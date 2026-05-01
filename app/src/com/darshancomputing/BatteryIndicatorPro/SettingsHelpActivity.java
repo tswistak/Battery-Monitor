@@ -72,6 +72,8 @@ public class SettingsHelpActivity extends AppCompatActivity {
             setContentView(R.layout.main_settings_help);
         }
 
+        EdgeToEdgeHelper.applyIfNeeded(this);
+
         TextView tv;
         MovementMethod linkMovement = LinkMovementMethod.getInstance();
 

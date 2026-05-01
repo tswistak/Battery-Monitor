@@ -58,6 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
         w.setStatusBarColor(c);
 
         setContentView(R.layout.prefs);
+        EdgeToEdgeHelper.applyIfNeeded(this);
 
         if (savedInstanceState == null) {
             frag = new SettingsFragment();

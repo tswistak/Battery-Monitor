@@ -42,6 +42,7 @@ public class HelpActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.help);
+        EdgeToEdgeHelper.applyIfNeeded(this);
 
         setTitle(getResources().getString(R.string.help_activity_subtitle));
 

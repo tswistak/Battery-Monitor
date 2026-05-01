@@ -67,6 +67,7 @@ public class AlarmEditActivity extends AppCompatActivity {
         setWindowSubtitle(res.getString(R.string.alarm_settings_subtitle));
 
         setContentView(R.layout.prefs);
+        EdgeToEdgeHelper.applyIfNeeded(this);
 
         // if (savedInstanceState == null) {
             frag = new AlarmEditFragment();

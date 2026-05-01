@@ -49,6 +49,7 @@ public class BatteryInfoActivity extends AppCompatActivity {
         PersistentFragment.getInstance(getSupportFragmentManager()); // Calling here ensures PF created before other Fragments?
 
         setContentView(R.layout.battery_info);
+        EdgeToEdgeHelper.applyIfNeeded(this);
 
         pagerAdapter = new BatteryInfoPagerAdapter(getSupportFragmentManager());
 
