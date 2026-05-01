@@ -16,8 +16,8 @@ android {
         targetSdk 35
 
         vectorDrawables.useSupportLibrary = false
+        resourceConfigurations += ['ar', 'cs', 'de', 'el', 'en', 'en-rUS', 'es', 'es-rUS', 'fa', 'fr', 'hi', 'hu', 'it', 'iw', 'ja', 'lt', 'nl', 'pl', 'pt', 'pt-rBR', 'ro', 'ru', 'sk', 'sl', 'sr', 'tr', 'zh', 'zh-rCN']
 
-        resConfigs "ar", "cs", "de", "el", "en", "en-rUS", "es", "es-rUS", "fa", "fr", "hi", "hu", "it", "iw", "ja", "lt", "nl", "pl", "pt", "pt-rBR", "ro", "ru", "sk", "sl", "sr", "tr", "zh", "zh-rCN"
     }
 
     sourceSets {
