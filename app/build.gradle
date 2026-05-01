@@ -9,24 +9,11 @@ if (securePropertiesFile.exists()) {
 android {
     namespace "com.darshancomputing.BatteryIndicatorPro"
 
-    compileSdkVersion 33
-
-    dependencies {
-        implementation "androidx.core:core:1.10.1"
-        implementation "androidx.fragment:fragment:1.6.1"
-        implementation "androidx.viewpager:viewpager:1.0.0"
-
-        implementation "androidx.appcompat:appcompat:1.6.1"
-        implementation "androidx.appcompat:appcompat-resources:1.6.1"
-
-        implementation "androidx.preference:preference:1.2.1"
-
-        implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.0"))
-    }
+    compileSdk 35
 
     defaultConfig {
-        minSdkVersion 26
-        targetSdkVersion 33
+        minSdk 26
+        targetSdk 35
 
         vectorDrawables.useSupportLibrary = false
 
@@ -45,7 +32,12 @@ android {
         }
     }
 
-    lintOptions {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
         disable 'MissingTranslation'
     }
 
@@ -69,4 +61,15 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "androidx.core:core:1.13.1"
+    implementation "androidx.fragment:fragment:1.8.6"
+    implementation "androidx.viewpager:viewpager:1.1.0"
+
+    implementation "androidx.appcompat:appcompat:1.7.0"
+    implementation "androidx.appcompat:appcompat-resources:1.7.0"
+
+    implementation "androidx.preference:preference:1.2.1"
+
+    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.9.24")
 }

@@ -27,6 +27,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ServiceInfo;
 import android.content.res.Resources;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -428,7 +429,11 @@ public class BatteryInfoService extends Service {
             handleUpdateWithSameStatus();
 
         prepareNotification();
-        startForeground(NOTIFICATION_PRIMARY, mainNotificationB.build());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            startForeground(NOTIFICATION_PRIMARY, mainNotificationB.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+        } else {
+            startForeground(NOTIFICATION_PRIMARY, mainNotificationB.build());
+        }
 
         if (alarms.anyActiveAlarms())
             handleAlarms();
@@ -864,7 +869,25 @@ public class BatteryInfoService extends Service {
             widgetIds.add(appWidgetIds[i]);
         }
 
-        context.startForegroundService(new Intent(context, BatteryInfoService.class));
+        startForegroundServiceSafely(context);
+    }
+
+    public static void startForegroundServiceSafely(Context context) {
+        Intent serviceIntent = new Intent(context, BatteryInfoService.class);
+
+        try {
+            context.startForegroundService(serviceIntent);
+        } catch (RuntimeException e) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S &&
+                e instanceof android.app.ForegroundServiceStartNotAllowedException) {
+                try {
+                    context.startService(serviceIntent);
+                } catch (Exception ignored) {
+                }
+            } else {
+                throw e;
+            }
+        }
     }
 
     public static void onWidgetDeleted(Context context, int[] appWidgetIds) {

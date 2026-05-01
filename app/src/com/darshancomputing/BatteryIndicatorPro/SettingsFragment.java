@@ -247,7 +247,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         try {
             serviceMessenger.send(outgoing);
         } catch (Exception e) {
-            getActivity().startForegroundService(new Intent(getActivity(), BatteryInfoService.class));
+            BatteryInfoService.startForegroundServiceSafely(getActivity());
         }
     }
 

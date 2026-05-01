@@ -15,7 +15,6 @@
 package com.darshancomputing.BatteryIndicatorPro;
 
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,8 +39,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
         // Note: Regardless of anything here, Android will start the Service on boot if there are any desktop widgets
         if (startPref.equals("always") || (startPref.equals("auto") && service_desired)){
-            ComponentName comp = new ComponentName(context.getPackageName(), BatteryInfoService.class.getName());
-            context.startForegroundService(new Intent().setComponent(comp));
+            BatteryInfoService.startForegroundServiceSafely(context);
         }
 
         // This receiver is called on PACKAGE_REPLACED, too, but we don't want to log boot in that case

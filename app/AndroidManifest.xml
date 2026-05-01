@@ -10,6 +10,8 @@
   <!-- Permissions now considered "normal", automatically granted on API 23+ -->
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /><!-- Required on API 28+ -->
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
   <uses-permission android:name="android.permission.VIBRATE" />
 
   <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
@@ -87,6 +89,8 @@
       android:name=".BatteryInfoService"
       android:process="com.darshancomputing.BatteryBotPro.BIS"
       android:icon="@drawable/battery"
+      android:exported="false"
+      android:foregroundServiceType="dataSync"
       />
 
   <receiver
