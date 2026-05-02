@@ -54,6 +54,9 @@ public class SettingsHelpActivity extends AppCompatActivity {
         } else if (pref_screen.equals(SettingsFragment.KEY_STATUS_BAR_ICON_SETTINGS)) {
             setContentView(R.layout.status_bar_icon_settings_help);
             setWindowSubtitle(res.getString(R.string.status_bar_icon_settings));
+        } else if (pref_screen.equals(SettingsFragment.KEY_STATUS_BAR_CHIP_SETTINGS)) {
+            setContentView(R.layout.status_bar_chip_settings_help);
+            setWindowSubtitle(res.getString(R.string.status_bar_chip_settings));
         } else if (pref_screen.equals(SettingsFragment.KEY_CURRENT_HACK_SETTINGS)) {
             setContentView(R.layout.current_hack_settings_help);
             setWindowSubtitle(res.getString(R.string.current_hack_settings));

@@ -77,6 +77,9 @@ public class SettingsActivity extends AppCompatActivity {
         } else if (pref_screen.equals(SettingsFragment.KEY_STATUS_BAR_ICON_SETTINGS)) {
             frag.setScreen(R.xml.status_bar_icon_pref_screen);
             setWindowSubtitle(res.getString(R.string.status_bar_icon_settings));
+        } else if (pref_screen.equals(SettingsFragment.KEY_STATUS_BAR_CHIP_SETTINGS)) {
+            frag.setScreen(R.xml.status_bar_chip_pref_screen);
+            setWindowSubtitle(res.getString(R.string.status_bar_chip_settings));
         } else if (pref_screen.equals(SettingsFragment.KEY_NOTIFICATION_SETTINGS)) {
             frag.setScreen(R.xml.notification_pref_screen);
             setWindowSubtitle(res.getString(R.string.notification_settings));

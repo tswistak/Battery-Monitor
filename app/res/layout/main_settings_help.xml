@@ -14,6 +14,9 @@
     <TextView style="@style/help_cat" android:text="@string/status_bar_icon_settings" />
     <TextView style="@style/help_text" android:text="@string/status_bar_icon_settings_help" />
 
+    <TextView style="@style/help_cat" android:text="@string/status_bar_chip_settings" />
+    <TextView style="@style/help_text" android:text="@string/status_bar_chip_settings_help" />
+
     <TextView style="@style/help_cat" android:text="@string/current_hack_settings" />
     <TextView style="@style/help_text" android:text="@string/current_hack_settings_help" />
 

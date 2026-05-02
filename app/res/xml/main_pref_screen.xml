@@ -13,6 +13,12 @@
   />
 
   <Preference
+     app:key="status_bar_chip_settings"
+     app:title="@string/status_bar_chip_settings"
+     app:summary="@string/status_bar_chip_settings_summary"
+  />
+
+  <Preference
      app:key="current_hack_settings"
      app:title="@string/current_hack_settings"
      app:summary="@string/current_hack_settings_summary"

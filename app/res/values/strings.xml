@@ -360,6 +360,12 @@
   <string formatted="false" name="status_bar_icon_settings_help">
     You can select which icon set to use and change the settings for the icon set (e.g., colors).
   </string>
+  <string formatted="false" name="status_bar_chip_settings">Status Bar Chip</string>
+  <string formatted="false" name="status_bar_chip_settings_summary">Configure Android 16+ chip content</string>
+  <string formatted="false" name="status_bar_chip_settings_help">
+    On Android 16+ with Live Updates, you can configure what the status
+    bar chip shows and whether to display the charging emoji.
+  </string>
   <string formatted="false" name="current_hack_settings">Current (mA) Hack</string>
   <string formatted="false" name="current_hack_settings_summary">Advanced settings for enabling mA info</string>
   <string formatted="false" name="current_hack_settings_help">

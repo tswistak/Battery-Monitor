@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/named_so_scroll_position_is_preserved"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+>
+  <LinearLayout style="@style/help_ll" android:orientation="vertical">
+    <TextView style="@style/help_cat"  android:text="@string/pref_cat_status_bar_chip" />
+    <View style="@style/help_cat_post_margin" />
+    <TextView style="@style/help_pref" android:text="@string/pref_chip_content" />
+    <TextView style="@style/help_text" android:text="@string/pref_chip_content_help" />
+    <TextView style="@style/help_pref" android:text="@string/pref_chip_indicate_charging" />
+    <TextView style="@style/help_text" android:text="@string/pref_chip_indicate_charging_help" />
+  </LinearLayout>
+</ScrollView>
+

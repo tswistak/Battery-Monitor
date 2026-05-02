@@ -1,0 +1,22 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory
+      android:key="category_status_bar_chip"
+      android:title="@string/pref_cat_status_bar_chip"
+  >
+    <ListPreference
+       android:key="chip_content"
+       android:title="@string/pref_chip_content"
+       android:entries="@array/icon_content_entries"
+       android:entryValues="@array/icon_content_values"
+       android:defaultValue="@string/default_chip_content"
+    />
+
+    <CheckBoxPreference
+       android:key="chip_indicate_charging"
+       android:title="@string/pref_chip_indicate_charging"
+       android:summary="@string/pref_chip_indicate_charging_summary"
+       android:defaultValue="true"
+    />
+  </PreferenceCategory>
+</PreferenceScreen>
+

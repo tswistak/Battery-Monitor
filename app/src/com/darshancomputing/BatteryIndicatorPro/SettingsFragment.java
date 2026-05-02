@@ -46,6 +46,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
 
     public static final String KEY_NOTIFICATION_SETTINGS = "notification_settings";
     public static final String KEY_STATUS_BAR_ICON_SETTINGS = "status_bar_icon_settings";
+    public static final String KEY_STATUS_BAR_CHIP_SETTINGS = "status_bar_chip_settings";
     public static final String KEY_CURRENT_HACK_SETTINGS = "current_hack_settings";
     public static final String KEY_ALARMS_SETTINGS = "alarms_settings";
     public static final String KEY_ALARM_EDIT_SETTINGS = "alarm_edit_settings";
@@ -281,7 +282,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
 
         int pref_res = pref_screen;
 
-        if ((pref_screen == R.xml.status_bar_icon_pref_screen || pref_screen == R.xml.notification_pref_screen) &&
+        if ((pref_screen == R.xml.status_bar_icon_pref_screen ||
+             pref_screen == R.xml.status_bar_chip_pref_screen ||
+             pref_screen == R.xml.notification_pref_screen) &&
             (!appNotifsEnabled || !mainNotifsEnabled)) {
             pref_res = R.xml.main_notifs_disabled_pref_screen;
         }
@@ -292,9 +295,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         boolean liveUpdateSupported = BatteryInfoService.supportsLiveUpdates();
         boolean liveUpdateEnabledInSystem = BatteryInfoService.isLiveUpdateEnabledInSystem(getActivity());
 
-        if (pref_screen == R.xml.main_pref_screen && liveUpdateSupported && liveUpdateEnabledInSystem) {
-            Preference p = mPreferenceScreen.findPreference(KEY_STATUS_BAR_ICON_SETTINGS);
-            if (p != null) mPreferenceScreen.removePreference(p);
+        if (pref_screen == R.xml.main_pref_screen) {
+            if (liveUpdateSupported && liveUpdateEnabledInSystem) {
+                Preference p = mPreferenceScreen.findPreference(KEY_STATUS_BAR_ICON_SETTINGS);
+                if (p != null) mPreferenceScreen.removePreference(p);
+            }
+
+            if (!liveUpdateSupported) {
+                Preference p = mPreferenceScreen.findPreference(KEY_STATUS_BAR_CHIP_SETTINGS);
+                if (p != null) mPreferenceScreen.removePreference(p);
+            }
         }
 
         PreferenceCategory cat;
@@ -336,13 +346,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
             //prefb.setOnPreferenceClickListener(notifChanBListener);
 
             prefb.setSummary(R.string.pref_manage_main_channel);
-
-            if (!liveUpdateSupported) {
-                PreferenceCategory chipCat = (PreferenceCategory) mPreferenceScreen.findPreference(KEY_CAT_STATUS_BAR_CHIP);
-                if (chipCat != null) {
-                    chipCat.removeAll();
-                    chipCat.setLayoutResource(R.layout.none);
-                }
+        } else if (pref_screen == R.xml.status_bar_chip_pref_screen && !liveUpdateSupported) {
+            PreferenceCategory chipCat = (PreferenceCategory) mPreferenceScreen.findPreference(KEY_CAT_STATUS_BAR_CHIP);
+            if (chipCat != null) {
+                chipCat.removeAll();
+                chipCat.setLayoutResource(R.layout.none);
             }
         } else if (pref_screen == R.xml.current_hack_pref_screen) {
             if (CurrentHack.getCurrent() == null) {
@@ -384,7 +392,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         String key = preference.getKey();
         if (key == null) {
             return false;
-        } else if (key.equals(KEY_NOTIFICATION_SETTINGS) || key.equals(KEY_STATUS_BAR_ICON_SETTINGS) ||
+        } else if (key.equals(KEY_NOTIFICATION_SETTINGS) ||
+                   key.equals(KEY_STATUS_BAR_ICON_SETTINGS) ||
+                   key.equals(KEY_STATUS_BAR_CHIP_SETTINGS) ||
                    key.equals(KEY_CURRENT_HACK_SETTINGS) ||
                    key.equals(KEY_OTHER_SETTINGS)) {
             ComponentName comp = new ComponentName(getActivity().getPackageName(), SettingsActivity.class.getName());

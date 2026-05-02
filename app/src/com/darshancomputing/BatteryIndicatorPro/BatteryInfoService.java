@@ -776,7 +776,7 @@ public class BatteryInfoService extends Service {
         }
 
         Boolean indicate_charging = settings.getBoolean(SettingsFragment.KEY_INDICATE_CHARGING, true);
-        int clampedPercent = Math.max(0, Math.min(100, iconContentValue()));
+        int clampedPercent = Math.max(0, Math.min(140, iconContentValue()));
 
         if (icon_set.equals("builtin.plain_number")) {
             String prefix = (info.status == BatteryInfo.STATUS_CHARGING && indicate_charging) ? "charging" : "plain";

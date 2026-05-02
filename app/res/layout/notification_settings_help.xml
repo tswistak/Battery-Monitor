@@ -16,12 +16,5 @@
     <TextView style="@style/help_pref" android:text="@string/pref_status_duration_in_vital_signs" />
     <TextView style="@style/help_text" android:text="@string/pref_status_duration_in_vital_signs_help" />
 
-    <View style="@style/help_cat_pre_margin" />
-    <TextView style="@style/help_cat"  android:text="@string/pref_cat_status_bar_chip" />
-    <View style="@style/help_cat_post_margin" />
-    <TextView style="@style/help_pref" android:text="@string/pref_chip_content" />
-    <TextView style="@style/help_text" android:text="@string/pref_chip_content_help" />
-    <TextView style="@style/help_pref" android:text="@string/pref_chip_indicate_charging" />
-    <TextView style="@style/help_text" android:text="@string/pref_chip_indicate_charging_help" />
   </LinearLayout>
 </ScrollView>
