@@ -127,6 +127,7 @@ public class BatteryInfoService extends Service {
     private Notification.Builder mainNotificationB;
     private String mainNotificationTopLine, mainNotificationBottomLine;
     private RemoteViews notificationRV;
+    private boolean mainNotificationForegroundStarted;
 
     private Predictor predictor;
 
@@ -198,6 +199,7 @@ public class BatteryInfoService extends Service {
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mainNotificationB = new Notification.Builder(this);
+        mainNotificationForegroundStarted = false;
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         setUpChannels();
@@ -253,6 +255,7 @@ public class BatteryInfoService extends Service {
         log_db.close();
         updateWidgets(null);
         stopForeground(true);
+        mainNotificationForegroundStarted = false;
     }
 
     @Override
@@ -383,6 +386,7 @@ public class BatteryInfoService extends Service {
         if (cancelFirst) {
             stopForeground(true);
             mainNotificationB = new Notification.Builder(this);
+            mainNotificationForegroundStarted = false;
         }
 
         registerReceiver(mBatteryInfoReceiver, batteryChanged);
@@ -452,22 +456,33 @@ public class BatteryInfoService extends Service {
     }
 
     private void startForegroundWithRetry() {
+        Notification mainNotification = mainNotificationB.build();
+
         try {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                startForeground(NOTIFICATION_PRIMARY, mainNotificationB.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+            if (mainNotificationForegroundStarted) {
+                mNotificationManager.notify(NOTIFICATION_PRIMARY, mainNotification);
+            } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                startForeground(NOTIFICATION_PRIMARY, mainNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+                mainNotificationForegroundStarted = true;
             } else {
-                startForeground(NOTIFICATION_PRIMARY, mainNotificationB.build());
+                startForeground(NOTIFICATION_PRIMARY, mainNotification);
+                mainNotificationForegroundStarted = true;
             }
         } catch (RuntimeException e) {
             // Channel state may have changed under us; rebuild channels and try once more.
             try {
                 setUpChannels();
                 prepareNotification();
+                mainNotification = mainNotificationB.build();
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                    startForeground(NOTIFICATION_PRIMARY, mainNotificationB.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+                if (mainNotificationForegroundStarted) {
+                    mNotificationManager.notify(NOTIFICATION_PRIMARY, mainNotification);
+                } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                    startForeground(NOTIFICATION_PRIMARY, mainNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+                    mainNotificationForegroundStarted = true;
                 } else {
-                    startForeground(NOTIFICATION_PRIMARY, mainNotificationB.build());
+                    startForeground(NOTIFICATION_PRIMARY, mainNotification);
+                    mainNotificationForegroundStarted = true;
                 }
             } catch (RuntimeException retryError) {
                 Log.e(LOG_TAG, "Unable to enter foreground mode", retryError);
