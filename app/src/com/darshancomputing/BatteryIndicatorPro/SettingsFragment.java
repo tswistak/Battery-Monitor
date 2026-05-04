@@ -296,7 +296,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         boolean liveUpdateEnabledInSystem = BatteryInfoService.isLiveUpdateEnabledInSystem(getActivity());
 
         if (pref_screen == R.xml.main_pref_screen) {
-            if (liveUpdateSupported && liveUpdateEnabledInSystem) {
+            // Are there any Androids that support both live updates and notification icon change?
+//            if (liveUpdateSupported && liveUpdateEnabledInSystem) {
+            if (liveUpdateSupported) {
                 Preference p = mPreferenceScreen.findPreference(KEY_STATUS_BAR_ICON_SETTINGS);
                 if (p != null) mPreferenceScreen.removePreference(p);
             }
