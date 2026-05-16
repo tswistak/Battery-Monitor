@@ -113,9 +113,7 @@
     Даршан Компьютинг, ООО.  Спасибо первоначальным авторам и участникам
     для создания и поддержки восходящего проекта.</string>
   <string name="help_cat_contact" formatted="false">Контакты</string>
-  <string name="help_contact" formatted="false">Если
-    у вас есть вопрос, проблема или комментарий, пожалуйста
-    напишите мне.</string>
+  <string formatted="false" name="help_contact">Если у вас есть вопрос, проблема или комментарий, пожалуйста, <a href="mailto:tomasz@swistak.codes">напишите мне</a>.</string>
   <string name="settings_overview" formatted="false">Обзор</string>
   <string name="settings_overview_help" formatted="false">Все настройки разбиты на несколько страниц. Каждая страница настроек имеет свою соответствующую страницу помощи. Просто нажмите MENU, затем Help (MENU на планшетах не обязательно) для получения справки по настройкам текущей страницы.</string>
   <string name="notification_settings" formatted="false">Основное уведомление</string>

@@ -108,10 +108,8 @@
     Darshan Computing, LLC.  Grazie agli autori originali e ai contributori
     per la creazione e il mantenimento del progetto a monte.</string>
   <string name="help_cat_contact" formatted="false">Contatti</string>
-  <string name="help_contact" formatted="false">Se
-    hai una domanda, un problema o un commento, per favore
-    mandami una email.</string>
-  <string name="settings_overview" formatted="false">Panoramica</string>
+  <string formatted="false" name="help_contact">Se hai una domanda, un problema o un commento, per favore <a href="mailto:tomasz@swistak.codes">mandami una email</a>.</string>
+<string name="settings_overview" formatted="false">Panoramica</string>
   <string name="settings_overview_help" formatted="false">Le impostazioni sono organizzate in tre pagine separate, descritte qui di seguito. Ogni pagina ha una sua pagina di aiuto che descrive le impostazioni. Basta premere MENU\' - Aiuto per ottenere aiuto su qualunque impostazione presente nella pagina.</string>
   <string name="notification_settings" formatted="false">Notifiche principali</string>
   <string name="notification_settings_summary" formatted="false">Configura le notifiche principali</string>

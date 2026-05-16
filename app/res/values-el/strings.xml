@@ -158,10 +158,8 @@
     Darshan Computing, LLC.  Ευχαριστώ τους αρχικούς συγγραφείς και τους συντελεστές
     για τη δημιουργία και τη συντήρηση του ανάντη έργου.</string>
     <string formatted="false" name="help_cat_contact">Επικοινωνία</string>
-  <string formatted="false" name="help_contact">Αν
-    έχετε μια ερώτηση, ένα πρόβλημα ή ένα σχόλιο, παρακαλώ
-    στείλτε μου email.</string>
-  <string formatted="false" name="settings_overview">Επισκόπηση</string>
+  <string formatted="false" name="help_contact">Εάν έχετε μια ερώτηση, ένα πρόβλημα ή ένα σχόλιο, παρακαλώ <a href="mailto:tomasz@swistak.codes">στείλτε μου email</a>.</string>
+    <string formatted="false" name="settings_overview">Επισκόπηση</string>
   <string formatted="false" name="settings_overview_help">Οι ρυθμίσεις είναι οργανωμένες σε τέσσερις ξεχωριστές σελίδες, όπως περιγράφεται πιο κάτω. Κάθε σελίδα έχει τη δική της σελίδα βοήθειας που περιγράφει τις ρυθμίσεις της σελίδας αυτής. Απλά πατήστε MENU και μετά Βοήθεια (στα tablets, το MENU δεν είναι αναγκαίο) για να πάρετε βοήθεια σε όποια σελίδα ρυθμίσεων βρίσκεστε.</string>
   <string formatted="false" name="notifications_disabled_cat">Οι ειδοποιήσεις είναι απενεργοποιημένες</string>
   <string formatted="false" name="app_notifs_disabled_b">Ενεργοποιήστε τις Ειδοποιήσεις εφαρμογών</string>

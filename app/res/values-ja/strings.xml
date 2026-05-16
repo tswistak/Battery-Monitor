@@ -128,9 +128,7 @@
     ダルシャン コンピューティング LLC。  原作者と協力者に感謝します
     上流プロジェクトの作成と維持に使用します。</string>
   <string name="help_cat_contact" formatted="false">問い合わせ</string>
-  <string name="help_contact" formatted="false">もし
-    ご質問、問題、コメントがありましたら、
-    メールしてください。</string>
+  <string formatted="false" name="help_contact">ご質問、問題、コメントがありましたら、お気軽にお問い合わせください <a href="mailto:tomasz@swistak.codes">メールしてください</a>.</string>
   <string name="notifications_disabled" formatted="false">通知が無効です！</string>
   <string name="notifications_disabled_message" formatted="false">Battery Monitor のすべての通知がブロックされています。これにより、メイン通知および設定したアラーム通知は表示されません。\n\nBattery Monitor では、メイン通知のオン/オフや個別アラームの一時無効化をアプリ内で行えるため、システム側で通知ブロックを解除することを強くおすすめします。通知がブロックされている間は、Battery Monitor が正常に動作していないように見える場合があります。\n\nOK を押してシステム設定を開き、Battery Monitor の通知ブロックを解除してください。</string>
   <string name="battery_optimized" formatted="false">Battery Monitor が制限されています！</string>

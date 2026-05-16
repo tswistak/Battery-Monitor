@@ -158,10 +158,8 @@
     Darshan Computing, LLC.  Děkujeme původním autorům a přispěvatelům
     pro vytvoření a údržbu upstream projektu.</string>
     <string formatted="false" name="help_cat_contact">Kontakt</string>
-  <string formatted="false" name="help_contact">Pokud
-    máte dotaz, problém nebo připomínku, prosím
-    napište mi.</string>
-  <string formatted="false" name="settings_overview">Přehled</string>
+  <string formatted="false" name="help_contact">Máte-li dotaz, problém nebo připomínku, prosím <a href="mailto:tomasz@swistak.codes">napište mi</a>.</string>
+    <string formatted="false" name="settings_overview">Přehled</string>
   <string formatted="false" name="settings_overview_help">Nastavení jsou rozdělena do tří oddělených stránek, tak jak je popsáno níže. Každá stránka má svou vlastní nápovědu popisující dostupná nastavení. Jednoduše stikněte MENU pro popis jednotlivých nastavení dostupných na stránce nastavení.</string>
   <string formatted="false" name="notifications_disabled_cat">Upozornění zakázána</string>
   <string formatted="false" name="app_notifs_disabled_b">Povolit oznámení aplikací</string>

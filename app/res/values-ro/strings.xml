@@ -162,9 +162,7 @@
   <string formatted="false" name="help_acknowledgments">Battery Monitor este o furcă a Battery Indicator Pro / BatteryBot Pro de
     Darshan Computing, LLC.  Mulțumim autorilor și colaboratorilor originali
     pentru crearea și menținerea proiectului din amonte.</string>
-  <string formatted="false" name="help_contact">Dacă
-    ai o întrebare, o problemă sau un comentariu, te rog
-    e-mail-mi.</string>
+  <string formatted="false" name="help_contact">Dacă aveți o întrebare, o problemă sau un comentariu, vă rugăm <a href="mailto:tomasz@swistak.codes">e-mail-mi</a>.</string>
   <string formatted="false" name="settings_overview_help">Setările monitorului bateriei sunt organizate în pagini separate, așa cum este descris
     mai jos.  Fiecare pagină de setări are propria pagină de ajutor care descrie
     setări disponibile acolo.</string>

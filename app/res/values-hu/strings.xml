@@ -102,9 +102,7 @@
     Darshan Computing, LLC.  Köszönet az eredeti szerzőknek és a közreműködőknek
     az upstream projekt létrehozásához és karbantartásához.</string>
   <string name="help_cat_contact" formatted="false">Kapcsolat</string>
-  <string name="help_contact" formatted="false">Ha
-    kérdése, problémája vagy megjegyzése van, kérem
-    emailt nekem.</string>
+  <string formatted="false" name="help_contact">Ha kérdése, problémája vagy észrevétele van, kérem <a href="mailto:tomasz@swistak.codes">emailt nekem</a>.</string>
   <string name="settings_overview" formatted="false">Áttekintés</string>
   <string name="settings_overview_help" formatted="false">A beállításokat három oldalra összegyűtve találja az alábbiak szerint. Minden oldal saját súgóval rendelkezik az ott található beállítások leírásával. Ezeket a MENÜ gomb - Súgó opcióval érheti el..</string>
   <string name="alarm_settings_subtitle" formatted="false">Riasztás beállítások</string>

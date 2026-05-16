@@ -180,9 +180,7 @@
   <string name="help_privacy" formatted="false">Battery Monitor hiçbir kişisel bilgiyi toplamaz, saklamaz veya iletmez.</string>
   <string name="help_no_warranty" formatted="false">Bu yazılım faydalı olması umuduyla sunulur, ancak HİÇBİR GARANTİ VERİLMEZ.</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor, Battery Indicator Pro ve BatteryBot Pro uygulamalarindan fork edilmiştir. Orijinal yazar ve katki saglayanlara projeyi olusturup surdurdukleri icin tesekkur ederiz.</string>
-  <string name="help_contact" formatted="false">Eğer
-    bir sorunuz, sorununuz veya yorumunuz varsa lütfen
-    bana e-posta gönder.</string>
+  <string formatted="false" name="help_contact">Bir sorunuz, sorununuz veya yorumunuz varsa lütfen <a href="mailto:tomasz@swistak.codes">bana e-posta gönder</a>.</string>
   <string name="notifications_disabled_cat" formatted="false">Bildirimler Devre Dışı</string>
   <string name="app_notifs_disabled_b" formatted="false">Uygulama Bildirimlerini Etkinleştir</string>
   <string name="app_notifs_disabled_summary" formatted="false">Bu uygulama için tüm bildirimleri kapattınız. Bu ayarlara erişmek için etkinleştirin.</string>

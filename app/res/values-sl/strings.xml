@@ -206,9 +206,7 @@
   <string formatted="false" name="help_acknowledgments">Battery Monitor je razcep Battery Indicator Pro / BatteryBot Pro avtorja
     Darshan Computing, LLC.  Hvala izvirnim avtorjem in sodelavcem
     za ustvarjanje in vzdrževanje gorvodnega projekta.</string>
-  <string formatted="false" name="help_contact">če
-    imate vprašanje, težavo ali komentar, prosim
-    pošlji mi e-pošto.</string>
+  <string formatted="false" name="help_contact">Če imate vprašanje, težavo ali komentar, vas prosimo <a href="mailto:tomasz@swistak.codes">pošlji mi e-pošto</a>.</string>
   <string formatted="false" name="settings_overview_help">Nastavitve Battery Monitorja so organizirane v ločene strani, kot je opisano
     spodaj.  Vsaka stran z nastavitvami ima svojo stran s pomočjo, ki opisuje
     nastavitve, ki so tam na voljo.</string>

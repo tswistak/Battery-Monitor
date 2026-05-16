@@ -219,9 +219,7 @@
     <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
   <string formatted="false" name="help_cat_privacy">Ochrana osobných údajov</string>
   <string formatted="false" name="help_privacy">Battery Monitor nezhromažďuje, neukladá ani neprenáša žiadne osobné informácie.</string>
-  <string formatted="false" name="help_contact">Ak
-    máte otázku, problém alebo komentár, prosím
-    napíšte mi.</string>
+  <string formatted="false" name="help_contact">Ak máte otázku, problém alebo komentár, prosím <a href="mailto:tomasz@swistak.codes">napíšte mi</a>.</string>
   <string formatted="false" name="notifications_disabled_cat">Upozornenia sú vypnuté</string>
   <string formatted="false" name="app_notifs_disabled_b">Povoliť upozornenia aplikácií</string>
   <string formatted="false" name="app_notifs_disabled_summary">Zakázali ste všetky upozornenia pre túto aplikáciu.  Povoľte im prístup k týmto nastaveniam.</string>

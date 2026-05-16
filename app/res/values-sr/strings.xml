@@ -117,9 +117,7 @@
   <string name="help_cat_no_warranty" formatted="false">Bez garancije</string>
   <string name="help_cat_acknowledgments" formatted="false">Želimo da se zahvalimo</string>
   <string name="help_cat_contact" formatted="false">Kontakt</string>
-  <string name="help_contact" formatted="false">Ако
-    имате питање, проблем или коментар, молим
-    емаил ме.</string>
+  <string formatted="false" name="help_contact">Ако имате питање, проблем или коментар, молим <a href="mailto:tomasz@swistak.codes">емаил ме</a>.</string>
   <string name="settings_overview" formatted="false">Pregled</string>
   <string name="notification_settings" formatted="false">Glavno obaveštenje</string>
   <string name="notification_settings_summary" formatted="false">Podesite glavno obaveštenje</string>

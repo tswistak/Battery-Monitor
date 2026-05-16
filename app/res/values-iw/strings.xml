@@ -180,9 +180,7 @@
     Darshan Computing, LLC.  תודה לכותבים המקוריים ולתורמים
     ליצירה ותחזוקה של הפרויקט במעלה הזרם.</string>
   <string formatted="false" name="help_cat_contact">מַגָע</string>
-  <string formatted="false" name="help_contact">אם
-    יש לך שאלה, בעיה או הערה, בבקשה
-    מייל לי.</string>
+  <string formatted="false" name="help_contact">אם יש לך שאלה, בעיה או הערה, בבקשה <a href="mailto:tomasz@swistak.codes">שלח לי מייל</a>.</string>
   <string formatted="false" name="settings_overview">סקירה כללית</string>
   <string formatted="false" name="settings_overview_help">ההגדרות של Battery Monitor מאורגנות בדפים נפרדים כמתואר
     למטה.  לכל דף הגדרות יש דף עזרה משלו המתאר את

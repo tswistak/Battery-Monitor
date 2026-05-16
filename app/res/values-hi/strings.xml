@@ -162,9 +162,7 @@
     दर्शन कंप्यूटिंग, एलएलसी।  मूल लेखकों और योगदानकर्ताओं को धन्यवाद
     अपस्ट्रीम प्रोजेक्ट बनाने और बनाए रखने के लिए।</string>
   <string formatted="false" name="help_cat_contact">संपर्क</string>
-  <string formatted="false" name="help_contact">यदि
-    कृपया आपके पास कोई प्रश्न, कोई समस्या या कोई टिप्पणी है
-    मुझे ईमेल करें.</string>
+  <string formatted="false" name="help_contact">यदि आपका कोई प्रश्न, कोई समस्या या कोई टिप्पणी है, तो कृपया <a href="mailto:tomasz@swistak.codes">मुझे ईमेल करो</a>.</string>
   <string formatted="false" name="settings_overview">सिंहावलोकन</string>
   <string formatted="false" name="settings_overview_help">बैटरी मॉनिटर की सेटिंग्स को वर्णित अनुसार अलग-अलग पृष्ठों में व्यवस्थित किया गया है
     नीचे.  सेटिंग्स के प्रत्येक पृष्ठ का अपना स्वयं का सहायता पृष्ठ है जो इसका वर्णन करता है

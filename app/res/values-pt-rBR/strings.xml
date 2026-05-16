@@ -180,9 +180,7 @@
   <string formatted="false" name="help_acknowledgments">Battery Monitor é um fork do Battery Indicator Pro / BatteryBot Pro da
     Darshan Computação, LLC.  Obrigado aos autores originais e colaboradores
     para criar e manter o projeto upstream.</string>
-  <string formatted="false" name="help_contact">Se
-    você tem uma pergunta, um problema ou um comentário, por favor
-    envie-me um e-mail.</string>
+  <string formatted="false" name="help_contact">Se você tiver alguma dúvida, problema ou comentário, por favor <a href="mailto:tomasz@swistak.codes">envie-me um e-mail</a>.</string>
   <string formatted="false" name="settings_overview_help">As configurações do Battery Monitor são organizadas em páginas separadas conforme descrito
     abaixo.  Cada página de configurações tem sua própria página de ajuda que descreve o
     configurações disponíveis lá.</string>

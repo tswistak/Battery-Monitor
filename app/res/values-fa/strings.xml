@@ -169,9 +169,7 @@
     Darshan Computing, LLC.  با تشکر از نویسندگان و مشارکت کنندگان اصلی
     برای ایجاد و نگهداری پروژه بالادست.</string>
   <string formatted="false" name="help_cat_contact">تماس بگیرید</string>
-  <string formatted="false" name="help_contact">اگر
-    سوال، مشکل یا نظری دارید، لطفا
-    به من ایمیل بزنید</string>
+  <string formatted="false" name="help_contact">اگر سوالی دارید، مشکلی دارید یا نظری دارید، لطفا <a href="mailto:tomasz@swistak.codes">به من ایمیل بزنید</a>.</string>
   <string formatted="false" name="settings_overview">نمای کلی</string>
   <string formatted="false" name="settings_overview_help">تنظیمات مانیتور باتری طبق توضیحات در صفحات جداگانه سازماندهی شده است
     زیر  هر صفحه از تنظیمات صفحه راهنمای خود را دارد که آن را توصیف می کند

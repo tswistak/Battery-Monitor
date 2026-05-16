@@ -86,9 +86,7 @@
     達山計算有限責任公司。  感謝原作者與貢獻者
     用於建立和維護上游專案。</string>
   <string name="help_cat_contact" formatted="false">聯繫方式</string>
-  <string name="help_contact" formatted="false">如果
-    如果您有疑問、問題或意見，請
-    給我發電子郵件。</string>
+  <string formatted="false" name="help_contact">如果您有疑問、問題或意見，請 <a href="mailto:tomasz@swistak.codes">給我發電子郵件</a>.</string>
   <string name="settings_overview" formatted="false">預覽</string>
   <string name="settings_overview_help" formatted="false">設定包括如下所述的三個獨立頁面。各頁面的說明信息獨立顯示，在「選單」-「說明」內容中可獲取當前頁面的說明信息。</string>
   <string name="other_settings" formatted="false">其他設定</string>

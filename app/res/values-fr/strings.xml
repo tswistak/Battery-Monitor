@@ -192,7 +192,7 @@
     <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
   <string name="help_cat_privacy" formatted="false">Confidentialité</string>
   <string name="help_privacy" formatted="false">Battery Monitor ne collecte, ne stocke ni ne transmet aucune information personnelle.</string>
-  <string name="help_contact" formatted="false">Si vous avez une question, un probleme ou un commentaire, merci de mecrire par e-mail.</string>
+  <string formatted="false" name="help_contact">Si vous avez une question, un problème ou un commentaire, n\'hésitez pas <a href="mailto:tomasz@swistak.codes">envoyez-moi un e-mail</a>.</string>
   <string name="notifications_disabled_cat" formatted="false">Notifications désactivées</string>
   <string name="app_notifs_disabled_b" formatted="false">Activer les notifications de l’appli</string>
   <string name="app_notifs_disabled_summary" formatted="false">Toutes les notifications de cette appli sont désactivées. Activez-les pour accéder à ces réglages.</string>

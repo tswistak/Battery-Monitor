@@ -109,9 +109,7 @@
     Darshan Computing, LLC.  Dziękuję oryginalnym autorom i współpracownikom
     za utworzenie i utrzymanie projektu upstream.</string>
   <string name="help_cat_contact" formatted="false">Kontakt</string>
-  <string name="help_contact" formatted="false">Jeśli
-    masz pytanie, problem lub komentarz, proszę
-    napisz do mnie e-mail.</string>
+  <string formatted="false" name="help_contact">Jeżeli masz pytanie, problem lub komentarz, prosimy o kontakt <a href="mailto:tomasz@swistak.codes">napisz do mnie e-mail</a>.</string>
   <string name="settings_overview" formatted="false">Przegląd</string>
   <string name="settings_overview_help" formatted="false">Ustawienia są posegregowane na 4 osobne strony. Każda strona ma własną pomoc, która opisuje ustawienia na niej. Po prostu naciśnij MENU a następnie Pomoc (na tabletach MENU nie jest wymagane) aby ją uzyskać.</string>
   <string name="notification_settings" formatted="false">Główne powiadomienia</string>

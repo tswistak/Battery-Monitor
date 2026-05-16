@@ -214,9 +214,7 @@
     <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>。</string>
   <string formatted="false" name="help_cat_privacy">隐私</string>
   <string formatted="false" name="help_privacy">Battery Monitor不会收集、存储或传输任何个人信息。</string>
-  <string formatted="false" name="help_contact">如果
-    如果您有疑问、问题或意见，请
-    给我发电子邮件。</string>
+  <string formatted="false" name="help_contact">如果您有疑问、问题或意见，请 <a href="mailto:tomasz@swistak.codes">给我发电子邮件</a>.</string>
   <string formatted="false" name="notifications_disabled_cat">通知已禁用</string>
   <string formatted="false" name="app_notifs_disabled_b">启用应用程序通知</string>
   <string formatted="false" name="app_notifs_disabled_summary">您已禁用此应用程序的所有通知。  请允许他们访问这些设置。</string>

@@ -114,9 +114,7 @@
     دارشان للحوسبة، ذ.م.م.  شكرا للمؤلفين والمساهمين الأصليين
     لإنشاء وصيانة المشروع المنبع.</string>
   <string name="help_cat_contact" formatted="false">للتواصل</string>
-  <string name="help_contact" formatted="false">إذا
-    لديك سؤال، مشكلة، أو تعليق، من فضلك
-    أرسل لي بريدا إلكترونيا.</string>
+  <string formatted="false" name="help_contact">إذا كان لديك سؤال، مشكلة، أو تعليق، من فضلك <a href="mailto:tomasz@swistak.codes">أرسل لي بريدا إلكترونيا</a>.</string>
   <string name="settings_overview" formatted="false">نظرة عامة</string>
   <string name="settings_overview_help" formatted="false">الاعدادات منفصلة كما موضح ادناه واذا اردت ان تدخل لاعدادات الصفحة ببساطة اضغط على زر الخيارات الموجودة في هاتفك للحصل على مساعدة اما على الاجهزة اللوحية فأن زر الخيارات غير ضروري</string>
   <string name="notification_settings" formatted="false">الاشعارات الرئيسية</string>

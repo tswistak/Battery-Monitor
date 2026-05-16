@@ -219,9 +219,7 @@
     <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
   <string formatted="false" name="help_cat_privacy">Privatumas</string>
   <string formatted="false" name="help_privacy">Battery Monitor nerenka, nesaugo ir neperduoda jokios asmeninės informacijos.</string>
-  <string formatted="false" name="help_contact">Jeigu
-    turite klausimų, problemų ar komentarų, prašau
-    el.</string>
+  <string formatted="false" name="help_contact">Jei turite klausimų, problemų ar komentarų, prašau <a href="mailto:tomasz@swistak.codes">el</a>.</string>
   <string formatted="false" name="notifications_disabled_cat">Pranešimai išjungti</string>
   <string formatted="false" name="app_notifs_disabled_b">Įgalinti programų pranešimus</string>
   <string formatted="false" name="app_notifs_disabled_summary">Išjungėte visus šios programos pranešimus.  Leiskite jiems pasiekti šiuos nustatymus.</string>
