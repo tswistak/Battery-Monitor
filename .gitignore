@@ -8,6 +8,7 @@ gen
 #libs
 TODO
 my-release-key.keystore
+release.keystore
 .gradle
 build
 

@@ -6,6 +6,34 @@ if (securePropertiesFile.exists()) {
     securePropertiesFile.withInputStream { secureProperties.load(it) }
 }
 
+def ciVersionName = (project.findProperty("ciVersionName") ?: System.getenv("CI_VERSION_NAME"))?.toString()
+def baseVersionName = ciVersionName ?: "0.0.1-test"
+
+def computedVersionCode = 26017
+if (ciVersionName) {
+    def matcher = (ciVersionName =~ /^(\d+)\.(\d+)\.(\d+)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/)
+    if (!matcher.matches()) {
+        throw new GradleException(
+                "ciVersionName must match SemVer (example: 1.0.0, 1.0.0-prerelease, 1.0.0+build.1)"
+        )
+    }
+
+    int major = matcher.group(1).toInteger()
+    int minor = matcher.group(2).toInteger()
+    int patch = matcher.group(3).toInteger()
+    if (minor > 999 || patch > 999) {
+        throw new GradleException("Minor and patch must be <= 999 for versionCode packing")
+    }
+    computedVersionCode = major * 1000000 + minor * 1000 + patch
+}
+
+def releaseStoreFileProp = project.findProperty("releaseStoreFile") ?: System.getenv("RELEASE_STORE_FILE")
+def releaseStorePasswordProp = project.findProperty("releaseStorePassword") ?: System.getenv("RELEASE_STORE_PASSWORD") ?: secureProperties['key.store.password']
+def releaseKeyAliasProp = project.findProperty("releaseKeyAlias") ?: System.getenv("RELEASE_KEY_ALIAS") ?: "alias_name"
+def releaseKeyPasswordProp = project.findProperty("releaseKeyPassword") ?: System.getenv("RELEASE_KEY_PASSWORD") ?: secureProperties['key.alias.password']
+def requestedTasks = gradle.startParameter.taskNames.collect { it.toLowerCase() }
+def isReleaseBuildRequested = requestedTasks.any { it.contains("release") }
+
 android {
     namespace "codes.swistak.batterymonitor"
 
@@ -14,6 +42,8 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 37
+        versionName baseVersionName
+        versionCode computedVersionCode
 
         vectorDrawables.useSupportLibrary = false
         resourceConfigurations += ['ar', 'cs', 'de', 'el', 'en', 'en-rUS', 'es', 'es-rUS', 'fa', 'fr', 'hi', 'hu', 'it', 'iw', 'ja', 'lt', 'nl', 'pl', 'pt', 'pt-rBR', 'ro', 'ru', 'sk', 'sl', 'sr', 'tr', 'zh', 'zh-rCN']
@@ -43,15 +73,21 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("../../private/my-release-key.keystore")
-            storePassword secureProperties['key.store.password']
-            keyAlias "alias_name"
-            keyPassword secureProperties['key.alias.password']
+            storeFile releaseStoreFileProp ? file(releaseStoreFileProp) : file("does-not-exist.keystore")
+            storePassword releaseStorePasswordProp
+            keyAlias releaseKeyAliasProp
+            keyPassword releaseKeyPasswordProp
         }
     }
 
     buildTypes {
         release {
+            if (isReleaseBuildRequested && (!releaseStoreFileProp || !releaseStorePasswordProp || !releaseKeyAliasProp || !releaseKeyPasswordProp)) {
+                throw new GradleException(
+                        "Release signing is not configured. Provide releaseStoreFile, releaseStorePassword, " +
+                        "releaseKeyAlias and releaseKeyPassword (properties or env vars)."
+                )
+            }
             signingConfig signingConfigs.release
             minifyEnabled true
             proguardFile 'proguard-no-obfuscation'
