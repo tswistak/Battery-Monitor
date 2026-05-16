@@ -1,4 +1,8 @@
-# Battery Monitor
+<p align="center">
+  <img src="docs/assets/app-icon.png" alt="Battery Monitor app icon" width="128" height="128" />
+</p>
+
+<h1 align="center">Battery Monitor</h1>
 
 Battery Monitor is a classic, no-nonsense Android battery app focused on clarity, reliability, and control.
 
