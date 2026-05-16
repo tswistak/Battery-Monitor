@@ -135,6 +135,12 @@ public class PersistentFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            if (androidx.core.content.ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        }
+
         if (sp_main.getBoolean(SettingsFragment.KEY_FIRST_RUN, true)) {
             if (BatteryInfoService.supportsLiveUpdates()) {
                 showLiveUpdatesOnboarding();

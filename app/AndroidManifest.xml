@@ -92,7 +92,7 @@
       android:process="codes.swistak.batterymonitor.BIS"
       android:icon="@drawable/battery"
       android:exported="false"
-      android:foregroundServiceType="specialUse"
+      android:foregroundServiceType="specialUse|dataSync"
       >
     <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_TYPE"
               android:value="Battery indicator and status bar information." />

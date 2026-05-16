@@ -128,7 +128,6 @@ public class BatteryInfoService extends Service {
     private static final int small_chargingIcon0 = R.drawable.small_charging000;
 
     /* Global variables for these Notification Runnables */
-    private Notification.Builder mainNotificationB;
     private String mainNotificationTopLine, mainNotificationBottomLine;
     private RemoteViews notificationRV;
     private boolean mainNotificationForegroundStarted;
@@ -145,9 +144,9 @@ public class BatteryInfoService extends Service {
         @Override
         public void run() {
             chipShowingTemperature = !chipShowingTemperature;
-            prepareNotification();
+            Notification mainNotification = prepareNotification();
             if (mainNotificationForegroundStarted) {
-                mNotificationManager.notify(NOTIFICATION_PRIMARY, mainNotificationB.build());
+                mNotificationManager.notify(NOTIFICATION_PRIMARY, mainNotification);
             }
 
             int interval;
@@ -224,7 +223,6 @@ public class BatteryInfoService extends Service {
         alarms = new AlarmDatabase(this);
 
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mainNotificationB = new Notification.Builder(this);
         mainNotificationForegroundStarted = false;
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
@@ -419,7 +417,6 @@ public class BatteryInfoService extends Service {
     private void applyNewSettings(boolean cancelFirst) {
         if (cancelFirst) {
             stopForeground(true);
-            mainNotificationB = new Notification.Builder(this);
             mainNotificationForegroundStarted = false;
         }
 
@@ -508,7 +505,7 @@ public class BatteryInfoService extends Service {
     }
 
     private void startForegroundWithRetry() {
-        Notification mainNotification = mainNotificationB.build();
+        Notification mainNotification = prepareNotification();
 
         try {
             if (mainNotificationForegroundStarted) {
@@ -527,8 +524,7 @@ public class BatteryInfoService extends Service {
             // Channel state may have changed under us; rebuild channels and try once more.
             try {
                 setUpChannels();
-                prepareNotification();
-                mainNotification = mainNotificationB.build();
+                mainNotification = prepareNotification();
 
                 if (mainNotificationForegroundStarted) {
                     mNotificationManager.notify(NOTIFICATION_PRIMARY, mainNotification);
@@ -624,35 +620,38 @@ public class BatteryInfoService extends Service {
         }
     }
 
-    private void prepareNotification() {
+    private Notification prepareNotification() {
         mainNotificationTopLine = lineFor(SettingsFragment.KEY_TOP_LINE);
         mainNotificationBottomLine = lineFor(SettingsFragment.KEY_BOTTOM_LINE);
 
-        mainNotificationB.setSmallIcon(iconFor())
+        Notification.Builder nb = new Notification.Builder(this, CHAN_ID_MAIN);
+
+        nb.setSmallIcon(iconFor())
             .setOngoing(true)
             .setWhen(0)
             .setShowWhen(false)
-            .setChannelId(CHAN_ID_MAIN)
             .setContentIntent(currentInfoPendingIntent)
             .setVisibility(Notification.VISIBILITY_PUBLIC);
 
-        mainNotificationB.setContentTitle(mainNotificationTopLine)
+        nb.setContentTitle(mainNotificationTopLine)
             .setContentText(mainNotificationBottomLine);
 
         if (supportsLiveUpdates()) {
             try {
                 java.lang.reflect.Method setRequestPromotedOngoing = Notification.Builder.class.getMethod("setRequestPromotedOngoing", boolean.class);
                 java.lang.reflect.Method setShortCriticalText = Notification.Builder.class.getMethod("setShortCriticalText", String.class);
-                setRequestPromotedOngoing.invoke(mainNotificationB, true);
+                setRequestPromotedOngoing.invoke(nb, true);
 
                 String text = chipContentText();
                 if (shouldShowChipChargingIndicator()) {
                     text = "⚡" + text;
                 }
 
-                setShortCriticalText.invoke(mainNotificationB, text);
+                setShortCriticalText.invoke(nb, text);
             } catch (Throwable ignored) {}
         }
+
+        return nb.build();
     }
 
     private String contentPreference(String key, String defaultValue) {
