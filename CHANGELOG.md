@@ -19,6 +19,7 @@
 - Fixed Android 16 compatibility issues (UI, crash during DND)
 - Fixed notification reliability on older Android versions.
 - Fixed random timeout crashes.
+- Fixed hardcoded strings to use string resources for better localization.
 
 ### Development
 

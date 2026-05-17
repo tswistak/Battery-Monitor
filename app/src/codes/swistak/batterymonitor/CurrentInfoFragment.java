@@ -374,12 +374,12 @@ public class CurrentInfoFragment extends Fragment {
         tv.setText(s);
 
         if (info.last_percent >= 0) {
-            s = "Since "; // TODO: Translatable
+            s = Str.since + " ";
 
             if (info.last_status != BatteryInfo.STATUS_FULLY_CHARGED)
                 s += info.last_percent + Str.percent_symbol + ", ";
 
-            s += hours + "h " + mins + "m ago"; // TODO: Translatable
+            s += Str.n_hours_m_minutes_short(hours, mins);
 
             tv = (TextView) view.findViewById(R.id.status_duration);
             tv.setText(s);

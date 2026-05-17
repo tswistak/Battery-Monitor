@@ -794,7 +794,9 @@ public class BatteryInfoService extends Service {
         }
         if (settings.getBoolean(SettingsFragment.KEY_STATUS_DURATION_IN_VITAL_SIGNS, false)) {
             float statusDurationHours = (now - info.last_status_cTM) / (60 * 60 * 1000f);
-            line += " / " + String.format("%.1f", statusDurationHours) + "h"; // TODO: Translatable 'h'
+            int durationHours = (int) statusDurationHours;
+            int durationMinutes = (int) ((statusDurationHours * 60) % 60);
+            line += " / " + Str.n_hours_m_minutes_short(durationHours, durationMinutes);
         }
 
         return line;
