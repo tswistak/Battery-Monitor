@@ -295,83 +295,53 @@
   <string name="pref_content_temperature" formatted="false">Temperatura baterije</string>
   <string name="pref_content_switching" formatted="false">Menjaj između oba</string>
   <plurals name="n_log_items">
-    <item quantity="zero">evidencionih unosa</item>
     <item quantity="one">%d evidencioni unos</item>
-    <item quantity="two">%d evidenciona unosa</item>
-    <item quantity="few">%d evidencionih unosa</item>
-    <item quantity="many">%d evidencionih unosa</item>
+    <item quantity="few">%d evidenciona unosa</item>
     <item quantity="other">%d evidencionih unosa</item>
   </plurals>
   <plurals name="n_hours_long">
-    <item quantity="zero">n_sat</item>
     <item quantity="one">"%d sat, "</item>
-    <item quantity="two">"%d sata, "</item>
-    <item quantity="few">"%d sata/i, "</item>
-    <item quantity="many">"%d sata/i, "</item>
+    <item quantity="few">"%d sata, "</item>
     <item quantity="other">"%d sati, "</item>
   </plurals>
   <plurals name="n_minutes_long">
-    <item quantity="zero">"%d sati, "</item>
     <item quantity="one">%d minut</item>
-    <item quantity="two">%d minuta</item>
     <item quantity="few">%d minuta</item>
-    <item quantity="many">%d minuta</item>
     <item quantity="other">%d minuta</item>
   </plurals>
   <plurals name="n_hours_medium">
-    <item quantity="zero">n_sata/i</item>
     <item quantity="one">"%d h, "</item>
-    <item quantity="two">"%d h, "</item>
     <item quantity="few">"%d h, "</item>
-    <item quantity="many">"%d h, "</item>
     <item quantity="other">"%d h, "</item>
   </plurals>
   <plurals name="n_minutes_medium">
-    <item quantity="zero">"%d min, "</item>
     <item quantity="one">%d min.</item>
-    <item quantity="two">%d min.</item>
     <item quantity="few">%d min.</item>
-    <item quantity="many">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="n_hours_short">
-    <item quantity="zero">%d h</item>
-    <item quantity="one">%d h</item>
-    <item quantity="two">%d h</item>
-    <item quantity="few">%d h</item>
-    <item quantity="many">%d h</item>
+    <item quantity="one">"%dh "</item>
+    <item quantity="few">"%dh "</item>
     <item quantity="other">"%dh "</item>
   </plurals>
   <plurals name="n_minutes_short">
-    <item quantity="zero">"%dmin "</item>
-    <item quantity="one">"%dmin "</item>
-    <item quantity="two">"%dmin "</item>
-    <item quantity="few">"%dmin "</item>
-    <item quantity="many">"%dmin "</item>
+    <item quantity="one">%dm</item>
+    <item quantity="few">%dm</item>
     <item quantity="other">%dm</item>
   </plurals>
   <plurals name="n_days">
-    <item quantity="zero">n_dana</item>
     <item quantity="one">"%d dan, "</item>
-    <item quantity="two">"%d dana, "</item>
     <item quantity="few">"%d dana, "</item>
-    <item quantity="many">"%d dana, "</item>
     <item quantity="other">"%d dana, "</item>
   </plurals>
   <plurals name="n_hours">
-    <item quantity="zero">"%d dana, "</item>
     <item quantity="one">%d sat</item>
-    <item quantity="two">%d sata/i</item>
-    <item quantity="few">%d sata/i</item>
-    <item quantity="many">%d sata/i</item>
-    <item quantity="other">%d sata/i</item>
+    <item quantity="few">%d sata</item>
+    <item quantity="other">%d sati</item>
   </plurals>
   <plurals name="for_n_hours">
-    <item quantity="zero">Za_n_sata/i</item>
     <item quantity="one">Za %d sat</item>
-    <item quantity="two">Za %d sata</item>
-    <item quantity="few">Za %d sata/i</item>
-    <item quantity="many">Za %d sata/i</item>
-    <item quantity="other">Za %d sata/i</item>
+    <item quantity="few">Za %d sata</item>
+    <item quantity="other">Za %d sati</item>
   </plurals>
 </resources>

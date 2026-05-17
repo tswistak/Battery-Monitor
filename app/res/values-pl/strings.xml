@@ -8,7 +8,7 @@
   <string name="yes" formatted="false">Tak</string>
   <string name="cancel" formatted="false">Anuluj</string>
   <string name="confirm_close" formatted="false">Zamknąć?</string>
-  <string name="confirm_close_hint" formatted="false">Battery Monitor zostanie zamknięty i nie będziesz widział statusu w powiadomieniach.\n\nJeżeli chcesz widzieć status, zostaw program uruchomiony naciskając Anuluj a następnie przycisk Wstecz.</string>
+  <string name="confirm_close_hint" formatted="false">Battery Monitor zostanie zamknięty i nie będziesz widzieć statusu w powiadomieniach.\n\nJeżeli chcesz widzieć status, zostaw program uruchomiony naciskając Anuluj a następnie przycisk Wstecz.</string>
   <string name="notifications_disabled" formatted="false">Powiadomienia są wyłączone!</string>
   <string name="confirm_clear_logs" formatted="false">Usunąć wszystkie logi?</string>
   <string name="configure_log_filter" formatted="false">Co pokazać w dzienniku?</string>
@@ -100,7 +100,7 @@
     Darshan Computing, LLC.  Dziękuję oryginalnym autorom i współpracownikom
     za utworzenie i utrzymanie projektu upstream.</string>
   <string name="help_cat_contact" formatted="false">Kontakt</string>
-  <string formatted="false" name="help_contact">Jeżeli masz pytanie, problem lub komentarz, prosimy o kontakt <a href="mailto:tomasz@swistak.codes">napisz do mnie e-mail</a>.</string>
+  <string formatted="false" name="help_contact">Jeżeli masz pytanie, problem lub komentarz, prosimy o kontakt <a href="mailto:tomasz@swistak.codes">przez e-mail</a>.</string>
   <string name="settings_overview" formatted="false">Przegląd</string>
   <string name="settings_overview_help" formatted="false">Ustawienia są posegregowane na 4 osobne strony. Każda strona ma własną pomoc, która opisuje ustawienia na niej. Po prostu naciśnij MENU a następnie Pomoc (na tabletach MENU nie jest wymagane) aby ją uzyskać.</string>
   <string name="notification_settings" formatted="false">Główne powiadomienia</string>
@@ -138,7 +138,7 @@
   <string name="custom" formatted="false">Własny...</string>
   <string name="pref_cat_icon_set" formatted="false">Zestaw ikon</string>
   <string name="pref_icon_set" formatted="false">Zestaw ikon</string>
-  <string name="pref_icon_set_help" formatted="false">Android jest w wielu wersjach, więc nie istnieje jeden idealny zestaw ikon, który działa dobrze na każdym urządzeniu. Użytkownicy wersji Pro mogą korzystać z wtyczek, aby uzyskać więcej opcji, ale do dyspozycji są trzy wbudowane zestawy ikon, które powinny być chociaż jeden dobrym rozwiązaniem dla praktycznie każdego urządzenia.\n\n\"Klasyczny\" to oryginalny zestaw ikon z 2009 roku. Jest wciąż najlepsza dla starszych urządzeń, ale nowsze wersje Androida (począwszy od Android 3.0, Honeycomb) kurczą i przyciemniają ikony powiadomień, co czyni ten zestaw bardzo trudnym do odczytania.\n\n\"Zwykły numer\" jest domyślne dla wszystkich nowych urządzeń z systemem Android. Jest to bardzo duży biały numer, który jest dobrze widoczny nawet po skurczeniu i przyciemnieniu. Podczas ładowania pod numerkiem pokazuje się \"błyskawica\".\n\n\"Mniejszy numer\" jest jak \"Plain number\" ale mniejszy, bo niektóre nowsze urządzenia nie kurczą ikonek jak seryjny Android i \"Plain number\" robi się bardzo duży.\n\nJeśli masz jakieś wtyczki ikon do BatteryBot Pro zainstalowane (naciśnij przycisk MENU, a następnie Pobierz Wtyczki by otrzymać darmowe wtyczki) to możesz wybrać spośród nich tutaj.</string>
+  <string name="pref_icon_set_help" formatted="false">Android występuje w wielu odmianach, więc nie ma jednego idealnego zestawu ikon, który dobrze działa na każdym urządzeniu. Są trzy wbudowane zestawy ikon, które powinny zapewnić co najmniej jedną dobrą opcję dla praktycznie każdego urządzenia.\n\n\"Klasyczny\" to oryginalny zestaw ikon z 2009 roku. Nadal jest najlepszy na starszych urządzeniach, ale nowsze wersje Androida (od Androida 3.0, Honeycomb) zmniejszają i przyciemniają ikony powiadomień, przez co ten zestaw jest bardzo trudny do odczytania.\n\n\"Zwykły numer\" to domyślny wybór dla wszystkich nowszych urządzeń z Androidem. To bardzo duży biały numer, który pozostaje dobrze widoczny nawet po zmniejszeniu i przyciemnieniu. Podczas ładowania pod numerem pojawia się błyskawica.\n\n\"Mniejszy numer\" jest jak \"Zwykły numer\", tylko mniejszy, ponieważ niektóre nowsze urządzenia nie zmniejszają ikony tak jak czysty Android i bardzo duży numer w \"Zwykłym numerze\" może wyglądać na nich komicznie duży.</string>
   <string name="pref_cat_charging_indicator" formatted="false">Wskaźnik naładowania</string>
   <string name="pref_indicate_charging" formatted="false">Wskaźnik ładowania</string>
   <string name="pref_indicate_charging_summary" formatted="false">Zmienić wskaźnik w podczas ładowania?</string>
@@ -146,7 +146,7 @@
   <string name="pref_cat_logging" formatted="false">Logowanie</string>
   <string name="pref_enable_logging" formatted="false">Włącz logowanie</string>
   <string name="pref_enable_logging_summary" formatted="false">Czy logować zmiany stanu baterii?</string>
-  <string name="pref_enable_logging_help" formatted="false">Jeżeli aktywny, Battery Monitor będzie zapisywał zmiany statusu baterii (np. jeżeli urządzenie zostało w pełni naładowane). Możesz obejrzeć ligi z głównego okna (wciśnij MENU i wybierz Logi; na tabletach, MENU nie jest wymagane).</string>
+  <string name="pref_enable_logging_help" formatted="false">Jeżeli aktywny, Battery Monitor będzie zapisywał zmiany statusu baterii (np. jeżeli urządzenie zostało w pełni naładowane). Możesz obejrzeć logi z głównego okna (wciśnij MENU i wybierz Logi; na tabletach, MENU nie jest wymagane).</string>
   <string name="pref_max_log_age" formatted="false">Maksymalny czas logu</string>
   <string name="pref_max_log_age_summary" formatted="false">Usuń logi starsze niż:</string>
   <string name="pref_max_log_age_help" formatted="false">Jeżeli zapisywanie logów jest aktywne, za każdym razem gdy podpinasz urządzenie, logi starsze od tego będą usuwane.</string>
@@ -296,40 +296,52 @@
   <string name="pref_content_switching" formatted="false">Przełączaj między oboma</string>
   <plurals name="n_log_items">
     <item quantity="one">%d Log</item>
-    <item quantity="other">%d Logów</item>
+    <item quantity="few">%d Logi</item>
+    <item quantity="many">%d Logów</item>
   </plurals>
   <plurals name="n_hours_long">
     <item quantity="one">"%d godzina, "</item>
-    <item quantity="other">"%d godzin, "</item>
+    <item quantity="few">"%d godziny, "</item>
+    <item quantity="many">"%d godzin, "</item>
   </plurals>
   <plurals name="n_minutes_long">
     <item quantity="one">%d minuta</item>
-    <item quantity="other">%d minuty</item>
+    <item quantity="few">%d minuty</item>
+    <item quantity="many">%d minut</item>
   </plurals>
   <plurals name="n_hours_medium">
     <item quantity="one">"%d godz, "</item>
-    <item quantity="other">"%d godz, "</item>
+    <item quantity="few">"%d godz, "</item>
+    <item quantity="many">"%d godz, "</item>
   </plurals>
   <plurals name="n_minutes_medium">
     <item quantity="one">%d min.</item>
-    <item quantity="other">%d min.</item>
+    <item quantity="few">%d min.</item>
+    <item quantity="many">%d min.</item>
   </plurals>
   <plurals name="n_hours_short">
-    <item quantity="other">"%dh "</item>
+    <item quantity="one">"%dh "</item>
+    <item quantity="few">"%dh "</item>
+    <item quantity="many">"%dh "</item>
   </plurals>
   <plurals name="n_minutes_short">
-    <item quantity="other">%dm</item>
+    <item quantity="one">%dm</item>
+    <item quantity="few">%dm</item>
+    <item quantity="many">%dm</item>
   </plurals>
   <plurals name="n_days">
     <item quantity="one">"%d dzień, "</item>
-    <item quantity="other">"%d dni, "</item>
+    <item quantity="few">"%d dni, "</item>
+    <item quantity="many">"%d dni, "</item>
   </plurals>
   <plurals name="n_hours">
     <item quantity="one">%d godzina</item>
-    <item quantity="other">%d godzin</item>
+    <item quantity="few">%d godziny</item>
+    <item quantity="many">%d godzin</item>
   </plurals>
   <plurals name="for_n_hours">
     <item quantity="one">Przez %d godzinę</item>
-    <item quantity="other">Przez %d godzin</item>
+    <item quantity="few">Przez %d godziny</item>
+    <item quantity="many">Przez %d godzin</item>
   </plurals>
 </resources>

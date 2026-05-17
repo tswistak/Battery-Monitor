@@ -610,7 +610,6 @@
   <string formatted="false" name="pref_cat_language">Language</string>
   <string formatted="false" name="pref_language_override">Language Override</string>
   <string formatted="false" name="pref_language_override_summary">Select language:</string>
-  x
 
   <string formatted="false" name="pref_classic_color_mode">Force Classic Color Mode</string>
   <string formatted="false" name="pref_classic_color_mode_summary">

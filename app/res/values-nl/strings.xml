@@ -138,7 +138,7 @@
   <string name="custom" formatted="false">Aangepast...</string>
   <string name="pref_cat_icon_set" formatted="false">Iconen</string>
   <string name="pref_icon_set" formatted="false">Iconen</string>
-  <string name="pref_icon_set_help" formatted="false">Er zijn verschillende soorten Android, dus er is niet een perfecte set iconen die overal goed werken. Je kunt plugins gebruiken voor meer iconen, maar er zijn nu 3 standaard opties./n /n</string>
+  <string name="pref_icon_set_help" formatted="false">Android bestaat in veel varianten, dus er is niet één perfecte iconenset die op elk apparaat goed werkt. Er zijn drie ingebouwde iconensets die voor vrijwel elk apparaat minstens één goede optie zouden moeten bieden.\n\n\"Klassiek\" is de oorspronkelijke iconenset uit 2009. Deze is nog steeds het beste op oudere apparaten, maar nieuwere Android-versies (vanaf Android 3.0, Honeycomb) verkleinen en dimmen meldingsiconen, waardoor deze set erg moeilijk leesbaar wordt.\n\n\"Gewoon nummer\" is de standaard op nieuwere Android-apparaten. Dit is een zeer groot wit cijfer dat ook na verkleinen en dimmen goed zichtbaar blijft. Tijdens het opladen verschijnt er een bliksemsymbool onder het cijfer.\n\n\"Kleiner nummer\" is zoals \"Gewoon nummer\", maar kleiner, omdat sommige nieuwere apparaten het icoon niet echt verkleinen zoals standaard Android dat doet. Daardoor kan het grote cijfer in \"Gewoon nummer\" op die apparaten komisch groot lijken.</string>
   <string name="pref_cat_charging_indicator" formatted="false">Indicatie tijdens opladen</string>
   <string name="pref_indicate_charging" formatted="false">Indicatie tonen tijdens opladen</string>
   <string name="pref_indicate_charging_summary" formatted="false">Icoon veranderen tijdens opladen</string>

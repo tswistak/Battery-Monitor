@@ -145,7 +145,7 @@
   <string name="custom" formatted="false">Настраиваемый...</string>
   <string name="pref_cat_icon_set" formatted="false">Набор значков</string>
   <string name="pref_icon_set" formatted="false">Набор значков</string>
-  <string name="pref_icon_set_help" formatted="false">Существует много вариантов системы Android, поэтому не существует набора значков, который был бы идеален для любого устройства. Пользователи версии Pro могут использовать плагины, но и в текущей версии есть три набора значков, которые позволят получить хороший результат практически для любого устройства.\n\n\"Классический\" - оригинальный набор значков с 2009 года. До сих пор является самым подходящим для старых устройств, но в более новых версиях Android (начиная с Android 3.0, Honeycomb) значки сжимаются и тускнут, что затрудняет их восприятие.\n\n\"Просто число\" - набор значков по умолчанию для всех современных устройств. Это очень большие белые цифры, которые хорошо читаются даже будучи сжатыми и тусклыми. Во время зарядки под цифрами показывается молния.\n\n\"Мелкие цифры\" - то же, что и \"Просто число\", но мельче. Дело в том, что некоторые современные устройства не масштабируют значки и очень крупные цифры в наборе \"Просто число\" выглядят на таких устройствах комично.\n\nЕсли вы установили плагины значков для BatteryBot Pro (нажмите MENU, затем \"Получить плагины\" для доступа к бесплатным плагинам или просто нажмите \"Получить плагины\" на панели действий на новых устройствах), вы можете выбрать дополнительные значки.</string>
+  <string name="pref_icon_set_help" formatted="false">Android существует во множестве вариантов, поэтому нет одного идеального набора значков, который хорошо работает на любом устройстве. Есть три встроенных набора значков, среди которых почти на любом устройстве должен найтись как минимум один удачный вариант.\n\n\"Классический\" — это исходный набор значков 2009 года. На старых устройствах он по-прежнему лучший, но в более новых версиях Android (начиная с Android 3.0, Honeycomb) значки уведомлений уменьшаются и тускнеют, из-за чего этот набор становится очень трудночитаемым.\n\n\"Обычный номер\" — вариант по умолчанию для всех новых устройств Android. Это очень крупный белый номер, который остается хорошо видимым даже после уменьшения и затемнения. Во время зарядки под номером показывается молния.\n\n\"Меньший номер\" похож на \"Обычный номер\", но меньше, потому что некоторые новые устройства фактически не уменьшают значок так, как это делает чистый Android, и очень крупный номер в варианте \"Обычный номер\" на таких устройствах может выглядеть комично большим.</string>
   <string name="pref_cat_current_hack_main" formatted="false">Основные параметры</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Определение силы тока не поддерживается</string>
   <string name="pref_current_hack_unsupported" formatted="false">Извините, но определение силы тока для данного устройства не поддерживается.</string>
@@ -296,22 +296,32 @@
   <string name="pref_content_switching" formatted="false">Переключать между обоими</string>
   <plurals name="n_log_items">
     <item quantity="one">%d элемент журнала</item>
-    <item quantity="other">%d элементов журнала</item>
+    <item quantity="few">%d элемента журнала</item>
+    <item quantity="many">%d элементов журнала</item>
+    <item quantity="other">%d элемента журнала</item>
   </plurals>
   <plurals name="n_hours_long">
     <item quantity="one">"%d час, "</item>
-    <item quantity="other">"%d часов, "</item>
+    <item quantity="few">"%d часа, "</item>
+    <item quantity="many">"%d часов, "</item>
+    <item quantity="other">"%d часа, "</item>
   </plurals>
   <plurals name="n_minutes_long">
     <item quantity="one">%d минута</item>
-    <item quantity="other">%d минут</item>
+    <item quantity="few">%d минуты</item>
+    <item quantity="many">%d минут</item>
+    <item quantity="other">%d минуты</item>
   </plurals>
   <plurals name="n_hours_medium">
     <item quantity="one">"%d ч., "</item>
-    <item quantity="other">"%d час., "</item>
+    <item quantity="few">"%d ч., "</item>
+    <item quantity="many">"%d ч., "</item>
+    <item quantity="other">"%d ч., "</item>
   </plurals>
   <plurals name="n_minutes_medium">
     <item quantity="one">%d мин.</item>
+    <item quantity="few">%d мин.</item>
+    <item quantity="many">%d мин.</item>
     <item quantity="other">%d мин.</item>
   </plurals>
   <plurals name="n_hours_short">
@@ -322,14 +332,20 @@
   </plurals>
   <plurals name="n_days">
     <item quantity="one">"%d день, "</item>
-    <item quantity="other">"%d дней, "</item>
+    <item quantity="few">"%d дня, "</item>
+    <item quantity="many">"%d дней, "</item>
+    <item quantity="other">"%d дня, "</item>
   </plurals>
   <plurals name="n_hours">
     <item quantity="one">%d час</item>
-    <item quantity="other">%d часов</item>
+    <item quantity="few">%d часа</item>
+    <item quantity="many">%d часов</item>
+    <item quantity="other">%d часа</item>
   </plurals>
   <plurals name="for_n_hours">
     <item quantity="one">В течение %d часа</item>
-    <item quantity="other">В течение %d часов</item>
+    <item quantity="few">В течение %d часа</item>
+    <item quantity="many">В течение %d часов</item>
+    <item quantity="other">В течение %d часа</item>
   </plurals>
 </resources>

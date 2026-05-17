@@ -143,7 +143,7 @@
   <string name="custom" formatted="false">مخصص</string>
   <string name="pref_cat_icon_set" formatted="false">ضبط ايقونة</string>
   <string name="pref_icon_set" formatted="false">ضبط الايقونة</string>
-  <string name="pref_icon_set_help" formatted="false">الاندرويد يأتي بنسخ عديدة ولاتوجد ايقونة تعمل بشكل كامل على كل الاجهزة المستخدمين المحترفين يمكنهم جلب بعض الاضافات للحصول على خيارات اكثر لكن توجد ثلاث خيارات هي التي تعمل على كل الاجهزة\n\nالشكل الكلاسيكي هو الافتراضي والاصلي الذي يأتي منذ 2009 مع نسخة اندرويد3.0 القديمة والتي تسمى بقرص العسل و يجعل ايقونة الاشعارات سهلة القراءة\n\nشكل الارقام الكبيرة والتي تأتي لجميع الهواتف الجديدة لكن هناك هواتف ضغيرة وجديدة مما يؤدي الى عدم تركيب الارقام بشكل مناسب\n\nشكل الارقام الصغيرة وهوه مايفضله الذي يتركون شكل الارقام الكبيرة بسب عدم التركيب بشكل جيد لهواتفهم\n\nاذا كنت قد اشتريت النسخة الكاملة لهذا التطبيق فسوف تحصل على اضافات مجانية اضغط على خيارات واضغط على الحصول على اضافات مجانية او اضغط على الخيارات السريعة الموجودة في الشريط للهواتف الجديدة</string>
+  <string name="pref_icon_set_help" formatted="false">يتوفر Android في أشكال كثيرة، لذلك لا توجد مجموعة أيقونات واحدة مثالية تعمل جيدًا على كل جهاز. توجد ثلاث مجموعات أيقونات مدمجة يفترض أن توفر على الأقل خيارًا جيدًا واحدًا لمعظم الأجهزة.\n\n\"الكلاسيكي\" هو مجموعة الأيقونات الأصلية منذ عام 2009. وما يزال الأفضل على الأجهزة الأقدم، لكن الإصدارات الأحدث من Android (ابتداءً من Android 3.0 Honeycomb) تصغّر أيقونات الإشعارات وتخفّض سطوعها، مما يجعل قراءة هذه المجموعة صعبة جدًا.\n\n\"الرقم العادي\" هو الخيار الافتراضي في أجهزة Android الأحدث. وهو رقم أبيض كبير جدًا يبقى واضحًا حتى بعد التصغير والتعتيم. ويظهر رمز البرق أسفل الرقم أثناء الشحن.\n\n\"رقم أصغر\" يشبه \"الرقم العادي\" لكنه أصغر حجمًا، لأن بعض الأجهزة الأحدث لا تصغّر الأيقونة فعليًا كما يفعل Android القياسي، وعندها قد يبدو الرقم الكبير جدًا في \"الرقم العادي\" كبيرًا بشكل مبالغ فيه.</string>
   <string name="pref_cat_charging_indicator" formatted="false">مؤشر الشحن</string>
   <string name="pref_indicate_charging" formatted="false">اشارة الى الشحن</string>
   <string name="pref_indicate_charging_summary" formatted="false">تغيير لايقونة للتنبيه عند الشحن؟</string>
@@ -295,37 +295,75 @@
   <string name="pref_content_temperature" formatted="false">درجة حرارة البطارية</string>
   <string name="pref_content_switching" formatted="false">التبديل بين الاثنين</string>
   <plurals name="n_log_items">
-    <item quantity="one">%dسجل المحتوى</item>
-    <item quantity="other">%d سجل المحتوى</item>
+    <item quantity="zero">%d عنصر سجل</item>
+    <item quantity="one">%d عنصر سجل</item>
+    <item quantity="two">%d عنصران سجل</item>
+    <item quantity="few">%d عناصر سجل</item>
+    <item quantity="many">%d عنصر سجل</item>
+    <item quantity="other">%d عنصر سجل</item>
   </plurals>
   <plurals name="n_hours_long">
+    <item quantity="zero">%d ساعة</item>
     <item quantity="one">%d ساعة</item>
-    <item quantity="other">%dساعة</item>
+    <item quantity="two">%d ساعتان</item>
+    <item quantity="few">%d ساعات</item>
+    <item quantity="many">%d ساعة</item>
+    <item quantity="other">%d ساعة</item>
   </plurals>
   <plurals name="n_minutes_long">
+    <item quantity="zero">%d دقيقة</item>
     <item quantity="one">%d دقيقة</item>
-    <item quantity="other">%dدقائق</item>
+    <item quantity="two">%d دقيقتان</item>
+    <item quantity="few">%d دقائق</item>
+    <item quantity="many">%d دقيقة</item>
+    <item quantity="other">%d دقيقة</item>
   </plurals>
   <plurals name="n_hours_medium">
+    <item quantity="zero">"%d س, "</item>
     <item quantity="one">"%d س, "</item>
-    <item quantity="other">"%d ساعات, "</item>
+    <item quantity="two">"%d س, "</item>
+    <item quantity="few">"%d س, "</item>
+    <item quantity="many">"%d س, "</item>
+    <item quantity="other">"%d س, "</item>
   </plurals>
   <plurals name="n_minutes_medium">
-    <item quantity="one">%dدق</item>
-    <item quantity="other">%dدقا</item>
+    <item quantity="zero">%d دق.</item>
+    <item quantity="one">%d دق.</item>
+    <item quantity="two">%d دق.</item>
+    <item quantity="few">%d دق.</item>
+    <item quantity="many">%d دق.</item>
+    <item quantity="other">%d دق.</item>
   </plurals>
   <plurals name="n_hours_short">
+    <item quantity="zero">"%d س "</item>
+    <item quantity="one">"%d س "</item>
+    <item quantity="two">"%d س "</item>
+    <item quantity="few">"%d س "</item>
+    <item quantity="many">"%d س "</item>
     <item quantity="other">"%d س "</item>
   </plurals>
   <plurals name="n_days">
-    <item quantity="other">"%d ايام , "</item>
+    <item quantity="zero">"%d يوم, "</item>
+    <item quantity="one">"%d يوم, "</item>
+    <item quantity="two">"%d يومان, "</item>
+    <item quantity="few">"%d أيام, "</item>
+    <item quantity="many">"%d يومًا, "</item>
+    <item quantity="other">"%d يوم, "</item>
   </plurals>
   <plurals name="n_hours">
+    <item quantity="zero">%d ساعة</item>
     <item quantity="one">%d ساعة</item>
-    <item quantity="other">%dساعات</item>
+    <item quantity="two">%d ساعتان</item>
+    <item quantity="few">%d ساعات</item>
+    <item quantity="many">%d ساعة</item>
+    <item quantity="other">%d ساعة</item>
   </plurals>
   <plurals name="for_n_hours">
-    <item quantity="one">ل %dساعة</item>
-    <item quantity="other">ل %dساعات</item>
+    <item quantity="zero">لمدة %d ساعة</item>
+    <item quantity="one">لمدة %d ساعة</item>
+    <item quantity="two">لمدة %d ساعتين</item>
+    <item quantity="few">لمدة %d ساعات</item>
+    <item quantity="many">لمدة %d ساعة</item>
+    <item quantity="other">لمدة %d ساعة</item>
   </plurals>
 </resources>
