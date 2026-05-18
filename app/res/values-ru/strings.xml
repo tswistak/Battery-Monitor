@@ -12,8 +12,7 @@
   <string name="confirm_clear_logs" formatted="false">Действительно очистить журнал?</string>
   <string name="configure_log_filter" formatted="false">Какие элементы журнала показывать?</string>
   <string name="okay" formatted="false">Да</string>
-  <string name="none" formatted="false">Нет</string>
-  <string name="tab_current_info" formatted="false">Текущая информация</string>
+    <string name="tab_current_info" formatted="false">Текущая информация</string>
   <string name="tab_history" formatted="false">История</string>
   <string name="notification_until_charged" formatted="false">" до полного заряда"</string>
   <string name="notification_until_drained" formatted="false">" осталось"</string>
@@ -34,10 +33,6 @@
   <string name="celsius" formatted="false">Цельсий</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Экономичное использование, осталось:</string>
-  <string name="normal_usage" formatted="false">Нормальное использование, осталось:</string>
-  <string name="heavy_usage" formatted="false">Активное использование, осталось:</string>
-  <string name="constant_usage" formatted="false">Постоянное использование, осталось:</string>
   <string name="inaccessible_storage" formatted="false">SD-карта недоступна.</string>
   <string name="inaccessible_w_reason" formatted="false">SD-карта недоступна:</string>
   <string name="read_only_storage" formatted="false">SD-карта доступна только для чтения.</string>
@@ -49,7 +44,6 @@
   <string name="temperature" formatted="false">градусы_цельсия</string>
   <string name="temperature_f" formatted="false">градусы_фаренгейта</string>
   <string name="voltage" formatted="false">вольт</string>
-  <string name="current" formatted="false">миллиампер</string>
   <string name="status_unplugged" formatted="false">отключен</string>
   <string name="status_unknown" formatted="false">Неизвестно</string>
   <string name="status_charging" formatted="false">Заряжается</string>
@@ -86,8 +80,6 @@
   <string name="alarm_health_failure" formatted="false">"Состояние аккумулятора: "</string>
   <string name="alarm_text" formatted="false">Редактировать предупреждения.</string>
   <string name="logs_empty" formatted="false">Журналы пусты</string>
-  <string name="charging_from" formatted="false">Заряжается от</string>
-  <string name="fully_charged" formatted="false">Полностью заряжен</string>
   <string name="since" formatted="false">После</string>
   <string name="currently_using" formatted="false">Сейчас использует</string>
   <string name="currently_set_to" formatted="false">"Текущая настройка: "</string>
@@ -179,7 +171,6 @@
   <string name="pref_max_log_age" formatted="false">Максимальный возраст журнала</string>
   <string name="pref_max_log_age_summary" formatted="false">Удалить журналы старше:</string>
   <string name="pref_max_log_age_help" formatted="false">Если включено ведение журнала, то при каждом подключении зарядного устройства более старые, чем указанная величина, журналы будут удаляться.</string>
-  <string name="pref_notify_status_duration" formatted="false">Показывать продолжительность состояния</string>
   <string name="pref_cat_temperature_unit" formatted="false">Единицы измерения температуры</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Преобразовать к Фаренгейту</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Система Android сообщает температуру аккумулятора в градусах Цельсия. Если для вас предпочтительнее градусы Фаренгейта, выберите эту опцию, и приложение осуществит преобразование для вас.</string>
@@ -200,7 +191,6 @@
   <string name="pref_classic_color_mode" formatted="false">Применить классический цветовой режим</string>
   <string name="pref_classic_color_mode_summary" formatted="false">Это обычно не работает; пожалуйста, прочтите справку</string>
   <string name="pref_classic_color_mode_help" formatted="false">Начиная с Android 5.0 (Lollipop), цветные значки уведомлений официально больше не поддерживаются, при этом классический значок BatteryBot выглядит сплошным белым. Поэтому на подобных устройствах приложение использует простой белый контур с белыми цифрами.\n\nОднако, не все устройства строго следуют спецификациям, поэтому сказанное выше не является обязательным не везде работает корректно. Вы можете попробовать настроить стандартное отображение классического набора значков включением этой опции. Помните, что на большинстве устройств это только приведет к тому, что значок станет сплошным белым.</string>
-  <string name="pref_cat_device_specific" formatted="false">Настройки для конкретных устройств</string>
   <string name="alarms_overview" formatted="false">Обзор предупреждений</string>
   <string name="alarms_overview_help" formatted="false">На этой странице можно добавить новые предупреждения, быстро включить или выключить существующие предупреждения, а также удалить их.\n\nДля добавления нажмите \"Добавить предупреждение\" — будет создано новое предупреждение и открыта страница, на которой вы можете произвести настройки нового предупреждения. Подробности - в справке на соответствующей странице.\n\nНиже кнопки \"Добавить предупреждение\" имеется список уже созданных предупреждений.\n\n• Для изменения существующего предупреждения просто коснитесь его.\n• Для удаления существующего предупреждения прикоснитесь и задержите палец на нем, затем выберите \"Удалить предупреждение\". (Удалить предупреждение также можно на странице настроек предупреждения нажав MENU, затем \"Удалить предупреждение\".)\n• Для быстрого переключения предупреждения нажмите значок часов слева от названия предупреждения. (Включить или выключить предупреждение также можно на странице настроек предупреждения.)</string>
   <string name="pref_alarm_enabled" formatted="false">Включить предупреждение</string>
@@ -279,7 +269,6 @@
   <string name="pref_manage_main_channel" formatted="false">Настроить основной канал</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Чип в строке состояния (Android 16+)</string>
   <string name="pref_chip_content" formatted="false">Содержимое чипа</string>
-  <string name="pref_chip_content_switching" formatted="false">Переключать между батареей и температурой</string>
   <string name="pref_chip_switching_interval" formatted="false">Интервал переключения</string>
   <string name="pref_chip_content_help" formatted="false">Выберите, какое значение показывать в чипе продвинутого уведомления Android 16+.</string>
   <string name="pref_chip_indicate_charging" formatted="false">Показывать эмодзи зарядки</string>

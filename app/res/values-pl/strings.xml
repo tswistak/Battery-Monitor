@@ -13,8 +13,7 @@
   <string name="confirm_clear_logs" formatted="false">Usunąć wszystkie logi?</string>
   <string name="configure_log_filter" formatted="false">Co pokazać w dzienniku?</string>
   <string name="okay" formatted="false">OK</string>
-  <string name="none" formatted="false">Żaden</string>
-  <string name="tab_current_info" formatted="false">Aktualny stan</string>
+    <string name="tab_current_info" formatted="false">Aktualny stan</string>
   <string name="tab_history" formatted="false">Historia</string>
   <string name="notification_until_charged" formatted="false">" do naładowania"</string>
   <string name="notification_until_drained" formatted="false">" pozostało"</string>
@@ -35,10 +34,6 @@
   <string name="celsius" formatted="false">Celcjusz</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Lekkie użytk., pozostało:</string>
-  <string name="normal_usage" formatted="false">Normalne użytk., pozostało:</string>
-  <string name="heavy_usage" formatted="false">Mocne użytk., pozostało:</string>
-  <string name="constant_usage" formatted="false">Ciągłe użytk., pozostało:</string>
   <string name="inaccessible_storage" formatted="false">Karta SD jest niedostępna.</string>
   <string name="inaccessible_w_reason" formatted="false">Karta SD jest niedostępna:</string>
   <string name="read_only_storage" formatted="false">Karta SD jest w trybie tylko do odczytu.</string>
@@ -86,8 +81,6 @@
   <string name="alarm_health_failure" formatted="false">"Stan zdrowia baterii: "</string>
   <string name="alarm_text" formatted="false">Edytuj alarmy.</string>
   <string name="logs_empty" formatted="false">Brak logów</string>
-  <string name="charging_from" formatted="false">Ładowanie od</string>
-  <string name="fully_charged" formatted="false">W pełni naładowana</string>
   <string name="since" formatted="false">Od</string>
   <string name="currently_using" formatted="false">W użyciu</string>
   <string name="currently_set_to" formatted="false">"Ustawione na: "</string>
@@ -150,7 +143,6 @@
   <string name="pref_max_log_age" formatted="false">Maksymalny czas logu</string>
   <string name="pref_max_log_age_summary" formatted="false">Usuń logi starsze niż:</string>
   <string name="pref_max_log_age_help" formatted="false">Jeżeli zapisywanie logów jest aktywne, za każdym razem gdy podpinasz urządzenie, logi starsze od tego będą usuwane.</string>
-  <string name="pref_notify_status_duration" formatted="false">Pokaż czas stanu</string>
   <string name="pref_cat_temperature_unit" formatted="false">Jednostka temperatury</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Konwertuj na Fahrenheita</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android raportuje temperaturę baterii w stopniach Celcjusza. Jeżeli wolisz stopnie Fahrenheita, to zaznacz tą opcję a aplikacja wykona konwersję.</string>
@@ -161,7 +153,6 @@
   <string name="pref_cat_language" formatted="false">Język</string>
   <string name="pref_language_override" formatted="false">Wymuś język</string>
   <string name="pref_language_override_summary" formatted="false">Wybierz język</string>
-  <string name="pref_cat_device_specific" formatted="false">Ustawienia specyficzne dla urządzenia</string>
   <string name="alarms_overview" formatted="false">Alarmy</string>
   <string name="alarms_overview_help" formatted="false">Tutaj możesz dodawać nowe alarmy, szybko włączać lub wyłączać już istniejące albo je usuwać.\n\nAby dodać alarm wciśnij \"Dodaj alarm\" — to utworzy nowy alarm i zabierze do ustawień, gdzie możesz kontrolować ustawienia dla nowego alarmu. Zobacz pomoc dla tej strony po więcej szczegółow.\n\nPoniżej przycisku \"Dodaj alarm\" jest lista wszystkich alarmów, które już stworzyłeś.\n\n• Aby edytować istniejący alarm, kliknij na niego.\n• Aby usunąć alarm, naciśnij i przytrzymaj go, a następnie wybierz \"Usuń alarm\".\n• Aby włączyć/wyłączyć alarm, naciśnij ikonę budzika po lewej obok tekstu alarmu.</string>
   <string name="pref_alarm_enabled" formatted="false">Włącz alarm</string>
@@ -204,7 +195,6 @@
   <string name="menu_show_seconds" formatted="false">Pokaż sekundy</string>
   <string name="menu_hide_seconds" formatted="false">Ukryj sekundy</string>
   <string name="no_storage_permission" formatted="false">Nie przyznano uprawnienia do pamięci.</string>
-  <string name="current" formatted="false">miliampery</string>
   <string name="status_boot_completed" formatted="false">Uruchamianie zakończone</string>
   <string name="alarm_type_temperature_drops" formatted="false">Temperatura spadnie poniżej</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura spadnie poniżej...</string>
@@ -246,7 +236,6 @@
   <string name="pref_manage_main_channel" formatted="false">Zarządzaj kanałem głównym</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Chip paska stanu (Android 16+)</string>
   <string name="pref_chip_content" formatted="false">Zawartość chipa</string>
-  <string name="pref_chip_content_switching" formatted="false">Przełączaj między baterią a temperaturą</string>
   <string name="pref_chip_switching_interval" formatted="false">Interwał przełączania</string>
   <string name="pref_chip_content_help" formatted="false">Wybierz wartość wyświetlaną w chipie promowanego powiadomienia na Androidzie 16+.</string>
   <string name="pref_chip_indicate_charging" formatted="false">Pokaż emoji ładowania</string>

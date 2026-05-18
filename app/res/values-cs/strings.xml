@@ -44,8 +44,7 @@
   <string formatted="false" name="confirm_clear_logs">Opravdu vymazat všechny záznamy ?</string>
   <string formatted="false" name="configure_log_filter">Zobrazit, které položky protokolu?</string>
   <string formatted="false" name="okay">O.K.</string>
-  <string formatted="false" name="none">Žádný</string>
-  <string formatted="false" name="tab_current_info">Aktuální informace</string>
+    <string formatted="false" name="tab_current_info">Aktuální informace</string>
   <string formatted="false" name="tab_history">Dějiny</string>
   <string formatted="false" name="notification_until_charged">"do nabití"</string>
   <string formatted="false" name="notification_until_drained">"doleva"</string>
@@ -68,10 +67,6 @@
   <string formatted="false" name="celsius">Celsia</string>
   <string formatted="false" name="celsius_symbol">C</string>
   <string formatted="false" name="volt_symbol">V</string>
-    <string formatted="false" name="light_usage">Při občasném používání:</string>
-  <string formatted="false" name="normal_usage">Při normálním používání:</string>
-  <string formatted="false" name="heavy_usage">Při častém používání:</string>
-  <string formatted="false" name="constant_usage">Při nepřetržitém používání:</string>
     <string formatted="false" name="inaccessible_storage">SD Karta je nedostupná.</string>
   <string formatted="false" name="inaccessible_w_reason">SD Karta je nedostupná:</string>
   <string formatted="false" name="read_only_storage">SD Karta pouze pro čtení</string>
@@ -84,8 +79,7 @@
   <string formatted="false" name="temperature">stupně Celsia</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
   <string formatted="false" name="voltage">voltů</string>
-  <string formatted="false" name="current">milliamperes</string>
-  <string formatted="false" name="status_unplugged">Nepřipojeno</string>
+    <string formatted="false" name="status_unplugged">Nepřipojeno</string>
   <string formatted="false" name="status_unknown">Neznámý</string>
   <string formatted="false" name="status_charging">Nabíjení</string>
   <string formatted="false" name="status_discharging">Vybíjení</string>
@@ -129,9 +123,7 @@
   <string formatted="true" name="after_nh_mm_plugged_in">Po zapojení %1$dh %2$dm</string>
   <string formatted="true" name="after_nm_ms_unplugged">Po odpojení %1$dm %2$d</string>
   <string formatted="true" name="after_nm_ms_plugged_in">Po zapojení %1$dm %2$ds</string>
-    <string formatted="false" name="charging_from">Nabíjení od</string>
-  <string formatted="false" name="fully_charged">Plně nabito</string>
-  <string formatted="false" name="since">od</string>
+    <string formatted="false" name="since">od</string>
   <string formatted="false" name="currently_using">Aktuální používání</string>
   <string formatted="false" name="currently_set_to">"Aktuálně nastaveno: "</string>
   <string formatted="false" name="currently_disabled">Aktuálně zakázáno</string>
@@ -206,7 +198,6 @@
   <string formatted="false" name="pref_cat_notification_content">Obsah</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Čip stavového řádku (Android 16+)</string>
   <string formatted="false" name="pref_chip_content">Obsah čipu</string>
-  <string formatted="false" name="pref_chip_content_switching">Přepínání mezi baterií a teplotou</string>
     <string formatted="false" name="pref_chip_switching_interval">Interval přepínání</string>
     <string formatted="false" name="pref_chip_content_help">Vyberte, jaká hodnota se má zobrazovat na čipu propagovaného oznámení pro Android 16+.</string>
   <string formatted="false" name="pref_chip_indicate_charging">Zobrazit Emoji nabíjení</string>
@@ -385,7 +376,6 @@
   <string formatted="false" name="pref_max_log_age">Maximální stáří záznamů</string>
   <string formatted="false" name="pref_max_log_age_summary">Vymazat záznamy starší než:</string>
   <string formatted="false" name="pref_max_log_age_help">Pokud jsou záznamy povoleny, pak všechny starší budou vždy vymazány.</string>
-  <string formatted="false" name="pref_notify_status_duration">Zobrazit trvání stavu</string>
     <string formatted="false" name="pref_cat_temperature_unit">Měrná jednotka teploty</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Změnit na Fahrenheity</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">
@@ -452,8 +442,7 @@
         možnost zapnuta.  Pamatujte, že na většině zařízení se tím vytvoří pouze ikona
         zbělá.
   </string>
-  <string formatted="false" name="pref_cat_device_specific">Nastavení specifických přístrojů</string>
-  <string formatted="false" name="alarms_overview">Přehled upozornění</string>
+    <string formatted="false" name="alarms_overview">Přehled upozornění</string>
   <string formatted="false" name="alarms_overview_help">
     Tato stránka umožňuje přidávat nové alarmy, rychle je zapínat nebo vypínat
         existující alarmy, nebo alarmy smazat.\n

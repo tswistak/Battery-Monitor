@@ -62,7 +62,6 @@
   <string formatted="false" name="configure_log_filter">Show which log items?</string>
 
   <string formatted="false" name="okay">Okay</string>
-  <string formatted="false" name="none">None</string>
 
   <string formatted="false" name="tab_current_info">Current Info</string>
   <string formatted="false" name="tab_history">History</string>
@@ -91,11 +90,6 @@
   <string formatted="false" name="celsius_symbol">C</string>
   <string formatted="false" name="volt_symbol">V</string>
 
-  <string formatted="false" name="light_usage">Light Usage Left:</string>
-  <string formatted="false" name="normal_usage">Normal Usage Left:</string>
-  <string formatted="false" name="heavy_usage">Heavy Usage Left:</string>
-  <string formatted="false" name="constant_usage">Constant Usage Left:</string>
-
   <string formatted="false" name="inaccessible_storage">SD Card is inaccessible.</string>
   <string formatted="false" name="inaccessible_w_reason">SD Card inaccessible: </string>
   <string formatted="false" name="read_only_storage">SD Card is read only.</string>
@@ -110,7 +104,6 @@
   <string formatted="false" name="temperature">degrees_celsius</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
   <string formatted="false" name="voltage">volts</string>
-  <string formatted="false" name="current">milliamperes</string>
 
   <string formatted="false" name="status_unplugged">Unplugged</string>
   <string formatted="false" name="status_unknown">Unknown</string>
@@ -206,9 +199,6 @@
     <item quantity="one">%d hour</item>
     <item quantity="other">%d hours</item>
   </plurals>
-
-  <string formatted="false" name="charging_from">Charging from</string>
-  <string formatted="false" name="fully_charged">Fully Charged</string>
 
   <string formatted="false" name="since">Since</string>
   <plurals name="for_n_hours">
@@ -334,7 +324,6 @@
   <string formatted="false" name="pref_cat_notification_content">Content</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Status Bar Chip (Android 16+)</string>
   <string formatted="false" name="pref_chip_content">Chip Content</string>
-  <string formatted="false" name="pref_chip_content_switching">Switch between battery and temperature</string>
   <string formatted="false" name="pref_chip_switching_interval">Switching interval</string>
   <string formatted="false" name="pref_chip_content_help">
     Choose what value to show in the Android 16+ promoted-notification chip.
@@ -554,7 +543,6 @@
     If logging is enabled, then whenever you plug in your device, logs
     older than this will be deleted.
   </string>
-  <string formatted="false" name="pref_notify_status_duration">Show Status Duration</string>
 
   <string formatted="false" name="pref_cat_temperature_unit">Temperature Unit</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Convert to Fahrenheit</string>
@@ -629,8 +617,6 @@
     option on.  Remember, on most devices this will just make the icon
     turn solid white.
   </string>
-
-  <string formatted="false" name="pref_cat_device_specific">Device Specific Settings</string>
 
   <string formatted="false" name="alarms_overview">Alarms Overview</string>
   <string formatted="false" name="alarms_overview_help">

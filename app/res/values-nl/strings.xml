@@ -12,8 +12,7 @@
   <string name="confirm_clear_logs" formatted="false">Alle logboeken verwijderen?</string>
   <string name="configure_log_filter" formatted="false">Welke logitems laten zien?</string>
   <string name="okay" formatted="false">OK</string>
-  <string name="none" formatted="false">Geen</string>
-  <string name="tab_current_info" formatted="false">Huidige informatie</string>
+    <string name="tab_current_info" formatted="false">Huidige informatie</string>
   <string name="tab_history" formatted="false">Geschiedenis</string>
   <string name="notification_until_charged" formatted="false">" tot opgeladen"</string>
   <string name="notification_until_drained" formatted="false">" over"</string>
@@ -34,10 +33,6 @@
   <string name="celsius" formatted="false">Celsius</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Bij licht gebruik:</string>
-  <string name="normal_usage" formatted="false">Bij normaal gebruik:</string>
-  <string name="heavy_usage" formatted="false">Bij intensief gebruik:</string>
-  <string name="constant_usage" formatted="false">Bij constant gebruik:</string>
   <string name="inaccessible_storage" formatted="false">SD kaart is niet toegankelijk</string>
   <string name="inaccessible_w_reason" formatted="false">SD kaart niet toegankelijk:</string>
   <string name="read_only_storage" formatted="false">SD kaart is ingesteld op alleen lezen</string>
@@ -48,7 +43,6 @@
   <string name="charge" formatted="false">laadpercentage</string>
   <string name="temperature" formatted="false">graden_celsius</string>
   <string name="temperature_f" formatted="false">graden_fahrenheit</string>
-  <string name="current" formatted="false">milliampère</string>
   <string name="voltage" formatted="false">volt</string>
   <string name="status_unplugged" formatted="false">Losgekoppeld</string>
   <string name="status_unknown" formatted="false">Onbekend</string>
@@ -86,8 +80,6 @@
   <string name="alarm_health_failure" formatted="false">"Batterijconditie is: "</string>
   <string name="alarm_text" formatted="false">Selecteer om alarmen aan te passen</string>
   <string name="logs_empty" formatted="false">Logboeken zijn leeg</string>
-  <string name="charging_from" formatted="false">Aan het opladen vanaf</string>
-  <string name="fully_charged" formatted="false">Volledig opgeladen</string>
   <string name="since" formatted="false">sinds</string>
   <string name="currently_using" formatted="false">Je gebruikt nu</string>
   <string name="currently_set_to" formatted="false">"Ingesteld op: "</string>
@@ -150,7 +142,6 @@
   <string name="pref_max_log_age" formatted="false">Maximale logboek leeftijd</string>
   <string name="pref_max_log_age_summary" formatted="false">Verwijder logboeken ouder dan:</string>
   <string name="pref_max_log_age_help" formatted="false">Wanneer het logboek is ingeschakeld zullen alle logs ouder dan dit worden verwijderd wanneer je je apparaat aansluit.</string>
-  <string name="pref_notify_status_duration" formatted="false">Laat tijd van status zien</string>
   <string name="pref_cat_temperature_unit" formatted="false">Temperatuur</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Converteren naar Fahrenheit</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android geeft de batterijtemperatuur in graden Celsius. Selecteer deze optie om Fahrenheit te gebruiken.</string>
@@ -161,7 +152,6 @@
   <string name="pref_cat_language" formatted="false">Taal</string>
   <string name="pref_language_override" formatted="false">Andere taal gebruiken</string>
   <string name="pref_language_override_summary" formatted="false">Taal selecteren:</string>
-  <string name="pref_cat_device_specific" formatted="false">Apparaatspecifieke instellingen</string>
   <string name="alarms_overview" formatted="false">Overzicht van alarmen</string>
   <string name="alarms_overview_help" formatted="false">Op deze pagina kun je alarmen toevoegen, in of uitschakelen en verwijderen.</string>
   <string name="pref_alarm_enabled" formatted="false">Alarm inschakelen</string>
@@ -247,7 +237,6 @@
   <string name="pref_manage_main_channel" formatted="false">Hoofdkanaal beheren</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Statusbalkchip (Android 16+)</string>
   <string name="pref_chip_content" formatted="false">Chipinhoud</string>
-  <string name="pref_chip_content_switching" formatted="false">Wissel tussen batterij en temperatuur</string>
   <string name="pref_chip_switching_interval" formatted="false">Wisselinterval</string>
   <string name="pref_chip_content_help" formatted="false">Kies welke waarde wordt getoond in de Android 16+ promoted-notification-chip.</string>
   <string name="pref_chip_indicate_charging" formatted="false">Laad-emoji tonen</string>

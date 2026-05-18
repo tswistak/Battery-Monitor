@@ -11,8 +11,7 @@
   <string name="confirm_close_hint" formatted="false">Battery Monitor将完全退出，通知栏电量指示图标将不再显示。 如果您想让本程序后台运行，可以单击手机“返回”键关闭主窗口。</string>
   <string name="confirm_clear_logs" formatted="false">确认清理所有日志？</string>
   <string name="okay" formatted="false">完成</string>
-  <string name="none" formatted="false">无</string>
-  <string name="menu_settings" formatted="false">设置项</string>
+    <string name="menu_settings" formatted="false">设置项</string>
   <string name="menu_close" formatted="false">关闭</string>
   <string name="menu_help" formatted="false">帮助</string>
   <string name="menu_clear" formatted="false">清理</string>
@@ -26,10 +25,6 @@
   <string name="celsius" formatted="false">摄氏温度</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">省电使用剩余时间：</string>
-  <string name="normal_usage" formatted="false">正常使用剩余时间：</string>
-  <string name="heavy_usage" formatted="false">频繁使用剩余时间：</string>
-  <string name="constant_usage" formatted="false">持续使用剩余时间：</string>
   <string name="inaccessible_storage" formatted="false">SD卡无法访问。</string>
   <string name="inaccessible_w_reason" formatted="false">SD卡无法访问：</string>
   <string name="read_only_storage" formatted="false">SD卡已设置为“只读”模式。</string>
@@ -59,8 +54,6 @@
   <string name="alarm_temp_rises" formatted="false">电池温度高于</string>
   <string name="alarm_text" formatted="false">点击编辑此警报器</string>
   <string name="logs_empty" formatted="false">日志记录为空</string>
-  <string name="charging_from" formatted="false">充电起始电量</string>
-  <string name="fully_charged" formatted="false">完全充满</string>
   <string name="since" formatted="false">开始于</string>
   <string name="currently_using" formatted="false">当前使用</string>
   <string name="currently_set_to" formatted="false">"当前设置为"</string>
@@ -97,7 +90,6 @@
   <string name="pref_autostart_at_boot_help" formatted="false">设置是否允许Battery Monitor在开机时自启动。 ”关机前运行中”选项仅在手动关闭Battery Monitor时有效。若您使用其他方式，如使用任务杀手进行关闭，则本程序无法确认是否由您关闭，选择该方式后仍会在开机时自启动。</string>
   <string name="pref_cat_language" formatted="false">语言</string>
   <string name="pref_language_override_summary" formatted="false">选择语言:</string>
-  <string name="pref_cat_device_specific" formatted="false">特殊设备设置</string>
   <string name="alarms_overview" formatted="false">概述</string>
   <string name="alarms_overview_help" formatted="false">在本页面您可以添加一个新的警报器，以及快速启用、禁用或删除一个已存在的警报器。\n\n按“添加警报器”按钮可以创建一个新的警报器，之后您将进入设置页面去设置新建的警报器。\n\n在“添加警报器”按钮的下方是您已创建的所有警报器的列表\n\n·点击警报器即可设置 ·长按可以删除(也可以在设置页面中按菜单键选择删除。) ·点击警报器左边的图标可以禁用或启用警报器(也可以在设置页面中选择。)</string>
   <string name="pref_alarm_enabled" formatted="false">启用警报器</string>
@@ -175,7 +167,6 @@
   <string formatted="false" name="temperature">摄氏度</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
   <string formatted="false" name="voltage">伏特</string>
-  <string formatted="false" name="current">milliamperes</string>
   <string formatted="false" name="status_boot_completed">启动完成</string>
   <string formatted="false" name="alarm_type_fully_charged">充满电</string>
   <string formatted="false" name="alarm_type_charge_drops">电荷降至以下</string>
@@ -246,7 +237,6 @@
   <string formatted="false" name="pref_cat_notification_content">内容</string>
   <string formatted="false" name="pref_cat_status_bar_chip">状态栏芯片（Android 16+）</string>
   <string formatted="false" name="pref_chip_content">芯片内容</string>
-  <string formatted="false" name="pref_chip_content_switching">在电池和温度之间切换</string>
   <string formatted="false" name="pref_chip_switching_interval">切换间隔</string>
   <string formatted="false" name="pref_chip_content_help">选择在 Android 16+ 升级通知芯片中显示的值。</string>
   <string formatted="false" name="pref_chip_indicate_charging">显示充电表情符号</string>
@@ -390,7 +380,6 @@
   <string formatted="false" name="pref_indicate_charging_help">某些图标集指示电池何时充电，例如
     例如，在数字下方显示闪电。  禁用
     如果您不希望这样做，请执行此设置。</string>
-  <string formatted="false" name="pref_notify_status_duration">显示状态持续时间</string>
   <string formatted="false" name="predictor_sensitive">敏感的</string>
   <string formatted="false" name="predictor_conservative">保守的</string>
   <string formatted="false" name="predictor_since_status_change">自状态变更以来</string>

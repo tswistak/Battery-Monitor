@@ -11,8 +11,7 @@
   <string name="confirm_close_hint" formatted="false">Battery Monitor bo popolnoma zaprt in ga ne boste več videli v statusni vrstici.\n\nČe bi radi zaprli le glavno okno in pustili indikator zagnan, pritisnite Prekliči in nato samo pritisnite tipko NAZAJ na napravi da zapustite glavno okno.</string>
   <string name="confirm_clear_logs" formatted="false">Ste prepričani da želite izbrisati vsa poročila?</string>
   <string name="okay" formatted="false">Vredu</string>
-  <string name="none" formatted="false">Noben</string>
-  <string name="menu_settings" formatted="false">Nastavitve</string>
+    <string name="menu_settings" formatted="false">Nastavitve</string>
   <string name="menu_close" formatted="false">Zapri</string>
   <string name="menu_help" formatted="false">Pomoč</string>
   <string name="menu_clear" formatted="false">Počisti</string>
@@ -26,10 +25,6 @@
   <string name="celsius" formatted="false">Celzija</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Lahka uporaba:</string>
-  <string name="normal_usage" formatted="false">Normalna uporaba:</string>
-  <string name="heavy_usage" formatted="false">Težka uporaba:</string>
-  <string name="constant_usage" formatted="false">Nenehna uporaba:</string>
   <string name="inaccessible_storage" formatted="false">SD kartica je nedostopna.</string>
   <string name="inaccessible_w_reason" formatted="false">SD kartica nedostopna:</string>
   <string name="read_only_storage" formatted="false">SD kartica samo za branje.</string>
@@ -74,8 +69,6 @@
   <string name="alarm_health_failure" formatted="false">"Zdravje baterije je: "</string>
   <string name="alarm_text" formatted="false">Izberite za urejanje alarmov.</string>
   <string name="logs_empty" formatted="false">Poročila so prazna</string>
-  <string name="charging_from" formatted="false">Polnjenje od</string>
-  <string name="fully_charged" formatted="false">Napolnjeno</string>
   <string name="since" formatted="false">od</string>
   <string name="currently_using" formatted="false">Trenutno uporabljeno</string>
   <string name="currently_set_to" formatted="false">"Trenutno nastavljeno na: "</string>
@@ -100,7 +93,6 @@
   <string name="pref_autostart_at_boot_summary" formatted="false">Zaženi Battery Monitor ko se naprava zažene:</string>
   <string name="pref_cat_language" formatted="false">Jezik</string>
   <string name="pref_language_override_summary" formatted="false">Izberi jezik:</string>
-  <string name="pref_cat_device_specific" formatted="false">Nastavitve za specifično napravo</string>
   <string name="alarms_overview" formatted="false">Pregled alarmov</string>
   <string name="pref_alarm_enabled" formatted="false">Omogoči alarm</string>
   <string name="pref_cat_alarm_conditions" formatted="false">Stanje alarmov</string>
@@ -166,7 +158,6 @@
   <string formatted="false" name="menu_hide_seconds">Skrij sekunde</string>
   <string formatted="false" name="no_storage_permission">Dovoljenje za shranjevanje ni odobreno.</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
-  <string formatted="false" name="current">milliamperes</string>
   <string formatted="false" name="status_boot_completed">Zagon končan</string>
   <string formatted="false" name="alarm_type_temperature_drops">Temperatura pade pod</string>
   <string formatted="false" name="alarm_type_health_failure">Zdravstveni neuspeh</string>
@@ -245,7 +236,6 @@
   <string formatted="false" name="pref_cat_notification_content">Vsebina</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Čip vrstice stanja (Android 16+)</string>
   <string formatted="false" name="pref_chip_content">Vsebina čipa</string>
-  <string formatted="false" name="pref_chip_content_switching">Preklop med baterijo in temperaturo</string>
   <string formatted="false" name="pref_chip_switching_interval">Preklopni interval</string>
   <string formatted="false" name="pref_chip_content_help">Izberite, katero vrednost želite prikazati v čipu za promovirana obvestila Android 16+.</string>
   <string formatted="false" name="pref_chip_indicate_charging">Prikaži polnilni emoji</string>
@@ -392,7 +382,6 @@
   <string formatted="false" name="pref_enable_logging_help">Če je omogočeno, bo Battery Monitor beležil spremembe stanja baterije.</string>
   <string formatted="false" name="pref_max_log_age_help">Če je beleženje omogočeno, se beleži vsakič, ko priključite napravo
     starejše od tega bodo izbrisane.</string>
-  <string formatted="false" name="pref_notify_status_duration">Prikaži trajanje stanja</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Android sporoča temperaturo baterije v stopinjah Celzija.  če
     raje vidite temperaturo baterije v stopinjah Fahrenheita,
     označite to možnost in aplikacija se bo pretvorila namesto vas.</string>

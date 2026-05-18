@@ -10,8 +10,7 @@
   <string name="confirm_close_hint" formatted="false">O Estado da Bateria vai ser fechado completamente, e não o vais ver na tua barra de estado.\n\nSe apenas queres sair da janela principal e manter o indicador, toca em Cancel e depois carrega na tecla Back do teu aparelho.</string>
   <string name="confirm_clear_logs" formatted="false">Limpar todos os relatórios?</string>
   <string name="okay" formatted="false">OK</string>
-  <string name="none" formatted="false">Nenhum</string>
-  <string name="menu_settings" formatted="false">Definições</string>
+    <string name="menu_settings" formatted="false">Definições</string>
   <string name="menu_close" formatted="false">Fechar</string>
   <string name="menu_help" formatted="false">Ajuda</string>
   <string name="menu_clear" formatted="false">Limpar</string>
@@ -25,10 +24,6 @@
   <string name="celsius" formatted="false">Celsius</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Uso leve restante:</string>
-  <string name="normal_usage" formatted="false">Uso normal restante:</string>
-  <string name="heavy_usage" formatted="false">Uso intenso restante:</string>
-  <string name="constant_usage" formatted="false">Uso constante restante:</string>
   <string name="inaccessible_storage" formatted="false">Cartão SD inacessível</string>
   <string name="inaccessible_w_reason" formatted="false">Cartão SD inacessível:</string>
   <string name="read_only_storage" formatted="false">Cartão SD é apenas de leitura</string>
@@ -46,8 +41,6 @@
   <string name="alarm_health_failure" formatted="false">"Saúde da bateria é: "</string>
   <string name="alarm_text" formatted="false">Selecciona para editar alarmes.</string>
   <string name="logs_empty" formatted="false">Relatórios vazios</string>
-  <string name="charging_from" formatted="false">A carregar de</string>
-  <string name="fully_charged" formatted="false">Completamente Carregado</string>
   <string name="since" formatted="false">Desde</string>
   <string name="currently_using" formatted="false">A usar</string>
   <string name="currently_set_to" formatted="false">"Definido para: "</string>
@@ -101,7 +94,6 @@
   <string formatted="false" name="menu_hide_seconds">Ocultar segundos</string>
   <string formatted="false" name="no_storage_permission">Permissão de armazenamento não concedida.</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
-  <string formatted="false" name="current">milliamperes</string>
   <string formatted="false" name="status_unplugged">Desconectado</string>
   <string formatted="false" name="status_unknown">Desconhecido</string>
   <string formatted="false" name="status_charging">Carregando</string>
@@ -210,7 +202,6 @@
   <string formatted="false" name="pref_cat_notification_content">Contente</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Chip da barra de status (Android 16+)</string>
   <string formatted="false" name="pref_chip_content">Conteúdo do chip</string>
-  <string formatted="false" name="pref_chip_content_switching">Alternar entre bateria e temperatura</string>
   <string formatted="false" name="pref_chip_switching_interval">Intervalo de troca</string>
   <string formatted="false" name="pref_chip_content_help">Escolha qual valor mostrar no chip de notificação promovida do Android 16+.</string>
   <string formatted="false" name="pref_chip_indicate_charging">Mostrar emoji de carregamento</string>
@@ -362,7 +353,6 @@
   <string formatted="false" name="pref_max_log_age_summary">Excluir registros anteriores a:</string>
   <string formatted="false" name="pref_max_log_age_help">Se o registro estiver ativado, sempre que você conectar seu dispositivo, os registros
     mais antigos que isso serão excluídos.</string>
-  <string formatted="false" name="pref_notify_status_duration">Mostrar duração do status</string>
   <string formatted="false" name="pref_cat_temperature_unit">Unidade de temperatura</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Converter para Fahrenheit</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">O Android informa a temperatura da bateria em graus Celsius.  Se
@@ -421,7 +411,6 @@
     faça com que o conjunto de ícones Clássico funcione da maneira clássica, girando este
     opção ativada.  Lembre-se, na maioria dos dispositivos isso apenas tornará o ícone
     ficar totalmente branco.</string>
-  <string formatted="false" name="pref_cat_device_specific">Configurações específicas do dispositivo</string>
   <string formatted="false" name="alarms_overview">Visão geral dos alarmes</string>
   <string formatted="false" name="alarms_overview_help">Esta página permite adicionar novos alarmes, ativar ou desativar rapidamente
     alarmes existentes ou excluir alarmes.\n

@@ -14,8 +14,7 @@
   <string name="confirm_clear_logs" formatted="false">ログをすべてクリアしてもよろしいですか?</string>
   <string name="configure_log_filter" formatted="false">どのログ項目を表示しますか?</string>
   <string name="okay" formatted="false">OK</string>
-  <string name="none" formatted="false">なし</string>
-  <string name="tab_current_info" formatted="false">現在の情報</string>
+    <string name="tab_current_info" formatted="false">現在の情報</string>
   <string name="tab_history" formatted="false">履歴</string>
   <string name="notification_until_charged" formatted="false">" 充電まで"</string>
   <string name="notification_until_drained" formatted="false">" 残"</string>
@@ -38,10 +37,6 @@
   <string name="celsius" formatted="false">セ氏</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">低負荷使用残:</string>
-  <string name="normal_usage" formatted="false">通常使用残:</string>
-  <string name="heavy_usage" formatted="false">高負荷使用残:</string>
-  <string name="constant_usage" formatted="false">連続使用残:</string>
   <string name="inaccessible_storage" formatted="false">SD カードにアクセスできません。</string>
   <string name="inaccessible_w_reason" formatted="false">SD カードにアクセスできません:</string>
   <string name="read_only_storage" formatted="false">SD カードは読み取り専用です。</string>
@@ -54,7 +49,6 @@
   <string name="temperature" formatted="false">セ氏度</string>
   <string name="temperature_f" formatted="false">華氏度</string>
   <string name="voltage" formatted="false">電圧</string>
-  <string name="current" formatted="false">ミリアンペア</string>
   <string name="status_unplugged" formatted="false">未接続</string>
   <string name="status_unknown" formatted="false">不明</string>
   <string name="status_charging" formatted="false">充電中</string>
@@ -99,8 +93,6 @@
   <string name="after_nh_mm_plugged_in" formatted="false">プラグを挿してから %1$d時間%2$d分</string>
   <string name="after_nm_ms_unplugged" formatted="false">プラグを抜いてから %1$d分%2$d秒</string>
   <string name="after_nm_ms_plugged_in" formatted="false">プラグを挿してから %1$d分%2$d秒</string>
-  <string name="charging_from" formatted="false">充電開始</string>
-  <string name="fully_charged" formatted="false">フル充電</string>
   <string name="since" formatted="false">から</string>
   <string name="currently_using" formatted="false">現在使用中</string>
   <string name="currently_set_to" formatted="false">"現在の設定: "</string>
@@ -169,7 +161,6 @@
   <string name="pref_cat_notification_content" formatted="false">コンテンツ</string>
   <string name="pref_cat_status_bar_chip" formatted="false">ステータスバーチップ（Android 16+）</string>
   <string name="pref_chip_content" formatted="false">チップ内容</string>
-  <string name="pref_chip_content_switching" formatted="false">バッテリー残量と温度を切り替える</string>
   <string name="pref_chip_switching_interval" formatted="false">切り替え間隔</string>
   <string name="pref_chip_content_help" formatted="false">Android 16 以降の昇格通知チップに表示する値を選択します。</string>
   <string name="pref_chip_indicate_charging" formatted="false">充電絵文字を表示</string>
@@ -238,7 +229,6 @@
   <string name="pref_max_log_age" formatted="false">最大ログ履歴</string>
   <string name="pref_max_log_age_summary" formatted="false">次より古いログを削除します:</string>
   <string name="pref_max_log_age_help" formatted="false">ロギングが有効になっている場合、あなたのデバイスを接続するたびに、 ここで指定した値よりも古いログを削除します。</string>
-  <string name="pref_notify_status_duration" formatted="false">ステータス時間を表示</string>
   <string name="pref_cat_temperature_unit" formatted="false">温度の単位</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">華氏に変換する</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android はセ氏でバッテリ温度を報告します。バッテリー温度を華氏で 確認したい場合は、このオプションをチェックすると、アプリが変換します。</string>
@@ -259,7 +249,6 @@
   <string name="pref_classic_color_mode" formatted="false">強制的にクラシックカラーモードにする</string>
   <string name="pref_classic_color_mode_summary" formatted="false">これは通常動作しません。ヘルプをお読みください</string>
   <string name="pref_classic_color_mode_help" formatted="false">Android 5.0 (Lollipop) から、着色された通知アイコンはもはや公式には Android 上で動作しません。クラシックアイコンは白い四角としてを表示されます。そのためデフォルトでは、これらのデバイス上で、アプリは白い番号と白いアウトラインを使用します。\n\nしかし、すべてのデバイスが仕様に従っているわけではないので、これは必要ではなく、すべてにおいて正常に動作するわけではありません。このオプションをオンにすることによって、クラシックな方法で、クラシックアイコンセットを動作させてみることができます。覚えておいてほしいのは、ほとんどのデバイスでこれはアイコンがただの白い四角になります、。</string>
-  <string name="pref_cat_device_specific" formatted="false">デバイス固有の設定</string>
   <string name="alarms_overview" formatted="false">アラームの概要</string>
   <string name="alarms_overview_help" formatted="false">このページで、新しいアラームを追加する、既存のアラームをすばやく 有効または無効にする、アラームを削除することができます。\n\n新しいアラームを追加するには、\"アラームを追加\" を押します - これで、新しいアラームを作成して、アラーム設定ページへ移動します。 そこで新しいアラームの設定を変更することができます。 詳細については、そのページのヘルプを参照してください。\n\n作成したすべてのアラームのリストの下に \"\アラームを追加\"\ ボタンがあります\n\n• 既存のアラームを編集するには、それを押すだけです。\n• 削除するには、それを長押しします。その後 \"アラームを削除\" を選択します。 (個々のアラーム設定ページから、メニューを押して、 その後 \"アラームを削除\" でアラームを削除することもできます。)\n• すばやくアラームを有効にするかどうかを切り替えるには、 アラームテキストの左側の、目覚まし時計のアイコンを押します。 (また、個々のアラーム設定ページから、アラームを有効または 無効にすることもできます。)</string>
   <string name="pref_alarm_enabled" formatted="false">アラームを有効にする</string>

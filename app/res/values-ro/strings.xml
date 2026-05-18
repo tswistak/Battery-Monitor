@@ -11,8 +11,7 @@
   <string name="confirm_close_hint" formatted="false">Battery Monitor se va inchide complet. Informatiile despre baterie nu vor mai fi afisate in bara de stare a telefonului./n Daca doriti sa inchideti fereastra principala, pastrand afisarea informatiilor despre baterie, apasati Anuleaza si apoi butonul BACK al telefonului.</string>
   <string name="confirm_clear_logs" formatted="false">Sigur stergeti toate logurile?</string>
   <string name="okay" formatted="false">Bine</string>
-  <string name="none" formatted="false">Nimic/Gol</string>
-  <string name="tab_current_info" formatted="false">Informatie actuala</string>
+    <string name="tab_current_info" formatted="false">Informatie actuala</string>
   <string name="tab_history" formatted="false">Istoric</string>
   <string name="notification_until_charged" formatted="false">pana la incarcare completa</string>
   <string name="notification_until_drained" formatted="false">ramas</string>
@@ -33,10 +32,6 @@
   <string name="celsius" formatted="false">Celsius</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Timp Ramas - Utilizare Usoara</string>
-  <string name="normal_usage" formatted="false">Timp Ramas - Utilizare Normala</string>
-  <string name="heavy_usage" formatted="false">Timp Ramas - Utilizare Intensiva</string>
-  <string name="constant_usage" formatted="false">Timp Ramas - Utilizare Constanta</string>
   <string name="inaccessible_storage" formatted="false">Cartela SD nu este accesibila</string>
   <string name="inaccessible_w_reason" formatted="false">Cartela SD nu este accesibila</string>
   <string name="read_only_storage" formatted="false">Cartela SD nu este protejata la scriere (Read Only)</string>
@@ -76,8 +71,6 @@
   <string name="alarm_health_failure" formatted="false">Calitatea Bateriei este:</string>
   <string name="alarm_text" formatted="false">Selecteaza pentru a edita alarmele.</string>
   <string name="logs_empty" formatted="false">Nu sunt loguri/loguri goale</string>
-  <string name="charging_from" formatted="false">Se incarca de la</string>
-  <string name="fully_charged" formatted="false">Incarcata Complet</string>
   <string name="since" formatted="false">De la</string>
   <string name="currently_using" formatted="false">Folosire curenta</string>
   <string name="currently_set_to" formatted="false">"Acum setat la: "</string>
@@ -120,7 +113,6 @@
   <string formatted="false" name="menu_hide_seconds">Ascunde secunde</string>
   <string formatted="false" name="no_storage_permission">Permisiunea de stocare nu a fost acordată.</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
-  <string formatted="false" name="current">milliamperes</string>
   <string formatted="false" name="status_boot_completed">Încărcare finalizată</string>
   <string formatted="false" name="alarm_type_temperature_drops">Temperatura scade sub</string>
   <string formatted="false" name="alarm_type_temperature_rises">Temperatura crește deasupra</string>
@@ -210,7 +202,6 @@
   <string formatted="false" name="pref_cat_notification_content">Conţinut</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Cip bară de stare (Android 16+)</string>
   <string formatted="false" name="pref_chip_content">Conținut de cip</string>
-  <string formatted="false" name="pref_chip_content_switching">Comutați între baterie și temperatură</string>
   <string formatted="false" name="pref_chip_switching_interval">Interval de comutare</string>
   <string formatted="false" name="pref_chip_content_help">Alegeți ce valoare să afișați în cipul de notificare promovat Android 16+.</string>
   <string formatted="false" name="pref_chip_indicate_charging">Afișați emoji de încărcare</string>
@@ -362,7 +353,6 @@
   <string formatted="false" name="pref_max_log_age_summary">Ștergeți jurnalele mai vechi de:</string>
   <string formatted="false" name="pref_max_log_age_help">Dacă înregistrarea este activată, atunci de fiecare dată când conectați dispozitivul, se înregistrează
     mai vechi decât acesta va fi ștearsă.</string>
-  <string formatted="false" name="pref_notify_status_duration">Afișează durata stării</string>
   <string formatted="false" name="pref_cat_temperature_unit">Unitate de temperatură</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Convertiți în Fahrenheit</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Android raportează temperatura bateriei în grade Celsius.  Dacă
@@ -421,7 +411,6 @@
     faceți setul de pictograme clasic să funcționeze în mod clasic, rotind acesta
     opțiunea activată.  Amintiți-vă, pe majoritatea dispozitivelor, aceasta va face doar pictograma
     devin alb solid.</string>
-  <string formatted="false" name="pref_cat_device_specific">Setări specifice dispozitivului</string>
   <string formatted="false" name="alarms_overview">Prezentare generală a alarmelor</string>
   <string formatted="false" name="alarms_overview_help">Această pagină vă permite să adăugați alarme noi, să activați sau să dezactivați rapid
     alarme existente sau ștergeți alarmele.\n

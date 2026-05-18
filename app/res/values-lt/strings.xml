@@ -11,8 +11,7 @@
   <string name="confirm_close_hint" formatted="false">Baterijos Indikatorius bus visiškai uždarytas ir Jūs jo nebematysite savo būsenos juostoje.\n\nJei jus tiesiog norite palikti pagrindinį langą ir leisti indikatoriui toliau veikti, paspauskite Nutraukti ir tada paspauskite Grįžti mygtuką, ant savo telefono.</string>
   <string name="confirm_clear_logs" formatted="false">Ar tikrai ištrinti visus įrašus?</string>
   <string name="okay" formatted="false">Gerai</string>
-  <string name="none" formatted="false">Nė Vienas</string>
-  <string name="menu_settings" formatted="false">Nustatymai</string>
+    <string name="menu_settings" formatted="false">Nustatymai</string>
   <string name="menu_close" formatted="false">Uždaryti</string>
   <string name="menu_help" formatted="false">Pagalba</string>
   <string name="menu_clear" formatted="false">Ištrinti</string>
@@ -26,10 +25,6 @@
   <string name="celsius" formatted="false">Celsijus</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Mažai Naudojant Liko:</string>
-  <string name="normal_usage" formatted="false">Normaliai Naudojant Liko:</string>
-  <string name="heavy_usage" formatted="false">Daug Naudojant Liko:</string>
-  <string name="constant_usage" formatted="false">Nepertraukiamai Naudojant Liko:</string>
   <string name="inaccessible_storage" formatted="false">SD kortelė nepasiekiama.</string>
   <string name="inaccessible_w_reason" formatted="false">SD kortelė nepasiekiama:</string>
   <string name="read_only_storage" formatted="false">SD kortele yra \"read-only\"</string>
@@ -76,8 +71,6 @@
   <string name="alarm_health_failure" formatted="false">"Baterijos būklė yra: "</string>
   <string name="alarm_text" formatted="false">Koreguoti aliarmus.</string>
   <string name="logs_empty" formatted="false">Įrašai tušti</string>
-  <string name="charging_from" formatted="false">Iškraunama nuo</string>
-  <string name="fully_charged" formatted="false">Pilnai įkrauta</string>
   <string name="since" formatted="false">Nuo</string>
   <string name="currently_using" formatted="false">Dabar naudojama</string>
   <string name="currently_set_to" formatted="false">"Dabar nustatyta: "</string>
@@ -111,7 +104,6 @@
   <string name="pref_cat_language" formatted="false">Kalba</string>
   <string name="pref_language_override" formatted="false">Kalbos Nepaisymas</string>
   <string name="pref_language_override_summary" formatted="false">Pasirinkti kalbą:</string>
-  <string name="pref_cat_device_specific" formatted="false">Specifiniai Prietaiso Nustatymai</string>
   <string name="alarms_overview" formatted="false">Aliarmų Peržiūra</string>
   <string name="pref_alarm_enabled" formatted="false">Įjungti Aliarmą</string>
   <string name="pref_cat_alarm_conditions" formatted="false">Aliarmo Sąlygos</string>
@@ -191,7 +183,6 @@
   <string formatted="false" name="menu_hide_seconds">Slėpti sekundes</string>
   <string formatted="false" name="no_storage_permission">Leidimas saugoti nesuteiktas.</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
-  <string formatted="false" name="current">milliamperes</string>
   <string formatted="false" name="status_boot_completed">Įkrovimas baigtas</string>
   <string formatted="false" name="alarm_type_temperature_drops">Temperatūra nukrenta žemiau</string>
   <string formatted="false" name="alarm_type_entry_temperature_drops">Temperatūra nukrenta žemiau...</string>
@@ -251,7 +242,6 @@
   <string formatted="false" name="pref_cat_notification_content">Turinys</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Būsenos juostos lustas (16 ir naujesnės versijos „Android“)</string>
   <string formatted="false" name="pref_chip_content">Lusto turinys</string>
-  <string formatted="false" name="pref_chip_content_switching">Perjunkite tarp akumuliatoriaus ir temperatūros</string>
   <string formatted="false" name="pref_chip_switching_interval">Perjungimo intervalas</string>
   <string formatted="false" name="pref_chip_content_help">Pasirinkite, kokią reikšmę rodyti „Android 16+“ reklamuojamų pranešimų luste.</string>
   <string formatted="false" name="pref_chip_indicate_charging">Rodyti įkrovimo jaustukus</string>
@@ -398,7 +388,6 @@
   <string formatted="false" name="pref_enable_logging_help">Jei įjungta, „Battery Monitor“ registruos akumuliatoriaus būsenos pokyčius.</string>
   <string formatted="false" name="pref_max_log_age_help">Jei registravimas įjungtas, tada, kai prijungiate įrenginį, registruojami
     bus ištrintas senesnis nei šis.</string>
-  <string formatted="false" name="pref_notify_status_duration">Rodyti būsenos trukmę</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">„Android“ praneša apie akumuliatoriaus temperatūrą Celsijaus laipsniais.  Jeigu
     norite matyti akumuliatoriaus temperatūrą Farenheito laipsniais,
     pažymėkite šią parinktį ir programa konvertuos už jus.</string>

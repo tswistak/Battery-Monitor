@@ -11,8 +11,7 @@
   <string name="confirm_close_hint" formatted="false">Battery Monitor將完全退出，狀態列電量指示圖標將不再顯示。\n\n如果您想讓本程序背景運行，可以單擊手機「返回」鍵關閉主視窗。</string>
   <string name="confirm_clear_logs" formatted="false">確認清理所有日誌？</string>
   <string name="okay" formatted="false">完成</string>
-  <string name="none" formatted="false">無</string>
-  <string name="tab_current_info" formatted="false">現在狀況</string>
+    <string name="tab_current_info" formatted="false">現在狀況</string>
   <string name="tab_history" formatted="false">紀錄</string>
   <string name="menu_settings" formatted="false">設定</string>
   <string name="menu_close" formatted="false">關閉</string>
@@ -27,10 +26,6 @@
   <string name="celsius" formatted="false">攝氏溫度</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">省電使用剩餘時間：</string>
-  <string name="normal_usage" formatted="false">正常使用剩餘時間：</string>
-  <string name="heavy_usage" formatted="false">頻繁使用剩餘時間：</string>
-  <string name="constant_usage" formatted="false">持續使用剩餘時間：</string>
   <string name="inaccessible_storage" formatted="false">SD卡無法存取。</string>
   <string name="inaccessible_w_reason" formatted="false">SD卡無法存取：</string>
   <string name="read_only_storage" formatted="false">SD卡已設定為「唯讀」模式。</string>
@@ -38,7 +33,6 @@
   <string name="date" formatted="false">日期</string>
   <string name="time" formatted="false">時間</string>
   <string name="status" formatted="false">狀態</string>
-  <string name="current" formatted="false">mA</string>
   <string name="status_unplugged" formatted="false">電源中斷</string>
   <string name="status_unknown" formatted="false">未知</string>
   <string name="status_charging" formatted="false">充電中</string>
@@ -61,8 +55,6 @@
   <string name="alarm_type_fully_charged" formatted="false">電池充滿</string>
   <string name="alarm_fully_charged" formatted="false">電池已充滿</string>
   <string name="logs_empty" formatted="false">日誌記錄為空</string>
-  <string name="charging_from" formatted="false">充電起始電量</string>
-  <string name="fully_charged" formatted="false">完全充滿</string>
   <string name="since" formatted="false">開始於</string>
   <string name="currently_using" formatted="false">目前使用</string>
   <string name="currently_set_to" formatted="false">"目前設定為"</string>
@@ -101,7 +93,6 @@
   <string name="pref_autostart_at_boot_summary" formatted="false">確認允許電量指示器開機時自動啟動？</string>
   <string name="pref_autostart_at_boot_help" formatted="false">設定是否允許電量指示器在開機時自動啟動。\n\n」關機前運行中」選項僅在手動關閉電量指示器時有效。若您使用其他方式，如使用任務殺手進行關閉，則本程序無法確認是否由您關閉，選擇該方式後仍會在開機時自動啟動。</string>
   <string name="pref_cat_language" formatted="false">語言</string>
-  <string name="pref_cat_device_specific" formatted="false">特殊設備設定</string>
   <string name="boot_pref_always" formatted="false">始終</string>
   <string name="boot_pref_never" formatted="false">從不</string>
   <string name="boot_pref_if_running" formatted="false">關機時運行</string>
@@ -275,7 +266,6 @@
   <string formatted="false" name="pref_cat_notification_content">內容</string>
   <string formatted="false" name="pref_cat_status_bar_chip">狀態列晶片（Android 16+）</string>
   <string formatted="false" name="pref_chip_content">晶片內容</string>
-  <string formatted="false" name="pref_chip_content_switching">在電池和溫度之間切換</string>
   <string formatted="false" name="pref_chip_switching_interval">切換間隔</string>
   <string formatted="false" name="pref_chip_content_help">選擇在 Android 16+ 升級通知晶片中顯示的值。</string>
   <string formatted="false" name="pref_chip_indicate_charging">顯示充電表情符號</string>
@@ -419,7 +409,6 @@
   <string formatted="false" name="pref_indicate_charging_help">某些圖示集指示電池何時充電，例如
     例如，在數字下方顯示閃電。  停用
     如果您不希望這樣做，請執行此設定。</string>
-  <string formatted="false" name="pref_notify_status_duration">顯示狀態持續時間</string>
   <string formatted="false" name="predictor_sensitive">敏感的</string>
   <string formatted="false" name="predictor_conservative">保守的</string>
   <string formatted="false" name="predictor_since_status_change">自從狀態變更以來</string>

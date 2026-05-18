@@ -42,8 +42,7 @@
   <string formatted="false" name="channel_group_name_alarms">एलार्म</string>
   <string formatted="false" name="configure_log_filter">कौन से लॉग आइटम दिखाएँ?</string>
   <string formatted="false" name="okay">ठीक है</string>
-  <string formatted="false" name="none">कोई नहीं</string>
-  <string formatted="false" name="tab_current_info">वर्तमान जानकारी</string>
+    <string formatted="false" name="tab_current_info">वर्तमान जानकारी</string>
   <string formatted="false" name="tab_history">इतिहास</string>
   <string formatted="false" name="notification_until_charged">"चार्ज होने तक"</string>
   <string formatted="false" name="notification_until_drained">" बाएं"</string>
@@ -66,10 +65,6 @@
   <string formatted="false" name="celsius">सेल्सीयस</string>
   <string formatted="false" name="celsius_symbol">C</string>
   <string formatted="false" name="volt_symbol">V</string>
-  <string formatted="false" name="light_usage">प्रकाश उपयोग बायां:</string>
-  <string formatted="false" name="normal_usage">सामान्य उपयोग बाएँ:</string>
-  <string formatted="false" name="heavy_usage">भारी उपयोग बायाँ:</string>
-  <string formatted="false" name="constant_usage">लगातार उपयोग बाएँ:</string>
   <string formatted="false" name="inaccessible_storage">एसडी कार्ड पहुंच योग्य नहीं है.</string>
   <string formatted="false" name="inaccessible_w_reason">एसडी कार्ड पहुंच योग्य नहीं:</string>
   <string formatted="false" name="read_only_storage">एसडी कार्ड केवल पढ़ने के लिए है.</string>
@@ -82,7 +77,6 @@
   <string formatted="false" name="temperature">डिग्री_सेल्सियस</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
   <string formatted="false" name="voltage">वोल्ट</string>
-  <string formatted="false" name="current">milliamperes</string>
   <string formatted="false" name="status_unplugged">अनप्लग</string>
   <string formatted="false" name="status_unknown">अज्ञात</string>
   <string formatted="false" name="status_charging">चार्ज</string>
@@ -127,8 +121,6 @@
   <string formatted="false" name="after_nh_mm_plugged_in">%1$dh %2$dm के बाद प्लग इन किया गया</string>
   <string formatted="false" name="after_nm_ms_unplugged">%1$dm %2$ds के अनप्लग होने के बाद</string>
   <string formatted="false" name="after_nm_ms_plugged_in">%1$dm %2$ds प्लग इन करने के बाद</string>
-  <string formatted="false" name="charging_from">से चार्ज हो रहा है</string>
-  <string formatted="false" name="fully_charged">पूर्णतःउर्जित</string>
   <string formatted="false" name="since">तब से</string>
   <string formatted="false" name="currently_using">वर्तमान में उपयोग कर रहे हैं</string>
   <string formatted="false" name="currently_set_to">"वर्तमान में इस पर सेट है:"</string>
@@ -211,7 +203,6 @@
   <string formatted="false" name="pref_cat_notification_content">सामग्री</string>
   <string formatted="false" name="pref_cat_status_bar_chip">स्टेटस बार चिप (एंड्रॉइड 16+)</string>
   <string formatted="false" name="pref_chip_content">चिप सामग्री</string>
-  <string formatted="false" name="pref_chip_content_switching">बैटरी और तापमान के बीच स्विच करें</string>
   <string formatted="false" name="pref_chip_switching_interval">स्विचिंग अंतराल</string>
   <string formatted="false" name="pref_chip_content_help">चुनें कि Android 16+ प्रचारित-अधिसूचना चिप में कौन सा मान दिखाना है।</string>
   <string formatted="false" name="pref_chip_indicate_charging">चार्जिंग इमोजी दिखाएँ</string>
@@ -358,7 +349,6 @@
   <string formatted="false" name="pref_max_log_age_summary">इससे पुराने लॉग हटाएँ:</string>
   <string formatted="false" name="pref_max_log_age_help">यदि लॉगिंग सक्षम है, तो जब भी आप अपने डिवाइस को प्लग इन करते हैं, लॉग इन होता है
     इससे अधिक पुराना हटा दिया जाएगा।</string>
-  <string formatted="false" name="pref_notify_status_duration">स्थिति अवधि दिखाएँ</string>
   <string formatted="false" name="pref_cat_temperature_unit">तापमान इकाई</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">फ़ारेनहाइट में कनवर्ट करें</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">एंड्रॉइड बैटरी तापमान को डिग्री सेल्सियस में रिपोर्ट करता है।  यदि
@@ -416,7 +406,6 @@
     इसे घुमाकर क्लासिक आइकन सेट को क्लासिक तरीके से काम करने दें
     विकल्प चालू.  याद रखें, अधिकांश डिवाइस पर यह केवल आइकन बनाएगा
     ठोस सफ़ेद हो जाना.</string>
-  <string formatted="false" name="pref_cat_device_specific">डिवाइस विशिष्ट सेटिंग्स</string>
   <string formatted="false" name="alarms_overview">अलार्म अवलोकन</string>
   <string formatted="false" name="alarms_overview_help">यह पृष्ठ आपको नए अलार्म जोड़ने, तुरंत सक्षम या अक्षम करने की अनुमति देता है
     मौजूदा अलार्म, या अलार्म हटा दें.\n

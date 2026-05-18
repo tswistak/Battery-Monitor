@@ -11,8 +11,7 @@
   <string name="confirm_close_hint" formatted="false">Battery Monitor bude úplne zatvorený a nebudete ho viac vidieť ani v notifikačnej lište.\n\nAk len chcete odísť z hlavného okna a nechať indikátor spustený, stlačte Zrušiť a potom stlačte na vašom telefóne tlačidlo späť pre odídenie z hlavného okna.</string>
   <string name="confirm_clear_logs" formatted="false">Naozaj odstrániť všetky záznamy?</string>
   <string name="okay" formatted="false">OK</string>
-  <string name="none" formatted="false">Nič</string>
-  <string name="menu_settings" formatted="false">Nastavenia</string>
+    <string name="menu_settings" formatted="false">Nastavenia</string>
   <string name="menu_close" formatted="false">Zavrieť</string>
   <string name="menu_help" formatted="false">Pomocník</string>
   <string name="menu_clear" formatted="false">Vymazať</string>
@@ -26,10 +25,6 @@
   <string name="celsius" formatted="false">Celzia</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Malé používanie:</string>
-  <string name="normal_usage" formatted="false">Normálne používanie:</string>
-  <string name="heavy_usage" formatted="false">Časté používanie:</string>
-  <string name="constant_usage" formatted="false">Neustále používanie:</string>
   <string name="inaccessible_storage" formatted="false">SD karta nie je prístupná.</string>
   <string name="inaccessible_w_reason" formatted="false">SD karta neprístupná:</string>
   <string name="read_only_storage" formatted="false">SD karta je len na čítanie.</string>
@@ -76,8 +71,6 @@
   <string name="alarm_health_failure" formatted="false">"Zdravie batérie je: "</string>
   <string name="alarm_text" formatted="false">Označiť pre úpravu upozornení.</string>
   <string name="logs_empty" formatted="false">Záznamy sú prázdne</string>
-  <string name="charging_from" formatted="false">Nabíjanie od</string>
-  <string name="fully_charged" formatted="false">Plne nabitá</string>
   <string name="since" formatted="false">Od</string>
   <string name="currently_using" formatted="false">Práve používate</string>
   <string name="currently_set_to" formatted="false">"V súčasnosti nastavený na: "</string>
@@ -108,7 +101,6 @@
   <string name="pref_cat_autostart" formatted="false">Automatické spustenie</string>
   <string name="pref_autostart_at_boot" formatted="false">Spustiť automaticky po zapnutí</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">Spustiť Battery Monitor keď zariadenie štartuje:</string>
-  <string name="pref_cat_device_specific" formatted="false">Nastavenia špecifické pre konkrétne zariadenia</string>
   <string name="alarms_overview" formatted="false">Prehľad upozornení</string>
   <string name="pref_alarm_enabled" formatted="false">Zapnúť upozornenie</string>
   <string name="pref_alarm_enabled_help" formatted="false">Ak chcete dočasne vypnúť alarm bez znovuvytvárania nového, keď ho budete potrebovať, môžete ho vypnúť a zapnúť alebo tu alebo na stránke alarmov.</string>
@@ -193,7 +185,6 @@
   <string formatted="false" name="menu_hide_seconds">Skryť sekundy</string>
   <string formatted="false" name="no_storage_permission">Povolenie na ukladanie nebolo udelené.</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
-  <string formatted="false" name="current">milliamperes</string>
   <string formatted="false" name="status_boot_completed">Boot dokončený</string>
   <string formatted="false" name="alarm_type_temperature_drops">Teplota klesne pod</string>
   <string formatted="false" name="alarm_type_entry_temperature_drops">Teplota klesá pod...</string>
@@ -256,7 +247,6 @@
   <string formatted="false" name="pref_cat_notification_content">Obsah</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Čip stavového riadka (Android 16+)</string>
   <string formatted="false" name="pref_chip_content">Obsah čipu</string>
-  <string formatted="false" name="pref_chip_content_switching">Prepínanie medzi batériou a teplotou</string>
   <string formatted="false" name="pref_chip_switching_interval">Interval prepínania</string>
   <string formatted="false" name="pref_chip_content_help">Vyberte hodnotu, ktorá sa má zobrazovať v čipe upozornení na Android 16+.</string>
   <string formatted="false" name="pref_chip_indicate_charging">Zobraziť Emoji nabíjania</string>
@@ -401,7 +391,6 @@
     napríklad znázornením blesku pod číslom.  Zakázať
     toto nastavenie, ak chcete, aby to nerobilo.</string>
   <string formatted="false" name="pref_enable_logging_help">Ak je aktivovaná, Battery Monitor bude zaznamenávať zmeny stavu batérie.</string>
-  <string formatted="false" name="pref_notify_status_duration">Zobraziť trvanie stavu</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Android hlási teplotu batérie v stupňoch Celzia.  Ak
     uprednostňujete zobrazenie teploty batérie v stupňoch Fahrenheita,
     začiarknite túto možnosť a aplikácia sa prevedie za vás.</string>

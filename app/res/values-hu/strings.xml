@@ -27,10 +27,6 @@
   <string name="celsius" formatted="false">Celsius</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Könnyű használat még:</string>
-  <string name="normal_usage" formatted="false">Normál használat még:</string>
-  <string name="heavy_usage" formatted="false">Gyakori használat még:</string>
-  <string name="constant_usage" formatted="false">Állandó használat még:</string>
   <string name="inaccessible_storage" formatted="false">Az SD kártya nem elérhető.</string>
   <string name="inaccessible_w_reason" formatted="false">Elérhetetlen SD kártya:</string>
   <string name="read_only_storage" formatted="false">Az SD kártya csak írható.</string>
@@ -77,8 +73,6 @@
   <string name="alarm_health_failure" formatted="false">"Akku állapota: "</string>
   <string name="alarm_text" formatted="false">Riasztások módosítása.</string>
   <string name="logs_empty" formatted="false">A naplók üresek.</string>
-  <string name="charging_from" formatted="false">Töltés innen:</string>
-  <string name="fully_charged" formatted="false">Teljesen feltöltve</string>
   <string name="since" formatted="false">óta</string>
   <string name="currently_using" formatted="false">Jelenleg használatban:</string>
   <string name="currently_set_to" formatted="false">"Jelenlegi beállítás:"</string>
@@ -135,7 +129,6 @@
   <string name="pref_cat_language" formatted="false">Nyelv</string>
   <string name="pref_language_override" formatted="false">Nyelv megváltoztatása</string>
   <string name="pref_language_override_summary" formatted="false">Válasszon nyelvet:</string>
-  <string name="pref_cat_device_specific" formatted="false">Eszközre jellemző beállítások</string>
   <string name="alarms_overview" formatted="false">Riasztások áttekintése</string>
   <string name="pref_alarm_enabled" formatted="false">Riasztás enegedélyezése</string>
   <string name="pref_alarm_enabled_help" formatted="false">Ha egy riasztást átmenetileg le kíván tiltani, anélkül, hogy azt később újra létre kellene hoznia, ki- és bekapcsolhatja itt, vagy a riasztások főlapján is.</string>
@@ -175,8 +168,7 @@
   <string name="battery_optimized_message" formatted="false">A Battery Monitor nem tud megfelelően futni, mert korlátozza a rendszer. Az Android \"akkumulátor-optimalizálás\" funkciója a rosszul megírt appok háttérfogyasztását korlátozza.\n\nA Battery Monitor viszont egy jól megtervezett app, amelynek korlátozás nélkül kell futnia a háttérben a helyes működéshez. Nagyon hatékony, és nem csökkenti az akkumulátor üzemidejét.\n\nNyomd meg az OK gombot a rendszerbeállítások megnyitásához, ahol kikapcsolhatod az akkumulátor-optimalizálást a Battery Monitor számára.</string>
   <string name="main_notif_chan_name" formatted="false">Fő értesítés</string>
   <string name="channel_group_name_alarms" formatted="false">Riasztások</string>
-  <string name="none" formatted="false">Nincs</string>
-  <string name="tab_history" formatted="false">Előzmények</string>
+    <string name="tab_history" formatted="false">Előzmények</string>
   <string name="notification_until_charged" formatted="false">" feltöltésig"</string>
   <string name="notification_until_drained" formatted="false">" maradt"</string>
   <string name="activity_until_charged" formatted="false">feltöltésig</string>
@@ -186,7 +178,6 @@
   <string name="menu_hide_seconds" formatted="false">Másodpercek elrejtése</string>
   <string name="no_storage_permission" formatted="false">Nincs tárhely-hozzáférési engedély.</string>
   <string name="temperature_f" formatted="false">fahrenheit_fok</string>
-  <string name="current" formatted="false">milliamper</string>
   <string name="status_boot_completed" formatted="false">Rendszerindítás kész</string>
   <string name="alarm_type_temperature_drops" formatted="false">Hőmérséklet ez alá csökken</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Hőmérséklet ez alá csökken...</string>
@@ -232,7 +223,6 @@
   <string name="pref_cat_notification_content" formatted="false">Tartalom</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Állapotsor chip (Android 16+)</string>
   <string name="pref_chip_content" formatted="false">Chip tartalma</string>
-  <string name="pref_chip_content_switching" formatted="false">Váltás akku és hőmérséklet között</string>
   <string name="pref_chip_switching_interval" formatted="false">Váltási időköz</string>
   <string name="pref_chip_content_help" formatted="false">Válaszd ki, mit jelenítsen meg az Android 16+ promoted-notification chip.</string>
   <string name="pref_chip_indicate_charging" formatted="false">Töltés emoji megjelenítése</string>
@@ -282,7 +272,6 @@
   <string name="pref_auto_refresh_current_in_main_window" formatted="false">mA automatikus frissítése a főablakban</string>
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Automatikusan frissítse az mA értéket két másodpercenként?</string>
   <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Engedélyezve a főablakban az mA érték 2 másodpercenként frissül.</string>
-  <string name="pref_notify_status_duration" formatted="false">Állapot időtartam megjelenítése</string>
   <string name="predictor_sensitive" formatted="false">Érzékeny</string>
   <string name="predictor_conservative" formatted="false">Konzervatív</string>
   <string name="predictor_since_status_change" formatted="false">Állapotváltozás óta</string>

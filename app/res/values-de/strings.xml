@@ -14,8 +14,7 @@
   <string name="confirm_clear_logs" formatted="false">Wirklich alle Protokolle löschen?</string>
   <string name="configure_log_filter" formatted="false">Welche Elemente sollen angezeigt werden?</string>
   <string name="okay" formatted="false">Okay</string>
-  <string name="none" formatted="false">Keine(n)</string>
-  <string name="tab_current_info" formatted="false">Aktuelle Info</string>
+    <string name="tab_current_info" formatted="false">Aktuelle Info</string>
   <string name="tab_history" formatted="false">Verlauf</string>
   <string name="notification_until_charged" formatted="false">" bis vollständig aufgeladen"</string>
   <string name="notification_until_drained" formatted="false">" verbleibend"</string>
@@ -36,10 +35,6 @@
   <string name="celsius" formatted="false">Celsius</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Übrig bei geringer Benutzung:</string>
-  <string name="normal_usage" formatted="false">Übrig bei normaler Benutzung:</string>
-  <string name="heavy_usage" formatted="false">Übrig bei starker Benutzung:</string>
-  <string name="constant_usage" formatted="false">Übrig bei durchgehender Benutzung:</string>
   <string name="inaccessible_storage" formatted="false">SD-Karte ist nicht verfügbar.</string>
   <string name="inaccessible_w_reason" formatted="false">SD-Karte nicht verfügbar:</string>
   <string name="read_only_storage" formatted="false">SD-Karte ist schreibgeschützt.</string>
@@ -87,8 +82,6 @@
   <string name="alarm_health_failure" formatted="false">"Batteriezustand ist: "</string>
   <string name="alarm_text" formatted="false">Auswählen um Alarme zu bearbeiten.</string>
   <string name="logs_empty" formatted="false">Protokoll ist leer</string>
-  <string name="charging_from" formatted="false">Lädt von</string>
-  <string name="fully_charged" formatted="false">Voll geladen</string>
   <string name="since" formatted="false">Seit</string>
   <string name="currently_using" formatted="false">Im Moment in Benutzung</string>
   <string name="currently_set_to" formatted="false">"Im Moment gesetzt auf: "</string>
@@ -127,7 +120,6 @@
   <string name="pref_cat_autostart" formatted="false">Autostart</string>
   <string name="pref_autostart_at_boot" formatted="false">Autostart beim Gerätestart</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">Battery Monitor starten wenn Gerät startet:</string>
-  <string name="pref_cat_device_specific" formatted="false">Geräte abhängige Einstellungen</string>
   <string name="alarms_overview" formatted="false">Übersicht Alarme</string>
   <string name="pref_alarm_enabled" formatted="false">Alarm einschalten</string>
   <string name="pref_cat_alarm_conditions" formatted="false">Alarm-Bedingungen</string>
@@ -162,7 +154,6 @@
   <string name="menu_show_seconds" formatted="false">Sekunden anzeigen</string>
   <string name="menu_hide_seconds" formatted="false">Sekunden ausblenden</string>
   <string name="no_storage_permission" formatted="false">Speicherberechtigung nicht erteilt.</string>
-  <string name="current" formatted="false">Milliampere</string>
   <string name="status_boot_completed" formatted="false">Start abgeschlossen</string>
   <string name="alarm_type_temperature_drops" formatted="false">Temperatur fällt unter</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatur fällt unter...</string>
@@ -208,7 +199,6 @@
   <string name="pref_cat_notification_content" formatted="false">Inhalt</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Statusleisten-Chip (Android 16+)</string>
   <string name="pref_chip_content" formatted="false">Chip-Inhalt</string>
-  <string name="pref_chip_content_switching" formatted="false">Zwischen Akku und Temperatur wechseln</string>
   <string name="pref_chip_switching_interval" formatted="false">Wechselintervall</string>
   <string name="pref_chip_content_help" formatted="false">Wählen Sie, welcher Wert im Android-16+-Benachrichtigungs-Chip angezeigt wird.</string>
   <string name="pref_chip_indicate_charging" formatted="false">Lade-Emoji anzeigen</string>
@@ -269,7 +259,6 @@
   <string name="pref_indicate_charging_help" formatted="false">Einige Icon-Sets zeigen beim Laden einen Blitz an; diese Einstellung kann das deaktivieren.</string>
   <string name="pref_enable_logging_help" formatted="false">Wenn aktiviert, protokolliert Battery Monitor Akku-Statusänderungen.</string>
   <string name="pref_max_log_age_help" formatted="false">Wenn die Protokollierung aktiv ist, werden beim Anschließen des Geräts ältere Protokolle gelöscht.</string>
-  <string name="pref_notify_status_duration" formatted="false">Statusdauer anzeigen</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android meldet die Akkutemperatur in Celsius. Aktivieren Sie diese Option, wenn Sie Fahrenheit bevorzugen.</string>
   <string name="pref_autostart_at_boot_help" formatted="false">Steuert, ob Battery Monitor beim Gerätestart automatisch gestartet werden soll.</string>
   <string name="predictor_sensitive" formatted="false">Sensitiv</string>

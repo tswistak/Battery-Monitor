@@ -49,8 +49,7 @@
   <string formatted="false" name="confirm_clear_logs">واقعاً همه گزارش‌ها پاک می‌شوند؟</string>
   <string formatted="false" name="configure_log_filter">کدام موارد گزارش را نشان دهید؟</string>
   <string formatted="false" name="okay">باشه</string>
-  <string formatted="false" name="none">هیچ کدام</string>
-  <string formatted="false" name="tab_current_info">اطلاعات فعلی</string>
+    <string formatted="false" name="tab_current_info">اطلاعات فعلی</string>
   <string formatted="false" name="tab_history">تاریخچه</string>
   <string formatted="false" name="notification_until_charged">"تا زمانی که شارژ شود"</string>
   <string formatted="false" name="notification_until_drained">"چپ"</string>
@@ -73,10 +72,6 @@
   <string formatted="false" name="celsius">درجه سانتیگراد</string>
   <string formatted="false" name="celsius_symbol">C</string>
   <string formatted="false" name="volt_symbol">V</string>
-  <string formatted="false" name="light_usage">استفاده از نور باقی مانده:</string>
-  <string formatted="false" name="normal_usage">استفاده معمولی باقی مانده:</string>
-  <string formatted="false" name="heavy_usage">استفاده سنگین باقی مانده:</string>
-  <string formatted="false" name="constant_usage">استفاده ثابت باقی مانده:</string>
   <string formatted="false" name="inaccessible_storage">کارت SD غیر قابل دسترسی است.</string>
   <string formatted="false" name="inaccessible_w_reason">کارت SD غیر قابل دسترسی است:</string>
   <string formatted="false" name="read_only_storage">کارت SD فقط خواندنی است.</string>
@@ -89,7 +84,6 @@
   <string formatted="false" name="temperature">درجه_سلسیوس</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
   <string formatted="false" name="voltage">ولت</string>
-  <string formatted="false" name="current">milliamperes</string>
   <string formatted="false" name="status_unplugged">قطع شده</string>
   <string formatted="false" name="status_unknown">ناشناس</string>
   <string formatted="false" name="status_charging">شارژ کردن</string>
@@ -134,8 +128,6 @@
   <string formatted="false" name="after_nh_mm_plugged_in">بعد از اینکه %1$dh %2$dm وصل شد</string>
   <string formatted="false" name="after_nm_ms_unplugged">پس از قطع %1$dm %2$ds از برق</string>
   <string formatted="false" name="after_nm_ms_plugged_in">بعد از اینکه %1$dm %2$ds وصل شد</string>
-  <string formatted="false" name="charging_from">شارژ از</string>
-  <string formatted="false" name="fully_charged">کاملا شارژ شده</string>
   <string formatted="false" name="since">از آنجایی که</string>
   <string formatted="false" name="currently_using">در حال حاضر استفاده می شود</string>
   <string formatted="false" name="currently_set_to">"در حال حاضر روی:"</string>
@@ -218,7 +210,6 @@
   <string formatted="false" name="pref_cat_notification_content">محتوا</string>
   <string formatted="false" name="pref_cat_status_bar_chip">تراشه نوار وضعیت (Android 16 و بالاتر)</string>
   <string formatted="false" name="pref_chip_content">محتوای تراشه</string>
-  <string formatted="false" name="pref_chip_content_switching">بین باتری و دما سوئیچ کنید</string>
   <string formatted="false" name="pref_chip_switching_interval">فاصله تعویض</string>
   <string formatted="false" name="pref_chip_content_help">مقداری را انتخاب کنید که در تراشه اعلان تبلیغاتی Android 16+ نشان داده شود.</string>
   <string formatted="false" name="pref_chip_indicate_charging">نمایش شکلک شارژ</string>
@@ -370,7 +361,6 @@
   <string formatted="false" name="pref_max_log_age_summary">حذف گزارش های قدیمی تر از:</string>
   <string formatted="false" name="pref_max_log_age_help">اگر ورود به سیستم فعال باشد، هر زمان که دستگاه خود را وصل می کنید، ثبت می شود
     قدیمی تر از این حذف خواهد شد.</string>
-  <string formatted="false" name="pref_notify_status_duration">نمایش مدت زمان وضعیت</string>
   <string formatted="false" name="pref_cat_temperature_unit">واحد دما</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">تبدیل به فارنهایت</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">اندروید دمای باتری را بر حسب درجه سانتیگراد گزارش می کند.  اگر
@@ -429,7 +419,6 @@
     با چرخاندن آن، مجموعه آیکون کلاسیک را به روش کلاسیک کار کنید
     گزینه روشن  به یاد داشته باشید، در اکثر دستگاه ها این فقط نماد را ایجاد می کند
     جامد سفید شود.</string>
-  <string formatted="false" name="pref_cat_device_specific">تنظیمات خاص دستگاه</string>
   <string formatted="false" name="alarms_overview">بررسی اجمالی هشدارها</string>
   <string formatted="false" name="alarms_overview_help">این صفحه به شما امکان می دهد آلارم های جدید اضافه کنید، به سرعت فعال یا غیرفعال کنید
     آلارم های موجود، یا حذف آلارم ها.\n

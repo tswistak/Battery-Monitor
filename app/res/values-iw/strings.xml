@@ -13,8 +13,7 @@
   <string name="confirm_clear_logs" formatted="false">באמת למחוק את כל יומני הרישום?</string>
   <string name="configure_log_filter" formatted="false">אילו רישומות מיומן הרישום להציג?</string>
   <string name="okay" formatted="false">אישור</string>
-  <string name="none" formatted="false">אף אחד</string>
-  <string name="tab_current_info" formatted="false">המידע הנוכחי</string>
+    <string name="tab_current_info" formatted="false">המידע הנוכחי</string>
   <string name="tab_history" formatted="false">היסטוריה</string>
   <string name="notification_until_charged" formatted="false">" עד לסיום הטעינה"</string>
   <string name="notification_until_drained" formatted="false">" נותרו"</string>
@@ -31,10 +30,6 @@
   <string name="percent_symbol" formatted="false">%</string>
   <string name="fahrenheit" formatted="false">פארנהייט</string>
   <string name="celsius" formatted="false">צלזיוס</string>
-  <string name="light_usage" formatted="false">שימוש קל שנותר:</string>
-  <string name="normal_usage" formatted="false">שימוש רגיל שנותר:</string>
-  <string name="heavy_usage" formatted="false">שימוש רב שנותר:</string>
-  <string name="constant_usage" formatted="false">שימוש רצוף שנותר:</string>
   <string name="date" formatted="false">תאריך</string>
   <string name="time" formatted="false">שעה</string>
   <string name="status" formatted="false">מצב</string>
@@ -73,8 +68,6 @@
   <string name="alarm_health_failure" formatted="false">"בריאות הסוללה היא:"</string>
   <string name="alarm_text" formatted="false">ביחרו לעריכת התראות</string>
   <string name="logs_empty" formatted="false">יומני הרישום ריקים</string>
-  <string name="charging_from" formatted="false">בטעינה מ</string>
-  <string name="fully_charged" formatted="false">טעונה במלואה</string>
   <string name="since" formatted="false">מ</string>
   <string name="currently_using" formatted="false">כעת בשימוש</string>
   <string name="currently_set_to" formatted="false">"כעת מכוון ל: "</string>
@@ -144,7 +137,6 @@
   <string formatted="false" name="temperature">מעלות_צלזיוס</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
   <string formatted="false" name="voltage">וולט</string>
-  <string formatted="false" name="current">milliamperes</string>
   <string formatted="false" name="plugged_usb">(USB)</string>
   <string formatted="false" name="plugged_unknown">(?)</string>
   <string formatted="false" name="alarm_type_temperature_drops">הטמפרטורה יורדת מתחת</string>
@@ -223,7 +215,6 @@
   <string formatted="false" name="pref_manage_main_channel">ניהול הערוץ הראשי</string>
   <string formatted="false" name="pref_cat_status_bar_chip">שבב שורת המצב (אנדרואיד 16+)</string>
   <string formatted="false" name="pref_chip_content">תוכן שבב</string>
-  <string formatted="false" name="pref_chip_content_switching">מעבר בין סוללה לטמפרטורה</string>
   <string formatted="false" name="pref_chip_switching_interval">מרווח החלפה</string>
   <string formatted="false" name="pref_chip_content_help">בחר איזה ערך להציג בשבב ההודעות המקודם של Android 16+.</string>
   <string formatted="false" name="pref_chip_indicate_charging">הצג סימון טעינה</string>
@@ -360,7 +351,6 @@
   <string formatted="false" name="pref_max_log_age_summary">מחק יומנים ישנים יותר מ:</string>
   <string formatted="false" name="pref_max_log_age_help">אם רישום מופעל, אז בכל פעם שאתה מחבר את המכשיר שלך, יומן
     ישן מזה יימחק.</string>
-  <string formatted="false" name="pref_notify_status_duration">הצג משך מצב</string>
   <string formatted="false" name="pref_cat_temperature_unit">יחידת טמפרטורה</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">המר לפרנהייט</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">אנדרואיד מדווחת על טמפרטורת הסוללה במעלות צלזיוס.  אם
@@ -408,7 +398,6 @@
     לגרום לסט הסמלים הקלאסי לעבוד בצורה הקלאסית על ידי הפיכתו
     אפשרות מופעלת.  זכור, ברוב המכשירים זה רק יהפוך את הסמל
     להפוך לבן מוצק.</string>
-  <string formatted="false" name="pref_cat_device_specific">הגדרות ספציפיות למכשיר</string>
   <string formatted="false" name="alarms_overview">סקירה כללית של אזעקות</string>
   <string formatted="false" name="alarms_overview_help">דף זה מאפשר לך להוסיף התראות חדשות, להפעיל או לבטל במהירות
     אזעקות קיימות, או מחק אזעקות.\n

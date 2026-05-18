@@ -12,8 +12,7 @@
   <string name="confirm_clear_logs" formatted="false">Vuoi davvero cancellare tutto il registro?</string>
   <string name="configure_log_filter" formatted="false">Quali log mostrare?</string>
   <string name="okay" formatted="false">Ok</string>
-  <string name="none" formatted="false">Nessuno</string>
-  <string name="tab_current_info" formatted="false">Info correnti</string>
+    <string name="tab_current_info" formatted="false">Info correnti</string>
   <string name="tab_history" formatted="false">Storico</string>
   <string name="notification_until_charged" formatted="false">" alla ricarica"</string>
   <string name="notification_until_drained" formatted="false">" rimasti/o"</string>
@@ -34,10 +33,6 @@
   <string name="celsius" formatted="false">Centigrado</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Rimanente con uso leggero:</string>
-  <string name="normal_usage" formatted="false">Rimanente con uso normale:</string>
-  <string name="heavy_usage" formatted="false">Rimanente con uso pesante:</string>
-  <string name="constant_usage" formatted="false">Rimanente con uso costante:</string>
   <string name="inaccessible_storage" formatted="false">Scheda SD inaccessibile.</string>
   <string name="inaccessible_w_reason" formatted="false">Scheda SD inaccessibile:</string>
   <string name="read_only_storage" formatted="false">Scheda SD in sola lettura.</string>
@@ -85,8 +80,6 @@
   <string name="alarm_health_failure" formatted="false">"La salute della batteria è: "</string>
   <string name="alarm_text" formatted="false">Seleziona per modificare gli allarmi.</string>
   <string name="logs_empty" formatted="false">Registro vuoto</string>
-  <string name="charging_from" formatted="false">In carica dalle</string>
-  <string name="fully_charged" formatted="false">Completamente carico</string>
   <string name="since" formatted="false">Dalle</string>
   <string name="currently_using" formatted="false">Attualmente in uso</string>
   <string name="currently_set_to" formatted="false">"Attualmente impostato su: "</string>
@@ -129,7 +122,6 @@
   <string name="pref_cat_language" formatted="false">Lingua</string>
   <string name="pref_language_override" formatted="false">Sovrascrittura lingua</string>
   <string name="pref_language_override_summary" formatted="false">Seleziona lingua:</string>
-  <string name="pref_cat_device_specific" formatted="false">Impostazioni specifiche dispositivo</string>
   <string name="alarms_overview" formatted="false">Panoramica allarmi</string>
   <string name="alarms_overview_help" formatted="false">Questa pagina ti permette di aggiungere nuovi allarmi, abilitare o disabilitare rapidamente gli allarmi esistenti, o cancellare gli allarmi.\n\nPer aggiungere un nuovo allarme, premere \"Aggiungi allarme\" — questo creerà un nuovo allarme e ti porterà alla pagina impostazioni dell\'allarme, dove si possono controllare le impostazioni per il nuovo allarme. Vedere l\'aiuto in tale pagina per maggiori dettagli.\n\nSotto il pulsante \"Aggiungi allarme\" c\'è un elenco di tutti gli allarmi che hai creato.\n\n• Per modificare un allarme esistente, basta selezionarlo.\n• Per cancellare un allarme, tenere premuto a lungo, poi selezionare \"Cancella allarme\". (Potete anche cancellare un allarme della pagina impostazioni individuali sveglia premendo MENU e poi \"Cancella allarmi\"). • Per alternare rapidamente se un allarme viene attivato, premere l\'icona sveglia a sinistra del testo la sveglia. (È anche possibile attivare o disattivare un allarme da parte delle singole impostazioni della sveglia pagina).</string>
   <string name="pref_alarm_enabled" formatted="false">Attiva allarme</string>
@@ -170,7 +162,6 @@
   <string name="menu_show_seconds" formatted="false">Mostra secondi</string>
   <string name="menu_hide_seconds" formatted="false">Nascondi secondi</string>
   <string name="no_storage_permission" formatted="false">Permesso di archiviazione non concesso.</string>
-  <string name="current" formatted="false">milliampere</string>
   <string name="status_boot_completed" formatted="false">Avvio completato</string>
   <string name="alarm_type_temperature_drops" formatted="false">La temperatura scende sotto</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">La temperatura scende sotto...</string>
@@ -205,9 +196,9 @@
   <string name="current_hack_settings_summary" formatted="false">Impostazioni avanzate per abilitare info mA</string>
   <string name="current_hack_settings_help" formatted="false">Android non fornisce un metodo ufficiale per accedere alle informazioni sulla corrente della batteria. Tuttavia è disponibile un hack che su molti dispositivi può permettere di ottenere queste informazioni.\n\nNon è garantito che funzioni: potrebbe non funzionare affatto o sembrare funzionare ma produrre valori senza senso.\n\nIn questa sezione sono disponibili le impostazioni per attivare l\'hack e controllarne il funzionamento, se possibile.</string>
   <string name="live_updates_onboarding_title" formatted="false">Chip batteria barra di stato</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato. Questa opzione è abilitata per impostazione predefinita.\n\nSe preferisci un'icona di notifica tradizionale, puoi disattivare "Live Updates" nelle impostazioni di sistema Android per questa app.\n\nNota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell'app. Se succede, riaprila semplicemente.</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato, ma al momento questa opzione è disabilitata nelle impostazioni di sistema.\n\nConsigliamo di abilitarla per la migliore esperienza. Se preferisci un'icona di notifica tradizionale, puoi lasciarla disabilitata.\n\nNota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell'app. Se succede, riaprila semplicemente.</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor ha bisogno della tua autorizzazione per mostrare il livello della batteria nella barra di stato e avvisarti sugli allarmi.\n\nNota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell'app. Se succede, riaprila semplicemente.</string>
+  <string name="live_updates_onboarding_message_on" formatted="false">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato. Questa opzione è abilitata per impostazione predefinita.\n\nSe preferisci un\'icona di notifica tradizionale, puoi disattivare "Live Updates" nelle impostazioni di sistema Android per questa app.\n\nNota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell\'app. Se succede, riaprila semplicemente.</string>
+  <string name="live_updates_onboarding_message_off" formatted="false">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato, ma al momento questa opzione è disabilitata nelle impostazioni di sistema.\n\nConsigliamo di abilitarla per la migliore esperienza. Se preferisci un\'icona di notifica tradizionale, puoi lasciarla disabilitata.\n\nNota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell\'app. Se succede, riaprila semplicemente.</string>
+  <string name="notifications_onboarding_message" formatted="false">Battery Monitor ha bisogno della tua autorizzazione per mostrare il livello della batteria nella barra di stato e avvisarti sugli allarmi.\n\nNota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell\'app. Se succede, riaprila semplicemente.</string>
   <string name="live_updates_onboarding_positive_on" formatted="false">Capito</string>
   <string name="live_updates_onboarding_positive_off" formatted="false">Vai alle impostazioni</string>
   <string name="live_updates_onboarding_negative_off" formatted="false">Chiudi</string>
@@ -216,7 +207,6 @@
   <string name="pref_cat_notification_content" formatted="false">Contenuto</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Chip barra di stato (Android 16+)</string>
   <string name="pref_chip_content" formatted="false">Contenuto chip</string>
-  <string name="pref_chip_content_switching" formatted="false">Alterna tra batteria e temperatura</string>
   <string name="pref_chip_switching_interval" formatted="false">Intervallo alternanza</string>
   <string name="pref_chip_content_help" formatted="false">Scegli quale valore mostrare nel chip delle notifiche avanzate di Android 16+.</string>
   <string name="pref_chip_indicate_charging" formatted="false">Mostra emoji ricarica</string>
@@ -278,7 +268,6 @@
   <string name="pref_indicate_charging" formatted="false">Indica carica</string>
   <string name="pref_indicate_charging_summary" formatted="false">Modificare l\'icona quando in carica?</string>
   <string name="pref_indicate_charging_help" formatted="false">Alcuni set di icone indicano quando la batteria è in carica.</string>
-  <string name="pref_notify_status_duration" formatted="false">Mostra durata stato</string>
   <string name="predictor_sensitive" formatted="false">Sensibile</string>
   <string name="predictor_conservative" formatted="false">Conservativo</string>
   <string name="predictor_since_status_change" formatted="false">Dal cambio stato</string>

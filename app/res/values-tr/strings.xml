@@ -12,8 +12,7 @@
   <string name="confirm_clear_logs" formatted="false">Tüm günlükleri gerçekten temizle?</string>
   <string name="configure_log_filter" formatted="false">Hangi günlük öğeleri gösterilsin?</string>
   <string name="okay" formatted="false">Tamam</string>
-  <string name="none" formatted="false">Hiçbiri</string>
-  <string name="menu_settings" formatted="false">Ayarlar</string>
+    <string name="menu_settings" formatted="false">Ayarlar</string>
   <string name="menu_close" formatted="false">Kapat</string>
   <string name="menu_help" formatted="false">Yardım</string>
   <string name="menu_clear" formatted="false">Temizle</string>
@@ -28,10 +27,6 @@
   <string name="celsius" formatted="false">Santigrad</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
-  <string name="light_usage" formatted="false">Kalan Hafif Kullanım:</string>
-  <string name="normal_usage" formatted="false">Kalan Normal Kullanım:</string>
-  <string name="heavy_usage" formatted="false">Kalan Yoğun Kullanım:</string>
-  <string name="constant_usage" formatted="false">Kalan Durağan Kullanım Süresi:</string>
   <string name="inaccessible_storage" formatted="false">SD Kart erişilebilir değil.</string>
   <string name="inaccessible_w_reason" formatted="false">SD Kart\'a erişilemiyor:</string>
   <string name="read_only_storage" formatted="false">SK Kart sadece okunur modda.</string>
@@ -79,8 +74,6 @@
   <string name="alarm_health_failure" formatted="false">"Pil sağlığı: "</string>
   <string name="alarm_text" formatted="false">Alarmları düzenlemek için seç.</string>
   <string name="logs_empty" formatted="false">Kayıtlar Boş</string>
-  <string name="charging_from" formatted="false">den şarj ediliyor</string>
-  <string name="fully_charged" formatted="false">Şarj Tam Dolu</string>
   <string name="since" formatted="false">den itibaren</string>
   <string name="currently_using" formatted="false">Şu an kullanılıyor</string>
   <string name="currently_set_to" formatted="false">"Şu an buna ayarlı: "</string>
@@ -107,7 +100,6 @@
   <string name="pref_cat_autostart" formatted="false">Otomatik başlat</string>
   <string name="pref_autostart_at_boot" formatted="false">Açılışta otomatik başlat</string>
   <string name="pref_cat_language" formatted="false">Dil</string>
-  <string name="pref_cat_device_specific" formatted="false">Cihaza Özel Ayarlar</string>
   <string name="pref_alarm_enabled" formatted="false">Alarmı Etkinleştir</string>
   <string name="pref_cat_alarm_conditions" formatted="false">Alarm Koşulları</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Burada hangi koşulların alarm tetikleyeceğini kontrol edebilirsiniz.</string>
@@ -153,7 +145,6 @@
   <string name="menu_show_seconds" formatted="false">Saniyeleri Göster</string>
   <string name="menu_hide_seconds" formatted="false">Saniyeleri Gizle</string>
   <string name="no_storage_permission" formatted="false">Depolama izni verilmedi.</string>
-  <string name="current" formatted="false">miliamper</string>
   <string name="status_boot_completed" formatted="false">Önyükleme Tamamlandı</string>
   <string name="alarm_type_temperature_drops" formatted="false">Sıcaklık şu değerin altına düşerse</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Sıcaklık şu değerin altına düşerse...</string>
@@ -198,7 +189,7 @@
   <string name="live_updates_onboarding_title" formatted="false">Durum Çubuğu Pil Çipi</string>
   <string name="live_updates_onboarding_message_on" formatted="false">Cihazınız, pil yüzdesini durum çubuğunda bir çip olarak göstermeyi destekler. Bu seçenek varsayılan olarak etkindir.\n\nGeleneksel bir bildirim simgesini tercih ediyorsanız, bu uygulama için Android sistem ayarlarında "Canlı Güncellemeler"i kapatabilirsiniz.\n\nNot: Bu izni vermek bazen uygulamanın kapanmasına neden olabilir. Böyle olursa uygulamayı yeniden açmanız yeterlidir.</string>
   <string name="live_updates_onboarding_message_off" formatted="false">Cihazınız, pil yüzdesini durum çubuğunda bir çip olarak göstermeyi destekler, ancak bu seçenek şu anda sistem ayarlarında devre dışıdır.\n\nEn iyi deneyim için etkinleştirmenizi öneririz. Geleneksel bir bildirim simgesini tercih ediyorsanız devre dışı bırakılmış halde tutabilirsiniz.\n\nNot: Bu izni vermek bazen uygulamanın kapanmasına neden olabilir. Böyle olursa uygulamayı yeniden açmanız yeterlidir.</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor'ün pil seviyesini durum çubuğunda gösterebilmesi ve alarmlar hakkında sizi bilgilendirebilmesi için izninize ihtiyacı vardır.\n\nNot: Bu izni vermek bazen uygulamanın kapanmasına neden olabilir. Böyle olursa uygulamayı yeniden açmanız yeterlidir.</string>
+  <string name="notifications_onboarding_message" formatted="false">Battery Monitor\'ün pil seviyesini durum çubuğunda gösterebilmesi ve alarmlar hakkında sizi bilgilendirebilmesi için izninize ihtiyacı vardır.\n\nNot: Bu izni vermek bazen uygulamanın kapanmasına neden olabilir. Böyle olursa uygulamayı yeniden açmanız yeterlidir.</string>
   <string name="live_updates_onboarding_positive_on" formatted="false">Anladım</string>
   <string name="live_updates_onboarding_positive_off" formatted="false">Ayarlara Git</string>
   <string name="live_updates_onboarding_negative_off" formatted="false">Kapat</string>
@@ -207,7 +198,6 @@
   <string name="pref_cat_notification_content" formatted="false">İçerik</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Durum Çubuğu Çipi (Android 16+)</string>
   <string name="pref_chip_content" formatted="false">Çip İçeriği</string>
-  <string name="pref_chip_content_switching" formatted="false">Pil ve sıcaklık arasında geçiş yap</string>
   <string name="pref_chip_switching_interval" formatted="false">Geçiş aralığı</string>
   <string name="pref_chip_content_help" formatted="false">Android 16+ bildirim çipinde hangi değerin gösterileceğini seçin.</string>
   <string name="pref_chip_indicate_charging" formatted="false">Şarj Emojisini Göster</string>
@@ -270,7 +260,6 @@
   <string name="pref_enable_logging_summary" formatted="false">Pil durum değişiklikleri kaydedilsin mi?</string>
   <string name="pref_enable_logging_help" formatted="false">Etkinleştirilirse Battery Monitor pil durum değişikliklerini kaydeder.</string>
   <string name="pref_max_log_age_help" formatted="false">Kayıt tutma açıksa, cihaz takıldığında bu süreden eski kayıtlar silinir.</string>
-  <string name="pref_notify_status_duration" formatted="false">Durum Süresini Göster</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android pil sıcaklığını Santigrat olarak bildirir; isterseniz Fahrenhayt\'a dönüştürülür.</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">Cihaz açıldığında Battery Monitor başlatılsın:</string>
   <string name="pref_autostart_at_boot_help" formatted="false">Battery Monitor\'un cihaz açılışında otomatik başlatılmasını kontrol eder.</string>

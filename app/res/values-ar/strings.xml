@@ -14,8 +14,7 @@
   <string name="confirm_clear_logs" formatted="false">هل تريد مسح السجلات ؟</string>
   <string name="configure_log_filter" formatted="false">رؤية عناصر السجلات؟</string>
   <string name="okay" formatted="false">موافق</string>
-  <string name="none" formatted="false">لا\ولاواحد</string>
-  <string name="tab_current_info" formatted="false">معلومات الحالية</string>
+    <string name="tab_current_info" formatted="false">معلومات الحالية</string>
   <string name="tab_history" formatted="false">سجلات التطبيق</string>
   <string name="notification_until_charged" formatted="false">"حتى الشحن"</string>
   <string name="notification_until_drained" formatted="false">"ترك"</string>
@@ -36,10 +35,6 @@
   <string name="celsius" formatted="false">سلسيوسي</string>
   <string name="celsius_symbol" formatted="false">س</string>
   <string name="volt_symbol" formatted="false">ف</string>
-  <string name="light_usage" formatted="false">بقى من زمن استعمال الضوء:</string>
-  <string name="normal_usage" formatted="false">بقى من حالة الاستعمال العادي:</string>
-  <string name="heavy_usage" formatted="false">بقى من حالة الاستعمال الكبير:</string>
-  <string name="constant_usage" formatted="false">بقى من الاستعمال المنتظم :</string>
   <string name="inaccessible_storage" formatted="false">بطاقة اس دي غير قابلة للوصول</string>
   <string name="inaccessible_w_reason" formatted="false">بطاقة اس دي يتعذر الوصول اليها:</string>
   <string name="read_only_storage" formatted="false">بطاقة اس دي للقراءة فقط</string>
@@ -87,8 +82,6 @@
   <string name="alarm_health_failure" formatted="false">"حالة البطارية "</string>
   <string name="alarm_text" formatted="false">اختر لتعديل المنبهات</string>
   <string name="logs_empty" formatted="false">السجلات فارغة</string>
-  <string name="charging_from" formatted="false">شحن من</string>
-  <string name="fully_charged" formatted="false">الشحن كامل</string>
   <string name="since" formatted="false">منذ</string>
   <string name="currently_using" formatted="false">تستخدم حاليا</string>
   <string name="currently_set_to" formatted="false">"حاليا ضبط الى: "</string>
@@ -155,7 +148,6 @@
   <string name="pref_max_log_age" formatted="false">الاحد الاقصى للسجلات</string>
   <string name="pref_max_log_age_summary" formatted="false">حذف السجلات القديمة بعد:</string>
   <string name="pref_max_log_age_help" formatted="false">اذا تم تمكين السجلات سوف يتم حذف السجلات القديمة من فترة لاخرى وسوف يتم التبديل بالسجلات الجديدة</string>
-  <string name="pref_notify_status_duration" formatted="false">مدة عرض الحالة</string>
   <string name="pref_cat_temperature_unit" formatted="false">وحدة درجة الحرارة</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">تحويل إلى فهرنهايت</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">الاندرويد وحدة قياس حرارته هي الدرجة السليزية اذا كنت تفضل رؤية درجة الحرارة بالفهرنهايت تحقق من هذا الخيار وسوف يحول لتطبيق درجة الحرارة لك</string>
@@ -173,7 +165,6 @@
   <string name="pref_cat_language" formatted="false">اللغة</string>
   <string name="pref_language_override" formatted="false">تجاوز اللغة</string>
   <string name="pref_language_override_summary" formatted="false">اختر اللغة:</string>
-  <string name="pref_cat_device_specific" formatted="false">اعدادات النظام المعينة</string>
   <string name="alarms_overview" formatted="false">النظرة العامة على المنبهات</string>
   <string name="alarms_overview_help" formatted="false">هذه الصفحة تؤدي الى اعدادات المنبهات للتمكين والتعطيل السريع او حذف المنبه\n\nلاضافة منبه جديد اضغط على كلمة اضافة منبه وهذا سوف يؤديك الى اعدادات المنبه لاختيار المنبه الجديد راجع قسم مساعده للحصول على التفاصيل\n\nاسفل كلمة اضافة منبه هذه قائمة تحتوي على المنبهات التي قمت بأنشاها\n\nلتعديل على منبه اضغط عليه فقط\nلحذف منبه ضغطة طويلة عليه واختر حذف المنبه ويمكنك حذفها من قائمة الاعدادات الرئيسية واختيار خذف المنبه\nللتبديل بسرعة ما إذا تم تمكين التنبيه، اضغط على أيقونة المنبه على يسار النص التنبيه يمكنك أيضا تمكين أو تعطيل التنبيه من صفحة إعدادات التنبيه الفردية</string>
   <string name="pref_alarm_enabled" formatted="false">تمكين التنبيه</string>
@@ -215,7 +206,6 @@
   <string name="menu_show_seconds" formatted="false">إظهار الثواني</string>
   <string name="menu_hide_seconds" formatted="false">إخفاء الثواني</string>
   <string name="no_storage_permission" formatted="false">لم يتم منح إذن التخزين.</string>
-  <string name="current" formatted="false">ميلي أمبير</string>
   <string name="status_boot_completed" formatted="false">اكتمل الإقلاع</string>
   <string name="alarm_type_temperature_drops" formatted="false">تنخفض الحرارة عن</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">تنخفض الحرارة عن...</string>
@@ -254,7 +244,6 @@
   <string name="pref_manage_main_channel" formatted="false">إدارة القناة الرئيسية</string>
   <string name="pref_cat_status_bar_chip" formatted="false">شريحة شريط الحالة (Android 16+)</string>
   <string name="pref_chip_content" formatted="false">محتوى الشريحة</string>
-  <string name="pref_chip_content_switching" formatted="false">التبديل بين البطارية والحرارة</string>
   <string name="pref_chip_switching_interval" formatted="false">فاصل التبديل</string>
   <string name="pref_chip_content_help" formatted="false">اختر القيمة التي ستُعرض في شريحة الإشعار المروّج على Android 16+.</string>
   <string name="pref_chip_indicate_charging" formatted="false">إظهار رمز الشحن</string>

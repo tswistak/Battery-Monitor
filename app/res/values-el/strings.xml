@@ -44,8 +44,7 @@
   <string formatted="false" name="confirm_clear_logs">Θέλετε να διαγράψετε όλες τις καταγραφές δεδομένων;</string>
   <string formatted="false" name="configure_log_filter">Εμφάνιση των στοιχείων καταγραφής;</string>
   <string formatted="false" name="okay">Εντάξει</string>
-  <string formatted="false" name="none">Κανένα</string>
-  <string formatted="false" name="tab_current_info">Τρέχουσες πληροφορίες</string>
+    <string formatted="false" name="tab_current_info">Τρέχουσες πληροφορίες</string>
   <string formatted="false" name="tab_history">Ιστορία</string>
   <string formatted="false" name="notification_until_charged">"μέχρι να χρεωθεί"</string>
   <string formatted="false" name="notification_until_drained">"αριστερά"</string>
@@ -68,10 +67,6 @@
   <string formatted="false" name="celsius">Κελσίου</string>
   <string formatted="false" name="celsius_symbol">C</string>
   <string formatted="false" name="volt_symbol">V</string>
-    <string formatted="false" name="light_usage">Χρόνος με Ελαφριά Χρήση:</string>
-  <string formatted="false" name="normal_usage">Χρόνος με Κανονική Χρήση:</string>
-  <string formatted="false" name="heavy_usage">Χρόνος με Βαριά Χρήση:</string>
-  <string formatted="false" name="constant_usage">Χρόνος με Σταθερή Χρήση:</string>
     <string formatted="false" name="inaccessible_storage">Η Κάρτα SD είναι απροσπέλαστη.</string>
   <string formatted="false" name="inaccessible_w_reason">Κάρτα SD απροσπέλαστη:</string>
   <string formatted="false" name="read_only_storage">Η Κάρτα SD είναι αναγνώσιμη μόνο.</string>
@@ -84,8 +79,7 @@
   <string formatted="false" name="temperature">βαθμοί_κελσίου</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
   <string formatted="false" name="voltage">βόλτς</string>
-  <string formatted="false" name="current">milliamperes</string>
-  <string formatted="false" name="status_unplugged">Αποσυνδεδεμένο</string>
+    <string formatted="false" name="status_unplugged">Αποσυνδεδεμένο</string>
   <string formatted="false" name="status_unknown">Άγνωστο</string>
   <string formatted="false" name="status_charging">Φόρτιση</string>
   <string formatted="false" name="status_discharging">Αποφόρτιση</string>
@@ -129,9 +123,7 @@
   <string formatted="true" name="after_nh_mm_plugged_in">Αφού συνδεθεί το %1$dh, το %2$dm</string>
   <string formatted="true" name="after_nm_ms_unplugged">Μετά την αποσύνδεση του %1$dm του %2$d</string>
   <string formatted="true" name="after_nm_ms_plugged_in">Μετά την σύνδεση %1$dm %2$ds</string>
-    <string formatted="false" name="charging_from">Φόρτιση από</string>
-  <string formatted="false" name="fully_charged">Πλήρως Φορτισμένη</string>
-  <string formatted="false" name="since">Από</string>
+    <string formatted="false" name="since">Από</string>
   <string formatted="false" name="currently_using">Τώρα χρησιμοποιείται</string>
   <string formatted="false" name="currently_set_to">"Τώρα έχει ρυθμιστεί σε: "</string>
   <string formatted="false" name="currently_disabled">Απενεργοποιημένο Τώρα</string>
@@ -206,7 +198,6 @@
   <string formatted="false" name="pref_cat_notification_content">Περιεχόμενο</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Τσιπ γραμμής κατάστασης (Android 16+)</string>
   <string formatted="false" name="pref_chip_content">Περιεχόμενο Chip</string>
-  <string formatted="false" name="pref_chip_content_switching">Εναλλαγή μεταξύ μπαταρίας και θερμοκρασίας</string>
     <string formatted="false" name="pref_chip_switching_interval">Μεσοδιάστημα εναλλαγής</string>
     <string formatted="false" name="pref_chip_content_help">Επιλέξτε ποια τιμή θα εμφανίζεται στο τσιπ ειδοποιήσεων προωθημένων Android 16+.</string>
   <string formatted="false" name="pref_chip_indicate_charging">Εμφάνιση Emoji φόρτισης</string>
@@ -385,7 +376,6 @@
   <string formatted="false" name="pref_max_log_age">Μέγιστη Περίοδος Καταγραφής</string>
   <string formatted="false" name="pref_max_log_age_summary">Διαγραφή λίστας δεδομένων παλαιότερης από:</string>
   <string formatted="false" name="pref_max_log_age_help">Αν η καταγραφή είναι ενεργοποιημένη, τότε όποτε συνδέετε τη συσκευή στην πρίζα, όλες οι παλαιότερες καταγραφές θα διαγραφούν.</string>
-  <string formatted="false" name="pref_notify_status_duration">Εμφάνιση διάρκειας κατάστασης</string>
     <string formatted="false" name="pref_cat_temperature_unit">Μονάδες Θερμοκρασίας</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Μετατροπή σε Φάρεναϊτ</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Το Android αναφέρει τη θερμοκρασία της μπαταρίας σε βαθμούς Κελσίου. Αν προτιμάτε να τη βλέπετε σε Φάρεναϊτ, επιλέξετε αυτήν την επιλογή και η εφαρμογή θα σας τη μετατρέπει.</string>
@@ -435,8 +425,7 @@
         επιλογή ενεργοποιημένη.  Θυμηθείτε, στις περισσότερες συσκευές αυτό θα δημιουργήσει απλώς το εικονίδιο
         γίνει στερεό λευκό.
   </string>
-  <string formatted="false" name="pref_cat_device_specific">Ειδικές Ρυθμίσεις Συσκευής</string>
-  <string formatted="false" name="alarms_overview">Επισκόπηση Ειδιποιήσεων</string>
+    <string formatted="false" name="alarms_overview">Επισκόπηση Ειδιποιήσεων</string>
   <string formatted="false" name="alarms_overview_help">Αυτή η σελίδα σας επιτρέπει να προσθέσετε νέες ειδοποιήσεις, να επεξεργάστείτε ή να διαγράψετε ειδοποιήσεις που έχετε θέσει.\n\nΓια να προσθέσετε μια νέα ειδιποίηση πατήστε \"Προσθήκη ειδοποίησης\" - αυτό θα δημιουργήσει μια νέα ειδιποίηση και θα μεταφερθείτε στη σελίδα ρυθμίσεων ειδοποίησης, όπου μπορείτε να καθορίσετε τις ρυθμίσεις για τη νέα ειδοποίηση. Δέστε τη βοήθεια στη σελίδα αυτή για περισσότερες πληροφορίες.\n\nΚάτω από το πλήκτρο \"Προσθήκη Ειδοποίησης\" υπάρχει η λίστα με όλες τις ειδοποιήσεις που έχετε καθορίσει.\n\n• Για να επεξεργαστείτε μια ειδοποίηση, απλά πατήστε πάνω της.\n• Για να διαγράψετε μια ειδοποίηση, πατήστε παρατεταμένα πάνω της, μετά επιλέξτε \"Διαγραφή Ειδιποίησης\". (Μπορείτε επίσης να διαγράψετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης πατώντας το MENU και μετά \"Διαγραφή Ειδιποίησης\").\n• Για γρήγορη εναλλαγή μεταξύ ενεργοποίησης και απενεργοποίησης μιας ειδοποίησης, πατήστε την εικόνα ρολογιού ειδοποίησης στα αριστερά του κειμένου ειδοποίησης. (Μπορείτε να ενεργοποιήσετε ή να απενεργοποιήσετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης)</string>
   <string formatted="false" name="pref_alarm_enabled">Ενεργοποίηση Ειδοποίησης</string>
   <string formatted="false" name="pref_alarm_enabled_help">Αν θέλετε να απενεργοποιήσετε προσωρινά μια ειδοποίηση χωρίς να χρειάζεται να τη ξαναδημιουργήσετε όταν τη χρειάζεστε ξανά, μπορείτε να την απενεργοποιήσετε είτε από εδώ είτε από τη κυρίως σελίδα των ειδοποιήσεων.</string>
