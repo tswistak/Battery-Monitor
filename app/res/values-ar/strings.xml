@@ -80,8 +80,7 @@
   <string name="alarm_charge_rises" formatted="false">"شحن البطاية اعلى من"</string>
   <string name="alarm_temp_rises" formatted="false">"مؤقت البطاية اعلى"</string>
   <string name="alarm_health_failure" formatted="false">"حالة البطارية "</string>
-  <string name="alarm_text" formatted="false">اختر لتعديل المنبهات</string>
-  <string name="logs_empty" formatted="false">السجلات فارغة</string>
+    <string name="logs_empty" formatted="false">السجلات فارغة</string>
   <string name="since" formatted="false">منذ</string>
   <string name="currently_using" formatted="false">تستخدم حاليا</string>
   <string name="currently_set_to" formatted="false">"حاليا ضبط الى: "</string>

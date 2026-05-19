@@ -69,8 +69,7 @@
   <string name="alarm_charge_rises" formatted="false">"Nabitie batérie je nad "</string>
   <string name="alarm_temp_rises" formatted="false">"Teplota batérie je nad "</string>
   <string name="alarm_health_failure" formatted="false">"Zdravie batérie je: "</string>
-  <string name="alarm_text" formatted="false">Označiť pre úpravu upozornení.</string>
-  <string name="logs_empty" formatted="false">Záznamy sú prázdne</string>
+    <string name="logs_empty" formatted="false">Záznamy sú prázdne</string>
   <string name="since" formatted="false">Od</string>
   <string name="currently_using" formatted="false">Práve používate</string>
   <string name="currently_set_to" formatted="false">"V súčasnosti nastavený na: "</string>

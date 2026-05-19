@@ -69,8 +69,7 @@
   <string name="alarm_charge_rises" formatted="false">"Charge de la batterie supérieure à "</string>
   <string name="alarm_temp_rises" formatted="false">"T° de la batterie supérieure à "</string>
   <string name="alarm_health_failure" formatted="false">"Santé de la batterie : "</string>
-  <string name="alarm_text" formatted="false">Sélectionnez pour modifier l\'alarme.</string>
-  <string name="logs_empty" formatted="false">Les journaux sont vides</string>
+    <string name="logs_empty" formatted="false">Les journaux sont vides</string>
   <string name="since" formatted="false">depuis</string>
   <string name="currently_using" formatted="false">Valeur actuelle :</string>
   <string name="currently_set_to" formatted="false">"Valeur actuelle :"</string>

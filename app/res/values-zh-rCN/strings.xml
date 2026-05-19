@@ -52,8 +52,7 @@
   <string name="alarm_charge_drops" formatted="false">电池电量低于</string>
   <string name="alarm_charge_rises" formatted="false">电池电量高于</string>
   <string name="alarm_temp_rises" formatted="false">电池温度高于</string>
-  <string name="alarm_text" formatted="false">点击编辑此警报器</string>
-  <string name="logs_empty" formatted="false">日志记录为空</string>
+    <string name="logs_empty" formatted="false">日志记录为空</string>
   <string name="since" formatted="false">开始于</string>
   <string name="currently_using" formatted="false">当前使用</string>
   <string name="currently_set_to" formatted="false">"当前设置为"</string>

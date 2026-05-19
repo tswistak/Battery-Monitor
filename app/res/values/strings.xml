@@ -147,7 +147,6 @@
   <string formatted="false" name="alarm_temp_drops">"Battery temp. is below "</string>
   <string formatted="false" name="alarm_temp_rises">"Battery temp. is above "</string>
   <string formatted="false" name="alarm_health_failure">"Battery health is: "</string>
-  <string formatted="false" name="alarm_text">Select to edit alarms.</string>
 
   <string formatted="false" name="logs_empty">Logs Are Empty</string>
   <plurals name="n_log_items">

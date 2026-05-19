@@ -71,7 +71,6 @@
   <string name="alarm_charge_drops" formatted="false">"La carga de la bateria es inferior a "</string>
   <string name="alarm_charge_rises" formatted="false">"La carga de la bateria es superior a "</string>
   <string name="alarm_temp_rises" formatted="false">"La Temperatura de la bateria es superior a "</string>
-  <string name="alarm_text" formatted="false">Seleccionar para editar alarmas</string>
   <string name="logs_empty" formatted="false">El registro está vacío</string>
   <string name="since" formatted="false">desde</string>
   <string name="currently_using" formatted="false">Usando actualmente</string>

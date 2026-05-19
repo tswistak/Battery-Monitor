@@ -51,7 +51,6 @@ class Str {
     static String alarm_temp_drops;
     static String alarm_temp_rises;
     static String alarm_health_failure;
-    static String alarm_text;
 
     static String inaccessible_storage;
     static String inaccessible_w_reason;
@@ -117,7 +116,6 @@ class Str {
         alarm_temp_drops     = res.getString(R.string.alarm_temp_drops);
         alarm_temp_rises     = res.getString(R.string.alarm_temp_rises);
         alarm_health_failure = res.getString(R.string.alarm_health_failure);
-        alarm_text           = res.getString(R.string.alarm_text);
 
         inaccessible_storage  = res.getString(R.string.inaccessible_storage);
         inaccessible_w_reason = res.getString(R.string.inaccessible_w_reason);

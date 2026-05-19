@@ -67,8 +67,7 @@
   <string name="alarm_charge_rises" formatted="false">"Stanje baterije nad "</string>
   <string name="alarm_temp_rises" formatted="false">"Temperatura baterije nad "</string>
   <string name="alarm_health_failure" formatted="false">"Zdravje baterije je: "</string>
-  <string name="alarm_text" formatted="false">Izberite za urejanje alarmov.</string>
-  <string name="logs_empty" formatted="false">Poročila so prazna</string>
+    <string name="logs_empty" formatted="false">Poročila so prazna</string>
   <string name="since" formatted="false">od</string>
   <string name="currently_using" formatted="false">Trenutno uporabljeno</string>
   <string name="currently_set_to" formatted="false">"Trenutno nastavljeno na: "</string>

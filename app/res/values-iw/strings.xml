@@ -66,8 +66,7 @@
   <string name="alarm_charge_rises" formatted="false">"מטען הסוללה מעל "</string>
   <string name="alarm_temp_rises" formatted="false">"טמפרטורת הסוללה גבוהה מ-"</string>
   <string name="alarm_health_failure" formatted="false">"בריאות הסוללה היא:"</string>
-  <string name="alarm_text" formatted="false">ביחרו לעריכת התראות</string>
-  <string name="logs_empty" formatted="false">יומני הרישום ריקים</string>
+    <string name="logs_empty" formatted="false">יומני הרישום ריקים</string>
   <string name="since" formatted="false">מ</string>
   <string name="currently_using" formatted="false">כעת בשימוש</string>
   <string name="currently_set_to" formatted="false">"כעת מכוון ל: "</string>

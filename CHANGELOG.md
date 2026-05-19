@@ -13,6 +13,7 @@
 - Rebranded the app from BatteryBot Pro to Battery Monitor.
 - Added automated translations for missing strings.
 - Possibility to set custom values for battery alarms (charge levels, temperature).
+- Removed unnecessary text from notifications.
 
 ### Fixed
 

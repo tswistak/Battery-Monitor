@@ -39,8 +39,7 @@
   <string name="alarm_charge_rises" formatted="false">"Carga da bateria acima de "</string>
   <string name="alarm_temp_rises" formatted="false">"Temp. bateria acima de "</string>
   <string name="alarm_health_failure" formatted="false">"Saúde da bateria é: "</string>
-  <string name="alarm_text" formatted="false">Selecione para editar alarmes.</string>
-  <string name="logs_empty" formatted="false">Não existem relatórios</string>
+    <string name="logs_empty" formatted="false">Não existem relatórios</string>
   <string name="since" formatted="false">Desde</string>
   <string name="currently_using" formatted="false">Usando</string>
   <string name="currently_set_to" formatted="false">"Definido para: "</string>

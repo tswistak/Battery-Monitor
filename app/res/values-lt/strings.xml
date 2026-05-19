@@ -69,8 +69,7 @@
   <string name="alarm_charge_rises" formatted="false">"Baterijos lygis yra aukščiau "</string>
   <string name="alarm_temp_rises" formatted="false">"Baterijos temp. yra aukščiau "</string>
   <string name="alarm_health_failure" formatted="false">"Baterijos būklė yra: "</string>
-  <string name="alarm_text" formatted="false">Koreguoti aliarmus.</string>
-  <string name="logs_empty" formatted="false">Įrašai tušti</string>
+    <string name="logs_empty" formatted="false">Įrašai tušti</string>
   <string name="since" formatted="false">Nuo</string>
   <string name="currently_using" formatted="false">Dabar naudojama</string>
   <string name="currently_set_to" formatted="false">"Dabar nustatyta: "</string>

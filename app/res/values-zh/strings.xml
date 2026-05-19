@@ -208,8 +208,7 @@
   <string formatted="false" name="alarm_temp_drops">“電池溫度低於”</string>
   <string formatted="false" name="alarm_temp_rises">“電池溫度高於”</string>
   <string formatted="false" name="alarm_health_failure">“電池健康狀況是：”</string>
-  <string formatted="false" name="alarm_text">選擇編輯警報。</string>
-  <string formatted="false" name="after_nh_mm_unplugged">%1$dh %2$dm 拔掉插頭後</string>
+    <string formatted="false" name="after_nh_mm_unplugged">%1$dh %2$dm 拔掉插頭後</string>
   <string formatted="false" name="after_nh_mm_plugged_in">%1$dh %2$dm 插入後</string>
   <string formatted="false" name="after_nm_ms_unplugged">%1$dm %2$ds 拔掉插頭後</string>
   <string formatted="false" name="after_nm_ms_plugged_in">%1$dm %2$ds 插入後</string>

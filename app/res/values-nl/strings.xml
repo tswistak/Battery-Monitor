@@ -78,8 +78,7 @@
   <string name="alarm_charge_rises" formatted="false">"Batterijniveau is boven "</string>
   <string name="alarm_temp_rises" formatted="false">"Batterijtemperatuur is boven "</string>
   <string name="alarm_health_failure" formatted="false">"Batterijconditie is: "</string>
-  <string name="alarm_text" formatted="false">Selecteer om alarmen aan te passen</string>
-  <string name="logs_empty" formatted="false">Logboeken zijn leeg</string>
+    <string name="logs_empty" formatted="false">Logboeken zijn leeg</string>
   <string name="since" formatted="false">sinds</string>
   <string name="currently_using" formatted="false">Je gebruikt nu</string>
   <string name="currently_set_to" formatted="false">"Ingesteld op: "</string>

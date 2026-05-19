@@ -72,8 +72,7 @@
   <string name="alarm_charge_rises" formatted="false">"Pil şarjı şu değerin üstünde "</string>
   <string name="alarm_temp_rises" formatted="false">"Pil sıcaklığı şu değerin üstünde "</string>
   <string name="alarm_health_failure" formatted="false">"Pil sağlığı: "</string>
-  <string name="alarm_text" formatted="false">Alarmları düzenlemek için seç.</string>
-  <string name="logs_empty" formatted="false">Kayıtlar Boş</string>
+    <string name="logs_empty" formatted="false">Kayıtlar Boş</string>
   <string name="since" formatted="false">den itibaren</string>
   <string name="currently_using" formatted="false">Şu an kullanılıyor</string>
   <string name="currently_set_to" formatted="false">"Şu an buna ayarlı: "</string>

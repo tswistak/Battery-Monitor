@@ -929,7 +929,6 @@ public class BatteryInfoService extends Service {
             if (c != null) {
                 nb = parseAlarmCursor(c);
                 nb.setContentTitle(Str.alarm_fully_charged)
-                    .setContentText(Str.alarm_text)
                     .setChannelId(CHAN_ID_A_CHARGED);
 
                 nb.setVisibility(Notification.VISIBILITY_PUBLIC);
@@ -945,7 +944,6 @@ public class BatteryInfoService extends Service {
             nb = parseAlarmCursor(c);
             String threshold = c.getString(c.getColumnIndex(AlarmDatabase.KEY_THRESHOLD));
             nb.setContentTitle(Str.alarm_charge_drops + threshold + Str.percent_symbol)
-                .setContentText(Str.alarm_text)
                 .setChannelId(CHAN_ID_A_CDROP);
 
             nb.setVisibility(Notification.VISIBILITY_PUBLIC);
@@ -960,7 +958,6 @@ public class BatteryInfoService extends Service {
             nb = parseAlarmCursor(c);
             String threshold = c.getString(c.getColumnIndex(AlarmDatabase.KEY_THRESHOLD));
             nb.setContentTitle(Str.alarm_charge_rises + threshold + Str.percent_symbol)
-                .setContentText(Str.alarm_text)
                 .setChannelId(CHAN_ID_A_CRISE);
 
             nb.setVisibility(Notification.VISIBILITY_PUBLIC);
@@ -978,7 +975,6 @@ public class BatteryInfoService extends Service {
             nb = parseAlarmCursor(c);
             String threshold = c.getString(c.getColumnIndex(AlarmDatabase.KEY_THRESHOLD));
             nb.setContentTitle(Str.alarm_temp_rises + Str.formatTemp(Integer.valueOf(threshold), convertF, false))
-                .setContentText(Str.alarm_text)
                 .setChannelId(CHAN_ID_A_TRISE);
 
             nb.setVisibility(Notification.VISIBILITY_PUBLIC);
@@ -996,7 +992,6 @@ public class BatteryInfoService extends Service {
             nb = parseAlarmCursor(c);
             String threshold = c.getString(c.getColumnIndex(AlarmDatabase.KEY_THRESHOLD));
             nb.setContentTitle(Str.alarm_temp_drops + Str.formatTemp(Integer.valueOf(threshold), convertF, false))
-                .setContentText(Str.alarm_text)
                 .setChannelId(CHAN_ID_A_TDROP);
 
             nb.setVisibility(Notification.VISIBILITY_PUBLIC);
@@ -1011,7 +1006,6 @@ public class BatteryInfoService extends Service {
                 sps_editor.putInt(KEY_PREVIOUS_HEALTH, info.health);
                 nb = parseAlarmCursor(c);
                 nb.setContentTitle(Str.alarm_health_failure + Str.healths[info.health])
-                    .setContentText(Str.alarm_text)
                     .setChannelId(CHAN_ID_A_HFAIL);
 
                 nb.setVisibility(Notification.VISIBILITY_PUBLIC);

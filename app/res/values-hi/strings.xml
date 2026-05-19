@@ -115,8 +115,7 @@
   <string formatted="false" name="alarm_temp_drops">"बैटरी का तापमान नीचे है"</string>
   <string formatted="false" name="alarm_temp_rises">"बैटरी का तापमान ऊपर है"</string>
   <string formatted="false" name="alarm_health_failure">"बैटरी स्वास्थ्य है:"</string>
-  <string formatted="false" name="alarm_text">अलार्म संपादित करने के लिए चयन करें.</string>
-  <string formatted="false" name="logs_empty">लॉग खाली हैं</string>
+    <string formatted="false" name="logs_empty">लॉग खाली हैं</string>
   <string formatted="false" name="after_nh_mm_unplugged">%1$dh %2$dm के बाद अनप्लग किया गया</string>
   <string formatted="false" name="after_nh_mm_plugged_in">%1$dh %2$dm के बाद प्लग इन किया गया</string>
   <string formatted="false" name="after_nm_ms_unplugged">%1$dm %2$ds के अनप्लग होने के बाद</string>

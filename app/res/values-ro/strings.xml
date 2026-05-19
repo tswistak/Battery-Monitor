@@ -69,8 +69,7 @@
   <string name="alarm_charge_rises" formatted="false">"Nivelul bateriei este peste "</string>
   <string name="alarm_temp_rises" formatted="false">"Temperatura bateriei este peste "</string>
   <string name="alarm_health_failure" formatted="false">Calitatea Bateriei este:</string>
-  <string name="alarm_text" formatted="false">Selecteaza pentru a edita alarmele.</string>
-  <string name="logs_empty" formatted="false">Nu sunt loguri/loguri goale</string>
+    <string name="logs_empty" formatted="false">Nu sunt loguri/loguri goale</string>
   <string name="since" formatted="false">De la</string>
   <string name="currently_using" formatted="false">Folosire curenta</string>
   <string name="currently_set_to" formatted="false">"Acum setat la: "</string>

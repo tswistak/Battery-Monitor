@@ -117,8 +117,7 @@
   <string formatted="false" name="alarm_temp_drops">"Η θερμοκρασία της μπαταρίας είναι κάτω"</string>
   <string formatted="false" name="alarm_temp_rises">"Η θερμοκρασία της μπαταρίας είναι πάνω "</string>
   <string formatted="false" name="alarm_health_failure">"Η υγεία της μπαταρίας είναι: "</string>
-  <string formatted="false" name="alarm_text">Επιλέξτε για επεξεργασία ειδοποιήσεων.</string>
-  <string formatted="false" name="logs_empty">Λίστες Καταγραφής Άδειες</string>
+    <string formatted="false" name="logs_empty">Λίστες Καταγραφής Άδειες</string>
     <string formatted="true" name="after_nh_mm_unplugged">Μετά την αποσύνδεση του %1$dh %2$dm</string>
   <string formatted="true" name="after_nh_mm_plugged_in">Αφού συνδεθεί το %1$dh, το %2$dm</string>
   <string formatted="true" name="after_nm_ms_unplugged">Μετά την αποσύνδεση του %1$dm του %2$d</string>

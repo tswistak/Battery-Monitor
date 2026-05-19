@@ -122,8 +122,7 @@
   <string formatted="false" name="alarm_temp_drops">"دمای باتری پایین است"</string>
   <string formatted="false" name="alarm_temp_rises">"دمای باتری بالاتر است"</string>
   <string formatted="false" name="alarm_health_failure">"سلامت باتری این است:"</string>
-  <string formatted="false" name="alarm_text">برای ویرایش آلارم ها را انتخاب کنید.</string>
-  <string formatted="false" name="logs_empty">سیاههها خالی هستند</string>
+    <string formatted="false" name="logs_empty">سیاههها خالی هستند</string>
   <string formatted="false" name="after_nh_mm_unplugged">پس از قطع %1$dh %2$dm از برق</string>
   <string formatted="false" name="after_nh_mm_plugged_in">بعد از اینکه %1$dh %2$dm وصل شد</string>
   <string formatted="false" name="after_nm_ms_unplugged">پس از قطع %1$dm %2$ds از برق</string>

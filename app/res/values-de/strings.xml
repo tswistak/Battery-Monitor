@@ -80,8 +80,7 @@
   <string name="alarm_charge_rises" formatted="false">"Akkuladung ist über "</string>
   <string name="alarm_temp_rises" formatted="false">"Akkutemperatur ist über "</string>
   <string name="alarm_health_failure" formatted="false">"Batteriezustand ist: "</string>
-  <string name="alarm_text" formatted="false">Auswählen um Alarme zu bearbeiten.</string>
-  <string name="logs_empty" formatted="false">Protokoll ist leer</string>
+    <string name="logs_empty" formatted="false">Protokoll ist leer</string>
   <string name="since" formatted="false">Seit</string>
   <string name="currently_using" formatted="false">Im Moment in Benutzung</string>
   <string name="currently_set_to" formatted="false">"Im Moment gesetzt auf: "</string>

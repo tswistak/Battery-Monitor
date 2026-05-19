@@ -71,8 +71,7 @@
   <string name="alarm_charge_rises" formatted="false">"Akku töltése legalább "</string>
   <string name="alarm_temp_rises" formatted="false">"Akku hőfoka legalább "</string>
   <string name="alarm_health_failure" formatted="false">"Akku állapota: "</string>
-  <string name="alarm_text" formatted="false">Riasztások módosítása.</string>
-  <string name="logs_empty" formatted="false">A naplók üresek.</string>
+    <string name="logs_empty" formatted="false">A naplók üresek.</string>
   <string name="since" formatted="false">óta</string>
   <string name="currently_using" formatted="false">Jelenleg használatban:</string>
   <string name="currently_set_to" formatted="false">"Jelenlegi beállítás:"</string>
