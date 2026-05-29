@@ -1,0 +1,38 @@
+Battery Monitor to prosta i praktyczna aplikacja na Androida do pilnowania baterii Twojego urządzenia.
+
+Podaje Ci przejrzyste informacje o baterii w mgnieniu oka, wyświetla przydatne powiadomienia, obsługuje konfigurowalne alarmy dotyczące baterii i umożliwia Ci przegląd historii baterii na przestrzeni czasu.
+
+<b>Główne funkcje:</b>
+
+- stałe powiadomienie z aktualnym poziomem naładowania baterii, stanem i opcjonalnymi szczegółami
+- na Androidzie 16 i nowszych główne powiadomienie może zostać zastąpione przez Aktualizację na żywo pokazującą aktualny poziom naładowania baterii lub temperaturę
+- szczegółowe informacje o baterii, w tym poziom naładowania, temperatura, napięcie, stan zdrowia i źródło zasilania
+- konfigurowalne alarmy dotyczące baterii: o pełnym naładowaniu, niskim poziomie naładowania lub niestandardowych progach naładowania; temperaturze i stanie zdrowia baterii
+- historia zdarzeń związanych z baterią z możliwością filtrowania
+- eksport historii do pliku CSV w celu dalszej analizy
+- widżety na ekranie głównym
+- brak zbierania danych osobowych
+
+<b>Powiadomienie o stanie baterii</b>
+
+Battery Monitor może wyświetlać stałe powiadomienie z aktualnymi informacjami o baterii. Możesz wybrać, co ma być wyświetlane, np. procent naładowania baterii, stan ładowania lub dodatkowe szczegóły.
+
+<b>Alarmy dotyczące baterii</b>
+
+Ustaw praktyczne alarmy, które pomogą Ci zarządzać ładowaniem i rozładowywaniem. Battery Monitor może powiadamiać Cię, gdy bateria osiągnie wybrany poziom naładowania, spadnie poniżej określonego progu lub zostanie w pełni naładowana.
+
+<b>Historia i eksport</b>
+
+Aplikacja rejestruje zdarzenia związane z baterią, dzięki czemu możesz przejrzeć, jak zmieniał się jej stan na przestrzeni czasu. Logi mogą być filtrowane i eksportowane do pliku CSV w celu dalszej analizy.
+
+<b>Widżety</b>
+
+Widżety na ekranie głównym umożliwiają Ci wgląd w najważniejsze informacje o stanie baterii bez otwierania aplikacji.
+
+<b>Prywatność</b>
+
+Battery Monitor nie zbiera, nie przechowuje ani nie przekazuje danych osobowych. Skupia się wyłącznie na lokalnym monitorowaniu stanu baterii na Twoim urządzeniu.
+
+<b>Kontekst projektu</b>
+
+Battery Monitor to kontynuacja i odświeżona wersja aplikacji Battery Indicator Pro / BatteryBot Pro. Celem projektu jest zachowanie klasycznego, przejrzystego doświadczenia monitorowania baterii przy jednoczesnym zapewnieniu prawidłowego działania aplikacji na najnowszych wersjach Androida.

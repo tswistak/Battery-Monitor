@@ -1,0 +1,38 @@
+Battery Monitor is a simple, practical Android app for keeping an eye on your device’s battery.
+
+It gives you clear battery information at a glance, shows useful notifications, supports configurable battery alarms, and lets you review battery history over time.
+
+<b>Main features:</b>
+
+- persistent notification with current battery level, status, and optional details
+- on Android 16 and newer, the main notification can be replaced with a Live Update showing the current battery level or temperature,
+- detailed battery information, including charge level, temperature, voltage, health, and power source
+- configurable battery alarms: for full charge, low battery, or custom charge thresholds; temperature and battery health
+- battery event history with filtering
+- CSV history export for further analysis
+- home screen widgets
+- no personal data collection
+
+<b>Battery status notification</b>
+
+Battery Monitor can show a persistent notification with up-to-date battery information. You can choose what is displayed, such as battery percentage, charging status, or additional details.
+
+<b>Battery alarms</b>
+
+Set practical alerts to help you manage charging and discharging. Battery Monitor can notify you when the battery reaches a selected level, drops below a chosen threshold, or becomes fully charged.
+
+<b>History and export</b>
+
+The app records battery-related events so you can review how your battery status changed over time. Logs can be filtered and exported to CSV for further analysis.
+
+<b>Widgets</b>
+
+Home screen widgets let you keep important battery information visible without opening the app.
+
+<b>Privacy</b>
+
+Battery Monitor does not collect, store, or transmit personal data. It focuses only on local battery monitoring on your device.
+
+<b>Project background</b>
+
+Battery Monitor is a continued and rebranded version of Battery Indicator Pro / BatteryBot Pro. The project aims to preserve a classic, clear battery monitoring experience while keeping the app working well on modern Android versions.
