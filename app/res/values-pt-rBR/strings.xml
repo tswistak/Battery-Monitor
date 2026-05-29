@@ -471,4 +471,11 @@
   <string formatted="false" name="custom">Personalizado...</string>
   <string formatted="false" name="alarm_custom_temp_message">Insira a temperatura em graus %s</string>
   <string formatted="false" name="alarm_custom_charge_message">Insira a porcentagem de cobrança (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">Mostrar atualizacao ao vivo</string>
+  <string formatted="false" name="pref_live_update_display_summary">Mostrar na barra de status:</string>
+  <string formatted="false" name="pref_live_update_display_help">Escolha quando o chip de atualizacao ao vivo do Android 16+ deve ser exibido na barra de status.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Somente durante o carregamento</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Manter notificacao principal com atualizacao ao vivo</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Mostrar a notificacao principal completa enquanto a atualizacao ao vivo estiver ativa?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Se ativado, a notificacao principal normal permanece visivel alem do chip da barra de status.</string>
 </resources>

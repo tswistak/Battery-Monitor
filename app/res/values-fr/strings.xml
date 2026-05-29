@@ -282,4 +282,11 @@
   <string formatted="false" name="custom">Personnalisé...</string>
   <string formatted="false" name="alarm_custom_temp_message">Entrez la temprature en degrs %s</string>
   <string formatted="false" name="alarm_custom_charge_message">Entrez le pourcentage de frais (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">Afficher la mise a jour en direct</string>
+  <string formatted="false" name="pref_live_update_display_summary">Afficher dans la barre d etat :</string>
+  <string formatted="false" name="pref_live_update_display_help">Choisissez quand la puce de mise a jour en direct d Android 16+ doit s afficher dans la barre d etat.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Uniquement pendant la charge</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Conserver la notification principale avec la mise a jour en direct</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Afficher la notification principale complete lorsque la mise a jour en direct est active ?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Si active, la notification principale classique reste visible en plus de la puce de la barre d etat.</string>
 </resources>

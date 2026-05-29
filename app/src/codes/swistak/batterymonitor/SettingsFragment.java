@@ -70,6 +70,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     public static final String KEY_CHIP_CONTENT = "chip_content";
     public static final String KEY_CHIP_SWITCHING_INTERVAL = "chip_switching_interval";
     public static final String KEY_CHIP_INDICATE_CHARGING = "chip_indicate_charging";
+    public static final String KEY_LIVE_UPDATE_DISPLAY = "live_update_display";
+    public static final String KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION = "live_update_keep_main_notification";
     public static final String KEY_RED = "use_red";
     public static final String KEY_RED_THRESH = "red_threshold";
     public static final String KEY_AMBER = "use_amber";
@@ -131,6 +133,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
                                                 KEY_RED_THRESH, KEY_AMBER_THRESH, KEY_GREEN_THRESH,
                                                  KEY_ICON_SET, KEY_ICON_CONTENT, KEY_CHIP_CONTENT,
                                                 KEY_CHIP_SWITCHING_INTERVAL,
+                                                 KEY_LIVE_UPDATE_DISPLAY,
                                                 KEY_CURRENT_HACK_MULTIPLIER,
                                                 KEY_MAX_LOG_AGE, KEY_TOP_LINE, KEY_BOTTOM_LINE,
                                                 KEY_TIME_REMAINING_VERBOSITY,
@@ -146,6 +149,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
                                                     KEY_CHIP_CONTENT,
                                                     KEY_CHIP_SWITCHING_INTERVAL,
                                                     KEY_CHIP_INDICATE_CHARGING,
+                                                    KEY_LIVE_UPDATE_DISPLAY,
+                                                    KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION,
                                                    KEY_TOP_LINE, KEY_BOTTOM_LINE,
                                                    KEY_ENABLE_LOGGING,
                                                    KEY_TIME_REMAINING_VERBOSITY,
@@ -429,6 +434,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
             updateChipIntervalVisibility();
         }
 
+        if (key.equals(KEY_LIVE_UPDATE_DISPLAY)) {
+            updateChipIntervalVisibility();
+        }
+
         for (int i=0; i < PARENTS.length; i++) {
             if (key.equals(PARENTS[i])) {
                 setEnablednessOfDeps(i);
@@ -552,7 +561,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         if (p == null) return;
 
         boolean isSwitching = "switching".equals(mSharedPreferences.getString(KEY_CHIP_CONTENT, ""));
-        p.setVisible(isSwitching);
+        boolean liveUpdatesDisabled = "never".equals(mSharedPreferences.getString(KEY_LIVE_UPDATE_DISPLAY,
+                                                                                    res.getString(R.string.default_live_update_display_mode)));
+        p.setVisible(isSwitching && !liveUpdatesDisabled);
     }
 
     private void updateListPrefSummary(String key) {

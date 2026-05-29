@@ -346,4 +346,11 @@
   <string formatted="false" name="custom">مخصص...</string>
   <string formatted="false" name="alarm_custom_temp_message">أدخل درجة الحرارة بدرجات %s</string>
   <string formatted="false" name="alarm_custom_charge_message">أدخل نسبة الشحن (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">عرض التحديث المباشر</string>
+  <string formatted="false" name="pref_live_update_display_summary">إظهار في شريط الحالة:</string>
+  <string formatted="false" name="pref_live_update_display_help">اختر متى يجب عرض شريحة التحديث المباشر في Android 16+ في شريط الحالة.</string>
+  <string formatted="false" name="pref_live_update_display_charging">فقط أثناء الشحن</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">الاحتفاظ بالإشعار الرئيسي مع التحديث المباشر</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">إظهار الإشعار الرئيسي الكامل أثناء تفعيل التحديث المباشر؟</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">إذا كان مفعلاً، سيظل الإشعار الرئيسي العادي مرئيًا بالإضافة إلى شريحة شريط الحالة.</string>
 </resources>

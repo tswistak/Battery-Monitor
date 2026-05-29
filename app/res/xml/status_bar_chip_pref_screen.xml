@@ -4,6 +4,22 @@
       android:title="@string/pref_cat_status_bar_chip"
   >
     <ListPreference
+       android:key="live_update_display"
+       android:title="@string/pref_live_update_display"
+       android:summary="@string/pref_live_update_display_summary"
+       android:entries="@array/live_update_display_entries"
+       android:entryValues="@array/live_update_display_values"
+       android:defaultValue="@string/default_live_update_display_mode"
+    />
+
+    <CheckBoxPreference
+       android:key="live_update_keep_main_notification"
+       android:title="@string/pref_live_update_keep_main_notification"
+       android:summary="@string/pref_live_update_keep_main_notification_summary"
+       android:defaultValue="false"
+    />
+
+    <ListPreference
        android:key="chip_content"
        android:title="@string/pref_chip_content"
        android:entries="@array/chip_content_entries"

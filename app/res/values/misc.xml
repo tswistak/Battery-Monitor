@@ -251,8 +251,21 @@
     <item>switching</item>
   </string-array>
 
+  <string-array name="live_update_display_entries">
+    <item>@string/boot_pref_always</item>
+    <item>@string/pref_live_update_display_charging</item>
+    <item>@string/boot_pref_never</item>
+  </string-array>
+
+  <string-array name="live_update_display_values">
+    <item>always</item>
+    <item>charging</item>
+    <item>never</item>
+  </string-array>
+
   <string name="default_icon_content">percentage</string>
   <string name="default_chip_content">percentage</string>
+  <string name="default_live_update_display_mode">charging</string>
 
   <string-array name="notification_line_content_entries">
     <item>@string/time_remaining</item>

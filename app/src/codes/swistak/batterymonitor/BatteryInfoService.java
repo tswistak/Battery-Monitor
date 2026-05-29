@@ -79,6 +79,7 @@ public class BatteryInfoService extends Service {
     //private static final String LOG_TAG = "codes.swistak.batterymonitor - BatteryInfoService";
 
     private static final int NOTIFICATION_PRIMARY      = 1;
+    private static final int NOTIFICATION_MAIN_COMPANION = 2;
     private static final int NOTIFICATION_ALARM = 7;
 
     public static final String CHAN_ID_OLD_MAIN = "main";
@@ -134,6 +135,9 @@ public class BatteryInfoService extends Service {
     private final HashMap<String, Integer> iconResCache = new HashMap<String, Integer>();
     private static final String CONTENT_PERCENTAGE = "percentage";
     private static final String CONTENT_TEMPERATURE = "temperature";
+    private static final String LIVE_UPDATE_MODE_ALWAYS = "always";
+    private static final String LIVE_UPDATE_MODE_CHARGING = "charging";
+    private static final String LIVE_UPDATE_MODE_NEVER = "never";
 
     private Predictor predictor;
 
@@ -426,7 +430,7 @@ public class BatteryInfoService extends Service {
         update(null);
 
         mHandler.removeCallbacks(runChipSwitch);
-        if (supportsLiveUpdates() && "switching".equals(settings.getString(SettingsFragment.KEY_CHIP_CONTENT, ""))) {
+        if (shouldRunChipSwitcher()) {
             int interval;
             try {
                 interval = Integer.parseInt(settings.getString(SettingsFragment.KEY_CHIP_SWITCHING_INTERVAL, "5"));
@@ -542,6 +546,8 @@ public class BatteryInfoService extends Service {
                 Log.e(LOG_TAG, "Unable to enter foreground mode", retryError);
             }
         }
+
+        updateCompanionMainNotification();
     }
 
     private void updateWidgets(BatteryInfo info) {
@@ -625,6 +631,7 @@ public class BatteryInfoService extends Service {
         mainNotificationBottomLine = lineFor(SettingsFragment.KEY_BOTTOM_LINE);
 
         Notification.Builder nb = new Notification.Builder(this, CHAN_ID_MAIN);
+        boolean requestLiveUpdateChip = shouldRequestLiveUpdateChip();
 
         nb.setSmallIcon(iconFor())
             .setOngoing(true)
@@ -636,7 +643,7 @@ public class BatteryInfoService extends Service {
         nb.setContentTitle(mainNotificationTopLine)
             .setContentText(mainNotificationBottomLine);
 
-        if (supportsLiveUpdates()) {
+        if (requestLiveUpdateChip) {
             try {
                 java.lang.reflect.Method setRequestPromotedOngoing = Notification.Builder.class.getMethod("setRequestPromotedOngoing", boolean.class);
                 java.lang.reflect.Method setShortCriticalText = Notification.Builder.class.getMethod("setShortCriticalText", String.class);
@@ -652,6 +659,30 @@ public class BatteryInfoService extends Service {
         }
 
         return nb.build();
+    }
+
+    private Notification prepareCompanionMainNotification() {
+        Notification.Builder nb = new Notification.Builder(this, CHAN_ID_MAIN);
+
+        nb.setSmallIcon(iconForLegacyMainNotification())
+            .setOngoing(true)
+            .setWhen(0)
+            .setShowWhen(false)
+            .setContentIntent(currentInfoPendingIntent)
+            .setVisibility(Notification.VISIBILITY_PUBLIC)
+            .setContentTitle(mainNotificationTopLine)
+            .setContentText(mainNotificationBottomLine);
+
+        return nb.build();
+    }
+
+    private void updateCompanionMainNotification() {
+        if (!shouldShowCompanionMainNotification()) {
+            mNotificationManager.cancel(NOTIFICATION_MAIN_COMPANION);
+            return;
+        }
+
+        mNotificationManager.notify(NOTIFICATION_MAIN_COMPANION, prepareCompanionMainNotification());
     }
 
     private String contentPreference(String key, String defaultValue) {
@@ -693,6 +724,45 @@ public class BatteryInfoService extends Service {
             return Str.formatTemp(info.temperature, convertF, false);
         }
         return info.percent + "%";
+    }
+
+    private String liveUpdateMode() {
+        String mode = settings.getString(SettingsFragment.KEY_LIVE_UPDATE_DISPLAY,
+                                         res.getString(R.string.default_live_update_display_mode));
+
+        if (LIVE_UPDATE_MODE_ALWAYS.equals(mode) || LIVE_UPDATE_MODE_CHARGING.equals(mode) || LIVE_UPDATE_MODE_NEVER.equals(mode)) {
+            return mode;
+        }
+
+        return LIVE_UPDATE_MODE_CHARGING;
+    }
+
+    private boolean isChargingOrFull() {
+        return info.status == BatteryInfo.STATUS_CHARGING || info.status == BatteryInfo.STATUS_FULLY_CHARGED;
+    }
+
+    private boolean shouldRequestLiveUpdateChip() {
+        if (!supportsLiveUpdates()) return false;
+
+        String mode = liveUpdateMode();
+        if (LIVE_UPDATE_MODE_NEVER.equals(mode)) return false;
+        if (LIVE_UPDATE_MODE_ALWAYS.equals(mode)) return true;
+
+        return isChargingOrFull();
+    }
+
+    private boolean shouldKeepMainNotificationWithLiveUpdate() {
+        return settings.getBoolean(SettingsFragment.KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION, false);
+    }
+
+    private boolean shouldShowCompanionMainNotification() {
+        return shouldRequestLiveUpdateChip() && shouldKeepMainNotificationWithLiveUpdate();
+    }
+
+    private boolean shouldRunChipSwitcher() {
+        if (!supportsLiveUpdates()) return false;
+        if (LIVE_UPDATE_MODE_NEVER.equals(liveUpdateMode())) return false;
+        return "switching".equals(settings.getString(SettingsFragment.KEY_CHIP_CONTENT, ""));
     }
 
     private boolean shouldShowChipChargingIndicator() {
@@ -816,9 +886,14 @@ public class BatteryInfoService extends Service {
     }
 
     private int iconFor() {
-        if (supportsLiveUpdates()) {
+        if (shouldRequestLiveUpdateChip()) {
             return R.drawable.battery;
         }
+
+        return iconForLegacyMainNotification();
+    }
+
+    private int iconForLegacyMainNotification() {
 
         String default_set = "builtin.plain_number";
 

@@ -450,4 +450,11 @@
   <string formatted="false" name="custom">Προσαρμοσμένο...</string>
   <string formatted="false" name="alarm_custom_temp_message">Εισαγάγετε τη θερμοκρασία σε %s βαθμούς</string>
   <string formatted="false" name="alarm_custom_charge_message">Εισαγάγετε το ποσοστό χρέωσης (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">Εμφάνιση Live Update</string>
+  <string formatted="false" name="pref_live_update_display_summary">Εμφάνιση στη γραμμή κατάστασης:</string>
+  <string formatted="false" name="pref_live_update_display_help">Επιλέξτε πότε θα εμφανίζεται το chip Live Update του Android 16+ στη γραμμή κατάστασης.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Μόνο κατά τη φόρτιση</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Διατήρηση κύριας ειδοποίησης με το Live Update</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Να εμφανίζεται η πλήρης κύρια ειδοποίηση όσο το Live Update είναι ενεργό;</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Αν είναι ενεργό, η κανονική κύρια ειδοποίηση παραμένει ορατή μαζί με το chip στη γραμμή κατάστασης.</string>
 </resources>

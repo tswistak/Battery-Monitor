@@ -293,4 +293,11 @@
   <string formatted="false" name="custom">Egyéni...</string>
   <string formatted="false" name="alarm_custom_temp_message">Adja meg a hőmrskletet %s fokban</string>
   <string formatted="false" name="alarm_custom_charge_message">Adja meg a terhelési százalékot (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">Élő frissítés megjelenítése</string>
+  <string formatted="false" name="pref_live_update_display_summary">Megjelenítés az állapotsávban:</string>
+  <string formatted="false" name="pref_live_update_display_help">Válaszd ki, hogy az Android 16+ élő frissítési chipje mikor jelenjen meg az állapotsávban.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Csak töltés közben</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Fő értesítés megtartása élő frissítés mellett</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">A teljes fő értesítés is megjelenjen, amikor az élő frissítés aktív?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Ha be van kapcsolva, a normál fő értesítés az állapotsáv chip mellett is látható marad.</string>
 </resources>

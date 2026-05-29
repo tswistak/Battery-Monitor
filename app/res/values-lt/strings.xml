@@ -470,4 +470,11 @@
   <string formatted="false" name="custom">Pasirinktinis...</string>
   <string formatted="false" name="alarm_custom_temp_message">Įveskite temperatūrą %s laipsniais</string>
   <string formatted="false" name="alarm_custom_charge_message">Įveskite apmokestinimo procentą (0–100)</string>
+  <string formatted="false" name="pref_live_update_display">Rodyti tiesioginį atnaujinimą</string>
+  <string formatted="false" name="pref_live_update_display_summary">Rodyti būsenos juostoje:</string>
+  <string formatted="false" name="pref_live_update_display_help">Pasirinkite, kada Android 16+ tiesioginio atnaujinimo žetonas turi būti rodomas būsenos juostoje.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Tik kraunant</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Palikti pagrindinį pranešimą su tiesioginiu atnaujinimu</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Ar rodyti pilną pagrindinį pranešimą, kai tiesioginis atnaujinimas aktyvus?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Jei įjungta, įprastas pagrindinis pranešimas liks matomas kartu su būsenos juostos žetonu.</string>
 </resources>

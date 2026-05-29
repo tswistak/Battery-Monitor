@@ -471,4 +471,11 @@
   <string formatted="false" name="custom">Personalizat...</string>
   <string formatted="false" name="alarm_custom_temp_message">Introduceți temperatura n grade %s</string>
   <string formatted="false" name="alarm_custom_charge_message">Introduceți procentajul de taxare (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">Afiseaza actualizarea live</string>
+  <string formatted="false" name="pref_live_update_display_summary">Afiseaza in bara de stare:</string>
+  <string formatted="false" name="pref_live_update_display_help">Alege cand trebuie afisat in bara de stare chipul de actualizare live din Android 16+.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Doar in timpul incarcarii</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Pastreaza notificarea principala cu actualizarea live</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Sa fie afisata notificarea principala completa cat timp actualizarea live este activa?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Daca este activat, notificarea principala obisnuita ramane vizibila pe langa chipul din bara de stare.</string>
 </resources>

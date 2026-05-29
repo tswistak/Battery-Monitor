@@ -328,4 +328,11 @@
   <string formatted="false" name="custom">Настраиваемый...</string>
   <string formatted="false" name="alarm_custom_temp_message">Введите температуру в градусах %s.</string>
   <string formatted="false" name="alarm_custom_charge_message">Введите процент заряда (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">Показывать Live Update</string>
+  <string formatted="false" name="pref_live_update_display_summary">Показывать в строке состояния:</string>
+  <string formatted="false" name="pref_live_update_display_help">Выберите, когда в строке состояния должен показываться чип Live Update в Android 16+.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Только во время зарядки</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Сохранять основное уведомление при Live Update</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Показывать полное основное уведомление, пока Live Update активен?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Если включено, обычное основное уведомление остается видимым вместе с чипом в строке состояния.</string>
 </resources>

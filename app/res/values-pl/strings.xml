@@ -278,6 +278,13 @@
 
   <string name="pref_cat_notification_content" formatted="false">Zawartość</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Kapsułka na pasku stanu (Android 16+)</string>
+  <string formatted="false" name="pref_live_update_display">Wyświetlaj aktualizację na żywo</string>
+  <string formatted="false" name="pref_live_update_display_summary">Wyświetlaj na pasku stanu:</string>
+  <string formatted="false" name="pref_live_update_display_help">Wybierz, kiedy kapsułka aktualizacji na żywo ma być wyświetlana na pasku stanu.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Tylko podczas ładowania</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Pozostawiaj główne powiadomienie</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Czy wyświetlać główne powiadomienie, gdy aktualizacja na żywo jest aktywna?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Jeśli włączone, główne powiadomienie pozostaje widoczne razem z kapsułką na pasku stanu.</string>
   <string name="pref_chip_content" formatted="false">Zawartość kapsułki</string>
   <string name="pref_chip_switching_interval" formatted="false">Interwał przełączania</string>
   <string name="pref_chip_content_help" formatted="false">Wybierz, którą wartość pokazywać w kapsułce promowanego powiadomienia na Androidzie 16+.</string>

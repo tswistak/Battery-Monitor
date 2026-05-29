@@ -321,10 +321,21 @@
 
   <string formatted="false" name="pref_cat_notification_content">Content</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Status Bar Chip (Android 16+)</string>
+  <string formatted="false" name="pref_live_update_display">Show Live Update</string>
+  <string formatted="false" name="pref_live_update_display_summary">Show in status bar:</string>
+  <string formatted="false" name="pref_live_update_display_help">
+    Choose when the Live Update chip should be shown in the status bar.
+  </string>
+  <string formatted="false" name="pref_live_update_display_charging">Only during charging</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Keep main notification</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Show the main notification while Live Update is active?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">
+    If enabled, the main notification remains visible in addition to the status bar chip.
+  </string>
   <string formatted="false" name="pref_chip_content">Chip Content</string>
   <string formatted="false" name="pref_chip_switching_interval">Switching interval</string>
   <string formatted="false" name="pref_chip_content_help">
-    Choose what value to show in the Android 16+ promoted-notification chip.
+    Choose what value to show in the promoted-notification chip.
   </string>
   <string formatted="false" name="pref_chip_indicate_charging">Show Charging Emoji</string>
   <string formatted="false" name="pref_chip_indicate_charging_summary">Show a lightning emoji when charging or fully charged?</string>

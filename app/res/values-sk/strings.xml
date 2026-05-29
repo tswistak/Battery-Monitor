@@ -472,4 +472,11 @@
   <string formatted="false" name="custom">Vlastné...</string>
   <string formatted="false" name="alarm_custom_temp_message">Zadajte teplotu v stupňoch %s</string>
   <string formatted="false" name="alarm_custom_charge_message">Zadajte percento účtovania (0 – 100)</string>
+  <string formatted="false" name="pref_live_update_display">Zobrazovat Live Update</string>
+  <string formatted="false" name="pref_live_update_display_summary">Zobrazit v stavovom riadku:</string>
+  <string formatted="false" name="pref_live_update_display_help">Vyberte, kedy sa ma v stavovom riadku zobrazovat cip Live Update v Androide 16+.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Iba pocas nabijania</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Ponechat hlavne upozornenie pri Live Update</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Zobrazovat cele hlavne upozornenie, ked je Live Update aktivny?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Ak je zapnute, bezne hlavne upozornenie zostane viditelne spolu s cipom v stavovom riadku.</string>
 </resources>

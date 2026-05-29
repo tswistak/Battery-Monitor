@@ -469,4 +469,11 @@
   <string formatted="false" name="custom">Po meri...</string>
   <string formatted="false" name="alarm_custom_temp_message">Vnesite temperaturo v stopinjah %s</string>
   <string formatted="false" name="alarm_custom_charge_message">Vnesite odstotek obremenitve (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">Prikazi sprotno posodobitev</string>
+  <string formatted="false" name="pref_live_update_display_summary">Prikazi v vrstici stanja:</string>
+  <string formatted="false" name="pref_live_update_display_help">Izberite, kdaj naj se v vrstici stanja prikaze cip sprotne posodobitve Android 16+.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Samo med polnjenjem</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Obdrzi glavno obvestilo s sprotno posodobitvijo</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Ali naj se prikaze celotno glavno obvestilo, ko je sprotna posodobitev aktivna?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Ce je vklopljeno, navadno glavno obvestilo ostane vidno poleg cipa v vrstici stanja.</string>
 </resources>

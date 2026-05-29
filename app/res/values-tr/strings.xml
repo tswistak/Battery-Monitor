@@ -276,4 +276,11 @@
   <string formatted="false" name="custom">Özel...</string>
   <string formatted="false" name="alarm_custom_temp_message">Sıcaklığı %s derece cinsinden girin</string>
   <string formatted="false" name="alarm_custom_charge_message">Ücret yüzdesini girin (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">Canli guncellemeyi goster</string>
+  <string formatted="false" name="pref_live_update_display_summary">Durum cubugunda goster:</string>
+  <string formatted="false" name="pref_live_update_display_help">Android 16+ Canli Guncelleme rozetinin durum cubugunda ne zaman gosterilecegini secin.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Yalnizca sarj sirasinda</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Canli Guncelleme ile ana bildirimi koru</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Canli Guncelleme etkinken tam ana bildirim de gosterilsin mi?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Etkinse, normal ana bildirim durum cubugu rozetine ek olarak gorunur kalir.</string>
 </resources>

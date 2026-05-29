@@ -479,4 +479,11 @@
   <string formatted="false" name="custom">سفارشی...</string>
   <string formatted="false" name="alarm_custom_temp_message">دما را بر حسب %s درجه وارد کنید</string>
   <string formatted="false" name="alarm_custom_charge_message">درصد شارژ را وارد کنید (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">نمایش به‌روزرسانی زنده</string>
+  <string formatted="false" name="pref_live_update_display_summary">نمایش در نوار وضعیت:</string>
+  <string formatted="false" name="pref_live_update_display_help">انتخاب کنید تراشهٔ به‌روزرسانی زندهٔ Android 16+ چه زمانی در نوار وضعیت نمایش داده شود.</string>
+  <string formatted="false" name="pref_live_update_display_charging">فقط هنگام شارژ</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">نگه داشتن اعلان اصلی همراه با به‌روزرسانی زنده</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">وقتی به‌روزرسانی زنده فعال است، اعلان اصلی کامل نمایش داده شود؟</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">اگر فعال باشد، اعلان اصلی معمولی علاوه بر تراشهٔ نوار وضعیت قابل مشاهده می‌ماند.</string>
 </resources>

@@ -457,4 +457,11 @@
   <string formatted="false" name="custom">מותאם אישית...</string>
   <string formatted="false" name="alarm_custom_temp_message">הזן טמפרטורה ב-%s מעלות</string>
   <string formatted="false" name="alarm_custom_charge_message">הזן אחוז חיוב (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">הצג עדכון חי</string>
+  <string formatted="false" name="pref_live_update_display_summary">הצג בשורת המצב:</string>
+  <string formatted="false" name="pref_live_update_display_help">בחר מתי שבב העדכון החי של Android 16+ יוצג בשורת המצב.</string>
+  <string formatted="false" name="pref_live_update_display_charging">רק בזמן טעינה</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">השאר התראה ראשית עם עדכון חי</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">להציג את ההתראה הראשית המלאה בזמן שהעדכון החי פעיל?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">אם מופעל, ההתראה הראשית הרגילה תישאר גלויה בנוסף לשבב בשורת המצב.</string>
 </resources>

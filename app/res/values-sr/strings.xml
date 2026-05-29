@@ -324,4 +324,11 @@
   <string formatted="false" name="custom">Прилагођено...</string>
   <string formatted="false" name="alarm_custom_temp_message">Унесите температуру у ЗЗПХ0ЗЗ степенима</string>
   <string formatted="false" name="alarm_custom_charge_message">Унесите проценат наплате (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">Prikaži Live Update</string>
+  <string formatted="false" name="pref_live_update_display_summary">Prikaži u statusnoj traci:</string>
+  <string formatted="false" name="pref_live_update_display_help">Odaberite kada čip za Live Update na Androidu 16+ treba da se prikazuje u statusnoj traci.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Samo tokom punjenja</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Zadrži glavno obaveštenje uz Live Update</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Prikazivati celo glavno obaveštenje dok je Live Update aktivan?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Ako je uključeno, normalno glavno obaveštenje ostaje vidljivo pored čipa u statusnoj traci.</string>
 </resources>

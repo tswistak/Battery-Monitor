@@ -485,4 +485,11 @@
   <string formatted="false" name="custom">自訂...</string>
   <string formatted="false" name="alarm_custom_temp_message">輸入 %s 度的溫度</string>
   <string formatted="false" name="alarm_custom_charge_message">輸入費用百分比（0-100）</string>
+  <string formatted="false" name="pref_live_update_display">显示实时更新</string>
+  <string formatted="false" name="pref_live_update_display_summary">在状态栏显示:</string>
+  <string formatted="false" name="pref_live_update_display_help">选择在 Android 16+ 中何时在状态栏显示实时更新胶囊。</string>
+  <string formatted="false" name="pref_live_update_display_charging">仅在充电时</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">实时更新时保留主通知</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">实时更新激活时是否仍显示完整主通知？</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">启用后，除状态栏胶囊外，常规主通知也会保持可见。</string>
 </resources>

@@ -120,7 +120,8 @@ public class CurrentInfoFragment extends Fragment {
         }
 
         PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
-        if (!pm.isIgnoringBatteryOptimizations("codes.swistak.batterymonitor") &&
+        String packageName = getActivity().getPackageName();
+        if (!pm.isIgnoringBatteryOptimizations(packageName) &&
             !showingBatteryOptimizedDialog)
         {
             showingBatteryOptimizedDialog = true;

@@ -312,4 +312,11 @@
   <string formatted="false" name="custom">カスタム...</string>
   <string formatted="false" name="alarm_custom_temp_message">温度を%s度で入力してください</string>
   <string formatted="false" name="alarm_custom_charge_message">充電率を入力してください (0 ～ 100)</string>
+  <string formatted="false" name="pref_live_update_display">ライブアップデートを表示</string>
+  <string formatted="false" name="pref_live_update_display_summary">ステータスバーに表示:</string>
+  <string formatted="false" name="pref_live_update_display_help">Android 16+ のライブアップデート チップをステータスバーに表示するタイミングを選択します。</string>
+  <string formatted="false" name="pref_live_update_display_charging">充電中のみ</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">ライブアップデート中もメイン通知を表示</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">ライブアップデートが有効な間も、メイン通知を完全表示しますか？</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">有効にすると、ステータスバーのチップに加えて通常のメイン通知も表示されます。</string>
 </resources>

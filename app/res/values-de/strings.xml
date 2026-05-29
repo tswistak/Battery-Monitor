@@ -282,4 +282,11 @@
   <string formatted="false" name="custom">Benutzerdefiniert...</string>
   <string formatted="false" name="alarm_custom_temp_message">Geben Sie die Temperatur in %s Grad ein</string>
   <string formatted="false" name="alarm_custom_charge_message">Geben Sie den Gebührenprozentsatz ein (0–100).</string>
+  <string formatted="false" name="pref_live_update_display">Live-Update anzeigen</string>
+  <string formatted="false" name="pref_live_update_display_summary">In der Statusleiste anzeigen:</string>
+  <string formatted="false" name="pref_live_update_display_help">Wählen Sie, wann der Live-Update-Chip unter Android 16+ in der Statusleiste angezeigt werden soll.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Nur während des Ladens</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Hauptbenachrichtigung bei Live-Update beibehalten</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Vollständige Hauptbenachrichtigung anzeigen, während Live-Update aktiv ist?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Wenn aktiviert, bleibt die normale Hauptbenachrichtigung zusätzlich zum Statusleisten-Chip sichtbar.</string>
 </resources>

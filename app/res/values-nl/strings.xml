@@ -307,4 +307,11 @@
   <string formatted="false" name="custom">Aangepast...</string>
   <string formatted="false" name="alarm_custom_temp_message">Voer de temperatuur in %s graden in</string>
   <string formatted="false" name="alarm_custom_charge_message">Voer het kostenpercentage in (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">Live-update tonen</string>
+  <string formatted="false" name="pref_live_update_display_summary">Tonen in statusbalk:</string>
+  <string formatted="false" name="pref_live_update_display_help">Kies wanneer de live-updatechip van Android 16+ in de statusbalk moet worden getoond.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Alleen tijdens opladen</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Hoofdmelding behouden bij live-update</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Volledige hoofdmelding tonen terwijl live-update actief is?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Als dit is ingeschakeld, blijft de normale hoofdmelding zichtbaar naast de statusbalkchip.</string>
 </resources>

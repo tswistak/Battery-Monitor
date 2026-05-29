@@ -466,4 +466,11 @@
   <string formatted="false" name="custom">कस्टम...</string>
   <string formatted="false" name="alarm_custom_temp_message">तापमान %s डिग्री में दर्ज करें</string>
   <string formatted="false" name="alarm_custom_charge_message">चार्ज प्रतिशत दर्ज करें (0-100)</string>
+  <string formatted="false" name="pref_live_update_display">लाइव अपडेट दिखाएं</string>
+  <string formatted="false" name="pref_live_update_display_summary">स्टेटस बार में दिखाएं:</string>
+  <string formatted="false" name="pref_live_update_display_help">चुनें कि Android 16+ का लाइव अपडेट चिप स्टेटस बार में कब दिखे।</string>
+  <string formatted="false" name="pref_live_update_display_charging">सिर्फ चार्जिंग के दौरान</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">लाइव अपडेट के साथ मुख्य सूचना बनाए रखें</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">क्या लाइव अपडेट सक्रिय होने पर पूरी मुख्य सूचना भी दिखाई जाए?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">यदि यह चालू है, तो स्टेटस बार चिप के साथ सामान्य मुख्य सूचना भी दिखाई देगी।</string>
 </resources>

@@ -7,6 +7,10 @@
   <LinearLayout style="@style/help_ll" android:orientation="vertical">
     <TextView style="@style/help_cat"  android:text="@string/pref_cat_status_bar_chip" />
     <View style="@style/help_cat_post_margin" />
+    <TextView style="@style/help_pref" android:text="@string/pref_live_update_display" />
+    <TextView style="@style/help_text" android:text="@string/pref_live_update_display_help" />
+    <TextView style="@style/help_pref" android:text="@string/pref_live_update_keep_main_notification" />
+    <TextView style="@style/help_text" android:text="@string/pref_live_update_keep_main_notification_help" />
     <TextView style="@style/help_pref" android:text="@string/pref_chip_content" />
     <TextView style="@style/help_text" android:text="@string/pref_chip_content_help" />
     <TextView style="@style/help_pref" android:text="@string/pref_chip_indicate_charging" />
