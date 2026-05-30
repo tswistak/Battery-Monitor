@@ -1,0 +1,20 @@
+New:
+
+- Added live updates
+- Showing temperature on a notification icon
+- Support for language chooser
+
+Improved:
+
+- Rebranded the app to Battery Monitor
+- Automated translations for missing strings
+- Human-made Polish translations
+- Possibility to set custom values for battery alarms
+- Removed unnecessary text from notifications
+
+Fixed:
+
+- Android 16 compatibility issues
+- Notification reliability on older Android versions
+- Random timeout crashes
+- Hardcoded strings to use string resources

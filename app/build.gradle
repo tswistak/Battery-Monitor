@@ -34,6 +34,12 @@ def releaseKeyPasswordProp = project.findProperty("releaseKeyPassword") ?: Syste
 def requestedTasks = gradle.startParameter.taskNames.collect { it.toLowerCase() }
 def isReleaseBuildRequested = requestedTasks.any { it.contains("release") }
 
+def hasReleaseSigning =
+        releaseStoreFileProp &&
+        releaseStorePasswordProp &&
+        releaseKeyAliasProp &&
+        releaseKeyPasswordProp
+
 android {
     namespace "codes.swistak.batterymonitor"
 
@@ -73,10 +79,12 @@ android {
 
     signingConfigs {
         release {
-            storeFile releaseStoreFileProp ? file(releaseStoreFileProp) : file("does-not-exist.keystore")
-            storePassword releaseStorePasswordProp
-            keyAlias releaseKeyAliasProp
-            keyPassword releaseKeyPasswordProp
+            if (hasReleaseSigning) {
+                storeFile file(releaseStoreFileProp)
+                storePassword releaseStorePasswordProp
+                keyAlias releaseKeyAliasProp
+                keyPassword releaseKeyPasswordProp
+            }
         }
     }
 
@@ -87,13 +95,10 @@ android {
         }
 
         release {
-            if (isReleaseBuildRequested && (!releaseStoreFileProp || !releaseStorePasswordProp || !releaseKeyAliasProp || !releaseKeyPasswordProp)) {
-                throw new GradleException(
-                        "Release signing is not configured. Provide releaseStoreFile, releaseStorePassword, " +
-                        "releaseKeyAlias and releaseKeyPassword (properties or env vars)."
-                )
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
             }
-            signingConfig signingConfigs.release
+
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), rootProject.file('proguard-no-obfuscation')
         }

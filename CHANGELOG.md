@@ -12,13 +12,13 @@
 
 - Rebranded the app from BatteryBot Pro to Battery Monitor.
 - Added automated translations for missing strings.
-- Human-made Polish translations (thanks @Aga-C)
+- Human-made Polish translations (thanks @Aga-C).
 - Possibility to set custom values for battery alarms (charge levels, temperature).
 - Removed unnecessary text from notifications.
 
 ### Fixed
 
-- Fixed Android 16 compatibility issues (UI, crash during DND)
+- Fixed Android 16 compatibility issues (UI, crash during DND).
 - Fixed notification reliability on older Android versions.
 - Fixed random timeout crashes.
 - Fixed hardcoded strings to use string resources for better localization.
