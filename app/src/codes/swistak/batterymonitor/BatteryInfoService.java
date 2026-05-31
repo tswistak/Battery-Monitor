@@ -887,7 +887,7 @@ public class BatteryInfoService extends Service {
 
     private int iconFor() {
         if (shouldRequestLiveUpdateChip()) {
-            return R.drawable.battery;
+            return R.mipmap.ic_launcher_round;
         }
 
         return iconForLegacyMainNotification();

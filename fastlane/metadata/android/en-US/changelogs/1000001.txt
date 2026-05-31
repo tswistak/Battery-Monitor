@@ -1,0 +1,3 @@
+Fixed:
+
+- Replaced old icon in live updates with the current one.

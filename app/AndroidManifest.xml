@@ -91,7 +91,7 @@
   <service
       android:name=".BatteryInfoService"
       android:process="codes.swistak.batterymonitor.BIS"
-      android:icon="@drawable/battery"
+      android:icon="@mipmap/ic_launcher_round"
       android:exported="false"
       android:foregroundServiceType="specialUse|dataSync"
       >

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.1
+
+### Fixed
+
+- Replaced old icon in live updates with the current one.
+
 ## 1.0.0
 
 ### New
