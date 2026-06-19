@@ -14,7 +14,7 @@ build
 
 !build.properties
 !ant.properties
-
+!fdroid-version.properties
 
 # res/drawable*/b???.*
 # res/drawable*/r???.*
