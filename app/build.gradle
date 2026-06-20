@@ -52,6 +52,11 @@ android {
 
     compileSdk 37
 
+    dependenciesInfo {
+        includeInApk false
+        includeInBundle false
+    }
+
     defaultConfig {
         minSdk 26
         targetSdk 37

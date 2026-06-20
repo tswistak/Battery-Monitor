@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.3
+
+### Fixed
+
+- Disabled Android dependency metadata in release.
+
 ## 1.0.2
 
 ### Fixed
