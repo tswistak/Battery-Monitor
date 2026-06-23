@@ -116,7 +116,7 @@
   <string formatted="false" name="status_boot_completed">Boot Completed</string>
 
   <string formatted="false" name="health_unknown">Unknown</string>
-  <string formatted="false" name="health_good">Good Health</string>
+  <string formatted="false" name="health_good">Healthy</string>
   <string formatted="false" name="health_overheat">Overheated</string>
   <string formatted="false" name="health_dead">Dead</string>
   <string formatted="false" name="health_overvoltage">Overvoltage</string>
@@ -670,7 +670,7 @@
     below, after choosing that alarm type.\n
 
     \nThe \"Health Fails\" alarm will notify you if your battery health
-    becomes something other than \"Unknown\" or \"Good Health\", as
+    becomes something other than \"Unknown\" or \"Healthy\", as
     reported by Android.
   </string>
   <string formatted="false" name="pref_alarm_threshold">Threshold</string>
