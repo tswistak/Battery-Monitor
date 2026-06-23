@@ -4,14 +4,12 @@
 
 <h1 align="center">Battery Monitor</h1>
 
-<p align="center">
-  <a href="https://github.com/tswistak/Battery-Monitor/releases/latest">
-    <img src="docs/assets/badge_github.png" alt="Download on GitHub" height="80" />
-  </a>
-  <a href="https://f-droid.org/packages/codes.swistak.batterymonitor/">
-    <img src="https://f-droid.org/badge/get-it-on.png" alt="Download from F-Droid" height="80" />
-  </a>
-</p>
+<div align="center">
+  
+[<img src="docs/assets/badge_github.png" alt="Download on GitHub" height="80">](https://github.com/tswistak/Battery-Monitor/releases/latest)
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="Download from F-Droid" height="80">](https://f-droid.org/packages/codes.swistak.batterymonitor/)
+
+</div>
 
 Battery Monitor is a classic, no-nonsense Android battery app focused on clarity, reliability, and control.
 
