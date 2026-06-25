@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## Unreleased
+
+### Improved
+
+- Changed "Good Health" to "Healthy" in notification (#11, thanks @ltguillaume)
+
+### Fixed
+
+- Separated live updates channel from the main notification channel (#10)
+
 ## 1.0.3
 
 ### Fixed

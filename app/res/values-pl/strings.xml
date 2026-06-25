@@ -35,6 +35,7 @@
     \nNaciśnij OK, aby przejść do ustawień systemowych, gdzie możesz wyłączyć optymalizację baterii dla Battery Monitor.</string>
 
   <string name="main_notif_chan_name" formatted="false">Główne powiadomienie</string>
+  <string name="live_updates_notif_chan_name" formatted="false">Aktualizacje na żywo</string>
   <string name="channel_group_name_alarms" formatted="false">Alarmy</string>
 
   <string name="confirm_clear_logs" formatted="false">Czy naprawdę wyczyścić wszystkie logi?</string>

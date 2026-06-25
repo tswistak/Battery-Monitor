@@ -38,6 +38,7 @@
     \n कृपया सिस्टम सेटिंग्स पर जाने के लिए ओके दबाएं जहां आप कर सकते हैं
     बैटरी मॉनिटर के लिए बैटरी अनुकूलन अक्षम करें।</string>
   <string formatted="false" name="main_notif_chan_name">मुख्य अधिसूचना</string>
+  <string formatted="false" name="live_updates_notif_chan_name">लाइव अपडेट</string>
   <string formatted="false" name="channel_group_name_alarms">एलार्म</string>
   <string formatted="false" name="configure_log_filter">कौन से लॉग आइटम दिखाएँ?</string>
   <string formatted="false" name="okay">ठीक है</string>

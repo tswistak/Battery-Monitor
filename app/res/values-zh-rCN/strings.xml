@@ -140,6 +140,7 @@
     \n请按“确定”进入系统设置，您可以在其中
     禁用Battery Monitor的电池优化。</string>
   <string formatted="false" name="main_notif_chan_name">主要通知</string>
+  <string formatted="false" name="live_updates_notif_chan_name">实时更新</string>
   <string formatted="false" name="channel_group_name_alarms">警报</string>
   <string formatted="false" name="configure_log_filter">显示哪些日志项？</string>
   <string formatted="false" name="tab_current_info">当前信息</string>

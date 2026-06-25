@@ -194,6 +194,7 @@
   <string name="battery_optimized" formatted="false">Battery Monitor je ograničen!</string>
   <string name="battery_optimized_message" formatted="false">Sistem ograničava ispravan rad aplikacije Battery Monitor. Ova Android funkcija „optimizacije baterije” služi da ograniči loše dizajnirane aplikacije kako ne bi previše trošile bateriju u pozadini.\n\nBattery Monitor je, međutim, dobro optimizovana aplikacija koja mora da radi bez ograničenja u pozadini da bi radila ispravno. Veoma je efikasna i neće smanjiti trajanje baterije.\n\nPritisnite OK da otvorite sistemska podešavanja i isključite optimizaciju baterije za Battery Monitor.</string>
   <string name="main_notif_chan_name" formatted="false">Glavno obaveštenje</string>
+  <string name="live_updates_notif_chan_name" formatted="false">Ažuriranja uživo</string>
   <string name="channel_group_name_alarms" formatted="false">Alarmi</string>
   <string name="menu_show_seconds" formatted="false">Prikaži sekunde</string>
   <string name="menu_hide_seconds" formatted="false">Sakrij sekunde</string>

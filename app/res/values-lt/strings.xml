@@ -162,6 +162,7 @@
     \nPaspauskite OK, kad patektumėte į sistemos nustatymus, kur galite
     išjungti akumuliatoriaus optimizavimą „Battery Monitor“.</string>
   <string formatted="false" name="main_notif_chan_name">Pagrindinis pranešimas</string>
+  <string formatted="false" name="live_updates_notif_chan_name">Tiesioginiai naujiniai</string>
   <string formatted="false" name="channel_group_name_alarms">Signalizacijos</string>
   <string formatted="false" name="configure_log_filter">Rodyti kuriuos žurnalo elementus?</string>
   <string formatted="false" name="tab_current_info">Dabartinė informacija</string>

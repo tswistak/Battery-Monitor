@@ -150,6 +150,7 @@
   <string name="battery_optimized" formatted="false">Battery Monitor è limitato!</string>
   <string name="battery_optimized_message" formatted="false">Battery Monitor è limitato e non può funzionare correttamente. Questa \"ottimizzazione batteria\" è una funzione Android progettata per limitare app mal progettate ed evitare un consumo eccessivo della batteria in background.\n\nBattery Monitor, però, è un\'app ben progettata che deve poter funzionare senza limitazioni in background per operare correttamente. È estremamente efficiente e non ridurrà la durata della batteria.\n\nPremi OK per andare alle impostazioni di sistema dove puoi disattivare l\'ottimizzazione batteria per Battery Monitor.</string>
   <string name="main_notif_chan_name" formatted="false">Notifica principale</string>
+  <string name="live_updates_notif_chan_name" formatted="false">Aggiornamenti in tempo reale</string>
   <string name="channel_group_name_alarms" formatted="false">Allarmi</string>
   <string name="menu_show_seconds" formatted="false">Mostra secondi</string>
   <string name="menu_hide_seconds" formatted="false">Nascondi secondi</string>

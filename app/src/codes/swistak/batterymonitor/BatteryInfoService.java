@@ -51,8 +51,7 @@ public class BatteryInfoService extends Service {
     private static final String LOG_TAG = "BatteryInfoService";
 
     private final IntentFilter batteryChanged = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-    //private final IntentFilter userPresent    = new IntentFilter(Intent.ACTION_USER_PRESENT);
-    private PendingIntent currentInfoPendingIntent, updatePredictorPendingIntent, alarmsPendingIntent, alarmsCancelPendingIntent;
+    private PendingIntent currentInfoPendingIntent, updatePredictorPendingIntent, alarmsPendingIntent;
     private Intent alarmsIntent;
 
     private NotificationManager mNotificationManager;
@@ -65,7 +64,6 @@ public class BatteryInfoService extends Service {
     private AlarmDatabase alarms;
     private LogDatabase log_db;
     private BatteryLevel bl;
-    //private CurrentHack currentHack;
     private CircleWidgetBackground cwbg;
     private BatteryInfo info;
     private long now;
@@ -81,13 +79,8 @@ public class BatteryInfoService extends Service {
     private static final int NOTIFICATION_PRIMARY      = 1;
     private static final int NOTIFICATION_MAIN_COMPANION = 2;
     private static final int NOTIFICATION_ALARM = 7;
-
-    public static final String CHAN_ID_OLD_MAIN = "main";
-    public static final String CHAN_ID_OLD_ALARM = "alarm";
-    public static final String CHAN_ID_OLD_MAIN_2 = "main_002";
-    public static final String CHAN_ID_OLD_MAIN_3 = "main_003";
-
     public static final String CHAN_ID_MAIN = "main_004";
+    public static final String CHAN_ID_LIVE_UPDATE = "live_update_001";
 
     // Important: Make sure alarm notification channel IDs and alarm type database values always match
     public static final String CHAN_ID_A_CHARGED = "fully_charged";
@@ -117,22 +110,13 @@ public class BatteryInfoService extends Service {
 
     public static final String EXTRA_CURRENT_INFO  = "codes.swistak.batterymonitor.EXTRA_CURRENT_INFO";
     public static final String EXTRA_EDIT_ALARMS   = "codes.swistak.batterymonitor.EXTRA_EDIT_ALARMS";
-    //public static final String EXTRA_CANCEL_ALARMS = "codes.swistak.batterymonitor.EXTRA_CANCEL_ALARMS";
 
-
-    //private static final Object[] EMPTY_OBJECT_ARRAY = {};
-    //private static final  Class<?>[]  EMPTY_CLASS_ARRAY = {};
-
-    private static final int plainIcon0 = R.drawable.plain000;
-    private static final int small_plainIcon0 = R.drawable.small_plain000;
-    private static final int chargingIcon0 = R.drawable.charging000;
-    private static final int small_chargingIcon0 = R.drawable.small_charging000;
 
     /* Global variables for these Notification Runnables */
     private String mainNotificationTopLine, mainNotificationBottomLine;
     private RemoteViews notificationRV;
     private boolean mainNotificationForegroundStarted;
-    private final HashMap<String, Integer> iconResCache = new HashMap<String, Integer>();
+    private final HashMap<String, Integer> iconResCache = new HashMap<>();
     private static final String CONTENT_PERCENTAGE = "percentage";
     private static final String CONTENT_TEMPERATURE = "temperature";
     private static final String LIVE_UPDATE_MODE_ALWAYS = "always";
@@ -173,14 +157,18 @@ public class BatteryInfoService extends Service {
         if (mNotificationManager == null)
             mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        mNotificationManager.deleteNotificationChannel(CHAN_ID_OLD_MAIN);
-        mNotificationManager.deleteNotificationChannel(CHAN_ID_OLD_MAIN_2);
-        mNotificationManager.deleteNotificationChannel(CHAN_ID_OLD_MAIN_3);
-        mNotificationManager.deleteNotificationChannel(CHAN_ID_OLD_ALARM);
-
         int main_importance = NotificationManager.IMPORTANCE_LOW;
         CharSequence main_notif_chan_name = getString(R.string.main_notif_chan_name);
         NotificationChannel ch = new NotificationChannel(CHAN_ID_MAIN, main_notif_chan_name, main_importance);
+        ch.setSound(null, null);
+        ch.enableLights(false);
+        ch.enableVibration(false);
+        ch.setShowBadge(false);
+        ch.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        mNotificationManager.createNotificationChannel(ch);
+
+        CharSequence live_updates_notif_chan_name = getString(R.string.live_updates_notif_chan_name);
+        ch = new NotificationChannel(CHAN_ID_LIVE_UPDATE, live_updates_notif_chan_name, main_importance);
         ch.setSound(null, null);
         ch.enableLights(false);
         ch.enableVibration(false);
@@ -630,8 +618,9 @@ public class BatteryInfoService extends Service {
         mainNotificationTopLine = lineFor(SettingsFragment.KEY_TOP_LINE);
         mainNotificationBottomLine = lineFor(SettingsFragment.KEY_BOTTOM_LINE);
 
-        Notification.Builder nb = new Notification.Builder(this, CHAN_ID_MAIN);
         boolean requestLiveUpdateChip = shouldRequestLiveUpdateChip();
+        String channelId = requestLiveUpdateChip ? CHAN_ID_LIVE_UPDATE : CHAN_ID_MAIN;
+        Notification.Builder nb = new Notification.Builder(this, channelId);
 
         nb.setSmallIcon(iconFor())
             .setOngoing(true)

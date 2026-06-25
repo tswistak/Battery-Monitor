@@ -131,6 +131,7 @@
   <string name="notification_settings_summary" formatted="false">メイン通知を設定します</string>
   <string name="notification_settings_help" formatted="false">プルダウン通知に表示される内容を設定し、その外観をコントロールすることができます。</string>
   <string name="main_notif_chan_name" formatted="false">メイン通知</string>
+  <string name="live_updates_notif_chan_name" formatted="false">ライブアップデート</string>
   <string name="channel_group_name_alarms" formatted="false">アラーム</string>
   <string name="status_bar_icon_settings" formatted="false">ステータスバー アイコン</string>
   <string name="status_bar_icon_settings_summary" formatted="false">アイコンセットのコントロール</string>

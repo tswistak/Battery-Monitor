@@ -55,6 +55,7 @@
   </string>
 
   <string formatted="false" name="main_notif_chan_name">Main Notification</string>
+  <string formatted="false" name="live_updates_notif_chan_name">Live Updates</string>
   <string formatted="false" name="channel_group_name_alarms">Alarms</string>
 
   <string formatted="false" name="confirm_clear_logs">Really clear all logs?</string>

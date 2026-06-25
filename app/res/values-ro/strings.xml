@@ -105,6 +105,7 @@
     \nVă rugăm să apăsați pe OK pentru a fi dus la setările sistemului unde puteți
     dezactivați optimizarea bateriei pentru Battery Monitor.</string>
   <string formatted="false" name="main_notif_chan_name">Notificare principală</string>
+  <string formatted="false" name="live_updates_notif_chan_name">Actualizări live</string>
   <string formatted="false" name="channel_group_name_alarms">Alarme</string>
   <string formatted="false" name="configure_log_filter">Afișați ce elemente de jurnal?</string>
   <string formatted="false" name="menu_show_seconds">Afișează secunde</string>

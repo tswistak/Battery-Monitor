@@ -137,6 +137,7 @@
     \nPritisnite OK, da vas preusmerijo na sistemske nastavitve, kjer lahko
     onemogočite optimizacijo baterije za Battery Monitor.</string>
   <string formatted="false" name="main_notif_chan_name">Glavno obvestilo</string>
+  <string formatted="false" name="live_updates_notif_chan_name">Posodobitve v živo</string>
   <string formatted="false" name="channel_group_name_alarms">Alarmi</string>
   <string formatted="false" name="configure_log_filter">Pokaži, katere elemente dnevnika?</string>
   <string formatted="false" name="tab_current_info">Aktualne informacije</string>

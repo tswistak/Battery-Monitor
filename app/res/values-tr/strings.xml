@@ -127,6 +127,7 @@
   <string name="battery_optimized" formatted="false">Battery Monitor kısıtlandı!</string>
   <string name="battery_optimized_message" formatted="false">Battery Monitor doğru çalışamayacak şekilde kısıtlandı. Bu \"pil optimizasyonu\", arka planda çok pil tüketen uygulamaları sınırlamak için Android özelliğidir.\n\nBattery Monitor ise düzgün çalışmak için arka planda kısıtlanmadan çalışması gereken, verimli bir uygulamadır.\n\nOK\'a basarak Battery Monitor için pil optimizasyonunu kapatabileceğiniz sistem ayarlarına gidebilirsiniz.</string>
   <string name="main_notif_chan_name" formatted="false">Ana Bildirim</string>
+  <string name="live_updates_notif_chan_name" formatted="false">Canlı Güncellemeler</string>
   <string name="channel_group_name_alarms" formatted="false">Alarmlar</string>
   <string name="tab_current_info" formatted="false">Güncel Bilgi</string>
   <string name="tab_history" formatted="false">Geçmiş</string>

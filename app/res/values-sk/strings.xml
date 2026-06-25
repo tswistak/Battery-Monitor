@@ -164,6 +164,7 @@
     \nPStlačte tlačidlo OK, aby ste sa dostali do systémových nastavení, kde môžete
     zakázať optimalizáciu batérie pre Monitor batérie.</string>
   <string formatted="false" name="main_notif_chan_name">Hlavné oznámenie</string>
+  <string formatted="false" name="live_updates_notif_chan_name">Živé aktualizácie</string>
   <string formatted="false" name="channel_group_name_alarms">Budíky</string>
   <string formatted="false" name="configure_log_filter">Zobraziť, ktoré položky denníka?</string>
   <string formatted="false" name="tab_current_info">Aktuálne informácie</string>
