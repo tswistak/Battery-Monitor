@@ -169,6 +169,7 @@
     停用 Battery Monitor 的電池最佳化。
   </string>
   <string formatted="false" name="main_notif_chan_name">主要通知</string>
+  <string formatted="false" name="live_updates_notif_chan_name">即時更新</string>
   <string formatted="false" name="channel_group_name_alarms">警報</string>
   <string formatted="false" name="configure_log_filter">顯示哪些記錄項目？</string>
   <string formatted="false" name="notification_until_charged">“直到收費為止”</string>

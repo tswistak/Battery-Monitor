@@ -44,6 +44,7 @@
     \nلطفاً OK را فشار دهید تا به تنظیمات سیستم در جایی که می توانید منتقل شوید
     بهینه سازی باتری را برای مانیتور باتری غیرفعال کنید.</string>
   <string formatted="false" name="main_notif_chan_name">اطلاعیه اصلی</string>
+  <string formatted="false" name="live_updates_notif_chan_name">به‌روزرسانی‌های زنده</string>
   <string formatted="false" name="channel_group_name_alarms">آلارم ها</string>
   <string formatted="false" name="confirm_clear_logs">واقعاً همه گزارش‌ها پاک می‌شوند؟</string>
   <string formatted="false" name="configure_log_filter">کدام موارد گزارش را نشان دهید؟</string>

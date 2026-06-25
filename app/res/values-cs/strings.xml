@@ -39,6 +39,7 @@
         zakázat optimalizaci baterie pro sledování baterie.
   </string>
   <string formatted="false" name="main_notif_chan_name">Hlavní oznámení</string>
+  <string formatted="false" name="live_updates_notif_chan_name">Živé aktualizace</string>
   <string formatted="false" name="channel_group_name_alarms">Alarmy</string>
   <string formatted="false" name="confirm_clear_logs">Opravdu vymazat všechny záznamy ?</string>
   <string formatted="false" name="configure_log_filter">Zobrazit, které položky protokolu?</string>

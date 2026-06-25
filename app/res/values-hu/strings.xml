@@ -154,6 +154,7 @@
   <string name="battery_optimized" formatted="false">A Battery Monitor korlátozva van!</string>
   <string name="battery_optimized_message" formatted="false">A Battery Monitor nem tud megfelelően futni, mert korlátozza a rendszer. Az Android \"akkumulátor-optimalizálás\" funkciója a rosszul megírt appok háttérfogyasztását korlátozza.\n\nA Battery Monitor viszont egy jól megtervezett app, amelynek korlátozás nélkül kell futnia a háttérben a helyes működéshez. Nagyon hatékony, és nem csökkenti az akkumulátor üzemidejét.\n\nNyomd meg az OK gombot a rendszerbeállítások megnyitásához, ahol kikapcsolhatod az akkumulátor-optimalizálást a Battery Monitor számára.</string>
   <string name="main_notif_chan_name" formatted="false">Fő értesítés</string>
+  <string name="live_updates_notif_chan_name" formatted="false">Élő frissítések</string>
   <string name="channel_group_name_alarms" formatted="false">Riasztások</string>
     <string name="tab_history" formatted="false">Előzmények</string>
   <string name="notification_until_charged" formatted="false">" feltöltésig"</string>

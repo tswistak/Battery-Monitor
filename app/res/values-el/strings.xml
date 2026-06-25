@@ -39,6 +39,7 @@
         απενεργοποιήστε τη βελτιστοποίηση μπαταρίας για την οθόνη μπαταρίας.
   </string>
   <string formatted="false" name="main_notif_chan_name">Κύρια ειδοποίηση</string>
+  <string formatted="false" name="live_updates_notif_chan_name">Ζωντανές ενημερώσεις</string>
   <string formatted="false" name="channel_group_name_alarms">Συναγερμός</string>
   <string formatted="false" name="confirm_clear_logs">Θέλετε να διαγράψετε όλες τις καταγραφές δεδομένων;</string>
   <string formatted="false" name="configure_log_filter">Εμφάνιση των στοιχείων καταγραφής;</string>

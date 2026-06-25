@@ -113,6 +113,7 @@
     \n אנא לחץ על אישור כדי לעבור להגדרות המערכת שבהן תוכל
     השבת את אופטימיזציית הסוללה עבור Battery Monitor.</string>
   <string formatted="false" name="main_notif_chan_name">הודעה ראשית</string>
+  <string formatted="false" name="live_updates_notif_chan_name">עדכונים חיים</string>
   <string formatted="false" name="channel_group_name_alarms">אַזעָקָה</string>
   <string formatted="false" name="menu_show_seconds">הצג שניות</string>
   <string formatted="false" name="menu_hide_seconds">הסתר שניות</string>

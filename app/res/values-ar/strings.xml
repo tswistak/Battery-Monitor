@@ -189,6 +189,7 @@
   <string name="battery_optimized" formatted="false">تم تقييد Battery Monitor!</string>
   <string name="battery_optimized_message" formatted="false">تم تقييد Battery Monitor من العمل بشكل صحيح. «تحسين البطارية» ميزة في Android صُممت لتقييد التطبيقات سيئة التصميم حتى لا تستهلك الكثير من البطارية في الخلفية.\n\nلكن Battery Monitor تطبيق مصمم جيدًا ويحتاج للعمل دون تقييد في الخلفية لكي يعمل بصورة صحيحة. وهو فعال جدًا ولن يقلل عمر البطارية.\n\nيرجى الضغط على موافق للانتقال إلى إعدادات النظام حيث يمكنك تعطيل تحسين البطارية لتطبيق Battery Monitor.</string>
   <string name="main_notif_chan_name" formatted="false">الإشعار الرئيسي</string>
+  <string name="live_updates_notif_chan_name" formatted="false">التحديثات المباشرة</string>
   <string name="channel_group_name_alarms" formatted="false">الإنذارات</string>
   <string name="menu_show_seconds" formatted="false">إظهار الثواني</string>
   <string name="menu_hide_seconds" formatted="false">إخفاء الثواني</string>

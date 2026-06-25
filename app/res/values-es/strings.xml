@@ -153,6 +153,7 @@
     \nPresione OK para ir a la configuración del sistema donde podrá
     deshabilite la optimización de la batería para Battery Monitor.</string>
   <string formatted="false" name="main_notif_chan_name">Notificación principal</string>
+  <string formatted="false" name="live_updates_notif_chan_name">Actualizaciones en vivo</string>
   <string formatted="false" name="channel_group_name_alarms">Alarmas</string>
   <string formatted="false" name="menu_show_seconds">Mostrar segundos</string>
   <string formatted="false" name="menu_hide_seconds">Ocultar segundos</string>

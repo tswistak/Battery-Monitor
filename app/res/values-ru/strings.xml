@@ -217,6 +217,7 @@
   <string name="battery_optimized" formatted="false">Battery Monitor ограничен системой!</string>
   <string name="battery_optimized_message" formatted="false">Работа Battery Monitor ограничена и приложение не может функционировать корректно. Эта «оптимизация батареи» — функция Android, предназначенная для ограничения плохо разработанных приложений, чтобы они не расходовали слишком много заряда в фоне.\n\nОднако Battery Monitor — хорошо спроектированное приложение, которому для корректной работы нужен неограниченный фоновый режим. Оно очень эффективно и не уменьшает время работы аккумулятора.\n\nНажмите OK, чтобы перейти в системные настройки и отключить оптимизацию батареи для Battery Monitor.</string>
   <string name="main_notif_chan_name" formatted="false">Основное уведомление</string>
+  <string name="live_updates_notif_chan_name" formatted="false">Живые обновления</string>
   <string name="channel_group_name_alarms" formatted="false">Предупреждения</string>
   <string name="menu_show_seconds" formatted="false">Показывать секунды</string>
   <string name="menu_hide_seconds" formatted="false">Скрывать секунды</string>

@@ -142,6 +142,7 @@
   <string name="battery_optimized" formatted="false">Battery Monitor ist eingeschränkt!</string>
   <string name="battery_optimized_message" formatted="false">Battery Monitor ist in der Ausführung eingeschränkt und kann nicht korrekt arbeiten. Diese „Akku-Optimierung“ ist eine Android-Funktion, die schlecht entwickelte Apps im Hintergrund begrenzen soll.\n\nBattery Monitor ist jedoch eine gut entwickelte App, die ohne Einschränkungen im Hintergrund laufen muss, um korrekt zu funktionieren. Sie ist sehr effizient und verkürzt die Akkulaufzeit nicht.\n\nBitte drücken Sie OK, um zu den Systemeinstellungen zu gelangen, wo Sie die Akku-Optimierung für Battery Monitor deaktivieren können.</string>
   <string name="main_notif_chan_name" formatted="false">Hauptbenachrichtigung</string>
+  <string name="live_updates_notif_chan_name" formatted="false">Live-Updates</string>
   <string name="channel_group_name_alarms" formatted="false">Alarme</string>
   <string name="menu_show_seconds" formatted="false">Sekunden anzeigen</string>
   <string name="menu_hide_seconds" formatted="false">Sekunden ausblenden</string>
