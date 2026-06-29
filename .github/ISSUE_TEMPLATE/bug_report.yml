@@ -14,6 +14,8 @@ body:
           required: true
         - label: The title is only a short summary, and the full details are written in the description below.
           required: true
+        - label: The issue title and description are written in English.
+          required: true
   - type: textarea
     id: bug_description
     attributes:
