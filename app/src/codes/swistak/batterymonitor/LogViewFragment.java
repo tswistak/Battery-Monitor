@@ -427,7 +427,7 @@ public class LogViewFragment extends ListFragment {
                 for (i = 0; i < cols; i++) {
                     if (CSV_ORDER[i].equals(LogDatabase.KEY_TIME)) {
                         d.setTime(completeCursor.getLong(mAdapter.timeIndex));
-                        buf.write(mAdapter.dateFormat.format(d) + "," + mAdapter.timeFormat.format(d) + ",");
+                        buf.write(mAdapter.dateFormat.format(d) + "," + timeDateStringFromDate(getActivity(), d) + ",");
                     } else if (CSV_ORDER[i].equals(LogDatabase.KEY_STATUS_CODE)) {
                         statusCode  = completeCursor.getInt(mAdapter.statusCodeIndex);
                         statusCodes = LogDatabase.decodeStatus(statusCode);

@@ -122,6 +122,7 @@
   <string name="age_2_weeks" formatted="false">2 savaitės</string>
   <string name="age_3_weeks" formatted="false">3 savaitės</string>
   <string name="age_4_weeks" formatted="false">4 savaitės</string>
+  <string formatted="false" name="age_forever">Visam laikui</string>
   <plurals name="n_log_items">
     <item quantity="one">%d Įrašo Punktas</item>
     <item quantity="few">%d Įrašo Punktai</item>

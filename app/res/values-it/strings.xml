@@ -143,6 +143,7 @@
   <string name="age_2_weeks" formatted="false">2 settimane</string>
   <string name="age_3_weeks" formatted="false">3 settimane</string>
   <string name="age_4_weeks" formatted="false">4 settimane</string>
+  <string formatted="false" name="age_forever">Per sempre</string>
   <string name="circle_widget" formatted="false">Battery Monitor Cerchio</string>
   <string name="full_widget" formatted="false">Battery Monitor Completo</string>
   <string name="notifications_disabled" formatted="false">Le notifiche sono disabilitate!</string>

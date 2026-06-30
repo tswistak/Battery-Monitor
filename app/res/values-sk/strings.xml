@@ -120,6 +120,7 @@
   <string name="age_2_weeks" formatted="false">2 týždne</string>
   <string name="age_3_weeks" formatted="false">3 týždne</string>
   <string name="age_4_weeks" formatted="false">4 týždne</string>
+  <string formatted="false" name="age_forever">Navždy</string>
   <plurals name="n_log_items">
     <item quantity="zero">%d záznamov</item>
     <item quantity="one">%d záznam</item>

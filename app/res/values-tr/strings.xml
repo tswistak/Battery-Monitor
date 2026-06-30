@@ -118,6 +118,7 @@
   <string name="age_2_weeks" formatted="false">2 hafta</string>
   <string name="age_3_weeks" formatted="false">3 hafta</string>
   <string name="age_4_weeks" formatted="false">4 hafta</string>
+  <string formatted="false" name="age_forever">Süresiz</string>
   <string name="icon_set_classic" formatted="false">Klasik</string>
   <string name="icon_set_smaller" formatted="false">Daha Küçük Numara</string>
   <string name="circle_widget" formatted="false">Battery Monitor Daire</string>

@@ -547,7 +547,8 @@
   <string formatted="false" name="pref_max_log_age_summary">Delete logs older than:</string>
   <string formatted="false" name="pref_max_log_age_help">
     If logging is enabled, then whenever you plug in your device, logs
-    older than this will be deleted.
+    older than this will be deleted. Select Forever to keep logs until
+    you clear them manually.
   </string>
 
   <string formatted="false" name="pref_cat_temperature_unit">Temperature Unit</string>
@@ -695,6 +696,7 @@
   <string formatted="false" name="age_2_weeks">2 weeks</string>
   <string formatted="false" name="age_3_weeks">3 weeks</string>
   <string formatted="false" name="age_4_weeks">4 weeks</string>
+  <string formatted="false" name="age_forever">Forever</string>
 
   <string formatted="false" name="icon_set_classic">Classic</string>
   <string formatted="false" name="icon_set_plain">Plain Number</string>

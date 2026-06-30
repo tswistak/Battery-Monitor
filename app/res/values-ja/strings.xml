@@ -266,6 +266,7 @@
   <string name="age_2_weeks" formatted="false">2 週間</string>
   <string name="age_3_weeks" formatted="false">3 週間</string>
   <string name="age_4_weeks" formatted="false">4 週間</string>
+  <string formatted="false" name="age_forever">永久</string>
   <string name="icon_set_classic" formatted="false">クラシック</string>
   <string name="icon_set_plain" formatted="false">数字のみ</string>
   <string name="icon_set_smaller" formatted="false">小さい数字</string>

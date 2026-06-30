@@ -181,6 +181,7 @@
   <string name="age_2_weeks" formatted="false">اسبوعين</string>
   <string name="age_3_weeks" formatted="false">ثلاث اسابيع</string>
   <string name="age_4_weeks" formatted="false">اربعة اسابيع</string>
+  <string formatted="false" name="age_forever">دائمًا</string>
   <string name="icon_set_classic" formatted="false">كلاسيك</string>
   <string name="icon_set_plain" formatted="false">رقم كبير</string>
   <string name="icon_set_smaller" formatted="false">رقم صغير</string>

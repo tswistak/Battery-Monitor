@@ -478,6 +478,7 @@
   <string formatted="false" name="age_2_weeks">2 týdny</string>
   <string formatted="false" name="age_3_weeks">3 týdny</string>
   <string formatted="false" name="age_4_weeks">4 týdny</string>
+  <string formatted="false" name="age_forever">Navždy</string>
   <string formatted="false" name="icon_set_classic">Klasický</string>
   <string formatted="false" name="icon_set_plain">Obyčejné číslo</string>
   <string formatted="false" name="icon_set_smaller">Menší číslo</string>

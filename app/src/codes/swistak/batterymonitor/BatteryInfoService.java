@@ -945,8 +945,11 @@ public class BatteryInfoService extends Service {
         if (settings.getBoolean(SettingsFragment.KEY_ENABLE_LOGGING, true)) {
             log_db.logStatus(info, now, LogDatabase.STATUS_NEW);
 
-            if (info.status != info.last_status && info.last_status == BatteryInfo.STATUS_UNPLUGGED)
-                log_db.prune(Integer.valueOf(settings.getString(SettingsFragment.KEY_MAX_LOG_AGE, Str.default_max_log_age)));
+            if (info.status != info.last_status && info.last_status == BatteryInfo.STATUS_UNPLUGGED) {
+                int maxLogAge = Integer.valueOf(settings.getString(SettingsFragment.KEY_MAX_LOG_AGE, Str.default_max_log_age));
+                if (maxLogAge >= 0)
+                    log_db.prune(maxLogAge);
+            }
         }
 
         if (settings.getBoolean(SettingsFragment.KEY_ENABLE_CURRENT_HACK, false) &&

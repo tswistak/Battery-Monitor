@@ -129,6 +129,7 @@
   <string name="age_2_weeks" formatted="false">2 semaines</string>
   <string name="age_3_weeks" formatted="false">3 semaines</string>
   <string name="age_4_weeks" formatted="false">4 semaines</string>
+  <string formatted="false" name="age_forever">Toujours</string>
   <string name="notifications_disabled" formatted="false">Les notifications sont désactivées !</string>
   <string name="notifications_disabled_message" formatted="false">Vous avez bloqué toutes les notifications de Battery Monitor. La notification principale et tous les alarmes configurés seront bloqués.\n\nBattery Monitor permet d’activer/désactiver séparément la notification principale et de désactiver temporairement les alarmes créées ; il est donc fortement recommandé de débloquer ses notifications.\n\nAppuyez sur OK pour ouvrir les paramètres système afin de réactiver les notifications de Battery Monitor.</string>
   <string name="battery_optimized" formatted="false">Battery Monitor est limité !</string>

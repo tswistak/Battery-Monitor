@@ -114,6 +114,7 @@
   <string name="age_2_weeks" formatted="false">2 semanas</string>
   <string name="age_3_weeks" formatted="false">3 semanas</string>
   <string name="age_4_weeks" formatted="false">4 semanas</string>
+  <string formatted="false" name="age_forever">Siempre</string>
   <string name="icon_set_classic" formatted="false">Clásico</string>
   <string name="icon_set_plain" formatted="false">Número Sencillo</string>
   <string name="icon_set_smaller" formatted="false">Número más Pequeño</string>

@@ -168,6 +168,7 @@
   <string name="age_2_weeks" formatted="false">2 weken</string>
   <string name="age_3_weeks" formatted="false">3 weken</string>
   <string name="age_4_weeks" formatted="false">4 weken</string>
+  <string formatted="false" name="age_forever">Altijd</string>
   <string name="icon_set_classic" formatted="false">Klassiek</string>
   <string name="icon_set_plain" formatted="false">Cijfer</string>
   <string name="icon_set_smaller" formatted="false">Kleiner cijfer</string>

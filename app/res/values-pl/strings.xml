@@ -478,6 +478,7 @@
   <string name="age_2_weeks" formatted="false">2 tygodnie</string>
   <string name="age_3_weeks" formatted="false">3 tygodnie</string>
   <string name="age_4_weeks" formatted="false">4 tygodnie</string>
+  <string formatted="false" name="age_forever">Na zawsze</string>
 
   <string name="icon_set_classic" formatted="false">Klasyczny</string>
   <string name="icon_set_plain" formatted="false">Zwykła liczba</string>

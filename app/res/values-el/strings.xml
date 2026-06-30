@@ -442,6 +442,7 @@
   <string formatted="false" name="age_2_weeks">2 εβδομάδες</string>
   <string formatted="false" name="age_3_weeks">3 εβδομάδες</string>
   <string formatted="false" name="age_4_weeks">4 εβδομάδες</string>
+  <string formatted="false" name="age_forever">Για πάντα</string>
   <string formatted="false" name="icon_set_classic">Κλασσικός</string>
   <string formatted="false" name="icon_set_plain">Απλός αριθμός</string>
   <string formatted="false" name="icon_set_smaller">Μικρότερος αριθμός</string>

@@ -207,6 +207,7 @@
   <string name="age_2_weeks" formatted="false">2 недели</string>
   <string name="age_3_weeks" formatted="false">3 недели</string>
   <string name="age_4_weeks" formatted="false">4 недели</string>
+  <string formatted="false" name="age_forever">Навсегда</string>
   <string name="icon_set_classic" formatted="false">Классический</string>
   <string name="icon_set_plain" formatted="false">Просто число</string>
   <string name="icon_set_smaller" formatted="false">Мелкие цифры</string>

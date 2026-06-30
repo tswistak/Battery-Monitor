@@ -188,6 +188,7 @@
   <string name="age_2_weeks" formatted="false">Dve nedelje</string>
   <string name="age_3_weeks" formatted="false">Tri nedelje</string>
   <string name="age_4_weeks" formatted="false">Mesec dana</string>
+  <string formatted="false" name="age_forever">Zauvek</string>
   <string name="icon_set_classic" formatted="false">Klasično</string>
   <string name="icon_set_plain" formatted="false">Običan broj</string>
   <string name="icon_set_smaller" formatted="false">Manji broj</string>

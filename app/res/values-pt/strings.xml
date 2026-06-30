@@ -463,6 +463,7 @@
   <string formatted="false" name="age_2_weeks">2 semanas</string>
   <string formatted="false" name="age_3_weeks">3 semanas</string>
   <string formatted="false" name="age_4_weeks">4 semanas</string>
+  <string formatted="false" name="age_forever">Para sempre</string>
   <string formatted="false" name="icon_set_classic">Clássico</string>
   <string formatted="false" name="icon_set_plain">Número Simples</string>
   <string formatted="false" name="icon_set_smaller">Número menor</string>

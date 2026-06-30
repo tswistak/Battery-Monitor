@@ -449,6 +449,7 @@
   <string formatted="false" name="age_2_weeks">2 שבועות</string>
   <string formatted="false" name="age_3_weeks">3 שבועות</string>
   <string formatted="false" name="age_4_weeks">4 שבועות</string>
+  <string formatted="false" name="age_forever">לתמיד</string>
   <string formatted="false" name="icon_set_classic">קלַאסִי</string>
   <string formatted="false" name="icon_set_plain">מספר רגיל</string>
   <string formatted="false" name="icon_set_smaller">מספר קטן יותר</string>
