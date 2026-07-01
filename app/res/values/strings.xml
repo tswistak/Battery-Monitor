@@ -545,7 +545,7 @@
   </string>
   <string formatted="false" name="pref_max_log_age">Maximum Log Age</string>
   <string formatted="false" name="pref_max_log_age_summary">Delete logs older than:</string>
-  <string formatted="false" name="pref_max_log_age_help">If logging is enabled, then whenever you plug in your device, logs older than this will be deleted. Select Never delete to keep logs until you clear them manually.</string>
+  <string formatted="false" name="pref_max_log_age_help">If logging is enabled, then whenever you plug in your device, logs older than this will be deleted. Select "Never delete" to keep logs until you clear them manually.</string>
 
   <string formatted="false" name="pref_cat_temperature_unit">Temperature Unit</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Convert to Fahrenheit</string>

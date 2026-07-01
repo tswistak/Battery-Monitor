@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## Unreleased
+
+### New
+
+- Added an option to keep logs until they are manually removed (thanks @lrcstars).
+
+### Improved
+
+- Chinese translations (thanks @lrcstars).
+- CSV now exports time with seconds (#19, thanks @lrcstars).
+
 ## 1.0.4
 
 ### Improved
