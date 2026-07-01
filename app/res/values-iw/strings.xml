@@ -342,8 +342,7 @@
   <string formatted="false" name="pref_enable_logging_help">אם מופעל, Battery Monitor ירשום שינויים במצב הסוללה.</string>
   <string formatted="false" name="pref_max_log_age">גיל יומן מקסימלי</string>
   <string formatted="false" name="pref_max_log_age_summary">מחק יומנים ישנים יותר מ:</string>
-  <string formatted="false" name="pref_max_log_age_help">אם רישום מופעל, אז בכל פעם שאתה מחבר את המכשיר שלך, יומן
-    ישן מזה יימחק.</string>
+  <string formatted="false" name="pref_max_log_age_help">אם הרישום מופעל, בכל פעם שתחבר את המכשיר יימחקו רישומים ישנים יותר מערך זה. בחר לעולם לא למחוק כדי לשמור אותם עד שתמחק אותם ידנית.</string>
   <string formatted="false" name="pref_cat_temperature_unit">יחידת טמפרטורה</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">המר לפרנהייט</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">אנדרואיד מדווחת על טמפרטורת הסוללה במעלות צלזיוס.  אם
@@ -449,6 +448,7 @@
   <string formatted="false" name="age_2_weeks">2 שבועות</string>
   <string formatted="false" name="age_3_weeks">3 שבועות</string>
   <string formatted="false" name="age_4_weeks">4 שבועות</string>
+  <string formatted="false" name="age_never_delete">לעולם לא למחוק</string>
   <string formatted="false" name="icon_set_classic">קלַאסִי</string>
   <string formatted="false" name="icon_set_plain">מספר רגיל</string>
   <string formatted="false" name="icon_set_smaller">מספר קטן יותר</string>

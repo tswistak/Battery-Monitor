@@ -109,7 +109,7 @@
   <string name="pref_enable_logging_help" formatted="false">Se abilitato, Battery Monitor registrerà i cambiamenti dello stato della batteria (es. il telefono è scollegato o è completamente carico). Puoi vedere il registro dalla finestra principale (premi MENU\' e poi seleziona Logs; nei tablet MENU\' non è necessario).</string>
   <string name="pref_max_log_age" formatted="false">Periodo massimo registro</string>
   <string name="pref_max_log_age_summary" formatted="false">Cancella registri più vecchi di:</string>
-  <string name="pref_max_log_age_help" formatted="false">Se il logging è abilitato, ogni volta che colleghi il telefono, i registri più vecchi saranno cancellati.</string>
+  <string formatted="false" name="pref_max_log_age_help">Se il logging è abilitato, ogni volta che colleghi il dispositivo verranno eliminati i registri più vecchi di questo valore. Seleziona Non eliminare mai per conservarli finché non li cancelli manualmente.</string>
   <string name="pref_cat_temperature_unit" formatted="false">Unità temperatura</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Converti in Fahrenheit</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android riporta la temperatura della batteria in gradi Celsius. Se preferisci vedere la temperatura della batteria in gradi Fahrenheit, spunta questa opzione.</string>
@@ -143,6 +143,7 @@
   <string name="age_2_weeks" formatted="false">2 settimane</string>
   <string name="age_3_weeks" formatted="false">3 settimane</string>
   <string name="age_4_weeks" formatted="false">4 settimane</string>
+  <string formatted="false" name="age_never_delete">Non eliminare mai</string>
   <string name="circle_widget" formatted="false">Battery Monitor Cerchio</string>
   <string name="full_widget" formatted="false">Battery Monitor Completo</string>
   <string name="notifications_disabled" formatted="false">Le notifiche sono disabilitate!</string>

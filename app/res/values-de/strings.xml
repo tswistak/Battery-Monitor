@@ -136,6 +136,7 @@
   <string name="age_2_weeks" formatted="false">2 Wochen</string>
   <string name="age_3_weeks" formatted="false">3 Wochen</string>
   <string name="age_4_weeks" formatted="false">4 Wochen</string>
+  <string formatted="false" name="age_never_delete">Nie löschen</string>
   <string name="icon_set_classic" formatted="false">Klassik</string>
   <string name="notifications_disabled" formatted="false">Benachrichtigungen sind deaktiviert!</string>
   <string name="notifications_disabled_message" formatted="false">Sie haben alle Benachrichtigungen für Battery Monitor blockiert. Dadurch kann Battery Monitor keine Benachrichtigungen anzeigen: Sowohl die Hauptbenachrichtigung als auch alle von Ihnen gesetzten Alarme werden blockiert.\n\nDa Battery Monitor es erlaubt, die Hauptbenachrichtigung separat ein- und auszuschalten und Alarme vorübergehend zu deaktivieren, wird dringend empfohlen, die Benachrichtigungen für Battery Monitor wieder zuzulassen. Solange sie blockiert sind, kann es so aussehen, als ob Battery Monitor nicht funktioniert.\n\nBitte drücken Sie OK, um zu den Systemeinstellungen zu gelangen, wo Sie die Benachrichtigungen für Battery Monitor wieder freigeben können.</string>
@@ -246,7 +247,7 @@
   <string name="pref_indicate_charging_summary" formatted="false">Icon bei Ladevorgang anpassen?</string>
   <string name="pref_indicate_charging_help" formatted="false">Einige Icon-Sets zeigen beim Laden einen Blitz an; diese Einstellung kann das deaktivieren.</string>
   <string name="pref_enable_logging_help" formatted="false">Wenn aktiviert, protokolliert Battery Monitor Akku-Statusänderungen.</string>
-  <string name="pref_max_log_age_help" formatted="false">Wenn die Protokollierung aktiv ist, werden beim Anschließen des Geräts ältere Protokolle gelöscht.</string>
+  <string formatted="false" name="pref_max_log_age_help">Wenn die Protokollierung aktiviert ist, werden beim Anschließen des Geräts Protokolle gelöscht, die älter als diese Einstellung sind. Wähle Nie löschen, um Protokolle zu behalten, bis du sie manuell löschst.</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android meldet die Akkutemperatur in Celsius. Aktivieren Sie diese Option, wenn Sie Fahrenheit bevorzugen.</string>
   <string name="pref_autostart_at_boot_help" formatted="false">Steuert, ob Battery Monitor beim Gerätestart automatisch gestartet werden soll.</string>
   <string name="predictor_sensitive" formatted="false">Sensitiv</string>

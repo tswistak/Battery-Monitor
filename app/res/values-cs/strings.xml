@@ -369,7 +369,7 @@
   <string formatted="false" name="pref_enable_logging_help">Je-li povoleno, Battery Monitor bude zaznamenávat změny stavu baterie.</string>
   <string formatted="false" name="pref_max_log_age">Maximální stáří záznamů</string>
   <string formatted="false" name="pref_max_log_age_summary">Vymazat záznamy starší než:</string>
-  <string formatted="false" name="pref_max_log_age_help">Pokud jsou záznamy povoleny, pak všechny starší budou vždy vymazány.</string>
+  <string formatted="false" name="pref_max_log_age_help">Pokud je zaznamenávání zapnuté, při každém připojení zařízení se odstraní záznamy starší než tato hodnota. Výběrem Nikdy nemazat je ponecháte, dokud je nesmažete ručně.</string>
     <string formatted="false" name="pref_cat_temperature_unit">Měrná jednotka teploty</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Změnit na Fahrenheity</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">
@@ -478,6 +478,7 @@
   <string formatted="false" name="age_2_weeks">2 týdny</string>
   <string formatted="false" name="age_3_weeks">3 týdny</string>
   <string formatted="false" name="age_4_weeks">4 týdny</string>
+  <string formatted="false" name="age_never_delete">Nikdy nemazat</string>
   <string formatted="false" name="icon_set_classic">Klasický</string>
   <string formatted="false" name="icon_set_plain">Obyčejné číslo</string>
   <string formatted="false" name="icon_set_smaller">Menší číslo</string>

@@ -109,7 +109,7 @@
   <string name="pref_enable_logging_help" formatted="false">Ha engedélyezi, a Battery Monitor naplózza az akku állapotának változásait. (pl.ha a telefont lekapcsolták a töltőről vagy az akku teljesen feltöltődött). A napló elérhető a főablakból a MENÜ gomb használatával.</string>
   <string name="pref_max_log_age" formatted="false">Napló időszaka</string>
   <string name="pref_max_log_age_summary" formatted="false">Törölje az ennél régebbi bejegyzéseket:</string>
-  <string name="pref_max_log_age_help" formatted="false">Ha a naplózás engedélyezett, minden esetben, amikor tölteni kezdi a készüléket, az ennél régebbi bejegyzések törlődnek.</string>
+  <string formatted="false" name="pref_max_log_age_help">Ha a naplózás engedélyezett, az eszköz csatlakoztatásakor az ennél régebbi naplók törlődnek. Válaszd a Soha ne törölje lehetőséget, hogy a naplók megmaradjanak, amíg kézzel nem törlöd őket.</string>
   <string name="pref_cat_temperature_unit" formatted="false">Hőmérséklet mértékegysége</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Fahrenheit használata</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Az Android Celsius°-ban közli a hőmérsékletet. Ha jobban szeretné az akkumlátor hőmérsékletét Fahrenheit-ben látni, kapcsolja be ezt az opciót, és az alkalmásás konvértálni fogja önnek.</string>
@@ -144,6 +144,7 @@
   <string name="age_2_weeks" formatted="false">2 hét</string>
   <string name="age_3_weeks" formatted="false">3 hét</string>
   <string name="age_4_weeks" formatted="false">4 hét</string>
+  <string formatted="false" name="age_never_delete">Soha ne törölje</string>
   <string name="icon_set_classic" formatted="false">Klasszikus</string>
   <string name="icon_set_plain" formatted="false">Egyszerű számok</string>
   <string name="icon_set_smaller" formatted="false">Kisebb számok</string>

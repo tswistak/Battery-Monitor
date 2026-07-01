@@ -222,7 +222,7 @@
   <string name="pref_enable_logging_help" formatted="false">有効にした場合、Battery Monitor はバッテリーのステータスの変更を記録します。</string>
   <string name="pref_max_log_age" formatted="false">最大ログ履歴</string>
   <string name="pref_max_log_age_summary" formatted="false">次より古いログを削除します:</string>
-  <string name="pref_max_log_age_help" formatted="false">ロギングが有効になっている場合、あなたのデバイスを接続するたびに、 ここで指定した値よりも古いログを削除します。</string>
+  <string formatted="false" name="pref_max_log_age_help">ロギングが有効な場合、デバイスを接続するたびに、この値より古いログが削除されます。手動で消去するまでログを保持するには「削除しない」を選択してください。</string>
   <string name="pref_cat_temperature_unit" formatted="false">温度の単位</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">華氏に変換する</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android はセ氏でバッテリ温度を報告します。バッテリー温度を華氏で 確認したい場合は、このオプションをチェックすると、アプリが変換します。</string>
@@ -266,6 +266,7 @@
   <string name="age_2_weeks" formatted="false">2 週間</string>
   <string name="age_3_weeks" formatted="false">3 週間</string>
   <string name="age_4_weeks" formatted="false">4 週間</string>
+  <string formatted="false" name="age_never_delete">削除しない</string>
   <string name="icon_set_classic" formatted="false">クラシック</string>
   <string name="icon_set_plain" formatted="false">数字のみ</string>
   <string name="icon_set_smaller" formatted="false">小さい数字</string>

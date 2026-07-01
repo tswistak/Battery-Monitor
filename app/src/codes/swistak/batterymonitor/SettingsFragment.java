@@ -153,6 +153,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
                                                     KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION,
                                                    KEY_TOP_LINE, KEY_BOTTOM_LINE,
                                                    KEY_ENABLE_LOGGING,
+                                                   KEY_MAX_LOG_AGE,
                                                    KEY_TIME_REMAINING_VERBOSITY,
                                                    KEY_STATUS_DURATION_IN_VITAL_SIGNS,
                                                    KEY_ENABLE_CURRENT_HACK,

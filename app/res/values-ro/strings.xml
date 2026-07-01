@@ -345,8 +345,7 @@
   <string formatted="false" name="pref_enable_logging_help">Dacă este activat, Battery Monitor va înregistra modificările stării bateriei.</string>
   <string formatted="false" name="pref_max_log_age">Vârsta maximă a jurnalului</string>
   <string formatted="false" name="pref_max_log_age_summary">Ștergeți jurnalele mai vechi de:</string>
-  <string formatted="false" name="pref_max_log_age_help">Dacă înregistrarea este activată, atunci de fiecare dată când conectați dispozitivul, se înregistrează
-    mai vechi decât acesta va fi ștearsă.</string>
+  <string formatted="false" name="pref_max_log_age_help">Dacă înregistrarea este activată, de fiecare dată când conectați dispozitivul, jurnalele mai vechi decât această valoare vor fi șterse. Selectați Nu șterge niciodată pentru a le păstra până când le ștergeți manual.</string>
   <string formatted="false" name="pref_cat_temperature_unit">Unitate de temperatură</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Convertiți în Fahrenheit</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Android raportează temperatura bateriei în grade Celsius.  Dacă
@@ -463,6 +462,7 @@
   <string formatted="false" name="age_2_weeks">2 saptamani</string>
   <string formatted="false" name="age_3_weeks">3 saptamani</string>
   <string formatted="false" name="age_4_weeks">4 săptămâni</string>
+  <string formatted="false" name="age_never_delete">Nu șterge niciodată</string>
   <string formatted="false" name="icon_set_classic">Clasic</string>
   <string formatted="false" name="icon_set_plain">Număr simplu</string>
   <string formatted="false" name="icon_set_smaller">Număr mai mic</string>

@@ -369,7 +369,7 @@
   <string formatted="false" name="pref_enable_logging_help">Αν ενεργοποιηθεί, ο Battery Monitor, θα καταγράφει τις μεταβολές κατάστασης της μπαταρίας (π.χ αν η συσκευή αποσυνδεθεί από το ρεύμα ή έχει φορτιστεί πλήρως). Μπορείτε να δείτε τα κατεγραμμένα δεδομένα από το κυρίως παράθυρο (πατήστε MENU και μετά επιλέξτε Λίστα Καταγραφής, στα tablets, το MENU δε είναι απαραίτητο.)</string>
   <string formatted="false" name="pref_max_log_age">Μέγιστη Περίοδος Καταγραφής</string>
   <string formatted="false" name="pref_max_log_age_summary">Διαγραφή λίστας δεδομένων παλαιότερης από:</string>
-  <string formatted="false" name="pref_max_log_age_help">Αν η καταγραφή είναι ενεργοποιημένη, τότε όποτε συνδέετε τη συσκευή στην πρίζα, όλες οι παλαιότερες καταγραφές θα διαγραφούν.</string>
+  <string formatted="false" name="pref_max_log_age_help">Αν η καταγραφή είναι ενεργή, κάθε φορά που συνδέετε τη συσκευή θα διαγράφονται οι καταγραφές που είναι παλαιότερες από αυτήν την επιλογή. Επιλέξτε Να μη διαγράφονται ποτέ για να τις κρατήσετε μέχρι να τις διαγράψετε χειροκίνητα.</string>
     <string formatted="false" name="pref_cat_temperature_unit">Μονάδες Θερμοκρασίας</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Μετατροπή σε Φάρεναϊτ</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Το Android αναφέρει τη θερμοκρασία της μπαταρίας σε βαθμούς Κελσίου. Αν προτιμάτε να τη βλέπετε σε Φάρεναϊτ, επιλέξετε αυτήν την επιλογή και η εφαρμογή θα σας τη μετατρέπει.</string>
@@ -442,6 +442,7 @@
   <string formatted="false" name="age_2_weeks">2 εβδομάδες</string>
   <string formatted="false" name="age_3_weeks">3 εβδομάδες</string>
   <string formatted="false" name="age_4_weeks">4 εβδομάδες</string>
+  <string formatted="false" name="age_never_delete">Να μη διαγράφονται ποτέ</string>
   <string formatted="false" name="icon_set_classic">Κλασσικός</string>
   <string formatted="false" name="icon_set_plain">Απλός αριθμός</string>
   <string formatted="false" name="icon_set_smaller">Μικρότερος αριθμός</string>

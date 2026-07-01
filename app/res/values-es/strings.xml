@@ -96,7 +96,7 @@
   <string name="pref_enable_logging_help" formatted="false">Si está activado, Battery Monitor registrará los cambios de estado de la batería (por ejemplo, al desenchufar el teléfono o cuando se cargue completamente). Puede ver los logs desde la ventana principal, pulsando MENU y seleccionando Registro.</string>
   <string name="pref_max_log_age" formatted="false">Antigüedad máxima</string>
   <string name="pref_max_log_age_summary" formatted="false">Borrar logs anteriores a:</string>
-  <string name="pref_max_log_age_help" formatted="false">Si el registro está activado, cada vez que enchufe el teléfono se borrarán los logs anteriores al tiempo seleccionado.</string>
+  <string formatted="false" name="pref_max_log_age_help">Si el registro está activado, cada vez que conectes el dispositivo se eliminarán los registros anteriores a este valor. Selecciona No eliminar nunca para conservarlos hasta que los borres manualmente.</string>
   <string name="pref_cat_temperature_unit" formatted="false">Unidad de temperatura</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Convertir a Fahrenheit</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android informa de la temperatura en grados Celsius. Si prefiere ver la temperatura de la batería en grados Fahrenheit, marque esta opción.</string>
@@ -114,6 +114,7 @@
   <string name="age_2_weeks" formatted="false">2 semanas</string>
   <string name="age_3_weeks" formatted="false">3 semanas</string>
   <string name="age_4_weeks" formatted="false">4 semanas</string>
+  <string formatted="false" name="age_never_delete">No eliminar nunca</string>
   <string name="icon_set_classic" formatted="false">Clásico</string>
   <string name="icon_set_plain" formatted="false">Número Sencillo</string>
   <string name="icon_set_smaller" formatted="false">Número más Pequeño</string>

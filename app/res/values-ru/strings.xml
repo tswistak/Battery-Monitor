@@ -163,7 +163,7 @@
   <string name="pref_enable_logging_help" formatted="false">Если включено, Battery Monitor будет вести журнал изменений состояния аккумулятора.</string>
   <string name="pref_max_log_age" formatted="false">Максимальный возраст журнала</string>
   <string name="pref_max_log_age_summary" formatted="false">Удалить журналы старше:</string>
-  <string name="pref_max_log_age_help" formatted="false">Если включено ведение журнала, то при каждом подключении зарядного устройства более старые, чем указанная величина, журналы будут удаляться.</string>
+  <string formatted="false" name="pref_max_log_age_help">Если ведение журнала включено, при каждом подключении устройства будут удаляться записи старше этого значения. Выберите Никогда не удалять, чтобы хранить записи, пока вы не очистите их вручную.</string>
   <string name="pref_cat_temperature_unit" formatted="false">Единицы измерения температуры</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Преобразовать к Фаренгейту</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Система Android сообщает температуру аккумулятора в градусах Цельсия. Если для вас предпочтительнее градусы Фаренгейта, выберите эту опцию, и приложение осуществит преобразование для вас.</string>
@@ -207,6 +207,7 @@
   <string name="age_2_weeks" formatted="false">2 недели</string>
   <string name="age_3_weeks" formatted="false">3 недели</string>
   <string name="age_4_weeks" formatted="false">4 недели</string>
+  <string formatted="false" name="age_never_delete">Никогда не удалять</string>
   <string name="icon_set_classic" formatted="false">Классический</string>
   <string name="icon_set_plain" formatted="false">Просто число</string>
   <string name="icon_set_smaller" formatted="false">Мелкие цифры</string>

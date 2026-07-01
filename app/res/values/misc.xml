@@ -116,6 +116,7 @@
     <item>336</item>
     <item>504</item>
     <item>672</item>
+    <item>-1</item>
   </string-array>
 
   <string-array name="log_filter_pref_keys">
@@ -221,6 +222,7 @@
     <item>@string/age_2_weeks</item>
     <item>@string/age_3_weeks</item>
     <item>@string/age_4_weeks</item>
+    <item>@string/age_never_delete</item>
   </string-array>
 
   <string-array name="icon_set_entries">

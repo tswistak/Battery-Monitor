@@ -341,8 +341,7 @@
   <string formatted="false" name="pref_enable_logging_help">यदि सक्षम किया गया है, तो बैटरी मॉनिटर बैटरी स्थिति परिवर्तन लॉग करेगा।</string>
   <string formatted="false" name="pref_max_log_age">अधिकतम लॉग आयु</string>
   <string formatted="false" name="pref_max_log_age_summary">इससे पुराने लॉग हटाएँ:</string>
-  <string formatted="false" name="pref_max_log_age_help">यदि लॉगिंग सक्षम है, तो जब भी आप अपने डिवाइस को प्लग इन करते हैं, लॉग इन होता है
-    इससे अधिक पुराना हटा दिया जाएगा।</string>
+  <string formatted="false" name="pref_max_log_age_help">यदि लॉगिंग सक्षम है, तो जब भी आप डिवाइस को प्लग इन करेंगे, इस मान से पुराने लॉग हटाए जाएँगे। लॉग को तब तक रखने के लिए कभी न हटाएँ चुनें, जब तक आप उन्हें मैन्युअल रूप से साफ़ न करें।</string>
   <string formatted="false" name="pref_cat_temperature_unit">तापमान इकाई</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">फ़ारेनहाइट में कनवर्ट करें</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">एंड्रॉइड बैटरी तापमान को डिग्री सेल्सियस में रिपोर्ट करता है।  यदि
@@ -458,6 +457,7 @@
   <string formatted="false" name="age_2_weeks">2 सप्ताह</string>
   <string formatted="false" name="age_3_weeks">3 सप्ताह</string>
   <string formatted="false" name="age_4_weeks">4 सप्ताह</string>
+  <string formatted="false" name="age_never_delete">कभी न हटाएँ</string>
   <string formatted="false" name="icon_set_classic">क्लासिक</string>
   <string formatted="false" name="icon_set_plain">सादा नंबर</string>
   <string formatted="false" name="icon_set_smaller">छोटी संख्या</string>

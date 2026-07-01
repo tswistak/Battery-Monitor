@@ -122,6 +122,7 @@
   <string name="age_2_weeks" formatted="false">2 savaitės</string>
   <string name="age_3_weeks" formatted="false">3 savaitės</string>
   <string name="age_4_weeks" formatted="false">4 savaitės</string>
+  <string formatted="false" name="age_never_delete">Niekada netrinti</string>
   <plurals name="n_log_items">
     <item quantity="one">%d Įrašo Punktas</item>
     <item quantity="few">%d Įrašo Punktai</item>
@@ -374,8 +375,7 @@
     Pavyzdžiui, po skaičiumi rodydami žaibą.  Išjungti
     šį nustatymą, jei nenorite, kad jis to darytų.</string>
   <string formatted="false" name="pref_enable_logging_help">Jei įjungta, „Battery Monitor“ registruos akumuliatoriaus būsenos pokyčius.</string>
-  <string formatted="false" name="pref_max_log_age_help">Jei registravimas įjungtas, tada, kai prijungiate įrenginį, registruojami
-    bus ištrintas senesnis nei šis.</string>
+  <string formatted="false" name="pref_max_log_age_help">Jei registravimas įjungtas, kiekvieną kartą prijungus įrenginį bus ištrinti už šią reikšmę senesni įrašai. Pasirinkite Niekada netrinti, kad įrašai būtų saugomi, kol juos ištrinsite rankiniu būdu.</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">„Android“ praneša apie akumuliatoriaus temperatūrą Celsijaus laipsniais.  Jeigu
     norite matyti akumuliatoriaus temperatūrą Farenheito laipsniais,
     pažymėkite šią parinktį ir programa konvertuos už jus.</string>

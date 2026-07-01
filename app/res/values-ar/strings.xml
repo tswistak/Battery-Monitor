@@ -140,7 +140,7 @@
   <string name="pref_enable_logging_help" formatted="false">اذا تم تمكين هذا الخيار سوف يقوم التطبيق بتسجيل حالة تغييرات البطارية</string>
   <string name="pref_max_log_age" formatted="false">الاحد الاقصى للسجلات</string>
   <string name="pref_max_log_age_summary" formatted="false">حذف السجلات القديمة بعد:</string>
-  <string name="pref_max_log_age_help" formatted="false">اذا تم تمكين السجلات سوف يتم حذف السجلات القديمة من فترة لاخرى وسوف يتم التبديل بالسجلات الجديدة</string>
+  <string formatted="false" name="pref_max_log_age_help">إذا كان التسجيل مفعلاً، فكلما وصلت جهازك بالطاقة ستُحذف السجلات الأقدم من هذا الخيار. اختر عدم الحذف للاحتفاظ بالسجلات حتى تمسحها يدويًا.</string>
   <string name="pref_cat_temperature_unit" formatted="false">وحدة درجة الحرارة</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">تحويل إلى فهرنهايت</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">الاندرويد وحدة قياس حرارته هي الدرجة السليزية اذا كنت تفضل رؤية درجة الحرارة بالفهرنهايت تحقق من هذا الخيار وسوف يحول لتطبيق درجة الحرارة لك</string>
@@ -181,6 +181,7 @@
   <string name="age_2_weeks" formatted="false">اسبوعين</string>
   <string name="age_3_weeks" formatted="false">ثلاث اسابيع</string>
   <string name="age_4_weeks" formatted="false">اربعة اسابيع</string>
+  <string formatted="false" name="age_never_delete">عدم الحذف</string>
   <string name="icon_set_classic" formatted="false">كلاسيك</string>
   <string name="icon_set_plain" formatted="false">رقم كبير</string>
   <string name="icon_set_smaller" formatted="false">رقم صغير</string>

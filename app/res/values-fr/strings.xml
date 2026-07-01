@@ -95,7 +95,7 @@
   <string name="pref_enable_logging_help" formatted="false">Si l\'option est active, Battery Monitor enregistre tous les changements d\'état de la batterie (comme quand le téléphone est débranché ou a fini sa charge). Vous pouvez consulter les journaux depuis la fenêtre principale (en appuyant sur MENU et en sélectionnant Journaux).</string>
   <string name="pref_max_log_age" formatted="false">Âge maximal du journal</string>
   <string name="pref_max_log_age_summary" formatted="false">Supprimer les journaux plus ancients que :</string>
-  <string name="pref_max_log_age_help" formatted="false">Lorsque la journalisation est activée que vous branchez votre téléphone les journaux les plus vieux sont supprimés.</string>
+  <string formatted="false" name="pref_max_log_age_help">Si la journalisation est activée, chaque fois que vous branchez votre appareil, les journaux plus anciens que cette valeur seront supprimés. Sélectionnez Ne jamais supprimer pour les conserver tant que vous ne les effacez pas manuellement.</string>
   <string name="pref_cat_temperature_unit" formatted="false">Unité de température</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Convertir en Fahrenheit</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android donne la température de la batterie en degrés Celsius. Si vous préférez avoir la température en degrés Fahrenheit, cochez cette option et l\'application changera l\'unité pour vous.</string>
@@ -129,6 +129,7 @@
   <string name="age_2_weeks" formatted="false">2 semaines</string>
   <string name="age_3_weeks" formatted="false">3 semaines</string>
   <string name="age_4_weeks" formatted="false">4 semaines</string>
+  <string formatted="false" name="age_never_delete">Ne jamais supprimer</string>
   <string name="notifications_disabled" formatted="false">Les notifications sont désactivées !</string>
   <string name="notifications_disabled_message" formatted="false">Vous avez bloqué toutes les notifications de Battery Monitor. La notification principale et tous les alarmes configurés seront bloqués.\n\nBattery Monitor permet d’activer/désactiver séparément la notification principale et de désactiver temporairement les alarmes créées ; il est donc fortement recommandé de débloquer ses notifications.\n\nAppuyez sur OK pour ouvrir les paramètres système afin de réactiver les notifications de Battery Monitor.</string>
   <string name="battery_optimized" formatted="false">Battery Monitor est limité !</string>

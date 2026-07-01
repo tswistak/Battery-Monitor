@@ -64,6 +64,7 @@
   <string name="age_2_weeks" formatted="false">2 semanas</string>
   <string name="age_3_weeks" formatted="false">3 semanas</string>
   <string name="age_4_weeks" formatted="false">4 semanas</string>
+  <string formatted="false" name="age_never_delete">Nunca excluir</string>
 
   <string formatted="false" name="settings_activity_subtitle">Configurações</string>
   <string formatted="false" name="circle_widget">Círculo do Monitor de Bateria</string>
@@ -352,8 +353,7 @@
     exemplo, mostrando um raio abaixo do número.  Desativar
     esta configuração se você preferir não fazer isso.</string>
   <string formatted="false" name="pref_enable_logging_help">Se ativado, o Battery Monitor registrará as alterações no estado da bateria.</string>
-  <string formatted="false" name="pref_max_log_age_help">Se o registro estiver ativado, sempre que você conectar seu dispositivo, os registros
-    mais antigos que isso serão excluídos.</string>
+  <string formatted="false" name="pref_max_log_age_help">Se o registro estiver ativado, sempre que você conectar o dispositivo, os registros mais antigos que este valor serão excluídos. Selecione Nunca excluir para mantê-los até que você os apague manualmente.</string>
   <string formatted="false" name="pref_cat_temperature_unit">Unidade de temperatura</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Converter para Fahrenheit</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">O Android informa a temperatura da bateria em graus Celsius.  Se
