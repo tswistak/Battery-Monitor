@@ -109,7 +109,7 @@
   <string name="age_2_weeks" formatted="false">2 tedna</string>
   <string name="age_3_weeks" formatted="false">3 tedne</string>
   <string name="age_4_weeks" formatted="false">4 tedne</string>
-  <string formatted="false" name="age_forever">Za vedno</string>
+  <string formatted="false" name="age_never_delete">Nikoli ne izbriši</string>
 
   <string formatted="false" name="circle_widget">Krog monitorja baterije</string>
   <string formatted="false" name="full_widget">Monitor baterije je poln</string>
@@ -369,8 +369,7 @@
     na primer s prikazom strele pod številko.  Onemogoči
     to nastavitev, če želite, da tega ne storite.</string>
   <string formatted="false" name="pref_enable_logging_help">Če je omogočeno, bo Battery Monitor beležil spremembe stanja baterije.</string>
-  <string formatted="false" name="pref_max_log_age_help">Če je beleženje omogočeno, se beleži vsakič, ko priključite napravo
-    starejše od tega bodo izbrisane.</string>
+  <string formatted="false" name="pref_max_log_age_help">Če je beleženje omogočeno, se ob vsaki priključitvi naprave izbrišejo zapisi, starejši od te vrednosti. Izberite Nikoli ne izbriši, da jih ohranite, dokler jih ročno ne izbrišete.</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Android sporoča temperaturo baterije v stopinjah Celzija.  če
     raje vidite temperaturo baterije v stopinjah Fahrenheita,
     označite to možnost in aplikacija se bo pretvorila namesto vas.</string>

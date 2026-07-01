@@ -76,7 +76,7 @@
   <string name="pref_enable_logging_help" formatted="false">启用后，Battery Monitor 会记录电池状态变化，例如拔下电源、开始充电或充满电。</string>
   <string name="pref_max_log_age" formatted="false">历史记录保留时间</string>
   <string name="pref_max_log_age_summary" formatted="false">删除早于以下时间的记录：</string>
-  <string name="pref_max_log_age_help" formatted="false">启用历史记录后，应用会在设备接入电源时清理超过所选保留时间的记录；选择“永久保留”则不会自动清理。</string>
+  <string formatted="false" name="pref_max_log_age_help">启用历史记录后，应用会在设备接入电源时清理超过所选保留时间的记录；选择“永不删除”则会保留记录，直到您手动清除。</string>
   <string name="pref_cat_temperature_unit" formatted="false">温度显示单位</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">转换为华氏温度</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android系统以摄氏单位报告电池温度信息。若您想使温度信息以华氏单位显示，请勾选此项。</string>
@@ -102,7 +102,7 @@
   <string name="age_2_weeks" formatted="false">二周</string>
   <string name="age_3_weeks" formatted="false">三周</string>
   <string name="age_4_weeks" formatted="false">四周</string>
-  <string name="age_forever" formatted="false">永久保留</string>
+  <string formatted="false" name="age_never_delete">永不删除</string>
   <plurals name="n_log_items">
     <item quantity="one">%d项日志记录</item>
     <item quantity="other">%d项日志记录</item>

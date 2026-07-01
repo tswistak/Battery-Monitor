@@ -388,7 +388,7 @@
   <string name="pref_enable_logging_help" formatted="false">Jeśli włączone, Battery Monitor będzie rejestrować zmiany stanu baterii.</string>
   <string name="pref_max_log_age" formatted="false">Maksymalny czas przechowywania logów</string>
   <string name="pref_max_log_age_summary" formatted="false">Usuń logi starsze niż:</string>
-  <string name="pref_max_log_age_help" formatted="false">Jeśli logowanie jest włączone, kiedy tylko podłączysz swoje urządzenie, logi starsze od tej wartości zostaną usunięte.</string>
+  <string formatted="false" name="pref_max_log_age_help">Jeśli logowanie jest włączone, po każdym podłączeniu urządzenia zostaną usunięte logi starsze niż ta wartość. Wybierz Nigdy nie usuwaj, aby zachować logi do czasu ręcznego wyczyszczenia.</string>
 
   <string name="pref_cat_temperature_unit" formatted="false">Jednostka temperatury</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Konwertuj do Fahrenheita</string>
@@ -478,7 +478,7 @@
   <string name="age_2_weeks" formatted="false">2 tygodnie</string>
   <string name="age_3_weeks" formatted="false">3 tygodnie</string>
   <string name="age_4_weeks" formatted="false">4 tygodnie</string>
-  <string formatted="false" name="age_forever">Na zawsze</string>
+  <string formatted="false" name="age_never_delete">Nigdy nie usuwaj</string>
 
   <string name="icon_set_classic" formatted="false">Klasyczny</string>
   <string name="icon_set_plain" formatted="false">Zwykła liczba</string>

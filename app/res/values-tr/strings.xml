@@ -118,7 +118,7 @@
   <string name="age_2_weeks" formatted="false">2 hafta</string>
   <string name="age_3_weeks" formatted="false">3 hafta</string>
   <string name="age_4_weeks" formatted="false">4 hafta</string>
-  <string formatted="false" name="age_forever">Süresiz</string>
+  <string formatted="false" name="age_never_delete">Asla silme</string>
   <string name="icon_set_classic" formatted="false">Klasik</string>
   <string name="icon_set_smaller" formatted="false">Daha Küçük Numara</string>
   <string name="circle_widget" formatted="false">Battery Monitor Daire</string>
@@ -248,7 +248,7 @@
   <string name="pref_indicate_charging_help" formatted="false">Bazı simge setleri şarj olurken yıldırım simgesi gösterir.</string>
   <string name="pref_enable_logging_summary" formatted="false">Pil durum değişiklikleri kaydedilsin mi?</string>
   <string name="pref_enable_logging_help" formatted="false">Etkinleştirilirse Battery Monitor pil durum değişikliklerini kaydeder.</string>
-  <string name="pref_max_log_age_help" formatted="false">Kayıt tutma açıksa, cihaz takıldığında bu süreden eski kayıtlar silinir.</string>
+  <string formatted="false" name="pref_max_log_age_help">Kayıt tutma açıksa, cihazı her bağladığınızda bu değerden eski kayıtlar silinir. Kayıtları elle temizleyene kadar saklamak için Asla silme seçeneğini seçin.</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android pil sıcaklığını Santigrat olarak bildirir; isterseniz Fahrenhayt\'a dönüştürülür.</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">Cihaz açıldığında Battery Monitor başlatılsın:</string>
   <string name="pref_autostart_at_boot_help" formatted="false">Battery Monitor\'un cihaz açılışında otomatik başlatılmasını kontrol eder.</string>

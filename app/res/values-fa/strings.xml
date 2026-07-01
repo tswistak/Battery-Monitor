@@ -353,8 +353,7 @@
   <string formatted="false" name="pref_enable_logging_help">اگر فعال باشد، Battery Monitor تغییرات وضعیت باتری را ثبت می کند.</string>
   <string formatted="false" name="pref_max_log_age">حداکثر سن ورود</string>
   <string formatted="false" name="pref_max_log_age_summary">حذف گزارش های قدیمی تر از:</string>
-  <string formatted="false" name="pref_max_log_age_help">اگر ورود به سیستم فعال باشد، هر زمان که دستگاه خود را وصل می کنید، ثبت می شود
-    قدیمی تر از این حذف خواهد شد.</string>
+  <string formatted="false" name="pref_max_log_age_help">اگر ثبت گزارش فعال باشد، هر بار که دستگاه را به برق وصل کنید، گزارش‌های قدیمی‌تر از این مقدار حذف می‌شوند. گزینه هرگز حذف نشود را انتخاب کنید تا گزارش‌ها تا زمانی که خودتان آن‌ها را پاک کنید باقی بمانند.</string>
   <string formatted="false" name="pref_cat_temperature_unit">واحد دما</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">تبدیل به فارنهایت</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">اندروید دمای باتری را بر حسب درجه سانتیگراد گزارش می کند.  اگر
@@ -471,7 +470,7 @@
   <string formatted="false" name="age_2_weeks">2 هفته</string>
   <string formatted="false" name="age_3_weeks">3 هفته</string>
   <string formatted="false" name="age_4_weeks">4 هفته</string>
-  <string formatted="false" name="age_forever">برای همیشه</string>
+  <string formatted="false" name="age_never_delete">هرگز حذف نشود</string>
   <string formatted="false" name="icon_set_classic">کلاسیک</string>
   <string formatted="false" name="icon_set_plain">شماره ساده</string>
   <string formatted="false" name="icon_set_smaller">تعداد کوچکتر</string>

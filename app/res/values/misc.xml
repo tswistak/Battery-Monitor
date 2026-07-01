@@ -222,7 +222,7 @@
     <item>@string/age_2_weeks</item>
     <item>@string/age_3_weeks</item>
     <item>@string/age_4_weeks</item>
-    <item>@string/age_forever</item>
+    <item>@string/age_never_delete</item>
   </string-array>
 
   <string-array name="icon_set_entries">

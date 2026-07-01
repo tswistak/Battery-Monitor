@@ -345,8 +345,7 @@
   <string formatted="false" name="pref_enable_logging_help">Se ativado, o Battery Monitor registrará as alterações no estado da bateria.</string>
   <string formatted="false" name="pref_max_log_age">Idade máxima do registro</string>
   <string formatted="false" name="pref_max_log_age_summary">Excluir registros anteriores a:</string>
-  <string formatted="false" name="pref_max_log_age_help">Se o registro estiver ativado, sempre que você conectar seu dispositivo, os registros
-    mais antigos que isso serão excluídos.</string>
+  <string formatted="false" name="pref_max_log_age_help">Se o registro estiver ativado, sempre que você conectar o dispositivo, os registros mais antigos que este valor serão excluídos. Selecione Nunca excluir para mantê-los até que você os apague manualmente.</string>
   <string formatted="false" name="pref_cat_temperature_unit">Unidade de temperatura</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Converter para Fahrenheit</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">O Android informa a temperatura da bateria em graus Celsius.  Se
@@ -463,7 +462,7 @@
   <string formatted="false" name="age_2_weeks">2 semanas</string>
   <string formatted="false" name="age_3_weeks">3 semanas</string>
   <string formatted="false" name="age_4_weeks">4 semanas</string>
-  <string formatted="false" name="age_forever">Para sempre</string>
+  <string formatted="false" name="age_never_delete">Nunca excluir</string>
   <string formatted="false" name="icon_set_classic">Clássico</string>
   <string formatted="false" name="icon_set_plain">Número Simples</string>
   <string formatted="false" name="icon_set_smaller">Número menor</string>

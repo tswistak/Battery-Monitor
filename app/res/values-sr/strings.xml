@@ -151,7 +151,7 @@
   <string name="pref_enable_logging_help" formatted="false">Ukoliko je omogućeno, Battery Monitor će evidentirati promene u stanju baterije.</string>
   <string name="pref_max_log_age" formatted="false">Maksimalno vreme evidentiranja unosa</string>
   <string name="pref_max_log_age_summary" formatted="false">Obriši evidenciju unosa stariju od:</string>
-  <string name="pref_max_log_age_help" formatted="false">Ukoliko je evidentiranje unosa omogućeno, kad god stavite uređaj na punjenje, starije evidencije unosa će biti obrisane.</string>
+  <string formatted="false" name="pref_max_log_age_help">Ako je evidentiranje omogućeno, svaki put kada priključite uređaj biće obrisani zapisi stariji od ove vrednosti. Izaberite Nikad ne briši da ih zadržite dok ih ručno ne obrišete.</string>
   <string name="pref_cat_temperature_unit" formatted="false">Jedinica temperature</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Pretvori u farenhajte</string>
   <string name="pref_cat_autostart" formatted="false">Pokreni automatski</string>
@@ -188,7 +188,7 @@
   <string name="age_2_weeks" formatted="false">Dve nedelje</string>
   <string name="age_3_weeks" formatted="false">Tri nedelje</string>
   <string name="age_4_weeks" formatted="false">Mesec dana</string>
-  <string formatted="false" name="age_forever">Zauvek</string>
+  <string formatted="false" name="age_never_delete">Nikad ne briši</string>
   <string name="icon_set_classic" formatted="false">Klasično</string>
   <string name="icon_set_plain" formatted="false">Običan broj</string>
   <string name="icon_set_smaller" formatted="false">Manji broj</string>
