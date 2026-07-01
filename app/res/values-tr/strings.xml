@@ -87,7 +87,6 @@
   <string name="alarm_settings" formatted="false">Alarmlar</string>
   <string name="other_settings" formatted="false">Diğer Ayarlar</string>
   <string name="add_alarm" formatted="false">Alarm ekle</string>
-  <string name="pref_icon_set" formatted="false">Simge ayarla</string>
   <string name="pref_cat_charging_indicator" formatted="false">Şarj oluyor Göstergesi</string>
   <string name="pref_cat_logging" formatted="false">Kayıt Tutma</string>
   <string name="pref_enable_logging" formatted="false">Kayıt Tutmayı Etkinleştir</string>
@@ -119,8 +118,6 @@
   <string name="age_3_weeks" formatted="false">3 hafta</string>
   <string name="age_4_weeks" formatted="false">4 hafta</string>
   <string formatted="false" name="age_never_delete">Asla silme</string>
-  <string name="icon_set_classic" formatted="false">Klasik</string>
-  <string name="icon_set_smaller" formatted="false">Daha Küçük Numara</string>
   <string name="circle_widget" formatted="false">Battery Monitor Daire</string>
   <string name="full_widget" formatted="false">Battery Monitor Tam</string>
   <string name="notifications_disabled" formatted="false">Bildirimler devre dışı!</string>
@@ -170,8 +167,8 @@
   <string name="notification_settings_summary" formatted="false">Ana bildirimi yapılandır</string>
   <string name="notification_settings_help" formatted="false">Açılır bildirimde hangi içeriğin gösterileceğini yapılandırabilirsiniz.</string>
   <string name="status_bar_icon_settings" formatted="false">Durum Çubuğu Simgesi</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Simge setlerini yönet</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Hangi simge setinin kullanılacağını seçebilir ve ayarlarını değiştirebilirsiniz.</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">Simge içeriğini seçin</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Bildirim simgesinin pil yüzdesini mi yoksa sıcaklığı mı göstereceğini, simgede birim sembolünün gösterilip gösterilmeyeceğini ve şarj için ayrı bir simge kullanılıp kullanılmayacağını seçin.</string>
   <string name="status_bar_chip_settings" formatted="false">Durum Çubuğu Çipi</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Live Updates çip içeriğini ayarla</string>
   <string name="status_bar_chip_settings_help" formatted="false">Android 16+ ve Live Updates ile durum çubuğu çipinde ne gösterileceğini ayarlayabilirsiniz.</string>
@@ -212,10 +209,11 @@
   <string name="pref_status_duration_in_vital_signs" formatted="false">Hayati göstergelerde durum süresi</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Hayati göstergelerde durum değişiminden beri geçen süre gösterilsin mi?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Etkinse, hayati göstergeler satırı şarj durum değişiminden beri geçen süreyi içerir.</string>
-  <string name="pref_cat_icon_set" formatted="false">Simge Seti</string>
+  <string name="pref_cat_icon_set" formatted="false">Bildirim simgesi</string>
   <string name="pref_icon_content" formatted="false">Simge İçeriği</string>
   <string name="pref_icon_content_help" formatted="false">Durum çubuğu simgesinin pil yüzdesini mi sıcaklığı mı göstereceğini seçin.</string>
-  <string name="pref_icon_set_help" formatted="false">Android çok farklı cihazlarda çalıştığı için her cihaza uyan tek bir simge seti yoktur.</string>
+  <string name="pref_show_icon_unit" formatted="false">Birim sembolünü göster</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Etkinse simge, pil yüzdesi için yüzde işareti ve pil sıcaklığı için derece simgesi gösterir. Yalnızca sayıyı göstermek için bunu kapatın.</string>
   <string name="pref_cat_current_hack_main" formatted="false">Ana Kontrol</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Akım (mA) Hilesi Desteklenmiyor</string>
   <string name="pref_current_hack_unsupported" formatted="false">Üzgünüz, akım (mA) hilesi bu cihazda desteklenmiyor.</string>
@@ -245,7 +243,7 @@
   <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Etkinse ana penceredeki mA değeri iki saniyede bir yenilenir.</string>
   <string name="pref_indicate_charging" formatted="false">Şarjı Göster</string>
   <string name="pref_indicate_charging_summary" formatted="false">Şarj olurken simge değişsin mi?</string>
-  <string name="pref_indicate_charging_help" formatted="false">Bazı simge setleri şarj olurken yıldırım simgesi gösterir.</string>
+  <string name="pref_indicate_charging_help" formatted="false">Şarj simgesi sayının altında bir yıldırım gösterebilir. Şarj ve deşarj sırasında aynı simgeyi tercih ediyorsanız bu ayarı kapatın.</string>
   <string name="pref_enable_logging_summary" formatted="false">Pil durum değişiklikleri kaydedilsin mi?</string>
   <string name="pref_enable_logging_help" formatted="false">Etkinleştirilirse Battery Monitor pil durum değişikliklerini kaydeder.</string>
   <string formatted="false" name="pref_max_log_age_help">Kayıt tutma açıksa, cihazı her bağladığınızda bu değerden eski kayıtlar silinir. Kayıtları elle temizleyene kadar saklamak için Asla silme seçeneğini seçin.</string>
@@ -261,13 +259,9 @@
   <string name="pref_prediction_type_help" formatted="false">Battery Monitor\'un kalan pil ömrünü / tam doluma kalan süreyi nasıl tahmin edeceğini buradan seçebilirsiniz.</string>
   <string name="pref_language_override" formatted="false">Dil Geçersiz Kılma</string>
   <string name="pref_language_override_summary" formatted="false">Dil seçin:</string>
-  <string name="pref_classic_color_mode" formatted="false">Klasik Renk Modunu Zorla</string>
-  <string name="pref_classic_color_mode_summary" formatted="false">Bu genelde çalışmaz; lütfen yardımı okuyun</string>
-  <string name="pref_classic_color_mode_help" formatted="false">Android 5.0 sonrası renkli bildirim simgeleri çoğu cihazda düzgün çalışmaz.</string>
   <string name="alarms_overview" formatted="false">Alarmlara Genel Bakış</string>
   <string name="alarms_overview_help" formatted="false">Bu sayfa yeni alarm eklemenizi, mevcut alarmları hızlıca etkinleştirip devre dışı bırakmanızı veya silmenizi sağlar.</string>
   <string name="pref_alarm_enabled_help" formatted="false">Bir alarmı yeniden oluşturmadan geçici olarak kapatmak istiyorsanız burada veya ana alarm sayfasında açıp kapatabilirsiniz.</string>
-  <string name="icon_set_plain" formatted="false">Düz Numara</string>
   <string name="pref_content_percent" formatted="false">Pil Yüzdesi</string>
   <string name="pref_content_temperature" formatted="false">Pil Sıcaklığı</string>
   <string name="pref_content_switching" formatted="false">İkisi arasında geçiş yap</string>

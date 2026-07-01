@@ -270,10 +270,8 @@
     You can configure which content to show in the pull-down notification.
   </string>
   <string formatted="false" name="status_bar_icon_settings">Status Bar Icon</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">Control icon sets</string>
-  <string formatted="false" name="status_bar_icon_settings_help">
-    You can select which icon set to use and change the settings for the icon set (e.g., colors).
-  </string>
+  <string formatted="false" name="status_bar_icon_settings_summary">Choose icon content</string>
+  <string formatted="false" name="status_bar_icon_settings_help">Choose whether the notification icon shows battery percentage or temperature. Also choose, whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon.</string>
   <string formatted="false" name="status_bar_chip_settings">Status Bar Chip</string>
   <string formatted="false" name="status_bar_chip_settings_summary">Configure Live Updates\' chip content</string>
   <string formatted="false" name="status_bar_chip_settings_help">
@@ -382,33 +380,17 @@
 
   <string formatted="false" name="custom">Custom...</string>
 
-  <string formatted="false" name="pref_cat_icon_set">Icon Set</string>
-  <string formatted="false" name="pref_icon_set">Icon Set</string>
+  <string formatted="false" name="pref_cat_icon_set">Notification Icon</string>
   <string formatted="false" name="pref_icon_content">Icon Content</string>
   <string formatted="false" name="pref_icon_content_help">
     Choose whether the status bar icon shows battery percentage or
     battery temperature. Temperature follows your selected unit.
   </string>
-  <string formatted="false" name="pref_icon_set_help">
-    Android comes in many flavors, so there is no one perfect icon set
-    that works well on every device.  There are three built-in icon sets
-    that should provide at least one good option for virtually every
-    device.\n
-
-    \n\"Classic\" is the original icon set from 2009.  It is still the
-    best on older devices, but newer versions of Android (starting
-    with Android 3.0, Honeycomb) shrink and dim the notification icons,
-    making this set very difficult to read.\n
-
-    \n\"Plain number\" is the default for all newer Android devices.
-    It is a very large white number that shows up well even after
-    being shrunk and dimmed.  It shows a lightning bolt under the
-    number during charging.\n
-
-    \n\"Smaller number\" is like \"Plain number\" but smaller, because
-    some newer devices do not actually shrink the icon like stock
-    Android does, and the very large number in \"Plain Number\" can
-    appear comically large on these devices.
+  <string formatted="false" name="pref_show_icon_unit">Show Unit Symbol</string>
+  <string formatted="false" name="pref_show_icon_unit_help">
+    If enabled, the icon shows a percent sign for battery percentage
+    and a degree symbol for battery temperature. Disable it to show
+    only the number.
   </string>
 
   <string formatted="false" name="pref_cat_current_hack_main">Main Control</string>
@@ -532,9 +514,8 @@
   <string formatted="false" name="pref_indicate_charging">Indicate Charging</string>
   <string formatted="false" name="pref_indicate_charging_summary">Alter icon to indicate when charging?</string>
   <string formatted="false" name="pref_indicate_charging_help">
-    Some icon sets indicate when the battery is being charged, for
-    example by showing a lightning bolt below the number.  Disable
-    this setting if you would prefer it not to do that.
+    Icon can show a lightning bolt below the number during charging.
+    Disable this setting if you would prefer the same icon all the time.
   </string>
 
   <string formatted="false" name="pref_cat_logging">Logging</string>
@@ -603,23 +584,6 @@
   <string formatted="false" name="pref_cat_language">Language</string>
   <string formatted="false" name="pref_language_override">App language</string>
   <string formatted="false" name="pref_language_override_summary">Select language:</string>
-
-  <string formatted="false" name="pref_classic_color_mode">Force Classic Color Mode</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">
-    This usually does not work; please read the help
-  </string>
-  <string formatted="false" name="pref_classic_color_mode_help">
-    Starting with Android 5.0 (Lollipop), colored notification icons
-    officially no longer work on Android, making the Classic icon show
-    up as solid white. So by default, on these devices the app uses a
-    plain white outline with white number.\n
-
-    \nHowever, not all devices follow the spec, so this is not
-    necessary and does not work correctly everywhere.  You can try to
-    make the Classic icon set work in the classic way by turning this
-    option on.  Remember, on most devices this will just make the icon
-    turn solid white.
-  </string>
 
   <string formatted="false" name="alarms_overview">Alarms Overview</string>
   <string formatted="false" name="alarms_overview_help">
@@ -693,10 +657,6 @@
   <string formatted="false" name="age_3_weeks">3 weeks</string>
   <string formatted="false" name="age_4_weeks">4 weeks</string>
   <string formatted="false" name="age_never_delete">Never delete</string>
-
-  <string formatted="false" name="icon_set_classic">Classic</string>
-  <string formatted="false" name="icon_set_plain">Plain Number</string>
-  <string formatted="false" name="icon_set_smaller">Smaller Number</string>
   <string formatted="false" name="pref_content_percent">Battery Percentage</string>
   <string formatted="false" name="pref_content_temperature">Battery Temperature</string>
   <string formatted="false" name="pref_content_switching">Switch between both</string>

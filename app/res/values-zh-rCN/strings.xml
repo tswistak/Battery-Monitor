@@ -200,8 +200,8 @@
   <string formatted="false" name="notification_settings_summary">配置主要通知</string>
   <string formatted="false" name="notification_settings_help">您可以配置在下拉通知中显示哪些内容。</string>
   <string formatted="false" name="status_bar_icon_settings">状态栏图标</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">控制图标集</string>
-  <string formatted="false" name="status_bar_icon_settings_help">您可以选择要使用的图标集并更改图标集的设置（例如颜色）。</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">选择图标内容</string>
+  <string name="status_bar_icon_settings_help" formatted="false">选择通知图标显示电池百分比还是温度、是否在图标中显示单位符号，以及充电时是否使用专用图标。</string>
   <string formatted="false" name="status_bar_chip_settings">状态栏芯片</string>
   <string formatted="false" name="status_bar_chip_settings_summary">配置实时更新芯片内容</string>
   <string formatted="false" name="status_bar_chip_settings_help">在具有实时更新的 Android 16+ 上，您可以配置状态
@@ -258,30 +258,12 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">包括生命体征状态变化后的时间？</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">如果设置，生命体征行还将包括小时数
     设备被拔出、插入或充满电后。</string>
-  <string formatted="false" name="pref_cat_icon_set">图标集</string>
-  <string formatted="false" name="pref_icon_set">图标集</string>
+  <string formatted="false" name="pref_cat_icon_set">通知图标</string>
   <string formatted="false" name="pref_icon_content">图标内容</string>
   <string formatted="false" name="pref_icon_content_help">选择状态栏图标是否显示电池百分比或
     电池温度。温度遵循您选择的单位。</string>
-  <string formatted="false" name="pref_icon_set_help">Android 有多种风格，因此没有一套完美的图标集
-    适用于所有设备。  共有三个内置图标集
-    这应该为几乎每个人提供至少一个好的选择
-    设备.\n
-
-    \n\"Classic\"是2009年的原始图标集。它仍然是
-    在较旧的设备上效果最好，但在较新版本的 Android 上（从
-    Android 3.0，Honeycomb）缩小并变暗通知图标，
-    使得这套书很难阅读。\n
-
-    \n\“普通数字\”是所有较新 Android 设备的默认设置。
-    这是一个非常大的白色数字，即使在
-    被缩小和变暗。  它显示了在下面的闪电
-    充电时的号码。\n
-
-    \n\“较小的数字”类似于“普通数字”，但更小，因为
-    一些较新的设备实际上并没有像库存那样缩小图标
-    Android 可以，“普通数字”中的非常大的数字可以
-    在这些设备上显得大得可笑。</string>
+  <string name="pref_show_icon_unit" formatted="false">显示单位符号</string>
+  <string name="pref_show_icon_unit_help" formatted="false">启用后，图标会为电池百分比显示百分号，为电池温度显示度数符号。关闭此选项可只显示数字。</string>
   <string formatted="false" name="pref_cat_current_hack_main">主控</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">电流 (mA) Hack 不支持</string>
   <string formatted="false" name="pref_current_hack_unsupported">抱歉，该设备不支持当前的 (mA) 破解。</string>
@@ -364,9 +346,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">充电指示灯</string>
   <string formatted="false" name="pref_indicate_charging">指示正在充电</string>
   <string formatted="false" name="pref_indicate_charging_summary">更改图标以指示充电时？</string>
-  <string formatted="false" name="pref_indicate_charging_help">某些图标集指示电池何时充电，例如
-    例如，在数字下方显示闪电。  禁用
-    如果您不希望这样做，请执行此设置。</string>
+  <string formatted="false" name="pref_indicate_charging_help">充电图标可以在数字下方显示闪电。如果你希望充电和放电时使用相同图标，请关闭此设置。</string>
   <string formatted="false" name="predictor_sensitive">敏感的</string>
   <string formatted="false" name="predictor_conservative">保守的</string>
   <string formatted="false" name="predictor_since_status_change">自状态变更以来</string>
@@ -391,18 +371,6 @@
     \n最后，您可以仅根据您的情况进行预测
     长期平均使用情况。</string>
   <string formatted="false" name="pref_language_override">语言覆盖</string>
-  <string formatted="false" name="pref_classic_color_mode">强制经典色彩模式</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">这通常不起作用；请阅读帮助</string>
-  <string formatted="false" name="pref_classic_color_mode_help">从 Android 5.0 (Lollipop) 开始，彩色通知图标
-    正式不再适用于 Android，使经典图标显示
-    呈纯白色。因此，默认情况下，在这些设备上应用程序使用
-    带有白色数字的纯白色轮廓。\n
-
-    \n然而，并非所有设备都遵循该规范，因此这不是
-    必要的，并且不能在任何地方正常工作。  你可以尝试
-    通过转动此按钮使经典图标集以经典方式工作
-    选项打开。  请记住，在大多数设备上这只会使图标
-    变成纯白色。</string>
   <string formatted="false" name="pref_alarm_enabled_help">如果你想暂时
   禁用警报而无需在需要时重新创建它
   同样，您可以在此处或主警报上将其关闭和打开
@@ -428,9 +396,6 @@
     安卓系统报道。</string>
   <string formatted="false" name="pref_alarm_threshold_help">对于充电和温度报警，需要设置温度
     或将触发警报的电量水平。</string>
-  <string formatted="false" name="icon_set_classic">经典的</string>
-  <string formatted="false" name="icon_set_plain">普通号码</string>
-  <string formatted="false" name="icon_set_smaller">较小的数字</string>
   <string formatted="false" name="pref_content_percent">电池电量百分比</string>
   <string formatted="false" name="pref_content_temperature">电池温度</string>
   <string formatted="false" name="pref_content_switching">两者之间切换</string>

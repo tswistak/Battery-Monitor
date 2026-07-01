@@ -199,8 +199,8 @@
   <string formatted="false" name="notification_settings_summary">Konfigurirajte glavno obvestilo</string>
   <string formatted="false" name="notification_settings_help">Konfigurirate lahko, katero vsebino želite prikazati v spustnem obvestilu.</string>
   <string formatted="false" name="status_bar_icon_settings">Ikona vrstice stanja</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">Nabori ikon za nadzor</string>
-  <string formatted="false" name="status_bar_icon_settings_help">Izberete lahko, kateri nabor ikon želite uporabiti, in spremenite nastavitve za nabor ikon (npr. barve).</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">Izberite vsebino ikone</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Izberite, ali ikona obvestila prikazuje odstotek baterije ali temperaturo, ali naj bo v ikoni prikazan simbol enote in ali naj ima polnjenje posebno ikono.</string>
   <string formatted="false" name="status_bar_chip_settings">Čip vrstice stanja</string>
   <string formatted="false" name="status_bar_chip_settings_summary">Konfigurirajte vsebino čipa Live Updates</string>
   <string formatted="false" name="status_bar_chip_settings_help">V sistemu Android 16+ s posodobitvami v živo lahko konfigurirate stanje
@@ -259,30 +259,12 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">Vključiti čas od spremembe statusa v vitalne znake?</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">Če je nastavljeno, bo vrstica vitalnih znakov vključevala tudi število ur
     odkar je bila naprava odklopljena, priključena ali popolnoma napolnjena.</string>
-  <string formatted="false" name="pref_cat_icon_set">Nabor ikon</string>
-  <string formatted="false" name="pref_icon_set">Nabor ikon</string>
+  <string formatted="false" name="pref_cat_icon_set">Ikona obvestila</string>
   <string formatted="false" name="pref_icon_content">Vsebina ikone</string>
   <string formatted="false" name="pref_icon_content_help">Izberite, ali ikona vrstice stanja prikazuje odstotek baterije ali
     temperatura baterije. Temperatura sledi vaši izbrani enoti.</string>
-  <string formatted="false" name="pref_icon_set_help">Android je na voljo v številnih različicah, zato ni popolnega nabora ikon
-    ki dobro deluje na vsaki napravi.  Obstajajo trije vgrajeni nizi ikon
-    ki bi moral zagotoviti vsaj eno dobro možnost za skoraj vsakega
-    naprava.\n
-
-    \n\"Classic\" je prvotni nabor ikon iz leta 2009. Še vedno je
-    najbolje na starejših napravah, vendar novejše različice Androida (začenši
-    z Androidom 3.0, Honeycomb) skrčite in zatemnite ikone obvestil,
-    zaradi česar je ta sklop zelo težko brati.\n
-
-    \n\"Navadna številka\" je privzeta nastavitev za vse novejše naprave Android.
-    Gre za zelo veliko belo številko, ki se dobro pokaže tudi po tem
-    skrčeno in zatemnjeno.  Prikazuje strelo pod
-    številko med polnjenjem.\n
-
-    \n\"Manjše število\" je kot \"Navadno število\", vendar manjše, ker
-    nekatere novejše naprave dejansko ne skrčijo ikone kot običajne
-    Android to počne in zelo veliko število v \"Plain Number\" lahko
-    na teh napravah videti komično velike.</string>
+  <string name="pref_show_icon_unit" formatted="false">Prikaži simbol enote</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Če je omogočeno, ikona prikazuje znak za odstotek pri odstotku baterije in simbol stopinje pri temperaturi baterije. Izklopite to možnost, če želite prikazati samo številko.</string>
   <string formatted="false" name="pref_cat_current_hack_main">Glavni nadzor</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">Tok (mA) Hack ni podprt</string>
   <string formatted="false" name="pref_current_hack_unsupported">Oprostite, trenutni (mA) hack ni podprt v tej napravi.</string>
@@ -365,9 +347,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">Indikator polnjenja</string>
   <string formatted="false" name="pref_indicate_charging">Označite Polnjenje</string>
   <string formatted="false" name="pref_indicate_charging_summary">Ali želite spremeniti ikono za prikaz med polnjenjem?</string>
-  <string formatted="false" name="pref_indicate_charging_help">Nekateri nizi ikon kažejo, kdaj se baterija polni, npr
-    na primer s prikazom strele pod številko.  Onemogoči
-    to nastavitev, če želite, da tega ne storite.</string>
+  <string formatted="false" name="pref_indicate_charging_help">Ikona polnjenja lahko pod številko prikaže strelo. Izklopite to nastavitev, če želite isto ikono med polnjenjem in praznjenjem.</string>
   <string formatted="false" name="pref_enable_logging_help">Če je omogočeno, bo Battery Monitor beležil spremembe stanja baterije.</string>
   <string formatted="false" name="pref_max_log_age_help">Če je beleženje omogočeno, se ob vsaki priključitvi naprave izbrišejo zapisi, starejši od te vrednosti. Izberite Nikoli ne izbriši, da jih ohranite, dokler jih ročno ne izbrišete.</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Android sporoča temperaturo baterije v stopinjah Celzija.  če
@@ -409,18 +389,6 @@
     \nNazadnje lahko napoved temelji na vašem
     dolgoročna povprečna uporaba.</string>
   <string formatted="false" name="pref_language_override">Preglasitev jezika</string>
-  <string formatted="false" name="pref_classic_color_mode">Vsili klasični barvni način</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">To ponavadi ne deluje; prosim preberi pomoč</string>
-  <string formatted="false" name="pref_classic_color_mode_help">Od Android 5.0 (Lollipop), barvne ikone obvestil
-    uradno ne deluje več v sistemu Android, zaradi česar se prikaže ikona Classic
-    kot trdno bela. Torej aplikacija v teh napravah privzeto uporablja a
-    navaden bel obris z belo številko.\n
-
-    \n Vendar vse naprave ne upoštevajo specifikacij, zato to ni
-    potrebno in ne deluje povsod pravilno.  Lahko poskusite
-    naj klasičen nabor ikon deluje na klasičen način, tako da to obrnete
-    možnost vklopljena.  Ne pozabite, da bo v večini naprav to samo ikona
-    postane trdno bela.</string>
   <string formatted="false" name="alarms_overview_help">Ta stran vam omogoča dodajanje novih alarmov, hitro omogočanje ali onemogočanje
     obstoječe alarme ali izbrišite alarme.\n
 
@@ -461,9 +429,6 @@
     poroča Android.</string>
   <string formatted="false" name="pref_alarm_threshold_help">Za alarme za polnjenje in temperaturo morate nastaviti temperaturo
     ali raven napolnjenosti, ki bo sprožila alarm.</string>
-  <string formatted="false" name="icon_set_classic">Klasična</string>
-  <string formatted="false" name="icon_set_plain">Navadna številka</string>
-  <string formatted="false" name="icon_set_smaller">Manjša številka</string>
   <string formatted="false" name="pref_content_percent">Odstotek baterije</string>
   <string formatted="false" name="pref_content_temperature">Temperatura baterije</string>
   <string formatted="false" name="pref_content_switching">Preklapljajte med obema</string>

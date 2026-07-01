@@ -171,8 +171,8 @@
   <string formatted="false" name="notification_settings_summary">اعلان اصلی را پیکربندی کنید</string>
   <string formatted="false" name="notification_settings_help">می توانید پیکربندی کنید که کدام محتوا در اعلان کشویی نمایش داده شود.</string>
   <string formatted="false" name="status_bar_icon_settings">نماد نوار وضعیت</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">مجموعه آیکون های کنترل</string>
-  <string formatted="false" name="status_bar_icon_settings_help">می‌توانید انتخاب کنید که از کدام مجموعه نماد استفاده شود و تنظیمات مجموعه آیکون‌ها (مانند رنگ‌ها) را تغییر دهید.</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">محتوای آیکون را انتخاب کنید</string>
+  <string name="status_bar_icon_settings_help" formatted="false">انتخاب کنید که آیکون اعلان درصد باتری را نشان دهد یا دما، اینکه نماد واحد داخل آیکون نمایش داده شود یا نه، و اینکه هنگام شارژ از آیکون جداگانه استفاده شود یا نه.</string>
   <string formatted="false" name="status_bar_chip_settings">تراشه نوار وضعیت</string>
   <string formatted="false" name="status_bar_chip_settings_summary">محتوای تراشه به‌روزرسانی‌های زنده را پیکربندی کنید</string>
   <string formatted="false" name="status_bar_chip_settings_help">در Android 16 و بالاتر با به‌روزرسانی‌های زنده، می‌توانید وضعیت را پیکربندی کنید
@@ -238,30 +238,12 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">شامل زمان از تغییر وضعیت در علائم حیاتی می شود؟</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">در صورت تنظیم، خط علائم حیاتی شامل تعداد ساعات نیز می شود
     از زمانی که دستگاه از برق جدا شده، وصل شده یا کاملاً شارژ شده است.</string>
-  <string formatted="false" name="pref_cat_icon_set">مجموعه آیکون</string>
-  <string formatted="false" name="pref_icon_set">مجموعه آیکون</string>
+  <string formatted="false" name="pref_cat_icon_set">آیکون اعلان</string>
   <string formatted="false" name="pref_icon_content">محتوای آیکون</string>
   <string formatted="false" name="pref_icon_content_help">انتخاب کنید آیا نماد نوار وضعیت درصد باتری را نشان دهد یا خیر
     دمای باتری دما از واحد انتخابی شما پیروی می کند.</string>
-  <string formatted="false" name="pref_icon_set_help">اندروید انواع مختلفی دارد، بنابراین هیچ مجموعه آیکون کاملی وجود ندارد
-    که روی هر دستگاهی به خوبی کار می کند.  سه مجموعه آیکون داخلی وجود دارد
-    که باید حداقل یک گزینه خوب تقریباً برای هر کدام ارائه دهد
-    دستگاه.\n
-
-    \n \"Classic\" مجموعه نمادهای اصلی از سال 2009 است. هنوز هم
-    بهترین در دستگاه های قدیمی تر، اما نسخه های جدیدتر اندروید (شروع
-    با اندروید 3.0، لانه زنبوری) نمادهای اعلان را کوچک و کم نور می کند،
-    خواندن این مجموعه را بسیار دشوار می کند.\n
-
-    \n \"شماره ساده\" پیش‌فرض برای همه دستگاه‌های Android جدیدتر است.
-    این یک عدد سفید بسیار بزرگ است که حتی بعد از آن نیز به خوبی نشان داده می شود
-    کوچک و کم نور شدن  یک رعد و برق زیر را نشان می دهد
-    شماره در هنگام شارژ.\n
-
-    \n \"عدد کوچکتر\" مانند \"عدد ساده\" است اما کوچکتر است، زیرا
-    برخی از دستگاه های جدیدتر در واقع نماد را مانند سهام کوچک نمی کنند
-    Android این کار را می کند و تعداد بسیار زیاد در \"Plain Number\" می تواند
-    در این دستگاه ها به طرز جالبی بزرگ به نظر می رسند.</string>
+  <string name="pref_show_icon_unit" formatted="false">نمایش نماد واحد</string>
+  <string name="pref_show_icon_unit_help" formatted="false">اگر فعال باشد، آیکون برای درصد باتری علامت درصد و برای دمای باتری علامت درجه را نشان می‌دهد. برای نمایش فقط عدد، این گزینه را غیرفعال کنید.</string>
   <string formatted="false" name="pref_cat_current_hack_main">کنترل اصلی</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">هک فعلی (mA) پشتیبانی نمی شود</string>
   <string formatted="false" name="pref_current_hack_unsupported">متأسفیم، هک فعلی (mA) در این دستگاه پشتیبانی نمی شود.</string>
@@ -344,9 +326,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">نشانگر شارژ</string>
   <string formatted="false" name="pref_indicate_charging">شارژ را نشان می دهد</string>
   <string formatted="false" name="pref_indicate_charging_summary">نماد تغییر دهید تا هنگام شارژ نشان داده شود؟</string>
-  <string formatted="false" name="pref_indicate_charging_help">برخی از مجموعه‌های نماد نشان می‌دهند که باتری در حال شارژ شدن است
-    به عنوان مثال با نشان دادن یک رعد و برق در زیر عدد.  غیر فعال کردن
-    اگر ترجیح می دهید این کار را انجام ندهید، این تنظیم را انجام دهید.</string>
+  <string formatted="false" name="pref_indicate_charging_help">آیکون شارژ می‌تواند یک نماد صاعقه زیر عدد نشان دهد. اگر همان آیکون را هنگام شارژ و تخلیه ترجیح می‌دهید، این گزینه را غیرفعال کنید.</string>
   <string formatted="false" name="pref_cat_logging">ورود به سیستم</string>
   <string formatted="false" name="pref_enable_logging">Logging را فعال کنید</string>
   <string formatted="false" name="pref_enable_logging_summary">گزارش وضعیت باتری تغییر می کند؟</string>
@@ -400,18 +380,6 @@
   <string formatted="false" name="pref_cat_language">زبان</string>
   <string formatted="false" name="pref_language_override">لغو زبان</string>
   <string formatted="false" name="pref_language_override_summary">انتخاب زبان:</string>
-  <string formatted="false" name="pref_classic_color_mode">اجباری حالت رنگ کلاسیک</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">این معمولا کار نمی کند. لطفا راهنما را بخوانید</string>
-  <string formatted="false" name="pref_classic_color_mode_help">شروع با Android 5.0 (Lollipop)، نمادهای اعلان رنگی
-    به طور رسمی دیگر در اندروید کار نمی کند و نماد کلاسیک را نشان می دهد
-    به صورت سفید جامد بنابراین به طور پیش فرض، در این دستگاه ها برنامه از a
-    طرح کلی سفید ساده با شماره سفید.\n
-
-    \n با این حال، همه دستگاه ها از مشخصات پیروی نمی کنند، بنابراین اینطور نیست
-    ضروری است و در همه جا به درستی کار نمی کند.  می توانید تلاش کنید
-    با چرخاندن آن، مجموعه آیکون کلاسیک را به روش کلاسیک کار کنید
-    گزینه روشن  به یاد داشته باشید، در اکثر دستگاه ها این فقط نماد را ایجاد می کند
-    جامد سفید شود.</string>
   <string formatted="false" name="alarms_overview">بررسی اجمالی هشدارها</string>
   <string formatted="false" name="alarms_overview_help">این صفحه به شما امکان می دهد آلارم های جدید اضافه کنید، به سرعت فعال یا غیرفعال کنید
     آلارم های موجود، یا حذف آلارم ها.\n
@@ -471,9 +439,6 @@
   <string formatted="false" name="age_3_weeks">3 هفته</string>
   <string formatted="false" name="age_4_weeks">4 هفته</string>
   <string formatted="false" name="age_never_delete">هرگز حذف نشود</string>
-  <string formatted="false" name="icon_set_classic">کلاسیک</string>
-  <string formatted="false" name="icon_set_plain">شماره ساده</string>
-  <string formatted="false" name="icon_set_smaller">تعداد کوچکتر</string>
   <string formatted="false" name="pref_content_percent">درصد باتری</string>
   <string formatted="false" name="pref_content_temperature">دمای باتری</string>
   <string formatted="false" name="pref_content_switching">بین هر دو جابجا شوید</string>

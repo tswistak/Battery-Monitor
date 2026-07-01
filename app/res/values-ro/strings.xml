@@ -163,8 +163,8 @@
   <string formatted="false" name="notification_settings_summary">Configurați notificarea principală</string>
   <string formatted="false" name="notification_settings_help">Puteți configura ce conținut să se afișeze în notificarea derulantă.</string>
   <string formatted="false" name="status_bar_icon_settings">Pictograma barei de stare</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">Seturi de pictograme de control</string>
-  <string formatted="false" name="status_bar_icon_settings_help">Puteți selecta ce set de pictograme să utilizați și puteți modifica setările pentru setul de pictograme (de exemplu, culori).</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">Alege conținutul pictogramei</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Alege dacă pictograma notificării afișează procentul bateriei sau temperatura, dacă simbolul unității este afișat în pictogramă și dacă încărcarea folosește o pictogramă dedicată.</string>
   <string formatted="false" name="status_bar_chip_settings">Cip bară de stare</string>
   <string formatted="false" name="status_bar_chip_settings_summary">Configurați conținutul cipului actualizărilor în direct</string>
   <string formatted="false" name="status_bar_chip_settings_help">Pe Android 16+ cu actualizări live, puteți configura starea
@@ -230,30 +230,12 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">Includeți timpul de la schimbarea stării în semnele vitale?</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">Dacă este setată, linia semnelor vitale va include și numărul de ore
     deoarece dispozitivul a fost deconectat, conectat sau încărcat complet.</string>
-  <string formatted="false" name="pref_cat_icon_set">Set de pictograme</string>
-  <string formatted="false" name="pref_icon_set">Set de pictograme</string>
+  <string formatted="false" name="pref_cat_icon_set">Pictograma notificării</string>
   <string formatted="false" name="pref_icon_content">Conținutul pictogramei</string>
   <string formatted="false" name="pref_icon_content_help">Alegeți dacă pictograma barei de stare arată procentul bateriei sau
     temperatura bateriei. Temperatura urmează unitatea selectată.</string>
-  <string formatted="false" name="pref_icon_set_help">Android vine în multe variante, așa că nu există un set de pictograme perfect
-    care funcționează bine pe fiecare dispozitiv.  Există trei seturi de pictograme încorporate
-    care ar trebui să ofere cel puțin o opțiune bună pentru aproape fiecare
-    dispozitiv.\n
-
-    \n\"Classic\" este setul original de pictograme din 2009. Este încă
-    cel mai bun pe dispozitive mai vechi, dar versiuni mai noi de Android (începând
-    cu Android 3.0, Honeycomb) micșorați și estompați pictogramele de notificare,
-    făcând acest set foarte greu de citit.\n
-
-    \n\„Număr simplu\” este implicit pentru toate dispozitivele Android mai noi.
-    Este un număr alb foarte mare care apare bine chiar și după
-    fiind micşorat şi estompat.  Prezintă un fulger sub
-    număr în timpul încărcării.\n
-
-    \n\"Număr mai mic\" este ca \"Număr simplu\", dar mai mic, deoarece
-    unele dispozitive mai noi de fapt nu micșorează pictograma ca stocul
-    Android o face, iar numărul foarte mare din „Număr simplu” poate
-    par comic de mari pe aceste dispozitive.</string>
+  <string name="pref_show_icon_unit" formatted="false">Afișați simbolul unității</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Dacă este activată, pictograma afișează semnul procentului pentru nivelul bateriei și simbolul gradului pentru temperatura bateriei. Dezactivează opțiunea pentru a afișa doar numărul.</string>
   <string formatted="false" name="pref_cat_current_hack_main">Control principal</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">Hack actual (mA) neacceptat</string>
   <string formatted="false" name="pref_current_hack_unsupported">Ne pare rău, hack-ul actual (mA) nu este acceptat pe acest dispozitiv.</string>
@@ -336,9 +318,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">Indicator de încărcare</string>
   <string formatted="false" name="pref_indicate_charging">Indicați încărcarea</string>
   <string formatted="false" name="pref_indicate_charging_summary">Modificați pictograma pentru a indica când se încarcă?</string>
-  <string formatted="false" name="pref_indicate_charging_help">Unele seturi de pictograme indică când bateria este încărcată, pt
-    exemplu, arătând un fulger sub număr.  Dezactivați
-    această setare dacă preferați să nu facă asta.</string>
+  <string formatted="false" name="pref_indicate_charging_help">Pictograma de încărcare poate afișa un fulger sub număr. Dezactivează această opțiune dacă preferi aceeași pictogramă la încărcare și descărcare.</string>
   <string formatted="false" name="pref_cat_logging">Înregistrare</string>
   <string formatted="false" name="pref_enable_logging">Activați înregistrarea</string>
   <string formatted="false" name="pref_enable_logging_summary">Înregistrați modificările stării bateriei?</string>
@@ -392,18 +372,6 @@
   <string formatted="false" name="pref_cat_language">Limbă</string>
   <string formatted="false" name="pref_language_override">Anularea limbii</string>
   <string formatted="false" name="pref_language_override_summary">Selectați limba:</string>
-  <string formatted="false" name="pref_classic_color_mode">Forțați modul clasic de culoare</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">Acest lucru de obicei nu funcționează; va rog cititi ajutorul</string>
-  <string formatted="false" name="pref_classic_color_mode_help">Începând cu Android 5.0 (Lollipop), pictograme de notificare colorate
-    oficial nu mai funcționează pe Android, ceea ce face ca pictograma Classic să se afișeze
-    sus ca un alb solid. Deci, în mod implicit, pe aceste dispozitive aplicația folosește un
-    contur alb simplu cu număr alb.\n
-
-    \nCu toate acestea, nu toate dispozitivele respectă specificațiile, așa că nu este așa
-    necesar și nu funcționează corect peste tot.  Poți încerca
-    faceți setul de pictograme clasic să funcționeze în mod clasic, rotind acesta
-    opțiunea activată.  Amintiți-vă, pe majoritatea dispozitivelor, aceasta va face doar pictograma
-    devin alb solid.</string>
   <string formatted="false" name="alarms_overview">Prezentare generală a alarmelor</string>
   <string formatted="false" name="alarms_overview_help">Această pagină vă permite să adăugați alarme noi, să activați sau să dezactivați rapid
     alarme existente sau ștergeți alarmele.\n
@@ -463,9 +431,6 @@
   <string formatted="false" name="age_3_weeks">3 saptamani</string>
   <string formatted="false" name="age_4_weeks">4 săptămâni</string>
   <string formatted="false" name="age_never_delete">Nu șterge niciodată</string>
-  <string formatted="false" name="icon_set_classic">Clasic</string>
-  <string formatted="false" name="icon_set_plain">Număr simplu</string>
-  <string formatted="false" name="icon_set_smaller">Număr mai mic</string>
   <string formatted="false" name="pref_content_percent">Procentul bateriei</string>
   <string formatted="false" name="pref_content_temperature">Temperatura bateriei</string>
   <string formatted="false" name="pref_content_switching">Comutați între ambele</string>
