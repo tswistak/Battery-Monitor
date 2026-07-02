@@ -1,119 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_launcher_name" formatted="false">Battery Monitor</string>
   <string name="settings_activity_subtitle" formatted="false">设置</string>
   <string name="help_activity_subtitle" formatted="false">帮助</string>
   <string name="battery_use_b" formatted="false">查看电量使用情况</string>
+  <string formatted="false" name="circle_widget">圆形小组件</string>
+  <string formatted="false" name="full_widget">完整小组件</string>
   <string name="yes" formatted="false">确认</string>
   <string name="cancel" formatted="false">取消</string>
   <string name="confirm_close" formatted="false">确认退出？</string>
   <string name="confirm_close_hint" formatted="false">Battery Monitor 将完全退出，通知栏中的电量指示将不再显示。如果您只是想离开主界面并让服务继续运行，请点“取消”，然后按手机返回键。</string>
-  <string name="confirm_clear_logs" formatted="false">确定要清空所有历史记录吗？</string>
-  <string name="okay" formatted="false">完成</string>
-    <string name="menu_settings" formatted="false">设置</string>
-  <string name="menu_close" formatted="false">关闭</string>
-  <string name="menu_help" formatted="false">帮助</string>
-  <string name="menu_clear" formatted="false">清空</string>
-  <string name="menu_reverse" formatted="false">反向排序</string>
-  <string name="menu_export" formatted="false">导出 CSV</string>
-  <string name="menu_delete_alarm" formatted="false">删除闹钟</string>
-  <string name="percent_symbol" formatted="false">%</string>
-  <string name="degree_symbol" formatted="false">°</string>
-  <string name="fahrenheit" formatted="false">华氏温度</string>
-  <string name="fahrenheit_symbol" formatted="false">F</string>
-  <string name="celsius" formatted="false">摄氏温度</string>
-  <string name="celsius_symbol" formatted="false">C</string>
-  <string name="volt_symbol" formatted="false">V</string>
-  <string name="inaccessible_storage" formatted="false">SD卡无法访问。</string>
-  <string name="inaccessible_w_reason" formatted="false">SD卡无法访问：</string>
-  <string name="read_only_storage" formatted="false">SD卡已设置为“只读”模式。</string>
-  <string name="file_written" formatted="false">文件已成功保存到所选位置。</string>
-  <string name="status_unplugged" formatted="false">未接电源</string>
-  <string name="status_unknown" formatted="false">未知</string>
-  <string name="status_charging" formatted="false">充电中</string>
-  <string name="status_discharging" formatted="false">放电中</string>
-  <string name="status_not_charging" formatted="false">未充电</string>
-  <string name="status_fully_charged" formatted="false">电池充满</string>
-  <string name="status_plugged_in" formatted="false">插入电源</string>
-  <string name="health_unknown" formatted="false">未知</string>
-  <string name="health_good" formatted="false">正常</string>
-  <string name="health_overheat" formatted="false">过热</string>
-  <string name="health_dead" formatted="false">损坏</string>
-  <string name="health_overvoltage" formatted="false">超压</string>
-  <string name="health_failure" formatted="false">错误</string>
-  <string name="health_cold" formatted="false">温度过低</string>
-  <string name="plugged_unplugged" formatted="false">未接电源</string>
-  <string name="plugged_ac" formatted="false">(AC)</string>
-  <string name="plugged_usb" formatted="false">(USB)</string>
-  <string name="plugged_unknown" formatted="false">(?)</string>
-  <string name="plugged_wireless" formatted="false">(WL)</string>
-  <string name="alarm_fully_charged" formatted="false">电池已充满！</string>
-  <string name="alarm_charge_drops" formatted="false">电池电量低于</string>
-  <string name="alarm_charge_rises" formatted="false">电池电量高于</string>
-  <string name="alarm_temp_rises" formatted="false">电池温度高于</string>
-    <string name="logs_empty" formatted="false">日志记录为空</string>
-  <string name="since" formatted="false">开始于</string>
-  <string name="currently_using" formatted="false">当前使用</string>
-  <string name="currently_set_to" formatted="false">"当前设置为"</string>
-  <string name="currently_disabled" formatted="false">当前不可用</string>
-  <string name="help_cat_version" formatted="false">版本</string>
-  <string name="help_cat_no_warranty" formatted="false">免责声明</string>
-  <string name="help_no_warranty" formatted="false">本软件按“原样”提供，不提供任何明示或暗示的担保。开发者会尽力保证软件正常运行，但不对使用过程中可能造成的不便、数据损失或设备问题承担责任。</string>
-  <string name="help_cat_acknowledgments" formatted="false">致谢</string>
-  <string name="help_acknowledgments" formatted="false">Battery Monitor 是 Battery Indicator Pro / BatteryBot Pro 的一个分支。感谢原作者和贡献者创建并维护上游项目。</string>
-  <string name="help_cat_contact" formatted="false">联系方式</string>
-  <string name="settings_overview" formatted="false">概览</string>
-  <string name="settings_overview_help" formatted="false">设置按页面分类。每个设置页面都有对应的帮助内容，可在菜单中的“帮助”查看当前页面说明。</string>
-  <string name="alarm_settings_subtitle" formatted="false">闹钟设置</string>
-  <string name="alarm_settings" formatted="false">闹钟</string>
-  <string name="alarm_settings_help" formatted="false">您可以让 Battery Monitor 在电池达到某个条件时提醒您，例如充满电、电量低于 20% 等。</string>
-  <string name="other_settings" formatted="false">其他设置</string>
-  <string name="other_settings_help" formatted="false">此页面包含其他设置，包括历史记录、温度单位、自启动方式等。</string>
-  <string name="add_alarm" formatted="false">添加闹钟</string>
-  <string name="pref_cat_logging" formatted="false">历史记录</string>
-  <string name="pref_enable_logging" formatted="false">启用历史记录</string>
-  <string name="pref_enable_logging_summary" formatted="false">记录电池状态变化？</string>
-  <string name="pref_enable_logging_help" formatted="false">启用后，Battery Monitor 会记录电池状态变化，例如拔下电源、开始充电或充满电。</string>
-  <string name="pref_max_log_age" formatted="false">历史记录保留时间</string>
-  <string name="pref_max_log_age_summary" formatted="false">删除早于以下时间的记录：</string>
-  <string formatted="false" name="pref_max_log_age_help">启用历史记录后，应用会在设备接入电源时清理超过所选保留时间的记录；选择“永不删除”则会保留记录，直到您手动清除。</string>
-  <string name="pref_cat_temperature_unit" formatted="false">温度显示单位</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">转换为华氏温度</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android系统以摄氏单位报告电池温度信息。若您想使温度信息以华氏单位显示，请勾选此项。</string>
-  <string name="pref_cat_autostart" formatted="false">自启动</string>
-  <string name="pref_autostart_at_boot" formatted="false">开机自启动</string>
-  <string name="pref_autostart_at_boot_summary" formatted="false">设备启动时启动 Battery Monitor：</string>
-  <string name="pref_autostart_at_boot_help" formatted="false">设置 Battery Monitor 是否在设备启动时自动运行。“关机前正在运行”只会参考您最近一次手动启动或关闭 Battery Monitor 的状态。</string>
-  <string name="pref_cat_language" formatted="false">语言</string>
-  <string name="pref_language_override_summary" formatted="false">选择语言:</string>
-  <string name="alarms_overview" formatted="false">闹钟概览</string>
-  <string name="alarms_overview_help" formatted="false">您可以在此页面添加新闹钟，或快速启用、停用、删除已有闹钟。\n\n点击“添加闹钟”会创建一个新闹钟并进入设置页面。\n\n下方列表会显示您已创建的闹钟：点击可编辑，长按可删除，点击旁边的开关可启用或停用。</string>
-  <string name="pref_alarm_enabled" formatted="false">启用闹钟</string>
-  <string name="pref_alarm_threshold" formatted="false">阈值</string>
-  <string name="alarm_pref_not_used" formatted="false">此闹钟类型不使用该项</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">闹钟阈值：</string>
-  <string name="boot_pref_always" formatted="false">始终</string>
-  <string name="boot_pref_never" formatted="false">从不</string>
-  <string name="boot_pref_if_running" formatted="false">关机时运行</string>
-  <string name="age_1_day" formatted="false">一天</string>
-  <string name="age_2_days" formatted="false">两天</string>
-  <string name="age_4_days" formatted="false">四天</string>
-  <string name="age_1_week" formatted="false">一周</string>
-  <string name="age_2_weeks" formatted="false">二周</string>
-  <string name="age_3_weeks" formatted="false">三周</string>
-  <string name="age_4_weeks" formatted="false">四周</string>
-  <string formatted="false" name="age_never_delete">永不删除</string>
-  <plurals name="n_log_items">
-    <item quantity="one">%d项日志记录</item>
-    <item quantity="other">%d项日志记录</item>
-  </plurals>
-  <plurals name="for_n_hours">
-    <item quantity="one">已%d小时</item>
-    <item quantity="other">已%d小时</item>
-  </plurals>
-
-  <string formatted="false" name="circle_widget">圆形小组件</string>
-  <string formatted="false" name="full_widget">完整小组件</string>
   <string formatted="false" name="notifications_disabled">通知已禁用！</string>
   <string formatted="false" name="notifications_disabled_message">您已阻止Battery Monitor的所有通知。  这将
     防止Battery Monitor显示任何通知：主要
@@ -141,17 +37,37 @@
   <string formatted="false" name="main_notif_chan_name">主要通知</string>
   <string formatted="false" name="live_updates_notif_chan_name">实时更新</string>
   <string formatted="false" name="channel_group_name_alarms">警报</string>
+  <string name="confirm_clear_logs" formatted="false">确定要清空所有历史记录吗？</string>
   <string formatted="false" name="configure_log_filter">显示哪些日志项？</string>
+  <string name="okay" formatted="false">完成</string>
   <string formatted="false" name="tab_current_info">当前信息</string>
   <string formatted="false" name="tab_history">历史</string>
   <string formatted="false" name="notification_until_charged">" 后充满"</string>
   <string formatted="false" name="notification_until_drained">" 剩余"</string>
   <string formatted="false" name="activity_until_charged">距离充满</string>
   <string formatted="false" name="activity_until_drained">剩余可用时间</string>
+  <string name="menu_settings" formatted="false">设置</string>
+  <string name="menu_close" formatted="false">关闭</string>
+  <string name="menu_help" formatted="false">帮助</string>
+  <string name="menu_clear" formatted="false">清空</string>
+  <string name="menu_reverse" formatted="false">反向排序</string>
   <string formatted="false" name="menu_log_filter">筛选</string>
+  <string name="menu_export" formatted="false">导出 CSV</string>
+  <string name="menu_delete_alarm" formatted="false">删除闹钟</string>
   <string formatted="false" name="menu_show_seconds">显示秒数</string>
   <string formatted="false" name="menu_hide_seconds">隐藏秒数</string>
+  <string name="percent_symbol" formatted="false">%</string>
+  <string name="degree_symbol" formatted="false">°</string>
+  <string name="fahrenheit" formatted="false">华氏温度</string>
+  <string name="fahrenheit_symbol" formatted="false">F</string>
+  <string name="celsius" formatted="false">摄氏温度</string>
+  <string name="celsius_symbol" formatted="false">C</string>
+  <string name="volt_symbol" formatted="false">V</string>
+  <string name="inaccessible_storage" formatted="false">SD卡无法访问。</string>
+  <string name="inaccessible_w_reason" formatted="false">SD卡无法访问：</string>
+  <string name="read_only_storage" formatted="false">SD卡已设置为“只读”模式。</string>
   <string formatted="false" name="no_storage_permission">未授予存储权限。</string>
+  <string name="file_written" formatted="false">文件已成功保存到所选位置。</string>
   <string formatted="false" name="date">日期</string>
   <string formatted="false" name="time">时间</string>
   <string formatted="false" name="status">状态</string>
@@ -159,7 +75,26 @@
   <string formatted="false" name="temperature">摄氏度</string>
   <string formatted="false" name="temperature_f">华氏温度</string>
   <string formatted="false" name="voltage">伏特</string>
+  <string name="status_unplugged" formatted="false">未接电源</string>
+  <string name="status_unknown" formatted="false">未知</string>
+  <string name="status_charging" formatted="false">充电中</string>
+  <string name="status_discharging" formatted="false">放电中</string>
+  <string name="status_not_charging" formatted="false">未充电</string>
+  <string name="status_fully_charged" formatted="false">电池充满</string>
+  <string name="status_plugged_in" formatted="false">插入电源</string>
   <string formatted="false" name="status_boot_completed">启动完成</string>
+  <string name="health_unknown" formatted="false">未知</string>
+  <string name="health_good" formatted="false">正常</string>
+  <string name="health_overheat" formatted="false">过热</string>
+  <string name="health_dead" formatted="false">损坏</string>
+  <string name="health_overvoltage" formatted="false">超压</string>
+  <string name="health_failure" formatted="false">错误</string>
+  <string name="health_cold" formatted="false">温度过低</string>
+  <string name="plugged_unplugged" formatted="false">未接电源</string>
+  <string name="plugged_ac" formatted="false">(AC)</string>
+  <string name="plugged_usb" formatted="false">(USB)</string>
+  <string name="plugged_unknown" formatted="false">(?)</string>
+  <string name="plugged_wireless" formatted="false">(WL)</string>
   <string formatted="false" name="alarm_type_fully_charged">充满电</string>
   <string formatted="false" name="alarm_type_charge_drops">电量低于</string>
   <string formatted="false" name="alarm_type_charge_rises">电量高于</string>
@@ -172,19 +107,44 @@
   <string formatted="false" name="alarm_type_entry_temperature_drops">温度低于...</string>
   <string formatted="false" name="alarm_type_entry_temperature_rises">温度升至以上...</string>
   <string formatted="false" name="alarm_type_entry_health_failure">电池健康异常</string>
+  <string name="alarm_fully_charged" formatted="false">电池已充满！</string>
+  <string name="alarm_charge_drops" formatted="false">电池电量低于</string>
+  <string name="alarm_charge_rises" formatted="false">电池电量高于</string>
   <string formatted="false" name="alarm_temp_drops">“电池温度低于”</string>
+  <string name="alarm_temp_rises" formatted="false">电池温度高于</string>
   <string formatted="false" name="alarm_health_failure">“电池健康状况是：”</string>
+  <string name="logs_empty" formatted="false">日志记录为空</string>
+  <plurals name="n_log_items">
+    <item quantity="one">%d项日志记录</item>
+    <item quantity="other">%d项日志记录</item>
+  </plurals>
   <string formatted="false" name="after_nh_mm_unplugged">断开电源 %1$d小时 %2$d分钟后</string>
   <string formatted="false" name="after_nh_mm_plugged_in">接入电源 %1$d小时 %2$d分钟后</string>
   <string formatted="false" name="after_nm_ms_unplugged">断开电源 %1$d分钟 %2$d秒后</string>
   <string formatted="false" name="after_nm_ms_plugged_in">接入电源 %1$d分钟 %2$d秒后</string>
+  <string name="since" formatted="false">开始于</string>
+  <plurals name="for_n_hours">
+    <item quantity="one">已%d小时</item>
+    <item quantity="other">已%d小时</item>
+  </plurals>
+  <string name="currently_using" formatted="false">当前使用</string>
+  <string name="currently_set_to" formatted="false">"当前设置为"</string>
+  <string name="currently_disabled" formatted="false">当前不可用</string>
+  <string name="help_cat_version" formatted="false">版本</string>
   <string formatted="false" name="help_cat_open_source">开源</string>
   <string formatted="false" name="help_open_source">这个
     项目是开源的。您可以访问源代码
     <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>。</string>
   <string formatted="false" name="help_cat_privacy">隐私</string>
   <string formatted="false" name="help_privacy">Battery Monitor不会收集、存储或传输任何个人信息。</string>
+  <string name="help_cat_no_warranty" formatted="false">免责声明</string>
+  <string name="help_no_warranty" formatted="false">本软件按“原样”提供，不提供任何明示或暗示的担保。开发者会尽力保证软件正常运行，但不对使用过程中可能造成的不便、数据损失或设备问题承担责任。</string>
+  <string name="help_cat_acknowledgments" formatted="false">致谢</string>
+  <string name="help_acknowledgments" formatted="false">Battery Monitor 是 Battery Indicator Pro / BatteryBot Pro 的一个分支。感谢原作者和贡献者创建并维护上游项目。</string>
+  <string name="help_cat_contact" formatted="false">联系方式</string>
   <string formatted="false" name="help_contact">如果您有疑问、问题或意见，请 <a href="mailto:tomasz@swistak.codes">给我发电子邮件</a>.</string>
+  <string name="settings_overview" formatted="false">概览</string>
+  <string name="settings_overview_help" formatted="false">设置按页面分类。每个设置页面都有对应的帮助内容，可在菜单中的“帮助”查看当前页面说明。</string>
   <string formatted="false" name="notifications_disabled_cat">通知已禁用</string>
   <string formatted="false" name="app_notifs_disabled_b">启用应用程序通知</string>
   <string formatted="false" name="app_notifs_disabled_summary">您已禁用此应用程序的所有通知。  请允许他们访问这些设置。</string>
@@ -217,17 +177,30 @@
 
     \n设置以打开黑客（如果可能）并控制其方式
     使用的内容可在本节中找到。</string>
+  <string name="alarm_settings_subtitle" formatted="false">闹钟设置</string>
+  <string name="alarm_settings" formatted="false">闹钟</string>
+  <string name="alarm_settings_help" formatted="false">您可以让 Battery Monitor 在电池达到某个条件时提醒您，例如充满电、电量低于 20% 等。</string>
+  <string name="other_settings" formatted="false">其他设置</string>
+  <string name="other_settings_help" formatted="false">此页面包含其他设置，包括历史记录、温度单位、自启动方式等。</string>
   <string formatted="false" name="live_updates_onboarding_title">状态栏电池芯片</string>
   <string formatted="false" name="live_updates_onboarding_message_on">您的设备支持在状态栏中以芯片形式显示电池百分比。此选项默认已启用。\n\n如果您偏好传统通知图标，可以在 Android 系统设置中为此应用关闭“实时更新”。\n\n注意：授予此权限有时可能会导致应用关闭。若发生这种情况，请重新打开应用。</string>
   <string formatted="false" name="live_updates_onboarding_message_off">您的设备支持在状态栏中以芯片形式显示电池百分比，但此选项目前在系统设置中已禁用。\n\n我们建议启用它以获得最佳体验。如果您偏好传统通知图标，可以保持禁用。\n\n注意：授予此权限有时可能会导致应用关闭。若发生这种情况，请重新打开应用。</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor 需要您的权限，才能在状态栏显示电池电量并通知您有关闹钟的信息。\n\n注意：授予此权限有时可能会导致应用关闭。若发生这种情况，请重新打开应用。</string>
   <string formatted="false" name="live_updates_onboarding_positive_on">知道了</string>
   <string formatted="false" name="live_updates_onboarding_positive_off">前往“设置”</string>
   <string formatted="false" name="live_updates_onboarding_negative_off">暂不处理</string>
+  <string name="notifications_onboarding_message" formatted="false">Battery Monitor 需要您的权限，才能在状态栏显示电池电量并通知您有关闹钟的信息。\n\n注意：授予此权限有时可能会导致应用关闭。若发生这种情况，请重新打开应用。</string>
+  <string name="add_alarm" formatted="false">添加闹钟</string>
   <string formatted="false" name="pref_cat_channel_settings">通知渠道设置</string>
   <string formatted="false" name="pref_manage_main_channel">管理主渠道</string>
   <string formatted="false" name="pref_cat_notification_content">内容</string>
   <string formatted="false" name="pref_cat_status_bar_chip">状态栏芯片（Android 16+）</string>
+  <string formatted="false" name="pref_live_update_display">显示实时更新</string>
+  <string formatted="false" name="pref_live_update_display_summary">在状态栏显示:</string>
+  <string formatted="false" name="pref_live_update_display_help">选择在 Android 16+ 中何时在状态栏显示实时更新胶囊。</string>
+  <string formatted="false" name="pref_live_update_display_charging">仅在充电时</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">实时更新时保留主通知</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">实时更新激活时是否仍显示完整主通知？</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">启用后，除状态栏胶囊外，常规主通知也会保持可见。</string>
   <string formatted="false" name="pref_chip_content">芯片内容</string>
   <string formatted="false" name="pref_chip_switching_interval">切换间隔</string>
   <string formatted="false" name="pref_chip_content_help">选择在 Android 16+ 升级通知芯片中显示的值。</string>
@@ -258,6 +231,7 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">包括生命体征状态变化后的时间？</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">如果设置，生命体征行还将包括小时数
     设备被拔出、插入或充满电后。</string>
+  <string formatted="false" name="custom">自定义...</string>
   <string formatted="false" name="pref_cat_icon_set">通知图标</string>
   <string formatted="false" name="pref_icon_content">图标内容</string>
   <string formatted="false" name="pref_icon_content_help">选择状态栏图标是否显示电池百分比或
@@ -347,6 +321,20 @@
   <string formatted="false" name="pref_indicate_charging">指示正在充电</string>
   <string formatted="false" name="pref_indicate_charging_summary">更改图标以指示充电时？</string>
   <string formatted="false" name="pref_indicate_charging_help">充电图标可以在数字下方显示闪电。如果你希望充电和放电时使用相同图标，请关闭此设置。</string>
+  <string name="pref_cat_logging" formatted="false">历史记录</string>
+  <string name="pref_enable_logging" formatted="false">启用历史记录</string>
+  <string name="pref_enable_logging_summary" formatted="false">记录电池状态变化？</string>
+  <string name="pref_enable_logging_help" formatted="false">启用后，Battery Monitor 会记录电池状态变化，例如拔下电源、开始充电或充满电。</string>
+  <string name="pref_max_log_age" formatted="false">历史记录保留时间</string>
+  <string name="pref_max_log_age_summary" formatted="false">删除早于以下时间的记录：</string>
+  <string formatted="false" name="pref_max_log_age_help">启用历史记录后，应用会在设备接入电源时清理超过所选保留时间的记录；选择“永不删除”则会保留记录，直到您手动清除。</string>
+  <string name="pref_cat_temperature_unit" formatted="false">温度显示单位</string>
+  <string name="pref_convert_to_fahrenheit" formatted="false">转换为华氏温度</string>
+  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android系统以摄氏单位报告电池温度信息。若您想使温度信息以华氏单位显示，请勾选此项。</string>
+  <string name="pref_cat_autostart" formatted="false">自启动</string>
+  <string name="pref_autostart_at_boot" formatted="false">开机自启动</string>
+  <string name="pref_autostart_at_boot_summary" formatted="false">设备启动时启动 Battery Monitor：</string>
+  <string name="pref_autostart_at_boot_help" formatted="false">设置 Battery Monitor 是否在设备启动时自动运行。“关机前正在运行”只会参考您最近一次手动启动或关闭 Battery Monitor 的状态。</string>
   <string formatted="false" name="predictor_sensitive">敏感的</string>
   <string formatted="false" name="predictor_conservative">保守的</string>
   <string formatted="false" name="predictor_since_status_change">自状态变更以来</string>
@@ -370,7 +358,12 @@
 
     \n最后，您可以仅根据您的情况进行预测
     长期平均使用情况。</string>
+  <string name="pref_cat_language" formatted="false">语言</string>
   <string formatted="false" name="pref_language_override">语言覆盖</string>
+  <string name="pref_language_override_summary" formatted="false">选择语言:</string>
+  <string name="alarms_overview" formatted="false">闹钟概览</string>
+  <string name="alarms_overview_help" formatted="false">您可以在此页面添加新闹钟，或快速启用、停用、删除已有闹钟。\n\n点击“添加闹钟”会创建一个新闹钟并进入设置页面。\n\n下方列表会显示您已创建的闹钟：点击可编辑，长按可删除，点击旁边的开关可启用或停用。</string>
+  <string name="pref_alarm_enabled" formatted="false">启用闹钟</string>
   <string formatted="false" name="pref_alarm_enabled_help">如果你想暂时
   禁用警报而无需在需要时重新创建它
   同样，您可以在此处或主警报上将其关闭和打开
@@ -394,21 +387,27 @@
     \n 如果您的电池健康状况不佳，“健康失败”警报将通知您
     变成“未知”或“身体健康”以外的东西，如
     安卓系统报道。</string>
+  <string name="pref_alarm_threshold" formatted="false">阈值</string>
+  <string name="alarm_pref_not_used" formatted="false">此闹钟类型不使用该项</string>
+  <string name="pref_alarm_threshold_summary" formatted="false">闹钟阈值：</string>
   <string formatted="false" name="pref_alarm_threshold_help">对于充电和温度报警，需要设置温度
     或将触发警报的电量水平。</string>
+  <string formatted="false" name="alarm_custom_temp_message">输入 %s 度的温度</string>
+  <string formatted="false" name="alarm_custom_charge_message">输入电量百分比（0-100）</string>
+  <string name="boot_pref_always" formatted="false">始终</string>
+  <string name="boot_pref_never" formatted="false">从不</string>
+  <string name="boot_pref_if_running" formatted="false">关机时运行</string>
+  <string name="age_1_day" formatted="false">一天</string>
+  <string name="age_2_days" formatted="false">两天</string>
+  <string name="age_4_days" formatted="false">四天</string>
+  <string name="age_1_week" formatted="false">一周</string>
+  <string name="age_2_weeks" formatted="false">二周</string>
+  <string name="age_3_weeks" formatted="false">三周</string>
+  <string name="age_4_weeks" formatted="false">四周</string>
+  <string formatted="false" name="age_never_delete">永不删除</string>
   <string formatted="false" name="pref_content_percent">电池电量百分比</string>
   <string formatted="false" name="pref_content_temperature">电池温度</string>
   <string formatted="false" name="pref_content_switching">两者之间切换</string>
-  <string formatted="false" name="custom">自定义...</string>
-  <string formatted="false" name="alarm_custom_temp_message">输入 %s 度的温度</string>
-  <string formatted="false" name="alarm_custom_charge_message">输入电量百分比（0-100）</string>
-  <string formatted="false" name="pref_live_update_display">显示实时更新</string>
-  <string formatted="false" name="pref_live_update_display_summary">在状态栏显示:</string>
-  <string formatted="false" name="pref_live_update_display_help">选择在 Android 16+ 中何时在状态栏显示实时更新胶囊。</string>
-  <string formatted="false" name="pref_live_update_display_charging">仅在充电时</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">实时更新时保留主通知</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">实时更新激活时是否仍显示完整主通知？</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">启用后，除状态栏胶囊外，常规主通知也会保持可见。</string>
   <string formatted="false" name="chip_switching_interval_2_seconds">2 秒</string>
   <string formatted="false" name="chip_switching_interval_5_seconds">5 秒</string>
   <string formatted="false" name="chip_switching_interval_10_seconds">10 秒</string>

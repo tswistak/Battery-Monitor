@@ -1,85 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_launcher_name" formatted="false">Battery Monitor</string>
   <string name="settings_activity_subtitle" formatted="false">Setari</string>
   <string name="help_activity_subtitle" formatted="false">Ajutor</string>
   <string name="battery_use_b" formatted="false">Vizualizeaza Utilizarea Bateriei</string>
+  <string formatted="false" name="circle_widget">Cercul de monitorizare a bateriei</string>
+  <string formatted="false" name="full_widget">Monitor baterie plină</string>
   <string name="yes" formatted="false">Da</string>
   <string name="cancel" formatted="false">Anuleaza</string>
   <string name="confirm_close" formatted="false">Sigur inchideti?</string>
   <string name="confirm_close_hint" formatted="false">Battery Monitor se va inchide complet. Informatiile despre baterie nu vor mai fi afisate in bara de stare a telefonului./n Daca doriti sa inchideti fereastra principala, pastrand afisarea informatiilor despre baterie, apasati Anuleaza si apoi butonul BACK al telefonului.</string>
-  <string name="confirm_clear_logs" formatted="false">Sigur stergeti toate logurile?</string>
-  <string name="okay" formatted="false">Bine</string>
-    <string name="tab_current_info" formatted="false">Informatie actuala</string>
-  <string name="tab_history" formatted="false">Istoric</string>
-  <string name="notification_until_charged" formatted="false">pana la incarcare completa</string>
-  <string name="notification_until_drained" formatted="false">ramas</string>
-  <string name="activity_until_charged" formatted="false">pana la incarcare completa</string>
-  <string name="activity_until_drained" formatted="false">pana la descarcare completa</string>
-  <string name="menu_settings" formatted="false">Setari</string>
-  <string name="menu_close" formatted="false">Inchide</string>
-  <string name="menu_help" formatted="false">Ajutor</string>
-  <string name="menu_clear" formatted="false">Sterge</string>
-  <string name="menu_reverse" formatted="false">Inverseaza ordinea</string>
-  <string name="menu_log_filter" formatted="false">Filtru</string>
-  <string name="menu_export" formatted="false">Exporta CSV</string>
-  <string name="menu_delete_alarm" formatted="false">Sterge Alarma</string>
-  <string name="percent_symbol" formatted="false">%</string>
-  <string name="degree_symbol" formatted="false">°</string>
-  <string name="fahrenheit" formatted="false">Fahrenheit</string>
-  <string name="fahrenheit_symbol" formatted="false">F</string>
-  <string name="celsius" formatted="false">Celsius</string>
-  <string name="celsius_symbol" formatted="false">C</string>
-  <string name="volt_symbol" formatted="false">V</string>
-  <string name="inaccessible_storage" formatted="false">Cartela SD nu este accesibila</string>
-  <string name="inaccessible_w_reason" formatted="false">Cartela SD nu este accesibila</string>
-  <string name="read_only_storage" formatted="false">Cartela SD nu este protejata la scriere (Read Only)</string>
-  <string name="file_written" formatted="false">Fisier scris cu succes in radacina cartelei SD</string>
-  <string name="date" formatted="false">data</string>
-  <string name="time" formatted="false">ora</string>
-  <string name="status" formatted="false">stare</string>
-  <string name="charge" formatted="false">procentaj_incarcare</string>
-  <string name="temperature" formatted="false">grade_celsius</string>
-  <string name="voltage" formatted="false">volti</string>
-  <string name="status_unplugged" formatted="false">Deconectat</string>
-  <string name="status_unknown" formatted="false">Necunoscut</string>
-  <string name="status_charging" formatted="false">Se incarca</string>
-  <string name="status_discharging" formatted="false">Se descarca</string>
-  <string name="status_not_charging" formatted="false">Nu se incarca</string>
-  <string name="status_fully_charged" formatted="false">Incarcat complet</string>
-  <string name="status_plugged_in" formatted="false">Conectat</string>
-  <string name="health_unknown" formatted="false">Necunoscut</string>
-  <string name="health_good" formatted="false">Stare buna</string>
-  <string name="health_overheat" formatted="false">Supraincalzire</string>
-  <string name="health_dead" formatted="false">Mort</string>
-  <string name="health_overvoltage" formatted="false">Voltaj peste limita</string>
-  <string name="health_failure" formatted="false">Defectiune</string>
-  <string name="health_cold" formatted="false">Rece</string>
-  <string name="plugged_unplugged" formatted="false">Deconectat</string>
-  <string name="plugged_ac" formatted="false">(AC)</string>
-  <string name="plugged_usb" formatted="false">(USB)</string>
-  <string name="plugged_unknown" formatted="false">(?)</string>
-  <string name="plugged_wireless" formatted="false">Wireless</string>
-  <string name="alarm_type_fully_charged" formatted="false">Incarcat complet</string>
-  <string name="alarm_type_charge_drops" formatted="false">Cand incarcarea scade sub</string>
-  <string name="alarm_type_charge_rises" formatted="false">Cand incarcare urca peste</string>
-  <string name="alarm_fully_charged" formatted="false">Bateria este acum incarcata complet</string>
-  <string name="alarm_charge_drops" formatted="false">"Nivelul bateriei este sub "</string>
-  <string name="alarm_charge_rises" formatted="false">"Nivelul bateriei este peste "</string>
-  <string name="alarm_temp_rises" formatted="false">"Temperatura bateriei este peste "</string>
-  <string name="alarm_health_failure" formatted="false">Calitatea Bateriei este:</string>
-    <string name="logs_empty" formatted="false">Nu sunt loguri/loguri goale</string>
-  <string name="since" formatted="false">De la</string>
-  <string name="currently_using" formatted="false">Folosire curenta</string>
-  <string name="currently_set_to" formatted="false">"Acum setat la: "</string>
-  <string name="currently_disabled" formatted="false">Dezactivat Acum</string>
-  <string name="help_cat_version" formatted="false">Versiune</string>
-  <string name="help_cat_no_warranty" formatted="false">Nu se ofera garantie</string>
-  <string name="help_cat_contact" formatted="false">Contact</string>
-  <string name="settings_overview" formatted="false">Prezentare</string>
-
-  <string formatted="false" name="circle_widget">Cercul de monitorizare a bateriei</string>
-  <string formatted="false" name="full_widget">Monitor baterie plină</string>
   <string formatted="false" name="notifications_disabled">Notificările sunt dezactivate!</string>
   <string formatted="false" name="notifications_disabled_message">Ați blocat toate notificările pentru Battery Monitor.  Aceasta va
     împiedică Battery Monitor să afișeze notificări: principal
@@ -107,12 +37,67 @@
   <string formatted="false" name="main_notif_chan_name">Notificare principală</string>
   <string formatted="false" name="live_updates_notif_chan_name">Actualizări live</string>
   <string formatted="false" name="channel_group_name_alarms">Alarme</string>
+  <string name="confirm_clear_logs" formatted="false">Sigur stergeti toate logurile?</string>
   <string formatted="false" name="configure_log_filter">Afișați ce elemente de jurnal?</string>
+  <string name="okay" formatted="false">Bine</string>
+  <string name="tab_current_info" formatted="false">Informatie actuala</string>
+  <string name="tab_history" formatted="false">Istoric</string>
+  <string name="notification_until_charged" formatted="false">pana la incarcare completa</string>
+  <string name="notification_until_drained" formatted="false">ramas</string>
+  <string name="activity_until_charged" formatted="false">pana la incarcare completa</string>
+  <string name="activity_until_drained" formatted="false">pana la descarcare completa</string>
+  <string name="menu_settings" formatted="false">Setari</string>
+  <string name="menu_close" formatted="false">Inchide</string>
+  <string name="menu_help" formatted="false">Ajutor</string>
+  <string name="menu_clear" formatted="false">Sterge</string>
+  <string name="menu_reverse" formatted="false">Inverseaza ordinea</string>
+  <string name="menu_log_filter" formatted="false">Filtru</string>
+  <string name="menu_export" formatted="false">Exporta CSV</string>
+  <string name="menu_delete_alarm" formatted="false">Sterge Alarma</string>
   <string formatted="false" name="menu_show_seconds">Afișează secunde</string>
   <string formatted="false" name="menu_hide_seconds">Ascunde secunde</string>
+  <string name="percent_symbol" formatted="false">%</string>
+  <string name="degree_symbol" formatted="false">°</string>
+  <string name="fahrenheit" formatted="false">Fahrenheit</string>
+  <string name="fahrenheit_symbol" formatted="false">F</string>
+  <string name="celsius" formatted="false">Celsius</string>
+  <string name="celsius_symbol" formatted="false">C</string>
+  <string name="volt_symbol" formatted="false">V</string>
+  <string name="inaccessible_storage" formatted="false">Cartela SD nu este accesibila</string>
+  <string name="inaccessible_w_reason" formatted="false">Cartela SD nu este accesibila</string>
+  <string name="read_only_storage" formatted="false">Cartela SD nu este protejata la scriere (Read Only)</string>
   <string formatted="false" name="no_storage_permission">Permisiunea de stocare nu a fost acordată.</string>
+  <string name="file_written" formatted="false">Fisier scris cu succes in radacina cartelei SD</string>
+  <string name="date" formatted="false">data</string>
+  <string name="time" formatted="false">ora</string>
+  <string name="status" formatted="false">stare</string>
+  <string name="charge" formatted="false">procentaj_incarcare</string>
+  <string name="temperature" formatted="false">grade_celsius</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
+  <string name="voltage" formatted="false">volti</string>
+  <string name="status_unplugged" formatted="false">Deconectat</string>
+  <string name="status_unknown" formatted="false">Necunoscut</string>
+  <string name="status_charging" formatted="false">Se incarca</string>
+  <string name="status_discharging" formatted="false">Se descarca</string>
+  <string name="status_not_charging" formatted="false">Nu se incarca</string>
+  <string name="status_fully_charged" formatted="false">Incarcat complet</string>
+  <string name="status_plugged_in" formatted="false">Conectat</string>
   <string formatted="false" name="status_boot_completed">Încărcare finalizată</string>
+  <string name="health_unknown" formatted="false">Necunoscut</string>
+  <string name="health_good" formatted="false">Stare buna</string>
+  <string name="health_overheat" formatted="false">Supraincalzire</string>
+  <string name="health_dead" formatted="false">Mort</string>
+  <string name="health_overvoltage" formatted="false">Voltaj peste limita</string>
+  <string name="health_failure" formatted="false">Defectiune</string>
+  <string name="health_cold" formatted="false">Rece</string>
+  <string name="plugged_unplugged" formatted="false">Deconectat</string>
+  <string name="plugged_ac" formatted="false">(AC)</string>
+  <string name="plugged_usb" formatted="false">(USB)</string>
+  <string name="plugged_unknown" formatted="false">(?)</string>
+  <string name="plugged_wireless" formatted="false">Wireless</string>
+  <string name="alarm_type_fully_charged" formatted="false">Incarcat complet</string>
+  <string name="alarm_type_charge_drops" formatted="false">Cand incarcarea scade sub</string>
+  <string name="alarm_type_charge_rises" formatted="false">Cand incarcare urca peste</string>
   <string formatted="false" name="alarm_type_temperature_drops">Temperatura scade sub</string>
   <string formatted="false" name="alarm_type_temperature_rises">Temperatura crește deasupra</string>
   <string formatted="false" name="alarm_type_health_failure">Eșecul de sănătate</string>
@@ -122,17 +107,29 @@
   <string formatted="false" name="alarm_type_entry_temperature_drops">Temperatura scade sub...</string>
   <string formatted="false" name="alarm_type_entry_temperature_rises">Temperatura crește peste...</string>
   <string formatted="false" name="alarm_type_entry_health_failure">Sănătatea eșuează</string>
+  <string name="alarm_fully_charged" formatted="false">Bateria este acum incarcata complet</string>
+  <string name="alarm_charge_drops" formatted="false">"Nivelul bateriei este sub "</string>
+  <string name="alarm_charge_rises" formatted="false">"Nivelul bateriei este peste "</string>
   <string formatted="false" name="alarm_temp_drops">„Temp. baterie este sub”</string>
+  <string name="alarm_temp_rises" formatted="false">"Temperatura bateriei este peste "</string>
+  <string name="alarm_health_failure" formatted="false">Calitatea Bateriei este:</string>
+  <string name="logs_empty" formatted="false">Nu sunt loguri/loguri goale</string>
   <string formatted="false" name="after_nh_mm_unplugged">După ce %1$dh %2$dm a fost deconectat</string>
   <string formatted="false" name="after_nh_mm_plugged_in">După ce %1$dh %2$dm a fost conectat la priză</string>
   <string formatted="false" name="after_nm_ms_unplugged">După ce %1$dm %2$d au fost deconectate</string>
   <string formatted="false" name="after_nm_ms_plugged_in">După ce %1$dm %2$d s-au conectat</string>
+  <string name="since" formatted="false">De la</string>
+  <string name="currently_using" formatted="false">Folosire curenta</string>
+  <string name="currently_set_to" formatted="false">"Acum setat la: "</string>
+  <string name="currently_disabled" formatted="false">Dezactivat Acum</string>
+  <string name="help_cat_version" formatted="false">Versiune</string>
   <string formatted="false" name="help_cat_open_source">Open Source</string>
   <string formatted="false" name="help_open_source">Aceasta
     proiectul este open source. Puteți accesa codul sursă la
     <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
   <string formatted="false" name="help_cat_privacy">Confidențialitate</string>
   <string formatted="false" name="help_privacy">Battery Monitor nu colectează, stochează și nu transmite informații personale.</string>
+  <string name="help_cat_no_warranty" formatted="false">Nu se ofera garantie</string>
   <string formatted="false" name="help_no_warranty">Acest software este distribuit în speranța că va fi util, dar
     FĂRĂ NICIO GARANȚIE; fără măcar garanția implicită a
     VANTABILITATE sau ADECVENȚĂ PENTRU UN ANUMIT SCOP.\n
@@ -144,7 +141,9 @@
   <string formatted="false" name="help_acknowledgments">Battery Monitor este o furcă a Battery Indicator Pro / BatteryBot Pro de
     Darshan Computing, LLC.  Mulțumim autorilor și colaboratorilor originali
     pentru crearea și menținerea proiectului din amonte.</string>
+  <string name="help_cat_contact" formatted="false">Contact</string>
   <string formatted="false" name="help_contact">Dacă aveți o întrebare, o problemă sau un comentariu, vă rugăm <a href="mailto:tomasz@swistak.codes">e-mail-mi</a>.</string>
+  <string name="settings_overview" formatted="false">Prezentare</string>
   <string formatted="false" name="settings_overview_help">Setările monitorului bateriei sunt organizate în pagini separate, așa cum este descris
     mai jos.  Fiecare pagină de setări are propria pagină de ajutor care descrie
     setări disponibile acolo.</string>
@@ -191,15 +190,22 @@
   <string formatted="false" name="live_updates_onboarding_title">Bara de stare Cip baterie</string>
   <string formatted="false" name="live_updates_onboarding_message_on">Dispozitivul dvs. acceptă afișarea procentului bateriei sub formă de cip în bara de stare. Această opțiune este activată implicit.\n\nDacă preferați o pictogramă de notificare tradițională, puteți dezactiva „Live Updates” din setările de sistem Android pentru această aplicație.\n\nNotă: Acordarea acestei permisiuni poate duce ocazional la închiderea aplicației. Dacă se întâmplă asta, redeschideți-o pur și simplu.</string>
   <string formatted="false" name="live_updates_onboarding_message_off">Dispozitivul dvs. acceptă afișarea procentului bateriei sub formă de cip în bara de stare, dar această opțiune este în prezent dezactivată în setările de sistem.\n\nRecomandăm activarea ei pentru cea mai bună experiență. Dacă preferați o pictogramă de notificare tradițională, o puteți lăsa dezactivată.\n\nNotă: Acordarea acestei permisiuni poate duce ocazional la închiderea aplicației. Dacă se întâmplă asta, redeschideți-o pur și simplu.</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor are nevoie de permisiunea dvs. pentru a afișa nivelul bateriei în bara de stare și pentru a vă notifica despre alarme.\n\nNotă: Acordarea acestei permisiuni poate duce ocazional la închiderea aplicației. Dacă se întâmplă asta, redeschideți-o pur și simplu.</string>
   <string formatted="false" name="live_updates_onboarding_positive_on">Am înţeles</string>
   <string formatted="false" name="live_updates_onboarding_positive_off">Accesați Setări</string>
   <string formatted="false" name="live_updates_onboarding_negative_off">Respingeți</string>
+  <string name="notifications_onboarding_message" formatted="false">Battery Monitor are nevoie de permisiunea dvs. pentru a afișa nivelul bateriei în bara de stare și pentru a vă notifica despre alarme.\n\nNotă: Acordarea acestei permisiuni poate duce ocazional la închiderea aplicației. Dacă se întâmplă asta, redeschideți-o pur și simplu.</string>
   <string formatted="false" name="add_alarm">Adăugați alarma</string>
   <string formatted="false" name="pref_cat_channel_settings">Setări canal de notificare</string>
   <string formatted="false" name="pref_manage_main_channel">Gestionați canalul principal</string>
   <string formatted="false" name="pref_cat_notification_content">Conţinut</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Cip bară de stare (Android 16+)</string>
+  <string formatted="false" name="pref_live_update_display">Afiseaza actualizarea live</string>
+  <string formatted="false" name="pref_live_update_display_summary">Afiseaza in bara de stare:</string>
+  <string formatted="false" name="pref_live_update_display_help">Alege cand trebuie afisat in bara de stare chipul de actualizare live din Android 16+.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Doar in timpul incarcarii</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Pastreaza notificarea principala cu actualizarea live</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Sa fie afisata notificarea principala completa cat timp actualizarea live este activa?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Daca este activat, notificarea principala obisnuita ramane vizibila pe langa chipul din bara de stare.</string>
   <string formatted="false" name="pref_chip_content">Conținut de cip</string>
   <string formatted="false" name="pref_chip_switching_interval">Interval de comutare</string>
   <string formatted="false" name="pref_chip_content_help">Alegeți ce valoare să afișați în cipul de notificare promovat Android 16+.</string>
@@ -230,6 +236,7 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">Includeți timpul de la schimbarea stării în semnele vitale?</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">Dacă este setată, linia semnelor vitale va include și numărul de ore
     deoarece dispozitivul a fost deconectat, conectat sau încărcat complet.</string>
+  <string formatted="false" name="custom">Personalizat...</string>
   <string formatted="false" name="pref_cat_icon_set">Pictograma notificării</string>
   <string formatted="false" name="pref_icon_content">Conținutul pictogramei</string>
   <string formatted="false" name="pref_icon_content_help">Alegeți dacă pictograma barei de stare arată procentul bateriei sau
@@ -420,6 +427,8 @@
   <string formatted="false" name="pref_alarm_threshold_summary">Pragul de alarmare:</string>
   <string formatted="false" name="pref_alarm_threshold_help">Pentru alarme de încărcare și temperatură, trebuie să setați temperatura
     sau nivelul de încărcare care va declanșa alarma.</string>
+  <string formatted="false" name="alarm_custom_temp_message">Introduceți temperatura n grade %s</string>
+  <string formatted="false" name="alarm_custom_charge_message">Introduceți procentajul de taxare (0-100)</string>
   <string formatted="false" name="boot_pref_always">Întotdeauna</string>
   <string formatted="false" name="boot_pref_never">Nu</string>
   <string formatted="false" name="boot_pref_if_running">Dacă rulează la oprire</string>
@@ -434,16 +443,6 @@
   <string formatted="false" name="pref_content_percent">Procentul bateriei</string>
   <string formatted="false" name="pref_content_temperature">Temperatura bateriei</string>
   <string formatted="false" name="pref_content_switching">Comutați între ambele</string>
-  <string formatted="false" name="custom">Personalizat...</string>
-  <string formatted="false" name="alarm_custom_temp_message">Introduceți temperatura n grade %s</string>
-  <string formatted="false" name="alarm_custom_charge_message">Introduceți procentajul de taxare (0-100)</string>
-  <string formatted="false" name="pref_live_update_display">Afiseaza actualizarea live</string>
-  <string formatted="false" name="pref_live_update_display_summary">Afiseaza in bara de stare:</string>
-  <string formatted="false" name="pref_live_update_display_help">Alege cand trebuie afisat in bara de stare chipul de actualizare live din Android 16+.</string>
-  <string formatted="false" name="pref_live_update_display_charging">Doar in timpul incarcarii</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">Pastreaza notificarea principala cu actualizarea live</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Sa fie afisata notificarea principala completa cat timp actualizarea live este activa?</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Daca este activat, notificarea principala obisnuita ramane vizibila pe langa chipul din bara de stare.</string>
   <string formatted="false" name="chip_switching_interval_2_seconds">2 secunde</string>
   <string formatted="false" name="chip_switching_interval_5_seconds">5 secunde</string>
   <string formatted="false" name="chip_switching_interval_10_seconds">10 secunde</string>

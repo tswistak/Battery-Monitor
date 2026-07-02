@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_launcher_name" formatted="false">Battery Monitor</string>
   <string name="settings_activity_subtitle" formatted="false">تنظیمات</string>
@@ -9,7 +9,6 @@
   <string name="yes" formatted="false">آری</string>
   <string name="cancel" formatted="false">لغو</string>
   <string name="confirm_close" formatted="false">بستن</string>
-
   <string formatted="false" name="confirm_close_hint">مانیتور باتری کاملاً بسته خواهد شد و شما آن را نخواهید دید
     دیگر در نوار وضعیت شما.  هر ویجت دسکتاپ بی فایده خواهد بود.\n
 
@@ -49,7 +48,7 @@
   <string formatted="false" name="confirm_clear_logs">واقعاً همه گزارش‌ها پاک می‌شوند؟</string>
   <string formatted="false" name="configure_log_filter">کدام موارد گزارش را نشان دهید؟</string>
   <string formatted="false" name="okay">باشه</string>
-    <string formatted="false" name="tab_current_info">اطلاعات فعلی</string>
+  <string formatted="false" name="tab_current_info">اطلاعات فعلی</string>
   <string formatted="false" name="tab_history">تاریخچه</string>
   <string formatted="false" name="notification_until_charged">"تا زمانی که شارژ شود"</string>
   <string formatted="false" name="notification_until_drained">"چپ"</string>
@@ -122,7 +121,7 @@
   <string formatted="false" name="alarm_temp_drops">"دمای باتری پایین است"</string>
   <string formatted="false" name="alarm_temp_rises">"دمای باتری بالاتر است"</string>
   <string formatted="false" name="alarm_health_failure">"سلامت باتری این است:"</string>
-    <string formatted="false" name="logs_empty">سیاههها خالی هستند</string>
+  <string formatted="false" name="logs_empty">سیاههها خالی هستند</string>
   <string formatted="false" name="after_nh_mm_unplugged">پس از قطع %1$dh %2$dm از برق</string>
   <string formatted="false" name="after_nh_mm_plugged_in">بعد از اینکه %1$dh %2$dm وصل شد</string>
   <string formatted="false" name="after_nm_ms_unplugged">پس از قطع %1$dm %2$ds از برق</string>
@@ -199,15 +198,22 @@
   <string formatted="false" name="live_updates_onboarding_title">نوار وضعیت تراشه باتری</string>
   <string formatted="false" name="live_updates_onboarding_message_on">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند. این گزینه به‌صورت پیش‌فرض فعال است.\n\nاگر نماد اعلان سنتی را ترجیح می‌دهید، می‌توانید «Live Updates» را در تنظیمات سیستم Android برای این برنامه غیرفعال کنید.\n\nنکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
   <string formatted="false" name="live_updates_onboarding_message_off">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند، اما این گزینه در حال حاضر در تنظیمات سیستم غیرفعال است.\n\nبرای بهترین تجربه، توصیه می‌کنیم آن را فعال کنید. اگر نماد اعلان سنتی را ترجیح می‌دهید، می‌توانید آن را غیرفعال نگه دارید.\n\nنکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor برای نمایش سطح باتری در نوار وضعیت و اطلاع‌رسانی درباره هشدارها به اجازه شما نیاز دارد.\n\nنکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
   <string formatted="false" name="live_updates_onboarding_positive_on">متوجه شدم</string>
   <string formatted="false" name="live_updates_onboarding_positive_off">به تنظیمات بروید</string>
   <string formatted="false" name="live_updates_onboarding_negative_off">رد کردن</string>
+  <string name="notifications_onboarding_message" formatted="false">Battery Monitor برای نمایش سطح باتری در نوار وضعیت و اطلاع‌رسانی درباره هشدارها به اجازه شما نیاز دارد.\n\nنکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
   <string formatted="false" name="add_alarm">هشدار اضافه کنید</string>
   <string formatted="false" name="pref_cat_channel_settings">تنظیمات کانال اعلان</string>
   <string formatted="false" name="pref_manage_main_channel">کانال اصلی را مدیریت کنید</string>
   <string formatted="false" name="pref_cat_notification_content">محتوا</string>
   <string formatted="false" name="pref_cat_status_bar_chip">تراشه نوار وضعیت (Android 16 و بالاتر)</string>
+  <string formatted="false" name="pref_live_update_display">نمایش به‌روزرسانی زنده</string>
+  <string formatted="false" name="pref_live_update_display_summary">نمایش در نوار وضعیت:</string>
+  <string formatted="false" name="pref_live_update_display_help">انتخاب کنید تراشهٔ به‌روزرسانی زندهٔ Android 16+ چه زمانی در نوار وضعیت نمایش داده شود.</string>
+  <string formatted="false" name="pref_live_update_display_charging">فقط هنگام شارژ</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">نگه داشتن اعلان اصلی همراه با به‌روزرسانی زنده</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">وقتی به‌روزرسانی زنده فعال است، اعلان اصلی کامل نمایش داده شود؟</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">اگر فعال باشد، اعلان اصلی معمولی علاوه بر تراشهٔ نوار وضعیت قابل مشاهده می‌ماند.</string>
   <string formatted="false" name="pref_chip_content">محتوای تراشه</string>
   <string formatted="false" name="pref_chip_switching_interval">فاصله تعویض</string>
   <string formatted="false" name="pref_chip_content_help">مقداری را انتخاب کنید که در تراشه اعلان تبلیغاتی Android 16+ نشان داده شود.</string>
@@ -238,6 +244,7 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">شامل زمان از تغییر وضعیت در علائم حیاتی می شود؟</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">در صورت تنظیم، خط علائم حیاتی شامل تعداد ساعات نیز می شود
     از زمانی که دستگاه از برق جدا شده، وصل شده یا کاملاً شارژ شده است.</string>
+  <string formatted="false" name="custom">سفارشی...</string>
   <string formatted="false" name="pref_cat_icon_set">آیکون اعلان</string>
   <string formatted="false" name="pref_icon_content">محتوای آیکون</string>
   <string formatted="false" name="pref_icon_content_help">انتخاب کنید آیا نماد نوار وضعیت درصد باتری را نشان دهد یا خیر
@@ -428,6 +435,8 @@
   <string formatted="false" name="pref_alarm_threshold_summary">آستانه هشدار:</string>
   <string formatted="false" name="pref_alarm_threshold_help">برای هشدارهای شارژ و دما، باید دما را تنظیم کنید
     یا سطح شارژی که باعث ایجاد زنگ هشدار می شود.</string>
+  <string formatted="false" name="alarm_custom_temp_message">دما را بر حسب %s درجه وارد کنید</string>
+  <string formatted="false" name="alarm_custom_charge_message">درصد شارژ را وارد کنید (0-100)</string>
   <string formatted="false" name="boot_pref_always">همیشه</string>
   <string formatted="false" name="boot_pref_never">هرگز</string>
   <string formatted="false" name="boot_pref_if_running">اگر در حالت خاموش شدن اجرا می شود</string>
@@ -442,16 +451,6 @@
   <string formatted="false" name="pref_content_percent">درصد باتری</string>
   <string formatted="false" name="pref_content_temperature">دمای باتری</string>
   <string formatted="false" name="pref_content_switching">بین هر دو جابجا شوید</string>
-  <string formatted="false" name="custom">سفارشی...</string>
-  <string formatted="false" name="alarm_custom_temp_message">دما را بر حسب %s درجه وارد کنید</string>
-  <string formatted="false" name="alarm_custom_charge_message">درصد شارژ را وارد کنید (0-100)</string>
-  <string formatted="false" name="pref_live_update_display">نمایش به‌روزرسانی زنده</string>
-  <string formatted="false" name="pref_live_update_display_summary">نمایش در نوار وضعیت:</string>
-  <string formatted="false" name="pref_live_update_display_help">انتخاب کنید تراشهٔ به‌روزرسانی زندهٔ Android 16+ چه زمانی در نوار وضعیت نمایش داده شود.</string>
-  <string formatted="false" name="pref_live_update_display_charging">فقط هنگام شارژ</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">نگه داشتن اعلان اصلی همراه با به‌روزرسانی زنده</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">وقتی به‌روزرسانی زنده فعال است، اعلان اصلی کامل نمایش داده شود؟</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">اگر فعال باشد، اعلان اصلی معمولی علاوه بر تراشهٔ نوار وضعیت قابل مشاهده می‌ماند.</string>
   <string formatted="false" name="chip_switching_interval_2_seconds">2 ثانیه</string>
   <string formatted="false" name="chip_switching_interval_5_seconds">5 ثانیه</string>
   <string formatted="false" name="chip_switching_interval_10_seconds">10 ثانیه</string>

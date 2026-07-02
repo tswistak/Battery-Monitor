@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_launcher_name" formatted="false">Battery Monitor</string>
   <string name="settings_activity_subtitle" formatted="false">सेटिंग</string>
@@ -10,9 +10,6 @@
   <string name="cancel" formatted="false">निष्क्रिय</string>
   <string name="confirm_close" formatted="false">वास्तव मे बंद करें</string>
   <string name="confirm_close_hint" formatted="false">Battery Monitor। पूरी तरह से बंद कर दिया जाएगा, और आप किसी भी अधिक अपनी स्थिति के बार में यह नहीं देख सकेंगे। किसी भी डेस्कटॉप विगेट्स बेकार हो जाएगा।\n\nतुम सिर्फ मुख्य विंडो छोड़ दो और चल सेवा को बनाए रखना चाहते हैं, तो प्रेस रद्द करें और फिर बस मुख्य विंडो को छोड़ने के लिए अपनी डिवाइस की पीठ बटन दबाएँ।\n\nआप अधिसूचना को छिपाने लेकिन चल विगेट्स रखना चाहते हैं, प्रेस रद्द करें और उसके बाद अधिसूचना छुपाएं।</string>
-  <string name="confirm_clear_logs" formatted="false">वास्तव में सब साफ़ लॉग?</string>
-  <string name="pref_time_remaining_verbosity_help" formatted="false">उपकरण सभी आकृति और आकार में आते हैं, तो सबसे अनुवाद समय शेष अनुमान सूचना क्षेत्र में आराम से फिट बैठता है कि यह सुनिश्चित करने के लिए लघु रूपों का उपयोग करने की आवश्यकता है। यह अभी भी फिट नहीं है, तो आप गाढ़ा प्रारूप के लिए विकल्प चुन सकते हैं। आप कमरे के पास बहुत है, तो आप वाचाल सेटिंग पसंद हो सकता है।</string>
-
   <string formatted="false" name="notifications_disabled">सूचनाएं अक्षम हैं!</string>
   <string formatted="false" name="notifications_disabled_message">आपने बैटरी मॉनिटर के लिए सभी सूचनाएं अवरुद्ध कर दी हैं।  ये होगा
     बैटरी मॉनिटर को कोई भी सूचना दिखाने से रोकें: मुख्य
@@ -40,9 +37,10 @@
   <string formatted="false" name="main_notif_chan_name">मुख्य अधिसूचना</string>
   <string formatted="false" name="live_updates_notif_chan_name">लाइव अपडेट</string>
   <string formatted="false" name="channel_group_name_alarms">एलार्म</string>
+  <string name="confirm_clear_logs" formatted="false">वास्तव में सब साफ़ लॉग?</string>
   <string formatted="false" name="configure_log_filter">कौन से लॉग आइटम दिखाएँ?</string>
   <string formatted="false" name="okay">ठीक है</string>
-    <string formatted="false" name="tab_current_info">वर्तमान जानकारी</string>
+  <string formatted="false" name="tab_current_info">वर्तमान जानकारी</string>
   <string formatted="false" name="tab_history">इतिहास</string>
   <string formatted="false" name="notification_until_charged">"चार्ज होने तक"</string>
   <string formatted="false" name="notification_until_drained">" बाएं"</string>
@@ -115,7 +113,7 @@
   <string formatted="false" name="alarm_temp_drops">"बैटरी का तापमान नीचे है"</string>
   <string formatted="false" name="alarm_temp_rises">"बैटरी का तापमान ऊपर है"</string>
   <string formatted="false" name="alarm_health_failure">"बैटरी स्वास्थ्य है:"</string>
-    <string formatted="false" name="logs_empty">लॉग खाली हैं</string>
+  <string formatted="false" name="logs_empty">लॉग खाली हैं</string>
   <string formatted="false" name="after_nh_mm_unplugged">%1$dh %2$dm के बाद अनप्लग किया गया</string>
   <string formatted="false" name="after_nh_mm_plugged_in">%1$dh %2$dm के बाद प्लग इन किया गया</string>
   <string formatted="false" name="after_nm_ms_unplugged">%1$dm %2$ds के अनप्लग होने के बाद</string>
@@ -192,15 +190,22 @@
   <string formatted="false" name="live_updates_onboarding_title">स्टेटस बार बैटरी चिप</string>
   <string formatted="false" name="live_updates_onboarding_message_on">आपका डिवाइस स्टेटस बार में बैटरी प्रतिशत को चिप के रूप में दिखाने का समर्थन करता है। यह विकल्प डिफ़ॉल्ट रूप से सक्षम है।\n\nअगर आप पारंपरिक नोटिफिकेशन आइकन पसंद करते हैं, तो आप इस ऐप के लिए Android सिस्टम सेटिंग्स में "लाइव अपडेट्स" बंद कर सकते हैं।\n\nनोट: यह अनुमति देने पर कभी-कभी ऐप बंद हो सकती है। अगर ऐसा हो, तो बस ऐप को दोबारा खोलें।</string>
   <string formatted="false" name="live_updates_onboarding_message_off">आपका डिवाइस स्टेटस बार में बैटरी प्रतिशत को चिप के रूप में दिखाने का समर्थन करता है, लेकिन यह विकल्प अभी सिस्टम सेटिंग्स में बंद है।\n\nबेहतर अनुभव के लिए हम इसे सक्षम करने की सलाह देते हैं। अगर आप पारंपरिक नोटिफिकेशन आइकन पसंद करते हैं, तो आप इसे बंद ही रहने दे सकते हैं।\n\nनोट: यह अनुमति देने पर कभी-कभी ऐप बंद हो सकती है। अगर ऐसा हो, तो बस ऐप को दोबारा खोलें।</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor को स्टेटस बार में बैटरी स्तर दिखाने और अलार्म के बारे में सूचित करने के लिए आपकी अनुमति चाहिए।\n\nनोट: यह अनुमति देने पर कभी-कभी ऐप बंद हो सकती है। अगर ऐसा हो, तो बस ऐप को दोबारा खोलें।</string>
   <string formatted="false" name="live_updates_onboarding_positive_on">समझ गया</string>
   <string formatted="false" name="live_updates_onboarding_positive_off">सेटिंग्स पर जाएं</string>
   <string formatted="false" name="live_updates_onboarding_negative_off">नकार देना</string>
+  <string name="notifications_onboarding_message" formatted="false">Battery Monitor को स्टेटस बार में बैटरी स्तर दिखाने और अलार्म के बारे में सूचित करने के लिए आपकी अनुमति चाहिए।\n\nनोट: यह अनुमति देने पर कभी-कभी ऐप बंद हो सकती है। अगर ऐसा हो, तो बस ऐप को दोबारा खोलें।</string>
   <string formatted="false" name="add_alarm">अलार्म जोड़ें</string>
   <string formatted="false" name="pref_cat_channel_settings">अधिसूचना चैनल सेटिंग्स</string>
   <string formatted="false" name="pref_manage_main_channel">मुख्य चैनल प्रबंधित करें</string>
   <string formatted="false" name="pref_cat_notification_content">सामग्री</string>
   <string formatted="false" name="pref_cat_status_bar_chip">स्टेटस बार चिप (एंड्रॉइड 16+)</string>
+  <string formatted="false" name="pref_live_update_display">लाइव अपडेट दिखाएं</string>
+  <string formatted="false" name="pref_live_update_display_summary">स्टेटस बार में दिखाएं:</string>
+  <string formatted="false" name="pref_live_update_display_help">चुनें कि Android 16+ का लाइव अपडेट चिप स्टेटस बार में कब दिखे।</string>
+  <string formatted="false" name="pref_live_update_display_charging">सिर्फ चार्जिंग के दौरान</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">लाइव अपडेट के साथ मुख्य सूचना बनाए रखें</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">क्या लाइव अपडेट सक्रिय होने पर पूरी मुख्य सूचना भी दिखाई जाए?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">यदि यह चालू है, तो स्टेटस बार चिप के साथ सामान्य मुख्य सूचना भी दिखाई देगी।</string>
   <string formatted="false" name="pref_chip_content">चिप सामग्री</string>
   <string formatted="false" name="pref_chip_switching_interval">स्विचिंग अंतराल</string>
   <string formatted="false" name="pref_chip_content_help">चुनें कि Android 16+ प्रचारित-अधिसूचना चिप में कौन सा मान दिखाना है।</string>
@@ -219,6 +224,7 @@
   <string formatted="false" name="time_since_status_change">स्थिति परिवर्तन के बाद से समय</string>
   <string formatted="false" name="vital_signs">जीवन के संकेत</string>
   <string formatted="false" name="pref_time_remaining_verbosity">समय शेष वाचालता</string>
+  <string name="pref_time_remaining_verbosity_help" formatted="false">उपकरण सभी आकृति और आकार में आते हैं, तो सबसे अनुवाद समय शेष अनुमान सूचना क्षेत्र में आराम से फिट बैठता है कि यह सुनिश्चित करने के लिए लघु रूपों का उपयोग करने की आवश्यकता है। यह अभी भी फिट नहीं है, तो आप गाढ़ा प्रारूप के लिए विकल्प चुन सकते हैं। आप कमरे के पास बहुत है, तो आप वाचाल सेटिंग पसंद हो सकता है।</string>
   <string formatted="false" name="condensed">संघनित</string>
   <string formatted="false" name="normal">Normal</string>
   <string formatted="false" name="verbose">वाचाल</string>
@@ -226,6 +232,7 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">महत्वपूर्ण संकेतों में स्थिति परिवर्तन के बाद का समय शामिल करें?</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">यदि सेट किया गया है, तो महत्वपूर्ण संकेत लाइन में घंटों की संख्या भी शामिल होगी
     चूंकि डिवाइस अनप्लग हो गया, प्लग इन हो गया या पूरी तरह चार्ज हो गया।</string>
+  <string formatted="false" name="custom">कस्टम...</string>
   <string formatted="false" name="pref_cat_icon_set">सूचना आइकन</string>
   <string formatted="false" name="pref_icon_content">चिह्न सामग्री</string>
   <string formatted="false" name="pref_icon_content_help">चुनें कि स्टेटस बार आइकन बैटरी प्रतिशत दिखाता है या नहीं
@@ -415,6 +422,8 @@
   <string formatted="false" name="pref_alarm_threshold_summary">अलार्म सीमा:</string>
   <string formatted="false" name="pref_alarm_threshold_help">चार्ज और तापमान अलार्म के लिए, आपको तापमान सेट करना होगा
     या चार्ज स्तर जो अलार्म को ट्रिगर करेगा।</string>
+  <string formatted="false" name="alarm_custom_temp_message">तापमान %s डिग्री में दर्ज करें</string>
+  <string formatted="false" name="alarm_custom_charge_message">चार्ज प्रतिशत दर्ज करें (0-100)</string>
   <string formatted="false" name="boot_pref_always">हमेशा</string>
   <string formatted="false" name="boot_pref_never">कभी नहीं</string>
   <string formatted="false" name="boot_pref_if_running">यदि शटडाउन पर चल रहा है</string>
@@ -429,16 +438,6 @@
   <string formatted="false" name="pref_content_percent">बैटरी प्रतिशत</string>
   <string formatted="false" name="pref_content_temperature">बैटरी तापमान</string>
   <string formatted="false" name="pref_content_switching">दोनों के बीच स्विच करें</string>
-  <string formatted="false" name="custom">कस्टम...</string>
-  <string formatted="false" name="alarm_custom_temp_message">तापमान %s डिग्री में दर्ज करें</string>
-  <string formatted="false" name="alarm_custom_charge_message">चार्ज प्रतिशत दर्ज करें (0-100)</string>
-  <string formatted="false" name="pref_live_update_display">लाइव अपडेट दिखाएं</string>
-  <string formatted="false" name="pref_live_update_display_summary">स्टेटस बार में दिखाएं:</string>
-  <string formatted="false" name="pref_live_update_display_help">चुनें कि Android 16+ का लाइव अपडेट चिप स्टेटस बार में कब दिखे।</string>
-  <string formatted="false" name="pref_live_update_display_charging">सिर्फ चार्जिंग के दौरान</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">लाइव अपडेट के साथ मुख्य सूचना बनाए रखें</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">क्या लाइव अपडेट सक्रिय होने पर पूरी मुख्य सूचना भी दिखाई जाए?</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">यदि यह चालू है, तो स्टेटस बार चिप के साथ सामान्य मुख्य सूचना भी दिखाई देगी।</string>
   <string formatted="false" name="chip_switching_interval_2_seconds">2 सेकंड</string>
   <string formatted="false" name="chip_switching_interval_5_seconds">5 सेकंड</string>
   <string formatted="false" name="chip_switching_interval_10_seconds">10 सेकंड</string>

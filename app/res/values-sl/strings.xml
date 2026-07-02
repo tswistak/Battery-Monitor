@@ -1,118 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_launcher_name" formatted="false">Battery Monitor</string>
   <string name="settings_activity_subtitle" formatted="false">Nastavitve</string>
   <string name="help_activity_subtitle" formatted="false">Pomoč</string>
   <string name="battery_use_b" formatted="false">Poglej porabo baterije</string>
+  <string formatted="false" name="circle_widget">Krog monitorja baterije</string>
+  <string formatted="false" name="full_widget">Monitor baterije je poln</string>
   <string name="yes" formatted="false">Da</string>
   <string name="cancel" formatted="false">Prekliči</string>
   <string name="confirm_close" formatted="false">Ste prepričani da želite zapreti?</string>
   <string name="confirm_close_hint" formatted="false">Battery Monitor bo popolnoma zaprt in ga ne boste več videli v statusni vrstici.\n\nČe bi radi zaprli le glavno okno in pustili indikator zagnan, pritisnite Prekliči in nato samo pritisnite tipko NAZAJ na napravi da zapustite glavno okno.</string>
-  <string name="confirm_clear_logs" formatted="false">Ste prepričani da želite izbrisati vsa poročila?</string>
-  <string name="okay" formatted="false">Vredu</string>
-    <string name="menu_settings" formatted="false">Nastavitve</string>
-  <string name="menu_close" formatted="false">Zapri</string>
-  <string name="menu_help" formatted="false">Pomoč</string>
-  <string name="menu_clear" formatted="false">Počisti</string>
-  <string name="menu_reverse" formatted="false">Obratni vrstni red</string>
-  <string name="menu_export" formatted="false">Izvozi CVS</string>
-  <string name="menu_delete_alarm" formatted="false">Zbriši alarm</string>
-  <string name="percent_symbol" formatted="false">%</string>
-  <string name="degree_symbol" formatted="false">°</string>
-  <string name="fahrenheit" formatted="false">Fahrenheit</string>
-  <string name="fahrenheit_symbol" formatted="false">F</string>
-  <string name="celsius" formatted="false">Celzija</string>
-  <string name="celsius_symbol" formatted="false">C</string>
-  <string name="volt_symbol" formatted="false">V</string>
-  <string name="inaccessible_storage" formatted="false">SD kartica je nedostopna.</string>
-  <string name="inaccessible_w_reason" formatted="false">SD kartica nedostopna:</string>
-  <string name="read_only_storage" formatted="false">SD kartica samo za branje.</string>
-  <string name="file_written" formatted="false">Datoteka uspešno zapisana v korensko mapo SD kartice.</string>
-  <string name="date" formatted="false">datum</string>
-  <string name="time" formatted="false">čas</string>
-  <string name="status" formatted="false">stanje</string>
-  <string name="charge" formatted="false">napolnjen_procent</string>
-  <string name="temperature" formatted="false">stopinj_celzija</string>
-  <string name="voltage" formatted="false">voltov</string>
-  <string name="status_unplugged" formatted="false">Odklopljeno</string>
-  <string name="status_unknown" formatted="false">Neznano</string>
-  <string name="status_charging" formatted="false">Polnjenje</string>
-  <string name="status_discharging" formatted="false">Praznenje</string>
-  <string name="status_not_charging" formatted="false">Se ne polni</string>
-  <string name="status_fully_charged" formatted="false">Napolnjeno</string>
-  <string name="status_plugged_in" formatted="false">Priklopljeno</string>
-  <string name="health_unknown" formatted="false">Neznano</string>
-  <string name="health_good" formatted="false">Dobro zdravje</string>
-  <string name="health_overheat" formatted="false">Pregreto</string>
-  <string name="health_dead" formatted="false">Mrtvo</string>
-  <string name="health_overvoltage" formatted="false">Prevelika voltaža</string>
-  <string name="health_failure" formatted="false">Napaka</string>
-  <string name="health_cold" formatted="false">hladno</string>
-  <string name="plugged_unplugged" formatted="false">Odklopljeno</string>
-  <string name="plugged_ac" formatted="false">(AC)</string>
-  <string name="plugged_usb" formatted="false">(USB)</string>
-  <string name="plugged_unknown" formatted="false">(?)</string>
-  <string name="plugged_wireless" formatted="false">(WL)</string>
-  <string name="alarm_type_fully_charged" formatted="false">Napolnjeno</string>
-  <string name="alarm_type_charge_drops" formatted="false">Baterija pade pod</string>
-  <string name="alarm_type_charge_rises" formatted="false">Baterija pride nad</string>
-  <string name="alarm_type_temperature_rises" formatted="false">Temperatura pride nad</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Se napolni</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Baterije pade pod...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Baterija pride nad...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatura pride nad...</string>
-  <string name="alarm_fully_charged" formatted="false">Baterija je popolnoma napolnjena</string>
-  <string name="alarm_charge_drops" formatted="false">"Stanje baterije pod "</string>
-  <string name="alarm_charge_rises" formatted="false">"Stanje baterije nad "</string>
-  <string name="alarm_temp_rises" formatted="false">"Temperatura baterije nad "</string>
-  <string name="alarm_health_failure" formatted="false">"Zdravje baterije je: "</string>
-    <string name="logs_empty" formatted="false">Poročila so prazna</string>
-  <string name="since" formatted="false">od</string>
-  <string name="currently_using" formatted="false">Trenutno uporabljeno</string>
-  <string name="currently_set_to" formatted="false">"Trenutno nastavljeno na: "</string>
-  <string name="currently_disabled" formatted="false">Trenutno onemogočeno</string>
-  <string name="help_cat_version" formatted="false">Različica</string>
-  <string name="help_cat_contact" formatted="false">Kontakt</string>
-  <string name="settings_overview" formatted="false">Povzetek</string>
-  <string name="alarm_settings_subtitle" formatted="false">Nastavitve alarma</string>
-  <string name="alarm_settings" formatted="false">Alarmi</string>
-  <string name="alarm_settings_help" formatted="false">Battery Monitor lahko nastavite tako, da vas obvesti ko baterija doseže določeno točko (npr., baterija se popolnoma napolni, baterija pade pod 20%).</string>
-  <string name="other_settings" formatted="false">Druge nastavitve</string>
-  <string name="add_alarm" formatted="false">Dodaj alarm</string>
-  <string name="pref_cat_logging" formatted="false">Beleženje</string>
-  <string name="pref_enable_logging" formatted="false">Omogoči beleženje</string>
-  <string name="pref_enable_logging_summary" formatted="false">Beležim spremembo stanj baterije?</string>
-  <string name="pref_max_log_age" formatted="false">Največja starost poročila</string>
-  <string name="pref_max_log_age_summary" formatted="false">Izbriši poročila starejša od:</string>
-  <string name="pref_cat_temperature_unit" formatted="false">Enota za temperaturo</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Pretvori v Fahrenheit</string>
-  <string name="pref_cat_autostart" formatted="false">Samodejni zagon</string>
-  <string name="pref_autostart_at_boot" formatted="false">Samodejni zagon ob zagonu</string>
-  <string name="pref_autostart_at_boot_summary" formatted="false">Zaženi Battery Monitor ko se naprava zažene:</string>
-  <string name="pref_cat_language" formatted="false">Jezik</string>
-  <string name="pref_language_override_summary" formatted="false">Izberi jezik:</string>
-  <string name="alarms_overview" formatted="false">Pregled alarmov</string>
-  <string name="pref_alarm_enabled" formatted="false">Omogoči alarm</string>
-  <string name="pref_cat_alarm_conditions" formatted="false">Stanje alarmov</string>
-  <string name="pref_alarm_type" formatted="false">Vrsta alarma</string>
-  <string name="pref_alarm_type_summary" formatted="false">Sproži alarm ko baterija:</string>
-  <string name="pref_alarm_threshold" formatted="false">Meja</string>
-  <string name="alarm_pref_not_used" formatted="false">Se ne uporablja za to vrsto alarma.</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Meja alarma:</string>
-  <string name="boot_pref_always" formatted="false">Vedno</string>
-  <string name="boot_pref_never" formatted="false">Nikoli</string>
-  <string name="boot_pref_if_running" formatted="false">Če je zagnano ob izklopu</string>
-  <string name="age_1_day" formatted="false">1 dan</string>
-  <string name="age_2_days" formatted="false">2 dnei</string>
-  <string name="age_4_days" formatted="false">4 dni</string>
-  <string name="age_1_week" formatted="false">1 teden</string>
-  <string name="age_2_weeks" formatted="false">2 tedna</string>
-  <string name="age_3_weeks" formatted="false">3 tedne</string>
-  <string name="age_4_weeks" formatted="false">4 tedne</string>
-  <string formatted="false" name="age_never_delete">Nikoli ne izbriši</string>
-
-  <string formatted="false" name="circle_widget">Krog monitorja baterije</string>
-  <string formatted="false" name="full_widget">Monitor baterije je poln</string>
   <string formatted="false" name="notifications_disabled">Obvestila so onemogočena!</string>
   <string formatted="false" name="notifications_disabled_message">Blokirali ste vsa obvestila za Battery Monitor.  To bo
     preprečite, da bi Battery Monitor prikazoval kakršna koli obvestila: glavni
@@ -140,28 +37,92 @@
   <string formatted="false" name="main_notif_chan_name">Glavno obvestilo</string>
   <string formatted="false" name="live_updates_notif_chan_name">Posodobitve v živo</string>
   <string formatted="false" name="channel_group_name_alarms">Alarmi</string>
+  <string name="confirm_clear_logs" formatted="false">Ste prepričani da želite izbrisati vsa poročila?</string>
   <string formatted="false" name="configure_log_filter">Pokaži, katere elemente dnevnika?</string>
+  <string name="okay" formatted="false">Vredu</string>
   <string formatted="false" name="tab_current_info">Aktualne informacije</string>
   <string formatted="false" name="tab_history">Zgodovina</string>
   <string formatted="false" name="notification_until_charged">"do polnjenja"</string>
   <string formatted="false" name="notification_until_drained">"levo"</string>
   <string formatted="false" name="activity_until_charged">do polnjenja</string>
   <string formatted="false" name="activity_until_drained">dokler se ne odcedi</string>
+  <string name="menu_settings" formatted="false">Nastavitve</string>
+  <string name="menu_close" formatted="false">Zapri</string>
+  <string name="menu_help" formatted="false">Pomoč</string>
+  <string name="menu_clear" formatted="false">Počisti</string>
+  <string name="menu_reverse" formatted="false">Obratni vrstni red</string>
   <string formatted="false" name="menu_log_filter">Filter</string>
+  <string name="menu_export" formatted="false">Izvozi CVS</string>
+  <string name="menu_delete_alarm" formatted="false">Zbriši alarm</string>
   <string formatted="false" name="menu_show_seconds">Prikaži sekunde</string>
   <string formatted="false" name="menu_hide_seconds">Skrij sekunde</string>
+  <string name="percent_symbol" formatted="false">%</string>
+  <string name="degree_symbol" formatted="false">°</string>
+  <string name="fahrenheit" formatted="false">Fahrenheit</string>
+  <string name="fahrenheit_symbol" formatted="false">F</string>
+  <string name="celsius" formatted="false">Celzija</string>
+  <string name="celsius_symbol" formatted="false">C</string>
+  <string name="volt_symbol" formatted="false">V</string>
+  <string name="inaccessible_storage" formatted="false">SD kartica je nedostopna.</string>
+  <string name="inaccessible_w_reason" formatted="false">SD kartica nedostopna:</string>
+  <string name="read_only_storage" formatted="false">SD kartica samo za branje.</string>
   <string formatted="false" name="no_storage_permission">Dovoljenje za shranjevanje ni odobreno.</string>
+  <string name="file_written" formatted="false">Datoteka uspešno zapisana v korensko mapo SD kartice.</string>
+  <string name="date" formatted="false">datum</string>
+  <string name="time" formatted="false">čas</string>
+  <string name="status" formatted="false">stanje</string>
+  <string name="charge" formatted="false">napolnjen_procent</string>
+  <string name="temperature" formatted="false">stopinj_celzija</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
+  <string name="voltage" formatted="false">voltov</string>
+  <string name="status_unplugged" formatted="false">Odklopljeno</string>
+  <string name="status_unknown" formatted="false">Neznano</string>
+  <string name="status_charging" formatted="false">Polnjenje</string>
+  <string name="status_discharging" formatted="false">Praznenje</string>
+  <string name="status_not_charging" formatted="false">Se ne polni</string>
+  <string name="status_fully_charged" formatted="false">Napolnjeno</string>
+  <string name="status_plugged_in" formatted="false">Priklopljeno</string>
   <string formatted="false" name="status_boot_completed">Zagon končan</string>
+  <string name="health_unknown" formatted="false">Neznano</string>
+  <string name="health_good" formatted="false">Dobro zdravje</string>
+  <string name="health_overheat" formatted="false">Pregreto</string>
+  <string name="health_dead" formatted="false">Mrtvo</string>
+  <string name="health_overvoltage" formatted="false">Prevelika voltaža</string>
+  <string name="health_failure" formatted="false">Napaka</string>
+  <string name="health_cold" formatted="false">hladno</string>
+  <string name="plugged_unplugged" formatted="false">Odklopljeno</string>
+  <string name="plugged_ac" formatted="false">(AC)</string>
+  <string name="plugged_usb" formatted="false">(USB)</string>
+  <string name="plugged_unknown" formatted="false">(?)</string>
+  <string name="plugged_wireless" formatted="false">(WL)</string>
+  <string name="alarm_type_fully_charged" formatted="false">Napolnjeno</string>
+  <string name="alarm_type_charge_drops" formatted="false">Baterija pade pod</string>
+  <string name="alarm_type_charge_rises" formatted="false">Baterija pride nad</string>
   <string formatted="false" name="alarm_type_temperature_drops">Temperatura pade pod</string>
+  <string name="alarm_type_temperature_rises" formatted="false">Temperatura pride nad</string>
   <string formatted="false" name="alarm_type_health_failure">Zdravstveni neuspeh</string>
+  <string name="alarm_type_entry_fully_charged" formatted="false">Se napolni</string>
+  <string name="alarm_type_entry_charge_drops" formatted="false">Baterije pade pod...</string>
+  <string name="alarm_type_entry_charge_rises" formatted="false">Baterija pride nad...</string>
   <string formatted="false" name="alarm_type_entry_temperature_drops">Temperatura pade pod...</string>
+  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatura pride nad...</string>
   <string formatted="false" name="alarm_type_entry_health_failure">Zdravje ne uspe</string>
+  <string name="alarm_fully_charged" formatted="false">Baterija je popolnoma napolnjena</string>
+  <string name="alarm_charge_drops" formatted="false">"Stanje baterije pod "</string>
+  <string name="alarm_charge_rises" formatted="false">"Stanje baterije nad "</string>
   <string formatted="false" name="alarm_temp_drops">"Temperatura baterije je nižja"</string>
+  <string name="alarm_temp_rises" formatted="false">"Temperatura baterije nad "</string>
+  <string name="alarm_health_failure" formatted="false">"Zdravje baterije je: "</string>
+  <string name="logs_empty" formatted="false">Poročila so prazna</string>
   <string formatted="false" name="after_nh_mm_unplugged">Po %1$dh %2$dm odklopljen</string>
   <string formatted="false" name="after_nh_mm_plugged_in">Po priključitvi %1$dh %2$dm</string>
   <string formatted="false" name="after_nm_ms_unplugged">Po %1$dm %2$ds odklopljen</string>
   <string formatted="false" name="after_nm_ms_plugged_in">Po %1$dm %2$ds priključeni</string>
+  <string name="since" formatted="false">od</string>
+  <string name="currently_using" formatted="false">Trenutno uporabljeno</string>
+  <string name="currently_set_to" formatted="false">"Trenutno nastavljeno na: "</string>
+  <string name="currently_disabled" formatted="false">Trenutno onemogočeno</string>
+  <string name="help_cat_version" formatted="false">Različica</string>
   <string formatted="false" name="help_cat_open_source">Odprta koda</string>
   <string formatted="false" name="help_open_source">to
     projekt je odprtokoden. Do izvorne kode lahko dostopate na
@@ -180,7 +141,9 @@
   <string formatted="false" name="help_acknowledgments">Battery Monitor je razcep Battery Indicator Pro / BatteryBot Pro avtorja
     Darshan Computing, LLC.  Hvala izvirnim avtorjem in sodelavcem
     za ustvarjanje in vzdrževanje gorvodnega projekta.</string>
+  <string name="help_cat_contact" formatted="false">Kontakt</string>
   <string formatted="false" name="help_contact">Če imate vprašanje, težavo ali komentar, vas prosimo <a href="mailto:tomasz@swistak.codes">pošlji mi e-pošto</a>.</string>
+  <string name="settings_overview" formatted="false">Povzetek</string>
   <string formatted="false" name="settings_overview_help">Nastavitve Battery Monitorja so organizirane v ločene strani, kot je opisano
     spodaj.  Vsaka stran z nastavitvami ima svojo stran s pomočjo, ki opisuje
     nastavitve, ki so tam na voljo.</string>
@@ -216,19 +179,31 @@
 
     \nNastavitve za vklop vdora, če je to mogoče, in nadzor, kako je
     rabljeni so na voljo v tem razdelku.</string>
+  <string name="alarm_settings_subtitle" formatted="false">Nastavitve alarma</string>
+  <string name="alarm_settings" formatted="false">Alarmi</string>
+  <string name="alarm_settings_help" formatted="false">Battery Monitor lahko nastavite tako, da vas obvesti ko baterija doseže določeno točko (npr., baterija se popolnoma napolni, baterija pade pod 20%).</string>
+  <string name="other_settings" formatted="false">Druge nastavitve</string>
   <string formatted="false" name="other_settings_help">Vse druge nastavitve so na tej strani, vključno z beleženjem, zaklepanjem
     zaslon, temperaturna enota, samodejni zagon itd.</string>
   <string formatted="false" name="live_updates_onboarding_title">Vrstica stanja Baterijski čip</string>
   <string formatted="false" name="live_updates_onboarding_message_on">Vaša naprava podpira prikaz odstotka baterije kot čip v vrstici stanja. Ta možnost je privzeto omogočena.\n\nČe imate raje tradicionalno ikono obvestila, lahko v sistemskih nastavitvah Androida za to aplikacijo izklopite »Live Updates«.\n\nOpomba: dodelitev tega dovoljenja lahko občasno povzroči zaprtje aplikacije. Če se to zgodi, jo preprosto znova odprite.</string>
   <string formatted="false" name="live_updates_onboarding_message_off">Vaša naprava podpira prikaz odstotka baterije kot čip v vrstici stanja, vendar je ta možnost trenutno izklopljena v sistemskih nastavitvah.\n\nZa najboljšo izkušnjo priporočamo, da jo omogočite. Če imate raje tradicionalno ikono obvestila, jo lahko pustite izklopljeno.\n\nOpomba: dodelitev tega dovoljenja lahko občasno povzroči zaprtje aplikacije. Če se to zgodi, jo preprosto znova odprite.</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor potrebuje vaše dovoljenje za prikaz ravni baterije v vrstici stanja in obveščanje o alarmih.\n\nOpomba: dodelitev tega dovoljenja lahko občasno povzroči zaprtje aplikacije. Če se to zgodi, jo preprosto znova odprite.</string>
   <string formatted="false" name="live_updates_onboarding_positive_on">Razumem</string>
   <string formatted="false" name="live_updates_onboarding_positive_off">Pojdite v Nastavitve</string>
   <string formatted="false" name="live_updates_onboarding_negative_off">Odpusti</string>
+  <string name="notifications_onboarding_message" formatted="false">Battery Monitor potrebuje vaše dovoljenje za prikaz ravni baterije v vrstici stanja in obveščanje o alarmih.\n\nOpomba: dodelitev tega dovoljenja lahko občasno povzroči zaprtje aplikacije. Če se to zgodi, jo preprosto znova odprite.</string>
+  <string name="add_alarm" formatted="false">Dodaj alarm</string>
   <string formatted="false" name="pref_cat_channel_settings">Nastavitve kanala za obvestila</string>
   <string formatted="false" name="pref_manage_main_channel">Upravljanje glavnega kanala</string>
   <string formatted="false" name="pref_cat_notification_content">Vsebina</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Čip vrstice stanja (Android 16+)</string>
+  <string formatted="false" name="pref_live_update_display">Prikazi sprotno posodobitev</string>
+  <string formatted="false" name="pref_live_update_display_summary">Prikazi v vrstici stanja:</string>
+  <string formatted="false" name="pref_live_update_display_help">Izberite, kdaj naj se v vrstici stanja prikaze cip sprotne posodobitve Android 16+.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Samo med polnjenjem</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Obdrzi glavno obvestilo s sprotno posodobitvijo</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Ali naj se prikaze celotno glavno obvestilo, ko je sprotna posodobitev aktivna?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Ce je vklopljeno, navadno glavno obvestilo ostane vidno poleg cipa v vrstici stanja.</string>
   <string formatted="false" name="pref_chip_content">Vsebina čipa</string>
   <string formatted="false" name="pref_chip_switching_interval">Preklopni interval</string>
   <string formatted="false" name="pref_chip_content_help">Izberite, katero vrednost želite prikazati v čipu za promovirana obvestila Android 16+.</string>
@@ -259,6 +234,7 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">Vključiti čas od spremembe statusa v vitalne znake?</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">Če je nastavljeno, bo vrstica vitalnih znakov vključevala tudi število ur
     odkar je bila naprava odklopljena, priključena ali popolnoma napolnjena.</string>
+  <string formatted="false" name="custom">Po meri...</string>
   <string formatted="false" name="pref_cat_icon_set">Ikona obvestila</string>
   <string formatted="false" name="pref_icon_content">Vsebina ikone</string>
   <string formatted="false" name="pref_icon_content_help">Izberite, ali ikona vrstice stanja prikazuje odstotek baterije ali
@@ -348,11 +324,21 @@
   <string formatted="false" name="pref_indicate_charging">Označite Polnjenje</string>
   <string formatted="false" name="pref_indicate_charging_summary">Ali želite spremeniti ikono za prikaz med polnjenjem?</string>
   <string formatted="false" name="pref_indicate_charging_help">Ikona polnjenja lahko pod številko prikaže strelo. Izklopite to nastavitev, če želite isto ikono med polnjenjem in praznjenjem.</string>
+  <string name="pref_cat_logging" formatted="false">Beleženje</string>
+  <string name="pref_enable_logging" formatted="false">Omogoči beleženje</string>
+  <string name="pref_enable_logging_summary" formatted="false">Beležim spremembo stanj baterije?</string>
   <string formatted="false" name="pref_enable_logging_help">Če je omogočeno, bo Battery Monitor beležil spremembe stanja baterije.</string>
+  <string name="pref_max_log_age" formatted="false">Največja starost poročila</string>
+  <string name="pref_max_log_age_summary" formatted="false">Izbriši poročila starejša od:</string>
   <string formatted="false" name="pref_max_log_age_help">Če je beleženje omogočeno, se ob vsaki priključitvi naprave izbrišejo zapisi, starejši od te vrednosti. Izberite Nikoli ne izbriši, da jih ohranite, dokler jih ročno ne izbrišete.</string>
+  <string name="pref_cat_temperature_unit" formatted="false">Enota za temperaturo</string>
+  <string name="pref_convert_to_fahrenheit" formatted="false">Pretvori v Fahrenheit</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Android sporoča temperaturo baterije v stopinjah Celzija.  če
     raje vidite temperaturo baterije v stopinjah Fahrenheita,
     označite to možnost in aplikacija se bo pretvorila namesto vas.</string>
+  <string name="pref_cat_autostart" formatted="false">Samodejni zagon</string>
+  <string name="pref_autostart_at_boot" formatted="false">Samodejni zagon ob zagonu</string>
+  <string name="pref_autostart_at_boot_summary" formatted="false">Zaženi Battery Monitor ko se naprava zažene:</string>
   <string formatted="false" name="pref_autostart_at_boot_help">Nadzira, ali naj se Battery Monitor sam zažene
     samodejno, ko se naprava zažene.\n
 
@@ -388,7 +374,10 @@
 
     \nNazadnje lahko napoved temelji na vašem
     dolgoročna povprečna uporaba.</string>
+  <string name="pref_cat_language" formatted="false">Jezik</string>
   <string formatted="false" name="pref_language_override">Preglasitev jezika</string>
+  <string name="pref_language_override_summary" formatted="false">Izberi jezik:</string>
+  <string name="alarms_overview" formatted="false">Pregled alarmov</string>
   <string formatted="false" name="alarms_overview_help">Ta stran vam omogoča dodajanje novih alarmov, hitro omogočanje ali onemogočanje
     obstoječe alarme ali izbrišite alarme.\n
 
@@ -407,12 +396,16 @@
     \n• Če želite preprosto preklopiti, ali je alarm omogočen, pritisnite preklopnik
     preklopite na stran besedila alarma.  (Lahko tudi omogočite oz
     onemogočite alarm na strani z nastavitvami posameznega alarma.)</string>
+  <string name="pref_alarm_enabled" formatted="false">Omogoči alarm</string>
   <string formatted="false" name="pref_alarm_enabled_help">Če želite začasno
   onemogočite alarm, ne da bi ga morali znova ustvariti, ko želite
   spet ga lahko izklopite in vklopite tukaj ali na glavnih alarmih
   strani.</string>
+  <string name="pref_cat_alarm_conditions" formatted="false">Stanje alarmov</string>
   <string formatted="false" name="pref_cat_alarm_conditions_help">Tukaj lahko
   nadzirajte, kateri pogoji sprožijo alarm.</string>
+  <string name="pref_alarm_type" formatted="false">Vrsta alarma</string>
+  <string name="pref_alarm_type_summary" formatted="false">Sproži alarm ko baterija:</string>
   <string formatted="false" name="pref_alarm_type_help">Trenutno obstaja pet vrst
     alarma, med katerimi lahko izbirate.\n
 
@@ -427,21 +420,27 @@
     \nAlarm \"Health Fails\" vas bo obvestil, če je vaša baterija zdrava
     postane nekaj drugega kot \"Neznano\" ali \"Dobro zdravje\", npr
     poroča Android.</string>
+  <string name="pref_alarm_threshold" formatted="false">Meja</string>
+  <string name="alarm_pref_not_used" formatted="false">Se ne uporablja za to vrsto alarma.</string>
+  <string name="pref_alarm_threshold_summary" formatted="false">Meja alarma:</string>
   <string formatted="false" name="pref_alarm_threshold_help">Za alarme za polnjenje in temperaturo morate nastaviti temperaturo
     ali raven napolnjenosti, ki bo sprožila alarm.</string>
+  <string formatted="false" name="alarm_custom_temp_message">Vnesite temperaturo v stopinjah %s</string>
+  <string formatted="false" name="alarm_custom_charge_message">Vnesite odstotek obremenitve (0-100)</string>
+  <string name="boot_pref_always" formatted="false">Vedno</string>
+  <string name="boot_pref_never" formatted="false">Nikoli</string>
+  <string name="boot_pref_if_running" formatted="false">Če je zagnano ob izklopu</string>
+  <string name="age_1_day" formatted="false">1 dan</string>
+  <string name="age_2_days" formatted="false">2 dnei</string>
+  <string name="age_4_days" formatted="false">4 dni</string>
+  <string name="age_1_week" formatted="false">1 teden</string>
+  <string name="age_2_weeks" formatted="false">2 tedna</string>
+  <string name="age_3_weeks" formatted="false">3 tedne</string>
+  <string name="age_4_weeks" formatted="false">4 tedne</string>
+  <string formatted="false" name="age_never_delete">Nikoli ne izbriši</string>
   <string formatted="false" name="pref_content_percent">Odstotek baterije</string>
   <string formatted="false" name="pref_content_temperature">Temperatura baterije</string>
   <string formatted="false" name="pref_content_switching">Preklapljajte med obema</string>
-  <string formatted="false" name="custom">Po meri...</string>
-  <string formatted="false" name="alarm_custom_temp_message">Vnesite temperaturo v stopinjah %s</string>
-  <string formatted="false" name="alarm_custom_charge_message">Vnesite odstotek obremenitve (0-100)</string>
-  <string formatted="false" name="pref_live_update_display">Prikazi sprotno posodobitev</string>
-  <string formatted="false" name="pref_live_update_display_summary">Prikazi v vrstici stanja:</string>
-  <string formatted="false" name="pref_live_update_display_help">Izberite, kdaj naj se v vrstici stanja prikaze cip sprotne posodobitve Android 16+.</string>
-  <string formatted="false" name="pref_live_update_display_charging">Samo med polnjenjem</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">Obdrzi glavno obvestilo s sprotno posodobitvijo</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Ali naj se prikaze celotno glavno obvestilo, ko je sprotna posodobitev aktivna?</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Ce je vklopljeno, navadno glavno obvestilo ostane vidno poleg cipa v vrstici stanja.</string>
   <string formatted="false" name="chip_switching_interval_2_seconds">2 sekundi</string>
   <string formatted="false" name="chip_switching_interval_5_seconds">5 sekund</string>
   <string formatted="false" name="chip_switching_interval_10_seconds">10 sekund</string>

@@ -1,24 +1,41 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_launcher_name" formatted="false">Battery Monitor</string>
   <string name="settings_activity_subtitle" formatted="false">Beállítások</string>
   <string name="help_activity_subtitle" formatted="false">Segítség</string>
   <string name="battery_use_b" formatted="false">Akku használat</string>
+  <string name="circle_widget" formatted="false">Battery Monitor kör widget</string>
+  <string name="full_widget" formatted="false">Battery Monitor teljes widget</string>
   <string name="yes" formatted="false">Igen</string>
   <string name="cancel" formatted="false">Mégsem</string>
   <string name="confirm_close" formatted="false">Biztosan bezárja?</string>
   <string name="confirm_close_hint" formatted="false">A Battery Monitor most teljesen bezárul, és az állapotsorban sem lesz látható.\n\nHa tovább kívánja futtatni a Battery Monitort, és csak a főablakot szeretné elhagyni, válassz a \"Mégsem\"-et majd használja a Vissza gombot!</string>
+  <string name="notifications_disabled" formatted="false">Az értesítések le vannak tiltva!</string>
+  <string name="notifications_disabled_message" formatted="false">Minden Battery Monitor értesítést letiltottál. Emiatt a Battery Monitor nem tud értesítéseket megjeleníteni: a fő értesítés és az összes beállított riasztás is blokkolva lesz.\n\nMivel a Battery Monitor lehetővé teszi a fő értesítés külön be- és kikapcsolását, valamint a létrehozott riasztások ideiglenes letiltását is, erősen javasolt feloldani az értesítések tiltását. Amíg tiltva vannak, úgy tűnhet, mintha a Battery Monitor hibásan működne.\n\nNyomd meg az OK gombot a rendszerbeállítások megnyitásához, ahol feloldhatod a Battery Monitor értesítéseit.</string>
+  <string name="battery_optimized" formatted="false">A Battery Monitor korlátozva van!</string>
+  <string name="battery_optimized_message" formatted="false">A Battery Monitor nem tud megfelelően futni, mert korlátozza a rendszer. Az Android \"akkumulátor-optimalizálás\" funkciója a rosszul megírt appok háttérfogyasztását korlátozza.\n\nA Battery Monitor viszont egy jól megtervezett app, amelynek korlátozás nélkül kell futnia a háttérben a helyes működéshez. Nagyon hatékony, és nem csökkenti az akkumulátor üzemidejét.\n\nNyomd meg az OK gombot a rendszerbeállítások megnyitásához, ahol kikapcsolhatod az akkumulátor-optimalizálást a Battery Monitor számára.</string>
+  <string name="main_notif_chan_name" formatted="false">Fő értesítés</string>
+  <string name="live_updates_notif_chan_name" formatted="false">Élő frissítések</string>
+  <string name="channel_group_name_alarms" formatted="false">Riasztások</string>
   <string name="confirm_clear_logs" formatted="false">Biztosan töröl minden naplót?</string>
   <string name="configure_log_filter" formatted="false">Milyen események legyenek naplózva?</string>
   <string name="okay" formatted="false">Rendben</string>
   <string name="tab_current_info" formatted="false">Jelenlengi információ</string>
+  <string name="tab_history" formatted="false">Előzmények</string>
+  <string name="notification_until_charged" formatted="false">" feltöltésig"</string>
+  <string name="notification_until_drained" formatted="false">" maradt"</string>
+  <string name="activity_until_charged" formatted="false">feltöltésig</string>
+  <string name="activity_until_drained" formatted="false">lemerülésig</string>
   <string name="menu_settings" formatted="false">Beállítások</string>
   <string name="menu_close" formatted="false">Bezárás</string>
   <string name="menu_help" formatted="false">Súgó</string>
   <string name="menu_clear" formatted="false">Törlés</string>
   <string name="menu_reverse" formatted="false">Fordított sorrend</string>
+  <string name="menu_log_filter" formatted="false">Szűrő</string>
   <string name="menu_export" formatted="false">CSV Exportálás</string>
   <string name="menu_delete_alarm" formatted="false">Risztás törlése</string>
+  <string name="menu_show_seconds" formatted="false">Másodpercek megjelenítése</string>
+  <string name="menu_hide_seconds" formatted="false">Másodpercek elrejtése</string>
   <string name="percent_symbol" formatted="false">%</string>
   <string name="degree_symbol" formatted="false">°</string>
   <string name="fahrenheit" formatted="false">Fahrenheit</string>
@@ -29,12 +46,14 @@
   <string name="inaccessible_storage" formatted="false">Az SD kártya nem elérhető.</string>
   <string name="inaccessible_w_reason" formatted="false">Elérhetetlen SD kártya:</string>
   <string name="read_only_storage" formatted="false">Az SD kártya csak írható.</string>
+  <string name="no_storage_permission" formatted="false">Nincs tárhely-hozzáférési engedély.</string>
   <string name="file_written" formatted="false">A fájl írása az SD kártya gyökerébe sikeres.</string>
   <string name="date" formatted="false">dátum</string>
   <string name="time" formatted="false">idő</string>
   <string name="status" formatted="false">állapot</string>
   <string name="charge" formatted="false">töltöttség_százalék</string>
   <string name="temperature" formatted="false">celsius_fok</string>
+  <string name="temperature_f" formatted="false">fahrenheit_fok</string>
   <string name="voltage" formatted="false">volt</string>
   <string name="status_unplugged" formatted="false">Szétkapcsolva</string>
   <string name="status_unknown" formatted="false">Ismeretlen</string>
@@ -43,6 +62,7 @@
   <string name="status_not_charging" formatted="false">Nincs töltés</string>
   <string name="status_fully_charged" formatted="false">Teljesen feltöltve</string>
   <string name="status_plugged_in" formatted="false">Csatlakoztatva</string>
+  <string name="status_boot_completed" formatted="false">Rendszerindítás kész</string>
   <string name="health_unknown" formatted="false">Ismeretlen</string>
   <string name="health_good" formatted="false">Jó állapot</string>
   <string name="health_overheat" formatted="false">Túlmelegedés</string>
@@ -58,20 +78,47 @@
   <string name="alarm_type_fully_charged" formatted="false">Teljesen feltöltve</string>
   <string name="alarm_type_charge_drops" formatted="false">Töltöttség ez alá csökken</string>
   <string name="alarm_type_charge_rises" formatted="false">Töltöttség meghaladja</string>
+  <string name="alarm_type_temperature_drops" formatted="false">Hőmérséklet ez alá csökken</string>
   <string name="alarm_type_temperature_rises" formatted="false">Hőmérséklet meghaladja</string>
   <string name="alarm_type_health_failure" formatted="false">Állapot probléma</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Teljesen feltöltődik</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Töltöttség ez alá csökken...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Töltöttség meghaladja...</string>
+  <string name="alarm_type_entry_temperature_drops" formatted="false">Hőmérséklet ez alá csökken...</string>
   <string name="alarm_type_entry_temperature_rises" formatted="false">Hőmérséklet meghaladja...</string>
   <string name="alarm_type_entry_health_failure" formatted="false">Állapot probléma</string>
   <string name="alarm_fully_charged" formatted="false">Az akku teljesen feltöltve</string>
   <string name="alarm_charge_drops" formatted="false">"Akku töltése legfeljebb "</string>
   <string name="alarm_charge_rises" formatted="false">"Akku töltése legalább "</string>
+  <string name="alarm_temp_drops" formatted="false">"Akku hőfoka legfeljebb "</string>
   <string name="alarm_temp_rises" formatted="false">"Akku hőfoka legalább "</string>
   <string name="alarm_health_failure" formatted="false">"Akku állapota: "</string>
-    <string name="logs_empty" formatted="false">A naplók üresek.</string>
+  <string name="logs_empty" formatted="false">A naplók üresek.</string>
+  <plurals name="n_log_items">
+    <item quantity="zero">%d naplóelem</item>
+    <item quantity="one">%d naplóelem</item>
+    <item quantity="two">%d naplóelem</item>
+    <item quantity="few">%d naplóelem</item>
+    <item quantity="many">%d naplóelem</item>
+    <item quantity="other">%d naplóelem</item>
+  </plurals>
+  <string name="after_nh_mm_unplugged" formatted="false">%1$dó %2$dp óta lecsatlakoztatva</string>
+  <string name="after_nh_mm_plugged_in" formatted="false">%1$dó %2$dp óta csatlakoztatva</string>
+  <string name="after_nm_ms_unplugged" formatted="false">%1$dp %2$dm óta lecsatlakoztatva</string>
+  <string name="after_nm_ms_plugged_in" formatted="false">%1$dp %2$dm óta csatlakoztatva</string>
+  <plurals name="n_days">
+    <item quantity="one">"%d nap, "</item>
+    <item quantity="other">"%d nap, "</item>
+  </plurals>
+  <plurals name="n_hours">
+    <item quantity="one">%d óra</item>
+    <item quantity="other">%d óra</item>
+  </plurals>
   <string name="since" formatted="false">óta</string>
+  <plurals name="for_n_hours">
+    <item quantity="one">%d órája</item>
+    <item quantity="other">%d órája</item>
+  </plurals>
   <string name="currently_using" formatted="false">Jelenleg használatban:</string>
   <string name="currently_set_to" formatted="false">"Jelenlegi beállítás:"</string>
   <string name="currently_disabled" formatted="false">Jelenleg Letiltva</string>
@@ -80,6 +127,8 @@
   <string name="help_open_source" formatted="false">Ezt
     projekt nyílt forráskódú. A forráskódot a címen érheti el
     <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+  <string name="help_cat_privacy" formatted="false">Adatvédelem</string>
+  <string name="help_privacy" formatted="false">A Battery Monitor nem gyűjt, tárol vagy továbbít semmilyen személyes adatot.</string>
   <string name="help_cat_no_warranty" formatted="false">Nincs garancia</string>
   <string name="help_no_warranty" formatted="false">Ezt a szoftvert annak reményében terjesztjük, hogy hasznosnak bizonyul, de MINDENNEMŰ GARANCIA NÉLKÜL, kizárva még az általában beleértett garanciákat is, mint a FORGALMAZHATÓSÁG, vagy A CÉLNAK VALÓ MEGFELELÉS.\n\nBár minden elvárhatót megteszek, hogy megbizonyosodjak a szoftver helyes és zavartalan működéséről, kizárt bárminemű felelősség a szoftver használatából eredő minden kár vagy okozott kellemetlenség miatt.</string>
   <string name="help_cat_acknowledgments" formatted="false">Köszönetnyilvánítás</string>
@@ -90,89 +139,6 @@
   <string formatted="false" name="help_contact">Ha kérdése, problémája vagy észrevétele van, kérem <a href="mailto:tomasz@swistak.codes">emailt nekem</a>.</string>
   <string name="settings_overview" formatted="false">Áttekintés</string>
   <string name="settings_overview_help" formatted="false">A beállításokat három oldalra összegyűtve találja az alábbiak szerint. Minden oldal saját súgóval rendelkezik az ott található beállítások leírásával. Ezeket a MENÜ gomb - Súgó opcióval érheti el..</string>
-  <string name="alarm_settings_subtitle" formatted="false">Riasztás beállítások</string>
-  <string name="alarm_settings" formatted="false">Riasztások</string>
-  <string name="alarm_settings_help" formatted="false">Beállíthatja, hogy a Battery Monitor értesítse, amikor az akku töltése elér egy bizonyos szintet (pl. ha teljesen feltöltődik, vagy mondjuk 20% alá csökken.)</string>
-  <string name="other_settings" formatted="false">Egyéb beállítások</string>
-  <string name="other_settings_help" formatted="false">Miden további beállítás ezen az oldalon található: naplózás, képernyőzár, hőmérséklet mértékegysége, automatikus indulás, stb.</string>
-  <string name="add_alarm" formatted="false">Riasztás hozzáadása</string>
-  <string name="time_remaining" formatted="false">Hátralévő idő</string>
-  <string name="pref_cat_icon_set" formatted="false">Értesítési ikon</string>
-  <string name="pref_cat_charging_indicator" formatted="false">Töltésjelző</string>
-  <string name="pref_indicate_charging" formatted="false">Töltés jelzése</string>
-  <string name="pref_indicate_charging_summary" formatted="false">Látszódjon az ikonon a töltés?</string>
-  <string name="pref_indicate_charging_help" formatted="false">A töltési ikon villámjelet jeleníthet meg a szám alatt. Kapcsold ki ezt a beállítást, ha töltéskor és merüléskor ugyanazt az ikont szeretnéd.</string>
-  <string name="pref_cat_logging" formatted="false">Naplózás</string>
-  <string name="pref_enable_logging" formatted="false">Naplózás engedélyezése</string>
-  <string name="pref_enable_logging_summary" formatted="false">Naplózza az akku állapotának változásait?</string>
-  <string name="pref_enable_logging_help" formatted="false">Ha engedélyezi, a Battery Monitor naplózza az akku állapotának változásait. (pl.ha a telefont lekapcsolták a töltőről vagy az akku teljesen feltöltődött). A napló elérhető a főablakból a MENÜ gomb használatával.</string>
-  <string name="pref_max_log_age" formatted="false">Napló időszaka</string>
-  <string name="pref_max_log_age_summary" formatted="false">Törölje az ennél régebbi bejegyzéseket:</string>
-  <string formatted="false" name="pref_max_log_age_help">Ha a naplózás engedélyezett, az eszköz csatlakoztatásakor az ennél régebbi naplók törlődnek. Válaszd a Soha ne törölje lehetőséget, hogy a naplók megmaradjanak, amíg kézzel nem törlöd őket.</string>
-  <string name="pref_cat_temperature_unit" formatted="false">Hőmérséklet mértékegysége</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Fahrenheit használata</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Az Android Celsius°-ban közli a hőmérsékletet. Ha jobban szeretné az akkumlátor hőmérsékletét Fahrenheit-ben látni, kapcsolja be ezt az opciót, és az alkalmásás konvértálni fogja önnek.</string>
-  <string name="pref_cat_autostart" formatted="false">Automatikus indítás</string>
-  <string name="pref_autostart_at_boot" formatted="false">Automatikus indítás bekapcsoláskor</string>
-  <string name="pref_autostart_at_boot_summary" formatted="false">A Battery Monitor elindítása a készülék bekapcsolásakor:</string>
-  <string name="pref_autostart_at_boot_help" formatted="false">Beállíthatja, hogy a Battery Monitor milyen esetekben induljon el a készülék bekapcsolásakor.\n\nA \"Ha kikapcsoláskor aktív\" opcióval az alkalmazás automatikusan elindul, ha kikapcsoláskor aktív volt. Tehát ha leállítja egy task killer-rel, akkor a Battery Monitor nem fogja tudni, hogy leállította, és a készülék indításakor bekapcsol.</string>
-  <string name="pref_cat_predictor" formatted="false">Hátralévő idő becslések</string>
-  <string name="pref_prediction_type" formatted="false">Becslés típusa</string>
-  <string name="pref_cat_language" formatted="false">Nyelv</string>
-  <string name="pref_language_override" formatted="false">Nyelv megváltoztatása</string>
-  <string name="pref_language_override_summary" formatted="false">Válasszon nyelvet:</string>
-  <string name="alarms_overview" formatted="false">Riasztások áttekintése</string>
-  <string name="pref_alarm_enabled" formatted="false">Riasztás enegedélyezése</string>
-  <string name="pref_alarm_enabled_help" formatted="false">Ha egy riasztást átmenetileg le kíván tiltani, anélkül, hogy azt később újra létre kellene hoznia, ki- és bekapcsolhatja itt, vagy a riasztások főlapján is.</string>
-  <string name="pref_cat_alarm_conditions" formatted="false">Riasztási feltételek</string>
-  <string name="pref_cat_alarm_conditions_help" formatted="false">Itt határozhatja meg, hogy milyen események váltsanak ki riasztást.</string>
-  <string name="pref_alarm_type" formatted="false">Riasztás típus</string>
-  <string name="pref_alarm_type_summary" formatted="false">Riasztás küldése, ha az akku:</string>
-  <string name="pref_alarm_type_help" formatted="false">Jelenleg öt riasztás típus közül választhat.\n\nAz \"Eléri a teljes töltést\" akkor következik be, amikor az akku \"Töltés\" állapotról \"Teljesen feltöltve\" állapotra vált. Számos készülékeken ez nem szügségképpen jelenti a 100%-os szint elérését.\n\nHa a töltési és hőmérséklet riasztást választja, be kell állítani a riasztási küszöbszinteket.\n\nAz \"Állapot probléma\" riasztás akkor következik be, ha az akku állapota nem \"Ismeretlen\" és nem \"Jó állapotú\".</string>
-  <string name="pref_alarm_threshold" formatted="false">Küszöb</string>
-  <string name="alarm_pref_not_used" formatted="false">Nem használt ehhez a riasztás típushoz</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Riasztási küszöb:</string>
-  <string name="pref_alarm_threshold_help" formatted="false">Töltési és hőfok riasztásokhoz be kell állítania a riasztási küszöbszinteket.</string>
-  <string name="boot_pref_always" formatted="false">Mindig</string>
-  <string name="boot_pref_never" formatted="false">Soha</string>
-  <string name="boot_pref_if_running" formatted="false">Ha kikapcsoláskor aktív</string>
-  <string name="age_1_day" formatted="false">1 nap</string>
-  <string name="age_2_days" formatted="false">2 nap</string>
-  <string name="age_4_days" formatted="false">4 nap</string>
-  <string name="age_1_week" formatted="false">1 hét</string>
-  <string name="age_2_weeks" formatted="false">2 hét</string>
-  <string name="age_3_weeks" formatted="false">3 hét</string>
-  <string name="age_4_weeks" formatted="false">4 hét</string>
-  <string formatted="false" name="age_never_delete">Soha ne törölje</string>
-  <string name="circle_widget" formatted="false">Battery Monitor kör widget</string>
-  <string name="full_widget" formatted="false">Battery Monitor teljes widget</string>
-  <string name="notifications_disabled" formatted="false">Az értesítések le vannak tiltva!</string>
-  <string name="notifications_disabled_message" formatted="false">Minden Battery Monitor értesítést letiltottál. Emiatt a Battery Monitor nem tud értesítéseket megjeleníteni: a fő értesítés és az összes beállított riasztás is blokkolva lesz.\n\nMivel a Battery Monitor lehetővé teszi a fő értesítés külön be- és kikapcsolását, valamint a létrehozott riasztások ideiglenes letiltását is, erősen javasolt feloldani az értesítések tiltását. Amíg tiltva vannak, úgy tűnhet, mintha a Battery Monitor hibásan működne.\n\nNyomd meg az OK gombot a rendszerbeállítások megnyitásához, ahol feloldhatod a Battery Monitor értesítéseit.</string>
-  <string name="battery_optimized" formatted="false">A Battery Monitor korlátozva van!</string>
-  <string name="battery_optimized_message" formatted="false">A Battery Monitor nem tud megfelelően futni, mert korlátozza a rendszer. Az Android \"akkumulátor-optimalizálás\" funkciója a rosszul megírt appok háttérfogyasztását korlátozza.\n\nA Battery Monitor viszont egy jól megtervezett app, amelynek korlátozás nélkül kell futnia a háttérben a helyes működéshez. Nagyon hatékony, és nem csökkenti az akkumulátor üzemidejét.\n\nNyomd meg az OK gombot a rendszerbeállítások megnyitásához, ahol kikapcsolhatod az akkumulátor-optimalizálást a Battery Monitor számára.</string>
-  <string name="main_notif_chan_name" formatted="false">Fő értesítés</string>
-  <string name="live_updates_notif_chan_name" formatted="false">Élő frissítések</string>
-  <string name="channel_group_name_alarms" formatted="false">Riasztások</string>
-    <string name="tab_history" formatted="false">Előzmények</string>
-  <string name="notification_until_charged" formatted="false">" feltöltésig"</string>
-  <string name="notification_until_drained" formatted="false">" maradt"</string>
-  <string name="activity_until_charged" formatted="false">feltöltésig</string>
-  <string name="activity_until_drained" formatted="false">lemerülésig</string>
-  <string name="menu_log_filter" formatted="false">Szűrő</string>
-  <string name="menu_show_seconds" formatted="false">Másodpercek megjelenítése</string>
-  <string name="menu_hide_seconds" formatted="false">Másodpercek elrejtése</string>
-  <string name="no_storage_permission" formatted="false">Nincs tárhely-hozzáférési engedély.</string>
-  <string name="temperature_f" formatted="false">fahrenheit_fok</string>
-  <string name="status_boot_completed" formatted="false">Rendszerindítás kész</string>
-  <string name="alarm_type_temperature_drops" formatted="false">Hőmérséklet ez alá csökken</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Hőmérséklet ez alá csökken...</string>
-  <string name="alarm_temp_drops" formatted="false">"Akku hőfoka legfeljebb "</string>
-  <string name="after_nh_mm_unplugged" formatted="false">%1$dó %2$dp óta lecsatlakoztatva</string>
-  <string name="after_nh_mm_plugged_in" formatted="false">%1$dó %2$dp óta csatlakoztatva</string>
-  <string name="after_nm_ms_unplugged" formatted="false">%1$dp %2$dm óta lecsatlakoztatva</string>
-  <string name="after_nm_ms_plugged_in" formatted="false">%1$dp %2$dm óta csatlakoztatva</string>
-  <string name="help_cat_privacy" formatted="false">Adatvédelem</string>
-  <string name="help_privacy" formatted="false">A Battery Monitor nem gyűjt, tárol vagy továbbít semmilyen személyes adatot.</string>
   <string name="notifications_disabled_cat" formatted="false">Értesítések letiltva</string>
   <string name="app_notifs_disabled_b" formatted="false">Alkalmazásértesítések engedélyezése</string>
   <string name="app_notifs_disabled_summary" formatted="false">Letiltottad az alkalmazás összes értesítését. Ezek eléréséhez engedélyezd őket.</string>
@@ -196,17 +162,30 @@
   <string name="current_hack_settings" formatted="false">Áram (mA) hack</string>
   <string name="current_hack_settings_summary" formatted="false">Speciális beállítások az mA információ engedélyezéséhez</string>
   <string name="current_hack_settings_help" formatted="false">Az Android nem biztosít hivatalos módot az alkalmazásoknak a pillanatnyi akkumulátoráram elérésére. Viszont létezik egy hack, amely sok készüléken potenciálisan lehetővé teszi ezt.</string>
+  <string name="alarm_settings_subtitle" formatted="false">Riasztás beállítások</string>
+  <string name="alarm_settings" formatted="false">Riasztások</string>
+  <string name="alarm_settings_help" formatted="false">Beállíthatja, hogy a Battery Monitor értesítse, amikor az akku töltése elér egy bizonyos szintet (pl. ha teljesen feltöltődik, vagy mondjuk 20% alá csökken.)</string>
+  <string name="other_settings" formatted="false">Egyéb beállítások</string>
+  <string name="other_settings_help" formatted="false">Miden további beállítás ezen az oldalon található: naplózás, képernyőzár, hőmérséklet mértékegysége, automatikus indulás, stb.</string>
   <string name="live_updates_onboarding_title" formatted="false">Állapotsor akkumulátor chip</string>
   <string name="live_updates_onboarding_message_on" formatted="false">A készülék támogatja az akkumulátor százalékának chipként való megjelenítését az állapotsorban. Ez alapértelmezés szerint be van kapcsolva.\n\nHa a hagyományos értesítési ikont részesíti előnyben, kikapcsolhatja a „Live Updates” funkciót az alkalmazás Android rendszerbeállításaiban.\n\nMegjegyzés: Ennek az engedélynek a megadása alkalmanként az alkalmazás bezáródását okozhatja. Ha ez történik, egyszerűen nyissa meg újra.</string>
   <string name="live_updates_onboarding_message_off" formatted="false">A készülék támogatja az akkumulátor százalékának chipként való megjelenítését az állapotsorban, de ez jelenleg ki van kapcsolva a rendszerbeállításokban.\n\nA legjobb élmény érdekében javasoljuk a bekapcsolását. Ha a hagyományos értesítési ikont részesíti előnyben, kikapcsolva is hagyhatja.\n\nMegjegyzés: Ennek az engedélynek a megadása alkalmanként az alkalmazás bezáródását okozhatja. Ha ez történik, egyszerűen nyissa meg újra.</string>
-  <string name="notifications_onboarding_message" formatted="false">A Battery Monitornak engedélyre van szüksége ahhoz, hogy az állapotsorban megjelenítse az akkumulátor töltöttségét, és értesítse Önt a riasztásokról.\n\nMegjegyzés: Ennek az engedélynek a megadása alkalmanként az alkalmazás bezáródását okozhatja. Ha ez történik, egyszerűen nyissa meg újra.</string>
   <string name="live_updates_onboarding_positive_on" formatted="false">Értem</string>
   <string name="live_updates_onboarding_positive_off" formatted="false">Ugrás a beállításokhoz</string>
   <string name="live_updates_onboarding_negative_off" formatted="false">Bezárás</string>
+  <string name="notifications_onboarding_message" formatted="false">A Battery Monitornak engedélyre van szüksége ahhoz, hogy az állapotsorban megjelenítse az akkumulátor töltöttségét, és értesítse Önt a riasztásokról.\n\nMegjegyzés: Ennek az engedélynek a megadása alkalmanként az alkalmazás bezáródását okozhatja. Ha ez történik, egyszerűen nyissa meg újra.</string>
+  <string name="add_alarm" formatted="false">Riasztás hozzáadása</string>
   <string name="pref_cat_channel_settings" formatted="false">Értesítési csatorna beállítások</string>
   <string name="pref_manage_main_channel" formatted="false">Fő csatorna kezelése</string>
   <string name="pref_cat_notification_content" formatted="false">Tartalom</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Állapotsor chip (Android 16+)</string>
+  <string formatted="false" name="pref_live_update_display">Élő frissítés megjelenítése</string>
+  <string formatted="false" name="pref_live_update_display_summary">Megjelenítés az állapotsávban:</string>
+  <string formatted="false" name="pref_live_update_display_help">Válaszd ki, hogy az Android 16+ élő frissítési chipje mikor jelenjen meg az állapotsávban.</string>
+  <string formatted="false" name="pref_live_update_display_charging">Csak töltés közben</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification">Fő értesítés megtartása élő frissítés mellett</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_summary">A teljes fő értesítés is megjelenjen, amikor az élő frissítés aktív?</string>
+  <string formatted="false" name="pref_live_update_keep_main_notification_help">Ha be van kapcsolva, a normál fő értesítés az állapotsáv chip mellett is látható marad.</string>
   <string name="pref_chip_content" formatted="false">Chip tartalma</string>
   <string name="pref_chip_switching_interval" formatted="false">Váltási időköz</string>
   <string name="pref_chip_content_help" formatted="false">Válaszd ki, mit jelenítsen meg az Android 16+ promoted-notification chip.</string>
@@ -217,6 +196,7 @@
   <string name="pref_top_line_content_help" formatted="false">Állítsd be, mi jelenjen meg az értesítés felső sorában.</string>
   <string name="pref_bottom_line_content" formatted="false">Alsó sor tartalma</string>
   <string name="pref_bottom_line_content_help" formatted="false">Az alsó sorhoz ugyanazok az opciók érhetők el, mint a felső sorhoz.</string>
+  <string name="time_remaining" formatted="false">Hátralévő idő</string>
   <string name="time_since_status_change" formatted="false">Idő az állapotváltozás óta</string>
   <string name="vital_signs" formatted="false">Létfontosságú adatok</string>
   <string name="pref_time_remaining_verbosity" formatted="false">Hátralévő idő részletezettsége</string>
@@ -227,6 +207,8 @@
   <string name="pref_status_duration_in_vital_signs" formatted="false">Állapot időtartama a létfontosságú adatokban</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Megjelenjen az állapotváltozás óta eltelt idő a létfontosságú adatok között?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Bekapcsolva a létfontosságú adatsor mutatja az állapotváltozás óta eltelt órákat is.</string>
+  <string formatted="false" name="custom">Egyéni...</string>
+  <string name="pref_cat_icon_set" formatted="false">Értesítési ikon</string>
   <string name="pref_icon_content" formatted="false">Ikon tartalma</string>
   <string name="pref_icon_content_help" formatted="false">Válaszd ki, hogy az állapotsor ikon akkumulátor százalékot vagy hőmérsékletet mutasson.</string>
   <string name="pref_show_icon_unit" formatted="false">Egységjel megjelenítése</string>
@@ -258,45 +240,63 @@
   <string name="pref_auto_refresh_current_in_main_window" formatted="false">mA automatikus frissítése a főablakban</string>
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Automatikusan frissítse az mA értéket két másodpercenként?</string>
   <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Engedélyezve a főablakban az mA érték 2 másodpercenként frissül.</string>
+  <string name="pref_cat_charging_indicator" formatted="false">Töltésjelző</string>
+  <string name="pref_indicate_charging" formatted="false">Töltés jelzése</string>
+  <string name="pref_indicate_charging_summary" formatted="false">Látszódjon az ikonon a töltés?</string>
+  <string name="pref_indicate_charging_help" formatted="false">A töltési ikon villámjelet jeleníthet meg a szám alatt. Kapcsold ki ezt a beállítást, ha töltéskor és merüléskor ugyanazt az ikont szeretnéd.</string>
+  <string name="pref_cat_logging" formatted="false">Naplózás</string>
+  <string name="pref_enable_logging" formatted="false">Naplózás engedélyezése</string>
+  <string name="pref_enable_logging_summary" formatted="false">Naplózza az akku állapotának változásait?</string>
+  <string name="pref_enable_logging_help" formatted="false">Ha engedélyezi, a Battery Monitor naplózza az akku állapotának változásait. (pl.ha a telefont lekapcsolták a töltőről vagy az akku teljesen feltöltődött). A napló elérhető a főablakból a MENÜ gomb használatával.</string>
+  <string name="pref_max_log_age" formatted="false">Napló időszaka</string>
+  <string name="pref_max_log_age_summary" formatted="false">Törölje az ennél régebbi bejegyzéseket:</string>
+  <string formatted="false" name="pref_max_log_age_help">Ha a naplózás engedélyezett, az eszköz csatlakoztatásakor az ennél régebbi naplók törlődnek. Válaszd a Soha ne törölje lehetőséget, hogy a naplók megmaradjanak, amíg kézzel nem törlöd őket.</string>
+  <string name="pref_cat_temperature_unit" formatted="false">Hőmérséklet mértékegysége</string>
+  <string name="pref_convert_to_fahrenheit" formatted="false">Fahrenheit használata</string>
+  <string name="pref_convert_to_fahrenheit_help" formatted="false">Az Android Celsius°-ban közli a hőmérsékletet. Ha jobban szeretné az akkumlátor hőmérsékletét Fahrenheit-ben látni, kapcsolja be ezt az opciót, és az alkalmásás konvértálni fogja önnek.</string>
+  <string name="pref_cat_autostart" formatted="false">Automatikus indítás</string>
+  <string name="pref_autostart_at_boot" formatted="false">Automatikus indítás bekapcsoláskor</string>
+  <string name="pref_autostart_at_boot_summary" formatted="false">A Battery Monitor elindítása a készülék bekapcsolásakor:</string>
+  <string name="pref_autostart_at_boot_help" formatted="false">Beállíthatja, hogy a Battery Monitor milyen esetekben induljon el a készülék bekapcsolásakor.\n\nA \"Ha kikapcsoláskor aktív\" opcióval az alkalmazás automatikusan elindul, ha kikapcsoláskor aktív volt. Tehát ha leállítja egy task killer-rel, akkor a Battery Monitor nem fogja tudni, hogy leállította, és a készülék indításakor bekapcsol.</string>
   <string name="predictor_sensitive" formatted="false">Érzékeny</string>
   <string name="predictor_conservative" formatted="false">Konzervatív</string>
   <string name="predictor_since_status_change" formatted="false">Állapotváltozás óta</string>
   <string name="predictor_long_term_ave" formatted="false">Hosszú távú átlag</string>
+  <string name="pref_cat_predictor" formatted="false">Hátralévő idő becslések</string>
+  <string name="pref_prediction_type" formatted="false">Becslés típusa</string>
   <string name="pref_prediction_type_help" formatted="false">Itt kiválaszthatod, hogyan becsülje a Battery Monitor a hátralévő akkuidőt.</string>
+  <string name="pref_cat_language" formatted="false">Nyelv</string>
+  <string name="pref_language_override" formatted="false">Nyelv megváltoztatása</string>
+  <string name="pref_language_override_summary" formatted="false">Válasszon nyelvet:</string>
+  <string name="alarms_overview" formatted="false">Riasztások áttekintése</string>
   <string name="alarms_overview_help" formatted="false">Ezen az oldalon új riasztásokat adhatsz hozzá, gyorsan engedélyezheted vagy letilthatod a meglévőket, illetve törölheted őket.</string>
+  <string name="pref_alarm_enabled" formatted="false">Riasztás enegedélyezése</string>
+  <string name="pref_alarm_enabled_help" formatted="false">Ha egy riasztást átmenetileg le kíván tiltani, anélkül, hogy azt később újra létre kellene hoznia, ki- és bekapcsolhatja itt, vagy a riasztások főlapján is.</string>
+  <string name="pref_cat_alarm_conditions" formatted="false">Riasztási feltételek</string>
+  <string name="pref_cat_alarm_conditions_help" formatted="false">Itt határozhatja meg, hogy milyen események váltsanak ki riasztást.</string>
+  <string name="pref_alarm_type" formatted="false">Riasztás típus</string>
+  <string name="pref_alarm_type_summary" formatted="false">Riasztás küldése, ha az akku:</string>
+  <string name="pref_alarm_type_help" formatted="false">Jelenleg öt riasztás típus közül választhat.\n\nAz \"Eléri a teljes töltést\" akkor következik be, amikor az akku \"Töltés\" állapotról \"Teljesen feltöltve\" állapotra vált. Számos készülékeken ez nem szügségképpen jelenti a 100%-os szint elérését.\n\nHa a töltési és hőmérséklet riasztást választja, be kell állítani a riasztási küszöbszinteket.\n\nAz \"Állapot probléma\" riasztás akkor következik be, ha az akku állapota nem \"Ismeretlen\" és nem \"Jó állapotú\".</string>
+  <string name="pref_alarm_threshold" formatted="false">Küszöb</string>
+  <string name="alarm_pref_not_used" formatted="false">Nem használt ehhez a riasztás típushoz</string>
+  <string name="pref_alarm_threshold_summary" formatted="false">Riasztási küszöb:</string>
+  <string name="pref_alarm_threshold_help" formatted="false">Töltési és hőfok riasztásokhoz be kell állítania a riasztási küszöbszinteket.</string>
+  <string formatted="false" name="alarm_custom_temp_message">Adja meg a hőmrskletet %s fokban</string>
+  <string formatted="false" name="alarm_custom_charge_message">Adja meg a terhelési százalékot (0-100)</string>
+  <string name="boot_pref_always" formatted="false">Mindig</string>
+  <string name="boot_pref_never" formatted="false">Soha</string>
+  <string name="boot_pref_if_running" formatted="false">Ha kikapcsoláskor aktív</string>
+  <string name="age_1_day" formatted="false">1 nap</string>
+  <string name="age_2_days" formatted="false">2 nap</string>
+  <string name="age_4_days" formatted="false">4 nap</string>
+  <string name="age_1_week" formatted="false">1 hét</string>
+  <string name="age_2_weeks" formatted="false">2 hét</string>
+  <string name="age_3_weeks" formatted="false">3 hét</string>
+  <string name="age_4_weeks" formatted="false">4 hét</string>
+  <string formatted="false" name="age_never_delete">Soha ne törölje</string>
   <string name="pref_content_percent" formatted="false">Akkumulátor százalék</string>
   <string name="pref_content_temperature" formatted="false">Akkumulátor hőmérséklet</string>
   <string name="pref_content_switching" formatted="false">Váltás mindkettő között</string>
-  <plurals name="n_log_items">
-    <item quantity="zero">%d naplóelem</item>
-    <item quantity="one">%d naplóelem</item>
-    <item quantity="two">%d naplóelem</item>
-    <item quantity="few">%d naplóelem</item>
-    <item quantity="many">%d naplóelem</item>
-    <item quantity="other">%d naplóelem</item>
-  </plurals>
-  <plurals name="n_days">
-    <item quantity="one">"%d nap, "</item>
-    <item quantity="other">"%d nap, "</item>
-  </plurals>
-  <plurals name="n_hours">
-    <item quantity="one">%d óra</item>
-    <item quantity="other">%d óra</item>
-  </plurals>
-  <plurals name="for_n_hours">
-    <item quantity="one">%d órája</item>
-    <item quantity="other">%d órája</item>
-  </plurals>
-  <string formatted="false" name="custom">Egyéni...</string>
-  <string formatted="false" name="alarm_custom_temp_message">Adja meg a hőmrskletet %s fokban</string>
-  <string formatted="false" name="alarm_custom_charge_message">Adja meg a terhelési százalékot (0-100)</string>
-  <string formatted="false" name="pref_live_update_display">Élő frissítés megjelenítése</string>
-  <string formatted="false" name="pref_live_update_display_summary">Megjelenítés az állapotsávban:</string>
-  <string formatted="false" name="pref_live_update_display_help">Válaszd ki, hogy az Android 16+ élő frissítési chipje mikor jelenjen meg az állapotsávban.</string>
-  <string formatted="false" name="pref_live_update_display_charging">Csak töltés közben</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">Fő értesítés megtartása élő frissítés mellett</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">A teljes fő értesítés is megjelenjen, amikor az élő frissítés aktív?</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Ha be van kapcsolva, a normál fő értesítés az állapotsáv chip mellett is látható marad.</string>
   <string formatted="false" name="chip_switching_interval_2_seconds">2 masodperc</string>
   <string formatted="false" name="chip_switching_interval_5_seconds">5 masodperc</string>
   <string formatted="false" name="chip_switching_interval_10_seconds">10 masodperc</string>
