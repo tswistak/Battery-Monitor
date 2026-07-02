@@ -53,19 +53,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     public static final String KEY_OTHER_SETTINGS = "other_settings";
     public static final String KEY_ENABLE_LOGGING = "enable_logging";
     public static final String KEY_MAX_LOG_AGE = "max_log_age";
-    public static final String KEY_ICON_PLUGIN = "icon_plugin";
-    public static final String KEY_ICON_SET = "icon_set";
     public static final String KEY_ICON_CONTENT = "icon_content";
     public static final String KEY_CONVERT_F = "convert_to_fahrenheit";
     public static final String KEY_NOTIFY_STATUS_DURATION = "notify_status_duration";
     public static final String KEY_AUTOSTART = "autostart";
     public static final String KEY_PREDICTION_TYPE = "prediction_type";
-    public static final String KEY_CLASSIC_COLOR_MODE = "classic_color_mode";
     public static final String KEY_STATUS_DUR_EST = "status_dur_est";
-    public static final String KEY_CAT_CLASSIC_COLOR_MODE = "category_classic_color_mode";
     public static final String KEY_CAT_CHARGING_INDICATOR = "category_charging_indicator";
     public static final String KEY_PLUGIN_SETTINGS = "plugin_settings";
     public static final String KEY_INDICATE_CHARGING = "indicate_charging";
+    public static final String KEY_SHOW_ICON_UNIT = "show_icon_unit";
     public static final String KEY_CAT_STATUS_BAR_CHIP = "category_status_bar_chip";
     public static final String KEY_CHIP_CONTENT = "chip_content";
     public static final String KEY_CHIP_SWITCHING_INTERVAL = "chip_switching_interval";
@@ -131,7 +128,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
 
     private static final String[] LIST_PREFS = {KEY_AUTOSTART, KEY_STATUS_DUR_EST,
                                                 KEY_RED_THRESH, KEY_AMBER_THRESH, KEY_GREEN_THRESH,
-                                                 KEY_ICON_SET, KEY_ICON_CONTENT, KEY_CHIP_CONTENT,
+                                                 KEY_ICON_CONTENT, KEY_CHIP_CONTENT,
                                                 KEY_CHIP_SWITCHING_INTERVAL,
                                                  KEY_LIVE_UPDATE_DISPLAY,
                                                 KEY_CURRENT_HACK_MULTIPLIER,
@@ -143,8 +140,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     private static final String[] RESET_SERVICE = {KEY_CONVERT_F, KEY_NOTIFY_STATUS_DURATION,
                                                    KEY_RED, KEY_RED_THRESH,
                                                    KEY_AMBER, KEY_AMBER_THRESH, KEY_GREEN, KEY_GREEN_THRESH,
-                                                   KEY_ICON_SET,
                                                    KEY_INDICATE_CHARGING,
+                                                   KEY_SHOW_ICON_UNIT,
                                                     KEY_ICON_CONTENT,
                                                     KEY_CHIP_CONTENT,
                                                     KEY_CHIP_SWITCHING_INTERVAL,
@@ -330,24 +327,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
                 prefs.setSummary(R.string.main_notifs_disabled_summary);
                 prefb.setSummary(R.string.main_notifs_disabled_b);
             }
-        } else if (pref_screen == R.xml.status_bar_icon_pref_screen) {
-            ListPreference iconSetPref = (ListPreference) mPreferenceScreen.findPreference(KEY_ICON_SET);
-            setPluginPrefEntriesAndValues(iconSetPref);
-
-            String currentPlugin = iconSetPref.getValue();
-
-            if (currentPlugin == null)
-                currentPlugin = "builtin.plain_number";
-
-            if (currentPlugin.equals("builtin.classic")) {
-                cat = (PreferenceCategory) mPreferenceScreen.findPreference(KEY_CAT_CHARGING_INDICATOR);
-                cat.removeAll();
-                cat.setLayoutResource(R.layout.none);
-            } else {
-                cat = (PreferenceCategory) mPreferenceScreen.findPreference(KEY_CAT_CLASSIC_COLOR_MODE);
-                cat.removeAll();
-                cat.setLayoutResource(R.layout.none);
-            }
         } else if (pref_screen == R.xml.notification_pref_screen) {
             Preference prefb = mPreferenceScreen.findPreference(KEY_ENABLE_NOTIFS_B);
             //prefb.setEnabled(false);
@@ -419,17 +398,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
-
-        if (key.equals(KEY_CLASSIC_COLOR_MODE)) {
-            resetService();
-            //(No longer have actual colors, so settings page doesn't change.)
-            //setPreferences(); // To show/hide icon-set/plugin settings
-        }
-
-        if (key.equals(KEY_ICON_SET)) {
-            resetService();
-            setPreferences(); // To show/hide icon-set/plugin settings
-        }
 
         if (key.equals(KEY_CHIP_CONTENT)) {
             updateChipIntervalVisibility();
@@ -582,23 +550,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         } else {
             pref.setSummary(res.getString(R.string.currently_disabled));
         }
-    }
-
-    // TODO: Now that plugins have long been unsupported, get rid of this and just do normal list pref?
-    private void setPluginPrefEntriesAndValues(ListPreference lpref) {
-        java.util.List<String> entriesList = new java.util.ArrayList<String>();
-        java.util.List<String>  valuesList = new java.util.ArrayList<String>();
-
-        String[] icon_set_entries = res.getStringArray(R.array.icon_set_entries);
-        String[] icon_set_values  = res.getStringArray(R.array.icon_set_values);
-
-        for (int i = 0; i < icon_set_entries.length; i++) {
-            entriesList.add(icon_set_entries[i]);
-             valuesList.add(icon_set_values[i]);
-        }
-
-        lpref.setEntries    (entriesList.toArray(new String[entriesList.size()]));
-        lpref.setEntryValues(valuesList.toArray(new String[entriesList.size()]));
     }
 
     public void enableNotifsButtonClick() {

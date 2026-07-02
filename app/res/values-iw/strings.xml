@@ -85,8 +85,7 @@
   <string name="condensed" formatted="false">דחוס</string>
   <string name="normal" formatted="false">רגיל</string>
   <string name="verbose" formatted="false">מילולי</string>
-  <string name="pref_cat_icon_set" formatted="false">ערכת סמלים</string>
-  <string name="pref_icon_set" formatted="false">ערכת סמלים</string>
+  <string name="pref_cat_icon_set" formatted="false">סמל התראה</string>
   <string name="pref_cat_current_hack_main" formatted="false">בקרה ראשית</string>
   <string formatted="false" name="confirm_close_hint">אישור סגירה של האפליקציה.</string>
   <string formatted="false" name="notifications_disabled_message">חסמת את כל ההתראות עבור Battery Monitor.  צוואה זו
@@ -176,8 +175,8 @@
   <string formatted="false" name="notification_settings_summary">הגדר את ההודעה הראשית</string>
   <string formatted="false" name="notification_settings_help">אתה יכול להגדיר איזה תוכן יוצג בהודעה הנפתחת.</string>
   <string formatted="false" name="status_bar_icon_settings">סמל שורת המצב</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">ערכות אייקוני שליטה</string>
-  <string formatted="false" name="status_bar_icon_settings_help">אתה יכול לבחור באיזו ערכת אייקונים להשתמש ולשנות את ההגדרות עבור ערכת האייקונים (למשל, צבעים).</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">בחר את תוכן הסמל</string>
+  <string name="status_bar_icon_settings_help" formatted="false">בחר אם סמל ההתראה יציג את אחוז הסוללה או את הטמפרטורה, אם סמל היחידה יוצג בתוך הסמל, ואם לטעינה יהיה סמל ייעודי.</string>
   <string formatted="false" name="status_bar_chip_settings">שבב שורת המצב</string>
   <string formatted="false" name="status_bar_chip_settings_summary">הגדר את תוכן השבב של עדכונים חיים</string>
   <string formatted="false" name="status_bar_chip_settings_help">ב-Android 16 ומעלה ניתן לקבוע מה יוצג בשבב שורת המצב והאם להציג סימון טעינה.</string>
@@ -233,25 +232,8 @@
   <string formatted="false" name="pref_icon_content">תוכן סמל</string>
   <string formatted="false" name="pref_icon_content_help">בחר אם סמל שורת המצב יציג את אחוז הסוללה או
     טמפרטורת הסוללה. הטמפרטורה עוקבת אחר היחידה שבחרת.</string>
-  <string formatted="false" name="pref_icon_set_help">אנדרואיד מגיע בטעמים רבים, כך שאין סט אייקונים מושלם אחד
-    שעובד היטב בכל מכשיר.  ישנן שלוש ערכות אייקונים מובנות
-    זה אמור לספק לפחות אפשרות טובה אחת כמעט לכל אחד
-    מכשיר.\n
-
-    \n\"Classic\" הוא סט הסמלים המקורי משנת 2009. זה עדיין
-    הטוב ביותר במכשירים ישנים יותר, אך גרסאות חדשות יותר של אנדרואיד (החל
-    עם אנדרואיד 3.0, חלת דבש) לכווץ ועמעום את סמלי ההתראות,
-    מה שהופך את הסט הזה לקשה מאוד לקריאה.\n
-
-    \n\"מספר רגיל\" הוא ברירת המחדל עבור כל מכשירי האנדרואיד החדשים יותר.
-    זהו מספר לבן גדול מאוד שמופיע היטב גם לאחר מכן
-    מכווץ ומעומעם.  זה מראה ברק מתחת ל
-    מספר במהלך הטעינה.\n
-
-    \n\"מספר קטן יותר\" הוא כמו \"מספר רגיל\" אבל קטן יותר, בגלל
-    חלק מהמכשירים החדשים יותר לא ממש מכווצים את הסמל כמו מלאי
-    אנדרואיד עושה זאת, והמספר הגדול מאוד ב-\"Plain Number\" יכול
-    נראים גדולים באופן קומי במכשירים אלה.</string>
+  <string name="pref_show_icon_unit" formatted="false">הצג סמל יחידה</string>
+  <string name="pref_show_icon_unit_help" formatted="false">כאשר האפשרות מופעלת, הסמל מציג סימן אחוז עבור אחוז הסוללה וסימן מעלה עבור טמפרטורת הסוללה. השבת אפשרות זו כדי להציג רק את המספר.</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">פריצה נוכחית (mA) אינה נתמכת</string>
   <string formatted="false" name="pref_current_hack_unsupported">מצטערים, הפריצה הנוכחית (mA) אינה נתמכת במכשיר זה.</string>
   <string formatted="false" name="pref_enable_current_hack">אפשר פריצה</string>
@@ -333,9 +315,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">מחוון טעינה</string>
   <string formatted="false" name="pref_indicate_charging">ציין טעינה</string>
   <string formatted="false" name="pref_indicate_charging_summary">לשנות את הסמל לציון בעת ​​טעינה?</string>
-  <string formatted="false" name="pref_indicate_charging_help">חלק מערכי הסמלים מציינים מתי הסוללה נטענת, עבור
-    דוגמה על ידי הצגת ברק מתחת למספר.  השבת
-    הגדרה זו אם אתה מעדיף שהיא לא תעשה זאת.</string>
+  <string formatted="false" name="pref_indicate_charging_help">סמל הטעינה יכול להציג ברק מתחת למספר. השבת הגדרה זו אם אתה מעדיף את אותו סמל בזמן טעינה ופריקה.</string>
   <string formatted="false" name="pref_cat_logging">רישום</string>
   <string formatted="false" name="pref_enable_logging">אפשר רישום</string>
   <string formatted="false" name="pref_enable_logging_summary">לרשום שינויים במצב הסוללה?</string>
@@ -378,18 +358,6 @@
   <string formatted="false" name="pref_cat_language">שָׂפָה</string>
   <string formatted="false" name="pref_language_override">ביטול שפה</string>
   <string formatted="false" name="pref_language_override_summary">בחר שפה:</string>
-  <string formatted="false" name="pref_classic_color_mode">כפה על מצב צבע קלאסי</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">זה בדרך כלל לא עובד; אנא קרא את העזרה</string>
-  <string formatted="false" name="pref_classic_color_mode_help">החל מאנדרואיד 5.0 (Lollipop), סמלי התראות צבעוניות
-    רשמית כבר לא עובד באנדרואיד, מה שהופך את הסמל הקלאסי להראות
-    למעלה כמו לבן מוצק. אז כברירת מחדל, במכשירים אלה האפליקציה משתמשת ב-a
-    קו מתאר לבן רגיל עם מספר לבן.\n
-
-    \n עם זאת, לא כל המכשירים עוקבים אחר המפרט, אז זה לא
-    הכרחי ואינו פועל כהלכה בכל מקום.  אתה יכול לנסות
-    לגרום לסט הסמלים הקלאסי לעבוד בצורה הקלאסית על ידי הפיכתו
-    אפשרות מופעלת.  זכור, ברוב המכשירים זה רק יהפוך את הסמל
-    להפוך לבן מוצק.</string>
   <string formatted="false" name="alarms_overview">סקירה כללית של אזעקות</string>
   <string formatted="false" name="alarms_overview_help">דף זה מאפשר לך להוסיף התראות חדשות, להפעיל או לבטל במהירות
     אזעקות קיימות, או מחק אזעקות.\n
@@ -449,9 +417,6 @@
   <string formatted="false" name="age_3_weeks">3 שבועות</string>
   <string formatted="false" name="age_4_weeks">4 שבועות</string>
   <string formatted="false" name="age_never_delete">לעולם לא למחוק</string>
-  <string formatted="false" name="icon_set_classic">קלַאסִי</string>
-  <string formatted="false" name="icon_set_plain">מספר רגיל</string>
-  <string formatted="false" name="icon_set_smaller">מספר קטן יותר</string>
   <string formatted="false" name="pref_content_percent">אחוז סוללה</string>
   <string formatted="false" name="pref_content_temperature">טמפרטורת הסוללה</string>
   <string formatted="false" name="pref_content_switching">החלף בין שניהם</string>

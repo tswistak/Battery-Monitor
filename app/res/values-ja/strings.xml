@@ -134,8 +134,8 @@
   <string name="live_updates_notif_chan_name" formatted="false">ライブアップデート</string>
   <string name="channel_group_name_alarms" formatted="false">アラーム</string>
   <string name="status_bar_icon_settings" formatted="false">ステータスバー アイコン</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">アイコンセットのコントロール</string>
-  <string name="status_bar_icon_settings_help" formatted="false">どのアイコンセットを使用するか選択して、アイコンセットの設定を変更することができます (色など)。</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">アイコンの表示内容を選択</string>
+  <string name="status_bar_icon_settings_help" formatted="false">通知アイコンにバッテリー残量を表示するか温度を表示するか、アイコン内に単位記号を表示するか、また充電時に専用アイコンを使うかを選択します。</string>
   <string name="current_hack_settings" formatted="false">電流 (mA) ハック</string>
   <string name="current_hack_settings_summary" formatted="false">mA 情報を有効にする詳細設定</string>
   <string name="current_hack_settings_help" formatted="false">Android は、バッテリー電流に関する情報にアクセスするための手段をアプリに提供していません。しかし、ハックは、多くのデバイスでこの情報を取得することができるようになります。\n\nこの動作は保証されません。全く動作しない可能性もあります。または動作しても全く意味のない値になることもあります。\n\n設定が可能な場合は、ハックをオンにして、このセクションで使用する方法を制御します。</string>
@@ -180,11 +180,11 @@
   <string name="pref_status_duration_in_vital_signs" formatted="false">バイタルサインにステータスの期間を含める</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">バイタルサインにステータスが変わってからの時間を含めますか?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">設定した場合は、デバイスのプラグを抜いた、挿した、またはフル充電 されてからの時間が、バイタルサインの行に含まれます。</string>
-  <string name="pref_cat_icon_set" formatted="false">アイコンセット</string>
-  <string name="pref_icon_set" formatted="false">アイコンセット</string>
+  <string name="pref_cat_icon_set" formatted="false">通知アイコン</string>
   <string name="pref_icon_content" formatted="false">アイコン内容</string>
   <string name="pref_icon_content_help" formatted="false">ステータスバーアイコンにバッテリー残量を表示するか、バッテリー温度を表示するかを選択します。温度は選択した単位に従います。</string>
-  <string name="pref_icon_set_help" formatted="false">Android にはさまざまな種類があるため、すべての端末でうまく動作する完璧なアイコンセットは 1 つではありません。ほぼすべての端末で少なくとも 1 つは良い選択肢になるよう、3 つの組み込みアイコンセットを用意しています。\n\n\"クラシック\" は 2009 年からある元祖のアイコンセットです。古い端末では今でも最適ですが、新しい Android（Android 3.0 Honeycomb 以降）では通知アイコンが縮小されて暗く表示されるため、このセットは非常に読みにくくなります。\n\n\"通常の数字\" は新しい Android 端末の標準です。とても大きな白い数字で、縮小や暗転後でも見やすく表示されます。充電中は数字の下に稲妻が表示されます。\n\n\"小さい数字\" は \"通常の数字\" を小さくしたものです。新しい端末の中には、標準的な Android のように実際にはアイコンを縮小しないものがあり、\"通常の数字\" の大きな数字が不自然に大きく見える場合があるためです。</string>
+  <string name="pref_show_icon_unit" formatted="false">単位記号を表示</string>
+  <string name="pref_show_icon_unit_help" formatted="false">有効にすると、アイコンにバッテリー残量はパーセント記号、バッテリー温度は度記号を表示します。数字だけを表示したい場合は無効にしてください。</string>
   <string name="pref_cat_current_hack_main" formatted="false">メイン コントロール</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">電流 (mA) ハックはサポートされていません</string>
   <string name="pref_current_hack_unsupported" formatted="false">申し訳ありません、このデバイスで電流 (mA) ハックはサポートされていません。</string>
@@ -215,7 +215,7 @@
   <string name="pref_cat_charging_indicator" formatted="false">充電中インジケーター</string>
   <string name="pref_indicate_charging" formatted="false">充電中を示す</string>
   <string name="pref_indicate_charging_summary" formatted="false">充電中を示すアイコンを使用しますか?</string>
-  <string name="pref_indicate_charging_help" formatted="false">いくつかのアイコンセットでは、充電中であることを示します。 たとえば、数字の下に稲妻が表示されます。その表示をしたくない場合は、 この設定を無効にしてください。</string>
+  <string name="pref_indicate_charging_help" formatted="false">充電アイコンでは数字の下に稲妻を表示できます。充電中と放電中で同じアイコンにしたい場合は、この設定を無効にしてください。</string>
   <string name="pref_cat_logging" formatted="false">ロギング</string>
   <string name="pref_enable_logging" formatted="false">ログを有効にする</string>
   <string name="pref_enable_logging_summary" formatted="false">バッテリーステータスの変更ログを取得しますか?</string>
@@ -240,9 +240,6 @@
   <string name="pref_cat_language" formatted="false">言語</string>
   <string name="pref_language_override" formatted="false">言語の上書き</string>
   <string name="pref_language_override_summary" formatted="false">言語を選択:</string>
-  <string name="pref_classic_color_mode" formatted="false">強制的にクラシックカラーモードにする</string>
-  <string name="pref_classic_color_mode_summary" formatted="false">これは通常動作しません。ヘルプをお読みください</string>
-  <string name="pref_classic_color_mode_help" formatted="false">Android 5.0 (Lollipop) から、着色された通知アイコンはもはや公式には Android 上で動作しません。クラシックアイコンは白い四角としてを表示されます。そのためデフォルトでは、これらのデバイス上で、アプリは白い番号と白いアウトラインを使用します。\n\nしかし、すべてのデバイスが仕様に従っているわけではないので、これは必要ではなく、すべてにおいて正常に動作するわけではありません。このオプションをオンにすることによって、クラシックな方法で、クラシックアイコンセットを動作させてみることができます。覚えておいてほしいのは、ほとんどのデバイスでこれはアイコンがただの白い四角になります、。</string>
   <string name="alarms_overview" formatted="false">アラームの概要</string>
   <string name="alarms_overview_help" formatted="false">このページで、新しいアラームを追加する、既存のアラームをすばやく 有効または無効にする、アラームを削除することができます。\n\n新しいアラームを追加するには、\"アラームを追加\" を押します - これで、新しいアラームを作成して、アラーム設定ページへ移動します。 そこで新しいアラームの設定を変更することができます。 詳細については、そのページのヘルプを参照してください。\n\n作成したすべてのアラームのリストの下に \"\アラームを追加\"\ ボタンがあります\n\n• 既存のアラームを編集するには、それを押すだけです。\n• 削除するには、それを長押しします。その後 \"アラームを削除\" を選択します。 (個々のアラーム設定ページから、メニューを押して、 その後 \"アラームを削除\" でアラームを削除することもできます。)\n• すばやくアラームを有効にするかどうかを切り替えるには、 アラームテキストの左側の、目覚まし時計のアイコンを押します。 (また、個々のアラーム設定ページから、アラームを有効または 無効にすることもできます。)</string>
   <string name="pref_alarm_enabled" formatted="false">アラームを有効にする</string>
@@ -267,9 +264,6 @@
   <string name="age_3_weeks" formatted="false">3 週間</string>
   <string name="age_4_weeks" formatted="false">4 週間</string>
   <string formatted="false" name="age_never_delete">削除しない</string>
-  <string name="icon_set_classic" formatted="false">クラシック</string>
-  <string name="icon_set_plain" formatted="false">数字のみ</string>
-  <string name="icon_set_smaller" formatted="false">小さい数字</string>
   <string name="pref_content_percent" formatted="false">バッテリー残量</string>
   <string name="pref_content_temperature" formatted="false">バッテリー温度</string>
   <string name="pref_content_switching" formatted="false">両方を切り替え表示</string>

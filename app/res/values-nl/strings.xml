@@ -97,8 +97,8 @@
   <string name="notification_settings_summary" formatted="false">Hoofdmelding configureren</string>
   <string name="notification_settings_help" formatted="false">Je kunt de inhoud en het uiterlijk van de melding aanpassen.</string>
   <string name="status_bar_icon_settings" formatted="false">Status icoon</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Iconen</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Je kunt selecteren welke iconen je wilt gebruiken.</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">Kies de icooninhoud</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Kies of het meldingsicoon het batterijpercentage of de temperatuur toont, of het eenheidssymbool in het icoon wordt weergegeven en of laden een apart icoon gebruikt.</string>
   <string name="alarm_settings_subtitle" formatted="false">Alarminstellingen</string>
   <string name="alarm_settings" formatted="false">Alarmen</string>
   <string name="alarm_settings_help" formatted="false">Je kunt een melding ontvangen als je batterijniveau onder een bepaald punt komt.</string>
@@ -121,13 +121,11 @@
   <string name="pref_status_duration_in_vital_signs" formatted="false">Tijd van status</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Laat tijd sinds wijziging zien in de onderste regel van de melding?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Stel dit in om de tijd sinds de laatste statuswijziging te laten zien in de onderste regel.</string>
-  <string name="pref_cat_icon_set" formatted="false">Iconen</string>
-  <string name="pref_icon_set" formatted="false">Iconen</string>
-  <string name="pref_icon_set_help" formatted="false">Android bestaat in veel varianten, dus er is niet één perfecte iconenset die op elk apparaat goed werkt. Er zijn drie ingebouwde iconensets die voor vrijwel elk apparaat minstens één goede optie zouden moeten bieden.\n\n\"Klassiek\" is de oorspronkelijke iconenset uit 2009. Deze is nog steeds het beste op oudere apparaten, maar nieuwere Android-versies (vanaf Android 3.0, Honeycomb) verkleinen en dimmen meldingsiconen, waardoor deze set erg moeilijk leesbaar wordt.\n\n\"Gewoon nummer\" is de standaard op nieuwere Android-apparaten. Dit is een zeer groot wit cijfer dat ook na verkleinen en dimmen goed zichtbaar blijft. Tijdens het opladen verschijnt er een bliksemsymbool onder het cijfer.\n\n\"Kleiner nummer\" is zoals \"Gewoon nummer\", maar kleiner, omdat sommige nieuwere apparaten het icoon niet echt verkleinen zoals standaard Android dat doet. Daardoor kan het grote cijfer in \"Gewoon nummer\" op die apparaten komisch groot lijken.</string>
+  <string name="pref_cat_icon_set" formatted="false">Meldingsicoon</string>
   <string name="pref_cat_charging_indicator" formatted="false">Indicatie tijdens opladen</string>
   <string name="pref_indicate_charging" formatted="false">Indicatie tonen tijdens opladen</string>
   <string name="pref_indicate_charging_summary" formatted="false">Icoon veranderen tijdens opladen</string>
-  <string name="pref_indicate_charging_help" formatted="false">Sommige icoonsets geven aan wanneer de batterij wordt opgeladen. Dit kun je hier aan of uitzetten.</string>
+  <string name="pref_indicate_charging_help" formatted="false">Het laadicoon kan een bliksemschicht onder het getal tonen. Schakel dit uit als je tijdens laden en ontladen hetzelfde icoon wilt.</string>
   <string name="pref_cat_logging" formatted="false">Logboek</string>
   <string name="pref_enable_logging" formatted="false">Logboek inschakelen</string>
   <string name="pref_enable_logging_summary" formatted="false">Veranderingen in batterijstatus opnemen in logboek</string>
@@ -169,9 +167,6 @@
   <string name="age_3_weeks" formatted="false">3 weken</string>
   <string name="age_4_weeks" formatted="false">4 weken</string>
   <string formatted="false" name="age_never_delete">Nooit verwijderen</string>
-  <string name="icon_set_classic" formatted="false">Klassiek</string>
-  <string name="icon_set_plain" formatted="false">Cijfer</string>
-  <string name="icon_set_smaller" formatted="false">Kleiner cijfer</string>
   <string name="circle_widget" formatted="false">Battery Monitor Cirkel</string>
   <string name="full_widget" formatted="false">Battery Monitor Volledig</string>
   <string name="notifications_disabled" formatted="false">Meldingen zijn uitgeschakeld!</string>
@@ -233,6 +228,8 @@
   <string name="pref_chip_indicate_charging_help" formatted="false">Als dit is ingeschakeld, toont de statusbalkchip een bliksem-emoji naast de waarde tijdens laden of wanneer volledig opgeladen.</string>
   <string name="pref_icon_content" formatted="false">Icooninhoud</string>
   <string name="pref_icon_content_help" formatted="false">Kies of het statusbalkicoon batterijpercentage of batterijtemperatuur toont. Temperatuur volgt je gekozen eenheid.</string>
+  <string name="pref_show_icon_unit" formatted="false">Eenheidssymbool tonen</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Als dit is ingeschakeld, toont het pictogram een procentteken voor het batterijpercentage en een gradensymbool voor de batterijtemperatuur. Schakel dit uit om alleen het getal te tonen.</string>
   <string name="pref_cat_current_hack_main" formatted="false">Hoofdbesturing</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Stroomhack (mA) niet ondersteund</string>
   <string name="pref_current_hack_unsupported" formatted="false">Sorry, de stroomhack (mA) wordt op dit apparaat niet ondersteund.</string>
@@ -267,9 +264,6 @@
   <string name="pref_cat_predictor" formatted="false">Schattingen resterende tijd</string>
   <string name="pref_prediction_type" formatted="false">Type schatting</string>
   <string name="pref_prediction_type_help" formatted="false">Hier kun je kiezen hoe Battery Monitor je resterende batterijduur / tijd tot volledig opgeladen voorspelt.\n\nHet \"Gevoelig\"-algoritme is strikt gebaseerd op je laatste vijf minuten gebruik. Als je belangrijkste vraag is \"Hoe lang gaat mijn batterij mee als ik blijf doen wat ik nu doe?\", dan is dit het juiste algoritme.\n\nHet \"Conservatief\"-algoritme is standaard. Het is ook gebaseerd op recent gebruik, maar probeert minder vrij af te wijken van je langetermijngemiddelde.\n\nSelecteer \"Sinds statuswijziging\" om de voorspelling strikt op je huidige sessie te baseren.\n\nTot slot kun je de voorspelling uitsluitend op je langetermijngemiddelde gebruik baseren.</string>
-  <string name="pref_classic_color_mode" formatted="false">Klassieke kleurmodus forceren</string>
-  <string name="pref_classic_color_mode_summary" formatted="false">Dit werkt meestal niet; lees de help</string>
-  <string name="pref_classic_color_mode_help" formatted="false">Vanaf Android 5.0 (Lollipop) werken gekleurde meldingsiconen officieel niet meer op Android, waardoor het klassieke icoon volledig wit wordt. Daarom gebruikt de app standaard op deze apparaten een eenvoudige witte omtrek met een wit cijfer.\n\nNiet alle apparaten volgen de specificatie, dus dit is niet overal nodig en werkt niet overal correct. Je kunt proberen de klassieke iconenset op de klassieke manier te laten werken door deze optie in te schakelen. Onthoud dat dit op de meeste apparaten het icoon gewoon volledig wit maakt.</string>
   <string name="pref_content_percent" formatted="false">Batterijpercentage</string>
   <string name="pref_content_temperature" formatted="false">Batterijtemperatuur</string>
   <string name="pref_content_switching" formatted="false">Wissel tussen beide</string>

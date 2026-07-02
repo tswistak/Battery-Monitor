@@ -97,12 +97,11 @@
   <string name="other_settings_help" formatted="false">Miden további beállítás ezen az oldalon található: naplózás, képernyőzár, hőmérséklet mértékegysége, automatikus indulás, stb.</string>
   <string name="add_alarm" formatted="false">Riasztás hozzáadása</string>
   <string name="time_remaining" formatted="false">Hátralévő idő</string>
-  <string name="pref_cat_icon_set" formatted="false">Ikon stílus</string>
-  <string name="pref_icon_set" formatted="false">Ikon stílus</string>
+  <string name="pref_cat_icon_set" formatted="false">Értesítési ikon</string>
   <string name="pref_cat_charging_indicator" formatted="false">Töltésjelző</string>
   <string name="pref_indicate_charging" formatted="false">Töltés jelzése</string>
   <string name="pref_indicate_charging_summary" formatted="false">Látszódjon az ikonon a töltés?</string>
-  <string name="pref_indicate_charging_help" formatted="false">Valamelyik ikon stílus megváltozik töltéskor, például egy villám jellel a szám alatt. Kikapcsolhatja a funkciót, ha jobban szeretné enélkül szeretné használni.</string>
+  <string name="pref_indicate_charging_help" formatted="false">A töltési ikon villámjelet jeleníthet meg a szám alatt. Kapcsold ki ezt a beállítást, ha töltéskor és merüléskor ugyanazt az ikont szeretnéd.</string>
   <string name="pref_cat_logging" formatted="false">Naplózás</string>
   <string name="pref_enable_logging" formatted="false">Naplózás engedélyezése</string>
   <string name="pref_enable_logging_summary" formatted="false">Naplózza az akku állapotának változásait?</string>
@@ -145,9 +144,6 @@
   <string name="age_3_weeks" formatted="false">3 hét</string>
   <string name="age_4_weeks" formatted="false">4 hét</string>
   <string formatted="false" name="age_never_delete">Soha ne törölje</string>
-  <string name="icon_set_classic" formatted="false">Klasszikus</string>
-  <string name="icon_set_plain" formatted="false">Egyszerű számok</string>
-  <string name="icon_set_smaller" formatted="false">Kisebb számok</string>
   <string name="circle_widget" formatted="false">Battery Monitor kör widget</string>
   <string name="full_widget" formatted="false">Battery Monitor teljes widget</string>
   <string name="notifications_disabled" formatted="false">Az értesítések le vannak tiltva!</string>
@@ -192,8 +188,8 @@
   <string name="notification_settings_summary" formatted="false">A fő értesítés beállítása</string>
   <string name="notification_settings_help" formatted="false">Beállíthatod, milyen tartalom jelenjen meg a lehúzható értesítésben.</string>
   <string name="status_bar_icon_settings" formatted="false">Állapotsor ikon</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Ikonkészletek beállítása</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Kiválaszthatod a használni kívánt ikonkészletet, és módosíthatod annak beállításait.</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">Ikontartalom kiválasztása</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Válaszd ki, hogy az értesítési ikon az akkumulátor százalékát vagy a hőmérsékletét jelenítse meg, hogy az egységjel megjelenjen-e az ikonban, és hogy töltéskor külön ikon legyen-e.</string>
   <string name="status_bar_chip_settings" formatted="false">Állapotsor chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">A Live Updates chip tartalmának beállítása</string>
   <string name="status_bar_chip_settings_help" formatted="false">Android 16+ rendszeren, Live Updates mellett beállíthatod, mit jelenítsen meg az állapotsor chip.</string>
@@ -233,7 +229,8 @@
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Bekapcsolva a létfontosságú adatsor mutatja az állapotváltozás óta eltelt órákat is.</string>
   <string name="pref_icon_content" formatted="false">Ikon tartalma</string>
   <string name="pref_icon_content_help" formatted="false">Válaszd ki, hogy az állapotsor ikon akkumulátor százalékot vagy hőmérsékletet mutasson.</string>
-  <string name="pref_icon_set_help" formatted="false">Az Android sokféle készüléken fut, ezért nincs egyetlen tökéletes ikonkészlet, ami mindenhol ideális.</string>
+  <string name="pref_show_icon_unit" formatted="false">Egységjel megjelenítése</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Bekapcsolva az ikon százalékjelet jelenít meg az akkumulátor töltöttségéhez és fokjelet az akkumulátor hőmérsékletéhez. Kapcsold ki, ha csak a számot szeretnéd látni.</string>
   <string name="pref_cat_current_hack_main" formatted="false">Fő vezérlés</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Áram (mA) hack nem támogatott</string>
   <string name="pref_current_hack_unsupported" formatted="false">Sajnáljuk, az áram (mA) hack nem támogatott ezen a készüléken.</string>
@@ -266,9 +263,6 @@
   <string name="predictor_since_status_change" formatted="false">Állapotváltozás óta</string>
   <string name="predictor_long_term_ave" formatted="false">Hosszú távú átlag</string>
   <string name="pref_prediction_type_help" formatted="false">Itt kiválaszthatod, hogyan becsülje a Battery Monitor a hátralévő akkuidőt.</string>
-  <string name="pref_classic_color_mode" formatted="false">Klasszikus színmód kényszerítése</string>
-  <string name="pref_classic_color_mode_summary" formatted="false">Ez általában nem működik; kérlek olvasd el a súgót</string>
-  <string name="pref_classic_color_mode_help" formatted="false">Android 5.0 óta a színes értesítési ikonok hivatalosan nem támogatottak mindenhol.</string>
   <string name="alarms_overview_help" formatted="false">Ezen az oldalon új riasztásokat adhatsz hozzá, gyorsan engedélyezheted vagy letilthatod a meglévőket, illetve törölheted őket.</string>
   <string name="pref_content_percent" formatted="false">Akkumulátor százalék</string>
   <string name="pref_content_temperature" formatted="false">Akkumulátor hőmérséklet</string>

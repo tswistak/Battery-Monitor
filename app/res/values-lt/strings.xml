@@ -207,8 +207,8 @@
   <string formatted="false" name="notification_settings_summary">Konfigūruokite pagrindinį pranešimą</string>
   <string formatted="false" name="notification_settings_help">Galite konfigūruoti, kurį turinį rodyti išskleidžiamajame pranešime.</string>
   <string formatted="false" name="status_bar_icon_settings">Būsenos juostos piktograma</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">Valdymo piktogramų rinkiniai</string>
-  <string formatted="false" name="status_bar_icon_settings_help">Galite pasirinkti, kurį piktogramų rinkinį naudoti, ir pakeisti piktogramų rinkinio nustatymus (pvz., spalvas).</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">Pasirinkite piktogramos turinį</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Pasirinkite, ar pranešimo piktograma rodo akumuliatoriaus procentą ar temperatūrą, ar piktogramoje rodomas vieneto simbolis ir ar įkrovimui turi būti naudojama atskira piktograma.</string>
   <string formatted="false" name="status_bar_chip_settings">Būsenos juostos lustas</string>
   <string formatted="false" name="status_bar_chip_settings_summary">Konfigūruokite tiesioginių atnaujinimų lusto turinį</string>
   <string formatted="false" name="status_bar_chip_settings_help">16 ir naujesnėse versijose „Android“ su tiesioginiais naujiniais galite konfigūruoti būseną
@@ -265,30 +265,12 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">Įtraukti laiką nuo būsenos pasikeitimo į gyvybinius požymius?</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">Jei nustatyta, gyvybinių požymių eilutėje taip pat bus nurodytas valandų skaičius
     nuo tada, kai įrenginys buvo atjungtas, prijungtas arba visiškai įkrautas.</string>
-  <string formatted="false" name="pref_cat_icon_set">Piktogramų rinkinys</string>
-  <string formatted="false" name="pref_icon_set">Piktogramų rinkinys</string>
+  <string formatted="false" name="pref_cat_icon_set">Pranešimo piktograma</string>
   <string formatted="false" name="pref_icon_content">Piktogramos turinys</string>
   <string formatted="false" name="pref_icon_content_help">Pasirinkite, ar būsenos juostos piktograma rodo akumuliatoriaus procentą arba
     akumuliatoriaus temperatūra. Temperatūra atitinka jūsų pasirinktą vienetą.</string>
-  <string formatted="false" name="pref_icon_set_help">„Android“ yra įvairių skonių, todėl nėra vieno tobulo piktogramų rinkinio
-    kuris gerai veikia kiekviename įrenginyje.  Yra trys integruoti piktogramų rinkiniai
-    kad turėtų būti bent vienas geras pasirinkimas beveik kiekvienam
-    prietaisas.\n
-
-    \n\"Classic\" yra originalus 2009 m. piktogramų rinkinys. Tai vis dar
-    geriausia senesniuose įrenginiuose, bet naujesnėse „Android“ versijose (pradedant
-    su Android 3.0, Honeycomb) sumažinti ir pritemdyti pranešimų piktogramas,
-    todėl šį rinkinį labai sunku perskaityti.\n
-
-    \n\"Paprastas numeris\" yra numatytasis visų naujesnių "Android" įrenginių.
-    Tai labai didelis baltas skaičius, kuris gerai pasirodo net ir po to
-    yra susitraukęs ir pritemdytas.  Jame rodomas žaibas po
-    numerį įkrovimo metu.\n
-
-    \n\"Mažesnis skaičius\" yra kaip \"Paprastas skaičius\", bet mažesnis, nes
-    kai kurie naujesni įrenginiai iš tikrųjų nesumažina piktogramos kaip atsargos
-    „Android“ tai daro, o labai didelis skaičius \"Paprastas skaičius\" gali
-    šiuose įrenginiuose atrodo komiškai dideli.</string>
+  <string name="pref_show_icon_unit" formatted="false">Rodyti vieneto simbolį</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Jei įjungta, piktograma rodo procento ženklą akumuliatoriaus lygiui ir laipsnio simbolį akumuliatoriaus temperatūrai. Išjunkite, jei norite rodyti tik skaičių.</string>
   <string formatted="false" name="pref_cat_current_hack_main">Pagrindinis valdymas</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">Srovės (mA) įsilaužimas nepalaikomas</string>
   <string formatted="false" name="pref_current_hack_unsupported">Atsiprašome, dabartinis (mA) įsilaužimas šiame įrenginyje nepalaikomas.</string>
@@ -371,9 +353,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">Įkrovimo indikatorius</string>
   <string formatted="false" name="pref_indicate_charging">Nurodykite įkrovimą</string>
   <string formatted="false" name="pref_indicate_charging_summary">Keisti piktogramą, kad būtų rodomas įkrovimas?</string>
-  <string formatted="false" name="pref_indicate_charging_help">Kai kurie piktogramų rinkiniai rodo, kada baterija įkraunama
-    Pavyzdžiui, po skaičiumi rodydami žaibą.  Išjungti
-    šį nustatymą, jei nenorite, kad jis to darytų.</string>
+  <string formatted="false" name="pref_indicate_charging_help">Įkrovimo piktograma gali rodyti žaibą po skaičiumi. Išjunkite šį nustatymą, jei norite tos pačios piktogramos kraunant ir išsikraunant.</string>
   <string formatted="false" name="pref_enable_logging_help">Jei įjungta, „Battery Monitor“ registruos akumuliatoriaus būsenos pokyčius.</string>
   <string formatted="false" name="pref_max_log_age_help">Jei registravimas įjungtas, kiekvieną kartą prijungus įrenginį bus ištrinti už šią reikšmę senesni įrašai. Pasirinkite Niekada netrinti, kad įrašai būtų saugomi, kol juos ištrinsite rankiniu būdu.</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">„Android“ praneša apie akumuliatoriaus temperatūrą Celsijaus laipsniais.  Jeigu
@@ -414,18 +394,6 @@
 
     \nGaliausiai galite turėti prognozę, pagrįstą tik jūsų
     ilgalaikis vidutinis naudojimas.</string>
-  <string formatted="false" name="pref_classic_color_mode">Priverskite klasikinį spalvų režimą</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">Paprastai tai neveikia; prašau perskaityti pagalbą</string>
-  <string formatted="false" name="pref_classic_color_mode_help">Pradedant nuo Android 5.0 (Lollipop), spalvotos pranešimų piktogramos
-    oficialiai nebeveikia „Android“, todėl rodoma klasikinė piktograma
-    iki vientisos baltos spalvos. Taigi pagal numatytuosius nustatymus šiuose įrenginiuose programa naudoja a
-    paprastas baltas kontūras su baltu skaičiumi.\n
-
-    \nTačiau ne visi įrenginiai atitinka specifikacijas, todėl taip nėra
-    būtina ir ne visur veikia tinkamai.  Galite pabandyti
-    paverskite klasikinį piktogramų rinkinį klasikiniu būdu
-    parinktis įjungta.  Atminkite, kad daugumoje įrenginių tai padarys tik piktogramą
-    taps vientisai baltas.</string>
   <string formatted="false" name="alarms_overview_help">Šiame puslapyje galite pridėti naujų signalų, greitai įjungti arba išjungti
     esamus pavojaus signalus arba ištrinti signalus.\n
 
@@ -462,9 +430,6 @@
     \nAliarmas „Sveikata sugenda“ jums praneš, jei jūsų akumuliatorius bus sveikas
     tampa ne \"Nežinoma\" arba \"Gera sveikata\", kaip
     pranešė Android.</string>
-  <string formatted="false" name="icon_set_classic">Klasika</string>
-  <string formatted="false" name="icon_set_plain">Paprastas numeris</string>
-  <string formatted="false" name="icon_set_smaller">Mažesnis skaičius</string>
   <string formatted="false" name="pref_content_percent">Baterijos procentas</string>
   <string formatted="false" name="pref_content_temperature">Baterijos temperatūra</string>
   <string formatted="false" name="pref_content_switching">Perjungti tarp abiejų</string>

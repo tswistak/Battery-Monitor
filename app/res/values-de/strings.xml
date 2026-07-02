@@ -137,7 +137,6 @@
   <string name="age_3_weeks" formatted="false">3 Wochen</string>
   <string name="age_4_weeks" formatted="false">4 Wochen</string>
   <string formatted="false" name="age_never_delete">Nie löschen</string>
-  <string name="icon_set_classic" formatted="false">Klassik</string>
   <string name="notifications_disabled" formatted="false">Benachrichtigungen sind deaktiviert!</string>
   <string name="notifications_disabled_message" formatted="false">Sie haben alle Benachrichtigungen für Battery Monitor blockiert. Dadurch kann Battery Monitor keine Benachrichtigungen anzeigen: Sowohl die Hauptbenachrichtigung als auch alle von Ihnen gesetzten Alarme werden blockiert.\n\nDa Battery Monitor es erlaubt, die Hauptbenachrichtigung separat ein- und auszuschalten und Alarme vorübergehend zu deaktivieren, wird dringend empfohlen, die Benachrichtigungen für Battery Monitor wieder zuzulassen. Solange sie blockiert sind, kann es so aussehen, als ob Battery Monitor nicht funktioniert.\n\nBitte drücken Sie OK, um zu den Systemeinstellungen zu gelangen, wo Sie die Benachrichtigungen für Battery Monitor wieder freigeben können.</string>
   <string name="battery_optimized" formatted="false">Battery Monitor ist eingeschränkt!</string>
@@ -171,8 +170,8 @@
   <string name="alarm_chan_disabled_b" formatted="false">Diesen Alarmtyp aktivieren</string>
   <string name="alarm_chan_settings_b" formatted="false">Diesen Alarmtyp verwalten</string>
   <string name="notification_settings_help" formatted="false">Sie können konfigurieren, welche Inhalte in der Benachrichtigung angezeigt werden.</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Icon-Sets steuern</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Sie können auswählen, welches Icon-Set verwendet wird, und dessen Einstellungen ändern (z. B. Farben).</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">Symbolinhalt auswählen</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Wählen Sie aus, ob das Benachrichtigungssymbol den Akkustand oder die Temperatur anzeigt, ob das Einheitssymbol im Symbol angezeigt wird und ob beim Laden ein eigenes Symbol verwendet wird.</string>
   <string name="status_bar_chip_settings" formatted="false">Statusleisten-Chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Inhalt des Live-Updates-Chips konfigurieren</string>
   <string name="status_bar_chip_settings_help" formatted="false">Auf Android 16+ mit Live Updates können Sie konfigurieren, was der Statusleisten-Chip zeigt und ob das Lade-Emoji angezeigt wird.</string>
@@ -210,11 +209,11 @@
   <string name="pref_status_duration_in_vital_signs" formatted="false">Statusdauer in Vitalzeichen</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Zeit seit Statusänderung in Vitalzeichen einbeziehen?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Wenn aktiviert, zeigt die Vitalzeichenzeile auch die Zeit seit Ausstecken, Einstecken oder Vollladung.</string>
-  <string name="pref_cat_icon_set" formatted="false">Icon-Set</string>
-  <string name="pref_icon_set" formatted="false">Icon-Set</string>
+  <string name="pref_cat_icon_set" formatted="false">Benachrichtigungssymbol</string>
   <string name="pref_icon_content" formatted="false">Icon-Inhalt</string>
   <string name="pref_icon_content_help" formatted="false">Wählen Sie, ob das Statusleisten-Icon Akkustand oder Akkutemperatur anzeigt.</string>
-  <string name="pref_icon_set_help" formatted="false">Android gibt es in vielen Varianten, daher gibt es kein perfektes Icon-Set für jedes Gerät.</string>
+  <string name="pref_show_icon_unit" formatted="false">Einheitensymbol anzeigen</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Wenn aktiviert, zeigt das Symbol ein Prozentzeichen für den Akkustand und ein Gradsymbol für die Akkutemperatur. Deaktivieren Sie dies, wenn nur die Zahl angezeigt werden soll.</string>
   <string name="pref_cat_current_hack_main" formatted="false">Hauptsteuerung</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Stromstärke-(mA)-Hack nicht unterstützt</string>
   <string name="pref_current_hack_unsupported" formatted="false">Der Stromstärke-(mA)-Hack wird auf diesem Gerät leider nicht unterstützt.</string>
@@ -245,7 +244,7 @@
   <string name="pref_cat_charging_indicator" formatted="false">Ladeindikator</string>
   <string name="pref_indicate_charging" formatted="false">Ladevorgang anzeigen</string>
   <string name="pref_indicate_charging_summary" formatted="false">Icon bei Ladevorgang anpassen?</string>
-  <string name="pref_indicate_charging_help" formatted="false">Einige Icon-Sets zeigen beim Laden einen Blitz an; diese Einstellung kann das deaktivieren.</string>
+  <string name="pref_indicate_charging_help" formatted="false">Das Ladesymbol kann unter der Zahl einen Blitz anzeigen. Deaktivieren Sie diese Option, wenn Sie beim Laden und Entladen dasselbe Symbol bevorzugen.</string>
   <string name="pref_enable_logging_help" formatted="false">Wenn aktiviert, protokolliert Battery Monitor Akku-Statusänderungen.</string>
   <string formatted="false" name="pref_max_log_age_help">Wenn die Protokollierung aktiviert ist, werden beim Anschließen des Geräts Protokolle gelöscht, die älter als diese Einstellung sind. Wähle Nie löschen, um Protokolle zu behalten, bis du sie manuell löschst.</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android meldet die Akkutemperatur in Celsius. Aktivieren Sie diese Option, wenn Sie Fahrenheit bevorzugen.</string>
@@ -260,19 +259,14 @@
   <string name="pref_cat_language" formatted="false">Sprache</string>
   <string name="pref_language_override" formatted="false">Sprache überschreiben</string>
   <string name="pref_language_override_summary" formatted="false">Sprache auswählen:</string>
-  <string name="pref_classic_color_mode" formatted="false">Klassischen Farbmodus erzwingen</string>
-  <string name="pref_classic_color_mode_summary" formatted="false">Dies funktioniert meist nicht; bitte Hilfe lesen</string>
-  <string name="pref_classic_color_mode_help" formatted="false">Seit Android 5.0 funktionieren farbige Benachrichtigungs-Icons offiziell nicht mehr überall.</string>
   <string name="alarms_overview_help" formatted="false">Auf dieser Seite können Sie neue Alarme hinzufügen, bestehende schnell aktivieren/deaktivieren oder löschen.</string>
   <string name="pref_alarm_enabled_help" formatted="false">Wenn Sie einen Alarm vorübergehend deaktivieren möchten, können Sie ihn hier oder auf der Hauptalarmseite aus- und wieder einschalten.</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Hier legen Sie fest, welche Bedingungen den Alarm auslösen.</string>
   <string name="pref_alarm_type_help" formatted="false">Aktuell stehen fünf Alarmtypen zur Auswahl.</string>
   <string name="pref_alarm_threshold_help" formatted="false">Für Lade- und Temperaturalarme müssen Sie den Schwellenwert festlegen.</string>
-  <string name="icon_set_plain" formatted="false">Normale Zahl</string>
   <string name="pref_content_percent" formatted="false">Akkustand in Prozent</string>
   <string name="pref_content_temperature" formatted="false">Akkutemperatur</string>
   <string name="pref_content_switching" formatted="false">Zwischen beiden wechseln</string>
-  <string name="icon_set_smaller" formatted="false">kleinere Nummer</string>
   <plurals name="n_log_items">
     <item quantity="one">%d Protokoll Eintrag</item>
     <item quantity="other">%d Protokoll Einträge</item>

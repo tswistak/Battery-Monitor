@@ -115,9 +115,6 @@
   <string name="age_3_weeks" formatted="false">3 semanas</string>
   <string name="age_4_weeks" formatted="false">4 semanas</string>
   <string formatted="false" name="age_never_delete">No eliminar nunca</string>
-  <string name="icon_set_classic" formatted="false">Clásico</string>
-  <string name="icon_set_plain" formatted="false">Número Sencillo</string>
-  <string name="icon_set_smaller" formatted="false">Número más Pequeño</string>
   <plurals name="n_log_items">
     <item quantity="one">%d entrada en el registro</item>
     <item quantity="other">%d entradas en el registro</item>
@@ -195,8 +192,8 @@
   <string formatted="false" name="notification_settings_summary">Configurar la notificación principal</string>
   <string formatted="false" name="notification_settings_help">Puede configurar qué contenido mostrar en la notificación desplegable.</string>
   <string formatted="false" name="status_bar_icon_settings">Icono de la barra de estado</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">Conjuntos de iconos de control</string>
-  <string formatted="false" name="status_bar_icon_settings_help">Puede seleccionar qué conjunto de iconos usar y cambiar la configuración del conjunto de iconos (por ejemplo, colores).</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">Elige el contenido del icono</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Elige si el icono de la notificación muestra el porcentaje de batería o la temperatura, si el símbolo de la unidad aparece en el icono y si la carga usa un icono específico.</string>
   <string formatted="false" name="status_bar_chip_settings">Chip de barra de estado</string>
   <string formatted="false" name="status_bar_chip_settings_summary">Configurar el contenido del chip de Live Updates</string>
   <string formatted="false" name="status_bar_chip_settings_help">En Android 16+ con Live Updates, puedes configurar cuál es el estado
@@ -257,30 +254,12 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">¿Incluir el tiempo desde el cambio de estado en los signos vitales?</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">Si se establece, la línea de signos vitales también incluirá el número de horas
     desde que el dispositivo se desenchufó, se enchufó o se cargó por completo.</string>
-  <string formatted="false" name="pref_cat_icon_set">Conjunto de iconos</string>
-  <string formatted="false" name="pref_icon_set">Conjunto de iconos</string>
+  <string formatted="false" name="pref_cat_icon_set">Icono de notificación</string>
   <string formatted="false" name="pref_icon_content">Contenido del icono</string>
   <string formatted="false" name="pref_icon_content_help">Elija si el icono de la barra de estado muestra el porcentaje de batería o
     temperatura de la batería. La temperatura sigue la unidad seleccionada.</string>
-  <string formatted="false" name="pref_icon_set_help">Android viene en muchas versiones, por lo que no existe un conjunto de íconos perfecto
-    que funciona bien en todos los dispositivos.  Hay tres conjuntos de iconos integrados
-    que debería proporcionar al menos una buena opción para prácticamente todos
-    dispositivo.\n
-
-    \n\"Classic\" es el conjunto de iconos original de 2009. Sigue siendo el
-    mejor en dispositivos más antiguos, pero en versiones más nuevas de Android (a partir
-    con Android 3.0, Honeycomb) reduce y atenúa los íconos de notificación,
-    haciendo que este conjunto sea muy difícil de leer.\n
-
-    \n\"Número simple\" es el valor predeterminado para todos los dispositivos Android más nuevos.
-    Es un número blanco muy grande que se muestra bien incluso después
-    siendo reducido y atenuado.  Muestra un rayo debajo del
-    número durante la carga.\n
-
-    \n\"Número más pequeño\" es como \"Número simple\" pero más pequeño, porque
-    algunos dispositivos más nuevos en realidad no reducen el ícono como el stock
-    Android lo hace, y el número muy grande en \"Número simple\" puede
-    aparecen cómicamente grandes en estos dispositivos.</string>
+  <string name="pref_show_icon_unit" formatted="false">Mostrar símbolo de unidad</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Si está activado, el icono muestra un signo de porcentaje para el nivel de batería y un símbolo de grado para la temperatura de la batería. Desactívalo para mostrar solo el número.</string>
   <string formatted="false" name="pref_cat_current_hack_main">Control principal</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">Hack de corriente (mA) no compatible</string>
   <string formatted="false" name="pref_current_hack_unsupported">Lo sentimos, el truco actual (mA) no es compatible con este dispositivo.</string>
@@ -363,9 +342,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">Indicador de carga</string>
   <string formatted="false" name="pref_indicate_charging">Indicar cargando</string>
   <string formatted="false" name="pref_indicate_charging_summary">¿Modificar el icono para indicar cuándo se está cargando?</string>
-  <string formatted="false" name="pref_indicate_charging_help">Algunos conjuntos de iconos indican cuándo se está cargando la batería, por ejemplo
-    ejemplo mostrando un rayo debajo del número.  Desactivar
-    esta configuración si prefiere que no lo haga.</string>
+  <string formatted="false" name="pref_indicate_charging_help">El icono de carga puede mostrar un rayo debajo del número. Desactiva este ajuste si prefieres el mismo icono al cargar y descargar.</string>
   <string formatted="false" name="predictor_sensitive">Sensible</string>
   <string formatted="false" name="predictor_conservative">Conservador</string>
   <string formatted="false" name="predictor_since_status_change">Desde el cambio de estado</string>
@@ -392,18 +369,6 @@
   <string formatted="false" name="pref_cat_language">Idioma</string>
   <string formatted="false" name="pref_language_override">Anulación de idioma</string>
   <string formatted="false" name="pref_language_override_summary">Seleccionar idioma:</string>
-  <string formatted="false" name="pref_classic_color_mode">Forzar modo de color clásico</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">Por lo general, esto no funciona; por favor lee la ayuda</string>
-  <string formatted="false" name="pref_classic_color_mode_help">A partir de Android 5.0 (Lollipop), íconos de notificación de colores
-    oficialmente ya no funciona en Android, lo que hace que se muestre el ícono Clásico
-    hasta que quede blanco sólido. Entonces, de forma predeterminada, en estos dispositivos la aplicación usa un
-    contorno blanco liso con número blanco.\n
-
-    \nSin embargo, no todos los dispositivos siguen las especificaciones, por lo que esto no es
-    necesario y no funciona correctamente en todas partes.  Puedes intentarlo
-    haga que el conjunto de íconos Clásico funcione de la manera clásica girando esto
-    opción activada.  Recuerde, en la mayoría de los dispositivos esto solo hará que el ícono
-    se vuelve blanco sólido.</string>
   <string formatted="false" name="alarms_overview">Descripción general de alarmas</string>
   <string formatted="false" name="alarms_overview_help">Esta página le permite agregar nuevas alarmas, habilitarlas o deshabilitarlas rápidamente
     alarmas existentes o eliminar alarmas.\n

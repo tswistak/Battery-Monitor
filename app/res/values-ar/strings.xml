@@ -103,8 +103,8 @@
   <string name="notification_settings_summary" formatted="false">اعدادات الاشعارات الرئيسية</string>
   <string name="notification_settings_help" formatted="false">يمكنك تكوين المحتوى الذي تود رؤيته في قائمة الاشعارات والسيطرة على مظهره</string>
   <string name="status_bar_icon_settings" formatted="false">ايقونة شريط الحالة</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">السيطرة على الايقونة</string>
-  <string name="status_bar_icon_settings_help" formatted="false">يمكنك الاختيار من الايقونات لجعلها المستخدمة وتغير اعدادات الايقونة المستخدمة</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">اختر محتوى الأيقونة</string>
+  <string name="status_bar_icon_settings_help" formatted="false">اختر ما إذا كانت أيقونة الإشعار تعرض نسبة البطارية أو درجة الحرارة، وما إذا كان رمز الوحدة يظهر داخل الأيقونة، وما إذا كان الشحن يستخدم أيقونة مخصصة.</string>
   <string name="alarm_settings_subtitle" formatted="false">اعدادات المنبه</string>
   <string name="alarm_settings" formatted="false">المنبهات</string>
   <string name="alarm_settings_help" formatted="false">يمكن للمؤشر بإعلامك عند مستوى البطارية تصل إلى نقطة معينة (على سبيل المثال، يصبح البطارية مشحونة بالكامل، وانخفاض مستوى البطارية أقل من 20٪)</string>
@@ -127,13 +127,11 @@
   <string name="pref_status_duration_in_vital_signs" formatted="false">مدة الوضع في العلامات الحيوية</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">الوقت الماضي منذ تغيير الحالة</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">اذا تم ضبط العلامات الحيوية سوف بيلغك ان الجهاز كم من الزمن مضى من الشحن والتفريغ</string>
-  <string name="pref_cat_icon_set" formatted="false">ضبط ايقونة</string>
-  <string name="pref_icon_set" formatted="false">ضبط الايقونة</string>
-  <string name="pref_icon_set_help" formatted="false">يتوفر Android في أشكال كثيرة، لذلك لا توجد مجموعة أيقونات واحدة مثالية تعمل جيدًا على كل جهاز. توجد ثلاث مجموعات أيقونات مدمجة يفترض أن توفر على الأقل خيارًا جيدًا واحدًا لمعظم الأجهزة.\n\n\"الكلاسيكي\" هو مجموعة الأيقونات الأصلية منذ عام 2009. وما يزال الأفضل على الأجهزة الأقدم، لكن الإصدارات الأحدث من Android (ابتداءً من Android 3.0 Honeycomb) تصغّر أيقونات الإشعارات وتخفّض سطوعها، مما يجعل قراءة هذه المجموعة صعبة جدًا.\n\n\"الرقم العادي\" هو الخيار الافتراضي في أجهزة Android الأحدث. وهو رقم أبيض كبير جدًا يبقى واضحًا حتى بعد التصغير والتعتيم. ويظهر رمز البرق أسفل الرقم أثناء الشحن.\n\n\"رقم أصغر\" يشبه \"الرقم العادي\" لكنه أصغر حجمًا، لأن بعض الأجهزة الأحدث لا تصغّر الأيقونة فعليًا كما يفعل Android القياسي، وعندها قد يبدو الرقم الكبير جدًا في \"الرقم العادي\" كبيرًا بشكل مبالغ فيه.</string>
+  <string name="pref_cat_icon_set" formatted="false">أيقونة الإشعار</string>
   <string name="pref_cat_charging_indicator" formatted="false">مؤشر الشحن</string>
   <string name="pref_indicate_charging" formatted="false">اشارة الى الشحن</string>
   <string name="pref_indicate_charging_summary" formatted="false">تغيير لايقونة للتنبيه عند الشحن؟</string>
-  <string name="pref_indicate_charging_help" formatted="false">بعض مجموعات الأيقونات تشير عندما يتم شحن البطارية، على سبيل المثال من خلال إظهار الضوء السفلي . تعطيل هذا الإعداد إذا كنت تفضل ذلك أن لا يفعل ذلك.</string>
+  <string name="pref_indicate_charging_help" formatted="false">يمكن لأيقونة الشحن إظهار رمز برق أسفل الرقم. عطّل هذا الإعداد إذا كنت تفضّل نفس الأيقونة أثناء الشحن والتفريغ.</string>
   <string name="pref_cat_logging" formatted="false">تسجيل</string>
   <string name="pref_enable_logging" formatted="false">تمكين التسجيل</string>
   <string name="pref_enable_logging_summary" formatted="false">تسجيل حالة تغيير البطارية ؟</string>
@@ -182,9 +180,6 @@
   <string name="age_3_weeks" formatted="false">ثلاث اسابيع</string>
   <string name="age_4_weeks" formatted="false">اربعة اسابيع</string>
   <string formatted="false" name="age_never_delete">عدم الحذف</string>
-  <string name="icon_set_classic" formatted="false">كلاسيك</string>
-  <string name="icon_set_plain" formatted="false">رقم كبير</string>
-  <string name="icon_set_smaller" formatted="false">رقم صغير</string>
   <string name="notifications_disabled" formatted="false">تم تعطيل الإشعارات!</string>
   <string name="notifications_disabled_message" formatted="false">لقد قمت بحظر جميع إشعارات Battery Monitor. سيمنع ذلك التطبيق من عرض أي إشعارات: سيتم حظر الإشعار الرئيسي وأي إنذارات قمت بإعدادها.\n\nوبما أن Battery Monitor يتيح لك تشغيل أو إيقاف الإشعار الرئيسي بشكل مستقل، وكذلك تعطيل الإنذارات التي أنشأتها مؤقتًا، فننصح بشدة بإلغاء حظر إشعارات Battery Monitor. أثناء الحظر، قد يبدو وكأن التطبيق لا يعمل.\n\nيرجى الضغط على موافق للانتقال إلى إعدادات النظام حيث يمكنك إلغاء حظر إشعارات Battery Monitor.</string>
   <string name="battery_optimized" formatted="false">تم تقييد Battery Monitor!</string>
@@ -240,6 +235,8 @@
   <string name="pref_chip_indicate_charging_help" formatted="false">عند التمكين، ستعرض شريحة شريط الحالة رمز البرق بجانب القيمة أثناء الشحن أو عند اكتمال الشحن.</string>
   <string name="pref_icon_content" formatted="false">محتوى الأيقونة</string>
   <string name="pref_icon_content_help" formatted="false">اختر ما إذا كانت أيقونة شريط الحالة تعرض نسبة البطارية أو درجة حرارتها. ستتبع الحرارة الوحدة التي اخترتها.</string>
+  <string name="pref_show_icon_unit" formatted="false">إظهار رمز الوحدة</string>
+  <string name="pref_show_icon_unit_help" formatted="false">عند التفعيل، تعرض الأيقونة علامة النسبة المئوية لنسبة البطارية وعلامة الدرجة لدرجة حرارة البطارية. عطّل هذا الخيار لعرض الرقم فقط.</string>
   <string name="pref_cat_current_hack_main" formatted="false">التحكم الرئيسي</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">حيلة التيار (mA) غير مدعومة</string>
   <string name="pref_current_hack_unsupported" formatted="false">عذرًا، حيلة التيار (mA) غير مدعومة على هذا الجهاز.</string>
@@ -267,9 +264,6 @@
   <string name="pref_auto_refresh_current_in_main_window" formatted="false">تحديث mA تلقائيًا في النافذة الرئيسية</string>
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">تحديث mA تلقائيًا كل ثانيتين؟</string>
   <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">إذا كان إعداد الحيلة يعرض mA في النافذة الرئيسية، يمكنك تحديث القيمة بالنقر عليها. وإذا أردت تحديثات متكررة دون النقر، فعّل هذا الخيار لتحديث القيمة تلقائيًا كل ثانيتين أثناء ظهور النافذة.\n\nلاحظ أن بعض الأجهزة نادرًا ما تحدّث البيانات الأساسية أو لا تحدّثها إطلاقًا، لذا قد لا تبدو القيمة متغيرة حتى مع التحديث التلقائي.</string>
-  <string name="pref_classic_color_mode" formatted="false">فرض وضع الألوان الكلاسيكي</string>
-  <string name="pref_classic_color_mode_summary" formatted="false">هذا غالبًا لا يعمل؛ يرجى قراءة المساعدة</string>
-  <string name="pref_classic_color_mode_help" formatted="false">بدءًا من Android 5.0 (Lollipop)، لم تعد أيقونات الإشعارات الملوّنة تعمل رسميًا على Android، مما يجعل الأيقونة الكلاسيكية تظهر باللون الأبيض بالكامل. لذلك يستخدم التطبيق افتراضيًا إطارًا أبيض ورقمًا أبيض على هذه الأجهزة.\n\nومع ذلك، ليست كل الأجهزة تلتزم بالمواصفات، لذا هذا ليس ضروريًا دائمًا ولا يعمل بشكل صحيح في كل مكان. يمكنك محاولة تشغيل مجموعة الأيقونات الكلاسيكية بالطريقة التقليدية عبر تفعيل هذا الخيار. تذكّر أنه على معظم الأجهزة سيجعل الأيقونة بيضاء بالكامل.</string>
   <string name="pref_content_percent" formatted="false">نسبة البطارية</string>
   <string name="pref_content_temperature" formatted="false">درجة حرارة البطارية</string>
   <string name="pref_content_switching" formatted="false">التبديل بين الاثنين</string>

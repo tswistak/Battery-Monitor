@@ -209,8 +209,8 @@
   <string formatted="false" name="notification_settings_summary">Nakonfigurujte hlavné upozornenie</string>
   <string formatted="false" name="notification_settings_help">Môžete nakonfigurovať, ktorý obsah sa má zobraziť v rozbaľovacom upozornení.</string>
   <string formatted="false" name="status_bar_icon_settings">Ikona stavového riadka</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">Sady ovládacích ikon</string>
-  <string formatted="false" name="status_bar_icon_settings_help">Môžete si vybrať, ktorá sada ikon sa má použiť, a zmeniť nastavenia sady ikon (napr. farby).</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">Vyberte obsah ikony</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Vyberte, či ikona upozornenia zobrazuje percento batérie alebo teplotu, či sa v ikone zobrazuje symbol jednotky a či má mať nabíjanie vlastnú ikonu.</string>
   <string formatted="false" name="status_bar_chip_settings">Čip stavového riadka</string>
   <string formatted="false" name="status_bar_chip_settings_summary">Nakonfigurujte obsah čipu Live Updates</string>
   <string formatted="false" name="status_bar_chip_settings_help">V systéme Android 16+ so živými aktualizáciami môžete nakonfigurovať stav
@@ -270,30 +270,12 @@
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">Zahrnúť čas od zmeny stavu do vitálnych funkcií?</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_help">Ak je nastavené, riadok vitálnych funkcií bude obsahovať aj počet hodín
     odkedy sa zariadenie odpojilo, zapojilo alebo úplne nabilo.</string>
-  <string formatted="false" name="pref_cat_icon_set">Sada ikon</string>
-  <string formatted="false" name="pref_icon_set">Sada ikon</string>
+  <string formatted="false" name="pref_cat_icon_set">Ikona upozornenia</string>
   <string formatted="false" name="pref_icon_content">Obsah ikony</string>
   <string formatted="false" name="pref_icon_content_help">Vyberte, či ikona stavového riadka zobrazuje percento batérie alebo
     teplota batérie. Teplota sa riadi vami zvolenou jednotkou.</string>
-  <string formatted="false" name="pref_icon_set_help">Android prichádza v mnohých variantoch, takže neexistuje žiadna dokonalá sada ikon
-    ktorý funguje dobre na každom zariadení.  K dispozícii sú tri vstavané sady ikon
-    to by malo poskytnúť aspoň jednu dobrú možnosť prakticky pre každého
-    zariadenie.\n
-
-    \n\"Classic\" je pôvodná sada ikon z roku 2009. Stále je
-    najlepšie na starších zariadeniach, ale na novších verziách Androidu (od
-    so systémom Android 3.0, Honeycomb) zmenšiť a stlmiť ikony upozornení,
-    čím sa táto množina veľmi ťažko číta.\n
-
-    \n\"Obyčajné číslo\" je predvolené pre všetky novšie zariadenia s Androidom.
-    Je to veľmi veľké biele číslo, ktoré sa dobre zobrazuje aj potom
-    scvrknuté a stlmené.  Zobrazuje blesk pod
-    číslo počas nabíjania.\n
-
-    \n\"Menšie číslo\" je ako \"Obyčajné číslo\", ale menšie, pretože
-    niektoré novšie zariadenia v skutočnosti nezmenšujú ikonu ako akcie
-    Android áno a veľmi veľké číslo v \"Obyčajnom čísle\" môže
-    na týchto zariadeniach vyzerajú komicky veľké.</string>
+  <string name="pref_show_icon_unit" formatted="false">Zobraziť symbol jednotky</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Ak je zapnuté, ikona zobrazuje znak percenta pre stav batérie a symbol stupňa pre teplotu batérie. Vypnite túto možnosť, ak chcete zobrazovať len číslo.</string>
   <string formatted="false" name="pref_cat_current_hack_main">Hlavné ovládanie</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">Aktuálny (mA) hack nie je podporovaný</string>
   <string formatted="false" name="pref_current_hack_unsupported">Ľutujeme, aktuálny (mA) hack nie je na tomto zariadení podporovaný.</string>
@@ -376,9 +358,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">Indikátor nabíjania</string>
   <string formatted="false" name="pref_indicate_charging">Označte nabíjanie</string>
   <string formatted="false" name="pref_indicate_charging_summary">Zmeniť ikonu na označenie pri nabíjaní?</string>
-  <string formatted="false" name="pref_indicate_charging_help">Niektoré sady ikon označujú, kedy sa batéria nabíja, napr
-    napríklad znázornením blesku pod číslom.  Zakázať
-    toto nastavenie, ak chcete, aby to nerobilo.</string>
+  <string formatted="false" name="pref_indicate_charging_help">Ikona nabíjania môže pod číslom zobrazovať blesk. Túto možnosť vypnite, ak chcete rovnakú ikonu pri nabíjaní aj vybíjaní.</string>
   <string formatted="false" name="pref_enable_logging_help">Ak je aktivovaná, Battery Monitor bude zaznamenávať zmeny stavu batérie.</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Android hlási teplotu batérie v stupňoch Celzia.  Ak
     uprednostňujete zobrazenie teploty batérie v stupňoch Fahrenheita,
@@ -421,18 +401,6 @@
   <string formatted="false" name="pref_cat_language">Jazyk</string>
   <string formatted="false" name="pref_language_override">Prepísanie jazyka</string>
   <string formatted="false" name="pref_language_override_summary">Vyberte jazyk:</string>
-  <string formatted="false" name="pref_classic_color_mode">Vynútiť klasický farebný režim</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">Toto zvyčajne nefunguje; prosím prečítajte si nápovedu</string>
-  <string formatted="false" name="pref_classic_color_mode_help">Počnúc systémom Android 5.0 (Lollipop), farebné ikony upozornení
-    oficiálne už nefunguje v systéme Android, takže sa zobrazuje ikona Classic
-    až ako pevná biela. Aplikácia teda štandardne na týchto zariadeniach používa a
-    obyčajný biely obrys s bielym číslom.\n
-
-    \nNie všetky zariadenia sa však riadia špecifikáciou, takže to tak nie je
-    potrebné a nefunguje všade správne.  Môžete sa o to pokúsiť
-    aby sada ikon Classic fungovala klasickým spôsobom otáčaním
-    možnosť zapnutá.  Pamätajte, že na väčšine zariadení sa tým vytvorí iba ikona
-    zbelie.</string>
   <string formatted="false" name="alarms_overview_help">Táto stránka vám umožňuje pridávať nové alarmy, rýchlo povoliť alebo zakázať
     existujúce alarmy, alebo vymazať alarmy.\n
 
@@ -465,9 +433,6 @@
     \nAlarm \"Health Fails\" vás upozorní, ak je vaša batéria v poriadku
     sa stane niečím iným ako \"Neznámy\" alebo \"Dobré zdravie\", as
     nahlásil Android.</string>
-  <string formatted="false" name="icon_set_classic">klasické</string>
-  <string formatted="false" name="icon_set_plain">Obyčajné číslo</string>
-  <string formatted="false" name="icon_set_smaller">Menšie číslo</string>
   <string formatted="false" name="pref_content_percent">Percento batérie</string>
   <string formatted="false" name="pref_content_temperature">Teplota batérie</string>
   <string formatted="false" name="pref_content_switching">Prepínajte medzi oboma</string>

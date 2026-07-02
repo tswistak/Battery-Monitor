@@ -158,8 +158,8 @@
   <string formatted="false" name="notification_settings_summary">Διαμόρφωση της κύριας ειδοποίησης</string>
   <string formatted="false" name="notification_settings_help">Μπορείτε να διαμορφώσετε ποιο περιεχόμενο θα εμφανίζεται στην αναπτυσσόμενη ειδοποίηση.</string>
   <string formatted="false" name="status_bar_icon_settings">Εικονίδιο γραμμής κατάστασης</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">Σύνολα εικονιδίων ελέγχου</string>
-  <string formatted="false" name="status_bar_icon_settings_help">Μπορείτε να επιλέξετε ποιο σετ εικονιδίων θα χρησιμοποιήσετε και να αλλάξετε τις ρυθμίσεις για το σύνολο εικονιδίων (π.χ. χρώματα).</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">Επιλέξτε περιεχόμενο εικονιδίου</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Επιλέξτε αν το εικονίδιο ειδοποίησης εμφανίζει ποσοστό μπαταρίας ή θερμοκρασία, αν εμφανίζεται το σύμβολο της μονάδας μέσα στο εικονίδιο και αν η φόρτιση θα έχει ξεχωριστό εικονίδιο.</string>
   <string formatted="false" name="status_bar_chip_settings">Τσιπ γραμμής κατάστασης</string>
   <string formatted="false" name="status_bar_chip_settings_summary">Διαμόρφωση περιεχομένου τσιπ Ζωντανών ενημερώσεων</string>
   <string formatted="false" name="status_bar_chip_settings_help">
@@ -234,34 +234,14 @@
     Εάν οριστεί, η γραμμή ζωτικών σημείων θα περιλαμβάνει επίσης τον αριθμό των ωρών
         αφού η συσκευή αποσυνδέθηκε, συνδέθηκε ή φορτίστηκε πλήρως.
   </string>
-    <string formatted="false" name="pref_cat_icon_set">Σύνολο εικονιδίων</string>
-  <string formatted="false" name="pref_icon_set">Σύνολο εικονιδίων</string>
+    <string formatted="false" name="pref_cat_icon_set">Εικονίδιο ειδοποίησης</string>
   <string formatted="false" name="pref_icon_content">Περιεχόμενο εικονιδίου</string>
   <string formatted="false" name="pref_icon_content_help">
     Επιλέξτε εάν το εικονίδιο της γραμμής κατάστασης εμφανίζει ποσοστό μπαταρίας ή
         θερμοκρασία μπαταρίας. Η θερμοκρασία ακολουθεί τη μονάδα που έχετε επιλέξει.
   </string>
-  <string formatted="false" name="pref_icon_set_help">
-    Το Android διατίθεται σε πολλές γεύσεις, επομένως δεν υπάρχει ένα τέλειο σύνολο εικονιδίων
-        που λειτουργεί καλά σε κάθε συσκευή.  Υπάρχουν τρία ενσωματωμένα σύνολα εικονιδίων
-        που θα πρέπει να παρέχει τουλάχιστον μία καλή επιλογή σχεδόν για κάθε
-        συσκευή.\n
-    
-        Το \n \"Classic\" είναι το αρχικό σύνολο εικονιδίων από το 2009. Εξακολουθεί να είναι το
-        καλύτερο σε παλαιότερες συσκευές, αλλά νεότερες εκδόσεις Android (ξεκινούν
-        με Android 3.0, Honeycomb) συρρίκνωση και μείωση της φωτεινότητας των εικονιδίων ειδοποιήσεων,
-        κάνοντας αυτό το σύνολο πολύ δύσκολο στην ανάγνωση.\n
-    
-        Το \n \"Απλός αριθμός\" είναι η προεπιλογή για όλες τις νεότερες συσκευές Android.
-        Είναι ένας πολύ μεγάλος λευκός αριθμός που φαίνεται καλά ακόμα και μετά
-        που συρρικνώνεται και θαμπώνει.  Δείχνει έναν κεραυνό κάτω από το
-        αριθμός κατά τη φόρτιση.\n
-    
-        \n \"Μικρότερος αριθμός\" είναι σαν \"Απλός αριθμός\" αλλά μικρότερος, επειδή
-        Ορισμένες νεότερες συσκευές στην πραγματικότητα δεν συρρικνώνουν το εικονίδιο όπως το απόθεμα
-        Το Android κάνει, και ο πολύ μεγάλος αριθμός στο \"Plain Number\" μπορεί
-        εμφανίζονται κωμικά μεγάλες σε αυτές τις συσκευές.
-  </string>
+  <string name="pref_show_icon_unit" formatted="false">Εμφάνιση συμβόλου μονάδας</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Αν είναι ενεργό, το εικονίδιο εμφανίζει σύμβολο ποσοστού για το ποσοστό μπαταρίας και σύμβολο βαθμών για τη θερμοκρασία της μπαταρίας. Απενεργοποιήστε το για να εμφανίζεται μόνο ο αριθμός.</string>
   <string formatted="false" name="pref_cat_current_hack_main">Κύριος έλεγχος</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">Τρέχουσα παραβίαση (mA) Δεν υποστηρίζεται</string>
   <string formatted="false" name="pref_current_hack_unsupported">Λυπούμαστε, η τρέχουσα εισβολή (mA) δεν υποστηρίζεται σε αυτήν τη συσκευή.</string>
@@ -358,11 +338,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">Ένδειξη φόρτισης</string>
   <string formatted="false" name="pref_indicate_charging">Υποδεικνύεται Φόρτιση</string>
   <string formatted="false" name="pref_indicate_charging_summary">Αλλαγή εικονιδίου για ένδειξη κατά τη φόρτιση;</string>
-  <string formatted="false" name="pref_indicate_charging_help">
-    Ορισμένα σύνολα εικονιδίων υποδεικνύουν πότε φορτίζεται η μπαταρία, για
-        παράδειγμα δείχνοντας έναν κεραυνό κάτω από τον αριθμό.  Απενεργοποίηση
-        αυτή τη ρύθμιση εάν προτιμάτε να μην το κάνει αυτό.
-  </string>
+  <string formatted="false" name="pref_indicate_charging_help">Το εικονίδιο φόρτισης μπορεί να εμφανίζει έναν κεραυνό κάτω από τον αριθμό. Απενεργοποιήστε αυτή τη ρύθμιση αν προτιμάτε το ίδιο εικονίδιο κατά τη φόρτιση και την αποφόρτιση.</string>
   <string formatted="false" name="pref_cat_logging">Καταγραφή</string>
   <string formatted="false" name="pref_enable_logging">Ενεργοποίηση Καταγραφής</string>
   <string formatted="false" name="pref_enable_logging_summary">Καταγραφή αλλαγής κατάστασης μπαταρίας;</string>
@@ -405,20 +381,6 @@
     <string formatted="false" name="pref_cat_language">Γλώσσα</string>
   <string formatted="false" name="pref_language_override">Υπέρβαση Γλώσσας</string>
   <string formatted="false" name="pref_language_override_summary">Επιλογή Γλώσσας:</string>
-    <string formatted="false" name="pref_classic_color_mode">Αναγκαστική κλασική λειτουργία χρώματος</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">Αυτό συνήθως δεν λειτουργεί. παρακαλώ διαβάστε τη βοήθεια</string>
-  <string formatted="false" name="pref_classic_color_mode_help">
-    Ξεκινώντας με το Android 5.0 (Lollipop), έγχρωμα εικονίδια ειδοποιήσεων
-        επίσημα δεν λειτουργεί πλέον σε Android, κάνοντας το εικονίδιο Classic να εμφανίζεται
-        ως στερεό λευκό. Επομένως, από προεπιλογή, σε αυτές τις συσκευές η εφαρμογή χρησιμοποιεί α
-        απλό λευκό περίγραμμα με λευκό αριθμό.\n
-    
-        \nΩστόσο, δεν ακολουθούν όλες οι συσκευές τις προδιαγραφές, επομένως δεν είναι
-        απαραίτητο και δεν λειτουργεί σωστά παντού.  Μπορείτε να προσπαθήσετε
-        κάντε το σετ εικονιδίων Classic να λειτουργεί με τον κλασικό τρόπο περιστρέφοντας αυτό
-        επιλογή ενεργοποιημένη.  Θυμηθείτε, στις περισσότερες συσκευές αυτό θα δημιουργήσει απλώς το εικονίδιο
-        γίνει στερεό λευκό.
-  </string>
     <string formatted="false" name="alarms_overview">Επισκόπηση Ειδιποιήσεων</string>
   <string formatted="false" name="alarms_overview_help">Αυτή η σελίδα σας επιτρέπει να προσθέσετε νέες ειδοποιήσεις, να επεξεργάστείτε ή να διαγράψετε ειδοποιήσεις που έχετε θέσει.\n\nΓια να προσθέσετε μια νέα ειδιποίηση πατήστε \"Προσθήκη ειδοποίησης\" - αυτό θα δημιουργήσει μια νέα ειδιποίηση και θα μεταφερθείτε στη σελίδα ρυθμίσεων ειδοποίησης, όπου μπορείτε να καθορίσετε τις ρυθμίσεις για τη νέα ειδοποίηση. Δέστε τη βοήθεια στη σελίδα αυτή για περισσότερες πληροφορίες.\n\nΚάτω από το πλήκτρο \"Προσθήκη Ειδοποίησης\" υπάρχει η λίστα με όλες τις ειδοποιήσεις που έχετε καθορίσει.\n\n• Για να επεξεργαστείτε μια ειδοποίηση, απλά πατήστε πάνω της.\n• Για να διαγράψετε μια ειδοποίηση, πατήστε παρατεταμένα πάνω της, μετά επιλέξτε \"Διαγραφή Ειδιποίησης\". (Μπορείτε επίσης να διαγράψετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης πατώντας το MENU και μετά \"Διαγραφή Ειδιποίησης\").\n• Για γρήγορη εναλλαγή μεταξύ ενεργοποίησης και απενεργοποίησης μιας ειδοποίησης, πατήστε την εικόνα ρολογιού ειδοποίησης στα αριστερά του κειμένου ειδοποίησης. (Μπορείτε να ενεργοποιήσετε ή να απενεργοποιήσετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης)</string>
   <string formatted="false" name="pref_alarm_enabled">Ενεργοποίηση Ειδοποίησης</string>
@@ -443,9 +405,6 @@
   <string formatted="false" name="age_3_weeks">3 εβδομάδες</string>
   <string formatted="false" name="age_4_weeks">4 εβδομάδες</string>
   <string formatted="false" name="age_never_delete">Να μη διαγράφονται ποτέ</string>
-  <string formatted="false" name="icon_set_classic">Κλασσικός</string>
-  <string formatted="false" name="icon_set_plain">Απλός αριθμός</string>
-  <string formatted="false" name="icon_set_smaller">Μικρότερος αριθμός</string>
   <string formatted="false" name="pref_content_percent">Ποσοστό μπαταρίας</string>
   <string formatted="false" name="pref_content_temperature">Θερμοκρασία μπαταρίας</string>
   <string formatted="false" name="pref_content_switching">Εναλλαγή μεταξύ των δύο</string>

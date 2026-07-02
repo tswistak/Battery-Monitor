@@ -130,12 +130,6 @@
     <item>unknown</item>
   </string-array>
 
-  <string-array name="icon_set_values">
-    <item>builtin.classic</item>
-    <item>builtin.plain_number</item>
-    <item>builtin.smaller_number</item>
-  </string-array>
-
   <bool name="long_activity_names">true</bool>
 
   <string-array name="statuses">
@@ -223,12 +217,6 @@
     <item>@string/age_3_weeks</item>
     <item>@string/age_4_weeks</item>
     <item>@string/age_never_delete</item>
-  </string-array>
-
-  <string-array name="icon_set_entries">
-    <item>@string/icon_set_classic</item>
-    <item>@string/icon_set_plain</item>
-    <item>@string/icon_set_smaller</item>
   </string-array>
 
   <string-array name="icon_content_entries">

@@ -75,8 +75,7 @@
   <string name="settings_overview_help" formatted="false">設定包括如下所述的三個獨立頁面。各頁面的說明信息獨立顯示，在「選單」-「說明」內容中可獲取當前頁面的說明信息。</string>
   <string name="other_settings" formatted="false">其他設定</string>
   <string name="other_settings_help" formatted="false">此頁面包含其他的設定，包括日誌功能、螢幕鎖功能、溫度單位、自動啟動方式等。</string>
-  <string name="pref_cat_icon_set" formatted="false">圖示設定</string>
-  <string name="pref_icon_set" formatted="false">圖示設定</string>
+  <string name="pref_cat_icon_set" formatted="false">通知圖示</string>
   <string name="pref_cat_logging" formatted="false">歷史記錄</string>
   <string name="pref_enable_logging" formatted="false">啟用歷史記錄</string>
   <string name="pref_enable_logging_summary" formatted="false">記錄電池狀態變化？</string>
@@ -103,9 +102,6 @@
   <string name="age_3_weeks" formatted="false">三周</string>
   <string name="age_4_weeks" formatted="false">四周</string>
   <string formatted="false" name="age_never_delete">永不刪除</string>
-  <string name="icon_set_classic" formatted="false">經典圖示</string>
-  <string name="icon_set_plain" formatted="false">普通數字圖示</string>
-  <string name="icon_set_smaller" formatted="false">小數字圖示</string>
   <plurals name="n_log_items">
     <item quantity="one">%d項日誌記錄</item>
     <item quantity="other">%d項日誌記錄</item>
@@ -224,8 +220,8 @@
   <string formatted="false" name="notification_settings_summary">配置主要通知</string>
   <string formatted="false" name="notification_settings_help">您可以設定在下拉通知中顯示哪些內容。</string>
   <string formatted="false" name="status_bar_icon_settings">狀態列圖示</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">控制圖示集</string>
-  <string formatted="false" name="status_bar_icon_settings_help">您可以選擇要使用的圖示集並變更圖示集的設定（例如顏色）。</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">選擇圖示內容</string>
+  <string name="status_bar_icon_settings_help" formatted="false">選擇通知圖示要顯示電池百分比還是溫度、是否在圖示中顯示單位符號，以及充電時是否使用專用圖示。</string>
   <string formatted="false" name="status_bar_chip_settings">狀態列晶片</string>
   <string formatted="false" name="status_bar_chip_settings_summary">配置即時更新晶片內容</string>
   <string formatted="false" name="status_bar_chip_settings_help">
@@ -292,25 +288,8 @@
   <string formatted="false" name="pref_icon_content">圖示內容</string>
   <string formatted="false" name="pref_icon_content_help">選擇狀態列圖示是否顯示電池百分比或
     電池溫度。溫度遵循您選擇的單位。</string>
-  <string formatted="false" name="pref_icon_set_help">Android 有多種風格，因此沒有一套完美的圖示集
-    適用於所有設備。  共有三個內建圖示集
-    這應該為幾乎每個人提供至少一個好的選擇
-    設備.\n
-
-    \n\"Classic\"是2009年的原始圖示集。它仍然是
-    在較舊的設備上效果最好，但在較新版本的 Android 上（從
-    Android 3.0，Honeycomb）縮小並變暗通知圖標，
-    使得這套書很難閱讀。 \n
-
-    \n\「普通數字\」是所有較新 Android 裝置的預設設定。
-    這是一個非常大的白色數字，即使在
-    被縮小和變暗。  它顯示了在下面的閃電
-    充電時的號碼。 \n
-
-    \n\“較小的數字”類似於“普通數字”，但較小，因為
-    一些較新的設備實際上並沒有像庫存那樣縮小圖標
-    Android 可以，「普通數字」中的非常大的數字可以
-    在這些設備上顯得大得可笑。</string>
+  <string name="pref_show_icon_unit" formatted="false">顯示單位符號</string>
+  <string name="pref_show_icon_unit_help" formatted="false">啟用後，圖示會為電池百分比顯示百分號，為電池溫度顯示度數符號。停用此選項可只顯示數字。</string>
   <string formatted="false" name="pref_cat_current_hack_main">主控</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">電流 (mA) Hack 不支持</string>
   <string formatted="false" name="pref_current_hack_unsupported">抱歉，該裝置不支援目前的 (mA) 破解。</string>
@@ -395,9 +374,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">充電指示燈</string>
   <string formatted="false" name="pref_indicate_charging">指示正在充電</string>
   <string formatted="false" name="pref_indicate_charging_summary">更改圖示以指示充電時？</string>
-  <string formatted="false" name="pref_indicate_charging_help">某些圖示集指示電池何時充電，例如
-    例如，在數字下方顯示閃電。  停用
-    如果您不希望這樣做，請執行此設定。</string>
+  <string formatted="false" name="pref_indicate_charging_help">充電圖示可以在數字下方顯示閃電。若您希望充電和放電時使用相同圖示，請停用此設定。</string>
   <string formatted="false" name="predictor_sensitive">敏感的</string>
   <string formatted="false" name="predictor_conservative">保守的</string>
   <string formatted="false" name="predictor_since_status_change">自從狀態變更以來</string>
@@ -423,18 +400,6 @@
     長期平均使用情況。</string>
   <string formatted="false" name="pref_language_override">語言覆蓋</string>
   <string formatted="false" name="pref_language_override_summary">選擇語言：</string>
-  <string formatted="false" name="pref_classic_color_mode">強制經典色彩模式</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">這通常不起作用；請閱讀幫助</string>
-  <string formatted="false" name="pref_classic_color_mode_help">從 Android 5.0 (Lollipop) 開始，彩色通知圖標
-    正式不再適用於 Android，使經典圖示顯示
-    呈純白色。因此，預設情況下，在這些裝置上應用程式使用
-    帶有白色數字的純白色輪廓。 \n
-
-    \n然而，並非所有設備都遵循該規範，因此這不是
-    必要的並且不能在任何地方正常工作。  你可以嘗試
-    透過轉動此按鈕使經典圖標集以經典方式工作
-    選項打開。  請記住，在大多數設備上這只會使圖標
-    變成純白色。</string>
   <string formatted="false" name="alarms_overview">警報概述</string>
   <string formatted="false" name="alarms_overview_help">此頁面可讓您新增警報、快速啟用或停用
     現有警報，或刪除警報。 \n

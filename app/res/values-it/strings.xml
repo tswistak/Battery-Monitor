@@ -181,8 +181,8 @@
   <string name="alarm_chan_disabled" formatted="false">Hai disabilitato le notifiche per questo tipo di allarme. Abilitale per usare questo tipo di allarme.</string>
   <string name="alarm_chan_disabled_b" formatted="false">Abilita questo tipo di allarme</string>
   <string name="alarm_chan_settings_b" formatted="false">Gestisci questo tipo di allarme</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Gestisci i set di icone</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Puoi selezionare quale set di icone usare e modificare le impostazioni del set (es. colori).</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">Scegli il contenuto dell’icona</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Scegli se l’icona della notifica mostra la percentuale della batteria o la temperatura, se il simbolo dell’unità viene mostrato nell’icona e se la ricarica usa un’icona dedicata.</string>
   <string name="status_bar_chip_settings" formatted="false">Chip barra di stato</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configura il contenuto del chip di Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">Su Android 16+ con Live Updates puoi configurare cosa mostra il chip della barra di stato e se visualizzare l\'emoji di ricarica.</string>
@@ -221,11 +221,11 @@
   <string name="pref_status_duration_in_vital_signs" formatted="false">Durata stato nei segni vitali</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Includere il tempo dal cambio stato nei segni vitali?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Se impostato, la riga dei segni vitali includerà anche il numero di ore da quando il dispositivo è stato scollegato, collegato o completamente carico.</string>
-  <string name="pref_cat_icon_set" formatted="false">Set icone</string>
-  <string name="pref_icon_set" formatted="false">Set icone</string>
+  <string name="pref_cat_icon_set" formatted="false">Icona di notifica</string>
   <string name="pref_icon_content" formatted="false">Contenuto icona</string>
   <string name="pref_icon_content_help" formatted="false">Scegli se l\'icona della barra di stato mostra percentuale batteria o temperatura batteria.</string>
-  <string name="pref_icon_set_help" formatted="false">Android esiste in molte varianti, quindi non c\'è un unico set di icone perfetto per ogni dispositivo.</string>
+  <string name="pref_show_icon_unit" formatted="false">Mostra simbolo dell’unità</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Se attivata, l’icona mostra il simbolo di percentuale per la carica della batteria e il simbolo di grado per la temperatura della batteria. Disattivala per mostrare solo il numero.</string>
   <string name="pref_cat_current_hack_main" formatted="false">Controllo principale</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Hack corrente (mA) non supportato</string>
   <string name="pref_current_hack_unsupported" formatted="false">Spiacenti, l\'hack corrente (mA) non è supportato su questo dispositivo.</string>
@@ -256,7 +256,7 @@
   <string name="pref_cat_charging_indicator" formatted="false">Indicatore di carica</string>
   <string name="pref_indicate_charging" formatted="false">Indica carica</string>
   <string name="pref_indicate_charging_summary" formatted="false">Modificare l\'icona quando in carica?</string>
-  <string name="pref_indicate_charging_help" formatted="false">Alcuni set di icone indicano quando la batteria è in carica.</string>
+  <string name="pref_indicate_charging_help" formatted="false">L’icona di ricarica può mostrare un fulmine sotto il numero. Disattiva questa opzione se preferisci la stessa icona durante carica e scarica.</string>
   <string name="predictor_sensitive" formatted="false">Sensibile</string>
   <string name="predictor_conservative" formatted="false">Conservativo</string>
   <string name="predictor_since_status_change" formatted="false">Dal cambio stato</string>
@@ -264,12 +264,6 @@
   <string name="pref_cat_predictor" formatted="false">Stime tempo rimanente</string>
   <string name="pref_prediction_type" formatted="false">Tipo di stima</string>
   <string name="pref_prediction_type_help" formatted="false">Qui puoi selezionare come Battery Monitor predice la durata residua della batteria / tempo fino alla carica completa.</string>
-  <string name="pref_classic_color_mode" formatted="false">Forza modalità colori classica</string>
-  <string name="pref_classic_color_mode_summary" formatted="false">Di solito non funziona; leggi l\'aiuto</string>
-  <string name="pref_classic_color_mode_help" formatted="false">Da Android 5.0 (Lollipop), le icone notifica colorate ufficialmente non funzionano più su Android.</string>
-  <string name="icon_set_classic" formatted="false">Classico</string>
-  <string name="icon_set_plain" formatted="false">Numero semplice</string>
-  <string name="icon_set_smaller" formatted="false">Numero più piccolo</string>
   <string name="pref_content_percent" formatted="false">Percentuale batteria</string>
   <string name="pref_content_temperature" formatted="false">Temperatura batteria</string>
   <string name="pref_content_switching" formatted="false">Alterna tra entrambi</string>

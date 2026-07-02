@@ -101,8 +101,8 @@
   <string name="notification_settings_summary" formatted="false">Настройте основное уведомление</string>
   <string name="notification_settings_help" formatted="false">Вы можете настроить, что и как показывать в уведомлении (на опускающейся шторке).</string>
   <string name="status_bar_icon_settings" formatted="false">Значок строки уведомлений</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Наборы значков</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Можно выбрать используемый набор значков, а также изменить настройки для набора (например, цвет).</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">Выберите содержимое значка</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Выберите, будет ли значок уведомления показывать процент заряда или температуру, будет ли в значке отображаться символ единицы и нужен ли отдельный значок во время зарядки.</string>
   <string name="current_hack_settings" formatted="false">Измерение тока (mA)</string>
   <string name="current_hack_settings_summary" formatted="false">Настройки для измерения тока (mA)</string>
   <string name="current_hack_settings_help" formatted="false">Система Android не предоставляет приложениям информации о токе аккумулятора. Тем не менее, существует обходной способ, потенциально позволяющий получить эти данные.\n\nНЕТ НИКАКОЙ гарантии, что этот способ будет работать. Он может не работать вообще или же работать, но выдавать при этом бессмысленные значения.\n\nВ этом разделе находятся настройки включения этого способа, а также его использования, если это возможно.</string>
@@ -128,9 +128,7 @@
   <string name="pref_status_duration_in_vital_signs" formatted="false">Продолжительность состояния в терминах критически важных параметров</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Включать время с момента изменения состояния критически важных параметров?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Если выбрано, строка критически важных параметров также будет включать время, прошедшее с момента отключения или подключения зарядного устройства или с момента полной зарядки аккумулятора.</string>
-  <string name="pref_cat_icon_set" formatted="false">Набор значков</string>
-  <string name="pref_icon_set" formatted="false">Набор значков</string>
-  <string name="pref_icon_set_help" formatted="false">Android существует во множестве вариантов, поэтому нет одного идеального набора значков, который хорошо работает на любом устройстве. Есть три встроенных набора значков, среди которых почти на любом устройстве должен найтись как минимум один удачный вариант.\n\n\"Классический\" — это исходный набор значков 2009 года. На старых устройствах он по-прежнему лучший, но в более новых версиях Android (начиная с Android 3.0, Honeycomb) значки уведомлений уменьшаются и тускнеют, из-за чего этот набор становится очень трудночитаемым.\n\n\"Обычный номер\" — вариант по умолчанию для всех новых устройств Android. Это очень крупный белый номер, который остается хорошо видимым даже после уменьшения и затемнения. Во время зарядки под номером показывается молния.\n\n\"Меньший номер\" похож на \"Обычный номер\", но меньше, потому что некоторые новые устройства фактически не уменьшают значок так, как это делает чистый Android, и очень крупный номер в варианте \"Обычный номер\" на таких устройствах может выглядеть комично большим.</string>
+  <string name="pref_cat_icon_set" formatted="false">Значок уведомления</string>
   <string name="pref_cat_current_hack_main" formatted="false">Основные параметры</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Определение силы тока не поддерживается</string>
   <string name="pref_current_hack_unsupported" formatted="false">Извините, но определение силы тока для данного устройства не поддерживается.</string>
@@ -156,7 +154,7 @@
   <string name="pref_cat_charging_indicator" formatted="false">Индикатор зарядки</string>
   <string name="pref_indicate_charging" formatted="false">Показывать зарядку</string>
   <string name="pref_indicate_charging_summary" formatted="false">Изменять значок во время зарядки?</string>
-  <string name="pref_indicate_charging_help" formatted="false">В некоторых наборах значков процесс зарядки обозначается символом молнии под текущим значением заряда аккумулятора. Отключите эту настройку, если это вам не нужно.</string>
+  <string name="pref_indicate_charging_help" formatted="false">Значок зарядки может показывать молнию под числом. Отключите этот параметр, если хотите видеть один и тот же значок при зарядке и разрядке.</string>
   <string name="pref_cat_logging" formatted="false">Ведение журнала</string>
   <string name="pref_enable_logging" formatted="false">Включить ведение журнала</string>
   <string name="pref_enable_logging_summary" formatted="false">Вести журнал изменений состояния аккумулятора?</string>
@@ -181,9 +179,6 @@
   <string name="pref_cat_language" formatted="false">Язык</string>
   <string name="pref_language_override" formatted="false">Переопределить язык</string>
   <string name="pref_language_override_summary" formatted="false">Выберите язык:</string>
-  <string name="pref_classic_color_mode" formatted="false">Применить классический цветовой режим</string>
-  <string name="pref_classic_color_mode_summary" formatted="false">Это обычно не работает; пожалуйста, прочтите справку</string>
-  <string name="pref_classic_color_mode_help" formatted="false">Начиная с Android 5.0 (Lollipop), цветные значки уведомлений официально больше не поддерживаются, при этом классический значок BatteryBot выглядит сплошным белым. Поэтому на подобных устройствах приложение использует простой белый контур с белыми цифрами.\n\nОднако, не все устройства строго следуют спецификациям, поэтому сказанное выше не является обязательным не везде работает корректно. Вы можете попробовать настроить стандартное отображение классического набора значков включением этой опции. Помните, что на большинстве устройств это только приведет к тому, что значок станет сплошным белым.</string>
   <string name="alarms_overview" formatted="false">Обзор предупреждений</string>
   <string name="alarms_overview_help" formatted="false">На этой странице можно добавить новые предупреждения, быстро включить или выключить существующие предупреждения, а также удалить их.\n\nДля добавления нажмите \"Добавить предупреждение\" — будет создано новое предупреждение и открыта страница, на которой вы можете произвести настройки нового предупреждения. Подробности - в справке на соответствующей странице.\n\nНиже кнопки \"Добавить предупреждение\" имеется список уже созданных предупреждений.\n\n• Для изменения существующего предупреждения просто коснитесь его.\n• Для удаления существующего предупреждения прикоснитесь и задержите палец на нем, затем выберите \"Удалить предупреждение\". (Удалить предупреждение также можно на странице настроек предупреждения нажав MENU, затем \"Удалить предупреждение\".)\n• Для быстрого переключения предупреждения нажмите значок часов слева от названия предупреждения. (Включить или выключить предупреждение также можно на странице настроек предупреждения.)</string>
   <string name="pref_alarm_enabled" formatted="false">Включить предупреждение</string>
@@ -208,9 +203,6 @@
   <string name="age_3_weeks" formatted="false">3 недели</string>
   <string name="age_4_weeks" formatted="false">4 недели</string>
   <string formatted="false" name="age_never_delete">Никогда не удалять</string>
-  <string name="icon_set_classic" formatted="false">Классический</string>
-  <string name="icon_set_plain" formatted="false">Просто число</string>
-  <string name="icon_set_smaller" formatted="false">Мелкие цифры</string>
   <string name="circle_widget" formatted="false">Battery Monitor: круглый виджет</string>
   <string name="full_widget" formatted="false">Battery Monitor: полный виджет</string>
   <string name="notifications_disabled" formatted="false">Уведомления отключены!</string>
@@ -265,6 +257,8 @@
   <string name="pref_chip_indicate_charging_help" formatted="false">Если включено, чип в строке состояния будет показывать эмодзи молнии рядом со значением во время зарядки или при полном заряде.</string>
   <string name="pref_icon_content" formatted="false">Содержимое значка</string>
   <string name="pref_icon_content_help" formatted="false">Выберите, что показывать в значке строки состояния: процент заряда батареи или ее температуру. Для температуры используется выбранная единица измерения.</string>
+  <string name="pref_show_icon_unit" formatted="false">Показывать символ единицы</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Если включено, значок показывает знак процента для уровня заряда и символ градуса для температуры батареи. Отключите этот параметр, чтобы показывать только число.</string>
   <string name="pref_current_hack_prefer_fs" formatted="false">Предпочитать старый метод обхода</string>
   <string name="pref_current_hack_prefer_fs_summary" formatted="false">Предпочитать старый метод на основе файловой системы?</string>
   <string name="pref_current_hack_prefer_fs_help" formatted="false">Начиная с Lollipop (Android 5.0), Android предоставляет менее «хакерский» способ получения данных о токе (mA) напрямую через BatteryManager. Однако он все еще может не работать совсем или работать плохо. До Android Nougat (Android 7.0) старый метод (через файловую систему) чаще работает лучше на большинстве устройств, поэтому на устройствах с Android ниже 7.0 он остается методом по умолчанию.\n\nЭтот параметр лишь подсказывает обходному механизму, какой метод предпочесть; если на вашем устройстве работает плохо, попробуйте переключить его.</string>

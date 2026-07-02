@@ -5,11 +5,17 @@
 ### New
 
 - Added an option to keep logs until they are manually removed (thanks @lrcstars).
+- Notification bar icons redesign with new settings (#18).
 
 ### Improved
 
 - Chinese translations (thanks @lrcstars).
 - CSV now exports time with seconds (#19, thanks @lrcstars).
+
+### Development
+
+- Rebuilt an icon generation script for new icon types.
+- Removed the directory with legacy image assets.
 
 ## 1.0.4
 

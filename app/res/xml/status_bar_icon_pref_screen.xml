@@ -1,18 +1,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
   <PreferenceCategory android:title="@string/pref_cat_icon_set">
     <ListPreference
-       android:key="icon_set"
-       android:title="@string/pref_icon_set"
-       android:entries="@array/icon_set_entries"
-       android:entryValues="@array/icon_set_values"
-    />
-
-    <ListPreference
        android:key="icon_content"
        android:title="@string/pref_icon_content"
        android:entries="@array/icon_content_entries"
        android:entryValues="@array/icon_content_values"
        android:defaultValue="@string/default_icon_content"
+    />
+    <CheckBoxPreference
+        android:key="show_icon_unit"
+        android:title="@string/pref_show_icon_unit"
+        android:defaultValue="true"
     />
   </PreferenceCategory>
 
@@ -25,18 +23,6 @@
         android:title="@string/pref_indicate_charging"
         android:summary="@string/pref_indicate_charging_summary"
         android:defaultValue="true"
-    />
-  </PreferenceCategory>
-
-  <PreferenceCategory
-      android:key="category_classic_color_mode"
-      android:title="@string/pref_classic_color_mode"
-  >
-    <CheckBoxPreference
-       android:key="classic_color_mode"
-       android:title="@string/pref_classic_color_mode"
-       android:summary="@string/pref_classic_color_mode_summary"
-       android:defaultValue="false"
     />
   </PreferenceCategory>
 </PreferenceScreen>

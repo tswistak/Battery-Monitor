@@ -230,8 +230,8 @@
   <string name="notification_settings_summary" formatted="false">Skonfiguruj główne powiadomienie</string>
   <string name="notification_settings_help" formatted="false">Możesz skonfigurować, co wyświetlać w rozwijanym powiadomieniu.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikona na pasku stanu</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Skonfiguruj zestaw ikon</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Możesz wybrać, którego zestawu ikon używać, i zmienić ustawienia dla zestawu ikon (np. kolory).</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">Wybierz zawartość ikony</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Także, czy ma wyświetlać symbol jednostki w ikonie oraz, czy ładowanie ma używać osobnej ikony.</string>
   <string name="status_bar_chip_settings" formatted="false">Kapsułka na pasku stanu</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Skonfiguruj zawartość kapsułki powiadomień na żywo</string>
   <string name="status_bar_chip_settings_help" formatted="false">Na Androidzie 16+ z powiadomieniami na żywo możesz skonfigurować, co pokazuje kapsułka na pasku stanu i czy wyświetlać emoji ładowania.</string>
@@ -312,18 +312,11 @@
 
   <string formatted="false" name="custom">Niestandardowe...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Zestaw ikon</string>
-  <string name="pref_icon_set" formatted="false">Zestaw ikon</string>
+  <string name="pref_cat_icon_set" formatted="false">Ikona powiadomienia</string>
   <string name="pref_icon_content" formatted="false">Zawartość ikony</string>
   <string name="pref_icon_content_help" formatted="false">Wybierz, czy ikona na pasku stanu ma pokazywać procent baterii, czy temperaturę baterii. Temperatura jest podawana w wybranej przez Ciebie jednostce.</string>
-  <string name="pref_icon_set_help" formatted="false">
-    Android występuje w wielu wersjach, więc nie ma jednego idealnego zestawu ikon, który dobrze działa na każdym urządzeniu. Są trzy wbudowane zestawy ikon, które powinny dostarczać co najmniej jedną dobrą opcję dla praktycznie każdego urządzenia.\n
-
-    \n„Klasyczny” to oryginalny zestaw ikon z 2009 roku. Nadal jest najlepszy na starszych urządzeniach, ale nowsze wersje Androida (począwszy od Androida 3.0, Honeycomb) zmniejszają i przyciemniają ikony powiadomień, czyniąc ten zestaw bardzo trudnym do odczytania.\n
-
-    \n„Zwykła liczba” jest domyślny we wszystkich nowszych urządzeń z Androidem. To bardzo duży biały numer, który pozostaje dobrze widoczny nawet po zmniejszeniu i przyciemnieniu. Wyświetla błykawicę pod liczbą podczas ładowania.\n
-
-    \n„Mniejsza liczba” jest jak „Zwykła liczba”, tylko mniejszy, ponieważ niektóre nowsze urządzenia w rzeczywistości nie zmniejszają ikony tak jak robi to standardowy Android i bardzo duży numer w „Zwykła liczba” może wyglądać na nich komicznie duży.</string>
+  <string name="pref_show_icon_unit" formatted="false">Pokaż symbol jednostki</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Gdy ta opcja jest włączona, ikona pokazuje znak procenta dla poziomu baterii i symbol stopnia dla temperatury baterii. Wyłącz ją, aby wyświetlać tylko liczbę.</string>
 
   <string name="pref_cat_current_hack_main" formatted="false">Główne sterowanie</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Nieobsługiwane obejście na obliczanie prądu (mA)</string>
@@ -380,7 +373,7 @@
   <string name="pref_cat_charging_indicator" formatted="false">Wskaźnik ładowania</string>
   <string name="pref_indicate_charging" formatted="false">Wskazuj ładowania</string>
   <string name="pref_indicate_charging_summary" formatted="false">Czy zmieniać ikonę, aby wskazywać ładowanie?</string>
-  <string name="pref_indicate_charging_help" formatted="false">Niektóre zestawy ikon wskazują, gdy bateria jest ładowana, np. pokazując błyskawicę pod liczbą. Wyłącz to ustawienie, jeśli preferujesz, żeby tak się nie działo.</string>
+  <string name="pref_indicate_charging_help" formatted="false">Ikona może wyświetlać błyskawicę pod liczbą podczas ładowania. Wyłącz to ustawienie, jeśli wolisz mieć tę samą ikonę cały czas.</string>
 
   <string name="pref_cat_logging" formatted="false">Logowanie</string>
   <string name="pref_enable_logging" formatted="false">Włącz logowanie</string>
@@ -425,13 +418,6 @@
   <string name="pref_cat_language" formatted="false">Język</string>
   <string name="pref_language_override" formatted="false">Język aplikacji</string>
   <string name="pref_language_override_summary" formatted="false">Wybierz język:</string>
-
-  <string name="pref_classic_color_mode" formatted="false">Wymuś klasyczny tryb kolorów</string>
-  <string name="pref_classic_color_mode_summary" formatted="false">To zwykle nie działa; przeczytaj pomoc</string>
-  <string name="pref_classic_color_mode_help" formatted="false">
-    Począwszy od Androida 5.0 (Lollipop) kolorowe ikony powiadomień oficjalnie już nie działają na Androidzie, przez co klasyczna ikona pokazuje się jako jednolicie biała. Dlatego domyślnie na tych urządzeniach aplikacja używa prostego białego konturu z białą liczbą.\n
-
-    \nJednak nie wszystkie urządzenia stosują się do specyfikacji, więc nie jest to konieczne i nie wszędzie działa prawidłowo. Możesz spróbować sprawić, że klasyczny zestaw ikon działa w klasyczny sposób, włączając tę opcję. Pamiętaj, że na większości urządzeń po prostu spowowuje to, że ikona zamieni się w jednolicie białą.</string>
 
   <string name="alarms_overview" formatted="false">Przegląd alarmów</string>
   <string name="alarms_overview_help" formatted="false">
@@ -479,10 +465,6 @@
   <string name="age_3_weeks" formatted="false">3 tygodnie</string>
   <string name="age_4_weeks" formatted="false">4 tygodnie</string>
   <string formatted="false" name="age_never_delete">Nigdy nie usuwaj</string>
-
-  <string name="icon_set_classic" formatted="false">Klasyczny</string>
-  <string name="icon_set_plain" formatted="false">Zwykła liczba</string>
-  <string name="icon_set_smaller" formatted="false">Mniejsza liczba</string>
   <string name="pref_content_percent" formatted="false">Procent baterii</string>
   <string name="pref_content_temperature" formatted="false">Temperatura baterii</string>
   <string name="pref_content_switching" formatted="false">Przełączaj między obiema</string>

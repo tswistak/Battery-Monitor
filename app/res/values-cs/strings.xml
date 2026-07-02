@@ -158,8 +158,8 @@
   <string formatted="false" name="notification_settings_summary">Nakonfigurujte hlavní oznámení</string>
   <string formatted="false" name="notification_settings_help">Můžete nakonfigurovat, který obsah se zobrazí v rozevíracím oznámení.</string>
   <string formatted="false" name="status_bar_icon_settings">Ikona stavového řádku</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">Sady ikon ovládání</string>
-  <string formatted="false" name="status_bar_icon_settings_help">Můžete vybrat, kterou sadu ikon použít, a změnit nastavení sady ikon (např. barvy).</string>
+  <string formatted="false" name="status_bar_icon_settings_summary">Vyberte obsah ikony</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Zvolte, zda ikona v oznámení zobrazuje procento baterie nebo teplotu, zda se v ikoně zobrazuje symbol jednotky a zda má mít nabíjení vlastní ikonu.</string>
   <string formatted="false" name="status_bar_chip_settings">Čip stavového řádku</string>
   <string formatted="false" name="status_bar_chip_settings_summary">Nakonfigurujte obsah čipu Live Updates</string>
   <string formatted="false" name="status_bar_chip_settings_help">
@@ -234,34 +234,14 @@
     Pokud je nastaveno, řádek vitálních funkcí bude obsahovat také počet hodin
         protože se zařízení odpojilo, zapojilo nebo plně nabilo.
   </string>
-    <string formatted="false" name="pref_cat_icon_set">Sada ikon</string>
-  <string formatted="false" name="pref_icon_set">Sada ikon</string>
+    <string formatted="false" name="pref_cat_icon_set">Ikona oznámení</string>
   <string formatted="false" name="pref_icon_content">Obsah ikony</string>
   <string formatted="false" name="pref_icon_content_help">
     Zvolte, zda ikona stavového řádku zobrazuje procento baterie nebo
         teplota baterie. Teplota odpovídá vámi zvolené jednotce.
   </string>
-  <string formatted="false" name="pref_icon_set_help">
-    Android přichází v mnoha variantách, takže neexistuje žádná dokonalá sada ikon
-        který funguje dobře na každém zařízení.  Existují tři vestavěné sady ikon
-        to by mělo poskytnout alespoň jednu dobrou možnost prakticky pro každého
-        zařízení.\n
-    
-        \n\"Classic\" je původní sada ikon z roku 2009. Stále je to
-        nejlépe na starších zařízeních, ale na novějších verzích Androidu (počínaje
-        se systémem Android 3.0, Honeycomb) zmenšit a ztlumit ikony oznámení,
-        čímž je tato sada velmi obtížně čitelná.\n
-    
-        \n\"Obyčejné číslo\" je výchozí nastavení pro všechna novější zařízení Android.
-        Je to velmi velké bílé číslo, které se dobře zobrazuje i poté
-        zmenšuje se a tlumí.  Ukazuje to blesk pod
-        číslo při nabíjení.\n
-    
-        \n\"Menší číslo\" je jako \"Obyčejné číslo\", ale menší, protože
-        některá novější zařízení ve skutečnosti ikonu nezmenšují jako u akcií
-        Android ano a velmi velké číslo v \"Obyčejném čísle\" může
-        na těchto zařízeních vypadají komicky velké.
-  </string>
+  <string name="pref_show_icon_unit" formatted="false">Zobrazit symbol jednotky</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Je-li zapnuto, ikona zobrazuje znak procenta pro procento baterie a symbol stupně pro teplotu baterie. Vypněte tuto volbu, chcete-li zobrazit jen číslo.</string>
   <string formatted="false" name="pref_cat_current_hack_main">Hlavní ovládání</string>
   <string formatted="false" name="pref_cat_current_hack_unsupported">Proud (mA) Hack Nepodporováno</string>
   <string formatted="false" name="pref_current_hack_unsupported">Litujeme, aktuální (mA) hack není na tomto zařízení podporován.</string>
@@ -358,11 +338,7 @@
   <string formatted="false" name="pref_cat_charging_indicator">Indikátor nabíjení</string>
   <string formatted="false" name="pref_indicate_charging">Označte nabíjení</string>
   <string formatted="false" name="pref_indicate_charging_summary">Změnit ikonu pro indikaci při nabíjení?</string>
-  <string formatted="false" name="pref_indicate_charging_help">
-    Některé sady ikon indikují, kdy se baterie nabíjí, např
-        příklad zobrazením blesku pod číslem.  Zakázat
-        toto nastavení, pokud chcete, aby to nedělalo.
-  </string>
+  <string formatted="false" name="pref_indicate_charging_help">Ikona nabíjení může pod číslem zobrazovat blesk. Tuto volbu vypněte, pokud chcete při nabíjení i vybíjení stejnou ikonu.</string>
   <string formatted="false" name="pref_cat_logging">Záznamy</string>
   <string formatted="false" name="pref_enable_logging">Povolit záznamy</string>
   <string formatted="false" name="pref_enable_logging_summary">Záznamy změnu stavu baterie ?</string>
@@ -422,20 +398,6 @@
     <string formatted="false" name="pref_cat_language">Jazyk</string>
   <string formatted="false" name="pref_language_override">Přepsání jazyka</string>
   <string formatted="false" name="pref_language_override_summary">Vyberte jazyk:</string>
-    <string formatted="false" name="pref_classic_color_mode">Vynutit klasický barevný režim</string>
-  <string formatted="false" name="pref_classic_color_mode_summary">To obvykle nefunguje; prosím přečtěte si nápovědu</string>
-  <string formatted="false" name="pref_classic_color_mode_help">
-    Počínaje Androidem 5.0 (Lollipop), barevné ikony upozornění
-        oficiálně již nefunguje na Androidu, takže se zobrazuje ikona Classic
-        až jako pevná bílá. Ve výchozím nastavení tedy aplikace na těchto zařízeních používá a
-        čistý bílý obrys s bílým číslem.\n
-    
-        \nNicméně ne všechna zařízení splňují specifikaci, takže tomu tak není
-        nutné a nefunguje všude správně.  Můžete to zkusit
-        otočením této sady ikon nastavte klasickým způsobem
-        možnost zapnuta.  Pamatujte, že na většině zařízení se tím vytvoří pouze ikona
-        zbělá.
-  </string>
     <string formatted="false" name="alarms_overview">Přehled upozornění</string>
   <string formatted="false" name="alarms_overview_help">
     Tato stránka umožňuje přidávat nové alarmy, rychle je zapínat nebo vypínat
@@ -479,9 +441,6 @@
   <string formatted="false" name="age_3_weeks">3 týdny</string>
   <string formatted="false" name="age_4_weeks">4 týdny</string>
   <string formatted="false" name="age_never_delete">Nikdy nemazat</string>
-  <string formatted="false" name="icon_set_classic">Klasický</string>
-  <string formatted="false" name="icon_set_plain">Obyčejné číslo</string>
-  <string formatted="false" name="icon_set_smaller">Menší číslo</string>
   <string formatted="false" name="pref_content_percent">Procento baterie</string>
   <string formatted="false" name="pref_content_temperature">Teplota baterie</string>
   <string formatted="false" name="pref_content_switching">Přepínejte mezi oběma</string>

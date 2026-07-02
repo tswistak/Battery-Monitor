@@ -687,13 +687,15 @@ public class BatteryInfoService extends Service {
         return (int) Math.round(temp);
     }
 
-    private int iconContentValue() {
-        String content = contentPreference(SettingsFragment.KEY_ICON_CONTENT,
-                                           res.getString(R.string.default_icon_content));
+    private int iconContentValue(String content) {
         if (CONTENT_TEMPERATURE.equals(content)) {
             return roundedTemperatureValue();
         }
         return info.percent;
+    }
+
+    private int maxIconContentValue(String content) {
+        return CONTENT_TEMPERATURE.equals(content) ? 150 : 100;
     }
 
     private String chipContentText() {
@@ -883,33 +885,23 @@ public class BatteryInfoService extends Service {
     }
 
     private int iconForLegacyMainNotification() {
+        String content = contentPreference(SettingsFragment.KEY_ICON_CONTENT,
+                                           res.getString(R.string.default_icon_content));
+        boolean indicateCharging = settings.getBoolean(SettingsFragment.KEY_INDICATE_CHARGING, true);
+        boolean showUnit = settings.getBoolean(SettingsFragment.KEY_SHOW_ICON_UNIT, true);
+        int clampedValue = Math.max(0, Math.min(maxIconContentValue(content), iconContentValue(content)));
 
-        String default_set = "builtin.plain_number";
+        String prefix = (info.status == BatteryInfo.STATUS_CHARGING && indicateCharging) ? "charging" : "plain";
+        int defaultResId = R.drawable.plain000;
 
-        String icon_set = settings.getString(SettingsFragment.KEY_ICON_SET, "null");
-        if (! icon_set.startsWith("builtin.")) icon_set = "null"; // TODO: Remove this line to re-enable plugins
-
-        if (icon_set.equals("null")) {
-            icon_set = default_set;
-
-            // Writing to settings here should only happen when Service first started, so shouldn't have conflict
-            settings.edit().putString(SettingsFragment.KEY_ICON_SET, default_set).apply();
+        if (showUnit) {
+            prefix += CONTENT_TEMPERATURE.equals(content) ? "_temp" : "_percentage";
         }
 
-        Boolean indicate_charging = settings.getBoolean(SettingsFragment.KEY_INDICATE_CHARGING, true);
-        int clampedPercent = Math.max(0, Math.min(140, iconContentValue()));
+        int fallbackResId = res.getIdentifier(prefix + "000", "drawable", getPackageName());
+        if (fallbackResId == 0) fallbackResId = defaultResId;
 
-        if (icon_set.equals("builtin.plain_number")) {
-            String prefix = (info.status == BatteryInfo.STATUS_CHARGING && indicate_charging) ? "charging" : "plain";
-            return iconByName(prefix, clampedPercent, R.drawable.plain000);
-        } else if (icon_set.equals("builtin.smaller_number")) {
-            String prefix = (info.status == BatteryInfo.STATUS_CHARGING && indicate_charging) ? "small_charging" : "small_plain";
-            return iconByName(prefix, clampedPercent, R.drawable.small_plain000);
-        } else if (!settings.getBoolean(SettingsFragment.KEY_CLASSIC_COLOR_MODE, false)) {
-            return iconByName("w", clampedPercent, R.drawable.w000);
-        } else {
-            return iconByName("b", clampedPercent, R.drawable.b000);
-        }
+        return iconByName(prefix, clampedValue, fallbackResId);
     }
 
     // Resource IDs are not guaranteed to be contiguous; resolve by name and cache.
