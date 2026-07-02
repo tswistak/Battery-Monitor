@@ -3,29 +3,50 @@
   <string name="app_launcher_name" formatted="false">Battery Monitor</string>
   <string name="settings_activity_subtitle" formatted="false">設定</string>
   <string name="help_activity_subtitle" formatted="false">ヘルプ</string>
+
   <string name="battery_use_b" formatted="false">バッテリーの使用を表示する</string>
   <string name="circle_widget" formatted="false">Battery Monitor サークル</string>
   <string name="full_widget" formatted="false">Battery Monitor フル</string>
   <string name="yes" formatted="false">はい</string>
   <string name="cancel" formatted="false">キャンセル</string>
+
   <string name="confirm_close" formatted="false">閉じてもよろしいですか?</string>
-  <string name="confirm_close_hint" formatted="false">Battery Monitor は完全に閉じます。ステータスバーに 表示されなくなります。\n\nメインウインドウから離れるだけで、インジケーターの 実行を続ける場合は、キャンセルまたはデバイスの戻る ボタンを押してください。</string>
+  <string name="confirm_close_hint" formatted="false">Battery Monitor は完全に閉じます。ステータスバーに 表示されなくなります。\n
+    \n
+    メインウインドウから離れるだけで、インジケーターの 実行を続ける場合は、キャンセルまたはデバイスの戻る ボタンを押してください。</string>
+
   <string name="notifications_disabled" formatted="false">通知が無効です！</string>
-  <string name="notifications_disabled_message" formatted="false">Battery Monitor のすべての通知がブロックされています。これにより、メイン通知および設定したアラーム通知は表示されません。\n\nBattery Monitor では、メイン通知のオン/オフや個別アラームの一時無効化をアプリ内で行えるため、システム側で通知ブロックを解除することを強くおすすめします。通知がブロックされている間は、Battery Monitor が正常に動作していないように見える場合があります。\n\nOK を押してシステム設定を開き、Battery Monitor の通知ブロックを解除してください。</string>
+  <string name="notifications_disabled_message" formatted="false">Battery Monitor のすべての通知がブロックされています。これにより、メイン通知および設定したアラーム通知は表示されません。\n
+    \n
+    Battery Monitor では、メイン通知のオン/オフや個別アラームの一時無効化をアプリ内で行えるため、システム側で通知ブロックを解除することを強くおすすめします。通知がブロックされている間は、Battery Monitor が正常に動作していないように見える場合があります。\n
+    \n
+    OK を押してシステム設定を開き、Battery Monitor の通知ブロックを解除してください。</string>
+
   <string name="battery_optimized" formatted="false">Battery Monitor が制限されています！</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor はバックグラウンドで正しく動作するための実行が制限されています。これは、設計の悪いアプリの過剰なバッテリー消費を防ぐ Android の「バッテリー最適化」機能によるものです。\n\nただし Battery Monitor は、バックグラウンドで制限なく実行される必要がある、効率的に設計されたアプリです。非常に省電力で、バッテリー駆動時間を短くしません。\n\nOK を押してシステム設定を開き、Battery Monitor のバッテリー最適化を無効にしてください。</string>
+  <string name="battery_optimized_message" formatted="false">Battery Monitor はバックグラウンドで正しく動作するための実行が制限されています。これは、設計の悪いアプリの過剰なバッテリー消費を防ぐ Android の「バッテリー最適化」機能によるものです。\n
+    \n
+    ただし Battery Monitor は、バックグラウンドで制限なく実行される必要がある、効率的に設計されたアプリです。非常に省電力で、バッテリー駆動時間を短くしません。\n
+    \n
+    OK を押してシステム設定を開き、Battery Monitor のバッテリー最適化を無効にしてください。</string>
+
   <string name="main_notif_chan_name" formatted="false">メイン通知</string>
   <string name="live_updates_notif_chan_name" formatted="false">ライブアップデート</string>
   <string name="channel_group_name_alarms" formatted="false">アラーム</string>
+
   <string name="confirm_clear_logs" formatted="false">ログをすべてクリアしてもよろしいですか?</string>
+
   <string name="configure_log_filter" formatted="false">どのログ項目を表示しますか?</string>
+
   <string name="okay" formatted="false">OK</string>
+
   <string name="tab_current_info" formatted="false">現在の情報</string>
   <string name="tab_history" formatted="false">履歴</string>
+
   <string name="notification_until_charged" formatted="false">" 充電まで"</string>
   <string name="notification_until_drained" formatted="false">" 残"</string>
   <string name="activity_until_charged" formatted="false">充電まで</string>
   <string name="activity_until_drained" formatted="false">放電まで</string>
+
   <string name="menu_settings" formatted="false">設定</string>
   <string name="menu_close" formatted="false">閉じる</string>
   <string name="menu_help" formatted="false">ヘルプ</string>
@@ -36,6 +57,7 @@
   <string name="menu_delete_alarm" formatted="false">アラームを削除</string>
   <string name="menu_show_seconds" formatted="false">秒を表示</string>
   <string name="menu_hide_seconds" formatted="false">秒を非表示</string>
+
   <string name="percent_symbol" formatted="false">%</string>
   <string name="degree_symbol" formatted="false">°</string>
   <string name="fahrenheit" formatted="false">華氏</string>
@@ -43,11 +65,13 @@
   <string name="celsius" formatted="false">セ氏</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
+
   <string name="inaccessible_storage" formatted="false">SD カードにアクセスできません。</string>
   <string name="inaccessible_w_reason" formatted="false">SD カードにアクセスできません:</string>
   <string name="read_only_storage" formatted="false">SD カードは読み取り専用です。</string>
   <string name="no_storage_permission" formatted="false">ストレージ権限が許可されていません。</string>
   <string name="file_written" formatted="false">ファイルが SD カードのルートに正常に書き込まれました。</string>
+
   <string name="date" formatted="false">日付</string>
   <string name="time" formatted="false">時刻</string>
   <string name="status" formatted="false">ステータス</string>
@@ -55,6 +79,7 @@
   <string name="temperature" formatted="false">セ氏度</string>
   <string name="temperature_f" formatted="false">華氏度</string>
   <string name="voltage" formatted="false">電圧</string>
+
   <string name="status_unplugged" formatted="false">未接続</string>
   <string name="status_unknown" formatted="false">不明</string>
   <string name="status_charging" formatted="false">充電中</string>
@@ -62,7 +87,9 @@
   <string name="status_not_charging" formatted="false">非充電中</string>
   <string name="status_fully_charged" formatted="false">フル充電</string>
   <string name="status_plugged_in" formatted="false">接続済</string>
+
   <string name="status_boot_completed" formatted="false">起動完了</string>
+
   <string name="health_unknown" formatted="false">不明</string>
   <string name="health_good" formatted="false">良好</string>
   <string name="health_overheat" formatted="false">過熱</string>
@@ -75,6 +102,7 @@
   <string name="plugged_usb" formatted="false">(USB)</string>
   <string name="plugged_unknown" formatted="false">(?)</string>
   <string name="plugged_wireless" formatted="false">(無線)</string>
+
   <string name="alarm_type_fully_charged" formatted="false">フル充電されました</string>
   <string name="alarm_type_charge_drops" formatted="false">残量が低下しました</string>
   <string name="alarm_type_charge_rises" formatted="false">残量が上昇しました</string>
@@ -87,51 +115,63 @@
   <string name="alarm_type_entry_temperature_drops" formatted="false">温度が次を下回る...</string>
   <string name="alarm_type_entry_temperature_rises" formatted="false">温度が上昇しました...</string>
   <string name="alarm_type_entry_health_failure" formatted="false">ステータス障害</string>
+
   <string name="alarm_fully_charged" formatted="false">バッテリーがフル充電されました</string>
   <string name="alarm_charge_drops" formatted="false">"バッテリー残量が低下しました "</string>
   <string name="alarm_charge_rises" formatted="false">"バッテリー残量が上昇しました "</string>
   <string name="alarm_temp_drops" formatted="false">"バッテリー温度が次を下回りました "</string>
   <string name="alarm_temp_rises" formatted="false">"バッテリーの温度が上昇しました "</string>
   <string name="alarm_health_failure" formatted="false">"バッテリーのステータス: "</string>
+
   <string name="logs_empty" formatted="false">ログは空です</string>
   <plurals name="n_log_items">
     <item quantity="one">%d ログアイテム</item>
     <item quantity="other">%d ログアイテム</item>
   </plurals>
+
   <string name="after_nh_mm_unplugged" formatted="false">プラグを抜いてから %1$d時間%2$d分</string>
   <string name="after_nh_mm_plugged_in" formatted="false">プラグを挿してから %1$d時間%2$d分</string>
   <string name="after_nm_ms_unplugged" formatted="false">プラグを抜いてから %1$d分%2$d秒</string>
   <string name="after_nm_ms_plugged_in" formatted="false">プラグを挿してから %1$d分%2$d秒</string>
+
   <plurals name="n_hours_long">
     <item quantity="one">"%d 時間 "</item>
     <item quantity="other">"%d 時間 "</item>
   </plurals>
+
   <plurals name="n_minutes_long">
     <item quantity="one">%d 分</item>
     <item quantity="other">%d 分</item>
   </plurals>
+
   <plurals name="n_hours_medium">
     <item quantity="one">"%d 時間 "</item>
     <item quantity="other">"%d 時間 "</item>
   </plurals>
+
   <plurals name="n_minutes_medium">
     <item quantity="one">%d 分</item>
     <item quantity="other">%d 分</item>
   </plurals>
+
   <plurals name="n_hours_short">
     <item quantity="other">"%d時間 "</item>
   </plurals>
+
   <plurals name="n_minutes_short">
     <item quantity="other">%d分</item>
   </plurals>
+
   <plurals name="n_days">
     <item quantity="one">"%d 日 "</item>
     <item quantity="other">"%d 日 "</item>
   </plurals>
+
   <plurals name="n_hours">
     <item quantity="one">%d 時間</item>
     <item quantity="other">%d 時間</item>
   </plurals>
+
   <string name="since" formatted="false">から</string>
   <plurals name="for_n_hours">
     <item quantity="one">%d 時間</item>
@@ -140,23 +180,29 @@
   <string name="currently_using" formatted="false">現在使用中</string>
   <string name="currently_set_to" formatted="false">"現在の設定: "</string>
   <string name="currently_disabled" formatted="false">現在無効</string>
+
   <string name="help_cat_version" formatted="false">バージョン</string>
+
   <string name="help_cat_open_source" formatted="false">オープンソース</string>
-  <string name="help_open_source" formatted="false">これ
-    プロジェクトはオープンソースです。ソースコードには次の場所からアクセスできます。
-    <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>。</string>
+  <string name="help_open_source" formatted="false">これ プロジェクトはオープンソースです。ソースコードには次の場所からアクセスできます。 <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>。</string>
+
   <string name="help_cat_privacy" formatted="false">プライバシー</string>
   <string name="help_privacy" formatted="false">Battery Monitor は個人情報を収集、保存、送信することはありません。</string>
+
   <string name="help_cat_no_warranty" formatted="false">無保証</string>
-  <string name="help_no_warranty" formatted="false">このプログラムは有用であることを願って頒布されますが、 *全くの無保証* です。商業可能性の保証や特定目的への適合性は、言外に示されたものも含め、全く存在しません。\n\n確実にこれが正しく機能し、問題を引き起こさないようにするため最善を尽くしますが、いかなる状況下においても、 あらゆる損害や不便の責任は負いません。</string>
+  <string name="help_no_warranty" formatted="false">このプログラムは有用であることを願って頒布されますが、 *全くの無保証* です。商業可能性の保証や特定目的への適合性は、言外に示されたものも含め、全く存在しません。\n
+    \n
+    確実にこれが正しく機能し、問題を引き起こさないようにするため最善を尽くしますが、いかなる状況下においても、 あらゆる損害や不便の責任は負いません。</string>
+
   <string name="help_cat_acknowledgments" formatted="false">謝辞</string>
-  <string name="help_acknowledgments" formatted="false">Battery Monitor は、Battery Indicator Pro / BatteryBot Pro のフォークです。
-    ダルシャン コンピューティング LLC。  原作者と協力者に感謝します
-    上流プロジェクトの作成と維持に使用します。</string>
+  <string name="help_acknowledgments" formatted="false">Battery Monitor は、Battery Indicator Pro / BatteryBot Pro のフォークです。 ダルシャン コンピューティング LLC。 原作者と協力者に感謝します 上流プロジェクトの作成と維持に使用します。</string>
+
   <string name="help_cat_contact" formatted="false">問い合わせ</string>
   <string formatted="false" name="help_contact">ご質問、問題、コメントがありましたら、お気軽にお問い合わせください <a href="mailto:tomasz@swistak.codes">メールしてください</a>.</string>
+
   <string name="settings_overview" formatted="false">概要</string>
   <string name="settings_overview_help" formatted="false">下記のように、設定は別のページにまとめられています。 各ページに、 そのページの設定を記載した、独自のヘルプページがあります。 ヘルプを表示するには、今いる設定ページでメニューを押すだけです。 (タブレットではメニューは必要ありません)</string>
+
   <string name="notifications_disabled_cat" formatted="false">通知が無効</string>
   <string name="app_notifs_disabled_b" formatted="false">アプリ通知を有効化</string>
   <string name="app_notifs_disabled_summary" formatted="false">このアプリの通知がすべて無効になっています。これらの設定にアクセスするには有効にしてください。</string>
@@ -168,6 +214,7 @@
   <string name="alarm_chan_disabled" formatted="false">この種類のアラーム通知が無効です。このアラーム種類を使用するには有効にしてください。</string>
   <string name="alarm_chan_disabled_b" formatted="false">このアラーム種類を有効化</string>
   <string name="alarm_chan_settings_b" formatted="false">このアラーム種類を管理</string>
+
   <string name="notification_settings" formatted="false">メイン通知</string>
   <string name="notification_settings_summary" formatted="false">メイン通知を設定します</string>
   <string name="notification_settings_help" formatted="false">プルダウン通知に表示される内容を設定し、その外観をコントロールすることができます。</string>
@@ -179,22 +226,42 @@
   <string name="status_bar_chip_settings_help" formatted="false">Android 16 以降でライブ更新を使用している場合、ステータスバーチップに表示する内容や充電絵文字の表示有無を設定できます。</string>
   <string name="current_hack_settings" formatted="false">電流 (mA) ハック</string>
   <string name="current_hack_settings_summary" formatted="false">mA 情報を有効にする詳細設定</string>
-  <string name="current_hack_settings_help" formatted="false">Android は、バッテリー電流に関する情報にアクセスするための手段をアプリに提供していません。しかし、ハックは、多くのデバイスでこの情報を取得することができるようになります。\n\nこの動作は保証されません。全く動作しない可能性もあります。または動作しても全く意味のない値になることもあります。\n\n設定が可能な場合は、ハックをオンにして、このセクションで使用する方法を制御します。</string>
+  <string name="current_hack_settings_help" formatted="false">Android は、バッテリー電流に関する情報にアクセスするための手段をアプリに提供していません。しかし、ハックは、多くのデバイスでこの情報を取得することができるようになります。\n
+    \n
+    この動作は保証されません。全く動作しない可能性もあります。または動作しても全く意味のない値になることもあります。\n
+    \n
+    設定が可能な場合は、ハックをオンにして、このセクションで使用する方法を制御します。</string>
+
   <string name="alarm_settings_subtitle" formatted="false">アラーム設定</string>
   <string name="alarm_settings" formatted="false">アラーム</string>
   <string name="alarm_settings_help" formatted="false">お使いのバッテリー残量が一定のレベルに達したときに、 Battery Monitor があなたに通知することができます (例、バッテリーがフル充電された、 バッテリー残量が 20% を下回った)。</string>
   <string name="other_settings" formatted="false">その他の設定</string>
   <string name="other_settings_help" formatted="false">ロギング、ロック画面、温度の単位、自動開始、およびその他を含め、 その他のすべての設定はこのページにあります。</string>
+
   <string name="live_updates_onboarding_title" formatted="false">ステータスバーのバッテリーチップ</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できます。このオプションはデフォルトで有効です。\n\n従来の通知アイコンを使いたい場合は、このアプリの Android システム設定で「ライブ更新」をオフにできます。\n\n注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できますが、このオプションは現在システム設定で無効になっています。\n\n最適な体験のため、有効にすることをおすすめします。従来の通知アイコンを使いたい場合は、無効のままでも構いません。\n\n注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
+  <string name="live_updates_onboarding_message_on" formatted="false">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できます。このオプションはデフォルトで有効です。\n
+    \n
+    従来の通知アイコンを使いたい場合は、このアプリの Android システム設定で「ライブ更新」をオフにできます。\n
+    \n
+    注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
+  <string name="live_updates_onboarding_message_off" formatted="false">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できますが、このオプションは現在システム設定で無効になっています。\n
+    \n
+    最適な体験のため、有効にすることをおすすめします。従来の通知アイコンを使いたい場合は、無効のままでも構いません。\n
+    \n
+    注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
   <string name="live_updates_onboarding_positive_on" formatted="false">了解</string>
   <string name="live_updates_onboarding_positive_off" formatted="false">設定へ移動</string>
   <string name="live_updates_onboarding_negative_off" formatted="false">閉じる</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor がステータスバーにバッテリー残量を表示し、アラームについて通知するには、権限が必要です。\n\n注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
+
+  <string name="notifications_onboarding_message" formatted="false">Battery Monitor がステータスバーにバッテリー残量を表示し、アラームについて通知するには、権限が必要です。\n
+    \n
+    注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
+
   <string name="add_alarm" formatted="false">アラームを追加</string>
+
   <string name="pref_cat_channel_settings" formatted="false">通知チャンネル設定</string>
   <string name="pref_manage_main_channel" formatted="false">メインチャンネルを管理</string>
+
   <string name="pref_cat_notification_content" formatted="false">コンテンツ</string>
   <string name="pref_cat_status_bar_chip" formatted="false">ステータスバーチップ（Android 16+）</string>
   <string formatted="false" name="pref_live_update_display">ライブアップデートを表示</string>
@@ -217,51 +284,77 @@
   <string name="time_remaining" formatted="false">残時間</string>
   <string name="time_since_status_change" formatted="false">ステータス変更からの時間</string>
   <string name="vital_signs" formatted="false">バイタルサイン</string>
+
   <string name="pref_time_remaining_verbosity" formatted="false">残時間の詳細</string>
   <string name="pref_time_remaining_verbosity_help" formatted="false">デバイスにはすべての形やサイズ入っているので、見積残り時間が 通知エリアにフィットするように適切に略語を使用して調整するだけです。 それでもフィットしない場合は、圧縮した形式を選ぶことができます。 たくさんのスペースがある場合は、詳細な設定を行うことができます。</string>
   <string name="condensed" formatted="false">圧縮</string>
   <string name="normal" formatted="false">通常</string>
   <string name="verbose" formatted="false">詳細</string>
+
   <string name="pref_status_duration_in_vital_signs" formatted="false">バイタルサインにステータスの期間を含める</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">バイタルサインにステータスが変わってからの時間を含めますか?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">設定した場合は、デバイスのプラグを抜いた、挿した、またはフル充電 されてからの時間が、バイタルサインの行に含まれます。</string>
+
   <string formatted="false" name="custom">カスタム...</string>
+
   <string name="pref_cat_icon_set" formatted="false">通知アイコン</string>
   <string name="pref_icon_content" formatted="false">アイコン内容</string>
   <string name="pref_icon_content_help" formatted="false">ステータスバーアイコンにバッテリー残量を表示するか、バッテリー温度を表示するかを選択します。温度は選択した単位に従います。</string>
   <string name="pref_show_icon_unit" formatted="false">単位記号を表示</string>
   <string name="pref_show_icon_unit_help" formatted="false">有効にすると、アイコンにバッテリー残量はパーセント記号、バッテリー温度は度記号を表示します。数字だけを表示したい場合は無効にしてください。</string>
+
   <string name="pref_cat_current_hack_main" formatted="false">メイン コントロール</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">電流 (mA) ハックはサポートされていません</string>
+
   <string name="pref_current_hack_unsupported" formatted="false">申し訳ありません、このデバイスで電流 (mA) ハックはサポートされていません。</string>
+
   <string name="pref_enable_current_hack" formatted="false">ハックを有効にする</string>
   <string name="pref_enable_current_hack_summary" formatted="false">電流 (mA) ハックを有効にしてみますか?</string>
   <string name="pref_enable_current_hack_help" formatted="false">この設定を有効にすると、ハックに関する他のオプションが使用可能になります。</string>
+
   <string name="pref_current_hack_prefer_fs" formatted="false">旧ハック方式を優先</string>
   <string name="pref_current_hack_prefer_fs_summary" formatted="false">古いファイルシステムベースの方式を優先しますか？</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Lollipop（Android 5.0）以降、Android は BatteryManager から電流（mA）情報を取得できる、以前よりハック性の低い手段を提供しています。ただし、動作や精度は依然として保証されません。Nougat（Android 7.0）より前では、旧方式（ファイルシステムベース）の方が多くの端末で良好に動作するため、Android 7.0 未満ではこちらが既定です。\n\nこの設定はどちらの方式を優先するかのヒントに過ぎません。端末でうまく動かない場合は切り替えて試してください。</string>
+  <string name="pref_current_hack_prefer_fs_help" formatted="false">Lollipop（Android 5.0）以降、Android は BatteryManager から電流（mA）情報を取得できる、以前よりハック性の低い手段を提供しています。ただし、動作や精度は依然として保証されません。Nougat（Android 7.0）より前では、旧方式（ファイルシステムベース）の方が多くの端末で良好に動作するため、Android 7.0 未満ではこちらが既定です。\n
+    \n
+    この設定はどちらの方式を優先するかのヒントに過ぎません。端末でうまく動かない場合は切り替えて試してください。</string>
+
   <string name="pref_current_hack_multiplier" formatted="false">倍率</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">一部の端末では、API が要求するマイクロアンペアではなくミリアンペアを返したり、符号が逆になっている場合があります。また、正しい符号でも逆向き表示を好むユーザーもいます。そうした状況に対応するため、API の結果にここで指定した倍率を掛けられます。\n\nたとえば常に 0 mA と表示される場合、倍率を 1000 にすると改善することがあります。API が 450 マイクロアンペアを返すなら 450 mA と表示されるようになります。API 自体が 0 マイクロアンペアを返す場合は、倍率を変えても表示は 0 mA のままです。</string>
+  <string name="pref_current_hack_multiplier_help" formatted="false">一部の端末では、API が要求するマイクロアンペアではなくミリアンペアを返したり、符号が逆になっている場合があります。また、正しい符号でも逆向き表示を好むユーザーもいます。そうした状況に対応するため、API の結果にここで指定した倍率を掛けられます。\n
+    \n
+    たとえば常に 0 mA と表示される場合、倍率を 1000 にすると改善することがあります。API が 450 マイクロアンペアを返すなら 450 mA と表示されるようになります。API 自体が 0 マイクロアンペアを返す場合は、倍率を変えても表示は 0 mA のままです。</string>
+
   <string name="pref_cat_current_hack_notification" formatted="false">通知</string>
   <string name="pref_display_current_in_vital_stats" formatted="false">バイタル統計に表示</string>
   <string name="pref_display_current_in_vital_stats_summary" formatted="false">メイン通知のバイタル統計に電流 (mA) を表示しますか?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">有効にすると、ハックを試行して、メイン通知のバイタル統計行に結果が表示されます。これを表示するには、メイン通知にバイタル統計を表示するように設定する必要があることにご注意ください。システムが新しいバッテリー情報を送信したときにのみ、この値は更新されます。\n\nほとんどのデバイスで、負の値は、バッテリーからの純流出を示し、正の値は、バッテリーが充電されていることを示しています。しかし、すべてのデバイスでこのように値を生成するとは限りません。</string>
+  <string name="pref_display_current_in_vital_stats_help" formatted="false">有効にすると、ハックを試行して、メイン通知のバイタル統計行に結果が表示されます。これを表示するには、メイン通知にバイタル統計を表示するように設定する必要があることにご注意ください。システムが新しいバッテリー情報を送信したときにのみ、この値は更新されます。\n
+    \n
+    ほとんどのデバイスで、負の値は、バッテリーからの純流出を示し、正の値は、バッテリーが充電されていることを示しています。しかし、すべてのデバイスでこのように値を生成するとは限りません。</string>
+
   <string name="pref_cat_current_hack_main_window" formatted="false">メインウインドウ</string>
   <string name="pref_display_current_in_main_window" formatted="false">メインウインドウに表示</string>
   <string name="pref_display_current_in_main_window_summary" formatted="false">メインウインドウに電流 (mA) を表示しますか?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">有効にすると、ハックを試行し、メインウィンドウに結果が表示されます。システムが新しいバッテリー情報を送信するたびにこの値が更新されますが、表示された値をタップすることで、いつでも値を更新することができます。 (いくつかのデバイスはほとんど、またはまったく基になるデータを更新しないため、タップで表示する値が変更されない場合があることにご注意ください。)\n\nほとんどのデバイスで、負の値は、バッテリーからの純流出を示し、正の値は、バッテリーが充電されていることを示しています。しかし、すべてのデバイスでこのように値を生成するとは限りません。</string>
+  <string name="pref_display_current_in_main_window_help" formatted="false">有効にすると、ハックを試行し、メインウィンドウに結果が表示されます。システムが新しいバッテリー情報を送信するたびにこの値が更新されますが、表示された値をタップすることで、いつでも値を更新することができます。 (いくつかのデバイスはほとんど、またはまったく基になるデータを更新しないため、タップで表示する値が変更されない場合があることにご注意ください。)\n
+    \n
+    ほとんどのデバイスで、負の値は、バッテリーからの純流出を示し、正の値は、バッテリーが充電されていることを示しています。しかし、すべてのデバイスでこのように値を生成するとは限りません。</string>
+
   <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">バイタル統計に平均を表示する</string>
   <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">メイン通知のバイタル統計に平均電流を使用しますか?</string>
   <string name="pref_prefer_current_avg_in_main_window" formatted="false">メインウインドウに平均を表示する</string>
   <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">メインウインドウに平均電流を使用しますか?</string>
+
   <string name="pref_prefer_current_avg_help" formatted="false">一部のシステムではさらにハックを利用して、読み取った瞬間だけでなく、最近の電流の平均を取得することができます。これはデバイスによって異なり、一部のデバイスでのみ使用できます。 (すべてがうまくいけば) 安定した値を取得することもありますが、同じ値を返すこと、使用できない値を返すこともあります (その場合、このオプションをオフにする必要があります)。</string>
+
   <string name="pref_auto_refresh_current_in_main_window" formatted="false">メインウインドウの mA を自動更新する</string>
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">2 秒ごとに mA を自動更新しますか?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">メインウィンドウに　mA　を表示するハックを設定した場合、それをタップして値を更新することができます。タップすることなく、頻繁に更新を確認したい場合、このオプションを有効にすると、ウィンドウが表示されている間、値を 2 秒ごとに自動更新することができます\n\nいくつかのデバイスはほとんど、またはまったく基になるデータを更新しないため、アプリがシステムから取得したデータで表示された値を更新しても、表示が更新したように見えない場合があることにご注意ください。</string>
+  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">メインウィンドウに mA を表示するハックを設定した場合、それをタップして値を更新することができます。タップすることなく、頻繁に更新を確認したい場合、このオプションを有効にすると、ウィンドウが表示されている間、値を 2 秒ごとに自動更新することができます\n
+    \n
+    いくつかのデバイスはほとんど、またはまったく基になるデータを更新しないため、アプリがシステムから取得したデータで表示された値を更新しても、表示が更新したように見えない場合があることにご注意ください。</string>
+
   <string name="pref_cat_charging_indicator" formatted="false">充電中インジケーター</string>
   <string name="pref_indicate_charging" formatted="false">充電中を示す</string>
   <string name="pref_indicate_charging_summary" formatted="false">充電中を示すアイコンを使用しますか?</string>
   <string name="pref_indicate_charging_help" formatted="false">充電アイコンでは数字の下に稲妻を表示できます。充電中と放電中で同じアイコンにしたい場合は、この設定を無効にしてください。</string>
+
   <string name="pref_cat_logging" formatted="false">ロギング</string>
   <string name="pref_enable_logging" formatted="false">ログを有効にする</string>
   <string name="pref_enable_logging_summary" formatted="false">バッテリーステータスの変更ログを取得しますか?</string>
@@ -269,41 +362,74 @@
   <string name="pref_max_log_age" formatted="false">最大ログ履歴</string>
   <string name="pref_max_log_age_summary" formatted="false">次より古いログを削除します:</string>
   <string formatted="false" name="pref_max_log_age_help">ロギングが有効な場合、デバイスを接続するたびに、この値より古いログが削除されます。手動で消去するまでログを保持するには「削除しない」を選択してください。</string>
+
   <string name="pref_cat_temperature_unit" formatted="false">温度の単位</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">華氏に変換する</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android はセ氏でバッテリ温度を報告します。バッテリー温度を華氏で 確認したい場合は、このオプションをチェックすると、アプリが変換します。</string>
+
   <string name="pref_cat_autostart" formatted="false">自動開始</string>
   <string name="pref_autostart_at_boot" formatted="false">起動時に自動開始</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">デバイスが起動した時に Battery Monitor を開始します:</string>
-  <string name="pref_autostart_at_boot_help" formatted="false">デバイスの起動時に、Battery Monitor が自動的に起動する必要があるか コントロールします。\n\n\"シャットダウン時に実行中の場合\" オプションは、Battery Monitor を 直近に手動で開始または停止したかを考慮して動作します。 そのため、タスクキラーのように、他の手段で Battery Monitor を kill した場合、 Battery Monitor はあなたが停止したことがわからないため、 このオプションを設定していると、起動時に開始します。</string>
+  <string name="pref_autostart_at_boot_help" formatted="false">デバイスの起動時に、Battery Monitor が自動的に起動する必要があるか コントロールします。\n
+    \n
+    \"シャットダウン時に実行中の場合\" オプションは、Battery Monitor を 直近に手動で開始または停止したかを考慮して動作します。 そのため、タスクキラーのように、他の手段で Battery Monitor を kill した場合、 Battery Monitor はあなたが停止したことがわからないため、 このオプションを設定していると、起動時に開始します。</string>
+
   <string name="predictor_sensitive" formatted="false">高感度</string>
   <string name="predictor_conservative" formatted="false">保守的</string>
   <string name="predictor_since_status_change" formatted="false">ステータスが変わったら</string>
   <string name="predictor_long_term_ave" formatted="false">長期平均</string>
+
   <string name="pref_cat_predictor" formatted="false">残時間の見積</string>
   <string name="pref_prediction_type" formatted="false">見積の種類</string>
-  <string name="pref_prediction_type_help" formatted="false">ここでは、バッテリーのフル充電からの残量/残時間を Battery Monitor が予測する方法を選択することができます。\n\n\"高感度\" アルゴリズムは、厳密に直近の5分間の使用量に基づいて求めます。 主に \"あとどのくらい今の操作を続けることができるか?\" に関心がある場合は、このアルゴリズムをご利用ください。\n\"保守的\" なアルゴリズムがデフォルトです。最近の使用状況に 基づいていますが、長期的な平均の使用状況から あまり大きく変化しないようにします\n\n厳密に現在のセッションに基づいて予測するには、 \"ステータスが変わってから\" を選択してください。\n\n最終的に、長期的な平均の使用状況のみに基づいて、 予測することができます。</string>
+  <string name="pref_prediction_type_help" formatted="false">ここでは、バッテリーのフル充電からの残量/残時間を Battery Monitor が予測する方法を選択することができます。\n
+    \n
+    \"高感度\" アルゴリズムは、厳密に直近の5分間の使用量に基づいて求めます。 主に \"あとどのくらい今の操作を続けることができるか?\" に関心がある場合は、このアルゴリズムをご利用ください。\n
+    \"保守的\" なアルゴリズムがデフォルトです。最近の使用状況に 基づいていますが、長期的な平均の使用状況から あまり大きく変化しないようにします\n
+    \n
+    厳密に現在のセッションに基づいて予測するには、 \"ステータスが変わってから\" を選択してください。\n
+    \n
+    最終的に、長期的な平均の使用状況のみに基づいて、 予測することができます。</string>
+
   <string name="pref_cat_language" formatted="false">言語</string>
   <string name="pref_language_override" formatted="false">言語の上書き</string>
   <string name="pref_language_override_summary" formatted="false">言語を選択:</string>
+
   <string name="alarms_overview" formatted="false">アラームの概要</string>
-  <string name="alarms_overview_help" formatted="false">このページで、新しいアラームを追加する、既存のアラームをすばやく 有効または無効にする、アラームを削除することができます。\n\n新しいアラームを追加するには、\"アラームを追加\" を押します - これで、新しいアラームを作成して、アラーム設定ページへ移動します。 そこで新しいアラームの設定を変更することができます。 詳細については、そのページのヘルプを参照してください。\n\n作成したすべてのアラームのリストの下に \"\アラームを追加\"\ ボタンがあります\n\n• 既存のアラームを編集するには、それを押すだけです。\n• 削除するには、それを長押しします。その後 \"アラームを削除\" を選択します。 (個々のアラーム設定ページから、メニューを押して、 その後 \"アラームを削除\" でアラームを削除することもできます。)\n• すばやくアラームを有効にするかどうかを切り替えるには、 アラームテキストの左側の、目覚まし時計のアイコンを押します。 (また、個々のアラーム設定ページから、アラームを有効または 無効にすることもできます。)</string>
+  <string name="alarms_overview_help" formatted="false">このページで、新しいアラームを追加する、既存のアラームをすばやく 有効または無効にする、アラームを削除することができます。\n
+    \n
+    新しいアラームを追加するには、\"アラームを追加\" を押します - これで、新しいアラームを作成して、アラーム設定ページへ移動します。 そこで新しいアラームの設定を変更することができます。 詳細については、そのページのヘルプを参照してください。\n
+    \n
+    作成したすべてのアラームのリストの下に \"\アラームを追加\"\ ボタンがあります\n
+    \n
+    • 既存のアラームを編集するには、それを押すだけです。\n
+    • 削除するには、それを長押しします。その後 \"アラームを削除\" を選択します。 (個々のアラーム設定ページから、メニューを押して、 その後 \"アラームを削除\" でアラームを削除することもできます。)\n
+    • すばやくアラームを有効にするかどうかを切り替えるには、 アラームテキストの左側の、目覚まし時計のアイコンを押します。 (また、個々のアラーム設定ページから、アラームを有効または 無効にすることもできます。)</string>
+
   <string name="pref_alarm_enabled" formatted="false">アラームを有効にする</string>
   <string name="pref_alarm_enabled_help" formatted="false">一時的にアラームを無効にするだけで、再び使用したくなったときに 再作成したくない場合、ここまたはメインのアラームのページで、 オフにすることができます。</string>
+
   <string name="pref_cat_alarm_conditions" formatted="false">アラームの条件</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">ここでアラームの発生する条件を指定します。</string>
   <string name="pref_alarm_type" formatted="false">アラームの種類</string>
   <string name="pref_alarm_type_summary" formatted="false">バッテリーでアラームを発生します:</string>
-  <string name="pref_alarm_type_help" formatted="false">現在 5 種類のアラームを選択することができます。\n\n\"フル充電されました\" アラームは、お使いのバッテリーの状態が \"充電中\" から \"フル充電\" に変わったときに通知します。 これは、多くのデバイスで 100% 充電と同じ意味ではないことに ご注意ください。\n\n充電の状態と温度のアラームは、そのアラームの種類を選択した後で、 以下のしきい値を設定する必要があります。\n\n\"ステータス障害\" のアラームは、Android から報告される お使いのバッテリーの状態が、\"不明\" や \"良好\" 以外のものになると通知されます。</string>
+  <string name="pref_alarm_type_help" formatted="false">現在 5 種類のアラームを選択することができます。\n
+    \n
+    \"フル充電されました\" アラームは、お使いのバッテリーの状態が \"充電中\" から \"フル充電\" に変わったときに通知します。 これは、多くのデバイスで 100% 充電と同じ意味ではないことに ご注意ください。\n
+    \n
+    充電の状態と温度のアラームは、そのアラームの種類を選択した後で、 以下のしきい値を設定する必要があります。\n
+    \n
+    \"ステータス障害\" のアラームは、Android から報告される お使いのバッテリーの状態が、\"不明\" や \"良好\" 以外のものになると通知されます。</string>
   <string name="pref_alarm_threshold" formatted="false">しきい値</string>
   <string name="alarm_pref_not_used" formatted="false">このアラームの種類では使用しません</string>
   <string name="pref_alarm_threshold_summary" formatted="false">アラームのしきい値:</string>
   <string name="pref_alarm_threshold_help" formatted="false">充電の状態と温度のアラームには、アラームを発生する 温度や充電のレベルを設定する必要があります。</string>
   <string formatted="false" name="alarm_custom_temp_message">温度を%s度で入力してください</string>
   <string formatted="false" name="alarm_custom_charge_message">充電率を入力してください (0 ～ 100)</string>
+
   <string name="boot_pref_always" formatted="false">常に</string>
   <string name="boot_pref_never" formatted="false">なし</string>
   <string name="boot_pref_if_running" formatted="false">シャットダウン時に実行中の場合</string>
+
   <string name="age_1_day" formatted="false">1 日</string>
   <string name="age_2_days" formatted="false">2 日</string>
   <string name="age_4_days" formatted="false">4 日</string>
@@ -315,6 +441,7 @@
   <string name="pref_content_percent" formatted="false">バッテリー残量</string>
   <string name="pref_content_temperature" formatted="false">バッテリー温度</string>
   <string name="pref_content_switching" formatted="false">両方を切り替え表示</string>
+
   <string formatted="false" name="chip_switching_interval_2_seconds">2秒</string>
   <string formatted="false" name="chip_switching_interval_5_seconds">5秒</string>
   <string formatted="false" name="chip_switching_interval_10_seconds">10秒</string>

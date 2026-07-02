@@ -3,57 +3,52 @@
   <string name="app_launcher_name" formatted="false">Battery Monitor</string>
   <string name="settings_activity_subtitle" formatted="false">تنظیمات</string>
   <string name="help_activity_subtitle" formatted="false">کمک</string>
+
   <string name="battery_use_b" formatted="false">نمایش کاربرد باتری</string>
   <string name="circle_widget" formatted="false">چرخه باتری پات</string>
   <string name="full_widget" formatted="false">باتری پات کامل</string>
   <string name="yes" formatted="false">آری</string>
   <string name="cancel" formatted="false">لغو</string>
+
   <string name="confirm_close" formatted="false">بستن</string>
-  <string formatted="false" name="confirm_close_hint">مانیتور باتری کاملاً بسته خواهد شد و شما آن را نخواهید دید
-    دیگر در نوار وضعیت شما.  هر ویجت دسکتاپ بی فایده خواهد بود.\n
+  <string formatted="false" name="confirm_close_hint">مانیتور باتری کاملاً بسته خواهد شد و شما آن را نخواهید دید دیگر در نوار وضعیت شما. هر ویجت دسکتاپ بی فایده خواهد بود.\n
+    \n
+    اگر فقط می خواهید پنجره اصلی را ترک کرده و سرویس را حفظ کنید در حال اجرا، Cancel را فشار دهید و سپس فقط دکمه BACK دستگاه خود را فشار دهید دکمه خروج از پنجره اصلی.\n
+    \n
+    Z اگر می خواهید اعلان را مخفی کنید اما ویجت ها را در حال اجرا نگه دارید، Cancel را فشار دهید و سپس تنظیمات را تغییر دهید تا اعلان پنهان شود.</string>
 
-    \n اگر فقط می خواهید پنجره اصلی را ترک کرده و سرویس را حفظ کنید
-    در حال اجرا، Cancel را فشار دهید و سپس فقط دکمه BACK دستگاه خود را فشار دهید
-    دکمه خروج از پنجره اصلی.\n
-
-    \nZ اگر می خواهید اعلان را مخفی کنید اما ویجت ها را در حال اجرا نگه دارید،
-    Cancel را فشار دهید و سپس تنظیمات را تغییر دهید تا اعلان پنهان شود.</string>
   <string formatted="false" name="notifications_disabled">اعلان ها غیرفعال هستند!</string>
-  <string formatted="false" name="notifications_disabled_message">شما همه اعلان‌های مانیتور باتری را مسدود کرده‌اید.  این خواهد شد
-    جلوگیری از نمایش هر گونه اعلان توسط مانیتور باتری: اصلی
-    اعلان و هر آلارمی که تنظیم کرده اید همگی مسدود خواهند شد.\n
+  <string formatted="false" name="notifications_disabled_message">شما همه اعلان‌های مانیتور باتری را مسدود کرده‌اید. این خواهد شد جلوگیری از نمایش هر گونه اعلان توسط مانیتور باتری: اصلی اعلان و هر آلارمی که تنظیم کرده اید همگی مسدود خواهند شد.\n
+    \n
+    Since Battery Monitor به شما امکان می دهد اعلان اصلی را روشن یا خاموش کنید به طور جداگانه، و همچنین به طور موقت هر آلارم را غیرفعال کنید شما ایجاد کرده اید، اکیداً توصیه می شود که آن را رفع انسداد کنید اعلان های مانیتور باتری در حالی که آنها مسدود هستند، ظاهر می شود که مانیتور باتری خراب است.\n
+    \n
+    لطفاً OK را فشار دهید تا به تنظیمات سیستم در جایی که می توانید منتقل شوید رفع انسداد اعلان‌ها برای مانیتور باتری</string>
 
-    \nSince Battery Monitor به شما امکان می دهد اعلان اصلی را روشن یا خاموش کنید
-    به طور جداگانه، و همچنین به طور موقت هر آلارم را غیرفعال کنید
-    شما ایجاد کرده اید، اکیداً توصیه می شود که آن را رفع انسداد کنید
-    اعلان های مانیتور باتری  در حالی که آنها مسدود هستند، ظاهر می شود
-    که مانیتور باتری خراب است.\n
-
-    \nلطفاً OK را فشار دهید تا به تنظیمات سیستم در جایی که می توانید منتقل شوید
-    رفع انسداد اعلان‌ها برای مانیتور باتری</string>
   <string formatted="false" name="battery_optimized">مانیتور باتری محدود شد!</string>
-  <string formatted="false" name="battery_optimized_message">عملکرد مانیتور باتری به درستی محدود شده است.  این \"بهینه سازی باتری\"
-    یک ویژگی اندروید است که برای محدود کردن برنامه‌های طراحی ضعیف برای جلوگیری از آنها طراحی شده است
-    از استفاده بیش از حد باتری در پس زمینه.\n
+  <string formatted="false" name="battery_optimized_message">عملکرد مانیتور باتری به درستی محدود شده است. این \"بهینه سازی باتری\" یک ویژگی اندروید است که برای محدود کردن برنامه‌های طراحی ضعیف برای جلوگیری از آنها طراحی شده است از استفاده بیش از حد باتری در پس زمینه.\n
+    با این حال،\n
+    Battery Monitor یک برنامه خوب طراحی شده است که باید بدون محدودیت در پس زمینه برای عملکرد صحیح فوق العاده کارآمد است و عمر باتری شما را کاهش نخواهد داد.\n
+    \n
+    لطفاً OK را فشار دهید تا به تنظیمات سیستم در جایی که می توانید منتقل شوید بهینه سازی باتری را برای مانیتور باتری غیرفعال کنید.</string>
 
-    با این حال، \nBattery Monitor یک برنامه خوب طراحی شده است که باید بدون محدودیت در
-    پس زمینه برای عملکرد صحیح  فوق العاده کارآمد است و
-    عمر باتری شما را کاهش نخواهد داد.\n
-
-    \nلطفاً OK را فشار دهید تا به تنظیمات سیستم در جایی که می توانید منتقل شوید
-    بهینه سازی باتری را برای مانیتور باتری غیرفعال کنید.</string>
   <string formatted="false" name="main_notif_chan_name">اطلاعیه اصلی</string>
   <string formatted="false" name="live_updates_notif_chan_name">به‌روزرسانی‌های زنده</string>
   <string formatted="false" name="channel_group_name_alarms">آلارم ها</string>
+
   <string formatted="false" name="confirm_clear_logs">واقعاً همه گزارش‌ها پاک می‌شوند؟</string>
+
   <string formatted="false" name="configure_log_filter">کدام موارد گزارش را نشان دهید؟</string>
+
   <string formatted="false" name="okay">باشه</string>
+
   <string formatted="false" name="tab_current_info">اطلاعات فعلی</string>
   <string formatted="false" name="tab_history">تاریخچه</string>
+
   <string formatted="false" name="notification_until_charged">"تا زمانی که شارژ شود"</string>
   <string formatted="false" name="notification_until_drained">"چپ"</string>
   <string formatted="false" name="activity_until_charged">تا زمانی که شارژ شود</string>
   <string formatted="false" name="activity_until_drained">تا زمانی که تخلیه شود</string>
+
   <string formatted="false" name="menu_settings">تنظیمات</string>
   <string formatted="false" name="menu_close">بستن</string>
   <string formatted="false" name="menu_help">کمک کنید</string>
@@ -64,6 +59,7 @@
   <string formatted="false" name="menu_delete_alarm">حذف هشدار</string>
   <string formatted="false" name="menu_show_seconds">نمایش ثانیه ها</string>
   <string formatted="false" name="menu_hide_seconds">مخفی کردن ثانیه ها</string>
+
   <string formatted="false" name="percent_symbol">%</string>
   <string formatted="false" name="degree_symbol">°</string>
   <string formatted="false" name="fahrenheit">فارنهایت</string>
@@ -71,11 +67,13 @@
   <string formatted="false" name="celsius">درجه سانتیگراد</string>
   <string formatted="false" name="celsius_symbol">C</string>
   <string formatted="false" name="volt_symbol">V</string>
+
   <string formatted="false" name="inaccessible_storage">کارت SD غیر قابل دسترسی است.</string>
   <string formatted="false" name="inaccessible_w_reason">کارت SD غیر قابل دسترسی است:</string>
   <string formatted="false" name="read_only_storage">کارت SD فقط خواندنی است.</string>
   <string formatted="false" name="no_storage_permission">مجوز ذخیره سازی داده نشده است.</string>
   <string formatted="false" name="file_written">فایل با موفقیت در مکان انتخابی نوشته شد.</string>
+
   <string formatted="false" name="date">تاریخ</string>
   <string formatted="false" name="time">زمان</string>
   <string formatted="false" name="status">وضعیت</string>
@@ -83,6 +81,7 @@
   <string formatted="false" name="temperature">درجه_سلسیوس</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
   <string formatted="false" name="voltage">ولت</string>
+
   <string formatted="false" name="status_unplugged">قطع شده</string>
   <string formatted="false" name="status_unknown">ناشناس</string>
   <string formatted="false" name="status_charging">شارژ کردن</string>
@@ -90,7 +89,9 @@
   <string formatted="false" name="status_not_charging">شارژ نشدن</string>
   <string formatted="false" name="status_fully_charged">کاملا شارژ شده</string>
   <string formatted="false" name="status_plugged_in">متصل به برق</string>
+
   <string formatted="false" name="status_boot_completed">بوت کامل شد</string>
+
   <string formatted="false" name="health_unknown">ناشناس</string>
   <string formatted="false" name="health_good">سلامتی</string>
   <string formatted="false" name="health_overheat">بیش از حد گرم شود</string>
@@ -103,6 +104,7 @@
   <string formatted="false" name="plugged_usb">(USB)</string>
   <string formatted="false" name="plugged_unknown">(?)</string>
   <string formatted="false" name="plugged_wireless">(بی سیم)</string>
+
   <string formatted="false" name="alarm_type_fully_charged">کاملا شارژ شده</string>
   <string formatted="false" name="alarm_type_charge_drops">شارژ پایین می آید</string>
   <string formatted="false" name="alarm_type_charge_rises">شارژ بالاتر می رود</string>
@@ -115,56 +117,66 @@
   <string formatted="false" name="alarm_type_entry_temperature_drops">کاهش دما به زیر ...</string>
   <string formatted="false" name="alarm_type_entry_temperature_rises">افزایش دما از ...</string>
   <string formatted="false" name="alarm_type_entry_health_failure">سلامتی شکست می خورد</string>
+
   <string formatted="false" name="alarm_fully_charged">اکنون باتری کاملاً شارژ شده است</string>
   <string formatted="false" name="alarm_charge_drops">"شارژ باتری زیر است"</string>
   <string formatted="false" name="alarm_charge_rises">"شارژ باتری بالاتر است"</string>
   <string formatted="false" name="alarm_temp_drops">"دمای باتری پایین است"</string>
   <string formatted="false" name="alarm_temp_rises">"دمای باتری بالاتر است"</string>
   <string formatted="false" name="alarm_health_failure">"سلامت باتری این است:"</string>
+
   <string formatted="false" name="logs_empty">سیاههها خالی هستند</string>
   <string formatted="false" name="after_nh_mm_unplugged">پس از قطع %1$dh %2$dm از برق</string>
+
   <string formatted="false" name="after_nh_mm_plugged_in">بعد از اینکه %1$dh %2$dm وصل شد</string>
   <string formatted="false" name="after_nm_ms_unplugged">پس از قطع %1$dm %2$ds از برق</string>
   <string formatted="false" name="after_nm_ms_plugged_in">بعد از اینکه %1$dm %2$ds وصل شد</string>
   <string formatted="false" name="since">از آنجایی که</string>
-  <string formatted="false" name="currently_using">در حال حاضر استفاده می شود</string>
-  <string formatted="false" name="currently_set_to">"در حال حاضر روی:"</string>
-  <string formatted="false" name="currently_disabled">در حال حاضر غیر فعال است</string>
-  <string formatted="false" name="help_cat_version">نسخه</string>
-  <string formatted="false" name="help_cat_open_source">منبع باز</string>
-  <string formatted="false" name="help_open_source">این
-    پروژه متن باز است می توانید به کد منبع دسترسی پیدا کنید
-    <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
-  <string formatted="false" name="help_cat_privacy">حریم خصوصی</string>
-  <string formatted="false" name="help_privacy">مانیتور باتری هیچ اطلاعات شخصی را جمع آوری، ذخیره یا انتقال نمی دهد.</string>
-  <string formatted="false" name="help_cat_no_warranty">بدون گارانتی</string>
-  <string formatted="false" name="help_no_warranty">این نرم افزار به امید اینکه مفید واقع شود توزیع شده است اما
-    بدون ضمانت؛ حتی بدون ضمانت ضمنی
-    قابلیت خرید و فروش یا تناسب اندام برای یک هدف خاص.\n
 
-    \n در حالی که من تمام تلاشم را می کنم تا مطمئن شوم که خوب کار می کند و نمی کند
-    مشکل ایجاد کنید، من مسئول هیچ گونه آسیب یا ناراحتی نیستم
-    ممکن است تحت هر شرایطی ایجاد شود.</string>
+  <string formatted="false" name="currently_using">در حال حاضر استفاده می شود</string>
+
+  <string formatted="false" name="currently_set_to">"در حال حاضر روی:"</string>
+
+  <string formatted="false" name="currently_disabled">در حال حاضر غیر فعال است</string>
+
+  <string formatted="false" name="help_cat_version">نسخه</string>
+
+  <string formatted="false" name="help_cat_open_source">منبع باز</string>
+
+  <string formatted="false" name="help_open_source">این پروژه متن باز است می توانید به کد منبع دسترسی پیدا کنید <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+
+  <string formatted="false" name="help_cat_privacy">حریم خصوصی</string>
+
+  <string formatted="false" name="help_privacy">مانیتور باتری هیچ اطلاعات شخصی را جمع آوری، ذخیره یا انتقال نمی دهد.</string>
+
+  <string formatted="false" name="help_cat_no_warranty">بدون گارانتی</string>
+  <string formatted="false" name="help_no_warranty">این نرم افزار به امید اینکه مفید واقع شود توزیع شده است اما بدون ضمانت؛ حتی بدون ضمانت ضمنی قابلیت خرید و فروش یا تناسب اندام برای یک هدف خاص.\n
+    \n
+    در حالی که من تمام تلاشم را می کنم تا مطمئن شوم که خوب کار می کند و نمی کند مشکل ایجاد کنید، من مسئول هیچ گونه آسیب یا ناراحتی نیستم ممکن است تحت هر شرایطی ایجاد شود.</string>
   <string formatted="false" name="help_cat_acknowledgments">قدردانی ها</string>
-  <string formatted="false" name="help_acknowledgments">Battery Monitor یک چنگال از Battery Indicator Pro / BatteryBot Pro توسط است
-    Darshan Computing, LLC.  با تشکر از نویسندگان و مشارکت کنندگان اصلی
-    برای ایجاد و نگهداری پروژه بالادست.</string>
+  <string formatted="false" name="help_acknowledgments">Battery Monitor یک چنگال از Battery Indicator Pro / BatteryBot Pro توسط است Darshan Computing, LLC. با تشکر از نویسندگان و مشارکت کنندگان اصلی برای ایجاد و نگهداری پروژه بالادست.</string>
   <string formatted="false" name="help_cat_contact">تماس بگیرید</string>
+
   <string formatted="false" name="help_contact">اگر سوالی دارید، مشکلی دارید یا نظری دارید، لطفا <a href="mailto:tomasz@swistak.codes">به من ایمیل بزنید</a>.</string>
+
   <string formatted="false" name="settings_overview">نمای کلی</string>
-  <string formatted="false" name="settings_overview_help">تنظیمات مانیتور باتری طبق توضیحات در صفحات جداگانه سازماندهی شده است
-    زیر  هر صفحه از تنظیمات صفحه راهنمای خود را دارد که آن را توصیف می کند
-    تنظیمات موجود در آنجا</string>
+  <string formatted="false" name="settings_overview_help">تنظیمات مانیتور باتری طبق توضیحات در صفحات جداگانه سازماندهی شده است زیر هر صفحه از تنظیمات صفحه راهنمای خود را دارد که آن را توصیف می کند تنظیمات موجود در آنجا</string>
+
   <string formatted="false" name="notifications_disabled_cat">اعلان‌ها غیرفعال است</string>
   <string formatted="false" name="app_notifs_disabled_b">اعلان‌های برنامه را فعال کنید</string>
+
   <string formatted="false" name="app_notifs_disabled_summary">شما همه اعلان‌ها را برای این برنامه غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا به این تنظیمات دسترسی داشته باشند.</string>
   <string formatted="false" name="main_notifs_disabled_b">اعلان اصلی را فعال کنید</string>
+
   <string formatted="false" name="main_notifs_disabled_summary">شما اعلان اصلی این برنامه را غیرفعال کرده اید.  لطفاً برای دسترسی به این تنظیمات آن را فعال کنید.</string>
   <string formatted="false" name="app_notifs_alarms_disabled_summary">شما همه اعلان‌ها را برای این برنامه غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا به آلارم های شما دسترسی داشته باشند.</string>
+
   <string formatted="false" name="alarm_notifs_disabled_b">فعال کردن هشدارها</string>
   <string formatted="false" name="alarm_notifs_disabled_summary">شما گروه اعلان هشدار را برای این برنامه غیرفعال کرده اید.  لطفاً آن را برای دسترسی به آلارم های خود فعال کنید.</string>
+
   <string formatted="false" name="alarm_chan_disabled">شما اعلان‌ها را برای این نوع زنگ هشدار غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا از این نوع زنگ هشدار استفاده کنند.</string>
   <string formatted="false" name="alarm_chan_disabled_b">این نوع زنگ هشدار را فعال کنید</string>
+
   <string formatted="false" name="alarm_chan_settings_b">این نوع زنگ هشدار را مدیریت کنید</string>
   <string formatted="false" name="notification_settings">اطلاعیه اصلی</string>
   <string formatted="false" name="notification_settings_summary">اعلان اصلی را پیکربندی کنید</string>
@@ -174,268 +186,210 @@
   <string name="status_bar_icon_settings_help" formatted="false">انتخاب کنید که آیکون اعلان درصد باتری را نشان دهد یا دما، اینکه نماد واحد داخل آیکون نمایش داده شود یا نه، و اینکه هنگام شارژ از آیکون جداگانه استفاده شود یا نه.</string>
   <string formatted="false" name="status_bar_chip_settings">تراشه نوار وضعیت</string>
   <string formatted="false" name="status_bar_chip_settings_summary">محتوای تراشه به‌روزرسانی‌های زنده را پیکربندی کنید</string>
-  <string formatted="false" name="status_bar_chip_settings_help">در Android 16 و بالاتر با به‌روزرسانی‌های زنده، می‌توانید وضعیت را پیکربندی کنید
-    تراشه نوار نشان می دهد و اینکه آیا ایموجی شارژ نمایش داده می شود.</string>
+  <string formatted="false" name="status_bar_chip_settings_help">در Android 16 و بالاتر با به‌روزرسانی‌های زنده، می‌توانید وضعیت را پیکربندی کنید تراشه نوار نشان می دهد و اینکه آیا ایموجی شارژ نمایش داده می شود.</string>
   <string formatted="false" name="current_hack_settings">هک فعلی (mA).</string>
+
   <string formatted="false" name="current_hack_settings_summary">تنظیمات پیشرفته برای فعال کردن اطلاعات mA</string>
-  <string formatted="false" name="current_hack_settings_help">اندروید ابزاری برای دسترسی اپلیکیشن ها به اطلاعات فراهم نمی کند
-    در مورد جریان باتری  با این حال، یک هک در دسترس است
-    که به بسیاری از دستگاه ها اجازه می دهد تا به طور بالقوه این اطلاعات را دریافت کنند.\n
-
-    \n این تضمینی برای کار کردن نیست.  ممکن است اصلا کار نکند یا کار کند
-    ممکن است به نظر کارآمد باشد اما فقط به مقادیر بیهوده منجر شود.\n
-
-    \nSettings برای فعال کردن هک، در صورت امکان، و کنترل نحوه انجام آن
-    استفاده شده در این بخش موجود است.</string>
+  <string formatted="false" name="current_hack_settings_help">اندروید ابزاری برای دسترسی اپلیکیشن ها به اطلاعات فراهم نمی کند در مورد جریان باتری با این حال، یک هک در دسترس است که به بسیاری از دستگاه ها اجازه می دهد تا به طور بالقوه این اطلاعات را دریافت کنند.\n
+    \n
+    این تضمینی برای کار کردن نیست. ممکن است اصلا کار نکند یا کار کند ممکن است به نظر کارآمد باشد اما فقط به مقادیر بیهوده منجر شود.\n
+    \n
+    Settings برای فعال کردن هک، در صورت امکان، و کنترل نحوه انجام آن استفاده شده در این بخش موجود است.</string>
   <string formatted="false" name="alarm_settings_subtitle">تنظیمات هشدار</string>
   <string formatted="false" name="alarm_settings">آلارم ها</string>
-  <string formatted="false" name="alarm_settings_help">می‌توانید از مانیتور باتری به شما اطلاع دهید که وقتی باتری شما تمام می‌شود
-    به شرایط خاصی می رسد (به عنوان مثال، باتری کاملاً شارژ می شود،
-    سطح باتری به زیر 20٪ می رسد و بسیاری دیگر).</string>
+  <string formatted="false" name="alarm_settings_help">می‌توانید از مانیتور باتری به شما اطلاع دهید که وقتی باتری شما تمام می‌شود به شرایط خاصی می رسد (به عنوان مثال، باتری کاملاً شارژ می شود، سطح باتری به زیر 20٪ می رسد و بسیاری دیگر).</string>
   <string formatted="false" name="other_settings">تنظیمات دیگر</string>
-  <string formatted="false" name="other_settings_help">تمام تنظیمات دیگر از جمله ورود به سیستم، قفل در این صفحه وجود دارد
-    صفحه نمایش، واحد دما، شروع خودکار و موارد دیگر.</string>
+  <string formatted="false" name="other_settings_help">تمام تنظیمات دیگر از جمله ورود به سیستم، قفل در این صفحه وجود دارد صفحه نمایش، واحد دما، شروع خودکار و موارد دیگر.</string>
   <string formatted="false" name="live_updates_onboarding_title">نوار وضعیت تراشه باتری</string>
-  <string formatted="false" name="live_updates_onboarding_message_on">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند. این گزینه به‌صورت پیش‌فرض فعال است.\n\nاگر نماد اعلان سنتی را ترجیح می‌دهید، می‌توانید «Live Updates» را در تنظیمات سیستم Android برای این برنامه غیرفعال کنید.\n\nنکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
-  <string formatted="false" name="live_updates_onboarding_message_off">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند، اما این گزینه در حال حاضر در تنظیمات سیستم غیرفعال است.\n\nبرای بهترین تجربه، توصیه می‌کنیم آن را فعال کنید. اگر نماد اعلان سنتی را ترجیح می‌دهید، می‌توانید آن را غیرفعال نگه دارید.\n\nنکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
+  <string formatted="false" name="live_updates_onboarding_message_on">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند. این گزینه به‌صورت پیش‌فرض فعال است.\n
+    \n
+    اگر نماد اعلان سنتی را ترجیح می‌دهید، می‌توانید «Live Updates» را در تنظیمات سیستم Android برای این برنامه غیرفعال کنید.\n
+    \n
+    نکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
+  <string formatted="false" name="live_updates_onboarding_message_off">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند، اما این گزینه در حال حاضر در تنظیمات سیستم غیرفعال است.\n
+    \n
+    برای بهترین تجربه، توصیه می‌کنیم آن را فعال کنید. اگر نماد اعلان سنتی را ترجیح می‌دهید، می‌توانید آن را غیرفعال نگه دارید.\n
+    \n
+    نکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
   <string formatted="false" name="live_updates_onboarding_positive_on">متوجه شدم</string>
   <string formatted="false" name="live_updates_onboarding_positive_off">به تنظیمات بروید</string>
+
   <string formatted="false" name="live_updates_onboarding_negative_off">رد کردن</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor برای نمایش سطح باتری در نوار وضعیت و اطلاع‌رسانی درباره هشدارها به اجازه شما نیاز دارد.\n\nنکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
+  <string name="notifications_onboarding_message" formatted="false">Battery Monitor برای نمایش سطح باتری در نوار وضعیت و اطلاع‌رسانی درباره هشدارها به اجازه شما نیاز دارد.\n
+    \n
+    نکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
   <string formatted="false" name="add_alarm">هشدار اضافه کنید</string>
   <string formatted="false" name="pref_cat_channel_settings">تنظیمات کانال اعلان</string>
   <string formatted="false" name="pref_manage_main_channel">کانال اصلی را مدیریت کنید</string>
+
   <string formatted="false" name="pref_cat_notification_content">محتوا</string>
   <string formatted="false" name="pref_cat_status_bar_chip">تراشه نوار وضعیت (Android 16 و بالاتر)</string>
   <string formatted="false" name="pref_live_update_display">نمایش به‌روزرسانی زنده</string>
   <string formatted="false" name="pref_live_update_display_summary">نمایش در نوار وضعیت:</string>
   <string formatted="false" name="pref_live_update_display_help">انتخاب کنید تراشهٔ به‌روزرسانی زندهٔ Android 16+ چه زمانی در نوار وضعیت نمایش داده شود.</string>
   <string formatted="false" name="pref_live_update_display_charging">فقط هنگام شارژ</string>
+
   <string formatted="false" name="pref_live_update_keep_main_notification">نگه داشتن اعلان اصلی همراه با به‌روزرسانی زنده</string>
+
   <string formatted="false" name="pref_live_update_keep_main_notification_summary">وقتی به‌روزرسانی زنده فعال است، اعلان اصلی کامل نمایش داده شود؟</string>
+
   <string formatted="false" name="pref_live_update_keep_main_notification_help">اگر فعال باشد، اعلان اصلی معمولی علاوه بر تراشهٔ نوار وضعیت قابل مشاهده می‌ماند.</string>
   <string formatted="false" name="pref_chip_content">محتوای تراشه</string>
+
   <string formatted="false" name="pref_chip_switching_interval">فاصله تعویض</string>
   <string formatted="false" name="pref_chip_content_help">مقداری را انتخاب کنید که در تراشه اعلان تبلیغاتی Android 16+ نشان داده شود.</string>
   <string formatted="false" name="pref_chip_indicate_charging">نمایش شکلک شارژ</string>
   <string formatted="false" name="pref_chip_indicate_charging_summary">یک شکلک رعد و برق هنگام شارژ یا شارژ کامل نشان داده شود؟</string>
-  <string formatted="false" name="pref_chip_indicate_charging_help">اگر فعال باشد، تراشه نوار وضعیت یک شکلک رعد و برق را در کنار آن نشان می دهد
-    مقدار تراشه در هنگام شارژ یا در هنگام شارژ کامل.</string>
+  <string formatted="false" name="pref_chip_indicate_charging_help">اگر فعال باشد، تراشه نوار وضعیت یک شکلک رعد و برق را در کنار آن نشان می دهد مقدار تراشه در هنگام شارژ یا در هنگام شارژ کامل.</string>
   <string formatted="false" name="pref_top_line_content">محتوای خط برتر</string>
-  <string formatted="false" name="pref_top_line_content_help">آنچه را که در خط بالای اعلان قرار می گیرد پیکربندی کنید: تخمین زده شده است
-    زمان باقی مانده (قابل تنظیم در جای دیگر)، چه مدت از وضعیت
-    تغییر کرده است (وصل شده، از برق خارج شده یا کاملا شارژ شده است)، یا
-    علائم حیاتی باتری (سلامت باتری، دما و ولتاژ).</string>
+  <string formatted="false" name="pref_top_line_content_help">آنچه را که در خط بالای اعلان قرار می گیرد پیکربندی کنید: تخمین زده شده است زمان باقی مانده (قابل تنظیم در جای دیگر)، چه مدت از وضعیت تغییر کرده است (وصل شده، از برق خارج شده یا کاملا شارژ شده است)، یا علائم حیاتی باتری (سلامت باتری، دما و ولتاژ).</string>
   <string formatted="false" name="pref_bottom_line_content">محتوای خط پایین</string>
   <string formatted="false" name="pref_bottom_line_content_help">شما همان گزینه هایی را برای خط پایین دارید که برای خط بالا.</string>
   <string formatted="false" name="time_remaining">زمان باقی مانده</string>
   <string formatted="false" name="time_since_status_change">زمان از تغییر وضعیت</string>
   <string formatted="false" name="vital_signs">علائم حیاتی</string>
   <string formatted="false" name="pref_time_remaining_verbosity">زمان باقی مانده پرحرفی</string>
-  <string formatted="false" name="pref_time_remaining_verbosity_help">دستگاه‌ها در اشکال و اندازه‌های مختلف وجود دارند، بنابراین اکثر ترجمه‌ها به این نیاز دارند
-    از اختصارات استفاده کنید تا اطمینان حاصل کنید که برآورد زمان باقیمانده مطابقت دارد
-    به راحتی در منطقه اطلاع رسانی.  اگر هنوز جا نیفتاد،
-    می توانید فرمت فشرده را انتخاب کنید.  اگر فضای زیادی دارید،
-    ممکن است تنظیمات پرمخاطب را ترجیح دهید.</string>
+  <string formatted="false" name="pref_time_remaining_verbosity_help">دستگاه‌ها در اشکال و اندازه‌های مختلف وجود دارند، بنابراین اکثر ترجمه‌ها به این نیاز دارند از اختصارات استفاده کنید تا اطمینان حاصل کنید که برآورد زمان باقیمانده مطابقت دارد به راحتی در منطقه اطلاع رسانی. اگر هنوز جا نیفتاد، می توانید فرمت فشرده را انتخاب کنید. اگر فضای زیادی دارید، ممکن است تنظیمات پرمخاطب را ترجیح دهید.</string>
   <string formatted="false" name="condensed">متراکم شده</string>
   <string formatted="false" name="normal">Normal</string>
   <string formatted="false" name="verbose">پرمخاطب</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs">مدت زمان وضعیت در علائم حیاتی</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">شامل زمان از تغییر وضعیت در علائم حیاتی می شود؟</string>
-  <string formatted="false" name="pref_status_duration_in_vital_signs_help">در صورت تنظیم، خط علائم حیاتی شامل تعداد ساعات نیز می شود
-    از زمانی که دستگاه از برق جدا شده، وصل شده یا کاملاً شارژ شده است.</string>
+  <string formatted="false" name="pref_status_duration_in_vital_signs_help">در صورت تنظیم، خط علائم حیاتی شامل تعداد ساعات نیز می شود از زمانی که دستگاه از برق جدا شده، وصل شده یا کاملاً شارژ شده است.</string>
   <string formatted="false" name="custom">سفارشی...</string>
   <string formatted="false" name="pref_cat_icon_set">آیکون اعلان</string>
+
   <string formatted="false" name="pref_icon_content">محتوای آیکون</string>
-  <string formatted="false" name="pref_icon_content_help">انتخاب کنید آیا نماد نوار وضعیت درصد باتری را نشان دهد یا خیر
-    دمای باتری دما از واحد انتخابی شما پیروی می کند.</string>
+  <string formatted="false" name="pref_icon_content_help">انتخاب کنید آیا نماد نوار وضعیت درصد باتری را نشان دهد یا خیر دمای باتری دما از واحد انتخابی شما پیروی می کند.</string>
   <string name="pref_show_icon_unit" formatted="false">نمایش نماد واحد</string>
   <string name="pref_show_icon_unit_help" formatted="false">اگر فعال باشد، آیکون برای درصد باتری علامت درصد و برای دمای باتری علامت درجه را نشان می‌دهد. برای نمایش فقط عدد، این گزینه را غیرفعال کنید.</string>
   <string formatted="false" name="pref_cat_current_hack_main">کنترل اصلی</string>
+
   <string formatted="false" name="pref_cat_current_hack_unsupported">هک فعلی (mA) پشتیبانی نمی شود</string>
   <string formatted="false" name="pref_current_hack_unsupported">متأسفیم، هک فعلی (mA) در این دستگاه پشتیبانی نمی شود.</string>
   <string formatted="false" name="pref_enable_current_hack">هک را فعال کنید</string>
+
   <string formatted="false" name="pref_enable_current_hack_summary">تلاش برای فعال کردن هک فعلی (mA)؟</string>
-  <string formatted="false" name="pref_enable_current_hack_help">هنگامی که این تنظیم فعال است، گزینه های دیگر مربوط به
-    هک قابل استفاده خواهد بود</string>
+
+  <string formatted="false" name="pref_enable_current_hack_help">هنگامی که این تنظیم فعال است، گزینه های دیگر مربوط به هک قابل استفاده خواهد بود</string>
   <string formatted="false" name="pref_current_hack_prefer_fs">روش هک قدیمی را ترجیح دهید</string>
   <string formatted="false" name="pref_current_hack_prefer_fs_summary">روش هک قدیمی و مبتنی بر سیستم فایل را ترجیح می دهید؟</string>
-  <string formatted="false" name="pref_current_hack_prefer_fs_help">با شروع در Lollipop (اندروید 5.0)، اندروید اکنون یک ارائه می دهد
-    روشی کمتر هک برای دسترسی به اطلاعات جاری (mA)
-    مستقیماً از BatteryManager سیستم.  با این حال، هنوز هم نیست
-    تضمین می شود که اصلا کار کند یا خوب کار کند.  تا اندروید نوقا
-    (اندروید 7.0)، به نظر می رسد روش هک قدیمی (مبتنی بر سیستم فایل).
-    روی اکثر دستگاه‌ها بهتر کار می‌کند، بنابراین در دستگاه‌ها پیش‌فرض باقی می‌ماند
-    کمتر از Android 7.0.\n اجرا می شود
-
-    \nاین تنظیم فقط یک اشاره به هک کردن روش است
-    ترجیح دادن اگر هک به خوبی کار نمی کند، می توانید آن را تغییر دهید
-    دستگاه شما</string>
+  <string formatted="false" name="pref_current_hack_prefer_fs_help">با شروع در Lollipop (اندروید 5.0)، اندروید اکنون یک ارائه می دهد روشی کمتر هک برای دسترسی به اطلاعات جاری (mA) مستقیماً از BatteryManager سیستم. با این حال، هنوز هم نیست تضمین می شود که اصلا کار کند یا خوب کار کند. تا اندروید نوقا (اندروید 7.0)، به نظر می رسد روش هک قدیمی (مبتنی بر سیستم فایل). روی اکثر دستگاه‌ها بهتر کار می‌کند، بنابراین در دستگاه‌ها پیش‌فرض باقی می‌ماند کمتر از Android 7.0.\n
+    اجرا می شود\n
+    این تنظیم فقط یک اشاره به هک کردن روش است ترجیح دادن اگر هک به خوبی کار نمی کند، می توانید آن را تغییر دهید دستگاه شما</string>
   <string formatted="false" name="pref_current_hack_multiplier">ضرب کننده</string>
-  <string formatted="false" name="pref_current_hack_multiplier_help">برخی از دستگاه ها میلی آمپر را به جای میکرو آمپر گزارش می دهند
-    API فراخوانی می کند.  همان دستگاه ها علامت مقدار گزارش شده را تعویض می کنند.
-    برخی از کاربران علامت مخالف مقادیر گزارش شده را ترجیح می دهند.
-    برای کمک به انطباق با موقعیت هایی مانند این، می توانید ضرب کنید
-    نتیجه فراخوانی API با مقدار here.\n
 
-    برای مثال، اگر دستگاه شما همیشه 0 میلی آمپر را نشان می دهد، می توانید امتحان کنید
-    با استفاده از ضریب 1000. اگر فراخوانی API 450 را برگرداند
-    میکرو آمپر، این ضریب باعث می شود برنامه مقدار را نشان دهد
-    450 میلی آمپر به جای 0 میلی آمپر.  اگر تماس API 0 را برگرداند
-    میکرو آمپر، البته، ضریب فینال را تغییر نمی دهد
-    مقدار نمایش 0 میلی آمپر</string>
+  <string formatted="false" name="pref_current_hack_multiplier_help">برخی از دستگاه ها میلی آمپر را به جای میکرو آمپر گزارش می دهند API فراخوانی می کند. همان دستگاه ها علامت مقدار گزارش شده را تعویض می کنند. برخی از کاربران علامت مخالف مقادیر گزارش شده را ترجیح می دهند. برای کمک به انطباق با موقعیت هایی مانند این، می توانید ضرب کنید نتیجه فراخوانی API با مقدار here.\n
+    برای مثال، اگر دستگاه شما همیشه 0 میلی آمپر را نشان می دهد، می توانید امتحان کنید با استفاده از ضریب 1000. اگر فراخوانی API 450 را برگرداند میکرو آمپر، این ضریب باعث می شود برنامه مقدار را نشان دهد 450 میلی آمپر به جای 0 میلی آمپر. اگر تماس API 0 را برگرداند میکرو آمپر، البته، ضریب فینال را تغییر نمی دهد مقدار نمایش 0 میلی آمپر</string>
   <string formatted="false" name="pref_cat_current_hack_notification">اطلاع رسانی</string>
-  <string formatted="false" name="pref_display_current_in_vital_stats">نمایش در آمار حیاتی</string>
-  <string formatted="false" name="pref_display_current_in_vital_stats_summary">نمایش جریان (mA) در اعلان اصلی آمار حیاتی؟</string>
-  <string formatted="false" name="pref_display_current_in_vital_stats_help">هنگامی که فعال شود، هک انجام می شود و نمایش داده می شود
-    منجر به خط آمار حیاتی اعلان اصلی می شود.  توجه داشته باشید که شما
-    باید اعلان اصلی برای نمایش آمار حیاتی پیکربندی شده باشد
-    برای دیدن این  این مقدار فقط زمانی تازه می شود که
-    سیستم اطلاعات باتری جدید را ارسال می کند.\n
 
-    \nO در اکثر دستگاه ها، یک مقدار منفی نشان دهنده تخلیه خالص از دستگاه است
-    باتری و مقدار مثبت نشان دهنده وجود باتری است
-    شارژ شده است.  با این حال، همه دستگاه‌ها مقادیر را از این طریق تولید نمی‌کنند.</string>
+  <string formatted="false" name="pref_display_current_in_vital_stats">نمایش در آمار حیاتی</string>
+
+  <string formatted="false" name="pref_display_current_in_vital_stats_summary">نمایش جریان (mA) در اعلان اصلی آمار حیاتی؟</string>
+  <string formatted="false" name="pref_display_current_in_vital_stats_help">هنگامی که فعال شود، هک انجام می شود و نمایش داده می شود منجر به خط آمار حیاتی اعلان اصلی می شود. توجه داشته باشید که شما باید اعلان اصلی برای نمایش آمار حیاتی پیکربندی شده باشد برای دیدن این این مقدار فقط زمانی تازه می شود که سیستم اطلاعات باتری جدید را ارسال می کند.\n
+    \n
+    O در اکثر دستگاه ها، یک مقدار منفی نشان دهنده تخلیه خالص از دستگاه است باتری و مقدار مثبت نشان دهنده وجود باتری است شارژ شده است. با این حال، همه دستگاه‌ها مقادیر را از این طریق تولید نمی‌کنند.</string>
   <string formatted="false" name="pref_cat_current_hack_main_window">پنجره اصلی</string>
+
   <string formatted="false" name="pref_display_current_in_main_window">نمایش در پنجره اصلی</string>
   <string formatted="false" name="pref_display_current_in_main_window_summary">نمایش جریان (mA) در پنجره اصلی؟</string>
-  <string formatted="false" name="pref_display_current_in_main_window_help">هنگامی که فعال شود، هک انجام می شود و نمایش داده می شود
-    منجر به پنجره اصلی می شود.  این مقدار هر زمان که باشد به روز می شود
-    سیستم اطلاعات باتری جدید را ارسال می کند، اما شما می توانید آن را به روز کنید
-    ارزش را در هر زمان به سادگی با ضربه زدن روی مقدار نمایش داده شده، ارزش گذاری کنید.  (توجه
-    که برخی از دستگاه ها به ندرت یا هرگز داده های اساسی را به روز نمی کنند، بنابراین
-    ممکن است با ضربه زدن، مقدار تغییر نکند.)\n
+  <string formatted="false" name="pref_display_current_in_main_window_help">هنگامی که فعال شود، هک انجام می شود و نمایش داده می شود منجر به پنجره اصلی می شود. این مقدار هر زمان که باشد به روز می شود سیستم اطلاعات باتری جدید را ارسال می کند، اما شما می توانید آن را به روز کنید ارزش را در هر زمان به سادگی با ضربه زدن روی مقدار نمایش داده شده، ارزش گذاری کنید. (توجه که برخی از دستگاه ها به ندرت یا هرگز داده های اساسی را به روز نمی کنند، بنابراین ممکن است با ضربه زدن، مقدار تغییر نکند.)\n
+    \n
+    O در اکثر دستگاه ها، یک مقدار منفی نشان دهنده تخلیه خالص از دستگاه است باتری و مقدار مثبت نشان دهنده وجود باتری است شارژ شده است. با این حال، همه دستگاه‌ها مقادیر را از این طریق تولید نمی‌کنند.</string>
 
-    \nO در اکثر دستگاه ها، یک مقدار منفی نشان دهنده تخلیه خالص از دستگاه است
-    باتری و مقدار مثبت نشان دهنده وجود باتری است
-    شارژ شده است.  با این حال، همه دستگاه‌ها مقادیر را از این طریق تولید نمی‌کنند.</string>
   <string formatted="false" name="pref_prefer_current_avg_in_vital_stats">ترجیح دادن میانگین در آمار حیاتی</string>
   <string formatted="false" name="pref_prefer_current_avg_in_vital_stats_summary">آیا می‌خواهید از current_avg در آمار حیاتی اعلان اصلی استفاده کنید؟</string>
+
   <string formatted="false" name="pref_prefer_current_avg_in_main_window">ترجیح دادن میانگین در پنجره اصلی</string>
   <string formatted="false" name="pref_prefer_current_avg_in_main_window_summary">سعی کنید از current_avg در پنجره اصلی استفاده کنید؟</string>
-  <string formatted="false" name="pref_prefer_current_avg_help">برخی از سیستم ها یک هک بیشتر در دسترس دارند که اخیراً به آن اشاره می کند
-    میانگین جریان به جای خواندن آنی آن.
-    معنای این از دستگاهی به دستگاه دیگر متفاوت است و فقط در دسترس است
-    در برخی از دستگاه ها  این ممکن است ارزش پایدارتری به دست دهد (اگر همه چیز پیش برود
-    خوب)، ممکن است همان مقدار را برگرداند، یا ممکن است غیرقابل استفاده را برگرداند
-    مقدار (در این صورت باید این گزینه را خاموش کنید).</string>
+  <string formatted="false" name="pref_prefer_current_avg_help">برخی از سیستم ها یک هک بیشتر در دسترس دارند که اخیراً به آن اشاره می کند میانگین جریان به جای خواندن آنی آن. معنای این از دستگاهی به دستگاه دیگر متفاوت است و فقط در دسترس است در برخی از دستگاه ها این ممکن است ارزش پایدارتری به دست دهد (اگر همه چیز پیش برود خوب)، ممکن است همان مقدار را برگرداند، یا ممکن است غیرقابل استفاده را برگرداند مقدار (در این صورت باید این گزینه را خاموش کنید).</string>
   <string formatted="false" name="pref_auto_refresh_current_in_main_window">به‌روزرسانی خودکار mA در پنجره اصلی</string>
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window_summary">به‌روزرسانی خودکار mA هر دو ثانیه؟</string>
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window_help">اگر هک را برای نمایش mA در پنجره اصلی تنظیم کرده اید، می توانید
-    مقدار را به سادگی با ضربه زدن روی آن تازه کنید.  اگر می خواهید ببینید
-    به روز رسانی های مکرر بدون نیاز به ضربه زدن، می توانید این گزینه را فعال کنید
-    برای بازخوانی خودکار مقدار هر دو ثانیه در حالی که پنجره قابل مشاهده است.\n
 
-    \n توجه داشته باشید که برخی از دستگاه ها به ندرت یا هرگز موارد زیر را به روز نمی کنند
-    داده ها، بنابراین ممکن است به نظر نمی رسد مقدار تغییر کند، حتی اگر برنامه تغییر کند
-    بازخوانی مقدار نمایش داده شده برای مطابقت با داده های بازیابی شده از
-    سیستم</string>
+  <string formatted="false" name="pref_auto_refresh_current_in_main_window_summary">به‌روزرسانی خودکار mA هر دو ثانیه؟</string>
+  <string formatted="false" name="pref_auto_refresh_current_in_main_window_help">اگر هک را برای نمایش mA در پنجره اصلی تنظیم کرده اید، می توانید مقدار را به سادگی با ضربه زدن روی آن تازه کنید. اگر می خواهید ببینید به روز رسانی های مکرر بدون نیاز به ضربه زدن، می توانید این گزینه را فعال کنید برای بازخوانی خودکار مقدار هر دو ثانیه در حالی که پنجره قابل مشاهده است.\n
+    \n
+    توجه داشته باشید که برخی از دستگاه ها به ندرت یا هرگز موارد زیر را به روز نمی کنند داده ها، بنابراین ممکن است به نظر نمی رسد مقدار تغییر کند، حتی اگر برنامه تغییر کند بازخوانی مقدار نمایش داده شده برای مطابقت با داده های بازیابی شده از سیستم</string>
   <string formatted="false" name="pref_cat_charging_indicator">نشانگر شارژ</string>
   <string formatted="false" name="pref_indicate_charging">شارژ را نشان می دهد</string>
+
   <string formatted="false" name="pref_indicate_charging_summary">نماد تغییر دهید تا هنگام شارژ نشان داده شود؟</string>
   <string formatted="false" name="pref_indicate_charging_help">آیکون شارژ می‌تواند یک نماد صاعقه زیر عدد نشان دهد. اگر همان آیکون را هنگام شارژ و تخلیه ترجیح می‌دهید، این گزینه را غیرفعال کنید.</string>
   <string formatted="false" name="pref_cat_logging">ورود به سیستم</string>
   <string formatted="false" name="pref_enable_logging">Logging را فعال کنید</string>
+
   <string formatted="false" name="pref_enable_logging_summary">گزارش وضعیت باتری تغییر می کند؟</string>
+
   <string formatted="false" name="pref_enable_logging_help">اگر فعال باشد، Battery Monitor تغییرات وضعیت باتری را ثبت می کند.</string>
   <string formatted="false" name="pref_max_log_age">حداکثر سن ورود</string>
   <string formatted="false" name="pref_max_log_age_summary">حذف گزارش های قدیمی تر از:</string>
+
   <string formatted="false" name="pref_max_log_age_help">اگر ثبت گزارش فعال باشد، هر بار که دستگاه را به برق وصل کنید، گزارش‌های قدیمی‌تر از این مقدار حذف می‌شوند. گزینه هرگز حذف نشود را انتخاب کنید تا گزارش‌ها تا زمانی که خودتان آن‌ها را پاک کنید باقی بمانند.</string>
   <string formatted="false" name="pref_cat_temperature_unit">واحد دما</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">تبدیل به فارنهایت</string>
-  <string formatted="false" name="pref_convert_to_fahrenheit_help">اندروید دمای باتری را بر حسب درجه سانتیگراد گزارش می کند.  اگر
-    شما ترجیح می دهید دمای باتری را بر حسب درجه فارنهایت ببینید،
-    این گزینه را علامت بزنید، برنامه برای شما تبدیل خواهد شد.</string>
+  <string formatted="false" name="pref_convert_to_fahrenheit_help">اندروید دمای باتری را بر حسب درجه سانتیگراد گزارش می کند. اگر شما ترجیح می دهید دمای باتری را بر حسب درجه فارنهایت ببینید، این گزینه را علامت بزنید، برنامه برای شما تبدیل خواهد شد.</string>
+
   <string formatted="false" name="pref_cat_autostart">شروع خودکار</string>
   <string formatted="false" name="pref_autostart_at_boot">شروع خودکار در بوت</string>
   <string formatted="false" name="pref_autostart_at_boot_summary">هنگام بوت شدن دستگاه، مانیتور باتری را راه اندازی کنید:</string>
-  <string formatted="false" name="pref_autostart_at_boot_help">کنترل می کند که آیا مانیتور باتری باید خودش روشن شود یا خیر
-    به طور خودکار هنگام بوت شدن دستگاه.\n
-
-    \n گزینه \"If Running on Shutdown\" با توجه به کار می کند
-    آیا اخیراً مانیتور باتری را به صورت دستی راه اندازی کرده اید یا متوقف کرده اید.
-    بنابراین اگر مانیتور باتری را از طریق برخی دیگر بکشید
-    یعنی مانند یک قاتل وظیفه، مانیتور باتری نمی داند
-    شما آن را متوقف کردید، و اگر آن را داشته باشید همچنان در هنگام راه اندازی شروع می شود
-    این را تنظیم کنید.\n
-
-    \nNOTE: اگر شما یک مانیتور باتری داشته باشید، آندروید همیشه مانیتور باتری را در بوت راه اندازی می کند
-    ویجت های دسکتاپ مانیتور باتری  در این صورت این تنظیمات بی ربط است.</string>
+  <string formatted="false" name="pref_autostart_at_boot_help">کنترل می کند که آیا مانیتور باتری باید خودش روشن شود یا خیر به طور خودکار هنگام بوت شدن دستگاه.\n
+    \n
+    گزینه \"If Running on Shutdown\" با توجه به کار می کند آیا اخیراً مانیتور باتری را به صورت دستی راه اندازی کرده اید یا متوقف کرده اید. بنابراین اگر مانیتور باتری را از طریق برخی دیگر بکشید یعنی مانند یک قاتل وظیفه، مانیتور باتری نمی داند شما آن را متوقف کردید، و اگر آن را داشته باشید همچنان در هنگام راه اندازی شروع می شود این را تنظیم کنید.\n
+    \n
+    NOTE: اگر شما یک مانیتور باتری داشته باشید، آندروید همیشه مانیتور باتری را در بوت راه اندازی می کند ویجت های دسکتاپ مانیتور باتری در این صورت این تنظیمات بی ربط است.</string>
   <string formatted="false" name="predictor_sensitive">حساس</string>
   <string formatted="false" name="predictor_conservative">محافظه کار</string>
   <string formatted="false" name="predictor_since_status_change">از زمان تغییر وضعیت</string>
+
   <string formatted="false" name="predictor_long_term_ave">میانگین بلند مدت</string>
   <string formatted="false" name="pref_cat_predictor">برآوردهای زمان باقی مانده</string>
   <string formatted="false" name="pref_prediction_type">نوع تخمین</string>
-  <string formatted="false" name="pref_prediction_type_help">در اینجا می توانید انتخاب کنید که چگونه مانیتور باتری باقیمانده شما را پیش بینی کند
-    عمر باتری / زمان تا شارژ کامل.\n
 
-    \n الگوریتم \"حساس\" دقیقاً بر اساس پنج مورد آخر شما است
-    دقیقه استفاده  اگر نگرانی اصلی شما این است که \"تا کی؟
-    باتری دوام می آورد اگر به کاری که می کنم ادامه دهم؟\" پس این است
-    الگوریتم برای شما.\n
-
-    \n الگوریتم \"محافظه کار\" پیش فرض است.  همچنین مبتنی است
-    در استفاده اخیر، اما سعی می کند با طولانی مدت شما متفاوت نباشد
-    میانگین خیلی آزادانه.\n
-
-    \n \"Since Status Change\" را انتخاب کنید تا بر اساس پیش‌بینی انجام شود
-    دقیقاً در جلسه فعلی شما.\n
-
-    \n در نهایت، شما می توانید پیش بینی را تنها بر اساس خود داشته باشید
-    متوسط استفاده طولانی مدت</string>
+  <string formatted="false" name="pref_prediction_type_help">در اینجا می توانید انتخاب کنید که چگونه مانیتور باتری باقیمانده شما را پیش بینی کند عمر باتری / زمان تا شارژ کامل.\n
+    \n
+    الگوریتم \"حساس\" دقیقاً بر اساس پنج مورد آخر شما است دقیقه استفاده اگر نگرانی اصلی شما این است که \"تا کی؟ باتری دوام می آورد اگر به کاری که می کنم ادامه دهم؟\" پس این است الگوریتم برای شما.\n
+    \n
+    الگوریتم \"محافظه کار\" پیش فرض است. همچنین مبتنی است در استفاده اخیر، اما سعی می کند با طولانی مدت شما متفاوت نباشد میانگین خیلی آزادانه.\n
+    \n
+    \"Since Status Change\" را انتخاب کنید تا بر اساس پیش‌بینی انجام شود دقیقاً در جلسه فعلی شما.\n
+    \n
+    در نهایت، شما می توانید پیش بینی را تنها بر اساس خود داشته باشید متوسط استفاده طولانی مدت</string>
   <string formatted="false" name="pref_cat_language">زبان</string>
   <string formatted="false" name="pref_language_override">لغو زبان</string>
   <string formatted="false" name="pref_language_override_summary">انتخاب زبان:</string>
+
   <string formatted="false" name="alarms_overview">بررسی اجمالی هشدارها</string>
-  <string formatted="false" name="alarms_overview_help">این صفحه به شما امکان می دهد آلارم های جدید اضافه کنید، به سرعت فعال یا غیرفعال کنید
-    آلارم های موجود، یا حذف آلارم ها.\n
-
-    \nبرای افزودن زنگ هشدار جدید، \"افزودن زنگ\" را فشار دهید — با این کار یک زنگ جدید ایجاد می شود
-    زنگ هشدار و شما را به صفحه تنظیمات آلارم می برد، جایی که می توانید
-    تنظیمات زنگ جدید را کنترل کنید.  به کمک آن صفحه مراجعه کنید
-    برای جزئیات بیشتر.\n
-
-    \nدر زیر دکمه \"افزودن زنگ هشدار\" لیستی از هر زنگ هشداری وجود دارد
-    ایجاد شد.\n
-
-    \n• برای ویرایش زنگ موجود، فقط آن را فشار دهید.
-    \n• برای حذف زنگ هشدار، آن را به مدت طولانی فشار دهید، سپس \"حذف" را انتخاب کنید
-    زنگ هشدار\".  (همچنین می توانید یک زنگ هشدار را از آلارم فردی حذف کنید
-    صفحه تنظیمات با فشار دادن MENU سپس \"Delete Alarm\".)
-    \n• برای اینکه به راحتی فعال بودن زنگ هشدار را تغییر دهید، کلید را فشار دهید
-    به سمت متن زنگ هشدار بروید.  (همچنین می توانید یا را فعال کنید
-    زنگ هشدار را از صفحه تنظیمات زنگ جداگانه غیرفعال کنید.)</string>
+  <string formatted="false" name="alarms_overview_help">این صفحه به شما امکان می دهد آلارم های جدید اضافه کنید، به سرعت فعال یا غیرفعال کنید آلارم های موجود، یا حذف آلارم ها.\n
+    \n
+    برای افزودن زنگ هشدار جدید، \"افزودن زنگ\" را فشار دهید — با این کار یک زنگ جدید ایجاد می شود زنگ هشدار و شما را به صفحه تنظیمات آلارم می برد، جایی که می توانید تنظیمات زنگ جدید را کنترل کنید. به کمک آن صفحه مراجعه کنید برای جزئیات بیشتر.\n
+    \n
+    در زیر دکمه \"افزودن زنگ هشدار\" لیستی از هر زنگ هشداری وجود دارد ایجاد شد.\n
+    \n
+    • برای ویرایش زنگ موجود، فقط آن را فشار دهید.\n
+    • برای حذف زنگ هشدار، آن را به مدت طولانی فشار دهید، سپس \"حذف" را انتخاب کنید زنگ هشدار\". (همچنین می توانید یک زنگ هشدار را از آلارم فردی حذف کنید صفحه تنظیمات با فشار دادن MENU سپس \"Delete Alarm\".)\n
+    • برای اینکه به راحتی فعال بودن زنگ هشدار را تغییر دهید، کلید را فشار دهید به سمت متن زنگ هشدار بروید. (همچنین می توانید یا را فعال کنید زنگ هشدار را از صفحه تنظیمات زنگ جداگانه غیرفعال کنید.)</string>
   <string formatted="false" name="pref_alarm_enabled">فعال کردن هشدار</string>
-  <string formatted="false" name="pref_alarm_enabled_help">اگر می خواهید موقتا
-  زنگ هشدار را بدون نیاز به ایجاد مجدد آن در زمانی که می خواهید غیرفعال کنید
-  دوباره، می‌توانید آن را خاموش و روشن کنید یا در اینجا یا روی آلارم‌های اصلی
-  صفحه</string>
+  <string formatted="false" name="pref_alarm_enabled_help">اگر می خواهید موقتا زنگ هشدار را بدون نیاز به ایجاد مجدد آن در زمانی که می خواهید غیرفعال کنید دوباره، می‌توانید آن را خاموش و روشن کنید یا در اینجا یا روی آلارم‌های اصلی صفحه</string>
+
   <string formatted="false" name="pref_cat_alarm_conditions">شرایط هشدار</string>
-  <string formatted="false" name="pref_cat_alarm_conditions_help">اینجا جایی است که می توانید
-  کنترل کنید که چه شرایطی باعث ایجاد زنگ هشدار می شود.</string>
+  <string formatted="false" name="pref_cat_alarm_conditions_help">اینجا جایی است که می توانید کنترل کنید که چه شرایطی باعث ایجاد زنگ هشدار می شود.</string>
   <string formatted="false" name="pref_alarm_type">نوع زنگ هشدار</string>
+
   <string formatted="false" name="pref_alarm_type_summary">زنگ هشدار هنگام باتری:</string>
-  <string formatted="false" name="pref_alarm_type_help">در حال حاضر پنج نوع وجود دارد
-    زنگ هشداری که می توانید انتخاب کنید.\n
-
-    \n زنگ \"کاملا شارژ می شود\" به شما اطلاع می دهد
-    وضعیت باتری شما از \"شارژ\" به \"کاملاً" تغییر می کند
-    شارژ شد\".  توجه داشته باشید که در بسیاری از دستگاه‌ها، این لزوماً اینطور نیست
-    همان چیزی که 100٪ شارژ است.\n
-
-    \n هشدارهای شارژ و دما از شما می خواهند که آستانه ای را تنظیم کنید
-    در زیر، پس از انتخاب آن نوع زنگ هشدار.\n
-
-    \n هشدار \"Health Fails\" در صورت سلامت باتری شما را مطلع می کند
-    به چیزی غیر از \"ناشناخته\" یا \"سلامت خوب\" تبدیل می شود
-    توسط اندروید گزارش شده است.</string>
+  <string formatted="false" name="pref_alarm_type_help">در حال حاضر پنج نوع وجود دارد زنگ هشداری که می توانید انتخاب کنید.\n
+    \n
+    زنگ \"کاملا شارژ می شود\" به شما اطلاع می دهد وضعیت باتری شما از \"شارژ\" به \"کاملاً" تغییر می کند شارژ شد\". توجه داشته باشید که در بسیاری از دستگاه‌ها، این لزوماً اینطور نیست همان چیزی که 100٪ شارژ است.\n
+    \n
+    هشدارهای شارژ و دما از شما می خواهند که آستانه ای را تنظیم کنید در زیر، پس از انتخاب آن نوع زنگ هشدار.\n
+    \n
+    هشدار \"Health Fails\" در صورت سلامت باتری شما را مطلع می کند به چیزی غیر از \"ناشناخته\" یا \"سلامت خوب\" تبدیل می شود توسط اندروید گزارش شده است.</string>
   <string formatted="false" name="pref_alarm_threshold">آستانه</string>
+
   <string formatted="false" name="alarm_pref_not_used">برای این نوع زنگ هشدار استفاده نمی شود</string>
   <string formatted="false" name="pref_alarm_threshold_summary">آستانه هشدار:</string>
-  <string formatted="false" name="pref_alarm_threshold_help">برای هشدارهای شارژ و دما، باید دما را تنظیم کنید
-    یا سطح شارژی که باعث ایجاد زنگ هشدار می شود.</string>
+
+  <string formatted="false" name="pref_alarm_threshold_help">برای هشدارهای شارژ و دما، باید دما را تنظیم کنید یا سطح شارژی که باعث ایجاد زنگ هشدار می شود.</string>
   <string formatted="false" name="alarm_custom_temp_message">دما را بر حسب %s درجه وارد کنید</string>
+
   <string formatted="false" name="alarm_custom_charge_message">درصد شارژ را وارد کنید (0-100)</string>
   <string formatted="false" name="boot_pref_always">همیشه</string>
   <string formatted="false" name="boot_pref_never">هرگز</string>
@@ -447,9 +401,11 @@
   <string formatted="false" name="age_2_weeks">2 هفته</string>
   <string formatted="false" name="age_3_weeks">3 هفته</string>
   <string formatted="false" name="age_4_weeks">4 هفته</string>
+
   <string formatted="false" name="age_never_delete">هرگز حذف نشود</string>
   <string formatted="false" name="pref_content_percent">درصد باتری</string>
   <string formatted="false" name="pref_content_temperature">دمای باتری</string>
+
   <string formatted="false" name="pref_content_switching">بین هر دو جابجا شوید</string>
   <string formatted="false" name="chip_switching_interval_2_seconds">2 ثانیه</string>
   <string formatted="false" name="chip_switching_interval_5_seconds">5 ثانیه</string>

@@ -3,53 +3,50 @@
   <string formatted="false" name="app_launcher_name">Battery Monitor</string>
   <string formatted="false" name="settings_activity_subtitle">Ρυθμίσεις</string>
   <string formatted="false" name="help_activity_subtitle">Βοήθεια</string>
+
   <string formatted="false" name="battery_use_b">Χρήση Μπαταρίας</string>
   <string formatted="false" name="circle_widget">Κύκλος παρακολούθησης μπαταρίας</string>
   <string formatted="false" name="full_widget">Οθόνη μπαταρίας πλήρης</string>
   <string formatted="false" name="yes">Ναι</string>
   <string formatted="false" name="cancel">Ακύρωση</string>
+
   <string formatted="false" name="confirm_close">Θέλετε να Κλείσετε την εφαρμογή;</string>
-  <string formatted="false" name="confirm_close_hint">Ο Battery Monitor θα κλείσει εντελώς, και δε θα υπάρχει στην μπάρα κατάστασης πλέον.\n\nΑν επιθυμείτε να φύγετε από το κυρίως παράθυρο και να αφήσετε το πρόγραμμα να τρέχει, πατήστε Ακύρωση και μετά πατήστε το κουμπί BACK της συσκευής σας για να φύγετε από το κυρίως παράθυρο.</string>
+  <string formatted="false" name="confirm_close_hint">Ο Battery Monitor θα κλείσει εντελώς, και δε θα υπάρχει στην μπάρα κατάστασης πλέον.\n
+    \n
+    Αν επιθυμείτε να φύγετε από το κυρίως παράθυρο και να αφήσετε το πρόγραμμα να τρέχει, πατήστε Ακύρωση και μετά πατήστε το κουμπί BACK της συσκευής σας για να φύγετε από το κυρίως παράθυρο.</string>
+
   <string formatted="false" name="notifications_disabled">Οι ειδοποιήσεις είναι απενεργοποιημένες!</string>
-  <string formatted="false" name="notifications_disabled_message">
-    Έχετε αποκλείσει όλες τις ειδοποιήσεις για το Battery Monitor.  Αυτό θα
-        αποτρέψτε την εμφάνιση ειδοποιήσεων στο Battery Monitor: το κύριο
-        η ειδοποίηση και τυχόν συναγερμοί που έχετε ορίσει θα αποκλειστούν.\n
-    
-        Το \nSince Battery Monitor σάς επιτρέπει να ενεργοποιείτε ή να απενεργοποιείτε την κύρια ειδοποίηση
-        ξεχωριστά, καθώς και να απενεργοποιήσετε προσωρινά τυχόν συναγερμούς
-        που δημιουργήσατε, συνιστάται ανεπιφύλακτα να ξεμπλοκάρετε το
-        Ειδοποιήσεις για την οθόνη μπαταρίας.  Ενώ είναι μπλοκαρισμένα, θα εμφανιστεί
-        ότι η οθόνη μπαταρίας είναι χαλασμένη.\n
-    
-        \nΠατήστε OK για να μεταφερθείτε στις ρυθμίσεις συστήματος όπου μπορείτε
-        ξεμπλοκάρετε τις ειδοποιήσεις για την οθόνη μπαταρίας.
-  </string>
+  <string formatted="false" name="notifications_disabled_message">Έχετε αποκλείσει όλες τις ειδοποιήσεις για το Battery Monitor. Αυτό θα αποτρέψτε την εμφάνιση ειδοποιήσεων στο Battery Monitor: το κύριο η ειδοποίηση και τυχόν συναγερμοί που έχετε ορίσει θα αποκλειστούν.\n
+    Το\n
+    Since Battery Monitor σάς επιτρέπει να ενεργοποιείτε ή να απενεργοποιείτε την κύρια ειδοποίηση ξεχωριστά, καθώς και να απενεργοποιήσετε προσωρινά τυχόν συναγερμούς που δημιουργήσατε, συνιστάται ανεπιφύλακτα να ξεμπλοκάρετε το Ειδοποιήσεις για την οθόνη μπαταρίας. Ενώ είναι μπλοκαρισμένα, θα εμφανιστεί ότι η οθόνη μπαταρίας είναι χαλασμένη.\n
+    \n
+    Πατήστε OK για να μεταφερθείτε στις ρυθμίσεις συστήματος όπου μπορείτε ξεμπλοκάρετε τις ειδοποιήσεις για την οθόνη μπαταρίας.</string>
+
   <string formatted="false" name="battery_optimized">Περιορίστηκε η οθόνη μπαταρίας!</string>
-  <string formatted="false" name="battery_optimized_message">
-    Η οθόνη μπαταρίας δεν λειτουργεί σωστά.  Αυτή η \"βελτιστοποίηση μπαταρίας\"
-        είναι μια λειτουργία Android που έχει σχεδιαστεί για να περιορίζει τις κακοσχεδιασμένες εφαρμογές για την αποτροπή τους
-        από τη χρήση υπερβολικής μπαταρίας στο παρασκήνιο.\n
-    
-        Το \nBattery Monitor, ωστόσο, είναι μια καλά σχεδιασμένη εφαρμογή που πρέπει να εκτελείται απεριόριστα σε
-        το φόντο για να λειτουργήσει σωστά.  Είναι εξαιρετικά αποτελεσματικό και
-        δεν θα μειώσει τη διάρκεια ζωής της μπαταρίας σας.\n
-    
-        \nΠατήστε OK για να μεταφερθείτε στις ρυθμίσεις συστήματος όπου μπορείτε
-        απενεργοποιήστε τη βελτιστοποίηση μπαταρίας για την οθόνη μπαταρίας.
-  </string>
+  <string formatted="false" name="battery_optimized_message">Η οθόνη μπαταρίας δεν λειτουργεί σωστά. Αυτή η \"βελτιστοποίηση μπαταρίας\" είναι μια λειτουργία Android που έχει σχεδιαστεί για να περιορίζει τις κακοσχεδιασμένες εφαρμογές για την αποτροπή τους από τη χρήση υπερβολικής μπαταρίας στο παρασκήνιο.\n
+    Το\n
+    Battery Monitor, ωστόσο, είναι μια καλά σχεδιασμένη εφαρμογή που πρέπει να εκτελείται απεριόριστα σε το φόντο για να λειτουργήσει σωστά. Είναι εξαιρετικά αποτελεσματικό και δεν θα μειώσει τη διάρκεια ζωής της μπαταρίας σας.\n
+    \n
+    Πατήστε OK για να μεταφερθείτε στις ρυθμίσεις συστήματος όπου μπορείτε απενεργοποιήστε τη βελτιστοποίηση μπαταρίας για την οθόνη μπαταρίας.</string>
+
   <string formatted="false" name="main_notif_chan_name">Κύρια ειδοποίηση</string>
   <string formatted="false" name="live_updates_notif_chan_name">Ζωντανές ενημερώσεις</string>
   <string formatted="false" name="channel_group_name_alarms">Συναγερμός</string>
+
   <string formatted="false" name="confirm_clear_logs">Θέλετε να διαγράψετε όλες τις καταγραφές δεδομένων;</string>
+
   <string formatted="false" name="configure_log_filter">Εμφάνιση των στοιχείων καταγραφής;</string>
+
   <string formatted="false" name="okay">Εντάξει</string>
+
   <string formatted="false" name="tab_current_info">Τρέχουσες πληροφορίες</string>
   <string formatted="false" name="tab_history">Ιστορία</string>
+
   <string formatted="false" name="notification_until_charged">"μέχρι να χρεωθεί"</string>
   <string formatted="false" name="notification_until_drained">"αριστερά"</string>
   <string formatted="false" name="activity_until_charged">μέχρι να φορτιστεί</string>
   <string formatted="false" name="activity_until_drained">μέχρι να στραγγίξει</string>
+
   <string formatted="false" name="menu_settings">Ρυθμίσεις</string>
   <string formatted="false" name="menu_close">Κλείσιμο</string>
   <string formatted="false" name="menu_help">Βοήθεια</string>
@@ -60,6 +57,7 @@
   <string formatted="false" name="menu_delete_alarm">Διαγραφή Ειδοποίησης</string>
   <string formatted="false" name="menu_show_seconds">Εμφάνιση δευτερολέπτων</string>
   <string formatted="false" name="menu_hide_seconds">Απόκρυψη δευτερολέπτων</string>
+
   <string formatted="false" name="percent_symbol">%</string>
   <string formatted="false" name="degree_symbol">°</string>
   <string formatted="false" name="fahrenheit">Φάρεναϊτ</string>
@@ -67,11 +65,13 @@
   <string formatted="false" name="celsius">Κελσίου</string>
   <string formatted="false" name="celsius_symbol">C</string>
   <string formatted="false" name="volt_symbol">V</string>
+
   <string formatted="false" name="inaccessible_storage">Η Κάρτα SD είναι απροσπέλαστη.</string>
   <string formatted="false" name="inaccessible_w_reason">Κάρτα SD απροσπέλαστη:</string>
   <string formatted="false" name="read_only_storage">Η Κάρτα SD είναι αναγνώσιμη μόνο.</string>
   <string formatted="false" name="no_storage_permission">Δεν έχει δοθεί άδεια αποθήκευσης.</string>
   <string formatted="false" name="file_written">Το έγγραφο αποθηκεύτηκε επιτυχώς στην κάρτα SD.</string>
+
   <string formatted="false" name="date">ημερομηνία</string>
   <string formatted="false" name="time">ώρα</string>
   <string formatted="false" name="status">κατάσταση</string>
@@ -79,6 +79,7 @@
   <string formatted="false" name="temperature">βαθμοί_κελσίου</string>
   <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
   <string formatted="false" name="voltage">βόλτς</string>
+
   <string formatted="false" name="status_unplugged">Αποσυνδεδεμένο</string>
   <string formatted="false" name="status_unknown">Άγνωστο</string>
   <string formatted="false" name="status_charging">Φόρτιση</string>
@@ -86,7 +87,9 @@
   <string formatted="false" name="status_not_charging">Δε Φορτίζει</string>
   <string formatted="false" name="status_fully_charged">Πλήρως Φορτισμένη</string>
   <string formatted="false" name="status_plugged_in">Συνδεδεμένο</string>
+
   <string formatted="false" name="status_boot_completed">Η εκκίνηση ολοκληρώθηκε</string>
+
   <string formatted="false" name="health_unknown">Άγνωστο</string>
   <string formatted="false" name="health_good">Καλή Υγεία</string>
   <string formatted="false" name="health_overheat">Υπερθέρμανση</string>
@@ -99,6 +102,7 @@
   <string formatted="false" name="plugged_usb">(USB)</string>
   <string formatted="false" name="plugged_unknown">(?)</string>
   <string formatted="false" name="plugged_wireless">(WL)</string>
+
   <string formatted="false" name="alarm_type_fully_charged">Πλήρως Φορτισμένη</string>
   <string formatted="false" name="alarm_type_charge_drops">Το επίπεδο φόρτισης πέφτει κάτω από</string>
   <string formatted="false" name="alarm_type_charge_rises">Το επίπεδο φόρτισης ανεβαίνει πάνω από</string>
@@ -111,48 +115,66 @@
   <string formatted="false" name="alarm_type_entry_temperature_drops">Η θερμοκρασία πέφτει κάτω από...</string>
   <string formatted="false" name="alarm_type_entry_temperature_rises">Η θερμοκρασία ανεβαίνει πάνω από...</string>
   <string formatted="false" name="alarm_type_entry_health_failure">Καλή υγεία αποτυγχάνει</string>
+
   <string formatted="false" name="alarm_fully_charged">Η μπαταρία είναι φορτισμένη πλήρως</string>
   <string formatted="false" name="alarm_charge_drops">"Το φορτίο της μπαταρίας είναι πιο κάτω "</string>
   <string formatted="false" name="alarm_charge_rises">Το φορτίο της μπαταρίας είναι πάνω \"</string>
   <string formatted="false" name="alarm_temp_drops">"Η θερμοκρασία της μπαταρίας είναι κάτω"</string>
   <string formatted="false" name="alarm_temp_rises">"Η θερμοκρασία της μπαταρίας είναι πάνω "</string>
   <string formatted="false" name="alarm_health_failure">"Η υγεία της μπαταρίας είναι: "</string>
+
   <string formatted="false" name="logs_empty">Λίστες Καταγραφής Άδειες</string>
   <string formatted="true" name="after_nh_mm_unplugged">Μετά την αποσύνδεση του %1$dh %2$dm</string>
+
   <string formatted="true" name="after_nh_mm_plugged_in">Αφού συνδεθεί το %1$dh, το %2$dm</string>
   <string formatted="true" name="after_nm_ms_unplugged">Μετά την αποσύνδεση του %1$dm του %2$d</string>
   <string formatted="true" name="after_nm_ms_plugged_in">Μετά την σύνδεση %1$dm %2$ds</string>
   <string formatted="false" name="since">Από</string>
+
   <string formatted="false" name="currently_using">Τώρα χρησιμοποιείται</string>
+
   <string formatted="false" name="currently_set_to">"Τώρα έχει ρυθμιστεί σε: "</string>
+
   <string formatted="false" name="currently_disabled">Απενεργοποιημένο Τώρα</string>
+
   <string formatted="false" name="help_cat_version">Έκδοση</string>
+
   <string formatted="false" name="help_cat_open_source">Ανοιχτού κώδικα</string>
-  <string formatted="false" name="help_open_source">Αυτό
-    το έργο είναι ανοιχτού κώδικα. Μπορείτε να αποκτήσετε πρόσβαση στον πηγαίο κώδικα στη διεύθυνση
-    <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+
+  <string formatted="false" name="help_open_source">Αυτό το έργο είναι ανοιχτού κώδικα. Μπορείτε να αποκτήσετε πρόσβαση στον πηγαίο κώδικα στη διεύθυνση <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+
   <string formatted="false" name="help_cat_privacy">Μυστικότητα</string>
+
   <string formatted="false" name="help_privacy">Το Battery Monitor δεν συλλέγει, αποθηκεύει ή μεταδίδει προσωπικές πληροφορίες.</string>
+
   <string formatted="false" name="help_cat_no_warranty">Καμιά Εγγύηση</string>
-  <string formatted="false" name="help_no_warranty">Το πρόγραμμα αυτό διατίθεται με την ελπίδα ότι θα είναι χρήσιμο, αλλά ΧΩΡΙΣ ΚΑΜΙΑ ΕΓΓΥΗΣΗ, χωρίς ακόμα την εννούμενη εγγύηση της ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή της ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ.\n\nΠαρόλο όμως που θα κάνω ό,τι καλύτερο μπορώ για να εξασφαλίσω ότι η εφαρμογή δουλεύει με τον καλύτερο τρόπο και δε δημιουργεί προβλήματα, δεν είμαι υπεύθυνος για οποιαδήποτε ζημιά ή αναστάτωση που μπορεί να δημιουργήσει κάτω από οποιεσδήποτε συνθήκες.</string>
+  <string formatted="false" name="help_no_warranty">Το πρόγραμμα αυτό διατίθεται με την ελπίδα ότι θα είναι χρήσιμο, αλλά ΧΩΡΙΣ ΚΑΜΙΑ ΕΓΓΥΗΣΗ, χωρίς ακόμα την εννούμενη εγγύηση της ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή της ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ.\n
+    \n
+    Παρόλο όμως που θα κάνω ό,τι καλύτερο μπορώ για να εξασφαλίσω ότι η εφαρμογή δουλεύει με τον καλύτερο τρόπο και δε δημιουργεί προβλήματα, δεν είμαι υπεύθυνος για οποιαδήποτε ζημιά ή αναστάτωση που μπορεί να δημιουργήσει κάτω από οποιεσδήποτε συνθήκες.</string>
   <string formatted="false" name="help_cat_acknowledgments">Ευχαριστίες</string>
-  <string formatted="false" name="help_acknowledgments">Το Battery Monitor είναι ένα πιρούνι του Battery Indicator Pro / BatteryBot Pro από
-    Darshan Computing, LLC.  Ευχαριστώ τους αρχικούς συγγραφείς και τους συντελεστές
-    για τη δημιουργία και τη συντήρηση του ανάντη έργου.</string>
+  <string formatted="false" name="help_acknowledgments">Το Battery Monitor είναι ένα πιρούνι του Battery Indicator Pro / BatteryBot Pro από Darshan Computing, LLC. Ευχαριστώ τους αρχικούς συγγραφείς και τους συντελεστές για τη δημιουργία και τη συντήρηση του ανάντη έργου.</string>
   <string formatted="false" name="help_cat_contact">Επικοινωνία</string>
+
   <string formatted="false" name="help_contact">Εάν έχετε μια ερώτηση, ένα πρόβλημα ή ένα σχόλιο, παρακαλώ <a href="mailto:tomasz@swistak.codes">στείλτε μου email</a>.</string>
+
   <string formatted="false" name="settings_overview">Επισκόπηση</string>
   <string formatted="false" name="settings_overview_help">Οι ρυθμίσεις είναι οργανωμένες σε τέσσερις ξεχωριστές σελίδες, όπως περιγράφεται πιο κάτω. Κάθε σελίδα έχει τη δική της σελίδα βοήθειας που περιγράφει τις ρυθμίσεις της σελίδας αυτής. Απλά πατήστε MENU και μετά Βοήθεια (στα tablets, το MENU δεν είναι αναγκαίο) για να πάρετε βοήθεια σε όποια σελίδα ρυθμίσεων βρίσκεστε.</string>
+
   <string formatted="false" name="notifications_disabled_cat">Οι ειδοποιήσεις είναι απενεργοποιημένες</string>
   <string formatted="false" name="app_notifs_disabled_b">Ενεργοποιήστε τις Ειδοποιήσεις εφαρμογών</string>
+
   <string formatted="false" name="app_notifs_disabled_summary">Έχετε απενεργοποιήσει όλες τις ειδοποιήσεις για αυτήν την εφαρμογή.  Ενεργοποιήστε τους να έχουν πρόσβαση σε αυτές τις ρυθμίσεις.</string>
   <string formatted="false" name="main_notifs_disabled_b">Ενεργοποιήστε την κύρια ειδοποίηση</string>
+
   <string formatted="false" name="main_notifs_disabled_summary">Έχετε απενεργοποιήσει την κύρια ειδοποίηση για αυτήν την εφαρμογή.  Ενεργοποιήστε το για πρόσβαση σε αυτές τις ρυθμίσεις.</string>
   <string formatted="false" name="app_notifs_alarms_disabled_summary">Έχετε απενεργοποιήσει όλες τις ειδοποιήσεις για αυτήν την εφαρμογή.  Επιτρέψτε τους να έχουν πρόσβαση στους συναγερμούς σας.</string>
+
   <string formatted="false" name="alarm_notifs_disabled_b">Ενεργοποίηση συναγερμών</string>
   <string formatted="false" name="alarm_notifs_disabled_summary">Έχετε απενεργοποιήσει την ομάδα ειδοποιήσεων συναγερμού για αυτήν την εφαρμογή.  Ενεργοποιήστε το για πρόσβαση στους συναγερμούς σας.</string>
+
   <string formatted="false" name="alarm_chan_disabled">Έχετε απενεργοποιήσει τις ειδοποιήσεις για αυτόν τον τύπο συναγερμού.  Επιτρέψτε τους να χρησιμοποιούν αυτόν τον τύπο συναγερμού.</string>
   <string formatted="false" name="alarm_chan_disabled_b">Ενεργοποιήστε αυτόν τον τύπο συναγερμού</string>
+
   <string formatted="false" name="alarm_chan_settings_b">Διαχείριση αυτού του τύπου συναγερμού</string>
   <string formatted="false" name="notification_settings">Κύρια ειδοποίηση</string>
   <string formatted="false" name="notification_settings_summary">Διαμόρφωση της κύριας ειδοποίησης</string>
@@ -162,247 +184,209 @@
   <string name="status_bar_icon_settings_help" formatted="false">Επιλέξτε αν το εικονίδιο ειδοποίησης εμφανίζει ποσοστό μπαταρίας ή θερμοκρασία, αν εμφανίζεται το σύμβολο της μονάδας μέσα στο εικονίδιο και αν η φόρτιση θα έχει ξεχωριστό εικονίδιο.</string>
   <string formatted="false" name="status_bar_chip_settings">Τσιπ γραμμής κατάστασης</string>
   <string formatted="false" name="status_bar_chip_settings_summary">Διαμόρφωση περιεχομένου τσιπ Ζωντανών ενημερώσεων</string>
-  <string formatted="false" name="status_bar_chip_settings_help">
-    Στο Android 16+ με Ζωντανές ενημερώσεις, μπορείτε να διαμορφώσετε την κατάσταση
-        Εμφανίζει το τσιπ ράβδου και αν θα εμφανιστεί το emoji φόρτισης.
-  </string>
+  <string formatted="false" name="status_bar_chip_settings_help">Στο Android 16+ με Ζωντανές ενημερώσεις, μπορείτε να διαμορφώσετε την κατάσταση Εμφανίζει το τσιπ ράβδου και αν θα εμφανιστεί το emoji φόρτισης.</string>
   <string formatted="false" name="current_hack_settings">Τρέχουσα παραβίαση (mA).</string>
+
   <string formatted="false" name="current_hack_settings_summary">Προηγμένες ρυθμίσεις για την ενεργοποίηση των πληροφοριών mA</string>
-  <string formatted="false" name="current_hack_settings_help">
-    Το Android δεν παρέχει ένα μέσο για τις εφαρμογές για πρόσβαση σε πληροφορίες
-        σχετικά με το ρεύμα της μπαταρίας.  Ωστόσο, ένα hack είναι διαθέσιμο
-        που επιτρέπει σε πολλές συσκευές να λαμβάνουν δυνητικά αυτές τις πληροφορίες.\n
-    
-        \nΑυτό δεν είναι εγγυημένο ότι θα λειτουργήσει.  Μπορεί να μην λειτουργεί καθόλου ή να λειτουργεί
-        μπορεί να φαίνεται ότι λειτουργεί αλλά να έχει ως αποτέλεσμα μόνο ανούσιες τιμές.\n
-    
-        \nΡυθμίσεις για να ενεργοποιήσετε το hack, αν είναι δυνατόν, και να ελέγξετε πώς είναι
-        που χρησιμοποιούνται είναι διαθέσιμα σε αυτήν την ενότητα.
-  </string>
+  <string formatted="false" name="current_hack_settings_help">Το Android δεν παρέχει ένα μέσο για τις εφαρμογές για πρόσβαση σε πληροφορίες σχετικά με το ρεύμα της μπαταρίας. Ωστόσο, ένα hack είναι διαθέσιμο που επιτρέπει σε πολλές συσκευές να λαμβάνουν δυνητικά αυτές τις πληροφορίες.\n
+    \n
+    Αυτό δεν είναι εγγυημένο ότι θα λειτουργήσει. Μπορεί να μην λειτουργεί καθόλου ή να λειτουργεί μπορεί να φαίνεται ότι λειτουργεί αλλά να έχει ως αποτέλεσμα μόνο ανούσιες τιμές.\n
+    \n
+    Ρυθμίσεις για να ενεργοποιήσετε το hack, αν είναι δυνατόν, και να ελέγξετε πώς είναι που χρησιμοποιούνται είναι διαθέσιμα σε αυτήν την ενότητα.</string>
   <string formatted="false" name="alarm_settings_subtitle">Ρυθμίσεις Ειδοποιήσεων</string>
   <string formatted="false" name="alarm_settings">Ειδοποιήσεις</string>
   <string formatted="false" name="alarm_settings_help">Μπορείτε να ρυθμίσετε τον Battery Monitor να σας ενημερώνει όταν το επίπεδο της μπαταρίας φτάνει σε ένα συγκεκριμένο επίπεδο (π.χ, όταν η μπαταρία φορτίζεται πλήρως ή όταν το επίπεδο της μπαταρίας πέφτει κάτω από 20%)</string>
   <string formatted="false" name="other_settings">Άλλες Ρυθμίσεις</string>
   <string formatted="false" name="other_settings_help">Όλες οι άλλες ρυθμίσεις βρίσκονται σε αυτή τη σελίδα, συμπεριλαμβανομένων της καταγραφής δεδομένων, του κλειδώματος της οθόνης, των μονάδων θερμοκρασίας, της αυτόματης έναρξης, και άλλα ακόμη.</string>
   <string name="live_updates_onboarding_title">Τσιπ μπαταρίας γραμμής κατάστασης</string>
-  <string name="live_updates_onboarding_message_on">Η συσκευή σας υποστηρίζει την εμφάνιση του ποσοστού μπαταρίας ως chip στη γραμμή κατάστασης. Αυτό είναι ενεργοποιημένο από προεπιλογή.\n\nΑν προτιμάτε ένα παραδοσιακό εικονίδιο ειδοποίησης, μπορείτε να απενεργοποιήσετε τις «Ζωντανές ενημερώσεις» στις ρυθμίσεις συστήματος Android για αυτήν την εφαρμογή.\n\nΣημείωση: Η παραχώρηση αυτής της άδειας μπορεί περιστασιακά να προκαλέσει το κλείσιμο της εφαρμογής. Αν συμβεί, απλώς ανοίξτε την ξανά.</string>
-  <string name="live_updates_onboarding_message_off">Η συσκευή σας υποστηρίζει την εμφάνιση του ποσοστού μπαταρίας ως chip στη γραμμή κατάστασης, αλλά αυτή τη στιγμή είναι απενεργοποιημένο στις ρυθμίσεις συστήματος.\n\nΣυνιστούμε να το ενεργοποιήσετε για την καλύτερη εμπειρία. Αν προτιμάτε ένα παραδοσιακό εικονίδιο ειδοποίησης, μπορείτε να το αφήσετε απενεργοποιημένο.\n\nΣημείωση: Η παραχώρηση αυτής της άδειας μπορεί περιστασιακά να προκαλέσει το κλείσιμο της εφαρμογής. Αν συμβεί, απλώς ανοίξτε την ξανά.</string>
+  <string name="live_updates_onboarding_message_on">Η συσκευή σας υποστηρίζει την εμφάνιση του ποσοστού μπαταρίας ως chip στη γραμμή κατάστασης. Αυτό είναι ενεργοποιημένο από προεπιλογή.\n
+    \n
+    Αν προτιμάτε ένα παραδοσιακό εικονίδιο ειδοποίησης, μπορείτε να απενεργοποιήσετε τις «Ζωντανές ενημερώσεις» στις ρυθμίσεις συστήματος Android για αυτήν την εφαρμογή.\n
+    \n
+    Σημείωση: Η παραχώρηση αυτής της άδειας μπορεί περιστασιακά να προκαλέσει το κλείσιμο της εφαρμογής. Αν συμβεί, απλώς ανοίξτε την ξανά.</string>
+  <string name="live_updates_onboarding_message_off">Η συσκευή σας υποστηρίζει την εμφάνιση του ποσοστού μπαταρίας ως chip στη γραμμή κατάστασης, αλλά αυτή τη στιγμή είναι απενεργοποιημένο στις ρυθμίσεις συστήματος.\n
+    \n
+    Συνιστούμε να το ενεργοποιήσετε για την καλύτερη εμπειρία. Αν προτιμάτε ένα παραδοσιακό εικονίδιο ειδοποίησης, μπορείτε να το αφήσετε απενεργοποιημένο.\n
+    \n
+    Σημείωση: Η παραχώρηση αυτής της άδειας μπορεί περιστασιακά να προκαλέσει το κλείσιμο της εφαρμογής. Αν συμβεί, απλώς ανοίξτε την ξανά.</string>
   <string name="live_updates_onboarding_positive_on">Κατάλαβα</string>
   <string name="live_updates_onboarding_positive_off">Μεταβείτε στις Ρυθμίσεις</string>
+
   <string name="live_updates_onboarding_negative_off">Απολύω</string>
-  <string name="notifications_onboarding_message" formatted="false">Το Battery Monitor χρειάζεται την άδειά σας για να εμφανίζει το επίπεδο μπαταρίας στη γραμμή κατάστασης και να σας ειδοποιεί για συναγερμούς.\n\nΣημείωση: Η παραχώρηση αυτής της άδειας μπορεί περιστασιακά να προκαλέσει το κλείσιμο της εφαρμογής. Αν συμβεί, απλώς ανοίξτε την ξανά.</string>
+  <string name="notifications_onboarding_message" formatted="false">Το Battery Monitor χρειάζεται την άδειά σας για να εμφανίζει το επίπεδο μπαταρίας στη γραμμή κατάστασης και να σας ειδοποιεί για συναγερμούς.\n
+    \n
+    Σημείωση: Η παραχώρηση αυτής της άδειας μπορεί περιστασιακά να προκαλέσει το κλείσιμο της εφαρμογής. Αν συμβεί, απλώς ανοίξτε την ξανά.</string>
   <string formatted="false" name="add_alarm">Προσθήκη ειδοποίησης</string>
   <string formatted="false" name="pref_cat_channel_settings">Ρυθμίσεις καναλιού ειδοποιήσεων</string>
   <string formatted="false" name="pref_manage_main_channel">Διαχείριση Κύριου Καναλιού</string>
+
   <string formatted="false" name="pref_cat_notification_content">Περιεχόμενο</string>
   <string formatted="false" name="pref_cat_status_bar_chip">Τσιπ γραμμής κατάστασης (Android 16+)</string>
   <string formatted="false" name="pref_live_update_display">Εμφάνιση Live Update</string>
   <string formatted="false" name="pref_live_update_display_summary">Εμφάνιση στη γραμμή κατάστασης:</string>
   <string formatted="false" name="pref_live_update_display_help">Επιλέξτε πότε θα εμφανίζεται το chip Live Update του Android 16+ στη γραμμή κατάστασης.</string>
   <string formatted="false" name="pref_live_update_display_charging">Μόνο κατά τη φόρτιση</string>
+
   <string formatted="false" name="pref_live_update_keep_main_notification">Διατήρηση κύριας ειδοποίησης με το Live Update</string>
+
   <string formatted="false" name="pref_live_update_keep_main_notification_summary">Να εμφανίζεται η πλήρης κύρια ειδοποίηση όσο το Live Update είναι ενεργό;</string>
+
   <string formatted="false" name="pref_live_update_keep_main_notification_help">Αν είναι ενεργό, η κανονική κύρια ειδοποίηση παραμένει ορατή μαζί με το chip στη γραμμή κατάστασης.</string>
   <string formatted="false" name="pref_chip_content">Περιεχόμενο Chip</string>
+
   <string formatted="false" name="pref_chip_switching_interval">Μεσοδιάστημα εναλλαγής</string>
   <string formatted="false" name="pref_chip_content_help">Επιλέξτε ποια τιμή θα εμφανίζεται στο τσιπ ειδοποιήσεων προωθημένων Android 16+.</string>
   <string formatted="false" name="pref_chip_indicate_charging">Εμφάνιση Emoji φόρτισης</string>
   <string formatted="false" name="pref_chip_indicate_charging_summary">Εμφάνιση ενός emoji αστραπής κατά τη φόρτιση ή την πλήρη φόρτιση;</string>
-  <string formatted="false" name="pref_chip_indicate_charging_help">
-    Εάν είναι ενεργοποιημένο, το τσιπ της γραμμής κατάστασης θα εμφανίσει ένα emoji αστραπή δίπλα
-        την τιμή του τσιπ κατά τη φόρτιση ή όταν είναι πλήρως φορτισμένο.
-  </string>
+  <string formatted="false" name="pref_chip_indicate_charging_help">Εάν είναι ενεργοποιημένο, το τσιπ της γραμμής κατάστασης θα εμφανίσει ένα emoji αστραπή δίπλα την τιμή του τσιπ κατά τη φόρτιση ή όταν είναι πλήρως φορτισμένο.</string>
   <string formatted="false" name="pref_top_line_content">Περιεχόμενο κορυφαίας γραμμής</string>
-  <string formatted="false" name="pref_top_line_content_help">
-    Διαμορφώστε τι εμφανίζεται στην επάνω γραμμή της ειδοποίησης: εκτιμώμενο
-        χρόνος που απομένει (με δυνατότητα διαμόρφωσης αλλού), πόσος χρόνος από την κατάσταση
-        έχει αλλάξει (συνδεδεμένο, αποσυνδεδεμένο ή πλήρως φορτισμένο) ή το
-        ζωτικά σημεία της μπαταρίας (υγεία μπαταρίας, θερμοκρασία και τάση).
-  </string>
+  <string formatted="false" name="pref_top_line_content_help">Διαμορφώστε τι εμφανίζεται στην επάνω γραμμή της ειδοποίησης: εκτιμώμενο χρόνος που απομένει (με δυνατότητα διαμόρφωσης αλλού), πόσος χρόνος από την κατάσταση έχει αλλάξει (συνδεδεμένο, αποσυνδεδεμένο ή πλήρως φορτισμένο) ή το ζωτικά σημεία της μπαταρίας (υγεία μπαταρίας, θερμοκρασία και τάση).</string>
   <string formatted="false" name="pref_bottom_line_content">Περιεχόμενο κατώτατης γραμμής</string>
   <string formatted="false" name="pref_bottom_line_content_help">Έχετε τις ίδιες επιλογές για την κάτω γραμμή όπως και για την επάνω γραμμή.</string>
   <string formatted="false" name="time_remaining">Χρόνος που απομένει</string>
   <string formatted="false" name="time_since_status_change">Χρόνος από την αλλαγή κατάστασης</string>
   <string formatted="false" name="vital_signs">Ζωτικά Σημεία</string>
   <string formatted="false" name="pref_time_remaining_verbosity">Χρόνος που απομένει</string>
-  <string formatted="false" name="pref_time_remaining_verbosity_help">
-    Οι συσκευές διατίθενται σε όλα τα σχήματα και μεγέθη, επομένως οι περισσότερες μεταφράσεις χρειάζονται
-        χρησιμοποιήστε συντομογραφίες για να βεβαιωθείτε ότι ταιριάζει η εκτίμηση του υπολειπόμενου χρόνου
-        άνετα στην περιοχή ειδοποιήσεων.  Αν πάλι δεν ταιριάζει,
-        μπορείτε να επιλέξετε τη συμπυκνωμένη μορφή.  Αν έχεις άφθονο χώρο,
-        μπορεί να προτιμήσετε τη λεπτομερή ρύθμιση.
-  </string>
+  <string formatted="false" name="pref_time_remaining_verbosity_help">Οι συσκευές διατίθενται σε όλα τα σχήματα και μεγέθη, επομένως οι περισσότερες μεταφράσεις χρειάζονται χρησιμοποιήστε συντομογραφίες για να βεβαιωθείτε ότι ταιριάζει η εκτίμηση του υπολειπόμενου χρόνου άνετα στην περιοχή ειδοποιήσεων. Αν πάλι δεν ταιριάζει, μπορείτε να επιλέξετε τη συμπυκνωμένη μορφή. Αν έχεις άφθονο χώρο, μπορεί να προτιμήσετε τη λεπτομερή ρύθμιση.</string>
   <string formatted="false" name="condensed">Συμπυκνωμένο</string>
   <string formatted="false" name="normal">Κανονικός</string>
   <string formatted="false" name="verbose">Πολύλογος</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs">Διάρκεια κατάστασης σε ζωτικά σημεία</string>
   <string formatted="false" name="pref_status_duration_in_vital_signs_summary">Να συμπεριληφθεί χρόνος από την αλλαγή κατάστασης στα ζωτικά σημεία;</string>
-  <string formatted="false" name="pref_status_duration_in_vital_signs_help">
-    Εάν οριστεί, η γραμμή ζωτικών σημείων θα περιλαμβάνει επίσης τον αριθμό των ωρών
-        αφού η συσκευή αποσυνδέθηκε, συνδέθηκε ή φορτίστηκε πλήρως.
-  </string>
+  <string formatted="false" name="pref_status_duration_in_vital_signs_help">Εάν οριστεί, η γραμμή ζωτικών σημείων θα περιλαμβάνει επίσης τον αριθμό των ωρών αφού η συσκευή αποσυνδέθηκε, συνδέθηκε ή φορτίστηκε πλήρως.</string>
   <string formatted="false" name="custom">Προσαρμοσμένο...</string>
   <string formatted="false" name="pref_cat_icon_set">Εικονίδιο ειδοποίησης</string>
+
   <string formatted="false" name="pref_icon_content">Περιεχόμενο εικονιδίου</string>
-  <string formatted="false" name="pref_icon_content_help">
-    Επιλέξτε εάν το εικονίδιο της γραμμής κατάστασης εμφανίζει ποσοστό μπαταρίας ή
-        θερμοκρασία μπαταρίας. Η θερμοκρασία ακολουθεί τη μονάδα που έχετε επιλέξει.
-  </string>
+  <string formatted="false" name="pref_icon_content_help">Επιλέξτε εάν το εικονίδιο της γραμμής κατάστασης εμφανίζει ποσοστό μπαταρίας ή θερμοκρασία μπαταρίας. Η θερμοκρασία ακολουθεί τη μονάδα που έχετε επιλέξει.</string>
   <string name="pref_show_icon_unit" formatted="false">Εμφάνιση συμβόλου μονάδας</string>
   <string name="pref_show_icon_unit_help" formatted="false">Αν είναι ενεργό, το εικονίδιο εμφανίζει σύμβολο ποσοστού για το ποσοστό μπαταρίας και σύμβολο βαθμών για τη θερμοκρασία της μπαταρίας. Απενεργοποιήστε το για να εμφανίζεται μόνο ο αριθμός.</string>
   <string formatted="false" name="pref_cat_current_hack_main">Κύριος έλεγχος</string>
+
   <string formatted="false" name="pref_cat_current_hack_unsupported">Τρέχουσα παραβίαση (mA) Δεν υποστηρίζεται</string>
   <string formatted="false" name="pref_current_hack_unsupported">Λυπούμαστε, η τρέχουσα εισβολή (mA) δεν υποστηρίζεται σε αυτήν τη συσκευή.</string>
   <string formatted="false" name="pref_enable_current_hack">Ενεργοποίηση hack</string>
+
   <string formatted="false" name="pref_enable_current_hack_summary">Προσπαθήστε να ενεργοποιήσετε την τρέχουσα εισβολή (mA);</string>
-  <string formatted="false" name="pref_enable_current_hack_help">
-    Όταν αυτή η ρύθμιση είναι ενεργοποιημένη, οι άλλες επιλογές σχετικά με το
-        hack θα είναι χρησιμοποιήσιμο.
-  </string>
+
+  <string formatted="false" name="pref_enable_current_hack_help">Όταν αυτή η ρύθμιση είναι ενεργοποιημένη, οι άλλες επιλογές σχετικά με το hack θα είναι χρησιμοποιήσιμο.</string>
   <string formatted="false" name="pref_current_hack_prefer_fs">Προτιμήστε την παλιά μέθοδο hack</string>
   <string formatted="false" name="pref_current_hack_prefer_fs_summary">Προτιμάτε παλαιότερη μέθοδο χακαρίσματος που βασίζεται σε σύστημα αρχείων;</string>
-  <string formatted="false" name="pref_current_hack_prefer_fs_help">
-    Ξεκινώντας από το Lollipop (Android 5.0), το Android παρέχει τώρα ένα
-        κάπως λιγότερο χακαρισμένος τρόπος πρόσβασης σε τρέχουσες (mA) πληροφορίες,
-        απευθείας από το σύστημα BatteryManager.  Ωστόσο, εξακολουθεί να μην είναι
-        εγγυημένο ότι θα λειτουργήσει καθόλου ή θα λειτουργήσει καλά.  Μέχρι το Android Nougat
-        (Android 7.0), η παλιά μέθοδος χακαρίσματος (βασισμένη σε σύστημα αρχείων) φαίνεται να
-        λειτουργεί καλύτερα στις περισσότερες συσκευές, επομένως παραμένει η προεπιλογή στις συσκευές
-        τρέχει λιγότερο από το Android 7.0.\n
-    
-        \nΑυτή η ρύθμιση είναι απλώς μια υπόδειξη για το hack σχετικά με τη μέθοδο
-        προτιμώ? μπορείτε να δοκιμάσετε να το αλλάξετε εάν το hack δεν λειτουργεί καλά
-        τη συσκευή σας.
-  </string>
+  <string formatted="false" name="pref_current_hack_prefer_fs_help">Ξεκινώντας από το Lollipop (Android 5.0), το Android παρέχει τώρα ένα κάπως λιγότερο χακαρισμένος τρόπος πρόσβασης σε τρέχουσες (mA) πληροφορίες, απευθείας από το σύστημα BatteryManager. Ωστόσο, εξακολουθεί να μην είναι εγγυημένο ότι θα λειτουργήσει καθόλου ή θα λειτουργήσει καλά. Μέχρι το Android Nougat (Android 7.0), η παλιά μέθοδος χακαρίσματος (βασισμένη σε σύστημα αρχείων) φαίνεται να λειτουργεί καλύτερα στις περισσότερες συσκευές, επομένως παραμένει η προεπιλογή στις συσκευές τρέχει λιγότερο από το Android 7.0.\n
+    \n
+    Αυτή η ρύθμιση είναι απλώς μια υπόδειξη για το hack σχετικά με τη μέθοδο προτιμώ? μπορείτε να δοκιμάσετε να το αλλάξετε εάν το hack δεν λειτουργεί καλά τη συσκευή σας.</string>
   <string formatted="false" name="pref_current_hack_multiplier">Πολλαπλασιαστής</string>
-  <string formatted="false" name="pref_current_hack_multiplier_help">
-    Ορισμένες συσκευές αναφέρουν χιλιοστά αμπέρ αντί για μικροαμπέρ
-        Το API ζητά.  Οι ίδιες συσκευές αλλάζουν το σύμβολο της τιμής που αναφέρεται.
-        Ορισμένοι χρήστες προτιμούν το αντίθετο πρόσημο των σωστά αναφερόμενων τιμών.
-        Για να βοηθήσετε στην αντιμετώπιση καταστάσεων όπως αυτές, μπορείτε να πολλαπλασιάσετε το
-        αποτέλεσμα της κλήσης API από την τιμή εδώ.\n
-    
-        \nΕάν η συσκευή σας εμφανίζει πάντα 0 mA, για παράδειγμα, μπορείτε να δοκιμάσετε
-        χρησιμοποιώντας πολλαπλασιαστή 1000. Εάν η κλήση API επιστρέψει 450
-        μικροαμπέρ, αυτός ο πολλαπλασιαστής θα κάνει την εφαρμογή να δείξει την τιμή
-        ως 450 mA αντί 0 mA.  Εάν η κλήση API επιστρέψει 0
-        μικροαμπέρ, φυσικά, ο πολλαπλασιαστής δεν θα αλλάξει την τελική
-        τιμή ένδειξης 0 mA.
-  </string>
+
+  <string formatted="false" name="pref_current_hack_multiplier_help">Ορισμένες συσκευές αναφέρουν χιλιοστά αμπέρ αντί για μικροαμπέρ Το API ζητά. Οι ίδιες συσκευές αλλάζουν το σύμβολο της τιμής που αναφέρεται. Ορισμένοι χρήστες προτιμούν το αντίθετο πρόσημο των σωστά αναφερόμενων τιμών. Για να βοηθήσετε στην αντιμετώπιση καταστάσεων όπως αυτές, μπορείτε να πολλαπλασιάσετε το αποτέλεσμα της κλήσης API από την τιμή εδώ.\n
+    \n
+    Εάν η συσκευή σας εμφανίζει πάντα 0 mA, για παράδειγμα, μπορείτε να δοκιμάσετε χρησιμοποιώντας πολλαπλασιαστή 1000. Εάν η κλήση API επιστρέψει 450 μικροαμπέρ, αυτός ο πολλαπλασιαστής θα κάνει την εφαρμογή να δείξει την τιμή ως 450 mA αντί 0 mA. Εάν η κλήση API επιστρέψει 0 μικροαμπέρ, φυσικά, ο πολλαπλασιαστής δεν θα αλλάξει την τελική τιμή ένδειξης 0 mA.</string>
   <string formatted="false" name="pref_cat_current_hack_notification">Κοινοποίηση</string>
+
   <string formatted="false" name="pref_display_current_in_vital_stats">Εμφάνιση σε ζωτικής σημασίας στατιστικά</string>
+
   <string formatted="false" name="pref_display_current_in_vital_stats_summary">Εμφάνιση του ρεύματος (mA) στα βασικά στατιστικά στοιχεία της κύριας ειδοποίησης;</string>
-  <string formatted="false" name="pref_display_current_in_vital_stats_help">
-    Όταν ενεργοποιηθεί, θα επιχειρηθεί το hack και θα εμφανιστεί το
-        καταλήγουν στη γραμμή βασικών στατιστικών στοιχείων ειδοποίησης.  Σημειώστε ότι εσείς
-        πρέπει να έχει διαμορφωθεί η κύρια ειδοποίηση ώστε να εμφανίζει ζωτικά στατιστικά στοιχεία
-        για να το δεις αυτό.  Αυτή η τιμή θα ανανεωθεί μόνο όταν
-        το σύστημα στέλνει νέα στοιχεία μπαταρίας.\n
-    
-        \nO στις περισσότερες συσκευές, μια αρνητική τιμή υποδηλώνει καθαρή αποστράγγιση από το
-        μπαταρία και μια θετική τιμή υποδηλώνει ότι η μπαταρία βρίσκεται
-        χρεώνονται.  Ωστόσο, δεν δημιουργούν όλες οι συσκευές τιμές με αυτόν τον τρόπο.
-  </string>
+  <string formatted="false" name="pref_display_current_in_vital_stats_help">Όταν ενεργοποιηθεί, θα επιχειρηθεί το hack και θα εμφανιστεί το καταλήγουν στη γραμμή βασικών στατιστικών στοιχείων ειδοποίησης. Σημειώστε ότι εσείς πρέπει να έχει διαμορφωθεί η κύρια ειδοποίηση ώστε να εμφανίζει ζωτικά στατιστικά στοιχεία για να το δεις αυτό. Αυτή η τιμή θα ανανεωθεί μόνο όταν το σύστημα στέλνει νέα στοιχεία μπαταρίας.\n
+    \n
+    O στις περισσότερες συσκευές, μια αρνητική τιμή υποδηλώνει καθαρή αποστράγγιση από το μπαταρία και μια θετική τιμή υποδηλώνει ότι η μπαταρία βρίσκεται χρεώνονται. Ωστόσο, δεν δημιουργούν όλες οι συσκευές τιμές με αυτόν τον τρόπο.</string>
   <string formatted="false" name="pref_cat_current_hack_main_window">Κύριο Παράθυρο</string>
+
   <string formatted="false" name="pref_display_current_in_main_window">Εμφάνιση στο κύριο παράθυρο</string>
   <string formatted="false" name="pref_display_current_in_main_window_summary">Εμφάνιση ρεύματος (mA) στο κύριο παράθυρο;</string>
-  <string formatted="false" name="pref_display_current_in_main_window_help">
-    Όταν ενεργοποιηθεί, θα επιχειρηθεί το hack και θα εμφανιστεί το
-        αποτέλεσμα στο κύριο παράθυρο.  Αυτή η τιμή θα ανανεώνεται κάθε φορά
-        το σύστημα στέλνει νέες πληροφορίες μπαταρίας, αλλά μπορείτε να ανανεώσετε τις
-        τιμή ανά πάσα στιγμή πατώντας απλώς την εμφανιζόμενη τιμή.  (Σημ
-        ότι ορισμένες συσκευές σπάνια ή ποτέ ενημερώνουν τα υποκείμενα δεδομένα, έτσι
-        η τιμή μπορεί να μην φαίνεται να αλλάζει με το πάτημα.)\n
-    
-        \nO στις περισσότερες συσκευές, μια αρνητική τιμή υποδηλώνει καθαρή αποστράγγιση από το
-        μπαταρία και μια θετική τιμή υποδηλώνει ότι η μπαταρία βρίσκεται
-        χρεώνονται.  Ωστόσο, δεν δημιουργούν όλες οι συσκευές τιμές με αυτόν τον τρόπο.
-  </string>
+  <string formatted="false" name="pref_display_current_in_main_window_help">Όταν ενεργοποιηθεί, θα επιχειρηθεί το hack και θα εμφανιστεί το αποτέλεσμα στο κύριο παράθυρο. Αυτή η τιμή θα ανανεώνεται κάθε φορά το σύστημα στέλνει νέες πληροφορίες μπαταρίας, αλλά μπορείτε να ανανεώσετε τις τιμή ανά πάσα στιγμή πατώντας απλώς την εμφανιζόμενη τιμή. (Σημ ότι ορισμένες συσκευές σπάνια ή ποτέ ενημερώνουν τα υποκείμενα δεδομένα, έτσι η τιμή μπορεί να μην φαίνεται να αλλάζει με το πάτημα.)\n
+    \n
+    O στις περισσότερες συσκευές, μια αρνητική τιμή υποδηλώνει καθαρή αποστράγγιση από το μπαταρία και μια θετική τιμή υποδηλώνει ότι η μπαταρία βρίσκεται χρεώνονται. Ωστόσο, δεν δημιουργούν όλες οι συσκευές τιμές με αυτόν τον τρόπο.</string>
+
   <string formatted="false" name="pref_prefer_current_avg_in_vital_stats">Προτιμήστε το μέσο όρο σε ζωτικά στατιστικά</string>
   <string formatted="false" name="pref_prefer_current_avg_in_vital_stats_summary">Προσπαθήστε να χρησιμοποιήσετε το current_avg στα βασικά στατιστικά στοιχεία της κύριας ειδοποίησης;</string>
+
   <string formatted="false" name="pref_prefer_current_avg_in_main_window">Προτιμήστε το μέσο όρο στο κύριο παράθυρο</string>
   <string formatted="false" name="pref_prefer_current_avg_in_main_window_summary">Δοκιμάστε να χρησιμοποιήσετε το current_avg στο κύριο παράθυρο;</string>
-  <string formatted="false" name="pref_prefer_current_avg_help">
-    Ορισμένα συστήματα έχουν ένα επιπλέον hack διαθέσιμο, δίνοντας ένα πρόσφατο
-        μέσο όρο του τρέχοντος παρά μια στιγμιαία ανάγνωσή του.
-        Το τι σημαίνει αυτό διαφέρει από συσκευή σε συσκευή και είναι διαθέσιμο μόνο
-        σε ορισμένες συσκευές.  Αυτό μπορεί να δώσει μια πιο σταθερή τιμή (αν όλα πάνε
-        καλά), μπορεί να επιστρέψει την ίδια τιμή ή μπορεί να επιστρέψει μια μη χρησιμοποιήσιμη
-        τιμή (οπότε θα πρέπει να απενεργοποιήσετε αυτήν την επιλογή).
-  </string>
+  <string formatted="false" name="pref_prefer_current_avg_help">Ορισμένα συστήματα έχουν ένα επιπλέον hack διαθέσιμο, δίνοντας ένα πρόσφατο μέσο όρο του τρέχοντος παρά μια στιγμιαία ανάγνωσή του. Το τι σημαίνει αυτό διαφέρει από συσκευή σε συσκευή και είναι διαθέσιμο μόνο σε ορισμένες συσκευές. Αυτό μπορεί να δώσει μια πιο σταθερή τιμή (αν όλα πάνε καλά), μπορεί να επιστρέψει την ίδια τιμή ή μπορεί να επιστρέψει μια μη χρησιμοποιήσιμη τιμή (οπότε θα πρέπει να απενεργοποιήσετε αυτήν την επιλογή).</string>
   <string formatted="false" name="pref_auto_refresh_current_in_main_window">Αυτόματη ανανέωση mA στο κύριο παράθυρο</string>
+
   <string formatted="false" name="pref_auto_refresh_current_in_main_window_summary">Αυτόματη ανανέωση mA κάθε δύο δευτερόλεπτα;</string>
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window_help">
-    Εάν έχετε ρυθμίσει το hack να εμφανίζει mA στο κύριο παράθυρο, μπορείτε
-        ανανεώστε την τιμή απλά πατώντας την.  Αν θες να δεις
-        συχνές ενημερώσεις χωρίς να χρειάζεται να πατήσετε, μπορείτε να ενεργοποιήσετε αυτήν την επιλογή
-        για αυτόματη ανανέωση της τιμής κάθε δύο δευτερόλεπτα όσο είναι ορατό το παράθυρο.\n
-    
-        \nΛάβετε υπόψη ότι ορισμένες συσκευές σπάνια ή ποτέ δεν ενημερώνουν το υποκείμενο
-        δεδομένα, επομένως η τιμή μπορεί να μην φαίνεται να αλλάζει ακόμα κι αν η εφαρμογή αλλάζει
-        ανανέωση της εμφανιζόμενης τιμής για να ταιριάζει με τα δεδομένα που ανακτώνται
-        το σύστημα.
-  </string>
+  <string formatted="false" name="pref_auto_refresh_current_in_main_window_help">Εάν έχετε ρυθμίσει το hack να εμφανίζει mA στο κύριο παράθυρο, μπορείτε ανανεώστε την τιμή απλά πατώντας την. Αν θες να δεις συχνές ενημερώσεις χωρίς να χρειάζεται να πατήσετε, μπορείτε να ενεργοποιήσετε αυτήν την επιλογή για αυτόματη ανανέωση της τιμής κάθε δύο δευτερόλεπτα όσο είναι ορατό το παράθυρο.\n
+    \n
+    Λάβετε υπόψη ότι ορισμένες συσκευές σπάνια ή ποτέ δεν ενημερώνουν το υποκείμενο δεδομένα, επομένως η τιμή μπορεί να μην φαίνεται να αλλάζει ακόμα κι αν η εφαρμογή αλλάζει ανανέωση της εμφανιζόμενης τιμής για να ταιριάζει με τα δεδομένα που ανακτώνται το σύστημα.</string>
   <string formatted="false" name="pref_cat_charging_indicator">Ένδειξη φόρτισης</string>
   <string formatted="false" name="pref_indicate_charging">Υποδεικνύεται Φόρτιση</string>
+
   <string formatted="false" name="pref_indicate_charging_summary">Αλλαγή εικονιδίου για ένδειξη κατά τη φόρτιση;</string>
   <string formatted="false" name="pref_indicate_charging_help">Το εικονίδιο φόρτισης μπορεί να εμφανίζει έναν κεραυνό κάτω από τον αριθμό. Απενεργοποιήστε αυτή τη ρύθμιση αν προτιμάτε το ίδιο εικονίδιο κατά τη φόρτιση και την αποφόρτιση.</string>
   <string formatted="false" name="pref_cat_logging">Καταγραφή</string>
   <string formatted="false" name="pref_enable_logging">Ενεργοποίηση Καταγραφής</string>
+
   <string formatted="false" name="pref_enable_logging_summary">Καταγραφή αλλαγής κατάστασης μπαταρίας;</string>
+
   <string formatted="false" name="pref_enable_logging_help">Αν ενεργοποιηθεί, ο Battery Monitor, θα καταγράφει τις μεταβολές κατάστασης της μπαταρίας (π.χ αν η συσκευή αποσυνδεθεί από το ρεύμα ή έχει φορτιστεί πλήρως). Μπορείτε να δείτε τα κατεγραμμένα δεδομένα από το κυρίως παράθυρο (πατήστε MENU και μετά επιλέξτε Λίστα Καταγραφής, στα tablets, το MENU δε είναι απαραίτητο.)</string>
   <string formatted="false" name="pref_max_log_age">Μέγιστη Περίοδος Καταγραφής</string>
   <string formatted="false" name="pref_max_log_age_summary">Διαγραφή λίστας δεδομένων παλαιότερης από:</string>
+
   <string formatted="false" name="pref_max_log_age_help">Αν η καταγραφή είναι ενεργή, κάθε φορά που συνδέετε τη συσκευή θα διαγράφονται οι καταγραφές που είναι παλαιότερες από αυτήν την επιλογή. Επιλέξτε Να μη διαγράφονται ποτέ για να τις κρατήσετε μέχρι να τις διαγράψετε χειροκίνητα.</string>
   <string formatted="false" name="pref_cat_temperature_unit">Μονάδες Θερμοκρασίας</string>
   <string formatted="false" name="pref_convert_to_fahrenheit">Μετατροπή σε Φάρεναϊτ</string>
   <string formatted="false" name="pref_convert_to_fahrenheit_help">Το Android αναφέρει τη θερμοκρασία της μπαταρίας σε βαθμούς Κελσίου. Αν προτιμάτε να τη βλέπετε σε Φάρεναϊτ, επιλέξετε αυτήν την επιλογή και η εφαρμογή θα σας τη μετατρέπει.</string>
+
   <string formatted="false" name="pref_cat_autostart">Αυτόματη Ενεργοποίηση</string>
   <string formatted="false" name="pref_autostart_at_boot">Αυτόματη Ενεργοποίηση μετά από Επανεκκίνηση</string>
   <string formatted="false" name="pref_autostart_at_boot_summary">Εκκίνηση Battery Monitor όταν η συσκευή επανεκκινά:</string>
-  <string formatted="false" name="pref_autostart_at_boot_help">Ελέγχει κατά πόσο ο Battery Monitor θα ξεκινά από μόνος του αυτόματα όποτε η συσκευή εκκινά.\n\nΗ \"Αν Τρέχει κατά το Σβήσιμο\" επιλογή εργάζεται σε σχέση με το κατά πόσο έχετε πρόσφατα εκκινήσει ή κλείσει το Battery Monitor. Άρα αν έχετε κλείσει αναγκαστικά το Battery Monitor , όπως με ένα Task Killer, το πρόγραμμα δε θα γνωρίζει ότι το σταματήσατε και έτσι θα εκκινήσει αυτόματα αν το έχετε ρυθμίσει έτσι.</string>
+  <string formatted="false" name="pref_autostart_at_boot_help">Ελέγχει κατά πόσο ο Battery Monitor θα ξεκινά από μόνος του αυτόματα όποτε η συσκευή εκκινά.\n
+    \n
+    Η \"Αν Τρέχει κατά το Σβήσιμο\" επιλογή εργάζεται σε σχέση με το κατά πόσο έχετε πρόσφατα εκκινήσει ή κλείσει το Battery Monitor. Άρα αν έχετε κλείσει αναγκαστικά το Battery Monitor , όπως με ένα Task Killer, το πρόγραμμα δε θα γνωρίζει ότι το σταματήσατε και έτσι θα εκκινήσει αυτόματα αν το έχετε ρυθμίσει έτσι.</string>
   <string formatted="false" name="predictor_sensitive">Ευαίσθητος</string>
   <string formatted="false" name="predictor_conservative">Συντηρητικός</string>
   <string formatted="false" name="predictor_since_status_change">Από την Αλλαγή Κατάστασης</string>
+
   <string formatted="false" name="predictor_long_term_ave">Μακροπρόθεσμος Μέσος όρος</string>
   <string formatted="false" name="pref_cat_predictor">Εκτιμήσεις υπολειπόμενου χρόνου</string>
   <string formatted="false" name="pref_prediction_type">Τύπος εκτίμησης</string>
-  <string formatted="false" name="pref_prediction_type_help">
-    Εδώ μπορείτε να επιλέξετε πώς το Battery Monitor θα προβλέψει το υπόλοιπο
-        διάρκεια μπαταρίας / χρόνος μέχρι την πλήρη φόρτιση.\n
-    
-        \nΟ αλγόριθμος \"Sensitive\" βασίζεται αυστηρά στα πέντε τελευταία σας
-        λεπτά χρήσης.  Εάν το κύριο μέλημά σας είναι \"Πόσο καιρό θα μου
-        η μπαταρία διαρκεί αν συνεχίσω να κάνω αυτό που κάνω;\" τότε αυτό είναι
-        αλγόριθμος για εσάς.\n
-    
-        \nΟ αλγόριθμος \"Συντηρητικό\" είναι ο προεπιλεγμένος.  Επίσης βασίζεται
-        σε πρόσφατη χρήση, αλλά προσπαθεί να μην διαφέρει από τη μακροπρόθεσμη σας
-        μέσος όρος πολύ ελεύθερα.\n
-    
-        \nΕπιλέξτε \"Since Status Change\" για να βασίζεται η πρόβλεψη
-        αυστηρά στην τρέχουσα συνεδρία σας.\n
-    
-        \nΤέλος, μπορείτε να έχετε την πρόβλεψη βασισμένη αποκλειστικά στη δική σας
-        μακροπρόθεσμη μέση χρήση.
-  </string>
+
+  <string formatted="false" name="pref_prediction_type_help">Εδώ μπορείτε να επιλέξετε πώς το Battery Monitor θα προβλέψει το υπόλοιπο διάρκεια μπαταρίας / χρόνος μέχρι την πλήρη φόρτιση.\n
+    \n
+    Ο αλγόριθμος \"Sensitive\" βασίζεται αυστηρά στα πέντε τελευταία σας λεπτά χρήσης. Εάν το κύριο μέλημά σας είναι \"Πόσο καιρό θα μου η μπαταρία διαρκεί αν συνεχίσω να κάνω αυτό που κάνω;\" τότε αυτό είναι αλγόριθμος για εσάς.\n
+    \n
+    Ο αλγόριθμος \"Συντηρητικό\" είναι ο προεπιλεγμένος. Επίσης βασίζεται σε πρόσφατη χρήση, αλλά προσπαθεί να μην διαφέρει από τη μακροπρόθεσμη σας μέσος όρος πολύ ελεύθερα.\n
+    \n
+    Επιλέξτε \"Since Status Change\" για να βασίζεται η πρόβλεψη αυστηρά στην τρέχουσα συνεδρία σας.\n
+    \n
+    Τέλος, μπορείτε να έχετε την πρόβλεψη βασισμένη αποκλειστικά στη δική σας μακροπρόθεσμη μέση χρήση.</string>
   <string formatted="false" name="pref_cat_language">Γλώσσα</string>
   <string formatted="false" name="pref_language_override">Υπέρβαση Γλώσσας</string>
   <string formatted="false" name="pref_language_override_summary">Επιλογή Γλώσσας:</string>
+
   <string formatted="false" name="alarms_overview">Επισκόπηση Ειδιποιήσεων</string>
-  <string formatted="false" name="alarms_overview_help">Αυτή η σελίδα σας επιτρέπει να προσθέσετε νέες ειδοποιήσεις, να επεξεργάστείτε ή να διαγράψετε ειδοποιήσεις που έχετε θέσει.\n\nΓια να προσθέσετε μια νέα ειδιποίηση πατήστε \"Προσθήκη ειδοποίησης\" - αυτό θα δημιουργήσει μια νέα ειδιποίηση και θα μεταφερθείτε στη σελίδα ρυθμίσεων ειδοποίησης, όπου μπορείτε να καθορίσετε τις ρυθμίσεις για τη νέα ειδοποίηση. Δέστε τη βοήθεια στη σελίδα αυτή για περισσότερες πληροφορίες.\n\nΚάτω από το πλήκτρο \"Προσθήκη Ειδοποίησης\" υπάρχει η λίστα με όλες τις ειδοποιήσεις που έχετε καθορίσει.\n\n• Για να επεξεργαστείτε μια ειδοποίηση, απλά πατήστε πάνω της.\n• Για να διαγράψετε μια ειδοποίηση, πατήστε παρατεταμένα πάνω της, μετά επιλέξτε \"Διαγραφή Ειδιποίησης\". (Μπορείτε επίσης να διαγράψετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης πατώντας το MENU και μετά \"Διαγραφή Ειδιποίησης\").\n• Για γρήγορη εναλλαγή μεταξύ ενεργοποίησης και απενεργοποίησης μιας ειδοποίησης, πατήστε την εικόνα ρολογιού ειδοποίησης στα αριστερά του κειμένου ειδοποίησης. (Μπορείτε να ενεργοποιήσετε ή να απενεργοποιήσετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης)</string>
+  <string formatted="false" name="alarms_overview_help">Αυτή η σελίδα σας επιτρέπει να προσθέσετε νέες ειδοποιήσεις, να επεξεργάστείτε ή να διαγράψετε ειδοποιήσεις που έχετε θέσει.\n
+    \n
+    Για να προσθέσετε μια νέα ειδιποίηση πατήστε \"Προσθήκη ειδοποίησης\" - αυτό θα δημιουργήσει μια νέα ειδιποίηση και θα μεταφερθείτε στη σελίδα ρυθμίσεων ειδοποίησης, όπου μπορείτε να καθορίσετε τις ρυθμίσεις για τη νέα ειδοποίηση. Δέστε τη βοήθεια στη σελίδα αυτή για περισσότερες πληροφορίες.\n
+    \n
+    Κάτω από το πλήκτρο \"Προσθήκη Ειδοποίησης\" υπάρχει η λίστα με όλες τις ειδοποιήσεις που έχετε καθορίσει.\n
+    \n
+    • Για να επεξεργαστείτε μια ειδοποίηση, απλά πατήστε πάνω της.\n
+    • Για να διαγράψετε μια ειδοποίηση, πατήστε παρατεταμένα πάνω της, μετά επιλέξτε \"Διαγραφή Ειδιποίησης\". (Μπορείτε επίσης να διαγράψετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης πατώντας το MENU και μετά \"Διαγραφή Ειδιποίησης\").\n
+    • Για γρήγορη εναλλαγή μεταξύ ενεργοποίησης και απενεργοποίησης μιας ειδοποίησης, πατήστε την εικόνα ρολογιού ειδοποίησης στα αριστερά του κειμένου ειδοποίησης. (Μπορείτε να ενεργοποιήσετε ή να απενεργοποιήσετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης)</string>
   <string formatted="false" name="pref_alarm_enabled">Ενεργοποίηση Ειδοποίησης</string>
   <string formatted="false" name="pref_alarm_enabled_help">Αν θέλετε να απενεργοποιήσετε προσωρινά μια ειδοποίηση χωρίς να χρειάζεται να τη ξαναδημιουργήσετε όταν τη χρειάζεστε ξανά, μπορείτε να την απενεργοποιήσετε είτε από εδώ είτε από τη κυρίως σελίδα των ειδοποιήσεων.</string>
+
   <string formatted="false" name="pref_cat_alarm_conditions">Συνθήκες Ειδοποίησης</string>
   <string formatted="false" name="pref_cat_alarm_conditions_help">Εδώ ελέγχετε τις συνθήκες που ενεργοποιούν μια ειδοποίηση.</string>
   <string formatted="false" name="pref_alarm_type">Τύπος Ειδοποίησης</string>
+
   <string formatted="false" name="pref_alarm_type_summary">Ενεργοποίηση Ειδοποίησης όταν η μπαταρία:</string>
-  <string formatted="false" name="pref_alarm_type_help">Υπάρχουν μέχρι τώρα πέντε τύποι ειδοποιήσεων από τις οποίες μπορείτε να διαλέξετε.\n\nΗ \"Πλήρως Φορτισμένη\" ειδοποίηση θα σας ενημερώνει όταν η κατάσταση της μπαταρίας αλλάζει από το \"Φορτίζει\" στο \"Πλήρως Φορτισμένη\". Σημειώστε ότι σε πολλές συσκευές, αυτό δε σημαίνει αναγκαστικά το ίδιο πράγμα με το 100% φορτισμένη.\n\nΓια τις ειδοποιήσεις φόρτισης και θερμοκρασίας χρειάζεται να θέσετε ένα κάτω όριο, μετά που θα επιλέξετε τον τύπο αυτό της ειδοποίησης.\n\nΗ ειδοποίηση \"Όχι καλή υγεία μπαταρίας\" θα σας προειδοποιήσει αν η υγεία της μπαταρίας σας μετατραπεί σε κάτι διαφορετικό από το \"Άγνωστο\" ή \"Καλή Υγεία\", όπως αναφέρεται από το Abdroid.</string>
+  <string formatted="false" name="pref_alarm_type_help">Υπάρχουν μέχρι τώρα πέντε τύποι ειδοποιήσεων από τις οποίες μπορείτε να διαλέξετε.\n
+    \n
+    Η \"Πλήρως Φορτισμένη\" ειδοποίηση θα σας ενημερώνει όταν η κατάσταση της μπαταρίας αλλάζει από το \"Φορτίζει\" στο \"Πλήρως Φορτισμένη\". Σημειώστε ότι σε πολλές συσκευές, αυτό δε σημαίνει αναγκαστικά το ίδιο πράγμα με το 100% φορτισμένη.\n
+    \n
+    Για τις ειδοποιήσεις φόρτισης και θερμοκρασίας χρειάζεται να θέσετε ένα κάτω όριο, μετά που θα επιλέξετε τον τύπο αυτό της ειδοποίησης.\n
+    \n
+    Η ειδοποίηση \"Όχι καλή υγεία μπαταρίας\" θα σας προειδοποιήσει αν η υγεία της μπαταρίας σας μετατραπεί σε κάτι διαφορετικό από το \"Άγνωστο\" ή \"Καλή Υγεία\", όπως αναφέρεται από το Abdroid.</string>
   <string formatted="false" name="pref_alarm_threshold">Όριο</string>
+
   <string formatted="false" name="alarm_pref_not_used">Δε χρησιμοποιείται για αυτόν τον τύπο ειδοποίησης</string>
   <string formatted="false" name="pref_alarm_threshold_summary">Όριο Ειδιποίησης:</string>
+
   <string formatted="false" name="pref_alarm_threshold_help">Για τις ειδοποιήσεις φόρτισης και θερμοκρασίας, πρέπει να καθορίσετε το όριο φόρτισης ή θερμοκρασίας το οποίο θα ενεργοποιεί την ειδοποίηση.</string>
   <string formatted="false" name="alarm_custom_temp_message">Εισαγάγετε τη θερμοκρασία σε %s βαθμούς</string>
+
   <string formatted="false" name="alarm_custom_charge_message">Εισαγάγετε το ποσοστό χρέωσης (0-100)</string>
   <string formatted="false" name="boot_pref_always">Πάντα</string>
   <string formatted="false" name="boot_pref_never">Ποτέ</string>
@@ -414,9 +398,11 @@
   <string formatted="false" name="age_2_weeks">2 εβδομάδες</string>
   <string formatted="false" name="age_3_weeks">3 εβδομάδες</string>
   <string formatted="false" name="age_4_weeks">4 εβδομάδες</string>
+
   <string formatted="false" name="age_never_delete">Να μη διαγράφονται ποτέ</string>
   <string formatted="false" name="pref_content_percent">Ποσοστό μπαταρίας</string>
   <string formatted="false" name="pref_content_temperature">Θερμοκρασία μπαταρίας</string>
+
   <string formatted="false" name="pref_content_switching">Εναλλαγή μεταξύ των δύο</string>
   <string formatted="false" name="chip_switching_interval_2_seconds">2 δευτερόλεπτα</string>
   <string formatted="false" name="chip_switching_interval_5_seconds">5 δευτερόλεπτα</string>

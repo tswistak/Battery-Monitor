@@ -3,29 +3,50 @@
   <string name="app_launcher_name" formatted="false">Battery Monitor</string>
   <string name="settings_activity_subtitle" formatted="false">Instellingen</string>
   <string name="help_activity_subtitle" formatted="false">Help</string>
+
   <string name="battery_use_b" formatted="false">Batterijgebruik bekijken</string>
   <string name="circle_widget" formatted="false">Battery Monitor Cirkel</string>
   <string name="full_widget" formatted="false">Battery Monitor Volledig</string>
   <string name="yes" formatted="false">Ja</string>
   <string name="cancel" formatted="false">Annuleren</string>
+
   <string name="confirm_close" formatted="false">Sluiten?</string>
-  <string name="confirm_close_hint" formatted="false">Battery Monitor zal volledig worden afgesloten, en het statusbalkicoon zal ook weggaan.\n\nWil je alleen dit venster sluiten en de indicator actief houden, druk dan op \'Annuleren\' en druk op de TERUG knop om het venster te sluiten.</string>
+  <string name="confirm_close_hint" formatted="false">Battery Monitor zal volledig worden afgesloten, en het statusbalkicoon zal ook weggaan.\n
+    \n
+    Wil je alleen dit venster sluiten en de indicator actief houden, druk dan op \'Annuleren\' en druk op de TERUG knop om het venster te sluiten.</string>
+
   <string name="notifications_disabled" formatted="false">Meldingen zijn uitgeschakeld!</string>
-  <string name="notifications_disabled_message" formatted="false">Je hebt alle meldingen voor Battery Monitor geblokkeerd. Daardoor kan Battery Monitor geen meldingen meer tonen: zowel de hoofdmelding als alle ingestelde alarmen worden geblokkeerd.\n\nOmdat Battery Monitor je de hoofdmelding apart laat in- en uitschakelen en je ook alarmen tijdelijk kunt uitschakelen, raden we sterk aan om de meldingen van Battery Monitor te deblokkeren. Zolang ze geblokkeerd zijn, kan het lijken alsof Battery Monitor niet werkt.\n\nDruk op OK om naar de systeeminstellingen te gaan waar je meldingen voor Battery Monitor kunt deblokkeren.</string>
+  <string name="notifications_disabled_message" formatted="false">Je hebt alle meldingen voor Battery Monitor geblokkeerd. Daardoor kan Battery Monitor geen meldingen meer tonen: zowel de hoofdmelding als alle ingestelde alarmen worden geblokkeerd.\n
+    \n
+    Omdat Battery Monitor je de hoofdmelding apart laat in- en uitschakelen en je ook alarmen tijdelijk kunt uitschakelen, raden we sterk aan om de meldingen van Battery Monitor te deblokkeren. Zolang ze geblokkeerd zijn, kan het lijken alsof Battery Monitor niet werkt.\n
+    \n
+    Druk op OK om naar de systeeminstellingen te gaan waar je meldingen voor Battery Monitor kunt deblokkeren.</string>
+
   <string name="battery_optimized" formatted="false">Battery Monitor is beperkt!</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor wordt beperkt en kan daardoor niet correct werken. Deze \"batterijoptimalisatie\" is een Android-functie die bedoeld is om slecht ontworpen apps te beperken zodat ze op de achtergrond niet te veel batterij verbruiken.\n\nBattery Monitor is echter een goed ontworpen app die onbeperkt op de achtergrond moet kunnen draaien om goed te werken. De app is zeer efficiënt en verkort je batterijduur niet.\n\nDruk op OK om naar de systeeminstellingen te gaan waar je batterijoptimalisatie voor Battery Monitor kunt uitschakelen.</string>
+  <string name="battery_optimized_message" formatted="false">Battery Monitor wordt beperkt en kan daardoor niet correct werken. Deze \"batterijoptimalisatie\" is een Android-functie die bedoeld is om slecht ontworpen apps te beperken zodat ze op de achtergrond niet te veel batterij verbruiken.\n
+    \n
+    Battery Monitor is echter een goed ontworpen app die onbeperkt op de achtergrond moet kunnen draaien om goed te werken. De app is zeer efficiënt en verkort je batterijduur niet.\n
+    \n
+    Druk op OK om naar de systeeminstellingen te gaan waar je batterijoptimalisatie voor Battery Monitor kunt uitschakelen.</string>
+
   <string name="main_notif_chan_name" formatted="false">Hoofdmelding</string>
   <string name="live_updates_notif_chan_name" formatted="false">Live-updates</string>
   <string name="channel_group_name_alarms" formatted="false">Alarmen</string>
+
   <string name="confirm_clear_logs" formatted="false">Alle logboeken verwijderen?</string>
+
   <string name="configure_log_filter" formatted="false">Welke logitems laten zien?</string>
+
   <string name="okay" formatted="false">OK</string>
+
   <string name="tab_current_info" formatted="false">Huidige informatie</string>
   <string name="tab_history" formatted="false">Geschiedenis</string>
+
   <string name="notification_until_charged" formatted="false">" tot opgeladen"</string>
   <string name="notification_until_drained" formatted="false">" over"</string>
   <string name="activity_until_charged" formatted="false">tot opgeladen</string>
   <string name="activity_until_drained" formatted="false">tot leeg</string>
+
   <string name="menu_settings" formatted="false">Instellingen</string>
   <string name="menu_close" formatted="false">Sluiten</string>
   <string name="menu_help" formatted="false">Hulp</string>
@@ -36,6 +57,7 @@
   <string name="menu_delete_alarm" formatted="false">Alarm verwijderen</string>
   <string name="menu_show_seconds" formatted="false">Toon seconden</string>
   <string name="menu_hide_seconds" formatted="false">Verberg seconden</string>
+
   <string name="percent_symbol" formatted="false">%</string>
   <string name="degree_symbol" formatted="false">°</string>
   <string name="fahrenheit" formatted="false">Fahrenheit</string>
@@ -43,11 +65,13 @@
   <string name="celsius" formatted="false">Celsius</string>
   <string name="celsius_symbol" formatted="false">C</string>
   <string name="volt_symbol" formatted="false">V</string>
+
   <string name="inaccessible_storage" formatted="false">SD kaart is niet toegankelijk</string>
   <string name="inaccessible_w_reason" formatted="false">SD kaart niet toegankelijk:</string>
   <string name="read_only_storage" formatted="false">SD kaart is ingesteld op alleen lezen</string>
   <string name="no_storage_permission" formatted="false">Toestemming voor opslag niet verleend.</string>
   <string name="file_written" formatted="false">Bestand is opgeslagen in de hoofdmap van de SD kaart</string>
+
   <string name="date" formatted="false">datum</string>
   <string name="time" formatted="false">tijd</string>
   <string name="status" formatted="false">toestand</string>
@@ -55,6 +79,7 @@
   <string name="temperature" formatted="false">graden_celsius</string>
   <string name="temperature_f" formatted="false">graden_fahrenheit</string>
   <string name="voltage" formatted="false">volt</string>
+
   <string name="status_unplugged" formatted="false">Losgekoppeld</string>
   <string name="status_unknown" formatted="false">Onbekend</string>
   <string name="status_charging" formatted="false">Opladen</string>
@@ -62,7 +87,9 @@
   <string name="status_not_charging" formatted="false">Niet opladen</string>
   <string name="status_fully_charged" formatted="false">Volledig opgeladen</string>
   <string name="status_plugged_in" formatted="false">Aangesloten</string>
+
   <string name="status_boot_completed" formatted="false">Opstarten voltooid</string>
+
   <string name="health_unknown" formatted="false">Onbekend</string>
   <string name="health_good" formatted="false">Gezond :)</string>
   <string name="health_overheat" formatted="false">Oververhit</string>
@@ -75,6 +102,7 @@
   <string name="plugged_usb" formatted="false">(USB)</string>
   <string name="plugged_unknown" formatted="false">(?)</string>
   <string name="plugged_wireless" formatted="false">(Draadloos)</string>
+
   <string name="alarm_type_fully_charged" formatted="false">Volledig opgeladen</string>
   <string name="alarm_type_charge_drops" formatted="false">Lading komt onder</string>
   <string name="alarm_type_charge_rises" formatted="false">Lading komt boven</string>
@@ -87,53 +115,65 @@
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatuur daalt onder...</string>
   <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatuur komt boven...</string>
   <string name="alarm_type_entry_health_failure" formatted="false">Gezondheid faalt</string>
+
   <string name="alarm_fully_charged" formatted="false">Batterij is nu volledig opgeladen</string>
   <string name="alarm_charge_drops" formatted="false">"Batterijniveau is onder "</string>
   <string name="alarm_charge_rises" formatted="false">"Batterijniveau is boven "</string>
   <string name="alarm_temp_drops" formatted="false">"Batterijtemp. is onder "</string>
   <string name="alarm_temp_rises" formatted="false">"Batterijtemperatuur is boven "</string>
   <string name="alarm_health_failure" formatted="false">"Batterijconditie is: "</string>
+
   <string name="logs_empty" formatted="false">Logboeken zijn leeg</string>
   <plurals name="n_log_items">
     <item quantity="one">%d logboekitem</item>
     <item quantity="other">%d logboekitems</item>
   </plurals>
+
   <string name="after_nh_mm_unplugged" formatted="false">Na %1$du %2$dm losgekoppeld</string>
   <string name="after_nh_mm_plugged_in" formatted="false">Na %1$du %2$dm aangesloten</string>
   <string name="after_nm_ms_unplugged" formatted="false">Na %1$dm %2$ds losgekoppeld</string>
   <string name="after_nm_ms_plugged_in" formatted="false">Na %1$dm %2$ds aangesloten</string>
+
   <plurals name="n_hours_long">
     <item quantity="one">"%d uur, "</item>
     <item quantity="other">"%d uur, "</item>
   </plurals>
+
   <plurals name="n_minutes_long">
     <item quantity="one">%d minuut</item>
     <item quantity="other">%d minuten</item>
   </plurals>
+
   <plurals name="n_hours_medium">
     <item quantity="one">"%d uur, "</item>
     <item quantity="other">"%d uur, "</item>
   </plurals>
+
   <plurals name="n_minutes_medium">
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
+
   <plurals name="n_hours_short">
     <item quantity="one">"%du "</item>
     <item quantity="other">"%du "</item>
   </plurals>
+
   <plurals name="n_minutes_short">
     <item quantity="one">%dm</item>
     <item quantity="other">%dm</item>
   </plurals>
+
   <plurals name="n_days">
     <item quantity="one">"%d dag, "</item>
     <item quantity="other">"%d dagen, "</item>
   </plurals>
+
   <plurals name="n_hours">
     <item quantity="one">%d uur</item>
     <item quantity="other">%d uur</item>
   </plurals>
+
   <string name="since" formatted="false">sinds</string>
   <plurals name="for_n_hours">
     <item quantity="one">(%d uur)</item>
@@ -142,23 +182,29 @@
   <string name="currently_using" formatted="false">Je gebruikt nu</string>
   <string name="currently_set_to" formatted="false">"Ingesteld op: "</string>
   <string name="currently_disabled" formatted="false">Momenteel uitgeschakeld</string>
+
   <string name="help_cat_version" formatted="false">Versie</string>
+
   <string name="help_cat_open_source" formatted="false">Open source</string>
-  <string name="help_open_source" formatted="false">Dit
-    project is open source. U kunt de broncode raadplegen op
-    <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+  <string name="help_open_source" formatted="false">Dit project is open source. U kunt de broncode raadplegen op <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+
   <string name="help_cat_privacy" formatted="false">Privacy</string>
   <string name="help_privacy" formatted="false">Battery Monitor verzamelt, bewaart of verzendt geen persoonlijke informatie.</string>
+
   <string name="help_cat_no_warranty" formatted="false">Geen garantie</string>
-  <string name="help_no_warranty" formatted="false">Deze software wordt uitgegeven in de hoop dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE; zonder zelfs de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel.\n\nTerwijl ik mijn best doe om ervoor te zorgen dat het goed werkt en geen problemen veroorzaken, ben ik niet verantwoordelijk voor eventuele schade of overlast dat wordt veroorzaakt onder alle omstandigheden.</string>
+  <string name="help_no_warranty" formatted="false">Deze software wordt uitgegeven in de hoop dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE; zonder zelfs de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel.\n
+    \n
+    Terwijl ik mijn best doe om ervoor te zorgen dat het goed werkt en geen problemen veroorzaken, ben ik niet verantwoordelijk voor eventuele schade of overlast dat wordt veroorzaakt onder alle omstandigheden.</string>
+
   <string name="help_cat_acknowledgments" formatted="false">Erkenningen</string>
-  <string name="help_acknowledgments" formatted="false">Battery Monitor is een afsplitsing van Battery Indicator Pro / BatteryBot Pro van
-    Darshan Computing, LLC.  Dank aan de oorspronkelijke auteurs en bijdragers
-    voor het creëren en onderhouden van het upstream-project.</string>
+  <string name="help_acknowledgments" formatted="false">Battery Monitor is een afsplitsing van Battery Indicator Pro / BatteryBot Pro van Darshan Computing, LLC. Dank aan de oorspronkelijke auteurs en bijdragers voor het creëren en onderhouden van het upstream-project.</string>
+
   <string name="help_cat_contact" formatted="false">Contact</string>
   <string formatted="false" name="help_contact">Als u een vraag, een probleem of een opmerking heeft, neem dan contact met ons op <a href="mailto:tomasz@swistak.codes">e-mail mij</a>.</string>
+
   <string name="settings_overview" formatted="false">Overzicht</string>
   <string name="settings_overview_help" formatted="false">De instellingen zijn verdeeld over drie verschillende pagina\'s, zoals onder beschreven. Elke pagina heeft zijn eigen helppagina over de instellingen op die pagina. Druk op MENU en dan Help voor help.</string>
+
   <string name="notifications_disabled_cat" formatted="false">Meldingen uitgeschakeld</string>
   <string name="app_notifs_disabled_b" formatted="false">Appmeldingen inschakelen</string>
   <string name="app_notifs_disabled_summary" formatted="false">Je hebt alle meldingen voor deze app uitgeschakeld. Schakel ze in om toegang te krijgen tot deze instellingen.</string>
@@ -170,6 +216,7 @@
   <string name="alarm_chan_disabled" formatted="false">Je hebt meldingen voor dit alarmtype uitgeschakeld. Schakel ze in om dit type alarm te gebruiken.</string>
   <string name="alarm_chan_disabled_b" formatted="false">Dit alarmtype inschakelen</string>
   <string name="alarm_chan_settings_b" formatted="false">Dit alarmtype beheren</string>
+
   <string name="notification_settings" formatted="false">Hoofdmelding</string>
   <string name="notification_settings_summary" formatted="false">Hoofdmelding configureren</string>
   <string name="notification_settings_help" formatted="false">Je kunt de inhoud en het uiterlijk van de melding aanpassen.</string>
@@ -181,22 +228,42 @@
   <string name="status_bar_chip_settings_help" formatted="false">Op Android 16+ met Live Updates kun je instellen wat de statusbalkchip toont en of de laad-emoji wordt weergegeven.</string>
   <string name="current_hack_settings" formatted="false">Stroomhack (mA)</string>
   <string name="current_hack_settings_summary" formatted="false">Geavanceerde instellingen voor het inschakelen van mA-info</string>
-  <string name="current_hack_settings_help" formatted="false">Android biedt apps geen officiële manier om informatie over batterijstroom te lezen. Er is echter een hack beschikbaar waarmee veel apparaten deze informatie mogelijk kunnen verkrijgen.\n\nDit werkt niet gegarandeerd. Het kan helemaal niet werken, of lijken te werken maar onzinnige waarden tonen.\n\nIn deze sectie kun je de hack inschakelen (indien mogelijk) en instellen hoe die wordt gebruikt.</string>
+  <string name="current_hack_settings_help" formatted="false">Android biedt apps geen officiële manier om informatie over batterijstroom te lezen. Er is echter een hack beschikbaar waarmee veel apparaten deze informatie mogelijk kunnen verkrijgen.\n
+    \n
+    Dit werkt niet gegarandeerd. Het kan helemaal niet werken, of lijken te werken maar onzinnige waarden tonen.\n
+    \n
+    In deze sectie kun je de hack inschakelen (indien mogelijk) en instellen hoe die wordt gebruikt.</string>
+
   <string name="alarm_settings_subtitle" formatted="false">Alarminstellingen</string>
   <string name="alarm_settings" formatted="false">Alarmen</string>
   <string name="alarm_settings_help" formatted="false">Je kunt een melding ontvangen als je batterijniveau onder een bepaald punt komt.</string>
   <string name="other_settings" formatted="false">Overige instellingen</string>
   <string name="other_settings_help" formatted="false">Alle andere instellingen zijn te vinden op deze pagina, waaronder logboeken, vergrendeling, temperatuureenheid, automatisch starten en meer.</string>
+
   <string name="live_updates_onboarding_title" formatted="false">Statusbalk batterijchip</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk. Deze optie staat standaard aan.\n\nAls je liever een traditioneel meldingspictogram gebruikt, kun je "Live Updates" uitschakelen in de Android-systeeminstellingen voor deze app.\n\nOpmerking: Het verlenen van deze toestemming kan er soms voor zorgen dat de app sluit. Als dat gebeurt, open je de app gewoon opnieuw.</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk, maar deze optie is momenteel uitgeschakeld in de systeeminstellingen.\n\nVoor de beste ervaring raden we aan deze optie in te schakelen. Als je liever een traditioneel meldingspictogram gebruikt, kun je deze uitgeschakeld laten.\n\nOpmerking: Het verlenen van deze toestemming kan er soms voor zorgen dat de app sluit. Als dat gebeurt, open je de app gewoon opnieuw.</string>
+  <string name="live_updates_onboarding_message_on" formatted="false">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk. Deze optie staat standaard aan.\n
+    \n
+    Als je liever een traditioneel meldingspictogram gebruikt, kun je "Live Updates" uitschakelen in de Android-systeeminstellingen voor deze app.\n
+    \n
+    Opmerking: Het verlenen van deze toestemming kan er soms voor zorgen dat de app sluit. Als dat gebeurt, open je de app gewoon opnieuw.</string>
+  <string name="live_updates_onboarding_message_off" formatted="false">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk, maar deze optie is momenteel uitgeschakeld in de systeeminstellingen.\n
+    \n
+    Voor de beste ervaring raden we aan deze optie in te schakelen. Als je liever een traditioneel meldingspictogram gebruikt, kun je deze uitgeschakeld laten.\n
+    \n
+    Opmerking: Het verlenen van deze toestemming kan er soms voor zorgen dat de app sluit. Als dat gebeurt, open je de app gewoon opnieuw.</string>
   <string name="live_updates_onboarding_positive_on" formatted="false">Begrepen</string>
   <string name="live_updates_onboarding_positive_off" formatted="false">Ga naar instellingen</string>
   <string name="live_updates_onboarding_negative_off" formatted="false">Sluiten</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor heeft je toestemming nodig om het batterijniveau in de statusbalk te tonen en je over alarmen te informeren.\n\nOpmerking: Het verlenen van deze toestemming kan er soms voor zorgen dat de app sluit. Als dat gebeurt, open je de app gewoon opnieuw.</string>
+
+  <string name="notifications_onboarding_message" formatted="false">Battery Monitor heeft je toestemming nodig om het batterijniveau in de statusbalk te tonen en je over alarmen te informeren.\n
+    \n
+    Opmerking: Het verlenen van deze toestemming kan er soms voor zorgen dat de app sluit. Als dat gebeurt, open je de app gewoon opnieuw.</string>
+
   <string name="add_alarm" formatted="false">Alarm toevoegen</string>
+
   <string name="pref_cat_channel_settings" formatted="false">Instellingen meldingskanalen</string>
   <string name="pref_manage_main_channel" formatted="false">Hoofdkanaal beheren</string>
+
   <string name="pref_cat_notification_content" formatted="false">Inhoud</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Statusbalkchip (Android 16+)</string>
   <string formatted="false" name="pref_live_update_display">Live-update tonen</string>
@@ -219,51 +286,79 @@
   <string name="time_remaining" formatted="false">Tijd resterend</string>
   <string name="time_since_status_change" formatted="false">Tijd sinds wijziging in status</string>
   <string name="vital_signs" formatted="false">Gezondheid</string>
+
   <string name="pref_time_remaining_verbosity" formatted="false">Uitgebreidheid van weergave van resterende tijd</string>
   <string name="pref_time_remaining_verbosity_help" formatted="false">Hier kun je instellen hoe uitgebreid de beschrijving van de tijd moet zijn, zodat het op je scherm past.</string>
   <string name="condensed" formatted="false">Minimaal</string>
   <string name="normal" formatted="false">Normaal</string>
   <string name="verbose" formatted="false">Uitgebreid</string>
+
   <string name="pref_status_duration_in_vital_signs" formatted="false">Tijd van status</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Laat tijd sinds wijziging zien in de onderste regel van de melding?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Stel dit in om de tijd sinds de laatste statuswijziging te laten zien in de onderste regel.</string>
+
   <string formatted="false" name="custom">Aangepast...</string>
+
   <string name="pref_cat_icon_set" formatted="false">Meldingsicoon</string>
   <string name="pref_icon_content" formatted="false">Icooninhoud</string>
   <string name="pref_icon_content_help" formatted="false">Kies of het statusbalkicoon batterijpercentage of batterijtemperatuur toont. Temperatuur volgt je gekozen eenheid.</string>
   <string name="pref_show_icon_unit" formatted="false">Eenheidssymbool tonen</string>
   <string name="pref_show_icon_unit_help" formatted="false">Als dit is ingeschakeld, toont het pictogram een procentteken voor het batterijpercentage en een gradensymbool voor de batterijtemperatuur. Schakel dit uit om alleen het getal te tonen.</string>
+
   <string name="pref_cat_current_hack_main" formatted="false">Hoofdbesturing</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Stroomhack (mA) niet ondersteund</string>
+
   <string name="pref_current_hack_unsupported" formatted="false">Sorry, de stroomhack (mA) wordt op dit apparaat niet ondersteund.</string>
+
   <string name="pref_enable_current_hack" formatted="false">Hack inschakelen</string>
   <string name="pref_enable_current_hack_summary" formatted="false">Proberen de stroomhack (mA) in te schakelen?</string>
   <string name="pref_enable_current_hack_help" formatted="false">Wanneer deze instelling is ingeschakeld, zijn de overige opties rond de hack bruikbaar.</string>
+
   <string name="pref_current_hack_prefer_fs" formatted="false">Oude hackmethode verkiezen</string>
   <string name="pref_current_hack_prefer_fs_summary" formatted="false">Oudere, op bestandssysteem gebaseerde hackmethode verkiezen?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Vanaf Lollipop (Android 5.0) biedt Android een iets minder hacky manier om stroominformatie (mA) op te halen, direct via BatteryManager. Dit werkt echter nog steeds niet gegarandeerd of goed op alle apparaten. Tot Android Nougat (Android 7.0) lijkt de oude methode (op bestandssysteem gebaseerd) op de meeste apparaten beter te werken, daarom blijft die standaard op apparaten met Android lager dan 7.0.\n\nDeze instelling is slechts een hint voor de hack over welke methode te verkiezen; je kunt dit wijzigen als de hack niet goed werkt op je apparaat.</string>
+  <string name="pref_current_hack_prefer_fs_help" formatted="false">Vanaf Lollipop (Android 5.0) biedt Android een iets minder hacky manier om stroominformatie (mA) op te halen, direct via BatteryManager. Dit werkt echter nog steeds niet gegarandeerd of goed op alle apparaten. Tot Android Nougat (Android 7.0) lijkt de oude methode (op bestandssysteem gebaseerd) op de meeste apparaten beter te werken, daarom blijft die standaard op apparaten met Android lager dan 7.0.\n
+    \n
+    Deze instelling is slechts een hint voor de hack over welke methode te verkiezen; je kunt dit wijzigen als de hack niet goed werkt op je apparaat.</string>
+
   <string name="pref_current_hack_multiplier" formatted="false">Vermenigvuldiger</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Sommige apparaten rapporteren milliampères in plaats van microampères zoals het API verwacht. Sommige apparaten draaien ook het teken van de waarde om. Sommige gebruikers geven zelfs de voorkeur aan het omgekeerde teken van correct gerapporteerde waarden.\n\nOm zulke situaties op te vangen, kun je het resultaat van de API-aanroep met de waarde hier vermenigvuldigen.\n\nAls je apparaat bijvoorbeeld altijd 0 mA toont, kun je een vermenigvuldiger van 1000 proberen. Als de API 450 microampères teruggeeft, zal de app 450 mA tonen in plaats van 0 mA. Als de API 0 microampères teruggeeft, verandert de vermenigvuldiger die eindwaarde natuurlijk niet.</string>
+  <string name="pref_current_hack_multiplier_help" formatted="false">Sommige apparaten rapporteren milliampères in plaats van microampères zoals het API verwacht. Sommige apparaten draaien ook het teken van de waarde om. Sommige gebruikers geven zelfs de voorkeur aan het omgekeerde teken van correct gerapporteerde waarden.\n
+    \n
+    Om zulke situaties op te vangen, kun je het resultaat van de API-aanroep met de waarde hier vermenigvuldigen.\n
+    \n
+    Als je apparaat bijvoorbeeld altijd 0 mA toont, kun je een vermenigvuldiger van 1000 proberen. Als de API 450 microampères teruggeeft, zal de app 450 mA tonen in plaats van 0 mA. Als de API 0 microampères teruggeeft, verandert de vermenigvuldiger die eindwaarde natuurlijk niet.</string>
+
   <string name="pref_cat_current_hack_notification" formatted="false">Melding</string>
   <string name="pref_display_current_in_vital_stats" formatted="false">Toon in vitale stats</string>
   <string name="pref_display_current_in_vital_stats_summary" formatted="false">Stroom (mA) tonen in vitale stats van de hoofdmelding?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Als ingeschakeld, wordt de hack geprobeerd en wordt het resultaat getoond in de vitale-statsregel van de hoofdmelding. Let op: je moet de hoofdmelding zo instellen dat vitale stats worden weergegeven om dit te zien. Deze waarde ververst alleen wanneer het systeem nieuwe batterijinformatie stuurt.\n\nOp de meeste apparaten betekent een negatieve waarde netto ontladen en een positieve waarde dat de batterij wordt opgeladen. Niet alle apparaten leveren waarden op deze manier.</string>
+  <string name="pref_display_current_in_vital_stats_help" formatted="false">Als ingeschakeld, wordt de hack geprobeerd en wordt het resultaat getoond in de vitale-statsregel van de hoofdmelding. Let op: je moet de hoofdmelding zo instellen dat vitale stats worden weergegeven om dit te zien. Deze waarde ververst alleen wanneer het systeem nieuwe batterijinformatie stuurt.\n
+    \n
+    Op de meeste apparaten betekent een negatieve waarde netto ontladen en een positieve waarde dat de batterij wordt opgeladen. Niet alle apparaten leveren waarden op deze manier.</string>
+
   <string name="pref_cat_current_hack_main_window" formatted="false">Hoofdvenster</string>
   <string name="pref_display_current_in_main_window" formatted="false">Toon in hoofdvenster</string>
   <string name="pref_display_current_in_main_window_summary" formatted="false">Stroom (mA) tonen in het hoofdvenster?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Als ingeschakeld, wordt de hack geprobeerd en wordt het resultaat in het hoofdvenster getoond. Deze waarde ververst telkens wanneer het systeem nieuwe batterijinformatie stuurt, maar je kunt de waarde ook op elk moment verversen door op de getoonde waarde te tikken. (Let op dat sommige apparaten de onderliggende data zelden of nooit updaten, waardoor de waarde bij tikken niet zichtbaar verandert.)\n\nOp de meeste apparaten betekent een negatieve waarde netto ontladen en een positieve waarde dat de batterij wordt opgeladen. Niet alle apparaten leveren waarden op deze manier.</string>
+  <string name="pref_display_current_in_main_window_help" formatted="false">Als ingeschakeld, wordt de hack geprobeerd en wordt het resultaat in het hoofdvenster getoond. Deze waarde ververst telkens wanneer het systeem nieuwe batterijinformatie stuurt, maar je kunt de waarde ook op elk moment verversen door op de getoonde waarde te tikken. (Let op dat sommige apparaten de onderliggende data zelden of nooit updaten, waardoor de waarde bij tikken niet zichtbaar verandert.)\n
+    \n
+    Op de meeste apparaten betekent een negatieve waarde netto ontladen en een positieve waarde dat de batterij wordt opgeladen. Niet alle apparaten leveren waarden op deze manier.</string>
+
   <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Gemiddelde verkiezen in vitale stats</string>
   <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Proberen current_avg te gebruiken in vitale stats van de hoofdmelding?</string>
   <string name="pref_prefer_current_avg_in_main_window" formatted="false">Gemiddelde verkiezen in hoofdvenster</string>
   <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Proberen current_avg te gebruiken in het hoofdvenster?</string>
+
   <string name="pref_prefer_current_avg_help" formatted="false">Sommige systemen hebben een extra hack beschikbaar die een recent gemiddelde van de stroom geeft in plaats van een momentopname. Wat dit betekent verschilt per apparaat en is alleen op sommige apparaten beschikbaar. Dit kan een stabielere waarde geven (als alles goed gaat), dezelfde waarde teruggeven of een onbruikbare waarde teruggeven (schakel deze optie dan uit).</string>
+
   <string name="pref_auto_refresh_current_in_main_window" formatted="false">mA automatisch verversen in hoofdvenster</string>
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">mA elke twee seconden automatisch verversen?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Als je de hack hebt ingesteld om mA in het hoofdvenster te tonen, kun je de waarde verversen door erop te tikken. Als je frequente updates wilt zonder te tikken, kun je deze optie inschakelen om de waarde elke twee seconden automatisch te verversen zolang het venster zichtbaar is.\n\nLet op dat sommige apparaten de onderliggende data zelden of nooit updaten, waardoor de waarde mogelijk niet zichtbaar verandert hoewel de app wel ververst.</string>
+  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Als je de hack hebt ingesteld om mA in het hoofdvenster te tonen, kun je de waarde verversen door erop te tikken. Als je frequente updates wilt zonder te tikken, kun je deze optie inschakelen om de waarde elke twee seconden automatisch te verversen zolang het venster zichtbaar is.\n
+    \n
+    Let op dat sommige apparaten de onderliggende data zelden of nooit updaten, waardoor de waarde mogelijk niet zichtbaar verandert hoewel de app wel ververst.</string>
+
   <string name="pref_cat_charging_indicator" formatted="false">Indicatie tijdens opladen</string>
   <string name="pref_indicate_charging" formatted="false">Indicatie tonen tijdens opladen</string>
   <string name="pref_indicate_charging_summary" formatted="false">Icoon veranderen tijdens opladen</string>
   <string name="pref_indicate_charging_help" formatted="false">Het laadicoon kan een bliksemschicht onder het getal tonen. Schakel dit uit als je tijdens laden en ontladen hetzelfde icoon wilt.</string>
+
   <string name="pref_cat_logging" formatted="false">Logboek</string>
   <string name="pref_enable_logging" formatted="false">Logboek inschakelen</string>
   <string name="pref_enable_logging_summary" formatted="false">Veranderingen in batterijstatus opnemen in logboek</string>
@@ -271,41 +366,61 @@
   <string name="pref_max_log_age" formatted="false">Maximale logboek leeftijd</string>
   <string name="pref_max_log_age_summary" formatted="false">Verwijder logboeken ouder dan:</string>
   <string formatted="false" name="pref_max_log_age_help">Als logboekregistratie is ingeschakeld, worden telkens wanneer je het apparaat aansluit logs verwijderd die ouder zijn dan deze waarde. Kies Nooit verwijderen om logs te bewaren totdat je ze handmatig wist.</string>
+
   <string name="pref_cat_temperature_unit" formatted="false">Temperatuur</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Converteren naar Fahrenheit</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android geeft de batterijtemperatuur in graden Celsius. Selecteer deze optie om Fahrenheit te gebruiken.</string>
+
   <string name="pref_cat_autostart" formatted="false">Automatisch starten</string>
   <string name="pref_autostart_at_boot" formatted="false">Automatisch starten bij inschakelen</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">Starten als het apparaat wordt ingeschakeld:</string>
   <string name="pref_autostart_at_boot_help" formatted="false">Deze optie verandert of Battery Monitor automatisch opstart wanneer het systeem opstart.</string>
+
   <string name="predictor_sensitive" formatted="false">Gevoelig</string>
   <string name="predictor_conservative" formatted="false">Conservatief</string>
   <string name="predictor_since_status_change" formatted="false">Sinds statuswijziging</string>
   <string name="predictor_long_term_ave" formatted="false">Langetermijngemiddelde</string>
+
   <string name="pref_cat_predictor" formatted="false">Schattingen resterende tijd</string>
   <string name="pref_prediction_type" formatted="false">Type schatting</string>
-  <string name="pref_prediction_type_help" formatted="false">Hier kun je kiezen hoe Battery Monitor je resterende batterijduur / tijd tot volledig opgeladen voorspelt.\n\nHet \"Gevoelig\"-algoritme is strikt gebaseerd op je laatste vijf minuten gebruik. Als je belangrijkste vraag is \"Hoe lang gaat mijn batterij mee als ik blijf doen wat ik nu doe?\", dan is dit het juiste algoritme.\n\nHet \"Conservatief\"-algoritme is standaard. Het is ook gebaseerd op recent gebruik, maar probeert minder vrij af te wijken van je langetermijngemiddelde.\n\nSelecteer \"Sinds statuswijziging\" om de voorspelling strikt op je huidige sessie te baseren.\n\nTot slot kun je de voorspelling uitsluitend op je langetermijngemiddelde gebruik baseren.</string>
+  <string name="pref_prediction_type_help" formatted="false">Hier kun je kiezen hoe Battery Monitor je resterende batterijduur / tijd tot volledig opgeladen voorspelt.\n
+    \n
+    Het \"Gevoelig\"-algoritme is strikt gebaseerd op je laatste vijf minuten gebruik. Als je belangrijkste vraag is \"Hoe lang gaat mijn batterij mee als ik blijf doen wat ik nu doe?\", dan is dit het juiste algoritme.\n
+    \n
+    Het \"Conservatief\"-algoritme is standaard. Het is ook gebaseerd op recent gebruik, maar probeert minder vrij af te wijken van je langetermijngemiddelde.\n
+    \n
+    Selecteer \"Sinds statuswijziging\" om de voorspelling strikt op je huidige sessie te baseren.\n
+    \n
+    Tot slot kun je de voorspelling uitsluitend op je langetermijngemiddelde gebruik baseren.</string>
+
   <string name="pref_cat_language" formatted="false">Taal</string>
   <string name="pref_language_override" formatted="false">Andere taal gebruiken</string>
   <string name="pref_language_override_summary" formatted="false">Taal selecteren:</string>
+
   <string name="alarms_overview" formatted="false">Overzicht van alarmen</string>
   <string name="alarms_overview_help" formatted="false">Op deze pagina kun je alarmen toevoegen, in of uitschakelen en verwijderen.</string>
+
   <string name="pref_alarm_enabled" formatted="false">Alarm inschakelen</string>
   <string name="pref_alarm_enabled_help" formatted="false">Als je tijdelijk een alarm wilt uitschakelen zonder het daarna weer te moeten instellen, kun je hem hier of op de alarmen pagina uitschakelen.</string>
+
   <string name="pref_cat_alarm_conditions" formatted="false">Voorwaarden voor alarm</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Hier kun je de voorwaarden instellen voor het alarm</string>
   <string name="pref_alarm_type" formatted="false">Type alarm</string>
   <string name="pref_alarm_type_summary" formatted="false">Geef alarm wanneer batterij:</string>
-  <string name="pref_alarm_type_help" formatted="false">Er zijn 5 typen alarm om uit te kiezen.\n\n</string>
+  <string name="pref_alarm_type_help" formatted="false">Er zijn 5 typen alarm om uit te kiezen.\n
+    \n
+    </string>
   <string name="pref_alarm_threshold" formatted="false">Voorwaarde</string>
   <string name="alarm_pref_not_used" formatted="false">Niet gebruikt voor dit alarmtype</string>
   <string name="pref_alarm_threshold_summary" formatted="false">Voorwaarde voor alarm:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Voor lading en temperatuuralarmen moet je de lading of temperatuur instellen waarop het alarm afgaat.</string>
   <string formatted="false" name="alarm_custom_temp_message">Voer de temperatuur in %s graden in</string>
   <string formatted="false" name="alarm_custom_charge_message">Voer het kostenpercentage in (0-100)</string>
+
   <string name="boot_pref_always" formatted="false">Altijd</string>
   <string name="boot_pref_never" formatted="false">Nooit</string>
   <string name="boot_pref_if_running" formatted="false">Wanneer ingeschakeld bij afsluiten</string>
+
   <string name="age_1_day" formatted="false">1 dag</string>
   <string name="age_2_days" formatted="false">2 dagen</string>
   <string name="age_4_days" formatted="false">4 dagen</string>
@@ -317,6 +432,7 @@
   <string name="pref_content_percent" formatted="false">Batterijpercentage</string>
   <string name="pref_content_temperature" formatted="false">Batterijtemperatuur</string>
   <string name="pref_content_switching" formatted="false">Wissel tussen beide</string>
+
   <string formatted="false" name="chip_switching_interval_2_seconds">2 seconden</string>
   <string formatted="false" name="chip_switching_interval_5_seconds">5 seconden</string>
   <string formatted="false" name="chip_switching_interval_10_seconds">10 seconden</string>
