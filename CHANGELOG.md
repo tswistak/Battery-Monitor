@@ -16,6 +16,7 @@
 
 - Rebuilt an icon generation script for new icon types.
 - Removed the directory with legacy image assets.
+- Reordered all localized strings to match order in English (#23).
 
 ## 1.0.4
 

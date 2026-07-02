@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_launcher_name" formatted="false">Monitor baterii</string>
   <string name="settings_activity_subtitle" formatted="false">Ustawienia</string>
@@ -11,28 +11,25 @@
   <string name="cancel" formatted="false">Anuluj</string>
 
   <string name="confirm_close" formatted="false">Czy naprawdę zamknąć?</string>
-  <string name="confirm_close_hint" formatted="false">
-    Battery Monitor zostanie całkowicie zamknięty i nie będziesz go już widzieć na pasku stanu. Wszelkie widżety na ekranie głównym staną się bezużyteczne.\n
-
-    \nJeśli chcesz po prostu opuścić okno główne i pozostawić usługę działającą, naciśnij Anuluj, a następnie naciśnij przycisk Wstecz swojego urządzenia, aby zamknąć okno główne.\n
-
-    \nJeśli chcesz ukryć powiadomienie, ale pozostawić widżety działające, naciśnij Anuluj, a następnie zmień ustawienia, aby ukryć powiadomienie.</string>
+  <string name="confirm_close_hint" formatted="false">Battery Monitor zostanie całkowicie zamknięty i nie będziesz go już widzieć na pasku stanu. Wszelkie widżety na ekranie głównym staną się bezużyteczne.\n
+    \n
+    Jeśli chcesz po prostu opuścić okno główne i pozostawić usługę działającą, naciśnij Anuluj, a następnie naciśnij przycisk Wstecz swojego urządzenia, aby zamknąć okno główne.\n
+    \n
+    Jeśli chcesz ukryć powiadomienie, ale pozostawić widżety działające, naciśnij Anuluj, a następnie zmień ustawienia, aby ukryć powiadomienie.</string>
 
   <string name="notifications_disabled" formatted="false">Powiadomienia są wyłączone!</string>
-  <string name="notifications_disabled_message" formatted="false">
-    Wyłączyłeś(-aś) wszystkie powiadomienia dla Battery Monitor. To uniemożliwi aplikacji wyświetlanie jakichkolwiek powiadomień: główne powiadomienie i wszystkie ustawione przez Ciebie alarmy zostaną zablokowane.\n
-
-    \nPonieważ aplikacja pozwala Ci na osobne włączanie i wyłączanie głównego powiadomienia, jak również na tymczasowe wyłączanie utworzonych przez Ciebie alarmów, zdecydowanie zaleca się odblokować powiadomienia. Gdy są zablokowane, może się wydawać, jakby aplikacja nie działała prawidłowo.\n
-
-    \nNaciśnij OK, aby przejść do ustawień systemowych, gdzie możesz odblokować powiadomienia dla Battery Monitor.</string>
+  <string name="notifications_disabled_message" formatted="false">Wyłączyłeś(-aś) wszystkie powiadomienia dla Battery Monitor. To uniemożliwi aplikacji wyświetlanie jakichkolwiek powiadomień: główne powiadomienie i wszystkie ustawione przez Ciebie alarmy zostaną zablokowane.\n
+    \n
+    Ponieważ aplikacja pozwala Ci na osobne włączanie i wyłączanie głównego powiadomienia, jak również na tymczasowe wyłączanie utworzonych przez Ciebie alarmów, zdecydowanie zaleca się odblokować powiadomienia. Gdy są zablokowane, może się wydawać, jakby aplikacja nie działała prawidłowo.\n
+    \n
+    Naciśnij OK, aby przejść do ustawień systemowych, gdzie możesz odblokować powiadomienia dla Battery Monitor.</string>
 
   <string name="battery_optimized" formatted="false">Battery Monitor jest ograniczony!</string>
-  <string name="battery_optimized_message" formatted="false">
-    Battery Monitor ma ograniczoną możliwość prawidłowego działania. Ta „optymalizacja baterii” to funkcja Androida zaprojektowana w celu ograniczenia działania słabo zaprojektowanych aplikacji, aby zapobiegać zbyt dużemu zużywaniu baterii w tle.\n
-
-    \nBattery Monitor jest jednak dobrze zaprojektowaną aplikacją, która musi działać bez ograniczeń w tle, aby funkcjonować prawidłowo. Jest to niezwykle wydajne i nie będzie skracać żywotności baterii.\n
-
-    \nNaciśnij OK, aby przejść do ustawień systemowych, gdzie możesz wyłączyć optymalizację baterii dla Battery Monitor.</string>
+  <string name="battery_optimized_message" formatted="false">Battery Monitor ma ograniczoną możliwość prawidłowego działania. Ta „optymalizacja baterii” to funkcja Androida zaprojektowana w celu ograniczenia działania słabo zaprojektowanych aplikacji, aby zapobiegać zbyt dużemu zużywaniu baterii w tle.\n
+    \n
+    Battery Monitor jest jednak dobrze zaprojektowaną aplikacją, która musi działać bez ograniczeń w tle, aby funkcjonować prawidłowo. Jest to niezwykle wydajne i nie będzie skracać żywotności baterii.\n
+    \n
+    Naciśnij OK, aby przejść do ustawień systemowych, gdzie możesz wyłączyć optymalizację baterii dla Battery Monitor.</string>
 
   <string name="main_notif_chan_name" formatted="false">Główne powiadomienie</string>
   <string name="live_updates_notif_chan_name" formatted="false">Aktualizacje na żywo</string>
@@ -135,46 +132,53 @@
     <item quantity="many">%d logów</item>
   </plurals>
 
-  <string name="after_nh_mm_unplugged" formatted="false">Po %1$dh %2$dm od odłączenia</string>
-  <string name="after_nh_mm_plugged_in" formatted="false">Po %1$dh %2$dm od podłączenia</string>
-  <string name="after_nm_ms_unplugged" formatted="false">Po %1$dm %2$ds od odłączenia</string>
-  <string name="after_nm_ms_plugged_in" formatted="false">Po %1$dm %2$ds od podłączenia</string>
+  <string name="after_nh_mm_unplugged" formatted="true">Po %1$dh %2$dm od odłączenia</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">Po %1$dh %2$dm od podłączenia</string>
+  <string name="after_nm_ms_unplugged" formatted="true">Po %1$dm %2$ds od odłączenia</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">Po %1$dm %2$ds od podłączenia</string>
 
   <plurals name="n_hours_long">
     <item quantity="one">"%d godzina, "</item>
     <item quantity="few">"%d godziny, "</item>
     <item quantity="many">"%d godzin, "</item>
   </plurals>
+
   <plurals name="n_minutes_long">
     <item quantity="one">%d minuta</item>
     <item quantity="few">%d minuty</item>
     <item quantity="many">%d minut</item>
   </plurals>
+
   <plurals name="n_hours_medium">
     <item quantity="one">"%d godz., "</item>
     <item quantity="few">"%d godz., "</item>
     <item quantity="many">"%d godz., "</item>
   </plurals>
+
   <plurals name="n_minutes_medium">
     <item quantity="one">%d min</item>
     <item quantity="few">%d min</item>
     <item quantity="many">%d min</item>
   </plurals>
+
   <plurals name="n_hours_short">
     <item quantity="one">"%dh "</item>
     <item quantity="few">"%dh "</item>
     <item quantity="many">"%dh "</item>
   </plurals>
+
   <plurals name="n_minutes_short">
     <item quantity="one">%dm</item>
     <item quantity="few">%dm</item>
     <item quantity="many">%dm</item>
   </plurals>
+
   <plurals name="n_days">
     <item quantity="one">"%d dzień, "</item>
     <item quantity="few">"%d dni, "</item>
     <item quantity="many">"%d dni, "</item>
   </plurals>
+
   <plurals name="n_hours">
     <item quantity="one">%d godzina</item>
     <item quantity="few">%d godziny</item>
@@ -200,16 +204,15 @@
   <string name="help_privacy" formatted="false">Battery Monitor nie gromadzi, nie przechowuje ani nie przekazuje żadnych danych osobowych.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Brak gwarancji</string>
-  <string name="help_no_warranty" formatted="false">
-    Niniejsze oprogramowanie jest udostępniane w nadziei, że okaże się przydatne, jednak BEZ ŻADNEJ GWARANCJI, w tym bez dorozumianej gwarancji PRZYDATNOŚCI HANDLOWEJ lub PRZYDATNOŚCI DO OKREŚLONEGO CELU.\n
-
-  \nChociaż dokładam wszelkich starań, aby wszystko działało prawidłowo i nie powodowało żadnych problemów, nie ponoszę odpowiedzialności za jakiekolwiek szkody lub niedogodności, które mogą wyniknąć z tego tytułu, niezależnie od okoliczności.</string>
+  <string name="help_no_warranty" formatted="false">Niniejsze oprogramowanie jest udostępniane w nadziei, że okaże się przydatne, jednak BEZ ŻADNEJ GWARANCJI, w tym bez dorozumianej gwarancji PRZYDATNOŚCI HANDLOWEJ lub PRZYDATNOŚCI DO OKREŚLONEGO CELU.\n
+    \n
+    Chociaż dokładam wszelkich starań, aby wszystko działało prawidłowo i nie powodowało żadnych problemów, nie ponoszę odpowiedzialności za jakiekolwiek szkody lub niedogodności, które mogą wyniknąć z tego tytułu, niezależnie od okoliczności.</string>
 
   <string name="help_cat_acknowledgments" formatted="false">Podziękowania</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor jest forkiem Battery Indicator Pro / BatteryBot Pro autorstwa Darshan Computing, LLC. Dziękuję autorom i współtwórcom za stworzenie i utrzymywanie projektu źródłowego.</string>
 
   <string name="help_cat_contact" formatted="false">Kontakt</string>
-  <string formatted="false" name="help_contact">Jeśli masz pytanie, problem lub komentarz, napisz do mnie <a href="mailto:tomasz@swistak.codes">e-maila</a>.</string>
+  <string name="help_contact" formatted="false">Jeśli masz pytanie, problem lub komentarz, napisz do mnie <a href="mailto:tomasz@swistak.codes">e-maila</a>.</string>
 
   <string name="settings_overview" formatted="false">Przegląd</string>
   <string name="settings_overview_help" formatted="false">Ustawienia Battery Monitor zostały zorganizowane w osobne strony jak opisano poniżej. Każda strona ustawień ma swoją własną stronę pomocy opisującą dostępne tam opcje.</string>
@@ -237,12 +240,11 @@
   <string name="status_bar_chip_settings_help" formatted="false">Na Androidzie 16+ z powiadomieniami na żywo możesz skonfigurować, co pokazuje kapsułka na pasku stanu i czy wyświetlać emoji ładowania.</string>
   <string name="current_hack_settings" formatted="false">Obejście na obliczanie prądu (mA)</string>
   <string name="current_hack_settings_summary" formatted="false">Zaawansowane ustawienia na włączenie informacji o mA</string>
-  <string name="current_hack_settings_help" formatted="false">
-    Android nie dostarcza aplikacjom możliwości uzyskania dostępu do informacji o natężeniu prądu baterii. Jest jednak dostępne obejście pozwalające wielu urządzeniom potencjanie uzyskać te informacje.\n
-
-    \nNie ma gwarancji, że to zadziała. Może nie działać wcale albo wyglądać na działające, ale zwracać bezsensowne wartości.\n
-
-    \nUstaiwenia na włączenie obejścia, o ile to możliwe, i kontrolowanie jak jest to używane są dostępne w tej sekcji.</string>
+  <string name="current_hack_settings_help" formatted="false">Android nie dostarcza aplikacjom możliwości uzyskania dostępu do informacji o natężeniu prądu baterii. Jest jednak dostępne obejście pozwalające wielu urządzeniom potencjanie uzyskać te informacje.\n
+    \n
+    Nie ma gwarancji, że to zadziała. Może nie działać wcale albo wyglądać na działające, ale zwracać bezsensowne wartości.\n
+    \n
+    Ustaiwenia na włączenie obejścia, o ile to możliwe, i kontrolowanie jak jest to używane są dostępne w tej sekcji.</string>
 
   <string name="alarm_settings_subtitle" formatted="false">Ustawienia alarmów</string>
   <string name="alarm_settings" formatted="false">Alarmy</string>
@@ -250,27 +252,24 @@
   <string name="other_settings" formatted="false">Inne ustawienia</string>
   <string name="other_settings_help" formatted="false">Wszystkie pozostałe ustawienia znajdują się na tej stronie, w tym rejestrowanie stanu baterii, jednostka temperatury czy automatyczne uruchamianie.</string>
 
-  <string name="live_updates_onboarding_title" formatted="false">Kapsułka baterii na pasku stanu</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">
-    Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu. Jest to włączone domyślnie.\n
+  <string name="live_updates_onboarding_title">Kapsułka baterii na pasku stanu</string>
+  <string name="live_updates_onboarding_message_on">Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu. Jest to włączone domyślnie.\n
+    \n
+    Jeśli preferujesz tradycyjną ikonę powiadomienia, możesz wyłączyć „Aktualizacje na żywo” w ustawieniach systemowych Androida dla tej aplikacji.\n
+    \n
+    Uwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
+  <string name="live_updates_onboarding_message_off">Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu, ale obecnie jest to wyłączone w ustawieniach systemowych.\n
+    \n
+    Zaleca się włączenie tej funkcji. Jeśli preferujesz tradycyjną ikonę powiadomienia, możesz pozostawić ją wyłączoną.\n
+    \n
+    Uwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
+  <string name="live_updates_onboarding_positive_on">Rozumiem</string>
+  <string name="live_updates_onboarding_positive_off">Przejdź do ustawień</string>
+  <string name="live_updates_onboarding_negative_off">Odrzuć</string>
 
-    \nJeśli  preferujesz tradycyjną ikonę powiadomienia, możesz wyłączyć „Aktualizacje na żywo” w ustawieniach systemowych Androida dla tej aplikacji.\n
-
-    \nUwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">
-    Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu, ale obecnie jest to wyłączone w ustawieniach systemowych.\n
-
-    \nZaleca się włączenie tej funkcji. Jeśli preferujesz tradycyjną ikonę powiadomienia, możesz pozostawić ją wyłączoną.\n
-
-    \nUwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
-  <string name="live_updates_onboarding_positive_on" formatted="false">Rozumiem</string>
-  <string name="live_updates_onboarding_positive_off" formatted="false">Przejdź do ustawień</string>
-  <string name="live_updates_onboarding_negative_off" formatted="false">Odrzuć</string>
-
-  <string name="notifications_onboarding_message">
-    Battery Monitor potrzebuje Twojego uprawnienia, aby wyświetlać poziom naładowania baterii na pasku stanu i powiadamiać Cię o alarmach.\n
-
-    \nUwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
+  <string name="notifications_onboarding_message">Battery Monitor potrzebuje Twojego uprawnienia, aby wyświetlać poziom naładowania baterii na pasku stanu i powiadamiać Cię o alarmach.\n
+    \n
+    Uwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
 
   <string name="add_alarm" formatted="false">Dodaj alarm</string>
 
@@ -279,13 +278,13 @@
 
   <string name="pref_cat_notification_content" formatted="false">Zawartość</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Kapsułka na pasku stanu (Android 16+)</string>
-  <string formatted="false" name="pref_live_update_display">Wyświetlaj aktualizację na żywo</string>
-  <string formatted="false" name="pref_live_update_display_summary">Wyświetlaj na pasku stanu:</string>
-  <string formatted="false" name="pref_live_update_display_help">Wybierz, kiedy kapsułka aktualizacji na żywo ma być wyświetlana na pasku stanu.</string>
-  <string formatted="false" name="pref_live_update_display_charging">Tylko podczas ładowania</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">Pozostawiaj główne powiadomienie</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Czy wyświetlać główne powiadomienie, gdy aktualizacja na żywo jest aktywna?</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Jeśli włączone, główne powiadomienie pozostaje widoczne razem z kapsułką na pasku stanu.</string>
+  <string name="pref_live_update_display" formatted="false">Wyświetlaj aktualizację na żywo</string>
+  <string name="pref_live_update_display_summary" formatted="false">Wyświetlaj na pasku stanu:</string>
+  <string name="pref_live_update_display_help" formatted="false">Wybierz, kiedy kapsułka aktualizacji na żywo ma być wyświetlana na pasku stanu.</string>
+  <string name="pref_live_update_display_charging" formatted="false">Tylko podczas ładowania</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">Pozostawiaj główne powiadomienie</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">Czy wyświetlać główne powiadomienie, gdy aktualizacja na żywo jest aktywna?</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">Jeśli włączone, główne powiadomienie pozostaje widoczne razem z kapsułką na pasku stanu.</string>
   <string name="pref_chip_content" formatted="false">Zawartość kapsułki</string>
   <string name="pref_chip_switching_interval" formatted="false">Interwał przełączania</string>
   <string name="pref_chip_content_help" formatted="false">Wybierz, którą wartość pokazywać w kapsułce promowanego powiadomienia na Androidzie 16+.</string>
@@ -310,7 +309,7 @@
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Czy uwzględnić czas od zmiany stanu w parametrach?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Jeśli ustawione, wiersz z parametrami będzie również uwzględniać liczbę godzin od momentu odłączenia, podłączenia lub w pełni naładowania urządzenia.</string>
 
-  <string formatted="false" name="custom">Niestandardowe...</string>
+  <string name="custom" formatted="false">Niestandardowe...</string>
 
   <string name="pref_cat_icon_set" formatted="false">Ikona powiadomienia</string>
   <string name="pref_icon_content" formatted="false">Zawartość ikony</string>
@@ -329,32 +328,28 @@
 
   <string name="pref_current_hack_prefer_fs" formatted="false">Preferuj starą metodę obejścia</string>
   <string name="pref_current_hack_prefer_fs_summary" formatted="false">Czy preferować starszą metodę opartą na systmie plików?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">
-    Począwszy od Lollipop (Android 5.0) Android dostarcza nieco lepszy sposób na uzyskanie dostępu do informacji o obliczaniu prądu (mA) bezpośrednio z systemowego BatteryManager. Jednak nadal nie ma gwarancji, że w ogóle zadziała lub że będzie działać dobrze. Do Androida Nougat (Android 7.0) stara metoda obejścia (oparta na systemie plików) wydaje się działać lepiej na większości urządzeń, dlatego pozostaje domyślna na urządzeniach z Androidem poniżej 7.0.\n
-
-    \nTo ustawienie jest jedynie wskazówką dla obejścia, którą metodę preferować; możesz spróbować je zmienić, jeśli obejście nie działa dobrze na Twoim urządzeniu.</string>
+  <string name="pref_current_hack_prefer_fs_help" formatted="false">Począwszy od Lollipop (Android 5.0) Android dostarcza nieco lepszy sposób na uzyskanie dostępu do informacji o obliczaniu prądu (mA) bezpośrednio z systemowego BatteryManager. Jednak nadal nie ma gwarancji, że w ogóle zadziała lub że będzie działać dobrze. Do Androida Nougat (Android 7.0) stara metoda obejścia (oparta na systemie plików) wydaje się działać lepiej na większości urządzeń, dlatego pozostaje domyślna na urządzeniach z Androidem poniżej 7.0.\n
+    \n
+    To ustawienie jest jedynie wskazówką dla obejścia, którą metodę preferować; możesz spróbować je zmienić, jeśli obejście nie działa dobrze na Twoim urządzeniu.</string>
 
   <string name="pref_current_hack_multiplier" formatted="false">Mnożnik</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">
-    Niektóre urządzenia odnotowują miliampery zamiast mikroamperów, jak wywołuje API. Te same urządzenia zamieniają znak odnotowanej wartości. Niektórzy użytkownicy preferuje przeciwny znak prawidłowo odnotowanej wartości. Aby pogodzić takie sytuacje, możesz pomnożyć wynik wywołania API przez podaną tu wartość.\n
-
-    \nJeśli Twoje urządzenie zawsze pokazuje 0 mA, możesz na przykład spróbować użyć mnożnika 1000. Jeśli wywołanie API zwraca 450 mikroamperów, mnożnik ten sprawi, że aplikacja pokaże wartość 450 mA zamiast 0 mA. Jeśli wywołanie API zwraca 0 mikroamperów, mnożnik oczywiście nie zmieni końcowej wyświetlanej wartości 0 mA.</string>
+  <string name="pref_current_hack_multiplier_help" formatted="false">Niektóre urządzenia odnotowują miliampery zamiast mikroamperów, jak wywołuje API. Te same urządzenia zamieniają znak odnotowanej wartości. Niektórzy użytkownicy preferuje przeciwny znak prawidłowo odnotowanej wartości. Aby pogodzić takie sytuacje, możesz pomnożyć wynik wywołania API przez podaną tu wartość.\n
+    \n
+    Jeśli Twoje urządzenie zawsze pokazuje 0 mA, możesz na przykład spróbować użyć mnożnika 1000. Jeśli wywołanie API zwraca 450 mikroamperów, mnożnik ten sprawi, że aplikacja pokaże wartość 450 mA zamiast 0 mA. Jeśli wywołanie API zwraca 0 mikroamperów, mnożnik oczywiście nie zmieni końcowej wyświetlanej wartości 0 mA.</string>
 
   <string name="pref_cat_current_hack_notification" formatted="false">Powiadomienie</string>
   <string name="pref_display_current_in_vital_stats" formatted="false">Wyświetlaj w parametrach</string>
   <string name="pref_display_current_in_vital_stats_summary" formatted="false">Czy wyświetlać obliczanie prądu (mA) w parametrach głównego powiadomienia?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">
-    Gdy włączone, obejście zostanie wypróbowane i wyświetli wynik w wierszu parametrów głównego powiadomienia. Pamiętaj, że musisz mieć skonfigurowane główne powiadomienie, aby wyświetlać parametry i móc to zobaczyć. Wartość ta odświeży się tylko wtedy, gdy system wyśle nowe informacje o baterii.\n
-
-    \nNa większości urządzeń wartość ujemna oznacza pobór energii z baterii, a dodatnia, że bateria jest naładowana. Jednak nie wszystkie urządzenia generują wartości w ten sposób.</string>
+  <string name="pref_display_current_in_vital_stats_help" formatted="false">Gdy włączone, obejście zostanie wypróbowane i wyświetli wynik w wierszu parametrów głównego powiadomienia. Pamiętaj, że musisz mieć skonfigurowane główne powiadomienie, aby wyświetlać parametry i móc to zobaczyć. Wartość ta odświeży się tylko wtedy, gdy system wyśle nowe informacje o baterii.\n
+    \n
+    Na większości urządzeń wartość ujemna oznacza pobór energii z baterii, a dodatnia, że bateria jest naładowana. Jednak nie wszystkie urządzenia generują wartości w ten sposób.</string>
 
   <string name="pref_cat_current_hack_main_window" formatted="false">Główne okno</string>
   <string name="pref_display_current_in_main_window" formatted="false">Wyświetlaj w głównym oknie</string>
   <string name="pref_display_current_in_main_window_summary" formatted="false">Czy wyświetlać obliczanie prądu (mA) w głównym oknie?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">
-    Gdy włączone, obejście zostanie wypróbowane i wyświetli wynik w głównym oknie. Wartość ta zostanie odświeżona, gdy tylko system wyśle nowe informacje o baterii, ale możesz ją odświeżyć w każdej chwili, po prostu naciskając wyświetloną wartość. (Pamiętaj, że niektóre urządzenia rzadko albo nigdy nie aktualizują danych źródłowych, więc wartość może wydawać się niezmieniona po naciśnięciu.)\n
-
-    \nNa większości urządzeń wartość ujemna oznacza pobór energii z baterii, a dodatnia, że bateria jest naładowana. Jednak nie wszystkie urządzenia generują wartości w ten sposób.</string>
+  <string name="pref_display_current_in_main_window_help" formatted="false">Gdy włączone, obejście zostanie wypróbowane i wyświetli wynik w głównym oknie. Wartość ta zostanie odświeżona, gdy tylko system wyśle nowe informacje o baterii, ale możesz ją odświeżyć w każdej chwili, po prostu naciskając wyświetloną wartość. (Pamiętaj, że niektóre urządzenia rzadko albo nigdy nie aktualizują danych źródłowych, więc wartość może wydawać się niezmieniona po naciśnięciu.)\n
+    \n
+    Na większości urządzeń wartość ujemna oznacza pobór energii z baterii, a dodatnia, że bateria jest naładowana. Jednak nie wszystkie urządzenia generują wartości w ten sposób.</string>
 
   <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Preferuj średnią w parametrach</string>
   <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Czy próbować używać current_avg w parametrach głównego powiadomienia?</string>
@@ -365,10 +360,9 @@
 
   <string name="pref_auto_refresh_current_in_main_window" formatted="false">Automatycznie odświeżanie mA w głównym oknie</string>
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Czy automatycznie odświeżać mA co dwie sekundy?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">
-    Jeśli masz obejście ustawione na wyświetlanie mA w głównym oknie, możesz odświeżyć wartość, po prostu ją naciskając. Jeśli chcesz widzieć częste aktualizacje bez konieczności naciskania, możesz włączyć tę opcję, aby automatycznie odświeżać wartość co dwie sekundy, gdy okno jest widoczne.\n
-
-    \nPamiętaj, że niektóre urządzenia rzadko albo nigdy nie aktualizują danych źródłowych, więc wartość może wydawać się niezmieniona, mimo że aplikacja odświeża wyświetlaną wartość, aby dopasować ją do danych pobranych z systemu.</string>
+  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Jeśli masz obejście ustawione na wyświetlanie mA w głównym oknie, możesz odświeżyć wartość, po prostu ją naciskając. Jeśli chcesz widzieć częste aktualizacje bez konieczności naciskania, możesz włączyć tę opcję, aby automatycznie odświeżać wartość co dwie sekundy, gdy okno jest widoczne.\n
+    \n
+    Pamiętaj, że niektóre urządzenia rzadko albo nigdy nie aktualizują danych źródłowych, więc wartość może wydawać się niezmieniona, mimo że aplikacja odświeża wyświetlaną wartość, aby dopasować ją do danych pobranych z systemu.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Wskaźnik ładowania</string>
   <string name="pref_indicate_charging" formatted="false">Wskazuj ładowanie</string>
@@ -381,7 +375,7 @@
   <string name="pref_enable_logging_help" formatted="false">Jeśli włączone, Battery Monitor będzie rejestrować zmiany stanu baterii.</string>
   <string name="pref_max_log_age" formatted="false">Maksymalny czas przechowywania logów</string>
   <string name="pref_max_log_age_summary" formatted="false">Usuwaj logi starsze niż:</string>
-  <string formatted="false" name="pref_max_log_age_help">Jeśli logowanie jest włączone, kiedy tylko podłączysz swoje urządzenie, logi starsze od tej wartości zostaną usunięte. Wybierz „Nigdy nie usuwaj”, aby przechowywać logi, dopóki ich nie wyczyścisz ręcznie.</string>
+  <string name="pref_max_log_age_help" formatted="false">Jeśli logowanie jest włączone, kiedy tylko podłączysz swoje urządzenie, logi starsze od tej wartości zostaną usunięte. Wybierz „Nigdy nie usuwaj”, aby przechowywać logi, dopóki ich nie wyczyścisz ręcznie.</string>
 
   <string name="pref_cat_temperature_unit" formatted="false">Jednostka temperatury</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Konwertuj do Fahrenheita</string>
@@ -390,12 +384,11 @@
   <string name="pref_cat_autostart" formatted="false">Automatyczne uruchamianie</string>
   <string name="pref_autostart_at_boot" formatted="false">Uruchamiaj automatyczne przy starcie systemu</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Battery Monitor podczas włączania urządzenia:</string>
-  <string name="pref_autostart_at_boot_help" formatted="false">
-    Określa, czy Battery Monitor ma uruchamiać się automatycznie podczas włączania urządzenia urządzenia.\n
-
-    \nOpcja „Jeśli działała przy wyłączaniu systemu” działa w zależności od tego, czy ostatnio ręcznie uruchamiałeś(-aś) lub zatrzymywałeś(-aś) Battery Monitor. Jeśli więc zabijasz Battery Monitor w inny sposób, jak na przykład za pomocą narzędzia do zamykania procesów, Battery Monitor nie wie, że ją zatrzymałeś(-aś) i nadal będzie się uruchamiać przy starcie systemu, jeśli masz tak ustawione.\n
-
-    \nUWAGA: Android będzie zawsze uruchamiać Battery Monitor przy starcie systemu, jeśli na pulpicie masz widżety Battery Monitor. W takim przypadku ustawienie to nie ma znaczenia.</string>
+  <string name="pref_autostart_at_boot_help" formatted="false">Określa, czy Battery Monitor ma uruchamiać się automatycznie podczas włączania urządzenia urządzenia.\n
+    \n
+    Opcja „Jeśli działała przy wyłączaniu systemu” działa w zależności od tego, czy ostatnio ręcznie uruchamiałeś(-aś) lub zatrzymywałeś(-aś) Battery Monitor. Jeśli więc zabijasz Battery Monitor w inny sposób, jak na przykład za pomocą narzędzia do zamykania procesów, Battery Monitor nie wie, że ją zatrzymałeś(-aś) i nadal będzie się uruchamiać przy starcie systemu, jeśli masz tak ustawione.\n
+    \n
+    UWAGA: Android będzie zawsze uruchamiać Battery Monitor przy starcie systemu, jeśli na pulpicie masz widżety Battery Monitor. W takim przypadku ustawienie to nie ma znaczenia.</string>
 
   <string name="predictor_sensitive" formatted="false">Czułe</string>
   <string name="predictor_conservative" formatted="false">Konserwatywne</string>
@@ -404,32 +397,30 @@
 
   <string name="pref_cat_predictor" formatted="false">Szacunkowy pozostały czas</string>
   <string name="pref_prediction_type" formatted="false">Typ szacowania</string>
-  <string name="pref_prediction_type_help" formatted="false">
-    Tutaj możesz wybrać, w jaki sposób Battery Monitor będzie przewidywać pozostały czas pracy baterii/czas do pełnego naładowania.\n
-
-    \nAlgorytm „Czułe” jest oparty wyłącznie na ostatnich pięciu minutach użytkowania. Jeśli Twoim głównym zmartwieniem jest „Jak długo moja bateria wytrzyma, jeśli dalej będę robić to, co robię?”, wtedy algorytm jest dla Ciebie.\n
-
-    \nAlgorytm „Konserwatywne” jest domyślny. Również opiera się na ostatnim użyciu, ale stara się nie odbiegać zbyt mocno od średniej długoterminowej.\n
-
-    \nWybierz „Od zmiany stanu”, aby mieć przewidywanie oparte wyłącznie na bieżącej sesji.\n
-
-    \nOstatecznie możesz mieć przewidywanie oparte wyłącznie na średnim użyciu długoterminowym.</string>
+  <string name="pref_prediction_type_help" formatted="false">Tutaj możesz wybrać, w jaki sposób Battery Monitor będzie przewidywać pozostały czas pracy baterii/czas do pełnego naładowania.\n
+    \n
+    Algorytm „Czułe” jest oparty wyłącznie na ostatnich pięciu minutach użytkowania. Jeśli Twoim głównym zmartwieniem jest „Jak długo moja bateria wytrzyma, jeśli dalej będę robić to, co robię?”, wtedy algorytm jest dla Ciebie.\n
+    \n
+    Algorytm „Konserwatywne” jest domyślny. Również opiera się na ostatnim użyciu, ale stara się nie odbiegać zbyt mocno od średniej długoterminowej.\n
+    \n
+    Wybierz „Od zmiany stanu”, aby mieć przewidywanie oparte wyłącznie na bieżącej sesji.\n
+    \n
+    Ostatecznie możesz mieć przewidywanie oparte wyłącznie na średnim użyciu długoterminowym.</string>
 
   <string name="pref_cat_language" formatted="false">Język</string>
   <string name="pref_language_override" formatted="false">Język aplikacji</string>
   <string name="pref_language_override_summary" formatted="false">Wybierz język:</string>
 
   <string name="alarms_overview" formatted="false">Przegląd alarmów</string>
-  <string name="alarms_overview_help" formatted="false">
-    Na tej stronie możesz dodawać nowe alarmy, szybko włączać lub wyłączać już istniejące lub je usuwać.\n
-
-    \nAby dodać nowy alarm, naciśnij „Dodaj alarm” — to utworzy nowy alarm i przeniesie Cię na stronę ustawień alarmu, gdzie możesz sterować ustawieniami dla nowego alarmu. Zobacz pomoc na tej stronie po więcej szczegółow.\n
-
-    \nPod przyciskiem „Dodaj alarm” jest lista wszystkich utworzonych przez Ciebie alarmów.\n
-
-    \n• Aby zedytować istniejący alarm, po prostu go naciśnij.
-    \n• Aby usunąć alarm, długo go naciśnij, a następnie wybierz „Usuń alarm”. (Możesz także usunąć alarm ze strony ustawień pojedynczego alarmu, naciskając MENU, a następnie „Usuń alarm”.)
-    \n• Aby łatwo włączyć/wyłączyć alarm, naciśnij przełącznik obok tekstu alarmu. (Możesz także alarm włączyć lub wyłączyć na stronie ustawień pojedynczego alarmu).</string>
+  <string name="alarms_overview_help" formatted="false">Na tej stronie możesz dodawać nowe alarmy, szybko włączać lub wyłączać już istniejące lub je usuwać.\n
+    \n
+    Aby dodać nowy alarm, naciśnij „Dodaj alarm” — to utworzy nowy alarm i przeniesie Cię na stronę ustawień alarmu, gdzie możesz sterować ustawieniami dla nowego alarmu. Zobacz pomoc na tej stronie po więcej szczegółow.\n
+    \n
+    Pod przyciskiem „Dodaj alarm” jest lista wszystkich utworzonych przez Ciebie alarmów.\n
+    \n
+    • Aby zedytować istniejący alarm, po prostu go naciśnij.\n
+    • Aby usunąć alarm, długo go naciśnij, a następnie wybierz „Usuń alarm”. (Możesz także usunąć alarm ze strony ustawień pojedynczego alarmu, naciskając MENU, a następnie „Usuń alarm”.)\n
+    • Aby łatwo włączyć/wyłączyć alarm, naciśnij przełącznik obok tekstu alarmu. (Możesz także alarm włączyć lub wyłączyć na stronie ustawień pojedynczego alarmu).</string>
 
   <string name="pref_alarm_enabled" formatted="false">Włącz alarm</string>
   <string name="pref_alarm_enabled_help" formatted="false">Jeśli chcesz tymczasowo wyłączyć alarm, bez konieczności tworzenia go od nowa, gdy będziesz go potrzebować, możesz go włączyć lub wyłączyć tutaj albo na głównej stronie alarmów.</string>
@@ -438,20 +429,19 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">W tym miejscu możesz określić, jakie warunki spowodują wywołanie alarmu.</string>
   <string name="pref_alarm_type" formatted="false">Typ alarmu</string>
   <string name="pref_alarm_type_summary" formatted="false">Wywołaj alarm, gdy bateria:</string>
-  <string name="pref_alarm_type_help" formatted="false">
-    Obecnie możesz wybierać spośród pięciu typów alarmu.\n
-
-    \nAlarm „Zostaje w pełni naładowana” powiadomi Cię, gdy stan Twojej baterii zmieni się z „Ładowanie” na „W pełni naładowana”. Pamiętaj, że na wielu urządzeniach nie jest to koniecznie to samo co 100% nałdowania.\n
-
-    \nAlarmy ładowania i temperatury wymagają od Ciebie ustawienia progu po wybraniu tego typu alarmu.\n
-
-    \nAlarm „Problemy ze zdrowiem” powiadomi Cię, jeśli zdrowie Twojej baterii stanie się inne niż „Nieznane” lub „Zdrowa”, jak zgłasza Android.</string>
+  <string name="pref_alarm_type_help" formatted="false">Obecnie możesz wybierać spośród pięciu typów alarmu.\n
+    \n
+    Alarm „Zostaje w pełni naładowana” powiadomi Cię, gdy stan Twojej baterii zmieni się z „Ładowanie” na „W pełni naładowana”. Pamiętaj, że na wielu urządzeniach nie jest to koniecznie to samo co 100% nałdowania.\n
+    \n
+    Alarmy ładowania i temperatury wymagają od Ciebie ustawienia progu po wybraniu tego typu alarmu.\n
+    \n
+    Alarm „Problemy ze zdrowiem” powiadomi Cię, jeśli zdrowie Twojej baterii stanie się inne niż „Nieznane” lub „Zdrowa”, jak zgłasza Android.</string>
   <string name="pref_alarm_threshold" formatted="false">Próg</string>
   <string name="alarm_pref_not_used" formatted="false">Nieużywane dla tego typu alarmu</string>
   <string name="pref_alarm_threshold_summary" formatted="false">Próg alarmu:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Dla ładowania i alarmów temperatury potrzebujesz ustawić poziom ładowania i temperaturę, który wywoła alarm.</string>
-  <string formatted="false" name="alarm_custom_temp_message">Wprowadź temperaturę w stopniach %s</string>
-  <string formatted="false" name="alarm_custom_charge_message">Wprowadź procent naładowania (0-100)</string>
+  <string name="alarm_custom_temp_message" formatted="true">Wprowadź temperaturę w stopniach %s</string>
+  <string name="alarm_custom_charge_message" formatted="false">Wprowadź procent naładowania (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">Zawsze</string>
   <string name="boot_pref_never" formatted="false">Nigdy</string>
@@ -464,13 +454,14 @@
   <string name="age_2_weeks" formatted="false">2 tygodnie</string>
   <string name="age_3_weeks" formatted="false">3 tygodnie</string>
   <string name="age_4_weeks" formatted="false">4 tygodnie</string>
-  <string formatted="false" name="age_never_delete">Nigdy nie usuwaj</string>
+  <string name="age_never_delete" formatted="false">Nigdy nie usuwaj</string>
   <string name="pref_content_percent" formatted="false">Procent baterii</string>
   <string name="pref_content_temperature" formatted="false">Temperatura baterii</string>
   <string name="pref_content_switching" formatted="false">Przełączaj między obiema</string>
-  <string formatted="false" name="chip_switching_interval_2_seconds">2 sekundy</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 sekund</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 sekund</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 sekund</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 sekund</string>
+
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 sekundy</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 sekund</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 sekund</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 sekund</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 sekund</string>
 </resources>
