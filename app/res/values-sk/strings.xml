@@ -5,8 +5,8 @@
   <string name="help_activity_subtitle" formatted="false">Pomocník</string>
 
   <string name="battery_use_b" formatted="false">Pozrieť používanie batérie</string>
-  <string formatted="false" name="circle_widget">Kruh monitora batérie</string>
-  <string formatted="false" name="full_widget">Monitor batérie je plný</string>
+  <string name="circle_widget" formatted="false">Kruh monitora batérie</string>
+  <string name="full_widget" formatted="false">Monitor batérie je plný</string>
   <string name="yes" formatted="false">Áno</string>
   <string name="cancel" formatted="false">Zrušiť</string>
 
@@ -15,48 +15,48 @@
     \n
     Ak len chcete odísť z hlavného okna a nechať indikátor spustený, stlačte Zrušiť a potom stlačte na vašom telefóne tlačidlo späť pre odídenie z hlavného okna.</string>
 
-  <string formatted="false" name="notifications_disabled">Upozornenia sú vypnuté!</string>
-  <string formatted="false" name="notifications_disabled_message">Zablokovali ste všetky upozornenia pre Monitor batérie. Toto bude zabrániť, aby Monitor batérie zobrazoval akékoľvek upozornenia: hlavné upozornenie a všetky nastavené budíky budú zablokované.\n
+  <string name="notifications_disabled" formatted="false">Upozornenia sú vypnuté!</string>
+  <string name="notifications_disabled_message" formatted="false">Zablokovali ste všetky upozornenia pre Monitor batérie. Toto bude zabrániť, aby Monitor batérie zobrazoval akékoľvek upozornenia: hlavné upozornenie a všetky nastavené budíky budú zablokované.\n
     \n
     Since Battery Monitor umožňuje zapnúť alebo vypnúť hlavné upozornenie samostatne, ako aj dočasne deaktivovať všetky alarmy ktoré ste vytvorili, dôrazne vám odporúčame odblokovať Upozornenia monitora batérie. Keď sú zablokované, zobrazí sa že Battery Monitor je pokazený.\n
     \n
     PStlačte tlačidlo OK, aby ste sa dostali do systémových nastavení, kde môžete odblokovať upozornenia pre Monitor batérie.</string>
 
-  <string formatted="false" name="battery_optimized">Monitor batérie je obmedzený!</string>
-  <string formatted="false" name="battery_optimized_message">Monitor batérie nefunguje správne. Táto \"optimalizácia batérie\" je funkcia systému Android navrhnutá na obmedzenie zle navrhnutých aplikácií, aby sa im zabránilo z prílišného používania batérie na pozadí.\n
+  <string name="battery_optimized" formatted="false">Monitor batérie je obmedzený!</string>
+  <string name="battery_optimized_message" formatted="false">Monitor batérie nefunguje správne. Táto \"optimalizácia batérie\" je funkcia systému Android navrhnutá na obmedzenie zle navrhnutých aplikácií, aby sa im zabránilo z prílišného používania batérie na pozadí.\n
     \n
     Battery Monitor je však dobre navrhnutá aplikácia, ktorá musí bežať bez obmedzenia pozadia, aby správne fungovali. Je mimoriadne efektívny a nezníži životnosť batérie.\n
     \n
     PStlačte tlačidlo OK, aby ste sa dostali do systémových nastavení, kde môžete zakázať optimalizáciu batérie pre Monitor batérie.</string>
 
-  <string formatted="false" name="main_notif_chan_name">Hlavné oznámenie</string>
-  <string formatted="false" name="live_updates_notif_chan_name">Živé aktualizácie</string>
-  <string formatted="false" name="channel_group_name_alarms">Budíky</string>
+  <string name="main_notif_chan_name" formatted="false">Hlavné oznámenie</string>
+  <string name="live_updates_notif_chan_name" formatted="false">Živé aktualizácie</string>
+  <string name="channel_group_name_alarms" formatted="false">Budíky</string>
 
   <string name="confirm_clear_logs" formatted="false">Naozaj odstrániť všetky záznamy?</string>
 
-  <string formatted="false" name="configure_log_filter">Zobraziť, ktoré položky denníka?</string>
+  <string name="configure_log_filter" formatted="false">Zobraziť, ktoré položky denníka?</string>
 
   <string name="okay" formatted="false">OK</string>
 
-  <string formatted="false" name="tab_current_info">Aktuálne informácie</string>
-  <string formatted="false" name="tab_history">História</string>
+  <string name="tab_current_info" formatted="false">Aktuálne informácie</string>
+  <string name="tab_history" formatted="false">História</string>
 
-  <string formatted="false" name="notification_until_charged">"do nabitia"</string>
-  <string formatted="false" name="notification_until_drained">"vľavo"</string>
-  <string formatted="false" name="activity_until_charged">do nabitia</string>
-  <string formatted="false" name="activity_until_drained">až do vyčerpania</string>
+  <string name="notification_until_charged" formatted="false">"do nabitia"</string>
+  <string name="notification_until_drained" formatted="false">"vľavo"</string>
+  <string name="activity_until_charged" formatted="false">do nabitia</string>
+  <string name="activity_until_drained" formatted="false">až do vyčerpania</string>
 
   <string name="menu_settings" formatted="false">Nastavenia</string>
   <string name="menu_close" formatted="false">Zavrieť</string>
   <string name="menu_help" formatted="false">Pomocník</string>
   <string name="menu_clear" formatted="false">Vymazať</string>
   <string name="menu_reverse" formatted="false">Opačné poradie</string>
-  <string formatted="false" name="menu_log_filter">Filter</string>
+  <string name="menu_log_filter" formatted="false">Filter</string>
   <string name="menu_export" formatted="false">Exportovať CSV</string>
   <string name="menu_delete_alarm" formatted="false">Vymazať upozornenie</string>
-  <string formatted="false" name="menu_show_seconds">Zobraziť sekundy</string>
-  <string formatted="false" name="menu_hide_seconds">Skryť sekundy</string>
+  <string name="menu_show_seconds" formatted="false">Zobraziť sekundy</string>
+  <string name="menu_hide_seconds" formatted="false">Skryť sekundy</string>
 
   <string name="percent_symbol" formatted="false">%</string>
   <string name="degree_symbol" formatted="false">°</string>
@@ -69,7 +69,7 @@
   <string name="inaccessible_storage" formatted="false">SD karta nie je prístupná.</string>
   <string name="inaccessible_w_reason" formatted="false">SD karta neprístupná:</string>
   <string name="read_only_storage" formatted="false">SD karta je len na čítanie.</string>
-  <string formatted="false" name="no_storage_permission">Povolenie na ukladanie nebolo udelené.</string>
+  <string name="no_storage_permission" formatted="false">Povolenie na ukladanie nebolo udelené.</string>
   <string name="file_written" formatted="false">Súbor úspešne zapísaný na kartu SD.</string>
 
   <string name="date" formatted="false">dátum</string>
@@ -77,7 +77,7 @@
   <string name="status" formatted="false">stav</string>
   <string name="charge" formatted="false">percento nabitia</string>
   <string name="temperature" formatted="false">stupňov celzia</string>
-  <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
+  <string name="temperature_f" formatted="false">degrees_fahrenheit</string>
   <string name="voltage" formatted="false">voltov</string>
 
   <string name="status_unplugged" formatted="false">Odpojený</string>
@@ -88,7 +88,7 @@
   <string name="status_fully_charged" formatted="false">Plne nabitá</string>
   <string name="status_plugged_in" formatted="false">Pripojený</string>
 
-  <string formatted="false" name="status_boot_completed">Boot dokončený</string>
+  <string name="status_boot_completed" formatted="false">Boot dokončený</string>
 
   <string name="health_unknown" formatted="false">Neznámy</string>
   <string name="health_good" formatted="false">Dobré zdravie</string>
@@ -106,20 +106,20 @@
   <string name="alarm_type_fully_charged" formatted="false">Plne nabitá</string>
   <string name="alarm_type_charge_drops" formatted="false">Nabitie klesne pod</string>
   <string name="alarm_type_charge_rises" formatted="false">Nabitie stúpne nad</string>
-  <string formatted="false" name="alarm_type_temperature_drops">Teplota klesne pod</string>
+  <string name="alarm_type_temperature_drops" formatted="false">Teplota klesne pod</string>
   <string name="alarm_type_temperature_rises" formatted="false">Teplota stúpne nad</string>
   <string name="alarm_type_health_failure" formatted="false">Porucha zdravia</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Bude plne nabitá</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Nabitie klesne pod...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Nabitie stúpne nad...</string>
-  <string formatted="false" name="alarm_type_entry_temperature_drops">Teplota klesá pod...</string>
+  <string name="alarm_type_entry_temperature_drops" formatted="false">Teplota klesá pod...</string>
   <string name="alarm_type_entry_temperature_rises" formatted="false">Teplota stúpne nad...</string>
   <string name="alarm_type_entry_health_failure" formatted="false">Porucha zdravia</string>
 
   <string name="alarm_fully_charged" formatted="false">Batéria je teraz úplne nabitá</string>
   <string name="alarm_charge_drops" formatted="false">"Nabitie batérie je pod "</string>
   <string name="alarm_charge_rises" formatted="false">"Nabitie batérie je nad "</string>
-  <string formatted="false" name="alarm_temp_drops">"Teplota batérie je pod"</string>
+  <string name="alarm_temp_drops" formatted="false">"Teplota batérie je pod"</string>
   <string name="alarm_temp_rises" formatted="false">"Teplota batérie je nad "</string>
   <string name="alarm_health_failure" formatted="false">"Zdravie batérie je: "</string>
 
@@ -133,10 +133,10 @@
     <item quantity="other">%d záznamov</item>
   </plurals>
 
-  <string formatted="false" name="after_nh_mm_unplugged">Po odpojení %1$dh %2$dm</string>
-  <string formatted="false" name="after_nh_mm_plugged_in">Po pripojení %1$dh %2$dm</string>
-  <string formatted="false" name="after_nm_ms_unplugged">Po odpojení %1$dm %2$d</string>
-  <string formatted="false" name="after_nm_ms_plugged_in">Po zapojení %1$dm %2$d</string>
+  <string name="after_nh_mm_unplugged" formatted="true">Po odpojení %1$dh %2$dm</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">Po pripojení %1$dh %2$dm</string>
+  <string name="after_nm_ms_unplugged" formatted="true">Po odpojení %1$dm %2$d</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">Po zapojení %1$dm %2$d</string>
 
   <string name="since" formatted="false">Od</string>
 
@@ -157,12 +157,12 @@
 
   <string name="help_cat_version" formatted="false">Verzia</string>
 
-  <string formatted="false" name="help_cat_open_source">Open Source</string>
+  <string name="help_cat_open_source" formatted="false">Open Source</string>
 
-  <string formatted="false" name="help_open_source">Toto projekt je open source. K zdrojovému kódu sa môžete dostať na adrese <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+  <string name="help_open_source" formatted="false">Toto projekt je open source. K zdrojovému kódu sa môžete dostať na adrese <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
-  <string formatted="false" name="help_cat_privacy">Ochrana osobných údajov</string>
-  <string formatted="false" name="help_privacy">Battery Monitor nezhromažďuje, neukladá ani neprenáša žiadne osobné informácie.</string>
+  <string name="help_cat_privacy" formatted="false">Ochrana osobných údajov</string>
+  <string name="help_privacy" formatted="false">Battery Monitor nezhromažďuje, neukladá ani neprenáša žiadne osobné informácie.</string>
   <string name="help_cat_no_warranty" formatted="false">Bez záruky</string>
   <string name="help_no_warranty" formatted="false">Tento softvér je ponúkaný v dúfaní, že bude užitočný ale BEZ AKEJKOĽVEK ZÁRUKY; neposkytujú sa ani odvodené záruky PREDAJNOSTI alebo VHODNOSTI PRE URČITÝ ÚČEL.\n
     \n
@@ -172,193 +172,193 @@
   <string name="help_acknowledgments" formatted="false">Battery Monitor je vidlica Battery Indicator Pro / BatteryBot Pro od Darshan Computing, LLC. Ďakujem pôvodným autorom a prispievateľom na vytvorenie a udržiavanie upstream projektu.</string>
 
   <string name="help_cat_contact" formatted="false">Kontakt</string>
-  <string formatted="false" name="help_contact">Ak máte otázku, problém alebo komentár, prosím <a href="mailto:tomasz@swistak.codes">napíšte mi</a>.</string>
+  <string name="help_contact" formatted="false">Ak máte otázku, problém alebo komentár, prosím <a href="mailto:tomasz@swistak.codes">napíšte mi</a>.</string>
 
   <string name="settings_overview" formatted="false">Prehľad</string>
   <string name="settings_overview_help" formatted="false">Nastavenia sú zoradené do troch samostaných stránok ako je popísané nižšie. Každá stránka má vlastnú stránku pomoci popisujúcu nastavenia na konkrétnej stránke. Jednoducho stlačte MENU a potom Pomocník (na tabletoch MENU nie je požadované) aby ste našli pomoc na ktorejkoľvek stránke.</string>
 
-  <string formatted="false" name="notifications_disabled_cat">Upozornenia sú vypnuté</string>
-  <string formatted="false" name="app_notifs_disabled_b">Povoliť upozornenia aplikácií</string>
+  <string name="notifications_disabled_cat" formatted="false">Upozornenia sú vypnuté</string>
+  <string name="app_notifs_disabled_b" formatted="false">Povoliť upozornenia aplikácií</string>
 
-  <string formatted="false" name="app_notifs_disabled_summary">Zakázali ste všetky upozornenia pre túto aplikáciu.  Povoľte im prístup k týmto nastaveniam.</string>
-  <string formatted="false" name="main_notifs_disabled_b">Povoliť hlavné upozornenie</string>
+  <string name="app_notifs_disabled_summary" formatted="false">Zakázali ste všetky upozornenia pre túto aplikáciu.  Povoľte im prístup k týmto nastaveniam.</string>
+  <string name="main_notifs_disabled_b" formatted="false">Povoliť hlavné upozornenie</string>
 
-  <string formatted="false" name="main_notifs_disabled_summary">Zakázali ste hlavné upozornenie pre túto aplikáciu.  Ak chcete získať prístup k týmto nastaveniam, povoľte ho.</string>
-  <string formatted="false" name="app_notifs_alarms_disabled_summary">Zakázali ste všetky upozornenia pre túto aplikáciu.  Povoľte im prístup k vašim budíkom.</string>
+  <string name="main_notifs_disabled_summary" formatted="false">Zakázali ste hlavné upozornenie pre túto aplikáciu.  Ak chcete získať prístup k týmto nastaveniam, povoľte ho.</string>
+  <string name="app_notifs_alarms_disabled_summary" formatted="false">Zakázali ste všetky upozornenia pre túto aplikáciu.  Povoľte im prístup k vašim budíkom.</string>
 
-  <string formatted="false" name="alarm_notifs_disabled_b">Povoliť budíky</string>
-  <string formatted="false" name="alarm_notifs_disabled_summary">Deaktivovali ste skupinu upozornení na alarm pre túto aplikáciu.  Ak chcete získať prístup k budíkom, povoľte ho.</string>
+  <string name="alarm_notifs_disabled_b" formatted="false">Povoliť budíky</string>
+  <string name="alarm_notifs_disabled_summary" formatted="false">Deaktivovali ste skupinu upozornení na alarm pre túto aplikáciu.  Ak chcete získať prístup k budíkom, povoľte ho.</string>
 
-  <string formatted="false" name="alarm_chan_disabled">Pre tento typ budíka ste zakázali upozornenia.  Povoľte im používať tento typ budíka.</string>
-  <string formatted="false" name="alarm_chan_disabled_b">Povoliť tento typ alarmu</string>
-  <string formatted="false" name="alarm_chan_settings_b">Spravovať tento typ alarmu</string>
-  <string formatted="false" name="notification_settings">Hlavné oznámenie</string>
-  <string formatted="false" name="notification_settings_summary">Nakonfigurujte hlavné upozornenie</string>
-  <string formatted="false" name="notification_settings_help">Môžete nakonfigurovať, ktorý obsah sa má zobraziť v rozbaľovacom upozornení.</string>
-  <string formatted="false" name="status_bar_icon_settings">Ikona stavového riadka</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">Vyberte obsah ikony</string>
+  <string name="alarm_chan_disabled" formatted="false">Pre tento typ budíka ste zakázali upozornenia.  Povoľte im používať tento typ budíka.</string>
+  <string name="alarm_chan_disabled_b" formatted="false">Povoliť tento typ alarmu</string>
+  <string name="alarm_chan_settings_b" formatted="false">Spravovať tento typ alarmu</string>
+  <string name="notification_settings" formatted="false">Hlavné oznámenie</string>
+  <string name="notification_settings_summary" formatted="false">Nakonfigurujte hlavné upozornenie</string>
+  <string name="notification_settings_help" formatted="false">Môžete nakonfigurovať, ktorý obsah sa má zobraziť v rozbaľovacom upozornení.</string>
+  <string name="status_bar_icon_settings" formatted="false">Ikona stavového riadka</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">Vyberte obsah ikony</string>
   <string name="status_bar_icon_settings_help" formatted="false">Vyberte, či ikona upozornenia zobrazuje percento batérie alebo teplotu, či sa v ikone zobrazuje symbol jednotky a či má mať nabíjanie vlastnú ikonu.</string>
-  <string formatted="false" name="status_bar_chip_settings">Čip stavového riadka</string>
-  <string formatted="false" name="status_bar_chip_settings_summary">Nakonfigurujte obsah čipu Live Updates</string>
+  <string name="status_bar_chip_settings" formatted="false">Čip stavového riadka</string>
+  <string name="status_bar_chip_settings_summary" formatted="false">Nakonfigurujte obsah čipu Live Updates</string>
 
-  <string formatted="false" name="status_bar_chip_settings_help">V systéme Android 16+ so živými aktualizáciami môžete nakonfigurovať stav zobrazuje pruhový čip a či sa má zobraziť emodži nabíjania.</string>
-  <string formatted="false" name="current_hack_settings">Hack prúdu (mA).</string>
-  <string formatted="false" name="current_hack_settings_summary">Rozšírené nastavenia na povolenie informácií o mA</string>
-  <string formatted="false" name="current_hack_settings_help">Android neposkytuje aplikáciám prostriedky na prístup k informáciám o prúde batérie. K dispozícii je však hack ktorá umožňuje mnohým zariadeniam potenciálne získať tieto informácie.\n
+  <string name="status_bar_chip_settings_help" formatted="false">V systéme Android 16+ so živými aktualizáciami môžete nakonfigurovať stav zobrazuje pruhový čip a či sa má zobraziť emodži nabíjania.</string>
+  <string name="current_hack_settings" formatted="false">Hack prúdu (mA).</string>
+  <string name="current_hack_settings_summary" formatted="false">Rozšírené nastavenia na povolenie informácií o mA</string>
+  <string name="current_hack_settings_help" formatted="false">Android neposkytuje aplikáciám prostriedky na prístup k informáciám o prúde batérie. K dispozícii je však hack ktorá umožňuje mnohým zariadeniam potenciálne získať tieto informácie.\n
     \n
     Nie je zaručené, že to bude fungovať. Nemusí to fungovať vôbec alebo áno sa môže zdať, že funguje, ale výsledkom sú len nezmyselné hodnoty.\n
     Nastavenia\n
     S zapnúť hack, ak je to možné, a ovládať, ako to je použité sú dostupné v tejto sekcii.</string>
   <string name="alarm_settings_subtitle" formatted="false">Nastavenie upozornení</string>
   <string name="alarm_settings" formatted="false">Upozornenia</string>
-  <string formatted="false" name="alarm_settings_help">Monitor batérie vás môže upozorniť na úroveň nabitia batérie dosiahne určitý stav (napr. batéria sa úplne nabije, úroveň batérie klesne pod 20 % a mnoho ďalších).</string>
+  <string name="alarm_settings_help" formatted="false">Monitor batérie vás môže upozorniť na úroveň nabitia batérie dosiahne určitý stav (napr. batéria sa úplne nabije, úroveň batérie klesne pod 20 % a mnoho ďalších).</string>
   <string name="other_settings" formatted="false">Ostatné nastavenia</string>
   <string name="other_settings_help" formatted="false">Všetky ostatné nastavenia sú na tejto stránke, vrátane zaznamenávania, zámku obrazovky, jednotiek teploty, auto-štartu a iných.</string>
-  <string formatted="false" name="live_updates_onboarding_title">Stavový riadok Čip batérie</string>
-  <string formatted="false" name="live_updates_onboarding_message_on">Vaše zariadenie podporuje zobrazovanie percenta batérie ako čip v stavovom riadku. Táto možnosť je predvolene zapnutá.\n
+  <string name="live_updates_onboarding_title">Stavový riadok Čip batérie</string>
+  <string name="live_updates_onboarding_message_on">Vaše zariadenie podporuje zobrazovanie percenta batérie ako čip v stavovom riadku. Táto možnosť je predvolene zapnutá.\n
     \n
     Ak uprednostňujete tradičnú ikonu upozornenia, môžete pre túto aplikáciu vypnúť „Live Updates“ v systémových nastaveniach Androidu.\n
     \n
     Poznámka: Udelenie tohto povolenia môže občas spôsobiť zatvorenie aplikácie. Ak sa to stane, jednoducho ju znova otvorte.</string>
-  <string formatted="false" name="live_updates_onboarding_message_off">Vaše zariadenie podporuje zobrazovanie percenta batérie ako čip v stavovom riadku, ale táto možnosť je momentálne v systémových nastaveniach vypnutá.\n
+  <string name="live_updates_onboarding_message_off">Vaše zariadenie podporuje zobrazovanie percenta batérie ako čip v stavovom riadku, ale táto možnosť je momentálne v systémových nastaveniach vypnutá.\n
     \n
     Pre najlepší zážitok odporúčame túto možnosť zapnúť. Ak uprednostňujete tradičnú ikonu upozornenia, môžete ju nechať vypnutú.\n
     \n
     Poznámka: Udelenie tohto povolenia môže občas spôsobiť zatvorenie aplikácie. Ak sa to stane, jednoducho ju znova otvorte.</string>
 
-  <string formatted="false" name="live_updates_onboarding_positive_on">Dobre</string>
-  <string formatted="false" name="live_updates_onboarding_positive_off">Prejdite do časti Nastavenia</string>
-  <string formatted="false" name="live_updates_onboarding_negative_off">Odmietnuť</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor potrebuje vaše povolenie, aby mohol zobrazovať stav batérie v stavovom riadku a upozorňovať vás na alarmy.\n
+  <string name="live_updates_onboarding_positive_on">Dobre</string>
+  <string name="live_updates_onboarding_positive_off">Prejdite do časti Nastavenia</string>
+  <string name="live_updates_onboarding_negative_off">Odmietnuť</string>
+  <string name="notifications_onboarding_message">Battery Monitor potrebuje vaše povolenie, aby mohol zobrazovať stav batérie v stavovom riadku a upozorňovať vás na alarmy.\n
     \n
     Poznámka: Udelenie tohto povolenia môže občas spôsobiť zatvorenie aplikácie. Ak sa to stane, jednoducho ju znova otvorte.</string>
   <string name="add_alarm" formatted="false">Pridať upozornenie</string>
 
-  <string formatted="false" name="pref_cat_channel_settings">Nastavenia kanála upozornení</string>
-  <string formatted="false" name="pref_manage_main_channel">Spravovať hlavný kanál</string>
-  <string formatted="false" name="pref_cat_notification_content">Obsah</string>
-  <string formatted="false" name="pref_cat_status_bar_chip">Čip stavového riadka (Android 16+)</string>
-  <string formatted="false" name="pref_live_update_display">Zobrazovat Live Update</string>
-  <string formatted="false" name="pref_live_update_display_summary">Zobrazit v stavovom riadku:</string>
+  <string name="pref_cat_channel_settings" formatted="false">Nastavenia kanála upozornení</string>
+  <string name="pref_manage_main_channel" formatted="false">Spravovať hlavný kanál</string>
+  <string name="pref_cat_notification_content" formatted="false">Obsah</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Čip stavového riadka (Android 16+)</string>
+  <string name="pref_live_update_display" formatted="false">Zobrazovat Live Update</string>
+  <string name="pref_live_update_display_summary" formatted="false">Zobrazit v stavovom riadku:</string>
 
-  <string formatted="false" name="pref_live_update_display_help">Vyberte, kedy sa ma v stavovom riadku zobrazovat cip Live Update v Androide 16+.</string>
+  <string name="pref_live_update_display_help" formatted="false">Vyberte, kedy sa ma v stavovom riadku zobrazovat cip Live Update v Androide 16+.</string>
 
-  <string formatted="false" name="pref_live_update_display_charging">Iba pocas nabijania</string>
+  <string name="pref_live_update_display_charging" formatted="false">Iba pocas nabijania</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification">Ponechat hlavne upozornenie pri Live Update</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Zobrazovat cele hlavne upozornenie, ked je Live Update aktivny?</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">Ponechat hlavne upozornenie pri Live Update</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">Zobrazovat cele hlavne upozornenie, ked je Live Update aktivny?</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Ak je zapnute, bezne hlavne upozornenie zostane viditelne spolu s cipom v stavovom riadku.</string>
-  <string formatted="false" name="pref_chip_content">Obsah čipu</string>
-  <string formatted="false" name="pref_chip_switching_interval">Interval prepínania</string>
-  <string formatted="false" name="pref_chip_content_help">Vyberte hodnotu, ktorá sa má zobrazovať v čipe upozornení na Android 16+.</string>
-  <string formatted="false" name="pref_chip_indicate_charging">Zobraziť Emoji nabíjania</string>
-  <string formatted="false" name="pref_chip_indicate_charging_summary">Zobrazovať pri nabíjaní alebo pri plnom nabití emoji blesku?</string>
-  <string formatted="false" name="pref_chip_indicate_charging_help">Ak je táto možnosť povolená, na čipe stavového riadka sa vedľa zobrazí emodži blesku hodnotu čipu počas nabíjania alebo pri plnom nabití.</string>
-  <string formatted="false" name="pref_top_line_content">Obsah horného riadku</string>
-  <string formatted="false" name="pref_top_line_content_help">Nakonfigurujte, čo sa zobrazí v hornom riadku upozornenia: odhadované zostávajúci čas (konfigurovateľný inde), ako dlho od stavu sa zmenil (zapojený, odpojený alebo plne nabitý) alebo vitálne funkcie batérie (stav batérie, teplota a napätie).</string>
-  <string formatted="false" name="pref_bottom_line_content">Spodný riadok Obsah</string>
-  <string formatted="false" name="pref_bottom_line_content_help">Pre spodný riadok máte rovnaké možnosti ako pre horný riadok.</string>
-  <string formatted="false" name="time_remaining">Zostávajúci čas</string>
-  <string formatted="false" name="time_since_status_change">Čas od zmeny stavu</string>
-  <string formatted="false" name="vital_signs">Vitálne znaky</string>
-  <string formatted="false" name="pref_time_remaining_verbosity">Výrečnosť zostávajúceho času</string>
-  <string formatted="false" name="pref_time_remaining_verbosity_help">Zariadenia sú dostupné vo všetkých tvaroch a veľkostiach, takže väčšina prekladov potrebuje použite skratky, aby ste zabezpečili, že odhad zostávajúceho času sedí pohodlne v oblasti oznámení. Ak stále nesedí, môžete sa rozhodnúť pre kondenzovaný formát. Ak máte dostatok miesta, možno uprednostňujete podrobné nastavenie.</string>
-  <string formatted="false" name="condensed">Zhustené</string>
-  <string formatted="false" name="normal">Normal</string>
-  <string formatted="false" name="verbose">Úplné</string>
-  <string formatted="false" name="pref_status_duration_in_vital_signs">Trvanie stavu vo vitálnych znakoch</string>
-  <string formatted="false" name="pref_status_duration_in_vital_signs_summary">Zahrnúť čas od zmeny stavu do vitálnych funkcií?</string>
-  <string formatted="false" name="pref_status_duration_in_vital_signs_help">Ak je nastavené, riadok vitálnych funkcií bude obsahovať aj počet hodín odkedy sa zariadenie odpojilo, zapojilo alebo úplne nabilo.</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">Ak je zapnute, bezne hlavne upozornenie zostane viditelne spolu s cipom v stavovom riadku.</string>
+  <string name="pref_chip_content" formatted="false">Obsah čipu</string>
+  <string name="pref_chip_switching_interval" formatted="false">Interval prepínania</string>
+  <string name="pref_chip_content_help" formatted="false">Vyberte hodnotu, ktorá sa má zobrazovať v čipe upozornení na Android 16+.</string>
+  <string name="pref_chip_indicate_charging" formatted="false">Zobraziť Emoji nabíjania</string>
+  <string name="pref_chip_indicate_charging_summary" formatted="false">Zobrazovať pri nabíjaní alebo pri plnom nabití emoji blesku?</string>
+  <string name="pref_chip_indicate_charging_help" formatted="false">Ak je táto možnosť povolená, na čipe stavového riadka sa vedľa zobrazí emodži blesku hodnotu čipu počas nabíjania alebo pri plnom nabití.</string>
+  <string name="pref_top_line_content" formatted="false">Obsah horného riadku</string>
+  <string name="pref_top_line_content_help" formatted="false">Nakonfigurujte, čo sa zobrazí v hornom riadku upozornenia: odhadované zostávajúci čas (konfigurovateľný inde), ako dlho od stavu sa zmenil (zapojený, odpojený alebo plne nabitý) alebo vitálne funkcie batérie (stav batérie, teplota a napätie).</string>
+  <string name="pref_bottom_line_content" formatted="false">Spodný riadok Obsah</string>
+  <string name="pref_bottom_line_content_help" formatted="false">Pre spodný riadok máte rovnaké možnosti ako pre horný riadok.</string>
+  <string name="time_remaining" formatted="false">Zostávajúci čas</string>
+  <string name="time_since_status_change" formatted="false">Čas od zmeny stavu</string>
+  <string name="vital_signs" formatted="false">Vitálne znaky</string>
+  <string name="pref_time_remaining_verbosity" formatted="false">Výrečnosť zostávajúceho času</string>
+  <string name="pref_time_remaining_verbosity_help" formatted="false">Zariadenia sú dostupné vo všetkých tvaroch a veľkostiach, takže väčšina prekladov potrebuje použite skratky, aby ste zabezpečili, že odhad zostávajúceho času sedí pohodlne v oblasti oznámení. Ak stále nesedí, môžete sa rozhodnúť pre kondenzovaný formát. Ak máte dostatok miesta, možno uprednostňujete podrobné nastavenie.</string>
+  <string name="condensed" formatted="false">Zhustené</string>
+  <string name="normal" formatted="false">Normal</string>
+  <string name="verbose" formatted="false">Úplné</string>
+  <string name="pref_status_duration_in_vital_signs" formatted="false">Trvanie stavu vo vitálnych znakoch</string>
+  <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Zahrnúť čas od zmeny stavu do vitálnych funkcií?</string>
+  <string name="pref_status_duration_in_vital_signs_help" formatted="false">Ak je nastavené, riadok vitálnych funkcií bude obsahovať aj počet hodín odkedy sa zariadenie odpojilo, zapojilo alebo úplne nabilo.</string>
 
-  <string formatted="false" name="custom">Vlastné...</string>
-  <string formatted="false" name="pref_cat_icon_set">Ikona upozornenia</string>
-  <string formatted="false" name="pref_icon_content">Obsah ikony</string>
-  <string formatted="false" name="pref_icon_content_help">Vyberte, či ikona stavového riadka zobrazuje percento batérie alebo teplota batérie. Teplota sa riadi vami zvolenou jednotkou.</string>
+  <string name="custom" formatted="false">Vlastné...</string>
+  <string name="pref_cat_icon_set" formatted="false">Ikona upozornenia</string>
+  <string name="pref_icon_content" formatted="false">Obsah ikony</string>
+  <string name="pref_icon_content_help" formatted="false">Vyberte, či ikona stavového riadka zobrazuje percento batérie alebo teplota batérie. Teplota sa riadi vami zvolenou jednotkou.</string>
   <string name="pref_show_icon_unit" formatted="false">Zobraziť symbol jednotky</string>
 
   <string name="pref_show_icon_unit_help" formatted="false">Ak je zapnuté, ikona zobrazuje znak percenta pre stav batérie a symbol stupňa pre teplotu batérie. Vypnite túto možnosť, ak chcete zobrazovať len číslo.</string>
-  <string formatted="false" name="pref_cat_current_hack_main">Hlavné ovládanie</string>
-  <string formatted="false" name="pref_cat_current_hack_unsupported">Aktuálny (mA) hack nie je podporovaný</string>
+  <string name="pref_cat_current_hack_main" formatted="false">Hlavné ovládanie</string>
+  <string name="pref_cat_current_hack_unsupported" formatted="false">Aktuálny (mA) hack nie je podporovaný</string>
 
-  <string formatted="false" name="pref_current_hack_unsupported">Ľutujeme, aktuálny (mA) hack nie je na tomto zariadení podporovaný.</string>
+  <string name="pref_current_hack_unsupported" formatted="false">Ľutujeme, aktuálny (mA) hack nie je na tomto zariadení podporovaný.</string>
 
-  <string formatted="false" name="pref_enable_current_hack">Povoliť hackovanie</string>
-  <string formatted="false" name="pref_enable_current_hack_summary">Pokus o aktiváciu aktuálneho (mA) hacku?</string>
-  <string formatted="false" name="pref_enable_current_hack_help">Keď je toto nastavenie povolené, ostatné možnosti týkajúce sa hack bude použiteľný.</string>
-  <string formatted="false" name="pref_current_hack_prefer_fs">Uprednostnite starú metódu hackovania</string>
-  <string formatted="false" name="pref_current_hack_prefer_fs_summary">Preferujete staršiu metódu hackovania založenú na súborovom systéme?</string>
+  <string name="pref_enable_current_hack" formatted="false">Povoliť hackovanie</string>
+  <string name="pref_enable_current_hack_summary" formatted="false">Pokus o aktiváciu aktuálneho (mA) hacku?</string>
+  <string name="pref_enable_current_hack_help" formatted="false">Keď je toto nastavenie povolené, ostatné možnosti týkajúce sa hack bude použiteľný.</string>
+  <string name="pref_current_hack_prefer_fs" formatted="false">Uprednostnite starú metódu hackovania</string>
+  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Preferujete staršiu metódu hackovania založenú na súborovom systéme?</string>
 
-  <string formatted="false" name="pref_current_hack_prefer_fs_help">Od verzie Lollipop (Android 5.0) Android teraz poskytuje a o niečo menej hackerský spôsob prístupu k aktuálnym (mA) informáciám, priamo zo systému BatteryManager. Stále však nie je zaručené, že bude fungovať vôbec alebo bude fungovať dobre. Až do Androidu Nougat (Android 7.0), stará metóda hackovania (založená na súborovom systéme). funguje lepšie na väčšine zariadení, takže zostáva predvolená na zariadeniach beží menej ako Android 7.0.\n
+  <string name="pref_current_hack_prefer_fs_help" formatted="false">Od verzie Lollipop (Android 5.0) Android teraz poskytuje a o niečo menej hackerský spôsob prístupu k aktuálnym (mA) informáciám, priamo zo systému BatteryManager. Stále však nie je zaručené, že bude fungovať vôbec alebo bude fungovať dobre. Až do Androidu Nougat (Android 7.0), stará metóda hackovania (založená na súborovom systéme). funguje lepšie na väčšine zariadení, takže zostáva predvolená na zariadeniach beží menej ako Android 7.0.\n
     \n
     Toto nastavenie je len náznak hacku o tom, ktorú metódu použiť preferovať; môžete to skúsiť zmeniť, ak hack nefunguje dobre vaše zariadenie.</string>
-  <string formatted="false" name="pref_current_hack_multiplier">Násobiteľ</string>
+  <string name="pref_current_hack_multiplier" formatted="false">Násobiteľ</string>
 
-  <string formatted="false" name="pref_current_hack_multiplier_help">Niektoré zariadenia uvádzajú skôr miliampéry ako mikroampéry API vyžaduje. Rovnaké zariadenia si vymenia znamienko hlásenej hodnoty. Niektorí používatelia uprednostňujú opačné znamienko správne vykázaných hodnôt. Aby ste sa vyhli takýmto situáciám, môžete ich znásobiť výsledok volania API hodnotou tu.\n
+  <string name="pref_current_hack_multiplier_help" formatted="false">Niektoré zariadenia uvádzajú skôr miliampéry ako mikroampéry API vyžaduje. Rovnaké zariadenia si vymenia znamienko hlásenej hodnoty. Niektorí používatelia uprednostňujú opačné znamienko správne vykázaných hodnôt. Aby ste sa vyhli takýmto situáciám, môžete ich znásobiť výsledok volania API hodnotou tu.\n
     \n
     Ak vaše zariadenie vždy zobrazuje napríklad 0 mA, môžete to skúsiť pomocou násobiteľa 1000. Ak volanie API vráti 450 mikroampér, tento multiplikátor prinúti aplikáciu zobraziť hodnotu ako 450 mA namiesto 0 mA. Ak volanie API vráti 0 mikroampér, samozrejme, násobič nezmení finále zobrazovaná hodnota 0 mA.</string>
 
-  <string formatted="false" name="pref_cat_current_hack_notification">Oznámenie</string>
-  <string formatted="false" name="pref_display_current_in_vital_stats">Zobraziť v dôležitých štatistikách</string>
-  <string formatted="false" name="pref_display_current_in_vital_stats_summary">Zobrazovať prúd (mA) v hlavných štatistikách upozornení?</string>
+  <string name="pref_cat_current_hack_notification" formatted="false">Oznámenie</string>
+  <string name="pref_display_current_in_vital_stats" formatted="false">Zobraziť v dôležitých štatistikách</string>
+  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Zobrazovať prúd (mA) v hlavných štatistikách upozornení?</string>
 
-  <string formatted="false" name="pref_display_current_in_vital_stats_help">Keď je povolená, dôjde k pokusu o hack a zobrazí sa výsledkom bude hlavný riadok vitálnych štatistík upozornení. Všimnite si, že vy musí mať hlavné upozornenie nakonfigurované na zobrazovanie dôležitých štatistík aby ste to videli. Táto hodnota sa obnoví iba vtedy, keď je systém odošle informácie o novej batérii.\n
+  <string name="pref_display_current_in_vital_stats_help" formatted="false">Keď je povolená, dôjde k pokusu o hack a zobrazí sa výsledkom bude hlavný riadok vitálnych štatistík upozornení. Všimnite si, že vy musí mať hlavné upozornenie nakonfigurované na zobrazovanie dôležitých štatistík aby ste to videli. Táto hodnota sa obnoví iba vtedy, keď je systém odošle informácie o novej batérii.\n
     \n
     ONa väčšine zariadení záporná hodnota označuje čistý odtok z batérie a kladná hodnota znamená, že batéria je vybitá spoplatnené. Nie všetky zariadenia však generujú hodnoty týmto spôsobom.</string>
-  <string formatted="false" name="pref_cat_current_hack_main_window">Hlavné okno</string>
-  <string formatted="false" name="pref_display_current_in_main_window">Zobrazenie v hlavnom okne</string>
+  <string name="pref_cat_current_hack_main_window" formatted="false">Hlavné okno</string>
+  <string name="pref_display_current_in_main_window" formatted="false">Zobrazenie v hlavnom okne</string>
 
-  <string formatted="false" name="pref_display_current_in_main_window_summary">Zobraziť prúd (mA) v hlavnom okne?</string>
-  <string formatted="false" name="pref_display_current_in_main_window_help">Keď je povolená, dôjde k pokusu o hack a zobrazí sa výsledok v hlavnom okne. Táto hodnota sa kedykoľvek obnoví systém odošle nové informácie o batérii, ale môžete ich obnoviť hodnotu kedykoľvek jednoduchým klepnutím na zobrazenú hodnotu. (Pozn že niektoré zariadenia málokedy alebo vôbec neaktualizujú základné údaje, takže pri klepnutí sa nemusí zdať, že by sa hodnota zmenila.)\n
+  <string name="pref_display_current_in_main_window_summary" formatted="false">Zobraziť prúd (mA) v hlavnom okne?</string>
+  <string name="pref_display_current_in_main_window_help" formatted="false">Keď je povolená, dôjde k pokusu o hack a zobrazí sa výsledok v hlavnom okne. Táto hodnota sa kedykoľvek obnoví systém odošle nové informácie o batérii, ale môžete ich obnoviť hodnotu kedykoľvek jednoduchým klepnutím na zobrazenú hodnotu. (Pozn že niektoré zariadenia málokedy alebo vôbec neaktualizujú základné údaje, takže pri klepnutí sa nemusí zdať, že by sa hodnota zmenila.)\n
     \n
     ONa väčšine zariadení záporná hodnota označuje čistý odtok z batérie a kladná hodnota znamená, že batéria je vybitá spoplatnené. Nie všetky zariadenia však generujú hodnoty týmto spôsobom.</string>
 
-  <string formatted="false" name="pref_prefer_current_avg_in_vital_stats">Uprednostňujte priemer v dôležitých štatistikách</string>
-  <string formatted="false" name="pref_prefer_current_avg_in_vital_stats_summary">Skúsiť použiť current_avg v hlavných štatistikách dôležitých upozornení?</string>
-  <string formatted="false" name="pref_prefer_current_avg_in_main_window">Uprednostňujte priemer v hlavnom okne</string>
-  <string formatted="false" name="pref_prefer_current_avg_in_main_window_summary">Skúsiť použiť current_avg v hlavnom okne?</string>
+  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Uprednostňujte priemer v dôležitých štatistikách</string>
+  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Skúsiť použiť current_avg v hlavných štatistikách dôležitých upozornení?</string>
+  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Uprednostňujte priemer v hlavnom okne</string>
+  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Skúsiť použiť current_avg v hlavnom okne?</string>
 
-  <string formatted="false" name="pref_prefer_current_avg_help">Niektoré systémy majú k dispozícii ďalší hack, ktorý poskytuje najnovší skôr priemer prúdu než jeho okamžité odčítanie. Čo to znamená, sa líši od zariadenia k zariadeniu a je k dispozícii iba na niektorých zariadeniach. To môže poskytnúť stabilnejšiu hodnotu (ak všetko pôjde no), môže vrátiť rovnakú hodnotu alebo môže vrátiť nepoužiteľné hodnotu (v takom prípade by ste mali túto možnosť vypnúť).</string>
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window">Automatická obnova mA v hlavnom okne</string>
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window_summary">Automatická obnova mA každé dve sekundy?</string>
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window_help">Ak máte hack nastavený na zobrazenie mA v hlavnom okne, môžete obnovte hodnotu jednoduchým klepnutím. Ak chcete vidieť časté aktualizácie bez toho, aby ste museli klepnúť, môžete túto možnosť povoliť na automatické obnovenie hodnoty každé dve sekundy, kým je okno viditeľné.\n
+  <string name="pref_prefer_current_avg_help" formatted="false">Niektoré systémy majú k dispozícii ďalší hack, ktorý poskytuje najnovší skôr priemer prúdu než jeho okamžité odčítanie. Čo to znamená, sa líši od zariadenia k zariadeniu a je k dispozícii iba na niektorých zariadeniach. To môže poskytnúť stabilnejšiu hodnotu (ak všetko pôjde no), môže vrátiť rovnakú hodnotu alebo môže vrátiť nepoužiteľné hodnotu (v takom prípade by ste mali túto možnosť vypnúť).</string>
+  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Automatická obnova mA v hlavnom okne</string>
+  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Automatická obnova mA každé dve sekundy?</string>
+  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Ak máte hack nastavený na zobrazenie mA v hlavnom okne, môžete obnovte hodnotu jednoduchým klepnutím. Ak chcete vidieť časté aktualizácie bez toho, aby ste museli klepnúť, môžete túto možnosť povoliť na automatické obnovenie hodnoty každé dve sekundy, kým je okno viditeľné.\n
     \n
     Všimnite si, že niektoré zariadenia málokedy alebo nikdy neaktualizujú základ údaje, takže sa môže zdať, že sa hodnota nezmení, aj keď sa aplikácia zmenila obnovenie zobrazenej hodnoty, aby sa zhodovala s údajmi získanými z systému.</string>
 
-  <string formatted="false" name="pref_cat_charging_indicator">Indikátor nabíjania</string>
-  <string formatted="false" name="pref_indicate_charging">Označte nabíjanie</string>
-  <string formatted="false" name="pref_indicate_charging_summary">Zmeniť ikonu na označenie pri nabíjaní?</string>
-  <string formatted="false" name="pref_indicate_charging_help">Ikona nabíjania môže pod číslom zobrazovať blesk. Túto možnosť vypnite, ak chcete rovnakú ikonu pri nabíjaní aj vybíjaní.</string>
+  <string name="pref_cat_charging_indicator" formatted="false">Indikátor nabíjania</string>
+  <string name="pref_indicate_charging" formatted="false">Označte nabíjanie</string>
+  <string name="pref_indicate_charging_summary" formatted="false">Zmeniť ikonu na označenie pri nabíjaní?</string>
+  <string name="pref_indicate_charging_help" formatted="false">Ikona nabíjania môže pod číslom zobrazovať blesk. Túto možnosť vypnite, ak chcete rovnakú ikonu pri nabíjaní aj vybíjaní.</string>
 
   <string name="pref_cat_logging" formatted="false">Zaznamenávanie</string>
 
   <string name="pref_enable_logging" formatted="false">Zapnúť zaznamenávanie</string>
   <string name="pref_enable_logging_summary" formatted="false">Zaznamenávať zmeny stavu batérie?</string>
-  <string formatted="false" name="pref_enable_logging_help">Ak je aktivovaná, Battery Monitor bude zaznamenávať zmeny stavu batérie.</string>
+  <string name="pref_enable_logging_help" formatted="false">Ak je aktivovaná, Battery Monitor bude zaznamenávať zmeny stavu batérie.</string>
 
   <string name="pref_max_log_age" formatted="false">Maximálny vek záznamu</string>
   <string name="pref_max_log_age_summary" formatted="false">Zmazať záznamy staršie ako:</string>
-  <string formatted="false" name="pref_max_log_age_help">Ak je zaznamenávanie zapnuté, pri každom pripojení zariadenia sa odstránia záznamy staršie ako táto hodnota. Výberom Nikdy neodstraňovať ich ponecháte, kým ich nevymažete ručne.</string>
+  <string name="pref_max_log_age_help" formatted="false">Ak je zaznamenávanie zapnuté, pri každom pripojení zariadenia sa odstránia záznamy staršie ako táto hodnota. Výberom Nikdy neodstraňovať ich ponecháte, kým ich nevymažete ručne.</string>
   <string name="pref_cat_temperature_unit" formatted="false">Jednotky teploty</string>
 
   <string name="pref_convert_to_fahrenheit" formatted="false">Premeniť na Fahrenheity</string>
-  <string formatted="false" name="pref_convert_to_fahrenheit_help">Android hlási teplotu batérie v stupňoch Celzia. Ak uprednostňujete zobrazenie teploty batérie v stupňoch Fahrenheita, začiarknite túto možnosť a aplikácia sa prevedie za vás.</string>
+  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android hlási teplotu batérie v stupňoch Celzia. Ak uprednostňujete zobrazenie teploty batérie v stupňoch Fahrenheita, začiarknite túto možnosť a aplikácia sa prevedie za vás.</string>
   <string name="pref_cat_autostart" formatted="false">Automatické spustenie</string>
   <string name="pref_autostart_at_boot" formatted="false">Spustiť automaticky po zapnutí</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">Spustiť Battery Monitor keď zariadenie štartuje:</string>
-  <string formatted="false" name="pref_autostart_at_boot_help">Ovláda, či sa má Battery Monitor spustiť sám automaticky pri spustení zariadenia.\n
+  <string name="pref_autostart_at_boot_help" formatted="false">Ovláda, či sa má Battery Monitor spustiť sám automaticky pri spustení zariadenia.\n
     \n
     Možnosť \"Ak beží pri vypnutí\" funguje s ohľadom na či ste naposledy manuálne spustili alebo zastavili Battery Monitor. Takže ak zabijete Battery Monitor cez nejaký iný znamená, že ako zabijak úloh, potom Battery Monitor nevie zastavili ste ho a stále sa spustí pri spustení, ak ho máte nastaviť na toto.\n
     POZNÁMKA: Android vždy spustí Battery Monitor pri štarte, ak máte Miniaplikácie Monitor batérie na ploche. V takom prípade je toto nastavenie irelevantné.</string>
-  <string formatted="false" name="predictor_sensitive">Citlivý</string>
+  <string name="predictor_sensitive" formatted="false">Citlivý</string>
 
-  <string formatted="false" name="predictor_conservative">konzervatívny</string>
-  <string formatted="false" name="predictor_since_status_change">Od zmeny stavu</string>
-  <string formatted="false" name="predictor_long_term_ave">Dlhodobý priemer</string>
+  <string name="predictor_conservative" formatted="false">konzervatívny</string>
+  <string name="predictor_since_status_change" formatted="false">Od zmeny stavu</string>
+  <string name="predictor_long_term_ave" formatted="false">Dlhodobý priemer</string>
 
-  <string formatted="false" name="pref_cat_predictor">Odhady zostávajúceho času</string>
-  <string formatted="false" name="pref_prediction_type">Typ odhadu</string>
-  <string formatted="false" name="pref_prediction_type_help">Tu si môžete vybrať, ako bude Battery Monitor predpovedať váš zostávajúci čas výdrž batérie / čas do úplného nabitia.\n
+  <string name="pref_cat_predictor" formatted="false">Odhady zostávajúceho času</string>
+  <string name="pref_prediction_type" formatted="false">Typ odhadu</string>
+  <string name="pref_prediction_type_help" formatted="false">Tu si môžete vybrať, ako bude Battery Monitor predpovedať váš zostávajúci čas výdrž batérie / čas do úplného nabitia.\n
     \n
     Algoritmus \"Sensitive\" je striktne založený na vašich posledných piatich minúty používania. Ak je vašou hlavnou starosťou \"Ako dlho budem? výdrž batérie, ak budem pokračovať v tom, čo robím?\" potom je toto algoritmus pre vás.\n
     \n
@@ -367,12 +367,12 @@
     voľte \"Od zmeny stavu\", aby bola predpoveď založená striktne na vašej aktuálnej relácii.\n
     \n
     Nakoniec môžete mať predpoveď založenú výlučne na vašej dlhodobé priemerné používanie.</string>
-  <string formatted="false" name="pref_cat_language">Jazyk</string>
+  <string name="pref_cat_language" formatted="false">Jazyk</string>
 
-  <string formatted="false" name="pref_language_override">Prepísanie jazyka</string>
-  <string formatted="false" name="pref_language_override_summary">Vyberte jazyk:</string>
+  <string name="pref_language_override" formatted="false">Prepísanie jazyka</string>
+  <string name="pref_language_override_summary" formatted="false">Vyberte jazyk:</string>
   <string name="alarms_overview" formatted="false">Prehľad upozornení</string>
-  <string formatted="false" name="alarms_overview_help">Táto stránka vám umožňuje pridávať nové alarmy, rýchlo povoliť alebo zakázať existujúce alarmy, alebo vymazať alarmy.\n
+  <string name="alarms_overview_help" formatted="false">Táto stránka vám umožňuje pridávať nové alarmy, rýchlo povoliť alebo zakázať existujúce alarmy, alebo vymazať alarmy.\n
     \n
     Ak chcete pridať nový budík, stlačte \"Pridať budík\" — tým sa vytvorí nový budík a dostanete sa na stránku nastavení budíka, kde môžete ovládať nastavenia nového budíka. Pozrite si pomocníka na tejto stránke pre viac podrobností.\n
     \n
@@ -390,7 +390,7 @@
   <string name="pref_alarm_type" formatted="false">Typ upozornenia</string>
   <string name="pref_alarm_type_summary" formatted="false">Spustiť upozornenie keď batéria:</string>
 
-  <string formatted="false" name="pref_alarm_type_help">V súčasnosti existuje päť typov alarmu, z ktorého si môžete vybrať.\n
+  <string name="pref_alarm_type_help" formatted="false">V súčasnosti existuje päť typov alarmu, z ktorého si môžete vybrať.\n
     \n
     Alarm \"Bude plne nabitý\" vás upozorní, keď stav batérie sa zmení z \"Nabíja sa\" na \"Plne Nabité\". Upozorňujeme, že na mnohých zariadeniach to nie je nevyhnutne to isté ako pri 100% nabití.\n
     \n
@@ -403,8 +403,8 @@
   <string name="pref_alarm_threshold_summary" formatted="false">Hranica upozornenia:</string>
 
   <string name="pref_alarm_threshold_help" formatted="false">Pre upozornenia nabitia a teploty, potrebujete nastaviť hranicu teploty alebo hranicu nabitia, ktorá spustí upozornenie.</string>
-  <string formatted="false" name="alarm_custom_temp_message">Zadajte teplotu v stupňoch %s</string>
-  <string formatted="false" name="alarm_custom_charge_message">Zadajte percento účtovania (0 – 100)</string>
+  <string name="alarm_custom_temp_message" formatted="true">Zadajte teplotu v stupňoch %s</string>
+  <string name="alarm_custom_charge_message" formatted="false">Zadajte percento účtovania (0 – 100)</string>
   <string name="boot_pref_always" formatted="false">Vždy</string>
   <string name="boot_pref_never" formatted="false">Nikdy</string>
   <string name="boot_pref_if_running" formatted="false">Ak je spustený pri vypínaní</string>
@@ -416,14 +416,14 @@
 
   <string name="age_3_weeks" formatted="false">3 týždne</string>
   <string name="age_4_weeks" formatted="false">4 týždne</string>
-  <string formatted="false" name="age_never_delete">Nikdy neodstraňovať</string>
+  <string name="age_never_delete" formatted="false">Nikdy neodstraňovať</string>
 
-  <string formatted="false" name="pref_content_percent">Percento batérie</string>
-  <string formatted="false" name="pref_content_temperature">Teplota batérie</string>
-  <string formatted="false" name="pref_content_switching">Prepínajte medzi oboma</string>
-  <string formatted="false" name="chip_switching_interval_2_seconds">2 sekundy</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 sekúnd</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 sekúnd</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 sekúnd</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 sekúnd</string>
+  <string name="pref_content_percent" formatted="false">Percento batérie</string>
+  <string name="pref_content_temperature" formatted="false">Teplota batérie</string>
+  <string name="pref_content_switching" formatted="false">Prepínajte medzi oboma</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 sekundy</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 sekúnd</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 sekúnd</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 sekúnd</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 sekúnd</string>
 </resources>

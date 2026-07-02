@@ -1,140 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string formatted="false" name="app_launcher_name">Battery Monitor</string>
-  <string formatted="false" name="settings_activity_subtitle">Settings</string>
-  <string formatted="false" name="help_activity_subtitle">Battery Monitor Help</string>
+  <string name="app_launcher_name" formatted="false">Battery Monitor</string>
+  <string name="settings_activity_subtitle" formatted="false">Settings</string>
+  <string name="help_activity_subtitle" formatted="false">Battery Monitor Help</string>
 
-  <string formatted="false" name="battery_use_b">View Battery Use</string>
-  <string formatted="false" name="circle_widget">Circle</string>
-  <string formatted="false" name="full_widget">Full</string>
-  <string formatted="false" name="yes">Yes</string>
-  <string formatted="false" name="cancel">Cancel</string>
+  <string name="battery_use_b" formatted="false">View Battery Use</string>
+  <string name="circle_widget" formatted="false">Circle</string>
+  <string name="full_widget" formatted="false">Full</string>
+  <string name="yes" formatted="false">Yes</string>
+  <string name="cancel" formatted="false">Cancel</string>
 
-  <string formatted="false" name="confirm_close">Really Close?</string>
-  <string formatted="false" name="confirm_close_hint">Battery Monitor will be completely closed, and you won\'t see it in your status bar anymore. Any home screen widgets will be useless.\n
+  <string name="confirm_close" formatted="false">Really Close?</string>
+  <string name="confirm_close_hint" formatted="false">Battery Monitor will be completely closed, and you won\'t see it in your status bar anymore. Any home screen widgets will be useless.\n
     \n
     If you just want to leave the main window and keep the service running, press Cancel and then just press your device\'s BACK button to leave the main window.\n
     \n
     If you want to hide the notification but keep widgets running, press Cancel and then change the settings to hide the notification.</string>
 
-  <string formatted="false" name="notifications_disabled">Notifications are disabled!</string>
-  <string formatted="false" name="notifications_disabled_message">You have turned off all notifications for Battery Monitor. This will prevent the app from showing any notifications: the main notification and any alarms you have set will all be blocked.\n
+  <string name="notifications_disabled" formatted="false">Notifications are disabled!</string>
+  <string name="notifications_disabled_message" formatted="false">You have turned off all notifications for Battery Monitor. This will prevent the app from showing any notifications: the main notification and any alarms you have set will all be blocked.\n
     \n
     Since Battery Monitor allows you to turn the main notification on or off separately, as well as temporarily disable any alarms you\'ve created, it is strongly recommended that you unblock the app notifications. While they are blocked, it will appear that Battery Monitor is broken.\n
     \n
     Please press OK to be taken to the system settings where you can unblock notifications for Battery Monitor.</string>
 
-  <string formatted="false" name="battery_optimized">Battery Monitor restricted!</string>
-  <string formatted="false" name="battery_optimized_message">Battery Monitor is restricted from running correctly. This \"battery optimization\" is an Android feature designed to restrict poorly designed apps to prevent them from using too much battery in the background.\n
+  <string name="battery_optimized" formatted="false">Battery Monitor restricted!</string>
+  <string name="battery_optimized_message" formatted="false">Battery Monitor is restricted from running correctly. This \"battery optimization\" is an Android feature designed to restrict poorly designed apps to prevent them from using too much battery in the background.\n
     \n
     Battery Monitor, however, is a well-designed app that must run unrestricted in the background in order to function properly. It is extremely efficient and will not reduce your battery life.\n
     \n
     Please press OK to be taken to the system settings where you can disable battery optimization for Battery Monitor.</string>
 
-  <string formatted="false" name="main_notif_chan_name">Main Notification</string>
-  <string formatted="false" name="live_updates_notif_chan_name">Live Updates</string>
-  <string formatted="false" name="channel_group_name_alarms">Alarms</string>
+  <string name="main_notif_chan_name" formatted="false">Main Notification</string>
+  <string name="live_updates_notif_chan_name" formatted="false">Live Updates</string>
+  <string name="channel_group_name_alarms" formatted="false">Alarms</string>
 
-  <string formatted="false" name="confirm_clear_logs">Really clear all logs?</string>
+  <string name="confirm_clear_logs" formatted="false">Really clear all logs?</string>
 
-  <string formatted="false" name="configure_log_filter">Show which log items?</string>
+  <string name="configure_log_filter" formatted="false">Show which log items?</string>
 
-  <string formatted="false" name="okay">Okay</string>
+  <string name="okay" formatted="false">Okay</string>
 
-  <string formatted="false" name="tab_current_info">Current state</string>
-  <string formatted="false" name="tab_history">History</string>
+  <string name="tab_current_info" formatted="false">Current state</string>
+  <string name="tab_history" formatted="false">History</string>
 
-  <string formatted="false" name="notification_until_charged">" until charged"</string>
-  <string formatted="false" name="notification_until_drained">" left"</string>
-  <string formatted="false" name="activity_until_charged">until charged</string>
-  <string formatted="false" name="activity_until_drained">until drained</string>
+  <string name="notification_until_charged" formatted="false">" until charged"</string>
+  <string name="notification_until_drained" formatted="false">" left"</string>
+  <string name="activity_until_charged" formatted="false">until charged</string>
+  <string name="activity_until_drained" formatted="false">until drained</string>
 
-  <string formatted="false" name="menu_settings">Settings</string>
-  <string formatted="false" name="menu_close">Close</string>
-  <string formatted="false" name="menu_help">Help</string>
-  <string formatted="false" name="menu_clear">Clear</string>
-  <string formatted="false" name="menu_reverse">Reverse Order</string>
-  <string formatted="false" name="menu_log_filter">Filter</string>
-  <string formatted="false" name="menu_export">Export CSV</string>
-  <string formatted="false" name="menu_delete_alarm">Delete Alarm</string>
-  <string formatted="false" name="menu_show_seconds">Show Seconds</string>
-  <string formatted="false" name="menu_hide_seconds">Hide Seconds</string>
+  <string name="menu_settings" formatted="false">Settings</string>
+  <string name="menu_close" formatted="false">Close</string>
+  <string name="menu_help" formatted="false">Help</string>
+  <string name="menu_clear" formatted="false">Clear</string>
+  <string name="menu_reverse" formatted="false">Reverse Order</string>
+  <string name="menu_log_filter" formatted="false">Filter</string>
+  <string name="menu_export" formatted="false">Export CSV</string>
+  <string name="menu_delete_alarm" formatted="false">Delete Alarm</string>
+  <string name="menu_show_seconds" formatted="false">Show Seconds</string>
+  <string name="menu_hide_seconds" formatted="false">Hide Seconds</string>
 
-  <string formatted="false" name="percent_symbol">%</string>
-  <string formatted="false" name="degree_symbol">°</string>
-  <string formatted="false" name="fahrenheit">Fahrenheit</string>
-  <string formatted="false" name="fahrenheit_symbol">F</string>
-  <string formatted="false" name="celsius">Celsius</string>
-  <string formatted="false" name="celsius_symbol">C</string>
-  <string formatted="false" name="volt_symbol">V</string>
+  <string name="percent_symbol" formatted="false">%</string>
+  <string name="degree_symbol" formatted="false">°</string>
+  <string name="fahrenheit" formatted="false">Fahrenheit</string>
+  <string name="fahrenheit_symbol" formatted="false">F</string>
+  <string name="celsius" formatted="false">Celsius</string>
+  <string name="celsius_symbol" formatted="false">C</string>
+  <string name="volt_symbol" formatted="false">V</string>
 
-  <string formatted="false" name="inaccessible_storage">SD Card is inaccessible</string>
-  <string formatted="false" name="inaccessible_w_reason">SD Card inaccessible: </string>
-  <string formatted="false" name="read_only_storage">SD Card is read only</string>
-  <string formatted="false" name="no_storage_permission">Storage permission not granted.</string>
-  <string formatted="false" name="file_written">File successfully written to selected location</string>
+  <string name="inaccessible_storage" formatted="false">SD Card is inaccessible</string>
+  <string name="inaccessible_w_reason" formatted="false">SD Card inaccessible: </string>
+  <string name="read_only_storage" formatted="false">SD Card is read only</string>
+  <string name="no_storage_permission" formatted="false">Storage permission not granted.</string>
+  <string name="file_written" formatted="false">File successfully written to selected location</string>
 
-  <string formatted="false" name="date">date</string>
-  <string formatted="false" name="time">time</string>
-  <string formatted="false" name="status">status</string>
-  <string formatted="false" name="charge">charge_percentage</string>
-  <string formatted="false" name="temperature">degrees_celsius</string>
-  <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
-  <string formatted="false" name="voltage">volts</string>
+  <string name="date" formatted="false">date</string>
+  <string name="time" formatted="false">time</string>
+  <string name="status" formatted="false">status</string>
+  <string name="charge" formatted="false">charge_percentage</string>
+  <string name="temperature" formatted="false">degrees_celsius</string>
+  <string name="temperature_f" formatted="false">degrees_fahrenheit</string>
+  <string name="voltage" formatted="false">volts</string>
 
-  <string formatted="false" name="status_unplugged">Unplugged</string>
-  <string formatted="false" name="status_unknown">Unknown</string>
-  <string formatted="false" name="status_charging">Charging</string>
-  <string formatted="false" name="status_discharging">Discharging</string>
-  <string formatted="false" name="status_not_charging">Not Charging</string>
-  <string formatted="false" name="status_fully_charged">Fully Charged</string>
-  <string formatted="false" name="status_plugged_in">Plugged In</string>
+  <string name="status_unplugged" formatted="false">Unplugged</string>
+  <string name="status_unknown" formatted="false">Unknown</string>
+  <string name="status_charging" formatted="false">Charging</string>
+  <string name="status_discharging" formatted="false">Discharging</string>
+  <string name="status_not_charging" formatted="false">Not Charging</string>
+  <string name="status_fully_charged" formatted="false">Fully Charged</string>
+  <string name="status_plugged_in" formatted="false">Plugged In</string>
 
-  <string formatted="false" name="status_boot_completed">Boot Completed</string>
+  <string name="status_boot_completed" formatted="false">Boot Completed</string>
 
-  <string formatted="false" name="health_unknown">Unknown</string>
-  <string formatted="false" name="health_good">Healthy</string>
-  <string formatted="false" name="health_overheat">Overheated</string>
-  <string formatted="false" name="health_dead">Dead</string>
-  <string formatted="false" name="health_overvoltage">Overvoltage</string>
-  <string formatted="false" name="health_failure">Failure</string>
-  <string formatted="false" name="health_cold">Cold</string>
-  <string formatted="false" name="plugged_unplugged">Unplugged</string>
-  <string formatted="false" name="plugged_ac">(AC)</string>
-  <string formatted="false" name="plugged_usb">(USB)</string>
-  <string formatted="false" name="plugged_unknown">(?)</string>
-  <string formatted="false" name="plugged_wireless">(Wireless)</string>
+  <string name="health_unknown" formatted="false">Unknown</string>
+  <string name="health_good" formatted="false">Healthy</string>
+  <string name="health_overheat" formatted="false">Overheated</string>
+  <string name="health_dead" formatted="false">Dead</string>
+  <string name="health_overvoltage" formatted="false">Overvoltage</string>
+  <string name="health_failure" formatted="false">Failure</string>
+  <string name="health_cold" formatted="false">Cold</string>
+  <string name="plugged_unplugged" formatted="false">Unplugged</string>
+  <string name="plugged_ac" formatted="false">(AC)</string>
+  <string name="plugged_usb" formatted="false">(USB)</string>
+  <string name="plugged_unknown" formatted="false">(?)</string>
+  <string name="plugged_wireless" formatted="false">(Wireless)</string>
 
-  <string formatted="false" name="alarm_type_fully_charged">Fully charged</string>
-  <string formatted="false" name="alarm_type_charge_drops">Charge drops below</string>
-  <string formatted="false" name="alarm_type_charge_rises">Charge rises above</string>
-  <string formatted="false" name="alarm_type_temperature_drops">Temperature drops below</string>
-  <string formatted="false" name="alarm_type_temperature_rises">Temperature rises above</string>
-  <string formatted="false" name="alarm_type_health_failure">Health failure</string>
-  <string formatted="false" name="alarm_type_entry_fully_charged">Becomes fully charged</string>
-  <string formatted="false" name="alarm_type_entry_charge_drops">Charge drops below...</string>
-  <string formatted="false" name="alarm_type_entry_charge_rises">Charge rises above...</string>
-  <string formatted="false" name="alarm_type_entry_temperature_drops">Temperature drops below...</string>
-  <string formatted="false" name="alarm_type_entry_temperature_rises">Temperature rises above...</string>
-  <string formatted="false" name="alarm_type_entry_health_failure">Health fails</string>
+  <string name="alarm_type_fully_charged" formatted="false">Fully charged</string>
+  <string name="alarm_type_charge_drops" formatted="false">Charge drops below</string>
+  <string name="alarm_type_charge_rises" formatted="false">Charge rises above</string>
+  <string name="alarm_type_temperature_drops" formatted="false">Temperature drops below</string>
+  <string name="alarm_type_temperature_rises" formatted="false">Temperature rises above</string>
+  <string name="alarm_type_health_failure" formatted="false">Health failure</string>
+  <string name="alarm_type_entry_fully_charged" formatted="false">Becomes fully charged</string>
+  <string name="alarm_type_entry_charge_drops" formatted="false">Charge drops below...</string>
+  <string name="alarm_type_entry_charge_rises" formatted="false">Charge rises above...</string>
+  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperature drops below...</string>
+  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperature rises above...</string>
+  <string name="alarm_type_entry_health_failure" formatted="false">Health fails</string>
 
-  <string formatted="false" name="alarm_fully_charged">Battery is now fully charged</string>
-  <string formatted="false" name="alarm_charge_drops">"Battery charge is below "</string>
-  <string formatted="false" name="alarm_charge_rises">"Battery charge is above "</string>
-  <string formatted="false" name="alarm_temp_drops">"Battery temp. is below "</string>
-  <string formatted="false" name="alarm_temp_rises">"Battery temp. is above "</string>
-  <string formatted="false" name="alarm_health_failure">"Battery health is: "</string>
+  <string name="alarm_fully_charged" formatted="false">Battery is now fully charged</string>
+  <string name="alarm_charge_drops" formatted="false">"Battery charge is below "</string>
+  <string name="alarm_charge_rises" formatted="false">"Battery charge is above "</string>
+  <string name="alarm_temp_drops" formatted="false">"Battery temp. is below "</string>
+  <string name="alarm_temp_rises" formatted="false">"Battery temp. is above "</string>
+  <string name="alarm_health_failure" formatted="false">"Battery health is: "</string>
 
-  <string formatted="false" name="logs_empty">Logs Are Empty</string>
+  <string name="logs_empty" formatted="false">Logs Are Empty</string>
   <plurals name="n_log_items">
     <item quantity="one">%d Log Item</item>
     <item quantity="other">%d Log Items</item>
   </plurals>
 
-  <string formatted="true" name="after_nh_mm_unplugged">After %1$dh %2$dm unplugged</string>
-  <string formatted="true" name="after_nh_mm_plugged_in">After %1$dh %2$dm plugged in</string>
-  <string formatted="true" name="after_nm_ms_unplugged">After %1$dm %2$ds unplugged</string>
-  <string formatted="true" name="after_nm_ms_plugged_in">After %1$dm %2$ds plugged in</string>
+  <string name="after_nh_mm_unplugged" formatted="true">After %1$dh %2$dm unplugged</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">After %1$dh %2$dm plugged in</string>
+  <string name="after_nm_ms_unplugged" formatted="true">After %1$dm %2$ds unplugged</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">After %1$dm %2$ds plugged in</string>
 
   <plurals name="n_hours_long">
     <item quantity="one">"%d hour, "</item>
@@ -174,71 +174,71 @@
     <item quantity="other">%d hours</item>
   </plurals>
 
-  <string formatted="false" name="since">Since</string>
+  <string name="since" formatted="false">Since</string>
   <plurals name="for_n_hours">
     <item quantity="one">For %d Hour</item>
     <item quantity="other">For %d Hours</item>
   </plurals>
-  <string formatted="false" name="currently_using">Currently using</string>
-  <string formatted="false" name="currently_set_to">"Currently set to: "</string>
-  <string formatted="false" name="currently_disabled">Currently Disabled</string>
+  <string name="currently_using" formatted="false">Currently using</string>
+  <string name="currently_set_to" formatted="false">"Currently set to: "</string>
+  <string name="currently_disabled" formatted="false">Currently Disabled</string>
 
-  <string formatted="false" name="help_cat_version">Version</string>
+  <string name="help_cat_version" formatted="false">Version</string>
 
-  <string formatted="false" name="help_cat_open_source">Open Source</string>
-  <string formatted="false" name="help_open_source">This project is open source. You can access the source code at <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+  <string name="help_cat_open_source" formatted="false">Open Source</string>
+  <string name="help_open_source" formatted="false">This project is open source. You can access the source code at <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
-  <string formatted="false" name="help_cat_privacy">Privacy</string>
-  <string formatted="false" name="help_privacy">Battery Monitor does not collect, store, or transmit any personal information.</string>
+  <string name="help_cat_privacy" formatted="false">Privacy</string>
+  <string name="help_privacy" formatted="false">Battery Monitor does not collect, store, or transmit any personal information.</string>
 
-  <string formatted="false" name="help_cat_no_warranty">No Warranty</string>
-  <string formatted="false" name="help_no_warranty">This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n
+  <string name="help_cat_no_warranty" formatted="false">No Warranty</string>
+  <string name="help_no_warranty" formatted="false">This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n
     \n
     While I do my best to make sure that it works well and does not cause problems, I am not responsible for any damage or inconvenience it may cause under any circumstance.</string>
 
-  <string formatted="false" name="help_cat_acknowledgments">Acknowledgments</string>
-  <string formatted="false" name="help_acknowledgments">Battery Monitor is a fork of Battery Indicator Pro / BatteryBot Pro by Darshan Computing, LLC. Thank you to the original authors and contributors for creating and maintaining the upstream project.</string>
+  <string name="help_cat_acknowledgments" formatted="false">Acknowledgments</string>
+  <string name="help_acknowledgments" formatted="false">Battery Monitor is a fork of Battery Indicator Pro / BatteryBot Pro by Darshan Computing, LLC. Thank you to the original authors and contributors for creating and maintaining the upstream project.</string>
 
-  <string formatted="false" name="help_cat_contact">Contact</string>
-  <string formatted="false" name="help_contact">If you have a question, a problem, or a comment, please <a href="mailto:tomasz@swistak.codes">email me</a>.</string>
+  <string name="help_cat_contact" formatted="false">Contact</string>
+  <string name="help_contact" formatted="false">If you have a question, a problem, or a comment, please <a href="mailto:tomasz@swistak.codes">email me</a>.</string>
 
-  <string formatted="false" name="settings_overview">Overview</string>
-  <string formatted="false" name="settings_overview_help">Battery Monitor\'s settings are organized into separate pages as described below. Each page of settings has its own help page describing the settings available there.</string>
+  <string name="settings_overview" formatted="false">Overview</string>
+  <string name="settings_overview_help" formatted="false">Battery Monitor\'s settings are organized into separate pages as described below. Each page of settings has its own help page describing the settings available there.</string>
 
-  <string formatted="false" name="notifications_disabled_cat">Notifications Disabled</string>
-  <string formatted="false" name="app_notifs_disabled_b">Enable App Notifications</string>
-  <string formatted="false" name="app_notifs_disabled_summary">You have disabled all notifications for this app. Please enable them to access these settings.</string>
-  <string formatted="false" name="main_notifs_disabled_b">Enable Main Notification</string>
-  <string formatted="false" name="main_notifs_disabled_summary">You have disabled the main notification for this app. Please enable it to access these settings.</string>
-  <string formatted="false" name="app_notifs_alarms_disabled_summary">You have disabled all notifications for this app. Please enable them to access your alarms.</string>
-  <string formatted="false" name="alarm_notifs_disabled_b">Enable Alarms</string>
-  <string formatted="false" name="alarm_notifs_disabled_summary">You have disabled the alarm notification group for this app. Please enable it to access your alarms.</string>
-  <string formatted="false" name="alarm_chan_disabled">You have disabled notifications for this alarm type.  Please enable them to use this type of alarm.</string>
-  <string formatted="false" name="alarm_chan_disabled_b">Enable This Alarm Type</string>
-  <string formatted="false" name="alarm_chan_settings_b">Manage This Alarm Type</string>
+  <string name="notifications_disabled_cat" formatted="false">Notifications Disabled</string>
+  <string name="app_notifs_disabled_b" formatted="false">Enable App Notifications</string>
+  <string name="app_notifs_disabled_summary" formatted="false">You have disabled all notifications for this app. Please enable them to access these settings.</string>
+  <string name="main_notifs_disabled_b" formatted="false">Enable Main Notification</string>
+  <string name="main_notifs_disabled_summary" formatted="false">You have disabled the main notification for this app. Please enable it to access these settings.</string>
+  <string name="app_notifs_alarms_disabled_summary" formatted="false">You have disabled all notifications for this app. Please enable them to access your alarms.</string>
+  <string name="alarm_notifs_disabled_b" formatted="false">Enable Alarms</string>
+  <string name="alarm_notifs_disabled_summary" formatted="false">You have disabled the alarm notification group for this app. Please enable it to access your alarms.</string>
+  <string name="alarm_chan_disabled" formatted="false">You have disabled notifications for this alarm type.  Please enable them to use this type of alarm.</string>
+  <string name="alarm_chan_disabled_b" formatted="false">Enable This Alarm Type</string>
+  <string name="alarm_chan_settings_b" formatted="false">Manage This Alarm Type</string>
 
-  <string formatted="false" name="notification_settings">Main Notification</string>
-  <string formatted="false" name="notification_settings_summary">Configure the main notification</string>
-  <string formatted="false" name="notification_settings_help">You can configure which content to show in the pull-down notification.</string>
-  <string formatted="false" name="status_bar_icon_settings">Status Bar Icon</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">Choose icon content</string>
-  <string formatted="false" name="status_bar_icon_settings_help">Choose whether the notification icon shows battery percentage or temperature. Also choose, whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon.</string>
-  <string formatted="false" name="status_bar_chip_settings">Status Bar Chip</string>
-  <string formatted="false" name="status_bar_chip_settings_summary">Configure Live Updates\' chip content</string>
-  <string formatted="false" name="status_bar_chip_settings_help">On Android 16+ with Live Updates, you can configure what the status bar chip shows and whether to display the charging emoji.</string>
-  <string formatted="false" name="current_hack_settings">Current (mA) Hack</string>
-  <string formatted="false" name="current_hack_settings_summary">Advanced settings for enabling mA info</string>
-  <string formatted="false" name="current_hack_settings_help">Android does not provide a means for apps to access information about the battery current. However, a hack is available that allows many devices to potentially get this information.\n
+  <string name="notification_settings" formatted="false">Main Notification</string>
+  <string name="notification_settings_summary" formatted="false">Configure the main notification</string>
+  <string name="notification_settings_help" formatted="false">You can configure which content to show in the pull-down notification.</string>
+  <string name="status_bar_icon_settings" formatted="false">Status Bar Icon</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">Choose icon content</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Choose whether the notification icon shows battery percentage or temperature. Also choose, whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon.</string>
+  <string name="status_bar_chip_settings" formatted="false">Status Bar Chip</string>
+  <string name="status_bar_chip_settings_summary" formatted="false">Configure Live Updates\' chip content</string>
+  <string name="status_bar_chip_settings_help" formatted="false">On Android 16+ with Live Updates, you can configure what the status bar chip shows and whether to display the charging emoji.</string>
+  <string name="current_hack_settings" formatted="false">Current (mA) Hack</string>
+  <string name="current_hack_settings_summary" formatted="false">Advanced settings for enabling mA info</string>
+  <string name="current_hack_settings_help" formatted="false">Android does not provide a means for apps to access information about the battery current. However, a hack is available that allows many devices to potentially get this information.\n
     \n
     This is not guaranteed to work. It may not work at all or it may appear to work but only result in nonsense values.\n
     \n
     Settings to turn on the hack, if possible, and control how it is used are available in this section.</string>
 
-  <string formatted="false" name="alarm_settings_subtitle">Alarm Settings</string>
-  <string formatted="false" name="alarm_settings">Alarms</string>
-  <string formatted="false" name="alarm_settings_help">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
-  <string formatted="false" name="other_settings">Other Settings</string>
-  <string formatted="false" name="other_settings_help">All other settings are on this page, including logging, temperature unit, autostart, and more.</string>
+  <string name="alarm_settings_subtitle" formatted="false">Alarm Settings</string>
+  <string name="alarm_settings" formatted="false">Alarms</string>
+  <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
+  <string name="other_settings" formatted="false">Other Settings</string>
+  <string name="other_settings_help" formatted="false">All other settings are on this page, including logging, temperature unit, autostart, and more.</string>
 
   <string name="live_updates_onboarding_title">Status Bar Battery Chip</string>
   <string name="live_updates_onboarding_message_on">Your device supports showing the battery percentage as a chip in the status bar. This is enabled by default.\n
@@ -259,133 +259,133 @@
     \n
     Note: Granting this permission may occasionally cause the app to close. If it does, please simply reopen it.</string>
 
-  <string formatted="false" name="add_alarm">Add alarm</string>
+  <string name="add_alarm" formatted="false">Add alarm</string>
 
-  <string formatted="false" name="pref_cat_channel_settings">Notification Channel Settings</string>
-  <string formatted="false" name="pref_manage_main_channel">Manage Main Channel</string>
+  <string name="pref_cat_channel_settings" formatted="false">Notification Channel Settings</string>
+  <string name="pref_manage_main_channel" formatted="false">Manage Main Channel</string>
 
-  <string formatted="false" name="pref_cat_notification_content">Content</string>
-  <string formatted="false" name="pref_cat_status_bar_chip">Status Bar Chip (Android 16+)</string>
-  <string formatted="false" name="pref_live_update_display">Show Live Update</string>
-  <string formatted="false" name="pref_live_update_display_summary">Show in status bar:</string>
-  <string formatted="false" name="pref_live_update_display_help">Choose when the Live Update chip should be shown in the status bar.</string>
-  <string formatted="false" name="pref_live_update_display_charging">Only during charging</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">Keep main notification</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Show the main notification while Live Update is active?</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">If enabled, the main notification remains visible in addition to the status bar chip.</string>
-  <string formatted="false" name="pref_chip_content">Chip Content</string>
-  <string formatted="false" name="pref_chip_switching_interval">Switching interval</string>
-  <string formatted="false" name="pref_chip_content_help">Choose what value to show in the promoted-notification chip.</string>
-  <string formatted="false" name="pref_chip_indicate_charging">Show Charging Emoji</string>
-  <string formatted="false" name="pref_chip_indicate_charging_summary">Show a lightning emoji when charging or fully charged?</string>
-  <string formatted="false" name="pref_chip_indicate_charging_help">If enabled, the status bar chip will show a lightning emoji next to the chip value while charging or when fully charged.</string>
-  <string formatted="false" name="pref_top_line_content">Top Line Content</string>
-  <string formatted="false" name="pref_top_line_content_help">Configure what goes in the top line of the notification: estimated time remaining (configurable elsewhere), how long since the status has changed (plugged in, unplugged, or fully charged), or the battery vital signs (battery health, temperature, and voltage).</string>
-  <string formatted="false" name="pref_bottom_line_content">Bottom Line Content</string>
-  <string formatted="false" name="pref_bottom_line_content_help">You have the same options for the bottom line as for the top line.</string>
-  <string formatted="false" name="time_remaining">Time Remaining</string>
-  <string formatted="false" name="time_since_status_change">Time Since Status Change</string>
-  <string formatted="false" name="vital_signs">Vital Signs</string>
+  <string name="pref_cat_notification_content" formatted="false">Content</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Status Bar Chip (Android 16+)</string>
+  <string name="pref_live_update_display" formatted="false">Show Live Update</string>
+  <string name="pref_live_update_display_summary" formatted="false">Show in status bar:</string>
+  <string name="pref_live_update_display_help" formatted="false">Choose when the Live Update chip should be shown in the status bar.</string>
+  <string name="pref_live_update_display_charging" formatted="false">Only during charging</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">Keep main notification</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">Show the main notification while Live Update is active?</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">If enabled, the main notification remains visible in addition to the status bar chip.</string>
+  <string name="pref_chip_content" formatted="false">Chip Content</string>
+  <string name="pref_chip_switching_interval" formatted="false">Switching interval</string>
+  <string name="pref_chip_content_help" formatted="false">Choose what value to show in the promoted-notification chip.</string>
+  <string name="pref_chip_indicate_charging" formatted="false">Show Charging Emoji</string>
+  <string name="pref_chip_indicate_charging_summary" formatted="false">Show a lightning emoji when charging or fully charged?</string>
+  <string name="pref_chip_indicate_charging_help" formatted="false">If enabled, the status bar chip will show a lightning emoji next to the chip value while charging or when fully charged.</string>
+  <string name="pref_top_line_content" formatted="false">Top Line Content</string>
+  <string name="pref_top_line_content_help" formatted="false">Configure what goes in the top line of the notification: estimated time remaining (configurable elsewhere), how long since the status has changed (plugged in, unplugged, or fully charged), or the battery vital signs (battery health, temperature, and voltage).</string>
+  <string name="pref_bottom_line_content" formatted="false">Bottom Line Content</string>
+  <string name="pref_bottom_line_content_help" formatted="false">You have the same options for the bottom line as for the top line.</string>
+  <string name="time_remaining" formatted="false">Time Remaining</string>
+  <string name="time_since_status_change" formatted="false">Time Since Status Change</string>
+  <string name="vital_signs" formatted="false">Vital Signs</string>
 
-  <string formatted="false" name="pref_time_remaining_verbosity">Time Remaining Verbosity</string>
-  <string formatted="false" name="pref_time_remaining_verbosity_help">Devices come in all shapes and sizes, so most translations need to use abbreviations to ensure that the time-remaining estimate fits comfortably in the notification area. If it still doesn\'t fit, you can opt for the condensed format. If you have plenty of room, you might prefer the verbose setting.</string>
-  <string formatted="false" name="condensed">Condensed</string>
-  <string formatted="false" name="normal">Normal</string>
-  <string formatted="false" name="verbose">Verbose</string>
+  <string name="pref_time_remaining_verbosity" formatted="false">Time Remaining Verbosity</string>
+  <string name="pref_time_remaining_verbosity_help" formatted="false">Devices come in all shapes and sizes, so most translations need to use abbreviations to ensure that the time-remaining estimate fits comfortably in the notification area. If it still doesn\'t fit, you can opt for the condensed format. If you have plenty of room, you might prefer the verbose setting.</string>
+  <string name="condensed" formatted="false">Condensed</string>
+  <string name="normal" formatted="false">Normal</string>
+  <string name="verbose" formatted="false">Verbose</string>
 
-  <string formatted="false" name="pref_status_duration_in_vital_signs">Status Duration in Vital Signs</string>
-  <string formatted="false" name="pref_status_duration_in_vital_signs_summary">Include Time Since Status Change in Vital Signs?</string>
-  <string formatted="false" name="pref_status_duration_in_vital_signs_help">If set, the vital signs line will also include the number of hours since the device became unplugged, plugged in, or fully charged.</string>
+  <string name="pref_status_duration_in_vital_signs" formatted="false">Status Duration in Vital Signs</string>
+  <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Include Time Since Status Change in Vital Signs?</string>
+  <string name="pref_status_duration_in_vital_signs_help" formatted="false">If set, the vital signs line will also include the number of hours since the device became unplugged, plugged in, or fully charged.</string>
 
-  <string formatted="false" name="custom">Custom...</string>
+  <string name="custom" formatted="false">Custom...</string>
 
-  <string formatted="false" name="pref_cat_icon_set">Notification Icon</string>
-  <string formatted="false" name="pref_icon_content">Icon Content</string>
-  <string formatted="false" name="pref_icon_content_help">Choose whether the status bar icon shows battery percentage or battery temperature. Temperature follows your selected unit.</string>
-  <string formatted="false" name="pref_show_icon_unit">Show Unit Symbol</string>
-  <string formatted="false" name="pref_show_icon_unit_help">If enabled, the icon shows a percent sign for battery percentage and a degree symbol for battery temperature. Disable it to show only the number.</string>
+  <string name="pref_cat_icon_set" formatted="false">Notification Icon</string>
+  <string name="pref_icon_content" formatted="false">Icon Content</string>
+  <string name="pref_icon_content_help" formatted="false">Choose whether the status bar icon shows battery percentage or battery temperature. Temperature follows your selected unit.</string>
+  <string name="pref_show_icon_unit" formatted="false">Show Unit Symbol</string>
+  <string name="pref_show_icon_unit_help" formatted="false">If enabled, the icon shows a percent sign for battery percentage and a degree symbol for battery temperature. Disable it to show only the number.</string>
 
-  <string formatted="false" name="pref_cat_current_hack_main">Main Control</string>
-  <string formatted="false" name="pref_cat_current_hack_unsupported">Current (mA) Hack Unsupported</string>
+  <string name="pref_cat_current_hack_main" formatted="false">Main Control</string>
+  <string name="pref_cat_current_hack_unsupported" formatted="false">Current (mA) Hack Unsupported</string>
 
-  <string formatted="false" name="pref_current_hack_unsupported">Sorry, the current (mA) hack is not supported on this device.</string>
+  <string name="pref_current_hack_unsupported" formatted="false">Sorry, the current (mA) hack is not supported on this device.</string>
 
-  <string formatted="false" name="pref_enable_current_hack">Enable hack</string>
-  <string formatted="false" name="pref_enable_current_hack_summary">Attempt to enable the current (mA) hack?</string>
-  <string formatted="false" name="pref_enable_current_hack_help">When this setting is enabled, the other options regarding the hack will be usable.</string>
+  <string name="pref_enable_current_hack" formatted="false">Enable hack</string>
+  <string name="pref_enable_current_hack_summary" formatted="false">Attempt to enable the current (mA) hack?</string>
+  <string name="pref_enable_current_hack_help" formatted="false">When this setting is enabled, the other options regarding the hack will be usable.</string>
 
-  <string formatted="false" name="pref_current_hack_prefer_fs">Prefer old hack method</string>
-  <string formatted="false" name="pref_current_hack_prefer_fs_summary">Prefer older, filesystem-based hack method?</string>
-  <string formatted="false" name="pref_current_hack_prefer_fs_help">Starting in Lollipop (Android 5.0), Android now provides a somewhat less hackish way to access current (mA) information, directly from the system BatteryManager. However, it is still not guaranteed to work at all or to work well. Until Android Nougat (Android 7.0), the old (filesystem-based) hack method seems to work better on most devices, so it remains the default on devices running less than Android 7.0.\n
+  <string name="pref_current_hack_prefer_fs" formatted="false">Prefer old hack method</string>
+  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Prefer older, filesystem-based hack method?</string>
+  <string name="pref_current_hack_prefer_fs_help" formatted="false">Starting in Lollipop (Android 5.0), Android now provides a somewhat less hackish way to access current (mA) information, directly from the system BatteryManager. However, it is still not guaranteed to work at all or to work well. Until Android Nougat (Android 7.0), the old (filesystem-based) hack method seems to work better on most devices, so it remains the default on devices running less than Android 7.0.\n
     \n
     This setting is just a hint to the hack about which method to prefer; you can try changing it if the hack isn\'t working well on your device.</string>
 
-  <string formatted="false" name="pref_current_hack_multiplier">Multiplier</string>
-  <string formatted="false" name="pref_current_hack_multiplier_help">Some devices report milliamperes rather than microamperes as the API calls for. Same devices swap the sign of the value reported. Some users prefer the opposite sign of correctly reported values. To help accommodate situations like these, you can multiply the result of the API call by the value here.\n
+  <string name="pref_current_hack_multiplier" formatted="false">Multiplier</string>
+  <string name="pref_current_hack_multiplier_help" formatted="false">Some devices report milliamperes rather than microamperes as the API calls for. Same devices swap the sign of the value reported. Some users prefer the opposite sign of correctly reported values. To help accommodate situations like these, you can multiply the result of the API call by the value here.\n
     \n
     If your device always displays 0 mA, for example, you could try using a multiplier of 1000. If the API call returns 450 microamperes, that multiplier will get the app to show the value as 450 mA rather than 0 mA. If the API call returns 0 microamperes, of course, the multiplier won\'t change the final display value of 0 mA.</string>
 
-  <string formatted="false" name="pref_cat_current_hack_notification">Notification</string>
-  <string formatted="false" name="pref_display_current_in_vital_stats">Display in vital stats</string>
-  <string formatted="false" name="pref_display_current_in_vital_stats_summary">Display current (mA) in main notification vital stats?</string>
-  <string formatted="false" name="pref_display_current_in_vital_stats_help">When enabled, the hack will be attempted and will display the result in the main notification vital stats line. Note that you must have the main notification configured to display vital stats in order to see this. This value will only refresh when the system sends new battery information.\n
+  <string name="pref_cat_current_hack_notification" formatted="false">Notification</string>
+  <string name="pref_display_current_in_vital_stats" formatted="false">Display in vital stats</string>
+  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Display current (mA) in main notification vital stats?</string>
+  <string name="pref_display_current_in_vital_stats_help" formatted="false">When enabled, the hack will be attempted and will display the result in the main notification vital stats line. Note that you must have the main notification configured to display vital stats in order to see this. This value will only refresh when the system sends new battery information.\n
     \n
     On most devices, a negative value indicates a net drain from the battery and a positive value indicates that the battery is being charged. Not all devices generate values this way, however.</string>
 
-  <string formatted="false" name="pref_cat_current_hack_main_window">Main Window</string>
-  <string formatted="false" name="pref_display_current_in_main_window">Display in main window</string>
-  <string formatted="false" name="pref_display_current_in_main_window_summary">Display current (mA) in main window?</string>
-  <string formatted="false" name="pref_display_current_in_main_window_help">When enabled, the hack will be attempted and will display the result in the main window. This value will be refreshed whenever the system sends new battery information, but you can refresh the value at any time by simply tapping the displayed value. (Note that some devices rarely or never update the underlying data, so the value may not appear to change on tap.)\n
+  <string name="pref_cat_current_hack_main_window" formatted="false">Main Window</string>
+  <string name="pref_display_current_in_main_window" formatted="false">Display in main window</string>
+  <string name="pref_display_current_in_main_window_summary" formatted="false">Display current (mA) in main window?</string>
+  <string name="pref_display_current_in_main_window_help" formatted="false">When enabled, the hack will be attempted and will display the result in the main window. This value will be refreshed whenever the system sends new battery information, but you can refresh the value at any time by simply tapping the displayed value. (Note that some devices rarely or never update the underlying data, so the value may not appear to change on tap.)\n
     \n
     On most devices, a negative value indicates a net drain from the battery and a positive value indicates that the battery is being charged. Not all devices generate values this way, however.</string>
 
-  <string formatted="false" name="pref_prefer_current_avg_in_vital_stats">Prefer average in vital stats</string>
-  <string formatted="false" name="pref_prefer_current_avg_in_vital_stats_summary">Try to use current_avg in main notification vital stats?</string>
-  <string formatted="false" name="pref_prefer_current_avg_in_main_window">Prefer average in main window</string>
-  <string formatted="false" name="pref_prefer_current_avg_in_main_window_summary">Try to use current_avg in main window?</string>
+  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Prefer average in vital stats</string>
+  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Try to use current_avg in main notification vital stats?</string>
+  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Prefer average in main window</string>
+  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Try to use current_avg in main window?</string>
 
-  <string formatted="false" name="pref_prefer_current_avg_help">Some systems have a further hack available, giving a recent average of the current rather than an instantaneous reading of it. What this means varies from device to device and is only available on some devices. This may give a more stable value (if all goes well), it may return the same value, or it may return an unusable value (in which case you should turn this option off).</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Some systems have a further hack available, giving a recent average of the current rather than an instantaneous reading of it. What this means varies from device to device and is only available on some devices. This may give a more stable value (if all goes well), it may return the same value, or it may return an unusable value (in which case you should turn this option off).</string>
 
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window">Auto-refresh mA in main window</string>
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window_summary">Auto-refresh mA every two seconds?</string>
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window_help">If you have the hack set to display mA in the main window, you can refresh the value by simply tapping it. If you want to see frequent updates without having to tap, you can enable this option to auto-refresh the value every two seconds while the window is visible.\n
+  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Auto-refresh mA in main window</string>
+  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Auto-refresh mA every two seconds?</string>
+  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">If you have the hack set to display mA in the main window, you can refresh the value by simply tapping it. If you want to see frequent updates without having to tap, you can enable this option to auto-refresh the value every two seconds while the window is visible.\n
     \n
     Note that some devices rarely or never update the underlying data, so the value may not appear to change even though the app is refreshing the displayed value to match the data retrieved from the system.</string>
 
-  <string formatted="false" name="pref_cat_charging_indicator">Charging Indicator</string>
-  <string formatted="false" name="pref_indicate_charging">Indicate Charging</string>
-  <string formatted="false" name="pref_indicate_charging_summary">Alter icon to indicate when charging?</string>
-  <string formatted="false" name="pref_indicate_charging_help">Icon can show a lightning bolt below the number during charging. Disable this setting if you would prefer the same icon all the time.</string>
+  <string name="pref_cat_charging_indicator" formatted="false">Charging Indicator</string>
+  <string name="pref_indicate_charging" formatted="false">Indicate Charging</string>
+  <string name="pref_indicate_charging_summary" formatted="false">Alter icon to indicate when charging?</string>
+  <string name="pref_indicate_charging_help" formatted="false">Icon can show a lightning bolt below the number during charging. Disable this setting if you would prefer the same icon all the time.</string>
 
-  <string formatted="false" name="pref_cat_logging">Logging</string>
-  <string formatted="false" name="pref_enable_logging">Enable Logging</string>
-  <string formatted="false" name="pref_enable_logging_summary">Log battery state changes?</string>
-  <string formatted="false" name="pref_enable_logging_help">If enabled, Battery Monitor will log battery state changes.</string>
-  <string formatted="false" name="pref_max_log_age">Maximum Log Age</string>
-  <string formatted="false" name="pref_max_log_age_summary">Delete logs older than:</string>
-  <string formatted="false" name="pref_max_log_age_help">If logging is enabled, then whenever you plug in your device, logs older than this will be deleted. Select "Never delete" to keep logs until you clear them manually.</string>
+  <string name="pref_cat_logging" formatted="false">Logging</string>
+  <string name="pref_enable_logging" formatted="false">Enable Logging</string>
+  <string name="pref_enable_logging_summary" formatted="false">Log battery state changes?</string>
+  <string name="pref_enable_logging_help" formatted="false">If enabled, Battery Monitor will log battery state changes.</string>
+  <string name="pref_max_log_age" formatted="false">Maximum Log Age</string>
+  <string name="pref_max_log_age_summary" formatted="false">Delete logs older than:</string>
+  <string name="pref_max_log_age_help" formatted="false">If logging is enabled, then whenever you plug in your device, logs older than this will be deleted. Select "Never delete" to keep logs until you clear them manually.</string>
 
-  <string formatted="false" name="pref_cat_temperature_unit">Temperature Unit</string>
-  <string formatted="false" name="pref_convert_to_fahrenheit">Convert to Fahrenheit</string>
-  <string formatted="false" name="pref_convert_to_fahrenheit_help">Android reports the battery temperature in degrees Celsius. If you prefer to see the battery temperature in degrees Fahrenheit, check this option, and the app will convert for you.</string>
+  <string name="pref_cat_temperature_unit" formatted="false">Temperature Unit</string>
+  <string name="pref_convert_to_fahrenheit" formatted="false">Convert to Fahrenheit</string>
+  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android reports the battery temperature in degrees Celsius. If you prefer to see the battery temperature in degrees Fahrenheit, check this option, and the app will convert for you.</string>
 
-  <string formatted="false" name="pref_cat_autostart">Autostart</string>
-  <string formatted="false" name="pref_autostart_at_boot">Autostart at Boot</string>
-  <string formatted="false" name="pref_autostart_at_boot_summary">Start Battery Monitor when device boots:</string>
-  <string formatted="false" name="pref_autostart_at_boot_help">Controls whether Battery Monitor should start itself automatically when the device boots up.\n
+  <string name="pref_cat_autostart" formatted="false">Autostart</string>
+  <string name="pref_autostart_at_boot" formatted="false">Autostart at Boot</string>
+  <string name="pref_autostart_at_boot_summary" formatted="false">Start Battery Monitor when device boots:</string>
+  <string name="pref_autostart_at_boot_help" formatted="false">Controls whether Battery Monitor should start itself automatically when the device boots up.\n
     \n
     The \"If Running on Shutdown\" option works with regard to whether you\'ve most recently manually started or stopped Battery Monitor. So if you kill Battery Monitor through some other means, like a task killer, then Battery Monitor doesn\'t know you stopped it, and it will still start at boot up if you have it set to this.\n
     \n
     NOTE: Android will always start Battery Monitor on boot if you have an Battery Monitor desktop widgets. In that case this settings is irrelevant.</string>
 
-  <string formatted="false" name="predictor_sensitive">Sensitive</string>
-  <string formatted="false" name="predictor_conservative">Conservative</string>
-  <string formatted="false" name="predictor_since_status_change">Since Status Change</string>
-  <string formatted="false" name="predictor_long_term_ave">Long-term Average</string>
+  <string name="predictor_sensitive" formatted="false">Sensitive</string>
+  <string name="predictor_conservative" formatted="false">Conservative</string>
+  <string name="predictor_since_status_change" formatted="false">Since Status Change</string>
+  <string name="predictor_long_term_ave" formatted="false">Long-term Average</string>
 
-  <string formatted="false" name="pref_cat_predictor">Time-Remaining Estimates</string>
-  <string formatted="false" name="pref_prediction_type">Estimate Type</string>
-  <string formatted="false" name="pref_prediction_type_help">Here you can select how Battery Monitor will predict your remaining battery life / time until fully charged.\n
+  <string name="pref_cat_predictor" formatted="false">Time-Remaining Estimates</string>
+  <string name="pref_prediction_type" formatted="false">Estimate Type</string>
+  <string name="pref_prediction_type_help" formatted="false">Here you can select how Battery Monitor will predict your remaining battery life / time until fully charged.\n
     \n
     The \"Sensitive\" algorithm is strictly based on your last five minutes of usage. If your primary concern is \"How long will my battery last if I keep doing what I\'m doing?\" then this is the algorithm for you.\n
     \n
@@ -395,12 +395,12 @@
     \n
     Finally, you can have the prediction based solely on your long-term average usage.</string>
 
-  <string formatted="false" name="pref_cat_language">Language</string>
-  <string formatted="false" name="pref_language_override">App language</string>
-  <string formatted="false" name="pref_language_override_summary">Select language:</string>
+  <string name="pref_cat_language" formatted="false">Language</string>
+  <string name="pref_language_override" formatted="false">App language</string>
+  <string name="pref_language_override_summary" formatted="false">Select language:</string>
 
-  <string formatted="false" name="alarms_overview">Alarms Overview</string>
-  <string formatted="false" name="alarms_overview_help">This page allows you to add new alarms, quickly enable or disable existing alarms, or delete alarms.\n
+  <string name="alarms_overview" formatted="false">Alarms Overview</string>
+  <string name="alarms_overview_help" formatted="false">This page allows you to add new alarms, quickly enable or disable existing alarms, or delete alarms.\n
     \n
     To add a new alarm, press \"Add alarm\" — this will create a new alarm and take you to the alarm settings page, where you can control the settings for the new alarm. See the help on that page for more details.\n
     \n
@@ -410,46 +410,46 @@
     • To delete an alarm, long-press it, then select \"Delete Alarm\". (You can also delete an alarm from the individual alarm settings page by pressing MENU then \"Delete Alarm\".)\n
     • To easily toggle whether an alarm is enabled, press the toggle switch to the side of the alarm text. (You can also enable or disable an alarm from the individual alarm settings page.)</string>
 
-  <string formatted="false" name="pref_alarm_enabled">Enable Alarm</string>
-  <string formatted="false" name="pref_alarm_enabled_help">If you want to temporarily disable an alarm without having to recreate it when you want it again, you can turn it off and on either here or on the main alarms page.</string>
+  <string name="pref_alarm_enabled" formatted="false">Enable Alarm</string>
+  <string name="pref_alarm_enabled_help" formatted="false">If you want to temporarily disable an alarm without having to recreate it when you want it again, you can turn it off and on either here or on the main alarms page.</string>
 
-  <string formatted="false" name="pref_cat_alarm_conditions">Alarm Conditions</string>
-  <string formatted="false" name="pref_cat_alarm_conditions_help">This is where you can control what conditions trigger the alarm.</string>
-  <string formatted="false" name="pref_alarm_type">Alarm Type</string>
-  <string formatted="false" name="pref_alarm_type_summary">Trigger alarm when battery:</string>
-  <string formatted="false" name="pref_alarm_type_help">There are currently five types of alarm that you can choose from.\n
+  <string name="pref_cat_alarm_conditions" formatted="false">Alarm Conditions</string>
+  <string name="pref_cat_alarm_conditions_help" formatted="false">This is where you can control what conditions trigger the alarm.</string>
+  <string name="pref_alarm_type" formatted="false">Alarm Type</string>
+  <string name="pref_alarm_type_summary" formatted="false">Trigger alarm when battery:</string>
+  <string name="pref_alarm_type_help" formatted="false">There are currently five types of alarm that you can choose from.\n
     \n
     The \"Becomes fully charged\" alarm will notify you when the status of your battery changes from \"Charging\" to \"Fully Charged\". Note that on many devices, this isn\'t necessarily the same thing as being at 100% charge.\n
     \n
     The charge and temperature alarms require you to set a threshold below, after choosing that alarm type.\n
     \n
     The \"Health Fails\" alarm will notify you if your battery health becomes something other than \"Unknown\" or \"Healthy\", as reported by Android.</string>
-  <string formatted="false" name="pref_alarm_threshold">Threshold</string>
-  <string formatted="false" name="alarm_pref_not_used">Not used for this alarm type</string>
-  <string formatted="false" name="pref_alarm_threshold_summary">Alarm threshold:</string>
-  <string formatted="false" name="pref_alarm_threshold_help">For charge and temperature alarms, you need to set the temperature or charge level that will trigger the alarm.</string>
-  <string formatted="true" name="alarm_custom_temp_message">Enter temperature in %s degrees</string>
-  <string formatted="false" name="alarm_custom_charge_message">Enter charge percentage (0-100)</string>
+  <string name="pref_alarm_threshold" formatted="false">Threshold</string>
+  <string name="alarm_pref_not_used" formatted="false">Not used for this alarm type</string>
+  <string name="pref_alarm_threshold_summary" formatted="false">Alarm threshold:</string>
+  <string name="pref_alarm_threshold_help" formatted="false">For charge and temperature alarms, you need to set the temperature or charge level that will trigger the alarm.</string>
+  <string name="alarm_custom_temp_message" formatted="true">Enter temperature in %s degrees</string>
+  <string name="alarm_custom_charge_message" formatted="false">Enter charge percentage (0-100)</string>
 
-  <string formatted="false" name="boot_pref_always">Always</string>
-  <string formatted="false" name="boot_pref_never">Never</string>
-  <string formatted="false" name="boot_pref_if_running">If running on shutdown</string>
+  <string name="boot_pref_always" formatted="false">Always</string>
+  <string name="boot_pref_never" formatted="false">Never</string>
+  <string name="boot_pref_if_running" formatted="false">If running on shutdown</string>
 
-  <string formatted="false" name="age_1_day">1 day</string>
-  <string formatted="false" name="age_2_days">2 days</string>
-  <string formatted="false" name="age_4_days">4 days</string>
-  <string formatted="false" name="age_1_week">1 week</string>
-  <string formatted="false" name="age_2_weeks">2 weeks</string>
-  <string formatted="false" name="age_3_weeks">3 weeks</string>
-  <string formatted="false" name="age_4_weeks">4 weeks</string>
-  <string formatted="false" name="age_never_delete">Never delete</string>
-  <string formatted="false" name="pref_content_percent">Battery Percentage</string>
-  <string formatted="false" name="pref_content_temperature">Battery Temperature</string>
-  <string formatted="false" name="pref_content_switching">Switch between both</string>
+  <string name="age_1_day" formatted="false">1 day</string>
+  <string name="age_2_days" formatted="false">2 days</string>
+  <string name="age_4_days" formatted="false">4 days</string>
+  <string name="age_1_week" formatted="false">1 week</string>
+  <string name="age_2_weeks" formatted="false">2 weeks</string>
+  <string name="age_3_weeks" formatted="false">3 weeks</string>
+  <string name="age_4_weeks" formatted="false">4 weeks</string>
+  <string name="age_never_delete" formatted="false">Never delete</string>
+  <string name="pref_content_percent" formatted="false">Battery Percentage</string>
+  <string name="pref_content_temperature" formatted="false">Battery Temperature</string>
+  <string name="pref_content_switching" formatted="false">Switch between both</string>
 
-  <string formatted="false" name="chip_switching_interval_2_seconds">2 seconds</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 seconds</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 seconds</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 seconds</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 seconds</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 seconds</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 seconds</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 seconds</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 seconds</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 seconds</string>
 </resources>

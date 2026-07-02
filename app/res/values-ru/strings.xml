@@ -133,10 +133,10 @@
     <item quantity="other">%d элемента журнала</item>
   </plurals>
 
-  <string name="after_nh_mm_unplugged" formatted="false">После %1$dч %2$dм без подключения</string>
-  <string name="after_nh_mm_plugged_in" formatted="false">После %1$dч %2$dм при подключении</string>
-  <string name="after_nm_ms_unplugged" formatted="false">После %1$dм %2$dс без подключения</string>
-  <string name="after_nm_ms_plugged_in" formatted="false">После %1$dм %2$dс при подключении</string>
+  <string name="after_nh_mm_unplugged" formatted="true">После %1$dч %2$dм без подключения</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">После %1$dч %2$dм при подключении</string>
+  <string name="after_nm_ms_unplugged" formatted="true">После %1$dм %2$dс без подключения</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">После %1$dм %2$dс при подключении</string>
 
   <plurals name="n_hours_long">
     <item quantity="one">"%d час, "</item>
@@ -222,7 +222,7 @@
   <string name="help_acknowledgments" formatted="false">Battery Monitor — это форк Battery Indicator Pro/BatteryBot Pro от Даршан Компьютинг, ООО. Спасибо первоначальным авторам и участникам для создания и поддержки восходящего проекта.</string>
 
   <string name="help_cat_contact" formatted="false">Контакты</string>
-  <string formatted="false" name="help_contact">Если у вас есть вопрос, проблема или комментарий, пожалуйста, <a href="mailto:tomasz@swistak.codes">напишите мне</a>.</string>
+  <string name="help_contact" formatted="false">Если у вас есть вопрос, проблема или комментарий, пожалуйста, <a href="mailto:tomasz@swistak.codes">напишите мне</a>.</string>
 
   <string name="settings_overview" formatted="false">Обзор</string>
   <string name="settings_overview_help" formatted="false">Все настройки разбиты на несколько страниц. Каждая страница настроек имеет свою соответствующую страницу помощи. Просто нажмите MENU, затем Help (MENU на планшетах не обязательно) для получения справки по настройкам текущей страницы.</string>
@@ -262,22 +262,22 @@
   <string name="other_settings" formatted="false">Другие настройки</string>
   <string name="other_settings_help" formatted="false">На этой странице представлены все остальные настройки, включая настройку журнала работы, блокировки экрана, единиц измерения, автозагрузки и другие.</string>
 
-  <string name="live_updates_onboarding_title" formatted="false">Чип батареи в строке состояния</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">Ваше устройство поддерживает отображение процента батареи в виде чипа в строке состояния. Эта опция включена по умолчанию.\n
+  <string name="live_updates_onboarding_title">Чип батареи в строке состояния</string>
+  <string name="live_updates_onboarding_message_on">Ваше устройство поддерживает отображение процента батареи в виде чипа в строке состояния. Эта опция включена по умолчанию.\n
     \n
     Если вы предпочитаете традиционный значок уведомления, вы можете отключить «Live Updates» в системных настройках Android для этого приложения.\n
     \n
     Примечание: предоставление этого разрешения может иногда приводить к закрытию приложения. Если это произойдет, просто откройте его снова.</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">Ваше устройство поддерживает отображение процента батареи в виде чипа в строке состояния, но эта опция сейчас отключена в системных настройках.\n
+  <string name="live_updates_onboarding_message_off">Ваше устройство поддерживает отображение процента батареи в виде чипа в строке состояния, но эта опция сейчас отключена в системных настройках.\n
     \n
     Для наилучшего опыта рекомендуем включить ее. Если вы предпочитаете традиционный значок уведомления, можно оставить ее отключенной.\n
     \n
     Примечание: предоставление этого разрешения может иногда приводить к закрытию приложения. Если это произойдет, просто откройте его снова.</string>
-  <string name="live_updates_onboarding_positive_on" formatted="false">Понятно</string>
-  <string name="live_updates_onboarding_positive_off" formatted="false">Перейти в настройки</string>
-  <string name="live_updates_onboarding_negative_off" formatted="false">Закрыть</string>
+  <string name="live_updates_onboarding_positive_on">Понятно</string>
+  <string name="live_updates_onboarding_positive_off">Перейти в настройки</string>
+  <string name="live_updates_onboarding_negative_off">Закрыть</string>
 
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor требуется ваше разрешение, чтобы показывать уровень батареи в строке состояния и уведомлять вас о сигналах тревоги.\n
+  <string name="notifications_onboarding_message">Battery Monitor требуется ваше разрешение, чтобы показывать уровень батареи в строке состояния и уведомлять вас о сигналах тревоги.\n
     \n
     Примечание: предоставление этого разрешения может иногда приводить к закрытию приложения. Если это произойдет, просто откройте его снова.</string>
 
@@ -288,13 +288,13 @@
 
   <string name="pref_cat_notification_content" formatted="false">Содержание</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Чип в строке состояния (Android 16+)</string>
-  <string formatted="false" name="pref_live_update_display">Показывать Live Update</string>
-  <string formatted="false" name="pref_live_update_display_summary">Показывать в строке состояния:</string>
-  <string formatted="false" name="pref_live_update_display_help">Выберите, когда в строке состояния должен показываться чип Live Update в Android 16+.</string>
-  <string formatted="false" name="pref_live_update_display_charging">Только во время зарядки</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">Сохранять основное уведомление при Live Update</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Показывать полное основное уведомление, пока Live Update активен?</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Если включено, обычное основное уведомление остается видимым вместе с чипом в строке состояния.</string>
+  <string name="pref_live_update_display" formatted="false">Показывать Live Update</string>
+  <string name="pref_live_update_display_summary" formatted="false">Показывать в строке состояния:</string>
+  <string name="pref_live_update_display_help" formatted="false">Выберите, когда в строке состояния должен показываться чип Live Update в Android 16+.</string>
+  <string name="pref_live_update_display_charging" formatted="false">Только во время зарядки</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">Сохранять основное уведомление при Live Update</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">Показывать полное основное уведомление, пока Live Update активен?</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">Если включено, обычное основное уведомление остается видимым вместе с чипом в строке состояния.</string>
   <string name="pref_chip_content" formatted="false">Содержимое чипа</string>
   <string name="pref_chip_switching_interval" formatted="false">Интервал переключения</string>
   <string name="pref_chip_content_help" formatted="false">Выберите, какое значение показывать в чипе продвинутого уведомления Android 16+.</string>
@@ -319,7 +319,7 @@
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Включать время с момента изменения состояния критически важных параметров?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Если выбрано, строка критически важных параметров также будет включать время, прошедшее с момента отключения или подключения зарядного устройства или с момента полной зарядки аккумулятора.</string>
 
-  <string formatted="false" name="custom">Настраиваемый...</string>
+  <string name="custom" formatted="false">Настраиваемый...</string>
 
   <string name="pref_cat_icon_set" formatted="false">Значок уведомления</string>
   <string name="pref_icon_content" formatted="false">Содержимое значка</string>
@@ -385,7 +385,7 @@
   <string name="pref_enable_logging_help" formatted="false">Если включено, Battery Monitor будет вести журнал изменений состояния аккумулятора.</string>
   <string name="pref_max_log_age" formatted="false">Максимальный возраст журнала</string>
   <string name="pref_max_log_age_summary" formatted="false">Удалить журналы старше:</string>
-  <string formatted="false" name="pref_max_log_age_help">Если ведение журнала включено, при каждом подключении устройства будут удаляться записи старше этого значения. Выберите Никогда не удалять, чтобы хранить записи, пока вы не очистите их вручную.</string>
+  <string name="pref_max_log_age_help" formatted="false">Если ведение журнала включено, при каждом подключении устройства будут удаляться записи старше этого значения. Выберите Никогда не удалять, чтобы хранить записи, пока вы не очистите их вручную.</string>
 
   <string name="pref_cat_temperature_unit" formatted="false">Единицы измерения температуры</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Преобразовать к Фаренгейту</string>
@@ -446,8 +446,8 @@
   <string name="alarm_pref_not_used" formatted="false">Не используется для этого типа предупреждения</string>
   <string name="pref_alarm_threshold_summary" formatted="false">Порог срабатывания:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Для предупреждений о заряде и температуре необходимо установить температуру или уровень заряда, приводящих к возникновению предупреждения.</string>
-  <string formatted="false" name="alarm_custom_temp_message">Введите температуру в градусах %s.</string>
-  <string formatted="false" name="alarm_custom_charge_message">Введите процент заряда (0-100)</string>
+  <string name="alarm_custom_temp_message" formatted="true">Введите температуру в градусах %s.</string>
+  <string name="alarm_custom_charge_message" formatted="false">Введите процент заряда (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">Всегда</string>
   <string name="boot_pref_never" formatted="false">Никогда</string>
@@ -460,14 +460,14 @@
   <string name="age_2_weeks" formatted="false">2 недели</string>
   <string name="age_3_weeks" formatted="false">3 недели</string>
   <string name="age_4_weeks" formatted="false">4 недели</string>
-  <string formatted="false" name="age_never_delete">Никогда не удалять</string>
+  <string name="age_never_delete" formatted="false">Никогда не удалять</string>
   <string name="pref_content_percent" formatted="false">Процент заряда</string>
   <string name="pref_content_temperature" formatted="false">Температура батареи</string>
   <string name="pref_content_switching" formatted="false">Переключать между обоими</string>
 
-  <string formatted="false" name="chip_switching_interval_2_seconds">2 секунды</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 секунд</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 секунд</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 секунд</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 секунд</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 секунды</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 секунд</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 секунд</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 секунд</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 секунд</string>
 </resources>

@@ -129,10 +129,10 @@
     <item quantity="other">%d logboekitems</item>
   </plurals>
 
-  <string name="after_nh_mm_unplugged" formatted="false">Na %1$du %2$dm losgekoppeld</string>
-  <string name="after_nh_mm_plugged_in" formatted="false">Na %1$du %2$dm aangesloten</string>
-  <string name="after_nm_ms_unplugged" formatted="false">Na %1$dm %2$ds losgekoppeld</string>
-  <string name="after_nm_ms_plugged_in" formatted="false">Na %1$dm %2$ds aangesloten</string>
+  <string name="after_nh_mm_unplugged" formatted="true">Na %1$du %2$dm losgekoppeld</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">Na %1$du %2$dm aangesloten</string>
+  <string name="after_nm_ms_unplugged" formatted="true">Na %1$dm %2$ds losgekoppeld</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">Na %1$dm %2$ds aangesloten</string>
 
   <plurals name="n_hours_long">
     <item quantity="one">"%d uur, "</item>
@@ -200,7 +200,7 @@
   <string name="help_acknowledgments" formatted="false">Battery Monitor is een afsplitsing van Battery Indicator Pro / BatteryBot Pro van Darshan Computing, LLC. Dank aan de oorspronkelijke auteurs en bijdragers voor het creëren en onderhouden van het upstream-project.</string>
 
   <string name="help_cat_contact" formatted="false">Contact</string>
-  <string formatted="false" name="help_contact">Als u een vraag, een probleem of een opmerking heeft, neem dan contact met ons op <a href="mailto:tomasz@swistak.codes">e-mail mij</a>.</string>
+  <string name="help_contact" formatted="false">Als u een vraag, een probleem of een opmerking heeft, neem dan contact met ons op <a href="mailto:tomasz@swistak.codes">e-mail mij</a>.</string>
 
   <string name="settings_overview" formatted="false">Overzicht</string>
   <string name="settings_overview_help" formatted="false">De instellingen zijn verdeeld over drie verschillende pagina\'s, zoals onder beschreven. Elke pagina heeft zijn eigen helppagina over de instellingen op die pagina. Druk op MENU en dan Help voor help.</string>
@@ -240,22 +240,22 @@
   <string name="other_settings" formatted="false">Overige instellingen</string>
   <string name="other_settings_help" formatted="false">Alle andere instellingen zijn te vinden op deze pagina, waaronder logboeken, vergrendeling, temperatuureenheid, automatisch starten en meer.</string>
 
-  <string name="live_updates_onboarding_title" formatted="false">Statusbalk batterijchip</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk. Deze optie staat standaard aan.\n
+  <string name="live_updates_onboarding_title">Statusbalk batterijchip</string>
+  <string name="live_updates_onboarding_message_on">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk. Deze optie staat standaard aan.\n
     \n
     Als je liever een traditioneel meldingspictogram gebruikt, kun je "Live Updates" uitschakelen in de Android-systeeminstellingen voor deze app.\n
     \n
     Opmerking: Het verlenen van deze toestemming kan er soms voor zorgen dat de app sluit. Als dat gebeurt, open je de app gewoon opnieuw.</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk, maar deze optie is momenteel uitgeschakeld in de systeeminstellingen.\n
+  <string name="live_updates_onboarding_message_off">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk, maar deze optie is momenteel uitgeschakeld in de systeeminstellingen.\n
     \n
     Voor de beste ervaring raden we aan deze optie in te schakelen. Als je liever een traditioneel meldingspictogram gebruikt, kun je deze uitgeschakeld laten.\n
     \n
     Opmerking: Het verlenen van deze toestemming kan er soms voor zorgen dat de app sluit. Als dat gebeurt, open je de app gewoon opnieuw.</string>
-  <string name="live_updates_onboarding_positive_on" formatted="false">Begrepen</string>
-  <string name="live_updates_onboarding_positive_off" formatted="false">Ga naar instellingen</string>
-  <string name="live_updates_onboarding_negative_off" formatted="false">Sluiten</string>
+  <string name="live_updates_onboarding_positive_on">Begrepen</string>
+  <string name="live_updates_onboarding_positive_off">Ga naar instellingen</string>
+  <string name="live_updates_onboarding_negative_off">Sluiten</string>
 
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor heeft je toestemming nodig om het batterijniveau in de statusbalk te tonen en je over alarmen te informeren.\n
+  <string name="notifications_onboarding_message">Battery Monitor heeft je toestemming nodig om het batterijniveau in de statusbalk te tonen en je over alarmen te informeren.\n
     \n
     Opmerking: Het verlenen van deze toestemming kan er soms voor zorgen dat de app sluit. Als dat gebeurt, open je de app gewoon opnieuw.</string>
 
@@ -266,13 +266,13 @@
 
   <string name="pref_cat_notification_content" formatted="false">Inhoud</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Statusbalkchip (Android 16+)</string>
-  <string formatted="false" name="pref_live_update_display">Live-update tonen</string>
-  <string formatted="false" name="pref_live_update_display_summary">Tonen in statusbalk:</string>
-  <string formatted="false" name="pref_live_update_display_help">Kies wanneer de live-updatechip van Android 16+ in de statusbalk moet worden getoond.</string>
-  <string formatted="false" name="pref_live_update_display_charging">Alleen tijdens opladen</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">Hoofdmelding behouden bij live-update</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Volledige hoofdmelding tonen terwijl live-update actief is?</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Als dit is ingeschakeld, blijft de normale hoofdmelding zichtbaar naast de statusbalkchip.</string>
+  <string name="pref_live_update_display" formatted="false">Live-update tonen</string>
+  <string name="pref_live_update_display_summary" formatted="false">Tonen in statusbalk:</string>
+  <string name="pref_live_update_display_help" formatted="false">Kies wanneer de live-updatechip van Android 16+ in de statusbalk moet worden getoond.</string>
+  <string name="pref_live_update_display_charging" formatted="false">Alleen tijdens opladen</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">Hoofdmelding behouden bij live-update</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">Volledige hoofdmelding tonen terwijl live-update actief is?</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">Als dit is ingeschakeld, blijft de normale hoofdmelding zichtbaar naast de statusbalkchip.</string>
   <string name="pref_chip_content" formatted="false">Chipinhoud</string>
   <string name="pref_chip_switching_interval" formatted="false">Wisselinterval</string>
   <string name="pref_chip_content_help" formatted="false">Kies welke waarde wordt getoond in de Android 16+ promoted-notification-chip.</string>
@@ -297,7 +297,7 @@
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Laat tijd sinds wijziging zien in de onderste regel van de melding?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Stel dit in om de tijd sinds de laatste statuswijziging te laten zien in de onderste regel.</string>
 
-  <string formatted="false" name="custom">Aangepast...</string>
+  <string name="custom" formatted="false">Aangepast...</string>
 
   <string name="pref_cat_icon_set" formatted="false">Meldingsicoon</string>
   <string name="pref_icon_content" formatted="false">Icooninhoud</string>
@@ -365,7 +365,7 @@
   <string name="pref_enable_logging_help" formatted="false">Wanneer je dit inschakelt zullen veranderingen in de batterijstatus worden opgenomen in het logboek.</string>
   <string name="pref_max_log_age" formatted="false">Maximale logboek leeftijd</string>
   <string name="pref_max_log_age_summary" formatted="false">Verwijder logboeken ouder dan:</string>
-  <string formatted="false" name="pref_max_log_age_help">Als logboekregistratie is ingeschakeld, worden telkens wanneer je het apparaat aansluit logs verwijderd die ouder zijn dan deze waarde. Kies Nooit verwijderen om logs te bewaren totdat je ze handmatig wist.</string>
+  <string name="pref_max_log_age_help" formatted="false">Als logboekregistratie is ingeschakeld, worden telkens wanneer je het apparaat aansluit logs verwijderd die ouder zijn dan deze waarde. Kies Nooit verwijderen om logs te bewaren totdat je ze handmatig wist.</string>
 
   <string name="pref_cat_temperature_unit" formatted="false">Temperatuur</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Converteren naar Fahrenheit</string>
@@ -414,8 +414,8 @@
   <string name="alarm_pref_not_used" formatted="false">Niet gebruikt voor dit alarmtype</string>
   <string name="pref_alarm_threshold_summary" formatted="false">Voorwaarde voor alarm:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Voor lading en temperatuuralarmen moet je de lading of temperatuur instellen waarop het alarm afgaat.</string>
-  <string formatted="false" name="alarm_custom_temp_message">Voer de temperatuur in %s graden in</string>
-  <string formatted="false" name="alarm_custom_charge_message">Voer het kostenpercentage in (0-100)</string>
+  <string name="alarm_custom_temp_message" formatted="true">Voer de temperatuur in %s graden in</string>
+  <string name="alarm_custom_charge_message" formatted="false">Voer het kostenpercentage in (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">Altijd</string>
   <string name="boot_pref_never" formatted="false">Nooit</string>
@@ -428,14 +428,14 @@
   <string name="age_2_weeks" formatted="false">2 weken</string>
   <string name="age_3_weeks" formatted="false">3 weken</string>
   <string name="age_4_weeks" formatted="false">4 weken</string>
-  <string formatted="false" name="age_never_delete">Nooit verwijderen</string>
+  <string name="age_never_delete" formatted="false">Nooit verwijderen</string>
   <string name="pref_content_percent" formatted="false">Batterijpercentage</string>
   <string name="pref_content_temperature" formatted="false">Batterijtemperatuur</string>
   <string name="pref_content_switching" formatted="false">Wissel tussen beide</string>
 
-  <string formatted="false" name="chip_switching_interval_2_seconds">2 seconden</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 seconden</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 seconden</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 seconden</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 seconden</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 seconden</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 seconden</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 seconden</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 seconden</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 seconden</string>
 </resources>

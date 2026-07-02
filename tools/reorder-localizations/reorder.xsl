@@ -23,6 +23,28 @@
   </xsl:template>
 
   <xsl:template match="*[@name]">
-    <xsl:copy-of select="."/>
+    <xsl:variable name="referenceNode" select="$referenceDoc/*[@name = current()/@name][1]"/>
+
+    <xsl:element name="{name()}">
+      <xsl:attribute name="name">
+        <xsl:value-of select="@name"/>
+      </xsl:attribute>
+
+      <xsl:choose>
+        <xsl:when test="self::string and $referenceNode/@formatted">
+          <xsl:attribute name="formatted">
+            <xsl:value-of select="$referenceNode/@formatted"/>
+          </xsl:attribute>
+        </xsl:when>
+        <xsl:when test="self::string and not($referenceNode) and @formatted">
+          <xsl:attribute name="formatted">
+            <xsl:value-of select="@formatted"/>
+          </xsl:attribute>
+        </xsl:when>
+      </xsl:choose>
+
+      <xsl:copy-of select="@*[name() != 'name' and name() != 'formatted']"/>
+      <xsl:copy-of select="node()"/>
+    </xsl:element>
   </xsl:template>
 </xsl:stylesheet>

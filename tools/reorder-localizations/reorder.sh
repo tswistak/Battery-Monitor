@@ -10,7 +10,6 @@ ROOT_DIR="$(
 )"
 XML_DIR="$ROOT_DIR/app/res"
 REF_XML_PATH="$XML_DIR/values/strings.xml"
-ORDER_XSL_PATH="$SCRIPT_DIR/order.xsl"
 REORDER_XSL_PATH="$SCRIPT_DIR/reorder.xsl"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/xml-reorder.XXXXXX")"
 trap 'rm -rf "$TMP_DIR"' EXIT
@@ -25,24 +24,22 @@ while IFS= read -r values_dir; do
     continue
   fi
 
-  current_order="$(xsltproc "$ORDER_XSL_PATH" "$file_path")"
   xsltproc --stringparam reference "$REF_XML_PATH" "$REORDER_XSL_PATH" "$file_path" >"$NEW_XML_PATH"
-  transformed_order="$(xsltproc "$ORDER_XSL_PATH" "$NEW_XML_PATH")"
 
-  if [[ "$current_order" == "$transformed_order" ]]; then
+  if cmp -s "$file_path" "$NEW_XML_PATH"; then
     continue
   fi
 
   COUNTER=$((COUNTER + 1))
   cp "$NEW_XML_PATH" "$file_path"
-  echo "reordered ${file_path#$ROOT_DIR/}"
+  echo "rewrote ${file_path#$ROOT_DIR/}"
 done < <(
   find "$XML_DIR" -mindepth 1 -maxdepth 1 -type d -name 'values-*' | LC_ALL=C sort
 )
 
 if [[ "$COUNTER" -eq 0 ]]; then
-  echo "all files are already ordered"
+  echo "all files already match the reordered XML"
   exit 0
 fi
 
-echo "files reordered: $COUNTER"
+echo "files rewritten: $COUNTER"

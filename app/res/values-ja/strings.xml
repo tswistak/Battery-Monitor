@@ -129,10 +129,10 @@
     <item quantity="other">%d ログアイテム</item>
   </plurals>
 
-  <string name="after_nh_mm_unplugged" formatted="false">プラグを抜いてから %1$d時間%2$d分</string>
-  <string name="after_nh_mm_plugged_in" formatted="false">プラグを挿してから %1$d時間%2$d分</string>
-  <string name="after_nm_ms_unplugged" formatted="false">プラグを抜いてから %1$d分%2$d秒</string>
-  <string name="after_nm_ms_plugged_in" formatted="false">プラグを挿してから %1$d分%2$d秒</string>
+  <string name="after_nh_mm_unplugged" formatted="true">プラグを抜いてから %1$d時間%2$d分</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">プラグを挿してから %1$d時間%2$d分</string>
+  <string name="after_nm_ms_unplugged" formatted="true">プラグを抜いてから %1$d分%2$d秒</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">プラグを挿してから %1$d分%2$d秒</string>
 
   <plurals name="n_hours_long">
     <item quantity="one">"%d 時間 "</item>
@@ -198,7 +198,7 @@
   <string name="help_acknowledgments" formatted="false">Battery Monitor は、Battery Indicator Pro / BatteryBot Pro のフォークです。 ダルシャン コンピューティング LLC。 原作者と協力者に感謝します 上流プロジェクトの作成と維持に使用します。</string>
 
   <string name="help_cat_contact" formatted="false">問い合わせ</string>
-  <string formatted="false" name="help_contact">ご質問、問題、コメントがありましたら、お気軽にお問い合わせください <a href="mailto:tomasz@swistak.codes">メールしてください</a>.</string>
+  <string name="help_contact" formatted="false">ご質問、問題、コメントがありましたら、お気軽にお問い合わせください <a href="mailto:tomasz@swistak.codes">メールしてください</a>.</string>
 
   <string name="settings_overview" formatted="false">概要</string>
   <string name="settings_overview_help" formatted="false">下記のように、設定は別のページにまとめられています。 各ページに、 そのページの設定を記載した、独自のヘルプページがあります。 ヘルプを表示するには、今いる設定ページでメニューを押すだけです。 (タブレットではメニューは必要ありません)</string>
@@ -238,22 +238,22 @@
   <string name="other_settings" formatted="false">その他の設定</string>
   <string name="other_settings_help" formatted="false">ロギング、ロック画面、温度の単位、自動開始、およびその他を含め、 その他のすべての設定はこのページにあります。</string>
 
-  <string name="live_updates_onboarding_title" formatted="false">ステータスバーのバッテリーチップ</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できます。このオプションはデフォルトで有効です。\n
+  <string name="live_updates_onboarding_title">ステータスバーのバッテリーチップ</string>
+  <string name="live_updates_onboarding_message_on">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できます。このオプションはデフォルトで有効です。\n
     \n
     従来の通知アイコンを使いたい場合は、このアプリの Android システム設定で「ライブ更新」をオフにできます。\n
     \n
     注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できますが、このオプションは現在システム設定で無効になっています。\n
+  <string name="live_updates_onboarding_message_off">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できますが、このオプションは現在システム設定で無効になっています。\n
     \n
     最適な体験のため、有効にすることをおすすめします。従来の通知アイコンを使いたい場合は、無効のままでも構いません。\n
     \n
     注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
-  <string name="live_updates_onboarding_positive_on" formatted="false">了解</string>
-  <string name="live_updates_onboarding_positive_off" formatted="false">設定へ移動</string>
-  <string name="live_updates_onboarding_negative_off" formatted="false">閉じる</string>
+  <string name="live_updates_onboarding_positive_on">了解</string>
+  <string name="live_updates_onboarding_positive_off">設定へ移動</string>
+  <string name="live_updates_onboarding_negative_off">閉じる</string>
 
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor がステータスバーにバッテリー残量を表示し、アラームについて通知するには、権限が必要です。\n
+  <string name="notifications_onboarding_message">Battery Monitor がステータスバーにバッテリー残量を表示し、アラームについて通知するには、権限が必要です。\n
     \n
     注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
 
@@ -264,13 +264,13 @@
 
   <string name="pref_cat_notification_content" formatted="false">コンテンツ</string>
   <string name="pref_cat_status_bar_chip" formatted="false">ステータスバーチップ（Android 16+）</string>
-  <string formatted="false" name="pref_live_update_display">ライブアップデートを表示</string>
-  <string formatted="false" name="pref_live_update_display_summary">ステータスバーに表示:</string>
-  <string formatted="false" name="pref_live_update_display_help">Android 16+ のライブアップデート チップをステータスバーに表示するタイミングを選択します。</string>
-  <string formatted="false" name="pref_live_update_display_charging">充電中のみ</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">ライブアップデート中もメイン通知を表示</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">ライブアップデートが有効な間も、メイン通知を完全表示しますか？</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">有効にすると、ステータスバーのチップに加えて通常のメイン通知も表示されます。</string>
+  <string name="pref_live_update_display" formatted="false">ライブアップデートを表示</string>
+  <string name="pref_live_update_display_summary" formatted="false">ステータスバーに表示:</string>
+  <string name="pref_live_update_display_help" formatted="false">Android 16+ のライブアップデート チップをステータスバーに表示するタイミングを選択します。</string>
+  <string name="pref_live_update_display_charging" formatted="false">充電中のみ</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">ライブアップデート中もメイン通知を表示</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">ライブアップデートが有効な間も、メイン通知を完全表示しますか？</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">有効にすると、ステータスバーのチップに加えて通常のメイン通知も表示されます。</string>
   <string name="pref_chip_content" formatted="false">チップ内容</string>
   <string name="pref_chip_switching_interval" formatted="false">切り替え間隔</string>
   <string name="pref_chip_content_help" formatted="false">Android 16 以降の昇格通知チップに表示する値を選択します。</string>
@@ -295,7 +295,7 @@
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">バイタルサインにステータスが変わってからの時間を含めますか?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">設定した場合は、デバイスのプラグを抜いた、挿した、またはフル充電 されてからの時間が、バイタルサインの行に含まれます。</string>
 
-  <string formatted="false" name="custom">カスタム...</string>
+  <string name="custom" formatted="false">カスタム...</string>
 
   <string name="pref_cat_icon_set" formatted="false">通知アイコン</string>
   <string name="pref_icon_content" formatted="false">アイコン内容</string>
@@ -361,7 +361,7 @@
   <string name="pref_enable_logging_help" formatted="false">有効にした場合、Battery Monitor はバッテリーのステータスの変更を記録します。</string>
   <string name="pref_max_log_age" formatted="false">最大ログ履歴</string>
   <string name="pref_max_log_age_summary" formatted="false">次より古いログを削除します:</string>
-  <string formatted="false" name="pref_max_log_age_help">ロギングが有効な場合、デバイスを接続するたびに、この値より古いログが削除されます。手動で消去するまでログを保持するには「削除しない」を選択してください。</string>
+  <string name="pref_max_log_age_help" formatted="false">ロギングが有効な場合、デバイスを接続するたびに、この値より古いログが削除されます。手動で消去するまでログを保持するには「削除しない」を選択してください。</string>
 
   <string name="pref_cat_temperature_unit" formatted="false">温度の単位</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">華氏に変換する</string>
@@ -423,8 +423,8 @@
   <string name="alarm_pref_not_used" formatted="false">このアラームの種類では使用しません</string>
   <string name="pref_alarm_threshold_summary" formatted="false">アラームのしきい値:</string>
   <string name="pref_alarm_threshold_help" formatted="false">充電の状態と温度のアラームには、アラームを発生する 温度や充電のレベルを設定する必要があります。</string>
-  <string formatted="false" name="alarm_custom_temp_message">温度を%s度で入力してください</string>
-  <string formatted="false" name="alarm_custom_charge_message">充電率を入力してください (0 ～ 100)</string>
+  <string name="alarm_custom_temp_message" formatted="true">温度を%s度で入力してください</string>
+  <string name="alarm_custom_charge_message" formatted="false">充電率を入力してください (0 ～ 100)</string>
 
   <string name="boot_pref_always" formatted="false">常に</string>
   <string name="boot_pref_never" formatted="false">なし</string>
@@ -437,14 +437,14 @@
   <string name="age_2_weeks" formatted="false">2 週間</string>
   <string name="age_3_weeks" formatted="false">3 週間</string>
   <string name="age_4_weeks" formatted="false">4 週間</string>
-  <string formatted="false" name="age_never_delete">削除しない</string>
+  <string name="age_never_delete" formatted="false">削除しない</string>
   <string name="pref_content_percent" formatted="false">バッテリー残量</string>
   <string name="pref_content_temperature" formatted="false">バッテリー温度</string>
   <string name="pref_content_switching" formatted="false">両方を切り替え表示</string>
 
-  <string formatted="false" name="chip_switching_interval_2_seconds">2秒</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5秒</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10秒</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15秒</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30秒</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">2秒</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5秒</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10秒</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15秒</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30秒</string>
 </resources>

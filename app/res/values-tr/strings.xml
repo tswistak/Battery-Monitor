@@ -124,11 +124,11 @@
   <string name="alarm_health_failure" formatted="false">"Pil sağlığı: "</string>
 
   <string name="logs_empty" formatted="false">Kayıtlar Boş</string>
-  <string name="after_nh_mm_unplugged" formatted="false">%1$dh %2$dm sonra çıkarıldı</string>
+  <string name="after_nh_mm_unplugged" formatted="true">%1$dh %2$dm sonra çıkarıldı</string>
 
-  <string name="after_nh_mm_plugged_in" formatted="false">%1$dh %2$dm sonra takıldı</string>
-  <string name="after_nm_ms_unplugged" formatted="false">%1$dm %2$ds sonra çıkarıldı</string>
-  <string name="after_nm_ms_plugged_in" formatted="false">%1$dm %2$ds sonra takıldı</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">%1$dh %2$dm sonra takıldı</string>
+  <string name="after_nm_ms_unplugged" formatted="true">%1$dm %2$ds sonra çıkarıldı</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">%1$dm %2$ds sonra takıldı</string>
   <string name="since" formatted="false">den itibaren</string>
 
   <plurals name="for_n_hours">
@@ -158,7 +158,7 @@
 
   <string name="help_cat_contact" formatted="false">Kişi</string>
 
-  <string formatted="false" name="help_contact">Bir sorunuz, sorununuz veya yorumunuz varsa lütfen <a href="mailto:tomasz@swistak.codes">bana e-posta gönder</a>.</string>
+  <string name="help_contact" formatted="false">Bir sorunuz, sorununuz veya yorumunuz varsa lütfen <a href="mailto:tomasz@swistak.codes">bana e-posta gönder</a>.</string>
   <string name="settings_overview" formatted="false">Genel Bakış</string>
 
   <string name="settings_overview_help" formatted="false">Aşağıda açıklandığı gibi, Ayarlar dört ayrı sayfa içerisinden düzenlenebilir. Her sayfa ayarları açıklayan kendi yardım sayfasına sahiptir. Bulunduğunuz sayfada hangi ayar için yardım almak istiyorsanız sadece MENU tuşuna basın (tabletler için, Menu gereklli değildir).</string>
@@ -196,22 +196,22 @@
   <string name="alarm_settings_help" formatted="false">Pil seviyesi belirli bir duruma geldiğinde Battery Monitor sizi bilgilendirebilir.</string>
   <string name="other_settings" formatted="false">Diğer Ayarlar</string>
   <string name="other_settings_help" formatted="false">Günlükleme, kilit ekranı, sıcaklık birimi, otomatik başlatma ve daha fazlası bu sayfadadır.</string>
-  <string name="live_updates_onboarding_title" formatted="false">Durum Çubuğu Pil Çipi</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">Cihazınız, pil yüzdesini durum çubuğunda bir çip olarak göstermeyi destekler. Bu seçenek varsayılan olarak etkindir.\n
+  <string name="live_updates_onboarding_title">Durum Çubuğu Pil Çipi</string>
+  <string name="live_updates_onboarding_message_on">Cihazınız, pil yüzdesini durum çubuğunda bir çip olarak göstermeyi destekler. Bu seçenek varsayılan olarak etkindir.\n
     \n
     Geleneksel bir bildirim simgesini tercih ediyorsanız, bu uygulama için Android sistem ayarlarında "Canlı Güncellemeler"i kapatabilirsiniz.\n
     \n
     Not: Bu izni vermek bazen uygulamanın kapanmasına neden olabilir. Böyle olursa uygulamayı yeniden açmanız yeterlidir.</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">Cihazınız, pil yüzdesini durum çubuğunda bir çip olarak göstermeyi destekler, ancak bu seçenek şu anda sistem ayarlarında devre dışıdır.\n
+  <string name="live_updates_onboarding_message_off">Cihazınız, pil yüzdesini durum çubuğunda bir çip olarak göstermeyi destekler, ancak bu seçenek şu anda sistem ayarlarında devre dışıdır.\n
     \n
     En iyi deneyim için etkinleştirmenizi öneririz. Geleneksel bir bildirim simgesini tercih ediyorsanız devre dışı bırakılmış halde tutabilirsiniz.\n
     \n
     Not: Bu izni vermek bazen uygulamanın kapanmasına neden olabilir. Böyle olursa uygulamayı yeniden açmanız yeterlidir.</string>
-  <string name="live_updates_onboarding_positive_on" formatted="false">Anladım</string>
+  <string name="live_updates_onboarding_positive_on">Anladım</string>
 
-  <string name="live_updates_onboarding_positive_off" formatted="false">Ayarlara Git</string>
-  <string name="live_updates_onboarding_negative_off" formatted="false">Kapat</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor\'ün pil seviyesini durum çubuğunda gösterebilmesi ve alarmlar hakkında sizi bilgilendirebilmesi için izninize ihtiyacı vardır.\n
+  <string name="live_updates_onboarding_positive_off">Ayarlara Git</string>
+  <string name="live_updates_onboarding_negative_off">Kapat</string>
+  <string name="notifications_onboarding_message">Battery Monitor\'ün pil seviyesini durum çubuğunda gösterebilmesi ve alarmlar hakkında sizi bilgilendirebilmesi için izninize ihtiyacı vardır.\n
     \n
     Not: Bu izni vermek bazen uygulamanın kapanmasına neden olabilir. Böyle olursa uygulamayı yeniden açmanız yeterlidir.</string>
   <string name="add_alarm" formatted="false">Alarm ekle</string>
@@ -220,16 +220,16 @@
   <string name="pref_manage_main_channel" formatted="false">Ana Kanalı Yönet</string>
   <string name="pref_cat_notification_content" formatted="false">İçerik</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Durum Çubuğu Çipi (Android 16+)</string>
-  <string formatted="false" name="pref_live_update_display">Canli guncellemeyi goster</string>
-  <string formatted="false" name="pref_live_update_display_summary">Durum cubugunda goster:</string>
-  <string formatted="false" name="pref_live_update_display_help">Android 16+ Canli Guncelleme rozetinin durum cubugunda ne zaman gosterilecegini secin.</string>
+  <string name="pref_live_update_display" formatted="false">Canli guncellemeyi goster</string>
+  <string name="pref_live_update_display_summary" formatted="false">Durum cubugunda goster:</string>
+  <string name="pref_live_update_display_help" formatted="false">Android 16+ Canli Guncelleme rozetinin durum cubugunda ne zaman gosterilecegini secin.</string>
 
-  <string formatted="false" name="pref_live_update_display_charging">Yalnizca sarj sirasinda</string>
+  <string name="pref_live_update_display_charging" formatted="false">Yalnizca sarj sirasinda</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification">Canli Guncelleme ile ana bildirimi koru</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">Canli Guncelleme ile ana bildirimi koru</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Canli Guncelleme etkinken tam ana bildirim de gosterilsin mi?</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Etkinse, normal ana bildirim durum cubugu rozetine ek olarak gorunur kalir.</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">Canli Guncelleme etkinken tam ana bildirim de gosterilsin mi?</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">Etkinse, normal ana bildirim durum cubugu rozetine ek olarak gorunur kalir.</string>
 
   <string name="pref_chip_content" formatted="false">Çip İçeriği</string>
   <string name="pref_chip_switching_interval" formatted="false">Geçiş aralığı</string>
@@ -252,7 +252,7 @@
   <string name="pref_status_duration_in_vital_signs" formatted="false">Hayati göstergelerde durum süresi</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Hayati göstergelerde durum değişiminden beri geçen süre gösterilsin mi?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Etkinse, hayati göstergeler satırı şarj durum değişiminden beri geçen süreyi içerir.</string>
-  <string formatted="false" name="custom">Özel...</string>
+  <string name="custom" formatted="false">Özel...</string>
 
   <string name="pref_cat_icon_set" formatted="false">Bildirim simgesi</string>
   <string name="pref_icon_content" formatted="false">Simge İçeriği</string>
@@ -310,7 +310,7 @@
   <string name="pref_max_log_age" formatted="false">Maksimum Kayıt Yaşı</string>
 
   <string name="pref_max_log_age_summary" formatted="false">Şundan eski kayıtları sil:</string>
-  <string formatted="false" name="pref_max_log_age_help">Kayıt tutma açıksa, cihazı her bağladığınızda bu değerden eski kayıtlar silinir. Kayıtları elle temizleyene kadar saklamak için Asla silme seçeneğini seçin.</string>
+  <string name="pref_max_log_age_help" formatted="false">Kayıt tutma açıksa, cihazı her bağladığınızda bu değerden eski kayıtlar silinir. Kayıtları elle temizleyene kadar saklamak için Asla silme seçeneğini seçin.</string>
   <string name="pref_cat_temperature_unit" formatted="false">Sıcaklık Birimi</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Fahrenhayt\'a çevir</string>
 
@@ -352,8 +352,8 @@
   <string name="pref_alarm_threshold_summary" formatted="false">Alarm eşiği:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Şarj ve sıcaklık alarmı için, şarj ve ya sıcaklık alarmını tetikleyecek seviyeleri belirlemeye ihtiyacınız var.</string>
 
-  <string formatted="false" name="alarm_custom_temp_message">Sıcaklığı %s derece cinsinden girin</string>
-  <string formatted="false" name="alarm_custom_charge_message">Ücret yüzdesini girin (0-100)</string>
+  <string name="alarm_custom_temp_message" formatted="true">Sıcaklığı %s derece cinsinden girin</string>
+  <string name="alarm_custom_charge_message" formatted="false">Ücret yüzdesini girin (0-100)</string>
   <string name="boot_pref_always" formatted="false">Daima</string>
   <string name="boot_pref_never" formatted="false">Asla</string>
   <string name="boot_pref_if_running" formatted="false">Eğer kapalıyken çalışıyorsa</string>
@@ -365,14 +365,14 @@
   <string name="age_3_weeks" formatted="false">3 hafta</string>
 
   <string name="age_4_weeks" formatted="false">4 hafta</string>
-  <string formatted="false" name="age_never_delete">Asla silme</string>
+  <string name="age_never_delete" formatted="false">Asla silme</string>
   <string name="pref_content_percent" formatted="false">Pil Yüzdesi</string>
 
   <string name="pref_content_temperature" formatted="false">Pil Sıcaklığı</string>
   <string name="pref_content_switching" formatted="false">İkisi arasında geçiş yap</string>
-  <string formatted="false" name="chip_switching_interval_2_seconds">2 saniye</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 saniye</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 saniye</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 saniye</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 saniye</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 saniye</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 saniye</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 saniye</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 saniye</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 saniye</string>
 </resources>

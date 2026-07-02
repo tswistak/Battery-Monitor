@@ -129,10 +129,10 @@
     <item quantity="other">%d elementi log</item>
   </plurals>
 
-  <string name="after_nh_mm_unplugged" formatted="false">Dopo %1$dh %2$dm scollegato</string>
-  <string name="after_nh_mm_plugged_in" formatted="false">Dopo %1$dh %2$dm collegato</string>
-  <string name="after_nm_ms_unplugged" formatted="false">Dopo %1$dm %2$ds scollegato</string>
-  <string name="after_nm_ms_plugged_in" formatted="false">Dopo %1$dm %2$ds collegato</string>
+  <string name="after_nh_mm_unplugged" formatted="true">Dopo %1$dh %2$dm scollegato</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">Dopo %1$dh %2$dm collegato</string>
+  <string name="after_nm_ms_unplugged" formatted="true">Dopo %1$dm %2$ds scollegato</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">Dopo %1$dm %2$ds collegato</string>
 
   <string name="since" formatted="false">Dalle</string>
 
@@ -164,7 +164,7 @@
   <string name="help_acknowledgments" formatted="false">Battery Monitor è un fork di Battery Indicator Pro / BatteryBot Pro di Darshan Computing, LLC. Grazie agli autori originali e ai contributori per la creazione e il mantenimento del progetto a monte.</string>
 
   <string name="help_cat_contact" formatted="false">Contatti</string>
-  <string formatted="false" name="help_contact">Se hai una domanda, un problema o un commento, per favore <a href="mailto:tomasz@swistak.codes">mandami una email</a>.</string>
+  <string name="help_contact" formatted="false">Se hai una domanda, un problema o un commento, per favore <a href="mailto:tomasz@swistak.codes">mandami una email</a>.</string>
 
   <string name="settings_overview" formatted="false">Panoramica</string>
   <string name="settings_overview_help" formatted="false">Le impostazioni sono organizzate in tre pagine separate, descritte qui di seguito. Ogni pagina ha una sua pagina di aiuto che descrive le impostazioni. Basta premere MENU\' - Aiuto per ottenere aiuto su qualunque impostazione presente nella pagina.</string>
@@ -206,22 +206,22 @@
   <string name="alarm_settings_help" formatted="false">Puoi ottenere una notifica da Battery Monitor quando il livello della batteria raggiunge un certo punto (es., la batteria diventa completamente carica, la batteria scende sotto il 20%).</string>
   <string name="other_settings" formatted="false">Altre impostazioni</string>
   <string name="other_settings_help" formatted="false">Tutte le altre impostazioni sono su questa pagina, compresi il logging, blocca schermo, unità temperatura, autostart, e altro.</string>
-  <string name="live_updates_onboarding_title" formatted="false">Chip batteria barra di stato</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato. Questa opzione è abilitata per impostazione predefinita.\n
+  <string name="live_updates_onboarding_title">Chip batteria barra di stato</string>
+  <string name="live_updates_onboarding_message_on">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato. Questa opzione è abilitata per impostazione predefinita.\n
     \n
     Se preferisci un\'icona di notifica tradizionale, puoi disattivare "Live Updates" nelle impostazioni di sistema Android per questa app.\n
     \n
     Nota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell\'app. Se succede, riaprila semplicemente.</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato, ma al momento questa opzione è disabilitata nelle impostazioni di sistema.\n
+  <string name="live_updates_onboarding_message_off">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato, ma al momento questa opzione è disabilitata nelle impostazioni di sistema.\n
     \n
     Consigliamo di abilitarla per la migliore esperienza. Se preferisci un\'icona di notifica tradizionale, puoi lasciarla disabilitata.\n
     \n
     Nota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell\'app. Se succede, riaprila semplicemente.</string>
 
-  <string name="live_updates_onboarding_positive_on" formatted="false">Capito</string>
-  <string name="live_updates_onboarding_positive_off" formatted="false">Vai alle impostazioni</string>
-  <string name="live_updates_onboarding_negative_off" formatted="false">Chiudi</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor ha bisogno della tua autorizzazione per mostrare il livello della batteria nella barra di stato e avvisarti sugli allarmi.\n
+  <string name="live_updates_onboarding_positive_on">Capito</string>
+  <string name="live_updates_onboarding_positive_off">Vai alle impostazioni</string>
+  <string name="live_updates_onboarding_negative_off">Chiudi</string>
+  <string name="notifications_onboarding_message">Battery Monitor ha bisogno della tua autorizzazione per mostrare il livello della batteria nella barra di stato e avvisarti sugli allarmi.\n
     \n
     Nota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell\'app. Se succede, riaprila semplicemente.</string>
   <string name="add_alarm" formatted="false">Aggiungi allarme</string>
@@ -230,17 +230,17 @@
   <string name="pref_manage_main_channel" formatted="false">Gestisci canale principale</string>
   <string name="pref_cat_notification_content" formatted="false">Contenuto</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Chip barra di stato (Android 16+)</string>
-  <string formatted="false" name="pref_live_update_display">Mostra aggiornamento live</string>
-  <string formatted="false" name="pref_live_update_display_summary">Mostra nella barra di stato:</string>
+  <string name="pref_live_update_display" formatted="false">Mostra aggiornamento live</string>
+  <string name="pref_live_update_display_summary" formatted="false">Mostra nella barra di stato:</string>
 
-  <string formatted="false" name="pref_live_update_display_help">Scegli quando mostrare nella barra di stato il chip di aggiornamento live di Android 16+.</string>
+  <string name="pref_live_update_display_help" formatted="false">Scegli quando mostrare nella barra di stato il chip di aggiornamento live di Android 16+.</string>
 
-  <string formatted="false" name="pref_live_update_display_charging">Solo durante la ricarica</string>
+  <string name="pref_live_update_display_charging" formatted="false">Solo durante la ricarica</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification">Mantieni la notifica principale con l aggiornamento live</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Mostrare la notifica principale completa mentre l aggiornamento live e attivo?</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">Mantieni la notifica principale con l aggiornamento live</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">Mostrare la notifica principale completa mentre l aggiornamento live e attivo?</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Se abilitato, la normale notifica principale resta visibile insieme al chip nella barra di stato.</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">Se abilitato, la normale notifica principale resta visibile insieme al chip nella barra di stato.</string>
   <string name="pref_chip_content" formatted="false">Contenuto chip</string>
   <string name="pref_chip_switching_interval" formatted="false">Intervallo alternanza</string>
   <string name="pref_chip_content_help" formatted="false">Scegli quale valore mostrare nel chip delle notifiche avanzate di Android 16+.</string>
@@ -263,7 +263,7 @@
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Includere il tempo dal cambio stato nei segni vitali?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Se impostato, la riga dei segni vitali includerà anche il numero di ore da quando il dispositivo è stato scollegato, collegato o completamente carico.</string>
 
-  <string formatted="false" name="custom">Personalizzato...</string>
+  <string name="custom" formatted="false">Personalizzato...</string>
   <string name="pref_cat_icon_set" formatted="false">Icona di notifica</string>
   <string name="pref_icon_content" formatted="false">Contenuto icona</string>
   <string name="pref_icon_content_help" formatted="false">Scegli se l\'icona della barra di stato mostra percentuale batteria o temperatura batteria.</string>
@@ -320,7 +320,7 @@
 
   <string name="pref_max_log_age" formatted="false">Periodo massimo registro</string>
   <string name="pref_max_log_age_summary" formatted="false">Cancella registri più vecchi di:</string>
-  <string formatted="false" name="pref_max_log_age_help">Se il logging è abilitato, ogni volta che colleghi il dispositivo verranno eliminati i registri più vecchi di questo valore. Seleziona Non eliminare mai per conservarli finché non li cancelli manualmente.</string>
+  <string name="pref_max_log_age_help" formatted="false">Se il logging è abilitato, ogni volta che colleghi il dispositivo verranno eliminati i registri più vecchi di questo valore. Seleziona Non eliminare mai per conservarli finché non li cancelli manualmente.</string>
   <string name="pref_cat_temperature_unit" formatted="false">Unità temperatura</string>
 
   <string name="pref_convert_to_fahrenheit" formatted="false">Converti in Fahrenheit</string>
@@ -375,8 +375,8 @@
   <string name="pref_alarm_threshold_summary" formatted="false">Soglia allarme:</string>
 
   <string name="pref_alarm_threshold_help" formatted="false">Per gli allarmi di carica e temperatura, è necessario impostare la temperatura o il livello di carica per innescare l\' allarme.</string>
-  <string formatted="false" name="alarm_custom_temp_message">Inserisci la temperatura in gradi %s</string>
-  <string formatted="false" name="alarm_custom_charge_message">Inserisci la percentuale di addebito (0-100)</string>
+  <string name="alarm_custom_temp_message" formatted="true">Inserisci la temperatura in gradi %s</string>
+  <string name="alarm_custom_charge_message" formatted="false">Inserisci la percentuale di addebito (0-100)</string>
   <string name="boot_pref_always" formatted="false">Sempre</string>
   <string name="boot_pref_never" formatted="false">Mai</string>
   <string name="boot_pref_if_running" formatted="false">Se è in esecuzione allo spegnimento</string>
@@ -388,14 +388,14 @@
 
   <string name="age_3_weeks" formatted="false">3 settimane</string>
   <string name="age_4_weeks" formatted="false">4 settimane</string>
-  <string formatted="false" name="age_never_delete">Non eliminare mai</string>
+  <string name="age_never_delete" formatted="false">Non eliminare mai</string>
 
   <string name="pref_content_percent" formatted="false">Percentuale batteria</string>
   <string name="pref_content_temperature" formatted="false">Temperatura batteria</string>
   <string name="pref_content_switching" formatted="false">Alterna tra entrambi</string>
-  <string formatted="false" name="chip_switching_interval_2_seconds">2 secondi</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 secondi</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 secondi</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 secondi</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 secondi</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 secondi</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 secondi</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 secondi</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 secondi</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 secondi</string>
 </resources>

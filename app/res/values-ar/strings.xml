@@ -133,10 +133,10 @@
     <item quantity="other">%d عنصر سجل</item>
   </plurals>
 
-  <string name="after_nh_mm_unplugged" formatted="false">بعد %1$dس %2$dد بدون توصيل</string>
-  <string name="after_nh_mm_plugged_in" formatted="false">بعد %1$dس %2$dد أثناء التوصيل</string>
-  <string name="after_nm_ms_unplugged" formatted="false">بعد %1$dد %2$dث بدون توصيل</string>
-  <string name="after_nm_ms_plugged_in" formatted="false">بعد %1$dد %2$dث أثناء التوصيل</string>
+  <string name="after_nh_mm_unplugged" formatted="true">بعد %1$dس %2$dد بدون توصيل</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">بعد %1$dس %2$dد أثناء التوصيل</string>
+  <string name="after_nm_ms_unplugged" formatted="true">بعد %1$dد %2$dث بدون توصيل</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">بعد %1$dد %2$dث أثناء التوصيل</string>
 
   <plurals name="n_hours_long">
     <item quantity="zero">%d ساعة</item>
@@ -232,7 +232,7 @@
   <string name="help_acknowledgments" formatted="false">مراقب البطارية عبارة عن شوكة لـ Battery Indicator Pro / BatteryBot Pro بواسطة دارشان للحوسبة، ذ.م.م. شكرا للمؤلفين والمساهمين الأصليين لإنشاء وصيانة المشروع المنبع.</string>
   <string name="help_cat_contact" formatted="false">للتواصل</string>
 
-  <string formatted="false" name="help_contact">إذا كان لديك سؤال، مشكلة، أو تعليق، من فضلك <a href="mailto:tomasz@swistak.codes">أرسل لي بريدا إلكترونيا</a>.</string>
+  <string name="help_contact" formatted="false">إذا كان لديك سؤال، مشكلة، أو تعليق، من فضلك <a href="mailto:tomasz@swistak.codes">أرسل لي بريدا إلكترونيا</a>.</string>
   <string name="settings_overview" formatted="false">نظرة عامة</string>
 
   <string name="settings_overview_help" formatted="false">الاعدادات منفصلة كما موضح ادناه واذا اردت ان تدخل لاعدادات الصفحة ببساطة اضغط على زر الخيارات الموجودة في هاتفك للحصل على مساعدة اما على الاجهزة اللوحية فأن زر الخيارات غير ضروري</string>
@@ -271,22 +271,22 @@
   <string name="alarm_settings_help" formatted="false">يمكن للمؤشر بإعلامك عند مستوى البطارية تصل إلى نقطة معينة (على سبيل المثال، يصبح البطارية مشحونة بالكامل، وانخفاض مستوى البطارية أقل من 20٪)</string>
   <string name="other_settings" formatted="false">اعدادات اخرى</string>
   <string name="other_settings_help" formatted="false">جميع الاعدادات في هذه الصفحة السجلات والقفل ودرجة الحرارة والتشغيل التلقائيواعدادات اخرى</string>
-  <string name="live_updates_onboarding_title" formatted="false">شريحة بطارية شريط الحالة</string>
+  <string name="live_updates_onboarding_title">شريحة بطارية شريط الحالة</string>
 
-  <string name="live_updates_onboarding_message_on" formatted="false">جهازك يدعم عرض نسبة البطارية كشريحة في شريط الحالة. هذا الخيار مفعّل افتراضيًا.\n
+  <string name="live_updates_onboarding_message_on">جهازك يدعم عرض نسبة البطارية كشريحة في شريط الحالة. هذا الخيار مفعّل افتراضيًا.\n
     \n
     إذا كنت تفضّل أيقونة إشعار تقليدية، يمكنك إيقاف «Live Updates» من إعدادات نظام Android لهذا التطبيق.\n
     \n
     ملاحظة: قد يؤدي منح هذا الإذن أحيانًا إلى إغلاق التطبيق. إذا حدث ذلك، يرجى إعادة فتحه ببساطة.</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">جهازك يدعم عرض نسبة البطارية كشريحة في شريط الحالة، لكنه معطّل حاليًا في إعدادات النظام.\n
+  <string name="live_updates_onboarding_message_off">جهازك يدعم عرض نسبة البطارية كشريحة في شريط الحالة، لكنه معطّل حاليًا في إعدادات النظام.\n
     \n
     نوصي بتمكينه للحصول على أفضل تجربة. إذا كنت تفضّل أيقونة إشعار تقليدية، يمكنك تركه معطّلًا.\n
     \n
     ملاحظة: قد يؤدي منح هذا الإذن أحيانًا إلى إغلاق التطبيق. إذا حدث ذلك، يرجى إعادة فتحه ببساطة.</string>
-  <string name="live_updates_onboarding_positive_on" formatted="false">حسنًا</string>
-  <string name="live_updates_onboarding_positive_off" formatted="false">الانتقال إلى الإعدادات</string>
-  <string name="live_updates_onboarding_negative_off" formatted="false">تجاهل</string>
-  <string name="notifications_onboarding_message" formatted="false">يحتاج Battery Monitor إلى إذنك لعرض مستوى البطارية في شريط الحالة وإشعارك بالتنبيهات.\n
+  <string name="live_updates_onboarding_positive_on">حسنًا</string>
+  <string name="live_updates_onboarding_positive_off">الانتقال إلى الإعدادات</string>
+  <string name="live_updates_onboarding_negative_off">تجاهل</string>
+  <string name="notifications_onboarding_message">يحتاج Battery Monitor إلى إذنك لعرض مستوى البطارية في شريط الحالة وإشعارك بالتنبيهات.\n
     \n
     ملاحظة: قد يؤدي منح هذا الإذن أحيانًا إلى إغلاق التطبيق. إذا حدث ذلك، يرجى إعادة فتحه ببساطة.</string>
 
@@ -298,13 +298,13 @@
   <string name="pref_cat_notification_content" formatted="false">المحتوى</string>
 
   <string name="pref_cat_status_bar_chip" formatted="false">شريحة شريط الحالة (Android 16+)</string>
-  <string formatted="false" name="pref_live_update_display">عرض التحديث المباشر</string>
-  <string formatted="false" name="pref_live_update_display_summary">إظهار في شريط الحالة:</string>
-  <string formatted="false" name="pref_live_update_display_help">اختر متى يجب عرض شريحة التحديث المباشر في Android 16+ في شريط الحالة.</string>
-  <string formatted="false" name="pref_live_update_display_charging">فقط أثناء الشحن</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">الاحتفاظ بالإشعار الرئيسي مع التحديث المباشر</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">إظهار الإشعار الرئيسي الكامل أثناء تفعيل التحديث المباشر؟</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">إذا كان مفعلاً، سيظل الإشعار الرئيسي العادي مرئيًا بالإضافة إلى شريحة شريط الحالة.</string>
+  <string name="pref_live_update_display" formatted="false">عرض التحديث المباشر</string>
+  <string name="pref_live_update_display_summary" formatted="false">إظهار في شريط الحالة:</string>
+  <string name="pref_live_update_display_help" formatted="false">اختر متى يجب عرض شريحة التحديث المباشر في Android 16+ في شريط الحالة.</string>
+  <string name="pref_live_update_display_charging" formatted="false">فقط أثناء الشحن</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">الاحتفاظ بالإشعار الرئيسي مع التحديث المباشر</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">إظهار الإشعار الرئيسي الكامل أثناء تفعيل التحديث المباشر؟</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">إذا كان مفعلاً، سيظل الإشعار الرئيسي العادي مرئيًا بالإضافة إلى شريحة شريط الحالة.</string>
   <string name="pref_chip_content" formatted="false">محتوى الشريحة</string>
   <string name="pref_chip_switching_interval" formatted="false">فاصل التبديل</string>
   <string name="pref_chip_content_help" formatted="false">اختر القيمة التي ستُعرض في شريحة الإشعار المروّج على Android 16+.</string>
@@ -328,7 +328,7 @@
 
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">الوقت الماضي منذ تغيير الحالة</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">اذا تم ضبط العلامات الحيوية سوف بيلغك ان الجهاز كم من الزمن مضى من الشحن والتفريغ</string>
-  <string formatted="false" name="custom">مخصص...</string>
+  <string name="custom" formatted="false">مخصص...</string>
 
   <string name="pref_cat_icon_set" formatted="false">أيقونة الإشعار</string>
 
@@ -397,7 +397,7 @@
   <string name="pref_enable_logging_help" formatted="false">اذا تم تمكين هذا الخيار سوف يقوم التطبيق بتسجيل حالة تغييرات البطارية</string>
   <string name="pref_max_log_age" formatted="false">الاحد الاقصى للسجلات</string>
   <string name="pref_max_log_age_summary" formatted="false">حذف السجلات القديمة بعد:</string>
-  <string formatted="false" name="pref_max_log_age_help">إذا كان التسجيل مفعلاً، فكلما وصلت جهازك بالطاقة ستُحذف السجلات الأقدم من هذا الخيار. اختر عدم الحذف للاحتفاظ بالسجلات حتى تمسحها يدويًا.</string>
+  <string name="pref_max_log_age_help" formatted="false">إذا كان التسجيل مفعلاً، فكلما وصلت جهازك بالطاقة ستُحذف السجلات الأقدم من هذا الخيار. اختر عدم الحذف للاحتفاظ بالسجلات حتى تمسحها يدويًا.</string>
   <string name="pref_cat_temperature_unit" formatted="false">وحدة درجة الحرارة</string>
 
   <string name="pref_convert_to_fahrenheit" formatted="false">تحويل إلى فهرنهايت</string>
@@ -460,8 +460,8 @@
   <string name="alarm_pref_not_used" formatted="false">لا تستخدم لهذا النوع التنبيه</string>
   <string name="pref_alarm_threshold_summary" formatted="false">نسبة التنبيه:</string>
   <string name="pref_alarm_threshold_help" formatted="false">للرسوم ودرجة الحرارة وأجهزة الإنذار، تحتاج إلى ضبط على مستوى درجة الحرارة أو شحن من شأنها أن تؤدي إلى التنبيه</string>
-  <string formatted="false" name="alarm_custom_temp_message">أدخل درجة الحرارة بدرجات %s</string>
-  <string formatted="false" name="alarm_custom_charge_message">أدخل نسبة الشحن (0-100)</string>
+  <string name="alarm_custom_temp_message" formatted="true">أدخل درجة الحرارة بدرجات %s</string>
+  <string name="alarm_custom_charge_message" formatted="false">أدخل نسبة الشحن (0-100)</string>
   <string name="boot_pref_always" formatted="false">دائما</string>
 
   <string name="boot_pref_never" formatted="false">ابدا</string>
@@ -474,14 +474,14 @@
   <string name="age_2_weeks" formatted="false">اسبوعين</string>
   <string name="age_3_weeks" formatted="false">ثلاث اسابيع</string>
   <string name="age_4_weeks" formatted="false">اربعة اسابيع</string>
-  <string formatted="false" name="age_never_delete">عدم الحذف</string>
+  <string name="age_never_delete" formatted="false">عدم الحذف</string>
   <string name="pref_content_percent" formatted="false">نسبة البطارية</string>
   <string name="pref_content_temperature" formatted="false">درجة حرارة البطارية</string>
   <string name="pref_content_switching" formatted="false">التبديل بين الاثنين</string>
-  <string formatted="false" name="chip_switching_interval_2_seconds">ثانيتان</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">ثانيتان</string>
 
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 ثوانٍ</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 ثوانٍ</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 ثانية</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 ثانية</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 ثوانٍ</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 ثوانٍ</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 ثانية</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 ثانية</string>
 </resources>

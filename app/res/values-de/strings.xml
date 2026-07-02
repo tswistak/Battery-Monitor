@@ -129,10 +129,10 @@
     <item quantity="other">%d Protokoll Einträge</item>
   </plurals>
 
-  <string name="after_nh_mm_unplugged" formatted="false">Nach %1$dh %2$dm ausgesteckt</string>
-  <string name="after_nh_mm_plugged_in" formatted="false">Nach %1$dh %2$dm eingesteckt</string>
-  <string name="after_nm_ms_unplugged" formatted="false">Nach %1$dm %2$ds ausgesteckt</string>
-  <string name="after_nm_ms_plugged_in" formatted="false">Nach %1$dm %2$ds eingesteckt</string>
+  <string name="after_nh_mm_unplugged" formatted="true">Nach %1$dh %2$dm ausgesteckt</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">Nach %1$dh %2$dm eingesteckt</string>
+  <string name="after_nm_ms_unplugged" formatted="true">Nach %1$dm %2$ds ausgesteckt</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">Nach %1$dm %2$ds eingesteckt</string>
 
   <string name="since" formatted="false">Seit</string>
 
@@ -164,7 +164,7 @@
   <string name="help_acknowledgments" formatted="false">Battery Monitor ist eine Abzweigung von Battery Indicator Pro / BatteryBot Pro von Darshan Computing, LLC. Vielen Dank an die ursprünglichen Autoren und Mitwirkenden für die Erstellung und Pflege des Upstream-Projekts.</string>
 
   <string name="help_cat_contact" formatted="false">Kontakt</string>
-  <string formatted="false" name="help_contact">Wenn Sie eine Frage, ein Problem oder einen Kommentar haben, wenden Sie sich bitte an uns <a href="mailto:tomasz@swistak.codes">Schicken Sie mir eine E-Mail</a>.</string>
+  <string name="help_contact" formatted="false">Wenn Sie eine Frage, ein Problem oder einen Kommentar haben, wenden Sie sich bitte an uns <a href="mailto:tomasz@swistak.codes">Schicken Sie mir eine E-Mail</a>.</string>
 
   <string name="settings_overview" formatted="false">Übersicht</string>
   <string name="settings_overview_help" formatted="false">Die Einstellungen sind unterteilt in separate Seiten (siehe unten stehende Beschreibung). Jede Seite enthält eine eigene Hilfe-Seite, welche die Einstellungen beschreibt. Drücken Sie einfach MENÜ, danach Hilfe (auf Tablets entfällt das Drücken des MENÜ-Buttons), um Hilfe für jedwede Einstellung zu erhalten.</string>
@@ -202,22 +202,22 @@
   <string name="alarm_settings_help" formatted="false">Battery Monitor kann Sie benachrichtigen, wenn ein bestimmter Akkuzustand erreicht wird (z. B. vollständig geladen, unter 20% usw.).</string>
   <string name="other_settings" formatted="false">Andere Einstellungen</string>
   <string name="other_settings_help" formatted="false">Alle weiteren Einstellungen befinden sich auf dieser Seite, einschließlich Protokollierung, Sperrbildschirm, Temperatureinheit, Autostart und mehr.</string>
-  <string name="live_updates_onboarding_title" formatted="false">Akku-Chip in der Statusleiste</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">Ihr Gerät unterstützt die Anzeige des Batteriestands als Chip in der Statusleiste. Diese Option ist standardmäßig aktiviert.\n
+  <string name="live_updates_onboarding_title">Akku-Chip in der Statusleiste</string>
+  <string name="live_updates_onboarding_message_on">Ihr Gerät unterstützt die Anzeige des Batteriestands als Chip in der Statusleiste. Diese Option ist standardmäßig aktiviert.\n
     \n
     Wenn Sie ein klassisches Benachrichtigungssymbol bevorzugen, können Sie „Live Updates“ in den Android-Systemeinstellungen für diese App deaktivieren.\n
     \n
     Hinweis: Das Erteilen dieser Berechtigung kann gelegentlich dazu führen, dass sich die App schließt. Falls das passiert, öffnen Sie sie einfach erneut.</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">Ihr Gerät unterstützt die Anzeige des Batteriestands als Chip in der Statusleiste, aber diese Option ist derzeit in den Systemeinstellungen deaktiviert.\n
+  <string name="live_updates_onboarding_message_off">Ihr Gerät unterstützt die Anzeige des Batteriestands als Chip in der Statusleiste, aber diese Option ist derzeit in den Systemeinstellungen deaktiviert.\n
     \n
     Für die beste Nutzung empfehlen wir, sie zu aktivieren. Wenn Sie ein klassisches Benachrichtigungssymbol bevorzugen, können Sie sie deaktiviert lassen.\n
     \n
     Hinweis: Das Erteilen dieser Berechtigung kann gelegentlich dazu führen, dass sich die App schließt. Falls das passiert, öffnen Sie sie einfach erneut.</string>
 
-  <string name="live_updates_onboarding_positive_on" formatted="false">Verstanden</string>
-  <string name="live_updates_onboarding_positive_off" formatted="false">Zu den Einstellungen</string>
-  <string name="live_updates_onboarding_negative_off" formatted="false">Schließen</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor benötigt Ihre Berechtigung, um den Batteriestand in der Statusleiste anzuzeigen und Sie über Alarme zu benachrichtigen.\n
+  <string name="live_updates_onboarding_positive_on">Verstanden</string>
+  <string name="live_updates_onboarding_positive_off">Zu den Einstellungen</string>
+  <string name="live_updates_onboarding_negative_off">Schließen</string>
+  <string name="notifications_onboarding_message">Battery Monitor benötigt Ihre Berechtigung, um den Batteriestand in der Statusleiste anzuzeigen und Sie über Alarme zu benachrichtigen.\n
     \n
     Hinweis: Das Erteilen dieser Berechtigung kann gelegentlich dazu führen, dass sich die App schließt. Falls das passiert, öffnen Sie sie einfach erneut.</string>
   <string name="add_alarm" formatted="false">Alarm hinzufügen</string>
@@ -226,17 +226,17 @@
   <string name="pref_manage_main_channel" formatted="false">Hauptkanal verwalten</string>
   <string name="pref_cat_notification_content" formatted="false">Inhalt</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Statusleisten-Chip (Android 16+)</string>
-  <string formatted="false" name="pref_live_update_display">Live-Update anzeigen</string>
-  <string formatted="false" name="pref_live_update_display_summary">In der Statusleiste anzeigen:</string>
+  <string name="pref_live_update_display" formatted="false">Live-Update anzeigen</string>
+  <string name="pref_live_update_display_summary" formatted="false">In der Statusleiste anzeigen:</string>
 
-  <string formatted="false" name="pref_live_update_display_help">Wählen Sie, wann der Live-Update-Chip unter Android 16+ in der Statusleiste angezeigt werden soll.</string>
+  <string name="pref_live_update_display_help" formatted="false">Wählen Sie, wann der Live-Update-Chip unter Android 16+ in der Statusleiste angezeigt werden soll.</string>
 
-  <string formatted="false" name="pref_live_update_display_charging">Nur während des Ladens</string>
+  <string name="pref_live_update_display_charging" formatted="false">Nur während des Ladens</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification">Hauptbenachrichtigung bei Live-Update beibehalten</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Vollständige Hauptbenachrichtigung anzeigen, während Live-Update aktiv ist?</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">Hauptbenachrichtigung bei Live-Update beibehalten</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">Vollständige Hauptbenachrichtigung anzeigen, während Live-Update aktiv ist?</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Wenn aktiviert, bleibt die normale Hauptbenachrichtigung zusätzlich zum Statusleisten-Chip sichtbar.</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">Wenn aktiviert, bleibt die normale Hauptbenachrichtigung zusätzlich zum Statusleisten-Chip sichtbar.</string>
   <string name="pref_chip_content" formatted="false">Chip-Inhalt</string>
   <string name="pref_chip_switching_interval" formatted="false">Wechselintervall</string>
   <string name="pref_chip_content_help" formatted="false">Wählen Sie, welcher Wert im Android-16+-Benachrichtigungs-Chip angezeigt wird.</string>
@@ -259,7 +259,7 @@
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Zeit seit Statusänderung in Vitalzeichen einbeziehen?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Wenn aktiviert, zeigt die Vitalzeichenzeile auch die Zeit seit Ausstecken, Einstecken oder Vollladung.</string>
 
-  <string formatted="false" name="custom">Benutzerdefiniert...</string>
+  <string name="custom" formatted="false">Benutzerdefiniert...</string>
   <string name="pref_cat_icon_set" formatted="false">Benachrichtigungssymbol</string>
   <string name="pref_icon_content" formatted="false">Icon-Inhalt</string>
   <string name="pref_icon_content_help" formatted="false">Wählen Sie, ob das Statusleisten-Icon Akkustand oder Akkutemperatur anzeigt.</string>
@@ -316,7 +316,7 @@
 
   <string name="pref_max_log_age" formatted="false">Maximales Protokollalter</string>
   <string name="pref_max_log_age_summary" formatted="false">Löschen von Protokollen älter als:</string>
-  <string formatted="false" name="pref_max_log_age_help">Wenn die Protokollierung aktiviert ist, werden beim Anschließen des Geräts Protokolle gelöscht, die älter als diese Einstellung sind. Wähle Nie löschen, um Protokolle zu behalten, bis du sie manuell löschst.</string>
+  <string name="pref_max_log_age_help" formatted="false">Wenn die Protokollierung aktiviert ist, werden beim Anschließen des Geräts Protokolle gelöscht, die älter als diese Einstellung sind. Wähle Nie löschen, um Protokolle zu behalten, bis du sie manuell löschst.</string>
   <string name="pref_cat_temperature_unit" formatted="false">Temperatureinheit</string>
 
   <string name="pref_convert_to_fahrenheit" formatted="false">Umrechnen in Fahrenheit</string>
@@ -356,8 +356,8 @@
   <string name="pref_alarm_threshold_summary" formatted="false">Alarm-Grenzwert:</string>
 
   <string name="pref_alarm_threshold_help" formatted="false">Für Lade- und Temperaturalarme müssen Sie den Schwellenwert festlegen.</string>
-  <string formatted="false" name="alarm_custom_temp_message">Geben Sie die Temperatur in %s Grad ein</string>
-  <string formatted="false" name="alarm_custom_charge_message">Geben Sie den Gebührenprozentsatz ein (0–100).</string>
+  <string name="alarm_custom_temp_message" formatted="true">Geben Sie die Temperatur in %s Grad ein</string>
+  <string name="alarm_custom_charge_message" formatted="false">Geben Sie den Gebührenprozentsatz ein (0–100).</string>
   <string name="boot_pref_always" formatted="false">Immer</string>
   <string name="boot_pref_never" formatted="false">Nie</string>
   <string name="boot_pref_if_running" formatted="false">Wenn es beim Herunterfahren läuft</string>
@@ -369,14 +369,14 @@
 
   <string name="age_3_weeks" formatted="false">3 Wochen</string>
   <string name="age_4_weeks" formatted="false">4 Wochen</string>
-  <string formatted="false" name="age_never_delete">Nie löschen</string>
+  <string name="age_never_delete" formatted="false">Nie löschen</string>
 
   <string name="pref_content_percent" formatted="false">Akkustand in Prozent</string>
   <string name="pref_content_temperature" formatted="false">Akkutemperatur</string>
   <string name="pref_content_switching" formatted="false">Zwischen beiden wechseln</string>
-  <string formatted="false" name="chip_switching_interval_2_seconds">2 Sekunden</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 Sekunden</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 Sekunden</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 Sekunden</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 Sekunden</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 Sekunden</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 Sekunden</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 Sekunden</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 Sekunden</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 Sekunden</string>
 </resources>

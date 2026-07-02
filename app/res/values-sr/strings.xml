@@ -132,10 +132,10 @@
     <item quantity="other">%d evidencionih unosa</item>
   </plurals>
 
-  <string name="after_nh_mm_unplugged" formatted="false">Nakon %1$dh %2$dm bez punjača</string>
-  <string name="after_nh_mm_plugged_in" formatted="false">Nakon %1$dh %2$dm na punjaču</string>
-  <string name="after_nm_ms_unplugged" formatted="false">Nakon %1$dm %2$ds bez punjača</string>
-  <string name="after_nm_ms_plugged_in" formatted="false">Nakon %1$dm %2$ds na punjaču</string>
+  <string name="after_nh_mm_unplugged" formatted="true">Nakon %1$dh %2$dm bez punjača</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">Nakon %1$dh %2$dm na punjaču</string>
+  <string name="after_nm_ms_unplugged" formatted="true">Nakon %1$dm %2$ds bez punjača</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">Nakon %1$dm %2$ds na punjaču</string>
 
   <plurals name="n_hours_long">
     <item quantity="one">"%d sat, "</item>
@@ -212,7 +212,7 @@
   <string name="help_acknowledgments" formatted="false">Баттери Монитор је виљушка Баттери Индицатор Про / БаттериБот Про од стране Дарсхан Цомпутинг, ЛЛЦ. Хвала оригиналним ауторима и сарадницима за креирање и одржавање узводног пројекта.</string>
 
   <string name="help_cat_contact" formatted="false">Kontakt</string>
-  <string formatted="false" name="help_contact">Ако имате питање, проблем или коментар, молим <a href="mailto:tomasz@swistak.codes">емаил ме</a>.</string>
+  <string name="help_contact" formatted="false">Ако имате питање, проблем или коментар, молим <a href="mailto:tomasz@swistak.codes">емаил ме</a>.</string>
 
   <string name="settings_overview" formatted="false">Pregled</string>
   <string name="settings_overview_help" formatted="false">Podešavanja aplikacije Battery Monitor organizovana su u zasebne stranice kao što je opisano ispod. Svaka stranica podešavanja ima sopstvenu stranicu pomoći koja objašnjava dostupne opcije.</string>
@@ -252,22 +252,22 @@
   <string name="other_settings" formatted="false">Druga podešavanja</string>
   <string name="other_settings_help" formatted="false">Sva druga podešavanja su na ovoj stranici, uključujući evidenciju stanja, režim zaključanog ekrana, jedinicu temperature, samopokretanje i drugo.</string>
 
-  <string name="live_updates_onboarding_title" formatted="false">Čip baterije u statusnoj traci</string>
-  <string name="live_updates_onboarding_message_on" formatted="false">Vaš uređaj podržava prikaz procenta baterije kao čipa u statusnoj traci. Ova opcija je podrazumevano uključena.\n
+  <string name="live_updates_onboarding_title">Čip baterije u statusnoj traci</string>
+  <string name="live_updates_onboarding_message_on">Vaš uređaj podržava prikaz procenta baterije kao čipa u statusnoj traci. Ova opcija je podrazumevano uključena.\n
     \n
     Ako više volite klasičnu ikonicu obaveštenja, možete isključiti „Live Updates” u Android sistemskim podešavanjima za ovu aplikaciju.\n
     \n
     Napomena: Davanje ove dozvole može povremeno izazvati zatvaranje aplikacije. Ako se to desi, samo je ponovo otvorite.</string>
-  <string name="live_updates_onboarding_message_off" formatted="false">Vaš uređaj podržava prikaz procenta baterije kao čipa u statusnoj traci, ali je ova opcija trenutno isključena u sistemskim podešavanjima.\n
+  <string name="live_updates_onboarding_message_off">Vaš uređaj podržava prikaz procenta baterije kao čipa u statusnoj traci, ali je ova opcija trenutno isključena u sistemskim podešavanjima.\n
     \n
     Za najbolje iskustvo preporučujemo da je uključite. Ako više volite klasičnu ikonicu obaveštenja, možete je ostaviti isključenu.\n
     \n
     Napomena: Davanje ove dozvole može povremeno izazvati zatvaranje aplikacije. Ako se to desi, samo je ponovo otvorite.</string>
-  <string name="live_updates_onboarding_positive_on" formatted="false">Razumem</string>
-  <string name="live_updates_onboarding_positive_off" formatted="false">Idi na podešavanja</string>
-  <string name="live_updates_onboarding_negative_off" formatted="false">Zatvori</string>
+  <string name="live_updates_onboarding_positive_on">Razumem</string>
+  <string name="live_updates_onboarding_positive_off">Idi na podešavanja</string>
+  <string name="live_updates_onboarding_negative_off">Zatvori</string>
 
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitoru je potrebna vaša dozvola da prikazuje nivo baterije u statusnoj traci i obaveštava vas o alarmima.\n
+  <string name="notifications_onboarding_message">Battery Monitoru je potrebna vaša dozvola da prikazuje nivo baterije u statusnoj traci i obaveštava vas o alarmima.\n
     \n
     Napomena: Davanje ove dozvole može povremeno izazvati zatvaranje aplikacije. Ako se to desi, samo je ponovo otvorite.</string>
 
@@ -278,13 +278,13 @@
 
   <string name="pref_cat_notification_content" formatted="false">Sadržaj</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Čip statusne trake (Android 16+)</string>
-  <string formatted="false" name="pref_live_update_display">Prikaži Live Update</string>
-  <string formatted="false" name="pref_live_update_display_summary">Prikaži u statusnoj traci:</string>
-  <string formatted="false" name="pref_live_update_display_help">Odaberite kada čip za Live Update na Androidu 16+ treba da se prikazuje u statusnoj traci.</string>
-  <string formatted="false" name="pref_live_update_display_charging">Samo tokom punjenja</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification">Zadrži glavno obaveštenje uz Live Update</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">Prikazivati celo glavno obaveštenje dok je Live Update aktivan?</string>
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">Ako je uključeno, normalno glavno obaveštenje ostaje vidljivo pored čipa u statusnoj traci.</string>
+  <string name="pref_live_update_display" formatted="false">Prikaži Live Update</string>
+  <string name="pref_live_update_display_summary" formatted="false">Prikaži u statusnoj traci:</string>
+  <string name="pref_live_update_display_help" formatted="false">Odaberite kada čip za Live Update na Androidu 16+ treba da se prikazuje u statusnoj traci.</string>
+  <string name="pref_live_update_display_charging" formatted="false">Samo tokom punjenja</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">Zadrži glavno obaveštenje uz Live Update</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">Prikazivati celo glavno obaveštenje dok je Live Update aktivan?</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">Ako je uključeno, normalno glavno obaveštenje ostaje vidljivo pored čipa u statusnoj traci.</string>
   <string name="pref_chip_content" formatted="false">Sadržaj čipa</string>
   <string name="pref_chip_switching_interval" formatted="false">Interval promene</string>
   <string name="pref_chip_content_help" formatted="false">Izaberite koju vrednost prikazivati u Android 16+ promoted-notification čipu.</string>
@@ -309,7 +309,7 @@
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Uključiti vreme od promene statusa u vitalne znake?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Ako je uključeno, linija vitalnih znakova će prikazivati i broj sati od kada je uređaj isključen sa punjača, priključen na punjač ili potpuno napunjen.</string>
 
-  <string formatted="false" name="custom">Прилагођено...</string>
+  <string name="custom" formatted="false">Прилагођено...</string>
 
   <string name="pref_cat_icon_set" formatted="false">Ikonica obaveštenja</string>
   <string name="pref_icon_content" formatted="false">Sadržaj ikonice</string>
@@ -377,7 +377,7 @@
   <string name="pref_enable_logging_help" formatted="false">Ukoliko je omogućeno, Battery Monitor će evidentirati promene u stanju baterije.</string>
   <string name="pref_max_log_age" formatted="false">Maksimalno vreme evidentiranja unosa</string>
   <string name="pref_max_log_age_summary" formatted="false">Obriši evidenciju unosa stariju od:</string>
-  <string formatted="false" name="pref_max_log_age_help">Ako je evidentiranje omogućeno, svaki put kada priključite uređaj biće obrisani zapisi stariji od ove vrednosti. Izaberite Nikad ne briši da ih zadržite dok ih ručno ne obrišete.</string>
+  <string name="pref_max_log_age_help" formatted="false">Ako je evidentiranje omogućeno, svaki put kada priključite uređaj biće obrisani zapisi stariji od ove vrednosti. Izaberite Nikad ne briši da ih zadržite dok ih ručno ne obrišete.</string>
 
   <string name="pref_cat_temperature_unit" formatted="false">Jedinica temperature</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Pretvori u farenhajte</string>
@@ -442,8 +442,8 @@
   <string name="alarm_pref_not_used" formatted="false">Ne koristi se za ovaj tip alarma</string>
   <string name="pref_alarm_threshold_summary" formatted="false">Granice alarma:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Kad su u pitanju alarm za procenat baterije i alarm za temperaturu, potrebno je podesiti nivo temperature ili procenta baterije koji će pokrenuti alarm.</string>
-  <string formatted="false" name="alarm_custom_temp_message">Унесите температуру у ЗЗПХ0ЗЗ степенима</string>
-  <string formatted="false" name="alarm_custom_charge_message">Унесите проценат наплате (0-100)</string>
+  <string name="alarm_custom_temp_message" formatted="true">Унесите температуру у ЗЗПХ0ЗЗ степенима</string>
+  <string name="alarm_custom_charge_message" formatted="false">Унесите проценат наплате (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">Uvek</string>
   <string name="boot_pref_never" formatted="false">Nikad</string>
@@ -456,14 +456,14 @@
   <string name="age_2_weeks" formatted="false">Dve nedelje</string>
   <string name="age_3_weeks" formatted="false">Tri nedelje</string>
   <string name="age_4_weeks" formatted="false">Mesec dana</string>
-  <string formatted="false" name="age_never_delete">Nikad ne briši</string>
+  <string name="age_never_delete" formatted="false">Nikad ne briši</string>
   <string name="pref_content_percent" formatted="false">Procenat baterije</string>
   <string name="pref_content_temperature" formatted="false">Temperatura baterije</string>
   <string name="pref_content_switching" formatted="false">Menjaj između oba</string>
 
-  <string formatted="false" name="chip_switching_interval_2_seconds">2 sekunde</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 sekundi</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 sekundi</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 sekundi</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 sekundi</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 sekunde</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 sekundi</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 sekundi</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 sekundi</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 sekundi</string>
 </resources>

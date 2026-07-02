@@ -11,25 +11,25 @@
   <string name="cancel" formatted="false">ביטול</string>
 
   <string name="confirm_close" formatted="false">לסגור באמת?</string>
-  <string formatted="false" name="confirm_close_hint">אישור סגירה של האפליקציה.</string>
+  <string name="confirm_close_hint" formatted="false">אישור סגירה של האפליקציה.</string>
 
   <string name="notifications_disabled" formatted="false">הודעות אינן מאופשרות!</string>
-  <string formatted="false" name="notifications_disabled_message">חסמת את כל ההתראות עבור Battery Monitor. צוואה זו למנוע מBattery Monitor להציג הודעות כלשהן: הראשי התראה וכל האזעקה שהגדרת ייחסמו כולם.\n
+  <string name="notifications_disabled_message" formatted="false">חסמת את כל ההתראות עבור Battery Monitor. צוואה זו למנוע מBattery Monitor להציג הודעות כלשהן: הראשי התראה וכל האזעקה שהגדרת ייחסמו כולם.\n
     \n
     Since Battery Monitor מאפשר לך להפעיל או לכבות את ההתראה הראשית בנפרד, כמו גם להשבית זמנית כל אזעקה שיצרת, מומלץ בחום לבטל את החסימה של התראות Battery Monitor. בזמן שהם חסומים, זה יופיע שBattery Monitor מקולקל.\n
     \n
     אנא לחץ על אישור כדי לעבור להגדרות המערכת שבהן תוכל בטל את חסימת ההתראות עבור Battery Monitor.</string>
 
-  <string formatted="false" name="battery_optimized">Battery Monitor מוגבל!</string>
-  <string formatted="false" name="battery_optimized_message">Battery Monitor מוגבל לפעול כהלכה. זה \"אופטימיזציה של סוללה\" היא תכונת אנדרואיד שנועדה להגביל אפליקציות מעוצבות בצורה גרועה כדי למנוע אותן משימוש ביותר מדי סוללה ברקע.\n
+  <string name="battery_optimized" formatted="false">Battery Monitor מוגבל!</string>
+  <string name="battery_optimized_message" formatted="false">Battery Monitor מוגבל לפעול כהלכה. זה \"אופטימיזציה של סוללה\" היא תכונת אנדרואיד שנועדה להגביל אפליקציות מעוצבות בצורה גרועה כדי למנוע אותן משימוש ביותר מדי סוללה ברקע.\n
     \n
     Battery Monitor, לעומת זאת, היא אפליקציה מעוצבת היטב שחייבת לפעול ללא הגבלה הרקע על מנת לתפקד כראוי. זה מאוד יעיל ו לא יקטין את חיי הסוללה שלך.\n
     \n
     אנא לחץ על אישור כדי לעבור להגדרות המערכת שבהן תוכל השבת את אופטימיזציית הסוללה עבור Battery Monitor.</string>
 
-  <string formatted="false" name="main_notif_chan_name">הודעה ראשית</string>
-  <string formatted="false" name="live_updates_notif_chan_name">עדכונים חיים</string>
-  <string formatted="false" name="channel_group_name_alarms">אַזעָקָה</string>
+  <string name="main_notif_chan_name" formatted="false">הודעה ראשית</string>
+  <string name="live_updates_notif_chan_name" formatted="false">עדכונים חיים</string>
+  <string name="channel_group_name_alarms" formatted="false">אַזעָקָה</string>
 
   <string name="confirm_clear_logs" formatted="false">באמת למחוק את כל יומני הרישום?</string>
 
@@ -53,30 +53,30 @@
   <string name="menu_log_filter" formatted="false">מסנן</string>
   <string name="menu_export" formatted="false">ייצוא ל-CSV</string>
   <string name="menu_delete_alarm" formatted="false">מחיקת התרעה</string>
-  <string formatted="false" name="menu_show_seconds">הצג שניות</string>
-  <string formatted="false" name="menu_hide_seconds">הסתר שניות</string>
+  <string name="menu_show_seconds" formatted="false">הצג שניות</string>
+  <string name="menu_hide_seconds" formatted="false">הסתר שניות</string>
 
   <string name="percent_symbol" formatted="false">%</string>
-  <string formatted="false" name="degree_symbol">°</string>
+  <string name="degree_symbol" formatted="false">°</string>
   <string name="fahrenheit" formatted="false">פארנהייט</string>
-  <string formatted="false" name="fahrenheit_symbol">F</string>
+  <string name="fahrenheit_symbol" formatted="false">F</string>
   <string name="celsius" formatted="false">צלזיוס</string>
-  <string formatted="false" name="celsius_symbol">C</string>
-  <string formatted="false" name="volt_symbol">V</string>
+  <string name="celsius_symbol" formatted="false">C</string>
+  <string name="volt_symbol" formatted="false">V</string>
 
-  <string formatted="false" name="inaccessible_storage">כרטיס SD אינו נגיש.</string>
-  <string formatted="false" name="inaccessible_w_reason">כרטיס SD לא נגיש:</string>
-  <string formatted="false" name="read_only_storage">כרטיס SD הוא לקריאה בלבד.</string>
-  <string formatted="false" name="no_storage_permission">לא ניתנה הרשאת אחסון.</string>
-  <string formatted="false" name="file_written">הקובץ נכתב בהצלחה למיקום שנבחר.</string>
+  <string name="inaccessible_storage" formatted="false">כרטיס SD אינו נגיש.</string>
+  <string name="inaccessible_w_reason" formatted="false">כרטיס SD לא נגיש:</string>
+  <string name="read_only_storage" formatted="false">כרטיס SD הוא לקריאה בלבד.</string>
+  <string name="no_storage_permission" formatted="false">לא ניתנה הרשאת אחסון.</string>
+  <string name="file_written" formatted="false">הקובץ נכתב בהצלחה למיקום שנבחר.</string>
 
   <string name="date" formatted="false">תאריך</string>
   <string name="time" formatted="false">שעה</string>
   <string name="status" formatted="false">מצב</string>
-  <string formatted="false" name="charge">אחוז_חיוב</string>
-  <string formatted="false" name="temperature">מעלות_צלזיוס</string>
-  <string formatted="false" name="temperature_f">degrees_fahrenheit</string>
-  <string formatted="false" name="voltage">וולט</string>
+  <string name="charge" formatted="false">אחוז_חיוב</string>
+  <string name="temperature" formatted="false">מעלות_צלזיוס</string>
+  <string name="temperature_f" formatted="false">degrees_fahrenheit</string>
+  <string name="voltage" formatted="false">וולט</string>
 
   <string name="status_unplugged" formatted="false">לא מחובר</string>
   <string name="status_unknown" formatted="false">לא ידוע</string>
@@ -97,36 +97,36 @@
   <string name="health_cold" formatted="false">קר</string>
   <string name="plugged_unplugged" formatted="false">לא-מחובר</string>
   <string name="plugged_ac" formatted="false">(זרם חילופין)</string>
-  <string formatted="false" name="plugged_usb">(USB)</string>
-  <string formatted="false" name="plugged_unknown">(?)</string>
+  <string name="plugged_usb" formatted="false">(USB)</string>
+  <string name="plugged_unknown" formatted="false">(?)</string>
   <string name="plugged_wireless" formatted="false">(אלחוטי)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">טעונה במלואה</string>
   <string name="alarm_type_charge_drops" formatted="false">המטען נמוך מ-</string>
   <string name="alarm_type_charge_rises" formatted="false">המטען גבוה מ-</string>
-  <string formatted="false" name="alarm_type_temperature_drops">הטמפרטורה יורדת מתחת</string>
+  <string name="alarm_type_temperature_drops" formatted="false">הטמפרטורה יורדת מתחת</string>
   <string name="alarm_type_temperature_rises" formatted="false">הטמפרטורה גבוהה מ-</string>
   <string name="alarm_type_health_failure" formatted="false">כשל בריאותי</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">טעינה מלאה הושלמה</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">המטען פחות מ-</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">המטען יותר מ-</string>
-  <string formatted="false" name="alarm_type_entry_temperature_drops">הטמפרטורה יורדת מתחת...</string>
+  <string name="alarm_type_entry_temperature_drops" formatted="false">הטמפרטורה יורדת מתחת...</string>
   <string name="alarm_type_entry_temperature_rises" formatted="false">הטמפרטורה גבוהה מ-</string>
   <string name="alarm_type_entry_health_failure" formatted="false">בריאות לא-טובה</string>
 
   <string name="alarm_fully_charged" formatted="false">הסוללה טעונה כעת במלואה</string>
   <string name="alarm_charge_drops" formatted="false">"מטען הסוללה מתחת ל-"</string>
   <string name="alarm_charge_rises" formatted="false">"מטען הסוללה מעל "</string>
-  <string formatted="false" name="alarm_temp_drops">"טמפרטורת הסוללה נמוכה יותר"</string>
+  <string name="alarm_temp_drops" formatted="false">"טמפרטורת הסוללה נמוכה יותר"</string>
   <string name="alarm_temp_rises" formatted="false">"טמפרטורת הסוללה גבוהה מ-"</string>
   <string name="alarm_health_failure" formatted="false">"בריאות הסוללה היא:"</string>
 
   <string name="logs_empty" formatted="false">יומני הרישום ריקים</string>
-  <string formatted="false" name="after_nh_mm_unplugged">לאחר ניתוק %1$dh %2$dm</string>
+  <string name="after_nh_mm_unplugged" formatted="true">לאחר ניתוק %1$dh %2$dm</string>
 
-  <string formatted="false" name="after_nh_mm_plugged_in">לאחר %1$dh %2$dm מחובר לחשמל</string>
-  <string formatted="false" name="after_nm_ms_unplugged">לאחר ניתוק ה-%1$dm %2$ds</string>
-  <string formatted="false" name="after_nm_ms_plugged_in">לאחר %1$dm %2$ds מחוברים</string>
+  <string name="after_nh_mm_plugged_in" formatted="true">לאחר %1$dh %2$dm מחובר לחשמל</string>
+  <string name="after_nm_ms_unplugged" formatted="true">לאחר ניתוק ה-%1$dm %2$ds</string>
+  <string name="after_nm_ms_plugged_in" formatted="true">לאחר %1$dm %2$ds מחוברים</string>
   <string name="since" formatted="false">מ</string>
 
   <string name="currently_using" formatted="false">כעת בשימוש</string>
@@ -139,205 +139,205 @@
 
   <string name="help_cat_open_source" formatted="false">קוד פתוח</string>
 
-  <string formatted="false" name="help_open_source">זה הפרויקט הוא קוד פתוח. אתה יכול לגשת לקוד המקור בכתובת <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+  <string name="help_open_source" formatted="false">זה הפרויקט הוא קוד פתוח. אתה יכול לגשת לקוד המקור בכתובת <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">פרטיות</string>
 
-  <string formatted="false" name="help_privacy">Battery Monitor אינו אוסף, מאחסן או מעביר מידע אישי.</string>
+  <string name="help_privacy" formatted="false">Battery Monitor אינו אוסף, מאחסן או מעביר מידע אישי.</string>
 
-  <string formatted="false" name="help_cat_no_warranty">אין אחריות</string>
-  <string formatted="false" name="help_no_warranty">תוכנה זו מופצת בתקווה שהיא תהיה שימושית, אבל ללא כל אחריות; אפילו ללא האחריות המשתמעת של סחירות או התאמה למטרה מסוימת.\n
+  <string name="help_cat_no_warranty" formatted="false">אין אחריות</string>
+  <string name="help_no_warranty" formatted="false">תוכנה זו מופצת בתקווה שהיא תהיה שימושית, אבל ללא כל אחריות; אפילו ללא האחריות המשתמעת של סחירות או התאמה למטרה מסוימת.\n
     \n
     בעוד אני עושה כמיטב יכולתי לוודא שזה עובד טוב ולא לגרום לבעיות, אני לא אחראי לכל נזק או אי נוחות זה עלול לגרום בכל נסיבות.</string>
-  <string formatted="false" name="help_cat_acknowledgments">תודות</string>
-  <string formatted="false" name="help_acknowledgments">צג הסוללה הוא מזלג של Battery Indicator Pro / BatteryBot Pro מאת Darshan Computing, LLC. תודה לכותבים המקוריים ולתורמים ליצירה ותחזוקה של הפרויקט במעלה הזרם.</string>
-  <string formatted="false" name="help_cat_contact">מַגָע</string>
+  <string name="help_cat_acknowledgments" formatted="false">תודות</string>
+  <string name="help_acknowledgments" formatted="false">צג הסוללה הוא מזלג של Battery Indicator Pro / BatteryBot Pro מאת Darshan Computing, LLC. תודה לכותבים המקוריים ולתורמים ליצירה ותחזוקה של הפרויקט במעלה הזרם.</string>
+  <string name="help_cat_contact" formatted="false">מַגָע</string>
 
-  <string formatted="false" name="help_contact">אם יש לך שאלה, בעיה או הערה, בבקשה <a href="mailto:tomasz@swistak.codes">שלח לי מייל</a>.</string>
+  <string name="help_contact" formatted="false">אם יש לך שאלה, בעיה או הערה, בבקשה <a href="mailto:tomasz@swistak.codes">שלח לי מייל</a>.</string>
 
-  <string formatted="false" name="settings_overview">סקירה כללית</string>
-  <string formatted="false" name="settings_overview_help">ההגדרות של Battery Monitor מאורגנות בדפים נפרדים כמתואר למטה. לכל דף הגדרות יש דף עזרה משלו המתאר את ההגדרות הזמינות שם.</string>
+  <string name="settings_overview" formatted="false">סקירה כללית</string>
+  <string name="settings_overview_help" formatted="false">ההגדרות של Battery Monitor מאורגנות בדפים נפרדים כמתואר למטה. לכל דף הגדרות יש דף עזרה משלו המתאר את ההגדרות הזמינות שם.</string>
 
-  <string formatted="false" name="notifications_disabled_cat">הודעות מושבתות</string>
-  <string formatted="false" name="app_notifs_disabled_b">הפעל התראות אפליקציה</string>
+  <string name="notifications_disabled_cat" formatted="false">הודעות מושבתות</string>
+  <string name="app_notifs_disabled_b" formatted="false">הפעל התראות אפליקציה</string>
 
-  <string formatted="false" name="app_notifs_disabled_summary">השבתת את כל ההתראות עבור האפליקציה הזו.  אנא אפשר להם לגשת להגדרות אלה.</string>
-  <string formatted="false" name="main_notifs_disabled_b">אפשר הודעה ראשית</string>
+  <string name="app_notifs_disabled_summary" formatted="false">השבתת את כל ההתראות עבור האפליקציה הזו.  אנא אפשר להם לגשת להגדרות אלה.</string>
+  <string name="main_notifs_disabled_b" formatted="false">אפשר הודעה ראשית</string>
 
-  <string formatted="false" name="main_notifs_disabled_summary">השבתת את ההתראה הראשית עבור אפליקציה זו.  אנא הפעל אותו כדי לגשת להגדרות אלה.</string>
-  <string formatted="false" name="app_notifs_alarms_disabled_summary">השבתת את כל ההתראות עבור האפליקציה הזו.  אנא אפשר להם לגשת להתראות שלך.</string>
+  <string name="main_notifs_disabled_summary" formatted="false">השבתת את ההתראה הראשית עבור אפליקציה זו.  אנא הפעל אותו כדי לגשת להגדרות אלה.</string>
+  <string name="app_notifs_alarms_disabled_summary" formatted="false">השבתת את כל ההתראות עבור האפליקציה הזו.  אנא אפשר להם לגשת להתראות שלך.</string>
 
-  <string formatted="false" name="alarm_notifs_disabled_b">אפשר אזעקות</string>
-  <string formatted="false" name="alarm_notifs_disabled_summary">השבתת את קבוצת התראות האזעקה עבור אפליקציה זו.  אנא הפעל אותו כדי לגשת להתראות שלך.</string>
+  <string name="alarm_notifs_disabled_b" formatted="false">אפשר אזעקות</string>
+  <string name="alarm_notifs_disabled_summary" formatted="false">השבתת את קבוצת התראות האזעקה עבור אפליקציה זו.  אנא הפעל אותו כדי לגשת להתראות שלך.</string>
 
-  <string formatted="false" name="alarm_chan_disabled">השבתת התראות עבור סוג התראה זה.  אנא אפשר להם להשתמש בסוג זה של אזעקה.</string>
-  <string formatted="false" name="alarm_chan_disabled_b">אפשר סוג אזעקה זה</string>
+  <string name="alarm_chan_disabled" formatted="false">השבתת התראות עבור סוג התראה זה.  אנא אפשר להם להשתמש בסוג זה של אזעקה.</string>
+  <string name="alarm_chan_disabled_b" formatted="false">אפשר סוג אזעקה זה</string>
 
-  <string formatted="false" name="alarm_chan_settings_b">נהל את סוג האזעקה הזה</string>
-  <string formatted="false" name="notification_settings">הודעה ראשית</string>
-  <string formatted="false" name="notification_settings_summary">הגדר את ההודעה הראשית</string>
-  <string formatted="false" name="notification_settings_help">אתה יכול להגדיר איזה תוכן יוצג בהודעה הנפתחת.</string>
-  <string formatted="false" name="status_bar_icon_settings">סמל שורת המצב</string>
-  <string formatted="false" name="status_bar_icon_settings_summary">בחר את תוכן הסמל</string>
+  <string name="alarm_chan_settings_b" formatted="false">נהל את סוג האזעקה הזה</string>
+  <string name="notification_settings" formatted="false">הודעה ראשית</string>
+  <string name="notification_settings_summary" formatted="false">הגדר את ההודעה הראשית</string>
+  <string name="notification_settings_help" formatted="false">אתה יכול להגדיר איזה תוכן יוצג בהודעה הנפתחת.</string>
+  <string name="status_bar_icon_settings" formatted="false">סמל שורת המצב</string>
+  <string name="status_bar_icon_settings_summary" formatted="false">בחר את תוכן הסמל</string>
   <string name="status_bar_icon_settings_help" formatted="false">בחר אם סמל ההתראה יציג את אחוז הסוללה או את הטמפרטורה, אם סמל היחידה יוצג בתוך הסמל, ואם לטעינה יהיה סמל ייעודי.</string>
-  <string formatted="false" name="status_bar_chip_settings">שבב שורת המצב</string>
-  <string formatted="false" name="status_bar_chip_settings_summary">הגדר את תוכן השבב של עדכונים חיים</string>
-  <string formatted="false" name="status_bar_chip_settings_help">ב-Android 16 ומעלה ניתן לקבוע מה יוצג בשבב שורת המצב והאם להציג סימון טעינה.</string>
-  <string formatted="false" name="current_hack_settings">פריצה נוכחית (mA).</string>
+  <string name="status_bar_chip_settings" formatted="false">שבב שורת המצב</string>
+  <string name="status_bar_chip_settings_summary" formatted="false">הגדר את תוכן השבב של עדכונים חיים</string>
+  <string name="status_bar_chip_settings_help" formatted="false">ב-Android 16 ומעלה ניתן לקבוע מה יוצג בשבב שורת המצב והאם להציג סימון טעינה.</string>
+  <string name="current_hack_settings" formatted="false">פריצה נוכחית (mA).</string>
 
-  <string formatted="false" name="current_hack_settings_summary">הגדרות מתקדמות להפעלת מידע mA</string>
-  <string formatted="false" name="current_hack_settings_help">אנדרואיד לא מספקת אמצעי לאפליקציות לגשת למידע לגבי זרם הסוללה. עם זאת, פריצה זמינה שמאפשר למכשירים רבים לקבל מידע זה.\n
+  <string name="current_hack_settings_summary" formatted="false">הגדרות מתקדמות להפעלת מידע mA</string>
+  <string name="current_hack_settings_help" formatted="false">אנדרואיד לא מספקת אמצעי לאפליקציות לגשת למידע לגבי זרם הסוללה. עם זאת, פריצה זמינה שמאפשר למכשירים רבים לקבל מידע זה.\n
     \n
     זה לא מובטח שיעבוד. יכול להיות שזה לא יעבוד בכלל או שזה עשוי להיראות כעובד אבל רק לגרום לערכי שטות.\n
     \n
     Settings כדי להפעיל את הפריצה, אם אפשר, ולשלוט איך זה בשימוש זמינים בסעיף זה.</string>
   <string name="alarm_settings_subtitle" formatted="false">הגדרות התראה</string>
   <string name="alarm_settings" formatted="false">התראות</string>
-  <string formatted="false" name="alarm_settings_help">אתה יכול לגרום ל-Battery Monitor להודיע לך מתי רמת הסוללה שלך מגיע למצב מסוים (למשל, הסוללה נטועה במלואה, רמת הסוללה יורדת מתחת ל-20%, ועוד רבים אחרים).</string>
+  <string name="alarm_settings_help" formatted="false">אתה יכול לגרום ל-Battery Monitor להודיע לך מתי רמת הסוללה שלך מגיע למצב מסוים (למשל, הסוללה נטועה במלואה, רמת הסוללה יורדת מתחת ל-20%, ועוד רבים אחרים).</string>
   <string name="other_settings" formatted="false">הגדרות אחרות</string>
-  <string formatted="false" name="other_settings_help">כל שאר ההגדרות נמצאות בדף זה, כולל רישום, נעילה מסך, יחידת טמפרטורה, הפעלה אוטומטית ועוד.</string>
-  <string formatted="false" name="live_updates_onboarding_title">שבב סוללה בשורת המצב</string>
-  <string formatted="false" name="live_updates_onboarding_message_on">המכשיר שלך תומך בהצגת אחוז הסוללה כשבב בשורת המצב. אפשרות זו מופעלת כברירת מחדל.\n
+  <string name="other_settings_help" formatted="false">כל שאר ההגדרות נמצאות בדף זה, כולל רישום, נעילה מסך, יחידת טמפרטורה, הפעלה אוטומטית ועוד.</string>
+  <string name="live_updates_onboarding_title">שבב סוללה בשורת המצב</string>
+  <string name="live_updates_onboarding_message_on">המכשיר שלך תומך בהצגת אחוז הסוללה כשבב בשורת המצב. אפשרות זו מופעלת כברירת מחדל.\n
     \n
     אם אתה מעדיף סמל התראה מסורתי, אפשר לכבות את "Live Updates" בהגדרות המערכת של Android עבור האפליקציה הזו.\n
     \n
     הערה: מתן ההרשאה הזו עלול לגרום לעיתים לסגירת האפליקציה. אם זה קורה, פשוט פתח אותה מחדש.</string>
-  <string formatted="false" name="live_updates_onboarding_message_off">המכשיר שלך תומך בהצגת אחוז הסוללה כשבב בשורת המצב, אבל אפשרות זו כבויה כרגע בהגדרות המערכת.\n
+  <string name="live_updates_onboarding_message_off">המכשיר שלך תומך בהצגת אחוז הסוללה כשבב בשורת המצב, אבל אפשרות זו כבויה כרגע בהגדרות המערכת.\n
     \n
     מומלץ להפעיל אותה לחוויה הטובה ביותר. אם אתה מעדיף סמל התראה מסורתי, אפשר להשאיר אותה כבויה.\n
     \n
     הערה: מתן ההרשאה הזו עלול לגרום לעיתים לסגירת האפליקציה. אם זה קורה, פשוט פתח אותה מחדש.</string>
-  <string formatted="false" name="live_updates_onboarding_positive_on">הבנתי</string>
-  <string formatted="false" name="live_updates_onboarding_positive_off">עבור אל הגדרות</string>
+  <string name="live_updates_onboarding_positive_on">הבנתי</string>
+  <string name="live_updates_onboarding_positive_off">עבור אל הגדרות</string>
 
-  <string formatted="false" name="live_updates_onboarding_negative_off">לְפַטֵר</string>
-  <string name="notifications_onboarding_message" formatted="false">Battery Monitor צריך את ההרשאה שלך כדי להציג את רמת הסוללה בשורת המצב ולהתריע על אזעקות.\n
+  <string name="live_updates_onboarding_negative_off">לְפַטֵר</string>
+  <string name="notifications_onboarding_message">Battery Monitor צריך את ההרשאה שלך כדי להציג את רמת הסוללה בשורת המצב ולהתריע על אזעקות.\n
     \n
     הערה: מתן ההרשאה הזו עלול לגרום לעיתים לסגירת האפליקציה. אם זה קורה, פשוט פתח אותה מחדש.</string>
   <string name="add_alarm" formatted="false">הוספת התראה</string>
-  <string formatted="false" name="pref_cat_channel_settings">הגדרות ערוץ הודעות</string>
-  <string formatted="false" name="pref_manage_main_channel">ניהול הערוץ הראשי</string>
+  <string name="pref_cat_channel_settings" formatted="false">הגדרות ערוץ הודעות</string>
+  <string name="pref_manage_main_channel" formatted="false">ניהול הערוץ הראשי</string>
 
   <string name="pref_cat_notification_content" formatted="false">תוכן</string>
-  <string formatted="false" name="pref_cat_status_bar_chip">שבב שורת המצב (אנדרואיד 16+)</string>
-  <string formatted="false" name="pref_live_update_display">הצג עדכון חי</string>
-  <string formatted="false" name="pref_live_update_display_summary">הצג בשורת המצב:</string>
-  <string formatted="false" name="pref_live_update_display_help">בחר מתי שבב העדכון החי של Android 16+ יוצג בשורת המצב.</string>
-  <string formatted="false" name="pref_live_update_display_charging">רק בזמן טעינה</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">שבב שורת המצב (אנדרואיד 16+)</string>
+  <string name="pref_live_update_display" formatted="false">הצג עדכון חי</string>
+  <string name="pref_live_update_display_summary" formatted="false">הצג בשורת המצב:</string>
+  <string name="pref_live_update_display_help" formatted="false">בחר מתי שבב העדכון החי של Android 16+ יוצג בשורת המצב.</string>
+  <string name="pref_live_update_display_charging" formatted="false">רק בזמן טעינה</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification">השאר התראה ראשית עם עדכון חי</string>
+  <string name="pref_live_update_keep_main_notification" formatted="false">השאר התראה ראשית עם עדכון חי</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification_summary">להציג את ההתראה הראשית המלאה בזמן שהעדכון החי פעיל?</string>
+  <string name="pref_live_update_keep_main_notification_summary" formatted="false">להציג את ההתראה הראשית המלאה בזמן שהעדכון החי פעיל?</string>
 
-  <string formatted="false" name="pref_live_update_keep_main_notification_help">אם מופעל, ההתראה הראשית הרגילה תישאר גלויה בנוסף לשבב בשורת המצב.</string>
-  <string formatted="false" name="pref_chip_content">תוכן שבב</string>
+  <string name="pref_live_update_keep_main_notification_help" formatted="false">אם מופעל, ההתראה הראשית הרגילה תישאר גלויה בנוסף לשבב בשורת המצב.</string>
+  <string name="pref_chip_content" formatted="false">תוכן שבב</string>
 
-  <string formatted="false" name="pref_chip_switching_interval">מרווח החלפה</string>
-  <string formatted="false" name="pref_chip_content_help">בחר איזה ערך להציג בשבב ההודעות המקודם של Android 16+.</string>
-  <string formatted="false" name="pref_chip_indicate_charging">הצג סימון טעינה</string>
-  <string formatted="false" name="pref_chip_indicate_charging_summary">להציג סימון בזמן טעינה או טעינה מלאה?</string>
-  <string formatted="false" name="pref_chip_indicate_charging_help">אם מופעל, שבב שורת המצב יציג סימון ליד הערך בזמן טעינה או טעינה מלאה.</string>
+  <string name="pref_chip_switching_interval" formatted="false">מרווח החלפה</string>
+  <string name="pref_chip_content_help" formatted="false">בחר איזה ערך להציג בשבב ההודעות המקודם של Android 16+.</string>
+  <string name="pref_chip_indicate_charging" formatted="false">הצג סימון טעינה</string>
+  <string name="pref_chip_indicate_charging_summary" formatted="false">להציג סימון בזמן טעינה או טעינה מלאה?</string>
+  <string name="pref_chip_indicate_charging_help" formatted="false">אם מופעל, שבב שורת המצב יציג סימון ליד הערך בזמן טעינה או טעינה מלאה.</string>
   <string name="pref_top_line_content" formatted="false">תוכן השורה העליונה</string>
-  <string formatted="false" name="pref_top_line_content_help">הגדר את מה שמופיע בשורה העליונה של ההודעה: הערכה הזמן שנותר (ניתן להגדרה במקום אחר), כמה זמן מאז הסטטוס השתנה (מחובר לחשמל, מנותק או נטען במלואו), או את סימנים חיוניים של הסוללה (בריאות הסוללה, טמפרטורה ומתח).</string>
+  <string name="pref_top_line_content_help" formatted="false">הגדר את מה שמופיע בשורה העליונה של ההודעה: הערכה הזמן שנותר (ניתן להגדרה במקום אחר), כמה זמן מאז הסטטוס השתנה (מחובר לחשמל, מנותק או נטען במלואו), או את סימנים חיוניים של הסוללה (בריאות הסוללה, טמפרטורה ומתח).</string>
   <string name="pref_bottom_line_content" formatted="false">תוכן השורה התחתונה</string>
-  <string formatted="false" name="pref_bottom_line_content_help">יש לך אותן אפשרויות לשורה התחתונה כמו לשורה העליונה.</string>
+  <string name="pref_bottom_line_content_help" formatted="false">יש לך אותן אפשרויות לשורה התחתונה כמו לשורה העליונה.</string>
   <string name="time_remaining" formatted="false">משך הזמן שנותר</string>
-  <string formatted="false" name="time_since_status_change">זמן מאז שינוי המצב</string>
-  <string formatted="false" name="vital_signs">סימנים חיוניים</string>
-  <string formatted="false" name="pref_time_remaining_verbosity">זמן שנותר מילוליות</string>
-  <string formatted="false" name="pref_time_remaining_verbosity_help">מכשירים מגיעים בכל הצורות והגדלים, כך שרוב התרגומים צריכים לעשות זאת השתמש בקיצורים כדי להבטיח שהאומדן שנותר הזמן מתאים בנוחות באזור ההודעות. אם זה עדיין לא מתאים, אתה יכול לבחור בפורמט המרוכז. אם יש לך הרבה מקום, ייתכן שתעדיף את ההגדרה המילולית.</string>
+  <string name="time_since_status_change" formatted="false">זמן מאז שינוי המצב</string>
+  <string name="vital_signs" formatted="false">סימנים חיוניים</string>
+  <string name="pref_time_remaining_verbosity" formatted="false">זמן שנותר מילוליות</string>
+  <string name="pref_time_remaining_verbosity_help" formatted="false">מכשירים מגיעים בכל הצורות והגדלים, כך שרוב התרגומים צריכים לעשות זאת השתמש בקיצורים כדי להבטיח שהאומדן שנותר הזמן מתאים בנוחות באזור ההודעות. אם זה עדיין לא מתאים, אתה יכול לבחור בפורמט המרוכז. אם יש לך הרבה מקום, ייתכן שתעדיף את ההגדרה המילולית.</string>
   <string name="condensed" formatted="false">דחוס</string>
   <string name="normal" formatted="false">רגיל</string>
   <string name="verbose" formatted="false">מילולי</string>
-  <string formatted="false" name="pref_status_duration_in_vital_signs">משך מצב בסימנים חיוניים</string>
-  <string formatted="false" name="pref_status_duration_in_vital_signs_summary">האם לכלול זמן מאז שינוי המצב בסימנים חיוניים?</string>
-  <string formatted="false" name="pref_status_duration_in_vital_signs_help">אם מוגדר, קו הסימנים החיוניים יכלול גם את מספר השעות מאז שהמכשיר התנתק מהחשמל, חובר לחשמל או נטען במלואו.</string>
-  <string formatted="false" name="custom">מותאם אישית...</string>
+  <string name="pref_status_duration_in_vital_signs" formatted="false">משך מצב בסימנים חיוניים</string>
+  <string name="pref_status_duration_in_vital_signs_summary" formatted="false">האם לכלול זמן מאז שינוי המצב בסימנים חיוניים?</string>
+  <string name="pref_status_duration_in_vital_signs_help" formatted="false">אם מוגדר, קו הסימנים החיוניים יכלול גם את מספר השעות מאז שהמכשיר התנתק מהחשמל, חובר לחשמל או נטען במלואו.</string>
+  <string name="custom" formatted="false">מותאם אישית...</string>
   <string name="pref_cat_icon_set" formatted="false">סמל התראה</string>
 
-  <string formatted="false" name="pref_icon_content">תוכן סמל</string>
-  <string formatted="false" name="pref_icon_content_help">בחר אם סמל שורת המצב יציג את אחוז הסוללה או טמפרטורת הסוללה. הטמפרטורה עוקבת אחר היחידה שבחרת.</string>
+  <string name="pref_icon_content" formatted="false">תוכן סמל</string>
+  <string name="pref_icon_content_help" formatted="false">בחר אם סמל שורת המצב יציג את אחוז הסוללה או טמפרטורת הסוללה. הטמפרטורה עוקבת אחר היחידה שבחרת.</string>
   <string name="pref_show_icon_unit" formatted="false">הצג סמל יחידה</string>
   <string name="pref_show_icon_unit_help" formatted="false">כאשר האפשרות מופעלת, הסמל מציג סימן אחוז עבור אחוז הסוללה וסימן מעלה עבור טמפרטורת הסוללה. השבת אפשרות זו כדי להציג רק את המספר.</string>
   <string name="pref_cat_current_hack_main" formatted="false">בקרה ראשית</string>
 
-  <string formatted="false" name="pref_cat_current_hack_unsupported">פריצה נוכחית (mA) אינה נתמכת</string>
-  <string formatted="false" name="pref_current_hack_unsupported">מצטערים, הפריצה הנוכחית (mA) אינה נתמכת במכשיר זה.</string>
-  <string formatted="false" name="pref_enable_current_hack">אפשר פריצה</string>
+  <string name="pref_cat_current_hack_unsupported" formatted="false">פריצה נוכחית (mA) אינה נתמכת</string>
+  <string name="pref_current_hack_unsupported" formatted="false">מצטערים, הפריצה הנוכחית (mA) אינה נתמכת במכשיר זה.</string>
+  <string name="pref_enable_current_hack" formatted="false">אפשר פריצה</string>
 
-  <string formatted="false" name="pref_enable_current_hack_summary">ניסיון להפעיל את הפריצה הנוכחית (mA)?</string>
+  <string name="pref_enable_current_hack_summary" formatted="false">ניסיון להפעיל את הפריצה הנוכחית (mA)?</string>
 
-  <string formatted="false" name="pref_enable_current_hack_help">כאשר הגדרה זו מופעלת, האפשרויות האחרות לגבי ה פריצה תהיה שמישה.</string>
-  <string formatted="false" name="pref_current_hack_prefer_fs">העדיפו שיטת פריצה ישנה</string>
-  <string formatted="false" name="pref_current_hack_prefer_fs_summary">מעדיף שיטת פריצה ישנה יותר מבוססת מערכת קבצים?</string>
-  <string formatted="false" name="pref_current_hack_prefer_fs_help">החל מ-Lollipop (אנדרואיד 5.0), אנדרואיד מספקת כעת א דרך קצת פחות פריצה לגשת למידע נוכחי (mA), ישירות מהמערכת BatteryManager. עם זאת, זה עדיין לא מובטח לעבוד בכלל או לעבוד טוב. עד אנדרואיד נוגט (אנדרואיד 7.0), נראה ששיטת הפריצה הישנה (מבוססת מערכת קבצים). עובד טוב יותר ברוב המכשירים, כך שזה נשאר ברירת המחדל במכשירים פועל פחות מאנדרואיד 7.0.\n
+  <string name="pref_enable_current_hack_help" formatted="false">כאשר הגדרה זו מופעלת, האפשרויות האחרות לגבי ה פריצה תהיה שמישה.</string>
+  <string name="pref_current_hack_prefer_fs" formatted="false">העדיפו שיטת פריצה ישנה</string>
+  <string name="pref_current_hack_prefer_fs_summary" formatted="false">מעדיף שיטת פריצה ישנה יותר מבוססת מערכת קבצים?</string>
+  <string name="pref_current_hack_prefer_fs_help" formatted="false">החל מ-Lollipop (אנדרואיד 5.0), אנדרואיד מספקת כעת א דרך קצת פחות פריצה לגשת למידע נוכחי (mA), ישירות מהמערכת BatteryManager. עם זאת, זה עדיין לא מובטח לעבוד בכלל או לעבוד טוב. עד אנדרואיד נוגט (אנדרואיד 7.0), נראה ששיטת הפריצה הישנה (מבוססת מערכת קבצים). עובד טוב יותר ברוב המכשירים, כך שזה נשאר ברירת המחדל במכשירים פועל פחות מאנדרואיד 7.0.\n
     \n
     הגדרה זו היא רק רמז לפריצה לגבי איזו שיטה מעדיף; אתה יכול לנסות לשנות אותו אם הפריצה לא עובדת טוב המכשיר שלך.</string>
-  <string formatted="false" name="pref_current_hack_multiplier">מַכפִּיל</string>
+  <string name="pref_current_hack_multiplier" formatted="false">מַכפִּיל</string>
 
-  <string formatted="false" name="pref_current_hack_multiplier_help">מכשירים מסוימים מדווחים על מיליאמפר ולא על מיקרואמפר API קורא ל. אותם מכשירים מחליפים את הסימן של הערך שדווח. חלק מהמשתמשים מעדיפים את הסימן ההפוך לערכים שדווחו כהלכה. כדי לעזור להתאים למצבים כאלה, אתה יכול להכפיל את תוצאה של קריאת ה-API לפי הערך here.\n
+  <string name="pref_current_hack_multiplier_help" formatted="false">מכשירים מסוימים מדווחים על מיליאמפר ולא על מיקרואמפר API קורא ל. אותם מכשירים מחליפים את הסימן של הערך שדווח. חלק מהמשתמשים מעדיפים את הסימן ההפוך לערכים שדווחו כהלכה. כדי לעזור להתאים למצבים כאלה, אתה יכול להכפיל את תוצאה של קריאת ה-API לפי הערך here.\n
     \n
     אם המכשיר שלך תמיד מציג 0 mA, למשל, תוכל לנסות באמצעות מכפיל של 1000. אם הקריאה ל-API מחזירה 450 מיקרואמפר, מכפיל זה יגרום לאפליקציה להציג את הערך כ-450 mA ולא 0 mA. אם קריאת ה-API מחזירה 0 מיקרואמפר, כמובן, המכפיל לא ישנה את הגמר ערך תצוגה של 0 mA.</string>
-  <string formatted="false" name="pref_cat_current_hack_notification">הוֹדָעָה</string>
+  <string name="pref_cat_current_hack_notification" formatted="false">הוֹדָעָה</string>
 
-  <string formatted="false" name="pref_display_current_in_vital_stats">הצג בסטטיסטיקה חיונית</string>
+  <string name="pref_display_current_in_vital_stats" formatted="false">הצג בסטטיסטיקה חיונית</string>
 
-  <string formatted="false" name="pref_display_current_in_vital_stats_summary">להציג את הנוכחי (mA) בסטטיסטיקה חיונית של הודעות ראשיות?</string>
-  <string formatted="false" name="pref_display_current_in_vital_stats_help">כאשר מופעל, הפריצה תבוצע ותציג את ה- תוצאה בשורת הנתונים החיוניים הראשיים של הנתונים. שימו לב שאתם יש להגדיר את ההודעה הראשית להצגת נתונים סטטיסטיים חיוניים כדי לראות את זה. ערך זה ירענן רק כאשר המערכת שולחת מידע סוללה חדש.\n
+  <string name="pref_display_current_in_vital_stats_summary" formatted="false">להציג את הנוכחי (mA) בסטטיסטיקה חיונית של הודעות ראשיות?</string>
+  <string name="pref_display_current_in_vital_stats_help" formatted="false">כאשר מופעל, הפריצה תבוצע ותציג את ה- תוצאה בשורת הנתונים החיוניים הראשיים של הנתונים. שימו לב שאתם יש להגדיר את ההודעה הראשית להצגת נתונים סטטיסטיים חיוניים כדי לראות את זה. ערך זה ירענן רק כאשר המערכת שולחת מידע סוללה חדש.\n
     \n
     ברוב המכשירים, ערך שלילי מציין ניקוז נטו מה- סוללה וערך חיובי מציינים שהסוללה פועלת טעון. עם זאת, לא כל המכשירים מייצרים ערכים כך.</string>
-  <string formatted="false" name="pref_cat_current_hack_main_window">חלון ראשי</string>
+  <string name="pref_cat_current_hack_main_window" formatted="false">חלון ראשי</string>
 
-  <string formatted="false" name="pref_display_current_in_main_window">הצג בחלון הראשי</string>
-  <string formatted="false" name="pref_display_current_in_main_window_summary">להציג זרם (mA) בחלון הראשי?</string>
-  <string formatted="false" name="pref_display_current_in_main_window_help">כאשר מופעל, הפריצה תבוצע ותציג את ה- תוצאה בחלון הראשי. ערך זה יתרענן בכל פעם המערכת שולחת מידע חדש על הסוללה, אבל אתה יכול לרענן את ערך בכל עת פשוט על ידי הקשה על הערך המוצג. (שימו לב שחלק מהמכשירים לעתים רחוקות או לעולם לא מעדכנים את הנתונים הבסיסיים, אז ייתכן שהערך לא משתנה בהקשה.)\n
+  <string name="pref_display_current_in_main_window" formatted="false">הצג בחלון הראשי</string>
+  <string name="pref_display_current_in_main_window_summary" formatted="false">להציג זרם (mA) בחלון הראשי?</string>
+  <string name="pref_display_current_in_main_window_help" formatted="false">כאשר מופעל, הפריצה תבוצע ותציג את ה- תוצאה בחלון הראשי. ערך זה יתרענן בכל פעם המערכת שולחת מידע חדש על הסוללה, אבל אתה יכול לרענן את ערך בכל עת פשוט על ידי הקשה על הערך המוצג. (שימו לב שחלק מהמכשירים לעתים רחוקות או לעולם לא מעדכנים את הנתונים הבסיסיים, אז ייתכן שהערך לא משתנה בהקשה.)\n
     \n
     ברוב המכשירים, ערך שלילי מציין ניקוז נטו מה- סוללה וערך חיובי מציינים שהסוללה פועלת טעון. עם זאת, לא כל המכשירים מייצרים ערכים כך.</string>
 
-  <string formatted="false" name="pref_prefer_current_avg_in_vital_stats">העדיפו ממוצע בסטטיסטיקה חיונית</string>
-  <string formatted="false" name="pref_prefer_current_avg_in_vital_stats_summary">האם לנסות להשתמש ב-current_avg בסטטיסטיקה חיונית של הודעות ראשיות?</string>
+  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">העדיפו ממוצע בסטטיסטיקה חיונית</string>
+  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">האם לנסות להשתמש ב-current_avg בסטטיסטיקה חיונית של הודעות ראשיות?</string>
 
-  <string formatted="false" name="pref_prefer_current_avg_in_main_window">העדיפו ממוצע בחלון הראשי</string>
-  <string formatted="false" name="pref_prefer_current_avg_in_main_window_summary">נסה להשתמש ב-current_avg בחלון הראשי?</string>
-  <string formatted="false" name="pref_prefer_current_avg_help">לחלק מהמערכות יש פריצה נוספת זמינה, נותנת פריצה אחרונה ממוצע של הזרם ולא קריאה מיידית שלו. המשמעות של זה משתנה ממכשיר למכשיר והיא זמינה רק במכשירים מסוימים. זה עשוי לתת ערך יציב יותר (אם הכל יסתדר ובכן), הוא עשוי להחזיר את אותו ערך, או שהוא עשוי להחזיר ערך בלתי שמיש ערך (במקרה זה עליך לבטל אפשרות זו).</string>
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window">רענון אוטומטי של mA בחלון הראשי</string>
+  <string name="pref_prefer_current_avg_in_main_window" formatted="false">העדיפו ממוצע בחלון הראשי</string>
+  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">נסה להשתמש ב-current_avg בחלון הראשי?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">לחלק מהמערכות יש פריצה נוספת זמינה, נותנת פריצה אחרונה ממוצע של הזרם ולא קריאה מיידית שלו. המשמעות של זה משתנה ממכשיר למכשיר והיא זמינה רק במכשירים מסוימים. זה עשוי לתת ערך יציב יותר (אם הכל יסתדר ובכן), הוא עשוי להחזיר את אותו ערך, או שהוא עשוי להחזיר ערך בלתי שמיש ערך (במקרה זה עליך לבטל אפשרות זו).</string>
+  <string name="pref_auto_refresh_current_in_main_window" formatted="false">רענון אוטומטי של mA בחלון הראשי</string>
 
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window_summary">רענון אוטומטי של mA כל שתי שניות?</string>
-  <string formatted="false" name="pref_auto_refresh_current_in_main_window_help">אם הפריצה מוגדרת להצגת mA בחלון הראשי, אתה יכול רענן את הערך פשוט על ידי הקשה עליו. אם אתה רוצה לראות עדכונים תכופים מבלי להקיש, תוכל להפעיל אפשרות זו לרענון אוטומטי של הערך כל שתי שניות בזמן שהחלון גלוי.\n
+  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">רענון אוטומטי של mA כל שתי שניות?</string>
+  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">אם הפריצה מוגדרת להצגת mA בחלון הראשי, אתה יכול רענן את הערך פשוט על ידי הקשה עליו. אם אתה רוצה לראות עדכונים תכופים מבלי להקיש, תוכל להפעיל אפשרות זו לרענון אוטומטי של הערך כל שתי שניות בזמן שהחלון גלוי.\n
     \n
     שים לב שחלק מהמכשירים לעתים רחוקות או לעולם לא מעדכנים את הבסיס נתונים, כך שייתכן שהערך לא משתנה למרות שהאפליקציה כן רענון הערך המוצג כך שיתאים לנתונים שאוחזרו מהם המערכת.</string>
-  <string formatted="false" name="pref_cat_charging_indicator">מחוון טעינה</string>
-  <string formatted="false" name="pref_indicate_charging">ציין טעינה</string>
+  <string name="pref_cat_charging_indicator" formatted="false">מחוון טעינה</string>
+  <string name="pref_indicate_charging" formatted="false">ציין טעינה</string>
 
-  <string formatted="false" name="pref_indicate_charging_summary">לשנות את הסמל לציון בעת ​​טעינה?</string>
-  <string formatted="false" name="pref_indicate_charging_help">סמל הטעינה יכול להציג ברק מתחת למספר. השבת הגדרה זו אם אתה מעדיף את אותו סמל בזמן טעינה ופריקה.</string>
-  <string formatted="false" name="pref_cat_logging">רישום</string>
-  <string formatted="false" name="pref_enable_logging">אפשר רישום</string>
+  <string name="pref_indicate_charging_summary" formatted="false">לשנות את הסמל לציון בעת ​​טעינה?</string>
+  <string name="pref_indicate_charging_help" formatted="false">סמל הטעינה יכול להציג ברק מתחת למספר. השבת הגדרה זו אם אתה מעדיף את אותו סמל בזמן טעינה ופריקה.</string>
+  <string name="pref_cat_logging" formatted="false">רישום</string>
+  <string name="pref_enable_logging" formatted="false">אפשר רישום</string>
 
-  <string formatted="false" name="pref_enable_logging_summary">לרשום שינויים במצב הסוללה?</string>
+  <string name="pref_enable_logging_summary" formatted="false">לרשום שינויים במצב הסוללה?</string>
 
-  <string formatted="false" name="pref_enable_logging_help">אם מופעל, Battery Monitor ירשום שינויים במצב הסוללה.</string>
-  <string formatted="false" name="pref_max_log_age">גיל יומן מקסימלי</string>
-  <string formatted="false" name="pref_max_log_age_summary">מחק יומנים ישנים יותר מ:</string>
+  <string name="pref_enable_logging_help" formatted="false">אם מופעל, Battery Monitor ירשום שינויים במצב הסוללה.</string>
+  <string name="pref_max_log_age" formatted="false">גיל יומן מקסימלי</string>
+  <string name="pref_max_log_age_summary" formatted="false">מחק יומנים ישנים יותר מ:</string>
 
-  <string formatted="false" name="pref_max_log_age_help">אם הרישום מופעל, בכל פעם שתחבר את המכשיר יימחקו רישומים ישנים יותר מערך זה. בחר לעולם לא למחוק כדי לשמור אותם עד שתמחק אותם ידנית.</string>
-  <string formatted="false" name="pref_cat_temperature_unit">יחידת טמפרטורה</string>
-  <string formatted="false" name="pref_convert_to_fahrenheit">המר לפרנהייט</string>
-  <string formatted="false" name="pref_convert_to_fahrenheit_help">אנדרואיד מדווחת על טמפרטורת הסוללה במעלות צלזיוס. אם אתה מעדיף לראות את טמפרטורת הסוללה במעלות פרנהייט, סמן אפשרות זו, והאפליקציה תמיר עבורך.</string>
+  <string name="pref_max_log_age_help" formatted="false">אם הרישום מופעל, בכל פעם שתחבר את המכשיר יימחקו רישומים ישנים יותר מערך זה. בחר לעולם לא למחוק כדי לשמור אותם עד שתמחק אותם ידנית.</string>
+  <string name="pref_cat_temperature_unit" formatted="false">יחידת טמפרטורה</string>
+  <string name="pref_convert_to_fahrenheit" formatted="false">המר לפרנהייט</string>
+  <string name="pref_convert_to_fahrenheit_help" formatted="false">אנדרואיד מדווחת על טמפרטורת הסוללה במעלות צלזיוס. אם אתה מעדיף לראות את טמפרטורת הסוללה במעלות פרנהייט, סמן אפשרות זו, והאפליקציה תמיר עבורך.</string>
 
-  <string formatted="false" name="pref_cat_autostart">הפעלה אוטומטית</string>
-  <string formatted="false" name="pref_autostart_at_boot">הפעלה אוטומטית באתחול</string>
-  <string formatted="false" name="pref_autostart_at_boot_summary">הפעל את Battery Monitor בעת אתחול המכשיר:</string>
-  <string formatted="false" name="pref_autostart_at_boot_help">קובע אם האפליקציה תופעל אוטומטית בעת אתחול המכשיר.</string>
-  <string formatted="false" name="predictor_sensitive">רָגִישׁ</string>
-  <string formatted="false" name="predictor_conservative">שַׁמְרָנִי</string>
-  <string formatted="false" name="predictor_since_status_change">מאז שינוי הסטטוס</string>
+  <string name="pref_cat_autostart" formatted="false">הפעלה אוטומטית</string>
+  <string name="pref_autostart_at_boot" formatted="false">הפעלה אוטומטית באתחול</string>
+  <string name="pref_autostart_at_boot_summary" formatted="false">הפעל את Battery Monitor בעת אתחול המכשיר:</string>
+  <string name="pref_autostart_at_boot_help" formatted="false">קובע אם האפליקציה תופעל אוטומטית בעת אתחול המכשיר.</string>
+  <string name="predictor_sensitive" formatted="false">רָגִישׁ</string>
+  <string name="predictor_conservative" formatted="false">שַׁמְרָנִי</string>
+  <string name="predictor_since_status_change" formatted="false">מאז שינוי הסטטוס</string>
 
-  <string formatted="false" name="predictor_long_term_ave">ממוצע לטווח ארוך</string>
-  <string formatted="false" name="pref_cat_predictor">הערכות שנותר זמן</string>
-  <string formatted="false" name="pref_prediction_type">סוג הערכה</string>
+  <string name="predictor_long_term_ave" formatted="false">ממוצע לטווח ארוך</string>
+  <string name="pref_cat_predictor" formatted="false">הערכות שנותר זמן</string>
+  <string name="pref_prediction_type" formatted="false">סוג הערכה</string>
 
-  <string formatted="false" name="pref_prediction_type_help">כאן תוכל לבחור כיצד Battery Monitor יחזה את השאריות שלך חיי סוללה/זמן עד לטעינה מלאה.\n
+  <string name="pref_prediction_type_help" formatted="false">כאן תוכל לבחור כיצד Battery Monitor יחזה את השאריות שלך חיי סוללה/זמן עד לטעינה מלאה.\n
     \n
     אלגוריתם \"רגיש\" מבוסס אך ורק על חמשת האחרונים שלך דקות של שימוש. אם הדאגה העיקרית שלך היא \"כמה זמן אני הסוללה מחזיקה מעמד אם אני ממשיך לעשות את מה שאני עושה?\" אז זה אלגוריתם בשבילך.\n
     \n
@@ -346,12 +346,12 @@
     בחר \"מאז שינוי סטטוס\" כדי להתבסס על החיזוי אך ורק על ההפעלה הנוכחית שלך.\n
     \n
     לבסוף, אתה יכול לקבל את התחזית מבוססת אך ורק על שלך שימוש ממוצע לטווח ארוך.</string>
-  <string formatted="false" name="pref_cat_language">שָׂפָה</string>
-  <string formatted="false" name="pref_language_override">ביטול שפה</string>
-  <string formatted="false" name="pref_language_override_summary">בחר שפה:</string>
+  <string name="pref_cat_language" formatted="false">שָׂפָה</string>
+  <string name="pref_language_override" formatted="false">ביטול שפה</string>
+  <string name="pref_language_override_summary" formatted="false">בחר שפה:</string>
 
-  <string formatted="false" name="alarms_overview">סקירה כללית של אזעקות</string>
-  <string formatted="false" name="alarms_overview_help">דף זה מאפשר לך להוסיף התראות חדשות, להפעיל או לבטל במהירות אזעקות קיימות, או מחק אזעקות.\n
+  <string name="alarms_overview" formatted="false">סקירה כללית של אזעקות</string>
+  <string name="alarms_overview_help" formatted="false">דף זה מאפשר לך להוסיף התראות חדשות, להפעיל או לבטל במהירות אזעקות קיימות, או מחק אזעקות.\n
     \n
     כדי להוסיף התראה חדשה, הקש על \"הוסף אזעקה\" - פעולה זו תיצור התראה חדשה אזעק וייקח אותך לדף הגדרות האזעקה, שם תוכל לשלוט בהגדרות של האזעקה החדשה. עיין בעזרה בעמוד זה לפרטים נוספים.\n
     \n
@@ -360,49 +360,49 @@
     • כדי לערוך התראה קיימת, פשוט לחץ עליה.\n
     • כדי למחוק התראה, לחץ עליה לחיצה ארוכה ולאחר מכן בחר \"מחק אזעקה\". (תוכל גם למחוק התראה מהאזעקה הבודדת דף ההגדרות על ידי לחיצה על MENU ואז על \"מחק אזעקה\".)\n
     • כדי לשנות בקלות אם אזעקה מופעלת, לחץ על המתג לעבור לצד טקסט האזעקה. (אתה יכול גם להפעיל או השבת התראה מדף הגדרות האזעקה הבודדים.)</string>
-  <string formatted="false" name="pref_alarm_enabled">אפשר אזעקה</string>
-  <string formatted="false" name="pref_alarm_enabled_help">אם אתה רוצה זמנית השבת התראה מבלי שתצטרך ליצור אותה מחדש כשאתה רוצה אותה שוב, אתה יכול לכבות ולהדליק אותו כאן או על האזעקות הראשיות עמוד.</string>
+  <string name="pref_alarm_enabled" formatted="false">אפשר אזעקה</string>
+  <string name="pref_alarm_enabled_help" formatted="false">אם אתה רוצה זמנית השבת התראה מבלי שתצטרך ליצור אותה מחדש כשאתה רוצה אותה שוב, אתה יכול לכבות ולהדליק אותו כאן או על האזעקות הראשיות עמוד.</string>
 
-  <string formatted="false" name="pref_cat_alarm_conditions">תנאי אזעקה</string>
-  <string formatted="false" name="pref_cat_alarm_conditions_help">זה המקום שבו אתה יכול לשלוט באילו תנאים מפעילים את האזעקה.</string>
-  <string formatted="false" name="pref_alarm_type">סוג אזעקה</string>
+  <string name="pref_cat_alarm_conditions" formatted="false">תנאי אזעקה</string>
+  <string name="pref_cat_alarm_conditions_help" formatted="false">זה המקום שבו אתה יכול לשלוט באילו תנאים מפעילים את האזעקה.</string>
+  <string name="pref_alarm_type" formatted="false">סוג אזעקה</string>
 
-  <string formatted="false" name="pref_alarm_type_summary">הפעל אזעקה כאשר הסוללה:</string>
-  <string formatted="false" name="pref_alarm_type_help">ישנם כיום חמישה סוגים של אזעקה שאתה יכול לבחור מ.\n
+  <string name="pref_alarm_type_summary" formatted="false">הפעל אזעקה כאשר הסוללה:</string>
+  <string name="pref_alarm_type_help" formatted="false">ישנם כיום חמישה סוגים של אזעקה שאתה יכול לבחור מ.\n
     \n
     אזעקת \"הופך לטעון במלואו\" תודיע לך כאשר סטטוס הסוללה שלך משתנה מ-\"טעינה\" ל\"ללא עלות". טעון\". שים לב שבמכשירים רבים, זה לא בהכרח אותו דבר כמו להיות ב-100% טעינה.\n
     \n
     אזעקות הטעינה והטמפרטורה מחייבות אותך להגדיר סף להלן, לאחר בחירת סוג האזעקה.\n
     \n
     אזעקת \"בריאות נכשל\" תודיע לך אם הסוללה שלך תקינה הופך למשהו אחר מאשר \"לא ידוע\" או \"בריאות טובה\", כמו דווח על ידי אנדרואיד.</string>
-  <string formatted="false" name="pref_alarm_threshold">סַף</string>
+  <string name="pref_alarm_threshold" formatted="false">סַף</string>
 
-  <string formatted="false" name="alarm_pref_not_used">לא בשימוש עבור סוג אזעקה זה</string>
-  <string formatted="false" name="pref_alarm_threshold_summary">סף אזעקה:</string>
+  <string name="alarm_pref_not_used" formatted="false">לא בשימוש עבור סוג אזעקה זה</string>
+  <string name="pref_alarm_threshold_summary" formatted="false">סף אזעקה:</string>
 
-  <string formatted="false" name="pref_alarm_threshold_help">עבור אזעקות טעינה וטמפרטורה, עליך להגדיר את הטמפרטורה או רמת טעינה שתפעיל את האזעקה.</string>
-  <string formatted="false" name="alarm_custom_temp_message">הזן טמפרטורה ב-%s מעלות</string>
+  <string name="pref_alarm_threshold_help" formatted="false">עבור אזעקות טעינה וטמפרטורה, עליך להגדיר את הטמפרטורה או רמת טעינה שתפעיל את האזעקה.</string>
+  <string name="alarm_custom_temp_message" formatted="true">הזן טמפרטורה ב-%s מעלות</string>
 
-  <string formatted="false" name="alarm_custom_charge_message">הזן אחוז חיוב (0-100)</string>
-  <string formatted="false" name="boot_pref_always">תָמִיד</string>
-  <string formatted="false" name="boot_pref_never">לְעוֹלָם לֹא</string>
-  <string formatted="false" name="boot_pref_if_running">אם פועל בכיבוי</string>
-  <string formatted="false" name="age_1_day">יום אחד</string>
-  <string formatted="false" name="age_2_days">2 ימים</string>
-  <string formatted="false" name="age_4_days">4 ימים</string>
-  <string formatted="false" name="age_1_week">שבוע אחד</string>
-  <string formatted="false" name="age_2_weeks">2 שבועות</string>
-  <string formatted="false" name="age_3_weeks">3 שבועות</string>
-  <string formatted="false" name="age_4_weeks">4 שבועות</string>
+  <string name="alarm_custom_charge_message" formatted="false">הזן אחוז חיוב (0-100)</string>
+  <string name="boot_pref_always" formatted="false">תָמִיד</string>
+  <string name="boot_pref_never" formatted="false">לְעוֹלָם לֹא</string>
+  <string name="boot_pref_if_running" formatted="false">אם פועל בכיבוי</string>
+  <string name="age_1_day" formatted="false">יום אחד</string>
+  <string name="age_2_days" formatted="false">2 ימים</string>
+  <string name="age_4_days" formatted="false">4 ימים</string>
+  <string name="age_1_week" formatted="false">שבוע אחד</string>
+  <string name="age_2_weeks" formatted="false">2 שבועות</string>
+  <string name="age_3_weeks" formatted="false">3 שבועות</string>
+  <string name="age_4_weeks" formatted="false">4 שבועות</string>
 
-  <string formatted="false" name="age_never_delete">לעולם לא למחוק</string>
-  <string formatted="false" name="pref_content_percent">אחוז סוללה</string>
-  <string formatted="false" name="pref_content_temperature">טמפרטורת הסוללה</string>
+  <string name="age_never_delete" formatted="false">לעולם לא למחוק</string>
+  <string name="pref_content_percent" formatted="false">אחוז סוללה</string>
+  <string name="pref_content_temperature" formatted="false">טמפרטורת הסוללה</string>
 
-  <string formatted="false" name="pref_content_switching">החלף בין שניהם</string>
-  <string formatted="false" name="chip_switching_interval_2_seconds">2 שניות</string>
-  <string formatted="false" name="chip_switching_interval_5_seconds">5 שניות</string>
-  <string formatted="false" name="chip_switching_interval_10_seconds">10 שניות</string>
-  <string formatted="false" name="chip_switching_interval_15_seconds">15 שניות</string>
-  <string formatted="false" name="chip_switching_interval_30_seconds">30 שניות</string>
+  <string name="pref_content_switching" formatted="false">החלף בין שניהם</string>
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 שניות</string>
+  <string name="chip_switching_interval_5_seconds" formatted="false">5 שניות</string>
+  <string name="chip_switching_interval_10_seconds" formatted="false">10 שניות</string>
+  <string name="chip_switching_interval_15_seconds" formatted="false">15 שניות</string>
+  <string name="chip_switching_interval_30_seconds" formatted="false">30 שניות</string>
 </resources>

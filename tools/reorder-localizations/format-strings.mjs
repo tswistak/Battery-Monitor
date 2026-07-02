@@ -18,7 +18,11 @@ async function main() {
 
   for (const filePath of filePaths) {
     const original = normalizeNewlines(await readFile(filePath, "utf8"));
-    flattenedByPath.set(filePath, flattenDocument(original, filePath));
+    const reorderedAttributes = normalizeAttributeOrderDocument(original);
+    flattenedByPath.set(
+      filePath,
+      flattenDocument(reorderedAttributes, filePath),
+    );
   }
 
   const englishPath = path.join(resDir, "values", "strings.xml");
@@ -106,6 +110,13 @@ function flattenDocument(content, filePath) {
   output += document.inner.slice(cursor);
   output += document.suffix;
   return output;
+}
+
+function normalizeAttributeOrderDocument(content) {
+  return content.replace(
+    /(<string\b[^>]*?)\bformatted=(['"][^'"]*['"])\s+\bname=(['"][^'"]*['"])([^>]*>)/g,
+    "$1name=$3 formatted=$2$4",
+  );
 }
 
 function applyBlankLines(content, filePath, blankLineAfterLineNumbers) {
