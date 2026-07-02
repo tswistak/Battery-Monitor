@@ -4,7 +4,7 @@
 
 ### New
 
-- Added an option to keep logs until they are manually removed (thanks @lrcstars).
+- Added an option to keep logs until they are manually removed (#25, thanks @lrcstars).
 - Notification bar icons redesign with new settings (#18).
 
 ### Improved
