@@ -231,7 +231,7 @@
   <string name="notification_settings_help" formatted="false">Możesz skonfigurować, co wyświetlać w rozwijanym powiadomieniu.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikona na pasku stanu</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Wybierz zawartość ikony</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Także, czy ma wyświetlać symbol jednostki w ikonie oraz, czy ładowanie ma używać osobnej ikony.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Wybierz także, czy symbol jednostki ma być pokazywany w ikonie i czy ładowanie ma mieć własną ikonę.</string>
   <string name="status_bar_chip_settings" formatted="false">Kapsułka na pasku stanu</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Skonfiguruj zawartość kapsułki powiadomień na żywo</string>
   <string name="status_bar_chip_settings_help" formatted="false">Na Androidzie 16+ z powiadomieniami na żywo możesz skonfigurować, co pokazuje kapsułka na pasku stanu i czy wyświetlać emoji ładowania.</string>
@@ -315,8 +315,8 @@
   <string name="pref_cat_icon_set" formatted="false">Ikona powiadomienia</string>
   <string name="pref_icon_content" formatted="false">Zawartość ikony</string>
   <string name="pref_icon_content_help" formatted="false">Wybierz, czy ikona na pasku stanu ma pokazywać procent baterii, czy temperaturę baterii. Temperatura jest podawana w wybranej przez Ciebie jednostce.</string>
-  <string name="pref_show_icon_unit" formatted="false">Pokaż symbol jednostki</string>
-  <string name="pref_show_icon_unit_help" formatted="false">Gdy ta opcja jest włączona, ikona pokazuje znak procenta dla poziomu baterii i symbol stopnia dla temperatury baterii. Wyłącz ją, aby wyświetlać tylko liczbę.</string>
+  <string name="pref_show_icon_unit" formatted="false">Pokazuj symbol jednostki</string>
+  <string name="pref_show_icon_unit_help" formatted="false">Jeśli włączone, ikona pokazuje znak procenta dla poziomu naładowania baterii i symbol stopnia dla temperatury baterii. Wyłącz to ustawienie, aby pokazywać tylko liczbę.</string>
 
   <string name="pref_cat_current_hack_main" formatted="false">Główne sterowanie</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Nieobsługiwane obejście na obliczanie prądu (mA)</string>
@@ -371,9 +371,9 @@
     \nPamiętaj, że niektóre urządzenia rzadko albo nigdy nie aktualizują danych źródłowych, więc wartość może wydawać się niezmieniona, mimo że aplikacja odświeża wyświetlaną wartość, aby dopasować ją do danych pobranych z systemu.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Wskaźnik ładowania</string>
-  <string name="pref_indicate_charging" formatted="false">Wskazuj ładowania</string>
+  <string name="pref_indicate_charging" formatted="false">Wskazuj ładowanie</string>
   <string name="pref_indicate_charging_summary" formatted="false">Czy zmieniać ikonę, aby wskazywać ładowanie?</string>
-  <string name="pref_indicate_charging_help" formatted="false">Ikona może wyświetlać błyskawicę pod liczbą podczas ładowania. Wyłącz to ustawienie, jeśli wolisz mieć tę samą ikonę cały czas.</string>
+  <string name="pref_indicate_charging_help" formatted="false">Ikona może pokazywać błyskawicę pod liczbą podczas ładowania. Wyłącz to ustawienie, jeśli preferujesz tę samą ikonę cały czas.</string>
 
   <string name="pref_cat_logging" formatted="false">Logowanie</string>
   <string name="pref_enable_logging" formatted="false">Włącz logowanie</string>
@@ -391,7 +391,7 @@
   <string name="pref_autostart_at_boot" formatted="false">Uruchamiaj automatyczne przy starcie systemu</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Battery Monitor podczas włączania urządzenia:</string>
   <string name="pref_autostart_at_boot_help" formatted="false">
-    Określa, czy Battery Monitor ma uruchamiać się automatycznie podczas włącaania urządzenia urządzenia.\n
+    Określa, czy Battery Monitor ma uruchamiać się automatycznie podczas włączania urządzenia urządzenia.\n
 
     \nOpcja „Jeśli działała przy wyłączaniu systemu” działa w zależności od tego, czy ostatnio ręcznie uruchamiałeś(-aś) lub zatrzymywałeś(-aś) Battery Monitor. Jeśli więc zabijasz Battery Monitor w inny sposób, jak na przykład za pomocą narzędzia do zamykania procesów, Battery Monitor nie wie, że ją zatrzymałeś(-aś) i nadal będzie się uruchamiać przy starcie systemu, jeśli masz tak ustawione.\n
 
