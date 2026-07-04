@@ -45,7 +45,7 @@
   -->
   <activity
       android:name=".BatteryInfoActivity"
-      android:label="@string/app_full_name"
+      android:label="@string/app_launcher_name"
       android:theme="@style/bi_main_theme"
       android:stateNotNeeded="true"
       android:launchMode="singleTask"
