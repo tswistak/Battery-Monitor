@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 1.1.0
 
 ### New
 
@@ -10,12 +10,17 @@
 ### Improved
 
 - Chinese translations (thanks @lrcstars).
+- Dutch translations (thanks @ltguillaume).
 - CSV now exports time with seconds (#19, thanks @lrcstars).
+
+### Fixed
+
+- Fixed the untranslated app name on the launcher (#31, thanks @Aga-C).
 
 ### Development
 
 - Rebuilt an icon generation script for new icon types.
-- Removed the directory with legacy image assets.
+- Removed legacy image assets.
 - Reordered all localized strings to match order in English (#23).
 
 ## 1.0.4

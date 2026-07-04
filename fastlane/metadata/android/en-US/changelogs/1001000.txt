@@ -1,0 +1,14 @@
+New:
+
+- Added an option to keep logs until they are manually removed (#25, thanks @lrcstars).
+- Notification bar icons redesign with new settings (#18).
+
+Improved:
+
+- Chinese translations (thanks @lrcstars).
+- Dutch translations (thanks @ltguillaume).
+- CSV now exports time with seconds (#19, thanks @lrcstars).
+
+Fixed:
+
+- Fixed the untranslated app name on the launcher (#31, thanks @Aga-C).
