@@ -55,7 +55,7 @@
   <string name="menu_clear" formatted="false">Wyczyść</string>
   <string name="menu_reverse" formatted="false">Odwróć kolejność</string>
   <string name="menu_log_filter" formatted="false">Filtruj</string>
-  <string name="menu_export" formatted="false">Eksport do CSV</string>
+  <string name="menu_export" formatted="false">Eksportuj do CSV</string>
   <string name="menu_delete_alarm" formatted="false">Usuń alarm</string>
   <string name="menu_show_seconds" formatted="false">Pokaż sekundy</string>
   <string name="menu_hide_seconds" formatted="false">Ukryj sekundy</string>

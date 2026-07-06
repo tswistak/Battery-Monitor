@@ -363,7 +363,7 @@ public class LogViewFragment extends ListFragment {
 
     private void createNewCSVFile() {
         String ts = new java.text.SimpleDateFormat("yyyy-MM-dd-HHmmss-SSS").format(new Date());
-        String csvFileName = "BatteryBot_Pro-Logs-" + ts + ".csv";
+        String csvFileName = "Battery_Monitor-Logs-" + ts + ".csv";
 
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
