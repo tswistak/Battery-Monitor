@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+### Fixed
+
+- Default file name for export now contains current app name (thanks @Aga-C).
+
 ## 1.1.0
 
 ### New
