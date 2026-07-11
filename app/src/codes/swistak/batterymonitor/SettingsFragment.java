@@ -50,6 +50,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     public static final String KEY_CURRENT_HACK_SETTINGS = "current_hack_settings";
     public static final String KEY_ALARMS_SETTINGS = "alarms_settings";
     public static final String KEY_ALARM_EDIT_SETTINGS = "alarm_edit_settings";
+    public static final String KEY_ADVANCED_INFO_HELP = "advanced_info_help";
     public static final String KEY_OTHER_SETTINGS = "other_settings";
     public static final String KEY_ENABLE_LOGGING = "enable_logging";
     public static final String KEY_MAX_LOG_AGE = "max_log_age";
@@ -96,6 +97,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     public static final String KEY_ENABLE_NOTIFS_B = "enable_notifications_button";
     public static final String KEY_ENABLE_NOTIFS_SUMMARY = "enable_notifications_summary";
     public static final String KEY_UI_COLOR = "ui_color";
+    public static final String KEY_ENABLE_ADVANCED_STATS = "enable_advanced_stats";
 
     private static final String[] PARENTS    = {KEY_ENABLE_LOGGING,
                                                 KEY_DISPLAY_CURRENT_IN_VITAL_STATS,

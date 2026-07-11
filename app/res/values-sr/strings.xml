@@ -43,6 +43,7 @@
 
   <string name="tab_current_info" formatted="false">Trenutne informacije</string>
   <string name="tab_history" formatted="false">Istorija</string>
+  <string name="tab_advanced" formatted="false">Napredno</string>
 
   <string name="notification_until_charged" formatted="false">" do pune baterije"</string>
   <string name="notification_until_drained" formatted="false">" preostalo"</string>
@@ -412,6 +413,13 @@
   <string name="pref_cat_language" formatted="false">Jezik</string>
   <string name="pref_language_override" formatted="false">Preinači jezik</string>
   <string name="pref_language_override_summary" formatted="false">Odaberi jezik:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">Napredna statistika baterije</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Prikaži naprednu statistiku baterije</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Dodaje karticu Napredno sa statistikom baterije koja zahteva root ili Shizuku.</string>
+
+  <string name="advanced_action_refresh" formatted="false">Osveži</string>
+  <string name="advanced_status_loading" formatted="false">Učitavanje napredne statistike baterije...</string>
+  <string name="advanced_status_no_access" formatted="false">Za prikaz napredne statistike baterije potreban je root ili Shizuku.</string>
 
   <string name="alarms_overview" formatted="false">Pregled alarma</string>
   <string name="alarms_overview_help" formatted="false">Na ovoj stranici možete dodati nove alarme, brzo uključiti ili isključiti postojeće alarme, ili obrisati alarme.\n
@@ -466,4 +474,46 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 sekundi</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 sekundi</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 sekundi</string>
+
+  <string name="advanced_status_waiting_permission" formatted="false">Čeka se dozvola za Shizuku...</string>
+  <string name="advanced_status_no_stats" formatted="false">Na ovom uređaju trenutno nema dostupne napredne statistike baterije.</string>
+  <string name="advanced_section_counters" formatted="false">Brojači</string>
+  <string name="advanced_section_capacity" formatted="false">Kapacitet</string>
+  <string name="advanced_section_charging" formatted="false">Punjenje</string>
+  <string name="advanced_section_service" formatted="false">Android servis baterije</string>
+  <string name="advanced_section_sysfs" formatted="false">Kernel power_supply fajlovi</string>
+  <string name="advanced_section_metadata" formatted="false">Metapodaci</string>
+  <string name="advanced_field_charge_counter" formatted="false">Procena preostalog naboja</string>
+  <string name="advanced_field_current_now" formatted="false">Trenutna struja</string>
+  <string name="advanced_field_current_average" formatted="false">Prosečna struja</string>
+  <string name="advanced_field_energy_counter" formatted="false">Brojač energije</string>
+  <string name="advanced_field_cycle_count" formatted="false">Broj ciklusa</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Prijavljeni kapacitet</string>
+  <string name="advanced_field_state_of_health" formatted="false">Stanje zdravlja</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Kapacitet punog punjenja</string>
+  <string name="advanced_field_design_capacity" formatted="false">Projektovani kapacitet</string>
+  <string name="advanced_field_estimated_health" formatted="false">Procenjeno stanje</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Preostalo vreme punjenja</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Maksimalna struja punjenja</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Maksimalni napon punjenja</string>
+  <string name="advanced_field_charging_policy" formatted="false">Politika punjenja</string>
+  <string name="advanced_field_charging_state" formatted="false">Stanje punjenja</string>
+  <string name="advanced_field_capacity_level" formatted="false">Nivo kapaciteta</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Datum proizvodnje</string>
+  <string name="advanced_field_first_use_date" formatted="false">Datum prve upotrebe</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Serijski broj baterije</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Status dela baterije</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Proizvođač dela baterije</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Naziv modela baterije</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Minimalni projektni napon</string>
+  <string name="advanced_value_not_available" formatted="false">Nije dostupno</string>
+  <string name="advanced_help_overview" formatted="false">Kartica Napredno prikazuje dodatnu dijagnostiku baterije prikupljenu iz Android sistemskih servisa i iz kernel power_supply fajlova. Dostupnost zavisi od uređaja, verzije Androida, čipa za punjenje, fuel gauge čipa i onoga što proizvođač izloži.</string>
+  <string name="advanced_help_counters" formatted="false">Brojači sadrže vrednosti uživo ili nedavno uzorkovane vrednosti, kao što su brojač punjenja, struja, brojač energije i broj ciklusa. Neki uređaji izlažu samo deo tih vrednosti, a jedinice mogu dolaziti direktno iz hardverskog drajvera.</string>
+  <string name="advanced_help_capacity" formatted="false">Kapacitet prikazuje kapacitet punog punjenja, projektovani kapacitet i procenjeno zdravlje. Procenjeno zdravlje se računa kao kapacitet punog punjenja podeljen projektovanim kapacitetom, pa njegova tačnost zavisi od vrednosti koje uređaj prijavljuje.</string>
+  <string name="advanced_help_charging" formatted="false">Punjenje prikazuje vrednosti povezane sa aktivnom putanjom punjenja, kao što su maksimalna struja ili napon punjenja, politika punjenja, stanje punjenja i nivo kapaciteta. Ova polja mogu da se menjaju između punjača i režima punjenja.</string>
+  <string name="advanced_help_service" formatted="false">Android servis baterije prikazuje sirova polja koja prijavljuje `dumpsys battery`. To su vrednosti na nivou frameworka koje često uključuju izvor punjenja, stanje baterije, temperaturu, napon i druge informacije o stanju.</string>
+  <string name="advanced_help_sysfs" formatted="false">Kernel power_supply fajlovi prikazuju sirove jednolinijske vrednosti pročitane iz `/sys/class/power_supply`, kao što su battery, BMS, USB ili bežični punjač čvorovi. Ovo je namerno prikaz niskog nivoa i može sadržati nazive specifične za drajver, korisne uglavnom za otklanjanje grešaka.</string>
+  <string name="advanced_help_metadata" formatted="false">Metapodaci prikazuju osobine baterije višeg nivoa koje BatteryManager izlaže, kao što su stanje zdravlja, preostalo vreme punjenja, detalji proizvodnje ili status zamene. Većina ovih polja zahteva privilegovan pristup, a mnogi uređaji izlažu samo mali deo njih.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Rešavanje problema</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Ako je kartica prazna, prvo proverite da li su napredne statistike uključene u Podešavanjima. Na uređajima sa root pristupom Battery Monitor prvo pokušava `su`. Na uređajima bez roota sa Shizuku, Shizuku mora biti instaliran i pokrenut, a Battery Monitor mora imati dodeljenu dozvolu unutar Shizuku. Neki uređaji i dalje izlažu samo nekoliko polja, što znači da nedostajući podaci na tom uređaju nisu dostupni preko Androida ili kernela.</string>
 </resources>

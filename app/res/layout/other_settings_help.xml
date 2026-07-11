@@ -5,6 +5,12 @@
             android:layout_height="fill_parent"
 >
   <LinearLayout style="@style/help_ll" android:orientation="vertical">
+    <TextView style="@style/help_cat"  android:text="@string/pref_cat_advanced_stats" />
+    <View style="@style/help_cat_post_margin" />
+    <TextView style="@style/help_pref" android:text="@string/pref_enable_advanced_stats" />
+    <TextView style="@style/help_text" android:text="@string/pref_enable_advanced_stats_summary" />
+
+    <View style="@style/help_cat_pre_margin" />
     <TextView style="@style/help_cat"  android:text="@string/pref_cat_logging" />
     <View style="@style/help_cat_post_margin" />
     <TextView style="@style/help_pref" android:text="@string/pref_enable_logging" />

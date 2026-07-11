@@ -43,6 +43,7 @@
 
   <string name="tab_current_info" formatted="false">वर्तमान जानकारी</string>
   <string name="tab_history" formatted="false">इतिहास</string>
+  <string name="tab_advanced" formatted="false">उन्नत</string>
 
   <string name="notification_until_charged" formatted="false">"चार्ज होने तक"</string>
   <string name="notification_until_drained" formatted="false">" बाएं"</string>
@@ -354,7 +355,15 @@
   <string name="pref_language_override" formatted="false">भाषा ओवरराइड</string>
   <string name="pref_language_override_summary" formatted="false">भाषा चुने:</string>
 
+  <string name="pref_cat_advanced_stats" formatted="false">उन्नत बैटरी आँकड़े</string>
+  <string name="pref_enable_advanced_stats" formatted="false">उन्नत बैटरी आँकड़े दिखाएँ</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">एक उन्नत टैब जोड़ता है जिसमें बैटरी आँकड़े होते हैं और जिसके लिए root या Shizuku चाहिए।</string>
+  <string name="advanced_action_refresh" formatted="false">रीफ़्रेश</string>
+
+  <string name="advanced_status_loading" formatted="false">उन्नत बैटरी आँकड़े लोड हो रहे हैं...</string>
+  <string name="advanced_status_no_access" formatted="false">उन्नत बैटरी आँकड़े दिखाने के लिए root या Shizuku चाहिए।</string>
   <string name="alarms_overview" formatted="false">अलार्म अवलोकन</string>
+
   <string name="alarms_overview_help" formatted="false">यह पृष्ठ आपको नए अलार्म जोड़ने, तुरंत सक्षम या अक्षम करने की अनुमति देता है मौजूदा अलार्म, या अलार्म हटा दें.\n
     \n
     नया अलार्म जोड़ने के लिए, \"अलार्म जोड़ें\" दबाएँ - इससे एक नया अलार्म बन जाएगा अलार्म और आपको अलार्म सेटिंग पृष्ठ पर ले जाएं, जहां आप कर सकते हैं नए अलार्म के लिए सेटिंग्स को नियंत्रित करें। उस पृष्ठ पर सहायता देखें अधिक जानकारी के लिए.\n
@@ -366,7 +375,6 @@
     • अलार्म सक्षम है या नहीं, इसे आसानी से टॉगल करने के लिए टॉगल दबाएं अलार्म टेक्स्ट के किनारे पर स्विच करें. (आप सक्षम भी कर सकते हैं या व्यक्तिगत अलार्म सेटिंग पृष्ठ से अलार्म अक्षम करें।)</string>
   <string name="pref_alarm_enabled" formatted="false">अलार्म सक्षम करें</string>
   <string name="pref_alarm_enabled_help" formatted="false">यदि आप अस्थायी रूप से चाहते हैं जब आप चाहें तो अलार्म को दोबारा बनाए बिना उसे अक्षम कर दें फिर, आप इसे यहां या मुख्य अलार्म पर बंद और चालू कर सकते हैं पेज.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">अलार्म की स्थिति</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">यहीं आप कर सकते हैं नियंत्रित करें कि कौन सी स्थितियाँ अलार्म को ट्रिगर करती हैं।</string>
   <string name="pref_alarm_type" formatted="false">अलार्म प्रकार</string>
@@ -409,4 +417,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 सेकंड</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 सेकंड</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 सेकंड</string>
+  <string name="advanced_status_waiting_permission" formatted="false">Shizuku अनुमति की प्रतीक्षा हो रही है...</string>
+  <string name="advanced_status_no_stats" formatted="false">इस डिवाइस पर अभी कोई उन्नत बैटरी आँकड़े उपलब्ध नहीं हैं।</string>
+  <string name="advanced_section_counters" formatted="false">काउंटर</string>
+  <string name="advanced_section_capacity" formatted="false">क्षमता</string>
+  <string name="advanced_section_charging" formatted="false">चार्जिंग</string>
+
+  <string name="advanced_section_service" formatted="false">Android बैटरी सेवा</string>
+  <string name="advanced_section_sysfs" formatted="false">कर्नेल power_supply फ़ाइलें</string>
+  <string name="advanced_section_metadata" formatted="false">मेटाडेटा</string>
+  <string name="advanced_field_charge_counter" formatted="false">अनुमानित शेष चार्ज</string>
+  <string name="advanced_field_current_now" formatted="false">वर्तमान धारा</string>
+
+  <string name="advanced_field_current_average" formatted="false">औसत धारा</string>
+  <string name="advanced_field_energy_counter" formatted="false">ऊर्जा काउंटर</string>
+  <string name="advanced_field_cycle_count" formatted="false">सायकल गणना</string>
+  <string name="advanced_field_reported_capacity" formatted="false">रिपोर्ट की गई क्षमता</string>
+  <string name="advanced_field_state_of_health" formatted="false">स्वास्थ्य स्थिति</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">पूर्ण चार्ज क्षमता</string>
+  <string name="advanced_field_design_capacity" formatted="false">डिज़ाइन क्षमता</string>
+  <string name="advanced_field_estimated_health" formatted="false">अनुमानित स्वास्थ्य</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">बचा हुआ चार्ज समय</string>
+  <string name="advanced_field_max_charging_current" formatted="false">अधिकतम चार्जिंग धारा</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">अधिकतम चार्जिंग वोल्टेज</string>
+  <string name="advanced_field_charging_policy" formatted="false">चार्जिंग नीति</string>
+  <string name="advanced_field_charging_state" formatted="false">चार्जिंग स्थिति</string>
+  <string name="advanced_field_capacity_level" formatted="false">क्षमता स्तर</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">निर्माण तिथि</string>
+  <string name="advanced_field_first_use_date" formatted="false">पहले उपयोग की तिथि</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">बैटरी का सीरियल नंबर</string>
+  <string name="advanced_field_battery_part_status" formatted="false">बैटरी भाग की स्थिति</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">बैटरी भाग का निर्माता</string>
+  <string name="advanced_field_battery_model_name" formatted="false">बैटरी मॉडल का नाम</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">न्यूनतम डिज़ाइन वोल्टेज</string>
+  <string name="advanced_value_not_available" formatted="false">उपलब्ध नहीं</string>
+  <string name="advanced_help_overview" formatted="false">उन्नत टैब Android सिस्टम सेवाओं और कर्नेल power_supply फ़ाइलों से एकत्र की गई अतिरिक्त बैटरी डायग्नोस्टिक जानकारी दिखाता है। उपलब्धता डिवाइस, Android संस्करण, चार्जिंग चिप, fuel gauge चिप और निर्माता क्या उपलब्ध कराता है इस पर निर्भर करती है।</string>
+  <string name="advanced_help_counters" formatted="false">काउंटर में लाइव या हाल में सैंपल किए गए मान होते हैं, जैसे चार्ज काउंटर, करंट, ऊर्जा काउंटर और साइकिल गिनती। कुछ डिवाइस इनमें से केवल कुछ मान ही दिखाते हैं और इकाइयाँ सीधे हार्डवेयर ड्राइवर से आ सकती हैं।</string>
+  <string name="advanced_help_capacity" formatted="false">क्षमता अनुभाग पूर्ण चार्ज क्षमता, डिज़ाइन क्षमता और अनुमानित स्वास्थ्य दिखाता है। अनुमानित स्वास्थ्य पूर्ण चार्ज क्षमता को डिज़ाइन क्षमता से विभाजित करके निकाला जाता है, इसलिए इसकी सटीकता डिवाइस द्वारा रिपोर्ट किए गए मानों पर निर्भर करती है।</string>
+  <string name="advanced_help_charging" formatted="false">चार्जिंग अनुभाग सक्रिय चार्जिंग पथ से जुड़े मान दिखाता है, जैसे अधिकतम चार्जिंग करंट या वोल्टेज, चार्जिंग नीति, चार्जिंग स्थिति और क्षमता स्तर। ये फ़ील्ड चार्जर और चार्जिंग मोड के अनुसार बदल सकते हैं।</string>
+  <string name="advanced_help_service" formatted="false">Android बैटरी सेवा `dumpsys battery` द्वारा रिपोर्ट किए गए कच्चे फ़ील्ड दिखाती है। ये framework स्तर के मान हैं जिनमें अक्सर चार्जिंग स्रोत, बैटरी स्थिति, तापमान, वोल्टेज और अन्य स्थिति जानकारी शामिल होती है।</string>
+  <string name="advanced_help_sysfs" formatted="false">कर्नेल power_supply फ़ाइलें `/sys/class/power_supply` से पढ़े गए एक-पंक्ति कच्चे मान दिखाती हैं, जैसे battery, BMS, USB या wireless charger नोड। यह जानबूझकर निम्न-स्तरीय दृश्य है और इसमें ड्राइवर-विशिष्ट नाम हो सकते हैं जो मुख्य रूप से डीबगिंग के लिए उपयोगी हैं।</string>
+  <string name="advanced_help_metadata" formatted="false">मेटाडेटा BatteryManager द्वारा उपलब्ध कराई गई ऊपरी स्तर की बैटरी विशेषताएँ दिखाता है, जैसे स्वास्थ्य स्थिति, बचा हुआ चार्ज समय, निर्माण विवरण या बदलने की स्थिति। इनमें से अधिकांश फ़ील्ड के लिए विशेषाधिकार प्राप्त पहुँच चाहिए और कई डिवाइस इनमें से केवल कुछ ही मान दिखाते हैं।</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">समस्या निवारण</string>
+  <string name="advanced_help_troubleshooting" formatted="false">यदि टैब खाली है, तो पहले सुनिश्चित करें कि सेटिंग्स में उन्नत आँकड़े सक्षम हैं। रूट वाले उपकरणों पर Battery Monitor पहले `su` का प्रयास करता है। बिना रूट वाले उपकरणों पर Shizuku के साथ, Shizuku इंस्टॉल और चालू होना चाहिए और Battery Monitor को Shizuku के भीतर अनुमति मिलनी चाहिए। कुछ उपकरण फिर भी केवल कुछ ही फ़ील्ड दिखाते हैं, जिसका मतलब है कि बाकी डेटा उस उपकरण पर Android या कर्नेल के माध्यम से उपलब्ध नहीं है।</string>
 </resources>

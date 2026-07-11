@@ -41,6 +41,7 @@
 
   <string name="tab_current_info" formatted="false">معلومات الحالية</string>
   <string name="tab_history" formatted="false">سجلات التطبيق</string>
+  <string name="tab_advanced" formatted="false">متقدم</string>
 
   <string name="notification_until_charged" formatted="false">"حتى الشحن"</string>
   <string name="notification_until_drained" formatted="false">"ترك"</string>
@@ -430,6 +431,13 @@
 
   <string name="pref_language_override" formatted="false">تجاوز اللغة</string>
   <string name="pref_language_override_summary" formatted="false">اختر اللغة:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">إحصاءات البطارية المتقدمة</string>
+  <string name="pref_enable_advanced_stats" formatted="false">إظهار إحصاءات البطارية المتقدمة</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">يضيف تبويبًا متقدمًا مع إحصاءات بطارية تتطلب صلاحيات root أو Shizuku.</string>
+  <string name="advanced_action_refresh" formatted="false">تحديث</string>
+
+  <string name="advanced_status_loading" formatted="false">جارٍ تحميل إحصاءات البطارية المتقدمة...</string>
+  <string name="advanced_status_no_access" formatted="false">يلزم root أو Shizuku لعرض إحصاءات البطارية المتقدمة.</string>
   <string name="alarms_overview" formatted="false">النظرة العامة على المنبهات</string>
 
   <string name="alarms_overview_help" formatted="false">هذه الصفحة تؤدي الى اعدادات المنبهات للتمكين والتعطيل السريع او حذف المنبه\n
@@ -484,4 +492,46 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 ثوانٍ</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 ثانية</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 ثانية</string>
+  <string name="advanced_status_waiting_permission" formatted="false">بانتظار إذن Shizuku...</string>
+
+  <string name="advanced_status_no_stats" formatted="false">لا تتوفر أي إحصاءات بطارية متقدمة على هذا الجهاز حاليًا.</string>
+  <string name="advanced_section_counters" formatted="false">العدادات</string>
+  <string name="advanced_section_capacity" formatted="false">السعة</string>
+  <string name="advanced_section_charging" formatted="false">الشحن</string>
+  <string name="advanced_section_service" formatted="false">خدمة بطارية Android</string>
+  <string name="advanced_section_sysfs" formatted="false">ملفات power_supply في النواة</string>
+  <string name="advanced_section_metadata" formatted="false">البيانات الوصفية</string>
+  <string name="advanced_field_charge_counter" formatted="false">تقدير الشحنة المتبقية</string>
+  <string name="advanced_field_current_now" formatted="false">التيار الحالي</string>
+  <string name="advanced_field_current_average" formatted="false">متوسط التيار</string>
+  <string name="advanced_field_energy_counter" formatted="false">عداد الطاقة</string>
+  <string name="advanced_field_cycle_count" formatted="false">عدد الدورات</string>
+  <string name="advanced_field_reported_capacity" formatted="false">السعة المبلغ عنها</string>
+  <string name="advanced_field_state_of_health" formatted="false">حالة الصحة</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">سعة الشحن الكامل</string>
+  <string name="advanced_field_design_capacity" formatted="false">السعة التصميمية</string>
+  <string name="advanced_field_estimated_health" formatted="false">الحالة التقديرية</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">الوقت المتبقي للشحن</string>
+  <string name="advanced_field_max_charging_current" formatted="false">أقصى تيار شحن</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">أقصى جهد شحن</string>
+  <string name="advanced_field_charging_policy" formatted="false">سياسة الشحن</string>
+  <string name="advanced_field_charging_state" formatted="false">حالة الشحن</string>
+  <string name="advanced_field_capacity_level" formatted="false">مستوى السعة</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">تاريخ التصنيع</string>
+  <string name="advanced_field_first_use_date" formatted="false">تاريخ أول استخدام</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">الرقم التسلسلي للبطارية</string>
+  <string name="advanced_field_battery_part_status" formatted="false">حالة جزء البطارية</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">مصنّع جزء البطارية</string>
+  <string name="advanced_field_battery_model_name" formatted="false">اسم طراز البطارية</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">أدنى جهد تصميمي</string>
+  <string name="advanced_value_not_available" formatted="false">غير متاح</string>
+  <string name="advanced_help_overview" formatted="false">تعرض علامة التبويب المتقدمة معلومات تشخيصية إضافية للبطارية يتم جمعها من خدمات نظام Android وملفات power_supply في النواة. يعتمد ما هو متاح على الجهاز وإصدار Android وشريحة الشحن وشريحة قياس البطارية وما يتيحه المصنع.</string>
+  <string name="advanced_help_counters" formatted="false">تحتوي العدادات على قيم مباشرة أو مأخوذة حديثا مثل عداد الشحنة والتيار وعداد الطاقة وعدد الدورات. بعض الأجهزة تعرض جزءا فقط من هذه القيم وقد تأتي الوحدات مباشرة من برنامج تشغيل العتاد.</string>
+  <string name="advanced_help_capacity" formatted="false">تعرض السعة سعة الشحن الكامل والسعة التصميمية والحالة التقديرية. يتم حساب الحالة التقديرية بقسمة سعة الشحن الكامل على السعة التصميمية ولذلك تعتمد دقتها على ما يبلغه الجهاز.</string>
+  <string name="advanced_help_charging" formatted="false">يعرض قسم الشحن قيما مرتبطة بمسار الشحن النشط مثل أقصى تيار أو جهد شحن وسياسة الشحن وحالة الشحن ومستوى السعة. قد تتغير هذه الحقول بين الشواحن وأوضاع الشحن المختلفة.</string>
+  <string name="advanced_help_service" formatted="false">تعرض خدمة بطارية Android الحقول الخام التي يبلغ عنها `dumpsys battery`. هذه قيم على مستوى إطار النظام وغالبا ما تشمل مصدر الشحن وحالة البطارية ودرجة الحرارة والجهد ومعلومات حالة أخرى.</string>
+  <string name="advanced_help_sysfs" formatted="false">تعرض ملفات power_supply في النواة قيما خاما من سطر واحد مقروءة من `/sys/class/power_supply` مثل عقد البطارية أو BMS أو USB أو الشاحن اللاسلكي. هذا عرض منخفض المستوى عمدا وقد يحتوي على أسماء خاصة ببرنامج التشغيل وهو مفيد أساسا للتصحيح.</string>
+  <string name="advanced_help_metadata" formatted="false">تعرض البيانات الوصفية خصائص بطارية أعلى مستوى يوفرها BatteryManager مثل حالة الصحة أو الوقت المتبقي للشحن أو تفاصيل التصنيع أو حالة الاستبدال. معظم هذه الحقول تتطلب وصولا مميزا وكثير من الأجهزة لا يعرض إلا جزءا صغيرا منها.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">استكشاف الأخطاء وإصلاحها</string>
+  <string name="advanced_help_troubleshooting" formatted="false">إذا كانت علامة التبويب فارغة فتأكد أولا من تفعيل الإحصاءات المتقدمة في الإعدادات. على الأجهزة ذات root يحاول Battery Monitor استخدام `su` أولا. على الأجهزة غير المروتة مع Shizuku يجب أن يكون Shizuku مثبتا وقيد التشغيل وأن يحصل Battery Monitor على الإذن داخل Shizuku. بعض الأجهزة لا تعرض إلا عددا قليلا من الحقول وهذا يعني أن البيانات الناقصة غير متاحة عبر Android أو النواة على ذلك الجهاز.</string>
 </resources>

@@ -41,6 +41,7 @@
 
   <string name="tab_current_info" formatted="false">Dabartinė informacija</string>
   <string name="tab_history" formatted="false">Istorija</string>
+  <string name="tab_advanced" formatted="false">Išsamiau</string>
 
   <string name="notification_until_charged" formatted="false">"kol bus apmokestinta"</string>
   <string name="notification_until_drained" formatted="false">"kairėje"</string>
@@ -367,6 +368,14 @@
 
   <string name="pref_language_override" formatted="false">Kalbos Nepaisymas</string>
   <string name="pref_language_override_summary" formatted="false">Pasirinkti kalbą:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">Išplėstinė baterijos statistika</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Rodyti išplėstinę baterijos statistiką</string>
+
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Prideda kortelę „Išsamiau“ su baterijos statistika, kuriai reikia root arba Shizuku.</string>
+  <string name="advanced_action_refresh" formatted="false">Atnaujinti</string>
+  <string name="advanced_status_loading" formatted="false">Įkeliama išplėstinė baterijos statistika...</string>
+
+  <string name="advanced_status_no_access" formatted="false">Norint rodyti išplėstinę baterijos statistiką, reikia root arba Shizuku.</string>
   <string name="alarms_overview" formatted="false">Aliarmų Peržiūra</string>
   <string name="alarms_overview_help" formatted="false">Šiame puslapyje galite pridėti naujų signalų, greitai įjungti arba išjungti esamus pavojaus signalus arba ištrinti signalus.\n
     \n
@@ -377,7 +386,6 @@
     • Norėdami redaguoti esamą žadintuvą, tiesiog paspauskite jį.\n
     • Norėdami ištrinti signalą, ilgai paspauskite jį, tada pasirinkite \"Ištrinti Signalizacija\". (Taip pat galite ištrinti signalą iš atskiro signalo nustatymų puslapyje paspausdami MENIU, tada \"Ištrinti aliarmą\".)\n
     • Norėdami lengvai perjungti, ar žadintuvas įjungtas, paspauskite jungiklį pereiti į aliarmo teksto pusę. (Taip pat galite įjungti arba išjungti pavojaus signalą atskirų signalų nustatymų puslapyje.)</string>
-
   <string name="pref_alarm_enabled" formatted="false">Įjungti Aliarmą</string>
   <string name="pref_alarm_enabled_help" formatted="false">Jei norite laikinai išjungti žadintuvą ir nereikia jo sukurti iš naujo, kai to norite vėlgi galite jį išjungti ir įjungti čia arba pagrindiniuose signaluose puslapį.</string>
   <string name="pref_cat_alarm_conditions" formatted="false">Aliarmo Sąlygos</string>
@@ -422,4 +430,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 sekundžių</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 sekundžių</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 sekundžių</string>
+  <string name="advanced_status_waiting_permission" formatted="false">Laukiama Shizuku leidimo...</string>
+  <string name="advanced_status_no_stats" formatted="false">Šiuo metu šiame įrenginyje nėra jokios išplėstinės baterijos statistikos.</string>
+  <string name="advanced_section_counters" formatted="false">Skaitikliai</string>
+
+  <string name="advanced_section_capacity" formatted="false">Talpa</string>
+  <string name="advanced_section_charging" formatted="false">Įkrovimas</string>
+  <string name="advanced_section_service" formatted="false">Android baterijos paslauga</string>
+  <string name="advanced_section_sysfs" formatted="false">Branduolio power_supply failai</string>
+  <string name="advanced_section_metadata" formatted="false">Metaduomenys</string>
+
+  <string name="advanced_field_charge_counter" formatted="false">Numatomas likęs įkrovimas</string>
+  <string name="advanced_field_current_now" formatted="false">Dabartinė srovė</string>
+  <string name="advanced_field_current_average" formatted="false">Vidutinė srovė</string>
+  <string name="advanced_field_energy_counter" formatted="false">Energijos skaitiklis</string>
+  <string name="advanced_field_cycle_count" formatted="false">Ciklų skaičius</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Pateikta talpa</string>
+  <string name="advanced_field_state_of_health" formatted="false">Baterijos būklė</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Pilnos įkrovos talpa</string>
+  <string name="advanced_field_design_capacity" formatted="false">Projektinė talpa</string>
+  <string name="advanced_field_estimated_health" formatted="false">Numatoma būklė</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Likęs įkrovimo laikas</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Didžiausia įkrovimo srovė</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Didžiausia įkrovimo įtampa</string>
+  <string name="advanced_field_charging_policy" formatted="false">Įkrovimo politika</string>
+  <string name="advanced_field_charging_state" formatted="false">Įkrovimo būsena</string>
+  <string name="advanced_field_capacity_level" formatted="false">Talpos lygis</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Pagaminimo data</string>
+  <string name="advanced_field_first_use_date" formatted="false">Pirmojo naudojimo data</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Baterijos serijos numeris</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Baterijos dalies būsena</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Baterijos dalies gamintojas</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Baterijos modelio pavadinimas</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Minimali projektinė įtampa</string>
+  <string name="advanced_value_not_available" formatted="false">Nėra</string>
+  <string name="advanced_help_overview" formatted="false">Kortelėje Išplėstinė rodoma papildoma baterijos diagnostika, surinkta iš Android sistemos paslaugų ir branduolio power_supply failų. Prieinamumas priklauso nuo įrenginio, Android versijos, įkrovimo lusto, fuel gauge lusto ir to, ką pateikia gamintojas.</string>
+  <string name="advanced_help_counters" formatted="false">Skaitikliai rodo tiesiogines arba neseniai nuskaitytas reikšmes, tokias kaip įkrovos skaitiklis, srovė, energijos skaitiklis ir ciklų skaičius. Kai kurie įrenginiai pateikia tik dalį šių reikšmių, o vienetai gali ateiti tiesiai iš aparatinės įrangos tvarkyklės.</string>
+  <string name="advanced_help_capacity" formatted="false">Talpa rodo pilno įkrovimo talpą, projektinę talpą ir apskaičiuotą būklę. Apskaičiuota būklė gaunama pilno įkrovimo talpą padalijus iš projektinės talpos, todėl tikslumas priklauso nuo įrenginio pateikiamų reikšmių.</string>
+  <string name="advanced_help_charging" formatted="false">Įkrovimas rodo reikšmes, susijusias su aktyviu įkrovimo keliu, tokias kaip didžiausia įkrovimo srovė ar įtampa, įkrovimo politika, įkrovimo būsena ir talpos lygis. Šie laukai gali keistis priklausomai nuo įkroviklio ir įkrovimo režimo.</string>
+  <string name="advanced_help_service" formatted="false">Android baterijos paslauga rodo žalius laukus, kuriuos pateikia `dumpsys battery`. Tai framework lygio reikšmės, kurios dažnai apima įkrovimo šaltinį, baterijos būseną, temperatūrą, įtampą ir kitą būsenos informaciją.</string>
+  <string name="advanced_help_sysfs" formatted="false">Branduolio power_supply failai rodo žalias vienos eilutės reikšmes, nuskaitytas iš `/sys/class/power_supply`, pavyzdžiui battery, BMS, USB ar belaidžio įkroviklio mazgus. Tai sąmoningai žemo lygio vaizdas, kuriame gali būti tvarkyklei būdingų pavadinimų, naudingų daugiausia derinimui.</string>
+  <string name="advanced_help_metadata" formatted="false">Metaduomenys rodo aukštesnio lygio baterijos savybes, pateikiamas per BatteryManager, pavyzdžiui baterijos būklę, likusį įkrovimo laiką, gamybos detales ar pakeitimo būseną. Daugumai šių laukų reikia privilegijuotos prieigos, o daugelis įrenginių pateikia tik nedidelę jų dalį.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Trikčių šalinimas</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Jei kortelė tuščia, pirmiausia įsitikinkite, kad nustatymuose įjungta išplėstinė statistika. Įrenginiuose su root Battery Monitor pirmiausia bando `su`. Įrenginiuose be root su Shizuku, Shizuku turi būti įdiegta ir paleista, o Battery Monitor turi turėti suteiktą leidimą Shizuku viduje. Kai kurie įrenginiai vis tiek pateikia tik kelis laukus, o tai reiškia, kad trūkstami duomenys tame įrenginyje per Android ar branduolį nėra pasiekiami.</string>
 </resources>

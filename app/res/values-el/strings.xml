@@ -41,6 +41,7 @@
 
   <string name="tab_current_info" formatted="false">Τρέχουσες πληροφορίες</string>
   <string name="tab_history" formatted="false">Ιστορία</string>
+  <string name="tab_advanced" formatted="false">Για προχωρημένους</string>
 
   <string name="notification_until_charged" formatted="false">"μέχρι να χρεωθεί"</string>
   <string name="notification_until_drained" formatted="false">"αριστερά"</string>
@@ -354,7 +355,15 @@
   <string name="pref_language_override" formatted="false">Υπέρβαση Γλώσσας</string>
   <string name="pref_language_override_summary" formatted="false">Επιλογή Γλώσσας:</string>
 
+  <string name="pref_cat_advanced_stats" formatted="false">Προχωρημένα στατιστικά μπαταρίας</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Εμφάνιση προχωρημένων στατιστικών μπαταρίας</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Προσθέτει καρτέλα Για προχωρημένους με στατιστικά μπαταρίας που απαιτούν root ή Shizuku.</string>
+  <string name="advanced_action_refresh" formatted="false">Ανανέωση</string>
+
+  <string name="advanced_status_loading" formatted="false">Φόρτωση προχωρημένων στατιστικών μπαταρίας...</string>
+  <string name="advanced_status_no_access" formatted="false">Απαιτείται root ή Shizuku για την εμφάνιση προχωρημένων στατιστικών μπαταρίας.</string>
   <string name="alarms_overview" formatted="false">Επισκόπηση Ειδιποιήσεων</string>
+
   <string name="alarms_overview_help" formatted="false">Αυτή η σελίδα σας επιτρέπει να προσθέσετε νέες ειδοποιήσεις, να επεξεργάστείτε ή να διαγράψετε ειδοποιήσεις που έχετε θέσει.\n
     \n
     Για να προσθέσετε μια νέα ειδιποίηση πατήστε \"Προσθήκη ειδοποίησης\" - αυτό θα δημιουργήσει μια νέα ειδιποίηση και θα μεταφερθείτε στη σελίδα ρυθμίσεων ειδοποίησης, όπου μπορείτε να καθορίσετε τις ρυθμίσεις για τη νέα ειδοποίηση. Δέστε τη βοήθεια στη σελίδα αυτή για περισσότερες πληροφορίες.\n
@@ -366,7 +375,6 @@
     • Για γρήγορη εναλλαγή μεταξύ ενεργοποίησης και απενεργοποίησης μιας ειδοποίησης, πατήστε την εικόνα ρολογιού ειδοποίησης στα αριστερά του κειμένου ειδοποίησης. (Μπορείτε να ενεργοποιήσετε ή να απενεργοποιήσετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης)</string>
   <string name="pref_alarm_enabled" formatted="false">Ενεργοποίηση Ειδοποίησης</string>
   <string name="pref_alarm_enabled_help" formatted="false">Αν θέλετε να απενεργοποιήσετε προσωρινά μια ειδοποίηση χωρίς να χρειάζεται να τη ξαναδημιουργήσετε όταν τη χρειάζεστε ξανά, μπορείτε να την απενεργοποιήσετε είτε από εδώ είτε από τη κυρίως σελίδα των ειδοποιήσεων.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Συνθήκες Ειδοποίησης</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Εδώ ελέγχετε τις συνθήκες που ενεργοποιούν μια ειδοποίηση.</string>
   <string name="pref_alarm_type" formatted="false">Τύπος Ειδοποίησης</string>
@@ -409,4 +417,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 δευτερόλεπτα</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 δευτερόλεπτα</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 δευτερόλεπτα</string>
+  <string name="advanced_status_waiting_permission" formatted="false">Αναμονή για άδεια Shizuku...</string>
+  <string name="advanced_status_no_stats" formatted="false">Δεν υπάρχουν διαθέσιμα προχωρημένα στατιστικά μπαταρίας σε αυτή τη συσκευή αυτή τη στιγμή.</string>
+  <string name="advanced_section_counters" formatted="false">Μετρητές</string>
+  <string name="advanced_section_capacity" formatted="false">Χωρητικότητα</string>
+  <string name="advanced_section_charging" formatted="false">Φόρτιση</string>
+
+  <string name="advanced_section_service" formatted="false">Υπηρεσία μπαταρίας Android</string>
+  <string name="advanced_section_sysfs" formatted="false">Αρχεία power_supply του πυρήνα</string>
+  <string name="advanced_section_metadata" formatted="false">Μεταδεδομένα</string>
+  <string name="advanced_field_charge_counter" formatted="false">Εκτιμώμενο εναπομένον φορτίο</string>
+  <string name="advanced_field_current_now" formatted="false">Τρέχον ρεύμα</string>
+
+  <string name="advanced_field_current_average" formatted="false">Μέσο ρεύμα</string>
+  <string name="advanced_field_energy_counter" formatted="false">Μετρητής ενέργειας</string>
+  <string name="advanced_field_cycle_count" formatted="false">Αριθμός κύκλων</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Αναφερόμενη χωρητικότητα</string>
+  <string name="advanced_field_state_of_health" formatted="false">Κατάσταση υγείας</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Χωρητικότητα πλήρους φόρτισης</string>
+  <string name="advanced_field_design_capacity" formatted="false">Ονομαστική χωρητικότητα</string>
+  <string name="advanced_field_estimated_health" formatted="false">Εκτιμώμενη υγεία</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Υπολειπόμενος χρόνος φόρτισης</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Μέγιστο ρεύμα φόρτισης</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Μέγιστη τάση φόρτισης</string>
+  <string name="advanced_field_charging_policy" formatted="false">Πολιτική φόρτισης</string>
+  <string name="advanced_field_charging_state" formatted="false">Κατάσταση φόρτισης</string>
+  <string name="advanced_field_capacity_level" formatted="false">Επίπεδο χωρητικότητας</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Ημερομηνία κατασκευής</string>
+  <string name="advanced_field_first_use_date" formatted="false">Ημερομηνία πρώτης χρήσης</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Σειριακός αριθμός μπαταρίας</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Κατάσταση εξαρτήματος μπαταρίας</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Κατασκευαστής εξαρτήματος μπαταρίας</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Όνομα μοντέλου μπαταρίας</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Ελάχιστη τάση σχεδιασμού</string>
+  <string name="advanced_value_not_available" formatted="false">Μη διαθέσιμο</string>
+  <string name="advanced_help_overview" formatted="false">Η καρτέλα Για προχωρημένους εμφανίζει επιπλέον διαγνωστικά μπαταρίας που συλλέγονται από υπηρεσίες συστήματος Android και από αρχεία power_supply του πυρήνα. Η διαθεσιμότητα εξαρτάται από τη συσκευή, την έκδοση Android, το κύκλωμα φόρτισης, το fuel gauge και όσα εκθέτει ο κατασκευαστής.</string>
+  <string name="advanced_help_counters" formatted="false">Οι μετρητές περιέχουν ζωντανές ή πρόσφατα δειγματοληπτημένες τιμές όπως μετρητή φόρτισης, ρεύμα, μετρητή ενέργειας και αριθμό κύκλων. Ορισμένες συσκευές εκθέτουν μόνο μέρος αυτών των τιμών και οι μονάδες μπορεί να προέρχονται απευθείας από το πρόγραμμα οδήγησης υλικού.</string>
+  <string name="advanced_help_capacity" formatted="false">Η χωρητικότητα εμφανίζει χωρητικότητα πλήρους φόρτισης, ονομαστική χωρητικότητα και εκτιμώμενη υγεία. Η εκτιμώμενη υγεία υπολογίζεται ως χωρητικότητα πλήρους φόρτισης δια την ονομαστική χωρητικότητα, επομένως είναι τόσο ακριβής όσο και οι τιμές που αναφέρει η συσκευή.</string>
+  <string name="advanced_help_charging" formatted="false">Η φόρτιση εμφανίζει τιμές που σχετίζονται με την ενεργή διαδρομή φόρτισης, όπως μέγιστο ρεύμα ή τάση φόρτισης, πολιτική φόρτισης, κατάσταση φόρτισης και επίπεδο χωρητικότητας. Αυτά τα πεδία μπορεί να αλλάζουν μεταξύ φορτιστών και τρόπων φόρτισης.</string>
+  <string name="advanced_help_service" formatted="false">Η υπηρεσία μπαταρίας Android εμφανίζει ακατέργαστα πεδία που αναφέρονται από το `dumpsys battery`. Πρόκειται για τιμές επιπέδου framework που συχνά περιλαμβάνουν πηγή φόρτισης, κατάσταση μπαταρίας, θερμοκρασία, τάση και άλλες πληροφορίες κατάστασης.</string>
+  <string name="advanced_help_sysfs" formatted="false">Τα αρχεία power_supply του πυρήνα εμφανίζουν ακατέργαστες μονογραμμικές τιμές από το `/sys/class/power_supply`, όπως κόμβους μπαταρίας, BMS, USB ή ασύρματου φορτιστή. Είναι σκόπιμα χαμηλού επιπέδου προβολή και μπορεί να περιέχουν ονόματα ειδικά για τον οδηγό, χρήσιμα κυρίως για αποσφαλμάτωση.</string>
+  <string name="advanced_help_metadata" formatted="false">Τα μεταδεδομένα δείχνουν ιδιότητες μπαταρίας υψηλότερου επιπέδου που εκτίθενται μέσω του BatteryManager, όπως κατάσταση υγείας, υπολειπόμενο χρόνο φόρτισης, λεπτομέρειες κατασκευής ή κατάσταση αντικατάστασης. Τα περισσότερα από αυτά τα πεδία απαιτούν προνομιούχα πρόσβαση και πολλές συσκευές εκθέτουν μόνο ένα μικρό υποσύνολο.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Αντιμετώπιση προβλημάτων</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Αν η καρτέλα είναι κενή, βεβαιωθείτε πρώτα ότι οι προηγμένες στατιστικές είναι ενεργοποιημένες στις Ρυθμίσεις. Σε συσκευές με root το Battery Monitor δοκιμάζει πρώτα το `su`. Σε συσκευές χωρίς root με Shizuku, το Shizuku πρέπει να είναι εγκατεστημένο, ενεργό και το Battery Monitor να έχει λάβει άδεια μέσα στο Shizuku. Ορισμένες συσκευές εξακολουθούν να εκθέτουν μόνο λίγα πεδία, πράγμα που σημαίνει ότι τα υπόλοιπα δεδομένα δεν είναι διαθέσιμα μέσω Android ή του πυρήνα σε αυτή τη συσκευή.</string>
 </resources>

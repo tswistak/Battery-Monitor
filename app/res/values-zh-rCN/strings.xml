@@ -39,6 +39,7 @@
 
   <string name="tab_current_info" formatted="false">当前信息</string>
   <string name="tab_history" formatted="false">历史</string>
+  <string name="tab_advanced" formatted="false">高级</string>
 
   <string name="notification_until_charged" formatted="false">" 后充满"</string>
   <string name="notification_until_drained" formatted="false">" 剩余"</string>
@@ -356,13 +357,20 @@
 
   <string name="pref_language_override" formatted="false">语言覆盖</string>
   <string name="pref_language_override_summary" formatted="false">选择语言:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">高级电池统计</string>
+  <string name="pref_enable_advanced_stats" formatted="false">显示高级电池统计</string>
+
+  <string name="pref_enable_advanced_stats_summary" formatted="false">添加“高级”标签页，并显示需要 root 或 Shizuku 的电池统计。</string>
+  <string name="advanced_action_refresh" formatted="false">刷新</string>
+  <string name="advanced_status_loading" formatted="false">正在加载高级电池统计...</string>
+
+  <string name="advanced_status_no_access" formatted="false">显示高级电池统计需要 root 或 Shizuku。</string>
   <string name="alarms_overview" formatted="false">闹钟概览</string>
   <string name="alarms_overview_help" formatted="false">您可以在此页面添加新闹钟，或快速启用、停用、删除已有闹钟。\n
     \n
     点击“添加闹钟”会创建一个新闹钟并进入设置页面。\n
     \n
     下方列表会显示您已创建的闹钟：点击可编辑，长按可删除，点击旁边的开关可启用或停用。</string>
-
   <string name="pref_alarm_enabled" formatted="false">启用闹钟</string>
   <string name="pref_alarm_enabled_help" formatted="false">如果你想暂时 禁用警报而无需在需要时重新创建它 同样，您可以在此处或主警报上将其关闭和打开 页。</string>
   <string name="pref_cat_alarm_conditions" formatted="false">报警条件</string>
@@ -407,4 +415,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 秒</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 秒</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 秒</string>
+  <string name="advanced_status_waiting_permission" formatted="false">正在等待 Shizuku 权限...</string>
+  <string name="advanced_status_no_stats" formatted="false">此设备当前没有可用的高级电池统计。</string>
+  <string name="advanced_section_counters" formatted="false">计数器</string>
+
+  <string name="advanced_section_capacity" formatted="false">容量</string>
+  <string name="advanced_section_charging" formatted="false">充电</string>
+  <string name="advanced_section_service" formatted="false">Android 电池服务</string>
+  <string name="advanced_section_sysfs" formatted="false">内核 power_supply 文件</string>
+  <string name="advanced_section_metadata" formatted="false">元数据</string>
+
+  <string name="advanced_field_charge_counter" formatted="false">剩余电量估算</string>
+  <string name="advanced_field_current_now" formatted="false">当前电流</string>
+  <string name="advanced_field_current_average" formatted="false">平均电流</string>
+  <string name="advanced_field_energy_counter" formatted="false">能量计数器</string>
+  <string name="advanced_field_cycle_count" formatted="false">循环次数</string>
+  <string name="advanced_field_reported_capacity" formatted="false">报告容量</string>
+  <string name="advanced_field_state_of_health" formatted="false">健康状态</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">满充容量</string>
+  <string name="advanced_field_design_capacity" formatted="false">设计容量</string>
+  <string name="advanced_field_estimated_health" formatted="false">估计健康度</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">剩余充电时间</string>
+  <string name="advanced_field_max_charging_current" formatted="false">最大充电电流</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">最大充电电压</string>
+  <string name="advanced_field_charging_policy" formatted="false">充电策略</string>
+  <string name="advanced_field_charging_state" formatted="false">充电状态</string>
+  <string name="advanced_field_capacity_level" formatted="false">容量级别</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">生产日期</string>
+  <string name="advanced_field_first_use_date" formatted="false">首次使用日期</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">电池序列号</string>
+  <string name="advanced_field_battery_part_status" formatted="false">电池部件状态</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">电池部件制造商</string>
+  <string name="advanced_field_battery_model_name" formatted="false">电池型号名称</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">最小设计电压</string>
+  <string name="advanced_value_not_available" formatted="false">不可用</string>
+  <string name="advanced_help_overview" formatted="false">高级标签页会显示来自 Android 系统服务和内核 power_supply 文件的额外电池诊断信息。可用内容取决于设备、Android 版本、充电芯片、fuel gauge 芯片，以及厂商实际公开了哪些数据。</string>
+  <string name="advanced_help_counters" formatted="false">计数器包含实时或最近采样的数值，例如电量计数器、电流、能量计数器和循环次数。有些设备只会提供其中一部分，单位也可能直接来自硬件驱动。</string>
+  <string name="advanced_help_capacity" formatted="false">容量会显示满充容量、设计容量和估算健康度。估算健康度通过满充容量除以设计容量计算，因此准确性取决于设备上报的数值。</string>
+  <string name="advanced_help_charging" formatted="false">充电部分会显示与当前充电路径相关的数值，例如最大充电电流或电压、充电策略、充电状态和容量级别。这些字段可能会随着充电器和充电模式变化。</string>
+  <string name="advanced_help_service" formatted="false">Android 电池服务会显示 `dumpsys battery` 报告的原始字段。这些是 framework 层级的数值，通常包括充电来源、电池状态、温度、电压和其他状态信息。</string>
+  <string name="advanced_help_sysfs" formatted="false">内核 power_supply 文件会显示从 `/sys/class/power_supply` 读取的单行原始数值，例如 battery、BMS、USB 或无线充电器节点。这是有意保留的低层级视图，可能包含驱动专用名称，主要用于调试。</string>
+  <string name="advanced_help_metadata" formatted="false">元数据显示通过 BatteryManager 暴露的更高层电池属性，例如健康状态、剩余充电时间、制造信息或更换状态。这些字段大多需要特权访问，而且很多设备只会提供其中很小的一部分。</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">故障排查</string>
+  <string name="advanced_help_troubleshooting" formatted="false">如果标签页是空的，请先确认已在设置中启用高级统计。在已 root 的设备上，Battery Monitor 会先尝试使用 `su`。在未 root 且使用 Shizuku 的设备上，Shizuku 必须已安装并启动，并且必须在 Shizuku 中为 Battery Monitor 授权。有些设备仍然只会公开少数字段，这意味着缺失的数据无法通过 Android 或内核在该设备上获取。</string>
 </resources>

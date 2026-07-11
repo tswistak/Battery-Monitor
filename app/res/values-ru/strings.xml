@@ -43,6 +43,7 @@
 
   <string name="tab_current_info" formatted="false">Текущая информация</string>
   <string name="tab_history" formatted="false">История</string>
+  <string name="tab_advanced" formatted="false">Расширено</string>
 
   <string name="notification_until_charged" formatted="false">" до полного заряда"</string>
   <string name="notification_until_drained" formatted="false">" осталось"</string>
@@ -418,6 +419,13 @@
   <string name="pref_cat_language" formatted="false">Язык</string>
   <string name="pref_language_override" formatted="false">Переопределить язык</string>
   <string name="pref_language_override_summary" formatted="false">Выберите язык:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">Расширенная статистика батареи</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Показывать расширенную статистику батареи</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Добавляет вкладку «Расширено» со статистикой батареи, требующей root или Shizuku.</string>
+
+  <string name="advanced_action_refresh" formatted="false">Обновить</string>
+  <string name="advanced_status_loading" formatted="false">Загрузка расширенной статистики батареи...</string>
+  <string name="advanced_status_no_access" formatted="false">Для отображения расширенной статистики батареи требуется root или Shizuku.</string>
 
   <string name="alarms_overview" formatted="false">Обзор предупреждений</string>
   <string name="alarms_overview_help" formatted="false">На этой странице можно добавить новые предупреждения, быстро включить или выключить существующие предупреждения, а также удалить их.\n
@@ -470,4 +478,46 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 секунд</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 секунд</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 секунд</string>
+
+  <string name="advanced_status_waiting_permission" formatted="false">Ожидание разрешения Shizuku...</string>
+  <string name="advanced_status_no_stats" formatted="false">На этом устройстве сейчас нет доступной расширенной статистики батареи.</string>
+  <string name="advanced_section_counters" formatted="false">Счетчики</string>
+  <string name="advanced_section_capacity" formatted="false">Емкость</string>
+  <string name="advanced_section_charging" formatted="false">Зарядка</string>
+  <string name="advanced_section_service" formatted="false">Служба батареи Android</string>
+  <string name="advanced_section_sysfs" formatted="false">Файлы power_supply ядра</string>
+  <string name="advanced_section_metadata" formatted="false">Метаданные</string>
+  <string name="advanced_field_charge_counter" formatted="false">Оценка оставшегося заряда</string>
+  <string name="advanced_field_current_now" formatted="false">Текущий ток</string>
+  <string name="advanced_field_current_average" formatted="false">Средний ток</string>
+  <string name="advanced_field_energy_counter" formatted="false">Счетчик энергии</string>
+  <string name="advanced_field_cycle_count" formatted="false">Количество циклов</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Заявленная емкость</string>
+  <string name="advanced_field_state_of_health" formatted="false">Состояние здоровья</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Емкость полного заряда</string>
+  <string name="advanced_field_design_capacity" formatted="false">Проектная емкость</string>
+  <string name="advanced_field_estimated_health" formatted="false">Оценка состояния</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Оставшееся время зарядки</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Максимальный ток зарядки</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Максимальное напряжение зарядки</string>
+  <string name="advanced_field_charging_policy" formatted="false">Политика зарядки</string>
+  <string name="advanced_field_charging_state" formatted="false">Состояние зарядки</string>
+  <string name="advanced_field_capacity_level" formatted="false">Уровень емкости</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Дата производства</string>
+  <string name="advanced_field_first_use_date" formatted="false">Дата первого использования</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Серийный номер батареи</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Статус части батареи</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Производитель части батареи</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Название модели батареи</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Минимальное проектное напряжение</string>
+  <string name="advanced_value_not_available" formatted="false">Недоступно</string>
+  <string name="advanced_help_overview" formatted="false">Вкладка Дополнительно показывает дополнительную диагностику батареи, собранную из системных служб Android и файлов power_supply ядра. Доступность зависит от устройства, версии Android, чипа зарядки, fuel gauge и того, что раскрывает производитель.</string>
+  <string name="advanced_help_counters" formatted="false">Счетчики содержат текущие или недавно считанные значения, такие как счетчик заряда, ток, счетчик энергии и число циклов. Некоторые устройства предоставляют только часть этих значений, а единицы измерения могут идти напрямую от драйвера оборудования.</string>
+  <string name="advanced_help_capacity" formatted="false">Раздел Емкость показывает емкость полного заряда, проектную емкость и расчетное состояние. Расчетное состояние вычисляется как емкость полного заряда, деленная на проектную емкость, поэтому точность зависит от значений, сообщаемых устройством.</string>
+  <string name="advanced_help_charging" formatted="false">Раздел Зарядка показывает значения, связанные с активным путем зарядки, например максимальный ток или напряжение зарядки, политику зарядки, состояние зарядки и уровень емкости. Эти поля могут меняться в зависимости от зарядного устройства и режима зарядки.</string>
+  <string name="advanced_help_service" formatted="false">Служба батареи Android показывает сырые поля, сообщаемые `dumpsys battery`. Это значения уровня framework, которые часто включают источник зарядки, состояние батареи, температуру, напряжение и другую служебную информацию.</string>
+  <string name="advanced_help_sysfs" formatted="false">Файлы power_supply ядра показывают сырые однострочные значения, прочитанные из `/sys/class/power_supply`, например узлы battery, BMS, USB или беспроводного зарядного устройства. Это намеренно низкоуровневое представление и в нем могут встречаться имена, специфичные для драйвера, полезные в основном для отладки.</string>
+  <string name="advanced_help_metadata" formatted="false">Метаданные показывают более высокоуровневые свойства батареи, доступные через BatteryManager, например состояние здоровья, оставшееся время зарядки, данные о производстве или статус замены. Для большинства этих полей нужен привилегированный доступ, и многие устройства раскрывают лишь небольшую их часть.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Устранение неполадок</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Если вкладка пуста, сначала убедитесь, что расширенная статистика включена в настройках. На устройствах с root Battery Monitor сначала пытается использовать `su`. На устройствах без root с Shizuku, Shizuku должен быть установлен и запущен, а Battery Monitor должен получить разрешение внутри Shizuku. Некоторые устройства все равно предоставляют только несколько полей. Это означает, что недостающие данные недоступны через Android или ядро на этом устройстве.</string>
 </resources>

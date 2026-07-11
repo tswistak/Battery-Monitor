@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### New
+
+- Added the "Advanced" tab showing battery data accessible by root/Shizuku (#27).
+
 ### Fixed
 
 - Default file name for export now contains current app name (thanks @Aga-C).

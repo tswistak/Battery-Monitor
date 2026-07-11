@@ -41,6 +41,7 @@
 
   <string name="tab_current_info" formatted="false">Jelenlengi információ</string>
   <string name="tab_history" formatted="false">Előzmények</string>
+  <string name="tab_advanced" formatted="false">Speciális</string>
 
   <string name="notification_until_charged" formatted="false">" feltöltésig"</string>
   <string name="notification_until_drained" formatted="false">" maradt"</string>
@@ -353,6 +354,13 @@
   <string name="pref_language_override" formatted="false">Nyelv megváltoztatása</string>
   <string name="pref_language_override_summary" formatted="false">Válasszon nyelvet:</string>
 
+  <string name="pref_cat_advanced_stats" formatted="false">Speciális akkumulátor-statisztikák</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Speciális akkumulátor-statisztikák megjelenítése</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Hozzáad egy Speciális lapot olyan akkumulátor-statisztikákkal, amelyek rootot vagy Shizukut igényelnek.</string>
+
+  <string name="advanced_action_refresh" formatted="false">Frissítés</string>
+  <string name="advanced_status_loading" formatted="false">Speciális akkumulátor-statisztikák betöltése...</string>
+  <string name="advanced_status_no_access" formatted="false">A speciális akkumulátor-statisztikák megjelenítéséhez root vagy Shizuku szükséges.</string>
   <string name="alarms_overview" formatted="false">Riasztások áttekintése</string>
   <string name="alarms_overview_help" formatted="false">Ezen az oldalon új riasztásokat adhatsz hozzá, gyorsan engedélyezheted vagy letilthatod a meglévőket, illetve törölheted őket.</string>
   <string name="pref_alarm_enabled" formatted="false">Riasztás enegedélyezése</string>
@@ -399,4 +407,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 masodperc</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 masodperc</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 masodperc</string>
+  <string name="advanced_status_waiting_permission" formatted="false">Várakozás a Shizuku engedélyére...</string>
+
+  <string name="advanced_status_no_stats" formatted="false">Jelenleg nem érhetők el speciális akkumulátor-statisztikák ezen az eszközön.</string>
+  <string name="advanced_section_counters" formatted="false">Számlálók</string>
+  <string name="advanced_section_capacity" formatted="false">Kapacitás</string>
+  <string name="advanced_section_charging" formatted="false">Töltés</string>
+  <string name="advanced_section_service" formatted="false">Android akkumulátorszolgáltatás</string>
+
+  <string name="advanced_section_sysfs" formatted="false">Kernel power_supply fájlok</string>
+  <string name="advanced_section_metadata" formatted="false">Metaadatok</string>
+  <string name="advanced_field_charge_counter" formatted="false">Becsült maradék töltés</string>
+  <string name="advanced_field_current_now" formatted="false">Aktuális áram</string>
+  <string name="advanced_field_current_average" formatted="false">Átlagos áram</string>
+  <string name="advanced_field_energy_counter" formatted="false">Energia-számláló</string>
+  <string name="advanced_field_cycle_count" formatted="false">Ciklusszám</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Jelentett kapacitás</string>
+  <string name="advanced_field_state_of_health" formatted="false">Egészségi állapot</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Teljes töltési kapacitás</string>
+  <string name="advanced_field_design_capacity" formatted="false">Tervezett kapacitás</string>
+  <string name="advanced_field_estimated_health" formatted="false">Becsült állapot</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Hátralévő töltési idő</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Maximális töltőáram</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Maximális töltési feszültség</string>
+  <string name="advanced_field_charging_policy" formatted="false">Töltési szabályzat</string>
+  <string name="advanced_field_charging_state" formatted="false">Töltési állapot</string>
+  <string name="advanced_field_capacity_level" formatted="false">Kapacitásszint</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Gyártási dátum</string>
+  <string name="advanced_field_first_use_date" formatted="false">Első használat dátuma</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Akkumulátor sorozatszáma</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Akkumulátoralkatrész állapota</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Akkumulátoralkatrész gyártója</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Akkumulátormodell neve</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Minimális tervezési feszültség</string>
+  <string name="advanced_value_not_available" formatted="false">Nem érhető el</string>
+  <string name="advanced_help_overview" formatted="false">A Speciális fül további akkumulátor-diagnosztikát mutat az Android rendszer-szolgáltatásokból és a kernel power_supply fájljaiból. Az elérhetőség az eszköztől, az Android verziójától, a töltőchiptől, a fuel gauge chiptől és attól függ, hogy a gyártó mit tesz elérhetővé.</string>
+  <string name="advanced_help_counters" formatted="false">A számlálók élő vagy nemrég mintavételezett értékeket tartalmaznak, például töltésszámlálót, áramot, energiaszámlálót és ciklusszámot. Egyes eszközök ezeknek csak egy részét adják meg, és a mértékegységek közvetlenül a hardver-illesztőből származhatnak.</string>
+  <string name="advanced_help_capacity" formatted="false">A Kapacitás a teljes töltési kapacitást, a névleges kapacitást és a becsült állapotot mutatja. A becsült állapot a teljes töltési kapacitás és a névleges kapacitás hányadosa, így pontossága a készülék által jelentett adatoktól függ.</string>
+  <string name="advanced_help_charging" formatted="false">A Töltés az aktív töltési útvonallal kapcsolatos értékeket mutatja, például a maximális töltőáramot vagy töltési feszültséget, a töltési házirendet, a töltési állapotot és a kapacitásszintet. Ezek a mezők töltőnként és töltési módonként változhatnak.</string>
+  <string name="advanced_help_service" formatted="false">Az Android akkumulátorszolgáltatás a `dumpsys battery` által jelentett nyers mezőket mutatja. Ezek keretrendszer-szintű értékek, amelyek gyakran tartalmazzák a töltési forrást, az akkumulátor állapotát, a hőmérsékletet, a feszültséget és más állapotinformációkat.</string>
+  <string name="advanced_help_sysfs" formatted="false">A kernel power_supply fájlok a `/sys/class/power_supply` alól olvasott nyers egysoros értékeket mutatják, például akkumulátor, BMS, USB vagy vezeték nélküli töltő csomópontokat. Ez szándékosan alacsony szintű nézet, és tartalmazhat illesztőspecifikus neveket, amelyek főleg hibakereséshez hasznosak.</string>
+  <string name="advanced_help_metadata" formatted="false">A metaadatok magasabb szintű akkumulátortulajdonságokat mutatnak, amelyeket a BatteryManager tesz elérhetővé, például az egészségi állapotot, a hátralévő töltési időt, a gyártási adatokat vagy a csereállapotot. E mezők többsége jogosultságot igényel, és sok eszköz csak kis részét teszi elérhetővé.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Hibaelhárítás</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Ha a fül üres, először győződjön meg arról, hogy a speciális statisztikák be vannak kapcsolva a Beállításokban. Rootolt eszközökön a Battery Monitor először a `su` parancsot próbálja. Nem rootolt, Shizukuval használt eszközökön a Shizukunak telepítve és futva kell lennie, és a Battery Monitornak engedélyt kell kapnia a Shizukuban. Egyes eszközök ennek ellenére is csak néhány mezőt tesznek elérhetővé, ami azt jelenti, hogy a hiányzó adatok Androidon vagy a kernelen keresztül nem hozzáférhetők azon a készüléken.</string>
 </resources>

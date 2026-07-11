@@ -43,6 +43,7 @@
 
   <string name="tab_current_info" formatted="false">اطلاعات فعلی</string>
   <string name="tab_history" formatted="false">تاریخچه</string>
+  <string name="tab_advanced" formatted="false">پیشرفته</string>
 
   <string name="notification_until_charged" formatted="false">"تا زمانی که شارژ شود"</string>
   <string name="notification_until_drained" formatted="false">"چپ"</string>
@@ -357,7 +358,15 @@
   <string name="pref_language_override" formatted="false">لغو زبان</string>
   <string name="pref_language_override_summary" formatted="false">انتخاب زبان:</string>
 
+  <string name="pref_cat_advanced_stats" formatted="false">آمار پیشرفته باتری</string>
+  <string name="pref_enable_advanced_stats" formatted="false">نمایش آمار پیشرفته باتری</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">یک برگه پیشرفته با آمار باتری اضافه می‌کند که به root یا Shizuku نیاز دارد.</string>
+  <string name="advanced_action_refresh" formatted="false">نوسازی</string>
+
+  <string name="advanced_status_loading" formatted="false">در حال بارگذاری آمار پیشرفته باتری...</string>
+  <string name="advanced_status_no_access" formatted="false">برای نمایش آمار پیشرفته باتری به root یا Shizuku نیاز است.</string>
   <string name="alarms_overview" formatted="false">بررسی اجمالی هشدارها</string>
+
   <string name="alarms_overview_help" formatted="false">این صفحه به شما امکان می دهد آلارم های جدید اضافه کنید، به سرعت فعال یا غیرفعال کنید آلارم های موجود، یا حذف آلارم ها.\n
     \n
     برای افزودن زنگ هشدار جدید، \"افزودن زنگ\" را فشار دهید — با این کار یک زنگ جدید ایجاد می شود زنگ هشدار و شما را به صفحه تنظیمات آلارم می برد، جایی که می توانید تنظیمات زنگ جدید را کنترل کنید. به کمک آن صفحه مراجعه کنید برای جزئیات بیشتر.\n
@@ -369,7 +378,6 @@
     • برای اینکه به راحتی فعال بودن زنگ هشدار را تغییر دهید، کلید را فشار دهید به سمت متن زنگ هشدار بروید. (همچنین می توانید یا را فعال کنید زنگ هشدار را از صفحه تنظیمات زنگ جداگانه غیرفعال کنید.)</string>
   <string name="pref_alarm_enabled" formatted="false">فعال کردن هشدار</string>
   <string name="pref_alarm_enabled_help" formatted="false">اگر می خواهید موقتا زنگ هشدار را بدون نیاز به ایجاد مجدد آن در زمانی که می خواهید غیرفعال کنید دوباره، می‌توانید آن را خاموش و روشن کنید یا در اینجا یا روی آلارم‌های اصلی صفحه</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">شرایط هشدار</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">اینجا جایی است که می توانید کنترل کنید که چه شرایطی باعث ایجاد زنگ هشدار می شود.</string>
   <string name="pref_alarm_type" formatted="false">نوع زنگ هشدار</string>
@@ -412,4 +420,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 ثانیه</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 ثانیه</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 ثانیه</string>
+  <string name="advanced_status_waiting_permission" formatted="false">در انتظار مجوز Shizuku...</string>
+  <string name="advanced_status_no_stats" formatted="false">در حال حاضر هیچ آمار پیشرفته‌ای از باتری روی این دستگاه در دسترس نیست.</string>
+  <string name="advanced_section_counters" formatted="false">شمارنده‌ها</string>
+  <string name="advanced_section_capacity" formatted="false">ظرفیت</string>
+  <string name="advanced_section_charging" formatted="false">شارژ</string>
+
+  <string name="advanced_section_service" formatted="false">سرویس باتری Android</string>
+  <string name="advanced_section_sysfs" formatted="false">فایل های power_supply هسته</string>
+  <string name="advanced_section_metadata" formatted="false">فراداده</string>
+  <string name="advanced_field_charge_counter" formatted="false">برآورد شارژ باقی‌مانده</string>
+  <string name="advanced_field_current_now" formatted="false">جریان فعلی</string>
+
+  <string name="advanced_field_current_average" formatted="false">میانگین جریان</string>
+  <string name="advanced_field_energy_counter" formatted="false">شمارنده انرژی</string>
+  <string name="advanced_field_cycle_count" formatted="false">تعداد چرخه</string>
+  <string name="advanced_field_reported_capacity" formatted="false">ظرفیت گزارش شده</string>
+  <string name="advanced_field_state_of_health" formatted="false">وضعیت سلامت</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">ظرفیت شارژ کامل</string>
+  <string name="advanced_field_design_capacity" formatted="false">ظرفیت طراحی</string>
+  <string name="advanced_field_estimated_health" formatted="false">سلامت تخمینی</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">زمان باقی مانده تا تکمیل شارژ</string>
+  <string name="advanced_field_max_charging_current" formatted="false">حداکثر جریان شارژ</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">حداکثر ولتاژ شارژ</string>
+  <string name="advanced_field_charging_policy" formatted="false">سیاست شارژ</string>
+  <string name="advanced_field_charging_state" formatted="false">وضعیت شارژ</string>
+  <string name="advanced_field_capacity_level" formatted="false">سطح ظرفیت</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">تاریخ ساخت</string>
+  <string name="advanced_field_first_use_date" formatted="false">تاریخ اولین استفاده</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">شماره سریال باتری</string>
+  <string name="advanced_field_battery_part_status" formatted="false">وضعیت قطعه باتری</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">سازنده قطعه باتری</string>
+  <string name="advanced_field_battery_model_name" formatted="false">نام مدل باتری</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">حداقل ولتاژ طراحی</string>
+  <string name="advanced_value_not_available" formatted="false">در دسترس نیست</string>
+  <string name="advanced_help_overview" formatted="false">زبانه پیشرفته، عیب یابی های اضافی باتری را که از سرویس های سیستمی Android و فایل های power_supply هسته جمع آوری می شوند نشان می دهد. در دسترس بودن این داده ها به دستگاه، نسخه Android، تراشه شارژ، تراشه اندازه گیری باتری و مواردی که سازنده در اختیار می گذارد بستگی دارد.</string>
+  <string name="advanced_help_counters" formatted="false">شمارنده ها شامل مقادیر زنده یا نمونه برداری شده اخیر مانند شمارنده شارژ، جریان، شمارنده انرژی و تعداد چرخه ها هستند. بعضی دستگاه ها فقط بخشی از این مقادیر را ارائه می دهند و واحدها ممکن است مستقیما از درایور سخت افزار بیایند.</string>
+  <string name="advanced_help_capacity" formatted="false">ظرفیت، ظرفیت شارژ کامل، ظرفیت طراحی و سلامت تخمینی را نشان می دهد. سلامت تخمینی از تقسیم ظرفیت شارژ کامل بر ظرفیت طراحی به دست می آید، بنابراین دقت آن به داده های گزارش شده توسط دستگاه بستگی دارد.</string>
+  <string name="advanced_help_charging" formatted="false">بخش شارژ مقادیر مربوط به مسیر فعال شارژ را نشان می دهد، مانند بیشینه جریان یا ولتاژ شارژ، سیاست شارژ، وضعیت شارژ و سطح ظرفیت. این فیلدها ممکن است بین شارژرها و حالت های شارژ تغییر کنند.</string>
+  <string name="advanced_help_service" formatted="false">سرویس باتری Android فیلدهای خام گزارش شده توسط `dumpsys battery` را نشان می دهد. این ها مقادیر سطح چارچوب هستند و معمولا منبع شارژ، وضعیت باتری، دما، ولتاژ و اطلاعات وضعیتی دیگر را شامل می شوند.</string>
+  <string name="advanced_help_sysfs" formatted="false">فایل های power_supply هسته مقادیر خام تک خطی خوانده شده از `/sys/class/power_supply` را نشان می دهند، مانند گره های battery یا BMS یا USB یا شارژر بی سیم. این نما عمدا سطح پایین است و ممکن است نام های مخصوص درایور داشته باشد که بیشتر برای اشکال زدایی مفید هستند.</string>
+  <string name="advanced_help_metadata" formatted="false">فراداده، ویژگی های سطح بالاتر باتری را که از طریق BatteryManager در دسترس هستند نشان می دهد؛ مانند وضعیت سلامت، زمان باقی مانده تا تکمیل شارژ، جزئیات ساخت یا وضعیت تعویض. بیشتر این فیلدها به دسترسی ویژه نیاز دارند و بسیاری از دستگاه ها فقط بخش کوچکی از آنها را ارائه می دهند.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">عیب یابی</string>
+  <string name="advanced_help_troubleshooting" formatted="false">اگر زبانه خالی است، ابتدا مطمئن شوید آمارهای پیشرفته در تنظیمات فعال شده اند. در دستگاه های روت شده Battery Monitor ابتدا `su` را امتحان می کند. در دستگاه های بدون روت با Shizuku، Shizuku باید نصب و فعال باشد و Battery Monitor باید درون Shizuku مجوز گرفته باشد. بعضی دستگاه ها همچنان فقط چند فیلد را ارائه می دهند و این یعنی داده های بیشتر از طریق Android یا هسته روی آن دستگاه در دسترس نیست.</string>
 </resources>

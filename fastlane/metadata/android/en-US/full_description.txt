@@ -7,6 +7,7 @@ It gives you clear battery information at a glance, shows useful notifications, 
 - persistent notification with current battery level, status, and optional details
 - on Android 16 and newer, the main notification can be replaced with a Live Update showing the current battery level or temperature,
 - detailed battery information, including charge level, temperature, voltage, health, and power source
+- advanced battery information thanks to root access or Shizuku
 - configurable battery alarms: for full charge, low battery, or custom charge thresholds; temperature and battery health
 - battery event history with filtering
 - CSV history export for further analysis

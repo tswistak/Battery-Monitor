@@ -41,6 +41,7 @@
 
   <string name="tab_current_info" formatted="false">Infos actuelles</string>
   <string name="tab_history" formatted="false">Historique</string>
+  <string name="tab_advanced" formatted="false">Avancé</string>
 
   <string name="notification_until_charged" formatted="false">" jusqu’à charge"</string>
   <string name="notification_until_drained" formatted="false">" restants"</string>
@@ -340,6 +341,14 @@
 
   <string name="pref_language_override" formatted="false">Outrepasser la langue</string>
   <string name="pref_language_override_summary" formatted="false">Sélectionnez une langue :</string>
+  <string name="pref_cat_advanced_stats" formatted="false">Statistiques avancées de la batterie</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Afficher les statistiques avancées de la batterie</string>
+
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Ajoute un onglet Avancé avec des statistiques de batterie nécessitant root ou Shizuku.</string>
+  <string name="advanced_action_refresh" formatted="false">Actualiser</string>
+  <string name="advanced_status_loading" formatted="false">Chargement des statistiques avancées de la batterie...</string>
+
+  <string name="advanced_status_no_access" formatted="false">Root ou Shizuku est nécessaire pour afficher les statistiques avancées de la batterie.</string>
   <string name="alarms_overview" formatted="false">Aperçu des alarmes</string>
   <string name="alarms_overview_help" formatted="false">Cette page vous permet d\'ajouter de nouvelles alarmes, activer ou désactiver rapidement les alarmes existantes, ou supprimer des alarmes.\n
     \n
@@ -350,7 +359,6 @@
     • Pour modifier une alarme existante, il suffit de la sélectionner.\n
     • Pour supprimer une alarme, il faut effectuer un appui long sur une alarme, puis sélectionner \"Supprimer l\'alarme\". (Vous pouvez également supprimer une alarme à partir de la page des paramètres individuels de l\'alarme en appuyant sur MENU, puis sur \"Supprimer l\'alarme\".)\n
     • Pour basculer rapidement si une alarme est activée, il faut appuyer sur l\'icône horloge située à la gauche du texte de l\'alarme. (Vous pouvez également activer ou désactiver une alarme à partir de la page des paramètres individuels de l\'alarme.)</string>
-
   <string name="pref_alarm_enabled" formatted="false">Activer l\'alarme</string>
   <string name="pref_alarm_enabled_help" formatted="false">Si vous voulez temporairement désactiver une alarme sans avoir à la recréer, vous pouvez la désactiver et la réactiver sur la page des alarmes.</string>
   <string name="pref_cat_alarm_conditions" formatted="false">Conditions de l\'alarme</string>
@@ -395,4 +403,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 secondes</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 secondes</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 secondes</string>
+  <string name="advanced_status_waiting_permission" formatted="false">En attente de l\'autorisation Shizuku...</string>
+  <string name="advanced_status_no_stats" formatted="false">Aucune statistique avancée de batterie n\'est disponible sur cet appareil pour le moment.</string>
+  <string name="advanced_section_counters" formatted="false">Compteurs</string>
+
+  <string name="advanced_section_capacity" formatted="false">Capacité</string>
+  <string name="advanced_section_charging" formatted="false">Charge</string>
+  <string name="advanced_section_service" formatted="false">Service de batterie Android</string>
+  <string name="advanced_section_sysfs" formatted="false">Fichiers power_supply du noyau</string>
+  <string name="advanced_section_metadata" formatted="false">Métadonnées</string>
+
+  <string name="advanced_field_charge_counter" formatted="false">Charge restante estimée</string>
+  <string name="advanced_field_current_now" formatted="false">Courant instantané</string>
+  <string name="advanced_field_current_average" formatted="false">Courant moyen</string>
+  <string name="advanced_field_energy_counter" formatted="false">Compteur d\'énergie</string>
+  <string name="advanced_field_cycle_count" formatted="false">Nombre de cycles</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Capacité rapportée</string>
+  <string name="advanced_field_state_of_health" formatted="false">État de santé</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Capacité à pleine charge</string>
+  <string name="advanced_field_design_capacity" formatted="false">Capacité nominale</string>
+  <string name="advanced_field_estimated_health" formatted="false">État estimé</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Temps de charge restant</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Courant de charge maximal</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Tension de charge maximale</string>
+  <string name="advanced_field_charging_policy" formatted="false">Politique de charge</string>
+  <string name="advanced_field_charging_state" formatted="false">État de charge</string>
+  <string name="advanced_field_capacity_level" formatted="false">Niveau de capacité</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Date de fabrication</string>
+  <string name="advanced_field_first_use_date" formatted="false">Date de première utilisation</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Numéro de série de la batterie</string>
+  <string name="advanced_field_battery_part_status" formatted="false">État de la pièce batterie</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Fabricant de la pièce batterie</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Nom du modèle de batterie</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Tension minimale de conception</string>
+  <string name="advanced_value_not_available" formatted="false">Non disponible</string>
+  <string name="advanced_help_overview" formatted="false">L onglet Avancé affiche des diagnostics de batterie supplémentaires provenant des services système Android et des fichiers power_supply du noyau. Leur disponibilité dépend de l appareil, de la version Android, de la puce de charge, de la jauge de batterie et de ce que le fabricant expose.</string>
+  <string name="advanced_help_counters" formatted="false">Les compteurs contiennent des valeurs en direct ou récemment échantillonnées, comme le compteur de charge, le courant, le compteur d énergie et le nombre de cycles. Certains appareils n en exposent qu une partie et les unités peuvent venir directement du pilote matériel.</string>
+  <string name="advanced_help_capacity" formatted="false">La capacité affiche la capacité à pleine charge, la capacité nominale et l état estimé. L état estimé est calculé comme la capacité à pleine charge divisée par la capacité nominale, donc sa précision dépend des valeurs rapportées par l appareil.</string>
+  <string name="advanced_help_charging" formatted="false">La charge affiche des valeurs liées au chemin de charge actif, comme le courant ou la tension maximale de charge, la politique de charge, l état de charge et le niveau de capacité. Ces champs peuvent changer selon le chargeur et le mode de charge.</string>
+  <string name="advanced_help_service" formatted="false">Le service de batterie Android affiche les champs bruts rapportés par `dumpsys battery`. Ce sont des valeurs du framework qui incluent souvent la source d alimentation, l état de la batterie, la température, la tension et d autres informations d état.</string>
+  <string name="advanced_help_sysfs" formatted="false">Les fichiers power_supply du noyau affichent des valeurs brutes sur une seule ligne lues depuis `/sys/class/power_supply`, par exemple pour la batterie, le BMS, l USB ou le chargeur sans fil. Cette vue est volontairement bas niveau et peut contenir des noms spécifiques au pilote, utiles surtout pour le débogage.</string>
+  <string name="advanced_help_metadata" formatted="false">Les métadonnées affichent des propriétés de batterie de plus haut niveau exposées via BatteryManager, comme l état de santé, le temps de charge restant, des détails de fabrication ou l état de remplacement. La plupart de ces champs nécessitent un accès privilégié et beaucoup d appareils n en exposent qu une petite partie.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Dépannage</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Si l onglet est vide, vérifiez d abord que les statistiques avancées sont activées dans les paramètres. Sur les appareils rootés, Battery Monitor essaie d abord `su`. Sur les appareils non rootés avec Shizuku, Shizuku doit être installé, démarré et Battery Monitor doit recevoir l autorisation dans Shizuku. Certains appareils n exposent malgré tout que quelques champs, ce qui signifie que les données manquantes ne sont pas disponibles via Android ou le noyau sur cet appareil.</string>
 </resources>

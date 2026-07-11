@@ -43,6 +43,7 @@
 
   <string name="tab_current_info" formatted="false">Current state</string>
   <string name="tab_history" formatted="false">History</string>
+  <string name="tab_advanced" formatted="false">Advanced</string>
 
   <string name="notification_until_charged" formatted="false">" until charged"</string>
   <string name="notification_until_drained" formatted="false">" left"</string>
@@ -398,6 +399,13 @@
   <string name="pref_cat_language" formatted="false">Language</string>
   <string name="pref_language_override" formatted="false">App language</string>
   <string name="pref_language_override_summary" formatted="false">Select language:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">Advanced battery stats</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Show advanced battery stats</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Adds an Advanced tab with battery diagnostics that require either root access or Shizuku.</string>
+
+  <string name="advanced_action_refresh" formatted="false">Refresh</string>
+  <string name="advanced_status_loading" formatted="false">Loading advanced battery stats...</string>
+  <string name="advanced_status_no_access" formatted="false">Root access or Shizuku is needed to show advanced battery stats.</string>
 
   <string name="alarms_overview" formatted="false">Alarms Overview</string>
   <string name="alarms_overview_help" formatted="false">This page allows you to add new alarms, quickly enable or disable existing alarms, or delete alarms.\n
@@ -452,4 +460,46 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 seconds</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 seconds</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 seconds</string>
+
+  <string name="advanced_status_waiting_permission" formatted="false">Waiting for Shizuku permission…</string>
+  <string name="advanced_status_no_stats" formatted="false">No advanced battery stats are available on this device right now.</string>
+  <string name="advanced_section_counters" formatted="false">Counters</string>
+  <string name="advanced_section_capacity" formatted="false">Capacity</string>
+  <string name="advanced_section_charging" formatted="false">Charging</string>
+  <string name="advanced_section_service" formatted="false">Android battery service</string>
+  <string name="advanced_section_sysfs" formatted="false">Kernel power-supply files</string>
+  <string name="advanced_section_metadata" formatted="false">Metadata</string>
+  <string name="advanced_field_charge_counter" formatted="false">Remaining charge estimate</string>
+  <string name="advanced_field_current_now" formatted="false">Current now</string>
+  <string name="advanced_field_current_average" formatted="false">Current average</string>
+  <string name="advanced_field_energy_counter" formatted="false">Energy counter</string>
+  <string name="advanced_field_cycle_count" formatted="false">Cycle count</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Reported capacity</string>
+  <string name="advanced_field_state_of_health" formatted="false">State of health</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Full charge capacity</string>
+  <string name="advanced_field_design_capacity" formatted="false">Design capacity</string>
+  <string name="advanced_field_estimated_health" formatted="false">Estimated health</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Charge time remaining</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Max charging current</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Max charging voltage</string>
+  <string name="advanced_field_charging_policy" formatted="false">Charging policy</string>
+  <string name="advanced_field_charging_state" formatted="false">Charging state</string>
+  <string name="advanced_field_capacity_level" formatted="false">Capacity level</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Manufacturing date</string>
+  <string name="advanced_field_first_use_date" formatted="false">First use date</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Battery serial number</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Battery part status</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Battery part manufacturer</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Battery model name</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Minimum design voltage</string>
+  <string name="advanced_value_not_available" formatted="false">Not available</string>
+  <string name="advanced_help_overview" formatted="false">The Advanced tab shows extra battery diagnostics collected from Android system services and kernel power-supply files. Availability depends on the device, Android build, charger IC, fuel-gauge chip, and what the manufacturer exposes.</string>
+  <string name="advanced_help_counters" formatted="false">Counters contain live or recently sampled values such as charge counter, current, energy counter, and cycle count. Some devices expose only a subset, and units may come directly from the hardware driver.</string>
+  <string name="advanced_help_capacity" formatted="false">Capacity shows full-charge capacity, design capacity, and estimated health. Estimated health is calculated as full-charge capacity divided by design capacity, so it is only as accurate as the values reported by the device.</string>
+  <string name="advanced_help_charging" formatted="false">Charging shows values related to the active charging path, such as maximum charging current or voltage, charging policy, charging state, and capacity level. These fields may change between chargers and charging modes.</string>
+  <string name="advanced_help_service" formatted="false">Android battery service shows raw fields reported by `dumpsys battery`. These are framework-level values that often include charging source, battery status, temperature, voltage, and other service state.</string>
+  <string name="advanced_help_sysfs" formatted="false">Kernel power-supply files show raw one-line values read from `/sys/class/power_supply`, such as battery, BMS, USB, or wireless charger nodes. This is intentionally low-level and may include driver-specific names that are useful mainly for debugging.</string>
+  <string name="advanced_help_metadata" formatted="false">Metadata shows higher-level battery properties exposed through BatteryManager, such as state of health, remaining charge time, manufacturing details, or replacement status. Most of these fields require privileged access and many devices expose only a small subset.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Troubleshooting</string>
+  <string name="advanced_help_troubleshooting" formatted="false">If the tab is empty, first make sure Advanced stats are enabled in Settings. On rooted devices, Battery Monitor tries `su` first. On non-rooted devices Shizuku must be installed, running, and Battery Monitor must be granted permission inside Shizuku. Some devices expose only a few fields, which means the missing data is not available through Android or the kernel on that device.</string>
 </resources>

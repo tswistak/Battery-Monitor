@@ -41,6 +41,7 @@
 
   <string name="tab_current_info" formatted="false">現在の情報</string>
   <string name="tab_history" formatted="false">履歴</string>
+  <string name="tab_advanced" formatted="false">詳細</string>
 
   <string name="notification_until_charged" formatted="false">" 充電まで"</string>
   <string name="notification_until_drained" formatted="false">" 残"</string>
@@ -393,6 +394,13 @@
   <string name="pref_cat_language" formatted="false">言語</string>
   <string name="pref_language_override" formatted="false">言語の上書き</string>
   <string name="pref_language_override_summary" formatted="false">言語を選択:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">高度なバッテリー統計</string>
+  <string name="pref_enable_advanced_stats" formatted="false">高度なバッテリー統計を表示</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">root または Shizuku が必要なバッテリー統計を含む詳細タブを追加します。</string>
+
+  <string name="advanced_action_refresh" formatted="false">更新</string>
+  <string name="advanced_status_loading" formatted="false">高度なバッテリー統計を読み込み中...</string>
+  <string name="advanced_status_no_access" formatted="false">高度なバッテリー統計を表示するには root または Shizuku が必要です。</string>
 
   <string name="alarms_overview" formatted="false">アラームの概要</string>
   <string name="alarms_overview_help" formatted="false">このページで、新しいアラームを追加する、既存のアラームをすばやく 有効または無効にする、アラームを削除することができます。\n
@@ -447,4 +455,46 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10秒</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15秒</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30秒</string>
+
+  <string name="advanced_status_waiting_permission" formatted="false">Shizuku の権限を待機中...</string>
+  <string name="advanced_status_no_stats" formatted="false">この端末では現在利用できる高度なバッテリー統計がありません。</string>
+  <string name="advanced_section_counters" formatted="false">カウンター</string>
+  <string name="advanced_section_capacity" formatted="false">容量</string>
+  <string name="advanced_section_charging" formatted="false">充電</string>
+  <string name="advanced_section_service" formatted="false">Android バッテリーサービス</string>
+  <string name="advanced_section_sysfs" formatted="false">カーネル power_supply ファイル</string>
+  <string name="advanced_section_metadata" formatted="false">メタデータ</string>
+  <string name="advanced_field_charge_counter" formatted="false">推定残量</string>
+  <string name="advanced_field_current_now" formatted="false">現在の電流</string>
+  <string name="advanced_field_current_average" formatted="false">平均電流</string>
+  <string name="advanced_field_energy_counter" formatted="false">エネルギーカウンター</string>
+  <string name="advanced_field_cycle_count" formatted="false">サイクル回数</string>
+  <string name="advanced_field_reported_capacity" formatted="false">報告容量</string>
+  <string name="advanced_field_state_of_health" formatted="false">健全性</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">満充電容量</string>
+  <string name="advanced_field_design_capacity" formatted="false">設計容量</string>
+  <string name="advanced_field_estimated_health" formatted="false">推定状態</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">充電残り時間</string>
+  <string name="advanced_field_max_charging_current" formatted="false">最大充電電流</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">最大充電電圧</string>
+  <string name="advanced_field_charging_policy" formatted="false">充電ポリシー</string>
+  <string name="advanced_field_charging_state" formatted="false">充電状態</string>
+  <string name="advanced_field_capacity_level" formatted="false">容量レベル</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">製造日</string>
+  <string name="advanced_field_first_use_date" formatted="false">初回使用日</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">バッテリーのシリアル番号</string>
+  <string name="advanced_field_battery_part_status" formatted="false">バッテリー部品の状態</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">バッテリー部品メーカー</string>
+  <string name="advanced_field_battery_model_name" formatted="false">バッテリーモデル名</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">最小設計電圧</string>
+  <string name="advanced_value_not_available" formatted="false">利用不可</string>
+  <string name="advanced_help_overview" formatted="false">詳細タブには、Android のシステムサービスとカーネルの power_supply ファイルから取得した追加のバッテリー診断情報が表示されます。利用できる項目は、端末、Android のバージョン、充電チップ、fuel gauge チップ、およびメーカーが公開している情報に依存します。</string>
+  <string name="advanced_help_counters" formatted="false">カウンターには、充電カウンター、電流、エネルギーカウンター、サイクル回数などのライブ値または最近取得された値が含まれます。端末によっては一部しか公開されず、単位はハードウェアドライバー由来の場合があります。</string>
+  <string name="advanced_help_capacity" formatted="false">容量には、満充電容量、設計容量、推定状態が表示されます。推定状態は満充電容量を設計容量で割って計算されるため、精度は端末が報告する値に依存します。</string>
+  <string name="advanced_help_charging" formatted="false">充電には、最大充電電流や最大充電電圧、充電ポリシー、充電状態、容量レベルなど、現在の充電経路に関連する値が表示されます。これらの項目は充電器や充電モードによって変わる場合があります。</string>
+  <string name="advanced_help_service" formatted="false">Android バッテリーサービスには、`dumpsys battery` が報告する生の項目が表示されます。これらはフレームワークレベルの値で、充電元、バッテリー状態、温度、電圧、その他の状態情報を含むことがあります。</string>
+  <string name="advanced_help_sysfs" formatted="false">カーネル power_supply ファイルには、`/sys/class/power_supply` から読み取った 1 行の生データが表示されます。battery、BMS、USB、ワイヤレス充電器などのノードが含まれます。これは意図的に低レベルな表示であり、主にデバッグ向けのドライバー固有名が含まれる場合があります。</string>
+  <string name="advanced_help_metadata" formatted="false">メタデータには、BatteryManager が公開する高レベルなバッテリー情報が表示されます。たとえば健全性、充電残り時間、製造情報、交換状態などです。これらの項目の多くは特権アクセスが必要で、対応する値を一部しか公開しない端末も多くあります。</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">トラブルシューティング</string>
+  <string name="advanced_help_troubleshooting" formatted="false">タブが空の場合は、まず設定で詳細統計が有効になっていることを確認してください。root 化された端末では Battery Monitor は最初に `su` を試します。root 化されていない端末で Shizuku を使う場合は、Shizuku がインストールされて起動しており、Battery Monitor に Shizuku 内で権限が与えられている必要があります。それでも一部の端末では数個の項目しか公開されず、その場合は不足しているデータがその端末で Android やカーネル経由では利用できないことを意味します。</string>
 </resources>

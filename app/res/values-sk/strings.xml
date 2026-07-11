@@ -41,6 +41,7 @@
 
   <string name="tab_current_info" formatted="false">Aktuálne informácie</string>
   <string name="tab_history" formatted="false">História</string>
+  <string name="tab_advanced" formatted="false">Pokročilé</string>
 
   <string name="notification_until_charged" formatted="false">"do nabitia"</string>
   <string name="notification_until_drained" formatted="false">"vľavo"</string>
@@ -371,6 +372,14 @@
 
   <string name="pref_language_override" formatted="false">Prepísanie jazyka</string>
   <string name="pref_language_override_summary" formatted="false">Vyberte jazyk:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">Pokročilé štatistiky batérie</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Zobraziť pokročilé štatistiky batérie</string>
+
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Pridá kartu Pokročilé so štatistikami batérie, ktoré vyžadujú root alebo Shizuku.</string>
+  <string name="advanced_action_refresh" formatted="false">Obnoviť</string>
+  <string name="advanced_status_loading" formatted="false">Načítavajú sa pokročilé štatistiky batérie...</string>
+
+  <string name="advanced_status_no_access" formatted="false">Na zobrazenie pokročilých štatistík batérie je potrebný root alebo Shizuku.</string>
   <string name="alarms_overview" formatted="false">Prehľad upozornení</string>
   <string name="alarms_overview_help" formatted="false">Táto stránka vám umožňuje pridávať nové alarmy, rýchlo povoliť alebo zakázať existujúce alarmy, alebo vymazať alarmy.\n
     \n
@@ -381,7 +390,6 @@
     • Ak chcete upraviť existujúci budík, stačí ho stlačiť.\n
     • Ak chcete budík odstrániť, dlho ho stlačte a potom vyberte možnosť \"Odstrániť Alarm\". (Alarm môžete vymazať aj z jednotlivého alarmu stránku nastavení stlačením MENU a potom \"Odstrániť budík\".)\n
     • Ak chcete jednoducho prepínať, či je alarm aktivovaný, stlačte prepínač prepnite na stranu textu budíka. (Môžete tiež povoliť resp zakázať budík na stránke nastavení jednotlivých budíkov.)</string>
-
   <string name="pref_alarm_enabled" formatted="false">Zapnúť upozornenie</string>
   <string name="pref_alarm_enabled_help" formatted="false">Ak chcete dočasne vypnúť alarm bez znovuvytvárania nového, keď ho budete potrebovať, môžete ho vypnúť a zapnúť alebo tu alebo na stránke alarmov.</string>
   <string name="pref_cat_alarm_conditions" formatted="false">Podmienky upozornenia</string>
@@ -426,4 +434,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 sekúnd</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 sekúnd</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 sekúnd</string>
+  <string name="advanced_status_waiting_permission" formatted="false">Čaká sa na povolenie Shizuku...</string>
+  <string name="advanced_status_no_stats" formatted="false">Na tomto zariadení momentálne nie sú dostupné žiadne pokročilé štatistiky batérie.</string>
+  <string name="advanced_section_counters" formatted="false">Počítadlá</string>
+
+  <string name="advanced_section_capacity" formatted="false">Kapacita</string>
+  <string name="advanced_section_charging" formatted="false">Nabíjanie</string>
+  <string name="advanced_section_service" formatted="false">Služba batérie Androidu</string>
+  <string name="advanced_section_sysfs" formatted="false">Súbory power_supply jadra</string>
+  <string name="advanced_section_metadata" formatted="false">Metadáta</string>
+
+  <string name="advanced_field_charge_counter" formatted="false">Odhad zostávajúceho náboja</string>
+  <string name="advanced_field_current_now" formatted="false">Aktuálny prúd</string>
+  <string name="advanced_field_current_average" formatted="false">Priemerný prúd</string>
+  <string name="advanced_field_energy_counter" formatted="false">Počítadlo energie</string>
+  <string name="advanced_field_cycle_count" formatted="false">Počet cyklov</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Hlásená kapacita</string>
+  <string name="advanced_field_state_of_health" formatted="false">Stav zdravia</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Kapacita plného nabitia</string>
+  <string name="advanced_field_design_capacity" formatted="false">Návrhová kapacita</string>
+  <string name="advanced_field_estimated_health" formatted="false">Odhadované zdravie</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Zostávajúci čas nabíjania</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Maximálny nabíjací prúd</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Maximálne nabíjacie napätie</string>
+  <string name="advanced_field_charging_policy" formatted="false">Politika nabíjania</string>
+  <string name="advanced_field_charging_state" formatted="false">Stav nabíjania</string>
+  <string name="advanced_field_capacity_level" formatted="false">Úroveň kapacity</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Dátum výroby</string>
+  <string name="advanced_field_first_use_date" formatted="false">Dátum prvého použitia</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Sériové číslo batérie</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Stav časti batérie</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Výrobca časti batérie</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Názov modelu batérie</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Minimálne návrhové napätie</string>
+  <string name="advanced_value_not_available" formatted="false">Nedostupné</string>
+  <string name="advanced_help_overview" formatted="false">Karta Pokročilé zobrazuje ďalšiu diagnostiku batérie získanú zo systémových služieb Androidu a zo súborov power_supply jadra. Dostupnosť závisí od zariadenia, verzie Androidu, nabíjacieho čipu, fuel gauge čipu a od toho, čo výrobca sprístupní.</string>
+  <string name="advanced_help_counters" formatted="false">Počítadlá obsahujú živé alebo nedávno vzorkované hodnoty, ako sú počítadlo náboja, prúd, počítadlo energie a počet cyklov. Niektoré zariadenia poskytujú len časť týchto hodnôt a jednotky môžu pochádzať priamo z hardvérového ovládača.</string>
+  <string name="advanced_help_capacity" formatted="false">Kapacita zobrazuje kapacitu plného nabitia, návrhovú kapacitu a odhadované zdravie. Odhadované zdravie sa počíta ako kapacita plného nabitia delená návrhovou kapacitou, takže je presné len natoľko, nakoľko presné sú hodnoty hlásené zariadením.</string>
+  <string name="advanced_help_charging" formatted="false">Nabíjanie zobrazuje hodnoty súvisiace s aktívnou nabíjacou cestou, ako sú maximálny nabíjací prúd alebo napätie, politika nabíjania, stav nabíjania a úroveň kapacity. Tieto polia sa môžu meniť medzi nabíjačkami a režimami nabíjania.</string>
+  <string name="advanced_help_service" formatted="false">Služba batérie Androidu zobrazuje surové polia hlásené príkazom `dumpsys battery`. Ide o hodnoty na úrovni frameworku, ktoré často zahŕňajú zdroj napájania, stav batérie, teplotu, napätie a ďalšie stavové informácie.</string>
+  <string name="advanced_help_sysfs" formatted="false">Súbory power_supply jadra zobrazujú surové jednořadkové hodnoty čítané z `/sys/class/power_supply`, napríklad uzly battery, BMS, USB alebo bezdrôtovej nabíjačky. Ide zámerne o nízkoúrovňový pohľad a môžu obsahovať názvy špecifické pre ovládač, užitočné najmä pri ladení.</string>
+  <string name="advanced_help_metadata" formatted="false">Metadáta zobrazujú vlastnosti batérie vyššej úrovne sprístupnené cez BatteryManager, napríklad stav zdravia, zostávajúci čas nabíjania, výrobné údaje alebo stav výmeny. Väčšina týchto polí vyžaduje privilegovaný prístup a veľa zariadení sprístupňuje len malú časť z nich.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Riešenie problémov</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Ak je karta prázdna, najprv sa uistite, že sú v nastaveniach zapnuté pokročilé štatistiky. Na rootnutých zariadeniach skúša Battery Monitor najprv `su`. Na nerootnutých zariadeniach so Shizuku musí byť Shizuku nainštalované a spustené a Battery Monitor musí mať v Shizuku udelené povolenie. Niektoré zariadenia aj tak sprístupňujú len niekoľko polí, čo znamená, že chýbajúce údaje nie sú cez Android ani jadro na danom zariadení dostupné.</string>
 </resources>
