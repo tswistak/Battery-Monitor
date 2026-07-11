@@ -9,21 +9,21 @@ DRAWABLE_DIRS = [
   File.join(ROOT, "app/res/drawable-hdpi"),
 ].freeze
 
-FONT = "Helvetica-Bold"
+FONT = "Helvetica-Narrow-Bold"
 PERCENT_RANGE = 0..100
 TEMP_RANGE = 0..150
 DEGREE = "\u00B0"
 
 SUFFIX_SPECS = {
   "%" => {
-    suffix_scale: 0.88,
-    gap_scale: -0.12,
+    suffix_scale: 0.68,
+    gap_scale: 0.00,
     mode: :bottom,
   },
   DEGREE => {
-    suffix_scale: 0.72,
+    suffix_scale: 0.78,
     gap_scale: -0.10,
-    rise_scale: 0.18,
+    rise_scale: 0.12,
     mode: :superscript,
   },
 }.freeze
@@ -46,6 +46,24 @@ TEXT_VARIANTS = {
     range: 0..150,
     output_name: ->(prefix, value) { "#{prefix}_temp#{format('%03d', value)}.png" },
     sample_number: "150",
+  },
+}.freeze
+
+POINTSIZE_SAMPLE_VALUES = {
+  number: {
+    1 => 8,
+    2 => 88,
+    3 => 148,
+  },
+  percentage: {
+    1 => 8,
+    2 => 88,
+    3 => 100,
+  },
+  temperature: {
+    1 => 8,
+    2 => 88,
+    3 => 148,
   },
 }.freeze
 
@@ -86,38 +104,53 @@ FALLBACK_SAMPLE_SIZES = {
   },
 }.freeze
 
-NUMBER_TRIM_TARGETS = {
+TEXT_TRIM_TARGETS = {
   "app/res/drawable" => {
-    "n" => [17, 11],
-    "plain" => [25, 13],
-    "charging" => [25, 19],
+    "n" => {
+      number: [20, 16],
+      percentage: [22, 16],
+      temperature: [21, 17],
+    },
+    "plain" => {
+      number: [20, 16],
+      percentage: [22, 16],
+      temperature: [21, 17],
+    },
+    "charging" => {
+      number: [20, 16],
+      percentage: [22, 16],
+      temperature: [21, 17],
+    },
   },
   "app/res/drawable-hdpi" => {
-    "n" => [27, 14],
-    "plain" => [46, 24],
-    "charging" => [47, 37],
+    "n" => {
+      number: [31, 26],
+      percentage: [34, 24],
+      temperature: [33, 26],
+    },
+    "plain" => {
+      number: [45, 34],
+      percentage: [47, 31],
+      temperature: [46, 33],
+    },
+    "charging" => {
+      number: [45, 34],
+      percentage: [47, 31],
+      temperature: [46, 33],
+    },
   },
 }.freeze
 
-NUMBER_POINTSIZE_SEARCH = {
+POINTSIZE_SEARCH = {
   "app/res/drawable" => {
-    "n" => (14..18),
-    "plain" => (14..17),
-    "charging" => (14..17),
+    "n" => (12..24),
+    "plain" => (12..24),
+    "charging" => (12..24),
   },
   "app/res/drawable-hdpi" => {
-    "n" => (16..20),
-    "plain" => (27..31),
-    "charging" => (24..28),
-  },
-}.freeze
-
-NUMBER_POINTSIZE_OVERRIDES = {
-  "app/res/drawable" => {
-    "plain" => 15,
-  },
-  "app/res/drawable-hdpi" => {
-    "plain" => 30,
+    "n" => (18..34),
+    "plain" => (22..44),
+    "charging" => (22..44),
   },
 }.freeze
 
@@ -153,32 +186,26 @@ end
 def sample_dimensions(base_dir, prefix, sample_name)
   sample_path = File.join(base_dir, sample_name)
   if File.exist?(sample_path)
-    width, height = image_size(sample_path)
-    _sample_w, sample_h = trimmed_size(sample_path)
-    return [width, height, sample_h]
+    return image_size(sample_path)
   end
 
   relative_dir = base_dir.sub(ROOT + "/", "")
-  width, height = FALLBACK_SAMPLE_SIZES.fetch(relative_dir).fetch(prefix)
-  [width, height, height]
-end
-
-def render_label(out_path, text, fill, pointsize)
-  run(
-    "magick",
-    "-background", "none",
-    "-fill", fill,
-    "-font", FONT,
-    "-pointsize", pointsize.to_s,
-    "label:#{text}",
-    "PNG32:#{out_path}"
-  )
-  run("magick", out_path, "-trim", "+repage", "PNG32:#{out_path}")
+  FALLBACK_SAMPLE_SIZES.fetch(relative_dir).fetch(prefix)
 end
 
 def render_text_pair(out_path, number, suffix, fill, pointsize)
   if suffix.nil?
-    render_label(out_path, number.to_s, fill, pointsize)
+    run(
+      "magick",
+      "-background", "none",
+      "-fill", fill,
+      "-font", FONT,
+      "-pointsize", pointsize.to_s,
+      "label:#{number}",
+      "-trim",
+      "+repage",
+      "PNG32:#{out_path}"
+    )
     return
   end
 
@@ -188,8 +215,28 @@ def render_text_pair(out_path, number, suffix, fill, pointsize)
     suffix_path = File.join(dir, "suffix.png")
     pair_path = File.join(dir, "pair.png")
 
-    render_label(main_path, number.to_s, fill, pointsize)
-    render_label(suffix_path, suffix, fill, [1, (pointsize * suffix_spec[:suffix_scale]).round].max)
+    run(
+      "magick",
+      "-background", "none",
+      "-fill", fill,
+      "-font", FONT,
+      "-pointsize", pointsize.to_s,
+      "label:#{number}",
+      "-trim",
+      "+repage",
+      "PNG32:#{main_path}"
+    )
+    run(
+      "magick",
+      "-background", "none",
+      "-fill", fill,
+      "-font", FONT,
+      "-pointsize", [1, (pointsize * suffix_spec[:suffix_scale]).round].max.to_s,
+      "label:#{suffix}",
+      "-trim",
+      "+repage",
+      "PNG32:#{suffix_path}"
+    )
 
     main_w, main_h = image_size(main_path)
     suffix_w, suffix_h = image_size(suffix_path)
@@ -226,73 +273,36 @@ def render_text_pair(out_path, number, suffix, fill, pointsize)
   end
 end
 
-def fit_pointsize(target_width, target_height, fill, suffix, sample_number)
+def fit_pointsize(target_width, target_height, fill, suffix, sample_text, candidate_range)
   Dir.mktmpdir("icon-fit") do |dir|
     probe = File.join(dir, "probe.png")
-    low = 4
-    high = 196
-    best = low
+    best = candidate_range.min
 
-    while low <= high
-      candidate = (low + high) / 2
-      render_text_pair(probe, sample_number, suffix, fill, candidate)
+    candidate_range.each do |candidate|
+      render_text_pair(probe, sample_text, suffix, fill, candidate)
       width, height = image_size(probe)
-      fits = width <= target_width && height <= target_height
+      next unless width <= target_width && height <= target_height
 
-      if fits
-        best = candidate
-        low = candidate + 1
-      else
-        high = candidate - 1
-      end
+      best = candidate
     end
 
     best
   end
 end
 
-def fit_number_pointsize(base_dir, prefix, fill, width, height, y_shift, overlay_path)
+def fit_pointsize_for_value(base_dir, prefix, variant_name, fill, value)
   relative_dir = base_dir.sub(ROOT + "/", "")
-  override = NUMBER_POINTSIZE_OVERRIDES.fetch(relative_dir, {}).fetch(prefix, nil)
-  return override unless override.nil?
+  target_width, target_height = TEXT_TRIM_TARGETS.fetch(relative_dir).fetch(prefix).fetch(variant_name)
+  candidate_range = POINTSIZE_SEARCH.fetch(relative_dir).fetch(prefix)
+  suffix = TEXT_VARIANTS.fetch(variant_name)[:suffix]
+  fit_pointsize(target_width, target_height, fill, suffix, value.to_s, candidate_range)
+end
 
-  target_width, target_height = NUMBER_TRIM_TARGETS.fetch(relative_dir).fetch(prefix)
-  candidate_range = NUMBER_POINTSIZE_SEARCH.fetch(relative_dir).fetch(prefix)
+def digit_bucket(value)
+  return 3 if value >= 100
+  return 2 if value >= 10
 
-  Dir.mktmpdir("icon-fit-number") do |dir|
-    text_path = File.join(dir, "text.png")
-    out_path = File.join(dir, "out.png")
-    best_pointsize = 4
-    best_score = nil
-
-    candidate_range.each do |candidate|
-      render_text_pair(text_path, 100, nil, fill, candidate)
-      text_w, text_h = image_size(text_path)
-
-      x = (width - text_w) / 2
-      y = (height - text_h) / 2 + y_shift
-
-      cmd = ["magick", "-size", "#{width}x#{height}", "xc:none"]
-      cmd.concat([overlay_path, "-composite"]) unless overlay_path.nil?
-      cmd.concat([
-        text_path,
-        "-geometry", "#{x >= 0 ? '+' : ''}#{x}#{y >= 0 ? '+' : ''}#{y}",
-        "-composite",
-        "PNG32:#{out_path}"
-      ])
-      run(*cmd)
-
-      trim_w, trim_h = trimmed_size_or_zero(out_path)
-      score = ((trim_w - target_width) ** 2) + ((trim_h - target_height) ** 2)
-
-      if best_score.nil? || score <= best_score
-        best_score = score
-        best_pointsize = candidate
-      end
-    end
-
-    best_pointsize
-  end
+  1
 end
 
 def extract_overlay(base_dir, prefix)
@@ -352,22 +362,29 @@ end
 
 def generate_family(base_dir, prefix)
   spec = VARIANTS.fetch(prefix)
-  width, height, sample_h = sample_dimensions(base_dir, prefix, spec[:sample])
+  width, height = sample_dimensions(base_dir, prefix, spec[:sample])
   y_shift = (height * spec[:y_shift_ratio]).round
 
-  target_width = width
-  target_height = [height, sample_h + spec[:height_pad]].min
-  pointsizes = nil
-  extractor = proc do |overlay|
-    pointsizes = {
-      number: fit_number_pointsize(base_dir, prefix, spec[:fill], width, height, y_shift, overlay),
-      percentage: fit_pointsize(target_width, target_height, spec[:fill], "%", TEXT_VARIANTS[:percentage][:sample_number]),
-      temperature: fit_pointsize(target_width, target_height, spec[:fill], DEGREE, TEXT_VARIANTS[:temperature][:sample_number]),
-    }
+  pointsize_cache = Hash.new do |cache, key|
+    variant_name, bucket = key
+    sample_value = POINTSIZE_SAMPLE_VALUES.fetch(variant_name).fetch(bucket)
+    cache[key] = fit_pointsize_for_value(base_dir, prefix, variant_name, spec[:fill], sample_value)
+  end
 
+  extractor = proc do |overlay|
     TEXT_VARIANTS.each do |variant_name, text_variant|
       text_variant[:range].each do |value|
-        compose_icon(base_dir, prefix, value, variant_name, pointsizes[variant_name], overlay, width, height, y_shift)
+        compose_icon(
+          base_dir,
+          prefix,
+          value,
+          variant_name,
+          pointsize_cache[[variant_name, digit_bucket(value)]],
+          overlay,
+          width,
+          height,
+          y_shift
+        )
       end
     end
   end
@@ -384,7 +401,11 @@ def generate_family(base_dir, prefix)
 
   puts(
     "#{base_dir.sub(ROOT + '/', '')} #{prefix}: #{width}x#{height}, " \
-    "number=#{pointsizes[:number]}, percent=#{pointsizes[:percentage]}, degree=#{pointsizes[:temperature]}"
+    "1-digit=#{pointsize_cache[[:number, 1]]}, " \
+    "2-digit=#{pointsize_cache[[:number, 2]]}, " \
+    "3-digit=#{pointsize_cache[[:number, 3]]}, " \
+    "2-digit-percent=#{pointsize_cache[[:percentage, 2]]}, " \
+    "2-digit-degree=#{pointsize_cache[[:temperature, 2]]}"
   )
 end
 
