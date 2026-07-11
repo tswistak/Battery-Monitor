@@ -25,6 +25,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 
@@ -38,6 +39,9 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.TwoStatePreference;
+
+import rikka.shizuku.Shizuku;
+import rikka.shizuku.ShizukuProvider;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements OnSharedPreferenceChangeListener {
     public static final String SETTINGS_FILE = "codes.swistak.batterymonitor_preferences";
@@ -172,6 +176,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     private Messenger serviceMessenger;
     private final Messenger messenger = new Messenger(new MessageHandler(this));
     private final BatteryInfoService.RemoteConnection serviceConnection = new BatteryInfoService.RemoteConnection(messenger);
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     private Resources res;
     private PreferenceScreen mPreferenceScreen;
@@ -183,8 +188,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     private boolean systemPromotedEnabled;
 
     private int pref_screen;
-
-    private int menu_res = R.menu.settings;
 
     private static class MessageHandler extends Handler {
         private SettingsFragment sa;
@@ -445,6 +448,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
                 setEnablednessOfCurrentHackDeps(false);
         }
 
+        if (key.equals(KEY_ENABLE_ADVANCED_STATS) &&
+            mSharedPreferences.getBoolean(KEY_ENABLE_ADVANCED_STATS, false))
+            maybeRequestShizukuForAdvancedStats();
+
         if (key.equals(KEY_CURRENT_HACK_PREFER_FS))
             CurrentHack.setPreferFS(mSharedPreferences.getBoolean(KEY_CURRENT_HACK_PREFER_FS,
                                                                   res.getBoolean(R.bool.default_prefer_fs_current_hack)));
@@ -464,6 +471,47 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         }
 
         mSharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    private void maybeRequestShizukuForAdvancedStats() {
+        new Thread(() -> {
+            boolean rootAvailable = new AdvancedBatteryStatsCollector.RootExecutor().run("id") != null;
+            if (rootAvailable)
+                return;
+
+            mainHandler.post(this::requestShizukuPermissionIfNeeded);
+        }).start();
+    }
+
+    private void requestShizukuPermissionIfNeeded() {
+        if (!isAdded() || getActivity() == null)
+            return;
+
+        ShizukuProvider.enableMultiProcessSupport(false);
+        ShizukuProvider.requestBinderForNonProviderProcess(getActivity().getApplicationContext());
+
+        if (Shizuku.pingBinder()) {
+            requestShizukuPermissionFromBinder();
+            return;
+        }
+
+        Shizuku.addBinderReceivedListenerSticky(new Shizuku.OnBinderReceivedListener() {
+            @Override
+            public void onBinderReceived() {
+                Shizuku.removeBinderReceivedListener(this);
+                requestShizukuPermissionFromBinder();
+            }
+        });
+    }
+
+    private void requestShizukuPermissionFromBinder() {
+        if (!isAdded() || getActivity() == null || Shizuku.isPreV11())
+            return;
+
+        if (Shizuku.checkSelfPermission() == android.content.pm.PackageManager.PERMISSION_GRANTED)
+            return;
+
+        Shizuku.requestPermission(7001);
     }
 
     private void updateConvertFSummary() {

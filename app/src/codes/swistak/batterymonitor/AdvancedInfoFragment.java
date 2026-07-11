@@ -206,11 +206,6 @@ public class AdvancedInfoFragment extends Fragment {
         }
 
         if (Shizuku.checkSelfPermission() != PERMISSION_GRANTED) {
-            if (Shizuku.shouldShowRequestPermissionRationale()) {
-                showNoAccessMessage();
-                return;
-            }
-
             showStatus(R.string.advanced_status_waiting_permission);
             loading = false;
             Shizuku.requestPermission(REQUEST_CODE_SHIZUKU);

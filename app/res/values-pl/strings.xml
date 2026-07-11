@@ -473,7 +473,7 @@
   <string name="chip_switching_interval_15_seconds" formatted="false">15 sekund</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 sekund</string>
 
-  <string name="advanced_status_waiting_permission" formatted="false">Oczekiwanie na dostęp przez Shizuku...</string>
+  <string name="advanced_status_waiting_permission" formatted="false">Oczekiwanie na dostęp przez Shizuku…</string>
   <string name="advanced_status_no_stats" formatted="false">Na tym urządzeniu nie są teraz dostępne żadne zaawansowane statystyki baterii.</string>
   <string name="advanced_section_counters" formatted="false">Liczniki</string>
   <string name="advanced_section_capacity" formatted="false">Pojemność</string>
@@ -511,7 +511,7 @@
   <string name="advanced_help_charging" formatted="false">Ładowanie pokazuje wartości związane z aktywną ścieżką ładowania, takie jak maksymalny prąd lub napięcie ładowania, polityka ładowania, stan ładowania i poziom pojemności. Te pola mogą się zmieniać w zależności od ładowarki i trybu ładowania.</string>
   <string name="advanced_help_service" formatted="false">Usługa baterii Androida pokazuje surowe pola raportowane przez `dumpsys battery`. Są to wartości na poziomie frameworka, często obejmujące źródło ładowania, stan baterii, temperaturę, napięcie i inne informacje o stanie usługi.</string>
   <string name="advanced_help_sysfs" formatted="false">Pliki power_supply jądra pokazują surowe jednoliniowe wartości odczytane z `/sys/class/power_supply`, takie jak węzły baterii, BMS, USB lub ładowarki bezprzewodowej. To celowo niskopoziomowy widok, który może zawierać nazwy specyficzne dla sterownika i jest przydatny głównie do debugowania.</string>
-  <string name="advanced_help_metadata" formatted="false">Metadane pokazują wyżej poziomowe właściwości baterii udostępniane przez BatteryManager, takie jak kondycja baterii, pozostały czas ładowania, szczegóły produkcyjne lub status wymiany. Większość tych pól wymaga uprzywilejowanego dostępu, a wiele urządzeń udostępnia tylko niewielką ich część.</string>
+  <string name="advanced_help_metadata" formatted="false">Metadane pokazują wysoko-poziomowe właściwości baterii udostępniane przez BatteryManager, takie jak kondycja baterii, pozostały czas ładowania, szczegóły produkcyjne lub status wymiany. Większość tych pól wymaga uprzywilejowanego dostępu, a wiele urządzeń udostępnia tylko niewielką ich część.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Rozwiązywanie problemów</string>
   <string name="advanced_help_troubleshooting" formatted="false">Jeśli karta jest pusta, najpierw upewnij się, że w Ustawieniach włączono statystyki zaawansowane. Na urządzeniach z rootem Battery Monitor najpierw próbuje użyć `su`. Na urządzeniach bez roota aplikacja Shizuku musi być zainstalowana i uruchomiona, a Battery Monitor musi mieć w niej przyznane uprawnienie. Niektóre urządzenia udostępniają tylko kilka pól, co oznacza, że brakujące dane nie są dostępne przez Androida lub jądro na tym urządzeniu.</string>
 </resources>
