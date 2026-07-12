@@ -1,43 +1,43 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  <PreferenceCategory android:title="@string/pref_cat_channel_settings">
-    <Preference
-        android:key="enable_notifications_button"
-        android:layout="@layout/enable_notifications_button"
-        android:selectable="false"
-    />
-  </PreferenceCategory>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/pref_cat_channel_settings">
+        <Preference
+            android:key="enable_notifications_button"
+            android:layout="@layout/enable_notifications_button"
+            android:selectable="false" />
+    </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/pref_cat_notification_content">
-    <ListPreference
-       android:key="top_line"
-       android:title="@string/pref_top_line_content"
-       android:entries="@array/notification_line_content_entries"
-       android:entryValues="@array/notification_line_content_values"
-       android:defaultValue="@string/default_top_line_content"
-    />
+    <PreferenceCategory android:title="@string/pref_cat_notification_content">
+        <ListPreference
+            android:defaultValue="@string/default_top_line_content"
+            android:entries="@array/notification_line_content_entries"
+            android:entryValues="@array/notification_line_content_values"
+            android:key="top_line"
+            android:title="@string/pref_top_line_content"
+            app:singleLineTitle="false" />
 
-    <ListPreference
-       android:key="bottom_line"
-       android:title="@string/pref_bottom_line_content"
-       android:entries="@array/notification_line_content_entries"
-       android:entryValues="@array/notification_line_content_values"
-       android:defaultValue="@string/default_bottom_line_content"
-    />
+        <ListPreference
+            android:defaultValue="@string/default_bottom_line_content"
+            android:entries="@array/notification_line_content_entries"
+            android:entryValues="@array/notification_line_content_values"
+            android:key="bottom_line"
+            android:title="@string/pref_bottom_line_content"
+            app:singleLineTitle="false" />
 
-    <ListPreference
-       android:key="time_remaining_verbosity"
-       android:title="@string/pref_time_remaining_verbosity"
-       android:entries="@array/time_remaining_verbosity_entries"
-       android:entryValues="@array/time_remaining_verbosity_values"
-       android:defaultValue="@string/default_time_remaining_verbosity"
-    />
+        <ListPreference
+            android:defaultValue="@string/default_time_remaining_verbosity"
+            android:entries="@array/time_remaining_verbosity_entries"
+            android:entryValues="@array/time_remaining_verbosity_values"
+            android:key="time_remaining_verbosity"
+            android:title="@string/pref_time_remaining_verbosity"
+            app:singleLineTitle="false" />
 
-    <CheckBoxPreference
-       android:key="status_duration_in_vital_signs"
-       android:title="@string/pref_status_duration_in_vital_signs"
-       android:summary="@string/pref_status_duration_in_vital_signs_summary"
-       android:defaultValue="false"
-    />
-  </PreferenceCategory>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="status_duration_in_vital_signs"
+            android:summary="@string/pref_status_duration_in_vital_signs_summary"
+            android:title="@string/pref_status_duration_in_vital_signs"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

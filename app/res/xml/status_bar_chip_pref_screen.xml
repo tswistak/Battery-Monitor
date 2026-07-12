@@ -1,46 +1,46 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  <PreferenceCategory
-      android:key="category_status_bar_chip"
-      android:title="@string/pref_cat_status_bar_chip"
-  >
-    <ListPreference
-       android:key="live_update_display"
-       android:title="@string/pref_live_update_display"
-       android:summary="@string/pref_live_update_display_summary"
-       android:entries="@array/live_update_display_entries"
-       android:entryValues="@array/live_update_display_values"
-       android:defaultValue="@string/default_live_update_display_mode"
-    />
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:key="category_status_bar_chip"
+        android:title="@string/pref_cat_status_bar_chip">
+        <ListPreference
+            android:defaultValue="@string/default_live_update_display_mode"
+            android:entries="@array/live_update_display_entries"
+            android:entryValues="@array/live_update_display_values"
+            android:key="live_update_display"
+            android:summary="@string/pref_live_update_display_summary"
+            android:title="@string/pref_live_update_display"
+            app:singleLineTitle="false" />
 
-    <CheckBoxPreference
-       android:key="live_update_keep_main_notification"
-       android:title="@string/pref_live_update_keep_main_notification"
-       android:summary="@string/pref_live_update_keep_main_notification_summary"
-       android:defaultValue="false"
-    />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="live_update_keep_main_notification"
+            android:summary="@string/pref_live_update_keep_main_notification_summary"
+            android:title="@string/pref_live_update_keep_main_notification"
+            app:singleLineTitle="false" />
 
-    <ListPreference
-       android:key="chip_content"
-       android:title="@string/pref_chip_content"
-       android:entries="@array/chip_content_entries"
-       android:entryValues="@array/chip_content_values"
-       android:defaultValue="@string/default_chip_content"
-    />
+        <ListPreference
+            android:defaultValue="@string/default_chip_content"
+            android:entries="@array/chip_content_entries"
+            android:entryValues="@array/chip_content_values"
+            android:key="chip_content"
+            android:title="@string/pref_chip_content"
+            app:singleLineTitle="false" />
 
-    <ListPreference
-       android:key="chip_switching_interval"
-       android:title="@string/pref_chip_switching_interval"
-       android:entries="@array/chip_switching_interval_entries"
-       android:entryValues="@array/chip_switching_interval_values"
-       android:defaultValue="5"
-    />
+        <ListPreference
+            android:defaultValue="5"
+            android:entries="@array/chip_switching_interval_entries"
+            android:entryValues="@array/chip_switching_interval_values"
+            android:key="chip_switching_interval"
+            android:title="@string/pref_chip_switching_interval"
+            app:singleLineTitle="false" />
 
-    <CheckBoxPreference
-       android:key="chip_indicate_charging"
-       android:title="@string/pref_chip_indicate_charging"
-       android:summary="@string/pref_chip_indicate_charging_summary"
-       android:defaultValue="true"
-    />
-  </PreferenceCategory>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="chip_indicate_charging"
+            android:summary="@string/pref_chip_indicate_charging_summary"
+            android:title="@string/pref_chip_indicate_charging"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
 </PreferenceScreen>
 
