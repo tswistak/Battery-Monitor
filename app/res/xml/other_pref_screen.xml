@@ -47,12 +47,12 @@
             app:title="@string/pref_prediction_type" />
     </PreferenceCategory>
 
-  <PreferenceCategory app:title="@string/pref_cat_advanced_stats">
-    <CheckBoxPreference
-       app:key="enable_advanced_stats"
-       app:title="@string/pref_enable_advanced_stats"
-       app:summary="@string/pref_enable_advanced_stats_summary"
-       android:defaultValue="false"
-    />
-  </PreferenceCategory>
+    <PreferenceCategory app:title="@string/pref_cat_advanced_stats">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            app:key="enable_advanced_stats"
+            app:singleLineTitle="false"
+            app:summary="@string/pref_enable_advanced_stats_summary"
+            app:title="@string/pref_enable_advanced_stats" />
+    </PreferenceCategory>
 </PreferenceScreen>

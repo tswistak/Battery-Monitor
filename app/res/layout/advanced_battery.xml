@@ -38,7 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/advanced_section_counters"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/advanced_counter_rows"
@@ -59,7 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/advanced_section_capacity"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/advanced_capacity_rows"
@@ -80,7 +82,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/advanced_section_charging"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/advanced_charging_rows"
@@ -101,7 +104,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/advanced_section_service"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/advanced_service_rows"
@@ -122,7 +126,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/advanced_section_sysfs"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/advanced_sysfs_rows"
@@ -143,7 +148,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/advanced_section_metadata"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/advanced_metadata_rows"
