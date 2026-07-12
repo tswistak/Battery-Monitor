@@ -14,6 +14,10 @@
 
 - The default file name for export now contains the current app name (thanks @Aga-C).
 
+### Development
+
+- Removed unused black icon variant.
+
 ## 1.1.0
 
 ### New

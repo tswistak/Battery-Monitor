@@ -68,13 +68,6 @@ POINTSIZE_SAMPLE_VALUES = {
 }.freeze
 
 VARIANTS = {
-  "n" => {
-    sample: "n100.png",
-    fill: "black",
-    overlay_source: nil,
-    y_shift_ratio: 0.00,
-    height_pad: 2,
-  },
   "plain" => {
     sample: "plain100.png",
     fill: "white",
@@ -93,12 +86,10 @@ VARIANTS = {
 
 FALLBACK_SAMPLE_SIZES = {
   "app/res/drawable" => {
-    "n" => [25, 25],
     "plain" => [25, 25],
     "charging" => [25, 25],
   },
   "app/res/drawable-hdpi" => {
-    "n" => [38, 38],
     "plain" => [48, 48],
     "charging" => [48, 48],
   },
@@ -106,11 +97,6 @@ FALLBACK_SAMPLE_SIZES = {
 
 TEXT_TRIM_TARGETS = {
   "app/res/drawable" => {
-    "n" => {
-      number: [20, 16],
-      percentage: [22, 16],
-      temperature: [21, 17],
-    },
     "plain" => {
       number: [20, 16],
       percentage: [22, 16],
@@ -123,11 +109,6 @@ TEXT_TRIM_TARGETS = {
     },
   },
   "app/res/drawable-hdpi" => {
-    "n" => {
-      number: [31, 26],
-      percentage: [34, 24],
-      temperature: [33, 26],
-    },
     "plain" => {
       number: [45, 34],
       percentage: [47, 31],
@@ -143,12 +124,10 @@ TEXT_TRIM_TARGETS = {
 
 POINTSIZE_SEARCH = {
   "app/res/drawable" => {
-    "n" => (12..24),
     "plain" => (12..24),
     "charging" => (12..24),
   },
   "app/res/drawable-hdpi" => {
-    "n" => (18..34),
     "plain" => (22..44),
     "charging" => (22..44),
   },

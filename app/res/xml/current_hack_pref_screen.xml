@@ -1,84 +1,80 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  <PreferenceCategory
-      android:key="category_current_hack_main"
-      android:title="@string/pref_cat_current_hack_main"
-  >
-    <CheckBoxPreference
-       android:key="enable_current_hack"
-       android:title="@string/pref_enable_current_hack"
-       android:summary="@string/pref_enable_current_hack_summary"
-       android:defaultValue="false"
-    />
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:key="category_current_hack_main"
+        android:title="@string/pref_cat_current_hack_main">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="enable_current_hack"
+            android:summary="@string/pref_enable_current_hack_summary"
+            android:title="@string/pref_enable_current_hack"
+            app:singleLineTitle="false" />
 
-    <CheckBoxPreference
-        android:key="current_hack_prefer_fs"
-        android:title="@string/pref_current_hack_prefer_fs"
-        android:summary="@string/pref_current_hack_prefer_fs_summary"
-        android:defaultValue="@bool/default_prefer_fs_current_hack"
-    />
+        <CheckBoxPreference
+            android:defaultValue="@bool/default_prefer_fs_current_hack"
+            android:key="current_hack_prefer_fs"
+            android:summary="@string/pref_current_hack_prefer_fs_summary"
+            android:title="@string/pref_current_hack_prefer_fs"
+            app:singleLineTitle="false" />
 
-    <ListPreference
-       android:key="current_hack_multiplier"
-       android:title="@string/pref_current_hack_multiplier"
-       android:entries="@array/current_hack_multiplier_entries_values"
-       android:entryValues="@array/current_hack_multiplier_entries_values"
-       android:defaultValue="1"
-    />
-  </PreferenceCategory>
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/current_hack_multiplier_entries_values"
+            android:entryValues="@array/current_hack_multiplier_entries_values"
+            android:key="current_hack_multiplier"
+            android:title="@string/pref_current_hack_multiplier"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
 
-  <PreferenceCategory
-      android:key="category_current_hack_notification"
-      android:title="@string/pref_cat_current_hack_notification"
-  >
-    <CheckBoxPreference
-       android:key="display_current_in_vital_stats"
-       android:title="@string/pref_display_current_in_vital_stats"
-       android:summary="@string/pref_display_current_in_vital_stats_summary"
-       android:defaultValue="false"
-    />
+    <PreferenceCategory
+        android:key="category_current_hack_notification"
+        android:title="@string/pref_cat_current_hack_notification">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="display_current_in_vital_stats"
+            android:summary="@string/pref_display_current_in_vital_stats_summary"
+            android:title="@string/pref_display_current_in_vital_stats"
+            app:singleLineTitle="false" />
 
-    <CheckBoxPreference
-       android:key="prefer_current_avg_in_vital_stats"
-       android:title="@string/pref_prefer_current_avg_in_vital_stats"
-       android:summary="@string/pref_prefer_current_avg_in_vital_stats_summary"
-       android:defaultValue="false"
-    />
-  </PreferenceCategory>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefer_current_avg_in_vital_stats"
+            android:summary="@string/pref_prefer_current_avg_in_vital_stats_summary"
+            android:title="@string/pref_prefer_current_avg_in_vital_stats"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
 
-  <PreferenceCategory
-      android:key="category_current_hack_main_window"
-      android:title="@string/pref_cat_current_hack_main_window"
-  >
-    <CheckBoxPreference
-       android:key="display_current_in_main_window"
-       android:title="@string/pref_display_current_in_main_window"
-       android:summary="@string/pref_display_current_in_main_window_summary"
-       android:defaultValue="false"
-    />
+    <PreferenceCategory
+        android:key="category_current_hack_main_window"
+        android:title="@string/pref_cat_current_hack_main_window">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="display_current_in_main_window"
+            android:summary="@string/pref_display_current_in_main_window_summary"
+            android:title="@string/pref_display_current_in_main_window"
+            app:singleLineTitle="false" />
 
-    <CheckBoxPreference
-       android:key="prefer_current_avg_in_main_window"
-       android:title="@string/pref_prefer_current_avg_in_main_window"
-       android:summary="@string/pref_prefer_current_avg_in_main_window_summary"
-       android:defaultValue="false"
-    />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefer_current_avg_in_main_window"
+            android:summary="@string/pref_prefer_current_avg_in_main_window_summary"
+            android:title="@string/pref_prefer_current_avg_in_main_window"
+            app:singleLineTitle="false" />
 
-    <CheckBoxPreference
-        android:key="auto_refresh_current_in_main_window"
-        android:title="@string/pref_auto_refresh_current_in_main_window"
-        android:summary="@string/pref_auto_refresh_current_in_main_window_summary"
-        android:defaultValue="false"
-    />
-  </PreferenceCategory>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="auto_refresh_current_in_main_window"
+            android:summary="@string/pref_auto_refresh_current_in_main_window_summary"
+            android:title="@string/pref_auto_refresh_current_in_main_window"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
 
-  <PreferenceCategory
-      android:key="category_current_hack_unsupported"
-      android:title="@string/pref_cat_current_hack_unsupported"
-  >
-    <Preference
-       android:summary="@string/pref_current_hack_unsupported"
-       android:layout="@layout/current_hack_unsupported_pref"
-       android:enabled="false"
-    />
-  </PreferenceCategory>
+    <PreferenceCategory
+        android:key="category_current_hack_unsupported"
+        android:title="@string/pref_cat_current_hack_unsupported">
+        <Preference
+            android:enabled="false"
+            android:layout="@layout/current_hack_unsupported_pref"
+            android:summary="@string/pref_current_hack_unsupported" />
+    </PreferenceCategory>
 </PreferenceScreen>
