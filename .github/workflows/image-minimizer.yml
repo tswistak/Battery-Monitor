@@ -1,0 +1,95 @@
+name: Image minimizer
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+  issue_comment:
+    types:
+      - created
+      - edited
+  pull_request_review_comment:
+    types:
+      - created
+      - edited
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+  pull_request_target:
+    types:
+      - opened
+      - edited
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  image-minimizer:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: .github/package-lock.json
+
+      - name: Cache workflow node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: .github/node_modules
+          key: image-minimizer-node22-${{ runner.os }}-${{ hashFiles('.github/package-lock.json') }}
+
+      - name: Install script dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci --prefix .github
+
+      - name: Resize images in issues
+        if: github.event_name == 'issues'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_KIND: issue
+          TARGET_NUMBER: ${{ github.event.issue.number }}
+        run: node .github/scripts/image-minimizer.mjs
+
+      - name: Resize images in pull requests
+        if: github.event_name == 'pull_request_target'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_KIND: pull_request
+          TARGET_NUMBER: ${{ github.event.pull_request.number }}
+        run: node .github/scripts/image-minimizer.mjs
+
+      - name: Resize images in comments
+        if: github.event_name == 'issue_comment'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_KIND: issue_comment
+          TARGET_COMMENT_ID: ${{ github.event.comment.id }}
+        run: node .github/scripts/image-minimizer.mjs
+
+      - name: Resize images in pull request review comments
+        if: github.event_name == 'pull_request_review_comment'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_KIND: pull_request_review_comment
+          TARGET_COMMENT_ID: ${{ github.event.comment.id }}
+        run: node .github/scripts/image-minimizer.mjs
+
+      - name: Resize images in pull request review summaries
+        if: github.event_name == 'pull_request_review'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_KIND: pull_request_review
+          TARGET_NUMBER: ${{ github.event.pull_request.number }}
+          TARGET_REVIEW_ID: ${{ github.event.review.id }}
+        run: node .github/scripts/image-minimizer.mjs
