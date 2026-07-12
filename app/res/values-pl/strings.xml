@@ -412,12 +412,12 @@
   <string name="pref_language_override" formatted="false">Język aplikacji</string>
   <string name="pref_language_override_summary" formatted="false">Wybierz język:</string>
   <string name="pref_cat_advanced_stats" formatted="false">Zaawansowane statystyki baterii</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Pokaż zaawansowane statystyki baterii</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Dodaje kartę Zaawansowane ze statystykami baterii wymagającymi roota albo Shizuku.</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Pokazuj zaawansowane statystyki baterii</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Dodaje kartę „Zaawansowane” z diagnostyką baterii, która wymaga roota albo Shizuku.</string>
 
   <string name="advanced_action_refresh" formatted="false">Odśwież</string>
-  <string name="advanced_status_loading" formatted="false">Wczytywanie zaawansowanych statystyk baterii...</string>
-  <string name="advanced_status_no_access" formatted="false">Do wyświetlenia zaawansowanych statystyk baterii potrzebny jest root albo Shizuku.</string>
+  <string name="advanced_status_loading" formatted="false">Ładowanie zaawansowanych statystyk baterii…</string>
+  <string name="advanced_status_no_access" formatted="false">Do wyświetlania zaawansowanych statystyk baterii potrzebny jest dostęp do roota albo Shizuku.</string>
 
   <string name="alarms_overview" formatted="false">Przegląd alarmów</string>
   <string name="alarms_overview_help" formatted="false">Na tej stronie możesz dodawać nowe alarmy, szybko włączać lub wyłączać już istniejące lub je usuwać.\n
@@ -473,45 +473,45 @@
   <string name="chip_switching_interval_15_seconds" formatted="false">15 sekund</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 sekund</string>
 
-  <string name="advanced_status_waiting_permission" formatted="false">Oczekiwanie na dostęp przez Shizuku…</string>
-  <string name="advanced_status_no_stats" formatted="false">Na tym urządzeniu nie są teraz dostępne żadne zaawansowane statystyki baterii.</string>
+  <string name="advanced_status_waiting_permission" formatted="false">Oczekiwanie na uprawnienie do Shizuku…</string>
+  <string name="advanced_status_no_stats" formatted="false">W tej chwili nie są dostępne żadne zaawansowane statystyki baterii.</string>
   <string name="advanced_section_counters" formatted="false">Liczniki</string>
   <string name="advanced_section_capacity" formatted="false">Pojemność</string>
   <string name="advanced_section_charging" formatted="false">Ładowanie</string>
   <string name="advanced_section_service" formatted="false">Usługa baterii Androida</string>
   <string name="advanced_section_sysfs" formatted="false">Pliki power_supply jądra</string>
   <string name="advanced_section_metadata" formatted="false">Metadane</string>
-  <string name="advanced_field_charge_counter" formatted="false">Szacowany pozostały ładunek</string>
+  <string name="advanced_field_charge_counter" formatted="false">Szacunkowy pozostały poziom naładowania</string>
   <string name="advanced_field_current_now" formatted="false">Bieżący prąd</string>
   <string name="advanced_field_current_average" formatted="false">Średni prąd</string>
   <string name="advanced_field_energy_counter" formatted="false">Licznik energii</string>
   <string name="advanced_field_cycle_count" formatted="false">Liczba cykli</string>
   <string name="advanced_field_reported_capacity" formatted="false">Zgłoszona pojemność</string>
-  <string name="advanced_field_state_of_health" formatted="false">Kondycja baterii</string>
-  <string name="advanced_field_full_charge_capacity" formatted="false">Pojemność pełnego ładowania</string>
-  <string name="advanced_field_design_capacity" formatted="false">Zaprojektowana pojemność</string>
-  <string name="advanced_field_estimated_health" formatted="false">Szacowana kondycja</string>
+  <string name="advanced_field_state_of_health" formatted="false">Stan zdrowia</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Pojemność pełnego naładowania</string>
+  <string name="advanced_field_design_capacity" formatted="false">Pojemność projektowa</string>
+  <string name="advanced_field_estimated_health" formatted="false">Szacowane zdrowie</string>
   <string name="advanced_field_charge_time_remaining" formatted="false">Pozostały czas ładowania</string>
   <string name="advanced_field_max_charging_current" formatted="false">Maksymalny prąd ładowania</string>
   <string name="advanced_field_max_charging_voltage" formatted="false">Maksymalne napięcie ładowania</string>
-  <string name="advanced_field_charging_policy" formatted="false">Zasada ładowania</string>
+  <string name="advanced_field_charging_policy" formatted="false">Strategia ładowania</string>
   <string name="advanced_field_charging_state" formatted="false">Stan ładowania</string>
   <string name="advanced_field_capacity_level" formatted="false">Poziom pojemności</string>
   <string name="advanced_field_manufacturing_date" formatted="false">Data produkcji</string>
   <string name="advanced_field_first_use_date" formatted="false">Data pierwszego użycia</string>
   <string name="advanced_field_battery_serial_number" formatted="false">Numer seryjny baterii</string>
-  <string name="advanced_field_battery_part_status" formatted="false">Status części baterii</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Stan części baterii</string>
   <string name="advanced_field_battery_part_manufacturer" formatted="false">Producent części baterii</string>
   <string name="advanced_field_battery_model_name" formatted="false">Nazwa modelu baterii</string>
-  <string name="advanced_field_minimum_design_voltage" formatted="false">Zaprojektowane minimalne napięcie</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Minimalne napięcie projektowe</string>
   <string name="advanced_value_not_available" formatted="false">Niedostępne</string>
-  <string name="advanced_help_overview" formatted="false">Karta Zaawansowane pokazuje dodatkową diagnostykę baterii zbieraną z usług systemowych Androida i z plików power_supply jądra. Dostępność zależy od urządzenia, wersji Androida, układu ładowania, układu pomiaru pojemności baterii i od tego, co udostępnia producent.</string>
-  <string name="advanced_help_counters" formatted="false">Liczniki zawierają bieżące lub niedawno próbkowane wartości, takie jak szacowany pozostały ładunek, prąd, licznik energii i liczba cykli. Niektóre urządzenia udostępniają tylko część z nich, a jednostki mogą pochodzić bezpośrednio ze sterownika sprzętowego.</string>
-  <string name="advanced_help_capacity" formatted="false">Pojemność pokazuje pojemność pełnego ładowania, zaprojektowaną pojemność baterii i szacowaną kondycję. Szacowana kondycja jest liczona jako pojemność pełnego ładowania podzielona przez zaprojektowaną pojemność, więc jej dokładność zależy od danych raportowanych przez urządzenie.</string>
-  <string name="advanced_help_charging" formatted="false">Ładowanie pokazuje wartości związane z aktywną ścieżką ładowania, takie jak maksymalny prąd lub napięcie ładowania, polityka ładowania, stan ładowania i poziom pojemności. Te pola mogą się zmieniać w zależności od ładowarki i trybu ładowania.</string>
-  <string name="advanced_help_service" formatted="false">Usługa baterii Androida pokazuje surowe pola raportowane przez `dumpsys battery`. Są to wartości na poziomie frameworka, często obejmujące źródło ładowania, stan baterii, temperaturę, napięcie i inne informacje o stanie usługi.</string>
-  <string name="advanced_help_sysfs" formatted="false">Pliki power_supply jądra pokazują surowe jednoliniowe wartości odczytane z `/sys/class/power_supply`, takie jak węzły baterii, BMS, USB lub ładowarki bezprzewodowej. To celowo niskopoziomowy widok, który może zawierać nazwy specyficzne dla sterownika i jest przydatny głównie do debugowania.</string>
-  <string name="advanced_help_metadata" formatted="false">Metadane pokazują wysoko-poziomowe właściwości baterii udostępniane przez BatteryManager, takie jak kondycja baterii, pozostały czas ładowania, szczegóły produkcyjne lub status wymiany. Większość tych pól wymaga uprzywilejowanego dostępu, a wiele urządzeń udostępnia tylko niewielką ich część.</string>
+  <string name="advanced_help_overview" formatted="false">Karta „Zaawansowane” pokazuje dodatkową diagnostykę baterii zbieraną z usług systemowych Androida i z plików power_supply jądra. Dostępność zależy od urządzenia, wersji Androida, układu scalonego ładowarki, układu scalonego wskaźnika naładowania baterii i informacji udostępnionych przez producenta.</string>
+  <string name="advanced_help_counters" formatted="false">Liczniki zawierają bieżące lub niedawno spróbkowane wartości, takie jak szacunkowy pozostały poziom naładowania, prąd, licznik energii i liczba cykli. Niektóre urządzenia udostępniają jedynie część z nich, a jednostki mogą pochodzić bezpośrednio ze sterownika sprzętowego.</string>
+  <string name="advanced_help_capacity" formatted="false">Pojemność pokazuje pojemność pełnego naładowania, pojemność projektową i szacowane zdrowie. Szacowane zdrowie jest obliczane jako pojemność pełnego naładowania podzielona przez pojemność projektową, więc jego dokładność zależy od wartości odnotowanych przez urządzenie.</string>
+  <string name="advanced_help_charging" formatted="false">Ładowanie pokazuje wartości związane z aktywną ścieżką ładowania, takie jak maksymalny prąd lub napięcie ładowania, strategia ładowania, stan ładowania i poziom pojemności. Pola te mogą się zmieniać w zależności od ładowarki i trybu ładowania.</string>
+  <string name="advanced_help_service" formatted="false">Usługa baterii Androida pokazuje nieprzetworzone pola zgłoszone przez `dumpsys battery`. Są to wartości na poziomie frameworka, które często obejmują źródło ładowania, stan baterii, temperaturę, napięcie i inne stany usługi.</string>
+  <string name="advanced_help_sysfs" formatted="false">Pliki power_supply jądra pokazują nieprzetworzone jednoliniowe wartości odczytane z `/sys/class/power_supply`, takie jak węzły baterii, BMS, USB czy ładowarki bezprzewodowej. Jest to celowo niskopoziomowe i może zawierać nazwy specyficzne dla sterownika, które są przydatne głównie do debugowania.</string>
+  <string name="advanced_help_metadata" formatted="false">Metadane pokazują wysokopoziomowe właściwości baterii udostępniane przez BatteryManager, takie jak stan zdrowia, pozostały czas ładowania, szczegóły produkcyjne czy stan zamiennika. Większość tych pól wymaga uprzywilejowanego dostępu, a wiele urządzeń udostępnia jedynie niewielką ich część.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Rozwiązywanie problemów</string>
-  <string name="advanced_help_troubleshooting" formatted="false">Jeśli karta jest pusta, najpierw upewnij się, że w Ustawieniach włączono statystyki zaawansowane. Na urządzeniach z rootem Battery Monitor najpierw próbuje użyć `su`. Na urządzeniach bez roota aplikacja Shizuku musi być zainstalowana i uruchomiona, a Battery Monitor musi mieć w niej przyznane uprawnienie. Niektóre urządzenia udostępniają tylko kilka pól, co oznacza, że brakujące dane nie są dostępne przez Androida lub jądro na tym urządzeniu.</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Jeśli karta jest pusta, najpierw upewnij się, że „Zaawansowane statystyki baterii” zostały włączone w ustawieniach. Na zrootowanych urządzeniach Battery Monitor najpierw próbuje użyć `su`. Na urządzeniach bez dostępu do roota Shizuku musi być zainstalowany i uruchomiony, a Battery Monitor musi mieć w nim przyznane uprawnienie. Niektóre urządzenia udostępniają jedynie kilka pól, co oznacza, że brakujące dane nie są dostępne przez Androida lub jądro na tym urządzeniu.</string>
 </resources>
