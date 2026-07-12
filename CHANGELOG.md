@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 1.2.0
 
 ### New
 
@@ -13,6 +13,7 @@
 ### Fixed
 
 - The default file name for export now contains the current app name (thanks @Aga-C).
+- Long names in setting are now wrapped to the new line (#40, thanks @Aga-C).
 
 ### Development
 

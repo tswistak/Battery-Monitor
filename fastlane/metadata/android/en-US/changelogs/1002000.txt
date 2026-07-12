@@ -1,0 +1,12 @@
+New:
+
+- Added the "Advanced" tab showing battery data accessible by root/Shizuku (#27).
+
+Improved:
+
+- Changed font in icons to narrower, so digits are bigger now (#18).
+
+Fixed:
+
+- The default file name for export now contains the current app name (thanks @Aga-C).
+- Long names in setting are now wrapped to the new line (#40, thanks @Aga-C).
