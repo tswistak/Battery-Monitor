@@ -65,6 +65,9 @@ public class SettingsHelpActivity extends AppCompatActivity {
             setWindowSubtitle(res.getString(R.string.other_settings));
 
             has_links = new int[] {};
+        } else if (pref_screen.equals(SettingsFragment.KEY_ADVANCED_INFO_HELP)) {
+            setContentView(R.layout.advanced_info_help);
+            setWindowSubtitle(res.getString(R.string.tab_advanced));
         } else if (pref_screen.equals(SettingsFragment.KEY_ALARMS_SETTINGS)) {
             setContentView(R.layout.alarm_settings_help);
             setWindowSubtitle(res.getString(R.string.alarm_settings));

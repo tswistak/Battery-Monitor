@@ -128,6 +128,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat-resources:1.7.0"
 
     implementation "androidx.preference:preference:1.2.1"
+    implementation "dev.rikka.shizuku:api:13.1.5"
+    implementation "dev.rikka.shizuku:provider:13.1.5"
 
     implementation platform("org.jetbrains.kotlin:kotlin-bom:1.9.24")
 }

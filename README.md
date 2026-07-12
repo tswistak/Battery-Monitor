@@ -26,6 +26,7 @@ See battery status at a glance, get meaningful notifications, and track battery 
 
 - Live battery percentage and status in notifications
 - Detailed current battery info (charge, temperature, voltage, health, plug state)
+- Access advanced battery info using root or Shizuku
 - Configurable battery alarms (for charge levels, temperature, and more)
 - Battery history/logging with CSV export
 - Home screen widgets

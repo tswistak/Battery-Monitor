@@ -43,6 +43,7 @@
 
   <string name="tab_current_info" formatted="false">Huidige informatie</string>
   <string name="tab_history" formatted="false">Geschiedenis</string>
+  <string name="tab_advanced" formatted="false">Geavanceerd</string>
 
   <string name="notification_until_charged" formatted="false">" tot opgeladen"</string>
   <string name="notification_until_drained" formatted="false">" over"</string>
@@ -74,7 +75,6 @@
   <string name="no_storage_permission" formatted="false">Toestemming voor opslag niet verleend.</string>
   <string name="file_written" formatted="false">Bestand is opgeslagen in de hoofdmap van de SD-kaart</string>
 
-  <!-- These are used for the CSV export. -->
   <string name="date" formatted="false">datum</string>
   <string name="time" formatted="false">tijd</string>
   <string name="status" formatted="false">status</string>
@@ -109,15 +109,16 @@
   <string name="alarm_type_fully_charged" formatted="false">Volledig opgeladen</string>
   <string name="alarm_type_charge_drops" formatted="false">Batterijniveau onder</string>
   <string name="alarm_type_charge_rises" formatted="false">Batterijniveau boven</string>
-  <string name="alarm_type_temperature_rises" formatted="false">Temperatuur boven</string>
   <string name="alarm_type_temperature_drops" formatted="false">Temperatuur onder</string>
+  <string name="alarm_type_temperature_rises" formatted="false">Temperatuur boven</string>
   <string name="alarm_type_health_failure" formatted="false">Probleem met batterij</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Is volledig opgeladen</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Batterijniveau onder...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Batterijniveau boven...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatuur boven...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatuur onder...</string>
+  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatuur boven...</string>
   <string name="alarm_type_entry_health_failure" formatted="false">Probleem met batterij</string>
+
   <string name="alarm_fully_charged" formatted="false">Batterij is volledig opgeladen</string>
   <string name="alarm_charge_drops" formatted="false">"Batterijniveau onder "</string>
   <string name="alarm_charge_rises" formatted="false">"Batterijniveau boven "</string>
@@ -400,6 +401,13 @@
   <string name="pref_cat_language" formatted="false">Taal</string>
   <string name="pref_language_override" formatted="false">Andere taal gebruiken</string>
   <string name="pref_language_override_summary" formatted="false">Taal kiezen:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">Geavanceerde batterijstatistieken</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Geavanceerde batterijstatistieken tonen</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Voegt een tabblad Geavanceerd toe met batterijstatistieken waarvoor root of Shizuku nodig is.</string>
+
+  <string name="advanced_action_refresh" formatted="false">Vernieuwen</string>
+  <string name="advanced_status_loading" formatted="false">Geavanceerde batterijstatistieken laden...</string>
+  <string name="advanced_status_no_access" formatted="false">Root of Shizuku is nodig om geavanceerde batterijstatistieken te tonen.</string>
 
   <string name="alarms_overview" formatted="false">Overzicht van alarmen</string>
   <string name="alarms_overview_help" formatted="false">Op deze pagina kun je alarmen toevoegen, in of uitschakelen en verwijderen.\n
@@ -454,4 +462,46 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 seconden</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 seconden</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 seconden</string>
+
+  <string name="advanced_status_waiting_permission" formatted="false">Wachten op Shizuku-toestemming...</string>
+  <string name="advanced_status_no_stats" formatted="false">Er zijn momenteel geen geavanceerde batterijstatistieken beschikbaar op dit apparaat.</string>
+  <string name="advanced_section_counters" formatted="false">Tellers</string>
+  <string name="advanced_section_capacity" formatted="false">Capaciteit</string>
+  <string name="advanced_section_charging" formatted="false">Laden</string>
+  <string name="advanced_section_service" formatted="false">Android-batterijservice</string>
+  <string name="advanced_section_sysfs" formatted="false">Kernel power_supply-bestanden</string>
+  <string name="advanced_section_metadata" formatted="false">Metadata</string>
+  <string name="advanced_field_charge_counter" formatted="false">Geschatte resterende lading</string>
+  <string name="advanced_field_current_now" formatted="false">Huidige stroom</string>
+  <string name="advanced_field_current_average" formatted="false">Gemiddelde stroom</string>
+  <string name="advanced_field_energy_counter" formatted="false">Energieteller</string>
+  <string name="advanced_field_cycle_count" formatted="false">Aantal cycli</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Gerapporteerde capaciteit</string>
+  <string name="advanced_field_state_of_health" formatted="false">Gezondheidstoestand</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Volledige laadcapaciteit</string>
+  <string name="advanced_field_design_capacity" formatted="false">Ontwerpcapaciteit</string>
+  <string name="advanced_field_estimated_health" formatted="false">Geschatte gezondheid</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Resterende laadtijd</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Maximale laadstroom</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Maximale laadspanning</string>
+  <string name="advanced_field_charging_policy" formatted="false">Laadbeleid</string>
+  <string name="advanced_field_charging_state" formatted="false">Laadstatus</string>
+  <string name="advanced_field_capacity_level" formatted="false">Capaciteitsniveau</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Productiedatum</string>
+  <string name="advanced_field_first_use_date" formatted="false">Datum van eerste gebruik</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Serienummer van de batterij</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Status van het batterijonderdeel</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Fabrikant van het batterijonderdeel</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Modelnaam van de batterij</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Minimale ontwerp spanning</string>
+  <string name="advanced_value_not_available" formatted="false">Niet beschikbaar</string>
+  <string name="advanced_help_overview" formatted="false">Het tabblad Geavanceerd toont extra batterijdiagnostiek uit Android-systeemservices en uit kernelbestanden van power_supply. Welke gegevens beschikbaar zijn, hangt af van het apparaat, de Android-versie, de laadchip, de fuel gauge-chip en wat de fabrikant vrijgeeft.</string>
+  <string name="advanced_help_counters" formatted="false">Tellers bevatten live of recent bemonsterde waarden, zoals laadteller, stroom, energieteller en aantal cycli. Sommige apparaten geven slechts een deel van deze waarden vrij en de eenheden kunnen rechtstreeks uit de hardwaredriver komen.</string>
+  <string name="advanced_help_capacity" formatted="false">Capaciteit toont volledige laadcapaciteit, ontwerpcapaciteit en geschatte gezondheid. De geschatte gezondheid wordt berekend als volledige laadcapaciteit gedeeld door ontwerpcapaciteit en is dus slechts zo nauwkeurig als de waarden die het apparaat rapporteert.</string>
+  <string name="advanced_help_charging" formatted="false">Laden toont waarden die horen bij het actieve laadpad, zoals maximale laadstroom of laadspanning, laadbeleid, laadstatus en capaciteitsniveau. Deze velden kunnen verschillen per lader en laadmodus.</string>
+  <string name="advanced_help_service" formatted="false">De Android-batterijservice toont ruwe velden die door `dumpsys battery` worden gerapporteerd. Dit zijn frameworkwaarden die vaak de laadbron, batterijstatus, temperatuur, spanning en andere statusinformatie bevatten.</string>
+  <string name="advanced_help_sysfs" formatted="false">Kernel power_supply-bestanden tonen ruwe eenregelige waarden uit `/sys/class/power_supply`, zoals battery-, BMS-, USB- of draadloze lader-nodes. Dit is bewust een laag-niveauweergave en kan driverspecifieke namen bevatten die vooral nuttig zijn voor debuggen.</string>
+  <string name="advanced_help_metadata" formatted="false">Metadata toont batterij-eigenschappen op hoger niveau die via BatteryManager beschikbaar zijn, zoals gezondheidstoestand, resterende laadtijd, productiegegevens of vervangingsstatus. De meeste van deze velden vereisen bevoorrechte toegang en veel apparaten geven slechts een klein deel vrij.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Probleemoplossing</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Als het tabblad leeg is, controleer dan eerst of geavanceerde statistieken in Instellingen zijn ingeschakeld. Op geroote apparaten probeert Battery Monitor eerst `su`. Op niet-geroote apparaten met Shizuku moet Shizuku zijn geïnstalleerd en actief zijn, en Battery Monitor moet binnen Shizuku toestemming hebben gekregen. Sommige apparaten geven nog steeds maar een paar velden vrij. Dat betekent dat de ontbrekende gegevens op dat apparaat niet via Android of de kernel beschikbaar zijn.</string>
 </resources>

@@ -16,6 +16,7 @@ package codes.swistak.batterymonitor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -34,6 +35,7 @@ public class BatteryInfoActivity extends AppCompatActivity {
 //public class BatteryInfoActivity extends FragmentActivity {
     private BatteryInfoPagerAdapter pagerAdapter;
     private ViewPager viewPager;
+    private boolean advancedStatsEnabled;
 
     //private static final String LOG_TAG = "BatteryBot";
 
@@ -51,7 +53,8 @@ public class BatteryInfoActivity extends AppCompatActivity {
         setContentView(R.layout.battery_info);
         EdgeToEdgeHelper.applyIfNeeded(this);
 
-        pagerAdapter = new BatteryInfoPagerAdapter(getSupportFragmentManager());
+        advancedStatsEnabled = isAdvancedStatsEnabled();
+        pagerAdapter = new BatteryInfoPagerAdapter(getSupportFragmentManager(), advancedStatsEnabled);
 
         pagerAdapter.setContext(this);
 
@@ -65,6 +68,8 @@ public class BatteryInfoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        maybeRebuildPager();
 
         // PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_tab_strip);
         // tabStrip.setTabIndicatorColor(Str.accent_color);
@@ -94,7 +99,7 @@ public class BatteryInfoActivity extends AppCompatActivity {
 
     private void routeIntent(Intent intent) {
         if (intent.hasExtra(BatteryInfoService.EXTRA_EDIT_ALARMS))
-            viewPager.setCurrentItem(2);
+            viewPager.setCurrentItem(pagerAdapter.getAlarmsPosition());
         else if (intent.hasExtra(BatteryInfoService.EXTRA_CURRENT_INFO))
             viewPager.setCurrentItem(1);
     }
@@ -111,6 +116,33 @@ public class BatteryInfoActivity extends AppCompatActivity {
         super.onStop();
 
         pagerAdapter.setContext(null);
+    }
+
+    private boolean isAdvancedStatsEnabled() {
+        SharedPreferences settings = getSharedPreferences(SettingsFragment.SETTINGS_FILE, Context.MODE_MULTI_PROCESS);
+        return settings.getBoolean(SettingsFragment.KEY_ENABLE_ADVANCED_STATS, false);
+    }
+
+    private void maybeRebuildPager() {
+        boolean newAdvancedStatsEnabled = isAdvancedStatsEnabled();
+        if (newAdvancedStatsEnabled == advancedStatsEnabled)
+            return;
+
+        int currentItem = viewPager.getCurrentItem();
+        boolean oldAdvancedStatsEnabled = advancedStatsEnabled;
+
+        advancedStatsEnabled = newAdvancedStatsEnabled;
+        pagerAdapter = new BatteryInfoPagerAdapter(getSupportFragmentManager(), advancedStatsEnabled);
+        pagerAdapter.setContext(this);
+        viewPager.setAdapter(pagerAdapter);
+
+        int newCurrentItem = currentItem;
+        if (oldAdvancedStatsEnabled && !advancedStatsEnabled && currentItem == 2)
+            newCurrentItem = 1;
+        else if (currentItem == (oldAdvancedStatsEnabled ? 3 : 2))
+            newCurrentItem = pagerAdapter.getAlarmsPosition();
+
+        viewPager.setCurrentItem(newCurrentItem, false);
     }
 
     @Override
@@ -140,9 +172,11 @@ public class BatteryInfoActivity extends AppCompatActivity {
     private static class BatteryInfoPagerAdapter extends FragmentPagerAdapter {
         private Context context;
         private LogViewFragment logViewFragment;
+        private final boolean showAdvancedTab;
 
-        BatteryInfoPagerAdapter(FragmentManager fm) {
+        BatteryInfoPagerAdapter(FragmentManager fm, boolean showAdvancedTab) {
             super(fm);
+            this.showAdvancedTab = showAdvancedTab;
         }
 
         public void setContext(Context c) {
@@ -155,7 +189,27 @@ public class BatteryInfoActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return showAdvancedTab ? 4 : 3;
+        }
+
+        int getAlarmsPosition() {
+            return showAdvancedTab ? 3 : 2;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            switch (position) {
+                case 0:
+                    return 0;
+                case 1:
+                    return 1;
+                case 2:
+                    return showAdvancedTab ? 2 : 3;
+                case 3:
+                    return 3;
+                default:
+                    return position;
+            }
         }
 
         // getItem() is apparently intended to always create new Fragments!
@@ -167,6 +221,11 @@ public class BatteryInfoActivity extends AppCompatActivity {
                 case 1:
                     return new CurrentInfoFragment();
                 case 2:
+                    if (showAdvancedTab)
+                        return new AdvancedInfoFragment();
+
+                    return new AlarmsFragment();
+                case 3:
                     return new AlarmsFragment();
                 default:
                     return null;
@@ -197,6 +256,11 @@ public class BatteryInfoActivity extends AppCompatActivity {
                 case 1:
                     return res.getString(R.string.tab_current_info).toUpperCase();
                 case 2:
+                    if (showAdvancedTab)
+                        return res.getString(R.string.tab_advanced).toUpperCase();
+
+                    return res.getString(R.string.alarm_settings).toUpperCase();
+                case 3:
                     return res.getString(R.string.alarm_settings).toUpperCase();
                 default:
                     return null;

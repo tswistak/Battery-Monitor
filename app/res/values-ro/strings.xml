@@ -39,6 +39,7 @@
 
   <string name="tab_current_info" formatted="false">Informatie actuala</string>
   <string name="tab_history" formatted="false">Istoric</string>
+  <string name="tab_advanced" formatted="false">Avansat</string>
 
   <string name="notification_until_charged" formatted="false">pana la incarcare completa</string>
   <string name="notification_until_drained" formatted="false">ramas</string>
@@ -354,7 +355,15 @@
   <string name="pref_language_override" formatted="false">Anularea limbii</string>
   <string name="pref_language_override_summary" formatted="false">Selectați limba:</string>
 
+  <string name="pref_cat_advanced_stats" formatted="false">Statistici avansate ale bateriei</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Afișează statisticile avansate ale bateriei</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Adaugă o filă Avansat cu statistici ale bateriei care necesită root sau Shizuku.</string>
+  <string name="advanced_action_refresh" formatted="false">Reîmprospătează</string>
+
+  <string name="advanced_status_loading" formatted="false">Se încarcă statisticile avansate ale bateriei...</string>
+  <string name="advanced_status_no_access" formatted="false">Pentru a afișa statisticile avansate ale bateriei este necesar root sau Shizuku.</string>
   <string name="alarms_overview" formatted="false">Prezentare generală a alarmelor</string>
+
   <string name="alarms_overview_help" formatted="false">Această pagină vă permite să adăugați alarme noi, să activați sau să dezactivați rapid alarme existente sau ștergeți alarmele.\n
     \n
     Pentru a adăuga o nouă alarmă, apăsați „Adăugați alarmă” — aceasta va crea o nouă alarmă alarmă și vă duce la pagina de setări de alarmă, unde puteți controlați setările pentru noua alarmă. Vezi ajutorul de pe pagina respectivă pentru mai multe detalii.\n
@@ -366,7 +375,6 @@
     • Pentru a comuta cu ușurință dacă o alarmă este activată, apăsați comutatorul comutați pe partea laterală a textului de alarmă. (De asemenea, puteți activa sau dezactivați o alarmă din pagina de setări individuale de alarmă.)</string>
   <string name="pref_alarm_enabled" formatted="false">Activați alarma</string>
   <string name="pref_alarm_enabled_help" formatted="false">Dacă vrei temporar dezactivați o alarmă fără a fi nevoie să o recreați când doriți din nou, îl puteți opri și porni fie aici, fie pe alarmele principale pagina.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Condiții de alarmă</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Aici poți controlați ce condiții declanșează alarma.</string>
   <string name="pref_alarm_type" formatted="false">Tip alarmă</string>
@@ -409,4 +417,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 secunde</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 secunde</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 secunde</string>
+  <string name="advanced_status_waiting_permission" formatted="false">Se așteaptă permisiunea Shizuku...</string>
+  <string name="advanced_status_no_stats" formatted="false">În acest moment nu sunt disponibile statistici avansate ale bateriei pe acest dispozitiv.</string>
+  <string name="advanced_section_counters" formatted="false">Contoare</string>
+  <string name="advanced_section_capacity" formatted="false">Capacitate</string>
+  <string name="advanced_section_charging" formatted="false">Încărcare</string>
+
+  <string name="advanced_section_service" formatted="false">Serviciul de baterie Android</string>
+  <string name="advanced_section_sysfs" formatted="false">Fișierele power_supply ale nucleului</string>
+  <string name="advanced_section_metadata" formatted="false">Metadate</string>
+  <string name="advanced_field_charge_counter" formatted="false">Estimarea încărcării rămase</string>
+  <string name="advanced_field_current_now" formatted="false">Curent actual</string>
+
+  <string name="advanced_field_current_average" formatted="false">Curent mediu</string>
+  <string name="advanced_field_energy_counter" formatted="false">Contor de energie</string>
+  <string name="advanced_field_cycle_count" formatted="false">Număr de cicluri</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Capacitate raportată</string>
+  <string name="advanced_field_state_of_health" formatted="false">Stare de sănătate</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Capacitate la încărcare completă</string>
+  <string name="advanced_field_design_capacity" formatted="false">Capacitate proiectată</string>
+  <string name="advanced_field_estimated_health" formatted="false">Stare estimată</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Timp de încărcare rămas</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Curent maxim de încărcare</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Tensiune maximă de încărcare</string>
+  <string name="advanced_field_charging_policy" formatted="false">Politică de încărcare</string>
+  <string name="advanced_field_charging_state" formatted="false">Stare de încărcare</string>
+  <string name="advanced_field_capacity_level" formatted="false">Nivel de capacitate</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Data fabricației</string>
+  <string name="advanced_field_first_use_date" formatted="false">Data primei utilizări</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Numărul de serie al bateriei</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Starea componentei bateriei</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Producătorul componentei bateriei</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Numele modelului bateriei</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Tensiune minimă de proiectare</string>
+  <string name="advanced_value_not_available" formatted="false">Indisponibil</string>
+  <string name="advanced_help_overview" formatted="false">Fila Avansat afișează diagnosticări suplimentare ale bateriei colectate din serviciile de sistem Android și din fișierele power_supply ale nucleului. Disponibilitatea depinde de dispozitiv, de versiunea Android, de cipul de încărcare, de cipul fuel gauge și de ceea ce expune producătorul.</string>
+  <string name="advanced_help_counters" formatted="false">Contoarele conțin valori live sau eșantionate recent, cum ar fi contorul de încărcare, curentul, contorul de energie și numărul de cicluri. Unele dispozitive expun doar o parte dintre aceste valori, iar unitățile pot veni direct din driverul hardware.</string>
+  <string name="advanced_help_capacity" formatted="false">Capacitate afișează capacitatea la încărcare completă, capacitatea proiectată și starea estimată. Starea estimată se calculează ca raport între capacitatea la încărcare completă și capacitatea proiectată, astfel că precizia depinde de valorile raportate de dispozitiv.</string>
+  <string name="advanced_help_charging" formatted="false">Încărcare afișează valori legate de calea activă de încărcare, precum curentul sau tensiunea maximă de încărcare, politica de încărcare, starea de încărcare și nivelul de capacitate. Aceste câmpuri se pot schimba între încărcătoare și moduri de încărcare.</string>
+  <string name="advanced_help_service" formatted="false">Serviciul de baterie Android afișează câmpurile brute raportate de `dumpsys battery`. Acestea sunt valori la nivel de framework care includ adesea sursa de încărcare, starea bateriei, temperatura, tensiunea și alte informații de stare.</string>
+  <string name="advanced_help_sysfs" formatted="false">Fișierele power_supply ale nucleului afișează valori brute pe o singură linie citite din `/sys/class/power_supply`, cum ar fi noduri battery, BMS, USB sau încărcător wireless. Aceasta este intenționat o vedere de nivel jos și poate include nume specifice driverului, utile mai ales pentru depanare.</string>
+  <string name="advanced_help_metadata" formatted="false">Metadate arată proprietăți ale bateriei de nivel mai înalt expuse prin BatteryManager, cum ar fi starea de sănătate, timpul de încărcare rămas, detalii de fabricație sau starea de înlocuire. Majoritatea acestor câmpuri necesită acces privilegiat, iar multe dispozitive expun doar un mic subset.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Depanare</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Dacă fila este goală, verifică mai întâi că statisticile avansate sunt activate în Setări. Pe dispozitivele cu root, Battery Monitor încearcă mai întâi `su`. Pe dispozitivele fără root cu Shizuku, Shizuku trebuie să fie instalat și pornit, iar Battery Monitor trebuie să primească permisiunea în Shizuku. Unele dispozitive expun în continuare doar câteva câmpuri, ceea ce înseamnă că datele lipsă nu sunt disponibile prin Android sau prin nucleu pe acel dispozitiv.</string>
 </resources>

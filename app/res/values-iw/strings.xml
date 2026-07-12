@@ -39,6 +39,7 @@
 
   <string name="tab_current_info" formatted="false">המידע הנוכחי</string>
   <string name="tab_history" formatted="false">היסטוריה</string>
+  <string name="tab_advanced" formatted="false">מתקדם</string>
 
   <string name="notification_until_charged" formatted="false">" עד לסיום הטעינה"</string>
   <string name="notification_until_drained" formatted="false">" נותרו"</string>
@@ -350,7 +351,15 @@
   <string name="pref_language_override" formatted="false">ביטול שפה</string>
   <string name="pref_language_override_summary" formatted="false">בחר שפה:</string>
 
+  <string name="pref_cat_advanced_stats" formatted="false">סטטיסטיקות סוללה מתקדמות</string>
+  <string name="pref_enable_advanced_stats" formatted="false">הצג סטטיסטיקות סוללה מתקדמות</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">מוסיף לשונית מתקדמת עם סטטיסטיקות סוללה שדורשות root או Shizuku.</string>
+  <string name="advanced_action_refresh" formatted="false">רענון</string>
+
+  <string name="advanced_status_loading" formatted="false">טוען סטטיסטיקות סוללה מתקדמות...</string>
+  <string name="advanced_status_no_access" formatted="false">נדרש root או Shizuku כדי להציג סטטיסטיקות סוללה מתקדמות.</string>
   <string name="alarms_overview" formatted="false">סקירה כללית של אזעקות</string>
+
   <string name="alarms_overview_help" formatted="false">דף זה מאפשר לך להוסיף התראות חדשות, להפעיל או לבטל במהירות אזעקות קיימות, או מחק אזעקות.\n
     \n
     כדי להוסיף התראה חדשה, הקש על \"הוסף אזעקה\" - פעולה זו תיצור התראה חדשה אזעק וייקח אותך לדף הגדרות האזעקה, שם תוכל לשלוט בהגדרות של האזעקה החדשה. עיין בעזרה בעמוד זה לפרטים נוספים.\n
@@ -362,7 +371,6 @@
     • כדי לשנות בקלות אם אזעקה מופעלת, לחץ על המתג לעבור לצד טקסט האזעקה. (אתה יכול גם להפעיל או השבת התראה מדף הגדרות האזעקה הבודדים.)</string>
   <string name="pref_alarm_enabled" formatted="false">אפשר אזעקה</string>
   <string name="pref_alarm_enabled_help" formatted="false">אם אתה רוצה זמנית השבת התראה מבלי שתצטרך ליצור אותה מחדש כשאתה רוצה אותה שוב, אתה יכול לכבות ולהדליק אותו כאן או על האזעקות הראשיות עמוד.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">תנאי אזעקה</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">זה המקום שבו אתה יכול לשלוט באילו תנאים מפעילים את האזעקה.</string>
   <string name="pref_alarm_type" formatted="false">סוג אזעקה</string>
@@ -405,4 +413,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 שניות</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 שניות</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 שניות</string>
+  <string name="advanced_status_waiting_permission" formatted="false">ממתין להרשאת Shizuku...</string>
+  <string name="advanced_status_no_stats" formatted="false">כרגע אין סטטיסטיקות סוללה מתקדמות זמינות במכשיר הזה.</string>
+  <string name="advanced_section_counters" formatted="false">מונים</string>
+  <string name="advanced_section_capacity" formatted="false">קיבולת</string>
+  <string name="advanced_section_charging" formatted="false">טעינה</string>
+
+  <string name="advanced_section_service" formatted="false">שירות הסוללה של Android</string>
+  <string name="advanced_section_sysfs" formatted="false">קובצי power_supply של הליבה</string>
+  <string name="advanced_section_metadata" formatted="false">מטא נתונים</string>
+  <string name="advanced_field_charge_counter" formatted="false">הערכת הטעינה הנותרת</string>
+  <string name="advanced_field_current_now" formatted="false">זרם נוכחי</string>
+
+  <string name="advanced_field_current_average" formatted="false">זרם ממוצע</string>
+  <string name="advanced_field_energy_counter" formatted="false">מונה אנרגיה</string>
+  <string name="advanced_field_cycle_count" formatted="false">מספר מחזורים</string>
+  <string name="advanced_field_reported_capacity" formatted="false">קיבולת מדווחת</string>
+  <string name="advanced_field_state_of_health" formatted="false">מצב בריאות</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">קיבולת טעינה מלאה</string>
+  <string name="advanced_field_design_capacity" formatted="false">קיבולת תכנונית</string>
+  <string name="advanced_field_estimated_health" formatted="false">בריאות משוערת</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">זמן טעינה נותר</string>
+  <string name="advanced_field_max_charging_current" formatted="false">זרם טעינה מרבי</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">מתח טעינה מרבי</string>
+  <string name="advanced_field_charging_policy" formatted="false">מדיניות טעינה</string>
+  <string name="advanced_field_charging_state" formatted="false">מצב טעינה</string>
+  <string name="advanced_field_capacity_level" formatted="false">רמת קיבולת</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">תאריך ייצור</string>
+  <string name="advanced_field_first_use_date" formatted="false">תאריך שימוש ראשון</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">המספר הסידורי של הסוללה</string>
+  <string name="advanced_field_battery_part_status" formatted="false">מצב רכיב הסוללה</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">יצרן רכיב הסוללה</string>
+  <string name="advanced_field_battery_model_name" formatted="false">שם דגם הסוללה</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">מתח תכנון מינימלי</string>
+  <string name="advanced_value_not_available" formatted="false">לא זמין</string>
+  <string name="advanced_help_overview" formatted="false">לשונית המתקדם מציגה אבחון סוללה נוסף שנאסף משירותי המערכת של Android ומקובצי power_supply של הליבה. הזמינות תלויה במכשיר, בגרסת Android, בשבב הטעינה, בשבב מדידת הסוללה ובמה שהיצרן חושף.</string>
+  <string name="advanced_help_counters" formatted="false">המונים כוללים ערכים חיים או ערכים שנדגמו לאחרונה, כמו מונה טעינה, זרם, מונה אנרגיה ומספר מחזורים. חלק מהמכשירים חושפים רק חלק מהערכים האלה והיחידות עשויות להגיע ישירות ממנהל ההתקן של החומרה.</string>
+  <string name="advanced_help_capacity" formatted="false">קיבולת מציגה קיבולת טעינה מלאה, קיבולת תכנון ובריאות משוערת. הבריאות המשוערת מחושבת כקיבולת טעינה מלאה חלקי קיבולת התכנון, ולכן הדיוק שלה תלוי בדיוק הערכים שהמכשיר מדווח.</string>
+  <string name="advanced_help_charging" formatted="false">טעינה מציגה ערכים הקשורים למסלול הטעינה הפעיל, כמו זרם או מתח טעינה מרביים, מדיניות טעינה, מצב טעינה ורמת קיבולת. שדות אלה עשויים להשתנות בין מטענים ומצבי טעינה.</string>
+  <string name="advanced_help_service" formatted="false">שירות הסוללה של Android מציג שדות גולמיים שמדווחים על ידי `dumpsys battery`. אלה ערכים ברמת המסגרת של המערכת שלרוב כוללים מקור טעינה, מצב סוללה, טמפרטורה, מתח ומידע מצב נוסף.</string>
+  <string name="advanced_help_sysfs" formatted="false">קובצי power_supply של הליבה מציגים ערכים גולמיים של שורה אחת שנקראים מתוך `/sys/class/power_supply`, כמו צמתי battery, BMS, USB או מטען אלחוטי. זו תצוגה נמוכת רמה בכוונה וייתכנו בה שמות ייחודיים לדרייבר, שימושיים בעיקר לניפוי שגיאות.</string>
+  <string name="advanced_help_metadata" formatted="false">מטא נתונים מציגים מאפייני סוללה ברמה גבוהה יותר שנחשפים דרך BatteryManager, כמו מצב בריאות, זמן טעינה נותר, פרטי ייצור או מצב החלפה. רוב השדות האלה דורשים גישה מועדפת ורבים מהמכשירים חושפים רק חלק קטן מהם.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">פתרון בעיות</string>
+  <string name="advanced_help_troubleshooting" formatted="false">אם הלשונית ריקה, ודא תחילה שסטטיסטיקות מתקדמות מופעלות בהגדרות. במכשירים עם root, Battery Monitor מנסה תחילה את `su`. במכשירים ללא root עם Shizuku, יש להתקין ולהפעיל את Shizuku, ולתת ל Battery Monitor הרשאה בתוך Shizuku. חלק מהמכשירים עדיין חושפים רק מעט שדות, כלומר הנתונים החסרים אינם זמינים דרך Android או דרך הליבה במכשיר הזה.</string>
 </resources>

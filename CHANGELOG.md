@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### New
+
+- Added the "Advanced" tab showing battery data accessible by root/Shizuku (#27).
+
 ### Improved
 
 - Changed font in icons to narrower, so digits are bigger now (#18). 

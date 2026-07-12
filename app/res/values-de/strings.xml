@@ -41,6 +41,7 @@
 
   <string name="tab_current_info" formatted="false">Aktuelle Info</string>
   <string name="tab_history" formatted="false">Verlauf</string>
+  <string name="tab_advanced" formatted="false">Erweitert</string>
 
   <string name="notification_until_charged" formatted="false">" bis vollständig aufgeladen"</string>
   <string name="notification_until_drained" formatted="false">" verbleibend"</string>
@@ -338,9 +339,16 @@
 
   <string name="pref_language_override" formatted="false">Sprache überschreiben</string>
   <string name="pref_language_override_summary" formatted="false">Sprache auswählen:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">Erweiterte Akkustatistiken</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Erweiterte Akkustatistiken anzeigen</string>
+
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Fügt einen Reiter Erweitert mit Akkustatistiken hinzu, die Root oder Shizuku benötigen.</string>
+  <string name="advanced_action_refresh" formatted="false">Aktualisieren</string>
+  <string name="advanced_status_loading" formatted="false">Erweiterte Akkustatistiken werden geladen...</string>
+
+  <string name="advanced_status_no_access" formatted="false">Für erweiterte Akkustatistiken wird Root oder Shizuku benötigt.</string>
   <string name="alarms_overview" formatted="false">Übersicht Alarme</string>
   <string name="alarms_overview_help" formatted="false">Auf dieser Seite können Sie neue Alarme hinzufügen, bestehende schnell aktivieren/deaktivieren oder löschen.</string>
-
   <string name="pref_alarm_enabled" formatted="false">Alarm einschalten</string>
   <string name="pref_alarm_enabled_help" formatted="false">Wenn Sie einen Alarm vorübergehend deaktivieren möchten, können Sie ihn hier oder auf der Hauptalarmseite aus- und wieder einschalten.</string>
   <string name="pref_cat_alarm_conditions" formatted="false">Alarm-Bedingungen</string>
@@ -379,4 +387,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 Sekunden</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 Sekunden</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 Sekunden</string>
+  <string name="advanced_status_waiting_permission" formatted="false">Warte auf Shizuku-Berechtigung...</string>
+  <string name="advanced_status_no_stats" formatted="false">Auf diesem Gerät sind derzeit keine erweiterten Akkustatistiken verfügbar.</string>
+  <string name="advanced_section_counters" formatted="false">Zähler</string>
+
+  <string name="advanced_section_capacity" formatted="false">Kapazität</string>
+  <string name="advanced_section_charging" formatted="false">Laden</string>
+  <string name="advanced_section_service" formatted="false">Android-Akkudienst</string>
+  <string name="advanced_section_sysfs" formatted="false">Kernel-Dateien von power_supply</string>
+  <string name="advanced_section_metadata" formatted="false">Metadaten</string>
+
+  <string name="advanced_field_charge_counter" formatted="false">Geschätzte Restladung</string>
+  <string name="advanced_field_current_now" formatted="false">Aktueller Strom</string>
+  <string name="advanced_field_current_average" formatted="false">Durchschnittsstrom</string>
+  <string name="advanced_field_energy_counter" formatted="false">Energiezähler</string>
+  <string name="advanced_field_cycle_count" formatted="false">Zyklusanzahl</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Gemeldete Kapazität</string>
+  <string name="advanced_field_state_of_health" formatted="false">Gesundheitszustand</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Vollladekapazität</string>
+  <string name="advanced_field_design_capacity" formatted="false">Designkapazität</string>
+  <string name="advanced_field_estimated_health" formatted="false">Geschätzter Zustand</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Verbleibende Ladezeit</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Maximaler Ladestrom</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Maximale Ladespannung</string>
+  <string name="advanced_field_charging_policy" formatted="false">Laderichtlinie</string>
+  <string name="advanced_field_charging_state" formatted="false">Ladezustand</string>
+  <string name="advanced_field_capacity_level" formatted="false">Kapazitätsstufe</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Herstellungsdatum</string>
+  <string name="advanced_field_first_use_date" formatted="false">Datum der ersten Nutzung</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Seriennummer des Akkus</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Status des Akkuteils</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Hersteller des Akkuteils</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Modellname des Akkus</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Minimale Designspannung</string>
+  <string name="advanced_value_not_available" formatted="false">Nicht verfügbar</string>
+  <string name="advanced_help_overview" formatted="false">Der Reiter Erweitert zeigt zusätzliche Akkudiagnosen aus Android-Systemdiensten und aus power_supply-Dateien des Kernels. Welche Daten verfügbar sind, hängt vom Gerät, der Android-Version, dem Ladechip, dem Fuel-Gauge-Chip und den vom Hersteller freigegebenen Daten ab.</string>
+  <string name="advanced_help_counters" formatted="false">Zähler enthalten Live-Werte oder kürzlich abgetastete Werte wie Ladungszähler, Strom, Energiezähler und Zyklusanzahl. Manche Geräte stellen nur einen Teil davon bereit und die Einheiten kommen mitunter direkt vom Hardware-Treiber.</string>
+  <string name="advanced_help_capacity" formatted="false">Kapazität zeigt Vollladekapazität, Designkapazität und den geschätzten Zustand. Der geschätzte Zustand wird als Vollladekapazität geteilt durch Designkapazität berechnet und ist daher nur so genau wie die vom Gerät gemeldeten Werte.</string>
+  <string name="advanced_help_charging" formatted="false">Laden zeigt Werte zum aktiven Ladepfad wie maximalen Ladestrom oder maximale Ladespannung, Laderichtlinie, Ladezustand und Kapazitätsstufe. Diese Felder können sich je nach Ladegerät und Lademodus ändern.</string>
+  <string name="advanced_help_service" formatted="false">Der Android-Akkudienst zeigt Rohfelder an, die von `dumpsys battery` gemeldet werden. Das sind Framework-Werte, die häufig Stromquelle, Akkustatus, Temperatur, Spannung und weitere Statusinformationen enthalten.</string>
+  <string name="advanced_help_sysfs" formatted="false">Kernel-Dateien von power_supply zeigen rohe einzeilige Werte aus `/sys/class/power_supply`, etwa für Akku, BMS, USB oder kabelloses Laden. Das ist absichtlich eine niedrigstufige Ansicht und kann treiberspezifische Namen enthalten, die vor allem für Debugging nützlich sind.</string>
+  <string name="advanced_help_metadata" formatted="false">Metadaten zeigen höherstufige Akkueigenschaften, die über BatteryManager verfügbar sind, etwa Gesundheitszustand, verbleibende Ladezeit, Fertigungsdetails oder Austauschstatus. Die meisten dieser Felder benötigen privilegierten Zugriff, und viele Geräte stellen nur einen kleinen Teil davon bereit.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Fehlersuche</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Wenn der Reiter leer ist, stellen Sie zuerst sicher, dass erweiterte Statistiken in den Einstellungen aktiviert sind. Auf gerooteten Geräten versucht Battery Monitor zuerst `su`. Auf nicht gerooteten Geräten mit Shizuku muss Shizuku installiert und gestartet sein, und Battery Monitor muss in Shizuku die Berechtigung erhalten. Manche Geräte liefern trotzdem nur wenige Felder. Dann sind die fehlenden Daten über Android oder den Kernel auf diesem Gerät nicht verfügbar.</string>
 </resources>

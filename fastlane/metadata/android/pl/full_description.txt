@@ -7,6 +7,7 @@ Podaje Ci przejrzyste informacje o baterii w mgnieniu oka, wyświetla przydatne 
 - stałe powiadomienie z aktualnym poziomem naładowania baterii, stanem i opcjonalnymi szczegółami
 - na Androidzie 16 i nowszych główne powiadomienie może zostać zastąpione przez Aktualizację na żywo pokazującą aktualny poziom naładowania baterii lub temperaturę
 - szczegółowe informacje o baterii, w tym poziom naładowania, temperatura, napięcie, stan zdrowia i źródło zasilania
+- zaawansowane informacje o baterii dzięki dostępowi do roota albo Shizuku
 - konfigurowalne alarmy dotyczące baterii: o pełnym naładowaniu, niskim poziomie naładowania lub niestandardowych progach naładowania; temperaturze i stanie zdrowia baterii
 - historia zdarzeń związanych z baterią z możliwością filtrowania
 - eksport historii do pliku CSV w celu dalszej analizy

@@ -41,6 +41,7 @@
 
   <string name="tab_current_info" formatted="false">Güncel Bilgi</string>
   <string name="tab_history" formatted="false">Geçmiş</string>
+  <string name="tab_advanced" formatted="false">Gelişmiş</string>
 
   <string name="notification_until_charged" formatted="false">" şarj olana kadar"</string>
   <string name="notification_until_drained" formatted="false">" kaldı"</string>
@@ -332,10 +333,17 @@
   <string name="pref_language_override" formatted="false">Dil Geçersiz Kılma</string>
 
   <string name="pref_language_override_summary" formatted="false">Dil seçin:</string>
+  <string name="pref_cat_advanced_stats" formatted="false">Gelişmiş pil istatistikleri</string>
+  <string name="pref_enable_advanced_stats" formatted="false">Gelişmiş pil istatistiklerini göster</string>
+  <string name="pref_enable_advanced_stats_summary" formatted="false">Root veya Shizuku gerektiren pil istatistikleriyle bir Gelişmiş sekmesi ekler.</string>
+
+  <string name="advanced_action_refresh" formatted="false">Yenile</string>
+  <string name="advanced_status_loading" formatted="false">Gelişmiş pil istatistikleri yükleniyor...</string>
+  <string name="advanced_status_no_access" formatted="false">Gelişmiş pil istatistiklerini göstermek için root veya Shizuku gerekir.</string>
+
   <string name="alarms_overview" formatted="false">Alarmlara Genel Bakış</string>
   <string name="alarms_overview_help" formatted="false">Bu sayfa yeni alarm eklemenizi, mevcut alarmları hızlıca etkinleştirip devre dışı bırakmanızı veya silmenizi sağlar.</string>
   <string name="pref_alarm_enabled" formatted="false">Alarmı Etkinleştir</string>
-
   <string name="pref_alarm_enabled_help" formatted="false">Bir alarmı yeniden oluşturmadan geçici olarak kapatmak istiyorsanız burada veya ana alarm sayfasında açıp kapatabilirsiniz.</string>
   <string name="pref_cat_alarm_conditions" formatted="false">Alarm Koşulları</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Burada hangi koşulların alarm tetikleyeceğini kontrol edebilirsiniz.</string>
@@ -375,4 +383,47 @@
   <string name="chip_switching_interval_10_seconds" formatted="false">10 saniye</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 saniye</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 saniye</string>
+  <string name="advanced_status_waiting_permission" formatted="false">Shizuku izni bekleniyor...</string>
+  <string name="advanced_status_no_stats" formatted="false">Bu cihazda şu anda gelişmiş pil istatistiği mevcut değil.</string>
+  <string name="advanced_section_counters" formatted="false">Sayaçlar</string>
+  <string name="advanced_section_capacity" formatted="false">Kapasite</string>
+
+  <string name="advanced_section_charging" formatted="false">Şarj</string>
+  <string name="advanced_section_service" formatted="false">Android pil hizmeti</string>
+  <string name="advanced_section_sysfs" formatted="false">Çekirdek power_supply dosyaları</string>
+  <string name="advanced_section_metadata" formatted="false">Meta veriler</string>
+  <string name="advanced_field_charge_counter" formatted="false">Tahmini kalan şarj</string>
+
+  <string name="advanced_field_current_now" formatted="false">Anlık akım</string>
+  <string name="advanced_field_current_average" formatted="false">Ortalama akım</string>
+  <string name="advanced_field_energy_counter" formatted="false">Enerji sayacı</string>
+  <string name="advanced_field_cycle_count" formatted="false">Döngü sayısı</string>
+  <string name="advanced_field_reported_capacity" formatted="false">Bildirilen kapasite</string>
+  <string name="advanced_field_state_of_health" formatted="false">Sağlık durumu</string>
+  <string name="advanced_field_full_charge_capacity" formatted="false">Tam şarj kapasitesi</string>
+  <string name="advanced_field_design_capacity" formatted="false">Tasarım kapasitesi</string>
+  <string name="advanced_field_estimated_health" formatted="false">Tahmini sağlık</string>
+  <string name="advanced_field_charge_time_remaining" formatted="false">Kalan şarj süresi</string>
+  <string name="advanced_field_max_charging_current" formatted="false">Maksimum şarj akımı</string>
+  <string name="advanced_field_max_charging_voltage" formatted="false">Maksimum şarj voltajı</string>
+  <string name="advanced_field_charging_policy" formatted="false">Şarj politikası</string>
+  <string name="advanced_field_charging_state" formatted="false">Şarj durumu</string>
+  <string name="advanced_field_capacity_level" formatted="false">Kapasite seviyesi</string>
+  <string name="advanced_field_manufacturing_date" formatted="false">Üretim tarihi</string>
+  <string name="advanced_field_first_use_date" formatted="false">İlk kullanım tarihi</string>
+  <string name="advanced_field_battery_serial_number" formatted="false">Batarya seri numarası</string>
+  <string name="advanced_field_battery_part_status" formatted="false">Batarya parça durumu</string>
+  <string name="advanced_field_battery_part_manufacturer" formatted="false">Batarya parça üreticisi</string>
+  <string name="advanced_field_battery_model_name" formatted="false">Batarya model adı</string>
+  <string name="advanced_field_minimum_design_voltage" formatted="false">Minimum tasarım voltajı</string>
+  <string name="advanced_value_not_available" formatted="false">Kullanılamıyor</string>
+  <string name="advanced_help_overview" formatted="false">Gelişmiş sekmesi, Android sistem hizmetlerinden ve çekirdekteki power_supply dosyalarından toplanan ek pil tanı bilgilerini gösterir. Kullanılabilirlik cihaz, Android sürümü, şarj çipi, fuel gauge çipi ve üreticinin neleri açtığına bağlıdır.</string>
+  <string name="advanced_help_counters" formatted="false">Sayaçlar, şarj sayacı, akım, enerji sayacı ve döngü sayısı gibi canlı veya yakın zamanda örneklenmiş değerleri içerir. Bazı cihazlar bunların yalnızca bir kısmını sunar ve birimler doğrudan donanım sürücüsünden gelebilir.</string>
+  <string name="advanced_help_capacity" formatted="false">Kapasite, tam şarj kapasitesini, tasarım kapasitesini ve tahmini sağlığı gösterir. Tahmini sağlık, tam şarj kapasitesinin tasarım kapasitesine bölünmesiyle hesaplanır; bu nedenle doğruluğu cihazın bildirdiği değerlere bağlıdır.</string>
+  <string name="advanced_help_charging" formatted="false">Şarj bölümü, etkin şarj yolu ile ilgili değerleri gösterir; örneğin maksimum şarj akımı veya gerilimi, şarj politikası, şarj durumu ve kapasite düzeyi. Bu alanlar şarj cihazına ve şarj moduna göre değişebilir.</string>
+  <string name="advanced_help_service" formatted="false">Android pil hizmeti, `dumpsys battery` tarafından bildirilen ham alanları gösterir. Bunlar çoğu zaman şarj kaynağı, pil durumu, sıcaklık, gerilim ve diğer durum bilgilerini içeren framework düzeyindeki değerlerdir.</string>
+  <string name="advanced_help_sysfs" formatted="false">Çekirdek power_supply dosyaları, `/sys/class/power_supply` altından okunan tek satırlık ham değerleri gösterir; örneğin battery, BMS, USB veya kablosuz şarj düğümleri. Bu görünüm bilinçli olarak düşük seviyelidir ve çoğunlukla hata ayıklama için yararlı olan sürücüye özgü adlar içerebilir.</string>
+  <string name="advanced_help_metadata" formatted="false">Meta veriler, BatteryManager üzerinden sunulan daha üst düzey batarya özelliklerini gösterir; örneğin sağlık durumu, kalan şarj süresi, üretim ayrıntıları veya değişim durumu. Bu alanların çoğu ayrıcalıklı erişim gerektirir ve birçok cihaz bunların yalnızca küçük bir bölümünü sunar.</string>
+  <string name="advanced_help_troubleshooting_title" formatted="false">Sorun giderme</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Sekme boşsa önce Ayarlar içinde gelişmiş istatistiklerin etkin olduğundan emin olun. Root erişimi olan cihazlarda Battery Monitor önce `su` kullanmayı dener. Root olmayan ve Shizuku kullanan cihazlarda Shizuku kurulu ve çalışıyor olmalı, ayrıca Battery Monitor için Shizuku içinde izin verilmiş olmalıdır. Bazı cihazlar yine de yalnızca birkaç alan sunar; bu da eksik verilerin o cihazda Android veya çekirdek üzerinden mevcut olmadığı anlamına gelir.</string>
 </resources>
