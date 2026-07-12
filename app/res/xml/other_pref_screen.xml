@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
   <PreferenceCategory app:title="@string/pref_cat_logging">
     <CheckBoxPreference
+       app:singleLineTitle="false"
        app:key="enable_logging"
        app:title="@string/pref_enable_logging"
        app:summary="@string/pref_enable_logging_summary"
@@ -9,6 +10,7 @@
     />
 
     <ListPreference
+       app:singleLineTitle="false"
        app:key="max_log_age"
        app:title="@string/pref_max_log_age"
        android:entries="@array/max_log_age_entries"
@@ -20,6 +22,7 @@
 
   <PreferenceCategory app:title="@string/pref_cat_temperature_unit">
     <CheckBoxPreference
+       app:singleLineTitle="false"
        app:key="convert_to_fahrenheit"
        app:title="@string/pref_convert_to_fahrenheit"
        android:defaultValue="@bool/default_convert_to_fahrenheit"
@@ -28,6 +31,7 @@
 
   <PreferenceCategory app:title="@string/pref_cat_autostart">
     <ListPreference
+       app:singleLineTitle="false"
        app:key="autostart"
        app:title="@string/pref_autostart_at_boot"
        android:entries="@array/boot_pref_entries"
@@ -39,6 +43,7 @@
 
   <PreferenceCategory app:title="@string/pref_cat_predictor">
     <ListPreference
+       app:singleLineTitle="false"
        app:key="prediction_type"
        app:title="@string/pref_prediction_type"
        android:entries="@array/prediction_type_entries"
@@ -49,6 +54,7 @@
 
   <!--PreferenceCategory app:title="@string/pref_cat_language">
     <ListPreference
+       app:singleLineTitle="false"
        app:key="language_override"
        app:title="@string/pref_language_override"
        android:entryValues="@array/lang_values"

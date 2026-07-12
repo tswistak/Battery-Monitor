@@ -1,6 +1,8 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
   <PreferenceCategory android:title="@string/pref_cat_icon_set">
     <ListPreference
+       app:singleLineTitle="false"
        android:key="icon_content"
        android:title="@string/pref_icon_content"
        android:entries="@array/icon_content_entries"
@@ -8,6 +10,7 @@
        android:defaultValue="@string/default_icon_content"
     />
     <CheckBoxPreference
+        app:singleLineTitle="false"
         android:key="show_icon_unit"
         android:title="@string/pref_show_icon_unit"
         android:defaultValue="true"
@@ -19,6 +22,7 @@
       android:title="@string/pref_cat_charging_indicator"
   >
     <CheckBoxPreference
+        app:singleLineTitle="false"
         android:key="indicate_charging"
         android:title="@string/pref_indicate_charging"
         android:summary="@string/pref_indicate_charging_summary"

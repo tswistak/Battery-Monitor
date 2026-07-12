@@ -1,5 +1,7 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
   <CheckBoxPreference
+      app:singleLineTitle="false"
       android:key="enabled"
       android:persistent="false"
       android:title="@string/pref_alarm_enabled"
@@ -7,6 +9,7 @@
 
   <PreferenceCategory android:title="@string/pref_cat_alarm_conditions">
     <ListPreference
+        app:singleLineTitle="false"
         android:key="type"
         android:persistent="false"
         android:entries="@array/alarm_type_entries"
@@ -16,6 +19,7 @@
     />
 
     <ListPreference
+        app:singleLineTitle="false"
         android:key="threshold"
         android:persistent="false"
         android:dialogTitle="@string/pref_alarm_threshold_summary"
@@ -25,6 +29,7 @@
 
   <PreferenceCategory android:title="@string/pref_cat_channel_settings">
     <Preference
+        app:singleLineTitle="false"
         android:key="alarm_chan_disabled"
         android:summary="@string/alarm_chan_disabled"
         android:layout="@layout/alarm_chan_disabled"
@@ -33,6 +38,7 @@
     />
 
     <Preference
+        app:singleLineTitle="false"
         android:key="channel_settings_button"
         android:layout="@layout/enable_notifications_button"
     />

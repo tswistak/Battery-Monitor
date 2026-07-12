@@ -1,6 +1,8 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
   <PreferenceCategory android:title="@string/pref_cat_channel_settings">
     <Preference
+        app:singleLineTitle="false"
         android:key="enable_notifications_button"
         android:layout="@layout/enable_notifications_button"
         android:selectable="false"
@@ -9,6 +11,7 @@
 
   <PreferenceCategory android:title="@string/pref_cat_notification_content">
     <ListPreference
+       app:singleLineTitle="false"
        android:key="top_line"
        android:title="@string/pref_top_line_content"
        android:entries="@array/notification_line_content_entries"
@@ -17,6 +20,7 @@
     />
 
     <ListPreference
+       app:singleLineTitle="false"
        android:key="bottom_line"
        android:title="@string/pref_bottom_line_content"
        android:entries="@array/notification_line_content_entries"
@@ -25,6 +29,7 @@
     />
 
     <ListPreference
+       app:singleLineTitle="false"
        android:key="time_remaining_verbosity"
        android:title="@string/pref_time_remaining_verbosity"
        android:entries="@array/time_remaining_verbosity_entries"
@@ -33,6 +38,7 @@
     />
 
     <CheckBoxPreference
+       app:singleLineTitle="false"
        android:key="status_duration_in_vital_signs"
        android:title="@string/pref_status_duration_in_vital_signs"
        android:summary="@string/pref_status_duration_in_vital_signs_summary"
