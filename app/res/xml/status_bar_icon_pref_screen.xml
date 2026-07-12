@@ -1,28 +1,28 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  <PreferenceCategory android:title="@string/pref_cat_icon_set">
-    <ListPreference
-       android:key="icon_content"
-       android:title="@string/pref_icon_content"
-       android:entries="@array/icon_content_entries"
-       android:entryValues="@array/icon_content_values"
-       android:defaultValue="@string/default_icon_content"
-    />
-    <CheckBoxPreference
-        android:key="show_icon_unit"
-        android:title="@string/pref_show_icon_unit"
-        android:defaultValue="true"
-    />
-  </PreferenceCategory>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/pref_cat_icon_set">
+        <ListPreference
+            android:defaultValue="@string/default_icon_content"
+            android:entries="@array/icon_content_entries"
+            android:entryValues="@array/icon_content_values"
+            android:key="icon_content"
+            android:title="@string/pref_icon_content"
+            app:singleLineTitle="false" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_icon_unit"
+            android:title="@string/pref_show_icon_unit"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
 
-  <PreferenceCategory
-      android:key="category_charging_indicator"
-      android:title="@string/pref_cat_charging_indicator"
-  >
-    <CheckBoxPreference
-        android:key="indicate_charging"
-        android:title="@string/pref_indicate_charging"
-        android:summary="@string/pref_indicate_charging_summary"
-        android:defaultValue="true"
-    />
-  </PreferenceCategory>
+    <PreferenceCategory
+        android:key="category_charging_indicator"
+        android:title="@string/pref_cat_charging_indicator">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="indicate_charging"
+            android:summary="@string/pref_indicate_charging_summary"
+            android:title="@string/pref_indicate_charging"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
 </PreferenceScreen>

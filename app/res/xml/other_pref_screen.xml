@@ -1,59 +1,49 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-  <PreferenceCategory app:title="@string/pref_cat_logging">
-    <CheckBoxPreference
-       app:key="enable_logging"
-       app:title="@string/pref_enable_logging"
-       app:summary="@string/pref_enable_logging_summary"
-       android:defaultValue="true"
-    />
+    <PreferenceCategory app:title="@string/pref_cat_logging">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            app:key="enable_logging"
+            app:singleLineTitle="false"
+            app:summary="@string/pref_enable_logging_summary"
+            app:title="@string/pref_enable_logging" />
 
-    <ListPreference
-       app:key="max_log_age"
-       app:title="@string/pref_max_log_age"
-       android:entries="@array/max_log_age_entries"
-       android:entryValues="@array/max_log_age_values"
-       android:dialogTitle="@string/pref_max_log_age_summary"
-       android:defaultValue="@string/default_max_log_age"
-    />
-  </PreferenceCategory>
+        <ListPreference
+            android:defaultValue="@string/default_max_log_age"
+            android:dialogTitle="@string/pref_max_log_age_summary"
+            android:entries="@array/max_log_age_entries"
+            android:entryValues="@array/max_log_age_values"
+            app:key="max_log_age"
+            app:singleLineTitle="false"
+            app:title="@string/pref_max_log_age" />
+    </PreferenceCategory>
 
-  <PreferenceCategory app:title="@string/pref_cat_temperature_unit">
-    <CheckBoxPreference
-       app:key="convert_to_fahrenheit"
-       app:title="@string/pref_convert_to_fahrenheit"
-       android:defaultValue="@bool/default_convert_to_fahrenheit"
-    />
-  </PreferenceCategory>
+    <PreferenceCategory app:title="@string/pref_cat_temperature_unit">
+        <CheckBoxPreference
+            android:defaultValue="@bool/default_convert_to_fahrenheit"
+            app:key="convert_to_fahrenheit"
+            app:singleLineTitle="false"
+            app:title="@string/pref_convert_to_fahrenheit" />
+    </PreferenceCategory>
 
-  <PreferenceCategory app:title="@string/pref_cat_autostart">
-    <ListPreference
-       app:key="autostart"
-       app:title="@string/pref_autostart_at_boot"
-       android:entries="@array/boot_pref_entries"
-       android:entryValues="@array/boot_pref_values"
-       android:dialogTitle="@string/pref_autostart_at_boot_summary"
-       android:defaultValue="auto"
-    />
-  </PreferenceCategory>
+    <PreferenceCategory app:title="@string/pref_cat_autostart">
+        <ListPreference
+            android:defaultValue="auto"
+            android:dialogTitle="@string/pref_autostart_at_boot_summary"
+            android:entries="@array/boot_pref_entries"
+            android:entryValues="@array/boot_pref_values"
+            app:key="autostart"
+            app:singleLineTitle="false"
+            app:title="@string/pref_autostart_at_boot" />
+    </PreferenceCategory>
 
-  <PreferenceCategory app:title="@string/pref_cat_predictor">
-    <ListPreference
-       app:key="prediction_type"
-       app:title="@string/pref_prediction_type"
-       android:entries="@array/prediction_type_entries"
-       android:entryValues="@array/prediction_type_values"
-       android:defaultValue="@string/default_prediction_type"
-    />
-  </PreferenceCategory>
-
-  <!--PreferenceCategory app:title="@string/pref_cat_language">
-    <ListPreference
-       app:key="language_override"
-       app:title="@string/pref_language_override"
-       android:entryValues="@array/lang_values"
-       android:dialogTitle="@string/pref_language_override_summary"
-       android:defaultValue="default"
-    />
-  </PreferenceCategory-->
+    <PreferenceCategory app:title="@string/pref_cat_predictor">
+        <ListPreference
+            android:defaultValue="@string/default_prediction_type"
+            android:entries="@array/prediction_type_entries"
+            android:entryValues="@array/prediction_type_values"
+            app:key="prediction_type"
+            app:singleLineTitle="false"
+            app:title="@string/pref_prediction_type" />
+    </PreferenceCategory>
 </PreferenceScreen>

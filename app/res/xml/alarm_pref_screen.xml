@@ -1,40 +1,39 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  <CheckBoxPreference
-      android:key="enabled"
-      android:persistent="false"
-      android:title="@string/pref_alarm_enabled"
-  />
-
-  <PreferenceCategory android:title="@string/pref_cat_alarm_conditions">
-    <ListPreference
-        android:key="type"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <CheckBoxPreference
+        android:key="enabled"
         android:persistent="false"
-        android:entries="@array/alarm_type_entries"
-        android:entryValues="@array/alarm_type_values"
-        android:dialogTitle="@string/pref_alarm_type_summary"
-        android:title="@string/pref_alarm_type"
-    />
+        android:title="@string/pref_alarm_enabled"
+        app:singleLineTitle="false" />
 
-    <ListPreference
-        android:key="threshold"
-        android:persistent="false"
-        android:dialogTitle="@string/pref_alarm_threshold_summary"
-        android:title="@string/pref_alarm_threshold"
-    />
-  </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_alarm_conditions">
+        <ListPreference
+            android:dialogTitle="@string/pref_alarm_type_summary"
+            android:entries="@array/alarm_type_entries"
+            android:entryValues="@array/alarm_type_values"
+            android:key="type"
+            android:persistent="false"
+            android:title="@string/pref_alarm_type"
+            app:singleLineTitle="false" />
 
-  <PreferenceCategory android:title="@string/pref_cat_channel_settings">
-    <Preference
-        android:key="alarm_chan_disabled"
-        android:summary="@string/alarm_chan_disabled"
-        android:layout="@layout/alarm_chan_disabled"
-        android:enabled="false"
-        android:visibility="invisible"
-    />
+        <ListPreference
+            android:dialogTitle="@string/pref_alarm_threshold_summary"
+            android:key="threshold"
+            android:persistent="false"
+            android:title="@string/pref_alarm_threshold"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
 
-    <Preference
-        android:key="channel_settings_button"
-        android:layout="@layout/enable_notifications_button"
-    />
-  </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_channel_settings">
+        <Preference
+            android:enabled="false"
+            android:key="alarm_chan_disabled"
+            android:layout="@layout/alarm_chan_disabled"
+            android:summary="@string/alarm_chan_disabled"
+            android:visibility="invisible" />
+
+        <Preference
+            android:key="channel_settings_button"
+            android:layout="@layout/enable_notifications_button" />
+    </PreferenceCategory>
 </PreferenceScreen>
