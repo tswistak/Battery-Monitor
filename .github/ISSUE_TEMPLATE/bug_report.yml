@@ -52,13 +52,6 @@ body:
     id: screenshots_videos
     attributes:
       label: Screenshots / videos
-      description: Optional. If you include screenshots or videos, keep them inside the expandable block below so the report stays compact.
-      value: |
-        <details>
-        <summary>Screenshot 1</summary>
-
-        <!-- Drag and drop your screenshot or a video here. If you have more, please copy-paste this section. --> 
-
-        </details>
+      description: Optional, but it makes easier to understand the problem if we can see it.
     validations:
       required: false
