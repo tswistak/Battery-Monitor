@@ -22,15 +22,17 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
+import android.provider.Settings;
 
 
-import androidx.preference.CheckBoxPreference;
+import androidx.annotation.RequiresApi;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 //import androidx.preference.Preference.OnPreferenceClickListener;
@@ -38,7 +40,8 @@ import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
-import androidx.preference.TwoStatePreference;
+
+import java.util.Locale;
 
 import rikka.shizuku.Shizuku;
 import rikka.shizuku.ShizukuProvider;
@@ -57,6 +60,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     public static final String KEY_ADVANCED_INFO_HELP = "advanced_info_help";
     public static final String KEY_OTHER_SETTINGS = "other_settings";
     public static final String KEY_ENABLE_LOGGING = "enable_logging";
+    public static final String KEY_CHANGE_APP_LANGUAGE_HOLDER = "change_app_language_holder";
+    public static final String KEY_CHANGE_APP_LANGUAGE = "change_app_language";
     public static final String KEY_MAX_LOG_AGE = "max_log_age";
     public static final String KEY_ICON_CONTENT = "icon_content";
     public static final String KEY_CONVERT_F = "convert_to_fahrenheit";
@@ -156,6 +161,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
                                                     KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION,
                                                    KEY_TOP_LINE, KEY_BOTTOM_LINE,
                                                    KEY_ENABLE_LOGGING,
+                                                   KEY_CHANGE_APP_LANGUAGE,
                                                    KEY_MAX_LOG_AGE,
                                                    KEY_TIME_REMAINING_VERBOSITY,
                                                    KEY_STATUS_DURATION_IN_VITAL_SIGNS,
@@ -379,6 +385,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
             setEnablednessOfCurrentHackDeps(false);
 
         updateConvertFSummary();
+        setupLanguage();
 
         Intent biServiceIntent = new Intent(getActivity(), BatteryInfoService.class);
         getActivity().bindService(biServiceIntent, serviceConnection, 0);
@@ -471,6 +478,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         }
 
         mSharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        setupLanguage();
     }
 
     private void maybeRequestShizukuForAdvancedStats() {
@@ -600,6 +608,38 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
         } else {
             pref.setSummary(res.getString(R.string.currently_disabled));
         }
+    }
+
+    private void setupLanguage() {
+        PreferenceCategory category;
+        Preference pref;
+        try {
+            category = mPreferenceScreen.findPreference(KEY_CHANGE_APP_LANGUAGE_HOLDER);
+            pref = mPreferenceScreen.findPreference(KEY_CHANGE_APP_LANGUAGE);
+        } catch (java.lang.ClassCastException e) {
+            return;
+        }
+
+        if (category == null || pref == null) return;
+        pref.setSummary(res.getString(R.string.currently_set_to) + " " + Locale.getDefault().getDisplayLanguage());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            category.setVisible(true);
+            pref.setOnPreferenceClickListener(preference -> this.launchChangeAppLanguageIntent());
+        } else {
+            category.setVisible(false);
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private boolean launchChangeAppLanguageIntent() {
+        try {
+            Intent intent = new Intent(Settings.ACTION_APP_LOCALE_SETTINGS);
+            intent.setData(Uri.fromParts("package", getContext().getPackageName(), null));
+            startActivity(intent);
+            return true;
+        } catch (Exception ignored) {
+        }
+        return false;
     }
 
     public void enableNotifsButtonClick() {
