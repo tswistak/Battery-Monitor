@@ -167,6 +167,9 @@
     <item quantity="other">%dm</item>
   </plurals>
 
+  <string name="unit_days">%dd</string>
+  <string name="unit_hours">%du</string>
+  <string name="unit_minutes">%dm</string>
   <plurals name="n_days">
     <item quantity="one">"%d dag, "</item>
     <item quantity="other">"%d dagen, "</item>

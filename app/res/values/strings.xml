@@ -175,6 +175,9 @@
     <item quantity="other">%d hours</item>
   </plurals>
 
+  <string name="unit_days">%dd</string>
+  <string name="unit_hours">%dh</string>
+  <string name="unit_minutes">%dm</string>
   <string name="since" formatted="false">Since</string>
   <plurals name="for_n_hours">
     <item quantity="one">For %d Hour</item>

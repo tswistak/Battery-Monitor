@@ -163,6 +163,9 @@
     <item quantity="other">%d分</item>
   </plurals>
 
+  <string name="unit_days">%d日</string>
+  <string name="unit_hours">%d時間</string>
+  <string name="unit_minutes">%d分</string>
   <plurals name="n_days">
     <item quantity="one">"%d 日 "</item>
     <item quantity="other">"%d 日 "</item>
