@@ -1,6 +1,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory app:title="@string/pref_cat_language">
+    <PreferenceCategory
+        app:key="change_app_language_holder"
+        app:title="@string/pref_cat_language">
         <Preference
             app:key="change_app_language"
             app:singleLineTitle="false"

@@ -60,6 +60,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     public static final String KEY_ADVANCED_INFO_HELP = "advanced_info_help";
     public static final String KEY_OTHER_SETTINGS = "other_settings";
     public static final String KEY_ENABLE_LOGGING = "enable_logging";
+    public static final String KEY_CHANGE_APP_LANGUAGE_HOLDER = "change_app_language_holder";
     public static final String KEY_CHANGE_APP_LANGUAGE = "change_app_language";
     public static final String KEY_MAX_LOG_AGE = "max_log_age";
     public static final String KEY_ICON_CONTENT = "icon_content";
@@ -610,20 +611,22 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     }
 
     private void setupLanguage() {
+        PreferenceCategory category;
         Preference pref;
         try {
+            category = mPreferenceScreen.findPreference(KEY_CHANGE_APP_LANGUAGE_HOLDER);
             pref = mPreferenceScreen.findPreference(KEY_CHANGE_APP_LANGUAGE);
         } catch (java.lang.ClassCastException e) {
             return;
         }
 
-        if (pref == null) return;
+        if (category == null || pref == null) return;
         pref.setSummary(res.getString(R.string.currently_set_to) + " " + Locale.getDefault().getDisplayLanguage());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pref.setVisible(true);
+            category.setVisible(true);
             pref.setOnPreferenceClickListener(preference -> this.launchChangeAppLanguageIntent());
         } else {
-            pref.setVisible(false);
+            category.setVisible(false);
         }
     }
 
