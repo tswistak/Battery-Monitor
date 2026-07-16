@@ -181,6 +181,9 @@
     <item quantity="other">%dм</item>
   </plurals>
 
+  <string name="unit_days">%dд</string>
+  <string name="unit_hours">%dч</string>
+  <string name="unit_minutes">%dм</string>
   <plurals name="n_days">
     <item quantity="one">"%d день, "</item>
     <item quantity="few">"%d дня, "</item>

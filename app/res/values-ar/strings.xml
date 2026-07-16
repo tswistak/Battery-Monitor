@@ -184,6 +184,9 @@
     <item quantity="other">"%d س "</item>
   </plurals>
 
+  <string name="unit_days">%dي</string>
+  <string name="unit_hours">%dس</string>
+  <string name="unit_minutes">%dد</string>
   <plurals name="n_days">
     <item quantity="zero">"%d يوم, "</item>
     <item quantity="one">"%d يوم, "</item>
