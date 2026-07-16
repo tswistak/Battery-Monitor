@@ -67,7 +67,7 @@ class Str {
     static String voltage;
 
     static String status_boot_completed;
-    
+
     static String[] statuses;
     static String[] log_statuses;
     static String[] log_statuses_old;
@@ -222,13 +222,19 @@ class Str {
             BatteryInfo.RelativeTime predicted = info.prediction.last_rtime;
 
             if (predicted.days > 0)
-                return android.text.Html.fromHtml("<font color=\"#6fc14b\">" + predicted.days + "d</font> " +
-                                                  "<font color=\"#33b5e5\"><small>" + predicted.hours + "h</small></font>");
+                return android.text.Html.fromHtml("<font color=\"#6fc14b\">" +
+                    String.format(res.getString(R.string.unit_days), predicted.days) + "</font> " +
+                    "<font color=\"#33b5e5\"><small>" +
+                    String.format(res.getString(R.string.unit_hours), predicted.hours) + "</small></font>");
             else if (predicted.hours > 0)
-                return android.text.Html.fromHtml("<font color=\"#6fc14b\">" + predicted.hours + "h</font> " +
-                                                  "<font color=\"#33b5e5\"><small>" + predicted.minutes + "m</small></font>");
+                return android.text.Html.fromHtml("<font color=\"#6fc14b\">" +
+                    String.format(res.getString(R.string.unit_hours), predicted.hours) + "</font> " +
+                    "<font color=\"#33b5e5\"><small>" +
+                    String.format(res.getString(R.string.unit_minutes), predicted.minutes) + "</small></font>");
             else
-                return android.text.Html.fromHtml("<font color=\"#33b5e5\"><small>" + predicted.minutes + " mins</small></font>");
+                return android.text.Html.fromHtml("<font color=\"#33b5e5\"><small>" +
+                    String.format(res.getQuantityString(R.plurals.n_minutes_medium, predicted.minutes), predicted.minutes) +
+                    "</small></font>");
         }
     }
 
