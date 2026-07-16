@@ -167,9 +167,6 @@
     <item quantity="other">%dm</item>
   </plurals>
 
-  <string name="unit_days">%dd</string>
-  <string name="unit_hours">%du</string>
-  <string name="unit_minutes">%dm</string>
   <plurals name="n_days">
     <item quantity="one">"%d dag, "</item>
     <item quantity="other">"%d dagen, "</item>
@@ -180,11 +177,16 @@
     <item quantity="other">%d uur</item>
   </plurals>
 
-  <string name="since" formatted="false">sinds</string>
   <plurals name="for_n_hours">
     <item quantity="one">(%d uur)</item>
     <item quantity="other">(%d uur)</item>
   </plurals>
+
+  <string name="unit_days">%dd</string>
+  <string name="unit_hours">%du</string>
+  <string name="unit_minutes">%dm</string>
+  <string name="since" formatted="false">sinds</string>
+
   <string name="currently_using" formatted="false">Je gebruikt nu</string>
   <string name="currently_set_to" formatted="false">"Ingesteld op: "</string>
   <string name="currently_disabled" formatted="false">Momenteel uitgeschakeld</string>
@@ -402,8 +404,7 @@
     Tot slot kun je de voorspelling uitsluitend op je langetermijngemiddelde gebruik baseren.</string>
 
   <string name="pref_cat_language" formatted="false">Taal</string>
-  <string name="pref_language_override" formatted="false">Andere taal gebruiken</string>
-  <string name="pref_language_override_summary" formatted="false">Taal kiezen:</string>
+  <string name="pref_change_app_language" formatted="false">App-taal</string>
   <string name="pref_cat_advanced_stats" formatted="false">Geavanceerde batterijstatistieken</string>
   <string name="pref_enable_advanced_stats" formatted="false">Geavanceerde batterijstatistieken tonen</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Voegt een tabblad Geavanceerd toe met batterijstatistieken waarvoor root of Shizuku nodig is.</string>

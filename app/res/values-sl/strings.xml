@@ -125,37 +125,107 @@
   <string name="alarm_health_failure" formatted="false">"Zdravje baterije je: "</string>
 
   <string name="logs_empty" formatted="false">Poročila so prazna</string>
-  <string name="after_nh_mm_unplugged" formatted="true">Po %1$dh %2$dm odklopljen</string>
+  <plurals name="n_log_items">
+    <item quantity="one">%d vnos dnevnika</item>
+    <item quantity="two">%d vnosa dnevnika</item>
+    <item quantity="few">%d vnosi dnevnika</item>
+    <item quantity="other">%d vnosov dnevnika</item>
+  </plurals>
 
+  <string name="after_nh_mm_unplugged" formatted="true">Po %1$dh %2$dm odklopljen</string>
   <string name="after_nh_mm_plugged_in" formatted="true">Po priključitvi %1$dh %2$dm</string>
   <string name="after_nm_ms_unplugged" formatted="true">Po %1$dm %2$ds odklopljen</string>
   <string name="after_nm_ms_plugged_in" formatted="true">Po %1$dm %2$ds priključeni</string>
+
+  <plurals name="n_hours_long">
+    <item quantity="one">"%d ura, "</item>
+    <item quantity="two">"%d uri, "</item>
+    <item quantity="few">"%d ure, "</item>
+    <item quantity="other">"%d ur, "</item>
+  </plurals>
+
+  <plurals name="n_minutes_long">
+    <item quantity="one">%d minuta</item>
+    <item quantity="two">%d minuti</item>
+    <item quantity="few">%d minute</item>
+    <item quantity="other">%d minut</item>
+  </plurals>
+
+  <plurals name="n_hours_medium">
+    <item quantity="one">"%d h, "</item>
+    <item quantity="two">"%d h, "</item>
+    <item quantity="few">"%d h, "</item>
+    <item quantity="other">"%d h, "</item>
+  </plurals>
+
+  <plurals name="n_minutes_medium">
+    <item quantity="one">%d min</item>
+    <item quantity="two">%d min</item>
+    <item quantity="few">%d min</item>
+    <item quantity="other">%d min</item>
+  </plurals>
+
+  <plurals name="n_hours_short">
+    <item quantity="one">"%d h "</item>
+    <item quantity="two">"%d h "</item>
+    <item quantity="few">"%d h "</item>
+    <item quantity="other">"%d h "</item>
+  </plurals>
+
+  <plurals name="n_minutes_short">
+    <item quantity="one">%d min</item>
+    <item quantity="two">%d min</item>
+    <item quantity="few">%d min</item>
+    <item quantity="other">%d min</item>
+  </plurals>
+
+  <plurals name="n_days">
+    <item quantity="one">"%d dan, "</item>
+    <item quantity="two">"%d dneva, "</item>
+    <item quantity="few">"%d dnevi, "</item>
+    <item quantity="other">"%d dni, "</item>
+  </plurals>
+
+  <plurals name="n_hours">
+    <item quantity="one">%d ura</item>
+    <item quantity="two">%d uri</item>
+    <item quantity="few">%d ure</item>
+    <item quantity="other">%d ur</item>
+  </plurals>
+
+  <plurals name="for_n_hours">
+    <item quantity="one">Za %d uro</item>
+    <item quantity="two">Za %d uri</item>
+    <item quantity="few">Za %d ure</item>
+    <item quantity="other">Za %d ur</item>
+  </plurals>
+
+  <string name="unit_days">%dd</string>
+  <string name="unit_hours">%dh</string>
+  <string name="unit_minutes">%dmin</string>
   <string name="since" formatted="false">od</string>
 
   <string name="currently_using" formatted="false">Trenutno uporabljeno</string>
-
   <string name="currently_set_to" formatted="false">"Trenutno nastavljeno na: "</string>
-
   <string name="currently_disabled" formatted="false">Trenutno onemogočeno</string>
 
   <string name="help_cat_version" formatted="false">Različica</string>
 
   <string name="help_cat_open_source" formatted="false">Odprta koda</string>
-
   <string name="help_open_source" formatted="false">to projekt je odprtokoden. Do izvorne kode lahko dostopate na <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">Zasebnost</string>
-
   <string name="help_privacy" formatted="false">Battery Monitor ne zbira, shranjuje ali prenaša nobenih osebnih podatkov.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Brez garancije</string>
   <string name="help_no_warranty" formatted="false">Ta programska oprema se distribuira v upanju, da bo uporabna, vendar BREZ VSAKEGA JAMSTVA; brez implicitnega jamstva PRIMERNOST ZA PRODAJO ali PRIMERNOST ZA DOLOČEN NAMEN.\n
     \n
     Medtem se po svojih najboljših močeh trudim zagotoviti, da deluje dobro in ne povzročajo težave, ne odgovarjam za morebitno škodo ali neprijetnosti lahko povzroči v kakršnih koli okoliščinah.</string>
+
   <string name="help_cat_acknowledgments" formatted="false">Zahvala</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor je razcep Battery Indicator Pro / BatteryBot Pro avtorja Darshan Computing, LLC. Hvala izvirnim avtorjem in sodelavcem za ustvarjanje in vzdrževanje gorvodnega projekta.</string>
-  <string name="help_cat_contact" formatted="false">Kontakt</string>
 
+  <string name="help_cat_contact" formatted="false">Kontakt</string>
   <string name="help_contact" formatted="false">Če imate vprašanje, težavo ali komentar, vas prosimo <a href="mailto:tomasz@swistak.codes">pošlji mi e-pošto</a>.</string>
 
   <string name="settings_overview" formatted="false">Povzetek</string>
@@ -163,20 +233,16 @@
 
   <string name="notifications_disabled_cat" formatted="false">Obvestila onemogočena</string>
   <string name="app_notifs_disabled_b" formatted="false">Omogoči obvestila aplikacij</string>
-
   <string name="app_notifs_disabled_summary" formatted="false">Onemogočili ste vsa obvestila za to aplikacijo.  Omogočite jim dostop do teh nastavitev.</string>
   <string name="main_notifs_disabled_b" formatted="false">Omogoči glavno obvestilo</string>
-
   <string name="main_notifs_disabled_summary" formatted="false">Onemogočili ste glavno obvestilo za to aplikacijo.  Omogočite ga za dostop do teh nastavitev.</string>
   <string name="app_notifs_alarms_disabled_summary" formatted="false">Onemogočili ste vsa obvestila za to aplikacijo.  Omogočite jim dostop do vaših alarmov.</string>
-
   <string name="alarm_notifs_disabled_b" formatted="false">Omogoči alarme</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Za to aplikacijo ste onemogočili skupino obvestil o alarmih.  Omogočite ga za dostop do svojih alarmov.</string>
-
   <string name="alarm_chan_disabled" formatted="false">Za to vrsto alarma ste onemogočili obvestila.  Omogočite jim uporabo te vrste alarma.</string>
   <string name="alarm_chan_disabled_b" formatted="false">Omogoči to vrsto alarma</string>
-
   <string name="alarm_chan_settings_b" formatted="false">Upravljanje te vrste alarma</string>
+
   <string name="notification_settings" formatted="false">Glavno obvestilo</string>
   <string name="notification_settings_summary" formatted="false">Konfigurirajte glavno obvestilo</string>
   <string name="notification_settings_help" formatted="false">Konfigurirate lahko, katero vsebino želite prikazati v spustnem obvestilu.</string>
@@ -187,18 +253,19 @@
   <string name="status_bar_chip_settings_summary" formatted="false">Konfigurirajte vsebino čipa Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">V sistemu Android 16+ s posodobitvami v živo lahko konfigurirate stanje paličasti čip prikazuje in ali naj prikaže emoji za polnjenje.</string>
   <string name="current_hack_settings" formatted="false">Tok (mA) Hack</string>
-
   <string name="current_hack_settings_summary" formatted="false">Napredne nastavitve za omogočanje mA info</string>
   <string name="current_hack_settings_help" formatted="false">Android aplikacijam ne omogoča dostopa do informacij glede toka baterije. Vendar pa je na voljo kramp ki omogoča številnim napravam, da potencialno dobijo te informacije.\n
     \n
     Ni zagotovljeno, da bo delovalo. Morda sploh ne bo delovalo ali pa se lahko zdi, da deluje, vendar povzroči le nesmiselne vrednosti.\n
     \n
     Nastavitve za vklop vdora, če je to mogoče, in nadzor, kako je rabljeni so na voljo v tem razdelku.</string>
+
   <string name="alarm_settings_subtitle" formatted="false">Nastavitve alarma</string>
   <string name="alarm_settings" formatted="false">Alarmi</string>
   <string name="alarm_settings_help" formatted="false">Battery Monitor lahko nastavite tako, da vas obvesti ko baterija doseže določeno točko (npr., baterija se popolnoma napolni, baterija pade pod 20%).</string>
   <string name="other_settings" formatted="false">Druge nastavitve</string>
   <string name="other_settings_help" formatted="false">Vse druge nastavitve so na tej strani, vključno z beleženjem, zaklepanjem zaslon, temperaturna enota, samodejni zagon itd.</string>
+
   <string name="live_updates_onboarding_title">Vrstica stanja Baterijski čip</string>
   <string name="live_updates_onboarding_message_on">Vaša naprava podpira prikaz odstotka baterije kot čip v vrstici stanja. Ta možnost je privzeto omogočena.\n
     \n
@@ -212,12 +279,14 @@
     Opomba: dodelitev tega dovoljenja lahko občasno povzroči zaprtje aplikacije. Če se to zgodi, jo preprosto znova odprite.</string>
   <string name="live_updates_onboarding_positive_on">Razumem</string>
   <string name="live_updates_onboarding_positive_off">Pojdite v Nastavitve</string>
-
   <string name="live_updates_onboarding_negative_off">Odpusti</string>
+
   <string name="notifications_onboarding_message">Battery Monitor potrebuje vaše dovoljenje za prikaz ravni baterije v vrstici stanja in obveščanje o alarmih.\n
     \n
     Opomba: dodelitev tega dovoljenja lahko občasno povzroči zaprtje aplikacije. Če se to zgodi, jo preprosto znova odprite.</string>
+
   <string name="add_alarm" formatted="false">Dodaj alarm</string>
+
   <string name="pref_cat_channel_settings" formatted="false">Nastavitve kanala za obvestila</string>
   <string name="pref_manage_main_channel" formatted="false">Upravljanje glavnega kanala</string>
 
@@ -227,14 +296,10 @@
   <string name="pref_live_update_display_summary" formatted="false">Prikazi v vrstici stanja:</string>
   <string name="pref_live_update_display_help" formatted="false">Izberite, kdaj naj se v vrstici stanja prikaze cip sprotne posodobitve Android 16+.</string>
   <string name="pref_live_update_display_charging" formatted="false">Samo med polnjenjem</string>
-
   <string name="pref_live_update_keep_main_notification" formatted="false">Obdrzi glavno obvestilo s sprotno posodobitvijo</string>
-
   <string name="pref_live_update_keep_main_notification_summary" formatted="false">Ali naj se prikaze celotno glavno obvestilo, ko je sprotna posodobitev aktivna?</string>
-
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Ce je vklopljeno, navadno glavno obvestilo ostane vidno poleg cipa v vrstici stanja.</string>
   <string name="pref_chip_content" formatted="false">Vsebina čipa</string>
-
   <string name="pref_chip_switching_interval" formatted="false">Preklopni interval</string>
   <string name="pref_chip_content_help" formatted="false">Izberite, katero vrednost želite prikazati v čipu za promovirana obvestila Android 16+.</string>
   <string name="pref_chip_indicate_charging" formatted="false">Prikaži polnilni emoji</string>
@@ -247,50 +312,53 @@
   <string name="time_remaining" formatted="false">Preostali čas</string>
   <string name="time_since_status_change" formatted="false">Čas od spremembe stanja</string>
   <string name="vital_signs" formatted="false">Vitalni znaki</string>
+
   <string name="pref_time_remaining_verbosity" formatted="false">Preostali čas Dobesednost</string>
   <string name="pref_time_remaining_verbosity_help" formatted="false">Naprave so v vseh oblikah in velikostih, zato večina prevodov potrebuje uporabite okrajšave, da zagotovite, da ocena preostalega časa ustreza udobno v območju za obvestila. Če še vedno ne ustreza, lahko se odločite za zgoščeno obliko. Če imate dovolj prostora, morda vam bo ljubša podrobna nastavitev.</string>
   <string name="condensed" formatted="false">Zgoščeno</string>
   <string name="normal" formatted="false">Normal</string>
   <string name="verbose" formatted="false">Dobesedno</string>
+
   <string name="pref_status_duration_in_vital_signs" formatted="false">Trajanje stanja v vitalnih znakih</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Vključiti čas od spremembe statusa v vitalne znake?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Če je nastavljeno, bo vrstica vitalnih znakov vključevala tudi število ur odkar je bila naprava odklopljena, priključena ali popolnoma napolnjena.</string>
-  <string name="custom" formatted="false">Po meri...</string>
-  <string name="pref_cat_icon_set" formatted="false">Ikona obvestila</string>
 
+  <string name="custom" formatted="false">Po meri...</string>
+
+  <string name="pref_cat_icon_set" formatted="false">Ikona obvestila</string>
   <string name="pref_icon_content" formatted="false">Vsebina ikone</string>
   <string name="pref_icon_content_help" formatted="false">Izberite, ali ikona vrstice stanja prikazuje odstotek baterije ali temperatura baterije. Temperatura sledi vaši izbrani enoti.</string>
   <string name="pref_show_icon_unit" formatted="false">Prikaži simbol enote</string>
   <string name="pref_show_icon_unit_help" formatted="false">Če je omogočeno, ikona prikazuje znak za odstotek pri odstotku baterije in simbol stopinje pri temperaturi baterije. Izklopite to možnost, če želite prikazati samo številko.</string>
+
   <string name="pref_cat_current_hack_main" formatted="false">Glavni nadzor</string>
-
   <string name="pref_cat_current_hack_unsupported" formatted="false">Tok (mA) Hack ni podprt</string>
+
   <string name="pref_current_hack_unsupported" formatted="false">Oprostite, trenutni (mA) hack ni podprt v tej napravi.</string>
+
   <string name="pref_enable_current_hack" formatted="false">Omogoči kramp</string>
-
   <string name="pref_enable_current_hack_summary" formatted="false">Poskus omogočiti trenutni (mA) vdor?</string>
-
   <string name="pref_enable_current_hack_help" formatted="false">Ko je ta nastavitev omogočena, se druge možnosti glede hack bo uporaben.</string>
+
   <string name="pref_current_hack_prefer_fs" formatted="false">Raje staro metodo hekanja</string>
   <string name="pref_current_hack_prefer_fs_summary" formatted="false">Imate raje starejšo metodo vdora, ki temelji na datotečnem sistemu?</string>
   <string name="pref_current_hack_prefer_fs_help" formatted="false">Začenši z Lollipopom (Android 5.0), Android zdaj ponuja a nekoliko manj hekerski način za dostop do trenutnih (mA) informacij, neposredno iz sistema BatteryManager. Vendar še vedno ni zagotovljeno, da sploh deluje ali da deluje dobro. Do Android Nougat (Android 7.0), zdi se, da stara (na datotečnem sistemu) metoda vdora deluje bolje na večini naprav, zato ostaja privzeto na napravah deluje manj kot Android 7.0.\n
     \n
     Ta nastavitev je samo namig heku o tem, katero metodo naj uporabi raje; lahko ga poskusite spremeniti, če kramp ne deluje dobro vašo napravo.</string>
-  <string name="pref_current_hack_multiplier" formatted="false">Množitelj</string>
 
+  <string name="pref_current_hack_multiplier" formatted="false">Množitelj</string>
   <string name="pref_current_hack_multiplier_help" formatted="false">Nekatere naprave poročajo o miliamperih namesto mikroamperih API zahteva. Iste naprave zamenjajo predznak sporočene vrednosti. Nekateri uporabniki imajo raje nasprotni predznak pravilno prijavljenih vrednosti. Da bi se lažje prilagodili takšnim situacijam, lahko pomnožite rezultat klica API-ja z vrednostjo tukaj.\n
     \n
     Če vaša naprava na primer vedno prikazuje 0 mA, lahko poskusite z množiteljem 1000. Če klic API vrne 450 mikroamperov, bo ta množitelj poskrbel, da bo aplikacija prikazala vrednost kot 450 mA namesto 0 mA. Če klic API vrne 0 mikroamperov seveda množitelj ne bo spremenil končne vrednosti prikazana vrednost 0 mA.</string>
+
   <string name="pref_cat_current_hack_notification" formatted="false">Obvestilo</string>
-
   <string name="pref_display_current_in_vital_stats" formatted="false">Prikaz v vitalni statistiki</string>
-
   <string name="pref_display_current_in_vital_stats_summary" formatted="false">Prikaz toka (mA) v glavni statistiki obvestila?</string>
   <string name="pref_display_current_in_vital_stats_help" formatted="false">Ko je omogočeno, bo izveden poskus vdora in prikazano bo rezultat v glavni vrstici vitalnih statistik obvestil. Upoštevajte, da ste mora imeti glavno obvestilo konfigurirano za prikaz vitalne statistike da bi videl to. Ta vrednost se bo osvežila samo, ko je sistem pošlje informacije o novi bateriji.\n
     \n
     ONa večini naprav negativna vrednost označuje neto odtok iz baterija, pozitivna vrednost pa pomeni, da je baterija v izrednem stanju napolnjena. Vse naprave pa ne ustvarjajo vrednosti na ta način.</string>
-  <string name="pref_cat_current_hack_main_window" formatted="false">Glavno okno</string>
 
+  <string name="pref_cat_current_hack_main_window" formatted="false">Glavno okno</string>
   <string name="pref_display_current_in_main_window" formatted="false">Prikaz v glavnem oknu</string>
   <string name="pref_display_current_in_main_window_summary" formatted="false">Prikaži tok (mA) v glavnem oknu?</string>
   <string name="pref_display_current_in_main_window_help" formatted="false">Ko je omogočeno, bo izveden poskus vdora in prikazano bo rezultat v glavnem oknu. Ta vrednost se bo kadar koli osvežila sistem pošlje nove informacije o bateriji, vendar jih lahko osvežite vrednost kadar koli tako, da preprosto tapnete prikazano vrednost. (Opomba da nekatere naprave redko ali nikoli ne posodabljajo osnovnih podatkov, torej vrednost se ob dotiku morda ne bo spremenila.)\n
@@ -299,31 +367,30 @@
 
   <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Raje povprečje vitalnih statistik</string>
   <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Poskusite uporabiti current_avg v glavni statistiki obvestil?</string>
-
   <string name="pref_prefer_current_avg_in_main_window" formatted="false">Prednostno povprečje v glavnem oknu</string>
   <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Poskusite uporabiti current_avg v glavnem oknu?</string>
-  <string name="pref_prefer_current_avg_help" formatted="false">Nekateri sistemi imajo na voljo dodatne vdore, ki dajejo nedavne povprečje trenutnega in ne trenutni odčitek tega. Kaj to pomeni, se razlikuje od naprave do naprave in je na voljo samo na nekaterih napravah. To lahko da stabilnejšo vrednost (če bo vse šlo dobro), lahko vrne isto vrednost ali pa vrne neuporabno vrednost (v tem primeru morate to možnost izklopiti).</string>
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Samodejno osveži mA v glavnem oknu</string>
 
+  <string name="pref_prefer_current_avg_help" formatted="false">Nekateri sistemi imajo na voljo dodatne vdore, ki dajejo nedavne povprečje trenutnega in ne trenutni odčitek tega. Kaj to pomeni, se razlikuje od naprave do naprave in je na voljo samo na nekaterih napravah. To lahko da stabilnejšo vrednost (če bo vse šlo dobro), lahko vrne isto vrednost ali pa vrne neuporabno vrednost (v tem primeru morate to možnost izklopiti).</string>
+
+  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Samodejno osveži mA v glavnem oknu</string>
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Samodejno osveži mA vsaki dve sekundi?</string>
   <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Če imate kramp nastavljen za prikaz mA v glavnem oknu, lahko osvežite vrednost tako, da se je preprosto dotaknete. Če želite videti pogoste posodobitve, ne da bi se morali dotakniti, lahko omogočite to možnost za samodejno osvežitev vrednosti vsaki dve sekundi, ko je okno vidno.\n
     \n
     Upoštevajte, da nekatere naprave le redko ali nikoli ne posodobijo podlage podatkov, zato se morda zdi, da se vrednost ne spremeni, čeprav se aplikacija osveževanje prikazane vrednosti, da se ujema s pridobljenimi podatki sistem.</string>
+
   <string name="pref_cat_charging_indicator" formatted="false">Indikator polnjenja</string>
   <string name="pref_indicate_charging" formatted="false">Označite Polnjenje</string>
-
   <string name="pref_indicate_charging_summary" formatted="false">Ali želite spremeniti ikono za prikaz med polnjenjem?</string>
   <string name="pref_indicate_charging_help" formatted="false">Ikona polnjenja lahko pod številko prikaže strelo. Izklopite to nastavitev, če želite isto ikono med polnjenjem in praznjenjem.</string>
+
   <string name="pref_cat_logging" formatted="false">Beleženje</string>
   <string name="pref_enable_logging" formatted="false">Omogoči beleženje</string>
-
   <string name="pref_enable_logging_summary" formatted="false">Beležim spremembo stanj baterije?</string>
-
   <string name="pref_enable_logging_help" formatted="false">Če je omogočeno, bo Battery Monitor beležil spremembe stanja baterije.</string>
   <string name="pref_max_log_age" formatted="false">Največja starost poročila</string>
   <string name="pref_max_log_age_summary" formatted="false">Izbriši poročila starejša od:</string>
-
   <string name="pref_max_log_age_help" formatted="false">Če je beleženje omogočeno, se ob vsaki priključitvi naprave izbrišejo zapisi, starejši od te vrednosti. Izberite Nikoli ne izbriši, da jih ohranite, dokler jih ročno ne izbrišete.</string>
+
   <string name="pref_cat_temperature_unit" formatted="false">Enota za temperaturo</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Pretvori v Fahrenheit</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android sporoča temperaturo baterije v stopinjah Celzija. če raje vidite temperaturo baterije v stopinjah Fahrenheita, označite to možnost in aplikacija se bo pretvorila namesto vas.</string>
@@ -336,14 +403,14 @@
     Možnost \"Če teče ob zaustavitvi\" deluje glede na ali ste nazadnje ročno zagnali ali ustavili Battery Monitor. Torej, če ubijete Battery Monitor prek kakšnega drugega pomeni, kot ubijalec nalog, potem Battery Monitor ne ve ustavili ste ga in še vedno se bo začel ob zagonu, če ga imate nastavite na to.\n
     \n
     OPOMBA: Android bo ob zagonu vedno zagnal Battery Monitor, če imate Namizni pripomočki Battery Monitor. V tem primeru te nastavitve niso pomembne.</string>
+
   <string name="predictor_sensitive" formatted="false">Občutljivo</string>
   <string name="predictor_conservative" formatted="false">Konservativen</string>
   <string name="predictor_since_status_change" formatted="false">Od spremembe statusa</string>
-
   <string name="predictor_long_term_ave" formatted="false">Dolgoročno povprečje</string>
+
   <string name="pref_cat_predictor" formatted="false">Ocene preostalega časa</string>
   <string name="pref_prediction_type" formatted="false">Vrsta ocene</string>
-
   <string name="pref_prediction_type_help" formatted="false">Tukaj lahko izberete, kako bo Battery Monitor predvidel vašo preostalo življenjska doba baterije/čas do popolne napolnjenosti.\n
     \n
     Algoritem \"Občutljivo\" strogo temelji na zadnjih petih minut uporabe. Če je vaša glavna skrb »Kako dolgo bo moj baterija zdrži, če nadaljujem s tem, kar počnem?\", potem je to algoritem za vas.\n
@@ -353,19 +420,18 @@
     Izberite \"Od spremembe statusa\", če želite predvidevanje temeljiti strogo na vaši trenutni seji.\n
     \n
     Nazadnje lahko napoved temelji na vašem dolgoročna povprečna uporaba.</string>
-  <string name="pref_cat_language" formatted="false">Jezik</string>
-  <string name="pref_language_override" formatted="false">Preglasitev jezika</string>
-  <string name="pref_language_override_summary" formatted="false">Izberi jezik:</string>
 
+  <string name="pref_cat_language" formatted="false">Jezik</string>
+  <string name="pref_change_app_language" formatted="false">Jezik aplikacije</string>
   <string name="pref_cat_advanced_stats" formatted="false">Napredna statistika baterije</string>
   <string name="pref_enable_advanced_stats" formatted="false">Prikaži napredno statistiko baterije</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Doda zavihek Napredno s statistiko baterije, ki zahteva root ali Shizuku.</string>
-  <string name="advanced_action_refresh" formatted="false">Osveži</string>
 
+  <string name="advanced_action_refresh" formatted="false">Osveži</string>
   <string name="advanced_status_loading" formatted="false">Nalaganje napredne statistike baterije...</string>
   <string name="advanced_status_no_access" formatted="false">Za prikaz napredne statistike baterije je potreben root ali Shizuku.</string>
-  <string name="alarms_overview" formatted="false">Pregled alarmov</string>
 
+  <string name="alarms_overview" formatted="false">Pregled alarmov</string>
   <string name="alarms_overview_help" formatted="false">Ta stran vam omogoča dodajanje novih alarmov, hitro omogočanje ali onemogočanje obstoječe alarme ali izbrišite alarme.\n
     \n
     Če želite dodati nov alarm, pritisnite \"Dodaj alarm\" — s tem boste ustvarili novega alarm in vas popelje na stran z nastavitvami alarma, kjer lahko nadzirajte nastavitve za nov alarm. Oglejte si pomoč na tej strani za več podrobnosti.\n
@@ -375,12 +441,13 @@
     • Če želite urediti obstoječi alarm, ga preprosto pritisnite.\n
     • Če želite izbrisati alarm, ga dolgo pritisnite in izberite \"Izbriši Alarm\". (Alarm lahko tudi izbrišete iz posameznega alarma stran z nastavitvami, tako da pritisnete MENU in nato \"Izbriši alarm\".)\n
     • Če želite preprosto preklopiti, ali je alarm omogočen, pritisnite preklopnik preklopite na stran besedila alarma. (Lahko tudi omogočite oz onemogočite alarm na strani z nastavitvami posameznega alarma.)</string>
+
   <string name="pref_alarm_enabled" formatted="false">Omogoči alarm</string>
   <string name="pref_alarm_enabled_help" formatted="false">Če želite začasno onemogočite alarm, ne da bi ga morali znova ustvariti, ko želite spet ga lahko izklopite in vklopite tukaj ali na glavnih alarmih strani.</string>
+
   <string name="pref_cat_alarm_conditions" formatted="false">Stanje alarmov</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Tukaj lahko nadzirajte, kateri pogoji sprožijo alarm.</string>
   <string name="pref_alarm_type" formatted="false">Vrsta alarma</string>
-
   <string name="pref_alarm_type_summary" formatted="false">Sproži alarm ko baterija:</string>
   <string name="pref_alarm_type_help" formatted="false">Trenutno obstaja pet vrst alarma, med katerimi lahko izbirate.\n
     \n
@@ -390,17 +457,16 @@
     \n
     Alarm \"Health Fails\" vas bo obvestil, če je vaša baterija zdrava postane nekaj drugega kot \"Neznano\" ali \"Dobro zdravje\", npr poroča Android.</string>
   <string name="pref_alarm_threshold" formatted="false">Meja</string>
-
   <string name="alarm_pref_not_used" formatted="false">Se ne uporablja za to vrsto alarma.</string>
   <string name="pref_alarm_threshold_summary" formatted="false">Meja alarma:</string>
-
   <string name="pref_alarm_threshold_help" formatted="false">Za alarme za polnjenje in temperaturo morate nastaviti temperaturo ali raven napolnjenosti, ki bo sprožila alarm.</string>
   <string name="alarm_custom_temp_message" formatted="true">Vnesite temperaturo v stopinjah %s</string>
-
   <string name="alarm_custom_charge_message" formatted="false">Vnesite odstotek obremenitve (0-100)</string>
+
   <string name="boot_pref_always" formatted="false">Vedno</string>
   <string name="boot_pref_never" formatted="false">Nikoli</string>
   <string name="boot_pref_if_running" formatted="false">Če je zagnano ob izklopu</string>
+
   <string name="age_1_day" formatted="false">1 dan</string>
   <string name="age_2_days" formatted="false">2 dnei</string>
   <string name="age_4_days" formatted="false">4 dni</string>
@@ -408,29 +474,27 @@
   <string name="age_2_weeks" formatted="false">2 tedna</string>
   <string name="age_3_weeks" formatted="false">3 tedne</string>
   <string name="age_4_weeks" formatted="false">4 tedne</string>
-
   <string name="age_never_delete" formatted="false">Nikoli ne izbriši</string>
   <string name="pref_content_percent" formatted="false">Odstotek baterije</string>
   <string name="pref_content_temperature" formatted="false">Temperatura baterije</string>
-
   <string name="pref_content_switching" formatted="false">Preklapljajte med obema</string>
+
   <string name="chip_switching_interval_2_seconds" formatted="false">2 sekundi</string>
   <string name="chip_switching_interval_5_seconds" formatted="false">5 sekund</string>
   <string name="chip_switching_interval_10_seconds" formatted="false">10 sekund</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 sekund</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 sekund</string>
+
   <string name="advanced_status_waiting_permission" formatted="false">Čakanje na dovoljenje Shizuku...</string>
   <string name="advanced_status_no_stats" formatted="false">Na tej napravi trenutno ni na voljo nobene napredne statistike baterije.</string>
   <string name="advanced_section_counters" formatted="false">Števci</string>
   <string name="advanced_section_capacity" formatted="false">Zmogljivost</string>
   <string name="advanced_section_charging" formatted="false">Polnjenje</string>
-
   <string name="advanced_section_service" formatted="false">Storitev baterije Android</string>
   <string name="advanced_section_sysfs" formatted="false">Datoteke power_supply jedra</string>
   <string name="advanced_section_metadata" formatted="false">Metapodatki</string>
   <string name="advanced_field_charge_counter" formatted="false">Ocenjen preostali naboj</string>
   <string name="advanced_field_current_now" formatted="false">Trenutni tok</string>
-
   <string name="advanced_field_current_average" formatted="false">Povprečni tok</string>
   <string name="advanced_field_energy_counter" formatted="false">Števec energije</string>
   <string name="advanced_field_cycle_count" formatted="false">Število ciklov</string>

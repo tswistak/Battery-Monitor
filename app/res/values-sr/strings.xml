@@ -186,12 +186,17 @@
     <item quantity="other">%d sati</item>
   </plurals>
 
-  <string name="since" formatted="false">Od</string>
   <plurals name="for_n_hours">
     <item quantity="one">Za %d sat</item>
     <item quantity="few">Za %d sata</item>
     <item quantity="other">Za %d sati</item>
   </plurals>
+
+  <string name="unit_days">%dd</string>
+  <string name="unit_hours">%dh</string>
+  <string name="unit_minutes">%dmin</string>
+  <string name="since" formatted="false">Od</string>
+
   <string name="currently_using" formatted="false">Trenutno koristi</string>
   <string name="currently_set_to" formatted="false">"Trenutno podešeno na : "</string>
   <string name="currently_disabled" formatted="false">Trenutno deaktivirano</string>
@@ -411,8 +416,7 @@
     Na kraju, procena može biti zasnovana i samo na vašem dugoročnom proseku korišćenja.</string>
 
   <string name="pref_cat_language" formatted="false">Jezik</string>
-  <string name="pref_language_override" formatted="false">Preinači jezik</string>
-  <string name="pref_language_override_summary" formatted="false">Odaberi jezik:</string>
+  <string name="pref_change_app_language" formatted="false">Jezik aplikacije</string>
   <string name="pref_cat_advanced_stats" formatted="false">Napredna statistika baterije</string>
   <string name="pref_enable_advanced_stats" formatted="false">Prikaži naprednu statistiku baterije</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Dodaje karticu Napredno sa statistikom baterije koja zahteva root ili Shizuku.</string>

@@ -184,9 +184,15 @@
     <item quantity="other">"%d س "</item>
   </plurals>
 
-  <string name="unit_days">%dي</string>
-  <string name="unit_hours">%dس</string>
-  <string name="unit_minutes">%dد</string>
+  <plurals name="n_minutes_short">
+    <item quantity="zero">%d د</item>
+    <item quantity="one">%d د</item>
+    <item quantity="two">%d د</item>
+    <item quantity="few">%d د</item>
+    <item quantity="many">%d د</item>
+    <item quantity="other">%d د</item>
+  </plurals>
+
   <plurals name="n_days">
     <item quantity="zero">"%d يوم, "</item>
     <item quantity="one">"%d يوم, "</item>
@@ -205,8 +211,6 @@
     <item quantity="other">%d ساعة</item>
   </plurals>
 
-  <string name="since" formatted="false">منذ</string>
-
   <plurals name="for_n_hours">
     <item quantity="zero">لمدة %d ساعة</item>
     <item quantity="one">لمدة %d ساعة</item>
@@ -215,33 +219,39 @@
     <item quantity="many">لمدة %d ساعة</item>
     <item quantity="other">لمدة %d ساعة</item>
   </plurals>
+
+  <string name="unit_days">%dي</string>
+  <string name="unit_hours">%dس</string>
+  <string name="unit_minutes">%dد</string>
+  <string name="since" formatted="false">منذ</string>
+
   <string name="currently_using" formatted="false">تستخدم حاليا</string>
   <string name="currently_set_to" formatted="false">"حاليا ضبط الى: "</string>
   <string name="currently_disabled" formatted="false">معطل حاليا</string>
+
   <string name="help_cat_version" formatted="false">الاصدار</string>
 
   <string name="help_cat_open_source" formatted="false">مفتوح المصدر</string>
-
   <string name="help_open_source" formatted="false">هذا المشروع مفتوح المصدر. يمكنك الوصول إلى الكود المصدري على <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+
   <string name="help_cat_privacy" formatted="false">الخصوصية</string>
-
   <string name="help_privacy" formatted="false">لا يقوم Battery Monitor بجمع أو تخزين أو نقل أي معلومات شخصية.</string>
-  <string name="help_cat_no_warranty" formatted="false">لا ضمان</string>
 
+  <string name="help_cat_no_warranty" formatted="false">لا ضمان</string>
   <string name="help_no_warranty" formatted="false">يتم نشر هذا التطبيق على امل ان يكون مفيدا وعملي لكن من دون اي ضمان حتى دون صلاحية التسويق وللاستخدام لغرض معين\n
     \n
     بينما أنا أبذل قصارى جهدي للتأكد من أنه يعمل بشكل جيد ولا يسبب المشاكل، وأنا لست مسؤولا عن أي ضرر أو إزعاج قد يسببه تحت أي ظرف من الظروف</string>
+
   <string name="help_cat_acknowledgments" formatted="false">شكر وتقدير</string>
-
   <string name="help_acknowledgments" formatted="false">مراقب البطارية عبارة عن شوكة لـ Battery Indicator Pro / BatteryBot Pro بواسطة دارشان للحوسبة، ذ.م.م. شكرا للمؤلفين والمساهمين الأصليين لإنشاء وصيانة المشروع المنبع.</string>
+
   <string name="help_cat_contact" formatted="false">للتواصل</string>
-
   <string name="help_contact" formatted="false">إذا كان لديك سؤال، مشكلة، أو تعليق، من فضلك <a href="mailto:tomasz@swistak.codes">أرسل لي بريدا إلكترونيا</a>.</string>
+
   <string name="settings_overview" formatted="false">نظرة عامة</string>
-
   <string name="settings_overview_help" formatted="false">الاعدادات منفصلة كما موضح ادناه واذا اردت ان تدخل لاعدادات الصفحة ببساطة اضغط على زر الخيارات الموجودة في هاتفك للحصل على مساعدة اما على الاجهزة اللوحية فأن زر الخيارات غير ضروري</string>
-  <string name="notifications_disabled_cat" formatted="false">الإشعارات معطلة</string>
 
+  <string name="notifications_disabled_cat" formatted="false">الإشعارات معطلة</string>
   <string name="app_notifs_disabled_b" formatted="false">تمكين إشعارات التطبيق</string>
   <string name="app_notifs_disabled_summary" formatted="false">لقد عطلت جميع إشعارات هذا التطبيق. يرجى تمكينها للوصول إلى هذه الإعدادات.</string>
   <string name="main_notifs_disabled_b" formatted="false">تمكين الإشعار الرئيسي</string>
@@ -252,8 +262,8 @@
   <string name="alarm_chan_disabled" formatted="false">لقد عطلت إشعارات هذا النوع من الإنذارات. يرجى تمكينها لاستخدام هذا النوع.</string>
   <string name="alarm_chan_disabled_b" formatted="false">تمكين هذا النوع من الإنذارات</string>
   <string name="alarm_chan_settings_b" formatted="false">إدارة هذا النوع من الإنذارات</string>
-  <string name="notification_settings" formatted="false">الاشعارات الرئيسية</string>
 
+  <string name="notification_settings" formatted="false">الاشعارات الرئيسية</string>
   <string name="notification_settings_summary" formatted="false">اعدادات الاشعارات الرئيسية</string>
   <string name="notification_settings_help" formatted="false">يمكنك تكوين المحتوى الذي تود رؤيته في قائمة الاشعارات والسيطرة على مظهره</string>
   <string name="status_bar_icon_settings" formatted="false">ايقونة شريط الحالة</string>
@@ -269,14 +279,14 @@
     لا يوجد ضمان بأن هذا سيعمل. قد لا يعمل إطلاقًا أو قد يبدو أنه يعمل لكنه يعطي قيماً غير منطقية.\n
     \n
     إعدادات تشغيل هذه الحيلة والتحكم بطريقة استخدامها متاحة في هذا القسم إذا كان ذلك ممكنًا.</string>
-  <string name="alarm_settings_subtitle" formatted="false">اعدادات المنبه</string>
 
+  <string name="alarm_settings_subtitle" formatted="false">اعدادات المنبه</string>
   <string name="alarm_settings" formatted="false">المنبهات</string>
   <string name="alarm_settings_help" formatted="false">يمكن للمؤشر بإعلامك عند مستوى البطارية تصل إلى نقطة معينة (على سبيل المثال، يصبح البطارية مشحونة بالكامل، وانخفاض مستوى البطارية أقل من 20٪)</string>
   <string name="other_settings" formatted="false">اعدادات اخرى</string>
   <string name="other_settings_help" formatted="false">جميع الاعدادات في هذه الصفحة السجلات والقفل ودرجة الحرارة والتشغيل التلقائيواعدادات اخرى</string>
-  <string name="live_updates_onboarding_title">شريحة بطارية شريط الحالة</string>
 
+  <string name="live_updates_onboarding_title">شريحة بطارية شريط الحالة</string>
   <string name="live_updates_onboarding_message_on">جهازك يدعم عرض نسبة البطارية كشريحة في شريط الحالة. هذا الخيار مفعّل افتراضيًا.\n
     \n
     إذا كنت تفضّل أيقونة إشعار تقليدية، يمكنك إيقاف «Live Updates» من إعدادات نظام Android لهذا التطبيق.\n
@@ -290,6 +300,7 @@
   <string name="live_updates_onboarding_positive_on">حسنًا</string>
   <string name="live_updates_onboarding_positive_off">الانتقال إلى الإعدادات</string>
   <string name="live_updates_onboarding_negative_off">تجاهل</string>
+
   <string name="notifications_onboarding_message">يحتاج Battery Monitor إلى إذنك لعرض مستوى البطارية في شريط الحالة وإشعارك بالتنبيهات.\n
     \n
     ملاحظة: قد يؤدي منح هذا الإذن أحيانًا إلى إغلاق التطبيق. إذا حدث ذلك، يرجى إعادة فتحه ببساطة.</string>
@@ -297,10 +308,9 @@
   <string name="add_alarm" formatted="false">اضافة تنبيه</string>
 
   <string name="pref_cat_channel_settings" formatted="false">إعدادات قنوات الإشعارات</string>
-
   <string name="pref_manage_main_channel" formatted="false">إدارة القناة الرئيسية</string>
-  <string name="pref_cat_notification_content" formatted="false">المحتوى</string>
 
+  <string name="pref_cat_notification_content" formatted="false">المحتوى</string>
   <string name="pref_cat_status_bar_chip" formatted="false">شريحة شريط الحالة (Android 16+)</string>
   <string name="pref_live_update_display" formatted="false">عرض التحديث المباشر</string>
   <string name="pref_live_update_display_summary" formatted="false">إظهار في شريط الحالة:</string>
@@ -322,104 +332,104 @@
   <string name="time_remaining" formatted="false">الوقت المتبقي</string>
   <string name="time_since_status_change" formatted="false">منذ وقت تغيير الحالة</string>
   <string name="vital_signs" formatted="false">علامات حيوية</string>
-  <string name="pref_time_remaining_verbosity" formatted="false">الوقت المتبقي الاسهاب</string>
 
+  <string name="pref_time_remaining_verbosity" formatted="false">الوقت المتبقي الاسهاب</string>
   <string name="pref_time_remaining_verbosity_help" formatted="false">الأجهزة تأتي في جميع الأشكال والأحجام، لذلك تحتاج معظم الترجمات لاستخدام الاختصارات لضمان أن تقدير الوقت المتبقي يلائم بشكل مريح في منطقة الاشعارات. إذا كان لا يزال لا يصلح، يمكنك اختيار شكل مكثف. إذا كان لديك الكثير من الغرف، قد تفضل الإعداد المطول.</string>
   <string name="condensed" formatted="false">موجز</string>
   <string name="normal" formatted="false">عادي</string>
   <string name="verbose" formatted="false">مسهب</string>
-  <string name="pref_status_duration_in_vital_signs" formatted="false">مدة الوضع في العلامات الحيوية</string>
 
+  <string name="pref_status_duration_in_vital_signs" formatted="false">مدة الوضع في العلامات الحيوية</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">الوقت الماضي منذ تغيير الحالة</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">اذا تم ضبط العلامات الحيوية سوف بيلغك ان الجهاز كم من الزمن مضى من الشحن والتفريغ</string>
+
   <string name="custom" formatted="false">مخصص...</string>
 
   <string name="pref_cat_icon_set" formatted="false">أيقونة الإشعار</string>
-
   <string name="pref_icon_content" formatted="false">محتوى الأيقونة</string>
   <string name="pref_icon_content_help" formatted="false">اختر ما إذا كانت أيقونة شريط الحالة تعرض نسبة البطارية أو درجة حرارتها. ستتبع الحرارة الوحدة التي اخترتها.</string>
   <string name="pref_show_icon_unit" formatted="false">إظهار رمز الوحدة</string>
   <string name="pref_show_icon_unit_help" formatted="false">عند التفعيل، تعرض الأيقونة علامة النسبة المئوية لنسبة البطارية وعلامة الدرجة لدرجة حرارة البطارية. عطّل هذا الخيار لعرض الرقم فقط.</string>
-  <string name="pref_cat_current_hack_main" formatted="false">التحكم الرئيسي</string>
 
+  <string name="pref_cat_current_hack_main" formatted="false">التحكم الرئيسي</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">حيلة التيار (mA) غير مدعومة</string>
+
   <string name="pref_current_hack_unsupported" formatted="false">عذرًا، حيلة التيار (mA) غير مدعومة على هذا الجهاز.</string>
 
   <string name="pref_enable_current_hack" formatted="false">تمكين الحيلة</string>
-
   <string name="pref_enable_current_hack_summary" formatted="false">محاولة تمكين حيلة التيار (mA)؟</string>
   <string name="pref_enable_current_hack_help" formatted="false">عند تمكين هذا الإعداد ستصبح الخيارات الأخرى الخاصة بالحيلة قابلة للاستخدام.</string>
-  <string name="pref_current_hack_prefer_fs" formatted="false">تفضيل طريقة الحيلة القديمة</string>
 
+  <string name="pref_current_hack_prefer_fs" formatted="false">تفضيل طريقة الحيلة القديمة</string>
   <string name="pref_current_hack_prefer_fs_summary" formatted="false">تفضيل طريقة أقدم تعتمد على نظام الملفات؟</string>
   <string name="pref_current_hack_prefer_fs_help" formatted="false">بدءًا من Lollipop (Android 5.0)، يوفّر Android طريقة أقل تحايلاً للوصول إلى معلومات التيار (mA) مباشرة من BatteryManager. ومع ذلك، ما زال غير مضمون أن تعمل دائمًا أو بشكل جيد. حتى Nougat (Android 7.0)، غالبًا ما تعمل الطريقة القديمة (المعتمدة على نظام الملفات) بشكل أفضل على معظم الأجهزة، لذلك تظل افتراضية على الأجهزة الأقل من Android 7.0.\n
     \n
     هذا الإعداد مجرد تلميح للحيلة حول الطريقة المفضلة؛ يمكنك تغييره إذا لم تعمل الحيلة جيدًا على جهازك.</string>
-  <string name="pref_current_hack_multiplier" formatted="false">المُضاعِف</string>
 
+  <string name="pref_current_hack_multiplier" formatted="false">المُضاعِف</string>
   <string name="pref_current_hack_multiplier_help" formatted="false">بعض الأجهزة ترسل ميلي أمبير بدلًا من ميكروأمبير كما يتوقع الـ API. وبعضها يعكس إشارة القيمة. كما يفضّل بعض المستخدمين الإشارة المعاكسة حتى للقيم الصحيحة.\n
     \n
     للتعامل مع مثل هذه الحالات، يمكنك ضرب نتيجة استدعاء API بالقيمة هنا.\n
     \n
     مثلًا، إذا كان جهازك يعرض 0 mA دائمًا، جرّب مضاعف 1000. إذا أعاد API قيمة 450 ميكروأمبير، سيعرض التطبيق 450 mA بدلًا من 0 mA. وإذا أعاد API صفرًا، فلن يغيّر المضاعف النتيجة النهائية بالطبع.</string>
-  <string name="pref_cat_current_hack_notification" formatted="false">الإشعار</string>
 
+  <string name="pref_cat_current_hack_notification" formatted="false">الإشعار</string>
   <string name="pref_display_current_in_vital_stats" formatted="false">العرض في الإحصاءات الحيوية</string>
   <string name="pref_display_current_in_vital_stats_summary" formatted="false">عرض التيار (mA) في إحصاءات الإشعار الرئيسية؟</string>
   <string name="pref_display_current_in_vital_stats_help" formatted="false">عند التمكين، ستتم محاولة الحيلة وسيُعرض الناتج في سطر الإحصاءات الحيوية بالإشعار الرئيسي. لاحظ أنه يجب ضبط الإشعار الرئيسي لعرض الإحصاءات الحيوية حتى ترى ذلك. لن تتحدّث هذه القيمة إلا عندما يرسل النظام معلومات بطارية جديدة.\n
     \n
     في أغلب الأجهزة، تشير القيمة السالبة إلى سحب صافٍ من البطارية، والموجبة إلى أن البطارية تُشحن. لكن ليس كل الأجهزة تعمل بهذه الطريقة.</string>
-  <string name="pref_cat_current_hack_main_window" formatted="false">النافذة الرئيسية</string>
 
+  <string name="pref_cat_current_hack_main_window" formatted="false">النافذة الرئيسية</string>
   <string name="pref_display_current_in_main_window" formatted="false">العرض في النافذة الرئيسية</string>
   <string name="pref_display_current_in_main_window_summary" formatted="false">عرض التيار (mA) في النافذة الرئيسية؟</string>
   <string name="pref_display_current_in_main_window_help" formatted="false">عند التمكين، ستتم محاولة الحيلة وسيُعرض الناتج في النافذة الرئيسية. تُحدّث هذه القيمة كلما أرسل النظام معلومات بطارية جديدة، كما يمكنك تحديثها يدويًا بالنقر على القيمة المعروضة. (لاحظ أن بعض الأجهزة نادرًا ما تحدّث البيانات الأساسية أو لا تحدّثها إطلاقًا، لذلك قد لا تتغير القيمة ظاهريًا عند النقر).\n
     \n
     في أغلب الأجهزة، تشير القيمة السالبة إلى سحب صافٍ من البطارية، والموجبة إلى أن البطارية تُشحن. لكن ليس كل الأجهزة تعمل بهذه الطريقة.</string>
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">تفضيل المتوسط في الإحصاءات الحيوية</string>
 
+  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">تفضيل المتوسط في الإحصاءات الحيوية</string>
   <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">محاولة استخدام current_avg في إحصاءات الإشعار الرئيسية؟</string>
   <string name="pref_prefer_current_avg_in_main_window" formatted="false">تفضيل المتوسط في النافذة الرئيسية</string>
   <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">محاولة استخدام current_avg في النافذة الرئيسية؟</string>
+
   <string name="pref_prefer_current_avg_help" formatted="false">بعض الأنظمة لديها حيلة إضافية تتيح متوسطًا حديثًا للتيار بدل القراءة اللحظية. يختلف معنى ذلك من جهاز لآخر وهو متاح فقط على بعض الأجهزة. قد يعطي قيمة أكثر استقرارًا (إن سارت الأمور جيدًا)، أو يعيد نفس القيمة دائمًا، أو يعيد قيمة غير قابلة للاستخدام (وفي هذه الحالة عطّل هذا الخيار).</string>
 
   <string name="pref_auto_refresh_current_in_main_window" formatted="false">تحديث mA تلقائيًا في النافذة الرئيسية</string>
-
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">تحديث mA تلقائيًا كل ثانيتين؟</string>
   <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">إذا كان إعداد الحيلة يعرض mA في النافذة الرئيسية، يمكنك تحديث القيمة بالنقر عليها. وإذا أردت تحديثات متكررة دون النقر، فعّل هذا الخيار لتحديث القيمة تلقائيًا كل ثانيتين أثناء ظهور النافذة.\n
     \n
     لاحظ أن بعض الأجهزة نادرًا ما تحدّث البيانات الأساسية أو لا تحدّثها إطلاقًا، لذا قد لا تبدو القيمة متغيرة حتى مع التحديث التلقائي.</string>
-  <string name="pref_cat_charging_indicator" formatted="false">مؤشر الشحن</string>
 
+  <string name="pref_cat_charging_indicator" formatted="false">مؤشر الشحن</string>
   <string name="pref_indicate_charging" formatted="false">اشارة الى الشحن</string>
   <string name="pref_indicate_charging_summary" formatted="false">تغيير لايقونة للتنبيه عند الشحن؟</string>
   <string name="pref_indicate_charging_help" formatted="false">يمكن لأيقونة الشحن إظهار رمز برق أسفل الرقم. عطّل هذا الإعداد إذا كنت تفضّل نفس الأيقونة أثناء الشحن والتفريغ.</string>
-  <string name="pref_cat_logging" formatted="false">تسجيل</string>
 
+  <string name="pref_cat_logging" formatted="false">تسجيل</string>
   <string name="pref_enable_logging" formatted="false">تمكين التسجيل</string>
   <string name="pref_enable_logging_summary" formatted="false">تسجيل حالة تغيير البطارية ؟</string>
   <string name="pref_enable_logging_help" formatted="false">اذا تم تمكين هذا الخيار سوف يقوم التطبيق بتسجيل حالة تغييرات البطارية</string>
   <string name="pref_max_log_age" formatted="false">الاحد الاقصى للسجلات</string>
   <string name="pref_max_log_age_summary" formatted="false">حذف السجلات القديمة بعد:</string>
   <string name="pref_max_log_age_help" formatted="false">إذا كان التسجيل مفعلاً، فكلما وصلت جهازك بالطاقة ستُحذف السجلات الأقدم من هذا الخيار. اختر عدم الحذف للاحتفاظ بالسجلات حتى تمسحها يدويًا.</string>
-  <string name="pref_cat_temperature_unit" formatted="false">وحدة درجة الحرارة</string>
 
+  <string name="pref_cat_temperature_unit" formatted="false">وحدة درجة الحرارة</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">تحويل إلى فهرنهايت</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">الاندرويد وحدة قياس حرارته هي الدرجة السليزية اذا كنت تفضل رؤية درجة الحرارة بالفهرنهايت تحقق من هذا الخيار وسوف يحول لتطبيق درجة الحرارة لك</string>
-  <string name="pref_cat_autostart" formatted="false">تشغيل تلقائي</string>
 
+  <string name="pref_cat_autostart" formatted="false">تشغيل تلقائي</string>
   <string name="pref_autostart_at_boot" formatted="false">تشغيل تلقائي عند بدء الهاتف</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">تشغيل التطبيق عند اقلاع الهاتف</string>
   <string name="pref_autostart_at_boot_help" formatted="false">السيطرة تبدا مع بدا التشغيل الخاص بالهاتف\n
     \n
     اذا كنت في وضع الايقاف سوف يتوقف البرنامج تلقائيا اما اذا كنت تستعمل برامج القتل مثل TASK KILLER فأن التطبيق لايعلم بأنك اوقفته وبذلك سوف يعمل التطبيق اذا اعدت تشغيل الهاتف اذا كنت قد ضبطت الاعدد</string>
-  <string name="predictor_sensitive" formatted="false">الحساس</string>
 
+  <string name="predictor_sensitive" formatted="false">الحساس</string>
   <string name="predictor_conservative" formatted="false">المعتدل</string>
   <string name="predictor_since_status_change" formatted="false">منذ تغيير الحالة</string>
   <string name="predictor_long_term_ave" formatted="false">طويل الاجل</string>
-  <string name="pref_cat_predictor" formatted="false">تقديرات الوقت المتبقي</string>
 
+  <string name="pref_cat_predictor" formatted="false">تقديرات الوقت المتبقي</string>
   <string name="pref_prediction_type" formatted="false">نوع التقدير</string>
   <string name="pref_prediction_type_help" formatted="false">هنا يمكنك الاختيار بالمؤشر الاحترافي من البطارية المتبقية الى مشحونة بالكامل\n
     \n
@@ -430,19 +440,18 @@
     وضع منذ تم التغيير وهو يعتمد بشكل اساسي على الاوضاع التي سبقته\n
     \n
     واخيرا يمكن التنبؤ على استخدان عادي بشكل طويل المدا</string>
-  <string name="pref_cat_language" formatted="false">اللغة</string>
 
-  <string name="pref_language_override" formatted="false">تجاوز اللغة</string>
-  <string name="pref_language_override_summary" formatted="false">اختر اللغة:</string>
+  <string name="pref_cat_language" formatted="false">اللغة</string>
+  <string name="pref_change_app_language" formatted="false">لغة التطبيق</string>
   <string name="pref_cat_advanced_stats" formatted="false">إحصاءات البطارية المتقدمة</string>
   <string name="pref_enable_advanced_stats" formatted="false">إظهار إحصاءات البطارية المتقدمة</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">يضيف تبويبًا متقدمًا مع إحصاءات بطارية تتطلب صلاحيات root أو Shizuku.</string>
-  <string name="advanced_action_refresh" formatted="false">تحديث</string>
 
+  <string name="advanced_action_refresh" formatted="false">تحديث</string>
   <string name="advanced_status_loading" formatted="false">جارٍ تحميل إحصاءات البطارية المتقدمة...</string>
   <string name="advanced_status_no_access" formatted="false">يلزم root أو Shizuku لعرض إحصاءات البطارية المتقدمة.</string>
-  <string name="alarms_overview" formatted="false">النظرة العامة على المنبهات</string>
 
+  <string name="alarms_overview" formatted="false">النظرة العامة على المنبهات</string>
   <string name="alarms_overview_help" formatted="false">هذه الصفحة تؤدي الى اعدادات المنبهات للتمكين والتعطيل السريع او حذف المنبه\n
     \n
     لاضافة منبه جديد اضغط على كلمة اضافة منبه وهذا سوف يؤديك الى اعدادات المنبه لاختيار المنبه الجديد راجع قسم مساعده للحصول على التفاصيل\n
@@ -452,11 +461,11 @@
     لتعديل على منبه اضغط عليه فقط\n
     لحذف منبه ضغطة طويلة عليه واختر حذف المنبه ويمكنك حذفها من قائمة الاعدادات الرئيسية واختيار خذف المنبه\n
     للتبديل بسرعة ما إذا تم تمكين التنبيه، اضغط على أيقونة المنبه على يسار النص التنبيه يمكنك أيضا تمكين أو تعطيل التنبيه من صفحة إعدادات التنبيه الفردية</string>
+
   <string name="pref_alarm_enabled" formatted="false">تمكين التنبيه</string>
-
   <string name="pref_alarm_enabled_help" formatted="false">إذا كنت ترغب في تعطيل التنبيه مؤقتا دون الحاجة إلى إعادة ذلك عندما تريد ذلك مرة أخرى، يمكنك إيقاف تشغيله وإما هنا أو في صفحة الاشعارات الرئيسي.</string>
-  <string name="pref_cat_alarm_conditions" formatted="false">ظروف التنبيه</string>
 
+  <string name="pref_cat_alarm_conditions" formatted="false">ظروف التنبيه</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">هذا هو المكان الذي يمكنك التحكم في أي ظروف تؤدي إلى التنبيه</string>
   <string name="pref_alarm_type" formatted="false">نوع المنبه</string>
   <string name="pref_alarm_type_summary" formatted="false">تشغيل التنبيه عندما تكون البطارية :</string>
@@ -473,12 +482,12 @@
   <string name="pref_alarm_threshold_help" formatted="false">للرسوم ودرجة الحرارة وأجهزة الإنذار، تحتاج إلى ضبط على مستوى درجة الحرارة أو شحن من شأنها أن تؤدي إلى التنبيه</string>
   <string name="alarm_custom_temp_message" formatted="true">أدخل درجة الحرارة بدرجات %s</string>
   <string name="alarm_custom_charge_message" formatted="false">أدخل نسبة الشحن (0-100)</string>
-  <string name="boot_pref_always" formatted="false">دائما</string>
 
+  <string name="boot_pref_always" formatted="false">دائما</string>
   <string name="boot_pref_never" formatted="false">ابدا</string>
   <string name="boot_pref_if_running" formatted="false">اذا كان مغلق</string>
-  <string name="age_1_day" formatted="false">يوم واحد</string>
 
+  <string name="age_1_day" formatted="false">يوم واحد</string>
   <string name="age_2_days" formatted="false">يومان</string>
   <string name="age_4_days" formatted="false">اربعة ايام</string>
   <string name="age_1_week" formatted="false">اسبوع</string>
@@ -489,14 +498,14 @@
   <string name="pref_content_percent" formatted="false">نسبة البطارية</string>
   <string name="pref_content_temperature" formatted="false">درجة حرارة البطارية</string>
   <string name="pref_content_switching" formatted="false">التبديل بين الاثنين</string>
-  <string name="chip_switching_interval_2_seconds" formatted="false">ثانيتان</string>
 
+  <string name="chip_switching_interval_2_seconds" formatted="false">ثانيتان</string>
   <string name="chip_switching_interval_5_seconds" formatted="false">5 ثوانٍ</string>
   <string name="chip_switching_interval_10_seconds" formatted="false">10 ثوانٍ</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 ثانية</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 ثانية</string>
-  <string name="advanced_status_waiting_permission" formatted="false">بانتظار إذن Shizuku...</string>
 
+  <string name="advanced_status_waiting_permission" formatted="false">بانتظار إذن Shizuku...</string>
   <string name="advanced_status_no_stats" formatted="false">لا تتوفر أي إحصاءات بطارية متقدمة على هذا الجهاز حاليًا.</string>
   <string name="advanced_section_counters" formatted="false">العدادات</string>
   <string name="advanced_section_capacity" formatted="false">السعة</string>

@@ -163,47 +163,52 @@
     <item quantity="other">%d分</item>
   </plurals>
 
-  <string name="unit_days">%d天</string>
-  <string name="unit_hours">%d小時</string>
-  <string name="unit_minutes">%d分</string>
   <plurals name="n_days">
     <item quantity="one">"%d天,"</item>
     <item quantity="other">"%d天,"</item>
   </plurals>
 
-  <string name="since" formatted="false">開始於</string>
+  <plurals name="n_hours">
+    <item quantity="other">%d小時</item>
+  </plurals>
 
   <plurals name="for_n_hours">
     <item quantity="one">已%d小時</item>
     <item quantity="other">已%d小時</item>
   </plurals>
+
+  <string name="unit_days">%d天</string>
+  <string name="unit_hours">%d小時</string>
+  <string name="unit_minutes">%d分</string>
+  <string name="since" formatted="false">開始於</string>
+
   <string name="currently_using" formatted="false">目前使用</string>
   <string name="currently_set_to" formatted="false">"目前設定為"</string>
   <string name="currently_disabled" formatted="false">目前不可使用</string>
+
   <string name="help_cat_version" formatted="false">版本</string>
 
   <string name="help_cat_open_source" formatted="false">開放原始碼</string>
-
   <string name="help_open_source" formatted="false">這個 專案是開源的。您可以存取原始程式碼 <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>。</string>
+
   <string name="help_cat_privacy" formatted="false">隱私</string>
-
   <string name="help_privacy" formatted="false">Battery Monitor不會收集、儲存或傳輸任何個人資訊。</string>
-  <string name="help_cat_no_warranty" formatted="false">免責申明</string>
 
+  <string name="help_cat_no_warranty" formatted="false">免責申明</string>
   <string name="help_no_warranty" formatted="false">本軟體旨在提高系統的易用性，並<b>無任何承擔責任的義務</b>。<b>不對使用軟體實現特殊功能的實用性做任何承諾</b>。\n
     \n
     軟體開發者將盡其所能最求軟體的正常工作及流暢運行，但對任何情況下可能導致的使用者的不適或設備損壞不承擔任何責任。</string>
+
   <string name="help_cat_acknowledgments" formatted="false">聲明</string>
-
   <string name="help_acknowledgments" formatted="false">Battery Monitor 是 Battery Indicator Pro / BatteryBot Pro 的分支 達山計算有限責任公司。 感謝原作者與貢獻者 用於建立和維護上游專案。</string>
+
   <string name="help_cat_contact" formatted="false">聯繫方式</string>
-
   <string name="help_contact" formatted="false">如果您有疑問、問題或意見，請 <a href="mailto:tomasz@swistak.codes">給我發電子郵件</a>.</string>
+
   <string name="settings_overview" formatted="false">預覽</string>
-
   <string name="settings_overview_help" formatted="false">設定包括如下所述的三個獨立頁面。各頁面的說明信息獨立顯示，在「選單」-「說明」內容中可獲取當前頁面的說明信息。</string>
-  <string name="notifications_disabled_cat" formatted="false">通知已禁用</string>
 
+  <string name="notifications_disabled_cat" formatted="false">通知已禁用</string>
   <string name="app_notifs_disabled_b" formatted="false">啟用應用程式通知</string>
   <string name="app_notifs_disabled_summary" formatted="false">您已停用此應用程式的所有通知。  請允許他們存取這些設定。</string>
   <string name="main_notifs_disabled_b" formatted="false">啟用主通知</string>
@@ -214,8 +219,8 @@
   <string name="alarm_chan_disabled" formatted="false">您已停用此警報類型的通知。  請允許他們使用此類警報。</string>
   <string name="alarm_chan_disabled_b" formatted="false">啟用此警報類型</string>
   <string name="alarm_chan_settings_b" formatted="false">管理此警報類型</string>
-  <string name="notification_settings" formatted="false">主要通知</string>
 
+  <string name="notification_settings" formatted="false">主要通知</string>
   <string name="notification_settings_summary" formatted="false">配置主要通知</string>
   <string name="notification_settings_help" formatted="false">您可以設定在下拉通知中顯示哪些內容。</string>
   <string name="status_bar_icon_settings" formatted="false">狀態列圖示</string>
@@ -231,14 +236,14 @@
     這不能保證有效。 它可能根本不起作用或它 可能看起來有效，但只會產生無意義的值。\n
     \n
     設定以開啟駭客（如果可能）並控制其方式 使用的內容可在本節中找到。</string>
-  <string name="alarm_settings_subtitle" formatted="false">警報設定</string>
 
+  <string name="alarm_settings_subtitle" formatted="false">警報設定</string>
   <string name="alarm_settings" formatted="false">警報</string>
   <string name="alarm_settings_help" formatted="false">您可以讓Battery Monitor在電池電量不足時通知您 達到一定條件（例如，電池充滿電， 電池電量低於 20% 等等）。</string>
   <string name="other_settings" formatted="false">其他設定</string>
   <string name="other_settings_help" formatted="false">此頁面包含其他的設定，包括日誌功能、螢幕鎖功能、溫度單位、自動啟動方式等。</string>
-  <string name="live_updates_onboarding_title">狀態列電池晶片</string>
 
+  <string name="live_updates_onboarding_title">狀態列電池晶片</string>
   <string name="live_updates_onboarding_message_on">您的装置支援在状态列中以芯片形式显示电池百分比。此选项默认已启用。\n
     \n
     如果您偏好传统通知图标，可以在 Android 系统设置中为此应用关闭“实时更新”。\n
@@ -252,6 +257,7 @@
   <string name="live_updates_onboarding_positive_on">知道了</string>
   <string name="live_updates_onboarding_positive_off">前往“設定”</string>
   <string name="live_updates_onboarding_negative_off">解僱</string>
+
   <string name="notifications_onboarding_message">Battery Monitor 需要您的权限，以在状态列显示电池电量并通知您有关警报的信息。\n
     \n
     注意：授予此权限有时可能会导致应用关闭。若发生这种情况，请重新打开应用。</string>
@@ -259,10 +265,9 @@
   <string name="add_alarm" formatted="false">添加鬧鐘</string>
 
   <string name="pref_cat_channel_settings" formatted="false">通知頻道設定</string>
-
   <string name="pref_manage_main_channel" formatted="false">管理主通路</string>
-  <string name="pref_cat_notification_content" formatted="false">內容</string>
 
+  <string name="pref_cat_notification_content" formatted="false">內容</string>
   <string name="pref_cat_status_bar_chip" formatted="false">狀態列晶片（Android 16+）</string>
   <string name="pref_live_update_display" formatted="false">显示实时更新</string>
   <string name="pref_live_update_display_summary" formatted="false">在状态栏显示:</string>
@@ -284,102 +289,102 @@
   <string name="time_remaining" formatted="false">剩餘時間</string>
   <string name="time_since_status_change" formatted="false">自狀態變更以來的時間</string>
   <string name="vital_signs" formatted="false">生命徵象</string>
-  <string name="pref_time_remaining_verbosity" formatted="false">剩餘時間冗長</string>
 
+  <string name="pref_time_remaining_verbosity" formatted="false">剩餘時間冗長</string>
   <string name="pref_time_remaining_verbosity_help" formatted="false">設備有各種形狀和尺寸，因此大多數翻譯都需要 使用縮寫來確保剩餘時間估計值符合 輕鬆地在通知區域。 如果還是不合適的話 您可以選擇壓縮格式。 如果你有足夠的空間， 您可能更喜歡詳細設定。</string>
   <string name="condensed" formatted="false">濃縮</string>
   <string name="normal" formatted="false">一般</string>
   <string name="verbose" formatted="false">冗長</string>
-  <string name="pref_status_duration_in_vital_signs" formatted="false">生命徵象狀態持續時間</string>
 
+  <string name="pref_status_duration_in_vital_signs" formatted="false">生命徵象狀態持續時間</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">包括生命徵象狀態變化後的時間？</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">如果設置，生命體徵行還將包括小時數 設備被拔出、插入或充滿電後。</string>
+
   <string name="custom" formatted="false">自訂...</string>
 
   <string name="pref_cat_icon_set" formatted="false">通知圖示</string>
-
   <string name="pref_icon_content" formatted="false">圖示內容</string>
   <string name="pref_icon_content_help" formatted="false">選擇狀態列圖示是否顯示電池百分比或 電池溫度。溫度遵循您選擇的單位。</string>
   <string name="pref_show_icon_unit" formatted="false">顯示單位符號</string>
   <string name="pref_show_icon_unit_help" formatted="false">啟用後，圖示會為電池百分比顯示百分號，為電池溫度顯示度數符號。停用此選項可只顯示數字。</string>
-  <string name="pref_cat_current_hack_main" formatted="false">主控</string>
 
+  <string name="pref_cat_current_hack_main" formatted="false">主控</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">電流 (mA) Hack 不支持</string>
+
   <string name="pref_current_hack_unsupported" formatted="false">抱歉，該裝置不支援目前的 (mA) 破解。</string>
 
   <string name="pref_enable_current_hack" formatted="false">啟用駭客攻擊</string>
-
   <string name="pref_enable_current_hack_summary" formatted="false">嘗試啟用電流（mA）黑客？</string>
   <string name="pref_enable_current_hack_help" formatted="false">啟用此設定後，相關的其他選項 hack 將可用。</string>
-  <string name="pref_current_hack_prefer_fs" formatted="false">更喜歡舊的黑客方法</string>
 
+  <string name="pref_current_hack_prefer_fs" formatted="false">更喜歡舊的黑客方法</string>
   <string name="pref_current_hack_prefer_fs_summary" formatted="false">喜歡舊的、基於檔案系統的黑客方法？</string>
   <string name="pref_current_hack_prefer_fs_help" formatted="false">從 Lollipop (Android 5.0) 開始，Android 現在提供 存取電流（mA）資訊的不太黑客的方式， 直接來自系統 BatteryManager。 然而，這仍然不是 保證能夠正常工作或正常工作。 直到 Android 牛軋糖 （Android 7.0），舊的（基於檔案系統的）駭客方法似乎 在大多數設備上工作得更好，因此它仍然是設備上的預設設置 運行低於 Android 7.0.\n
     \n
     這個設定只是提示駭客應該使用哪一種方法 更喜歡；如果破解效果不佳，您可以嘗試更改它 您的設備。</string>
-  <string name="pref_current_hack_multiplier" formatted="false">乘數</string>
 
+  <string name="pref_current_hack_multiplier" formatted="false">乘數</string>
   <string name="pref_current_hack_multiplier_help" formatted="false">一些設備報告毫安培而不是微安培作為 API 呼叫。 相同的設備交換報告值的符號。 一些用戶更喜歡正確報告值的相反符號。 為了幫助適應此類情況，您可以將 透過此處的值呼叫 API 的結果。\n
     \n
     例如，如果您的裝置始終顯示 0 mA，您可以嘗試 使用 1000 的乘數。如果 API 呼叫回傳 450 微安，該乘數將使應用程式顯示該值 為 450 mA 而非 0 mA。 如果API呼叫回傳0 微安，當然，乘數不會改變最終的 顯示值為 0 mA。</string>
-  <string name="pref_cat_current_hack_notification" formatted="false">通知</string>
 
+  <string name="pref_cat_current_hack_notification" formatted="false">通知</string>
   <string name="pref_display_current_in_vital_stats" formatted="false">在生命統計中顯示</string>
   <string name="pref_display_current_in_vital_stats_summary" formatted="false">在主通知生命統計中顯示電流（mA）？</string>
   <string name="pref_display_current_in_vital_stats_help" formatted="false">啟用後，將嘗試進行駭客攻擊並顯示 導致主要通知生命統計行。 請注意，您 必須將主通知配置為顯示重要統計數據 為了看到這個。 該值僅在以下情況下才會刷新 系統發送新的電池訊息。\n
     \n
     在大多數設備上，負值表示淨消耗 電池電量，正值表示電池正在充電 收費。 然而，並非所有設備都以這種方式產生價值。</string>
-  <string name="pref_cat_current_hack_main_window" formatted="false">主視窗</string>
 
+  <string name="pref_cat_current_hack_main_window" formatted="false">主視窗</string>
   <string name="pref_display_current_in_main_window" formatted="false">在主視窗中顯示</string>
   <string name="pref_display_current_in_main_window_summary" formatted="false">在主視窗中顯示電流（mA）？</string>
   <string name="pref_display_current_in_main_window_help" formatted="false">啟用後，將嘗試進行駭客攻擊並顯示 結果出現在主視窗中。 該值將在任何時候刷新 系統會發送新的電池訊息，但您可以刷新 只需點擊顯示的值即可隨時查看值。 （註 有些設備很少或從不更新底層數據，所以 該值可能不會在點擊時發生變化。 ）\n
     \n
     在大多數設備上，負值表示淨消耗 電池電量，正值表示電池正在充電 收費。 然而，並非所有設備都以這種方式產生價值。</string>
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">偏好生命統計數據的平均值</string>
 
+  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">偏好生命統計數據的平均值</string>
   <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">嘗試在主要通知生命統計中使用 current_avg 嗎？</string>
   <string name="pref_prefer_current_avg_in_main_window" formatted="false">首選主視窗中的平均值</string>
   <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">嘗試在主視窗中使用 current_avg？</string>
+
   <string name="pref_prefer_current_avg_help" formatted="false">有些系統有進一步的破解可用，給出了最近的 電流的平均值而不是瞬時讀數。 這意味著什麼因設備而異，並且僅可用 在某些設備上。 這可能會給出更穩定的值（如果一切順利） 好吧），它可能會傳回相同的值，或者可能會傳回一個不可用的值 值（在這種情況下您應該關閉此選項）。</string>
 
   <string name="pref_auto_refresh_current_in_main_window" formatted="false">在主視窗中自動重新整理 mA</string>
-
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">每兩秒自動刷新毫安？</string>
   <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">如果您設定了在主視窗中顯示 mA 的功能，您可以 只需點擊即可刷新該值。 如果你想看 無需點擊即可頻繁更新，您可以啟用此選項 當視窗可見時每兩秒自動刷新一次值。\n
     \n
     請注意，某些設備很少或從不更新底層 數據，因此即使應用程式運行，該值也可能不會發生變化 刷新顯示的值以匹配從中檢索的數據 系統。</string>
-  <string name="pref_cat_charging_indicator" formatted="false">充電指示燈</string>
 
+  <string name="pref_cat_charging_indicator" formatted="false">充電指示燈</string>
   <string name="pref_indicate_charging" formatted="false">指示正在充電</string>
   <string name="pref_indicate_charging_summary" formatted="false">更改圖示以指示充電時？</string>
   <string name="pref_indicate_charging_help" formatted="false">充電圖示可以在數字下方顯示閃電。若您希望充電和放電時使用相同圖示，請停用此設定。</string>
-  <string name="pref_cat_logging" formatted="false">歷史記錄</string>
 
+  <string name="pref_cat_logging" formatted="false">歷史記錄</string>
   <string name="pref_enable_logging" formatted="false">啟用歷史記錄</string>
   <string name="pref_enable_logging_summary" formatted="false">記錄電池狀態變化？</string>
   <string name="pref_enable_logging_help" formatted="false">啟用後，Battery Monitor 會記錄電池狀態變化，例如拔下電源、開始充電或充滿電。</string>
   <string name="pref_max_log_age" formatted="false">歷史記錄保留時間</string>
   <string name="pref_max_log_age_summary" formatted="false">刪除早於以下時間的記錄：</string>
   <string name="pref_max_log_age_help" formatted="false">啟用歷史記錄後，應用會在裝置接入電源時清理超過所選保留時間的記錄；選擇「永不刪除」則會保留記錄，直到您手動清除。</string>
-  <string name="pref_cat_temperature_unit" formatted="false">溫度顯示單位</string>
 
+  <string name="pref_cat_temperature_unit" formatted="false">溫度顯示單位</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">確認切換到華氏單位？</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android系統以攝氏單位報告電池溫度信息。若您想使溫度信息以華氏單位顯示，請勾選此項。</string>
-  <string name="pref_cat_autostart" formatted="false">自動啟動</string>
 
+  <string name="pref_cat_autostart" formatted="false">自動啟動</string>
   <string name="pref_autostart_at_boot" formatted="false">開機自動啟動方式</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">確認允許電量指示器開機時自動啟動？</string>
   <string name="pref_autostart_at_boot_help" formatted="false">設定是否允許電量指示器在開機時自動啟動。\n
     \n
     」關機前運行中」選項僅在手動關閉電量指示器時有效。若您使用其他方式，如使用任務殺手進行關閉，則本程序無法確認是否由您關閉，選擇該方式後仍會在開機時自動啟動。</string>
-  <string name="predictor_sensitive" formatted="false">敏感的</string>
 
+  <string name="predictor_sensitive" formatted="false">敏感的</string>
   <string name="predictor_conservative" formatted="false">保守的</string>
   <string name="predictor_since_status_change" formatted="false">自從狀態變更以來</string>
   <string name="predictor_long_term_ave" formatted="false">長期平均</string>
-  <string name="pref_cat_predictor" formatted="false">剩餘時間估計</string>
 
+  <string name="pref_cat_predictor" formatted="false">剩餘時間估計</string>
   <string name="pref_prediction_type" formatted="false">估算類型</string>
   <string name="pref_prediction_type_help" formatted="false">您可以在此處選擇Battery Monitor如何預測剩餘電量 電池壽命/充滿電的時間。\n
     \n
@@ -390,19 +395,18 @@
     選擇「自從狀態變更」以進行預測 嚴格限制在目前會話中。\n
     \n
     最後，您可以僅根據您的情況進行預測 長期平均使用情況。</string>
-  <string name="pref_cat_language" formatted="false">語言</string>
 
-  <string name="pref_language_override" formatted="false">語言覆蓋</string>
-  <string name="pref_language_override_summary" formatted="false">選擇語言：</string>
+  <string name="pref_cat_language" formatted="false">語言</string>
+  <string name="pref_change_app_language" formatted="false">應用程式語言</string>
   <string name="pref_cat_advanced_stats" formatted="false">高级电池统计</string>
   <string name="pref_enable_advanced_stats" formatted="false">显示高级电池统计</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">添加“高级”标签页，并显示需要 root 或 Shizuku 的电池统计。</string>
-  <string name="advanced_action_refresh" formatted="false">刷新</string>
 
+  <string name="advanced_action_refresh" formatted="false">刷新</string>
   <string name="advanced_status_loading" formatted="false">正在加载高级电池统计...</string>
   <string name="advanced_status_no_access" formatted="false">显示高级电池统计需要 root 或 Shizuku。</string>
-  <string name="alarms_overview" formatted="false">警報概述</string>
 
+  <string name="alarms_overview" formatted="false">警報概述</string>
   <string name="alarms_overview_help" formatted="false">此頁面可讓您新增警報、快速啟用或停用 現有警報，或刪除警報。\n
     \n
     若要新增警報，請按「新增警報」—這將建立一個新警報 鬧鐘並帶您進入鬧鐘設定頁面，您可以在其中 控制新警報的設定。 請參閱該頁面上的說明 了解更多詳情。\n
@@ -412,11 +416,11 @@
     • 要編輯現有警報，只需按下它即可。\n
     • 若要刪除鬧鐘，請長按該鬧鐘，然後選擇“刪除” 警報\”。（您也可以從單一警報中刪除警報） 按 MENU 然後按「刪除警報」設定頁面。 ）\n
     • 若要輕鬆切換是否啟用警報，請按切換鈕 切換到警報文字一側。 （您也可以啟用或 從單獨的警報設定頁面停用警報。 ）</string>
+
   <string name="pref_alarm_enabled" formatted="false">啟用警報</string>
-
   <string name="pref_alarm_enabled_help" formatted="false">如果你想暫時 禁用警報而無需在需要時重新建立它 同樣，您可以在此處或主警報上將其關閉和打開 頁。</string>
-  <string name="pref_cat_alarm_conditions" formatted="false">警報條件</string>
 
+  <string name="pref_cat_alarm_conditions" formatted="false">警報條件</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">這是你可以的地方 控制觸發警報的條件。</string>
   <string name="pref_alarm_type" formatted="false">警報類型</string>
   <string name="pref_alarm_type_summary" formatted="false">電池觸發警報：</string>
@@ -433,12 +437,12 @@
   <string name="pref_alarm_threshold_help" formatted="false">對於充電和溫度警報，需要設定溫度 或將觸發警報的電量水準。</string>
   <string name="alarm_custom_temp_message" formatted="true">輸入 %s 度的溫度</string>
   <string name="alarm_custom_charge_message" formatted="false">輸入費用百分比（0-100）</string>
-  <string name="boot_pref_always" formatted="false">始終</string>
 
+  <string name="boot_pref_always" formatted="false">始終</string>
   <string name="boot_pref_never" formatted="false">從不</string>
   <string name="boot_pref_if_running" formatted="false">關機時運行</string>
-  <string name="age_1_day" formatted="false">一天</string>
 
+  <string name="age_1_day" formatted="false">一天</string>
   <string name="age_2_days" formatted="false">兩天</string>
   <string name="age_4_days" formatted="false">四天</string>
   <string name="age_1_week" formatted="false">一周</string>
@@ -449,14 +453,14 @@
   <string name="pref_content_percent" formatted="false">電池電量百分比</string>
   <string name="pref_content_temperature" formatted="false">電池溫度</string>
   <string name="pref_content_switching" formatted="false">兩者之間切換</string>
-  <string name="chip_switching_interval_2_seconds" formatted="false">2 秒</string>
 
+  <string name="chip_switching_interval_2_seconds" formatted="false">2 秒</string>
   <string name="chip_switching_interval_5_seconds" formatted="false">5 秒</string>
   <string name="chip_switching_interval_10_seconds" formatted="false">10 秒</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 秒</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 秒</string>
-  <string name="advanced_status_waiting_permission" formatted="false">正在等待 Shizuku 权限...</string>
 
+  <string name="advanced_status_waiting_permission" formatted="false">正在等待 Shizuku 权限...</string>
   <string name="advanced_status_no_stats" formatted="false">此设备当前没有可用的高级电池统计。</string>
   <string name="advanced_section_counters" formatted="false">计数器</string>
   <string name="advanced_section_capacity" formatted="false">容量</string>

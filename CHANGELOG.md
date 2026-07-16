@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## Unreleased
+
+### New
+
+- Added system (Android 13+) language chooser in settings (#56, thanks @Aga-C).
+
+### Fixed
+
+- Using localized unit strings instead of hardcoded English ones (#63, thanks @Hirdaya-Shrestha).
+
 ## 1.2.0
 
 ### New
