@@ -22,13 +22,15 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
-
+import android.os.ParcelFileDescriptor;
+import android.widget.Toast;
 
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
@@ -39,6 +41,15 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.TwoStatePreference;
+
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 import rikka.shizuku.Shizuku;
 import rikka.shizuku.ShizukuProvider;
@@ -102,6 +113,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     public static final String KEY_ENABLE_NOTIFS_SUMMARY = "enable_notifications_summary";
     public static final String KEY_UI_COLOR = "ui_color";
     public static final String KEY_ENABLE_ADVANCED_STATS = "enable_advanced_stats";
+    public static final String KEY_EXPORT_SETTINGS = "export_settings";
+    public static final String KEY_IMPORT_SETTINGS = "import_settings";
+
+    private static final int EXPORT_SETTINGS_REQUEST = 1001;
+    private static final int IMPORT_SETTINGS_REQUEST = 1002;
 
     private static final String[] PARENTS    = {KEY_ENABLE_LOGGING,
                                                 KEY_DISPLAY_CURRENT_IN_VITAL_STATS,
@@ -397,8 +413,73 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
             startActivity(new Intent().setComponent(comp).putExtra(EXTRA_SCREEN, key));
 
             return true;
+        } else if (key.equals(KEY_EXPORT_SETTINGS)) {
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/json");
+            intent.putExtra(Intent.EXTRA_TITLE, "Battery_Monitor_Settings.json");
+            startActivityForResult(intent, EXPORT_SETTINGS_REQUEST);
+            return true;
+        } else if (key.equals(KEY_IMPORT_SETTINGS)) {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/json");
+            startActivityForResult(intent, IMPORT_SETTINGS_REQUEST);
+            return true;
         } else //TODO: convert biServiceConnection.biService.configurePlugin();
             return key.equals(KEY_PLUGIN_SETTINGS);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if (resultCode != getActivity().RESULT_OK || resultData == null)
+            return;
+
+        Uri uri = resultData.getData();
+        if (uri == null)
+            return;
+
+        if (requestCode == EXPORT_SETTINGS_REQUEST) {
+            try {
+                String json = SettingsBackup.exportToJson(mSharedPreferences).toString();
+                ParcelFileDescriptor pfd = getActivity().getContentResolver().openFileDescriptor(uri, "w");
+                if (pfd == null) return;
+                FileOutputStream fos = new FileOutputStream(pfd.getFileDescriptor());
+                fos.write(json.getBytes(StandardCharsets.UTF_8));
+                fos.close();
+                pfd.close();
+                Toast.makeText(getActivity(), R.string.backup_export_success, Toast.LENGTH_SHORT).show();
+            } catch (JSONException | IOException e) {
+                Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == IMPORT_SETTINGS_REQUEST) {
+            try {
+                ParcelFileDescriptor pfd = getActivity().getContentResolver().openFileDescriptor(uri, "r");
+                if (pfd == null) return;
+                java.io.FileInputStream fis = new java.io.FileInputStream(pfd.getFileDescriptor());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null)
+                    sb.append(line).append('\n');
+                reader.close();
+                pfd.close();
+
+                SharedPreferences.Editor editor = mSharedPreferences.edit();
+                SettingsBackup.importFromJson(editor, sb.toString());
+                editor.commit();
+
+                setPreferences();
+                resetService();
+                Toast.makeText(getActivity(), R.string.backup_import_success, Toast.LENGTH_SHORT).show();
+            } catch (FileNotFoundException e) {
+                // User cancelled, do nothing
+            } catch (JSONException | IOException | IllegalArgumentException e) {
+                int resId = "backup_too_new".equals(e.getMessage()) ?
+                    R.string.backup_too_new : R.string.backup_invalid_file;
+                Toast.makeText(getActivity(), resId, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

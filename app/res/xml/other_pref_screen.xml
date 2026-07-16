@@ -55,4 +55,17 @@
             app:summary="@string/pref_enable_advanced_stats_summary"
             app:title="@string/pref_enable_advanced_stats" />
     </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/pref_cat_backup">
+        <Preference
+            app:key="export_settings"
+            app:singleLineTitle="false"
+            app:summary="@string/pref_export_settings_summary"
+            app:title="@string/pref_export_settings" />
+        <Preference
+            app:key="import_settings"
+            app:singleLineTitle="false"
+            app:summary="@string/pref_import_settings_summary"
+            app:title="@string/pref_import_settings" />
+    </PreferenceCategory>
 </PreferenceScreen>
