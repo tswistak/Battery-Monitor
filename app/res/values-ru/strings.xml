@@ -181,9 +181,6 @@
     <item quantity="other">%dм</item>
   </plurals>
 
-  <string name="unit_days">%dд</string>
-  <string name="unit_hours">%dч</string>
-  <string name="unit_minutes">%dм</string>
   <plurals name="n_days">
     <item quantity="one">"%d день, "</item>
     <item quantity="few">"%d дня, "</item>
@@ -198,13 +195,18 @@
     <item quantity="other">%d часа</item>
   </plurals>
 
-  <string name="since" formatted="false">После</string>
   <plurals name="for_n_hours">
     <item quantity="one">В течение %d часа</item>
     <item quantity="few">В течение %d часа</item>
     <item quantity="many">В течение %d часов</item>
     <item quantity="other">В течение %d часа</item>
   </plurals>
+
+  <string name="unit_days">%dд</string>
+  <string name="unit_hours">%dч</string>
+  <string name="unit_minutes">%dм</string>
+  <string name="since" formatted="false">После</string>
+
   <string name="currently_using" formatted="false">Сейчас использует</string>
   <string name="currently_set_to" formatted="false">"Текущая настройка: "</string>
   <string name="currently_disabled" formatted="false">Сейчас отключен</string>
@@ -420,8 +422,7 @@
     И, наконец, прогноз может основываться исключительно на усредненных данных об использовании за длительный период времени.</string>
 
   <string name="pref_cat_language" formatted="false">Язык</string>
-  <string name="pref_language_override" formatted="false">Переопределить язык</string>
-  <string name="pref_language_override_summary" formatted="false">Выберите язык:</string>
+  <string name="pref_change_app_language" formatted="false">Язык приложения</string>
   <string name="pref_cat_advanced_stats" formatted="false">Расширенная статистика батареи</string>
   <string name="pref_enable_advanced_stats" formatted="false">Показывать расширенную статистику батареи</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Добавляет вкладку «Расширено» со статистикой батареи, требующей root или Shizuku.</string>

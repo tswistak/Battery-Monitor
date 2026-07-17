@@ -175,14 +175,16 @@
     <item quantity="other">%d hours</item>
   </plurals>
 
-  <string name="unit_days">%dd</string>
-  <string name="unit_hours">%dh</string>
-  <string name="unit_minutes">%dm</string>
-  <string name="since" formatted="false">Since</string>
   <plurals name="for_n_hours">
     <item quantity="one">For %d Hour</item>
     <item quantity="other">For %d Hours</item>
   </plurals>
+
+  <string name="unit_days">%dd</string>
+  <string name="unit_hours">%dh</string>
+  <string name="unit_minutes">%dm</string>
+  <string name="since" formatted="false">Since</string>
+
   <string name="currently_using" formatted="false">Currently using</string>
   <string name="currently_set_to" formatted="false">"Currently set to: "</string>
   <string name="currently_disabled" formatted="false">Currently Disabled</string>
@@ -400,8 +402,7 @@
     Finally, you can have the prediction based solely on your long-term average usage.</string>
 
   <string name="pref_cat_language" formatted="false">Language</string>
-  <string name="pref_language_override" formatted="false">App language</string>
-  <string name="pref_language_override_summary" formatted="false">Select language:</string>
+  <string name="pref_change_app_language" formatted="false">App language</string>
   <string name="pref_cat_advanced_stats" formatted="false">Advanced battery stats</string>
   <string name="pref_enable_advanced_stats" formatted="false">Show advanced battery stats</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Adds an Advanced tab with battery diagnostics that require either root access or Shizuku.</string>

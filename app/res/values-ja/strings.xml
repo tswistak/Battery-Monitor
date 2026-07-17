@@ -163,9 +163,6 @@
     <item quantity="other">%d分</item>
   </plurals>
 
-  <string name="unit_days">%d日</string>
-  <string name="unit_hours">%d時間</string>
-  <string name="unit_minutes">%d分</string>
   <plurals name="n_days">
     <item quantity="one">"%d 日 "</item>
     <item quantity="other">"%d 日 "</item>
@@ -176,11 +173,16 @@
     <item quantity="other">%d 時間</item>
   </plurals>
 
-  <string name="since" formatted="false">から</string>
   <plurals name="for_n_hours">
     <item quantity="one">%d 時間</item>
     <item quantity="other">%d 時間</item>
   </plurals>
+
+  <string name="unit_days">%d日</string>
+  <string name="unit_hours">%d時間</string>
+  <string name="unit_minutes">%d分</string>
+  <string name="since" formatted="false">から</string>
+
   <string name="currently_using" formatted="false">現在使用中</string>
   <string name="currently_set_to" formatted="false">"現在の設定: "</string>
   <string name="currently_disabled" formatted="false">現在無効</string>
@@ -395,8 +397,7 @@
     最終的に、長期的な平均の使用状況のみに基づいて、 予測することができます。</string>
 
   <string name="pref_cat_language" formatted="false">言語</string>
-  <string name="pref_language_override" formatted="false">言語の上書き</string>
-  <string name="pref_language_override_summary" formatted="false">言語を選択:</string>
+  <string name="pref_change_app_language" formatted="false">アプリの言語</string>
   <string name="pref_cat_advanced_stats" formatted="false">高度なバッテリー統計</string>
   <string name="pref_enable_advanced_stats" formatted="false">高度なバッテリー統計を表示</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">root または Shizuku が必要なバッテリー統計を含む詳細タブを追加します。</string>

@@ -135,33 +135,74 @@
   <string name="after_nm_ms_unplugged" formatted="true">Nach %1$dm %2$ds ausgesteckt</string>
   <string name="after_nm_ms_plugged_in" formatted="true">Nach %1$dm %2$ds eingesteckt</string>
 
-  <string name="since" formatted="false">Seit</string>
+  <plurals name="n_hours_long">
+    <item quantity="one">"%d Stunde, "</item>
+    <item quantity="other">"%d Stunden, "</item>
+  </plurals>
+
+  <plurals name="n_minutes_long">
+    <item quantity="one">%d Minute</item>
+    <item quantity="other">%d Minuten</item>
+  </plurals>
+
+  <plurals name="n_hours_medium">
+    <item quantity="one">"%d Std., "</item>
+    <item quantity="other">"%d Std., "</item>
+  </plurals>
+
+  <plurals name="n_minutes_medium">
+    <item quantity="one">%d Min.</item>
+    <item quantity="other">%d Min.</item>
+  </plurals>
+
+  <plurals name="n_hours_short">
+    <item quantity="one">"%d Std. "</item>
+    <item quantity="other">"%d Std. "</item>
+  </plurals>
+
+  <plurals name="n_minutes_short">
+    <item quantity="one">%d Min.</item>
+    <item quantity="other">%d Min.</item>
+  </plurals>
+
+  <plurals name="n_days">
+    <item quantity="one">"%d Tag, "</item>
+    <item quantity="other">"%d Tage, "</item>
+  </plurals>
+
+  <plurals name="n_hours">
+    <item quantity="one">%d Stunde</item>
+    <item quantity="other">%d Stunden</item>
+  </plurals>
 
   <plurals name="for_n_hours">
     <item quantity="one">Seit %d Stunde</item>
     <item quantity="other">Seit %d Stunden</item>
   </plurals>
 
+  <string name="unit_days">%dT</string>
+  <string name="unit_hours">%dStd</string>
+  <string name="unit_minutes">%dMin</string>
+  <string name="since" formatted="false">Seit</string>
+
   <string name="currently_using" formatted="false">Im Moment in Benutzung</string>
-
   <string name="currently_set_to" formatted="false">"Im Moment gesetzt auf: "</string>
-
   <string name="currently_disabled" formatted="false">Im Moment ausgeschalten</string>
 
   <string name="help_cat_version" formatted="false">Version</string>
 
   <string name="help_cat_open_source" formatted="false">Open Source</string>
-
   <string name="help_open_source" formatted="false">Dies Das Projekt ist Open Source. Den Quellcode finden Sie unter <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">Datenschutz</string>
   <string name="help_privacy" formatted="false">Battery Monitor erhebt, speichert oder übermittelt keine personenbezogenen Daten.</string>
+
   <string name="help_cat_no_warranty" formatted="false">Keine Garantie</string>
   <string name="help_no_warranty" formatted="false">Diese Software ist in der Hoffnung erstellt, dass sie nützlich sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTGÄNGIGKEIT oder EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.\n
     \n
     Während ich mein Bestes gebe, um sicherzustellen, dass sie gut funktioniert und sie keine Probleme erzeugt, bin ich keinen Umständen verantwortlich für jegliche Schäden oder Unannehmlichkeiten.</string>
-  <string name="help_cat_acknowledgments" formatted="false">Danksagungen</string>
 
+  <string name="help_cat_acknowledgments" formatted="false">Danksagungen</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor ist eine Abzweigung von Battery Indicator Pro / BatteryBot Pro von Darshan Computing, LLC. Vielen Dank an die ursprünglichen Autoren und Mitwirkenden für die Erstellung und Pflege des Upstream-Projekts.</string>
 
   <string name="help_cat_contact" formatted="false">Kontakt</string>
@@ -172,19 +213,16 @@
 
   <string name="notifications_disabled_cat" formatted="false">Benachrichtigungen deaktiviert</string>
   <string name="app_notifs_disabled_b" formatted="false">App-Benachrichtigungen aktivieren</string>
-
   <string name="app_notifs_disabled_summary" formatted="false">Sie haben alle Benachrichtigungen für diese App deaktiviert. Bitte aktivieren Sie sie, um auf diese Einstellungen zuzugreifen.</string>
   <string name="main_notifs_disabled_b" formatted="false">Hauptbenachrichtigung aktivieren</string>
-
   <string name="main_notifs_disabled_summary" formatted="false">Sie haben die Hauptbenachrichtigung für diese App deaktiviert. Bitte aktivieren Sie sie, um auf diese Einstellungen zuzugreifen.</string>
   <string name="app_notifs_alarms_disabled_summary" formatted="false">Sie haben alle Benachrichtigungen für diese App deaktiviert. Bitte aktivieren Sie sie, um auf Ihre Alarme zuzugreifen.</string>
-
   <string name="alarm_notifs_disabled_b" formatted="false">Alarme aktivieren</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Sie haben die Alarm-Benachrichtigungsgruppe für diese App deaktiviert. Bitte aktivieren Sie sie, um auf Ihre Alarme zuzugreifen.</string>
-
   <string name="alarm_chan_disabled" formatted="false">Sie haben Benachrichtigungen für diesen Alarmtyp deaktiviert. Bitte aktivieren Sie sie, um diesen Alarmtyp zu verwenden.</string>
   <string name="alarm_chan_disabled_b" formatted="false">Diesen Alarmtyp aktivieren</string>
   <string name="alarm_chan_settings_b" formatted="false">Diesen Alarmtyp verwalten</string>
+
   <string name="notification_settings" formatted="false">Benachrichtigungen</string>
   <string name="notification_settings_summary" formatted="false">Bearbeite die Benachrichtigungen</string>
   <string name="notification_settings_help" formatted="false">Sie können konfigurieren, welche Inhalte in der Benachrichtigung angezeigt werden.</string>
@@ -193,16 +231,17 @@
   <string name="status_bar_icon_settings_help" formatted="false">Wählen Sie aus, ob das Benachrichtigungssymbol den Akkustand oder die Temperatur anzeigt, ob das Einheitssymbol im Symbol angezeigt wird und ob beim Laden ein eigenes Symbol verwendet wird.</string>
   <string name="status_bar_chip_settings" formatted="false">Statusleisten-Chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Inhalt des Live-Updates-Chips konfigurieren</string>
-
   <string name="status_bar_chip_settings_help" formatted="false">Auf Android 16+ mit Live Updates können Sie konfigurieren, was der Statusleisten-Chip zeigt und ob das Lade-Emoji angezeigt wird.</string>
   <string name="current_hack_settings" formatted="false">Stromstärke-(mA)-Hack</string>
   <string name="current_hack_settings_summary" formatted="false">Erweiterte Einstellungen für mA-Informationen</string>
   <string name="current_hack_settings_help" formatted="false">Android bietet Apps keinen offiziellen Zugriff auf Informationen zur Batteriestromstärke. Es gibt jedoch einen Hack, der dies auf vielen Geräten eventuell ermöglicht.</string>
+
   <string name="alarm_settings_subtitle" formatted="false">Alarm Einstellungen</string>
   <string name="alarm_settings" formatted="false">Alarme</string>
   <string name="alarm_settings_help" formatted="false">Battery Monitor kann Sie benachrichtigen, wenn ein bestimmter Akkuzustand erreicht wird (z. B. vollständig geladen, unter 20% usw.).</string>
   <string name="other_settings" formatted="false">Andere Einstellungen</string>
   <string name="other_settings_help" formatted="false">Alle weiteren Einstellungen befinden sich auf dieser Seite, einschließlich Protokollierung, Sperrbildschirm, Temperatureinheit, Autostart und mehr.</string>
+
   <string name="live_updates_onboarding_title">Akku-Chip in der Statusleiste</string>
   <string name="live_updates_onboarding_message_on">Ihr Gerät unterstützt die Anzeige des Batteriestands als Chip in der Statusleiste. Diese Option ist standardmäßig aktiviert.\n
     \n
@@ -214,29 +253,27 @@
     Für die beste Nutzung empfehlen wir, sie zu aktivieren. Wenn Sie ein klassisches Benachrichtigungssymbol bevorzugen, können Sie sie deaktiviert lassen.\n
     \n
     Hinweis: Das Erteilen dieser Berechtigung kann gelegentlich dazu führen, dass sich die App schließt. Falls das passiert, öffnen Sie sie einfach erneut.</string>
-
   <string name="live_updates_onboarding_positive_on">Verstanden</string>
   <string name="live_updates_onboarding_positive_off">Zu den Einstellungen</string>
   <string name="live_updates_onboarding_negative_off">Schließen</string>
+
   <string name="notifications_onboarding_message">Battery Monitor benötigt Ihre Berechtigung, um den Batteriestand in der Statusleiste anzuzeigen und Sie über Alarme zu benachrichtigen.\n
     \n
     Hinweis: Das Erteilen dieser Berechtigung kann gelegentlich dazu führen, dass sich die App schließt. Falls das passiert, öffnen Sie sie einfach erneut.</string>
+
   <string name="add_alarm" formatted="false">Alarm hinzufügen</string>
 
   <string name="pref_cat_channel_settings" formatted="false">Benachrichtigungskanal-Einstellungen</string>
   <string name="pref_manage_main_channel" formatted="false">Hauptkanal verwalten</string>
+
   <string name="pref_cat_notification_content" formatted="false">Inhalt</string>
   <string name="pref_cat_status_bar_chip" formatted="false">Statusleisten-Chip (Android 16+)</string>
   <string name="pref_live_update_display" formatted="false">Live-Update anzeigen</string>
   <string name="pref_live_update_display_summary" formatted="false">In der Statusleiste anzeigen:</string>
-
   <string name="pref_live_update_display_help" formatted="false">Wählen Sie, wann der Live-Update-Chip unter Android 16+ in der Statusleiste angezeigt werden soll.</string>
-
   <string name="pref_live_update_display_charging" formatted="false">Nur während des Ladens</string>
-
   <string name="pref_live_update_keep_main_notification" formatted="false">Hauptbenachrichtigung bei Live-Update beibehalten</string>
   <string name="pref_live_update_keep_main_notification_summary" formatted="false">Vollständige Hauptbenachrichtigung anzeigen, während Live-Update aktiv ist?</string>
-
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Wenn aktiviert, bleibt die normale Hauptbenachrichtigung zusätzlich zum Statusleisten-Chip sichtbar.</string>
   <string name="pref_chip_content" formatted="false">Chip-Inhalt</string>
   <string name="pref_chip_switching_interval" formatted="false">Wechselintervall</string>
@@ -251,22 +288,25 @@
   <string name="time_remaining" formatted="false">Verbleibende Restlaufzeit</string>
   <string name="time_since_status_change" formatted="false">Vergangene Zeit seit Statusänderung</string>
   <string name="vital_signs" formatted="false">Vitalzeichen</string>
+
   <string name="pref_time_remaining_verbosity" formatted="false">Ausführlichkeit Restzeit</string>
   <string name="pref_time_remaining_verbosity_help" formatted="false">Je nach Gerätegröße sind teils Abkürzungen nötig, damit die Restzeitschätzung gut in den Benachrichtigungsbereich passt.</string>
   <string name="condensed" formatted="false">Kompakt</string>
   <string name="normal" formatted="false">Normal</string>
   <string name="verbose" formatted="false">Ausführlich</string>
+
   <string name="pref_status_duration_in_vital_signs" formatted="false">Statusdauer in Vitalzeichen</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Zeit seit Statusänderung in Vitalzeichen einbeziehen?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">Wenn aktiviert, zeigt die Vitalzeichenzeile auch die Zeit seit Ausstecken, Einstecken oder Vollladung.</string>
 
   <string name="custom" formatted="false">Benutzerdefiniert...</string>
+
   <string name="pref_cat_icon_set" formatted="false">Benachrichtigungssymbol</string>
   <string name="pref_icon_content" formatted="false">Icon-Inhalt</string>
   <string name="pref_icon_content_help" formatted="false">Wählen Sie, ob das Statusleisten-Icon Akkustand oder Akkutemperatur anzeigt.</string>
   <string name="pref_show_icon_unit" formatted="false">Einheitensymbol anzeigen</string>
-
   <string name="pref_show_icon_unit_help" formatted="false">Wenn aktiviert, zeigt das Symbol ein Prozentzeichen für den Akkustand und ein Gradsymbol für die Akkutemperatur. Deaktivieren Sie dies, wenn nur die Zahl angezeigt werden soll.</string>
+
   <string name="pref_cat_current_hack_main" formatted="false">Hauptsteuerung</string>
   <string name="pref_cat_current_hack_unsupported" formatted="false">Stromstärke-(mA)-Hack nicht unterstützt</string>
 
@@ -275,22 +315,21 @@
   <string name="pref_enable_current_hack" formatted="false">Hack aktivieren</string>
   <string name="pref_enable_current_hack_summary" formatted="false">Versuchen, den Stromstärke-(mA)-Hack zu aktivieren?</string>
   <string name="pref_enable_current_hack_help" formatted="false">Wenn diese Einstellung aktiviert ist, sind die übrigen Hack-Optionen nutzbar.</string>
+
   <string name="pref_current_hack_prefer_fs" formatted="false">Alte Hack-Methode bevorzugen</string>
   <string name="pref_current_hack_prefer_fs_summary" formatted="false">Ältere, dateisystembasierte Hack-Methode bevorzugen?</string>
-
   <string name="pref_current_hack_prefer_fs_help" formatted="false">Seit Lollipop gibt es einen weniger hackigen Weg über BatteryManager, der jedoch nicht immer zuverlässig funktioniert.</string>
-  <string name="pref_current_hack_multiplier" formatted="false">Multiplikator</string>
 
+  <string name="pref_current_hack_multiplier" formatted="false">Multiplikator</string>
   <string name="pref_current_hack_multiplier_help" formatted="false">Einige Geräte liefern mA statt µA oder vertauschen das Vorzeichen; der Multiplikator hilft beim Anpassen.</string>
 
   <string name="pref_cat_current_hack_notification" formatted="false">Benachrichtigung</string>
   <string name="pref_display_current_in_vital_stats" formatted="false">In Vitalzeichen anzeigen</string>
   <string name="pref_display_current_in_vital_stats_summary" formatted="false">Stromstärke (mA) in den Vitalzeichen der Hauptbenachrichtigung anzeigen?</string>
-
   <string name="pref_display_current_in_vital_stats_help" formatted="false">Wenn aktiviert, wird der Hack versucht und das Ergebnis in der Vitalzeichenzeile angezeigt.</string>
+
   <string name="pref_cat_current_hack_main_window" formatted="false">Hauptfenster</string>
   <string name="pref_display_current_in_main_window" formatted="false">Im Hauptfenster anzeigen</string>
-
   <string name="pref_display_current_in_main_window_summary" formatted="false">Stromstärke (mA) im Hauptfenster anzeigen?</string>
   <string name="pref_display_current_in_main_window_help" formatted="false">Wenn aktiviert, wird der Hack versucht und das Ergebnis im Hauptfenster angezeigt.</string>
 
@@ -300,6 +339,7 @@
   <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">current_avg im Hauptfenster verwenden?</string>
 
   <string name="pref_prefer_current_avg_help" formatted="false">Einige Systeme liefern einen gemittelten Stromwert statt eines Momentanwerts.</string>
+
   <string name="pref_auto_refresh_current_in_main_window" formatted="false">mA im Hauptfenster automatisch aktualisieren</string>
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">mA alle zwei Sekunden automatisch aktualisieren?</string>
   <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Wenn der Hack mA im Hauptfenster anzeigt, kann der Wert automatisch aktualisiert werden.</string>
@@ -310,24 +350,23 @@
   <string name="pref_indicate_charging_help" formatted="false">Das Ladesymbol kann unter der Zahl einen Blitz anzeigen. Deaktivieren Sie diese Option, wenn Sie beim Laden und Entladen dasselbe Symbol bevorzugen.</string>
 
   <string name="pref_cat_logging" formatted="false">Protokollierung</string>
-
   <string name="pref_enable_logging" formatted="false">Protokollierung einschalten</string>
   <string name="pref_enable_logging_summary" formatted="false">Batteriestatusänderungen protokollieren?</string>
   <string name="pref_enable_logging_help" formatted="false">Wenn aktiviert, protokolliert Battery Monitor Akku-Statusänderungen.</string>
-
   <string name="pref_max_log_age" formatted="false">Maximales Protokollalter</string>
   <string name="pref_max_log_age_summary" formatted="false">Löschen von Protokollen älter als:</string>
   <string name="pref_max_log_age_help" formatted="false">Wenn die Protokollierung aktiviert ist, werden beim Anschließen des Geräts Protokolle gelöscht, die älter als diese Einstellung sind. Wähle Nie löschen, um Protokolle zu behalten, bis du sie manuell löschst.</string>
-  <string name="pref_cat_temperature_unit" formatted="false">Temperatureinheit</string>
 
+  <string name="pref_cat_temperature_unit" formatted="false">Temperatureinheit</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">Umrechnen in Fahrenheit</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">Android meldet die Akkutemperatur in Celsius. Aktivieren Sie diese Option, wenn Sie Fahrenheit bevorzugen.</string>
+
   <string name="pref_cat_autostart" formatted="false">Autostart</string>
   <string name="pref_autostart_at_boot" formatted="false">Autostart beim Gerätestart</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">Battery Monitor starten wenn Gerät startet:</string>
   <string name="pref_autostart_at_boot_help" formatted="false">Steuert, ob Battery Monitor beim Gerätestart automatisch gestartet werden soll.</string>
-  <string name="predictor_sensitive" formatted="false">Sensitiv</string>
 
+  <string name="predictor_sensitive" formatted="false">Sensitiv</string>
   <string name="predictor_conservative" formatted="false">Konservativ</string>
   <string name="predictor_since_status_change" formatted="false">Seit Statusänderung</string>
   <string name="predictor_long_term_ave" formatted="false">Langzeitdurchschnitt</string>
@@ -335,68 +374,65 @@
   <string name="pref_cat_predictor" formatted="false">Restzeit-Schätzungen</string>
   <string name="pref_prediction_type" formatted="false">Schätztyp</string>
   <string name="pref_prediction_type_help" formatted="false">Hier können Sie auswählen, wie Battery Monitor die verbleibende Akkulaufzeit bzw. die Zeit bis zur vollständigen Ladung schätzt.</string>
-  <string name="pref_cat_language" formatted="false">Sprache</string>
 
-  <string name="pref_language_override" formatted="false">Sprache überschreiben</string>
-  <string name="pref_language_override_summary" formatted="false">Sprache auswählen:</string>
+  <string name="pref_cat_language" formatted="false">Sprache</string>
+  <string name="pref_change_app_language" formatted="false">App-Sprache</string>
   <string name="pref_cat_advanced_stats" formatted="false">Erweiterte Akkustatistiken</string>
   <string name="pref_enable_advanced_stats" formatted="false">Erweiterte Akkustatistiken anzeigen</string>
-
   <string name="pref_enable_advanced_stats_summary" formatted="false">Fügt einen Reiter Erweitert mit Akkustatistiken hinzu, die Root oder Shizuku benötigen.</string>
+
   <string name="advanced_action_refresh" formatted="false">Aktualisieren</string>
   <string name="advanced_status_loading" formatted="false">Erweiterte Akkustatistiken werden geladen...</string>
-
   <string name="advanced_status_no_access" formatted="false">Für erweiterte Akkustatistiken wird Root oder Shizuku benötigt.</string>
+
   <string name="alarms_overview" formatted="false">Übersicht Alarme</string>
   <string name="alarms_overview_help" formatted="false">Auf dieser Seite können Sie neue Alarme hinzufügen, bestehende schnell aktivieren/deaktivieren oder löschen.</string>
+
   <string name="pref_alarm_enabled" formatted="false">Alarm einschalten</string>
   <string name="pref_alarm_enabled_help" formatted="false">Wenn Sie einen Alarm vorübergehend deaktivieren möchten, können Sie ihn hier oder auf der Hauptalarmseite aus- und wieder einschalten.</string>
-  <string name="pref_cat_alarm_conditions" formatted="false">Alarm-Bedingungen</string>
 
+  <string name="pref_cat_alarm_conditions" formatted="false">Alarm-Bedingungen</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Hier legen Sie fest, welche Bedingungen den Alarm auslösen.</string>
   <string name="pref_alarm_type" formatted="false">Alarmtyp</string>
   <string name="pref_alarm_type_summary" formatted="false">Alarm auslösen wenn Batterie:</string>
-
   <string name="pref_alarm_type_help" formatted="false">Aktuell stehen fünf Alarmtypen zur Auswahl.</string>
   <string name="pref_alarm_threshold" formatted="false">Grenzwert</string>
-
   <string name="alarm_pref_not_used" formatted="false">Nicht benutzt für diesen Alarmtyp</string>
   <string name="pref_alarm_threshold_summary" formatted="false">Alarm-Grenzwert:</string>
-
   <string name="pref_alarm_threshold_help" formatted="false">Für Lade- und Temperaturalarme müssen Sie den Schwellenwert festlegen.</string>
   <string name="alarm_custom_temp_message" formatted="true">Geben Sie die Temperatur in %s Grad ein</string>
   <string name="alarm_custom_charge_message" formatted="false">Geben Sie den Gebührenprozentsatz ein (0–100).</string>
+
   <string name="boot_pref_always" formatted="false">Immer</string>
   <string name="boot_pref_never" formatted="false">Nie</string>
   <string name="boot_pref_if_running" formatted="false">Wenn es beim Herunterfahren läuft</string>
+
   <string name="age_1_day" formatted="false">1 Tag</string>
   <string name="age_2_days" formatted="false">2 Tage</string>
   <string name="age_4_days" formatted="false">4 Tage</string>
   <string name="age_1_week" formatted="false">1 Woche</string>
   <string name="age_2_weeks" formatted="false">2 Wochen</string>
-
   <string name="age_3_weeks" formatted="false">3 Wochen</string>
   <string name="age_4_weeks" formatted="false">4 Wochen</string>
   <string name="age_never_delete" formatted="false">Nie löschen</string>
-
   <string name="pref_content_percent" formatted="false">Akkustand in Prozent</string>
   <string name="pref_content_temperature" formatted="false">Akkutemperatur</string>
   <string name="pref_content_switching" formatted="false">Zwischen beiden wechseln</string>
+
   <string name="chip_switching_interval_2_seconds" formatted="false">2 Sekunden</string>
   <string name="chip_switching_interval_5_seconds" formatted="false">5 Sekunden</string>
   <string name="chip_switching_interval_10_seconds" formatted="false">10 Sekunden</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 Sekunden</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 Sekunden</string>
+
   <string name="advanced_status_waiting_permission" formatted="false">Warte auf Shizuku-Berechtigung...</string>
   <string name="advanced_status_no_stats" formatted="false">Auf diesem Gerät sind derzeit keine erweiterten Akkustatistiken verfügbar.</string>
   <string name="advanced_section_counters" formatted="false">Zähler</string>
-
   <string name="advanced_section_capacity" formatted="false">Kapazität</string>
   <string name="advanced_section_charging" formatted="false">Laden</string>
   <string name="advanced_section_service" formatted="false">Android-Akkudienst</string>
   <string name="advanced_section_sysfs" formatted="false">Kernel-Dateien von power_supply</string>
   <string name="advanced_section_metadata" formatted="false">Metadaten</string>
-
   <string name="advanced_field_charge_counter" formatted="false">Geschätzte Restladung</string>
   <string name="advanced_field_current_now" formatted="false">Aktueller Strom</string>
   <string name="advanced_field_current_average" formatted="false">Durchschnittsstrom</string>

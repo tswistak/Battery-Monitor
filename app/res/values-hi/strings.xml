@@ -127,37 +127,87 @@
   <string name="alarm_health_failure" formatted="false">"बैटरी स्वास्थ्य है:"</string>
 
   <string name="logs_empty" formatted="false">लॉग खाली हैं</string>
-  <string name="after_nh_mm_unplugged" formatted="true">%1$dh %2$dm के बाद अनप्लग किया गया</string>
+  <plurals name="n_log_items">
+    <item quantity="one">%d लॉग प्रविष्टि</item>
+    <item quantity="other">%d लॉग प्रविष्टियाँ</item>
+  </plurals>
 
+  <string name="after_nh_mm_unplugged" formatted="true">%1$dh %2$dm के बाद अनप्लग किया गया</string>
   <string name="after_nh_mm_plugged_in" formatted="true">%1$dh %2$dm के बाद प्लग इन किया गया</string>
   <string name="after_nm_ms_unplugged" formatted="true">%1$dm %2$ds के अनप्लग होने के बाद</string>
   <string name="after_nm_ms_plugged_in" formatted="true">%1$dm %2$ds प्लग इन करने के बाद</string>
+
+  <plurals name="n_hours_long">
+    <item quantity="one">"%d घंटा, "</item>
+    <item quantity="other">"%d घंटे, "</item>
+  </plurals>
+
+  <plurals name="n_minutes_long">
+    <item quantity="one">%d मिनट</item>
+    <item quantity="other">%d मिनट</item>
+  </plurals>
+
+  <plurals name="n_hours_medium">
+    <item quantity="one">"%d घं., "</item>
+    <item quantity="other">"%d घं., "</item>
+  </plurals>
+
+  <plurals name="n_minutes_medium">
+    <item quantity="one">%d मि.</item>
+    <item quantity="other">%d मि.</item>
+  </plurals>
+
+  <plurals name="n_hours_short">
+    <item quantity="one">"%d घं. "</item>
+    <item quantity="other">"%d घं. "</item>
+  </plurals>
+
+  <plurals name="n_minutes_short">
+    <item quantity="one">%d मि.</item>
+    <item quantity="other">%d मि.</item>
+  </plurals>
+
+  <plurals name="n_days">
+    <item quantity="one">"%d दिन, "</item>
+    <item quantity="other">"%d दिन, "</item>
+  </plurals>
+
+  <plurals name="n_hours">
+    <item quantity="one">%d घंटा</item>
+    <item quantity="other">%d घंटे</item>
+  </plurals>
+
+  <plurals name="for_n_hours">
+    <item quantity="one">%d घंटे के लिए</item>
+    <item quantity="other">%d घंटे के लिए</item>
+  </plurals>
+
+  <string name="unit_days">%dदि</string>
+  <string name="unit_hours">%dघं</string>
+  <string name="unit_minutes">%dमि</string>
   <string name="since" formatted="false">तब से</string>
 
   <string name="currently_using" formatted="false">वर्तमान में उपयोग कर रहे हैं</string>
-
   <string name="currently_set_to" formatted="false">"वर्तमान में इस पर सेट है:"</string>
-
   <string name="currently_disabled" formatted="false">वर्तमान में अक्षम</string>
 
   <string name="help_cat_version" formatted="false">संस्करण</string>
 
   <string name="help_cat_open_source" formatted="false">खुला स्त्रोत</string>
-
   <string name="help_open_source" formatted="false">यह प्रोजेक्ट खुला स्रोत है. आप स्रोत कोड तक पहुंच सकते हैं <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>।</string>
 
   <string name="help_cat_privacy" formatted="false">गोपनीयता</string>
-
   <string name="help_privacy" formatted="false">बैटरी मॉनिटर किसी भी व्यक्तिगत जानकारी को एकत्र, संग्रहीत या प्रसारित नहीं करता है।</string>
 
   <string name="help_cat_no_warranty" formatted="false">कोई वारंटी नहीं</string>
   <string name="help_no_warranty" formatted="false">यह सॉफ़्टवेयर इस आशा में वितरित किया जाता है कि यह उपयोगी होगा, लेकिन बिना किसी वारंटी के; की निहित वारंटी के बिना भी किसी विशेष उद्देश्य के लिए व्यापारिक योग्यता या उपयुक्तता.\n
     \n
     जबकि मैं यह सुनिश्चित करने की पूरी कोशिश करता हूं कि यह अच्छी तरह से काम करे और नहीं समस्याएँ उत्पन्न करें, मैं किसी भी क्षति या असुविधा के लिए ज़िम्मेदार नहीं हूँ यह किसी भी परिस्थिति में उत्पन्न हो सकता है।</string>
+
   <string name="help_cat_acknowledgments" formatted="false">स्वीकृतियाँ</string>
   <string name="help_acknowledgments" formatted="false">बैटरी मॉनिटर बैटरी इंडिकेटर प्रो/बैटरीबॉट प्रो का एक कांटा है दर्शन कंप्यूटिंग, एलएलसी। मूल लेखकों और योगदानकर्ताओं को धन्यवाद अपस्ट्रीम प्रोजेक्ट बनाने और बनाए रखने के लिए।</string>
-  <string name="help_cat_contact" formatted="false">संपर्क</string>
 
+  <string name="help_cat_contact" formatted="false">संपर्क</string>
   <string name="help_contact" formatted="false">यदि आपका कोई प्रश्न, कोई समस्या या कोई टिप्पणी है, तो कृपया <a href="mailto:tomasz@swistak.codes">मुझे ईमेल करो</a>.</string>
 
   <string name="settings_overview" formatted="false">सिंहावलोकन</string>
@@ -165,20 +215,16 @@
 
   <string name="notifications_disabled_cat" formatted="false">सूचनाएं अक्षम की गईं</string>
   <string name="app_notifs_disabled_b" formatted="false">ऐप सूचनाएं सक्षम करें</string>
-
   <string name="app_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए सभी सूचनाएं अक्षम कर दी हैं.  कृपया उन्हें इन सेटिंग्स तक पहुंचने में सक्षम करें।</string>
   <string name="main_notifs_disabled_b" formatted="false">मुख्य अधिसूचना सक्षम करें</string>
-
   <string name="main_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए मुख्य अधिसूचना अक्षम कर दी है.  कृपया इन सेटिंग्स तक पहुंचने के लिए इसे सक्षम करें।</string>
   <string name="app_notifs_alarms_disabled_summary" formatted="false">आपने इस ऐप के लिए सभी सूचनाएं अक्षम कर दी हैं.  कृपया उन्हें अपने अलार्म तक पहुंचने में सक्षम करें।</string>
-
   <string name="alarm_notifs_disabled_b" formatted="false">अलार्म सक्षम करें</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए अलार्म अधिसूचना समूह को अक्षम कर दिया है।  कृपया इसे अपने अलार्म तक पहुंचने के लिए सक्षम करें।</string>
-
   <string name="alarm_chan_disabled" formatted="false">आपने इस अलार्म प्रकार के लिए सूचनाएं अक्षम कर दी हैं।  कृपया उन्हें इस प्रकार के अलार्म का उपयोग करने में सक्षम करें।</string>
   <string name="alarm_chan_disabled_b" formatted="false">इस अलार्म प्रकार को सक्षम करें</string>
-
   <string name="alarm_chan_settings_b" formatted="false">इस अलार्म प्रकार को प्रबंधित करें</string>
+
   <string name="notification_settings" formatted="false">मुख्य अधिसूचना</string>
   <string name="notification_settings_summary" formatted="false">मुख्य अधिसूचना कॉन्फ़िगर करें</string>
   <string name="notification_settings_help" formatted="false">आप कॉन्फ़िगर कर सकते हैं कि पुल-डाउन अधिसूचना में कौन सी सामग्री दिखानी है।</string>
@@ -189,18 +235,19 @@
   <string name="status_bar_chip_settings_summary" formatted="false">लाइव अपडेट\' चिप सामग्री कॉन्फ़िगर करें</string>
   <string name="status_bar_chip_settings_help" formatted="false">एंड्रॉइड 16+ पर लाइव अपडेट के साथ, आप स्थिति को कॉन्फ़िगर कर सकते हैं बार चिप दिखाता है और चार्जिंग इमोजी प्रदर्शित करना है या नहीं।</string>
   <string name="current_hack_settings" formatted="false">वर्तमान (एमए) हैक</string>
-
   <string name="current_hack_settings_summary" formatted="false">एमए जानकारी सक्षम करने के लिए उन्नत सेटिंग्स</string>
   <string name="current_hack_settings_help" formatted="false">एंड्रॉइड ऐप्स को जानकारी तक पहुंचने का कोई साधन प्रदान नहीं करता है बैटरी करंट के बारे में हालाँकि, एक हैक उपलब्ध है जो कई उपकरणों को संभावित रूप से यह जानकारी प्राप्त करने की अनुमति देता है।\n
     \n
     यह काम करने की गारंटी नहीं है। हो सकता है कि यह बिल्कुल भी काम न करे या हो ऐसा प्रतीत हो सकता है कि यह काम करता है लेकिन इसका परिणाम केवल निरर्थक मान ही होता है।\n
     \n
     सेटिंग्स यदि संभव हो तो हैक को चालू करें और नियंत्रित करें कि यह कैसा है प्रयुक्त इस अनुभाग में उपलब्ध हैं।</string>
+
   <string name="alarm_settings_subtitle" formatted="false">अलार्म सेटिंग्स</string>
   <string name="alarm_settings" formatted="false">एलार्म</string>
   <string name="alarm_settings_help" formatted="false">आपकी बैटरी का स्तर होने पर आप बैटरी मॉनिटर आपको सूचित कर सकते हैं एक निश्चित स्थिति तक पहुँच जाता है (उदाहरण के लिए, बैटरी पूरी तरह चार्ज हो जाती है, बैटरी का स्तर 20% से नीचे चला जाता है, और कई अन्य)।</string>
   <string name="other_settings" formatted="false">अन्य सेटिंग्स</string>
   <string name="other_settings_help" formatted="false">लॉगिंग, लॉक सहित अन्य सभी सेटिंग्स इस पेज पर हैं स्क्रीन, तापमान इकाई, ऑटोस्टार्ट, और बहुत कुछ।</string>
+
   <string name="live_updates_onboarding_title">स्टेटस बार बैटरी चिप</string>
   <string name="live_updates_onboarding_message_on">आपका डिवाइस स्टेटस बार में बैटरी प्रतिशत को चिप के रूप में दिखाने का समर्थन करता है। यह विकल्प डिफ़ॉल्ट रूप से सक्षम है।\n
     \n
@@ -214,12 +261,14 @@
     नोट: यह अनुमति देने पर कभी-कभी ऐप बंद हो सकती है। अगर ऐसा हो, तो बस ऐप को दोबारा खोलें।</string>
   <string name="live_updates_onboarding_positive_on">समझ गया</string>
   <string name="live_updates_onboarding_positive_off">सेटिंग्स पर जाएं</string>
-
   <string name="live_updates_onboarding_negative_off">नकार देना</string>
+
   <string name="notifications_onboarding_message">Battery Monitor को स्टेटस बार में बैटरी स्तर दिखाने और अलार्म के बारे में सूचित करने के लिए आपकी अनुमति चाहिए।\n
     \n
     नोट: यह अनुमति देने पर कभी-कभी ऐप बंद हो सकती है। अगर ऐसा हो, तो बस ऐप को दोबारा खोलें।</string>
+
   <string name="add_alarm" formatted="false">अलार्म जोड़ें</string>
+
   <string name="pref_cat_channel_settings" formatted="false">अधिसूचना चैनल सेटिंग्स</string>
   <string name="pref_manage_main_channel" formatted="false">मुख्य चैनल प्रबंधित करें</string>
 
@@ -229,14 +278,10 @@
   <string name="pref_live_update_display_summary" formatted="false">स्टेटस बार में दिखाएं:</string>
   <string name="pref_live_update_display_help" formatted="false">चुनें कि Android 16+ का लाइव अपडेट चिप स्टेटस बार में कब दिखे।</string>
   <string name="pref_live_update_display_charging" formatted="false">सिर्फ चार्जिंग के दौरान</string>
-
   <string name="pref_live_update_keep_main_notification" formatted="false">लाइव अपडेट के साथ मुख्य सूचना बनाए रखें</string>
-
   <string name="pref_live_update_keep_main_notification_summary" formatted="false">क्या लाइव अपडेट सक्रिय होने पर पूरी मुख्य सूचना भी दिखाई जाए?</string>
-
   <string name="pref_live_update_keep_main_notification_help" formatted="false">यदि यह चालू है, तो स्टेटस बार चिप के साथ सामान्य मुख्य सूचना भी दिखाई देगी।</string>
   <string name="pref_chip_content" formatted="false">चिप सामग्री</string>
-
   <string name="pref_chip_switching_interval" formatted="false">स्विचिंग अंतराल</string>
   <string name="pref_chip_content_help" formatted="false">चुनें कि Android 16+ प्रचारित-अधिसूचना चिप में कौन सा मान दिखाना है।</string>
   <string name="pref_chip_indicate_charging" formatted="false">चार्जिंग इमोजी दिखाएँ</string>
@@ -249,50 +294,53 @@
   <string name="time_remaining" formatted="false">शेष समय</string>
   <string name="time_since_status_change" formatted="false">स्थिति परिवर्तन के बाद से समय</string>
   <string name="vital_signs" formatted="false">जीवन के संकेत</string>
+
   <string name="pref_time_remaining_verbosity" formatted="false">समय शेष वाचालता</string>
   <string name="pref_time_remaining_verbosity_help" formatted="false">उपकरण सभी आकृति और आकार में आते हैं, तो सबसे अनुवाद समय शेष अनुमान सूचना क्षेत्र में आराम से फिट बैठता है कि यह सुनिश्चित करने के लिए लघु रूपों का उपयोग करने की आवश्यकता है। यह अभी भी फिट नहीं है, तो आप गाढ़ा प्रारूप के लिए विकल्प चुन सकते हैं। आप कमरे के पास बहुत है, तो आप वाचाल सेटिंग पसंद हो सकता है।</string>
   <string name="condensed" formatted="false">संघनित</string>
   <string name="normal" formatted="false">Normal</string>
   <string name="verbose" formatted="false">वाचाल</string>
+
   <string name="pref_status_duration_in_vital_signs" formatted="false">महत्वपूर्ण संकेतों में स्थिति अवधि</string>
   <string name="pref_status_duration_in_vital_signs_summary" formatted="false">महत्वपूर्ण संकेतों में स्थिति परिवर्तन के बाद का समय शामिल करें?</string>
   <string name="pref_status_duration_in_vital_signs_help" formatted="false">यदि सेट किया गया है, तो महत्वपूर्ण संकेत लाइन में घंटों की संख्या भी शामिल होगी चूंकि डिवाइस अनप्लग हो गया, प्लग इन हो गया या पूरी तरह चार्ज हो गया।</string>
-  <string name="custom" formatted="false">कस्टम...</string>
-  <string name="pref_cat_icon_set" formatted="false">सूचना आइकन</string>
 
+  <string name="custom" formatted="false">कस्टम...</string>
+
+  <string name="pref_cat_icon_set" formatted="false">सूचना आइकन</string>
   <string name="pref_icon_content" formatted="false">चिह्न सामग्री</string>
   <string name="pref_icon_content_help" formatted="false">चुनें कि स्टेटस बार आइकन बैटरी प्रतिशत दिखाता है या नहीं बैटरी का तापमान. तापमान आपके चयनित इकाई का अनुसरण करता है।</string>
   <string name="pref_show_icon_unit" formatted="false">इकाई चिह्न दिखाएँ</string>
   <string name="pref_show_icon_unit_help" formatted="false">यदि यह चालू है, तो आइकन बैटरी प्रतिशत के लिए प्रतिशत चिह्न और बैटरी तापमान के लिए डिग्री चिह्न दिखाता है। केवल संख्या दिखाने के लिए इसे बंद करें।</string>
+
   <string name="pref_cat_current_hack_main" formatted="false">मुख्य नियंत्रण</string>
-
   <string name="pref_cat_current_hack_unsupported" formatted="false">वर्तमान (एमए) हैक असमर्थित</string>
+
   <string name="pref_current_hack_unsupported" formatted="false">क्षमा करें, वर्तमान (एमए) हैक इस डिवाइस पर समर्थित नहीं है।</string>
+
   <string name="pref_enable_current_hack" formatted="false">हैक सक्षम करें</string>
-
   <string name="pref_enable_current_hack_summary" formatted="false">वर्तमान (एमए) हैक को सक्षम करने का प्रयास करें?</string>
-
   <string name="pref_enable_current_hack_help" formatted="false">जब यह सेटिंग सक्षम हो जाती है, तो इसके संबंध में अन्य विकल्प हैक प्रयोग योग्य होगा.</string>
+
   <string name="pref_current_hack_prefer_fs" formatted="false">पुरानी हैक विधि को प्राथमिकता दें</string>
   <string name="pref_current_hack_prefer_fs_summary" formatted="false">पुरानी, ​​फ़ाइल सिस्टम-आधारित हैक पद्धति को प्राथमिकता दें?</string>
   <string name="pref_current_hack_prefer_fs_help" formatted="false">लॉलीपॉप (एंड्रॉइड 5.0) से शुरू होकर, एंड्रॉइड अब एक प्रदान करता है वर्तमान (एमए) जानकारी तक पहुंचने का कुछ कम हैक तरीका, सीधे सिस्टम बैटरीमैनेजर से। हालाँकि, यह अभी भी नहीं है बिल्कुल काम करने या अच्छा काम करने की गारंटी। एंड्रॉइड नौगट तक (एंड्रॉइड 7.0), पुरानी (फ़ाइल सिस्टम-आधारित) हैक पद्धति प्रतीत होती है अधिकांश डिवाइस पर बेहतर काम करता है, इसलिए यह डिवाइस पर डिफ़ॉल्ट बना रहता है Android 7.0.\n
     से कम चल रहा है\n
     यह सेटिंग हैक के लिए केवल एक संकेत है कि किस विधि का उपयोग करना है पसंद करें; यदि हैक ठीक से काम नहीं कर रहा है तो आप इसे बदलने का प्रयास कर सकते हैं आपका उपकरण.</string>
-  <string name="pref_current_hack_multiplier" formatted="false">गुणक</string>
 
+  <string name="pref_current_hack_multiplier" formatted="false">गुणक</string>
   <string name="pref_current_hack_multiplier_help" formatted="false">कुछ डिवाइस माइक्रोएम्पीयर के बजाय मिलीएम्पीयर की रिपोर्ट करते हैं एपीआई मांगता है. समान डिवाइस रिपोर्ट किए गए मान के चिह्न को स्वैप करते हैं। कुछ उपयोगकर्ता सही ढंग से रिपोर्ट किए गए मानों के विपरीत चिह्न को पसंद करते हैं। इस तरह की स्थितियों को समायोजित करने में सहायता के लिए, आप इसे गुणा कर सकते हैं एपीआई कॉल का परिणाम यहां दिए गए मान के अनुसार है।\n
     \n
     , उदाहरण के लिए, यदि आपका उपकरण हमेशा 0 mA प्रदर्शित करता है, तो आप कोशिश कर सकते हैं 1000 के गुणक का उपयोग करना। यदि एपीआई कॉल 450 लौटाती है माइक्रोएम्पीयर, उस गुणक को मूल्य दिखाने के लिए ऐप मिलेगा 0 mA के बजाय 450 mA के रूप में। यदि एपीआई कॉल 0 लौटाती है माइक्रोएम्पीयर, निश्चित रूप से, गुणक अंतिम को नहीं बदलेगा 0 mA का प्रदर्शन मान.</string>
+
   <string name="pref_cat_current_hack_notification" formatted="false">अधिसूचना</string>
-
   <string name="pref_display_current_in_vital_stats" formatted="false">महत्वपूर्ण आँकड़ों में प्रदर्शित करें</string>
-
   <string name="pref_display_current_in_vital_stats_summary" formatted="false">मुख्य अधिसूचना महत्वपूर्ण आंकड़ों में वर्तमान (एमए) प्रदर्शित करें?</string>
   <string name="pref_display_current_in_vital_stats_help" formatted="false">सक्षम होने पर, हैक का प्रयास किया जाएगा और प्रदर्शित किया जाएगा मुख्य अधिसूचना महत्वपूर्ण आँकड़े पंक्ति में परिणाम। ध्यान दें कि आप महत्वपूर्ण आँकड़े प्रदर्शित करने के लिए मुख्य अधिसूचना कॉन्फ़िगर होनी चाहिए इसे देखने के लिए. यह मान तभी ताज़ा होगा जब सिस्टम नई बैटरी की जानकारी भेजता है.\n
     \n
     अधिकांश उपकरणों पर, एक नकारात्मक मान से शुद्ध निकास का संकेत मिलता है बैटरी और एक सकारात्मक मान इंगित करता है कि बैटरी चल रही है आरोपित. हालाँकि, सभी डिवाइस इस तरह से मूल्य उत्पन्न नहीं करते हैं।</string>
-  <string name="pref_cat_current_hack_main_window" formatted="false">मुख्य विंडो</string>
 
+  <string name="pref_cat_current_hack_main_window" formatted="false">मुख्य विंडो</string>
   <string name="pref_display_current_in_main_window" formatted="false">मुख्य विंडो में प्रदर्शित करें</string>
   <string name="pref_display_current_in_main_window_summary" formatted="false">मुख्य विंडो में करंट (एमए) प्रदर्शित करें?</string>
   <string name="pref_display_current_in_main_window_help" formatted="false">सक्षम होने पर, हैक का प्रयास किया जाएगा और प्रदर्शित किया जाएगा मुख्य विंडो में परिणाम. यह मान जब भी ताज़ा किया जाएगा सिस्टम नई बैटरी की जानकारी भेजता है, लेकिन आप इसे रीफ्रेश कर सकते हैं किसी भी समय केवल प्रदर्शित मूल्य को टैप करके मूल्य। (नोट इसलिए, कुछ डिवाइस अंतर्निहित डेटा को शायद ही कभी या कभी अपडेट नहीं करते हैं हो सकता है कि टैप करने पर मान परिवर्तित न हो।)\n
@@ -301,31 +349,30 @@
 
   <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">महत्वपूर्ण आँकड़ों में औसत को प्राथमिकता दें</string>
   <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">मुख्य अधिसूचना महत्वपूर्ण आँकड़ों में current_avg का उपयोग करने का प्रयास करें?</string>
-
   <string name="pref_prefer_current_avg_in_main_window" formatted="false">मुख्य विंडो में औसत को प्राथमिकता दें</string>
   <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">मुख्य विंडो में current_avg का उपयोग करने का प्रयास करें?</string>
-  <string name="pref_prefer_current_avg_help" formatted="false">कुछ प्रणालियों में एक और हैक उपलब्ध है, जो हाल ही में दिया गया है इसके तात्कालिक पढ़ने के बजाय वर्तमान का औसत। इसका मतलब अलग-अलग डिवाइस में अलग-अलग होता है और यह केवल उपलब्ध होता है कुछ उपकरणों पर. यह अधिक स्थिर मान दे सकता है (यदि सब कुछ ठीक रहा)। ठीक है), यह वही मान लौटा सकता है, या यह अनुपयोगी लौटा सकता है मान (ऐसी स्थिति में आपको यह विकल्प बंद कर देना चाहिए)।</string>
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">मुख्य विंडो में स्वतः ताज़ा mA</string>
 
+  <string name="pref_prefer_current_avg_help" formatted="false">कुछ प्रणालियों में एक और हैक उपलब्ध है, जो हाल ही में दिया गया है इसके तात्कालिक पढ़ने के बजाय वर्तमान का औसत। इसका मतलब अलग-अलग डिवाइस में अलग-अलग होता है और यह केवल उपलब्ध होता है कुछ उपकरणों पर. यह अधिक स्थिर मान दे सकता है (यदि सब कुछ ठीक रहा)। ठीक है), यह वही मान लौटा सकता है, या यह अनुपयोगी लौटा सकता है मान (ऐसी स्थिति में आपको यह विकल्प बंद कर देना चाहिए)।</string>
+
+  <string name="pref_auto_refresh_current_in_main_window" formatted="false">मुख्य विंडो में स्वतः ताज़ा mA</string>
   <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">हर दो सेकंड में mA को स्वतः ताज़ा करें?</string>
   <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">यदि आपके पास मुख्य विंडो में mA प्रदर्शित करने के लिए हैक सेट है, तो आप ऐसा कर सकते हैं बस इसे टैप करके मान को ताज़ा करें। अगर आप देखना चाहते हैं लगातार अपडेट के लिए बिना टैप किए आप इस विकल्प को सक्षम कर सकते हैं विंडो दिखाई देने पर हर दो सेकंड में मान को स्वतः ताज़ा करने के लिए।\n
     \n
     ध्यान दें कि कुछ डिवाइस शायद ही कभी या कभी भी अंतर्निहित अपडेट नहीं करते हैं डेटा, इसलिए ऐप होने पर भी मान बदलता नहीं दिख सकता है प्राप्त डेटा से मिलान करने के लिए प्रदर्शित मान को ताज़ा करना प्रणाली.</string>
+
   <string name="pref_cat_charging_indicator" formatted="false">चार्जिंग संकेतक</string>
   <string name="pref_indicate_charging" formatted="false">चार्जिंग का संकेत दें</string>
-
   <string name="pref_indicate_charging_summary" formatted="false">चार्ज करते समय इंगित करने के लिए आइकन बदलें?</string>
   <string name="pref_indicate_charging_help" formatted="false">चार्जिंग आइकन संख्या के नीचे बिजली का चिन्ह दिखा सकता है। यदि आप चार्ज और डिस्चार्ज दोनों में एक ही आइकन चाहते हैं, तो इस सेटिंग को बंद करें।</string>
+
   <string name="pref_cat_logging" formatted="false">लॉगिंग</string>
   <string name="pref_enable_logging" formatted="false">लॉगिंग सक्षम करें</string>
-
   <string name="pref_enable_logging_summary" formatted="false">लॉग बैटरी स्थिति में परिवर्तन?</string>
-
   <string name="pref_enable_logging_help" formatted="false">यदि सक्षम किया गया है, तो बैटरी मॉनिटर बैटरी स्थिति परिवर्तन लॉग करेगा।</string>
   <string name="pref_max_log_age" formatted="false">अधिकतम लॉग आयु</string>
   <string name="pref_max_log_age_summary" formatted="false">इससे पुराने लॉग हटाएँ:</string>
-
   <string name="pref_max_log_age_help" formatted="false">यदि लॉगिंग सक्षम है, तो जब भी आप डिवाइस को प्लग इन करेंगे, इस मान से पुराने लॉग हटाए जाएँगे। लॉग को तब तक रखने के लिए कभी न हटाएँ चुनें, जब तक आप उन्हें मैन्युअल रूप से साफ़ न करें।</string>
+
   <string name="pref_cat_temperature_unit" formatted="false">तापमान इकाई</string>
   <string name="pref_convert_to_fahrenheit" formatted="false">फ़ारेनहाइट में कनवर्ट करें</string>
   <string name="pref_convert_to_fahrenheit_help" formatted="false">एंड्रॉइड बैटरी तापमान को डिग्री सेल्सियस में रिपोर्ट करता है। यदि आप बैटरी का तापमान डिग्री फ़ारेनहाइट में देखना पसंद करते हैं, इस विकल्प को जांचें, और ऐप आपके लिए रूपांतरित हो जाएगा।</string>
@@ -334,14 +381,14 @@
   <string name="pref_autostart_at_boot" formatted="false">बूट पर ऑटोस्टार्ट</string>
   <string name="pref_autostart_at_boot_summary" formatted="false">डिवाइस बूट होने पर बैटरी मॉनिटर प्रारंभ करें:</string>
   <string name="pref_autostart_at_boot_help" formatted="false">यह नियंत्रित करता है कि डिवाइस बूट होने पर बैटरी मॉनिटर स्वचालित रूप से शुरू हो या नहीं। "शटडाउन पर चल रहा था" विकल्प इस बात पर निर्भर करता है कि आपने हाल ही में बैटरी मॉनिटर को मैन्युअली शुरू या बंद किया था या नहीं। यदि बैटरी मॉनिटर किसी बाहरी टूल (जैसे टास्क किलर) से बंद किया गया, तो ऐप हमेशा इसे पहचान नहीं पाती और बूट पर फिर शुरू हो सकता है। नोट: यदि आपके पास बैटरी मॉनिटर का डेस्कटॉप विजेट है, तो एंड्रॉइड बूट पर ऐप को वैसे भी शुरू कर देगा।</string>
+
   <string name="predictor_sensitive" formatted="false">संवेदनशील</string>
   <string name="predictor_conservative" formatted="false">रूढ़िवादी</string>
   <string name="predictor_since_status_change" formatted="false">स्थिति परिवर्तन के बाद से</string>
-
   <string name="predictor_long_term_ave" formatted="false">दीर्घकालिक औसत</string>
+
   <string name="pref_cat_predictor" formatted="false">समय-शेष अनुमान</string>
   <string name="pref_prediction_type" formatted="false">अनुमान प्रकार</string>
-
   <string name="pref_prediction_type_help" formatted="false">यहां आप यह चुन सकते हैं कि बैटरी मॉनिटर आपके शेष रहने की भविष्यवाणी कैसे करेगा बैटरी जीवन/पूरी तरह चार्ज होने तक का समय.\n
     \n
     \"संवेदनशील\" एल्गोरिदम पूरी तरह से आपके पिछले पांच पर आधारित है उपयोग के मिनट. यदि आपकी प्राथमिक चिंता यह है कि "कब तक मेरी इच्छा पूरी होगी।" अगर मैं वही करता रहूं जो मैं कर रहा हूं तो बैटरी खत्म हो जाएगी?\" तो यही है आपके लिए एल्गोरिदम.\n
@@ -351,19 +398,18 @@
     भविष्यवाणी आधारित करने के लिए \"स्थिति परिवर्तन के बाद से\" का चयन करें आपके वर्तमान सत्र पर सख्ती से।\n
     \n
     अंत में, आप पूरी तरह से अपने आधार पर भविष्यवाणी कर सकते हैं दीर्घकालिक औसत उपयोग।</string>
-  <string name="pref_cat_language" formatted="false">भाषा</string>
-  <string name="pref_language_override" formatted="false">भाषा ओवरराइड</string>
-  <string name="pref_language_override_summary" formatted="false">भाषा चुने:</string>
 
+  <string name="pref_cat_language" formatted="false">भाषा</string>
+  <string name="pref_change_app_language" formatted="false">ऐप की भाषा</string>
   <string name="pref_cat_advanced_stats" formatted="false">उन्नत बैटरी आँकड़े</string>
   <string name="pref_enable_advanced_stats" formatted="false">उन्नत बैटरी आँकड़े दिखाएँ</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">एक उन्नत टैब जोड़ता है जिसमें बैटरी आँकड़े होते हैं और जिसके लिए root या Shizuku चाहिए।</string>
-  <string name="advanced_action_refresh" formatted="false">रीफ़्रेश</string>
 
+  <string name="advanced_action_refresh" formatted="false">रीफ़्रेश</string>
   <string name="advanced_status_loading" formatted="false">उन्नत बैटरी आँकड़े लोड हो रहे हैं...</string>
   <string name="advanced_status_no_access" formatted="false">उन्नत बैटरी आँकड़े दिखाने के लिए root या Shizuku चाहिए।</string>
-  <string name="alarms_overview" formatted="false">अलार्म अवलोकन</string>
 
+  <string name="alarms_overview" formatted="false">अलार्म अवलोकन</string>
   <string name="alarms_overview_help" formatted="false">यह पृष्ठ आपको नए अलार्म जोड़ने, तुरंत सक्षम या अक्षम करने की अनुमति देता है मौजूदा अलार्म, या अलार्म हटा दें.\n
     \n
     नया अलार्म जोड़ने के लिए, \"अलार्म जोड़ें\" दबाएँ - इससे एक नया अलार्म बन जाएगा अलार्म और आपको अलार्म सेटिंग पृष्ठ पर ले जाएं, जहां आप कर सकते हैं नए अलार्म के लिए सेटिंग्स को नियंत्रित करें। उस पृष्ठ पर सहायता देखें अधिक जानकारी के लिए.\n
@@ -373,12 +419,13 @@
     • किसी मौजूदा अलार्म को संपादित करने के लिए, बस इसे दबाएं।\n
     • किसी अलार्म को हटाने के लिए, उसे देर तक दबाएँ, फिर \"हटाएँ चुनें अलार्म\"। (आप व्यक्तिगत अलार्म से अलार्म भी हटा सकते हैं पहले मेनू और फिर \"अलार्म हटाएं\" दबाकर सेटिंग पेज खोलें।)\n
     • अलार्म सक्षम है या नहीं, इसे आसानी से टॉगल करने के लिए टॉगल दबाएं अलार्म टेक्स्ट के किनारे पर स्विच करें. (आप सक्षम भी कर सकते हैं या व्यक्तिगत अलार्म सेटिंग पृष्ठ से अलार्म अक्षम करें।)</string>
+
   <string name="pref_alarm_enabled" formatted="false">अलार्म सक्षम करें</string>
   <string name="pref_alarm_enabled_help" formatted="false">यदि आप अस्थायी रूप से चाहते हैं जब आप चाहें तो अलार्म को दोबारा बनाए बिना उसे अक्षम कर दें फिर, आप इसे यहां या मुख्य अलार्म पर बंद और चालू कर सकते हैं पेज.</string>
+
   <string name="pref_cat_alarm_conditions" formatted="false">अलार्म की स्थिति</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">यहीं आप कर सकते हैं नियंत्रित करें कि कौन सी स्थितियाँ अलार्म को ट्रिगर करती हैं।</string>
   <string name="pref_alarm_type" formatted="false">अलार्म प्रकार</string>
-
   <string name="pref_alarm_type_summary" formatted="false">बैटरी होने पर ट्रिगर अलार्म:</string>
   <string name="pref_alarm_type_help" formatted="false">वर्तमान में पाँच प्रकार हैं अलार्म का जिसे आप चुन सकते हैं.\n
     \n
@@ -388,17 +435,16 @@
     \n
     यदि आपकी बैटरी ख़राब है तो \"स्वास्थ्य विफल\" अलार्म आपको सूचित करेगा "अज्ञात" या "अच्छे स्वास्थ्य" के अलावा कुछ और बन जाता है, जैसे एंड्रॉइड द्वारा रिपोर्ट किया गया।</string>
   <string name="pref_alarm_threshold" formatted="false">सीमा</string>
-
   <string name="alarm_pref_not_used" formatted="false">इस अलार्म प्रकार के लिए उपयोग नहीं किया जाता है</string>
   <string name="pref_alarm_threshold_summary" formatted="false">अलार्म सीमा:</string>
-
   <string name="pref_alarm_threshold_help" formatted="false">चार्ज और तापमान अलार्म के लिए, आपको तापमान सेट करना होगा या चार्ज स्तर जो अलार्म को ट्रिगर करेगा।</string>
   <string name="alarm_custom_temp_message" formatted="true">तापमान %s डिग्री में दर्ज करें</string>
-
   <string name="alarm_custom_charge_message" formatted="false">चार्ज प्रतिशत दर्ज करें (0-100)</string>
+
   <string name="boot_pref_always" formatted="false">हमेशा</string>
   <string name="boot_pref_never" formatted="false">कभी नहीं</string>
   <string name="boot_pref_if_running" formatted="false">यदि शटडाउन पर चल रहा है</string>
+
   <string name="age_1_day" formatted="false">1 दिन</string>
   <string name="age_2_days" formatted="false">2 दिन</string>
   <string name="age_4_days" formatted="false">4 दिन</string>
@@ -406,29 +452,27 @@
   <string name="age_2_weeks" formatted="false">2 सप्ताह</string>
   <string name="age_3_weeks" formatted="false">3 सप्ताह</string>
   <string name="age_4_weeks" formatted="false">4 सप्ताह</string>
-
   <string name="age_never_delete" formatted="false">कभी न हटाएँ</string>
   <string name="pref_content_percent" formatted="false">बैटरी प्रतिशत</string>
   <string name="pref_content_temperature" formatted="false">बैटरी तापमान</string>
-
   <string name="pref_content_switching" formatted="false">दोनों के बीच स्विच करें</string>
+
   <string name="chip_switching_interval_2_seconds" formatted="false">2 सेकंड</string>
   <string name="chip_switching_interval_5_seconds" formatted="false">5 सेकंड</string>
   <string name="chip_switching_interval_10_seconds" formatted="false">10 सेकंड</string>
   <string name="chip_switching_interval_15_seconds" formatted="false">15 सेकंड</string>
   <string name="chip_switching_interval_30_seconds" formatted="false">30 सेकंड</string>
+
   <string name="advanced_status_waiting_permission" formatted="false">Shizuku अनुमति की प्रतीक्षा हो रही है...</string>
   <string name="advanced_status_no_stats" formatted="false">इस डिवाइस पर अभी कोई उन्नत बैटरी आँकड़े उपलब्ध नहीं हैं।</string>
   <string name="advanced_section_counters" formatted="false">काउंटर</string>
   <string name="advanced_section_capacity" formatted="false">क्षमता</string>
   <string name="advanced_section_charging" formatted="false">चार्जिंग</string>
-
   <string name="advanced_section_service" formatted="false">Android बैटरी सेवा</string>
   <string name="advanced_section_sysfs" formatted="false">कर्नेल power_supply फ़ाइलें</string>
   <string name="advanced_section_metadata" formatted="false">मेटाडेटा</string>
   <string name="advanced_field_charge_counter" formatted="false">अनुमानित शेष चार्ज</string>
   <string name="advanced_field_current_now" formatted="false">वर्तमान धारा</string>
-
   <string name="advanced_field_current_average" formatted="false">औसत धारा</string>
   <string name="advanced_field_energy_counter" formatted="false">ऊर्जा काउंटर</string>
   <string name="advanced_field_cycle_count" formatted="false">सायकल गणना</string>

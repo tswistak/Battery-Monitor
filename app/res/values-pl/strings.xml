@@ -186,12 +186,17 @@
     <item quantity="many">%d godzin</item>
   </plurals>
 
-  <string name="since" formatted="false">Od</string>
   <plurals name="for_n_hours">
     <item quantity="one">Przez %d godzinę</item>
     <item quantity="few">Przez %d godziny</item>
     <item quantity="many">Przez %d godzin</item>
   </plurals>
+
+  <string name="unit_days">%dd</string>
+  <string name="unit_hours">%dh</string>
+  <string name="unit_minutes">%dm</string>
+  <string name="since" formatted="false">Od</string>
+
   <string name="currently_using" formatted="false">W użyciu</string>
   <string name="currently_set_to" formatted="false">"Ustawione na: "</string>
   <string name="currently_disabled" formatted="false">Wyłączone</string>
@@ -409,8 +414,7 @@
     Ostatecznie możesz mieć przewidywanie oparte wyłącznie na średnim użyciu długoterminowym.</string>
 
   <string name="pref_cat_language" formatted="false">Język</string>
-  <string name="pref_language_override" formatted="false">Język aplikacji</string>
-  <string name="pref_language_override_summary" formatted="false">Wybierz język:</string>
+  <string name="pref_change_app_language" formatted="false">Język aplikacji</string>
   <string name="pref_cat_advanced_stats" formatted="false">Zaawansowane statystyki baterii</string>
   <string name="pref_enable_advanced_stats" formatted="false">Pokazuj zaawansowane statystyki baterii</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Dodaje kartę „Zaawansowane” z diagnostyką baterii, która wymaga roota albo Shizuku.</string>
