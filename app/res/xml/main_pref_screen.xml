@@ -28,4 +28,16 @@
      app:key="other_settings"
      app:title="@string/other_settings"
   />
+
+  <Preference
+     app:key="export_settings_backup"
+     app:title="@string/pref_export_settings"
+     app:summary="@string/pref_export_settings_summary"
+  />
+
+  <Preference
+     app:key="import_settings_backup"
+     app:title="@string/pref_import_settings"
+     app:summary="@string/pref_import_settings_summary"
+  />
 </PreferenceScreen>

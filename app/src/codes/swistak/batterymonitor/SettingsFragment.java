@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,9 +31,13 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.provider.Settings;
-
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+
+
+import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 //import androidx.preference.Preference.OnPreferenceClickListener;
@@ -40,6 +45,7 @@ import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
+import androidx.preference.TwoStatePreference;
 
 import java.util.Locale;
 
@@ -59,54 +65,59 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
     public static final String KEY_ALARM_EDIT_SETTINGS = "alarm_edit_settings";
     public static final String KEY_ADVANCED_INFO_HELP = "advanced_info_help";
     public static final String KEY_OTHER_SETTINGS = "other_settings";
-    public static final String KEY_ENABLE_LOGGING = "enable_logging";
+    public static final String KEY_ENABLE_LOGGING = SettingsKeys.KEY_ENABLE_LOGGING;
     public static final String KEY_CHANGE_APP_LANGUAGE_HOLDER = "change_app_language_holder";
     public static final String KEY_CHANGE_APP_LANGUAGE = "change_app_language";
-    public static final String KEY_MAX_LOG_AGE = "max_log_age";
-    public static final String KEY_ICON_CONTENT = "icon_content";
-    public static final String KEY_CONVERT_F = "convert_to_fahrenheit";
-    public static final String KEY_NOTIFY_STATUS_DURATION = "notify_status_duration";
-    public static final String KEY_AUTOSTART = "autostart";
-    public static final String KEY_PREDICTION_TYPE = "prediction_type";
-    public static final String KEY_STATUS_DUR_EST = "status_dur_est";
+    public static final String KEY_MAX_LOG_AGE = SettingsKeys.KEY_MAX_LOG_AGE;
+    public static final String KEY_ICON_CONTENT = SettingsKeys.KEY_ICON_CONTENT;
+    public static final String KEY_CONVERT_F = SettingsKeys.KEY_CONVERT_F;
+    public static final String KEY_NOTIFY_STATUS_DURATION = SettingsKeys.KEY_NOTIFY_STATUS_DURATION;
+    public static final String KEY_AUTOSTART = SettingsKeys.KEY_AUTOSTART;
+    public static final String KEY_PREDICTION_TYPE = SettingsKeys.KEY_PREDICTION_TYPE;
+    public static final String KEY_STATUS_DUR_EST = SettingsKeys.KEY_STATUS_DUR_EST;
     public static final String KEY_CAT_CHARGING_INDICATOR = "category_charging_indicator";
     public static final String KEY_PLUGIN_SETTINGS = "plugin_settings";
-    public static final String KEY_INDICATE_CHARGING = "indicate_charging";
-    public static final String KEY_SHOW_ICON_UNIT = "show_icon_unit";
+    public static final String KEY_INDICATE_CHARGING = SettingsKeys.KEY_INDICATE_CHARGING;
+    public static final String KEY_SHOW_ICON_UNIT = SettingsKeys.KEY_SHOW_ICON_UNIT;
     public static final String KEY_CAT_STATUS_BAR_CHIP = "category_status_bar_chip";
-    public static final String KEY_CHIP_CONTENT = "chip_content";
-    public static final String KEY_CHIP_SWITCHING_INTERVAL = "chip_switching_interval";
-    public static final String KEY_CHIP_INDICATE_CHARGING = "chip_indicate_charging";
-    public static final String KEY_LIVE_UPDATE_DISPLAY = "live_update_display";
-    public static final String KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION = "live_update_keep_main_notification";
-    public static final String KEY_RED = "use_red";
-    public static final String KEY_RED_THRESH = "red_threshold";
-    public static final String KEY_AMBER = "use_amber";
-    public static final String KEY_AMBER_THRESH = "amber_threshold";
-    public static final String KEY_GREEN = "use_green";
-    public static final String KEY_GREEN_THRESH = "green_threshold";
-    public static final String KEY_TOP_LINE = "top_line";
-    public static final String KEY_BOTTOM_LINE = "bottom_line";
-    public static final String KEY_TIME_REMAINING_VERBOSITY = "time_remaining_verbosity";
-    public static final String KEY_STATUS_DURATION_IN_VITAL_SIGNS = "status_duration_in_vital_signs";
+    public static final String KEY_CHIP_CONTENT = SettingsKeys.KEY_CHIP_CONTENT;
+    public static final String KEY_CHIP_SWITCHING_INTERVAL = SettingsKeys.KEY_CHIP_SWITCHING_INTERVAL;
+    public static final String KEY_CHIP_INDICATE_CHARGING = SettingsKeys.KEY_CHIP_INDICATE_CHARGING;
+    public static final String KEY_LIVE_UPDATE_DISPLAY = SettingsKeys.KEY_LIVE_UPDATE_DISPLAY;
+    public static final String KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION = SettingsKeys.KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION;
+    public static final String KEY_RED = SettingsKeys.KEY_RED;
+    public static final String KEY_RED_THRESH = SettingsKeys.KEY_RED_THRESH;
+    public static final String KEY_AMBER = SettingsKeys.KEY_AMBER;
+    public static final String KEY_AMBER_THRESH = SettingsKeys.KEY_AMBER_THRESH;
+    public static final String KEY_GREEN = SettingsKeys.KEY_GREEN;
+    public static final String KEY_GREEN_THRESH = SettingsKeys.KEY_GREEN_THRESH;
+    public static final String KEY_TOP_LINE = SettingsKeys.KEY_TOP_LINE;
+    public static final String KEY_BOTTOM_LINE = SettingsKeys.KEY_BOTTOM_LINE;
+    public static final String KEY_TIME_REMAINING_VERBOSITY = SettingsKeys.KEY_TIME_REMAINING_VERBOSITY;
+    public static final String KEY_STATUS_DURATION_IN_VITAL_SIGNS = SettingsKeys.KEY_STATUS_DURATION_IN_VITAL_SIGNS;
     public static final String KEY_CAT_CURRENT_HACK_MAIN = "category_current_hack_main";
     public static final String KEY_CAT_CURRENT_HACK_UNSUPPORTED = "category_current_hack_unsupported";
-    public static final String KEY_ENABLE_CURRENT_HACK = "enable_current_hack";
-    public static final String KEY_CURRENT_HACK_PREFER_FS = "current_hack_prefer_fs";
-    public static final String KEY_CURRENT_HACK_MULTIPLIER = "current_hack_multiplier";
+    public static final String KEY_ENABLE_CURRENT_HACK = SettingsKeys.KEY_ENABLE_CURRENT_HACK;
+    public static final String KEY_CURRENT_HACK_PREFER_FS = SettingsKeys.KEY_CURRENT_HACK_PREFER_FS;
+    public static final String KEY_CURRENT_HACK_MULTIPLIER = SettingsKeys.KEY_CURRENT_HACK_MULTIPLIER;
     public static final String KEY_CAT_CURRENT_HACK_NOTIFICATION = "category_current_hack_notification";
-    public static final String KEY_DISPLAY_CURRENT_IN_VITAL_STATS = "display_current_in_vital_stats";
-    public static final String KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS = "prefer_current_avg_in_vital_stats";
+    public static final String KEY_DISPLAY_CURRENT_IN_VITAL_STATS = SettingsKeys.KEY_DISPLAY_CURRENT_IN_VITAL_STATS;
+    public static final String KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS = SettingsKeys.KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS;
     public static final String KEY_CAT_CURRENT_HACK_MAIN_WINDOW = "category_current_hack_main_window";
-    public static final String KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW = "display_current_in_main_window";
-    public static final String KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW = "prefer_current_avg_in_main_window";
-    public static final String KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW = "auto_refresh_current_in_main_window";
+    public static final String KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW = SettingsKeys.KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW;
+    public static final String KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW = SettingsKeys.KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW;
+    public static final String KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW = SettingsKeys.KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW;
     public static final String KEY_FIRST_RUN = "first_run";
     public static final String KEY_MIGRATED_SERVICE_DESIRED = "service_desired_migrated_to_sp_main";
     public static final String KEY_ENABLE_NOTIFS_B = "enable_notifications_button";
     public static final String KEY_ENABLE_NOTIFS_SUMMARY = "enable_notifications_summary";
-    public static final String KEY_UI_COLOR = "ui_color";
-    public static final String KEY_ENABLE_ADVANCED_STATS = "enable_advanced_stats";
+    public static final String KEY_UI_COLOR = SettingsKeys.KEY_UI_COLOR;
+    public static final String KEY_ENABLE_ADVANCED_STATS = SettingsKeys.KEY_ENABLE_ADVANCED_STATS;
+    public static final String KEY_EXPORT_SETTINGS = "export_settings_backup";
+    public static final String KEY_IMPORT_SETTINGS = "import_settings_backup";
+
+    private static final int EXPORT_REQUEST = 1;
+    private static final int IMPORT_REQUEST = 2;
 
     private static final String[] PARENTS    = {KEY_ENABLE_LOGGING,
                                                 KEY_DISPLAY_CURRENT_IN_VITAL_STATS,
@@ -404,7 +415,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
             startActivity(new Intent().setComponent(comp).putExtra(EXTRA_SCREEN, key));
 
             return true;
-        } else //TODO: convert biServiceConnection.biService.configurePlugin();
+        } else if (key.equals(KEY_EXPORT_SETTINGS)) {
+            Intent exportIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT)
+                .addCategory(Intent.CATEGORY_OPENABLE)
+                .setType("application/json")
+                .putExtra(Intent.EXTRA_TITLE, "battery_monitor_settings.json");
+            startActivityForResult(exportIntent, EXPORT_REQUEST);
+            return true;
+        } else if (key.equals(KEY_IMPORT_SETTINGS)) {
+            Intent importIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT)
+                .addCategory(Intent.CATEGORY_OPENABLE)
+                .setType("application/json");
+            startActivityForResult(importIntent, IMPORT_REQUEST);
+            return true;
+        } else
             return key.equals(KEY_PLUGIN_SETTINGS);
     }
 
@@ -607,6 +631,49 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
             pref.setSummary(res.getString(R.string.currently_set_to) + pref.getEntry());
         } else {
             pref.setSummary(res.getString(R.string.currently_disabled));
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != getActivity().RESULT_OK || data == null || data.getData() == null)
+            return;
+
+        Uri uri = data.getData();
+        try {
+            if (requestCode == EXPORT_REQUEST) {
+                SettingsBackup.writeToUri(getActivity(), uri, SettingsBackup.exportToJson(mSharedPreferences));
+                Toast.makeText(getActivity(), R.string.settings_exported, Toast.LENGTH_SHORT).show();
+            } else if (requestCode == IMPORT_REQUEST) {
+                String json = SettingsBackup.readFromUri(getActivity(), uri);
+                if (json == null) return;
+
+                int fileVersion = SettingsBackup.getSchemaVersion(json);
+                if (fileVersion > SettingsBackup.SCHEMA_VERSION) {
+                    new AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.settings_file_version_warning)
+                        .setPositiveButton(R.string.yes, (DialogInterface dialog, int which) -> doImport(json))
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+                } else {
+                    doImport(json);
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), R.string.invalid_settings_file, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void doImport(String json) {
+        try {
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            SettingsBackup.importFromJson(editor, json);
+            editor.apply();
+            setPreferences();
+            resetService();
+            Toast.makeText(getActivity(), R.string.settings_imported, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), R.string.invalid_settings_file, Toast.LENGTH_SHORT).show();
         }
     }
 

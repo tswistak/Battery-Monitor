@@ -63,4 +63,5 @@
             app:summary="@string/pref_enable_advanced_stats_summary"
             app:title="@string/pref_enable_advanced_stats" />
     </PreferenceCategory>
+
 </PreferenceScreen>
