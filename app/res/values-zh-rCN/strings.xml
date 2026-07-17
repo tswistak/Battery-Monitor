@@ -486,4 +486,16 @@
   <string name="advanced_help_metadata" formatted="false">元数据显示通过 BatteryManager 暴露的更高层电池属性，例如健康状态、剩余充电时间、制造信息或更换状态。这些字段大多需要特权访问，而且很多设备只会提供其中很小的一部分。</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">故障排查</string>
   <string name="advanced_help_troubleshooting" formatted="false">如果标签页是空的，请先确认已在设置中启用高级统计。在已 root 的设备上，Battery Monitor 会先尝试使用 `su`。在未 root 且使用 Shizuku 的设备上，Shizuku 必须已安装并启动，并且必须在 Shizuku 中为 Battery Monitor 授权。有些设备仍然只会公开少数字段，这意味着缺失的数据无法通过 Android 或内核在该设备上获取。</string>
+
+  <string name="pref_cat_backup" formatted="false">设置备份</string>
+  <string name="pref_export_settings" formatted="false">导出设置</string>
+  <string name="pref_export_settings_summary" formatted="false">将当前设置保存到文件</string>
+  <string name="pref_import_settings" formatted="false">导入设置</string>
+  <string name="pref_import_settings_summary" formatted="false">从文件恢复设置</string>
+  <string name="settings_backup_title" formatted="false">将设置保存到…</string>
+  <string name="settings_restore_title" formatted="false">打开设置文件…</string>
+  <string name="settings_exported" formatted="false">设置已成功导出</string>
+  <string name="settings_imported" formatted="false">设置已成功导入</string>
+  <string name="invalid_settings_file" formatted="false">无效的设置文件</string>
+  <string name="settings_file_version_warning" formatted="false">此文件由较新版本的应用创建。导入可能会导致意外行为。仍要继续吗？</string>
 </resources>

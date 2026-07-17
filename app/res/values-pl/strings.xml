@@ -518,4 +518,16 @@
   <string name="advanced_help_metadata" formatted="false">Metadane pokazują wysokopoziomowe właściwości baterii udostępniane przez BatteryManager, takie jak stan zdrowia, pozostały czas ładowania, szczegóły produkcyjne czy stan zamiennika. Większość tych pól wymaga uprzywilejowanego dostępu, a wiele urządzeń udostępnia jedynie niewielką ich część.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Rozwiązywanie problemów</string>
   <string name="advanced_help_troubleshooting" formatted="false">Jeśli karta jest pusta, najpierw upewnij się, że „Zaawansowane statystyki baterii” zostały włączone w ustawieniach. Na zrootowanych urządzeniach Battery Monitor najpierw próbuje użyć `su`. Na urządzeniach bez dostępu do roota Shizuku musi być zainstalowany i uruchomiony, a Battery Monitor musi mieć w nim przyznane uprawnienie. Niektóre urządzenia udostępniają jedynie kilka pól, co oznacza, że brakujące dane nie są dostępne przez Androida lub jądro na tym urządzeniu.</string>
+
+  <string name="pref_cat_backup" formatted="false">Kopia zapasowa ustawień</string>
+  <string name="pref_export_settings" formatted="false">Eksportuj ustawienia</string>
+  <string name="pref_export_settings_summary" formatted="false">Zapisz bieżące ustawienia do pliku</string>
+  <string name="pref_import_settings" formatted="false">Importuj ustawienia</string>
+  <string name="pref_import_settings_summary" formatted="false">Przywróć ustawienia z pliku</string>
+  <string name="settings_backup_title" formatted="false">Zapisz ustawienia w…</string>
+  <string name="settings_restore_title" formatted="false">Otwórz plik ustawień…</string>
+  <string name="settings_exported" formatted="false">Wyeksportowano ustawienia</string>
+  <string name="settings_imported" formatted="false">Zaimportowano ustawienia</string>
+  <string name="invalid_settings_file" formatted="false">Nieprawidłowy plik ustawień</string>
+  <string name="settings_file_version_warning" formatted="false">Ten plik został utworzony przez nowszą wersję aplikacji. Jego import może spowodować nieoczekiwane działanie. Czy mimo to kontynuować?</string>
 </resources>

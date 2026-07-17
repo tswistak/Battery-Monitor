@@ -504,4 +504,16 @@
   <string name="advanced_help_metadata" formatted="false">मेटाडेटा BatteryManager द्वारा उपलब्ध कराई गई ऊपरी स्तर की बैटरी विशेषताएँ दिखाता है, जैसे स्वास्थ्य स्थिति, बचा हुआ चार्ज समय, निर्माण विवरण या बदलने की स्थिति। इनमें से अधिकांश फ़ील्ड के लिए विशेषाधिकार प्राप्त पहुँच चाहिए और कई डिवाइस इनमें से केवल कुछ ही मान दिखाते हैं।</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">समस्या निवारण</string>
   <string name="advanced_help_troubleshooting" formatted="false">यदि टैब खाली है, तो पहले सुनिश्चित करें कि सेटिंग्स में उन्नत आँकड़े सक्षम हैं। रूट वाले उपकरणों पर Battery Monitor पहले `su` का प्रयास करता है। बिना रूट वाले उपकरणों पर Shizuku के साथ, Shizuku इंस्टॉल और चालू होना चाहिए और Battery Monitor को Shizuku के भीतर अनुमति मिलनी चाहिए। कुछ उपकरण फिर भी केवल कुछ ही फ़ील्ड दिखाते हैं, जिसका मतलब है कि बाकी डेटा उस उपकरण पर Android या कर्नेल के माध्यम से उपलब्ध नहीं है।</string>
+
+  <string name="pref_cat_backup" formatted="false">सेटिंग का बैकअप</string>
+  <string name="pref_export_settings" formatted="false">सेटिंग निर्यात करें</string>
+  <string name="pref_export_settings_summary" formatted="false">वर्तमान सेटिंग को फ़ाइल में सहेजें</string>
+  <string name="pref_import_settings" formatted="false">सेटिंग आयात करें</string>
+  <string name="pref_import_settings_summary" formatted="false">फ़ाइल से सेटिंग पुनर्स्थापित करें</string>
+  <string name="settings_backup_title" formatted="false">सेटिंग इसमें सहेजें…</string>
+  <string name="settings_restore_title" formatted="false">सेटिंग फ़ाइल खोलें…</string>
+  <string name="settings_exported" formatted="false">सेटिंग सफलतापूर्वक निर्यात की गईं</string>
+  <string name="settings_imported" formatted="false">सेटिंग सफलतापूर्वक आयात की गईं</string>
+  <string name="invalid_settings_file" formatted="false">अमान्य सेटिंग फ़ाइल</string>
+  <string name="settings_file_version_warning" formatted="false">यह फ़ाइल ऐप के नए संस्करण से बनाई गई है। इसे आयात करने से अनपेक्षित व्यवहार हो सकता है। फिर भी जारी रखें?</string>
 </resources>

@@ -5,6 +5,7 @@
 ### New
 
 - Added system (Android 13+) language chooser in settings (#56, thanks @Aga-C).
+- Added importing and exporting app settings (#51, thanks @Hirdaya-Shrestha).
 
 ### Fixed
 

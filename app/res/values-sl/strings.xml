@@ -526,4 +526,16 @@
   <string name="advanced_help_metadata" formatted="false">Metapodatki prikazujejo lastnosti baterije višje ravni, ki jih prek BatteryManagerja izpostavlja sistem, na primer stanje zdravja, preostali čas polnjenja, podatke o izdelavi ali stanje zamenjave. Večina teh polj zahteva privilegiran dostop, številne naprave pa izpostavijo le majhen del.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Odpravljanje težav</string>
   <string name="advanced_help_troubleshooting" formatted="false">Če je zavihek prazen, najprej preverite, ali so v nastavitvah omogočene napredne statistike. Na rootanih napravah Battery Monitor najprej poskusi `su`. Na napravah brez roota s Shizuku mora biti Shizuku nameščen in zagnan, Battery Monitor pa mora imeti dovoljenje znotraj Shizuku. Nekatere naprave še vedno izpostavijo le nekaj polj, kar pomeni, da manjkajoči podatki na tej napravi niso na voljo prek Androida ali jedra.</string>
+
+  <string name="pref_cat_backup" formatted="false">Varnostna kopija nastavitev</string>
+  <string name="pref_export_settings" formatted="false">Izvozi nastavitve</string>
+  <string name="pref_export_settings_summary" formatted="false">Shrani trenutne nastavitve v datoteko</string>
+  <string name="pref_import_settings" formatted="false">Uvozi nastavitve</string>
+  <string name="pref_import_settings_summary" formatted="false">Obnovi nastavitve iz datoteke</string>
+  <string name="settings_backup_title" formatted="false">Shrani nastavitve v…</string>
+  <string name="settings_restore_title" formatted="false">Odpri datoteko nastavitev…</string>
+  <string name="settings_exported" formatted="false">Nastavitve so bile uspešno izvožene</string>
+  <string name="settings_imported" formatted="false">Nastavitve so bile uspešno uvožene</string>
+  <string name="invalid_settings_file" formatted="false">Neveljavna datoteka nastavitev</string>
+  <string name="settings_file_version_warning" formatted="false">Ta datoteka je bila ustvarjena z novejšo različico aplikacije. Uvoz lahko povzroči nepričakovano delovanje. Vseeno nadaljujem?</string>
 </resources>

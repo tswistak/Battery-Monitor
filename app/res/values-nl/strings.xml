@@ -508,4 +508,16 @@
   <string name="advanced_help_metadata" formatted="false">Metadata toont batterij-eigenschappen op hoger niveau die via BatteryManager beschikbaar zijn, zoals gezondheidstoestand, resterende laadtijd, productiegegevens of vervangingsstatus. De meeste van deze velden vereisen bevoorrechte toegang en veel apparaten geven slechts een klein deel vrij.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Probleemoplossing</string>
   <string name="advanced_help_troubleshooting" formatted="false">Als het tabblad leeg is, controleer dan eerst of geavanceerde statistieken in Instellingen zijn ingeschakeld. Op geroote apparaten probeert Battery Monitor eerst `su`. Op niet-geroote apparaten met Shizuku moet Shizuku zijn geïnstalleerd en actief zijn, en Battery Monitor moet binnen Shizuku toestemming hebben gekregen. Sommige apparaten geven nog steeds maar een paar velden vrij. Dat betekent dat de ontbrekende gegevens op dat apparaat niet via Android of de kernel beschikbaar zijn.</string>
+
+  <string name="pref_cat_backup" formatted="false">Back-up van instellingen</string>
+  <string name="pref_export_settings" formatted="false">Instellingen exporteren</string>
+  <string name="pref_export_settings_summary" formatted="false">Huidige instellingen opslaan in een bestand</string>
+  <string name="pref_import_settings" formatted="false">Instellingen importeren</string>
+  <string name="pref_import_settings_summary" formatted="false">Instellingen herstellen vanuit een bestand</string>
+  <string name="settings_backup_title" formatted="false">Instellingen opslaan in…</string>
+  <string name="settings_restore_title" formatted="false">Instellingenbestand openen…</string>
+  <string name="settings_exported" formatted="false">Instellingen zijn succesvol geëxporteerd</string>
+  <string name="settings_imported" formatted="false">Instellingen zijn succesvol geïmporteerd</string>
+  <string name="invalid_settings_file" formatted="false">Ongeldig instellingenbestand</string>
+  <string name="settings_file_version_warning" formatted="false">Dit bestand is gemaakt met een nieuwere versie van de app. Importeren kan onverwacht gedrag veroorzaken. Toch doorgaan?</string>
 </resources>

@@ -520,4 +520,16 @@
   <string name="advanced_help_metadata" formatted="false">Metapodaci prikazuju osobine baterije višeg nivoa koje BatteryManager izlaže, kao što su stanje zdravlja, preostalo vreme punjenja, detalji proizvodnje ili status zamene. Većina ovih polja zahteva privilegovan pristup, a mnogi uređaji izlažu samo mali deo njih.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Rešavanje problema</string>
   <string name="advanced_help_troubleshooting" formatted="false">Ako je kartica prazna, prvo proverite da li su napredne statistike uključene u Podešavanjima. Na uređajima sa root pristupom Battery Monitor prvo pokušava `su`. Na uređajima bez roota sa Shizuku, Shizuku mora biti instaliran i pokrenut, a Battery Monitor mora imati dodeljenu dozvolu unutar Shizuku. Neki uređaji i dalje izlažu samo nekoliko polja, što znači da nedostajući podaci na tom uređaju nisu dostupni preko Androida ili kernela.</string>
+
+  <string name="pref_cat_backup" formatted="false">Rezervna kopija podešavanja</string>
+  <string name="pref_export_settings" formatted="false">Izvezi podešavanja</string>
+  <string name="pref_export_settings_summary" formatted="false">Sačuvaj trenutna podešavanja u datoteku</string>
+  <string name="pref_import_settings" formatted="false">Uvezi podešavanja</string>
+  <string name="pref_import_settings_summary" formatted="false">Vrati podešavanja iz datoteke</string>
+  <string name="settings_backup_title" formatted="false">Sačuvaj podešavanja u…</string>
+  <string name="settings_restore_title" formatted="false">Otvori datoteku podešavanja…</string>
+  <string name="settings_exported" formatted="false">Podešavanja su uspešno izvezena</string>
+  <string name="settings_imported" formatted="false">Podešavanja su uspešno uvezena</string>
+  <string name="invalid_settings_file" formatted="false">Neispravna datoteka podešavanja</string>
+  <string name="settings_file_version_warning" formatted="false">Ova datoteka je napravljena novijom verzijom aplikacije. Uvoz može izazvati neočekivano ponašanje. Nastaviti ipak?</string>
 </resources>

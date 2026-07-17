@@ -466,4 +466,16 @@
   <string name="advanced_help_metadata" formatted="false">Metadaten zeigen höherstufige Akkueigenschaften, die über BatteryManager verfügbar sind, etwa Gesundheitszustand, verbleibende Ladezeit, Fertigungsdetails oder Austauschstatus. Die meisten dieser Felder benötigen privilegierten Zugriff, und viele Geräte stellen nur einen kleinen Teil davon bereit.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Fehlersuche</string>
   <string name="advanced_help_troubleshooting" formatted="false">Wenn der Reiter leer ist, stellen Sie zuerst sicher, dass erweiterte Statistiken in den Einstellungen aktiviert sind. Auf gerooteten Geräten versucht Battery Monitor zuerst `su`. Auf nicht gerooteten Geräten mit Shizuku muss Shizuku installiert und gestartet sein, und Battery Monitor muss in Shizuku die Berechtigung erhalten. Manche Geräte liefern trotzdem nur wenige Felder. Dann sind die fehlenden Daten über Android oder den Kernel auf diesem Gerät nicht verfügbar.</string>
+
+  <string name="pref_cat_backup" formatted="false">Sicherung der Einstellungen</string>
+  <string name="pref_export_settings" formatted="false">Einstellungen exportieren</string>
+  <string name="pref_export_settings_summary" formatted="false">Aktuelle Einstellungen in einer Datei speichern</string>
+  <string name="pref_import_settings" formatted="false">Einstellungen importieren</string>
+  <string name="pref_import_settings_summary" formatted="false">Einstellungen aus einer Datei wiederherstellen</string>
+  <string name="settings_backup_title" formatted="false">Einstellungen speichern unter…</string>
+  <string name="settings_restore_title" formatted="false">Einstellungsdatei öffnen…</string>
+  <string name="settings_exported" formatted="false">Einstellungen wurden erfolgreich exportiert</string>
+  <string name="settings_imported" formatted="false">Einstellungen wurden erfolgreich importiert</string>
+  <string name="invalid_settings_file" formatted="false">Ungültige Einstellungsdatei</string>
+  <string name="settings_file_version_warning" formatted="false">Diese Datei wurde mit einer neueren Version der App erstellt. Das Importieren kann zu unerwartetem Verhalten führen. Trotzdem fortfahren?</string>
 </resources>

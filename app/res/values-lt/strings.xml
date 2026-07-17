@@ -525,4 +525,16 @@
   <string name="advanced_help_metadata" formatted="false">Metaduomenys rodo aukštesnio lygio baterijos savybes, pateikiamas per BatteryManager, pavyzdžiui baterijos būklę, likusį įkrovimo laiką, gamybos detales ar pakeitimo būseną. Daugumai šių laukų reikia privilegijuotos prieigos, o daugelis įrenginių pateikia tik nedidelę jų dalį.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Trikčių šalinimas</string>
   <string name="advanced_help_troubleshooting" formatted="false">Jei kortelė tuščia, pirmiausia įsitikinkite, kad nustatymuose įjungta išplėstinė statistika. Įrenginiuose su root Battery Monitor pirmiausia bando `su`. Įrenginiuose be root su Shizuku, Shizuku turi būti įdiegta ir paleista, o Battery Monitor turi turėti suteiktą leidimą Shizuku viduje. Kai kurie įrenginiai vis tiek pateikia tik kelis laukus, o tai reiškia, kad trūkstami duomenys tame įrenginyje per Android ar branduolį nėra pasiekiami.</string>
+
+  <string name="pref_cat_backup" formatted="false">Nustatymų atsarginė kopija</string>
+  <string name="pref_export_settings" formatted="false">Eksportuoti nustatymus</string>
+  <string name="pref_export_settings_summary" formatted="false">Išsaugoti dabartinius nustatymus faile</string>
+  <string name="pref_import_settings" formatted="false">Importuoti nustatymus</string>
+  <string name="pref_import_settings_summary" formatted="false">Atkurti nustatymus iš failo</string>
+  <string name="settings_backup_title" formatted="false">Išsaugoti nustatymus į…</string>
+  <string name="settings_restore_title" formatted="false">Atidaryti nustatymų failą…</string>
+  <string name="settings_exported" formatted="false">Nustatymai sėkmingai eksportuoti</string>
+  <string name="settings_imported" formatted="false">Nustatymai sėkmingai importuoti</string>
+  <string name="invalid_settings_file" formatted="false">Netinkamas nustatymų failas</string>
+  <string name="settings_file_version_warning" formatted="false">Šis failas buvo sukurtas naujesne programos versija. Jį importavus gali atsirasti nenumatytas veikimas. Vis tiek tęsti?</string>
 </resources>
