@@ -42,6 +42,8 @@ import android.os.Messenger;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import androidx.core.app.NotificationCompat;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -303,13 +305,6 @@ public class BatteryInfoService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // Notification.Builder nb = makeTestAlarmBuilder();
-        // nb.setContentTitle("Test Title")
-        //     .setContentText("Text content")
-        //     .setContentIntent(alarmsPendingIntent)
-        //     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-        // notifyAlarm(makeTestAlarmBuilder().build());
-
         return messenger.getBinder();
     }
 
@@ -620,31 +615,26 @@ public class BatteryInfoService extends Service {
 
         boolean requestLiveUpdateChip = shouldRequestLiveUpdateChip();
         String channelId = requestLiveUpdateChip ? CHAN_ID_LIVE_UPDATE : CHAN_ID_MAIN;
-        Notification.Builder nb = new Notification.Builder(this, channelId);
+        NotificationCompat.Builder nb = new NotificationCompat.Builder(this, channelId);
 
         nb.setSmallIcon(iconFor())
             .setOngoing(true)
             .setWhen(0)
             .setShowWhen(false)
             .setContentIntent(currentInfoPendingIntent)
-            .setVisibility(Notification.VISIBILITY_PUBLIC);
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         nb.setContentTitle(mainNotificationTopLine)
             .setContentText(mainNotificationBottomLine);
 
         if (requestLiveUpdateChip) {
-            try {
-                java.lang.reflect.Method setRequestPromotedOngoing = Notification.Builder.class.getMethod("setRequestPromotedOngoing", boolean.class);
-                java.lang.reflect.Method setShortCriticalText = Notification.Builder.class.getMethod("setShortCriticalText", String.class);
-                setRequestPromotedOngoing.invoke(nb, true);
+            String text = chipContentText();
+            if (shouldShowChipChargingIndicator()) {
+                text = "⚡" + text;
+            }
 
-                String text = chipContentText();
-                if (shouldShowChipChargingIndicator()) {
-                    text = "⚡" + text;
-                }
-
-                setShortCriticalText.invoke(nb, text);
-            } catch (Throwable ignored) {}
+            nb.setRequestPromotedOngoing(true)
+                .setShortCriticalText(text);
         }
 
         return nb.build();
@@ -1138,6 +1128,7 @@ public class BatteryInfoService extends Service {
 
     public static boolean supportsLiveUpdates() {
         if (android.os.Build.VERSION.SDK_INT < 36) return false;
+        // we can't only rely on SDK version, because not every OS implements live updates
         try {
             Notification.Builder.class.getMethod("setRequestPromotedOngoing", boolean.class);
             Notification.Builder.class.getMethod("setShortCriticalText", String.class);

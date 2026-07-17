@@ -10,6 +10,7 @@
 ### Fixed
 
 - Using localized unit strings instead of hardcoded English ones (#63, thanks @Hirdaya-Shrestha).
+- Rewritten live updates to use NotificationCompat, to ensure it works well with API 36.
 
 ## 1.2.0
 
