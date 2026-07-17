@@ -121,10 +121,6 @@ class AdvancedBatteryStatsCollector {
     }
 
     private static String readProperty(CommandExecutor executor, String propertyName) {
-        String forced = executor.run("cmd battery get -f " + propertyName + " 2>/dev/null");
-        if (forced != null)
-            return forced;
-
         return executor.run("cmd battery get " + propertyName + " 2>/dev/null");
     }
 
