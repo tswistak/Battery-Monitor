@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+### Improved
+
+- Added timestamp to settings backup export file name.
+
 ## 1.3.0
 
 ### New

@@ -47,6 +47,7 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.TwoStatePreference;
 
+import java.util.Date;
 import java.util.Locale;
 
 import rikka.shizuku.Shizuku;
@@ -416,10 +417,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
 
             return true;
         } else if (key.equals(KEY_EXPORT_SETTINGS)) {
+            String ts = new java.text.SimpleDateFormat("yyyy-MM-dd-HHmmss-SSS").format(new Date());
             Intent exportIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT)
                 .addCategory(Intent.CATEGORY_OPENABLE)
                 .setType("application/json")
-                .putExtra(Intent.EXTRA_TITLE, "battery_monitor_settings.json");
+                .putExtra(Intent.EXTRA_TITLE, "battery_monitor_settings_" + ts + ".json");
             startActivityForResult(exportIntent, EXPORT_REQUEST);
             return true;
         } else if (key.equals(KEY_IMPORT_SETTINGS)) {
