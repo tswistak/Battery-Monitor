@@ -104,10 +104,17 @@ class BatteryInfo {
 
         private static final int MIN_PREDICTION = 60 * 1000;
 
+        void clear() {
+            when = 0;
+            what = NONE;
+        }
+
         void update(long ts) {
             when = ts;
 
-            if (status == STATUS_FULLY_CHARGED) what = NONE;
+            if (status == STATUS_FULLY_CHARGED ||
+                status == STATUS_NOT_CHARGING ||
+                status == STATUS_UNKNOWN) what = NONE;
             else if (status == STATUS_CHARGING) what = UNTIL_CHARGED;
             else                                what = UNTIL_DRAINED;
         }
