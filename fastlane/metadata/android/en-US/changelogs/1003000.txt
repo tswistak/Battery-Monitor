@@ -1,0 +1,10 @@
+New:
+
+- Added system (Android 13+) language chooser in settings (#56, thanks @Aga-C).
+- Added importing and exporting app settings (#51, thanks @Hirdaya-Shrestha).
+
+Fixed:
+
+- Using localized unit strings instead of hardcoded English ones (#63, thanks @Hirdaya-Shrestha).
+- Rewritten live updates to use NotificationCompat, to ensure it works well with API 36.
+- Turned off force refresh of battery data in OS in the Advanced tab, which could cause issues with some battery drivers.

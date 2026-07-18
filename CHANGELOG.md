@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 1.3.0
 
 ### New
 
@@ -11,7 +11,7 @@
 
 - Using localized unit strings instead of hardcoded English ones (#63, thanks @Hirdaya-Shrestha).
 - Rewritten live updates to use NotificationCompat, to ensure it works well with API 36.
-- Turned off force refresh of battery data in OS in Advanced tab, which could cause issues with some battery drivers.
+- Turned off force refresh of battery data in OS in the Advanced tab, which could cause issues with some battery drivers.
 
 ## 1.2.0
 
