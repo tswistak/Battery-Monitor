@@ -505,13 +505,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">Αντιμετώπιση προβλημάτων</string>
   <string name="advanced_help_troubleshooting" formatted="false">Αν η καρτέλα είναι κενή, βεβαιωθείτε πρώτα ότι οι προηγμένες στατιστικές είναι ενεργοποιημένες στις Ρυθμίσεις. Σε συσκευές με root το Battery Monitor δοκιμάζει πρώτα το `su`. Σε συσκευές χωρίς root με Shizuku, το Shizuku πρέπει να είναι εγκατεστημένο, ενεργό και το Battery Monitor να έχει λάβει άδεια μέσα στο Shizuku. Ορισμένες συσκευές εξακολουθούν να εκθέτουν μόνο λίγα πεδία, πράγμα που σημαίνει ότι τα υπόλοιπα δεδομένα δεν είναι διαθέσιμα μέσω Android ή του πυρήνα σε αυτή τη συσκευή.</string>
 
-  <string name="pref_cat_backup" formatted="false">Αντίγραφο ασφαλείας ρυθμίσεων</string>
   <string name="pref_export_settings" formatted="false">Εξαγωγή ρυθμίσεων</string>
   <string name="pref_export_settings_summary" formatted="false">Αποθήκευση των τρεχουσών ρυθμίσεων σε αρχείο</string>
   <string name="pref_import_settings" formatted="false">Εισαγωγή ρυθμίσεων</string>
   <string name="pref_import_settings_summary" formatted="false">Επαναφορά ρυθμίσεων από αρχείο</string>
-  <string name="settings_backup_title" formatted="false">Αποθήκευση ρυθμίσεων σε…</string>
-  <string name="settings_restore_title" formatted="false">Άνοιγμα αρχείου ρυθμίσεων…</string>
   <string name="settings_exported" formatted="false">Οι ρυθμίσεις εξήχθησαν με επιτυχία</string>
   <string name="settings_imported" formatted="false">Οι ρυθμίσεις εισήχθησαν με επιτυχία</string>
   <string name="invalid_settings_file" formatted="false">Μη έγκυρο αρχείο ρυθμίσεων</string>

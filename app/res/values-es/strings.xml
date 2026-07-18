@@ -509,13 +509,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">Solución de problemas</string>
   <string name="advanced_help_troubleshooting" formatted="false">Si la pestaña está vacía, primero asegúrate de que las estadísticas avanzadas estén activadas en Ajustes. En dispositivos con root, Battery Monitor intenta usar primero `su`. En dispositivos sin root con Shizuku, Shizuku debe estar instalado y en ejecución, y Battery Monitor debe tener el permiso concedido dentro de Shizuku. Algunos dispositivos siguen exponiendo solo unos pocos campos, lo que significa que los datos que faltan no están disponibles a través de Android o del kernel en ese dispositivo.</string>
 
-  <string name="pref_cat_backup" formatted="false">Copia de seguridad de ajustes</string>
   <string name="pref_export_settings" formatted="false">Exportar ajustes</string>
   <string name="pref_export_settings_summary" formatted="false">Guardar los ajustes actuales en un archivo</string>
   <string name="pref_import_settings" formatted="false">Importar ajustes</string>
   <string name="pref_import_settings_summary" formatted="false">Restaurar ajustes desde un archivo</string>
-  <string name="settings_backup_title" formatted="false">Guardar ajustes en…</string>
-  <string name="settings_restore_title" formatted="false">Abrir archivo de ajustes…</string>
   <string name="settings_exported" formatted="false">Los ajustes se exportaron correctamente</string>
   <string name="settings_imported" formatted="false">Los ajustes se importaron correctamente</string>
   <string name="invalid_settings_file" formatted="false">Archivo de ajustes no válido</string>

@@ -502,13 +502,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">トラブルシューティング</string>
   <string name="advanced_help_troubleshooting" formatted="false">タブが空の場合は、まず設定で詳細統計が有効になっていることを確認してください。root 化された端末では Battery Monitor は最初に `su` を試します。root 化されていない端末で Shizuku を使う場合は、Shizuku がインストールされて起動しており、Battery Monitor に Shizuku 内で権限が与えられている必要があります。それでも一部の端末では数個の項目しか公開されず、その場合は不足しているデータがその端末で Android やカーネル経由では利用できないことを意味します。</string>
 
-  <string name="pref_cat_backup" formatted="false">設定のバックアップ</string>
   <string name="pref_export_settings" formatted="false">設定をエクスポート</string>
   <string name="pref_export_settings_summary" formatted="false">現在の設定をファイルに保存</string>
   <string name="pref_import_settings" formatted="false">設定をインポート</string>
   <string name="pref_import_settings_summary" formatted="false">ファイルから設定を復元</string>
-  <string name="settings_backup_title" formatted="false">設定の保存先…</string>
-  <string name="settings_restore_title" formatted="false">設定ファイルを開く…</string>
   <string name="settings_exported" formatted="false">設定を正常にエクスポートしました</string>
   <string name="settings_imported" formatted="false">設定を正常にインポートしました</string>
   <string name="invalid_settings_file" formatted="false">無効な設定ファイル</string>

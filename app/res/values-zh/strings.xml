@@ -502,13 +502,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">疑難排解</string>
   <string name="advanced_help_troubleshooting" formatted="false">如果分頁是空的，請先確認已在設定中啟用進階統計。在已 root 的裝置上，Battery Monitor 會先嘗試使用 `su`。在未 root 且使用 Shizuku 的裝置上，Shizuku 必須已安裝並啟動，而且必須在 Shizuku 中授予 Battery Monitor 權限。有些裝置仍然只會公開少數欄位，這表示缺少的資料在該裝置上無法透過 Android 或核心取得。</string>
 
-  <string name="pref_cat_backup" formatted="false">設定備份</string>
   <string name="pref_export_settings" formatted="false">匯出設定</string>
   <string name="pref_export_settings_summary" formatted="false">將目前設定儲存至檔案</string>
   <string name="pref_import_settings" formatted="false">匯入設定</string>
   <string name="pref_import_settings_summary" formatted="false">從檔案還原設定</string>
-  <string name="settings_backup_title" formatted="false">將設定儲存至…</string>
-  <string name="settings_restore_title" formatted="false">開啟設定檔案…</string>
   <string name="settings_exported" formatted="false">設定已成功匯出</string>
   <string name="settings_imported" formatted="false">設定已成功匯入</string>
   <string name="invalid_settings_file" formatted="false">無效的設定檔案</string>

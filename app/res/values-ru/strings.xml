@@ -525,13 +525,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">Устранение неполадок</string>
   <string name="advanced_help_troubleshooting" formatted="false">Если вкладка пуста, сначала убедитесь, что расширенная статистика включена в настройках. На устройствах с root Battery Monitor сначала пытается использовать `su`. На устройствах без root с Shizuku, Shizuku должен быть установлен и запущен, а Battery Monitor должен получить разрешение внутри Shizuku. Некоторые устройства все равно предоставляют только несколько полей. Это означает, что недостающие данные недоступны через Android или ядро на этом устройстве.</string>
 
-  <string name="pref_cat_backup" formatted="false">Резервное копирование настроек</string>
   <string name="pref_export_settings" formatted="false">Экспортировать настройки</string>
   <string name="pref_export_settings_summary" formatted="false">Сохранить текущие настройки в файл</string>
   <string name="pref_import_settings" formatted="false">Импортировать настройки</string>
   <string name="pref_import_settings_summary" formatted="false">Восстановить настройки из файла</string>
-  <string name="settings_backup_title" formatted="false">Сохранить настройки в…</string>
-  <string name="settings_restore_title" formatted="false">Открыть файл настроек…</string>
   <string name="settings_exported" formatted="false">Настройки успешно экспортированы</string>
   <string name="settings_imported" formatted="false">Настройки успешно импортированы</string>
   <string name="invalid_settings_file" formatted="false">Недопустимый файл настроек</string>

@@ -547,13 +547,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">استكشاف الأخطاء وإصلاحها</string>
   <string name="advanced_help_troubleshooting" formatted="false">إذا كانت علامة التبويب فارغة فتأكد أولا من تفعيل الإحصاءات المتقدمة في الإعدادات. على الأجهزة ذات root يحاول Battery Monitor استخدام `su` أولا. على الأجهزة غير المروتة مع Shizuku يجب أن يكون Shizuku مثبتا وقيد التشغيل وأن يحصل Battery Monitor على الإذن داخل Shizuku. بعض الأجهزة لا تعرض إلا عددا قليلا من الحقول وهذا يعني أن البيانات الناقصة غير متاحة عبر Android أو النواة على ذلك الجهاز.</string>
 
-  <string name="pref_cat_backup" formatted="false">نسخ احتياطي للإعدادات</string>
   <string name="pref_export_settings" formatted="false">تصدير الإعدادات</string>
   <string name="pref_export_settings_summary" formatted="false">حفظ الإعدادات الحالية في ملف</string>
   <string name="pref_import_settings" formatted="false">استيراد الإعدادات</string>
   <string name="pref_import_settings_summary" formatted="false">استعادة الإعدادات من ملف</string>
-  <string name="settings_backup_title" formatted="false">حفظ الإعدادات في…</string>
-  <string name="settings_restore_title" formatted="false">فتح ملف الإعدادات…</string>
   <string name="settings_exported" formatted="false">تم تصدير الإعدادات بنجاح</string>
   <string name="settings_imported" formatted="false">تم استيراد الإعدادات بنجاح</string>
   <string name="invalid_settings_file" formatted="false">ملف إعدادات غير صالح</string>

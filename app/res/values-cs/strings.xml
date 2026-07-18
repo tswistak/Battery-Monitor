@@ -526,13 +526,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">Řešení problémů</string>
   <string name="advanced_help_troubleshooting" formatted="false">Pokud je karta prázdná, nejprve se ujistěte, že jsou v Nastavení zapnuté pokročilé statistiky. Na rootnutých zařízeních zkouší Battery Monitor nejprve `su`. Na nerootnutých zařízeních se Shizuku musí být Shizuku nainstalováno, spuštěno a Battery Monitor musí mít v Shizuku udělené oprávnění. Některá zařízení i tak poskytují jen několik polí, což znamená, že chybějící data nejsou přes Android ani jádro na daném zařízení dostupná.</string>
 
-  <string name="pref_cat_backup" formatted="false">Záloha nastavení</string>
   <string name="pref_export_settings" formatted="false">Exportovat nastavení</string>
   <string name="pref_export_settings_summary" formatted="false">Uložit aktuální nastavení do souboru</string>
   <string name="pref_import_settings" formatted="false">Importovat nastavení</string>
   <string name="pref_import_settings_summary" formatted="false">Obnovit nastavení ze souboru</string>
-  <string name="settings_backup_title" formatted="false">Uložit nastavení do…</string>
-  <string name="settings_restore_title" formatted="false">Otevřít soubor nastavení…</string>
   <string name="settings_exported" formatted="false">Nastavení bylo úspěšně exportováno</string>
   <string name="settings_imported" formatted="false">Nastavení bylo úspěšně importováno</string>
   <string name="invalid_settings_file" formatted="false">Neplatný soubor nastavení</string>

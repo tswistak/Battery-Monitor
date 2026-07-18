@@ -487,13 +487,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">Dépannage</string>
   <string name="advanced_help_troubleshooting" formatted="false">Si l onglet est vide, vérifiez d abord que les statistiques avancées sont activées dans les paramètres. Sur les appareils rootés, Battery Monitor essaie d abord `su`. Sur les appareils non rootés avec Shizuku, Shizuku doit être installé, démarré et Battery Monitor doit recevoir l autorisation dans Shizuku. Certains appareils n exposent malgré tout que quelques champs, ce qui signifie que les données manquantes ne sont pas disponibles via Android ou le noyau sur cet appareil.</string>
 
-  <string name="pref_cat_backup" formatted="false">Sauvegarde des paramètres</string>
   <string name="pref_export_settings" formatted="false">Exporter les paramètres</string>
   <string name="pref_export_settings_summary" formatted="false">Enregistrer les paramètres actuels dans un fichier</string>
   <string name="pref_import_settings" formatted="false">Importer les paramètres</string>
   <string name="pref_import_settings_summary" formatted="false">Restaurer les paramètres depuis un fichier</string>
-  <string name="settings_backup_title" formatted="false">Enregistrer les paramètres dans…</string>
-  <string name="settings_restore_title" formatted="false">Ouvrir un fichier de paramètres…</string>
   <string name="settings_exported" formatted="false">Les paramètres ont été exportés avec succès</string>
   <string name="settings_imported" formatted="false">Les paramètres ont été importés avec succès</string>
   <string name="invalid_settings_file" formatted="false">Fichier de paramètres non valide</string>

@@ -508,13 +508,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">عیب یابی</string>
   <string name="advanced_help_troubleshooting" formatted="false">اگر زبانه خالی است، ابتدا مطمئن شوید آمارهای پیشرفته در تنظیمات فعال شده اند. در دستگاه های روت شده Battery Monitor ابتدا `su` را امتحان می کند. در دستگاه های بدون روت با Shizuku، Shizuku باید نصب و فعال باشد و Battery Monitor باید درون Shizuku مجوز گرفته باشد. بعضی دستگاه ها همچنان فقط چند فیلد را ارائه می دهند و این یعنی داده های بیشتر از طریق Android یا هسته روی آن دستگاه در دسترس نیست.</string>
 
-  <string name="pref_cat_backup" formatted="false">پشتیبان‌گیری از تنظیمات</string>
   <string name="pref_export_settings" formatted="false">صادر کردن تنظیمات</string>
   <string name="pref_export_settings_summary" formatted="false">ذخیره تنظیمات فعلی در یک فایل</string>
   <string name="pref_import_settings" formatted="false">وارد کردن تنظیمات</string>
   <string name="pref_import_settings_summary" formatted="false">بازیابی تنظیمات از یک فایل</string>
-  <string name="settings_backup_title" formatted="false">ذخیره تنظیمات در…</string>
-  <string name="settings_restore_title" formatted="false">باز کردن فایل تنظیمات…</string>
   <string name="settings_exported" formatted="false">تنظیمات با موفقیت صادر شد</string>
   <string name="settings_imported" formatted="false">تنظیمات با موفقیت وارد شد</string>
   <string name="invalid_settings_file" formatted="false">فایل تنظیمات نامعتبر است</string>

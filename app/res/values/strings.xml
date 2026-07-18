@@ -507,13 +507,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">Troubleshooting</string>
   <string name="advanced_help_troubleshooting" formatted="false">If the tab is empty, first make sure Advanced stats are enabled in Settings. On rooted devices, Battery Monitor tries `su` first. On non-rooted devices Shizuku must be installed, running, and Battery Monitor must be granted permission inside Shizuku. Some devices expose only a few fields, which means the missing data is not available through Android or the kernel on that device.</string>
 
-  <string name="pref_cat_backup" formatted="false">Settings backup</string>
   <string name="pref_export_settings" formatted="false">Export settings</string>
   <string name="pref_export_settings_summary" formatted="false">Save current settings to a file</string>
   <string name="pref_import_settings" formatted="false">Import settings</string>
   <string name="pref_import_settings_summary" formatted="false">Restore settings from a file</string>
-  <string name="settings_backup_title" formatted="false">Save settings to…</string>
-  <string name="settings_restore_title" formatted="false">Open settings file…</string>
   <string name="settings_exported" formatted="false">Settings exported successfully</string>
   <string name="settings_imported" formatted="false">Settings imported successfully</string>
   <string name="invalid_settings_file" formatted="false">Invalid settings file</string>

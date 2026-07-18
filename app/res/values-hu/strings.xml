@@ -479,13 +479,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">Hibaelhárítás</string>
   <string name="advanced_help_troubleshooting" formatted="false">Ha a fül üres, először győződjön meg arról, hogy a speciális statisztikák be vannak kapcsolva a Beállításokban. Rootolt eszközökön a Battery Monitor először a `su` parancsot próbálja. Nem rootolt, Shizukuval használt eszközökön a Shizukunak telepítve és futva kell lennie, és a Battery Monitornak engedélyt kell kapnia a Shizukuban. Egyes eszközök ennek ellenére is csak néhány mezőt tesznek elérhetővé, ami azt jelenti, hogy a hiányzó adatok Androidon vagy a kernelen keresztül nem hozzáférhetők azon a készüléken.</string>
 
-  <string name="pref_cat_backup" formatted="false">Beállítások biztonsági mentése</string>
   <string name="pref_export_settings" formatted="false">Beállítások exportálása</string>
   <string name="pref_export_settings_summary" formatted="false">Jelenlegi beállítások mentése fájlba</string>
   <string name="pref_import_settings" formatted="false">Beállítások importálása</string>
   <string name="pref_import_settings_summary" formatted="false">Beállítások visszaállítása fájlból</string>
-  <string name="settings_backup_title" formatted="false">Beállítások mentése ide…</string>
-  <string name="settings_restore_title" formatted="false">Beállításfájl megnyitása…</string>
   <string name="settings_exported" formatted="false">A beállítások exportálása sikerült</string>
   <string name="settings_imported" formatted="false">A beállítások importálása sikerült</string>
   <string name="invalid_settings_file" formatted="false">Érvénytelen beállításfájl</string>

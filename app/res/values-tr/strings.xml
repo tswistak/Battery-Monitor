@@ -467,13 +467,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">Sorun giderme</string>
   <string name="advanced_help_troubleshooting" formatted="false">Sekme boşsa önce Ayarlar içinde gelişmiş istatistiklerin etkin olduğundan emin olun. Root erişimi olan cihazlarda Battery Monitor önce `su` kullanmayı dener. Root olmayan ve Shizuku kullanan cihazlarda Shizuku kurulu ve çalışıyor olmalı, ayrıca Battery Monitor için Shizuku içinde izin verilmiş olmalıdır. Bazı cihazlar yine de yalnızca birkaç alan sunar; bu da eksik verilerin o cihazda Android veya çekirdek üzerinden mevcut olmadığı anlamına gelir.</string>
 
-  <string name="pref_cat_backup" formatted="false">Ayar yedeği</string>
   <string name="pref_export_settings" formatted="false">Ayarları dışa aktar</string>
   <string name="pref_export_settings_summary" formatted="false">Geçerli ayarları bir dosyaya kaydet</string>
   <string name="pref_import_settings" formatted="false">Ayarları içe aktar</string>
   <string name="pref_import_settings_summary" formatted="false">Ayarları bir dosyadan geri yükle</string>
-  <string name="settings_backup_title" formatted="false">Ayarları şuraya kaydet…</string>
-  <string name="settings_restore_title" formatted="false">Ayar dosyasını aç…</string>
   <string name="settings_exported" formatted="false">Ayarlar başarıyla dışa aktarıldı</string>
   <string name="settings_imported" formatted="false">Ayarlar başarıyla içe aktarıldı</string>
   <string name="invalid_settings_file" formatted="false">Geçersiz ayar dosyası</string>

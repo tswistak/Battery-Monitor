@@ -515,13 +515,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">Depanare</string>
   <string name="advanced_help_troubleshooting" formatted="false">Dacă fila este goală, verifică mai întâi că statisticile avansate sunt activate în Setări. Pe dispozitivele cu root, Battery Monitor încearcă mai întâi `su`. Pe dispozitivele fără root cu Shizuku, Shizuku trebuie să fie instalat și pornit, iar Battery Monitor trebuie să primească permisiunea în Shizuku. Unele dispozitive expun în continuare doar câteva câmpuri, ceea ce înseamnă că datele lipsă nu sunt disponibile prin Android sau prin nucleu pe acel dispozitiv.</string>
 
-  <string name="pref_cat_backup" formatted="false">Copie de rezervă a setărilor</string>
   <string name="pref_export_settings" formatted="false">Exportă setările</string>
   <string name="pref_export_settings_summary" formatted="false">Salvează setările curente într-un fișier</string>
   <string name="pref_import_settings" formatted="false">Importă setările</string>
   <string name="pref_import_settings_summary" formatted="false">Restabilește setările dintr-un fișier</string>
-  <string name="settings_backup_title" formatted="false">Salvează setările în…</string>
-  <string name="settings_restore_title" formatted="false">Deschide fișierul de setări…</string>
   <string name="settings_exported" formatted="false">Setările au fost exportate cu succes</string>
   <string name="settings_imported" formatted="false">Setările au fost importate cu succes</string>
   <string name="invalid_settings_file" formatted="false">Fișier de setări nevalid</string>

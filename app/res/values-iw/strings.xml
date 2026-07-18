@@ -511,13 +511,10 @@
   <string name="advanced_help_troubleshooting_title" formatted="false">פתרון בעיות</string>
   <string name="advanced_help_troubleshooting" formatted="false">אם הלשונית ריקה, ודא תחילה שסטטיסטיקות מתקדמות מופעלות בהגדרות. במכשירים עם root, Battery Monitor מנסה תחילה את `su`. במכשירים ללא root עם Shizuku, יש להתקין ולהפעיל את Shizuku, ולתת ל Battery Monitor הרשאה בתוך Shizuku. חלק מהמכשירים עדיין חושפים רק מעט שדות, כלומר הנתונים החסרים אינם זמינים דרך Android או דרך הליבה במכשיר הזה.</string>
 
-  <string name="pref_cat_backup" formatted="false">גיבוי הגדרות</string>
   <string name="pref_export_settings" formatted="false">ייצוא הגדרות</string>
   <string name="pref_export_settings_summary" formatted="false">שמירת ההגדרות הנוכחיות לקובץ</string>
   <string name="pref_import_settings" formatted="false">ייבוא הגדרות</string>
   <string name="pref_import_settings_summary" formatted="false">שחזור הגדרות מקובץ</string>
-  <string name="settings_backup_title" formatted="false">שמירת הגדרות אל…</string>
-  <string name="settings_restore_title" formatted="false">פתיחת קובץ הגדרות…</string>
   <string name="settings_exported" formatted="false">ההגדרות יוצאו בהצלחה</string>
   <string name="settings_imported" formatted="false">ההגדרות יובאו בהצלחה</string>
   <string name="invalid_settings_file" formatted="false">קובץ הגדרות לא תקין</string>
