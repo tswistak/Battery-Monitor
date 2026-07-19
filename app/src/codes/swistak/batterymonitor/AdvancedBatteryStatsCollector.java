@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 
 class AdvancedBatteryStatsCollector {
     private static final long COMMAND_TIMEOUT_SECONDS = 10L;
+    private static final int MAX_COMMAND_OUTPUT_BYTES = 256 * 1024;
     private static final Pattern LONG_PATTERN = Pattern.compile("(-?\\d+)");
     private static final int BATTERY_PROPERTY_MANUFACTURING_DATE = 7;
     private static final int BATTERY_PROPERTY_FIRST_USAGE_DATE = 8;
@@ -424,7 +425,7 @@ class AdvancedBatteryStatsCollector {
         Process process = null;
 
         try {
-            process = Runtime.getRuntime().exec(command);
+            process = new ProcessBuilder(command).redirectErrorStream(true).start();
             if (!process.waitFor(COMMAND_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
                 process.destroyForcibly();
                 return null;
@@ -433,7 +434,11 @@ class AdvancedBatteryStatsCollector {
             if (process.exitValue() != 0)
                 return null;
 
-            String output = readFully(process.getInputStream()).trim();
+            String output = readFully(process.getInputStream());
+            if (output == null)
+                return null;
+
+            output = output.trim();
             return !output.isEmpty() ? output : null;
         } catch (Exception e) {
             return null;
@@ -448,8 +453,12 @@ class AdvancedBatteryStatsCollector {
         byte[] buffer = new byte[4096];
         int bytesRead;
 
-        while ((bytesRead = inputStream.read(buffer)) != -1)
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            if (outputStream.size() + bytesRead > MAX_COMMAND_OUTPUT_BYTES)
+                return null;
+
             outputStream.write(buffer, 0, bytesRead);
+        }
 
         return new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
     }

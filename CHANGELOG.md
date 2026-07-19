@@ -6,6 +6,10 @@
 
 - Added timestamp to settings backup export file name.
 
+### Fixed
+
+- Low-severity security issues.
+
 ### Development
 
 - Updated Gradle and dependencies to the latest versions.
