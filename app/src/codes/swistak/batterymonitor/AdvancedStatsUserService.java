@@ -24,6 +24,7 @@ import android.os.RemoteException;
 import androidx.annotation.Keep;
 
 public class AdvancedStatsUserService extends Binder {
+    private static final String DESCRIPTOR = "codes.swistak.batterymonitor.AdvancedStatsUserService";
     private static final int TRANSACTION_GET_SNAPSHOT = IBinder.FIRST_CALL_TRANSACTION;
     private static final int TRANSACTION_DESTROY = 16777115;
     private final Context context;
@@ -53,6 +54,14 @@ public class AdvancedStatsUserService extends Binder {
 
     @Override
     protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+        if (code == INTERFACE_TRANSACTION) {
+            reply.writeString(DESCRIPTOR);
+            return true;
+        }
+
+        if (code == TRANSACTION_GET_SNAPSHOT || code == TRANSACTION_DESTROY)
+            data.enforceInterface(DESCRIPTOR);
+
         if (code == TRANSACTION_GET_SNAPSHOT) {
             reply.writeNoException();
             reply.writeBundle(getSnapshot());
@@ -72,6 +81,7 @@ public class AdvancedStatsUserService extends Binder {
         Parcel reply = Parcel.obtain();
 
         try {
+            data.writeInterfaceToken(DESCRIPTOR);
             binder.transact(TRANSACTION_GET_SNAPSHOT, data, reply, 0);
             reply.readException();
             return reply.readBundle(AdvancedBatterySnapshot.class.getClassLoader());
