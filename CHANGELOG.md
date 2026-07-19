@@ -6,6 +6,11 @@
 
 - Added timestamp to settings backup export file name.
 
+### Development
+
+- Updated Gradle and dependencies to the latest versions.
+- Replaced deprecated APIs with current ones.
+
 ## 1.3.0
 
 ### New
