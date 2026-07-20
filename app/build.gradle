@@ -48,13 +48,13 @@ def hasReleaseSigning =
         releaseKeyPasswordProp
 
 android {
-    namespace "codes.swistak.batterymonitor"
+    namespace = "codes.swistak.batterymonitor"
 
     compileSdk 37
 
     dependenciesInfo {
-        includeInApk false
-        includeInBundle false
+        includeInApk = false
+        includeInBundle = false
     }
 
     defaultConfig {
@@ -120,12 +120,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "androidx.core:core:1.17.0"
-    implementation "androidx.fragment:fragment:1.8.6"
+    implementation "androidx.core:core:1.19.0"
+    implementation "androidx.fragment:fragment:1.8.9"
     implementation "androidx.viewpager:viewpager:1.1.0"
 
-    implementation "androidx.appcompat:appcompat:1.7.0"
-    implementation "androidx.appcompat:appcompat-resources:1.7.0"
+    implementation "androidx.appcompat:appcompat:1.7.1"
+    implementation "androidx.appcompat:appcompat-resources:1.7.1"
 
     implementation "androidx.preference:preference:1.2.1"
     implementation "dev.rikka.shizuku:api:13.1.5"

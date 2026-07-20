@@ -37,6 +37,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
@@ -127,7 +128,7 @@ public class BatteryInfoService extends Service {
 
     private Predictor predictor;
 
-    private final Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     private boolean chipShowingTemperature = false;
     private final Runnable runChipSwitch = new Runnable() {
@@ -280,7 +281,7 @@ public class BatteryInfoService extends Service {
         mNotificationManager.cancelAll();
         log_db.close();
         updateWidgets(null);
-        stopForeground(true);
+        stopForeground(STOP_FOREGROUND_REMOVE);
         mainNotificationForegroundStarted = false;
     }
 
@@ -312,6 +313,7 @@ public class BatteryInfoService extends Service {
         private BatteryInfoService bis;
 
         MessageHandler(BatteryInfoService s) {
+            super(Looper.getMainLooper());
             bis = s;
         }
 
@@ -386,8 +388,8 @@ public class BatteryInfoService extends Service {
     }
 
     private void loadSettingsFiles() {
-        settings = getSharedPreferences(SettingsFragment.SETTINGS_FILE, Context.MODE_MULTI_PROCESS);
-        sp_service = getSharedPreferences(SettingsFragment.SP_SERVICE_FILE, Context.MODE_MULTI_PROCESS);
+        settings = getSharedPreferences(SettingsFragment.SETTINGS_FILE, Context.MODE_PRIVATE);
+        sp_service = getSharedPreferences(SettingsFragment.SP_SERVICE_FILE, Context.MODE_PRIVATE);
     }
 
     private void reloadSettings(boolean cancelFirst) {
@@ -403,7 +405,7 @@ public class BatteryInfoService extends Service {
 
     private void applyNewSettings(boolean cancelFirst) {
         if (cancelFirst) {
-            stopForeground(true);
+            stopForeground(STOP_FOREGROUND_REMOVE);
             mainNotificationForegroundStarted = false;
         }
 
@@ -1066,7 +1068,7 @@ public class BatteryInfoService extends Service {
     }
 
     private Notification.Builder parseAlarmCursor(Cursor c) {
-        Notification.Builder nb = new Notification.Builder(this)
+        Notification.Builder nb = new Notification.Builder(this, CHAN_ID_A_CHARGED)
             .setSmallIcon(R.drawable.stat_notify_alarm)
             .setAutoCancel(true)
             .setContentIntent(alarmsPendingIntent);

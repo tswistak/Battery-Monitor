@@ -18,12 +18,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        if (intent == null)
+            return;
+
+        String action = intent.getAction();
+        if (!Intent.ACTION_BOOT_COMPLETED.equals(action) && !Intent.ACTION_MY_PACKAGE_REPLACED.equals(action))
+            return;
+
+        SharedPreferences settings = context.getSharedPreferences(
+                SettingsFragment.SETTINGS_FILE, Context.MODE_PRIVATE);
         SharedPreferences sp_main = context.getSharedPreferences(SettingsFragment.SP_MAIN_FILE, 0);
         SharedPreferences sp_service = context.getSharedPreferences(SettingsFragment.SP_SERVICE_FILE, 0);
 

@@ -9,6 +9,12 @@
 ### Fixed
 
 - "1 min until drained" prediction while the plugged device stopped charging (#58). 
+- Low-severity security issues.
+
+### Development
+
+- Updated Gradle and dependencies to the latest versions.
+- Replaced deprecated APIs with current ones.
 
 ## 1.3.0
 
