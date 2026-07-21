@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
@@ -363,7 +364,8 @@ public class LogViewFragment extends ListFragment {
 
     private void createNewCSVFile() {
         String ts = new java.text.SimpleDateFormat("yyyy-MM-dd-HHmmss-SSS").format(new Date());
-        String csvFileName = "Battery_Monitor-Logs-" + ts + ".csv";
+        String device = sanitizeFileNamePart(Build.MANUFACTURER + "-" + Build.MODEL);
+        String csvFileName = "Battery_Monitor-Logs-" + device + "-" + ts + ".csv";
 
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -373,6 +375,11 @@ public class LogViewFragment extends ListFragment {
         startActivityForResult(intent, CREATE_CSV_FILE);
     }
 
+    private static String sanitizeFileNamePart(String value) {
+        return value.trim()
+                .replaceAll("[^\\p{L}\\p{N}._-]+", "-")
+                .replaceAll("-+", "-");
+    }
 
     private void exportCSV() {
         String state = Environment.getExternalStorageState();
