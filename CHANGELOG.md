@@ -6,6 +6,7 @@
 
 - Added timestamp to settings backup export file name.
 - More reliable way for running background service to better prevent aggressive optimization (#59).
+- Added manufacturer and model to log file name (#81).
 
 ### Fixed
 
