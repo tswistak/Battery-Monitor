@@ -34,6 +34,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.AudioAttributes;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -44,6 +45,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -664,7 +666,15 @@ public class BatteryInfoService extends Service {
                 .setShortCriticalText(text);
         }
 
-        return nb.build();
+        Notification notification = nb.build();
+        if (requestLiveUpdateChip) {
+            boolean promotable = NotificationCompat.hasPromotableCharacteristics(notification);
+            boolean promotionAllowed = NotificationManagerCompat.from(this).canPostPromotedNotifications();
+            Log.d(LOG_TAG, "Live Update: promotable=" + promotable
+                    + ", promotionAllowed=" + promotionAllowed);
+        }
+
+        return notification;
     }
 
     private Notification prepareCompanionMainNotification() {
@@ -1154,25 +1164,11 @@ public class BatteryInfoService extends Service {
     }
 
     public static boolean supportsLiveUpdates() {
-        if (android.os.Build.VERSION.SDK_INT < 36) return false;
-        // we can't only rely on SDK version, because not every OS implements live updates
-        try {
-            Notification.Builder.class.getMethod("setRequestPromotedOngoing", boolean.class);
-            Notification.Builder.class.getMethod("setShortCriticalText", String.class);
-            return true;
-        } catch (Throwable e) {
-            return false;
-        }
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA;
     }
 
     public static boolean isLiveUpdateEnabledInSystem(Context context) {
-        if (android.os.Build.VERSION.SDK_INT < 36) return true;
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        try {
-            Object result = nm.getClass().getMethod("canPostPromotedNotifications").invoke(nm);
-            return result != null && (boolean) result;
-        } catch (Throwable ignored) {
-            return true;
-        }
+        if (!supportsLiveUpdates()) return true;
+        return NotificationManagerCompat.from(context).canPostPromotedNotifications();
     }
 }

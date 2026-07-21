@@ -18,6 +18,7 @@
 
 - Updated Gradle and dependencies to the latest versions.
 - Replaced deprecated APIs with current ones.
+- Refactored live updates to rely only on NotificationCompat.
 
 ## 1.3.0
 
