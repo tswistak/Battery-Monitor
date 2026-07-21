@@ -12,6 +12,7 @@
 
 - "1 min until drained" prediction while the plugged device stopped charging (#58). 
 - Low-severity security issues.
+- Clearing "Advanced" tab contents on refresh (#57).
 
 ### Development
 
