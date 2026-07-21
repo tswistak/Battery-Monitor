@@ -46,9 +46,9 @@ public class AdvancedInfoFragment extends Fragment {
     private static final int REQUEST_CODE_SHIZUKU = 7001;
 
     private final Handler mainHandler = new Handler();
-    private boolean started;
     private boolean loading;
     private boolean shizukuInitialized;
+    private boolean tabVisible;
 
     private TextView statusView;
     private View countersSection;
@@ -67,21 +67,21 @@ public class AdvancedInfoFragment extends Fragment {
     private final Shizuku.OnBinderReceivedListener binderReceivedListener = new Shizuku.OnBinderReceivedListener() {
         @Override
         public void onBinderReceived() {
-            if (started)
+            if (isTabActive())
                 loadStats();
         }
     };
     private final Shizuku.OnBinderDeadListener binderDeadListener = new Shizuku.OnBinderDeadListener() {
         @Override
         public void onBinderDead() {
-            if (started)
+            if (isTabActive())
                 showNoAccessMessage();
         }
     };
     private final Shizuku.OnRequestPermissionResultListener permissionListener = new Shizuku.OnRequestPermissionResultListener() {
         @Override
         public void onRequestPermissionResult(int requestCode, int grantResult) {
-            if (!started || requestCode != REQUEST_CODE_SHIZUKU)
+            if (!isTabActive() || requestCode != REQUEST_CODE_SHIZUKU)
                 return;
 
             if (grantResult == PERMISSION_GRANTED)
@@ -95,6 +95,7 @@ public class AdvancedInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        tabVisible = getUserVisibleHint();
         setHasOptionsMenu(true);
         Shizuku.addBinderReceivedListenerSticky(binderReceivedListener);
         Shizuku.addBinderDeadListener(binderDeadListener);
@@ -135,16 +136,20 @@ public class AdvancedInfoFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        started = true;
-        loadStats();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        tabVisible = isVisibleToUser;
+
+        if (tabVisible && isResumed())
+            loadStats();
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        started = false;
+    public void onResume() {
+        super.onResume();
+
+        if (tabVisible)
+            loadStats();
     }
 
     @Override
@@ -166,13 +171,16 @@ public class AdvancedInfoFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean isTabActive() {
+        return tabVisible && isResumed() && getView() != null;
+    }
+
     private void loadStats() {
-        if (!started || loading)
+        if (!isTabActive() || loading)
             return;
 
         loading = true;
         showStatus(R.string.advanced_status_loading);
-        clearRows();
 
         new Thread(() -> {
             AdvancedBatterySnapshot rootSnapshot = AdvancedBatteryStatsCollector.collect(
@@ -193,7 +201,7 @@ public class AdvancedInfoFragment extends Fragment {
     }
 
     private void loadViaShizuku() {
-        if (!started) {
+        if (!isTabActive()) {
             loading = false;
             return;
         }
@@ -248,7 +256,7 @@ public class AdvancedInfoFragment extends Fragment {
     private void postSnapshot(final AdvancedBatterySnapshot snapshot) {
         mainHandler.post(() -> {
             loading = false;
-            if (!started)
+            if (!isTabActive())
                 return;
 
             if (!snapshot.hasStats()) {
@@ -308,8 +316,11 @@ public class AdvancedInfoFragment extends Fragment {
     private void showNoAccessMessage() {
         mainHandler.post(() -> {
             loading = false;
+
+            if (!isTabActive())
+                return;
+
             showStatus(R.string.advanced_status_no_access);
-            clearRows();
         });
     }
 
