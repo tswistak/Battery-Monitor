@@ -555,4 +555,6 @@
   <string name="settings_imported" formatted="false">تم استيراد الإعدادات بنجاح</string>
   <string name="invalid_settings_file" formatted="false">ملف إعدادات غير صالح</string>
   <string name="settings_file_version_warning" formatted="false">تم إنشاء هذا الملف بواسطة إصدار أحدث من التطبيق. قد يؤدي استيراده إلى سلوك غير متوقع. هل تريد المتابعة رغم ذلك؟</string>
+
+  <string name="background_service_starting" formatted="false">جارٍ بدء تشغيل مراقب البطارية…</string>
 </resources>

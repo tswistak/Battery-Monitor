@@ -498,4 +498,6 @@
   <string name="settings_imported" formatted="false">Impostazioni importate correttamente</string>
   <string name="invalid_settings_file" formatted="false">File delle impostazioni non valido</string>
   <string name="settings_file_version_warning" formatted="false">Questo file è stato creato da una versione più recente dell’app. L’importazione potrebbe causare un comportamento imprevisto. Continuare comunque?</string>
+
+  <string name="background_service_starting" formatted="false">Battery Monitor si sta avviando…</string>
 </resources>

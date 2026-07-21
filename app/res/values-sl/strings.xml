@@ -535,4 +535,6 @@
   <string name="settings_imported" formatted="false">Nastavitve so bile uspešno uvožene</string>
   <string name="invalid_settings_file" formatted="false">Neveljavna datoteka nastavitev</string>
   <string name="settings_file_version_warning" formatted="false">Ta datoteka je bila ustvarjena z novejšo različico aplikacije. Uvoz lahko povzroči nepričakovano delovanje. Vseeno nadaljujem?</string>
+
+  <string name="background_service_starting" formatted="false">Nadzornik baterije se zaganja…</string>
 </resources>

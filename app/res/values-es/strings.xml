@@ -517,4 +517,6 @@
   <string name="settings_imported" formatted="false">Los ajustes se importaron correctamente</string>
   <string name="invalid_settings_file" formatted="false">Archivo de ajustes no válido</string>
   <string name="settings_file_version_warning" formatted="false">Este archivo fue creado por una versión más reciente de la aplicación. Importarlo puede provocar un comportamiento inesperado. ¿Continuar de todos modos?</string>
+
+  <string name="background_service_starting" formatted="false">Battery Monitor se está iniciando…</string>
 </resources>

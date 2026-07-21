@@ -475,4 +475,6 @@
   <string name="settings_imported" formatted="false">Einstellungen wurden erfolgreich importiert</string>
   <string name="invalid_settings_file" formatted="false">Ungültige Einstellungsdatei</string>
   <string name="settings_file_version_warning" formatted="false">Diese Datei wurde mit einer neueren Version der App erstellt. Das Importieren kann zu unerwartetem Verhalten führen. Trotzdem fortfahren?</string>
+
+  <string name="background_service_starting" formatted="false">Battery Monitor wird gestartet…</string>
 </resources>

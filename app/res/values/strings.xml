@@ -515,4 +515,6 @@
   <string name="settings_imported" formatted="false">Settings imported successfully</string>
   <string name="invalid_settings_file" formatted="false">Invalid settings file</string>
   <string name="settings_file_version_warning" formatted="false">This file was created by a newer version of the app. Importing it may cause unexpected behaviour. Continue anyway?</string>
+
+  <string name="background_service_starting" formatted="false">Battery Monitor is starting…</string>
 </resources>

@@ -495,4 +495,6 @@
   <string name="settings_imported" formatted="false">设置已成功导入</string>
   <string name="invalid_settings_file" formatted="false">无效的设置文件</string>
   <string name="settings_file_version_warning" formatted="false">此文件由较新版本的应用创建。导入可能会导致意外行为。仍要继续吗？</string>
+
+  <string name="background_service_starting" formatted="false">电池监视器正在启动…</string>
 </resources>

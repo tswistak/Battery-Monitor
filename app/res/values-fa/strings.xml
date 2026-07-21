@@ -516,4 +516,6 @@
   <string name="settings_imported" formatted="false">تنظیمات با موفقیت وارد شد</string>
   <string name="invalid_settings_file" formatted="false">فایل تنظیمات نامعتبر است</string>
   <string name="settings_file_version_warning" formatted="false">این فایل با نسخه جدیدتری از برنامه ایجاد شده است. وارد کردن آن ممکن است باعث رفتار غیرمنتظره شود. با این حال ادامه می‌دهید؟</string>
+
+  <string name="background_service_starting" formatted="false">پایشگر باتری در حال راه‌اندازی است…</string>
 </resources>

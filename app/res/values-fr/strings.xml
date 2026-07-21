@@ -495,4 +495,6 @@
   <string name="settings_imported" formatted="false">Les paramètres ont été importés avec succès</string>
   <string name="invalid_settings_file" formatted="false">Fichier de paramètres non valide</string>
   <string name="settings_file_version_warning" formatted="false">Ce fichier a été créé par une version plus récente de l’application. Son importation peut provoquer un comportement inattendu. Continuer quand même ?</string>
+
+  <string name="background_service_starting" formatted="false">Battery Monitor démarre…</string>
 </resources>

@@ -324,6 +324,8 @@ public class PersistentFragment extends Fragment {
 
     public void closeApp() {
         sp_main.edit().putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false).apply();
+        if (getActivity() != null)
+            BackgroundServiceWatchdog.cancel(getActivity().getApplicationContext());
 
         if (getActivity() == null) return;
 

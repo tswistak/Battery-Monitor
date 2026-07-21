@@ -519,4 +519,6 @@
   <string name="settings_imported" formatted="false">ההגדרות יובאו בהצלחה</string>
   <string name="invalid_settings_file" formatted="false">קובץ הגדרות לא תקין</string>
   <string name="settings_file_version_warning" formatted="false">קובץ זה נוצר בגרסה חדשה יותר של האפליקציה. ייבואו עלול לגרום להתנהגות בלתי צפויה. להמשיך בכל זאת?</string>
+
+  <string name="background_service_starting" formatted="false">Battery Monitor מופעל…</string>
 </resources>

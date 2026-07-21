@@ -538,4 +538,6 @@
   <string name="settings_imported" formatted="false">Nastavenia boli úspešne importované</string>
   <string name="invalid_settings_file" formatted="false">Neplatný súbor nastavení</string>
   <string name="settings_file_version_warning" formatted="false">Tento súbor bol vytvorený novšou verziou aplikácie. Jeho import môže spôsobiť neočakávané správanie. Napriek tomu pokračovať?</string>
+
+  <string name="background_service_starting" formatted="false">Monitor batérie sa spúšťa…</string>
 </resources>

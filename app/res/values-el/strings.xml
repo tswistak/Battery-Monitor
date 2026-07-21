@@ -513,4 +513,6 @@
   <string name="settings_imported" formatted="false">Οι ρυθμίσεις εισήχθησαν με επιτυχία</string>
   <string name="invalid_settings_file" formatted="false">Μη έγκυρο αρχείο ρυθμίσεων</string>
   <string name="settings_file_version_warning" formatted="false">Αυτό το αρχείο δημιουργήθηκε από νεότερη έκδοση της εφαρμογής. Η εισαγωγή του μπορεί να προκαλέσει απρόσμενη συμπεριφορά. Συνέχεια ούτως ή άλλως;</string>
+
+  <string name="background_service_starting" formatted="false">Το Battery Monitor ξεκινά…</string>
 </resources>

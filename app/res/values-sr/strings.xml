@@ -529,4 +529,6 @@
   <string name="settings_imported" formatted="false">Podešavanja su uspešno uvezena</string>
   <string name="invalid_settings_file" formatted="false">Neispravna datoteka podešavanja</string>
   <string name="settings_file_version_warning" formatted="false">Ova datoteka je napravljena novijom verzijom aplikacije. Uvoz može izazvati neočekivano ponašanje. Nastaviti ipak?</string>
+
+  <string name="background_service_starting" formatted="false">Battery Monitor se pokreće…</string>
 </resources>

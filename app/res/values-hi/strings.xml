@@ -513,4 +513,6 @@
   <string name="settings_imported" formatted="false">सेटिंग सफलतापूर्वक आयात की गईं</string>
   <string name="invalid_settings_file" formatted="false">अमान्य सेटिंग फ़ाइल</string>
   <string name="settings_file_version_warning" formatted="false">यह फ़ाइल ऐप के नए संस्करण से बनाई गई है। इसे आयात करने से अनपेक्षित व्यवहार हो सकता है। फिर भी जारी रखें?</string>
+
+  <string name="background_service_starting" formatted="false">बैटरी मॉनिटर शुरू हो रहा है…</string>
 </resources>

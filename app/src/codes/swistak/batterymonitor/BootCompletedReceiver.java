@@ -39,13 +39,13 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         boolean service_desired;
 
         // Actual "migration" has to be done from main process, so we will read the old value here until such a time as it is migrated.
-        if (! sp_main.getBoolean(SettingsFragment.KEY_MIGRATED_SERVICE_DESIRED, false))
+        if (!sp_main.getBoolean(SettingsFragment.KEY_MIGRATED_SERVICE_DESIRED, false))
             service_desired = sp_service.getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false);
         else
             service_desired = sp_main.getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false);
 
         // Note: Regardless of anything here, Android will start the Service on boot if there are any desktop widgets
-        if (startPref.equals("always") || (startPref.equals("auto") && service_desired)){
+        if (startPref.equals("always") || (startPref.equals("auto") && service_desired)) {
             BatteryInfoService.startForegroundServiceSafely(context);
         }
 

@@ -519,4 +519,6 @@
   <string name="settings_imported" formatted="false">Configurações importadas com sucesso</string>
   <string name="invalid_settings_file" formatted="false">Arquivo de configurações inválido</string>
   <string name="settings_file_version_warning" formatted="false">Este arquivo foi criado por uma versão mais recente do app. Importá-lo pode causar comportamento inesperado. Continuar mesmo assim?</string>
+
+  <string name="background_service_starting" formatted="false">O Monitor de Bateria está iniciando…</string>
 </resources>

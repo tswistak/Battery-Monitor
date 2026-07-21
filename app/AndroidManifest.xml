@@ -9,7 +9,6 @@
   <!-- Permissions now considered "normal", automatically granted on API 23+ -->
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /><!-- Required on API 28+ -->
-  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
   <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS" />
@@ -93,11 +92,17 @@
       android:process="codes.swistak.batterymonitor.BIS"
       android:icon="@mipmap/ic_launcher_round"
       android:exported="false"
-      android:foregroundServiceType="specialUse|dataSync"
+      android:foregroundServiceType="specialUse"
       >
-    <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_TYPE"
-              android:value="Battery indicator and status bar information." />
+    <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+              android:value="Continuous battery monitoring and user-visible battery status information." />
   </service>
+
+  <receiver
+      android:name=".BackgroundServiceWatchdog"
+      android:enabled="true"
+      android:exported="false"
+      android:process="codes.swistak.batterymonitor.BIS" />
 
   <receiver
       android:name=".BootCompletedReceiver"
