@@ -533,4 +533,6 @@
   <string name="settings_imported" formatted="false">Настройки успешно импортированы</string>
   <string name="invalid_settings_file" formatted="false">Недопустимый файл настроек</string>
   <string name="settings_file_version_warning" formatted="false">Этот файл был создан более новой версией приложения. Его импорт может привести к непредвиденному поведению. Всё равно продолжить?</string>
+
+  <string name="background_service_starting" formatted="false">Монитор батареи запускается…</string>
 </resources>

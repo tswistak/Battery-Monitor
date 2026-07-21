@@ -487,4 +487,6 @@
   <string name="settings_imported" formatted="false">A beállítások importálása sikerült</string>
   <string name="invalid_settings_file" formatted="false">Érvénytelen beállításfájl</string>
   <string name="settings_file_version_warning" formatted="false">Ezt a fájlt az alkalmazás egy újabb verziója hozta létre. Az importálás váratlan működést okozhat. Folytatja?</string>
+
+  <string name="background_service_starting" formatted="false">A Battery Monitor elindul…</string>
 </resources>

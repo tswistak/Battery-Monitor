@@ -510,4 +510,6 @@
   <string name="settings_imported" formatted="false">設定已成功匯入</string>
   <string name="invalid_settings_file" formatted="false">無效的設定檔案</string>
   <string name="settings_file_version_warning" formatted="false">此檔案由較新版本的應用程式建立。匯入可能會造成未預期的行為。仍要繼續嗎？</string>
+
+  <string name="background_service_starting" formatted="false">電池監視器正在啟動…</string>
 </resources>

@@ -54,7 +54,7 @@ public class BatteryInfoService extends Service {
     private static final String LOG_TAG = "BatteryInfoService";
 
     private final IntentFilter batteryChanged = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-    private PendingIntent currentInfoPendingIntent, updatePredictorPendingIntent, alarmsPendingIntent;
+    private PendingIntent currentInfoPendingIntent, alarmsPendingIntent;
     private Intent alarmsIntent;
 
     private NotificationManager mNotificationManager;
@@ -74,10 +74,8 @@ public class BatteryInfoService extends Service {
     private static java.util.HashSet<Messenger> clientMessengers;
     private static Messenger messenger;
 
-    private static HashSet<Integer> widgetIds = new HashSet<Integer>();
+    private static HashSet<Integer> widgetIds = new HashSet<>();
     private static AppWidgetManager widgetManager;
-
-    //private static final String LOG_TAG = "codes.swistak.batterymonitor - BatteryInfoService";
 
     private static final int NOTIFICATION_PRIMARY      = 1;
     private static final int NOTIFICATION_MAIN_COMPANION = 2;
@@ -100,7 +98,6 @@ public class BatteryInfoService extends Service {
 
     private static final int RC_MAIN   = 100;
     private static final int RC_ALARMS_EDIT = 101;
-    private static final int RC_ALARMS_CANCEL = 102;
 
     public static final String KEY_PREVIOUS_CHARGE = "previous_charge";
     public static final String KEY_PREVIOUS_TEMP = "previous_temp";
@@ -109,15 +106,12 @@ public class BatteryInfoService extends Service {
     public static final String LAST_SDK_API = "last_sdk_api";
 
 
-    private static final String EXTRA_UPDATE_PREDICTOR = "codes.swistak.batterymonitor.EXTRA_UPDATE_PREDICTOR";
-
     public static final String EXTRA_CURRENT_INFO  = "codes.swistak.batterymonitor.EXTRA_CURRENT_INFO";
     public static final String EXTRA_EDIT_ALARMS   = "codes.swistak.batterymonitor.EXTRA_EDIT_ALARMS";
 
 
     /* Global variables for these Notification Runnables */
     private String mainNotificationTopLine, mainNotificationBottomLine;
-    private RemoteViews notificationRV;
     private boolean mainNotificationForegroundStarted;
     private final HashMap<String, Integer> iconResCache = new HashMap<>();
     private static final String CONTENT_PERCENTAGE = "percentage";
@@ -130,6 +124,7 @@ public class BatteryInfoService extends Service {
 
     private final Handler mHandler = new Handler(Looper.getMainLooper());
 
+    private final Runnable runPredictorUpdate = () -> update(null);
     private boolean chipShowingTemperature = false;
     private final Runnable runChipSwitch = new Runnable() {
         @Override
@@ -202,6 +197,15 @@ public class BatteryInfoService extends Service {
 
     @Override
     public void onCreate() {
+        super.onCreate();
+
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        setUpMinimalForegroundChannel();
+        if (!startForegroundImmediately()) {
+            stopSelf();
+            return;
+        }
+
         res = getResources();
         Str.setResources(res);
         log_db = new LogDatabase(this);
@@ -217,8 +221,6 @@ public class BatteryInfoService extends Service {
 
         alarms = new AlarmDatabase(this);
 
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mainNotificationForegroundStarted = false;
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         loadSettingsFiles();
@@ -234,18 +236,10 @@ public class BatteryInfoService extends Service {
         Intent currentInfoIntent = new Intent(this, BatteryInfoActivity.class).putExtra(EXTRA_CURRENT_INFO, true);
         currentInfoPendingIntent = PendingIntent.getActivity(this, RC_MAIN, currentInfoIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        Intent updatePredictorIntent = new Intent(this, BatteryInfoService.class);
-        updatePredictorIntent.putExtra(EXTRA_UPDATE_PREDICTOR, true);
-        updatePredictorPendingIntent = PendingIntent.getService(this, 0, updatePredictorIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
         alarmsIntent = new Intent(this, BatteryInfoActivity.class).putExtra(EXTRA_EDIT_ALARMS, true);
 
         Intent serviceAlarmsIntent = new Intent(this, BatteryInfoService.class).putExtra(EXTRA_EDIT_ALARMS, true);
-        //alarmsPendingIntent = PendingIntent.getService(this, RC_ALARMS_EDIT, serviceAlarmsIntent, 0);
         alarmsPendingIntent = PendingIntent.getActivity(this, RC_ALARMS_EDIT, alarmsIntent, PendingIntent.FLAG_IMMUTABLE);
-
-        // Intent serviceCancelAlarmsIntent = new Intent(this, BatteryInfoService.class).putExtra(EXTRA_CANCEL_ALARMS, true);
-        // alarmsCancelPendingIntent = PendingIntent.getService(this, RC_ALARMS_CANCEL, serviceCancelAlarmsIntent, 0);
 
         widgetManager = AppWidgetManager.getInstance(this);
 
@@ -273,32 +267,33 @@ public class BatteryInfoService extends Service {
 
     @Override
     public void onDestroy() {
-        alarmManager.cancel(updatePredictorPendingIntent);
-        alarms.close();
-        unregisterReceiver(mBatteryInfoReceiver);
+        if (alarms != null) alarms.close();
+        try {
+            unregisterReceiver(mBatteryInfoReceiver);
+        } catch (IllegalArgumentException ignored) {
+        }
         mHandler.removeCallbacks(runRenotify);
         mHandler.removeCallbacks(runChipSwitch);
-        mNotificationManager.cancelAll();
-        log_db.close();
-        updateWidgets(null);
+        mHandler.removeCallbacks(runPredictorUpdate);
+        if (mNotificationManager != null) mNotificationManager.cancelAll();
+        if (log_db != null) log_db.close();
+        if (cwbg != null) updateWidgets(null);
         stopForeground(STOP_FOREGROUND_REMOVE);
         mainNotificationForegroundStarted = false;
     }
 
     @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        BackgroundServiceWatchdog.schedule(this);
+        super.onTaskRemoved(rootIntent);
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // if (intent != null && intent.getBooleanExtra(EXTRA_EDIT_ALARMS, false)) {
-        //     alarmPlayer.stop();
-        //     startActivity(alarmsIntent);
-        //     return Service.START_STICKY;
-        // }
-
-        // if (intent != null && intent.getBooleanExtra(EXTRA_CANCEL_ALARMS, false)) {
-        //     alarmPlayer.stop();
-        //     return Service.START_STICKY;
-        // }
-
-        // Always update
+        if (!mainNotificationForegroundStarted) {
+            stopSelf(startId);
+            return Service.START_NOT_STICKY;
+        }
         update(null);
 
         return Service.START_STICKY;
@@ -488,9 +483,47 @@ public class BatteryInfoService extends Service {
             sendClientMessage(messenger, RemoteConnection.CLIENT_BATTERY_INFO_UPDATED, info.toBundle());
         }
 
-        try { // Some reports on Developer console, don't make much sense.  Better not to crash and live without predictor update.
-            alarmManager.set(AlarmManager.ELAPSED_REALTIME, android.os.SystemClock.elapsedRealtime() + (2 * 60 * 1000), updatePredictorPendingIntent);
-        } catch (Exception e) {}
+        BackgroundServiceWatchdog.recordHeartbeat(this);
+        BackgroundServiceWatchdog.schedule(this);
+        mHandler.removeCallbacks(runPredictorUpdate);
+        mHandler.postDelayed(runPredictorUpdate, 2L * 60L * 1000L);
+    }
+
+    private void setUpMinimalForegroundChannel() {
+        if (mNotificationManager == null) return;
+
+        NotificationChannel channel = new NotificationChannel(CHAN_ID_MAIN,
+                getString(R.string.main_notif_chan_name), NotificationManager.IMPORTANCE_LOW);
+        channel.setSound(null, null);
+        channel.enableLights(false);
+        channel.enableVibration(false);
+        channel.setShowBadge(false);
+        mNotificationManager.createNotificationChannel(channel);
+    }
+
+    private boolean startForegroundImmediately() {
+        Notification notification = new NotificationCompat.Builder(this, CHAN_ID_MAIN)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(getString(R.string.background_service_starting))
+                .setOngoing(true)
+                .setShowWhen(false)
+                .build();
+
+        try {
+            startForegroundWithNotification(notification);
+            mainNotificationForegroundStarted = true;
+            return true;
+        } catch (RuntimeException firstError) {
+            try {
+                setUpMinimalForegroundChannel();
+                startForegroundWithNotification(notification);
+                mainNotificationForegroundStarted = true;
+                return true;
+            } catch (RuntimeException retryError) {
+                Log.e(LOG_TAG, "Unable to enter foreground mode during service startup", retryError);
+                return false;
+            }
+        }
     }
 
     private void startForegroundWithRetry() {
@@ -499,14 +532,8 @@ public class BatteryInfoService extends Service {
         try {
             if (mainNotificationForegroundStarted) {
                 mNotificationManager.notify(NOTIFICATION_PRIMARY, mainNotification);
-            } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                startForeground(NOTIFICATION_PRIMARY, mainNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
-                mainNotificationForegroundStarted = true;
-            } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                startForeground(NOTIFICATION_PRIMARY, mainNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
-                mainNotificationForegroundStarted = true;
             } else {
-                startForeground(NOTIFICATION_PRIMARY, mainNotification);
+                startForegroundWithNotification(mainNotification);
                 mainNotificationForegroundStarted = true;
             }
         } catch (RuntimeException e) {
@@ -517,14 +544,8 @@ public class BatteryInfoService extends Service {
 
                 if (mainNotificationForegroundStarted) {
                     mNotificationManager.notify(NOTIFICATION_PRIMARY, mainNotification);
-                } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                    startForeground(NOTIFICATION_PRIMARY, mainNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
-                    mainNotificationForegroundStarted = true;
-                } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                    startForeground(NOTIFICATION_PRIMARY, mainNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
-                    mainNotificationForegroundStarted = true;
                 } else {
-                    startForeground(NOTIFICATION_PRIMARY, mainNotification);
+                    startForegroundWithNotification(mainNotification);
                     mainNotificationForegroundStarted = true;
                 }
             } catch (RuntimeException retryError) {
@@ -535,11 +556,15 @@ public class BatteryInfoService extends Service {
         updateCompanionMainNotification();
     }
 
-    private void updateWidgets(BatteryInfo info) {
-        //Intent mainWindowIntent = new Intent(this, BatteryInfoActivity.class);
-        //PendingIntent mainWindowPendingIntent = PendingIntent.getActivity(this, RC_MAIN, mainWindowIntent, 0);
-        //PendingIntent currentInfoPendingIntent = PendingIntent.getActivity(this, RC_MAIN, currentInfoIntent, 0);
+    private void startForegroundWithNotification(Notification notification) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            startForeground(NOTIFICATION_PRIMARY, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
+        } else {
+            startForeground(NOTIFICATION_PRIMARY, notification);
+        }
+    }
 
+    private void updateWidgets(BatteryInfo info) {
         if (info == null) {
             cwbg.setLevel(0);
         } else {

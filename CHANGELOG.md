@@ -5,6 +5,7 @@
 ### Improved
 
 - Added timestamp to settings backup export file name.
+- More reliable way for running background service to better prevent aggressive optimization (#59).
 
 ### Fixed
 

@@ -527,4 +527,6 @@
   <string name="settings_imported" formatted="false">Ustawienia zostały zaimportowane</string>
   <string name="invalid_settings_file" formatted="false">Nieprawidłowy plik ustawień</string>
   <string name="settings_file_version_warning" formatted="false">Ten plik został utworzony przez nowszą wersję aplikacji. Zaimportowanie go może spowodować nieoczekiwane zachowanie. Czy kontynuować mimo to?</string>
+
+  <string name="background_service_starting" formatted="false">Monitor baterii uruchamia się…</string>
 </resources>

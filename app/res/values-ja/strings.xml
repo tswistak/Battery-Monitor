@@ -510,4 +510,6 @@
   <string name="settings_imported" formatted="false">設定を正常にインポートしました</string>
   <string name="invalid_settings_file" formatted="false">無効な設定ファイル</string>
   <string name="settings_file_version_warning" formatted="false">このファイルは新しいバージョンのアプリで作成されています。インポートすると予期しない動作が発生する可能性があります。それでも続行しますか？</string>
+
+  <string name="background_service_starting" formatted="false">Battery Monitor を起動しています…</string>
 </resources>

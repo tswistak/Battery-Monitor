@@ -523,4 +523,6 @@
   <string name="settings_imported" formatted="false">Setările au fost importate cu succes</string>
   <string name="invalid_settings_file" formatted="false">Fișier de setări nevalid</string>
   <string name="settings_file_version_warning" formatted="false">Acest fișier a fost creat de o versiune mai nouă a aplicației. Importarea lui poate cauza un comportament neașteptat. Continui oricum?</string>
+
+  <string name="background_service_starting" formatted="false">Monitorul bateriei pornește…</string>
 </resources>

@@ -534,4 +534,6 @@
   <string name="settings_imported" formatted="false">Nustatymai sėkmingai importuoti</string>
   <string name="invalid_settings_file" formatted="false">Netinkamas nustatymų failas</string>
   <string name="settings_file_version_warning" formatted="false">Šis failas buvo sukurtas naujesne programos versija. Jį importavus gali atsirasti nenumatytas veikimas. Vis tiek tęsti?</string>
+
+  <string name="background_service_starting" formatted="false">Battery Monitor paleidžiamas…</string>
 </resources>

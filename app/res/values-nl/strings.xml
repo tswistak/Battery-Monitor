@@ -517,4 +517,6 @@
   <string name="settings_imported" formatted="false">Instellingen zijn succesvol geïmporteerd</string>
   <string name="invalid_settings_file" formatted="false">Ongeldig instellingenbestand</string>
   <string name="settings_file_version_warning" formatted="false">Dit bestand is gemaakt met een nieuwere versie van de app. Importeren kan onverwacht gedrag veroorzaken. Toch doorgaan?</string>
+
+  <string name="background_service_starting" formatted="false">Battery Monitor wordt gestart…</string>
 </resources>

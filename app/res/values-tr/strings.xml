@@ -475,4 +475,6 @@
   <string name="settings_imported" formatted="false">Ayarlar başarıyla içe aktarıldı</string>
   <string name="invalid_settings_file" formatted="false">Geçersiz ayar dosyası</string>
   <string name="settings_file_version_warning" formatted="false">Bu dosya uygulamanın daha yeni bir sürümüyle oluşturuldu. İçe aktarmak beklenmedik davranışlara yol açabilir. Yine de devam edilsin mi?</string>
+
+  <string name="background_service_starting" formatted="false">Pil İzleyici başlatılıyor…</string>
 </resources>
