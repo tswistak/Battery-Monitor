@@ -1,0 +1,203 @@
+name: Verify Release Pull Request
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+permissions:
+  contents: read
+
+jobs:
+  verify-release-pr:
+    name: Verify release pull request
+    if: >-
+      startsWith(github.head_ref, 'chore/release-') ||
+      startsWith(github.event.pull_request.title, 'chore: release')
+    runs-on: ubuntu-latest
+    env:
+      PR_TITLE: ${{ github.event.pull_request.title }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Validate pull request title
+        id: release
+        shell: bash
+        run: |
+          if [[ ! "$PR_TITLE" =~ ^chore:\ release\ ([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+            echo "Pull request title must match: chore: release [major].[minor].[patch]"
+            exit 1
+          fi
+
+          VERSION="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${BASH_REMATCH[3]}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "major=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+          echo "minor=${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
+          echo "patch=${BASH_REMATCH[3]}" >> "$GITHUB_OUTPUT"
+          echo "Release version from title: $VERSION"
+
+      - name: Validate F-Droid version name
+        if: ${{ !cancelled() }}
+        shell: bash
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          if [[ -z "$VERSION" ]]; then
+            echo "Cannot validate versionName because the pull request title is invalid"
+            exit 1
+          fi
+
+          mapfile -t VERSION_NAMES < <(
+            sed -n 's/^[[:space:]]*versionName[[:space:]]*=[[:space:]]*//p' fdroid-version.properties
+          )
+          if (( ${#VERSION_NAMES[@]} != 1 )); then
+            echo "fdroid-version.properties must contain exactly one versionName property"
+            exit 1
+          fi
+
+          VERSION_NAME="${VERSION_NAMES[0]%$'\r'}"
+          if [[ "$VERSION_NAME" != "$VERSION" ]]; then
+            echo "versionName is '$VERSION_NAME'; expected '$VERSION'"
+            exit 1
+          fi
+
+          echo "versionName matches the pull request title: $VERSION"
+
+      - name: Validate F-Droid version code
+        if: ${{ !cancelled() }}
+        shell: bash
+        env:
+          MAJOR: ${{ steps.release.outputs.major }}
+          MINOR: ${{ steps.release.outputs.minor }}
+          PATCH: ${{ steps.release.outputs.patch }}
+        run: |
+          if [[ -z "$MAJOR" || -z "$MINOR" || -z "$PATCH" ]]; then
+            echo "Cannot compute versionCode because the pull request title is invalid"
+            exit 1
+          fi
+
+          MAJOR_NUMBER=$((10#$MAJOR))
+          MINOR_NUMBER=$((10#$MINOR))
+          PATCH_NUMBER=$((10#$PATCH))
+          if (( MINOR_NUMBER > 999 || PATCH_NUMBER > 999 )); then
+            echo "Minor and patch must be <= 999 for versionCode packing"
+            exit 1
+          fi
+          EXPECTED_VERSION_CODE=$((MAJOR_NUMBER * 1000000 + MINOR_NUMBER * 1000 + PATCH_NUMBER))
+
+          mapfile -t VERSION_CODES < <(
+            sed -n 's/^[[:space:]]*versionCode[[:space:]]*=[[:space:]]*//p' fdroid-version.properties
+          )
+          if (( ${#VERSION_CODES[@]} != 1 )); then
+            echo "fdroid-version.properties must contain exactly one versionCode property"
+            exit 1
+          fi
+
+          VERSION_CODE="${VERSION_CODES[0]%$'\r'}"
+          if [[ ! "$VERSION_CODE" =~ ^[0-9]+$ ]]; then
+            echo "versionCode must be an integer; found '$VERSION_CODE'"
+            exit 1
+          fi
+          if [[ "$VERSION_CODE" != "$EXPECTED_VERSION_CODE" ]]; then
+            echo "versionCode is '$VERSION_CODE'; expected '$EXPECTED_VERSION_CODE'"
+            exit 1
+          fi
+
+          echo "versionCode is correct: $VERSION_CODE"
+
+      - name: Validate new F-Droid changelog file
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          mapfile -t VERSION_CODES < <(
+            sed -n 's/^[[:space:]]*versionCode[[:space:]]*=[[:space:]]*//p' fdroid-version.properties
+          )
+          if (( ${#VERSION_CODES[@]} != 1 )); then
+            echo "Cannot determine the expected changelog file without one versionCode property"
+            exit 1
+          fi
+
+          VERSION_CODE="${VERSION_CODES[0]%$'\r'}"
+          if [[ ! "$VERSION_CODE" =~ ^[0-9]+$ ]]; then
+            echo "Cannot determine the expected changelog file from versionCode '$VERSION_CODE'"
+            exit 1
+          fi
+
+          CHANGELOG_FILE="fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt"
+          if [[ ! -f "$CHANGELOG_FILE" ]]; then
+            echo "Missing F-Droid changelog file: $CHANGELOG_FILE"
+            exit 1
+          fi
+
+          ADDED_FILES="$(git diff --diff-filter=A --name-only "$BASE_SHA" "$HEAD_SHA" -- "$CHANGELOG_FILE")"
+          if [[ "$ADDED_FILES" != "$CHANGELOG_FILE" ]]; then
+            echo "$CHANGELOG_FILE exists, but it was not added by this pull request"
+            exit 1
+          fi
+
+          echo "New F-Droid changelog file found: $CHANGELOG_FILE"
+
+      - name: Validate F-Droid changelog character limit
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          VERSION_CODE="$(
+            sed -n 's/^[[:space:]]*versionCode[[:space:]]*=[[:space:]]*//p' fdroid-version.properties
+          )"
+          VERSION_CODE="${VERSION_CODE%$'\r'}"
+          if [[ ! "$VERSION_CODE" =~ ^[0-9]+$ ]]; then
+            echo "Cannot determine the changelog file from versionCode '$VERSION_CODE'"
+            exit 1
+          fi
+
+          CHANGELOG_FILE="fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt"
+          if [[ ! -f "$CHANGELOG_FILE" ]]; then
+            echo "Cannot count characters because $CHANGELOG_FILE is missing"
+            exit 1
+          fi
+
+          read -r CHARACTER_COUNT < <(LC_ALL=C.UTF-8 wc -m < "$CHANGELOG_FILE")
+          if (( CHARACTER_COUNT > 500 )); then
+            echo "$CHANGELOG_FILE contains $CHARACTER_COUNT characters; the limit is 500"
+            exit 1
+          fi
+
+          echo "$CHANGELOG_FILE contains $CHARACTER_COUNT of 500 allowed characters"
+
+      - name: Validate CHANGELOG version
+        if: ${{ !cancelled() }}
+        shell: bash
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          if [[ -z "$VERSION" ]]; then
+            echo "Cannot validate CHANGELOG.md because the pull request title is invalid"
+            exit 1
+          fi
+          if [[ ! -f CHANGELOG.md ]]; then
+            echo "CHANGELOG.md is missing"
+            exit 1
+          fi
+          if ! grep -Fqx -- "## $VERSION" CHANGELOG.md; then
+            echo "CHANGELOG.md must contain a '## $VERSION' heading"
+            exit 1
+          fi
+
+          CHANGELOG_DIFF="$(git diff --unified=0 "$BASE_SHA" "$HEAD_SHA" -- CHANGELOG.md)"
+          if ! grep -Fqx -- "+## $VERSION" <<< "$CHANGELOG_DIFF"; then
+            echo "The '## $VERSION' heading was not added to CHANGELOG.md by this pull request"
+            exit 1
+          fi
+
+          echo "CHANGELOG.md adds version $VERSION"

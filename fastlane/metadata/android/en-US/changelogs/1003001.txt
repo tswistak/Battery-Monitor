@@ -1,0 +1,11 @@
+Improved:
+
+- Added timestamp to settings backup export file name.
+- More reliable way for running background service to better prevent aggressive optimization (#59).
+- Added manufacturer and model to log file name (#81).
+
+Fixed:
+
+- "1 min until drained" prediction while the plugged device stopped charging (#58).
+- Low-severity security issues.
+- Clearing "Advanced" tab contents on refresh (#57).
