@@ -41,7 +41,7 @@
 
   <string name="okay" formatted="false">OK</string>
 
-  <string name="tab_current_info" formatted="false">Huidige informatie</string>
+  <string name="tab_current_info" formatted="false">Status</string>
   <string name="tab_history" formatted="false">Geschiedenis</string>
   <string name="tab_advanced" formatted="false">Geavanceerd</string>
 
