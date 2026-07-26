@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Unreleased
+
+### Development
+
+- Refactored the whole app from Java to Kotlin (#7).
+- Refactored unit tests to JUnit and moved them to Gradle.
+
 ## 1.3.1
 
 ### Improved
@@ -10,7 +17,7 @@
 
 ### Fixed
 
-- "1 min until drained" prediction while the plugged device stopped charging (#58). 
+- "1 min until drained" prediction while the plugged device stopped charging (#58).
 - Low-severity security issues.
 - Clearing "Advanced" tab contents on refresh (#57).
 
@@ -41,7 +48,7 @@
 
 ### Improved
 
-- Changed font in icons to narrower, so digits are bigger now (#18). 
+- Changed font in icons to narrower, so digits are bigger now (#18).
 
 ### Fixed
 
