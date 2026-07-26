@@ -65,12 +65,20 @@ The main goal of the fork is to maintain and enhance the app to ensure it works 
 
 Huge thanks to the original authors and contributors.
 
-## Build
+## Development
 
-Build with Android Studio or from CLI:
+Use Android Studio for development.
+
+### Build
 
 ```bash
 ./gradlew assembleDebug
+```
+
+### Unit tests
+
+```bash
+./gradlew test
 ```
 
 ## License

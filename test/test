@@ -1,3 +1,0 @@
-#!/bin/bash
-
-javac -sourcepath . codes/swistak/batterymonitor/Test.java && java -classpath . codes.swistak.batterymonitor.Test

@@ -56,3 +56,26 @@ jobs:
 
       - name: Run Android lint
         run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:lintDebug
+
+  unit-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run unit tests
+        run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:testDebugUnitTest
