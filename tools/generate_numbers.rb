@@ -5,8 +5,8 @@ require "tmpdir"
 
 ROOT = File.expand_path("..", __dir__)
 DRAWABLE_DIRS = [
-  File.join(ROOT, "app/res/drawable"),
-  File.join(ROOT, "app/res/drawable-hdpi"),
+  File.join(ROOT, "app/src/main/res/drawable"),
+  File.join(ROOT, "app/src/main/res/drawable-hdpi"),
 ].freeze
 
 FONT = "Helvetica-Narrow-Bold"
@@ -85,18 +85,18 @@ VARIANTS = {
 }.freeze
 
 FALLBACK_SAMPLE_SIZES = {
-  "app/res/drawable" => {
+  "app/src/main/res/drawable" => {
     "plain" => [25, 25],
     "charging" => [25, 25],
   },
-  "app/res/drawable-hdpi" => {
+  "app/src/main/res/drawable-hdpi" => {
     "plain" => [48, 48],
     "charging" => [48, 48],
   },
 }.freeze
 
 TEXT_TRIM_TARGETS = {
-  "app/res/drawable" => {
+  "app/src/main/res/drawable" => {
     "plain" => {
       number: [20, 16],
       percentage: [22, 16],
@@ -108,7 +108,7 @@ TEXT_TRIM_TARGETS = {
       temperature: [21, 17],
     },
   },
-  "app/res/drawable-hdpi" => {
+  "app/src/main/res/drawable-hdpi" => {
     "plain" => {
       number: [45, 34],
       percentage: [47, 31],
@@ -123,11 +123,11 @@ TEXT_TRIM_TARGETS = {
 }.freeze
 
 POINTSIZE_SEARCH = {
-  "app/res/drawable" => {
+  "app/src/main/res/drawable" => {
     "plain" => (12..24),
     "charging" => (12..24),
   },
-  "app/res/drawable-hdpi" => {
+  "app/src/main/res/drawable-hdpi" => {
     "plain" => (22..44),
     "charging" => (22..44),
   },

@@ -8,7 +8,7 @@ SCRIPT_DIR="$(
 ROOT_DIR="$(
   cd "$SCRIPT_DIR/../.." && pwd
 )"
-XML_DIR="$ROOT_DIR/app/res"
+XML_DIR="$ROOT_DIR/app/src/main/res"
 REF_XML_PATH="$XML_DIR/values/strings.xml"
 REORDER_XSL_PATH="$SCRIPT_DIR/reorder.xsl"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/xml-reorder.XXXXXX")"

@@ -68,18 +68,6 @@ android {
 
     }
 
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            resources.srcDirs = ['src']
-            aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
-            res.srcDirs = ['res']
-            assets.srcDirs = ['assets']
-        }
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -117,6 +105,10 @@ android {
     }
 }
 
+android.sourceSets.named("main") {
+    kotlin.directories.add("src/main/java")
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -130,6 +122,4 @@ dependencies {
     implementation "androidx.preference:preference:1.2.1"
     implementation "dev.rikka.shizuku:api:13.1.5"
     implementation "dev.rikka.shizuku:provider:13.1.5"
-
-    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.9.24")
 }

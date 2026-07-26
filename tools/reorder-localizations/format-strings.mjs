@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "../..");
-const resDir = path.join(repoRoot, "app", "res");
+const resDir = path.join(repoRoot, "app", "src", "main", "res");
 const topLevelIndent = "  ";
 
 main().catch((error) => {
@@ -29,7 +29,7 @@ async function main() {
   const flattenedEnglish = flattenedByPath.get(englishPath);
 
   if (!flattenedEnglish) {
-    throw new Error("Missing app/res/values/strings.xml");
+    throw new Error("Missing app/src/main/res/values/strings.xml");
   }
 
   const blankLineAfterLineNumbers = collectBlankLineAfterLineNumbers(
