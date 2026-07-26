@@ -19,15 +19,14 @@ import org.junit.Test
 class PredictorCoreTest {
     companion object {
         private const val ONE_MINUTE = 60000L
-
         private const val DISCHARGE_MS_PER_PERCENT: Long = ONE_MINUTE
         private const val AC_MS_PER_PERCENT: Long = 2 * ONE_MINUTE
         private const val WIRELESS_MS_PER_PERCENT: Long = 3 * ONE_MINUTE
         private const val USB_MS_PER_PERCENT: Long = 4 * ONE_MINUTE
     }
 
-    private var predictor: PredictorCore? = null
-    private var info: BatteryInfo? = null
+    private lateinit var predictor: PredictorCore
+    private lateinit var info: BatteryInfo
 
     @Before
     fun setUp() {
@@ -38,7 +37,7 @@ class PredictorCoreTest {
             USB_MS_PER_PERCENT.toFloat()
         )
 
-        predictor!!.setPredictionType(PredictorCore.LONG_TERM)
+        predictor.setPredictionType(PredictorCore.LONG_TERM)
         info = BatteryInfo()
     }
 
@@ -50,16 +49,16 @@ class PredictorCoreTest {
     fun unpluggedBatteryProducesDrainPrediction() {
         val now = 0L
 
-        info!!.status = BatteryInfo.STATUS_UNPLUGGED
-        info!!.plugged = BatteryInfo.PLUGGED_UNPLUGGED
-        info!!.percent = 80
+        info.status = BatteryInfo.STATUS_UNPLUGGED
+        info.plugged = BatteryInfo.PLUGGED_UNPLUGGED
+        info.percent = 80
 
-        predictor!!.update(info, now)
+        predictor.update(info, now)
 
         Assert.assertEquals(
-            BatteryInfo.Prediction.UNTIL_DRAINED.toLong(), info!!.prediction.what.toLong()
+            BatteryInfo.Prediction.UNTIL_DRAINED.toLong(), info.prediction.whatHappened.toLong()
         )
-        Assert.assertEquals(80L * DISCHARGE_MS_PER_PERCENT, info!!.prediction.`when`)
+        Assert.assertEquals(80L * DISCHARGE_MS_PER_PERCENT, info.prediction.whenHappened)
     }
 
     /**
@@ -70,18 +69,18 @@ class PredictorCoreTest {
     fun chargingBatteryProducesChargePrediction() {
         val now = 0L
 
-        info!!.status = BatteryInfo.STATUS_CHARGING
-        info!!.plugged = BatteryInfo.PLUGGED_USB
-        info!!.percent = 80
+        info.status = BatteryInfo.STATUS_CHARGING
+        info.plugged = BatteryInfo.PLUGGED_USB
+        info.percent = 80
 
-        predictor!!.update(info, now)
+        predictor.update(info, now)
 
         Assert.assertEquals(
-            BatteryInfo.Prediction.UNTIL_CHARGED.toLong(), info!!.prediction.what.toLong()
+            BatteryInfo.Prediction.UNTIL_CHARGED.toLong(), info.prediction.whatHappened.toLong()
         )
         Assert.assertTrue(
             "Charging prediction should point into the future",
-            info!!.prediction.`when` >= now + ONE_MINUTE
+            info.prediction.whenHappened >= now + ONE_MINUTE
         )
     }
 
@@ -91,19 +90,21 @@ class PredictorCoreTest {
      */
     @Test
     fun fullyChargedStatusClearsPrediction() {
-        info!!.status = BatteryInfo.STATUS_UNPLUGGED
-        info!!.plugged = BatteryInfo.PLUGGED_UNPLUGGED
-        info!!.percent = 50
+        info.status = BatteryInfo.STATUS_UNPLUGGED
+        info.plugged = BatteryInfo.PLUGGED_UNPLUGGED
+        info.percent = 50
 
-        predictor!!.update(info, 0L)
+        predictor.update(info, 0L)
 
-        info!!.status = BatteryInfo.STATUS_FULLY_CHARGED
-        info!!.percent = 100
+        info.status = BatteryInfo.STATUS_FULLY_CHARGED
+        info.percent = 100
 
-        predictor!!.update(info, ONE_MINUTE)
+        predictor.update(info, ONE_MINUTE)
 
-        Assert.assertEquals(BatteryInfo.Prediction.NONE.toLong(), info!!.prediction.what.toLong())
-        Assert.assertEquals(0L, info!!.prediction.`when`)
+        Assert.assertEquals(
+            BatteryInfo.Prediction.NONE.toLong(), info.prediction.whatHappened.toLong()
+        )
+        Assert.assertEquals(0L, info.prediction.whenHappened)
     }
 
     /**
@@ -112,25 +113,25 @@ class PredictorCoreTest {
      */
     @Test
     fun changingFromDischargingToChargingChangesPredictionType() {
-        info!!.status = BatteryInfo.STATUS_UNPLUGGED
-        info!!.plugged = BatteryInfo.PLUGGED_UNPLUGGED
-        info!!.percent = 70
+        info.status = BatteryInfo.STATUS_UNPLUGGED
+        info.plugged = BatteryInfo.PLUGGED_UNPLUGGED
+        info.percent = 70
 
-        predictor!!.update(info, 0L)
-
-        Assert.assertEquals(
-            BatteryInfo.Prediction.UNTIL_DRAINED.toLong(), info!!.prediction.what.toLong()
-        )
-
-        info!!.status = BatteryInfo.STATUS_CHARGING
-        info!!.plugged = BatteryInfo.PLUGGED_USB
-
-        predictor!!.update(info, ONE_MINUTE)
+        predictor.update(info, 0L)
 
         Assert.assertEquals(
-            BatteryInfo.Prediction.UNTIL_CHARGED.toLong(), info!!.prediction.what.toLong()
+            BatteryInfo.Prediction.UNTIL_DRAINED.toLong(), info.prediction.whatHappened.toLong()
         )
-        Assert.assertTrue(info!!.prediction.`when` >= 2 * ONE_MINUTE)
+
+        info.status = BatteryInfo.STATUS_CHARGING
+        info.plugged = BatteryInfo.PLUGGED_USB
+
+        predictor.update(info, ONE_MINUTE)
+
+        Assert.assertEquals(
+            BatteryInfo.Prediction.UNTIL_CHARGED.toLong(), info.prediction.whatHappened.toLong()
+        )
+        Assert.assertTrue(info.prediction.whenHappened >= 2 * ONE_MINUTE)
     }
 
     /**
@@ -142,11 +143,11 @@ class PredictorCoreTest {
         val now = replayLegacyIrregularDischargeScenario()
 
         Assert.assertEquals(
-            BatteryInfo.Prediction.UNTIL_DRAINED.toLong(), info!!.prediction.what.toLong()
+            BatteryInfo.Prediction.UNTIL_DRAINED.toLong(), info.prediction.whatHappened.toLong()
         )
         Assert.assertTrue(
             "Prediction should remain at least one minute in the future",
-            info!!.prediction.`when` >= now + ONE_MINUTE
+            info.prediction.whenHappened >= now + ONE_MINUTE
         )
     }
 
@@ -158,41 +159,44 @@ class PredictorCoreTest {
     fun increasingLevelWithUnknownStatusClearsPrediction() {
         var now = replayLegacyIrregularDischargeScenario()
 
-        info!!.status = BatteryInfo.STATUS_UNKNOWN
-        info!!.percent = 90
-        predictor!!.update(info, now)
+        info.status = BatteryInfo.STATUS_UNKNOWN
+        info.percent = 90
+        predictor.update(info, now)
 
         now += ONE_MINUTE
-        info!!.percent = 91
-        predictor!!.update(info, now)
+        info.percent = 91
+        predictor.update(info, now)
 
-        Assert.assertEquals(BatteryInfo.Prediction.NONE.toLong(), info!!.prediction.what.toLong())
-        Assert.assertEquals(0L, info!!.prediction.`when`)
+        Assert.assertEquals(
+            BatteryInfo.Prediction.NONE.toLong(), info.prediction.whatHappened.toLong()
+        )
+        Assert.assertEquals(0L, info.prediction.whenHappened)
     }
 
     private fun replayLegacyIrregularDischargeScenario(): Long {
         val minutesByLevel = intArrayOf(300, 145, 21, 11, 2, 3, 2, 2, 1, 2, 3, 1, 2)
 
-        predictor!!.setPredictionType(PredictorCore.SINCE_STATUS_CHANGE)
+        predictor.setPredictionType(PredictorCore.SINCE_STATUS_CHANGE)
 
-        info!!.status = BatteryInfo.STATUS_UNPLUGGED
-        info!!.plugged = BatteryInfo.PLUGGED_UNPLUGGED
-        info!!.percent = 100
+        info.status = BatteryInfo.STATUS_UNPLUGGED
+        info.plugged = BatteryInfo.PLUGGED_UNPLUGGED
+        info.percent = 100
 
         var now = 0L
 
         minutesByLevel.forEach { minutesAtLevel ->
             (0..<minutesAtLevel).forEach { _ ->
                 now += ONE_MINUTE
-                predictor!!.update(info, now)
+                predictor.update(info, now)
             }
 
-            info!!.percent -= 1
+            info.percent -= 1
         }
 
         now += ONE_MINUTE
-        predictor!!.update(info, now)
+        predictor.update(info, now)
 
         return now
     }
 }
+
