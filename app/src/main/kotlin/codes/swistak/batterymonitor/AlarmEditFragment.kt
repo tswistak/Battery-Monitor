@@ -103,7 +103,7 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
     private var chanDisabled = false
 
     fun setScreen() {
-        setPreferences()
+        if (this::res.isInitialized) setPreferences()
     }
 
     private fun setPreferences() {
