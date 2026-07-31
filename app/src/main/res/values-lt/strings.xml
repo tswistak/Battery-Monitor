@@ -252,19 +252,13 @@
   <string name="status_bar_chip_settings" formatted="false">Būsenos juostos lustas</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Konfigūruokite tiesioginių atnaujinimų lusto turinį</string>
   <string name="status_bar_chip_settings_help" formatted="false">16 ir naujesnėse versijose „Android“ su tiesioginiais naujiniais galite konfigūruoti būseną juostos lustas ir ar rodyti įkrovimo jaustuką.</string>
-  <string name="current_hack_settings" formatted="false">Srovės (mA) įsilaužimas</string>
-  <string name="current_hack_settings_summary" formatted="false">Išplėstiniai nustatymai, leidžiantys įjungti mA informaciją</string>
-  <string name="current_hack_settings_help" formatted="false">„Android“ nesuteikia programoms galimybės pasiekti informaciją apie akumuliatoriaus srovę. Tačiau įsilaužimas yra prieinamas kuri leidžia daugeliui įrenginių potencialiai gauti šią informaciją.\n
-    \n
-    Negarantuojama, kad tai veiks. Gali visai neveikti arba neveikti gali pasirodyti, kad tai veikia, bet rezultatas tik nesąmoningas vertes.\n
-    \n
-    Nustatymai, norėdami įjungti įsilaužimą, jei įmanoma, ir valdyti, kaip tai vyksta naudojami yra šiame skyriuje.</string>
-
+  <string name="current_state_settings_summary" formatted="false">Dabartinės informacijos ekrano nustatymai</string>
+  <string name="current_state_settings_help" formatted="false">Nustatykite, kokia informacija rodoma Dabartinės informacijos ekrane. Akumuliatoriaus srovės parinktys valdo tiesioginį rodmenį, pateikiamą su kitais akumuliatoriaus duomenimis.</string>
   <string name="alarm_settings_subtitle" formatted="false">Aliarmo Nustatymai</string>
   <string name="alarm_settings" formatted="false">Aliarmai</string>
   <string name="alarm_settings_help" formatted="false">Jūs galite nusistatyti Baterijos Indikatoriaus perspėjimą, kai baterijos lygis pasiekia tam tikrą tašką (pvz.: baterija pilnai įkraunama, baterijos lygtis nukrenta žemiau 20% ir pan.).</string>
-  <string name="other_settings" formatted="false">Kiti nustatymai</string>
-  <string name="other_settings_help" formatted="false">Visi kiti nustatymai yra šiame puslapyje: įrašų sudarymas, ekrano užraktas, temperatūros vienetas, auto-paleidimas ir kitą.</string>
+  <string name="other_settings" formatted="false">Bendrieji</string>
+  <string name="other_settings_help" formatted="false">Šiame puslapyje pateikiami bendrieji programėlės nustatymai, įskaitant žurnalų rašymą, temperatūros vienetą, automatinį paleidimą ir kt.</string>
 
   <string name="live_updates_onboarding_title">Būsenos juostos akumuliatoriaus lustas</string>
   <string name="live_updates_onboarding_message_on">Jūsų įrenginys palaiko akumuliatoriaus procento rodymą kaip lustą būsenos juostoje. Ši parinktis pagal numatytuosius nustatymus įjungta.\n
@@ -331,52 +325,33 @@
   <string name="pref_show_icon_unit" formatted="false">Rodyti vieneto simbolį</string>
   <string name="pref_show_icon_unit_help" formatted="false">Jei įjungta, piktograma rodo procento ženklą akumuliatoriaus lygiui ir laipsnio simbolį akumuliatoriaus temperatūrai. Išjunkite, jei norite rodyti tik skaičių.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Pagrindinis valdymas</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Srovės (mA) įsilaužimas nepalaikomas</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Akumuliatoriaus srovė</string>
+  <string name="pref_enable_battery_current" formatted="false">Įjungti akumuliatoriaus srovę</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Rodyti akumuliatoriaus srovę pagrindiniame lange?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">Įjungus akumuliatoriaus srovė rodoma pagrindiniame lange ir tampa pasiekiamos susijusios parinktys.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Atsiprašome, dabartinis (mA) įsilaužimas šiame įrenginyje nepalaikomas.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">Jei reikia, naudoti privilegijuotą prieigą</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Leisti privilegijuotą prieigą kaip atsarginį būdą, kai įprasti metodai negali nuskaityti srovės?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Įjungus Battery Monitor gali naudoti root arba Shizuku tik tada, kai Android ir failų sistemos metodai nepateikia rodmens. Reikalingo leidimo prašoma įjungiant.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Įgalinti įsilaužimą</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Bandote įjungti srovės (mA) įsilaužimą?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">Kai šis nustatymas įjungtas, kitos parinktys, susijusios su įsilaužimas bus tinkamas naudoti.</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">Pirmenybę teikite senam įsilaužimo metodui</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Mėgstate senesnį, failų sistema pagrįstą įsilaužimo metodą?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Pradedant nuo „Lollipop“ („Android 5.0“), „Android“ dabar teikia a šiek tiek mažiau įsilaužėlių būdas pasiekti esamą (mA) informaciją, tiesiai iš sistemos BatteryManager. Tačiau vis dar nėra garantuotai dirbs išvis arba dirbs gerai. Iki Android Nougat (Android 7.0), atrodo, kad senasis (pagrįstas failų sistema) įsilaužimo metodas veikia geriau daugumoje įrenginių, todėl įrenginiuose jis išlieka numatytasis veikia senesnė nei Android 7.0.\n
+  <string name="pref_battery_current_multiplier" formatted="false">Daugiklis</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Kai kurie įrenginiai srovę pateikia netikėtais vienetais arba su netikėtu ženklu. Čia padauginkite pateiktą reikšmę, kad pataisytumėte rodomą rezultatą.\n
     \n
-    Šis nustatymas yra tik užuomina į įsilaužimą, kurį metodą naudoti teikia pirmenybę; galite pabandyti jį pakeisti, jei įsilaužimas neveikia gerai savo įrenginį.</string>
+    Apytiksliai vertinant telefoną, pagal Android standartą kraunant ženklas yra teigiamas, o iškraunant – neigiamas. Aktyvus įkrovimas dažnai būna apie +500–+5000 mA, o įprastas iškrovimas – apie -100–-3000 mA. Reikšmės arti nulio gali būti normalios, kai baterija beveik pilna arba telefonas nenaudojamas. Jei reikšmė atrodo maždaug 1000 kartų per maža ar per didelė arba ženklas apverstas, pakoreguokite daugiklį.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Daugiklis</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Kai kurie įrenginiai nurodo miliamperus, o ne mikroamperus API ragina. Tie patys įrenginiai sukeičia praneštos vertės ženklą. Kai kurie vartotojai teikia pirmenybę priešingam teisingai pateiktų verčių ženklui. Norėdami padėti prisitaikyti prie tokių situacijų, galite padauginti API iškvietimo rezultatas pagal čia esančią reikšmę.\n
-    \n
-    Jei jūsų įrenginys visada rodo, pavyzdžiui, 0 mA, galite pabandyti naudojant daugiklį 1000. Jei API iškvietimas grąžina 450 mikroamperų, šis daugiklis leis programai parodyti vertę kaip 450 mA, o ne 0 mA. Jei API skambutis grąžina 0 mikroamperų, žinoma, daugiklis nepakeis galutinio rodoma 0 mA vertė.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Teikti pirmenybę vidutinei srovei</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Naudoti naujausią vidurkį, kai jis pasiekiamas?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Kai kurios sistemos kartu su momentine srove pateikia naujausią vidurkį. Vidurkinimo laikotarpis ir kokybė priklauso nuo įrenginio. Išjunkite, jei vidurkis nepasiekiamas arba netinkamas.</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Pranešimas</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">Rodyti gyvybiškai svarbioje statistikoje</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Rodyti srovę (mA) pagrindinėje pranešimų gyvybiškai svarbioje statistikoje?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Kai įjungta, bus bandoma įsilaužti ir bus rodomas rezultatas bus pagrindinė pranešimo gyvybiškai svarbios statistikos eilutė. Atkreipkite dėmesį, kad jūs turi būti sukonfigūruotas pagrindinis pranešimas, kad būtų rodoma svarbi statistika norėdami tai pamatyti. Ši reikšmė bus atnaujinta tik tada, kai sistema siunčia informaciją apie naują bateriją.\n
-    \n
-    Daugelyje įrenginių neigiama reikšmė rodo grynąjį nutekėjimą iš baterija ir teigiama reikšmė rodo, kad baterija veikia apmokestintas. Tačiau ne visi įrenginiai sukuria vertes tokiu būdu.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Automatinio atnaujinimo intervalas</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Pasirinkite, kaip dažnai atnaujinti srovės rodmenį, kol matomas pagrindinis langas.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Įveskite intervalą sekundėmis (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">Įveskite reikšmę nuo 1 iki 3600.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d sek.</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">Pagrindinis langas</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Rodyti pagrindiniame lange</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Rodyti srovę (mA) pagrindiniame lange?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Kai įjungta, bus bandoma įsilaužti ir bus rodomas rezultatas pagrindiniame lange. Ši vertė bus atnaujinta bet kada sistema siunčia informaciją apie naują bateriją, bet jūs galite ją atnaujinti vertę bet kuriuo metu tiesiog bakstelėdami rodomą vertę. (Pastaba kad kai kurie įrenginiai retai arba niekada neatnaujina pagrindinių duomenų, todėl bakstelėjus reikšmė gali nepasikeisti.)\n
-    \n
-    Daugelyje įrenginių neigiama reikšmė rodo grynąjį nutekėjimą iš baterija ir teigiama reikšmė rodo, kad baterija veikia apmokestintas. Tačiau ne visi įrenginiai sukuria vertes tokiu būdu.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Pirmenybė teikiama vidutinei gyvybiškai svarbiai statistikai</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Bandyti naudoti current_avg pagrindinėje pranešimų gyvybiškai svarbioje statistikoje?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Pirmenybė teikiama vidutiniam pagrindiniam lange</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Pabandykite pagrindiniame lange naudoti current_avg?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Kai kurios sistemos turi dar vieną įsilaužimą, suteikiantį naujausią srovės vidurkis, o ne momentinis jos rodmuo. Tai, ką tai reiškia, skiriasi priklausomai nuo įrenginio ir pasiekiama tik kai kuriuose įrenginiuose. Tai gali suteikti stabilesnę vertę (jei viskas vyksta gerai), jis gali grąžinti tą pačią vertę arba gali grąžinti netinkamą naudoti reikšmę (tokiu atveju turėtumėte išjungti šią parinktį).</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Automatinis atnaujinimas mA pagrindiniame lange</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Automatiškai atnaujinti mA kas dvi sekundes?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Jei nustatėte, kad įsilaužimas pagrindiniame lange būtų rodomas mA, galite atnaujinkite vertę tiesiog paliesdami ją. Jei nori pamatyti dažnai atnaujinant, nereikia bakstelėti, galite įjungti šią parinktį kad automatiškai atnaujintumėte reikšmę kas dvi sekundes, kol matomas langas.\n
-    \n
-    Atminkite, kad kai kurie įrenginiai retai arba niekada neatnaujina pagrindinių duomenų duomenis, todėl vertė gali nepasikeisti, net jei programa yra atnaujinama rodoma reikšmė, kad ji atitiktų duomenis, gautus iš sistema.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Rodyti akumuliatoriaus srovę</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Rodyti srovę pagrindinio pranešimo gyvybinių rodiklių eilutėje?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">Įjungus srovė rodoma pagrindinio pranešimo gyvybinių rodiklių eilutėje. Bent viena pranešimo eilutė turi rodyti gyvybinius rodiklius.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Įkrovimo indikatorius</string>
   <string name="pref_indicate_charging" formatted="false">Nurodykite įkrovimą</string>

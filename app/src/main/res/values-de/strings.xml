@@ -232,15 +232,13 @@
   <string name="status_bar_chip_settings" formatted="false">Statusleisten-Chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Inhalt des Live-Updates-Chips konfigurieren</string>
   <string name="status_bar_chip_settings_help" formatted="false">Auf Android 16+ mit Live Updates können Sie konfigurieren, was der Statusleisten-Chip zeigt und ob das Lade-Emoji angezeigt wird.</string>
-  <string name="current_hack_settings" formatted="false">Stromstärke-(mA)-Hack</string>
-  <string name="current_hack_settings_summary" formatted="false">Erweiterte Einstellungen für mA-Informationen</string>
-  <string name="current_hack_settings_help" formatted="false">Android bietet Apps keinen offiziellen Zugriff auf Informationen zur Batteriestromstärke. Es gibt jedoch einen Hack, der dies auf vielen Geräten eventuell ermöglicht.</string>
-
+  <string name="current_state_settings_summary" formatted="false">Einstellungen für den Bildschirm „Aktuelle Info“</string>
+  <string name="current_state_settings_help" formatted="false">Legen Sie fest, welche Informationen auf dem Bildschirm „Aktuelle Info“ angezeigt werden. Die Batteriestromoptionen steuern den Live-Messwert neben den übrigen Batteriedetails.</string>
   <string name="alarm_settings_subtitle" formatted="false">Alarm Einstellungen</string>
   <string name="alarm_settings" formatted="false">Alarme</string>
   <string name="alarm_settings_help" formatted="false">Battery Monitor kann Sie benachrichtigen, wenn ein bestimmter Akkuzustand erreicht wird (z. B. vollständig geladen, unter 20% usw.).</string>
-  <string name="other_settings" formatted="false">Andere Einstellungen</string>
-  <string name="other_settings_help" formatted="false">Alle weiteren Einstellungen befinden sich auf dieser Seite, einschließlich Protokollierung, Sperrbildschirm, Temperatureinheit, Autostart und mehr.</string>
+  <string name="other_settings" formatted="false">Allgemein</string>
+  <string name="other_settings_help" formatted="false">Auf dieser Seite finden Sie allgemeine App-Einstellungen wie Protokollierung, Temperatureinheit, Autostart und mehr.</string>
 
   <string name="live_updates_onboarding_title">Akku-Chip in der Statusleiste</string>
   <string name="live_updates_onboarding_message_on">Ihr Gerät unterstützt die Anzeige des Batteriestands als Chip in der Statusleiste. Diese Option ist standardmäßig aktiviert.\n
@@ -307,42 +305,33 @@
   <string name="pref_show_icon_unit" formatted="false">Einheitensymbol anzeigen</string>
   <string name="pref_show_icon_unit_help" formatted="false">Wenn aktiviert, zeigt das Symbol ein Prozentzeichen für den Akkustand und ein Gradsymbol für die Akkutemperatur. Deaktivieren Sie dies, wenn nur die Zahl angezeigt werden soll.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Hauptsteuerung</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Stromstärke-(mA)-Hack nicht unterstützt</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Batteriestrom</string>
+  <string name="pref_enable_battery_current" formatted="false">Batteriestrom aktivieren</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Batteriestrom im Hauptfenster anzeigen?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">Wenn aktiviert, wird der Batteriestrom im Hauptfenster angezeigt und die zugehörigen Optionen werden verfügbar.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Der Stromstärke-(mA)-Hack wird auf diesem Gerät leider nicht unterstützt.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">Bei Bedarf privilegierten Zugriff verwenden</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Privilegierten Zugriff als Ausweichmethode zulassen, wenn normale Methoden den Batteriestrom nicht lesen können?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Wenn aktiviert, darf Battery Monitor Root oder Shizuku nur verwenden, wenn Android- und Dateisystemmethoden keinen Messwert liefern. Die erforderliche Berechtigung wird beim Aktivieren angefordert.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Hack aktivieren</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Versuchen, den Stromstärke-(mA)-Hack zu aktivieren?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">Wenn diese Einstellung aktiviert ist, sind die übrigen Hack-Optionen nutzbar.</string>
+  <string name="pref_battery_current_multiplier" formatted="false">Multiplikator</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Einige Geräte melden unerwartete Einheiten oder Vorzeichen. Multipliziere den gemeldeten Wert hier, um die Anzeige zu korrigieren.\n
+    \n
+    Als grober Richtwert für Smartphones gilt nach Android-Konvention: positiv beim Laden und negativ beim Entladen. Aktives Laden liegt oft bei etwa +500 bis +5000 mA, normales Entladen bei etwa -100 bis -3000 mA. Werte nahe null können bei fast vollem Akku oder im Leerlauf normal sein. Ist der Betrag ungefähr 1000-mal zu klein oder zu groß oder ist das Vorzeichen vertauscht, passe den Multiplikator an.</string>
 
-  <string name="pref_current_hack_prefer_fs" formatted="false">Alte Hack-Methode bevorzugen</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Ältere, dateisystembasierte Hack-Methode bevorzugen?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Seit Lollipop gibt es einen weniger hackigen Weg über BatteryManager, der jedoch nicht immer zuverlässig funktioniert.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Durchschnittsstrom bevorzugen</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Den aktuellen Durchschnitt verwenden, wenn verfügbar?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Einige Systeme liefern zusätzlich zum Momentanstrom einen aktuellen Durchschnitt. Zeitraum und Qualität unterscheiden sich je nach Gerät. Deaktivieren Sie diese Option, wenn der Durchschnitt nicht verfügbar oder unbrauchbar ist.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Multiplikator</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Einige Geräte liefern mA statt µA oder vertauschen das Vorzeichen; der Multiplikator hilft beim Anpassen.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Intervall der automatischen Aktualisierung</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Legen Sie fest, wie oft der Batteriestrom aktualisiert wird, während das Hauptfenster sichtbar ist.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Intervall in Sekunden eingeben (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">Geben Sie einen Wert von 1 bis 3600 ein.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d Sekunden</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Benachrichtigung</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">In Vitalzeichen anzeigen</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Stromstärke (mA) in den Vitalzeichen der Hauptbenachrichtigung anzeigen?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Wenn aktiviert, wird der Hack versucht und das Ergebnis in der Vitalzeichenzeile angezeigt.</string>
-
-  <string name="pref_cat_current_hack_main_window" formatted="false">Hauptfenster</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Im Hauptfenster anzeigen</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Stromstärke (mA) im Hauptfenster anzeigen?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Wenn aktiviert, wird der Hack versucht und das Ergebnis im Hauptfenster angezeigt.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Durchschnitt in Vitalzeichen bevorzugen</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">current_avg in den Vitalzeichen verwenden?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Durchschnitt im Hauptfenster bevorzugen</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">current_avg im Hauptfenster verwenden?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Einige Systeme liefern einen gemittelten Stromwert statt eines Momentanwerts.</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">mA im Hauptfenster automatisch aktualisieren</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">mA alle zwei Sekunden automatisch aktualisieren?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Wenn der Hack mA im Hauptfenster anzeigt, kann der Wert automatisch aktualisiert werden.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Batteriestrom anzeigen</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Batteriestrom in der Vitalzeichenzeile der Hauptbenachrichtigung anzeigen?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">Wenn aktiviert, wird der Batteriestrom in der Vitalzeichenzeile der Hauptbenachrichtigung angezeigt. Mindestens eine Benachrichtigungszeile muss Vitalzeichen anzeigen.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Ladeindikator</string>
   <string name="pref_indicate_charging" formatted="false">Ladevorgang anzeigen</string>

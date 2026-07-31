@@ -256,19 +256,13 @@
   <string name="status_bar_chip_settings" formatted="false">Čip stavového riadka</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Nakonfigurujte obsah čipu Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">V systéme Android 16+ so živými aktualizáciami môžete nakonfigurovať stav zobrazuje pruhový čip a či sa má zobraziť emodži nabíjania.</string>
-  <string name="current_hack_settings" formatted="false">Hack prúdu (mA).</string>
-  <string name="current_hack_settings_summary" formatted="false">Rozšírené nastavenia na povolenie informácií o mA</string>
-  <string name="current_hack_settings_help" formatted="false">Android neposkytuje aplikáciám prostriedky na prístup k informáciám o prúde batérie. K dispozícii je však hack ktorá umožňuje mnohým zariadeniam potenciálne získať tieto informácie.\n
-    \n
-    Nie je zaručené, že to bude fungovať. Nemusí to fungovať vôbec alebo áno sa môže zdať, že funguje, ale výsledkom sú len nezmyselné hodnoty.\n
-    Nastavenia\n
-    S zapnúť hack, ak je to možné, a ovládať, ako to je použité sú dostupné v tejto sekcii.</string>
-
+  <string name="current_state_settings_summary" formatted="false">Nastavenia obrazovky Aktuálne informácie</string>
+  <string name="current_state_settings_help" formatted="false">Nastavte informácie zobrazované na obrazovke Aktuálne informácie. Možnosti prúdu batérie riadia živý údaj zobrazený spolu s ostatnými podrobnosťami o batérii.</string>
   <string name="alarm_settings_subtitle" formatted="false">Nastavenie upozornení</string>
   <string name="alarm_settings" formatted="false">Upozornenia</string>
   <string name="alarm_settings_help" formatted="false">Monitor batérie vás môže upozorniť na úroveň nabitia batérie dosiahne určitý stav (napr. batéria sa úplne nabije, úroveň batérie klesne pod 20 % a mnoho ďalších).</string>
-  <string name="other_settings" formatted="false">Ostatné nastavenia</string>
-  <string name="other_settings_help" formatted="false">Všetky ostatné nastavenia sú na tejto stránke, vrátane zaznamenávania, zámku obrazovky, jednotiek teploty, auto-štartu a iných.</string>
+  <string name="other_settings" formatted="false">Všeobecné</string>
+  <string name="other_settings_help" formatted="false">Na tejto stránke sú všeobecné nastavenia aplikácie vrátane zaznamenávania, jednotky teploty, automatického spustenia a ďalších možností.</string>
 
   <string name="live_updates_onboarding_title">Stavový riadok Čip batérie</string>
   <string name="live_updates_onboarding_message_on">Vaše zariadenie podporuje zobrazovanie percenta batérie ako čip v stavovom riadku. Táto možnosť je predvolene zapnutá.\n
@@ -335,52 +329,33 @@
   <string name="pref_show_icon_unit" formatted="false">Zobraziť symbol jednotky</string>
   <string name="pref_show_icon_unit_help" formatted="false">Ak je zapnuté, ikona zobrazuje znak percenta pre stav batérie a symbol stupňa pre teplotu batérie. Vypnite túto možnosť, ak chcete zobrazovať len číslo.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Hlavné ovládanie</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Aktuálny (mA) hack nie je podporovaný</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Prúd batérie</string>
+  <string name="pref_enable_battery_current" formatted="false">Povoliť prúd batérie</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Zobraziť prúd batérie v hlavnom okne?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">Po povolení sa prúd batérie zobrazí v hlavnom okne a sprístupnia sa súvisiace možnosti.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Ľutujeme, aktuálny (mA) hack nie je na tomto zariadení podporovaný.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">V prípade potreby použiť privilegovaný prístup</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Povoliť privilegovaný prístup ako zálohu, keď bežné metódy nedokážu prečítať prúd?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Po povolení môže Battery Monitor použiť root alebo Shizuku iba vtedy, keď Android ani súborový systém neposkytnú údaj. Potrebné povolenie sa vyžiada pri zapnutí.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Povoliť hackovanie</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Pokus o aktiváciu aktuálneho (mA) hacku?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">Keď je toto nastavenie povolené, ostatné možnosti týkajúce sa hack bude použiteľný.</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">Uprednostnite starú metódu hackovania</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Preferujete staršiu metódu hackovania založenú na súborovom systéme?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Od verzie Lollipop (Android 5.0) Android teraz poskytuje a o niečo menej hackerský spôsob prístupu k aktuálnym (mA) informáciám, priamo zo systému BatteryManager. Stále však nie je zaručené, že bude fungovať vôbec alebo bude fungovať dobre. Až do Androidu Nougat (Android 7.0), stará metóda hackovania (založená na súborovom systéme). funguje lepšie na väčšine zariadení, takže zostáva predvolená na zariadeniach beží menej ako Android 7.0.\n
+  <string name="pref_battery_current_multiplier" formatted="false">Násobiteľ</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Niektoré zariadenia hlásia neočakávané jednotky alebo znamienka. Vynásobte tu hlásenú hodnotu, aby ste opravili zobrazený výsledok.\n
     \n
-    Toto nastavenie je len náznak hacku o tom, ktorú metódu použiť preferovať; môžete to skúsiť zmeniť, ak hack nefunguje dobre vaše zariadenie.</string>
+    Ako približná referencia pre telefóny používa Android kladné znamienko pri nabíjaní a záporné pri vybíjaní. Aktívne nabíjanie býva často približne +500 až +5000 mA, bežné vybíjanie približne -100 až -3000 mA. Hodnoty blízko nuly môžu byť normálne, keď je batéria takmer plná alebo telefón nečinný. Ak je hodnota asi 1000-krát príliš malá či veľká alebo má opačné znamienko, upravte násobiteľ.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Násobiteľ</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Niektoré zariadenia uvádzajú skôr miliampéry ako mikroampéry API vyžaduje. Rovnaké zariadenia si vymenia znamienko hlásenej hodnoty. Niektorí používatelia uprednostňujú opačné znamienko správne vykázaných hodnôt. Aby ste sa vyhli takýmto situáciám, môžete ich znásobiť výsledok volania API hodnotou tu.\n
-    \n
-    Ak vaše zariadenie vždy zobrazuje napríklad 0 mA, môžete to skúsiť pomocou násobiteľa 1000. Ak volanie API vráti 450 mikroampér, tento multiplikátor prinúti aplikáciu zobraziť hodnotu ako 450 mA namiesto 0 mA. Ak volanie API vráti 0 mikroampér, samozrejme, násobič nezmení finále zobrazovaná hodnota 0 mA.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Uprednostniť priemerný prúd</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Použiť posledný priemer, keď je dostupný?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Niektoré systémy poskytujú okrem okamžitého prúdu aj nedávny priemer. Obdobie a kvalita priemerovania sa líšia podľa zariadenia. Ak priemer nie je dostupný alebo použiteľný, túto možnosť vypnite.</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Oznámenie</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">Zobraziť v dôležitých štatistikách</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Zobrazovať prúd (mA) v hlavných štatistikách upozornení?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Keď je povolená, dôjde k pokusu o hack a zobrazí sa výsledkom bude hlavný riadok vitálnych štatistík upozornení. Všimnite si, že vy musí mať hlavné upozornenie nakonfigurované na zobrazovanie dôležitých štatistík aby ste to videli. Táto hodnota sa obnoví iba vtedy, keď je systém odošle informácie o novej batérii.\n
-    \n
-    ONa väčšine zariadení záporná hodnota označuje čistý odtok z batérie a kladná hodnota znamená, že batéria je vybitá spoplatnené. Nie všetky zariadenia však generujú hodnoty týmto spôsobom.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Interval automatického obnovenia</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Vyberte, ako často sa má údaj prúdu obnovovať, keď je hlavné okno viditeľné.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Zadajte interval v sekundách (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">Zadajte hodnotu od 1 do 3600.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d sekúnd</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">Hlavné okno</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Zobrazenie v hlavnom okne</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Zobraziť prúd (mA) v hlavnom okne?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Keď je povolená, dôjde k pokusu o hack a zobrazí sa výsledok v hlavnom okne. Táto hodnota sa kedykoľvek obnoví systém odošle nové informácie o batérii, ale môžete ich obnoviť hodnotu kedykoľvek jednoduchým klepnutím na zobrazenú hodnotu. (Pozn že niektoré zariadenia málokedy alebo vôbec neaktualizujú základné údaje, takže pri klepnutí sa nemusí zdať, že by sa hodnota zmenila.)\n
-    \n
-    ONa väčšine zariadení záporná hodnota označuje čistý odtok z batérie a kladná hodnota znamená, že batéria je vybitá spoplatnené. Nie všetky zariadenia však generujú hodnoty týmto spôsobom.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Uprednostňujte priemer v dôležitých štatistikách</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Skúsiť použiť current_avg v hlavných štatistikách dôležitých upozornení?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Uprednostňujte priemer v hlavnom okne</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Skúsiť použiť current_avg v hlavnom okne?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Niektoré systémy majú k dispozícii ďalší hack, ktorý poskytuje najnovší skôr priemer prúdu než jeho okamžité odčítanie. Čo to znamená, sa líši od zariadenia k zariadeniu a je k dispozícii iba na niektorých zariadeniach. To môže poskytnúť stabilnejšiu hodnotu (ak všetko pôjde no), môže vrátiť rovnakú hodnotu alebo môže vrátiť nepoužiteľné hodnotu (v takom prípade by ste mali túto možnosť vypnúť).</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Automatická obnova mA v hlavnom okne</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Automatická obnova mA každé dve sekundy?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Ak máte hack nastavený na zobrazenie mA v hlavnom okne, môžete obnovte hodnotu jednoduchým klepnutím. Ak chcete vidieť časté aktualizácie bez toho, aby ste museli klepnúť, môžete túto možnosť povoliť na automatické obnovenie hodnoty každé dve sekundy, kým je okno viditeľné.\n
-    \n
-    Všimnite si, že niektoré zariadenia málokedy alebo nikdy neaktualizujú základ údaje, takže sa môže zdať, že sa hodnota nezmení, aj keď sa aplikácia zmenila obnovenie zobrazenej hodnoty, aby sa zhodovala s údajmi získanými z systému.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Zobraziť prúd batérie</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Zobraziť prúd v riadku dôležitých štatistík hlavného oznámenia?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">Po povolení sa prúd zobrazí v riadku dôležitých štatistík hlavného oznámenia. Aspoň jeden riadok oznámenia musí zobrazovať dôležité štatistiky.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Indikátor nabíjania</string>
   <string name="pref_indicate_charging" formatted="false">Označte nabíjanie</string>

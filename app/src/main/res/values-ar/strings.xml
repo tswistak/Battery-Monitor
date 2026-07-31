@@ -272,19 +272,13 @@
   <string name="status_bar_chip_settings" formatted="false">شريحة شريط الحالة</string>
   <string name="status_bar_chip_settings_summary" formatted="false">تهيئة محتوى شريحة Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">على Android 16+ مع Live Updates يمكنك تهيئة ما تعرضه شريحة شريط الحالة وما إذا كان سيتم عرض رمز الشحن التعبيري.</string>
-  <string name="current_hack_settings" formatted="false">حيلة التيار (mA)</string>
-  <string name="current_hack_settings_summary" formatted="false">إعدادات متقدمة لتمكين معلومات mA</string>
-  <string name="current_hack_settings_help" formatted="false">لا يوفر Android طريقة رسمية للتطبيقات للوصول إلى معلومات تيار البطارية. ولكن توجد حيلة قد تتيح هذا على كثير من الأجهزة.\n
-    \n
-    لا يوجد ضمان بأن هذا سيعمل. قد لا يعمل إطلاقًا أو قد يبدو أنه يعمل لكنه يعطي قيماً غير منطقية.\n
-    \n
-    إعدادات تشغيل هذه الحيلة والتحكم بطريقة استخدامها متاحة في هذا القسم إذا كان ذلك ممكنًا.</string>
-
+  <string name="current_state_settings_summary" formatted="false">إعدادات شاشة المعلومات الحالية</string>
+  <string name="current_state_settings_help" formatted="false">اضبط المعلومات المعروضة على شاشة المعلومات الحالية. تتحكم خيارات تيار البطارية في القراءة المباشرة المعروضة مع تفاصيل البطارية الأخرى.</string>
   <string name="alarm_settings_subtitle" formatted="false">اعدادات المنبه</string>
   <string name="alarm_settings" formatted="false">المنبهات</string>
   <string name="alarm_settings_help" formatted="false">يمكن للمؤشر بإعلامك عند مستوى البطارية تصل إلى نقطة معينة (على سبيل المثال، يصبح البطارية مشحونة بالكامل، وانخفاض مستوى البطارية أقل من 20٪)</string>
-  <string name="other_settings" formatted="false">اعدادات اخرى</string>
-  <string name="other_settings_help" formatted="false">جميع الاعدادات في هذه الصفحة السجلات والقفل ودرجة الحرارة والتشغيل التلقائيواعدادات اخرى</string>
+  <string name="other_settings" formatted="false">عام</string>
+  <string name="other_settings_help" formatted="false">توجد إعدادات التطبيق العامة في هذه الصفحة، بما في ذلك التسجيل ووحدة الحرارة والتشغيل التلقائي والمزيد.</string>
 
   <string name="live_updates_onboarding_title">شريحة بطارية شريط الحالة</string>
   <string name="live_updates_onboarding_message_on">جهازك يدعم عرض نسبة البطارية كشريحة في شريط الحالة. هذا الخيار مفعّل افتراضيًا.\n
@@ -351,54 +345,33 @@
   <string name="pref_show_icon_unit" formatted="false">إظهار رمز الوحدة</string>
   <string name="pref_show_icon_unit_help" formatted="false">عند التفعيل، تعرض الأيقونة علامة النسبة المئوية لنسبة البطارية وعلامة الدرجة لدرجة حرارة البطارية. عطّل هذا الخيار لعرض الرقم فقط.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">التحكم الرئيسي</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">حيلة التيار (mA) غير مدعومة</string>
+  <string name="pref_cat_battery_current_main" formatted="false">تيار البطارية</string>
+  <string name="pref_enable_battery_current" formatted="false">تفعيل تيار البطارية</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">عرض تيار البطارية في النافذة الرئيسية؟</string>
+  <string name="pref_enable_battery_current_help" formatted="false">عند التفعيل، يظهر تيار البطارية في النافذة الرئيسية وتصبح الخيارات المرتبطة به متاحة.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">عذرًا، حيلة التيار (mA) غير مدعومة على هذا الجهاز.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">استخدام الوصول المميّز عند الحاجة</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">السماح بالوصول المميّز كخيار احتياطي إذا تعذرت القراءة بالطرق العادية؟</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">عند التفعيل، قد يستخدم Battery Monitor صلاحيات root أو Shizuku فقط إذا لم توفر طرق Android ونظام الملفات قراءة. تُطلب الصلاحية اللازمة عند تفعيل هذا الخيار.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">تمكين الحيلة</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">محاولة تمكين حيلة التيار (mA)؟</string>
-  <string name="pref_enable_current_hack_help" formatted="false">عند تمكين هذا الإعداد ستصبح الخيارات الأخرى الخاصة بالحيلة قابلة للاستخدام.</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">تفضيل طريقة الحيلة القديمة</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">تفضيل طريقة أقدم تعتمد على نظام الملفات؟</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">بدءًا من Lollipop (Android 5.0)، يوفّر Android طريقة أقل تحايلاً للوصول إلى معلومات التيار (mA) مباشرة من BatteryManager. ومع ذلك، ما زال غير مضمون أن تعمل دائمًا أو بشكل جيد. حتى Nougat (Android 7.0)، غالبًا ما تعمل الطريقة القديمة (المعتمدة على نظام الملفات) بشكل أفضل على معظم الأجهزة، لذلك تظل افتراضية على الأجهزة الأقل من Android 7.0.\n
+  <string name="pref_battery_current_multiplier" formatted="false">المُضاعِف</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">تبلغ بعض الأجهزة عن وحدات أو إشارات غير متوقعة. اضرب القيمة المُبلّغ عنها هنا لتصحيح النتيجة المعروضة.\n
     \n
-    هذا الإعداد مجرد تلميح للحيلة حول الطريقة المفضلة؛ يمكنك تغييره إذا لم تعمل الحيلة جيدًا على جهازك.</string>
+    كمرجع تقريبي للهواتف، تكون إشارة Android القياسية موجبة أثناء الشحن وسالبة أثناء التفريغ. يكون الشحن النشط غالبًا بين +500 و+5000 mA، بينما يكون التفريغ العادي غالبًا بين -100 و-3000 mA. قد تكون القيم القريبة من الصفر طبيعية عندما تكون البطارية شبه ممتلئة أو الهاتف في وضع الخمول. إذا بدت القيمة أصغر أو أكبر بنحو 1000 مرة، أو كانت الإشارة معكوسة، فاضبط المُضاعِف.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">المُضاعِف</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">بعض الأجهزة ترسل ميلي أمبير بدلًا من ميكروأمبير كما يتوقع الـ API. وبعضها يعكس إشارة القيمة. كما يفضّل بعض المستخدمين الإشارة المعاكسة حتى للقيم الصحيحة.\n
-    \n
-    للتعامل مع مثل هذه الحالات، يمكنك ضرب نتيجة استدعاء API بالقيمة هنا.\n
-    \n
-    مثلًا، إذا كان جهازك يعرض 0 mA دائمًا، جرّب مضاعف 1000. إذا أعاد API قيمة 450 ميكروأمبير، سيعرض التطبيق 450 mA بدلًا من 0 mA. وإذا أعاد API صفرًا، فلن يغيّر المضاعف النتيجة النهائية بالطبع.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">تفضيل متوسط التيار</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">استخدام المتوسط الحديث عند توفره؟</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">توفر بعض الأنظمة متوسطًا حديثًا إلى جانب التيار اللحظي. تختلف مدة المتوسط وجودته حسب الجهاز. عطّل هذا الخيار إذا كان المتوسط غير متاح أو غير صالح.</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">الإشعار</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">العرض في الإحصاءات الحيوية</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">عرض التيار (mA) في إحصاءات الإشعار الرئيسية؟</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">عند التمكين، ستتم محاولة الحيلة وسيُعرض الناتج في سطر الإحصاءات الحيوية بالإشعار الرئيسي. لاحظ أنه يجب ضبط الإشعار الرئيسي لعرض الإحصاءات الحيوية حتى ترى ذلك. لن تتحدّث هذه القيمة إلا عندما يرسل النظام معلومات بطارية جديدة.\n
-    \n
-    في أغلب الأجهزة، تشير القيمة السالبة إلى سحب صافٍ من البطارية، والموجبة إلى أن البطارية تُشحن. لكن ليس كل الأجهزة تعمل بهذه الطريقة.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">فاصل التحديث التلقائي</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">اختر عدد مرات تحديث قراءة تيار البطارية أثناء ظهور النافذة الرئيسية.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">أدخل فاصلًا بالثواني (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">أدخل قيمة من 1 إلى 3600.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d ثانية</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">النافذة الرئيسية</string>
-  <string name="pref_display_current_in_main_window" formatted="false">العرض في النافذة الرئيسية</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">عرض التيار (mA) في النافذة الرئيسية؟</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">عند التمكين، ستتم محاولة الحيلة وسيُعرض الناتج في النافذة الرئيسية. تُحدّث هذه القيمة كلما أرسل النظام معلومات بطارية جديدة، كما يمكنك تحديثها يدويًا بالنقر على القيمة المعروضة. (لاحظ أن بعض الأجهزة نادرًا ما تحدّث البيانات الأساسية أو لا تحدّثها إطلاقًا، لذلك قد لا تتغير القيمة ظاهريًا عند النقر).\n
-    \n
-    في أغلب الأجهزة، تشير القيمة السالبة إلى سحب صافٍ من البطارية، والموجبة إلى أن البطارية تُشحن. لكن ليس كل الأجهزة تعمل بهذه الطريقة.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">تفضيل المتوسط في الإحصاءات الحيوية</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">محاولة استخدام current_avg في إحصاءات الإشعار الرئيسية؟</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">تفضيل المتوسط في النافذة الرئيسية</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">محاولة استخدام current_avg في النافذة الرئيسية؟</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">بعض الأنظمة لديها حيلة إضافية تتيح متوسطًا حديثًا للتيار بدل القراءة اللحظية. يختلف معنى ذلك من جهاز لآخر وهو متاح فقط على بعض الأجهزة. قد يعطي قيمة أكثر استقرارًا (إن سارت الأمور جيدًا)، أو يعيد نفس القيمة دائمًا، أو يعيد قيمة غير قابلة للاستخدام (وفي هذه الحالة عطّل هذا الخيار).</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">تحديث mA تلقائيًا في النافذة الرئيسية</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">تحديث mA تلقائيًا كل ثانيتين؟</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">إذا كان إعداد الحيلة يعرض mA في النافذة الرئيسية، يمكنك تحديث القيمة بالنقر عليها. وإذا أردت تحديثات متكررة دون النقر، فعّل هذا الخيار لتحديث القيمة تلقائيًا كل ثانيتين أثناء ظهور النافذة.\n
-    \n
-    لاحظ أن بعض الأجهزة نادرًا ما تحدّث البيانات الأساسية أو لا تحدّثها إطلاقًا، لذا قد لا تبدو القيمة متغيرة حتى مع التحديث التلقائي.</string>
+  <string name="pref_display_current_in_notification" formatted="false">عرض تيار البطارية</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">عرض تيار البطارية في سطر الإحصاءات الحيوية للإشعار الرئيسي؟</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">عند التفعيل، يظهر تيار البطارية في سطر الإحصاءات الحيوية للإشعار الرئيسي. يجب ضبط سطر إشعار واحد على الأقل لعرض الإحصاءات الحيوية.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">مؤشر الشحن</string>
   <string name="pref_indicate_charging" formatted="false">اشارة الى الشحن</string>

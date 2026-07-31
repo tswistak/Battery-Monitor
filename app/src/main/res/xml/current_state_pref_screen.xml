@@ -1,0 +1,43 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:key="category_battery_current_main"
+        android:title="@string/pref_cat_battery_current_main">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="enable_battery_current"
+            android:summary="@string/pref_enable_battery_current_summary"
+            android:title="@string/pref_enable_battery_current"
+            app:singleLineTitle="false" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="use_privileged_battery_current"
+            android:summary="@string/pref_use_privileged_battery_current_summary"
+            android:title="@string/pref_use_privileged_battery_current"
+            app:singleLineTitle="false" />
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/battery_current_multiplier_entries_values"
+            android:entryValues="@array/battery_current_multiplier_entries_values"
+            android:key="battery_current_multiplier"
+            android:title="@string/pref_battery_current_multiplier"
+            app:singleLineTitle="false" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefer_average_battery_current"
+            android:summary="@string/pref_prefer_average_battery_current_summary"
+            android:title="@string/pref_prefer_average_battery_current"
+            app:singleLineTitle="false" />
+
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/battery_current_refresh_interval_entries"
+            android:entryValues="@array/battery_current_refresh_interval_values"
+            android:key="battery_current_refresh_interval"
+            android:title="@string/pref_battery_current_refresh_interval"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
+</PreferenceScreen>

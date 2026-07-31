@@ -1,20 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/named_so_scroll_position_is_preserved"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
->
-  <LinearLayout style="@style/help_ll" android:orientation="vertical">
-    <TextView style="@style/help_cat"  android:text="@string/pref_cat_notification_content" />
-    <View style="@style/help_cat_post_margin" />
-    <TextView style="@style/help_pref" android:text="@string/pref_top_line_content" />
-    <TextView style="@style/help_text" android:text="@string/pref_top_line_content_help" />
-    <TextView style="@style/help_pref" android:text="@string/pref_bottom_line_content" />
-    <TextView style="@style/help_text" android:text="@string/pref_bottom_line_content_help" />
-    <TextView style="@style/help_pref" android:text="@string/pref_time_remaining_verbosity" />
-    <TextView style="@style/help_text" android:text="@string/pref_time_remaining_verbosity_help" />
-    <TextView style="@style/help_pref" android:text="@string/pref_status_duration_in_vital_signs" />
-    <TextView style="@style/help_text" android:text="@string/pref_status_duration_in_vital_signs_help" />
+    android:id="@+id/named_so_scroll_position_is_preserved"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-  </LinearLayout>
+    <LinearLayout
+        style="@style/help_ll"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/pref_cat_notification_content" />
+
+        <View style="@style/help_cat_post_margin" />
+
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/pref_top_line_content" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/pref_top_line_content_help" />
+
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/pref_bottom_line_content" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/pref_bottom_line_content_help" />
+
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/pref_time_remaining_verbosity" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/pref_time_remaining_verbosity_help" />
+
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/pref_status_duration_in_vital_signs" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/pref_status_duration_in_vital_signs_help" />
+
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/pref_display_current_in_notification" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/pref_display_current_in_notification_help" />
+
+    </LinearLayout>
 </ScrollView>

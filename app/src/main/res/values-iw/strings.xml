@@ -240,19 +240,13 @@
   <string name="status_bar_chip_settings" formatted="false">שבב שורת המצב</string>
   <string name="status_bar_chip_settings_summary" formatted="false">הגדר את תוכן השבב של עדכונים חיים</string>
   <string name="status_bar_chip_settings_help" formatted="false">ב-Android 16 ומעלה ניתן לקבוע מה יוצג בשבב שורת המצב והאם להציג סימון טעינה.</string>
-  <string name="current_hack_settings" formatted="false">פריצה נוכחית (mA).</string>
-  <string name="current_hack_settings_summary" formatted="false">הגדרות מתקדמות להפעלת מידע mA</string>
-  <string name="current_hack_settings_help" formatted="false">אנדרואיד לא מספקת אמצעי לאפליקציות לגשת למידע לגבי זרם הסוללה. עם זאת, פריצה זמינה שמאפשר למכשירים רבים לקבל מידע זה.\n
-    \n
-    זה לא מובטח שיעבוד. יכול להיות שזה לא יעבוד בכלל או שזה עשוי להיראות כעובד אבל רק לגרום לערכי שטות.\n
-    \n
-    Settings כדי להפעיל את הפריצה, אם אפשר, ולשלוט איך זה בשימוש זמינים בסעיף זה.</string>
-
+  <string name="current_state_settings_summary" formatted="false">הגדרות למסך המידע הנוכחי</string>
+  <string name="current_state_settings_help" formatted="false">הגדר את המידע שמוצג במסך המידע הנוכחי. אפשרויות זרם הסוללה שולטות בקריאה החיה שמוצגת לצד שאר פרטי הסוללה.</string>
   <string name="alarm_settings_subtitle" formatted="false">הגדרות התראה</string>
   <string name="alarm_settings" formatted="false">התראות</string>
   <string name="alarm_settings_help" formatted="false">אתה יכול לגרום ל-Battery Monitor להודיע לך מתי רמת הסוללה שלך מגיע למצב מסוים (למשל, הסוללה נטועה במלואה, רמת הסוללה יורדת מתחת ל-20%, ועוד רבים אחרים).</string>
-  <string name="other_settings" formatted="false">הגדרות אחרות</string>
-  <string name="other_settings_help" formatted="false">כל שאר ההגדרות נמצאות בדף זה, כולל רישום, נעילה מסך, יחידת טמפרטורה, הפעלה אוטומטית ועוד.</string>
+  <string name="other_settings" formatted="false">כללי</string>
+  <string name="other_settings_help" formatted="false">בעמוד זה נמצאות ההגדרות הכלליות של היישום, כולל רישום, יחידת טמפרטורה, הפעלה אוטומטית ועוד.</string>
 
   <string name="live_updates_onboarding_title">שבב סוללה בשורת המצב</string>
   <string name="live_updates_onboarding_message_on">המכשיר שלך תומך בהצגת אחוז הסוללה כשבב בשורת המצב. אפשרות זו מופעלת כברירת מחדל.\n
@@ -319,52 +313,33 @@
   <string name="pref_show_icon_unit" formatted="false">הצג סמל יחידה</string>
   <string name="pref_show_icon_unit_help" formatted="false">כאשר האפשרות מופעלת, הסמל מציג סימן אחוז עבור אחוז הסוללה וסימן מעלה עבור טמפרטורת הסוללה. השבת אפשרות זו כדי להציג רק את המספר.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">בקרה ראשית</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">פריצה נוכחית (mA) אינה נתמכת</string>
+  <string name="pref_cat_battery_current_main" formatted="false">זרם הסוללה</string>
+  <string name="pref_enable_battery_current" formatted="false">הפעלת זרם הסוללה</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">להציג את זרם הסוללה בחלון הראשי?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">כאשר האפשרות מופעלת, זרם הסוללה מוצג בחלון הראשי והאפשרויות הקשורות זמינות.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">מצטערים, הפריצה הנוכחית (mA) אינה נתמכת במכשיר זה.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">שימוש בגישה מיוחסת בעת הצורך</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">לאפשר גישה מיוחסת כגיבוי כאשר השיטות הרגילות אינן מצליחות לקרוא את הזרם?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">כאשר האפשרות מופעלת, Battery Monitor עשוי להשתמש ב-root או ב-Shizuku רק אם שיטות Android ומערכת הקבצים אינן מספקות קריאה. ההרשאה הנדרשת מתבקשת בעת ההפעלה.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">אפשר פריצה</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">ניסיון להפעיל את הפריצה הנוכחית (mA)?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">כאשר הגדרה זו מופעלת, האפשרויות האחרות לגבי ה פריצה תהיה שמישה.</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">העדיפו שיטת פריצה ישנה</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">מעדיף שיטת פריצה ישנה יותר מבוססת מערכת קבצים?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">החל מ-Lollipop (אנדרואיד 5.0), אנדרואיד מספקת כעת א דרך קצת פחות פריצה לגשת למידע נוכחי (mA), ישירות מהמערכת BatteryManager. עם זאת, זה עדיין לא מובטח לעבוד בכלל או לעבוד טוב. עד אנדרואיד נוגט (אנדרואיד 7.0), נראה ששיטת הפריצה הישנה (מבוססת מערכת קבצים). עובד טוב יותר ברוב המכשירים, כך שזה נשאר ברירת המחדל במכשירים פועל פחות מאנדרואיד 7.0.\n
+  <string name="pref_battery_current_multiplier" formatted="false">מַכפִּיל</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">מכשירים מסוימים מדווחים על יחידות או סימנים בלתי צפויים. הכפל כאן את הערך המדווח כדי לתקן את התוצאה המוצגת.\n
     \n
-    הגדרה זו היא רק רמז לפריצה לגבי איזו שיטה מעדיף; אתה יכול לנסות לשנות אותו אם הפריצה לא עובדת טוב המכשיר שלך.</string>
+    כנקודת ייחוס כללית לטלפונים, הסימן התקני של Android הוא חיובי בזמן טעינה ושלילי בזמן פריקה. טעינה פעילה היא לרוב בערך +500 עד +5000 mA, ופריקה רגילה היא לרוב בערך -100 עד -3000 mA. ערכים קרובים לאפס יכולים להיות תקינים כשהסוללה כמעט מלאה או כשהטלפון אינו פעיל. אם הגודל נראה קטן או גדול בערך פי 1000, או שהסימן הפוך, יש לכוונן את המכפיל.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">מַכפִּיל</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">מכשירים מסוימים מדווחים על מיליאמפר ולא על מיקרואמפר API קורא ל. אותם מכשירים מחליפים את הסימן של הערך שדווח. חלק מהמשתמשים מעדיפים את הסימן ההפוך לערכים שדווחו כהלכה. כדי לעזור להתאים למצבים כאלה, אתה יכול להכפיל את תוצאה של קריאת ה-API לפי הערך here.\n
-    \n
-    אם המכשיר שלך תמיד מציג 0 mA, למשל, תוכל לנסות באמצעות מכפיל של 1000. אם הקריאה ל-API מחזירה 450 מיקרואמפר, מכפיל זה יגרום לאפליקציה להציג את הערך כ-450 mA ולא 0 mA. אם קריאת ה-API מחזירה 0 מיקרואמפר, כמובן, המכפיל לא ישנה את הגמר ערך תצוגה של 0 mA.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">העדפת זרם ממוצע</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">להשתמש בממוצע האחרון כאשר הוא זמין?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">מערכות מסוימות מספקות ממוצע עדכני בנוסף לזרם הרגעי. התקופה והאיכות משתנות בין מכשירים. יש לכבות אפשרות זו אם הממוצע אינו זמין או אינו שימושי.</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">הוֹדָעָה</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">הצג בסטטיסטיקה חיונית</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">להציג את הנוכחי (mA) בסטטיסטיקה חיונית של הודעות ראשיות?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">כאשר מופעל, הפריצה תבוצע ותציג את ה- תוצאה בשורת הנתונים החיוניים הראשיים של הנתונים. שימו לב שאתם יש להגדיר את ההודעה הראשית להצגת נתונים סטטיסטיים חיוניים כדי לראות את זה. ערך זה ירענן רק כאשר המערכת שולחת מידע סוללה חדש.\n
-    \n
-    ברוב המכשירים, ערך שלילי מציין ניקוז נטו מה- סוללה וערך חיובי מציינים שהסוללה פועלת טעון. עם זאת, לא כל המכשירים מייצרים ערכים כך.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">מרווח רענון אוטומטי</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">בחירת תדירות רענון קריאת זרם הסוללה כשהחלון הראשי גלוי.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">יש להזין מרווח בשניות (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">יש להזין ערך בין 1 ל-3600.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d שניות</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">חלון ראשי</string>
-  <string name="pref_display_current_in_main_window" formatted="false">הצג בחלון הראשי</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">להציג זרם (mA) בחלון הראשי?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">כאשר מופעל, הפריצה תבוצע ותציג את ה- תוצאה בחלון הראשי. ערך זה יתרענן בכל פעם המערכת שולחת מידע חדש על הסוללה, אבל אתה יכול לרענן את ערך בכל עת פשוט על ידי הקשה על הערך המוצג. (שימו לב שחלק מהמכשירים לעתים רחוקות או לעולם לא מעדכנים את הנתונים הבסיסיים, אז ייתכן שהערך לא משתנה בהקשה.)\n
-    \n
-    ברוב המכשירים, ערך שלילי מציין ניקוז נטו מה- סוללה וערך חיובי מציינים שהסוללה פועלת טעון. עם זאת, לא כל המכשירים מייצרים ערכים כך.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">העדיפו ממוצע בסטטיסטיקה חיונית</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">האם לנסות להשתמש ב-current_avg בסטטיסטיקה חיונית של הודעות ראשיות?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">העדיפו ממוצע בחלון הראשי</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">נסה להשתמש ב-current_avg בחלון הראשי?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">לחלק מהמערכות יש פריצה נוספת זמינה, נותנת פריצה אחרונה ממוצע של הזרם ולא קריאה מיידית שלו. המשמעות של זה משתנה ממכשיר למכשיר והיא זמינה רק במכשירים מסוימים. זה עשוי לתת ערך יציב יותר (אם הכל יסתדר ובכן), הוא עשוי להחזיר את אותו ערך, או שהוא עשוי להחזיר ערך בלתי שמיש ערך (במקרה זה עליך לבטל אפשרות זו).</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">רענון אוטומטי של mA בחלון הראשי</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">רענון אוטומטי של mA כל שתי שניות?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">אם הפריצה מוגדרת להצגת mA בחלון הראשי, אתה יכול רענן את הערך פשוט על ידי הקשה עליו. אם אתה רוצה לראות עדכונים תכופים מבלי להקיש, תוכל להפעיל אפשרות זו לרענון אוטומטי של הערך כל שתי שניות בזמן שהחלון גלוי.\n
-    \n
-    שים לב שחלק מהמכשירים לעתים רחוקות או לעולם לא מעדכנים את הבסיס נתונים, כך שייתכן שהערך לא משתנה למרות שהאפליקציה כן רענון הערך המוצג כך שיתאים לנתונים שאוחזרו מהם המערכת.</string>
+  <string name="pref_display_current_in_notification" formatted="false">הצגת זרם הסוללה</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">להציג את זרם הסוללה בשורת הנתונים החיוניים של ההתראה הראשית?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">כאשר האפשרות מופעלת, זרם הסוללה מוצג בשורת הנתונים החיוניים של ההתראה הראשית. לפחות שורת התראה אחת חייבת להציג נתונים חיוניים.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">מחוון טעינה</string>
   <string name="pref_indicate_charging" formatted="false">ציין טעינה</string>

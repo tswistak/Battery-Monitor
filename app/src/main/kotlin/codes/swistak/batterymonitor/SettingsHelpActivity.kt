@@ -60,9 +60,9 @@ class SettingsHelpActivity : AppCompatActivity() {
                 setWindowSubtitle(res!!.getString(R.string.status_bar_chip_settings))
             }
 
-            SettingsFragment.KEY_CURRENT_HACK_SETTINGS -> {
-                setContentView(R.layout.current_hack_settings_help)
-                setWindowSubtitle(res!!.getString(R.string.current_hack_settings))
+            SettingsFragment.KEY_CURRENT_STATE_SETTINGS -> {
+                setContentView(R.layout.current_state_settings_help)
+                setWindowSubtitle(res!!.getString(R.string.tab_current_info))
             }
 
             SettingsFragment.KEY_OTHER_SETTINGS -> {

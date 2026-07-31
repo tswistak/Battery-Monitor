@@ -234,19 +234,13 @@
   <string name="status_bar_chip_settings" formatted="false">Statusbalkchip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Stel de inhoud van de Live Updates-chip in</string>
   <string name="status_bar_chip_settings_help" formatted="false">Op Android 16+ met Live Updates kun je instellen wat de statusbalkchip toont en of de laad-emoji wordt weergegeven.</string>
-  <string name="current_hack_settings" formatted="false">Stroomhack (mA)</string>
-  <string name="current_hack_settings_summary" formatted="false">Geavanceerde instellingen voor het inschakelen van mA-info</string>
-  <string name="current_hack_settings_help" formatted="false">Android biedt apps geen officiële manier om informatie over batterijstroom te lezen. Er is echter een hack beschikbaar waarmee veel apparaten deze informatie mogelijk kunnen verkrijgen.\n
-    \n
-    Dit werkt niet gegarandeerd. Het kan helemaal niet werken, of lijken te werken maar onzinnige waarden tonen.\n
-    \n
-    In deze sectie kun je de hack inschakelen (indien mogelijk) en instellen hoe die wordt gebruikt.</string>
-
+  <string name="current_state_settings_summary" formatted="false">Instellingen voor het statusscherm</string>
+  <string name="current_state_settings_help" formatted="false">Stel in welke informatie op het statusscherm wordt getoond. De opties voor batterijstroom bepalen de actuele meting die naast de andere batterijgegevens verschijnt.</string>
   <string name="alarm_settings_subtitle" formatted="false">Alarminstellingen</string>
   <string name="alarm_settings" formatted="false">Alarmen</string>
   <string name="alarm_settings_help" formatted="false">Je kunt een melding ontvangen als je batterijniveau onder een bepaald punt komt.</string>
-  <string name="other_settings" formatted="false">Overige instellingen</string>
-  <string name="other_settings_help" formatted="false">Alle andere instellingen zijn te vinden op deze pagina, waaronder logboeken, vergrendeling, temperatuureenheid, automatisch starten en meer.</string>
+  <string name="other_settings" formatted="false">Algemeen</string>
+  <string name="other_settings_help" formatted="false">Op deze pagina staan algemene appinstellingen, waaronder logboekregistratie, temperatuureenheid, automatisch starten en meer.</string>
 
   <string name="live_updates_onboarding_title">Statusbalk batterijchip</string>
   <string name="live_updates_onboarding_message_on">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk. Deze optie staat standaard aan.\n
@@ -313,52 +307,33 @@
   <string name="pref_show_icon_unit" formatted="false">Eenheidssymbool tonen</string>
   <string name="pref_show_icon_unit_help" formatted="false">Als dit is ingeschakeld, toont het pictogram een procentteken voor het batterijpercentage en een gradensymbool voor de batterijtemperatuur. Schakel dit uit om alleen het getal te tonen.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Hoofdbesturing</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Stroomhack (mA) niet ondersteund</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Batterijstroom</string>
+  <string name="pref_enable_battery_current" formatted="false">Batterijstroom inschakelen</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Batterijstroom in het hoofdvenster tonen?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">Na inschakelen wordt de batterijstroom in het hoofdvenster getoond en worden de bijbehorende opties beschikbaar.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Sorry, de stroomhack (mA) wordt op dit apparaat niet ondersteund.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">Indien nodig toegang met extra rechten gebruiken</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Toegang met extra rechten toestaan als reserve wanneer normale methoden de stroom niet kunnen lezen?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Na inschakelen mag Battery Monitor root of Shizuku alleen gebruiken als Android en het bestandssysteem geen meting leveren. De vereiste toestemming wordt bij het inschakelen gevraagd.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Hack inschakelen</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Proberen de stroomhack (mA) in te schakelen?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">Wanneer deze instelling is ingeschakeld, zijn de overige opties rond de hack bruikbaar.</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">Oude hackmethode verkiezen</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Oudere, op bestandssysteem gebaseerde hackmethode verkiezen?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Vanaf Lollipop (Android 5.0) biedt Android een iets minder hacky manier om stroominformatie (mA) op te halen, direct via BatteryManager. Dit werkt echter nog steeds niet gegarandeerd of goed op alle apparaten. Tot Android Nougat (Android 7.0) lijkt de oude methode (op bestandssysteem gebaseerd) op de meeste apparaten beter te werken, daarom blijft die standaard op apparaten met Android lager dan 7.0.\n
+  <string name="pref_battery_current_multiplier" formatted="false">Vermenigvuldiger</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Sommige apparaten rapporteren onverwachte eenheden of tekens. Vermenigvuldig de gerapporteerde waarde hier om het weergegeven resultaat te corrigeren.\n
     \n
-    Deze instelling is slechts een hint voor de hack over welke methode te verkiezen; je kunt dit wijzigen als de hack niet goed werkt op je apparaat.</string>
+    Als globale richtlijn voor een telefoon gebruikt Android een positieve waarde tijdens opladen en een negatieve waarde tijdens ontladen. Actief opladen ligt vaak rond +500 tot +5000 mA, terwijl normaal ontladen vaak rond -100 tot -3000 mA ligt. Waarden rond nul kunnen normaal zijn wanneer de batterij bijna vol is of de telefoon niet actief is. Als de grootte ongeveer 1000 keer te klein of te groot lijkt, of het teken is omgekeerd, pas dan de vermenigvuldiger aan.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Vermenigvuldiger</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Sommige apparaten rapporteren milliampères in plaats van microampères zoals het API verwacht. Sommige apparaten draaien ook het teken van de waarde om. Sommige gebruikers geven zelfs de voorkeur aan het omgekeerde teken van correct gerapporteerde waarden.\n
-    \n
-    Om zulke situaties op te vangen, kun je het resultaat van de API-aanroep met de waarde hier vermenigvuldigen. Als je apparaat bijvoorbeeld altijd 0 mA toont, kun je een vermenigvuldiger van 1000 proberen. Als de API 450 microampères teruggeeft, zal de app 450 mA tonen in plaats van 0 mA. Als de API 0 microampères teruggeeft, verandert de vermenigvuldiger die eindwaarde natuurlijk niet.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Gemiddelde stroom verkiezen</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Het recente gemiddelde gebruiken wanneer beschikbaar?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Sommige systemen leveren naast de actuele stroom ook een recent gemiddelde. De periode en kwaliteit verschillen per apparaat. Schakel dit uit als het gemiddelde niet beschikbaar of onbruikbaar is.</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Melding</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">Toon in vitale stats</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Stroom (mA) tonen in vitale stats van de hoofdmelding?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Als ingeschakeld, wordt de hack geprobeerd en wordt het resultaat getoond in de vitale-statsregel van de hoofdmelding. Let op: je moet de hoofdmelding zo instellen dat vitale stats worden weergegeven om dit te zien. Deze waarde ververst alleen wanneer het systeem nieuwe batterijinformatie stuurt.\n
-    \n
-    Op de meeste apparaten betekent een negatieve waarde netto ontladen en een positieve waarde dat de batterij wordt opgeladen. Niet alle apparaten leveren waarden op deze manier.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Interval voor automatisch vernieuwen</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Kies hoe vaak de batterijstroom wordt vernieuwd terwijl het hoofdvenster zichtbaar is.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Voer een interval in seconden in (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">Voer een waarde van 1 tot 3600 in.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d seconden</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">Hoofdvenster</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Toon in hoofdvenster</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Stroom (mA) tonen in het hoofdvenster?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Als ingeschakeld, wordt de hack geprobeerd en wordt het resultaat in het hoofdvenster getoond. Deze waarde ververst telkens wanneer het systeem nieuwe batterijinformatie stuurt, maar je kunt de waarde ook op elk moment verversen door op de getoonde waarde te tikken. (Let op dat sommige apparaten de onderliggende data zelden of nooit updaten, waardoor de waarde bij tikken niet zichtbaar verandert.)\n
-    \n
-    Op de meeste apparaten betekent een negatieve waarde netto ontladen en een positieve waarde dat de batterij wordt opgeladen. Niet alle apparaten leveren waarden op deze manier.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Gemiddelde verkiezen in vitale stats</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Proberen current_avg te gebruiken in vitale stats van de hoofdmelding?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Gemiddelde verkiezen in hoofdvenster</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Proberen current_avg te gebruiken in het hoofdvenster?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Sommige systemen hebben een extra hack beschikbaar die een recent gemiddelde van de stroom geeft in plaats van een momentopname. Wat dit betekent verschilt per apparaat en is alleen op sommige apparaten beschikbaar. Dit kan een stabielere waarde geven (als alles goed gaat), dezelfde waarde teruggeven of een onbruikbare waarde teruggeven (schakel deze optie dan uit).</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">mA automatisch verversen in hoofdvenster</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">mA elke twee seconden automatisch verversen?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Als je de hack hebt ingesteld om mA in het hoofdvenster te tonen, kun je de waarde verversen door erop te tikken. Als je frequente updates wilt zonder te tikken, kun je deze optie inschakelen om de waarde elke twee seconden automatisch te verversen zolang het venster zichtbaar is.\n
-    \n
-    Let op dat sommige apparaten de onderliggende data zelden of nooit updaten, waardoor de waarde mogelijk niet zichtbaar verandert hoewel de app wel ververst.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Batterijstroom tonen</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Batterijstroom tonen in de regel met vitale gegevens van de hoofdmelding?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">Na inschakelen wordt de batterijstroom getoond in de regel met vitale gegevens van de hoofdmelding. Minstens één meldingsregel moet vitale gegevens tonen.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Indicatie tijdens opladen</string>
   <string name="pref_indicate_charging" formatted="false">Indicatie tonen tijdens opladen</string>

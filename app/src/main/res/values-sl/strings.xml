@@ -252,19 +252,13 @@
   <string name="status_bar_chip_settings" formatted="false">Čip vrstice stanja</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Konfigurirajte vsebino čipa Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">V sistemu Android 16+ s posodobitvami v živo lahko konfigurirate stanje paličasti čip prikazuje in ali naj prikaže emoji za polnjenje.</string>
-  <string name="current_hack_settings" formatted="false">Tok (mA) Hack</string>
-  <string name="current_hack_settings_summary" formatted="false">Napredne nastavitve za omogočanje mA info</string>
-  <string name="current_hack_settings_help" formatted="false">Android aplikacijam ne omogoča dostopa do informacij glede toka baterije. Vendar pa je na voljo kramp ki omogoča številnim napravam, da potencialno dobijo te informacije.\n
-    \n
-    Ni zagotovljeno, da bo delovalo. Morda sploh ne bo delovalo ali pa se lahko zdi, da deluje, vendar povzroči le nesmiselne vrednosti.\n
-    \n
-    Nastavitve za vklop vdora, če je to mogoče, in nadzor, kako je rabljeni so na voljo v tem razdelku.</string>
-
+  <string name="current_state_settings_summary" formatted="false">Nastavitve zaslona Aktualne informacije</string>
+  <string name="current_state_settings_help" formatted="false">Nastavite informacije, prikazane na zaslonu Aktualne informacije. Možnosti toka baterije upravljajo sprotni odčitek, prikazan z drugimi podatki o bateriji.</string>
   <string name="alarm_settings_subtitle" formatted="false">Nastavitve alarma</string>
   <string name="alarm_settings" formatted="false">Alarmi</string>
   <string name="alarm_settings_help" formatted="false">Battery Monitor lahko nastavite tako, da vas obvesti ko baterija doseže določeno točko (npr., baterija se popolnoma napolni, baterija pade pod 20%).</string>
-  <string name="other_settings" formatted="false">Druge nastavitve</string>
-  <string name="other_settings_help" formatted="false">Vse druge nastavitve so na tej strani, vključno z beleženjem, zaklepanjem zaslon, temperaturna enota, samodejni zagon itd.</string>
+  <string name="other_settings" formatted="false">Splošno</string>
+  <string name="other_settings_help" formatted="false">Na tej strani so splošne nastavitve aplikacije, vključno z beleženjem, enoto temperature, samodejnim zagonom in drugimi možnostmi.</string>
 
   <string name="live_updates_onboarding_title">Vrstica stanja Baterijski čip</string>
   <string name="live_updates_onboarding_message_on">Vaša naprava podpira prikaz odstotka baterije kot čip v vrstici stanja. Ta možnost je privzeto omogočena.\n
@@ -331,52 +325,33 @@
   <string name="pref_show_icon_unit" formatted="false">Prikaži simbol enote</string>
   <string name="pref_show_icon_unit_help" formatted="false">Če je omogočeno, ikona prikazuje znak za odstotek pri odstotku baterije in simbol stopinje pri temperaturi baterije. Izklopite to možnost, če želite prikazati samo številko.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Glavni nadzor</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Tok (mA) Hack ni podprt</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Tok baterije</string>
+  <string name="pref_enable_battery_current" formatted="false">Omogoči tok baterije</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Prikažem tok baterije v glavnem oknu?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">Ko je omogočeno, je tok baterije prikazan v glavnem oknu in povezane možnosti postanejo na voljo.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Oprostite, trenutni (mA) hack ni podprt v tej napravi.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">Po potrebi uporabi privilegiran dostop</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Dovolim privilegiran dostop kot rezervo, ko običajni načini ne morejo prebrati toka?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Ko je omogočeno, lahko Battery Monitor uporabi root ali Shizuku samo, če Android in datotečni sistem ne ponudita meritve. Zahtevano dovoljenje se zahteva ob vklopu.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Omogoči kramp</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Poskus omogočiti trenutni (mA) vdor?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">Ko je ta nastavitev omogočena, se druge možnosti glede hack bo uporaben.</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">Raje staro metodo hekanja</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Imate raje starejšo metodo vdora, ki temelji na datotečnem sistemu?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Začenši z Lollipopom (Android 5.0), Android zdaj ponuja a nekoliko manj hekerski način za dostop do trenutnih (mA) informacij, neposredno iz sistema BatteryManager. Vendar še vedno ni zagotovljeno, da sploh deluje ali da deluje dobro. Do Android Nougat (Android 7.0), zdi se, da stara (na datotečnem sistemu) metoda vdora deluje bolje na večini naprav, zato ostaja privzeto na napravah deluje manj kot Android 7.0.\n
+  <string name="pref_battery_current_multiplier" formatted="false">Množitelj</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Nekatere naprave poročajo v nepričakovanih enotah ali z nepričakovanim predznakom. Tukaj pomnožite sporočeno vrednost, da popravite prikazani rezultat.\n
     \n
-    Ta nastavitev je samo namig heku o tem, katero metodo naj uporabi raje; lahko ga poskusite spremeniti, če kramp ne deluje dobro vašo napravo.</string>
+    Kot groba referenca za telefone je standardni predznak Androida med polnjenjem pozitiven, med praznjenjem pa negativen. Aktivno polnjenje je pogosto približno od +500 do +5000 mA, običajno praznjenje pa od -100 do -3000 mA. Vrednosti blizu nič so lahko običajne, ko je baterija skoraj polna ali telefon miruje. Če je vrednost približno 1000-krat premajhna ali prevelika oziroma je predznak obrnjen, prilagodite množitelj.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Množitelj</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Nekatere naprave poročajo o miliamperih namesto mikroamperih API zahteva. Iste naprave zamenjajo predznak sporočene vrednosti. Nekateri uporabniki imajo raje nasprotni predznak pravilno prijavljenih vrednosti. Da bi se lažje prilagodili takšnim situacijam, lahko pomnožite rezultat klica API-ja z vrednostjo tukaj.\n
-    \n
-    Če vaša naprava na primer vedno prikazuje 0 mA, lahko poskusite z množiteljem 1000. Če klic API vrne 450 mikroamperov, bo ta množitelj poskrbel, da bo aplikacija prikazala vrednost kot 450 mA namesto 0 mA. Če klic API vrne 0 mikroamperov seveda množitelj ne bo spremenil končne vrednosti prikazana vrednost 0 mA.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Prednost povprečnemu toku</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Uporabim nedavno povprečje, ko je na voljo?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Nekateri sistemi poleg trenutnega toka ponudijo tudi nedavno povprečje. Obdobje in kakovost sta odvisna od naprave. Izklopite možnost, če povprečje ni na voljo ali ni uporabno.</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Obvestilo</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">Prikaz v vitalni statistiki</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Prikaz toka (mA) v glavni statistiki obvestila?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Ko je omogočeno, bo izveden poskus vdora in prikazano bo rezultat v glavni vrstici vitalnih statistik obvestil. Upoštevajte, da ste mora imeti glavno obvestilo konfigurirano za prikaz vitalne statistike da bi videl to. Ta vrednost se bo osvežila samo, ko je sistem pošlje informacije o novi bateriji.\n
-    \n
-    ONa večini naprav negativna vrednost označuje neto odtok iz baterija, pozitivna vrednost pa pomeni, da je baterija v izrednem stanju napolnjena. Vse naprave pa ne ustvarjajo vrednosti na ta način.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Interval samodejnega osveževanja</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Izberite, kako pogosto se tok osveži, ko je glavno okno vidno.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Vnesite interval v sekundah (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">Vnesite vrednost od 1 do 3600.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d sekund</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">Glavno okno</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Prikaz v glavnem oknu</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Prikaži tok (mA) v glavnem oknu?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Ko je omogočeno, bo izveden poskus vdora in prikazano bo rezultat v glavnem oknu. Ta vrednost se bo kadar koli osvežila sistem pošlje nove informacije o bateriji, vendar jih lahko osvežite vrednost kadar koli tako, da preprosto tapnete prikazano vrednost. (Opomba da nekatere naprave redko ali nikoli ne posodabljajo osnovnih podatkov, torej vrednost se ob dotiku morda ne bo spremenila.)\n
-    \n
-    ONa večini naprav negativna vrednost označuje neto odtok iz baterija, pozitivna vrednost pa pomeni, da je baterija v izrednem stanju napolnjena. Vse naprave pa ne ustvarjajo vrednosti na ta način.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Raje povprečje vitalnih statistik</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Poskusite uporabiti current_avg v glavni statistiki obvestil?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Prednostno povprečje v glavnem oknu</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Poskusite uporabiti current_avg v glavnem oknu?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Nekateri sistemi imajo na voljo dodatne vdore, ki dajejo nedavne povprečje trenutnega in ne trenutni odčitek tega. Kaj to pomeni, se razlikuje od naprave do naprave in je na voljo samo na nekaterih napravah. To lahko da stabilnejšo vrednost (če bo vse šlo dobro), lahko vrne isto vrednost ali pa vrne neuporabno vrednost (v tem primeru morate to možnost izklopiti).</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Samodejno osveži mA v glavnem oknu</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Samodejno osveži mA vsaki dve sekundi?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Če imate kramp nastavljen za prikaz mA v glavnem oknu, lahko osvežite vrednost tako, da se je preprosto dotaknete. Če želite videti pogoste posodobitve, ne da bi se morali dotakniti, lahko omogočite to možnost za samodejno osvežitev vrednosti vsaki dve sekundi, ko je okno vidno.\n
-    \n
-    Upoštevajte, da nekatere naprave le redko ali nikoli ne posodobijo podlage podatkov, zato se morda zdi, da se vrednost ne spremeni, čeprav se aplikacija osveževanje prikazane vrednosti, da se ujema s pridobljenimi podatki sistem.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Prikaži tok baterije</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Prikažem tok v vrstici ključnih podatkov glavnega obvestila?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">Ko je omogočeno, se tok prikaže v vrstici ključnih podatkov glavnega obvestila. Vsaj ena vrstica obvestila mora prikazovati ključne podatke.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Indikator polnjenja</string>
   <string name="pref_indicate_charging" formatted="false">Označite Polnjenje</string>

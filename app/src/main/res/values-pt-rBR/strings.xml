@@ -236,19 +236,13 @@
   <string name="status_bar_chip_settings" formatted="false">Chip da barra de status</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configurar o conteúdo do chip do Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">No Android 16+ com Live Updates, você pode configurar qual o status o chip da barra é exibido e se o emoji de carregamento deve ser exibido.</string>
-  <string name="current_hack_settings" formatted="false">Corte atual (mA)</string>
-  <string name="current_hack_settings_summary" formatted="false">Configurações avançadas para ativar informações de mA</string>
-  <string name="current_hack_settings_help" formatted="false">O Android não fornece um meio para os aplicativos acessarem informações sobre a corrente da bateria. No entanto, um hack está disponível que permite que muitos dispositivos obtenham potencialmente essas informações.\n
-    \n
-    Não há garantia de que funcione. Pode não funcionar ou pode parecer funcionar, mas resultar apenas em valores absurdos.\n
-    \n
-    Settings para ativar o hack, se possível, e controlar como ele é usados estão disponíveis nesta seção.</string>
-
+  <string name="current_state_settings_summary" formatted="false">Configurações da tela Informações atuais</string>
+  <string name="current_state_settings_help" formatted="false">Configure as informações mostradas na tela Informações atuais. As opções de corrente da bateria controlam a leitura em tempo real exibida junto com os outros detalhes da bateria.</string>
   <string name="alarm_settings_subtitle" formatted="false">Definições dos alarmes</string>
   <string name="alarm_settings" formatted="false">Alarmes</string>
   <string name="alarm_settings_help" formatted="false">Você pode fazer com que o Battery Monitor o notifique quando o nível da bateria atinge uma determinada condição (por exemplo, a bateria fica totalmente carregada, o nível da bateria cai abaixo de 20% e muitos outros).</string>
-  <string name="other_settings" formatted="false">Outras Configurações</string>
-  <string name="other_settings_help" formatted="false">Todas as outras configurações estão nesta página, incluindo registro, bloqueio tela, unidade de temperatura, inicialização automática e muito mais.</string>
+  <string name="other_settings" formatted="false">Geral</string>
+  <string name="other_settings_help" formatted="false">Esta página contém as configurações gerais do aplicativo, incluindo registro, unidade de temperatura, inicialização automática e muito mais.</string>
 
   <string name="live_updates_onboarding_title">Chip de bateria da barra de status</string>
   <string name="live_updates_onboarding_message_on">Seu dispositivo suporta mostrar a porcentagem da bateria como um chip na barra de status. Esta opção vem ativada por padrão.\n
@@ -315,52 +309,33 @@
   <string name="pref_show_icon_unit" formatted="false">Mostrar símbolo da unidade</string>
   <string name="pref_show_icon_unit_help" formatted="false">Se ativado, o ícone mostra o sinal de porcentagem para a carga da bateria e o símbolo de grau para a temperatura da bateria. Desative para mostrar apenas o número.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Controle Principal</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Corte atual (mA) não suportado</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Corrente da bateria</string>
+  <string name="pref_enable_battery_current" formatted="false">Ativar corrente da bateria</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Mostrar a corrente da bateria na janela principal?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">Quando ativada, a corrente da bateria é mostrada na janela principal e as opções relacionadas ficam disponíveis.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Desculpe, o hack atual (mA) não é compatível com este dispositivo.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">Usar acesso privilegiado se necessário</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Permitir acesso privilegiado como alternativa quando os métodos normais não conseguem ler a corrente?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Quando ativado, o Battery Monitor pode usar root ou Shizuku apenas se os métodos do Android e do sistema de arquivos não fornecerem uma leitura. A permissão necessária é solicitada ao ativar.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Habilitar hack</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Tentativa de ativar o hack atual (mA)?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">Quando esta configuração está habilitada, as demais opções referentes ao hack será utilizável.</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">Prefira o método antigo de hack</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Prefere o método de hack mais antigo baseado em sistema de arquivos?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">A partir do Lollipop (Android 5.0), o Android agora oferece um maneira um pouco menos hackeada de acessar informações atuais (mA), diretamente do sistema BatteryManager. Contudo, ainda não é garantido que funcione ou funcione bem. Até o Android Nougat (Android 7.0), o antigo método de hack (baseado em sistema de arquivos) parece funciona melhor na maioria dos dispositivos, por isso continua sendo o padrão nos dispositivos rodando menos que Android 7.0.\n
+  <string name="pref_battery_current_multiplier" formatted="false">Multiplicador</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Alguns dispositivos informam unidades ou sinais inesperados. Multiplique aqui o valor informado para corrigir o resultado exibido.\n
     \n
-    Esta configuração é apenas uma dica para o hack sobre qual método usar prefira; você pode tentar alterá-lo se o hack não estiver funcionando bem seu dispositivo.</string>
+    Como referência aproximada para celulares, o sinal padrão do Android é positivo durante o carregamento e negativo durante a descarga. O carregamento ativo costuma ficar entre +500 e +5000 mA, enquanto a descarga normal costuma ficar entre -100 e -3000 mA. Valores próximos de zero podem ser normais quando a bateria está quase cheia ou o celular está ocioso. Se a magnitude parecer cerca de 1000 vezes menor ou maior, ou se o sinal estiver invertido, ajuste o multiplicador.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Multiplicador</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Alguns dispositivos relatam miliamperes em vez de microamperes como Chamadas de API. Os mesmos dispositivos trocam o sinal do valor informado. Alguns usuários preferem o sinal oposto dos valores relatados corretamente. Para ajudar a acomodar situações como essas, você pode multiplicar o resultado da chamada da API pelo valor aqui.\n
-    \n
-    Se o seu dispositivo sempre exibir 0 mA, por exemplo, você pode tentar usando um multiplicador de 1000. Se a chamada da API retornar 450 microamperes, esse multiplicador fará com que o aplicativo mostre o valor como 450 mA em vez de 0 mA. Se a chamada da API retornar 0 microamperes, é claro, o multiplicador não mudará o valor final valor de exibição de 0 mA.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Preferir corrente média</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Usar a média recente quando estiver disponível?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Alguns sistemas fornecem uma média recente além da corrente instantânea. O período e a qualidade variam conforme o dispositivo. Desative esta opção se a média estiver indisponível ou inutilizável.</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Notificação</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">Exibir em estatísticas vitais</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Exibir corrente (mA) nas estatísticas vitais da notificação principal?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Quando ativado, o hack será tentado e exibirá o resultará na linha principal de estatísticas vitais da notificação. Observe que você deve ter a notificação principal configurada para exibir estatísticas vitais para ver isso. Este valor só será atualizado quando o o sistema envia informações sobre a nova bateria.\n
-    \n
-    Na maioria dos dispositivos, um valor negativo indica um dreno líquido do bateria e um valor positivo indica que a bateria está sendo cobrado. Contudo, nem todos os dispositivos geram valores desta forma.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Intervalo de atualização automática</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Escolha a frequência de atualização da corrente enquanto a janela principal está visível.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Digite um intervalo em segundos (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">Digite um valor entre 1 e 3600.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d segundos</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">Janela Principal</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Exibir na janela principal</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Exibir corrente (mA) na janela principal?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Quando ativado, o hack será tentado e exibirá o resultado na janela principal. Este valor será atualizado sempre o sistema envia novas informações sobre a bateria, mas você pode atualizar o valor a qualquer momento simplesmente tocando no valor exibido. (Nota que alguns dispositivos raramente ou nunca atualizam os dados subjacentes, então o valor pode parecer não mudar na torneira.)\n
-    \n
-    Na maioria dos dispositivos, um valor negativo indica um dreno líquido do bateria e um valor positivo indica que a bateria está sendo cobrado. Contudo, nem todos os dispositivos geram valores desta forma.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Prefira a média em estatísticas vitais</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Tentar usar current_avg nas estatísticas vitais da notificação principal?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Prefira a média na janela principal</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Tente usar current_avg na janela principal?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Alguns sistemas têm um hack adicional disponível, dando uma recente média da corrente em vez de uma leitura instantânea dela. O que isso significa varia de dispositivo para dispositivo e só está disponível em alguns dispositivos. Isto pode dar um valor mais estável (se tudo correr bem), pode retornar o mesmo valor ou pode retornar um valor inutilizável valor (nesse caso você deve desativar esta opção).</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Atualização automática de mA na janela principal</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Atualização automática de mA a cada dois segundos?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Se você configurou o hack para exibir mA na janela principal, você pode atualize o valor simplesmente tocando nele. Se você quiser ver atualizações frequentes sem precisar tocar, você pode ativar esta opção para atualizar automaticamente o valor a cada dois segundos enquanto a janela estiver visível.\n
-    \n
-    Observe que alguns dispositivos raramente ou nunca atualizam o subjacente dados, portanto, o valor pode parecer não mudar, mesmo que o aplicativo esteja atualizando o valor exibido para corresponder aos dados recuperados de o sistema.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Mostrar corrente da bateria</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Mostrar a corrente na linha de estatísticas vitais da notificação principal?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">Quando ativada, a corrente aparece na linha de estatísticas vitais da notificação principal. Pelo menos uma linha da notificação deve mostrar estatísticas vitais.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Indicador de carga</string>
   <string name="pref_indicate_charging" formatted="false">Indicar carregamento</string>

@@ -38,6 +38,13 @@
             android:summary="@string/pref_status_duration_in_vital_signs_summary"
             android:title="@string/pref_status_duration_in_vital_signs"
             app:singleLineTitle="false" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="display_current_in_notification"
+            android:summary="@string/pref_display_current_in_notification_summary"
+            android:title="@string/pref_display_current_in_notification"
+            app:singleLineTitle="false" />
     </PreferenceCategory>
 
 </PreferenceScreen>

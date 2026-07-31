@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Unreleased
+
+### Improved
+
+- Modernized and simplified battery current measurement (#52).
+- Reorganized settings.
+
 ## 1.3.2
 
 ### Development

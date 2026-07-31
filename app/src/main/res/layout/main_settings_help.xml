@@ -1,26 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/named_so_scroll_position_is_preserved"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
->
-  <LinearLayout style="@style/help_ll" android:orientation="vertical">
-    <TextView style="@style/help_cat"  android:text="@string/settings_overview" />
-    <TextView style="@style/help_text" android:text="@string/settings_overview_help" />
+    android:id="@+id/named_so_scroll_position_is_preserved"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <TextView style="@style/help_cat" android:text="@string/notification_settings" />
-    <TextView style="@style/help_text" android:text="@string/notification_settings_help" />
+    <LinearLayout
+        style="@style/help_ll"
+        android:orientation="vertical">
 
-    <TextView style="@style/help_cat" android:text="@string/status_bar_icon_settings" />
-    <TextView style="@style/help_text" android:text="@string/status_bar_icon_settings_help" />
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/settings_overview" />
 
-    <TextView style="@style/help_cat" android:text="@string/status_bar_chip_settings" />
-    <TextView style="@style/help_text" android:text="@string/status_bar_chip_settings_help" />
+        <TextView
+            style="@style/help_text"
+            android:text="@string/settings_overview_help" />
 
-    <TextView style="@style/help_cat" android:text="@string/current_hack_settings" />
-    <TextView style="@style/help_text" android:text="@string/current_hack_settings_help" />
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/other_settings" />
 
-    <TextView style="@style/help_cat" android:text="@string/other_settings" />
-    <TextView style="@style/help_text" android:text="@string/other_settings_help" />
-  </LinearLayout>
+        <TextView
+            style="@style/help_text"
+            android:text="@string/other_settings_help" />
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/notification_settings" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/notification_settings_help" />
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/status_bar_icon_settings" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/status_bar_icon_settings_help" />
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/status_bar_chip_settings" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/status_bar_chip_settings_help" />
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/tab_current_info" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/current_state_settings_help" />
+
+    </LinearLayout>
 </ScrollView>

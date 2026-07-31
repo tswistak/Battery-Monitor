@@ -33,6 +33,11 @@ import android.os.Looper
 import android.os.Message
 import android.os.Messenger
 import android.provider.Settings
+import android.text.InputType
+import android.util.TypedValue
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -59,7 +64,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         const val KEY_NOTIFICATION_SETTINGS: String = "notification_settings"
         const val KEY_STATUS_BAR_ICON_SETTINGS: String = "status_bar_icon_settings"
         const val KEY_STATUS_BAR_CHIP_SETTINGS: String = "status_bar_chip_settings"
-        const val KEY_CURRENT_HACK_SETTINGS: String = "current_hack_settings"
+        const val KEY_CURRENT_STATE_SETTINGS: String = "current_state_settings"
+
         const val KEY_ALARMS_SETTINGS: String = "alarms_settings"
         const val KEY_ALARM_EDIT_SETTINGS: String = "alarm_edit_settings"
         const val KEY_ADVANCED_INFO_HELP: String = "advanced_info_help"
@@ -95,23 +101,19 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         const val KEY_TIME_REMAINING_VERBOSITY: String = SettingsKeys.KEY_TIME_REMAINING_VERBOSITY
         const val KEY_STATUS_DURATION_IN_VITAL_SIGNS: String =
             SettingsKeys.KEY_STATUS_DURATION_IN_VITAL_SIGNS
-        const val KEY_CAT_CURRENT_HACK_MAIN: String = "category_current_hack_main"
-        const val KEY_CAT_CURRENT_HACK_UNSUPPORTED: String = "category_current_hack_unsupported"
-        const val KEY_ENABLE_CURRENT_HACK: String = SettingsKeys.KEY_ENABLE_CURRENT_HACK
-        const val KEY_CURRENT_HACK_PREFER_FS: String = SettingsKeys.KEY_CURRENT_HACK_PREFER_FS
-        const val KEY_CURRENT_HACK_MULTIPLIER: String = SettingsKeys.KEY_CURRENT_HACK_MULTIPLIER
-        const val KEY_CAT_CURRENT_HACK_NOTIFICATION: String = "category_current_hack_notification"
-        const val KEY_DISPLAY_CURRENT_IN_VITAL_STATS: String =
-            SettingsKeys.KEY_DISPLAY_CURRENT_IN_VITAL_STATS
-        const val KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS: String =
-            SettingsKeys.KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS
-        const val KEY_CAT_CURRENT_HACK_MAIN_WINDOW: String = "category_current_hack_main_window"
-        const val KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW: String =
-            SettingsKeys.KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW
-        const val KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW: String =
-            SettingsKeys.KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW
-        const val KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW: String =
-            SettingsKeys.KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW
+        const val KEY_CAT_BATTERY_CURRENT_MAIN: String = "category_battery_current_main"
+        const val KEY_ENABLE_BATTERY_CURRENT: String = SettingsKeys.KEY_ENABLE_BATTERY_CURRENT
+        const val KEY_USE_PRIVILEGED_BATTERY_CURRENT: String =
+            SettingsKeys.KEY_USE_PRIVILEGED_BATTERY_CURRENT
+        const val KEY_BATTERY_CURRENT_MULTIPLIER: String =
+            SettingsKeys.KEY_BATTERY_CURRENT_MULTIPLIER
+        const val KEY_BATTERY_CURRENT_REFRESH_INTERVAL: String =
+            SettingsKeys.KEY_BATTERY_CURRENT_REFRESH_INTERVAL
+        const val KEY_DISPLAY_CURRENT_IN_NOTIFICATION: String =
+            SettingsKeys.KEY_DISPLAY_CURRENT_IN_NOTIFICATION
+        const val KEY_PREFER_AVERAGE_BATTERY_CURRENT: String =
+            SettingsKeys.KEY_PREFER_AVERAGE_BATTERY_CURRENT
+
         const val KEY_FIRST_RUN: String = "first_run"
         const val KEY_MIGRATED_SERVICE_DESIRED: String = "service_desired_migrated_to_sp_main"
         const val KEY_ENABLE_NOTIFS_B: String = "enable_notifications_button"
@@ -125,27 +127,20 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         private const val IMPORT_REQUEST = 2
 
         private val PARENTS = arrayOf<String?>(
-            KEY_ENABLE_LOGGING,
-            KEY_DISPLAY_CURRENT_IN_VITAL_STATS,
-            KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW,
-            KEY_RED,
-            KEY_AMBER,
-            KEY_GREEN
+            KEY_ENABLE_LOGGING, KEY_RED, KEY_AMBER, KEY_GREEN
         )
         private val DEPENDENTS = arrayOf<Array<String?>?>(
-            arrayOf(KEY_MAX_LOG_AGE), arrayOf(KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS), arrayOf(
-                KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW, KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW
-            ), arrayOf(KEY_RED_THRESH), arrayOf(KEY_AMBER_THRESH), arrayOf(KEY_GREEN_THRESH)
+            arrayOf(KEY_MAX_LOG_AGE),
+            arrayOf(KEY_RED_THRESH),
+            arrayOf(KEY_AMBER_THRESH),
+            arrayOf(KEY_GREEN_THRESH)
         )
 
-        private val CURRENT_HACK_DEPENDENTS = arrayOf<String?>(
-            KEY_CURRENT_HACK_PREFER_FS,
-            KEY_CURRENT_HACK_MULTIPLIER,
-            KEY_DISPLAY_CURRENT_IN_VITAL_STATS,
-            KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS,
-            KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW,
-            KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW,
-            KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW
+        private val BATTERY_CURRENT_DEPENDENTS = arrayOf<String?>(
+            KEY_USE_PRIVILEGED_BATTERY_CURRENT,
+            KEY_BATTERY_CURRENT_MULTIPLIER,
+            KEY_BATTERY_CURRENT_REFRESH_INTERVAL,
+            KEY_PREFER_AVERAGE_BATTERY_CURRENT
         )
 
         private val INVERSE_PARENTS = arrayOf<String?>()
@@ -161,7 +156,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             KEY_CHIP_CONTENT,
             KEY_CHIP_SWITCHING_INTERVAL,
             KEY_LIVE_UPDATE_DISPLAY,
-            KEY_CURRENT_HACK_MULTIPLIER,
+            KEY_BATTERY_CURRENT_MULTIPLIER,
             KEY_MAX_LOG_AGE,
             KEY_TOP_LINE,
             KEY_BOTTOM_LINE,
@@ -193,11 +188,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             KEY_MAX_LOG_AGE,
             KEY_TIME_REMAINING_VERBOSITY,
             KEY_STATUS_DURATION_IN_VITAL_SIGNS,
-            KEY_ENABLE_CURRENT_HACK,
-            KEY_CURRENT_HACK_PREFER_FS,
-            KEY_CURRENT_HACK_MULTIPLIER,
-            KEY_DISPLAY_CURRENT_IN_VITAL_STATS,
-            KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS,
+            KEY_ENABLE_BATTERY_CURRENT,
+            KEY_USE_PRIVILEGED_BATTERY_CURRENT,
+            KEY_BATTERY_CURRENT_MULTIPLIER,
+            KEY_DISPLAY_CURRENT_IN_NOTIFICATION,
+            KEY_PREFER_AVERAGE_BATTERY_CURRENT,
             KEY_UI_COLOR,
             KEY_PREDICTION_TYPE
         )
@@ -227,8 +222,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         Handler(Looper.getMainLooper()) {
         override fun handleMessage(incoming: Message) {
             when (incoming.what) {
-                BatteryInfoService.RemoteConnection.CLIENT_SERVICE_CONNECTED -> sa.serviceMessenger =
-                    incoming.replyTo
+                BatteryInfoService.RemoteConnection.CLIENT_SERVICE_CONNECTED -> {
+                    sa.serviceMessenger = incoming.replyTo
+                    sa.resetService()
+                }
 
                 else -> super.handleMessage(incoming)
             }
@@ -283,6 +280,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         mSharedPreferences.edit().commit()
 
         val outgoing = Message.obtain()
+        outgoing.data = batteryCurrentOverridesBundle()
 
         if (cancelFirst) outgoing.what =
             BatteryInfoService.RemoteConnection.SERVICE_CANCEL_NOTIFICATION_AND_RELOAD_SETTINGS
@@ -291,8 +289,31 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         try {
             serviceMessenger!!.send(outgoing)
         } catch (e: Exception) {
-            BatteryInfoService.startForegroundServiceSafely(requireContext())
+            BatteryInfoService.startForegroundServiceSafely(requireContext(), outgoing.data)
         }
+    }
+
+    private fun batteryCurrentOverridesBundle(): Bundle = Bundle().apply {
+        putBoolean(
+            KEY_ENABLE_BATTERY_CURRENT,
+            mSharedPreferences.getBoolean(KEY_ENABLE_BATTERY_CURRENT, false)
+        )
+        putBoolean(
+            KEY_USE_PRIVILEGED_BATTERY_CURRENT,
+            mSharedPreferences.getBoolean(KEY_USE_PRIVILEGED_BATTERY_CURRENT, false)
+        )
+        putString(
+            KEY_BATTERY_CURRENT_MULTIPLIER,
+            mSharedPreferences.getString(KEY_BATTERY_CURRENT_MULTIPLIER, "1")
+        )
+        putBoolean(
+            KEY_DISPLAY_CURRENT_IN_NOTIFICATION,
+            mSharedPreferences.getBoolean(KEY_DISPLAY_CURRENT_IN_NOTIFICATION, false)
+        )
+        putBoolean(
+            KEY_PREFER_AVERAGE_BATTERY_CURRENT,
+            mSharedPreferences.getBoolean(KEY_PREFER_AVERAGE_BATTERY_CURRENT, false)
+        )
     }
 
     private fun setPreferences() {
@@ -303,13 +324,13 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         mainNotifsEnabled = getMainNotifsEnabled()
         systemPromotedEnabled = BatteryInfoService.isLiveUpdateEnabledInSystem(requireContext())
 
-        var pref_res = prefScreen
+        var prefRes = prefScreen
 
         if ((prefScreen == R.xml.status_bar_icon_pref_screen || prefScreen == R.xml.status_bar_chip_pref_screen || prefScreen == R.xml.notification_pref_screen) && (!appNotifsEnabled || !mainNotifsEnabled)) {
-            pref_res = R.xml.main_notifs_disabled_pref_screen
+            prefRes = R.xml.main_notifs_disabled_pref_screen
         }
 
-        setPreferencesFromResource(pref_res, null)
+        setPreferencesFromResource(prefRes, null)
         mPreferenceScreen = preferenceScreen
 
         val liveUpdateSupported: Boolean = BatteryInfoService.supportsLiveUpdates()
@@ -328,9 +349,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }
         }
 
-        var cat: PreferenceCategory?
-
-        if (pref_res == R.xml.main_notifs_disabled_pref_screen) {
+        if (prefRes == R.xml.main_notifs_disabled_pref_screen) {
             val prefB = mPreferenceScreen!!.findPreference<Preference?>(KEY_ENABLE_NOTIFS_B)
             val prefS = mPreferenceScreen!!.findPreference<Preference?>(KEY_ENABLE_NOTIFS_SUMMARY)
 
@@ -344,6 +363,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         } else if (prefScreen == R.xml.notification_pref_screen) {
             val prefB = mPreferenceScreen!!.findPreference<Preference?>(KEY_ENABLE_NOTIFS_B)
             prefB!!.setSummary(R.string.pref_manage_main_channel)
+            updateDisplayCurrentInNotificationEnabledness()
         } else if (prefScreen == R.xml.status_bar_chip_pref_screen) {
             if (!liveUpdateSupported) {
                 val chipCat = mPreferenceScreen!!.findPreference<Preference?>(
@@ -356,29 +376,16 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             } else {
                 updateChipIntervalVisibility()
             }
-        } else if (prefScreen == R.xml.current_hack_pref_screen) {
-            if (CurrentHack.current == null) {
-                cat =
-                    mPreferenceScreen!!.findPreference<Preference?>(KEY_CAT_CURRENT_HACK_MAIN) as PreferenceCategory?
-                cat!!.removeAll()
-                cat.layoutResource = R.layout.none
-                cat = mPreferenceScreen!!.findPreference<Preference?>(
-                    KEY_CAT_CURRENT_HACK_NOTIFICATION
-                ) as PreferenceCategory?
-                cat!!.removeAll()
-                cat.layoutResource = R.layout.none
-                cat = mPreferenceScreen!!.findPreference<Preference?>(
-                    KEY_CAT_CURRENT_HACK_MAIN_WINDOW
-                ) as PreferenceCategory?
-                cat!!.removeAll()
-                cat.layoutResource = R.layout.none
-            } else {
-                cat = mPreferenceScreen!!.findPreference<Preference?>(
-                    KEY_CAT_CURRENT_HACK_UNSUPPORTED
-                ) as PreferenceCategory?
-                cat!!.removeAll()
-                cat.layoutResource = R.layout.none
-            }
+        } else if (prefScreen == R.xml.current_state_pref_screen) {
+            BatteryCurrent.setContext(requireContext())
+            BatteryCurrent.setUsePrivilegedAccess(
+                mSharedPreferences.getBoolean(KEY_USE_PRIVILEGED_BATTERY_CURRENT, false)
+            )
+            BatteryCurrent.setMultiplier(
+                mSharedPreferences.getString(KEY_BATTERY_CURRENT_MULTIPLIER, "1")?.toIntOrNull()
+                    ?: 1
+            )
+            setupBatteryCurrentRefreshIntervalPreference()
         }
 
         for (i in PARENTS.indices) setEnablednessOfDeps(i)
@@ -387,10 +394,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
         for (i in LIST_PREFS.indices) updateListPrefSummary(LIST_PREFS[i]!!)
 
-        if (prefScreen == R.xml.current_hack_pref_screen && !mSharedPreferences!!.getBoolean(
-                KEY_ENABLE_CURRENT_HACK, false
+        if (prefScreen == R.xml.current_state_pref_screen && !mSharedPreferences!!.getBoolean(
+                KEY_ENABLE_BATTERY_CURRENT, false
             )
-        ) setEnablednessOfCurrentHackDeps(false)
+        ) setEnablednessOfBatteryCurrentDeps(false)
 
         updateConvertFSummary()
         setupLanguage()
@@ -406,7 +413,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 return false
             }
 
-            KEY_NOTIFICATION_SETTINGS, KEY_STATUS_BAR_ICON_SETTINGS, KEY_STATUS_BAR_CHIP_SETTINGS, KEY_CURRENT_HACK_SETTINGS, KEY_OTHER_SETTINGS -> {
+            KEY_NOTIFICATION_SETTINGS, KEY_STATUS_BAR_ICON_SETTINGS, KEY_STATUS_BAR_CHIP_SETTINGS, KEY_CURRENT_STATE_SETTINGS, KEY_OTHER_SETTINGS -> {
                 val comp = ComponentName(
                     requireActivity().packageName, SettingsActivity::class.java.getName()
                 )
@@ -476,18 +483,18 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             updateConvertFSummary()
         }
 
-        if (key == KEY_ENABLE_CURRENT_HACK) {
+        if (key == KEY_ENABLE_BATTERY_CURRENT) {
             if (mSharedPreferences.getBoolean(
-                    KEY_ENABLE_CURRENT_HACK, false
+                    KEY_ENABLE_BATTERY_CURRENT, false
                 )
-            ) setEnablednessOfCurrentHackDeps(true)
+            ) setEnablednessOfBatteryCurrentDeps(true)
 
             for (i in PARENTS.indices) setEnablednessOfDeps(i)
 
             if (!mSharedPreferences.getBoolean(
-                    KEY_ENABLE_CURRENT_HACK, false
+                    KEY_ENABLE_BATTERY_CURRENT, false
                 )
-            ) setEnablednessOfCurrentHackDeps(false)
+            ) setEnablednessOfBatteryCurrentDeps(false)
         }
 
         if (key == KEY_ENABLE_ADVANCED_STATS && mSharedPreferences.getBoolean(
@@ -495,11 +502,17 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             )
         ) maybeRequestShizukuForAdvancedStats()
 
-        if (key == KEY_CURRENT_HACK_PREFER_FS) CurrentHack.setPreferFS(
-            mSharedPreferences.getBoolean(
-                KEY_CURRENT_HACK_PREFER_FS, res.getBoolean(R.bool.default_prefer_fs_current_hack)
+        if (key == KEY_USE_PRIVILEGED_BATTERY_CURRENT) {
+            val enabled = mSharedPreferences.getBoolean(
+                KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
             )
-        )
+            BatteryCurrent.setUsePrivilegedAccess(enabled)
+            if (enabled) maybeRequestShizukuForAdvancedStats()
+        }
+
+        if (key == KEY_BATTERY_CURRENT_REFRESH_INTERVAL) {
+            updateBatteryCurrentRefreshIntervalSummary()
+        }
 
         for (i in RESET_SERVICE.indices) {
             if (key == RESET_SERVICE[i]) {
@@ -576,14 +589,97 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         }
     }
 
-    private fun setEnablednessOfCurrentHackDeps(enabled: Boolean) {
-        for (i in CURRENT_HACK_DEPENDENTS.indices) {
+    private fun setEnablednessOfBatteryCurrentDeps(enabled: Boolean) {
+        for (i in BATTERY_CURRENT_DEPENDENTS.indices) {
             val dependent =
-                mPreferenceScreen!!.findPreference<Preference?>(CURRENT_HACK_DEPENDENTS[i]!!)
+                mPreferenceScreen!!.findPreference<Preference?>(BATTERY_CURRENT_DEPENDENTS[i]!!)
                     ?: return
 
             dependent.isEnabled = enabled
         }
+    }
+
+    private fun updateDisplayCurrentInNotificationEnabledness() {
+        mPreferenceScreen!!.findPreference<Preference?>(
+            KEY_DISPLAY_CURRENT_IN_NOTIFICATION
+        )?.isEnabled = mSharedPreferences.getBoolean(KEY_ENABLE_BATTERY_CURRENT, false)
+    }
+
+    private fun setupBatteryCurrentRefreshIntervalPreference() {
+        val preference = mPreferenceScreen!!.findPreference<ListPreference>(
+            KEY_BATTERY_CURRENT_REFRESH_INTERVAL
+        ) ?: return
+        updateBatteryCurrentRefreshIntervalSummary()
+        preference.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, newValue ->
+                if (newValue == "custom") {
+                    showCustomBatteryCurrentRefreshIntervalDialog(preference)
+                    false
+                } else {
+                    true
+                }
+            }
+    }
+
+    private fun updateBatteryCurrentRefreshIntervalSummary() {
+        val preference = mPreferenceScreen!!.findPreference<ListPreference>(
+            KEY_BATTERY_CURRENT_REFRESH_INTERVAL
+        ) ?: return
+        val seconds = mSharedPreferences.getString(
+            KEY_BATTERY_CURRENT_REFRESH_INTERVAL, "2"
+        )?.toIntOrNull()?.coerceIn(1, 3600) ?: 2
+        val entry = preference.entries.getOrNull(
+            preference.findIndexOfValue(seconds.toString())
+        )
+        val value = entry ?: getString(
+            R.string.pref_battery_current_refresh_interval_custom_summary, seconds
+        )
+        preference.summary = getString(R.string.currently_set_to) + value
+    }
+
+    private fun showCustomBatteryCurrentRefreshIntervalDialog(preference: ListPreference) {
+        val context = context ?: return
+        val input = EditText(context).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            setText(
+                mSharedPreferences.getString(KEY_BATTERY_CURRENT_REFRESH_INTERVAL, "2")
+            )
+            selectAll()
+        }
+        val container = FrameLayout(context)
+        val margin = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics
+        ).toInt()
+        container.addView(
+            input, FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply {
+                leftMargin = margin
+                rightMargin = margin
+            })
+
+        val dialog = AlertDialog.Builder(context).setTitle(preference.title)
+            .setMessage(R.string.pref_battery_current_refresh_interval_custom_message)
+            .setView(container).setPositiveButton(android.R.string.ok, null)
+            .setNegativeButton(android.R.string.cancel, null).create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val seconds = input.text.toString().toIntOrNull()
+                if (seconds == null || seconds !in 1..3600) {
+                    input.error = getString(
+                        R.string.pref_battery_current_refresh_interval_error
+                    )
+                    return@setOnClickListener
+                }
+                mSharedPreferences.edit {
+                    putString(KEY_BATTERY_CURRENT_REFRESH_INTERVAL, seconds.toString())
+                }
+                preference.value = seconds.toString()
+                updateBatteryCurrentRefreshIntervalSummary()
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
     }
 
     private fun setEnablednessOfInverseDeps(index: Int) {

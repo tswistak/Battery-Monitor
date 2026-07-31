@@ -234,19 +234,13 @@
   <string name="status_bar_chip_settings" formatted="false">स्टेटस बार चिप</string>
   <string name="status_bar_chip_settings_summary" formatted="false">लाइव अपडेट\' चिप सामग्री कॉन्फ़िगर करें</string>
   <string name="status_bar_chip_settings_help" formatted="false">एंड्रॉइड 16+ पर लाइव अपडेट के साथ, आप स्थिति को कॉन्फ़िगर कर सकते हैं बार चिप दिखाता है और चार्जिंग इमोजी प्रदर्शित करना है या नहीं।</string>
-  <string name="current_hack_settings" formatted="false">वर्तमान (एमए) हैक</string>
-  <string name="current_hack_settings_summary" formatted="false">एमए जानकारी सक्षम करने के लिए उन्नत सेटिंग्स</string>
-  <string name="current_hack_settings_help" formatted="false">एंड्रॉइड ऐप्स को जानकारी तक पहुंचने का कोई साधन प्रदान नहीं करता है बैटरी करंट के बारे में हालाँकि, एक हैक उपलब्ध है जो कई उपकरणों को संभावित रूप से यह जानकारी प्राप्त करने की अनुमति देता है।\n
-    \n
-    यह काम करने की गारंटी नहीं है। हो सकता है कि यह बिल्कुल भी काम न करे या हो ऐसा प्रतीत हो सकता है कि यह काम करता है लेकिन इसका परिणाम केवल निरर्थक मान ही होता है।\n
-    \n
-    सेटिंग्स यदि संभव हो तो हैक को चालू करें और नियंत्रित करें कि यह कैसा है प्रयुक्त इस अनुभाग में उपलब्ध हैं।</string>
-
+  <string name="current_state_settings_summary" formatted="false">वर्तमान जानकारी स्क्रीन की सेटिंग</string>
+  <string name="current_state_settings_help" formatted="false">वर्तमान जानकारी स्क्रीन पर दिखाई जाने वाली जानकारी कॉन्फ़िगर करें। बैटरी करंट विकल्प, बैटरी के अन्य विवरणों के साथ दिखाई जाने वाली लाइव रीडिंग को नियंत्रित करते हैं।</string>
   <string name="alarm_settings_subtitle" formatted="false">अलार्म सेटिंग्स</string>
   <string name="alarm_settings" formatted="false">एलार्म</string>
   <string name="alarm_settings_help" formatted="false">आपकी बैटरी का स्तर होने पर आप बैटरी मॉनिटर आपको सूचित कर सकते हैं एक निश्चित स्थिति तक पहुँच जाता है (उदाहरण के लिए, बैटरी पूरी तरह चार्ज हो जाती है, बैटरी का स्तर 20% से नीचे चला जाता है, और कई अन्य)।</string>
-  <string name="other_settings" formatted="false">अन्य सेटिंग्स</string>
-  <string name="other_settings_help" formatted="false">लॉगिंग, लॉक सहित अन्य सभी सेटिंग्स इस पेज पर हैं स्क्रीन, तापमान इकाई, ऑटोस्टार्ट, और बहुत कुछ।</string>
+  <string name="other_settings" formatted="false">सामान्य</string>
+  <string name="other_settings_help" formatted="false">इस पेज पर ऐप की सामान्य सेटिंग होती हैं, जिनमें लॉगिंग, तापमान इकाई, अपने-आप शुरू होना और बहुत कुछ शामिल है।</string>
 
   <string name="live_updates_onboarding_title">स्टेटस बार बैटरी चिप</string>
   <string name="live_updates_onboarding_message_on">आपका डिवाइस स्टेटस बार में बैटरी प्रतिशत को चिप के रूप में दिखाने का समर्थन करता है। यह विकल्प डिफ़ॉल्ट रूप से सक्षम है।\n
@@ -313,52 +307,33 @@
   <string name="pref_show_icon_unit" formatted="false">इकाई चिह्न दिखाएँ</string>
   <string name="pref_show_icon_unit_help" formatted="false">यदि यह चालू है, तो आइकन बैटरी प्रतिशत के लिए प्रतिशत चिह्न और बैटरी तापमान के लिए डिग्री चिह्न दिखाता है। केवल संख्या दिखाने के लिए इसे बंद करें।</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">मुख्य नियंत्रण</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">वर्तमान (एमए) हैक असमर्थित</string>
+  <string name="pref_cat_battery_current_main" formatted="false">बैटरी करंट</string>
+  <string name="pref_enable_battery_current" formatted="false">बैटरी करंट सक्षम करें</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">मुख्य विंडो में बैटरी करंट दिखाएँ?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">सक्षम होने पर बैटरी करंट मुख्य विंडो में दिखता है और उससे जुड़े विकल्प उपलब्ध हो जाते हैं।</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">क्षमा करें, वर्तमान (एमए) हैक इस डिवाइस पर समर्थित नहीं है।</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">ज़रूरत पड़ने पर विशेषाधिकार प्राप्त पहुँच का उपयोग करें</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">सामान्य तरीके करंट न पढ़ पाएँ तो विशेषाधिकार प्राप्त पहुँच को वैकल्पिक तरीका बनाएँ?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">सक्षम होने पर Battery Monitor केवल तभी root या Shizuku उपयोग कर सकता है जब Android और फ़ाइल सिस्टम से रीडिंग न मिले। विकल्प चालू करते समय आवश्यक अनुमति माँगी जाती है।</string>
 
-  <string name="pref_enable_current_hack" formatted="false">हैक सक्षम करें</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">वर्तमान (एमए) हैक को सक्षम करने का प्रयास करें?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">जब यह सेटिंग सक्षम हो जाती है, तो इसके संबंध में अन्य विकल्प हैक प्रयोग योग्य होगा.</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">पुरानी हैक विधि को प्राथमिकता दें</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">पुरानी, ​​फ़ाइल सिस्टम-आधारित हैक पद्धति को प्राथमिकता दें?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">लॉलीपॉप (एंड्रॉइड 5.0) से शुरू होकर, एंड्रॉइड अब एक प्रदान करता है वर्तमान (एमए) जानकारी तक पहुंचने का कुछ कम हैक तरीका, सीधे सिस्टम बैटरीमैनेजर से। हालाँकि, यह अभी भी नहीं है बिल्कुल काम करने या अच्छा काम करने की गारंटी। एंड्रॉइड नौगट तक (एंड्रॉइड 7.0), पुरानी (फ़ाइल सिस्टम-आधारित) हैक पद्धति प्रतीत होती है अधिकांश डिवाइस पर बेहतर काम करता है, इसलिए यह डिवाइस पर डिफ़ॉल्ट बना रहता है Android 7.0.\n
-    से कम चल रहा है\n
-    यह सेटिंग हैक के लिए केवल एक संकेत है कि किस विधि का उपयोग करना है पसंद करें; यदि हैक ठीक से काम नहीं कर रहा है तो आप इसे बदलने का प्रयास कर सकते हैं आपका उपकरण.</string>
-
-  <string name="pref_current_hack_multiplier" formatted="false">गुणक</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">कुछ डिवाइस माइक्रोएम्पीयर के बजाय मिलीएम्पीयर की रिपोर्ट करते हैं एपीआई मांगता है. समान डिवाइस रिपोर्ट किए गए मान के चिह्न को स्वैप करते हैं। कुछ उपयोगकर्ता सही ढंग से रिपोर्ट किए गए मानों के विपरीत चिह्न को पसंद करते हैं। इस तरह की स्थितियों को समायोजित करने में सहायता के लिए, आप इसे गुणा कर सकते हैं एपीआई कॉल का परिणाम यहां दिए गए मान के अनुसार है।\n
+  <string name="pref_battery_current_multiplier" formatted="false">गुणक</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">कुछ डिवाइस अनपेक्षित इकाइयों या चिह्नों में करंट की रिपोर्ट करते हैं। दिखाए गए परिणाम को सही करने के लिए रिपोर्ट किए गए मान को यहाँ गुणा करें।\n
     \n
-    , उदाहरण के लिए, यदि आपका उपकरण हमेशा 0 mA प्रदर्शित करता है, तो आप कोशिश कर सकते हैं 1000 के गुणक का उपयोग करना। यदि एपीआई कॉल 450 लौटाती है माइक्रोएम्पीयर, उस गुणक को मूल्य दिखाने के लिए ऐप मिलेगा 0 mA के बजाय 450 mA के रूप में। यदि एपीआई कॉल 0 लौटाती है माइक्रोएम्पीयर, निश्चित रूप से, गुणक अंतिम को नहीं बदलेगा 0 mA का प्रदर्शन मान.</string>
+    फ़ोन के लिए एक मोटे संदर्भ के रूप में, Android का मानक चिह्न चार्जिंग के समय धनात्मक और डिस्चार्जिंग के समय ऋणात्मक होता है। सक्रिय चार्जिंग अक्सर लगभग +500 से +5000 mA होती है, जबकि सामान्य डिस्चार्ज लगभग -100 से -3000 mA होता है। बैटरी लगभग पूरी होने या फ़ोन के निष्क्रिय होने पर शून्य के पास के मान सामान्य हो सकते हैं। यदि परिमाण लगभग 1000 गुना छोटा या बड़ा दिखता है, या चिह्न उलटा है, तो गुणक समायोजित करें।</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">अधिसूचना</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">महत्वपूर्ण आँकड़ों में प्रदर्शित करें</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">मुख्य अधिसूचना महत्वपूर्ण आंकड़ों में वर्तमान (एमए) प्रदर्शित करें?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">सक्षम होने पर, हैक का प्रयास किया जाएगा और प्रदर्शित किया जाएगा मुख्य अधिसूचना महत्वपूर्ण आँकड़े पंक्ति में परिणाम। ध्यान दें कि आप महत्वपूर्ण आँकड़े प्रदर्शित करने के लिए मुख्य अधिसूचना कॉन्फ़िगर होनी चाहिए इसे देखने के लिए. यह मान तभी ताज़ा होगा जब सिस्टम नई बैटरी की जानकारी भेजता है.\n
-    \n
-    अधिकांश उपकरणों पर, एक नकारात्मक मान से शुद्ध निकास का संकेत मिलता है बैटरी और एक सकारात्मक मान इंगित करता है कि बैटरी चल रही है आरोपित. हालाँकि, सभी डिवाइस इस तरह से मूल्य उत्पन्न नहीं करते हैं।</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">औसत करंट को प्राथमिकता दें</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">उपलब्ध होने पर हाल का औसत उपयोग करें?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">कुछ सिस्टम तात्कालिक करंट के साथ हाल का औसत भी देते हैं। औसत की अवधि और गुणवत्ता डिवाइस के अनुसार बदलती है। औसत अनुपलब्ध या अनुपयोगी हो तो इसे बंद करें।</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">मुख्य विंडो</string>
-  <string name="pref_display_current_in_main_window" formatted="false">मुख्य विंडो में प्रदर्शित करें</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">मुख्य विंडो में करंट (एमए) प्रदर्शित करें?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">सक्षम होने पर, हैक का प्रयास किया जाएगा और प्रदर्शित किया जाएगा मुख्य विंडो में परिणाम. यह मान जब भी ताज़ा किया जाएगा सिस्टम नई बैटरी की जानकारी भेजता है, लेकिन आप इसे रीफ्रेश कर सकते हैं किसी भी समय केवल प्रदर्शित मूल्य को टैप करके मूल्य। (नोट इसलिए, कुछ डिवाइस अंतर्निहित डेटा को शायद ही कभी या कभी अपडेट नहीं करते हैं हो सकता है कि टैप करने पर मान परिवर्तित न हो।)\n
-    \n
-    अधिकांश उपकरणों पर, एक नकारात्मक मान से शुद्ध निकास का संकेत मिलता है बैटरी और एक सकारात्मक मान इंगित करता है कि बैटरी चल रही है आरोपित. हालाँकि, सभी डिवाइस इस तरह से मूल्य उत्पन्न नहीं करते हैं।</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">अपने-आप रीफ़्रेश अंतराल</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">मुख्य विंडो दिखाई देने पर बैटरी करंट कितनी बार रीफ़्रेश हो, यह चुनें।</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">सेकंड में अंतराल दर्ज करें (1–3600)।</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">1 से 3600 तक का मान दर्ज करें।</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d सेकंड</string>
 
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">महत्वपूर्ण आँकड़ों में औसत को प्राथमिकता दें</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">मुख्य अधिसूचना महत्वपूर्ण आँकड़ों में current_avg का उपयोग करने का प्रयास करें?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">मुख्य विंडो में औसत को प्राथमिकता दें</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">मुख्य विंडो में current_avg का उपयोग करने का प्रयास करें?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">कुछ प्रणालियों में एक और हैक उपलब्ध है, जो हाल ही में दिया गया है इसके तात्कालिक पढ़ने के बजाय वर्तमान का औसत। इसका मतलब अलग-अलग डिवाइस में अलग-अलग होता है और यह केवल उपलब्ध होता है कुछ उपकरणों पर. यह अधिक स्थिर मान दे सकता है (यदि सब कुछ ठीक रहा)। ठीक है), यह वही मान लौटा सकता है, या यह अनुपयोगी लौटा सकता है मान (ऐसी स्थिति में आपको यह विकल्प बंद कर देना चाहिए)।</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">मुख्य विंडो में स्वतः ताज़ा mA</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">हर दो सेकंड में mA को स्वतः ताज़ा करें?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">यदि आपके पास मुख्य विंडो में mA प्रदर्शित करने के लिए हैक सेट है, तो आप ऐसा कर सकते हैं बस इसे टैप करके मान को ताज़ा करें। अगर आप देखना चाहते हैं लगातार अपडेट के लिए बिना टैप किए आप इस विकल्प को सक्षम कर सकते हैं विंडो दिखाई देने पर हर दो सेकंड में मान को स्वतः ताज़ा करने के लिए।\n
-    \n
-    ध्यान दें कि कुछ डिवाइस शायद ही कभी या कभी भी अंतर्निहित अपडेट नहीं करते हैं डेटा, इसलिए ऐप होने पर भी मान बदलता नहीं दिख सकता है प्राप्त डेटा से मिलान करने के लिए प्रदर्शित मान को ताज़ा करना प्रणाली.</string>
+  <string name="pref_display_current_in_notification" formatted="false">बैटरी करंट दिखाएँ</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">मुख्य सूचना की महत्वपूर्ण आँकड़ों वाली पंक्ति में बैटरी करंट दिखाएँ?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">सक्षम होने पर बैटरी करंट मुख्य सूचना की महत्वपूर्ण आँकड़ों वाली पंक्ति में दिखता है। कम से कम एक सूचना पंक्ति में महत्वपूर्ण आँकड़े चुने होने चाहिए।</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">चार्जिंग संकेतक</string>
   <string name="pref_indicate_charging" formatted="false">चार्जिंग का संकेत दें</string>

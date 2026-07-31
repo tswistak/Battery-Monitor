@@ -61,7 +61,6 @@ class BatteryInfoService : Service() {
 
     companion object {
         private const val LOG_TAG = "BatteryInfoService"
-
         private var clientMessengers: HashSet<Messenger>? = null
         private var messenger: Messenger? = null
         private val widgetIds = HashSet<Int>()
@@ -98,6 +97,10 @@ class BatteryInfoService : Service() {
 
         const val EXTRA_CURRENT_INFO: String = "codes.swistak.batterymonitor.EXTRA_CURRENT_INFO"
         const val EXTRA_EDIT_ALARMS: String = "codes.swistak.batterymonitor.EXTRA_EDIT_ALARMS"
+
+        // Carries fresh preference values to the service's separate BIS process.
+        private const val EXTRA_BATTERY_CURRENT_OVERRIDES =
+            "codes.swistak.batterymonitor.EXTRA_BATTERY_CURRENT_OVERRIDES"
 
         private const val CONTENT_PERCENTAGE = "percentage"
         private const val CONTENT_TEMPERATURE = "temperature"
@@ -146,8 +149,15 @@ class BatteryInfoService : Service() {
             startForegroundServiceSafely(context)
         }
 
-        fun startForegroundServiceSafely(context: Context) {
+        fun startForegroundServiceSafely(
+            context: Context, batteryCurrentOverrides: Bundle? = null
+        ) {
             val serviceIntent = Intent(context, BatteryInfoService::class.java)
+            if (batteryCurrentOverrides != null) {
+                serviceIntent.putExtra(
+                    EXTRA_BATTERY_CURRENT_OVERRIDES, batteryCurrentOverrides
+                )
+            }
 
             try {
                 context.startForegroundService(serviceIntent)
@@ -192,6 +202,9 @@ class BatteryInfoService : Service() {
     private lateinit var settings: SharedPreferences
     private lateinit var spService: SharedPreferences
     private var spsEditor: SharedPreferences.Editor? = null
+    private var batteryCurrentEnabled = false
+    private var displayCurrentInNotification = false
+    private var preferAverageBatteryCurrent = false
 
     private lateinit var res: Resources
     private var alarms: AlarmDatabase? = null
@@ -328,18 +341,8 @@ class BatteryInfoService : Service() {
 
         sdkVersioning()
 
-        CurrentHack.setContext(this)
-        CurrentHack.setPreferFS(
-            settings.getBoolean(
-                SettingsFragment.KEY_CURRENT_HACK_PREFER_FS,
-                res.getBoolean(R.bool.default_prefer_fs_current_hack)
-            )
-        )
-        CurrentHack.setMultiplier(
-            settings.getString(
-                SettingsFragment.KEY_CURRENT_HACK_MULTIPLIER, "1"
-            )!!.toInt()
-        )
+        BatteryCurrent.setContext(this)
+        configureBatteryCurrent()
 
         val currentInfoIntent = Intent(this, BatteryInfoActivity::class.java).putExtra(
             EXTRA_CURRENT_INFO, true
@@ -408,6 +411,7 @@ class BatteryInfoService : Service() {
             stopSelf(startId)
             return START_NOT_STICKY
         }
+        intent?.getBundleExtra(EXTRA_BATTERY_CURRENT_OVERRIDES)?.let(::configureBatteryCurrent)
         update(null)
 
         return START_STICKY
@@ -438,9 +442,12 @@ class BatteryInfoService : Service() {
                     incoming.replyTo
                 )
 
-                RemoteConnection.SERVICE_RELOAD_SETTINGS -> bis.reloadSettings(false)
+                RemoteConnection.SERVICE_RELOAD_SETTINGS -> bis.reloadSettings(
+                    false, incoming.data
+                )
+
                 RemoteConnection.SERVICE_CANCEL_NOTIFICATION_AND_RELOAD_SETTINGS -> bis.reloadSettings(
-                    true
+                    true, incoming.data
                 )
 
                 else -> super.handleMessage(incoming)
@@ -484,23 +491,45 @@ class BatteryInfoService : Service() {
         spService = getSharedPreferences(SettingsFragment.SP_SERVICE_FILE, MODE_PRIVATE)
     }
 
-    private fun reloadSettings(cancelFirst: Boolean) {
+    private fun reloadSettings(cancelFirst: Boolean, batteryCurrentOverrides: Bundle?) {
         loadSettingsFiles()
-        CurrentHack.setPreferFS(
-            settings.getBoolean(
-                SettingsFragment.KEY_CURRENT_HACK_PREFER_FS,
-                res.getBoolean(R.bool.default_prefer_fs_current_hack)
-            )
-        )
-        CurrentHack.setMultiplier(
-            settings.getString(
-                SettingsFragment.KEY_CURRENT_HACK_MULTIPLIER, "1"
-            )!!.toInt()
-        )
+        configureBatteryCurrent(batteryCurrentOverrides)
 
         Str.setResources(res)
 
         applyNewSettings(cancelFirst)
+    }
+
+    private fun configureBatteryCurrent(overrides: Bundle? = null) {
+        batteryCurrentEnabled = overrides?.getBoolean(
+            SettingsFragment.KEY_ENABLE_BATTERY_CURRENT,
+            settings.getBoolean(SettingsFragment.KEY_ENABLE_BATTERY_CURRENT, false)
+        ) ?: settings.getBoolean(SettingsFragment.KEY_ENABLE_BATTERY_CURRENT, false)
+        displayCurrentInNotification = overrides?.getBoolean(
+            SettingsFragment.KEY_DISPLAY_CURRENT_IN_NOTIFICATION,
+            settings.getBoolean(SettingsFragment.KEY_DISPLAY_CURRENT_IN_NOTIFICATION, false)
+        ) ?: settings.getBoolean(SettingsFragment.KEY_DISPLAY_CURRENT_IN_NOTIFICATION, false)
+        preferAverageBatteryCurrent = overrides?.getBoolean(
+            SettingsFragment.KEY_PREFER_AVERAGE_BATTERY_CURRENT,
+            settings.getBoolean(SettingsFragment.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false)
+        ) ?: settings.getBoolean(
+            SettingsFragment.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
+        )
+
+        BatteryCurrent.setUsePrivilegedAccess(
+            overrides?.getBoolean(
+                SettingsFragment.KEY_USE_PRIVILEGED_BATTERY_CURRENT, settings.getBoolean(
+                    SettingsFragment.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
+                )
+            ) ?: settings.getBoolean(
+                SettingsFragment.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
+            )
+        )
+        val multiplier = overrides?.getString(
+            SettingsFragment.KEY_BATTERY_CURRENT_MULTIPLIER,
+            settings.getString(SettingsFragment.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
+        ) ?: settings.getString(SettingsFragment.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
+        BatteryCurrent.setMultiplier(multiplier?.toIntOrNull() ?: 1)
     }
 
     private fun applyNewSettings(cancelFirst: Boolean) {
@@ -940,19 +969,13 @@ class BatteryInfoService : Service() {
         var line = Str.healths[info!!.health] + " / " + Str.formatTemp(info!!.temperature, convertF)
 
         if (info!!.voltage > 500) line += " / " + Str.formatVoltage(info!!.voltage)
-        if (settings.getBoolean(
-                SettingsFragment.KEY_ENABLE_CURRENT_HACK, false
-            ) && settings.getBoolean(
-                SettingsFragment.KEY_DISPLAY_CURRENT_IN_VITAL_STATS, false
-            )
-        ) {
-            var current: Long? = null
-            if (settings.getBoolean(
-                    SettingsFragment.KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS, false
-                )
-            ) current = CurrentHack.avgCurrent
-            if (current == null) current = CurrentHack.current
-            if (current != null) line += " / " + current.toString() + "mA"
+        if (batteryCurrentEnabled && displayCurrentInNotification) {
+            var current: Double? = null
+            if (preferAverageBatteryCurrent) current = BatteryCurrent.avgCurrent
+            if (current == null) current = BatteryCurrent.current
+            if (current != null) {
+                line += " / " + BatteryCurrent.formatMilliAmps(current) + "mA"
+            }
         }
         if (settings.getBoolean(
                 SettingsFragment.KEY_STATUS_DURATION_IN_VITAL_SIGNS, false
@@ -1047,12 +1070,7 @@ class BatteryInfoService : Service() {
             }
         }
 
-        if (settings.getBoolean(
-                SettingsFragment.KEY_ENABLE_CURRENT_HACK, false
-            ) && settings.getBoolean(
-                SettingsFragment.KEY_DISPLAY_CURRENT_IN_VITAL_STATS, false
-            )
-        ) {
+        if (batteryCurrentEnabled && displayCurrentInNotification) {
             mHandler.postDelayed(runRenotify, 1000)
             mHandler.postDelayed(runRenotify, 3000)
             mHandler.postDelayed(runRenotify, 9000)

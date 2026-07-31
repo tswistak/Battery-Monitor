@@ -230,19 +230,13 @@
   <string name="status_bar_chip_settings" formatted="false">ステータスバーチップ</string>
   <string name="status_bar_chip_settings_summary" formatted="false">ライブ更新チップの表示内容を設定</string>
   <string name="status_bar_chip_settings_help" formatted="false">Android 16 以降でライブ更新を使用している場合、ステータスバーチップに表示する内容や充電絵文字の表示有無を設定できます。</string>
-  <string name="current_hack_settings" formatted="false">電流 (mA) ハック</string>
-  <string name="current_hack_settings_summary" formatted="false">mA 情報を有効にする詳細設定</string>
-  <string name="current_hack_settings_help" formatted="false">Android は、バッテリー電流に関する情報にアクセスするための手段をアプリに提供していません。しかし、ハックは、多くのデバイスでこの情報を取得することができるようになります。\n
-    \n
-    この動作は保証されません。全く動作しない可能性もあります。または動作しても全く意味のない値になることもあります。\n
-    \n
-    設定が可能な場合は、ハックをオンにして、このセクションで使用する方法を制御します。</string>
-
+  <string name="current_state_settings_summary" formatted="false">「現在の情報」画面の設定</string>
+  <string name="current_state_settings_help" formatted="false">「現在の情報」画面に表示する内容を設定します。バッテリー電流のオプションは、ほかのバッテリー情報と一緒に表示されるリアルタイム値を制御します。</string>
   <string name="alarm_settings_subtitle" formatted="false">アラーム設定</string>
   <string name="alarm_settings" formatted="false">アラーム</string>
   <string name="alarm_settings_help" formatted="false">お使いのバッテリー残量が一定のレベルに達したときに、 Battery Monitor があなたに通知することができます (例、バッテリーがフル充電された、 バッテリー残量が 20% を下回った)。</string>
-  <string name="other_settings" formatted="false">その他の設定</string>
-  <string name="other_settings_help" formatted="false">ロギング、ロック画面、温度の単位、自動開始、およびその他を含め、 その他のすべての設定はこのページにあります。</string>
+  <string name="other_settings" formatted="false">一般</string>
+  <string name="other_settings_help" formatted="false">このページには、ログ、温度単位、自動起動などの一般的なアプリ設定があります。</string>
 
   <string name="live_updates_onboarding_title">ステータスバーのバッテリーチップ</string>
   <string name="live_updates_onboarding_message_on">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できます。このオプションはデフォルトで有効です。\n
@@ -309,52 +303,33 @@
   <string name="pref_show_icon_unit" formatted="false">単位記号を表示</string>
   <string name="pref_show_icon_unit_help" formatted="false">有効にすると、アイコンにバッテリー残量はパーセント記号、バッテリー温度は度記号を表示します。数字だけを表示したい場合は無効にしてください。</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">メイン コントロール</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">電流 (mA) ハックはサポートされていません</string>
+  <string name="pref_cat_battery_current_main" formatted="false">バッテリー電流</string>
+  <string name="pref_enable_battery_current" formatted="false">バッテリー電流を有効にする</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">メイン画面にバッテリー電流を表示しますか？</string>
+  <string name="pref_enable_battery_current_help" formatted="false">有効にすると、メイン画面にバッテリー電流が表示され、関連する設定が利用できます。</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">申し訳ありません、このデバイスで電流 (mA) ハックはサポートされていません。</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">必要な場合に特権アクセスを使用</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">通常の方法で電流を読み取れない場合、特権アクセスを予備の方法として許可しますか？</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">有効にすると、Android とファイルシステムの方法で値を取得できない場合に限り、Battery Monitor が root または Shizuku を使用します。必要な権限は有効化時に要求されます。</string>
 
-  <string name="pref_enable_current_hack" formatted="false">ハックを有効にする</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">電流 (mA) ハックを有効にしてみますか?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">この設定を有効にすると、ハックに関する他のオプションが使用可能になります。</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">旧ハック方式を優先</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">古いファイルシステムベースの方式を優先しますか？</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Lollipop（Android 5.0）以降、Android は BatteryManager から電流（mA）情報を取得できる、以前よりハック性の低い手段を提供しています。ただし、動作や精度は依然として保証されません。Nougat（Android 7.0）より前では、旧方式（ファイルシステムベース）の方が多くの端末で良好に動作するため、Android 7.0 未満ではこちらが既定です。\n
+  <string name="pref_battery_current_multiplier" formatted="false">倍率</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">一部の端末では、予期しない単位や符号で電流が報告されます。表示結果を補正するには、報告値にここで指定した倍率を掛けます。\n
     \n
-    この設定はどちらの方式を優先するかのヒントに過ぎません。端末でうまく動かない場合は切り替えて試してください。</string>
+    スマートフォンのおおよその目安として、Android の標準では充電中が正、放電中が負です。充電中は +500～+5000 mA、通常の放電中は -100～-3000 mA 程度になることがよくあります。満充電に近い場合や端末がアイドル状態の場合は、ゼロに近い値でも正常です。値が約 1000 倍小さい、または大きい場合や、符号が逆の場合は倍率を調整してください。</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">倍率</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">一部の端末では、API が要求するマイクロアンペアではなくミリアンペアを返したり、符号が逆になっている場合があります。また、正しい符号でも逆向き表示を好むユーザーもいます。そうした状況に対応するため、API の結果にここで指定した倍率を掛けられます。\n
-    \n
-    たとえば常に 0 mA と表示される場合、倍率を 1000 にすると改善することがあります。API が 450 マイクロアンペアを返すなら 450 mA と表示されるようになります。API 自体が 0 マイクロアンペアを返す場合は、倍率を変えても表示は 0 mA のままです。</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">平均電流を優先</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">利用できる場合は直近の平均値を使用しますか？</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">一部のシステムでは瞬間電流に加えて直近の平均値も提供されます。平均期間と品質は端末によって異なります。利用できない、または不適切な場合は無効にしてください。</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">通知</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">バイタル統計に表示</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">メイン通知のバイタル統計に電流 (mA) を表示しますか?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">有効にすると、ハックを試行して、メイン通知のバイタル統計行に結果が表示されます。これを表示するには、メイン通知にバイタル統計を表示するように設定する必要があることにご注意ください。システムが新しいバッテリー情報を送信したときにのみ、この値は更新されます。\n
-    \n
-    ほとんどのデバイスで、負の値は、バッテリーからの純流出を示し、正の値は、バッテリーが充電されていることを示しています。しかし、すべてのデバイスでこのように値を生成するとは限りません。</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">自動更新間隔</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">メイン画面の表示中にバッテリー電流を更新する間隔を選択します。</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">秒単位で間隔を入力してください（1～3600）。</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">1～3600 の値を入力してください。</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d 秒</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">メインウインドウ</string>
-  <string name="pref_display_current_in_main_window" formatted="false">メインウインドウに表示</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">メインウインドウに電流 (mA) を表示しますか?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">有効にすると、ハックを試行し、メインウィンドウに結果が表示されます。システムが新しいバッテリー情報を送信するたびにこの値が更新されますが、表示された値をタップすることで、いつでも値を更新することができます。 (いくつかのデバイスはほとんど、またはまったく基になるデータを更新しないため、タップで表示する値が変更されない場合があることにご注意ください。)\n
-    \n
-    ほとんどのデバイスで、負の値は、バッテリーからの純流出を示し、正の値は、バッテリーが充電されていることを示しています。しかし、すべてのデバイスでこのように値を生成するとは限りません。</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">バイタル統計に平均を表示する</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">メイン通知のバイタル統計に平均電流を使用しますか?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">メインウインドウに平均を表示する</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">メインウインドウに平均電流を使用しますか?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">一部のシステムではさらにハックを利用して、読み取った瞬間だけでなく、最近の電流の平均を取得することができます。これはデバイスによって異なり、一部のデバイスでのみ使用できます。 (すべてがうまくいけば) 安定した値を取得することもありますが、同じ値を返すこと、使用できない値を返すこともあります (その場合、このオプションをオフにする必要があります)。</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">メインウインドウの mA を自動更新する</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">2 秒ごとに mA を自動更新しますか?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">メインウィンドウに mA を表示するハックを設定した場合、それをタップして値を更新することができます。タップすることなく、頻繁に更新を確認したい場合、このオプションを有効にすると、ウィンドウが表示されている間、値を 2 秒ごとに自動更新することができます\n
-    \n
-    いくつかのデバイスはほとんど、またはまったく基になるデータを更新しないため、アプリがシステムから取得したデータで表示された値を更新しても、表示が更新したように見えない場合があることにご注意ください。</string>
+  <string name="pref_display_current_in_notification" formatted="false">バッテリー電流を表示</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">メイン通知のバイタル統計行にバッテリー電流を表示しますか？</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">有効にすると、メイン通知のバイタル統計行にバッテリー電流が表示されます。少なくとも1つの通知行をバイタル統計に設定する必要があります。</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">充電中インジケーター</string>
   <string name="pref_indicate_charging" formatted="false">充電中を示す</string>

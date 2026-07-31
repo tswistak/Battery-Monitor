@@ -74,7 +74,7 @@ class CurrentInfoFragment : Fragment() {
     private val mHandler = Handler(Looper.getMainLooper())
     private val mARefresher: Runnable = Runnable {
         refreshCurrent()
-        mHandler.postDelayed(mARefresher, 2000)
+        mHandler.postDelayed(mARefresher, batteryCurrentRefreshIntervalMillis())
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -94,8 +94,7 @@ class CurrentInfoFragment : Fragment() {
 
         batteryUseB = rootView.findViewById<View?>(R.id.battery_use_b) as Button
 
-        requireNotNull(rootView.findViewById<View?>(R.id.vital_stats))
-            .setOnClickListener(vsListener)
+        requireNotNull(rootView.findViewById(R.id.vital_stats)).setOnClickListener(vsListener)
         currentIcon = rootView.findViewById(R.id.current_icon)
 
         tvTemp = rootView.findViewById<View?>(R.id.temp) as TextView
@@ -137,7 +136,7 @@ class CurrentInfoFragment : Fragment() {
 
         dpScale = requireActivity().resources.displayMetrics.density
 
-        CurrentHack.setContext(requireContext())
+        BatteryCurrent.setContext(requireContext())
 
         setHasOptionsMenu(true)
     }
@@ -145,15 +144,14 @@ class CurrentInfoFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        CurrentHack.setPreferFS(
+        BatteryCurrent.setUsePrivilegedAccess(
             pFrag!!.settings.getBoolean(
-                SettingsFragment.KEY_CURRENT_HACK_PREFER_FS,
-                pFrag!!.res.getBoolean(R.bool.default_prefer_fs_current_hack)
+                SettingsFragment.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
             )
         )
-        CurrentHack.setMultiplier(
+        BatteryCurrent.setMultiplier(
             pFrag!!.settings.getString(
-                SettingsFragment.KEY_CURRENT_HACK_MULTIPLIER, "1"
+                SettingsFragment.KEY_BATTERY_CURRENT_MULTIPLIER, "1"
             )!!.toInt()
         )
     }
@@ -175,13 +173,9 @@ class CurrentInfoFragment : Fragment() {
         handleUpdatedBatteryInfo()
 
         if (pFrag!!.settings.getBoolean(
-                SettingsFragment.KEY_ENABLE_CURRENT_HACK, false
-            ) && pFrag!!.settings.getBoolean(
-                SettingsFragment.KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW, false
-            ) && pFrag!!.settings.getBoolean(
-                SettingsFragment.KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW, false
+                SettingsFragment.KEY_ENABLE_BATTERY_CURRENT, false
             )
-        ) mHandler.postDelayed(mARefresher, 2000)
+        ) mHandler.postDelayed(mARefresher, batteryCurrentRefreshIntervalMillis())
     }
 
     override fun onStop() {
@@ -385,26 +379,31 @@ class CurrentInfoFragment : Fragment() {
         var s = ""
 
         if (pFrag!!.settings.getBoolean(
-                SettingsFragment.KEY_ENABLE_CURRENT_HACK, false
-            ) && pFrag!!.settings.getBoolean(
-                SettingsFragment.KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW, false
+                SettingsFragment.KEY_ENABLE_BATTERY_CURRENT, false
             )
         ) {
             currentIcon!!.visibility = View.VISIBLE
 
-            var current: Long? = null
+            var current: Double? = null
 
             if (pFrag!!.settings.getBoolean(
-                    SettingsFragment.KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW, false
+                    SettingsFragment.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
                 )
-            ) current = CurrentHack.avgCurrent
-            if (current == null) current = CurrentHack.current
-            if (current != null) s += current.toString() + "mA"
+            ) current = BatteryCurrent.avgCurrent
+            if (current == null) current = BatteryCurrent.current
+            if (current != null) s += BatteryCurrent.formatMilliAmps(current) + "mA"
         } else {
             currentIcon!!.visibility = View.INVISIBLE
         }
 
         tvCurrent!!.text = s
+    }
+
+    private fun batteryCurrentRefreshIntervalMillis(): Long {
+        val seconds = pFrag!!.settings.getString(
+            SettingsFragment.KEY_BATTERY_CURRENT_REFRESH_INTERVAL, "2"
+        )?.toLongOrNull()?.coerceIn(1L, 3600L) ?: 2L
+        return seconds * 1000L
     }
 
     /* mA TextView */

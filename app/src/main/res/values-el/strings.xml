@@ -232,19 +232,13 @@
   <string name="status_bar_chip_settings" formatted="false">Τσιπ γραμμής κατάστασης</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Διαμόρφωση περιεχομένου τσιπ Ζωντανών ενημερώσεων</string>
   <string name="status_bar_chip_settings_help" formatted="false">Στο Android 16+ με Ζωντανές ενημερώσεις, μπορείτε να διαμορφώσετε την κατάσταση Εμφανίζει το τσιπ ράβδου και αν θα εμφανιστεί το emoji φόρτισης.</string>
-  <string name="current_hack_settings" formatted="false">Τρέχουσα παραβίαση (mA).</string>
-  <string name="current_hack_settings_summary" formatted="false">Προηγμένες ρυθμίσεις για την ενεργοποίηση των πληροφοριών mA</string>
-  <string name="current_hack_settings_help" formatted="false">Το Android δεν παρέχει ένα μέσο για τις εφαρμογές για πρόσβαση σε πληροφορίες σχετικά με το ρεύμα της μπαταρίας. Ωστόσο, ένα hack είναι διαθέσιμο που επιτρέπει σε πολλές συσκευές να λαμβάνουν δυνητικά αυτές τις πληροφορίες.\n
-    \n
-    Αυτό δεν είναι εγγυημένο ότι θα λειτουργήσει. Μπορεί να μην λειτουργεί καθόλου ή να λειτουργεί μπορεί να φαίνεται ότι λειτουργεί αλλά να έχει ως αποτέλεσμα μόνο ανούσιες τιμές.\n
-    \n
-    Ρυθμίσεις για να ενεργοποιήσετε το hack, αν είναι δυνατόν, και να ελέγξετε πώς είναι που χρησιμοποιούνται είναι διαθέσιμα σε αυτήν την ενότητα.</string>
-
+  <string name="current_state_settings_summary" formatted="false">Ρυθμίσεις για την οθόνη Τρέχουσες πληροφορίες</string>
+  <string name="current_state_settings_help" formatted="false">Διαμορφώστε τις πληροφορίες που εμφανίζονται στην οθόνη Τρέχουσες πληροφορίες. Οι επιλογές ρεύματος μπαταρίας ελέγχουν τη ζωντανή ένδειξη μαζί με τις άλλες λεπτομέρειες της μπαταρίας.</string>
   <string name="alarm_settings_subtitle" formatted="false">Ρυθμίσεις Ειδοποιήσεων</string>
   <string name="alarm_settings" formatted="false">Ειδοποιήσεις</string>
   <string name="alarm_settings_help" formatted="false">Μπορείτε να ρυθμίσετε τον Battery Monitor να σας ενημερώνει όταν το επίπεδο της μπαταρίας φτάνει σε ένα συγκεκριμένο επίπεδο (π.χ, όταν η μπαταρία φορτίζεται πλήρως ή όταν το επίπεδο της μπαταρίας πέφτει κάτω από 20%)</string>
-  <string name="other_settings" formatted="false">Άλλες Ρυθμίσεις</string>
-  <string name="other_settings_help" formatted="false">Όλες οι άλλες ρυθμίσεις βρίσκονται σε αυτή τη σελίδα, συμπεριλαμβανομένων της καταγραφής δεδομένων, του κλειδώματος της οθόνης, των μονάδων θερμοκρασίας, της αυτόματης έναρξης, και άλλα ακόμη.</string>
+  <string name="other_settings" formatted="false">Γενικά</string>
+  <string name="other_settings_help" formatted="false">Σε αυτή τη σελίδα βρίσκονται οι γενικές ρυθμίσεις της εφαρμογής, όπως η καταγραφή, η μονάδα θερμοκρασίας, η αυτόματη εκκίνηση και άλλα.</string>
 
   <string name="live_updates_onboarding_title">Τσιπ μπαταρίας γραμμής κατάστασης</string>
   <string name="live_updates_onboarding_message_on">Η συσκευή σας υποστηρίζει την εμφάνιση του ποσοστού μπαταρίας ως chip στη γραμμή κατάστασης. Αυτό είναι ενεργοποιημένο από προεπιλογή.\n
@@ -311,52 +305,33 @@
   <string name="pref_show_icon_unit" formatted="false">Εμφάνιση συμβόλου μονάδας</string>
   <string name="pref_show_icon_unit_help" formatted="false">Αν είναι ενεργό, το εικονίδιο εμφανίζει σύμβολο ποσοστού για το ποσοστό μπαταρίας και σύμβολο βαθμών για τη θερμοκρασία της μπαταρίας. Απενεργοποιήστε το για να εμφανίζεται μόνο ο αριθμός.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Κύριος έλεγχος</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Τρέχουσα παραβίαση (mA) Δεν υποστηρίζεται</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Ρεύμα μπαταρίας</string>
+  <string name="pref_enable_battery_current" formatted="false">Ενεργοποίηση ρεύματος μπαταρίας</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Εμφάνιση του ρεύματος μπαταρίας στο κύριο παράθυρο;</string>
+  <string name="pref_enable_battery_current_help" formatted="false">Όταν ενεργοποιηθεί, το ρεύμα μπαταρίας εμφανίζεται στο κύριο παράθυρο και γίνονται διαθέσιμες οι σχετικές επιλογές.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Λυπούμαστε, η τρέχουσα εισβολή (mA) δεν υποστηρίζεται σε αυτήν τη συσκευή.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">Χρήση προνομιακής πρόσβασης αν χρειάζεται</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Να επιτρέπεται προνομιακή πρόσβαση ως εφεδρεία όταν οι κανονικές μέθοδοι δεν μπορούν να διαβάσουν το ρεύμα;</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Όταν ενεργοποιηθεί, το Battery Monitor μπορεί να χρησιμοποιήσει root ή Shizuku μόνο αν οι μέθοδοι Android και συστήματος αρχείων δεν δώσουν μέτρηση. Η απαιτούμενη άδεια ζητείται κατά την ενεργοποίηση.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Ενεργοποίηση hack</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Προσπαθήστε να ενεργοποιήσετε την τρέχουσα εισβολή (mA);</string>
-  <string name="pref_enable_current_hack_help" formatted="false">Όταν αυτή η ρύθμιση είναι ενεργοποιημένη, οι άλλες επιλογές σχετικά με το hack θα είναι χρησιμοποιήσιμο.</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">Προτιμήστε την παλιά μέθοδο hack</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Προτιμάτε παλαιότερη μέθοδο χακαρίσματος που βασίζεται σε σύστημα αρχείων;</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Ξεκινώντας από το Lollipop (Android 5.0), το Android παρέχει τώρα ένα κάπως λιγότερο χακαρισμένος τρόπος πρόσβασης σε τρέχουσες (mA) πληροφορίες, απευθείας από το σύστημα BatteryManager. Ωστόσο, εξακολουθεί να μην είναι εγγυημένο ότι θα λειτουργήσει καθόλου ή θα λειτουργήσει καλά. Μέχρι το Android Nougat (Android 7.0), η παλιά μέθοδος χακαρίσματος (βασισμένη σε σύστημα αρχείων) φαίνεται να λειτουργεί καλύτερα στις περισσότερες συσκευές, επομένως παραμένει η προεπιλογή στις συσκευές τρέχει λιγότερο από το Android 7.0.\n
+  <string name="pref_battery_current_multiplier" formatted="false">Πολλαπλασιαστής</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Ορισμένες συσκευές αναφέρουν μη αναμενόμενες μονάδες ή πρόσημα. Πολλαπλασιάστε εδώ την αναφερόμενη τιμή για να διορθώσετε το εμφανιζόμενο αποτέλεσμα.\n
     \n
-    Αυτή η ρύθμιση είναι απλώς μια υπόδειξη για το hack σχετικά με τη μέθοδο προτιμώ? μπορείτε να δοκιμάσετε να το αλλάξετε εάν το hack δεν λειτουργεί καλά τη συσκευή σας.</string>
+    Ως ενδεικτική αναφορά για τηλέφωνα, το Android χρησιμοποιεί θετικό πρόσημο κατά τη φόρτιση και αρνητικό κατά την εκφόρτιση. Η ενεργή φόρτιση είναι συχνά περίπου +500 έως +5000 mA, ενώ η συνηθισμένη εκφόρτιση περίπου -100 έως -3000 mA. Τιμές κοντά στο μηδέν μπορεί να είναι φυσιολογικές όταν η μπαταρία είναι σχεδόν γεμάτη ή το τηλέφωνο αδρανές. Αν το μέγεθος φαίνεται περίπου 1000 φορές μικρότερο ή μεγαλύτερο, ή το πρόσημο είναι αντίστροφο, προσαρμόστε τον πολλαπλασιαστή.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Πολλαπλασιαστής</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Ορισμένες συσκευές αναφέρουν χιλιοστά αμπέρ αντί για μικροαμπέρ Το API ζητά. Οι ίδιες συσκευές αλλάζουν το σύμβολο της τιμής που αναφέρεται. Ορισμένοι χρήστες προτιμούν το αντίθετο πρόσημο των σωστά αναφερόμενων τιμών. Για να βοηθήσετε στην αντιμετώπιση καταστάσεων όπως αυτές, μπορείτε να πολλαπλασιάσετε το αποτέλεσμα της κλήσης API από την τιμή εδώ.\n
-    \n
-    Εάν η συσκευή σας εμφανίζει πάντα 0 mA, για παράδειγμα, μπορείτε να δοκιμάσετε χρησιμοποιώντας πολλαπλασιαστή 1000. Εάν η κλήση API επιστρέψει 450 μικροαμπέρ, αυτός ο πολλαπλασιαστής θα κάνει την εφαρμογή να δείξει την τιμή ως 450 mA αντί 0 mA. Εάν η κλήση API επιστρέψει 0 μικροαμπέρ, φυσικά, ο πολλαπλασιαστής δεν θα αλλάξει την τελική τιμή ένδειξης 0 mA.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Προτίμηση μέσου ρεύματος</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Χρήση του πρόσφατου μέσου όρου όταν είναι διαθέσιμος;</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Ορισμένα συστήματα παρέχουν πρόσφατο μέσο όρο μαζί με το στιγμιαίο ρεύμα. Η περίοδος και η ποιότητα διαφέρουν ανά συσκευή. Απενεργοποιήστε την επιλογή αν ο μέσος όρος δεν είναι διαθέσιμος ή χρήσιμος.</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Κοινοποίηση</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">Εμφάνιση σε ζωτικής σημασίας στατιστικά</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Εμφάνιση του ρεύματος (mA) στα βασικά στατιστικά στοιχεία της κύριας ειδοποίησης;</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Όταν ενεργοποιηθεί, θα επιχειρηθεί το hack και θα εμφανιστεί το καταλήγουν στη γραμμή βασικών στατιστικών στοιχείων ειδοποίησης. Σημειώστε ότι εσείς πρέπει να έχει διαμορφωθεί η κύρια ειδοποίηση ώστε να εμφανίζει ζωτικά στατιστικά στοιχεία για να το δεις αυτό. Αυτή η τιμή θα ανανεωθεί μόνο όταν το σύστημα στέλνει νέα στοιχεία μπαταρίας.\n
-    \n
-    O στις περισσότερες συσκευές, μια αρνητική τιμή υποδηλώνει καθαρή αποστράγγιση από το μπαταρία και μια θετική τιμή υποδηλώνει ότι η μπαταρία βρίσκεται χρεώνονται. Ωστόσο, δεν δημιουργούν όλες οι συσκευές τιμές με αυτόν τον τρόπο.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Διάστημα αυτόματης ανανέωσης</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Επιλέξτε πόσο συχνά ανανεώνεται η ένδειξη ρεύματος όταν είναι ορατό το κύριο παράθυρο.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Εισαγάγετε διάστημα σε δευτερόλεπτα (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">Εισαγάγετε τιμή από 1 έως 3600.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d δευτερόλεπτα</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">Κύριο Παράθυρο</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Εμφάνιση στο κύριο παράθυρο</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Εμφάνιση ρεύματος (mA) στο κύριο παράθυρο;</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Όταν ενεργοποιηθεί, θα επιχειρηθεί το hack και θα εμφανιστεί το αποτέλεσμα στο κύριο παράθυρο. Αυτή η τιμή θα ανανεώνεται κάθε φορά το σύστημα στέλνει νέες πληροφορίες μπαταρίας, αλλά μπορείτε να ανανεώσετε τις τιμή ανά πάσα στιγμή πατώντας απλώς την εμφανιζόμενη τιμή. (Σημ ότι ορισμένες συσκευές σπάνια ή ποτέ ενημερώνουν τα υποκείμενα δεδομένα, έτσι η τιμή μπορεί να μην φαίνεται να αλλάζει με το πάτημα.)\n
-    \n
-    O στις περισσότερες συσκευές, μια αρνητική τιμή υποδηλώνει καθαρή αποστράγγιση από το μπαταρία και μια θετική τιμή υποδηλώνει ότι η μπαταρία βρίσκεται χρεώνονται. Ωστόσο, δεν δημιουργούν όλες οι συσκευές τιμές με αυτόν τον τρόπο.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Προτιμήστε το μέσο όρο σε ζωτικά στατιστικά</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Προσπαθήστε να χρησιμοποιήσετε το current_avg στα βασικά στατιστικά στοιχεία της κύριας ειδοποίησης;</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Προτιμήστε το μέσο όρο στο κύριο παράθυρο</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Δοκιμάστε να χρησιμοποιήσετε το current_avg στο κύριο παράθυρο;</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Ορισμένα συστήματα έχουν ένα επιπλέον hack διαθέσιμο, δίνοντας ένα πρόσφατο μέσο όρο του τρέχοντος παρά μια στιγμιαία ανάγνωσή του. Το τι σημαίνει αυτό διαφέρει από συσκευή σε συσκευή και είναι διαθέσιμο μόνο σε ορισμένες συσκευές. Αυτό μπορεί να δώσει μια πιο σταθερή τιμή (αν όλα πάνε καλά), μπορεί να επιστρέψει την ίδια τιμή ή μπορεί να επιστρέψει μια μη χρησιμοποιήσιμη τιμή (οπότε θα πρέπει να απενεργοποιήσετε αυτήν την επιλογή).</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Αυτόματη ανανέωση mA στο κύριο παράθυρο</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Αυτόματη ανανέωση mA κάθε δύο δευτερόλεπτα;</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Εάν έχετε ρυθμίσει το hack να εμφανίζει mA στο κύριο παράθυρο, μπορείτε ανανεώστε την τιμή απλά πατώντας την. Αν θες να δεις συχνές ενημερώσεις χωρίς να χρειάζεται να πατήσετε, μπορείτε να ενεργοποιήσετε αυτήν την επιλογή για αυτόματη ανανέωση της τιμής κάθε δύο δευτερόλεπτα όσο είναι ορατό το παράθυρο.\n
-    \n
-    Λάβετε υπόψη ότι ορισμένες συσκευές σπάνια ή ποτέ δεν ενημερώνουν το υποκείμενο δεδομένα, επομένως η τιμή μπορεί να μην φαίνεται να αλλάζει ακόμα κι αν η εφαρμογή αλλάζει ανανέωση της εμφανιζόμενης τιμής για να ταιριάζει με τα δεδομένα που ανακτώνται το σύστημα.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Εμφάνιση ρεύματος μπαταρίας</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Εμφάνιση ρεύματος στη γραμμή ζωτικών στατιστικών της κύριας ειδοποίησης;</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">Όταν ενεργοποιηθεί, το ρεύμα εμφανίζεται στη γραμμή ζωτικών στατιστικών της κύριας ειδοποίησης. Τουλάχιστον μία γραμμή ειδοποίησης πρέπει να εμφανίζει ζωτικά στατιστικά.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Ένδειξη φόρτισης</string>
   <string name="pref_indicate_charging" formatted="false">Υποδεικνύεται Φόρτιση</string>

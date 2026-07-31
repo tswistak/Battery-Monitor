@@ -220,19 +220,13 @@
   <string name="status_bar_chip_settings" formatted="false">状态栏芯片</string>
   <string name="status_bar_chip_settings_summary" formatted="false">配置实时更新芯片内容</string>
   <string name="status_bar_chip_settings_help" formatted="false">在具有实时更新的 Android 16+ 上，您可以配置状态 条形芯片显示以及是否显示充电表情。</string>
-  <string name="current_hack_settings" formatted="false">电流 (mA) 读取</string>
-  <string name="current_hack_settings_summary" formatted="false">用于启用 mA 信息的高级设置</string>
-  <string name="current_hack_settings_help" formatted="false">Android 不提供应用程序访问信息的方法 关于电池电流。 但是，可以使用 hack 这允许许多设备潜在地获取此信息。\n
-    \n
-    这不能保证有效。 它可能根本不起作用或者它 可能看起来有效，但只会产生无意义的值。\n
-    \n
-    设置以打开黑客（如果可能）并控制其方式 使用的内容可在本节中找到。</string>
-
+  <string name="current_state_settings_summary" formatted="false">当前信息屏幕设置</string>
+  <string name="current_state_settings_help" formatted="false">配置“当前信息”屏幕上显示的信息。电池电流选项控制与其他电池详细信息一同显示的实时读数。</string>
   <string name="alarm_settings_subtitle" formatted="false">闹钟设置</string>
   <string name="alarm_settings" formatted="false">闹钟</string>
   <string name="alarm_settings_help" formatted="false">您可以让 Battery Monitor 在电池达到某个条件时提醒您，例如充满电、电量低于 20% 等。</string>
-  <string name="other_settings" formatted="false">其他设置</string>
-  <string name="other_settings_help" formatted="false">此页面包含其他设置，包括历史记录、温度单位、自启动方式等。</string>
+  <string name="other_settings" formatted="false">常规</string>
+  <string name="other_settings_help" formatted="false">此页面包含应用的常规设置，包括日志记录、温度单位、自动启动等。</string>
 
   <string name="live_updates_onboarding_title">状态栏电池芯片</string>
   <string name="live_updates_onboarding_message_on">您的设备支持在状态栏中以芯片形式显示电池百分比。此选项默认已启用。\n
@@ -299,52 +293,33 @@
   <string name="pref_show_icon_unit" formatted="false">显示单位符号</string>
   <string name="pref_show_icon_unit_help" formatted="false">启用后，图标会为电池百分比显示百分号，为电池温度显示度数符号。关闭此选项可只显示数字。</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">主控</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">电流 (mA) Hack 不支持</string>
+  <string name="pref_cat_battery_current_main" formatted="false">电池电流</string>
+  <string name="pref_enable_battery_current" formatted="false">启用电池电流</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">在主窗口中显示电池电流？</string>
+  <string name="pref_enable_battery_current_help" formatted="false">启用后，电池电流会显示在主窗口中，并可使用相关选项。</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">抱歉，该设备不支持当前的 (mA) 破解。</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">需要时使用特权访问</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">普通方法无法读取电流时，允许使用特权访问作为备用方法？</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">启用后，只有当 Android 和文件系统方法无法提供读数时，Battery Monitor 才会使用 root 或 Shizuku。启用此选项时会请求所需权限。</string>
 
-  <string name="pref_enable_current_hack" formatted="false">启用电流读取</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">尝试启用电流（mA）读取？</string>
-  <string name="pref_enable_current_hack_help" formatted="false">启用此设置后，有关的其他选项 hack 将可用。</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">优先使用旧方法</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">优先使用旧的文件系统读取方法？</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">从 Lollipop (Android 5.0) 开始，Android 现在提供 访问电流（mA）信息的不太黑客的方式， 直接来自系统 BatteryManager。 然而，这仍然不是 保证能够正常工作或正常工作。 直到 Android 牛轧糖 （Android 7.0），旧的（基于文件系统的）黑客方法似乎 在大多数设备上工作得更好，因此它仍然是设备上的默认设置 运行低于 Android 7.0.\n
+  <string name="pref_battery_current_multiplier" formatted="false">乘数</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">某些设备会报告意外的单位或符号。请在此处乘以报告值以修正显示结果。\n
     \n
-    这个设置只是提示黑客应该使用哪种方法 更喜欢；如果破解效果不佳，您可以尝试更改它 您的设备。</string>
+    作为手机的粗略参考，Android 的标准符号是充电时为正、放电时为负。主动充电通常约为 +500 至 +5000 mA，普通放电通常约为 -100 至 -3000 mA。电池接近充满或手机空闲时，接近零的值可能是正常的。如果数值看起来约小了或大了 1000 倍，或者符号相反，请调整乘数。</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">乘数</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">一些设备报告毫安而不是微安作为 API 调用。 相同的设备交换报告值的符号。 一些用户更喜欢正确报告值的相反符号。 为了帮助适应此类情况，您可以将 通过此处的值调用 API 的结果。\n
-    \n
-    例如，如果您的设备始终显示 0 mA，您可以尝试 使用 1000 的乘数。如果 API 调用返回 450 微安，该乘数将使应用程序显示该值 为 450 mA 而不是 0 mA。 如果API调用返回0 微安，当然，乘数不会改变最终的 显示值为 0 mA。</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">优先使用平均电流</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">可用时使用最近的平均值？</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">某些系统除了瞬时电流外还会提供最近的平均值。平均周期和质量因设备而异。如果平均值不可用或无法使用，请关闭此选项。</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">通知</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">在生命统计中显示</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">在主通知生命统计中显示电流（mA）？</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">启用后，将尝试进行黑客攻击并显示 导致主要通知生命统计行。 请注意，您 必须将主通知配置为显示重要统计数据 为了看到这个。 该值仅在以下情况下才会刷新 系统发送新的电池信息。\n
-    \n
-    在大多数设备上，负值表示净消耗 电池电量，正值表示电池正在充电 收费。 然而，并非所有设备都以这种方式产生价值。</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">自动刷新间隔</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">选择主窗口可见时电池电流读数的刷新频率。</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">输入以秒为单位的间隔（1–3600）。</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">请输入 1 到 3600 之间的值。</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d 秒</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">主窗口</string>
-  <string name="pref_display_current_in_main_window" formatted="false">在主窗口中显示</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">在主窗口中显示电流（mA）？</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">启用后，将尝试进行黑客攻击并显示 结果出现在主窗口中。 该值将在任何时候刷新 系统会发送新的电池信息，但您可以刷新 只需点击显示的值即可随时查看值。 （注 有些设备很少或从不更新底层数据，所以 该值可能不会在点击时发生变化。）\n
-    \n
-    在大多数设备上，负值表示净消耗 电池电量，正值表示电池正在充电 收费。 然而，并非所有设备都以这种方式产生价值。</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">更喜欢生命统计数据的平均值</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">尝试在主要通知生命统计中使用 current_avg 吗？</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">首选主窗口中的平均值</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">尝试在主窗口中使用 current_avg 吗？</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">有些系统有进一步的破解可用，给出了最近的 电流的平均值而不是瞬时读数。 这意味着什么因设备而异，并且仅可用 在某些设备上。 这可能会给出更稳定的值（如果一切顺利） 好吧），它可能返回相同的值，或者可能返回一个不可用的值 值（在这种情况下您应该关闭此选项）。</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">在主窗口中自动刷新 mA</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">每两秒自动刷新毫安？</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">如果您设置了在主窗口中显示 mA 的功能，您可以 只需点击即可刷新该值。 如果你想看 无需点击即可频繁更新，您可以启用此选项 当窗口可见时每两秒自动刷新一次值。\n
-    \n
-    请注意，某些设备很少或从不更新底层 数据，因此即使应用程序运行，该值也可能不会发生变化 刷新显示的值以匹配从中检索的数据 系统。</string>
+  <string name="pref_display_current_in_notification" formatted="false">显示电池电流</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">在主通知的重要统计信息行中显示电池电流？</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">启用后，电池电流会显示在主通知的重要统计信息行中。至少一个通知行必须设置为显示重要统计信息。</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">充电指示灯</string>
   <string name="pref_indicate_charging" formatted="false">指示正在充电</string>

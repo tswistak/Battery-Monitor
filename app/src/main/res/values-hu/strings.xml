@@ -236,15 +236,13 @@
   <string name="status_bar_chip_settings" formatted="false">Állapotsor chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">A Live Updates chip tartalmának beállítása</string>
   <string name="status_bar_chip_settings_help" formatted="false">Android 16+ rendszeren, Live Updates mellett beállíthatod, mit jelenítsen meg az állapotsor chip.</string>
-  <string name="current_hack_settings" formatted="false">Áram (mA) hack</string>
-  <string name="current_hack_settings_summary" formatted="false">Speciális beállítások az mA információ engedélyezéséhez</string>
-  <string name="current_hack_settings_help" formatted="false">Az Android nem biztosít hivatalos módot az alkalmazásoknak a pillanatnyi akkumulátoráram elérésére. Viszont létezik egy hack, amely sok készüléken potenciálisan lehetővé teszi ezt.</string>
-
+  <string name="current_state_settings_summary" formatted="false">A Jelenlegi információ képernyő beállításai</string>
+  <string name="current_state_settings_help" formatted="false">Állítsd be a Jelenlegi információ képernyőn megjelenő adatokat. Az akkumulátoráram beállításai a többi akkumulátoradat mellett látható élő értéket vezérlik.</string>
   <string name="alarm_settings_subtitle" formatted="false">Riasztás beállítások</string>
   <string name="alarm_settings" formatted="false">Riasztások</string>
   <string name="alarm_settings_help" formatted="false">Beállíthatja, hogy a Battery Monitor értesítse, amikor az akku töltése elér egy bizonyos szintet (pl. ha teljesen feltöltődik, vagy mondjuk 20% alá csökken.)</string>
-  <string name="other_settings" formatted="false">Egyéb beállítások</string>
-  <string name="other_settings_help" formatted="false">Miden további beállítás ezen az oldalon található: naplózás, képernyőzár, hőmérséklet mértékegysége, automatikus indulás, stb.</string>
+  <string name="other_settings" formatted="false">Általános</string>
+  <string name="other_settings_help" formatted="false">Ezen az oldalon találhatók az alkalmazás általános beállításai, például a naplózás, a hőmérsékleti mértékegység, az automatikus indítás és további lehetőségek.</string>
 
   <string name="live_updates_onboarding_title">Állapotsor akkumulátor chip</string>
   <string name="live_updates_onboarding_message_on">A készülék támogatja az akkumulátor százalékának chipként való megjelenítését az állapotsorban. Ez alapértelmezés szerint be van kapcsolva.\n
@@ -311,42 +309,33 @@
   <string name="pref_show_icon_unit" formatted="false">Egységjel megjelenítése</string>
   <string name="pref_show_icon_unit_help" formatted="false">Bekapcsolva az ikon százalékjelet jelenít meg az akkumulátor töltöttségéhez és fokjelet az akkumulátor hőmérsékletéhez. Kapcsold ki, ha csak a számot szeretnéd látni.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Fő vezérlés</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Áram (mA) hack nem támogatott</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Akkumulátoráram</string>
+  <string name="pref_enable_battery_current" formatted="false">Akkumulátoráram engedélyezése</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Megjelenjen az akkumulátoráram a főablakban?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">Engedélyezéskor az akkumulátoráram megjelenik a főablakban, és elérhetővé válnak a kapcsolódó beállítások.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Sajnáljuk, az áram (mA) hack nem támogatott ezen a készüléken.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">Privilegizált hozzáférés használata szükség esetén</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Engedélyezi a privilegizált hozzáférést tartalékként, ha a normál módszerek nem tudják kiolvasni az áramot?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Engedélyezéskor a Battery Monitor csak akkor használ rootot vagy Shizukut, ha az Android és a fájlrendszer nem ad mérési adatot. A szükséges engedélyt a bekapcsoláskor kéri.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Hack engedélyezése</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Megpróbálod engedélyezni az áram (mA) hack-et?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">Ha ez engedélyezve van, a hackkel kapcsolatos többi opció is használható lesz.</string>
+  <string name="pref_battery_current_multiplier" formatted="false">Szorzó</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Egyes készülékek váratlan mértékegységben vagy előjellel jelentik az áramot. A kijelzett eredmény javításához itt szorozd meg a jelentett értéket.\n
+    \n
+    Telefonoknál durva támpontként az Android szabványos előjele töltéskor pozitív, merítéskor negatív. Az aktív töltés gyakran körülbelül +500 és +5000 mA, a szokásos merítés pedig -100 és -3000 mA közé esik. A nullához közeli érték normális lehet majdnem tele akkumulátornál vagy tétlen telefonnál. Ha a nagyságrend körülbelül 1000-szer túl kicsi vagy túl nagy, illetve az előjel fordított, módosítsd a szorzót.</string>
 
-  <string name="pref_current_hack_prefer_fs" formatted="false">Régi hack módszer előnyben részesítése</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Régebbi, fájlrendszer-alapú hack módszert részesítesz előnyben?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Lollipop óta van egy kevésbé \"hackes\" módszer, de nem mindenhol működik jól.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Átlagos áram előnyben részesítése</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">A legutóbbi átlag használata, ha elérhető?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Egyes rendszerek a pillanatnyi áram mellett közelmúltbeli átlagot is adnak. Az átlagolás időtartama és minősége eszközfüggő. Kapcsolja ki, ha az átlag nem érhető el vagy használhatatlan.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Szorzó</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Egyes készülékek más mértékegységben vagy fordított előjellel jelentik az áramot; ezzel a szorzóval korrigálhatod.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Automatikus frissítés időköze</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Válassza ki, milyen gyakran frissüljön az akkumulátoráram, amíg a főablak látható.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Adja meg az időközt másodpercben (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">1 és 3600 közötti értéket adjon meg.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d másodperc</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Értesítés</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">Megjelenítés a létfontosságú adatokban</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Megjelenjen az áram (mA) a fő értesítés létfontosságú adatai között?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Bekapcsolva a hack eredménye megjelenik a fő értesítés létfontosságú adatsorában.</string>
-
-  <string name="pref_cat_current_hack_main_window" formatted="false">Főablak</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Megjelenítés a főablakban</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Megjelenjen az áram (mA) a főablakban?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Bekapcsolva a hack eredménye megjelenik a főablakban, és koppintással frissíthető.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Átlag előnyben a létfontosságú adatokban</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Próbálja a current_avg használatát a fő értesítés létfontosságú adataiban?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Átlag előnyben a főablakban</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Próbálja a current_avg használatát a főablakban?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Néhány rendszer átlagolt áramértéket is tud adni a pillanatnyi helyett.</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">mA automatikus frissítése a főablakban</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Automatikusan frissítse az mA értéket két másodpercenként?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Engedélyezve a főablakban az mA érték 2 másodpercenként frissül.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Akkumulátoráram megjelenítése</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Megjelenjen az akkumulátoráram a fő értesítés életjel-sorában?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">Engedélyezéskor az akkumulátoráram megjelenik a fő értesítés életjel-sorában. Legalább egy értesítési sort életjelek megjelenítésére kell állítani.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Töltésjelző</string>
   <string name="pref_indicate_charging" formatted="false">Töltés jelzése</string>

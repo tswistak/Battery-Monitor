@@ -128,9 +128,9 @@
 
   <string name="logs_empty" formatted="false">Logs Are Empty</string>
   <plurals name="n_log_items">
-    <item quantity="one">%d Log Item</item>
-    <item quantity="other">%d Log Items</item>
-  </plurals>
+        <item quantity="one">%d Log Item</item>
+        <item quantity="other">%d Log Items</item>
+    </plurals>
 
   <string name="after_nh_mm_unplugged" formatted="true">After %1$dh %2$dm unplugged</string>
   <string name="after_nh_mm_plugged_in" formatted="true">After %1$dh %2$dm plugged in</string>
@@ -138,47 +138,47 @@
   <string name="after_nm_ms_plugged_in" formatted="true">After %1$dm %2$ds plugged in</string>
 
   <plurals name="n_hours_long">
-    <item quantity="one">"%d hour, "</item>
-    <item quantity="other">"%d hours, "</item>
-  </plurals>
+        <item quantity="one">"%d hour, "</item>
+        <item quantity="other">"%d hours, "</item>
+    </plurals>
 
   <plurals name="n_minutes_long">
-    <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
-  </plurals>
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
 
   <plurals name="n_hours_medium">
-    <item quantity="one">"%d hr, "</item>
-    <item quantity="other">"%d hrs, "</item>
-  </plurals>
+        <item quantity="one">"%d hr, "</item>
+        <item quantity="other">"%d hrs, "</item>
+    </plurals>
 
   <plurals name="n_minutes_medium">
-    <item quantity="one">%d min.</item>
-    <item quantity="other">%d mins.</item>
-  </plurals>
+        <item quantity="one">%d min.</item>
+        <item quantity="other">%d mins.</item>
+    </plurals>
 
   <plurals name="n_hours_short">
-    <item quantity="other">"%dh "</item>
-  </plurals>
+        <item quantity="other">"%dh "</item>
+    </plurals>
 
   <plurals name="n_minutes_short">
-    <item quantity="other">%dm</item>
-  </plurals>
+        <item quantity="other">%dm</item>
+    </plurals>
 
   <plurals name="n_days">
-    <item quantity="one">"%d day, "</item>
-    <item quantity="other">"%d days, "</item>
-  </plurals>
+        <item quantity="one">"%d day, "</item>
+        <item quantity="other">"%d days, "</item>
+    </plurals>
 
   <plurals name="n_hours">
-    <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
-  </plurals>
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
 
   <plurals name="for_n_hours">
-    <item quantity="one">For %d Hour</item>
-    <item quantity="other">For %d Hours</item>
-  </plurals>
+        <item quantity="one">For %d Hour</item>
+        <item quantity="other">For %d Hours</item>
+    </plurals>
 
   <string name="unit_days">%dd</string>
   <string name="unit_hours">%dh</string>
@@ -232,19 +232,13 @@
   <string name="status_bar_chip_settings" formatted="false">Status Bar Chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configure Live Updates\' chip content</string>
   <string name="status_bar_chip_settings_help" formatted="false">On Android 16+ with Live Updates, you can configure what the status bar chip shows and whether to display the charging emoji.</string>
-  <string name="current_hack_settings" formatted="false">Current (mA) Hack</string>
-  <string name="current_hack_settings_summary" formatted="false">Advanced settings for enabling mA info</string>
-  <string name="current_hack_settings_help" formatted="false">Android does not provide a means for apps to access information about the battery current. However, a hack is available that allows many devices to potentially get this information.\n
-    \n
-    This is not guaranteed to work. It may not work at all or it may appear to work but only result in nonsense values.\n
-    \n
-    Settings to turn on the hack, if possible, and control how it is used are available in this section.</string>
-
+  <string name="current_state_settings_summary" formatted="false">Settings for the Current state screen</string>
+  <string name="current_state_settings_help" formatted="false">Configure the information shown on the Current state screen. Battery-current options control the live reading displayed with the other battery details.</string>
   <string name="alarm_settings_subtitle" formatted="false">Alarm Settings</string>
   <string name="alarm_settings" formatted="false">Alarms</string>
   <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
-  <string name="other_settings" formatted="false">Other Settings</string>
-  <string name="other_settings_help" formatted="false">All other settings are on this page, including logging, temperature unit, autostart, and more.</string>
+  <string name="other_settings" formatted="false">General</string>
+  <string name="other_settings_help" formatted="false">General app settings are on this page, including logging, temperature unit, autostart, and more.</string>
 
   <string name="live_updates_onboarding_title">Status Bar Battery Chip</string>
   <string name="live_updates_onboarding_message_on">Your device supports showing the battery percentage as a chip in the status bar. This is enabled by default.\n
@@ -311,52 +305,33 @@
   <string name="pref_show_icon_unit" formatted="false">Show Unit Symbol</string>
   <string name="pref_show_icon_unit_help" formatted="false">If enabled, the icon shows a percent sign for battery percentage and a degree symbol for battery temperature. Disable it to show only the number.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Main Control</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Current (mA) Hack Unsupported</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Battery current</string>
+  <string name="pref_enable_battery_current" formatted="false">Enable battery current</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Display battery current in the main window?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">When enabled, battery current is displayed in the main window and its related options become available.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Sorry, the current (mA) hack is not supported on this device.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">Use privileged access if needed</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Allow privileged access as a fallback when normal methods cannot read battery current?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">When enabled, Battery Monitor may use root or Shizuku only if Android and file-system methods cannot provide a reading. Any required permission is requested when you enable this option.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Enable hack</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Attempt to enable the current (mA) hack?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">When this setting is enabled, the other options regarding the hack will be usable.</string>
-
-  <string name="pref_current_hack_prefer_fs" formatted="false">Prefer old hack method</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Prefer older, filesystem-based hack method?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Starting in Lollipop (Android 5.0), Android now provides a somewhat less hackish way to access current (mA) information, directly from the system BatteryManager. However, it is still not guaranteed to work at all or to work well. Until Android Nougat (Android 7.0), the old (filesystem-based) hack method seems to work better on most devices, so it remains the default on devices running less than Android 7.0.\n
+  <string name="pref_battery_current_multiplier" formatted="false">Multiplier</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Some devices report unexpected units or signs. Multiply the reported value here to correct the displayed result.\n
     \n
-    This setting is just a hint to the hack about which method to prefer; you can try changing it if the hack isn\'t working well on your device.</string>
+    As a rough phone reference, Android’s standard sign is positive while charging and negative while discharging. Active charging is often around +500 to +5000 mA, while ordinary discharge is often around -100 to -3000 mA. Values near zero can be normal when the battery is nearly full or the phone is idle. If the magnitude looks about 1000 times too small or too large, or the sign is reversed, adjust the multiplier.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Multiplier</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Some devices report milliamperes rather than microamperes as the API calls for. Same devices swap the sign of the value reported. Some users prefer the opposite sign of correctly reported values. To help accommodate situations like these, you can multiply the result of the API call by the value here.\n
-    \n
-    If your device always displays 0 mA, for example, you could try using a multiplier of 1000. If the API call returns 450 microamperes, that multiplier will get the app to show the value as 450 mA rather than 0 mA. If the API call returns 0 microamperes, of course, the multiplier won\'t change the final display value of 0 mA.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Prefer average current</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Use the recent average when available?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Some systems provide a recent average in addition to the instantaneous current. The averaging period and quality vary by device. Disable this option if the average is unavailable or unusable.</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Notification</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">Display in vital stats</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Display current (mA) in main notification vital stats?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">When enabled, the hack will be attempted and will display the result in the main notification vital stats line. Note that you must have the main notification configured to display vital stats in order to see this. This value will only refresh when the system sends new battery information.\n
-    \n
-    On most devices, a negative value indicates a net drain from the battery and a positive value indicates that the battery is being charged. Not all devices generate values this way, however.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Auto-refresh interval</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Choose how often the battery-current reading is refreshed while the main window is visible.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Enter an interval in seconds (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">Enter a value from 1 to 3600.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d seconds</string>
 
-  <string name="pref_cat_current_hack_main_window" formatted="false">Main Window</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Display in main window</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Display current (mA) in main window?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">When enabled, the hack will be attempted and will display the result in the main window. This value will be refreshed whenever the system sends new battery information, but you can refresh the value at any time by simply tapping the displayed value. (Note that some devices rarely or never update the underlying data, so the value may not appear to change on tap.)\n
-    \n
-    On most devices, a negative value indicates a net drain from the battery and a positive value indicates that the battery is being charged. Not all devices generate values this way, however.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Prefer average in vital stats</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Try to use current_avg in main notification vital stats?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Prefer average in main window</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Try to use current_avg in main window?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Some systems have a further hack available, giving a recent average of the current rather than an instantaneous reading of it. What this means varies from device to device and is only available on some devices. This may give a more stable value (if all goes well), it may return the same value, or it may return an unusable value (in which case you should turn this option off).</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Auto-refresh mA in main window</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Auto-refresh mA every two seconds?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">If you have the hack set to display mA in the main window, you can refresh the value by simply tapping it. If you want to see frequent updates without having to tap, you can enable this option to auto-refresh the value every two seconds while the window is visible.\n
-    \n
-    Note that some devices rarely or never update the underlying data, so the value may not appear to change even though the app is refreshing the displayed value to match the data retrieved from the system.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Display battery current</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Display battery current in the main notification’s vital-stats line?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">When enabled, battery current is displayed in the main notification’s vital-stats line. At least one notification line must be configured to show vital stats.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Charging Indicator</string>
   <string name="pref_indicate_charging" formatted="false">Indicate Charging</string>

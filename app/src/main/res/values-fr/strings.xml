@@ -236,15 +236,13 @@
   <string name="status_bar_chip_settings" formatted="false">Puce de barre d’état</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configurer le contenu de la puce Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">Sur Android 16+, avec Live Updates, vous pouvez configurer ce que la puce affiche.</string>
-  <string name="current_hack_settings" formatted="false">Hack courant (mA)</string>
-  <string name="current_hack_settings_summary" formatted="false">Réglages avancés pour activer les infos mA</string>
-  <string name="current_hack_settings_help" formatted="false">Android ne fournit pas de méthode officielle pour accéder au courant de la batterie. Un hack peut toutefois fonctionner sur certains appareils.</string>
-
+  <string name="current_state_settings_summary" formatted="false">Réglages de l’écran Infos actuelles</string>
+  <string name="current_state_settings_help" formatted="false">Configurez les informations affichées sur l’écran Infos actuelles. Les options de courant de la batterie contrôlent la mesure en direct affichée avec les autres détails de la batterie.</string>
   <string name="alarm_settings_subtitle" formatted="false">Paramètres des alarmes</string>
   <string name="alarm_settings" formatted="false">Alarmes</string>
   <string name="alarm_settings_help" formatted="false">Vous pouvez configurer Battery Monitor pour qu\'il vous informe dès que la batterie a atteint un certain point (exemple : La batterie est complètement chargée, le niveau de charge a atteint 20%, etc...).</string>
-  <string name="other_settings" formatted="false">Autres paramètres</string>
-  <string name="other_settings_help" formatted="false">Tous les autres paramètres sont dans cette partie, y compris la journalisation, la gestion de l\'écran de verrouillage, l\'unité de température, le démarrage automatique, etc...</string>
+  <string name="other_settings" formatted="false">Général</string>
+  <string name="other_settings_help" formatted="false">Cette page regroupe les réglages généraux de l’application, notamment la journalisation, l’unité de température, le démarrage automatique et plus encore.</string>
 
   <string name="live_updates_onboarding_title">Puce batterie de la barre d’état</string>
   <string name="live_updates_onboarding_message_on">Votre appareil prend en charge l\'affichage du pourcentage de batterie sous forme de puce dans la barre d\'état. Cette option est activée par défaut.\n
@@ -311,42 +309,33 @@
   <string name="pref_show_icon_unit" formatted="false">Afficher le symbole d’unité</string>
   <string name="pref_show_icon_unit_help" formatted="false">Si cette option est activée, l’icône affiche un signe pourcentage pour le niveau de batterie et un symbole de degré pour la température de la batterie. Désactivez-la pour n’afficher que le nombre.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Contrôle principal</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Hack courant (mA) non pris en charge</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Courant de la batterie</string>
+  <string name="pref_enable_battery_current" formatted="false">Activer le courant de la batterie</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Afficher le courant de la batterie dans la fenêtre principale ?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">Lorsque cette option est activée, le courant de la batterie s’affiche dans la fenêtre principale et les options associées deviennent disponibles.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Désolé, le hack courant (mA) n’est pas pris en charge sur cet appareil.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">Utiliser l’accès privilégié si nécessaire</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Autoriser l’accès privilégié comme solution de secours si les méthodes normales ne peuvent pas lire le courant ?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Lorsque cette option est activée, Battery Monitor peut utiliser root ou Shizuku uniquement si Android et le système de fichiers ne fournissent aucune mesure. L’autorisation nécessaire est demandée à l’activation.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Activer le hack</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Tenter d’activer le hack courant (mA) ?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">Quand ce réglage est activé, les autres options liées au hack deviennent utilisables.</string>
+  <string name="pref_battery_current_multiplier" formatted="false">Multiplicateur</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Certains appareils signalent des unités ou des signes inattendus. Multipliez ici la valeur signalée pour corriger le résultat affiché.\n
+    \n
+    À titre indicatif pour un téléphone, la convention Android utilise un signe positif pendant la charge et négatif pendant la décharge. Une charge active se situe souvent entre +500 et +5000 mA, et une décharge ordinaire entre -100 et -3000 mA. Des valeurs proches de zéro peuvent être normales lorsque la batterie est presque pleine ou que le téléphone est inactif. Si la valeur semble environ 1000 fois trop petite ou trop grande, ou si le signe est inversé, ajustez le multiplicateur.</string>
 
-  <string name="pref_current_hack_prefer_fs" formatted="false">Préférer l’ancienne méthode de hack</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Préférer l’ancienne méthode basée sur le système de fichiers ?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Depuis Android 5.0, une méthode moins \"hack\" existe via BatteryManager, mais sa fiabilité dépend des appareils.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Préférer le courant moyen</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Utiliser la moyenne récente lorsqu’elle est disponible ?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Certains systèmes fournissent une moyenne récente en plus du courant instantané. La période et la qualité varient selon l’appareil. Désactivez cette option si la moyenne est indisponible ou inutilisable.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Multiplicateur</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Ce multiplicateur permet d’ajuster les valeurs de courant rapportées différemment selon les appareils.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Intervalle d’actualisation automatique</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Choisissez la fréquence d’actualisation du courant lorsque la fenêtre principale est visible.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Saisissez un intervalle en secondes (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">Saisissez une valeur comprise entre 1 et 3600.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d secondes</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Notification</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">Afficher dans les signes vitaux</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Afficher le courant (mA) dans les signes vitaux de la notification principale ?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Si activé, le hack sera tenté et affiché dans la ligne de signes vitaux.</string>
-
-  <string name="pref_cat_current_hack_main_window" formatted="false">Fenêtre principale</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Afficher dans la fenêtre principale</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Afficher le courant (mA) dans la fenêtre principale ?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Si activé, le hack sera tenté et le résultat affiché dans la fenêtre principale.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Préférer la moyenne dans les signes vitaux</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Essayer d’utiliser current_avg dans les signes vitaux ?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Préférer la moyenne dans la fenêtre principale</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Essayer d’utiliser current_avg dans la fenêtre principale ?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Certains systèmes peuvent fournir une moyenne récente du courant plutôt qu’une mesure instantanée.</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Auto-actualiser mA dans la fenêtre principale</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">Auto-actualiser mA toutes les deux secondes ?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Permet d’actualiser automatiquement l’affichage mA sans appuyer.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Afficher le courant de la batterie</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Afficher le courant dans la ligne des statistiques vitales de la notification principale ?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">Lorsque cette option est activée, le courant apparaît dans la ligne des statistiques vitales de la notification principale. Au moins une ligne de notification doit afficher les statistiques vitales.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Indicateur de charge</string>
   <string name="pref_indicate_charging" formatted="false">Indiquer la charge</string>

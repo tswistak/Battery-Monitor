@@ -1,320 +1,336 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Resources that are neither styles nor strings to be translated. -->
+<?xml version="1.0" encoding="utf-8"?><!-- Resources that are neither styles nor strings to be translated. -->
 <resources>
-  <string-array name="temp_alarm_entries">
-    <item>0°C / 32°F</item>
-    <item>2°C / 36°F</item>
-    <item>4°C / 39°F</item>
-    <item>6°C / 43°F</item>
-    <item>8°C / 46°F</item>
-    <item>10°C / 50°F</item>
-    <item>12°C / 54°F</item>
-    <item>14°C / 57°F</item>
-    <item>16°C / 61°F</item>
-    <item>18°C / 64°F</item>
-    <item>20°C / 68°F</item>
-    <item>22°C / 72°F</item>
-    <item>24°C / 75°F</item>
-    <item>26°C / 79°F</item>
-    <item>28°C / 82°F</item>
-    <item>30°C / 86°F</item>
-    <item>32°C / 90°F</item>
-    <item>34°C / 93°F</item>
-    <item>36°C / 97°F</item>
-    <item>38°C / 100°F</item>
-    <item>40°C / 104°F</item>
-    <item>42°C / 108°F</item>
-    <item>44°C / 111°F</item>
-    <item>46°C / 115°F</item>
-    <item>48°C / 118°F</item>
-    <item>50°C / 122°F</item>
-    <item>52°C / 126°F</item>
-    <item>54°C / 129°F</item>
-    <item>56°C / 133°F</item>
-    <item>58°C / 136°F</item>
-    <item>60°C / 140°F</item>
-  </string-array>
-  <string-array name="temp_alarm_values">
-    <item>0</item>
-    <item>20</item>
-    <item>40</item>
-    <item>60</item>
-    <item>80</item>
-    <item>100</item>
-    <item>120</item>
-    <item>140</item>
-    <item>160</item>
-    <item>180</item>
-    <item>200</item>
-    <item>220</item>
-    <item>240</item>
-    <item>260</item>
-    <item>280</item>
-    <item>300</item>
-    <item>320</item>
-    <item>340</item>
-    <item>360</item>
-    <item>380</item>
-    <item>400</item>
-    <item>420</item>
-    <item>440</item>
-    <item>460</item>
-    <item>480</item>
-    <item>500</item>
-    <item>520</item>
-    <item>540</item>
-    <item>560</item>
-    <item>580</item>
-    <item>600</item>
-  </string-array>
+    <string-array name="temp_alarm_entries">
+        <item>0°C / 32°F</item>
+        <item>2°C / 36°F</item>
+        <item>4°C / 39°F</item>
+        <item>6°C / 43°F</item>
+        <item>8°C / 46°F</item>
+        <item>10°C / 50°F</item>
+        <item>12°C / 54°F</item>
+        <item>14°C / 57°F</item>
+        <item>16°C / 61°F</item>
+        <item>18°C / 64°F</item>
+        <item>20°C / 68°F</item>
+        <item>22°C / 72°F</item>
+        <item>24°C / 75°F</item>
+        <item>26°C / 79°F</item>
+        <item>28°C / 82°F</item>
+        <item>30°C / 86°F</item>
+        <item>32°C / 90°F</item>
+        <item>34°C / 93°F</item>
+        <item>36°C / 97°F</item>
+        <item>38°C / 100°F</item>
+        <item>40°C / 104°F</item>
+        <item>42°C / 108°F</item>
+        <item>44°C / 111°F</item>
+        <item>46°C / 115°F</item>
+        <item>48°C / 118°F</item>
+        <item>50°C / 122°F</item>
+        <item>52°C / 126°F</item>
+        <item>54°C / 129°F</item>
+        <item>56°C / 133°F</item>
+        <item>58°C / 136°F</item>
+        <item>60°C / 140°F</item>
+    </string-array>
+    <string-array name="temp_alarm_values">
+        <item>0</item>
+        <item>20</item>
+        <item>40</item>
+        <item>60</item>
+        <item>80</item>
+        <item>100</item>
+        <item>120</item>
+        <item>140</item>
+        <item>160</item>
+        <item>180</item>
+        <item>200</item>
+        <item>220</item>
+        <item>240</item>
+        <item>260</item>
+        <item>280</item>
+        <item>300</item>
+        <item>320</item>
+        <item>340</item>
+        <item>360</item>
+        <item>380</item>
+        <item>400</item>
+        <item>420</item>
+        <item>440</item>
+        <item>460</item>
+        <item>480</item>
+        <item>500</item>
+        <item>520</item>
+        <item>540</item>
+        <item>560</item>
+        <item>580</item>
+        <item>600</item>
+    </string-array>
 
-  <string-array name="chip_switching_interval_entries">
-    <item>@string/chip_switching_interval_2_seconds</item>
-    <item>@string/chip_switching_interval_5_seconds</item>
-    <item>@string/chip_switching_interval_10_seconds</item>
-    <item>@string/chip_switching_interval_15_seconds</item>
-    <item>@string/chip_switching_interval_30_seconds</item>
-  </string-array>
+    <string-array name="chip_switching_interval_entries">
+        <item>@string/chip_switching_interval_2_seconds</item>
+        <item>@string/chip_switching_interval_5_seconds</item>
+        <item>@string/chip_switching_interval_10_seconds</item>
+        <item>@string/chip_switching_interval_15_seconds</item>
+        <item>@string/chip_switching_interval_30_seconds</item>
+    </string-array>
 
-  <string-array name="chip_switching_interval_values">
-    <item>2</item>
-    <item>5</item>
-    <item>10</item>
-    <item>15</item>
-    <item>30</item>
-  </string-array>
+    <string-array name="chip_switching_interval_values">
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+    </string-array>
 
-  <string name="default_red_thresh">15</string>
-  <string name="default_amber_thresh">40</string>
-  <string name="default_green_thresh">@string/default_amber_thresh</string>
+    <string name="default_red_thresh">15</string>
+    <string name="default_amber_thresh">40</string>
+    <string name="default_green_thresh">@string/default_amber_thresh</string>
 
-  <string name="default_status_dur_est"     >12</string>
+    <string name="default_status_dur_est">12</string>
 
-  <string name="default_max_log_age">672</string>
+    <string name="default_max_log_age">672</string>
 
-  <!-- Important: Make sure alarm notification channel IDs and alarm type database values always match -->
-  <string-array name="alarm_type_values">
-    <item>fully_charged</item>
-    <item>charge_drops</item>
-    <item>charge_rises</item>
-    <item>temp_drops</item>
-    <item>temp_rises</item>
-    <item>health_failure</item>
-  </string-array>
+    <!-- Important: Make sure alarm notification channel IDs and alarm type database values always match -->
+    <string-array name="alarm_type_values">
+        <item>fully_charged</item>
+        <item>charge_drops</item>
+        <item>charge_rises</item>
+        <item>temp_drops</item>
+        <item>temp_rises</item>
+        <item>health_failure</item>
+    </string-array>
 
-  <string-array name="boot_pref_values">
-    <item>always</item>
-    <item>never</item>
-    <item>auto</item>
-  </string-array>
+    <string-array name="boot_pref_values">
+        <item>always</item>
+        <item>never</item>
+        <item>auto</item>
+    </string-array>
 
-  <string-array name="max_log_age_values">
-    <item>24</item>
-    <item>48</item>
-    <item>96</item>
-    <item>168</item>
-    <item>336</item>
-    <item>504</item>
-    <item>672</item>
-    <item>-1</item>
-  </string-array>
+    <string-array name="max_log_age_values">
+        <item>24</item>
+        <item>48</item>
+        <item>96</item>
+        <item>168</item>
+        <item>336</item>
+        <item>504</item>
+        <item>672</item>
+        <item>-1</item>
+    </string-array>
 
-  <string-array name="log_filter_pref_keys">
-    <item>plugged_in</item>
-    <item>unplugged</item>
-    <item>charging</item>
-    <item>discharging</item>
-    <item>not_charging</item>
-    <item>fully_charged</item>
-    <item>boot_completed</item>
-    <item>unknown</item>
-  </string-array>
+    <string-array name="log_filter_pref_keys">
+        <item>plugged_in</item>
+        <item>unplugged</item>
+        <item>charging</item>
+        <item>discharging</item>
+        <item>not_charging</item>
+        <item>fully_charged</item>
+        <item>boot_completed</item>
+        <item>unknown</item>
+    </string-array>
 
-  <bool name="long_activity_names">true</bool>
+    <bool name="long_activity_names">true</bool>
 
-  <string-array name="statuses">
-    <item>@string/status_unplugged</item>
-    <item>@string/status_unknown</item>
-    <item>@string/status_charging</item>
-    <item>@string/status_discharging</item>
-    <item>@string/status_not_charging</item>
-    <item>@string/status_fully_charged</item>
-  </string-array>
-  <string-array name="log_statuses"><!-- The same as above, worded for the Log screen -->
-    <item>@string/status_unplugged</item>
-    <item>@string/status_unknown</item>
-    <item>@string/status_plugged_in</item>
-    <item>@string/status_discharging</item>
-    <item>@string/status_not_charging</item>
-    <item>@string/status_fully_charged</item>
-  </string-array>
-  <string-array name="log_statuses_old"><!-- The same as above, worded for old Log screen statuses -->
-    <item>@string/status_discharging</item><!-- E.g., Unplugged is called Discharging after the first time it is logged -->
-    <item>@string/status_unknown</item>
-    <item>@string/status_charging</item>
-    <item>@string/status_discharging</item>
-    <item>@string/status_not_charging</item>
-    <item>@string/status_fully_charged</item>
-  </string-array>
-  <string-array name="log_filters">
-    <item>@string/status_plugged_in</item>
-    <item>@string/status_unplugged</item>
-    <item>@string/status_charging</item>
-    <item>@string/status_discharging</item>
-    <item>@string/status_not_charging</item>
-    <item>@string/status_fully_charged</item>
-    <item>@string/status_boot_completed</item>
-    <item>@string/status_unknown</item>
-  </string-array>
+    <string-array name="statuses">
+        <item>@string/status_unplugged</item>
+        <item>@string/status_unknown</item>
+        <item>@string/status_charging</item>
+        <item>@string/status_discharging</item>
+        <item>@string/status_not_charging</item>
+        <item>@string/status_fully_charged</item>
+    </string-array>
+    <string-array name="log_statuses"><!-- The same as above, worded for the Log screen -->
+        <item>@string/status_unplugged</item>
+        <item>@string/status_unknown</item>
+        <item>@string/status_plugged_in</item>
+        <item>@string/status_discharging</item>
+        <item>@string/status_not_charging</item>
+        <item>@string/status_fully_charged</item>
+    </string-array>
+    <string-array name="log_statuses_old"><!-- The same as above, worded for old Log screen statuses -->
+        <item>@string/status_discharging</item><!-- E.g., Unplugged is called Discharging after the first time it is logged -->
+        <item>@string/status_unknown</item>
+        <item>@string/status_charging</item>
+        <item>@string/status_discharging</item>
+        <item>@string/status_not_charging</item>
+        <item>@string/status_fully_charged</item>
+    </string-array>
+    <string-array name="log_filters">
+        <item>@string/status_plugged_in</item>
+        <item>@string/status_unplugged</item>
+        <item>@string/status_charging</item>
+        <item>@string/status_discharging</item>
+        <item>@string/status_not_charging</item>
+        <item>@string/status_fully_charged</item>
+        <item>@string/status_boot_completed</item>
+        <item>@string/status_unknown</item>
+    </string-array>
 
-  <string-array name="healths">
-    <item>@string/health_unknown</item>
-    <item>@string/health_unknown</item>
-    <item>@string/health_good</item>
-    <item>@string/health_overheat</item>
-    <item>@string/health_dead</item>
-    <item>@string/health_overvoltage</item>
-    <item>@string/health_failure</item>
-    <item>@string/health_cold</item>
-  </string-array>
-  <string-array name="pluggeds">
-    <item>@string/plugged_unplugged</item>
-    <item>@string/plugged_ac</item>
-    <item>@string/plugged_usb</item>
-    <item>@string/plugged_unknown</item>
-    <item>@string/plugged_wireless</item>
-  </string-array>
+    <string-array name="healths">
+        <item>@string/health_unknown</item>
+        <item>@string/health_unknown</item>
+        <item>@string/health_good</item>
+        <item>@string/health_overheat</item>
+        <item>@string/health_dead</item>
+        <item>@string/health_overvoltage</item>
+        <item>@string/health_failure</item>
+        <item>@string/health_cold</item>
+    </string-array>
+    <string-array name="pluggeds">
+        <item>@string/plugged_unplugged</item>
+        <item>@string/plugged_ac</item>
+        <item>@string/plugged_usb</item>
+        <item>@string/plugged_unknown</item>
+        <item>@string/plugged_wireless</item>
+    </string-array>
 
-  <string-array name="alarm_types_display">
-    <item>@string/alarm_type_fully_charged</item>
-    <item>@string/alarm_type_charge_drops</item>
-    <item>@string/alarm_type_charge_rises</item>
-    <item>@string/alarm_type_temperature_drops</item>
-    <item>@string/alarm_type_temperature_rises</item>
-    <item>@string/alarm_type_health_failure</item>
-  </string-array>
-  <string-array name="alarm_type_entries">
-    <item>@string/alarm_type_entry_fully_charged</item>
-    <item>@string/alarm_type_entry_charge_drops</item>
-    <item>@string/alarm_type_entry_charge_rises</item>
-    <item>@string/alarm_type_entry_temperature_drops</item>
-    <item>@string/alarm_type_entry_temperature_rises</item>
-    <item>@string/alarm_type_entry_health_failure</item>
-  </string-array>
+    <string-array name="alarm_types_display">
+        <item>@string/alarm_type_fully_charged</item>
+        <item>@string/alarm_type_charge_drops</item>
+        <item>@string/alarm_type_charge_rises</item>
+        <item>@string/alarm_type_temperature_drops</item>
+        <item>@string/alarm_type_temperature_rises</item>
+        <item>@string/alarm_type_health_failure</item>
+    </string-array>
+    <string-array name="alarm_type_entries">
+        <item>@string/alarm_type_entry_fully_charged</item>
+        <item>@string/alarm_type_entry_charge_drops</item>
+        <item>@string/alarm_type_entry_charge_rises</item>
+        <item>@string/alarm_type_entry_temperature_drops</item>
+        <item>@string/alarm_type_entry_temperature_rises</item>
+        <item>@string/alarm_type_entry_health_failure</item>
+    </string-array>
 
-  <string-array name="boot_pref_entries">
-    <item>@string/boot_pref_always</item>
-    <item>@string/boot_pref_never</item>
-    <item>@string/boot_pref_if_running</item>
-  </string-array>
+    <string-array name="boot_pref_entries">
+        <item>@string/boot_pref_always</item>
+        <item>@string/boot_pref_never</item>
+        <item>@string/boot_pref_if_running</item>
+    </string-array>
 
-  <string-array name="max_log_age_entries">
-    <item>@string/age_1_day</item>
-    <item>@string/age_2_days</item>
-    <item>@string/age_4_days</item>
-    <item>@string/age_1_week</item>
-    <item>@string/age_2_weeks</item>
-    <item>@string/age_3_weeks</item>
-    <item>@string/age_4_weeks</item>
-    <item>@string/age_never_delete</item>
-  </string-array>
+    <string-array name="max_log_age_entries">
+        <item>@string/age_1_day</item>
+        <item>@string/age_2_days</item>
+        <item>@string/age_4_days</item>
+        <item>@string/age_1_week</item>
+        <item>@string/age_2_weeks</item>
+        <item>@string/age_3_weeks</item>
+        <item>@string/age_4_weeks</item>
+        <item>@string/age_never_delete</item>
+    </string-array>
 
-  <string-array name="icon_content_entries">
-    <item>@string/pref_content_percent</item>
-    <item>@string/pref_content_temperature</item>
-  </string-array>
+    <string-array name="icon_content_entries">
+        <item>@string/pref_content_percent</item>
+        <item>@string/pref_content_temperature</item>
+    </string-array>
 
-  <string-array name="icon_content_values">
-    <item>percentage</item>
-    <item>temperature</item>
-  </string-array>
+    <string-array name="icon_content_values">
+        <item>percentage</item>
+        <item>temperature</item>
+    </string-array>
 
-  <string-array name="chip_content_entries">
-    <item>@string/pref_content_percent</item>
-    <item>@string/pref_content_temperature</item>
-    <item>@string/pref_content_switching</item>
-  </string-array>
+    <string-array name="chip_content_entries">
+        <item>@string/pref_content_percent</item>
+        <item>@string/pref_content_temperature</item>
+        <item>@string/pref_content_switching</item>
+    </string-array>
 
-  <string-array name="chip_content_values">
-    <item>percentage</item>
-    <item>temperature</item>
-    <item>switching</item>
-  </string-array>
+    <string-array name="chip_content_values">
+        <item>percentage</item>
+        <item>temperature</item>
+        <item>switching</item>
+    </string-array>
 
-  <string-array name="live_update_display_entries">
-    <item>@string/boot_pref_always</item>
-    <item>@string/pref_live_update_display_charging</item>
-    <item>@string/boot_pref_never</item>
-  </string-array>
+    <string-array name="live_update_display_entries">
+        <item>@string/boot_pref_always</item>
+        <item>@string/pref_live_update_display_charging</item>
+        <item>@string/boot_pref_never</item>
+    </string-array>
 
-  <string-array name="live_update_display_values">
-    <item>always</item>
-    <item>charging</item>
-    <item>never</item>
-  </string-array>
+    <string-array name="live_update_display_values">
+        <item>always</item>
+        <item>charging</item>
+        <item>never</item>
+    </string-array>
 
-  <string name="default_icon_content">percentage</string>
-  <string name="default_chip_content">percentage</string>
-  <string name="default_live_update_display_mode">charging</string>
+    <string name="default_icon_content">percentage</string>
+    <string name="default_chip_content">percentage</string>
+    <string name="default_live_update_display_mode">charging</string>
 
-  <string-array name="notification_line_content_entries">
-    <item>@string/time_remaining</item>
-    <item>@string/time_since_status_change</item>
-    <item>@string/vital_signs</item>
-  </string-array>
+    <string-array name="notification_line_content_entries">
+        <item>@string/time_remaining</item>
+        <item>@string/time_since_status_change</item>
+        <item>@string/vital_signs</item>
+    </string-array>
 
-  <string-array name="notification_line_content_values">
-    <item>remaining</item>
-    <item>since</item>
-    <item>vitals</item>
-  </string-array>
+    <string-array name="notification_line_content_values">
+        <item>remaining</item>
+        <item>since</item>
+        <item>vitals</item>
+    </string-array>
 
-  <string name="default_top_line_content">remaining</string>
-  <string name="default_bottom_line_content">vitals</string>
+    <string name="default_top_line_content">remaining</string>
+    <string name="default_bottom_line_content">vitals</string>
 
-  <string-array name="time_remaining_verbosity_entries">
-    <item>@string/condensed</item>
-    <item>@string/normal</item>
-    <item>@string/verbose</item>
-  </string-array>
+    <string-array name="time_remaining_verbosity_entries">
+        <item>@string/condensed</item>
+        <item>@string/normal</item>
+        <item>@string/verbose</item>
+    </string-array>
 
-  <string-array name="time_remaining_verbosity_values">
-    <item>condensed</item>
-    <item>normal</item>
-    <item>verbose</item>
-  </string-array>
+    <string-array name="time_remaining_verbosity_values">
+        <item>condensed</item>
+        <item>normal</item>
+        <item>verbose</item>
+    </string-array>
 
-  <string name="default_time_remaining_verbosity">normal</string>
+    <string name="default_time_remaining_verbosity">normal</string>
 
-  <string-array name="prediction_type_entries">
-    <item>@string/predictor_sensitive</item>
-    <item>@string/predictor_conservative</item>
-    <item>@string/predictor_since_status_change</item>
-    <item>@string/predictor_long_term_ave</item>
-  </string-array>
+    <string-array name="prediction_type_entries">
+        <item>@string/predictor_sensitive</item>
+        <item>@string/predictor_conservative</item>
+        <item>@string/predictor_since_status_change</item>
+        <item>@string/predictor_long_term_ave</item>
+    </string-array>
 
-  <!-- See PredictorCore.java -->
-  <string-array name="prediction_type_values">
-    <item>300000</item>
-    <item>-3</item>
-    <item>-1</item>
-    <item>-2</item>
-  </string-array>
+    <!-- See PredictorCore.java -->
+    <string-array name="prediction_type_values">
+        <item>300000</item>
+        <item>-3</item>
+        <item>-1</item>
+        <item>-2</item>
+    </string-array>
 
-  <string-array name="current_hack_multiplier_entries_values">
-    <item>1</item>
-    <item>-1</item>
-    <item>10</item>
-    <item>-10</item>
-    <item>100</item>
-    <item>-100</item>
-    <item>1000</item>
-    <item>-1000</item>
-  </string-array>
+    <string-array name="battery_current_multiplier_entries_values">
+        <item>1</item>
+        <item>-1</item>
+        <item>10</item>
+        <item>-10</item>
+        <item>100</item>
+        <item>-100</item>
+        <item>1000</item>
+        <item>-1000</item>
+    </string-array>
 
-  <string name="default_prediction_type">-3</string>
+    <string-array name="battery_current_refresh_interval_entries">
+        <item>@string/chip_switching_interval_2_seconds</item>
+        <item>@string/chip_switching_interval_5_seconds</item>
+        <item>@string/chip_switching_interval_10_seconds</item>
+        <item>@string/chip_switching_interval_15_seconds</item>
+        <item>@string/chip_switching_interval_30_seconds</item>
+        <item>@string/custom</item>
+    </string-array>
 
-  <bool name="default_convert_to_fahrenheit">false</bool>
+    <string-array name="battery_current_refresh_interval_values" translatable="false">
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>custom</item>
+    </string-array>
 
-  <bool name="default_prefer_fs_current_hack">false</bool>
+    <string name="default_prediction_type">-3</string>
+
+    <bool name="default_convert_to_fahrenheit">false</bool>
+
 </resources>

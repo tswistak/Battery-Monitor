@@ -77,9 +77,9 @@ class SettingsActivity : AppCompatActivity() {
         } else if (prefScreen == SettingsFragment.KEY_NOTIFICATION_SETTINGS) {
             frag!!.setScreen(R.xml.notification_pref_screen)
             setWindowSubtitle(res!!.getString(R.string.notification_settings))
-        } else if (prefScreen == SettingsFragment.KEY_CURRENT_HACK_SETTINGS) {
-            frag!!.setScreen(R.xml.current_hack_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.current_hack_settings))
+        } else if (prefScreen == SettingsFragment.KEY_CURRENT_STATE_SETTINGS) {
+            frag!!.setScreen(R.xml.current_state_pref_screen)
+            setWindowSubtitle(res!!.getString(R.string.tab_current_info))
         } else if (prefScreen == SettingsFragment.KEY_OTHER_SETTINGS) {
             frag!!.setScreen(R.xml.other_pref_screen)
             setWindowSubtitle(res!!.getString(R.string.other_settings))

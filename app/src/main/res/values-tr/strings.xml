@@ -230,15 +230,13 @@
   <string name="status_bar_chip_settings" formatted="false">Durum Çubuğu Çipi</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Live Updates çip içeriğini ayarla</string>
   <string name="status_bar_chip_settings_help" formatted="false">Android 16+ ve Live Updates ile durum çubuğu çipinde ne gösterileceğini ayarlayabilirsiniz.</string>
-  <string name="current_hack_settings" formatted="false">Akım (mA) Hilesi</string>
-  <string name="current_hack_settings_summary" formatted="false">mA bilgisini etkinleştirmek için gelişmiş ayarlar</string>
-  <string name="current_hack_settings_help" formatted="false">Android, uygulamalara pil akımı bilgisine resmi erişim sunmaz; ancak bazı cihazlarda çalışan bir hile vardır.</string>
-
+  <string name="current_state_settings_summary" formatted="false">Güncel Bilgi ekranı ayarları</string>
+  <string name="current_state_settings_help" formatted="false">Güncel Bilgi ekranında gösterilen bilgileri yapılandırın. Pil akımı seçenekleri, diğer pil ayrıntılarıyla birlikte gösterilen canlı ölçümü kontrol eder.</string>
   <string name="alarm_settings_subtitle" formatted="false">Alarm Ayarları</string>
   <string name="alarm_settings" formatted="false">Alarmlar</string>
   <string name="alarm_settings_help" formatted="false">Pil seviyesi belirli bir duruma geldiğinde Battery Monitor sizi bilgilendirebilir.</string>
-  <string name="other_settings" formatted="false">Diğer Ayarlar</string>
-  <string name="other_settings_help" formatted="false">Günlükleme, kilit ekranı, sıcaklık birimi, otomatik başlatma ve daha fazlası bu sayfadadır.</string>
+  <string name="other_settings" formatted="false">Genel</string>
+  <string name="other_settings_help" formatted="false">Günlük kaydı, sıcaklık birimi, otomatik başlatma ve daha fazlasını içeren genel uygulama ayarları bu sayfadadır.</string>
 
   <string name="live_updates_onboarding_title">Durum Çubuğu Pil Çipi</string>
   <string name="live_updates_onboarding_message_on">Cihazınız, pil yüzdesini durum çubuğunda bir çip olarak göstermeyi destekler. Bu seçenek varsayılan olarak etkindir.\n
@@ -305,42 +303,33 @@
   <string name="pref_show_icon_unit" formatted="false">Birim sembolünü göster</string>
   <string name="pref_show_icon_unit_help" formatted="false">Etkinse simge, pil yüzdesi için yüzde işareti ve pil sıcaklığı için derece simgesi gösterir. Yalnızca sayıyı göstermek için bunu kapatın.</string>
 
-  <string name="pref_cat_current_hack_main" formatted="false">Ana Kontrol</string>
-  <string name="pref_cat_current_hack_unsupported" formatted="false">Akım (mA) Hilesi Desteklenmiyor</string>
+  <string name="pref_cat_battery_current_main" formatted="false">Pil akımı</string>
+  <string name="pref_enable_battery_current" formatted="false">Pil akımını etkinleştir</string>
+  <string name="pref_enable_battery_current_summary" formatted="false">Pil akımı ana pencerede gösterilsin mi?</string>
+  <string name="pref_enable_battery_current_help" formatted="false">Etkinleştirildiğinde pil akımı ana pencerede gösterilir ve ilgili seçenekler kullanılabilir olur.</string>
 
-  <string name="pref_current_hack_unsupported" formatted="false">Üzgünüz, akım (mA) hilesi bu cihazda desteklenmiyor.</string>
+  <string name="pref_use_privileged_battery_current" formatted="false">Gerekirse ayrıcalıklı erişimi kullan</string>
+  <string name="pref_use_privileged_battery_current_summary" formatted="false">Normal yöntemler akımı okuyamazsa ayrıcalıklı erişime yedek olarak izin verilsin mi?</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Etkinleştirildiğinde Battery Monitor yalnızca Android ve dosya sistemi yöntemleri bir değer sağlamazsa root veya Shizuku kullanabilir. Gerekli izin açılırken istenir.</string>
 
-  <string name="pref_enable_current_hack" formatted="false">Hileyi etkinleştir</string>
-  <string name="pref_enable_current_hack_summary" formatted="false">Akım (mA) hilesini etkinleştirmeyi dene?</string>
-  <string name="pref_enable_current_hack_help" formatted="false">Bu ayar etkinleştirildiğinde hile ile ilgili diğer seçenekler kullanılabilir olur.</string>
+  <string name="pref_battery_current_multiplier" formatted="false">Çarpan</string>
+  <string name="pref_battery_current_multiplier_help" formatted="false">Bazı cihazlar akımı beklenmeyen birimlerde veya işaretle bildirir. Görüntülenen sonucu düzeltmek için bildirilen değeri burada çarpın.\n
+    \n
+    Telefonlar için kabaca referans olarak Android’in standart işareti şarj sırasında pozitif, deşarj sırasında negatiftir. Aktif şarj genellikle +500 ile +5000 mA, normal deşarj ise -100 ile -3000 mA civarındadır. Pil neredeyse doluyken veya telefon boştayken sıfıra yakın değerler normal olabilir. Değer yaklaşık 1000 kat küçük ya da büyük görünüyorsa veya işaret tersse çarpanı ayarlayın.</string>
 
-  <string name="pref_current_hack_prefer_fs" formatted="false">Eski hile yöntemini tercih et</string>
-  <string name="pref_current_hack_prefer_fs_summary" formatted="false">Dosya sistemine dayalı eski yöntemi tercih et?</string>
-  <string name="pref_current_hack_prefer_fs_help" formatted="false">Android 5.0 sonrası daha az hileli bir yöntem olsa da her cihazda güvenilir değildir.</string>
+  <string name="pref_prefer_average_battery_current" formatted="false">Ortalama akımı tercih et</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Kullanılabiliyorsa son ortalamayı kullan?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Bazı sistemler anlık akıma ek olarak yakın tarihli bir ortalama sağlar. Ortalama süresi ve kalitesi cihaza göre değişir. Ortalama yoksa veya kullanışsızsa bu seçeneği kapatın.</string>
 
-  <string name="pref_current_hack_multiplier" formatted="false">Çarpan</string>
-  <string name="pref_current_hack_multiplier_help" formatted="false">Bazı cihazlar akım değerini farklı birimde ya da ters işaretle raporlar; bu çarpanla düzeltilebilir.</string>
+  <string name="pref_battery_current_refresh_interval" formatted="false">Otomatik yenileme aralığı</string>
+  <string name="pref_battery_current_refresh_interval_help" formatted="false">Ana pencere görünürken pil akımının ne sıklıkla yenileneceğini seçin.</string>
+  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Saniye cinsinden bir aralık girin (1–3600).</string>
+  <string name="pref_battery_current_refresh_interval_error" formatted="false">1 ile 3600 arasında bir değer girin.</string>
+  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d saniye</string>
 
-  <string name="pref_cat_current_hack_notification" formatted="false">Bildirim</string>
-  <string name="pref_display_current_in_vital_stats" formatted="false">Hayati göstergelerde göster</string>
-  <string name="pref_display_current_in_vital_stats_summary" formatted="false">Ana bildirim hayati göstergelerinde akım (mA) gösterilsin mi?</string>
-  <string name="pref_display_current_in_vital_stats_help" formatted="false">Etkinleştirildiğinde hile denenir ve sonuç ana bildirimde gösterilir.</string>
-
-  <string name="pref_cat_current_hack_main_window" formatted="false">Ana Pencere</string>
-  <string name="pref_display_current_in_main_window" formatted="false">Ana pencerede göster</string>
-  <string name="pref_display_current_in_main_window_summary" formatted="false">Akım (mA) ana pencerede gösterilsin mi?</string>
-  <string name="pref_display_current_in_main_window_help" formatted="false">Etkinleştirildiğinde hile denenir ve sonuç ana pencerede gösterilir.</string>
-
-  <string name="pref_prefer_current_avg_in_vital_stats" formatted="false">Hayati göstergelerde ortalamayı tercih et</string>
-  <string name="pref_prefer_current_avg_in_vital_stats_summary" formatted="false">Ana bildirimin hayati göstergelerinde current_avg kullanılsın mı?</string>
-  <string name="pref_prefer_current_avg_in_main_window" formatted="false">Ana pencerede ortalamayı tercih et</string>
-  <string name="pref_prefer_current_avg_in_main_window_summary" formatted="false">Ana pencerede current_avg kullanılsın mı?</string>
-
-  <string name="pref_prefer_current_avg_help" formatted="false">Bazı sistemler anlık değer yerine yakın geçmiş ortalamasını verebilir.</string>
-
-  <string name="pref_auto_refresh_current_in_main_window" formatted="false">Ana pencerede mA otomatik yenile</string>
-  <string name="pref_auto_refresh_current_in_main_window_summary" formatted="false">mA her iki saniyede bir otomatik yenilensin mi?</string>
-  <string name="pref_auto_refresh_current_in_main_window_help" formatted="false">Etkinse ana penceredeki mA değeri iki saniyede bir yenilenir.</string>
+  <string name="pref_display_current_in_notification" formatted="false">Pil akımını göster</string>
+  <string name="pref_display_current_in_notification_summary" formatted="false">Pil akımı ana bildirimin önemli istatistikler satırında gösterilsin mi?</string>
+  <string name="pref_display_current_in_notification_help" formatted="false">Etkinleştirildiğinde pil akımı ana bildirimin önemli istatistikler satırında gösterilir. En az bir bildirim satırı önemli istatistikleri gösterecek şekilde ayarlanmalıdır.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Şarj oluyor Göstergesi</string>
   <string name="pref_indicate_charging" formatted="false">Şarjı Göster</string>
