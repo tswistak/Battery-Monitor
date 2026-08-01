@@ -29,7 +29,8 @@ class SettingsMigrationManagerTest {
             mapOf(
                 SettingsContract.LEGACY_KEY_ENABLE_CURRENT to true,
                 SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER to "1000",
-                SettingsContract.LEGACY_KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW to true
+                SettingsContract.LEGACY_KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW to true,
+                SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING to true
             )
         )
 
@@ -40,6 +41,11 @@ class SettingsMigrationManagerTest {
         assertEquals(true, preferences.values[SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT])
         assertEquals(false, preferences.values[SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT])
         assertEquals("2", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL])
+        assertFalse(
+            preferences.values.containsKey(
+                SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING
+            )
+        )
         assertFalse(preferences.values.containsKey(SettingsContract.LEGACY_KEY_ENABLE_CURRENT))
         assertFalse(
             preferences.values.containsKey(
@@ -49,6 +55,24 @@ class SettingsMigrationManagerTest {
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
         assertEquals(1, preferences.commitCount)
+    }
+
+    @Test
+    fun `existing current multiplier cancels pending automatic detection`() {
+        val preferences = FakeSharedPreferences(
+            mapOf(
+                SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER to "-10",
+                SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING to true
+            )
+        )
+
+        assertTrue(SettingsMigrationManager.migrate(preferences.instance))
+        assertEquals("-10", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER])
+        assertFalse(
+            preferences.values.containsKey(
+                SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING
+            )
+        )
     }
 
     @Test

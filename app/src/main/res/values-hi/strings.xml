@@ -317,6 +317,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">सक्षम होने पर Battery Monitor केवल तभी root या Shizuku उपयोग कर सकता है जब Android और फ़ाइल सिस्टम से रीडिंग न मिले। विकल्प चालू करते समय आवश्यक अनुमति माँगी जाती है।</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">गुणक</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">अपने आप पता लगाएँ</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">बैटरी की मौजूदा स्थिति या रीडिंग के लिए अपने आप पता लगाना उपलब्ध नहीं है।</string>
+  <string name="pref_battery_current_multiplier_detection_result">गुणक अपने आप %1$d पर सेट किया गया।</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">कुछ डिवाइस अनपेक्षित इकाइयों या चिह्नों में करंट की रिपोर्ट करते हैं। दिखाए गए परिणाम को सही करने के लिए रिपोर्ट किए गए मान को यहाँ गुणा करें।\n
     \n
     फ़ोन के लिए एक मोटे संदर्भ के रूप में, Android का मानक चिह्न चार्जिंग के समय धनात्मक और डिस्चार्जिंग के समय ऋणात्मक होता है। सक्रिय चार्जिंग अक्सर लगभग +500 से +5000 mA होती है, जबकि सामान्य डिस्चार्ज लगभग -100 से -3000 mA होता है। बैटरी लगभग पूरी होने या फ़ोन के निष्क्रिय होने पर शून्य के पास के मान सामान्य हो सकते हैं। यदि परिमाण लगभग 1000 गुना छोटा या बड़ा दिखता है, या चिह्न उलटा है, तो गुणक समायोजित करें।</string>

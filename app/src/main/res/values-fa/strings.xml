@@ -317,6 +317,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">با فعال‌کردن، Battery Monitor فقط هنگامی از root یا Shizuku استفاده می‌کند که روش‌های Android و سیستم فایل مقداری ارائه نکنند. مجوز لازم هنگام فعال‌سازی درخواست می‌شود.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">ضرب کننده</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">تشخیص خودکار</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">تشخیص خودکار برای وضعیت یا خوانش فعلی باتری در دسترس نیست.</string>
+  <string name="pref_battery_current_multiplier_detection_result">ضریب به‌طور خودکار روی %1$d تنظیم شد.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">برخی دستگاه‌ها واحدها یا علامت‌های غیرمنتظره گزارش می‌کنند. برای اصلاح نتیجه نمایش‌داده‌شده، مقدار گزارش‌شده را در اینجا ضرب کنید.\n
     \n
     به‌عنوان یک مرجع تقریبی برای تلفن‌ها، علامت استاندارد Android هنگام شارژ مثبت و هنگام تخلیه منفی است. شارژ فعال معمولاً حدود +500 تا +5000 mA و تخلیه عادی حدود -100 تا -3000 mA است. وقتی باتری تقریباً پر است یا تلفن بیکار است، مقادیر نزدیک صفر می‌توانند طبیعی باشند. اگر اندازه مقدار حدود 1000 برابر کوچک‌تر یا بزرگ‌تر به نظر می‌رسد، یا علامت برعکس است، ضریب را تنظیم کنید.</string>

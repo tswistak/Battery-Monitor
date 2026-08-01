@@ -313,6 +313,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">有効にすると、Android とファイルシステムの方法で値を取得できない場合に限り、Battery Monitor が root または Shizuku を使用します。必要な権限は有効化時に要求されます。</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">倍率</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">自動検出</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">現在のバッテリー状態または測定値では自動検出を利用できません。</string>
+  <string name="pref_battery_current_multiplier_detection_result">倍率を自動的に %1$d に設定しました。</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">一部の端末では、予期しない単位や符号で電流が報告されます。表示結果を補正するには、報告値にここで指定した倍率を掛けます。\n
     \n
     スマートフォンのおおよその目安として、Android の標準では充電中が正、放電中が負です。充電中は +500～+5000 mA、通常の放電中は -100～-3000 mA 程度になることがよくあります。満充電に近い場合や端末がアイドル状態の場合は、ゼロに近い値でも正常です。値が約 1000 倍小さい、または大きい場合や、符号が逆の場合は倍率を調整してください。</string>

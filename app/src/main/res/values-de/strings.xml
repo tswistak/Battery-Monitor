@@ -315,6 +315,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">Wenn aktiviert, darf Battery Monitor Root oder Shizuku nur verwenden, wenn Android- und Dateisystemmethoden keinen Messwert liefern. Die erforderliche Berechtigung wird beim Aktivieren angefordert.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Multiplikator</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Automatisch erkennen</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Die automatische Erkennung ist für den aktuellen Akkustatus oder Messwert nicht verfügbar.</string>
+  <string name="pref_battery_current_multiplier_detection_result">Der Multiplikator wurde automatisch auf %1$d gesetzt.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Einige Geräte melden unerwartete Einheiten oder Vorzeichen. Multipliziere den gemeldeten Wert hier, um die Anzeige zu korrigieren.\n
     \n
     Als grober Richtwert für Smartphones gilt nach Android-Konvention: positiv beim Laden und negativ beim Entladen. Aktives Laden liegt oft bei etwa +500 bis +5000 mA, normales Entladen bei etwa -100 bis -3000 mA. Werte nahe null können bei fast vollem Akku oder im Leerlauf normal sein. Ist der Betrag ungefähr 1000-mal zu klein oder zu groß oder ist das Vorzeichen vertauscht, passe den Multiplikator an.</string>

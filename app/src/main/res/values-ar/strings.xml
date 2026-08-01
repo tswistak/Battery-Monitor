@@ -355,6 +355,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">عند التفعيل، قد يستخدم Battery Monitor صلاحيات root أو Shizuku فقط إذا لم توفر طرق Android ونظام الملفات قراءة. تُطلب الصلاحية اللازمة عند تفعيل هذا الخيار.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">المُضاعِف</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">اكتشاف تلقائي</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">لا يتوفر الاكتشاف التلقائي لحالة البطارية أو القراءة الحالية.</string>
+  <string name="pref_battery_current_multiplier_detection_result">تم ضبط المُضاعِف تلقائيًا على %1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">تبلغ بعض الأجهزة عن وحدات أو إشارات غير متوقعة. اضرب القيمة المُبلّغ عنها هنا لتصحيح النتيجة المعروضة.\n
     \n
     كمرجع تقريبي للهواتف، تكون إشارة Android القياسية موجبة أثناء الشحن وسالبة أثناء التفريغ. يكون الشحن النشط غالبًا بين +500 و+5000 mA، بينما يكون التفريغ العادي غالبًا بين -100 و-3000 mA. قد تكون القيم القريبة من الصفر طبيعية عندما تكون البطارية شبه ممتلئة أو الهاتف في وضع الخمول. إذا بدت القيمة أصغر أو أكبر بنحو 1000 مرة، أو كانت الإشارة معكوسة، فاضبط المُضاعِف.</string>

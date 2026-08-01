@@ -77,9 +77,14 @@ internal object Version1SettingsImporter : SettingsImporter {
 
                 SettingsContract.LEGACY_KEY_PREFER_FILE_SYSTEM -> Unit
 
-                SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER -> editor.putString(
-                    SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, value as String
-                )
+                SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER -> {
+                    editor.putString(
+                        SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, value as String
+                    )
+                    editor.remove(
+                        SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING
+                    )
+                }
 
                 SettingsContract.LEGACY_KEY_DISPLAY_CURRENT_IN_VITAL_STATS -> displayCurrentInNotification =
                     value as Boolean

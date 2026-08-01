@@ -317,6 +317,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">Na inschakelen mag Battery Monitor root of Shizuku alleen gebruiken als Android en het bestandssysteem geen meting leveren. De vereiste toestemming wordt bij het inschakelen gevraagd.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Vermenigvuldiger</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Automatisch detecteren</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatische detectie is niet beschikbaar voor de huidige batterijstatus of meting.</string>
+  <string name="pref_battery_current_multiplier_detection_result">De vermenigvuldiger is automatisch ingesteld op %1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Sommige apparaten rapporteren onverwachte eenheden of tekens. Vermenigvuldig de gerapporteerde waarde hier om het weergegeven resultaat te corrigeren.\n
     \n
     Als globale richtlijn voor een telefoon gebruikt Android een positieve waarde tijdens opladen en een negatieve waarde tijdens ontladen. Actief opladen ligt vaak rond +500 tot +5000 mA, terwijl normaal ontladen vaak rond -100 tot -3000 mA ligt. Waarden rond nul kunnen normaal zijn wanneer de batterij bijna vol is of de telefoon niet actief is. Als de grootte ongeveer 1000 keer te klein of te groot lijkt, of het teken is omgekeerd, pas dan de vermenigvuldiger aan.</string>

@@ -313,6 +313,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">Etkinleştirildiğinde Battery Monitor yalnızca Android ve dosya sistemi yöntemleri bir değer sağlamazsa root veya Shizuku kullanabilir. Gerekli izin açılırken istenir.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Çarpan</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Otomatik algıla</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Otomatik algılama mevcut pil durumu veya okuması için kullanılamıyor.</string>
+  <string name="pref_battery_current_multiplier_detection_result">Çarpan otomatik olarak %1$d değerine ayarlandı.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Bazı cihazlar akımı beklenmeyen birimlerde veya işaretle bildirir. Görüntülenen sonucu düzeltmek için bildirilen değeri burada çarpın.\n
     \n
     Telefonlar için kabaca referans olarak Android’in standart işareti şarj sırasında pozitif, deşarj sırasında negatiftir. Aktif şarj genellikle +500 ile +5000 mA, normal deşarj ise -100 ile -3000 mA civarındadır. Pil neredeyse doluyken veya telefon boştayken sıfıra yakın değerler normal olabilir. Değer yaklaşık 1000 kat küçük ya da büyük görünüyorsa veya işaret tersse çarpanı ayarlayın.</string>

@@ -335,6 +335,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">Je-li povoleno, Battery Monitor může použít root nebo Shizuku pouze tehdy, když Android ani souborový systém neposkytnou údaj. Potřebné oprávnění se vyžádá při zapnutí.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Násobitel</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Zjistit automaticky</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatické zjištění není pro aktuální stav baterie nebo naměřenou hodnotu k dispozici.</string>
+  <string name="pref_battery_current_multiplier_detection_result">Násobitel byl automaticky nastaven na %1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Některá zařízení hlásí neočekávané jednotky nebo znaménko. Zde můžete hlášenou hodnotu vynásobit a opravit tak zobrazený výsledek.\n
     \n
     Pro hrubou orientaci u telefonů používá Android kladné znaménko při nabíjení a záporné při vybíjení. Aktivní nabíjení bývá přibližně +500 až +5000 mA, běžné vybíjení přibližně -100 až -3000 mA. Hodnoty blízko nule mohou být normální, když je baterie téměř plná nebo telefon nečinný. Pokud je hodnota asi 1000krát příliš malá či velká nebo má opačné znaménko, upravte násobitel.</string>

@@ -315,6 +315,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">Όταν ενεργοποιηθεί, το Battery Monitor μπορεί να χρησιμοποιήσει root ή Shizuku μόνο αν οι μέθοδοι Android και συστήματος αρχείων δεν δώσουν μέτρηση. Η απαιτούμενη άδεια ζητείται κατά την ενεργοποίηση.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Πολλαπλασιαστής</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Αυτόματος εντοπισμός</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Ο αυτόματος εντοπισμός δεν είναι διαθέσιμος για την τρέχουσα κατάσταση ή ένδειξη της μπαταρίας.</string>
+  <string name="pref_battery_current_multiplier_detection_result">Ο πολλαπλασιαστής ορίστηκε αυτόματα σε %1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Ορισμένες συσκευές αναφέρουν μη αναμενόμενες μονάδες ή πρόσημα. Πολλαπλασιάστε εδώ την αναφερόμενη τιμή για να διορθώσετε το εμφανιζόμενο αποτέλεσμα.\n
     \n
     Ως ενδεικτική αναφορά για τηλέφωνα, το Android χρησιμοποιεί θετικό πρόσημο κατά τη φόρτιση και αρνητικό κατά την εκφόρτιση. Η ενεργή φόρτιση είναι συχνά περίπου +500 έως +5000 mA, ενώ η συνηθισμένη εκφόρτιση περίπου -100 έως -3000 mA. Τιμές κοντά στο μηδέν μπορεί να είναι φυσιολογικές όταν η μπαταρία είναι σχεδόν γεμάτη ή το τηλέφωνο αδρανές. Αν το μέγεθος φαίνεται περίπου 1000 φορές μικρότερο ή μεγαλύτερο, ή το πρόσημο είναι αντίστροφο, προσαρμόστε τον πολλαπλασιαστή.</string>

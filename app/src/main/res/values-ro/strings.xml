@@ -323,6 +323,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">Când este activat, Battery Monitor poate folosi root sau Shizuku numai dacă metodele Android și ale sistemului de fișiere nu oferă o valoare. Permisiunea necesară este solicitată la activare.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Multiplicator</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detectează automat</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Detectarea automată nu este disponibilă pentru starea sau citirea curentă a bateriei.</string>
+  <string name="pref_battery_current_multiplier_detection_result">Multiplicatorul a fost setat automat la %1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Unele dispozitive raportează unități sau semne neașteptate. Înmulțește aici valoarea raportată pentru a corecta rezultatul afișat.\n
     \n
     Ca reper aproximativ pentru telefoane, semnul standard Android este pozitiv în timpul încărcării și negativ în timpul descărcării. Încărcarea activă este adesea între +500 și +5000 mA, iar descărcarea obișnuită între -100 și -3000 mA. Valorile apropiate de zero pot fi normale când bateria este aproape plină sau telefonul este inactiv. Dacă valoarea pare de aproximativ 1000 de ori prea mică ori prea mare sau semnul este inversat, ajustează multiplicatorul.</string>

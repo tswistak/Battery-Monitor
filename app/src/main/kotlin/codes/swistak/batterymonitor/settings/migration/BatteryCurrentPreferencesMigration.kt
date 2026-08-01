@@ -30,12 +30,18 @@ internal object BatteryCurrentPreferencesMigration : SettingsMigration {
             !preferences.contains(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER) && preferences.contains(
                 SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER
             )
-        val needsPrivileged = !preferences.contains(SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT)
+        val hasConfiguredMultiplier =
+            preferences.contains(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER) || preferences.contains(
+                SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER
+            )
+        val needsPrivileged =
+            !preferences.contains(SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT)
         val needsNotification =
             !preferences.contains(SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION) && preferences.contains(
                 SettingsContract.LEGACY_KEY_DISPLAY_CURRENT_IN_VITAL_STATS
             )
-        val needsAverage = !preferences.contains(SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT)
+        val needsAverage =
+            !preferences.contains(SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT)
         val needsRefreshInterval =
             !preferences.contains(SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL)
 
@@ -59,6 +65,9 @@ internal object BatteryCurrentPreferencesMigration : SettingsMigration {
                         SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER, "1"
                     )
                 )
+            }
+            if (hasConfiguredMultiplier) {
+                remove(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING)
             }
             if (needsNotification) {
                 putBoolean(

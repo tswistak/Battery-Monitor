@@ -303,6 +303,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">启用后，只有当 Android 和文件系统方法无法提供读数时，Battery Monitor 才会使用 root 或 Shizuku。启用此选项时会请求所需权限。</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">乘数</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">自动检测</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">当前电池状态或读数无法使用自动检测。</string>
+  <string name="pref_battery_current_multiplier_detection_result">乘数已自动设置为 %1$d。</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">某些设备会报告意外的单位或符号。请在此处乘以报告值以修正显示结果。\n
     \n
     作为手机的粗略参考，Android 的标准符号是充电时为正、放电时为负。主动充电通常约为 +500 至 +5000 mA，普通放电通常约为 -100 至 -3000 mA。电池接近充满或手机空闲时，接近零的值可能是正常的。如果数值看起来约小了或大了 1000 倍，或者符号相反，请调整乘数。</string>

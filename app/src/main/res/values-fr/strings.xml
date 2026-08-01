@@ -319,6 +319,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">Lorsque cette option est activée, Battery Monitor peut utiliser root ou Shizuku uniquement si Android et le système de fichiers ne fournissent aucune mesure. L’autorisation nécessaire est demandée à l’activation.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Multiplicateur</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Détecter automatiquement</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">La détection automatique n’est pas disponible pour l’état ou la mesure actuelle de la batterie.</string>
+  <string name="pref_battery_current_multiplier_detection_result">Le multiplicateur a été automatiquement défini sur %1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Certains appareils signalent des unités ou des signes inattendus. Multipliez ici la valeur signalée pour corriger le résultat affiché.\n
     \n
     À titre indicatif pour un téléphone, la convention Android utilise un signe positif pendant la charge et négatif pendant la décharge. Une charge active se situe souvent entre +500 et +5000 mA, et une décharge ordinaire entre -100 et -3000 mA. Des valeurs proches de zéro peuvent être normales lorsque la batterie est presque pleine ou que le téléphone est inactif. Si la valeur semble environ 1000 fois trop petite ou trop grande, ou si le signe est inversé, ajustez le multiplicateur.</string>

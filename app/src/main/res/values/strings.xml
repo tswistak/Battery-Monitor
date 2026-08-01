@@ -315,6 +315,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">When enabled, Battery Monitor may use root or Shizuku only if Android and file-system methods cannot provide a reading. Any required permission is requested when you enable this option.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Multiplier</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detect automatically</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatic detection is unavailable for the current battery state or reading.</string>
+  <string name="pref_battery_current_multiplier_detection_result">Multiplier automatically set to %1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Some devices report unexpected units or signs. Multiply the reported value here to correct the displayed result.\n
     \n
     As a rough phone reference, Android’s standard sign is positive while charging and negative while discharging. Active charging is often around +500 to +5000 mA, while ordinary discharge is often around -100 to -3000 mA. Values near zero can be normal when the battery is nearly full or the phone is idle. If the magnitude looks about 1000 times too small or too large, or the sign is reversed, adjust the multiplier.</string>

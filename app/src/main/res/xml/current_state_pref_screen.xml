@@ -19,8 +19,8 @@
 
         <ListPreference
             android:defaultValue="1"
-            android:entries="@array/battery_current_multiplier_entries_values"
-            android:entryValues="@array/battery_current_multiplier_entries_values"
+            android:entries="@array/battery_current_multiplier_entries"
+            android:entryValues="@array/battery_current_multiplier_values"
             android:key="battery_current_multiplier"
             android:title="@string/pref_battery_current_multiplier"
             app:singleLineTitle="false" />

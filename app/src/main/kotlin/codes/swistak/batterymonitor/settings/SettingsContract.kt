@@ -67,6 +67,9 @@ internal object SettingsContract {
     const val KEY_ENABLE_BATTERY_CURRENT: String = "enable_battery_current"
     const val KEY_USE_PRIVILEGED_BATTERY_CURRENT: String = "use_privileged_battery_current"
     const val KEY_BATTERY_CURRENT_MULTIPLIER: String = "battery_current_multiplier"
+    const val KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING: String =
+        "battery_current_multiplier_detection_pending"
+
     const val KEY_BATTERY_CURRENT_REFRESH_INTERVAL: String = "battery_current_refresh_interval"
     const val KEY_DISPLAY_CURRENT_IN_NOTIFICATION: String = "display_current_in_notification"
     const val KEY_PREFER_AVERAGE_BATTERY_CURRENT: String = "prefer_average_battery_current"

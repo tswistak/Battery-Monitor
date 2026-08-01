@@ -335,6 +335,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">Įjungus Battery Monitor gali naudoti root arba Shizuku tik tada, kai Android ir failų sistemos metodai nepateikia rodmens. Reikalingo leidimo prašoma įjungiant.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Daugiklis</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Aptikti automatiškai</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatinis aptikimas negalimas esant dabartinei akumuliatoriaus būsenai arba rodmeniui.</string>
+  <string name="pref_battery_current_multiplier_detection_result">Daugiklis automatiškai nustatytas į %1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Kai kurie įrenginiai srovę pateikia netikėtais vienetais arba su netikėtu ženklu. Čia padauginkite pateiktą reikšmę, kad pataisytumėte rodomą rezultatą.\n
     \n
     Apytiksliai vertinant telefoną, pagal Android standartą kraunant ženklas yra teigiamas, o iškraunant – neigiamas. Aktyvus įkrovimas dažnai būna apie +500–+5000 mA, o įprastas iškrovimas – apie -100–-3000 mA. Reikšmės arti nulio gali būti normalios, kai baterija beveik pilna arba telefonas nenaudojamas. Jei reikšmė atrodo maždaug 1000 kartų per maža ar per didelė arba ženklas apverstas, pakoreguokite daugiklį.</string>

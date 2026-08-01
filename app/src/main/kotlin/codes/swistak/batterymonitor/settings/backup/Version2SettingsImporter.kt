@@ -41,5 +41,8 @@ internal object Version2SettingsImporter : SettingsImporter {
         editor: SharedPreferences.Editor, settings: Map<String, Any>
     ) {
         for ((key, value) in settings) editor.putSetting(key, value)
+        if (settings.containsKey(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER)) {
+            editor.remove(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING)
+        }
     }
 }

@@ -319,6 +319,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">Engedélyezéskor a Battery Monitor csak akkor használ rootot vagy Shizukut, ha az Android és a fájlrendszer nem ad mérési adatot. A szükséges engedélyt a bekapcsoláskor kéri.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Szorzó</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Automatikus felismerés</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Az automatikus felismerés nem érhető el az akkumulátor jelenlegi állapotához vagy mérési értékéhez.</string>
+  <string name="pref_battery_current_multiplier_detection_result">A szorzó automatikusan %1$d értékre lett állítva.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Egyes készülékek váratlan mértékegységben vagy előjellel jelentik az áramot. A kijelzett eredmény javításához itt szorozd meg a jelentett értéket.\n
     \n
     Telefonoknál durva támpontként az Android szabványos előjele töltéskor pozitív, merítéskor negatív. Az aktív töltés gyakran körülbelül +500 és +5000 mA, a szokásos merítés pedig -100 és -3000 mA közé esik. A nullához közeli érték normális lehet majdnem tele akkumulátornál vagy tétlen telefonnál. Ha a nagyságrend körülbelül 1000-szer túl kicsi vagy túl nagy, illetve az előjel fordított, módosítsd a szorzót.</string>

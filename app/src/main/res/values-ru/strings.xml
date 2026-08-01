@@ -337,6 +337,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">После включения Battery Monitor может использовать root или Shizuku только когда Android и файловая система не дают показаний. Необходимое разрешение запрашивается при включении.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Множитель</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Определить автоматически</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Автоматическое определение недоступно для текущего состояния батареи или показания.</string>
+  <string name="pref_battery_current_multiplier_detection_result">Множитель автоматически установлен на %1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Некоторые устройства сообщают ток в неожиданных единицах или с обратным знаком. Умножьте сообщаемое значение здесь, чтобы скорректировать отображаемый результат.\n
     \n
     Для приблизительной оценки на телефоне стандарт Android использует положительное значение при зарядке и отрицательное при разрядке. Активная зарядка часто составляет примерно от +500 до +5000 mA, а обычная разрядка — от -100 до -3000 mA. Значения около нуля могут быть нормальными, когда батарея почти заряжена или телефон бездействует. Если значение выглядит примерно в 1000 раз меньше или больше либо знак обратный, настройте множитель.</string>

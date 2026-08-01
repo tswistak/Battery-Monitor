@@ -323,6 +323,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">כאשר האפשרות מופעלת, Battery Monitor עשוי להשתמש ב-root או ב-Shizuku רק אם שיטות Android ומערכת הקבצים אינן מספקות קריאה. ההרשאה הנדרשת מתבקשת בעת ההפעלה.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">מַכפִּיל</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">זיהוי אוטומטי</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">זיהוי אוטומטי אינו זמין עבור מצב הסוללה או הקריאה הנוכחיים.</string>
+  <string name="pref_battery_current_multiplier_detection_result">המכפיל הוגדר אוטומטית ל־%1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">מכשירים מסוימים מדווחים על יחידות או סימנים בלתי צפויים. הכפל כאן את הערך המדווח כדי לתקן את התוצאה המוצגת.\n
     \n
     כנקודת ייחוס כללית לטלפונים, הסימן התקני של Android הוא חיובי בזמן טעינה ושלילי בזמן פריקה. טעינה פעילה היא לרוב בערך +500 עד +5000 mA, ופריקה רגילה היא לרוב בערך -100 עד -3000 mA. ערכים קרובים לאפס יכולים להיות תקינים כשהסוללה כמעט מלאה או כשהטלפון אינו פעיל. אם הגודל נראה קטן או גדול בערך פי 1000, או שהסימן הפוך, יש לכוונן את המכפיל.</string>

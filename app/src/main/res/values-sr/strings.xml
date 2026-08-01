@@ -327,6 +327,9 @@
   <string name="pref_use_privileged_battery_current_help" formatted="false">Kada je omogućeno, Battery Monitor može da koristi root ili Shizuku samo ako Android i sistem datoteka ne daju očitavanje. Potrebna dozvola se traži pri uključivanju.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Množilac</string>
+  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Otkrij automatski</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatsko otkrivanje nije dostupno za trenutno stanje baterije ili očitavanje.</string>
+  <string name="pref_battery_current_multiplier_detection_result">Množilac je automatski podešen na %1$d.</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Neki uređaji prijavljuju neočekivane jedinice ili predznake. Ovde pomnožite prijavljenu vrednost da biste ispravili prikazani rezultat.\n
     \n
     Kao okvirna referenca za telefone, standardni Android predznak je pozitivan tokom punjenja i negativan tokom pražnjenja. Aktivno punjenje je često oko +500 do +5000 mA, dok je uobičajeno pražnjenje oko -100 do -3000 mA. Vrednosti blizu nule mogu biti normalne kada je baterija skoro puna ili telefon miruje. Ako vrednost izgleda oko 1000 puta premala ili prevelika, ili je predznak obrnut, podesite množilac.</string>
