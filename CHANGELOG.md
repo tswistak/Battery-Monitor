@@ -1,10 +1,14 @@
 # CHANGELOG
 
-## Unreleased
+## 1.4.0
+
+### New
+
+- Modernized and simplified battery current measurement (#52).
+- Battery current multiplier auto detector.
 
 ### Improved
 
-- Modernized and simplified battery current measurement (#52).
 - Reorganized settings.
 
 ### Fixed

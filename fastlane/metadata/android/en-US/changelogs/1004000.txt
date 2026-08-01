@@ -1,0 +1,13 @@
+New:
+
+- Modernized and simplified battery current measurement (#52).
+- Battery current multiplier auto detector.
+
+Improved:
+
+- Reorganized settings.
+
+Fixed:
+
+- Use localized decimal separator in notifications.
+- Wrong time formatting on Samsung phones (#87).
