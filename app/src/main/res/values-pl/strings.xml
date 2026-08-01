@@ -328,8 +328,8 @@
 
   <string name="pref_battery_current_multiplier" formatted="false">Mnożnik</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Wykryj automatycznie</string>
-  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatyczne wykrywanie nie jest dostępne dla bieżącego stanu baterii lub odczytu.</string>
-  <string name="pref_battery_current_multiplier_detection_result">Mnożnik został automatycznie ustawiony na %1$d.</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatyczne wykrywanie nie jest dostępne dla bieżącego stanu baterii lub odczytu</string>
+  <string name="pref_battery_current_multiplier_detection_result">Mnożnik został automatycznie ustawiony na %1$d</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Niektóre urządzenia zgłaszają nieoczekiwane jednostki lub znaki. Pomnóż tutaj zgłoszoną wartość, aby poprawić wyświetlany wynik.\n
     \n
     Orientacyjnie dla telefonu standardowy znak Androida jest dodatni podczas ładowania i ujemny podczas rozładowywania. Aktywne ładowanie często jest w przybliżeniu między +500 a +5000 mA, podczas gdy zwykłe rozładowywanie zwykle między -100 a -3000 mA. Wartości bliskie zeru mogą być normalne, gdy bateria jest prawie pełna lub telefon jest bezczynny. Jeśli rząd wielkości wygląda na około 1000 razy za mały lub za duży albo znak jest odwrócony, dostosuj mnożnik.</string>
