@@ -328,7 +328,7 @@
 
   <string name="pref_battery_current_multiplier" formatted="false">Mnożnik</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Wykryj automatycznie</string>
-  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatyczne wykrywanie nie jest dostępne dla bieżącego stanu baterii lub odczytu</string>
+  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatyczne wykrywanie jest niedostępne dla aktualnego stanu baterii lub odczytu</string>
   <string name="pref_battery_current_multiplier_detection_result">Mnożnik został automatycznie ustawiony na %1$d</string>
   <string name="pref_battery_current_multiplier_help" formatted="false">Niektóre urządzenia zgłaszają nieoczekiwane jednostki lub znaki. Pomnóż tutaj zgłoszoną wartość, aby poprawić wyświetlany wynik.\n
     \n
