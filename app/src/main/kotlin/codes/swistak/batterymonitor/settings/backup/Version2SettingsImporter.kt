@@ -13,27 +13,28 @@
 package codes.swistak.batterymonitor.settings.backup
 
 import android.content.SharedPreferences
-import codes.swistak.batterymonitor.SettingsKeys
+import codes.swistak.batterymonitor.settings.SettingsContract
+
 
 internal object Version2SettingsImporter : SettingsImporter {
     const val VERSION = 2
 
     override val schema: Map<String, Class<*>> = buildMap {
         putAll(Version1SettingsImporter.schema)
-        remove(SettingsKeys.LEGACY_KEY_ENABLE_CURRENT)
-        remove(SettingsKeys.LEGACY_KEY_PREFER_FILE_SYSTEM)
-        remove(SettingsKeys.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER)
-        remove(SettingsKeys.LEGACY_KEY_DISPLAY_CURRENT_IN_VITAL_STATS)
-        remove(SettingsKeys.LEGACY_KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS)
-        remove(SettingsKeys.LEGACY_KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW)
-        remove(SettingsKeys.LEGACY_KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW)
-        remove(SettingsKeys.LEGACY_KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW)
-        put(SettingsKeys.KEY_ENABLE_BATTERY_CURRENT, Boolean::class.java)
-        put(SettingsKeys.KEY_USE_PRIVILEGED_BATTERY_CURRENT, Boolean::class.java)
-        put(SettingsKeys.KEY_BATTERY_CURRENT_MULTIPLIER, String::class.java)
-        put(SettingsKeys.KEY_BATTERY_CURRENT_REFRESH_INTERVAL, String::class.java)
-        put(SettingsKeys.KEY_DISPLAY_CURRENT_IN_NOTIFICATION, Boolean::class.java)
-        put(SettingsKeys.KEY_PREFER_AVERAGE_BATTERY_CURRENT, Boolean::class.java)
+        remove(SettingsContract.LEGACY_KEY_ENABLE_CURRENT)
+        remove(SettingsContract.LEGACY_KEY_PREFER_FILE_SYSTEM)
+        remove(SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER)
+        remove(SettingsContract.LEGACY_KEY_DISPLAY_CURRENT_IN_VITAL_STATS)
+        remove(SettingsContract.LEGACY_KEY_PREFER_CURRENT_AVG_IN_VITAL_STATS)
+        remove(SettingsContract.LEGACY_KEY_DISPLAY_CURRENT_IN_MAIN_WINDOW)
+        remove(SettingsContract.LEGACY_KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW)
+        remove(SettingsContract.LEGACY_KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW)
+        put(SettingsContract.KEY_ENABLE_BATTERY_CURRENT, Boolean::class.java)
+        put(SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, Boolean::class.java)
+        put(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, String::class.java)
+        put(SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL, String::class.java)
+        put(SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION, Boolean::class.java)
+        put(SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, Boolean::class.java)
     }
 
     override fun restore(

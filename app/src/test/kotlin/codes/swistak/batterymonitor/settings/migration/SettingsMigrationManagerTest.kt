@@ -13,7 +13,7 @@
 package codes.swistak.batterymonitor.settings.migration
 
 import android.content.SharedPreferences
-import codes.swistak.batterymonitor.SettingsKeys
+import codes.swistak.batterymonitor.settings.SettingsContract
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -27,23 +27,23 @@ class SettingsMigrationManagerTest {
     fun `battery current migration is committed only once`() {
         val preferences = FakeSharedPreferences(
             mapOf(
-                SettingsKeys.LEGACY_KEY_ENABLE_CURRENT to true,
-                SettingsKeys.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER to "1000",
-                SettingsKeys.LEGACY_KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW to true
+                SettingsContract.LEGACY_KEY_ENABLE_CURRENT to true,
+                SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER to "1000",
+                SettingsContract.LEGACY_KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW to true
             )
         )
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
         assertEquals(1, preferences.commitCount)
-        assertEquals(true, preferences.values[SettingsKeys.KEY_ENABLE_BATTERY_CURRENT])
-        assertEquals("1000", preferences.values[SettingsKeys.KEY_BATTERY_CURRENT_MULTIPLIER])
-        assertEquals(true, preferences.values[SettingsKeys.KEY_PREFER_AVERAGE_BATTERY_CURRENT])
-        assertEquals(false, preferences.values[SettingsKeys.KEY_USE_PRIVILEGED_BATTERY_CURRENT])
-        assertEquals("2", preferences.values[SettingsKeys.KEY_BATTERY_CURRENT_REFRESH_INTERVAL])
-        assertFalse(preferences.values.containsKey(SettingsKeys.LEGACY_KEY_ENABLE_CURRENT))
+        assertEquals(true, preferences.values[SettingsContract.KEY_ENABLE_BATTERY_CURRENT])
+        assertEquals("1000", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER])
+        assertEquals(true, preferences.values[SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT])
+        assertEquals(false, preferences.values[SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT])
+        assertEquals("2", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL])
+        assertFalse(preferences.values.containsKey(SettingsContract.LEGACY_KEY_ENABLE_CURRENT))
         assertFalse(
             preferences.values.containsKey(
-                SettingsKeys.LEGACY_KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW
+                SettingsContract.LEGACY_KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW
             )
         )
 

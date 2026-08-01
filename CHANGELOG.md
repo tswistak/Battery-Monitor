@@ -7,6 +7,10 @@
 - Modernized and simplified battery current measurement (#52).
 - Reorganized settings.
 
+### Development
+
+- Refactored project structure.
+
 ## 1.3.2
 
 ### Development
