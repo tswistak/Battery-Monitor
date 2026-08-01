@@ -40,7 +40,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.ListFragment
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.app.PersistentFragment
-import codes.swistak.batterymonitor.common.Str
+import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.settings.SettingsContract
 import java.io.BufferedWriter
@@ -174,10 +174,10 @@ class LogViewFragment : ListFragment() {
 
     private fun migrateFiltersToSpMain() {
         pFrag!!.spMain.edit {
-            for (i in Str.logFilterPrefKeys.indices) {
+            for (i in DisplayStrings.logFilterPrefKeys.indices) {
                 putBoolean(
-                    Str.logFilterPrefKeys[i],
-                    pFrag!!.settings.getBoolean(Str.logFilterPrefKeys[i], true)
+                    DisplayStrings.logFilterPrefKeys[i],
+                    pFrag!!.settings.getBoolean(DisplayStrings.logFilterPrefKeys[i], true)
                 )
             }
             putBoolean("log_filters_migrated_to_sp_main", true)
@@ -227,12 +227,13 @@ class LogViewFragment : ListFragment() {
     }
 
     class ConfigureLogFilterDialogFragment : DialogFragment() {
-        val checkedItems: BooleanArray = BooleanArray(Str.logFilterPrefKeys.size)
+        val checkedItems: BooleanArray = BooleanArray(DisplayStrings.logFilterPrefKeys.size)
 
         @Suppress("DEPRECATION")
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             for (i in checkedItems.indices) {
-                checkedItems[i] = pFrag!!.spMain.getBoolean(Str.logFilterPrefKeys[i], true)
+                checkedItems[i] =
+                    pFrag!!.spMain.getBoolean(DisplayStrings.logFilterPrefKeys[i], true)
             }
 
             return AlertDialog.Builder(activity)
@@ -251,7 +252,7 @@ class LogViewFragment : ListFragment() {
     private fun setFilters(checked_items: BooleanArray) {
         pFrag!!.spMain.edit {
             for (i in checked_items.indices) {
-                putBoolean(Str.logFilterPrefKeys[i], checked_items[i])
+                putBoolean(DisplayStrings.logFilterPrefKeys[i], checked_items[i])
             }
         }
 
@@ -382,8 +383,8 @@ class LogViewFragment : ListFragment() {
     private fun setHeaderText() {
         val count = filteredCursor!!.count
 
-        if (count == 0) headerText!!.text = Str.logsEmpty
-        else headerText!!.text = Str.nLogItems(count)
+        if (count == 0) headerText!!.text = DisplayStrings.logsEmpty
+        else headerText!!.text = DisplayStrings.nLogItems(count)
     }
 
     fun batteryInfoUpdated() {
@@ -410,10 +411,11 @@ class LogViewFragment : ListFragment() {
         val state = Environment.getExternalStorageState()
 
         if (state != null && state == Environment.MEDIA_MOUNTED_READ_ONLY) {
-            Toast.makeText(activity, Str.readOnlyStorage, Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, DisplayStrings.readOnlyStorage, Toast.LENGTH_SHORT).show()
             return
         } else if (state == null || state != Environment.MEDIA_MOUNTED) {
-            Toast.makeText(activity, Str.inaccessibleWReason + state, Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, DisplayStrings.inaccessibleWReason + state, Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
@@ -432,13 +434,13 @@ class LogViewFragment : ListFragment() {
         val uri = resultData.data
 
         val csvFields = arrayOf<String?>(
-            Str.date,
-            Str.time,
-            Str.status,
-            Str.charge,
-            Str.temperature,
-            Str.temperatureF,
-            Str.voltage
+            DisplayStrings.date,
+            DisplayStrings.time,
+            DisplayStrings.status,
+            DisplayStrings.charge,
+            DisplayStrings.temperature,
+            DisplayStrings.temperatureF,
+            DisplayStrings.voltage
         )
 
         try {
@@ -483,11 +485,11 @@ class LogViewFragment : ListFragment() {
                         status_age = statusCodes[2]
 
                         s =
-                            if (status == LogDatabase.STATUS_BOOT_COMPLETED) Str.statusBootCompleted
-                            else if (status_age == LogDatabase.STATUS_OLD) Str.logStatusesOld[status]
-                            else Str.logStatuses[status]
+                            if (status == LogDatabase.STATUS_BOOT_COMPLETED) DisplayStrings.statusBootCompleted
+                            else if (status_age == LogDatabase.STATUS_OLD) DisplayStrings.logStatusesOld[status]
+                            else DisplayStrings.logStatuses[status]
 
-                        if (plugged > 0) s += " " + Str.pluggeds[plugged]
+                        if (plugged > 0) s += " " + DisplayStrings.pluggeds[plugged]
 
                         buf.write("$s,")
                     } else if (CSV_ORDER[i] == LogDatabase.KEY_CHARGE) {
@@ -509,11 +511,11 @@ class LogViewFragment : ListFragment() {
             fileWriter.close()
             pfd.close()
         } catch (e: Exception) {
-            Toast.makeText(activity, Str.inaccessibleStorage, Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, DisplayStrings.inaccessibleStorage, Toast.LENGTH_SHORT).show()
             return
         }
 
-        Toast.makeText(activity, Str.fileWritten, Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, DisplayStrings.fileWritten, Toast.LENGTH_SHORT).show()
     }
 
     // Based on http://stackoverflow.com/a/7343721/1427098
@@ -847,13 +849,13 @@ class LogViewFragment : ListFragment() {
 
             if (status == LogDatabase.STATUS_BOOT_COMPLETED) {
                 statusTv.setTextColor(col!!.boot)
-                s = Str.statusBootCompleted
+                s = DisplayStrings.statusBootCompleted
 
                 timeDiffTv.visibility = View.GONE
             } else if (statusAge == LogDatabase.STATUS_OLD) {
                 statusTv.setTextColor(col!!.oldStatus)
                 percentTv.setTextColor(col!!.oldStatus)
-                s = Str.logStatusesOld[status]
+                s = DisplayStrings.logStatusesOld[status]
 
                 timeDiffTv.visibility = View.GONE
             } else {
@@ -879,7 +881,7 @@ class LogViewFragment : ListFragment() {
                     }
                 }
 
-                s = Str.logStatuses[status]
+                s = DisplayStrings.logStatuses[status]
                 val delta: Long
                 val secs: Long
                 val mins: Long
@@ -937,7 +939,7 @@ class LogViewFragment : ListFragment() {
                 }
             }
 
-            if (plugged > 0) s += " " + Str.pluggeds[plugged]
+            if (plugged > 0) s += " " + DisplayStrings.pluggeds[plugged]
 
             statusTv.text = s
 
@@ -952,12 +954,13 @@ class LogViewFragment : ListFragment() {
             else timeTv.text = dateFormat.format(d) + "  " + timeFormat.format(d)
 
             val temperature = cursor.getInt(temperatureIndex)
-            if (temperature != 0) tempVoltTv.text = "" + Str.formatTemp(temperature, convertF)
+            if (temperature != 0) tempVoltTv.text =
+                "" + DisplayStrings.formatTemp(temperature, convertF)
             else tempVoltTv.text = ""
 
             val voltage = cursor.getInt(voltageIndex)
             if (voltage != 0) tempVoltTv.text =
-                tempVoltTv.getText().toString() + " / " + Str.formatVoltage(voltage)
+                tempVoltTv.getText().toString() + " / " + DisplayStrings.formatVoltage(voltage)
         }
     }
 

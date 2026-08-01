@@ -35,7 +35,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.common.Str
+import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.settings.SettingsContract
 import kotlin.math.roundToInt
 
@@ -340,7 +340,7 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
                             .getBoolean(SettingsContract.KEY_CONVERT_F, false)
                     }
                     try {
-                        entry = Str.formatTemp(`val`.toInt(), convertF, false)
+                        entry = DisplayStrings.formatTemp(`val`.toInt(), convertF, false)
                     } catch (e: NumberFormatException) {
                         entry = `val`
                     }
@@ -353,21 +353,33 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
         if (entry == null) entry = ""
         if (formatterUsed) entry = entry.replace("%", "%%")
 
-        if (lp.isEnabled) lp.setSummary(Str.currentlySetTo + entry)
-        else lp.setSummary(Str.alarmPrefNotUsed)
+        if (lp.isEnabled) lp.setSummary(DisplayStrings.currentlySetTo + entry)
+        else lp.setSummary(DisplayStrings.alarmPrefNotUsed)
     }
 
     private fun setUpThresholdList(resetValue: Boolean) {
         val lp = mPreferenceScreen!!.findPreference<Preference?>(KEY_THRESHOLD) as ListPreference?
 
         if (mAdapter!!.type == "temp_drops" || mAdapter!!.type == "temp_rises") {
-            val entries = arrayOfNulls<String>(Str.tempAlarmEntries.size + 1)
-            System.arraycopy(Str.tempAlarmEntries, 0, entries, 0, Str.tempAlarmEntries.size)
+            val entries = arrayOfNulls<String>(DisplayStrings.tempAlarmEntries.size + 1)
+            System.arraycopy(
+                DisplayStrings.tempAlarmEntries,
+                0,
+                entries,
+                0,
+                DisplayStrings.tempAlarmEntries.size
+            )
             entries[entries.size - 1] = res!!.getString(R.string.custom)
             lp!!.entries = entries
 
-            val values = arrayOfNulls<String>(Str.tempAlarmValues.size + 1)
-            System.arraycopy(Str.tempAlarmValues, 0, values, 0, Str.tempAlarmValues.size)
+            val values = arrayOfNulls<String>(DisplayStrings.tempAlarmValues.size + 1)
+            System.arraycopy(
+                DisplayStrings.tempAlarmValues,
+                0,
+                values,
+                0,
+                DisplayStrings.tempAlarmValues.size
+            )
             values[values.size - 1] = "custom"
             lp.entryValues = values
 

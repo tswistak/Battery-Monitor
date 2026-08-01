@@ -42,7 +42,7 @@ import androidx.fragment.app.Fragment
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.app.PersistentFragment
-import codes.swistak.batterymonitor.common.Str
+import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsHelpActivity
@@ -298,9 +298,12 @@ class AlarmsFragment : Fragment() {
         val enabled =
             (mCursor!!.getInt(mCursor!!.getColumnIndexOrThrow(AlarmDatabase.KEY_ENABLED)) == 1)
 
-        var s = Str.alarmTypesDisplay[Str.indexOf(Str.alarmTypeValues, type)]
+        var s = DisplayStrings.alarmTypesDisplay[DisplayStrings.indexOf(
+            DisplayStrings.alarmTypeValues,
+            type
+        )]
         if (type == "temp_drops" || type == "temp_rises") {
-            s += " " + Str.formatTemp(threshold.toInt(), convertF, false)
+            s += " " + DisplayStrings.formatTemp(threshold.toInt(), convertF, false)
         } else if (type == "charge_drops" || type == "charge_rises") {
             s += " $threshold%"
         }

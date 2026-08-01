@@ -35,7 +35,7 @@ import androidx.core.content.pm.PackageInfoCompat
 import androidx.fragment.app.Fragment
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatteryStatsCollector.RootExecutor
-import codes.swistak.batterymonitor.common.Str
+import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsHelpActivity
 import rikka.shizuku.Shizuku
@@ -461,8 +461,8 @@ class AdvancedInfoFragment : Fragment() {
         val roundedMinutes = ((value + 30000L) / 60000L).toInt()
         val hours = roundedMinutes / 60
         val minutes = roundedMinutes % 60
-        if (hours > 0) return Str.nHoursMMinutesLong(hours, minutes)
-        return Str.nMinutesLong(max(minutes, 0))
+        if (hours > 0) return DisplayStrings.nHoursMMinutesLong(hours, minutes)
+        return DisplayStrings.nMinutesLong(max(minutes, 0))
     }
 
     private class Row {

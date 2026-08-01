@@ -18,9 +18,13 @@ import android.text.Html
 import android.text.Spanned
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 import kotlin.math.roundToInt
 
-internal object Str {
+internal object DisplayStrings {
     private lateinit var res: Resources
 
     var defUiColor: Int = 0
@@ -195,6 +199,12 @@ internal object Str {
 
     @JvmOverloads
     fun formatTemp(temperature: Int, convertF: Boolean, includeTenths: Boolean = true): String {
+        return formatTemp(temperature, convertF, includeTenths, resourceLocale())
+    }
+
+    internal fun formatTemp(
+        temperature: Int, convertF: Boolean, includeTenths: Boolean, locale: Locale
+    ): String {
         val d: Double
         val s: String
 
@@ -206,11 +216,32 @@ internal object Str {
             s = degreeSymbol + celsiusSymbol
         }
 
-        return (if (includeTenths) d.toString() else d.roundToInt().toString()) + s
+        val value = if (includeTenths) d else d.roundToInt().toDouble()
+        val fractionDigits = if (includeTenths) 1 else 0
+        return formatDecimal(value, fractionDigits, fractionDigits, locale) + s
     }
 
     fun formatVoltage(voltage: Int): String {
-        return (voltage / 1000.0).toString() + voltSymbol
+        return formatVoltage(voltage, resourceLocale())
+    }
+
+    internal fun formatVoltage(voltage: Int, locale: Locale): String {
+        return formatDecimal(voltage / 1000.0, 1, 3, locale) + voltSymbol
+    }
+
+    private fun formatDecimal(
+        value: Double, minimumFractionDigits: Int, maximumFractionDigits: Int, locale: Locale
+    ): String {
+        return DecimalFormat("0", DecimalFormatSymbols.getInstance(locale)).apply {
+            isGroupingUsed = false
+            this.minimumFractionDigits = minimumFractionDigits
+            this.maximumFractionDigits = maximumFractionDigits
+            roundingMode = RoundingMode.HALF_UP
+        }.format(value)
+    }
+
+    private fun resourceLocale(): Locale {
+        return res.configuration.locales[0]
     }
 
     fun indexOf(a: Array<out String?>, key: String): Int {

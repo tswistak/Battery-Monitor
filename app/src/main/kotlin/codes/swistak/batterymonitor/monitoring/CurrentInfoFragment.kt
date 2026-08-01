@@ -45,7 +45,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.app.PersistentFragment
-import codes.swistak.batterymonitor.common.Str
+import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.help.HelpActivity
 import codes.swistak.batterymonitor.settings.SettingsActivity
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -332,34 +332,34 @@ class CurrentInfoFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun handleUpdatedBatteryInfo() {
         bl!!.setLevel(info.percent)
-        bl!!.setColor(Str.accentColor)
+        bl!!.setColor(DisplayStrings.accentColor)
         blv!!.invalidate()
 
         var tv = rootView.findViewById<View?>(R.id.level) as TextView
         tv.text = "" + info.percent + pFrag!!.res.getString(R.string.percent_symbol)
 
         tv = rootView.findViewById<View?>(R.id.time_remaining) as TextView
-        tv.text = Str.timeRemainingMainScreen(info)
+        tv.text = DisplayStrings.timeRemainingMainScreen(info)
         tv = rootView.findViewById<View?>(R.id.until_what) as TextView
-        tv.text = Str.untilWhat(info)
+        tv.text = DisplayStrings.untilWhat(info)
 
         val secs = ((System.currentTimeMillis() - info.lastStatusCtm) / 1000).toInt()
         val hours = secs / (60 * 60)
         val mins = (secs / 60) % 60
 
-        var s = Str.statuses[info.lastStatus]
+        var s = DisplayStrings.statuses[info.lastStatus]
 
-        if (info.lastStatus == BatteryInfo.STATUS_CHARGING) s += " " + Str.pluggeds[info.lastPlugged]
+        if (info.lastStatus == BatteryInfo.STATUS_CHARGING) s += " " + DisplayStrings.pluggeds[info.lastPlugged]
 
         tv = rootView.findViewById<View?>(R.id.status) as TextView
         tv.text = s
 
         if (info.lastPercent >= 0) {
-            s = Str.since + " "
+            s = DisplayStrings.since + " "
 
-            if (info.lastStatus != BatteryInfo.STATUS_FULLY_CHARGED) s += info.lastPercent.toString() + Str.percentSymbol + ", "
+            if (info.lastStatus != BatteryInfo.STATUS_FULLY_CHARGED) s += info.lastPercent.toString() + DisplayStrings.percentSymbol + ", "
 
-            s += Str.nHoursMMinutesShort(hours, mins)
+            s += DisplayStrings.nHoursMMinutesShort(hours, mins)
 
             tv = rootView.findViewById<View?>(R.id.status_duration) as TextView
             tv.text = s
@@ -370,9 +370,9 @@ class CurrentInfoFragment : Fragment() {
             pFrag!!.res.getBoolean(R.bool.default_convert_to_fahrenheit)
         )
 
-        tvHealth!!.text = Str.healths[info.health]
-        tvTemp!!.text = Str.formatTemp(info.temperature, convertF)
-        if (info.voltage > 500) tvVoltage!!.text = Str.formatVoltage(info.voltage)
+        tvHealth!!.text = DisplayStrings.healths[info.health]
+        tvTemp!!.text = DisplayStrings.formatTemp(info.temperature, convertF)
+        if (info.voltage > 500) tvVoltage!!.text = DisplayStrings.formatVoltage(info.voltage)
 
         if (info.lastStatus == BatteryInfo.STATUS_UNPLUGGED) pluggedIcon!!.setImageResource(
             R.drawable.unplugged
@@ -398,7 +398,9 @@ class CurrentInfoFragment : Fragment() {
                 )
             ) current = BatteryCurrent.avgCurrent
             if (current == null) current = BatteryCurrent.current
-            if (current != null) s += BatteryCurrent.formatMilliAmps(current) + "mA"
+            if (current != null) s += BatteryCurrent.formatMilliAmps(
+                current, pFrag!!.res.configuration.locales[0]
+            ) + "mA"
         } else {
             currentIcon!!.visibility = View.INVISIBLE
         }

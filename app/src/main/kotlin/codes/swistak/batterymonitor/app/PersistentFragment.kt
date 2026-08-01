@@ -39,7 +39,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.common.Str
+import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
@@ -306,7 +306,7 @@ class PersistentFragment : Fragment() {
 
     private fun updateResources() {
         res = requireActivity().resources
-        Str.setResources(res)
+        DisplayStrings.setResources(res)
     }
 
     fun setCIF(f: CurrentInfoFragment?) {

@@ -53,7 +53,7 @@ import androidx.core.app.NotificationManagerCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
-import codes.swistak.batterymonitor.common.Str
+import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.widgets.BatteryInfoAppWidgetProvider
@@ -330,7 +330,7 @@ class BatteryInfoService : Service() {
         }
 
         res = resources
-        Str.setResources(res)
+        DisplayStrings.setResources(res)
         logDb = LogDatabase(this)
 
         info = BatteryInfo()
@@ -505,7 +505,7 @@ class BatteryInfoService : Service() {
         loadSettingsFiles()
         configureBatteryCurrent(batteryCurrentOverrides)
 
-        Str.setResources(res)
+        DisplayStrings.setResources(res)
 
         applyNewSettings(cancelFirst)
     }
@@ -596,7 +596,7 @@ class BatteryInfoService : Service() {
 
         predictor!!.setPredictionType(
             settings.getString(
-                SettingsContract.KEY_PREDICTION_TYPE, Str.defaultPredictionType
+                SettingsContract.KEY_PREDICTION_TYPE, DisplayStrings.defaultPredictionType
             )!!
         )
         predictor!!.update(info!!)
@@ -707,7 +707,7 @@ class BatteryInfoService : Service() {
         if (info == null) {
             cwbg!!.setLevel(0)
         } else {
-            bl!!.setColor(Str.accentColor)
+            bl!!.setColor(DisplayStrings.accentColor)
             cwbg!!.setColor(-0x865c01)
 
             bl!!.setLevel(info.percent)
@@ -741,19 +741,19 @@ class BatteryInfoService : Service() {
                     rv.setImageViewBitmap(R.id.battery_level_view, bl!!.getBitmap())
 
                     if (info.prediction.whatHappened == BatteryInfo.Prediction.NONE) {
-                        rv.setTextViewText(R.id.fully_charged, Str.timeRemaining(info))
+                        rv.setTextViewText(R.id.fully_charged, DisplayStrings.timeRemaining(info))
                         rv.setTextViewText(R.id.time_remaining, "")
                         rv.setTextViewText(R.id.until_what, "")
                     } else {
                         rv.setTextViewText(R.id.fully_charged, "")
-                        rv.setTextViewText(R.id.time_remaining, Str.timeRemaining(info))
-                        rv.setTextViewText(R.id.until_what, Str.untilWhat(info))
+                        rv.setTextViewText(R.id.time_remaining, DisplayStrings.timeRemaining(info))
+                        rv.setTextViewText(R.id.until_what, DisplayStrings.untilWhat(info))
                     }
                 }
             }
 
-            if (info == null) rv.setTextViewText(R.id.level, "XX" + Str.percentSymbol)
-            else rv.setTextViewText(R.id.level, "" + info.percent + Str.percentSymbol)
+            if (info == null) rv.setTextViewText(R.id.level, "XX" + DisplayStrings.percentSymbol)
+            else rv.setTextViewText(R.id.level, "" + info.percent + DisplayStrings.percentSymbol)
 
             rv.setOnClickPendingIntent(R.id.widget_layout, currentInfoPendingIntent)
             try {
@@ -875,7 +875,7 @@ class BatteryInfoService : Service() {
             val convertF = settings.getBoolean(
                 SettingsContract.KEY_CONVERT_F, res.getBoolean(R.bool.default_convert_to_fahrenheit)
             )
-            return Str.formatTemp(info!!.temperature, convertF, false)
+            return DisplayStrings.formatTemp(info!!.temperature, convertF, false)
         }
         return info!!.percent.toString() + "%"
     }
@@ -947,20 +947,32 @@ class BatteryInfoService : Service() {
         val predicted = info!!.prediction.lastRTime
 
         if (info!!.prediction.whatHappened == BatteryInfo.Prediction.NONE) {
-            line = Str.statuses[info!!.status]
+            line = DisplayStrings.statuses[info!!.status]
         } else {
-            if (predicted.days > 0) line = Str.nDaysMHours(predicted.days, predicted.hours)
+            if (predicted.days > 0) line =
+                DisplayStrings.nDaysMHours(predicted.days, predicted.hours)
             else if (predicted.hours > 0) {
                 val verbosity: String = settings.getString(
                     SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
                     res.getString(R.string.default_time_remaining_verbosity)
                 )!!
                 line = when (verbosity) {
-                    "condensed" -> Str.nHoursMMinutesMedium(predicted.hours, predicted.minutes)
-                    "verbose" -> Str.nHoursMMinutesLong(predicted.hours, predicted.minutes)
-                    else -> Str.nHoursLongMMinutesMedium(predicted.hours, predicted.minutes)
+                    "condensed" -> DisplayStrings.nHoursMMinutesMedium(
+                        predicted.hours,
+                        predicted.minutes
+                    )
+
+                    "verbose" -> DisplayStrings.nHoursMMinutesLong(
+                        predicted.hours,
+                        predicted.minutes
+                    )
+
+                    else -> DisplayStrings.nHoursLongMMinutesMedium(
+                        predicted.hours,
+                        predicted.minutes
+                    )
                 }
-            } else line = Str.nMinutesLong(predicted.minutes)
+            } else line = DisplayStrings.nMinutesLong(predicted.minutes)
 
             line += if (info!!.prediction.whatHappened == BatteryInfo.Prediction.UNTIL_CHARGED) res!!.getString(
                 R.string.notification_until_charged
@@ -976,15 +988,20 @@ class BatteryInfoService : Service() {
             SettingsContract.KEY_CONVERT_F, res.getBoolean(R.bool.default_convert_to_fahrenheit)
         )
 
-        var line = Str.healths[info!!.health] + " / " + Str.formatTemp(info!!.temperature, convertF)
+        var line = DisplayStrings.healths[info!!.health] + " / " + DisplayStrings.formatTemp(
+            info!!.temperature,
+            convertF
+        )
 
-        if (info!!.voltage > 500) line += " / " + Str.formatVoltage(info!!.voltage)
+        if (info!!.voltage > 500) line += " / " + DisplayStrings.formatVoltage(info!!.voltage)
         if (batteryCurrentEnabled && displayCurrentInNotification) {
             var current: Double? = null
             if (preferAverageBatteryCurrent) current = BatteryCurrent.avgCurrent
             if (current == null) current = BatteryCurrent.current
             if (current != null) {
-                line += " / " + BatteryCurrent.formatMilliAmps(current) + "mA"
+                line += " / " + BatteryCurrent.formatMilliAmps(
+                    current, res.configuration.locales[0]
+                ) + "mA"
             }
         }
         if (settings.getBoolean(
@@ -994,7 +1011,7 @@ class BatteryInfoService : Service() {
             val statusDurationHours = (now - info!!.lastStatusCtm) / (60 * 60 * 1000f)
             val durationHours = statusDurationHours.toInt()
             val durationMinutes = ((statusDurationHours * 60) % 60).toInt()
-            line += " / " + Str.nHoursMMinutesShort(durationHours, durationMinutes)
+            line += " / " + DisplayStrings.nHoursMMinutesShort(durationHours, durationMinutes)
         }
 
         return line
@@ -1003,10 +1020,14 @@ class BatteryInfoService : Service() {
     private fun statusDurationLine(): String {
         val statusDuration = now - info!!.lastStatusCtm
         val statusDurationHours = ((statusDuration + (1000 * 60 * 30)) / (1000 * 60 * 60)).toInt()
-        var line = Str.statuses[info!!.status] + " "
+        var line = DisplayStrings.statuses[info!!.status] + " "
 
-        line += if (statusDuration < 1000 * 60 * 60) Str.since + " " + formatTime(Date(info!!.lastStatusCtm))
-        else Str.forNHours(statusDurationHours)
+        line += if (statusDuration < 1000 * 60 * 60) DisplayStrings.since + " " + formatTime(
+            Date(
+                info!!.lastStatusCtm
+            )
+        )
+        else DisplayStrings.forNHours(statusDurationHours)
 
         return line
     }
@@ -1074,7 +1095,7 @@ class BatteryInfoService : Service() {
 
             if (info!!.status != info!!.lastStatus && info!!.lastStatus == BatteryInfo.STATUS_UNPLUGGED) {
                 val maxLogAge = settings.getString(
-                    SettingsContract.KEY_MAX_LOG_AGE, Str.defaultMaxLogAge
+                    SettingsContract.KEY_MAX_LOG_AGE, DisplayStrings.defaultMaxLogAge
                 )!!.toInt()
                 if (maxLogAge >= 0) logDb!!.prune(maxLogAge)
             }
@@ -1124,7 +1145,7 @@ class BatteryInfoService : Service() {
             c = alarms!!.activeAlarmFull()
             if (c != null) {
                 nb = parseAlarmCursor(c)
-                nb.setContentTitle(Str.alarmFullyCharged).setChannelId(CHAN_ID_A_CHARGED)
+                nb.setContentTitle(DisplayStrings.alarmFullyCharged).setChannelId(CHAN_ID_A_CHARGED)
 
                 nb.setVisibility(Notification.VISIBILITY_PUBLIC)
 
@@ -1138,7 +1159,7 @@ class BatteryInfoService : Service() {
             spsEditor!!.putInt(KEY_PREVIOUS_CHARGE, info!!.percent)
             nb = parseAlarmCursor(c)
             val threshold = c.getString(c.getColumnIndexOrThrow(AlarmDatabase.KEY_THRESHOLD))
-            nb.setContentTitle(Str.alarmChargeDrops + threshold + Str.percentSymbol)
+            nb.setContentTitle(DisplayStrings.alarmChargeDrops + threshold + DisplayStrings.percentSymbol)
                 .setChannelId(CHAN_ID_A_CDROP)
 
             nb.setVisibility(Notification.VISIBILITY_PUBLIC)
@@ -1152,7 +1173,7 @@ class BatteryInfoService : Service() {
             spsEditor!!.putInt(KEY_PREVIOUS_CHARGE, info!!.percent)
             nb = parseAlarmCursor(c)
             val threshold = c.getString(c.getColumnIndexOrThrow(AlarmDatabase.KEY_THRESHOLD))
-            nb.setContentTitle(Str.alarmChargeRises + threshold + Str.percentSymbol)
+            nb.setContentTitle(DisplayStrings.alarmChargeRises + threshold + DisplayStrings.percentSymbol)
                 .setChannelId(CHAN_ID_A_CRISE)
 
             nb.setVisibility(Notification.VISIBILITY_PUBLIC)
@@ -1173,7 +1194,7 @@ class BatteryInfoService : Service() {
             nb = parseAlarmCursor(c)
             val threshold = c.getString(c.getColumnIndexOrThrow(AlarmDatabase.KEY_THRESHOLD))
             nb.setContentTitle(
-                Str.alarmTempRises + Str.formatTemp(
+                DisplayStrings.alarmTempRises + DisplayStrings.formatTemp(
                     threshold.toInt(), convertF, false
                 )
             ).setChannelId(CHAN_ID_A_TRISE)
@@ -1196,7 +1217,7 @@ class BatteryInfoService : Service() {
             nb = parseAlarmCursor(c)
             val threshold = c.getString(c.getColumnIndexOrThrow(AlarmDatabase.KEY_THRESHOLD))
             nb.setContentTitle(
-                Str.alarmTempDrops + Str.formatTemp(
+                DisplayStrings.alarmTempDrops + DisplayStrings.formatTemp(
                     threshold.toInt(), convertF, false
                 )
             ).setChannelId(CHAN_ID_A_TDROP)
@@ -1215,7 +1236,7 @@ class BatteryInfoService : Service() {
             if (c != null) {
                 spsEditor!!.putInt(KEY_PREVIOUS_HEALTH, info!!.health)
                 nb = parseAlarmCursor(c)
-                nb.setContentTitle(Str.alarmHealthFailure + Str.healths[info!!.health])
+                nb.setContentTitle(DisplayStrings.alarmHealthFailure + DisplayStrings.healths[info!!.health])
                     .setChannelId(CHAN_ID_A_HFAIL)
 
                 nb.setVisibility(Notification.VISIBILITY_PUBLIC)

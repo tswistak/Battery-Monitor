@@ -7,6 +7,10 @@
 - Modernized and simplified battery current measurement (#52).
 - Reorganized settings.
 
+### Fixed
+
+- Use localized decimal separator in notifications.
+
 ### Development
 
 - Refactored project structure.
