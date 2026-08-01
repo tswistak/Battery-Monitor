@@ -13,7 +13,6 @@
 */
 package codes.swistak.batterymonitor.logs
 
-
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
@@ -46,9 +45,7 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import java.io.BufferedWriter
 import java.io.FileWriter
 import java.text.DateFormat
-import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.math.roundToInt
@@ -75,32 +72,6 @@ class LogViewFragment : ListFragment() {
                 .replace("-+".toRegex(), "-")
         }
 
-        // Based on https://stackoverflow.com/a/23438859/1427098
-        private fun timeDateStringFromDate(ctx: Context?, d: Date): String {
-            val amPmStrings = DateFormatSymbols.getInstance(Locale.getDefault()).amPmStrings
-            val am = amPmStrings[Calendar.AM]
-            val pm = amPmStrings[Calendar.PM]
-
-            var androidDateTime = android.text.format.DateFormat.getTimeFormat(ctx).format(d)
-            var javaDateTime = DateFormat.getDateTimeInstance().format(d)
-            var amPm = ""
-
-            if (!Character.isDigit(androidDateTime[androidDateTime.length - 1])) {
-                amPm = if (androidDateTime.contains(am)) " $am"
-                else " $pm"
-
-                androidDateTime = androidDateTime.replace(amPm, "")
-            }
-
-            if (!Character.isDigit(javaDateTime[javaDateTime.length - 1])) {
-                javaDateTime = javaDateTime.replace(" $am", "")
-                javaDateTime = javaDateTime.replace(" $pm", "")
-            }
-
-            javaDateTime = javaDateTime.substring(javaDateTime.length - 3)
-
-            return androidDateTime + javaDateTime + amPm
-        }
     }
 
     private var logs: LogDatabase? = null
@@ -473,8 +444,8 @@ class LogViewFragment : ListFragment() {
                     if (CSV_ORDER[i] == LogDatabase.KEY_TIME) {
                         d.setTime(completeCursor!!.getLong(mAdapter!!.timeIndex))
                         buf.write(
-                            mAdapter!!.dateFormat.format(d) + "," + timeDateStringFromDate(
-                                activity, d
+                            mAdapter!!.dateFormat.format(d) + "," + DisplayStrings.formatTime(
+                                requireContext(), d, includeSeconds = true
                             ) + ","
                         )
                     } else if (CSV_ORDER[i] == LogDatabase.KEY_STATUS_CODE) {
@@ -807,7 +778,6 @@ class LogViewFragment : ListFragment() {
         var voltageIndex: Int = cursor.getColumnIndexOrThrow(LogDatabase.KEY_VOLTAGE)
         var timeDeltaIndex: Int = cursor.getColumnIndexOrThrow(KEY_TIME_DELTA)
         var dateFormat: DateFormat = android.text.format.DateFormat.getDateFormat(context)
-        var timeFormat: DateFormat = android.text.format.DateFormat.getTimeFormat(context)
 
         private val d = Date()
 
@@ -947,11 +917,10 @@ class LogViewFragment : ListFragment() {
 
             d.setTime(cursor.getLong(timeIndex))
 
-            if (pFrag!!.spMain.getBoolean(
-                    KEY_SHOW_SECONDS, false
-                )
-            ) timeTv.text = dateFormat.format(d) + "  " + timeDateStringFromDate(context, d)
-            else timeTv.text = dateFormat.format(d) + "  " + timeFormat.format(d)
+            val includeSeconds = pFrag!!.spMain.getBoolean(KEY_SHOW_SECONDS, false)
+            timeTv.text = dateFormat.format(d) + "  " + DisplayStrings.formatTime(
+                requireNotNull(context), d, includeSeconds
+            )
 
             val temperature = cursor.getInt(temperatureIndex)
             if (temperature != 0) tempVoltTv.text =

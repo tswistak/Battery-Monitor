@@ -15,6 +15,7 @@ package codes.swistak.batterymonitor.common
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.util.Calendar
 import java.util.Locale
 
 class DisplayStringsTest {
@@ -59,5 +60,78 @@ class DisplayStringsTest {
         assertEquals("4.217V", DisplayStrings.formatVoltage(4217, Locale.US))
         assertEquals("4,217V", DisplayStrings.formatVoltage(4217, Locale.forLanguageTag("pl")))
         assertEquals("4,0V", DisplayStrings.formatVoltage(4000, Locale.forLanguageTag("pl")))
+    }
+
+    @Test
+    fun `12 hour time excludes seconds when not requested`() {
+        assertTimeFormatting(
+            is24Hour = false,
+            includeSeconds = false,
+            expectedSkeleton = "hm",
+            expectedTime = "5:04 PM"
+        )
+    }
+
+    @Test
+    fun `12 hour time includes seconds when requested`() {
+        assertTimeFormatting(
+            is24Hour = false,
+            includeSeconds = true,
+            expectedSkeleton = "hms",
+            expectedTime = "5:04:09 PM"
+        )
+    }
+
+    @Test
+    fun `24 hour time excludes seconds when not requested`() {
+        assertTimeFormatting(
+            is24Hour = true,
+            includeSeconds = false,
+            expectedSkeleton = "Hm",
+            expectedTime = "17:04"
+        )
+    }
+
+    @Test
+    fun `24 hour time includes seconds when requested`() {
+        assertTimeFormatting(
+            is24Hour = true,
+            includeSeconds = true,
+            expectedSkeleton = "Hms",
+            expectedTime = "17:04:09"
+        )
+    }
+
+    private fun assertTimeFormatting(
+        is24Hour: Boolean,
+        includeSeconds: Boolean,
+        expectedSkeleton: String,
+        expectedTime: String
+    ) {
+        val date = Calendar.getInstance().apply {
+            set(2026, Calendar.JANUARY, 1, 17, 4, 9)
+            set(Calendar.MILLISECOND, 0)
+        }.time
+        var requestedSkeleton = ""
+
+        val formatted = DisplayStrings.formatTime(
+            date = date,
+            locale = Locale.US,
+            is24Hour = is24Hour,
+            includeSeconds = includeSeconds
+        ) { locale, skeleton ->
+            assertEquals(Locale.US, locale)
+            requestedSkeleton = skeleton
+            when (skeleton) {
+                "Hm" -> "HH:mm"
+                "Hms" -> "HH:mm:ss"
+                "hm" -> "h:mm a"
+                "hms" -> "h:mm:ss a"
+                else -> error("Unexpected time skeleton: $skeleton")
+            }
+        }
+
+        assertEquals(expectedSkeleton, requestedSkeleton)
+        assertEquals(expectedTime, formatted)
     }
 }

@@ -45,7 +45,6 @@ import android.os.Looper
 import android.os.Message
 import android.os.Messenger
 import android.os.RemoteException
-import android.provider.Settings
 import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -59,8 +58,6 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.widgets.BatteryInfoAppWidgetProvider
 import codes.swistak.batterymonitor.widgets.CircleWidgetBackground
 import codes.swistak.batterymonitor.widgets.FullAppWidgetProvider
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import kotlin.math.max
@@ -958,18 +955,15 @@ class BatteryInfoService : Service() {
                 )!!
                 line = when (verbosity) {
                     "condensed" -> DisplayStrings.nHoursMMinutesMedium(
-                        predicted.hours,
-                        predicted.minutes
+                        predicted.hours, predicted.minutes
                     )
 
                     "verbose" -> DisplayStrings.nHoursMMinutesLong(
-                        predicted.hours,
-                        predicted.minutes
+                        predicted.hours, predicted.minutes
                     )
 
                     else -> DisplayStrings.nHoursLongMMinutesMedium(
-                        predicted.hours,
-                        predicted.minutes
+                        predicted.hours, predicted.minutes
                     )
                 }
             } else line = DisplayStrings.nMinutesLong(predicted.minutes)
@@ -989,8 +983,7 @@ class BatteryInfoService : Service() {
         )
 
         var line = DisplayStrings.healths[info!!.health] + " / " + DisplayStrings.formatTemp(
-            info!!.temperature,
-            convertF
+            info!!.temperature, convertF
         )
 
         if (info!!.voltage > 500) line += " / " + DisplayStrings.formatVoltage(info!!.voltage)
@@ -1022,10 +1015,8 @@ class BatteryInfoService : Service() {
         val statusDurationHours = ((statusDuration + (1000 * 60 * 30)) / (1000 * 60 * 60)).toInt()
         var line = DisplayStrings.statuses[info!!.status] + " "
 
-        line += if (statusDuration < 1000 * 60 * 60) DisplayStrings.since + " " + formatTime(
-            Date(
-                info!!.lastStatusCtm
-            )
+        line += if (statusDuration < 1000 * 60 * 60) DisplayStrings.since + " " + DisplayStrings.formatTime(
+            this, Date(info!!.lastStatusCtm)
         )
         else DisplayStrings.forNHours(statusDurationHours)
 
@@ -1259,16 +1250,4 @@ class BatteryInfoService : Service() {
         mNotificationManager!!.notify(NOTIFICATION_ALARM, n)
     }
 
-    private fun formatTime(d: Date): String {
-        val format = Settings.System.getString(
-            contentResolver, Settings.System.TIME_12_24
-        )
-        return if (format == null || format == "12") {
-            DateFormat.getTimeInstance(
-                DateFormat.SHORT, Locale.getDefault()
-            ).format(d)
-        } else {
-            SimpleDateFormat("HH:mm", Locale.getDefault()).format(d)
-        }
-    }
 }

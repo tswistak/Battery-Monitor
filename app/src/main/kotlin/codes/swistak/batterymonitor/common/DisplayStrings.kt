@@ -13,6 +13,7 @@
 */
 package codes.swistak.batterymonitor.common
 
+import android.content.Context
 import android.content.res.Resources
 import android.text.Html
 import android.text.Spanned
@@ -21,6 +22,8 @@ import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 import kotlin.math.roundToInt
 
@@ -227,6 +230,33 @@ internal object DisplayStrings {
 
     internal fun formatVoltage(voltage: Int, locale: Locale): String {
         return formatDecimal(voltage / 1000.0, 1, 3, locale) + voltSymbol
+    }
+
+    fun formatTime(context: Context, date: Date, includeSeconds: Boolean = false): String {
+        val locale = context.resources.configuration.locales[0]
+        val is24Hour = android.text.format.DateFormat.is24HourFormat(context)
+
+        return formatTime(date, locale, is24Hour, includeSeconds) { requestedLocale, skeleton ->
+            android.text.format.DateFormat.getBestDateTimePattern(requestedLocale, skeleton)
+        }
+    }
+
+    internal fun formatTime(
+        date: Date,
+        locale: Locale,
+        is24Hour: Boolean,
+        includeSeconds: Boolean,
+        bestPattern: (Locale, String) -> String
+    ): String {
+        val skeleton = when {
+            is24Hour && includeSeconds -> "Hms"
+            is24Hour -> "Hm"
+            includeSeconds -> "hms"
+            else -> "hm"
+        }
+        val pattern = bestPattern(locale, skeleton)
+
+        return SimpleDateFormat(pattern, locale).format(date)
     }
 
     private fun formatDecimal(
