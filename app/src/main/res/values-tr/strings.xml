@@ -418,6 +418,8 @@
   <string name="chip_switching_interval_30_seconds" formatted="false">30 saniye</string>
 
   <string name="advanced_status_waiting_permission" formatted="false">Shizuku izni bekleniyor...</string>
+  <string name="shizuku_not_running" formatted="false">Battery Monitor\'a ayrıcalıklı erişim vermek için Shizuku\'yu başlatın.</string>
+  <string name="shizuku_permission_denied_permanently" formatted="false">Shizuku\'da Battery Monitor\'a manuel olarak izin verin.</string>
   <string name="advanced_status_no_stats" formatted="false">Bu cihazda şu anda gelişmiş pil istatistiği mevcut değil.</string>
   <string name="advanced_section_counters" formatted="false">Sayaçlar</string>
   <string name="advanced_section_capacity" formatted="false">Kapasite</string>

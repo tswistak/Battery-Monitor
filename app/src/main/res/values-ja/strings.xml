@@ -439,6 +439,8 @@
   <string name="chip_switching_interval_30_seconds" formatted="false">30秒</string>
 
   <string name="advanced_status_waiting_permission" formatted="false">Shizuku の権限を待機中...</string>
+  <string name="shizuku_not_running" formatted="false">Shizuku を起動して、Battery Monitor に特権アクセスを許可してください。</string>
+  <string name="shizuku_permission_denied_permanently" formatted="false">Shizuku で Battery Monitor の権限を手動で許可してください。</string>
   <string name="advanced_status_no_stats" formatted="false">この端末では現在利用できる高度なバッテリー統計がありません。</string>
   <string name="advanced_section_counters" formatted="false">カウンター</string>
   <string name="advanced_section_capacity" formatted="false">容量</string>

@@ -463,6 +463,8 @@
   <string name="chip_switching_interval_30_seconds" formatted="false">30 sekundžių</string>
 
   <string name="advanced_status_waiting_permission" formatted="false">Laukiama Shizuku leidimo...</string>
+  <string name="shizuku_not_running" formatted="false">Paleiskite „Shizuku“, kad suteiktumėte „Battery Monitor“ privilegijuotą prieigą.</string>
+  <string name="shizuku_permission_denied_permanently" formatted="false">Rankiniu būdu suteikite „Battery Monitor“ leidimą programoje „Shizuku“.</string>
   <string name="advanced_status_no_stats" formatted="false">Šiuo metu šiame įrenginyje nėra jokios išplėstinės baterijos statistikos.</string>
   <string name="advanced_section_counters" formatted="false">Skaitikliai</string>
   <string name="advanced_section_capacity" formatted="false">Talpa</string>

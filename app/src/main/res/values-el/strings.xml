@@ -442,6 +442,8 @@
   <string name="chip_switching_interval_30_seconds" formatted="false">30 δευτερόλεπτα</string>
 
   <string name="advanced_status_waiting_permission" formatted="false">Αναμονή για άδεια Shizuku...</string>
+  <string name="shizuku_not_running" formatted="false">Εκκινήστε το Shizuku για να παραχωρήσετε στο Battery Monitor προνομιακή πρόσβαση.</string>
+  <string name="shizuku_permission_denied_permanently" formatted="false">Παραχωρήστε στο Battery Monitor άδεια χειροκίνητα στο Shizuku.</string>
   <string name="advanced_status_no_stats" formatted="false">Δεν υπάρχουν διαθέσιμα προχωρημένα στατιστικά μπαταρίας σε αυτή τη συσκευή αυτή τη στιγμή.</string>
   <string name="advanced_section_counters" formatted="false">Μετρητές</string>
   <string name="advanced_section_capacity" formatted="false">Χωρητικότητα</string>

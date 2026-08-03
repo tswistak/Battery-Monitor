@@ -430,6 +430,8 @@
   <string name="chip_switching_interval_30_seconds" formatted="false">30 masodperc</string>
 
   <string name="advanced_status_waiting_permission" formatted="false">Várakozás a Shizuku engedélyére...</string>
+  <string name="shizuku_not_running" formatted="false">Indítsa el a Shizukut, hogy privilegizált hozzáférést adhasson a Battery Monitornak.</string>
+  <string name="shizuku_permission_denied_permanently" formatted="false">Adja meg kézzel a Battery Monitor engedélyét a Shizukuban.</string>
   <string name="advanced_status_no_stats" formatted="false">Jelenleg nem érhetők el speciális akkumulátor-statisztikák ezen az eszközön.</string>
   <string name="advanced_section_counters" formatted="false">Számlálók</string>
   <string name="advanced_section_capacity" formatted="false">Kapacitás</string>

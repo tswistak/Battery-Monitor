@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
+import codes.swistak.batterymonitor.common.CommandExecutor
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -20,6 +21,45 @@ import java.nio.file.Files
 import java.util.Locale
 
 class BatteryCurrentTest {
+    @Test
+    fun `privileged current prefers root and does not call Shizuku`() {
+        var shizukuCalls = 0
+        val executor = object : CommandExecutor {
+            override fun run(command: String): String? = "-420001"
+        }
+
+        val result = BatteryCurrent.readPrivilegedMicroAmps("current_now", executor) {
+            shizukuCalls++
+            -390000L
+        }
+
+        assertEquals(-420001L, result)
+        assertEquals(0, shizukuCalls)
+    }
+
+    @Test
+    fun `privileged current falls back to Shizuku after both root commands fail`() {
+        val commands = mutableListOf<String>()
+        val executor = object : CommandExecutor {
+            override fun run(command: String): String? {
+                commands.add(command)
+                return null
+            }
+        }
+
+        val result = BatteryCurrent.readPrivilegedMicroAmps("current_average", executor) {
+            -390001L
+        }
+
+        assertEquals(-390001L, result)
+        assertEquals(
+            listOf(
+                "cmd battery get -f current_average 2>/dev/null",
+                "cmd battery get current_average 2>/dev/null"
+            ), commands
+        )
+    }
+
     @Test
     fun `preserves microamp precision when converting to milliamps`() {
         BatteryCurrent.setMultiplier(1)

@@ -456,6 +456,8 @@
   <string name="chip_switching_interval_30_seconds" formatted="false">30 sekundi</string>
 
   <string name="advanced_status_waiting_permission" formatted="false">Čeka se dozvola za Shizuku...</string>
+  <string name="shizuku_not_running" formatted="false">Pokrenite Shizuku da biste aplikaciji Battery Monitor odobrili privilegovani pristup.</string>
+  <string name="shizuku_permission_denied_permanently" formatted="false">Ručno odobrite dozvolu aplikaciji Battery Monitor u aplikaciji Shizuku.</string>
   <string name="advanced_status_no_stats" formatted="false">Na ovom uređaju trenutno nema dostupne napredne statistike baterije.</string>
   <string name="advanced_section_counters" formatted="false">Brojači</string>
   <string name="advanced_section_capacity" formatted="false">Kapacitet</string>

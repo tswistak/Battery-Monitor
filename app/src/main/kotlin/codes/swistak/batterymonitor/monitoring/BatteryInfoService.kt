@@ -319,6 +319,8 @@ class BatteryInfoService : Service() {
     override fun onCreate() {
         super.onCreate()
 
+        BatteryCurrent.enableShizukuMultiProcessSupport(this)
+
         mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager?
         setUpMinimalForegroundChannel()
         if (!startForegroundImmediately()) {
@@ -349,6 +351,11 @@ class BatteryInfoService : Service() {
         sdkVersioning()
 
         BatteryCurrent.setContext(this)
+        BatteryCurrent.setShizukuReadyListener {
+            mHandler.post {
+                if (mainNotificationForegroundStarted) update(null)
+            }
+        }
         configureBatteryCurrent()
 
         val currentInfoIntent = Intent(this, BatteryInfoActivity::class.java).putExtra(
@@ -393,6 +400,7 @@ class BatteryInfoService : Service() {
     }
 
     override fun onDestroy() {
+        BatteryCurrent.setShizukuReadyListener(null)
         if (alarms != null) alarms!!.close()
         try {
             unregisterReceiver(mBatteryInfoReceiver)

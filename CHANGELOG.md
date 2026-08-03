@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+### Improved
+
+- Shizuku permission handling (#105).
+
 ## 1.4.0
 
 ### New

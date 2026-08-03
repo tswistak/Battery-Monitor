@@ -15,18 +15,13 @@ package codes.swistak.batterymonitor.advancedstats
 import android.content.Context
 import android.os.BatteryManager
 import codes.swistak.batterymonitor.R
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
-import java.nio.charset.StandardCharsets
+import codes.swistak.batterymonitor.common.CommandExecutor
 import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 
 internal object AdvancedBatteryStatsCollector {
-    private const val COMMAND_TIMEOUT_SECONDS = 10L
-    private const val MAX_COMMAND_OUTPUT_BYTES = 256 * 1024
     private val LONG_PATTERN: Pattern = Pattern.compile("(-?\\d+)")
     private const val BATTERY_PROPERTY_MANUFACTURING_DATE = 7
     private const val BATTERY_PROPERTY_FIRST_USAGE_DATE = 8
@@ -417,57 +412,4 @@ internal object AdvancedBatteryStatsCollector {
         return String.format(Locale.getDefault(), "%.2f V", value / 1000000.0)
     }
 
-    private fun runCommand(command: Array<String>): String? {
-        var process: Process? = null
-
-        try {
-            process = ProcessBuilder(*command).redirectErrorStream(true).start()
-            if (!process.waitFor(COMMAND_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
-                process.destroyForcibly()
-                return null
-            }
-
-            if (process.exitValue() != 0) return null
-
-            var output = readFully(process.getInputStream()) ?: return null
-
-            output = output.trim()
-            return if (!output.isEmpty()) output else null
-        } catch (e: Exception) {
-            return null
-        } finally {
-            process?.destroy()
-        }
-    }
-
-    @Throws(Exception::class)
-    private fun readFully(inputStream: InputStream): String? {
-        val outputStream = ByteArrayOutputStream()
-        val buffer = ByteArray(4096)
-        var bytesRead: Int
-
-        while ((inputStream.read(buffer).also { bytesRead = it }) != -1) {
-            if (outputStream.size() + bytesRead > MAX_COMMAND_OUTPUT_BYTES) return null
-
-            outputStream.write(buffer, 0, bytesRead)
-        }
-
-        return String(outputStream.toByteArray(), StandardCharsets.UTF_8)
-    }
-
-    internal interface CommandExecutor {
-        fun run(command: String): String?
-    }
-
-    internal class RootExecutor : CommandExecutor {
-        override fun run(command: String): String? {
-            return runCommand(arrayOf("su", "-c", command))
-        }
-    }
-
-    internal class PrivilegedShellExecutor : CommandExecutor {
-        override fun run(command: String): String? {
-            return runCommand(arrayOf("sh", "-c", command))
-        }
-    }
 }

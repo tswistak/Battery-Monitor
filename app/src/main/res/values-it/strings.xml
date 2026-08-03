@@ -437,6 +437,8 @@
   <string name="chip_switching_interval_30_seconds" formatted="false">30 secondi</string>
 
   <string name="advanced_status_waiting_permission" formatted="false">In attesa dell\'autorizzazione Shizuku...</string>
+  <string name="shizuku_not_running" formatted="false">Avvia Shizuku per concedere a Battery Monitor l\'accesso privilegiato.</string>
+  <string name="shizuku_permission_denied_permanently" formatted="false">Concedi manualmente a Battery Monitor l\'autorizzazione in Shizuku.</string>
   <string name="advanced_status_no_stats" formatted="false">Nessuna statistica avanzata della batteria è attualmente disponibile su questo dispositivo.</string>
   <string name="advanced_section_counters" formatted="false">Contatori</string>
   <string name="advanced_section_capacity" formatted="false">Capacità</string>

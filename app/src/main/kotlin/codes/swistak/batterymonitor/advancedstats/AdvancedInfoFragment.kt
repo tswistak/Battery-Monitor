@@ -14,6 +14,7 @@ package codes.swistak.batterymonitor.advancedstats
 
 
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.ApplicationInfo
@@ -22,6 +23,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -34,8 +36,8 @@ import android.widget.TextView
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.fragment.app.Fragment
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.advancedstats.AdvancedBatteryStatsCollector.RootExecutor
 import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.common.RootExecutor
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsHelpActivity
 import rikka.shizuku.Shizuku
@@ -43,18 +45,23 @@ import rikka.shizuku.Shizuku.OnBinderDeadListener
 import rikka.shizuku.Shizuku.OnBinderReceivedListener
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
 import rikka.shizuku.Shizuku.UserServiceArgs
-import rikka.shizuku.ShizukuProvider
 import java.util.Locale
 import kotlin.math.max
 
 class AdvancedInfoFragment : Fragment() {
     companion object {
         private const val REQUEST_CODE_SHIZUKU = 7001
+        private const val TAG = "AdvancedInfoFragment"
+    }
+
+    private enum class LoadState {
+        IDLE, CHECKING_ROOT, WAITING_FOR_SHIZUKU, WAITING_FOR_PERMISSION, BINDING_USER_SERVICE
     }
 
     private val mainHandler = Handler(Looper.getMainLooper())
-    private var loading = false
-    private var shizukuInitialized = false
+    private var loadState = LoadState.IDLE
+    private var loadGeneration = 0
+    private var activeConnection: ShizukuConnection? = null
     private var tabVisible = false
 
     private var statusView: TextView? = null
@@ -71,17 +78,43 @@ class AdvancedInfoFragment : Fragment() {
     private var sysfsRows: LinearLayout? = null
     private var metadataRows: LinearLayout? = null
 
-    private val binderReceivedListener: OnBinderReceivedListener =
-        OnBinderReceivedListener { if (this@AdvancedInfoFragment.isTabActive) loadStats() }
-    private val binderDeadListener: OnBinderDeadListener =
-        OnBinderDeadListener { if (this@AdvancedInfoFragment.isTabActive) showNoAccessMessage() }
+    private val binderReceivedListener: OnBinderReceivedListener = OnBinderReceivedListener {
+        mainHandler.post {
+            if (!isTabActive) return@post
+
+            when (loadState) {
+                LoadState.WAITING_FOR_SHIZUKU -> continueViaShizuku(loadGeneration)
+                LoadState.IDLE -> refreshStats()
+                else -> Unit
+            }
+        }
+    }
+    private val binderDeadListener: OnBinderDeadListener = OnBinderDeadListener {
+        mainHandler.post {
+            if (!isTabActive || loadState == LoadState.IDLE || loadState == LoadState.CHECKING_ROOT) {
+                return@post
+            }
+            finishWithNoAccess("Shizuku binder died")
+        }
+    }
     private val permissionListener: OnRequestPermissionResultListener =
         object : OnRequestPermissionResultListener {
             override fun onRequestPermissionResult(requestCode: Int, grantResult: Int) {
-                if (!this@AdvancedInfoFragment.isTabActive || requestCode != REQUEST_CODE_SHIZUKU) return
+                if (requestCode != REQUEST_CODE_SHIZUKU) return
 
-                if (grantResult == PackageManager.PERMISSION_GRANTED) loadViaShizuku()
-                else showNoAccessMessage()
+                mainHandler.post {
+                    if (loadState != LoadState.WAITING_FOR_PERMISSION) return@post
+
+                    if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                        if (isTabActive) {
+                            bindUserService(loadGeneration)
+                        } else {
+                            loadState = LoadState.IDLE
+                        }
+                    } else {
+                        finishWithNoAccess("Shizuku permission denied")
+                    }
+                }
             }
         }
 
@@ -104,6 +137,15 @@ class AdvancedInfoFragment : Fragment() {
         Shizuku.removeRequestPermissionResultListener(permissionListener)
     }
 
+    override fun onDestroyView() {
+        loadGeneration++
+        cancelActiveConnection()
+        loadState = LoadState.IDLE
+        mainHandler.removeCallbacksAndMessages(null)
+        clearViewReferences()
+        super.onDestroyView()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -124,7 +166,7 @@ class AdvancedInfoFragment : Fragment() {
         metadataRows = view.findViewById(R.id.advanced_metadata_rows)
 
         val refreshButton = view.findViewById<Button>(R.id.advanced_refresh)
-        refreshButton.setOnClickListener { _: View? -> loadStats() }
+        refreshButton.setOnClickListener { _: View? -> refreshStats() }
 
         return view
     }
@@ -135,13 +177,13 @@ class AdvancedInfoFragment : Fragment() {
         super.setUserVisibleHint(isVisibleToUser)
         tabVisible = isVisibleToUser
 
-        if (tabVisible && isResumed) loadStats()
+        if (tabVisible && isResumed) refreshStats()
     }
 
     override fun onResume() {
         super.onResume()
 
-        if (tabVisible) loadStats()
+        if (tabVisible) refreshStats()
     }
 
     @Deprecated("Deprecated in Java")
@@ -172,98 +214,158 @@ class AdvancedInfoFragment : Fragment() {
     private val isTabActive: Boolean
         get() = tabVisible && isResumed && view != null
 
-    private fun loadStats() {
-        if (!this.isTabActive || loading) return
+    private fun refreshStats() {
+        if (!isTabActive) return
 
-        loading = true
+        if (loadState == LoadState.WAITING_FOR_PERMISSION && Shizuku.pingBinder() && Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+            bindUserService(loadGeneration)
+            return
+        }
+        if (loadState == LoadState.WAITING_FOR_SHIZUKU) {
+            loadGeneration++
+            loadState = LoadState.IDLE
+        }
+        if (loadState != LoadState.IDLE) return
+
+        val appContext = context?.applicationContext ?: return
+        val generation = ++loadGeneration
+        loadState = LoadState.CHECKING_ROOT
         showStatus(R.string.advanced_status_loading)
 
-        Thread(Runnable {
+        Thread {
             val rootSnapshot = AdvancedBatteryStatsCollector.collect(
-                RootExecutor(),
-                AdvancedBatterySnapshot.ACCESS_ROOT,
-                0,
-                requireActivity().applicationContext,
-                false
+                RootExecutor(), AdvancedBatterySnapshot.ACCESS_ROOT, 0, appContext, false
             )
-            if (rootSnapshot.hasPrivilegedStats()) {
-                postSnapshot(rootSnapshot)
-                return@Runnable
+            mainHandler.post {
+                if (generation != loadGeneration || !isTabActive) return@post
+
+                if (rootSnapshot.hasPrivilegedStats()) {
+                    postSnapshot(rootSnapshot, generation)
+                } else {
+                    continueViaShizuku(generation)
+                }
             }
-            mainHandler.post { this.loadViaShizuku() }
-        }).start()
+        }.start()
     }
 
-    private fun loadViaShizuku() {
-        if (!this.isTabActive) {
-            loading = false
+    private fun continueViaShizuku(generation: Int) {
+        if (generation != loadGeneration || !isTabActive) return
+
+        if (!Shizuku.pingBinder()) {
+            loadState = LoadState.WAITING_FOR_SHIZUKU
+            showStatus(R.string.advanced_status_no_access)
+            return
+        }
+        if (Shizuku.isPreV11()) {
+            finishWithNoAccess("Unsupported Shizuku version")
             return
         }
 
-        initShizukuIfNeeded()
+        when {
+            Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED -> {
+                bindUserService(generation)
+            }
 
-        if (!Shizuku.pingBinder() || Shizuku.isPreV11()) {
-            showNoAccessMessage()
+            Shizuku.shouldShowRequestPermissionRationale() -> {
+                finishWithNoAccess("Shizuku permission was previously denied")
+            }
+
+            else -> {
+                loadState = LoadState.WAITING_FOR_PERMISSION
+                showStatus(R.string.advanced_status_waiting_permission)
+                try {
+                    Shizuku.requestPermission(REQUEST_CODE_SHIZUKU)
+                } catch (error: Throwable) {
+                    finishWithNoAccess("Unable to request Shizuku permission", error)
+                }
+            }
+        }
+    }
+
+    private fun bindUserService(generation: Int) {
+        if (generation != loadGeneration || !isTabActive || activeConnection != null) return
+
+        val appContext = context?.applicationContext ?: run {
+            finishLoading(generation)
             return
         }
-
-        if (Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
-            showStatus(R.string.advanced_status_waiting_permission)
-            loading = false
-            Shizuku.requestPermission(REQUEST_CODE_SHIZUKU)
-            return
-        }
+        val args = buildUserServiceArgs(appContext)
+        val connection = ShizukuConnection(args, generation)
+        activeConnection = connection
+        loadState = LoadState.BINDING_USER_SERVICE
 
         try {
-            Shizuku.bindUserService(buildUserServiceArgs(), ShizukuConnection())
-        } catch (e: Throwable) {
-            showNoAccessMessage()
+            Shizuku.bindUserService(args, connection)
+        } catch (error: Throwable) {
+            clearConnection(connection)
+            finishWithNoAccess("Unable to bind Shizuku user service", error)
         }
     }
 
-    private fun initShizukuIfNeeded() {
-        if (shizukuInitialized) return
-
-        ShizukuProvider.enableMultiProcessSupport(false)
-        ShizukuProvider.requestBinderForNonProviderProcess(requireActivity().applicationContext)
-        shizukuInitialized = true
-    }
-
-    private fun buildUserServiceArgs(): UserServiceArgs {
+    private fun buildUserServiceArgs(context: Context): UserServiceArgs {
         return UserServiceArgs(
-            ComponentName(
-                requireActivity().packageName, AdvancedStatsUserService::class.java.getName()
-            )
+            ComponentName(context.packageName, AdvancedStatsUserService::class.java.getName())
         ).daemon(false).processNameSuffix("advanced_stats")
-            .debuggable((requireActivity().applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0)
-            .version(this.installedVersionCode).tag("advanced_battery_stats")
+            .debuggable((context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0)
+            .version(installedVersionCode(context)).tag("advanced_battery_stats")
     }
 
-    private val installedVersionCode: Int
-        get() {
-            try {
-                val packageInfo = requireActivity().packageManager.getPackageInfo(
-                    requireActivity().packageName, 0
-                )
-                return PackageInfoCompat.getLongVersionCode(packageInfo).toInt()
-            } catch (e: Exception) {
-                return 1
-            }
+    private fun installedVersionCode(context: Context): Int {
+        return try {
+            PackageInfoCompat.getLongVersionCode(
+                context.packageManager.getPackageInfo(context.packageName, 0)
+            ).toInt()
+        } catch (error: Exception) {
+            Log.w(TAG, "Unable to read installed version code", error)
+            1
         }
+    }
 
-    private fun postSnapshot(snapshot: AdvancedBatterySnapshot) {
-        mainHandler.post(Runnable snapshotPost@{
-            loading = false
-            if (!this.isTabActive) return@snapshotPost
+    private fun postSnapshot(snapshot: AdvancedBatterySnapshot, generation: Int) {
+        mainHandler.post {
+            if (generation != loadGeneration) return@post
+
+            activeConnection?.let(::clearConnection)
+            loadState = LoadState.IDLE
+            if (!isTabActive) return@post
 
             if (!snapshot.hasStats()) {
                 showStatus(R.string.advanced_status_no_stats)
-                return@snapshotPost
+                return@post
             }
 
             showStatus(0)
             renderSnapshot(snapshot)
-        })
+        }
+    }
+
+    private fun finishLoading(generation: Int) {
+        if (generation == loadGeneration) {
+            activeConnection?.let(::clearConnection)
+            loadState = LoadState.IDLE
+        }
+    }
+
+    private fun finishWithNoAccess(message: String, error: Throwable? = null) {
+        if (error == null) Log.w(TAG, message) else Log.e(TAG, message, error)
+        loadGeneration++
+        cancelActiveConnection()
+        loadState = LoadState.IDLE
+        if (isTabActive) showStatus(R.string.advanced_status_no_access)
+    }
+
+    private fun clearConnection(connection: ShizukuConnection) {
+        if (activeConnection === connection) activeConnection = null
+    }
+
+    private fun cancelActiveConnection() {
+        val connection = activeConnection ?: return
+        activeConnection = null
+        try {
+            Shizuku.unbindUserService(connection.args, connection, true)
+        } catch (error: Throwable) {
+            Log.w(TAG, "Unable to unbind Shizuku user service", error)
+        }
     }
 
     private fun renderSnapshot(snapshot: AdvancedBatterySnapshot) {
@@ -367,14 +469,6 @@ class AdvancedInfoFragment : Fragment() {
         addRows(metadataSection!!, metadataRows!!, rows)
     }
 
-    private fun showNoAccessMessage() {
-        mainHandler.post(Runnable noAccessPost@{
-            loading = false
-            if (!this.isTabActive) return@noAccessPost
-            showStatus(R.string.advanced_status_no_access)
-        })
-    }
-
     private fun showStatus(stringRes: Int) {
         if (stringRes == 0) {
             statusView!!.visibility = View.GONE
@@ -383,6 +477,22 @@ class AdvancedInfoFragment : Fragment() {
 
         statusView!!.visibility = View.VISIBLE
         statusView!!.setText(stringRes)
+    }
+
+    private fun clearViewReferences() {
+        statusView = null
+        countersSection = null
+        capacitySection = null
+        chargingSection = null
+        serviceSection = null
+        sysfsSection = null
+        metadataSection = null
+        counterRows = null
+        capacityRows = null
+        chargingRows = null
+        serviceRows = null
+        sysfsRows = null
+        metadataRows = null
     }
 
     private fun clearRows() {
@@ -483,9 +593,9 @@ class AdvancedInfoFragment : Fragment() {
         }
     }
 
-    private inner class ShizukuConnection : ServiceConnection {
-        private val args: UserServiceArgs = buildUserServiceArgs()
-
+    private inner class ShizukuConnection(
+        val args: UserServiceArgs, private val generation: Int
+    ) : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder) {
             Thread {
                 try {
@@ -497,19 +607,29 @@ class AdvancedInfoFragment : Fragment() {
                         )
                     )
                     snapshot.shizukuVersion = Shizuku.getVersion()
-                    postSnapshot(snapshot)
-                } catch (e: Exception) {
-                    showNoAccessMessage()
+                    postSnapshot(snapshot, generation)
+                } catch (error: Throwable) {
+                    mainHandler.post {
+                        if (generation == loadGeneration) {
+                            finishWithNoAccess("Unable to retrieve Shizuku battery stats", error)
+                        }
+                    }
                 } finally {
                     try {
                         Shizuku.unbindUserService(args, this@ShizukuConnection, true)
-                    } catch (ignored: Exception) {
+                    } catch (error: Throwable) {
+                        Log.w(TAG, "Unable to unbind Shizuku user service", error)
                     }
                 }
             }.start()
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
+            mainHandler.post {
+                if (generation == loadGeneration && activeConnection === this@ShizukuConnection) {
+                    finishWithNoAccess("Shizuku user service disconnected")
+                }
+            }
         }
     }
 }

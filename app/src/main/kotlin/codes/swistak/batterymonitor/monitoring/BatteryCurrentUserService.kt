@@ -10,37 +10,36 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 */
-package codes.swistak.batterymonitor.advancedstats
+package codes.swistak.batterymonitor.monitoring
 
 import android.content.Context
 import android.os.Binder
-import android.os.Bundle
 import android.os.IBinder
 import android.os.Parcel
-import android.os.Process
 import android.os.RemoteException
 import androidx.annotation.Keep
 import codes.swistak.batterymonitor.common.PrivilegedShellExecutor
 import kotlin.system.exitProcess
 
-class AdvancedStatsUserService : Binder {
+@Keep
+class BatteryCurrentUserService : Binder {
     companion object {
         private const val DESCRIPTOR =
-            "codes.swistak.batterymonitor.advancedstats.AdvancedStatsUserService"
-
-        private const val TRANSACTION_GET_SNAPSHOT = FIRST_CALL_TRANSACTION
+            "codes.swistak.batterymonitor.monitoring.BatteryCurrentUserService"
+        private const val TRANSACTION_GET_CURRENT = FIRST_CALL_TRANSACTION
         private const val TRANSACTION_DESTROY = 16777115
 
         @Throws(RemoteException::class)
-        fun requestSnapshot(binder: IBinder): Bundle? {
+        fun requestCurrent(binder: IBinder, average: Boolean): Long? {
             val data = Parcel.obtain()
             val reply = Parcel.obtain()
 
             try {
                 data.writeInterfaceToken(DESCRIPTOR)
-                binder.transact(TRANSACTION_GET_SNAPSHOT, data, reply, 0)
+                data.writeInt(if (average) 1 else 0)
+                binder.transact(TRANSACTION_GET_CURRENT, data, reply, 0)
                 reply.readException()
-                return reply.readBundle(AdvancedBatterySnapshot::class.java.getClassLoader())
+                return if (reply.readInt() == 1) reply.readLong() else null
             } finally {
                 reply.recycle()
                 data.recycle()
@@ -48,25 +47,17 @@ class AdvancedStatsUserService : Binder {
         }
     }
 
-    private val context: Context?
+    constructor()
 
-    constructor() {
-        this.context = null
+    @Suppress("UNUSED_PARAMETER")
+    constructor(context: Context?)
+
+    private fun readCurrent(average: Boolean): Long? {
+        val property = if (average) "current_average" else "current_now"
+        return BatteryCurrent.readPrivilegedMicroAmps(
+            property, PrivilegedShellExecutor()
+        ) { null }
     }
-
-    @Keep
-    constructor(context: Context?) {
-        this.context = context?.applicationContext
-    }
-
-    private val snapshot: Bundle
-        get() = AdvancedBatteryStatsCollector.collect(
-            PrivilegedShellExecutor(),
-            AdvancedBatterySnapshot.ACCESS_SHIZUKU,
-            Process.myUid(),
-            context,
-            true
-        ).toBundle()
 
     private fun destroy() {
         exitProcess(0)
@@ -79,22 +70,24 @@ class AdvancedStatsUserService : Binder {
             response.writeString(DESCRIPTOR)
             return true
         }
-
-        if (code == TRANSACTION_GET_SNAPSHOT || code == TRANSACTION_DESTROY) data.enforceInterface(
-            DESCRIPTOR
-        )
-
-        if (code == TRANSACTION_GET_SNAPSHOT) {
-            response.writeNoException()
-            response.writeBundle(this.snapshot)
-            return true
+        if (code != TRANSACTION_GET_CURRENT && code != TRANSACTION_DESTROY) {
+            return super.onTransact(code, data, reply, flags)
         }
 
+        data.enforceInterface(DESCRIPTOR)
         if (code == TRANSACTION_DESTROY) {
             destroy()
             return true
         }
 
-        return super.onTransact(code, data, reply, flags)
+        val current = readCurrent(data.readInt() == 1)
+        response.writeNoException()
+        if (current == null) {
+            response.writeInt(0)
+        } else {
+            response.writeInt(1)
+            response.writeLong(current)
+        }
+        return true
     }
 }

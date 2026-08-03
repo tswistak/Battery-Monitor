@@ -49,7 +49,7 @@ import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.advancedstats.AdvancedBatteryStatsCollector.RootExecutor
+import codes.swistak.batterymonitor.common.RootExecutor
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryCurrentMultiplierDetector
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
@@ -57,7 +57,6 @@ import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnBinderReceivedListener
-import rikka.shizuku.ShizukuProvider
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -67,6 +66,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         private const val EXPORT_REQUEST = 1
         private const val IMPORT_REQUEST = 2
         private const val BATTERY_CURRENT_MULTIPLIER_AUTODETECT_VALUE = "auto"
+        private const val SHIZUKU_PERMISSION_REQUEST_CODE = 7001
 
         private val PARENTS = arrayOf<String?>(
             SettingsContract.KEY_ENABLE_LOGGING,
@@ -163,6 +163,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     private var prefScreen = 0
     private var batteryCurrentMultiplierDetectionRunning = false
     private var applyingDetectedBatteryCurrentMultiplier = false
+    private var pendingShizukuBinderListener: OnBinderReceivedListener? = null
 
     private class MessageHandler(private val sa: SettingsFragment) :
         Handler(Looper.getMainLooper()) {
@@ -219,6 +220,12 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         super.onPause()
 
         mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onDestroy() {
+        pendingShizukuBinderListener?.let(Shizuku::removeBinderReceivedListener)
+        pendingShizukuBinderListener = null
+        super.onDestroy()
     }
 
     @SuppressLint("ApplySharedPref", "UseKtx")
@@ -464,14 +471,14 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         if (key == SettingsContract.KEY_ENABLE_ADVANCED_STATS && mSharedPreferences.getBoolean(
                 SettingsContract.KEY_ENABLE_ADVANCED_STATS, false
             )
-        ) maybeRequestShizukuForAdvancedStats()
+        ) maybeRequestShizukuPermission()
 
         if (key == SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT) {
             val enabled = mSharedPreferences.getBoolean(
                 SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
             )
             BatteryCurrent.setUsePrivilegedAccess(enabled)
-            if (enabled) maybeRequestShizukuForAdvancedStats()
+            if (enabled) maybeRequestShizukuPermission()
         }
 
         if (key == SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL) {
@@ -498,7 +505,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         setupLanguage()
     }
 
-    private fun maybeRequestShizukuForAdvancedStats() {
+    private fun maybeRequestShizukuPermission() {
         Thread(Runnable {
             val rootAvailable = RootExecutor().run("id") != null
             if (rootAvailable) return@Runnable
@@ -509,28 +516,38 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     private fun requestShizukuPermissionIfNeeded() {
         if (!isAdded || activity == null) return
 
-        ShizukuProvider.enableMultiProcessSupport(false)
-        ShizukuProvider.requestBinderForNonProviderProcess(requireActivity().applicationContext)
-
         if (Shizuku.pingBinder()) {
             requestShizukuPermissionFromBinder()
             return
         }
 
-        Shizuku.addBinderReceivedListenerSticky(object : OnBinderReceivedListener {
+        if (pendingShizukuBinderListener != null) return
+        Toast.makeText(requireContext(), R.string.shizuku_not_running, Toast.LENGTH_LONG).show()
+        val listener = object : OnBinderReceivedListener {
             override fun onBinderReceived() {
-                Shizuku.removeBinderReceivedListener(this)
-                requestShizukuPermissionFromBinder()
+                mainHandler.post {
+                    Shizuku.removeBinderReceivedListener(this)
+                    if (pendingShizukuBinderListener === this) pendingShizukuBinderListener = null
+                    requestShizukuPermissionFromBinder()
+                }
             }
-        })
+        }
+        pendingShizukuBinderListener = listener
+        Shizuku.addBinderReceivedListenerSticky(listener)
     }
 
     private fun requestShizukuPermissionFromBinder() {
         if (!isAdded || activity == null || Shizuku.isPreV11()) return
 
         if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) return
+        if (Shizuku.shouldShowRequestPermissionRationale()) {
+            Toast.makeText(
+                requireContext(), R.string.shizuku_permission_denied_permanently, Toast.LENGTH_LONG
+            ).show()
+            return
+        }
 
-        Shizuku.requestPermission(7001)
+        Shizuku.requestPermission(SHIZUKU_PERMISSION_REQUEST_CODE)
     }
 
     private fun updateConvertFSummary() {
