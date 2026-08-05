@@ -5,6 +5,7 @@
 ### Improved
 
 - Shizuku permission handling (#105).
+- Removed hiding status bar icon settings on modern Androids (#89).
 
 ## 1.4.0
 
