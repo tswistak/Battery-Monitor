@@ -236,7 +236,7 @@
   <string name="notification_settings_help" formatted="false">אתה יכול להגדיר איזה תוכן יוצג בהודעה הנפתחת.</string>
   <string name="status_bar_icon_settings" formatted="false">סמל שורת המצב</string>
   <string name="status_bar_icon_settings_summary" formatted="false">בחר את תוכן הסמל</string>
-  <string name="status_bar_icon_settings_help" formatted="false">בחר אם סמל ההתראה יציג את אחוז הסוללה או את הטמפרטורה, אם סמל היחידה יוצג בתוך הסמל, ואם לטעינה יהיה סמל ייעודי.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">בחר אם סמל ההתראה יציג את אחוז הסוללה או את הטמפרטורה, אם סמל היחידה יוצג בתוך הסמל, ואם לטעינה יהיה סמל ייעודי. החל מ-Android 16, ייתכן שסמל שורת המצב לא יפעל בכל גרסאות מערכת ההפעלה.</string>
   <string name="status_bar_chip_settings" formatted="false">שבב שורת המצב</string>
   <string name="status_bar_chip_settings_summary" formatted="false">הגדר את תוכן השבב של עדכונים חיים</string>
   <string name="status_bar_chip_settings_help" formatted="false">ב-Android 16 ומעלה ניתן לקבוע מה יוצג בשבב שורת המצב והאם להציג סימון טעינה.</string>

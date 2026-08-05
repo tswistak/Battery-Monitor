@@ -232,7 +232,7 @@
   <string name="notification_settings_help" formatted="false">Você pode configurar qual conteúdo mostrar na notificação suspensa.</string>
   <string name="status_bar_icon_settings" formatted="false">Ícone da barra de status</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Escolha o conteúdo do ícone</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Escolha se o ícone da notificação mostra a porcentagem da bateria ou a temperatura, se o símbolo da unidade é mostrado no ícone e se o carregamento usa um ícone dedicado.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Escolha se o ícone da notificação mostra a porcentagem da bateria ou a temperatura, se o símbolo da unidade é mostrado no ícone e se o carregamento usa um ícone dedicado. A partir do Android 16, o ícone da barra de status pode não funcionar em todas as variantes do sistema operacional.</string>
   <string name="status_bar_chip_settings" formatted="false">Chip da barra de status</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configurar o conteúdo do chip do Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">No Android 16+ com Live Updates, você pode configurar qual o status o chip da barra é exibido e se o emoji de carregamento deve ser exibido.</string>

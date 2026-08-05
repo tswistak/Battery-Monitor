@@ -225,7 +225,7 @@
   <string name="notification_settings_help" formatted="false">您可以設定在下拉通知中顯示哪些內容。</string>
   <string name="status_bar_icon_settings" formatted="false">狀態列圖示</string>
   <string name="status_bar_icon_settings_summary" formatted="false">選擇圖示內容</string>
-  <string name="status_bar_icon_settings_help" formatted="false">選擇通知圖示要顯示電池百分比還是溫度、是否在圖示中顯示單位符號，以及充電時是否使用專用圖示。</string>
+  <string name="status_bar_icon_settings_help" formatted="false">選擇通知圖示要顯示電池百分比還是溫度、是否在圖示中顯示單位符號，以及充電時是否使用專用圖示。從 Android 16 開始，狀態列圖示可能無法在所有作業系統版本上正常運作。</string>
   <string name="status_bar_chip_settings" formatted="false">狀態列晶片</string>
   <string name="status_bar_chip_settings_summary" formatted="false">配置即時更新晶片內容</string>
   <string name="status_bar_chip_settings_help" formatted="false">在 Android 16+ 的即時更新中，您可以設定狀態列晶片顯示的內容，以及是否顯示充電表情符號。</string>

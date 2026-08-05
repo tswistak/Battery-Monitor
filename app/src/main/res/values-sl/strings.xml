@@ -248,7 +248,7 @@
   <string name="notification_settings_help" formatted="false">Konfigurirate lahko, katero vsebino želite prikazati v spustnem obvestilu.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikona vrstice stanja</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Izberite vsebino ikone</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Izberite, ali ikona obvestila prikazuje odstotek baterije ali temperaturo, ali naj bo v ikoni prikazan simbol enote in ali naj ima polnjenje posebno ikono.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Izberite, ali ikona obvestila prikazuje odstotek baterije ali temperaturo, ali naj bo v ikoni prikazan simbol enote in ali naj ima polnjenje posebno ikono. Od Androida 16 ikona vrstice stanja morda ne bo delovala v vseh različicah operacijskega sistema.</string>
   <string name="status_bar_chip_settings" formatted="false">Čip vrstice stanja</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Konfigurirajte vsebino čipa Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">V sistemu Android 16+ s posodobitvami v živo lahko konfigurirate stanje paličasti čip prikazuje in ali naj prikaže emoji za polnjenje.</string>

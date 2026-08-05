@@ -226,7 +226,7 @@
   <string name="notification_settings_help" formatted="false">Açılır bildirimde hangi içeriğin gösterileceğini yapılandırabilirsiniz.</string>
   <string name="status_bar_icon_settings" formatted="false">Durum Çubuğu Simgesi</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Simge içeriğini seçin</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Bildirim simgesinin pil yüzdesini mi yoksa sıcaklığı mı göstereceğini, simgede birim sembolünün gösterilip gösterilmeyeceğini ve şarj için ayrı bir simge kullanılıp kullanılmayacağını seçin.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Bildirim simgesinin pil yüzdesini mi yoksa sıcaklığı mı göstereceğini, simgede birim sembolünün gösterilip gösterilmeyeceğini ve şarj için ayrı bir simge kullanılıp kullanılmayacağını seçin. Android 16 ve sonrasında durum çubuğu simgesi her işletim sistemi varyantında çalışmayabilir.</string>
   <string name="status_bar_chip_settings" formatted="false">Durum Çubuğu Çipi</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Live Updates çip içeriğini ayarla</string>
   <string name="status_bar_chip_settings_help" formatted="false">Android 16+ ve Live Updates ile durum çubuğu çipinde ne gösterileceğini ayarlayabilirsiniz.</string>

@@ -228,7 +228,7 @@
   <string name="notification_settings_help" formatted="false">Sie können konfigurieren, welche Inhalte in der Benachrichtigung angezeigt werden.</string>
   <string name="status_bar_icon_settings" formatted="false">Statusleistensymbol</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Symbolinhalt auswählen</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Wählen Sie aus, ob das Benachrichtigungssymbol den Akkustand oder die Temperatur anzeigt, ob das Einheitssymbol im Symbol angezeigt wird und ob beim Laden ein eigenes Symbol verwendet wird.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Wählen Sie aus, ob das Benachrichtigungssymbol den Akkustand oder die Temperatur anzeigt, ob das Einheitssymbol im Symbol angezeigt wird und ob beim Laden ein eigenes Symbol verwendet wird. Ab Android 16 funktioniert das Statusleistensymbol möglicherweise nicht auf jeder Betriebssystemvariante.</string>
   <string name="status_bar_chip_settings" formatted="false">Statusleisten-Chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Inhalt des Live-Updates-Chips konfigurieren</string>
   <string name="status_bar_chip_settings_help" formatted="false">Auf Android 16+ mit Live Updates können Sie konfigurieren, was der Statusleisten-Chip zeigt und ob das Lade-Emoji angezeigt wird.</string>

@@ -216,7 +216,7 @@
   <string name="notification_settings_help" formatted="false">您可以配置在下拉通知中显示哪些内容。</string>
   <string name="status_bar_icon_settings" formatted="false">状态栏图标</string>
   <string name="status_bar_icon_settings_summary" formatted="false">选择图标内容</string>
-  <string name="status_bar_icon_settings_help" formatted="false">选择通知图标显示电池百分比还是温度、是否在图标中显示单位符号，以及充电时是否使用专用图标。</string>
+  <string name="status_bar_icon_settings_help" formatted="false">选择通知图标显示电池百分比还是温度、是否在图标中显示单位符号，以及充电时是否使用专用图标。从 Android 16 开始，状态栏图标可能无法在所有操作系统变体上正常工作。</string>
   <string name="status_bar_chip_settings" formatted="false">状态栏芯片</string>
   <string name="status_bar_chip_settings_summary" formatted="false">配置实时更新芯片内容</string>
   <string name="status_bar_chip_settings_help" formatted="false">在具有实时更新的 Android 16+ 上，您可以配置状态 条形芯片显示以及是否显示充电表情。</string>

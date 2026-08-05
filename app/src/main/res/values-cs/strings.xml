@@ -248,7 +248,7 @@
   <string name="notification_settings_help" formatted="false">Můžete nakonfigurovat, který obsah se zobrazí v rozevíracím oznámení.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikona stavového řádku</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Vyberte obsah ikony</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Zvolte, zda ikona v oznámení zobrazuje procento baterie nebo teplotu, zda se v ikoně zobrazuje symbol jednotky a zda má mít nabíjení vlastní ikonu.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Zvolte, zda ikona v oznámení zobrazuje procento baterie nebo teplotu, zda se v ikoně zobrazuje symbol jednotky a zda má mít nabíjení vlastní ikonu. Od Androidu 16 nemusí ikona stavového řádku fungovat ve všech variantách operačního systému.</string>
   <string name="status_bar_chip_settings" formatted="false">Čip stavového řádku</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Nakonfigurujte obsah čipu Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">V systému Android 16+ s živými aktualizacemi můžete konfigurovat stav zobrazuje pruhový čip a zda se má zobrazit emotikon nabíjení.</string>

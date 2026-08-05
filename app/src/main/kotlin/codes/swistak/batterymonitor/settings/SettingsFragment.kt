@@ -295,18 +295,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
         val liveUpdateSupported: Boolean = BatteryInfoService.supportsLiveUpdates()
 
-        if (prefScreen == R.xml.main_pref_screen) {
-            if (liveUpdateSupported) {
-                val p =
-                    mPreferenceScreen!!.findPreference<Preference?>(SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS)
-                if (p != null) mPreferenceScreen!!.removePreference(p)
-            }
-
-            if (!liveUpdateSupported) {
-                val p =
-                    mPreferenceScreen!!.findPreference<Preference?>(SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS)
-                if (p != null) mPreferenceScreen!!.removePreference(p)
-            }
+        if (prefScreen == R.xml.main_pref_screen && !liveUpdateSupported) {
+            val p =
+                mPreferenceScreen!!.findPreference<Preference?>(SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS)
+            if (p != null) mPreferenceScreen!!.removePreference(p)
         }
 
         if (prefRes == R.xml.main_notifs_disabled_pref_screen) {

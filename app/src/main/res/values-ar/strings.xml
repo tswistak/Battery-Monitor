@@ -268,7 +268,7 @@
   <string name="notification_settings_help" formatted="false">يمكنك تكوين المحتوى الذي تود رؤيته في قائمة الاشعارات والسيطرة على مظهره</string>
   <string name="status_bar_icon_settings" formatted="false">ايقونة شريط الحالة</string>
   <string name="status_bar_icon_settings_summary" formatted="false">اختر محتوى الأيقونة</string>
-  <string name="status_bar_icon_settings_help" formatted="false">اختر ما إذا كانت أيقونة الإشعار تعرض نسبة البطارية أو درجة الحرارة، وما إذا كان رمز الوحدة يظهر داخل الأيقونة، وما إذا كان الشحن يستخدم أيقونة مخصصة.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">اختر ما إذا كانت أيقونة الإشعار تعرض نسبة البطارية أو درجة الحرارة، وما إذا كان رمز الوحدة يظهر داخل الأيقونة، وما إذا كان الشحن يستخدم أيقونة مخصصة. ابتداءً من Android 16، قد لا تعمل أيقونة شريط الحالة على جميع إصدارات نظام التشغيل.</string>
   <string name="status_bar_chip_settings" formatted="false">شريحة شريط الحالة</string>
   <string name="status_bar_chip_settings_summary" formatted="false">تهيئة محتوى شريحة Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">على Android 16+ مع Live Updates يمكنك تهيئة ما تعرضه شريحة شريط الحالة وما إذا كان سيتم عرض رمز الشحن التعبيري.</string>

@@ -232,7 +232,7 @@
   <string name="notification_settings_help" formatted="false">Puede configurar qué contenido mostrar en la notificación desplegable.</string>
   <string name="status_bar_icon_settings" formatted="false">Icono de la barra de estado</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Elige el contenido del icono</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Elige si el icono de la notificación muestra el porcentaje de batería o la temperatura, si el símbolo de la unidad aparece en el icono y si la carga usa un icono específico.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Elige si el icono de la notificación muestra el porcentaje de batería o la temperatura, si el símbolo de la unidad aparece en el icono y si la carga usa un icono específico. A partir de Android 16, es posible que el icono de la barra de estado no funcione en todas las variantes del sistema operativo.</string>
   <string name="status_bar_chip_settings" formatted="false">Chip de barra de estado</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configurar el contenido del chip de Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">En Android 16+ con Live Updates, puedes configurar cuál es el estado muestra el chip de barra y si se muestra el emoji de carga.</string>

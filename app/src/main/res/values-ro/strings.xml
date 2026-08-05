@@ -236,7 +236,7 @@
   <string name="notification_settings_help" formatted="false">Puteți configura ce conținut să se afișeze în notificarea derulantă.</string>
   <string name="status_bar_icon_settings" formatted="false">Pictograma barei de stare</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Alege conținutul pictogramei</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Alege dacă pictograma notificării afișează procentul bateriei sau temperatura, dacă simbolul unității este afișat în pictogramă și dacă încărcarea folosește o pictogramă dedicată.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Alege dacă pictograma notificării afișează procentul bateriei sau temperatura, dacă simbolul unității este afișat în pictogramă și dacă încărcarea folosește o pictogramă dedicată. Începând cu Android 16, este posibil ca pictograma barei de stare să nu funcționeze pe toate variantele sistemului de operare.</string>
   <string name="status_bar_chip_settings" formatted="false">Cip bară de stare</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configurați conținutul cipului actualizărilor în direct</string>
   <string name="status_bar_chip_settings_help" formatted="false">Pe Android 16+ cu actualizări live, puteți configura starea cip bară afișează și dacă să afișați emoji-ul de încărcare.</string>

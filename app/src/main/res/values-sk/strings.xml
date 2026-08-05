@@ -252,7 +252,7 @@
   <string name="notification_settings_help" formatted="false">Môžete nakonfigurovať, ktorý obsah sa má zobraziť v rozbaľovacom upozornení.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikona stavového riadka</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Vyberte obsah ikony</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Vyberte, či ikona upozornenia zobrazuje percento batérie alebo teplotu, či sa v ikone zobrazuje symbol jednotky a či má mať nabíjanie vlastnú ikonu.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Vyberte, či ikona upozornenia zobrazuje percento batérie alebo teplotu, či sa v ikone zobrazuje symbol jednotky a či má mať nabíjanie vlastnú ikonu. Od Androidu 16 nemusí ikona stavového riadka fungovať vo všetkých variantoch operačného systému.</string>
   <string name="status_bar_chip_settings" formatted="false">Čip stavového riadka</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Nakonfigurujte obsah čipu Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">V systéme Android 16+ so živými aktualizáciami môžete nakonfigurovať stav zobrazuje pruhový čip a či sa má zobraziť emodži nabíjania.</string>

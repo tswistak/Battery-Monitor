@@ -232,7 +232,7 @@
   <string name="notification_settings_help" formatted="false">Vous pouvez choisir le contenu à afficher dans la notification déroulante.</string>
   <string name="status_bar_icon_settings" formatted="false">Icône de barre d’état</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Choisir le contenu de l’icône</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Choisissez si l’icône de notification affiche le pourcentage de batterie ou la température, si le symbole de l’unité est affiché dans l’icône et si la charge utilise une icône dédiée.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Choisissez si l’icône de notification affiche le pourcentage de batterie ou la température, si le symbole de l’unité est affiché dans l’icône et si la charge utilise une icône dédiée. À partir d’Android 16, l’icône de la barre d’état peut ne pas fonctionner sur toutes les variantes du système d’exploitation.</string>
   <string name="status_bar_chip_settings" formatted="false">Puce de barre d’état</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configurer le contenu de la puce Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">Sur Android 16+, avec Live Updates, vous pouvez configurer ce que la puce affiche.</string>

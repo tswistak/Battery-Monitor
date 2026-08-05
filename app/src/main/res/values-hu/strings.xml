@@ -232,7 +232,7 @@
   <string name="notification_settings_help" formatted="false">Beállíthatod, milyen tartalom jelenjen meg a lehúzható értesítésben.</string>
   <string name="status_bar_icon_settings" formatted="false">Állapotsor ikon</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Ikontartalom kiválasztása</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Válaszd ki, hogy az értesítési ikon az akkumulátor százalékát vagy a hőmérsékletét jelenítse meg, hogy az egységjel megjelenjen-e az ikonban, és hogy töltéskor külön ikon legyen-e.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Válaszd ki, hogy az értesítési ikon az akkumulátor százalékát vagy a hőmérsékletét jelenítse meg, hogy az egységjel megjelenjen-e az ikonban, és hogy töltéskor külön ikon legyen-e. Az Android 16-tól kezdve előfordulhat, hogy az állapotsor ikonja nem működik minden operációsrendszer-változaton.</string>
   <string name="status_bar_chip_settings" formatted="false">Állapotsor chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">A Live Updates chip tartalmának beállítása</string>
   <string name="status_bar_chip_settings_help" formatted="false">Android 16+ rendszeren, Live Updates mellett beállíthatod, mit jelenítsen meg az állapotsor chip.</string>

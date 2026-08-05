@@ -226,7 +226,7 @@
   <string name="notification_settings_help" formatted="false">プルダウン通知に表示される内容を設定し、その外観をコントロールすることができます。</string>
   <string name="status_bar_icon_settings" formatted="false">ステータスバー アイコン</string>
   <string name="status_bar_icon_settings_summary" formatted="false">アイコンの表示内容を選択</string>
-  <string name="status_bar_icon_settings_help" formatted="false">通知アイコンにバッテリー残量を表示するか温度を表示するか、アイコン内に単位記号を表示するか、また充電時に専用アイコンを使うかを選択します。</string>
+  <string name="status_bar_icon_settings_help" formatted="false">通知アイコンにバッテリー残量を表示するか温度を表示するか、アイコン内に単位記号を表示するか、また充電時に専用アイコンを使うかを選択します。Android 16 以降では、OS の種類によってはステータスバーアイコンが機能しない場合があります。</string>
   <string name="status_bar_chip_settings" formatted="false">ステータスバーチップ</string>
   <string name="status_bar_chip_settings_summary" formatted="false">ライブ更新チップの表示内容を設定</string>
   <string name="status_bar_chip_settings_help" formatted="false">Android 16 以降でライブ更新を使用している場合、ステータスバーチップに表示する内容や充電絵文字の表示有無を設定できます。</string>

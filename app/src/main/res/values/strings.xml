@@ -228,7 +228,7 @@
   <string name="notification_settings_help" formatted="false">You can configure which content to show in the pull-down notification.</string>
   <string name="status_bar_icon_settings" formatted="false">Status Bar Icon</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Choose icon content</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Choose whether the notification icon shows battery percentage or temperature. Also choose, whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Choose whether the notification icon shows battery percentage or temperature. Also choose, whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon. Starting with Android 16, the status bar icon may not work on every OS variant.</string>
   <string name="status_bar_chip_settings" formatted="false">Status Bar Chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configure Live Updates\' chip content</string>
   <string name="status_bar_chip_settings_help" formatted="false">On Android 16+ with Live Updates, you can configure what the status bar chip shows and whether to display the charging emoji.</string>

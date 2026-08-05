@@ -250,7 +250,7 @@
   <string name="notification_settings_help" formatted="false">Вы можете настроить, что и как показывать в уведомлении (на опускающейся шторке).</string>
   <string name="status_bar_icon_settings" formatted="false">Значок строки уведомлений</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Выберите содержимое значка</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Выберите, будет ли значок уведомления показывать процент заряда или температуру, будет ли в значке отображаться символ единицы и нужен ли отдельный значок во время зарядки.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Выберите, будет ли значок уведомления показывать процент заряда или температуру, будет ли в значке отображаться символ единицы и нужен ли отдельный значок во время зарядки. Начиная с Android 16 значок строки состояния может работать не во всех вариантах операционной системы.</string>
   <string name="status_bar_chip_settings" formatted="false">Чип в строке состояния</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Настройка содержимого чипа Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">На Android 16+ с Live Updates можно настроить, что показывать в чипе строки состояния и нужно ли отображать эмодзи зарядки.</string>

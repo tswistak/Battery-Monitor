@@ -230,7 +230,7 @@
   <string name="notification_settings_help" formatted="false">आप कॉन्फ़िगर कर सकते हैं कि पुल-डाउन अधिसूचना में कौन सी सामग्री दिखानी है।</string>
   <string name="status_bar_icon_settings" formatted="false">स्टेटस बार आइकन</string>
   <string name="status_bar_icon_settings_summary" formatted="false">आइकन की सामग्री चुनें</string>
-  <string name="status_bar_icon_settings_help" formatted="false">चुनें कि सूचना आइकन बैटरी प्रतिशत दिखाए या तापमान, आइकन में इकाई चिह्न दिखे या नहीं, और चार्जिंग के लिए अलग आइकन इस्तेमाल हो या नहीं।</string>
+  <string name="status_bar_icon_settings_help" formatted="false">चुनें कि सूचना आइकन बैटरी प्रतिशत दिखाए या तापमान, आइकन में इकाई चिह्न दिखे या नहीं, और चार्जिंग के लिए अलग आइकन इस्तेमाल हो या नहीं। Android 16 से शुरू होकर, हो सकता है कि स्टेटस बार आइकन हर OS वेरिएंट पर काम न करे।</string>
   <string name="status_bar_chip_settings" formatted="false">स्टेटस बार चिप</string>
   <string name="status_bar_chip_settings_summary" formatted="false">लाइव अपडेट\' चिप सामग्री कॉन्फ़िगर करें</string>
   <string name="status_bar_chip_settings_help" formatted="false">एंड्रॉइड 16+ पर लाइव अपडेट के साथ, आप स्थिति को कॉन्फ़िगर कर सकते हैं बार चिप दिखाता है और चार्जिंग इमोजी प्रदर्शित करना है या नहीं।</string>

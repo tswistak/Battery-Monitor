@@ -230,7 +230,7 @@
   <string name="notification_settings_help" formatted="false">Je kunt de inhoud en het uiterlijk van de melding aanpassen.</string>
   <string name="status_bar_icon_settings" formatted="false">Statusicoon</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Kies de icooninhoud</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Kies of het meldingsicoon het batterijpercentage of de temperatuur toont, of het eenheidssymbool in het icoon wordt weergegeven en of laden een apart icoon gebruikt.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Kies of het meldingsicoon het batterijpercentage of de temperatuur toont, of het eenheidssymbool in het icoon wordt weergegeven en of laden een apart icoon gebruikt. Vanaf Android 16 werkt het statusbalkpictogram mogelijk niet op elke variant van het besturingssysteem.</string>
   <string name="status_bar_chip_settings" formatted="false">Statusbalkchip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Stel de inhoud van de Live Updates-chip in</string>
   <string name="status_bar_chip_settings_help" formatted="false">Op Android 16+ met Live Updates kun je instellen wat de statusbalkchip toont en of de laad-emoji wordt weergegeven.</string>

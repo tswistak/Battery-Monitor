@@ -232,7 +232,7 @@
   <string name="notification_settings_help" formatted="false">Puoi configurare quali contenuto mostrare nella notifica a tendina e controllarne l\'aspetto.</string>
   <string name="status_bar_icon_settings" formatted="false">Icona barra di stato</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Scegli il contenuto dell’icona</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Scegli se l’icona della notifica mostra la percentuale della batteria o la temperatura, se il simbolo dell’unità viene mostrato nell’icona e se la ricarica usa un’icona dedicata.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Scegli se l’icona della notifica mostra la percentuale della batteria o la temperatura, se il simbolo dell’unità viene mostrato nell’icona e se la ricarica usa un’icona dedicata. A partire da Android 16, l’icona della barra di stato potrebbe non funzionare su tutte le varianti del sistema operativo.</string>
   <string name="status_bar_chip_settings" formatted="false">Chip barra di stato</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configura il contenuto del chip di Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">Su Android 16+ con Live Updates puoi configurare cosa mostra il chip della barra di stato e se visualizzare l\'emoji di ricarica.</string>

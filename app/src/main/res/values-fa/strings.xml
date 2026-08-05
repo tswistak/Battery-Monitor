@@ -230,7 +230,7 @@
   <string name="notification_settings_help" formatted="false">می توانید پیکربندی کنید که کدام محتوا در اعلان کشویی نمایش داده شود.</string>
   <string name="status_bar_icon_settings" formatted="false">نماد نوار وضعیت</string>
   <string name="status_bar_icon_settings_summary" formatted="false">محتوای آیکون را انتخاب کنید</string>
-  <string name="status_bar_icon_settings_help" formatted="false">انتخاب کنید که آیکون اعلان درصد باتری را نشان دهد یا دما، اینکه نماد واحد داخل آیکون نمایش داده شود یا نه، و اینکه هنگام شارژ از آیکون جداگانه استفاده شود یا نه.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">انتخاب کنید که آیکون اعلان درصد باتری را نشان دهد یا دما، اینکه نماد واحد داخل آیکون نمایش داده شود یا نه، و اینکه هنگام شارژ از آیکون جداگانه استفاده شود یا نه. از Android 16 به بعد، ممکن است نماد نوار وضعیت در همه نسخه‌های سیستم‌عامل کار نکند.</string>
   <string name="status_bar_chip_settings" formatted="false">تراشه نوار وضعیت</string>
   <string name="status_bar_chip_settings_summary" formatted="false">محتوای تراشه به‌روزرسانی‌های زنده را پیکربندی کنید</string>
   <string name="status_bar_chip_settings_help" formatted="false">در Android 16 و بالاتر با به‌روزرسانی‌های زنده، می‌توانید وضعیت را پیکربندی کنید تراشه نوار نشان می دهد و اینکه آیا ایموجی شارژ نمایش داده می شود.</string>

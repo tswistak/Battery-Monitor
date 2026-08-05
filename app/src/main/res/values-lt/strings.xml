@@ -248,7 +248,7 @@
   <string name="notification_settings_help" formatted="false">Galite konfigūruoti, kurį turinį rodyti išskleidžiamajame pranešime.</string>
   <string name="status_bar_icon_settings" formatted="false">Būsenos juostos piktograma</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Pasirinkite piktogramos turinį</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Pasirinkite, ar pranešimo piktograma rodo akumuliatoriaus procentą ar temperatūrą, ar piktogramoje rodomas vieneto simbolis ir ar įkrovimui turi būti naudojama atskira piktograma.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Pasirinkite, ar pranešimo piktograma rodo akumuliatoriaus procentą ar temperatūrą, ar piktogramoje rodomas vieneto simbolis ir ar įkrovimui turi būti naudojama atskira piktograma. Nuo „Android 16“ būsenos juostos piktograma gali veikti ne visuose operacinės sistemos variantuose.</string>
   <string name="status_bar_chip_settings" formatted="false">Būsenos juostos lustas</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Konfigūruokite tiesioginių atnaujinimų lusto turinį</string>
   <string name="status_bar_chip_settings_help" formatted="false">16 ir naujesnėse versijose „Android“ su tiesioginiais naujiniais galite konfigūruoti būseną juostos lustas ir ar rodyti įkrovimo jaustuką.</string>

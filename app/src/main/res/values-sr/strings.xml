@@ -240,7 +240,7 @@
   <string name="notification_settings_help" formatted="false">Možete da podesite koji sadržaj želite da bude prikazan u delu za notifikacije i da menjate njegog izgled.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikonica statusne trake</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Izaberite sadržaj ikonice</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Izaberite da li ikonica obaveštenja prikazuje procenat baterije ili temperaturu, da li se u ikonici prikazuje simbol jedinice i da li punjenje koristi posebnu ikonicu.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Izaberite da li ikonica obaveštenja prikazuje procenat baterije ili temperaturu, da li se u ikonici prikazuje simbol jedinice i da li punjenje koristi posebnu ikonicu. Od Androida 16 ikonica statusne trake možda neće raditi u svim varijantama operativnog sistema.</string>
   <string name="status_bar_chip_settings" formatted="false">Čip statusne trake</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Podesite sadržaj čipa za Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">Na Androidu 16+ sa Live Updates možete podesiti šta čip u statusnoj traci prikazuje i da li će se prikazivati emoji za punjenje.</string>

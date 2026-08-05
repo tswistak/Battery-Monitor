@@ -228,7 +228,7 @@
   <string name="notification_settings_help" formatted="false">Μπορείτε να διαμορφώσετε ποιο περιεχόμενο θα εμφανίζεται στην αναπτυσσόμενη ειδοποίηση.</string>
   <string name="status_bar_icon_settings" formatted="false">Εικονίδιο γραμμής κατάστασης</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Επιλέξτε περιεχόμενο εικονιδίου</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Επιλέξτε αν το εικονίδιο ειδοποίησης εμφανίζει ποσοστό μπαταρίας ή θερμοκρασία, αν εμφανίζεται το σύμβολο της μονάδας μέσα στο εικονίδιο και αν η φόρτιση θα έχει ξεχωριστό εικονίδιο.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Επιλέξτε αν το εικονίδιο ειδοποίησης εμφανίζει ποσοστό μπαταρίας ή θερμοκρασία, αν εμφανίζεται το σύμβολο της μονάδας μέσα στο εικονίδιο και αν η φόρτιση θα έχει ξεχωριστό εικονίδιο. Από το Android 16 και μετά, το εικονίδιο της γραμμής κατάστασης ενδέχεται να μη λειτουργεί σε κάθε παραλλαγή του λειτουργικού συστήματος.</string>
   <string name="status_bar_chip_settings" formatted="false">Τσιπ γραμμής κατάστασης</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Διαμόρφωση περιεχομένου τσιπ Ζωντανών ενημερώσεων</string>
   <string name="status_bar_chip_settings_help" formatted="false">Στο Android 16+ με Ζωντανές ενημερώσεις, μπορείτε να διαμορφώσετε την κατάσταση Εμφανίζει το τσιπ ράβδου και αν θα εμφανιστεί το emoji φόρτισης.</string>
