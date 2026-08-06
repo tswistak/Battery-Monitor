@@ -240,7 +240,7 @@
   <string name="notification_settings_help" formatted="false">Możesz skonfigurować, co wyświetlać w rozwijanym powiadomieniu.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikona na pasku stanu</string>
   <string name="status_bar_icon_settings_summary" formatted="false">Wybierz zawartość ikony</string>
-  <string name="status_bar_icon_settings_help" formatted="false">Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Wybierz także, czy symbol jednostki ma być pokazywany w ikonie i czy ładowanie ma mieć własną ikonę. Począwszy od Androida 16, ikona paska stanu może nie działać we wszystkich wariantach systemu.</string>
+  <string name="status_bar_icon_settings_help" formatted="false">Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Wybierz także, czy symbol jednostki ma być pokazywany w ikonie i czy ładowanie ma mieć własną ikonę. Począwszy od Androida 16 ikona na pasku stanu może nie działać w każdym wariancie systemu.</string>
   <string name="status_bar_chip_settings" formatted="false">Kapsułka na pasku stanu</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Skonfiguruj zawartość kapsułki powiadomień na żywo</string>
   <string name="status_bar_chip_settings_help" formatted="false">Na Androidzie 16+ z powiadomieniami na żywo możesz skonfigurować, co pokazuje kapsułka na pasku stanu i czy wyświetlać emoji ładowania.</string>
