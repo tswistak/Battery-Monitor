@@ -1,5 +1,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/remaining_charge">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_remaining_charge"
+            android:summary="@string/pref_show_remaining_charge_summary"
+            android:title="@string/pref_show_remaining_charge"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="category_battery_current_main"
         android:title="@string/pref_cat_battery_current_main">

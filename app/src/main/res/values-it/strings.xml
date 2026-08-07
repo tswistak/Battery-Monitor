@@ -284,7 +284,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Mostrare un\'emoji fulmine durante la ricarica o a carica completa?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Se abilitato, il chip nella barra di stato mostrerà un\'emoji fulmine accanto al valore durante la ricarica o a carica completa.</string>
   <string name="pref_top_line_content" formatted="false">Contenuto riga superiore</string>
-  <string name="pref_top_line_content_help" formatted="false">Configura cosa mostrare nella riga superiore della notifica.</string>
+  <string name="pref_top_line_content_help" formatted="false">Scegli se la riga superiore della notifica mostra il tempo residuo stimato, il tempo trascorso dal cambio di stato o i parametri vitali configurati.</string>
   <string name="pref_bottom_line_content" formatted="false">Contenuto riga inferiore</string>
   <string name="pref_bottom_line_content_help" formatted="false">Hai le stesse opzioni per la riga inferiore e la riga superiore.</string>
   <string name="time_remaining" formatted="false">Tempo rimanente</string>
@@ -490,4 +490,13 @@
   <string name="settings_file_version_warning" formatted="false">Questo file è stato creato da una versione più recente dell’app. L’importazione potrebbe causare un comportamento imprevisto. Continuare comunque?</string>
 
   <string name="background_service_starting" formatted="false">Battery Monitor si sta avviando…</string>
+  <string name="remaining_charge" formatted="false">Carica residua</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Carica residua non disponibile</string>
+  <string name="pref_show_remaining_charge" formatted="false">Mostra carica residua</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Mostrare la carica residua della batteria segnalata dal dispositivo in mAh?</string>
+  <string name="vital_sign_voltage" formatted="false">Tensione della batteria</string>
+  <string name="pref_vital_signs_content" formatted="false">Contenuto dei parametri vitali</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Quali valori includere nei parametri vitali e in quale ordine?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Riordina %1$s</string>
 </resources>

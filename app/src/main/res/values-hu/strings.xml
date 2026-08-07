@@ -284,7 +284,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Villám emoji megjelenítése töltéskor vagy teljes töltöttségnél?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Ha engedélyezve van, az állapotsor chip a töltöttségi érték mellett villám emojit jelenít meg.</string>
   <string name="pref_top_line_content" formatted="false">Felső sor tartalma</string>
-  <string name="pref_top_line_content_help" formatted="false">Állítsd be, mi jelenjen meg az értesítés felső sorában.</string>
+  <string name="pref_top_line_content_help" formatted="false">Válaszd ki, hogy az értesítés felső sora a becsült hátralévő időt, az állapotváltozás óta eltelt időt vagy a beállított életjeleket mutassa.</string>
   <string name="pref_bottom_line_content" formatted="false">Alsó sor tartalma</string>
   <string name="pref_bottom_line_content_help" formatted="false">Az alsó sorhoz ugyanazok az opciók érhetők el, mint a felső sorhoz.</string>
   <string name="time_remaining" formatted="false">Hátralévő idő</string>
@@ -483,4 +483,13 @@
   <string name="settings_file_version_warning" formatted="false">Ezt a fájlt az alkalmazás egy újabb verziója hozta létre. Az importálás váratlan működést okozhat. Folytatja?</string>
 
   <string name="background_service_starting" formatted="false">A Battery Monitor elindul…</string>
+  <string name="remaining_charge" formatted="false">Hátralévő töltés</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">A hátralévő töltés nem érhető el</string>
+  <string name="pref_show_remaining_charge" formatted="false">Hátralévő töltés megjelenítése</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Megjelenjen az eszköz által jelentett hátralévő akkumulátortöltés mAh-ban?</string>
+  <string name="vital_sign_voltage" formatted="false">Akkumulátorfeszültség</string>
+  <string name="pref_vital_signs_content" formatted="false">Életjelek tartalma</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Mely értékek szerepeljenek az életjelek között, és milyen sorrendben?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s átrendezése</string>
 </resources>

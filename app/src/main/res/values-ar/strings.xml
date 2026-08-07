@@ -320,7 +320,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">إظهار رمز البرق أثناء الشحن أو عند الامتلاء الكامل؟</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">عند التمكين، ستعرض شريحة شريط الحالة رمز البرق بجانب القيمة أثناء الشحن أو عند اكتمال الشحن.</string>
   <string name="pref_top_line_content" formatted="false">محتوى الشريط العلوي</string>
-  <string name="pref_top_line_content_help" formatted="false">تكوين ما يدور في السطر العلوي للاشعارات: الوقت المقدر المتبقي (شكلي في مكان آخر)، ماهوالوقت منذ تم تغيير الوضع (في الوتر، موصول، أو مشحونة بالكامل)، أو علامات حيوية بطارية (صحة البطارية، ودرجة الحرارة، والجهد ).</string>
+  <string name="pref_top_line_content_help" formatted="false">اختر ما إذا كان السطر العلوي للإشعار يعرض الوقت المتبقي المقدر أو الوقت منذ تغير الحالة أو المؤشرات الحيوية المحددة.</string>
   <string name="pref_bottom_line_content" formatted="false">المحتوى السفلي</string>
   <string name="pref_bottom_line_content_help" formatted="false">لديك نفس الخيارات للمحتوى السفلي كالمحتوى العلوي.</string>
   <string name="time_remaining" formatted="false">الوقت المتبقي</string>
@@ -535,4 +535,13 @@
   <string name="settings_file_version_warning" formatted="false">تم إنشاء هذا الملف بواسطة إصدار أحدث من التطبيق. قد يؤدي استيراده إلى سلوك غير متوقع. هل تريد المتابعة رغم ذلك؟</string>
 
   <string name="background_service_starting" formatted="false">جارٍ بدء تشغيل مراقب البطارية…</string>
+  <string name="remaining_charge" formatted="false">الشحنة المتبقية</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">الشحنة المتبقية غير متاحة</string>
+  <string name="pref_show_remaining_charge" formatted="false">عرض الشحنة المتبقية</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">عرض شحنة البطارية المتبقية التي يبلغ عنها الجهاز بوحدة mAh؟</string>
+  <string name="vital_sign_voltage" formatted="false">جهد البطارية</string>
+  <string name="pref_vital_signs_content" formatted="false">محتوى المؤشرات الحيوية</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">ما القيم التي يجب تضمينها في المؤشرات الحيوية، وبأي ترتيب؟</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">تغيير ترتيب %1$s</string>
 </resources>

@@ -280,7 +280,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Εμφάνιση ενός emoji αστραπής κατά τη φόρτιση ή την πλήρη φόρτιση;</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Εάν είναι ενεργοποιημένο, το τσιπ της γραμμής κατάστασης θα εμφανίσει ένα emoji αστραπή δίπλα την τιμή του τσιπ κατά τη φόρτιση ή όταν είναι πλήρως φορτισμένο.</string>
   <string name="pref_top_line_content" formatted="false">Περιεχόμενο κορυφαίας γραμμής</string>
-  <string name="pref_top_line_content_help" formatted="false">Διαμορφώστε τι εμφανίζεται στην επάνω γραμμή της ειδοποίησης: εκτιμώμενο χρόνος που απομένει (με δυνατότητα διαμόρφωσης αλλού), πόσος χρόνος από την κατάσταση έχει αλλάξει (συνδεδεμένο, αποσυνδεδεμένο ή πλήρως φορτισμένο) ή το ζωτικά σημεία της μπαταρίας (υγεία μπαταρίας, θερμοκρασία και τάση).</string>
+  <string name="pref_top_line_content_help" formatted="false">Επιλέξτε αν η επάνω γραμμή ειδοποίησης εμφανίζει τον εκτιμώμενο χρόνο που απομένει, τον χρόνο από την αλλαγή κατάστασης ή τα επιλεγμένα ζωτικά στοιχεία.</string>
   <string name="pref_bottom_line_content" formatted="false">Περιεχόμενο κατώτατης γραμμής</string>
   <string name="pref_bottom_line_content_help" formatted="false">Έχετε τις ίδιες επιλογές για την κάτω γραμμή όπως και για την επάνω γραμμή.</string>
   <string name="time_remaining" formatted="false">Χρόνος που απομένει</string>
@@ -495,4 +495,13 @@
   <string name="settings_file_version_warning" formatted="false">Αυτό το αρχείο δημιουργήθηκε από νεότερη έκδοση της εφαρμογής. Η εισαγωγή του μπορεί να προκαλέσει απρόσμενη συμπεριφορά. Συνέχεια ούτως ή άλλως;</string>
 
   <string name="background_service_starting" formatted="false">Το Battery Monitor ξεκινά…</string>
+  <string name="remaining_charge" formatted="false">Υπολειπόμενο φορτίο</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Το υπολειπόμενο φορτίο δεν είναι διαθέσιμο</string>
+  <string name="pref_show_remaining_charge" formatted="false">Εμφάνιση υπολειπόμενου φορτίου</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Εμφάνιση του υπολειπόμενου φορτίου μπαταρίας που αναφέρει η συσκευή σε mAh;</string>
+  <string name="vital_sign_voltage" formatted="false">Τάση μπαταρίας</string>
+  <string name="pref_vital_signs_content" formatted="false">Περιεχόμενο ζωτικών στοιχείων</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Ποιες τιμές να περιλαμβάνονται στα ζωτικά στοιχεία και με ποια σειρά;</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Αλλαγή σειράς: %1$s</string>
 </resources>

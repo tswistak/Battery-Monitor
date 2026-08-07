@@ -64,6 +64,24 @@ internal object SettingsContract {
     const val KEY_BOTTOM_LINE: String = "bottom_line"
     const val KEY_TIME_REMAINING_VERBOSITY: String = "time_remaining_verbosity"
     const val KEY_STATUS_DURATION_IN_VITAL_SIGNS: String = "status_duration_in_vital_signs"
+
+    const val KEY_VITAL_SIGNS_CONTENT: String = "vital_signs_content"
+    const val KEY_VITAL_SIGNS_ORDER: String = "vital_signs_order"
+    const val VITAL_SIGN_HEALTH: String = "health"
+    const val VITAL_SIGN_TEMPERATURE: String = "temperature"
+    const val VITAL_SIGN_VOLTAGE: String = "voltage"
+    const val VITAL_SIGN_CURRENT: String = "current"
+    const val VITAL_SIGN_CHARGE: String = "charge"
+    const val VITAL_SIGN_STATUS_DURATION: String = "status_duration"
+    val ALL_VITAL_SIGNS_CONTENT: List<String> = listOf(
+        VITAL_SIGN_HEALTH,
+        VITAL_SIGN_TEMPERATURE,
+        VITAL_SIGN_VOLTAGE,
+        VITAL_SIGN_CURRENT,
+        VITAL_SIGN_CHARGE,
+        VITAL_SIGN_STATUS_DURATION
+    )
+    val DEFAULT_VITAL_SIGNS_CONTENT: Set<String> = ALL_VITAL_SIGNS_CONTENT.take(3).toSet()
     const val KEY_ENABLE_BATTERY_CURRENT: String = "enable_battery_current"
     const val KEY_USE_PRIVILEGED_BATTERY_CURRENT: String = "use_privileged_battery_current"
     const val KEY_BATTERY_CURRENT_MULTIPLIER: String = "battery_current_multiplier"
@@ -73,6 +91,8 @@ internal object SettingsContract {
     const val KEY_BATTERY_CURRENT_REFRESH_INTERVAL: String = "battery_current_refresh_interval"
     const val KEY_DISPLAY_CURRENT_IN_NOTIFICATION: String = "display_current_in_notification"
     const val KEY_PREFER_AVERAGE_BATTERY_CURRENT: String = "prefer_average_battery_current"
+
+    const val KEY_SHOW_REMAINING_CHARGE: String = "show_remaining_charge"
 
     const val KEY_UI_COLOR: String = "ui_color"
     const val KEY_ENABLE_ADVANCED_STATS: String = "enable_advanced_stats"

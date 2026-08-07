@@ -24,7 +24,7 @@ import java.lang.reflect.Proxy
 
 class SettingsMigrationManagerTest {
     @Test
-    fun `battery current migration is committed only once`() {
+    fun `registered settings migrations are committed only once`() {
         val preferences = FakeSharedPreferences(
             mapOf(
                 SettingsContract.LEGACY_KEY_ENABLE_CURRENT to true,
@@ -35,7 +35,7 @@ class SettingsMigrationManagerTest {
         )
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
-        assertEquals(1, preferences.commitCount)
+        assertEquals(2, preferences.commitCount)
         assertEquals(true, preferences.values[SettingsContract.KEY_ENABLE_BATTERY_CURRENT])
         assertEquals("1000", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER])
         assertEquals(true, preferences.values[SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT])
@@ -54,7 +54,7 @@ class SettingsMigrationManagerTest {
         )
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
-        assertEquals(1, preferences.commitCount)
+        assertEquals(2, preferences.commitCount)
     }
 
     @Test
@@ -92,6 +92,48 @@ class SettingsMigrationManagerTest {
         assertEquals(2, preferences.commitCount)
     }
 
+    @Test
+    fun `vital signs migration preserves old notification choices`() {
+        val preferences = FakeSharedPreferences(
+            mapOf(
+                "_applied_settings_migration_version" to 1,
+                SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION to true,
+                SettingsContract.KEY_STATUS_DURATION_IN_VITAL_SIGNS to true,
+                SettingsContract.KEY_TOP_LINE to "remaining",
+                SettingsContract.KEY_BOTTOM_LINE to "since"
+            )
+        )
+
+        assertTrue(SettingsMigrationManager.migrate(preferences.instance))
+        assertEquals(
+            setOf(
+                SettingsContract.VITAL_SIGN_HEALTH,
+                SettingsContract.VITAL_SIGN_TEMPERATURE,
+                SettingsContract.VITAL_SIGN_VOLTAGE,
+                SettingsContract.VITAL_SIGN_CURRENT,
+                SettingsContract.VITAL_SIGN_STATUS_DURATION
+            ), preferences.values[SettingsContract.KEY_VITAL_SIGNS_CONTENT]
+        )
+        assertEquals("remaining", preferences.values[SettingsContract.KEY_TOP_LINE])
+        assertEquals("since", preferences.values[SettingsContract.KEY_BOTTOM_LINE])
+        assertFalse(
+            preferences.values.containsKey(SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION)
+        )
+        assertFalse(
+            preferences.values.containsKey(SettingsContract.KEY_STATUS_DURATION_IN_VITAL_SIGNS)
+        )
+    }
+
+    @Test
+    fun `vital signs migration defaults to health temperature and voltage`() {
+        assertEquals(
+            SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT,
+            VitalSignsContentMigration.migratedContent(
+                existing = null, displayCurrent = false, displayStatusDuration = false
+            )
+        )
+    }
+
     private fun recordingMigration(
         migrationVersion: Int, executedVersions: MutableList<Int>
     ): SettingsMigration = object : SettingsMigration {
@@ -121,6 +163,7 @@ class SettingsMigrationManagerTest {
                 "getBoolean" -> values[args[0] as String] as? Boolean ?: args[1]
                 "getInt" -> values[args[0] as String] as? Int ?: args[1]
                 "getString" -> values[args[0] as String] as? String ?: args[1]
+                "getStringSet" -> values[args[0] as String] as? Set<*> ?: args[1]
                 "edit" -> createEditor()
                 "toString" -> "FakeSharedPreferences"
                 "hashCode" -> System.identityHashCode(proxy)
@@ -134,7 +177,7 @@ class SettingsMigrationManagerTest {
             val handler = InvocationHandler { proxy, method, arguments ->
                 val args = arguments.orEmpty()
                 when (method.name) {
-                    "putBoolean", "putInt", "putString" -> {
+                    "putBoolean", "putInt", "putString", "putStringSet" -> {
                         updates[args[0] as String] = args[1]
                         proxy
                     }

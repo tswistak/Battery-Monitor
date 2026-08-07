@@ -280,7 +280,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Show a lightning emoji when charging or fully charged?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">If enabled, the status bar chip will show a lightning emoji next to the chip value while charging or when fully charged.</string>
   <string name="pref_top_line_content" formatted="false">Top Line Content</string>
-  <string name="pref_top_line_content_help" formatted="false">Configure what goes in the top line of the notification: estimated time remaining (configurable elsewhere), how long since the status has changed (plugged in, unplugged, or fully charged), or the battery vital signs (battery health, temperature, and voltage).</string>
+  <string name="pref_top_line_content_help" formatted="false">Choose whether the top notification line shows estimated time remaining, time since the status changed, or the configured Vital Signs.</string>
   <string name="pref_bottom_line_content" formatted="false">Bottom Line Content</string>
   <string name="pref_bottom_line_content_help" formatted="false">You have the same options for the bottom line as for the top line.</string>
   <string name="time_remaining" formatted="false">Time Remaining</string>
@@ -497,4 +497,13 @@
   <string name="settings_file_version_warning" formatted="false">This file was created by a newer version of the app. Importing it may cause unexpected behaviour. Continue anyway?</string>
 
   <string name="background_service_starting" formatted="false">Battery Monitor is starting…</string>
+  <string name="remaining_charge" formatted="false">Remaining charge</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Remaining charge unavailable</string>
+  <string name="pref_show_remaining_charge" formatted="false">Display remaining charge</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Display the device-reported remaining battery charge in mAh?</string>
+  <string name="vital_sign_voltage" formatted="false">Battery voltage</string>
+  <string name="pref_vital_signs_content" formatted="false">Vital Signs Content</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Which values should be included in Vital Signs, and in what order?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Reorder %1$s</string>
 </resources>

@@ -284,7 +284,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">¿Mostrar un emoji de relámpago cuando se carga o cuando está completamente cargado?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Si está habilitado, el chip de la barra de estado mostrará un emoji de relámpago al lado el valor del chip mientras se carga o cuando está completamente cargado.</string>
   <string name="pref_top_line_content" formatted="false">Contenido de primera línea</string>
-  <string name="pref_top_line_content_help" formatted="false">Configura lo que va en la línea superior de la notificación: estimado tiempo restante (configurable en otro lugar), cuánto tiempo desde que el estado ha cambiado (enchufado, desenchufado o completamente cargado), o el Signos vitales de la batería (estado, temperatura y voltaje de la batería).</string>
+  <string name="pref_top_line_content_help" formatted="false">Elige si la línea superior de la notificación muestra el tiempo restante estimado, el tiempo desde el cambio de estado o las estadísticas vitales configuradas.</string>
   <string name="pref_bottom_line_content" formatted="false">Contenido fundamental</string>
   <string name="pref_bottom_line_content_help" formatted="false">Tienes las mismas opciones para la línea inferior que para la línea superior.</string>
   <string name="time_remaining" formatted="false">Tiempo restante</string>
@@ -499,4 +499,13 @@
   <string name="settings_file_version_warning" formatted="false">Este archivo fue creado por una versión más reciente de la aplicación. Importarlo puede provocar un comportamiento inesperado. ¿Continuar de todos modos?</string>
 
   <string name="background_service_starting" formatted="false">Battery Monitor se está iniciando…</string>
+  <string name="remaining_charge" formatted="false">Carga restante</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Carga restante no disponible</string>
+  <string name="pref_show_remaining_charge" formatted="false">Mostrar carga restante</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">¿Mostrar la carga restante de la batería indicada por el dispositivo en mAh?</string>
+  <string name="vital_sign_voltage" formatted="false">Voltaje de la batería</string>
+  <string name="pref_vital_signs_content" formatted="false">Contenido de estadísticas vitales</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">¿Qué valores se deben incluir en las estadísticas vitales y en qué orden?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Reordenar %1$s</string>
 </resources>

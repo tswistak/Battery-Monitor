@@ -40,19 +40,11 @@
 
         <TextView
             style="@style/help_pref"
-            android:text="@string/pref_status_duration_in_vital_signs" />
+            android:text="@string/pref_vital_signs_content" />
 
         <TextView
             style="@style/help_text"
-            android:text="@string/pref_status_duration_in_vital_signs_help" />
-
-        <TextView
-            style="@style/help_pref"
-            android:text="@string/pref_display_current_in_notification" />
-
-        <TextView
-            style="@style/help_text"
-            android:text="@string/pref_display_current_in_notification_help" />
+            android:text="@string/pref_vital_signs_content_summary" />
 
     </LinearLayout>
 </ScrollView>

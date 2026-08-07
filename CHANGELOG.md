@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### New
+
+- Battery remaining charge display in the main screen and notification (#87).
+- Notification's "Vital Signs" content customization.
+
 ### Improved
 
 - Shizuku permission handling (#105).

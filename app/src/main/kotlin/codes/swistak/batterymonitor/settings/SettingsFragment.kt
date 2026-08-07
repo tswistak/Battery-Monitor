@@ -36,9 +36,14 @@ import android.os.Messenger
 import android.provider.Settings
 import android.text.InputType
 import android.util.TypedValue
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -48,6 +53,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.RootExecutor
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
@@ -132,11 +140,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             SettingsContract.KEY_CHANGE_APP_LANGUAGE,
             SettingsContract.KEY_MAX_LOG_AGE,
             SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
-            SettingsContract.KEY_STATUS_DURATION_IN_VITAL_SIGNS,
+            SettingsContract.KEY_VITAL_SIGNS_CONTENT,
+            SettingsContract.KEY_VITAL_SIGNS_ORDER,
             SettingsContract.KEY_ENABLE_BATTERY_CURRENT,
             SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT,
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
-            SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION,
             SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT,
             SettingsContract.KEY_UI_COLOR,
             SettingsContract.KEY_PREDICTION_TYPE
@@ -260,10 +268,17 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
             mSharedPreferences.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
         )
-        putBoolean(
-            SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION, mSharedPreferences.getBoolean(
-                SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION, false
+        putStringArrayList(
+            SettingsContract.KEY_VITAL_SIGNS_CONTENT, ArrayList(
+                mSharedPreferences.getStringSet(
+                    SettingsContract.KEY_VITAL_SIGNS_CONTENT,
+                    SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
+                ) ?: SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
             )
+        )
+        putString(
+            SettingsContract.KEY_VITAL_SIGNS_ORDER,
+            mSharedPreferences.getString(SettingsContract.KEY_VITAL_SIGNS_ORDER, null)
         )
         putBoolean(
             SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, mSharedPreferences.getBoolean(
@@ -318,7 +333,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             val prefB =
                 mPreferenceScreen!!.findPreference<Preference?>(SettingsContract.KEY_ENABLE_NOTIFS_B)
             prefB!!.setSummary(R.string.pref_manage_main_channel)
-            updateDisplayCurrentInNotificationEnabledness()
         } else if (prefScreen == R.xml.status_bar_chip_pref_screen) {
             if (!liveUpdateSupported) {
                 val chipCat = mPreferenceScreen!!.findPreference<Preference?>(
@@ -402,8 +416,137 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 return true
             }
 
+            SettingsContract.KEY_VITAL_SIGNS_CONTENT -> {
+                showVitalSignsDialog(preference)
+                return true
+            }
+
             else -> return key == SettingsContract.KEY_PLUGIN_SETTINGS
         }
+    }
+
+    private data class VitalSignDialogItem(
+        val value: String, val label: CharSequence, var isSelected: Boolean
+    )
+
+    private class VitalSignViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val checkBox: CheckBox = view.findViewById(R.id.vital_sign_checkbox)
+        val dragHandle: ImageView = view.findViewById(R.id.vital_sign_drag_handle)
+    }
+
+    private class VitalSignsAdapter(
+        private val items: MutableList<VitalSignDialogItem>
+    ) : RecyclerView.Adapter<VitalSignViewHolder>() {
+        var startDrag: ((RecyclerView.ViewHolder) -> Unit)? = null
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VitalSignViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(
+                R.layout.vital_sign_dialog_item, parent, false
+            )
+            return VitalSignViewHolder(view)
+        }
+
+        @SuppressLint("ClickableViewAccessibility")
+        override fun onBindViewHolder(holder: VitalSignViewHolder, position: Int) {
+            val item = items[position]
+            holder.checkBox.setOnCheckedChangeListener(null)
+            holder.checkBox.text = item.label
+            holder.checkBox.isChecked = item.isSelected
+            holder.checkBox.setOnCheckedChangeListener { _, checked ->
+                item.isSelected = checked
+            }
+            holder.dragHandle.contentDescription = holder.itemView.context.getString(
+                R.string.pref_vital_signs_reorder_handle, item.label
+            )
+            holder.dragHandle.setOnTouchListener { _, event ->
+                if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                    startDrag?.invoke(holder)
+                    true
+                } else {
+                    false
+                }
+            }
+        }
+
+        override fun getItemCount(): Int = items.size
+
+        fun move(fromPosition: Int, toPosition: Int) {
+            if (fromPosition == toPosition) return
+            val item = items.removeAt(fromPosition)
+            items.add(toPosition, item)
+            notifyItemMoved(fromPosition, toPosition)
+        }
+    }
+
+    private fun showVitalSignsDialog(preference: Preference) {
+        val context = context ?: return
+        val selectedValues = mSharedPreferences.getStringSet(
+            SettingsContract.KEY_VITAL_SIGNS_CONTENT, SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
+        ) ?: SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
+        val labelsByValue = resources.getStringArray(
+            R.array.vital_signs_content_values
+        ).zip(resources.getTextArray(R.array.vital_signs_content_entries)).toMap()
+        val items = VitalSignsOrder.parse(
+            mSharedPreferences.getString(SettingsContract.KEY_VITAL_SIGNS_ORDER, null)
+        ).mapNotNullTo(mutableListOf()) { value ->
+            labelsByValue[value]?.let { label ->
+                VitalSignDialogItem(value, label, value in selectedValues)
+            }
+        }
+
+        val rowPadding = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics
+        ).toInt()
+        val adapter = VitalSignsAdapter(items)
+        val list = RecyclerView(context).apply {
+            layoutManager = LinearLayoutManager(context)
+            this.adapter = adapter
+            setPadding(rowPadding, 0, rowPadding, 0)
+            clipToPadding = false
+        }
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
+                if (fromPosition == RecyclerView.NO_POSITION || toPosition == RecyclerView.NO_POSITION) {
+                    return false
+                }
+                adapter.move(fromPosition, toPosition)
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
+
+            override fun isLongPressDragEnabled(): Boolean = false
+        }).apply { attachToRecyclerView(list) }
+        adapter.startDrag = itemTouchHelper::startDrag
+
+        AlertDialog.Builder(context).setTitle(preference.title).setMessage(preference.summary)
+            .setView(list).setPositiveButton(R.string.okay) { _, _ ->
+                mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+                try {
+                    mSharedPreferences.edit {
+                        putStringSet(
+                            SettingsContract.KEY_VITAL_SIGNS_CONTENT,
+                            items.filter { it.isSelected }.mapTo(linkedSetOf()) {
+                                it.value
+                            })
+                        putString(
+                            SettingsContract.KEY_VITAL_SIGNS_ORDER,
+                            VitalSignsOrder.serialize(items.map { it.value })
+                        )
+                    }
+                } finally {
+                    mSharedPreferences.registerOnSharedPreferenceChangeListener(this)
+                }
+                resetService()
+            }.setNegativeButton(R.string.cancel, null).show()
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
@@ -706,13 +849,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 resetService()
             }
         }.apply { name = "battery-current-multiplier-detection" }.start()
-    }
-
-    private fun updateDisplayCurrentInNotificationEnabledness() {
-        mPreferenceScreen!!.findPreference<Preference?>(
-            SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION
-        )?.isEnabled =
-            mSharedPreferences.getBoolean(SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false)
     }
 
     private fun setupBatteryCurrentRefreshIntervalPreference() {

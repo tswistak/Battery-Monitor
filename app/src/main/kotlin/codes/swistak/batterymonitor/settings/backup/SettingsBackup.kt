@@ -15,6 +15,9 @@ package codes.swistak.batterymonitor.settings.backup
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.VitalSignsOrder
+import codes.swistak.batterymonitor.settings.migration.VitalSignsContentMigration
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -25,7 +28,7 @@ import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 
 internal object SettingsBackup {
-    const val SCHEMA_VERSION: Int = Version2SettingsImporter.VERSION
+    const val SCHEMA_VERSION: Int = Version3SettingsImporter.VERSION
 
     private fun validateSettings(
         settings: JSONObject, schema: Map<String, Class<*>>
@@ -45,6 +48,10 @@ internal object SettingsBackup {
                     "Invalid type for '$key': expected string"
                 }
 
+                Int::class.java -> require(value is Int) {
+                    "Invalid type for '$key': expected integer"
+                }
+
                 else -> error("Unsupported settings type for '$key'")
             }
             put(key, value)
@@ -60,9 +67,22 @@ internal object SettingsBackup {
     fun exportToJson(prefs: SharedPreferences): JSONObject {
         val settings = JSONObject()
         for (entry in prefs.all.entries) {
-            if (Version2SettingsImporter.schema.containsKey(entry.key)) {
+            if (Version3SettingsImporter.schema.containsKey(entry.key)) {
                 settings.put(entry.key, entry.value)
             }
+        }
+
+        val vitalSignsContent = prefs.getStringSet(
+            SettingsContract.KEY_VITAL_SIGNS_CONTENT, SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
+        ) ?: SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
+        for ((backupKey, contentValue) in Version3SettingsImporter.vitalSignsContentByBackupKey) {
+            settings.put(backupKey, contentValue in vitalSignsContent)
+        }
+        val vitalSignsOrder = VitalSignsOrder.parse(
+            prefs.getString(SettingsContract.KEY_VITAL_SIGNS_ORDER, null)
+        )
+        for ((backupKey, contentValue) in Version3SettingsImporter.vitalSignsOrderByBackupKey) {
+            settings.put(backupKey, vitalSignsOrder.indexOf(contentValue))
         }
 
         val root = JSONObject()
@@ -77,7 +97,11 @@ internal object SettingsBackup {
         val version = root.optInt("version", 0)
         val importer = settingsImporterForVersion(version)
         val settings = root.optJSONObject("settings") ?: return
-        importer.restore(editor, validateSettings(settings, importer.schema))
+        val validatedSettings = validateSettings(settings, importer.schema)
+        importer.restore(editor, validatedSettings)
+        if (version < Version3SettingsImporter.VERSION) {
+            VitalSignsContentMigration.restoreImportedSettings(editor, validatedSettings)
+        }
     }
 
     @Throws(IOException::class)

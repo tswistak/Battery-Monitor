@@ -282,7 +282,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">चार्ज करते समय या पूरी तरह चार्ज होने पर बिजली का इमोजी दिखाएँ?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">यदि सक्षम किया गया है, तो स्टेटस बार चिप बगल में एक बिजली का इमोजी दिखाएगा चार्ज करते समय या पूरी तरह चार्ज होने पर चिप का मूल्य।</string>
   <string name="pref_top_line_content" formatted="false">शीर्ष पंक्ति सामग्री</string>
-  <string name="pref_top_line_content_help" formatted="false">अधिसूचना की शीर्ष पंक्ति में क्या जाता है उसे कॉन्फ़िगर करें: अनुमानित शेष समय (अन्यत्र कॉन्फ़िगर करने योग्य), स्थिति कितने समय से है बदल गया है (प्लग इन, अनप्लग, या पूरी तरह से चार्ज), या बैटरी महत्वपूर्ण संकेत (बैटरी स्वास्थ्य, तापमान और वोल्टेज)।</string>
+  <string name="pref_top_line_content_help" formatted="false">चुनें कि सूचना की ऊपरी पंक्ति अनुमानित शेष समय, स्थिति बदलने के बाद का समय या चुने गए महत्वपूर्ण आँकड़े दिखाए।</string>
   <string name="pref_bottom_line_content" formatted="false">निचली पंक्ति की सामग्री</string>
   <string name="pref_bottom_line_content_help" formatted="false">आपके पास निचली पंक्ति के लिए वही विकल्प हैं जो शीर्ष पंक्ति के लिए हैं।</string>
   <string name="time_remaining" formatted="false">शेष समय</string>
@@ -495,4 +495,13 @@
   <string name="settings_file_version_warning" formatted="false">यह फ़ाइल ऐप के नए संस्करण से बनाई गई है। इसे आयात करने से अनपेक्षित व्यवहार हो सकता है। फिर भी जारी रखें?</string>
 
   <string name="background_service_starting" formatted="false">बैटरी मॉनिटर शुरू हो रहा है…</string>
+  <string name="remaining_charge" formatted="false">शेष चार्ज</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">शेष चार्ज उपलब्ध नहीं है</string>
+  <string name="pref_show_remaining_charge" formatted="false">शेष चार्ज दिखाएँ</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">डिवाइस द्वारा रिपोर्ट किया गया शेष बैटरी चार्ज mAh में दिखाएँ?</string>
+  <string name="vital_sign_voltage" formatted="false">बैटरी वोल्टेज</string>
+  <string name="pref_vital_signs_content" formatted="false">महत्वपूर्ण आँकड़ों की सामग्री</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">महत्वपूर्ण आँकड़ों में कौन-से मान शामिल हों और किस क्रम में?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s का क्रम बदलें</string>
 </resources>

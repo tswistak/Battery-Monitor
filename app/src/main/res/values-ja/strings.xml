@@ -278,7 +278,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">充電中または満充電時に稲妻絵文字を表示しますか？</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">有効にすると、充電中または満充電時に、ステータスバーチップの値の横に稲妻絵文字が表示されます。</string>
   <string name="pref_top_line_content" formatted="false">最上行のコンテンツ</string>
-  <string name="pref_top_line_content_help" formatted="false">通知の最上行の表示を設定します: 見積残り時間 (他の場所で設定可能)、 ステータスが変わってからの時間 (プラグを挿す、抜く、またはフル充電)、 またはバッテリーバイタルサイン (バッテリーの健康状態、温度、および電圧)。</string>
+  <string name="pref_top_line_content_help" formatted="false">通知の上段に、推定残り時間、状態が変わってからの時間、または設定した主要情報のどれを表示するか選択します。</string>
   <string name="pref_bottom_line_content" formatted="false">最下行のコンテンツ</string>
   <string name="pref_bottom_line_content_help" formatted="false">最上行と同様に、最下行にも同じオプションがあります。</string>
   <string name="time_remaining" formatted="false">残時間</string>
@@ -492,4 +492,13 @@
   <string name="settings_file_version_warning" formatted="false">このファイルは新しいバージョンのアプリで作成されています。インポートすると予期しない動作が発生する可能性があります。それでも続行しますか？</string>
 
   <string name="background_service_starting" formatted="false">Battery Monitor を起動しています…</string>
+  <string name="remaining_charge" formatted="false">残りの充電量</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">残りの充電量を取得できません</string>
+  <string name="pref_show_remaining_charge" formatted="false">残りの充電量を表示</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">端末が報告するバッテリーの残りの充電量を mAh で表示しますか？</string>
+  <string name="vital_sign_voltage" formatted="false">バッテリー電圧</string>
+  <string name="pref_vital_signs_content" formatted="false">主要情報の内容</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">主要情報に含める値と表示順をどうしますか？</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">%1$sの順序を変更</string>
 </resources>

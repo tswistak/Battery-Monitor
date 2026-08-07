@@ -288,7 +288,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">להציג סימון בזמן טעינה או טעינה מלאה?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">אם מופעל, שבב שורת המצב יציג סימון ליד הערך בזמן טעינה או טעינה מלאה.</string>
   <string name="pref_top_line_content" formatted="false">תוכן השורה העליונה</string>
-  <string name="pref_top_line_content_help" formatted="false">הגדר את מה שמופיע בשורה העליונה של ההודעה: הערכה הזמן שנותר (ניתן להגדרה במקום אחר), כמה זמן מאז הסטטוס השתנה (מחובר לחשמל, מנותק או נטען במלואו), או את סימנים חיוניים של הסוללה (בריאות הסוללה, טמפרטורה ומתח).</string>
+  <string name="pref_top_line_content_help" formatted="false">בחר אם בשורה העליונה של ההתראה יוצגו הזמן המשוער שנותר, הזמן מאז שינוי המצב או הנתונים החיוניים שנבחרו.</string>
   <string name="pref_bottom_line_content" formatted="false">תוכן השורה התחתונה</string>
   <string name="pref_bottom_line_content_help" formatted="false">יש לך אותן אפשרויות לשורה התחתונה כמו לשורה העליונה.</string>
   <string name="time_remaining" formatted="false">משך הזמן שנותר</string>
@@ -501,4 +501,13 @@
   <string name="settings_file_version_warning" formatted="false">קובץ זה נוצר בגרסה חדשה יותר של האפליקציה. ייבואו עלול לגרום להתנהגות בלתי צפויה. להמשיך בכל זאת?</string>
 
   <string name="background_service_starting" formatted="false">Battery Monitor מופעל…</string>
+  <string name="remaining_charge" formatted="false">טעינה נותרת</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">הטעינה הנותרת אינה זמינה</string>
+  <string name="pref_show_remaining_charge" formatted="false">הצגת הטעינה הנותרת</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">להציג את טעינת הסוללה הנותרת שהמכשיר מדווח עליה ב־mAh?</string>
+  <string name="vital_sign_voltage" formatted="false">מתח הסוללה</string>
+  <string name="pref_vital_signs_content" formatted="false">תוכן הנתונים החיוניים</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">אילו ערכים לכלול בנתונים החיוניים ובאיזה סדר?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">שינוי הסדר של %1$s</string>
 </resources>

@@ -277,7 +277,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">充電或充飽電時顯示閃電表情符號？</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">如果啟用，狀態列晶片將在旁邊顯示閃電表情符號 充電時或充滿電時的晶片值。</string>
   <string name="pref_top_line_content" formatted="false">頂線內容</string>
-  <string name="pref_top_line_content_help" formatted="false">配置通知第一行的內容：估計 剩餘時間（可在其他地方設定），狀態發生後多久 已更改（插入、拔出或充滿電），或者 電池生命徵象（電池健康狀況、溫度和電壓）。</string>
+  <string name="pref_top_line_content_help" formatted="false">選擇通知上方列要顯示預估剩餘時間、狀態變更後的時間或已設定的重要資料。</string>
   <string name="pref_bottom_line_content" formatted="false">底線內容</string>
   <string name="pref_bottom_line_content_help" formatted="false">對於底線和頂線，您有相同的選項。</string>
   <string name="time_remaining" formatted="false">剩餘時間</string>
@@ -492,4 +492,13 @@
   <string name="settings_file_version_warning" formatted="false">此檔案由較新版本的應用程式建立。匯入可能會造成未預期的行為。仍要繼續嗎？</string>
 
   <string name="background_service_starting" formatted="false">電池監視器正在啟動…</string>
+  <string name="remaining_charge" formatted="false">剩餘電量</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">無法取得剩餘電量</string>
+  <string name="pref_show_remaining_charge" formatted="false">顯示剩餘電量</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">要以 mAh 顯示裝置回報的電池剩餘電量嗎？</string>
+  <string name="vital_sign_voltage" formatted="false">電池電壓</string>
+  <string name="pref_vital_signs_content" formatted="false">重要資料內容</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">重要資料中要包含哪些數值，並以什麼順序顯示？</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">調整「%1$s」的順序</string>
 </resources>

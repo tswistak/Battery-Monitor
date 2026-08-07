@@ -300,7 +300,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Zobrazit emotikony blesku při nabíjení nebo plném nabití?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Pokud je povoleno, na čipu stavového řádku se vedle zobrazí emotikony blesku hodnotu čipu při nabíjení nebo při plném nabití.</string>
   <string name="pref_top_line_content" formatted="false">Obsah horní řádky</string>
-  <string name="pref_top_line_content_help" formatted="false">Nakonfigurujte, co se zobrazí v horním řádku oznámení: odhad zbývající čas (lze konfigurovat jinde), jak dlouho od stavu se změnila (připojena, odpojena nebo plně nabitá) nebo životní funkce baterie (stav baterie, teplota a napětí).</string>
+  <string name="pref_top_line_content_help" formatted="false">Zvolte, zda horní řádek oznámení zobrazí odhad zbývajícího času, dobu od změny stavu nebo vybrané důležité údaje.</string>
   <string name="pref_bottom_line_content" formatted="false">Sečteno a podtrženo Obsah</string>
   <string name="pref_bottom_line_content_help" formatted="false">Pro spodní řádek máte stejné možnosti jako pro horní řádek.</string>
   <string name="time_remaining" formatted="false">Zbývající čas</string>
@@ -516,4 +516,13 @@
   <string name="settings_file_version_warning" formatted="false">Tento soubor byl vytvořen novější verzí aplikace. Jeho import může způsobit neočekávané chování. Přesto pokračovat?</string>
 
   <string name="background_service_starting" formatted="false">Monitor baterie se spouští…</string>
+  <string name="remaining_charge" formatted="false">Zbývající náboj</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Zbývající náboj není k dispozici</string>
+  <string name="pref_show_remaining_charge" formatted="false">Zobrazit zbývající náboj</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Zobrazit zbývající náboj baterie hlášený zařízením v mAh?</string>
+  <string name="vital_sign_voltage" formatted="false">Napětí baterie</string>
+  <string name="pref_vital_signs_content" formatted="false">Obsah důležitých údajů</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Které hodnoty zahrnout do důležitých údajů a v jakém pořadí?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Změnit pořadí: %1$s</string>
 </resources>

@@ -282,7 +282,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Een bliksem-emoji tonen tijdens laden of volledig geladen?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Als dit is ingeschakeld, toont de statusbalkchip een bliksem-emoji naast de waarde tijdens laden of wanneer volledig opgeladen.</string>
   <string name="pref_top_line_content" formatted="false">Inhoud van bovenste lijn</string>
-  <string name="pref_top_line_content_help" formatted="false">Kies wat je wilt zien in de bovenste regel van de melding.</string>
+  <string name="pref_top_line_content_help" formatted="false">Kies of de bovenste meldingsregel de geschatte resterende tijd, de tijd sinds de statuswijziging of de ingestelde vitale gegevens toont.</string>
   <string name="pref_bottom_line_content" formatted="false">Inhoud van onderste lijn</string>
   <string name="pref_bottom_line_content_help" formatted="false">Je kunt de onderste regel op dezelfde manier aanpassen als de bovenste regel.</string>
   <string name="time_remaining" formatted="false">Tijd resterend</string>
@@ -499,4 +499,13 @@
   <string name="settings_file_version_warning" formatted="false">Dit bestand is gemaakt met een nieuwere versie van de app. Importeren kan onverwacht gedrag veroorzaken. Toch doorgaan?</string>
 
   <string name="background_service_starting" formatted="false">Battery Monitor wordt gestart…</string>
+  <string name="remaining_charge" formatted="false">Resterende lading</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Resterende lading niet beschikbaar</string>
+  <string name="pref_show_remaining_charge" formatted="false">Resterende lading tonen</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">De door het apparaat gemelde resterende batterijlading in mAh tonen?</string>
+  <string name="vital_sign_voltage" formatted="false">Batterijspanning</string>
+  <string name="pref_vital_signs_content" formatted="false">Inhoud vitale gegevens</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Welke waarden opnemen in de vitale gegevens en in welke volgorde?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s verplaatsen</string>
 </resources>

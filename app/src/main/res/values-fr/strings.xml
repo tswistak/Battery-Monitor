@@ -284,7 +284,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Afficher un emoji éclair pendant la charge ?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Si activé, la puce affichera un emoji éclair pendant la charge.</string>
   <string name="pref_top_line_content" formatted="false">Contenu de la ligne haute</string>
-  <string name="pref_top_line_content_help" formatted="false">Configurez ce qui apparaît sur la ligne haute de la notification.</string>
+  <string name="pref_top_line_content_help" formatted="false">Choisissez si la ligne supérieure affiche le temps restant estimé, le temps écoulé depuis le changement d’état ou les signes vitaux configurés.</string>
   <string name="pref_bottom_line_content" formatted="false">Contenu de la ligne basse</string>
   <string name="pref_bottom_line_content_help" formatted="false">Les mêmes options sont disponibles pour la ligne basse et la ligne haute.</string>
   <string name="time_remaining" formatted="false">Temps restant</string>
@@ -491,4 +491,13 @@
   <string name="settings_file_version_warning" formatted="false">Ce fichier a été créé par une version plus récente de l’application. Son importation peut provoquer un comportement inattendu. Continuer quand même ?</string>
 
   <string name="background_service_starting" formatted="false">Battery Monitor démarre…</string>
+  <string name="remaining_charge" formatted="false">Charge restante</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Charge restante indisponible</string>
+  <string name="pref_show_remaining_charge" formatted="false">Afficher la charge restante</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Afficher la charge restante de la batterie signalée par l’appareil en mAh ?</string>
+  <string name="vital_sign_voltage" formatted="false">Tension de la batterie</string>
+  <string name="pref_vital_signs_content" formatted="false">Contenu des signes vitaux</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Quelles valeurs inclure dans les signes vitaux et dans quel ordre ?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Réorganiser %1$s</string>
 </resources>

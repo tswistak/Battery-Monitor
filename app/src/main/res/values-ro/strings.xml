@@ -288,7 +288,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Afișați un emoji fulger când se încarcă sau este complet încărcat?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Dacă este activat, cipul barei de stare va afișa un emoji fulger lângă valoarea cipului în timpul încărcării sau când este complet încărcat.</string>
   <string name="pref_top_line_content" formatted="false">Conținut de linie de sus</string>
-  <string name="pref_top_line_content_help" formatted="false">Configurați ce se întâmplă în linia de sus a notificării: estimat timpul rămas (configurabil în altă parte), cât timp de la stare sa schimbat (conectat, deconectat sau încărcat complet) sau semnele vitale ale bateriei (sănătatea bateriei, temperatură și tensiune).</string>
+  <string name="pref_top_line_content_help" formatted="false">Alege dacă linia de sus a notificării afișează timpul rămas estimat, timpul de la schimbarea stării sau statisticile vitale configurate.</string>
   <string name="pref_bottom_line_content" formatted="false">Conținutul final</string>
   <string name="pref_bottom_line_content_help" formatted="false">Aveți aceleași opțiuni pentru linia de jos ca și pentru linia de sus.</string>
   <string name="time_remaining" formatted="false">Timpul rămas</string>
@@ -505,4 +505,13 @@
   <string name="settings_file_version_warning" formatted="false">Acest fișier a fost creat de o versiune mai nouă a aplicației. Importarea lui poate cauza un comportament neașteptat. Continui oricum?</string>
 
   <string name="background_service_starting" formatted="false">Monitorul bateriei pornește…</string>
+  <string name="remaining_charge" formatted="false">Încărcare rămasă</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Încărcarea rămasă nu este disponibilă</string>
+  <string name="pref_show_remaining_charge" formatted="false">Afișează încărcarea rămasă</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Afișezi încărcarea rămasă a bateriei raportată de dispozitiv în mAh?</string>
+  <string name="vital_sign_voltage" formatted="false">Tensiunea bateriei</string>
+  <string name="pref_vital_signs_content" formatted="false">Conținutul statisticilor vitale</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Ce valori să fie incluse în statisticile vitale și în ce ordine?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Reordonați %1$s</string>
 </resources>

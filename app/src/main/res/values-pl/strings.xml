@@ -292,7 +292,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Czy pokazywać emoji błyskawicy podczas ładowania lub pełnego naładowania?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Jeśli włączone, kapsułka na pasku stanu pokaże emoji błyskawicy obok wartości kapsułki podczas ładowania lub po pełnym naładowaniu.</string>
   <string name="pref_top_line_content" formatted="false">Zawartość górnego wiersza</string>
-  <string name="pref_top_line_content_help" formatted="false">Skonfiguruj, co ma się znajdować w górnym wierszu powiadomienia: szacowany pozostały czas (konfigurowalny w innym miejscu), czas od zmiany stanu (podłączony, odłączony, w pełni naładowany) lub parametry baterii (zdrowie, temperatura i napięcie).</string>
+  <string name="pref_top_line_content_help" formatted="false">Wybierz, czy górny wiersz powiadomienia ma pokazywać szacowany pozostały czas, czas od zmiany stanu czy skonfigurowane parametry.</string>
   <string name="pref_bottom_line_content" formatted="false">Zawartość dolnego wiersza</string>
   <string name="pref_bottom_line_content_help" formatted="false">Masz te same opcje dla dolnego i górnego wiersza.</string>
   <string name="time_remaining" formatted="false">Pozostały czas</string>
@@ -509,4 +509,13 @@
   <string name="settings_file_version_warning" formatted="false">Ten plik został utworzony przez nowszą wersję aplikacji. Zaimportowanie go może spowodować nieoczekiwane zachowanie. Czy kontynuować mimo to?</string>
 
   <string name="background_service_starting" formatted="false">Monitor baterii uruchamia się…</string>
+  <string name="remaining_charge" formatted="false">Pozostały ładunek</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Pozostały ładunek jest niedostępny</string>
+  <string name="pref_show_remaining_charge" formatted="false">Wyświetlaj pozostały ładunek</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Czy wyświetlać zgłaszany przez urządzenie pozostały ładunek baterii w mAh?</string>
+  <string name="vital_sign_voltage" formatted="false">Napięcie baterii</string>
+  <string name="pref_vital_signs_content" formatted="false">Zawartość parametrów</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Które wartości uwzględnić w parametrach i w jakiej kolejności?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Zmień kolejność: %1$s</string>
 </resources>

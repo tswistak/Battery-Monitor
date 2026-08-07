@@ -300,7 +300,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Prikaži emoji strele, ko se polni ali je popolnoma napolnjen?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Če je omogočeno, bo poleg čipa statusne vrstice prikazan emoji v obliki strele vrednost čipa med polnjenjem ali ko je popolnoma napolnjen.</string>
   <string name="pref_top_line_content" formatted="false">Vsebina vrhnje vrstice</string>
-  <string name="pref_top_line_content_help" formatted="false">Konfigurirajte, kaj se prikaže v zgornji vrstici obvestila: ocenjeno preostali čas (nastavljiv drugje), koliko časa je minilo od stanja se je spremenilo (priklopljeno, izklopljeno ali popolnoma napolnjeno) ali vitalne znake baterije (zdravje baterije, temperatura in napetost).</string>
+  <string name="pref_top_line_content_help" formatted="false">Izberite, ali zgornja vrstica obvestila prikazuje ocenjeni preostali čas, čas od spremembe stanja ali izbrane ključne podatke.</string>
   <string name="pref_bottom_line_content" formatted="false">Bottom Line Vsebina</string>
   <string name="pref_bottom_line_content_help" formatted="false">Za spodnjo vrstico imate enake možnosti kot za zgornjo vrstico.</string>
   <string name="time_remaining" formatted="false">Preostali čas</string>
@@ -517,4 +517,13 @@
   <string name="settings_file_version_warning" formatted="false">Ta datoteka je bila ustvarjena z novejšo različico aplikacije. Uvoz lahko povzroči nepričakovano delovanje. Vseeno nadaljujem?</string>
 
   <string name="background_service_starting" formatted="false">Nadzornik baterije se zaganja…</string>
+  <string name="remaining_charge" formatted="false">Preostali naboj</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Preostali naboj ni na voljo</string>
+  <string name="pref_show_remaining_charge" formatted="false">Prikaži preostali naboj</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Prikažem preostali naboj baterije, ki ga sporoča naprava, v mAh?</string>
+  <string name="vital_sign_voltage" formatted="false">Napetost baterije</string>
+  <string name="pref_vital_signs_content" formatted="false">Vsebina ključnih podatkov</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Katere vrednosti vključiti v ključne podatke in v kakšnem vrstnem redu?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Spremeni vrstni red: %1$s</string>
 </resources>

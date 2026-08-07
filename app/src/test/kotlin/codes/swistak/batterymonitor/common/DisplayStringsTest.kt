@@ -63,6 +63,24 @@ class DisplayStringsTest {
     }
 
     @Test
+    fun `compact charge format rounds to whole milliamp hours`() {
+        assertEquals("2,847", DisplayStrings.formatChargeCompact(2_847_300L, Locale.US))
+        assertEquals("1", DisplayStrings.formatChargeCompact(501L, Locale.US))
+        assertEquals("0", DisplayStrings.formatChargeCompact(499L, Locale.US))
+        assertEquals("0", DisplayStrings.formatChargeCompact(0L, Locale.US))
+    }
+
+    @Test
+    fun `detailed charge format uses one decimal place and locale separators`() {
+        assertEquals("2,847.3", DisplayStrings.formatChargeDetailed(2_847_300L, Locale.US))
+        assertEquals(
+            "2 847,3", DisplayStrings.formatChargeDetailed(
+                2_847_300L, Locale.forLanguageTag("pl-PL")
+            ).replace('\u00a0', ' ').replace('\u202f', ' ')
+        )
+    }
+
+    @Test
     fun `12 hour time excludes seconds when not requested`() {
         assertTimeFormatting(
             is24Hour = false,
@@ -85,10 +103,7 @@ class DisplayStringsTest {
     @Test
     fun `24 hour time excludes seconds when not requested`() {
         assertTimeFormatting(
-            is24Hour = true,
-            includeSeconds = false,
-            expectedSkeleton = "Hm",
-            expectedTime = "17:04"
+            is24Hour = true, includeSeconds = false, expectedSkeleton = "Hm", expectedTime = "17:04"
         )
     }
 
@@ -103,10 +118,7 @@ class DisplayStringsTest {
     }
 
     private fun assertTimeFormatting(
-        is24Hour: Boolean,
-        includeSeconds: Boolean,
-        expectedSkeleton: String,
-        expectedTime: String
+        is24Hour: Boolean, includeSeconds: Boolean, expectedSkeleton: String, expectedTime: String
     ) {
         val date = Calendar.getInstance().apply {
             set(2026, Calendar.JANUARY, 1, 17, 4, 9)
@@ -115,10 +127,7 @@ class DisplayStringsTest {
         var requestedSkeleton = ""
 
         val formatted = DisplayStrings.formatTime(
-            date = date,
-            locale = Locale.US,
-            is24Hour = is24Hour,
-            includeSeconds = includeSeconds
+            date = date, locale = Locale.US, is24Hour = is24Hour, includeSeconds = includeSeconds
         ) { locale, skeleton ->
             assertEquals(Locale.US, locale)
             requestedSkeleton = skeleton

@@ -278,7 +278,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Şarj olurken/yüzde 100\'de yıldırım emojisi gösterilsin mi?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Etkinse, durum çubuğu çipi şarj olurken değerin yanında yıldırım emojisi gösterir.</string>
   <string name="pref_top_line_content" formatted="false">Üst Satır İçeriği</string>
-  <string name="pref_top_line_content_help" formatted="false">Bildirimin üst satırında ne gösterileceğini yapılandırın.</string>
+  <string name="pref_top_line_content_help" formatted="false">Bildirimin üst satırında tahmini kalan sürenin, durum değişikliğinden beri geçen sürenin veya seçilen önemli istatistiklerin gösterilmesini seçin.</string>
   <string name="pref_bottom_line_content" formatted="false">Alt Satır İçeriği</string>
   <string name="pref_bottom_line_content_help" formatted="false">Alt satır için üst satırdaki seçeneklerin aynısı geçerlidir.</string>
   <string name="time_remaining" formatted="false">Kalan Süre</string>
@@ -471,4 +471,13 @@
   <string name="settings_file_version_warning" formatted="false">Bu dosya uygulamanın daha yeni bir sürümüyle oluşturuldu. İçe aktarmak beklenmedik davranışlara yol açabilir. Yine de devam edilsin mi?</string>
 
   <string name="background_service_starting" formatted="false">Pil İzleyici başlatılıyor…</string>
+  <string name="remaining_charge" formatted="false">Kalan şarj</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Kalan şarj kullanılamıyor</string>
+  <string name="pref_show_remaining_charge" formatted="false">Kalan şarjı göster</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Cihazın bildirdiği kalan pil şarjı mAh olarak gösterilsin mi?</string>
+  <string name="vital_sign_voltage" formatted="false">Pil voltajı</string>
+  <string name="pref_vital_signs_content" formatted="false">Önemli istatistiklerin içeriği</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Önemli istatistiklere hangi değerler dahil edilsin ve hangi sırada gösterilsin?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s öğesini yeniden sırala</string>
 </resources>

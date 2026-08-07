@@ -292,7 +292,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Prikaži emoji munje tokom punjenja ili kad je baterija puna?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Ako je uključeno, čip statusne trake će prikazivati emoji munje pored vrednosti dok se baterija puni ili je potpuno puna.</string>
   <string name="pref_top_line_content" formatted="false">Sadržaj gornje trake</string>
-  <string name="pref_top_line_content_help" formatted="false">Podesite šta ide u gornju liniju obaveštenja: procenu preostalog vremena (podesivo na drugom mestu), vreme od poslednje promene statusa (priključen, isključen ili potpuno napunjen), ili vitalne znake baterije (zdravlje, temperaturu i napon).</string>
+  <string name="pref_top_line_content_help" formatted="false">Izaberite da li gornji red obaveštenja prikazuje procenjeno preostalo vreme, vreme od promene statusa ili izabrane vitalne podatke.</string>
   <string name="pref_bottom_line_content" formatted="false">Sadržaj donje trake</string>
   <string name="pref_bottom_line_content_help" formatted="false">Na raspolaganju su vam iste opcije i za donju i za gornju traku</string>
   <string name="time_remaining" formatted="false">Preostalo vreme</string>
@@ -509,4 +509,13 @@
   <string name="settings_file_version_warning" formatted="false">Ova datoteka je napravljena novijom verzijom aplikacije. Uvoz može izazvati neočekivano ponašanje. Nastaviti ipak?</string>
 
   <string name="background_service_starting" formatted="false">Battery Monitor se pokreće…</string>
+  <string name="remaining_charge" formatted="false">Preostali naboj</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Preostali naboj nije dostupan</string>
+  <string name="pref_show_remaining_charge" formatted="false">Prikaži preostali naboj</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Prikazati preostali naboj baterije koji uređaj prijavljuje u mAh?</string>
+  <string name="vital_sign_voltage" formatted="false">Napon baterije</string>
+  <string name="pref_vital_signs_content" formatted="false">Sadržaj vitalnih podataka</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Koje vrednosti uključiti u vitalne podatke i kojim redosledom?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Promeni redosled: %1$s</string>
 </resources>

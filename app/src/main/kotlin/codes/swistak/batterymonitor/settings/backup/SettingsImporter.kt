@@ -26,10 +26,10 @@ internal fun settingsImporterForVersion(version: Int): SettingsImporter {
     require(version >= Version1SettingsImporter.VERSION) {
         "Unsupported settings schema version: $version"
     }
-    return if (version == Version1SettingsImporter.VERSION) {
-        Version1SettingsImporter
-    } else {
-        Version2SettingsImporter
+    return when (version) {
+        Version1SettingsImporter.VERSION -> Version1SettingsImporter
+        Version2SettingsImporter.VERSION -> Version2SettingsImporter
+        else -> Version3SettingsImporter
     }
 }
 

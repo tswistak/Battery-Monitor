@@ -70,6 +70,8 @@ internal class BatteryInfo {
         private const val FIELD_PREDICTION_WHAT = "prediction_what"
         private const val FIELD_PREDICTION_WHEN = "prediction_when"
 
+        private const val FIELD_REMAINING_CHARGE_UAH = "remaining_charge_uah"
+
         private fun attemptOnePercentHack(percent: Int): Int {
             var percent = percent
             val hackFile = File("/sys/class/power_supply/battery/charge_counter")
@@ -114,6 +116,8 @@ internal class BatteryInfo {
     var plugged: Int = 0
     var temperature: Int = 0
     var voltage: Int = 0
+
+    var remainingChargeUah: Long? = null
     var lastStatus: Int = 0
     var lastPlugged: Int = 0
     var lastPercent: Int = 0
@@ -238,6 +242,8 @@ internal class BatteryInfo {
         bundle.putInt(FIELD_PREDICTION_WHAT, prediction.whatHappened)
         bundle.putLong(FIELD_PREDICTION_WHEN, prediction.whenHappened)
 
+        remainingChargeUah?.let { bundle.putLong(FIELD_REMAINING_CHARGE_UAH, it) }
+
         return bundle
     }
 
@@ -260,5 +266,11 @@ internal class BatteryInfo {
 
         prediction.whatHappened = bundle.getInt(FIELD_PREDICTION_WHAT)
         prediction.whenHappened = bundle.getLong(FIELD_PREDICTION_WHEN)
+
+        remainingChargeUah = if (bundle.containsKey(FIELD_REMAINING_CHARGE_UAH)) {
+            bundle.getLong(FIELD_REMAINING_CHARGE_UAH)
+        } else {
+            null
+        }
     }
 }

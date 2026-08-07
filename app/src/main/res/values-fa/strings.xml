@@ -282,7 +282,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">یک شکلک رعد و برق هنگام شارژ یا شارژ کامل نشان داده شود؟</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">اگر فعال باشد، تراشه نوار وضعیت یک شکلک رعد و برق را در کنار آن نشان می دهد مقدار تراشه در هنگام شارژ یا در هنگام شارژ کامل.</string>
   <string name="pref_top_line_content" formatted="false">محتوای خط برتر</string>
-  <string name="pref_top_line_content_help" formatted="false">آنچه را که در خط بالای اعلان قرار می گیرد پیکربندی کنید: تخمین زده شده است زمان باقی مانده (قابل تنظیم در جای دیگر)، چه مدت از وضعیت تغییر کرده است (وصل شده، از برق خارج شده یا کاملا شارژ شده است)، یا علائم حیاتی باتری (سلامت باتری، دما و ولتاژ).</string>
+  <string name="pref_top_line_content_help" formatted="false">انتخاب کنید خط بالای اعلان زمان تخمینی باقی‌مانده، زمان سپری‌شده از تغییر وضعیت یا آمار حیاتی انتخاب‌شده را نشان دهد.</string>
   <string name="pref_bottom_line_content" formatted="false">محتوای خط پایین</string>
   <string name="pref_bottom_line_content_help" formatted="false">شما همان گزینه هایی را برای خط پایین دارید که برای خط بالا.</string>
   <string name="time_remaining" formatted="false">زمان باقی مانده</string>
@@ -499,4 +499,13 @@
   <string name="settings_file_version_warning" formatted="false">این فایل با نسخه جدیدتری از برنامه ایجاد شده است. وارد کردن آن ممکن است باعث رفتار غیرمنتظره شود. با این حال ادامه می‌دهید؟</string>
 
   <string name="background_service_starting" formatted="false">پایشگر باتری در حال راه‌اندازی است…</string>
+  <string name="remaining_charge" formatted="false">شارژ باقی‌مانده</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">شارژ باقی‌مانده در دسترس نیست</string>
+  <string name="pref_show_remaining_charge" formatted="false">نمایش شارژ باقی‌مانده</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">شارژ باقی‌مانده باتری که دستگاه گزارش می‌کند بر حسب mAh نمایش داده شود؟</string>
+  <string name="vital_sign_voltage" formatted="false">ولتاژ باتری</string>
+  <string name="pref_vital_signs_content" formatted="false">محتوای آمار حیاتی</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">کدام مقادیر در آمار حیاتی گنجانده شوند و با چه ترتیبی؟</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">تغییر ترتیب %1$s</string>
 </resources>

@@ -75,6 +75,8 @@ class CurrentInfoFragment : Fragment() {
     private var tvHealth: TextView? = null
     private var tvVoltage: TextView? = null
     private var tvCurrent: TextView? = null
+
+    private var tvRemainingCharge: TextView? = null
     private var pluggedIcon: ImageView? = null
 
     private val info = BatteryInfo()
@@ -108,6 +110,7 @@ class CurrentInfoFragment : Fragment() {
         tvHealth = rootView.findViewById<View?>(R.id.health) as TextView
         tvVoltage = rootView.findViewById<View?>(R.id.voltage) as TextView
         tvCurrent = rootView.findViewById<View?>(R.id.current) as TextView
+        tvRemainingCharge = rootView.findViewById<View?>(R.id.remaining_charge) as TextView
         pluggedIcon = rootView.findViewById<View?>(R.id.plugged_icon) as ImageView
 
         bindButtons()
@@ -338,6 +341,20 @@ class CurrentInfoFragment : Fragment() {
         var tv = rootView.findViewById<View?>(R.id.level) as TextView
         tv.text = "" + info.percent + pFrag!!.res.getString(R.string.percent_symbol)
 
+        val showRemainingCharge = pFrag!!.settings.getBoolean(
+            SettingsContract.KEY_SHOW_REMAINING_CHARGE, true
+        )
+        val remainingChargeUah = info.remainingChargeUah
+        tvRemainingCharge!!.visibility = if (showRemainingCharge && remainingChargeUah != null) {
+            tvRemainingCharge!!.text = getString(
+                R.string.remaining_charge_value,
+                DisplayStrings.formatChargeCompact(remainingChargeUah)
+            )
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+
         tv = rootView.findViewById<View?>(R.id.time_remaining) as TextView
         tv.text = DisplayStrings.timeRemainingMainScreen(info)
         tv = rootView.findViewById<View?>(R.id.until_what) as TextView
@@ -505,6 +522,10 @@ class CurrentInfoFragment : Fragment() {
 
         val level = rootView.findViewById<View?>(R.id.level) as TextView
         level.setTextSize(TypedValue.COMPLEX_UNIT_PX, pluggedIconHeight.toFloat())
+
+        tvRemainingCharge!!.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX, untilWhatTextHeight.toFloat()
+        )
 
         val clock = rootView.findViewById<View>(R.id.clock)
         clock.setLayoutParams(

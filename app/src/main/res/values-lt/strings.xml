@@ -300,7 +300,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Rodyti žaibišką jaustuką įkraunant ar visiškai įkraunant?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Jei įjungta, būsenos juostos lustas šalia parodys žaibišką jaustuką lusto vertė kraunant arba visiškai įkrautą.</string>
   <string name="pref_top_line_content" formatted="false">Aukščiausios eilutės turinys</string>
-  <string name="pref_top_line_content_help" formatted="false">Sukonfigūruokite, kas patenka į viršutinę pranešimo eilutę: apskaičiuota likęs laikas (konfigūruojamas kitur), kiek laiko nuo būsenos pasikeitė (įjungtas, išjungtas arba visiškai įkrautas) arba akumuliatoriaus gyvybiniai požymiai (baterijos būklė, temperatūra ir įtampa).</string>
+  <string name="pref_top_line_content_help" formatted="false">Pasirinkite, ar viršutinėje pranešimo eilutėje rodyti numatomą likusį laiką, laiką nuo būsenos pasikeitimo ar pasirinktus gyvybinius rodiklius.</string>
   <string name="pref_bottom_line_content" formatted="false">Apatinės eilutės turinys</string>
   <string name="pref_bottom_line_content_help" formatted="false">Apatinėje eilutėje turite tas pačias parinktis kaip ir viršutinei.</string>
   <string name="time_remaining" formatted="false">Likęs laikas</string>
@@ -516,4 +516,13 @@
   <string name="settings_file_version_warning" formatted="false">Šis failas buvo sukurtas naujesne programos versija. Jį importavus gali atsirasti nenumatytas veikimas. Vis tiek tęsti?</string>
 
   <string name="background_service_starting" formatted="false">Battery Monitor paleidžiamas…</string>
+  <string name="remaining_charge" formatted="false">Likęs įkrovos kiekis</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Likęs įkrovos kiekis nepasiekiamas</string>
+  <string name="pref_show_remaining_charge" formatted="false">Rodyti likusį įkrovos kiekį</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Rodyti įrenginio nurodytą likusį akumuliatoriaus įkrovos kiekį mAh?</string>
+  <string name="vital_sign_voltage" formatted="false">Akumuliatoriaus įtampa</string>
+  <string name="pref_vital_signs_content" formatted="false">Gyvybinių rodiklių turinys</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Kurias reikšmes įtraukti į gyvybinius rodiklius ir kokia tvarka?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">Keisti „%1$s“ tvarką</string>
 </resources>

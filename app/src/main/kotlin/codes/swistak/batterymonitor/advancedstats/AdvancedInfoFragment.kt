@@ -545,7 +545,9 @@ class AdvancedInfoFragment : Fragment() {
 
     private fun formatMicroAmpHours(value: Long?): String? {
         if (value == null) return null
-        return String.format(Locale.getDefault(), "%.1f mAh", value / 1000.0)
+        return getString(
+            R.string.remaining_charge_value, DisplayStrings.formatChargeDetailed(value)
+        )
     }
 
     private fun formatNanoWattHours(value: Long?): String? {

@@ -22,10 +22,12 @@ import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 internal object DisplayStrings {
     private lateinit var res: Resources
@@ -230,6 +232,27 @@ internal object DisplayStrings {
 
     internal fun formatVoltage(voltage: Int, locale: Locale): String {
         return formatDecimal(voltage / 1000.0, 1, 3, locale) + voltSymbol
+    }
+
+    fun formatChargeDetailed(microAmpHours: Long): String {
+        return formatChargeDetailed(microAmpHours, resourceLocale())
+    }
+
+    internal fun formatChargeDetailed(microAmpHours: Long, locale: Locale): String {
+        return NumberFormat.getNumberInstance(locale).apply {
+            minimumFractionDigits = 1
+            maximumFractionDigits = 1
+        }.format(microAmpHours / 1000.0)
+    }
+
+    fun formatChargeCompact(microAmpHours: Long): String {
+        return formatChargeCompact(microAmpHours, resourceLocale())
+    }
+
+    internal fun formatChargeCompact(microAmpHours: Long, locale: Locale): String {
+        return NumberFormat.getIntegerInstance(locale).format(
+            (microAmpHours / 1000.0).roundToLong()
+        )
     }
 
     fun formatTime(context: Context, date: Date, includeSeconds: Boolean = false): String {

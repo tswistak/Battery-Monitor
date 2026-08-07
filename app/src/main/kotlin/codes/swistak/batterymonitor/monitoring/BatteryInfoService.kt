@@ -55,6 +55,7 @@ import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.VitalSignsOrder
 import codes.swistak.batterymonitor.widgets.BatteryInfoAppWidgetProvider
 import codes.swistak.batterymonitor.widgets.CircleWidgetBackground
 import codes.swistak.batterymonitor.widgets.FullAppWidgetProvider
@@ -210,7 +211,9 @@ class BatteryInfoService : Service() {
     private lateinit var spService: SharedPreferences
     private var spsEditor: SharedPreferences.Editor? = null
     private var batteryCurrentEnabled = false
-    private var displayCurrentInNotification = false
+
+    private var vitalSignsContent: Set<String> = SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
+    private var vitalSignsOrder: List<String> = SettingsContract.ALL_VITAL_SIGNS_CONTENT
     private var preferAverageBatteryCurrent = false
 
     private lateinit var res: Resources
@@ -219,6 +222,9 @@ class BatteryInfoService : Service() {
     private var bl: BatteryLevel? = null
     private var cwbg: CircleWidgetBackground? = null
     private var info: BatteryInfo? = null
+
+    private lateinit var remainingChargeReader: RemainingChargeReader
+
     private var now: Long = 0
     private var updatedLasts = false
 
@@ -333,6 +339,8 @@ class BatteryInfoService : Service() {
         logDb = LogDatabase(this)
 
         info = BatteryInfo()
+
+        remainingChargeReader = RemainingChargeReader(applicationContext)
 
         messenger = Messenger(MessageHandler(this))
         clientMessengers = HashSet()
@@ -520,10 +528,16 @@ class BatteryInfoService : Service() {
             SettingsContract.KEY_ENABLE_BATTERY_CURRENT,
             settings.getBoolean(SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false)
         ) ?: settings.getBoolean(SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false)
-        displayCurrentInNotification = overrides?.getBoolean(
-            SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION,
-            settings.getBoolean(SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION, false)
-        ) ?: settings.getBoolean(SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION, false)
+        vitalSignsContent = overrides?.getStringArrayList(
+            SettingsContract.KEY_VITAL_SIGNS_CONTENT
+        )?.toSet() ?: settings.getStringSet(
+            SettingsContract.KEY_VITAL_SIGNS_CONTENT, SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
+        )?.toSet() ?: SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
+        vitalSignsOrder = VitalSignsOrder.parse(
+            overrides?.getString(SettingsContract.KEY_VITAL_SIGNS_ORDER) ?: settings.getString(
+                SettingsContract.KEY_VITAL_SIGNS_ORDER, null
+            )
+        )
         preferAverageBatteryCurrent = overrides?.getBoolean(
             SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT,
             settings.getBoolean(SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false)
@@ -598,6 +612,8 @@ class BatteryInfoService : Service() {
         if (batteryIntent == null) batteryIntent = registerReceiver(null, batteryChanged)
 
         if (batteryIntent != null) info!!.load(batteryIntent, spService)
+
+        info!!.remainingChargeUah = remainingChargeReader.readMicroAmpHours()
 
         predictor!!.setPredictionType(
             settings.getString(
@@ -935,7 +951,7 @@ class BatteryInfoService : Service() {
         return info!!.status == BatteryInfo.STATUS_CHARGING || info!!.status == BatteryInfo.STATUS_FULLY_CHARGED
     }
 
-    private fun lineFor(key: String): String? {
+    private fun lineFor(key: String): String {
         val req: String = settings.getString(
             key, if (key == SettingsContract.KEY_TOP_LINE) "remaining" else "vitals"
         )!!
@@ -943,7 +959,8 @@ class BatteryInfoService : Service() {
         return when (req) {
             "remaining" -> predictionLine()
             "vitals" -> vitalStatsLine()
-            else -> statusDurationLine()
+            "since" -> statusDurationLine()
+            else -> predictionLine()
         }
     }
 
@@ -990,32 +1007,52 @@ class BatteryInfoService : Service() {
             SettingsContract.KEY_CONVERT_F, res.getBoolean(R.bool.default_convert_to_fahrenheit)
         )
 
-        var line = DisplayStrings.healths[info!!.health] + " / " + DisplayStrings.formatTemp(
-            info!!.temperature, convertF
-        )
+        val values = mutableListOf<String>()
+        for (vitalSign in vitalSignsOrder) {
+            if (vitalSign !in vitalSignsContent) continue
+            when (vitalSign) {
+                SettingsContract.VITAL_SIGN_HEALTH -> {
+                    values += DisplayStrings.healths[info!!.health]
+                }
 
-        if (info!!.voltage > 500) line += " / " + DisplayStrings.formatVoltage(info!!.voltage)
-        if (batteryCurrentEnabled && displayCurrentInNotification) {
-            var current: Double? = null
-            if (preferAverageBatteryCurrent) current = BatteryCurrent.avgCurrent
-            if (current == null) current = BatteryCurrent.current
-            if (current != null) {
-                line += " / " + BatteryCurrent.formatMilliAmps(
-                    current, res.configuration.locales[0]
-                ) + "mA"
+                SettingsContract.VITAL_SIGN_TEMPERATURE -> {
+                    values += DisplayStrings.formatTemp(info!!.temperature, convertF)
+                }
+
+                SettingsContract.VITAL_SIGN_VOLTAGE -> {
+                    if (info!!.voltage > 500) values += DisplayStrings.formatVoltage(info!!.voltage)
+                }
+
+                SettingsContract.VITAL_SIGN_CURRENT -> if (batteryCurrentEnabled) {
+                    var current: Double? = null
+                    if (preferAverageBatteryCurrent) current = BatteryCurrent.avgCurrent
+                    if (current == null) current = BatteryCurrent.current
+                    if (current != null) {
+                        values += BatteryCurrent.formatMilliAmps(
+                            current, res.configuration.locales[0]
+                        ) + "mA"
+                    }
+                }
+
+                SettingsContract.VITAL_SIGN_CHARGE -> {
+                    values += info!!.remainingChargeUah?.let { remainingChargeUah ->
+                        getString(
+                            R.string.remaining_charge_value,
+                            DisplayStrings.formatChargeCompact(remainingChargeUah)
+                        )
+                    } ?: getString(R.string.remaining_charge_unavailable)
+                }
+
+                SettingsContract.VITAL_SIGN_STATUS_DURATION -> {
+                    val statusDurationHours = (now - info!!.lastStatusCtm) / (60 * 60 * 1000f)
+                    val durationHours = statusDurationHours.toInt()
+                    val durationMinutes = ((statusDurationHours * 60) % 60).toInt()
+                    values += DisplayStrings.nHoursMMinutesShort(durationHours, durationMinutes)
+                }
             }
         }
-        if (settings.getBoolean(
-                SettingsContract.KEY_STATUS_DURATION_IN_VITAL_SIGNS, false
-            )
-        ) {
-            val statusDurationHours = (now - info!!.lastStatusCtm) / (60 * 60 * 1000f)
-            val durationHours = statusDurationHours.toInt()
-            val durationMinutes = ((statusDurationHours * 60) % 60).toInt()
-            line += " / " + DisplayStrings.nHoursMMinutesShort(durationHours, durationMinutes)
-        }
 
-        return line
+        return values.joinToString(" / ")
     }
 
     private fun statusDurationLine(): String {
@@ -1100,7 +1137,7 @@ class BatteryInfoService : Service() {
             }
         }
 
-        if (batteryCurrentEnabled && displayCurrentInNotification) {
+        if (batteryCurrentEnabled && SettingsContract.VITAL_SIGN_CURRENT in vitalSignsContent) {
             mHandler.postDelayed(runRenotify, 1000)
             mHandler.postDelayed(runRenotify, 3000)
             mHandler.postDelayed(runRenotify, 9000)

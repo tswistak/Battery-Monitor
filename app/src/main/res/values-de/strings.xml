@@ -280,7 +280,7 @@
   <string name="pref_chip_indicate_charging_summary" formatted="false">Blitz-Emoji beim Laden oder bei vollem Akku anzeigen?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Wenn aktiviert, zeigt der Statusleisten-Chip beim Laden oder vollem Akku ein Blitz-Emoji neben dem Wert.</string>
   <string name="pref_top_line_content" formatted="false">Inhalt der oberen Zeile</string>
-  <string name="pref_top_line_content_help" formatted="false">Konfigurieren Sie, was in der oberen Zeile der Benachrichtigung angezeigt wird.</string>
+  <string name="pref_top_line_content_help" formatted="false">Wählen Sie, ob die obere Benachrichtigungszeile die geschätzte Restzeit, die Zeit seit dem Statuswechsel oder die konfigurierten Vitalzeichen anzeigt.</string>
   <string name="pref_bottom_line_content" formatted="false">Inhalt der unteren Zeile</string>
   <string name="pref_bottom_line_content_help" formatted="false">Für die untere Zeile stehen dieselben Optionen wie für die obere Zeile zur Verfügung.</string>
   <string name="time_remaining" formatted="false">Verbleibende Restlaufzeit</string>
@@ -471,4 +471,13 @@
   <string name="settings_file_version_warning" formatted="false">Diese Datei wurde mit einer neueren Version der App erstellt. Das Importieren kann zu unerwartetem Verhalten führen. Trotzdem fortfahren?</string>
 
   <string name="background_service_starting" formatted="false">Battery Monitor wird gestartet…</string>
+  <string name="remaining_charge" formatted="false">Verbleibende Ladung</string>
+  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+  <string name="remaining_charge_unavailable">Verbleibende Ladung nicht verfügbar</string>
+  <string name="pref_show_remaining_charge" formatted="false">Verbleibende Ladung anzeigen</string>
+  <string name="pref_show_remaining_charge_summary" formatted="false">Vom Gerät gemeldete verbleibende Akkuladung in mAh anzeigen?</string>
+  <string name="vital_sign_voltage" formatted="false">Akkuspannung</string>
+  <string name="pref_vital_signs_content" formatted="false">Inhalt der Vitalzeichen</string>
+  <string name="pref_vital_signs_content_summary" formatted="false">Welche Werte sollen in den Vitalzeichen enthalten sein und in welcher Reihenfolge?</string>
+  <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s neu anordnen</string>
 </resources>
