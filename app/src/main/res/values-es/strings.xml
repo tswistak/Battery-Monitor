@@ -199,7 +199,7 @@
   <string name="help_open_source" formatted="false">esto El proyecto es de código abierto. Puedes acceder al código fuente en <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">Privacidad</string>
-  <string name="help_privacy" formatted="false">Battery Monitor no recopila, almacena ni transmite ninguna información personal.</string>
+  <string name="help_privacy" formatted="false">Battery Monitor procesa localmente información de la batería y el dispositivo, incluidos valores proporcionados por el dispositivo, como el número de serie de la batería. No transmite esta información ni la recopila en servidores externos.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Sin garantía</string>
   <string name="help_no_warranty" formatted="false">Este programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía MERCANTIL implícita o sin garantizar la CONVENIENCIA PARA UN PROPÓSITO PARTICULAR.\n
@@ -208,6 +208,9 @@
 
   <string name="help_cat_acknowledgments" formatted="false">Agradecimientos</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor es una bifurcación de Battery Indicator Pro / BatteryBot Pro de Darshan Computación, LLC. Gracias a los autores y contribuyentes originales. para crear y mantener el proyecto upstream.</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">Preguntas frecuentes</string>
+  <string name="help_frequently_asked_questions" formatted="false">Puede encontrar respuestas a las preguntas más frecuentes en <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
   <string name="help_cat_contact" formatted="false">Contacto</string>
   <string name="help_contact" formatted="false">Si tiene alguna pregunta, problema o comentario, por favor <a href="mailto:tomasz@swistak.codes">envíame un correo electrónico</a>.</string>

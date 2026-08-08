@@ -195,13 +195,16 @@
   <string name="help_open_source" formatted="false">Bu proje açık kaynaktır. Kaynak koduna adresinden ulaşabilirsiniz. <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">Gizlilik</string>
-  <string name="help_privacy" formatted="false">Battery Monitor hiçbir kişisel bilgiyi toplamaz, saklamaz veya iletmez.</string>
+  <string name="help_privacy" formatted="false">Battery Monitor, pil seri numarası gibi cihazın sunduğu değerler de dahil olmak üzere pil ve cihaz bilgilerini yerel olarak işler. Bu bilgileri iletmez veya harici sunucularda toplamaz.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Garanti Yok</string>
   <string name="help_no_warranty" formatted="false">Bu yazılım faydalı olması umuduyla sunulur, ancak HİÇBİR GARANTİ VERİLMEZ.</string>
 
   <string name="help_cat_acknowledgments" formatted="false">Onaylar</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor, Battery Indicator Pro ve BatteryBot Pro uygulamalarindan fork edilmiştir. Orijinal yazar ve katki saglayanlara projeyi olusturup surdurdukleri icin tesekkur ederiz.</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">Sıkça Sorulan Sorular</string>
+  <string name="help_frequently_asked_questions" formatted="false">En sık sorulan soruların yanıtlarını <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a> adresinde bulabilirsiniz.</string>
 
   <string name="help_cat_contact" formatted="false">Kişi</string>
   <string name="help_contact" formatted="false">Bir sorunuz, sorununuz veya yorumunuz varsa lütfen <a href="mailto:tomasz@swistak.codes">bana e-posta gönder</a>.</string>

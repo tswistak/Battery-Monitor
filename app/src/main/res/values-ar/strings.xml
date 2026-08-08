@@ -235,7 +235,7 @@
   <string name="help_open_source" formatted="false">هذا المشروع مفتوح المصدر. يمكنك الوصول إلى الكود المصدري على <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">الخصوصية</string>
-  <string name="help_privacy" formatted="false">لا يقوم Battery Monitor بجمع أو تخزين أو نقل أي معلومات شخصية.</string>
+  <string name="help_privacy" formatted="false">يعالج Battery Monitor معلومات البطارية والجهاز محليًا، بما في ذلك القيم التي يكشف عنها الجهاز مثل الرقم التسلسلي للبطارية. لا ينقل هذه المعلومات ولا يجمعها على خوادم خارجية.</string>
 
   <string name="help_cat_no_warranty" formatted="false">لا ضمان</string>
   <string name="help_no_warranty" formatted="false">يتم نشر هذا التطبيق على امل ان يكون مفيدا وعملي لكن من دون اي ضمان حتى دون صلاحية التسويق وللاستخدام لغرض معين\n
@@ -244,6 +244,9 @@
 
   <string name="help_cat_acknowledgments" formatted="false">شكر وتقدير</string>
   <string name="help_acknowledgments" formatted="false">مراقب البطارية عبارة عن شوكة لـ Battery Indicator Pro / BatteryBot Pro بواسطة دارشان للحوسبة، ذ.م.م. شكرا للمؤلفين والمساهمين الأصليين لإنشاء وصيانة المشروع المنبع.</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">الأسئلة الشائعة</string>
+  <string name="help_frequently_asked_questions" formatted="false">يمكنك العثور على إجابات للأسئلة الأكثر شيوعًا على <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
   <string name="help_cat_contact" formatted="false">للتواصل</string>
   <string name="help_contact" formatted="false">إذا كان لديك سؤال، مشكلة، أو تعليق، من فضلك <a href="mailto:tomasz@swistak.codes">أرسل لي بريدا إلكترونيا</a>.</string>

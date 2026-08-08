@@ -7,6 +7,7 @@
 - Battery remaining charge display in the main screen, notification and chip (#87).
 - Notification's "Vital Signs" content customization.
 - Status bar chip content customization with new options (#104).
+- Added an FAQ section to the help.
 
 ### Improved
 

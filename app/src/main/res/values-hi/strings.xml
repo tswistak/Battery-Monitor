@@ -197,7 +197,7 @@
   <string name="help_open_source" formatted="false">यह प्रोजेक्ट खुला स्रोत है. आप स्रोत कोड तक पहुंच सकते हैं <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>।</string>
 
   <string name="help_cat_privacy" formatted="false">गोपनीयता</string>
-  <string name="help_privacy" formatted="false">बैटरी मॉनिटर किसी भी व्यक्तिगत जानकारी को एकत्र, संग्रहीत या प्रसारित नहीं करता है।</string>
+  <string name="help_privacy" formatted="false">Battery Monitor बैटरी और डिवाइस की जानकारी को स्थानीय रूप से संसाधित करता है, जिसमें डिवाइस द्वारा उपलब्ध कराए गए मान, जैसे बैटरी का सीरियल नंबर, शामिल हैं। यह इस जानकारी को प्रसारित नहीं करता है और न ही इसे बाहरी सर्वरों पर एकत्र करता है।</string>
 
   <string name="help_cat_no_warranty" formatted="false">कोई वारंटी नहीं</string>
   <string name="help_no_warranty" formatted="false">यह सॉफ़्टवेयर इस आशा में वितरित किया जाता है कि यह उपयोगी होगा, लेकिन बिना किसी वारंटी के; की निहित वारंटी के बिना भी किसी विशेष उद्देश्य के लिए व्यापारिक योग्यता या उपयुक्तता.\n
@@ -206,6 +206,9 @@
 
   <string name="help_cat_acknowledgments" formatted="false">स्वीकृतियाँ</string>
   <string name="help_acknowledgments" formatted="false">बैटरी मॉनिटर बैटरी इंडिकेटर प्रो/बैटरीबॉट प्रो का एक कांटा है दर्शन कंप्यूटिंग, एलएलसी। मूल लेखकों और योगदानकर्ताओं को धन्यवाद अपस्ट्रीम प्रोजेक्ट बनाने और बनाए रखने के लिए।</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">अक्सर पूछे जाने वाले प्रश्न</string>
+  <string name="help_frequently_asked_questions" formatted="false">सबसे लोकप्रिय प्रश्नों के उत्तर आप <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a> पर पा सकते हैं।</string>
 
   <string name="help_cat_contact" formatted="false">संपर्क</string>
   <string name="help_contact" formatted="false">यदि आपका कोई प्रश्न, कोई समस्या या कोई टिप्पणी है, तो कृपया <a href="mailto:tomasz@swistak.codes">मुझे ईमेल करो</a>.</string>

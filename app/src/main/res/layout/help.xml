@@ -1,26 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/named_so_scroll_position_is_preserved"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
->
-  <LinearLayout style="@style/help_ll" android:orientation="vertical">
-    <TextView style="@style/help_cat" android:text="@string/help_cat_version" />
-    <TextView android:id="@+id/version" style="@style/help_text" />
+    android:id="@+id/named_so_scroll_position_is_preserved"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <TextView style="@style/help_cat"  android:text="@string/help_cat_open_source" />
-    <TextView android:id="@+id/open_source" style="@style/help_text" android:text="@string/help_open_source" />
+    <LinearLayout
+        style="@style/help_ll"
+        android:orientation="vertical">
 
-    <TextView style="@style/help_cat"  android:text="@string/help_cat_acknowledgments" />
-    <TextView android:id="@+id/acknowledgments" style="@style/help_text" android:text="@string/help_acknowledgments" />
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/help_cat_version" />
 
-    <TextView style="@style/help_cat"  android:text="@string/help_cat_contact" />
-    <TextView android:id="@+id/contact" style="@style/help_text" android:text="@string/help_contact" />
+        <TextView
+            android:id="@+id/version"
+            style="@style/help_text" />
 
-    <TextView style="@style/help_cat"  android:text="@string/help_cat_privacy" />
-    <TextView style="@style/help_text" android:text="@string/help_privacy" />
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/help_cat_open_source" />
 
-    <TextView style="@style/help_cat"  android:text="@string/help_cat_no_warranty" />
-    <TextView style="@style/help_text" android:text="@string/help_no_warranty" />
-  </LinearLayout>
+        <TextView
+            android:id="@+id/open_source"
+            style="@style/help_text"
+            android:text="@string/help_open_source" />
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/help_cat_acknowledgments" />
+
+        <TextView
+            android:id="@+id/acknowledgments"
+            style="@style/help_text"
+            android:text="@string/help_acknowledgments" />
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/help_cat_frequently_asked_questions" />
+
+        <TextView
+            android:id="@+id/frequently_asked_questions"
+            style="@style/help_text"
+            android:text="@string/help_frequently_asked_questions" />
+        
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/help_cat_contact" />
+
+        <TextView
+            android:id="@+id/contact"
+            style="@style/help_text"
+            android:text="@string/help_contact" />
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/help_cat_privacy" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/help_privacy" />
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/help_cat_no_warranty" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/help_no_warranty" />
+    </LinearLayout>
 </ScrollView>

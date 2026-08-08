@@ -199,7 +199,7 @@
   <string name="help_open_source" formatted="false">Isto projeto é de código aberto. Você pode acessar o código fonte em <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">Privacidade</string>
-  <string name="help_privacy" formatted="false">O Battery Monitor não coleta, armazena ou transmite nenhuma informação pessoal.</string>
+  <string name="help_privacy" formatted="false">O Battery Monitor processa localmente informações da bateria e do dispositivo, incluindo valores expostos pelo dispositivo, como o número de série da bateria. Ele não transmite essas informações nem as coleta em servidores externos.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Sem Garantia</string>
   <string name="help_no_warranty" formatted="false">Este software é distribuído na esperança de que seja útil, mas SEM NENHUMA GARANTIA; mesmo sem a garantia implícita de COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM PROPÓSITO ESPECÍFICO.\n
@@ -208,6 +208,9 @@
 
   <string name="help_cat_acknowledgments" formatted="false">Agradecimentos</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor é um fork do Battery Indicator Pro / BatteryBot Pro da Darshan Computação, LLC. Obrigado aos autores originais e colaboradores para criar e manter o projeto upstream.</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">Perguntas frequentes</string>
+  <string name="help_frequently_asked_questions" formatted="false">Você pode encontrar respostas para as perguntas mais frequentes em <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
   <string name="help_cat_contact" formatted="false">Contacto</string>
   <string name="help_contact" formatted="false">Se você tiver alguma dúvida, problema ou comentário, por favor <a href="mailto:tomasz@swistak.codes">envie-me um e-mail</a>.</string>

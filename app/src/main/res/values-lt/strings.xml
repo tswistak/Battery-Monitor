@@ -215,7 +215,7 @@
   <string name="help_open_source" formatted="false">Tai projektas yra atviro kodo. Šaltinio kodą galite pasiekti adresu <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">Privatumas</string>
-  <string name="help_privacy" formatted="false">Battery Monitor nerenka, nesaugo ir neperduoda jokios asmeninės informacijos.</string>
+  <string name="help_privacy" formatted="false">Battery Monitor vietoje apdoroja baterijos ir įrenginio informaciją, įskaitant įrenginio pateikiamas reikšmes, pvz., baterijos serijos numerį. Jis neperduoda šios informacijos ir nerenka jos išoriniuose serveriuose.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Nėra garantijų</string>
   <string name="help_no_warranty" formatted="false">Ši programa yra sukurta su viltimi, kad ji bus naudinga, bet be JOKIŲ GARANTIJŲ; net be numanomos garantijos PARDAVIMUI ar TINKAMUMUI TAM TIKRAM TIKSLUI.\n
@@ -224,6 +224,9 @@
 
   <string name="help_cat_acknowledgments" formatted="false">Padėka</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor yra Battery Indicator Pro / BatteryBot Pro šakutė Darshan Computing, LLC. Dėkojame originaliems autoriams ir bendradarbiams už aukštesniojo projekto kūrimą ir priežiūrą.</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">Dažniausiai užduodami klausimai</string>
+  <string name="help_frequently_asked_questions" formatted="false">Atsakymus į dažniausiai užduodamus klausimus rasite adresu <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
   <string name="help_cat_contact" formatted="false">Kontaktai</string>
   <string name="help_contact" formatted="false">Jei turite klausimų, problemų ar komentarų, prašau <a href="mailto:tomasz@swistak.codes">el</a>.</string>

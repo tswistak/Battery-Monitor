@@ -199,7 +199,7 @@
   <string name="help_open_source" formatted="false">Ezt projekt nyílt forráskódú. A forráskódot a címen érheti el <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">Adatvédelem</string>
-  <string name="help_privacy" formatted="false">A Battery Monitor nem gyűjt, tárol vagy továbbít semmilyen személyes adatot.</string>
+  <string name="help_privacy" formatted="false">A Battery Monitor helyileg dolgozza fel az akkumulátor- és eszközinformációkat, beleértve az eszköz által elérhetővé tett értékeket, például az akkumulátor sorozatszámát. Ezeket az információkat nem továbbítja és nem gyűjti külső szervereken.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Nincs garancia</string>
   <string name="help_no_warranty" formatted="false">Ezt a szoftvert annak reményében terjesztjük, hogy hasznosnak bizonyul, de MINDENNEMŰ GARANCIA NÉLKÜL, kizárva még az általában beleértett garanciákat is, mint a FORGALMAZHATÓSÁG, vagy A CÉLNAK VALÓ MEGFELELÉS.\n
@@ -208,6 +208,9 @@
 
   <string name="help_cat_acknowledgments" formatted="false">Köszönetnyilvánítás</string>
   <string name="help_acknowledgments" formatted="false">A Battery Monitor a Battery Indicator Pro / BatteryBot Pro villája Darshan Computing, LLC. Köszönet az eredeti szerzőknek és a közreműködőknek az upstream projekt létrehozásához és karbantartásához.</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">Gyakran ismételt kérdések</string>
+  <string name="help_frequently_asked_questions" formatted="false">A leggyakoribb kérdésekre adott válaszokat itt találja: <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
   <string name="help_cat_contact" formatted="false">Kapcsolat</string>
   <string name="help_contact" formatted="false">Ha kérdése, problémája vagy észrevétele van, kérem <a href="mailto:tomasz@swistak.codes">emailt nekem</a>.</string>

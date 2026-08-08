@@ -195,7 +195,7 @@
   <string name="help_open_source" formatted="false">Αυτό το έργο είναι ανοιχτού κώδικα. Μπορείτε να αποκτήσετε πρόσβαση στον πηγαίο κώδικα στη διεύθυνση <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">Μυστικότητα</string>
-  <string name="help_privacy" formatted="false">Το Battery Monitor δεν συλλέγει, αποθηκεύει ή μεταδίδει προσωπικές πληροφορίες.</string>
+  <string name="help_privacy" formatted="false">Το Battery Monitor επεξεργάζεται τοπικά πληροφορίες μπαταρίας και συσκευής, συμπεριλαμβανομένων τιμών που εκθέτει η συσκευή, όπως ο σειριακός αριθμός της μπαταρίας. Δεν μεταδίδει αυτές τις πληροφορίες ούτε τις συλλέγει σε εξωτερικούς διακομιστές.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Καμιά Εγγύηση</string>
   <string name="help_no_warranty" formatted="false">Το πρόγραμμα αυτό διατίθεται με την ελπίδα ότι θα είναι χρήσιμο, αλλά ΧΩΡΙΣ ΚΑΜΙΑ ΕΓΓΥΗΣΗ, χωρίς ακόμα την εννούμενη εγγύηση της ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή της ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ.\n
@@ -204,6 +204,9 @@
 
   <string name="help_cat_acknowledgments" formatted="false">Ευχαριστίες</string>
   <string name="help_acknowledgments" formatted="false">Το Battery Monitor είναι ένα πιρούνι του Battery Indicator Pro / BatteryBot Pro από Darshan Computing, LLC. Ευχαριστώ τους αρχικούς συγγραφείς και τους συντελεστές για τη δημιουργία και τη συντήρηση του ανάντη έργου.</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">Συχνές ερωτήσεις</string>
+  <string name="help_frequently_asked_questions" formatted="false">Μπορείτε να βρείτε απαντήσεις στις πιο συχνές ερωτήσεις στη διεύθυνση <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
   <string name="help_cat_contact" formatted="false">Επικοινωνία</string>
   <string name="help_contact" formatted="false">Εάν έχετε μια ερώτηση, ένα πρόβλημα ή ένα σχόλιο, παρακαλώ <a href="mailto:tomasz@swistak.codes">στείλτε μου email</a>.</string>

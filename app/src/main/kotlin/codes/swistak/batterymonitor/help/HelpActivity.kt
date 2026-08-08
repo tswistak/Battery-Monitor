@@ -27,7 +27,12 @@ import codes.swistak.batterymonitor.common.EdgeToEdgeHelper
 
 class HelpActivity : AppCompatActivity() {
     companion object {
-        private val HAS_LINKS = intArrayOf(R.id.open_source, R.id.acknowledgments, R.id.contact)
+        private val HAS_LINKS = intArrayOf(
+            R.id.open_source,
+            R.id.acknowledgments,
+            R.id.frequently_asked_questions,
+            R.id.contact
+        )
     }
 
     @SuppressLint("SetTextI18n")

@@ -219,7 +219,7 @@
   <string name="help_open_source" formatted="false">Toto projekt je open source. K zdrojovému kódu sa môžete dostať na adrese <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">Ochrana osobných údajov</string>
-  <string name="help_privacy" formatted="false">Battery Monitor nezhromažďuje, neukladá ani neprenáša žiadne osobné informácie.</string>
+  <string name="help_privacy" formatted="false">Battery Monitor spracúva informácie o batérii a zariadení lokálne, vrátane hodnôt sprístupnených zariadením, napríklad sériového čísla batérie. Tieto informácie neprenáša ani ich nezhromažďuje na externých serveroch.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Bez záruky</string>
   <string name="help_no_warranty" formatted="false">Tento softvér je ponúkaný v dúfaní, že bude užitočný ale BEZ AKEJKOĽVEK ZÁRUKY; neposkytujú sa ani odvodené záruky PREDAJNOSTI alebo VHODNOSTI PRE URČITÝ ÚČEL.\n
@@ -228,6 +228,9 @@
 
   <string name="help_cat_acknowledgments" formatted="false">Poďakovania</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor je vidlica Battery Indicator Pro / BatteryBot Pro od Darshan Computing, LLC. Ďakujem pôvodným autorom a prispievateľom na vytvorenie a udržiavanie upstream projektu.</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">Často kladené otázky</string>
+  <string name="help_frequently_asked_questions" formatted="false">Odpovede na najčastejšie otázky nájdete na <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
   <string name="help_cat_contact" formatted="false">Kontakt</string>
   <string name="help_contact" formatted="false">Ak máte otázku, problém alebo komentár, prosím <a href="mailto:tomasz@swistak.codes">napíšte mi</a>.</string>

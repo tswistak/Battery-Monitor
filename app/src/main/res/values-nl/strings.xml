@@ -197,7 +197,7 @@
   <string name="help_open_source" formatted="false">Dit project is open source. Je kunt de broncode raadplegen op <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
   <string name="help_cat_privacy" formatted="false">Privacy</string>
-  <string name="help_privacy" formatted="false">Battery Monitor verzamelt, bewaart of verzendt geen persoonlijke informatie.</string>
+  <string name="help_privacy" formatted="false">Battery Monitor verwerkt batterij- en apparaatinformatie lokaal, waaronder waarden die door het apparaat worden verstrekt, zoals het serienummer van de batterij. Deze informatie wordt niet verzonden of op externe servers verzameld.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Geen garantie</string>
   <string name="help_no_warranty" formatted="false">Deze software wordt uitgegeven in de hoop dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE; zonder zelfs de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel.\n
@@ -206,6 +206,9 @@
 
   <string name="help_cat_acknowledgments" formatted="false">Erkenningen</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor is een afsplitsing van Battery Indicator Pro / BatteryBot Pro van Darshan Computing, LLC. Dank aan de oorspronkelijke auteurs en bijdragers voor het creëren en onderhouden van het upstream-project.</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">Veelgestelde vragen</string>
+  <string name="help_frequently_asked_questions" formatted="false">Antwoorden op de meest gestelde vragen vindt u op <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
   <string name="help_cat_contact" formatted="false">Contact</string>
   <string name="help_contact" formatted="false">Als je een vraag, een probleem of een opmerking hebt, stuur me dan een bericht <a href="mailto:tomasz@swistak.codes">per e-mail</a>.</string>

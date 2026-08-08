@@ -207,7 +207,7 @@
   <string name="help_open_source" formatted="false">Ово пројекат је отвореног кода. Можете приступити изворном коду на хттпс://гитхуб.цом/тсвистак/Баттери-Индицатор-Про.</string>
 
   <string name="help_cat_privacy" formatted="false">Privatnost</string>
-  <string name="help_privacy" formatted="false">Баттери Монитор не прикупља, чува или преноси никакве личне податке.</string>
+  <string name="help_privacy" formatted="false">Баттери Монитор локално обрађује информације о батерији и уређају, укључујући вредности које уређај излаже, као што је серијски број батерије. Не преноси ове информације нити их прикупља на спољним серверима.</string>
 
   <string name="help_cat_no_warranty" formatted="false">Bez garancije</string>
   <string name="help_no_warranty" formatted="false">Ovaj softver se distribuira u nadi da će biti koristan, ali BEZ IKAKVE GARANCIJE; čak i bez podrazumevane garancije O MOGUĆNOSTI PRODAJE ili PRIKLADNOSTI ZA ODREĐENU NAMENU.\n
@@ -216,6 +216,9 @@
 
   <string name="help_cat_acknowledgments" formatted="false">Želimo da se zahvalimo</string>
   <string name="help_acknowledgments" formatted="false">Баттери Монитор је виљушка Баттери Индицатор Про / БаттериБот Про од стране Дарсхан Цомпутинг, ЛЛЦ. Хвала оригиналним ауторима и сарадницима за креирање и одржавање узводног пројекта.</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">Често постављана питања</string>
+  <string name="help_frequently_asked_questions" formatted="false">Одговоре на најчешћа питања можете пронаћи на <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
   <string name="help_cat_contact" formatted="false">Kontakt</string>
   <string name="help_contact" formatted="false">Ако имате питање, проблем или коментар, молим <a href="mailto:tomasz@swistak.codes">емаил ме</a>.</string>

@@ -185,13 +185,16 @@
   <string name="help_open_source" formatted="false">这个 项目是开源的。您可以访问源代码 <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>。</string>
 
   <string name="help_cat_privacy" formatted="false">隐私</string>
-  <string name="help_privacy" formatted="false">Battery Monitor不会收集、存储或传输任何个人信息。</string>
+  <string name="help_privacy" formatted="false">Battery Monitor 会在本地处理电池和设备信息，包括设备提供的值，例如电池序列号。它不会传输这些信息，也不会在外部服务器上收集这些信息。</string>
 
   <string name="help_cat_no_warranty" formatted="false">免责声明</string>
   <string name="help_no_warranty" formatted="false">本软件按“原样”提供，不提供任何明示或暗示的担保。开发者会尽力保证软件正常运行，但不对使用过程中可能造成的不便、数据损失或设备问题承担责任。</string>
 
   <string name="help_cat_acknowledgments" formatted="false">致谢</string>
   <string name="help_acknowledgments" formatted="false">Battery Monitor 是 Battery Indicator Pro / BatteryBot Pro 的一个分支。感谢原作者和贡献者创建并维护上游项目。</string>
+
+  <string name="help_cat_frequently_asked_questions" formatted="false">常见问题</string>
+  <string name="help_frequently_asked_questions" formatted="false">您可以在 <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a> 找到最常见问题的解答。</string>
 
   <string name="help_cat_contact" formatted="false">联系方式</string>
   <string name="help_contact" formatted="false">如果您有疑问、问题或意见，请 <a href="mailto:tomasz@swistak.codes">给我发电子邮件</a>.</string>
