@@ -1,0 +1,11 @@
+New:
+
+- Battery remaining charge display in the main screen, notification and chip (#87).
+- Notification's "Vital Signs" content customization.
+- Status bar chip content customization with new options (#104).
+- Added a FAQ section to the help.
+
+Improved:
+
+- Shizuku permission handling (#105).
+- Removed hiding status bar icon settings on modern Androids (#89).
