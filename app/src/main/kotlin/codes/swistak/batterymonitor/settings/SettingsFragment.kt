@@ -106,8 +106,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             SettingsContract.KEY_AMBER_THRESH,
             SettingsContract.KEY_GREEN_THRESH,
             SettingsContract.KEY_ICON_CONTENT,
-            SettingsContract.KEY_CHIP_CONTENT,
-            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL,
             SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
             SettingsContract.KEY_MAX_LOG_AGE,
@@ -130,6 +128,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             SettingsContract.KEY_SHOW_ICON_UNIT,
             SettingsContract.KEY_ICON_CONTENT,
             SettingsContract.KEY_CHIP_CONTENT,
+            SettingsContract.KEY_CHIP_CONTENT_ORDER,
             SettingsContract.KEY_CHIP_SWITCHING_INTERVAL,
             SettingsContract.KEY_CHIP_INDICATE_CHARGING,
             SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
@@ -241,7 +240,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         mSharedPreferences.edit().commit()
 
         val outgoing = Message.obtain()
-        outgoing.data = batteryCurrentOverridesBundle()
+        outgoing.data = SettingsSnapshot.capture(mSharedPreferences)
 
         if (cancelFirst) outgoing.what =
             BatteryInfoService.RemoteConnection.SERVICE_CANCEL_NOTIFICATION_AND_RELOAD_SETTINGS
@@ -252,39 +251,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         } catch (e: Exception) {
             BatteryInfoService.startForegroundServiceSafely(requireContext(), outgoing.data)
         }
-    }
-
-    private fun batteryCurrentOverridesBundle(): Bundle = Bundle().apply {
-        putBoolean(
-            SettingsContract.KEY_ENABLE_BATTERY_CURRENT,
-            mSharedPreferences.getBoolean(SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false)
-        )
-        putBoolean(
-            SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, mSharedPreferences.getBoolean(
-                SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
-            )
-        )
-        putString(
-            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
-            mSharedPreferences.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
-        )
-        putStringArrayList(
-            SettingsContract.KEY_VITAL_SIGNS_CONTENT, ArrayList(
-                mSharedPreferences.getStringSet(
-                    SettingsContract.KEY_VITAL_SIGNS_CONTENT,
-                    SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
-                ) ?: SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
-            )
-        )
-        putString(
-            SettingsContract.KEY_VITAL_SIGNS_ORDER,
-            mSharedPreferences.getString(SettingsContract.KEY_VITAL_SIGNS_ORDER, null)
-        )
-        putBoolean(
-            SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, mSharedPreferences.getBoolean(
-                SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
-            )
-        )
     }
 
     private fun setPreferences() {
@@ -343,6 +309,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                     chipCat.layoutResource = R.layout.none
                 }
             } else {
+                setupChipSwitchingIntervalPreference()
                 updateChipIntervalVisibility()
             }
         } else if (prefScreen == R.xml.current_state_pref_screen) {
@@ -421,6 +388,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 return true
             }
 
+            SettingsContract.KEY_CHIP_CONTENT -> {
+                showChipContentDialog(preference)
+                return true
+            }
+
             else -> return key == SettingsContract.KEY_PLUGIN_SETTINGS
         }
     }
@@ -438,6 +410,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         private val items: MutableList<VitalSignDialogItem>
     ) : RecyclerView.Adapter<VitalSignViewHolder>() {
         var startDrag: ((RecyclerView.ViewHolder) -> Unit)? = null
+        var selectionChanged: (() -> Unit)? = null
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VitalSignViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(
@@ -454,6 +427,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             holder.checkBox.isChecked = item.isSelected
             holder.checkBox.setOnCheckedChangeListener { _, checked ->
                 item.isSelected = checked
+                selectionChanged?.invoke()
             }
             holder.dragHandle.contentDescription = holder.itemView.context.getString(
                 R.string.pref_vital_signs_reorder_handle, item.label
@@ -549,11 +523,89 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }.setNegativeButton(R.string.cancel, null).show()
     }
 
+    private fun showChipContentDialog(preference: Preference) {
+        val context = context ?: return
+        val selectedValues = mSharedPreferences.getStringSet(
+            SettingsContract.KEY_CHIP_CONTENT, SettingsContract.DEFAULT_CHIP_CONTENT
+        ) ?: SettingsContract.DEFAULT_CHIP_CONTENT
+        val labelsByValue = resources.getStringArray(
+            R.array.chip_content_values
+        ).zip(resources.getTextArray(R.array.chip_content_entries)).toMap()
+        val items = ChipContentOrder.parse(
+            mSharedPreferences.getString(SettingsContract.KEY_CHIP_CONTENT_ORDER, null)
+        ).mapNotNullTo(mutableListOf()) { value ->
+            labelsByValue[value]?.let { label ->
+                VitalSignDialogItem(value, label, value in selectedValues)
+            }
+        }
+
+        val rowPadding = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics
+        ).toInt()
+        val adapter = VitalSignsAdapter(items)
+        val list = RecyclerView(context).apply {
+            layoutManager = LinearLayoutManager(context)
+            this.adapter = adapter
+            setPadding(rowPadding, 0, rowPadding, 0)
+            clipToPadding = false
+        }
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
+                if (fromPosition == RecyclerView.NO_POSITION || toPosition == RecyclerView.NO_POSITION) {
+                    return false
+                }
+                adapter.move(fromPosition, toPosition)
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
+
+            override fun isLongPressDragEnabled(): Boolean = false
+        }).apply { attachToRecyclerView(list) }
+        adapter.startDrag = itemTouchHelper::startDrag
+
+        val dialog =
+            AlertDialog.Builder(context).setTitle(preference.title).setMessage(preference.summary)
+                .setView(list).setPositiveButton(R.string.okay) { _, _ ->
+                    mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+                    try {
+                        mSharedPreferences.edit {
+                            putStringSet(
+                                SettingsContract.KEY_CHIP_CONTENT,
+                                items.filter { it.isSelected }.mapTo(linkedSetOf()) { it.value })
+                            putString(
+                                SettingsContract.KEY_CHIP_CONTENT_ORDER,
+                                ChipContentOrder.serialize(items.map { it.value })
+                            )
+                        }
+                    } finally {
+                        mSharedPreferences.registerOnSharedPreferenceChangeListener(this)
+                    }
+                    updateChipIntervalVisibility()
+                    resetService()
+                }.setNegativeButton(R.string.cancel, null).create()
+        dialog.setOnShowListener {
+            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            val updatePositiveButton = { positiveButton.isEnabled = items.any { it.isSelected } }
+            adapter.selectionChanged = updatePositiveButton
+            updatePositiveButton()
+        }
+        dialog.show()
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         if (key == null) return
         mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
 
-        if (key == SettingsContract.KEY_CHIP_CONTENT) {
+        if (key == SettingsContract.KEY_CHIP_CONTENT || key == SettingsContract.KEY_CHIP_CONTENT_ORDER) {
             updateChipIntervalVisibility()
         }
 
@@ -618,6 +670,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
         if (key == SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL) {
             updateBatteryCurrentRefreshIntervalSummary()
+        }
+
+        if (key == SettingsContract.KEY_CHIP_SWITCHING_INTERVAL) {
+            updateChipSwitchingIntervalSummary()
         }
 
         for (i in RESET_SERVICE.indices) {
@@ -932,6 +988,83 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         dialog.show()
     }
 
+    private fun setupChipSwitchingIntervalPreference() {
+        val preference = mPreferenceScreen!!.findPreference<ListPreference>(
+            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL
+        ) ?: return
+        updateChipSwitchingIntervalSummary()
+        preference.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { _, newValue ->
+                if (newValue == "custom") {
+                    showCustomChipSwitchingIntervalDialog(preference)
+                    false
+                } else {
+                    true
+                }
+            }
+    }
+
+    private fun updateChipSwitchingIntervalSummary() {
+        val preference = mPreferenceScreen!!.findPreference<ListPreference>(
+            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL
+        ) ?: return
+        val seconds = mSharedPreferences.getString(
+            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL, "5"
+        )?.toIntOrNull()?.coerceIn(1, 3600) ?: 5
+        val entry = preference.entries.getOrNull(
+            preference.findIndexOfValue(seconds.toString())
+        )
+        val value = entry ?: getString(
+            R.string.pref_chip_switching_interval_custom_summary, seconds
+        )
+        preference.summary = getString(R.string.currently_set_to) + value
+    }
+
+    private fun showCustomChipSwitchingIntervalDialog(preference: ListPreference) {
+        val context = context ?: return
+        val input = EditText(context).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            setText(
+                mSharedPreferences.getString(
+                    SettingsContract.KEY_CHIP_SWITCHING_INTERVAL, "5"
+                )
+            )
+            selectAll()
+        }
+        val container = FrameLayout(context)
+        val margin = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics
+        ).toInt()
+        container.addView(
+            input, FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply {
+                leftMargin = margin
+                rightMargin = margin
+            })
+
+        val dialog = AlertDialog.Builder(context).setTitle(preference.title)
+            .setMessage(R.string.pref_chip_switching_interval_custom_message).setView(container)
+            .setPositiveButton(android.R.string.ok, null)
+            .setNegativeButton(android.R.string.cancel, null).create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val seconds = input.text.toString().toIntOrNull()
+                if (seconds == null || seconds !in 1..3600) {
+                    input.error = getString(R.string.pref_chip_switching_interval_error)
+                    return@setOnClickListener
+                }
+                mSharedPreferences.edit {
+                    putString(SettingsContract.KEY_CHIP_SWITCHING_INTERVAL, seconds.toString())
+                }
+                preference.value = seconds.toString()
+                updateChipSwitchingIntervalSummary()
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
     private fun setEnablednessOfInverseDeps(index: Int) {
         val dependent =
             mPreferenceScreen!!.findPreference<Preference?>(INVERSE_DEPENDENTS[index]!!) ?: return
@@ -946,8 +1079,9 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             mPreferenceScreen!!.findPreference<Preference?>(SettingsContract.KEY_CHIP_SWITCHING_INTERVAL)
                 ?: return
 
-        val isSwitching =
-            "switching" == mSharedPreferences.getString(SettingsContract.KEY_CHIP_CONTENT, "")
+        val isSwitching = mSharedPreferences.getStringSet(
+            SettingsContract.KEY_CHIP_CONTENT, SettingsContract.DEFAULT_CHIP_CONTENT
+        )?.size?.let { it > 1 } == true
         val liveUpdatesDisabled = "never" == mSharedPreferences.getString(
             SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
             res.getString(R.string.default_live_update_display_mode)

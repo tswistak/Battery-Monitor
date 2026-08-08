@@ -235,7 +235,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Válaszd ki, hogy az értesítési ikon az akkumulátor százalékát vagy a hőmérsékletét jelenítse meg, hogy az egységjel megjelenjen-e az ikonban, és hogy töltéskor külön ikon legyen-e. Az Android 16-tól kezdve előfordulhat, hogy az állapotsor ikonja nem működik minden operációsrendszer-változaton.</string>
   <string name="status_bar_chip_settings" formatted="false">Állapotsor chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">A Live Updates chip tartalmának beállítása</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Android 16+ rendszeren, Live Updates mellett beállíthatod, mit jelenítsen meg az állapotsor chip.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">A Live Updates beállításaiban megadhatod az állapotsor chip tartalmát és a váltási időközt.</string>
   <string name="current_state_settings_summary" formatted="false">A Jelenlegi információ képernyő beállításai</string>
   <string name="current_state_settings_help" formatted="false">Állítsd be a Jelenlegi információ képernyőn megjelenő adatokat. Az akkumulátoráram beállításai a többi akkumulátoradat mellett látható élő értéket vezérlik.</string>
   <string name="alarm_settings_subtitle" formatted="false">Riasztás beállítások</string>
@@ -269,7 +269,7 @@
   <string name="pref_manage_main_channel" formatted="false">Fő csatorna kezelése</string>
 
   <string name="pref_cat_notification_content" formatted="false">Tartalom</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Állapotsor chip (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Állapotsor chip</string>
   <string name="pref_live_update_display" formatted="false">Élő frissítés megjelenítése</string>
   <string name="pref_live_update_display_summary" formatted="false">Megjelenítés az állapotsávban:</string>
   <string name="pref_live_update_display_help" formatted="false">Válaszd ki, hogy az Android 16+ élő frissítési chipje mikor jelenjen meg az állapotsávban.</string>
@@ -279,7 +279,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Ha be van kapcsolva, a normál fő értesítés az állapotsáv chip mellett is látható marad.</string>
   <string name="pref_chip_content" formatted="false">Chip tartalma</string>
   <string name="pref_chip_switching_interval" formatted="false">Váltási időköz</string>
-  <string name="pref_chip_content_help" formatted="false">Válaszd ki, mit jelenítsen meg az Android 16+ promoted-notification chip.</string>
+  <string name="pref_chip_content_summary" formatted="false">Mely értékek jelenjenek meg a chipen, és milyen sorrendben?</string>
+  <string name="pref_chip_content_help" formatted="false">Válaszd ki az állapotsor chipen váltakozó értékeket, és állítsd be a sorrendjüket.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Válaszd ki, milyen gyakran váltson a chip a következő kijelölt értékre.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Válaszd ki, milyen gyakran váltson a chip a következő kijelölt értékre. Ez a beállítás akkor érhető el, ha egynél több érték van kijelölve.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Add meg az időközt másodpercben (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Adj meg egy 1 és 3600 közötti értéket.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d másodperc</string>
   <string name="pref_chip_indicate_charging" formatted="false">Töltés emoji megjelenítése</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Villám emoji megjelenítése töltéskor vagy teljes töltöttségnél?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Ha engedélyezve van, az állapotsor chip a töltöttségi érték mellett villám emojit jelenít meg.</string>

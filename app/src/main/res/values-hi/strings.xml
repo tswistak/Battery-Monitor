@@ -233,7 +233,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">चुनें कि सूचना आइकन बैटरी प्रतिशत दिखाए या तापमान, आइकन में इकाई चिह्न दिखे या नहीं, और चार्जिंग के लिए अलग आइकन इस्तेमाल हो या नहीं। Android 16 से शुरू होकर, हो सकता है कि स्टेटस बार आइकन हर OS वेरिएंट पर काम न करे।</string>
   <string name="status_bar_chip_settings" formatted="false">स्टेटस बार चिप</string>
   <string name="status_bar_chip_settings_summary" formatted="false">लाइव अपडेट\' चिप सामग्री कॉन्फ़िगर करें</string>
-  <string name="status_bar_chip_settings_help" formatted="false">एंड्रॉइड 16+ पर लाइव अपडेट के साथ, आप स्थिति को कॉन्फ़िगर कर सकते हैं बार चिप दिखाता है और चार्जिंग इमोजी प्रदर्शित करना है या नहीं।</string>
+  <string name="status_bar_chip_settings_help" formatted="false">लाइव अपडेट में आप स्टेटस बार चिप की सामग्री, उसके बदलने का अंतराल और चार्जिंग इमोजी का प्रदर्शन कॉन्फ़िगर कर सकते हैं।</string>
   <string name="current_state_settings_summary" formatted="false">वर्तमान जानकारी स्क्रीन की सेटिंग</string>
   <string name="current_state_settings_help" formatted="false">वर्तमान जानकारी स्क्रीन पर दिखाई जाने वाली जानकारी कॉन्फ़िगर करें। बैटरी करंट विकल्प, बैटरी के अन्य विवरणों के साथ दिखाई जाने वाली लाइव रीडिंग को नियंत्रित करते हैं।</string>
   <string name="alarm_settings_subtitle" formatted="false">अलार्म सेटिंग्स</string>
@@ -267,7 +267,7 @@
   <string name="pref_manage_main_channel" formatted="false">मुख्य चैनल प्रबंधित करें</string>
 
   <string name="pref_cat_notification_content" formatted="false">सामग्री</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">स्टेटस बार चिप (एंड्रॉइड 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">स्टेटस बार चिप</string>
   <string name="pref_live_update_display" formatted="false">लाइव अपडेट दिखाएं</string>
   <string name="pref_live_update_display_summary" formatted="false">स्टेटस बार में दिखाएं:</string>
   <string name="pref_live_update_display_help" formatted="false">चुनें कि Android 16+ का लाइव अपडेट चिप स्टेटस बार में कब दिखे।</string>
@@ -277,7 +277,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">यदि यह चालू है, तो स्टेटस बार चिप के साथ सामान्य मुख्य सूचना भी दिखाई देगी।</string>
   <string name="pref_chip_content" formatted="false">चिप सामग्री</string>
   <string name="pref_chip_switching_interval" formatted="false">स्विचिंग अंतराल</string>
-  <string name="pref_chip_content_help" formatted="false">चुनें कि Android 16+ प्रचारित-अधिसूचना चिप में कौन सा मान दिखाना है।</string>
+  <string name="pref_chip_content_summary" formatted="false">चिप में कौन से मान और किस क्रम में दिखाए जाएँ?</string>
+  <string name="pref_chip_content_help" formatted="false">वे मान चुनें जिनके बीच स्टेटस बार चिप बदलती रहेगी और उनका क्रम निर्धारित करें।</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">चुनें कि चिप कितनी बार अगले चयनित मान पर बदले।</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">चुनें कि चिप कितनी बार अगले चयनित मान पर बदले। यह सेटिंग एक से अधिक मान चुने जाने पर उपलब्ध होती है।</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">सेकंड में अंतराल दर्ज करें (1–3600)।</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">1 से 3600 तक का मान दर्ज करें।</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d सेकंड</string>
   <string name="pref_chip_indicate_charging" formatted="false">चार्जिंग इमोजी दिखाएँ</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">चार्ज करते समय या पूरी तरह चार्ज होने पर बिजली का इमोजी दिखाएँ?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">यदि सक्षम किया गया है, तो स्टेटस बार चिप बगल में एक बिजली का इमोजी दिखाएगा चार्ज करते समय या पूरी तरह चार्ज होने पर चिप का मूल्य।</string>

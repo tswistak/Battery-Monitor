@@ -231,7 +231,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Wählen Sie aus, ob das Benachrichtigungssymbol den Akkustand oder die Temperatur anzeigt, ob das Einheitssymbol im Symbol angezeigt wird und ob beim Laden ein eigenes Symbol verwendet wird. Ab Android 16 funktioniert das Statusleistensymbol möglicherweise nicht auf jeder Betriebssystemvariante.</string>
   <string name="status_bar_chip_settings" formatted="false">Statusleisten-Chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Inhalt des Live-Updates-Chips konfigurieren</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Auf Android 16+ mit Live Updates können Sie konfigurieren, was der Statusleisten-Chip zeigt und ob das Lade-Emoji angezeigt wird.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Mit Live Updates können Sie konfigurieren, was der Statusleisten-Chip zeigt, wie oft sich sein Inhalt ändert und ob das Lade-Emoji angezeigt wird.</string>
   <string name="current_state_settings_summary" formatted="false">Einstellungen für den Bildschirm „Aktuelle Info“</string>
   <string name="current_state_settings_help" formatted="false">Legen Sie fest, welche Informationen auf dem Bildschirm „Aktuelle Info“ angezeigt werden. Die Batteriestromoptionen steuern den Live-Messwert neben den übrigen Batteriedetails.</string>
   <string name="alarm_settings_subtitle" formatted="false">Alarm Einstellungen</string>
@@ -265,7 +265,7 @@
   <string name="pref_manage_main_channel" formatted="false">Hauptkanal verwalten</string>
 
   <string name="pref_cat_notification_content" formatted="false">Inhalt</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Statusleisten-Chip (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Statusleisten-Chip</string>
   <string name="pref_live_update_display" formatted="false">Live-Update anzeigen</string>
   <string name="pref_live_update_display_summary" formatted="false">In der Statusleiste anzeigen:</string>
   <string name="pref_live_update_display_help" formatted="false">Wählen Sie, wann der Live-Update-Chip unter Android 16+ in der Statusleiste angezeigt werden soll.</string>
@@ -275,7 +275,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Wenn aktiviert, bleibt die normale Hauptbenachrichtigung zusätzlich zum Statusleisten-Chip sichtbar.</string>
   <string name="pref_chip_content" formatted="false">Chip-Inhalt</string>
   <string name="pref_chip_switching_interval" formatted="false">Wechselintervall</string>
-  <string name="pref_chip_content_help" formatted="false">Wählen Sie, welcher Wert im Android-16+-Benachrichtigungs-Chip angezeigt wird.</string>
+  <string name="pref_chip_content_summary" formatted="false">Welche Werte sollen im Chip angezeigt werden und in welcher Reihenfolge?</string>
+  <string name="pref_chip_content_help" formatted="false">Wählen Sie die Werte aus, zwischen denen der Statusleisten-Chip wechselt, und legen Sie deren Reihenfolge fest.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Legen Sie fest, wie oft der Chip zum nächsten ausgewählten Wert wechselt.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Legen Sie fest, wie oft der Chip zum nächsten ausgewählten Wert wechselt. Diese Einstellung ist verfügbar, wenn mehr als ein Wert ausgewählt ist.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Geben Sie ein Intervall in Sekunden ein (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Geben Sie einen Wert zwischen 1 und 3600 ein.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d Sekunden</string>
   <string name="pref_chip_indicate_charging" formatted="false">Lade-Emoji anzeigen</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Blitz-Emoji beim Laden oder bei vollem Akku anzeigen?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Wenn aktiviert, zeigt der Statusleisten-Chip beim Laden oder vollem Akku ein Blitz-Emoji neben dem Wert.</string>

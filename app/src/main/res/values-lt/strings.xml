@@ -251,7 +251,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Pasirinkite, ar pranešimo piktograma rodo akumuliatoriaus procentą ar temperatūrą, ar piktogramoje rodomas vieneto simbolis ir ar įkrovimui turi būti naudojama atskira piktograma. Nuo „Android 16“ būsenos juostos piktograma gali veikti ne visuose operacinės sistemos variantuose.</string>
   <string name="status_bar_chip_settings" formatted="false">Būsenos juostos lustas</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Konfigūruokite tiesioginių atnaujinimų lusto turinį</string>
-  <string name="status_bar_chip_settings_help" formatted="false">16 ir naujesnėse versijose „Android“ su tiesioginiais naujiniais galite konfigūruoti būseną juostos lustas ir ar rodyti įkrovimo jaustuką.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Tiesioginiuose naujiniuose galite konfigūruoti būsenos juostos lusto turinį, jo keitimo intervalą ir įkrovimo jaustuką.</string>
   <string name="current_state_settings_summary" formatted="false">Dabartinės informacijos ekrano nustatymai</string>
   <string name="current_state_settings_help" formatted="false">Nustatykite, kokia informacija rodoma Dabartinės informacijos ekrane. Akumuliatoriaus srovės parinktys valdo tiesioginį rodmenį, pateikiamą su kitais akumuliatoriaus duomenimis.</string>
   <string name="alarm_settings_subtitle" formatted="false">Aliarmo Nustatymai</string>
@@ -285,7 +285,7 @@
   <string name="pref_manage_main_channel" formatted="false">Valdykite pagrindinį kanalą</string>
 
   <string name="pref_cat_notification_content" formatted="false">Turinys</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Būsenos juostos lustas (16 ir naujesnės versijos „Android“)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Būsenos juostos lustas</string>
   <string name="pref_live_update_display" formatted="false">Rodyti tiesioginį atnaujinimą</string>
   <string name="pref_live_update_display_summary" formatted="false">Rodyti būsenos juostoje:</string>
   <string name="pref_live_update_display_help" formatted="false">Pasirinkite, kada Android 16+ tiesioginio atnaujinimo žetonas turi būti rodomas būsenos juostoje.</string>
@@ -295,7 +295,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Jei įjungta, įprastas pagrindinis pranešimas liks matomas kartu su būsenos juostos žetonu.</string>
   <string name="pref_chip_content" formatted="false">Lusto turinys</string>
   <string name="pref_chip_switching_interval" formatted="false">Perjungimo intervalas</string>
-  <string name="pref_chip_content_help" formatted="false">Pasirinkite, kokią reikšmę rodyti „Android 16+“ reklamuojamų pranešimų luste.</string>
+  <string name="pref_chip_content_summary" formatted="false">Kokios reikšmės ir kokia tvarka turi būti rodomos luste?</string>
+  <string name="pref_chip_content_help" formatted="false">Pasirinkite reikšmes, kurias cikliškai rodys būsenos juostos lustas, ir nustatykite jų tvarką.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Pasirinkite, kaip dažnai lustas persijungs į kitą pasirinktą reikšmę.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Pasirinkite, kaip dažnai lustas persijungs į kitą pasirinktą reikšmę. Šis nustatymas pasiekiamas pasirinkus daugiau nei vieną reikšmę.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Įveskite intervalą sekundėmis (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Įveskite reikšmę nuo 1 iki 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d sek.</string>
   <string name="pref_chip_indicate_charging" formatted="false">Rodyti įkrovimo jaustukus</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Rodyti žaibišką jaustuką įkraunant ar visiškai įkraunant?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Jei įjungta, būsenos juostos lustas šalia parodys žaibišką jaustuką lusto vertė kraunant arba visiškai įkrautą.</string>

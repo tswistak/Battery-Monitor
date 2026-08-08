@@ -231,7 +231,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Επιλέξτε αν το εικονίδιο ειδοποίησης εμφανίζει ποσοστό μπαταρίας ή θερμοκρασία, αν εμφανίζεται το σύμβολο της μονάδας μέσα στο εικονίδιο και αν η φόρτιση θα έχει ξεχωριστό εικονίδιο. Από το Android 16 και μετά, το εικονίδιο της γραμμής κατάστασης ενδέχεται να μη λειτουργεί σε κάθε παραλλαγή του λειτουργικού συστήματος.</string>
   <string name="status_bar_chip_settings" formatted="false">Τσιπ γραμμής κατάστασης</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Διαμόρφωση περιεχομένου τσιπ Ζωντανών ενημερώσεων</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Στο Android 16+ με Ζωντανές ενημερώσεις, μπορείτε να διαμορφώσετε την κατάσταση Εμφανίζει το τσιπ ράβδου και αν θα εμφανιστεί το emoji φόρτισης.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Με τις Ζωντανές ενημερώσεις μπορείτε να διαμορφώσετε τι εμφανίζει το τσιπ, πόσο συχνά αλλάζει και αν θα εμφανιστεί το emoji φόρτισης.</string>
   <string name="current_state_settings_summary" formatted="false">Ρυθμίσεις για την οθόνη Τρέχουσες πληροφορίες</string>
   <string name="current_state_settings_help" formatted="false">Διαμορφώστε τις πληροφορίες που εμφανίζονται στην οθόνη Τρέχουσες πληροφορίες. Οι επιλογές ρεύματος μπαταρίας ελέγχουν τη ζωντανή ένδειξη μαζί με τις άλλες λεπτομέρειες της μπαταρίας.</string>
   <string name="alarm_settings_subtitle" formatted="false">Ρυθμίσεις Ειδοποιήσεων</string>
@@ -265,7 +265,7 @@
   <string name="pref_manage_main_channel" formatted="false">Διαχείριση Κύριου Καναλιού</string>
 
   <string name="pref_cat_notification_content" formatted="false">Περιεχόμενο</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Τσιπ γραμμής κατάστασης (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Τσιπ γραμμής κατάστασης</string>
   <string name="pref_live_update_display" formatted="false">Εμφάνιση Live Update</string>
   <string name="pref_live_update_display_summary" formatted="false">Εμφάνιση στη γραμμή κατάστασης:</string>
   <string name="pref_live_update_display_help" formatted="false">Επιλέξτε πότε θα εμφανίζεται το chip Live Update του Android 16+ στη γραμμή κατάστασης.</string>
@@ -275,7 +275,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Αν είναι ενεργό, η κανονική κύρια ειδοποίηση παραμένει ορατή μαζί με το chip στη γραμμή κατάστασης.</string>
   <string name="pref_chip_content" formatted="false">Περιεχόμενο Chip</string>
   <string name="pref_chip_switching_interval" formatted="false">Μεσοδιάστημα εναλλαγής</string>
-  <string name="pref_chip_content_help" formatted="false">Επιλέξτε ποια τιμή θα εμφανίζεται στο τσιπ ειδοποιήσεων προωθημένων Android 16+.</string>
+  <string name="pref_chip_content_summary" formatted="false">Ποιες τιμές θα εμφανίζονται στο chip και με ποια σειρά;</string>
+  <string name="pref_chip_content_help" formatted="false">Επιλέξτε τις τιμές μεταξύ των οποίων θα εναλλάσσεται το chip της γραμμής κατάστασης και ορίστε τη σειρά τους.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Επιλέξτε πόσο συχνά το chip θα αλλάζει στην επόμενη επιλεγμένη τιμή.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Επιλέξτε πόσο συχνά το chip θα αλλάζει στην επόμενη επιλεγμένη τιμή. Αυτή η ρύθμιση είναι διαθέσιμη όταν έχουν επιλεγεί περισσότερες από μία τιμές.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Εισαγάγετε ένα διάστημα σε δευτερόλεπτα (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Εισαγάγετε μια τιμή από 1 έως 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d δευτερόλεπτα</string>
   <string name="pref_chip_indicate_charging" formatted="false">Εμφάνιση Emoji φόρτισης</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Εμφάνιση ενός emoji αστραπής κατά τη φόρτιση ή την πλήρη φόρτιση;</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Εάν είναι ενεργοποιημένο, το τσιπ της γραμμής κατάστασης θα εμφανίσει ένα emoji αστραπή δίπλα την τιμή του τσιπ κατά τη φόρτιση ή όταν είναι πλήρως φορτισμένο.</string>

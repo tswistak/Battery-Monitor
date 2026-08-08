@@ -239,7 +239,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">בחר אם סמל ההתראה יציג את אחוז הסוללה או את הטמפרטורה, אם סמל היחידה יוצג בתוך הסמל, ואם לטעינה יהיה סמל ייעודי. החל מ-Android 16, ייתכן שסמל שורת המצב לא יפעל בכל גרסאות מערכת ההפעלה.</string>
   <string name="status_bar_chip_settings" formatted="false">שבב שורת המצב</string>
   <string name="status_bar_chip_settings_summary" formatted="false">הגדר את תוכן השבב של עדכונים חיים</string>
-  <string name="status_bar_chip_settings_help" formatted="false">ב-Android 16 ומעלה ניתן לקבוע מה יוצג בשבב שורת המצב והאם להציג סימון טעינה.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">ניתן לקבוע מה יוצג בשבב שורת המצב, באיזו תדירות התוכן יתחלף והאם להציג סימון טעינה.</string>
   <string name="current_state_settings_summary" formatted="false">הגדרות למסך המידע הנוכחי</string>
   <string name="current_state_settings_help" formatted="false">הגדר את המידע שמוצג במסך המידע הנוכחי. אפשרויות זרם הסוללה שולטות בקריאה החיה שמוצגת לצד שאר פרטי הסוללה.</string>
   <string name="alarm_settings_subtitle" formatted="false">הגדרות התראה</string>
@@ -273,7 +273,7 @@
   <string name="pref_manage_main_channel" formatted="false">ניהול הערוץ הראשי</string>
 
   <string name="pref_cat_notification_content" formatted="false">תוכן</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">שבב שורת המצב (אנדרואיד 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">שבב שורת המצב</string>
   <string name="pref_live_update_display" formatted="false">הצג עדכון חי</string>
   <string name="pref_live_update_display_summary" formatted="false">הצג בשורת המצב:</string>
   <string name="pref_live_update_display_help" formatted="false">בחר מתי שבב העדכון החי של Android 16+ יוצג בשורת המצב.</string>
@@ -283,7 +283,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">אם מופעל, ההתראה הראשית הרגילה תישאר גלויה בנוסף לשבב בשורת המצב.</string>
   <string name="pref_chip_content" formatted="false">תוכן שבב</string>
   <string name="pref_chip_switching_interval" formatted="false">מרווח החלפה</string>
-  <string name="pref_chip_content_help" formatted="false">בחר איזה ערך להציג בשבב ההודעות המקודם של Android 16+.</string>
+  <string name="pref_chip_content_summary" formatted="false">אילו ערכים יוצגו בשבב ובאיזה סדר?</string>
+  <string name="pref_chip_content_help" formatted="false">בחר את הערכים ששבב שורת המצב יתחלף ביניהם וסדר אותם.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">בחר באיזו תדירות השבב יעבור לערך הנבחר הבא.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">בחר באיזו תדירות השבב יעבור לערך הנבחר הבא. הגדרה זו זמינה כאשר נבחר יותר מערך אחד.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">הזן מרווח בשניות (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">הזן ערך בין 1 ל־3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d שניות</string>
   <string name="pref_chip_indicate_charging" formatted="false">הצג סימון טעינה</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">להציג סימון בזמן טעינה או טעינה מלאה?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">אם מופעל, שבב שורת המצב יציג סימון ליד הערך בזמן טעינה או טעינה מלאה.</string>

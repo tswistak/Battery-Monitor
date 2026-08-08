@@ -251,7 +251,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Izberite, ali ikona obvestila prikazuje odstotek baterije ali temperaturo, ali naj bo v ikoni prikazan simbol enote in ali naj ima polnjenje posebno ikono. Od Androida 16 ikona vrstice stanja morda ne bo delovala v vseh različicah operacijskega sistema.</string>
   <string name="status_bar_chip_settings" formatted="false">Čip vrstice stanja</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Konfigurirajte vsebino čipa Live Updates</string>
-  <string name="status_bar_chip_settings_help" formatted="false">V sistemu Android 16+ s posodobitvami v živo lahko konfigurirate stanje paličasti čip prikazuje in ali naj prikaže emoji za polnjenje.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Pri posodobitvah v živo lahko nastavite vsebino čipa vrstice stanja, interval menjave in prikaz emodžija za polnjenje.</string>
   <string name="current_state_settings_summary" formatted="false">Nastavitve zaslona Aktualne informacije</string>
   <string name="current_state_settings_help" formatted="false">Nastavite informacije, prikazane na zaslonu Aktualne informacije. Možnosti toka baterije upravljajo sprotni odčitek, prikazan z drugimi podatki o bateriji.</string>
   <string name="alarm_settings_subtitle" formatted="false">Nastavitve alarma</string>
@@ -285,7 +285,7 @@
   <string name="pref_manage_main_channel" formatted="false">Upravljanje glavnega kanala</string>
 
   <string name="pref_cat_notification_content" formatted="false">Vsebina</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Čip vrstice stanja (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Čip vrstice stanja</string>
   <string name="pref_live_update_display" formatted="false">Prikazi sprotno posodobitev</string>
   <string name="pref_live_update_display_summary" formatted="false">Prikazi v vrstici stanja:</string>
   <string name="pref_live_update_display_help" formatted="false">Izberite, kdaj naj se v vrstici stanja prikaze cip sprotne posodobitve Android 16+.</string>
@@ -295,7 +295,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Ce je vklopljeno, navadno glavno obvestilo ostane vidno poleg cipa v vrstici stanja.</string>
   <string name="pref_chip_content" formatted="false">Vsebina čipa</string>
   <string name="pref_chip_switching_interval" formatted="false">Preklopni interval</string>
-  <string name="pref_chip_content_help" formatted="false">Izberite, katero vrednost želite prikazati v čipu za promovirana obvestila Android 16+.</string>
+  <string name="pref_chip_content_summary" formatted="false">Katere vrednosti naj bodo prikazane v čipu in v kakšnem vrstnem redu?</string>
+  <string name="pref_chip_content_help" formatted="false">Izberite vrednosti, med katerimi bo preklapljal čip v vrstici stanja, in določite njihov vrstni red.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Izberite, kako pogosto čip preklopi na naslednjo izbrano vrednost.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Izberite, kako pogosto čip preklopi na naslednjo izbrano vrednost. Ta nastavitev je na voljo, ko je izbrana več kot ena vrednost.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Vnesite interval v sekundah (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Vnesite vrednost od 1 do 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d sekund</string>
   <string name="pref_chip_indicate_charging" formatted="false">Prikaži polnilni emoji</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Prikaži emoji strele, ko se polni ali je popolnoma napolnjen?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Če je omogočeno, bo poleg čipa statusne vrstice prikazan emoji v obliki strele vrednost čipa med polnjenjem ali ko je popolnoma napolnjen.</string>

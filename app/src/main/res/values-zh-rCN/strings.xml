@@ -219,7 +219,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">选择通知图标显示电池百分比还是温度、是否在图标中显示单位符号，以及充电时是否使用专用图标。从 Android 16 开始，状态栏图标可能无法在所有操作系统变体上正常工作。</string>
   <string name="status_bar_chip_settings" formatted="false">状态栏芯片</string>
   <string name="status_bar_chip_settings_summary" formatted="false">配置实时更新芯片内容</string>
-  <string name="status_bar_chip_settings_help" formatted="false">在具有实时更新的 Android 16+ 上，您可以配置状态 条形芯片显示以及是否显示充电表情。</string>
+  <string name="status_bar_chip_settings_help" formatted="false">在实时更新中，您可以配置状态栏芯片显示的内容、切换间隔以及是否显示充电表情。</string>
   <string name="current_state_settings_summary" formatted="false">当前信息屏幕设置</string>
   <string name="current_state_settings_help" formatted="false">配置“当前信息”屏幕上显示的信息。电池电流选项控制与其他电池详细信息一同显示的实时读数。</string>
   <string name="alarm_settings_subtitle" formatted="false">闹钟设置</string>
@@ -253,7 +253,7 @@
   <string name="pref_manage_main_channel" formatted="false">管理主渠道</string>
 
   <string name="pref_cat_notification_content" formatted="false">内容</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">状态栏芯片（Android 16+）</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">状态栏芯片</string>
   <string name="pref_live_update_display" formatted="false">显示实时更新</string>
   <string name="pref_live_update_display_summary" formatted="false">在状态栏显示:</string>
   <string name="pref_live_update_display_help" formatted="false">选择在 Android 16+ 中何时在状态栏显示实时更新胶囊。</string>
@@ -263,7 +263,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">启用后，除状态栏胶囊外，常规主通知也会保持可见。</string>
   <string name="pref_chip_content" formatted="false">芯片内容</string>
   <string name="pref_chip_switching_interval" formatted="false">切换间隔</string>
-  <string name="pref_chip_content_help" formatted="false">选择在 Android 16+ 升级通知芯片中显示的值。</string>
+  <string name="pref_chip_content_summary" formatted="false">芯片中应显示哪些值，以及按什么顺序显示？</string>
+  <string name="pref_chip_content_help" formatted="false">选择状态栏芯片循环显示的值，并排列它们的顺序。</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">选择芯片切换到下一个所选值的频率。</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">选择芯片切换到下一个所选值的频率。选择多个值时可使用此设置。</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">输入以秒为单位的间隔（1–3600）。</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">请输入 1 到 3600 之间的值。</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d 秒</string>
   <string name="pref_chip_indicate_charging" formatted="false">显示充电表情符号</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">充电或充满电时显示闪电表情符号？</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">如果启用，状态栏芯片将在旁边显示闪电表情符号 充电时或充满电时的芯片值。</string>

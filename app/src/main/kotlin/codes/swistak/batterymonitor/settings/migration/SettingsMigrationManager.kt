@@ -20,7 +20,7 @@ internal object SettingsMigrationManager {
     private const val APPLIED_VERSION_KEY = "_applied_settings_migration_version"
 
     private val registeredMigrations: List<SettingsMigration> = listOf(
-        BatteryCurrentPreferencesMigration, VitalSignsContentMigration
+        BatteryCurrentPreferencesMigration, VitalSignsContentMigration, ChipContentMigration
     )
 
     @Synchronized

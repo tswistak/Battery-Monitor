@@ -229,7 +229,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Bildirim simgesinin pil yüzdesini mi yoksa sıcaklığı mı göstereceğini, simgede birim sembolünün gösterilip gösterilmeyeceğini ve şarj için ayrı bir simge kullanılıp kullanılmayacağını seçin. Android 16 ve sonrasında durum çubuğu simgesi her işletim sistemi varyantında çalışmayabilir.</string>
   <string name="status_bar_chip_settings" formatted="false">Durum Çubuğu Çipi</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Live Updates çip içeriğini ayarla</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Android 16+ ve Live Updates ile durum çubuğu çipinde ne gösterileceğini ayarlayabilirsiniz.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Live Updates ile durum çubuğu çipinin içeriğini ve değişme aralığını ayarlayabilirsiniz.</string>
   <string name="current_state_settings_summary" formatted="false">Güncel Bilgi ekranı ayarları</string>
   <string name="current_state_settings_help" formatted="false">Güncel Bilgi ekranında gösterilen bilgileri yapılandırın. Pil akımı seçenekleri, diğer pil ayrıntılarıyla birlikte gösterilen canlı ölçümü kontrol eder.</string>
   <string name="alarm_settings_subtitle" formatted="false">Alarm Ayarları</string>
@@ -263,7 +263,7 @@
   <string name="pref_manage_main_channel" formatted="false">Ana Kanalı Yönet</string>
 
   <string name="pref_cat_notification_content" formatted="false">İçerik</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Durum Çubuğu Çipi (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Durum Çubuğu Çipi</string>
   <string name="pref_live_update_display" formatted="false">Canli guncellemeyi goster</string>
   <string name="pref_live_update_display_summary" formatted="false">Durum cubugunda goster:</string>
   <string name="pref_live_update_display_help" formatted="false">Android 16+ Canli Guncelleme rozetinin durum cubugunda ne zaman gosterilecegini secin.</string>
@@ -273,7 +273,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Etkinse, normal ana bildirim durum cubugu rozetine ek olarak gorunur kalir.</string>
   <string name="pref_chip_content" formatted="false">Çip İçeriği</string>
   <string name="pref_chip_switching_interval" formatted="false">Geçiş aralığı</string>
-  <string name="pref_chip_content_help" formatted="false">Android 16+ bildirim çipinde hangi değerin gösterileceğini seçin.</string>
+  <string name="pref_chip_content_summary" formatted="false">Çipte hangi değerler ve hangi sırayla gösterilsin?</string>
+  <string name="pref_chip_content_help" formatted="false">Durum çubuğu çipinin dönüşümlü göstereceği değerleri seçin ve sıralarını düzenleyin.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Çipin bir sonraki seçili değere ne sıklıkta geçeceğini seçin.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Çipin bir sonraki seçili değere ne sıklıkta geçeceğini seçin. Bu ayar birden fazla değer seçildiğinde kullanılabilir.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Saniye cinsinden bir aralık girin (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">1 ile 3600 arasında bir değer girin.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d saniye</string>
   <string name="pref_chip_indicate_charging" formatted="false">Şarj Emojisini Göster</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Şarj olurken/yüzde 100\'de yıldırım emojisi gösterilsin mi?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Etkinse, durum çubuğu çipi şarj olurken değerin yanında yıldırım emojisi gösterir.</string>

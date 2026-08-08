@@ -21,6 +21,73 @@ import org.junit.Test
 
 class SettingsBackupSchemaTest {
     @Test
+    fun `version three includes explicit chip content settings`() {
+        assertEquals(
+            String::class.java,
+            Version3SettingsImporter.schema[SettingsContract.KEY_CHIP_SWITCHING_INTERVAL]
+        )
+        assertFalse(Version3SettingsImporter.schema.containsKey(SettingsContract.KEY_CHIP_CONTENT))
+        assertEquals(
+            setOf(Boolean::class.java),
+            Version3SettingsImporter.chipContentByBackupKey.keys.mapTo(linkedSetOf()) {
+                Version3SettingsImporter.schema[it]
+            })
+        assertEquals(5, Version3SettingsImporter.chipContentByBackupKey.size)
+        assertEquals(
+            setOf(Int::class.java),
+            Version3SettingsImporter.chipContentOrderByBackupKey.keys.mapTo(linkedSetOf()) {
+                Version3SettingsImporter.schema[it]
+            })
+        assertEquals(5, Version3SettingsImporter.chipContentOrderByBackupKey.size)
+    }
+
+    @Test
+    fun `version three restores explicit chip content and order`() {
+        val expectedOrder = listOf(
+            SettingsContract.CHIP_CONTENT_CHARGE,
+            SettingsContract.CHIP_CONTENT_CURRENT,
+            SettingsContract.CHIP_CONTENT_PERCENTAGE,
+            SettingsContract.CHIP_CONTENT_VOLTAGE,
+            SettingsContract.CHIP_CONTENT_TEMPERATURE
+        )
+        val settings = buildMap<String, Any> {
+            for (key in Version3SettingsImporter.chipContentByBackupKey.keys) {
+                put(
+                    key,
+                    key == Version3SettingsImporter.KEY_CHIP_CONTENT_CURRENT || key == Version3SettingsImporter.KEY_CHIP_CONTENT_CHARGE
+                )
+            }
+            for ((key, contentValue) in Version3SettingsImporter.chipContentOrderByBackupKey) {
+                put(key, expectedOrder.indexOf(contentValue))
+            }
+        }
+
+        assertEquals(
+            setOf(
+                SettingsContract.CHIP_CONTENT_CURRENT, SettingsContract.CHIP_CONTENT_CHARGE
+            ), Version3SettingsImporter.chipContentFromBackup(settings)
+        )
+        assertEquals(expectedOrder, Version3SettingsImporter.chipContentOrderFromBackup(settings))
+    }
+
+    @Test
+    fun `missing chip content fields use application defaults`() {
+        assertEquals(
+            SettingsContract.DEFAULT_CHIP_CONTENT,
+            Version3SettingsImporter.chipContentFromBackup(emptyMap())
+        )
+    }
+
+    @Test
+    fun `version three rejects duplicate chip content positions`() {
+        val settings = Version3SettingsImporter.chipContentOrderByBackupKey.keys.associateWith { 0 }
+
+        assertThrows(IllegalArgumentException::class.java) {
+            Version3SettingsImporter.chipContentOrderFromBackup(settings)
+        }
+    }
+
+    @Test
     fun `version three includes remaining charge and explicit vital signs settings`() {
         assertEquals(3, SettingsBackup.SCHEMA_VERSION)
         assertEquals(

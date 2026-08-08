@@ -271,7 +271,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">اختر ما إذا كانت أيقونة الإشعار تعرض نسبة البطارية أو درجة الحرارة، وما إذا كان رمز الوحدة يظهر داخل الأيقونة، وما إذا كان الشحن يستخدم أيقونة مخصصة. ابتداءً من Android 16، قد لا تعمل أيقونة شريط الحالة على جميع إصدارات نظام التشغيل.</string>
   <string name="status_bar_chip_settings" formatted="false">شريحة شريط الحالة</string>
   <string name="status_bar_chip_settings_summary" formatted="false">تهيئة محتوى شريحة Live Updates</string>
-  <string name="status_bar_chip_settings_help" formatted="false">على Android 16+ مع Live Updates يمكنك تهيئة ما تعرضه شريحة شريط الحالة وما إذا كان سيتم عرض رمز الشحن التعبيري.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">مع Live Updates يمكنك تهيئة ما تعرضه شريحة شريط الحالة ومعدل تغيير محتواها وما إذا كان سيتم عرض رمز الشحن التعبيري.</string>
   <string name="current_state_settings_summary" formatted="false">إعدادات شاشة المعلومات الحالية</string>
   <string name="current_state_settings_help" formatted="false">اضبط المعلومات المعروضة على شاشة المعلومات الحالية. تتحكم خيارات تيار البطارية في القراءة المباشرة المعروضة مع تفاصيل البطارية الأخرى.</string>
   <string name="alarm_settings_subtitle" formatted="false">اعدادات المنبه</string>
@@ -305,7 +305,7 @@
   <string name="pref_manage_main_channel" formatted="false">إدارة القناة الرئيسية</string>
 
   <string name="pref_cat_notification_content" formatted="false">المحتوى</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">شريحة شريط الحالة (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">شريحة شريط الحالة</string>
   <string name="pref_live_update_display" formatted="false">عرض التحديث المباشر</string>
   <string name="pref_live_update_display_summary" formatted="false">إظهار في شريط الحالة:</string>
   <string name="pref_live_update_display_help" formatted="false">اختر متى يجب عرض شريحة التحديث المباشر في Android 16+ في شريط الحالة.</string>
@@ -315,7 +315,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">إذا كان مفعلاً، سيظل الإشعار الرئيسي العادي مرئيًا بالإضافة إلى شريحة شريط الحالة.</string>
   <string name="pref_chip_content" formatted="false">محتوى الشريحة</string>
   <string name="pref_chip_switching_interval" formatted="false">فاصل التبديل</string>
-  <string name="pref_chip_content_help" formatted="false">اختر القيمة التي ستُعرض في شريحة الإشعار المروّج على Android 16+.</string>
+  <string name="pref_chip_content_summary" formatted="false">ما القيم التي يجب عرضها في الشريحة، وبأي ترتيب؟</string>
+  <string name="pref_chip_content_help" formatted="false">اختر القيم التي تتنقل بينها شريحة شريط الحالة ورتّبها.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">اختر عدد مرات انتقال الشريحة إلى القيمة المحددة التالية.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">اختر عدد مرات انتقال الشريحة إلى القيمة المحددة التالية. يتوفر هذا الإعداد عند تحديد أكثر من قيمة واحدة.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">أدخل فاصلاً بالثواني (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">أدخل قيمة من 1 إلى 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d ثانية</string>
   <string name="pref_chip_indicate_charging" formatted="false">إظهار رمز الشحن</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">إظهار رمز البرق أثناء الشحن أو عند الامتلاء الكامل؟</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">عند التمكين، ستعرض شريحة شريط الحالة رمز البرق بجانب القيمة أثناء الشحن أو عند اكتمال الشحن.</string>

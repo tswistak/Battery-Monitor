@@ -19,11 +19,9 @@
             android:title="@string/pref_live_update_keep_main_notification"
             app:singleLineTitle="false" />
 
-        <ListPreference
-            android:defaultValue="@string/default_chip_content"
-            android:entries="@array/chip_content_entries"
-            android:entryValues="@array/chip_content_values"
+        <Preference
             android:key="chip_content"
+            android:summary="@string/pref_chip_content_summary"
             android:title="@string/pref_chip_content"
             app:singleLineTitle="false" />
 
@@ -32,6 +30,7 @@
             android:entries="@array/chip_switching_interval_entries"
             android:entryValues="@array/chip_switching_interval_values"
             android:key="chip_switching_interval"
+            android:summary="@string/pref_chip_switching_interval_summary"
             android:title="@string/pref_chip_switching_interval"
             app:singleLineTitle="false" />
 
@@ -43,4 +42,3 @@
             app:singleLineTitle="false" />
     </PreferenceCategory>
 </PreferenceScreen>
-

@@ -243,7 +243,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Izaberite da li ikonica obaveštenja prikazuje procenat baterije ili temperaturu, da li se u ikonici prikazuje simbol jedinice i da li punjenje koristi posebnu ikonicu. Od Androida 16 ikonica statusne trake možda neće raditi u svim varijantama operativnog sistema.</string>
   <string name="status_bar_chip_settings" formatted="false">Čip statusne trake</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Podesite sadržaj čipa za Live Updates</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Na Androidu 16+ sa Live Updates možete podesiti šta čip u statusnoj traci prikazuje i da li će se prikazivati emoji za punjenje.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Za Live Updates možete podesiti sadržaj čipa statusne trake, interval promene i prikaz emodžija za punjenje.</string>
   <string name="current_state_settings_summary" formatted="false">Podešavanja ekrana Trenutne informacije</string>
   <string name="current_state_settings_help" formatted="false">Podesite informacije koje se prikazuju na ekranu Trenutne informacije. Opcije struje baterije upravljaju trenutnim očitavanjem prikazanim uz ostale podatke o bateriji.</string>
   <string name="alarm_settings_subtitle" formatted="false">Podešavanja alarma</string>
@@ -277,7 +277,7 @@
   <string name="pref_manage_main_channel" formatted="false">Upravljaj glavnim kanalom</string>
 
   <string name="pref_cat_notification_content" formatted="false">Sadržaj</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Čip statusne trake (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Čip statusne trake</string>
   <string name="pref_live_update_display" formatted="false">Prikaži Live Update</string>
   <string name="pref_live_update_display_summary" formatted="false">Prikaži u statusnoj traci:</string>
   <string name="pref_live_update_display_help" formatted="false">Odaberite kada čip za Live Update na Androidu 16+ treba da se prikazuje u statusnoj traci.</string>
@@ -287,7 +287,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Ako je uključeno, normalno glavno obaveštenje ostaje vidljivo pored čipa u statusnoj traci.</string>
   <string name="pref_chip_content" formatted="false">Sadržaj čipa</string>
   <string name="pref_chip_switching_interval" formatted="false">Interval promene</string>
-  <string name="pref_chip_content_help" formatted="false">Izaberite koju vrednost prikazivati u Android 16+ promoted-notification čipu.</string>
+  <string name="pref_chip_content_summary" formatted="false">Koje vrednosti treba prikazati u čipu i kojim redosledom?</string>
+  <string name="pref_chip_content_help" formatted="false">Izaberite vrednosti između kojih će se čip statusne trake smenjivati i odredite njihov redosled.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Izaberite koliko često čip prelazi na sledeću izabranu vrednost.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Izaberite koliko često čip prelazi na sledeću izabranu vrednost. Ovo podešavanje je dostupno kada je izabrano više od jedne vrednosti.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Unesite interval u sekundama (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Unesite vrednost od 1 do 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d sekundi</string>
   <string name="pref_chip_indicate_charging" formatted="false">Prikaži emoji za punjenje</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Prikaži emoji munje tokom punjenja ili kad je baterija puna?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Ako je uključeno, čip statusne trake će prikazivati emoji munje pored vrednosti dok se baterija puni ili je potpuno puna.</string>

@@ -35,7 +35,7 @@ class SettingsMigrationManagerTest {
         )
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
-        assertEquals(2, preferences.commitCount)
+        assertEquals(3, preferences.commitCount)
         assertEquals(true, preferences.values[SettingsContract.KEY_ENABLE_BATTERY_CURRENT])
         assertEquals("1000", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER])
         assertEquals(true, preferences.values[SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT])
@@ -54,7 +54,7 @@ class SettingsMigrationManagerTest {
         )
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
-        assertEquals(2, preferences.commitCount)
+        assertEquals(3, preferences.commitCount)
     }
 
     @Test
@@ -134,6 +134,52 @@ class SettingsMigrationManagerTest {
         )
     }
 
+    @Test
+    fun `chip content migration maps percentage`() {
+        assertEquals(
+            setOf(SettingsContract.CHIP_CONTENT_PERCENTAGE),
+            ChipContentMigration.migratedContent("percentage")
+        )
+    }
+
+    @Test
+    fun `chip content migration maps temperature`() {
+        assertEquals(
+            setOf(SettingsContract.CHIP_CONTENT_TEMPERATURE),
+            ChipContentMigration.migratedContent("temperature")
+        )
+    }
+
+    @Test
+    fun `chip content migration maps switching to percentage and temperature`() {
+        assertEquals(
+            setOf(
+                SettingsContract.CHIP_CONTENT_PERCENTAGE, SettingsContract.CHIP_CONTENT_TEMPERATURE
+            ), ChipContentMigration.migratedContent("switching")
+        )
+    }
+
+    @Test
+    fun `chip content migration persists the mapped values and default order`() {
+        val preferences = FakeSharedPreferences(
+            mapOf(
+                "_applied_settings_migration_version" to 2,
+                SettingsContract.KEY_CHIP_CONTENT to "switching"
+            )
+        )
+
+        assertTrue(SettingsMigrationManager.migrate(preferences.instance))
+        assertEquals(
+            setOf(
+                SettingsContract.CHIP_CONTENT_PERCENTAGE, SettingsContract.CHIP_CONTENT_TEMPERATURE
+            ), preferences.values[SettingsContract.KEY_CHIP_CONTENT]
+        )
+        assertEquals(
+            SettingsContract.ALL_CHIP_CONTENT.joinToString(","),
+            preferences.values[SettingsContract.KEY_CHIP_CONTENT_ORDER]
+        )
+    }
+
     private fun recordingMigration(
         migrationVersion: Int, executedVersions: MutableList<Int>
     ): SettingsMigration = object : SettingsMigration {
@@ -159,6 +205,7 @@ class SettingsMigrationManagerTest {
         override fun invoke(proxy: Any, method: Method, arguments: Array<out Any?>?): Any? {
             val args = arguments.orEmpty()
             return when (method.name) {
+                "getAll" -> values.toMap()
                 "contains" -> values.containsKey(args[0] as String)
                 "getBoolean" -> values[args[0] as String] as? Boolean ?: args[1]
                 "getInt" -> values[args[0] as String] as? Int ?: args[1]

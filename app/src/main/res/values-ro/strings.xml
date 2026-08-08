@@ -239,7 +239,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Alege dacă pictograma notificării afișează procentul bateriei sau temperatura, dacă simbolul unității este afișat în pictogramă și dacă încărcarea folosește o pictogramă dedicată. Începând cu Android 16, este posibil ca pictograma barei de stare să nu funcționeze pe toate variantele sistemului de operare.</string>
   <string name="status_bar_chip_settings" formatted="false">Cip bară de stare</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configurați conținutul cipului actualizărilor în direct</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Pe Android 16+ cu actualizări live, puteți configura starea cip bară afișează și dacă să afișați emoji-ul de încărcare.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Cu actualizări live, puteți configura conținutul cipului barei de stare, intervalul de schimbare și emoji-ul de încărcare.</string>
   <string name="current_state_settings_summary" formatted="false">Setări pentru ecranul Informații actuale</string>
   <string name="current_state_settings_help" formatted="false">Configurează informațiile afișate pe ecranul Informații actuale. Opțiunile pentru curentul bateriei controlează valoarea în timp real afișată împreună cu celelalte detalii ale bateriei.</string>
   <string name="alarm_settings_subtitle" formatted="false">Setări de alarmă</string>
@@ -273,7 +273,7 @@
   <string name="pref_manage_main_channel" formatted="false">Gestionați canalul principal</string>
 
   <string name="pref_cat_notification_content" formatted="false">Conţinut</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Cip bară de stare (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Cip bară de stare</string>
   <string name="pref_live_update_display" formatted="false">Afiseaza actualizarea live</string>
   <string name="pref_live_update_display_summary" formatted="false">Afiseaza in bara de stare:</string>
   <string name="pref_live_update_display_help" formatted="false">Alege cand trebuie afisat in bara de stare chipul de actualizare live din Android 16+.</string>
@@ -283,7 +283,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Daca este activat, notificarea principala obisnuita ramane vizibila pe langa chipul din bara de stare.</string>
   <string name="pref_chip_content" formatted="false">Conținut de cip</string>
   <string name="pref_chip_switching_interval" formatted="false">Interval de comutare</string>
-  <string name="pref_chip_content_help" formatted="false">Alegeți ce valoare să afișați în cipul de notificare promovat Android 16+.</string>
+  <string name="pref_chip_content_summary" formatted="false">Ce valori trebuie afișate în cip și în ce ordine?</string>
+  <string name="pref_chip_content_help" formatted="false">Alegeți valorile între care va comuta cipul din bara de stare și stabiliți ordinea lor.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Alegeți cât de des trece cipul la următoarea valoare selectată.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Alegeți cât de des trece cipul la următoarea valoare selectată. Această setare este disponibilă când este selectată mai mult de o valoare.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Introduceți un interval în secunde (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Introduceți o valoare între 1 și 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d secunde</string>
   <string name="pref_chip_indicate_charging" formatted="false">Afișați emoji de încărcare</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Afișați un emoji fulger când se încarcă sau este complet încărcat?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Dacă este activat, cipul barei de stare va afișa un emoji fulger lângă valoarea cipului în timpul încărcării sau când este complet încărcat.</string>

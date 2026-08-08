@@ -231,7 +231,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Choose whether the notification icon shows battery percentage or temperature. Also choose, whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon. Starting with Android 16, the status bar icon may not work on every OS variant.</string>
   <string name="status_bar_chip_settings" formatted="false">Status Bar Chip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configure Live Updates\' chip content</string>
-  <string name="status_bar_chip_settings_help" formatted="false">On Android 16+ with Live Updates, you can configure what the status bar chip shows and whether to display the charging emoji.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Configure what the status bar chip shows, how often its content changes, and whether to display the charging emoji.</string>
   <string name="current_state_settings_summary" formatted="false">Settings for the Current state screen</string>
   <string name="current_state_settings_help" formatted="false">Configure the information shown on the Current state screen. Battery-current options control the live reading displayed with the other battery details.</string>
   <string name="alarm_settings_subtitle" formatted="false">Alarm Settings</string>
@@ -265,7 +265,7 @@
   <string name="pref_manage_main_channel" formatted="false">Manage Main Channel</string>
 
   <string name="pref_cat_notification_content" formatted="false">Content</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Status Bar Chip (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Status Bar Chip</string>
   <string name="pref_live_update_display" formatted="false">Show Live Update</string>
   <string name="pref_live_update_display_summary" formatted="false">Show in status bar:</string>
   <string name="pref_live_update_display_help" formatted="false">Choose when the Live Update chip should be shown in the status bar.</string>
@@ -275,7 +275,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">If enabled, the main notification remains visible in addition to the status bar chip.</string>
   <string name="pref_chip_content" formatted="false">Chip Content</string>
   <string name="pref_chip_switching_interval" formatted="false">Switching interval</string>
-  <string name="pref_chip_content_help" formatted="false">Choose what value to show in the promoted-notification chip.</string>
+  <string name="pref_chip_content_summary" formatted="false">Which values should be shown in the chip, and in what order?</string>
+  <string name="pref_chip_content_help" formatted="false">Choose which values the status bar chip cycles through and arrange their order.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Choose how often the chip changes to the next selected value.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Choose how often the chip changes to the next selected value. This setting is available when more than one value is selected.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Enter an interval in seconds (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Enter a value from 1 to 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d seconds</string>
   <string name="pref_chip_indicate_charging" formatted="false">Show Charging Emoji</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Show a lightning emoji when charging or fully charged?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">If enabled, the status bar chip will show a lightning emoji next to the chip value while charging or when fully charged.</string>

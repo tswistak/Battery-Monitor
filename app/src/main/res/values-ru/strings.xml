@@ -253,7 +253,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Выберите, будет ли значок уведомления показывать процент заряда или температуру, будет ли в значке отображаться символ единицы и нужен ли отдельный значок во время зарядки. Начиная с Android 16 значок строки состояния может работать не во всех вариантах операционной системы.</string>
   <string name="status_bar_chip_settings" formatted="false">Чип в строке состояния</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Настройка содержимого чипа Live Updates</string>
-  <string name="status_bar_chip_settings_help" formatted="false">На Android 16+ с Live Updates можно настроить, что показывать в чипе строки состояния и нужно ли отображать эмодзи зарядки.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Для Live Updates можно настроить содержимое чипа строки состояния, частоту его смены и отображение эмодзи зарядки.</string>
   <string name="current_state_settings_summary" formatted="false">Настройки экрана «Текущая информация»</string>
   <string name="current_state_settings_help" formatted="false">Настройте информацию на экране «Текущая информация». Параметры тока батареи управляют показом текущего значения вместе с остальными сведениями о батарее.</string>
   <string name="alarm_settings_subtitle" formatted="false">Настройки оповещений</string>
@@ -287,7 +287,7 @@
   <string name="pref_manage_main_channel" formatted="false">Настроить основной канал</string>
 
   <string name="pref_cat_notification_content" formatted="false">Содержание</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Чип в строке состояния (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Чип в строке состояния</string>
   <string name="pref_live_update_display" formatted="false">Показывать Live Update</string>
   <string name="pref_live_update_display_summary" formatted="false">Показывать в строке состояния:</string>
   <string name="pref_live_update_display_help" formatted="false">Выберите, когда в строке состояния должен показываться чип Live Update в Android 16+.</string>
@@ -297,7 +297,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Если включено, обычное основное уведомление остается видимым вместе с чипом в строке состояния.</string>
   <string name="pref_chip_content" formatted="false">Содержимое чипа</string>
   <string name="pref_chip_switching_interval" formatted="false">Интервал переключения</string>
-  <string name="pref_chip_content_help" formatted="false">Выберите, какое значение показывать в чипе продвинутого уведомления Android 16+.</string>
+  <string name="pref_chip_content_summary" formatted="false">Какие значения и в каком порядке должны отображаться в чипе?</string>
+  <string name="pref_chip_content_help" formatted="false">Выберите значения, между которыми будет переключаться чип в строке состояния, и задайте их порядок.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Выберите, как часто чип будет переключаться на следующее выбранное значение.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Выберите, как часто чип будет переключаться на следующее выбранное значение. Эта настройка доступна, если выбрано более одного значения.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Введите интервал в секундах (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Введите значение от 1 до 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d секунд</string>
   <string name="pref_chip_indicate_charging" formatted="false">Показывать эмодзи зарядки</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Показывать эмодзи молнии во время зарядки или при полном заряде?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Если включено, чип в строке состояния будет показывать эмодзи молнии рядом со значением во время зарядки или при полном заряде.</string>

@@ -229,7 +229,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">通知アイコンにバッテリー残量を表示するか温度を表示するか、アイコン内に単位記号を表示するか、また充電時に専用アイコンを使うかを選択します。Android 16 以降では、OS の種類によってはステータスバーアイコンが機能しない場合があります。</string>
   <string name="status_bar_chip_settings" formatted="false">ステータスバーチップ</string>
   <string name="status_bar_chip_settings_summary" formatted="false">ライブ更新チップの表示内容を設定</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Android 16 以降でライブ更新を使用している場合、ステータスバーチップに表示する内容や充電絵文字の表示有無を設定できます。</string>
+  <string name="status_bar_chip_settings_help" formatted="false">ライブ更新では、ステータスバーチップの表示内容、切り替え間隔、充電絵文字の表示有無を設定できます。</string>
   <string name="current_state_settings_summary" formatted="false">「現在の情報」画面の設定</string>
   <string name="current_state_settings_help" formatted="false">「現在の情報」画面に表示する内容を設定します。バッテリー電流のオプションは、ほかのバッテリー情報と一緒に表示されるリアルタイム値を制御します。</string>
   <string name="alarm_settings_subtitle" formatted="false">アラーム設定</string>
@@ -263,7 +263,7 @@
   <string name="pref_manage_main_channel" formatted="false">メインチャンネルを管理</string>
 
   <string name="pref_cat_notification_content" formatted="false">コンテンツ</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">ステータスバーチップ（Android 16+）</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">ステータスバーチップ</string>
   <string name="pref_live_update_display" formatted="false">ライブアップデートを表示</string>
   <string name="pref_live_update_display_summary" formatted="false">ステータスバーに表示:</string>
   <string name="pref_live_update_display_help" formatted="false">Android 16+ のライブアップデート チップをステータスバーに表示するタイミングを選択します。</string>
@@ -273,7 +273,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">有効にすると、ステータスバーのチップに加えて通常のメイン通知も表示されます。</string>
   <string name="pref_chip_content" formatted="false">チップ内容</string>
   <string name="pref_chip_switching_interval" formatted="false">切り替え間隔</string>
-  <string name="pref_chip_content_help" formatted="false">Android 16 以降の昇格通知チップに表示する値を選択します。</string>
+  <string name="pref_chip_content_summary" formatted="false">チップに表示する値とその順序を設定します。</string>
+  <string name="pref_chip_content_help" formatted="false">ステータスバーチップで切り替えて表示する値を選択し、順序を並べ替えます。</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">チップが次の選択値に切り替わる頻度を選択します。</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">チップが次の選択値に切り替わる頻度を選択します。この設定は複数の値を選択した場合に使用できます。</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">間隔を秒単位で入力してください（1～3600）。</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">1～3600の値を入力してください。</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d 秒</string>
   <string name="pref_chip_indicate_charging" formatted="false">充電絵文字を表示</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">充電中または満充電時に稲妻絵文字を表示しますか？</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">有効にすると、充電中または満充電時に、ステータスバーチップの値の横に稲妻絵文字が表示されます。</string>

@@ -233,7 +233,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">انتخاب کنید که آیکون اعلان درصد باتری را نشان دهد یا دما، اینکه نماد واحد داخل آیکون نمایش داده شود یا نه، و اینکه هنگام شارژ از آیکون جداگانه استفاده شود یا نه. از Android 16 به بعد، ممکن است نماد نوار وضعیت در همه نسخه‌های سیستم‌عامل کار نکند.</string>
   <string name="status_bar_chip_settings" formatted="false">تراشه نوار وضعیت</string>
   <string name="status_bar_chip_settings_summary" formatted="false">محتوای تراشه به‌روزرسانی‌های زنده را پیکربندی کنید</string>
-  <string name="status_bar_chip_settings_help" formatted="false">در Android 16 و بالاتر با به‌روزرسانی‌های زنده، می‌توانید وضعیت را پیکربندی کنید تراشه نوار نشان می دهد و اینکه آیا ایموجی شارژ نمایش داده می شود.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">با به‌روزرسانی‌های زنده می‌توانید محتوای تراشه نوار وضعیت، فاصله تغییر آن و نمایش ایموجی شارژ را پیکربندی کنید.</string>
   <string name="current_state_settings_summary" formatted="false">تنظیمات صفحه اطلاعات فعلی</string>
   <string name="current_state_settings_help" formatted="false">اطلاعات نمایش‌داده‌شده در صفحه اطلاعات فعلی را تنظیم کنید. گزینه‌های جریان باتری، خوانش زنده‌ای را که کنار سایر جزئیات باتری نشان داده می‌شود کنترل می‌کنند.</string>
   <string name="alarm_settings_subtitle" formatted="false">تنظیمات هشدار</string>
@@ -267,7 +267,7 @@
   <string name="pref_manage_main_channel" formatted="false">کانال اصلی را مدیریت کنید</string>
 
   <string name="pref_cat_notification_content" formatted="false">محتوا</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">تراشه نوار وضعیت (Android 16 و بالاتر)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">تراشه نوار وضعیت</string>
   <string name="pref_live_update_display" formatted="false">نمایش به‌روزرسانی زنده</string>
   <string name="pref_live_update_display_summary" formatted="false">نمایش در نوار وضعیت:</string>
   <string name="pref_live_update_display_help" formatted="false">انتخاب کنید تراشهٔ به‌روزرسانی زندهٔ Android 16+ چه زمانی در نوار وضعیت نمایش داده شود.</string>
@@ -277,7 +277,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">اگر فعال باشد، اعلان اصلی معمولی علاوه بر تراشهٔ نوار وضعیت قابل مشاهده می‌ماند.</string>
   <string name="pref_chip_content" formatted="false">محتوای تراشه</string>
   <string name="pref_chip_switching_interval" formatted="false">فاصله تعویض</string>
-  <string name="pref_chip_content_help" formatted="false">مقداری را انتخاب کنید که در تراشه اعلان تبلیغاتی Android 16+ نشان داده شود.</string>
+  <string name="pref_chip_content_summary" formatted="false">کدام مقادیر و با چه ترتیبی در تراشه نشان داده شوند؟</string>
+  <string name="pref_chip_content_help" formatted="false">مقادیری را که تراشهٔ نوار وضعیت میان آن‌ها جابه‌جا می‌شود انتخاب و ترتیبشان را تنظیم کنید.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">انتخاب کنید تراشه هر چند وقت یک‌بار به مقدار انتخاب‌شدهٔ بعدی تغییر کند.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">انتخاب کنید تراشه هر چند وقت یک‌بار به مقدار انتخاب‌شدهٔ بعدی تغییر کند. این تنظیم زمانی در دسترس است که بیش از یک مقدار انتخاب شده باشد.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">فاصله را بر حسب ثانیه وارد کنید (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">مقداری از 1 تا 3600 وارد کنید.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d ثانیه</string>
   <string name="pref_chip_indicate_charging" formatted="false">نمایش شکلک شارژ</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">یک شکلک رعد و برق هنگام شارژ یا شارژ کامل نشان داده شود؟</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">اگر فعال باشد، تراشه نوار وضعیت یک شکلک رعد و برق را در کنار آن نشان می دهد مقدار تراشه در هنگام شارژ یا در هنگام شارژ کامل.</string>

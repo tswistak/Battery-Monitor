@@ -15,8 +15,10 @@ package codes.swistak.batterymonitor.settings.backup
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.VitalSignsOrder
+import codes.swistak.batterymonitor.settings.migration.ChipContentMigration
 import codes.swistak.batterymonitor.settings.migration.VitalSignsContentMigration
 import org.json.JSONException
 import org.json.JSONObject
@@ -85,6 +87,19 @@ internal object SettingsBackup {
             settings.put(backupKey, vitalSignsOrder.indexOf(contentValue))
         }
 
+        val chipContent = prefs.getStringSet(
+            SettingsContract.KEY_CHIP_CONTENT, SettingsContract.DEFAULT_CHIP_CONTENT
+        ) ?: SettingsContract.DEFAULT_CHIP_CONTENT
+        for ((backupKey, contentValue) in Version3SettingsImporter.chipContentByBackupKey) {
+            settings.put(backupKey, contentValue in chipContent)
+        }
+        val chipContentOrder = ChipContentOrder.parse(
+            prefs.getString(SettingsContract.KEY_CHIP_CONTENT_ORDER, null)
+        )
+        for ((backupKey, contentValue) in Version3SettingsImporter.chipContentOrderByBackupKey) {
+            settings.put(backupKey, chipContentOrder.indexOf(contentValue))
+        }
+
         val root = JSONObject()
         root.put("version", SCHEMA_VERSION)
         root.put("settings", settings)
@@ -101,6 +116,7 @@ internal object SettingsBackup {
         importer.restore(editor, validatedSettings)
         if (version < Version3SettingsImporter.VERSION) {
             VitalSignsContentMigration.restoreImportedSettings(editor, validatedSettings)
+            ChipContentMigration.restoreImportedSettings(editor, validatedSettings)
         }
     }
 

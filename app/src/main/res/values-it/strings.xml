@@ -235,7 +235,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Scegli se l’icona della notifica mostra la percentuale della batteria o la temperatura, se il simbolo dell’unità viene mostrato nell’icona e se la ricarica usa un’icona dedicata. A partire da Android 16, l’icona della barra di stato potrebbe non funzionare su tutte le varianti del sistema operativo.</string>
   <string name="status_bar_chip_settings" formatted="false">Chip barra di stato</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configura il contenuto del chip di Live Updates</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Su Android 16+ con Live Updates puoi configurare cosa mostra il chip della barra di stato e se visualizzare l\'emoji di ricarica.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Con Live Updates puoi configurare cosa mostra il chip della barra di stato, quanto spesso cambia e se visualizzare l\'emoji di ricarica.</string>
   <string name="current_state_settings_summary" formatted="false">Impostazioni della schermata Info correnti</string>
   <string name="current_state_settings_help" formatted="false">Configura le informazioni mostrate nella schermata Info correnti. Le opzioni della corrente della batteria controllano la lettura in tempo reale visualizzata insieme agli altri dettagli della batteria.</string>
   <string name="alarm_settings_subtitle" formatted="false">Impostazioni allarme</string>
@@ -269,7 +269,7 @@
   <string name="pref_manage_main_channel" formatted="false">Gestisci canale principale</string>
 
   <string name="pref_cat_notification_content" formatted="false">Contenuto</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Chip barra di stato (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Chip barra di stato</string>
   <string name="pref_live_update_display" formatted="false">Mostra aggiornamento live</string>
   <string name="pref_live_update_display_summary" formatted="false">Mostra nella barra di stato:</string>
   <string name="pref_live_update_display_help" formatted="false">Scegli quando mostrare nella barra di stato il chip di aggiornamento live di Android 16+.</string>
@@ -279,7 +279,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Se abilitato, la normale notifica principale resta visibile insieme al chip nella barra di stato.</string>
   <string name="pref_chip_content" formatted="false">Contenuto chip</string>
   <string name="pref_chip_switching_interval" formatted="false">Intervallo alternanza</string>
-  <string name="pref_chip_content_help" formatted="false">Scegli quale valore mostrare nel chip delle notifiche avanzate di Android 16+.</string>
+  <string name="pref_chip_content_summary" formatted="false">Quali valori devono essere mostrati nel chip e in quale ordine?</string>
+  <string name="pref_chip_content_help" formatted="false">Scegli i valori tra cui alternare il chip nella barra di stato e disponili nell’ordine desiderato.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Scegli con quale frequenza il chip passa al valore selezionato successivo.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Scegli con quale frequenza il chip passa al valore selezionato successivo. Questa impostazione è disponibile quando è selezionato più di un valore.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Inserisci un intervallo in secondi (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Inserisci un valore compreso tra 1 e 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d secondi</string>
   <string name="pref_chip_indicate_charging" formatted="false">Mostra emoji ricarica</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Mostrare un\'emoji fulmine durante la ricarica o a carica completa?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Se abilitato, il chip nella barra di stato mostrerà un\'emoji fulmine accanto al valore durante la ricarica o a carica completa.</string>

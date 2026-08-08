@@ -255,7 +255,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Vyberte, či ikona upozornenia zobrazuje percento batérie alebo teplotu, či sa v ikone zobrazuje symbol jednotky a či má mať nabíjanie vlastnú ikonu. Od Androidu 16 nemusí ikona stavového riadka fungovať vo všetkých variantoch operačného systému.</string>
   <string name="status_bar_chip_settings" formatted="false">Čip stavového riadka</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Nakonfigurujte obsah čipu Live Updates</string>
-  <string name="status_bar_chip_settings_help" formatted="false">V systéme Android 16+ so živými aktualizáciami môžete nakonfigurovať stav zobrazuje pruhový čip a či sa má zobraziť emodži nabíjania.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Pri živých aktualizáciách môžete nastaviť obsah čipu stavového riadka, interval zmeny a zobrazenie emodži nabíjania.</string>
   <string name="current_state_settings_summary" formatted="false">Nastavenia obrazovky Aktuálne informácie</string>
   <string name="current_state_settings_help" formatted="false">Nastavte informácie zobrazované na obrazovke Aktuálne informácie. Možnosti prúdu batérie riadia živý údaj zobrazený spolu s ostatnými podrobnosťami o batérii.</string>
   <string name="alarm_settings_subtitle" formatted="false">Nastavenie upozornení</string>
@@ -289,7 +289,7 @@
   <string name="pref_manage_main_channel" formatted="false">Spravovať hlavný kanál</string>
 
   <string name="pref_cat_notification_content" formatted="false">Obsah</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Čip stavového riadka (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Čip stavového riadka</string>
   <string name="pref_live_update_display" formatted="false">Zobrazovat Live Update</string>
   <string name="pref_live_update_display_summary" formatted="false">Zobrazit v stavovom riadku:</string>
   <string name="pref_live_update_display_help" formatted="false">Vyberte, kedy sa ma v stavovom riadku zobrazovat cip Live Update v Androide 16+.</string>
@@ -299,7 +299,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Ak je zapnute, bezne hlavne upozornenie zostane viditelne spolu s cipom v stavovom riadku.</string>
   <string name="pref_chip_content" formatted="false">Obsah čipu</string>
   <string name="pref_chip_switching_interval" formatted="false">Interval prepínania</string>
-  <string name="pref_chip_content_help" formatted="false">Vyberte hodnotu, ktorá sa má zobrazovať v čipe upozornení na Android 16+.</string>
+  <string name="pref_chip_content_summary" formatted="false">Ktoré hodnoty sa majú zobrazovať v čipe a v akom poradí?</string>
+  <string name="pref_chip_content_help" formatted="false">Vyberte hodnoty, medzi ktorými sa bude čip v stavovom riadku prepínať, a usporiadajte ich poradie.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Vyberte, ako často sa čip prepne na ďalšiu zvolenú hodnotu.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Vyberte, ako často sa čip prepne na ďalšiu zvolenú hodnotu. Toto nastavenie je dostupné, keď je vybraná viac ako jedna hodnota.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Zadajte interval v sekundách (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Zadajte hodnotu od 1 do 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d sekúnd</string>
   <string name="pref_chip_indicate_charging" formatted="false">Zobraziť Emoji nabíjania</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Zobrazovať pri nabíjaní alebo pri plnom nabití emoji blesku?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Ak je táto možnosť povolená, na čipe stavového riadka sa vedľa zobrazí emodži blesku hodnotu čipu počas nabíjania alebo pri plnom nabití.</string>

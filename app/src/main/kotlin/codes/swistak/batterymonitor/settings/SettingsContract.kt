@@ -50,6 +50,21 @@ internal object SettingsContract {
     const val KEY_STATUS_DUR_EST: String = "status_dur_est"
     const val KEY_INDICATE_CHARGING: String = "indicate_charging"
     const val KEY_CHIP_CONTENT: String = "chip_content"
+    const val KEY_CHIP_CONTENT_ORDER: String = "chip_content_order"
+    const val CHIP_CONTENT_PERCENTAGE: String = "percentage"
+    const val CHIP_CONTENT_TEMPERATURE: String = "temperature"
+    const val CHIP_CONTENT_VOLTAGE: String = "voltage"
+    const val CHIP_CONTENT_CURRENT: String = "current"
+    const val CHIP_CONTENT_CHARGE: String = "charge"
+    val ALL_CHIP_CONTENT: List<String> = listOf(
+        CHIP_CONTENT_PERCENTAGE,
+        CHIP_CONTENT_TEMPERATURE,
+        CHIP_CONTENT_VOLTAGE,
+        CHIP_CONTENT_CURRENT,
+        CHIP_CONTENT_CHARGE
+    )
+    val DEFAULT_CHIP_CONTENT: Set<String> = setOf(CHIP_CONTENT_PERCENTAGE)
+
     const val KEY_CHIP_SWITCHING_INTERVAL: String = "chip_switching_interval"
     const val KEY_CHIP_INDICATE_CHARGING: String = "chip_indicate_charging"
     const val KEY_LIVE_UPDATE_DISPLAY: String = "live_update_display"

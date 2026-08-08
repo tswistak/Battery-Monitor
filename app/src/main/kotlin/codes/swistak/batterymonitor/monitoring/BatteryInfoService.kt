@@ -54,7 +54,9 @@ import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.logs.LogDatabase
+import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.SettingsSnapshot
 import codes.swistak.batterymonitor.settings.VitalSignsOrder
 import codes.swistak.batterymonitor.widgets.BatteryInfoAppWidgetProvider
 import codes.swistak.batterymonitor.widgets.CircleWidgetBackground
@@ -107,8 +109,8 @@ class BatteryInfoService : Service() {
         const val EXTRA_EDIT_ALARMS: String = "codes.swistak.batterymonitor.EXTRA_EDIT_ALARMS"
 
         // Carries fresh preference values to the service's separate BIS process.
-        private const val EXTRA_BATTERY_CURRENT_OVERRIDES =
-            "codes.swistak.batterymonitor.EXTRA_BATTERY_CURRENT_OVERRIDES"
+        private const val EXTRA_SETTINGS_SNAPSHOT =
+            "codes.swistak.batterymonitor.EXTRA_SETTINGS_SNAPSHOT"
 
         private const val CONTENT_PERCENTAGE = "percentage"
         private const val CONTENT_TEMPERATURE = "temperature"
@@ -157,14 +159,10 @@ class BatteryInfoService : Service() {
             startForegroundServiceSafely(context)
         }
 
-        fun startForegroundServiceSafely(
-            context: Context, batteryCurrentOverrides: Bundle? = null
-        ) {
+        fun startForegroundServiceSafely(context: Context, settingsSnapshot: Bundle? = null) {
             val serviceIntent = Intent(context, BatteryInfoService::class.java)
-            if (batteryCurrentOverrides != null) {
-                serviceIntent.putExtra(
-                    EXTRA_BATTERY_CURRENT_OVERRIDES, batteryCurrentOverrides
-                )
+            if (settingsSnapshot != null) {
+                serviceIntent.putExtra(EXTRA_SETTINGS_SNAPSHOT, settingsSnapshot)
             }
 
             try {
@@ -214,6 +212,10 @@ class BatteryInfoService : Service() {
 
     private var vitalSignsContent: Set<String> = SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
     private var vitalSignsOrder: List<String> = SettingsContract.ALL_VITAL_SIGNS_CONTENT
+    private var chipContent: Set<String> = SettingsContract.DEFAULT_CHIP_CONTENT
+    private var chipContentOrder: List<String> = SettingsContract.ALL_CHIP_CONTENT
+    private var chipContentIndex = 0
+
     private var preferAverageBatteryCurrent = false
 
     private lateinit var res: Resources
@@ -237,24 +239,17 @@ class BatteryInfoService : Service() {
     private val mHandler = Handler(Looper.getMainLooper())
 
     private val runPredictorUpdate = Runnable { update(null) }
-    private var chipShowingTemperature = false
     private val runChipSwitch: Runnable = object : Runnable {
         override fun run() {
-            chipShowingTemperature = !chipShowingTemperature
+            val selectedContent = selectedChipContent()
+            if (selectedContent.size < 2) return
+            chipContentIndex = (chipContentIndex + 1) % selectedContent.size
             val mainNotification = prepareNotification()
             if (mainNotificationForegroundStarted) {
                 mNotificationManager!!.notify(NOTIFICATION_PRIMARY, mainNotification)
             }
 
-            var interval: Int
-            interval = try {
-                settings.getString(
-                    SettingsContract.KEY_CHIP_SWITCHING_INTERVAL, "5"
-                )!!.toInt()
-            } catch (e: NumberFormatException) {
-                5
-            }
-            mHandler.postDelayed(this, interval * 1000L)
+            mHandler.postDelayed(this, chipSwitchingIntervalMillis())
         }
     }
 
@@ -365,6 +360,7 @@ class BatteryInfoService : Service() {
             }
         }
         configureBatteryCurrent()
+        configureChipContent()
 
         val currentInfoIntent = Intent(this, BatteryInfoActivity::class.java).putExtra(
             EXTRA_CURRENT_INFO, true
@@ -434,8 +430,11 @@ class BatteryInfoService : Service() {
             stopSelf(startId)
             return START_NOT_STICKY
         }
-        intent?.getBundleExtra(EXTRA_BATTERY_CURRENT_OVERRIDES)?.let(::configureBatteryCurrent)
+        intent?.getBundleExtra(EXTRA_SETTINGS_SNAPSHOT)?.let(::applySettingsSnapshot)
+        configureBatteryCurrent()
+        configureChipContent()
         update(null)
+        restartChipSwitcher()
 
         return START_STICKY
     }
@@ -514,51 +513,55 @@ class BatteryInfoService : Service() {
         spService = getSharedPreferences(SettingsContract.SP_SERVICE_FILE, MODE_PRIVATE)
     }
 
-    private fun reloadSettings(cancelFirst: Boolean, batteryCurrentOverrides: Bundle?) {
+    private fun reloadSettings(cancelFirst: Boolean, settingsSnapshot: Bundle?) {
         loadSettingsFiles()
-        configureBatteryCurrent(batteryCurrentOverrides)
+        settingsSnapshot?.let(::applySettingsSnapshot)
+        configureBatteryCurrent()
+        configureChipContent()
 
         DisplayStrings.setResources(res)
 
         applyNewSettings(cancelFirst)
     }
 
-    private fun configureBatteryCurrent(overrides: Bundle? = null) {
-        batteryCurrentEnabled = overrides?.getBoolean(
-            SettingsContract.KEY_ENABLE_BATTERY_CURRENT,
-            settings.getBoolean(SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false)
-        ) ?: settings.getBoolean(SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false)
-        vitalSignsContent = overrides?.getStringArrayList(
-            SettingsContract.KEY_VITAL_SIGNS_CONTENT
-        )?.toSet() ?: settings.getStringSet(
+    private fun applySettingsSnapshot(snapshot: Bundle) {
+        if (!SettingsSnapshot.apply(settings, snapshot)) {
+            Log.e(LOG_TAG, "Failed to apply cross-process settings snapshot")
+        }
+    }
+
+    private fun configureBatteryCurrent() {
+        batteryCurrentEnabled = settings.getBoolean(
+            SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false
+        )
+        vitalSignsContent = settings.getStringSet(
             SettingsContract.KEY_VITAL_SIGNS_CONTENT, SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
         )?.toSet() ?: SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
         vitalSignsOrder = VitalSignsOrder.parse(
-            overrides?.getString(SettingsContract.KEY_VITAL_SIGNS_ORDER) ?: settings.getString(
-                SettingsContract.KEY_VITAL_SIGNS_ORDER, null
-            )
+            settings.getString(SettingsContract.KEY_VITAL_SIGNS_ORDER, null)
         )
-        preferAverageBatteryCurrent = overrides?.getBoolean(
-            SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT,
-            settings.getBoolean(SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false)
-        ) ?: settings.getBoolean(
+        preferAverageBatteryCurrent = settings.getBoolean(
             SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
         )
 
         BatteryCurrent.setUsePrivilegedAccess(
-            overrides?.getBoolean(
-                SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, settings.getBoolean(
-                    SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
-                )
-            ) ?: settings.getBoolean(
+            settings.getBoolean(
                 SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
             )
         )
-        val multiplier = overrides?.getString(
-            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
-            settings.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
-        ) ?: settings.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
+        val multiplier = settings.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
         BatteryCurrent.setMultiplier(multiplier?.toIntOrNull() ?: 1)
+    }
+
+    private fun configureChipContent() {
+        chipContent = settings.getStringSet(
+            SettingsContract.KEY_CHIP_CONTENT, SettingsContract.DEFAULT_CHIP_CONTENT
+        )?.filterTo(linkedSetOf()) { it in SettingsContract.ALL_CHIP_CONTENT }
+            ?.ifEmpty { SettingsContract.DEFAULT_CHIP_CONTENT }
+            ?: SettingsContract.DEFAULT_CHIP_CONTENT
+        chipContentOrder = ChipContentOrder.parse(
+            settings.getString(SettingsContract.KEY_CHIP_CONTENT_ORDER, null)
+        )
     }
 
     private fun applyNewSettings(cancelFirst: Boolean) {
@@ -567,21 +570,18 @@ class BatteryInfoService : Service() {
             mainNotificationForegroundStarted = false
         }
 
-        chipShowingTemperature = false
+        chipContentIndex = 0
         setUpChannels()
         registerReceiver(mBatteryInfoReceiver, batteryChanged)
         update(null)
 
+        restartChipSwitcher()
+    }
+
+    private fun restartChipSwitcher() {
         mHandler.removeCallbacks(runChipSwitch)
         if (shouldRunChipSwitcher()) {
-            val interval: Int = try {
-                settings.getString(
-                    SettingsContract.KEY_CHIP_SWITCHING_INTERVAL, "5"
-                )!!.toInt()
-            } catch (e: NumberFormatException) {
-                5
-            }
-            mHandler.postDelayed(runChipSwitch, interval * 1000L)
+            mHandler.postDelayed(runChipSwitch, chipSwitchingIntervalMillis())
         }
     }
 
@@ -879,26 +879,54 @@ class BatteryInfoService : Service() {
         return if (CONTENT_TEMPERATURE == content) 150 else 100
     }
 
+    private fun selectedChipContent(): List<String> =
+        chipContentOrder.filter { it in chipContent }.ifEmpty {
+            listOf(SettingsContract.CHIP_CONTENT_PERCENTAGE)
+        }
+
     private fun chipContentText(): String {
-        var content: String = settings.getString(
-            SettingsContract.KEY_CHIP_CONTENT, res.getString(R.string.default_chip_content)
-        )!!
+        val selectedContent = selectedChipContent()
+        val content = selectedContent[chipContentIndex % selectedContent.size]
+        return when (content) {
+            SettingsContract.CHIP_CONTENT_TEMPERATURE -> {
+                val convertF = settings.getBoolean(
+                    SettingsContract.KEY_CONVERT_F,
+                    res.getBoolean(R.bool.default_convert_to_fahrenheit)
+                )
+                DisplayStrings.formatTemp(info!!.temperature, convertF, false)
+            }
 
-        content = if ("switching" == content) {
-            if (chipShowingTemperature) CONTENT_TEMPERATURE else CONTENT_PERCENTAGE
-        } else {
-            contentPreference(
-                SettingsContract.KEY_CHIP_CONTENT, res.getString(R.string.default_chip_content)
-            )
-        }
+            SettingsContract.CHIP_CONTENT_VOLTAGE -> {
+                if (info!!.voltage > 500) DisplayStrings.formatVoltage(info!!.voltage) else "—"
+            }
 
-        if (CONTENT_TEMPERATURE == content) {
-            val convertF = settings.getBoolean(
-                SettingsContract.KEY_CONVERT_F, res.getBoolean(R.bool.default_convert_to_fahrenheit)
-            )
-            return DisplayStrings.formatTemp(info!!.temperature, convertF, false)
+            SettingsContract.CHIP_CONTENT_CURRENT -> {
+                var current: Double? = null
+                if (preferAverageBatteryCurrent) current = BatteryCurrent.avgCurrent
+                if (current == null) current = BatteryCurrent.current
+                current?.let {
+                    BatteryCurrent.formatMilliAmps(it, res.configuration.locales[0]) + "mA"
+                } ?: "—"
+            }
+
+            SettingsContract.CHIP_CONTENT_CHARGE -> {
+                info!!.remainingChargeUah?.let { remainingChargeUah ->
+                    getString(
+                        R.string.remaining_charge_value,
+                        DisplayStrings.formatChargeCompact(remainingChargeUah)
+                    )
+                } ?: "—"
+            }
+
+            else -> info!!.percent.toString() + "%"
         }
-        return info!!.percent.toString() + "%"
+    }
+
+    private fun chipSwitchingIntervalMillis(): Long {
+        val seconds = settings.getString(
+            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL, "5"
+        )?.toLongOrNull()?.coerceIn(1L, 3600L) ?: 5L
+        return seconds * 1000L
     }
 
     private fun liveUpdateMode(): String {
@@ -940,7 +968,7 @@ class BatteryInfoService : Service() {
     private fun shouldRunChipSwitcher(): Boolean {
         if (!supportsLiveUpdates()) return false
         if (LIVE_UPDATE_MODE_NEVER == liveUpdateMode()) return false
-        return "switching" == settings.getString(SettingsContract.KEY_CHIP_CONTENT, "")
+        return selectedChipContent().size > 1
     }
 
     private fun shouldShowChipChargingIndicator(): Boolean {

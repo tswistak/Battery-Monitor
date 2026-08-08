@@ -235,7 +235,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Choisissez si l’icône de notification affiche le pourcentage de batterie ou la température, si le symbole de l’unité est affiché dans l’icône et si la charge utilise une icône dédiée. À partir d’Android 16, l’icône de la barre d’état peut ne pas fonctionner sur toutes les variantes du système d’exploitation.</string>
   <string name="status_bar_chip_settings" formatted="false">Puce de barre d’état</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Configurer le contenu de la puce Live Updates</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Sur Android 16+, avec Live Updates, vous pouvez configurer ce que la puce affiche.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Avec Live Updates, vous pouvez configurer ce que la puce affiche et la fréquence de changement de son contenu.</string>
   <string name="current_state_settings_summary" formatted="false">Réglages de l’écran Infos actuelles</string>
   <string name="current_state_settings_help" formatted="false">Configurez les informations affichées sur l’écran Infos actuelles. Les options de courant de la batterie contrôlent la mesure en direct affichée avec les autres détails de la batterie.</string>
   <string name="alarm_settings_subtitle" formatted="false">Paramètres des alarmes</string>
@@ -269,7 +269,7 @@
   <string name="pref_manage_main_channel" formatted="false">Gérer le canal principal</string>
 
   <string name="pref_cat_notification_content" formatted="false">Contenu</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Puce de barre d’état (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Puce de barre d’état</string>
   <string name="pref_live_update_display" formatted="false">Afficher la mise a jour en direct</string>
   <string name="pref_live_update_display_summary" formatted="false">Afficher dans la barre d etat :</string>
   <string name="pref_live_update_display_help" formatted="false">Choisissez quand la puce de mise a jour en direct d Android 16+ doit s afficher dans la barre d etat.</string>
@@ -279,7 +279,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Si active, la notification principale classique reste visible en plus de la puce de la barre d etat.</string>
   <string name="pref_chip_content" formatted="false">Contenu de la puce</string>
   <string name="pref_chip_switching_interval" formatted="false">Intervalle d’alternance</string>
-  <string name="pref_chip_content_help" formatted="false">Choisissez la valeur à afficher dans la puce Android 16+.</string>
+  <string name="pref_chip_content_summary" formatted="false">Quelles valeurs doivent être affichées dans la puce et dans quel ordre ?</string>
+  <string name="pref_chip_content_help" formatted="false">Choisissez les valeurs entre lesquelles la puce de la barre d’état alterne et définissez leur ordre.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Choisissez la fréquence à laquelle la puce passe à la valeur sélectionnée suivante.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Choisissez la fréquence à laquelle la puce passe à la valeur sélectionnée suivante. Ce réglage est disponible lorsque plusieurs valeurs sont sélectionnées.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Saisissez un intervalle en secondes (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Saisissez une valeur comprise entre 1 et 3600.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d secondes</string>
   <string name="pref_chip_indicate_charging" formatted="false">Afficher l’emoji de charge</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Afficher un emoji éclair pendant la charge ?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Si activé, la puce affichera un emoji éclair pendant la charge.</string>

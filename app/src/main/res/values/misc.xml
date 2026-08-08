@@ -73,14 +73,16 @@
         <item>@string/chip_switching_interval_10_seconds</item>
         <item>@string/chip_switching_interval_15_seconds</item>
         <item>@string/chip_switching_interval_30_seconds</item>
+        <item>@string/custom</item>
     </string-array>
 
-    <string-array name="chip_switching_interval_values">
+    <string-array name="chip_switching_interval_values" translatable="false">
         <item>2</item>
         <item>5</item>
         <item>10</item>
         <item>15</item>
         <item>30</item>
+        <item>custom</item>
     </string-array>
 
     <string name="default_red_thresh">15</string>
@@ -231,13 +233,17 @@
     <string-array name="chip_content_entries">
         <item>@string/pref_content_percent</item>
         <item>@string/pref_content_temperature</item>
-        <item>@string/pref_content_switching</item>
+        <item>@string/vital_sign_voltage</item>
+        <item>@string/pref_cat_battery_current_main</item>
+        <item>@string/remaining_charge</item>
     </string-array>
 
-    <string-array name="chip_content_values">
+    <string-array name="chip_content_values" translatable="false">
         <item>percentage</item>
         <item>temperature</item>
-        <item>switching</item>
+        <item>voltage</item>
+        <item>current</item>
+        <item>charge</item>
     </string-array>
 
     <string-array name="live_update_display_entries">

@@ -233,7 +233,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Kies of het meldingsicoon het batterijpercentage of de temperatuur toont, of het eenheidssymbool in het icoon wordt weergegeven en of laden een apart icoon gebruikt. Vanaf Android 16 werkt het statusbalkpictogram mogelijk niet op elke variant van het besturingssysteem.</string>
   <string name="status_bar_chip_settings" formatted="false">Statusbalkchip</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Stel de inhoud van de Live Updates-chip in</string>
-  <string name="status_bar_chip_settings_help" formatted="false">Op Android 16+ met Live Updates kun je instellen wat de statusbalkchip toont en of de laad-emoji wordt weergegeven.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Met Live Updates kun je instellen wat de statusbalkchip toont, hoe vaak de inhoud wisselt en of de laad-emoji wordt weergegeven.</string>
   <string name="current_state_settings_summary" formatted="false">Instellingen voor het statusscherm</string>
   <string name="current_state_settings_help" formatted="false">Stel in welke informatie op het statusscherm wordt getoond. De opties voor batterijstroom bepalen de actuele meting die naast de andere batterijgegevens verschijnt.</string>
   <string name="alarm_settings_subtitle" formatted="false">Alarminstellingen</string>
@@ -267,7 +267,7 @@
   <string name="pref_manage_main_channel" formatted="false">Hoofdkanaal beheren</string>
 
   <string name="pref_cat_notification_content" formatted="false">Inhoud</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Statusbalkchip (Android 16+)</string>
+  <string name="pref_cat_status_bar_chip" formatted="false">Statusbalkchip</string>
   <string name="pref_live_update_display" formatted="false">Live-update tonen</string>
   <string name="pref_live_update_display_summary" formatted="false">Tonen in statusbalk:</string>
   <string name="pref_live_update_display_help" formatted="false">Kies wanneer de live-updatechip van Android 16+ in de statusbalk moet worden getoond.</string>
@@ -277,7 +277,13 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Als dit is ingeschakeld, blijft de normale hoofdmelding zichtbaar naast de statusbalkchip.</string>
   <string name="pref_chip_content" formatted="false">Chipinhoud</string>
   <string name="pref_chip_switching_interval" formatted="false">Wisselinterval</string>
-  <string name="pref_chip_content_help" formatted="false">Kies welke waarde wordt getoond in de Android 16+ promoted-notification-chip.</string>
+  <string name="pref_chip_content_summary" formatted="false">Welke waarden moeten in de chip worden getoond en in welke volgorde?</string>
+  <string name="pref_chip_content_help" formatted="false">Kies de waarden waartussen de statusbalkchip wisselt en stel hun volgorde in.</string>
+  <string name="pref_chip_switching_interval_summary" formatted="false">Kies hoe vaak de chip naar de volgende geselecteerde waarde wisselt.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Kies hoe vaak de chip naar de volgende geselecteerde waarde wisselt. Deze instelling is beschikbaar wanneer meer dan één waarde is geselecteerd.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Voer een interval in seconden in (1–3600).</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Voer een waarde van 1 tot 3600 in.</string>
+  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d seconden</string>
   <string name="pref_chip_indicate_charging" formatted="false">Laad-emoji tonen</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Een bliksem-emoji tonen tijdens laden of volledig geladen?</string>
   <string name="pref_chip_indicate_charging_help" formatted="false">Als dit is ingeschakeld, toont de statusbalkchip een bliksem-emoji naast de waarde tijdens laden of wanneer volledig opgeladen.</string>
