@@ -243,7 +243,7 @@
   <string name="status_bar_icon_settings_help" formatted="false">Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Wybierz także, czy symbol jednostki ma być pokazywany w ikonie i czy ładowanie ma mieć własną ikonę. Począwszy od Androida 16 ikona na pasku stanu może nie działać w każdym wariancie systemu.</string>
   <string name="status_bar_chip_settings" formatted="false">Kapsułka na pasku stanu</string>
   <string name="status_bar_chip_settings_summary" formatted="false">Skonfiguruj zawartość kapsułki powiadomień na żywo</string>
-  <string name="status_bar_chip_settings_help" formatted="false">W powiadomieniach na żywo możesz skonfigurować, co pokazuje kapsułka na pasku stanu, jak często zmienia zawartość i czy wyświetlać emoji ładowania.</string>
+  <string name="status_bar_chip_settings_help" formatted="false">Skonfiguruj, co ma pokazywać kapsułka na pasku stanu, jak często będzie się zmieniać jej zawartość i czy wyświetlać emoji ładowania.</string>
   <string name="current_state_settings_summary" formatted="false">Ustawienia ekranu „Aktualny stan”</string>
   <string name="current_state_settings_help" formatted="false">Skonfiguruj informacje wyświetlane na ekranie „Aktualny stan”. Opcje prądu baterii sterują bieżącym odczytem pokazywanym razem z innymi szczegółami o baterii.</string>
   <string name="alarm_settings_subtitle" formatted="false">Ustawienia alarmów</string>
@@ -287,12 +287,12 @@
   <string name="pref_live_update_keep_main_notification_help" formatted="false">Jeśli włączone, główne powiadomienie pozostanie widoczne razem z kapsułką na pasku stanu.</string>
   <string name="pref_chip_content" formatted="false">Zawartość kapsułki</string>
   <string name="pref_chip_switching_interval" formatted="false">Interwał przełączania</string>
-  <string name="pref_chip_content_summary" formatted="false">Które wartości mają być wyświetlane w kapsułce i w jakiej kolejności?</string>
+  <string name="pref_chip_content_summary" formatted="false">Które wartości mają być wyświetlane w kapsułce i w której kolejności?</string>
   <string name="pref_chip_content_help" formatted="false">Wybierz wartości, między którymi ma przełączać się kapsułka na pasku stanu, i ustaw ich kolejność.</string>
   <string name="pref_chip_switching_interval_summary" formatted="false">Wybierz, jak często kapsułka ma przełączać się na następną wybraną wartość.</string>
-  <string name="pref_chip_switching_interval_help" formatted="false">Wybierz, jak często kapsułka ma przełączać się na następną wybraną wartość. To ustawienie jest dostępne po wybraniu więcej niż jednej wartości.</string>
-  <string name="pref_chip_switching_interval_custom_message" formatted="false">Wprowadź interwał w sekundach (1–3600).</string>
-  <string name="pref_chip_switching_interval_error" formatted="false">Wprowadź wartość od 1 do 3600.</string>
+  <string name="pref_chip_switching_interval_help" formatted="false">Wybierz, jak często kapsułka ma przełączać się na następną wybraną wartość. Ustawienie to jest dostępne, gdy została wybrana więcej niż jedna wartość.</string>
+  <string name="pref_chip_switching_interval_custom_message" formatted="false">Wprowadź interwał w sekundach (1–3600)</string>
+  <string name="pref_chip_switching_interval_error" formatted="false">Wprowadź wartość od 1 do 3600</string>
   <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d s</string>
   <string name="pref_chip_indicate_charging" formatted="false">Pokazuj emoji ładowania</string>
   <string name="pref_chip_indicate_charging_summary" formatted="false">Czy pokazywać emoji błyskawicy podczas ładowania lub pełnego naładowania?</string>
