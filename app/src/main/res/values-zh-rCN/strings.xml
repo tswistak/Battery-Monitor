@@ -495,4 +495,48 @@
   <string name="pref_vital_signs_content" formatted="false">重要数据内容</string>
   <string name="pref_vital_signs_content_summary" formatted="false">重要数据中应包含哪些数值，并按什么顺序显示？</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">调整“%1$s”的顺序</string>
+  <string name="pref_backup_restore" formatted="false">备份与恢复</string>
+  <string name="pref_export_alarms" formatted="false">导出闹钟</string>
+  <string name="pref_export_alarms_summary" formatted="false">将当前闹钟保存到文件</string>
+  <string name="pref_import_alarms" formatted="false">导入闹钟</string>
+  <string name="pref_import_alarms_summary" formatted="false">用文件中的闹钟替换当前闹钟</string>
+  <string name="alarms_exported" formatted="false">闹钟已成功导出</string>
+  <string name="alarms_imported" formatted="false">闹钟已成功导入</string>
+  <string name="invalid_alarms_file" formatted="false">无效的闹钟文件</string>
+  <string name="pref_backup_device_data" formatted="false">备份设备特定数据</string>
+  <string name="pref_export_device_data" formatted="false">导出设备特定数据</string>
+  <string name="pref_export_device_data_summary" formatted="false">将日志和预测数据保存到文件</string>
+  <string name="pref_import_device_data" formatted="false">导入设备特定数据</string>
+  <string name="pref_import_device_data_summary" formatted="false">从文件恢复日志和预测数据</string>
+  <string name="device_data_logs" formatted="false">日志</string>
+  <string name="device_data_predictor" formatted="false">预测数据</string>
+  <string name="device_data_backup_warning" formatted="false">这些设备特定数据属于收集数据的设备。将其导入其他设备可能会导致错误的预测或应用出现其他意外行为。</string>
+  <string name="device_data_exported" formatted="false">设备特定数据已成功导出</string>
+  <string name="device_data_imported" formatted="false">设备特定数据已成功导入</string>
+  <string name="invalid_device_data_file" formatted="false">无效的设备特定数据文件</string>
+  <string name="device_data_file_empty" formatted="false">此文件不包含支持的设备特定数据</string>
+  <string name="pref_import_logs_csv" formatted="false">从 CSV 导入日志</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">从导出的 CSV 文件导入日志</string>
+  <string name="csv_logs_import_warning" formatted="false">CSV 格式可能因应用版本而异，因此导入不一定总能正常工作。</string>
+  <string name="csv_logs_imported" formatted="false">CSV 日志已成功导入</string>
+  <string name="invalid_csv_logs_file" formatted="false">无效或不兼容的 CSV 日志文件</string>
+  <string name="log_import_mode_title" formatted="false">导入日志</string>
+  <string name="log_import_mode_message" formatted="false">如何处理导入的日志？</string>
+  <string name="log_import_replace" formatted="false">替换现有日志</string>
+  <string name="log_import_add" formatted="false">添加到现有日志</string>
+  <string name="pref_general_backup" formatted="false">常规应用备份</string>
+  <string name="pref_export_general_backup" formatted="false">导出常规备份</string>
+  <string name="pref_export_general_backup_summary" formatted="false">将设置、闹钟和设备特定数据保存到 ZIP 文件</string>
+  <string name="pref_import_general_backup" formatted="false">导入常规备份</string>
+  <string name="pref_import_general_backup_summary" formatted="false">从常规备份 ZIP 文件恢复所选数据</string>
+  <string name="general_backup_restore_message" formatted="false">选择要恢复的内容。</string>
+  <string name="general_backup_exported" formatted="false">常规备份已成功导出</string>
+  <string name="general_backup_imported" formatted="false">常规备份已成功导入</string>
+  <string name="invalid_general_backup_file" formatted="false">无效或不兼容的常规备份文件</string>
+  <string name="backup_restore_help_overview" formatted="false">使用备份保存应用数据，以便日后恢复。</string>
+  <string name="general_backup_help" formatted="false">常规备份会一起保存设置、闹钟和设备特定数据。恢复时，你可以选择要导入的可用数据。</string>
+  <string name="settings_backup_help" formatted="false">设置备份会保存应用偏好设置。导入后会恢复已保存的偏好设置。</string>
+  <string name="alarms_backup_help" formatted="false">闹钟备份会保存你的闹钟。导入后会使用备份中的闹钟替换所有当前闹钟。</string>
+  <string name="device_specific_backup_help" formatted="false">设备特定备份会保存日志和预测器数据。导入时可以选择其中一项或两项。这些数据属于源设备；在其他设备上使用可能导致预测不准确或应用行为异常。导入日志时，请选择添加到现有日志还是替换现有日志。</string>
+  <string name="csv_logs_import_help" formatted="false">可以从之前导出的 CSV 文件导入日志。不同应用版本之间的导入可能无法正常工作。请选择添加导入的日志或替换现有日志。</string>
 </resources>

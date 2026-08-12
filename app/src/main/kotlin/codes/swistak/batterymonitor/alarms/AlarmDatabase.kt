@@ -36,6 +36,15 @@ internal class AlarmDatabase(context: Context?) {
 
         const val KEY_VIBRATE: String = "vibrate"
         const val KEY_LIGHTS: String = "lights"
+
+        val SUPPORTED_TYPES: Set<String> = setOf(
+            "fully_charged",
+            "charge_drops",
+            "charge_rises",
+            "temp_drops",
+            "temp_rises",
+            "health_failure"
+        )
     }
 
     private val mSQLOpenHelper: SQLOpenHelper = SQLOpenHelper(context)
@@ -84,13 +93,57 @@ internal class AlarmDatabase(context: Context?) {
         }
     }
 
+    fun getAllAlarmRecords(): List<AlarmRecord> {
+        val cursor = getAllAlarms(true) ?: error("Could not read alarms")
+        cursor.use {
+            val records = mutableListOf<AlarmRecord>()
+            while (it.moveToNext()) {
+                val type = it.getString(it.getColumnIndexOrThrow(KEY_TYPE)) ?: continue
+                records += AlarmRecord(
+                    enabled = it.getInt(it.getColumnIndexOrThrow(KEY_ENABLED)) == 1,
+                    type = type,
+                    threshold = it.getString(it.getColumnIndexOrThrow(KEY_THRESHOLD)) ?: ""
+                )
+            }
+            return records
+        }
+    }
+
+    fun replaceAllAlarms(records: List<AlarmRecord>): Boolean {
+        openDBs()
+        val database = wdb ?: return false
+
+        return try {
+            database.beginTransaction()
+            database.delete(ALARM_TABLE_NAME, null, null)
+            for (record in records) {
+                val values = ContentValues().apply {
+                    put(KEY_ENABLED, if (record.enabled) 1 else 0)
+                    put(KEY_TYPE, record.type)
+                    put(KEY_THRESHOLD, record.threshold)
+                    put(KEY_RINGTONE, Settings.System.DEFAULT_NOTIFICATION_URI.toString())
+                    put(KEY_VIBRATE, 0)
+                    put(KEY_LIGHTS, 1)
+                }
+                check(database.insert(ALARM_TABLE_NAME, null, values) >= 0) {
+                    "Could not restore alarm"
+                }
+            }
+            database.setTransactionSuccessful()
+            true
+        } catch (e: Exception) {
+            false
+        } finally {
+            if (database.inTransaction()) database.endTransaction()
+        }
+    }
+
     fun getAlarm(id: Int): Cursor? {
         openDBs()
 
         try {
             val c = rdb!!.rawQuery(
-                "SELECT * FROM $ALARM_TABLE_NAME WHERE $KEY_ID=$id LIMIT 1",
-                null
+                "SELECT * FROM $ALARM_TABLE_NAME WHERE $KEY_ID=$id LIMIT 1", null
             )
             c.moveToFirst()
             return c

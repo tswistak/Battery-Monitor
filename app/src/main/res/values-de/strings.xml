@@ -489,4 +489,48 @@
   <string name="pref_vital_signs_content" formatted="false">Inhalt der Vitalzeichen</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Welche Werte sollen in den Vitalzeichen enthalten sein und in welcher Reihenfolge?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s neu anordnen</string>
+  <string name="pref_backup_restore" formatted="false">Sichern und Wiederherstellen</string>
+  <string name="pref_export_alarms" formatted="false">Alarme exportieren</string>
+  <string name="pref_export_alarms_summary" formatted="false">Aktuelle Alarme in einer Datei speichern</string>
+  <string name="pref_import_alarms" formatted="false">Alarme importieren</string>
+  <string name="pref_import_alarms_summary" formatted="false">Aktuelle Alarme durch Alarme aus einer Datei ersetzen</string>
+  <string name="alarms_exported" formatted="false">Alarme wurden erfolgreich exportiert</string>
+  <string name="alarms_imported" formatted="false">Alarme wurden erfolgreich importiert</string>
+  <string name="invalid_alarms_file" formatted="false">Ungültige Alarmdatei</string>
+  <string name="pref_backup_device_data" formatted="false">Gerätespezifische Daten sichern</string>
+  <string name="pref_export_device_data" formatted="false">Gerätespezifische Daten exportieren</string>
+  <string name="pref_export_device_data_summary" formatted="false">Protokolle und Vorhersagedaten in einer Datei speichern</string>
+  <string name="pref_import_device_data" formatted="false">Gerätespezifische Daten importieren</string>
+  <string name="pref_import_device_data_summary" formatted="false">Protokolle und Vorhersagedaten aus einer Datei wiederherstellen</string>
+  <string name="device_data_logs" formatted="false">Protokolle</string>
+  <string name="device_data_predictor" formatted="false">Vorhersagedaten</string>
+  <string name="device_data_backup_warning" formatted="false">Diese gerätespezifischen Daten gehören zu dem Gerät, auf dem sie erfasst wurden. Der Import auf ein anderes Gerät kann zu falschen Vorhersagen oder anderem unerwartetem App-Verhalten führen.</string>
+  <string name="device_data_exported" formatted="false">Gerätespezifische Daten erfolgreich exportiert</string>
+  <string name="device_data_imported" formatted="false">Gerätespezifische Daten erfolgreich importiert</string>
+  <string name="invalid_device_data_file" formatted="false">Ungültige Datei mit gerätespezifischen Daten</string>
+  <string name="device_data_file_empty" formatted="false">Diese Datei enthält keine unterstützten gerätespezifischen Daten</string>
+  <string name="pref_import_logs_csv" formatted="false">Protokolle aus CSV importieren</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Protokolle aus einer exportierten CSV-Datei importieren</string>
+  <string name="csv_logs_import_warning" formatted="false">CSV-Formate können sich zwischen App-Versionen unterscheiden, sodass der Import möglicherweise nicht immer korrekt funktioniert.</string>
+  <string name="csv_logs_imported" formatted="false">CSV-Protokolle erfolgreich importiert</string>
+  <string name="invalid_csv_logs_file" formatted="false">Ungültige oder inkompatible CSV-Protokolldatei</string>
+  <string name="log_import_mode_title" formatted="false">Protokolle importieren</string>
+  <string name="log_import_mode_message" formatted="false">Wie sollen die importierten Protokolle behandelt werden?</string>
+  <string name="log_import_replace" formatted="false">Vorhandene Protokolle ersetzen</string>
+  <string name="log_import_add" formatted="false">Zu vorhandenen Protokollen hinzufügen</string>
+  <string name="pref_general_backup" formatted="false">Allgemeine App-Sicherung</string>
+  <string name="pref_export_general_backup" formatted="false">Allgemeine Sicherung exportieren</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Einstellungen, Alarme und gerätespezifische Daten in einer ZIP-Datei speichern</string>
+  <string name="pref_import_general_backup" formatted="false">Allgemeine Sicherung importieren</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Ausgewählte Daten aus einer ZIP-Datei mit allgemeiner Sicherung wiederherstellen</string>
+  <string name="general_backup_restore_message" formatted="false">Wählen Sie aus, was wiederhergestellt werden soll.</string>
+  <string name="general_backup_exported" formatted="false">Allgemeine Sicherung erfolgreich exportiert</string>
+  <string name="general_backup_imported" formatted="false">Allgemeine Sicherung erfolgreich importiert</string>
+  <string name="invalid_general_backup_file" formatted="false">Ungültige oder inkompatible allgemeine Sicherungsdatei</string>
+  <string name="backup_restore_help_overview" formatted="false">Mit Sicherungen kannst du eine Kopie deiner App-Daten speichern und später wiederherstellen.</string>
+  <string name="general_backup_help" formatted="false">Eine allgemeine Sicherung speichert Einstellungen, Alarme und gerätespezifische Daten gemeinsam. Bei der Wiederherstellung kannst du auswählen, welche verfügbaren Daten importiert werden sollen.</string>
+  <string name="settings_backup_help" formatted="false">Eine Einstellungssicherung speichert deine App-Einstellungen. Beim Import werden die gespeicherten Einstellungen wiederhergestellt.</string>
+  <string name="alarms_backup_help" formatted="false">Eine Alarmsicherung speichert deine Alarme. Beim Import werden alle aktuellen Alarme durch die Alarme aus der Sicherung ersetzt.</string>
+  <string name="device_specific_backup_help" formatted="false">Eine gerätespezifische Sicherung speichert Protokolle und Prognosedaten. Beim Import kannst du eines oder beides auswählen. Diese Daten gehören zum Quellgerät; ihre Verwendung auf einem anderen Gerät kann zu falschen Prognosen oder unerwartetem Verhalten führen. Beim Import von Protokollen kannst du wählen, ob sie hinzugefügt oder vorhandene Protokolle ersetzt werden sollen.</string>
+  <string name="csv_logs_import_help" formatted="false">Du kannst Protokolle aus einer zuvor exportierten CSV-Datei importieren. Der Import zwischen verschiedenen App-Versionen funktioniert möglicherweise nicht korrekt. Wähle, ob importierte Protokolle hinzugefügt oder vorhandene Protokolle ersetzt werden sollen.</string>
 </resources>

@@ -513,4 +513,48 @@
   <string name="pref_vital_signs_content" formatted="false">Περιεχόμενο ζωτικών στοιχείων</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Ποιες τιμές να περιλαμβάνονται στα ζωτικά στοιχεία και με ποια σειρά;</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Αλλαγή σειράς: %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Δημιουργία και επαναφορά αντιγράφων ασφαλείας</string>
+  <string name="pref_export_alarms" formatted="false">Εξαγωγή ειδοποιήσεων</string>
+  <string name="pref_export_alarms_summary" formatted="false">Αποθήκευση των τρεχουσών ειδοποιήσεων σε αρχείο</string>
+  <string name="pref_import_alarms" formatted="false">Εισαγωγή ειδοποιήσεων</string>
+  <string name="pref_import_alarms_summary" formatted="false">Αντικατάσταση των τρεχουσών ειδοποιήσεων με ειδοποιήσεις από αρχείο</string>
+  <string name="alarms_exported" formatted="false">Οι ειδοποιήσεις εξήχθησαν με επιτυχία</string>
+  <string name="alarms_imported" formatted="false">Οι ειδοποιήσεις εισήχθησαν με επιτυχία</string>
+  <string name="invalid_alarms_file" formatted="false">Μη έγκυρο αρχείο ειδοποιήσεων</string>
+  <string name="pref_backup_device_data" formatted="false">Αντίγραφο ασφαλείας δεδομένων ειδικών για τη συσκευή</string>
+  <string name="pref_export_device_data" formatted="false">Εξαγωγή δεδομένων ειδικών για τη συσκευή</string>
+  <string name="pref_export_device_data_summary" formatted="false">Αποθήκευση αρχείων καταγραφής και δεδομένων πρόβλεψης σε αρχείο</string>
+  <string name="pref_import_device_data" formatted="false">Εισαγωγή δεδομένων ειδικών για τη συσκευή</string>
+  <string name="pref_import_device_data_summary" formatted="false">Επαναφορά αρχείων καταγραφής και δεδομένων πρόβλεψης από αρχείο</string>
+  <string name="device_data_logs" formatted="false">Αρχεία καταγραφής</string>
+  <string name="device_data_predictor" formatted="false">Δεδομένα πρόβλεψης</string>
+  <string name="device_data_backup_warning" formatted="false">Αυτά τα δεδομένα είναι ειδικά για τη συσκευή στην οποία συλλέχθηκαν. Η εισαγωγή τους σε άλλη συσκευή μπορεί να προκαλέσει λανθασμένες προβλέψεις ή άλλη μη αναμενόμενη συμπεριφορά της εφαρμογής.</string>
+  <string name="device_data_exported" formatted="false">Τα δεδομένα ειδικά για τη συσκευή εξήχθησαν με επιτυχία</string>
+  <string name="device_data_imported" formatted="false">Τα δεδομένα ειδικά για τη συσκευή εισήχθησαν με επιτυχία</string>
+  <string name="invalid_device_data_file" formatted="false">Μη έγκυρο αρχείο δεδομένων ειδικών για τη συσκευή</string>
+  <string name="device_data_file_empty" formatted="false">Αυτό το αρχείο δεν περιέχει υποστηριζόμενα δεδομένα ειδικά για τη συσκευή</string>
+  <string name="pref_import_logs_csv" formatted="false">Εισαγωγή αρχείων καταγραφής από CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Εισαγωγή αρχείων καταγραφής από εξαγόμενο αρχείο CSV</string>
+  <string name="csv_logs_import_warning" formatted="false">Οι μορφές CSV ενδέχεται να διαφέρουν μεταξύ των εκδόσεων της εφαρμογής, επομένως η εισαγωγή μπορεί να μη λειτουργεί πάντα σωστά.</string>
+  <string name="csv_logs_imported" formatted="false">Τα αρχεία καταγραφής CSV εισήχθησαν με επιτυχία</string>
+  <string name="invalid_csv_logs_file" formatted="false">Μη έγκυρο ή μη συμβατό αρχείο καταγραφής CSV</string>
+  <string name="log_import_mode_title" formatted="false">Εισαγωγή αρχείων καταγραφής</string>
+  <string name="log_import_mode_message" formatted="false">Πώς πρέπει να γίνει η διαχείριση των εισαγόμενων αρχείων καταγραφής;</string>
+  <string name="log_import_replace" formatted="false">Αντικατάσταση υπαρχόντων αρχείων καταγραφής</string>
+  <string name="log_import_add" formatted="false">Προσθήκη στα υπάρχοντα αρχεία καταγραφής</string>
+  <string name="pref_general_backup" formatted="false">Γενικό αντίγραφο ασφαλείας εφαρμογής</string>
+  <string name="pref_export_general_backup" formatted="false">Εξαγωγή γενικού αντιγράφου ασφαλείας</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Αποθήκευση ρυθμίσεων, ειδοποιήσεων και δεδομένων ειδικών για τη συσκευή σε αρχείο ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">Εισαγωγή γενικού αντιγράφου ασφαλείας</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Επαναφορά επιλεγμένων δεδομένων από αρχείο ZIP γενικού αντιγράφου ασφαλείας</string>
+  <string name="general_backup_restore_message" formatted="false">Επιλέξτε τι θέλετε να επαναφέρετε.</string>
+  <string name="general_backup_exported" formatted="false">Το γενικό αντίγραφο ασφαλείας εξήχθη με επιτυχία</string>
+  <string name="general_backup_imported" formatted="false">Το γενικό αντίγραφο ασφαλείας εισήχθη με επιτυχία</string>
+  <string name="invalid_general_backup_file" formatted="false">Μη έγκυρο ή μη συμβατό αρχείο γενικού αντιγράφου ασφαλείας</string>
+  <string name="backup_restore_help_overview" formatted="false">Χρησιμοποιήστε αντίγραφα ασφαλείας για να αποθηκεύσετε ένα αντίγραφο των δεδομένων της εφαρμογής και να το επαναφέρετε αργότερα.</string>
+  <string name="general_backup_help" formatted="false">Ένα γενικό αντίγραφο ασφαλείας αποθηκεύει μαζί ρυθμίσεις, ειδοποιήσεις και δεδομένα ειδικά για τη συσκευή. Κατά την επαναφορά, μπορείτε να επιλέξετε ποια διαθέσιμα δεδομένα θα εισαχθούν.</string>
+  <string name="settings_backup_help" formatted="false">Ένα αντίγραφο ασφαλείας ρυθμίσεων αποθηκεύει τις προτιμήσεις της εφαρμογής. Η εισαγωγή του επαναφέρει τις αποθηκευμένες προτιμήσεις.</string>
+  <string name="alarms_backup_help" formatted="false">Ένα αντίγραφο ασφαλείας ειδοποιήσεων αποθηκεύει τις ειδοποιήσεις σας. Η εισαγωγή του αντικαθιστά όλες τις τρέχουσες ειδοποιήσεις με αυτές του αντιγράφου ασφαλείας.</string>
+  <string name="device_specific_backup_help" formatted="false">Ένα αντίγραφο ασφαλείας ειδικά για τη συσκευή αποθηκεύει αρχεία καταγραφής και δεδομένα πρόβλεψης. Μπορείτε να επιλέξετε ένα ή και τα δύο κατά την εισαγωγή. Αυτά τα δεδομένα ανήκουν στη συσκευή προέλευσης· η χρήση τους σε άλλη συσκευή μπορεί να προκαλέσει λανθασμένες προβλέψεις ή απρόσμενη συμπεριφορά. Κατά την εισαγωγή αρχείων καταγραφής, επιλέξτε αν θα προστεθούν ή θα αντικαταστήσουν τα υπάρχοντα.</string>
+  <string name="csv_logs_import_help" formatted="false">Μπορείτε να εισαγάγετε αρχεία καταγραφής από ένα αρχείο CSV που εξήχθη προηγουμένως. Η εισαγωγή μεταξύ διαφορετικών εκδόσεων της εφαρμογής ενδέχεται να μη λειτουργεί σωστά. Επιλέξτε αν τα εισαγόμενα αρχεία καταγραφής θα προστεθούν ή θα αντικαταστήσουν τα υπάρχοντα.</string>
 </resources>

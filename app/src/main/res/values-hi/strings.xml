@@ -513,4 +513,48 @@
   <string name="pref_vital_signs_content" formatted="false">महत्वपूर्ण आँकड़ों की सामग्री</string>
   <string name="pref_vital_signs_content_summary" formatted="false">महत्वपूर्ण आँकड़ों में कौन-से मान शामिल हों और किस क्रम में?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s का क्रम बदलें</string>
+  <string name="pref_backup_restore" formatted="false">बैकअप और पुनर्स्थापना</string>
+  <string name="pref_export_alarms" formatted="false">अलार्म निर्यात करें</string>
+  <string name="pref_export_alarms_summary" formatted="false">वर्तमान अलार्म को फ़ाइल में सहेजें</string>
+  <string name="pref_import_alarms" formatted="false">अलार्म आयात करें</string>
+  <string name="pref_import_alarms_summary" formatted="false">वर्तमान अलार्म को फ़ाइल के अलार्म से बदलें</string>
+  <string name="alarms_exported" formatted="false">अलार्म सफलतापूर्वक निर्यात किए गए</string>
+  <string name="alarms_imported" formatted="false">अलार्म सफलतापूर्वक आयात किए गए</string>
+  <string name="invalid_alarms_file" formatted="false">अमान्य अलार्म फ़ाइल</string>
+  <string name="pref_backup_device_data" formatted="false">डिवाइस-विशिष्ट डेटा का बैकअप लें</string>
+  <string name="pref_export_device_data" formatted="false">डिवाइस-विशिष्ट डेटा निर्यात करें</string>
+  <string name="pref_export_device_data_summary" formatted="false">लॉग और पूर्वानुमान डेटा को फ़ाइल में सहेजें</string>
+  <string name="pref_import_device_data" formatted="false">डिवाइस-विशिष्ट डेटा आयात करें</string>
+  <string name="pref_import_device_data_summary" formatted="false">फ़ाइल से लॉग और पूर्वानुमान डेटा पुनर्स्थापित करें</string>
+  <string name="device_data_logs" formatted="false">लॉग</string>
+  <string name="device_data_predictor" formatted="false">पूर्वानुमान डेटा</string>
+  <string name="device_data_backup_warning" formatted="false">यह डिवाइस-विशिष्ट डेटा उस डिवाइस का है जिस पर इसे एकत्र किया गया था। इसे किसी दूसरे डिवाइस पर आयात करने से गलत पूर्वानुमान या ऐप का अन्य अनपेक्षित व्यवहार हो सकता है।</string>
+  <string name="device_data_exported" formatted="false">डिवाइस-विशिष्ट डेटा सफलतापूर्वक निर्यात किया गया</string>
+  <string name="device_data_imported" formatted="false">डिवाइस-विशिष्ट डेटा सफलतापूर्वक आयात किया गया</string>
+  <string name="invalid_device_data_file" formatted="false">अमान्य डिवाइस-विशिष्ट डेटा फ़ाइल</string>
+  <string name="device_data_file_empty" formatted="false">इस फ़ाइल में कोई समर्थित डिवाइस-विशिष्ट डेटा नहीं है</string>
+  <string name="pref_import_logs_csv" formatted="false">CSV से लॉग आयात करें</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">निर्यात की गई CSV फ़ाइल से लॉग आयात करें</string>
+  <string name="csv_logs_import_warning" formatted="false">ऐप के विभिन्न संस्करणों में CSV प्रारूप अलग हो सकते हैं, इसलिए आयात हमेशा ठीक से काम नहीं कर सकता।</string>
+  <string name="csv_logs_imported" formatted="false">CSV लॉग सफलतापूर्वक आयात किए गए</string>
+  <string name="invalid_csv_logs_file" formatted="false">अमान्य या असंगत CSV लॉग फ़ाइल</string>
+  <string name="log_import_mode_title" formatted="false">लॉग आयात करें</string>
+  <string name="log_import_mode_message" formatted="false">आयात किए गए लॉग को कैसे संभाला जाए?</string>
+  <string name="log_import_replace" formatted="false">मौजूदा लॉग बदलें</string>
+  <string name="log_import_add" formatted="false">मौजूदा लॉग में जोड़ें</string>
+  <string name="pref_general_backup" formatted="false">सामान्य ऐप बैकअप</string>
+  <string name="pref_export_general_backup" formatted="false">सामान्य बैकअप निर्यात करें</string>
+  <string name="pref_export_general_backup_summary" formatted="false">सेटिंग, अलार्म और डिवाइस-विशिष्ट डेटा को ZIP फ़ाइल में सहेजें</string>
+  <string name="pref_import_general_backup" formatted="false">सामान्य बैकअप आयात करें</string>
+  <string name="pref_import_general_backup_summary" formatted="false">सामान्य बैकअप ZIP फ़ाइल से चयनित डेटा पुनर्स्थापित करें</string>
+  <string name="general_backup_restore_message" formatted="false">चुनें कि आप क्या पुनर्स्थापित करना चाहते हैं।</string>
+  <string name="general_backup_exported" formatted="false">सामान्य बैकअप सफलतापूर्वक निर्यात किया गया</string>
+  <string name="general_backup_imported" formatted="false">सामान्य बैकअप सफलतापूर्वक आयात किया गया</string>
+  <string name="invalid_general_backup_file" formatted="false">अमान्य या असंगत सामान्य बैकअप फ़ाइल</string>
+  <string name="backup_restore_help_overview" formatted="false">अपने ऐप डेटा की एक प्रति सहेजने और बाद में पुनर्स्थापित करने के लिए बैकअप का उपयोग करें।</string>
+  <string name="general_backup_help" formatted="false">सामान्य बैकअप सेटिंग, अलार्म और डिवाइस-विशिष्ट डेटा को एक साथ सहेजता है। पुनर्स्थापित करते समय आप उपलब्ध डेटा में से चुन सकते हैं कि क्या आयात करना है।</string>
+  <string name="settings_backup_help" formatted="false">सेटिंग बैकअप आपकी ऐप प्राथमिकताएँ सहेजता है। इसे आयात करने पर सहेजी गई प्राथमिकताएँ पुनर्स्थापित होती हैं।</string>
+  <string name="alarms_backup_help" formatted="false">अलार्म बैकअप आपके अलार्म सहेजता है। इसे आयात करने पर सभी मौजूदा अलार्म बैकअप के अलार्म से बदल जाते हैं।</string>
+  <string name="device_specific_backup_help" formatted="false">डिवाइस-विशिष्ट बैकअप लॉग और पूर्वानुमान डेटा सहेजता है। आयात के दौरान आप एक या दोनों चुन सकते हैं। यह डेटा स्रोत डिवाइस का होता है; दूसरे डिवाइस पर इसका उपयोग गलत पूर्वानुमान या अनपेक्षित व्यवहार का कारण बन सकता है। लॉग आयात करते समय चुनें कि उन्हें जोड़ना है या मौजूदा लॉग को बदलना है।</string>
+  <string name="csv_logs_import_help" formatted="false">आप पहले निर्यात की गई CSV फ़ाइल से लॉग आयात कर सकते हैं। अलग-अलग ऐप संस्करणों के बीच आयात हमेशा सही ढंग से काम नहीं कर सकता। चुनें कि आयातित लॉग जोड़ने हैं या मौजूदा लॉग बदलने हैं।</string>
 </resources>

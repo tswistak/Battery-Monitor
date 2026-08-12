@@ -527,4 +527,48 @@
   <string name="pref_vital_signs_content" formatted="false">Sadržaj vitalnih podataka</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Koje vrednosti uključiti u vitalne podatke i kojim redosledom?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Promeni redosled: %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Резервна копија и враћање</string>
+  <string name="pref_export_alarms" formatted="false">Извези аларме</string>
+  <string name="pref_export_alarms_summary" formatted="false">Сачувај тренутне аларме у датотеку</string>
+  <string name="pref_import_alarms" formatted="false">Увези аларме</string>
+  <string name="pref_import_alarms_summary" formatted="false">Замени тренутне аларме алармима из датотеке</string>
+  <string name="alarms_exported" formatted="false">Аларми су успешно извезени</string>
+  <string name="alarms_imported" formatted="false">Аларми су успешно увезени</string>
+  <string name="invalid_alarms_file" formatted="false">Неважећа датотека аларма</string>
+  <string name="pref_backup_device_data" formatted="false">Резервна копија података специфичних за уређај</string>
+  <string name="pref_export_device_data" formatted="false">Извези податке специфичне за уређај</string>
+  <string name="pref_export_device_data_summary" formatted="false">Сачувај евиденције и податке предвиђања у датотеку</string>
+  <string name="pref_import_device_data" formatted="false">Увези податке специфичне за уређај</string>
+  <string name="pref_import_device_data_summary" formatted="false">Врати евиденције и податке предвиђања из датотеке</string>
+  <string name="device_data_logs" formatted="false">Евиденције</string>
+  <string name="device_data_predictor" formatted="false">Подаци предвиђања</string>
+  <string name="device_data_backup_warning" formatted="false">Ови подаци су специфични за уређај на којем су прикупљени. Увоз на други уређај може довести до погрешних предвиђања или другог неочекиваног понашања апликације.</string>
+  <string name="device_data_exported" formatted="false">Подаци специфични за уређај су успешно извезени</string>
+  <string name="device_data_imported" formatted="false">Подаци специфични за уређај су успешно увезени</string>
+  <string name="invalid_device_data_file" formatted="false">Неважећа датотека података специфичних за уређај</string>
+  <string name="device_data_file_empty" formatted="false">Ова датотека не садржи подржане податке специфичне за уређај</string>
+  <string name="pref_import_logs_csv" formatted="false">Увези евиденције из CSV-а</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Увези евиденције из извезене CSV датотеке</string>
+  <string name="csv_logs_import_warning" formatted="false">CSV формати могу да се разликују између верзија апликације, па увоз можда неће увек радити исправно.</string>
+  <string name="csv_logs_imported" formatted="false">CSV евиденције су успешно увезене</string>
+  <string name="invalid_csv_logs_file" formatted="false">Неважећа или некомпатибилна CSV датотека евиденција</string>
+  <string name="log_import_mode_title" formatted="false">Увези евиденције</string>
+  <string name="log_import_mode_message" formatted="false">Како треба поступити са увезеним евиденцијама?</string>
+  <string name="log_import_replace" formatted="false">Замени постојеће евиденције</string>
+  <string name="log_import_add" formatted="false">Додај постојећим евиденцијама</string>
+  <string name="pref_general_backup" formatted="false">Општа резервна копија апликације</string>
+  <string name="pref_export_general_backup" formatted="false">Извези општу резервну копију</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Сачувај подешавања, аларме и податке специфичне за уређај у ZIP датотеку</string>
+  <string name="pref_import_general_backup" formatted="false">Увези општу резервну копију</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Врати изабране податке из ZIP датотеке опште резервне копије</string>
+  <string name="general_backup_restore_message" formatted="false">Изаберите шта желите да вратите.</string>
+  <string name="general_backup_exported" formatted="false">Општа резервна копија је успешно извезена</string>
+  <string name="general_backup_imported" formatted="false">Општа резервна копија је успешно увезена</string>
+  <string name="invalid_general_backup_file" formatted="false">Неважећа или некомпатибилна датотека опште резервне копије</string>
+  <string name="backup_restore_help_overview" formatted="false">Користите резервне копије да сачувате податке апликације и касније их вратите.</string>
+  <string name="general_backup_help" formatted="false">Општа резервна копија заједно чува подешавања, аларме и податке специфичне за уређај. При враћању можете да изаберете које доступне податке желите да увезете.</string>
+  <string name="settings_backup_help" formatted="false">Резервна копија подешавања чува подешавања апликације. Њеним увозом враћају се сачувана подешавања.</string>
+  <string name="alarms_backup_help" formatted="false">Резервна копија аларма чува ваше аларме. Њеним увозом сви тренутни аларми замењују се алармима из копије.</string>
+  <string name="device_specific_backup_help" formatted="false">Резервна копија специфична за уређај чува евиденције и податке предвиђања. Током увоза можете изабрати једно или обоје. Ови подаци припадају изворном уређају; коришћење на другом уређају може довести до погрешних предвиђања или неочекиваног понашања. При увозу евиденција изаберите да ли их треба додати или заменити постојеће.</string>
+  <string name="csv_logs_import_help" formatted="false">Евиденције можете увести из раније извезене CSV датотеке. Увоз између различитих верзија апликације можда неће радити исправно. Изаберите да ли да додате увезене евиденције или замените постојеће.</string>
 </resources>

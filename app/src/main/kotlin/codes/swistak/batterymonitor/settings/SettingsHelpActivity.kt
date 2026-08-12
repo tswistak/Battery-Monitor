@@ -74,6 +74,11 @@ class SettingsHelpActivity : AppCompatActivity() {
                 hasLinks = intArrayOf()
             }
 
+            SettingsContract.KEY_BACKUP_RESTORE_SETTINGS -> {
+                setContentView(R.layout.backup_restore_settings_help)
+                setWindowSubtitle(res!!.getString(R.string.pref_backup_restore))
+            }
+
             SettingsContract.KEY_ADVANCED_INFO_HELP -> {
                 setContentView(R.layout.advanced_info_help)
                 setWindowSubtitle(res!!.getString(R.string.tab_advanced))

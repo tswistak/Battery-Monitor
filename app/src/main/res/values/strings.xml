@@ -515,4 +515,48 @@
   <string name="pref_vital_signs_content" formatted="false">Vital Signs Content</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Which values should be included in Vital Signs, and in what order?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Reorder %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Backup and restore</string>
+  <string name="pref_export_alarms" formatted="false">Export alarms</string>
+  <string name="pref_export_alarms_summary" formatted="false">Save current alarms to a file</string>
+  <string name="pref_import_alarms" formatted="false">Import alarms</string>
+  <string name="pref_import_alarms_summary" formatted="false">Replace current alarms with alarms from a file</string>
+  <string name="alarms_exported" formatted="false">Alarms exported successfully</string>
+  <string name="alarms_imported" formatted="false">Alarms imported successfully</string>
+  <string name="invalid_alarms_file" formatted="false">Invalid alarms file</string>
+  <string name="pref_backup_device_data" formatted="false">Backup device-specific data</string>
+  <string name="pref_export_device_data" formatted="false">Export device-specific data</string>
+  <string name="pref_export_device_data_summary" formatted="false">Save logs and predictor data to a file</string>
+  <string name="pref_import_device_data" formatted="false">Import device-specific data</string>
+  <string name="pref_import_device_data_summary" formatted="false">Restore logs and predictor data from a file</string>
+  <string name="device_data_logs" formatted="false">Logs</string>
+  <string name="device_data_predictor" formatted="false">Predictor data</string>
+  <string name="device_data_backup_warning" formatted="false">This device-specific data belongs to the device where it was collected. Importing it on another device can cause incorrect predictions or other unexpected app behavior.</string>
+  <string name="device_data_exported" formatted="false">Device-specific data exported successfully</string>
+  <string name="device_data_imported" formatted="false">Device-specific data imported successfully</string>
+  <string name="invalid_device_data_file" formatted="false">Invalid device-specific data file</string>
+  <string name="device_data_file_empty" formatted="false">This file contains no supported device-specific data</string>
+  <string name="pref_import_logs_csv" formatted="false">Import logs from CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Import logs from an exported CSV file</string>
+  <string name="csv_logs_import_warning" formatted="false">CSV formats can differ between app versions, so the import may not always work correctly.</string>
+  <string name="csv_logs_imported" formatted="false">CSV logs imported successfully</string>
+  <string name="invalid_csv_logs_file" formatted="false">Invalid or incompatible CSV logs file</string>
+  <string name="log_import_mode_title" formatted="false">Import logs</string>
+  <string name="log_import_mode_message" formatted="false">How should the imported logs be handled?</string>
+  <string name="log_import_replace" formatted="false">Replace existing logs</string>
+  <string name="log_import_add" formatted="false">Add to existing logs</string>
+  <string name="pref_general_backup" formatted="false">General app backup</string>
+  <string name="pref_export_general_backup" formatted="false">Export general backup</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Save settings, alarms, and device-specific data to a ZIP file</string>
+  <string name="pref_import_general_backup" formatted="false">Import general backup</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Restore selected data from a general backup ZIP file</string>
+  <string name="general_backup_restore_message" formatted="false">Choose what you want to restore.</string>
+  <string name="general_backup_exported" formatted="false">General backup exported successfully</string>
+  <string name="general_backup_imported" formatted="false">General backup imported successfully</string>
+  <string name="invalid_general_backup_file" formatted="false">Invalid or incompatible general backup file</string>
+  <string name="backup_restore_help_overview" formatted="false">Use backups to save a copy of your app data and restore it later.</string>
+  <string name="general_backup_help" formatted="false">A general backup saves settings, alarms, and device-specific data together. When restoring it, you can choose which available data to import.</string>
+  <string name="settings_backup_help" formatted="false">A settings backup saves your app preferences. Importing it restores the saved preferences.</string>
+  <string name="alarms_backup_help" formatted="false">An alarms backup saves your alarms. Importing it replaces all current alarms with those from the backup.</string>
+  <string name="device_specific_backup_help" formatted="false">A device-specific backup saves logs and predictor data. You can select either or both during import. This data belongs to the source device; using it on another device can cause incorrect predictions or unexpected behavior. When importing logs, choose whether to add them or replace existing logs.</string>
+  <string name="csv_logs_import_help" formatted="false">You can import logs from a previously exported CSV file. Import may not work correctly between different app versions. Choose whether to add imported logs or replace existing logs.</string>
 </resources>

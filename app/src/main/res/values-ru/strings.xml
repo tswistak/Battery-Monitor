@@ -533,4 +533,48 @@
   <string name="pref_vital_signs_content" formatted="false">Содержимое основных параметров</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Какие значения включать в основные параметры и в каком порядке?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Изменить порядок: %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Резервное копирование и восстановление</string>
+  <string name="pref_export_alarms" formatted="false">Экспорт сигналов</string>
+  <string name="pref_export_alarms_summary" formatted="false">Сохранить текущие сигналы в файл</string>
+  <string name="pref_import_alarms" formatted="false">Импорт сигналов</string>
+  <string name="pref_import_alarms_summary" formatted="false">Заменить текущие сигналы сигналами из файла</string>
+  <string name="alarms_exported" formatted="false">Сигналы успешно экспортированы</string>
+  <string name="alarms_imported" formatted="false">Сигналы успешно импортированы</string>
+  <string name="invalid_alarms_file" formatted="false">Недопустимый файл сигналов</string>
+  <string name="pref_backup_device_data" formatted="false">Резервная копия данных конкретного устройства</string>
+  <string name="pref_export_device_data" formatted="false">Экспорт данных конкретного устройства</string>
+  <string name="pref_export_device_data_summary" formatted="false">Сохранить журналы и данные прогнозирования в файл</string>
+  <string name="pref_import_device_data" formatted="false">Импорт данных конкретного устройства</string>
+  <string name="pref_import_device_data_summary" formatted="false">Восстановить журналы и данные прогнозирования из файла</string>
+  <string name="device_data_logs" formatted="false">Журналы</string>
+  <string name="device_data_predictor" formatted="false">Данные прогнозирования</string>
+  <string name="device_data_backup_warning" formatted="false">Эти данные относятся к устройству, на котором они были собраны. Их импорт на другое устройство может привести к неверным прогнозам или другому неожиданному поведению приложения.</string>
+  <string name="device_data_exported" formatted="false">Данные конкретного устройства успешно экспортированы</string>
+  <string name="device_data_imported" formatted="false">Данные конкретного устройства успешно импортированы</string>
+  <string name="invalid_device_data_file" formatted="false">Недопустимый файл данных конкретного устройства</string>
+  <string name="device_data_file_empty" formatted="false">Этот файл не содержит поддерживаемых данных конкретного устройства</string>
+  <string name="pref_import_logs_csv" formatted="false">Импорт журналов из CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Импортировать журналы из экспортированного CSV-файла</string>
+  <string name="csv_logs_import_warning" formatted="false">Форматы CSV могут различаться в разных версиях приложения, поэтому импорт не всегда может работать правильно.</string>
+  <string name="csv_logs_imported" formatted="false">Журналы CSV успешно импортированы</string>
+  <string name="invalid_csv_logs_file" formatted="false">Недопустимый или несовместимый файл журналов CSV</string>
+  <string name="log_import_mode_title" formatted="false">Импорт журналов</string>
+  <string name="log_import_mode_message" formatted="false">Как обработать импортированные журналы?</string>
+  <string name="log_import_replace" formatted="false">Заменить существующие журналы</string>
+  <string name="log_import_add" formatted="false">Добавить к существующим журналам</string>
+  <string name="pref_general_backup" formatted="false">Общая резервная копия приложения</string>
+  <string name="pref_export_general_backup" formatted="false">Экспорт общей резервной копии</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Сохранить настройки, сигналы и данные конкретного устройства в ZIP-файл</string>
+  <string name="pref_import_general_backup" formatted="false">Импорт общей резервной копии</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Восстановить выбранные данные из ZIP-файла общей резервной копии</string>
+  <string name="general_backup_restore_message" formatted="false">Выберите, что нужно восстановить.</string>
+  <string name="general_backup_exported" formatted="false">Общая резервная копия успешно экспортирована</string>
+  <string name="general_backup_imported" formatted="false">Общая резервная копия успешно импортирована</string>
+  <string name="invalid_general_backup_file" formatted="false">Недопустимый или несовместимый файл общей резервной копии</string>
+  <string name="backup_restore_help_overview" formatted="false">Используйте резервные копии, чтобы сохранить данные приложения и восстановить их позднее.</string>
+  <string name="general_backup_help" formatted="false">Общая резервная копия сохраняет вместе настройки, сигналы и данные, относящиеся к конкретному устройству. При восстановлении можно выбрать, какие доступные данные импортировать.</string>
+  <string name="settings_backup_help" formatted="false">Резервная копия настроек сохраняет параметры приложения. При импорте сохранённые параметры восстанавливаются.</string>
+  <string name="alarms_backup_help" formatted="false">Резервная копия сигналов сохраняет ваши сигналы. При импорте все текущие сигналы заменяются сигналами из копии.</string>
+  <string name="device_specific_backup_help" formatted="false">Резервная копия данных устройства сохраняет журналы и данные прогнозирования. При импорте можно выбрать один или оба типа данных. Эти данные принадлежат исходному устройству; их использование на другом устройстве может привести к неверным прогнозам или непредвиденному поведению. При импорте журналов выберите, добавить их или заменить существующие журналы.</string>
+  <string name="csv_logs_import_help" formatted="false">Можно импортировать журналы из ранее экспортированного файла CSV. Импорт между разными версиями приложения может работать некорректно. Выберите добавление импортированных журналов или замену существующих.</string>
 </resources>

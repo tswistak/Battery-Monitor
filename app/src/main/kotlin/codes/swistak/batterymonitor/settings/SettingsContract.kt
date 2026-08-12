@@ -27,6 +27,7 @@ internal object SettingsContract {
     const val KEY_ALARM_EDIT_SETTINGS: String = "alarm_edit_settings"
     const val KEY_ADVANCED_INFO_HELP: String = "advanced_info_help"
     const val KEY_OTHER_SETTINGS: String = "other_settings"
+    const val KEY_BACKUP_RESTORE_SETTINGS: String = "backup_restore_settings"
 
     const val KEY_CHANGE_APP_LANGUAGE_HOLDER: String = "change_app_language_holder"
     const val KEY_CHANGE_APP_LANGUAGE: String = "change_app_language"
@@ -38,6 +39,13 @@ internal object SettingsContract {
     const val KEY_ENABLE_NOTIFS_SUMMARY: String = "enable_notifications_summary"
     const val KEY_EXPORT_SETTINGS: String = "export_settings_backup"
     const val KEY_IMPORT_SETTINGS: String = "import_settings_backup"
+    const val KEY_EXPORT_ALARMS: String = "export_alarms_backup"
+    const val KEY_IMPORT_ALARMS: String = "import_alarms_backup"
+    const val KEY_EXPORT_DEVICE_DATA: String = "export_device_data_backup"
+    const val KEY_IMPORT_DEVICE_DATA: String = "import_device_data_backup"
+    const val KEY_IMPORT_LOGS_CSV: String = "import_logs_csv_backup"
+    const val KEY_EXPORT_GENERAL_BACKUP: String = "export_general_backup"
+    const val KEY_IMPORT_GENERAL_BACKUP: String = "import_general_backup"
 
     const val KEY_ENABLE_LOGGING: String = "enable_logging"
     const val KEY_MAX_LOG_AGE: String = "max_log_age"

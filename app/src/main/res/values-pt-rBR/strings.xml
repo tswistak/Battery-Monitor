@@ -519,4 +519,48 @@
   <string name="pref_vital_signs_content" formatted="false">Conteúdo dos dados vitais</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Quais valores incluir nos dados vitais e em que ordem?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Reordenar %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Backup e restauração</string>
+  <string name="pref_export_alarms" formatted="false">Exportar alarmes</string>
+  <string name="pref_export_alarms_summary" formatted="false">Salvar os alarmes atuais em um arquivo</string>
+  <string name="pref_import_alarms" formatted="false">Importar alarmes</string>
+  <string name="pref_import_alarms_summary" formatted="false">Substituir os alarmes atuais pelos alarmes de um arquivo</string>
+  <string name="alarms_exported" formatted="false">Alarmes exportados com sucesso</string>
+  <string name="alarms_imported" formatted="false">Alarmes importados com sucesso</string>
+  <string name="invalid_alarms_file" formatted="false">Arquivo de alarmes inválido</string>
+  <string name="pref_backup_device_data" formatted="false">Backup dos dados específicos do dispositivo</string>
+  <string name="pref_export_device_data" formatted="false">Exportar dados específicos do dispositivo</string>
+  <string name="pref_export_device_data_summary" formatted="false">Salvar registros e dados de previsão em um arquivo</string>
+  <string name="pref_import_device_data" formatted="false">Importar dados específicos do dispositivo</string>
+  <string name="pref_import_device_data_summary" formatted="false">Restaurar registros e dados de previsão de um arquivo</string>
+  <string name="device_data_logs" formatted="false">Registros</string>
+  <string name="device_data_predictor" formatted="false">Dados de previsão</string>
+  <string name="device_data_backup_warning" formatted="false">Esses dados são específicos do dispositivo em que foram coletados. Importá-los em outro dispositivo pode causar previsões incorretas ou outro comportamento inesperado do aplicativo.</string>
+  <string name="device_data_exported" formatted="false">Dados específicos do dispositivo exportados com sucesso</string>
+  <string name="device_data_imported" formatted="false">Dados específicos do dispositivo importados com sucesso</string>
+  <string name="invalid_device_data_file" formatted="false">Arquivo de dados específicos do dispositivo inválido</string>
+  <string name="device_data_file_empty" formatted="false">Este arquivo não contém dados específicos do dispositivo compatíveis</string>
+  <string name="pref_import_logs_csv" formatted="false">Importar registros de CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Importar registros de um arquivo CSV exportado</string>
+  <string name="csv_logs_import_warning" formatted="false">Os formatos CSV podem variar entre versões do aplicativo, portanto, a importação pode nem sempre funcionar corretamente.</string>
+  <string name="csv_logs_imported" formatted="false">Registros CSV importados com sucesso</string>
+  <string name="invalid_csv_logs_file" formatted="false">Arquivo de registros CSV inválido ou incompatível</string>
+  <string name="log_import_mode_title" formatted="false">Importar registros</string>
+  <string name="log_import_mode_message" formatted="false">Como os registros importados devem ser tratados?</string>
+  <string name="log_import_replace" formatted="false">Substituir registros existentes</string>
+  <string name="log_import_add" formatted="false">Adicionar aos registros existentes</string>
+  <string name="pref_general_backup" formatted="false">Backup geral do aplicativo</string>
+  <string name="pref_export_general_backup" formatted="false">Exportar backup geral</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Salvar configurações, alarmes e dados específicos do dispositivo em um arquivo ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">Importar backup geral</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Restaurar os dados selecionados de um arquivo ZIP de backup geral</string>
+  <string name="general_backup_restore_message" formatted="false">Escolha o que deseja restaurar.</string>
+  <string name="general_backup_exported" formatted="false">Backup geral exportado com sucesso</string>
+  <string name="general_backup_imported" formatted="false">Backup geral importado com sucesso</string>
+  <string name="invalid_general_backup_file" formatted="false">Arquivo de backup geral inválido ou incompatível</string>
+  <string name="backup_restore_help_overview" formatted="false">Use backups para salvar uma cópia dos dados do aplicativo e restaurá-la depois.</string>
+  <string name="general_backup_help" formatted="false">Um backup geral salva configurações, alarmes e dados específicos do dispositivo juntos. Ao restaurá-lo, você pode escolher quais dados disponíveis deseja importar.</string>
+  <string name="settings_backup_help" formatted="false">Um backup de configurações salva as preferências do aplicativo. Ao importá-lo, as preferências salvas são restauradas.</string>
+  <string name="alarms_backup_help" formatted="false">Um backup de alarmes salva seus alarmes. Ao importá-lo, todos os alarmes atuais são substituídos pelos alarmes do backup.</string>
+  <string name="device_specific_backup_help" formatted="false">Um backup específico do dispositivo salva registros e dados do preditor. Você pode selecionar um deles ou ambos durante a importação. Esses dados pertencem ao dispositivo de origem; usá-los em outro dispositivo pode causar previsões incorretas ou comportamento inesperado. Ao importar registros, escolha entre adicioná-los ou substituir os registros existentes.</string>
+  <string name="csv_logs_import_help" formatted="false">Você pode importar registros de um arquivo CSV exportado anteriormente. A importação entre versões diferentes do aplicativo pode não funcionar corretamente. Escolha entre adicionar os registros importados ou substituir os existentes.</string>
 </resources>

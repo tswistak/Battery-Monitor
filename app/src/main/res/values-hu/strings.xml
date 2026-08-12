@@ -501,4 +501,48 @@
   <string name="pref_vital_signs_content" formatted="false">Életjelek tartalma</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Mely értékek szerepeljenek az életjelek között, és milyen sorrendben?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s átrendezése</string>
+  <string name="pref_backup_restore" formatted="false">Biztonsági mentés és visszaállítás</string>
+  <string name="pref_export_alarms" formatted="false">Riasztások exportálása</string>
+  <string name="pref_export_alarms_summary" formatted="false">Jelenlegi riasztások mentése fájlba</string>
+  <string name="pref_import_alarms" formatted="false">Riasztások importálása</string>
+  <string name="pref_import_alarms_summary" formatted="false">Jelenlegi riasztások cseréje a fájlban lévőkre</string>
+  <string name="alarms_exported" formatted="false">A riasztások exportálása sikerült</string>
+  <string name="alarms_imported" formatted="false">A riasztások importálása sikerült</string>
+  <string name="invalid_alarms_file" formatted="false">Érvénytelen riasztásfájl</string>
+  <string name="pref_backup_device_data" formatted="false">Eszközspecifikus adatok biztonsági mentése</string>
+  <string name="pref_export_device_data" formatted="false">Eszközspecifikus adatok exportálása</string>
+  <string name="pref_export_device_data_summary" formatted="false">Naplók és előrejelzési adatok mentése fájlba</string>
+  <string name="pref_import_device_data" formatted="false">Eszközspecifikus adatok importálása</string>
+  <string name="pref_import_device_data_summary" formatted="false">Naplók és előrejelzési adatok visszaállítása fájlból</string>
+  <string name="device_data_logs" formatted="false">Naplók</string>
+  <string name="device_data_predictor" formatted="false">Előrejelzési adatok</string>
+  <string name="device_data_backup_warning" formatted="false">Ezek az eszközspecifikus adatok ahhoz az eszközhöz tartoznak, amelyen gyűjtötték őket. Másik eszközre importálva hibás előrejelzéseket vagy az alkalmazás egyéb váratlan működését okozhatják.</string>
+  <string name="device_data_exported" formatted="false">Az eszközspecifikus adatok exportálása sikeres</string>
+  <string name="device_data_imported" formatted="false">Az eszközspecifikus adatok importálása sikeres</string>
+  <string name="invalid_device_data_file" formatted="false">Érvénytelen eszközspecifikus adatfájl</string>
+  <string name="device_data_file_empty" formatted="false">Ez a fájl nem tartalmaz támogatott eszközspecifikus adatokat</string>
+  <string name="pref_import_logs_csv" formatted="false">Naplók importálása CSV-fájlból</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Naplók importálása egy exportált CSV-fájlból</string>
+  <string name="csv_logs_import_warning" formatted="false">A CSV-formátum alkalmazásverziónként eltérhet, ezért előfordulhat, hogy az importálás nem mindig működik megfelelően.</string>
+  <string name="csv_logs_imported" formatted="false">A CSV-naplók importálása sikeres</string>
+  <string name="invalid_csv_logs_file" formatted="false">Érvénytelen vagy nem kompatibilis CSV-naplófájl</string>
+  <string name="log_import_mode_title" formatted="false">Naplók importálása</string>
+  <string name="log_import_mode_message" formatted="false">Hogyan legyenek kezelve az importált naplók?</string>
+  <string name="log_import_replace" formatted="false">Meglévő naplók cseréje</string>
+  <string name="log_import_add" formatted="false">Hozzáadás a meglévő naplókhoz</string>
+  <string name="pref_general_backup" formatted="false">Általános alkalmazásbiztonsági mentés</string>
+  <string name="pref_export_general_backup" formatted="false">Általános biztonsági mentés exportálása</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Beállítások, riasztások és eszközspecifikus adatok mentése ZIP-fájlba</string>
+  <string name="pref_import_general_backup" formatted="false">Általános biztonsági mentés importálása</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Kiválasztott adatok visszaállítása egy általános biztonsági mentés ZIP-fájljából</string>
+  <string name="general_backup_restore_message" formatted="false">Válassza ki, mit szeretne visszaállítani.</string>
+  <string name="general_backup_exported" formatted="false">Az általános biztonsági mentés exportálása sikeres</string>
+  <string name="general_backup_imported" formatted="false">Az általános biztonsági mentés importálása sikeres</string>
+  <string name="invalid_general_backup_file" formatted="false">Érvénytelen vagy nem kompatibilis általános biztonsági mentési fájl</string>
+  <string name="backup_restore_help_overview" formatted="false">Biztonsági mentéssel elmentheted az alkalmazásadatok másolatát, és később visszaállíthatod.</string>
+  <string name="general_backup_help" formatted="false">Az általános biztonsági mentés együtt menti a beállításokat, a riasztásokat és az eszközspecifikus adatokat. Visszaállításkor kiválaszthatod, hogy az elérhető adatok közül melyeket szeretnéd importálni.</string>
+  <string name="settings_backup_help" formatted="false">A beállítások biztonsági mentése elmenti az alkalmazás beállításait. Importáláskor visszaállítja a mentett beállításokat.</string>
+  <string name="alarms_backup_help" formatted="false">A riasztások biztonsági mentése elmenti a riasztásaidat. Importáláskor minden jelenlegi riasztást a mentésben lévőkkel helyettesít.</string>
+  <string name="device_specific_backup_help" formatted="false">Az eszközspecifikus biztonsági mentés elmenti a naplókat és az előrejelző adatait. Importáláskor az egyik vagy mindkettő kiválasztható. Ezek az adatok a forráseszközhöz tartoznak; másik eszközön használva hibás előrejelzéseket vagy váratlan működést okozhatnak. A naplók importálásakor válaszd ki, hogy hozzáadod őket, vagy lecseréled a meglévő naplókat.</string>
+  <string name="csv_logs_import_help" formatted="false">Korábban exportált CSV-fájlból importálhatsz naplókat. Az importálás különböző alkalmazásverziók között nem mindig működik megfelelően. Válaszd ki, hogy az importált naplókat hozzáadod, vagy lecseréled velük a meglévőket.</string>
 </resources>

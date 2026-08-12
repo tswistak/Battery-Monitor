@@ -519,4 +519,48 @@
   <string name="pref_vital_signs_content" formatted="false">תוכן הנתונים החיוניים</string>
   <string name="pref_vital_signs_content_summary" formatted="false">אילו ערכים לכלול בנתונים החיוניים ובאיזה סדר?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">שינוי הסדר של %1$s</string>
+  <string name="pref_backup_restore" formatted="false">גיבוי ושחזור</string>
+  <string name="pref_export_alarms" formatted="false">ייצוא התראות</string>
+  <string name="pref_export_alarms_summary" formatted="false">שמירת ההתראות הנוכחיות לקובץ</string>
+  <string name="pref_import_alarms" formatted="false">ייבוא התראות</string>
+  <string name="pref_import_alarms_summary" formatted="false">החלפת ההתראות הנוכחיות בהתראות מקובץ</string>
+  <string name="alarms_exported" formatted="false">ההתראות יוצאו בהצלחה</string>
+  <string name="alarms_imported" formatted="false">ההתראות יובאו בהצלחה</string>
+  <string name="invalid_alarms_file" formatted="false">קובץ התראות לא תקין</string>
+  <string name="pref_backup_device_data" formatted="false">גיבוי נתונים ייחודיים למכשיר</string>
+  <string name="pref_export_device_data" formatted="false">ייצוא נתונים ייחודיים למכשיר</string>
+  <string name="pref_export_device_data_summary" formatted="false">שמירת יומנים ונתוני חיזוי בקובץ</string>
+  <string name="pref_import_device_data" formatted="false">ייבוא נתונים ייחודיים למכשיר</string>
+  <string name="pref_import_device_data_summary" formatted="false">שחזור יומנים ונתוני חיזוי מקובץ</string>
+  <string name="device_data_logs" formatted="false">יומנים</string>
+  <string name="device_data_predictor" formatted="false">נתוני חיזוי</string>
+  <string name="device_data_backup_warning" formatted="false">הנתונים האלה ייחודיים למכשיר שבו נאספו. ייבוא שלהם למכשיר אחר עלול לגרום לתחזיות שגויות או להתנהגות בלתי צפויה אחרת של היישום.</string>
+  <string name="device_data_exported" formatted="false">נתונים ייחודיים למכשיר יוצאו בהצלחה</string>
+  <string name="device_data_imported" formatted="false">נתונים ייחודיים למכשיר יובאו בהצלחה</string>
+  <string name="invalid_device_data_file" formatted="false">קובץ נתונים ייחודיים למכשיר לא תקין</string>
+  <string name="device_data_file_empty" formatted="false">קובץ זה אינו מכיל נתונים נתמכים הייחודיים למכשיר</string>
+  <string name="pref_import_logs_csv" formatted="false">ייבוא יומנים מ-CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">ייבוא יומנים מקובץ CSV שיוצא</string>
+  <string name="csv_logs_import_warning" formatted="false">תבניות CSV עשויות להשתנות בין גרסאות היישום, ולכן הייבוא לא תמיד יפעל כראוי.</string>
+  <string name="csv_logs_imported" formatted="false">יומני CSV יובאו בהצלחה</string>
+  <string name="invalid_csv_logs_file" formatted="false">קובץ יומני CSV לא תקין או לא תואם</string>
+  <string name="log_import_mode_title" formatted="false">ייבוא יומנים</string>
+  <string name="log_import_mode_message" formatted="false">כיצד לטפל ביומנים המיובאים?</string>
+  <string name="log_import_replace" formatted="false">החלפת יומנים קיימים</string>
+  <string name="log_import_add" formatted="false">הוספה ליומנים קיימים</string>
+  <string name="pref_general_backup" formatted="false">גיבוי כללי של היישום</string>
+  <string name="pref_export_general_backup" formatted="false">ייצוא גיבוי כללי</string>
+  <string name="pref_export_general_backup_summary" formatted="false">שמירת הגדרות, התראות ונתונים ייחודיים למכשיר בקובץ ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">ייבוא גיבוי כללי</string>
+  <string name="pref_import_general_backup_summary" formatted="false">שחזור הנתונים שנבחרו מקובץ ZIP של גיבוי כללי</string>
+  <string name="general_backup_restore_message" formatted="false">יש לבחור מה לשחזר.</string>
+  <string name="general_backup_exported" formatted="false">הגיבוי הכללי יוצא בהצלחה</string>
+  <string name="general_backup_imported" formatted="false">הגיבוי הכללי יובא בהצלחה</string>
+  <string name="invalid_general_backup_file" formatted="false">קובץ גיבוי כללי לא תקין או לא תואם</string>
+  <string name="backup_restore_help_overview" formatted="false">השתמשו בגיבויים כדי לשמור עותק של נתוני האפליקציה ולשחזר אותו מאוחר יותר.</string>
+  <string name="general_backup_help" formatted="false">גיבוי כללי שומר יחד הגדרות, התראות ונתונים ייחודיים למכשיר. בעת השחזור ניתן לבחור אילו מהנתונים הזמינים לייבא.</string>
+  <string name="settings_backup_help" formatted="false">גיבוי הגדרות שומר את העדפות האפליקציה. ייבוא שלו משחזר את ההעדפות שנשמרו.</string>
+  <string name="alarms_backup_help" formatted="false">גיבוי התראות שומר את ההתראות שלכם. ייבוא שלו מחליף את כל ההתראות הנוכחיות באלו שבגיבוי.</string>
+  <string name="device_specific_backup_help" formatted="false">גיבוי ייחודי למכשיר שומר יומנים ונתוני חיזוי. ניתן לבחור אחד מהם או את שניהם במהלך הייבוא. נתונים אלה שייכים למכשיר המקור; שימוש בהם במכשיר אחר עלול לגרום לתחזיות שגויות או להתנהגות בלתי צפויה. בעת ייבוא יומנים, יש לבחור אם להוסיף אותם או להחליף את היומנים הקיימים.</string>
+  <string name="csv_logs_import_help" formatted="false">ניתן לייבא יומנים מקובץ CSV שיוצא בעבר. ייתכן שהייבוא בין גרסאות שונות של האפליקציה לא יפעל כראוי. יש לבחור אם להוסיף את היומנים המיובאים או להחליף את היומנים הקיימים.</string>
 </resources>

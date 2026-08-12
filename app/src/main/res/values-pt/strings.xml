@@ -519,4 +519,48 @@
   <string name="pref_vital_signs_content" formatted="false">Conteúdo dos sinais vitais</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Que valores incluir nos sinais vitais e por que ordem?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Reordenar %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Cópia de segurança e restauro</string>
+  <string name="pref_export_alarms" formatted="false">Exportar alarmes</string>
+  <string name="pref_export_alarms_summary" formatted="false">Guardar os alarmes atuais num ficheiro</string>
+  <string name="pref_import_alarms" formatted="false">Importar alarmes</string>
+  <string name="pref_import_alarms_summary" formatted="false">Substituir os alarmes atuais pelos alarmes de um ficheiro</string>
+  <string name="alarms_exported" formatted="false">Alarmes exportados com sucesso</string>
+  <string name="alarms_imported" formatted="false">Alarmes importados com sucesso</string>
+  <string name="invalid_alarms_file" formatted="false">Ficheiro de alarmes inválido</string>
+  <string name="pref_backup_device_data" formatted="false">Cópia de segurança dos dados específicos do dispositivo</string>
+  <string name="pref_export_device_data" formatted="false">Exportar dados específicos do dispositivo</string>
+  <string name="pref_export_device_data_summary" formatted="false">Guardar registos e dados de previsão num ficheiro</string>
+  <string name="pref_import_device_data" formatted="false">Importar dados específicos do dispositivo</string>
+  <string name="pref_import_device_data_summary" formatted="false">Restaurar registos e dados de previsão a partir de um ficheiro</string>
+  <string name="device_data_logs" formatted="false">Registos</string>
+  <string name="device_data_predictor" formatted="false">Dados de previsão</string>
+  <string name="device_data_backup_warning" formatted="false">Estes dados são específicos do dispositivo onde foram recolhidos. Importá-los noutro dispositivo pode causar previsões incorretas ou outro comportamento inesperado da aplicação.</string>
+  <string name="device_data_exported" formatted="false">Dados específicos do dispositivo exportados com sucesso</string>
+  <string name="device_data_imported" formatted="false">Dados específicos do dispositivo importados com sucesso</string>
+  <string name="invalid_device_data_file" formatted="false">Ficheiro de dados específicos do dispositivo inválido</string>
+  <string name="device_data_file_empty" formatted="false">Este ficheiro não contém dados específicos do dispositivo suportados</string>
+  <string name="pref_import_logs_csv" formatted="false">Importar registos de CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Importar registos de um ficheiro CSV exportado</string>
+  <string name="csv_logs_import_warning" formatted="false">Os formatos CSV podem variar entre versões da aplicação, pelo que a importação poderá nem sempre funcionar corretamente.</string>
+  <string name="csv_logs_imported" formatted="false">Registos CSV importados com sucesso</string>
+  <string name="invalid_csv_logs_file" formatted="false">Ficheiro de registos CSV inválido ou incompatível</string>
+  <string name="log_import_mode_title" formatted="false">Importar registos</string>
+  <string name="log_import_mode_message" formatted="false">Como devem ser tratados os registos importados?</string>
+  <string name="log_import_replace" formatted="false">Substituir registos existentes</string>
+  <string name="log_import_add" formatted="false">Adicionar aos registos existentes</string>
+  <string name="pref_general_backup" formatted="false">Cópia de segurança geral da aplicação</string>
+  <string name="pref_export_general_backup" formatted="false">Exportar cópia de segurança geral</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Guardar definições, alarmes e dados específicos do dispositivo num ficheiro ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">Importar cópia de segurança geral</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Restaurar os dados selecionados a partir de um ficheiro ZIP de cópia de segurança geral</string>
+  <string name="general_backup_restore_message" formatted="false">Escolha o que pretende restaurar.</string>
+  <string name="general_backup_exported" formatted="false">Cópia de segurança geral exportada com sucesso</string>
+  <string name="general_backup_imported" formatted="false">Cópia de segurança geral importada com sucesso</string>
+  <string name="invalid_general_backup_file" formatted="false">Ficheiro de cópia de segurança geral inválido ou incompatível</string>
+  <string name="backup_restore_help_overview" formatted="false">Utilize cópias de segurança para guardar uma cópia dos dados da aplicação e restaurá-la mais tarde.</string>
+  <string name="general_backup_help" formatted="false">Uma cópia de segurança geral guarda em conjunto definições, alarmes e dados específicos do dispositivo. Ao restaurá-la, pode escolher quais dos dados disponíveis pretende importar.</string>
+  <string name="settings_backup_help" formatted="false">Uma cópia das definições guarda as preferências da aplicação. Ao importá-la, as preferências guardadas são restauradas.</string>
+  <string name="alarms_backup_help" formatted="false">Uma cópia dos alarmes guarda os seus alarmes. Ao importá-la, todos os alarmes atuais são substituídos pelos alarmes da cópia.</string>
+  <string name="device_specific_backup_help" formatted="false">Uma cópia específica do dispositivo guarda registos e dados do preditor. Pode selecionar um ou ambos durante a importação. Estes dados pertencem ao dispositivo de origem; utilizá-los noutro dispositivo pode causar previsões incorretas ou comportamento inesperado. Ao importar registos, escolha entre adicioná-los ou substituir os registos existentes.</string>
+  <string name="csv_logs_import_help" formatted="false">Pode importar registos de um ficheiro CSV exportado anteriormente. A importação entre versões diferentes da aplicação pode não funcionar corretamente. Escolha entre adicionar os registos importados ou substituir os existentes.</string>
 </resources>

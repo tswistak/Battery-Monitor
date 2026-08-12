@@ -553,4 +553,48 @@
   <string name="pref_vital_signs_content" formatted="false">محتوى المؤشرات الحيوية</string>
   <string name="pref_vital_signs_content_summary" formatted="false">ما القيم التي يجب تضمينها في المؤشرات الحيوية، وبأي ترتيب؟</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">تغيير ترتيب %1$s</string>
+  <string name="pref_backup_restore" formatted="false">النسخ الاحتياطي والاستعادة</string>
+  <string name="pref_export_alarms" formatted="false">تصدير التنبيهات</string>
+  <string name="pref_export_alarms_summary" formatted="false">حفظ التنبيهات الحالية في ملف</string>
+  <string name="pref_import_alarms" formatted="false">استيراد التنبيهات</string>
+  <string name="pref_import_alarms_summary" formatted="false">استبدال التنبيهات الحالية بتنبيهات من ملف</string>
+  <string name="alarms_exported" formatted="false">تم تصدير التنبيهات بنجاح</string>
+  <string name="alarms_imported" formatted="false">تم استيراد التنبيهات بنجاح</string>
+  <string name="invalid_alarms_file" formatted="false">ملف تنبيهات غير صالح</string>
+  <string name="pref_backup_device_data" formatted="false">نسخ البيانات الخاصة بالجهاز احتياطيًا</string>
+  <string name="pref_export_device_data" formatted="false">تصدير البيانات الخاصة بالجهاز</string>
+  <string name="pref_export_device_data_summary" formatted="false">حفظ السجلات وبيانات التنبؤ في ملف</string>
+  <string name="pref_import_device_data" formatted="false">استيراد البيانات الخاصة بالجهاز</string>
+  <string name="pref_import_device_data_summary" formatted="false">استعادة السجلات وبيانات التنبؤ من ملف</string>
+  <string name="device_data_logs" formatted="false">السجلات</string>
+  <string name="device_data_predictor" formatted="false">بيانات التنبؤ</string>
+  <string name="device_data_backup_warning" formatted="false">هذه بيانات خاصة بالجهاز الذي جُمعت عليه. قد يؤدي استيرادها على جهاز آخر إلى تنبؤات غير صحيحة أو سلوك آخر غير متوقع للتطبيق.</string>
+  <string name="device_data_exported" formatted="false">تم تصدير البيانات الخاصة بالجهاز بنجاح</string>
+  <string name="device_data_imported" formatted="false">تم استيراد البيانات الخاصة بالجهاز بنجاح</string>
+  <string name="invalid_device_data_file" formatted="false">ملف البيانات الخاصة بالجهاز غير صالح</string>
+  <string name="device_data_file_empty" formatted="false">لا يحتوي هذا الملف على بيانات مدعومة خاصة بالجهاز</string>
+  <string name="pref_import_logs_csv" formatted="false">استيراد السجلات من CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">استيراد السجلات من ملف CSV مُصدَّر</string>
+  <string name="csv_logs_import_warning" formatted="false">قد تختلف تنسيقات CSV بين إصدارات التطبيق، لذلك قد لا يعمل الاستيراد بشكل صحيح دائمًا.</string>
+  <string name="csv_logs_imported" formatted="false">تم استيراد سجلات CSV بنجاح</string>
+  <string name="invalid_csv_logs_file" formatted="false">ملف سجلات CSV غير صالح أو غير متوافق</string>
+  <string name="log_import_mode_title" formatted="false">استيراد السجلات</string>
+  <string name="log_import_mode_message" formatted="false">كيف يجب التعامل مع السجلات المستوردة؟</string>
+  <string name="log_import_replace" formatted="false">استبدال السجلات الحالية</string>
+  <string name="log_import_add" formatted="false">إضافة إلى السجلات الحالية</string>
+  <string name="pref_general_backup" formatted="false">نسخة احتياطية عامة للتطبيق</string>
+  <string name="pref_export_general_backup" formatted="false">تصدير النسخة الاحتياطية العامة</string>
+  <string name="pref_export_general_backup_summary" formatted="false">حفظ الإعدادات والتنبيهات والبيانات الخاصة بالجهاز في ملف ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">استيراد النسخة الاحتياطية العامة</string>
+  <string name="pref_import_general_backup_summary" formatted="false">استعادة البيانات المحددة من ملف ZIP لنسخة احتياطية عامة</string>
+  <string name="general_backup_restore_message" formatted="false">اختر ما تريد استعادته.</string>
+  <string name="general_backup_exported" formatted="false">تم تصدير النسخة الاحتياطية العامة بنجاح</string>
+  <string name="general_backup_imported" formatted="false">تم استيراد النسخة الاحتياطية العامة بنجاح</string>
+  <string name="invalid_general_backup_file" formatted="false">ملف النسخة الاحتياطية العامة غير صالح أو غير متوافق</string>
+  <string name="backup_restore_help_overview" formatted="false">استخدم النسخ الاحتياطية لحفظ نسخة من بيانات التطبيق واستعادتها لاحقًا.</string>
+  <string name="general_backup_help" formatted="false">تحفظ النسخة الاحتياطية العامة الإعدادات والتنبيهات والبيانات الخاصة بالجهاز معًا. عند استعادتها، يمكنك اختيار البيانات المتاحة التي تريد استيرادها.</string>
+  <string name="settings_backup_help" formatted="false">تحفظ نسخة الإعدادات الاحتياطية تفضيلات التطبيق. يؤدي استيرادها إلى استعادة التفضيلات المحفوظة.</string>
+  <string name="alarms_backup_help" formatted="false">تحفظ نسخة التنبيهات الاحتياطية تنبيهاتك. يؤدي استيرادها إلى استبدال جميع التنبيهات الحالية بالتنبيهات الموجودة في النسخة الاحتياطية.</string>
+  <string name="device_specific_backup_help" formatted="false">تحفظ النسخة الاحتياطية الخاصة بالجهاز السجلات وبيانات المتنبئ. يمكنك تحديد أحدهما أو كليهما أثناء الاستيراد. تنتمي هذه البيانات إلى الجهاز المصدر؛ وقد يؤدي استخدامها على جهاز آخر إلى تنبؤات غير صحيحة أو سلوك غير متوقع. عند استيراد السجلات، اختر إضافتها أو استبدال السجلات الحالية.</string>
+  <string name="csv_logs_import_help" formatted="false">يمكنك استيراد السجلات من ملف CSV تم تصديره سابقًا. قد لا يعمل الاستيراد بشكل صحيح بين إصدارات التطبيق المختلفة. اختر إضافة السجلات المستوردة أو استبدال السجلات الحالية.</string>
 </resources>

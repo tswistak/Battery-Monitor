@@ -472,6 +472,11 @@ class BatteryInfoService : Service() {
                     true, incoming.data
                 )
 
+                RemoteConnection.SERVICE_RELOAD_DEVICE_DATA -> {
+                    bis.predictor = Predictor(bis)
+                    bis.reloadSettings(false, incoming.data)
+                }
+
                 else -> super.handleMessage(incoming)
             }
         }
@@ -484,6 +489,7 @@ class BatteryInfoService : Service() {
             const val SERVICE_UNREGISTER_CLIENT: Int = 2
             const val SERVICE_RELOAD_SETTINGS: Int = 3
             const val SERVICE_CANCEL_NOTIFICATION_AND_RELOAD_SETTINGS: Int = 4
+            const val SERVICE_RELOAD_DEVICE_DATA: Int = 5
 
             const val CLIENT_SERVICE_CONNECTED: Int = 0
             const val CLIENT_BATTERY_INFO_UPDATED: Int = 1

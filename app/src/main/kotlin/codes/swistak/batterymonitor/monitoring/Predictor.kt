@@ -19,7 +19,8 @@ import android.os.SystemClock
 
 internal class Predictor(context: Context) {
     companion object {
-        private val KEY_AVERAGE = arrayOf<String?>(
+        internal const val STORE_NAME = "predictor_sp_store"
+        internal val KEY_AVERAGE = arrayOf(
             "key_ave_discharge",
             "key_ave_recharge_ac",
             "key_ave_recharge_wl",
@@ -27,8 +28,8 @@ internal class Predictor(context: Context) {
         )
     }
 
-    private val spPredictor: SharedPreferences =
-        context.getSharedPreferences("predictor_sp_store", 0)
+    private val spPredictor: SharedPreferences = context.getSharedPreferences(STORE_NAME, 0)
+
     private val editor: SharedPreferences.Editor = spPredictor.edit()
 
     private val pc: PredictorCore = PredictorCore(

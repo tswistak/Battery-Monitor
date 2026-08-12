@@ -510,4 +510,48 @@
   <string name="pref_vital_signs_content" formatted="false">重要資料內容</string>
   <string name="pref_vital_signs_content_summary" formatted="false">重要資料中要包含哪些數值，並以什麼順序顯示？</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">調整「%1$s」的順序</string>
+  <string name="pref_backup_restore" formatted="false">備份與還原</string>
+  <string name="pref_export_alarms" formatted="false">匯出鬧鐘</string>
+  <string name="pref_export_alarms_summary" formatted="false">將目前的鬧鐘儲存到檔案</string>
+  <string name="pref_import_alarms" formatted="false">匯入鬧鐘</string>
+  <string name="pref_import_alarms_summary" formatted="false">以檔案中的鬧鐘取代目前的鬧鐘</string>
+  <string name="alarms_exported" formatted="false">已成功匯出鬧鐘</string>
+  <string name="alarms_imported" formatted="false">已成功匯入鬧鐘</string>
+  <string name="invalid_alarms_file" formatted="false">無效的鬧鐘檔案</string>
+  <string name="pref_backup_device_data" formatted="false">備份裝置特定資料</string>
+  <string name="pref_export_device_data" formatted="false">匯出裝置特定資料</string>
+  <string name="pref_export_device_data_summary" formatted="false">將記錄和預測資料儲存到檔案</string>
+  <string name="pref_import_device_data" formatted="false">匯入裝置特定資料</string>
+  <string name="pref_import_device_data_summary" formatted="false">從檔案還原記錄和預測資料</string>
+  <string name="device_data_logs" formatted="false">記錄</string>
+  <string name="device_data_predictor" formatted="false">預測資料</string>
+  <string name="device_data_backup_warning" formatted="false">這些裝置特定資料屬於收集資料的裝置。將其匯入其他裝置可能會導致錯誤的預測或其他非預期的應用程式行為。</string>
+  <string name="device_data_exported" formatted="false">已成功匯出裝置特定資料</string>
+  <string name="device_data_imported" formatted="false">已成功匯入裝置特定資料</string>
+  <string name="invalid_device_data_file" formatted="false">無效的裝置特定資料檔案</string>
+  <string name="device_data_file_empty" formatted="false">此檔案不包含支援的裝置特定資料</string>
+  <string name="pref_import_logs_csv" formatted="false">從 CSV 匯入記錄</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">從匯出的 CSV 檔案匯入記錄</string>
+  <string name="csv_logs_import_warning" formatted="false">CSV 格式可能因應用程式版本而異，因此匯入不一定能正確運作。</string>
+  <string name="csv_logs_imported" formatted="false">已成功匯入 CSV 記錄</string>
+  <string name="invalid_csv_logs_file" formatted="false">無效或不相容的 CSV 記錄檔案</string>
+  <string name="log_import_mode_title" formatted="false">匯入記錄</string>
+  <string name="log_import_mode_message" formatted="false">應如何處理匯入的記錄？</string>
+  <string name="log_import_replace" formatted="false">取代現有記錄</string>
+  <string name="log_import_add" formatted="false">新增至現有記錄</string>
+  <string name="pref_general_backup" formatted="false">一般應用程式備份</string>
+  <string name="pref_export_general_backup" formatted="false">匯出一般備份</string>
+  <string name="pref_export_general_backup_summary" formatted="false">將設定、鬧鐘和裝置特定資料儲存到 ZIP 檔案</string>
+  <string name="pref_import_general_backup" formatted="false">匯入一般備份</string>
+  <string name="pref_import_general_backup_summary" formatted="false">從一般備份 ZIP 檔案還原所選資料</string>
+  <string name="general_backup_restore_message" formatted="false">選擇您要還原的內容。</string>
+  <string name="general_backup_exported" formatted="false">已成功匯出一般備份</string>
+  <string name="general_backup_imported" formatted="false">已成功匯入一般備份</string>
+  <string name="invalid_general_backup_file" formatted="false">無效或不相容的一般備份檔案</string>
+  <string name="backup_restore_help_overview" formatted="false">使用備份儲存應用程式資料，以便日後還原。</string>
+  <string name="general_backup_help" formatted="false">一般備份會一起儲存設定、鬧鐘和裝置特定資料。還原時，你可以選擇要匯入的可用資料。</string>
+  <string name="settings_backup_help" formatted="false">設定備份會儲存應用程式偏好設定。匯入後會還原已儲存的偏好設定。</string>
+  <string name="alarms_backup_help" formatted="false">鬧鐘備份會儲存你的鬧鐘。匯入後會以備份中的鬧鐘取代所有目前的鬧鐘。</string>
+  <string name="device_specific_backup_help" formatted="false">裝置特定備份會儲存記錄和預測器資料。匯入時可以選擇其中一項或兩項。這些資料屬於來源裝置；在其他裝置上使用可能造成預測不準確或應用程式行為異常。匯入記錄時，請選擇加入現有記錄或取代現有記錄。</string>
+  <string name="csv_logs_import_help" formatted="false">可以從之前匯出的 CSV 檔案匯入記錄。不同應用程式版本之間的匯入可能無法正常運作。請選擇加入匯入的記錄或取代現有記錄。</string>
 </resources>

@@ -534,4 +534,48 @@
   <string name="pref_vital_signs_content" formatted="false">Gyvybinių rodiklių turinys</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Kurias reikšmes įtraukti į gyvybinius rodiklius ir kokia tvarka?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Keisti „%1$s“ tvarką</string>
+  <string name="pref_backup_restore" formatted="false">Atsarginė kopija ir atkūrimas</string>
+  <string name="pref_export_alarms" formatted="false">Eksportuoti signalus</string>
+  <string name="pref_export_alarms_summary" formatted="false">Išsaugoti dabartinius signalus faile</string>
+  <string name="pref_import_alarms" formatted="false">Importuoti signalus</string>
+  <string name="pref_import_alarms_summary" formatted="false">Pakeisti dabartinius signalus signalais iš failo</string>
+  <string name="alarms_exported" formatted="false">Signalai sėkmingai eksportuoti</string>
+  <string name="alarms_imported" formatted="false">Signalai sėkmingai importuoti</string>
+  <string name="invalid_alarms_file" formatted="false">Netinkamas signalų failas</string>
+  <string name="pref_backup_device_data" formatted="false">Kurti konkrečiam įrenginiui skirtų duomenų atsarginę kopiją</string>
+  <string name="pref_export_device_data" formatted="false">Eksportuoti konkrečiam įrenginiui skirtus duomenis</string>
+  <string name="pref_export_device_data_summary" formatted="false">Išsaugoti žurnalus ir prognozavimo duomenis faile</string>
+  <string name="pref_import_device_data" formatted="false">Importuoti konkrečiam įrenginiui skirtus duomenis</string>
+  <string name="pref_import_device_data_summary" formatted="false">Atkurti žurnalus ir prognozavimo duomenis iš failo</string>
+  <string name="device_data_logs" formatted="false">Žurnalai</string>
+  <string name="device_data_predictor" formatted="false">Prognozavimo duomenys</string>
+  <string name="device_data_backup_warning" formatted="false">Šie duomenys priklauso įrenginiui, kuriame jie buvo surinkti. Importavus juos į kitą įrenginį gali būti pateiktos neteisingos prognozės arba programa gali veikti kitaip nei tikėtasi.</string>
+  <string name="device_data_exported" formatted="false">Konkrečiam įrenginiui skirti duomenys sėkmingai eksportuoti</string>
+  <string name="device_data_imported" formatted="false">Konkrečiam įrenginiui skirti duomenys sėkmingai importuoti</string>
+  <string name="invalid_device_data_file" formatted="false">Netinkamas konkrečiam įrenginiui skirtų duomenų failas</string>
+  <string name="device_data_file_empty" formatted="false">Šiame faile nėra palaikomų konkrečiam įrenginiui skirtų duomenų</string>
+  <string name="pref_import_logs_csv" formatted="false">Importuoti žurnalus iš CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Importuoti žurnalus iš eksportuoto CSV failo</string>
+  <string name="csv_logs_import_warning" formatted="false">CSV formatai gali skirtis tarp programos versijų, todėl importavimas ne visada gali veikti tinkamai.</string>
+  <string name="csv_logs_imported" formatted="false">CSV žurnalai sėkmingai importuoti</string>
+  <string name="invalid_csv_logs_file" formatted="false">Netinkamas arba nesuderinamas CSV žurnalų failas</string>
+  <string name="log_import_mode_title" formatted="false">Importuoti žurnalus</string>
+  <string name="log_import_mode_message" formatted="false">Kaip tvarkyti importuotus žurnalus?</string>
+  <string name="log_import_replace" formatted="false">Pakeisti esamus žurnalus</string>
+  <string name="log_import_add" formatted="false">Pridėti prie esamų žurnalų</string>
+  <string name="pref_general_backup" formatted="false">Bendroji programos atsarginė kopija</string>
+  <string name="pref_export_general_backup" formatted="false">Eksportuoti bendrąją atsarginę kopiją</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Išsaugoti nustatymus, signalus ir konkrečiam įrenginiui skirtus duomenis ZIP faile</string>
+  <string name="pref_import_general_backup" formatted="false">Importuoti bendrąją atsarginę kopiją</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Atkurti pasirinktus duomenis iš bendrosios atsarginės kopijos ZIP failo</string>
+  <string name="general_backup_restore_message" formatted="false">Pasirinkite, ką norite atkurti.</string>
+  <string name="general_backup_exported" formatted="false">Bendroji atsarginė kopija sėkmingai eksportuota</string>
+  <string name="general_backup_imported" formatted="false">Bendroji atsarginė kopija sėkmingai importuota</string>
+  <string name="invalid_general_backup_file" formatted="false">Netinkamas arba nesuderinamas bendrosios atsarginės kopijos failas</string>
+  <string name="backup_restore_help_overview" formatted="false">Naudokite atsargines kopijas programos duomenų kopijai išsaugoti ir vėliau atkurti.</string>
+  <string name="general_backup_help" formatted="false">Bendroji atsarginė kopija kartu išsaugo nustatymus, signalus ir konkrečiam įrenginiui skirtus duomenis. Atkurdami galite pasirinkti, kuriuos prieinamus duomenis importuoti.</string>
+  <string name="settings_backup_help" formatted="false">Nustatymų atsarginėje kopijoje išsaugomos programos nuostatos. Ją importavus atkuriamos išsaugotos nuostatos.</string>
+  <string name="alarms_backup_help" formatted="false">Signalų atsarginėje kopijoje išsaugomi jūsų signalai. Ją importavus visi dabartiniai signalai pakeičiami esančiais atsarginėje kopijoje.</string>
+  <string name="device_specific_backup_help" formatted="false">Konkrečiam įrenginiui skirtoje atsarginėje kopijoje išsaugomi žurnalai ir prognozuoklio duomenys. Importuodami galite pasirinkti vieną arba abu. Šie duomenys priklauso šaltinio įrenginiui; naudojant juos kitame įrenginyje prognozės gali būti neteisingos arba programa gali veikti netikėtai. Importuodami žurnalus pasirinkite, ar juos pridėti, ar pakeisti esamus.</string>
+  <string name="csv_logs_import_help" formatted="false">Galite importuoti žurnalus iš anksčiau eksportuoto CSV failo. Importavimas tarp skirtingų programos versijų gali veikti netinkamai. Pasirinkite, ar importuotus žurnalus pridėti, ar jais pakeisti esamus.</string>
 </resources>

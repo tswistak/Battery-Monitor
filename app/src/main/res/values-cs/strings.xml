@@ -534,4 +534,48 @@
   <string name="pref_vital_signs_content" formatted="false">Obsah důležitých údajů</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Které hodnoty zahrnout do důležitých údajů a v jakém pořadí?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Změnit pořadí: %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Záloha a obnovení</string>
+  <string name="pref_export_alarms" formatted="false">Exportovat alarmy</string>
+  <string name="pref_export_alarms_summary" formatted="false">Uložit aktuální alarmy do souboru</string>
+  <string name="pref_import_alarms" formatted="false">Importovat alarmy</string>
+  <string name="pref_import_alarms_summary" formatted="false">Nahradit aktuální alarmy alarmy ze souboru</string>
+  <string name="alarms_exported" formatted="false">Alarmy byly úspěšně exportovány</string>
+  <string name="alarms_imported" formatted="false">Alarmy byly úspěšně importovány</string>
+  <string name="invalid_alarms_file" formatted="false">Neplatný soubor alarmů</string>
+  <string name="pref_backup_device_data" formatted="false">Záloha dat specifických pro zařízení</string>
+  <string name="pref_export_device_data" formatted="false">Exportovat data specifická pro zařízení</string>
+  <string name="pref_export_device_data_summary" formatted="false">Uložit protokoly a data predikce do souboru</string>
+  <string name="pref_import_device_data" formatted="false">Importovat data specifická pro zařízení</string>
+  <string name="pref_import_device_data_summary" formatted="false">Obnovit protokoly a data predikce ze souboru</string>
+  <string name="device_data_logs" formatted="false">Protokoly</string>
+  <string name="device_data_predictor" formatted="false">Data predikce</string>
+  <string name="device_data_backup_warning" formatted="false">Tato data jsou specifická pro zařízení, na kterém byla shromážděna. Import do jiného zařízení může způsobit nesprávné predikce nebo jiné neočekávané chování aplikace.</string>
+  <string name="device_data_exported" formatted="false">Data specifická pro zařízení byla úspěšně exportována</string>
+  <string name="device_data_imported" formatted="false">Data specifická pro zařízení byla úspěšně importována</string>
+  <string name="invalid_device_data_file" formatted="false">Neplatný soubor dat specifických pro zařízení</string>
+  <string name="device_data_file_empty" formatted="false">Tento soubor neobsahuje žádná podporovaná data specifická pro zařízení</string>
+  <string name="pref_import_logs_csv" formatted="false">Importovat protokoly z CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Importovat protokoly z exportovaného souboru CSV</string>
+  <string name="csv_logs_import_warning" formatted="false">Formáty CSV se mohou mezi verzemi aplikace lišit, takže import nemusí vždy fungovat správně.</string>
+  <string name="csv_logs_imported" formatted="false">Protokoly CSV byly úspěšně importovány</string>
+  <string name="invalid_csv_logs_file" formatted="false">Neplatný nebo nekompatibilní soubor protokolů CSV</string>
+  <string name="log_import_mode_title" formatted="false">Importovat protokoly</string>
+  <string name="log_import_mode_message" formatted="false">Jak se mají importované protokoly zpracovat?</string>
+  <string name="log_import_replace" formatted="false">Nahradit stávající protokoly</string>
+  <string name="log_import_add" formatted="false">Přidat ke stávajícím protokolům</string>
+  <string name="pref_general_backup" formatted="false">Obecná záloha aplikace</string>
+  <string name="pref_export_general_backup" formatted="false">Exportovat obecnou zálohu</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Uložit nastavení, alarmy a data specifická pro zařízení do souboru ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">Importovat obecnou zálohu</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Obnovit vybraná data ze souboru ZIP obecné zálohy</string>
+  <string name="general_backup_restore_message" formatted="false">Vyberte, co chcete obnovit.</string>
+  <string name="general_backup_exported" formatted="false">Obecná záloha byla úspěšně exportována</string>
+  <string name="general_backup_imported" formatted="false">Obecná záloha byla úspěšně importována</string>
+  <string name="invalid_general_backup_file" formatted="false">Neplatný nebo nekompatibilní soubor obecné zálohy</string>
+  <string name="backup_restore_help_overview" formatted="false">Pomocí záloh můžete uložit kopii dat aplikace a později ji obnovit.</string>
+  <string name="general_backup_help" formatted="false">Obecná záloha ukládá nastavení, alarmy a data specifická pro zařízení společně. Při obnově si můžete vybrat, která dostupná data chcete importovat.</string>
+  <string name="settings_backup_help" formatted="false">Záloha nastavení ukládá předvolby aplikace. Jejím importem obnovíte uložené předvolby.</string>
+  <string name="alarms_backup_help" formatted="false">Záloha alarmů ukládá vaše alarmy. Jejím importem nahradíte všechny aktuální alarmy alarmy ze zálohy.</string>
+  <string name="device_specific_backup_help" formatted="false">Záloha dat specifických pro zařízení ukládá protokoly a data prediktoru. Při importu můžete vybrat jednu nebo obě položky. Tato data patří ke zdrojovému zařízení; jejich použití na jiném zařízení může způsobit nesprávné předpovědi nebo neočekávané chování. Při importu protokolů zvolte, zda je přidat, nebo nahradit stávající protokoly.</string>
+  <string name="csv_logs_import_help" formatted="false">Můžete importovat protokoly z dříve exportovaného souboru CSV. Import mezi různými verzemi aplikace nemusí fungovat správně. Zvolte, zda importované protokoly přidat, nebo jimi nahradit stávající protokoly.</string>
 </resources>

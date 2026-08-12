@@ -510,4 +510,48 @@
   <string name="pref_vital_signs_content" formatted="false">主要情報の内容</string>
   <string name="pref_vital_signs_content_summary" formatted="false">主要情報に含める値と表示順をどうしますか？</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$sの順序を変更</string>
+  <string name="pref_backup_restore" formatted="false">バックアップと復元</string>
+  <string name="pref_export_alarms" formatted="false">アラームをエクスポート</string>
+  <string name="pref_export_alarms_summary" formatted="false">現在のアラームをファイルに保存します</string>
+  <string name="pref_import_alarms" formatted="false">アラームをインポート</string>
+  <string name="pref_import_alarms_summary" formatted="false">現在のアラームをファイル内のアラームで置き換えます</string>
+  <string name="alarms_exported" formatted="false">アラームをエクスポートしました</string>
+  <string name="alarms_imported" formatted="false">アラームをインポートしました</string>
+  <string name="invalid_alarms_file" formatted="false">無効なアラームファイルです</string>
+  <string name="pref_backup_device_data" formatted="false">デバイス固有データをバックアップ</string>
+  <string name="pref_export_device_data" formatted="false">デバイス固有データをエクスポート</string>
+  <string name="pref_export_device_data_summary" formatted="false">ログと予測データをファイルに保存します</string>
+  <string name="pref_import_device_data" formatted="false">デバイス固有データをインポート</string>
+  <string name="pref_import_device_data_summary" formatted="false">ファイルからログと予測データを復元します</string>
+  <string name="device_data_logs" formatted="false">ログ</string>
+  <string name="device_data_predictor" formatted="false">予測データ</string>
+  <string name="device_data_backup_warning" formatted="false">このデバイス固有データは収集元のデバイスに属します。別のデバイスにインポートすると、予測が不正確になったり、アプリが予期しない動作をしたりする可能性があります。</string>
+  <string name="device_data_exported" formatted="false">デバイス固有データを正常にエクスポートしました</string>
+  <string name="device_data_imported" formatted="false">デバイス固有データを正常にインポートしました</string>
+  <string name="invalid_device_data_file" formatted="false">デバイス固有データファイルが無効です</string>
+  <string name="device_data_file_empty" formatted="false">このファイルには対応しているデバイス固有データが含まれていません</string>
+  <string name="pref_import_logs_csv" formatted="false">CSVからログをインポート</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">エクスポート済みCSVファイルからログをインポートします</string>
+  <string name="csv_logs_import_warning" formatted="false">CSV形式はアプリのバージョンによって異なる場合があるため、インポートが正しく機能しないことがあります。</string>
+  <string name="csv_logs_imported" formatted="false">CSVログを正常にインポートしました</string>
+  <string name="invalid_csv_logs_file" formatted="false">CSVログファイルが無効か、互換性がありません</string>
+  <string name="log_import_mode_title" formatted="false">ログをインポート</string>
+  <string name="log_import_mode_message" formatted="false">インポートしたログをどのように処理しますか？</string>
+  <string name="log_import_replace" formatted="false">既存のログを置き換える</string>
+  <string name="log_import_add" formatted="false">既存のログに追加する</string>
+  <string name="pref_general_backup" formatted="false">アプリ全体のバックアップ</string>
+  <string name="pref_export_general_backup" formatted="false">全体バックアップをエクスポート</string>
+  <string name="pref_export_general_backup_summary" formatted="false">設定、アラーム、デバイス固有データをZIPファイルに保存します</string>
+  <string name="pref_import_general_backup" formatted="false">全体バックアップをインポート</string>
+  <string name="pref_import_general_backup_summary" formatted="false">全体バックアップのZIPファイルから選択したデータを復元します</string>
+  <string name="general_backup_restore_message" formatted="false">復元する項目を選択してください。</string>
+  <string name="general_backup_exported" formatted="false">全体バックアップを正常にエクスポートしました</string>
+  <string name="general_backup_imported" formatted="false">全体バックアップを正常にインポートしました</string>
+  <string name="invalid_general_backup_file" formatted="false">全体バックアップファイルが無効か、互換性がありません</string>
+  <string name="backup_restore_help_overview" formatted="false">バックアップを使用してアプリデータのコピーを保存し、後で復元できます。</string>
+  <string name="general_backup_help" formatted="false">一般バックアップでは、設定、アラーム、端末固有データをまとめて保存します。復元時に、利用可能なデータからインポートする項目を選択できます。</string>
+  <string name="settings_backup_help" formatted="false">設定バックアップではアプリの設定を保存します。インポートすると保存した設定が復元されます。</string>
+  <string name="alarms_backup_help" formatted="false">アラームのバックアップではアラームを保存します。インポートすると、現在のすべてのアラームがバックアップ内のアラームに置き換えられます。</string>
+  <string name="device_specific_backup_help" formatted="false">端末固有バックアップでは、ログと予測データを保存します。インポート時に一方または両方を選択できます。このデータは元の端末のものであるため、別の端末で使用すると予測が不正確になったり、予期しない動作が発生したりする場合があります。ログをインポートするときは、既存のログに追加するか置き換えるかを選択してください。</string>
+  <string name="csv_logs_import_help" formatted="false">以前にエクスポートした CSV ファイルからログをインポートできます。異なるアプリバージョン間では正しくインポートできない場合があります。インポートしたログを追加するか、既存のログを置き換えるかを選択してください。</string>
 </resources>

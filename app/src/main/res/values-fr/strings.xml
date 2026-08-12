@@ -509,4 +509,48 @@
   <string name="pref_vital_signs_content" formatted="false">Contenu des signes vitaux</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Quelles valeurs inclure dans les signes vitaux et dans quel ordre ?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Réorganiser %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Sauvegarde et restauration</string>
+  <string name="pref_export_alarms" formatted="false">Exporter les alarmes</string>
+  <string name="pref_export_alarms_summary" formatted="false">Enregistrer les alarmes actuelles dans un fichier</string>
+  <string name="pref_import_alarms" formatted="false">Importer les alarmes</string>
+  <string name="pref_import_alarms_summary" formatted="false">Remplacer les alarmes actuelles par celles d’un fichier</string>
+  <string name="alarms_exported" formatted="false">Les alarmes ont été exportées avec succès</string>
+  <string name="alarms_imported" formatted="false">Les alarmes ont été importées avec succès</string>
+  <string name="invalid_alarms_file" formatted="false">Fichier d’alarmes non valide</string>
+  <string name="pref_backup_device_data" formatted="false">Sauvegarder les données propres à l’appareil</string>
+  <string name="pref_export_device_data" formatted="false">Exporter les données propres à l’appareil</string>
+  <string name="pref_export_device_data_summary" formatted="false">Enregistrer les journaux et les données de prédiction dans un fichier</string>
+  <string name="pref_import_device_data" formatted="false">Importer les données propres à l’appareil</string>
+  <string name="pref_import_device_data_summary" formatted="false">Restaurer les journaux et les données de prédiction depuis un fichier</string>
+  <string name="device_data_logs" formatted="false">Journaux</string>
+  <string name="device_data_predictor" formatted="false">Données de prédiction</string>
+  <string name="device_data_backup_warning" formatted="false">Ces données sont propres à l’appareil sur lequel elles ont été collectées. Leur importation sur un autre appareil peut entraîner des prédictions incorrectes ou un autre comportement inattendu de l’application.</string>
+  <string name="device_data_exported" formatted="false">Données propres à l’appareil exportées avec succès</string>
+  <string name="device_data_imported" formatted="false">Données propres à l’appareil importées avec succès</string>
+  <string name="invalid_device_data_file" formatted="false">Fichier de données propres à l’appareil non valide</string>
+  <string name="device_data_file_empty" formatted="false">Ce fichier ne contient aucune donnée propre à l’appareil prise en charge</string>
+  <string name="pref_import_logs_csv" formatted="false">Importer les journaux depuis un CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Importer les journaux depuis un fichier CSV exporté</string>
+  <string name="csv_logs_import_warning" formatted="false">Les formats CSV peuvent différer selon les versions de l’application. L’importation peut donc ne pas toujours fonctionner correctement.</string>
+  <string name="csv_logs_imported" formatted="false">Journaux CSV importés avec succès</string>
+  <string name="invalid_csv_logs_file" formatted="false">Fichier de journaux CSV non valide ou incompatible</string>
+  <string name="log_import_mode_title" formatted="false">Importer les journaux</string>
+  <string name="log_import_mode_message" formatted="false">Comment les journaux importés doivent-ils être traités ?</string>
+  <string name="log_import_replace" formatted="false">Remplacer les journaux existants</string>
+  <string name="log_import_add" formatted="false">Ajouter aux journaux existants</string>
+  <string name="pref_general_backup" formatted="false">Sauvegarde générale de l’application</string>
+  <string name="pref_export_general_backup" formatted="false">Exporter la sauvegarde générale</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Enregistrer les paramètres, les alarmes et les données propres à l’appareil dans un fichier ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">Importer la sauvegarde générale</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Restaurer les données sélectionnées depuis un fichier ZIP de sauvegarde générale</string>
+  <string name="general_backup_restore_message" formatted="false">Choisissez ce que vous souhaitez restaurer.</string>
+  <string name="general_backup_exported" formatted="false">Sauvegarde générale exportée avec succès</string>
+  <string name="general_backup_imported" formatted="false">Sauvegarde générale importée avec succès</string>
+  <string name="invalid_general_backup_file" formatted="false">Fichier de sauvegarde générale non valide ou incompatible</string>
+  <string name="backup_restore_help_overview" formatted="false">Utilisez les sauvegardes pour conserver une copie des données de l’application et les restaurer ultérieurement.</string>
+  <string name="general_backup_help" formatted="false">Une sauvegarde générale enregistre ensemble les paramètres, les alarmes et les données propres à l’appareil. Lors de la restauration, vous pouvez choisir les données disponibles à importer.</string>
+  <string name="settings_backup_help" formatted="false">Une sauvegarde des paramètres enregistre les préférences de l’application. Son importation restaure les préférences sauvegardées.</string>
+  <string name="alarms_backup_help" formatted="false">Une sauvegarde des alarmes enregistre vos alarmes. Son importation remplace toutes les alarmes actuelles par celles de la sauvegarde.</string>
+  <string name="device_specific_backup_help" formatted="false">Une sauvegarde propre à l’appareil enregistre les journaux et les données de prédiction. Vous pouvez sélectionner l’un ou les deux lors de l’importation. Ces données appartiennent à l’appareil source ; leur utilisation sur un autre appareil peut entraîner des prédictions incorrectes ou un comportement inattendu. Lors de l’importation des journaux, choisissez de les ajouter ou de remplacer les journaux existants.</string>
+  <string name="csv_logs_import_help" formatted="false">Vous pouvez importer des journaux depuis un fichier CSV exporté précédemment. L’importation entre différentes versions de l’application peut ne pas fonctionner correctement. Choisissez d’ajouter les journaux importés ou de remplacer les journaux existants.</string>
 </resources>

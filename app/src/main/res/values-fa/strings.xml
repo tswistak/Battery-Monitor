@@ -517,4 +517,48 @@
   <string name="pref_vital_signs_content" formatted="false">محتوای آمار حیاتی</string>
   <string name="pref_vital_signs_content_summary" formatted="false">کدام مقادیر در آمار حیاتی گنجانده شوند و با چه ترتیبی؟</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">تغییر ترتیب %1$s</string>
+  <string name="pref_backup_restore" formatted="false">پشتیبان‌گیری و بازیابی</string>
+  <string name="pref_export_alarms" formatted="false">صادر کردن هشدارها</string>
+  <string name="pref_export_alarms_summary" formatted="false">ذخیره هشدارهای فعلی در یک فایل</string>
+  <string name="pref_import_alarms" formatted="false">وارد کردن هشدارها</string>
+  <string name="pref_import_alarms_summary" formatted="false">جایگزینی هشدارهای فعلی با هشدارهای یک فایل</string>
+  <string name="alarms_exported" formatted="false">هشدارها با موفقیت صادر شدند</string>
+  <string name="alarms_imported" formatted="false">هشدارها با موفقیت وارد شدند</string>
+  <string name="invalid_alarms_file" formatted="false">فایل هشدار نامعتبر است</string>
+  <string name="pref_backup_device_data" formatted="false">پشتیبان‌گیری از داده‌های ویژه دستگاه</string>
+  <string name="pref_export_device_data" formatted="false">صادر کردن داده‌های ویژه دستگاه</string>
+  <string name="pref_export_device_data_summary" formatted="false">ذخیره گزارش‌ها و داده‌های پیش‌بینی در یک فایل</string>
+  <string name="pref_import_device_data" formatted="false">وارد کردن داده‌های ویژه دستگاه</string>
+  <string name="pref_import_device_data_summary" formatted="false">بازیابی گزارش‌ها و داده‌های پیش‌بینی از یک فایل</string>
+  <string name="device_data_logs" formatted="false">گزارش‌ها</string>
+  <string name="device_data_predictor" formatted="false">داده‌های پیش‌بینی</string>
+  <string name="device_data_backup_warning" formatted="false">این داده‌ها ویژه دستگاهی هستند که در آن جمع‌آوری شده‌اند. وارد کردن آن‌ها در دستگاهی دیگر ممکن است باعث پیش‌بینی‌های نادرست یا رفتار غیرمنتظره دیگری در برنامه شود.</string>
+  <string name="device_data_exported" formatted="false">داده‌های ویژه دستگاه با موفقیت صادر شدند</string>
+  <string name="device_data_imported" formatted="false">داده‌های ویژه دستگاه با موفقیت وارد شدند</string>
+  <string name="invalid_device_data_file" formatted="false">فایل داده‌های ویژه دستگاه نامعتبر است</string>
+  <string name="device_data_file_empty" formatted="false">این فایل حاوی هیچ داده پشتیبانی‌شده ویژه دستگاه نیست</string>
+  <string name="pref_import_logs_csv" formatted="false">وارد کردن گزارش‌ها از CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">وارد کردن گزارش‌ها از یک فایل CSV صادرشده</string>
+  <string name="csv_logs_import_warning" formatted="false">قالب‌های CSV ممکن است بین نسخه‌های برنامه متفاوت باشند، بنابراین وارد کردن همیشه به‌درستی کار نمی‌کند.</string>
+  <string name="csv_logs_imported" formatted="false">گزارش‌های CSV با موفقیت وارد شدند</string>
+  <string name="invalid_csv_logs_file" formatted="false">فایل گزارش‌های CSV نامعتبر یا ناسازگار است</string>
+  <string name="log_import_mode_title" formatted="false">وارد کردن گزارش‌ها</string>
+  <string name="log_import_mode_message" formatted="false">با گزارش‌های واردشده چگونه برخورد شود؟</string>
+  <string name="log_import_replace" formatted="false">جایگزینی گزارش‌های موجود</string>
+  <string name="log_import_add" formatted="false">افزودن به گزارش‌های موجود</string>
+  <string name="pref_general_backup" formatted="false">پشتیبان‌گیری عمومی برنامه</string>
+  <string name="pref_export_general_backup" formatted="false">صادر کردن پشتیبان عمومی</string>
+  <string name="pref_export_general_backup_summary" formatted="false">ذخیره تنظیمات، هشدارها و داده‌های ویژه دستگاه در یک فایل ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">وارد کردن پشتیبان عمومی</string>
+  <string name="pref_import_general_backup_summary" formatted="false">بازیابی داده‌های انتخاب‌شده از فایل ZIP پشتیبان عمومی</string>
+  <string name="general_backup_restore_message" formatted="false">مواردی را که می‌خواهید بازیابی شوند انتخاب کنید.</string>
+  <string name="general_backup_exported" formatted="false">پشتیبان عمومی با موفقیت صادر شد</string>
+  <string name="general_backup_imported" formatted="false">پشتیبان عمومی با موفقیت وارد شد</string>
+  <string name="invalid_general_backup_file" formatted="false">فایل پشتیبان عمومی نامعتبر یا ناسازگار است</string>
+  <string name="backup_restore_help_overview" formatted="false">از پشتیبان‌گیری برای ذخیرهٔ نسخه‌ای از داده‌های برنامه و بازیابی آن در آینده استفاده کنید.</string>
+  <string name="general_backup_help" formatted="false">پشتیبان‌گیری عمومی تنظیمات، هشدارها و داده‌های مختص دستگاه را با هم ذخیره می‌کند. هنگام بازیابی می‌توانید انتخاب کنید کدام داده‌های موجود وارد شوند.</string>
+  <string name="settings_backup_help" formatted="false">پشتیبان تنظیمات، ترجیحات برنامه را ذخیره می‌کند. وارد کردن آن ترجیحات ذخیره‌شده را بازیابی می‌کند.</string>
+  <string name="alarms_backup_help" formatted="false">پشتیبان هشدارها، هشدارهای شما را ذخیره می‌کند. وارد کردن آن همهٔ هشدارهای فعلی را با هشدارهای نسخهٔ پشتیبان جایگزین می‌کند.</string>
+  <string name="device_specific_backup_help" formatted="false">پشتیبان مختص دستگاه، گزارش‌ها و داده‌های پیش‌بینی‌کننده را ذخیره می‌کند. هنگام وارد کردن می‌توانید یکی یا هر دو را انتخاب کنید. این داده‌ها متعلق به دستگاه مبدأ هستند؛ استفاده از آن‌ها در دستگاهی دیگر ممکن است باعث پیش‌بینی‌های نادرست یا رفتار غیرمنتظره شود. هنگام وارد کردن گزارش‌ها، افزودن آن‌ها یا جایگزینی گزارش‌های موجود را انتخاب کنید.</string>
+  <string name="csv_logs_import_help" formatted="false">می‌توانید گزارش‌ها را از یک فایل CSV که قبلاً صادر شده است وارد کنید. وارد کردن بین نسخه‌های مختلف برنامه همیشه به‌درستی کار نمی‌کند. افزودن گزارش‌های واردشده یا جایگزینی گزارش‌های موجود را انتخاب کنید.</string>
 </resources>

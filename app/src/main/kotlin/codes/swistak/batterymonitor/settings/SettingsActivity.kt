@@ -81,6 +81,9 @@ class SettingsActivity : AppCompatActivity() {
         } else if (prefScreen == SettingsContract.KEY_OTHER_SETTINGS) {
             frag!!.setScreen(R.xml.other_pref_screen)
             setWindowSubtitle(res!!.getString(R.string.other_settings))
+        } else if (prefScreen == SettingsContract.KEY_BACKUP_RESTORE_SETTINGS) {
+            frag!!.setScreen(R.xml.backup_restore_pref_screen)
+            setWindowSubtitle(res!!.getString(R.string.pref_backup_restore))
         } else {
             frag!!.setScreen(R.xml.main_pref_screen)
             setWindowSubtitle(res!!.getString(R.string.settings_activity_subtitle))

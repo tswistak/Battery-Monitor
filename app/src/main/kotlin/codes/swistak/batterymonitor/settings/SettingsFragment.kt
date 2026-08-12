@@ -44,6 +44,8 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -57,7 +59,16 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.alarms.AlarmDatabase
+import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.common.RootExecutor
+import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
+import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
+import codes.swistak.batterymonitor.devicebackup.DeviceDataType
+import codes.swistak.batterymonitor.devicebackup.GeneralBackup
+import codes.swistak.batterymonitor.devicebackup.GeneralBackupArchive
+import codes.swistak.batterymonitor.devicebackup.GeneralBackupDataType
+import codes.swistak.batterymonitor.devicebackup.LogImportMode
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryCurrentMultiplierDetector
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
@@ -73,6 +84,16 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     companion object {
         private const val EXPORT_REQUEST = 1
         private const val IMPORT_REQUEST = 2
+        private const val EXPORT_ALARMS_REQUEST = 3
+        private const val IMPORT_ALARMS_REQUEST = 4
+        private const val EXPORT_DEVICE_DATA_REQUEST = 5
+        private const val IMPORT_DEVICE_DATA_REQUEST = 6
+        private const val IMPORT_LOGS_CSV_REQUEST = 7
+        private const val EXPORT_GENERAL_BACKUP_REQUEST = 8
+        private const val IMPORT_GENERAL_BACKUP_REQUEST = 9
+
+        private const val STATE_DEVICE_DATA_EXPORT = "state_device_data_export"
+
         private const val BATTERY_CURRENT_MULTIPLIER_AUTODETECT_VALUE = "auto"
         private const val SHIZUKU_PERMISSION_REQUEST_CODE = 7001
 
@@ -171,6 +192,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     private var batteryCurrentMultiplierDetectionRunning = false
     private var applyingDetectedBatteryCurrentMultiplier = false
     private var pendingShizukuBinderListener: OnBinderReceivedListener? = null
+    private var pendingDeviceDataExport: Set<DeviceDataType> = emptySet()
 
     private class MessageHandler(private val sa: SettingsFragment) :
         Handler(Looper.getMainLooper()) {
@@ -200,7 +222,19 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         pm.setSharedPreferencesMode(Context.MODE_PRIVATE)
         mSharedPreferences = requireNotNull(pm.getSharedPreferences())
 
+        pendingDeviceDataExport =
+            savedInstanceState?.getStringArray(STATE_DEVICE_DATA_EXPORT)?.mapNotNull { name ->
+                runCatching { DeviceDataType.valueOf(name) }.getOrNull()
+            }?.toSet().orEmpty()
+
         if (prefScreen > 0) setPreferences()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putStringArray(
+            STATE_DEVICE_DATA_EXPORT, pendingDeviceDataExport.map { it.name }.toTypedArray()
+        )
+        super.onSaveInstanceState(outState)
     }
 
     override fun onResume() {
@@ -352,7 +386,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 return false
             }
 
-            SettingsContract.KEY_NOTIFICATION_SETTINGS, SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS, SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS, SettingsContract.KEY_CURRENT_STATE_SETTINGS, SettingsContract.KEY_OTHER_SETTINGS -> {
+            SettingsContract.KEY_NOTIFICATION_SETTINGS, SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS, SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS, SettingsContract.KEY_CURRENT_STATE_SETTINGS, SettingsContract.KEY_OTHER_SETTINGS, SettingsContract.KEY_BACKUP_RESTORE_SETTINGS -> {
                 val comp = ComponentName(
                     requireActivity().packageName, SettingsActivity::class.java.getName()
                 )
@@ -380,6 +414,65 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                     Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                         .setType("application/json")
                 startActivityForResult(importIntent, IMPORT_REQUEST)
+                return true
+            }
+
+            SettingsContract.KEY_EXPORT_ALARMS -> {
+                val timestamp = SimpleDateFormat(
+                    "yyyy-MM-dd-HHmmss-SSS", Locale.getDefault()
+                ).format(Date())
+                val exportIntent =
+                    Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                        .setType("application/json")
+                        .putExtra(Intent.EXTRA_TITLE, "battery_monitor_alarms_$timestamp.json")
+                startActivityForResult(exportIntent, EXPORT_ALARMS_REQUEST)
+                return true
+            }
+
+            SettingsContract.KEY_IMPORT_ALARMS -> {
+                val importIntent =
+                    Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                        .setType("application/json")
+                startActivityForResult(importIntent, IMPORT_ALARMS_REQUEST)
+                return true
+            }
+
+            SettingsContract.KEY_EXPORT_DEVICE_DATA -> {
+                showDeviceDataExportDialog()
+                return true
+            }
+
+            SettingsContract.KEY_IMPORT_DEVICE_DATA -> {
+                val importIntent =
+                    Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                        .setType("application/json")
+                startActivityForResult(importIntent, IMPORT_DEVICE_DATA_REQUEST)
+                return true
+            }
+
+            SettingsContract.KEY_IMPORT_LOGS_CSV -> {
+                openCsvLogFilePicker()
+                return true
+            }
+
+            SettingsContract.KEY_EXPORT_GENERAL_BACKUP -> {
+                val timestamp = SimpleDateFormat(
+                    "yyyy-MM-dd-HHmmss-SSS", Locale.getDefault()
+                ).format(Date())
+                val exportIntent =
+                    Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                        .setType("application/zip").putExtra(
+                            Intent.EXTRA_TITLE, "battery_monitor_general_backup_$timestamp.zip"
+                        )
+                startActivityForResult(exportIntent, EXPORT_GENERAL_BACKUP_REQUEST)
+                return true
+            }
+
+            SettingsContract.KEY_IMPORT_GENERAL_BACKUP -> {
+                val importIntent =
+                    Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                        .setType("application/zip")
+                startActivityForResult(importIntent, IMPORT_GENERAL_BACKUP_REQUEST)
                 return true
             }
 
@@ -1131,9 +1224,303 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 } else {
                     doImport(json)
                 }
+            } else if (requestCode == EXPORT_ALARMS_REQUEST) {
+                val database = AlarmDatabase(requireContext())
+                try {
+                    AlarmBackup.writeToUri(
+                        requireContext(), uri, AlarmBackup.exportToJson(database)
+                    )
+                } finally {
+                    database.close()
+                }
+                Toast.makeText(activity, R.string.alarms_exported, Toast.LENGTH_SHORT).show()
+            } else if (requestCode == IMPORT_ALARMS_REQUEST) {
+                val json = AlarmBackup.readFromUri(requireContext(), uri) ?: return
+                val fileVersion = AlarmBackup.getSchemaVersion(json)
+                if (fileVersion > AlarmBackup.SCHEMA_VERSION) {
+                    AlertDialog.Builder(requireActivity())
+                        .setMessage(R.string.settings_file_version_warning).setPositiveButton(
+                            R.string.yes
+                        ) { _: DialogInterface?, _: Int ->
+                            doAlarmImport(json)
+                        }.setNegativeButton(R.string.cancel, null).show()
+                } else {
+                    doAlarmImport(json)
+                }
+            } else if (requestCode == EXPORT_DEVICE_DATA_REQUEST) {
+                DeviceDataBackup.writeToUri(
+                    requireContext(),
+                    uri,
+                    DeviceDataBackup.exportToJson(requireContext(), pendingDeviceDataExport)
+                )
+                pendingDeviceDataExport = emptySet()
+                Toast.makeText(activity, R.string.device_data_exported, Toast.LENGTH_SHORT).show()
+            } else if (requestCode == IMPORT_DEVICE_DATA_REQUEST) {
+                val json = DeviceDataBackup.readFromUri(requireContext(), uri) ?: return
+                showDeviceDataImportDialog(json)
+            } else if (requestCode == IMPORT_LOGS_CSV_REQUEST) {
+                val csv = CsvLogImporter.readFromUri(requireContext(), uri) ?: return
+                showCsvLogImportModeDialog(csv)
+            } else if (requestCode == EXPORT_GENERAL_BACKUP_REQUEST) {
+                GeneralBackup.exportToUri(requireContext(), uri, mSharedPreferences)
+                Toast.makeText(activity, R.string.general_backup_exported, Toast.LENGTH_SHORT)
+                    .show()
+            } else if (requestCode == IMPORT_GENERAL_BACKUP_REQUEST) {
+                val archive = GeneralBackup.readFromUri(requireContext(), uri) ?: return
+                showGeneralBackupImportDialog(archive)
             }
         } catch (e: Exception) {
-            Toast.makeText(activity, R.string.invalid_settings_file, Toast.LENGTH_SHORT).show()
+            val message = when (requestCode) {
+                EXPORT_ALARMS_REQUEST, IMPORT_ALARMS_REQUEST -> R.string.invalid_alarms_file
+                EXPORT_DEVICE_DATA_REQUEST, IMPORT_DEVICE_DATA_REQUEST -> R.string.invalid_device_data_file
+
+                IMPORT_LOGS_CSV_REQUEST -> R.string.invalid_csv_logs_file
+
+                EXPORT_GENERAL_BACKUP_REQUEST, IMPORT_GENERAL_BACKUP_REQUEST -> R.string.invalid_general_backup_file
+
+                else -> R.string.invalid_settings_file
+            }
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showDeviceDataExportDialog() {
+        val dataTypes = DeviceDataType.entries.toTypedArray()
+        showDeviceDataSelectionDialog(
+            title = R.string.pref_export_device_data,
+            positiveLabel = R.string.pref_export_device_data,
+            dataTypes = dataTypes,
+            warning = getString(R.string.device_data_backup_warning)
+        ) { selectedData ->
+            pendingDeviceDataExport = selectedData
+            val timestamp = SimpleDateFormat(
+                "yyyy-MM-dd-HHmmss-SSS", Locale.getDefault()
+            ).format(Date())
+            val exportIntent =
+                Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                    .setType("application/json").putExtra(
+                        Intent.EXTRA_TITLE, "battery_monitor_device_specific_$timestamp.json"
+                    )
+            startActivityForResult(exportIntent, EXPORT_DEVICE_DATA_REQUEST)
+        }
+    }
+
+    private fun openCsvLogFilePicker() {
+        val importIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+            .setType("text/*")
+        startActivityForResult(importIntent, IMPORT_LOGS_CSV_REQUEST)
+    }
+
+    private fun showCsvLogImportModeDialog(csv: String) {
+        showLogImportModeDialog(
+            getString(R.string.csv_logs_import_warning) + "\n\n" + getString(R.string.log_import_mode_message)
+        ) { logImportMode ->
+            try {
+                CsvLogImporter.importFromCsv(requireContext(), csv, logImportMode)
+                Toast.makeText(activity, R.string.csv_logs_imported, Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(activity, R.string.invalid_csv_logs_file, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun showGeneralBackupImportDialog(archive: GeneralBackupArchive) {
+        try {
+            val availableData = GeneralBackup.getAvailableData(archive)
+            val dataTypes =
+                GeneralBackupDataType.entries.filter { it in availableData }.toTypedArray()
+            val warning = buildString {
+                append(getString(R.string.general_backup_restore_message))
+                if (GeneralBackup.containsNewerSchema(archive)) {
+                    append("\n\n")
+                    append(getString(R.string.settings_file_version_warning))
+                }
+            }
+            val view = layoutInflater.inflate(R.layout.device_data_selection_dialog, null)
+            view.findViewById<TextView>(R.id.device_data_warning).text = warning
+            val options = view.findViewById<LinearLayout>(R.id.device_data_options)
+            val checkBoxes = dataTypes.map { type ->
+                CheckBox(requireContext()).apply {
+                    text = generalBackupItemLabel(type)
+                    isChecked = true
+                    options.addView(this)
+                }
+            }
+            val dialog =
+                AlertDialog.Builder(requireActivity()).setTitle(R.string.pref_import_general_backup)
+                    .setView(view).setPositiveButton(R.string.pref_import_general_backup) { _, _ ->
+                        val selectedData = dataTypes.filterIndexed { index, _ ->
+                            checkBoxes[index].isChecked
+                        }.toSet()
+                        if (GeneralBackupDataType.LOGS in selectedData) {
+                            showLogImportModeDialog(getString(R.string.log_import_mode_message)) { logImportMode ->
+                                doGeneralBackupImport(archive, selectedData, logImportMode)
+                            }
+                        } else {
+                            doGeneralBackupImport(archive, selectedData, LogImportMode.REPLACE)
+                        }
+                    }.setNegativeButton(R.string.cancel, null).create()
+            for (checkBox in checkBoxes) {
+                checkBox.setOnCheckedChangeListener { _, _ ->
+                    dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled =
+                        checkBoxes.any(CheckBox::isChecked)
+                }
+            }
+            dialog.setOnShowListener {
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).isEnabled =
+                    checkBoxes.any(CheckBox::isChecked)
+            }
+            dialog.show()
+        } catch (e: Exception) {
+            Toast.makeText(activity, R.string.invalid_general_backup_file, Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private fun generalBackupItemLabel(type: GeneralBackupDataType): String {
+        val label = getString(
+            when (type) {
+                GeneralBackupDataType.SETTINGS -> R.string.settings_activity_subtitle
+                GeneralBackupDataType.ALARMS -> R.string.alarm_settings
+                GeneralBackupDataType.LOGS -> R.string.device_data_logs
+                GeneralBackupDataType.PREDICTOR_DATA -> R.string.device_data_predictor
+            }
+        )
+        return if (type == GeneralBackupDataType.LOGS || type == GeneralBackupDataType.PREDICTOR_DATA) {
+            label + "\n" + getString(R.string.device_data_backup_warning)
+        } else {
+            label
+        }
+    }
+
+    private fun doGeneralBackupImport(
+        archive: GeneralBackupArchive,
+        selectedData: Set<GeneralBackupDataType>,
+        logImportMode: LogImportMode
+    ) {
+        try {
+            GeneralBackup.restore(
+                requireContext(), mSharedPreferences, archive, selectedData, logImportMode
+            )
+            if (GeneralBackupDataType.SETTINGS in selectedData) setPreferences()
+            when {
+                GeneralBackupDataType.PREDICTOR_DATA in selectedData -> reloadDeviceData()
+                GeneralBackupDataType.SETTINGS in selectedData -> resetService()
+            }
+            Toast.makeText(activity, R.string.general_backup_imported, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(activity, R.string.invalid_general_backup_file, Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private fun showDeviceDataImportDialog(json: String) {
+        try {
+            val availableData = DeviceDataBackup.getAvailableData(json)
+            if (availableData.isEmpty()) {
+                Toast.makeText(activity, R.string.device_data_file_empty, Toast.LENGTH_SHORT).show()
+                return
+            }
+            val dataTypes = DeviceDataType.entries.filter { it in availableData }.toTypedArray()
+            val version = DeviceDataBackup.getSchemaVersion(json)
+            val warning = if (version > DeviceDataBackup.SCHEMA_VERSION) {
+                getString(R.string.settings_file_version_warning) + "\n\n" + getString(R.string.device_data_backup_warning)
+            } else {
+                getString(R.string.device_data_backup_warning)
+            }
+            showDeviceDataSelectionDialog(
+                title = R.string.pref_import_device_data,
+                positiveLabel = R.string.pref_import_device_data,
+                dataTypes = dataTypes,
+                warning = warning
+            ) { selectedData ->
+                if (DeviceDataType.LOGS in selectedData) {
+                    showLogImportModeDialog(getString(R.string.log_import_mode_message)) { logImportMode ->
+                        doDeviceDataImport(json, selectedData, logImportMode)
+                    }
+                } else {
+                    doDeviceDataImport(json, selectedData, LogImportMode.REPLACE)
+                }
+            }
+        } catch (e: Exception) {
+            Toast.makeText(activity, R.string.invalid_device_data_file, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showDeviceDataSelectionDialog(
+        title: Int,
+        positiveLabel: Int,
+        dataTypes: Array<DeviceDataType>,
+        warning: String,
+        onConfirm: (Set<DeviceDataType>) -> Unit
+    ) {
+        val view = layoutInflater.inflate(R.layout.device_data_selection_dialog, null)
+        view.findViewById<TextView>(R.id.device_data_warning).text = warning
+        val options = view.findViewById<LinearLayout>(R.id.device_data_options)
+        val checkBoxes = dataTypes.map { type ->
+            CheckBox(requireContext()).apply {
+                text = getString(
+                    when (type) {
+                        DeviceDataType.LOGS -> R.string.device_data_logs
+                        DeviceDataType.PREDICTOR_DATA -> R.string.device_data_predictor
+                    }
+                )
+                isChecked = true
+                options.addView(this)
+            }
+        }
+        val dialog = AlertDialog.Builder(requireActivity()).setTitle(title).setView(view)
+            .setPositiveButton(positiveLabel) { _, _ ->
+                onConfirm(
+                    dataTypes.filterIndexed { index, _ -> checkBoxes[index].isChecked }.toSet()
+                )
+            }.setNegativeButton(R.string.cancel, null).create()
+        for (checkBox in checkBoxes) {
+            checkBox.setOnCheckedChangeListener { _, _ ->
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.isEnabled =
+                    checkBoxes.any(CheckBox::isChecked)
+            }
+        }
+        dialog.setOnShowListener {
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).isEnabled =
+                checkBoxes.any(CheckBox::isChecked)
+        }
+        dialog.show()
+    }
+
+    private fun showLogImportModeDialog(
+        message: String, onConfirm: (LogImportMode) -> Unit
+    ) {
+        AlertDialog.Builder(requireActivity()).setTitle(R.string.log_import_mode_title)
+            .setMessage(message).setPositiveButton(R.string.log_import_add) { _, _ ->
+                onConfirm(LogImportMode.ADD)
+            }.setNeutralButton(R.string.log_import_replace) { _, _ ->
+                onConfirm(LogImportMode.REPLACE)
+            }.setNegativeButton(R.string.cancel, null).show()
+    }
+
+    private fun doDeviceDataImport(
+        json: String, selectedData: Set<DeviceDataType>, logImportMode: LogImportMode
+    ) {
+        try {
+            DeviceDataBackup.importFromJson(
+                requireContext(), json, selectedData, logImportMode
+            )
+            reloadDeviceData()
+            Toast.makeText(activity, R.string.device_data_imported, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(activity, R.string.invalid_device_data_file, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun reloadDeviceData() {
+        val outgoing = Message.obtain()
+        outgoing.what = BatteryInfoService.RemoteConnection.SERVICE_RELOAD_DEVICE_DATA
+        outgoing.data = SettingsSnapshot.capture(mSharedPreferences)
+        try {
+            serviceMessenger!!.send(outgoing)
+        } catch (e: Exception) {
+            BatteryInfoService.startForegroundServiceSafely(requireContext(), outgoing.data)
         }
     }
 
@@ -1147,6 +1534,18 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             Toast.makeText(activity, R.string.settings_imported, Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(activity, R.string.invalid_settings_file, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun doAlarmImport(json: String) {
+        val database = AlarmDatabase(requireContext())
+        try {
+            AlarmBackup.importFromJson(database, json)
+            Toast.makeText(activity, R.string.alarms_imported, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(activity, R.string.invalid_alarms_file, Toast.LENGTH_SHORT).show()
+        } finally {
+            database.close()
         }
     }
 

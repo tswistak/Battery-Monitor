@@ -1,0 +1,54 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="@string/pref_general_backup">
+        <Preference
+            app:key="export_general_backup"
+            app:summary="@string/pref_export_general_backup_summary"
+            app:title="@string/pref_export_general_backup" />
+
+        <Preference
+            app:key="import_general_backup"
+            app:summary="@string/pref_import_general_backup_summary"
+            app:title="@string/pref_import_general_backup" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_activity_subtitle">
+        <Preference
+            app:key="export_settings_backup"
+            app:summary="@string/pref_export_settings_summary"
+            app:title="@string/pref_export_settings" />
+
+        <Preference
+            app:key="import_settings_backup"
+            app:summary="@string/pref_import_settings_summary"
+            app:title="@string/pref_import_settings" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/alarm_settings">
+        <Preference
+            app:key="export_alarms_backup"
+            app:summary="@string/pref_export_alarms_summary"
+            app:title="@string/pref_export_alarms" />
+
+        <Preference
+            app:key="import_alarms_backup"
+            app:summary="@string/pref_import_alarms_summary"
+            app:title="@string/pref_import_alarms" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/pref_backup_device_data">
+        <Preference
+            app:key="export_device_data_backup"
+            app:summary="@string/pref_export_device_data_summary"
+            app:title="@string/pref_export_device_data" />
+
+        <Preference
+            app:key="import_device_data_backup"
+            app:summary="@string/pref_import_device_data_summary"
+            app:title="@string/pref_import_device_data" />
+
+        <Preference
+            app:key="import_logs_csv_backup"
+            app:summary="@string/pref_import_logs_csv_summary"
+            app:title="@string/pref_import_logs_csv" />
+    </PreferenceCategory>
+</PreferenceScreen>

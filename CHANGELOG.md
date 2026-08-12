@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Unreleased
+
+### New
+
+- App backup and restore
+- Alarms backup (#69)
+- Existing logs import (#80)
+
 ## 1.5.0
 
 ### New

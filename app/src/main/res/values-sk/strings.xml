@@ -538,4 +538,48 @@
   <string name="pref_vital_signs_content" formatted="false">Obsah dôležitých údajov</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Ktoré hodnoty zahrnúť do dôležitých údajov a v akom poradí?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Zmeniť poradie: %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Záloha a obnovenie</string>
+  <string name="pref_export_alarms" formatted="false">Exportovať alarmy</string>
+  <string name="pref_export_alarms_summary" formatted="false">Uložiť aktuálne alarmy do súboru</string>
+  <string name="pref_import_alarms" formatted="false">Importovať alarmy</string>
+  <string name="pref_import_alarms_summary" formatted="false">Nahradiť aktuálne alarmy alarmami zo súboru</string>
+  <string name="alarms_exported" formatted="false">Alarmy boli úspešne exportované</string>
+  <string name="alarms_imported" formatted="false">Alarmy boli úspešne importované</string>
+  <string name="invalid_alarms_file" formatted="false">Neplatný súbor alarmov</string>
+  <string name="pref_backup_device_data" formatted="false">Záloha údajov špecifických pre zariadenie</string>
+  <string name="pref_export_device_data" formatted="false">Exportovať údaje špecifické pre zariadenie</string>
+  <string name="pref_export_device_data_summary" formatted="false">Uložiť denníky a údaje predikcie do súboru</string>
+  <string name="pref_import_device_data" formatted="false">Importovať údaje špecifické pre zariadenie</string>
+  <string name="pref_import_device_data_summary" formatted="false">Obnoviť denníky a údaje predikcie zo súboru</string>
+  <string name="device_data_logs" formatted="false">Denníky</string>
+  <string name="device_data_predictor" formatted="false">Údaje predikcie</string>
+  <string name="device_data_backup_warning" formatted="false">Tieto údaje sú špecifické pre zariadenie, na ktorom boli zhromaždené. Import do iného zariadenia môže spôsobiť nesprávne predikcie alebo iné neočakávané správanie aplikácie.</string>
+  <string name="device_data_exported" formatted="false">Údaje špecifické pre zariadenie boli úspešne exportované</string>
+  <string name="device_data_imported" formatted="false">Údaje špecifické pre zariadenie boli úspešne importované</string>
+  <string name="invalid_device_data_file" formatted="false">Neplatný súbor údajov špecifických pre zariadenie</string>
+  <string name="device_data_file_empty" formatted="false">Tento súbor neobsahuje žiadne podporované údaje špecifické pre zariadenie</string>
+  <string name="pref_import_logs_csv" formatted="false">Importovať denníky z CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Importovať denníky z exportovaného súboru CSV</string>
+  <string name="csv_logs_import_warning" formatted="false">Formáty CSV sa môžu medzi verziami aplikácie líšiť, takže import nemusí vždy fungovať správne.</string>
+  <string name="csv_logs_imported" formatted="false">Denníky CSV boli úspešne importované</string>
+  <string name="invalid_csv_logs_file" formatted="false">Neplatný alebo nekompatibilný súbor denníkov CSV</string>
+  <string name="log_import_mode_title" formatted="false">Importovať denníky</string>
+  <string name="log_import_mode_message" formatted="false">Ako sa majú importované denníky spracovať?</string>
+  <string name="log_import_replace" formatted="false">Nahradiť existujúce denníky</string>
+  <string name="log_import_add" formatted="false">Pridať k existujúcim denníkom</string>
+  <string name="pref_general_backup" formatted="false">Všeobecná záloha aplikácie</string>
+  <string name="pref_export_general_backup" formatted="false">Exportovať všeobecnú zálohu</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Uložiť nastavenia, alarmy a údaje špecifické pre zariadenie do súboru ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">Importovať všeobecnú zálohu</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Obnoviť vybrané údaje zo súboru ZIP všeobecnej zálohy</string>
+  <string name="general_backup_restore_message" formatted="false">Vyberte, čo chcete obnoviť.</string>
+  <string name="general_backup_exported" formatted="false">Všeobecná záloha bola úspešne exportovaná</string>
+  <string name="general_backup_imported" formatted="false">Všeobecná záloha bola úspešne importovaná</string>
+  <string name="invalid_general_backup_file" formatted="false">Neplatný alebo nekompatibilný súbor všeobecnej zálohy</string>
+  <string name="backup_restore_help_overview" formatted="false">Pomocou záloh môžete uložiť kópiu údajov aplikácie a neskôr ju obnoviť.</string>
+  <string name="general_backup_help" formatted="false">Všeobecná záloha ukladá nastavenia, alarmy a údaje špecifické pre zariadenie spoločne. Pri obnove si môžete vybrať, ktoré dostupné údaje chcete importovať.</string>
+  <string name="settings_backup_help" formatted="false">Záloha nastavení ukladá predvoľby aplikácie. Jej importom obnovíte uložené predvoľby.</string>
+  <string name="alarms_backup_help" formatted="false">Záloha alarmov ukladá vaše alarmy. Jej importom nahradíte všetky aktuálne alarmy alarmami zo zálohy.</string>
+  <string name="device_specific_backup_help" formatted="false">Záloha údajov špecifických pre zariadenie ukladá protokoly a údaje prediktora. Pri importe môžete vybrať jednu alebo obe položky. Tieto údaje patria k zdrojovému zariadeniu; ich použitie na inom zariadení môže spôsobiť nesprávne predpovede alebo neočakávané správanie. Pri importe protokolov zvoľte, či ich pridať, alebo nahradiť existujúce protokoly.</string>
+  <string name="csv_logs_import_help" formatted="false">Môžete importovať protokoly z predtým exportovaného súboru CSV. Import medzi rôznymi verziami aplikácie nemusí fungovať správne. Zvoľte, či importované protokoly pridať, alebo nimi nahradiť existujúce.</string>
 </resources>

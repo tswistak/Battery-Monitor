@@ -13,12 +13,18 @@
 */
 package codes.swistak.batterymonitor.logs
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
+import androidx.core.database.sqlite.transaction
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
+
+internal data class LogRecord(
+    val status: Int, val charge: Int?, val time: Long, val temperature: Int?, val voltage: Int?
+)
 
 internal class LogDatabase(context: Context?) {
     companion object {
@@ -42,7 +48,7 @@ internal class LogDatabase(context: Context?) {
         /* My cursor adapter was getting a bit complicated since it could only see one datum at a time, and
        how I want to present the data depends on several interrelated factors.  Storing all three of
        these items together simplifies things. */
-        private fun encodeStatus(status: Int, plugged: Int, statusAge: Int): Int {
+        internal fun encodeStatus(status: Int, plugged: Int, statusAge: Int): Int {
             return status + (plugged * 10) + (statusAge * 100)
         }
 
@@ -107,6 +113,66 @@ internal class LogDatabase(context: Context?) {
         } catch (e: Exception) {
             null
         }
+    }
+
+    fun getAllLogRecords(): List<LogRecord> {
+        openDBs()
+
+        val cursor = rdb?.rawQuery(
+            "SELECT $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE " + "FROM $LOG_TABLE_NAME ORDER BY $KEY_TIME ASC",
+            null
+        ) ?: return emptyList()
+        cursor.use {
+            val statusColumn = it.getColumnIndexOrThrow(KEY_STATUS_CODE)
+            val chargeColumn = it.getColumnIndexOrThrow(KEY_CHARGE)
+            val timeColumn = it.getColumnIndexOrThrow(KEY_TIME)
+            val temperatureColumn = it.getColumnIndexOrThrow(KEY_TEMPERATURE)
+            val voltageColumn = it.getColumnIndexOrThrow(KEY_VOLTAGE)
+            return buildList {
+                while (it.moveToNext()) {
+                    add(
+                        LogRecord(
+                            status = it.getInt(statusColumn),
+                            charge = it.getNullableInt(chargeColumn),
+                            time = it.getLong(timeColumn),
+                            temperature = it.getNullableInt(temperatureColumn),
+                            voltage = it.getNullableInt(voltageColumn)
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    fun replaceAllLogs(records: List<LogRecord>) = writeLogs(records, replaceExisting = true)
+
+    fun addLogs(records: List<LogRecord>) = writeLogs(records, replaceExisting = false)
+
+    private fun writeLogs(records: List<LogRecord>, replaceExisting: Boolean) {
+        openDBs()
+        val database = checkNotNull(wdb) { "Log database is unavailable" }
+        database.transaction {
+            if (replaceExisting) database.delete(LOG_TABLE_NAME, null, null)
+            for (record in records) {
+                val values = ContentValues().apply {
+                    put(KEY_STATUS_CODE, record.status)
+                    putNullable(KEY_CHARGE, record.charge)
+                    put(KEY_TIME, record.time)
+                    putNullable(KEY_TEMPERATURE, record.temperature)
+                    putNullable(KEY_VOLTAGE, record.voltage)
+                }
+                check(database.insertOrThrow(LOG_TABLE_NAME, null, values) >= 0) {
+                    "Could not restore log entry"
+                }
+            }
+        }
+    }
+
+    private fun Cursor.getNullableInt(columnIndex: Int): Int? =
+        if (isNull(columnIndex)) null else getInt(columnIndex)
+
+    private fun ContentValues.putNullable(key: String, value: Int?) {
+        if (value == null) putNull(key) else put(key, value)
     }
 
     fun logStatus(info: BatteryInfo, time: Long, statusAge: Int) {

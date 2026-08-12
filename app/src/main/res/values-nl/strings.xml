@@ -517,4 +517,48 @@
   <string name="pref_vital_signs_content" formatted="false">Inhoud vitale gegevens</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Welke waarden opnemen in de vitale gegevens en in welke volgorde?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s verplaatsen</string>
+  <string name="pref_backup_restore" formatted="false">Back-up en herstel</string>
+  <string name="pref_export_alarms" formatted="false">Alarmen exporteren</string>
+  <string name="pref_export_alarms_summary" formatted="false">Huidige alarmen opslaan in een bestand</string>
+  <string name="pref_import_alarms" formatted="false">Alarmen importeren</string>
+  <string name="pref_import_alarms_summary" formatted="false">Huidige alarmen vervangen door alarmen uit een bestand</string>
+  <string name="alarms_exported" formatted="false">Alarmen zijn succesvol geëxporteerd</string>
+  <string name="alarms_imported" formatted="false">Alarmen zijn succesvol geïmporteerd</string>
+  <string name="invalid_alarms_file" formatted="false">Ongeldig alarmbestand</string>
+  <string name="pref_backup_device_data" formatted="false">Back-up van apparaatspecifieke gegevens</string>
+  <string name="pref_export_device_data" formatted="false">Apparaatspecifieke gegevens exporteren</string>
+  <string name="pref_export_device_data_summary" formatted="false">Logboeken en voorspellingsgegevens opslaan in een bestand</string>
+  <string name="pref_import_device_data" formatted="false">Apparaatspecifieke gegevens importeren</string>
+  <string name="pref_import_device_data_summary" formatted="false">Logboeken en voorspellingsgegevens herstellen vanuit een bestand</string>
+  <string name="device_data_logs" formatted="false">Logboeken</string>
+  <string name="device_data_predictor" formatted="false">Voorspellingsgegevens</string>
+  <string name="device_data_backup_warning" formatted="false">Deze apparaatspecifieke gegevens horen bij het apparaat waarop ze zijn verzameld. Importeren op een ander apparaat kan leiden tot onjuiste voorspellingen of ander onverwacht gedrag van de app.</string>
+  <string name="device_data_exported" formatted="false">Apparaatspecifieke gegevens zijn geëxporteerd</string>
+  <string name="device_data_imported" formatted="false">Apparaatspecifieke gegevens zijn geïmporteerd</string>
+  <string name="invalid_device_data_file" formatted="false">Ongeldig bestand met apparaatspecifieke gegevens</string>
+  <string name="device_data_file_empty" formatted="false">Dit bestand bevat geen ondersteunde apparaatspecifieke gegevens</string>
+  <string name="pref_import_logs_csv" formatted="false">Logboeken importeren uit CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Logboeken importeren uit een geëxporteerd CSV-bestand</string>
+  <string name="csv_logs_import_warning" formatted="false">CSV-indelingen kunnen verschillen tussen appversies, waardoor importeren mogelijk niet altijd correct werkt.</string>
+  <string name="csv_logs_imported" formatted="false">CSV-logboeken zijn geïmporteerd</string>
+  <string name="invalid_csv_logs_file" formatted="false">Ongeldig of incompatibel CSV-logboekbestand</string>
+  <string name="log_import_mode_title" formatted="false">Logboeken importeren</string>
+  <string name="log_import_mode_message" formatted="false">Hoe moeten de geïmporteerde logboeken worden verwerkt?</string>
+  <string name="log_import_replace" formatted="false">Bestaande logboeken vervangen</string>
+  <string name="log_import_add" formatted="false">Toevoegen aan bestaande logboeken</string>
+  <string name="pref_general_backup" formatted="false">Algemene app-back-up</string>
+  <string name="pref_export_general_backup" formatted="false">Algemene back-up exporteren</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Instellingen, alarmen en apparaatspecifieke gegevens opslaan in een ZIP-bestand</string>
+  <string name="pref_import_general_backup" formatted="false">Algemene back-up importeren</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Geselecteerde gegevens herstellen uit een ZIP-bestand met een algemene back-up</string>
+  <string name="general_backup_restore_message" formatted="false">Kies wat u wilt herstellen.</string>
+  <string name="general_backup_exported" formatted="false">Algemene back-up is geëxporteerd</string>
+  <string name="general_backup_imported" formatted="false">Algemene back-up is geïmporteerd</string>
+  <string name="invalid_general_backup_file" formatted="false">Ongeldig of incompatibel algemeen back-upbestand</string>
+  <string name="backup_restore_help_overview" formatted="false">Gebruik back-ups om een kopie van je appgegevens op te slaan en later te herstellen.</string>
+  <string name="general_backup_help" formatted="false">Een algemene back-up slaat instellingen, alarmen en apparaatspecifieke gegevens samen op. Bij het herstellen kun je kiezen welke beschikbare gegevens je wilt importeren.</string>
+  <string name="settings_backup_help" formatted="false">Een instellingenback-up slaat je appvoorkeuren op. Bij het importeren worden de opgeslagen voorkeuren hersteld.</string>
+  <string name="alarms_backup_help" formatted="false">Een alarmback-up slaat je alarmen op. Bij het importeren worden alle huidige alarmen vervangen door de alarmen uit de back-up.</string>
+  <string name="device_specific_backup_help" formatted="false">Een apparaatspecifieke back-up slaat logboeken en voorspellingsgegevens op. Tijdens het importeren kun je een van beide of beide selecteren. Deze gegevens horen bij het bronapparaat; gebruik op een ander apparaat kan onjuiste voorspellingen of onverwacht gedrag veroorzaken. Kies bij het importeren van logboeken of je ze wilt toevoegen of bestaande logboeken wilt vervangen.</string>
+  <string name="csv_logs_import_help" formatted="false">Je kunt logboeken importeren uit een eerder geëxporteerd CSV-bestand. Import tussen verschillende appversies werkt mogelijk niet correct. Kies of geïmporteerde logboeken worden toegevoegd of bestaande logboeken worden vervangen.</string>
 </resources>

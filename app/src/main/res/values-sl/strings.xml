@@ -535,4 +535,48 @@
   <string name="pref_vital_signs_content" formatted="false">Vsebina ključnih podatkov</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Katere vrednosti vključiti v ključne podatke in v kakšnem vrstnem redu?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Spremeni vrstni red: %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Varnostno kopiranje in obnovitev</string>
+  <string name="pref_export_alarms" formatted="false">Izvozi alarme</string>
+  <string name="pref_export_alarms_summary" formatted="false">Shrani trenutne alarme v datoteko</string>
+  <string name="pref_import_alarms" formatted="false">Uvozi alarme</string>
+  <string name="pref_import_alarms_summary" formatted="false">Zamenjaj trenutne alarme z alarmi iz datoteke</string>
+  <string name="alarms_exported" formatted="false">Alarmi so bili uspešno izvoženi</string>
+  <string name="alarms_imported" formatted="false">Alarmi so bili uspešno uvoženi</string>
+  <string name="invalid_alarms_file" formatted="false">Neveljavna datoteka alarmov</string>
+  <string name="pref_backup_device_data" formatted="false">Varnostno kopiranje podatkov, značilnih za napravo</string>
+  <string name="pref_export_device_data" formatted="false">Izvozi podatke, značilne za napravo</string>
+  <string name="pref_export_device_data_summary" formatted="false">Shrani dnevnike in podatke napovedovanja v datoteko</string>
+  <string name="pref_import_device_data" formatted="false">Uvozi podatke, značilne za napravo</string>
+  <string name="pref_import_device_data_summary" formatted="false">Obnovi dnevnike in podatke napovedovanja iz datoteke</string>
+  <string name="device_data_logs" formatted="false">Dnevniki</string>
+  <string name="device_data_predictor" formatted="false">Podatki napovedovanja</string>
+  <string name="device_data_backup_warning" formatted="false">Ti podatki so značilni za napravo, v kateri so bili zbrani. Uvoz v drugo napravo lahko povzroči napačne napovedi ali drugo nepričakovano delovanje aplikacije.</string>
+  <string name="device_data_exported" formatted="false">Podatki, značilni za napravo, so bili uspešno izvoženi</string>
+  <string name="device_data_imported" formatted="false">Podatki, značilni za napravo, so bili uspešno uvoženi</string>
+  <string name="invalid_device_data_file" formatted="false">Neveljavna datoteka s podatki, značilnimi za napravo</string>
+  <string name="device_data_file_empty" formatted="false">Ta datoteka ne vsebuje podprtih podatkov, značilnih za napravo</string>
+  <string name="pref_import_logs_csv" formatted="false">Uvozi dnevnike iz CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Uvozi dnevnike iz izvožene datoteke CSV</string>
+  <string name="csv_logs_import_warning" formatted="false">Oblike CSV se lahko med različicami aplikacije razlikujejo, zato uvoz morda ne bo vedno deloval pravilno.</string>
+  <string name="csv_logs_imported" formatted="false">Dnevniki CSV so bili uspešno uvoženi</string>
+  <string name="invalid_csv_logs_file" formatted="false">Neveljavna ali nezdružljiva datoteka dnevnikov CSV</string>
+  <string name="log_import_mode_title" formatted="false">Uvozi dnevnike</string>
+  <string name="log_import_mode_message" formatted="false">Kako naj se obravnavajo uvoženi dnevniki?</string>
+  <string name="log_import_replace" formatted="false">Zamenjaj obstoječe dnevnike</string>
+  <string name="log_import_add" formatted="false">Dodaj obstoječim dnevnikom</string>
+  <string name="pref_general_backup" formatted="false">Splošna varnostna kopija aplikacije</string>
+  <string name="pref_export_general_backup" formatted="false">Izvozi splošno varnostno kopijo</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Shrani nastavitve, alarme in podatke, značilne za napravo, v datoteko ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">Uvozi splošno varnostno kopijo</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Obnovi izbrane podatke iz datoteke ZIP splošne varnostne kopije</string>
+  <string name="general_backup_restore_message" formatted="false">Izberite, kaj želite obnoviti.</string>
+  <string name="general_backup_exported" formatted="false">Splošna varnostna kopija je bila uspešno izvožena</string>
+  <string name="general_backup_imported" formatted="false">Splošna varnostna kopija je bila uspešno uvožena</string>
+  <string name="invalid_general_backup_file" formatted="false">Neveljavna ali nezdružljiva datoteka splošne varnostne kopije</string>
+  <string name="backup_restore_help_overview" formatted="false">Z varnostnimi kopijami shranite kopijo podatkov aplikacije in jo pozneje obnovite.</string>
+  <string name="general_backup_help" formatted="false">Splošna varnostna kopija skupaj shrani nastavitve, alarme in podatke, značilne za napravo. Pri obnovitvi lahko izberete, katere razpoložljive podatke želite uvoziti.</string>
+  <string name="settings_backup_help" formatted="false">Varnostna kopija nastavitev shrani nastavitve aplikacije. Z uvozom obnovite shranjene nastavitve.</string>
+  <string name="alarms_backup_help" formatted="false">Varnostna kopija alarmov shrani vaše alarme. Z uvozom zamenjate vse trenutne alarme z alarmi iz varnostne kopije.</string>
+  <string name="device_specific_backup_help" formatted="false">Varnostna kopija, značilna za napravo, shrani dnevnike in podatke napovedovalnika. Pri uvozu lahko izberete eno ali obe vrsti podatkov. Ti podatki pripadajo izvorni napravi; uporaba v drugi napravi lahko povzroči napačne napovedi ali nepričakovano delovanje. Pri uvozu dnevnikov izberite, ali jih želite dodati ali zamenjati obstoječe dnevnike.</string>
+  <string name="csv_logs_import_help" formatted="false">Dnevnike lahko uvozite iz predhodno izvožene datoteke CSV. Uvoz med različnimi različicami aplikacije morda ne bo deloval pravilno. Izberite, ali želite uvožene dnevnike dodati ali zamenjati obstoječe.</string>
 </resources>

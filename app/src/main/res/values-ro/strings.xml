@@ -523,4 +523,48 @@
   <string name="pref_vital_signs_content" formatted="false">Conținutul statisticilor vitale</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Ce valori să fie incluse în statisticile vitale și în ce ordine?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Reordonați %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Copiere de rezervă și restaurare</string>
+  <string name="pref_export_alarms" formatted="false">Exportați alarmele</string>
+  <string name="pref_export_alarms_summary" formatted="false">Salvați alarmele curente într-un fișier</string>
+  <string name="pref_import_alarms" formatted="false">Importați alarmele</string>
+  <string name="pref_import_alarms_summary" formatted="false">Înlocuiți alarmele curente cu cele dintr-un fișier</string>
+  <string name="alarms_exported" formatted="false">Alarmele au fost exportate cu succes</string>
+  <string name="alarms_imported" formatted="false">Alarmele au fost importate cu succes</string>
+  <string name="invalid_alarms_file" formatted="false">Fișier de alarme nevalid</string>
+  <string name="pref_backup_device_data" formatted="false">Copiere de rezervă a datelor specifice dispozitivului</string>
+  <string name="pref_export_device_data" formatted="false">Exportați datele specifice dispozitivului</string>
+  <string name="pref_export_device_data_summary" formatted="false">Salvați jurnalele și datele de predicție într-un fișier</string>
+  <string name="pref_import_device_data" formatted="false">Importați datele specifice dispozitivului</string>
+  <string name="pref_import_device_data_summary" formatted="false">Restaurați jurnalele și datele de predicție dintr-un fișier</string>
+  <string name="device_data_logs" formatted="false">Jurnale</string>
+  <string name="device_data_predictor" formatted="false">Date de predicție</string>
+  <string name="device_data_backup_warning" formatted="false">Aceste date sunt specifice dispozitivului pe care au fost colectate. Importarea lor pe alt dispozitiv poate duce la predicții incorecte sau la un alt comportament neașteptat al aplicației.</string>
+  <string name="device_data_exported" formatted="false">Datele specifice dispozitivului au fost exportate cu succes</string>
+  <string name="device_data_imported" formatted="false">Datele specifice dispozitivului au fost importate cu succes</string>
+  <string name="invalid_device_data_file" formatted="false">Fișier de date specifice dispozitivului nevalid</string>
+  <string name="device_data_file_empty" formatted="false">Acest fișier nu conține date specifice dispozitivului acceptate</string>
+  <string name="pref_import_logs_csv" formatted="false">Importați jurnale din CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Importați jurnale dintr-un fișier CSV exportat</string>
+  <string name="csv_logs_import_warning" formatted="false">Formatele CSV pot diferi între versiunile aplicației, astfel că importarea este posibil să nu funcționeze întotdeauna corect.</string>
+  <string name="csv_logs_imported" formatted="false">Jurnalele CSV au fost importate cu succes</string>
+  <string name="invalid_csv_logs_file" formatted="false">Fișier de jurnale CSV nevalid sau incompatibil</string>
+  <string name="log_import_mode_title" formatted="false">Importați jurnale</string>
+  <string name="log_import_mode_message" formatted="false">Cum trebuie gestionate jurnalele importate?</string>
+  <string name="log_import_replace" formatted="false">Înlocuiți jurnalele existente</string>
+  <string name="log_import_add" formatted="false">Adăugați la jurnalele existente</string>
+  <string name="pref_general_backup" formatted="false">Copiere de rezervă generală a aplicației</string>
+  <string name="pref_export_general_backup" formatted="false">Exportați copia de rezervă generală</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Salvați setările, alarmele și datele specifice dispozitivului într-un fișier ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">Importați copia de rezervă generală</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Restaurați datele selectate dintr-un fișier ZIP de copiere de rezervă generală</string>
+  <string name="general_backup_restore_message" formatted="false">Alegeți ce doriți să restaurați.</string>
+  <string name="general_backup_exported" formatted="false">Copia de rezervă generală a fost exportată cu succes</string>
+  <string name="general_backup_imported" formatted="false">Copia de rezervă generală a fost importată cu succes</string>
+  <string name="invalid_general_backup_file" formatted="false">Fișier de copiere de rezervă generală nevalid sau incompatibil</string>
+  <string name="backup_restore_help_overview" formatted="false">Folosește copiile de rezervă pentru a salva o copie a datelor aplicației și a o restaura mai târziu.</string>
+  <string name="general_backup_help" formatted="false">O copie de rezervă generală salvează împreună setările, alarmele și datele specifice dispozitivului. La restaurare, poți alege ce date disponibile dorești să imporți.</string>
+  <string name="settings_backup_help" formatted="false">O copie a setărilor salvează preferințele aplicației. Importarea ei restaurează preferințele salvate.</string>
+  <string name="alarms_backup_help" formatted="false">O copie a alarmelor salvează alarmele tale. Importarea ei înlocuiește toate alarmele curente cu cele din copie.</string>
+  <string name="device_specific_backup_help" formatted="false">O copie specifică dispozitivului salvează jurnalele și datele predictorului. Poți selecta una sau ambele categorii în timpul importului. Aceste date aparțin dispozitivului sursă; utilizarea lor pe alt dispozitiv poate cauza predicții incorecte sau un comportament neașteptat. La importarea jurnalelor, alege dacă le adaugi sau înlocuiești jurnalele existente.</string>
+  <string name="csv_logs_import_help" formatted="false">Poți importa jurnale dintr-un fișier CSV exportat anterior. Importul între versiuni diferite ale aplicației poate să nu funcționeze corect. Alege dacă adaugi jurnalele importate sau înlocuiești jurnalele existente.</string>
 </resources>

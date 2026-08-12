@@ -517,4 +517,48 @@
   <string name="pref_vital_signs_content" formatted="false">Contenido de estadísticas vitales</string>
   <string name="pref_vital_signs_content_summary" formatted="false">¿Qué valores se deben incluir en las estadísticas vitales y en qué orden?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Reordenar %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Copia de seguridad y restauración</string>
+  <string name="pref_export_alarms" formatted="false">Exportar alarmas</string>
+  <string name="pref_export_alarms_summary" formatted="false">Guardar las alarmas actuales en un archivo</string>
+  <string name="pref_import_alarms" formatted="false">Importar alarmas</string>
+  <string name="pref_import_alarms_summary" formatted="false">Reemplazar las alarmas actuales por las de un archivo</string>
+  <string name="alarms_exported" formatted="false">Las alarmas se exportaron correctamente</string>
+  <string name="alarms_imported" formatted="false">Las alarmas se importaron correctamente</string>
+  <string name="invalid_alarms_file" formatted="false">Archivo de alarmas no válido</string>
+  <string name="pref_backup_device_data" formatted="false">Copia de seguridad de datos específicos del dispositivo</string>
+  <string name="pref_export_device_data" formatted="false">Exportar datos específicos del dispositivo</string>
+  <string name="pref_export_device_data_summary" formatted="false">Guardar registros y datos de predicción en un archivo</string>
+  <string name="pref_import_device_data" formatted="false">Importar datos específicos del dispositivo</string>
+  <string name="pref_import_device_data_summary" formatted="false">Restaurar registros y datos de predicción desde un archivo</string>
+  <string name="device_data_logs" formatted="false">Registros</string>
+  <string name="device_data_predictor" formatted="false">Datos de predicción</string>
+  <string name="device_data_backup_warning" formatted="false">Estos datos son específicos del dispositivo en el que se recopilaron. Importarlos en otro dispositivo puede provocar predicciones incorrectas u otro comportamiento inesperado de la aplicación.</string>
+  <string name="device_data_exported" formatted="false">Datos específicos del dispositivo exportados correctamente</string>
+  <string name="device_data_imported" formatted="false">Datos específicos del dispositivo importados correctamente</string>
+  <string name="invalid_device_data_file" formatted="false">Archivo de datos específicos del dispositivo no válido</string>
+  <string name="device_data_file_empty" formatted="false">Este archivo no contiene datos específicos del dispositivo compatibles</string>
+  <string name="pref_import_logs_csv" formatted="false">Importar registros desde CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Importar registros desde un archivo CSV exportado</string>
+  <string name="csv_logs_import_warning" formatted="false">Los formatos CSV pueden variar entre versiones de la aplicación, por lo que es posible que la importación no siempre funcione correctamente.</string>
+  <string name="csv_logs_imported" formatted="false">Registros CSV importados correctamente</string>
+  <string name="invalid_csv_logs_file" formatted="false">Archivo de registros CSV no válido o incompatible</string>
+  <string name="log_import_mode_title" formatted="false">Importar registros</string>
+  <string name="log_import_mode_message" formatted="false">¿Cómo se deben gestionar los registros importados?</string>
+  <string name="log_import_replace" formatted="false">Reemplazar registros existentes</string>
+  <string name="log_import_add" formatted="false">Añadir a los registros existentes</string>
+  <string name="pref_general_backup" formatted="false">Copia de seguridad general de la aplicación</string>
+  <string name="pref_export_general_backup" formatted="false">Exportar copia de seguridad general</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Guardar ajustes, alarmas y datos específicos del dispositivo en un archivo ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">Importar copia de seguridad general</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Restaurar los datos seleccionados desde un archivo ZIP de copia de seguridad general</string>
+  <string name="general_backup_restore_message" formatted="false">Elige lo que quieres restaurar.</string>
+  <string name="general_backup_exported" formatted="false">Copia de seguridad general exportada correctamente</string>
+  <string name="general_backup_imported" formatted="false">Copia de seguridad general importada correctamente</string>
+  <string name="invalid_general_backup_file" formatted="false">Archivo de copia de seguridad general no válido o incompatible</string>
+  <string name="backup_restore_help_overview" formatted="false">Usa las copias de seguridad para guardar una copia de los datos de la aplicación y restaurarla más adelante.</string>
+  <string name="general_backup_help" formatted="false">Una copia de seguridad general guarda juntos los ajustes, las alarmas y los datos específicos del dispositivo. Al restaurarla, puedes elegir qué datos disponibles quieres importar.</string>
+  <string name="settings_backup_help" formatted="false">Una copia de seguridad de los ajustes guarda las preferencias de la aplicación. Al importarla se restauran las preferencias guardadas.</string>
+  <string name="alarms_backup_help" formatted="false">Una copia de seguridad de alarmas guarda tus alarmas. Al importarla se sustituyen todas las alarmas actuales por las de la copia.</string>
+  <string name="device_specific_backup_help" formatted="false">Una copia de seguridad específica del dispositivo guarda los registros y los datos del predictor. Puedes seleccionar uno o ambos durante la importación. Estos datos pertenecen al dispositivo de origen; usarlos en otro dispositivo puede producir predicciones incorrectas o un comportamiento inesperado. Al importar registros, elige si quieres añadirlos o sustituir los existentes.</string>
+  <string name="csv_logs_import_help" formatted="false">Puedes importar registros desde un archivo CSV exportado anteriormente. La importación entre distintas versiones de la aplicación podría no funcionar correctamente. Elige entre añadir los registros importados o sustituir los existentes.</string>
 </resources>

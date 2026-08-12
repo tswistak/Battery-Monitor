@@ -508,4 +508,48 @@
   <string name="pref_vital_signs_content" formatted="false">Contenuto dei parametri vitali</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Quali valori includere nei parametri vitali e in quale ordine?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Riordina %1$s</string>
+  <string name="pref_backup_restore" formatted="false">Backup e ripristino</string>
+  <string name="pref_export_alarms" formatted="false">Esporta allarmi</string>
+  <string name="pref_export_alarms_summary" formatted="false">Salva gli allarmi attuali in un file</string>
+  <string name="pref_import_alarms" formatted="false">Importa allarmi</string>
+  <string name="pref_import_alarms_summary" formatted="false">Sostituisci gli allarmi attuali con quelli di un file</string>
+  <string name="alarms_exported" formatted="false">Allarmi esportati correttamente</string>
+  <string name="alarms_imported" formatted="false">Allarmi importati correttamente</string>
+  <string name="invalid_alarms_file" formatted="false">File degli allarmi non valido</string>
+  <string name="pref_backup_device_data" formatted="false">Backup dei dati specifici del dispositivo</string>
+  <string name="pref_export_device_data" formatted="false">Esporta dati specifici del dispositivo</string>
+  <string name="pref_export_device_data_summary" formatted="false">Salva registri e dati di previsione in un file</string>
+  <string name="pref_import_device_data" formatted="false">Importa dati specifici del dispositivo</string>
+  <string name="pref_import_device_data_summary" formatted="false">Ripristina registri e dati di previsione da un file</string>
+  <string name="device_data_logs" formatted="false">Registri</string>
+  <string name="device_data_predictor" formatted="false">Dati di previsione</string>
+  <string name="device_data_backup_warning" formatted="false">Questi dati sono specifici del dispositivo su cui sono stati raccolti. Importarli su un altro dispositivo può causare previsioni errate o altri comportamenti imprevisti dell’app.</string>
+  <string name="device_data_exported" formatted="false">Dati specifici del dispositivo esportati correttamente</string>
+  <string name="device_data_imported" formatted="false">Dati specifici del dispositivo importati correttamente</string>
+  <string name="invalid_device_data_file" formatted="false">File dei dati specifici del dispositivo non valido</string>
+  <string name="device_data_file_empty" formatted="false">Questo file non contiene dati specifici del dispositivo supportati</string>
+  <string name="pref_import_logs_csv" formatted="false">Importa registri da CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Importa registri da un file CSV esportato</string>
+  <string name="csv_logs_import_warning" formatted="false">I formati CSV possono variare tra le versioni dell’app, pertanto l’importazione potrebbe non funzionare sempre correttamente.</string>
+  <string name="csv_logs_imported" formatted="false">Registri CSV importati correttamente</string>
+  <string name="invalid_csv_logs_file" formatted="false">File di registri CSV non valido o incompatibile</string>
+  <string name="log_import_mode_title" formatted="false">Importa registri</string>
+  <string name="log_import_mode_message" formatted="false">Come devono essere gestiti i registri importati?</string>
+  <string name="log_import_replace" formatted="false">Sostituisci registri esistenti</string>
+  <string name="log_import_add" formatted="false">Aggiungi ai registri esistenti</string>
+  <string name="pref_general_backup" formatted="false">Backup generale dell’app</string>
+  <string name="pref_export_general_backup" formatted="false">Esporta backup generale</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Salva impostazioni, allarmi e dati specifici del dispositivo in un file ZIP</string>
+  <string name="pref_import_general_backup" formatted="false">Importa backup generale</string>
+  <string name="pref_import_general_backup_summary" formatted="false">Ripristina i dati selezionati da un file ZIP di backup generale</string>
+  <string name="general_backup_restore_message" formatted="false">Scegli cosa vuoi ripristinare.</string>
+  <string name="general_backup_exported" formatted="false">Backup generale esportato correttamente</string>
+  <string name="general_backup_imported" formatted="false">Backup generale importato correttamente</string>
+  <string name="invalid_general_backup_file" formatted="false">File di backup generale non valido o incompatibile</string>
+  <string name="backup_restore_help_overview" formatted="false">Usa i backup per salvare una copia dei dati dell’app e ripristinarla in seguito.</string>
+  <string name="general_backup_help" formatted="false">Un backup generale salva insieme impostazioni, allarmi e dati specifici del dispositivo. Durante il ripristino puoi scegliere quali dati disponibili importare.</string>
+  <string name="settings_backup_help" formatted="false">Un backup delle impostazioni salva le preferenze dell’app. Importandolo vengono ripristinate le preferenze salvate.</string>
+  <string name="alarms_backup_help" formatted="false">Un backup degli allarmi salva i tuoi allarmi. Importandolo, tutti gli allarmi attuali vengono sostituiti da quelli del backup.</string>
+  <string name="device_specific_backup_help" formatted="false">Un backup specifico del dispositivo salva i registri e i dati del predittore. Durante l’importazione puoi selezionarne uno o entrambi. Questi dati appartengono al dispositivo di origine; usarli su un altro dispositivo può causare previsioni errate o comportamenti imprevisti. Durante l’importazione dei registri, scegli se aggiungerli o sostituire quelli esistenti.</string>
+  <string name="csv_logs_import_help" formatted="false">Puoi importare i registri da un file CSV esportato in precedenza. L’importazione tra versioni diverse dell’app potrebbe non funzionare correttamente. Scegli se aggiungere i registri importati o sostituire quelli esistenti.</string>
 </resources>
