@@ -57,6 +57,12 @@
   <string name="menu_reverse" formatted="false">Odwróć kolejność</string>
   <string name="menu_log_filter" formatted="false">Filtruj</string>
   <string name="menu_export" formatted="false">Eksportuj do CSV</string>
+  <string name="log_export_mode_title" formatted="false">Eksportuj logi</string>
+  <string name="log_export_append" formatted="false">Dopisz do istniejącego pliku</string>
+  <string name="log_export_new_file" formatted="false">Utwórz nowy plik</string>
+  <string name="log_export_range_title" formatted="false">Które logi wyeksportować?</string>
+  <string name="log_export_all_logs" formatted="false">Wszystkie logi</string>
+  <string name="log_export_from_last" formatted="false">Od ostatniego eksportu</string>
   <string name="menu_delete_alarm" formatted="false">Usuń alarm</string>
   <string name="menu_show_seconds" formatted="false">Pokaż sekundy</string>
   <string name="menu_hide_seconds" formatted="false">Ukryj sekundy</string>
@@ -528,6 +534,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Które wartości mają być uwzglęniane w parametrach i w której kolejności?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Zmień kolejność %1$s</string>
   <string name="pref_backup_restore" formatted="false">Kopia zapasowa i przywracanie</string>
+  <string name="pref_auto_log_export" formatted="false">Automatyczny eksport logów</string>
+  <string name="pref_set_auto_log_export" formatted="false">Ustaw automatyczny eksport logów</string>
+  <string name="pref_edit_auto_log_export" formatted="false">Edytuj automatyczny eksport logów</string>
+  <string name="pref_disable_auto_log_export" formatted="false">Wyłącz automatyczny eksport</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">Okresowo zapisuj nowe logi w folderze</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">Częstotliwość eksportu</string>
+  <string name="pref_auto_log_export_mode" formatted="false">Obsługa plików</string>
+  <string name="pref_auto_log_export_format" formatted="false">Format eksportu</string>
+  <string name="pref_auto_log_export_directory" formatted="false">Zmień folder</string>
+  <string name="auto_log_export_help" formatted="false">Automatyczny eksport zapisuje tylko logi zebrane od poprzedniego automatycznego eksportu. Wybierz częstotliwość oraz zdecyduj, czy każdy eksport ma tworzyć osobny plik, czy dopisywać nowe wpisy do jednego ciągłego pliku. Android może opóźnić eksport, gdy urządzenie jest bezczynne.</string>
+  <string name="auto_log_export_format_help" formatted="false">Wybierz CSV, aby ręcznie czytać, filtrować, tworzyć wykresy lub analizować logi w arkuszu kalkulacyjnym albo edytorze tekstu. Wybierz JSON, jeśli plik ma służyć głównie jako kopia zapasowa: zachowuje on uporządkowane dane logów Battery Monitor oraz czas ostatniego ręcznego eksportu potrzebny przy przywracaniu.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">Utwórz nowy plik</string>
+  <string name="auto_log_export_mode_append" formatted="false">Dopisz nowe logi do istniejącego pliku</string>
   <string name="pref_export_alarms" formatted="false">Eksportuj alarmy</string>
   <string name="pref_export_alarms_summary" formatted="false">Zapisz bieżące alarmy do pliku</string>
   <string name="pref_import_alarms" formatted="false">Importuj alarmy</string>

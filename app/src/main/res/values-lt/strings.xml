@@ -55,6 +55,12 @@
   <string name="menu_reverse" formatted="false">Atvirkštinė Tvarka</string>
   <string name="menu_log_filter" formatted="false">Filtruoti</string>
   <string name="menu_export" formatted="false">Eksportuoti CSV</string>
+  <string name="log_export_mode_title" formatted="false">Eksportuoti žurnalus</string>
+  <string name="log_export_append" formatted="false">Pridėti prie esamo failo</string>
+  <string name="log_export_new_file" formatted="false">Sukurti naują failą</string>
+  <string name="log_export_range_title" formatted="false">Kuriuos žurnalus eksportuoti?</string>
+  <string name="log_export_all_logs" formatted="false">Visi žurnalai</string>
+  <string name="log_export_from_last" formatted="false">Nuo paskutinio eksporto</string>
   <string name="menu_delete_alarm" formatted="false">Ištrinti Aliarmą</string>
   <string name="menu_show_seconds" formatted="false">Rodyti sekundes</string>
   <string name="menu_hide_seconds" formatted="false">Slėpti sekundes</string>
@@ -535,6 +541,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Kurias reikšmes įtraukti į gyvybinius rodiklius ir kokia tvarka?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Keisti „%1$s“ tvarką</string>
   <string name="pref_backup_restore" formatted="false">Atsarginė kopija ir atkūrimas</string>
+  <string name="pref_auto_log_export" formatted="false">Automatinis žurnalų eksportas</string>
+  <string name="pref_set_auto_log_export" formatted="false">Nustatyti automatinį žurnalų eksportą</string>
+  <string name="pref_edit_auto_log_export" formatted="false">Redaguoti automatinį žurnalų eksportą</string>
+  <string name="pref_disable_auto_log_export" formatted="false">Išjungti automatinį eksportą</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">Periodiškai išsaugoti naujus žurnalus aplanke</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">Eksporto dažnis</string>
+  <string name="pref_auto_log_export_mode" formatted="false">Failų tvarkymas</string>
+  <string name="pref_auto_log_export_format" formatted="false">Eksporto formatas</string>
+  <string name="pref_auto_log_export_directory" formatted="false">Keisti aplanką</string>
+  <string name="auto_log_export_help" formatted="false">Automatinis eksportas išsaugo tik nuo ankstesnio automatinio eksporto surinktus žurnalus. Pasirinkite dažnį ir ar kiekvienas eksportas turi sukurti atskirą failą, ar pridėti naujus įrašus prie vieno tęstinio failo. „Android“ gali atidėti eksportą, kai įrenginys nenaudojamas.</string>
+  <string name="auto_log_export_format_help" formatted="false">Rinkitės CSV, jei žurnalus norite rankiniu būdu skaityti, filtruoti, braižyti ar tikrinti skaičiuoklėje arba teksto rengyklėje. Rinkitės JSON, jei failas pirmiausia yra atsarginė kopija: jis išsaugo struktūrinius „Battery Monitor“ žurnalo duomenis ir paskutinio rankinio eksporto laiką atkūrimui.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">Sukurti naują failą</string>
+  <string name="auto_log_export_mode_append" formatted="false">Pridėti naujus žurnalus prie esamo failo</string>
   <string name="pref_export_alarms" formatted="false">Eksportuoti signalus</string>
   <string name="pref_export_alarms_summary" formatted="false">Išsaugoti dabartinius signalus faile</string>
   <string name="pref_import_alarms" formatted="false">Importuoti signalus</string>

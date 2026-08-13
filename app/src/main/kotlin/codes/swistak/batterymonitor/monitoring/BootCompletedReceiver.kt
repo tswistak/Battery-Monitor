@@ -17,6 +17,7 @@ package codes.swistak.batterymonitor.monitoring
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.settings.SettingsContract
 
@@ -33,8 +34,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
         val spMain = context.getSharedPreferences(SettingsContract.SP_MAIN_FILE, 0)
         val spService = context.getSharedPreferences(SettingsContract.SP_SERVICE_FILE, 0)
 
-        val startPref: String =
-            settings.getString(SettingsContract.KEY_AUTOSTART, "auto")!!
+        val startPref: String = settings.getString(SettingsContract.KEY_AUTOSTART, "auto")!!
 
         val serviceDesired: Boolean = if (!spMain.getBoolean(
                 SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false
@@ -52,5 +52,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
                 SettingsContract.KEY_ENABLE_LOGGING, true
             )
         ) LogDatabase(context).logBoot()
+
+        AutoLogExportScheduler.ensureScheduled(context)
     }
 }

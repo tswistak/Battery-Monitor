@@ -120,6 +120,46 @@
         <item>-1</item>
     </string-array>
 
+    <string-array name="auto_log_export_frequency_entries">
+        <item>@string/age_1_day</item>
+        <item>@string/age_2_days</item>
+        <item>@string/age_4_days</item>
+        <item>@string/age_1_week</item>
+        <item>@string/age_2_weeks</item>
+        <item>@string/age_3_weeks</item>
+        <item>@string/age_4_weeks</item>
+    </string-array>
+
+    <string-array name="auto_log_export_frequency_values">
+        <item>24</item>
+        <item>48</item>
+        <item>96</item>
+        <item>168</item>
+        <item>336</item>
+        <item>504</item>
+        <item>672</item>
+    </string-array>
+
+    <string-array name="auto_log_export_mode_entries">
+        <item>@string/auto_log_export_mode_new_file</item>
+        <item>@string/auto_log_export_mode_append</item>
+    </string-array>
+
+    <string-array name="auto_log_export_mode_values">
+        <item>new</item>
+        <item>append</item>
+    </string-array>
+
+    <string-array name="auto_log_export_format_entries">
+        <item>@string/auto_log_export_format_csv</item>
+        <item>@string/auto_log_export_format_json</item>
+    </string-array>
+
+    <string-array name="auto_log_export_format_values">
+        <item>csv</item>
+        <item>json</item>
+    </string-array>
+
     <string-array name="log_filter_pref_keys">
         <item>plugged_in</item>
         <item>unplugged</item>

@@ -33,6 +33,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.os.Messenger
+import android.provider.DocumentsContract
 import android.provider.Settings
 import android.text.InputType
 import android.util.TypedValue
@@ -40,11 +41,13 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -69,6 +72,10 @@ import codes.swistak.batterymonitor.devicebackup.GeneralBackup
 import codes.swistak.batterymonitor.devicebackup.GeneralBackupArchive
 import codes.swistak.batterymonitor.devicebackup.GeneralBackupDataType
 import codes.swistak.batterymonitor.devicebackup.LogImportMode
+import codes.swistak.batterymonitor.logs.AutoLogExportFrequency
+import codes.swistak.batterymonitor.logs.AutoLogExportMode
+import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
+import codes.swistak.batterymonitor.logs.LogExportFormat
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryCurrentMultiplierDetector
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
@@ -91,6 +98,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         private const val IMPORT_LOGS_CSV_REQUEST = 7
         private const val EXPORT_GENERAL_BACKUP_REQUEST = 8
         private const val IMPORT_GENERAL_BACKUP_REQUEST = 9
+        private const val AUTO_LOG_EXPORT_DIRECTORY_REQUEST = 10
 
         private const val STATE_DEVICE_DATA_EXPORT = "state_device_data_export"
 
@@ -359,6 +367,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             )
             setupBatteryCurrentMultiplierPreference()
             setupBatteryCurrentRefreshIntervalPreference()
+        } else if (prefScreen == R.xml.backup_restore_pref_screen) {
+            setupAutoLogExportPreference()
         }
 
         for (i in PARENTS.indices) setEnablednessOfDeps(i)
@@ -473,6 +483,15 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                     Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                         .setType("application/zip")
                 startActivityForResult(importIntent, IMPORT_GENERAL_BACKUP_REQUEST)
+                return true
+            }
+
+            SettingsContract.KEY_AUTO_LOG_EXPORT -> {
+                if (isAutoLogExportConfigured()) {
+                    showAutoLogExportDialog(currentAutoLogExportDirectory())
+                } else {
+                    openAutoLogExportDirectoryPicker()
+                }
                 return true
             }
 
@@ -700,6 +719,19 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
         if (key == SettingsContract.KEY_CHIP_CONTENT || key == SettingsContract.KEY_CHIP_CONTENT_ORDER) {
             updateChipIntervalVisibility()
+        }
+
+        if (key == SettingsContract.KEY_MAX_LOG_AGE) {
+            capAutoLogExportFrequencyToRetention()
+        }
+
+        if (key == SettingsContract.KEY_ENABLE_LOGGING) {
+            setupAutoLogExportPreference()
+            if (mSharedPreferences.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
+                AutoLogExportScheduler.ensureScheduled(requireContext())
+            } else {
+                AutoLogExportScheduler.cancel(requireContext())
+            }
         }
 
         if (key == SettingsContract.KEY_LIVE_UPDATE_DISPLAY) {
@@ -1201,6 +1233,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     @Suppress("OVERRIDE_DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == AUTO_LOG_EXPORT_DIRECTORY_REQUEST) {
+            handleAutoLogExportDirectoryResult(resultCode, data)
+            return
+        }
         if (resultCode != Activity.RESULT_OK || data == null || data.data == null) return
 
         val uri = data.data ?: return
@@ -1283,6 +1319,256 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun setupAutoLogExportPreference() {
+        if (prefScreen != R.xml.backup_restore_pref_screen) return
+        val preference = mPreferenceScreen?.findPreference<Preference>(
+            SettingsContract.KEY_AUTO_LOG_EXPORT
+        ) ?: return
+        val loggingEnabled = mSharedPreferences.getBoolean(
+            SettingsContract.KEY_ENABLE_LOGGING, true
+        )
+        preference.isEnabled = loggingEnabled
+        if (!isAutoLogExportConfigured()) {
+            preference.setTitle(R.string.pref_set_auto_log_export)
+            preference.setSummary(
+                if (loggingEnabled) R.string.pref_auto_log_export_not_set_summary
+                else R.string.currently_disabled
+            )
+            return
+        }
+
+        val frequencyOptions = autoLogExportFrequencyOptions()
+        val frequencyValues = frequencyOptions.map { it.preferenceValue }.toTypedArray()
+        val modeValues = resources.getStringArray(R.array.auto_log_export_mode_values)
+        val formatValues = resources.getStringArray(R.array.auto_log_export_format_values)
+        preference.setTitle(R.string.pref_edit_auto_log_export)
+        if (!loggingEnabled) {
+            preference.setSummary(R.string.currently_disabled)
+            return
+        }
+        preference.summary = getString(
+            R.string.pref_auto_log_export_set_summary, labelForValue(
+                frequencyValues,
+                frequencyOptions.map { it.label }.toTypedArray(),
+                currentAutoLogExportFrequency().preferenceValue
+            ), labelForValue(
+                modeValues,
+                resources.getStringArray(R.array.auto_log_export_mode_entries),
+                mSharedPreferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_MODE, null)
+            ), labelForValue(
+                formatValues,
+                resources.getStringArray(R.array.auto_log_export_format_entries),
+                mSharedPreferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT, null)
+            ), directoryLabel(currentAutoLogExportDirectory())
+        )
+    }
+
+    private fun openAutoLogExportDirectoryPicker() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).addFlags(
+            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION or Intent.FLAG_GRANT_PREFIX_URI_PERMISSION
+        )
+        startActivityForResult(intent, AUTO_LOG_EXPORT_DIRECTORY_REQUEST)
+    }
+
+    @SuppressLint("WrongConstant")
+    private fun handleAutoLogExportDirectoryResult(resultCode: Int, data: Intent?) {
+        val uri = data?.data
+        if (resultCode != Activity.RESULT_OK || uri == null) {
+            if (isAutoLogExportConfigured()) {
+                showAutoLogExportDialog(currentAutoLogExportDirectory())
+            }
+            return
+        }
+
+        val flags =
+            data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        showAutoLogExportDialog(uri, flags)
+    }
+
+    @SuppressLint("WrongConstant")
+    private fun showAutoLogExportDialog(directory: Uri?, permissionFlags: Int? = null) {
+        if (directory == null) {
+            openAutoLogExportDirectoryPicker()
+            return
+        }
+
+        val wasConfigured = isAutoLogExportConfigured()
+        val view = layoutInflater.inflate(R.layout.auto_log_export_dialog, null)
+        val frequencySpinner = view.findViewById<Spinner>(R.id.auto_log_export_frequency)
+        val modeSpinner = view.findViewById<Spinner>(R.id.auto_log_export_mode)
+        val formatSpinner = view.findViewById<Spinner>(R.id.auto_log_export_format)
+        val frequencyOptions = autoLogExportFrequencyOptions()
+        val frequencyValues = frequencyOptions.map { it.preferenceValue }.toTypedArray()
+        val modeValues = resources.getStringArray(R.array.auto_log_export_mode_values)
+        val formatValues = resources.getStringArray(R.array.auto_log_export_format_values)
+        val maxLogAgeHours = maxLogAgeHours()
+        val enabledFrequencyValues = AutoLogExportFrequency.enabledForRetention(maxLogAgeHours)
+            .map(AutoLogExportFrequency::preferenceValue).toSet()
+        val frequencyEnabled = frequencyOptions.map { it.preferenceValue in enabledFrequencyValues }
+        frequencySpinner.adapter = EnabledItemsArrayAdapter(
+            requireContext(), frequencyOptions.map { it.label }, frequencyEnabled
+        )
+        val selectedFrequency = AutoLogExportFrequency.cappedForRetention(
+            currentAutoLogExportFrequency(), maxLogAgeHours
+        )
+        frequencySpinner.setSelection(
+            valueIndex(frequencyValues, selectedFrequency.preferenceValue)
+        )
+        modeSpinner.setSelection(
+            valueIndex(
+                modeValues, mSharedPreferences.getString(
+                    SettingsContract.KEY_AUTO_LOG_EXPORT_MODE,
+                    AutoLogExportMode.NEW_FILE.preferenceValue
+                )
+            )
+        )
+        formatSpinner.setSelection(
+            valueIndex(
+                formatValues, mSharedPreferences.getString(
+                    SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT, LogExportFormat.CSV.preferenceValue
+                )
+            )
+        )
+
+        val dialog = AlertDialog.Builder(requireContext()).setTitle(
+            if (wasConfigured) R.string.pref_edit_auto_log_export
+            else R.string.pref_set_auto_log_export
+        ).setView(view).setPositiveButton(R.string.okay) { _, _ ->
+            val oldDirectory = currentAutoLogExportDirectory()
+            permissionFlags?.let {
+                requireContext().contentResolver.takePersistableUriPermission(directory, it)
+            }
+            mSharedPreferences.edit {
+                putString(
+                    SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY,
+                    frequencyValues[frequencySpinner.selectedItemPosition]
+                )
+                putString(
+                    SettingsContract.KEY_AUTO_LOG_EXPORT_MODE,
+                    modeValues[modeSpinner.selectedItemPosition]
+                )
+                putString(
+                    SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT,
+                    formatValues[formatSpinner.selectedItemPosition]
+                )
+                putString(SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY, directory.toString())
+                if (oldDirectory != directory) {
+                    remove(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME)
+                }
+            }
+            releaseAutoLogExportDirectory(oldDirectory.takeIf { it != directory })
+            setupAutoLogExportPreference()
+            AutoLogExportScheduler.reschedule(requireContext())
+        }.setNeutralButton(R.string.pref_auto_log_export_directory) { _, _ ->
+            openAutoLogExportDirectoryPicker()
+        }.setNegativeButton(
+            if (wasConfigured) R.string.pref_disable_auto_log_export else R.string.cancel
+        ) { _, _ ->
+            if (wasConfigured) disableAutoLogExport()
+        }.create()
+        dialog.show()
+    }
+
+    private fun disableAutoLogExport() {
+        val directory = currentAutoLogExportDirectory()
+        mSharedPreferences.edit {
+            putString(
+                SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY,
+                AutoLogExportFrequency.OFF.preferenceValue
+            )
+            remove(SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY)
+            remove(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME)
+        }
+        releaseAutoLogExportDirectory(directory)
+        setupAutoLogExportPreference()
+        AutoLogExportScheduler.cancel(requireContext())
+    }
+
+    private data class AutoLogExportFrequencyOption(
+        val label: String, val preferenceValue: String
+    )
+
+    private fun autoLogExportFrequencyOptions(): List<AutoLogExportFrequencyOption> {
+        val labels = resources.getStringArray(R.array.auto_log_export_frequency_entries)
+        val values = resources.getStringArray(R.array.auto_log_export_frequency_values)
+        return values.indices.map { index ->
+            AutoLogExportFrequencyOption(labels[index], values[index])
+        }
+    }
+
+    private fun maxLogAgeHours(): Int = mSharedPreferences.getString(
+        SettingsContract.KEY_MAX_LOG_AGE, getString(R.string.default_max_log_age)
+    )?.toIntOrNull() ?: getString(R.string.default_max_log_age).toInt()
+
+    private fun currentAutoLogExportFrequency(): AutoLogExportFrequency =
+        AutoLogExportFrequency.fromPreference(
+            mSharedPreferences.getString(
+                SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY,
+                AutoLogExportFrequency.ONE_DAY.preferenceValue
+            )
+        ).takeUnless { it == AutoLogExportFrequency.OFF } ?: AutoLogExportFrequency.ONE_DAY
+
+    private fun capAutoLogExportFrequencyToRetention() {
+        if (!isAutoLogExportConfigured()) return
+        val current = currentAutoLogExportFrequency()
+        val capped = AutoLogExportFrequency.cappedForRetention(current, maxLogAgeHours())
+        if (capped == current) return
+        mSharedPreferences.edit {
+            putString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, capped.preferenceValue)
+        }
+        setupAutoLogExportPreference()
+        AutoLogExportScheduler.reschedule(requireContext())
+    }
+
+    private class EnabledItemsArrayAdapter(
+        context: Context, labels: List<String>, private val enabledItems: List<Boolean>
+    ) : ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, labels) {
+        init {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+
+        override fun areAllItemsEnabled(): Boolean = enabledItems.all { it }
+
+        override fun isEnabled(position: Int): Boolean = enabledItems[position]
+
+        override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View =
+            super.getDropDownView(position, convertView, parent).also { view ->
+                view.isEnabled = enabledItems[position]
+                view.alpha = if (enabledItems[position]) 1f else 0.38f
+            }
+    }
+
+    private fun currentAutoLogExportDirectory(): Uri? = mSharedPreferences.getString(
+        SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY, null
+    )?.let(Uri::parse)
+
+    private fun isAutoLogExportConfigured(): Boolean =
+        currentAutoLogExportDirectory() != null && AutoLogExportFrequency.fromPreference(
+            mSharedPreferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, null)
+        ) != AutoLogExportFrequency.OFF
+
+    private fun releaseAutoLogExportDirectory(directory: Uri?) {
+        directory ?: return
+        runCatching {
+            requireContext().contentResolver.releasePersistableUriPermission(
+                directory,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            )
+        }
+    }
+
+    private fun directoryLabel(directory: Uri?): String = directory?.let {
+        runCatching { DocumentsContract.getTreeDocumentId(it) }.getOrNull()
+            ?: it.lastPathSegment.orEmpty()
+    }.orEmpty()
+
+    private fun valueIndex(values: Array<String>, value: String?): Int =
+        values.indexOf(value).takeIf { it >= 0 } ?: 0
+
+    private fun labelForValue(
+        values: Array<String>, labels: Array<String>, value: String?
+    ): String = labels.getOrElse(valueIndex(values, value)) { labels.firstOrNull().orEmpty() }
 
     private fun showDeviceDataExportDialog() {
         val dataTypes = DeviceDataType.entries.toTypedArray()

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_full_name" translatable="false">Battery Monitor Debug</string>
+    <string name="app_full_name" translatable="false">Battery Monitor Debug</string>
 </resources>
 

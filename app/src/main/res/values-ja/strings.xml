@@ -55,6 +55,12 @@
   <string name="menu_reverse" formatted="false">逆順</string>
   <string name="menu_log_filter" formatted="false">フィルター</string>
   <string name="menu_export" formatted="false">CSV をエクスポート</string>
+  <string name="log_export_mode_title" formatted="false">ログをエクスポート</string>
+  <string name="log_export_append" formatted="false">既存のファイルに追加</string>
+  <string name="log_export_new_file" formatted="false">新しいファイルを作成</string>
+  <string name="log_export_range_title" formatted="false">どのログをエクスポートしますか？</string>
+  <string name="log_export_all_logs" formatted="false">すべてのログ</string>
+  <string name="log_export_from_last" formatted="false">前回のエクスポート以降</string>
   <string name="menu_delete_alarm" formatted="false">アラームを削除</string>
   <string name="menu_show_seconds" formatted="false">秒を表示</string>
   <string name="menu_hide_seconds" formatted="false">秒を非表示</string>
@@ -511,6 +517,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">主要情報に含める値と表示順をどうしますか？</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$sの順序を変更</string>
   <string name="pref_backup_restore" formatted="false">バックアップと復元</string>
+  <string name="pref_auto_log_export" formatted="false">ログの自動エクスポート</string>
+  <string name="pref_set_auto_log_export" formatted="false">ログの自動エクスポートを設定</string>
+  <string name="pref_edit_auto_log_export" formatted="false">ログの自動エクスポートを編集</string>
+  <string name="pref_disable_auto_log_export" formatted="false">自動エクスポートを無効化</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">新しいログを定期的にフォルダーへ保存</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">エクスポートの頻度</string>
+  <string name="pref_auto_log_export_mode" formatted="false">ファイルの処理</string>
+  <string name="pref_auto_log_export_format" formatted="false">エクスポート形式</string>
+  <string name="pref_auto_log_export_directory" formatted="false">フォルダーを変更</string>
+  <string name="auto_log_export_help" formatted="false">自動エクスポートでは、前回の自動エクスポート以降に収集されたログだけが保存されます。実行頻度と、毎回別のファイルを作成するか、新しい項目を1つの継続ファイルに追加するかを選択できます。端末がアイドル状態のときは、Androidによってエクスポートが遅れる場合があります。</string>
+  <string name="auto_log_export_format_help" formatted="false">スプレッドシートやテキストエディターでログを手動で読み取り、絞り込み、グラフ化、監査する場合はCSVを選択してください。主にバックアップとして使う場合はJSONを選択してください。復元に必要なBattery Monitorの構造化ログデータと前回の手動エクスポート時刻が保持されます。</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">新しいファイルを作成</string>
+  <string name="auto_log_export_mode_append" formatted="false">新しいログを既存のファイルに追加</string>
   <string name="pref_export_alarms" formatted="false">アラームをエクスポート</string>
   <string name="pref_export_alarms_summary" formatted="false">現在のアラームをファイルに保存します</string>
   <string name="pref_import_alarms" formatted="false">アラームをインポート</string>

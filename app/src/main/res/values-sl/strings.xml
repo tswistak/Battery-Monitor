@@ -55,6 +55,12 @@
   <string name="menu_reverse" formatted="false">Obratni vrstni red</string>
   <string name="menu_log_filter" formatted="false">Filter</string>
   <string name="menu_export" formatted="false">Izvozi CVS</string>
+  <string name="log_export_mode_title" formatted="false">Izvozi dnevnike</string>
+  <string name="log_export_append" formatted="false">Dodaj obstoječi datoteki</string>
+  <string name="log_export_new_file" formatted="false">Ustvari novo datoteko</string>
+  <string name="log_export_range_title" formatted="false">Katere dnevnike želite izvoziti?</string>
+  <string name="log_export_all_logs" formatted="false">Vsi dnevniki</string>
+  <string name="log_export_from_last" formatted="false">Od zadnjega izvoza</string>
   <string name="menu_delete_alarm" formatted="false">Zbriši alarm</string>
   <string name="menu_show_seconds" formatted="false">Prikaži sekunde</string>
   <string name="menu_hide_seconds" formatted="false">Skrij sekunde</string>
@@ -536,6 +542,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Katere vrednosti vključiti v ključne podatke in v kakšnem vrstnem redu?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Spremeni vrstni red: %1$s</string>
   <string name="pref_backup_restore" formatted="false">Varnostno kopiranje in obnovitev</string>
+  <string name="pref_auto_log_export" formatted="false">Samodejni izvoz dnevnikov</string>
+  <string name="pref_set_auto_log_export" formatted="false">Nastavi samodejni izvoz dnevnikov</string>
+  <string name="pref_edit_auto_log_export" formatted="false">Uredi samodejni izvoz dnevnikov</string>
+  <string name="pref_disable_auto_log_export" formatted="false">Onemogoči samodejni izvoz</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">Občasno shrani nove dnevnike v mapo</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">Pogostost izvoza</string>
+  <string name="pref_auto_log_export_mode" formatted="false">Upravljanje datotek</string>
+  <string name="pref_auto_log_export_format" formatted="false">Oblika izvoza</string>
+  <string name="pref_auto_log_export_directory" formatted="false">Spremeni mapo</string>
+  <string name="auto_log_export_help" formatted="false">Samodejni izvoz shrani samo dnevnike, zbrane od prejšnjega samodejnega izvoza. Izberite pogostost in ali naj vsak izvoz ustvari ločeno datoteko ali doda nove vnose v eno neprekinjeno datoteko. Android lahko izvoz odloži, ko naprava miruje.</string>
+  <string name="auto_log_export_format_help" formatted="false">Izberite CSV za ročno branje, filtriranje, izdelavo grafov ali pregledovanje dnevnikov v preglednici ali urejevalniku besedila. Izberite JSON, kadar je datoteka predvsem varnostna kopija: ohrani strukturirane podatke programa Battery Monitor in čas zadnjega ročnega izvoza za obnovitev.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">Ustvari novo datoteko</string>
+  <string name="auto_log_export_mode_append" formatted="false">Dodaj nove dnevnike obstoječi datoteki</string>
   <string name="pref_export_alarms" formatted="false">Izvozi alarme</string>
   <string name="pref_export_alarms_summary" formatted="false">Shrani trenutne alarme v datoteko</string>
   <string name="pref_import_alarms" formatted="false">Uvozi alarme</string>

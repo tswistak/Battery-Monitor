@@ -73,5 +73,17 @@
         <TextView
             style="@style/help_text"
             android:text="@string/csv_logs_import_help" />
+
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/pref_auto_log_export" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/auto_log_export_help" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/auto_log_export_format_help" />
     </LinearLayout>
 </ScrollView>

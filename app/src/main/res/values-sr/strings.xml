@@ -57,6 +57,12 @@
   <string name="menu_reverse" formatted="false">Obrni redosled</string>
   <string name="menu_log_filter" formatted="false">Филтер</string>
   <string name="menu_export" formatted="false">Izvezi CSV</string>
+  <string name="log_export_mode_title" formatted="false">Извези евиденције</string>
+  <string name="log_export_append" formatted="false">Додај у постојећу датотеку</string>
+  <string name="log_export_new_file" formatted="false">Направи нову датотеку</string>
+  <string name="log_export_range_title" formatted="false">Које евиденције треба извести?</string>
+  <string name="log_export_all_logs" formatted="false">Све евиденције</string>
+  <string name="log_export_from_last" formatted="false">Од последњег извоза</string>
   <string name="menu_delete_alarm" formatted="false">Izbriši alarm</string>
   <string name="menu_show_seconds" formatted="false">Prikaži sekunde</string>
   <string name="menu_hide_seconds" formatted="false">Sakrij sekunde</string>
@@ -528,6 +534,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Koje vrednosti uključiti u vitalne podatke i kojim redosledom?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Promeni redosled: %1$s</string>
   <string name="pref_backup_restore" formatted="false">Резервна копија и враћање</string>
+  <string name="pref_auto_log_export" formatted="false">Аутоматски извоз евиденција</string>
+  <string name="pref_set_auto_log_export" formatted="false">Подеси аутоматски извоз</string>
+  <string name="pref_edit_auto_log_export" formatted="false">Уреди аутоматски извоз</string>
+  <string name="pref_disable_auto_log_export" formatted="false">Онемогући аутоматски извоз</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">Периодично чувај нове евиденције у фасциклу</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">Учесталост извоза</string>
+  <string name="pref_auto_log_export_mode" formatted="false">Руковање датотекама</string>
+  <string name="pref_auto_log_export_format" formatted="false">Формат извоза</string>
+  <string name="pref_auto_log_export_directory" formatted="false">Промени фасциклу</string>
+  <string name="auto_log_export_help" formatted="false">Аутоматски извоз чува само евиденције прикупљене од претходног аутоматског извоза. Изаберите учесталост и да ли сваки извоз прави засебну датотеку или додаје нове уносе у једну трајну датотеку. Android може одложити извоз док уређај мирује.</string>
+  <string name="auto_log_export_format_help" formatted="false">Изаберите CSV за ручно читање, филтрирање, прављење графикона или проверу евиденција у табели или уређивачу текста. Изаберите JSON када датотека првенствено служи као резервна копија: чува структуриране податке програма Battery Monitor и време последњег ручног извоза за враћање.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">Направи нову датотеку</string>
+  <string name="auto_log_export_mode_append" formatted="false">Додај нове евиденције у постојећу датотеку</string>
   <string name="pref_export_alarms" formatted="false">Извези аларме</string>
   <string name="pref_export_alarms_summary" formatted="false">Сачувај тренутне аларме у датотеку</string>
   <string name="pref_import_alarms" formatted="false">Увези аларме</string>

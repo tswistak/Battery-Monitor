@@ -14,6 +14,7 @@
 package codes.swistak.batterymonitor.logs
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -21,9 +22,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.database.CursorWrapper
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
+import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -42,35 +42,21 @@ import codes.swistak.batterymonitor.app.PersistentFragment
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.settings.SettingsContract
-import java.io.BufferedWriter
-import java.io.FileWriter
 import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
-import kotlin.math.roundToInt
 
 class LogViewFragment : ListFragment() {
     companion object {
         private var pFrag: PersistentFragment? = null
 
-        private val CSV_ORDER = arrayOf<String?>(
-            LogDatabase.KEY_TIME,
-            LogDatabase.KEY_STATUS_CODE,
-            LogDatabase.KEY_CHARGE,
-            LogDatabase.KEY_TEMPERATURE,
-            LogDatabase.KEY_VOLTAGE
-        )
-
         private const val KEY_SHOW_SECONDS = "show_seconds"
         private const val KEY_TIME_DELTA = "time_delta"
 
         private const val CREATE_CSV_FILE = 1
-
-        private fun sanitizeFileNamePart(value: String): String {
-            return value.trim().replace("[^\\p{L}\\p{N}._-]+".toRegex(), "-")
-                .replace("-+".toRegex(), "-")
-        }
+        private const val APPEND_CSV_FILE = 2
+        private const val STATE_EXPORT_AFTER = "export_after"
+        private const val STATE_EXPORT_THROUGH = "export_through"
+        private const val STATE_EXPORT_HAS_AFTER = "export_has_after"
 
     }
 
@@ -83,6 +69,9 @@ class LogViewFragment : ListFragment() {
     private var mAdapter: LogAdapter? = null
     private var headerText: TextView? = null
     private var convertF = false
+
+    private var pendingExportAfter: Long? = null
+    private var pendingExportThrough: Long = 0L
 
     private var reversed = false
     private var noDB = false
@@ -137,10 +126,22 @@ class LogViewFragment : ListFragment() {
         )
         col = Col()
 
+        pendingExportThrough = savedInstanceState?.getLong(STATE_EXPORT_THROUGH) ?: 0L
+        pendingExportAfter = savedInstanceState?.takeIf {
+            it.getBoolean(STATE_EXPORT_HAS_AFTER, false)
+        }?.getLong(STATE_EXPORT_AFTER)
+
         if (!pFrag!!.spMain.getBoolean(
                 "log_filters_migrated_to_sp_main", false
             )
         ) migrateFiltersToSpMain()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putLong(STATE_EXPORT_THROUGH, pendingExportThrough)
+        outState.putBoolean(STATE_EXPORT_HAS_AFTER, pendingExportAfter != null)
+        pendingExportAfter?.let { outState.putLong(STATE_EXPORT_AFTER, it) }
+        super.onSaveInstanceState(outState)
     }
 
     private fun migrateFiltersToSpMain() {
@@ -188,13 +189,21 @@ class LogViewFragment : ListFragment() {
                     pFrag!!.res.getString(R.string.yes)
                 ) { di, _ ->
                     val lvf = targetFragment as LogViewFragment?
-                    lvf!!.logs!!.clearAllLogs()
-                    lvf.reloadList(false)
+                    lvf!!.clearLogsAfterAutoExport()
                     di.cancel()
                 }.setNegativeButton(
                     pFrag!!.res.getString(R.string.cancel)
                 ) { di, _ -> di.cancel() }.create()
         }
+    }
+
+    private fun clearLogsAfterAutoExport() {
+        if (!AutoLogExporter.exportBeforeLogDeletion(requireContext())) {
+            Toast.makeText(activity, DisplayStrings.inaccessibleStorage, Toast.LENGTH_SHORT).show()
+            return
+        }
+        logs!!.clearAllLogs()
+        reloadList(false)
     }
 
     class ConfigureLogFilterDialogFragment : DialogFragment() {
@@ -299,7 +308,7 @@ class LogViewFragment : ListFragment() {
         }
 
         if (item.itemId == R.id.menu_export) {
-            exportCSV()
+            showExportModeDialog()
 
             return true
         }
@@ -362,131 +371,90 @@ class LogViewFragment : ListFragment() {
         reloadList(false)
     }
 
-    @Suppress("DEPRECATION")
-    private fun createNewCSVFile() {
-        val ts = SimpleDateFormat(
-            "yyyy-MM-dd-HHmmss-SSS", Locale.getDefault()
-        ).format(Date())
-        val device: String = sanitizeFileNamePart(Build.MANUFACTURER + "-" + Build.MODEL)
-        val csvFileName = "Battery_Monitor-Logs-$device-$ts.csv"
-
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.setType("text/csv")
-        intent.putExtra(Intent.EXTRA_TITLE, csvFileName)
-
-        startActivityForResult(intent, CREATE_CSV_FILE)
+    private fun showExportModeDialog() {
+        AlertDialog.Builder(requireContext()).setTitle(R.string.log_export_mode_title).setItems(
+            arrayOf(
+                getString(R.string.log_export_append), getString(R.string.log_export_new_file)
+            )
+        ) { _, choice ->
+            if (choice == 0) startAppendExport() else chooseNewExportRange()
+        }.setNegativeButton(R.string.cancel, null).show()
     }
 
-    private fun exportCSV() {
-        val state = Environment.getExternalStorageState()
+    private fun startAppendExport() {
+        pendingExportAfter = pFrag!!.settings.takeIf {
+            it.contains(SettingsContract.KEY_LAST_LOG_EXPORT_TIME)
+        }?.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0L)
+        pendingExportThrough = System.currentTimeMillis()
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+            // Android document providers do not consistently report the MIME type of CSV files.
+            .setType("*/*")
+        startActivityForResult(intent, APPEND_CSV_FILE)
+    }
 
-        if (state != null && state == Environment.MEDIA_MOUNTED_READ_ONLY) {
-            Toast.makeText(activity, DisplayStrings.readOnlyStorage, Toast.LENGTH_SHORT).show()
-            return
-        } else if (state == null || state != Environment.MEDIA_MOUNTED) {
-            Toast.makeText(activity, DisplayStrings.inaccessibleWReason + state, Toast.LENGTH_SHORT)
-                .show()
+    private fun chooseNewExportRange() {
+        val preferences = pFrag!!.settings
+        if (!preferences.contains(SettingsContract.KEY_LAST_LOG_EXPORT_TIME)) {
+            startNewExport(afterExclusive = null)
             return
         }
+        val lastExport = preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0L)
+        AlertDialog.Builder(requireContext()).setTitle(R.string.log_export_range_title).setItems(
+            arrayOf(
+                getString(R.string.log_export_all_logs), getString(R.string.log_export_from_last)
+            )
+        ) { _, choice ->
+            startNewExport(if (choice == 1) lastExport else null)
+        }.setNegativeButton(R.string.cancel, null).show()
+    }
 
-        createNewCSVFile()
+    private fun startNewExport(afterExclusive: Long?) {
+        pendingExportAfter = afterExclusive
+        pendingExportThrough = System.currentTimeMillis()
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+            .setType("text/csv").putExtra(
+                Intent.EXTRA_TITLE, LogExport.fileName(LogExportFormat.CSV, pendingExportThrough)
+            )
+        startActivityForResult(intent, CREATE_CSV_FILE)
     }
 
     @Suppress("OVERRIDE_DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-        if (requestCode != CREATE_CSV_FILE) return
+        if (requestCode != CREATE_CSV_FILE && requestCode != APPEND_CSV_FILE) return
+        if (resultCode != Activity.RESULT_OK || resultData?.data == null) return
 
-        if (resultData == null) {
-            return
-        }
-
-        val d = Date()
-        val uri = resultData.data
-
-        val csvFields = arrayOf<String?>(
-            DisplayStrings.date,
-            DisplayStrings.time,
-            DisplayStrings.status,
-            DisplayStrings.charge,
-            DisplayStrings.temperature,
-            DisplayStrings.temperatureF,
-            DisplayStrings.voltage
-        )
-
+        val uri = resultData.data ?: return
+        val append = requestCode == APPEND_CSV_FILE
         try {
-            val pfd = requireActivity().contentResolver.openFileDescriptor(uri!!, "w")
-            val fileWriter = FileWriter(pfd!!.fileDescriptor)
-            val buf = BufferedWriter(fileWriter)
-
-            var cols = csvFields.size
-            var i: Int
-            i = 0
-            while (i < cols) {
-                buf.write(csvFields[i])
-                if (i != cols - 1) buf.write(",")
-                i++
+            val records = LogExport.loadRecords(
+                requireContext(), pendingExportAfter, pendingExportThrough
+            )
+            val empty = append && isDocumentEmpty(uri)
+            requireActivity().contentResolver.openOutputStream(
+                uri, if (append) "wa" else "w"
+            )?.use { output ->
+                LogExport.writeCsv(
+                    requireContext(), output, records, includeHeader = !append || empty
+                )
+            } ?: error("Could not open export file")
+            pFrag!!.settings.edit {
+                putLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, pendingExportThrough)
             }
-            buf.write("\r\n")
-
-            var statusCode: Int
-            var statusCodes: IntArray?
-            var status: Int
-            var plugged: Int
-            var status_age: Int
-            var s: String?
-
-            completeCursor!!.moveToFirst()
-            while (!completeCursor!!.isAfterLast) {
-                cols = CSV_ORDER.size
-                i = 0
-                while (i < cols) {
-                    if (CSV_ORDER[i] == LogDatabase.KEY_TIME) {
-                        d.setTime(completeCursor!!.getLong(mAdapter!!.timeIndex))
-                        buf.write(
-                            mAdapter!!.dateFormat.format(d) + "," + DisplayStrings.formatTime(
-                                requireContext(), d, includeSeconds = true
-                            ) + ","
-                        )
-                    } else if (CSV_ORDER[i] == LogDatabase.KEY_STATUS_CODE) {
-                        statusCode = completeCursor!!.getInt(mAdapter!!.statusCodeIndex)
-                        statusCodes = LogDatabase.decodeStatus(statusCode)
-                        status = statusCodes!![0]
-                        plugged = statusCodes[1]
-                        status_age = statusCodes[2]
-
-                        s =
-                            if (status == LogDatabase.STATUS_BOOT_COMPLETED) DisplayStrings.statusBootCompleted
-                            else if (status_age == LogDatabase.STATUS_OLD) DisplayStrings.logStatusesOld[status]
-                            else DisplayStrings.logStatuses[status]
-
-                        if (plugged > 0) s += " " + DisplayStrings.pluggeds[plugged]
-
-                        buf.write("$s,")
-                    } else if (CSV_ORDER[i] == LogDatabase.KEY_CHARGE) {
-                        buf.write(completeCursor!!.getInt(mAdapter!!.chargeIndex).toString() + ",")
-                    } else if (CSV_ORDER[i] == LogDatabase.KEY_TEMPERATURE) {
-                        val temperature = completeCursor!!.getInt(mAdapter!!.temperatureIndex)
-                        buf.write((temperature / 10.0).toString() + ",")
-                        buf.write(((temperature * 9 / 5.0).roundToInt() / 10.0 + 32.0).toString() + ",")
-                    } else if (CSV_ORDER[i] == LogDatabase.KEY_VOLTAGE) {
-                        buf.write((completeCursor!!.getInt(mAdapter!!.voltageIndex) / 1000.0).toString())
-                    }
-                    i++
-                }
-                buf.write("\r\n")
-                completeCursor!!.moveToNext()
-            }
-
-            buf.close()
-            fileWriter.close()
-            pfd.close()
-        } catch (e: Exception) {
+            Toast.makeText(activity, DisplayStrings.fileWritten, Toast.LENGTH_SHORT).show()
+        } catch (exception: Exception) {
             Toast.makeText(activity, DisplayStrings.inaccessibleStorage, Toast.LENGTH_SHORT).show()
-            return
         }
+    }
 
-        Toast.makeText(activity, DisplayStrings.fileWritten, Toast.LENGTH_SHORT).show()
+    private fun isDocumentEmpty(uri: android.net.Uri): Boolean {
+        requireActivity().contentResolver.query(
+            uri, arrayOf(OpenableColumns.SIZE), null, null, null
+        )?.use { cursor ->
+            if (cursor.moveToFirst() && !cursor.isNull(0)) return cursor.getLong(0) == 0L
+        }
+        return requireActivity().contentResolver.openInputStream(uri)?.use {
+            it.read() == -1
+        } ?: true
     }
 
     // Based on http://stackoverflow.com/a/7343721/1427098

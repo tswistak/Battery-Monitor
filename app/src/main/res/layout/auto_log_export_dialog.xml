@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/auto_log_export_frequency"
+            android:text="@string/pref_auto_log_export_frequency" />
+
+        <Spinner
+            android:id="@+id/auto_log_export_frequency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/auto_log_export_frequency_entries" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:labelFor="@id/auto_log_export_mode"
+            android:text="@string/pref_auto_log_export_mode" />
+
+        <Spinner
+            android:id="@+id/auto_log_export_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/auto_log_export_mode_entries" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:labelFor="@id/auto_log_export_format"
+            android:text="@string/pref_auto_log_export_format" />
+
+        <Spinner
+            android:id="@+id/auto_log_export_format"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/auto_log_export_format_entries" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/auto_log_export_format_help" />
+    </LinearLayout>
+</ScrollView>

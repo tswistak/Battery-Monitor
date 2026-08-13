@@ -57,6 +57,12 @@
   <string name="menu_reverse" formatted="false">उल्टे क्रम</string>
   <string name="menu_log_filter" formatted="false">फ़िल्टर</string>
   <string name="menu_export" formatted="false">सीएसवी निर्यात करें</string>
+  <string name="log_export_mode_title" formatted="false">लॉग निर्यात करें</string>
+  <string name="log_export_append" formatted="false">मौजूदा फ़ाइल में जोड़ें</string>
+  <string name="log_export_new_file" formatted="false">नई फ़ाइल बनाएँ</string>
+  <string name="log_export_range_title" formatted="false">कौन-से लॉग निर्यात किए जाएँ?</string>
+  <string name="log_export_all_logs" formatted="false">सभी लॉग</string>
+  <string name="log_export_from_last" formatted="false">पिछले निर्यात के बाद से</string>
   <string name="menu_delete_alarm" formatted="false">अलार्म हटाएँ</string>
   <string name="menu_show_seconds" formatted="false">सेकंड दिखाएँ</string>
   <string name="menu_hide_seconds" formatted="false">सेकंड छिपाएँ</string>
@@ -514,6 +520,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">महत्वपूर्ण आँकड़ों में कौन-से मान शामिल हों और किस क्रम में?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s का क्रम बदलें</string>
   <string name="pref_backup_restore" formatted="false">बैकअप और पुनर्स्थापना</string>
+  <string name="pref_auto_log_export" formatted="false">स्वचालित लॉग निर्यात</string>
+  <string name="pref_set_auto_log_export" formatted="false">स्वचालित लॉग निर्यात सेट करें</string>
+  <string name="pref_edit_auto_log_export" formatted="false">स्वचालित लॉग निर्यात संपादित करें</string>
+  <string name="pref_disable_auto_log_export" formatted="false">स्वचालित निर्यात बंद करें</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">नए लॉग समय-समय पर किसी फ़ोल्डर में सहेजें</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">कितनी बार निर्यात करें</string>
+  <string name="pref_auto_log_export_mode" formatted="false">फ़ाइल प्रबंधन</string>
+  <string name="pref_auto_log_export_format" formatted="false">निर्यात प्रारूप</string>
+  <string name="pref_auto_log_export_directory" formatted="false">फ़ोल्डर बदलें</string>
+  <string name="auto_log_export_help" formatted="false">स्वचालित निर्यात केवल पिछले स्वचालित निर्यात के बाद एकत्र हुए लॉग सहेजते हैं। चुनें कि वे कितनी बार चलें और हर निर्यात अलग फ़ाइल बनाए या नई प्रविष्टियाँ एक ही जारी फ़ाइल में जोड़े। डिवाइस निष्क्रिय होने पर Android निर्यात में देरी कर सकता है।</string>
+  <string name="auto_log_export_format_help" formatted="false">स्प्रेडशीट या टेक्स्ट एडिटर में लॉग को मैन्युअल रूप से पढ़ने, फ़िल्टर करने, चार्ट बनाने या जाँचने के लिए CSV चुनें। मुख्य रूप से बैकअप के लिए JSON चुनें: यह बहाली के लिए Battery Monitor का संरचित लॉग डेटा और पिछले मैन्युअल निर्यात का समय सुरक्षित रखता है।</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">नई फ़ाइल बनाएँ</string>
+  <string name="auto_log_export_mode_append" formatted="false">नए लॉग मौजूदा फ़ाइल में जोड़ें</string>
   <string name="pref_export_alarms" formatted="false">अलार्म निर्यात करें</string>
   <string name="pref_export_alarms_summary" formatted="false">वर्तमान अलार्म को फ़ाइल में सहेजें</string>
   <string name="pref_import_alarms" formatted="false">अलार्म आयात करें</string>

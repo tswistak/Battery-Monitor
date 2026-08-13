@@ -47,6 +47,15 @@ internal object SettingsContract {
     const val KEY_EXPORT_GENERAL_BACKUP: String = "export_general_backup"
     const val KEY_IMPORT_GENERAL_BACKUP: String = "import_general_backup"
 
+    const val KEY_AUTO_LOG_EXPORT: String = "auto_log_export"
+    const val KEY_LAST_LOG_EXPORT_TIME: String = "last_log_export_time"
+    const val KEY_AUTO_LOG_EXPORT_FREQUENCY: String = "auto_log_export_frequency"
+    const val KEY_AUTO_LOG_EXPORT_MODE: String = "auto_log_export_mode"
+    const val KEY_AUTO_LOG_EXPORT_FORMAT: String = "auto_log_export_format"
+    const val KEY_AUTO_LOG_EXPORT_DIRECTORY: String = "auto_log_export_directory"
+    const val KEY_LAST_AUTO_LOG_EXPORT_TIME: String = "last_auto_log_export_time"
+    const val KEY_NEXT_AUTO_LOG_EXPORT_TIME: String = "next_auto_log_export_time"
+
     const val KEY_ENABLE_LOGGING: String = "enable_logging"
     const val KEY_MAX_LOG_AGE: String = "max_log_age"
     const val KEY_ICON_CONTENT: String = "icon_content"

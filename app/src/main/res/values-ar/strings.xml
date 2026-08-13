@@ -55,6 +55,12 @@
   <string name="menu_reverse" formatted="false">ترتيب عكسي</string>
   <string name="menu_log_filter" formatted="false">تحديد</string>
   <string name="menu_export" formatted="false">csv تصدير</string>
+  <string name="log_export_mode_title" formatted="false">تصدير السجلات</string>
+  <string name="log_export_append" formatted="false">إلحاق بملف موجود</string>
+  <string name="log_export_new_file" formatted="false">إنشاء ملف جديد</string>
+  <string name="log_export_range_title" formatted="false">ما السجلات التي تريد تصديرها؟</string>
+  <string name="log_export_all_logs" formatted="false">جميع السجلات</string>
+  <string name="log_export_from_last" formatted="false">منذ آخر تصدير</string>
   <string name="menu_delete_alarm" formatted="false">حذف التنبيه</string>
   <string name="menu_show_seconds" formatted="false">إظهار الثواني</string>
   <string name="menu_hide_seconds" formatted="false">إخفاء الثواني</string>
@@ -554,6 +560,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">ما القيم التي يجب تضمينها في المؤشرات الحيوية، وبأي ترتيب؟</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">تغيير ترتيب %1$s</string>
   <string name="pref_backup_restore" formatted="false">النسخ الاحتياطي والاستعادة</string>
+  <string name="pref_auto_log_export" formatted="false">التصدير التلقائي للسجلات</string>
+  <string name="pref_set_auto_log_export" formatted="false">إعداد التصدير التلقائي للسجلات</string>
+  <string name="pref_edit_auto_log_export" formatted="false">تعديل التصدير التلقائي للسجلات</string>
+  <string name="pref_disable_auto_log_export" formatted="false">تعطيل التصدير التلقائي</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">حفظ السجلات الجديدة دوريًا في مجلد</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">وتيرة التصدير</string>
+  <string name="pref_auto_log_export_mode" formatted="false">التعامل مع الملفات</string>
+  <string name="pref_auto_log_export_format" formatted="false">تنسيق التصدير</string>
+  <string name="pref_auto_log_export_directory" formatted="false">تغيير المجلد</string>
+  <string name="auto_log_export_help" formatted="false">تصدّر عمليات التصدير التلقائي السجلات التي جُمعت منذ آخر تصدير تلقائي فقط. اختر عدد مرات التشغيل وما إذا كان كل تصدير ينشئ ملفًا منفصلًا أو يلحق الإدخالات الجديدة بملف واحد مستمر. قد يؤخر Android التصدير عندما يكون الجهاز في وضع الخمول.</string>
+  <string name="auto_log_export_format_help" formatted="false">اختر CSV لقراءة السجلات أو تصفيتها أو إنشاء مخططات لها أو تدقيقها يدويًا في جدول بيانات أو محرر نصوص. اختر JSON عندما يكون الملف نسخة احتياطية أساسًا، لأنه يحفظ بيانات سجل Battery Monitor المنظمة ووقت آخر تصدير يدوي للاستعادة.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">إنشاء ملف جديد</string>
+  <string name="auto_log_export_mode_append" formatted="false">إلحاق السجلات الجديدة بالملف الموجود</string>
   <string name="pref_export_alarms" formatted="false">تصدير التنبيهات</string>
   <string name="pref_export_alarms_summary" formatted="false">حفظ التنبيهات الحالية في ملف</string>
   <string name="pref_import_alarms" formatted="false">استيراد التنبيهات</string>

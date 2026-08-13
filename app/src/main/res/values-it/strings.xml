@@ -55,6 +55,12 @@
   <string name="menu_reverse" formatted="false">Inverti ordine</string>
   <string name="menu_log_filter" formatted="false">Filtro</string>
   <string name="menu_export" formatted="false">Esporta CSV</string>
+  <string name="log_export_mode_title" formatted="false">Esporta registri</string>
+  <string name="log_export_append" formatted="false">Aggiungi a un file esistente</string>
+  <string name="log_export_new_file" formatted="false">Crea un nuovo file</string>
+  <string name="log_export_range_title" formatted="false">Quali registri devono essere esportati?</string>
+  <string name="log_export_all_logs" formatted="false">Tutti i registri</string>
+  <string name="log_export_from_last" formatted="false">Dall’ultima esportazione</string>
   <string name="menu_delete_alarm" formatted="false">Elimina allarme</string>
   <string name="menu_show_seconds" formatted="false">Mostra secondi</string>
   <string name="menu_hide_seconds" formatted="false">Nascondi secondi</string>
@@ -509,6 +515,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Quali valori includere nei parametri vitali e in quale ordine?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Riordina %1$s</string>
   <string name="pref_backup_restore" formatted="false">Backup e ripristino</string>
+  <string name="pref_auto_log_export" formatted="false">Esportazione automatica dei registri</string>
+  <string name="pref_set_auto_log_export" formatted="false">Configura esportazioni automatiche</string>
+  <string name="pref_edit_auto_log_export" formatted="false">Modifica esportazioni automatiche</string>
+  <string name="pref_disable_auto_log_export" formatted="false">Disattiva esportazione automatica</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">Salva periodicamente i nuovi registri in una cartella</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">Frequenza di esportazione</string>
+  <string name="pref_auto_log_export_mode" formatted="false">Gestione dei file</string>
+  <string name="pref_auto_log_export_format" formatted="false">Formato di esportazione</string>
+  <string name="pref_auto_log_export_directory" formatted="false">Cambia cartella</string>
+  <string name="auto_log_export_help" formatted="false">Le esportazioni automatiche salvano solo i registri raccolti dopo la precedente esportazione automatica. Scegli la frequenza e se ogni esportazione deve creare un file separato o aggiungere le nuove voci a un unico file continuo. Android può ritardare un’esportazione mentre il dispositivo è inattivo.</string>
+  <string name="auto_log_export_format_help" formatted="false">Scegli CSV per leggere, filtrare, rappresentare graficamente o controllare manualmente i registri in un foglio di calcolo o editor di testo. Scegli JSON quando il file serve soprattutto come backup: conserva i dati strutturati di Battery Monitor e l’ora dell’ultima esportazione manuale per il ripristino.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">Crea un nuovo file</string>
+  <string name="auto_log_export_mode_append" formatted="false">Aggiungi i nuovi registri al file esistente</string>
   <string name="pref_export_alarms" formatted="false">Esporta allarmi</string>
   <string name="pref_export_alarms_summary" formatted="false">Salva gli allarmi attuali in un file</string>
   <string name="pref_import_alarms" formatted="false">Importa allarmi</string>

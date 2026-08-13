@@ -55,6 +55,12 @@
   <string name="menu_reverse" formatted="false">Opačné poradie</string>
   <string name="menu_log_filter" formatted="false">Filter</string>
   <string name="menu_export" formatted="false">Exportovať CSV</string>
+  <string name="log_export_mode_title" formatted="false">Exportovať záznamy</string>
+  <string name="log_export_append" formatted="false">Pripojiť k existujúcemu súboru</string>
+  <string name="log_export_new_file" formatted="false">Vytvoriť nový súbor</string>
+  <string name="log_export_range_title" formatted="false">Ktoré záznamy sa majú exportovať?</string>
+  <string name="log_export_all_logs" formatted="false">Všetky záznamy</string>
+  <string name="log_export_from_last" formatted="false">Od posledného exportu</string>
   <string name="menu_delete_alarm" formatted="false">Vymazať upozornenie</string>
   <string name="menu_show_seconds" formatted="false">Zobraziť sekundy</string>
   <string name="menu_hide_seconds" formatted="false">Skryť sekundy</string>
@@ -539,6 +545,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Ktoré hodnoty zahrnúť do dôležitých údajov a v akom poradí?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Zmeniť poradie: %1$s</string>
   <string name="pref_backup_restore" formatted="false">Záloha a obnovenie</string>
+  <string name="pref_auto_log_export" formatted="false">Automatický export záznamov</string>
+  <string name="pref_set_auto_log_export" formatted="false">Nastaviť automatický export záznamov</string>
+  <string name="pref_edit_auto_log_export" formatted="false">Upraviť automatický export záznamov</string>
+  <string name="pref_disable_auto_log_export" formatted="false">Vypnúť automatický export</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">Pravidelne ukladať nové záznamy do priečinka</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">Frekvencia exportu</string>
+  <string name="pref_auto_log_export_mode" formatted="false">Práca so súbormi</string>
+  <string name="pref_auto_log_export_format" formatted="false">Formát exportu</string>
+  <string name="pref_auto_log_export_directory" formatted="false">Zmeniť priečinok</string>
+  <string name="auto_log_export_help" formatted="false">Automatický export ukladá iba záznamy zhromaždené od predchádzajúceho automatického exportu. Vyberte frekvenciu a či má každý export vytvoriť samostatný súbor, alebo pripojiť nové položky k jednému priebežnému súboru. Android môže export odložiť, keď je zariadenie nečinné.</string>
+  <string name="auto_log_export_format_help" formatted="false">CSV vyberte na ručné čítanie, filtrovanie, tvorbu grafov alebo kontrolu záznamov v tabuľkovom či textovom editore. JSON vyberte najmä ako zálohu: zachová štruktúrované údaje Battery Monitoru a čas posledného ručného exportu na obnovenie.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">Vytvoriť nový súbor</string>
+  <string name="auto_log_export_mode_append" formatted="false">Pripojiť nové záznamy k existujúcemu súboru</string>
   <string name="pref_export_alarms" formatted="false">Exportovať alarmy</string>
   <string name="pref_export_alarms_summary" formatted="false">Uložiť aktuálne alarmy do súboru</string>
   <string name="pref_import_alarms" formatted="false">Importovať alarmy</string>

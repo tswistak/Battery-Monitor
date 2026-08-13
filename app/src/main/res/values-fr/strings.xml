@@ -55,6 +55,12 @@
   <string name="menu_reverse" formatted="false">Inverser l\'ordre</string>
   <string name="menu_log_filter" formatted="false">Filtre</string>
   <string name="menu_export" formatted="false">Exporter en CSV</string>
+  <string name="log_export_mode_title" formatted="false">Exporter les journaux</string>
+  <string name="log_export_append" formatted="false">Ajouter à un fichier existant</string>
+  <string name="log_export_new_file" formatted="false">Créer un nouveau fichier</string>
+  <string name="log_export_range_title" formatted="false">Quels journaux faut-il exporter ?</string>
+  <string name="log_export_all_logs" formatted="false">Tous les journaux</string>
+  <string name="log_export_from_last" formatted="false">Depuis le dernier export</string>
   <string name="menu_delete_alarm" formatted="false">Supprimer l\'alarme</string>
   <string name="menu_show_seconds" formatted="false">Afficher les secondes</string>
   <string name="menu_hide_seconds" formatted="false">Masquer les secondes</string>
@@ -510,6 +516,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Quelles valeurs inclure dans les signes vitaux et dans quel ordre ?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Réorganiser %1$s</string>
   <string name="pref_backup_restore" formatted="false">Sauvegarde et restauration</string>
+  <string name="pref_auto_log_export" formatted="false">Export automatique des journaux</string>
+  <string name="pref_set_auto_log_export" formatted="false">Configurer les exports automatiques</string>
+  <string name="pref_edit_auto_log_export" formatted="false">Modifier les exports automatiques</string>
+  <string name="pref_disable_auto_log_export" formatted="false">Désactiver l’export automatique</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">Enregistrer périodiquement les nouveaux journaux dans un dossier</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">Fréquence d’export</string>
+  <string name="pref_auto_log_export_mode" formatted="false">Gestion des fichiers</string>
+  <string name="pref_auto_log_export_format" formatted="false">Format d’export</string>
+  <string name="pref_auto_log_export_directory" formatted="false">Changer de dossier</string>
+  <string name="auto_log_export_help" formatted="false">Les exports automatiques enregistrent uniquement les journaux collectés depuis le précédent export automatique. Choisissez leur fréquence et si chaque export doit créer un fichier distinct ou ajouter les nouvelles entrées à un fichier continu. Android peut retarder un export lorsque l’appareil est inactif.</string>
+  <string name="auto_log_export_format_help" formatted="false">Choisissez CSV pour lire, filtrer, représenter graphiquement ou auditer manuellement les journaux dans un tableur ou un éditeur de texte. Choisissez JSON lorsque le fichier sert principalement de sauvegarde : il conserve les données structurées de Battery Monitor et l’heure du dernier export manuel pour la restauration.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">Créer un nouveau fichier</string>
+  <string name="auto_log_export_mode_append" formatted="false">Ajouter les nouveaux journaux au fichier existant</string>
   <string name="pref_export_alarms" formatted="false">Exporter les alarmes</string>
   <string name="pref_export_alarms_summary" formatted="false">Enregistrer les alarmes actuelles dans un fichier</string>
   <string name="pref_import_alarms" formatted="false">Importer les alarmes</string>

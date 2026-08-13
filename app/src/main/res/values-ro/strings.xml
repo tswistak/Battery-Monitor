@@ -53,6 +53,12 @@
   <string name="menu_reverse" formatted="false">Inverseaza ordinea</string>
   <string name="menu_log_filter" formatted="false">Filtru</string>
   <string name="menu_export" formatted="false">Exporta CSV</string>
+  <string name="log_export_mode_title" formatted="false">Exportă jurnalele</string>
+  <string name="log_export_append" formatted="false">Adaugă la un fișier existent</string>
+  <string name="log_export_new_file" formatted="false">Creează un fișier nou</string>
+  <string name="log_export_range_title" formatted="false">Ce jurnale trebuie exportate?</string>
+  <string name="log_export_all_logs" formatted="false">Toate jurnalele</string>
+  <string name="log_export_from_last" formatted="false">De la ultimul export</string>
   <string name="menu_delete_alarm" formatted="false">Sterge Alarma</string>
   <string name="menu_show_seconds" formatted="false">Afișează secunde</string>
   <string name="menu_hide_seconds" formatted="false">Ascunde secunde</string>
@@ -524,6 +530,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Ce valori să fie incluse în statisticile vitale și în ce ordine?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Reordonați %1$s</string>
   <string name="pref_backup_restore" formatted="false">Copiere de rezervă și restaurare</string>
+  <string name="pref_auto_log_export" formatted="false">Export automat al jurnalelor</string>
+  <string name="pref_set_auto_log_export" formatted="false">Configurează exporturile automate</string>
+  <string name="pref_edit_auto_log_export" formatted="false">Editează exporturile automate</string>
+  <string name="pref_disable_auto_log_export" formatted="false">Dezactivează exportul automat</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">Salvează periodic jurnalele noi într-un dosar</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">Frecvența exportului</string>
+  <string name="pref_auto_log_export_mode" formatted="false">Gestionarea fișierelor</string>
+  <string name="pref_auto_log_export_format" formatted="false">Formatul exportului</string>
+  <string name="pref_auto_log_export_directory" formatted="false">Schimbă dosarul</string>
+  <string name="auto_log_export_help" formatted="false">Exporturile automate salvează numai jurnalele colectate de la exportul automat anterior. Alege frecvența și dacă fiecare export creează un fișier separat sau adaugă intrările noi într-un singur fișier continuu. Android poate întârzia un export cât timp dispozitivul este inactiv.</string>
+  <string name="auto_log_export_format_help" formatted="false">Alege CSV pentru a citi, filtra, reprezenta grafic sau audita manual jurnalele într-o foaie de calcul sau într-un editor de text. Alege JSON când fișierul este în principal o copie de rezervă: păstrează datele structurate ale Battery Monitor și ora ultimului export manual pentru restaurare.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">Creează un fișier nou</string>
+  <string name="auto_log_export_mode_append" formatted="false">Adaugă jurnalele noi la fișierul existent</string>
   <string name="pref_export_alarms" formatted="false">Exportați alarmele</string>
   <string name="pref_export_alarms_summary" formatted="false">Salvați alarmele curente într-un fișier</string>
   <string name="pref_import_alarms" formatted="false">Importați alarmele</string>

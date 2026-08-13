@@ -57,6 +57,12 @@
   <string name="menu_reverse" formatted="false">ترتیب معکوس</string>
   <string name="menu_log_filter" formatted="false">فیلتر کنید</string>
   <string name="menu_export" formatted="false">صادرات CSV</string>
+  <string name="log_export_mode_title" formatted="false">برون‌بری گزارش‌ها</string>
+  <string name="log_export_append" formatted="false">افزودن به پروندهٔ موجود</string>
+  <string name="log_export_new_file" formatted="false">ایجاد پروندهٔ جدید</string>
+  <string name="log_export_range_title" formatted="false">کدام گزارش‌ها برون‌بری شوند؟</string>
+  <string name="log_export_all_logs" formatted="false">همهٔ گزارش‌ها</string>
+  <string name="log_export_from_last" formatted="false">از آخرین برون‌بری</string>
   <string name="menu_delete_alarm" formatted="false">حذف هشدار</string>
   <string name="menu_show_seconds" formatted="false">نمایش ثانیه ها</string>
   <string name="menu_hide_seconds" formatted="false">مخفی کردن ثانیه ها</string>
@@ -518,6 +524,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">کدام مقادیر در آمار حیاتی گنجانده شوند و با چه ترتیبی؟</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">تغییر ترتیب %1$s</string>
   <string name="pref_backup_restore" formatted="false">پشتیبان‌گیری و بازیابی</string>
+  <string name="pref_auto_log_export" formatted="false">برون‌بری خودکار گزارش‌ها</string>
+  <string name="pref_set_auto_log_export" formatted="false">تنظیم برون‌بری خودکار گزارش‌ها</string>
+  <string name="pref_edit_auto_log_export" formatted="false">ویرایش برون‌بری خودکار گزارش‌ها</string>
+  <string name="pref_disable_auto_log_export" formatted="false">غیرفعال کردن برون‌بری خودکار</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">ذخیرهٔ دوره‌ای گزارش‌های جدید در یک پوشه</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">فاصلهٔ برون‌بری</string>
+  <string name="pref_auto_log_export_mode" formatted="false">مدیریت پرونده</string>
+  <string name="pref_auto_log_export_format" formatted="false">قالب برون‌بری</string>
+  <string name="pref_auto_log_export_directory" formatted="false">تغییر پوشه</string>
+  <string name="auto_log_export_help" formatted="false">برون‌بری خودکار فقط گزارش‌هایی را ذخیره می‌کند که از برون‌بری خودکار قبلی جمع‌آوری شده‌اند. فاصلهٔ اجرا و ایجاد پروندهٔ جداگانه یا افزودن ورودی‌های جدید به یک پروندهٔ پیوسته را انتخاب کنید. ممکن است Android هنگام بی‌کار بودن دستگاه برون‌بری را به تأخیر بیندازد.</string>
+  <string name="auto_log_export_format_help" formatted="false">برای خواندن، پالایش، رسم نمودار یا بررسی دستی گزارش‌ها در صفحه‌گسترده یا ویرایشگر متن، CSV را انتخاب کنید. اگر پرونده بیشتر برای پشتیبان‌گیری است JSON را انتخاب کنید؛ این قالب داده‌های ساختاریافتهٔ Battery Monitor و زمان آخرین برون‌بری دستی را برای بازیابی حفظ می‌کند.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">ایجاد پروندهٔ جدید</string>
+  <string name="auto_log_export_mode_append" formatted="false">افزودن گزارش‌های جدید به پروندهٔ موجود</string>
   <string name="pref_export_alarms" formatted="false">صادر کردن هشدارها</string>
   <string name="pref_export_alarms_summary" formatted="false">ذخیره هشدارهای فعلی در یک فایل</string>
   <string name="pref_import_alarms" formatted="false">وارد کردن هشدارها</string>

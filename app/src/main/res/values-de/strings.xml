@@ -55,6 +55,12 @@
   <string name="menu_reverse" formatted="false">Umgekehrte Anordnung</string>
   <string name="menu_log_filter" formatted="false">Filter</string>
   <string name="menu_export" formatted="false">CSV exportieren</string>
+  <string name="log_export_mode_title" formatted="false">Protokolle exportieren</string>
+  <string name="log_export_append" formatted="false">An vorhandene Datei anhängen</string>
+  <string name="log_export_new_file" formatted="false">Neue Datei erstellen</string>
+  <string name="log_export_range_title" formatted="false">Welche Protokolle sollen exportiert werden?</string>
+  <string name="log_export_all_logs" formatted="false">Alle Protokolle</string>
+  <string name="log_export_from_last" formatted="false">Seit dem letzten Export</string>
   <string name="menu_delete_alarm" formatted="false">Alarm löschen</string>
   <string name="menu_show_seconds" formatted="false">Sekunden anzeigen</string>
   <string name="menu_hide_seconds" formatted="false">Sekunden ausblenden</string>
@@ -490,6 +496,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Welche Werte sollen in den Vitalzeichen enthalten sein und in welcher Reihenfolge?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s neu anordnen</string>
   <string name="pref_backup_restore" formatted="false">Sichern und Wiederherstellen</string>
+  <string name="pref_auto_log_export" formatted="false">Automatischer Protokollexport</string>
+  <string name="pref_set_auto_log_export" formatted="false">Automatische Protokollexporte einrichten</string>
+  <string name="pref_edit_auto_log_export" formatted="false">Automatische Protokollexporte bearbeiten</string>
+  <string name="pref_disable_auto_log_export" formatted="false">Automatischen Export deaktivieren</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">Neue Protokolle regelmäßig in einem Ordner speichern</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">Exportintervall</string>
+  <string name="pref_auto_log_export_mode" formatted="false">Dateiverarbeitung</string>
+  <string name="pref_auto_log_export_format" formatted="false">Exportformat</string>
+  <string name="pref_auto_log_export_directory" formatted="false">Ordner ändern</string>
+  <string name="auto_log_export_help" formatted="false">Automatische Exporte speichern nur Protokolle, die seit dem vorherigen automatischen Export erfasst wurden. Wähle das Intervall und ob jeder Export eine eigene Datei erstellt oder neue Einträge an eine fortlaufende Datei anhängt. Android kann einen Export verzögern, während das Gerät inaktiv ist.</string>
+  <string name="auto_log_export_format_help" formatted="false">CSV eignet sich zum manuellen Lesen, Filtern, Darstellen oder Prüfen der Protokolle in einer Tabellenkalkulation oder einem Texteditor. JSON eignet sich vor allem als Sicherung: Es bewahrt die strukturierten Protokolldaten von Battery Monitor und den Zeitpunkt des letzten manuellen Exports zur Wiederherstellung.</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">Neue Datei erstellen</string>
+  <string name="auto_log_export_mode_append" formatted="false">Neue Protokolle an vorhandene Datei anhängen</string>
   <string name="pref_export_alarms" formatted="false">Alarme exportieren</string>
   <string name="pref_export_alarms_summary" formatted="false">Aktuelle Alarme in einer Datei speichern</string>
   <string name="pref_import_alarms" formatted="false">Alarme importieren</string>

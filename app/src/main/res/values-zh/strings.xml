@@ -55,6 +55,12 @@
   <string name="menu_reverse" formatted="false">反向排序</string>
   <string name="menu_log_filter" formatted="false">篩選</string>
   <string name="menu_export" formatted="false">匯出至CSV</string>
+  <string name="log_export_mode_title" formatted="false">匯出記錄</string>
+  <string name="log_export_append" formatted="false">附加到現有檔案</string>
+  <string name="log_export_new_file" formatted="false">建立新檔案</string>
+  <string name="log_export_range_title" formatted="false">要匯出哪些記錄？</string>
+  <string name="log_export_all_logs" formatted="false">所有記錄</string>
+  <string name="log_export_from_last" formatted="false">自上次匯出以來</string>
   <string name="menu_delete_alarm" formatted="false">刪除鬧鐘</string>
   <string name="menu_show_seconds" formatted="false">顯示秒數</string>
   <string name="menu_hide_seconds" formatted="false">隱藏秒數</string>
@@ -511,6 +517,21 @@
   <string name="pref_vital_signs_content_summary" formatted="false">重要資料中要包含哪些數值，並以什麼順序顯示？</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">調整「%1$s」的順序</string>
   <string name="pref_backup_restore" formatted="false">備份與還原</string>
+  <string name="pref_auto_log_export" formatted="false">自動匯出記錄</string>
+  <string name="pref_set_auto_log_export" formatted="false">設定自動匯出記錄</string>
+  <string name="pref_edit_auto_log_export" formatted="false">編輯自動匯出記錄</string>
+  <string name="pref_disable_auto_log_export" formatted="false">停用自動匯出</string>
+  <string name="pref_auto_log_export_not_set_summary" formatted="false">定期將新記錄儲存到資料夾</string>
+  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+  <string name="pref_auto_log_export_frequency" formatted="false">匯出頻率</string>
+  <string name="pref_auto_log_export_mode" formatted="false">檔案處理</string>
+  <string name="pref_auto_log_export_format" formatted="false">匯出格式</string>
+  <string name="pref_auto_log_export_directory" formatted="false">變更資料夾</string>
+  <string name="auto_log_export_help" formatted="false">自動匯出只會儲存自上次自動匯出後收集的記錄。請選擇執行頻率，以及每次匯出要建立獨立檔案，或將新項目附加到同一個持續使用的檔案。裝置閒置時，Android 可能會延遲匯出。</string>
+  <string name="auto_log_export_format_help" formatted="false">若要在試算表或文字編輯器中手動讀取、篩選、繪圖或稽核記錄，請選擇 CSV。若檔案主要用作備份，請選擇 JSON：它會保留 Battery Monitor 的結構化記錄資料及上次手動匯出時間，以便還原。</string>
+  <string name="auto_log_export_mode_new_file" formatted="false">建立新檔案</string>
+  <string name="auto_log_export_mode_append" formatted="false">將新記錄附加到現有檔案</string>
   <string name="pref_export_alarms" formatted="false">匯出鬧鐘</string>
   <string name="pref_export_alarms_summary" formatted="false">將目前的鬧鐘儲存到檔案</string>
   <string name="pref_import_alarms" formatted="false">匯入鬧鐘</string>

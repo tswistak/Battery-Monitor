@@ -14,6 +14,7 @@ package codes.swistak.batterymonitor.app
 
 
 import android.app.Application
+import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.migration.SettingsMigrationManager
 
@@ -24,5 +25,6 @@ class BatteryMonitorApplication : Application() {
         SettingsMigrationManager.migrate(
             getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
         )
+        AutoLogExportScheduler.ensureScheduled(this)
     }
 }

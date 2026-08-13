@@ -53,6 +53,7 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.logs.AutoLogExporter
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -1167,7 +1168,9 @@ class BatteryInfoService : Service() {
                 val maxLogAge = settings.getString(
                     SettingsContract.KEY_MAX_LOG_AGE, DisplayStrings.defaultMaxLogAge
                 )!!.toInt()
-                if (maxLogAge >= 0) logDb!!.prune(maxLogAge)
+                if (maxLogAge >= 0 && AutoLogExporter.exportBeforeLogDeletion(this)) {
+                    logDb!!.prune(maxLogAge)
+                }
             }
         }
 

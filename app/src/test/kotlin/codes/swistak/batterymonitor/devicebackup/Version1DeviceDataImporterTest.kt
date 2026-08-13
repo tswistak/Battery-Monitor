@@ -23,6 +23,9 @@ class Version1DeviceDataImporterTest {
     fun `device-specific data backup starts at schema version one`() {
         assertEquals(1, DeviceDataBackup.SCHEMA_VERSION)
         assertEquals(
+            "lastLogExportTime", Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME
+        )
+        assertEquals(
             setOf(
                 "averageDischarge",
                 "averageRechargeAc",

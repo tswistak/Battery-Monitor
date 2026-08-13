@@ -24,6 +24,8 @@ internal object Version1DeviceDataImporter {
     const val KEY_LOG_TEMPERATURE = "temperature"
     const val KEY_LOG_VOLTAGE = "voltage"
 
+    const val KEY_LAST_LOG_EXPORT_TIME = "lastLogExportTime"
+
     const val KEY_AVERAGE_DISCHARGE = "averageDischarge"
     const val KEY_AVERAGE_RECHARGE_AC = "averageRechargeAc"
     const val KEY_AVERAGE_RECHARGE_WIRELESS = "averageRechargeWireless"

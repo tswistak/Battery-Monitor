@@ -50,5 +50,10 @@
             app:key="import_logs_csv_backup"
             app:summary="@string/pref_import_logs_csv_summary"
             app:title="@string/pref_import_logs_csv" />
+
+        <Preference
+            app:key="auto_log_export"
+            app:summary="@string/pref_auto_log_export_not_set_summary"
+            app:title="@string/pref_set_auto_log_export" />
     </PreferenceCategory>
 </PreferenceScreen>

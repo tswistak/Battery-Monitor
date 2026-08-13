@@ -18,6 +18,7 @@ import android.net.Uri
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.monitoring.Predictor
+import codes.swistak.batterymonitor.settings.SettingsContract
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -73,6 +74,7 @@ internal object DeviceDataBackup {
             } finally {
                 database.close()
             }
+            addLastLogExportTime(context, root)
         }
 
         if (DeviceDataType.PREDICTOR_DATA in selectedData) {
@@ -106,6 +108,12 @@ internal object DeviceDataBackup {
         } else {
             null
         }
+        val lastLogExportTime =
+            if (DeviceDataType.LOGS in selectedData && root.has(Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)) {
+                parseLong(root, Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)
+            } else {
+                null
+            }
         val predictor = if (DeviceDataType.PREDICTOR_DATA in selectedData) {
             parsePredictor(root.getJSONObject(KEY_PREDICTOR))
         } else {
@@ -122,6 +130,13 @@ internal object DeviceDataBackup {
             } finally {
                 database.close()
             }
+        }
+        lastLogExportTime?.let {
+            check(
+                context.getSharedPreferences(
+                    SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+                ).edit().putLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, it).commit()
+            ) { "Could not restore the last log export time" }
         }
         predictor?.let {
             val preferences =
@@ -152,6 +167,36 @@ internal object DeviceDataBackup {
                 return reader.readText()
             }
         }
+    }
+
+    fun exportLogsToJson(context: Context, records: List<LogRecord>): JSONObject =
+        JSONObject().put(KEY_VERSION, SCHEMA_VERSION).put(KEY_LOGS, logsToJson(records)).also {
+            addLastLogExportTime(context, it)
+        }
+
+    fun readLogsFromJson(jsonString: String): List<LogRecord> =
+        parseLogs(parseRoot(jsonString).getJSONArray(KEY_LOGS))
+
+    private fun addLastLogExportTime(context: Context, root: JSONObject) {
+        val preferences = context.getSharedPreferences(
+            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+        )
+        if (preferences.contains(SettingsContract.KEY_LAST_LOG_EXPORT_TIME)) {
+            root.put(
+                Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME,
+                preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0L)
+            )
+        }
+    }
+
+    private fun parseLong(root: JSONObject, key: String): Long {
+        val value = root.get(key)
+        require(value is Number) { "Invalid value for '$key'" }
+        val longValue = value.toLong()
+        require(value.toDouble().isFinite() && value.toDouble() == longValue.toDouble()) {
+            "Invalid value for '$key'"
+        }
+        return longValue
     }
 
     private fun parseRoot(jsonString: String): JSONObject {

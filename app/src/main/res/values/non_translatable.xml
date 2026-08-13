@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string formatted="false" name="app_full_name" translatable="false">Battery Monitor</string>
+    <string name="app_full_name" formatted="false" translatable="false">Battery Monitor</string>
+    <string name="auto_log_export_format_csv" formatted="false" translatable="false">CSV</string>
+    <string name="auto_log_export_format_json" formatted="false" translatable="false">JSON</string>
 </resources>

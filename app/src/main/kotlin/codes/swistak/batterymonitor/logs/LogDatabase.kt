@@ -39,7 +39,7 @@ internal class LogDatabase(context: Context?) {
         const val KEY_TEMPERATURE: String = "temperature"
         const val KEY_VOLTAGE: String = "voltage"
 
-        val STATUS_BOOT_COMPLETED: Int = -1
+        const val STATUS_BOOT_COMPLETED: Int = -1
 
         // Values for status_age
         const val STATUS_NEW: Int = 0
@@ -116,11 +116,28 @@ internal class LogDatabase(context: Context?) {
     }
 
     fun getAllLogRecords(): List<LogRecord> {
+        return getLogRecordsInRange()
+    }
+
+    fun getLogRecordsInRange(
+        afterExclusive: Long? = null, throughInclusive: Long? = null
+    ): List<LogRecord> {
         openDBs()
 
+        val whereParts = mutableListOf<String>()
+        val whereArgs = mutableListOf<String>()
+        afterExclusive?.let {
+            whereParts += "$KEY_TIME > ?"
+            whereArgs += it.toString()
+        }
+        throughInclusive?.let {
+            whereParts += "$KEY_TIME <= ?"
+            whereArgs += it.toString()
+        }
+        val where = if (whereParts.isEmpty()) "" else " WHERE ${whereParts.joinToString(" AND ")}"
         val cursor = rdb?.rawQuery(
-            "SELECT $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE " + "FROM $LOG_TABLE_NAME ORDER BY $KEY_TIME ASC",
-            null
+            "SELECT $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE FROM $LOG_TABLE_NAME$where ORDER BY $KEY_TIME ASC",
+            whereArgs.takeIf { it.isNotEmpty() }?.toTypedArray()
         ) ?: return emptyList()
         cursor.use {
             val statusColumn = it.getColumnIndexOrThrow(KEY_STATUS_CODE)
