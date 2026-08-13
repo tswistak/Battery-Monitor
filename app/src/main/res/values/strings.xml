@@ -557,6 +557,6 @@
   <string name="general_backup_help" formatted="false">A general backup saves settings, alarms, and device-specific data together. When restoring it, you can choose which available data to import.</string>
   <string name="settings_backup_help" formatted="false">A settings backup saves your app preferences. Importing it restores the saved preferences.</string>
   <string name="alarms_backup_help" formatted="false">An alarms backup saves your alarms. Importing it replaces all current alarms with those from the backup.</string>
-  <string name="device_specific_backup_help" formatted="false">A device-specific backup saves logs and predictor data. You can select either or both during import. This data belongs to the source device; using it on another device can cause incorrect predictions or unexpected behavior. When importing logs, choose whether to add them or replace existing logs.</string>
+  <string name="device_specific_backup_help" formatted="false">A device-specific data backup saves logs and predictor data. You can select either or both during import. This data belongs to the source device; using it on another device can cause incorrect predictions or unexpected behavior. When importing logs, choose whether to add them or replace existing logs.</string>
   <string name="csv_logs_import_help" formatted="false">You can import logs from a previously exported CSV file. Import may not work correctly between different app versions. Choose whether to add imported logs or replace existing logs.</string>
 </resources>

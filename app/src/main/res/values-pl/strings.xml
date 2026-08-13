@@ -537,38 +537,38 @@
   <string name="invalid_alarms_file" formatted="false">Nieprawidłowy plik alarmów</string>
   <string name="pref_backup_device_data" formatted="false">Kopia zapasowa danych specyficznych dla urządzenia</string>
   <string name="pref_export_device_data" formatted="false">Eksportuj dane specyficzne dla urządzenia</string>
-  <string name="pref_export_device_data_summary" formatted="false">Zapisz dzienniki i dane predykcyjne do pliku</string>
+  <string name="pref_export_device_data_summary" formatted="false">Zapisz logi i dane predykcyjne do pliku</string>
   <string name="pref_import_device_data" formatted="false">Importuj dane specyficzne dla urządzenia</string>
-  <string name="pref_import_device_data_summary" formatted="false">Przywróć dzienniki i dane predykcyjne z pliku</string>
-  <string name="device_data_logs" formatted="false">Dzienniki</string>
+  <string name="pref_import_device_data_summary" formatted="false">Przywróć logi i dane predykcyjne z pliku</string>
+  <string name="device_data_logs" formatted="false">Logi</string>
   <string name="device_data_predictor" formatted="false">Dane predykcyjne</string>
-  <string name="device_data_backup_warning" formatted="false">Te dane są specyficzne dla urządzenia, na którym zostały zebrane. Zaimportowanie ich na innym urządzeniu może spowodować błędne przewidywania lub inne nieoczekiwane działanie aplikacji.</string>
-  <string name="device_data_exported" formatted="false">Dane specyficzne dla urządzenia zostały pomyślnie wyeksportowane</string>
-  <string name="device_data_imported" formatted="false">Dane specyficzne dla urządzenia zostały pomyślnie zaimportowane</string>
+  <string name="device_data_backup_warning" formatted="false">Te dane specyficzne dla urządzenia należą do urządzenia, na którym zostały zebrane. Zaimportowanie ich na innym urządzeniu może spowodować błędne przewidywania lub inne nieoczekiwane zachowanie aplikacji.</string>
+  <string name="device_data_exported" formatted="false">Dane specyficzne dla urządzenia zostały wyeksportowane</string>
+  <string name="device_data_imported" formatted="false">Dane specyficzne dla urządzenia zostały zaimportowane</string>
   <string name="invalid_device_data_file" formatted="false">Nieprawidłowy plik danych specyficznych dla urządzenia</string>
   <string name="device_data_file_empty" formatted="false">Ten plik nie zawiera obsługiwanych danych specyficznych dla urządzenia</string>
-  <string name="pref_import_logs_csv" formatted="false">Importuj dzienniki z pliku CSV</string>
-  <string name="pref_import_logs_csv_summary" formatted="false">Importuj dzienniki z wyeksportowanego pliku CSV</string>
-  <string name="csv_logs_import_warning" formatted="false">Format CSV może się różnić między wersjami aplikacji, dlatego import nie zawsze może działać poprawnie.</string>
-  <string name="csv_logs_imported" formatted="false">Dzienniki CSV zostały pomyślnie zaimportowane</string>
-  <string name="invalid_csv_logs_file" formatted="false">Nieprawidłowy lub niezgodny plik dzienników CSV</string>
-  <string name="log_import_mode_title" formatted="false">Importuj dzienniki</string>
-  <string name="log_import_mode_message" formatted="false">Jak obsłużyć zaimportowane dzienniki?</string>
-  <string name="log_import_replace" formatted="false">Zastąp istniejące dzienniki</string>
-  <string name="log_import_add" formatted="false">Dodaj do istniejących dzienników</string>
+  <string name="pref_import_logs_csv" formatted="false">Importuj logi z pliku CSV</string>
+  <string name="pref_import_logs_csv_summary" formatted="false">Importuj logi z wyeksportowanego pliku CSV</string>
+  <string name="csv_logs_import_warning" formatted="false">Formaty CSV mogą się różnić między wersjami aplikacji, dlatego import może nie zawsze działać prawidłowo.</string>
+  <string name="csv_logs_imported" formatted="false">Logi CSV zostały zaimportowane</string>
+  <string name="invalid_csv_logs_file" formatted="false">Nieprawidłowy lub niekompatybilny plik logów CSV</string>
+  <string name="log_import_mode_title" formatted="false">Importuj logi</string>
+  <string name="log_import_mode_message" formatted="false">Jak zaimportowane logi powinny zostać obsłużone?</string>
+  <string name="log_import_replace" formatted="false">Zastąp istniejące logi</string>
+  <string name="log_import_add" formatted="false">Dodaj do istniejących logów</string>
   <string name="pref_general_backup" formatted="false">Ogólna kopia zapasowa aplikacji</string>
   <string name="pref_export_general_backup" formatted="false">Eksportuj ogólną kopię zapasową</string>
-  <string name="pref_export_general_backup_summary" formatted="false">Zapisz ustawienia, alarmy i dane specyficzne dla urządzenia w pliku ZIP</string>
+  <string name="pref_export_general_backup_summary" formatted="false">Zapisz ustawienia, alarmy i dane specyficzne dla urządzenia do pliku ZIP</string>
   <string name="pref_import_general_backup" formatted="false">Importuj ogólną kopię zapasową</string>
   <string name="pref_import_general_backup_summary" formatted="false">Przywróć wybrane dane z pliku ZIP ogólnej kopii zapasowej</string>
-  <string name="general_backup_restore_message" formatted="false">Wybierz, co chcesz przywrócić.</string>
-  <string name="general_backup_exported" formatted="false">Ogólna kopia zapasowa została pomyślnie wyeksportowana</string>
-  <string name="general_backup_imported" formatted="false">Ogólna kopia zapasowa została pomyślnie zaimportowana</string>
-  <string name="invalid_general_backup_file" formatted="false">Nieprawidłowy lub niezgodny plik ogólnej kopii zapasowej</string>
-  <string name="backup_restore_help_overview" formatted="false">Użyj kopii zapasowych, aby zachować dane aplikacji i przywrócić je później.</string>
-  <string name="general_backup_help" formatted="false">Ogólna kopia zapasowa zapisuje razem ustawienia, alarmy i dane specyficzne dla urządzenia. Podczas przywracania możesz wybrać, które dostępne dane chcesz zaimportować.</string>
-  <string name="settings_backup_help" formatted="false">Kopia ustawień zapisuje preferencje aplikacji. Jej import przywraca zapisane preferencje.</string>
-  <string name="alarms_backup_help" formatted="false">Kopia alarmów zapisuje Twoje alarmy. Jej import zastępuje wszystkie bieżące alarmy alarmami z kopii.</string>
-  <string name="device_specific_backup_help" formatted="false">Kopia danych specyficznych dla urządzenia zapisuje logi i dane predyktora. Podczas importu możesz wybrać jedno lub oba. Dane te należą do urządzenia źródłowego; użycie ich na innym urządzeniu może spowodować nieprawidłowe prognozy lub nieoczekiwane działanie. Podczas importowania logów wybierz, czy dodać je do istniejących, czy je zastąpić.</string>
-  <string name="csv_logs_import_help" formatted="false">Możesz zaimportować logi z wcześniej wyeksportowanego pliku CSV. Import między różnymi wersjami aplikacji może nie działać prawidłowo. Wybierz, czy dodać zaimportowane logi, czy zastąpić nimi istniejące.</string>
+  <string name="general_backup_restore_message" formatted="false">Wybierz, co chcesz przywrócić</string>
+  <string name="general_backup_exported" formatted="false">Ogólna kopia zapasowa została wyeksportowana</string>
+  <string name="general_backup_imported" formatted="false">Ogólna kopia zapasowa została zaimportowana</string>
+  <string name="invalid_general_backup_file" formatted="false">Nieprawidłowy lub niekompatybilny plik ogólnej kopii zapasowej</string>
+  <string name="backup_restore_help_overview" formatted="false">Użyj kopii zapasowych, aby zapisać kopię Twoich danych aplikacji i przywrócić ją później.</string>
+  <string name="general_backup_help" formatted="false">Ogólna kopia zapasowa zapisuje razem ustawienia, alarmy i dane specyficzne dla urządzenia. Podczas jej przywracania możesz wybrać, które dostępne dane zaimportować.</string>
+  <string name="settings_backup_help" formatted="false">Kopia zapasowa ustawień zapisuje Twoje preferencje aplikacji. Zaimportowanie jej przywraca zapisane preferencje.</string>
+  <string name="alarms_backup_help" formatted="false">Kopia zapasowa alarmów zapisuje Twoje alarmy. Zaimportowanie jej zastępuje wszystkie bieżące alarmy alarmami z kopii zapasowej.</string>
+  <string name="device_specific_backup_help" formatted="false">Kopia zapasowa danych specyficznych dla urządzenia zapisuje logi i dane predykcyjne. Możesz wybrać którekolwiek lub oba podczas importu. Dane te należą do urządzenia źródłowego; użycie ich na innym urządzeniu może spowodować błędne przewidywania lub nieoczekiwane zachowanie. Podczas importowania logów wybierz, czy je dodać, czy zastąpić istniejące logi.</string>
+  <string name="csv_logs_import_help" formatted="false">Możesz zaimportować logi z poprzednio wyeksportowanego pliku CSV. Import może nie działać prawidłowo między różnymi wersjami aplikacji. Wybierz, czy dodać zaimportowane logi, czy zastąpić istniejące.</string>
 </resources>
