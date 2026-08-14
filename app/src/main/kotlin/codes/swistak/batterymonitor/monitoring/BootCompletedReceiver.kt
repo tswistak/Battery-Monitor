@@ -42,6 +42,8 @@ class BootCompletedReceiver : BroadcastReceiver() {
         ) spService.getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)
         else spMain.getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)
 
+        BackgroundServiceWatchdog.schedule(context)
+
         // Note: Regardless of anything here, Android will start the Service on boot if there are any desktop widgets
         if (startPref == "always" || (startPref == "auto" && serviceDesired)) {
             BatteryInfoService.startForegroundServiceSafely(context)

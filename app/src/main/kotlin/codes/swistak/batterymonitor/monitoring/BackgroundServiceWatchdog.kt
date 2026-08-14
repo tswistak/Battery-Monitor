@@ -25,15 +25,68 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
         private const val WATCHDOG_INTERVAL_MS = 20L * 60L * 1000L
 
         const val KEY_LAST_HEARTBEAT_ELAPSED_TIME: String = "background_last_heartbeat_elapsed_time"
+        const val KEY_LAST_SUCCESSFUL_LOG_CHECK_ELAPSED_TIME: String =
+            "background_last_successful_log_check_elapsed_time"
 
         fun recordHeartbeat(context: Context) {
             context.getSharedPreferences(
-                SettingsContract.SP_SERVICE_FILE,
-                Context.MODE_PRIVATE
+                SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
+            ).edit {
+                putLong(KEY_LAST_HEARTBEAT_ELAPSED_TIME, SystemClock.elapsedRealtime())
+            }
+        }
+
+        fun recordSuccessfulLogCheck(context: Context) {
+            context.getSharedPreferences(
+                SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
+            ).edit {
+                putLong(
+                    KEY_LAST_SUCCESSFUL_LOG_CHECK_ELAPSED_TIME, SystemClock.elapsedRealtime()
+                )
+            }
+        }
+
+        private fun isHeartbeatStale(lastHeartbeat: Long, elapsedRealtime: Long): Boolean {
+            return lastHeartbeat <= 0L || lastHeartbeat > elapsedRealtime || elapsedRealtime - lastHeartbeat >= WATCHDOG_INTERVAL_MS
+        }
+
+        private fun staleReason(context: Context): String? {
+            val servicePreferences = context.getSharedPreferences(
+                SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
             )
-                .edit {
-                    putLong(KEY_LAST_HEARTBEAT_ELAPSED_TIME, SystemClock.elapsedRealtime())
-                }
+            val elapsedRealtime = SystemClock.elapsedRealtime()
+            val lastServiceHeartbeat = servicePreferences.getLong(
+                KEY_LAST_HEARTBEAT_ELAPSED_TIME, 0L
+            )
+            if (isHeartbeatStale(lastServiceHeartbeat, elapsedRealtime)) {
+                return "service heartbeat is stale (last=$lastServiceHeartbeat, now=$elapsedRealtime)"
+            }
+
+            val settings = context.getSharedPreferences(
+                SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+            )
+            if (!settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) return null
+
+            val lastSuccessfulLogCheck = servicePreferences.getLong(
+                KEY_LAST_SUCCESSFUL_LOG_CHECK_ELAPSED_TIME, 0L
+            )
+            return if (isHeartbeatStale(lastSuccessfulLogCheck, elapsedRealtime)) {
+                "logging database heartbeat is stale (last=$lastSuccessfulLogCheck, now=$elapsedRealtime)"
+            } else null
+        }
+
+        fun selfHealIfNeeded(context: Context): Boolean {
+            if (!isServiceDesired(context)) {
+                cancel(context)
+                return false
+            }
+
+            schedule(context)
+            val reason = staleReason(context) ?: return false
+            Log.w(LOG_TAG, "Battery monitoring is unhealthy: $reason; requesting restart")
+            val result = BatteryInfoService.startForegroundServiceSafely(context)
+            Log.i(LOG_TAG, "Battery monitoring self-heal result: $result")
+            return true
         }
 
         fun schedule(context: Context) {
@@ -59,41 +112,36 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
 
         fun isServiceDesired(context: Context): Boolean {
             val settings = context.getSharedPreferences(
-                SettingsContract.SETTINGS_FILE,
-                Context.MODE_PRIVATE
+                SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
             )
             if ("always" == settings.getString(
-                    SettingsContract.KEY_AUTOSTART,
-                    "auto"
+                    SettingsContract.KEY_AUTOSTART, "auto"
                 )
             ) return true
 
             val mainPreferences = context.getSharedPreferences(
-                SettingsContract.SP_MAIN_FILE,
-                Context.MODE_PRIVATE
+                SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
             )
             if (mainPreferences.getBoolean(
-                    SettingsContract.KEY_MIGRATED_SERVICE_DESIRED,
-                    false
+                    SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false
                 )
             ) {
                 return mainPreferences.getBoolean(
-                    BatteryInfoService.KEY_SERVICE_DESIRED,
-                    false
+                    BatteryInfoService.KEY_SERVICE_DESIRED, false
                 )
             }
 
             return context.getSharedPreferences(
-                SettingsContract.SP_SERVICE_FILE,
-                Context.MODE_PRIVATE
-            )
-                .getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)
+                SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
+            ).getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)
         }
 
         private fun pendingIntent(context: Context?): PendingIntent? {
             val intent = Intent(context, BackgroundServiceWatchdog::class.java)
             return PendingIntent.getBroadcast(
-                context, REQUEST_CODE, intent,
+                context,
+                REQUEST_CODE,
+                intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
         }
@@ -105,20 +153,6 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
             return
         }
 
-        schedule(context)
-        val servicePreferences = context.getSharedPreferences(
-            SettingsContract.SP_SERVICE_FILE,
-            Context.MODE_PRIVATE
-        )
-        val lastHeartbeat = servicePreferences.getLong(KEY_LAST_HEARTBEAT_ELAPSED_TIME, 0L)
-        val heartbeatAge = SystemClock.elapsedRealtime() - lastHeartbeat
-
-        if (lastHeartbeat == 0L || heartbeatAge >= WATCHDOG_INTERVAL_MS) {
-            Log.w(
-                LOG_TAG,
-                "Battery monitoring heartbeat is stale; requesting a foreground-service restart"
-            )
-            BatteryInfoService.startForegroundServiceSafely(context)
-        }
+        selfHealIfNeeded(context)
     }
 }

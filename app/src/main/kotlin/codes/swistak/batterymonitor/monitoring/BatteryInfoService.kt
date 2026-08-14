@@ -55,6 +55,7 @@ import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.logs.AutoLogExporter
 import codes.swistak.batterymonitor.logs.LogDatabase
+import codes.swistak.batterymonitor.logs.LogResult
 import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
@@ -69,6 +70,10 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 
 class BatteryInfoService : Service() {
+
+    enum class ServiceStartResult {
+        START_REQUESTED, FALLBACK_REQUESTED, NOT_ALLOWED, FAILED
+    }
 
     companion object {
         private const val LOG_TAG = "BatteryInfoService"
@@ -160,7 +165,9 @@ class BatteryInfoService : Service() {
             startForegroundServiceSafely(context)
         }
 
-        fun startForegroundServiceSafely(context: Context, settingsSnapshot: Bundle? = null) {
+        fun startForegroundServiceSafely(
+            context: Context, settingsSnapshot: Bundle? = null
+        ): ServiceStartResult {
             val serviceIntent = Intent(context, BatteryInfoService::class.java)
             if (settingsSnapshot != null) {
                 serviceIntent.putExtra(EXTRA_SETTINGS_SNAPSHOT, settingsSnapshot)
@@ -168,17 +175,30 @@ class BatteryInfoService : Service() {
 
             try {
                 context.startForegroundService(serviceIntent)
-            } catch (e: RuntimeException) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && e is ForegroundServiceStartNotAllowedException) {
-                    try {
-                        context.startService(serviceIntent)
-                    } catch (ignored: Exception) {
+                return ServiceStartResult.START_REQUESTED
+            } catch (foregroundError: RuntimeException) {
+                Log.w(
+                    LOG_TAG,
+                    "Foreground-service start request failed; trying startService",
+                    foregroundError
+                )
+                try {
+                    context.startService(serviceIntent)
+                    Log.w(LOG_TAG, "Fallback startService request was accepted")
+                    return ServiceStartResult.FALLBACK_REQUESTED
+                } catch (fallbackError: RuntimeException) {
+                    fallbackError.addSuppressed(foregroundError)
+                    val notAllowed =
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && foregroundError is ForegroundServiceStartNotAllowedException
+                    val result = if (notAllowed) {
+                        ServiceStartResult.NOT_ALLOWED
+                    } else {
+                        ServiceStartResult.FAILED
                     }
-                } else {
-                    try {
-                        context.startService(serviceIntent)
-                    } catch (ignored: Exception) {
-                    }
+                    Log.e(
+                        LOG_TAG, "Both service start requests failed; result=$result", fallbackError
+                    )
+                    return result
                 }
             }
         }
@@ -320,6 +340,8 @@ class BatteryInfoService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+
+        BackgroundServiceWatchdog.schedule(this)
 
         BatteryCurrent.enableShizukuMultiProcessSupport(this)
 
@@ -1162,7 +1184,7 @@ class BatteryInfoService : Service() {
 
     private fun handleUpdateWithChangedStatus() {
         if (settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
-            logDb!!.logStatus(info!!, now, LogDatabase.STATUS_NEW)
+            recordLogResult(logDb!!.logStatus(info!!, now, LogDatabase.STATUS_NEW))
 
             if (info!!.status != info!!.lastStatus && info!!.lastStatus == BatteryInfo.STATUS_UNPLUGGED) {
                 val maxLogAge = settings.getString(
@@ -1202,12 +1224,26 @@ class BatteryInfoService : Service() {
         if (settings.getBoolean(
                 SettingsContract.KEY_ENABLE_LOGGING, true
             )
-        ) logDb!!.logStatus(info!!, now, LogDatabase.STATUS_OLD)
+        ) recordLogResult(logDb!!.logStatus(info!!, now, LogDatabase.STATUS_OLD))
 
         if (info!!.percent % 10 == 0) {
             spsEditor!!.putInt(KEY_PREVIOUS_CHARGE, info!!.percent)
             spsEditor!!.putInt(KEY_PREVIOUS_TEMP, info!!.temperature)
             spsEditor!!.putInt(KEY_PREVIOUS_HEALTH, info!!.health)
+        }
+    }
+
+    private fun recordLogResult(result: LogResult) {
+        when (result) {
+            LogResult.Inserted, LogResult.Duplicate -> BackgroundServiceWatchdog.recordSuccessfulLogCheck(
+                this
+            )
+
+            is LogResult.Failed -> Log.e(
+                LOG_TAG,
+                "Battery status logging failed after database recovery attempt",
+                result.error
+            )
         }
     }
 

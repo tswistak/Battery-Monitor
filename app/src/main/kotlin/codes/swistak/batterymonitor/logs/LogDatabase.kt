@@ -19,6 +19,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import androidx.core.database.sqlite.transaction
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 
@@ -26,8 +27,16 @@ internal data class LogRecord(
     val status: Int, val charge: Int?, val time: Long, val temperature: Int?, val voltage: Int?
 )
 
+internal sealed interface LogResult {
+    data object Inserted : LogResult
+    data object Duplicate : LogResult
+    data class Failed(val error: Throwable) : LogResult
+}
+
 internal class LogDatabase(context: Context?) {
     companion object {
+        private const val LOG_TAG = "LogDatabase"
+
         private const val DATABASE_NAME = "logs.db"
         private const val DATABASE_VERSION = 4
         private const val LOG_TABLE_NAME = "logs"
@@ -83,6 +92,7 @@ internal class LogDatabase(context: Context?) {
                 rdb = mSQLOpenHelper.readableDatabase
             } catch (e: SQLiteException) {
                 rdb = null
+                Log.e(LOG_TAG, "Unable to open the log database for reading", e)
             }
         }
 
@@ -90,14 +100,73 @@ internal class LogDatabase(context: Context?) {
             try {
                 wdb = mSQLOpenHelper.writableDatabase
             } catch (e: SQLiteException) {
-                rdb = null
+                wdb = null
+                Log.e(LOG_TAG, "Unable to open the log database for writing", e)
             }
         }
     }
 
+    private fun closeDatabaseHandles() {
+        val readableDatabase = rdb
+        val writableDatabase = wdb
+        rdb = null
+        wdb = null
+
+        try {
+            readableDatabase?.close()
+        } catch (e: RuntimeException) {
+            Log.w(LOG_TAG, "Unable to close the readable log database handle", e)
+        }
+        if (writableDatabase !== readableDatabase) {
+            try {
+                writableDatabase?.close()
+            } catch (e: RuntimeException) {
+                Log.w(LOG_TAG, "Unable to close the writable log database handle", e)
+            }
+        }
+    }
+
+    private fun requireDatabases(): Pair<SQLiteDatabase, SQLiteDatabase> {
+        openDBs()
+        val readableDatabase =
+            rdb ?: throw SQLiteException("Log database is unavailable for reading")
+        val writableDatabase =
+            wdb ?: throw SQLiteException("Log database is unavailable for writing")
+        return readableDatabase to writableDatabase
+    }
+
+    private inline fun writeWithRetry(
+        operationName: String, operation: (SQLiteDatabase, SQLiteDatabase) -> LogResult
+    ): LogResult {
+        var firstError: SQLiteException? = null
+        repeat(2) { attempt ->
+            try {
+                val (readableDatabase, writableDatabase) = requireDatabases()
+                return operation(readableDatabase, writableDatabase)
+            } catch (e: SQLiteException) {
+                if (attempt == 0) {
+                    firstError = e
+                    Log.w(
+                        LOG_TAG,
+                        "$operationName failed; reopening the database and retrying once",
+                        e
+                    )
+                    closeDatabaseHandles()
+                } else {
+                    firstError?.let { e.addSuppressed(it) }
+                    Log.e(LOG_TAG, "$operationName failed after retry", e)
+                    return LogResult.Failed(e)
+                }
+            } catch (e: RuntimeException) {
+                Log.e(LOG_TAG, "$operationName failed", e)
+                return LogResult.Failed(e)
+            }
+        }
+        error("Unreachable")
+    }
+
     fun close() {
-        if (rdb != null) rdb!!.close()
-        if (wdb != null) wdb!!.close()
+        closeDatabaseHandles()
     }
 
     fun getAllLogs(reversed: Boolean): Cursor? {
@@ -192,49 +261,49 @@ internal class LogDatabase(context: Context?) {
         if (value == null) putNull(key) else put(key, value)
     }
 
-    fun logStatus(info: BatteryInfo, time: Long, statusAge: Int) {
-        var duplicate = false
-
-        openDBs()
-
-        try {
-            val lastLog = rdb!!.rawQuery(
+    fun logStatus(info: BatteryInfo, time: Long, statusAge: Int): LogResult =
+        writeWithRetry("Logging battery status") { readableDatabase, writableDatabase ->
+            var duplicate = false
+            readableDatabase.rawQuery(
                 "SELECT * FROM $LOG_TABLE_NAME ORDER BY $KEY_TIME DESC LIMIT 1", null
-            )
+            ).use { lastLog ->
+                if (lastLog.moveToFirst()) {
+                    val statusCode = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_STATUS_CODE))
+                    val lastCharge = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_CHARGE))
+                    val decodedStatus: IntArray = decodeStatus(statusCode)
+                    val lastStatus = decodedStatus[0]
+                    val lastPlugged = decodedStatus[1]
 
-            if (lastLog.moveToFirst()) {
-                val statusCode = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_STATUS_CODE))
-                val lastCharge = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_CHARGE))
-                val a: IntArray = decodeStatus(statusCode)
-                val lastStatus = a[0]
-                val lastPlugged = a[1]
-
-                if (info.percent == lastCharge && info.status == lastStatus && info.plugged == lastPlugged) duplicate =
-                    true
+                    duplicate =
+                        info.percent == lastCharge && info.status == lastStatus && info.plugged == lastPlugged
+                }
             }
 
-            if (!duplicate) wdb!!.execSQL(
-                ("INSERT INTO $LOG_TABLE_NAME VALUES (NULL, ${
-                    encodeStatus(
-                        info.status, info.plugged, statusAge
-                    )
-                } ,${info.percent} ,${time} ,${info.temperature} ,${info.voltage})")
-            )
-
-            lastLog.close()
-        } catch (e: Exception) {
+            if (duplicate) {
+                LogResult.Duplicate
+            } else {
+                val values = ContentValues().apply {
+                    put(KEY_STATUS_CODE, encodeStatus(info.status, info.plugged, statusAge))
+                    put(KEY_CHARGE, info.percent)
+                    put(KEY_TIME, time)
+                    put(KEY_TEMPERATURE, info.temperature)
+                    put(KEY_VOLTAGE, info.voltage)
+                }
+                writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
+                LogResult.Inserted
+            }
         }
-    }
 
-    fun logBoot() {
-        openDBs()
-
-        try {
-            wdb!!.execSQL(
-                "INSERT INTO $LOG_TABLE_NAME VALUES (NULL, $STATUS_BOOT_COMPLETED,NULL,${System.currentTimeMillis()},NULL,NULL)"
-            )
-        } catch (e: Exception) {
+    fun logBoot(): LogResult = writeWithRetry("Logging boot completion") { _, writableDatabase ->
+        val values = ContentValues().apply {
+            put(KEY_STATUS_CODE, STATUS_BOOT_COMPLETED)
+            putNull(KEY_CHARGE)
+            put(KEY_TIME, System.currentTimeMillis())
+            putNull(KEY_TEMPERATURE)
+            putNull(KEY_VOLTAGE)
         }
+        writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
+        LogResult.Inserted
     }
 
     fun prune(maxHours: Int) {

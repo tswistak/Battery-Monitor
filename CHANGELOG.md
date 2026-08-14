@@ -13,6 +13,7 @@
 
 - Ability to append new logs to the existing ones (#83)
 - Possibility to only export logs that haven't been exported yet (#79)
+- Better handling of DB errors and service restart (#117) 
 
 ## 1.5.0
 

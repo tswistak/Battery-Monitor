@@ -82,16 +82,13 @@ class PersistentFragment : Fragment() {
     private fun bindService() {
         if (!serviceConnected && activity != null) {
             requireActivity().applicationContext.bindService(
-                biServiceIntent!!,
-                serviceConnection!!,
-                0
+                biServiceIntent!!, serviceConnection!!, 0
             )
             serviceConnected = true
         }
     }
 
-    private class MessageHandler(var pf: PersistentFragment) :
-        Handler(Looper.getMainLooper()) {
+    private class MessageHandler(var pf: PersistentFragment) : Handler(Looper.getMainLooper()) {
         override fun handleMessage(incoming: Message) {
             if (!pf.serviceConnected) {
                 Log.i(LOG_TAG, "serviceConected is false; ignoring message: $incoming");
@@ -154,6 +151,8 @@ class PersistentFragment : Fragment() {
         ) spMain.edit {
             putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true)
         }
+
+        BackgroundServiceWatchdog.schedule(requireContext())
     }
 
     override fun onResume() {
@@ -195,8 +194,11 @@ class PersistentFragment : Fragment() {
                 requireActivity(), Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED
         ) {
+            val selfHealRequested = BackgroundServiceWatchdog.selfHealIfNeeded(requireContext())
             if (!serviceConnected) {
-                BatteryInfoService.startForegroundServiceSafely(requireContext())
+                if (!selfHealRequested) BatteryInfoService.startForegroundServiceSafely(
+                    requireContext()
+                )
                 bindService()
             }
         }
