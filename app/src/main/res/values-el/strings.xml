@@ -59,7 +59,7 @@
   <string name="log_export_append" formatted="false">Προσθήκη σε υπάρχον αρχείο</string>
   <string name="log_export_new_file" formatted="false">Δημιουργία νέου αρχείου</string>
   <string name="log_export_range_title" formatted="false">Ποια αρχεία καταγραφής να εξαχθούν;</string>
-  <string name="log_export_all_logs" formatted="false">Όλα τα αρχεία καταγραφής</string>
+  <string name="log_export_all_logs" formatted="false">Όλα</string>
   <string name="log_export_from_last" formatted="false">Από την τελευταία εξαγωγή</string>
   <string name="menu_delete_alarm" formatted="false">Διαγραφή Ειδοποίησης</string>
   <string name="menu_show_seconds" formatted="false">Εμφάνιση δευτερολέπτων</string>
@@ -532,7 +532,7 @@
   <string name="pref_auto_log_export_format" formatted="false">Μορφή εξαγωγής</string>
   <string name="pref_auto_log_export_directory" formatted="false">Αλλαγή φακέλου</string>
   <string name="auto_log_export_help" formatted="false">Οι αυτόματες εξαγωγές αποθηκεύουν μόνο τις καταγραφές που συλλέχθηκαν από την προηγούμενη αυτόματη εξαγωγή. Επιλέξτε τη συχνότητα και αν κάθε εξαγωγή θα δημιουργεί ξεχωριστό αρχείο ή θα προσθέτει τις νέες εγγραφές σε ένα συνεχές αρχείο. Το Android μπορεί να καθυστερήσει μια εξαγωγή όταν η συσκευή είναι αδρανής.</string>
-  <string name="auto_log_export_format_help" formatted="false">Επιλέξτε CSV για χειροκίνητη ανάγνωση, φιλτράρισμα, δημιουργία γραφημάτων ή έλεγχο των καταγραφών σε υπολογιστικό φύλλο ή πρόγραμμα επεξεργασίας κειμένου. Επιλέξτε JSON κυρίως για αντίγραφο ασφαλείας: διατηρεί τα δομημένα δεδομένα καταγραφής του Battery Monitor και την ώρα της τελευταίας χειροκίνητης εξαγωγής για επαναφορά.</string>
+  <string name="auto_log_export_format_help" formatted="false">Επιλέξτε CSV για χειροκίνητη ανάγνωση, φιλτράρισμα, δημιουργία γραφημάτων ή έλεγχο των καταγραφών σε υπολογιστικό φύλλο ή πρόγραμμα επεξεργασίας κειμένου. Επιλέξτε JSON όταν το αρχείο χρησιμεύει κυρίως ως αντίγραφο ασφαλείας: διατηρεί τα δομημένα δεδομένα καταγραφής του Battery Monitor.</string>
   <string name="auto_log_export_mode_new_file" formatted="false">Δημιουργία νέου αρχείου</string>
   <string name="auto_log_export_mode_append" formatted="false">Προσθήκη νέων καταγραφών στο υπάρχον αρχείο</string>
   <string name="pref_export_alarms" formatted="false">Εξαγωγή ειδοποιήσεων</string>

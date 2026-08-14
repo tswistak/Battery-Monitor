@@ -61,7 +61,7 @@
   <string name="log_export_append" formatted="false">Додај у постојећу датотеку</string>
   <string name="log_export_new_file" formatted="false">Направи нову датотеку</string>
   <string name="log_export_range_title" formatted="false">Које евиденције треба извести?</string>
-  <string name="log_export_all_logs" formatted="false">Све евиденције</string>
+  <string name="log_export_all_logs" formatted="false">Све</string>
   <string name="log_export_from_last" formatted="false">Од последњег извоза</string>
   <string name="menu_delete_alarm" formatted="false">Izbriši alarm</string>
   <string name="menu_show_seconds" formatted="false">Prikaži sekunde</string>
@@ -546,7 +546,7 @@
   <string name="pref_auto_log_export_format" formatted="false">Формат извоза</string>
   <string name="pref_auto_log_export_directory" formatted="false">Промени фасциклу</string>
   <string name="auto_log_export_help" formatted="false">Аутоматски извоз чува само евиденције прикупљене од претходног аутоматског извоза. Изаберите учесталост и да ли сваки извоз прави засебну датотеку или додаје нове уносе у једну трајну датотеку. Android може одложити извоз док уређај мирује.</string>
-  <string name="auto_log_export_format_help" formatted="false">Изаберите CSV за ручно читање, филтрирање, прављење графикона или проверу евиденција у табели или уређивачу текста. Изаберите JSON када датотека првенствено служи као резервна копија: чува структуриране податке програма Battery Monitor и време последњег ручног извоза за враћање.</string>
+  <string name="auto_log_export_format_help" formatted="false">Изаберите CSV за ручно читање, филтрирање, прављење графикона или проверу евиденција у табели или уређивачу текста. Изаберите JSON када датотека првенствено служи као резервна копија: чува структуриране податке програма Battery Monitor.</string>
   <string name="auto_log_export_mode_new_file" formatted="false">Направи нову датотеку</string>
   <string name="auto_log_export_mode_append" formatted="false">Додај нове евиденције у постојећу датотеку</string>
   <string name="pref_export_alarms" formatted="false">Извези аларме</string>

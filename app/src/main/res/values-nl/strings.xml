@@ -61,7 +61,7 @@
   <string name="log_export_append" formatted="false">Aan bestaand bestand toevoegen</string>
   <string name="log_export_new_file" formatted="false">Nieuw bestand maken</string>
   <string name="log_export_range_title" formatted="false">Welke logboeken moeten worden geëxporteerd?</string>
-  <string name="log_export_all_logs" formatted="false">Alle logboeken</string>
+  <string name="log_export_all_logs" formatted="false">Alles</string>
   <string name="log_export_from_last" formatted="false">Sinds de laatste export</string>
   <string name="menu_delete_alarm" formatted="false">Alarm verwijderen</string>
   <string name="menu_show_seconds" formatted="false">Seconden tonen</string>
@@ -536,7 +536,7 @@
   <string name="pref_auto_log_export_format" formatted="false">Exportindeling</string>
   <string name="pref_auto_log_export_directory" formatted="false">Map wijzigen</string>
   <string name="auto_log_export_help" formatted="false">Automatische exports slaan alleen logboeken op die sinds de vorige automatische export zijn verzameld. Kies de frequentie en of elke export een afzonderlijk bestand maakt of nieuwe vermeldingen aan één doorlopend bestand toevoegt. Android kan een export uitstellen wanneer het apparaat inactief is.</string>
-  <string name="auto_log_export_format_help" formatted="false">Kies CSV om logboeken handmatig te lezen, filteren, in grafieken weer te geven of te controleren in een spreadsheet of teksteditor. Kies JSON wanneer het bestand vooral als back-up dient: dit bewaart de gestructureerde logboekgegevens van Battery Monitor en het tijdstip van de laatste handmatige export voor herstel.</string>
+  <string name="auto_log_export_format_help" formatted="false">Kies CSV om logboeken handmatig te lezen, filteren, in grafieken weer te geven of te controleren in een spreadsheet of teksteditor. Kies JSON wanneer het bestand vooral als back-up dient: dit bewaart de gestructureerde logboekgegevens van Battery Monitor.</string>
   <string name="auto_log_export_mode_new_file" formatted="false">Nieuw bestand maken</string>
   <string name="auto_log_export_mode_append" formatted="false">Nieuwe logboeken aan bestaand bestand toevoegen</string>
   <string name="pref_export_alarms" formatted="false">Alarmen exporteren</string>

@@ -59,7 +59,7 @@
   <string name="log_export_append" formatted="false">Mevcut dosyaya ekle</string>
   <string name="log_export_new_file" formatted="false">Yeni dosya oluştur</string>
   <string name="log_export_range_title" formatted="false">Hangi günlükler dışa aktarılsın?</string>
-  <string name="log_export_all_logs" formatted="false">Tüm günlükler</string>
+  <string name="log_export_all_logs" formatted="false">Her şey</string>
   <string name="log_export_from_last" formatted="false">Son dışa aktarımdan beri</string>
   <string name="menu_delete_alarm" formatted="false">Alarm Sil</string>
   <string name="menu_show_seconds" formatted="false">Saniyeleri Göster</string>
@@ -508,7 +508,7 @@
   <string name="pref_auto_log_export_format" formatted="false">Dışa aktarma biçimi</string>
   <string name="pref_auto_log_export_directory" formatted="false">Klasörü değiştir</string>
   <string name="auto_log_export_help" formatted="false">Otomatik dışa aktarımlar yalnızca önceki otomatik dışa aktarımdan sonra toplanan günlükleri kaydeder. Sıklığı ve her dışa aktarımın ayrı bir dosya oluşturmasını mı yoksa yeni girdileri tek bir sürekli dosyaya eklemesini mi istediğinizi seçin. Android, cihaz boştayken dışa aktarımı geciktirebilir.</string>
-  <string name="auto_log_export_format_help" formatted="false">Günlükleri bir elektronik tabloda veya metin düzenleyicide elle okumak, filtrelemek, grafiklemek ya da denetlemek için CSV’yi seçin. Dosya öncelikle yedek olacaksa JSON’ı seçin: geri yükleme için Battery Monitor’un yapılandırılmış günlük verilerini ve son elle dışa aktarma zamanını korur.</string>
+  <string name="auto_log_export_format_help" formatted="false">Günlükleri bir elektronik tabloda veya metin düzenleyicide elle okumak, filtrelemek, grafiklemek ya da denetlemek için CSV’yi seçin. Dosya öncelikle yedek olacaksa JSON’ı seçin: Battery Monitor’un yapılandırılmış günlük verilerini korur.</string>
   <string name="auto_log_export_mode_new_file" formatted="false">Yeni dosya oluştur</string>
   <string name="auto_log_export_mode_append" formatted="false">Yeni günlükleri mevcut dosyaya ekle</string>
   <string name="pref_export_alarms" formatted="false">Alarmları dışa aktar</string>

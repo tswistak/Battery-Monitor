@@ -57,7 +57,7 @@
   <string name="log_export_append" formatted="false">追加到现有文件</string>
   <string name="log_export_new_file" formatted="false">创建新文件</string>
   <string name="log_export_range_title" formatted="false">要导出哪些日志？</string>
-  <string name="log_export_all_logs" formatted="false">所有日志</string>
+  <string name="log_export_all_logs" formatted="false">全部</string>
   <string name="log_export_from_last" formatted="false">自上次导出以来</string>
   <string name="menu_delete_alarm" formatted="false">删除闹钟</string>
   <string name="menu_show_seconds" formatted="false">显示秒数</string>
@@ -514,7 +514,7 @@
   <string name="pref_auto_log_export_format" formatted="false">导出格式</string>
   <string name="pref_auto_log_export_directory" formatted="false">更改文件夹</string>
   <string name="auto_log_export_help" formatted="false">自动导出只保存自上次自动导出后收集的日志。请选择运行频率，以及每次导出是创建单独文件，还是将新条目追加到同一个持续使用的文件。设备空闲时，Android 可能会延迟导出。</string>
-  <string name="auto_log_export_format_help" formatted="false">如需在电子表格或文本编辑器中手动阅读、筛选、绘图或审核日志，请选择 CSV。如果文件主要用作备份，请选择 JSON：它会保留 Battery Monitor 的结构化日志数据和上次手动导出的时间，以便恢复。</string>
+  <string name="auto_log_export_format_help" formatted="false">如需在电子表格或文本编辑器中手动阅读、筛选、绘图或审核日志，请选择 CSV。如果文件主要用作备份，请选择 JSON：它会保留 Battery Monitor 的结构化日志数据。</string>
   <string name="auto_log_export_mode_new_file" formatted="false">创建新文件</string>
   <string name="auto_log_export_mode_append" formatted="false">将新日志追加到现有文件</string>
   <string name="pref_export_alarms" formatted="false">导出闹钟</string>
