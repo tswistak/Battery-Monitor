@@ -198,7 +198,7 @@ class LogViewFragment : ListFragment() {
     }
 
     private fun clearLogsAfterAutoExport() {
-        if (!AutoLogExporter.exportBeforeLogDeletion(requireContext())) {
+        if (!AutoLogExporter.exportBeforeManualLogClearing(requireContext())) {
             Toast.makeText(activity, DisplayStrings.inaccessibleStorage, Toast.LENGTH_SHORT).show()
             return
         }

@@ -178,10 +178,19 @@ internal object AutoLogExporter {
         )
     }
 
-    fun exportBeforeLogDeletion(context: Context): Boolean {
+    fun exportBeforeManualLogClearing(context: Context): Boolean =
+        exportBeforeLogDeletion(context, rescheduleAfterExport = false)
+
+    fun exportBeforeAutomaticLogPruning(context: Context): Boolean =
+        exportBeforeLogDeletion(context, rescheduleAfterExport = true)
+
+    private fun exportBeforeLogDeletion(
+        context: Context, rescheduleAfterExport: Boolean
+    ): Boolean {
         if (!isEnabled(context)) return true
         return try {
             export(context)
+            if (rescheduleAfterExport) AutoLogExportScheduler.reschedule(context)
             true
         } catch (exception: Exception) {
             Log.e(LOG_TAG, "Skipping log deletion because automatic export failed", exception)

@@ -1168,7 +1168,10 @@ class BatteryInfoService : Service() {
                 val maxLogAge = settings.getString(
                     SettingsContract.KEY_MAX_LOG_AGE, DisplayStrings.defaultMaxLogAge
                 )!!.toInt()
-                if (maxLogAge >= 0 && AutoLogExporter.exportBeforeLogDeletion(this)) {
+                if (maxLogAge >= 0 && logDb!!.hasLogsOlderThan(maxLogAge) && AutoLogExporter.exportBeforeAutomaticLogPruning(
+                        this
+                    )
+                ) {
                     logDb!!.prune(maxLogAge)
                 }
             }

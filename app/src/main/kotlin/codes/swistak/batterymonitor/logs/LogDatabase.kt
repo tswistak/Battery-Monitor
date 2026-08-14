@@ -249,6 +249,19 @@ internal class LogDatabase(context: Context?) {
         }
     }
 
+    fun hasLogsOlderThan(maxHours: Int): Boolean {
+        val oldestAllowedLog = System.currentTimeMillis() - (maxHours.toLong() * 60 * 60 * 1000)
+        openDBs()
+        return try {
+            rdb?.rawQuery(
+                "SELECT 1 FROM $LOG_TABLE_NAME WHERE $KEY_TIME < ? LIMIT 1",
+                arrayOf(oldestAllowedLog.toString())
+            )?.use { it.moveToFirst() } ?: false
+        } catch (exception: Exception) {
+            false
+        }
+    }
+
     fun clearAllLogs() {
         mSQLOpenHelper.reset()
     }
