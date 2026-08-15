@@ -11,25 +11,25 @@
   <string name="cancel" formatted="false">Anuluj</string>
 
   <string name="confirm_close" formatted="false">Czy naprawdę zamknąć?</string>
-  <string name="confirm_close_hint" formatted="false">Battery Monitor zostanie całkowicie zamknięty i nie będziesz go już widzieć na pasku stanu. Wszelkie widżety na ekranie głównym staną się bezużyteczne.\n
+  <string name="confirm_close_hint" formatted="false">Monitor baterii zostanie całkowicie zamknięty i nie będziesz go już widzieć na pasku stanu. Wszelkie widżety na ekranie głównym staną się bezużyteczne.\n
     \n
     Jeśli chcesz po prostu opuścić okno główne i pozostawić usługę działającą, naciśnij Anuluj, a następnie naciśnij przycisk Wstecz swojego urządzenia, aby zamknąć okno główne.\n
     \n
     Jeśli chcesz ukryć powiadomienie, ale pozostawić widżety działające, naciśnij Anuluj, a następnie zmień ustawienia, aby ukryć powiadomienie.</string>
 
   <string name="notifications_disabled" formatted="false">Powiadomienia są wyłączone!</string>
-  <string name="notifications_disabled_message" formatted="false">Wyłączyłeś(-aś) wszystkie powiadomienia dla Battery Monitor. To uniemożliwi aplikacji wyświetlanie jakichkolwiek powiadomień: główne powiadomienie i wszystkie ustawione przez Ciebie alarmy zostaną zablokowane.\n
+  <string name="notifications_disabled_message" formatted="false">Wyłączyłeś(-aś) wszystkie powiadomienia dla Monitora baterii. To uniemożliwi aplikacji wyświetlanie jakichkolwiek powiadomień: główne powiadomienie i wszystkie ustawione przez Ciebie alarmy zostaną zablokowane.\n
     \n
     Ponieważ aplikacja pozwala Ci na osobne włączanie i wyłączanie głównego powiadomienia, jak również na tymczasowe wyłączanie utworzonych przez Ciebie alarmów, zdecydowanie zaleca się odblokować powiadomienia. Gdy są zablokowane, może się wydawać, jakby aplikacja nie działała prawidłowo.\n
     \n
-    Naciśnij OK, aby przejść do ustawień systemowych, gdzie możesz odblokować powiadomienia dla Battery Monitor.</string>
+    Naciśnij OK, aby przejść do ustawień systemowych, gdzie możesz odblokować powiadomienia dla Monitora baterii.</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor jest ograniczony!</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor ma ograniczoną możliwość prawidłowego działania. Ta „optymalizacja baterii” to funkcja Androida zaprojektowana w celu ograniczenia działania słabo zaprojektowanych aplikacji, aby zapobiegać zbyt dużemu zużywaniu baterii w tle.\n
+  <string name="battery_optimized" formatted="false">Monitor baterii jest ograniczony!</string>
+  <string name="battery_optimized_message" formatted="false">Monitor baterii ma ograniczoną możliwość prawidłowego działania. Ta „optymalizacja baterii” to funkcja Androida zaprojektowana w celu ograniczenia działania słabo zaprojektowanych aplikacji, aby zapobiegać zbyt dużemu zużywaniu baterii w tle.\n
     \n
-    Battery Monitor jest jednak dobrze zaprojektowaną aplikacją, która musi działać bez ograniczeń w tle, aby funkcjonować prawidłowo. Jest to niezwykle wydajne i nie będzie skracać żywotności baterii.\n
+    Monitor baterii jest jednak dobrze zaprojektowaną aplikacją, która musi działać bez ograniczeń w tle, aby funkcjonować prawidłowo. Jest to niezwykle wydajne i nie będzie skracać żywotności baterii.\n
     \n
-    Naciśnij OK, aby przejść do ustawień systemowych, gdzie możesz wyłączyć optymalizację baterii dla Battery Monitor.</string>
+    Naciśnij OK, aby przejść do ustawień systemowych, gdzie możesz wyłączyć optymalizację baterii dla Monitora baterii.</string>
 
   <string name="main_notif_chan_name" formatted="false">Główne powiadomienie</string>
   <string name="live_updates_notif_chan_name" formatted="false">Aktualizacje na żywo</string>
@@ -119,10 +119,10 @@
   <string name="alarm_type_temperature_rises" formatted="false">Temperatura wzrasta powyżej</string>
   <string name="alarm_type_health_failure" formatted="false">Problemy ze zdrowiem</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Zostaje w pełni naładowana</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Poziom naładowania spada poniżej...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Poziom naładowania wzrasta powyżej...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura spada poniżej...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatura wzrasta powyżej...</string>
+  <string name="alarm_type_entry_charge_drops" formatted="false">Poziom naładowania spada poniżej…</string>
+  <string name="alarm_type_entry_charge_rises" formatted="false">Poziom naładowania wzrasta powyżej…</string>
+  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura spada poniżej…</string>
+  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatura wzrasta powyżej…</string>
   <string name="alarm_type_entry_health_failure" formatted="false">Problemy ze zdrowiem</string>
 
   <string name="alarm_fully_charged" formatted="false">Bateria jest w pełni naładowana</string>
@@ -221,7 +221,7 @@
     Chociaż dokładam wszelkich starań, aby wszystko działało prawidłowo i nie powodowało żadnych problemów, nie ponoszę odpowiedzialności za jakiekolwiek szkody lub niedogodności, które mogą wyniknąć z tego tytułu, niezależnie od okoliczności.</string>
 
   <string name="help_cat_acknowledgments" formatted="false">Podziękowania</string>
-  <string name="help_acknowledgments" formatted="false">Battery Monitor jest forkiem Battery Indicator Pro / BatteryBot Pro autorstwa Darshan Computing, LLC. Dziękuję autorom i współtwórcom za stworzenie i utrzymywanie projektu źródłowego.</string>
+  <string name="help_acknowledgments" formatted="false">Monitor baterii jest forkiem Battery Indicator Pro / BatteryBot Pro autorstwa Darshan Computing, LLC. Dziękuję autorom i współtwórcom za stworzenie i utrzymywanie projektu źródłowego.</string>
 
   <string name="help_cat_frequently_asked_questions" formatted="false">Najczęściej zadawane pytania</string>
   <string name="help_frequently_asked_questions" formatted="false">Możesz znaleźć odpowiedzi na najpopularniejsze pytania na <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
@@ -230,7 +230,7 @@
   <string name="help_contact" formatted="false">Jeśli masz pytanie, problem lub komentarz, napisz do mnie <a href="mailto:tomasz@swistak.codes">e-maila</a>.</string>
 
   <string name="settings_overview" formatted="false">Przegląd</string>
-  <string name="settings_overview_help" formatted="false">Ustawienia Battery Monitor zostały zorganizowane w osobne strony jak opisano poniżej. Każda strona ustawień ma swoją własną stronę pomocy opisującą dostępne tam opcje.</string>
+  <string name="settings_overview_help" formatted="false">Ustawienia Monitora baterii zostały zorganizowane w osobne strony jak opisano poniżej. Każda strona ustawień ma swoją własną stronę pomocy opisującą dostępne tam opcje.</string>
 
   <string name="notifications_disabled_cat" formatted="false">Powiadomienia wyłączone</string>
   <string name="app_notifs_disabled_b" formatted="false">Włącz powiadomienia aplikacji</string>
@@ -257,7 +257,7 @@
   <string name="current_state_settings_help" formatted="false">Skonfiguruj informacje wyświetlane na ekranie „Aktualny stan”. Opcje prądu baterii sterują bieżącym odczytem pokazywanym razem z innymi szczegółami o baterii.</string>
   <string name="alarm_settings_subtitle" formatted="false">Ustawienia alarmów</string>
   <string name="alarm_settings" formatted="false">Alarmy</string>
-  <string name="alarm_settings_help" formatted="false">Możesz ustawić, aby Battery Monitor powiadamiał Cię, gdy poziom naładowania Twojej baterii osiąga określony warunek (np. bateria staje się w pełni naładowana, poziom baterii spada poniżej 20% i wiele innych).</string>
+  <string name="alarm_settings_help" formatted="false">Możesz ustawić, aby Monitor baterii powiadamiał Cię, gdy poziom naładowania Twojej baterii osiąga określony warunek (np. bateria staje się w pełni naładowana, poziom baterii spada poniżej 20% i wiele innych).</string>
   <string name="other_settings" formatted="false">Ogólne</string>
   <string name="other_settings_help" formatted="false">Ogólne ustawienia aplikacji znajdują się na tej stronie, w tym rejestrowanie stanu baterii, jednostka temperatury, automatyczne uruchamianie i inne.</string>
 
@@ -276,7 +276,7 @@
   <string name="live_updates_onboarding_positive_off">Przejdź do ustawień</string>
   <string name="live_updates_onboarding_negative_off">Odrzuć</string>
 
-  <string name="notifications_onboarding_message">Battery Monitor potrzebuje Twojego uprawnienia, aby wyświetlać poziom naładowania baterii na pasku stanu i powiadamiać Cię o alarmach.\n
+  <string name="notifications_onboarding_message">Monitor baterii potrzebuje Twojego uprawnienia, aby wyświetlać poziom naładowania baterii na pasku stanu i powiadamiać Cię o alarmach.\n
     \n
     Uwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
 
@@ -335,7 +335,7 @@
 
   <string name="pref_use_privileged_battery_current" formatted="false">Użyj dostępu uprzywilejowanego, jeśli jest potrzebny</string>
   <string name="pref_use_privileged_battery_current_summary" formatted="false">Czy zezwolić na dostęp uprzywilejowany jako metodę zapasową, gdy zwykłe metody nie są w stanie odczytać prądu baterii?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Gdy włączone, Battery Monitor może użyć roota lub Shizuku tylko wtedy, gdy metody Androida i systemu plików nie są w stanie podać odczytu. Wymagane uprawnienie jest żądane, gdy włączysz tę opcję.</string>
+  <string name="pref_use_privileged_battery_current_help" formatted="false">Gdy włączone, Monitor baterii może użyć roota lub Shizuku tylko wtedy, gdy metody Androida i systemu plików nie są w stanie podać odczytu. Wymagane uprawnienie jest żądane, gdy włączysz tę opcję.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Mnożnik</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Wykryj automatycznie</string>
@@ -363,7 +363,7 @@
   <string name="pref_cat_logging" formatted="false">Logowanie</string>
   <string name="pref_enable_logging" formatted="false">Włącz logowanie</string>
   <string name="pref_enable_logging_summary" formatted="false">Czy logować zmiany stanu baterii?</string>
-  <string name="pref_enable_logging_help" formatted="false">Jeśli włączone, Battery Monitor będzie rejestrować zmiany stanu baterii.</string>
+  <string name="pref_enable_logging_help" formatted="false">Jeśli włączone, Monitor baterii będzie rejestrować zmiany stanu baterii.</string>
   <string name="pref_max_log_age" formatted="false">Maksymalny czas przechowywania logów</string>
   <string name="pref_max_log_age_summary" formatted="false">Usuwaj logi starsze niż:</string>
   <string name="pref_max_log_age_help" formatted="false">Jeśli logowanie jest włączone, kiedy tylko podłączysz swoje urządzenie, logi starsze od tej wartości zostaną usunięte. Wybierz „Nigdy nie usuwaj”, aby przechowywać logi, dopóki ich nie wyczyścisz ręcznie.</string>
@@ -374,12 +374,12 @@
 
   <string name="pref_cat_autostart" formatted="false">Automatyczne uruchamianie</string>
   <string name="pref_autostart_at_boot" formatted="false">Uruchamiaj automatycznie przy starcie systemu</string>
-  <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Battery Monitor podczas włączania urządzenia:</string>
-  <string name="pref_autostart_at_boot_help" formatted="false">Określa, czy Battery Monitor ma uruchamiać się automatycznie podczas włączania urządzenia urządzenia.\n
+  <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Monitor baterii podczas włączania urządzenia:</string>
+  <string name="pref_autostart_at_boot_help" formatted="false">Określa, czy Monitor baterii ma uruchamiać się automatycznie podczas włączania urządzenia urządzenia.\n
     \n
-    Opcja „Jeśli działała przy wyłączaniu systemu” działa w zależności od tego, czy ostatnio ręcznie uruchamiałeś(-aś) lub zatrzymywałeś(-aś) Battery Monitor. Jeśli więc zabijasz Battery Monitor w inny sposób, jak na przykład za pomocą narzędzia do zamykania procesów, Battery Monitor nie wie, że ją zatrzymałeś(-aś) i nadal będzie się uruchamiać przy starcie systemu, jeśli masz tak ustawione.\n
+    Opcja „Jeśli działała przy wyłączaniu systemu” działa w zależności od tego, czy ostatnio ręcznie uruchamiałeś(-aś) lub zatrzymywałeś(-aś) Monitor baterii. Jeśli więc zabijasz Monitor baterii w inny sposób, jak na przykład za pomocą narzędzia do zamykania procesów, Monitor baterii nie wie, że ją zatrzymałeś(-aś) i nadal będzie się uruchamiać przy starcie systemu, jeśli masz tak ustawione.\n
     \n
-    UWAGA: Android będzie zawsze uruchamiać Battery Monitor przy starcie systemu, jeśli na pulpicie masz widżety Battery Monitor. W takim przypadku ustawienie to nie ma znaczenia.</string>
+    UWAGA: Android będzie zawsze uruchamiać Monitor baterii przy starcie systemu, jeśli na pulpicie masz widżety Monitor baterii. W takim przypadku ustawienie to nie ma znaczenia.</string>
 
   <string name="predictor_sensitive" formatted="false">Czułe</string>
   <string name="predictor_conservative" formatted="false">Konserwatywne</string>
@@ -388,7 +388,7 @@
 
   <string name="pref_cat_predictor" formatted="false">Szacunkowy pozostały czas</string>
   <string name="pref_prediction_type" formatted="false">Typ szacowania</string>
-  <string name="pref_prediction_type_help" formatted="false">Tutaj możesz wybrać, w jaki sposób Battery Monitor będzie przewidywać pozostały czas pracy baterii/czas do pełnego naładowania.\n
+  <string name="pref_prediction_type_help" formatted="false">Tutaj możesz wybrać, w jaki sposób Monitor baterii będzie przewidywać pozostały czas pracy baterii/czas do pełnego naładowania.\n
     \n
     Algorytm „Czułe” jest oparty wyłącznie na ostatnich pięciu minutach użytkowania. Jeśli Twoim głównym zmartwieniem jest „Jak długo moja bateria wytrzyma, jeśli dalej będę robić to, co robię?”, wtedy algorytm jest dla Ciebie.\n
     \n
@@ -503,7 +503,7 @@
   <string name="advanced_help_sysfs" formatted="false">Pliki power_supply jądra pokazują nieprzetworzone jednoliniowe wartości odczytane z `/sys/class/power_supply`, takie jak węzły baterii, BMS, USB czy ładowarki bezprzewodowej. Jest to celowo niskopoziomowe i może zawierać nazwy specyficzne dla sterownika, które są przydatne głównie do debugowania.</string>
   <string name="advanced_help_metadata" formatted="false">Metadane pokazują wysokopoziomowe właściwości baterii udostępniane przez BatteryManager, takie jak stan zdrowia, pozostały czas ładowania, szczegóły produkcyjne czy stan zamiennika. Większość tych pól wymaga uprzywilejowanego dostępu, a wiele urządzeń udostępnia jedynie niewielką ich część.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Rozwiązywanie problemów</string>
-  <string name="advanced_help_troubleshooting" formatted="false">Jeśli karta jest pusta, najpierw upewnij się, że „Zaawansowane statystyki baterii” zostały włączone w ustawieniach. Na zrootowanych urządzeniach Battery Monitor najpierw próbuje użyć `su`. Na urządzeniach bez dostępu do roota Shizuku musi być zainstalowany i uruchomiony, a Battery Monitor musi mieć w nim przyznane uprawnienie. Niektóre urządzenia udostępniają jedynie kilka pól, co oznacza, że brakujące dane nie są dostępne przez Androida lub jądro na tym urządzeniu.</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Jeśli karta jest pusta, najpierw upewnij się, że „Zaawansowane statystyki baterii” zostały włączone w ustawieniach. Na zrootowanych urządzeniach Monitor baterii najpierw próbuje użyć `su`. Na urządzeniach bez dostępu do roota Shizuku musi być zainstalowany i uruchomiony, a Monitor baterii musi mieć w nim przyznane uprawnienie. Niektóre urządzenia udostępniają jedynie kilka pól, co oznacza, że brakujące dane nie są dostępne przez Androida lub jądro na tym urządzeniu.</string>
 
   <string name="pref_export_settings" formatted="false">Eksportuj ustawienia</string>
   <string name="pref_export_settings_summary" formatted="false">Zapisz bieżące ustawienia do pliku</string>
@@ -601,11 +601,11 @@
   <string name="diagnostics_dont_kill_my_app" formatted="false">Pomoc dotycząca działania w tle</string>
   <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Otwórz wskazówki dla tego urządzenia w serwisie Don’t Kill My App</string>
   <string name="diagnostics_device_and_logs" formatted="false">Urządzenie i raport diagnostyczny</string>
-  <string name="diagnostics_debug_logs" formatted="false">Zbieraj dzienniki debugowania</string>
+  <string name="diagnostics_debug_logs" formatted="false">Zbieraj logi debugowania</string>
   <string name="diagnostics_export" formatted="false">Eksportuj raport diagnostyczny</string>
-  <string name="diagnostics_export_summary" formatted="false">Zapisz informacje o urządzeniu, uprawnieniach, monitorowaniu i dostępnych dziennikach debugowania w pliku tekstowym</string>
-  <string name="diagnostics_clear" formatted="false">Usuń zebrane dzienniki debugowania</string>
-  <string name="diagnostics_clear_summary" formatted="false">Usuń dzienniki debugowania zapisane obecnie przez aplikację</string>
+  <string name="diagnostics_export_summary" formatted="false">Zapisz informacje o urządzeniu, uprawnieniach, monitorowaniu i dostępnych logach debugowania w pliku tekstowym</string>
+  <string name="diagnostics_clear" formatted="false">Usuń zebrane logi debugowania</string>
+  <string name="diagnostics_clear_summary" formatted="false">Usuń logi debugowania zapisane obecnie przez aplikację</string>
   <string name="diagnostics_checking" formatted="false">Sprawdzanie…</string>
   <string name="diagnostics_root_unavailable" formatted="false">Niedostępne. Naciśnij, aby poprosić o dostęp root lub go sprawdzić.</string>
   <string name="diagnostics_tap_to_check" formatted="false">Nie sprawdzono. Naciśnij, aby poprosić o dostęp lub go sprawdzić.</string>
@@ -616,14 +616,14 @@
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Brak ostatniej odpowiedzi. Naciśnij, aby zażądać ponownego uruchomienia.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Brak ostatniego udanego dostępu do bazy danych</string>
   <string name="diagnostics_working_last_seen" formatted="true">Działa · ostatnia odpowiedź %1$s temu</string>
-  <string name="diagnostics_debug_logs_warning" formatted="false">Dzienniki debugowania mogą zawierać dane osobowe. Włącz je tylko na czas badania problemu, przejrzyj wyeksportowany plik i zachowaj ostrożność przy publicznym udostępnianiu.</string>
-  <string name="diagnostics_logs_cleared" formatted="false">Usunięto dzienniki debugowania</string>
-  <string name="diagnostics_logs_clear_failed" formatted="false">Nie udało się usunąć dzienników debugowania</string>
+  <string name="diagnostics_debug_logs_warning" formatted="false">Logi debugowania mogą zawierać dane osobowe. Włącz je tylko na czas badania problemu, przejrzyj wyeksportowany plik i zachowaj ostrożność przy publicznym udostępnianiu.</string>
+  <string name="diagnostics_logs_cleared" formatted="false">Usunięto logi debugowania</string>
+  <string name="diagnostics_logs_clear_failed" formatted="false">Nie udało się usunąć logów debugowania</string>
   <string name="diagnostics_exported" formatted="false">Wyeksportowano raport diagnostyczny</string>
   <string name="diagnostics_export_failed" formatted="false">Nie udało się wyeksportować raportu diagnostycznego</string>
   <string name="diagnostics_help_title" formatted="false">Jak pomaga diagnostyka</string>
-  <string name="diagnostics_help_overview" formatted="false">Ten ekran sprawdza, czy Battery Monitor ma wszystko, czego potrzebuje do monitorowania w tle. Jeśli czegoś brakuje, naciśnij daną pozycję, aby otworzyć miejsce, w którym można to naprawić.</string>
-  <string name="diagnostics_help_report" formatted="false">Jeśli zgłaszasz problem, raport diagnostyczny może być niezbędny do znalezienia jego przyczyny. Zawiera informacje o urządzeniu i stanie aplikacji, a po ich włączeniu także dzienniki debugowania. Dzienniki mogą zawierać dane osobowe, dlatego przejrzyj plik i udostępniaj go ostrożnie.</string>
+  <string name="diagnostics_help_overview" formatted="false">Ten ekran sprawdza, czy Monitor baterii ma wszystko, czego potrzebuje do monitorowania w tle. Jeśli czegoś brakuje, naciśnij daną pozycję, aby otworzyć miejsce, w którym można to naprawić.</string>
+  <string name="diagnostics_help_report" formatted="false">Jeśli zgłaszasz problem, raport diagnostyczny może być niezbędny do znalezienia jego przyczyny. Zawiera informacje o urządzeniu i stanie aplikacji, a po ich włączeniu także logi debugowania. Logi mogą zawierać dane osobowe, dlatego przejrzyj plik i udostępniaj go ostrożnie.</string>
   <string name="diagnostics_service_restarting" formatted="false">Usługa nie odpowiedziała. Ponowne uruchamianie…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Usługa monitorowania nie odpowiedziała po ponownym uruchomieniu. Spróbuj ponownie uruchomić aplikację.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Sprawdzanie bazy danych nie powiodło się. Zwolnij trochę miejsca na urządzeniu i spróbuj ponownie.</string>
