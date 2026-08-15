@@ -26,4 +26,9 @@
     <Preference
         app:key="backup_restore_settings"
         app:title="@string/pref_backup_restore" />
+
+    <Preference
+        app:key="diagnostics_settings"
+        app:summary="@string/diagnostics_summary"
+        app:title="@string/diagnostics" />
 </PreferenceScreen>

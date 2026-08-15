@@ -29,21 +29,25 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
             "background_last_successful_log_check_elapsed_time"
 
         fun recordHeartbeat(context: Context) {
+            val elapsedTime = SystemClock.elapsedRealtime()
             context.getSharedPreferences(
                 SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
             ).edit {
-                putLong(KEY_LAST_HEARTBEAT_ELAPSED_TIME, SystemClock.elapsedRealtime())
+                putLong(KEY_LAST_HEARTBEAT_ELAPSED_TIME, elapsedTime)
             }
+            MonitoringHealthStore.recordServiceHeartbeat(context, elapsedTime)
         }
 
         fun recordSuccessfulLogCheck(context: Context) {
+            val elapsedTime = SystemClock.elapsedRealtime()
             context.getSharedPreferences(
                 SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
             ).edit {
                 putLong(
-                    KEY_LAST_SUCCESSFUL_LOG_CHECK_ELAPSED_TIME, SystemClock.elapsedRealtime()
+                    KEY_LAST_SUCCESSFUL_LOG_CHECK_ELAPSED_TIME, elapsedTime
                 )
             }
+            MonitoringHealthStore.recordDatabaseHeartbeat(context, elapsedTime)
         }
 
         private fun isHeartbeatStale(lastHeartbeat: Long, elapsedRealtime: Long): Boolean {
@@ -51,13 +55,9 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
         }
 
         private fun staleReason(context: Context): String? {
-            val servicePreferences = context.getSharedPreferences(
-                SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
-            )
+            val healthState = MonitoringHealthStore.read(context)
             val elapsedRealtime = SystemClock.elapsedRealtime()
-            val lastServiceHeartbeat = servicePreferences.getLong(
-                KEY_LAST_HEARTBEAT_ELAPSED_TIME, 0L
-            )
+            val lastServiceHeartbeat = healthState.serviceHeartbeatElapsedTime
             if (isHeartbeatStale(lastServiceHeartbeat, elapsedRealtime)) {
                 return "service heartbeat is stale (last=$lastServiceHeartbeat, now=$elapsedRealtime)"
             }
@@ -67,9 +67,7 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
             )
             if (!settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) return null
 
-            val lastSuccessfulLogCheck = servicePreferences.getLong(
-                KEY_LAST_SUCCESSFUL_LOG_CHECK_ELAPSED_TIME, 0L
-            )
+            val lastSuccessfulLogCheck = healthState.databaseHeartbeatElapsedTime
             return if (isHeartbeatStale(lastSuccessfulLogCheck, elapsedRealtime)) {
                 "logging database heartbeat is stale (last=$lastSuccessfulLogCheck, now=$elapsedRealtime)"
             } else null

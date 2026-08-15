@@ -24,6 +24,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.EdgeToEdgeHelper
+import codes.swistak.batterymonitor.diagnostics.DiagnosticsFragment
 
 class SettingsActivity : AppCompatActivity() {
     private var res: Resources? = null
@@ -55,9 +56,19 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.prefs)
         EdgeToEdgeHelper.applyIfNeeded(this)
 
+        if (prefScreen == SettingsContract.KEY_DIAGNOSTICS_SETTINGS) {
+            if (savedInstanceState == null) {
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.settings, DiagnosticsFragment(), ""
+                ).commit()
+            }
+            frag = null
+            setWindowSubtitle(res!!.getString(R.string.diagnostics))
+            return
+        }
+
         if (savedInstanceState == null) {
             frag = SettingsFragment()
-
             supportFragmentManager.beginTransaction().replace(R.id.settings, frag!!, "").commit()
         } else {
             frag = supportFragmentManager.findFragmentByTag("") as SettingsFragment?
@@ -123,6 +134,6 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     fun enableNotifsButtonClick(v: View?) {
-        frag!!.enableNotifsButtonClick()
+        frag?.enableNotifsButtonClick()
     }
 }

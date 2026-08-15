@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/named_so_scroll_position_is_preserved"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        style="@style/help_ll"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/diagnostics_help_title" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/diagnostics_help_overview" />
+
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/diagnostics_export" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/diagnostics_help_report" />
+    </LinearLayout>
+</ScrollView>

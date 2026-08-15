@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/diagnostics_permissions">
+        <Preference
+            app:key="diagnostics_notifications"
+            app:title="@string/diagnostics_notifications" />
+        <Preference
+            app:key="diagnostics_live_updates"
+            app:title="@string/live_updates_notif_chan_name" />
+        <Preference
+            app:key="diagnostics_root"
+            app:title="@string/diagnostics_root" />
+        <Preference
+            app:key="diagnostics_shizuku"
+            app:title="@string/diagnostics_shizuku" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/diagnostics_monitoring">
+        <Preference
+            app:key="diagnostics_service"
+            app:title="@string/diagnostics_service" />
+        <Preference
+            app:key="diagnostics_database"
+            app:title="@string/diagnostics_database" />
+        <Preference
+            app:key="diagnostics_battery_optimization"
+            app:title="@string/diagnostics_battery_optimization" />
+        <Preference
+            app:key="diagnostics_vendor_settings"
+            app:summary="@string/diagnostics_vendor_settings_summary"
+            app:title="@string/diagnostics_vendor_settings" />
+        <Preference
+            app:key="diagnostics_dont_kill_my_app"
+            app:summary="@string/diagnostics_dont_kill_my_app_summary"
+            app:title="@string/diagnostics_dont_kill_my_app" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/diagnostics_device_and_logs">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            app:key="debug_logging"
+            app:singleLineTitle="false"
+            app:title="@string/diagnostics_debug_logs" />
+        <Preference
+            app:key="diagnostics_export"
+            app:summary="@string/diagnostics_export_summary"
+            app:title="@string/diagnostics_export" />
+        <Preference
+            app:key="diagnostics_clear"
+            app:summary="@string/diagnostics_clear_summary"
+            app:title="@string/diagnostics_clear" />
+    </PreferenceCategory>
+</PreferenceScreen>

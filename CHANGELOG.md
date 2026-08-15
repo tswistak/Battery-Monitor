@@ -8,6 +8,7 @@
 - Alarms backup (#69)
 - Existing logs import (#80)
 - Scheduled automatic logs export (#34)
+- App diagnostics screen (#128) 
 
 ### Improved
 

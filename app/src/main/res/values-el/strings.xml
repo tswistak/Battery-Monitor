@@ -308,10 +308,6 @@
   <string name="normal" formatted="false">Κανονικός</string>
   <string name="verbose" formatted="false">Πολύλογος</string>
 
-  <string name="pref_status_duration_in_vital_signs" formatted="false">Διάρκεια κατάστασης σε ζωτικά σημεία</string>
-  <string name="pref_status_duration_in_vital_signs_summary" formatted="false">Να συμπεριληφθεί χρόνος από την αλλαγή κατάστασης στα ζωτικά σημεία;</string>
-  <string name="pref_status_duration_in_vital_signs_help" formatted="false">Εάν οριστεί, η γραμμή ζωτικών σημείων θα περιλαμβάνει επίσης τον αριθμό των ωρών αφού η συσκευή αποσυνδέθηκε, συνδέθηκε ή φορτίστηκε πλήρως.</string>
-
   <string name="custom" formatted="false">Προσαρμοσμένο...</string>
 
   <string name="pref_cat_icon_set" formatted="false">Εικονίδιο ειδοποίησης</string>
@@ -346,10 +342,6 @@
   <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Εισαγάγετε διάστημα σε δευτερόλεπτα (1–3600).</string>
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Εισαγάγετε τιμή από 1 έως 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d δευτερόλεπτα</string>
-
-  <string name="pref_display_current_in_notification" formatted="false">Εμφάνιση ρεύματος μπαταρίας</string>
-  <string name="pref_display_current_in_notification_summary" formatted="false">Εμφάνιση ρεύματος στη γραμμή ζωτικών στατιστικών της κύριας ειδοποίησης;</string>
-  <string name="pref_display_current_in_notification_help" formatted="false">Όταν ενεργοποιηθεί, το ρεύμα εμφανίζεται στη γραμμή ζωτικών στατιστικών της κύριας ειδοποίησης. Τουλάχιστον μία γραμμή ειδοποίησης πρέπει να εμφανίζει ζωτικά στατιστικά.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">Ένδειξη φόρτισης</string>
   <string name="pref_indicate_charging" formatted="false">Υποδεικνύεται Φόρτιση</string>
@@ -448,7 +440,6 @@
   <string name="age_never_delete" formatted="false">Να μη διαγράφονται ποτέ</string>
   <string name="pref_content_percent" formatted="false">Ποσοστό μπαταρίας</string>
   <string name="pref_content_temperature" formatted="false">Θερμοκρασία μπαταρίας</string>
-  <string name="pref_content_switching" formatted="false">Εναλλαγή μεταξύ των δύο</string>
 
   <string name="chip_switching_interval_2_seconds" formatted="false">2 δευτερόλεπτα</string>
   <string name="chip_switching_interval_5_seconds" formatted="false">5 δευτερόλεπτα</string>
@@ -516,9 +507,11 @@
   <string name="pref_show_remaining_charge" formatted="false">Εμφάνιση υπολειπόμενου φορτίου</string>
   <string name="pref_show_remaining_charge_summary" formatted="false">Εμφάνιση του υπολειπόμενου φορτίου μπαταρίας που αναφέρει η συσκευή σε mAh;</string>
   <string name="vital_sign_voltage" formatted="false">Τάση μπαταρίας</string>
+
   <string name="pref_vital_signs_content" formatted="false">Περιεχόμενο ζωτικών στοιχείων</string>
   <string name="pref_vital_signs_content_summary" formatted="false">Ποιες τιμές να περιλαμβάνονται στα ζωτικά στοιχεία και με ποια σειρά;</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Αλλαγή σειράς: %1$s</string>
+
   <string name="pref_backup_restore" formatted="false">Δημιουργία και επαναφορά αντιγράφων ασφαλείας</string>
   <string name="pref_auto_log_export" formatted="false">Αυτόματη εξαγωγή αρχείων καταγραφής</string>
   <string name="pref_set_auto_log_export" formatted="false">Ρύθμιση αυτόματων εξαγωγών</string>
@@ -578,4 +571,49 @@
   <string name="alarms_backup_help" formatted="false">Ένα αντίγραφο ασφαλείας ειδοποιήσεων αποθηκεύει τις ειδοποιήσεις σας. Η εισαγωγή του αντικαθιστά όλες τις τρέχουσες ειδοποιήσεις με αυτές του αντιγράφου ασφαλείας.</string>
   <string name="device_specific_backup_help" formatted="false">Ένα αντίγραφο ασφαλείας ειδικά για τη συσκευή αποθηκεύει αρχεία καταγραφής και δεδομένα πρόβλεψης. Μπορείτε να επιλέξετε ένα ή και τα δύο κατά την εισαγωγή. Αυτά τα δεδομένα ανήκουν στη συσκευή προέλευσης· η χρήση τους σε άλλη συσκευή μπορεί να προκαλέσει λανθασμένες προβλέψεις ή απρόσμενη συμπεριφορά. Κατά την εισαγωγή αρχείων καταγραφής, επιλέξτε αν θα προστεθούν ή θα αντικαταστήσουν τα υπάρχοντα.</string>
   <string name="csv_logs_import_help" formatted="false">Μπορείτε να εισαγάγετε αρχεία καταγραφής από ένα αρχείο CSV που εξήχθη προηγουμένως. Η εισαγωγή μεταξύ διαφορετικών εκδόσεων της εφαρμογής ενδέχεται να μη λειτουργεί σωστά. Επιλέξτε αν τα εισαγόμενα αρχεία καταγραφής θα προστεθούν ή θα αντικαταστήσουν τα υπάρχοντα.</string>
+
+  <string name="diagnostics" formatted="false">Διαγνωστικά</string>
+  <string name="diagnostics_summary" formatted="false">Έλεγχος αδειών και αξιοπιστίας παρακολούθησης και δημιουργία αναφοράς αντιμετώπισης προβλημάτων</string>
+  <string name="diagnostics_permissions" formatted="false">Άδειες και πρόσβαση</string>
+  <string name="diagnostics_notifications" formatted="false">Ειδοποιήσεις</string>
+  <string name="diagnostics_root" formatted="false">Πρόσβαση root</string>
+  <string name="diagnostics_shizuku" formatted="false">Πρόσβαση Shizuku</string>
+  <string name="diagnostics_monitoring" formatted="false">Παρακολούθηση στο παρασκήνιο</string>
+  <string name="diagnostics_service" formatted="false">Υπηρεσία παρακολούθησης</string>
+  <string name="diagnostics_database" formatted="false">Βάση δεδομένων καταγραφής</string>
+  <string name="diagnostics_battery_optimization" formatted="false">Βελτιστοποίηση μπαταρίας</string>
+  <string name="diagnostics_vendor_settings" formatted="false">Ρυθμίσεις κατασκευαστή</string>
+  <string name="diagnostics_vendor_settings_summary" formatted="false">Ανοίξτε πρόσθετες ρυθμίσεις δραστηριότητας παρασκηνίου ή αυτόματης εκκίνησης στη συσκευή</string>
+  <string name="diagnostics_dont_kill_my_app" formatted="false">Βοήθεια δραστηριότητας παρασκηνίου</string>
+  <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Ανοίξτε οδηγίες για τη συσκευή στο Don’t Kill My App</string>
+  <string name="diagnostics_device_and_logs" formatted="false">Συσκευή και αναφορά διαγνωστικών</string>
+  <string name="diagnostics_debug_logs" formatted="false">Συλλογή αρχείων εντοπισμού σφαλμάτων</string>
+  <string name="diagnostics_export" formatted="false">Εξαγωγή αναφοράς διαγνωστικών</string>
+  <string name="diagnostics_export_summary" formatted="false">Αποθηκεύστε πληροφορίες συσκευής, αδειών, παρακολούθησης και διαθέσιμων αρχείων σε αρχείο κειμένου</string>
+  <string name="diagnostics_clear" formatted="false">Διαγραφή συλλεγμένων αρχείων εντοπισμού</string>
+  <string name="diagnostics_clear_summary" formatted="false">Αφαιρέστε τα αρχεία εντοπισμού που αποθηκεύει η εφαρμογή</string>
+  <string name="diagnostics_checking" formatted="false">Έλεγχος…</string>
+  <string name="diagnostics_root_unavailable" formatted="false">Μη διαθέσιμο. Πατήστε για αίτημα ή έλεγχο πρόσβασης root.</string>
+  <string name="diagnostics_tap_to_check" formatted="false">Δεν ελέγχθηκε. Πατήστε για αίτημα ή έλεγχο πρόσβασης.</string>
+  <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Λείπει άδεια. Πατήστε για άνοιγμα ρυθμίσεων.</string>
+  <string name="diagnostics_shizuku_permission_missing" formatted="false">Λείπει άδεια. Πατήστε για να τη ζητήσετε από το Shizuku.</string>
+  <string name="diagnostics_unrestricted" formatted="false">Χωρίς περιορισμούς</string>
+  <string name="diagnostics_restricted_tap_to_fix" formatted="false">Περιορισμένο. Πατήστε για αξιόπιστη παρακολούθηση στο παρασκήνιο.</string>
+  <string name="diagnostics_not_running_tap_to_start" formatted="false">Καμία πρόσφατη απόκριση. Πατήστε για αίτημα επανεκκίνησης.</string>
+  <string name="diagnostics_no_recent_database_access" formatted="false">Καμία πρόσφατη επιτυχής πρόσβαση στη βάση δεδομένων</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Λειτουργεί · τελευταία απόκριση πριν από %1$s</string>
+  <string name="diagnostics_debug_logs_warning" formatted="false">Τα αρχεία εντοπισμού μπορεί να περιέχουν προσωπικές πληροφορίες. Ενεργοποιήστε τα μόνο κατά τη διερεύνηση, ελέγξτε το εξαγόμενο αρχείο και μοιραστείτε το δημόσια με προσοχή.</string>
+  <string name="diagnostics_logs_cleared" formatted="false">Τα αρχεία εντοπισμού διαγράφηκαν</string>
+  <string name="diagnostics_logs_clear_failed" formatted="false">Δεν ήταν δυνατή η διαγραφή των αρχείων εντοπισμού</string>
+  <string name="diagnostics_exported" formatted="false">Η αναφορά διαγνωστικών εξήχθη</string>
+  <string name="diagnostics_export_failed" formatted="false">Δεν ήταν δυνατή η εξαγωγή της αναφοράς</string>
+  <string name="diagnostics_help_title" formatted="false">Πώς βοηθούν τα διαγνωστικά</string>
+  <string name="diagnostics_help_overview" formatted="false">Αυτή η οθόνη ελέγχει αν το Battery Monitor έχει ό,τι χρειάζεται για παρακολούθηση στο παρασκήνιο. Αν λείπει κάτι, πατήστε το στοιχείο για να ανοίξετε τη σχετική ρύθμιση.</string>
+  <string name="diagnostics_help_report" formatted="false">Κατά την αναφορά προβλήματος, η αναφορά μπορεί να είναι ζωτική για την εύρεση της αιτίας. Περιλαμβάνει κατάσταση συσκευής και εφαρμογής και ενεργοποιημένα αρχεία. Μπορεί να περιέχουν προσωπικά στοιχεία, γι’ αυτό ελέγξτε και μοιραστείτε το αρχείο προσεκτικά.</string>
+  <string name="diagnostics_service_restarting" formatted="false">Η υπηρεσία δεν αποκρίθηκε. Γίνεται επανεκκίνησή της…</string>
+  <string name="diagnostics_service_restart_failed" formatted="false">Η υπηρεσία παρακολούθησης δεν αποκρίθηκε μετά την επανεκκίνηση. Δοκιμάστε να επανεκκινήσετε την εφαρμογή.</string>
+  <string name="diagnostics_database_failed_storage" formatted="false">Ο έλεγχος της βάσης δεδομένων απέτυχε. Ελευθερώστε χώρο στη συσκευή και δοκιμάστε ξανά.</string>
+  <string name="diagnostics_database_failed" formatted="false">Ο έλεγχος της βάσης δεδομένων απέτυχε. Επανεκκινήστε την εφαρμογή και δοκιμάστε ξανά. Αν συνεχιστεί, εξαγάγετε τα διαγνωστικά όταν αναφέρετε το πρόβλημα.</string>
+  <string name="diagnostics_service_responded" formatted="false">Η υπηρεσία παρακολούθησης αποκρίθηκε</string>
+  <string name="diagnostics_database_check_succeeded" formatted="false">Ο έλεγχος ανάγνωσης και εγγραφής της βάσης δεδομένων ολοκληρώθηκε με επιτυχία</string>
 </resources>

@@ -306,6 +306,26 @@ internal class LogDatabase(context: Context?) {
         LogResult.Inserted
     }
 
+    fun checkHealth(): LogResult =
+        writeWithRetry("Checking log database health") { readableDatabase, writableDatabase ->
+            readableDatabase.rawQuery("SELECT 1 FROM $LOG_TABLE_NAME LIMIT 1", null).use {
+                it.moveToFirst()
+            }
+
+            writableDatabase.beginTransaction()
+            try {
+                writableDatabase.execSQL(
+                    "CREATE TABLE IF NOT EXISTS diagnostics_write_probe (value INTEGER NOT NULL)"
+                )
+                writableDatabase.execSQL(
+                    "INSERT INTO diagnostics_write_probe (value) VALUES (1)"
+                )
+            } finally {
+                if (writableDatabase.inTransaction()) writableDatabase.endTransaction()
+            }
+            LogResult.Inserted
+        }
+
     fun prune(maxHours: Int) {
         val currentTM = System.currentTimeMillis()
         val oldestLog = currentTM - (maxHours.toLong() * 60 * 60 * 1000)

@@ -13,7 +13,11 @@
 package codes.swistak.batterymonitor.app
 
 
+import android.app.ActivityManager
 import android.app.Application
+import android.os.Build
+import android.os.Process
+import codes.swistak.batterymonitor.diagnostics.DebugLogCollector
 import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.migration.SettingsMigrationManager
@@ -26,5 +30,26 @@ class BatteryMonitorApplication : Application() {
             getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
         )
         AutoLogExportScheduler.ensureScheduled(this)
+        if (DebugLogCollector.shouldStartInProcess(currentProcessName())) {
+            DebugLogCollector.sync(
+                this, getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE).getBoolean(
+                    SettingsContract.KEY_DEBUG_LOGGING, false
+                )
+            )
+        }
+    }
+
+    private fun currentProcessName(): String? {
+        val frameworkProcessName = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            runCatching { getProcessName() }.getOrNull()
+        } else {
+            null
+        }
+        if (!frameworkProcessName.isNullOrEmpty()) return frameworkProcessName
+
+        val activityManager = getSystemService(ACTIVITY_SERVICE) as? ActivityManager
+        return activityManager?.runningAppProcesses?.firstOrNull {
+            it.pid == Process.myPid()
+        }?.processName
     }
 }

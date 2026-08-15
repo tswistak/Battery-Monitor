@@ -348,10 +348,6 @@
   <string name="normal" formatted="false">عادي</string>
   <string name="verbose" formatted="false">مسهب</string>
 
-  <string name="pref_status_duration_in_vital_signs" formatted="false">مدة الوضع في العلامات الحيوية</string>
-  <string name="pref_status_duration_in_vital_signs_summary" formatted="false">الوقت الماضي منذ تغيير الحالة</string>
-  <string name="pref_status_duration_in_vital_signs_help" formatted="false">اذا تم ضبط العلامات الحيوية سوف بيلغك ان الجهاز كم من الزمن مضى من الشحن والتفريغ</string>
-
   <string name="custom" formatted="false">مخصص...</string>
 
   <string name="pref_cat_icon_set" formatted="false">أيقونة الإشعار</string>
@@ -386,10 +382,6 @@
   <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">أدخل فاصلًا بالثواني (1–3600).</string>
   <string name="pref_battery_current_refresh_interval_error" formatted="false">أدخل قيمة من 1 إلى 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d ثانية</string>
-
-  <string name="pref_display_current_in_notification" formatted="false">عرض تيار البطارية</string>
-  <string name="pref_display_current_in_notification_summary" formatted="false">عرض تيار البطارية في سطر الإحصاءات الحيوية للإشعار الرئيسي؟</string>
-  <string name="pref_display_current_in_notification_help" formatted="false">عند التفعيل، يظهر تيار البطارية في سطر الإحصاءات الحيوية للإشعار الرئيسي. يجب ضبط سطر إشعار واحد على الأقل لعرض الإحصاءات الحيوية.</string>
 
   <string name="pref_cat_charging_indicator" formatted="false">مؤشر الشحن</string>
   <string name="pref_indicate_charging" formatted="false">اشارة الى الشحن</string>
@@ -488,7 +480,6 @@
   <string name="age_never_delete" formatted="false">عدم الحذف</string>
   <string name="pref_content_percent" formatted="false">نسبة البطارية</string>
   <string name="pref_content_temperature" formatted="false">درجة حرارة البطارية</string>
-  <string name="pref_content_switching" formatted="false">التبديل بين الاثنين</string>
 
   <string name="chip_switching_interval_2_seconds" formatted="false">ثانيتان</string>
   <string name="chip_switching_interval_5_seconds" formatted="false">5 ثوانٍ</string>
@@ -556,9 +547,11 @@
   <string name="pref_show_remaining_charge" formatted="false">عرض الشحنة المتبقية</string>
   <string name="pref_show_remaining_charge_summary" formatted="false">عرض شحنة البطارية المتبقية التي يبلغ عنها الجهاز بوحدة mAh؟</string>
   <string name="vital_sign_voltage" formatted="false">جهد البطارية</string>
+
   <string name="pref_vital_signs_content" formatted="false">محتوى المؤشرات الحيوية</string>
   <string name="pref_vital_signs_content_summary" formatted="false">ما القيم التي يجب تضمينها في المؤشرات الحيوية، وبأي ترتيب؟</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">تغيير ترتيب %1$s</string>
+
   <string name="pref_backup_restore" formatted="false">النسخ الاحتياطي والاستعادة</string>
   <string name="pref_auto_log_export" formatted="false">التصدير التلقائي للسجلات</string>
   <string name="pref_set_auto_log_export" formatted="false">إعداد التصدير التلقائي للسجلات</string>
@@ -618,4 +611,49 @@
   <string name="alarms_backup_help" formatted="false">تحفظ نسخة التنبيهات الاحتياطية تنبيهاتك. يؤدي استيرادها إلى استبدال جميع التنبيهات الحالية بالتنبيهات الموجودة في النسخة الاحتياطية.</string>
   <string name="device_specific_backup_help" formatted="false">تحفظ النسخة الاحتياطية الخاصة بالجهاز السجلات وبيانات المتنبئ. يمكنك تحديد أحدهما أو كليهما أثناء الاستيراد. تنتمي هذه البيانات إلى الجهاز المصدر؛ وقد يؤدي استخدامها على جهاز آخر إلى تنبؤات غير صحيحة أو سلوك غير متوقع. عند استيراد السجلات، اختر إضافتها أو استبدال السجلات الحالية.</string>
   <string name="csv_logs_import_help" formatted="false">يمكنك استيراد السجلات من ملف CSV تم تصديره سابقًا. قد لا يعمل الاستيراد بشكل صحيح بين إصدارات التطبيق المختلفة. اختر إضافة السجلات المستوردة أو استبدال السجلات الحالية.</string>
+
+  <string name="diagnostics" formatted="false">التشخيص</string>
+  <string name="diagnostics_summary" formatted="false">تحقق من الأذونات وموثوقية المراقبة وأنشئ تقريرًا لاستكشاف الأخطاء</string>
+  <string name="diagnostics_permissions" formatted="false">الأذونات والوصول</string>
+  <string name="diagnostics_notifications" formatted="false">الإشعارات</string>
+  <string name="diagnostics_root" formatted="false">وصول الجذر</string>
+  <string name="diagnostics_shizuku" formatted="false">وصول Shizuku</string>
+  <string name="diagnostics_monitoring" formatted="false">المراقبة في الخلفية</string>
+  <string name="diagnostics_service" formatted="false">خدمة المراقبة</string>
+  <string name="diagnostics_database" formatted="false">قاعدة بيانات السجل</string>
+  <string name="diagnostics_battery_optimization" formatted="false">تحسين البطارية</string>
+  <string name="diagnostics_vendor_settings" formatted="false">إعدادات الشركة المصنعة</string>
+  <string name="diagnostics_vendor_settings_summary" formatted="false">افتح إعدادات إضافية للنشاط في الخلفية أو التشغيل التلقائي المتاحة على هذا الجهاز</string>
+  <string name="diagnostics_dont_kill_my_app" formatted="false">مساعدة النشاط في الخلفية</string>
+  <string name="diagnostics_dont_kill_my_app_summary" formatted="false">افتح إرشادات خاصة بالجهاز على Don’t Kill My App</string>
+  <string name="diagnostics_device_and_logs" formatted="false">الجهاز وتقرير التشخيص</string>
+  <string name="diagnostics_debug_logs" formatted="false">جمع سجلات تصحيح الأخطاء</string>
+  <string name="diagnostics_export" formatted="false">تصدير تقرير التشخيص</string>
+  <string name="diagnostics_export_summary" formatted="false">احفظ معلومات الجهاز والأذونات والمراقبة وسجلات تصحيح الأخطاء المتاحة في ملف نصي</string>
+  <string name="diagnostics_clear" formatted="false">حذف سجلات تصحيح الأخطاء المجمعة</string>
+  <string name="diagnostics_clear_summary" formatted="false">أزل سجلات تصحيح الأخطاء المخزنة بواسطة التطبيق</string>
+  <string name="diagnostics_checking" formatted="false">جارٍ التحقق…</string>
+  <string name="diagnostics_root_unavailable" formatted="false">غير متاح. اضغط لطلب وصول الجذر أو التحقق منه.</string>
+  <string name="diagnostics_tap_to_check" formatted="false">لم يتم التحقق. اضغط لطلب الوصول أو التحقق منه.</string>
+  <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">الإذن مفقود. اضغط لفتح الإعدادات.</string>
+  <string name="diagnostics_shizuku_permission_missing" formatted="false">الإذن مفقود. اضغط لطلبه من Shizuku.</string>
+  <string name="diagnostics_unrestricted" formatted="false">غير مقيّد</string>
+  <string name="diagnostics_restricted_tap_to_fix" formatted="false">مقيّد. اضغط للسماح بمراقبة موثوقة في الخلفية.</string>
+  <string name="diagnostics_not_running_tap_to_start" formatted="false">لا توجد استجابة حديثة. اضغط لطلب إعادة التشغيل.</string>
+  <string name="diagnostics_no_recent_database_access" formatted="false">لا يوجد وصول ناجح حديث إلى قاعدة البيانات</string>
+  <string name="diagnostics_working_last_seen" formatted="true">يعمل · آخر استجابة منذ %1$s</string>
+  <string name="diagnostics_debug_logs_warning" formatted="false">قد تحتوي سجلات تصحيح الأخطاء على معلومات شخصية. فعّلها فقط أثناء التحقيق في مشكلة، وراجع الملف المصدّر، وتوخ الحذر عند مشاركته علنًا.</string>
+  <string name="diagnostics_logs_cleared" formatted="false">تم حذف سجلات تصحيح الأخطاء</string>
+  <string name="diagnostics_logs_clear_failed" formatted="false">تعذر حذف سجلات تصحيح الأخطاء</string>
+  <string name="diagnostics_exported" formatted="false">تم تصدير تقرير التشخيص</string>
+  <string name="diagnostics_export_failed" formatted="false">تعذر تصدير تقرير التشخيص</string>
+  <string name="diagnostics_help_title" formatted="false">كيف يساعد التشخيص</string>
+  <string name="diagnostics_help_overview" formatted="false">تتحقق هذه الشاشة من توفر كل ما يحتاجه Battery Monitor للمراقبة في الخلفية. إذا كان شيء مفقودًا، فاضغط على العنصر لفتح المكان الذي يمكنك إصلاحه فيه.</string>
+  <string name="diagnostics_help_report" formatted="false">عند الإبلاغ عن مشكلة، قد يكون التقرير ضروريًا لمعرفة السبب. يتضمن حالة الجهاز والتطبيق والسجلات المفعلة. قد تحتوي السجلات على معلومات شخصية، لذا راجع الملف وشاركه بحذر.</string>
+  <string name="diagnostics_service_restarting" formatted="false">لم تستجب الخدمة. جارٍ إعادة تشغيلها…</string>
+  <string name="diagnostics_service_restart_failed" formatted="false">لم تستجب خدمة المراقبة بعد إعادة التشغيل. جرّب إعادة تشغيل التطبيق.</string>
+  <string name="diagnostics_database_failed_storage" formatted="false">فشل فحص قاعدة البيانات. حرّر بعض مساحة تخزين الجهاز وحاول مجددًا.</string>
+  <string name="diagnostics_database_failed" formatted="false">فشل فحص قاعدة البيانات. أعد تشغيل التطبيق وحاول مجددًا. إذا استمر الفشل، فصدّر بيانات التشخيص عند الإبلاغ عن المشكلة.</string>
+  <string name="diagnostics_service_responded" formatted="false">استجابت خدمة المراقبة</string>
+  <string name="diagnostics_database_check_succeeded" formatted="false">نجح فحص القراءة والكتابة في قاعدة البيانات</string>
 </resources>

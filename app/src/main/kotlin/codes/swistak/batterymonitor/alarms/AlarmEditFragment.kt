@@ -17,11 +17,9 @@ package codes.swistak.batterymonitor.alarms
 import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.content.res.Resources
 import android.database.Cursor
 import android.os.Bundle
-import android.provider.Settings
 import android.text.InputType
 import android.util.TypedValue
 import android.view.ViewGroup
@@ -36,6 +34,8 @@ import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
+import codes.swistak.batterymonitor.common.showToast
 import codes.swistak.batterymonitor.settings.SettingsContract
 import kotlin.math.roundToInt
 
@@ -363,22 +363,14 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
         if (mAdapter!!.type == "temp_drops" || mAdapter!!.type == "temp_rises") {
             val entries = arrayOfNulls<String>(DisplayStrings.tempAlarmEntries.size + 1)
             System.arraycopy(
-                DisplayStrings.tempAlarmEntries,
-                0,
-                entries,
-                0,
-                DisplayStrings.tempAlarmEntries.size
+                DisplayStrings.tempAlarmEntries, 0, entries, 0, DisplayStrings.tempAlarmEntries.size
             )
             entries[entries.size - 1] = res!!.getString(R.string.custom)
             lp!!.entries = entries
 
             val values = arrayOfNulls<String>(DisplayStrings.tempAlarmValues.size + 1)
             System.arraycopy(
-                DisplayStrings.tempAlarmValues,
-                0,
-                values,
-                0,
-                DisplayStrings.tempAlarmValues.size
+                DisplayStrings.tempAlarmValues, 0, values, 0, DisplayStrings.tempAlarmValues.size
             )
             values[values.size - 1] = "custom"
             lp.entryValues = values
@@ -461,11 +453,9 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
 
     fun enableNotifsButtonClick() {
         if (mAdapter!!.type == null) return
-        val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
-        intent.putExtra(Settings.EXTRA_CHANNEL_ID, mAdapter!!.type)
-        intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-        startActivity(intent)
+        val context = requireContext()
+        if (!NotificationSettingsNavigator.openNotificationChannel(context, mAdapter!!.type!!)) {
+            context.showToast(R.string.advanced_value_not_available)
+        }
     }
 }

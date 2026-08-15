@@ -64,7 +64,9 @@ import androidx.recyclerview.widget.RecyclerView
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
+import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.common.RootExecutor
+import codes.swistak.batterymonitor.common.showToast
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.devicebackup.DeviceDataType
@@ -396,7 +398,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 return false
             }
 
-            SettingsContract.KEY_NOTIFICATION_SETTINGS, SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS, SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS, SettingsContract.KEY_CURRENT_STATE_SETTINGS, SettingsContract.KEY_OTHER_SETTINGS, SettingsContract.KEY_BACKUP_RESTORE_SETTINGS -> {
+            SettingsContract.KEY_NOTIFICATION_SETTINGS, SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS, SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS, SettingsContract.KEY_CURRENT_STATE_SETTINGS, SettingsContract.KEY_OTHER_SETTINGS, SettingsContract.KEY_BACKUP_RESTORE_SETTINGS, SettingsContract.KEY_DIAGNOSTICS_SETTINGS -> {
                 val comp = ComponentName(
                     requireActivity().packageName, SettingsActivity::class.java.getName()
                 )
@@ -1873,18 +1875,13 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     }
 
     fun enableNotifsButtonClick() {
-        val intent: Intent?
-        if (!appNotifsEnabled || mainChan == null) {
-            intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+        val context = requireContext()
+        val opened = if (!appNotifsEnabled || mainChan == null) {
+            NotificationSettingsNavigator.openNotifications(context)
         } else {
-            intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
-            intent.putExtra(Settings.EXTRA_CHANNEL_ID, mainChan!!.id)
+            NotificationSettingsNavigator.openNotificationChannel(context, mainChan!!.id)
         }
-
-        intent.putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-        startActivity(intent)
+        if (!opened) context.showToast(R.string.advanced_value_not_available)
     }
 
     private fun getMainNotifsEnabled(): Boolean {

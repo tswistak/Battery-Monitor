@@ -45,6 +45,8 @@ import android.os.Looper
 import android.os.Message
 import android.os.Messenger
 import android.os.RemoteException
+import android.os.ResultReceiver
+import android.os.SystemClock
 import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -118,6 +120,13 @@ class BatteryInfoService : Service() {
         private const val EXTRA_SETTINGS_SNAPSHOT =
             "codes.swistak.batterymonitor.EXTRA_SETTINGS_SNAPSHOT"
 
+        private const val ACTION_DIAGNOSTICS_CHECK =
+            "codes.swistak.batterymonitor.action.DIAGNOSTICS_CHECK"
+        private const val EXTRA_DIAGNOSTICS_RECEIVER =
+            "codes.swistak.batterymonitor.EXTRA_DIAGNOSTICS_RECEIVER"
+        const val DIAGNOSTICS_RESULT_OK = 1
+        const val DIAGNOSTICS_RESULT_TIMESTAMP = "diagnostics_result_timestamp"
+
         private const val CONTENT_PERCENTAGE = "percentage"
         private const val CONTENT_TEMPERATURE = "temperature"
         private const val LIVE_UPDATE_MODE_ALWAYS = "always"
@@ -172,7 +181,20 @@ class BatteryInfoService : Service() {
             if (settingsSnapshot != null) {
                 serviceIntent.putExtra(EXTRA_SETTINGS_SNAPSHOT, settingsSnapshot)
             }
+            return startServiceSafely(context, serviceIntent)
+        }
 
+        fun requestDiagnosticsCheck(
+            context: Context, receiver: ResultReceiver
+        ): ServiceStartResult = startServiceSafely(
+            context,
+            Intent(context, BatteryInfoService::class.java).setAction(ACTION_DIAGNOSTICS_CHECK)
+                .putExtra(EXTRA_DIAGNOSTICS_RECEIVER, receiver)
+        )
+
+        private fun startServiceSafely(
+            context: Context, serviceIntent: Intent
+        ): ServiceStartResult {
             try {
                 context.startForegroundService(serviceIntent)
                 return ServiceStartResult.START_REQUESTED
@@ -458,6 +480,21 @@ class BatteryInfoService : Service() {
         configureChipContent()
         update(null)
         restartChipSwitcher()
+
+        if (intent?.action == ACTION_DIAGNOSTICS_CHECK) {
+            @Suppress("DEPRECATION") val receiver =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    intent.getParcelableExtra(
+                        EXTRA_DIAGNOSTICS_RECEIVER, ResultReceiver::class.java
+                    )
+                } else {
+                    intent.getParcelableExtra(EXTRA_DIAGNOSTICS_RECEIVER)
+                }
+            receiver?.send(
+                DIAGNOSTICS_RESULT_OK, Bundle().apply {
+                    putLong(DIAGNOSTICS_RESULT_TIMESTAMP, SystemClock.elapsedRealtime())
+                })
+        }
 
         return START_STICKY
     }

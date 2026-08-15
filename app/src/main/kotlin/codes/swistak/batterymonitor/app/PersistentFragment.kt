@@ -31,7 +31,6 @@ import android.os.Looper
 import android.os.Message
 import android.os.Messenger
 import android.os.RemoteException
-import android.provider.Settings
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
@@ -40,6 +39,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
+import codes.swistak.batterymonitor.common.showToast
 import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
@@ -247,19 +248,9 @@ class PersistentFragment : Fragment() {
                         .setPositiveButton(
                             R.string.live_updates_onboarding_positive_off
                         ) { _, _ ->
-                            try {
-                                val action: String? = try {
-                                    Settings::class.java.getField("ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS")
-                                        .get(null) as String?
-                                } catch (ignored: Throwable) {
-                                    "android.settings.MANAGE_APP_PROMOTED_NOTIFICATIONS"
-                                }
-                                val intent = Intent(action)
-                                intent.putExtra(
-                                    Settings.EXTRA_APP_PACKAGE, requireActivity().packageName
-                                )
-                                startActivity(intent)
-                            } catch (ignored: Throwable) {
+                            val context = requireContext()
+                            if (!NotificationSettingsNavigator.openLiveUpdates(context)) {
+                                context.showToast(R.string.advanced_value_not_available)
                             }
                         }.setNegativeButton(
                             R.string.live_updates_onboarding_negative_off
@@ -287,10 +278,8 @@ class PersistentFragment : Fragment() {
         override fun onDismiss(dialog: DialogInterface) {
             super.onDismiss(dialog)
             val pf = getParentFragmentManager().findFragmentByTag(FRAG_TAG) as PersistentFragment?
-            if (pf != null) {
-                pf.spMain.edit {
-                    putBoolean(SettingsContract.KEY_FIRST_RUN, false)
-                }
+            pf?.spMain?.edit {
+                putBoolean(SettingsContract.KEY_FIRST_RUN, false)
             }
         }
     }

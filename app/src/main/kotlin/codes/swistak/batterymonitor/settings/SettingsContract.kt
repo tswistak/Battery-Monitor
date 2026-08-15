@@ -28,7 +28,7 @@ internal object SettingsContract {
     const val KEY_ADVANCED_INFO_HELP: String = "advanced_info_help"
     const val KEY_OTHER_SETTINGS: String = "other_settings"
     const val KEY_BACKUP_RESTORE_SETTINGS: String = "backup_restore_settings"
-
+    const val KEY_DIAGNOSTICS_SETTINGS: String = "diagnostics_settings"
     const val KEY_CHANGE_APP_LANGUAGE_HOLDER: String = "change_app_language_holder"
     const val KEY_CHANGE_APP_LANGUAGE: String = "change_app_language"
     const val KEY_PLUGIN_SETTINGS: String = "plugin_settings"
@@ -57,6 +57,8 @@ internal object SettingsContract {
     const val KEY_NEXT_AUTO_LOG_EXPORT_TIME: String = "next_auto_log_export_time"
 
     const val KEY_ENABLE_LOGGING: String = "enable_logging"
+    const val KEY_DEBUG_LOGGING: String = "debug_logging"
+
     const val KEY_MAX_LOG_AGE: String = "max_log_age"
     const val KEY_ICON_CONTENT: String = "icon_content"
     const val KEY_SHOW_ICON_UNIT: String = "show_icon_unit"
