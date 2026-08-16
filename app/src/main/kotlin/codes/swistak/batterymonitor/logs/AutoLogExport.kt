@@ -62,6 +62,18 @@ internal enum class AutoLogExportMode(val preferenceValue: String) {
     }
 }
 
+internal enum class AutoLogExportSetupAction {
+    START_INITIAL_EXPORT, RESCHEDULE
+}
+
+internal fun autoLogExportSetupAction(wasConfigured: Boolean): AutoLogExportSetupAction =
+    if (wasConfigured) AutoLogExportSetupAction.RESCHEDULE
+    else AutoLogExportSetupAction.START_INITIAL_EXPORT
+
+internal fun shouldCreateNewAutoLogExportFile(
+    hasRecords: Boolean, createFileWhenEmpty: Boolean
+): Boolean = hasRecords || createFileWhenEmpty
+
 internal fun shouldRunAutoLogExport(
     loggingEnabled: Boolean, frequency: AutoLogExportFrequency, directoryConfigured: Boolean
 ): Boolean = loggingEnabled && frequency != AutoLogExportFrequency.OFF && directoryConfigured
@@ -94,6 +106,15 @@ internal object AutoLogExportScheduler {
     fun reschedule(context: Context) {
         preferences(context).edit { remove(SettingsContract.KEY_NEXT_AUTO_LOG_EXPORT_TIME) }
         ensureScheduled(context)
+    }
+
+    fun startInitialExport(context: Context) {
+        cancel(context)
+        context.applicationContext.sendBroadcast(
+            Intent(context.applicationContext, AutoLogExportReceiver::class.java).putExtra(
+                AutoLogExportReceiver.EXTRA_CREATE_FILE_WHEN_EMPTY, true
+            )
+        )
     }
 
     fun scheduleAfterRun(context: Context) {
@@ -147,11 +168,19 @@ internal object AutoLogExportScheduler {
 }
 
 internal class AutoLogExportReceiver : BroadcastReceiver() {
+    companion object {
+        const val EXTRA_CREATE_FILE_WHEN_EMPTY =
+            "codes.swistak.batterymonitor.extra.CREATE_AUTO_EXPORT_FILE_WHEN_EMPTY"
+    }
+
     override fun onReceive(context: Context, intent: Intent?) {
         val result = goAsync()
+        val createFileWhenEmpty = intent?.getBooleanExtra(
+            EXTRA_CREATE_FILE_WHEN_EMPTY, false
+        ) == true
         Thread {
             try {
-                AutoLogExporter.export(context.applicationContext)
+                AutoLogExporter.export(context.applicationContext, createFileWhenEmpty)
             } catch (exception: Exception) {
                 Log.e("AutoLogExport", "Automatic log export failed", exception)
             } finally {
@@ -199,7 +228,7 @@ internal object AutoLogExporter {
     }
 
     @Synchronized
-    fun export(context: Context) {
+    fun export(context: Context, createFileWhenEmpty: Boolean = false) {
         if (!isEnabled(context)) return
         val preferences = context.getSharedPreferences(
             SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
@@ -223,7 +252,7 @@ internal object AutoLogExporter {
                 val records = LogExport.loadRecords(
                     context, afterExclusive = lastAutomaticExport, throughInclusive = exportThrough
                 )
-                if (records.isNotEmpty()) {
+                if (shouldCreateNewAutoLogExportFile(records.isNotEmpty(), createFileWhenEmpty)) {
                     val uri = createDocument(
                         context,
                         treeUri,
