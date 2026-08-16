@@ -89,6 +89,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+internal fun displayPathForDocumentId(documentId: String): String =
+    documentId.removePrefix("primary:")
+
 class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener {
     companion object {
         private const val EXPORT_REQUEST = 1
@@ -1569,10 +1572,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     }
 
     private fun directoryLabel(directory: Uri?): String = directory?.let {
-        runCatching { DocumentsContract.getTreeDocumentId(it) }.getOrNull()
-            ?: it.lastPathSegment.orEmpty()
+        runCatching { DocumentsContract.getTreeDocumentId(it) }.getOrNull()?.let(
+            ::displayPathForDocumentId
+        ) ?: it.lastPathSegment.orEmpty()
     }.orEmpty()
-
+    
     private fun valueIndex(values: Array<String>, value: String?): Int =
         values.indexOf(value).takeIf { it >= 0 } ?: 0
 
