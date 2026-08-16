@@ -10,9 +10,9 @@ package codes.swistak.batterymonitor.diagnostics
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.core.net.toUri
 import java.util.Locale
 
 internal enum class VendorFamily(val dontKillMyAppSlug: String) {
@@ -83,15 +83,14 @@ internal object BackgroundSettingsNavigator {
 
     fun openApplicationDetails(context: Context): Boolean = start(
         context, Intent(
-            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            Uri.parse("package:${context.packageName}")
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:${context.packageName}".toUri()
         )
     )
 
     fun openDontKillMyApp(context: Context, family: VendorFamily?): Boolean {
         val suffix = family?.dontKillMyAppSlug?.let { "/$it" }.orEmpty()
         return start(
-            context, Intent(Intent.ACTION_VIEW, Uri.parse("https://dontkillmyapp.com$suffix"))
+            context, Intent(Intent.ACTION_VIEW, "https://dontkillmyapp.com$suffix".toUri())
         )
     }
 
@@ -232,7 +231,7 @@ internal object BackgroundSettingsNavigator {
                 "com.asus.mobilemanager", "com.asus.mobilemanager.autostart.AutoStartActivity"
             ), componentIntent(
                 "com.asus.mobilemanager", "com.asus.mobilemanager.entry.FunctionActivity"
-            ).setData(Uri.parse("mobilemanager://function/entry/AutoStart"))
+            ).setData("mobilemanager://function/entry/AutoStart".toUri())
         )
 
         VendorFamily.TRANSSION -> listOf(
@@ -305,7 +304,7 @@ internal object BackgroundSettingsNavigator {
 
     private fun openPerAppBatterySettings(context: Context): Boolean = start(
         context, Intent(
-            ACTION_VIEW_ADVANCED_POWER_USAGE_DETAIL, Uri.parse("package:${context.packageName}")
+            ACTION_VIEW_ADVANCED_POWER_USAGE_DETAIL, "package:${context.packageName}".toUri()
         )
     )
 
