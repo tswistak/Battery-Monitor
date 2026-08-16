@@ -62,6 +62,18 @@ internal enum class AutoLogExportMode(val preferenceValue: String) {
     }
 }
 
+internal enum class AutoLogExportSetupAction {
+    START_INITIAL_EXPORT, RESCHEDULE
+}
+
+internal fun autoLogExportSetupAction(wasConfigured: Boolean): AutoLogExportSetupAction =
+    if (wasConfigured) AutoLogExportSetupAction.RESCHEDULE
+    else AutoLogExportSetupAction.START_INITIAL_EXPORT
+
+internal fun shouldCreateNewAutoLogExportFile(
+    hasRecords: Boolean, createFileWhenEmpty: Boolean
+): Boolean = hasRecords || createFileWhenEmpty
+
 internal fun shouldRunAutoLogExport(
     loggingEnabled: Boolean, frequency: AutoLogExportFrequency, directoryConfigured: Boolean
 ): Boolean = loggingEnabled && frequency != AutoLogExportFrequency.OFF && directoryConfigured
@@ -240,7 +252,7 @@ internal object AutoLogExporter {
                 val records = LogExport.loadRecords(
                     context, afterExclusive = lastAutomaticExport, throughInclusive = exportThrough
                 )
-                if (records.isNotEmpty() || createFileWhenEmpty) {
+                if (shouldCreateNewAutoLogExportFile(records.isNotEmpty(), createFileWhenEmpty)) {
                     val uri = createDocument(
                         context,
                         treeUri,

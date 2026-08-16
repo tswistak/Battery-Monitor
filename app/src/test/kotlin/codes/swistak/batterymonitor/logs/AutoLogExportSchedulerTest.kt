@@ -79,4 +79,29 @@ class AutoLogExportSchedulerTest {
             )
         )
     }
+
+    @Test
+    fun `new configuration exports immediately and creates a file even without logs`() {
+        assertEquals(
+            AutoLogExportSetupAction.START_INITIAL_EXPORT,
+            autoLogExportSetupAction(wasConfigured = false)
+        )
+        assertTrue(
+            shouldCreateNewAutoLogExportFile(
+                hasRecords = false, createFileWhenEmpty = true
+            )
+        )
+    }
+
+    @Test
+    fun `editing configuration reschedules and scheduled empty export creates no file`() {
+        assertEquals(
+            AutoLogExportSetupAction.RESCHEDULE, autoLogExportSetupAction(wasConfigured = true)
+        )
+        assertFalse(
+            shouldCreateNewAutoLogExportFile(
+                hasRecords = false, createFileWhenEmpty = false
+            )
+        )
+    }
 }

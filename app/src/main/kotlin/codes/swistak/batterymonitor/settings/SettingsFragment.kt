@@ -75,7 +75,9 @@ import codes.swistak.batterymonitor.devicebackup.LogImportMode
 import codes.swistak.batterymonitor.logs.AutoLogExportFrequency
 import codes.swistak.batterymonitor.logs.AutoLogExportMode
 import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
+import codes.swistak.batterymonitor.logs.AutoLogExportSetupAction
 import codes.swistak.batterymonitor.logs.LogExportFormat
+import codes.swistak.batterymonitor.logs.autoLogExportSetupAction
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryCurrentMultiplierDetector
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
@@ -1459,10 +1461,14 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }
             releaseAutoLogExportDirectory(oldDirectory.takeIf { it != directory })
             setupAutoLogExportPreference()
-            if (wasConfigured) {
-                AutoLogExportScheduler.reschedule(requireContext())
-            } else {
-                AutoLogExportScheduler.startInitialExport(requireContext())
+            when (autoLogExportSetupAction(wasConfigured)) {
+                AutoLogExportSetupAction.START_INITIAL_EXPORT -> AutoLogExportScheduler.startInitialExport(
+                    requireContext()
+                )
+
+                AutoLogExportSetupAction.RESCHEDULE -> AutoLogExportScheduler.reschedule(
+                    requireContext()
+                )
             }
         }.setNeutralButton(R.string.pref_auto_log_export_directory) { _, _ ->
             openAutoLogExportDirectoryPicker()
