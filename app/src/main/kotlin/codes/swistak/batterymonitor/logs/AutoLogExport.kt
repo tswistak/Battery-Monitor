@@ -96,6 +96,15 @@ internal object AutoLogExportScheduler {
         ensureScheduled(context)
     }
 
+    fun startInitialExport(context: Context) {
+        cancel(context)
+        context.applicationContext.sendBroadcast(
+            Intent(context.applicationContext, AutoLogExportReceiver::class.java).putExtra(
+                AutoLogExportReceiver.EXTRA_CREATE_FILE_WHEN_EMPTY, true
+            )
+        )
+    }
+
     fun scheduleAfterRun(context: Context) {
         val preferences = preferences(context)
         val frequency = AutoLogExportFrequency.fromPreference(
@@ -147,11 +156,19 @@ internal object AutoLogExportScheduler {
 }
 
 internal class AutoLogExportReceiver : BroadcastReceiver() {
+    companion object {
+        const val EXTRA_CREATE_FILE_WHEN_EMPTY =
+            "codes.swistak.batterymonitor.extra.CREATE_AUTO_EXPORT_FILE_WHEN_EMPTY"
+    }
+
     override fun onReceive(context: Context, intent: Intent?) {
         val result = goAsync()
+        val createFileWhenEmpty = intent?.getBooleanExtra(
+            EXTRA_CREATE_FILE_WHEN_EMPTY, false
+        ) == true
         Thread {
             try {
-                AutoLogExporter.export(context.applicationContext)
+                AutoLogExporter.export(context.applicationContext, createFileWhenEmpty)
             } catch (exception: Exception) {
                 Log.e("AutoLogExport", "Automatic log export failed", exception)
             } finally {
@@ -199,7 +216,7 @@ internal object AutoLogExporter {
     }
 
     @Synchronized
-    fun export(context: Context) {
+    fun export(context: Context, createFileWhenEmpty: Boolean = false) {
         if (!isEnabled(context)) return
         val preferences = context.getSharedPreferences(
             SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
@@ -223,7 +240,7 @@ internal object AutoLogExporter {
                 val records = LogExport.loadRecords(
                     context, afterExclusive = lastAutomaticExport, throughInclusive = exportThrough
                 )
-                if (records.isNotEmpty()) {
+                if (records.isNotEmpty() || createFileWhenEmpty) {
                     val uri = createDocument(
                         context,
                         treeUri,

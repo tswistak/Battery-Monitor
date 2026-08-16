@@ -1459,7 +1459,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }
             releaseAutoLogExportDirectory(oldDirectory.takeIf { it != directory })
             setupAutoLogExportPreference()
-            AutoLogExportScheduler.reschedule(requireContext())
+            if (wasConfigured) {
+                AutoLogExportScheduler.reschedule(requireContext())
+            } else {
+                AutoLogExportScheduler.startInitialExport(requireContext())
+            }
         }.setNeutralButton(R.string.pref_auto_log_export_directory) { _, _ ->
             openAutoLogExportDirectoryPicker()
         }.setNegativeButton(
