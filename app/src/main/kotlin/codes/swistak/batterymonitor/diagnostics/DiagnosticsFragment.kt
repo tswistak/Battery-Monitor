@@ -174,7 +174,13 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(KEY_VENDOR_SETTINGS)?.apply {
             isVisible = family != null
             setOnPreferenceClickListener {
-                family?.let { BackgroundSettingsNavigator.openVendorSettings(requireContext(), it) }
+                val context = requireContext()
+                if (family != null && !BackgroundSettingsNavigator.openVendorSettings(
+                        context, family
+                    )
+                ) {
+                    context.showToast(R.string.advanced_value_not_available)
+                }
                 true
             }
         }
