@@ -621,7 +621,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Ограничено. Нажмите, чтобы разрешить надёжный фоновый мониторинг.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Нет недавнего ответа. Нажмите, чтобы запросить перезапуск.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Нет недавнего успешного доступа к базе данных</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Работает · последний ответ %1$s назад</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Работает · Последний ответ %1$s назад</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Журналы отладки могут содержать личные данные. Включайте их только при исследовании проблемы, проверьте экспортированный файл и осторожно делитесь им публично.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Журналы отладки удалены</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Не удалось удалить журналы отладки</string>
@@ -633,7 +633,7 @@
   <string name="diagnostics_service_restarting" formatted="false">Служба не ответила. Выполняется перезапуск…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Служба мониторинга не ответила после перезапуска. Попробуйте перезапустить приложение.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Проверка базы данных не выполнена. Освободите место на устройстве и повторите попытку.</string>
-  <string name="diagnostics_database_failed" formatted="false">Проверка базы данных не выполнена. Перезапустите приложение и повторите попытку. Если ошибка сохраняется, экспортируйте диагностику при отправке отчёта о проблеме.</string>
+  <string name="diagnostics_database_failed" formatted="false">Проверка базы данных не выполнена. Перезапустите приложение и повторите попытку.</string>
   <string name="diagnostics_service_responded" formatted="false">Служба мониторинга ответила</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Проверка чтения и записи базы данных выполнена успешно</string>
 </resources>

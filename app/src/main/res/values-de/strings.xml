@@ -577,7 +577,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Eingeschränkt. Tippen, um zuverlässige Hintergrundüberwachung zu erlauben.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Keine aktuelle Antwort. Tippen, um einen Neustart anzufordern.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Kein kürzlich erfolgreicher Datenbankzugriff</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Funktioniert · letzte Antwort vor %1$s</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Funktioniert · Letzte Antwort vor %1$s</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Debug-Protokolle können persönliche Informationen enthalten. Nur während der Fehlersuche aktivieren, die exportierte Datei prüfen und beim öffentlichen Teilen vorsichtig sein.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Debug-Protokolle gelöscht</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Debug-Protokolle konnten nicht gelöscht werden</string>
@@ -589,7 +589,7 @@
   <string name="diagnostics_service_restarting" formatted="false">Der Dienst hat nicht geantwortet. Er wird neu gestartet…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Der Überwachungsdienst hat nach dem Neustart nicht geantwortet. Starten Sie die App neu.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Die Datenbankprüfung ist fehlgeschlagen. Geben Sie Speicherplatz auf dem Gerät frei und versuchen Sie es erneut.</string>
-  <string name="diagnostics_database_failed" formatted="false">Die Datenbankprüfung ist fehlgeschlagen. Starten Sie die App neu und versuchen Sie es erneut. Wenn der Fehler weiterhin auftritt, exportieren Sie beim Melden des Problems die Diagnose.</string>
+  <string name="diagnostics_database_failed" formatted="false">Die Datenbankprüfung ist fehlgeschlagen. Starten Sie die App neu und versuchen Sie es erneut.</string>
   <string name="diagnostics_service_responded" formatted="false">Der Überwachungsdienst hat geantwortet</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Die Lese- und Schreibprüfung der Datenbank war erfolgreich</string>
 </resources>

@@ -596,7 +596,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Limitato. Tocca per consentire un monitoraggio affidabile in background.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Nessuna risposta recente. Tocca per richiedere un riavvio.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Nessun accesso recente riuscito al database</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Funzionante · ultima risposta %1$s fa</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Funzionante · Ultima risposta %1$s fa</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">I registri di debug possono contenere informazioni personali. Attivali solo durante l’analisi di un problema, controlla il file esportato e condividilo pubblicamente con cautela.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Registri di debug eliminati</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Impossibile eliminare i registri di debug</string>
@@ -608,7 +608,7 @@
   <string name="diagnostics_service_restarting" formatted="false">Il servizio non ha risposto. Riavvio in corso…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Il servizio di monitoraggio non ha risposto dopo il riavvio. Prova a riavviare l’app.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Il controllo del database non è riuscito. Libera spazio sul dispositivo e riprova.</string>
-  <string name="diagnostics_database_failed" formatted="false">Il controllo del database non è riuscito. Riavvia l’app e riprova. Se il problema persiste, esporta la diagnostica quando lo segnali.</string>
+  <string name="diagnostics_database_failed" formatted="false">Il controllo del database non è riuscito. Riavvia l’app e riprova.</string>
   <string name="diagnostics_service_responded" formatted="false">Il servizio di monitoraggio ha risposto</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Il controllo di lettura e scrittura del database è riuscito</string>
 </resources>

@@ -605,7 +605,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Beperkt. Tik om betrouwbare achtergrondbewaking toe te staan.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Geen recente reactie. Tik om opnieuw starten aan te vragen.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Geen recente geslaagde databasetoegang</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Werkt · laatste reactie %1$s geleden</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Werkt · Laatste reactie %1$s geleden</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Debuglogboeken kunnen persoonlijke informatie bevatten. Schakel ze alleen in tijdens onderzoek, controleer het geëxporteerde bestand en deel het voorzichtig openbaar.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Debuglogboeken verwijderd</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Debuglogboeken konden niet worden verwijderd</string>
@@ -617,7 +617,7 @@
   <string name="diagnostics_service_restarting" formatted="false">De service reageerde niet. De service wordt opnieuw gestart…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">De bewakingsservice reageerde niet na de herstart. Probeer de app opnieuw te starten.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">De databasecontrole is mislukt. Maak opslagruimte vrij op het apparaat en probeer het opnieuw.</string>
-  <string name="diagnostics_database_failed" formatted="false">De databasecontrole is mislukt. Start de app opnieuw en probeer het nogmaals. Als het probleem blijft bestaan, exporteer dan diagnostische gegevens wanneer u het probleem meldt.</string>
+  <string name="diagnostics_database_failed" formatted="false">De databasecontrole is mislukt. Start de app opnieuw en probeer het nogmaals.</string>
   <string name="diagnostics_service_responded" formatted="false">De bewakingsservice heeft gereageerd</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">De lees- en schrijfcontrole van de database is geslaagd</string>
 </resources>

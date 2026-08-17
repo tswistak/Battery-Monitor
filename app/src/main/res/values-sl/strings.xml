@@ -623,7 +623,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Omejeno. Tapnite za zanesljivo spremljanje v ozadju.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Ni nedavnega odziva. Tapnite za zahtevo ponovnega zagona.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Ni nedavnega uspešnega dostopa do podatkovne zbirke</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Deluje · zadnji odziv pred %1$s</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Deluje · Zadnji odziv pred %1$s</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Dnevniki razhroščevanja lahko vsebujejo osebne podatke. Omogočite jih le med preiskavo, preglejte izvoženo datoteko in jo javno delite previdno.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Dnevniki razhroščevanja izbrisani</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Dnevnikov razhroščevanja ni bilo mogoče izbrisati</string>
@@ -635,7 +635,7 @@
   <string name="diagnostics_service_restarting" formatted="false">Storitev se ni odzvala. Poteka ponovni zagon…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Storitev spremljanja se po ponovnem zagonu ni odzvala. Poskusite znova zagnati aplikacijo.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Preverjanje podatkovne zbirke ni uspelo. Sprostite prostor v napravi in poskusite znova.</string>
-  <string name="diagnostics_database_failed" formatted="false">Preverjanje podatkovne zbirke ni uspelo. Znova zaženite aplikacijo in poskusite še enkrat. Če težava ostane, ob prijavi izvozite diagnostiko.</string>
+  <string name="diagnostics_database_failed" formatted="false">Preverjanje podatkovne zbirke ni uspelo. Znova zaženite aplikacijo in poskusite še enkrat.</string>
   <string name="diagnostics_service_responded" formatted="false">Storitev spremljanja se je odzvala</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Preverjanje branja in pisanja podatkovne zbirke je uspelo</string>
 </resources>

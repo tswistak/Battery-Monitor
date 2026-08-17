@@ -626,7 +626,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Obmedzené. Ťuknutím povoľte spoľahlivé monitorovanie na pozadí.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Žiadna nedávna odpoveď. Ťuknutím požiadajte o reštart.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Žiadny nedávny úspešný prístup k databáze</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Funguje · posledná odpoveď pred %1$s</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Funguje · Posledná odpoveď pred %1$s</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Ladiace záznamy môžu obsahovať osobné údaje. Zapnite ich iba počas skúmania problému, skontrolujte exportovaný súbor a pri verejnom zdieľaní buďte opatrní.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Ladiace záznamy odstránené</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Ladiace záznamy sa nepodarilo odstrániť</string>
@@ -638,7 +638,7 @@
   <string name="diagnostics_service_restarting" formatted="false">Služba neodpovedala. Reštartuje sa…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Monitorovacia služba po reštarte neodpovedala. Skúste reštartovať aplikáciu.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Kontrola databázy zlyhala. Uvoľnite miesto v úložisku zariadenia a skúste to znova.</string>
-  <string name="diagnostics_database_failed" formatted="false">Kontrola databázy zlyhala. Reštartujte aplikáciu a skúste to znova. Ak problém pretrváva, pri jeho hlásení exportujte diagnostiku.</string>
+  <string name="diagnostics_database_failed" formatted="false">Kontrola databázy zlyhala. Reštartujte aplikáciu a skúste to znova.</string>
   <string name="diagnostics_service_responded" formatted="false">Monitorovacia služba odpovedala</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Kontrola čítania a zápisu databázy bola úspešná</string>
 </resources>

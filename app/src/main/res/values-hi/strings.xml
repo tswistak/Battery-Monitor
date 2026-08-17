@@ -613,7 +613,7 @@
   <string name="diagnostics_service_restarting" formatted="false">सेवा ने जवाब नहीं दिया। इसे फिर से शुरू किया जा रहा है…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">निगरानी सेवा ने फिर से शुरू होने के बाद जवाब नहीं दिया। ऐप को फिर से शुरू करके देखें।</string>
   <string name="diagnostics_database_failed_storage" formatted="false">डेटाबेस जाँच विफल रही। डिवाइस में कुछ स्टोरेज खाली करें और फिर कोशिश करें।</string>
-  <string name="diagnostics_database_failed" formatted="false">डेटाबेस जाँच विफल रही। ऐप को फिर से शुरू करें और दोबारा कोशिश करें। अगर समस्या बनी रहे, तो उसकी रिपोर्ट करते समय निदान जानकारी निर्यात करें।</string>
+  <string name="diagnostics_database_failed" formatted="false">डेटाबेस जाँच विफल रही। ऐप को फिर से शुरू करें और दोबारा कोशिश करें।</string>
   <string name="diagnostics_service_responded" formatted="false">निगरानी सेवा ने जवाब दिया</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">डेटाबेस की पढ़ने और लिखने की जाँच सफल रही</string>
 </resources>

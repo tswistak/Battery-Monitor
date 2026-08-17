@@ -610,7 +610,7 @@
   <string name="diagnostics_service_restarting" formatted="false">服務沒有回應，正在重新啟動…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">監控服務重新啟動後仍沒有回應。請嘗試重新啟動應用程式。</string>
   <string name="diagnostics_database_failed_storage" formatted="false">資料庫檢查失敗。請釋放一些裝置儲存空間，然後再試一次。</string>
-  <string name="diagnostics_database_failed" formatted="false">資料庫檢查失敗。請重新啟動應用程式後再試一次。如果仍然失敗，請在回報問題時匯出診斷資訊。</string>
+  <string name="diagnostics_database_failed" formatted="false">資料庫檢查失敗。請重新啟動應用程式後再試一次。</string>
   <string name="diagnostics_service_responded" formatted="false">監控服務已回應</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">資料庫讀寫檢查成功</string>
 </resources>

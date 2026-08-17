@@ -589,7 +589,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Korlátozott. Koppintson a megbízható háttérbeli megfigyelés engedélyezéséhez.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Nincs friss válasz. Koppintson az újraindítás kéréséhez.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Nincs friss sikeres adatbázis-hozzáférés</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Működik · utolsó válasz: %1$s</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Működik · Utolsó válasz: %1$s</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">A hibakeresési naplók személyes adatokat tartalmazhatnak. Csak a probléma vizsgálata alatt engedélyezze, ellenőrizze az exportált fájlt, és óvatosan ossza meg nyilvánosan.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Hibakeresési naplók törölve</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">A hibakeresési naplók nem törölhetők</string>
@@ -601,7 +601,7 @@
   <string name="diagnostics_service_restarting" formatted="false">A szolgáltatás nem válaszolt. Újraindítás…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">A megfigyelési szolgáltatás az újraindítás után sem válaszolt. Próbálja újraindítani az alkalmazást.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Az adatbázis ellenőrzése sikertelen. Szabadítson fel tárhelyet az eszközön, majd próbálja újra.</string>
-  <string name="diagnostics_database_failed" formatted="false">Az adatbázis ellenőrzése sikertelen. Indítsa újra az alkalmazást, majd próbálja újra. Ha továbbra sem működik, a probléma jelentésekor exportálja a diagnosztikát.</string>
+  <string name="diagnostics_database_failed" formatted="false">Az adatbázis ellenőrzése sikertelen. Indítsa újra az alkalmazást, majd próbálja újra.</string>
   <string name="diagnostics_service_responded" formatted="false">A megfigyelési szolgáltatás válaszolt</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Az adatbázis olvasási és írási ellenőrzése sikeres</string>
 </resources>

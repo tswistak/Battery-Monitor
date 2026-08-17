@@ -597,7 +597,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Restreint. Touchez pour permettre un suivi fiable en arrière-plan.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Aucune réponse récente. Touchez pour demander un redémarrage.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Aucun accès récent réussi à la base de données</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Fonctionne · dernière réponse il y a %1$s</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Fonctionne · Dernière réponse il y a %1$s</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Les journaux de débogage peuvent contenir des informations personnelles. Activez-les seulement pendant une recherche de panne, vérifiez le fichier exporté et partagez-le avec prudence.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Journaux de débogage supprimés</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Impossible de supprimer les journaux de débogage</string>
@@ -609,7 +609,7 @@
   <string name="diagnostics_service_restarting" formatted="false">Le service n’a pas répondu. Redémarrage en cours…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Le service de suivi n’a pas répondu après le redémarrage. Essayez de redémarrer l’application.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">La vérification de la base de données a échoué. Libérez de l’espace sur l’appareil et réessayez.</string>
-  <string name="diagnostics_database_failed" formatted="false">La vérification de la base de données a échoué. Redémarrez l’application et réessayez. Si le problème persiste, exportez les diagnostics lorsque vous le signalez.</string>
+  <string name="diagnostics_database_failed" formatted="false">La vérification de la base de données a échoué. Redémarrez l’application et réessayez.</string>
   <string name="diagnostics_service_responded" formatted="false">Le service de suivi a répondu</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">La vérification de lecture et d’écriture de la base de données a réussi</string>
 </resources>

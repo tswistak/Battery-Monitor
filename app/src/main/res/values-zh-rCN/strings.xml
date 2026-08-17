@@ -595,7 +595,7 @@
   <string name="diagnostics_service_restarting" formatted="false">服务未响应，正在重启…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">监控服务重启后仍未响应。请尝试重启应用。</string>
   <string name="diagnostics_database_failed_storage" formatted="false">数据库检查失败。请释放一些设备存储空间，然后重试。</string>
-  <string name="diagnostics_database_failed" formatted="false">数据库检查失败。请重启应用后再试。如果仍然失败，请在报告问题时导出诊断信息。</string>
+  <string name="diagnostics_database_failed" formatted="false">数据库检查失败。请重启应用后再试。</string>
   <string name="diagnostics_service_responded" formatted="false">监控服务已响应</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">数据库读写检查成功</string>
 </resources>

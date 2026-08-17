@@ -610,7 +610,7 @@
   <string name="diagnostics_service_restarting" formatted="false">サービスが応答しませんでした。再起動しています…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">再起動後も監視サービスが応答しませんでした。アプリを再起動してみてください。</string>
   <string name="diagnostics_database_failed_storage" formatted="false">データベースの確認に失敗しました。端末の空き容量を増やして、もう一度お試しください。</string>
-  <string name="diagnostics_database_failed" formatted="false">データベースの確認に失敗しました。アプリを再起動して、もう一度お試しください。引き続き失敗する場合は、問題を報告するときに診断情報をエクスポートしてください。</string>
+  <string name="diagnostics_database_failed" formatted="false">データベースの確認に失敗しました。アプリを再起動して、もう一度お試しください。</string>
   <string name="diagnostics_service_responded" formatted="false">監視サービスが応答しました</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">データベースの読み書き確認に成功しました</string>
 </resources>

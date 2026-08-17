@@ -622,7 +622,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Ribojama. Palieskite leisti patikimą stebėjimą fone.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Nėra naujo atsako. Palieskite prašyti paleisti iš naujo.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Nėra naujos sėkmingos prieigos prie duomenų bazės</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Veikia · paskutinis atsakas prieš %1$s</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Veikia · Paskutinis atsakas prieš %1$s</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Derinimo žurnaluose gali būti asmeninės informacijos. Įjunkite tik tirdami problemą, peržiūrėkite eksportuotą failą ir viešai bendrinkite atsargiai.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Derinimo žurnalai ištrinti</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Nepavyko ištrinti derinimo žurnalų</string>
@@ -634,7 +634,7 @@
   <string name="diagnostics_service_restarting" formatted="false">Paslauga neatsakė. Ji paleidžiama iš naujo…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Stebėjimo paslauga po paleidimo iš naujo neatsakė. Pabandykite paleisti programą iš naujo.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Nepavyko patikrinti duomenų bazės. Atlaisvinkite vietos įrenginyje ir bandykite dar kartą.</string>
-  <string name="diagnostics_database_failed" formatted="false">Nepavyko patikrinti duomenų bazės. Paleiskite programą iš naujo ir bandykite dar kartą. Jei vis tiek nepavyksta, pranešdami apie problemą eksportuokite diagnostiką.</string>
+  <string name="diagnostics_database_failed" formatted="false">Nepavyko patikrinti duomenų bazės. Paleiskite programą iš naujo ir bandykite dar kartą.</string>
   <string name="diagnostics_service_responded" formatted="false">Stebėjimo paslauga atsakė</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Duomenų bazės skaitymo ir rašymo patikra sėkminga</string>
 </resources>

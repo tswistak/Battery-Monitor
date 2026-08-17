@@ -601,7 +601,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Περιορισμένο. Πατήστε για αξιόπιστη παρακολούθηση στο παρασκήνιο.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Καμία πρόσφατη απόκριση. Πατήστε για αίτημα επανεκκίνησης.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Καμία πρόσφατη επιτυχής πρόσβαση στη βάση δεδομένων</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Λειτουργεί · τελευταία απόκριση πριν από %1$s</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Λειτουργεί · Τελευταία απόκριση πριν από %1$s</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Τα αρχεία εντοπισμού μπορεί να περιέχουν προσωπικές πληροφορίες. Ενεργοποιήστε τα μόνο κατά τη διερεύνηση, ελέγξτε το εξαγόμενο αρχείο και μοιραστείτε το δημόσια με προσοχή.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Τα αρχεία εντοπισμού διαγράφηκαν</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Δεν ήταν δυνατή η διαγραφή των αρχείων εντοπισμού</string>
@@ -613,7 +613,7 @@
   <string name="diagnostics_service_restarting" formatted="false">Η υπηρεσία δεν αποκρίθηκε. Γίνεται επανεκκίνησή της…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Η υπηρεσία παρακολούθησης δεν αποκρίθηκε μετά την επανεκκίνηση. Δοκιμάστε να επανεκκινήσετε την εφαρμογή.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Ο έλεγχος της βάσης δεδομένων απέτυχε. Ελευθερώστε χώρο στη συσκευή και δοκιμάστε ξανά.</string>
-  <string name="diagnostics_database_failed" formatted="false">Ο έλεγχος της βάσης δεδομένων απέτυχε. Επανεκκινήστε την εφαρμογή και δοκιμάστε ξανά. Αν συνεχιστεί, εξαγάγετε τα διαγνωστικά όταν αναφέρετε το πρόβλημα.</string>
+  <string name="diagnostics_database_failed" formatted="false">Ο έλεγχος της βάσης δεδομένων απέτυχε. Επανεκκινήστε την εφαρμογή και δοκιμάστε ξανά.</string>
   <string name="diagnostics_service_responded" formatted="false">Η υπηρεσία παρακολούθησης αποκρίθηκε</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Ο έλεγχος ανάγνωσης και εγγραφής της βάσης δεδομένων ολοκληρώθηκε με επιτυχία</string>
 </resources>

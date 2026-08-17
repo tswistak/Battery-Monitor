@@ -617,7 +617,7 @@
   <string name="diagnostics_service_restarting" formatted="false">سرویس پاسخ نداد. در حال راه‌اندازی مجدد…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">سرویس پایش پس از راه‌اندازی مجدد پاسخ نداد. برنامه را دوباره راه‌اندازی کنید.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">بررسی پایگاه داده ناموفق بود. مقداری از فضای ذخیره‌سازی دستگاه را آزاد کنید و دوباره امتحان کنید.</string>
-  <string name="diagnostics_database_failed" formatted="false">بررسی پایگاه داده ناموفق بود. برنامه را دوباره راه‌اندازی و مجدداً امتحان کنید. اگر مشکل ادامه داشت، هنگام گزارش مشکل اطلاعات تشخیصی را صادر کنید.</string>
+  <string name="diagnostics_database_failed" formatted="false">بررسی پایگاه داده ناموفق بود. برنامه را دوباره راه‌اندازی و مجدداً امتحان کنید.</string>
   <string name="diagnostics_service_responded" formatted="false">سرویس پایش پاسخ داد</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">بررسی خواندن و نوشتن پایگاه داده موفق بود</string>
 </resources>

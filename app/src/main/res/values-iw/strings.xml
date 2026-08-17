@@ -619,7 +619,7 @@
   <string name="diagnostics_service_restarting" formatted="false">השירות לא הגיב. מתבצעת הפעלה מחדש…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">שירות הניטור לא הגיב לאחר ההפעלה מחדש. נסו להפעיל מחדש את היישום.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">בדיקת מסד הנתונים נכשלה. פנו מקום באחסון המכשיר ונסו שוב.</string>
-  <string name="diagnostics_database_failed" formatted="false">בדיקת מסד הנתונים נכשלה. הפעילו מחדש את היישום ונסו שוב. אם התקלה נמשכת, יצאו את נתוני האבחון בעת הדיווח עליה.</string>
+  <string name="diagnostics_database_failed" formatted="false">בדיקת מסד הנתונים נכשלה. הפעילו מחדש את היישום ונסו שוב.</string>
   <string name="diagnostics_service_responded" formatted="false">שירות הניטור הגיב</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">בדיקת הקריאה והכתיבה במסד הנתונים הצליחה</string>
 </resources>

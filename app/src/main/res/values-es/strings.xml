@@ -605,7 +605,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Restringido. Toca para permitir una supervisión fiable en segundo plano.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">No hay respuesta reciente. Toca para solicitar un reinicio.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">No hay acceso correcto reciente a la base de datos</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Funcionando · última respuesta hace %1$s</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Funcionando · Última respuesta hace %1$s</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Los registros de depuración pueden contener información personal. Actívalos solo mientras investigas un problema, revisa el archivo exportado y ten cuidado al compartirlo públicamente.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Registros de depuración eliminados</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">No se pudieron eliminar los registros de depuración</string>
@@ -617,7 +617,7 @@
   <string name="diagnostics_service_restarting" formatted="false">El servicio no respondió. Reiniciándolo…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">El servicio de supervisión no respondió después de reiniciarse. Prueba a reiniciar la aplicación.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Falló la comprobación de la base de datos. Libera espacio en el dispositivo e inténtalo de nuevo.</string>
-  <string name="diagnostics_database_failed" formatted="false">Falló la comprobación de la base de datos. Reinicia la aplicación e inténtalo de nuevo. Si sigue fallando, exporta los diagnósticos al informar del problema.</string>
+  <string name="diagnostics_database_failed" formatted="false">Falló la comprobación de la base de datos. Reinicia la aplicación e inténtalo de nuevo.</string>
   <string name="diagnostics_service_responded" formatted="false">El servicio de supervisión respondió</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">La comprobación de lectura y escritura de la base de datos se completó correctamente</string>
 </resources>

@@ -653,7 +653,7 @@
   <string name="diagnostics_service_restarting" formatted="false">لم تستجب الخدمة. جارٍ إعادة تشغيلها…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">لم تستجب خدمة المراقبة بعد إعادة التشغيل. جرّب إعادة تشغيل التطبيق.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">فشل فحص قاعدة البيانات. حرّر بعض مساحة تخزين الجهاز وحاول مجددًا.</string>
-  <string name="diagnostics_database_failed" formatted="false">فشل فحص قاعدة البيانات. أعد تشغيل التطبيق وحاول مجددًا. إذا استمر الفشل، فصدّر بيانات التشخيص عند الإبلاغ عن المشكلة.</string>
+  <string name="diagnostics_database_failed" formatted="false">فشل فحص قاعدة البيانات. أعد تشغيل التطبيق وحاول مجددًا.</string>
   <string name="diagnostics_service_responded" formatted="false">استجابت خدمة المراقبة</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">نجح فحص القراءة والكتابة في قاعدة البيانات</string>
 </resources>

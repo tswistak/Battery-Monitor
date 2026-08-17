@@ -622,7 +622,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Omezeno. Klepnutím povolíte spolehlivé sledování na pozadí.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Žádná nedávná odpověď. Klepnutím vyžádejte restart.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Žádný nedávný úspěšný přístup k databázi</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Funguje · poslední odpověď před %1$s</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Funguje · Poslední odpověď před %1$s</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Ladicí protokoly mohou obsahovat osobní údaje. Zapněte je pouze během hledání problému, zkontrolujte exportovaný soubor a při veřejném sdílení buďte opatrní.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Ladicí protokoly odstraněny</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Ladicí protokoly nelze odstranit</string>
@@ -634,7 +634,7 @@
   <string name="diagnostics_service_restarting" formatted="false">Služba neodpověděla. Probíhá její restartování…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Monitorovací služba po restartování neodpověděla. Zkuste restartovat aplikaci.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Kontrola databáze selhala. Uvolněte místo v úložišti zařízení a zkuste to znovu.</string>
-  <string name="diagnostics_database_failed" formatted="false">Kontrola databáze selhala. Restartujte aplikaci a zkuste to znovu. Pokud chyba přetrvá, při hlášení problému exportujte diagnostiku.</string>
+  <string name="diagnostics_database_failed" formatted="false">Kontrola databáze selhala. Restartujte aplikaci a zkuste to znovu.</string>
   <string name="diagnostics_service_responded" formatted="false">Monitorovací služba odpověděla</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Kontrola čtení a zápisu databáze proběhla úspěšně</string>
 </resources>

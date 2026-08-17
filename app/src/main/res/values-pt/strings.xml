@@ -607,7 +607,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Restrito. Toque para permitir monitorização fiável em segundo plano.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Sem resposta recente. Toque para pedir um reinício.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Sem acesso recente bem-sucedido à base de dados</string>
-  <string name="diagnostics_working_last_seen" formatted="true">A funcionar · última resposta há %1$s</string>
+  <string name="diagnostics_working_last_seen" formatted="true">A funcionar · Última resposta há %1$s</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Os registos de depuração podem conter informações pessoais. Ative-os apenas durante a investigação, reveja o ficheiro exportado e partilhe-o publicamente com cuidado.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Registos de depuração eliminados</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Não foi possível eliminar os registos de depuração</string>
@@ -619,7 +619,7 @@
   <string name="diagnostics_service_restarting" formatted="false">O serviço não respondeu. A reiniciar…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">O serviço de monitorização não respondeu após o reinício. Tente reiniciar a aplicação.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">A verificação da base de dados falhou. Liberte espaço no dispositivo e tente novamente.</string>
-  <string name="diagnostics_database_failed" formatted="false">A verificação da base de dados falhou. Reinicie a aplicação e tente novamente. Se continuar a falhar, exporte o diagnóstico ao comunicar o problema.</string>
+  <string name="diagnostics_database_failed" formatted="false">A verificação da base de dados falhou. Reinicie a aplicação e tente novamente.</string>
   <string name="diagnostics_service_responded" formatted="false">O serviço de monitorização respondeu</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">A verificação de leitura e escrita da base de dados foi bem-sucedida</string>
 </resources>

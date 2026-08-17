@@ -577,7 +577,7 @@
   <string name="diagnostics_restricted_tap_to_fix" formatted="false">Kısıtlı. Güvenilir arka plan izlemesine izin vermek için dokunun.</string>
   <string name="diagnostics_not_running_tap_to_start" formatted="false">Yakın zamanda yanıt yok. Yeniden başlatma istemek için dokunun.</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Yakın zamanda başarılı veritabanı erişimi yok</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Çalışıyor · son yanıt %1$s önce</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Çalışıyor · Son yanıt %1$s önce</string>
   <string name="diagnostics_debug_logs_warning" formatted="false">Hata ayıklama günlükleri kişisel bilgiler içerebilir. Yalnızca sorun araştırırken etkinleştirin, dışa aktarılan dosyayı inceleyin ve herkese açık paylaşırken dikkatli olun.</string>
   <string name="diagnostics_logs_cleared" formatted="false">Hata ayıklama günlükleri silindi</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Hata ayıklama günlükleri silinemedi</string>
@@ -589,7 +589,7 @@
   <string name="diagnostics_service_restarting" formatted="false">Hizmet yanıt vermedi. Yeniden başlatılıyor…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">İzleme hizmeti yeniden başlatıldıktan sonra yanıt vermedi. Uygulamayı yeniden başlatmayı deneyin.</string>
   <string name="diagnostics_database_failed_storage" formatted="false">Veritabanı denetimi başarısız oldu. Cihazda yer açıp tekrar deneyin.</string>
-  <string name="diagnostics_database_failed" formatted="false">Veritabanı denetimi başarısız oldu. Uygulamayı yeniden başlatıp tekrar deneyin. Sorun sürerse bildirirken tanılama bilgilerini dışa aktarın.</string>
+  <string name="diagnostics_database_failed" formatted="false">Veritabanı denetimi başarısız oldu. Uygulamayı yeniden başlatıp tekrar deneyin.</string>
   <string name="diagnostics_service_responded" formatted="false">İzleme hizmeti yanıt verdi</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Veritabanı okuma ve yazma denetimi başarılı</string>
 </resources>
