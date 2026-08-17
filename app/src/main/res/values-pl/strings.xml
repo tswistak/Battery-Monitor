@@ -374,12 +374,12 @@
 
   <string name="pref_cat_autostart" formatted="false">Automatyczne uruchamianie</string>
   <string name="pref_autostart_at_boot" formatted="false">Uruchamiaj automatycznie przy starcie systemu</string>
-  <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Monitor baterii podczas włączania urządzenia:</string>
+  <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Monitora baterii podczas włączania urządzenia:</string>
   <string name="pref_autostart_at_boot_help" formatted="false">Określa, czy Monitor baterii ma uruchamiać się automatycznie podczas włączania urządzenia urządzenia.\n
     \n
-    Opcja „Jeśli działała przy wyłączaniu systemu” działa w zależności od tego, czy ostatnio ręcznie uruchamiałeś(-aś) lub zatrzymywałeś(-aś) Monitor baterii. Jeśli więc zabijasz Monitor baterii w inny sposób, jak na przykład za pomocą narzędzia do zamykania procesów, Monitor baterii nie wie, że ją zatrzymałeś(-aś) i nadal będzie się uruchamiać przy starcie systemu, jeśli masz tak ustawione.\n
+    Opcja „Jeśli działała przy wyłączaniu systemu” działa w zależności od tego, czy ostatnio ręcznie uruchamiałeś(-aś) lub zatrzymywałeś(-aś) Monitora baterii. Jeśli więc zabijasz Monitor baterii w inny sposób, jak na przykład za pomocą narzędzia do zamykania procesów, Monitor baterii nie wie, że ją zatrzymałeś(-aś) i nadal będzie się uruchamiać przy starcie systemu, jeśli masz tak ustawione.\n
     \n
-    UWAGA: Android będzie zawsze uruchamiać Monitor baterii przy starcie systemu, jeśli na pulpicie masz widżety Monitor baterii. W takim przypadku ustawienie to nie ma znaczenia.</string>
+    UWAGA: Android będzie zawsze uruchamiać Monitora baterii przy starcie systemu, jeśli na pulpicie masz widżety Monitor baterii. W takim przypadku ustawienie to nie ma znaczenia.</string>
 
   <string name="predictor_sensitive" formatted="false">Czułe</string>
   <string name="predictor_conservative" formatted="false">Konserwatywne</string>
@@ -587,47 +587,47 @@
   <string name="csv_logs_import_help" formatted="false">Możesz zaimportować logi z poprzednio wyeksportowanego pliku CSV. Import może nie działać prawidłowo między różnymi wersjami aplikacji. Wybierz, czy dodać zaimportowane logi, czy zastąpić istniejące.</string>
 
   <string name="diagnostics" formatted="false">Diagnostyka</string>
-  <string name="diagnostics_summary" formatted="false">Sprawdź uprawnienia i niezawodność monitorowania oraz utwórz raport do rozwiązywania problemów</string>
+  <string name="diagnostics_summary" formatted="false">Sprawdź uprawnienia, niezawodność monitorowania i utwórz raport do rozwiązywania problemów</string>
   <string name="diagnostics_permissions" formatted="false">Uprawnienia i dostęp</string>
   <string name="diagnostics_notifications" formatted="false">Powiadomienia</string>
   <string name="diagnostics_root" formatted="false">Dostęp do roota</string>
   <string name="diagnostics_shizuku" formatted="false">Dostęp przez Shizuku</string>
   <string name="diagnostics_monitoring" formatted="false">Monitorowanie w tle</string>
   <string name="diagnostics_service" formatted="false">Usługa monitorowania</string>
-  <string name="diagnostics_database" formatted="false">Baza danych logów</string>
+  <string name="diagnostics_database" formatted="false">Baza danych logowania</string>
   <string name="diagnostics_battery_optimization" formatted="false">Optymalizacja baterii</string>
   <string name="diagnostics_vendor_settings" formatted="false">Ustawienia producenta</string>
-  <string name="diagnostics_vendor_settings_summary" formatted="false">Otwórz dodatkowe ustawienia aktywności w tle lub autostartu dostępne na tym urządzeniu</string>
-  <string name="diagnostics_dont_kill_my_app" formatted="false">Pomoc dotycząca działania w tle</string>
-  <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Otwórz wskazówki dla tego urządzenia w serwisie Don’t Kill My App</string>
-  <string name="diagnostics_device_and_logs" formatted="false">Urządzenie i raport diagnostyczny</string>
+  <string name="diagnostics_vendor_settings_summary" formatted="false">Otwórz dodatkowe ustawienia aktywności w tle lub automatycznego uruchamiania dostępne na tym urządzeniu</string>
+  <string name="diagnostics_dont_kill_my_app" formatted="false">Pomoc dotycząca aktywności w tle</string>
+  <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Otwórz wskazówki dla tego urządzenia w Don’t Kill My App</string>
+  <string name="diagnostics_device_and_logs" formatted="false">Urządzenie i raport rozwiązywania problemów</string>
   <string name="diagnostics_debug_logs" formatted="false">Zbieraj logi debugowania</string>
   <string name="diagnostics_export" formatted="false">Eksportuj raport diagnostyczny</string>
   <string name="diagnostics_export_summary" formatted="false">Zapisz informacje o urządzeniu, uprawnieniach, monitorowaniu i dostępnych logach debugowania w pliku tekstowym</string>
   <string name="diagnostics_clear" formatted="false">Usuń zebrane logi debugowania</string>
-  <string name="diagnostics_clear_summary" formatted="false">Usuń logi debugowania zapisane obecnie przez aplikację</string>
+  <string name="diagnostics_clear_summary" formatted="false">Usuń logi debugowania obecnie przechowywane przez aplikację</string>
   <string name="diagnostics_checking" formatted="false">Sprawdzanie…</string>
-  <string name="diagnostics_root_unavailable" formatted="false">Niedostępne. Naciśnij, aby poprosić o dostęp root lub go sprawdzić.</string>
-  <string name="diagnostics_tap_to_check" formatted="false">Nie sprawdzono. Naciśnij, aby poprosić o dostęp lub go sprawdzić.</string>
-  <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Brak uprawnienia. Naciśnij, aby otworzyć ustawienia.</string>
-  <string name="diagnostics_shizuku_permission_missing" formatted="false">Brak uprawnienia. Naciśnij, aby poprosić o nie w Shizuku.</string>
+  <string name="diagnostics_root_unavailable" formatted="false">Niedostępny. Naciśnij, aby poprosić o dostęp do roota lub go sprawdzić</string>
+  <string name="diagnostics_tap_to_check" formatted="false">Nie sprawdzono. Naciśnij, aby poprosić o dostęp lub go sprawdzić</string>
+  <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Brak uprawnienia. Naciśnij, aby otworzyć ustawienia</string>
+  <string name="diagnostics_shizuku_permission_missing" formatted="false">Brak uprawnienia. Naciśnij, aby poprosić o nie w Shizuku</string>
   <string name="diagnostics_unrestricted" formatted="false">Bez ograniczeń</string>
-  <string name="diagnostics_restricted_tap_to_fix" formatted="false">Ograniczone. Naciśnij, aby zezwolić na niezawodne monitorowanie w tle.</string>
-  <string name="diagnostics_not_running_tap_to_start" formatted="false">Brak ostatniej odpowiedzi. Naciśnij, aby zażądać ponownego uruchomienia.</string>
+  <string name="diagnostics_restricted_tap_to_fix" formatted="false">Z ograniczeniami. Naciśnij, aby zezwolić na niezawodne monitorowanie w tle</string>
+  <string name="diagnostics_not_running_tap_to_start" formatted="false">Brak ostatniej odpowiedzi. Naciśnij, aby poprosić o ponowne uruchomienie</string>
   <string name="diagnostics_no_recent_database_access" formatted="false">Brak ostatniego udanego dostępu do bazy danych</string>
-  <string name="diagnostics_working_last_seen" formatted="true">Działa · ostatnia odpowiedź %1$s temu</string>
-  <string name="diagnostics_debug_logs_warning" formatted="false">Logi debugowania mogą zawierać dane osobowe. Włącz je tylko na czas badania problemu, przejrzyj wyeksportowany plik i zachowaj ostrożność przy publicznym udostępnianiu.</string>
+  <string name="diagnostics_working_last_seen" formatted="true">Działa · Ostatnia odpowiedź %1$s temu</string>
+  <string name="diagnostics_debug_logs_warning" formatted="false">Logi debugowania mogą zawierać dane osobowe. Włącz tylko podczas badania problemu, przejrzyj wyeksportowany plik i uważaj, gdy udostępniasz go publicznie</string>
   <string name="diagnostics_logs_cleared" formatted="false">Usunięto logi debugowania</string>
   <string name="diagnostics_logs_clear_failed" formatted="false">Nie udało się usunąć logów debugowania</string>
   <string name="diagnostics_exported" formatted="false">Wyeksportowano raport diagnostyczny</string>
   <string name="diagnostics_export_failed" formatted="false">Nie udało się wyeksportować raportu diagnostycznego</string>
   <string name="diagnostics_help_title" formatted="false">Jak pomaga diagnostyka</string>
-  <string name="diagnostics_help_overview" formatted="false">Ten ekran sprawdza, czy Monitor baterii ma wszystko, czego potrzebuje do monitorowania w tle. Jeśli czegoś brakuje, naciśnij daną pozycję, aby otworzyć miejsce, w którym można to naprawić.</string>
-  <string name="diagnostics_help_report" formatted="false">Jeśli zgłaszasz problem, raport diagnostyczny może być niezbędny do znalezienia jego przyczyny. Zawiera informacje o urządzeniu i stanie aplikacji, a po ich włączeniu także logi debugowania. Logi mogą zawierać dane osobowe, dlatego przejrzyj plik i udostępniaj go ostrożnie.</string>
-  <string name="diagnostics_service_restarting" formatted="false">Usługa nie odpowiedziała. Ponowne uruchamianie…</string>
+  <string name="diagnostics_help_overview" formatted="false">Ten ekran sprawdza, czy Monitor baterii ma to, czego potrzebuje, aby utrzymywać monitorowanie w tle. Jeśli czegoś brakuje, naciśnij ten element, aby otworzyć miejsce, gdzie możesz go naprawić.</string>
+  <string name="diagnostics_help_report" formatted="false">Jeśli zgłaszasz problem, raport diagnostyczny może być istotny w znalezieniu jego przyczyny. Zawiera on informacje o urządzeniu i stanie aplikacji oraz (jeśli je włączyłeś(-aś)) logi debugowania. Logi debugowania mogą zawierać dane osobowe, dlatego przejrzyj plik i udostępnij go ostrożnie.</string>
+  <string name="diagnostics_service_restarting" formatted="false">Usługa nie odpowiedziała. Ponowne jej uruchamianie…</string>
   <string name="diagnostics_service_restart_failed" formatted="false">Usługa monitorowania nie odpowiedziała po ponownym uruchomieniu. Spróbuj ponownie uruchomić aplikację.</string>
-  <string name="diagnostics_database_failed_storage" formatted="false">Sprawdzanie bazy danych nie powiodło się. Zwolnij trochę miejsca na urządzeniu i spróbuj ponownie.</string>
-  <string name="diagnostics_database_failed" formatted="false">Sprawdzanie bazy danych nie powiodło się. Uruchom ponownie aplikację i spróbuj jeszcze raz. Jeśli problem nadal występuje, wyeksportuj diagnostykę podczas jego zgłaszania.</string>
+  <string name="diagnostics_database_failed_storage" formatted="false">Sprawdzenie bazy danych nie powiodło się. Zwolnij trochę miejsca na urządzeniu i spróbuj ponownie.</string>
+  <string name="diagnostics_database_failed" formatted="false">Sprawdzenie bazy danych nie powiodło się. Uruchom ponownie aplikację i spróbuj ponownie.</string>
   <string name="diagnostics_service_responded" formatted="false">Usługa monitorowania odpowiedziała</string>
-  <string name="diagnostics_database_check_succeeded" formatted="false">Sprawdzanie odczytu i zapisu bazy danych powiodło się</string>
+  <string name="diagnostics_database_check_succeeded" formatted="false">Sprawdzenie odczytu i zapisu bazy danych powiodło się</string>
 </resources>
