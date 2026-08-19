@@ -190,6 +190,7 @@
     <item quantity="other">depuis %d heures</item>
   </plurals>
 
+  <string name="duration_for">Depuis %1$s</string>
   <string name="unit_days">%dj</string>
   <string name="unit_hours">%dh</string>
   <string name="unit_minutes">%dmin</string>
@@ -251,7 +252,11 @@
   <string name="alarm_settings" formatted="false">Alarmes</string>
   <string name="alarm_settings_help" formatted="false">Vous pouvez configurer Battery Monitor pour qu\'il vous informe dès que la batterie a atteint un certain point (exemple : La batterie est complètement chargée, le niveau de charge a atteint 20%, etc...).</string>
   <string name="other_settings" formatted="false">Général</string>
-  <string name="other_settings_help" formatted="false">Cette page regroupe les réglages généraux de l’application, notamment la journalisation, l’unité de température, le démarrage automatique et plus encore.</string>
+  <string name="other_settings_help" formatted="false">Configurez le comportement général et les préférences courantes de l’application.</string>
+  <string name="units_formatting_settings" formatted="false">Unités et formatage</string>
+  <string name="units_formatting_settings_help" formatted="false">Choisissez les unités et les formats utilisés pour afficher les données de la batterie dans toute l’application.</string>
+  <string name="advanced_settings" formatted="false">Avancé</string>
+  <string name="advanced_settings_help" formatted="false">Affinez Battery Monitor avec des commandes supplémentaires pour les usages spécialisés.</string>
 
   <string name="live_updates_onboarding_title">Puce batterie de la barre d’état</string>
   <string name="live_updates_onboarding_message_on">Votre appareil prend en charge l\'affichage du pourcentage de batterie sous forme de puce dans la barre d\'état. Cette option est activée par défaut.\n
@@ -360,9 +365,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Supprimer les journaux plus ancients que :</string>
   <string name="pref_max_log_age_help" formatted="false">Si la journalisation est activée, chaque fois que vous branchez votre appareil, les journaux plus anciens que cette valeur seront supprimés. Sélectionnez Ne jamais supprimer pour les conserver tant que vous ne les effacez pas manuellement.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Unité de température</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Convertir en Fahrenheit</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android donne la température de la batterie en degrés Celsius. Si vous préférez avoir la température en degrés Fahrenheit, cochez cette option et l\'application changera l\'unité pour vous.</string>
+  <string name="pref_cat_units" formatted="false">Unités</string>
+  <string name="pref_temperature_unit" formatted="false">Unité de température</string>
+  <string name="pref_cat_formatting" formatted="false">Formatage</string>
+  <string name="pref_temperature_unit_help" formatted="false">Choisissez si les températures sont affichées en Celsius ou en Fahrenheit.</string>
 
   <string name="pref_cat_autostart" formatted="false">Démarrage automatique</string>
   <string name="pref_autostart_at_boot" formatted="false">Démarrage automatique au lancement</string>
@@ -382,6 +388,11 @@
 
   <string name="pref_cat_language" formatted="false">Langue</string>
   <string name="pref_change_app_language" formatted="false">Langue de l’application</string>
+  <string name="pref_change_app_language_help" formatted="false">Sélectionnez la langue utilisée par Battery Monitor. La valeur par défaut du système suit la langue de l’appareil.</string>
+  <string name="pref_long_duration_format" formatted="false">Format des longues durées</string>
+  <string name="pref_long_duration_format_help" formatted="false">Jours et heures utilise les jours au-delà de 24 heures, par exemple 1d 3h. Heures uniquement conserve toute la durée en heures, par exemple 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Jours et heures</string>
+  <string name="long_duration_format_hours_only" formatted="false">Heures uniquement</string>
   <string name="pref_cat_advanced_stats" formatted="false">Statistiques avancées de la batterie</string>
   <string name="pref_enable_advanced_stats" formatted="false">Afficher les statistiques avancées de la batterie</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Ajoute un onglet Avancé avec des statistiques de batterie nécessitant root ou Shizuku.</string>

@@ -148,11 +148,13 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             SettingsContract.KEY_TOP_LINE,
             SettingsContract.KEY_BOTTOM_LINE,
             SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
-            SettingsContract.KEY_PREDICTION_TYPE
+            SettingsContract.KEY_PREDICTION_TYPE,
+            SettingsContract.KEY_TEMPERATURE_UNIT,
+            SettingsContract.KEY_LONG_DURATION_FORMAT
         )
 
         private val RESET_SERVICE = arrayOf<String?>(
-            SettingsContract.KEY_CONVERT_F,
+            SettingsContract.KEY_TEMPERATURE_UNIT,
             SettingsContract.KEY_NOTIFY_STATUS_DURATION,
             SettingsContract.KEY_RED,
             SettingsContract.KEY_RED_THRESH,
@@ -182,7 +184,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
             SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT,
             SettingsContract.KEY_UI_COLOR,
-            SettingsContract.KEY_PREDICTION_TYPE
+            SettingsContract.KEY_PREDICTION_TYPE,
+            SettingsContract.KEY_LONG_DURATION_FORMAT
         )
 
         private val RESET_SERVICE_WITH_CANCEL_NOTIFICATION = arrayOf<String?>()
@@ -389,7 +392,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             )
         ) setEnablednessOfBatteryCurrentDeps(false)
 
-        updateConvertFSummary()
         setupLanguage()
 
         val biServiceIntent = Intent(activity, BatteryInfoService::class.java)
@@ -403,7 +405,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 return false
             }
 
-            SettingsContract.KEY_NOTIFICATION_SETTINGS, SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS, SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS, SettingsContract.KEY_CURRENT_STATE_SETTINGS, SettingsContract.KEY_OTHER_SETTINGS, SettingsContract.KEY_BACKUP_RESTORE_SETTINGS, SettingsContract.KEY_DIAGNOSTICS_SETTINGS -> {
+            SettingsContract.KEY_NOTIFICATION_SETTINGS, SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS, SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS, SettingsContract.KEY_CURRENT_STATE_SETTINGS, SettingsContract.KEY_OTHER_SETTINGS, SettingsContract.KEY_UNITS_FORMATTING_SETTINGS, SettingsContract.KEY_ADVANCED_SETTINGS, SettingsContract.KEY_BACKUP_RESTORE_SETTINGS, SettingsContract.KEY_DIAGNOSTICS_SETTINGS -> {
                 val comp = ComponentName(
                     requireActivity().packageName, SettingsActivity::class.java.getName()
                 )
@@ -766,10 +768,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }
         }
 
-        if (key == SettingsContract.KEY_CONVERT_F) {
-            updateConvertFSummary()
-        }
-
         if (key == SettingsContract.KEY_ENABLE_BATTERY_CURRENT) {
             val enabled = mSharedPreferences.getBoolean(
                 SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false
@@ -871,19 +869,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         }
 
         Shizuku.requestPermission(SHIZUKU_PERMISSION_REQUEST_CODE)
-    }
-
-    private fun updateConvertFSummary() {
-        val pref = mPreferenceScreen!!.findPreference<Preference?>(SettingsContract.KEY_CONVERT_F)
-            ?: return
-
-        pref.setSummary(
-            res.getString(R.string.currently_using) + " " + (if (mSharedPreferences.getBoolean(
-                    SettingsContract.KEY_CONVERT_F,
-                    res.getBoolean(R.bool.default_convert_to_fahrenheit)
-                )
-            ) res.getString(R.string.fahrenheit) else res.getString(R.string.celsius))
-        )
     }
 
     private fun setEnablednessOfDeps(index: Int) {
@@ -1578,7 +1563,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             ::displayPathForDocumentId
         ) ?: it.lastPathSegment.orEmpty()
     }.orEmpty()
-    
+
     private fun valueIndex(values: Array<String>, value: String?): Int =
         values.indexOf(value).takeIf { it >= 0 } ?: 0
 

@@ -188,6 +188,7 @@
     <item quantity="other">%d घंटे के लिए</item>
   </plurals>
 
+  <string name="duration_for">%1$s से</string>
   <string name="unit_days">%dदि</string>
   <string name="unit_hours">%dघं</string>
   <string name="unit_minutes">%dमि</string>
@@ -249,7 +250,11 @@
   <string name="alarm_settings" formatted="false">एलार्म</string>
   <string name="alarm_settings_help" formatted="false">आपकी बैटरी का स्तर होने पर आप बैटरी मॉनिटर आपको सूचित कर सकते हैं एक निश्चित स्थिति तक पहुँच जाता है (उदाहरण के लिए, बैटरी पूरी तरह चार्ज हो जाती है, बैटरी का स्तर 20% से नीचे चला जाता है, और कई अन्य)।</string>
   <string name="other_settings" formatted="false">सामान्य</string>
-  <string name="other_settings_help" formatted="false">इस पेज पर ऐप की सामान्य सेटिंग होती हैं, जिनमें लॉगिंग, तापमान इकाई, अपने-आप शुरू होना और बहुत कुछ शामिल है।</string>
+  <string name="other_settings_help" formatted="false">ऐप के सामान्य व्यवहार और रोज़मर्रा की प्राथमिकताएँ कॉन्फ़िगर करें।</string>
+  <string name="units_formatting_settings" formatted="false">इकाइयाँ और फ़ॉर्मेटिंग</string>
+  <string name="units_formatting_settings_help" formatted="false">पूरे ऐप में बैटरी डेटा दिखाने के लिए इस्तेमाल की जाने वाली इकाइयाँ और फ़ॉर्मेट चुनें।</string>
+  <string name="advanced_settings" formatted="false">उन्नत</string>
+  <string name="advanced_settings_help" formatted="false">विशेष उपयोगों के लिए अतिरिक्त नियंत्रणों से Battery Monitor को बेहतर ढंग से समायोजित करें।</string>
 
   <string name="live_updates_onboarding_title">स्टेटस बार बैटरी चिप</string>
   <string name="live_updates_onboarding_message_on">आपका डिवाइस स्टेटस बार में बैटरी प्रतिशत को चिप के रूप में दिखाने का समर्थन करता है। यह विकल्प डिफ़ॉल्ट रूप से सक्षम है।\n
@@ -358,9 +363,10 @@
   <string name="pref_max_log_age_summary" formatted="false">इससे पुराने लॉग हटाएँ:</string>
   <string name="pref_max_log_age_help" formatted="false">यदि लॉगिंग सक्षम है, तो जब भी आप डिवाइस को प्लग इन करेंगे, इस मान से पुराने लॉग हटाए जाएँगे। लॉग को तब तक रखने के लिए कभी न हटाएँ चुनें, जब तक आप उन्हें मैन्युअल रूप से साफ़ न करें।</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">तापमान इकाई</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">फ़ारेनहाइट में कनवर्ट करें</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">एंड्रॉइड बैटरी तापमान को डिग्री सेल्सियस में रिपोर्ट करता है। यदि आप बैटरी का तापमान डिग्री फ़ारेनहाइट में देखना पसंद करते हैं, इस विकल्प को जांचें, और ऐप आपके लिए रूपांतरित हो जाएगा।</string>
+  <string name="pref_cat_units" formatted="false">इकाइयाँ</string>
+  <string name="pref_temperature_unit" formatted="false">तापमान इकाई</string>
+  <string name="pref_cat_formatting" formatted="false">फ़ॉर्मेटिंग</string>
+  <string name="pref_temperature_unit_help" formatted="false">चुनें कि तापमान सेल्सियस या फ़ारेनहाइट में दिखाया जाए।</string>
 
   <string name="pref_cat_autostart" formatted="false">ऑटो स्टार्ट</string>
   <string name="pref_autostart_at_boot" formatted="false">बूट पर ऑटोस्टार्ट</string>
@@ -386,6 +392,11 @@
 
   <string name="pref_cat_language" formatted="false">भाषा</string>
   <string name="pref_change_app_language" formatted="false">ऐप की भाषा</string>
+  <string name="pref_change_app_language_help" formatted="false">Battery Monitor द्वारा इस्तेमाल की जाने वाली भाषा चुनें। सिस्टम डिफ़ॉल्ट आपके डिवाइस की भाषा का अनुसरण करता है।</string>
+  <string name="pref_long_duration_format" formatted="false">लंबी अवधि का फ़ॉर्मेट</string>
+  <string name="pref_long_duration_format_help" formatted="false">दिन और घंटे 24 घंटे के बाद दिनों का उपयोग करता है, जैसे 1d 3h। केवल घंटे पूरी अवधि को घंटों में रखता है, जैसे 27h।</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">दिन और घंटे</string>
+  <string name="long_duration_format_hours_only" formatted="false">केवल घंटे</string>
   <string name="pref_cat_advanced_stats" formatted="false">उन्नत बैटरी आँकड़े</string>
   <string name="pref_enable_advanced_stats" formatted="false">उन्नत बैटरी आँकड़े दिखाएँ</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">एक उन्नत टैब जोड़ता है जिसमें बैटरी आँकड़े होते हैं और जिसके लिए root या Shizuku चाहिए।</string>

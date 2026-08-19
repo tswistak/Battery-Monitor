@@ -30,13 +30,14 @@ import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.common.showToast
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.TemperatureUnit
+import codes.swistak.batterymonitor.settings.temperatureUnit
 import kotlin.math.roundToInt
 
 class AlarmEditFragment : PreferenceFragmentCompat() {
@@ -188,17 +189,17 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
         updateSummary(lp)
         lp.onPreferenceChangeListener = object : Preference.OnPreferenceChangeListener {
             override fun onPreferenceChange(pref: Preference, newValue: Any?): Boolean {
-                val `val` = newValue as String
-                if (`val` == "custom") {
+                val value = newValue as String
+                if (value == "custom") {
                     showCustomThresholdDialog((pref as ListPreference?)!!)
                     return false
                 }
 
-                if (mAdapter!!.threshold == `val`) return false
+                if (mAdapter!!.threshold == value) return false
 
-                mAdapter!!.updateThreshold(`val`)
+                mAdapter!!.updateThreshold(value)
 
-                (pref as ListPreference).setValue(`val`)
+                (pref as ListPreference).setValue(value)
                 updateSummary(pref)
 
                 return false
@@ -208,14 +209,13 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
 
     @SuppressLint("SetTextI18n")
     private fun showCustomThresholdDialog(lp: ListPreference) {
-        val context = getContext() ?: return
+        val context = context ?: return
 
         val et = EditText(context)
         et.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED)
 
         val currentVal = mAdapter!!.threshold
-        val convertF = PreferenceManager.getDefaultSharedPreferences(context)
-            .getBoolean(SettingsContract.KEY_CONVERT_F, false)
+        val convertF = selectedTemperatureUnit(context).convertToFahrenheit
 
         val message: String?
         if (mAdapter!!.type!!.contains("temp")) {
@@ -261,26 +261,24 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
 
     private fun validateAndSaveThreshold(input: String?, lp: ListPreference): Boolean {
         if (input.isNullOrEmpty()) return false
-        val context = getContext() ?: return false
+        val context = context ?: return false
 
         try {
-            val `val` = input.toInt()
+            val thresholdValue = input.toInt()
             if (mAdapter!!.type!!.contains("charge")) {
-                if (`val` !in 0..100) return false
-                mAdapter!!.updateThreshold(`val`.toString())
+                if (thresholdValue !in 0..100) return false
+                mAdapter!!.updateThreshold(thresholdValue.toString())
             } else if (mAdapter!!.type!!.contains("temp")) {
-                val convertF = PreferenceManager.getDefaultSharedPreferences(context)
-                    .getBoolean(SettingsContract.KEY_CONVERT_F, false)
-                val tenthsC: Int
-                if (convertF) {
-                    tenthsC = ((`val` - 32) * 50.0 / 9.0).roundToInt()
+                val convertF = selectedTemperatureUnit(context).convertToFahrenheit
+                val tenthsC: Int = if (convertF) {
+                    ((thresholdValue - 32) * 50.0 / 9.0).roundToInt()
                 } else {
-                    tenthsC = `val` * 10
+                    thresholdValue * 10
                 }
                 if (tenthsC < -500 || tenthsC > 1000) return false
                 mAdapter!!.updateThreshold(tenthsC.toString())
             } else {
-                mAdapter!!.updateThreshold(`val`.toString())
+                mAdapter!!.updateThreshold(thresholdValue.toString())
             }
 
             lp.setValue(mAdapter!!.threshold)
@@ -328,24 +326,21 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
 
         var entry = lp.getEntry() as String?
         if (entry == null) {
-            val `val` = lp.value
-            if (`val` != null && `val` != "custom") {
-                if (mAdapter!!.type!!.contains("charge")) {
-                    entry = "$`val`%"
+            val value = lp.value
+            if (value != null && value != "custom") {
+                entry = if (mAdapter!!.type!!.contains("charge")) {
+                    "$value%"
                 } else if (mAdapter!!.type!!.contains("temp")) {
                     val context = getContext()
-                    var convertF = false
-                    if (context != null) {
-                        convertF = PreferenceManager.getDefaultSharedPreferences(context)
-                            .getBoolean(SettingsContract.KEY_CONVERT_F, false)
-                    }
+                    val convertF =
+                        context?.let(::selectedTemperatureUnit)?.convertToFahrenheit ?: false
                     try {
-                        entry = DisplayStrings.formatTemp(`val`.toInt(), convertF, false)
+                        DisplayStrings.formatTemp(value.toInt(), convertF, false)
                     } catch (e: NumberFormatException) {
-                        entry = `val`
+                        value
                     }
                 } else {
-                    entry = `val`
+                    value
                 }
             }
         }
@@ -361,11 +356,10 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
         val lp = mPreferenceScreen!!.findPreference<Preference?>(KEY_THRESHOLD) as ListPreference?
 
         if (mAdapter!!.type == "temp_drops" || mAdapter!!.type == "temp_rises") {
-            val entries = arrayOfNulls<String>(DisplayStrings.tempAlarmEntries.size + 1)
-            System.arraycopy(
-                DisplayStrings.tempAlarmEntries, 0, entries, 0, DisplayStrings.tempAlarmEntries.size
-            )
-            entries[entries.size - 1] = res!!.getString(R.string.custom)
+            val convertF = selectedTemperatureUnit(requireContext()).convertToFahrenheit
+            val entries = DisplayStrings.tempAlarmValues.map { value ->
+                DisplayStrings.formatTemp(value.toInt(), convertF, false)
+            }.plus(res.getString(R.string.custom)).toTypedArray()
             lp!!.entries = entries
 
             val values = arrayOfNulls<String>(DisplayStrings.tempAlarmValues.size + 1)
@@ -407,6 +401,10 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
 
         updateSummary(lp)
     }
+
+    private fun selectedTemperatureUnit(context: Context): TemperatureUnit =
+        context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+            .temperatureUnit(getString(R.string.default_temperature_unit))
 
     private fun isChannelDisabled(channelId: String?): Boolean {
         val channel = mNotificationManager!!.getNotificationChannel(channelId)

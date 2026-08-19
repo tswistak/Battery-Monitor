@@ -35,7 +35,7 @@ class SettingsMigrationManagerTest {
         )
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
-        assertEquals(3, preferences.commitCount)
+        assertEquals(4, preferences.commitCount)
         assertEquals(true, preferences.values[SettingsContract.KEY_ENABLE_BATTERY_CURRENT])
         assertEquals("1000", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER])
         assertEquals(true, preferences.values[SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT])
@@ -54,7 +54,7 @@ class SettingsMigrationManagerTest {
         )
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
-        assertEquals(3, preferences.commitCount)
+        assertEquals(4, preferences.commitCount)
     }
 
     @Test
@@ -178,6 +178,22 @@ class SettingsMigrationManagerTest {
             SettingsContract.ALL_CHIP_CONTENT.joinToString(","),
             preferences.values[SettingsContract.KEY_CHIP_CONTENT_ORDER]
         )
+    }
+
+    @Test
+    fun `temperature unit migration preserves Fahrenheit choice`() {
+        val preferences = FakeSharedPreferences(
+            mapOf(
+                "_applied_settings_migration_version" to 3,
+                SettingsContract.LEGACY_KEY_CONVERT_F to true
+            )
+        )
+
+        assertTrue(SettingsMigrationManager.migrate(preferences.instance))
+        assertEquals(
+            "fahrenheit", preferences.values[SettingsContract.KEY_TEMPERATURE_UNIT]
+        )
+        assertFalse(preferences.values.containsKey(SettingsContract.LEGACY_KEY_CONVERT_F))
     }
 
     private fun recordingMigration(

@@ -210,6 +210,7 @@
     <item quantity="other">%d hodín</item>
   </plurals>
 
+  <string name="duration_for">Po dobu %1$s</string>
   <string name="unit_days">%dd</string>
   <string name="unit_hours">%dh</string>
   <string name="unit_minutes">%dmin</string>
@@ -271,7 +272,11 @@
   <string name="alarm_settings" formatted="false">Upozornenia</string>
   <string name="alarm_settings_help" formatted="false">Monitor batérie vás môže upozorniť na úroveň nabitia batérie dosiahne určitý stav (napr. batéria sa úplne nabije, úroveň batérie klesne pod 20 % a mnoho ďalších).</string>
   <string name="other_settings" formatted="false">Všeobecné</string>
-  <string name="other_settings_help" formatted="false">Na tejto stránke sú všeobecné nastavenia aplikácie vrátane zaznamenávania, jednotky teploty, automatického spustenia a ďalších možností.</string>
+  <string name="other_settings_help" formatted="false">Nastavte všeobecné správanie aplikácie a bežné predvoľby.</string>
+  <string name="units_formatting_settings" formatted="false">Jednotky a formátovanie</string>
+  <string name="units_formatting_settings_help" formatted="false">Vyberte jednotky a formáty používané na zobrazenie údajov o batérii v celej aplikácii.</string>
+  <string name="advanced_settings" formatted="false">Rozšírené</string>
+  <string name="advanced_settings_help" formatted="false">Dolaďte Battery Monitor pomocou ďalších ovládacích prvkov na špecializované použitie.</string>
 
   <string name="live_updates_onboarding_title">Stavový riadok Čip batérie</string>
   <string name="live_updates_onboarding_message_on">Vaše zariadenie podporuje zobrazovanie percenta batérie ako čip v stavovom riadku. Táto možnosť je predvolene zapnutá.\n
@@ -380,9 +385,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Zmazať záznamy staršie ako:</string>
   <string name="pref_max_log_age_help" formatted="false">Ak je zaznamenávanie zapnuté, pri každom pripojení zariadenia sa odstránia záznamy staršie ako táto hodnota. Výberom Nikdy neodstraňovať ich ponecháte, kým ich nevymažete ručne.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Jednotky teploty</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Premeniť na Fahrenheity</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android hlási teplotu batérie v stupňoch Celzia. Ak uprednostňujete zobrazenie teploty batérie v stupňoch Fahrenheita, začiarknite túto možnosť a aplikácia sa prevedie za vás.</string>
+  <string name="pref_cat_units" formatted="false">Jednotky</string>
+  <string name="pref_temperature_unit" formatted="false">Jednotka teploty</string>
+  <string name="pref_cat_formatting" formatted="false">Formátovanie</string>
+  <string name="pref_temperature_unit_help" formatted="false">Vyberte, či sa teploty zobrazujú v stupňoch Celzia alebo Fahrenheita.</string>
 
   <string name="pref_cat_autostart" formatted="false">Automatické spustenie</string>
   <string name="pref_autostart_at_boot" formatted="false">Spustiť automaticky po zapnutí</string>
@@ -411,6 +417,11 @@
 
   <string name="pref_cat_language" formatted="false">Jazyk</string>
   <string name="pref_change_app_language" formatted="false">Jazyk aplikácie</string>
+  <string name="pref_change_app_language_help" formatted="false">Vyberte jazyk používaný aplikáciou Battery Monitor. Predvolená hodnota systému sa riadi jazykom zariadenia.</string>
+  <string name="pref_long_duration_format" formatted="false">Formát dlhého trvania</string>
+  <string name="pref_long_duration_format_help" formatted="false">Dni a hodiny použijú po 24 hodinách dni, napríklad 1d 3h. Iba hodiny zachovajú celé trvanie v hodinách, napríklad 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Dni a hodiny</string>
+  <string name="long_duration_format_hours_only" formatted="false">Iba hodiny</string>
   <string name="pref_cat_advanced_stats" formatted="false">Pokročilé štatistiky batérie</string>
   <string name="pref_enable_advanced_stats" formatted="false">Zobraziť pokročilé štatistiky batérie</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Pridá kartu Pokročilé so štatistikami batérie, ktoré vyžadujú root alebo Shizuku.</string>

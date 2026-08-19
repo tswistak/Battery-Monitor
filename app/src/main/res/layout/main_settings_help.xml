@@ -26,6 +26,15 @@
 
         <TextView
             style="@style/help_cat"
+            android:text="@string/units_formatting_settings" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/units_formatting_settings_help" />
+
+
+        <TextView
+            style="@style/help_cat"
             android:text="@string/tab_current_info" />
 
         <TextView
@@ -55,6 +64,14 @@
         <TextView
             style="@style/help_text"
             android:text="@string/status_bar_chip_settings_help" />
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/advanced_settings" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/advanced_settings_help" />
 
         <TextView
             style="@style/help_cat"

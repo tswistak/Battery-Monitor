@@ -27,6 +27,9 @@ internal object SettingsContract {
     const val KEY_ALARM_EDIT_SETTINGS: String = "alarm_edit_settings"
     const val KEY_ADVANCED_INFO_HELP: String = "advanced_info_help"
     const val KEY_OTHER_SETTINGS: String = "other_settings"
+    const val KEY_UNITS_FORMATTING_SETTINGS: String = "units_formatting_settings"
+    const val KEY_ADVANCED_SETTINGS: String = "advanced_settings"
+
     const val KEY_BACKUP_RESTORE_SETTINGS: String = "backup_restore_settings"
     const val KEY_DIAGNOSTICS_SETTINGS: String = "diagnostics_settings"
     const val KEY_CHANGE_APP_LANGUAGE_HOLDER: String = "change_app_language_holder"
@@ -62,7 +65,10 @@ internal object SettingsContract {
     const val KEY_MAX_LOG_AGE: String = "max_log_age"
     const val KEY_ICON_CONTENT: String = "icon_content"
     const val KEY_SHOW_ICON_UNIT: String = "show_icon_unit"
-    const val KEY_CONVERT_F: String = "convert_to_fahrenheit"
+    const val KEY_TEMPERATURE_UNIT: String = "temperature_unit"
+
+    const val KEY_LONG_DURATION_FORMAT: String = "long_duration_format"
+
     const val KEY_NOTIFY_STATUS_DURATION: String = "notify_status_duration"
     const val KEY_AUTOSTART: String = "autostart"
     const val KEY_PREDICTION_TYPE: String = "prediction_type"
@@ -132,6 +138,8 @@ internal object SettingsContract {
     const val KEY_ENABLE_ADVANCED_STATS: String = "enable_advanced_stats"
 
     const val LEGACY_KEY_ENABLE_CURRENT = "enable_current_hack"
+    const val LEGACY_KEY_CONVERT_F = "convert_to_fahrenheit"
+
     const val LEGACY_KEY_PREFER_FILE_SYSTEM = "current_hack_prefer_fs"
     const val LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER = "current_hack_multiplier"
     const val LEGACY_KEY_CURRENT_SOURCE = "battery_current_source"

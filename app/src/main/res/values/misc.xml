@@ -1,38 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Resources that are neither styles nor strings to be translated. -->
 <resources>
-    <string-array name="temp_alarm_entries">
-        <item>0°C / 32°F</item>
-        <item>2°C / 36°F</item>
-        <item>4°C / 39°F</item>
-        <item>6°C / 43°F</item>
-        <item>8°C / 46°F</item>
-        <item>10°C / 50°F</item>
-        <item>12°C / 54°F</item>
-        <item>14°C / 57°F</item>
-        <item>16°C / 61°F</item>
-        <item>18°C / 64°F</item>
-        <item>20°C / 68°F</item>
-        <item>22°C / 72°F</item>
-        <item>24°C / 75°F</item>
-        <item>26°C / 79°F</item>
-        <item>28°C / 82°F</item>
-        <item>30°C / 86°F</item>
-        <item>32°C / 90°F</item>
-        <item>34°C / 93°F</item>
-        <item>36°C / 97°F</item>
-        <item>38°C / 100°F</item>
-        <item>40°C / 104°F</item>
-        <item>42°C / 108°F</item>
-        <item>44°C / 111°F</item>
-        <item>46°C / 115°F</item>
-        <item>48°C / 118°F</item>
-        <item>50°C / 122°F</item>
-        <item>52°C / 126°F</item>
-        <item>54°C / 129°F</item>
-        <item>56°C / 133°F</item>
-        <item>58°C / 136°F</item>
-        <item>60°C / 140°F</item>
-    </string-array>
     <string-array name="temp_alarm_values">
         <item>0</item>
         <item>20</item>
@@ -350,6 +317,16 @@
 
     <string name="default_time_remaining_verbosity">normal</string>
 
+    <string-array name="long_duration_format_entries">
+        <item>@string/long_duration_format_days_and_hours</item>
+        <item>@string/long_duration_format_hours_only</item>
+    </string-array>
+
+    <string-array name="long_duration_format_values" translatable="false">
+        <item>days_and_hours</item>
+        <item>hours_only</item>
+    </string-array>
+
     <string-array name="prediction_type_entries">
         <item>@string/predictor_sensitive</item>
         <item>@string/predictor_conservative</item>
@@ -409,6 +386,16 @@
 
     <string name="default_prediction_type">-3</string>
 
-    <bool name="default_convert_to_fahrenheit">false</bool>
+    <string-array name="temperature_unit_entries">
+        <item>@string/celsius</item>
+        <item>@string/fahrenheit</item>
+    </string-array>
+
+    <string-array name="temperature_unit_values" translatable="false">
+        <item>celsius</item>
+        <item>fahrenheit</item>
+    </string-array>
+
+    <string name="default_temperature_unit" translatable="false">celsius</string>
 
 </resources>

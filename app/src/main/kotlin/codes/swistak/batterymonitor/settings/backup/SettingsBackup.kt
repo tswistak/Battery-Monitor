@@ -19,6 +19,7 @@ import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.VitalSignsOrder
 import codes.swistak.batterymonitor.settings.migration.ChipContentMigration
+import codes.swistak.batterymonitor.settings.migration.TemperatureUnitPreferencesMigration
 import codes.swistak.batterymonitor.settings.migration.VitalSignsContentMigration
 import org.json.JSONException
 import org.json.JSONObject
@@ -30,7 +31,7 @@ import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 
 internal object SettingsBackup {
-    const val SCHEMA_VERSION: Int = Version3SettingsImporter.VERSION
+    const val SCHEMA_VERSION: Int = Version4SettingsImporter.VERSION
 
     private fun validateSettings(
         settings: JSONObject, schema: Map<String, Class<*>>
@@ -69,7 +70,7 @@ internal object SettingsBackup {
     fun exportToJson(prefs: SharedPreferences): JSONObject {
         val settings = JSONObject()
         for (entry in prefs.all.entries) {
-            if (Version3SettingsImporter.schema.containsKey(entry.key)) {
+            if (Version4SettingsImporter.schema.containsKey(entry.key)) {
                 settings.put(entry.key, entry.value)
             }
         }
@@ -114,6 +115,7 @@ internal object SettingsBackup {
         val settings = root.optJSONObject("settings") ?: return
         val validatedSettings = validateSettings(settings, importer.schema)
         importer.restore(editor, validatedSettings)
+        TemperatureUnitPreferencesMigration.restoreImportedSettings(editor, validatedSettings)
         if (version < Version3SettingsImporter.VERSION) {
             VitalSignsContentMigration.restoreImportedSettings(editor, validatedSettings)
             ChipContentMigration.restoreImportedSettings(editor, validatedSettings)

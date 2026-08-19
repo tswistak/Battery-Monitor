@@ -208,6 +208,7 @@
     <item quantity="other">В течение %d часа</item>
   </plurals>
 
+  <string name="duration_for">В течение %1$s</string>
   <string name="unit_days">%dд</string>
   <string name="unit_hours">%dч</string>
   <string name="unit_minutes">%dм</string>
@@ -269,7 +270,11 @@
   <string name="alarm_settings" formatted="false">Оповещения</string>
   <string name="alarm_settings_help" formatted="false">Вы можете настроить Battery Monitor так, чтобы получать уведомление о том, что заряд аккумулятора достигает определенного уровня (например, аккумулятор становится полностью заряженным, заряд опустился ниже 20%).</string>
   <string name="other_settings" formatted="false">Общие</string>
-  <string name="other_settings_help" formatted="false">На этой странице находятся общие настройки приложения: ведение журнала, единицы температуры, автозапуск и другие.</string>
+  <string name="other_settings_help" formatted="false">Настройте общее поведение приложения и повседневные параметры.</string>
+  <string name="units_formatting_settings" formatted="false">Единицы и форматирование</string>
+  <string name="units_formatting_settings_help" formatted="false">Выберите единицы и форматы отображения данных аккумулятора во всём приложении.</string>
+  <string name="advanced_settings" formatted="false">Расширенные</string>
+  <string name="advanced_settings_help" formatted="false">Точно настройте Battery Monitor с помощью дополнительных элементов управления для специальных сценариев.</string>
 
   <string name="live_updates_onboarding_title">Чип батареи в строке состояния</string>
   <string name="live_updates_onboarding_message_on">Ваше устройство поддерживает отображение процента батареи в виде чипа в строке состояния. Эта опция включена по умолчанию.\n
@@ -378,9 +383,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Удалить журналы старше:</string>
   <string name="pref_max_log_age_help" formatted="false">Если ведение журнала включено, при каждом подключении устройства будут удаляться записи старше этого значения. Выберите Никогда не удалять, чтобы хранить записи, пока вы не очистите их вручную.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Единицы измерения температуры</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Преобразовать к Фаренгейту</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Система Android сообщает температуру аккумулятора в градусах Цельсия. Если для вас предпочтительнее градусы Фаренгейта, выберите эту опцию, и приложение осуществит преобразование для вас.</string>
+  <string name="pref_cat_units" formatted="false">Единицы</string>
+  <string name="pref_temperature_unit" formatted="false">Единица измерения температуры</string>
+  <string name="pref_cat_formatting" formatted="false">Форматирование</string>
+  <string name="pref_temperature_unit_help" formatted="false">Выберите отображение температуры в градусах Цельсия или Фаренгейта.</string>
 
   <string name="pref_cat_autostart" formatted="false">Автозапуск</string>
   <string name="pref_autostart_at_boot" formatted="false">Автозапуск при загрузке</string>
@@ -408,6 +414,11 @@
 
   <string name="pref_cat_language" formatted="false">Язык</string>
   <string name="pref_change_app_language" formatted="false">Язык приложения</string>
+  <string name="pref_change_app_language_help" formatted="false">Выберите язык Battery Monitor. Системное значение по умолчанию соответствует языку устройства.</string>
+  <string name="pref_long_duration_format" formatted="false">Формат длительных интервалов</string>
+  <string name="pref_long_duration_format_help" formatted="false">Дни и часы использует дни после 24 часов, например 1d 3h. Только часы сохраняет всю длительность в часах, например 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Дни и часы</string>
+  <string name="long_duration_format_hours_only" formatted="false">Только часы</string>
   <string name="pref_cat_advanced_stats" formatted="false">Расширенная статистика батареи</string>
   <string name="pref_enable_advanced_stats" formatted="false">Показывать расширенную статистику батареи</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Добавляет вкладку «Расширено» со статистикой батареи, требующей root или Shizuku.</string>

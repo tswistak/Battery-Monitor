@@ -186,6 +186,7 @@
     <item quantity="other">%d Saat için</item>
   </plurals>
 
+  <string name="duration_for">%1$s boyunca</string>
   <string name="unit_days">%dg</string>
   <string name="unit_hours">%dsa</string>
   <string name="unit_minutes">%ddk</string>
@@ -245,7 +246,11 @@
   <string name="alarm_settings" formatted="false">Alarmlar</string>
   <string name="alarm_settings_help" formatted="false">Pil seviyesi belirli bir duruma geldiğinde Battery Monitor sizi bilgilendirebilir.</string>
   <string name="other_settings" formatted="false">Genel</string>
-  <string name="other_settings_help" formatted="false">Günlük kaydı, sıcaklık birimi, otomatik başlatma ve daha fazlasını içeren genel uygulama ayarları bu sayfadadır.</string>
+  <string name="other_settings_help" formatted="false">Uygulamanın genel davranışını ve günlük tercihlerini yapılandırın.</string>
+  <string name="units_formatting_settings" formatted="false">Birimler ve biçimlendirme</string>
+  <string name="units_formatting_settings_help" formatted="false">Uygulama genelinde pil verilerini göstermek için kullanılan birimleri ve biçimleri seçin.</string>
+  <string name="advanced_settings" formatted="false">Gelişmiş</string>
+  <string name="advanced_settings_help" formatted="false">Battery Monitor’ü özel kullanım alanları için ek kontrollerle ayrıntılı olarak ayarlayın.</string>
 
   <string name="live_updates_onboarding_title">Durum Çubuğu Pil Çipi</string>
   <string name="live_updates_onboarding_message_on">Cihazınız, pil yüzdesini durum çubuğunda bir çip olarak göstermeyi destekler. Bu seçenek varsayılan olarak etkindir.\n
@@ -354,9 +359,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Şundan eski kayıtları sil:</string>
   <string name="pref_max_log_age_help" formatted="false">Kayıt tutma açıksa, cihazı her bağladığınızda bu değerden eski kayıtlar silinir. Kayıtları elle temizleyene kadar saklamak için Asla silme seçeneğini seçin.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Sıcaklık Birimi</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Fahrenhayt\'a çevir</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android pil sıcaklığını Santigrat olarak bildirir; isterseniz Fahrenhayt\'a dönüştürülür.</string>
+  <string name="pref_cat_units" formatted="false">Birimler</string>
+  <string name="pref_temperature_unit" formatted="false">Sıcaklık birimi</string>
+  <string name="pref_cat_formatting" formatted="false">Biçimlendirme</string>
+  <string name="pref_temperature_unit_help" formatted="false">Sıcaklıkların Santigrat veya Fahrenhayt olarak gösterilmesini seçin.</string>
 
   <string name="pref_cat_autostart" formatted="false">Otomatik başlat</string>
   <string name="pref_autostart_at_boot" formatted="false">Açılışta otomatik başlat</string>
@@ -374,6 +380,11 @@
 
   <string name="pref_cat_language" formatted="false">Dil</string>
   <string name="pref_change_app_language" formatted="false">Uygulama dili</string>
+  <string name="pref_change_app_language_help" formatted="false">Battery Monitor’ün kullanacağı dili seçin. Sistem varsayılanı cihazınızın dilini izler.</string>
+  <string name="pref_long_duration_format" formatted="false">Uzun süre biçimi</string>
+  <string name="pref_long_duration_format_help" formatted="false">Günler ve saatler, 24 saatten sonra günleri kullanır; örneğin 1d 3h. Yalnızca saat, tüm süreyi saat olarak tutar; örneğin 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Günler ve saatler</string>
+  <string name="long_duration_format_hours_only" formatted="false">Yalnızca saat</string>
   <string name="pref_cat_advanced_stats" formatted="false">Gelişmiş pil istatistikleri</string>
   <string name="pref_enable_advanced_stats" formatted="false">Gelişmiş pil istatistiklerini göster</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Root veya Shizuku gerektiren pil istatistikleriyle bir Gelişmiş sekmesi ekler.</string>

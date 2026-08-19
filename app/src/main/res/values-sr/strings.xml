@@ -198,6 +198,7 @@
     <item quantity="other">Za %d sati</item>
   </plurals>
 
+  <string name="duration_for">Tokom %1$s</string>
   <string name="unit_days">%dd</string>
   <string name="unit_hours">%dh</string>
   <string name="unit_minutes">%dmin</string>
@@ -259,7 +260,11 @@
   <string name="alarm_settings" formatted="false">Alarmi</string>
   <string name="alarm_settings_help" formatted="false">Možete da podesite da vas Battery Monitor obavesti kada procenat baterije dosegne određeni nivo (npr. baterija je u potpunosti napunjena, procenat baterije padne ispod 20%).</string>
   <string name="other_settings" formatted="false">Opšte</string>
-  <string name="other_settings_help" formatted="false">Na ovoj stranici su opšta podešavanja aplikacije, uključujući evidenciju, jedinicu temperature, automatsko pokretanje i drugo.</string>
+  <string name="other_settings_help" formatted="false">Podesite opšte ponašanje aplikacije i svakodnevne postavke.</string>
+  <string name="units_formatting_settings" formatted="false">Jedinice i formatiranje</string>
+  <string name="units_formatting_settings_help" formatted="false">Izaberite jedinice i formate za prikaz podataka o bateriji u celoj aplikaciji.</string>
+  <string name="advanced_settings" formatted="false">Napredno</string>
+  <string name="advanced_settings_help" formatted="false">Fino podesite Battery Monitor dodatnim kontrolama za specijalizovane namene.</string>
 
   <string name="live_updates_onboarding_title">Čip baterije u statusnoj traci</string>
   <string name="live_updates_onboarding_message_on">Vaš uređaj podržava prikaz procenta baterije kao čipa u statusnoj traci. Ova opcija je podrazumevano uključena.\n
@@ -368,9 +373,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Obriši evidenciju unosa stariju od:</string>
   <string name="pref_max_log_age_help" formatted="false">Ako je evidentiranje omogućeno, svaki put kada priključite uređaj biće obrisani zapisi stariji od ove vrednosti. Izaberite Nikad ne briši da ih zadržite dok ih ručno ne obrišete.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Jedinica temperature</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Pretvori u farenhajte</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android prijavljuje temperaturu baterije u stepenima Celzijusa. Ako više volite prikaz u stepenima Farenhajta, uključite ovu opciju i aplikacija će automatski konvertovati.</string>
+  <string name="pref_cat_units" formatted="false">Jedinice</string>
+  <string name="pref_temperature_unit" formatted="false">Jedinica temperature</string>
+  <string name="pref_cat_formatting" formatted="false">Formatiranje</string>
+  <string name="pref_temperature_unit_help" formatted="false">Izaberite prikaz temperature u stepenima Celzijusa ili Farenhajta.</string>
 
   <string name="pref_cat_autostart" formatted="false">Pokreni automatski</string>
   <string name="pref_autostart_at_boot" formatted="false">Pokreni automatski pri paljenju</string>
@@ -400,6 +406,11 @@
 
   <string name="pref_cat_language" formatted="false">Jezik</string>
   <string name="pref_change_app_language" formatted="false">Jezik aplikacije</string>
+  <string name="pref_change_app_language_help" formatted="false">Izaberite jezik koji koristi Battery Monitor. Podrazumevana sistemska vrednost prati jezik uređaja.</string>
+  <string name="pref_long_duration_format" formatted="false">Format dugog trajanja</string>
+  <string name="pref_long_duration_format_help" formatted="false">Dani i sati koristi dane nakon 24 sata, na primer 1d 3h. Samo sati zadržava celo trajanje u satima, na primer 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Dani i sati</string>
+  <string name="long_duration_format_hours_only" formatted="false">Samo sati</string>
   <string name="pref_cat_advanced_stats" formatted="false">Napredna statistika baterije</string>
   <string name="pref_enable_advanced_stats" formatted="false">Prikaži naprednu statistiku baterije</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Dodaje karticu Napredno sa statistikom baterije koja zahteva root ili Shizuku.</string>

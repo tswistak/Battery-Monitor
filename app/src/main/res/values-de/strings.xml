@@ -186,6 +186,7 @@
     <item quantity="other">Seit %d Stunden</item>
   </plurals>
 
+  <string name="duration_for">Seit %1$s</string>
   <string name="unit_days">%dT</string>
   <string name="unit_hours">%dStd</string>
   <string name="unit_minutes">%dMin</string>
@@ -247,7 +248,11 @@
   <string name="alarm_settings" formatted="false">Alarme</string>
   <string name="alarm_settings_help" formatted="false">Battery Monitor kann Sie benachrichtigen, wenn ein bestimmter Akkuzustand erreicht wird (z. B. vollständig geladen, unter 20% usw.).</string>
   <string name="other_settings" formatted="false">Allgemein</string>
-  <string name="other_settings_help" formatted="false">Auf dieser Seite finden Sie allgemeine App-Einstellungen wie Protokollierung, Temperatureinheit, Autostart und mehr.</string>
+  <string name="other_settings_help" formatted="false">Konfigurieren Sie das allgemeine Verhalten und die alltäglichen Einstellungen der App.</string>
+  <string name="units_formatting_settings" formatted="false">Einheiten und Formatierung</string>
+  <string name="units_formatting_settings_help" formatted="false">Wählen Sie die Einheiten und Formate zur Anzeige von Akkudaten in der gesamten App.</string>
+  <string name="advanced_settings" formatted="false">Erweitert</string>
+  <string name="advanced_settings_help" formatted="false">Passen Sie Battery Monitor mit zusätzlichen Steuerelementen für spezielle Anwendungsfälle an.</string>
 
   <string name="live_updates_onboarding_title">Akku-Chip in der Statusleiste</string>
   <string name="live_updates_onboarding_message_on">Ihr Gerät unterstützt die Anzeige des Batteriestands als Chip in der Statusleiste. Diese Option ist standardmäßig aktiviert.\n
@@ -356,9 +361,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Löschen von Protokollen älter als:</string>
   <string name="pref_max_log_age_help" formatted="false">Wenn die Protokollierung aktiviert ist, werden beim Anschließen des Geräts Protokolle gelöscht, die älter als diese Einstellung sind. Wähle Nie löschen, um Protokolle zu behalten, bis du sie manuell löschst.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Temperatureinheit</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Umrechnen in Fahrenheit</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android meldet die Akkutemperatur in Celsius. Aktivieren Sie diese Option, wenn Sie Fahrenheit bevorzugen.</string>
+  <string name="pref_cat_units" formatted="false">Einheiten</string>
+  <string name="pref_temperature_unit" formatted="false">Temperatureinheit</string>
+  <string name="pref_cat_formatting" formatted="false">Formatierung</string>
+  <string name="pref_temperature_unit_help" formatted="false">Wählen Sie, ob Temperaturen in Celsius oder Fahrenheit angezeigt werden.</string>
 
   <string name="pref_cat_autostart" formatted="false">Autostart</string>
   <string name="pref_autostart_at_boot" formatted="false">Autostart beim Gerätestart</string>
@@ -376,6 +382,11 @@
 
   <string name="pref_cat_language" formatted="false">Sprache</string>
   <string name="pref_change_app_language" formatted="false">App-Sprache</string>
+  <string name="pref_change_app_language_help" formatted="false">Wählen Sie die von Battery Monitor verwendete Sprache. Die Systemvorgabe folgt der Gerätesprache.</string>
+  <string name="pref_long_duration_format" formatted="false">Format langer Zeiträume</string>
+  <string name="pref_long_duration_format_help" formatted="false">Tage und Stunden verwendet ab 24 Stunden Tage, zum Beispiel 1d 3h. Nur Stunden behält die gesamte Dauer in Stunden bei, zum Beispiel 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Tage und Stunden</string>
+  <string name="long_duration_format_hours_only" formatted="false">Nur Stunden</string>
   <string name="pref_cat_advanced_stats" formatted="false">Erweiterte Akkustatistiken</string>
   <string name="pref_enable_advanced_stats" formatted="false">Erweiterte Akkustatistiken anzeigen</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Fügt einen Reiter Erweitert mit Akkustatistiken hinzu, die Root oder Shizuku benötigen.</string>

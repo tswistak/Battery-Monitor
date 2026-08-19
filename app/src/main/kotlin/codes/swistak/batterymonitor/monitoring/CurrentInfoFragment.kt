@@ -46,9 +46,12 @@ import androidx.fragment.app.Fragment
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.app.PersistentFragment
 import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.common.DurationFormatter
 import codes.swistak.batterymonitor.help.HelpActivity
+import codes.swistak.batterymonitor.settings.LongDurationFormat
 import codes.swistak.batterymonitor.settings.SettingsActivity
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.temperatureUnit
 
 class CurrentInfoFragment : Fragment() {
     companion object {
@@ -355,8 +358,11 @@ class CurrentInfoFragment : Fragment() {
             View.GONE
         }
 
+        val longDurationFormat = LongDurationFormat.fromPreference(
+            pFrag!!.settings.getString(SettingsContract.KEY_LONG_DURATION_FORMAT, null)
+        )
         tv = rootView.findViewById<View?>(R.id.time_remaining) as TextView
-        tv.text = DisplayStrings.timeRemainingMainScreen(info)
+        tv.text = DisplayStrings.timeRemainingMainScreen(info, longDurationFormat)
         tv = rootView.findViewById<View?>(R.id.until_what) as TextView
         tv.text = DisplayStrings.untilWhat(info)
 
@@ -376,16 +382,17 @@ class CurrentInfoFragment : Fragment() {
 
             if (info.lastStatus != BatteryInfo.STATUS_FULLY_CHARGED) s += info.lastPercent.toString() + DisplayStrings.percentSymbol + ", "
 
-            s += DisplayStrings.nHoursMMinutesShort(hours, mins)
+            s += DurationFormatter.formatShort(
+                resources, hours * 60 + mins, longDurationFormat
+            )
 
             tv = rootView.findViewById<View?>(R.id.status_duration) as TextView
             tv.text = s
         }
 
-        val convertF: Boolean = pFrag!!.settings.getBoolean(
-            SettingsContract.KEY_CONVERT_F,
-            pFrag!!.res.getBoolean(R.bool.default_convert_to_fahrenheit)
-        )
+        val convertF = pFrag!!.settings.temperatureUnit(
+            pFrag!!.res.getString(R.string.default_temperature_unit)
+        ).convertToFahrenheit
 
         tvHealth!!.text = DisplayStrings.healths[info.health]
         tvTemp!!.text = DisplayStrings.formatTemp(info.temperature, convertF)

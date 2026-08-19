@@ -74,6 +74,16 @@ class SettingsHelpActivity : AppCompatActivity() {
                 hasLinks = intArrayOf()
             }
 
+            SettingsContract.KEY_UNITS_FORMATTING_SETTINGS -> {
+                setContentView(R.layout.units_formatting_settings_help)
+                setWindowSubtitle(res!!.getString(R.string.units_formatting_settings))
+            }
+
+            SettingsContract.KEY_ADVANCED_SETTINGS -> {
+                setContentView(R.layout.advanced_settings_help)
+                setWindowSubtitle(res!!.getString(R.string.advanced_settings))
+            }
+
             SettingsContract.KEY_BACKUP_RESTORE_SETTINGS -> {
                 setContentView(R.layout.backup_restore_settings_help)
                 setWindowSubtitle(res!!.getString(R.string.pref_backup_restore))

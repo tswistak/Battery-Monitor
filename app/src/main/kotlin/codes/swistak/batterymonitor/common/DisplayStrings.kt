@@ -19,6 +19,7 @@ import android.text.Html
 import android.text.Spanned
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
+import codes.swistak.batterymonitor.settings.LongDurationFormat
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -89,8 +90,8 @@ internal object DisplayStrings {
     lateinit var alarmTypesDisplay: Array<String>
     lateinit var alarmTypeEntries: Array<String>
     lateinit var alarmTypeValues: Array<String>
-    lateinit var tempAlarmEntries: Array<String>
     lateinit var tempAlarmValues: Array<String>
+
     lateinit var logFilterPrefKeys: Array<String>
 
     fun setResources(r: Resources) {
@@ -154,14 +155,9 @@ internal object DisplayStrings {
         alarmTypesDisplay = res.getStringArray(R.array.alarm_types_display)
         alarmTypeEntries = res.getStringArray(R.array.alarm_type_entries)
         alarmTypeValues = res.getStringArray(R.array.alarm_type_values)
-        tempAlarmEntries = res.getStringArray(R.array.temp_alarm_entries)
         tempAlarmValues = res.getStringArray(R.array.temp_alarm_values)
 
         logFilterPrefKeys = res.getStringArray(R.array.log_filter_pref_keys)
-    }
-
-    fun forNHours(n: Int): String {
-        return String.format(res.getQuantityString(R.plurals.for_n_hours, n), n)
     }
 
     fun nHoursMMinutesLong(n: Int, m: Int): String {
@@ -184,18 +180,6 @@ internal object DisplayStrings {
         return (String.format(
             res.getQuantityString(R.plurals.n_hours_long, n), n
         ) + String.format(res.getQuantityString(R.plurals.n_minutes_medium, m), m))
-    }
-
-    fun nHoursMMinutesShort(n: Int, m: Int): String {
-        return (String.format(
-            res.getQuantityString(R.plurals.n_hours_short, n), n
-        ) + String.format(res.getQuantityString(R.plurals.n_minutes_short, m), m))
-    }
-
-    fun nDaysMHours(n: Int, m: Int): String {
-        return (String.format(
-            res.getQuantityString(R.plurals.n_days, n), n
-        ) + String.format(res.getQuantityString(R.plurals.n_hours, m), m))
     }
 
     fun nLogItems(n: Int): String {
@@ -308,7 +292,9 @@ internal object DisplayStrings {
         return -1
     }
 
-    fun timeRemaining(info: BatteryInfo): Spanned? {
+    fun timeRemaining(
+        info: BatteryInfo, longDurationFormat: LongDurationFormat
+    ): Spanned? {
         if (info.prediction.whatHappened == BatteryInfo.Prediction.NONE) {
             return fromHtmlLegacy(
                 "<font color=\"#6fc14b\">" + statuses[info.status] + "</font>"
@@ -316,35 +302,47 @@ internal object DisplayStrings {
         } else {
             val predicted = info.prediction.lastRTime
 
-            if (predicted.days > 0) return fromHtmlLegacy(
-                "<font color=\"#6fc14b\">" + String.format(
-                    res.getString(R.string.unit_days), predicted.days
-                ) + "</font> " + "<font color=\"#33b5e5\"><small>" + String.format(
-                    res.getString(R.string.unit_hours), predicted.hours
-                ) + "</small></font>"
-            )
-            else if (predicted.hours > 0) return fromHtmlLegacy(
-                "<font color=\"#6fc14b\">" + String.format(
-                    res.getString(R.string.unit_hours), predicted.hours
-                ) + "</font> " + "<font color=\"#33b5e5\"><small>" + String.format(
-                    res.getString(R.string.unit_minutes), predicted.minutes
-                ) + "</small></font>"
-            )
-            else return fromHtmlLegacy(
-                "<font color=\"#33b5e5\"><small>" + String.format(
-                    res.getQuantityString(
-                        R.plurals.n_minutes_medium, predicted.minutes
-                    ), predicted.minutes
-                ) + "</small></font>"
-            )
+            if (predicted.days > 0 && longDurationFormat == LongDurationFormat.DAYS_AND_HOURS) {
+                val (days, hours) = DurationFormatter.roundedDaysAndHours(
+                    predicted.days, predicted.hours, predicted.minutes
+                )
+                return fromHtmlLegacy(
+                    "<font color=\"#6fc14b\">" + String.format(
+                        res.getString(R.string.unit_days), days
+                    ) + "</font> " + "<font color=\"#33b5e5\"><small>" + String.format(
+                        res.getString(R.string.unit_hours), hours
+                    ) + "</small></font>"
+                )
+            }
+
+            val hours = predicted.days * 24 + predicted.hours
+            return if (hours > 0) {
+                fromHtmlLegacy(
+                    "<font color=\"#6fc14b\">" + String.format(
+                        res.getString(R.string.unit_hours), hours
+                    ) + "</font> " + "<font color=\"#33b5e5\"><small>" + String.format(
+                        res.getString(R.string.unit_minutes), predicted.minutes
+                    ) + "</small></font>"
+                )
+            } else {
+                fromHtmlLegacy(
+                    "<font color=\"#33b5e5\"><small>" + String.format(
+                        res.getQuantityString(
+                            R.plurals.n_minutes_medium, predicted.minutes
+                        ), predicted.minutes
+                    ) + "</small></font>"
+                )
+            }
         }
     }
 
-    fun timeRemainingMainScreen(info: BatteryInfo): Spanned? {
+    fun timeRemainingMainScreen(
+        info: BatteryInfo, longDurationFormat: LongDurationFormat
+    ): Spanned? {
         return if (info.prediction.whatHappened == BatteryInfo.Prediction.NONE) fromHtmlLegacy(
             "&nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;"
         )
-        else timeRemaining(info)
+        else timeRemaining(info, longDurationFormat)
     }
 
     private fun fromHtmlLegacy(source: String): Spanned {

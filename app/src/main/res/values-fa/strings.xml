@@ -188,6 +188,7 @@
     <item quantity="other">برای %d ساعت</item>
   </plurals>
 
+  <string name="duration_for">به مدت %1$s</string>
   <string name="unit_days">%dروز</string>
   <string name="unit_hours">%dس</string>
   <string name="unit_minutes">%dد</string>
@@ -249,7 +250,11 @@
   <string name="alarm_settings" formatted="false">آلارم ها</string>
   <string name="alarm_settings_help" formatted="false">می‌توانید از مانیتور باتری به شما اطلاع دهید که وقتی باتری شما تمام می‌شود به شرایط خاصی می رسد (به عنوان مثال، باتری کاملاً شارژ می شود، سطح باتری به زیر 20٪ می رسد و بسیاری دیگر).</string>
   <string name="other_settings" formatted="false">عمومی</string>
-  <string name="other_settings_help" formatted="false">تنظیمات عمومی برنامه، از جمله گزارش‌گیری، واحد دما، اجرای خودکار و موارد دیگر، در این صفحه قرار دارند.</string>
+  <string name="other_settings_help" formatted="false">رفتار عمومی برنامه و ترجیحات روزمره را تنظیم کنید.</string>
+  <string name="units_formatting_settings" formatted="false">واحدها و قالب‌بندی</string>
+  <string name="units_formatting_settings_help" formatted="false">واحدها و قالب‌های نمایش اطلاعات باتری در سراسر برنامه را انتخاب کنید.</string>
+  <string name="advanced_settings" formatted="false">پیشرفته</string>
+  <string name="advanced_settings_help" formatted="false">Battery Monitor را با کنترل‌های بیشتر برای کاربردهای تخصصی دقیق‌تر تنظیم کنید.</string>
 
   <string name="live_updates_onboarding_title">نوار وضعیت تراشه باتری</string>
   <string name="live_updates_onboarding_message_on">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند. این گزینه به‌صورت پیش‌فرض فعال است.\n
@@ -358,9 +363,10 @@
   <string name="pref_max_log_age_summary" formatted="false">حذف گزارش های قدیمی تر از:</string>
   <string name="pref_max_log_age_help" formatted="false">اگر ثبت گزارش فعال باشد، هر بار که دستگاه را به برق وصل کنید، گزارش‌های قدیمی‌تر از این مقدار حذف می‌شوند. گزینه هرگز حذف نشود را انتخاب کنید تا گزارش‌ها تا زمانی که خودتان آن‌ها را پاک کنید باقی بمانند.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">واحد دما</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">تبدیل به فارنهایت</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">اندروید دمای باتری را بر حسب درجه سانتیگراد گزارش می کند. اگر شما ترجیح می دهید دمای باتری را بر حسب درجه فارنهایت ببینید، این گزینه را علامت بزنید، برنامه برای شما تبدیل خواهد شد.</string>
+  <string name="pref_cat_units" formatted="false">واحدها</string>
+  <string name="pref_temperature_unit" formatted="false">واحد دما</string>
+  <string name="pref_cat_formatting" formatted="false">قالب‌بندی</string>
+  <string name="pref_temperature_unit_help" formatted="false">انتخاب کنید دما با درجهٔ سانتی‌گراد یا فارنهایت نمایش داده شود.</string>
 
   <string name="pref_cat_autostart" formatted="false">شروع خودکار</string>
   <string name="pref_autostart_at_boot" formatted="false">شروع خودکار در بوت</string>
@@ -390,6 +396,11 @@
 
   <string name="pref_cat_language" formatted="false">زبان</string>
   <string name="pref_change_app_language" formatted="false">زبان برنامه</string>
+  <string name="pref_change_app_language_help" formatted="false">زبان مورد استفادهٔ Battery Monitor را انتخاب کنید. پیش‌فرض سیستم از زبان دستگاه پیروی می‌کند.</string>
+  <string name="pref_long_duration_format" formatted="false">قالب مدت‌زمان طولانی</string>
+  <string name="pref_long_duration_format_help" formatted="false">حالت روز و ساعت پس از ۲۴ ساعت از روز استفاده می‌کند، مانند 1d 3h. حالت فقط ساعت کل مدت را به ساعت نگه می‌دارد، مانند 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">روز و ساعت</string>
+  <string name="long_duration_format_hours_only" formatted="false">فقط ساعت</string>
   <string name="pref_cat_advanced_stats" formatted="false">آمار پیشرفته باتری</string>
   <string name="pref_enable_advanced_stats" formatted="false">نمایش آمار پیشرفته باتری</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">یک برگه پیشرفته با آمار باتری اضافه می‌کند که به root یا Shizuku نیاز دارد.</string>

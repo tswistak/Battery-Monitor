@@ -226,6 +226,7 @@
     <item quantity="other">لمدة %d ساعة</item>
   </plurals>
 
+  <string name="duration_for">لمدة %1$s</string>
   <string name="unit_days">%dي</string>
   <string name="unit_hours">%dس</string>
   <string name="unit_minutes">%dد</string>
@@ -287,7 +288,11 @@
   <string name="alarm_settings" formatted="false">المنبهات</string>
   <string name="alarm_settings_help" formatted="false">يمكن للمؤشر بإعلامك عند مستوى البطارية تصل إلى نقطة معينة (على سبيل المثال، يصبح البطارية مشحونة بالكامل، وانخفاض مستوى البطارية أقل من 20٪)</string>
   <string name="other_settings" formatted="false">عام</string>
-  <string name="other_settings_help" formatted="false">توجد إعدادات التطبيق العامة في هذه الصفحة، بما في ذلك التسجيل ووحدة الحرارة والتشغيل التلقائي والمزيد.</string>
+  <string name="other_settings_help" formatted="false">اضبط السلوك العام للتطبيق وتفضيلاته اليومية.</string>
+  <string name="units_formatting_settings" formatted="false">الوحدات والتنسيق</string>
+  <string name="units_formatting_settings_help" formatted="false">اختر الوحدات والتنسيقات المستخدمة لعرض بيانات البطارية في التطبيق.</string>
+  <string name="advanced_settings" formatted="false">متقدم</string>
+  <string name="advanced_settings_help" formatted="false">خصّص Battery Monitor بدقة باستخدام عناصر تحكم إضافية لحالات الاستخدام المتخصصة.</string>
 
   <string name="live_updates_onboarding_title">شريحة بطارية شريط الحالة</string>
   <string name="live_updates_onboarding_message_on">جهازك يدعم عرض نسبة البطارية كشريحة في شريط الحالة. هذا الخيار مفعّل افتراضيًا.\n
@@ -396,9 +401,10 @@
   <string name="pref_max_log_age_summary" formatted="false">حذف السجلات القديمة بعد:</string>
   <string name="pref_max_log_age_help" formatted="false">إذا كان التسجيل مفعلاً، فكلما وصلت جهازك بالطاقة ستُحذف السجلات الأقدم من هذا الخيار. اختر عدم الحذف للاحتفاظ بالسجلات حتى تمسحها يدويًا.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">وحدة درجة الحرارة</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">تحويل إلى فهرنهايت</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">الاندرويد وحدة قياس حرارته هي الدرجة السليزية اذا كنت تفضل رؤية درجة الحرارة بالفهرنهايت تحقق من هذا الخيار وسوف يحول لتطبيق درجة الحرارة لك</string>
+  <string name="pref_cat_units" formatted="false">الوحدات</string>
+  <string name="pref_temperature_unit" formatted="false">وحدة درجة الحرارة</string>
+  <string name="pref_cat_formatting" formatted="false">التنسيق</string>
+  <string name="pref_temperature_unit_help" formatted="false">اختر عرض درجات الحرارة بالدرجة المئوية أو الفهرنهايت.</string>
 
   <string name="pref_cat_autostart" formatted="false">تشغيل تلقائي</string>
   <string name="pref_autostart_at_boot" formatted="false">تشغيل تلقائي عند بدء الهاتف</string>
@@ -426,6 +432,11 @@
 
   <string name="pref_cat_language" formatted="false">اللغة</string>
   <string name="pref_change_app_language" formatted="false">لغة التطبيق</string>
+  <string name="pref_change_app_language_help" formatted="false">حدد اللغة التي يستخدمها Battery Monitor. يتبع خيار النظام الافتراضي لغة جهازك.</string>
+  <string name="pref_long_duration_format" formatted="false">تنسيق المدد الطويلة</string>
+  <string name="pref_long_duration_format_help" formatted="false">يستخدم وضع الأيام والساعات الأيام بعد 24 ساعة، مثل 1d 3h. يحتفظ وضع الساعات فقط بالمدة الكاملة بالساعات، مثل 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">الأيام والساعات</string>
+  <string name="long_duration_format_hours_only" formatted="false">ساعات فقط</string>
   <string name="pref_cat_advanced_stats" formatted="false">إحصاءات البطارية المتقدمة</string>
   <string name="pref_enable_advanced_stats" formatted="false">إظهار إحصاءات البطارية المتقدمة</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">يضيف تبويبًا متقدمًا مع إحصاءات بطارية تتطلب صلاحيات root أو Shizuku.</string>

@@ -194,6 +194,7 @@
     <item quantity="other">Pentru %d de ore</item>
   </plurals>
 
+  <string name="duration_for">Timp de %1$s</string>
   <string name="unit_days">%dz</string>
   <string name="unit_hours">%dh</string>
   <string name="unit_minutes">%dm</string>
@@ -255,7 +256,11 @@
   <string name="alarm_settings" formatted="false">Alarme</string>
   <string name="alarm_settings_help" formatted="false">Puteți solicita Battery Monitor să vă anunțe când nivelul bateriei este atinge o anumită condiție (de exemplu, bateria se încarcă complet, nivelul bateriei scade sub 20% și multe altele).</string>
   <string name="other_settings" formatted="false">General</string>
-  <string name="other_settings_help" formatted="false">Această pagină conține setările generale ale aplicației, inclusiv jurnalizarea, unitatea de temperatură, pornirea automată și altele.</string>
+  <string name="other_settings_help" formatted="false">Configurați comportamentul general și preferințele uzuale ale aplicației.</string>
+  <string name="units_formatting_settings" formatted="false">Unități și formatare</string>
+  <string name="units_formatting_settings_help" formatted="false">Alegeți unitățile și formatele folosite pentru afișarea datelor bateriei în întreaga aplicație.</string>
+  <string name="advanced_settings" formatted="false">Avansat</string>
+  <string name="advanced_settings_help" formatted="false">Reglați Battery Monitor cu opțiuni suplimentare pentru utilizări specializate.</string>
 
   <string name="live_updates_onboarding_title">Bara de stare Cip baterie</string>
   <string name="live_updates_onboarding_message_on">Dispozitivul dvs. acceptă afișarea procentului bateriei sub formă de cip în bara de stare. Această opțiune este activată implicit.\n
@@ -364,9 +369,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Ștergeți jurnalele mai vechi de:</string>
   <string name="pref_max_log_age_help" formatted="false">Dacă înregistrarea este activată, de fiecare dată când conectați dispozitivul, jurnalele mai vechi decât această valoare vor fi șterse. Selectați Nu șterge niciodată pentru a le păstra până când le ștergeți manual.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Unitate de temperatură</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Convertiți în Fahrenheit</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android raportează temperatura bateriei în grade Celsius. Dacă preferați să vedeți temperatura bateriei în grade Fahrenheit, bifați această opțiune, iar aplicația se va converti pentru dvs.</string>
+  <string name="pref_cat_units" formatted="false">Unități</string>
+  <string name="pref_temperature_unit" formatted="false">Unitate de temperatură</string>
+  <string name="pref_cat_formatting" formatted="false">Formatare</string>
+  <string name="pref_temperature_unit_help" formatted="false">Alegeți dacă temperaturile sunt afișate în Celsius sau Fahrenheit.</string>
 
   <string name="pref_cat_autostart" formatted="false">Pornire automată</string>
   <string name="pref_autostart_at_boot" formatted="false">Pornire automată la pornire</string>
@@ -396,6 +402,11 @@
 
   <string name="pref_cat_language" formatted="false">Limbă</string>
   <string name="pref_change_app_language" formatted="false">Limba aplicației</string>
+  <string name="pref_change_app_language_help" formatted="false">Selectați limba folosită de Battery Monitor. Valoarea implicită a sistemului urmează limba dispozitivului.</string>
+  <string name="pref_long_duration_format" formatted="false">Format pentru durate lungi</string>
+  <string name="pref_long_duration_format_help" formatted="false">Zile și ore folosește zile după 24 de ore, de exemplu 1d 3h. Doar ore păstrează întreaga durată în ore, de exemplu 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Zile și ore</string>
+  <string name="long_duration_format_hours_only" formatted="false">Doar ore</string>
   <string name="pref_cat_advanced_stats" formatted="false">Statistici avansate ale bateriei</string>
   <string name="pref_enable_advanced_stats" formatted="false">Afișează statisticile avansate ale bateriei</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Adaugă o filă Avansat cu statistici ale bateriei care necesită root sau Shizuku.</string>

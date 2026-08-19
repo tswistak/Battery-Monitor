@@ -184,8 +184,9 @@
   <plurals name="for_n_hours">
         <item quantity="one">For %d Hour</item>
         <item quantity="other">For %d Hours</item>
-    </plurals>
+  </plurals>
 
+  <string name="duration_for">For %1$s</string>
   <string name="unit_days">%dd</string>
   <string name="unit_hours">%dh</string>
   <string name="unit_minutes">%dm</string>
@@ -247,7 +248,11 @@
   <string name="alarm_settings" formatted="false">Alarms</string>
   <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
   <string name="other_settings" formatted="false">General</string>
-  <string name="other_settings_help" formatted="false">General app settings are on this page, including logging, temperature unit, autostart, and more.</string>
+  <string name="other_settings_help" formatted="false">Configure the app’s general behavior and everyday preferences.</string>
+  <string name="units_formatting_settings" formatted="false">Units &amp; formatting</string>
+  <string name="units_formatting_settings_help" formatted="false">Choose the units and formats used to display battery data throughout the app.</string>
+  <string name="advanced_settings" formatted="false">Advanced</string>
+  <string name="advanced_settings_help" formatted="false">Fine-tune Battery Monitor with additional controls for specialized use cases.</string>
 
   <string name="live_updates_onboarding_title">Status Bar Battery Chip</string>
   <string name="live_updates_onboarding_message_on">Your device supports showing the battery percentage as a chip in the status bar. This is enabled by default.\n
@@ -356,9 +361,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Delete logs older than:</string>
   <string name="pref_max_log_age_help" formatted="false">If logging is enabled, then whenever you plug in your device, logs older than this will be deleted. Select "Never delete" to keep logs until you clear them manually.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Temperature Unit</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Convert to Fahrenheit</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android reports the battery temperature in degrees Celsius. If you prefer to see the battery temperature in degrees Fahrenheit, check this option, and the app will convert for you.</string>
+  <string name="pref_cat_units" formatted="false">Units</string>
+  <string name="pref_temperature_unit" formatted="false">Temperature unit</string>
+  <string name="pref_cat_formatting" formatted="false">Formatting</string>
+  <string name="pref_temperature_unit_help" formatted="false">Choose whether temperatures are displayed in Celsius or Fahrenheit.</string>
 
   <string name="pref_cat_autostart" formatted="false">Autostart</string>
   <string name="pref_autostart_at_boot" formatted="false">Autostart at Boot</string>
@@ -388,6 +394,11 @@
 
   <string name="pref_cat_language" formatted="false">Language</string>
   <string name="pref_change_app_language" formatted="false">App language</string>
+  <string name="pref_change_app_language_help" formatted="false">Select the language used by Battery Monitor. The system default follows your device language.</string>
+  <string name="pref_long_duration_format" formatted="false">Long duration format</string>
+  <string name="pref_long_duration_format_help" formatted="false">Days and hours uses days after 24 hours, for example 1d 3h. Hours only keeps the full duration in hours, for example 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Days and hours</string>
+  <string name="long_duration_format_hours_only" formatted="false">Hours only</string>
   <string name="pref_cat_advanced_stats" formatted="false">Advanced battery stats</string>
   <string name="pref_enable_advanced_stats" formatted="false">Show advanced battery stats</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Adds an Advanced tab with battery diagnostics that require either root access or Shizuku.</string>

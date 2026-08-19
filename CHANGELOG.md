@@ -1,20 +1,27 @@
 # CHANGELOG
 
+## Unreleased
+
+### Improved
+
+- Reorganized settings.
+- Show day count for time higher than 24 hours (#71).
+
 ## 1.6.0
 
 ### New
 
-- App backup and restore
-- Alarms backup (#69)
-- Existing logs import (#80)
-- Scheduled automatic logs export (#34)
-- App diagnostics screen (#128) 
+- App backup and restore.
+- Alarms backup (#69).
+- Existing logs import (#80).
+- Scheduled automatic logs export (#34).
+- App diagnostics screen (#128) .
 
 ### Improved
 
-- Ability to append new logs to the existing ones (#83)
-- Possibility to only export logs that haven't been exported yet (#79)
-- Better handling of DB errors and service restart (#117) 
+- Ability to append new logs to the existing ones (#83).
+- Possibility to only export logs that haven't been exported yet (#79).
+- Better handling of DB errors and service restart (#117) .
 
 ## 1.5.0
 

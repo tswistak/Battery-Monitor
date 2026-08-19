@@ -29,7 +29,8 @@ internal fun settingsImporterForVersion(version: Int): SettingsImporter {
     return when (version) {
         Version1SettingsImporter.VERSION -> Version1SettingsImporter
         Version2SettingsImporter.VERSION -> Version2SettingsImporter
-        else -> Version3SettingsImporter
+        Version3SettingsImporter.VERSION -> Version3SettingsImporter
+        else -> Version4SettingsImporter
     }
 }
 

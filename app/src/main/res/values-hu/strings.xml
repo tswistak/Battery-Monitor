@@ -190,6 +190,7 @@
     <item quantity="other">%d órája</item>
   </plurals>
 
+  <string name="duration_for">Ennyi ideje: %1$s</string>
   <string name="unit_days">%dnap</string>
   <string name="unit_hours">%dóra</string>
   <string name="unit_minutes">%dperc</string>
@@ -251,7 +252,11 @@
   <string name="alarm_settings" formatted="false">Riasztások</string>
   <string name="alarm_settings_help" formatted="false">Beállíthatja, hogy a Battery Monitor értesítse, amikor az akku töltése elér egy bizonyos szintet (pl. ha teljesen feltöltődik, vagy mondjuk 20% alá csökken.)</string>
   <string name="other_settings" formatted="false">Általános</string>
-  <string name="other_settings_help" formatted="false">Ezen az oldalon találhatók az alkalmazás általános beállításai, például a naplózás, a hőmérsékleti mértékegység, az automatikus indítás és további lehetőségek.</string>
+  <string name="other_settings_help" formatted="false">Állítsa be az alkalmazás általános működését és mindennapi beállításait.</string>
+  <string name="units_formatting_settings" formatted="false">Mértékegységek és formázás</string>
+  <string name="units_formatting_settings_help" formatted="false">Válassza ki az akkumulátoradatok megjelenítéséhez használt mértékegységeket és formátumokat.</string>
+  <string name="advanced_settings" formatted="false">Speciális</string>
+  <string name="advanced_settings_help" formatted="false">Finomhangolja a Battery Monitort további vezérlőkkel a speciális felhasználási esetekhez.</string>
 
   <string name="live_updates_onboarding_title">Állapotsor akkumulátor chip</string>
   <string name="live_updates_onboarding_message_on">A készülék támogatja az akkumulátor százalékának chipként való megjelenítését az állapotsorban. Ez alapértelmezés szerint be van kapcsolva.\n
@@ -360,9 +365,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Törölje az ennél régebbi bejegyzéseket:</string>
   <string name="pref_max_log_age_help" formatted="false">Ha a naplózás engedélyezett, az eszköz csatlakoztatásakor az ennél régebbi naplók törlődnek. Válaszd a Soha ne törölje lehetőséget, hogy a naplók megmaradjanak, amíg kézzel nem törlöd őket.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Hőmérséklet mértékegysége</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Fahrenheit használata</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Az Android Celsius°-ban közli a hőmérsékletet. Ha jobban szeretné az akkumlátor hőmérsékletét Fahrenheit-ben látni, kapcsolja be ezt az opciót, és az alkalmásás konvértálni fogja önnek.</string>
+  <string name="pref_cat_units" formatted="false">Mértékegységek</string>
+  <string name="pref_temperature_unit" formatted="false">Hőmérséklet mértékegysége</string>
+  <string name="pref_cat_formatting" formatted="false">Formázás</string>
+  <string name="pref_temperature_unit_help" formatted="false">Válassza ki, hogy a hőmérséklet Celsius- vagy Fahrenheit-fokban jelenjen meg.</string>
 
   <string name="pref_cat_autostart" formatted="false">Automatikus indítás</string>
   <string name="pref_autostart_at_boot" formatted="false">Automatikus indítás bekapcsoláskor</string>
@@ -382,6 +388,11 @@
 
   <string name="pref_cat_language" formatted="false">Nyelv</string>
   <string name="pref_change_app_language" formatted="false">Alkalmazás nyelve</string>
+  <string name="pref_change_app_language_help" formatted="false">Válassza ki a Battery Monitor nyelvét. A rendszer alapértelmezése az eszköz nyelvét követi.</string>
+  <string name="pref_long_duration_format" formatted="false">Hosszú időtartam formátuma</string>
+  <string name="pref_long_duration_format_help" formatted="false">A Napok és órák 24 óra után napokat használ, például 1d 3h. A Csak óra a teljes időt órákban tartja, például 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Napok és órák</string>
+  <string name="long_duration_format_hours_only" formatted="false">Csak óra</string>
   <string name="pref_cat_advanced_stats" formatted="false">Speciális akkumulátor-statisztikák</string>
   <string name="pref_enable_advanced_stats" formatted="false">Speciális akkumulátor-statisztikák megjelenítése</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Hozzáad egy Speciális lapot olyan akkumulátor-statisztikákkal, amelyek rootot vagy Shizukut igényelnek.</string>

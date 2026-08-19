@@ -190,6 +190,7 @@
     <item quantity="other">Per %d ore</item>
   </plurals>
 
+  <string name="duration_for">Da %1$s</string>
   <string name="unit_days">%dg</string>
   <string name="unit_hours">%dh</string>
   <string name="unit_minutes">%dm</string>
@@ -251,7 +252,11 @@
   <string name="alarm_settings" formatted="false">Allarmi</string>
   <string name="alarm_settings_help" formatted="false">Puoi ottenere una notifica da Battery Monitor quando il livello della batteria raggiunge un certo punto (es., la batteria diventa completamente carica, la batteria scende sotto il 20%).</string>
   <string name="other_settings" formatted="false">Generali</string>
-  <string name="other_settings_help" formatted="false">In questa pagina trovi le impostazioni generali dell’app, tra cui registrazione, unità di temperatura, avvio automatico e altro.</string>
+  <string name="other_settings_help" formatted="false">Configura il comportamento generale e le preferenze quotidiane dell’app.</string>
+  <string name="units_formatting_settings" formatted="false">Unità e formattazione</string>
+  <string name="units_formatting_settings_help" formatted="false">Scegli le unità e i formati usati per mostrare i dati della batteria in tutta l’app.</string>
+  <string name="advanced_settings" formatted="false">Avanzate</string>
+  <string name="advanced_settings_help" formatted="false">Perfeziona Battery Monitor con controlli aggiuntivi per gli utilizzi specializzati.</string>
 
   <string name="live_updates_onboarding_title">Chip batteria barra di stato</string>
   <string name="live_updates_onboarding_message_on">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato. Questa opzione è abilitata per impostazione predefinita.\n
@@ -360,9 +365,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Cancella registri più vecchi di:</string>
   <string name="pref_max_log_age_help" formatted="false">Se il logging è abilitato, ogni volta che colleghi il dispositivo verranno eliminati i registri più vecchi di questo valore. Seleziona Non eliminare mai per conservarli finché non li cancelli manualmente.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Unità temperatura</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Converti in Fahrenheit</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android riporta la temperatura della batteria in gradi Celsius. Se preferisci vedere la temperatura della batteria in gradi Fahrenheit, spunta questa opzione.</string>
+  <string name="pref_cat_units" formatted="false">Unità</string>
+  <string name="pref_temperature_unit" formatted="false">Unità temperatura</string>
+  <string name="pref_cat_formatting" formatted="false">Formattazione</string>
+  <string name="pref_temperature_unit_help" formatted="false">Scegli se mostrare le temperature in Celsius o Fahrenheit.</string>
 
   <string name="pref_cat_autostart" formatted="false">Avvio automatico</string>
   <string name="pref_autostart_at_boot" formatted="false">Autostart all\'avvio</string>
@@ -382,6 +388,11 @@
 
   <string name="pref_cat_language" formatted="false">Lingua</string>
   <string name="pref_change_app_language" formatted="false">Lingua dell\'app</string>
+  <string name="pref_change_app_language_help" formatted="false">Seleziona la lingua usata da Battery Monitor. L’impostazione predefinita di sistema segue la lingua del dispositivo.</string>
+  <string name="pref_long_duration_format" formatted="false">Formato delle durate lunghe</string>
+  <string name="pref_long_duration_format_help" formatted="false">Giorni e ore usa i giorni oltre le 24 ore, ad esempio 1d 3h. Solo ore mantiene l’intera durata in ore, ad esempio 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Giorni e ore</string>
+  <string name="long_duration_format_hours_only" formatted="false">Solo ore</string>
   <string name="pref_cat_advanced_stats" formatted="false">Statistiche avanzate della batteria</string>
   <string name="pref_enable_advanced_stats" formatted="false">Mostra statistiche avanzate della batteria</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Aggiunge una scheda Avanzate con statistiche della batteria che richiedono root o Shizuku.</string>

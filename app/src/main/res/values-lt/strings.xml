@@ -206,6 +206,7 @@
     <item quantity="other">%d Valandoms</item>
   </plurals>
 
+  <string name="duration_for">Trukmė: %1$s</string>
   <string name="unit_days">%dd</string>
   <string name="unit_hours">%dval.</string>
   <string name="unit_minutes">%dmin.</string>
@@ -267,7 +268,11 @@
   <string name="alarm_settings" formatted="false">Aliarmai</string>
   <string name="alarm_settings_help" formatted="false">Jūs galite nusistatyti Baterijos Indikatoriaus perspėjimą, kai baterijos lygis pasiekia tam tikrą tašką (pvz.: baterija pilnai įkraunama, baterijos lygtis nukrenta žemiau 20% ir pan.).</string>
   <string name="other_settings" formatted="false">Bendrieji</string>
-  <string name="other_settings_help" formatted="false">Šiame puslapyje pateikiami bendrieji programėlės nustatymai, įskaitant žurnalų rašymą, temperatūros vienetą, automatinį paleidimą ir kt.</string>
+  <string name="other_settings_help" formatted="false">Nustatykite bendrą programėlės veikimą ir kasdienes nuostatas.</string>
+  <string name="units_formatting_settings" formatted="false">Vienetai ir formatavimas</string>
+  <string name="units_formatting_settings_help" formatted="false">Pasirinkite visoje programėlėje naudojamus akumuliatoriaus duomenų vienetus ir formatus.</string>
+  <string name="advanced_settings" formatted="false">Išplėstiniai</string>
+  <string name="advanced_settings_help" formatted="false">Tiksliau pritaikykite „Battery Monitor“ papildomais valdikliais specializuotoms reikmėms.</string>
 
   <string name="live_updates_onboarding_title">Būsenos juostos akumuliatoriaus lustas</string>
   <string name="live_updates_onboarding_message_on">Jūsų įrenginys palaiko akumuliatoriaus procento rodymą kaip lustą būsenos juostoje. Ši parinktis pagal numatytuosius nustatymus įjungta.\n
@@ -376,9 +381,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Ištrinti senesnius įrašus nei:</string>
   <string name="pref_max_log_age_help" formatted="false">Jei registravimas įjungtas, kiekvieną kartą prijungus įrenginį bus ištrinti už šią reikšmę senesni įrašai. Pasirinkite Niekada netrinti, kad įrašai būtų saugomi, kol juos ištrinsite rankiniu būdu.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Temperatūros</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Pakeisti į Farengeitą</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">„Android“ praneša apie akumuliatoriaus temperatūrą Celsijaus laipsniais. Jeigu norite matyti akumuliatoriaus temperatūrą Farenheito laipsniais, pažymėkite šią parinktį ir programa konvertuos už jus.</string>
+  <string name="pref_cat_units" formatted="false">Vienetai</string>
+  <string name="pref_temperature_unit" formatted="false">Temperatūros vienetas</string>
+  <string name="pref_cat_formatting" formatted="false">Formatavimas</string>
+  <string name="pref_temperature_unit_help" formatted="false">Pasirinkite, ar temperatūra rodoma Celsijaus, ar Farenheito laipsniais.</string>
 
   <string name="pref_cat_autostart" formatted="false">Auto-Paleidimas</string>
   <string name="pref_autostart_at_boot" formatted="false">Auto-Paleidimas įjungus telefoną</string>
@@ -407,6 +413,11 @@
 
   <string name="pref_cat_language" formatted="false">Kalba</string>
   <string name="pref_change_app_language" formatted="false">Programos kalba</string>
+  <string name="pref_change_app_language_help" formatted="false">Pasirinkite „Battery Monitor“ naudojamą kalbą. Sistemos numatytoji nuostata atitinka įrenginio kalbą.</string>
+  <string name="pref_long_duration_format" formatted="false">Ilgos trukmės formatas</string>
+  <string name="pref_long_duration_format_help" formatted="false">Dienos ir valandos po 24 valandų naudoja dienas, pvz., 1d 3h. Tik valandos visą trukmę rodo valandomis, pvz., 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Dienos ir valandos</string>
+  <string name="long_duration_format_hours_only" formatted="false">Tik valandos</string>
   <string name="pref_cat_advanced_stats" formatted="false">Išplėstinė baterijos statistika</string>
   <string name="pref_enable_advanced_stats" formatted="false">Rodyti išplėstinę baterijos statistiką</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Prideda kortelę „Išsamiau“ su baterijos statistika, kuriai reikia root arba Shizuku.</string>

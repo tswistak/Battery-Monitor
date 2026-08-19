@@ -46,6 +46,7 @@ import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsHelpActivity
+import codes.swistak.batterymonitor.settings.temperatureUnit
 
 class AlarmsFragment : Fragment() {
     companion object {
@@ -81,9 +82,7 @@ class AlarmsFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
 
@@ -137,12 +136,10 @@ class AlarmsFragment : Fragment() {
                 Toast.makeText(activity, "Error!", Toast.LENGTH_SHORT).show()
             }
             val comp = ComponentName(
-                requireActivity().packageName,
-                AlarmEditActivity::class.java.getName()
+                requireActivity().packageName, AlarmEditActivity::class.java.getName()
             )
             startActivity(
-                Intent().setComponent(comp)
-                    .putExtra(AlarmEditFragment.EXTRA_ALARM_ID, id)
+                Intent().setComponent(comp).putExtra(AlarmEditFragment.EXTRA_ALARM_ID, id)
             )
         }
 
@@ -161,10 +158,9 @@ class AlarmsFragment : Fragment() {
         if (mCursor != null) mCursor!!.registerDataSetObserver(AlarmsObserver())
 
         pfrag = PersistentFragment.getInstance(parentFragmentManager)
-        convertF = pfrag!!.settings.getBoolean(
-            SettingsContract.KEY_CONVERT_F,
-            pfrag!!.res.getBoolean(R.bool.default_convert_to_fahrenheit)
-        )
+        convertF = pfrag!!.settings.temperatureUnit(
+            pfrag!!.res.getString(R.string.default_temperature_unit)
+        ).convertToFahrenheit
     }
 
     private fun populateList() {
@@ -186,8 +182,7 @@ class AlarmsFragment : Fragment() {
         super.onDestroy()
         if (mCursor != null) mCursor!!.close()
         alarms!!.close()
-        if (mAlarmsList != null)
-            mAlarmsList!!.removeAllViews()
+        if (mAlarmsList != null) mAlarmsList!!.removeAllViews()
     }
 
     @Suppress("DEPRECATION")
@@ -196,12 +191,9 @@ class AlarmsFragment : Fragment() {
 
         alarmChanGroup = getAlarmChanGroup()
 
-        if (appNotifsEnabled != mNotificationManager!!.areNotificationsEnabled() ||
-            alarmNotifsEnabled != getAlarmNotifsEnabled()
-        ) {
+        if (appNotifsEnabled != mNotificationManager!!.areNotificationsEnabled() || alarmNotifsEnabled != getAlarmNotifsEnabled()) {
             val intent = Intent(
-                activity,
-                BatteryInfoActivity::class.java
+                activity, BatteryInfoActivity::class.java
             ).putExtra(BatteryInfoService.EXTRA_EDIT_ALARMS, true)
             startActivity(intent)
             requireActivity().finish()
@@ -215,10 +207,9 @@ class AlarmsFragment : Fragment() {
                 chan == null || chan.importance == NotificationManager.IMPORTANCE_NONE
         }
 
-        convertF = pfrag!!.settings.getBoolean(
-            SettingsContract.KEY_CONVERT_F,
-            pfrag!!.res.getBoolean(R.bool.default_convert_to_fahrenheit)
-        )
+        convertF = pfrag!!.settings.temperatureUnit(
+            pfrag!!.res.getString(R.string.default_temperature_unit)
+        ).convertToFahrenheit
 
         if (mCursor != null) mCursor!!.requery()
     }
@@ -241,12 +232,10 @@ class AlarmsFragment : Fragment() {
         val intent: Intent?
         if (item.itemId == R.id.menu_help) {
             val comp = ComponentName(
-                requireActivity().packageName,
-                SettingsHelpActivity::class.java.getName()
+                requireActivity().packageName, SettingsHelpActivity::class.java.getName()
             )
             intent = Intent().setComponent(comp).putExtra(
-                SettingsContract.EXTRA_SCREEN,
-                SettingsContract.KEY_ALARMS_SETTINGS
+                SettingsContract.EXTRA_SCREEN, SettingsContract.KEY_ALARMS_SETTINGS
             )
             startActivity(intent)
 
@@ -264,12 +253,10 @@ class AlarmsFragment : Fragment() {
 
             val childCount = mAlarmsList!!.childCount
             if (curIndex < childCount) requireNotNull(
-                mAlarmsList!!.getChildAt(curIndex)
-                    .findViewById<View?>(R.id.alarm_summary_box)
+                mAlarmsList!!.getChildAt(curIndex).findViewById<View?>(R.id.alarm_summary_box)
             ).requestFocus()
             else if (childCount > 0) requireNotNull(
-                mAlarmsList!!.getChildAt(curIndex - 1)
-                    .findViewById<View?>(R.id.alarm_summary_box)
+                mAlarmsList!!.getChildAt(curIndex - 1).findViewById<View?>(R.id.alarm_summary_box)
             ).requestFocus()
 
             return true
@@ -291,16 +278,14 @@ class AlarmsFragment : Fragment() {
         val toggle = view.findViewById<View?>(R.id.toggle) as CompoundButton
 
         val id = mCursor!!.getInt(mCursor!!.getColumnIndexOrThrow(AlarmDatabase.KEY_ID))
-        val type =
-            mCursor!!.getString(mCursor!!.getColumnIndexOrThrow(AlarmDatabase.KEY_TYPE))
+        val type = mCursor!!.getString(mCursor!!.getColumnIndexOrThrow(AlarmDatabase.KEY_TYPE))
         val threshold =
             mCursor!!.getString(mCursor!!.getColumnIndexOrThrow(AlarmDatabase.KEY_THRESHOLD))
         val enabled =
             (mCursor!!.getInt(mCursor!!.getColumnIndexOrThrow(AlarmDatabase.KEY_ENABLED)) == 1)
 
         var s = DisplayStrings.alarmTypesDisplay[DisplayStrings.indexOf(
-            DisplayStrings.alarmTypeValues,
-            type
+            DisplayStrings.alarmTypeValues, type
         )]
         if (type == "temp_drops" || type == "temp_rises") {
             s += " " + DisplayStrings.formatTemp(threshold.toInt(), convertF, false)
@@ -315,8 +300,7 @@ class AlarmsFragment : Fragment() {
 
         toggle.setOnCheckedChangeListener { _, isChecked ->
             alarms!!.setEnabled(
-                id,
-                isChecked
+                id, isChecked
             )
         }
 
@@ -338,12 +322,10 @@ class AlarmsFragment : Fragment() {
 
         summaryBox.setOnClickListener {
             val comp = ComponentName(
-                requireActivity().packageName,
-                AlarmEditActivity::class.java.getName()
+                requireActivity().packageName, AlarmEditActivity::class.java.getName()
             )
             startActivity(
-                Intent().setComponent(comp)
-                    .putExtra(AlarmEditFragment.EXTRA_ALARM_ID, id)
+                Intent().setComponent(comp).putExtra(AlarmEditFragment.EXTRA_ALARM_ID, id)
             )
         }
 

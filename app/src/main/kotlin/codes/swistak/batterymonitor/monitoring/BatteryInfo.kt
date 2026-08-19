@@ -171,8 +171,6 @@ internal class BatteryInfo {
             minutes = (seconds / 60) % 60
 
             if (hours >= 24) {
-                if (minutes >= 30) hours += 1
-
                 days = hours / 24
                 hours %= 24
             }

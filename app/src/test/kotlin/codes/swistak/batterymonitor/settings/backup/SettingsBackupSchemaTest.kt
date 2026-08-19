@@ -89,7 +89,6 @@ class SettingsBackupSchemaTest {
 
     @Test
     fun `version three includes remaining charge and explicit vital signs settings`() {
-        assertEquals(3, SettingsBackup.SCHEMA_VERSION)
         assertEquals(
             Boolean::class.java,
             Version3SettingsImporter.schema[SettingsContract.KEY_SHOW_REMAINING_CHARGE]
@@ -164,5 +163,22 @@ class SettingsBackupSchemaTest {
         assertSame(Version1SettingsImporter, settingsImporterForVersion(1))
         assertSame(Version2SettingsImporter, settingsImporterForVersion(2))
         assertSame(Version3SettingsImporter, settingsImporterForVersion(3))
+        assertSame(Version4SettingsImporter, settingsImporterForVersion(4))
+    }
+
+    @Test
+    fun `version four includes long duration format`() {
+        assertEquals(4, SettingsBackup.SCHEMA_VERSION)
+        assertEquals(
+            String::class.java,
+            Version4SettingsImporter.schema[SettingsContract.KEY_LONG_DURATION_FORMAT]
+        )
+        assertEquals(
+            String::class.java,
+            Version4SettingsImporter.schema[SettingsContract.KEY_TEMPERATURE_UNIT]
+        )
+        assertFalse(
+            Version4SettingsImporter.schema.containsKey(SettingsContract.LEGACY_KEY_CONVERT_F)
+        )
     }
 }

@@ -184,6 +184,7 @@
     <item quantity="other">%d 時間</item>
   </plurals>
 
+  <string name="duration_for">%1$s の間</string>
   <string name="unit_days">%d日</string>
   <string name="unit_hours">%d時間</string>
   <string name="unit_minutes">%d分</string>
@@ -245,7 +246,11 @@
   <string name="alarm_settings" formatted="false">アラーム</string>
   <string name="alarm_settings_help" formatted="false">お使いのバッテリー残量が一定のレベルに達したときに、 Battery Monitor があなたに通知することができます (例、バッテリーがフル充電された、 バッテリー残量が 20% を下回った)。</string>
   <string name="other_settings" formatted="false">一般</string>
-  <string name="other_settings_help" formatted="false">このページには、ログ、温度単位、自動起動などの一般的なアプリ設定があります。</string>
+  <string name="other_settings_help" formatted="false">アプリの全般的な動作と日常的な設定を構成します。</string>
+  <string name="units_formatting_settings" formatted="false">単位と表示形式</string>
+  <string name="units_formatting_settings_help" formatted="false">アプリ全体でバッテリーデータの表示に使用する単位と形式を選択します。</string>
+  <string name="advanced_settings" formatted="false">詳細設定</string>
+  <string name="advanced_settings_help" formatted="false">特殊な用途向けの追加コントロールで Battery Monitor を細かく調整します。</string>
 
   <string name="live_updates_onboarding_title">ステータスバーのバッテリーチップ</string>
   <string name="live_updates_onboarding_message_on">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できます。このオプションはデフォルトで有効です。\n
@@ -354,9 +359,10 @@
   <string name="pref_max_log_age_summary" formatted="false">次より古いログを削除します:</string>
   <string name="pref_max_log_age_help" formatted="false">ロギングが有効な場合、デバイスを接続するたびに、この値より古いログが削除されます。手動で消去するまでログを保持するには「削除しない」を選択してください。</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">温度の単位</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">華氏に変換する</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android はセ氏でバッテリ温度を報告します。バッテリー温度を華氏で 確認したい場合は、このオプションをチェックすると、アプリが変換します。</string>
+  <string name="pref_cat_units" formatted="false">単位</string>
+  <string name="pref_temperature_unit" formatted="false">温度の単位</string>
+  <string name="pref_cat_formatting" formatted="false">表示形式</string>
+  <string name="pref_temperature_unit_help" formatted="false">温度を摂氏または華氏のどちらで表示するかを選択します。</string>
 
   <string name="pref_cat_autostart" formatted="false">自動開始</string>
   <string name="pref_autostart_at_boot" formatted="false">起動時に自動開始</string>
@@ -383,6 +389,11 @@
 
   <string name="pref_cat_language" formatted="false">言語</string>
   <string name="pref_change_app_language" formatted="false">アプリの言語</string>
+  <string name="pref_change_app_language_help" formatted="false">Battery Monitor で使用する言語を選択します。システムのデフォルトでは端末の言語が使用されます。</string>
+  <string name="pref_long_duration_format" formatted="false">長時間の表示形式</string>
+  <string name="pref_long_duration_format_help" formatted="false">日と時間では24時間を超えると日を使用します（例: 1d 3h）。時間のみでは全期間を時間で表示します（例: 27h）。</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">日と時間</string>
+  <string name="long_duration_format_hours_only" formatted="false">時間のみ</string>
   <string name="pref_cat_advanced_stats" formatted="false">高度なバッテリー統計</string>
   <string name="pref_enable_advanced_stats" formatted="false">高度なバッテリー統計を表示</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">root または Shizuku が必要なバッテリー統計を含む詳細タブを追加します。</string>

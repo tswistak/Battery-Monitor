@@ -42,6 +42,7 @@ import codes.swistak.batterymonitor.app.PersistentFragment
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.temperatureUnit
 import java.text.DateFormat
 import java.util.Date
 
@@ -120,10 +121,9 @@ class LogViewFragment : ListFragment() {
 
         setHasOptionsMenu(true)
 
-        convertF = pFrag!!.settings.getBoolean(
-            SettingsContract.KEY_CONVERT_F,
-            pFrag!!.res.getBoolean(R.bool.default_convert_to_fahrenheit)
-        )
+        convertF = pFrag!!.settings.temperatureUnit(
+            pFrag!!.res.getString(R.string.default_temperature_unit)
+        ).convertToFahrenheit
         col = Col()
 
         pendingExportThrough = savedInstanceState?.getLong(STATE_EXPORT_THROUGH) ?: 0L
@@ -169,10 +169,9 @@ class LogViewFragment : ListFragment() {
 
         pFrag!!.setLVF(this)
 
-        convertF = pFrag!!.settings.getBoolean(
-            SettingsContract.KEY_CONVERT_F,
-            pFrag!!.res.getBoolean(R.bool.default_convert_to_fahrenheit)
-        )
+        convertF = pFrag!!.settings.temperatureUnit(
+            pFrag!!.res.getString(R.string.default_temperature_unit)
+        ).convertToFahrenheit
     }
 
     override fun onPause() {

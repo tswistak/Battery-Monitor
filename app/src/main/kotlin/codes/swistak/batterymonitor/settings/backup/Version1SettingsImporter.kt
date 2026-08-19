@@ -24,7 +24,7 @@ internal object Version1SettingsImporter : SettingsImporter {
         put(SettingsContract.KEY_MAX_LOG_AGE, String::class.java)
         put(SettingsContract.KEY_ICON_CONTENT, String::class.java)
         put(SettingsContract.KEY_SHOW_ICON_UNIT, Boolean::class.java)
-        put(SettingsContract.KEY_CONVERT_F, Boolean::class.java)
+        put(SettingsContract.LEGACY_KEY_CONVERT_F, Boolean::class.java)
         put(SettingsContract.KEY_NOTIFY_STATUS_DURATION, Boolean::class.java)
         put(SettingsContract.KEY_AUTOSTART, String::class.java)
         put(SettingsContract.KEY_PREDICTION_TYPE, String::class.java)

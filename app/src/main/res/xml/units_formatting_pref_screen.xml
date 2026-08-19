@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="@string/pref_cat_units">
+        <ListPreference
+            android:defaultValue="@string/default_temperature_unit"
+            android:entries="@array/temperature_unit_entries"
+            android:entryValues="@array/temperature_unit_values"
+            app:key="temperature_unit"
+            app:singleLineTitle="false"
+            app:title="@string/pref_temperature_unit" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/pref_cat_formatting">
+        <ListPreference
+            android:defaultValue="days_and_hours"
+            android:entries="@array/long_duration_format_entries"
+            android:entryValues="@array/long_duration_format_values"
+            app:key="long_duration_format"
+            app:singleLineTitle="false"
+            app:summary="@string/pref_long_duration_format_help"
+            app:title="@string/pref_long_duration_format" />
+    </PreferenceCategory>
+</PreferenceScreen>

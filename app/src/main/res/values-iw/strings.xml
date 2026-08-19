@@ -194,6 +194,7 @@
     <item quantity="other">למשך %d שעות</item>
   </plurals>
 
+  <string name="duration_for">במשך %1$s</string>
   <string name="unit_days">%dי</string>
   <string name="unit_hours">%dש</string>
   <string name="unit_minutes">%dד</string>
@@ -255,7 +256,11 @@
   <string name="alarm_settings" formatted="false">התראות</string>
   <string name="alarm_settings_help" formatted="false">אתה יכול לגרום ל-Battery Monitor להודיע לך מתי רמת הסוללה שלך מגיע למצב מסוים (למשל, הסוללה נטועה במלואה, רמת הסוללה יורדת מתחת ל-20%, ועוד רבים אחרים).</string>
   <string name="other_settings" formatted="false">כללי</string>
-  <string name="other_settings_help" formatted="false">בעמוד זה נמצאות ההגדרות הכלליות של היישום, כולל רישום, יחידת טמפרטורה, הפעלה אוטומטית ועוד.</string>
+  <string name="other_settings_help" formatted="false">הגדירו את ההתנהגות הכללית וההעדפות היומיומיות של היישום.</string>
+  <string name="units_formatting_settings" formatted="false">יחידות ועיצוב</string>
+  <string name="units_formatting_settings_help" formatted="false">בחרו את היחידות והתבניות להצגת נתוני הסוללה ברחבי היישום.</string>
+  <string name="advanced_settings" formatted="false">מתקדם</string>
+  <string name="advanced_settings_help" formatted="false">כוונו את Battery Monitor בעזרת פקדים נוספים לשימושים מיוחדים.</string>
 
   <string name="live_updates_onboarding_title">שבב סוללה בשורת המצב</string>
   <string name="live_updates_onboarding_message_on">המכשיר שלך תומך בהצגת אחוז הסוללה כשבב בשורת המצב. אפשרות זו מופעלת כברירת מחדל.\n
@@ -364,9 +369,10 @@
   <string name="pref_max_log_age_summary" formatted="false">מחק יומנים ישנים יותר מ:</string>
   <string name="pref_max_log_age_help" formatted="false">אם הרישום מופעל, בכל פעם שתחבר את המכשיר יימחקו רישומים ישנים יותר מערך זה. בחר לעולם לא למחוק כדי לשמור אותם עד שתמחק אותם ידנית.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">יחידת טמפרטורה</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">המר לפרנהייט</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">אנדרואיד מדווחת על טמפרטורת הסוללה במעלות צלזיוס. אם אתה מעדיף לראות את טמפרטורת הסוללה במעלות פרנהייט, סמן אפשרות זו, והאפליקציה תמיר עבורך.</string>
+  <string name="pref_cat_units" formatted="false">יחידות</string>
+  <string name="pref_temperature_unit" formatted="false">יחידת טמפרטורה</string>
+  <string name="pref_cat_formatting" formatted="false">עיצוב</string>
+  <string name="pref_temperature_unit_help" formatted="false">בחרו אם להציג טמפרטורות בצלזיוס או בפרנהייט.</string>
 
   <string name="pref_cat_autostart" formatted="false">הפעלה אוטומטית</string>
   <string name="pref_autostart_at_boot" formatted="false">הפעלה אוטומטית באתחול</string>
@@ -392,6 +398,11 @@
 
   <string name="pref_cat_language" formatted="false">שָׂפָה</string>
   <string name="pref_change_app_language" formatted="false">שפת האפליקציה</string>
+  <string name="pref_change_app_language_help" formatted="false">בחרו את השפה שבה Battery Monitor משתמש. ברירת המחדל של המערכת תואמת לשפת המכשיר.</string>
+  <string name="pref_long_duration_format" formatted="false">תבנית למשך זמן ארוך</string>
+  <string name="pref_long_duration_format_help" formatted="false">ימים ושעות משתמש בימים לאחר 24 שעות, למשל 1d 3h. שעות בלבד משאיר את כל משך הזמן בשעות, למשל 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">ימים ושעות</string>
+  <string name="long_duration_format_hours_only" formatted="false">שעות בלבד</string>
   <string name="pref_cat_advanced_stats" formatted="false">סטטיסטיקות סוללה מתקדמות</string>
   <string name="pref_enable_advanced_stats" formatted="false">הצג סטטיסטיקות סוללה מתקדמות</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">מוסיף לשונית מתקדמת עם סטטיסטיקות סוללה שדורשות root או Shizuku.</string>

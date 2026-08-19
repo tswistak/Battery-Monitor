@@ -10,38 +10,38 @@
 
         <TextView
             style="@style/help_text"
-            android:text="@string/other_settings_help" />
+            android:text="@string/units_formatting_settings_help" />
 
         <View style="@style/help_cat_pre_margin" />
 
         <TextView
             style="@style/help_cat"
-            android:text="@string/pref_cat_language" />
+            android:text="@string/pref_cat_units" />
 
         <View style="@style/help_cat_post_margin" />
 
         <TextView
             style="@style/help_pref"
-            android:text="@string/pref_change_app_language" />
+            android:text="@string/pref_temperature_unit" />
 
         <TextView
             style="@style/help_text"
-            android:text="@string/pref_change_app_language_help" />
+            android:text="@string/pref_temperature_unit_help" />
 
         <View style="@style/help_cat_pre_margin" />
 
         <TextView
             style="@style/help_cat"
-            android:text="@string/pref_cat_autostart" />
+            android:text="@string/pref_cat_formatting" />
 
         <View style="@style/help_cat_post_margin" />
 
         <TextView
             style="@style/help_pref"
-            android:text="@string/pref_autostart_at_boot" />
+            android:text="@string/pref_long_duration_format" />
 
         <TextView
             style="@style/help_text"
-            android:text="@string/pref_autostart_at_boot_help" />
+            android:text="@string/pref_long_duration_format_help" />
     </LinearLayout>
 </ScrollView>

@@ -186,6 +186,7 @@
     <item quantity="other">Για %d ώρες</item>
   </plurals>
 
+  <string name="duration_for">Για %1$s</string>
   <string name="unit_days">%dη</string>
   <string name="unit_hours">%dω</string>
   <string name="unit_minutes">%dλ</string>
@@ -247,7 +248,11 @@
   <string name="alarm_settings" formatted="false">Ειδοποιήσεις</string>
   <string name="alarm_settings_help" formatted="false">Μπορείτε να ρυθμίσετε τον Battery Monitor να σας ενημερώνει όταν το επίπεδο της μπαταρίας φτάνει σε ένα συγκεκριμένο επίπεδο (π.χ, όταν η μπαταρία φορτίζεται πλήρως ή όταν το επίπεδο της μπαταρίας πέφτει κάτω από 20%)</string>
   <string name="other_settings" formatted="false">Γενικά</string>
-  <string name="other_settings_help" formatted="false">Σε αυτή τη σελίδα βρίσκονται οι γενικές ρυθμίσεις της εφαρμογής, όπως η καταγραφή, η μονάδα θερμοκρασίας, η αυτόματη εκκίνηση και άλλα.</string>
+  <string name="other_settings_help" formatted="false">Ρυθμίστε τη γενική συμπεριφορά και τις καθημερινές προτιμήσεις της εφαρμογής.</string>
+  <string name="units_formatting_settings" formatted="false">Μονάδες και μορφοποίηση</string>
+  <string name="units_formatting_settings_help" formatted="false">Επιλέξτε τις μονάδες και τις μορφές εμφάνισης των δεδομένων μπαταρίας σε όλη την εφαρμογή.</string>
+  <string name="advanced_settings" formatted="false">Για προχωρημένους</string>
+  <string name="advanced_settings_help" formatted="false">Προσαρμόστε με ακρίβεια το Battery Monitor με πρόσθετα στοιχεία ελέγχου για εξειδικευμένες χρήσεις.</string>
 
   <string name="live_updates_onboarding_title">Τσιπ μπαταρίας γραμμής κατάστασης</string>
   <string name="live_updates_onboarding_message_on">Η συσκευή σας υποστηρίζει την εμφάνιση του ποσοστού μπαταρίας ως chip στη γραμμή κατάστασης. Αυτό είναι ενεργοποιημένο από προεπιλογή.\n
@@ -356,9 +361,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Διαγραφή λίστας δεδομένων παλαιότερης από:</string>
   <string name="pref_max_log_age_help" formatted="false">Αν η καταγραφή είναι ενεργή, κάθε φορά που συνδέετε τη συσκευή θα διαγράφονται οι καταγραφές που είναι παλαιότερες από αυτήν την επιλογή. Επιλέξτε Να μη διαγράφονται ποτέ για να τις κρατήσετε μέχρι να τις διαγράψετε χειροκίνητα.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Μονάδες Θερμοκρασίας</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Μετατροπή σε Φάρεναϊτ</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Το Android αναφέρει τη θερμοκρασία της μπαταρίας σε βαθμούς Κελσίου. Αν προτιμάτε να τη βλέπετε σε Φάρεναϊτ, επιλέξετε αυτήν την επιλογή και η εφαρμογή θα σας τη μετατρέπει.</string>
+  <string name="pref_cat_units" formatted="false">Μονάδες</string>
+  <string name="pref_temperature_unit" formatted="false">Μονάδα θερμοκρασίας</string>
+  <string name="pref_cat_formatting" formatted="false">Μορφοποίηση</string>
+  <string name="pref_temperature_unit_help" formatted="false">Επιλέξτε αν οι θερμοκρασίες εμφανίζονται σε Κελσίου ή Φάρεναϊτ.</string>
 
   <string name="pref_cat_autostart" formatted="false">Αυτόματη Ενεργοποίηση</string>
   <string name="pref_autostart_at_boot" formatted="false">Αυτόματη Ενεργοποίηση μετά από Επανεκκίνηση</string>
@@ -386,6 +392,11 @@
 
   <string name="pref_cat_language" formatted="false">Γλώσσα</string>
   <string name="pref_change_app_language" formatted="false">Γλώσσα εφαρμογής</string>
+  <string name="pref_change_app_language_help" formatted="false">Επιλέξτε τη γλώσσα που χρησιμοποιεί το Battery Monitor. Η προεπιλογή συστήματος ακολουθεί τη γλώσσα της συσκευής.</string>
+  <string name="pref_long_duration_format" formatted="false">Μορφή μεγάλης διάρκειας</string>
+  <string name="pref_long_duration_format_help" formatted="false">Η μορφή Ημέρες και ώρες χρησιμοποιεί ημέρες μετά τις 24 ώρες, π.χ. 1d 3h. Η επιλογή Μόνο ώρες διατηρεί όλη τη διάρκεια σε ώρες, π.χ. 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Ημέρες και ώρες</string>
+  <string name="long_duration_format_hours_only" formatted="false">Μόνο ώρες</string>
   <string name="pref_cat_advanced_stats" formatted="false">Προχωρημένα στατιστικά μπαταρίας</string>
   <string name="pref_enable_advanced_stats" formatted="false">Εμφάνιση προχωρημένων στατιστικών μπαταρίας</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Προσθέτει καρτέλα Για προχωρημένους με στατιστικά μπαταρίας που απαιτούν root ή Shizuku.</string>

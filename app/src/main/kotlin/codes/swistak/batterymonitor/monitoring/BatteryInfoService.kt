@@ -55,13 +55,16 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.common.DurationFormatter
 import codes.swistak.batterymonitor.logs.AutoLogExporter
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogResult
 import codes.swistak.batterymonitor.settings.ChipContentOrder
+import codes.swistak.batterymonitor.settings.LongDurationFormat
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
 import codes.swistak.batterymonitor.settings.VitalSignsOrder
+import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.widgets.BatteryInfoAppWidgetProvider
 import codes.swistak.batterymonitor.widgets.CircleWidgetBackground
 import codes.swistak.batterymonitor.widgets.FullAppWidgetProvider
@@ -828,12 +831,18 @@ class BatteryInfoService : Service() {
                     rv.setImageViewBitmap(R.id.battery_level_view, bl!!.getBitmap())
 
                     if (info.prediction.whatHappened == BatteryInfo.Prediction.NONE) {
-                        rv.setTextViewText(R.id.fully_charged, DisplayStrings.timeRemaining(info))
+                        rv.setTextViewText(
+                            R.id.fully_charged,
+                            DisplayStrings.timeRemaining(info, longDurationFormat())
+                        )
                         rv.setTextViewText(R.id.time_remaining, "")
                         rv.setTextViewText(R.id.until_what, "")
                     } else {
                         rv.setTextViewText(R.id.fully_charged, "")
-                        rv.setTextViewText(R.id.time_remaining, DisplayStrings.timeRemaining(info))
+                        rv.setTextViewText(
+                            R.id.time_remaining,
+                            DisplayStrings.timeRemaining(info, longDurationFormat())
+                        )
                         rv.setTextViewText(R.id.until_what, DisplayStrings.untilWhat(info))
                     }
                 }
@@ -926,9 +935,9 @@ class BatteryInfoService : Service() {
     }
 
     private fun roundedTemperatureValue(): Int {
-        val convertF = settings.getBoolean(
-            SettingsContract.KEY_CONVERT_F, res.getBoolean(R.bool.default_convert_to_fahrenheit)
-        )
+        val convertF = settings.temperatureUnit(
+            res.getString(R.string.default_temperature_unit)
+        ).convertToFahrenheit
         var temp = info!!.temperature / 10.0
         if (convertF) temp = temp * 9.0 / 5.0 + 32.0
         return temp.roundToInt()
@@ -955,10 +964,9 @@ class BatteryInfoService : Service() {
         val content = selectedContent[chipContentIndex % selectedContent.size]
         return when (content) {
             SettingsContract.CHIP_CONTENT_TEMPERATURE -> {
-                val convertF = settings.getBoolean(
-                    SettingsContract.KEY_CONVERT_F,
-                    res.getBoolean(R.bool.default_convert_to_fahrenheit)
-                )
+                val convertF = settings.temperatureUnit(
+                    res.getString(R.string.default_temperature_unit)
+                ).convertToFahrenheit
                 DisplayStrings.formatTemp(info!!.temperature, convertF, false)
             }
 
@@ -1065,24 +1073,28 @@ class BatteryInfoService : Service() {
         if (info!!.prediction.whatHappened == BatteryInfo.Prediction.NONE) {
             line = DisplayStrings.statuses[info!!.status]
         } else {
-            if (predicted.days > 0) line =
-                DisplayStrings.nDaysMHours(predicted.days, predicted.hours)
-            else if (predicted.hours > 0) {
+            val longDurationFormat = longDurationFormat()
+            val displayHours = predicted.days * 24 + predicted.hours
+            if (predicted.days > 0 && longDurationFormat == LongDurationFormat.DAYS_AND_HOURS) line =
+                DurationFormatter.formatRoundedDaysAndHours(
+                    res, predicted.days, predicted.hours, predicted.minutes
+                )
+            else if (displayHours > 0) {
                 val verbosity: String = settings.getString(
                     SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
                     res.getString(R.string.default_time_remaining_verbosity)
                 )!!
                 line = when (verbosity) {
                     "condensed" -> DisplayStrings.nHoursMMinutesMedium(
-                        predicted.hours, predicted.minutes
+                        displayHours, predicted.minutes
                     )
 
                     "verbose" -> DisplayStrings.nHoursMMinutesLong(
-                        predicted.hours, predicted.minutes
+                        displayHours, predicted.minutes
                     )
 
                     else -> DisplayStrings.nHoursLongMMinutesMedium(
-                        predicted.hours, predicted.minutes
+                        displayHours, predicted.minutes
                     )
                 }
             } else line = DisplayStrings.nMinutesLong(predicted.minutes)
@@ -1097,9 +1109,9 @@ class BatteryInfoService : Service() {
     }
 
     private fun vitalStatsLine(): String {
-        val convertF = settings.getBoolean(
-            SettingsContract.KEY_CONVERT_F, res.getBoolean(R.bool.default_convert_to_fahrenheit)
-        )
+        val convertF = settings.temperatureUnit(
+            res.getString(R.string.default_temperature_unit)
+        ).convertToFahrenheit
 
         val values = mutableListOf<String>()
         for (vitalSign in vitalSignsOrder) {
@@ -1138,10 +1150,10 @@ class BatteryInfoService : Service() {
                 }
 
                 SettingsContract.VITAL_SIGN_STATUS_DURATION -> {
-                    val statusDurationHours = (now - info!!.lastStatusCtm) / (60 * 60 * 1000f)
-                    val durationHours = statusDurationHours.toInt()
-                    val durationMinutes = ((statusDurationHours * 60) % 60).toInt()
-                    values += DisplayStrings.nHoursMMinutesShort(durationHours, durationMinutes)
+                    val durationMinutes = ((now - info!!.lastStatusCtm) / (60 * 1000)).toInt()
+                    values += DurationFormatter.formatShort(
+                        res, durationMinutes, longDurationFormat()
+                    )
                 }
             }
         }
@@ -1154,13 +1166,22 @@ class BatteryInfoService : Service() {
         val statusDurationHours = ((statusDuration + (1000 * 60 * 30)) / (1000 * 60 * 60)).toInt()
         var line = DisplayStrings.statuses[info!!.status] + " "
 
-        line += if (statusDuration < 1000 * 60 * 60) DisplayStrings.since + " " + DisplayStrings.formatTime(
-            this, Date(info!!.lastStatusCtm)
-        )
-        else DisplayStrings.forNHours(statusDurationHours)
+        line += if (statusDuration < 1000 * 60 * 60) {
+            DisplayStrings.since + " " + DisplayStrings.formatTime(
+                this, Date(info!!.lastStatusCtm)
+            )
+        } else {
+            DurationFormatter.formatRoundedHours(
+                res, statusDurationHours, longDurationFormat()
+            )
+        }
 
         return line
     }
+
+    private fun longDurationFormat(): LongDurationFormat = LongDurationFormat.fromPreference(
+        settings.getString(SettingsContract.KEY_LONG_DURATION_FORMAT, null)
+    )
 
     private fun iconFor(): Int {
         if (shouldRequestLiveUpdateChip()) {
@@ -1335,9 +1356,9 @@ class BatteryInfoService : Service() {
             info!!.temperature, spService.getInt(KEY_PREVIOUS_TEMP, 1)
         )
         if (c != null) {
-            val convertF = settings.getBoolean(
-                SettingsContract.KEY_CONVERT_F, res.getBoolean(R.bool.default_convert_to_fahrenheit)
-            )
+            val convertF = settings.temperatureUnit(
+                res.getString(R.string.default_temperature_unit)
+            ).convertToFahrenheit
 
             spsEditor!!.putInt(KEY_PREVIOUS_TEMP, info!!.temperature)
             nb = parseAlarmCursor(c)
@@ -1358,9 +1379,9 @@ class BatteryInfoService : Service() {
             info!!.temperature, spService.getInt(KEY_PREVIOUS_TEMP, 1)
         )
         if (c != null) {
-            val convertF = settings.getBoolean(
-                SettingsContract.KEY_CONVERT_F, res.getBoolean(R.bool.default_convert_to_fahrenheit)
-            )
+            val convertF = settings.temperatureUnit(
+                res.getString(R.string.default_temperature_unit)
+            ).convertToFahrenheit
 
             spsEditor!!.putInt(KEY_PREVIOUS_TEMP, info!!.temperature)
             nb = parseAlarmCursor(c)

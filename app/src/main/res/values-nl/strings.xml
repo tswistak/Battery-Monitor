@@ -188,6 +188,7 @@
     <item quantity="other">(%d uur)</item>
   </plurals>
 
+  <string name="duration_for">Gedurende %1$s</string>
   <string name="unit_days">%dd</string>
   <string name="unit_hours">%du</string>
   <string name="unit_minutes">%dm</string>
@@ -249,7 +250,11 @@
   <string name="alarm_settings" formatted="false">Alarmen</string>
   <string name="alarm_settings_help" formatted="false">Je kunt een melding ontvangen als je batterijniveau onder een bepaald punt komt.</string>
   <string name="other_settings" formatted="false">Algemeen</string>
-  <string name="other_settings_help" formatted="false">Op deze pagina staan algemene appinstellingen, waaronder logboekregistratie, temperatuureenheid, automatisch starten en meer.</string>
+  <string name="other_settings_help" formatted="false">Configureer het algemene gedrag en de dagelijkse voorkeuren van de app.</string>
+  <string name="units_formatting_settings" formatted="false">Eenheden en opmaak</string>
+  <string name="units_formatting_settings_help" formatted="false">Kies de eenheden en indelingen waarmee batterijgegevens in de hele app worden weergegeven.</string>
+  <string name="advanced_settings" formatted="false">Geavanceerd</string>
+  <string name="advanced_settings_help" formatted="false">Stem Battery Monitor nauwkeurig af met extra bediening voor gespecialiseerde toepassingen.</string>
 
   <string name="live_updates_onboarding_title">Statusbalk batterijchip</string>
   <string name="live_updates_onboarding_message_on">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk. Deze optie staat standaard aan.\n
@@ -358,9 +363,10 @@
   <string name="pref_max_log_age_summary" formatted="false">Verwijder logboeken ouder dan:</string>
   <string name="pref_max_log_age_help" formatted="false">Als logboekregistratie is ingeschakeld, worden telkens wanneer je het apparaat aansluit logs verwijderd die ouder zijn dan deze waarde. Kies Nooit verwijderen om logs te bewaren totdat je ze handmatig wist.</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">Temperatuur</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">Converteren naar Fahrenheit</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android geeft de batterijtemperatuur in graden Celsius. Selecteer deze optie om Fahrenheit te gebruiken.</string>
+  <string name="pref_cat_units" formatted="false">Eenheden</string>
+  <string name="pref_temperature_unit" formatted="false">Temperatuureenheid</string>
+  <string name="pref_cat_formatting" formatted="false">Opmaak</string>
+  <string name="pref_temperature_unit_help" formatted="false">Kies of temperaturen in Celsius of Fahrenheit worden weergegeven.</string>
 
   <string name="pref_cat_autostart" formatted="false">Automatisch starten</string>
   <string name="pref_autostart_at_boot" formatted="false">Automatisch starten bij inschakelen</string>
@@ -390,6 +396,11 @@
 
   <string name="pref_cat_language" formatted="false">Taal</string>
   <string name="pref_change_app_language" formatted="false">App-taal</string>
+  <string name="pref_change_app_language_help" formatted="false">Selecteer de taal die Battery Monitor gebruikt. De systeemstandaard volgt de taal van je apparaat.</string>
+  <string name="pref_long_duration_format" formatted="false">Opmaak van lange duur</string>
+  <string name="pref_long_duration_format_help" formatted="false">Dagen en uren gebruikt dagen na 24 uur, bijvoorbeeld 1d 3h. Alleen uren houdt de volledige duur in uren, bijvoorbeeld 27h.</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">Dagen en uren</string>
+  <string name="long_duration_format_hours_only" formatted="false">Alleen uren</string>
   <string name="pref_cat_advanced_stats" formatted="false">Geavanceerde batterijstatistieken</string>
   <string name="pref_enable_advanced_stats" formatted="false">Geavanceerde batterijstatistieken tonen</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">Voegt een tabblad Geavanceerd toe met batterijstatistieken waarvoor root of Shizuku nodig is.</string>

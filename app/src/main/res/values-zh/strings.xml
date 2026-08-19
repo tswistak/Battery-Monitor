@@ -183,6 +183,7 @@
     <item quantity="other">已%d小時</item>
   </plurals>
 
+  <string name="duration_for">持續 %1$s</string>
   <string name="unit_days">%d天</string>
   <string name="unit_hours">%d小時</string>
   <string name="unit_minutes">%d分</string>
@@ -244,7 +245,11 @@
   <string name="alarm_settings" formatted="false">警報</string>
   <string name="alarm_settings_help" formatted="false">您可以讓Battery Monitor在電池電量不足時通知您 達到一定條件（例如，電池充滿電， 電池電量低於 20% 等等）。</string>
   <string name="other_settings" formatted="false">一般</string>
-  <string name="other_settings_help" formatted="false">此頁面包含應用程式的一般設定，包括記錄、溫度單位、自動啟動等。</string>
+  <string name="other_settings_help" formatted="false">設定應用程式的一般行為與日常偏好。</string>
+  <string name="units_formatting_settings" formatted="false">單位與格式</string>
+  <string name="units_formatting_settings_help" formatted="false">選擇整個應用程式中顯示電池資料所用的單位與格式。</string>
+  <string name="advanced_settings" formatted="false">進階</string>
+  <string name="advanced_settings_help" formatted="false">使用適合專門用途的額外控制來微調 Battery Monitor。</string>
 
   <string name="live_updates_onboarding_title">狀態列電池晶片</string>
   <string name="live_updates_onboarding_message_on">您的装置支援在状态列中以芯片形式显示电池百分比。此选项默认已启用。\n
@@ -353,9 +358,10 @@
   <string name="pref_max_log_age_summary" formatted="false">刪除早於以下時間的記錄：</string>
   <string name="pref_max_log_age_help" formatted="false">啟用歷史記錄後，應用會在裝置接入電源時清理超過所選保留時間的記錄；選擇「永不刪除」則會保留記錄，直到您手動清除。</string>
 
-  <string name="pref_cat_temperature_unit" formatted="false">溫度顯示單位</string>
-  <string name="pref_convert_to_fahrenheit" formatted="false">確認切換到華氏單位？</string>
-  <string name="pref_convert_to_fahrenheit_help" formatted="false">Android系統以攝氏單位報告電池溫度信息。若您想使溫度信息以華氏單位顯示，請勾選此項。</string>
+  <string name="pref_cat_units" formatted="false">單位</string>
+  <string name="pref_temperature_unit" formatted="false">溫度顯示單位</string>
+  <string name="pref_cat_formatting" formatted="false">格式</string>
+  <string name="pref_temperature_unit_help" formatted="false">選擇以攝氏或華氏顯示溫度。</string>
 
   <string name="pref_cat_autostart" formatted="false">自動啟動</string>
   <string name="pref_autostart_at_boot" formatted="false">開機自動啟動方式</string>
@@ -383,6 +389,11 @@
 
   <string name="pref_cat_language" formatted="false">語言</string>
   <string name="pref_change_app_language" formatted="false">應用程式語言</string>
+  <string name="pref_change_app_language_help" formatted="false">選擇 Battery Monitor 使用的語言。系統預設值會跟隨裝置語言。</string>
+  <string name="pref_long_duration_format" formatted="false">長時間格式</string>
+  <string name="pref_long_duration_format_help" formatted="false">天與小時會在超過 24 小時後使用天數，例如 1d 3h。僅小時會以小時保留完整時間，例如 27h。</string>
+  <string name="long_duration_format_days_and_hours" formatted="false">天與小時</string>
+  <string name="long_duration_format_hours_only" formatted="false">僅小時</string>
   <string name="pref_cat_advanced_stats" formatted="false">高级电池统计</string>
   <string name="pref_enable_advanced_stats" formatted="false">显示高级电池统计</string>
   <string name="pref_enable_advanced_stats_summary" formatted="false">添加“高级”标签页，并显示需要 root 或 Shizuku 的电池统计。</string>
