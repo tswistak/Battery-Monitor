@@ -8,6 +8,12 @@
         style="@style/help_ll"
         android:orientation="vertical">
 
+        <View style="@style/help_cat_pre_margin" />
+
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/other_settings" />
+
         <TextView
             style="@style/help_text"
             android:text="@string/other_settings_help" />

@@ -252,11 +252,14 @@
   <string name="alarm_settings" formatted="false">Alarmes</string>
   <string name="alarm_settings_help" formatted="false">Vous pouvez configurer Battery Monitor pour qu\'il vous informe dès que la batterie a atteint un certain point (exemple : La batterie est complètement chargée, le niveau de charge a atteint 20%, etc...).</string>
   <string name="other_settings" formatted="false">Général</string>
-  <string name="other_settings_help" formatted="false">Configurez le comportement général et les préférences courantes de l’application.</string>
+  <string name="other_settings_summary" formatted="false">Configurez le comportement général et les préférences courantes de l’application.</string>
+  <string name="other_settings_help" formatted="false">Utilisez ces réglages pour adapter Battery Monitor à votre usage quotidien. Ils concernent le comportement général et les préférences qui permettent à l’application de s’intégrer naturellement à votre façon d’utiliser l’appareil.</string>
   <string name="units_formatting_settings" formatted="false">Unités et formatage</string>
-  <string name="units_formatting_settings_help" formatted="false">Choisissez les unités et les formats utilisés pour afficher les données de la batterie dans toute l’application.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Choisissez les unités et les formats utilisés pour afficher les données de la batterie dans toute l’application.</string>
+  <string name="units_formatting_settings_help" formatted="false">Utilisez ces réglages pour rendre les informations sur la batterie familières et faciles à lire. Vos choix sont appliqués de manière cohérente partout où les valeurs et durées correspondantes apparaissent dans Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Avancé</string>
-  <string name="advanced_settings_help" formatted="false">Affinez Battery Monitor avec des commandes supplémentaires pour les usages spécialisés.</string>
+  <string name="advanced_settings_summary" formatted="false">Affinez Battery Monitor avec des commandes supplémentaires pour les usages spécialisés.</string>
+  <string name="advanced_settings_help" formatted="false">Utilisez ces réglages lorsque vous souhaitez contrôler davantage le fonctionnement de Battery Monitor au-delà des préférences courantes. Les valeurs par défaut conviennent à la plupart des utilisateurs, tandis que des ajustements supplémentaires permettent de mieux adapter l’application à des besoins de suivi particuliers.</string>
 
   <string name="live_updates_onboarding_title">Puce batterie de la barre d’état</string>
   <string name="live_updates_onboarding_message_on">Votre appareil prend en charge l\'affichage du pourcentage de batterie sous forme de puce dans la barre d\'état. Cette option est activée par défaut.\n

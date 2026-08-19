@@ -288,11 +288,14 @@
   <string name="alarm_settings" formatted="false">المنبهات</string>
   <string name="alarm_settings_help" formatted="false">يمكن للمؤشر بإعلامك عند مستوى البطارية تصل إلى نقطة معينة (على سبيل المثال، يصبح البطارية مشحونة بالكامل، وانخفاض مستوى البطارية أقل من 20٪)</string>
   <string name="other_settings" formatted="false">عام</string>
-  <string name="other_settings_help" formatted="false">اضبط السلوك العام للتطبيق وتفضيلاته اليومية.</string>
+  <string name="other_settings_summary" formatted="false">اضبط السلوك العام للتطبيق وتفضيلاته اليومية.</string>
+  <string name="other_settings_help" formatted="false">استخدم هذه الإعدادات لتكييف Battery Monitor مع استخدامك اليومي. وهي تشمل السلوك العام للتطبيق والتفضيلات التي تساعده على الانسجام بشكل طبيعي مع طريقة استخدامك لجهازك.</string>
   <string name="units_formatting_settings" formatted="false">الوحدات والتنسيق</string>
-  <string name="units_formatting_settings_help" formatted="false">اختر الوحدات والتنسيقات المستخدمة لعرض بيانات البطارية في التطبيق.</string>
+  <string name="units_formatting_settings_summary" formatted="false">اختر الوحدات والتنسيقات المستخدمة لعرض بيانات البطارية في التطبيق.</string>
+  <string name="units_formatting_settings_help" formatted="false">استخدم هذه الإعدادات لجعل معلومات البطارية مألوفة وسهلة القراءة. تُطبّق اختياراتك بصورة متسقة أينما ظهرت القيم والمدد ذات الصلة في Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">متقدم</string>
-  <string name="advanced_settings_help" formatted="false">خصّص Battery Monitor بدقة باستخدام عناصر تحكم إضافية لحالات الاستخدام المتخصصة.</string>
+  <string name="advanced_settings_summary" formatted="false">خصّص Battery Monitor بدقة باستخدام عناصر تحكم إضافية لحالات الاستخدام المتخصصة.</string>
+  <string name="advanced_settings_help" formatted="false">استخدم هذه الإعدادات عندما تريد تحكمًا أكبر في عمل Battery Monitor يتجاوز التفضيلات اليومية. تناسب القيم الافتراضية معظم المستخدمين، بينما تساعد التعديلات الإضافية على تكييف التطبيق مع احتياجات مراقبة أكثر تحديدًا.</string>
 
   <string name="live_updates_onboarding_title">شريحة بطارية شريط الحالة</string>
   <string name="live_updates_onboarding_message_on">جهازك يدعم عرض نسبة البطارية كشريحة في شريط الحالة. هذا الخيار مفعّل افتراضيًا.\n

@@ -268,11 +268,14 @@
   <string name="alarm_settings" formatted="false">Aliarmai</string>
   <string name="alarm_settings_help" formatted="false">Jūs galite nusistatyti Baterijos Indikatoriaus perspėjimą, kai baterijos lygis pasiekia tam tikrą tašką (pvz.: baterija pilnai įkraunama, baterijos lygtis nukrenta žemiau 20% ir pan.).</string>
   <string name="other_settings" formatted="false">Bendrieji</string>
-  <string name="other_settings_help" formatted="false">Nustatykite bendrą programėlės veikimą ir kasdienes nuostatas.</string>
+  <string name="other_settings_summary" formatted="false">Nustatykite bendrą programėlės veikimą ir kasdienes nuostatas.</string>
+  <string name="other_settings_help" formatted="false">Naudokite šiuos nustatymus, kad pritaikytumėte „Battery Monitor“ kasdieniam naudojimui. Jie apima bendrą programėlės veikimą ir nuostatas, padedančias jai natūraliai derėti prie jūsų įrenginio naudojimo būdo.</string>
   <string name="units_formatting_settings" formatted="false">Vienetai ir formatavimas</string>
-  <string name="units_formatting_settings_help" formatted="false">Pasirinkite visoje programėlėje naudojamus akumuliatoriaus duomenų vienetus ir formatus.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Pasirinkite visoje programėlėje naudojamus akumuliatoriaus duomenų vienetus ir formatus.</string>
+  <string name="units_formatting_settings_help" formatted="false">Naudokite šiuos nustatymus, kad akumuliatoriaus informacija būtų įprasta ir lengvai skaitoma. Jūsų pasirinkimai nuosekliai taikomi visur, kur „Battery Monitor“ rodomos susijusios reikšmės ir trukmės.</string>
   <string name="advanced_settings" formatted="false">Išplėstiniai</string>
-  <string name="advanced_settings_help" formatted="false">Tiksliau pritaikykite „Battery Monitor“ papildomais valdikliais specializuotoms reikmėms.</string>
+  <string name="advanced_settings_summary" formatted="false">Tiksliau pritaikykite „Battery Monitor“ papildomais valdikliais specializuotoms reikmėms.</string>
+  <string name="advanced_settings_help" formatted="false">Naudokite šiuos nustatymus, kai norite labiau valdyti „Battery Monitor“ veikimą nei leidžia kasdienės nuostatos. Numatytieji nustatymai tinka daugumai naudotojų, o papildomi pakeitimai gali geriau pritaikyti programėlę konkretiems stebėjimo poreikiams.</string>
 
   <string name="live_updates_onboarding_title">Būsenos juostos akumuliatoriaus lustas</string>
   <string name="live_updates_onboarding_message_on">Jūsų įrenginys palaiko akumuliatoriaus procento rodymą kaip lustą būsenos juostoje. Ši parinktis pagal numatytuosius nustatymus įjungta.\n

@@ -236,11 +236,14 @@
   <string name="alarm_settings" formatted="false">闹钟</string>
   <string name="alarm_settings_help" formatted="false">您可以让 Battery Monitor 在电池达到某个条件时提醒您，例如充满电、电量低于 20% 等。</string>
   <string name="other_settings" formatted="false">常规</string>
-  <string name="other_settings_help" formatted="false">配置应用的常规行为和日常偏好。</string>
+  <string name="other_settings_summary" formatted="false">配置应用的常规行为和日常偏好。</string>
+  <string name="other_settings_help" formatted="false">使用这些设置让 Battery Monitor 更适合您的日常使用方式。它们涵盖应用的常规行为和偏好，帮助应用自然融入您使用设备的习惯。</string>
   <string name="units_formatting_settings" formatted="false">单位和格式</string>
-  <string name="units_formatting_settings_help" formatted="false">选择整个应用中显示电池数据所用的单位和格式。</string>
+  <string name="units_formatting_settings_summary" formatted="false">选择整个应用中显示电池数据所用的单位和格式。</string>
+  <string name="units_formatting_settings_help" formatted="false">使用这些设置让电池信息保持熟悉且易于阅读。您的选择会一致应用于 Battery Monitor 中显示相关数值和时长的所有位置。</string>
   <string name="advanced_settings" formatted="false">高级</string>
-  <string name="advanced_settings_help" formatted="false">使用面向专门用途的附加控制来微调 Battery Monitor。</string>
+  <string name="advanced_settings_summary" formatted="false">使用面向专门用途的附加控制来微调 Battery Monitor。</string>
+  <string name="advanced_settings_help" formatted="false">当您希望对 Battery Monitor 的工作方式进行超出日常偏好的更多控制时，请使用这些设置。默认设置适合大多数用户，而额外调整可帮助应用更好地满足特定的监控需求。</string>
 
   <string name="live_updates_onboarding_title">状态栏电池芯片</string>
   <string name="live_updates_onboarding_message_on">您的设备支持在状态栏中以芯片形式显示电池百分比。此选项默认已启用。\n

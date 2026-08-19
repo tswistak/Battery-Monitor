@@ -246,11 +246,14 @@
   <string name="alarm_settings" formatted="false">アラーム</string>
   <string name="alarm_settings_help" formatted="false">お使いのバッテリー残量が一定のレベルに達したときに、 Battery Monitor があなたに通知することができます (例、バッテリーがフル充電された、 バッテリー残量が 20% を下回った)。</string>
   <string name="other_settings" formatted="false">一般</string>
-  <string name="other_settings_help" formatted="false">アプリの全般的な動作と日常的な設定を構成します。</string>
+  <string name="other_settings_summary" formatted="false">アプリの全般的な動作と日常的な設定を構成します。</string>
+  <string name="other_settings_help" formatted="false">Battery Monitor を日常の使い方に合わせるための設定です。アプリの全般的な動作や、端末の使い方に自然になじませるための設定を扱います。</string>
   <string name="units_formatting_settings" formatted="false">単位と表示形式</string>
-  <string name="units_formatting_settings_help" formatted="false">アプリ全体でバッテリーデータの表示に使用する単位と形式を選択します。</string>
+  <string name="units_formatting_settings_summary" formatted="false">アプリ全体でバッテリーデータの表示に使用する単位と形式を選択します。</string>
+  <string name="units_formatting_settings_help" formatted="false">バッテリー情報を見慣れた読みやすい形にするための設定です。選択内容は、Battery Monitor で関連する値や期間が表示されるすべての場所に一貫して適用されます。</string>
   <string name="advanced_settings" formatted="false">詳細設定</string>
-  <string name="advanced_settings_help" formatted="false">特殊な用途向けの追加コントロールで Battery Monitor を細かく調整します。</string>
+  <string name="advanced_settings_summary" formatted="false">特殊な用途向けの追加コントロールで Battery Monitor を細かく調整します。</string>
+  <string name="advanced_settings_help" formatted="false">日常的な設定よりも Battery Monitor の動作を細かく制御したい場合に使用します。初期設定はほとんどのユーザーに適していますが、追加の調整によって特定の監視ニーズに合わせることができます。</string>
 
   <string name="live_updates_onboarding_title">ステータスバーのバッテリーチップ</string>
   <string name="live_updates_onboarding_message_on">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できます。このオプションはデフォルトで有効です。\n

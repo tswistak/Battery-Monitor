@@ -248,11 +248,14 @@
   <string name="alarm_settings" formatted="false">Alarme</string>
   <string name="alarm_settings_help" formatted="false">Battery Monitor kann Sie benachrichtigen, wenn ein bestimmter Akkuzustand erreicht wird (z. B. vollständig geladen, unter 20% usw.).</string>
   <string name="other_settings" formatted="false">Allgemein</string>
-  <string name="other_settings_help" formatted="false">Konfigurieren Sie das allgemeine Verhalten und die alltäglichen Einstellungen der App.</string>
+  <string name="other_settings_summary" formatted="false">Konfigurieren Sie das allgemeine Verhalten und die alltäglichen Einstellungen der App.</string>
+  <string name="other_settings_help" formatted="false">Mit diesen Einstellungen passen Sie Battery Monitor an Ihre tägliche Nutzung an. Sie betreffen das allgemeine Verhalten und Präferenzen, damit sich die App natürlich in die Nutzung Ihres Geräts einfügt.</string>
   <string name="units_formatting_settings" formatted="false">Einheiten und Formatierung</string>
-  <string name="units_formatting_settings_help" formatted="false">Wählen Sie die Einheiten und Formate zur Anzeige von Akkudaten in der gesamten App.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Wählen Sie die Einheiten und Formate zur Anzeige von Akkudaten in der gesamten App.</string>
+  <string name="units_formatting_settings_help" formatted="false">Mit diesen Einstellungen bleiben Akkuinformationen vertraut und leicht lesbar. Ihre Auswahl wird überall einheitlich verwendet, wo die entsprechenden Werte und Zeitangaben in Battery Monitor erscheinen.</string>
   <string name="advanced_settings" formatted="false">Erweitert</string>
-  <string name="advanced_settings_help" formatted="false">Passen Sie Battery Monitor mit zusätzlichen Steuerelementen für spezielle Anwendungsfälle an.</string>
+  <string name="advanced_settings_summary" formatted="false">Passen Sie Battery Monitor mit zusätzlichen Steuerelementen für spezielle Anwendungsfälle an.</string>
+  <string name="advanced_settings_help" formatted="false">Verwenden Sie diese Einstellungen, wenn Sie über die alltäglichen Präferenzen hinaus mehr Kontrolle über Battery Monitor wünschen. Die Standardwerte eignen sich für die meisten Nutzer, zusätzliche Anpassungen können die App jedoch besser auf besondere Überwachungsanforderungen abstimmen.</string>
 
   <string name="live_updates_onboarding_title">Akku-Chip in der Statusleiste</string>
   <string name="live_updates_onboarding_message_on">Ihr Gerät unterstützt die Anzeige des Batteriestands als Chip in der Statusleiste. Diese Option ist standardmäßig aktiviert.\n

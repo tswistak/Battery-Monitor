@@ -246,11 +246,14 @@
   <string name="alarm_settings" formatted="false">Alarmlar</string>
   <string name="alarm_settings_help" formatted="false">Pil seviyesi belirli bir duruma geldiğinde Battery Monitor sizi bilgilendirebilir.</string>
   <string name="other_settings" formatted="false">Genel</string>
-  <string name="other_settings_help" formatted="false">Uygulamanın genel davranışını ve günlük tercihlerini yapılandırın.</string>
+  <string name="other_settings_summary" formatted="false">Uygulamanın genel davranışını ve günlük tercihlerini yapılandırın.</string>
+  <string name="other_settings_help" formatted="false">Battery Monitor’ü günlük kullanımınıza uyarlamak için bu ayarları kullanın. Bunlar, uygulamanın cihazınızı kullanma biçiminize doğal olarak uyum sağlamasına yardımcı olan genel davranış ve tercihleri kapsar.</string>
   <string name="units_formatting_settings" formatted="false">Birimler ve biçimlendirme</string>
-  <string name="units_formatting_settings_help" formatted="false">Uygulama genelinde pil verilerini göstermek için kullanılan birimleri ve biçimleri seçin.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Uygulama genelinde pil verilerini göstermek için kullanılan birimleri ve biçimleri seçin.</string>
+  <string name="units_formatting_settings_help" formatted="false">Pil bilgilerinin tanıdık ve kolay okunur kalması için bu ayarları kullanın. Seçimleriniz, ilgili değerlerin ve sürelerin Battery Monitor’de göründüğü her yerde tutarlı biçimde uygulanır.</string>
   <string name="advanced_settings" formatted="false">Gelişmiş</string>
-  <string name="advanced_settings_help" formatted="false">Battery Monitor’ü özel kullanım alanları için ek kontrollerle ayrıntılı olarak ayarlayın.</string>
+  <string name="advanced_settings_summary" formatted="false">Battery Monitor’ü özel kullanım alanları için ek kontrollerle ayrıntılı olarak ayarlayın.</string>
+  <string name="advanced_settings_help" formatted="false">Battery Monitor’ün çalışma biçimi üzerinde günlük tercihlerin ötesinde daha fazla kontrol istediğinizde bu ayarları kullanın. Varsayılanlar çoğu kullanıcı için uygundur; ek düzenlemeler ise uygulamayı belirli izleme ihtiyaçlarına daha iyi uyarlayabilir.</string>
 
   <string name="live_updates_onboarding_title">Durum Çubuğu Pil Çipi</string>
   <string name="live_updates_onboarding_message_on">Cihazınız, pil yüzdesini durum çubuğunda bir çip olarak göstermeyi destekler. Bu seçenek varsayılan olarak etkindir.\n

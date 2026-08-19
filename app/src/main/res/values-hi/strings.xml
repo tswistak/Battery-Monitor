@@ -250,11 +250,14 @@
   <string name="alarm_settings" formatted="false">एलार्म</string>
   <string name="alarm_settings_help" formatted="false">आपकी बैटरी का स्तर होने पर आप बैटरी मॉनिटर आपको सूचित कर सकते हैं एक निश्चित स्थिति तक पहुँच जाता है (उदाहरण के लिए, बैटरी पूरी तरह चार्ज हो जाती है, बैटरी का स्तर 20% से नीचे चला जाता है, और कई अन्य)।</string>
   <string name="other_settings" formatted="false">सामान्य</string>
-  <string name="other_settings_help" formatted="false">ऐप के सामान्य व्यवहार और रोज़मर्रा की प्राथमिकताएँ कॉन्फ़िगर करें।</string>
+  <string name="other_settings_summary" formatted="false">ऐप के सामान्य व्यवहार और रोज़मर्रा की प्राथमिकताएँ कॉन्फ़िगर करें।</string>
+  <string name="other_settings_help" formatted="false">Battery Monitor को अपने रोज़मर्रा के उपयोग के अनुसार ढालने के लिए इन सेटिंग्स का उपयोग करें। इनमें ऐप का सामान्य व्यवहार और वे प्राथमिकताएँ शामिल हैं जो ऐप को आपके डिवाइस उपयोग के तरीके के साथ सहज रूप से काम करने में मदद करती हैं।</string>
   <string name="units_formatting_settings" formatted="false">इकाइयाँ और फ़ॉर्मेटिंग</string>
-  <string name="units_formatting_settings_help" formatted="false">पूरे ऐप में बैटरी डेटा दिखाने के लिए इस्तेमाल की जाने वाली इकाइयाँ और फ़ॉर्मेट चुनें।</string>
+  <string name="units_formatting_settings_summary" formatted="false">पूरे ऐप में बैटरी डेटा दिखाने के लिए इस्तेमाल की जाने वाली इकाइयाँ और फ़ॉर्मेट चुनें।</string>
+  <string name="units_formatting_settings_help" formatted="false">बैटरी की जानकारी को परिचित और आसानी से पढ़ने योग्य बनाए रखने के लिए इन सेटिंग्स का उपयोग करें। आपके विकल्प Battery Monitor में संबंधित मान और अवधियाँ दिखाई देने वाली हर जगह एक समान रूप से लागू होते हैं।</string>
   <string name="advanced_settings" formatted="false">उन्नत</string>
-  <string name="advanced_settings_help" formatted="false">विशेष उपयोगों के लिए अतिरिक्त नियंत्रणों से Battery Monitor को बेहतर ढंग से समायोजित करें।</string>
+  <string name="advanced_settings_summary" formatted="false">विशेष उपयोगों के लिए अतिरिक्त नियंत्रणों से Battery Monitor को बेहतर ढंग से समायोजित करें।</string>
+  <string name="advanced_settings_help" formatted="false">जब आप रोज़मर्रा की प्राथमिकताओं से आगे Battery Monitor के काम करने के तरीके पर अधिक नियंत्रण चाहते हैं, तब इन सेटिंग्स का उपयोग करें। डिफ़ॉल्ट अधिकांश उपयोगकर्ताओं के लिए उपयुक्त हैं, जबकि अतिरिक्त समायोजन ऐप को खास निगरानी आवश्यकताओं के अनुसार बेहतर ढंग से ढाल सकते हैं।</string>
 
   <string name="live_updates_onboarding_title">स्टेटस बार बैटरी चिप</string>
   <string name="live_updates_onboarding_message_on">आपका डिवाइस स्टेटस बार में बैटरी प्रतिशत को चिप के रूप में दिखाने का समर्थन करता है। यह विकल्प डिफ़ॉल्ट रूप से सक्षम है।\n

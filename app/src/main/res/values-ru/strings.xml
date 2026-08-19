@@ -270,11 +270,14 @@
   <string name="alarm_settings" formatted="false">Оповещения</string>
   <string name="alarm_settings_help" formatted="false">Вы можете настроить Battery Monitor так, чтобы получать уведомление о том, что заряд аккумулятора достигает определенного уровня (например, аккумулятор становится полностью заряженным, заряд опустился ниже 20%).</string>
   <string name="other_settings" formatted="false">Общие</string>
-  <string name="other_settings_help" formatted="false">Настройте общее поведение приложения и повседневные параметры.</string>
+  <string name="other_settings_summary" formatted="false">Настройте общее поведение приложения и повседневные параметры.</string>
+  <string name="other_settings_help" formatted="false">Используйте эти настройки, чтобы адаптировать Battery Monitor к повседневному использованию. Они охватывают общее поведение и параметры, которые помогают приложению естественно вписаться в привычный способ использования устройства.</string>
   <string name="units_formatting_settings" formatted="false">Единицы и форматирование</string>
-  <string name="units_formatting_settings_help" formatted="false">Выберите единицы и форматы отображения данных аккумулятора во всём приложении.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Выберите единицы и форматы отображения данных аккумулятора во всём приложении.</string>
+  <string name="units_formatting_settings_help" formatted="false">Используйте эти настройки, чтобы информация об аккумуляторе была привычной и легко читалась. Выбранные параметры применяются одинаково везде, где в Battery Monitor отображаются соответствующие значения и интервалы времени.</string>
   <string name="advanced_settings" formatted="false">Расширенные</string>
-  <string name="advanced_settings_help" formatted="false">Точно настройте Battery Monitor с помощью дополнительных элементов управления для специальных сценариев.</string>
+  <string name="advanced_settings_summary" formatted="false">Точно настройте Battery Monitor с помощью дополнительных элементов управления для специальных сценариев.</string>
+  <string name="advanced_settings_help" formatted="false">Используйте эти настройки, если вам нужен больший контроль над работой Battery Monitor, чем дают повседневные параметры. Значения по умолчанию подходят большинству пользователей, а дополнительные настройки помогают лучше адаптировать приложение к особым задачам мониторинга.</string>
 
   <string name="live_updates_onboarding_title">Чип батареи в строке состояния</string>
   <string name="live_updates_onboarding_message_on">Ваше устройство поддерживает отображение процента батареи в виде чипа в строке состояния. Эта опция включена по умолчанию.\n

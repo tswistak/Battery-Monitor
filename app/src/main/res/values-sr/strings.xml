@@ -260,11 +260,14 @@
   <string name="alarm_settings" formatted="false">Alarmi</string>
   <string name="alarm_settings_help" formatted="false">Možete da podesite da vas Battery Monitor obavesti kada procenat baterije dosegne određeni nivo (npr. baterija je u potpunosti napunjena, procenat baterije padne ispod 20%).</string>
   <string name="other_settings" formatted="false">Opšte</string>
-  <string name="other_settings_help" formatted="false">Podesite opšte ponašanje aplikacije i svakodnevne postavke.</string>
+  <string name="other_settings_summary" formatted="false">Podesite opšte ponašanje aplikacije i svakodnevne postavke.</string>
+  <string name="other_settings_help" formatted="false">Koristite ova podešavanja da prilagodite Battery Monitor svakodnevnoj upotrebi. Ona obuhvataju opšte ponašanje i postavke koje pomažu da se aplikacija prirodno uklopi u način na koji koristite uređaj.</string>
   <string name="units_formatting_settings" formatted="false">Jedinice i formatiranje</string>
-  <string name="units_formatting_settings_help" formatted="false">Izaberite jedinice i formate za prikaz podataka o bateriji u celoj aplikaciji.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Izaberite jedinice i formate za prikaz podataka o bateriji u celoj aplikaciji.</string>
+  <string name="units_formatting_settings_help" formatted="false">Koristite ova podešavanja da informacije o bateriji budu poznate i lake za čitanje. Vaši izbori se dosledno primenjuju svuda gde se odgovarajuće vrednosti i trajanja pojavljuju u Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Napredno</string>
-  <string name="advanced_settings_help" formatted="false">Fino podesite Battery Monitor dodatnim kontrolama za specijalizovane namene.</string>
+  <string name="advanced_settings_summary" formatted="false">Fino podesite Battery Monitor dodatnim kontrolama za specijalizovane namene.</string>
+  <string name="advanced_settings_help" formatted="false">Koristite ova podešavanja kada želite veću kontrolu nad radom Battery Monitor nego što nude svakodnevne postavke. Podrazumevane vrednosti odgovaraju većini korisnika, a dodatna podešavanja mogu bolje prilagoditi aplikaciju posebnim potrebama praćenja.</string>
 
   <string name="live_updates_onboarding_title">Čip baterije u statusnoj traci</string>
   <string name="live_updates_onboarding_message_on">Vaš uređaj podržava prikaz procenta baterije kao čipa u statusnoj traci. Ova opcija je podrazumevano uključena.\n

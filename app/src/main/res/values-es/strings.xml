@@ -252,11 +252,14 @@
   <string name="alarm_settings" formatted="false">Alarmas</string>
   <string name="alarm_settings_help" formatted="false">Puede hacer que Battery Monitor le notifique cuando su nivel de batería alcanza una determinada condición (por ejemplo, la batería se carga completamente, el nivel de la batería cae por debajo del 20%, y muchos otros).</string>
   <string name="other_settings" formatted="false">General</string>
-  <string name="other_settings_help" formatted="false">Configura el comportamiento general y las preferencias cotidianas de la aplicación.</string>
+  <string name="other_settings_summary" formatted="false">Configura el comportamiento general y las preferencias cotidianas de la aplicación.</string>
+  <string name="other_settings_help" formatted="false">Usa estos ajustes para adaptar Battery Monitor a tu uso diario. Abarcan el comportamiento general y las preferencias que ayudan a integrar la aplicación de forma natural en la manera en que utilizas el dispositivo.</string>
   <string name="units_formatting_settings" formatted="false">Unidades y formato</string>
-  <string name="units_formatting_settings_help" formatted="false">Elige las unidades y formatos utilizados para mostrar los datos de la batería en toda la aplicación.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Elige las unidades y formatos utilizados para mostrar los datos de la batería en toda la aplicación.</string>
+  <string name="units_formatting_settings_help" formatted="false">Usa estos ajustes para que la información de la batería resulte familiar y fácil de leer. Tus elecciones se aplican de forma coherente dondequiera que aparezcan los valores y las duraciones correspondientes en Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Avanzado</string>
-  <string name="advanced_settings_help" formatted="false">Ajusta Battery Monitor con controles adicionales para usos especializados.</string>
+  <string name="advanced_settings_summary" formatted="false">Ajusta Battery Monitor con controles adicionales para usos especializados.</string>
+  <string name="advanced_settings_help" formatted="false">Usa estos ajustes cuando quieras más control sobre el funcionamiento de Battery Monitor que el ofrecido por las preferencias cotidianas. Los valores predeterminados son adecuados para la mayoría de los usuarios, mientras que los ajustes adicionales permiten adaptar mejor la aplicación a necesidades de supervisión específicas.</string>
 
   <string name="live_updates_onboarding_title">Chip de batería de barra de estado</string>
   <string name="live_updates_onboarding_message_on">Tu dispositivo admite mostrar el porcentaje de batería como un chip en la barra de estado. Esta opción está habilitada de forma predeterminada.\n

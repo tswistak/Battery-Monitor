@@ -15,13 +15,13 @@
 - Alarms backup (#69).
 - Existing logs import (#80).
 - Scheduled automatic logs export (#34).
-- App diagnostics screen (#128) .
+- App diagnostics screen (#128).
 
 ### Improved
 
 - Ability to append new logs to the existing ones (#83).
 - Possibility to only export logs that haven't been exported yet (#79).
-- Better handling of DB errors and service restart (#117) .
+- Better handling of DB errors and service restart (#117).
 
 ## 1.5.0
 

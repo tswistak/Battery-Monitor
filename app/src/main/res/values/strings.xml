@@ -248,11 +248,14 @@
   <string name="alarm_settings" formatted="false">Alarms</string>
   <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
   <string name="other_settings" formatted="false">General</string>
-  <string name="other_settings_help" formatted="false">Configure the app’s general behavior and everyday preferences.</string>
+  <string name="other_settings_summary" formatted="false">Configure the app’s general behavior and everyday preferences.</string>
+  <string name="other_settings_help" formatted="false">Use these settings to adapt Battery Monitor to your everyday use. They cover general app behavior and preferences that help the app fit naturally into how you use your device.</string>
   <string name="units_formatting_settings" formatted="false">Units &amp; formatting</string>
-  <string name="units_formatting_settings_help" formatted="false">Choose the units and formats used to display battery data throughout the app.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Choose the units and formats used to display battery data throughout the app.</string>
+  <string name="units_formatting_settings_help" formatted="false">Use these settings to keep battery information familiar and easy to read. Your choices are applied consistently wherever the relevant values and durations appear in Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Advanced</string>
-  <string name="advanced_settings_help" formatted="false">Fine-tune Battery Monitor with additional controls for specialized use cases.</string>
+  <string name="advanced_settings_summary" formatted="false">Fine-tune Battery Monitor with additional controls for specialized use cases.</string>
+  <string name="advanced_settings_help" formatted="false">Use these settings when you want more control over how Battery Monitor works beyond everyday preferences. The defaults suit most users, while additional adjustments can help tailor the app to more specific monitoring needs.</string>
 
   <string name="live_updates_onboarding_title">Status Bar Battery Chip</string>
   <string name="live_updates_onboarding_message_on">Your device supports showing the battery percentage as a chip in the status bar. This is enabled by default.\n

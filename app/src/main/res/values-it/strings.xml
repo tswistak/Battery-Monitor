@@ -252,11 +252,14 @@
   <string name="alarm_settings" formatted="false">Allarmi</string>
   <string name="alarm_settings_help" formatted="false">Puoi ottenere una notifica da Battery Monitor quando il livello della batteria raggiunge un certo punto (es., la batteria diventa completamente carica, la batteria scende sotto il 20%).</string>
   <string name="other_settings" formatted="false">Generali</string>
-  <string name="other_settings_help" formatted="false">Configura il comportamento generale e le preferenze quotidiane dell’app.</string>
+  <string name="other_settings_summary" formatted="false">Configura il comportamento generale e le preferenze quotidiane dell’app.</string>
+  <string name="other_settings_help" formatted="false">Usa queste impostazioni per adattare Battery Monitor all’uso quotidiano. Riguardano il comportamento generale e le preferenze che aiutano l’app a integrarsi naturalmente nel modo in cui utilizzi il dispositivo.</string>
   <string name="units_formatting_settings" formatted="false">Unità e formattazione</string>
-  <string name="units_formatting_settings_help" formatted="false">Scegli le unità e i formati usati per mostrare i dati della batteria in tutta l’app.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Scegli le unità e i formati usati per mostrare i dati della batteria in tutta l’app.</string>
+  <string name="units_formatting_settings_help" formatted="false">Usa queste impostazioni per rendere le informazioni sulla batteria familiari e facili da leggere. Le tue scelte vengono applicate in modo coerente ovunque compaiano i valori e le durate pertinenti in Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Avanzate</string>
-  <string name="advanced_settings_help" formatted="false">Perfeziona Battery Monitor con controlli aggiuntivi per gli utilizzi specializzati.</string>
+  <string name="advanced_settings_summary" formatted="false">Perfeziona Battery Monitor con controlli aggiuntivi per gli utilizzi specializzati.</string>
+  <string name="advanced_settings_help" formatted="false">Usa queste impostazioni quando desideri un controllo maggiore sul funzionamento di Battery Monitor rispetto alle preferenze quotidiane. I valori predefiniti sono adatti alla maggior parte degli utenti, mentre ulteriori regolazioni consentono di adattare meglio l’app a esigenze di monitoraggio specifiche.</string>
 
   <string name="live_updates_onboarding_title">Chip batteria barra di stato</string>
   <string name="live_updates_onboarding_message_on">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato. Questa opzione è abilitata per impostazione predefinita.\n

@@ -250,11 +250,14 @@
   <string name="alarm_settings" formatted="false">Alarmen</string>
   <string name="alarm_settings_help" formatted="false">Je kunt een melding ontvangen als je batterijniveau onder een bepaald punt komt.</string>
   <string name="other_settings" formatted="false">Algemeen</string>
-  <string name="other_settings_help" formatted="false">Configureer het algemene gedrag en de dagelijkse voorkeuren van de app.</string>
+  <string name="other_settings_summary" formatted="false">Configureer het algemene gedrag en de dagelijkse voorkeuren van de app.</string>
+  <string name="other_settings_help" formatted="false">Gebruik deze instellingen om Battery Monitor aan te passen aan dagelijks gebruik. Ze omvatten algemeen appgedrag en voorkeuren waarmee de app vanzelfsprekend aansluit op de manier waarop je het apparaat gebruikt.</string>
   <string name="units_formatting_settings" formatted="false">Eenheden en opmaak</string>
-  <string name="units_formatting_settings_help" formatted="false">Kies de eenheden en indelingen waarmee batterijgegevens in de hele app worden weergegeven.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Kies de eenheden en indelingen waarmee batterijgegevens in de hele app worden weergegeven.</string>
+  <string name="units_formatting_settings_help" formatted="false">Gebruik deze instellingen om batterijgegevens vertrouwd en gemakkelijk leesbaar te houden. Je keuzes worden overal consequent toegepast waar de bijbehorende waarden en tijdsduren in Battery Monitor verschijnen.</string>
   <string name="advanced_settings" formatted="false">Geavanceerd</string>
-  <string name="advanced_settings_help" formatted="false">Stem Battery Monitor nauwkeurig af met extra bediening voor gespecialiseerde toepassingen.</string>
+  <string name="advanced_settings_summary" formatted="false">Stem Battery Monitor nauwkeurig af met extra bediening voor gespecialiseerde toepassingen.</string>
+  <string name="advanced_settings_help" formatted="false">Gebruik deze instellingen als je meer controle wilt over de werking van Battery Monitor dan de dagelijkse voorkeuren bieden. De standaardwaarden zijn geschikt voor de meeste gebruikers, terwijl aanvullende aanpassingen de app beter kunnen afstemmen op specifieke controlebehoeften.</string>
 
   <string name="live_updates_onboarding_title">Statusbalk batterijchip</string>
   <string name="live_updates_onboarding_message_on">Je apparaat ondersteunt het weergeven van het batterijpercentage als chip in de statusbalk. Deze optie staat standaard aan.\n

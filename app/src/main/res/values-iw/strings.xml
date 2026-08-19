@@ -256,11 +256,14 @@
   <string name="alarm_settings" formatted="false">התראות</string>
   <string name="alarm_settings_help" formatted="false">אתה יכול לגרום ל-Battery Monitor להודיע לך מתי רמת הסוללה שלך מגיע למצב מסוים (למשל, הסוללה נטועה במלואה, רמת הסוללה יורדת מתחת ל-20%, ועוד רבים אחרים).</string>
   <string name="other_settings" formatted="false">כללי</string>
-  <string name="other_settings_help" formatted="false">הגדירו את ההתנהגות הכללית וההעדפות היומיומיות של היישום.</string>
+  <string name="other_settings_summary" formatted="false">הגדירו את ההתנהגות הכללית וההעדפות היומיומיות של היישום.</string>
+  <string name="other_settings_help" formatted="false">השתמשו בהגדרות האלה כדי להתאים את Battery Monitor לשימוש היומיומי שלכם. הן עוסקות בהתנהגות הכללית ובהעדפות שעוזרות ליישום להשתלב באופן טבעי בדרך שבה אתם משתמשים במכשיר.</string>
   <string name="units_formatting_settings" formatted="false">יחידות ועיצוב</string>
-  <string name="units_formatting_settings_help" formatted="false">בחרו את היחידות והתבניות להצגת נתוני הסוללה ברחבי היישום.</string>
+  <string name="units_formatting_settings_summary" formatted="false">בחרו את היחידות והתבניות להצגת נתוני הסוללה ברחבי היישום.</string>
+  <string name="units_formatting_settings_help" formatted="false">השתמשו בהגדרות האלה כדי שמידע הסוללה יהיה מוכר וקל לקריאה. הבחירות שלכם מיושמות באופן עקבי בכל מקום שבו הערכים ומשכי הזמן הרלוונטיים מופיעים ב־Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">מתקדם</string>
-  <string name="advanced_settings_help" formatted="false">כוונו את Battery Monitor בעזרת פקדים נוספים לשימושים מיוחדים.</string>
+  <string name="advanced_settings_summary" formatted="false">כוונו את Battery Monitor בעזרת פקדים נוספים לשימושים מיוחדים.</string>
+  <string name="advanced_settings_help" formatted="false">השתמשו בהגדרות האלה כשתרצו שליטה רבה יותר באופן הפעולה של Battery Monitor מעבר להעדפות היומיומיות. ברירות המחדל מתאימות לרוב המשתמשים, והתאמות נוספות יכולות להתאים את היישום טוב יותר לצורכי ניטור מסוימים.</string>
 
   <string name="live_updates_onboarding_title">שבב סוללה בשורת המצב</string>
   <string name="live_updates_onboarding_message_on">המכשיר שלך תומך בהצגת אחוז הסוללה כשבב בשורת המצב. אפשרות זו מופעלת כברירת מחדל.\n

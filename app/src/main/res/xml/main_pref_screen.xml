@@ -1,12 +1,12 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
         app:key="other_settings"
-        app:summary="@string/other_settings_help"
+        app:summary="@string/other_settings_summary"
         app:title="@string/other_settings" />
 
     <Preference
         app:key="units_formatting_settings"
-        app:summary="@string/units_formatting_settings_help"
+        app:summary="@string/units_formatting_settings_summary"
         app:title="@string/units_formatting_settings" />
 
     <Preference
@@ -31,7 +31,7 @@
 
     <Preference
         app:key="advanced_settings"
-        app:summary="@string/advanced_settings_help"
+        app:summary="@string/advanced_settings_summary"
         app:title="@string/advanced_settings" />
 
     <Preference

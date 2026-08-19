@@ -268,11 +268,14 @@
   <string name="alarm_settings" formatted="false">Alarmi</string>
   <string name="alarm_settings_help" formatted="false">Battery Monitor lahko nastavite tako, da vas obvesti ko baterija doseže določeno točko (npr., baterija se popolnoma napolni, baterija pade pod 20%).</string>
   <string name="other_settings" formatted="false">Splošno</string>
-  <string name="other_settings_help" formatted="false">Nastavite splošno vedenje aplikacije in vsakodnevne možnosti.</string>
+  <string name="other_settings_summary" formatted="false">Nastavite splošno vedenje aplikacije in vsakodnevne možnosti.</string>
+  <string name="other_settings_help" formatted="false">S temi nastavitvami prilagodite Battery Monitor vsakodnevni uporabi. Zajemajo splošno delovanje in možnosti, ki aplikaciji pomagajo, da se naravno vključi v vaš način uporabe naprave.</string>
   <string name="units_formatting_settings" formatted="false">Enote in oblikovanje</string>
-  <string name="units_formatting_settings_help" formatted="false">Izberite enote in oblike za prikaz podatkov o bateriji v celotni aplikaciji.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Izberite enote in oblike za prikaz podatkov o bateriji v celotni aplikaciji.</string>
+  <string name="units_formatting_settings_help" formatted="false">S temi nastavitvami bodo podatki o bateriji domači in preprosti za branje. Vaše izbire se dosledno uporabijo povsod, kjer se v Battery Monitor prikažejo ustrezne vrednosti in trajanja.</string>
   <string name="advanced_settings" formatted="false">Napredno</string>
-  <string name="advanced_settings_help" formatted="false">Natančneje prilagodite Battery Monitor z dodatnimi možnostmi za specializirano uporabo.</string>
+  <string name="advanced_settings_summary" formatted="false">Natančneje prilagodite Battery Monitor z dodatnimi možnostmi za specializirano uporabo.</string>
+  <string name="advanced_settings_help" formatted="false">Te nastavitve uporabite, ko želite več nadzora nad delovanjem Battery Monitor, kot ga ponujajo vsakodnevne možnosti. Privzete vrednosti ustrezajo večini uporabnikov, dodatne prilagoditve pa lahko aplikacijo bolje prilagodijo posebnim potrebam spremljanja.</string>
 
   <string name="live_updates_onboarding_title">Vrstica stanja Baterijski čip</string>
   <string name="live_updates_onboarding_message_on">Vaša naprava podpira prikaz odstotka baterije kot čip v vrstici stanja. Ta možnost je privzeto omogočena.\n

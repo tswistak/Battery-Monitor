@@ -245,11 +245,14 @@
   <string name="alarm_settings" formatted="false">警報</string>
   <string name="alarm_settings_help" formatted="false">您可以讓Battery Monitor在電池電量不足時通知您 達到一定條件（例如，電池充滿電， 電池電量低於 20% 等等）。</string>
   <string name="other_settings" formatted="false">一般</string>
-  <string name="other_settings_help" formatted="false">設定應用程式的一般行為與日常偏好。</string>
+  <string name="other_settings_summary" formatted="false">設定應用程式的一般行為與日常偏好。</string>
+  <string name="other_settings_help" formatted="false">使用這些設定讓 Battery Monitor 更符合您的日常使用方式。這些設定涵蓋應用程式的一般行為與偏好，協助應用程式自然融入您使用裝置的習慣。</string>
   <string name="units_formatting_settings" formatted="false">單位與格式</string>
-  <string name="units_formatting_settings_help" formatted="false">選擇整個應用程式中顯示電池資料所用的單位與格式。</string>
+  <string name="units_formatting_settings_summary" formatted="false">選擇整個應用程式中顯示電池資料所用的單位與格式。</string>
+  <string name="units_formatting_settings_help" formatted="false">使用這些設定讓電池資訊保持熟悉且易於閱讀。您的選擇會一致套用至 Battery Monitor 中顯示相關數值與時間長度的所有位置。</string>
   <string name="advanced_settings" formatted="false">進階</string>
-  <string name="advanced_settings_help" formatted="false">使用適合專門用途的額外控制來微調 Battery Monitor。</string>
+  <string name="advanced_settings_summary" formatted="false">使用適合專門用途的額外控制來微調 Battery Monitor。</string>
+  <string name="advanced_settings_help" formatted="false">當您希望對 Battery Monitor 的運作方式進行超出日常偏好的更多控制時，請使用這些設定。預設值適合大多數使用者，而額外調整可協助應用程式更符合特定的監控需求。</string>
 
   <string name="live_updates_onboarding_title">狀態列電池晶片</string>
   <string name="live_updates_onboarding_message_on">您的装置支援在状态列中以芯片形式显示电池百分比。此选项默认已启用。\n

@@ -252,11 +252,14 @@
   <string name="alarm_settings" formatted="false">Riasztások</string>
   <string name="alarm_settings_help" formatted="false">Beállíthatja, hogy a Battery Monitor értesítse, amikor az akku töltése elér egy bizonyos szintet (pl. ha teljesen feltöltődik, vagy mondjuk 20% alá csökken.)</string>
   <string name="other_settings" formatted="false">Általános</string>
-  <string name="other_settings_help" formatted="false">Állítsa be az alkalmazás általános működését és mindennapi beállításait.</string>
+  <string name="other_settings_summary" formatted="false">Állítsa be az alkalmazás általános működését és mindennapi beállításait.</string>
+  <string name="other_settings_help" formatted="false">Ezekkel a beállításokkal a Battery Monitor a mindennapi használathoz igazítható. Az alkalmazás általános működését és azokat a beállításokat foglalják magukban, amelyek révén természetesen illeszkedik az eszköz használatához.</string>
   <string name="units_formatting_settings" formatted="false">Mértékegységek és formázás</string>
-  <string name="units_formatting_settings_help" formatted="false">Válassza ki az akkumulátoradatok megjelenítéséhez használt mértékegységeket és formátumokat.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Válassza ki az akkumulátoradatok megjelenítéséhez használt mértékegységeket és formátumokat.</string>
+  <string name="units_formatting_settings_help" formatted="false">Ezekkel a beállításokkal az akkumulátor adatai megszokottak és könnyen olvashatók maradnak. A választások következetesen érvényesülnek mindenhol, ahol a kapcsolódó értékek és időtartamok megjelennek a Battery Monitorban.</string>
   <string name="advanced_settings" formatted="false">Speciális</string>
-  <string name="advanced_settings_help" formatted="false">Finomhangolja a Battery Monitort további vezérlőkkel a speciális felhasználási esetekhez.</string>
+  <string name="advanced_settings_summary" formatted="false">Finomhangolja a Battery Monitort további vezérlőkkel a speciális felhasználási esetekhez.</string>
+  <string name="advanced_settings_help" formatted="false">Akkor használja ezeket a beállításokat, ha a mindennapi beállításokon túl nagyobb irányítást szeretne a Battery Monitor működése felett. Az alapértékek a legtöbb felhasználónak megfelelnek, a további módosítások pedig konkrétabb megfigyelési igényekhez igazíthatják az alkalmazást.</string>
 
   <string name="live_updates_onboarding_title">Állapotsor akkumulátor chip</string>
   <string name="live_updates_onboarding_message_on">A készülék támogatja az akkumulátor százalékának chipként való megjelenítését az állapotsorban. Ez alapértelmezés szerint be van kapcsolva.\n

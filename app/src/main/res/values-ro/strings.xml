@@ -256,11 +256,14 @@
   <string name="alarm_settings" formatted="false">Alarme</string>
   <string name="alarm_settings_help" formatted="false">Puteți solicita Battery Monitor să vă anunțe când nivelul bateriei este atinge o anumită condiție (de exemplu, bateria se încarcă complet, nivelul bateriei scade sub 20% și multe altele).</string>
   <string name="other_settings" formatted="false">General</string>
-  <string name="other_settings_help" formatted="false">Configurați comportamentul general și preferințele uzuale ale aplicației.</string>
+  <string name="other_settings_summary" formatted="false">Configurați comportamentul general și preferințele uzuale ale aplicației.</string>
+  <string name="other_settings_help" formatted="false">Folosiți aceste setări pentru a adapta Battery Monitor utilizării de zi cu zi. Ele acoperă comportamentul general și preferințele care ajută aplicația să se integreze firesc în modul în care folosiți dispozitivul.</string>
   <string name="units_formatting_settings" formatted="false">Unități și formatare</string>
-  <string name="units_formatting_settings_help" formatted="false">Alegeți unitățile și formatele folosite pentru afișarea datelor bateriei în întreaga aplicație.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Alegeți unitățile și formatele folosite pentru afișarea datelor bateriei în întreaga aplicație.</string>
+  <string name="units_formatting_settings_help" formatted="false">Folosiți aceste setări pentru ca informațiile despre baterie să fie familiare și ușor de citit. Alegerile sunt aplicate consecvent oriunde apar valorile și duratele relevante în Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Avansat</string>
-  <string name="advanced_settings_help" formatted="false">Reglați Battery Monitor cu opțiuni suplimentare pentru utilizări specializate.</string>
+  <string name="advanced_settings_summary" formatted="false">Reglați Battery Monitor cu opțiuni suplimentare pentru utilizări specializate.</string>
+  <string name="advanced_settings_help" formatted="false">Folosiți aceste setări când doriți mai mult control asupra modului în care funcționează Battery Monitor decât oferă preferințele uzuale. Valorile implicite sunt potrivite pentru majoritatea utilizatorilor, iar ajustările suplimentare pot adapta mai bine aplicația unor nevoi specifice de monitorizare.</string>
 
   <string name="live_updates_onboarding_title">Bara de stare Cip baterie</string>
   <string name="live_updates_onboarding_message_on">Dispozitivul dvs. acceptă afișarea procentului bateriei sub formă de cip în bara de stare. Această opțiune este activată implicit.\n

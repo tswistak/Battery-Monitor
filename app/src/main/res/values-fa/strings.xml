@@ -250,11 +250,14 @@
   <string name="alarm_settings" formatted="false">آلارم ها</string>
   <string name="alarm_settings_help" formatted="false">می‌توانید از مانیتور باتری به شما اطلاع دهید که وقتی باتری شما تمام می‌شود به شرایط خاصی می رسد (به عنوان مثال، باتری کاملاً شارژ می شود، سطح باتری به زیر 20٪ می رسد و بسیاری دیگر).</string>
   <string name="other_settings" formatted="false">عمومی</string>
-  <string name="other_settings_help" formatted="false">رفتار عمومی برنامه و ترجیحات روزمره را تنظیم کنید.</string>
+  <string name="other_settings_summary" formatted="false">رفتار عمومی برنامه و ترجیحات روزمره را تنظیم کنید.</string>
+  <string name="other_settings_help" formatted="false">از این تنظیمات برای هماهنگ کردن Battery Monitor با استفادهٔ روزمرهٔ خود بهره ببرید. این بخش رفتار عمومی برنامه و ترجیحاتی را پوشش می‌دهد که کمک می‌کنند برنامه به‌طور طبیعی با شیوهٔ استفادهٔ شما از دستگاه سازگار شود.</string>
   <string name="units_formatting_settings" formatted="false">واحدها و قالب‌بندی</string>
-  <string name="units_formatting_settings_help" formatted="false">واحدها و قالب‌های نمایش اطلاعات باتری در سراسر برنامه را انتخاب کنید.</string>
+  <string name="units_formatting_settings_summary" formatted="false">واحدها و قالب‌های نمایش اطلاعات باتری در سراسر برنامه را انتخاب کنید.</string>
+  <string name="units_formatting_settings_help" formatted="false">از این تنظیمات استفاده کنید تا اطلاعات باتری آشنا و خوانا باقی بماند. انتخاب‌های شما در همه‌جا که مقادیر و مدت‌زمان‌های مرتبط در Battery Monitor نمایش داده می‌شوند، به‌طور یکسان اعمال می‌شوند.</string>
   <string name="advanced_settings" formatted="false">پیشرفته</string>
-  <string name="advanced_settings_help" formatted="false">Battery Monitor را با کنترل‌های بیشتر برای کاربردهای تخصصی دقیق‌تر تنظیم کنید.</string>
+  <string name="advanced_settings_summary" formatted="false">Battery Monitor را با کنترل‌های بیشتر برای کاربردهای تخصصی دقیق‌تر تنظیم کنید.</string>
+  <string name="advanced_settings_help" formatted="false">وقتی فراتر از ترجیحات روزمره به کنترل بیشتری بر نحوهٔ کار Battery Monitor نیاز دارید، از این تنظیمات استفاده کنید. مقادیر پیش‌فرض برای بیشتر کاربران مناسب‌اند و تنظیمات اضافی می‌توانند برنامه را بهتر با نیازهای خاص پایش هماهنگ کنند.</string>
 
   <string name="live_updates_onboarding_title">نوار وضعیت تراشه باتری</string>
   <string name="live_updates_onboarding_message_on">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند. این گزینه به‌صورت پیش‌فرض فعال است.\n

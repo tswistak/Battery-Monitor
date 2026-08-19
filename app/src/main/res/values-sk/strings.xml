@@ -272,11 +272,14 @@
   <string name="alarm_settings" formatted="false">Upozornenia</string>
   <string name="alarm_settings_help" formatted="false">Monitor batérie vás môže upozorniť na úroveň nabitia batérie dosiahne určitý stav (napr. batéria sa úplne nabije, úroveň batérie klesne pod 20 % a mnoho ďalších).</string>
   <string name="other_settings" formatted="false">Všeobecné</string>
-  <string name="other_settings_help" formatted="false">Nastavte všeobecné správanie aplikácie a bežné predvoľby.</string>
+  <string name="other_settings_summary" formatted="false">Nastavte všeobecné správanie aplikácie a bežné predvoľby.</string>
+  <string name="other_settings_help" formatted="false">Pomocou týchto nastavení prispôsobíte Battery Monitor každodennému používaniu. Zahŕňajú všeobecné správanie a predvoľby, vďaka ktorým aplikácia prirodzene zapadne do spôsobu používania zariadenia.</string>
   <string name="units_formatting_settings" formatted="false">Jednotky a formátovanie</string>
-  <string name="units_formatting_settings_help" formatted="false">Vyberte jednotky a formáty používané na zobrazenie údajov o batérii v celej aplikácii.</string>
+  <string name="units_formatting_settings_summary" formatted="false">Vyberte jednotky a formáty používané na zobrazenie údajov o batérii v celej aplikácii.</string>
+  <string name="units_formatting_settings_help" formatted="false">Pomocou týchto nastavení zostanú informácie o batérii zrozumiteľné a ľahko čitateľné. Vaše voľby sa používajú jednotne všade, kde sa v Battery Monitor zobrazujú príslušné hodnoty a trvania.</string>
   <string name="advanced_settings" formatted="false">Rozšírené</string>
-  <string name="advanced_settings_help" formatted="false">Dolaďte Battery Monitor pomocou ďalších ovládacích prvkov na špecializované použitie.</string>
+  <string name="advanced_settings_summary" formatted="false">Dolaďte Battery Monitor pomocou ďalších ovládacích prvkov na špecializované použitie.</string>
+  <string name="advanced_settings_help" formatted="false">Tieto nastavenia použite, keď chcete mať nad fungovaním Battery Monitor väčšiu kontrolu než pri bežných predvoľbách. Predvolené hodnoty vyhovujú väčšine používateľov, ďalšie úpravy však môžu aplikáciu lepšie prispôsobiť konkrétnym potrebám monitorovania.</string>
 
   <string name="live_updates_onboarding_title">Stavový riadok Čip batérie</string>
   <string name="live_updates_onboarding_message_on">Vaše zariadenie podporuje zobrazovanie percenta batérie ako čip v stavovom riadku. Táto možnosť je predvolene zapnutá.\n
