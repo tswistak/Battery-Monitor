@@ -260,11 +260,11 @@
   <string name="alarm_settings" formatted="false">Alarmy</string>
   <string name="alarm_settings_help" formatted="false">Możesz ustawić, aby Monitor baterii powiadamiał Cię, gdy poziom naładowania Twojej baterii osiąga określony warunek (np. bateria staje się w pełni naładowana, poziom baterii spada poniżej 20% i wiele innych).</string>
   <string name="other_settings" formatted="false">Ogólne</string>
-  <string name="other_settings_help" formatted="false">Skonfiguruj ogólne działanie aplikacji i codzienne preferencje.</string>
+  <string name="other_settings_help" formatted="false">Skonfiguruj ogólne zachowanie aplikacji i codzienne preferencje</string>
   <string name="units_formatting_settings" formatted="false">Jednostki i formatowanie</string>
-  <string name="units_formatting_settings_help" formatted="false">Wybierz jednostki i formaty używane do wyświetlania danych baterii w całej aplikacji.</string>
+  <string name="units_formatting_settings_help" formatted="false">Wybierz jednostki i formaty używane do wyświetlania danych baterii w całej aplikacji</string>
   <string name="advanced_settings" formatted="false">Zaawansowane</string>
-  <string name="advanced_settings_help" formatted="false">Dostosuj Monitor baterii za pomocą dodatkowych opcji do specjalistycznych zastosowań.</string>
+  <string name="advanced_settings_help" formatted="false">Dostosuj Monitor baterii za pomocą dodatkowych opcji do specjalistycznych zastosowań</string>
 
   <string name="live_updates_onboarding_title">Kapsułka baterii na pasku stanu</string>
   <string name="live_updates_onboarding_message_on">Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu. Jest to włączone domyślnie.\n
@@ -376,7 +376,7 @@
   <string name="pref_cat_units" formatted="false">Jednostki</string>
   <string name="pref_temperature_unit" formatted="false">Jednostka temperatury</string>
   <string name="pref_cat_formatting" formatted="false">Formatowanie</string>
-  <string name="pref_temperature_unit_help" formatted="false">Wybierz wyświetlanie temperatury w stopniach Celsjusza lub Fahrenheita.</string>
+  <string name="pref_temperature_unit_help" formatted="false">Wybierz, czy temperatury mają być wyświetlane w stopniach Celsjusza, czy Fahrenheita.</string>
 
   <string name="pref_cat_autostart" formatted="false">Automatyczne uruchamianie</string>
   <string name="pref_autostart_at_boot" formatted="false">Uruchamiaj automatycznie przy starcie systemu</string>
@@ -406,9 +406,9 @@
 
   <string name="pref_cat_language" formatted="false">Język</string>
   <string name="pref_change_app_language" formatted="false">Język aplikacji</string>
-  <string name="pref_change_app_language_help" formatted="false">Wybierz język używany przez Monitor baterii. Ustawienie domyślne systemu korzysta z języka urządzenia.</string>
-  <string name="pref_long_duration_format" formatted="false">Format długiego czasu</string>
-  <string name="pref_long_duration_format_help" formatted="false">Dni i godziny używa dni po przekroczeniu 24 godzin, np. 1d 3h. Tylko godziny zachowuje cały czas w godzinach, np. 27h.</string>
+  <string name="pref_change_app_language_help" formatted="false">Wybierz język używany przez Monitora baterii. Domyślny systemowy jest zgodny z językiem Twojego urządzenia.</string>
+  <string name="pref_long_duration_format" formatted="false">Format długiego czasu trwania</string>
+  <string name="pref_long_duration_format_help" formatted="false">„Dni i godziny” używa dni po 24 godzinach, np. 1d 3h. „Tylko godziny” zachowuje pełny czas trwania w godzinach, np. 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Dni i godziny</string>
   <string name="long_duration_format_hours_only" formatted="false">Tylko godziny</string>
   <string name="pref_cat_advanced_stats" formatted="false">Zaawansowane statystyki baterii</string>
