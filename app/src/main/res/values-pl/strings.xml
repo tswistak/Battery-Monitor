@@ -198,7 +198,7 @@
     <item quantity="many">Przez %d godzin</item>
   </plurals>
 
-  <string name="duration_for">Przez %1$s</string>
+  <string name="duration_for">przez %1$s</string>
   <string name="unit_days">%dd</string>
   <string name="unit_hours">%dh</string>
   <string name="unit_minutes">%dm</string>
