@@ -267,7 +267,7 @@
   <string name="units_formatting_settings_help" formatted="false">Użyj tych ustawień, aby informacje o baterii pozostały rozpoznawalne i łatwe do odczytania. Twoje wybory są stosowane spójnie wszędzie tam, gdzie odpowiednie wartości i czasy trwania pojawiają się w Monitorze baterii.</string>
   <string name="advanced_settings" formatted="false">Zaawansowane</string>
   <string name="advanced_settings_summary" formatted="false">Dostosuj Monitor baterii za pomocą dodatkowych opcji do specjalistycznych zastosowań</string>
-  <string name="advanced_settings_help" formatted="false">Użyj tych ustawień, gdy potrzebujesz większej kontroli nad działaniem Monitora baterii niż zapewniają codzienne preferencje. Ustawienia domyślne są odpowiednie dla większości użytkowników, a dodatkowe możliwości pozwalają lepiej dopasować aplikację do szczególnych potrzeb związanych z monitorowaniem.</string>
+  <string name="advanced_settings_help" formatted="false">Użyj tych ustawień, gdy chcesz większej kontroli nad tym, jak Monitor baterii działa, wykraczając poza codzienne preferencje. Wartości domyślne są odpowiednie dla większości użytkowników, a dodatkowe modyfikacje mogą pomóc dostosować aplikację do bardziej specyficznych potrzeb monitorowania.</string>
 
   <string name="live_updates_onboarding_title">Kapsułka baterii na pasku stanu</string>
   <string name="live_updates_onboarding_message_on">Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu. Jest to włączone domyślnie.\n
