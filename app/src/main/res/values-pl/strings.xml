@@ -261,7 +261,7 @@
   <string name="alarm_settings_help" formatted="false">Możesz ustawić, aby Monitor baterii powiadamiał Cię, gdy poziom naładowania Twojej baterii osiąga określony warunek (np. bateria staje się w pełni naładowana, poziom baterii spada poniżej 20% i wiele innych).</string>
   <string name="other_settings" formatted="false">Ogólne</string>
   <string name="other_settings_summary" formatted="false">Skonfiguruj ogólne zachowanie aplikacji i codzienne preferencje</string>
-  <string name="other_settings_help" formatted="false">Użyj tych ustawień, aby dostosować Monitor baterii do codziennego użytkowania. Obejmują one ogólne działanie aplikacji i preferencje, dzięki którym aplikacja lepiej pasuje do sposobu korzystania z urządzenia.</string>
+  <string name="other_settings_help" formatted="false">Użyj tych ustawień, aby dostosować Monitor baterii do Twojego codziennego użytkowania. Obejmują ogólne zachowanie aplikacji i preferencje, co pomaga jej dopasować się naturalnie do Twojego sposobu korzystania z urządzenia.</string>
   <string name="units_formatting_settings" formatted="false">Jednostki i formatowanie</string>
   <string name="units_formatting_settings_summary" formatted="false">Wybierz jednostki i formaty używane do wyświetlania danych baterii w całej aplikacji</string>
   <string name="units_formatting_settings_help" formatted="false">Użyj tych ustawień, aby informacje o baterii były rozpoznawalne i łatwe do odczytania. Wybrane ustawienia są stosowane spójnie wszędzie tam, gdzie w Monitorze baterii pojawiają się odpowiednie wartości i czasy.</string>
