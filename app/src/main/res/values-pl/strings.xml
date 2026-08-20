@@ -264,7 +264,7 @@
   <string name="other_settings_help" formatted="false">Użyj tych ustawień, aby dostosować Monitor baterii do Twojego codziennego użytkowania. Obejmują ogólne zachowanie aplikacji i preferencje, co pomaga jej dopasować się naturalnie do Twojego sposobu korzystania z urządzenia.</string>
   <string name="units_formatting_settings" formatted="false">Jednostki i formatowanie</string>
   <string name="units_formatting_settings_summary" formatted="false">Wybierz jednostki i formaty używane do wyświetlania danych baterii w całej aplikacji</string>
-  <string name="units_formatting_settings_help" formatted="false">Użyj tych ustawień, aby informacje o baterii były rozpoznawalne i łatwe do odczytania. Wybrane ustawienia są stosowane spójnie wszędzie tam, gdzie w Monitorze baterii pojawiają się odpowiednie wartości i czasy.</string>
+  <string name="units_formatting_settings_help" formatted="false">Użyj tych ustawień, aby informacje o baterii pozostały rozpoznawalne i łatwe do odczytania. Twoje wybory są stosowane spójnie wszędzie tam, gdzie odpowiednie wartości i czasy trwania pojawiają się w Monitorze baterii.</string>
   <string name="advanced_settings" formatted="false">Zaawansowane</string>
   <string name="advanced_settings_summary" formatted="false">Dostosuj Monitor baterii za pomocą dodatkowych opcji do specjalistycznych zastosowań</string>
   <string name="advanced_settings_help" formatted="false">Użyj tych ustawień, gdy potrzebujesz większej kontroli nad działaniem Monitora baterii niż zapewniają codzienne preferencje. Ustawienia domyślne są odpowiednie dla większości użytkowników, a dodatkowe możliwości pozwalają lepiej dopasować aplikację do szczególnych potrzeb związanych z monitorowaniem.</string>
