@@ -95,6 +95,9 @@ class SettingsActivity : AppCompatActivity() {
         } else if (prefScreen == SettingsContract.KEY_UNITS_FORMATTING_SETTINGS) {
             frag!!.setScreen(R.xml.units_formatting_pref_screen)
             setWindowSubtitle(res!!.getString(R.string.units_formatting_settings))
+        } else if (prefScreen == SettingsContract.KEY_TIME_ESTIMATES_SETTINGS) {
+            frag!!.setScreen(R.xml.time_estimates_pref_screen)
+            setWindowSubtitle(res!!.getString(R.string.time_estimates_settings))
         } else if (prefScreen == SettingsContract.KEY_ADVANCED_SETTINGS) {
             frag!!.setScreen(R.xml.advanced_pref_screen)
             setWindowSubtitle(res!!.getString(R.string.advanced_settings))

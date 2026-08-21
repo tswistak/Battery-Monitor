@@ -28,6 +28,8 @@ internal object SettingsContract {
     const val KEY_ADVANCED_INFO_HELP: String = "advanced_info_help"
     const val KEY_OTHER_SETTINGS: String = "other_settings"
     const val KEY_UNITS_FORMATTING_SETTINGS: String = "units_formatting_settings"
+    const val KEY_TIME_ESTIMATES_SETTINGS: String = "time_estimates_settings"
+
     const val KEY_ADVANCED_SETTINGS: String = "advanced_settings"
 
     const val KEY_BACKUP_RESTORE_SETTINGS: String = "backup_restore_settings"
@@ -72,6 +74,14 @@ internal object SettingsContract {
     const val KEY_NOTIFY_STATUS_DURATION: String = "notify_status_duration"
     const val KEY_AUTOSTART: String = "autostart"
     const val KEY_PREDICTION_TYPE: String = "prediction_type"
+    const val KEY_CHARGING_TARGET_MODE: String = "charging_target_mode"
+    const val KEY_CUSTOM_CHARGING_TARGET: String = "custom_charging_target"
+    const val KEY_DISCHARGING_TARGET: String = "discharging_target"
+    const val CHARGING_TARGET_MODE_AUTOMATIC: String = "automatic"
+    const val CHARGING_TARGET_MODE_CUSTOM: String = "custom"
+    const val DEFAULT_CUSTOM_CHARGING_TARGET: Int = 80
+    const val DEFAULT_DISCHARGING_TARGET: Int = 0
+
     const val KEY_STATUS_DUR_EST: String = "status_dur_est"
     const val KEY_INDICATE_CHARGING: String = "indicate_charging"
     const val KEY_CHIP_CONTENT: String = "chip_content"
@@ -123,7 +133,7 @@ internal object SettingsContract {
     )
     val DEFAULT_VITAL_SIGNS_CONTENT: Set<String> = ALL_VITAL_SIGNS_CONTENT.take(3).toSet()
     const val KEY_ENABLE_BATTERY_CURRENT: String = "enable_battery_current"
-    const val KEY_USE_PRIVILEGED_BATTERY_CURRENT: String = "use_privileged_battery_current"
+    const val KEY_USE_PRIVILEGED_ACCESS: String = "use_privileged_access"
     const val KEY_BATTERY_CURRENT_MULTIPLIER: String = "battery_current_multiplier"
     const val KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING: String =
         "battery_current_multiplier_detection_pending"
@@ -139,6 +149,8 @@ internal object SettingsContract {
 
     const val LEGACY_KEY_ENABLE_CURRENT = "enable_current_hack"
     const val LEGACY_KEY_CONVERT_F = "convert_to_fahrenheit"
+
+    const val LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT = "use_privileged_battery_current"
 
     const val LEGACY_KEY_PREFER_FILE_SYSTEM = "current_hack_prefer_fs"
     const val LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER = "current_hack_multiplier"

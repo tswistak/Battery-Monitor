@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.settings.backup
 
+import android.content.SharedPreferences
 import codes.swistak.batterymonitor.settings.SettingsContract
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -29,16 +30,16 @@ class SettingsBackupSchemaTest {
         assertFalse(Version3SettingsImporter.schema.containsKey(SettingsContract.KEY_CHIP_CONTENT))
         assertEquals(
             setOf(Boolean::class.java),
-            Version3SettingsImporter.chipContentByBackupKey.keys.mapTo(linkedSetOf()) {
+            SettingsBackupCodec.chipContentByBackupKey.keys.mapTo(linkedSetOf()) {
                 Version3SettingsImporter.schema[it]
             })
-        assertEquals(5, Version3SettingsImporter.chipContentByBackupKey.size)
+        assertEquals(5, SettingsBackupCodec.chipContentByBackupKey.size)
         assertEquals(
             setOf(Int::class.java),
-            Version3SettingsImporter.chipContentOrderByBackupKey.keys.mapTo(linkedSetOf()) {
+            SettingsBackupCodec.chipContentOrderByBackupKey.keys.mapTo(linkedSetOf()) {
                 Version3SettingsImporter.schema[it]
             })
-        assertEquals(5, Version3SettingsImporter.chipContentOrderByBackupKey.size)
+        assertEquals(5, SettingsBackupCodec.chipContentOrderByBackupKey.size)
     }
 
     @Test
@@ -51,13 +52,13 @@ class SettingsBackupSchemaTest {
             SettingsContract.CHIP_CONTENT_TEMPERATURE
         )
         val settings = buildMap<String, Any> {
-            for (key in Version3SettingsImporter.chipContentByBackupKey.keys) {
+            for (key in SettingsBackupCodec.chipContentByBackupKey.keys) {
                 put(
                     key,
-                    key == Version3SettingsImporter.KEY_CHIP_CONTENT_CURRENT || key == Version3SettingsImporter.KEY_CHIP_CONTENT_CHARGE
+                    key == SettingsBackupCodec.KEY_CHIP_CONTENT_CURRENT || key == SettingsBackupCodec.KEY_CHIP_CONTENT_CHARGE
                 )
             }
-            for ((key, contentValue) in Version3SettingsImporter.chipContentOrderByBackupKey) {
+            for ((key, contentValue) in SettingsBackupCodec.chipContentOrderByBackupKey) {
                 put(key, expectedOrder.indexOf(contentValue))
             }
         }
@@ -65,25 +66,25 @@ class SettingsBackupSchemaTest {
         assertEquals(
             setOf(
                 SettingsContract.CHIP_CONTENT_CURRENT, SettingsContract.CHIP_CONTENT_CHARGE
-            ), Version3SettingsImporter.chipContentFromBackup(settings)
+            ), SettingsBackupCodec.chipContentFromBackup(settings)
         )
-        assertEquals(expectedOrder, Version3SettingsImporter.chipContentOrderFromBackup(settings))
+        assertEquals(expectedOrder, SettingsBackupCodec.chipContentOrderFromBackup(settings))
     }
 
     @Test
     fun `missing chip content fields use application defaults`() {
         assertEquals(
             SettingsContract.DEFAULT_CHIP_CONTENT,
-            Version3SettingsImporter.chipContentFromBackup(emptyMap())
+            SettingsBackupCodec.chipContentFromBackup(emptyMap())
         )
     }
 
     @Test
     fun `version three rejects duplicate chip content positions`() {
-        val settings = Version3SettingsImporter.chipContentOrderByBackupKey.keys.associateWith { 0 }
+        val settings = SettingsBackupCodec.chipContentOrderByBackupKey.keys.associateWith { 0 }
 
         assertThrows(IllegalArgumentException::class.java) {
-            Version3SettingsImporter.chipContentOrderFromBackup(settings)
+            SettingsBackupCodec.chipContentOrderFromBackup(settings)
         }
     }
 
@@ -98,28 +99,28 @@ class SettingsBackupSchemaTest {
         )
         assertEquals(
             setOf(Boolean::class.java),
-            Version3SettingsImporter.vitalSignsContentByBackupKey.keys.mapTo(linkedSetOf()) {
+            SettingsBackupCodec.vitalSignsContentByBackupKey.keys.mapTo(linkedSetOf()) {
                 Version3SettingsImporter.schema[it]
             })
-        assertEquals(6, Version3SettingsImporter.vitalSignsContentByBackupKey.size)
+        assertEquals(6, SettingsBackupCodec.vitalSignsContentByBackupKey.size)
         assertEquals(
             setOf(Int::class.java),
-            Version3SettingsImporter.vitalSignsOrderByBackupKey.keys.mapTo(linkedSetOf()) {
+            SettingsBackupCodec.vitalSignsOrderByBackupKey.keys.mapTo(linkedSetOf()) {
                 Version3SettingsImporter.schema[it]
             })
-        assertEquals(6, Version3SettingsImporter.vitalSignsOrderByBackupKey.size)
+        assertEquals(6, SettingsBackupCodec.vitalSignsOrderByBackupKey.size)
     }
 
     @Test
     fun `version three restores vital signs from explicit boolean fields`() {
-        val settings = Version3SettingsImporter.vitalSignsContentByBackupKey.keys.associateWith {
-            it == Version3SettingsImporter.KEY_VITAL_SIGN_CURRENT || it == Version3SettingsImporter.KEY_VITAL_SIGN_CHARGE
+        val settings = SettingsBackupCodec.vitalSignsContentByBackupKey.keys.associateWith {
+            it == SettingsBackupCodec.KEY_VITAL_SIGN_CURRENT || it == SettingsBackupCodec.KEY_VITAL_SIGN_CHARGE
         }
 
         assertEquals(
             setOf(
                 SettingsContract.VITAL_SIGN_CURRENT, SettingsContract.VITAL_SIGN_CHARGE
-            ), Version3SettingsImporter.vitalSignsContentFromBackup(settings)
+            ), SettingsBackupCodec.vitalSignsContentFromBackup(settings)
         )
     }
 
@@ -127,7 +128,7 @@ class SettingsBackupSchemaTest {
     fun `missing vital signs fields use application defaults`() {
         assertEquals(
             SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT,
-            Version3SettingsImporter.vitalSignsContentFromBackup(emptyMap())
+            SettingsBackupCodec.vitalSignsContentFromBackup(emptyMap())
         )
     }
 
@@ -142,19 +143,19 @@ class SettingsBackupSchemaTest {
             SettingsContract.VITAL_SIGN_TEMPERATURE
         )
         val settings =
-            Version3SettingsImporter.vitalSignsOrderByBackupKey.mapValues { (_, contentValue) ->
+            SettingsBackupCodec.vitalSignsOrderByBackupKey.mapValues { (_, contentValue) ->
                 expected.indexOf(contentValue)
             }
 
-        assertEquals(expected, Version3SettingsImporter.vitalSignsOrderFromBackup(settings))
+        assertEquals(expected, SettingsBackupCodec.vitalSignsOrderFromBackup(settings))
     }
 
     @Test
     fun `version three rejects duplicate vital signs positions`() {
-        val settings = Version3SettingsImporter.vitalSignsOrderByBackupKey.keys.associateWith { 0 }
+        val settings = SettingsBackupCodec.vitalSignsOrderByBackupKey.keys.associateWith { 0 }
 
         assertThrows(IllegalArgumentException::class.java) {
-            Version3SettingsImporter.vitalSignsOrderFromBackup(settings)
+            SettingsBackupCodec.vitalSignsOrderFromBackup(settings)
         }
     }
 
@@ -180,5 +181,64 @@ class SettingsBackupSchemaTest {
         assertFalse(
             Version4SettingsImporter.schema.containsKey(SettingsContract.LEGACY_KEY_CONVERT_F)
         )
+    }
+
+    @Test
+    fun `version four includes time estimate targets`() {
+        assertEquals(4, SettingsBackup.SCHEMA_VERSION)
+        assertEquals(
+            String::class.java,
+            Version4SettingsImporter.schema[SettingsContract.KEY_CHARGING_TARGET_MODE]
+        )
+        assertEquals(
+            Int::class.java,
+            Version4SettingsImporter.schema[SettingsContract.KEY_CUSTOM_CHARGING_TARGET]
+        )
+        assertEquals(
+            Int::class.java,
+            Version4SettingsImporter.schema[SettingsContract.KEY_DISCHARGING_TARGET]
+        )
+        assertEquals(
+            Boolean::class.java,
+            Version4SettingsImporter.schema[SettingsContract.KEY_USE_PRIVILEGED_ACCESS]
+        )
+        assertFalse(
+            Version4SettingsImporter.schema.containsKey(
+                SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT
+            )
+        )
+    }
+
+    @Test
+    fun `version four restores its settings through the shared codec`() {
+        val restored = mutableMapOf<String, Any?>()
+        val editor = java.lang.reflect.Proxy.newProxyInstance(
+            SharedPreferences.Editor::class.java.classLoader,
+            arrayOf(SharedPreferences.Editor::class.java)
+        ) { proxy, method, arguments ->
+            val args = arguments.orEmpty()
+            when (method.name) {
+                "putBoolean", "putInt", "putString", "putStringSet" -> {
+                    restored[args[0] as String] = args[1]
+                    proxy
+                }
+
+                "remove" -> proxy
+                else -> error("Unexpected editor method: ${method.name}")
+            }
+        } as SharedPreferences.Editor
+        val settings = mapOf<String, Any>(
+            SettingsContract.KEY_CHARGING_TARGET_MODE to "custom",
+            SettingsContract.KEY_CUSTOM_CHARGING_TARGET to 85,
+            SettingsContract.KEY_DISCHARGING_TARGET to 15,
+            SettingsContract.KEY_USE_PRIVILEGED_ACCESS to true
+        )
+
+        Version4SettingsImporter.restore(editor, settings)
+
+        assertEquals("custom", restored[SettingsContract.KEY_CHARGING_TARGET_MODE])
+        assertEquals(85, restored[SettingsContract.KEY_CUSTOM_CHARGING_TARGET])
+        assertEquals(15, restored[SettingsContract.KEY_DISCHARGING_TARGET])
+        assertEquals(true, restored[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
     }
 }

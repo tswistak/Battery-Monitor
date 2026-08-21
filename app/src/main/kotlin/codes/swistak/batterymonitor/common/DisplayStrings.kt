@@ -293,14 +293,16 @@ internal object DisplayStrings {
     }
 
     fun timeRemaining(
-        info: BatteryInfo, longDurationFormat: LongDurationFormat
+        info: BatteryInfo,
+        longDurationFormat: LongDurationFormat,
+        prediction: BatteryInfo.Prediction = info.prediction
     ): Spanned? {
-        if (info.prediction.whatHappened == BatteryInfo.Prediction.NONE) {
+        if (prediction.whatHappened == BatteryInfo.Prediction.NONE) {
             return fromHtmlLegacy(
                 "<font color=\"#6fc14b\">" + statuses[info.status] + "</font>"
             )
         } else {
-            val predicted = info.prediction.lastRTime
+            val predicted = prediction.lastRTime
 
             if (predicted.days > 0 && longDurationFormat == LongDurationFormat.DAYS_AND_HOURS) {
                 val (days, hours) = DurationFormatter.roundedDaysAndHours(
@@ -337,26 +339,45 @@ internal object DisplayStrings {
     }
 
     fun timeRemainingMainScreen(
-        info: BatteryInfo, longDurationFormat: LongDurationFormat
+        info: BatteryInfo,
+        longDurationFormat: LongDurationFormat,
+        prediction: BatteryInfo.Prediction = info.prediction
     ): Spanned? {
-        return if (info.prediction.whatHappened == BatteryInfo.Prediction.NONE) fromHtmlLegacy(
+        return if (prediction.whatHappened == BatteryInfo.Prediction.NONE) fromHtmlLegacy(
             "&nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;"
         )
-        else timeRemaining(info, longDurationFormat)
+        else timeRemaining(info, longDurationFormat, prediction)
     }
 
     private fun fromHtmlLegacy(source: String): Spanned {
         return Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY)
     }
 
-    fun untilWhat(info: BatteryInfo): String {
-        return when (info.prediction.whatHappened) {
-            BatteryInfo.Prediction.NONE -> ""
-            BatteryInfo.Prediction.UNTIL_CHARGED -> res.getString(
-                R.string.activity_until_charged
+    fun untilWhat(
+        info: BatteryInfo, prediction: BatteryInfo.Prediction = info.prediction
+    ): String {
+        if (prediction.targetReached) {
+            return res.getString(
+                R.string.activity_target_reached, prediction.targetPercent
             )
+        }
+        return when (prediction.whatHappened) {
+            BatteryInfo.Prediction.NONE -> ""
+            BatteryInfo.Prediction.UNTIL_CHARGED -> {
+                if (prediction.targetPercent == 100) {
+                    res.getString(R.string.activity_until_charged)
+                } else {
+                    res.getString(R.string.activity_until_target, prediction.targetPercent)
+                }
+            }
 
-            else -> res.getString(R.string.activity_until_drained)
+            else -> {
+                if (prediction.targetPercent == 0) {
+                    res.getString(R.string.activity_until_drained)
+                } else {
+                    res.getString(R.string.activity_until_target, prediction.targetPercent)
+                }
+            }
         }
     }
 }

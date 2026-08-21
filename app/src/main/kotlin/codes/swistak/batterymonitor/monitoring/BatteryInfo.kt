@@ -69,6 +69,15 @@ internal class BatteryInfo {
         private const val FIELD_PREDICTION_MINUTES = "prediction_minutes"
         private const val FIELD_PREDICTION_WHAT = "prediction_what"
         private const val FIELD_PREDICTION_WHEN = "prediction_when"
+        private const val FIELD_PREDICTION_TARGET_PERCENT = "prediction_target_percent"
+        private const val FIELD_PREDICTION_TARGET_REACHED = "prediction_target_reached"
+        private const val FIELD_FULL_RANGE_PREDICTION_DAYS = "full_range_prediction_days"
+        private const val FIELD_FULL_RANGE_PREDICTION_HOURS = "full_range_prediction_hours"
+        private const val FIELD_FULL_RANGE_PREDICTION_MINUTES = "full_range_prediction_minutes"
+        private const val FIELD_FULL_RANGE_PREDICTION_WHAT = "full_range_prediction_what"
+        private const val FIELD_FULL_RANGE_PREDICTION_WHEN = "full_range_prediction_when"
+        private const val FIELD_FULL_RANGE_PREDICTION_TARGET_PERCENT =
+            "full_range_prediction_target_percent"
 
         private const val FIELD_REMAINING_CHARGE_UAH = "remaining_charge_uah"
 
@@ -123,6 +132,7 @@ internal class BatteryInfo {
     var lastPercent: Int = 0
     var lastStatusCtm: Long = 0
     var prediction: Prediction = Prediction(this)
+    var fullRangePrediction: Prediction = Prediction(this)
 
     internal class Prediction(private val batteryInfo: BatteryInfo) {
         companion object {
@@ -134,20 +144,45 @@ internal class BatteryInfo {
 
         var whatHappened: Int = 0
         var whenHappened: Long = 0
+        var targetPercent: Int = 0
+        var targetReached: Boolean = false
+
         var lastRTime: RelativeTime = RelativeTime()
 
         fun clear() {
             whenHappened = 0
             whatHappened = NONE
+            targetPercent = 0
+            targetReached = false
         }
 
-        fun update(ts: Long) {
+        fun update(ts: Long, targetPercent: Int) {
             whenHappened = ts
+            this.targetPercent = targetPercent
+            targetReached = false
 
             if (batteryInfo.status == STATUS_FULLY_CHARGED || batteryInfo.status == STATUS_NOT_CHARGING || batteryInfo.status == STATUS_UNKNOWN) whatHappened =
                 NONE
             else if (batteryInfo.status == STATUS_CHARGING) whatHappened = UNTIL_CHARGED
             else whatHappened = UNTIL_DRAINED
+        }
+
+        fun markTargetReached(targetPercent: Int) {
+            whenHappened = 0
+            whatHappened = NONE
+            this.targetPercent = targetPercent
+            targetReached = true
+            lastRTime.update(0, 0)
+        }
+
+        fun copyFrom(other: Prediction) {
+            whatHappened = other.whatHappened
+            whenHappened = other.whenHappened
+            targetPercent = other.targetPercent
+            targetReached = other.targetReached
+            lastRTime.days = other.lastRTime.days
+            lastRTime.hours = other.lastRTime.hours
+            lastRTime.minutes = other.lastRTime.minutes
         }
 
         fun updateRelativeTime() {
@@ -239,6 +274,16 @@ internal class BatteryInfo {
 
         bundle.putInt(FIELD_PREDICTION_WHAT, prediction.whatHappened)
         bundle.putLong(FIELD_PREDICTION_WHEN, prediction.whenHappened)
+        bundle.putInt(FIELD_PREDICTION_TARGET_PERCENT, prediction.targetPercent)
+        bundle.putBoolean(FIELD_PREDICTION_TARGET_REACHED, prediction.targetReached)
+        bundle.putInt(FIELD_FULL_RANGE_PREDICTION_DAYS, fullRangePrediction.lastRTime.days)
+        bundle.putInt(FIELD_FULL_RANGE_PREDICTION_HOURS, fullRangePrediction.lastRTime.hours)
+        bundle.putInt(FIELD_FULL_RANGE_PREDICTION_MINUTES, fullRangePrediction.lastRTime.minutes)
+        bundle.putInt(FIELD_FULL_RANGE_PREDICTION_WHAT, fullRangePrediction.whatHappened)
+        bundle.putLong(FIELD_FULL_RANGE_PREDICTION_WHEN, fullRangePrediction.whenHappened)
+        bundle.putInt(
+            FIELD_FULL_RANGE_PREDICTION_TARGET_PERCENT, fullRangePrediction.targetPercent
+        )
 
         remainingChargeUah?.let { bundle.putLong(FIELD_REMAINING_CHARGE_UAH, it) }
 
@@ -264,6 +309,30 @@ internal class BatteryInfo {
 
         prediction.whatHappened = bundle.getInt(FIELD_PREDICTION_WHAT)
         prediction.whenHappened = bundle.getLong(FIELD_PREDICTION_WHEN)
+        prediction.targetPercent = if (bundle.containsKey(FIELD_PREDICTION_TARGET_PERCENT)) {
+            bundle.getInt(FIELD_PREDICTION_TARGET_PERCENT)
+        } else if (prediction.whatHappened == Prediction.UNTIL_CHARGED) {
+            100
+        } else {
+            0
+        }
+        prediction.targetReached = bundle.getBoolean(FIELD_PREDICTION_TARGET_REACHED, false)
+
+        if (bundle.containsKey(FIELD_FULL_RANGE_PREDICTION_WHAT)) {
+            fullRangePrediction.lastRTime.days = bundle.getInt(FIELD_FULL_RANGE_PREDICTION_DAYS)
+            fullRangePrediction.lastRTime.hours = bundle.getInt(FIELD_FULL_RANGE_PREDICTION_HOURS)
+            fullRangePrediction.lastRTime.minutes = bundle.getInt(
+                FIELD_FULL_RANGE_PREDICTION_MINUTES
+            )
+            fullRangePrediction.whatHappened = bundle.getInt(FIELD_FULL_RANGE_PREDICTION_WHAT)
+            fullRangePrediction.whenHappened = bundle.getLong(FIELD_FULL_RANGE_PREDICTION_WHEN)
+            fullRangePrediction.targetPercent = bundle.getInt(
+                FIELD_FULL_RANGE_PREDICTION_TARGET_PERCENT
+            )
+            fullRangePrediction.targetReached = false
+        } else {
+            fullRangePrediction.clear()
+        }
 
         remainingChargeUah = if (bundle.containsKey(FIELD_REMAINING_CHARGE_UAH)) {
             bundle.getLong(FIELD_REMAINING_CHARGE_UAH)

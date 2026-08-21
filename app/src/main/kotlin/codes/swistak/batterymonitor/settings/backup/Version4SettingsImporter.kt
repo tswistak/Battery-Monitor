@@ -23,9 +23,14 @@ internal object Version4SettingsImporter : SettingsImporter {
         remove(SettingsContract.LEGACY_KEY_CONVERT_F)
         put(SettingsContract.KEY_TEMPERATURE_UNIT, String::class.java)
         put(SettingsContract.KEY_LONG_DURATION_FORMAT, String::class.java)
+        put(SettingsContract.KEY_CHARGING_TARGET_MODE, String::class.java)
+        put(SettingsContract.KEY_CUSTOM_CHARGING_TARGET, Int::class.java)
+        put(SettingsContract.KEY_DISCHARGING_TARGET, Int::class.java)
+        remove(SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT)
+        put(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, Boolean::class.java)
     }
 
     override fun restore(
         editor: SharedPreferences.Editor, settings: Map<String, Any>
-    ) = Version3SettingsImporter.restore(editor, settings)
+    ) = SettingsBackupCodec.restore(editor, settings)
 }

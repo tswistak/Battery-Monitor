@@ -19,13 +19,6 @@
             android:title="@string/pref_enable_battery_current"
             app:singleLineTitle="false" />
 
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="use_privileged_battery_current"
-            android:summary="@string/pref_use_privileged_battery_current_summary"
-            android:title="@string/pref_use_privileged_battery_current"
-            app:singleLineTitle="false" />
-
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/battery_current_multiplier_entries"

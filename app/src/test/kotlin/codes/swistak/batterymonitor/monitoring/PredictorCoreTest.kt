@@ -75,7 +75,104 @@ class PredictorCoreTest {
             info.prediction.whenHappened >= now + ONE_MINUTE
         )
     }
-    
+
+    @Test
+    fun `charging battery predicts time until custom target`() {
+        predictor.setTargets(chargingTargetPercent = 85, dischargingTargetPercent = 0)
+        info.status = BatteryInfo.STATUS_CHARGING
+        info.plugged = BatteryInfo.PLUGGED_USB
+        info.percent = 80
+
+        predictor.update(info, 0L)
+
+        Assert.assertEquals(BatteryInfo.Prediction.UNTIL_CHARGED, info.prediction.whatHappened)
+        Assert.assertEquals(85, info.prediction.targetPercent)
+        Assert.assertEquals(5L * USB_MS_PER_PERCENT, info.prediction.whenHappened)
+    }
+
+    @Test
+    fun `discharging battery predicts time until custom target`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 40)
+        info.status = BatteryInfo.STATUS_UNPLUGGED
+        info.plugged = BatteryInfo.PLUGGED_UNPLUGGED
+        info.percent = 80
+
+        predictor.update(info, 0L)
+
+        Assert.assertEquals(BatteryInfo.Prediction.UNTIL_DRAINED, info.prediction.whatHappened)
+        Assert.assertEquals(40, info.prediction.targetPercent)
+        Assert.assertEquals(40L * DISCHARGE_MS_PER_PERCENT, info.prediction.whenHappened)
+    }
+
+    @Test
+    fun `discharging target supports twenty percent rules`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 20)
+        info.status = BatteryInfo.STATUS_UNPLUGGED
+        info.plugged = BatteryInfo.PLUGGED_UNPLUGGED
+        info.percent = 40
+
+        predictor.update(info, 0L)
+
+        Assert.assertEquals(20, info.prediction.targetPercent)
+        Assert.assertEquals(20L * DISCHARGE_MS_PER_PERCENT, info.prediction.whenHappened)
+    }
+
+    @Test
+    fun `charging target reached clears countdown and records target`() {
+        predictor.setTargets(chargingTargetPercent = 80, dischargingTargetPercent = 0)
+        info.status = BatteryInfo.STATUS_NOT_CHARGING
+        info.plugged = BatteryInfo.PLUGGED_USB
+        info.percent = 80
+
+        predictor.update(info, 0L)
+
+        Assert.assertEquals(BatteryInfo.Prediction.NONE, info.prediction.whatHappened)
+        Assert.assertEquals(0L, info.prediction.whenHappened)
+        Assert.assertEquals(80, info.prediction.targetPercent)
+        Assert.assertTrue(info.prediction.targetReached)
+    }
+
+    @Test
+    fun `charging above custom target is treated as reached`() {
+        predictor.setTargets(chargingTargetPercent = 80, dischargingTargetPercent = 0)
+        info.status = BatteryInfo.STATUS_CHARGING
+        info.plugged = BatteryInfo.PLUGGED_USB
+        info.percent = 85
+
+        predictor.update(info, 0L)
+
+        Assert.assertTrue(info.prediction.targetReached)
+        Assert.assertEquals(80, info.prediction.targetPercent)
+    }
+
+    @Test
+    fun `zero and one hundred targets retain standard prediction behavior`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 0)
+        info.status = BatteryInfo.STATUS_UNPLUGGED
+        info.plugged = BatteryInfo.PLUGGED_UNPLUGGED
+        info.percent = 20
+
+        predictor.update(info, 0L)
+
+        Assert.assertFalse(info.prediction.targetReached)
+        Assert.assertEquals(0, info.prediction.targetPercent)
+        Assert.assertEquals(20L * DISCHARGE_MS_PER_PERCENT, info.prediction.whenHappened)
+    }
+
+    @Test
+    fun `standard full charge target does not use target reached state`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 0)
+        info.status = BatteryInfo.STATUS_CHARGING
+        info.plugged = BatteryInfo.PLUGGED_USB
+        info.percent = 100
+
+        predictor.update(info, 0L)
+
+        Assert.assertFalse(info.prediction.targetReached)
+        Assert.assertEquals(BatteryInfo.Prediction.UNTIL_CHARGED, info.prediction.whatHappened)
+        Assert.assertEquals(100, info.prediction.targetPercent)
+    }
+
     @Test
     fun `fully charged battery clears previous prediction`() {
         info.status = BatteryInfo.STATUS_UNPLUGGED

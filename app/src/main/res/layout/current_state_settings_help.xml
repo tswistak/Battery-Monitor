@@ -36,14 +36,6 @@
 
         <TextView
             style="@style/help_pref"
-            android:text="@string/pref_use_privileged_battery_current" />
-
-        <TextView
-            style="@style/help_text"
-            android:text="@string/pref_use_privileged_battery_current_help" />
-
-        <TextView
-            style="@style/help_pref"
             android:text="@string/pref_battery_current_multiplier" />
 
         <TextView

@@ -32,6 +32,13 @@
             style="@style/help_text"
             android:text="@string/units_formatting_settings_help" />
 
+        <TextView
+            style="@style/help_cat"
+            android:text="@string/time_estimates_settings" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/time_estimates_settings_help" />
 
         <TextView
             style="@style/help_cat"

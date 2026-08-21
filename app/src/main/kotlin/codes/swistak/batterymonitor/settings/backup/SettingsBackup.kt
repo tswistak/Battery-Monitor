@@ -78,26 +78,26 @@ internal object SettingsBackup {
         val vitalSignsContent = prefs.getStringSet(
             SettingsContract.KEY_VITAL_SIGNS_CONTENT, SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
         ) ?: SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
-        for ((backupKey, contentValue) in Version3SettingsImporter.vitalSignsContentByBackupKey) {
+        for ((backupKey, contentValue) in SettingsBackupCodec.vitalSignsContentByBackupKey) {
             settings.put(backupKey, contentValue in vitalSignsContent)
         }
         val vitalSignsOrder = VitalSignsOrder.parse(
             prefs.getString(SettingsContract.KEY_VITAL_SIGNS_ORDER, null)
         )
-        for ((backupKey, contentValue) in Version3SettingsImporter.vitalSignsOrderByBackupKey) {
+        for ((backupKey, contentValue) in SettingsBackupCodec.vitalSignsOrderByBackupKey) {
             settings.put(backupKey, vitalSignsOrder.indexOf(contentValue))
         }
 
         val chipContent = prefs.getStringSet(
             SettingsContract.KEY_CHIP_CONTENT, SettingsContract.DEFAULT_CHIP_CONTENT
         ) ?: SettingsContract.DEFAULT_CHIP_CONTENT
-        for ((backupKey, contentValue) in Version3SettingsImporter.chipContentByBackupKey) {
+        for ((backupKey, contentValue) in SettingsBackupCodec.chipContentByBackupKey) {
             settings.put(backupKey, contentValue in chipContent)
         }
         val chipContentOrder = ChipContentOrder.parse(
             prefs.getString(SettingsContract.KEY_CHIP_CONTENT_ORDER, null)
         )
-        for ((backupKey, contentValue) in Version3SettingsImporter.chipContentOrderByBackupKey) {
+        for ((backupKey, contentValue) in SettingsBackupCodec.chipContentOrderByBackupKey) {
             settings.put(backupKey, chipContentOrder.indexOf(contentValue))
         }
 

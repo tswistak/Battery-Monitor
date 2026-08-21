@@ -79,6 +79,11 @@ class SettingsHelpActivity : AppCompatActivity() {
                 setWindowSubtitle(res!!.getString(R.string.units_formatting_settings))
             }
 
+            SettingsContract.KEY_TIME_ESTIMATES_SETTINGS -> {
+                setContentView(R.layout.time_estimates_settings_help)
+                setWindowSubtitle(res!!.getString(R.string.time_estimates_settings))
+            }
+
             SettingsContract.KEY_ADVANCED_SETTINGS -> {
                 setContentView(R.layout.advanced_settings_help)
                 setWindowSubtitle(res!!.getString(R.string.advanced_settings))
@@ -92,6 +97,7 @@ class SettingsHelpActivity : AppCompatActivity() {
             SettingsContract.KEY_DIAGNOSTICS_SETTINGS -> {
                 setContentView(R.layout.diagnostics_settings_help)
                 setWindowSubtitle(res!!.getString(R.string.diagnostics))
+                hasLinks = intArrayOf(R.id.charging_diagnostics_help_contact)
             }
 
             SettingsContract.KEY_ADVANCED_INFO_HELP -> {

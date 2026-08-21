@@ -351,9 +351,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Показывать ток аккумулятора в главном окне?</string>
   <string name="pref_enable_battery_current_help" formatted="false">После включения ток аккумулятора отображается в главном окне и становятся доступны связанные параметры.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">При необходимости использовать привилегированный доступ</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Разрешить привилегированный доступ как резервный способ, если обычные методы не могут считать ток?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">После включения Battery Monitor может использовать root или Shizuku только когда Android и файловая система не дают показаний. Необходимое разрешение запрашивается при включении.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Привилегированный доступ</string>
+  <string name="pref_use_privileged_access" formatted="false">Использовать привилегированный доступ</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Использовать предоставленный доступ root или Shizuku для более полных и точных данных устройства?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">Привилегированный доступ может предоставить дополнительные данные устройства и улучшить некоторые измерения. Battery Monitor использует только явно предоставленный вами доступ root или Shizuku.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Множитель</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Определить автоматически</string>
@@ -650,4 +651,60 @@
   <string name="diagnostics_database_failed" formatted="false">Проверка базы данных не выполнена. Перезапустите приложение и повторите попытку.</string>
   <string name="diagnostics_service_responded" formatted="false">Служба мониторинга ответила</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Проверка чтения и записи базы данных выполнена успешно</string>
+
+  <string name="charging_diagnostics_title" formatted="false">Диагностика ограничения зарядки OEM</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Чтобы отчёт был полезным, откройте справку и выполните шаги подготовки перед созданием снимков.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Сделать снимок</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Выберите режим зарядки в настройках устройства, затем сохраните его сигналы</string>
+  <string name="charging_diagnostics_report" formatted="false">Создать сравнительный отчёт</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Сначала сделайте снимки как минимум двух разных режимов зарядки OEM</string>
+  <string name="charging_diagnostics_clear" formatted="false">Очистить снимки зарядки</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Удалить локально сохранённые снимки зарядки OEM</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Какая настройка устройства активна?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Защита выключена / без ограничения</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Фиксированный предел 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Фиксированный предел 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Фиксированный предел 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Максимум / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Адаптивная / умная зарядка</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Зарядка по расписанию</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Другой режим OEM</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Сохранение сигналов зарядки…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Снимок зарядки сохранён</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Не удалось сохранить снимок зарядки</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">Сохранено снимков: %1$d. Нажмите, чтобы скопировать или отправить сравнение.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Сначала сохраните как минимум два разных режима зарядки</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Снимки зарядки удалены</string>
+  <string name="charging_diagnostics_copy" formatted="false">Копировать в буфер обмена</string>
+  <string name="charging_diagnostics_save" formatted="false">Сохранить</string>
+  <string name="charging_diagnostics_copied" formatted="false">Отчёт скопирован</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Откройте настройки батареи, отключите защиту зарядки и сделайте снимок.\n
+    2. Выберите фиксированный предел и сделайте ещё один снимок. Если возможно, повторите с другим пределом.\n
+    3. Включите адаптивную, умную или запланированную зарядку и сделайте ещё один снимок.\n
+    4. Создайте сравнительный отчёт. В него входят только отфильтрованные значения зарядки; личные идентификаторы, учётные записи, полные списки настроек и журналы отладки никогда не собираются.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Скопируйте или сохраните отчёт, затем <a href="https://github.com/tswistak/Battery-Monitor/issues/new">создайте issue на GitHub</a> или <a href="mailto:tomasz@swistak.codes">отправьте его по эл. почте</a>. Укажите модель, ОС и параметр OEM для каждого снимка.</string>
+
+  <string name="activity_until_target" formatted="true">до %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">цель достигнута (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Оценка времени</string>
+  <string name="time_estimates_settings_summary" formatted="false">Выберите способ расчёта оставшегося времени и целевые уровни заряда.</string>
+  <string name="time_estimates_settings_help" formatted="false">Эти настройки управляют оценками времени Battery Monitor. Целевые уровни влияют только на оценки и не запускают и не останавливают зарядку.</string>
+  <string name="pref_cat_target_levels" formatted="false">Целевые уровни</string>
+  <string name="pref_charging_target_mode" formatted="false">Цель зарядки</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Лимит зарядки устройства: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Пользовательская цель</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Фиксированный лимит устройства не обнаружен — используется 100 %.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    Если это значение выглядит неверным, вы можете помочь улучшить распознавание устройств. Откройте раздел «Диагностика» и создайте отчёт об ограничении зарядки OEM, внимательно следуя инструкциям в справке.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Автоматический режим использует фиксированный лимит устройства, если Battery Monitor может его прочитать, иначе 100 %. Адаптивная зарядка по-прежнему нацелена на 100 %. Выберите пользовательский режим, чтобы переопределить значение для оценок.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Автоматическое определение может работать на устройствах Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme и Sony Xperia, а также на устройствах с GrapheneOS или LineageOS, особенно при наличии доступа root или Shizuku. Оно основано на программных сигналах, поэтому доступность и точность не гарантируются даже для перечисленных производителей. Непроверенные модели или версии ОС из этих семейств также могут работать, но устройства других производителей сейчас автоматически не определяются.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Автоматически (рекомендуется)</string>
+  <string name="charging_target_mode_custom" formatted="false">Пользовательский</string>
+  <string name="pref_custom_charging_target" formatted="false">Пользовательская цель зарядки</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Задайте конечный уровень оценки зарядки при пользовательской цели.</string>
+  <string name="pref_discharging_target" formatted="false">Цель разрядки</string>
+  <string name="pref_discharging_target_help" formatted="false">Задайте конечный уровень оценки разрядки. Он не зависит от предупреждений о низком заряде.</string>
+  <string name="pref_target_level_summary" formatted="true">Оценивать до %1$d%%.</string>
 </resources>

@@ -317,9 +317,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">在主窗口中显示电池电流？</string>
   <string name="pref_enable_battery_current_help" formatted="false">启用后，电池电流会显示在主窗口中，并可使用相关选项。</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">需要时使用特权访问</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">普通方法无法读取电流时，允许使用特权访问作为备用方法？</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">启用后，只有当 Android 和文件系统方法无法提供读数时，Battery Monitor 才会使用 root 或 Shizuku。启用此选项时会请求所需权限。</string>
+  <string name="pref_cat_privileged_access" formatted="false">特权访问</string>
+  <string name="pref_use_privileged_access" formatted="false">使用特权访问</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">使用已授予的 root 或 Shizuku 权限来获取更完整、更准确的设备数据？</string>
+  <string name="pref_use_privileged_access_help" formatted="false">特权访问可以提供更多设备数据，并改善部分测量结果。Battery Monitor 只使用你明确授予的 root 或 Shizuku 权限。</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">乘数</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">自动检测</string>
@@ -612,4 +613,60 @@
   <string name="diagnostics_database_failed" formatted="false">数据库检查失败。请重启应用后再试。</string>
   <string name="diagnostics_service_responded" formatted="false">监控服务已响应</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">数据库读写检查成功</string>
+
+  <string name="charging_diagnostics_title" formatted="false">OEM 充电上限诊断</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">为了生成有用的报告，请先打开“帮助”并按照准备步骤操作，再捕获快照。</string>
+  <string name="charging_diagnostics_capture" formatted="false">捕获快照</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">在设备设置中选择充电模式，然后捕获其信号</string>
+  <string name="charging_diagnostics_report" formatted="false">创建比较报告</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">请先捕获至少两种不同的 OEM 充电模式</string>
+  <string name="charging_diagnostics_clear" formatted="false">清除充电快照</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">删除本地保存的 OEM 充电快照</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">当前启用了哪项设备设置？</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">保护关闭 / 无限制</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">固定上限 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">固定上限 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">固定上限 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">最大 / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">自适应 / 智能充电</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">定时充电</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">其他 OEM 模式</string>
+  <string name="charging_diagnostics_capturing" formatted="false">正在捕获充电信号…</string>
+  <string name="charging_diagnostics_captured" formatted="false">已捕获充电快照</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">无法捕获充电快照</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">已捕获 %1$d 个快照。点按即可复制或发送比较结果。</string>
+  <string name="charging_diagnostics_need_two" formatted="false">请先捕获至少两种不同的充电模式</string>
+  <string name="charging_diagnostics_cleared" formatted="false">已删除充电快照</string>
+  <string name="charging_diagnostics_copy" formatted="false">复制到剪贴板</string>
+  <string name="charging_diagnostics_save" formatted="false">保存</string>
+  <string name="charging_diagnostics_copied" formatted="false">已复制报告</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. 打开电池设置，关闭充电保护并捕获快照。\n
+    2. 选择固定上限并捕获另一个快照；如果可用，请用另一个上限重复。\n
+    3. 启用自适应、智能或定时充电，再捕获一个快照。\n
+    4. 创建比较报告。只会包含经过筛选的充电相关值；绝不会收集个人标识符、账号、完整设置列表或调试日志。</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">复制或保存报告后，<a href="https://github.com/tswistak/Battery-Monitor/issues/new">打开 GitHub 问题</a>或<a href="mailto:tomasz@swistak.codes">通过电子邮件发送</a>。请说明每个快照的手机型号、系统和 OEM 选项。</string>
+
+  <string name="activity_until_target" formatted="true">直到 %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">已达到目标（%1$d%%）</string>
+
+  <string name="time_estimates_settings" formatted="false">时间估算</string>
+  <string name="time_estimates_settings_summary" formatted="false">选择剩余时间的计算方式和目标电量。</string>
+  <string name="time_estimates_settings_help" formatted="false">这些设置控制 Battery Monitor 的时间估算。目标电量只影响估算，不会开始或停止充电。</string>
+  <string name="pref_cat_target_levels" formatted="false">目标电量</string>
+  <string name="pref_charging_target_mode" formatted="false">充电目标</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">设备充电上限：%1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">自定义目标</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">未检测到固定的设备上限 — 使用 100%。</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    如果此数值看起来不正确，您可以帮助改进设备检测。请打开“诊断”，严格按照“帮助”中的说明生成 OEM 充电上限报告。</string>
+  <string name="pref_charging_target_mode_help" formatted="false">自动模式会在 Battery Monitor 可读取时使用设备的固定充电上限，否则使用 100%。自适应充电的目标仍为 100%。选择自定义可在估算中覆盖设备数值。</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">自动检测可能适用于 Google Pixel、Samsung Galaxy、Xiaomi/Redmi/POCO、OnePlus/Oppo/Realme、Sony Xperia，以及运行 GrapheneOS 或 LineageOS 的设备，尤其是在具有 root 或 Shizuku 访问权限时。检测依赖软件信号，因此即使是列出的制造商，也不保证可用性或准确性。这些系列中未经测试的型号或操作系统版本也可能适用，但目前不会自动检测其他制造商的设备。</string>
+  <string name="charging_target_mode_automatic" formatted="false">自动（推荐）</string>
+  <string name="charging_target_mode_custom" formatted="false">自定义</string>
+  <string name="pref_custom_charging_target" formatted="false">自定义充电目标</string>
+  <string name="pref_custom_charging_target_help" formatted="false">充电目标设为自定义时，设置充电估算的结束电量。</string>
+  <string name="pref_discharging_target" formatted="false">放电目标</string>
+  <string name="pref_discharging_target_help" formatted="false">设置放电估算的结束电量。此设置与低电量警报无关。</string>
+  <string name="pref_target_level_summary" formatted="true">估算至 %1$d%%。</string>
 </resources>

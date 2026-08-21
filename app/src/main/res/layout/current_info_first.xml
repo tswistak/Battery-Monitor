@@ -41,9 +41,13 @@
             android:visibility="gone" />
 
         <LinearLayout
+            android:id="@+id/time_estimate"
             android:layout_width="fill_parent"
             android:layout_height="0px"
             android:layout_weight="0.44"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center_horizontal|bottom"
             android:orientation="horizontal"
             android:paddingTop="10dp">

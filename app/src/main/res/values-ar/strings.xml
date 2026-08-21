@@ -369,9 +369,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">عرض تيار البطارية في النافذة الرئيسية؟</string>
   <string name="pref_enable_battery_current_help" formatted="false">عند التفعيل، يظهر تيار البطارية في النافذة الرئيسية وتصبح الخيارات المرتبطة به متاحة.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">استخدام الوصول المميّز عند الحاجة</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">السماح بالوصول المميّز كخيار احتياطي إذا تعذرت القراءة بالطرق العادية؟</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">عند التفعيل، قد يستخدم Battery Monitor صلاحيات root أو Shizuku فقط إذا لم توفر طرق Android ونظام الملفات قراءة. تُطلب الصلاحية اللازمة عند تفعيل هذا الخيار.</string>
+  <string name="pref_cat_privileged_access" formatted="false">الوصول المميّز</string>
+  <string name="pref_use_privileged_access" formatted="false">استخدام الوصول المميّز</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">استخدام صلاحية root أو Shizuku الممنوحة للحصول على بيانات جهاز أكثر اكتمالًا ودقة؟</string>
+  <string name="pref_use_privileged_access_help" formatted="false">يمكن للوصول المميّز إتاحة بيانات إضافية للجهاز وتحسين بعض القياسات. يستخدم Battery Monitor فقط صلاحية root أو Shizuku التي تمنحها صراحةً.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">المُضاعِف</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">اكتشاف تلقائي</string>
@@ -670,4 +671,60 @@
   <string name="diagnostics_database_failed" formatted="false">فشل فحص قاعدة البيانات. أعد تشغيل التطبيق وحاول مجددًا.</string>
   <string name="diagnostics_service_responded" formatted="false">استجابت خدمة المراقبة</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">نجح فحص القراءة والكتابة في قاعدة البيانات</string>
+
+  <string name="charging_diagnostics_title" formatted="false">تشخيص حد الشحن من الشركة المصنّعة</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">للحصول على تقرير مفيد، افتح «المساعدة» واتبع خطوات التحضير قبل التقاط اللقطات.</string>
+  <string name="charging_diagnostics_capture" formatted="false">التقاط لقطة</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">اضبط وضع الشحن في إعدادات الجهاز ثم التقط إشاراته</string>
+  <string name="charging_diagnostics_report" formatted="false">إنشاء تقرير مقارنة</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">التقط أولاً وضعين مختلفين للشحن على الأقل</string>
+  <string name="charging_diagnostics_clear" formatted="false">مسح لقطات الشحن</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">حذف لقطات الشحن المحفوظة محلياً</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">أي إعداد للجهاز نشط؟</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">الحماية متوقفة / بلا حد</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">حد ثابت 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">حد ثابت 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">حد ثابت 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">الحد الأقصى / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">شحن تكيّفي / ذكي</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">شحن مجدول</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">وضع آخر للشركة المصنّعة</string>
+  <string name="charging_diagnostics_capturing" formatted="false">جارٍ التقاط إشارات الشحن…</string>
+  <string name="charging_diagnostics_captured" formatted="false">تم التقاط لقطة الشحن</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">تعذر التقاط لقطة الشحن</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">تم التقاط %1$d لقطات. انقر لنسخ المقارنة أو إرسالها.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">التقط أولاً وضعين مختلفين للشحن على الأقل</string>
+  <string name="charging_diagnostics_cleared" formatted="false">تم حذف لقطات الشحن</string>
+  <string name="charging_diagnostics_copy" formatted="false">نسخ إلى الحافظة</string>
+  <string name="charging_diagnostics_save" formatted="false">حفظ</string>
+  <string name="charging_diagnostics_copied" formatted="false">تم نسخ التقرير</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. افتح إعدادات البطارية وأوقف حماية الشحن ثم التقط لقطة.\n
+    2. اختر حداً ثابتاً والتقط لقطة أخرى. كرر ذلك بحد آخر إن أمكن.\n
+    3. فعّل الشحن التكيّفي أو الذكي أو المجدول والتقط لقطة إضافية.\n
+    4. أنشئ تقرير المقارنة. لا يتضمن إلا قيماً مصفاة تخص الشحن؛ ولا تُجمع أبداً المعرفات الشخصية أو الحسابات أو قوائم الإعدادات الكاملة أو سجلات التصحيح.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">انسخ التقرير أو احفظه ثم <a href="https://github.com/tswistak/Battery-Monitor/issues/new">افتح مشكلة في GitHub</a> أو <a href="mailto:tomasz@swistak.codes">أرسله بالبريد الإلكتروني</a>. اذكر طراز الهاتف والنظام وخيار الشركة المصنّعة لكل لقطة.</string>
+
+  <string name="activity_until_target" formatted="true">حتى %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">تم بلوغ الهدف (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">تقديرات الوقت</string>
+  <string name="time_estimates_settings_summary" formatted="false">اختر كيفية حساب الوقت المتبقي ومستويات البطارية المستهدفة.</string>
+  <string name="time_estimates_settings_help" formatted="false">تتحكم هذه الإعدادات في تقديرات Battery Monitor. تؤثر المستويات المستهدفة في التقديرات فقط، ولا تبدأ الشحن أو توقفه.</string>
+  <string name="pref_cat_target_levels" formatted="false">المستويات المستهدفة</string>
+  <string name="pref_charging_target_mode" formatted="false">هدف الشحن</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">حد شحن الجهاز: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">هدف مخصص</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">لم يُكتشف حد ثابت للجهاز — سيتم استخدام 100%.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    إذا كانت هذه القيمة لا تبدو صحيحة، يمكنك المساعدة في تحسين اكتشاف الأجهزة. افتح «التشخيص» وأنشئ تقريراً لحد الشحن من الشركة المصنّعة، مع اتباع تعليمات «المساعدة» بعناية.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">يستخدم الوضع التلقائي حد الجهاز الثابت إذا تمكن Battery Monitor من قراءته، وإلا فيستخدم 100%. يظل هدف الشحن التكيفي 100%. اختر مخصص لتجاوز قيمة الجهاز في التقديرات.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">قد يعمل الاكتشاف التلقائي على أجهزة Google Pixel وSamsung Galaxy وXiaomi/Redmi/POCO وOnePlus/Oppo/Realme وSony Xperia، وعلى الأجهزة التي تعمل بنظام GrapheneOS أو LineageOS، خصوصًا عند توفر صلاحية root أو Shizuku. يعتمد الاكتشاف على إشارات برمجية، لذلك لا نضمن توفره أو دقته حتى مع الشركات المذكورة. قد تعمل أيضًا طُرز أو إصدارات نظام غير مختبرة ضمن هذه العائلات، لكن أجهزة الشركات الأخرى لا تُكتشف تلقائيًا حاليًا.</string>
+  <string name="charging_target_mode_automatic" formatted="false">تلقائي (موصى به)</string>
+  <string name="charging_target_mode_custom" formatted="false">مخصص</string>
+  <string name="pref_custom_charging_target" formatted="false">هدف شحن مخصص</string>
+  <string name="pref_custom_charging_target_help" formatted="false">اضبط المستوى النهائي لتقديرات الشحن عندما يكون هدف الشحن مخصصًا.</string>
+  <string name="pref_discharging_target" formatted="false">هدف التفريغ</string>
+  <string name="pref_discharging_target_help" formatted="false">اضبط المستوى النهائي لتقديرات التفريغ. وهو مستقل عن تنبيهات انخفاض البطارية.</string>
+  <string name="pref_target_level_summary" formatted="true">تقدير حتى %1$d%%.</string>
 </resources>

@@ -333,9 +333,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Mostrar a corrente da bateria na janela principal?</string>
   <string name="pref_enable_battery_current_help" formatted="false">Quando ativada, a corrente da bateria é mostrada na janela principal e as opções relacionadas ficam disponíveis.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">Usar acesso privilegiado se necessário</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Permitir acesso privilegiado como alternativa quando os métodos normais não conseguem ler a corrente?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Quando ativado, o Battery Monitor pode usar root ou Shizuku apenas se os métodos do Android e do sistema de ficheiros não fornecerem uma leitura. A permissão necessária é pedida ao ativar.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Acesso privilegiado</string>
+  <string name="pref_use_privileged_access" formatted="false">Usar acesso privilegiado</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Usar o acesso root ou Shizuku concedido para obter dados do dispositivo mais completos e precisos?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">O acesso privilegiado pode disponibilizar dados adicionais do dispositivo e melhorar algumas medições. O Battery Monitor usa apenas o acesso root ou Shizuku que conceder explicitamente.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Multiplicador</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detetar automaticamente</string>
@@ -636,4 +637,60 @@
   <string name="diagnostics_database_failed" formatted="false">A verificação da base de dados falhou. Reinicie a aplicação e tente novamente.</string>
   <string name="diagnostics_service_responded" formatted="false">O serviço de monitorização respondeu</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">A verificação de leitura e escrita da base de dados foi bem-sucedida</string>
+
+  <string name="charging_diagnostics_title" formatted="false">Diagnóstico do limite de carregamento OEM</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Para obter um relatório útil, abra a Ajuda e siga os passos de preparação antes de capturar os instantâneos.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Capturar instantâneo</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Defina um modo de carregamento nas definições do dispositivo e capture os seus sinais</string>
+  <string name="charging_diagnostics_report" formatted="false">Criar relatório comparativo</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Capture primeiro pelo menos dois modos de carregamento OEM diferentes</string>
+  <string name="charging_diagnostics_clear" formatted="false">Limpar instantâneos de carregamento</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Eliminar instantâneos OEM guardados localmente</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Que definição do dispositivo está ativa?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Proteção desligada / sem limite</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Limite fixo 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Limite fixo 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Limite fixo 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Máximo / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Carregamento adaptativo / inteligente</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Carregamento programado</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Outro modo OEM</string>
+  <string name="charging_diagnostics_capturing" formatted="false">A capturar sinais de carregamento…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Instantâneo de carregamento capturado</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Não foi possível capturar o instantâneo</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d instantâneos capturados. Toque para copiar ou enviar a comparação.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Capture primeiro pelo menos dois modos diferentes</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Instantâneos de carregamento eliminados</string>
+  <string name="charging_diagnostics_copy" formatted="false">Copiar para a área de transferência</string>
+  <string name="charging_diagnostics_save" formatted="false">Guardar</string>
+  <string name="charging_diagnostics_copied" formatted="false">Relatório copiado</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Abra as definições da bateria, desligue a proteção de carregamento e capture um instantâneo.\n
+    2. Selecione um limite fixo e capture outro. Se possível, repita com outro limite.\n
+    3. Ative o carregamento adaptativo, inteligente ou programado e capture mais um.\n
+    4. Crie o relatório comparativo. Só são incluídos valores filtrados de carregamento; identificadores pessoais, contas, listas completas de definições e registos de depuração nunca são recolhidos.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Copie ou guarde o relatório e <a href="https://github.com/tswistak/Battery-Monitor/issues/new">abra um problema no GitHub</a> ou <a href="mailto:tomasz@swistak.codes">envie-o por e-mail</a>. Indique o modelo, o sistema e a opção OEM de cada instantâneo.</string>
+
+  <string name="activity_until_target" formatted="true">até %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">objetivo atingido (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Estimativas de tempo</string>
+  <string name="time_estimates_settings_summary" formatted="false">Escolha o cálculo do tempo restante e os níveis de bateria pretendidos.</string>
+  <string name="time_estimates_settings_help" formatted="false">Estas definições controlam as estimativas do Battery Monitor. Os níveis pretendidos afetam apenas as estimativas; não iniciam nem interrompem o carregamento.</string>
+  <string name="pref_cat_target_levels" formatted="false">Níveis pretendidos</string>
+  <string name="pref_charging_target_mode" formatted="false">Objetivo de carregamento</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Limite de carregamento do dispositivo: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Objetivo personalizado</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Nenhum limite fixo detetado — será usado 100%.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    Se este valor não parecer correto, pode ajudar a melhorar a deteção de dispositivos. Abra Diagnóstico e gere um relatório do limite de carregamento OEM, seguindo cuidadosamente as instruções da Ajuda.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Automático usa o limite fixo do dispositivo quando o Battery Monitor o consegue ler; caso contrário usa 100%. O carregamento adaptativo continua a visar 100%. Escolha Personalizado para substituir o valor nas estimativas.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">A deteção automática pode funcionar em dispositivos Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme e Sony Xperia, bem como em dispositivos com GrapheneOS ou LineageOS, sobretudo quando existe acesso root ou Shizuku. Baseia-se em sinais de software, pelo que a disponibilidade e a precisão não são garantidas nem mesmo para os fabricantes indicados. Modelos ou versões do sistema não testados destas famílias também podem funcionar, mas dispositivos de outros fabricantes não são atualmente detetados de forma automática.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Automático (recomendado)</string>
+  <string name="charging_target_mode_custom" formatted="false">Personalizado</string>
+  <string name="pref_custom_charging_target" formatted="false">Objetivo de carregamento personalizado</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Defina o nível final das estimativas de carregamento quando o objetivo é personalizado.</string>
+  <string name="pref_discharging_target" formatted="false">Objetivo de descarregamento</string>
+  <string name="pref_discharging_target_help" formatted="false">Defina o nível final das estimativas de descarregamento. É independente dos alarmes de bateria fraca.</string>
+  <string name="pref_target_level_summary" formatted="true">Estimar até %1$d%%.</string>
 </resources>

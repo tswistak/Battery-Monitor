@@ -38,6 +38,7 @@ internal fun SharedPreferences.Editor.putSetting(key: String, value: Any) {
     when (value) {
         is Boolean -> putBoolean(key, value)
         is String -> putString(key, value)
+        is Int -> putInt(key, value)
         else -> error("Unsupported settings value for '$key'")
     }
 }

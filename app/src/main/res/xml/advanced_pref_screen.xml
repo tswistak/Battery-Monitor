@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory app:title="@string/pref_cat_predictor">
-        <ListPreference
-            android:defaultValue="@string/default_prediction_type"
-            android:entries="@array/prediction_type_entries"
-            android:entryValues="@array/prediction_type_values"
-            app:key="prediction_type"
+
+    <PreferenceCategory app:title="@string/pref_cat_privileged_access">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            app:key="use_privileged_access"
             app:singleLineTitle="false"
-            app:title="@string/pref_prediction_type" />
+            app:summary="@string/pref_use_privileged_access_summary"
+            app:title="@string/pref_use_privileged_access" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/pref_cat_advanced_stats">

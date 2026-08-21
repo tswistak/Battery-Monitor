@@ -349,9 +349,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Zobrazit proud baterie v hlavním okně?</string>
   <string name="pref_enable_battery_current_help" formatted="false">Po povolení se proud baterie zobrazí v hlavním okně a zpřístupní se související možnosti.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">V případě potřeby použít privilegovaný přístup</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Povolit privilegovaný přístup jako zálohu, když běžné metody proud nepřečtou?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Je-li povoleno, Battery Monitor může použít root nebo Shizuku pouze tehdy, když Android ani souborový systém neposkytnou údaj. Potřebné oprávnění se vyžádá při zapnutí.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Privilegovaný přístup</string>
+  <string name="pref_use_privileged_access" formatted="false">Použít privilegovaný přístup</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Použít udělený přístup root nebo Shizuku pro úplnější a přesnější data zařízení?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">Privilegovaný přístup může zpřístupnit další data zařízení a zlepšit některá měření. Battery Monitor používá pouze přístup root nebo Shizuku, který výslovně udělíte.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Násobitel</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Zjistit automaticky</string>
@@ -651,4 +652,61 @@
   <string name="diagnostics_database_failed" formatted="false">Kontrola databáze selhala. Restartujte aplikaci a zkuste to znovu.</string>
   <string name="diagnostics_service_responded" formatted="false">Monitorovací služba odpověděla</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Kontrola čtení a zápisu databáze proběhla úspěšně</string>
+
+  <string name="charging_diagnostics_title" formatted="false">Diagnostika limitu nabíjení OEM</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Aby byla zpráva užitečná, otevřete Nápovědu a před pořízením snímků postupujte podle kroků přípravy.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Pořídit snímek</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Nastavte režim nabíjení v nastavení zařízení a poté zachyťte jeho signály</string>
+  <string name="charging_diagnostics_report" formatted="false">Vytvořit porovnávací zprávu</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Nejprve pořiďte alespoň dva různé režimy nabíjení OEM</string>
+  <string name="charging_diagnostics_clear" formatted="false">Vymazat snímky nabíjení</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Odstranit místně uložené snímky nabíjení OEM</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Které nastavení zařízení je aktivní?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Ochrana vypnuta / bez omezení</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Pevný limit 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Pevný limit 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Pevný limit 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptivní / chytré nabíjení</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Plánované nabíjení</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Jiný režim OEM</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Zachycování signálů nabíjení…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Snímek nabíjení pořízen</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Snímek nabíjení se nepodařilo pořídit</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">Pořízeno %1$d snímků. Klepnutím porovnání zkopírujete nebo odešlete.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Nejprve pořiďte alespoň dva různé režimy nabíjení</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Snímky nabíjení odstraněny</string>
+  <string name="charging_diagnostics_copy" formatted="false">Kopírovat do schránky</string>
+  <string name="charging_diagnostics_save" formatted="false">Uložit</string>
+  <string name="charging_diagnostics_copied" formatted="false">Zpráva byla zkopírována</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Otevřete nastavení baterie, vypněte ochranu nabíjení a pořiďte snímek.\n
+    2. Vyberte pevný limit a pořiďte další snímek. Je-li to možné, zopakujte s jiným limitem.\n
+    3. Zapněte adaptivní, chytré nebo plánované nabíjení a pořiďte ještě jeden snímek.\n
+    4. Vytvořte porovnávací zprávu. Obsahuje pouze filtrované hodnoty nabíjení; osobní identifikátory, účty, úplné výpisy nastavení ani ladicí protokoly se nikdy neshromažďují.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Zkopírujte nebo uložte zprávu a poté <a href="https://github.com/tswistak/Battery-Monitor/issues/new">otevřete problém na GitHubu</a> nebo ji <a href="mailto:tomasz@swistak.codes">odešlete e-mailem</a>. Uveďte model, systém a volbu OEM každého snímku.</string>
+
+  <string name="activity_until_target" formatted="true">do %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">cíl dosažen (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Odhady času</string>
+  <string name="time_estimates_settings_summary" formatted="false">Zvolte způsob výpočtu zbývajícího času a cílové úrovně baterie.</string>
+  <string name="time_estimates_settings_help" formatted="false">Tato nastavení řídí odhady času v Battery Monitor. Cílové úrovně ovlivňují pouze odhady; nespouštějí ani nezastavují nabíjení.</string>
+  <string name="pref_cat_target_levels" formatted="false">Cílové úrovně</string>
+  <string name="pref_charging_target_mode" formatted="false">Cíl nabíjení</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Limit nabíjení zařízení: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Vlastní cíl</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Nebyl zjištěn pevný limit zařízení — používá se 100 %.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    \n
+    Pokud tato hodnota nevypadá správně, můžete pomoci zlepšit rozpoznávání zařízení. Otevřete Diagnostiku a vytvořte zprávu o limitu nabíjení OEM. Pečlivě dodržujte pokyny v Nápovědě.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Automaticky použije pevný limit zařízení, pokud jej Battery Monitor dokáže přečíst, jinak 100 %. Adaptivní nabíjení stále cílí na 100 %. Volbou Vlastní přepíšete hodnotu zařízení pro odhady.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Automatické rozpoznání může fungovat na zařízeních Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme a Sony Xperia a také na zařízeních s GrapheneOS nebo LineageOS, zejména pokud je dostupný přístup root nebo Shizuku. Vychází ze softwarových signálů, proto není dostupnost ani přesnost zaručena ani u uvedených výrobců. Fungovat mohou také netestované modely či verze systému z těchto rodin, zařízení jiných výrobců však nyní automaticky rozpoznávána nejsou.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Automaticky (doporučeno)</string>
+  <string name="charging_target_mode_custom" formatted="false">Vlastní</string>
+  <string name="pref_custom_charging_target" formatted="false">Vlastní cíl nabíjení</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Nastavte koncovou úroveň odhadů nabíjení, když je cíl nabíjení vlastní.</string>
+  <string name="pref_discharging_target" formatted="false">Cíl vybíjení</string>
+  <string name="pref_discharging_target_help" formatted="false">Nastavte koncovou úroveň odhadů vybíjení. Je nezávislá na upozorněních na slabou baterii.</string>
+  <string name="pref_target_level_summary" formatted="true">Odhadovat do %1$d%%.</string>
 </resources>

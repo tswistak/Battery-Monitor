@@ -23,7 +23,8 @@ internal object SettingsMigrationManager {
         BatteryCurrentPreferencesMigration,
         VitalSignsContentMigration,
         ChipContentMigration,
-        TemperatureUnitPreferencesMigration
+        TemperatureUnitPreferencesMigration,
+        GlobalPrivilegedAccessMigration
     )
 
     @Synchronized

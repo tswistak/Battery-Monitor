@@ -23,5 +23,18 @@
         <TextView
             style="@style/help_text"
             android:text="@string/diagnostics_help_report" />
+
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/charging_diagnostics_title" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/charging_diagnostics_help_steps" />
+
+        <TextView
+            android:id="@+id/charging_diagnostics_help_contact"
+            style="@style/help_text"
+            android:text="@string/charging_diagnostics_help_contact" />
     </LinearLayout>
 </ScrollView>

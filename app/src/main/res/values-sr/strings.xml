@@ -341,9 +341,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Prikazati struju baterije u glavnom prozoru?</string>
   <string name="pref_enable_battery_current_help" formatted="false">Kada je omogućeno, struja baterije se prikazuje u glavnom prozoru i povezane opcije postaju dostupne.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">Po potrebi koristi privilegovani pristup</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Dozvoliti privilegovani pristup kao rezervu kada obične metode ne mogu da očitaju struju?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Kada je omogućeno, Battery Monitor može da koristi root ili Shizuku samo ako Android i sistem datoteka ne daju očitavanje. Potrebna dozvola se traži pri uključivanju.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Privilegovani pristup</string>
+  <string name="pref_use_privileged_access" formatted="false">Koristi privilegovani pristup</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Koristiti odobren root ili Shizuku pristup za potpunije i preciznije podatke uređaja?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">Privilegovani pristup može da omogući dodatne podatke uređaja i poboljša neka merenja. Battery Monitor koristi samo root ili Shizuku pristup koji izričito odobrite.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Množilac</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Otkrij automatski</string>
@@ -644,4 +645,60 @@
   <string name="diagnostics_database_failed" formatted="false">Провера базе података није успела. Поново покрените апликацију и покушајте поново.</string>
   <string name="diagnostics_service_responded" formatted="false">Услуга надгледања је одговорила</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Провера читања и писања базе података је успела</string>
+
+  <string name="charging_diagnostics_title" formatted="false">Дијагностика OEM ограничења пуњења</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Да би извештај био користан, отворите Помоћ и пратите кораке за припрему пре снимања стања.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Сними стање</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Подесите режим пуњења у подешавањима уређаја, па снимите његове сигнале</string>
+  <string name="charging_diagnostics_report" formatted="false">Направи упоредни извештај</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Прво снимите најмање два различита OEM режима пуњења</string>
+  <string name="charging_diagnostics_clear" formatted="false">Обриши снимке пуњења</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Обриши локално сачуване OEM снимке пуњења</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Које подешавање уређаја је активно?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Заштита искључена / без ограничења</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Фиксно ограничење 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Фиксно ограничење 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Фиксно ограничење 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Максимум / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Прилагодљиво / паметно пуњење</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Планирано пуњење</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Други OEM режим</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Снимање сигнала пуњења…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Снимак пуњења је сачуван</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Снимак пуњења није могуће сачувати</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">Сачувано снимака: %1$d. Додирните да копирате или пошаљете поређење.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Прво снимите најмање два различита режима пуњења</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Снимци пуњења су обрисани</string>
+  <string name="charging_diagnostics_copy" formatted="false">Копирај у привремену меморију</string>
+  <string name="charging_diagnostics_save" formatted="false">Сачувај</string>
+  <string name="charging_diagnostics_copied" formatted="false">Извештај је копиран</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Отворите подешавања батерије, искључите заштиту пуњења и снимите стање.\n
+    2. Изаберите фиксно ограничење и снимите друго стање. Ако је могуће, поновите са другим ограничењем.\n
+    3. Укључите прилагодљиво, паметно или планирано пуњење и снимите још једно стање.\n
+    4. Направите упоредни извештај. Укључене су само филтриране вредности пуњења; лични идентификатори, налози, потпуни исписи подешавања и дневници отклањања грешака се никада не прикупљају.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Копирајте или сачувајте извештај, затим <a href="https://github.com/tswistak/Battery-Monitor/issues/new">отворите GitHub проблем</a> или га <a href="mailto:tomasz@swistak.codes">пошаљите е-поштом</a>. Наведите модел, систем и OEM опцију за сваки снимак.</string>
+
+  <string name="activity_until_target" formatted="true">do %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">cilj dostignut (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Procene vremena</string>
+  <string name="time_estimates_settings_summary" formatted="false">Izaberite način izračunavanja preostalog vremena i ciljne nivoe baterije.</string>
+  <string name="time_estimates_settings_help" formatted="false">Ova podešavanja upravljaju procenama vremena u Battery Monitor. Ciljni nivoi utiču samo na procene; ne pokreću niti zaustavljaju punjenje.</string>
+  <string name="pref_cat_target_levels" formatted="false">Ciljni nivoi</string>
+  <string name="pref_charging_target_mode" formatted="false">Cilj punjenja</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Ograničenje punjenja uređaja: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Prilagođeni cilj</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Nije otkriveno fiksno ograničenje uređaja — koristi se 100%.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    Ако ова вредност не изгледа исправно, можете помоћи да се побољша препознавање уређаја. Отворите Дијагностику и направите извештај о OEM ограничењу пуњења, пажљиво пратећи упутства у Помоћи.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Automatski koristi fiksno ograničenje uređaja ako Battery Monitor može da ga pročita, inače 100%. Prilagodljivo punjenje i dalje cilja 100%. Izaberite Prilagođeno da zamenite vrednost uređaja za procene.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Аутоматско препознавање може да ради на уређајима Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme и Sony Xperia, као и на уређајима са GrapheneOS или LineageOS, нарочито када је доступан root или Shizuku приступ. Заснива се на софтверским сигналима, па доступност и тачност нису загарантоване ни код наведених произвођача. Могу радити и нетестирани модели или верзије система из ових породица, али уређаји других произвођача тренутно се не препознају аутоматски.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Automatski (preporučeno)</string>
+  <string name="charging_target_mode_custom" formatted="false">Prilagođeno</string>
+  <string name="pref_custom_charging_target" formatted="false">Prilagođeni cilj punjenja</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Podesite krajnji nivo procena punjenja kada je cilj punjenja prilagođen.</string>
+  <string name="pref_discharging_target" formatted="false">Cilj pražnjenja</string>
+  <string name="pref_discharging_target_help" formatted="false">Podesite krajnji nivo procena pražnjenja. Nezavisan je od alarma za nizak nivo baterije.</string>
+  <string name="pref_target_level_summary" formatted="true">Proceni do %1$d%%.</string>
 </resources>

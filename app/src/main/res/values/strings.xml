@@ -184,7 +184,7 @@
   <plurals name="for_n_hours">
         <item quantity="one">For %d Hour</item>
         <item quantity="other">For %d Hours</item>
-  </plurals>
+    </plurals>
 
   <string name="duration_for">for %1$s</string>
   <string name="unit_days">%dd</string>
@@ -329,9 +329,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Display battery current in the main window?</string>
   <string name="pref_enable_battery_current_help" formatted="false">When enabled, battery current is displayed in the main window and its related options become available.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">Use privileged access if needed</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Allow privileged access as a fallback when normal methods cannot read battery current?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">When enabled, Battery Monitor may use root or Shizuku only if Android and file-system methods cannot provide a reading. Any required permission is requested when you enable this option.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Privileged access</string>
+  <string name="pref_use_privileged_access" formatted="false">Use privileged access</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Use granted root or Shizuku access for more complete and accurate device data?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">Privileged access can make additional device data available and improve some measurements. Battery Monitor uses only root or Shizuku access that you explicitly grant.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Multiplier</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detect automatically</string>
@@ -632,4 +633,60 @@
   <string name="diagnostics_database_failed" formatted="false">The database check failed. Restart the app and try again.</string>
   <string name="diagnostics_service_responded" formatted="false">Monitoring service responded</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Database read and write check succeeded</string>
+
+  <string name="charging_diagnostics_title" formatted="false">OEM charging-limit diagnostics</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">For a useful report, open Help and follow the preparation steps before capturing snapshots.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Capture snapshot</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Set a charging mode in the device settings, then capture its signals</string>
+  <string name="charging_diagnostics_report" formatted="false">Create comparison report</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Capture at least two different OEM charging modes first</string>
+  <string name="charging_diagnostics_clear" formatted="false">Clear charging snapshots</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Delete locally stored OEM charging snapshots</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Which device setting is active?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Protection off / unrestricted</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Fixed limit 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Fixed limit 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Fixed limit 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptive / smart charging</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Scheduled charging</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Other OEM mode</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Capturing charging signals…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Charging snapshot captured</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Could not capture charging snapshot</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d snapshots captured. Tap to copy or send the comparison.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Capture at least two different charging modes first</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Charging snapshots deleted</string>
+  <string name="charging_diagnostics_copy" formatted="false">Copy to clipboard</string>
+  <string name="charging_diagnostics_save" formatted="false">Save</string>
+  <string name="charging_diagnostics_copied" formatted="false">Report copied</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Open your device’s battery settings and turn charging protection off, then capture a snapshot.\n
+    2. Select a fixed limit and capture another snapshot. If available, repeat for another fixed limit.\n
+    3. Enable adaptive, smart, or scheduled charging and capture one more snapshot.\n
+    4. Create the comparison report. Only filtered charging-related values are included; personal identifiers, accounts, complete settings dumps, and debug logs are never collected.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Copy or save the generated report, then <a href="https://github.com/tswistak/Battery-Monitor/issues/new">open a GitHub issue</a> or <a href="mailto:tomasz@swistak.codes">send it by email</a>. Describe the phone model, OS, and which OEM options correspond to each snapshot.</string>
+
+  <string name="activity_until_target" formatted="true">until %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">target reached (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Time estimates</string>
+  <string name="time_estimates_settings_summary" formatted="false">Choose how remaining time is calculated and which battery levels it targets.</string>
+  <string name="time_estimates_settings_help" formatted="false">These settings control Battery Monitor’s time estimates. Target levels affect estimates only; they do not make Battery Monitor start or stop charging.</string>
+  <string name="pref_cat_target_levels" formatted="false">Target levels</string>
+  <string name="pref_charging_target_mode" formatted="false">Charging target</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Device charging limit: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Custom target</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">No fixed device limit detected — using 100%.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    If this value does not look correct, you can help improve device detection. Open Diagnostics and generate an OEM charging-limit report, carefully following the instructions in Help.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Automatic uses a fixed device charging limit when Battery Monitor can read one, and otherwise uses 100%. Adaptive charging still targets 100%. Choose Custom to override the device value for estimates.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Automatic detection may work on Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme, and Sony Xperia devices, and on devices running GrapheneOS or LineageOS—particularly when root or Shizuku access is available. It relies on software signals, so availability and accuracy are not guaranteed even for the listed manufacturers. Untested models or OS versions in these families may also work, but devices from other manufacturers are not currently detected automatically.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Automatic (recommended)</string>
+  <string name="charging_target_mode_custom" formatted="false">Custom</string>
+  <string name="pref_custom_charging_target" formatted="false">Custom charging target</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Set the battery level used as the end point of charging estimates when Charging target is Custom.</string>
+  <string name="pref_discharging_target" formatted="false">Discharging target</string>
+  <string name="pref_discharging_target_help" formatted="false">Set the battery level used as the end point of discharging estimates. This is independent of low-battery alarms.</string>
+  <string name="pref_target_level_summary" formatted="true">Estimate until %1$d%%.</string>
 </resources>

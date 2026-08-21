@@ -349,9 +349,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Rodyti akumuliatoriaus srovę pagrindiniame lange?</string>
   <string name="pref_enable_battery_current_help" formatted="false">Įjungus akumuliatoriaus srovė rodoma pagrindiniame lange ir tampa pasiekiamos susijusios parinktys.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">Jei reikia, naudoti privilegijuotą prieigą</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Leisti privilegijuotą prieigą kaip atsarginį būdą, kai įprasti metodai negali nuskaityti srovės?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Įjungus Battery Monitor gali naudoti root arba Shizuku tik tada, kai Android ir failų sistemos metodai nepateikia rodmens. Reikalingo leidimo prašoma įjungiant.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Privilegijuota prieiga</string>
+  <string name="pref_use_privileged_access" formatted="false">Naudoti privilegijuotą prieigą</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Naudoti suteiktą root arba Shizuku prieigą išsamesniems ir tikslesniems įrenginio duomenims?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">Privilegijuota prieiga gali suteikti papildomų įrenginio duomenų ir pagerinti kai kuriuos matavimus. Battery Monitor naudoja tik aiškiai jūsų suteiktą root arba Shizuku prieigą.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Daugiklis</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Aptikti automatiškai</string>
@@ -651,4 +652,60 @@
   <string name="diagnostics_database_failed" formatted="false">Nepavyko patikrinti duomenų bazės. Paleiskite programą iš naujo ir bandykite dar kartą.</string>
   <string name="diagnostics_service_responded" formatted="false">Stebėjimo paslauga atsakė</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Duomenų bazės skaitymo ir rašymo patikra sėkminga</string>
+
+  <string name="charging_diagnostics_title" formatted="false">OEM įkrovimo ribos diagnostika</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Kad ataskaita būtų naudinga, prieš fiksuodami kopijas atverkite Žinyną ir atlikite paruošimo veiksmus.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Užfiksuoti momentinę kopiją</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Nustatykite įkrovimo režimą įrenginio nustatymuose ir užfiksuokite jo signalus</string>
+  <string name="charging_diagnostics_report" formatted="false">Sukurti palyginimo ataskaitą</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Pirmiausia užfiksuokite bent du skirtingus OEM įkrovimo režimus</string>
+  <string name="charging_diagnostics_clear" formatted="false">Išvalyti įkrovimo kopijas</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Ištrinti vietoje saugomas OEM įkrovimo kopijas</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Kuris įrenginio nustatymas aktyvus?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Apsauga išjungta / be ribos</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Fiksuota riba 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Fiksuota riba 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Fiksuota riba 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Maksimumas / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Prisitaikantis / išmanus įkrovimas</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Suplanuotas įkrovimas</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Kitas OEM režimas</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Fiksuojami įkrovimo signalai…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Įkrovimo kopija užfiksuota</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Nepavyko užfiksuoti įkrovimo kopijos</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">Užfiksuota kopijų: %1$d. Palieskite, kad nukopijuotumėte ar išsiųstumėte palyginimą.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Pirmiausia užfiksuokite bent du skirtingus režimus</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Įkrovimo kopijos ištrintos</string>
+  <string name="charging_diagnostics_copy" formatted="false">Kopijuoti į iškarpinę</string>
+  <string name="charging_diagnostics_save" formatted="false">Išsaugoti</string>
+  <string name="charging_diagnostics_copied" formatted="false">Ataskaita nukopijuota</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Atverkite akumuliatoriaus nustatymus, išjunkite įkrovimo apsaugą ir užfiksuokite kopiją.\n
+    2. Pasirinkite fiksuotą ribą ir užfiksuokite kitą kopiją. Jei galima, pakartokite su kita riba.\n
+    3. Įjunkite prisitaikantį, išmanų ar suplanuotą įkrovimą ir užfiksuokite dar vieną kopiją.\n
+    4. Sukurkite palyginimo ataskaitą. Įtraukiamos tik filtruotos įkrovimo reikšmės; asmeniniai identifikatoriai, paskyros, visi nustatymų sąrašai ir derinimo žurnalai niekada nerenkami.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Nukopijuokite arba išsaugokite ataskaitą, tada <a href="https://github.com/tswistak/Battery-Monitor/issues/new">atverkite GitHub problemą</a> arba <a href="mailto:tomasz@swistak.codes">siųskite el. paštu</a>. Nurodykite modelį, sistemą ir kiekvienos kopijos OEM parinktį.</string>
+
+  <string name="activity_until_target" formatted="true">iki %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">tikslas pasiektas (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Laiko įverčiai</string>
+  <string name="time_estimates_settings_summary" formatted="false">Pasirinkite likusio laiko skaičiavimą ir tikslinius akumuliatoriaus lygius.</string>
+  <string name="time_estimates_settings_help" formatted="false">Šie nustatymai valdo Battery Monitor laiko įverčius. Tiksliniai lygiai veikia tik įverčius; jie nepradeda ir nesustabdo įkrovimo.</string>
+  <string name="pref_cat_target_levels" formatted="false">Tiksliniai lygiai</string>
+  <string name="pref_charging_target_mode" formatted="false">Įkrovimo tikslas</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Įrenginio įkrovimo riba: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Pasirinktinis tikslas</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Fiksuota įrenginio riba neaptikta — naudojama 100 %.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    Jei ši reikšmė atrodo neteisinga, galite padėti pagerinti įrenginių aptikimą. Atverkite Diagnostiką ir sukurkite OEM įkrovimo ribos ataskaitą, atidžiai laikydamiesi Žinyno nurodymų.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Automatinis režimas naudoja fiksuotą įrenginio ribą, jei Battery Monitor ją gali perskaityti, kitaip 100 %. Adaptyvusis įkrovimas vis tiek siekia 100 %. Pasirinkite Pasirinktinis, kad pakeistumėte įrenginio vertę įverčiams.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Automatinis aptikimas gali veikti Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme ir Sony Xperia įrenginiuose bei įrenginiuose su GrapheneOS ar LineageOS, ypač kai pasiekiama root arba Shizuku prieiga. Jis remiasi programinės įrangos signalais, todėl veikimas ir tikslumas negarantuojami net nurodytų gamintojų įrenginiuose. Gali veikti ir neišbandyti šių šeimų modeliai ar OS versijos, tačiau kitų gamintojų įrenginiai šiuo metu automatiškai neaptinkami.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Automatiškai (rekomenduojama)</string>
+  <string name="charging_target_mode_custom" formatted="false">Pasirinktinis</string>
+  <string name="pref_custom_charging_target" formatted="false">Pasirinktinis įkrovimo tikslas</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Nustatykite galutinį įkrovimo įverčių lygį, kai tikslas yra pasirinktinis.</string>
+  <string name="pref_discharging_target" formatted="false">Iškrovimo tikslas</string>
+  <string name="pref_discharging_target_help" formatted="false">Nustatykite galutinį iškrovimo įverčių lygį. Jis nepriklauso nuo išsikrovusio akumuliatoriaus įspėjimų.</string>
+  <string name="pref_target_level_summary" formatted="true">Vertinti iki %1$d%%.</string>
 </resources>

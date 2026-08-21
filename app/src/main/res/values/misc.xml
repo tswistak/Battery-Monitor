@@ -342,6 +342,16 @@
         <item>-2</item>
     </string-array>
 
+    <string-array name="charging_target_mode_entries">
+        <item>@string/charging_target_mode_automatic</item>
+        <item>@string/charging_target_mode_custom</item>
+    </string-array>
+
+    <string-array name="charging_target_mode_values" translatable="false">
+        <item>automatic</item>
+        <item>custom</item>
+    </string-array>
+
     <string-array name="battery_current_multiplier_entries">
         <item>@string/pref_battery_current_multiplier_detect_automatically</item>
         <item>1</item>

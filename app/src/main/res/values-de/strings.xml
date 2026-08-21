@@ -329,9 +329,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Batteriestrom im Hauptfenster anzeigen?</string>
   <string name="pref_enable_battery_current_help" formatted="false">Wenn aktiviert, wird der Batteriestrom im Hauptfenster angezeigt und die zugehörigen Optionen werden verfügbar.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">Bei Bedarf privilegierten Zugriff verwenden</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Privilegierten Zugriff als Ausweichmethode zulassen, wenn normale Methoden den Batteriestrom nicht lesen können?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Wenn aktiviert, darf Battery Monitor Root oder Shizuku nur verwenden, wenn Android- und Dateisystemmethoden keinen Messwert liefern. Die erforderliche Berechtigung wird beim Aktivieren angefordert.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Privilegierter Zugriff</string>
+  <string name="pref_use_privileged_access" formatted="false">Privilegierten Zugriff verwenden</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Gewährten Root- oder Shizuku-Zugriff für vollständigere und genauere Gerätedaten verwenden?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">Privilegierter Zugriff kann zusätzliche Gerätedaten verfügbar machen und einige Messungen verbessern. Battery Monitor verwendet nur Root- oder Shizuku-Zugriff, den du ausdrücklich gewährst.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Multiplikator</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Automatisch erkennen</string>
@@ -606,4 +607,60 @@
   <string name="diagnostics_database_failed" formatted="false">Die Datenbankprüfung ist fehlgeschlagen. Starten Sie die App neu und versuchen Sie es erneut.</string>
   <string name="diagnostics_service_responded" formatted="false">Der Überwachungsdienst hat geantwortet</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Die Lese- und Schreibprüfung der Datenbank war erfolgreich</string>
+
+  <string name="charging_diagnostics_title" formatted="false">OEM-Ladelimit-Diagnose</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Damit der Bericht aussagekräftig ist, öffnen Sie die Hilfe und folgen Sie vor dem Erfassen den Vorbereitungsschritten.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Momentaufnahme erfassen</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Stellen Sie in den Geräteeinstellungen einen Lademodus ein und erfassen Sie anschließend dessen Signale</string>
+  <string name="charging_diagnostics_report" formatted="false">Vergleichsbericht erstellen</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Erfassen Sie zuerst mindestens zwei verschiedene OEM-Lademodi</string>
+  <string name="charging_diagnostics_clear" formatted="false">Lade-Momentaufnahmen löschen</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Lokal gespeicherte OEM-Lade-Momentaufnahmen löschen</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Welche Geräteeinstellung ist aktiv?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Schutz aus / uneingeschränkt</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Festes Limit 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Festes Limit 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Festes Limit 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptives / intelligentes Laden</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Zeitgesteuertes Laden</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Anderer OEM-Modus</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Ladesignale werden erfasst…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Lade-Momentaufnahme erfasst</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Lade-Momentaufnahme konnte nicht erfasst werden</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d Momentaufnahmen erfasst. Tippen, um den Vergleich zu kopieren oder zu senden.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Erfassen Sie zuerst mindestens zwei verschiedene Lademodi</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Lade-Momentaufnahmen gelöscht</string>
+  <string name="charging_diagnostics_copy" formatted="false">In Zwischenablage kopieren</string>
+  <string name="charging_diagnostics_save" formatted="false">Speichern</string>
+  <string name="charging_diagnostics_copied" formatted="false">Bericht kopiert</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Öffnen Sie die Akkueinstellungen, schalten Sie den Ladeschutz aus und erfassen Sie eine Momentaufnahme.\n
+    2. Wählen Sie ein festes Limit und erfassen Sie eine weitere. Wiederholen Sie dies nach Möglichkeit für ein anderes Limit.\n
+    3. Aktivieren Sie adaptives, intelligentes oder zeitgesteuertes Laden und erfassen Sie eine weitere Momentaufnahme.\n
+    4. Erstellen Sie den Vergleichsbericht. Er enthält nur gefilterte Ladedaten; persönliche Kennungen, Konten, vollständige Einstellungslisten und Debug-Protokolle werden niemals erfasst.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Kopieren oder speichern Sie den Bericht und <a href="https://github.com/tswistak/Battery-Monitor/issues/new">öffnen Sie ein GitHub-Issue</a> oder <a href="mailto:tomasz@swistak.codes">senden Sie ihn per E-Mail</a>. Nennen Sie Telefonmodell, Betriebssystem und die OEM-Option jeder Momentaufnahme.</string>
+
+  <string name="activity_until_target" formatted="true">bis %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">Ziel erreicht (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Zeitschätzungen</string>
+  <string name="time_estimates_settings_summary" formatted="false">Legen Sie Berechnungsmethode und Zielstände für die Restzeit fest.</string>
+  <string name="time_estimates_settings_help" formatted="false">Diese Einstellungen steuern die Zeitschätzungen von Battery Monitor. Zielstände beeinflussen nur die Schätzung; Battery Monitor startet oder beendet dadurch keinen Ladevorgang.</string>
+  <string name="pref_cat_target_levels" formatted="false">Zielstände</string>
+  <string name="pref_charging_target_mode" formatted="false">Ladeziel</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Ladelimit des Geräts: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Eigenes Ziel</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Kein festes Gerätelimit erkannt — 100% werden verwendet.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    Wenn dieser Wert nicht richtig aussieht, können Sie helfen, die Geräteerkennung zu verbessern. Öffnen Sie die Diagnose und erstellen Sie einen OEM-Ladelimit-Bericht. Befolgen Sie dabei sorgfältig die Anleitung in der Hilfe.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Automatisch verwendet ein festes Gerätelimit, wenn Battery Monitor es lesen kann, sonst 100%. Adaptives Laden zielt weiterhin auf 100%. Mit Benutzerdefiniert überschreiben Sie den Gerätewert für Schätzungen.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Die automatische Erkennung kann auf Geräten von Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme und Sony Xperia sowie auf Geräten mit GrapheneOS oder LineageOS funktionieren – besonders, wenn Root- oder Shizuku-Zugriff verfügbar ist. Sie stützt sich auf Softwaresignale; Verfügbarkeit und Genauigkeit sind daher selbst bei den genannten Herstellern nicht garantiert. Auch ungetestete Modelle oder Betriebssystemversionen dieser Familien können funktionieren. Geräte anderer Hersteller werden derzeit nicht automatisch erkannt.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Automatisch (empfohlen)</string>
+  <string name="charging_target_mode_custom" formatted="false">Benutzerdefiniert</string>
+  <string name="pref_custom_charging_target" formatted="false">Benutzerdefiniertes Ladeziel</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Legt den Endstand für Ladeschätzungen fest, wenn das Ladeziel benutzerdefiniert ist.</string>
+  <string name="pref_discharging_target" formatted="false">Entladeziel</string>
+  <string name="pref_discharging_target_help" formatted="false">Legt den Endstand für Entladeschätzungen fest. Dies ist unabhängig von Warnungen bei niedrigem Akkustand.</string>
+  <string name="pref_target_level_summary" formatted="true">Bis %1$d%% schätzen.</string>
 </resources>

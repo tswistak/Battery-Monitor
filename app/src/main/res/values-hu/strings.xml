@@ -333,9 +333,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Megjelenjen az akkumulátoráram a főablakban?</string>
   <string name="pref_enable_battery_current_help" formatted="false">Engedélyezéskor az akkumulátoráram megjelenik a főablakban, és elérhetővé válnak a kapcsolódó beállítások.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">Privilegizált hozzáférés használata szükség esetén</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Engedélyezi a privilegizált hozzáférést tartalékként, ha a normál módszerek nem tudják kiolvasni az áramot?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Engedélyezéskor a Battery Monitor csak akkor használ rootot vagy Shizukut, ha az Android és a fájlrendszer nem ad mérési adatot. A szükséges engedélyt a bekapcsoláskor kéri.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Privilegizált hozzáférés</string>
+  <string name="pref_use_privileged_access" formatted="false">Privilegizált hozzáférés használata</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Használja a megadott root- vagy Shizuku-hozzáférést teljesebb és pontosabb eszközadatokhoz?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">A privilegizált hozzáférés további eszközadatokat tehet elérhetővé, és javíthat egyes méréseket. A Battery Monitor csak az Ön által kifejezetten megadott root- vagy Shizuku-hozzáférést használja.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Szorzó</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Automatikus felismerés</string>
@@ -618,4 +619,60 @@
   <string name="diagnostics_database_failed" formatted="false">Az adatbázis ellenőrzése sikertelen. Indítsa újra az alkalmazást, majd próbálja újra.</string>
   <string name="diagnostics_service_responded" formatted="false">A megfigyelési szolgáltatás válaszolt</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Az adatbázis olvasási és írási ellenőrzése sikeres</string>
+
+  <string name="charging_diagnostics_title" formatted="false">OEM töltési korlát diagnosztikája</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Hasznos jelentéshez nyissa meg a Súgót, és a pillanatképek rögzítése előtt kövesse az előkészítési lépéseket.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Pillanatkép rögzítése</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Állítson be egy töltési módot az eszköz beállításaiban, majd rögzítse annak jeleit</string>
+  <string name="charging_diagnostics_report" formatted="false">Összehasonlító jelentés készítése</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Előbb rögzítsen legalább két különböző OEM töltési módot</string>
+  <string name="charging_diagnostics_clear" formatted="false">Töltési pillanatképek törlése</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Helyben tárolt OEM töltési pillanatképek törlése</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Melyik eszközbeállítás aktív?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Védelem kikapcsolva / korlátlan</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Rögzített korlát 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Rögzített korlát 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Rögzített korlát 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptív / intelligens töltés</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Ütemezett töltés</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Egyéb OEM mód</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Töltési jelek rögzítése…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Töltési pillanatkép rögzítve</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">A pillanatkép nem rögzíthető</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d pillanatkép rögzítve. Koppintson az összehasonlítás másolásához vagy elküldéséhez.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Előbb rögzítsen legalább két különböző töltési módot</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Töltési pillanatképek törölve</string>
+  <string name="charging_diagnostics_copy" formatted="false">Másolás a vágólapra</string>
+  <string name="charging_diagnostics_save" formatted="false">Mentés</string>
+  <string name="charging_diagnostics_copied" formatted="false">Jelentés másolva</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Nyissa meg az akkumulátor beállításait, kapcsolja ki a töltésvédelmet, majd rögzítsen pillanatképet.\n
+    2. Válasszon rögzített korlátot, és készítsen újabb pillanatképet. Ha lehet, ismételje meg másik korláttal.\n
+    3. Kapcsolja be az adaptív, intelligens vagy ütemezett töltést, és készítsen még egy pillanatképet.\n
+    4. Készítse el az összehasonlító jelentést. Csak szűrt töltési értékeket tartalmaz; személyes azonosítókat, fiókokat, teljes beállításlistákat és hibakeresési naplókat soha nem gyűjt.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Másolja vagy mentse a jelentést, majd <a href="https://github.com/tswistak/Battery-Monitor/issues/new">nyisson GitHub-hibajegyet</a>, vagy <a href="mailto:tomasz@swistak.codes">küldje el e-mailben</a>. Adja meg a modellt, a rendszert és az egyes pillanatképek OEM-beállítását.</string>
+
+  <string name="activity_until_target" formatted="true">%1$d%%-ig</string>
+  <string name="activity_target_reached" formatted="true">a cél elérve (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Időbecslések</string>
+  <string name="time_estimates_settings_summary" formatted="false">Válassza ki a hátralévő idő számítását és a célként használt akkumulátorszinteket.</string>
+  <string name="time_estimates_settings_help" formatted="false">Ezek a beállítások a Battery Monitor időbecsléseit szabályozzák. A célszintek csak a becslést módosítják; nem indítják el és nem állítják le a töltést.</string>
+  <string name="pref_cat_target_levels" formatted="false">Célszintek</string>
+  <string name="pref_charging_target_mode" formatted="false">Töltési cél</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Az eszköz töltési korlátja: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Egyéni cél</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Nem észlelhető rögzített eszközkorlát — 100% lesz használva.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    Ha ez az érték nem tűnik helyesnek, segíthet javítani az eszközfelismerést. Nyissa meg a Diagnosztikát, és készítsen OEM töltésikorlát-jelentést a Súgó utasításainak pontos követésével.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Az automatikus mód a rögzített eszközkorlátot használja, ha a Battery Monitor ki tudja olvasni, egyébként 100%-ot. Az adaptív töltés célja továbbra is 100%. Válassza az Egyéni lehetőséget az eszközérték felülírásához.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Az automatikus felismerés működhet Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme és Sony Xperia eszközökön, valamint GrapheneOS vagy LineageOS rendszert futtató eszközökön, különösen root- vagy Shizuku-hozzáféréssel. Szoftveres jelekre támaszkodik, ezért az elérhetőség és a pontosság a felsorolt gyártóknál sem garantált. E családok nem tesztelt modelljei vagy rendszerverziói is működhetnek, más gyártók eszközeit azonban jelenleg nem ismeri fel automatikusan.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Automatikus (ajánlott)</string>
+  <string name="charging_target_mode_custom" formatted="false">Egyéni</string>
+  <string name="pref_custom_charging_target" formatted="false">Egyéni töltési cél</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Állítsa be a töltési becslés végszintjét, amikor a töltési cél egyéni.</string>
+  <string name="pref_discharging_target" formatted="false">Merítési cél</string>
+  <string name="pref_discharging_target_help" formatted="false">Állítsa be a merítési becslés végszintjét. Ez független az alacsony töltöttségi riasztásoktól.</string>
+  <string name="pref_target_level_summary" formatted="true">Becslés %1$d%%-ig.</string>
 </resources>

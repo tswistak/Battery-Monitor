@@ -10,7 +10,7 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 */
-package codes.swistak.batterymonitor.monitoring
+package codes.swistak.batterymonitor.privileged
 
 import android.content.Context
 import android.os.Binder
@@ -22,24 +22,24 @@ import codes.swistak.batterymonitor.common.PrivilegedShellExecutor
 import kotlin.system.exitProcess
 
 @Keep
-class BatteryCurrentUserService : Binder {
+class PrivilegedCommandUserService : Binder {
     companion object {
         private const val DESCRIPTOR =
-            "codes.swistak.batterymonitor.monitoring.BatteryCurrentUserService"
-        private const val TRANSACTION_GET_CURRENT = FIRST_CALL_TRANSACTION
+            "codes.swistak.batterymonitor.privileged.PrivilegedCommandUserService"
+        private const val TRANSACTION_RUN_COMMAND = FIRST_CALL_TRANSACTION
         private const val TRANSACTION_DESTROY = 16777115
 
         @Throws(RemoteException::class)
-        fun requestCurrent(binder: IBinder, average: Boolean): Long? {
+        fun requestCommand(binder: IBinder, command: String): String? {
             val data = Parcel.obtain()
             val reply = Parcel.obtain()
 
             try {
                 data.writeInterfaceToken(DESCRIPTOR)
-                data.writeInt(if (average) 1 else 0)
-                binder.transact(TRANSACTION_GET_CURRENT, data, reply, 0)
+                data.writeString(command)
+                binder.transact(TRANSACTION_RUN_COMMAND, data, reply, 0)
                 reply.readException()
-                return if (reply.readInt() == 1) reply.readLong() else null
+                return reply.readString()
             } finally {
                 reply.recycle()
                 data.recycle()
@@ -52,12 +52,7 @@ class BatteryCurrentUserService : Binder {
     @Suppress("UNUSED_PARAMETER")
     constructor(context: Context?)
 
-    private fun readCurrent(average: Boolean): Long? {
-        val property = if (average) "current_average" else "current_now"
-        return BatteryCurrent.readPrivilegedMicroAmps(
-            property, PrivilegedShellExecutor()
-        ) { null }
-    }
+    private fun runCommand(command: String): String? = PrivilegedShellExecutor().run(command)
 
     private fun destroy() {
         exitProcess(0)
@@ -70,7 +65,7 @@ class BatteryCurrentUserService : Binder {
             response.writeString(DESCRIPTOR)
             return true
         }
-        if (code != TRANSACTION_GET_CURRENT && code != TRANSACTION_DESTROY) {
+        if (code !in setOf(TRANSACTION_RUN_COMMAND, TRANSACTION_DESTROY)) {
             return super.onTransact(code, data, reply, flags)
         }
 
@@ -80,14 +75,8 @@ class BatteryCurrentUserService : Binder {
             return true
         }
 
-        val current = readCurrent(data.readInt() == 1)
         response.writeNoException()
-        if (current == null) {
-            response.writeInt(0)
-        } else {
-            response.writeInt(1)
-            response.writeLong(current)
-        }
+        response.writeString(runCommand(data.readString().orEmpty()))
         return true
     }
 }

@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### New
+
+- Possibility to set charging and discharging targets for time estimations (#72).
+- Automated detection of charging limits on supported devices.
+
 ### Improved
 
 - Reorganized settings.

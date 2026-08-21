@@ -331,9 +331,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">جریان باتری در پنجره اصلی نمایش داده شود؟</string>
   <string name="pref_enable_battery_current_help" formatted="false">با فعال‌کردن، جریان باتری در پنجره اصلی نمایش داده می‌شود و گزینه‌های مرتبط در دسترس قرار می‌گیرند.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">استفاده از دسترسی ویژه در صورت نیاز</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">اگر روش‌های عادی نتوانند جریان را بخوانند، دسترسی ویژه به‌عنوان روش پشتیبان مجاز باشد؟</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">با فعال‌کردن، Battery Monitor فقط هنگامی از root یا Shizuku استفاده می‌کند که روش‌های Android و سیستم فایل مقداری ارائه نکنند. مجوز لازم هنگام فعال‌سازی درخواست می‌شود.</string>
+  <string name="pref_cat_privileged_access" formatted="false">دسترسی ویژه</string>
+  <string name="pref_use_privileged_access" formatted="false">استفاده از دسترسی ویژه</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">از دسترسی اعطاشدهٔ root یا Shizuku برای داده‌های کامل‌تر و دقیق‌تر دستگاه استفاده شود؟</string>
+  <string name="pref_use_privileged_access_help" formatted="false">دسترسی ویژه می‌تواند داده‌های بیشتری از دستگاه را در دسترس قرار دهد و برخی اندازه‌گیری‌ها را بهبود بخشد. Battery Monitor فقط از دسترسی root یا Shizuku که صریحاً اعطا می‌کنید استفاده می‌کند.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">ضرب کننده</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">تشخیص خودکار</string>
@@ -634,4 +635,60 @@
   <string name="diagnostics_database_failed" formatted="false">بررسی پایگاه داده ناموفق بود. برنامه را دوباره راه‌اندازی و مجدداً امتحان کنید.</string>
   <string name="diagnostics_service_responded" formatted="false">سرویس پایش پاسخ داد</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">بررسی خواندن و نوشتن پایگاه داده موفق بود</string>
+
+  <string name="charging_diagnostics_title" formatted="false">عیب‌یابی محدودیت شارژ سازنده</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">برای تهیه گزارشی مفید، پیش از ثبت تصاویر «راهنما» را باز کنید و مراحل آماده‌سازی را انجام دهید.</string>
+  <string name="charging_diagnostics_capture" formatted="false">گرفتن تصویر لحظه‌ای</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">یک حالت شارژ را در تنظیمات دستگاه انتخاب کنید و سپس سیگنال‌های آن را ثبت کنید</string>
+  <string name="charging_diagnostics_report" formatted="false">ایجاد گزارش مقایسه</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ سازنده را ثبت کنید</string>
+  <string name="charging_diagnostics_clear" formatted="false">پاک کردن تصاویر شارژ</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">حذف تصاویر شارژ ذخیره‌شده در دستگاه</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">کدام تنظیم دستگاه فعال است؟</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">محافظت خاموش / بدون محدودیت</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">محدودیت ثابت 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">محدودیت ثابت 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">محدودیت ثابت 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">حداکثر / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">شارژ تطبیقی / هوشمند</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">شارژ زمان‌بندی‌شده</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">حالت دیگر سازنده</string>
+  <string name="charging_diagnostics_capturing" formatted="false">در حال ثبت سیگنال‌های شارژ…</string>
+  <string name="charging_diagnostics_captured" formatted="false">تصویر شارژ ثبت شد</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">ثبت تصویر شارژ ممکن نشد</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d تصویر ثبت شد. برای کپی یا ارسال مقایسه بزنید.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ را ثبت کنید</string>
+  <string name="charging_diagnostics_cleared" formatted="false">تصاویر شارژ حذف شدند</string>
+  <string name="charging_diagnostics_copy" formatted="false">کپی در کلیپ‌بورد</string>
+  <string name="charging_diagnostics_save" formatted="false">ذخیره</string>
+  <string name="charging_diagnostics_copied" formatted="false">گزارش کپی شد</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. تنظیمات باتری را باز کنید، محافظت شارژ را خاموش کنید و یک تصویر ثبت کنید.\n
+    2. یک محدودیت ثابت انتخاب و تصویر دیگری ثبت کنید. در صورت امکان با محدودیتی دیگر تکرار کنید.\n
+    3. شارژ تطبیقی، هوشمند یا زمان‌بندی‌شده را فعال و تصویر دیگری ثبت کنید.\n
+    4. گزارش مقایسه را بسازید. فقط مقادیر فیلترشده مربوط به شارژ درج می‌شوند؛ شناسه‌های شخصی، حساب‌ها، فهرست کامل تنظیمات و گزارش‌های اشکال‌زدایی هرگز جمع‌آوری نمی‌شوند.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">گزارش را کپی یا ذخیره کنید، سپس <a href="https://github.com/tswistak/Battery-Monitor/issues/new">یک مسئله در GitHub باز کنید</a> یا <a href="mailto:tomasz@swistak.codes">با ایمیل بفرستید</a>. مدل، سیستم‌عامل و گزینه سازنده هر تصویر را بنویسید.</string>
+
+  <string name="activity_until_target" formatted="true">تا %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">هدف رسید (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">برآوردهای زمان</string>
+  <string name="time_estimates_settings_summary" formatted="false">روش محاسبه زمان باقی‌مانده و سطح‌های هدف باتری را انتخاب کنید.</string>
+  <string name="time_estimates_settings_help" formatted="false">این تنظیمات برآوردهای Battery Monitor را کنترل می‌کنند. سطح‌های هدف فقط بر برآوردها اثر دارند و شارژ را شروع یا متوقف نمی‌کنند.</string>
+  <string name="pref_cat_target_levels" formatted="false">سطح‌های هدف</string>
+  <string name="pref_charging_target_mode" formatted="false">هدف شارژ</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">محدودیت شارژ دستگاه: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">هدف سفارشی</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">محدودیت ثابت دستگاه شناسایی نشد — 100% استفاده می‌شود.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    اگر این مقدار درست به نظر نمی‌رسد، می‌توانید به بهبود تشخیص دستگاه کمک کنید. «عیب‌یابی» را باز کنید و با پیروی دقیق از دستورالعمل‌های «راهنما»، گزارش محدودیت شارژ سازنده را بسازید.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">حالت خودکار در صورت امکان محدودیت ثابت دستگاه را می‌خواند و در غیر این صورت از 100% استفاده می‌کند. شارژ تطبیقی همچنان 100% را هدف می‌گیرد. برای جایگزینی مقدار دستگاه در برآوردها، سفارشی را انتخاب کنید.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">تشخیص خودکار ممکن است روی دستگاه‌های Google Pixel، Samsung Galaxy، Xiaomi/Redmi/POCO، OnePlus/Oppo/Realme و Sony Xperia و نیز دستگاه‌های دارای GrapheneOS یا LineageOS، به‌ویژه با دسترسی root یا Shizuku، کار کند. این قابلیت به سیگنال‌های نرم‌افزاری متکی است؛ بنابراین حتی برای سازندگان نام‌برده نیز دسترس‌پذیری و دقت تضمین نمی‌شود. مدل‌ها یا نسخه‌های آزمایش‌نشده در این خانواده‌ها نیز ممکن است کار کنند، اما دستگاه‌های سازندگان دیگر در حال حاضر خودکار شناسایی نمی‌شوند.</string>
+  <string name="charging_target_mode_automatic" formatted="false">خودکار (پیشنهادی)</string>
+  <string name="charging_target_mode_custom" formatted="false">سفارشی</string>
+  <string name="pref_custom_charging_target" formatted="false">هدف شارژ سفارشی</string>
+  <string name="pref_custom_charging_target_help" formatted="false">هنگامی که هدف شارژ سفارشی است، سطح پایانی برآورد شارژ را تنظیم کنید.</string>
+  <string name="pref_discharging_target" formatted="false">هدف تخلیه</string>
+  <string name="pref_discharging_target_help" formatted="false">سطح پایانی برآورد تخلیه را تنظیم کنید. این گزینه از هشدارهای کمبود باتری مستقل است.</string>
+  <string name="pref_target_level_summary" formatted="true">برآورد تا %1$d%%.</string>
 </resources>

@@ -329,9 +329,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Εμφάνιση του ρεύματος μπαταρίας στο κύριο παράθυρο;</string>
   <string name="pref_enable_battery_current_help" formatted="false">Όταν ενεργοποιηθεί, το ρεύμα μπαταρίας εμφανίζεται στο κύριο παράθυρο και γίνονται διαθέσιμες οι σχετικές επιλογές.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">Χρήση προνομιακής πρόσβασης αν χρειάζεται</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Να επιτρέπεται προνομιακή πρόσβαση ως εφεδρεία όταν οι κανονικές μέθοδοι δεν μπορούν να διαβάσουν το ρεύμα;</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Όταν ενεργοποιηθεί, το Battery Monitor μπορεί να χρησιμοποιήσει root ή Shizuku μόνο αν οι μέθοδοι Android και συστήματος αρχείων δεν δώσουν μέτρηση. Η απαιτούμενη άδεια ζητείται κατά την ενεργοποίηση.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Προνομιακή πρόσβαση</string>
+  <string name="pref_use_privileged_access" formatted="false">Χρήση προνομιακής πρόσβασης</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Χρήση της παραχωρημένης πρόσβασης root ή Shizuku για πληρέστερα και ακριβέστερα δεδομένα συσκευής;</string>
+  <string name="pref_use_privileged_access_help" formatted="false">Η προνομιακή πρόσβαση μπορεί να διαθέσει πρόσθετα δεδομένα συσκευής και να βελτιώσει ορισμένες μετρήσεις. Το Battery Monitor χρησιμοποιεί μόνο πρόσβαση root ή Shizuku που παραχωρείτε ρητά.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Πολλαπλασιαστής</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Αυτόματος εντοπισμός</string>
@@ -630,4 +631,60 @@
   <string name="diagnostics_database_failed" formatted="false">Ο έλεγχος της βάσης δεδομένων απέτυχε. Επανεκκινήστε την εφαρμογή και δοκιμάστε ξανά.</string>
   <string name="diagnostics_service_responded" formatted="false">Η υπηρεσία παρακολούθησης αποκρίθηκε</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Ο έλεγχος ανάγνωσης και εγγραφής της βάσης δεδομένων ολοκληρώθηκε με επιτυχία</string>
+
+  <string name="charging_diagnostics_title" formatted="false">Διαγνωστικά ορίου φόρτισης OEM</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Για μια χρήσιμη αναφορά, ανοίξτε τη Βοήθεια και ακολουθήστε τα βήματα προετοιμασίας πριν από τη λήψη στιγμιότυπων.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Λήψη στιγμιότυπου</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Ορίστε μια λειτουργία φόρτισης στις ρυθμίσεις της συσκευής και καταγράψτε τα σήματά της</string>
+  <string name="charging_diagnostics_report" formatted="false">Δημιουργία αναφοράς σύγκρισης</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Καταγράψτε πρώτα τουλάχιστον δύο διαφορετικές λειτουργίες φόρτισης OEM</string>
+  <string name="charging_diagnostics_clear" formatted="false">Εκκαθάριση στιγμιότυπων φόρτισης</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Διαγραφή τοπικά αποθηκευμένων στιγμιότυπων OEM</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Ποια ρύθμιση συσκευής είναι ενεργή;</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Προστασία ανενεργή / χωρίς όριο</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Σταθερό όριο 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Σταθερό όριο 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Σταθερό όριο 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Μέγιστο / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Προσαρμοζόμενη / έξυπνη φόρτιση</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Προγραμματισμένη φόρτιση</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Άλλη λειτουργία OEM</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Καταγραφή σημάτων φόρτισης…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Το στιγμιότυπο φόρτισης καταγράφηκε</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Δεν ήταν δυνατή η καταγραφή</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">Καταγράφηκαν %1$d στιγμιότυπα. Πατήστε για αντιγραφή ή αποστολή της σύγκρισης.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Καταγράψτε πρώτα τουλάχιστον δύο διαφορετικές λειτουργίες</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Τα στιγμιότυπα φόρτισης διαγράφηκαν</string>
+  <string name="charging_diagnostics_copy" formatted="false">Αντιγραφή στο πρόχειρο</string>
+  <string name="charging_diagnostics_save" formatted="false">Αποθήκευση</string>
+  <string name="charging_diagnostics_copied" formatted="false">Η αναφορά αντιγράφηκε</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Ανοίξτε τις ρυθμίσεις μπαταρίας, απενεργοποιήστε την προστασία φόρτισης και καταγράψτε ένα στιγμιότυπο.\n
+    2. Επιλέξτε σταθερό όριο και καταγράψτε άλλο ένα. Αν είναι δυνατό, επαναλάβετε με διαφορετικό όριο.\n
+    3. Ενεργοποιήστε προσαρμοζόμενη, έξυπνη ή προγραμματισμένη φόρτιση και καταγράψτε ακόμη ένα.\n
+    4. Δημιουργήστε την αναφορά σύγκρισης. Περιλαμβάνονται μόνο φιλτραρισμένες τιμές φόρτισης· προσωπικά αναγνωριστικά, λογαριασμοί, πλήρεις λίστες ρυθμίσεων και αρχεία εντοπισμού σφαλμάτων δεν συλλέγονται ποτέ.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Αντιγράψτε ή αποθηκεύστε την αναφορά και έπειτα <a href="https://github.com/tswistak/Battery-Monitor/issues/new">ανοίξτε θέμα στο GitHub</a> ή <a href="mailto:tomasz@swistak.codes">στείλτε τη με email</a>. Αναφέρετε μοντέλο, σύστημα και επιλογή OEM για κάθε στιγμιότυπο.</string>
+
+  <string name="activity_until_target" formatted="true">έως %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">ο στόχος επιτεύχθηκε (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Εκτιμήσεις χρόνου</string>
+  <string name="time_estimates_settings_summary" formatted="false">Επιλέξτε τον υπολογισμό του χρόνου που απομένει και τα επίπεδα-στόχους της μπαταρίας.</string>
+  <string name="time_estimates_settings_help" formatted="false">Αυτές οι ρυθμίσεις ελέγχουν τις εκτιμήσεις του Battery Monitor. Τα επίπεδα-στόχοι επηρεάζουν μόνο τις εκτιμήσεις και δεν ξεκινούν ή σταματούν τη φόρτιση.</string>
+  <string name="pref_cat_target_levels" formatted="false">Επίπεδα-στόχοι</string>
+  <string name="pref_charging_target_mode" formatted="false">Στόχος φόρτισης</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Όριο φόρτισης συσκευής: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Προσαρμοσμένος στόχος</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Δεν εντοπίστηκε σταθερό όριο συσκευής — χρησιμοποιείται 100%.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    Αν αυτή η τιμή δεν φαίνεται σωστή, μπορείτε να βοηθήσετε στη βελτίωση της ανίχνευσης συσκευών. Ανοίξτε τα Διαγνωστικά και δημιουργήστε αναφορά ορίου φόρτισης OEM, ακολουθώντας προσεκτικά τις οδηγίες στη Βοήθεια.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Η αυτόματη λειτουργία χρησιμοποιεί το σταθερό όριο της συσκευής αν το Battery Monitor μπορεί να το διαβάσει, διαφορετικά 100%. Η προσαρμοστική φόρτιση εξακολουθεί να στοχεύει το 100%. Επιλέξτε Προσαρμοσμένο για παράκαμψη της τιμής στις εκτιμήσεις.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Η αυτόματη ανίχνευση μπορεί να λειτουργήσει σε συσκευές Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme και Sony Xperia, καθώς και σε συσκευές με GrapheneOS ή LineageOS, ιδιαίτερα όταν υπάρχει πρόσβαση root ή Shizuku. Βασίζεται σε σήματα λογισμικού, επομένως η διαθεσιμότητα και η ακρίβεια δεν είναι εγγυημένες ούτε για τους κατασκευαστές που αναφέρονται. Μπορεί επίσης να λειτουργήσει σε μη δοκιμασμένα μοντέλα ή εκδόσεις λειτουργικού αυτών των οικογενειών, αλλά συσκευές άλλων κατασκευαστών δεν ανιχνεύονται αυτόματα προς το παρόν.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Αυτόματα (συνιστάται)</string>
+  <string name="charging_target_mode_custom" formatted="false">Προσαρμοσμένο</string>
+  <string name="pref_custom_charging_target" formatted="false">Προσαρμοσμένος στόχος φόρτισης</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Ορίστε το τελικό επίπεδο των εκτιμήσεων φόρτισης όταν ο στόχος είναι προσαρμοσμένος.</string>
+  <string name="pref_discharging_target" formatted="false">Στόχος αποφόρτισης</string>
+  <string name="pref_discharging_target_help" formatted="false">Ορίστε το τελικό επίπεδο των εκτιμήσεων αποφόρτισης. Είναι ανεξάρτητο από τις ειδοποιήσεις χαμηλής μπαταρίας.</string>
+  <string name="pref_target_level_summary" formatted="true">Εκτίμηση έως %1$d%%.</string>
 </resources>

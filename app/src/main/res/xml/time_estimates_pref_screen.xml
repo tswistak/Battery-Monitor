@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="@string/pref_cat_predictor">
+        <ListPreference
+            android:defaultValue="@string/default_prediction_type"
+            android:entries="@array/prediction_type_entries"
+            android:entryValues="@array/prediction_type_values"
+            app:key="prediction_type"
+            app:singleLineTitle="false"
+            app:title="@string/pref_prediction_type" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/pref_cat_target_levels">
+        <ListPreference
+            android:defaultValue="automatic"
+            android:entries="@array/charging_target_mode_entries"
+            android:entryValues="@array/charging_target_mode_values"
+            app:key="charging_target_mode"
+            app:singleLineTitle="false"
+            app:title="@string/pref_charging_target_mode" />
+
+        <SeekBarPreference
+            android:defaultValue="80"
+            android:max="100"
+            app:adjustable="true"
+            app:key="custom_charging_target"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true"
+            app:singleLineTitle="false"
+            app:title="@string/pref_custom_charging_target" />
+
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:max="99"
+            app:adjustable="true"
+            app:key="discharging_target"
+            app:min="0"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true"
+            app:singleLineTitle="false"
+            app:title="@string/pref_discharging_target" />
+    </PreferenceCategory>
+</PreferenceScreen>

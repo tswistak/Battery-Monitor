@@ -35,7 +35,7 @@ internal object BatteryCurrentPreferencesMigration : SettingsMigration {
                 SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER
             )
         val needsPrivileged =
-            !preferences.contains(SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT)
+            !preferences.contains(SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT)
         val needsNotification =
             !preferences.contains(SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION) && preferences.contains(
                 SettingsContract.LEGACY_KEY_DISPLAY_CURRENT_IN_VITAL_STATS
@@ -54,7 +54,8 @@ internal object BatteryCurrentPreferencesMigration : SettingsMigration {
             }
             if (needsPrivileged) {
                 putBoolean(
-                    SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, preferences.getString(
+                    SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT,
+                    preferences.getString(
                         SettingsContract.LEGACY_KEY_CURRENT_SOURCE, null
                     ) == "privileged"
                 )

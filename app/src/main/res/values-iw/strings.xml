@@ -337,9 +337,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">להציג את זרם הסוללה בחלון הראשי?</string>
   <string name="pref_enable_battery_current_help" formatted="false">כאשר האפשרות מופעלת, זרם הסוללה מוצג בחלון הראשי והאפשרויות הקשורות זמינות.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">שימוש בגישה מיוחסת בעת הצורך</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">לאפשר גישה מיוחסת כגיבוי כאשר השיטות הרגילות אינן מצליחות לקרוא את הזרם?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">כאשר האפשרות מופעלת, Battery Monitor עשוי להשתמש ב-root או ב-Shizuku רק אם שיטות Android ומערכת הקבצים אינן מספקות קריאה. ההרשאה הנדרשת מתבקשת בעת ההפעלה.</string>
+  <string name="pref_cat_privileged_access" formatted="false">גישה מיוחסת</string>
+  <string name="pref_use_privileged_access" formatted="false">שימוש בגישה מיוחסת</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">להשתמש בגישת root או Shizuku שהוענקה לקבלת נתוני מכשיר מלאים ומדויקים יותר?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">גישה מיוחסת יכולה לספק נתוני מכשיר נוספים ולשפר מדידות מסוימות. Battery Monitor משתמש רק בגישת root או Shizuku שהענקת במפורש.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">מַכפִּיל</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">זיהוי אוטומטי</string>
@@ -636,4 +637,60 @@
   <string name="diagnostics_database_failed" formatted="false">בדיקת מסד הנתונים נכשלה. הפעילו מחדש את היישום ונסו שוב.</string>
   <string name="diagnostics_service_responded" formatted="false">שירות הניטור הגיב</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">בדיקת הקריאה והכתיבה במסד הנתונים הצליחה</string>
+
+  <string name="charging_diagnostics_title" formatted="false">אבחון מגבלת טעינה של היצרן</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">כדי ליצור דוח שימושי, פתחו את העזרה ובצעו את שלבי ההכנה לפני צילום תמונות המצב.</string>
+  <string name="charging_diagnostics_capture" formatted="false">צילום תמונת מצב</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">בחרו מצב טעינה בהגדרות המכשיר ואז צלמו את האותות שלו</string>
+  <string name="charging_diagnostics_report" formatted="false">יצירת דוח השוואה</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">תחילה צלמו לפחות שני מצבי טעינה שונים של היצרן</string>
+  <string name="charging_diagnostics_clear" formatted="false">ניקוי תמונות מצב של טעינה</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">מחיקת תמונות מצב השמורות מקומית</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">איזו הגדרת מכשיר פעילה?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">הגנה כבויה / ללא הגבלה</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">מגבלה קבועה 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">מגבלה קבועה 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">מגבלה קבועה 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">מרבי / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">טעינה מסתגלת / חכמה</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">טעינה מתוזמנת</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">מצב יצרן אחר</string>
+  <string name="charging_diagnostics_capturing" formatted="false">צילום אותות הטעינה…</string>
+  <string name="charging_diagnostics_captured" formatted="false">תמונת מצב של הטעינה צולמה</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">לא ניתן לצלם תמונת מצב</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">צולמו %1$d תמונות מצב. הקישו כדי להעתיק או לשלוח את ההשוואה.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">תחילה צלמו לפחות שני מצבי טעינה שונים</string>
+  <string name="charging_diagnostics_cleared" formatted="false">תמונות המצב נמחקו</string>
+  <string name="charging_diagnostics_copy" formatted="false">העתקה ללוח</string>
+  <string name="charging_diagnostics_save" formatted="false">שמירה</string>
+  <string name="charging_diagnostics_copied" formatted="false">הדוח הועתק</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. פתחו את הגדרות הסוללה, כבו את הגנת הטעינה וצלמו תמונת מצב.\n
+    2. בחרו מגבלה קבועה וצלמו תמונה נוספת. אם אפשר, חזרו עם מגבלה אחרת.\n
+    3. הפעילו טעינה מסתגלת, חכמה או מתוזמנת וצלמו תמונה נוספת.\n
+    4. צרו את דוח ההשוואה. נכללים רק ערכי טעינה מסוננים; מזהים אישיים, חשבונות, רשימות הגדרות מלאות ויומני ניפוי שגיאות לעולם אינם נאספים.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">העתיקו או שמרו את הדוח ואז <a href="https://github.com/tswistak/Battery-Monitor/issues/new">פתחו דיווח ב-GitHub</a> או <a href="mailto:tomasz@swistak.codes">שלחו בדוא״ל</a>. ציינו דגם, מערכת ואפשרות יצרן לכל תמונת מצב.</string>
+
+  <string name="activity_until_target" formatted="true">עד %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">היעד הושג (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">הערכות זמן</string>
+  <string name="time_estimates_settings_summary" formatted="false">בחרו כיצד לחשב את הזמן שנותר ואת רמות הסוללה ליעד.</string>
+  <string name="time_estimates_settings_help" formatted="false">הגדרות אלה שולטות בהערכות של Battery Monitor. רמות היעד משפיעות רק על ההערכות ואינן מתחילות או מפסיקות טעינה.</string>
+  <string name="pref_cat_target_levels" formatted="false">רמות יעד</string>
+  <string name="pref_charging_target_mode" formatted="false">יעד טעינה</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">מגבלת הטעינה של המכשיר: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">יעד מותאם אישית</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">לא זוהתה מגבלה קבועה — ייעשה שימוש ב־100%.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    אם הערך הזה אינו נראה נכון, תוכלו לעזור לשפר את זיהוי המכשירים. פתחו את האבחון והפיקו דוח מגבלת טעינה של היצרן תוך הקפדה על ההוראות בעזרה.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">מצב אוטומטי משתמש במגבלה קבועה של המכשיר אם Battery Monitor יכול לקרוא אותה, ואחרת ב־100%. טעינה מסתגלת עדיין מכוונת ל־100%. בחרו בהתאמה אישית כדי לעקוף את ערך המכשיר בהערכות.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">זיהוי אוטומטי עשוי לפעול במכשירי Google Pixel,‏ Samsung Galaxy,‏ Xiaomi/Redmi/POCO,‏ OnePlus/Oppo/Realme ו‑Sony Xperia, וגם במכשירים עם GrapheneOS או LineageOS, במיוחד כאשר זמינה גישת root או Shizuku. הזיהוי מסתמך על אותות תוכנה, ולכן הזמינות והדיוק אינם מובטחים גם אצל היצרנים שברשימה. ייתכן שגם דגמים או גרסאות מערכת שלא נבדקו ממשפחות אלו יעבדו, אך מכשירים של יצרנים אחרים אינם מזוהים אוטומטית כעת.</string>
+  <string name="charging_target_mode_automatic" formatted="false">אוטומטי (מומלץ)</string>
+  <string name="charging_target_mode_custom" formatted="false">מותאם אישית</string>
+  <string name="pref_custom_charging_target" formatted="false">יעד טעינה מותאם אישית</string>
+  <string name="pref_custom_charging_target_help" formatted="false">הגדירו את רמת הסיום של הערכות הטעינה כאשר היעד מותאם אישית.</string>
+  <string name="pref_discharging_target" formatted="false">יעד פריקה</string>
+  <string name="pref_discharging_target_help" formatted="false">הגדירו את רמת הסיום של הערכות הפריקה. היא נפרדת מהתראות סוללה חלשה.</string>
+  <string name="pref_target_level_summary" formatted="true">הערכה עד %1$d%%.</string>
 </resources>

@@ -25,13 +25,13 @@ internal class PredictorCore(
         const val RECHARGE_USB: Int = 3
 
         const val ONE_MINUTE: Int = 60 * 1000
-        val FIVE_MINUTES: Int = ONE_MINUTE * 5
+        const val FIVE_MINUTES: Int = ONE_MINUTE * 5
 
         const val SINCE_STATUS_CHANGE: Int = -1
         const val LONG_TERM: Int = -2
         const val AUTOMAGIC: Int = -3
 
-        private val MIN_PREDICTION: Int = ONE_MINUTE
+        private const val MIN_PREDICTION: Int = ONE_MINUTE
 
         private const val WEIGHT_OLD_AVERAGE = 0.998
         private const val WEIGHT_NEW_DATA: Double = 1 - WEIGHT_OLD_AVERAGE
@@ -45,6 +45,8 @@ internal class PredictorCore(
     }
 
     private var predictionType: Int = AUTOMAGIC
+    private var chargingTargetPercent: Int = 100
+    private var dischargingTargetPercent: Int = 0
 
     private val timestamps = LongArray(101)
     private var tsHead = 0
@@ -99,6 +101,17 @@ internal class PredictorCore(
         saveLastPredictionToInfo()
     }
 
+    fun setTargets(chargingTargetPercent: Int, dischargingTargetPercent: Int) {
+        val newChargingTarget = chargingTargetPercent.coerceIn(1, 100)
+        val newDischargingTarget = dischargingTargetPercent.coerceIn(0, 99)
+        if (this.chargingTargetPercent == newChargingTarget && this.dischargingTargetPercent == newDischargingTarget) return
+
+        this.chargingTargetPercent = newChargingTarget
+        this.dischargingTargetPercent = newDischargingTarget
+        lastPrediction = 0
+        lastStatus = -1
+    }
+
     fun update(info: BatteryInfo, whenUpdated: Long) {
         if (info.status == BatteryInfo.STATUS_UNKNOWN) {
             info.prediction.clear()
@@ -107,6 +120,14 @@ internal class PredictorCore(
 
         curInfo = info
         now = whenUpdated
+
+        val target = targetFor(info)
+        if (isTargetReached(info, target)) {
+            lastPrediction = 0
+            info.prediction.markTargetReached(target)
+            setLastsWithoutPrediction()
+            return
+        }
 
         if (!canPredict()) {
             lastPrediction = 0
@@ -119,7 +140,7 @@ internal class PredictorCore(
 
         if (lastPrediction < now + MIN_PREDICTION) {
             lastPrediction = now + MIN_PREDICTION
-            info.prediction.update(lastPrediction)
+            info.prediction.update(lastPrediction, target)
         }
 
         if (info.status != lastStatus || info.plugged != lastPlugged || info.status == BatteryInfo.STATUS_FULLY_CHARGED || (info.status == BatteryInfo.STATUS_CHARGING && info.percent < tsHead) || (info.status == BatteryInfo.STATUS_UNPLUGGED && info.percent > tsHead)) {
@@ -212,7 +233,7 @@ internal class PredictorCore(
     private fun saveLastPredictionToInfo() {
         if (lastPrediction < now + MIN_PREDICTION) lastPrediction = now + MIN_PREDICTION
 
-        curInfo!!.prediction.update(lastPrediction)
+        curInfo!!.prediction.update(lastPrediction, targetFor(curInfo!!))
     }
 
     private fun prediction(): Long {
@@ -232,7 +253,7 @@ internal class PredictorCore(
             from = now
         }
 
-        return from + (recentAverage() * level).toLong()
+        return from + (recentAverage() * (level - dischargingTargetPercent)).toLong()
     }
 
     private fun whenCharged(): Long {
@@ -244,7 +265,33 @@ internal class PredictorCore(
             from = now
         }
 
-        return from + ((101 - level) * recentAverage()).toLong()
+        val pointsRemaining = if (chargingTargetPercent == 100) {
+            101 - level
+        } else {
+            chargingTargetPercent - level
+        }
+        return from + (pointsRemaining * recentAverage()).toLong()
+    }
+
+    private fun targetFor(info: BatteryInfo): Int =
+        if (info.status == BatteryInfo.STATUS_UNPLUGGED) {
+            dischargingTargetPercent
+        } else {
+            chargingTargetPercent
+        }
+
+    private fun isTargetReached(info: BatteryInfo, target: Int): Boolean {
+        return when {
+            info.status == BatteryInfo.STATUS_UNPLUGGED -> dischargingTargetPercent > 0 && info.percent <= target
+
+            info.status == BatteryInfo.STATUS_CHARGING -> chargingTargetPercent < 100 && info.percent >= target
+
+            info.plugged != BatteryInfo.PLUGGED_UNPLUGGED && info.status in setOf(
+                BatteryInfo.STATUS_NOT_CHARGING, BatteryInfo.STATUS_FULLY_CHARGED
+            ) -> chargingTargetPercent < 100 && info.percent >= target
+
+            else -> false
+        }
     }
 
     private fun setLasts() {

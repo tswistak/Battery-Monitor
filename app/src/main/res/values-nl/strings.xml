@@ -331,9 +331,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Batterijstroom in het hoofdvenster tonen?</string>
   <string name="pref_enable_battery_current_help" formatted="false">Na inschakelen wordt de batterijstroom in het hoofdvenster getoond en worden de bijbehorende opties beschikbaar.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">Indien nodig toegang met extra rechten gebruiken</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Toegang met extra rechten toestaan als reserve wanneer normale methoden de stroom niet kunnen lezen?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Na inschakelen mag Battery Monitor root of Shizuku alleen gebruiken als Android en het bestandssysteem geen meting leveren. De vereiste toestemming wordt bij het inschakelen gevraagd.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Toegang met extra rechten</string>
+  <string name="pref_use_privileged_access" formatted="false">Toegang met extra rechten gebruiken</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Verleende root- of Shizuku-toegang gebruiken voor completere en nauwkeurigere apparaatgegevens?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">Toegang met extra rechten kan aanvullende apparaatgegevens beschikbaar maken en sommige metingen verbeteren. Battery Monitor gebruikt alleen root- of Shizuku-toegang die je uitdrukkelijk verleent.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Vermenigvuldiger</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Automatisch detecteren</string>
@@ -634,4 +635,60 @@
   <string name="diagnostics_database_failed" formatted="false">De databasecontrole is mislukt. Start de app opnieuw en probeer het nogmaals.</string>
   <string name="diagnostics_service_responded" formatted="false">De bewakingsservice heeft gereageerd</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">De lees- en schrijfcontrole van de database is geslaagd</string>
+
+  <string name="charging_diagnostics_title" formatted="false">Diagnose van OEM-laadlimiet</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Open voor een bruikbaar rapport de Help en volg de voorbereidingsstappen voordat u momentopnamen maakt.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Momentopname maken</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Stel een laadmodus in bij de apparaatinstellingen en leg daarna de signalen vast</string>
+  <string name="charging_diagnostics_report" formatted="false">Vergelijkingsrapport maken</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Maak eerst momentopnamen van minstens twee verschillende OEM-laadmodi</string>
+  <string name="charging_diagnostics_clear" formatted="false">Laadmomentopnamen wissen</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Lokaal opgeslagen OEM-laadmomentopnamen verwijderen</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Welke apparaatinstelling is actief?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Bescherming uit / onbeperkt</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Vaste limiet 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Vaste limiet 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Vaste limiet 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptief / slim laden</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Gepland laden</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Andere OEM-modus</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Laadsignalen worden vastgelegd…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Laadmomentopname gemaakt</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Laadmomentopname kon niet worden gemaakt</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d momentopnamen gemaakt. Tik om de vergelijking te kopiëren of te verzenden.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Maak eerst minstens twee verschillende laadmodi vast</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Laadmomentopnamen verwijderd</string>
+  <string name="charging_diagnostics_copy" formatted="false">Naar klembord kopiëren</string>
+  <string name="charging_diagnostics_save" formatted="false">Opslaan</string>
+  <string name="charging_diagnostics_copied" formatted="false">Rapport gekopieerd</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Open de batterij-instellingen, schakel laadbescherming uit en maak een momentopname.\n
+    2. Kies een vaste limiet en maak nog een momentopname. Herhaal dit indien mogelijk met een andere limiet.\n
+    3. Schakel adaptief, slim of gepland laden in en maak nog een momentopname.\n
+    4. Maak het vergelijkingsrapport. Alleen gefilterde laadwaarden worden opgenomen; persoonlijke identificatoren, accounts, volledige instellingenlijsten en debuglogboeken worden nooit verzameld.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Kopieer of bewaar het rapport en <a href="https://github.com/tswistak/Battery-Monitor/issues/new">open een GitHub-issue</a> of <a href="mailto:tomasz@swistak.codes">verstuur het per e-mail</a>. Vermeld model, besturingssysteem en OEM-optie van elke momentopname.</string>
+
+  <string name="activity_until_target" formatted="true">tot %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">doel bereikt (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Tijdsschattingen</string>
+  <string name="time_estimates_settings_summary" formatted="false">Kies hoe de resterende tijd wordt berekend en welke batterijniveaus het doel zijn.</string>
+  <string name="time_estimates_settings_help" formatted="false">Deze instellingen regelen de tijdsschattingen van Battery Monitor. Doelniveaus beïnvloeden alleen de schatting; ze starten of stoppen het opladen niet.</string>
+  <string name="pref_cat_target_levels" formatted="false">Doelniveaus</string>
+  <string name="pref_charging_target_mode" formatted="false">Laaddoel</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Laadlimiet van apparaat: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Aangepast doel</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Geen vaste apparaatlimiet gevonden — 100% wordt gebruikt.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    Als deze waarde niet correct lijkt, kunt u helpen de apparaatdetectie te verbeteren. Open Diagnostiek en maak een OEM-laadlimietrapport. Volg daarbij zorgvuldig de instructies in de Help.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Automatisch gebruikt een vaste apparaatlimiet als Battery Monitor die kan lezen, anders 100%. Adaptief laden blijft op 100% gericht. Kies Aangepast om de apparaatwaarde voor schattingen te overschrijven.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Automatische detectie kan werken op Google Pixel-, Samsung Galaxy-, Xiaomi/Redmi/POCO-, OnePlus/Oppo/Realme- en Sony Xperia-apparaten, en op apparaten met GrapheneOS of LineageOS, vooral wanneer root- of Shizuku-toegang beschikbaar is. De detectie steunt op softwaresignalen; beschikbaarheid en nauwkeurigheid zijn daarom ook bij de genoemde fabrikanten niet gegarandeerd. Ongeteste modellen of OS-versies binnen deze families kunnen eveneens werken, maar apparaten van andere fabrikanten worden momenteel niet automatisch gedetecteerd.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Automatisch (aanbevolen)</string>
+  <string name="charging_target_mode_custom" formatted="false">Aangepast</string>
+  <string name="pref_custom_charging_target" formatted="false">Aangepast laaddoel</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Stel het eindniveau voor laadschattingen in wanneer het laaddoel aangepast is.</string>
+  <string name="pref_discharging_target" formatted="false">Ontlaaddoel</string>
+  <string name="pref_discharging_target_help" formatted="false">Stel het eindniveau voor ontlaadschattingen in. Dit staat los van waarschuwingen voor een bijna lege batterij.</string>
+  <string name="pref_target_level_summary" formatted="true">Schatten tot %1$d%%.</string>
 </resources>

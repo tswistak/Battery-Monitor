@@ -4,7 +4,7 @@ Here you can find answers to the most common questions asked about Battery Monit
 
 ## Discharge/charge estimations don't look good, how can I fix them?
 
-Estimations get better with time — the longer you use the app, the more accurate they will be. However, if it doesn't help, you may change the way how the app estimates time: Settings → General → Estimate Type. In the app's built-in help, there are short descriptions of how each estimation type works.
+Estimations get better with time — the longer you use the app, the more accurate they will be. However, if it doesn't help, you may change the way how the app estimates time: Settings → Time estimates → Estimate Type. In the app's built-in help, there are short descriptions of how each estimation type works.
 
 ## Does clearing logs affect estimations?
 

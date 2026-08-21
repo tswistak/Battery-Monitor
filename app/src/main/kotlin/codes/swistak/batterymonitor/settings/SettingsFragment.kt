@@ -53,11 +53,13 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
+import androidx.preference.SeekBarPreference
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -84,9 +86,14 @@ import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryCurrentMultiplierDetector
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
+import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingTargetResolver
+import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceChargingLimitProvider
+import codes.swistak.batterymonitor.monitoring.charginglimit.TargetSource
+import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnBinderReceivedListener
+import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -126,7 +133,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         )
 
         private val BATTERY_CURRENT_DEPENDENTS = arrayOf<String?>(
-            SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT,
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
             SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL,
             SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT
@@ -180,11 +186,14 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             SettingsContract.KEY_VITAL_SIGNS_CONTENT,
             SettingsContract.KEY_VITAL_SIGNS_ORDER,
             SettingsContract.KEY_ENABLE_BATTERY_CURRENT,
-            SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT,
+            SettingsContract.KEY_USE_PRIVILEGED_ACCESS,
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
             SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT,
             SettingsContract.KEY_UI_COLOR,
             SettingsContract.KEY_PREDICTION_TYPE,
+            SettingsContract.KEY_CHARGING_TARGET_MODE,
+            SettingsContract.KEY_CUSTOM_CHARGING_TARGET,
+            SettingsContract.KEY_DISCHARGING_TARGET,
             SettingsContract.KEY_LONG_DURATION_FORMAT
         )
 
@@ -210,6 +219,19 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     private var batteryCurrentMultiplierDetectionRunning = false
     private var applyingDetectedBatteryCurrentMultiplier = false
     private var pendingShizukuBinderListener: OnBinderReceivedListener? = null
+    private var pendingPrivilegedShizukuBinderListener: OnBinderReceivedListener? = null
+    private var privilegedAccessRequestInProgress = false
+    private val privilegedShizukuPermissionListener =
+        OnRequestPermissionResultListener { requestCode, grantResult ->
+            if (requestCode != SHIZUKU_PERMISSION_REQUEST_CODE || !privilegedAccessRequestInProgress) return@OnRequestPermissionResultListener
+
+            if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                mainHandler.post(::completePrivilegedAccessEnable)
+            } else {
+                privilegedAccessRequestInProgress = false
+            }
+        }
+
     private var pendingDeviceDataExport: Set<DeviceDataType> = emptySet()
 
     private class MessageHandler(private val sa: SettingsFragment) :
@@ -239,6 +261,20 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         pm.setSharedPreferencesName(SettingsContract.SETTINGS_FILE)
         pm.setSharedPreferencesMode(Context.MODE_PRIVATE)
         mSharedPreferences = requireNotNull(pm.getSharedPreferences())
+
+        BatteryCurrent.setContext(requireContext())
+        PrivilegedAccess.initialize(requireContext())
+        PrivilegedAccess.setEnabled(
+            mSharedPreferences.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
+        )
+        PrivilegedAccess.setReadyListener {
+            mainHandler.post {
+                if (isAdded && prefScreen == R.xml.time_estimates_pref_screen) {
+                    setupTimeEstimatePreferences()
+                }
+            }
+        }
+        Shizuku.addRequestPermissionResultListener(privilegedShizukuPermissionListener)
 
         pendingDeviceDataExport =
             savedInstanceState?.getStringArray(STATE_DEVICE_DATA_EXPORT)?.mapNotNull { name ->
@@ -272,6 +308,14 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             setPreferences()
         }
 
+        if (prefScreen == R.xml.time_estimates_pref_screen) {
+            setupTimeEstimatePreferences()
+        }
+
+        if (prefScreen == R.xml.advanced_pref_screen) {
+            syncPrivilegedAccessPreference()
+        }
+
         mSharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
@@ -284,6 +328,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     override fun onDestroy() {
         pendingShizukuBinderListener?.let(Shizuku::removeBinderReceivedListener)
         pendingShizukuBinderListener = null
+        pendingPrivilegedShizukuBinderListener?.let(Shizuku::removeBinderReceivedListener)
+        pendingPrivilegedShizukuBinderListener = null
+        privilegedAccessRequestInProgress = false
+        Shizuku.removeRequestPermissionResultListener(privilegedShizukuPermissionListener)
+        PrivilegedAccess.setReadyListener(null)
         super.onDestroy()
     }
 
@@ -366,9 +415,9 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }
         } else if (prefScreen == R.xml.current_state_pref_screen) {
             BatteryCurrent.setContext(requireContext())
-            BatteryCurrent.setUsePrivilegedAccess(
+            PrivilegedAccess.setEnabled(
                 mSharedPreferences.getBoolean(
-                    SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
+                    SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
                 )
             )
             BatteryCurrent.setMultiplier(
@@ -377,6 +426,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             )
             setupBatteryCurrentMultiplierPreference()
             setupBatteryCurrentRefreshIntervalPreference()
+        } else if (prefScreen == R.xml.time_estimates_pref_screen) {
+            setupTimeEstimatePreferences()
+        } else if (prefScreen == R.xml.advanced_pref_screen) {
+            setupPrivilegedAccessPreference()
         } else if (prefScreen == R.xml.backup_restore_pref_screen) {
             setupAutoLogExportPreference()
         }
@@ -405,7 +458,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 return false
             }
 
-            SettingsContract.KEY_NOTIFICATION_SETTINGS, SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS, SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS, SettingsContract.KEY_CURRENT_STATE_SETTINGS, SettingsContract.KEY_OTHER_SETTINGS, SettingsContract.KEY_UNITS_FORMATTING_SETTINGS, SettingsContract.KEY_ADVANCED_SETTINGS, SettingsContract.KEY_BACKUP_RESTORE_SETTINGS, SettingsContract.KEY_DIAGNOSTICS_SETTINGS -> {
+            SettingsContract.KEY_NOTIFICATION_SETTINGS, SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS, SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS, SettingsContract.KEY_CURRENT_STATE_SETTINGS, SettingsContract.KEY_OTHER_SETTINGS, SettingsContract.KEY_UNITS_FORMATTING_SETTINGS, SettingsContract.KEY_TIME_ESTIMATES_SETTINGS, SettingsContract.KEY_ADVANCED_SETTINGS, SettingsContract.KEY_BACKUP_RESTORE_SETTINGS, SettingsContract.KEY_DIAGNOSTICS_SETTINGS -> {
                 val comp = ComponentName(
                     requireActivity().packageName, SettingsActivity::class.java.getName()
                 )
@@ -768,6 +821,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }
         }
 
+        if (key == SettingsContract.KEY_CHARGING_TARGET_MODE || key == SettingsContract.KEY_CUSTOM_CHARGING_TARGET || key == SettingsContract.KEY_DISCHARGING_TARGET) {
+            setupTimeEstimatePreferences()
+        }
+
         if (key == SettingsContract.KEY_ENABLE_BATTERY_CURRENT) {
             val enabled = mSharedPreferences.getBoolean(
                 SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false
@@ -790,12 +847,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             )
         ) maybeRequestShizukuPermission()
 
-        if (key == SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT) {
+        if (key == SettingsContract.KEY_USE_PRIVILEGED_ACCESS) {
             val enabled = mSharedPreferences.getBoolean(
-                SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
+                SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
             )
-            BatteryCurrent.setUsePrivilegedAccess(enabled)
-            if (enabled) maybeRequestShizukuPermission()
+            PrivilegedAccess.setEnabled(enabled)
         }
 
         if (key == SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL) {
@@ -832,6 +888,115 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             if (rootAvailable) return@Runnable
             mainHandler.post { this.requestShizukuPermissionIfNeeded() }
         }).start()
+    }
+
+    private fun setupPrivilegedAccessPreference() {
+        val preference = mPreferenceScreen?.findPreference<CheckBoxPreference>(
+            SettingsContract.KEY_USE_PRIVILEGED_ACCESS
+        ) ?: return
+        preference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, value ->
+            val enable = value as? Boolean ?: return@OnPreferenceChangeListener false
+            if (!enable) {
+                privilegedAccessRequestInProgress = false
+                pendingPrivilegedShizukuBinderListener?.let(
+                    Shizuku::removeBinderReceivedListener
+                )
+                pendingPrivilegedShizukuBinderListener = null
+                return@OnPreferenceChangeListener true
+            }
+
+            requestPrivilegedAccessEnable()
+            false
+        }
+    }
+
+    private fun requestPrivilegedAccessEnable() {
+        if (privilegedAccessRequestInProgress) return
+        privilegedAccessRequestInProgress = true
+
+        Thread(Runnable {
+            val rootGranted = RootExecutor().run("id") != null
+            mainHandler.post {
+                if (!privilegedAccessRequestInProgress || !isAdded) return@post
+                if (rootGranted) {
+                    completePrivilegedAccessEnable()
+                } else {
+                    requestPrivilegedShizukuPermission()
+                }
+            }
+        }).start()
+    }
+
+    private fun requestPrivilegedShizukuPermission() {
+        if (!isAdded || activity == null) {
+            privilegedAccessRequestInProgress = false
+            return
+        }
+
+        if (!runCatching(Shizuku::pingBinder).getOrDefault(false)) {
+            Toast.makeText(requireContext(), R.string.shizuku_not_running, Toast.LENGTH_LONG).show()
+            if (pendingPrivilegedShizukuBinderListener != null) return
+            val listener = object : OnBinderReceivedListener {
+                override fun onBinderReceived() {
+                    mainHandler.post {
+                        Shizuku.removeBinderReceivedListener(this)
+                        if (pendingPrivilegedShizukuBinderListener === this) {
+                            pendingPrivilegedShizukuBinderListener = null
+                        }
+                        if (privilegedAccessRequestInProgress) {
+                            requestPrivilegedShizukuPermission()
+                        }
+                    }
+                }
+            }
+            pendingPrivilegedShizukuBinderListener = listener
+            Shizuku.addBinderReceivedListenerSticky(listener)
+            return
+        }
+
+        if (runCatching(Shizuku::isPreV11).getOrDefault(true)) {
+            privilegedAccessRequestInProgress = false
+            return
+        }
+        if (runCatching(Shizuku::checkSelfPermission).getOrDefault(
+                PackageManager.PERMISSION_DENIED
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            completePrivilegedAccessEnable()
+            return
+        }
+        if (runCatching(Shizuku::shouldShowRequestPermissionRationale).getOrDefault(true)) {
+            Toast.makeText(
+                requireContext(), R.string.shizuku_permission_denied_permanently, Toast.LENGTH_LONG
+            ).show()
+            privilegedAccessRequestInProgress = false
+            return
+        }
+
+        runCatching { Shizuku.requestPermission(SHIZUKU_PERMISSION_REQUEST_CODE) }.onFailure {
+            privilegedAccessRequestInProgress = false
+        }
+    }
+
+    private fun completePrivilegedAccessEnable() {
+        if (!privilegedAccessRequestInProgress || !isAdded) return
+        privilegedAccessRequestInProgress = false
+        pendingPrivilegedShizukuBinderListener?.let(Shizuku::removeBinderReceivedListener)
+        pendingPrivilegedShizukuBinderListener = null
+        mSharedPreferences.edit {
+            putBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, true)
+        }
+        syncPrivilegedAccessPreference()
+    }
+
+    private fun syncPrivilegedAccessPreference() {
+        val enabled = mSharedPreferences.getBoolean(
+            SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
+        )
+        mPreferenceScreen?.findPreference<CheckBoxPreference>(
+            SettingsContract.KEY_USE_PRIVILEGED_ACCESS
+        )?.isChecked = enabled
+        PrivilegedAccess.setEnabled(enabled)
     }
 
     private fun requestShizukuPermissionIfNeeded() {
@@ -1221,6 +1386,60 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         } else {
             pref.setSummary(res.getString(R.string.currently_disabled))
         }
+    }
+
+    private fun setupTimeEstimatePreferences() {
+        val screen = mPreferenceScreen ?: return
+        val modePreference = screen.findPreference<ListPreference>(
+            SettingsContract.KEY_CHARGING_TARGET_MODE
+        ) ?: return
+        val customPreference = screen.findPreference<SeekBarPreference>(
+            SettingsContract.KEY_CUSTOM_CHARGING_TARGET
+        ) ?: return
+        val dischargingPreference = screen.findPreference<SeekBarPreference>(
+            SettingsContract.KEY_DISCHARGING_TARGET
+        ) ?: return
+
+        val customMode = mSharedPreferences.getString(
+            SettingsContract.KEY_CHARGING_TARGET_MODE,
+            SettingsContract.CHARGING_TARGET_MODE_AUTOMATIC
+        ) == SettingsContract.CHARGING_TARGET_MODE_CUSTOM
+        customPreference.isVisible = customMode
+        customPreference.isEnabled = customMode
+
+        val resolver = ChargingTargetResolver(
+            mSharedPreferences, DeviceChargingLimitProvider(
+                requireContext(), privilegedAccessEnabled = {
+                    mSharedPreferences.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
+                })
+        )
+        val chargingTarget = resolver.resolveChargingTarget()
+        val targetSummary = when (chargingTarget.source) {
+            TargetSource.DEVICE -> getString(
+                R.string.pref_charging_target_mode_summary_device, chargingTarget.percent
+            )
+
+            TargetSource.CUSTOM -> getString(R.string.pref_charging_target_mode_summary_custom)
+
+            TargetSource.DEFAULT -> getString(
+                R.string.pref_charging_target_mode_summary_default
+            )
+        }
+        val modeSummary = if (customMode) {
+            targetSummary
+        } else {
+            getString(R.string.pref_charging_target_mode_summary_automatic_help, targetSummary)
+        }
+        modePreference.summaryProvider = Preference.SummaryProvider<ListPreference> { modeSummary }
+        customPreference.summary = getString(
+            R.string.pref_target_level_summary, mSharedPreferences.getInt(
+                SettingsContract.KEY_CUSTOM_CHARGING_TARGET,
+                SettingsContract.DEFAULT_CUSTOM_CHARGING_TARGET
+            ).coerceIn(1, 100)
+        )
+        dischargingPreference.summary = getString(
+            R.string.pref_target_level_summary, resolver.resolveDischargingTarget().percent
+        )
     }
 
     @Suppress("OVERRIDE_DEPRECATION")

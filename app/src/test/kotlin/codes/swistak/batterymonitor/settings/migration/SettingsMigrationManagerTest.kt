@@ -35,11 +35,16 @@ class SettingsMigrationManagerTest {
         )
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
-        assertEquals(4, preferences.commitCount)
+        assertEquals(5, preferences.commitCount)
         assertEquals(true, preferences.values[SettingsContract.KEY_ENABLE_BATTERY_CURRENT])
         assertEquals("1000", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER])
         assertEquals(true, preferences.values[SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT])
-        assertEquals(false, preferences.values[SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT])
+        assertEquals(false, preferences.values[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
+        assertFalse(
+            preferences.values.containsKey(
+                SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT
+            )
+        )
         assertEquals("2", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL])
         assertFalse(
             preferences.values.containsKey(
@@ -54,7 +59,25 @@ class SettingsMigrationManagerTest {
         )
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
-        assertEquals(4, preferences.commitCount)
+        assertEquals(5, preferences.commitCount)
+    }
+
+    @Test
+    fun `privileged battery current choice migrates to global privileged access`() {
+        val preferences = FakeSharedPreferences(
+            mapOf(
+                "_applied_settings_migration_version" to 4,
+                SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT to true
+            )
+        )
+
+        assertTrue(SettingsMigrationManager.migrate(preferences.instance))
+        assertEquals(true, preferences.values[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
+        assertFalse(
+            preferences.values.containsKey(
+                SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT
+            )
+        )
     }
 
     @Test

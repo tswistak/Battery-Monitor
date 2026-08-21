@@ -331,9 +331,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">मुख्य विंडो में बैटरी करंट दिखाएँ?</string>
   <string name="pref_enable_battery_current_help" formatted="false">सक्षम होने पर बैटरी करंट मुख्य विंडो में दिखता है और उससे जुड़े विकल्प उपलब्ध हो जाते हैं।</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">ज़रूरत पड़ने पर विशेषाधिकार प्राप्त पहुँच का उपयोग करें</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">सामान्य तरीके करंट न पढ़ पाएँ तो विशेषाधिकार प्राप्त पहुँच को वैकल्पिक तरीका बनाएँ?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">सक्षम होने पर Battery Monitor केवल तभी root या Shizuku उपयोग कर सकता है जब Android और फ़ाइल सिस्टम से रीडिंग न मिले। विकल्प चालू करते समय आवश्यक अनुमति माँगी जाती है।</string>
+  <string name="pref_cat_privileged_access" formatted="false">विशेषाधिकार प्राप्त पहुँच</string>
+  <string name="pref_use_privileged_access" formatted="false">विशेषाधिकार प्राप्त पहुँच का उपयोग करें</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">अधिक पूर्ण और सटीक डिवाइस डेटा के लिए दी गई root या Shizuku पहुँच का उपयोग करें?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">विशेषाधिकार प्राप्त पहुँच अतिरिक्त डिवाइस डेटा उपलब्ध करा सकती है और कुछ मापों को बेहतर बना सकती है। Battery Monitor केवल वही root या Shizuku पहुँच उपयोग करता है जिसे आप स्पष्ट रूप से अनुमति देते हैं।</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">गुणक</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">अपने आप पता लगाएँ</string>
@@ -630,4 +631,60 @@
   <string name="diagnostics_database_failed" formatted="false">डेटाबेस जाँच विफल रही। ऐप को फिर से शुरू करें और दोबारा कोशिश करें।</string>
   <string name="diagnostics_service_responded" formatted="false">निगरानी सेवा ने जवाब दिया</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">डेटाबेस की पढ़ने और लिखने की जाँच सफल रही</string>
+
+  <string name="charging_diagnostics_title" formatted="false">OEM चार्जिंग सीमा निदान</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">उपयोगी रिपोर्ट के लिए, सहायता खोलें और स्नैपशॉट लेने से पहले तैयारी के चरणों का पालन करें।</string>
+  <string name="charging_diagnostics_capture" formatted="false">स्नैपशॉट लें</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">डिवाइस सेटिंग में चार्जिंग मोड चुनें, फिर उसके संकेत लें</string>
+  <string name="charging_diagnostics_report" formatted="false">तुलना रिपोर्ट बनाएँ</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">पहले कम से कम दो अलग OEM चार्जिंग मोड के स्नैपशॉट लें</string>
+  <string name="charging_diagnostics_clear" formatted="false">चार्जिंग स्नैपशॉट मिटाएँ</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">स्थानीय रूप से सहेजे OEM स्नैपशॉट हटाएँ</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">कौन-सी डिवाइस सेटिंग सक्रिय है?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">सुरक्षा बंद / असीमित</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">निश्चित सीमा 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">निश्चित सीमा 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">निश्चित सीमा 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">अधिकतम / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">अनुकूलित / स्मार्ट चार्जिंग</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">निर्धारित चार्जिंग</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">अन्य OEM मोड</string>
+  <string name="charging_diagnostics_capturing" formatted="false">चार्जिंग संकेत लिए जा रहे हैं…</string>
+  <string name="charging_diagnostics_captured" formatted="false">चार्जिंग स्नैपशॉट लिया गया</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">चार्जिंग स्नैपशॉट नहीं लिया जा सका</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d स्नैपशॉट लिए गए। तुलना कॉपी या भेजने के लिए टैप करें।</string>
+  <string name="charging_diagnostics_need_two" formatted="false">पहले कम से कम दो अलग चार्जिंग मोड लें</string>
+  <string name="charging_diagnostics_cleared" formatted="false">चार्जिंग स्नैपशॉट हटाए गए</string>
+  <string name="charging_diagnostics_copy" formatted="false">क्लिपबोर्ड पर कॉपी करें</string>
+  <string name="charging_diagnostics_save" formatted="false">सहेजें</string>
+  <string name="charging_diagnostics_copied" formatted="false">रिपोर्ट कॉपी की गई</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. बैटरी सेटिंग खोलें, चार्जिंग सुरक्षा बंद करें और स्नैपशॉट लें।\n
+    2. एक निश्चित सीमा चुनें और दूसरा स्नैपशॉट लें। संभव हो तो दूसरी सीमा के साथ दोहराएँ।\n
+    3. अनुकूलित, स्मार्ट या निर्धारित चार्जिंग चालू करें और एक और स्नैपशॉट लें।\n
+    4. तुलना रिपोर्ट बनाएँ। इसमें केवल फ़िल्टर किए गए चार्जिंग मान होते हैं; व्यक्तिगत पहचानकर्ता, खाते, पूरी सेटिंग सूची और डीबग लॉग कभी एकत्र नहीं किए जाते।</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">रिपोर्ट कॉपी या सहेजें, फिर <a href="https://github.com/tswistak/Battery-Monitor/issues/new">GitHub समस्या खोलें</a> या <a href="mailto:tomasz@swistak.codes">ईमेल से भेजें</a>। हर स्नैपशॉट के लिए मॉडल, सिस्टम और OEM विकल्प बताएँ।</string>
+
+  <string name="activity_until_target" formatted="true">%1$d%% तक</string>
+  <string name="activity_target_reached" formatted="true">लक्ष्य पूरा हुआ (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">समय अनुमान</string>
+  <string name="time_estimates_settings_summary" formatted="false">शेष समय की गणना और लक्षित बैटरी स्तर चुनें।</string>
+  <string name="time_estimates_settings_help" formatted="false">ये सेटिंग्स Battery Monitor के समय अनुमानों को नियंत्रित करती हैं। लक्ष्य स्तर केवल अनुमानों को प्रभावित करते हैं; वे चार्जिंग शुरू या बंद नहीं करते।</string>
+  <string name="pref_cat_target_levels" formatted="false">लक्ष्य स्तर</string>
+  <string name="pref_charging_target_mode" formatted="false">चार्जिंग लक्ष्य</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">डिवाइस चार्जिंग सीमा: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">कस्टम लक्ष्य</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">कोई निश्चित डिवाइस सीमा नहीं मिली — 100% उपयोग किया जाएगा।</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    अगर यह मान सही नहीं लगता, तो आप डिवाइस पहचान को बेहतर बनाने में मदद कर सकते हैं। निदान खोलें और सहायता में दिए निर्देशों का ध्यान से पालन करते हुए OEM चार्जिंग सीमा रिपोर्ट बनाएँ।</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Battery Monitor के पढ़ पाने पर स्वचालित मोड निश्चित डिवाइस सीमा का उपयोग करता है, अन्यथा 100% का। अनुकूली चार्जिंग का लक्ष्य फिर भी 100% रहता है। अनुमानों के लिए डिवाइस मान बदलने हेतु कस्टम चुनें।</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">स्वचालित पहचान Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme और Sony Xperia डिवाइसों तथा GrapheneOS या LineageOS चलाने वाले डिवाइसों पर काम कर सकती है—खासकर जब root या Shizuku पहुँच उपलब्ध हो। यह सॉफ़्टवेयर संकेतों पर निर्भर है, इसलिए सूचीबद्ध निर्माताओं के डिवाइसों पर भी उपलब्धता या सटीकता की गारंटी नहीं है। इन परिवारों के बिना जाँचे मॉडल या OS संस्करण भी काम कर सकते हैं, लेकिन अन्य निर्माताओं के डिवाइस अभी स्वचालित रूप से पहचाने नहीं जाते।</string>
+  <string name="charging_target_mode_automatic" formatted="false">स्वचालित (अनुशंसित)</string>
+  <string name="charging_target_mode_custom" formatted="false">कस्टम</string>
+  <string name="pref_custom_charging_target" formatted="false">कस्टम चार्जिंग लक्ष्य</string>
+  <string name="pref_custom_charging_target_help" formatted="false">चार्जिंग लक्ष्य कस्टम होने पर चार्जिंग अनुमान का अंतिम स्तर सेट करें।</string>
+  <string name="pref_discharging_target" formatted="false">डिस्चार्जिंग लक्ष्य</string>
+  <string name="pref_discharging_target_help" formatted="false">डिस्चार्जिंग अनुमान का अंतिम स्तर सेट करें। यह कम बैटरी अलार्म से स्वतंत्र है।</string>
+  <string name="pref_target_level_summary" formatted="true">%1$d%% तक अनुमान लगाएँ।</string>
 </resources>

@@ -327,9 +327,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Pil akımı ana pencerede gösterilsin mi?</string>
   <string name="pref_enable_battery_current_help" formatted="false">Etkinleştirildiğinde pil akımı ana pencerede gösterilir ve ilgili seçenekler kullanılabilir olur.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">Gerekirse ayrıcalıklı erişimi kullan</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Normal yöntemler akımı okuyamazsa ayrıcalıklı erişime yedek olarak izin verilsin mi?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Etkinleştirildiğinde Battery Monitor yalnızca Android ve dosya sistemi yöntemleri bir değer sağlamazsa root veya Shizuku kullanabilir. Gerekli izin açılırken istenir.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Ayrıcalıklı erişim</string>
+  <string name="pref_use_privileged_access" formatted="false">Ayrıcalıklı erişimi kullan</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Daha eksiksiz ve doğru cihaz verileri için verilen root veya Shizuku erişimi kullanılsın mı?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">Ayrıcalıklı erişim ek cihaz verilerini kullanılabilir hale getirebilir ve bazı ölçümleri iyileştirebilir. Battery Monitor yalnızca açıkça verdiğiniz root veya Shizuku erişimini kullanır.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Çarpan</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Otomatik algıla</string>
@@ -606,4 +607,60 @@
   <string name="diagnostics_database_failed" formatted="false">Veritabanı denetimi başarısız oldu. Uygulamayı yeniden başlatıp tekrar deneyin.</string>
   <string name="diagnostics_service_responded" formatted="false">İzleme hizmeti yanıt verdi</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Veritabanı okuma ve yazma denetimi başarılı</string>
+
+  <string name="charging_diagnostics_title" formatted="false">OEM şarj sınırı tanılama</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Yararlı bir rapor için görüntüleri yakalamadan önce Yardım’ı açın ve hazırlık adımlarını izleyin.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Anlık görüntü al</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Cihaz ayarlarında bir şarj modu belirleyin, ardından sinyallerini yakalayın</string>
+  <string name="charging_diagnostics_report" formatted="false">Karşılaştırma raporu oluştur</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Önce en az iki farklı OEM şarj modunu yakalayın</string>
+  <string name="charging_diagnostics_clear" formatted="false">Şarj görüntülerini temizle</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Yerel olarak saklanan OEM şarj görüntülerini sil</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Hangi cihaz ayarı etkin?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Koruma kapalı / sınırsız</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Sabit sınır 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Sabit sınır 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Sabit sınır 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Maksimum / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Uyarlanabilir / akıllı şarj</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Zamanlanmış şarj</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Diğer OEM modu</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Şarj sinyalleri yakalanıyor…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Şarj görüntüsü yakalandı</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Şarj görüntüsü yakalanamadı</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d görüntü yakalandı. Karşılaştırmayı kopyalamak veya göndermek için dokunun.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Önce en az iki farklı şarj modunu yakalayın</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Şarj görüntüleri silindi</string>
+  <string name="charging_diagnostics_copy" formatted="false">Panoya kopyala</string>
+  <string name="charging_diagnostics_save" formatted="false">Kaydet</string>
+  <string name="charging_diagnostics_copied" formatted="false">Rapor kopyalandı</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Pil ayarlarını açın, şarj korumasını kapatın ve bir görüntü yakalayın.\n
+    2. Sabit bir sınır seçin ve başka bir görüntü yakalayın. Mümkünse farklı bir sınırla tekrarlayın.\n
+    3. Uyarlanabilir, akıllı veya zamanlanmış şarjı açın ve bir görüntü daha yakalayın.\n
+    4. Karşılaştırma raporunu oluşturun. Yalnızca filtrelenmiş şarj değerleri eklenir; kişisel tanımlayıcılar, hesaplar, tam ayar dökümleri ve hata ayıklama günlükleri asla toplanmaz.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Raporu kopyalayın veya kaydedin, ardından <a href="https://github.com/tswistak/Battery-Monitor/issues/new">bir GitHub sorunu açın</a> veya <a href="mailto:tomasz@swistak.codes">e-postayla gönderin</a>. Her görüntünün modelini, sistemini ve OEM seçeneğini belirtin.</string>
+
+  <string name="activity_until_target" formatted="true">%1$d%% seviyesine kadar</string>
+  <string name="activity_target_reached" formatted="true">hedefe ulaşıldı (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Süre tahminleri</string>
+  <string name="time_estimates_settings_summary" formatted="false">Kalan sürenin nasıl hesaplanacağını ve hedef pil seviyelerini seçin.</string>
+  <string name="time_estimates_settings_help" formatted="false">Bu ayarlar Battery Monitor süre tahminlerini denetler. Hedef seviyeler yalnızca tahminleri etkiler; şarjı başlatmaz veya durdurmaz.</string>
+  <string name="pref_cat_target_levels" formatted="false">Hedef seviyeler</string>
+  <string name="pref_charging_target_mode" formatted="false">Şarj hedefi</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Cihaz şarj sınırı: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Özel hedef</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Sabit cihaz sınırı algılanmadı — 100% kullanılıyor.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    Bu değer doğru görünmüyorsa cihaz algılamayı geliştirmeye yardımcı olabilirsiniz. Tanılama’yı açın ve Yardım’daki talimatları dikkatle izleyerek bir OEM şarj sınırı raporu oluşturun.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Otomatik, Battery Monitor okuyabiliyorsa sabit cihaz sınırını, aksi halde 100% değerini kullanır. Uyarlanabilir şarj yine 100% hedefler. Tahminlerde cihaz değerini geçersiz kılmak için Özel’i seçin.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Otomatik algılama Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme ve Sony Xperia cihazlarda ve GrapheneOS veya LineageOS çalıştıran cihazlarda, özellikle root ya da Shizuku erişimi varsa çalışabilir. Yazılım sinyallerine dayandığından, listelenen üreticilerde bile kullanılabilirlik ve doğruluk garanti edilmez. Bu ailelerdeki denenmemiş modeller veya işletim sistemi sürümleri de çalışabilir, ancak diğer üreticilerin cihazları şu anda otomatik olarak algılanmaz.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Otomatik (önerilen)</string>
+  <string name="charging_target_mode_custom" formatted="false">Özel</string>
+  <string name="pref_custom_charging_target" formatted="false">Özel şarj hedefi</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Şarj hedefi özel olduğunda şarj tahminlerinin bitiş seviyesini ayarlayın.</string>
+  <string name="pref_discharging_target" formatted="false">Deşarj hedefi</string>
+  <string name="pref_discharging_target_help" formatted="false">Deşarj tahminlerinin bitiş seviyesini ayarlayın. Bu, düşük pil alarmlarından bağımsızdır.</string>
+  <string name="pref_target_level_summary" formatted="true">%1$d%% seviyesine kadar tahmin et.</string>
 </resources>

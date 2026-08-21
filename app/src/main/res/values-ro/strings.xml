@@ -337,9 +337,10 @@
   <string name="pref_enable_battery_current_summary" formatted="false">Afișezi curentul bateriei în fereastra principală?</string>
   <string name="pref_enable_battery_current_help" formatted="false">Când este activat, curentul bateriei apare în fereastra principală, iar opțiunile asociate devin disponibile.</string>
 
-  <string name="pref_use_privileged_battery_current" formatted="false">Folosește acces privilegiat dacă este necesar</string>
-  <string name="pref_use_privileged_battery_current_summary" formatted="false">Permiți accesul privilegiat ca rezervă când metodele normale nu pot citi curentul?</string>
-  <string name="pref_use_privileged_battery_current_help" formatted="false">Când este activat, Battery Monitor poate folosi root sau Shizuku numai dacă metodele Android și ale sistemului de fișiere nu oferă o valoare. Permisiunea necesară este solicitată la activare.</string>
+  <string name="pref_cat_privileged_access" formatted="false">Acces privilegiat</string>
+  <string name="pref_use_privileged_access" formatted="false">Folosește acces privilegiat</string>
+  <string name="pref_use_privileged_access_summary" formatted="false">Folosești accesul root sau Shizuku acordat pentru date mai complete și mai precise despre dispozitiv?</string>
+  <string name="pref_use_privileged_access_help" formatted="false">Accesul privilegiat poate face disponibile date suplimentare și poate îmbunătăți unele măsurători. Battery Monitor folosește numai accesul root sau Shizuku pe care îl acorzi explicit.</string>
 
   <string name="pref_battery_current_multiplier" formatted="false">Multiplicator</string>
   <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detectează automat</string>
@@ -640,4 +641,60 @@
   <string name="diagnostics_database_failed" formatted="false">Verificarea bazei de date a eșuat. Reporniți aplicația și încercați din nou.</string>
   <string name="diagnostics_service_responded" formatted="false">Serviciul de monitorizare a răspuns</string>
   <string name="diagnostics_database_check_succeeded" formatted="false">Verificarea citirii și scrierii bazei de date a reușit</string>
+
+  <string name="charging_diagnostics_title" formatted="false">Diagnosticarea limitei de încărcare OEM</string>
+  <string name="charging_diagnostics_instructions_hint" formatted="false">Pentru un raport util, deschide Ajutorul și urmează pașii de pregătire înainte de a captura instantaneele.</string>
+  <string name="charging_diagnostics_capture" formatted="false">Capturează instantaneu</string>
+  <string name="charging_diagnostics_capture_summary" formatted="false">Setează un mod de încărcare în setările dispozitivului, apoi capturează semnalele acestuia</string>
+  <string name="charging_diagnostics_report" formatted="false">Creează raport comparativ</string>
+  <string name="charging_diagnostics_report_summary" formatted="false">Capturează mai întâi cel puțin două moduri OEM diferite</string>
+  <string name="charging_diagnostics_clear" formatted="false">Șterge instantaneele de încărcare</string>
+  <string name="charging_diagnostics_clear_summary" formatted="false">Șterge instantaneele OEM salvate local</string>
+  <string name="charging_diagnostics_choose_state" formatted="false">Ce setare a dispozitivului este activă?</string>
+  <string name="charging_diagnostics_condition_off" formatted="false">Protecție oprită / fără limită</string>
+  <string name="charging_diagnostics_condition_70" formatted="false">Limită fixă 70%</string>
+  <string name="charging_diagnostics_condition_80" formatted="false">Limită fixă 80%</string>
+  <string name="charging_diagnostics_condition_90" formatted="false">Limită fixă 90%</string>
+  <string name="charging_diagnostics_condition_100" formatted="false">Maxim / 100%</string>
+  <string name="charging_diagnostics_condition_adaptive" formatted="false">Încărcare adaptivă / inteligentă</string>
+  <string name="charging_diagnostics_condition_scheduled" formatted="false">Încărcare programată</string>
+  <string name="charging_diagnostics_condition_other" formatted="false">Alt mod OEM</string>
+  <string name="charging_diagnostics_capturing" formatted="false">Se capturează semnalele de încărcare…</string>
+  <string name="charging_diagnostics_captured" formatted="false">Instantaneu de încărcare capturat</string>
+  <string name="charging_diagnostics_capture_failed" formatted="false">Instantaneul nu a putut fi capturat</string>
+  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d instantanee capturate. Atinge pentru a copia sau trimite comparația.</string>
+  <string name="charging_diagnostics_need_two" formatted="false">Capturează mai întâi cel puțin două moduri diferite</string>
+  <string name="charging_diagnostics_cleared" formatted="false">Instantaneele de încărcare au fost șterse</string>
+  <string name="charging_diagnostics_copy" formatted="false">Copiază în clipboard</string>
+  <string name="charging_diagnostics_save" formatted="false">Salvează</string>
+  <string name="charging_diagnostics_copied" formatted="false">Raport copiat</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Deschide setările bateriei, oprește protecția și capturează un instantaneu.\n
+    2. Selectează o limită fixă și capturează altul. Dacă este posibil, repetă cu altă limită.\n
+    3. Activează încărcarea adaptivă, inteligentă sau programată și capturează încă unul.\n
+    4. Creează raportul comparativ. Sunt incluse doar valori filtrate despre încărcare; identificatorii personali, conturile, listele complete de setări și jurnalele de depanare nu sunt colectate niciodată.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Copiază sau salvează raportul, apoi <a href="https://github.com/tswistak/Battery-Monitor/issues/new">deschide o problemă GitHub</a> sau <a href="mailto:tomasz@swistak.codes">trimite-l prin e-mail</a>. Menționează modelul, sistemul și opțiunea OEM pentru fiecare instantaneu.</string>
+
+  <string name="activity_until_target" formatted="true">până la %1$d%%</string>
+  <string name="activity_target_reached" formatted="true">ținta a fost atinsă (%1$d%%)</string>
+
+  <string name="time_estimates_settings" formatted="false">Estimări de timp</string>
+  <string name="time_estimates_settings_summary" formatted="false">Alegeți calculul timpului rămas și nivelurile țintă ale bateriei.</string>
+  <string name="time_estimates_settings_help" formatted="false">Aceste setări controlează estimările Battery Monitor. Nivelurile țintă afectează doar estimările; nu pornesc și nu opresc încărcarea.</string>
+  <string name="pref_cat_target_levels" formatted="false">Niveluri țintă</string>
+  <string name="pref_charging_target_mode" formatted="false">Țintă de încărcare</string>
+  <string name="pref_charging_target_mode_summary_device" formatted="true">Limita de încărcare a dispozitivului: %1$d%%</string>
+  <string name="pref_charging_target_mode_summary_custom" formatted="false">Țintă personalizată</string>
+  <string name="pref_charging_target_mode_summary_default" formatted="false">Nu a fost detectată o limită fixă — se utilizează 100%.</string>
+  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    Dacă această valoare nu pare corectă, poți ajuta la îmbunătățirea detectării dispozitivelor. Deschide Diagnosticare și generează un raport pentru limita de încărcare OEM, urmând cu atenție instrucțiunile din Ajutor.</string>
+  <string name="pref_charging_target_mode_help" formatted="false">Modul automat folosește limita fixă a dispozitivului dacă Battery Monitor o poate citi, altfel 100%. Încărcarea adaptivă urmărește în continuare 100%. Alegeți Personalizat pentru a înlocui valoarea în estimări.</string>
+  <string name="pref_charging_target_mode_support_help" formatted="false">Detectarea automată poate funcționa pe dispozitive Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme și Sony Xperia, precum și pe dispozitive cu GrapheneOS sau LineageOS, mai ales când este disponibil accesul root sau Shizuku. Se bazează pe semnale software, astfel că disponibilitatea și precizia nu sunt garantate nici pentru producătorii enumerați. Pot funcționa și modele sau versiuni de sistem netestate din aceste familii, însă dispozitivele altor producători nu sunt detectate automat în prezent.</string>
+  <string name="charging_target_mode_automatic" formatted="false">Automat (recomandat)</string>
+  <string name="charging_target_mode_custom" formatted="false">Personalizat</string>
+  <string name="pref_custom_charging_target" formatted="false">Țintă de încărcare personalizată</string>
+  <string name="pref_custom_charging_target_help" formatted="false">Setați nivelul final al estimărilor de încărcare când ținta este personalizată.</string>
+  <string name="pref_discharging_target" formatted="false">Țintă de descărcare</string>
+  <string name="pref_discharging_target_help" formatted="false">Setați nivelul final al estimărilor de descărcare. Este independent de alarmele pentru baterie descărcată.</string>
+  <string name="pref_target_level_summary" formatted="true">Estimează până la %1$d%%.</string>
 </resources>

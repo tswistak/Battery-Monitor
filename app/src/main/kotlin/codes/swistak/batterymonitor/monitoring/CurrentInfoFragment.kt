@@ -41,6 +41,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import codes.swistak.batterymonitor.R
@@ -48,6 +50,7 @@ import codes.swistak.batterymonitor.app.PersistentFragment
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
 import codes.swistak.batterymonitor.help.HelpActivity
+import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.LongDurationFormat
 import codes.swistak.batterymonitor.settings.SettingsActivity
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -81,6 +84,8 @@ class CurrentInfoFragment : Fragment() {
 
     private var tvRemainingCharge: TextView? = null
     private var pluggedIcon: ImageView? = null
+    private var timeEstimate: View? = null
+    private var showFullRangeEstimate = false
 
     private val info = BatteryInfo()
     private val mHandler = Handler(Looper.getMainLooper())
@@ -108,6 +113,13 @@ class CurrentInfoFragment : Fragment() {
 
         requireNotNull(rootView.findViewById(R.id.vital_stats)).setOnClickListener(vsListener)
         currentIcon = rootView.findViewById(R.id.current_icon)
+        timeEstimate = rootView.findViewById<View>(R.id.time_estimate).apply {
+            setOnClickListener {
+                if (!hasAlternativeTimeEstimate()) return@setOnClickListener
+                showFullRangeEstimate = !showFullRangeEstimate
+                updateTimeEstimateDisplay()
+            }
+        }
 
         tvTemp = rootView.findViewById<View?>(R.id.temp) as TextView
         tvHealth = rootView.findViewById<View?>(R.id.health) as TextView
@@ -150,6 +162,7 @@ class CurrentInfoFragment : Fragment() {
         dpScale = requireActivity().resources.displayMetrics.density
 
         BatteryCurrent.setContext(requireContext())
+        PrivilegedAccess.initialize(requireContext())
 
         setHasOptionsMenu(true)
     }
@@ -157,9 +170,9 @@ class CurrentInfoFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        BatteryCurrent.setUsePrivilegedAccess(
+        PrivilegedAccess.setEnabled(
             pFrag!!.settings.getBoolean(
-                SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
+                SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
             )
         )
         BatteryCurrent.setMultiplier(
@@ -361,10 +374,7 @@ class CurrentInfoFragment : Fragment() {
         val longDurationFormat = LongDurationFormat.fromPreference(
             pFrag!!.settings.getString(SettingsContract.KEY_LONG_DURATION_FORMAT, null)
         )
-        tv = rootView.findViewById<View?>(R.id.time_remaining) as TextView
-        tv.text = DisplayStrings.timeRemainingMainScreen(info, longDurationFormat)
-        tv = rootView.findViewById<View?>(R.id.until_what) as TextView
-        tv.text = DisplayStrings.untilWhat(info)
+        updateTimeEstimateDisplay()
 
         val secs = ((System.currentTimeMillis() - info.lastStatusCtm) / 1000).toInt()
         val hours = secs / (60 * 60)
@@ -404,6 +414,65 @@ class CurrentInfoFragment : Fragment() {
         else pluggedIcon!!.setImageResource(R.drawable.not_unplugged)
 
         refreshCurrent()
+    }
+
+    private fun hasAlternativeTimeEstimate(): Boolean {
+        val configured = info.prediction
+        val fullRange = info.fullRangePrediction
+        return configured.targetPercent != fullRange.targetPercent && (configured.whatHappened != BatteryInfo.Prediction.NONE || configured.targetReached) && fullRange.whatHappened != BatteryInfo.Prediction.NONE
+    }
+
+    private fun updateTimeEstimateDisplay() {
+        val estimateView = timeEstimate ?: return
+        val hasAlternative = hasAlternativeTimeEstimate()
+        if (!hasAlternative) showFullRangeEstimate = false
+        val prediction = if (showFullRangeEstimate) {
+            info.fullRangePrediction
+        } else {
+            info.prediction
+        }
+        val longDurationFormat = LongDurationFormat.fromPreference(
+            pFrag!!.settings.getString(SettingsContract.KEY_LONG_DURATION_FORMAT, null)
+        )
+        val timeRemaining = rootView.findViewById<TextView>(R.id.time_remaining)
+        val untilWhat = rootView.findViewById<TextView>(R.id.until_what)
+        timeRemaining.text = DisplayStrings.timeRemainingMainScreen(
+            info, longDurationFormat, prediction
+        )
+        untilWhat.text = DisplayStrings.untilWhat(info, prediction)
+
+        estimateView.isClickable = hasAlternative
+        estimateView.isFocusable = hasAlternative
+        estimateView.contentDescription = listOf(
+            timeRemaining.text.toString(), untilWhat.text.toString()
+        ).filter(String::isNotBlank).joinToString(", ")
+
+        if (hasAlternative) {
+            val actionLabel = if (showFullRangeEstimate) {
+                getString(
+                    R.string.activity_until_target, info.prediction.targetPercent
+                )
+            } else if (info.fullRangePrediction.targetPercent == 100) {
+                getString(R.string.activity_until_charged)
+            } else {
+                getString(R.string.activity_until_drained)
+            }
+            ViewCompat.replaceAccessibilityAction(
+                estimateView,
+                AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+                actionLabel
+            ) { _, _ ->
+                estimateView.performClick()
+                true
+            }
+        } else {
+            ViewCompat.replaceAccessibilityAction(
+                estimateView,
+                AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+                null,
+                null
+            )
+        }
     }
 
     private fun refreshCurrent() {

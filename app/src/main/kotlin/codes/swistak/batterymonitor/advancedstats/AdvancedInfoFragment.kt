@@ -14,10 +14,7 @@ package codes.swistak.batterymonitor.advancedstats
 
 
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
@@ -33,18 +30,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.pm.PackageInfoCompat
 import androidx.fragment.app.Fragment
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.RootExecutor
+import codes.swistak.batterymonitor.privileged.ShizukuUserServiceConnection
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsHelpActivity
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnBinderDeadListener
 import rikka.shizuku.Shizuku.OnBinderReceivedListener
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
-import rikka.shizuku.Shizuku.UserServiceArgs
 import java.util.Locale
 import kotlin.math.max
 
@@ -61,7 +57,8 @@ class AdvancedInfoFragment : Fragment() {
     private val mainHandler = Handler(Looper.getMainLooper())
     private var loadState = LoadState.IDLE
     private var loadGeneration = 0
-    private var activeConnection: ShizukuConnection? = null
+    private var activeConnection: ShizukuUserServiceConnection? = null
+
     private var tabVisible = false
 
     private var statusView: TextView? = null
@@ -289,35 +286,29 @@ class AdvancedInfoFragment : Fragment() {
             finishLoading(generation)
             return
         }
-        val args = buildUserServiceArgs(appContext)
-        val connection = ShizukuConnection(args, generation)
+        val connection = ShizukuUserServiceConnection(
+            appContext,
+            AdvancedStatsUserService::class.java,
+            processNameSuffix = "advanced_stats",
+            tag = "advanced_battery_stats",
+            onConnected = { connected, service ->
+                collectShizukuSnapshot(connected, service, generation)
+            },
+            onDisconnected = { disconnected ->
+                mainHandler.post {
+                    if (generation == loadGeneration && activeConnection === disconnected) {
+                        finishWithNoAccess("Shizuku user service disconnected")
+                    }
+                }
+            })
         activeConnection = connection
         loadState = LoadState.BINDING_USER_SERVICE
 
         try {
-            Shizuku.bindUserService(args, connection)
+            connection.bind()
         } catch (error: Throwable) {
             clearConnection(connection)
             finishWithNoAccess("Unable to bind Shizuku user service", error)
-        }
-    }
-
-    private fun buildUserServiceArgs(context: Context): UserServiceArgs {
-        return UserServiceArgs(
-            ComponentName(context.packageName, AdvancedStatsUserService::class.java.getName())
-        ).daemon(false).processNameSuffix("advanced_stats")
-            .debuggable((context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0)
-            .version(installedVersionCode(context)).tag("advanced_battery_stats")
-    }
-
-    private fun installedVersionCode(context: Context): Int {
-        return try {
-            PackageInfoCompat.getLongVersionCode(
-                context.packageManager.getPackageInfo(context.packageName, 0)
-            ).toInt()
-        } catch (error: Exception) {
-            Log.w(TAG, "Unable to read installed version code", error)
-            1
         }
     }
 
@@ -354,7 +345,7 @@ class AdvancedInfoFragment : Fragment() {
         if (isTabActive) showStatus(R.string.advanced_status_no_access)
     }
 
-    private fun clearConnection(connection: ShizukuConnection) {
+    private fun clearConnection(connection: ShizukuUserServiceConnection) {
         if (activeConnection === connection) activeConnection = null
     }
 
@@ -362,7 +353,7 @@ class AdvancedInfoFragment : Fragment() {
         val connection = activeConnection ?: return
         activeConnection = null
         try {
-            Shizuku.unbindUserService(connection.args, connection, true)
+            connection.unbind(remove = true)
         } catch (error: Throwable) {
             Log.w(TAG, "Unable to unbind Shizuku user service", error)
         }
@@ -595,43 +586,29 @@ class AdvancedInfoFragment : Fragment() {
         }
     }
 
-    private inner class ShizukuConnection(
-        val args: UserServiceArgs, private val generation: Int
-    ) : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, service: IBinder) {
-            Thread {
-                try {
-                    val snapshot: AdvancedBatterySnapshot = AdvancedBatterySnapshot.fromBundle(
-                        requireNotNull(
-                            AdvancedStatsUserService.requestSnapshot(
-                                service
-                            )
-                        )
-                    )
-                    snapshot.shizukuVersion = Shizuku.getVersion()
-                    postSnapshot(snapshot, generation)
-                } catch (error: Throwable) {
-                    mainHandler.post {
-                        if (generation == loadGeneration) {
-                            finishWithNoAccess("Unable to retrieve Shizuku battery stats", error)
-                        }
-                    }
-                } finally {
-                    try {
-                        Shizuku.unbindUserService(args, this@ShizukuConnection, true)
-                    } catch (error: Throwable) {
-                        Log.w(TAG, "Unable to unbind Shizuku user service", error)
+    private fun collectShizukuSnapshot(
+        connection: ShizukuUserServiceConnection, service: IBinder, generation: Int
+    ) {
+        Thread {
+            try {
+                val snapshot = AdvancedBatterySnapshot.fromBundle(
+                    requireNotNull(AdvancedStatsUserService.requestSnapshot(service))
+                )
+                snapshot.shizukuVersion = Shizuku.getVersion()
+                postSnapshot(snapshot, generation)
+            } catch (error: Throwable) {
+                mainHandler.post {
+                    if (generation == loadGeneration) {
+                        finishWithNoAccess("Unable to retrieve Shizuku battery stats", error)
                     }
                 }
-            }.start()
-        }
-
-        override fun onServiceDisconnected(name: ComponentName?) {
-            mainHandler.post {
-                if (generation == loadGeneration && activeConnection === this@ShizukuConnection) {
-                    finishWithNoAccess("Shizuku user service disconnected")
+            } finally {
+                try {
+                    connection.unbind(remove = true)
+                } catch (error: Throwable) {
+                    Log.w(TAG, "Unable to unbind Shizuku user service", error)
                 }
             }
-        }
+        }.start()
     }
 }

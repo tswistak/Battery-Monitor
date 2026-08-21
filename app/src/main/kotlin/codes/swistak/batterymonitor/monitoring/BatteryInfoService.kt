@@ -59,6 +59,7 @@ import codes.swistak.batterymonitor.common.DurationFormatter
 import codes.swistak.batterymonitor.logs.AutoLogExporter
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogResult
+import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.LongDurationFormat
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -368,7 +369,7 @@ class BatteryInfoService : Service() {
 
         BackgroundServiceWatchdog.schedule(this)
 
-        BatteryCurrent.enableShizukuMultiProcessSupport(this)
+        PrivilegedAccess.enableShizukuMultiProcessSupport(this)
 
         mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager?
         setUpMinimalForegroundChannel()
@@ -402,7 +403,8 @@ class BatteryInfoService : Service() {
         sdkVersioning()
 
         BatteryCurrent.setContext(this)
-        BatteryCurrent.setShizukuReadyListener {
+        PrivilegedAccess.initialize(this)
+        PrivilegedAccess.setReadyListener {
             mHandler.post {
                 if (mainNotificationForegroundStarted) update(null)
             }
@@ -452,7 +454,7 @@ class BatteryInfoService : Service() {
     }
 
     override fun onDestroy() {
-        BatteryCurrent.setShizukuReadyListener(null)
+        PrivilegedAccess.setReadyListener(null)
         if (alarms != null) alarms!!.close()
         try {
             unregisterReceiver(mBatteryInfoReceiver)
@@ -613,9 +615,9 @@ class BatteryInfoService : Service() {
             SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
         )
 
-        BatteryCurrent.setUsePrivilegedAccess(
+        PrivilegedAccess.setEnabled(
             settings.getBoolean(
-                SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false
+                SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
             )
         )
         val multiplier = settings.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
@@ -691,6 +693,7 @@ class BatteryInfoService : Service() {
         )
         predictor!!.update(info!!)
         info!!.prediction.updateRelativeTime()
+        info!!.fullRangePrediction.updateRelativeTime()
 
         if (statusHasChanged()) handleUpdateWithChangedStatus()
         else handleUpdateWithSameStatus()

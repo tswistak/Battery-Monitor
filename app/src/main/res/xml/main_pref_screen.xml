@@ -10,6 +10,11 @@
         app:title="@string/units_formatting_settings" />
 
     <Preference
+        app:key="time_estimates_settings"
+        app:summary="@string/time_estimates_settings_summary"
+        app:title="@string/time_estimates_settings" />
+
+    <Preference
         app:key="current_state_settings"
         app:summary="@string/current_state_settings_summary"
         app:title="@string/tab_current_info" />

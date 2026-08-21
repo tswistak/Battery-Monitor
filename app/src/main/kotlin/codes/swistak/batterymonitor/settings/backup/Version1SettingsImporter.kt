@@ -98,7 +98,7 @@ internal object Version1SettingsImporter : SettingsImporter {
             }
         }
 
-        editor.putBoolean(SettingsContract.KEY_USE_PRIVILEGED_BATTERY_CURRENT, false)
+        editor.putBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
         editor.putString(SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL, "2")
         displayCurrentInNotification?.let {
             editor.putBoolean(SettingsContract.KEY_DISPLAY_CURRENT_IN_NOTIFICATION, it)

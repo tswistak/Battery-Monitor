@@ -52,4 +52,22 @@
             app:summary="@string/diagnostics_clear_summary"
             app:title="@string/diagnostics_clear" />
     </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/charging_diagnostics_title">
+        <Preference
+            app:selectable="false"
+            app:summary="@string/charging_diagnostics_instructions_hint" />
+        <Preference
+            app:key="charging_diagnostics_capture"
+            app:summary="@string/charging_diagnostics_capture_summary"
+            app:title="@string/charging_diagnostics_capture" />
+        <Preference
+            app:key="charging_diagnostics_report"
+            app:summary="@string/charging_diagnostics_report_summary"
+            app:title="@string/charging_diagnostics_report" />
+        <Preference
+            app:key="charging_diagnostics_clear"
+            app:summary="@string/charging_diagnostics_clear_summary"
+            app:title="@string/charging_diagnostics_clear" />
+    </PreferenceCategory>
 </PreferenceScreen>
