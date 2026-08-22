@@ -642,27 +642,30 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">स्थानीय रूप से सहेजे OEM स्नैपशॉट हटाएँ</string>
   <string name="charging_diagnostics_choose_state" formatted="false">कौन-सी डिवाइस सेटिंग सक्रिय है?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">सुरक्षा बंद / असीमित</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">निश्चित सीमा 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">निश्चित सीमा 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">निश्चित सीमा 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">अधिकतम / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">निश्चित सीमा…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">अनुकूलित / स्मार्ट चार्जिंग</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">निर्धारित चार्जिंग</string>
   <string name="charging_diagnostics_condition_other" formatted="false">अन्य OEM मोड</string>
   <string name="charging_diagnostics_capturing" formatted="false">चार्जिंग संकेत लिए जा रहे हैं…</string>
   <string name="charging_diagnostics_captured" formatted="false">चार्जिंग स्नैपशॉट लिया गया</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">चार्जिंग स्नैपशॉट नहीं लिया जा सका</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d स्नैपशॉट लिए गए। तुलना कॉपी या भेजने के लिए टैप करें।</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">विशेषाधिकार प्राप्त पहुँच से अधिक निदान जानकारी उपलब्ध हो सकती है। अधिक उपयोगी OEM चार्जिंग सीमा रिपोर्ट के लिए Shizuku या root पहुँच दें और उन्नत सेटिंग में विशेषाधिकार प्राप्त पहुँच चालू करें।</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">%1$d स्नैपशॉट लिया गया। एक और चार्जिंग मोड लें।</item>
+    <item quantity="other">%1$d स्नैपशॉट लिए गए। तुलना देखने के लिए टैप करें।</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">पहले कम से कम दो अलग चार्जिंग मोड लें</string>
   <string name="charging_diagnostics_cleared" formatted="false">चार्जिंग स्नैपशॉट हटाए गए</string>
   <string name="charging_diagnostics_copy" formatted="false">क्लिपबोर्ड पर कॉपी करें</string>
   <string name="charging_diagnostics_save" formatted="false">सहेजें</string>
   <string name="charging_diagnostics_copied" formatted="false">रिपोर्ट कॉपी की गई</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. बैटरी सेटिंग खोलें, चार्जिंग सुरक्षा बंद करें और स्नैपशॉट लें।\n
-    2. एक निश्चित सीमा चुनें और दूसरा स्नैपशॉट लें। संभव हो तो दूसरी सीमा के साथ दोहराएँ।\n
-    3. अनुकूलित, स्मार्ट या निर्धारित चार्जिंग चालू करें और एक और स्नैपशॉट लें।\n
-    4. तुलना रिपोर्ट बनाएँ। इसमें केवल फ़िल्टर किए गए चार्जिंग मान होते हैं; व्यक्तिगत पहचानकर्ता, खाते, पूरी सेटिंग सूची और डीबग लॉग कभी एकत्र नहीं किए जाते।</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">रिपोर्ट कॉपी या सहेजें, फिर <a href="https://github.com/tswistak/Battery-Monitor/issues/new">GitHub समस्या खोलें</a> या <a href="mailto:tomasz@swistak.codes">ईमेल से भेजें</a>। हर स्नैपशॉट के लिए मॉडल, सिस्टम और OEM विकल्प बताएँ।</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. फ़ोन को चार्जर से अलग करें और कॉन्फ़िगरेशन स्नैपशॉट लेते समय उसे अलग रखें। स्नैपशॉट के बीच केवल निर्माता की चार्जिंग सुरक्षा सेटिंग बदलें।\n
+    2. चार्जिंग सुरक्षा बंद करें, 2–5 सेकंड प्रतीक्षा करें और स्नैपशॉट लें।\n
+    3. एक निश्चित सीमा चुनें, 2–5 सेकंड प्रतीक्षा करें और स्नैपशॉट लें। संभव हो तो दूसरी सीमा पर दोहराएँ।\n
+    4. अनुकूलित, स्मार्ट या निर्धारित चार्जिंग चालू करें, 2–5 सेकंड प्रतीक्षा करें और स्नैपशॉट लें।\n
+    5. यदि कॉन्फ़िगरेशन तुलना से स्पष्ट परिणाम न मिले, तो केवल संचालन के समय दिखने वाली स्थिति दर्ज करने के लिए चार्जिंग के दौरान क्रम को वैकल्पिक रूप से दोहराएँ।\n
+    6. तुलना रिपोर्ट बनाएँ और जाँचें। डेटा फ़िल्टर होता है और संभावित संवेदनशील मान छिपाए जाते हैं, फिर भी साझा करने से पहले पूरी रिपोर्ट जाँचें।</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">रिपोर्ट की समीक्षा के बाद, उसे कॉपी या सहेजें और ईमेल से <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> पर भेजें।</string>
 
   <string name="activity_until_target" formatted="true">%1$d%% तक</string>
   <string name="activity_target_reached" formatted="true">लक्ष्य पूरा हुआ (%1$d%%)</string>

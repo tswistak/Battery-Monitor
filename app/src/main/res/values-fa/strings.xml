@@ -646,27 +646,30 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">حذف تصاویر شارژ ذخیره‌شده در دستگاه</string>
   <string name="charging_diagnostics_choose_state" formatted="false">کدام تنظیم دستگاه فعال است؟</string>
   <string name="charging_diagnostics_condition_off" formatted="false">محافظت خاموش / بدون محدودیت</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">محدودیت ثابت 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">محدودیت ثابت 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">محدودیت ثابت 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">حداکثر / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">محدودیت ثابت…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">شارژ تطبیقی / هوشمند</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">شارژ زمان‌بندی‌شده</string>
   <string name="charging_diagnostics_condition_other" formatted="false">حالت دیگر سازنده</string>
   <string name="charging_diagnostics_capturing" formatted="false">در حال ثبت سیگنال‌های شارژ…</string>
   <string name="charging_diagnostics_captured" formatted="false">تصویر شارژ ثبت شد</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">ثبت تصویر شارژ ممکن نشد</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d تصویر ثبت شد. برای کپی یا ارسال مقایسه بزنید.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">با دسترسی ویژه ممکن است اطلاعات تشخیصی بیشتری در دسترس باشد. برای گزارش مفیدتر از محدودیت شارژ سازنده، دسترسی Shizuku یا root را بدهید و دسترسی ویژه را در تنظیمات پیشرفته فعال کنید.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">%1$d تصویر ثبت شد. حالت شارژ دیگری را ثبت کنید.</item>
+    <item quantity="other">%1$d تصویر ثبت شد. برای بررسی مقایسه بزنید.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ را ثبت کنید</string>
   <string name="charging_diagnostics_cleared" formatted="false">تصاویر شارژ حذف شدند</string>
   <string name="charging_diagnostics_copy" formatted="false">کپی در کلیپ‌بورد</string>
   <string name="charging_diagnostics_save" formatted="false">ذخیره</string>
   <string name="charging_diagnostics_copied" formatted="false">گزارش کپی شد</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. تنظیمات باتری را باز کنید، محافظت شارژ را خاموش کنید و یک تصویر ثبت کنید.\n
-    2. یک محدودیت ثابت انتخاب و تصویر دیگری ثبت کنید. در صورت امکان با محدودیتی دیگر تکرار کنید.\n
-    3. شارژ تطبیقی، هوشمند یا زمان‌بندی‌شده را فعال و تصویر دیگری ثبت کنید.\n
-    4. گزارش مقایسه را بسازید. فقط مقادیر فیلترشده مربوط به شارژ درج می‌شوند؛ شناسه‌های شخصی، حساب‌ها، فهرست کامل تنظیمات و گزارش‌های اشکال‌زدایی هرگز جمع‌آوری نمی‌شوند.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">گزارش را کپی یا ذخیره کنید، سپس <a href="https://github.com/tswistak/Battery-Monitor/issues/new">یک مسئله در GitHub باز کنید</a> یا <a href="mailto:tomasz@swistak.codes">با ایمیل بفرستید</a>. مدل، سیستم‌عامل و گزینه سازنده هر تصویر را بنویسید.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. گوشی را از شارژر جدا کنید و هنگام ثبت تصاویر پیکربندی، جدا نگه دارید. بین تصاویر فقط تنظیم محافظت شارژ سازنده را تغییر دهید.\n
+    2. محافظت شارژ را خاموش کنید، 2–5 ثانیه صبر و تصویری ثبت کنید.\n
+    3. محدودیتی ثابت انتخاب کنید، 2–5 ثانیه صبر و تصویری ثبت کنید. در صورت امکان با محدودیتی دیگر تکرار کنید.\n
+    4. شارژ تطبیقی، هوشمند یا زمان‌بندی‌شده را فعال کنید، 2–5 ثانیه صبر و تصویری ثبت کنید.\n
+    5. اگر مقایسه پیکربندی نتیجه روشنی نداشت، می‌توانید برای ثبت وضعیت‌هایی که فقط هنگام کار دیده می‌شوند، این مراحل را هنگام شارژ نیز تکرار کنید.\n
+    6. گزارش مقایسه را بسازید و بررسی کنید. داده‌ها فیلتر و مقادیر احتمالاً حساس پنهان می‌شوند، اما پیش از اشتراک‌گذاری کل گزارش را بررسی کنید.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">پس از بررسی گزارش، آن را کپی یا ذخیره کنید و با ایمیل به <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> بفرستید.</string>
 
   <string name="activity_until_target" formatted="true">تا %1$d%%</string>
   <string name="activity_target_reached" formatted="true">هدف رسید (%1$d%%)</string>

@@ -17,6 +17,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteFullException
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -25,6 +26,10 @@ import android.os.PowerManager
 import android.os.ResultReceiver
 import android.os.SystemClock
 import android.provider.Settings
+import android.widget.FrameLayout
+import android.widget.NumberPicker
+import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
@@ -275,20 +280,46 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
     }
 
     private fun showChargingConditionPicker() {
-        val conditions = ChargingDiagnosticCondition.entries
         val labels = intArrayOf(
             R.string.charging_diagnostics_condition_off,
-            R.string.charging_diagnostics_condition_70,
-            R.string.charging_diagnostics_condition_80,
-            R.string.charging_diagnostics_condition_90,
-            R.string.charging_diagnostics_condition_100,
+            R.string.charging_diagnostics_condition_fixed,
             R.string.charging_diagnostics_condition_adaptive,
             R.string.charging_diagnostics_condition_scheduled,
             R.string.charging_diagnostics_condition_other
         ).map(::getString).toTypedArray()
         AlertDialog.Builder(requireContext()).setTitle(R.string.charging_diagnostics_choose_state)
-            .setItems(labels) { _, which -> captureChargingSnapshot(conditions[which]) }
-            .setNegativeButton(R.string.cancel, null).show()
+            .setItems(labels) { _, which ->
+                when (which) {
+                    0 -> captureChargingSnapshot(ChargingDiagnosticCondition.Off)
+                    1 -> showFixedChargingLimitPicker()
+                    2 -> captureChargingSnapshot(ChargingDiagnosticCondition.Adaptive)
+                    3 -> captureChargingSnapshot(ChargingDiagnosticCondition.Scheduled)
+                    4 -> captureChargingSnapshot(ChargingDiagnosticCondition.Other)
+                }
+            }.setNegativeButton(R.string.cancel, null).show()
+    }
+
+    private fun showFixedChargingLimitPicker() {
+        val context = requireContext()
+        val horizontalPadding = (24 * resources.displayMetrics.density).toInt()
+        val picker = NumberPicker(context).apply {
+            minValue = ChargingDiagnosticCondition.MIN_FIXED_PERCENT
+            maxValue = ChargingDiagnosticCondition.MAX_FIXED_PERCENT
+            value = 80
+            wrapSelectorWheel = false
+        }
+        val container = FrameLayout(context).apply {
+            setPadding(horizontalPadding, 0, horizontalPadding, 0)
+            addView(
+                picker, FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+                )
+            )
+        }
+        AlertDialog.Builder(context).setTitle(R.string.charging_diagnostics_condition_fixed)
+            .setView(container).setPositiveButton(android.R.string.ok) { _, _ ->
+                captureChargingSnapshot(ChargingDiagnosticCondition.Fixed(picker.value))
+            }.setNegativeButton(R.string.cancel, null).show()
     }
 
     private fun captureChargingSnapshot(condition: ChargingDiagnosticCondition) {
@@ -303,7 +334,12 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
             val snapshot = runCatching {
                 ChargingLimitDiagnostics(context, { privilegedEnabled }).capture(condition)
             }.getOrNull()
-            if (snapshot != null) ChargingDiagnosticStore.append(context, snapshot)
+            val snapshotCount = if (snapshot != null) {
+                ChargingDiagnosticStore.append(context, snapshot)
+                ChargingDiagnosticStore.read(context).size
+            } else {
+                0
+            }
             mainHandler.post {
                 if (!isAdded) return@post
                 preference?.isEnabled = true
@@ -312,6 +348,12 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
                     if (snapshot != null) R.string.charging_diagnostics_captured
                     else R.string.charging_diagnostics_capture_failed
                 )
+                if (snapshotCount == 1 && snapshot?.hasLimitedUnprivilegedDiscovery() == true) {
+                    AlertDialog.Builder(requireContext())
+                        .setTitle(R.string.charging_diagnostics_title)
+                        .setMessage(R.string.charging_diagnostics_privileged_hint)
+                        .setPositiveButton(android.R.string.ok, null).show()
+                }
             }
         }.apply { name = "charging-limit-diagnostics" }.start()
     }
@@ -323,7 +365,9 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
             summary = if (count == 0) {
                 getString(R.string.charging_diagnostics_report_summary)
             } else {
-                getString(R.string.charging_diagnostics_snapshot_count, count)
+                resources.getQuantityString(
+                    R.plurals.charging_diagnostics_snapshot_count, count, count
+                )
             }
         }
         findPreference<Preference>(KEY_CHARGING_CLEAR)?.isEnabled = count > 0
@@ -338,16 +382,20 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
             return
         }
         val report = ChargingDiagnosticReport.create(requireContext(), snapshots)
-        val actions = arrayOf(
-            getString(R.string.charging_diagnostics_copy),
-            getString(R.string.charging_diagnostics_save)
-        )
+        val context = requireContext()
+        val padding = (16 * resources.displayMetrics.density).toInt()
+        val reportView = TextView(context).apply {
+            text = report
+            typeface = Typeface.MONOSPACE
+            setTextIsSelectable(true)
+            setPadding(padding, padding, padding, padding)
+        }
+        val scrollView = ScrollView(context).apply { addView(reportView) }
         AlertDialog.Builder(requireContext()).setTitle(R.string.charging_diagnostics_report)
-            .setItems(actions) { _, which ->
-                when (which) {
-                    0 -> copyChargingReport(report)
-                    1 -> saveChargingReport()
-                }
+            .setView(scrollView).setPositiveButton(R.string.charging_diagnostics_copy) { _, _ ->
+                copyChargingReport(report)
+            }.setNeutralButton(R.string.charging_diagnostics_save) { _, _ ->
+                saveChargingReport()
             }.setNegativeButton(R.string.cancel, null).show()
     }
 

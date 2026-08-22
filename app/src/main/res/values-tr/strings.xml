@@ -618,27 +618,30 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Yerel olarak saklanan OEM şarj görüntülerini sil</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Hangi cihaz ayarı etkin?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Koruma kapalı / sınırsız</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Sabit sınır 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Sabit sınır 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Sabit sınır 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Maksimum / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Sabit sınır…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Uyarlanabilir / akıllı şarj</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Zamanlanmış şarj</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Diğer OEM modu</string>
   <string name="charging_diagnostics_capturing" formatted="false">Şarj sinyalleri yakalanıyor…</string>
   <string name="charging_diagnostics_captured" formatted="false">Şarj görüntüsü yakalandı</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Şarj görüntüsü yakalanamadı</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d görüntü yakalandı. Karşılaştırmayı kopyalamak veya göndermek için dokunun.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">Ayrıcalıklı erişimle daha fazla tanılama bilgisi edinilebilir. Daha yararlı bir OEM şarj sınırı raporu için Shizuku veya root erişimi verin ve Gelişmiş ayarlarda ayrıcalıklı erişimi etkinleştirin.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">%1$d anlık görüntü yakalandı. Başka bir şarj modu yakalayın.</item>
+    <item quantity="other">%1$d anlık görüntü yakalandı. Karşılaştırmayı incelemek için dokunun.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Önce en az iki farklı şarj modunu yakalayın</string>
   <string name="charging_diagnostics_cleared" formatted="false">Şarj görüntüleri silindi</string>
   <string name="charging_diagnostics_copy" formatted="false">Panoya kopyala</string>
   <string name="charging_diagnostics_save" formatted="false">Kaydet</string>
   <string name="charging_diagnostics_copied" formatted="false">Rapor kopyalandı</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Pil ayarlarını açın, şarj korumasını kapatın ve bir görüntü yakalayın.\n
-    2. Sabit bir sınır seçin ve başka bir görüntü yakalayın. Mümkünse farklı bir sınırla tekrarlayın.\n
-    3. Uyarlanabilir, akıllı veya zamanlanmış şarjı açın ve bir görüntü daha yakalayın.\n
-    4. Karşılaştırma raporunu oluşturun. Yalnızca filtrelenmiş şarj değerleri eklenir; kişisel tanımlayıcılar, hesaplar, tam ayar dökümleri ve hata ayıklama günlükleri asla toplanmaz.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Raporu kopyalayın veya kaydedin, ardından <a href="https://github.com/tswistak/Battery-Monitor/issues/new">bir GitHub sorunu açın</a> veya <a href="mailto:tomasz@swistak.codes">e-postayla gönderin</a>. Her görüntünün modelini, sistemini ve OEM seçeneğini belirtin.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Telefonu şarj cihazından çıkarın ve yapılandırma görüntülerini yakalarken bağlantısız tutun. Görüntüler arasında yalnızca üreticinin şarj koruması ayarını değiştirin.\n
+    2. Şarj korumasını kapatın, 2–5 saniye bekleyin ve bir görüntü yakalayın.\n
+    3. Sabit bir sınır seçin, 2–5 saniye bekleyin ve bir görüntü yakalayın. Mümkünse farklı bir sınırla tekrarlayın.\n
+    4. Uyarlanabilir, akıllı veya zamanlanmış şarjı açın, 2–5 saniye bekleyin ve bir görüntü yakalayın.\n
+    5. Yapılandırma karşılaştırması kesin değilse yalnızca çalışma sırasında görünen durumu yakalamak için diziyi isteğe bağlı olarak şarj sırasında tekrarlayabilirsiniz.\n
+    6. Karşılaştırma raporunu oluşturup inceleyin. Veriler filtrelenir ve potansiyel olarak hassas değerler gizlenir; yine de göndermeden önce raporun tamamını kontrol edin.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Raporu inceledikten sonra kopyalayın veya kaydedin ve e-postayla <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> adresine gönderin.</string>
 
   <string name="activity_until_target" formatted="true">%1$d%% seviyesine kadar</string>
   <string name="activity_target_reached" formatted="true">hedefe ulaşıldı (%1$d%%)</string>

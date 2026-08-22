@@ -639,27 +639,29 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">端末内に保存したOEM充電スナップショットを削除します</string>
   <string name="charging_diagnostics_choose_state" formatted="false">どの端末設定が有効ですか？</string>
   <string name="charging_diagnostics_condition_off" formatted="false">保護オフ / 制限なし</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">固定上限70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">固定上限80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">固定上限90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">最大 / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">固定上限…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">アダプティブ / スマート充電</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">スケジュール充電</string>
   <string name="charging_diagnostics_condition_other" formatted="false">その他のOEMモード</string>
   <string name="charging_diagnostics_capturing" formatted="false">充電信号を取得中…</string>
   <string name="charging_diagnostics_captured" formatted="false">充電スナップショットを取得しました</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">充電スナップショットを取得できませんでした</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d件のスナップショットを取得しました。タップして比較をコピーまたは送信します。</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">特権アクセスを使用すると、より多くの診断情報を取得できる場合があります。より有用なOEM充電上限レポートを作成するには、Shizukuまたはrootアクセスを許可し、詳細設定で特権アクセスを有効にしてください。</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="other">%1$d件のスナップショットを取得しました。タップして比較を確認します。</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">最初に2種類以上の充電モードを取得してください</string>
   <string name="charging_diagnostics_cleared" formatted="false">充電スナップショットを削除しました</string>
   <string name="charging_diagnostics_copy" formatted="false">クリップボードにコピー</string>
   <string name="charging_diagnostics_save" formatted="false">保存</string>
   <string name="charging_diagnostics_copied" formatted="false">レポートをコピーしました</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. バッテリー設定を開き、充電保護をオフにしてスナップショットを取得します。\n
-    2. 固定上限を選び、もう一度取得します。可能なら別の上限でも繰り返します。\n
-    3. アダプティブ、スマート、またはスケジュール充電を有効にして、さらに取得します。\n
-    4. 比較レポートを作成します。充電関連のフィルター済み値だけが含まれ、個人識別子、アカウント、設定の完全な一覧、デバッグログは収集されません。</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">レポートをコピーまたは保存し、<a href="https://github.com/tswistak/Battery-Monitor/issues/new">GitHub Issueを開く</a>か、<a href="mailto:tomasz@swistak.codes">メールで送信</a>してください。各スナップショットの機種、OS、OEM設定を記載してください。</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. 端末を充電器から外し、設定スナップショットの取得中は接続しないでください。スナップショット間ではメーカーの充電保護設定だけを変更します。\n
+    2. 充電保護をオフにし、2–5秒待ってスナップショットを取得します。\n
+    3. 固定上限を選び、2–5秒待って取得します。可能なら別の上限で繰り返します。\n
+    4. アダプティブ、スマート、またはスケジュール充電を有効にし、2–5秒待って取得します。\n
+    5. 設定の比較で明確な結果が得られない場合は、充電中に同じ手順を任意で繰り返し、動作中だけ現れる状態を取得できます。\n
+    6. 比較レポートを作成して確認します。データはフィルターされ、潜在的に機密な値は隠されますが、共有前にレポート全体を確認してください。</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">レポートを確認後、コピーまたは保存し、メールで <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> へ送信してください。</string>
 
   <string name="activity_until_target" formatted="true">%1$d%% まで</string>
   <string name="activity_target_reached" formatted="true">目標に到達（%1$d%%）</string>

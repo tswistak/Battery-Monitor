@@ -639,27 +639,29 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">刪除儲存在本機的 OEM 充電快照</string>
   <string name="charging_diagnostics_choose_state" formatted="false">目前啟用哪個裝置設定？</string>
   <string name="charging_diagnostics_condition_off" formatted="false">保護關閉 / 無限制</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">固定上限 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">固定上限 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">固定上限 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">最大 / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">固定上限…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">自動調節 / 智慧充電</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">排程充電</string>
   <string name="charging_diagnostics_condition_other" formatted="false">其他 OEM 模式</string>
   <string name="charging_diagnostics_capturing" formatted="false">正在擷取充電訊號…</string>
   <string name="charging_diagnostics_captured" formatted="false">已擷取充電快照</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">無法擷取充電快照</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">已擷取 %1$d 個快照。輕觸即可複製或傳送比較結果。</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">使用特權存取可能會取得更多診斷資訊。請授予 Shizuku 或 root 存取權，並在進階設定中啟用特權存取，以產生更有用的 OEM 充電上限報告。</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="other">已擷取 %1$d 個快照。輕觸以檢視比較結果。</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">請先擷取至少兩種不同的充電模式</string>
   <string name="charging_diagnostics_cleared" formatted="false">已刪除充電快照</string>
   <string name="charging_diagnostics_copy" formatted="false">複製到剪貼簿</string>
   <string name="charging_diagnostics_save" formatted="false">儲存</string>
   <string name="charging_diagnostics_copied" formatted="false">已複製報告</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. 開啟電池設定，關閉充電保護並擷取快照。\n
-    2. 選擇固定上限並擷取另一個快照；若可用，請以另一個上限重複。\n
-    3. 啟用自動調節、智慧或排程充電，再擷取一個快照。\n
-    4. 建立比較報告。只會包含經過篩選的充電相關數值；絕不收集個人識別資訊、帳戶、完整設定清單或偵錯記錄。</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">複製或儲存報告後，<a href="https://github.com/tswistak/Battery-Monitor/issues/new">開啟 GitHub 問題</a>或<a href="mailto:tomasz@swistak.codes">以電子郵件傳送</a>。請說明每個快照的手機型號、系統與 OEM 選項。</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. 中斷手機與充電器的連接，並在擷取設定快照期間保持中斷。快照之間只變更製造商的充電保護設定。\n
+    2. 關閉充電保護，等待 2–5 秒，然後擷取快照。\n
+    3. 選擇固定上限，等待 2–5 秒，然後擷取快照。若可以，請以另一個上限重複操作。\n
+    4. 啟用自動調節、智慧或排程充電，等待 2–5 秒，然後擷取快照。\n
+    5. 如果設定比較無法得出明確結果，可以選擇在充電時重複此程序，以擷取僅在執行時出現的狀態。\n
+    6. 建立並檢查比較報告。資料會經過篩選，可能敏感的值會被隱藏，但傳送前仍請檢查完整報告。</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">檢視報告後，請複製或儲存，然後以電子郵件傳送至 <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>。</string>
 
   <string name="activity_until_target" formatted="true">直到 %1$d%%</string>
   <string name="activity_target_reached" formatted="true">已達目標（%1$d%%）</string>

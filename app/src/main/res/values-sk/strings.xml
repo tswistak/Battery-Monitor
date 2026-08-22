@@ -667,27 +667,32 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Odstrániť lokálne uložené snímky nabíjania OEM</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Ktoré nastavenie zariadenia je aktívne?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Ochrana vypnutá / bez obmedzenia</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Pevný limit 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Pevný limit 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Pevný limit 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Pevný limit…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptívne / inteligentné nabíjanie</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Plánované nabíjanie</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Iný režim OEM</string>
   <string name="charging_diagnostics_capturing" formatted="false">Zachytávajú sa signály nabíjania…</string>
   <string name="charging_diagnostics_captured" formatted="false">Snímka nabíjania zachytená</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Snímku nabíjania sa nepodarilo zachytiť</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">Zachytených %1$d snímok. Klepnutím porovnanie skopírujete alebo odošlete.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">S privilegovaným prístupom môžu byť dostupné ďalšie diagnostické informácie. Udeľte prístup cez Shizuku alebo root a zapnite privilegovaný prístup v rozšírených nastaveniach, aby bola správa o limite nabíjania OEM užitočnejšia.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">Zachytená %1$d snímka. Zachyťte ďalší režim nabíjania.</item>
+    <item quantity="few">Zachytené %1$d snímky. Klepnutím porovnanie skontrolujete.</item>
+    <item quantity="many">Zachytených %1$d snímky. Klepnutím porovnanie skontrolujete.</item>
+    <item quantity="other">Zachytených %1$d snímok. Klepnutím porovnanie skontrolujete.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Najprv zachyťte aspoň dva rôzne režimy nabíjania</string>
   <string name="charging_diagnostics_cleared" formatted="false">Snímky nabíjania odstránené</string>
   <string name="charging_diagnostics_copy" formatted="false">Kopírovať do schránky</string>
   <string name="charging_diagnostics_save" formatted="false">Uložiť</string>
   <string name="charging_diagnostics_copied" formatted="false">Správa bola skopírovaná</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Otvorte nastavenia batérie, vypnite ochranu nabíjania a zachyťte snímku.\n
-    2. Vyberte pevný limit a zachyťte ďalšiu snímku. Ak je to možné, zopakujte s iným limitom.\n
-    3. Zapnite adaptívne, inteligentné alebo plánované nabíjanie a zachyťte ešte jednu snímku.\n
-    4. Vytvorte porovnávaciu správu. Obsahuje iba filtrované hodnoty nabíjania; osobné identifikátory, účty, úplné výpisy nastavení ani ladiace protokoly sa nikdy nezhromažďujú.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Skopírujte alebo uložte správu a potom <a href="https://github.com/tswistak/Battery-Monitor/issues/new">otvorte problém na GitHube</a> alebo ju <a href="mailto:tomasz@swistak.codes">odošlite e-mailom</a>. Uveďte model, systém a voľbu OEM každej snímky.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Odpojte telefón a počas snímok konfigurácie ho nechajte odpojený. Medzi snímkami meňte iba nastavenie ochrany nabíjania od výrobcu.\n
+    2. Vypnite ochranu nabíjania, počkajte 2–5 sekúnd a zachyťte snímku.\n
+    3. Vyberte pevný limit, počkajte 2–5 sekúnd a zachyťte snímku. Ak je to možné, zopakujte s iným limitom.\n
+    4. Zapnite adaptívne, inteligentné alebo plánované nabíjanie, počkajte 2–5 sekúnd a zachyťte snímku.\n
+    5. Ak porovnanie konfigurácie nie je jednoznačné, môžete sekvenciu voliteľne zopakovať počas nabíjania a zachytiť stav dostupný iba počas prevádzky.\n
+    6. Vytvorte a skontrolujte porovnávaciu správu. Údaje sa filtrujú a potenciálne citlivé hodnoty sa skryjú, pred zdieľaním však skontrolujte celú správu.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Po kontrole správu skopírujte alebo uložte a odošlite ju e-mailom na adresu <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">do %1$d%%</string>
   <string name="activity_target_reached" formatted="true">cieľ dosiahnutý (%1$d%%)</string>

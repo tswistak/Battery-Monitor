@@ -32,6 +32,12 @@ import rikka.shizuku.Shizuku.UserServiceArgs
 import rikka.shizuku.ShizukuProvider
 
 internal object PrivilegedAccess : CommandExecutor {
+    internal enum class Backend {
+        ROOT, SHIZUKU
+    }
+
+    internal data class CommandResult(val output: String, val backend: Backend)
+
     private const val LOG_TAG = "codes.swistak.batterymonitor - PrivilegedAccess"
     private const val SHIZUKU_PERMISSION_REQUEST_CODE = 7001
     private const val COMMAND_SERVICE_SUFFIX = "privileged_commands"
@@ -96,9 +102,12 @@ internal object PrivilegedAccess : CommandExecutor {
         readyListener = listener
     }
 
-    override fun run(command: String): String? {
+    override fun run(command: String): String? = runWithBackend(command)?.output
+
+    fun runWithBackend(command: String): CommandResult? {
         if (!enabled) return null
-        return RootExecutor().run(command) ?: runShizukuCommand(command)
+        RootExecutor().run(command)?.let { return CommandResult(it, Backend.ROOT) }
+        return runShizukuCommand(command)?.let { CommandResult(it, Backend.SHIZUKU) }
     }
 
     fun runShizukuCommand(command: String): String? {

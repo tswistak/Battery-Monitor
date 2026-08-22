@@ -443,6 +443,8 @@ class CurrentInfoFragment : Fragment() {
 
         estimateView.isClickable = hasAlternative
         estimateView.isFocusable = hasAlternative
+        rootView.findViewById<View>(R.id.time_estimate_switch_hint).visibility =
+            if (hasAlternative) View.VISIBLE else View.GONE
         estimateView.contentDescription = listOf(
             timeRemaining.text.toString(), untilWhat.text.toString()
         ).filter(String::isNotBlank).joinToString(", ")

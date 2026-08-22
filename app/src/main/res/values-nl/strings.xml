@@ -646,27 +646,30 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Lokaal opgeslagen OEM-laadmomentopnamen verwijderen</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Welke apparaatinstelling is actief?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Bescherming uit / onbeperkt</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Vaste limiet 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Vaste limiet 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Vaste limiet 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Vaste limiet…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptief / slim laden</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Gepland laden</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Andere OEM-modus</string>
   <string name="charging_diagnostics_capturing" formatted="false">Laadsignalen worden vastgelegd…</string>
   <string name="charging_diagnostics_captured" formatted="false">Laadmomentopname gemaakt</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Laadmomentopname kon niet worden gemaakt</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d momentopnamen gemaakt. Tik om de vergelijking te kopiëren of te verzenden.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">Met bevoorrechte toegang is mogelijk meer diagnostische informatie beschikbaar. Verleen toegang via Shizuku of root en schakel bevoorrechte toegang in bij de geavanceerde instellingen voor een bruikbaarder rapport over OEM-laadlimieten.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">%1$d momentopname gemaakt. Leg nog een laadmodus vast.</item>
+    <item quantity="other">%1$d momentopnamen gemaakt. Tik om de vergelijking te bekijken.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Maak eerst minstens twee verschillende laadmodi vast</string>
   <string name="charging_diagnostics_cleared" formatted="false">Laadmomentopnamen verwijderd</string>
   <string name="charging_diagnostics_copy" formatted="false">Naar klembord kopiëren</string>
   <string name="charging_diagnostics_save" formatted="false">Opslaan</string>
   <string name="charging_diagnostics_copied" formatted="false">Rapport gekopieerd</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Open de batterij-instellingen, schakel laadbescherming uit en maak een momentopname.\n
-    2. Kies een vaste limiet en maak nog een momentopname. Herhaal dit indien mogelijk met een andere limiet.\n
-    3. Schakel adaptief, slim of gepland laden in en maak nog een momentopname.\n
-    4. Maak het vergelijkingsrapport. Alleen gefilterde laadwaarden worden opgenomen; persoonlijke identificatoren, accounts, volledige instellingenlijsten en debuglogboeken worden nooit verzameld.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Kopieer of bewaar het rapport en <a href="https://github.com/tswistak/Battery-Monitor/issues/new">open een GitHub-issue</a> of <a href="mailto:tomasz@swistak.codes">verstuur het per e-mail</a>. Vermeld model, besturingssysteem en OEM-optie van elke momentopname.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Koppel de telefoon los en houd deze losgekoppeld tijdens de configuratieopnamen. Wijzig tussen de opnamen alleen de laadbeschermingsinstelling van de fabrikant.\n
+    2. Schakel laadbescherming uit, wacht 2–5 seconden en maak een momentopname.\n
+    3. Kies een vaste limiet, wacht 2–5 seconden en maak een opname. Herhaal indien mogelijk met een andere limiet.\n
+    4. Schakel adaptief, slim of gepland laden in, wacht 2–5 seconden en maak een opname.\n
+    5. Als de configuratievergelijking geen duidelijk resultaat oplevert, kunt u de reeks desgewenst tijdens het opladen herhalen om toestanden vast te leggen die alleen tijdens gebruik zichtbaar zijn.\n
+    6. Maak en controleer het vergelijkingsrapport. Gegevens worden gefilterd en mogelijk gevoelige waarden worden afgeschermd, maar controleer het volledige rapport voordat u het deelt.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Kopieer of bewaar het rapport nadat u het hebt bekeken en verstuur het per e-mail naar <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">tot %1$d%%</string>
   <string name="activity_target_reached" formatted="true">doel bereikt (%1$d%%)</string>

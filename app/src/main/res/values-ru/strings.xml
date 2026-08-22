@@ -662,27 +662,32 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Удалить локально сохранённые снимки зарядки OEM</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Какая настройка устройства активна?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Защита выключена / без ограничения</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Фиксированный предел 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Фиксированный предел 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Фиксированный предел 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Максимум / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Фиксированный предел…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Адаптивная / умная зарядка</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Зарядка по расписанию</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Другой режим OEM</string>
   <string name="charging_diagnostics_capturing" formatted="false">Сохранение сигналов зарядки…</string>
   <string name="charging_diagnostics_captured" formatted="false">Снимок зарядки сохранён</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Не удалось сохранить снимок зарядки</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">Сохранено снимков: %1$d. Нажмите, чтобы скопировать или отправить сравнение.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">При привилегированном доступе может быть доступно больше диагностических данных. Предоставьте доступ через Shizuku или root и включите привилегированный доступ в расширенных настройках, чтобы получить более полезный отчёт об OEM-ограничении зарядки.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">Сохранён %1$d снимок. Сохраните другой режим зарядки.</item>
+    <item quantity="few">Сохранено %1$d снимка. Нажмите, чтобы просмотреть сравнение.</item>
+    <item quantity="many">Сохранено %1$d снимков. Нажмите, чтобы просмотреть сравнение.</item>
+    <item quantity="other">Сохранено %1$d снимка. Нажмите, чтобы просмотреть сравнение.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Сначала сохраните как минимум два разных режима зарядки</string>
   <string name="charging_diagnostics_cleared" formatted="false">Снимки зарядки удалены</string>
   <string name="charging_diagnostics_copy" formatted="false">Копировать в буфер обмена</string>
   <string name="charging_diagnostics_save" formatted="false">Сохранить</string>
   <string name="charging_diagnostics_copied" formatted="false">Отчёт скопирован</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Откройте настройки батареи, отключите защиту зарядки и сделайте снимок.\n
-    2. Выберите фиксированный предел и сделайте ещё один снимок. Если возможно, повторите с другим пределом.\n
-    3. Включите адаптивную, умную или запланированную зарядку и сделайте ещё один снимок.\n
-    4. Создайте сравнительный отчёт. В него входят только отфильтрованные значения зарядки; личные идентификаторы, учётные записи, полные списки настроек и журналы отладки никогда не собираются.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Скопируйте или сохраните отчёт, затем <a href="https://github.com/tswistak/Battery-Monitor/issues/new">создайте issue на GitHub</a> или <a href="mailto:tomasz@swistak.codes">отправьте его по эл. почте</a>. Укажите модель, ОС и параметр OEM для каждого снимка.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Отключите телефон от зарядного устройства и не подключайте его во время создания снимков конфигурации. Между снимками изменяйте только настройку защиты зарядки производителя.\n
+    2. Отключите защиту зарядки, подождите 2–5 секунд и сделайте снимок.\n
+    3. Выберите фиксированный предел, подождите 2–5 секунд и сделайте снимок. Если возможно, повторите с другим пределом.\n
+    4. Включите адаптивную, умную или запланированную зарядку, подождите 2–5 секунд и сделайте снимок.\n
+    5. Если сравнение конфигурации не дало однозначного результата, при желании повторите последовательность во время зарядки, чтобы зафиксировать состояние, доступное только в процессе работы.\n
+    6. Создайте и проверьте сравнительный отчёт. Данные фильтруются, а потенциально конфиденциальные значения скрываются, но перед отправкой проверьте весь отчёт.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">После проверки отчёта скопируйте или сохраните его и отправьте по электронной почте на адрес <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">до %1$d%%</string>
   <string name="activity_target_reached" formatted="true">цель достигнута (%1$d%%)</string>

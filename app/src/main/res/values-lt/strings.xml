@@ -663,27 +663,32 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Ištrinti vietoje saugomas OEM įkrovimo kopijas</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Kuris įrenginio nustatymas aktyvus?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Apsauga išjungta / be ribos</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Fiksuota riba 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Fiksuota riba 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Fiksuota riba 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Maksimumas / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Fiksuota riba…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Prisitaikantis / išmanus įkrovimas</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Suplanuotas įkrovimas</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Kitas OEM režimas</string>
   <string name="charging_diagnostics_capturing" formatted="false">Fiksuojami įkrovimo signalai…</string>
   <string name="charging_diagnostics_captured" formatted="false">Įkrovimo kopija užfiksuota</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Nepavyko užfiksuoti įkrovimo kopijos</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">Užfiksuota kopijų: %1$d. Palieskite, kad nukopijuotumėte ar išsiųstumėte palyginimą.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">Suteikus privilegijuotą prieigą gali būti pasiekiama daugiau diagnostikos informacijos. Suteikite prieigą per „Shizuku“ arba „root“ ir išplėstiniuose nustatymuose įjunkite privilegijuotą prieigą, kad OEM įkrovimo ribos ataskaita būtų naudingesnė.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">Užfiksuota %1$d momentinė kopija. Užfiksuokite kitą įkrovimo režimą.</item>
+    <item quantity="few">Užfiksuotos %1$d momentinės kopijos. Palieskite palyginimui peržiūrėti.</item>
+    <item quantity="many">Užfiksuota %1$d momentinių kopijų. Palieskite palyginimui peržiūrėti.</item>
+    <item quantity="other">Užfiksuota %1$d momentinės kopijos. Palieskite palyginimui peržiūrėti.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Pirmiausia užfiksuokite bent du skirtingus režimus</string>
   <string name="charging_diagnostics_cleared" formatted="false">Įkrovimo kopijos ištrintos</string>
   <string name="charging_diagnostics_copy" formatted="false">Kopijuoti į iškarpinę</string>
   <string name="charging_diagnostics_save" formatted="false">Išsaugoti</string>
   <string name="charging_diagnostics_copied" formatted="false">Ataskaita nukopijuota</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Atverkite akumuliatoriaus nustatymus, išjunkite įkrovimo apsaugą ir užfiksuokite kopiją.\n
-    2. Pasirinkite fiksuotą ribą ir užfiksuokite kitą kopiją. Jei galima, pakartokite su kita riba.\n
-    3. Įjunkite prisitaikantį, išmanų ar suplanuotą įkrovimą ir užfiksuokite dar vieną kopiją.\n
-    4. Sukurkite palyginimo ataskaitą. Įtraukiamos tik filtruotos įkrovimo reikšmės; asmeniniai identifikatoriai, paskyros, visi nustatymų sąrašai ir derinimo žurnalai niekada nerenkami.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Nukopijuokite arba išsaugokite ataskaitą, tada <a href="https://github.com/tswistak/Battery-Monitor/issues/new">atverkite GitHub problemą</a> arba <a href="mailto:tomasz@swistak.codes">siųskite el. paštu</a>. Nurodykite modelį, sistemą ir kiekvienos kopijos OEM parinktį.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Atjunkite telefoną ir palikite jį atjungtą, kol fiksuojamos konfigūracijos kopijos. Tarp kopijų keiskite tik gamintojo įkrovimo apsaugos nustatymą.\n
+    2. Išjunkite įkrovimo apsaugą, palaukite 2–5 sekundes ir užfiksuokite kopiją.\n
+    3. Pasirinkite fiksuotą ribą, palaukite 2–5 sekundes ir užfiksuokite. Jei galima, pakartokite su kita riba.\n
+    4. Įjunkite prisitaikantį, išmanų ar suplanuotą įkrovimą, palaukite 2–5 sekundes ir užfiksuokite.\n
+    5. Jei konfigūracijos palyginimas neaiškus, pasirinktinai pakartokite seką įkrovimo metu, kad užfiksuotumėte tik veikimo metu matomą būseną.\n
+    6. Sukurkite ir peržiūrėkite palyginimo ataskaitą. Duomenys filtruojami, o galimai jautrios reikšmės paslepiamos, tačiau prieš dalydamiesi peržiūrėkite visą ataskaitą.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Peržiūrėję ataskaitą nukopijuokite arba išsaugokite ir išsiųskite el. paštu adresu <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">iki %1$d%%</string>
   <string name="activity_target_reached" formatted="true">tikslas pasiektas (%1$d%%)</string>

@@ -624,27 +624,29 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">删除本地保存的 OEM 充电快照</string>
   <string name="charging_diagnostics_choose_state" formatted="false">当前启用了哪项设备设置？</string>
   <string name="charging_diagnostics_condition_off" formatted="false">保护关闭 / 无限制</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">固定上限 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">固定上限 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">固定上限 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">最大 / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">固定上限…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">自适应 / 智能充电</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">定时充电</string>
   <string name="charging_diagnostics_condition_other" formatted="false">其他 OEM 模式</string>
   <string name="charging_diagnostics_capturing" formatted="false">正在捕获充电信号…</string>
   <string name="charging_diagnostics_captured" formatted="false">已捕获充电快照</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">无法捕获充电快照</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">已捕获 %1$d 个快照。点按即可复制或发送比较结果。</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">使用特权访问可能会获得更多诊断信息。请授予 Shizuku 或 root 访问权限，并在高级设置中启用特权访问，以生成更有用的 OEM 充电上限报告。</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="other">已捕获 %1$d 个快照。点按以查看比较结果。</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">请先捕获至少两种不同的充电模式</string>
   <string name="charging_diagnostics_cleared" formatted="false">已删除充电快照</string>
   <string name="charging_diagnostics_copy" formatted="false">复制到剪贴板</string>
   <string name="charging_diagnostics_save" formatted="false">保存</string>
   <string name="charging_diagnostics_copied" formatted="false">已复制报告</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. 打开电池设置，关闭充电保护并捕获快照。\n
-    2. 选择固定上限并捕获另一个快照；如果可用，请用另一个上限重复。\n
-    3. 启用自适应、智能或定时充电，再捕获一个快照。\n
-    4. 创建比较报告。只会包含经过筛选的充电相关值；绝不会收集个人标识符、账号、完整设置列表或调试日志。</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">复制或保存报告后，<a href="https://github.com/tswistak/Battery-Monitor/issues/new">打开 GitHub 问题</a>或<a href="mailto:tomasz@swistak.codes">通过电子邮件发送</a>。请说明每个快照的手机型号、系统和 OEM 选项。</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. 断开手机与充电器的连接，并在捕获配置快照期间保持断开。快照之间只更改制造商的充电保护设置。\n
+    2. 关闭充电保护，等待 2–5 秒，然后捕获快照。\n
+    3. 选择固定上限，等待 2–5 秒，然后捕获快照。如果可以，请使用另一个上限重复操作。\n
+    4. 启用自适应、智能或定时充电，等待 2–5 秒，然后捕获快照。\n
+    5. 如果配置比较无法得出明确结果，可以选择在充电时重复此过程，以捕获仅在运行时出现的状态。\n
+    6. 创建并检查比较报告。数据会经过筛选，可能敏感的值会被隐藏，但发送前仍请检查完整报告。</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">查看报告后，请复制或保存，然后通过电子邮件发送至 <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>。</string>
 
   <string name="activity_until_target" formatted="true">直到 %1$d%%</string>
   <string name="activity_target_reached" formatted="true">已达到目标（%1$d%%）</string>

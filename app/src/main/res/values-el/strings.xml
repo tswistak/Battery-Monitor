@@ -642,27 +642,30 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Διαγραφή τοπικά αποθηκευμένων στιγμιότυπων OEM</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Ποια ρύθμιση συσκευής είναι ενεργή;</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Προστασία ανενεργή / χωρίς όριο</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Σταθερό όριο 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Σταθερό όριο 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Σταθερό όριο 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Μέγιστο / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Σταθερό όριο…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Προσαρμοζόμενη / έξυπνη φόρτιση</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Προγραμματισμένη φόρτιση</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Άλλη λειτουργία OEM</string>
   <string name="charging_diagnostics_capturing" formatted="false">Καταγραφή σημάτων φόρτισης…</string>
   <string name="charging_diagnostics_captured" formatted="false">Το στιγμιότυπο φόρτισης καταγράφηκε</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Δεν ήταν δυνατή η καταγραφή</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">Καταγράφηκαν %1$d στιγμιότυπα. Πατήστε για αντιγραφή ή αποστολή της σύγκρισης.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">Με προνομιακή πρόσβαση ενδέχεται να είναι διαθέσιμες περισσότερες διαγνωστικές πληροφορίες. Παραχωρήστε πρόσβαση μέσω Shizuku ή root και ενεργοποιήστε την προνομιακή πρόσβαση στις σύνθετες ρυθμίσεις για μια πιο χρήσιμη αναφορά ορίου φόρτισης OEM.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">Καταγράφηκε %1$d στιγμιότυπο. Καταγράψτε άλλη λειτουργία φόρτισης.</item>
+    <item quantity="other">Καταγράφηκαν %1$d στιγμιότυπα. Πατήστε για έλεγχο της σύγκρισης.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Καταγράψτε πρώτα τουλάχιστον δύο διαφορετικές λειτουργίες</string>
   <string name="charging_diagnostics_cleared" formatted="false">Τα στιγμιότυπα φόρτισης διαγράφηκαν</string>
   <string name="charging_diagnostics_copy" formatted="false">Αντιγραφή στο πρόχειρο</string>
   <string name="charging_diagnostics_save" formatted="false">Αποθήκευση</string>
   <string name="charging_diagnostics_copied" formatted="false">Η αναφορά αντιγράφηκε</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Ανοίξτε τις ρυθμίσεις μπαταρίας, απενεργοποιήστε την προστασία φόρτισης και καταγράψτε ένα στιγμιότυπο.\n
-    2. Επιλέξτε σταθερό όριο και καταγράψτε άλλο ένα. Αν είναι δυνατό, επαναλάβετε με διαφορετικό όριο.\n
-    3. Ενεργοποιήστε προσαρμοζόμενη, έξυπνη ή προγραμματισμένη φόρτιση και καταγράψτε ακόμη ένα.\n
-    4. Δημιουργήστε την αναφορά σύγκρισης. Περιλαμβάνονται μόνο φιλτραρισμένες τιμές φόρτισης· προσωπικά αναγνωριστικά, λογαριασμοί, πλήρεις λίστες ρυθμίσεων και αρχεία εντοπισμού σφαλμάτων δεν συλλέγονται ποτέ.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Αντιγράψτε ή αποθηκεύστε την αναφορά και έπειτα <a href="https://github.com/tswistak/Battery-Monitor/issues/new">ανοίξτε θέμα στο GitHub</a> ή <a href="mailto:tomasz@swistak.codes">στείλτε τη με email</a>. Αναφέρετε μοντέλο, σύστημα και επιλογή OEM για κάθε στιγμιότυπο.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Αποσυνδέστε το τηλέφωνο και διατηρήστε το αποσυνδεδεμένο κατά τη λήψη στιγμιοτύπων διαμόρφωσης. Μεταξύ των στιγμιοτύπων αλλάζετε μόνο τη ρύθμιση προστασίας φόρτισης του κατασκευαστή.\n
+    2. Απενεργοποιήστε την προστασία φόρτισης, περιμένετε 2–5 δευτερόλεπτα και καταγράψτε στιγμιότυπο.\n
+    3. Επιλέξτε σταθερό όριο, περιμένετε 2–5 δευτερόλεπτα και καταγράψτε. Επαναλάβετε με άλλο όριο αν γίνεται.\n
+    4. Ενεργοποιήστε προσαρμοζόμενη, έξυπνη ή προγραμματισμένη φόρτιση, περιμένετε 2–5 δευτερόλεπτα και καταγράψτε.\n
+    5. Αν η σύγκριση διαμόρφωσης δεν είναι σαφής, μπορείτε προαιρετικά να επαναλάβετε τη διαδικασία κατά τη φόρτιση για να καταγράψετε καταστάσεις που εμφανίζονται μόνο κατά τη λειτουργία.\n
+    6. Δημιουργήστε και ελέγξτε την αναφορά. Τα δεδομένα φιλτράρονται και οι δυνητικά ευαίσθητες τιμές αποκρύπτονται, αλλά ελέγξτε όλη την αναφορά πριν τη μοιραστείτε.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Αφού ελέγξετε την αναφορά, αντιγράψτε ή αποθηκεύστε την και στείλτε τη με email στη διεύθυνση <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">έως %1$d%%</string>
   <string name="activity_target_reached" formatted="true">ο στόχος επιτεύχθηκε (%1$d%%)</string>

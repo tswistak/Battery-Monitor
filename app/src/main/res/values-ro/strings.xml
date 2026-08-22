@@ -652,27 +652,31 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Șterge instantaneele OEM salvate local</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Ce setare a dispozitivului este activă?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Protecție oprită / fără limită</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Limită fixă 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Limită fixă 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Limită fixă 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Maxim / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Limită fixă…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Încărcare adaptivă / inteligentă</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Încărcare programată</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Alt mod OEM</string>
   <string name="charging_diagnostics_capturing" formatted="false">Se capturează semnalele de încărcare…</string>
   <string name="charging_diagnostics_captured" formatted="false">Instantaneu de încărcare capturat</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Instantaneul nu a putut fi capturat</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d instantanee capturate. Atinge pentru a copia sau trimite comparația.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">Cu acces privilegiat pot fi disponibile mai multe informații de diagnosticare. Acordă acces prin Shizuku sau root și activează accesul privilegiat în setările avansate pentru un raport mai util despre limita de încărcare OEM.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">%1$d instantaneu capturat. Capturează un alt mod de încărcare.</item>
+    <item quantity="few">%1$d instantanee capturate. Atinge pentru a examina comparația.</item>
+    <item quantity="other">%1$d de instantanee capturate. Atinge pentru a examina comparația.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Capturează mai întâi cel puțin două moduri diferite</string>
   <string name="charging_diagnostics_cleared" formatted="false">Instantaneele de încărcare au fost șterse</string>
   <string name="charging_diagnostics_copy" formatted="false">Copiază în clipboard</string>
   <string name="charging_diagnostics_save" formatted="false">Salvează</string>
   <string name="charging_diagnostics_copied" formatted="false">Raport copiat</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Deschide setările bateriei, oprește protecția și capturează un instantaneu.\n
-    2. Selectează o limită fixă și capturează altul. Dacă este posibil, repetă cu altă limită.\n
-    3. Activează încărcarea adaptivă, inteligentă sau programată și capturează încă unul.\n
-    4. Creează raportul comparativ. Sunt incluse doar valori filtrate despre încărcare; identificatorii personali, conturile, listele complete de setări și jurnalele de depanare nu sunt colectate niciodată.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Copiază sau salvează raportul, apoi <a href="https://github.com/tswistak/Battery-Monitor/issues/new">deschide o problemă GitHub</a> sau <a href="mailto:tomasz@swistak.codes">trimite-l prin e-mail</a>. Menționează modelul, sistemul și opțiunea OEM pentru fiecare instantaneu.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Deconectează telefonul și menține-l deconectat în timpul instantaneelor de configurare. Între instantanee, modifică doar setarea producătorului pentru protecția la încărcare.\n
+    2. Oprește protecția la încărcare, așteaptă 2–5 secunde și capturează un instantaneu.\n
+    3. Selectează o limită fixă, așteaptă 2–5 secunde și capturează. Dacă se poate, repetă cu altă limită.\n
+    4. Activează încărcarea adaptivă, inteligentă sau programată, așteaptă 2–5 secunde și capturează.\n
+    5. Dacă rezultatul comparației configurației nu este concludent, poți repeta opțional secvența în timpul încărcării pentru a captura stări prezente doar în timpul funcționării.\n
+    6. Creează și verifică raportul comparativ. Datele sunt filtrate, iar valorile potențial sensibile sunt ascunse, dar verifică raportul complet înainte de a-l distribui.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">După ce verifici raportul, copiază-l sau salvează-l și trimite-l prin e-mail la <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">până la %1$d%%</string>
   <string name="activity_target_reached" formatted="true">ținta a fost atinsă (%1$d%%)</string>

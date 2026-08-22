@@ -122,6 +122,12 @@ internal class PredictorCore(
         now = whenUpdated
 
         val target = targetFor(info)
+        if (isAtDischargingTarget(info)) {
+            lastPrediction = 0
+            info.prediction.markDischargingTargetReached(target)
+            setLastsWithoutPrediction()
+            return
+        }
         if (isTargetReached(info, target)) {
             lastPrediction = 0
             info.prediction.markTargetReached(target)
@@ -253,7 +259,7 @@ internal class PredictorCore(
             from = now
         }
 
-        return from + (recentAverage() * (level - dischargingTargetPercent)).toLong()
+        return from + (recentAverage() * (level - targetFor(curInfo!!))).toLong()
     }
 
     private fun whenCharged(): Long {
@@ -275,15 +281,20 @@ internal class PredictorCore(
 
     private fun targetFor(info: BatteryInfo): Int =
         if (info.status == BatteryInfo.STATUS_UNPLUGGED) {
-            dischargingTargetPercent
+            if (dischargingTargetPercent > 0 && info.percent < dischargingTargetPercent) {
+                0
+            } else {
+                dischargingTargetPercent
+            }
         } else {
             chargingTargetPercent
         }
 
+    private fun isAtDischargingTarget(info: BatteryInfo): Boolean =
+        info.status == BatteryInfo.STATUS_UNPLUGGED && dischargingTargetPercent > 0 && info.percent == dischargingTargetPercent
+
     private fun isTargetReached(info: BatteryInfo, target: Int): Boolean {
         return when {
-            info.status == BatteryInfo.STATUS_UNPLUGGED -> dischargingTargetPercent > 0 && info.percent <= target
-
             info.status == BatteryInfo.STATUS_CHARGING -> chargingTargetPercent < 100 && info.percent >= target
 
             info.plugged != BatteryInfo.PLUGGED_UNPLUGGED && info.status in setOf(

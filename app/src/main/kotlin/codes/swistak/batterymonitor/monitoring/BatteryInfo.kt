@@ -175,6 +175,14 @@ internal class BatteryInfo {
             lastRTime.update(0, 0)
         }
 
+        fun markDischargingTargetReached(targetPercent: Int) {
+            whenHappened = 0
+            whatHappened = UNTIL_DRAINED
+            this.targetPercent = targetPercent
+            targetReached = true
+            lastRTime.update(0, 0)
+        }
+
         fun copyFrom(other: Prediction) {
             whatHappened = other.whatHappened
             whenHappened = other.whenHappened
@@ -186,6 +194,10 @@ internal class BatteryInfo {
         }
 
         fun updateRelativeTime() {
+            if (targetReached) {
+                lastRTime.update(0, 0)
+                return
+            }
             val now = SystemClock.elapsedRealtime()
 
             if (whenHappened < now + MIN_PREDICTION) whenHappened = now + MIN_PREDICTION

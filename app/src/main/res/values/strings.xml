@@ -644,27 +644,30 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Delete locally stored OEM charging snapshots</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Which device setting is active?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Protection off / unrestricted</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Fixed limit 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Fixed limit 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Fixed limit 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Fixed limit…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptive / smart charging</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Scheduled charging</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Other OEM mode</string>
   <string name="charging_diagnostics_capturing" formatted="false">Capturing charging signals…</string>
   <string name="charging_diagnostics_captured" formatted="false">Charging snapshot captured</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Could not capture charging snapshot</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d snapshots captured. Tap to copy or send the comparison.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">More diagnostic information may be available with privileged access. Grant Shizuku or root access and enable privileged access in Advanced settings for a more useful OEM charging-limit report.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">%1$d snapshot captured. Capture another charging mode.</item>
+    <item quantity="other">%1$d snapshots captured. Tap to review the comparison.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Capture at least two different charging modes first</string>
   <string name="charging_diagnostics_cleared" formatted="false">Charging snapshots deleted</string>
   <string name="charging_diagnostics_copy" formatted="false">Copy to clipboard</string>
   <string name="charging_diagnostics_save" formatted="false">Save</string>
   <string name="charging_diagnostics_copied" formatted="false">Report copied</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Open your device’s battery settings and turn charging protection off, then capture a snapshot.\n
-    2. Select a fixed limit and capture another snapshot. If available, repeat for another fixed limit.\n
-    3. Enable adaptive, smart, or scheduled charging and capture one more snapshot.\n
-    4. Create the comparison report. Only filtered charging-related values are included; personal identifiers, accounts, complete settings dumps, and debug logs are never collected.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Copy or save the generated report, then <a href="https://github.com/tswistak/Battery-Monitor/issues/new">open a GitHub issue</a> or <a href="mailto:tomasz@swistak.codes">send it by email</a>. Describe the phone model, OS, and which OEM options correspond to each snapshot.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Unplug the phone and keep it disconnected while capturing configuration snapshots. Change only the OEM charging protection setting between snapshots.\n
+    2. Turn charging protection off, wait 2–5 seconds, then capture a snapshot.\n
+    3. Select any fixed limit, wait 2–5 seconds, and capture another snapshot. Repeat with at least one different fixed limit if available.\n
+    4. Enable adaptive, smart, or scheduled charging, wait 2–5 seconds, and capture one more snapshot.\n
+    5. If the configuration comparison is inconclusive, you may optionally repeat the sequence while charging to capture runtime-only state.\n
+    6. Create and review the comparison report. Report data is filtered and potentially sensitive values are redacted, but you should still review the complete report before sharing it.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">After reviewing the report, copy or save it and send it by email to <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">until %1$d%%</string>
   <string name="activity_target_reached" formatted="true">target reached (%1$d%%)</string>

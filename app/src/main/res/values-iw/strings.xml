@@ -648,27 +648,31 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">מחיקת תמונות מצב השמורות מקומית</string>
   <string name="charging_diagnostics_choose_state" formatted="false">איזו הגדרת מכשיר פעילה?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">הגנה כבויה / ללא הגבלה</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">מגבלה קבועה 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">מגבלה קבועה 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">מגבלה קבועה 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">מרבי / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">מגבלה קבועה…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">טעינה מסתגלת / חכמה</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">טעינה מתוזמנת</string>
   <string name="charging_diagnostics_condition_other" formatted="false">מצב יצרן אחר</string>
   <string name="charging_diagnostics_capturing" formatted="false">צילום אותות הטעינה…</string>
   <string name="charging_diagnostics_captured" formatted="false">תמונת מצב של הטעינה צולמה</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">לא ניתן לצלם תמונת מצב</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">צולמו %1$d תמונות מצב. הקישו כדי להעתיק או לשלוח את ההשוואה.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">ייתכן שמידע אבחון נוסף יהיה זמין עם גישה מורשית. העניקו גישה דרך Shizuku או root והפעילו גישה מורשית בהגדרות המתקדמות כדי לקבל דוח שימושי יותר על מגבלת הטעינה של היצרן.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">צולמה תמונת מצב %1$d. צלמו מצב טעינה נוסף.</item>
+    <item quantity="two">צולמו שתי תמונות מצב. הקישו לעיון בהשוואה.</item>
+    <item quantity="other">צולמו %1$d תמונות מצב. הקישו לעיון בהשוואה.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">תחילה צלמו לפחות שני מצבי טעינה שונים</string>
   <string name="charging_diagnostics_cleared" formatted="false">תמונות המצב נמחקו</string>
   <string name="charging_diagnostics_copy" formatted="false">העתקה ללוח</string>
   <string name="charging_diagnostics_save" formatted="false">שמירה</string>
   <string name="charging_diagnostics_copied" formatted="false">הדוח הועתק</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. פתחו את הגדרות הסוללה, כבו את הגנת הטעינה וצלמו תמונת מצב.\n
-    2. בחרו מגבלה קבועה וצלמו תמונה נוספת. אם אפשר, חזרו עם מגבלה אחרת.\n
-    3. הפעילו טעינה מסתגלת, חכמה או מתוזמנת וצלמו תמונה נוספת.\n
-    4. צרו את דוח ההשוואה. נכללים רק ערכי טעינה מסוננים; מזהים אישיים, חשבונות, רשימות הגדרות מלאות ויומני ניפוי שגיאות לעולם אינם נאספים.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">העתיקו או שמרו את הדוח ואז <a href="https://github.com/tswistak/Battery-Monitor/issues/new">פתחו דיווח ב-GitHub</a> או <a href="mailto:tomasz@swistak.codes">שלחו בדוא״ל</a>. ציינו דגם, מערכת ואפשרות יצרן לכל תמונת מצב.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. נתקו את הטלפון והשאירו אותו מנותק בזמן צילום תמונות מצב של התצורה. בין התמונות שנו רק את הגדרת הגנת הטעינה של היצרן.\n
+    2. כבו את הגנת הטעינה, המתינו 2–5 שניות וצלמו תמונת מצב.\n
+    3. בחרו מגבלה קבועה, המתינו 2–5 שניות וצלמו. אם אפשר, חזרו עם מגבלה אחרת.\n
+    4. הפעילו טעינה מסתגלת, חכמה או מתוזמנת, המתינו 2–5 שניות וצלמו.\n
+    5. אם השוואת התצורה אינה חד־משמעית, אפשר לחזור על הרצף בזמן טעינה כדי ללכוד מצב שמופיע רק בזמן פעולה.\n
+    6. צרו ועיינו בדוח ההשוואה. הנתונים מסוננים וערכים שעלולים להיות רגישים מוסתרים, אך יש לעיין בדוח המלא לפני השיתוף.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">לאחר עיון בדוח, העתיקו או שמרו אותו ושלחו אותו בדוא״ל אל <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">עד %1$d%%</string>
   <string name="activity_target_reached" formatted="true">היעד הושג (%1$d%%)</string>

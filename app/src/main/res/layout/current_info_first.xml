@@ -52,15 +52,32 @@
             android:orientation="horizontal"
             android:paddingTop="10dp">
 
-            <ImageView
+            <FrameLayout
                 android:id="@+id/clock"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="2dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/clock"
-                app:tint="@color/icon_tint" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/clock"
+                    app:tint="@color/icon_tint" />
+
+                <ImageView
+                    android:id="@+id/time_estimate_switch_hint"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end|bottom"
+                    android:background="@drawable/time_estimate_switch_hint_background"
+                    android:importantForAccessibility="no"
+                    android:padding="3dp"
+                    android:src="@drawable/swap_vertical"
+                    android:visibility="gone"
+                    app:tint="?android:attr/textColorSecondary" />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -84,6 +101,7 @@
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="0px" />
             </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 

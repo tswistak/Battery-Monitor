@@ -21,7 +21,18 @@ internal object PixelChargingLimitAdapter : ChargingLimitAdapter {
     private const val CHARGING_STATE_ADAPTIVE = 5
 
     override fun supports(profile: DeviceProfile): Boolean =
-        profile.manufacturer.equals("Google", ignoreCase = true)
+        profile.manufacturer.equals("Google", ignoreCase = true) && !profile.isGoogleEmulator()
+
+    private fun DeviceProfile.isGoogleEmulator(): Boolean = model.startsWith(
+        "sdk_gphone",
+        ignoreCase = true
+    ) || model.startsWith(
+        "Android SDK built for",
+        ignoreCase = true
+    ) || device.startsWith("generic", ignoreCase = true) || device.startsWith(
+        "emu",
+        ignoreCase = true
+    )
 
     override fun readState(
         profile: DeviceProfile,

@@ -664,27 +664,32 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Izbriši lokalno shranjene posnetke polnjenja OEM</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Katera nastavitev naprave je aktivna?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Zaščita izklopljena / brez omejitve</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Fiksna omejitev 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Fiksna omejitev 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Fiksna omejitev 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Največ / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Fiksna omejitev…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Prilagodljivo / pametno polnjenje</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Načrtovano polnjenje</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Drug način OEM</string>
   <string name="charging_diagnostics_capturing" formatted="false">Zajemanje signalov polnjenja…</string>
   <string name="charging_diagnostics_captured" formatted="false">Posnetek polnjenja zajet</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Posnetka polnjenja ni bilo mogoče zajeti</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">Zajetih je %1$d posnetkov. Tapnite za kopiranje ali pošiljanje primerjave.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">S privilegiranim dostopom je lahko na voljo več diagnostičnih podatkov. Dovolite dostop prek Shizuku ali root in v naprednih nastavitvah omogočite privilegirani dostop za uporabnejše poročilo o omejitvi polnjenja OEM.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">Zajet je %1$d posnetek. Zajemite še en način polnjenja.</item>
+    <item quantity="two">Zajeta sta %1$d posnetka. Tapnite za pregled primerjave.</item>
+    <item quantity="few">Zajeti so %1$d posnetki. Tapnite za pregled primerjave.</item>
+    <item quantity="other">Zajetih je %1$d posnetkov. Tapnite za pregled primerjave.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Najprej zajemite vsaj dva različna načina polnjenja</string>
   <string name="charging_diagnostics_cleared" formatted="false">Posnetki polnjenja izbrisani</string>
   <string name="charging_diagnostics_copy" formatted="false">Kopiraj v odložišče</string>
   <string name="charging_diagnostics_save" formatted="false">Shrani</string>
   <string name="charging_diagnostics_copied" formatted="false">Poročilo kopirano</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Odprite nastavitve baterije, izklopite zaščito polnjenja in zajemite posnetek.\n
-    2. Izberite fiksno omejitev in zajemite drugega. Če je mogoče, ponovite z drugo omejitvijo.\n
-    3. Vklopite prilagodljivo, pametno ali načrtovano polnjenje in zajemite še en posnetek.\n
-    4. Ustvarite primerjalno poročilo. Vključene so samo filtrirane vrednosti polnjenja; osebni identifikatorji, računi, celotni izpisi nastavitev in dnevniki razhroščevanja se nikoli ne zbirajo.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Kopirajte ali shranite poročilo, nato <a href="https://github.com/tswistak/Battery-Monitor/issues/new">odprite težavo GitHub</a> ali ga <a href="mailto:tomasz@swistak.codes">pošljite po e-pošti</a>. Navedite model, sistem in možnost OEM vsakega posnetka.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Odklopite telefon in ga med zajemanjem posnetkov konfiguracije pustite odklopljenega. Med posnetki spreminjajte samo proizvajalčevo nastavitev zaščite polnjenja.\n
+    2. Izklopite zaščito polnjenja, počakajte 2–5 sekund in zajemite posnetek.\n
+    3. Izberite fiksno omejitev, počakajte 2–5 sekund in zajemite posnetek. Če je mogoče, ponovite z drugo omejitvijo.\n
+    4. Vklopite prilagodljivo, pametno ali načrtovano polnjenje, počakajte 2–5 sekund in zajemite posnetek.\n
+    5. Če primerjava konfiguracije ni dokončna, lahko zaporedje po želji ponovite med polnjenjem in zajamete stanje, ki je na voljo samo med delovanjem.\n
+    6. Ustvarite in preglejte primerjalno poročilo. Podatki so filtrirani in morebitne občutljive vrednosti skrite, vendar pred pošiljanjem preglejte celotno poročilo.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Po pregledu poročilo kopirajte ali shranite in ga pošljite po e-pošti na <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">do %1$d%%</string>
   <string name="activity_target_reached" formatted="true">cilj dosežen (%1$d%%)</string>

@@ -357,6 +357,9 @@ internal object DisplayStrings {
         info: BatteryInfo, prediction: BatteryInfo.Prediction = info.prediction
     ): String {
         if (prediction.targetReached) {
+            if (prediction.whatHappened == BatteryInfo.Prediction.UNTIL_DRAINED) {
+                return res.getString(R.string.activity_until_target, prediction.targetPercent)
+            }
             return res.getString(
                 R.string.activity_target_reached, prediction.targetPercent
             )

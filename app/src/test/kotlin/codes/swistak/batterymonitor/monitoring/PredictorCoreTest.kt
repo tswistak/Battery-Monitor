@@ -118,6 +118,37 @@ class PredictorCoreTest {
     }
 
     @Test
+    fun `discharging at target shows zero time until target`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 20)
+        info.status = BatteryInfo.STATUS_UNPLUGGED
+        info.plugged = BatteryInfo.PLUGGED_UNPLUGGED
+        info.percent = 20
+
+        predictor.update(info, 0L)
+        info.prediction.updateRelativeTime()
+
+        Assert.assertEquals(BatteryInfo.Prediction.UNTIL_DRAINED, info.prediction.whatHappened)
+        Assert.assertEquals(20, info.prediction.targetPercent)
+        Assert.assertTrue(info.prediction.targetReached)
+        Assert.assertEquals(0, info.prediction.lastRTime.minutes)
+    }
+
+    @Test
+    fun `discharging below target switches to fully drained estimate`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 20)
+        info.status = BatteryInfo.STATUS_UNPLUGGED
+        info.plugged = BatteryInfo.PLUGGED_UNPLUGGED
+        info.percent = 19
+
+        predictor.update(info, 0L)
+
+        Assert.assertEquals(BatteryInfo.Prediction.UNTIL_DRAINED, info.prediction.whatHappened)
+        Assert.assertEquals(0, info.prediction.targetPercent)
+        Assert.assertFalse(info.prediction.targetReached)
+        Assert.assertEquals(19L * DISCHARGE_MS_PER_PERCENT, info.prediction.whenHappened)
+    }
+
+    @Test
     fun `charging target reached clears countdown and records target`() {
         predictor.setTargets(chargingTargetPercent = 80, dischargingTargetPercent = 0)
         info.status = BatteryInfo.STATUS_NOT_CHARGING

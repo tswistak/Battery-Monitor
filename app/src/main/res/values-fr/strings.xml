@@ -638,27 +638,31 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Supprimer les instantanés OEM enregistrés localement</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Quel réglage de l’appareil est actif ?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Protection désactivée / sans limite</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Limite fixe 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Limite fixe 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Limite fixe 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Limite fixe…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Charge adaptative / intelligente</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Charge programmée</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Autre mode OEM</string>
   <string name="charging_diagnostics_capturing" formatted="false">Capture des signaux de charge…</string>
   <string name="charging_diagnostics_captured" formatted="false">Instantané de charge capturé</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Impossible de capturer l’instantané de charge</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d instantanés capturés. Touchez pour copier ou envoyer la comparaison.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">L’accès privilégié peut fournir davantage d’informations de diagnostic. Accordez l’accès Shizuku ou root et activez l’accès privilégié dans les paramètres avancés pour obtenir un rapport de limite de charge OEM plus utile.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">%1$d instantané capturé. Capturez un autre mode de charge.</item>
+    <item quantity="many">%1$d instantanés capturés. Touchez pour examiner la comparaison.</item>
+    <item quantity="other">%1$d instantanés capturés. Touchez pour examiner la comparaison.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Capturez d’abord au moins deux modes de charge différents</string>
   <string name="charging_diagnostics_cleared" formatted="false">Instantanés de charge supprimés</string>
   <string name="charging_diagnostics_copy" formatted="false">Copier dans le presse-papiers</string>
   <string name="charging_diagnostics_save" formatted="false">Enregistrer</string>
   <string name="charging_diagnostics_copied" formatted="false">Rapport copié</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Ouvrez les paramètres de batterie, désactivez la protection de charge, puis capturez un instantané.\n
-    2. Choisissez une limite fixe et capturez-en un autre. Si possible, recommencez avec une autre limite.\n
-    3. Activez la charge adaptative, intelligente ou programmée et capturez un dernier instantané.\n
-    4. Créez le rapport comparatif. Seules des valeurs filtrées liées à la charge sont incluses ; les identifiants personnels, comptes, listes complètes de paramètres et journaux de débogage ne sont jamais collectés.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Copiez ou enregistrez le rapport, puis <a href="https://github.com/tswistak/Battery-Monitor/issues/new">ouvrez un ticket GitHub</a> ou <a href="mailto:tomasz@swistak.codes">envoyez-le par e-mail</a>. Indiquez le modèle, le système et l’option OEM de chaque instantané.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Débranchez le téléphone et laissez-le déconnecté pendant les instantanés de configuration. Ne modifiez que le réglage de protection de charge du fabricant entre les instantanés.\n
+    2. Désactivez la protection de charge, attendez 2 à 5 secondes, puis capturez un instantané.\n
+    3. Choisissez une limite fixe, attendez 2 à 5 secondes et capturez-en un autre. Recommencez avec une autre limite si possible.\n
+    4. Activez la charge adaptative, intelligente ou programmée, attendez 2 à 5 secondes et capturez un instantané.\n
+    5. Si la comparaison de configuration n’est pas concluante, vous pouvez répéter la séquence pendant la charge afin de capturer les états présents uniquement pendant le fonctionnement.\n
+    6. Créez et examinez le rapport comparatif. Les données sont filtrées et les valeurs potentiellement sensibles sont masquées, mais examinez tout le rapport avant de le partager.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Après avoir examiné le rapport, copiez-le ou enregistrez-le, puis envoyez-le par e-mail à <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">jusqu’à %1$d%%</string>
   <string name="activity_target_reached" formatted="true">objectif atteint (%1$d%%)</string>

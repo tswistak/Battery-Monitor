@@ -618,27 +618,30 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Lokal gespeicherte OEM-Lade-Momentaufnahmen löschen</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Welche Geräteeinstellung ist aktiv?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Schutz aus / uneingeschränkt</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Festes Limit 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Festes Limit 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Festes Limit 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Festes Limit…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptives / intelligentes Laden</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Zeitgesteuertes Laden</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Anderer OEM-Modus</string>
   <string name="charging_diagnostics_capturing" formatted="false">Ladesignale werden erfasst…</string>
   <string name="charging_diagnostics_captured" formatted="false">Lade-Momentaufnahme erfasst</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Lade-Momentaufnahme konnte nicht erfasst werden</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d Momentaufnahmen erfasst. Tippen, um den Vergleich zu kopieren oder zu senden.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">Mit privilegiertem Zugriff sind möglicherweise weitere Diagnosedaten verfügbar. Gewähren Sie Shizuku- oder Root-Zugriff und aktivieren Sie den privilegierten Zugriff in den erweiterten Einstellungen, um einen aussagekräftigeren Bericht zum OEM-Ladelimit zu erhalten.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">%1$d Momentaufnahme erfasst. Erfassen Sie einen weiteren Lademodus.</item>
+    <item quantity="other">%1$d Momentaufnahmen erfasst. Tippen Sie, um den Vergleich zu prüfen.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Erfassen Sie zuerst mindestens zwei verschiedene Lademodi</string>
   <string name="charging_diagnostics_cleared" formatted="false">Lade-Momentaufnahmen gelöscht</string>
   <string name="charging_diagnostics_copy" formatted="false">In Zwischenablage kopieren</string>
   <string name="charging_diagnostics_save" formatted="false">Speichern</string>
   <string name="charging_diagnostics_copied" formatted="false">Bericht kopiert</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Öffnen Sie die Akkueinstellungen, schalten Sie den Ladeschutz aus und erfassen Sie eine Momentaufnahme.\n
-    2. Wählen Sie ein festes Limit und erfassen Sie eine weitere. Wiederholen Sie dies nach Möglichkeit für ein anderes Limit.\n
-    3. Aktivieren Sie adaptives, intelligentes oder zeitgesteuertes Laden und erfassen Sie eine weitere Momentaufnahme.\n
-    4. Erstellen Sie den Vergleichsbericht. Er enthält nur gefilterte Ladedaten; persönliche Kennungen, Konten, vollständige Einstellungslisten und Debug-Protokolle werden niemals erfasst.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Kopieren oder speichern Sie den Bericht und <a href="https://github.com/tswistak/Battery-Monitor/issues/new">öffnen Sie ein GitHub-Issue</a> oder <a href="mailto:tomasz@swistak.codes">senden Sie ihn per E-Mail</a>. Nennen Sie Telefonmodell, Betriebssystem und die OEM-Option jeder Momentaufnahme.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Trennen Sie das Telefon vom Ladegerät und lassen Sie es während der Konfigurationsaufnahmen getrennt. Ändern Sie zwischen den Aufnahmen nur die Ladeschutzeinstellung des Herstellers.\n
+    2. Schalten Sie den Ladeschutz aus, warten Sie 2–5 Sekunden und erfassen Sie eine Momentaufnahme.\n
+    3. Wählen Sie ein festes Limit, warten Sie 2–5 Sekunden und erfassen Sie eine Aufnahme. Wiederholen Sie dies wenn möglich mit einem anderen Limit.\n
+    4. Aktivieren Sie adaptives, intelligentes oder zeitgesteuertes Laden, warten Sie 2–5 Sekunden und erfassen Sie eine Aufnahme.\n
+    5. Falls der Konfigurationsvergleich kein eindeutiges Ergebnis liefert, können Sie die Abfolge optional während des Ladens wiederholen, um den nur zur Laufzeit vorhandenen Zustand zu erfassen.\n
+    6. Erstellen und prüfen Sie den Vergleichsbericht. Die Daten werden gefiltert und potenziell sensible Werte unkenntlich gemacht; prüfen Sie dennoch den vollständigen Bericht vor dem Teilen.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Kopieren oder speichern Sie den Bericht nach der Prüfung und senden Sie ihn per E-Mail an <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">bis %1$d%%</string>
   <string name="activity_target_reached" formatted="true">Ziel erreicht (%1$d%%)</string>

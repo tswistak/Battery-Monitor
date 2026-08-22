@@ -682,27 +682,34 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">حذف لقطات الشحن المحفوظة محلياً</string>
   <string name="charging_diagnostics_choose_state" formatted="false">أي إعداد للجهاز نشط؟</string>
   <string name="charging_diagnostics_condition_off" formatted="false">الحماية متوقفة / بلا حد</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">حد ثابت 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">حد ثابت 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">حد ثابت 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">الحد الأقصى / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">حد ثابت…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">شحن تكيّفي / ذكي</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">شحن مجدول</string>
   <string name="charging_diagnostics_condition_other" formatted="false">وضع آخر للشركة المصنّعة</string>
   <string name="charging_diagnostics_capturing" formatted="false">جارٍ التقاط إشارات الشحن…</string>
   <string name="charging_diagnostics_captured" formatted="false">تم التقاط لقطة الشحن</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">تعذر التقاط لقطة الشحن</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">تم التقاط %1$d لقطات. انقر لنسخ المقارنة أو إرسالها.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">قد تتوفر معلومات تشخيصية إضافية باستخدام الوصول المميز. امنح الوصول عبر Shizuku أو root وفعّل الوصول المميز في الإعدادات المتقدمة للحصول على تقرير أكثر فائدة حول حد الشحن الخاص بالشركة المصنّعة.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="zero">لم يتم التقاط أي لقطات. التقط وضع شحن.</item>
+    <item quantity="one">تم التقاط %1$d لقطة. التقط وضع شحن آخر.</item>
+    <item quantity="two">تم التقاط لقطتين. انقر لمراجعة المقارنة.</item>
+    <item quantity="few">تم التقاط %1$d لقطات. انقر لمراجعة المقارنة.</item>
+    <item quantity="many">تم التقاط %1$d لقطة. انقر لمراجعة المقارنة.</item>
+    <item quantity="other">اللقطات الملتقطة: %1$d. انقر لمراجعة المقارنة.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">التقط أولاً وضعين مختلفين للشحن على الأقل</string>
   <string name="charging_diagnostics_cleared" formatted="false">تم حذف لقطات الشحن</string>
   <string name="charging_diagnostics_copy" formatted="false">نسخ إلى الحافظة</string>
   <string name="charging_diagnostics_save" formatted="false">حفظ</string>
   <string name="charging_diagnostics_copied" formatted="false">تم نسخ التقرير</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. افتح إعدادات البطارية وأوقف حماية الشحن ثم التقط لقطة.\n
-    2. اختر حداً ثابتاً والتقط لقطة أخرى. كرر ذلك بحد آخر إن أمكن.\n
-    3. فعّل الشحن التكيّفي أو الذكي أو المجدول والتقط لقطة إضافية.\n
-    4. أنشئ تقرير المقارنة. لا يتضمن إلا قيماً مصفاة تخص الشحن؛ ولا تُجمع أبداً المعرفات الشخصية أو الحسابات أو قوائم الإعدادات الكاملة أو سجلات التصحيح.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">انسخ التقرير أو احفظه ثم <a href="https://github.com/tswistak/Battery-Monitor/issues/new">افتح مشكلة في GitHub</a> أو <a href="mailto:tomasz@swistak.codes">أرسله بالبريد الإلكتروني</a>. اذكر طراز الهاتف والنظام وخيار الشركة المصنّعة لكل لقطة.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. افصل الهاتف عن الشاحن واتركه غير متصل أثناء التقاط لقطات الإعداد. غيّر بين اللقطات إعداد حماية الشحن الخاص بالشركة المصنّعة فقط.\n
+    2. أوقف حماية الشحن، وانتظر 2–5 ثوانٍ، ثم التقط لقطة.\n
+    3. اختر حداً ثابتاً، وانتظر 2–5 ثوانٍ، ثم التقط لقطة. كرر بحد آخر إن أمكن.\n
+    4. فعّل الشحن التكيّفي أو الذكي أو المجدول، وانتظر 2–5 ثوانٍ، ثم التقط لقطة.\n
+    5. إذا لم تكن مقارنة الإعداد حاسمة، يمكنك اختيارياً تكرار التسلسل أثناء الشحن لالتقاط الحالة التي تظهر وقت التشغيل فقط.\n
+    6. أنشئ تقرير المقارنة وراجعه. تُصفّى البيانات وتُحجب القيم المحتمل أن تكون حساسة، لكن راجع التقرير كاملاً قبل مشاركته.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">بعد مراجعة التقرير، انسخه أو احفظه ثم أرسله بالبريد الإلكتروني إلى <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">حتى %1$d%%</string>
   <string name="activity_target_reached" formatted="true">تم بلوغ الهدف (%1$d%%)</string>

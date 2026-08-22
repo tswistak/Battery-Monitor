@@ -630,27 +630,30 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Helyben tárolt OEM töltési pillanatképek törlése</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Melyik eszközbeállítás aktív?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Védelem kikapcsolva / korlátlan</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Rögzített korlát 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Rögzített korlát 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Rögzített korlát 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Maximum / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Rögzített korlát…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptív / intelligens töltés</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Ütemezett töltés</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Egyéb OEM mód</string>
   <string name="charging_diagnostics_capturing" formatted="false">Töltési jelek rögzítése…</string>
   <string name="charging_diagnostics_captured" formatted="false">Töltési pillanatkép rögzítve</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">A pillanatkép nem rögzíthető</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d pillanatkép rögzítve. Koppintson az összehasonlítás másolásához vagy elküldéséhez.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">Kiemelt hozzáféréssel további diagnosztikai adatok válhatnak elérhetővé. Engedélyezze a Shizuku- vagy root-hozzáférést, majd kapcsolja be a kiemelt hozzáférést a speciális beállításokban a hasznosabb OEM töltéskorlát-jelentéshez.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">%1$d pillanatkép rögzítve. Rögzítsen egy másik töltési módot.</item>
+    <item quantity="other">%1$d pillanatkép rögzítve. Koppintson az összehasonlítás áttekintéséhez.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Előbb rögzítsen legalább két különböző töltési módot</string>
   <string name="charging_diagnostics_cleared" formatted="false">Töltési pillanatképek törölve</string>
   <string name="charging_diagnostics_copy" formatted="false">Másolás a vágólapra</string>
   <string name="charging_diagnostics_save" formatted="false">Mentés</string>
   <string name="charging_diagnostics_copied" formatted="false">Jelentés másolva</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Nyissa meg az akkumulátor beállításait, kapcsolja ki a töltésvédelmet, majd rögzítsen pillanatképet.\n
-    2. Válasszon rögzített korlátot, és készítsen újabb pillanatképet. Ha lehet, ismételje meg másik korláttal.\n
-    3. Kapcsolja be az adaptív, intelligens vagy ütemezett töltést, és készítsen még egy pillanatképet.\n
-    4. Készítse el az összehasonlító jelentést. Csak szűrt töltési értékeket tartalmaz; személyes azonosítókat, fiókokat, teljes beállításlistákat és hibakeresési naplókat soha nem gyűjt.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Másolja vagy mentse a jelentést, majd <a href="https://github.com/tswistak/Battery-Monitor/issues/new">nyisson GitHub-hibajegyet</a>, vagy <a href="mailto:tomasz@swistak.codes">küldje el e-mailben</a>. Adja meg a modellt, a rendszert és az egyes pillanatképek OEM-beállítását.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Válassza le a telefont, és a konfigurációs pillanatképek készítése közben tartsa leválasztva. A pillanatképek között csak a gyártó töltésvédelmi beállítását módosítsa.\n
+    2. Kapcsolja ki a töltésvédelmet, várjon 2–5 másodpercet, majd rögzítsen pillanatképet.\n
+    3. Válasszon rögzített korlátot, várjon 2–5 másodpercet, majd rögzítsen. Ha lehet, ismételje meg másik korláttal.\n
+    4. Kapcsolja be az adaptív, intelligens vagy ütemezett töltést, várjon 2–5 másodpercet, majd rögzítsen.\n
+    5. Ha a konfiguráció összehasonlítása nem egyértelmű, a sorozatot opcionálisan töltés közben is megismételheti, hogy rögzítse a csak működés közben elérhető állapotot.\n
+    6. Készítse el és tekintse át az összehasonlító jelentést. Az adatok szűrve, a potenciálisan érzékeny értékek kitakarva jelennek meg, de megosztás előtt ellenőrizze a teljes jelentést.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">A jelentés áttekintése után másolja vagy mentse, majd küldje el e-mailben a <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> címre.</string>
 
   <string name="activity_until_target" formatted="true">%1$d%%-ig</string>
   <string name="activity_target_reached" formatted="true">a cél elérve (%1$d%%)</string>

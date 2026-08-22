@@ -656,27 +656,31 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Обриши локално сачуване OEM снимке пуњења</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Које подешавање уређаја је активно?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Заштита искључена / без ограничења</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Фиксно ограничење 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Фиксно ограничење 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Фиксно ограничење 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Максимум / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Фиксно ограничење…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Прилагодљиво / паметно пуњење</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Планирано пуњење</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Други OEM режим</string>
   <string name="charging_diagnostics_capturing" formatted="false">Снимање сигнала пуњења…</string>
   <string name="charging_diagnostics_captured" formatted="false">Снимак пуњења је сачуван</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Снимак пуњења није могуће сачувати</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">Сачувано снимака: %1$d. Додирните да копирате или пошаљете поређење.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">Уз привилеговани приступ може бити доступно више дијагностичких података. Одобрите приступ преко Shizuku-а или root-а и укључите привилеговани приступ у напредним подешавањима за кориснији извештај о OEM ограничењу пуњења.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">Сачуван је %1$d снимак. Сачувајте други режим пуњења.</item>
+    <item quantity="few">Сачувана су %1$d снимка. Додирните за преглед поређења.</item>
+    <item quantity="other">Сачувано је %1$d снимака. Додирните за преглед поређења.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Прво снимите најмање два различита режима пуњења</string>
   <string name="charging_diagnostics_cleared" formatted="false">Снимци пуњења су обрисани</string>
   <string name="charging_diagnostics_copy" formatted="false">Копирај у привремену меморију</string>
   <string name="charging_diagnostics_save" formatted="false">Сачувај</string>
   <string name="charging_diagnostics_copied" formatted="false">Извештај је копиран</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Отворите подешавања батерије, искључите заштиту пуњења и снимите стање.\n
-    2. Изаберите фиксно ограничење и снимите друго стање. Ако је могуће, поновите са другим ограничењем.\n
-    3. Укључите прилагодљиво, паметно или планирано пуњење и снимите још једно стање.\n
-    4. Направите упоредни извештај. Укључене су само филтриране вредности пуњења; лични идентификатори, налози, потпуни исписи подешавања и дневници отклањања грешака се никада не прикупљају.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Копирајте или сачувајте извештај, затим <a href="https://github.com/tswistak/Battery-Monitor/issues/new">отворите GitHub проблем</a> или га <a href="mailto:tomasz@swistak.codes">пошаљите е-поштом</a>. Наведите модел, систем и OEM опцију за сваки снимак.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Искључите телефон са пуњача и оставите га искљученог током снимања конфигурације. Између снимака мењајте само подешавање заштите пуњења произвођача.\n
+    2. Искључите заштиту пуњења, сачекајте 2–5 секунди и снимите стање.\n
+    3. Изаберите фиксно ограничење, сачекајте 2–5 секунди и снимите стање. Ако је могуће, поновите са другим ограничењем.\n
+    4. Укључите прилагодљиво, паметно или планирано пуњење, сачекајте 2–5 секунди и снимите стање.\n
+    5. Ако поређење конфигурације није јасно, можете по жељи поновити поступак током пуњења да бисте снимили стање доступно само током рада.\n
+    6. Направите и прегледајте упоредни извештај. Подаци се филтрирају, а потенцијално осетљиве вредности скривају, али пре слања прегледајте цео извештај.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Након прегледа извештаја, копирајте га или сачувајте и пошаљите е-поштом на <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">do %1$d%%</string>
   <string name="activity_target_reached" formatted="true">cilj dostignut (%1$d%%)</string>

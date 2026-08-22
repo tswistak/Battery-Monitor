@@ -637,27 +637,31 @@
   <string name="charging_diagnostics_clear_summary" formatted="false">Elimina le istantanee OEM salvate localmente</string>
   <string name="charging_diagnostics_choose_state" formatted="false">Quale impostazione del dispositivo è attiva?</string>
   <string name="charging_diagnostics_condition_off" formatted="false">Protezione disattivata / senza limite</string>
-  <string name="charging_diagnostics_condition_70" formatted="false">Limite fisso 70%</string>
-  <string name="charging_diagnostics_condition_80" formatted="false">Limite fisso 80%</string>
-  <string name="charging_diagnostics_condition_90" formatted="false">Limite fisso 90%</string>
-  <string name="charging_diagnostics_condition_100" formatted="false">Massimo / 100%</string>
+  <string name="charging_diagnostics_condition_fixed" formatted="false">Limite fisso…</string>
   <string name="charging_diagnostics_condition_adaptive" formatted="false">Ricarica adattiva / intelligente</string>
   <string name="charging_diagnostics_condition_scheduled" formatted="false">Ricarica programmata</string>
   <string name="charging_diagnostics_condition_other" formatted="false">Altra modalità OEM</string>
   <string name="charging_diagnostics_capturing" formatted="false">Acquisizione dei segnali di ricarica…</string>
   <string name="charging_diagnostics_captured" formatted="false">Istantanea di ricarica acquisita</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Impossibile acquisire l’istantanea di ricarica</string>
-  <string name="charging_diagnostics_snapshot_count" formatted="true">%1$d istantanee acquisite. Tocca per copiare o inviare il confronto.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">Con l’accesso privilegiato potrebbero essere disponibili più informazioni diagnostiche. Concedi l’accesso tramite Shizuku o root e attiva l’accesso privilegiato nelle impostazioni avanzate per ottenere un rapporto sui limiti di ricarica OEM più utile.</string>
+  <plurals name="charging_diagnostics_snapshot_count">
+    <item quantity="one">%1$d istantanea acquisita. Acquisisci un’altra modalità di ricarica.</item>
+    <item quantity="many">%1$d istantanee acquisite. Tocca per esaminare il confronto.</item>
+    <item quantity="other">%1$d istantanee acquisite. Tocca per esaminare il confronto.</item>
+  </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Acquisisci prima almeno due diverse modalità di ricarica</string>
   <string name="charging_diagnostics_cleared" formatted="false">Istantanee di ricarica eliminate</string>
   <string name="charging_diagnostics_copy" formatted="false">Copia negli appunti</string>
   <string name="charging_diagnostics_save" formatted="false">Salva</string>
   <string name="charging_diagnostics_copied" formatted="false">Rapporto copiato</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Apri le impostazioni della batteria, disattiva la protezione della ricarica e acquisisci un’istantanea.\n
-    2. Seleziona un limite fisso e acquisiscine un’altra. Se disponibile, ripeti con un limite diverso.\n
-    3. Attiva la ricarica adattiva, intelligente o programmata e acquisisci un’altra istantanea.\n
-    4. Crea il rapporto di confronto. Sono inclusi solo valori filtrati relativi alla ricarica; identificatori personali, account, dump completi delle impostazioni e log di debug non vengono mai raccolti.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Copia o salva il rapporto, quindi <a href="https://github.com/tswistak/Battery-Monitor/issues/new">apri una segnalazione GitHub</a> oppure <a href="mailto:tomasz@swistak.codes">invialo tramite e-mail</a>. Indica modello, sistema e opzione OEM di ogni istantanea.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Scollega il telefono e lascialo scollegato durante le istantanee della configurazione. Tra un’istantanea e l’altra modifica solo l’impostazione di protezione della ricarica del produttore.\n
+    2. Disattiva la protezione della ricarica, attendi 2–5 secondi e acquisisci un’istantanea.\n
+    3. Seleziona un limite fisso, attendi 2–5 secondi e acquisisci. Se possibile, ripeti con un limite diverso.\n
+    4. Attiva la ricarica adattiva, intelligente o programmata, attendi 2–5 secondi e acquisisci un’istantanea.\n
+    5. Se il confronto della configurazione non è conclusivo, puoi ripetere facoltativamente la sequenza durante la ricarica per acquisire gli stati presenti solo durante il funzionamento.\n
+    6. Crea e controlla il rapporto di confronto. I dati sono filtrati e i valori potenzialmente sensibili vengono oscurati, ma controlla l’intero rapporto prima di condividerlo.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Dopo aver esaminato il rapporto, copialo o salvalo e invialo tramite e-mail a <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">fino al %1$d%%</string>
   <string name="activity_target_reached" formatted="true">obiettivo raggiunto (%1$d%%)</string>

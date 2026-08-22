@@ -174,7 +174,7 @@ class ChargingTargetsTest {
     }
 
     @Test
-    fun `Pixel adapter support is independent of model and Android version`() {
+    fun `Pixel adapter supports future devices but excludes Google emulators`() {
         assertTrue(
             PixelChargingLimitAdapter.supports(
                 DeviceProfile("Google", "Pixel 6", "oriole", 31)
@@ -183,6 +183,11 @@ class ChargingTargetsTest {
         assertTrue(
             PixelChargingLimitAdapter.supports(
                 DeviceProfile("Google", "Future Pixel", "future", 99)
+            )
+        )
+        assertFalse(
+            PixelChargingLimitAdapter.supports(
+                DeviceProfile("Google", "sdk_gphone16k_arm64", "emu64a", 35)
             )
         )
         assertFalse(PixelChargingLimitAdapter.supports(genericProfile()))
