@@ -668,7 +668,6 @@
     <item quantity="one">Zapisano %1$d migawkę. Zapisz kolejny tryb ładowania.</item>
     <item quantity="few">Zapisano %1$d migawki. Naciśnij, aby przejrzeć porównanie.</item>
     <item quantity="many">Zapisano %1$d migawek. Naciśnij, aby przejrzeć porównanie.</item>
-    <item quantity="other">Zapisano %1$d migawki. Naciśnij, aby przejrzeć porównanie.</item>
   </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania</string>
   <string name="charging_diagnostics_cleared" formatted="false">Usunięto snapshoty ładowania</string>
