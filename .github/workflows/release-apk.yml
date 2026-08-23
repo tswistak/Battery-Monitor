@@ -62,6 +62,41 @@ jobs:
           APK_PATH="$(ls app/build/outputs/apk/release/*.apk | head -n 1)"
           cp "$APK_PATH" "dist/battery-monitor-${GITHUB_REF_NAME}.apk"
 
+      - name: Import OpenPGP signing key
+        shell: bash
+        env:
+          PGP_SIGNING_KEY_BASE64: ${{ secrets.PGP_SIGNING_KEY_BASE64 }}
+        run: |
+          set +x
+          printf '%s' "$PGP_SIGNING_KEY_BASE64" \
+            | base64 --decode \
+            | gpg --batch --import
+          unset PGP_SIGNING_KEY_BASE64
+
+      - name: Create OpenPGP signature
+        shell: bash
+        env:
+          PGP_PASSPHRASE: ${{ secrets.PGP_SIGNING_KEY_PASSPHRASE }}
+          PGP_FINGERPRINT: ${{ vars.PGP_SIGNING_KEY_FINGERPRINT }}
+        run: |
+          gpg \
+            --batch \
+            --yes \
+            --pinentry-mode loopback \
+            --passphrase "$PGP_PASSPHRASE" \
+            --local-user "$PGP_FINGERPRINT" \
+            --armor \
+            --detach-sign \
+            --output "dist/battery-monitor-${GITHUB_REF_NAME}.apk.asc" \
+            "dist/battery-monitor-${GITHUB_REF_NAME}.apk"
+
+      - name: Verify OpenPGP signature
+        shell: bash
+        run: |
+          gpg --verify \
+            "dist/battery-monitor-${GITHUB_REF_NAME}.apk.asc" \
+            "dist/battery-monitor-${GITHUB_REF_NAME}.apk"
+
       - name: Determine release channel
         id: release_channel
         shell: bash
@@ -111,3 +146,4 @@ jobs:
           body_path: ${{ steps.changelog_notes.outputs.notes_path }}
           files: |
             dist/battery-monitor-${{ github.ref_name }}.apk
+            dist/battery-monitor-${{ github.ref_name }}.apk.asc

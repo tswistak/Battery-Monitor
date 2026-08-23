@@ -85,3 +85,13 @@ Use Android Studio for development.
 
 GNU GPL v3.0-or-later.  
 See [LICENSE](LICENSE).
+
+## Release signing
+
+GitHub APK releases are signed with OpenPGP.
+
+Fingerprint:
+4A5C 1BDE 7687 85AD 68F2  C4F0 99B6 89A2 66FF 1B8B
+
+Public key:
+[docs/release-signing-key.asc](https://raw.githubusercontent.com/tswistak/Battery-Monitor/refs/heads/master/docs/release-signing-key.asc)
