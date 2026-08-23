@@ -663,24 +663,24 @@
   <string name="charging_diagnostics_capturing" formatted="false">Przechwytywanie sygnałów ładowania…</string>
   <string name="charging_diagnostics_captured" formatted="false">Wykonano snapshot ładowania</string>
   <string name="charging_diagnostics_capture_failed" formatted="false">Nie udało się wykonać snapshotu ładowania</string>
-  <string name="charging_diagnostics_privileged_hint" formatted="false">Dostęp uprzywilejowany może udostępnić więcej danych diagnostycznych. Przyznaj uprawnienia Shizuku lub root i włącz dostęp uprzywilejowany w ustawieniach zaawansowanych, aby uzyskać bardziej użyteczny raport o limicie ładowania.</string>
+  <string name="charging_diagnostics_privileged_hint" formatted="false">Więcej informacji diagnostycznych może być dostępnych z dostępem uprzywilejowanym. Przyznaj dostęp do roota albo Shizuku i włącz dostęp uprzywilejowany w Zaawansowanych dla bardziej przydatnego raportu limitu ładowania OEM</string>
   <plurals name="charging_diagnostics_snapshot_count">
-    <item quantity="one">Zapisano %1$d migawkę. Zapisz kolejny tryb ładowania.</item>
-    <item quantity="few">Zapisano %1$d migawki. Naciśnij, aby przejrzeć porównanie.</item>
-    <item quantity="many">Zapisano %1$d migawek. Naciśnij, aby przejrzeć porównanie.</item>
+    <item quantity="one">Wykonano %1$d snapshot. Wykonaj kolejny dla innego trybu ładowania</item>
+    <item quantity="few">Wykonano %1$d snapshoty. Naciśnij, aby przejrzeć porównanie</item>
+    <item quantity="many">Wykonano %1$d snapshotów. Naciśnij, aby przejrzeć porównanie</item>
   </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania</string>
   <string name="charging_diagnostics_cleared" formatted="false">Usunięto snapshoty ładowania</string>
   <string name="charging_diagnostics_copy" formatted="false">Kopiuj do schowka</string>
   <string name="charging_diagnostics_save" formatted="false">Zapisz</string>
   <string name="charging_diagnostics_copied" formatted="false">Skopiowano raport</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. Odłącz telefon i pozostaw go odłączonego podczas wykonywania migawek konfiguracji. Między migawkami zmieniaj tylko ustawienie ochrony ładowania producenta.\n
-    2. Wyłącz ochronę ładowania, odczekaj 2–5 sekund i wykonaj migawkę.\n
-    3. Wybierz stały limit, odczekaj 2–5 sekund i wykonaj migawkę. Jeśli to możliwe, powtórz z innym limitem.\n
-    4. Włącz ładowanie adaptacyjne, inteligentne lub zaplanowane, odczekaj 2–5 sekund i wykonaj migawkę.\n
-    5. Jeśli porównanie konfiguracji nie da jednoznacznego wyniku, możesz opcjonalnie powtórzyć tę sekwencję podczas ładowania, aby zarejestrować stan aktywny tylko w trakcie pracy.\n
-    6. Utwórz i przejrzyj raport porównawczy. Dane są filtrowane, a potencjalnie wrażliwe wartości ukrywane, ale przed udostępnieniem sprawdź cały raport.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">Po przejrzeniu raportu skopiuj go lub zapisz i wyślij e-mailem na adres <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
+  <string name="charging_diagnostics_help_steps" formatted="false">1. Odłącz telefon i pozostaw go odłączonego podczas wykonywania snapshotów konfiguracji. Zmieniaj tylko ustawienie ochrony ładowania OEM między snapshotami.\n
+    2. Wyłącz ochronę ładowania, odczekaj 2-5 sekund i wykonaj snapshot.\n
+    3. Wybierz dowolny stały limit, odczekaj 2-5 sekund i wykonaj kolejny snapshot. Powtórz to z co najmniej jednym innym stałym limitem, jeśli jest dostępny.\n
+    4. Włącz ładowanie adaptacyjne, inteligentne lub zaplanowane, odczekaj 2-5 sekund i wykonaj jeszcze jeden snapshot.\n
+    5. Jeśli porównanie konfiguracji jest niejednoznaczne, możesz opcjonalnie powtórzyć tę sekwencję podczas ładowania, aby uchwycić stan w trakcie działania.\n
+    6. Utwórz i przejrzyj raport porównawczy. Dane w raporcie są przefiltrowane, a potencjalnie wrażliwe wartości ukrywane, ale nadal powinieneś/powinnaś przejrzeć kompletny raport przed jego udostępnieniem.</string>
+  <string name="charging_diagnostics_help_contact" formatted="false">Po przejrzeniu raportu skopiuj go albo zapisz i wyślij e-mailem na <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
   <string name="activity_until_target" formatted="true">do %1$d%%</string>
   <string name="activity_target_reached" formatted="true">osiągnięto cel (%1$d%%)</string>
