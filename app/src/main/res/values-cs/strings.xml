@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">(WL)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Plně nabito</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Dosažen limit nabíjení</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Dosažen limit vybíjení</string>
   <string name="alarm_type_charge_drops" formatted="false">Stav klesne pod</string>
   <string name="alarm_type_charge_rises" formatted="false">Stav překročí hranici</string>
   <string name="alarm_type_temperature_drops" formatted="false">Teplota klesá níže</string>
   <string name="alarm_type_temperature_rises" formatted="false">Teplota překročí hranici</string>
   <string name="alarm_type_health_failure" formatted="false">Selhání</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Jakmile je plně nabito...</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Dosažen limit nabíjení</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Dosažen limit vybíjení</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Stav klesne pod...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Stav překročí hranici...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Teplota klesá pod...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Selhání</string>
 
   <string name="alarm_fully_charged" formatted="false">Baterie je plně nabitá</string>
+  <string name="alarm_charging_limit_met" formatted="true">Dosažen limit nabíjení: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Dosažen limit vybíjení: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Stav baterie klesl pod "</string>
   <string name="alarm_charge_rises" formatted="false">"Stav baterie překročil "</string>
   <string name="alarm_temp_drops" formatted="false">"Teplota baterie je pod"</string>
@@ -448,7 +454,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Zde můžeze měnit nastavení podmínek pro spuštění upozornění.</string>
   <string name="pref_alarm_type" formatted="false">Druh upozornění</string>
   <string name="pref_alarm_type_summary" formatted="false">Spustit upozornění jakmile baterie:</string>
-  <string name="pref_alarm_type_help" formatted="false">Můžete nastavit pět různých typů upozornění.\n
+  <string name="pref_alarm_type_help" formatted="false">Můžete nastavit osm různých typů upozornění.\n
+    \n
+    Upozornění „Dosažen limit nabíjení“ a „Dosažen limit vybíjení“ vás upozorní, když baterie dosáhne cíle nabíjení nebo vybíjení. Nevyžadují prahovou hodnotu a vždy se řídí aktuálním nastavením cílů.\n
+    \n
     \n
     \"Jakmile je plně nabito\" upozornění se spustí jakmile se stav baterie změní z\"Nabíjí se\" na \"Plně nabito\". Pozor u spousty zařízení toto nemá stejný význam jako když baterie ukazuje stav nabití 100%.\n
     \n

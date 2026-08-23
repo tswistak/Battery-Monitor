@@ -113,12 +113,16 @@
   <string name="plugged_wireless" formatted="false">(bezprzewodowe)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">W pełni naładowana</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Osiągnięto limit ładowania</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Osiągnięto limit rozładowania</string>
   <string name="alarm_type_charge_drops" formatted="false">Poziom naładowania spada poniżej</string>
   <string name="alarm_type_charge_rises" formatted="false">Poziom naładowania wzrasta powyżej</string>
   <string name="alarm_type_temperature_drops" formatted="false">Temperatura spada poniżej</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperatura wzrasta powyżej</string>
   <string name="alarm_type_health_failure" formatted="false">Problemy ze zdrowiem</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Zostaje w pełni naładowana</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Osiągnięcie limitu ładowania</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Osiągnięcie limitu rozładowania</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Poziom naładowania spada poniżej…</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Poziom naładowania wzrasta powyżej…</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura spada poniżej…</string>
@@ -126,6 +130,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Problemy ze zdrowiem</string>
 
   <string name="alarm_fully_charged" formatted="false">Bateria jest w pełni naładowana</string>
+  <string name="alarm_charging_limit_met" formatted="true">Osiągnięto limit ładowania: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Osiągnięto limit rozładowania: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Stan naładowania baterii jest poniżej "</string>
   <string name="alarm_charge_rises" formatted="false">"Stan naładowania baterii jest powyżej "</string>
   <string name="alarm_temp_drops" formatted="false">"Temperatura baterii jest poniżej "</string>
@@ -441,7 +447,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">W tym miejscu możesz określić, jakie warunki spowodują wywołanie alarmu.</string>
   <string name="pref_alarm_type" formatted="false">Typ alarmu</string>
   <string name="pref_alarm_type_summary" formatted="false">Wywołaj alarm, gdy bateria:</string>
-  <string name="pref_alarm_type_help" formatted="false">Obecnie możesz wybierać spośród pięciu typów alarmu.\n
+  <string name="pref_alarm_type_help" formatted="false">Obecnie możesz wybierać spośród ośmiu typów alarmu.\n
+    \n
+    Alarmy „Osiągnięcie limitu ładowania” i „Osiągnięcie limitu rozładowania” powiadomią Cię, gdy bateria osiągnie docelowy poziom ładowania lub rozładowania. Nie wymagają ustawienia progu i zawsze korzystają z bieżących ustawień celu.\n
+    \n
     \n
     Alarm „Zostaje w pełni naładowana” powiadomi Cię, gdy stan Twojej baterii zmieni się z „Ładowanie” na „W pełni naładowana”. Pamiętaj, że na wielu urządzeniach nie jest to koniecznie to samo co 100% nałdowania.\n
     \n

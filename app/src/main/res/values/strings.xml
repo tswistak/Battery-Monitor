@@ -113,12 +113,16 @@
   <string name="plugged_wireless" formatted="false">(Wireless)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Fully charged</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Charging limit met</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Discharging limit met</string>
   <string name="alarm_type_charge_drops" formatted="false">Charge drops below</string>
   <string name="alarm_type_charge_rises" formatted="false">Charge rises above</string>
   <string name="alarm_type_temperature_drops" formatted="false">Temperature drops below</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperature rises above</string>
   <string name="alarm_type_health_failure" formatted="false">Health failure</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Becomes fully charged</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Charging limit met</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Discharging limit met</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Charge drops below...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Charge rises above...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperature drops below...</string>
@@ -126,6 +130,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Health fails</string>
 
   <string name="alarm_fully_charged" formatted="false">Battery is now fully charged</string>
+  <string name="alarm_charging_limit_met" formatted="true">Charging limit reached: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Discharging limit reached: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Battery charge is below "</string>
   <string name="alarm_charge_rises" formatted="false">"Battery charge is above "</string>
   <string name="alarm_temp_drops" formatted="false">"Battery temp. is below "</string>
@@ -429,9 +435,11 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">This is where you can control what conditions trigger the alarm.</string>
   <string name="pref_alarm_type" formatted="false">Alarm Type</string>
   <string name="pref_alarm_type_summary" formatted="false">Trigger alarm when battery:</string>
-  <string name="pref_alarm_type_help" formatted="false">There are currently five types of alarm that you can choose from.\n
+  <string name="pref_alarm_type_help" formatted="false">There are currently eight types of alarm that you can choose from.\n
     \n
     The \"Becomes fully charged\" alarm will notify you when the status of your battery changes from \"Charging\" to \"Fully Charged\". Note that on many devices, this isn\'t necessarily the same thing as being at 100% charge.\n
+    \n
+    The \"Charging limit met\" and \"Discharging limit met\" alarms will notify you when the battery reaches your charging or discharging target. They need no threshold and always follow the current target settings.\n
     \n
     The charge and temperature alarms require you to set a threshold below, after choosing that alarm type.\n
     \n
@@ -653,9 +661,9 @@
   <string name="charging_diagnostics_capture_failed" formatted="false">Could not capture charging snapshot</string>
   <string name="charging_diagnostics_privileged_hint" formatted="false">More diagnostic information may be available with privileged access. Grant Shizuku or root access and enable privileged access in Advanced settings for a more useful OEM charging-limit report.</string>
   <plurals name="charging_diagnostics_snapshot_count">
-    <item quantity="one">%1$d snapshot captured. Capture another charging mode.</item>
-    <item quantity="other">%1$d snapshots captured. Tap to review the comparison.</item>
-  </plurals>
+        <item quantity="one">%1$d snapshot captured. Capture another charging mode.</item>
+        <item quantity="other">%1$d snapshots captured. Tap to review the comparison.</item>
+    </plurals>
   <string name="charging_diagnostics_need_two" formatted="false">Capture at least two different charging modes first</string>
   <string name="charging_diagnostics_cleared" formatted="false">Charging snapshots deleted</string>
   <string name="charging_diagnostics_copy" formatted="false">Copy to clipboard</string>

@@ -18,7 +18,12 @@ import android.content.SharedPreferences
 import android.os.SystemClock
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingTargetResolver
 import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceChargingLimitProvider
+import codes.swistak.batterymonitor.monitoring.charginglimit.ResolvedTarget
 import codes.swistak.batterymonitor.settings.SettingsContract
+
+internal data class ResolvedPredictionTargets(
+    val charging: ResolvedTarget, val discharging: ResolvedTarget
+)
 
 internal class Predictor(context: Context) {
     companion object {
@@ -64,7 +69,7 @@ internal class Predictor(context: Context) {
         fullRangePc.setPredictionType(type.toInt())
     }
 
-    fun update(info: BatteryInfo) {
+    fun update(info: BatteryInfo): ResolvedPredictionTargets {
         val chargingTarget = targetResolver.resolveChargingTarget()
         val dischargingTarget = targetResolver.resolveDischargingTarget()
         pc.setTargets(chargingTarget.percent, dischargingTarget.percent)
@@ -78,5 +83,6 @@ internal class Predictor(context: Context) {
         fullRangePc.update(fullRangeInfo, now)
         info.fullRangePrediction.copyFrom(fullRangeInfo.prediction)
         editor.putFloat(KEY_AVERAGE[pc.curChargingStatus], pc.longTermAverage.toFloat()).apply()
+        return ResolvedPredictionTargets(chargingTarget, dischargingTarget)
     }
 }

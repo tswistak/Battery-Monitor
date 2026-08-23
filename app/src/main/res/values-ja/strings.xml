@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">(無線)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">フル充電されました</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">充電上限に到達</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">放電下限に到達</string>
   <string name="alarm_type_charge_drops" formatted="false">残量が低下しました</string>
   <string name="alarm_type_charge_rises" formatted="false">残量が上昇しました</string>
   <string name="alarm_type_temperature_drops" formatted="false">温度が次を下回る</string>
   <string name="alarm_type_temperature_rises" formatted="false">温度が上昇しました</string>
   <string name="alarm_type_health_failure" formatted="false">ステータス障害</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">フル充電になりました</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">充電上限に到達</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">放電下限に到達</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">残量が低下しました...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">残量が上昇しました...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">温度が次を下回る...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">ステータス障害</string>
 
   <string name="alarm_fully_charged" formatted="false">バッテリーがフル充電されました</string>
+  <string name="alarm_charging_limit_met" formatted="true">充電上限に到達: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">放電下限に到達: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"バッテリー残量が低下しました "</string>
   <string name="alarm_charge_rises" formatted="false">"バッテリー残量が上昇しました "</string>
   <string name="alarm_temp_drops" formatted="false">"バッテリー温度が次を下回りました "</string>
@@ -424,7 +430,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">ここでアラームの発生する条件を指定します。</string>
   <string name="pref_alarm_type" formatted="false">アラームの種類</string>
   <string name="pref_alarm_type_summary" formatted="false">バッテリーでアラームを発生します:</string>
-  <string name="pref_alarm_type_help" formatted="false">現在 5 種類のアラームを選択することができます。\n
+  <string name="pref_alarm_type_help" formatted="false">現在、8 種類のアラームを選択できます。\n
+    \n
+    「充電上限に到達」と「放電下限に到達」アラームは、バッテリーが充電または放電の目標値に達したときに通知します。しきい値を設定する必要はなく、常に現在の目標設定に従います。\n
+    \n
     \n
     \"フル充電されました\" アラームは、お使いのバッテリーの状態が \"充電中\" から \"フル充電\" に変わったときに通知します。 これは、多くのデバイスで 100% 充電と同じ意味ではないことに ご注意ください。\n
     \n

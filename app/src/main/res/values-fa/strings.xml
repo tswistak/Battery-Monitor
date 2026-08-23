@@ -113,12 +113,16 @@
   <string name="plugged_wireless" formatted="false">(بی سیم)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">کاملا شارژ شده</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">حد شارژ رسید</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">حد تخلیه رسید</string>
   <string name="alarm_type_charge_drops" formatted="false">شارژ پایین می آید</string>
   <string name="alarm_type_charge_rises" formatted="false">شارژ بالاتر می رود</string>
   <string name="alarm_type_temperature_drops" formatted="false">دما به زیر می رسد</string>
   <string name="alarm_type_temperature_rises" formatted="false">دما بالاتر می رود</string>
   <string name="alarm_type_health_failure" formatted="false">شکست سلامتی</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">شارژ کامل می شود</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">حد شارژ رسید</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">حد تخلیه رسید</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">شارژ پایین تر میاد...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">شارژ بالاتر از ...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">کاهش دما به زیر ...</string>
@@ -126,6 +130,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">سلامتی شکست می خورد</string>
 
   <string name="alarm_fully_charged" formatted="false">اکنون باتری کاملاً شارژ شده است</string>
+  <string name="alarm_charging_limit_met" formatted="true">حد شارژ رسید: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">حد تخلیه رسید: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"شارژ باتری زیر است"</string>
   <string name="alarm_charge_rises" formatted="false">"شارژ باتری بالاتر است"</string>
   <string name="alarm_temp_drops" formatted="false">"دمای باتری پایین است"</string>
@@ -431,7 +437,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">اینجا جایی است که می توانید کنترل کنید که چه شرایطی باعث ایجاد زنگ هشدار می شود.</string>
   <string name="pref_alarm_type" formatted="false">نوع زنگ هشدار</string>
   <string name="pref_alarm_type_summary" formatted="false">زنگ هشدار هنگام باتری:</string>
-  <string name="pref_alarm_type_help" formatted="false">در حال حاضر پنج نوع وجود دارد زنگ هشداری که می توانید انتخاب کنید.\n
+  <string name="pref_alarm_type_help" formatted="false">در حال حاضر هشت نوع زنگ هشدار وجود دارد که می‌توانید انتخاب کنید.\n
+    \n
+    هشدارهای «حد شارژ رسید» و «حد تخلیه رسید» هنگام رسیدن باتری به هدف شارژ یا تخلیه به شما اطلاع می‌دهند. به آستانه نیاز ندارند و همیشه از تنظیمات هدف فعلی پیروی می‌کنند.\n
+    \n
     \n
     زنگ \"کاملا شارژ می شود\" به شما اطلاع می دهد وضعیت باتری شما از \"شارژ\" به \"کاملاً" تغییر می کند شارژ شد\". توجه داشته باشید که در بسیاری از دستگاه‌ها، این لزوماً اینطور نیست همان چیزی که 100٪ شارژ است.\n
     \n

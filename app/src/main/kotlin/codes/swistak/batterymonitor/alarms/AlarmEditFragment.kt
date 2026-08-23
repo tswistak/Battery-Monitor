@@ -156,7 +156,7 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
 
     private fun syncValuesAndSetListeners() {
         val cb = mPreferenceScreen!!.findPreference<Preference?>(KEY_ENABLED) as CheckBoxPreference?
-        cb!!.setChecked(mAdapter!!.enabled!!)
+        cb!!.setChecked(mAdapter!!.enabled)
         cb.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { pref, newValue ->
             mAdapter!!.updateEnabled((newValue as Boolean?)!!)
             true
@@ -441,6 +441,9 @@ class AlarmEditFragment : PreferenceFragmentCompat() {
             type = s
             chanDisabled = isChannelDisabled(type)
             alarms!!.setType(id, type)
+            if (type == "fully_charged" || type == "health_failure" || type == "charging_limit_met" || type == "discharging_limit_met") {
+                updateThreshold("")
+            }
         }
 
         fun updateThreshold(s: String?) {

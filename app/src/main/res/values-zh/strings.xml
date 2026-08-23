@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">(WL)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">電池充滿</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">已達充電上限</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">已達放電下限</string>
   <string name="alarm_type_charge_drops" formatted="false">電荷降至以下</string>
   <string name="alarm_type_charge_rises" formatted="false">電荷上升至以上</string>
   <string name="alarm_type_temperature_drops" formatted="false">氣溫降至以下</string>
   <string name="alarm_type_temperature_rises" formatted="false">溫度升至以上</string>
   <string name="alarm_type_health_failure" formatted="false">健康失敗</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">充滿電</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">已達充電上限</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">已達放電下限</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">電荷下降到以下...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">電荷上升到以上...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">氣溫降至以下...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">健康狀況不佳</string>
 
   <string name="alarm_fully_charged" formatted="false">電池已充滿</string>
+  <string name="alarm_charging_limit_met" formatted="true">已達充電上限：%1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">已達放電下限：%1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">“電池電量低於”</string>
   <string name="alarm_charge_rises" formatted="false">“電池電量高於”</string>
   <string name="alarm_temp_drops" formatted="false">“電池溫度低於”</string>
@@ -424,7 +430,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">這是你可以的地方 控制觸發警報的條件。</string>
   <string name="pref_alarm_type" formatted="false">警報類型</string>
   <string name="pref_alarm_type_summary" formatted="false">電池觸發警報：</string>
-  <string name="pref_alarm_type_help" formatted="false">目前有五種類型 鬧鐘可供您設定。\n
+  <string name="pref_alarm_type_help" formatted="false">目前有八種類型的警報可供您設定。\n
+    \n
+    「已達充電上限」和「已達放電下限」警報會在電池達到充電或放電目標時通知您。它們不需要設定門檻，且會一律依照目前的目標設定。\n
+    \n
     \n
     「充滿電」鬧鐘會在電池狀態從 「充電中」變為「已充滿」時觸發。請注意， 在許多裝置上，這與 100% 電量並不完全相同。\n
     \n

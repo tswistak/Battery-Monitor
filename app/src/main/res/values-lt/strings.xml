@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">(WL)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Pilnai įkrauta</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Pasiekta įkrovimo riba</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Pasiekta iškrovimo riba</string>
   <string name="alarm_type_charge_drops" formatted="false">Įkrovimas žemiau</string>
   <string name="alarm_type_charge_rises" formatted="false">Įkrovimas aukščiau</string>
   <string name="alarm_type_temperature_drops" formatted="false">Temperatūra nukrenta žemiau</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperatūra aukščiau</string>
   <string name="alarm_type_health_failure" formatted="false">Būklės klaida</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Visiškai įkrauta</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Pasiekta įkrovimo riba</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Pasiekta iškrovimo riba</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Įkrovimas žemiau...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Įkrovimas aukščiau...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatūra nukrenta žemiau...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Būklės klaida</string>
 
   <string name="alarm_fully_charged" formatted="false">Baterija pilnai įkrauta</string>
+  <string name="alarm_charging_limit_met" formatted="true">Pasiekta įkrovimo riba: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Pasiekta iškrovimo riba: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Baterijos lygis yra žemiau "</string>
   <string name="alarm_charge_rises" formatted="false">"Baterijos lygis yra aukščiau "</string>
   <string name="alarm_temp_drops" formatted="false">„Akumuliatoriaus temp. žemesnė“</string>
@@ -448,7 +454,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Čia galite valdyti tai, kas iškviečia aliarmą.</string>
   <string name="pref_alarm_type" formatted="false">Aliarmo Tipas</string>
   <string name="pref_alarm_type_summary" formatted="false">Iškviesti aliarmą kai baterija:</string>
-  <string name="pref_alarm_type_help" formatted="false">Šiuo metu yra penkios rūšys signalizacijos, kurią galite pasirinkti.\n
+  <string name="pref_alarm_type_help" formatted="false">Šiuo metu galite pasirinkti iš aštuonių signalizacijos tipų.\n
+    \n
+    Signalizacijos „Pasiekta įkrovimo riba“ ir „Pasiekta iškrovimo riba“ praneš, kai akumuliatorius pasieks įkrovimo ar iškrovimo tikslą. Joms nereikia nustatyti slenksčio ir jos visada laikosi dabartinių tikslų nustatymų.\n
+    \n
     \n
     Aliarmas \"Visiškai įkrautas\" jums praneš, kai akumuliatoriaus būsena pasikeičia iš \"Įkraunama\" į \"Visiškai Įkrauta\". Atminkite, kad daugelyje įrenginių tai nebūtinai yra tas pats, kas 100 % įkrovimo.\n
     \n

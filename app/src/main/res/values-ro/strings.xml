@@ -109,12 +109,16 @@
   <string name="plugged_wireless" formatted="false">Wireless</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Incarcat complet</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Limită de încărcare atinsă</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Limită de descărcare atinsă</string>
   <string name="alarm_type_charge_drops" formatted="false">Cand incarcarea scade sub</string>
   <string name="alarm_type_charge_rises" formatted="false">Cand incarcare urca peste</string>
   <string name="alarm_type_temperature_drops" formatted="false">Temperatura scade sub</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperatura crește deasupra</string>
   <string name="alarm_type_health_failure" formatted="false">Eșecul de sănătate</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Devine complet încărcat</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Limită de încărcare atinsă</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Limită de descărcare atinsă</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Încărcarea scade sub...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Taxa crește peste...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura scade sub...</string>
@@ -122,6 +126,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Sănătatea eșuează</string>
 
   <string name="alarm_fully_charged" formatted="false">Bateria este acum incarcata complet</string>
+  <string name="alarm_charging_limit_met" formatted="true">Limită de încărcare atinsă: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Limită de descărcare atinsă: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Nivelul bateriei este sub "</string>
   <string name="alarm_charge_rises" formatted="false">"Nivelul bateriei este peste "</string>
   <string name="alarm_temp_drops" formatted="false">„Temp. baterie este sub”</string>
@@ -437,7 +443,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Aici poți controlați ce condiții declanșează alarma.</string>
   <string name="pref_alarm_type" formatted="false">Tip alarmă</string>
   <string name="pref_alarm_type_summary" formatted="false">Declanșează alarma când bateria:</string>
-  <string name="pref_alarm_type_help" formatted="false">În prezent există cinci tipuri de alarma din care puteti alege.\n
+  <string name="pref_alarm_type_help" formatted="false">În prezent există opt tipuri de alarme din care puteți alege.\n
+    \n
+    Alarmele „Limită de încărcare atinsă” și „Limită de descărcare atinsă” vă vor anunța când bateria își atinge ținta de încărcare sau descărcare. Nu necesită un prag și urmează întotdeauna setările actuale ale țintei.\n
+    \n
     \n
     Alarma „Devine complet încărcată” vă va anunța când starea bateriei se schimbă de la „Încărcare” la „Complet Încărcat\”. Rețineți că pe multe dispozitive, acesta nu este neapărat același lucru ca fiind la 100% încărcare.\n
     \n

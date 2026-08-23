@@ -113,12 +113,16 @@
   <string name="plugged_wireless" formatted="false">(Draadloos)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Volledig opgeladen</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Laadlimiet bereikt</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Ontlaadlimiet bereikt</string>
   <string name="alarm_type_charge_drops" formatted="false">Batterijniveau onder</string>
   <string name="alarm_type_charge_rises" formatted="false">Batterijniveau boven</string>
   <string name="alarm_type_temperature_drops" formatted="false">Temperatuur onder</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperatuur boven</string>
   <string name="alarm_type_health_failure" formatted="false">Probleem met batterij</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Is volledig opgeladen</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Laadlimiet bereikt</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Ontlaadlimiet bereikt</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Batterijniveau onder...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Batterijniveau boven...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatuur onder...</string>
@@ -126,6 +130,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Probleem met batterij</string>
 
   <string name="alarm_fully_charged" formatted="false">Batterij is volledig opgeladen</string>
+  <string name="alarm_charging_limit_met" formatted="true">Laadlimiet bereikt: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Ontlaadlimiet bereikt: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Batterijniveau onder "</string>
   <string name="alarm_charge_rises" formatted="false">"Batterijniveau boven "</string>
   <string name="alarm_temp_drops" formatted="false">"Batterijtemperatuur onder "</string>
@@ -431,7 +437,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Hier kun je de voorwaarden instellen voor het alarm</string>
   <string name="pref_alarm_type" formatted="false">Type alarm</string>
   <string name="pref_alarm_type_summary" formatted="false">Geef alarm wanneer batterij:</string>
-  <string name="pref_alarm_type_help" formatted="false">Er zijn 5 typen alarm om uit te kiezen.\n
+  <string name="pref_alarm_type_help" formatted="false">Er zijn acht typen alarm om uit te kiezen.\n
+    \n
+    De alarmen ‘Laadlimiet bereikt’ en ‘Ontlaadlimiet bereikt’ waarschuwen je wanneer de batterij het laad- of ontlaaddoel bereikt. Ze vereisen geen drempelwaarde en volgen altijd de huidige doelinstellingen.\n
+    \n
     \n
     Het alarmtype \"Is volledig opgeladen\" zal je een melding sturen wanneer de status van je batterij verandert van \"Opladen\" to \"Volledig opgeladen\". Houd er rekening mee dat dit op veel apparaten niet per se hetzelfde is als een laadniveau van 100%.\n
     \n

@@ -113,12 +113,16 @@
   <string name="plugged_wireless" formatted="false">(Bežično)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">100% puno</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Dostignut limit punjenja</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Dostignut limit pražnjenja</string>
   <string name="alarm_type_charge_drops" formatted="false">Procenat padne ispod</string>
   <string name="alarm_type_charge_rises" formatted="false">Procenat pređe iznad</string>
   <string name="alarm_type_temperature_drops" formatted="false">Temperatura padne ispod</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperatura pređe iznad</string>
   <string name="alarm_type_health_failure" formatted="false">Stanje baterije narušeno</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Kad se 100% nanpuni</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Dostignut limit punjenja</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Dostignut limit pražnjenja</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Procenat baterije padne ispod...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Procenat baterije pređe iznad...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura padne ispod...</string>
@@ -126,6 +130,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Baterija zakaže</string>
 
   <string name="alarm_fully_charged" formatted="false">Baterija je sada 100% napunjena</string>
+  <string name="alarm_charging_limit_met" formatted="true">Dostignut limit punjenja: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Dostignut limit pražnjenja: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Procenat baterije ispod "</string>
   <string name="alarm_charge_rises" formatted="false">"Procenat baterije iznad "</string>
   <string name="alarm_temp_drops" formatted="false">"Temperatura baterije je ispod "</string>
@@ -441,7 +447,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Ovde možete da kontrolišete koji uslovi će aktivirati alarm.</string>
   <string name="pref_alarm_type" formatted="false">Vrsta alarma</string>
   <string name="pref_alarm_type_summary" formatted="false">Pokreni alarm kada je baterija:</string>
-  <string name="pref_alarm_type_help" formatted="false">Trenutno možete izabrati između pet tipova alarma.\n
+  <string name="pref_alarm_type_help" formatted="false">Trenutno možete izabrati između osam tipova alarma.\n
+    \n
+    Alarmi „Dostignut limit punjenja” i „Dostignut limit pražnjenja” obavestiće vas kada baterija dostigne cilj punjenja ili pražnjenja. Ne zahtevaju prag i uvek prate trenutna podešavanja cilja.\n
+    \n
     \n
     Alarm „Kad se 100% napuni” obavestiće vas kada status baterije pređe iz „Punjenje u toku” u „100% puno”. Imajte u vidu da na mnogim uređajima to ne mora nužno značiti baš 100% napunjenosti.\n
     \n

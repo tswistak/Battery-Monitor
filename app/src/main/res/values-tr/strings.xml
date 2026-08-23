@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">(Kablosuz)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Tamamiyle Doldu</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Şarj sınırına ulaşıldı</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Deşarj sınırına ulaşıldı</string>
   <string name="alarm_type_charge_drops" formatted="false">Şarj altına düşerse</string>
   <string name="alarm_type_charge_rises" formatted="false">Şarz üzerine çıkarsa</string>
   <string name="alarm_type_temperature_drops" formatted="false">Sıcaklık şu değerin altına düşerse</string>
   <string name="alarm_type_temperature_rises" formatted="false">Sıcaklık üzerine çıkarsa</string>
   <string name="alarm_type_health_failure" formatted="false">Sağlık yetersiz</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Tam şarjlı hale geldi</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Şarj sınırına ulaşıldı</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Deşarj sınırına ulaşıldı</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Şarj altına düşerse...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Şarj üstüne çıkarsa...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Sıcaklık şu değerin altına düşerse...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Sağlık başarısız</string>
 
   <string name="alarm_fully_charged" formatted="false">Pil şimdi tamamen şarj oldu</string>
+  <string name="alarm_charging_limit_met" formatted="true">Şarj sınırına ulaşıldı: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Deşarj sınırına ulaşıldı: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Pil şarjı şu değerin altında "</string>
   <string name="alarm_charge_rises" formatted="false">"Pil şarjı şu değerin üstünde "</string>
   <string name="alarm_temp_drops" formatted="false">"Pil sıcaklığı şu değerin altında "</string>
@@ -407,7 +413,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Burada hangi koşulların alarm tetikleyeceğini kontrol edebilirsiniz.</string>
   <string name="pref_alarm_type" formatted="false">Alarm Türü</string>
   <string name="pref_alarm_type_summary" formatted="false">Pil şu durumdayken alarm tetikle:</string>
-  <string name="pref_alarm_type_help" formatted="false">aralarından Seçebileceğiniz hazırda beş çeşit alarm sesi var.\n
+  <string name="pref_alarm_type_help" formatted="false">Şu anda seçebileceğiniz sekiz tür alarm var.\n
+    \n
+    „Şarj sınırına ulaşıldı” ve „Deşarj sınırına ulaşıldı” alarmları, pil şarj veya deşarj hedefine ulaştığında sizi bilgilendirir. Eşik gerektirmezler ve her zaman geçerli hedef ayarlarını izlerler.\n
+    \n
     \n
     </string>
   <string name="pref_alarm_threshold" formatted="false">Eşik</string>

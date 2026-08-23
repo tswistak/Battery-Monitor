@@ -24,5 +24,9 @@ internal fun alarmImporterForVersion(version: Int): AlarmImporter {
     require(version >= Version1AlarmImporter.VERSION) {
         "Unsupported alarm schema version: $version"
     }
-    return Version1AlarmImporter
+    return if (version >= Version2AlarmImporter.VERSION) {
+        Version2AlarmImporter
+    } else {
+        Version1AlarmImporter
+    }
 }

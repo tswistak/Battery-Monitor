@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">(WL)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Teljesen feltöltve</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Töltési korlát elérve</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Kisütési korlát elérve</string>
   <string name="alarm_type_charge_drops" formatted="false">Töltöttség ez alá csökken</string>
   <string name="alarm_type_charge_rises" formatted="false">Töltöttség meghaladja</string>
   <string name="alarm_type_temperature_drops" formatted="false">Hőmérséklet ez alá csökken</string>
   <string name="alarm_type_temperature_rises" formatted="false">Hőmérséklet meghaladja</string>
   <string name="alarm_type_health_failure" formatted="false">Állapot probléma</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Teljesen feltöltődik</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Töltési korlát elérve</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Kisütési korlát elérve</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Töltöttség ez alá csökken...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Töltöttség meghaladja...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Hőmérséklet ez alá csökken...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Állapot probléma</string>
 
   <string name="alarm_fully_charged" formatted="false">Az akku teljesen feltöltve</string>
+  <string name="alarm_charging_limit_met" formatted="true">Töltési korlát elérve: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Kisütési korlát elérve: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Akku töltése legfeljebb "</string>
   <string name="alarm_charge_rises" formatted="false">"Akku töltése legalább "</string>
   <string name="alarm_temp_drops" formatted="false">"Akku hőfoka legfeljebb "</string>
@@ -415,7 +421,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Itt határozhatja meg, hogy milyen események váltsanak ki riasztást.</string>
   <string name="pref_alarm_type" formatted="false">Riasztás típus</string>
   <string name="pref_alarm_type_summary" formatted="false">Riasztás küldése, ha az akku:</string>
-  <string name="pref_alarm_type_help" formatted="false">Jelenleg öt riasztás típus közül választhat.\n
+  <string name="pref_alarm_type_help" formatted="false">Jelenleg nyolc riasztástípus közül választhat.\n
+    \n
+    A „Töltési korlát elérve” és a „Kisütési korlát elérve” riasztás értesíti, amikor az akkumulátor eléri a töltési vagy kisütési célértéket. Nem igényelnek küszöbértéket, és mindig az aktuális célbeállításokat követik.\n
+    \n
     \n
     Az \"Eléri a teljes töltést\" akkor következik be, amikor az akku \"Töltés\" állapotról \"Teljesen feltöltve\" állapotra vált. Számos készülékeken ez nem szügségképpen jelenti a 100%-os szint elérését.\n
     \n

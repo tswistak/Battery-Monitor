@@ -109,12 +109,16 @@
   <string name="plugged_wireless" formatted="false">(WL)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">充满电</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">已达到充电上限</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">已达到放电下限</string>
   <string name="alarm_type_charge_drops" formatted="false">电量低于</string>
   <string name="alarm_type_charge_rises" formatted="false">电量高于</string>
   <string name="alarm_type_temperature_drops" formatted="false">温度低于</string>
   <string name="alarm_type_temperature_rises" formatted="false">温度升至以上</string>
   <string name="alarm_type_health_failure" formatted="false">电池健康异常</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">充满电</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">已达到充电上限</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">已达到放电下限</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">电量低于...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">电量高于...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">温度低于...</string>
@@ -122,6 +126,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">电池健康异常</string>
 
   <string name="alarm_fully_charged" formatted="false">电池已充满！</string>
+  <string name="alarm_charging_limit_met" formatted="true">已达到充电上限：%1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">已达到放电下限：%1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">电池电量低于</string>
   <string name="alarm_charge_rises" formatted="false">电池电量高于</string>
   <string name="alarm_temp_drops" formatted="false">“电池温度低于”</string>
@@ -409,7 +415,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">这是你可以的地方 控制触发警报的条件。</string>
   <string name="pref_alarm_type" formatted="false">报警类型</string>
   <string name="pref_alarm_type_summary" formatted="false">电池触发警报：</string>
-  <string name="pref_alarm_type_help" formatted="false">目前有五种类型 您可以选择的警报。\n
+  <string name="pref_alarm_type_help" formatted="false">目前有八种类型的警报可供您选择。\n
+    \n
+    “已达到充电上限”和“已达到放电下限”警报会在电池达到充电或放电目标时通知您。它们不需要设置阈值，并且始终遵循当前的目标设置。\n
+    \n
     \n
     “充满电”警报会在电量耗尽时通知您 电池状态从“正在充电”更改为“完全充电” 已收费”。 请注意，在许多设备上，这不一定是 与 100% 充电相同。\n
     \n

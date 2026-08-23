@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">(WL)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Πλήρως Φορτισμένη</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Επιτεύχθηκε όριο φόρτισης</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Επιτεύχθηκε όριο εκφόρτισης</string>
   <string name="alarm_type_charge_drops" formatted="false">Το επίπεδο φόρτισης πέφτει κάτω από</string>
   <string name="alarm_type_charge_rises" formatted="false">Το επίπεδο φόρτισης ανεβαίνει πάνω από</string>
   <string name="alarm_type_temperature_drops" formatted="false">Η θερμοκρασία πέφτει παρακάτω</string>
   <string name="alarm_type_temperature_rises" formatted="false">Η θερμοκρασία ανεβαίνει πάνω από</string>
   <string name="alarm_type_health_failure" formatted="false">Καλή υγεία απέτυχε</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Καθίσταται πλήρως φορτισμένη</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Επιτεύχθηκε όριο φόρτισης</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Επιτεύχθηκε όριο εκφόρτισης</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Το επίπεδο φόρτισης πέφτει κάτω από...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Το επίπεδο φόρτισης ανεβαίνει πάνω από...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Η θερμοκρασία πέφτει κάτω από...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Καλή υγεία αποτυγχάνει</string>
 
   <string name="alarm_fully_charged" formatted="false">Η μπαταρία είναι φορτισμένη πλήρως</string>
+  <string name="alarm_charging_limit_met" formatted="true">Επιτεύχθηκε όριο φόρτισης: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Επιτεύχθηκε όριο εκφόρτισης: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Το φορτίο της μπαταρίας είναι πιο κάτω "</string>
   <string name="alarm_charge_rises" formatted="false">Το φορτίο της μπαταρίας είναι πάνω \"</string>
   <string name="alarm_temp_drops" formatted="false">"Η θερμοκρασία της μπαταρίας είναι κάτω"</string>
@@ -427,7 +433,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Εδώ ελέγχετε τις συνθήκες που ενεργοποιούν μια ειδοποίηση.</string>
   <string name="pref_alarm_type" formatted="false">Τύπος Ειδοποίησης</string>
   <string name="pref_alarm_type_summary" formatted="false">Ενεργοποίηση Ειδοποίησης όταν η μπαταρία:</string>
-  <string name="pref_alarm_type_help" formatted="false">Υπάρχουν μέχρι τώρα πέντε τύποι ειδοποιήσεων από τις οποίες μπορείτε να διαλέξετε.\n
+  <string name="pref_alarm_type_help" formatted="false">Υπάρχουν μέχρι τώρα οκτώ τύποι ειδοποιήσεων από τις οποίες μπορείτε να διαλέξετε.\n
+    \n
+    Οι ειδοποιήσεις «Επιτεύχθηκε όριο φόρτισης» και «Επιτεύχθηκε όριο εκφόρτισης» θα σας ενημερώνουν όταν η μπαταρία φτάνει τον στόχο φόρτισης ή εκφόρτισης. Δεν χρειάζονται όριο και ακολουθούν πάντα τις τρέχουσες ρυθμίσεις στόχου.\n
+    \n
     \n
     Η \"Πλήρως Φορτισμένη\" ειδοποίηση θα σας ενημερώνει όταν η κατάσταση της μπαταρίας αλλάζει από το \"Φορτίζει\" στο \"Πλήρως Φορτισμένη\". Σημειώστε ότι σε πολλές συσκευές, αυτό δε σημαίνει αναγκαστικά το ίδιο πράγμα με το 100% φορτισμένη.\n
     \n

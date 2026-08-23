@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">(Sem fio)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Totalmente carregado</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Limite de carregamento atingido</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Limite de descarregamento atingido</string>
   <string name="alarm_type_charge_drops" formatted="false">Carga cai abaixo</string>
   <string name="alarm_type_charge_rises" formatted="false">A carga sobe acima</string>
   <string name="alarm_type_temperature_drops" formatted="false">A temperatura cai abaixo</string>
   <string name="alarm_type_temperature_rises" formatted="false">A temperatura sobe acima</string>
   <string name="alarm_type_health_failure" formatted="false">Falha na saúde</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Fica totalmente carregado</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Limite de carregamento atingido</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Limite de descarregamento atingido</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Carga cai abaixo...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">A carga sobe acima...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">A temperatura cai abaixo...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">A saúde falha</string>
 
   <string name="alarm_fully_charged" formatted="false">Bateria está completamente carregada</string>
+  <string name="alarm_charging_limit_met" formatted="true">Limite de carregamento atingido: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Limite de descarregamento atingido: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Carga da bateria abaixo de "</string>
   <string name="alarm_charge_rises" formatted="false">"Carga da bateria acima de "</string>
   <string name="alarm_temp_drops" formatted="false">"A temperatura da bateria está abaixo"</string>
@@ -433,7 +439,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">É aqui que você pode controlar quais condições acionam o alarme.</string>
   <string name="pref_alarm_type" formatted="false">Tipo de alarme</string>
   <string name="pref_alarm_type_summary" formatted="false">Acionar alarme quando a bateria:</string>
-  <string name="pref_alarm_type_help" formatted="false">Atualmente existem cinco tipos de alarme que você pode escolher.\n
+  <string name="pref_alarm_type_help" formatted="false">Atualmente existem oito tipos de alarme que você pode escolher.\n
+    \n
+    Os alarmes «Limite de carregamento atingido» e «Limite de descarregamento atingido» irão notificá-lo quando a bateria atingir o objetivo de carregamento ou descarregamento. Não precisam de limite e seguem sempre as definições atuais do objetivo.\n
+    \n
     \n
     O alarme "Torna-se totalmente carregado" irá notificá-lo quando o o status da bateria muda de \"Carregando\" para \"Totalmente Cobrado\". Observe que em muitos dispositivos, este não é necessariamente o a mesma coisa que estar com 100% de carga.\n
     \n

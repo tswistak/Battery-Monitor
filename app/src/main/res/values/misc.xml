@@ -63,6 +63,8 @@
     <!-- Important: Make sure alarm notification channel IDs and alarm type database values always match -->
     <string-array name="alarm_type_values">
         <item>fully_charged</item>
+        <item>charging_limit_met</item>
+        <item>discharging_limit_met</item>
         <item>charge_drops</item>
         <item>charge_rises</item>
         <item>temp_drops</item>
@@ -195,6 +197,8 @@
 
     <string-array name="alarm_types_display">
         <item>@string/alarm_type_fully_charged</item>
+        <item>@string/alarm_type_charging_limit_met</item>
+        <item>@string/alarm_type_discharging_limit_met</item>
         <item>@string/alarm_type_charge_drops</item>
         <item>@string/alarm_type_charge_rises</item>
         <item>@string/alarm_type_temperature_drops</item>
@@ -203,6 +207,8 @@
     </string-array>
     <string-array name="alarm_type_entries">
         <item>@string/alarm_type_entry_fully_charged</item>
+        <item>@string/alarm_type_entry_charging_limit_met</item>
+        <item>@string/alarm_type_entry_discharging_limit_met</item>
         <item>@string/alarm_type_entry_charge_drops</item>
         <item>@string/alarm_type_entry_charge_rises</item>
         <item>@string/alarm_type_entry_temperature_drops</item>

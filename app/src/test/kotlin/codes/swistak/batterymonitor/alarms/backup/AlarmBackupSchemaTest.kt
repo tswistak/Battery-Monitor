@@ -12,18 +12,20 @@
 */
 package codes.swistak.batterymonitor.alarms.backup
 
+import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.AlarmRecord
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class AlarmBackupSchemaTest {
     @Test
-    fun `version one contains only portable alarm fields`() {
-        assertEquals(1, AlarmBackup.SCHEMA_VERSION)
+    fun `alarm backups use the latest schema version`() {
+        assertEquals(2, AlarmBackup.SCHEMA_VERSION)
         assertEquals(
             setOf("enabled", "type", "threshold"), Version1AlarmImporter.schema.keys
         )
@@ -60,8 +62,76 @@ class AlarmBackupSchemaTest {
     }
 
     @Test
-    fun `future versions use the latest known importer`() {
-        assertSame(Version1AlarmImporter, alarmImporterForVersion(2))
+    fun `version two contains the same portable alarm fields`() {
+        assertEquals(
+            setOf("enabled", "type", "threshold"), Version2AlarmImporter.schema.keys
+        )
+        assertFalse(Version2AlarmImporter.schema.containsKey("_id"))
+        assertFalse(Version2AlarmImporter.schema.containsKey("ringtone"))
+    }
+
+    @Test
+    fun `charging limit met is imported as a threshold-less alarm`() {
+        assertEquals(
+            AlarmRecord(true, "charging_limit_met", ""), Version2AlarmImporter.restore(
+                mapOf("enabled" to true, "type" to "charging_limit_met", "threshold" to "80")
+            )
+        )
+    }
+
+    @Test
+    fun `discharging limit met is imported as a threshold-less alarm`() {
+        assertEquals(
+            AlarmRecord(false, "discharging_limit_met", ""), Version2AlarmImporter.restore(
+                mapOf("enabled" to false, "type" to "discharging_limit_met", "threshold" to "20")
+            )
+        )
+    }
+
+    @Test
+    fun `target alarm records round trip with an empty threshold`() {
+        for (type in listOf("charging_limit_met", "discharging_limit_met")) {
+            val record = Version2AlarmImporter.restore(
+                mapOf("enabled" to true, "type" to type, "threshold" to "50")
+            )!!
+            assertEquals("", record.threshold)
+            assertEquals(
+                record, Version2AlarmImporter.restore(
+                    mapOf(
+                        "enabled" to record.enabled,
+                        "type" to record.type,
+                        "threshold" to record.threshold
+                    )
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `version two keeps validating generic threshold alarms`() {
+        assertEquals(
+            AlarmRecord(true, "charge_rises", "90"), Version2AlarmImporter.restore(
+                mapOf("enabled" to true, "type" to "charge_rises", "threshold" to "90")
+            )
+        )
+        assertEquals(
+            AlarmRecord(true, "charge_rises", "90"), Version2AlarmImporter.restore(
+                mapOf("enabled" to true, "type" to "charge_rises", "threshold" to "not_a_number")
+            )
+        )
+    }
+
+    @Test
+    fun `target limit alarm types are in the supported types`() {
+        assertTrue("charging_limit_met" in AlarmDatabase.SUPPORTED_TYPES)
+        assertTrue("discharging_limit_met" in AlarmDatabase.SUPPORTED_TYPES)
+    }
+
+    @Test
+    fun `each version resolves its own importer and future versions use the latest`() {
+        assertSame(Version1AlarmImporter, alarmImporterForVersion(1))
+        assertSame(Version2AlarmImporter, alarmImporterForVersion(2))
+        assertSame(Version2AlarmImporter, alarmImporterForVersion(3))
         assertThrows(IllegalArgumentException::class.java) {
             alarmImporterForVersion(0)
         }

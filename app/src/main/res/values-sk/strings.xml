@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">(WL)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Plne nabitá</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Dosiahnutý limit nabíjania</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Dosiahnutý limit vybíjania</string>
   <string name="alarm_type_charge_drops" formatted="false">Nabitie klesne pod</string>
   <string name="alarm_type_charge_rises" formatted="false">Nabitie stúpne nad</string>
   <string name="alarm_type_temperature_drops" formatted="false">Teplota klesne pod</string>
   <string name="alarm_type_temperature_rises" formatted="false">Teplota stúpne nad</string>
   <string name="alarm_type_health_failure" formatted="false">Porucha zdravia</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Bude plne nabitá</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Dosiahnutý limit nabíjania</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Dosiahnutý limit vybíjania</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Nabitie klesne pod...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Nabitie stúpne nad...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Teplota klesá pod...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Porucha zdravia</string>
 
   <string name="alarm_fully_charged" formatted="false">Batéria je teraz úplne nabitá</string>
+  <string name="alarm_charging_limit_met" formatted="true">Dosiahnutý limit nabíjania: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Dosiahnutý limit vybíjania: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Nabitie batérie je pod "</string>
   <string name="alarm_charge_rises" formatted="false">"Nabitie batérie je nad "</string>
   <string name="alarm_temp_drops" formatted="false">"Teplota batérie je pod"</string>
@@ -452,7 +458,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Tu môžete kontrolovať, ktoré podmienky spustia upozornenie.</string>
   <string name="pref_alarm_type" formatted="false">Typ upozornenia</string>
   <string name="pref_alarm_type_summary" formatted="false">Spustiť upozornenie keď batéria:</string>
-  <string name="pref_alarm_type_help" formatted="false">V súčasnosti existuje päť typov alarmu, z ktorého si môžete vybrať.\n
+  <string name="pref_alarm_type_help" formatted="false">V súčasnosti existuje osem typov alarmu, z ktorých si môžete vybrať.\n
+    \n
+    Alarmy „Dosiahnutý limit nabíjania“ a „Dosiahnutý limit vybíjania“ vás upozornia, keď batéria dosiahne cieľ nabíjania alebo vybíjania. Nevyžadujú prahovú hodnotu a vždy sledujú aktuálne nastavenia cieľa.\n
+    \n
     \n
     Alarm \"Bude plne nabitý\" vás upozorní, keď stav batérie sa zmení z \"Nabíja sa\" na \"Plne Nabité\". Upozorňujeme, že na mnohých zariadeniach to nie je nevyhnutne to isté ako pri 100% nabití.\n
     \n

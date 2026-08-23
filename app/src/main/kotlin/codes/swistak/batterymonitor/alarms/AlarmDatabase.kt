@@ -39,6 +39,8 @@ internal class AlarmDatabase(context: Context?) {
 
         val SUPPORTED_TYPES: Set<String> = setOf(
             "fully_charged",
+            "charging_limit_met",
+            "discharging_limit_met",
             "charge_drops",
             "charge_rises",
             "temp_drops",
@@ -56,7 +58,7 @@ internal class AlarmDatabase(context: Context?) {
     }
 
     private fun openDBs() {
-        if (rdb == null || !rdb!!.isOpen()) {
+        if (rdb == null || !rdb!!.isOpen) {
             rdb = try {
                 mSQLOpenHelper.readableDatabase
             } catch (e: SQLiteException) {
@@ -64,7 +66,7 @@ internal class AlarmDatabase(context: Context?) {
             }
         }
 
-        if (wdb == null || !wdb!!.isOpen()) {
+        if (wdb == null || !wdb!!.isOpen) {
             try {
                 wdb = mSQLOpenHelper.writableDatabase
             } catch (e: SQLiteException) {
@@ -84,12 +86,12 @@ internal class AlarmDatabase(context: Context?) {
 
         openDBs()
 
-        try {
-            return rdb!!.rawQuery(
+        return try {
+            rdb!!.rawQuery(
                 "SELECT * FROM $ALARM_TABLE_NAME ORDER BY $KEY_ID $order", null
             )
         } catch (e: Exception) {
-            return null
+            null
         }
     }
 
@@ -173,6 +175,48 @@ internal class AlarmDatabase(context: Context?) {
         try {
             val c = rdb!!.rawQuery(
                 "SELECT * FROM $ALARM_TABLE_NAME WHERE $KEY_TYPE='fully_charged' AND ENABLED=1 LIMIT 1",
+                null
+            )
+
+            if (c.count == 0) {
+                c.close()
+                return null
+            }
+
+            c.moveToFirst()
+            return c
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+    fun activeAlarmChargingLimitMet(): Cursor? {
+        openDBs()
+
+        try {
+            val c = rdb!!.rawQuery(
+                "SELECT * FROM $ALARM_TABLE_NAME WHERE $KEY_TYPE='charging_limit_met' AND ENABLED=1 LIMIT 1",
+                null
+            )
+
+            if (c.count == 0) {
+                c.close()
+                return null
+            }
+
+            c.moveToFirst()
+            return c
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+    fun activeAlarmDischargingLimitMet(): Cursor? {
+        openDBs()
+
+        try {
+            val c = rdb!!.rawQuery(
+                "SELECT * FROM $ALARM_TABLE_NAME WHERE $KEY_TYPE='discharging_limit_met' AND ENABLED=1 LIMIT 1",
                 null
             )
 
@@ -361,7 +405,7 @@ internal class AlarmDatabase(context: Context?) {
         openDBs()
 
         try {
-            wdb!!.delete(ALARM_TABLE_NAME, KEY_ID + "=" + id, null)
+            wdb!!.delete(ALARM_TABLE_NAME, "$KEY_ID=$id", null)
         } catch (e: Exception) {
         }
     }

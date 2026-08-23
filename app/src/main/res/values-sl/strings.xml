@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">(WL)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Napolnjeno</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Dosežena meja polnjenja</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Dosežena meja praznjenja</string>
   <string name="alarm_type_charge_drops" formatted="false">Baterija pade pod</string>
   <string name="alarm_type_charge_rises" formatted="false">Baterija pride nad</string>
   <string name="alarm_type_temperature_drops" formatted="false">Temperatura pade pod</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperatura pride nad</string>
   <string name="alarm_type_health_failure" formatted="false">Zdravstveni neuspeh</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Se napolni</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Dosežena meja polnjenja</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Dosežena meja praznjenja</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Baterije pade pod...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Baterija pride nad...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura pade pod...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Zdravje ne uspe</string>
 
   <string name="alarm_fully_charged" formatted="false">Baterija je popolnoma napolnjena</string>
+  <string name="alarm_charging_limit_met" formatted="true">Dosežena meja polnjenja: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Dosežena meja praznjenja: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Stanje baterije pod "</string>
   <string name="alarm_charge_rises" formatted="false">"Stanje baterije nad "</string>
   <string name="alarm_temp_drops" formatted="false">"Temperatura baterije je nižja"</string>
@@ -449,7 +455,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Tukaj lahko nadzirajte, kateri pogoji sprožijo alarm.</string>
   <string name="pref_alarm_type" formatted="false">Vrsta alarma</string>
   <string name="pref_alarm_type_summary" formatted="false">Sproži alarm ko baterija:</string>
-  <string name="pref_alarm_type_help" formatted="false">Trenutno obstaja pet vrst alarma, med katerimi lahko izbirate.\n
+  <string name="pref_alarm_type_help" formatted="false">Trenutno je na voljo osem vrst alarma, med katerimi lahko izbirate.\n
+    \n
+    Alarma »Dosežena meja polnjenja« in »Dosežena meja praznjenja« vas bosta obvestila, ko baterija doseže cilj polnjenja ali praznjenja. Ne potrebujeta praga in vedno sledita trenutnim nastavitvam cilja.\n
+    \n
     \n
     Alarm \"Postane popolnoma napolnjen\" vas bo obvestil, ko stanje vaše baterije se spremeni iz \"Polnjenje\" v \"Popolnoma". Zaračunano\". Upoštevajte, da v mnogih napravah to ni nujno enako kot pri 100 % napolnjenosti.\n
     \n

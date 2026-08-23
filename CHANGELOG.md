@@ -6,6 +6,7 @@
 
 - Possibility to set charging and discharging targets for time estimations (#72).
 - Automated detection of charging limits on supported devices.
+- Alarms for charging and discharging limits (#144).
 
 ### Improved
 

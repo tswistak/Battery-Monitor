@@ -113,12 +113,16 @@
   <string name="plugged_wireless" formatted="false">(वायरलेस)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">पूर्णतःउर्जित</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">चार्जिंग सीमा पूरी हुई</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">डिस्चार्जिंग सीमा पूरी हुई</string>
   <string name="alarm_type_charge_drops" formatted="false">चार्ज नीचे चला जाता है</string>
   <string name="alarm_type_charge_rises" formatted="false">चार्ज ऊपर उठ जाता है</string>
   <string name="alarm_type_temperature_drops" formatted="false">तापमान नीचे चला जाता है</string>
   <string name="alarm_type_temperature_rises" formatted="false">तापमान ऊपर बढ़ जाता है</string>
   <string name="alarm_type_health_failure" formatted="false">स्वास्थ्य विफलता</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">फुल चार्ज हो जाता है</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">चार्जिंग सीमा पूरी हुई</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">डिस्चार्जिंग सीमा पूरी हुई</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">चार्ज नीचे चला जाता है...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">चार्ज ऊपर उठता है...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">तापमान नीचे चला गया...</string>
@@ -126,6 +130,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">स्वास्थ्य खराब रहता है</string>
 
   <string name="alarm_fully_charged" formatted="false">बैटरी अब पूरी तरह चार्ज हो गई है</string>
+  <string name="alarm_charging_limit_met" formatted="true">चार्जिंग सीमा पूरी हुई: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">डिस्चार्जिंग सीमा पूरी हुई: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"बैटरी चार्ज नीचे है"</string>
   <string name="alarm_charge_rises" formatted="false">"बैटरी चार्ज ऊपर है"</string>
   <string name="alarm_temp_drops" formatted="false">"बैटरी का तापमान नीचे है"</string>
@@ -427,7 +433,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">यहीं आप कर सकते हैं नियंत्रित करें कि कौन सी स्थितियाँ अलार्म को ट्रिगर करती हैं।</string>
   <string name="pref_alarm_type" formatted="false">अलार्म प्रकार</string>
   <string name="pref_alarm_type_summary" formatted="false">बैटरी होने पर ट्रिगर अलार्म:</string>
-  <string name="pref_alarm_type_help" formatted="false">वर्तमान में पाँच प्रकार हैं अलार्म का जिसे आप चुन सकते हैं.\n
+  <string name="pref_alarm_type_help" formatted="false">वर्तमान में आठ प्रकार के अलार्म हैं जिन्हें आप चुन सकते हैं।\n
+    \n
+    "चार्जिंग सीमा पूरी हुई" और "डिस्चार्जिंग सीमा पूरी हुई" अलार्म आपको तब सूचित करेंगे जब बैटरी अपने चार्जिंग या डिस्चार्जिंग लक्ष्य तक पहुँचती है। इनके लिए कोई सीमा निर्धारित करने की आवश्यकता नहीं है और ये हमेशा वर्तमान लक्ष्य सेटिंग का पालन करते हैं।\n
+    \n
     \n
     "पूरी तरह चार्ज हो जाता है" अलार्म आपको सूचित करेगा जब आपकी बैटरी की स्थिति "चार्जिंग" से "पूरी तरह" में बदल जाती है आरोप लगाया\"। ध्यान दें कि कई उपकरणों पर, यह आवश्यक नहीं है 100% चार्ज पर होने जैसी ही बात।\n
     \n

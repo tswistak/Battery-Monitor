@@ -111,12 +111,16 @@
   <string name="plugged_wireless" formatted="false">لا سلكي</string>
 
   <string name="alarm_type_fully_charged" formatted="false">تم الشحن بالكامل</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">تم بلوغ حد الشحن</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">تم بلوغ حد التفريغ</string>
   <string name="alarm_type_charge_drops" formatted="false">الشحن اسفل من</string>
   <string name="alarm_type_charge_rises" formatted="false">الشحن اعلى من</string>
   <string name="alarm_type_temperature_drops" formatted="false">تنخفض الحرارة عن</string>
   <string name="alarm_type_temperature_rises" formatted="false">ارتفاع درجة الحرارة اعلى من</string>
   <string name="alarm_type_health_failure" formatted="false">حالة سيئة للغاية</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">اصبح كامل الشحن</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">تم بلوغ حد الشحن</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">تم بلوغ حد التفريغ</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">الشحن اسفل من</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">الشحن اعلى من</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">تنخفض الحرارة عن...</string>
@@ -124,6 +128,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">حالة سيئة للغاية</string>
 
   <string name="alarm_fully_charged" formatted="false">تم الشحن بالكالم</string>
+  <string name="alarm_charging_limit_met" formatted="true">تم الوصول إلى حد الشحن: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">تم الوصول إلى حد التفريغ: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"شحن البطاية اسفل من"</string>
   <string name="alarm_charge_rises" formatted="false">"شحن البطاية اعلى من"</string>
   <string name="alarm_temp_drops" formatted="false">"درجة حرارة البطارية أقل من "</string>
@@ -467,7 +473,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">هذا هو المكان الذي يمكنك التحكم في أي ظروف تؤدي إلى التنبيه</string>
   <string name="pref_alarm_type" formatted="false">نوع المنبه</string>
   <string name="pref_alarm_type_summary" formatted="false">تشغيل التنبيه عندما تكون البطارية :</string>
-  <string name="pref_alarm_type_help" formatted="false">هناك خمسة انواع من التنبيه يمكنك الاختيار فيما بينها\n
+  <string name="pref_alarm_type_help" formatted="false">يوجد حاليًا ثمانية أنواع من التنبيهات يمكنك الاختيار من بينها.\n
+    \n
+    سينبهك إنذارا "تم بلوغ حد الشحن" و"تم بلوغ حد التفريغ" عندما تصل البطارية إلى هدف الشحن أو التفريغ. لا يتطلبان حدًا ويتبعان دائمًا إعدادات الهدف الحالية.\n
+    \n
     \n
     عندامتلاء البطارية في هذا الوضع التنبيه سوف ينبهك التطبيق من تغيير حالة البطارية من جاري الشحن الى امتلاء البطارية وهناك الكثير من الاجهزة تشخن عند ربطها بالقابس عندما تكون 100% حالة البطارية\n
     \n

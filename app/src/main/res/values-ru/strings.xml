@@ -113,12 +113,16 @@
   <string name="plugged_wireless" formatted="false">(Беспроводное ЗУ)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">Полностью заряжен</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">Достигнут лимит зарядки</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">Достигнут лимит разрядки</string>
   <string name="alarm_type_charge_drops" formatted="false">Заряд ниже</string>
   <string name="alarm_type_charge_rises" formatted="false">Заряд выше</string>
   <string name="alarm_type_temperature_drops" formatted="false">Температура ниже</string>
   <string name="alarm_type_temperature_rises" formatted="false">Температура выше</string>
   <string name="alarm_type_health_failure" formatted="false">Неисправность</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Становится полностью заряженным</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">Достигнут лимит зарядки</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Достигнут лимит разрядки</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">Заряд ниже...</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">Заряд выше...</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">Температура ниже...</string>
@@ -126,6 +130,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">Неисправность</string>
 
   <string name="alarm_fully_charged" formatted="false">Аккумулятор теперь полностью заряжен</string>
+  <string name="alarm_charging_limit_met" formatted="true">Достигнут лимит зарядки: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">Достигнут лимит разрядки: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"Заряд аккумулятора ниже "</string>
   <string name="alarm_charge_rises" formatted="false">"Заряд аккумулятора выше "</string>
   <string name="alarm_temp_drops" formatted="false">"Температура аккумулятора ниже "</string>
@@ -449,7 +455,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">Здесь настраиваются события, приводящие к появлению предупреждения.</string>
   <string name="pref_alarm_type" formatted="false">Тип предупреждения</string>
   <string name="pref_alarm_type_summary" formatted="false">Предупредить, если аккумулятор:</string>
-  <string name="pref_alarm_type_help" formatted="false">Вы можете выбрать из имеющихся пяти типов предупреждений.\n
+  <string name="pref_alarm_type_help" formatted="false">Вы можете выбрать один из восьми типов предупреждений.\n
+    \n
+    Предупреждения «Достигнут лимит зарядки» и «Достигнут лимит разрядки» сообщат вам, когда аккумулятор достигнет цели зарядки или разрядки. Для них не нужно задавать порог: они всегда следуют текущим настройкам цели.\n
+    \n
     \n
     Предупреждение \"Становится полностью заряженным\" сообщит вам, что состояние аккумулятора меняется с \"Заряжается\" на \"Полностью заряжен\". Учтите, что для многих устройств это не обязательно то же самое, что и 100% заряд.\n
     \n

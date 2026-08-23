@@ -93,6 +93,9 @@ class BatteryInfoService : Service() {
         const val CHAN_ID_MAIN: String = "main_004"
         const val CHAN_ID_LIVE_UPDATE: String = "live_update_001"
         const val CHAN_ID_A_CHARGED: String = "fully_charged"
+        const val CHAN_ID_A_CHARGING_LIMIT: String = "charging_limit_met"
+        const val CHAN_ID_A_DISCHARGING_LIMIT: String = "discharging_limit_met"
+
         const val CHAN_ID_A_CDROP: String = "charge_drops"
         const val CHAN_ID_A_CRISE: String = "charge_rises"
         const val CHAN_ID_A_TDROP: String = "temp_drops"
@@ -102,6 +105,8 @@ class BatteryInfoService : Service() {
 
         val ALARM_CHAN_IDS: Array<String> = arrayOf(
             CHAN_ID_A_CHARGED,
+            CHAN_ID_A_CHARGING_LIMIT,
+            CHAN_ID_A_DISCHARGING_LIMIT,
             CHAN_ID_A_CDROP,
             CHAN_ID_A_CRISE,
             CHAN_ID_A_TDROP,
@@ -282,6 +287,7 @@ class BatteryInfoService : Service() {
     private var mainNotificationForegroundStarted = false
     private val iconResCache = HashMap<String?, Int?>()
     private var predictor: Predictor? = null
+    private val targetAlarmEvaluator = TargetAlarmEvaluator()
 
     private val mHandler = Handler(Looper.getMainLooper())
 
@@ -337,6 +343,8 @@ class BatteryInfoService : Service() {
 
         val alarmChanNames = intArrayOf(
             R.string.alarm_type_fully_charged,
+            R.string.alarm_type_charging_limit_met,
+            R.string.alarm_type_discharging_limit_met,
             R.string.alarm_type_charge_drops,
             R.string.alarm_type_charge_rises,
             R.string.alarm_type_temperature_drops,
@@ -691,7 +699,15 @@ class BatteryInfoService : Service() {
                 SettingsContract.KEY_PREDICTION_TYPE, DisplayStrings.defaultPredictionType
             )!!
         )
-        predictor!!.update(info!!)
+        val resolvedTargets = predictor!!.update(info!!)
+        val targetAlarmResult = targetAlarmEvaluator.evaluate(
+            TargetAlarmUpdate(
+                percent = info!!.percent,
+                plugged = info!!.plugged,
+                chargingTarget = resolvedTargets.charging.percent,
+                dischargingTarget = resolvedTargets.discharging.percent
+            )
+        )
         info!!.prediction.updateRelativeTime()
         info!!.fullRangePrediction.updateRelativeTime()
 
@@ -701,7 +717,7 @@ class BatteryInfoService : Service() {
         prepareNotification()
         startForegroundWithRetry()
 
-        if (alarms!!.anyActiveAlarms()) handleAlarms()
+        if (alarms!!.anyActiveAlarms()) handleAlarms(targetAlarmResult, resolvedTargets)
 
         updateWidgets(info)
 
@@ -903,7 +919,7 @@ class BatteryInfoService : Service() {
                 NotificationManagerCompat.from(this).canPostPromotedNotifications()
             Log.d(
                 LOG_TAG,
-                ("Live Update: promotable=" + promotable + ", promotionAllowed=" + promotionAllowed)
+                ("Live Update: promotable=$promotable, promotionAllowed=$promotionAllowed")
             )
         }
 
@@ -1102,7 +1118,7 @@ class BatteryInfoService : Service() {
                 }
             } else line = DisplayStrings.nMinutesLong(predicted.minutes)
 
-            line += if (info!!.prediction.whatHappened == BatteryInfo.Prediction.UNTIL_CHARGED) res!!.getString(
+            line += if (info!!.prediction.whatHappened == BatteryInfo.Prediction.UNTIL_CHARGED) res.getString(
                 R.string.notification_until_charged
             )
             else res.getString(R.string.notification_until_drained)
@@ -1308,7 +1324,9 @@ class BatteryInfoService : Service() {
         }
     }
 
-    private fun handleAlarms() {
+    private fun handleAlarms(
+        targetAlarmResult: TargetAlarmResult, resolvedTargets: ResolvedPredictionTargets
+    ) {
         var c: Cursor?
         var nb: Notification.Builder?
 
@@ -1319,6 +1337,38 @@ class BatteryInfoService : Service() {
             if (c != null) {
                 nb = parseAlarmCursor(c)
                 nb.setContentTitle(DisplayStrings.alarmFullyCharged).setChannelId(CHAN_ID_A_CHARGED)
+
+                nb.setVisibility(Notification.VISIBILITY_PUBLIC)
+
+                notifyAlarm(nb.build())
+                c.close()
+            }
+        }
+
+        if (targetAlarmResult.chargingLimitReached) {
+            c = alarms!!.activeAlarmChargingLimitMet()
+            if (c != null) {
+                nb = parseAlarmCursor(c)
+                nb.setContentTitle(
+                    getString(R.string.alarm_charging_limit_met, resolvedTargets.charging.percent)
+                ).setChannelId(CHAN_ID_A_CHARGING_LIMIT)
+
+                nb.setVisibility(Notification.VISIBILITY_PUBLIC)
+
+                notifyAlarm(nb.build())
+                c.close()
+            }
+        }
+
+        if (targetAlarmResult.dischargingLimitReached) {
+            c = alarms!!.activeAlarmDischargingLimitMet()
+            if (c != null) {
+                nb = parseAlarmCursor(c)
+                nb.setContentTitle(
+                    getString(
+                        R.string.alarm_discharging_limit_met, resolvedTargets.discharging.percent
+                    )
+                ).setChannelId(CHAN_ID_A_DISCHARGING_LIMIT)
 
                 nb.setVisibility(Notification.VISIBILITY_PUBLIC)
 

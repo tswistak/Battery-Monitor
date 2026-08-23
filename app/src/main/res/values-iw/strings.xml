@@ -109,12 +109,16 @@
   <string name="plugged_wireless" formatted="false">(אלחוטי)</string>
 
   <string name="alarm_type_fully_charged" formatted="false">טעונה במלואה</string>
+  <string name="alarm_type_charging_limit_met" formatted="false">הושגה מגבלת הטעינה</string>
+  <string name="alarm_type_discharging_limit_met" formatted="false">הושגה מגבלת הפריקה</string>
   <string name="alarm_type_charge_drops" formatted="false">המטען נמוך מ-</string>
   <string name="alarm_type_charge_rises" formatted="false">המטען גבוה מ-</string>
   <string name="alarm_type_temperature_drops" formatted="false">הטמפרטורה יורדת מתחת</string>
   <string name="alarm_type_temperature_rises" formatted="false">הטמפרטורה גבוהה מ-</string>
   <string name="alarm_type_health_failure" formatted="false">כשל בריאותי</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">טעינה מלאה הושלמה</string>
+  <string name="alarm_type_entry_charging_limit_met" formatted="false">הושגה מגבלת הטעינה</string>
+  <string name="alarm_type_entry_discharging_limit_met" formatted="false">הושגה מגבלת הפריקה</string>
   <string name="alarm_type_entry_charge_drops" formatted="false">המטען פחות מ-</string>
   <string name="alarm_type_entry_charge_rises" formatted="false">המטען יותר מ-</string>
   <string name="alarm_type_entry_temperature_drops" formatted="false">הטמפרטורה יורדת מתחת...</string>
@@ -122,6 +126,8 @@
   <string name="alarm_type_entry_health_failure" formatted="false">בריאות לא-טובה</string>
 
   <string name="alarm_fully_charged" formatted="false">הסוללה טעונה כעת במלואה</string>
+  <string name="alarm_charging_limit_met" formatted="true">הושגה מגבלת הטעינה: %1$d%%</string>
+  <string name="alarm_discharging_limit_met" formatted="true">הושגה מגבלת הפריקה: %1$d%%</string>
   <string name="alarm_charge_drops" formatted="false">"מטען הסוללה מתחת ל-"</string>
   <string name="alarm_charge_rises" formatted="false">"מטען הסוללה מעל "</string>
   <string name="alarm_temp_drops" formatted="false">"טמפרטורת הסוללה נמוכה יותר"</string>
@@ -433,7 +439,10 @@
   <string name="pref_cat_alarm_conditions_help" formatted="false">זה המקום שבו אתה יכול לשלוט באילו תנאים מפעילים את האזעקה.</string>
   <string name="pref_alarm_type" formatted="false">סוג אזעקה</string>
   <string name="pref_alarm_type_summary" formatted="false">הפעל אזעקה כאשר הסוללה:</string>
-  <string name="pref_alarm_type_help" formatted="false">ישנם כיום חמישה סוגים של אזעקה שאתה יכול לבחור מ.\n
+  <string name="pref_alarm_type_help" formatted="false">ישנם כיום שמונה סוגים של אזעקות שניתן לבחור ביניהם.\n
+    \n
+    האזעקות „הושגה מגבלת הטעינה” ו„הושגה מגבלת הפריקה” יתריעו כאשר הסוללה מגיעה ליעד הטעינה או הפריקה שלה. הן אינן דורשות סף ותמיד פועלות לפי הגדרות היעד הנוכחיות.\n
+    \n
     \n
     אזעקת \"הופך לטעון במלואו\" תודיע לך כאשר סטטוס הסוללה שלך משתנה מ-\"טעינה\" ל\"ללא עלות". טעון\". שים לב שבמכשירים רבים, זה לא בהכרח אותו דבר כמו להיות ב-100% טעינה.\n
     \n
