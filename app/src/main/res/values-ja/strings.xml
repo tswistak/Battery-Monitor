@@ -238,13 +238,11 @@
   <string name="alarm_chan_settings_b" formatted="false">このアラーム種類を管理</string>
 
   <string name="notification_settings" formatted="false">メイン通知</string>
-  <string name="notification_settings_summary" formatted="false">メイン通知を設定します</string>
+  <string name="notification_settings_summary" formatted="false">通知内容、ステータスバーアイコン、ライブ更新チップを設定します。</string>
   <string name="notification_settings_help" formatted="false">プルダウン通知に表示される内容を設定し、その外観をコントロールすることができます。</string>
   <string name="status_bar_icon_settings" formatted="false">ステータスバー アイコン</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">アイコンの表示内容を選択</string>
   <string name="status_bar_icon_settings_help" formatted="false">通知アイコンにバッテリー残量を表示するか温度を表示するか、アイコン内に単位記号を表示するか、また充電時に専用アイコンを使うかを選択します。Android 16 以降では、OS の種類によってはステータスバーアイコンが機能しない場合があります。</string>
   <string name="status_bar_chip_settings" formatted="false">ステータスバーチップ</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">ライブ更新チップの表示内容を設定</string>
   <string name="status_bar_chip_settings_help" formatted="false">ライブ更新では、ステータスバーチップの表示内容、切り替え間隔、充電絵文字の表示有無を設定できます。</string>
   <string name="current_state_settings_summary" formatted="false">「現在の情報」画面の設定</string>
   <string name="current_state_settings_help" formatted="false">「現在の情報」画面に表示する内容を設定します。バッテリー電流のオプションは、ほかのバッテリー情報と一緒に表示されるリアルタイム値を制御します。</string>
@@ -254,9 +252,6 @@
   <string name="other_settings" formatted="false">一般</string>
   <string name="other_settings_summary" formatted="false">アプリの全般的な動作と日常的な設定を構成します。</string>
   <string name="other_settings_help" formatted="false">Battery Monitor を日常の使い方に合わせるための設定です。アプリの全般的な動作や、端末の使い方に自然になじませるための設定を扱います。</string>
-  <string name="units_formatting_settings" formatted="false">単位と表示形式</string>
-  <string name="units_formatting_settings_summary" formatted="false">アプリ全体でバッテリーデータの表示に使用する単位と形式を選択します。</string>
-  <string name="units_formatting_settings_help" formatted="false">バッテリー情報を見慣れた読みやすい形にするための設定です。選択内容は、Battery Monitor で関連する値や期間が表示されるすべての場所に一貫して適用されます。</string>
   <string name="advanced_settings" formatted="false">詳細設定</string>
   <string name="advanced_settings_summary" formatted="false">特殊な用途向けの追加コントロールで Battery Monitor を細かく調整します。</string>
   <string name="advanced_settings_help" formatted="false">日常的な設定よりも Battery Monitor の動作を細かく制御したい場合に使用します。初期設定はほとんどのユーザーに適していますが、追加の調整によって特定の監視ニーズに合わせることができます。</string>
@@ -286,7 +281,6 @@
   <string name="pref_manage_main_channel" formatted="false">メインチャンネルを管理</string>
 
   <string name="pref_cat_notification_content" formatted="false">コンテンツ</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">ステータスバーチップ</string>
   <string name="pref_live_update_display" formatted="false">ライブアップデートを表示</string>
   <string name="pref_live_update_display_summary" formatted="false">ステータスバーに表示:</string>
   <string name="pref_live_update_display_help" formatted="false">Android 16+ のライブアップデート チップをステータスバーに表示するタイミングを選択します。</string>
@@ -322,7 +316,6 @@
 
   <string name="custom" formatted="false">カスタム...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">通知アイコン</string>
   <string name="pref_icon_content" formatted="false">アイコン内容</string>
   <string name="pref_icon_content_help" formatted="false">ステータスバーアイコンにバッテリー残量を表示するか、バッテリー温度を表示するかを選択します。温度は選択した単位に従います。</string>
   <string name="pref_show_icon_unit" formatted="false">単位記号を表示</string>
@@ -356,7 +349,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">1～3600 の値を入力してください。</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d 秒</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">充電中インジケーター</string>
   <string name="pref_indicate_charging" formatted="false">充電中を示す</string>
   <string name="pref_indicate_charging_summary" formatted="false">充電中を示すアイコンを使用しますか?</string>
   <string name="pref_indicate_charging_help" formatted="false">充電アイコンでは数字の下に稲妻を表示できます。充電中と放電中で同じアイコンにしたい場合は、この設定を無効にしてください。</string>
@@ -369,9 +361,7 @@
   <string name="pref_max_log_age_summary" formatted="false">次より古いログを削除します:</string>
   <string name="pref_max_log_age_help" formatted="false">ロギングが有効な場合、デバイスを接続するたびに、この値より古いログが削除されます。手動で消去するまでログを保持するには「削除しない」を選択してください。</string>
 
-  <string name="pref_cat_units" formatted="false">単位</string>
   <string name="pref_temperature_unit" formatted="false">温度の単位</string>
-  <string name="pref_cat_formatting" formatted="false">表示形式</string>
   <string name="pref_temperature_unit_help" formatted="false">温度を摂氏または華氏のどちらで表示するかを選択します。</string>
 
   <string name="pref_cat_autostart" formatted="false">自動開始</string>
@@ -397,7 +387,7 @@
     \n
     最終的に、長期的な平均の使用状況のみに基づいて、 予測することができます。</string>
 
-  <string name="pref_cat_language" formatted="false">言語</string>
+  <string name="pref_cat_language" formatted="false">言語と表示形式</string>
   <string name="pref_change_app_language" formatted="false">アプリの言語</string>
   <string name="pref_change_app_language_help" formatted="false">Battery Monitor で使用する言語を選択します。システムのデフォルトでは端末の言語が使用されます。</string>
   <string name="pref_long_duration_format" formatted="false">長時間の表示形式</string>
@@ -534,6 +524,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$sの順序を変更</string>
 
   <string name="pref_backup_restore" formatted="false">バックアップと復元</string>
+  <string name="backup_restore_settings_summary" formatted="false">アプリの設定とバッテリーデータをバックアップ、復元、転送します。</string>
   <string name="pref_auto_log_export" formatted="false">ログの自動エクスポート</string>
   <string name="pref_set_auto_log_export" formatted="false">ログの自動エクスポートを設定</string>
   <string name="pref_edit_auto_log_export" formatted="false">ログの自動エクスポートを編集</string>

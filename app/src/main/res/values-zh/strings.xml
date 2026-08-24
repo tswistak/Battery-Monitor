@@ -237,13 +237,11 @@
   <string name="alarm_chan_settings_b" formatted="false">管理此警報類型</string>
 
   <string name="notification_settings" formatted="false">主要通知</string>
-  <string name="notification_settings_summary" formatted="false">配置主要通知</string>
+  <string name="notification_settings_summary" formatted="false">設定通知內容、狀態列圖示和即時更新晶片。</string>
   <string name="notification_settings_help" formatted="false">您可以設定在下拉通知中顯示哪些內容。</string>
   <string name="status_bar_icon_settings" formatted="false">狀態列圖示</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">選擇圖示內容</string>
   <string name="status_bar_icon_settings_help" formatted="false">選擇通知圖示要顯示電池百分比還是溫度、是否在圖示中顯示單位符號，以及充電時是否使用專用圖示。從 Android 16 開始，狀態列圖示可能無法在所有作業系統版本上正常運作。</string>
   <string name="status_bar_chip_settings" formatted="false">狀態列晶片</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">配置即時更新晶片內容</string>
   <string name="status_bar_chip_settings_help" formatted="false">在即時更新中，您可以設定狀態列晶片顯示的內容、切換間隔，以及是否顯示充電表情符號。</string>
   <string name="current_state_settings_summary" formatted="false">目前狀況畫面設定</string>
   <string name="current_state_settings_help" formatted="false">設定「目前狀況」畫面上顯示的資訊。電池電流選項控制與其他電池詳細資料一同顯示的即時讀數。</string>
@@ -253,9 +251,6 @@
   <string name="other_settings" formatted="false">一般</string>
   <string name="other_settings_summary" formatted="false">設定應用程式的一般行為與日常偏好。</string>
   <string name="other_settings_help" formatted="false">使用這些設定讓 Battery Monitor 更符合您的日常使用方式。這些設定涵蓋應用程式的一般行為與偏好，協助應用程式自然融入您使用裝置的習慣。</string>
-  <string name="units_formatting_settings" formatted="false">單位與格式</string>
-  <string name="units_formatting_settings_summary" formatted="false">選擇整個應用程式中顯示電池資料所用的單位與格式。</string>
-  <string name="units_formatting_settings_help" formatted="false">使用這些設定讓電池資訊保持熟悉且易於閱讀。您的選擇會一致套用至 Battery Monitor 中顯示相關數值與時間長度的所有位置。</string>
   <string name="advanced_settings" formatted="false">進階</string>
   <string name="advanced_settings_summary" formatted="false">使用適合專門用途的額外控制來微調 Battery Monitor。</string>
   <string name="advanced_settings_help" formatted="false">當您希望對 Battery Monitor 的運作方式進行超出日常偏好的更多控制時，請使用這些設定。預設值適合大多數使用者，而額外調整可協助應用程式更符合特定的監控需求。</string>
@@ -285,7 +280,6 @@
   <string name="pref_manage_main_channel" formatted="false">管理主通路</string>
 
   <string name="pref_cat_notification_content" formatted="false">內容</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">狀態列晶片</string>
   <string name="pref_live_update_display" formatted="false">显示实时更新</string>
   <string name="pref_live_update_display_summary" formatted="false">在状态栏显示:</string>
   <string name="pref_live_update_display_help" formatted="false">选择在 Android 16+ 中何时在状态栏显示实时更新胶囊。</string>
@@ -321,7 +315,6 @@
 
   <string name="custom" formatted="false">自訂...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">通知圖示</string>
   <string name="pref_icon_content" formatted="false">圖示內容</string>
   <string name="pref_icon_content_help" formatted="false">選擇狀態列圖示是否顯示電池百分比或 電池溫度。溫度遵循您選擇的單位。</string>
   <string name="pref_show_icon_unit" formatted="false">顯示單位符號</string>
@@ -355,7 +348,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">請輸入 1 到 3600 之間的值。</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d 秒</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">充電指示燈</string>
   <string name="pref_indicate_charging" formatted="false">指示正在充電</string>
   <string name="pref_indicate_charging_summary" formatted="false">更改圖示以指示充電時？</string>
   <string name="pref_indicate_charging_help" formatted="false">充電圖示可以在數字下方顯示閃電。若您希望充電和放電時使用相同圖示，請停用此設定。</string>
@@ -368,9 +360,7 @@
   <string name="pref_max_log_age_summary" formatted="false">刪除早於以下時間的記錄：</string>
   <string name="pref_max_log_age_help" formatted="false">啟用歷史記錄後，應用會在裝置接入電源時清理超過所選保留時間的記錄；選擇「永不刪除」則會保留記錄，直到您手動清除。</string>
 
-  <string name="pref_cat_units" formatted="false">單位</string>
   <string name="pref_temperature_unit" formatted="false">溫度顯示單位</string>
-  <string name="pref_cat_formatting" formatted="false">格式</string>
   <string name="pref_temperature_unit_help" formatted="false">選擇以攝氏或華氏顯示溫度。</string>
 
   <string name="pref_cat_autostart" formatted="false">自動啟動</string>
@@ -397,7 +387,7 @@
     \n
     最後，您可以僅根據您的情況進行預測 長期平均使用情況。</string>
 
-  <string name="pref_cat_language" formatted="false">語言</string>
+  <string name="pref_cat_language" formatted="false">語言與格式</string>
   <string name="pref_change_app_language" formatted="false">應用程式語言</string>
   <string name="pref_change_app_language_help" formatted="false">選擇 Battery Monitor 使用的語言。系統預設值會跟隨裝置語言。</string>
   <string name="pref_long_duration_format" formatted="false">長時間格式</string>
@@ -534,6 +524,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">調整「%1$s」的順序</string>
 
   <string name="pref_backup_restore" formatted="false">備份與還原</string>
+  <string name="backup_restore_settings_summary" formatted="false">備份、還原及轉移應用程式設定和電池資料。</string>
   <string name="pref_auto_log_export" formatted="false">自動匯出記錄</string>
   <string name="pref_set_auto_log_export" formatted="false">設定自動匯出記錄</string>
   <string name="pref_edit_auto_log_export" formatted="false">編輯自動匯出記錄</string>

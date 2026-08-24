@@ -280,13 +280,11 @@
   <string name="alarm_chan_settings_b" formatted="false">إدارة هذا النوع من الإنذارات</string>
 
   <string name="notification_settings" formatted="false">الاشعارات الرئيسية</string>
-  <string name="notification_settings_summary" formatted="false">اعدادات الاشعارات الرئيسية</string>
+  <string name="notification_settings_summary" formatted="false">هيّئ محتوى الإشعار وأيقونة شريط الحالة وشريحة التحديث المباشر.</string>
   <string name="notification_settings_help" formatted="false">يمكنك تكوين المحتوى الذي تود رؤيته في قائمة الاشعارات والسيطرة على مظهره</string>
   <string name="status_bar_icon_settings" formatted="false">ايقونة شريط الحالة</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">اختر محتوى الأيقونة</string>
   <string name="status_bar_icon_settings_help" formatted="false">اختر ما إذا كانت أيقونة الإشعار تعرض نسبة البطارية أو درجة الحرارة، وما إذا كان رمز الوحدة يظهر داخل الأيقونة، وما إذا كان الشحن يستخدم أيقونة مخصصة. ابتداءً من Android 16، قد لا تعمل أيقونة شريط الحالة على جميع إصدارات نظام التشغيل.</string>
   <string name="status_bar_chip_settings" formatted="false">شريحة شريط الحالة</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">تهيئة محتوى شريحة Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">مع Live Updates يمكنك تهيئة ما تعرضه شريحة شريط الحالة ومعدل تغيير محتواها وما إذا كان سيتم عرض رمز الشحن التعبيري.</string>
   <string name="current_state_settings_summary" formatted="false">إعدادات شاشة المعلومات الحالية</string>
   <string name="current_state_settings_help" formatted="false">اضبط المعلومات المعروضة على شاشة المعلومات الحالية. تتحكم خيارات تيار البطارية في القراءة المباشرة المعروضة مع تفاصيل البطارية الأخرى.</string>
@@ -296,9 +294,6 @@
   <string name="other_settings" formatted="false">عام</string>
   <string name="other_settings_summary" formatted="false">اضبط السلوك العام للتطبيق وتفضيلاته اليومية.</string>
   <string name="other_settings_help" formatted="false">استخدم هذه الإعدادات لتكييف Battery Monitor مع استخدامك اليومي. وهي تشمل السلوك العام للتطبيق والتفضيلات التي تساعده على الانسجام بشكل طبيعي مع طريقة استخدامك لجهازك.</string>
-  <string name="units_formatting_settings" formatted="false">الوحدات والتنسيق</string>
-  <string name="units_formatting_settings_summary" formatted="false">اختر الوحدات والتنسيقات المستخدمة لعرض بيانات البطارية في التطبيق.</string>
-  <string name="units_formatting_settings_help" formatted="false">استخدم هذه الإعدادات لجعل معلومات البطارية مألوفة وسهلة القراءة. تُطبّق اختياراتك بصورة متسقة أينما ظهرت القيم والمدد ذات الصلة في Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">متقدم</string>
   <string name="advanced_settings_summary" formatted="false">خصّص Battery Monitor بدقة باستخدام عناصر تحكم إضافية لحالات الاستخدام المتخصصة.</string>
   <string name="advanced_settings_help" formatted="false">استخدم هذه الإعدادات عندما تريد تحكمًا أكبر في عمل Battery Monitor يتجاوز التفضيلات اليومية. تناسب القيم الافتراضية معظم المستخدمين، بينما تساعد التعديلات الإضافية على تكييف التطبيق مع احتياجات مراقبة أكثر تحديدًا.</string>
@@ -328,7 +323,6 @@
   <string name="pref_manage_main_channel" formatted="false">إدارة القناة الرئيسية</string>
 
   <string name="pref_cat_notification_content" formatted="false">المحتوى</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">شريحة شريط الحالة</string>
   <string name="pref_live_update_display" formatted="false">عرض التحديث المباشر</string>
   <string name="pref_live_update_display_summary" formatted="false">إظهار في شريط الحالة:</string>
   <string name="pref_live_update_display_help" formatted="false">اختر متى يجب عرض شريحة التحديث المباشر في Android 16+ في شريط الحالة.</string>
@@ -364,7 +358,6 @@
 
   <string name="custom" formatted="false">مخصص...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">أيقونة الإشعار</string>
   <string name="pref_icon_content" formatted="false">محتوى الأيقونة</string>
   <string name="pref_icon_content_help" formatted="false">اختر ما إذا كانت أيقونة شريط الحالة تعرض نسبة البطارية أو درجة حرارتها. ستتبع الحرارة الوحدة التي اخترتها.</string>
   <string name="pref_show_icon_unit" formatted="false">إظهار رمز الوحدة</string>
@@ -398,7 +391,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">أدخل قيمة من 1 إلى 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d ثانية</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">مؤشر الشحن</string>
   <string name="pref_indicate_charging" formatted="false">اشارة الى الشحن</string>
   <string name="pref_indicate_charging_summary" formatted="false">تغيير لايقونة للتنبيه عند الشحن؟</string>
   <string name="pref_indicate_charging_help" formatted="false">يمكن لأيقونة الشحن إظهار رمز برق أسفل الرقم. عطّل هذا الإعداد إذا كنت تفضّل نفس الأيقونة أثناء الشحن والتفريغ.</string>
@@ -411,9 +403,7 @@
   <string name="pref_max_log_age_summary" formatted="false">حذف السجلات القديمة بعد:</string>
   <string name="pref_max_log_age_help" formatted="false">إذا كان التسجيل مفعلاً، فكلما وصلت جهازك بالطاقة ستُحذف السجلات الأقدم من هذا الخيار. اختر عدم الحذف للاحتفاظ بالسجلات حتى تمسحها يدويًا.</string>
 
-  <string name="pref_cat_units" formatted="false">الوحدات</string>
   <string name="pref_temperature_unit" formatted="false">وحدة درجة الحرارة</string>
-  <string name="pref_cat_formatting" formatted="false">التنسيق</string>
   <string name="pref_temperature_unit_help" formatted="false">اختر عرض درجات الحرارة بالدرجة المئوية أو الفهرنهايت.</string>
 
   <string name="pref_cat_autostart" formatted="false">تشغيل تلقائي</string>
@@ -440,7 +430,7 @@
     \n
     واخيرا يمكن التنبؤ على استخدان عادي بشكل طويل المدا</string>
 
-  <string name="pref_cat_language" formatted="false">اللغة</string>
+  <string name="pref_cat_language" formatted="false">اللغة والتنسيق</string>
   <string name="pref_change_app_language" formatted="false">لغة التطبيق</string>
   <string name="pref_change_app_language_help" formatted="false">حدد اللغة التي يستخدمها Battery Monitor. يتبع خيار النظام الافتراضي لغة جهازك.</string>
   <string name="pref_long_duration_format" formatted="false">تنسيق المدد الطويلة</string>
@@ -577,6 +567,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">تغيير ترتيب %1$s</string>
 
   <string name="pref_backup_restore" formatted="false">النسخ الاحتياطي والاستعادة</string>
+  <string name="backup_restore_settings_summary" formatted="false">أنشئ نسخة احتياطية من إعدادات تطبيقك وبيانات البطارية واستعدها وانقلها.</string>
   <string name="pref_auto_log_export" formatted="false">التصدير التلقائي للسجلات</string>
   <string name="pref_set_auto_log_export" formatted="false">إعداد التصدير التلقائي للسجلات</string>
   <string name="pref_edit_auto_log_export" formatted="false">تعديل التصدير التلقائي للسجلات</string>

@@ -248,13 +248,11 @@
   <string name="alarm_chan_settings_b" formatted="false">נהל את סוג האזעקה הזה</string>
 
   <string name="notification_settings" formatted="false">הודעה ראשית</string>
-  <string name="notification_settings_summary" formatted="false">הגדר את ההודעה הראשית</string>
+  <string name="notification_settings_summary" formatted="false">הגדר את תוכן ההתראה, את סמל שורת המצב ואת שבב העדכון החי.</string>
   <string name="notification_settings_help" formatted="false">אתה יכול להגדיר איזה תוכן יוצג בהודעה הנפתחת.</string>
   <string name="status_bar_icon_settings" formatted="false">סמל שורת המצב</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">בחר את תוכן הסמל</string>
   <string name="status_bar_icon_settings_help" formatted="false">בחר אם סמל ההתראה יציג את אחוז הסוללה או את הטמפרטורה, אם סמל היחידה יוצג בתוך הסמל, ואם לטעינה יהיה סמל ייעודי. החל מ-Android 16, ייתכן שסמל שורת המצב לא יפעל בכל גרסאות מערכת ההפעלה.</string>
   <string name="status_bar_chip_settings" formatted="false">שבב שורת המצב</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">הגדר את תוכן השבב של עדכונים חיים</string>
   <string name="status_bar_chip_settings_help" formatted="false">ניתן לקבוע מה יוצג בשבב שורת המצב, באיזו תדירות התוכן יתחלף והאם להציג סימון טעינה.</string>
   <string name="current_state_settings_summary" formatted="false">הגדרות למסך המידע הנוכחי</string>
   <string name="current_state_settings_help" formatted="false">הגדר את המידע שמוצג במסך המידע הנוכחי. אפשרויות זרם הסוללה שולטות בקריאה החיה שמוצגת לצד שאר פרטי הסוללה.</string>
@@ -264,9 +262,6 @@
   <string name="other_settings" formatted="false">כללי</string>
   <string name="other_settings_summary" formatted="false">הגדירו את ההתנהגות הכללית וההעדפות היומיומיות של היישום.</string>
   <string name="other_settings_help" formatted="false">השתמשו בהגדרות האלה כדי להתאים את Battery Monitor לשימוש היומיומי שלכם. הן עוסקות בהתנהגות הכללית ובהעדפות שעוזרות ליישום להשתלב באופן טבעי בדרך שבה אתם משתמשים במכשיר.</string>
-  <string name="units_formatting_settings" formatted="false">יחידות ועיצוב</string>
-  <string name="units_formatting_settings_summary" formatted="false">בחרו את היחידות והתבניות להצגת נתוני הסוללה ברחבי היישום.</string>
-  <string name="units_formatting_settings_help" formatted="false">השתמשו בהגדרות האלה כדי שמידע הסוללה יהיה מוכר וקל לקריאה. הבחירות שלכם מיושמות באופן עקבי בכל מקום שבו הערכים ומשכי הזמן הרלוונטיים מופיעים ב־Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">מתקדם</string>
   <string name="advanced_settings_summary" formatted="false">כוונו את Battery Monitor בעזרת פקדים נוספים לשימושים מיוחדים.</string>
   <string name="advanced_settings_help" formatted="false">השתמשו בהגדרות האלה כשתרצו שליטה רבה יותר באופן הפעולה של Battery Monitor מעבר להעדפות היומיומיות. ברירות המחדל מתאימות לרוב המשתמשים, והתאמות נוספות יכולות להתאים את היישום טוב יותר לצורכי ניטור מסוימים.</string>
@@ -296,7 +291,6 @@
   <string name="pref_manage_main_channel" formatted="false">ניהול הערוץ הראשי</string>
 
   <string name="pref_cat_notification_content" formatted="false">תוכן</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">שבב שורת המצב</string>
   <string name="pref_live_update_display" formatted="false">הצג עדכון חי</string>
   <string name="pref_live_update_display_summary" formatted="false">הצג בשורת המצב:</string>
   <string name="pref_live_update_display_help" formatted="false">בחר מתי שבב העדכון החי של Android 16+ יוצג בשורת המצב.</string>
@@ -332,7 +326,6 @@
 
   <string name="custom" formatted="false">מותאם אישית...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">סמל התראה</string>
   <string name="pref_icon_content" formatted="false">תוכן סמל</string>
   <string name="pref_icon_content_help" formatted="false">בחר אם סמל שורת המצב יציג את אחוז הסוללה או טמפרטורת הסוללה. הטמפרטורה עוקבת אחר היחידה שבחרת.</string>
   <string name="pref_show_icon_unit" formatted="false">הצג סמל יחידה</string>
@@ -366,7 +359,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">יש להזין ערך בין 1 ל-3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d שניות</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">מחוון טעינה</string>
   <string name="pref_indicate_charging" formatted="false">ציין טעינה</string>
   <string name="pref_indicate_charging_summary" formatted="false">לשנות את הסמל לציון בעת ​​טעינה?</string>
   <string name="pref_indicate_charging_help" formatted="false">סמל הטעינה יכול להציג ברק מתחת למספר. השבת הגדרה זו אם אתה מעדיף את אותו סמל בזמן טעינה ופריקה.</string>
@@ -379,9 +371,7 @@
   <string name="pref_max_log_age_summary" formatted="false">מחק יומנים ישנים יותר מ:</string>
   <string name="pref_max_log_age_help" formatted="false">אם הרישום מופעל, בכל פעם שתחבר את המכשיר יימחקו רישומים ישנים יותר מערך זה. בחר לעולם לא למחוק כדי לשמור אותם עד שתמחק אותם ידנית.</string>
 
-  <string name="pref_cat_units" formatted="false">יחידות</string>
   <string name="pref_temperature_unit" formatted="false">יחידת טמפרטורה</string>
-  <string name="pref_cat_formatting" formatted="false">עיצוב</string>
   <string name="pref_temperature_unit_help" formatted="false">בחרו אם להציג טמפרטורות בצלזיוס או בפרנהייט.</string>
 
   <string name="pref_cat_autostart" formatted="false">הפעלה אוטומטית</string>
@@ -406,7 +396,7 @@
     \n
     לבסוף, אתה יכול לקבל את התחזית מבוססת אך ורק על שלך שימוש ממוצע לטווח ארוך.</string>
 
-  <string name="pref_cat_language" formatted="false">שָׂפָה</string>
+  <string name="pref_cat_language" formatted="false">שפה ועיצוב</string>
   <string name="pref_change_app_language" formatted="false">שפת האפליקציה</string>
   <string name="pref_change_app_language_help" formatted="false">בחרו את השפה שבה Battery Monitor משתמש. ברירת המחדל של המערכת תואמת לשפת המכשיר.</string>
   <string name="pref_long_duration_format" formatted="false">תבנית למשך זמן ארוך</string>
@@ -543,6 +533,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">שינוי הסדר של %1$s</string>
 
   <string name="pref_backup_restore" formatted="false">גיבוי ושחזור</string>
+  <string name="backup_restore_settings_summary" formatted="false">גבה, שחזר והעבר את הגדרות היישום ונתוני הסוללה.</string>
   <string name="pref_auto_log_export" formatted="false">ייצוא יומנים אוטומטי</string>
   <string name="pref_set_auto_log_export" formatted="false">הגדרת ייצוא יומנים אוטומטי</string>
   <string name="pref_edit_auto_log_export" formatted="false">עריכת ייצוא יומנים אוטומטי</string>

@@ -52,16 +52,6 @@ class SettingsHelpActivity : AppCompatActivity() {
                 setWindowSubtitle(res!!.getString(R.string.notification_settings))
             }
 
-            SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS -> {
-                setContentView(R.layout.status_bar_icon_settings_help)
-                setWindowSubtitle(res!!.getString(R.string.status_bar_icon_settings))
-            }
-
-            SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS -> {
-                setContentView(R.layout.status_bar_chip_settings_help)
-                setWindowSubtitle(res!!.getString(R.string.status_bar_chip_settings))
-            }
-
             SettingsContract.KEY_CURRENT_STATE_SETTINGS -> {
                 setContentView(R.layout.current_state_settings_help)
                 setWindowSubtitle(res!!.getString(R.string.tab_current_info))
@@ -72,11 +62,6 @@ class SettingsHelpActivity : AppCompatActivity() {
                 setWindowSubtitle(res!!.getString(R.string.other_settings))
 
                 hasLinks = intArrayOf()
-            }
-
-            SettingsContract.KEY_UNITS_FORMATTING_SETTINGS -> {
-                setContentView(R.layout.units_formatting_settings_help)
-                setWindowSubtitle(res!!.getString(R.string.units_formatting_settings))
             }
 
             SettingsContract.KEY_TIME_ESTIMATES_SETTINGS -> {

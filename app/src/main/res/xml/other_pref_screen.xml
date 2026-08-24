@@ -7,6 +7,23 @@
             app:key="change_app_language"
             app:singleLineTitle="false"
             app:title="@string/pref_change_app_language" />
+
+        <ListPreference
+            android:defaultValue="@string/default_temperature_unit"
+            android:entries="@array/temperature_unit_entries"
+            android:entryValues="@array/temperature_unit_values"
+            app:key="temperature_unit"
+            app:singleLineTitle="false"
+            app:title="@string/pref_temperature_unit" />
+
+        <ListPreference
+            android:defaultValue="days_and_hours"
+            android:entries="@array/long_duration_format_entries"
+            android:entryValues="@array/long_duration_format_values"
+            app:key="long_duration_format"
+            app:singleLineTitle="false"
+            app:summary="@string/pref_long_duration_format_help"
+            app:title="@string/pref_long_duration_format" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/pref_cat_autostart">

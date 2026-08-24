@@ -34,6 +34,22 @@
             style="@style/help_text"
             android:text="@string/pref_change_app_language_help" />
 
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/pref_temperature_unit" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/pref_temperature_unit_help" />
+
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/pref_long_duration_format" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/pref_long_duration_format_help" />
+
         <View style="@style/help_cat_pre_margin" />
 
         <TextView

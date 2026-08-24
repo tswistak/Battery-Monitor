@@ -5,11 +5,6 @@
         app:title="@string/other_settings" />
 
     <Preference
-        app:key="units_formatting_settings"
-        app:summary="@string/units_formatting_settings_summary"
-        app:title="@string/units_formatting_settings" />
-
-    <Preference
         app:key="time_estimates_settings"
         app:summary="@string/time_estimates_settings_summary"
         app:title="@string/time_estimates_settings" />
@@ -25,22 +20,13 @@
         app:title="@string/notification_settings" />
 
     <Preference
-        app:key="status_bar_icon_settings"
-        app:summary="@string/status_bar_icon_settings_summary"
-        app:title="@string/status_bar_icon_settings" />
-
-    <Preference
-        app:key="status_bar_chip_settings"
-        app:summary="@string/status_bar_chip_settings_summary"
-        app:title="@string/status_bar_chip_settings" />
-
-    <Preference
         app:key="advanced_settings"
         app:summary="@string/advanced_settings_summary"
         app:title="@string/advanced_settings" />
 
     <Preference
         app:key="backup_restore_settings"
+        app:summary="@string/backup_restore_settings_summary"
         app:title="@string/pref_backup_restore" />
 
     <Preference

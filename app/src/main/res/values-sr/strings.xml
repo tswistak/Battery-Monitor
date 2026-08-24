@@ -252,13 +252,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Upravljaj ovim tipom alarma</string>
 
   <string name="notification_settings" formatted="false">Glavno obaveštenje</string>
-  <string name="notification_settings_summary" formatted="false">Podesite glavno obaveštenje</string>
+  <string name="notification_settings_summary" formatted="false">Podesite sadržaj obaveštenja, ikonicu statusne trake i čip ažuriranja uživo.</string>
   <string name="notification_settings_help" formatted="false">Možete da podesite koji sadržaj želite da bude prikazan u delu za notifikacije i da menjate njegog izgled.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikonica statusne trake</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Izaberite sadržaj ikonice</string>
   <string name="status_bar_icon_settings_help" formatted="false">Izaberite da li ikonica obaveštenja prikazuje procenat baterije ili temperaturu, da li se u ikonici prikazuje simbol jedinice i da li punjenje koristi posebnu ikonicu. Od Androida 16 ikonica statusne trake možda neće raditi u svim varijantama operativnog sistema.</string>
   <string name="status_bar_chip_settings" formatted="false">Čip statusne trake</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Podesite sadržaj čipa za Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">Za Live Updates možete podesiti sadržaj čipa statusne trake, interval promene i prikaz emodžija za punjenje.</string>
   <string name="current_state_settings_summary" formatted="false">Podešavanja ekrana Trenutne informacije</string>
   <string name="current_state_settings_help" formatted="false">Podesite informacije koje se prikazuju na ekranu Trenutne informacije. Opcije struje baterije upravljaju trenutnim očitavanjem prikazanim uz ostale podatke o bateriji.</string>
@@ -268,9 +266,6 @@
   <string name="other_settings" formatted="false">Opšte</string>
   <string name="other_settings_summary" formatted="false">Podesite opšte ponašanje aplikacije i svakodnevne postavke.</string>
   <string name="other_settings_help" formatted="false">Koristite ova podešavanja da prilagodite Battery Monitor svakodnevnoj upotrebi. Ona obuhvataju opšte ponašanje i postavke koje pomažu da se aplikacija prirodno uklopi u način na koji koristite uređaj.</string>
-  <string name="units_formatting_settings" formatted="false">Jedinice i formatiranje</string>
-  <string name="units_formatting_settings_summary" formatted="false">Izaberite jedinice i formate za prikaz podataka o bateriji u celoj aplikaciji.</string>
-  <string name="units_formatting_settings_help" formatted="false">Koristite ova podešavanja da informacije o bateriji budu poznate i lake za čitanje. Vaši izbori se dosledno primenjuju svuda gde se odgovarajuće vrednosti i trajanja pojavljuju u Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Napredno</string>
   <string name="advanced_settings_summary" formatted="false">Fino podesite Battery Monitor dodatnim kontrolama za specijalizovane namene.</string>
   <string name="advanced_settings_help" formatted="false">Koristite ova podešavanja kada želite veću kontrolu nad radom Battery Monitor nego što nude svakodnevne postavke. Podrazumevane vrednosti odgovaraju većini korisnika, a dodatna podešavanja mogu bolje prilagoditi aplikaciju posebnim potrebama praćenja.</string>
@@ -300,7 +295,6 @@
   <string name="pref_manage_main_channel" formatted="false">Upravljaj glavnim kanalom</string>
 
   <string name="pref_cat_notification_content" formatted="false">Sadržaj</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Čip statusne trake</string>
   <string name="pref_live_update_display" formatted="false">Prikaži Live Update</string>
   <string name="pref_live_update_display_summary" formatted="false">Prikaži u statusnoj traci:</string>
   <string name="pref_live_update_display_help" formatted="false">Odaberite kada čip za Live Update na Androidu 16+ treba da se prikazuje u statusnoj traci.</string>
@@ -336,7 +330,6 @@
 
   <string name="custom" formatted="false">Прилагођено...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Ikonica obaveštenja</string>
   <string name="pref_icon_content" formatted="false">Sadržaj ikonice</string>
   <string name="pref_icon_content_help" formatted="false">Izaberite da li ikonica statusne trake prikazuje procenat baterije ili temperaturu baterije. Temperatura prati izabranu jedinicu.</string>
   <string name="pref_show_icon_unit" formatted="false">Prikaži simbol jedinice</string>
@@ -370,7 +363,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Unesite vrednost od 1 do 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d sekundi</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Indikator punjenja</string>
   <string name="pref_indicate_charging" formatted="false">Označi punjenje</string>
   <string name="pref_indicate_charging_summary" formatted="false">Izmeni ikonicu da označi kada je na punjenju?</string>
   <string name="pref_indicate_charging_help" formatted="false">Ikonica punjenja može prikazivati munju ispod broja. Isključite ovu opciju ako želite istu ikonicu tokom punjenja i pražnjenja.</string>
@@ -383,9 +375,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Obriši evidenciju unosa stariju od:</string>
   <string name="pref_max_log_age_help" formatted="false">Ako je evidentiranje omogućeno, svaki put kada priključite uređaj biće obrisani zapisi stariji od ove vrednosti. Izaberite Nikad ne briši da ih zadržite dok ih ručno ne obrišete.</string>
 
-  <string name="pref_cat_units" formatted="false">Jedinice</string>
   <string name="pref_temperature_unit" formatted="false">Jedinica temperature</string>
-  <string name="pref_cat_formatting" formatted="false">Formatiranje</string>
   <string name="pref_temperature_unit_help" formatted="false">Izaberite prikaz temperature u stepenima Celzijusa ili Farenhajta.</string>
 
   <string name="pref_cat_autostart" formatted="false">Pokreni automatski</string>
@@ -414,7 +404,7 @@
     \n
     Na kraju, procena može biti zasnovana i samo na vašem dugoročnom proseku korišćenja.</string>
 
-  <string name="pref_cat_language" formatted="false">Jezik</string>
+  <string name="pref_cat_language" formatted="false">Jezik i formatiranje</string>
   <string name="pref_change_app_language" formatted="false">Jezik aplikacije</string>
   <string name="pref_change_app_language_help" formatted="false">Izaberite jezik koji koristi Battery Monitor. Podrazumevana sistemska vrednost prati jezik uređaja.</string>
   <string name="pref_long_duration_format" formatted="false">Format dugog trajanja</string>
@@ -551,6 +541,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">Promeni redosled: %1$s</string>
 
   <string name="pref_backup_restore" formatted="false">Резервна копија и враћање</string>
+  <string name="backup_restore_settings_summary" formatted="false">Napravite rezervnu kopiju, vratite i prenesite podešavanja aplikacije i podatke o bateriji.</string>
   <string name="pref_auto_log_export" formatted="false">Аутоматски извоз евиденција</string>
   <string name="pref_set_auto_log_export" formatted="false">Подеси аутоматски извоз</string>
   <string name="pref_edit_auto_log_export" formatted="false">Уреди аутоматски извоз</string>

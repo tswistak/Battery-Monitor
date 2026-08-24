@@ -39,4 +39,68 @@
             app:singleLineTitle="false" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/status_bar_icon_settings">
+        <ListPreference
+            android:defaultValue="@string/default_icon_content"
+            android:entries="@array/icon_content_entries"
+            android:entryValues="@array/icon_content_values"
+            android:key="icon_content"
+            android:title="@string/pref_icon_content"
+            app:singleLineTitle="false" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_icon_unit"
+            android:title="@string/pref_show_icon_unit"
+            app:singleLineTitle="false" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="indicate_charging"
+            android:summary="@string/pref_indicate_charging_summary"
+            android:title="@string/pref_indicate_charging"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_status_bar_chip"
+        android:title="@string/status_bar_chip_settings">
+        <ListPreference
+            android:defaultValue="@string/default_live_update_display_mode"
+            android:entries="@array/live_update_display_entries"
+            android:entryValues="@array/live_update_display_values"
+            android:key="live_update_display"
+            android:summary="@string/pref_live_update_display_summary"
+            android:title="@string/pref_live_update_display"
+            app:singleLineTitle="false" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="live_update_keep_main_notification"
+            android:summary="@string/pref_live_update_keep_main_notification_summary"
+            android:title="@string/pref_live_update_keep_main_notification"
+            app:singleLineTitle="false" />
+
+        <Preference
+            android:key="chip_content"
+            android:summary="@string/pref_chip_content_summary"
+            android:title="@string/pref_chip_content"
+            app:singleLineTitle="false" />
+
+        <ListPreference
+            android:defaultValue="5"
+            android:entries="@array/chip_switching_interval_entries"
+            android:entryValues="@array/chip_switching_interval_values"
+            android:key="chip_switching_interval"
+            android:summary="@string/pref_chip_switching_interval_summary"
+            android:title="@string/pref_chip_switching_interval"
+            app:singleLineTitle="false" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="chip_indicate_charging"
+            android:summary="@string/pref_chip_indicate_charging_summary"
+            android:title="@string/pref_chip_indicate_charging"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
 </PreferenceScreen>

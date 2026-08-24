@@ -242,13 +242,11 @@
   <string name="alarm_chan_settings_b" formatted="false">इस अलार्म प्रकार को प्रबंधित करें</string>
 
   <string name="notification_settings" formatted="false">मुख्य अधिसूचना</string>
-  <string name="notification_settings_summary" formatted="false">मुख्य अधिसूचना कॉन्फ़िगर करें</string>
+  <string name="notification_settings_summary" formatted="false">सूचना की सामग्री, स्टेटस बार आइकन और लाइव अपडेट चिप कॉन्फ़िगर करें।</string>
   <string name="notification_settings_help" formatted="false">आप कॉन्फ़िगर कर सकते हैं कि पुल-डाउन अधिसूचना में कौन सी सामग्री दिखानी है।</string>
   <string name="status_bar_icon_settings" formatted="false">स्टेटस बार आइकन</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">आइकन की सामग्री चुनें</string>
   <string name="status_bar_icon_settings_help" formatted="false">चुनें कि सूचना आइकन बैटरी प्रतिशत दिखाए या तापमान, आइकन में इकाई चिह्न दिखे या नहीं, और चार्जिंग के लिए अलग आइकन इस्तेमाल हो या नहीं। Android 16 से शुरू होकर, हो सकता है कि स्टेटस बार आइकन हर OS वेरिएंट पर काम न करे।</string>
   <string name="status_bar_chip_settings" formatted="false">स्टेटस बार चिप</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">लाइव अपडेट\' चिप सामग्री कॉन्फ़िगर करें</string>
   <string name="status_bar_chip_settings_help" formatted="false">लाइव अपडेट में आप स्टेटस बार चिप की सामग्री, उसके बदलने का अंतराल और चार्जिंग इमोजी का प्रदर्शन कॉन्फ़िगर कर सकते हैं।</string>
   <string name="current_state_settings_summary" formatted="false">वर्तमान जानकारी स्क्रीन की सेटिंग</string>
   <string name="current_state_settings_help" formatted="false">वर्तमान जानकारी स्क्रीन पर दिखाई जाने वाली जानकारी कॉन्फ़िगर करें। बैटरी करंट विकल्प, बैटरी के अन्य विवरणों के साथ दिखाई जाने वाली लाइव रीडिंग को नियंत्रित करते हैं।</string>
@@ -258,9 +256,6 @@
   <string name="other_settings" formatted="false">सामान्य</string>
   <string name="other_settings_summary" formatted="false">ऐप के सामान्य व्यवहार और रोज़मर्रा की प्राथमिकताएँ कॉन्फ़िगर करें।</string>
   <string name="other_settings_help" formatted="false">Battery Monitor को अपने रोज़मर्रा के उपयोग के अनुसार ढालने के लिए इन सेटिंग्स का उपयोग करें। इनमें ऐप का सामान्य व्यवहार और वे प्राथमिकताएँ शामिल हैं जो ऐप को आपके डिवाइस उपयोग के तरीके के साथ सहज रूप से काम करने में मदद करती हैं।</string>
-  <string name="units_formatting_settings" formatted="false">इकाइयाँ और फ़ॉर्मेटिंग</string>
-  <string name="units_formatting_settings_summary" formatted="false">पूरे ऐप में बैटरी डेटा दिखाने के लिए इस्तेमाल की जाने वाली इकाइयाँ और फ़ॉर्मेट चुनें।</string>
-  <string name="units_formatting_settings_help" formatted="false">बैटरी की जानकारी को परिचित और आसानी से पढ़ने योग्य बनाए रखने के लिए इन सेटिंग्स का उपयोग करें। आपके विकल्प Battery Monitor में संबंधित मान और अवधियाँ दिखाई देने वाली हर जगह एक समान रूप से लागू होते हैं।</string>
   <string name="advanced_settings" formatted="false">उन्नत</string>
   <string name="advanced_settings_summary" formatted="false">विशेष उपयोगों के लिए अतिरिक्त नियंत्रणों से Battery Monitor को बेहतर ढंग से समायोजित करें।</string>
   <string name="advanced_settings_help" formatted="false">जब आप रोज़मर्रा की प्राथमिकताओं से आगे Battery Monitor के काम करने के तरीके पर अधिक नियंत्रण चाहते हैं, तब इन सेटिंग्स का उपयोग करें। डिफ़ॉल्ट अधिकांश उपयोगकर्ताओं के लिए उपयुक्त हैं, जबकि अतिरिक्त समायोजन ऐप को खास निगरानी आवश्यकताओं के अनुसार बेहतर ढंग से ढाल सकते हैं।</string>
@@ -290,7 +285,6 @@
   <string name="pref_manage_main_channel" formatted="false">मुख्य चैनल प्रबंधित करें</string>
 
   <string name="pref_cat_notification_content" formatted="false">सामग्री</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">स्टेटस बार चिप</string>
   <string name="pref_live_update_display" formatted="false">लाइव अपडेट दिखाएं</string>
   <string name="pref_live_update_display_summary" formatted="false">स्टेटस बार में दिखाएं:</string>
   <string name="pref_live_update_display_help" formatted="false">चुनें कि Android 16+ का लाइव अपडेट चिप स्टेटस बार में कब दिखे।</string>
@@ -326,7 +320,6 @@
 
   <string name="custom" formatted="false">कस्टम...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">सूचना आइकन</string>
   <string name="pref_icon_content" formatted="false">चिह्न सामग्री</string>
   <string name="pref_icon_content_help" formatted="false">चुनें कि स्टेटस बार आइकन बैटरी प्रतिशत दिखाता है या नहीं बैटरी का तापमान. तापमान आपके चयनित इकाई का अनुसरण करता है।</string>
   <string name="pref_show_icon_unit" formatted="false">इकाई चिह्न दिखाएँ</string>
@@ -360,7 +353,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">1 से 3600 तक का मान दर्ज करें।</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d सेकंड</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">चार्जिंग संकेतक</string>
   <string name="pref_indicate_charging" formatted="false">चार्जिंग का संकेत दें</string>
   <string name="pref_indicate_charging_summary" formatted="false">चार्ज करते समय इंगित करने के लिए आइकन बदलें?</string>
   <string name="pref_indicate_charging_help" formatted="false">चार्जिंग आइकन संख्या के नीचे बिजली का चिन्ह दिखा सकता है। यदि आप चार्ज और डिस्चार्ज दोनों में एक ही आइकन चाहते हैं, तो इस सेटिंग को बंद करें।</string>
@@ -373,9 +365,7 @@
   <string name="pref_max_log_age_summary" formatted="false">इससे पुराने लॉग हटाएँ:</string>
   <string name="pref_max_log_age_help" formatted="false">यदि लॉगिंग सक्षम है, तो जब भी आप डिवाइस को प्लग इन करेंगे, इस मान से पुराने लॉग हटाए जाएँगे। लॉग को तब तक रखने के लिए कभी न हटाएँ चुनें, जब तक आप उन्हें मैन्युअल रूप से साफ़ न करें।</string>
 
-  <string name="pref_cat_units" formatted="false">इकाइयाँ</string>
   <string name="pref_temperature_unit" formatted="false">तापमान इकाई</string>
-  <string name="pref_cat_formatting" formatted="false">फ़ॉर्मेटिंग</string>
   <string name="pref_temperature_unit_help" formatted="false">चुनें कि तापमान सेल्सियस या फ़ारेनहाइट में दिखाया जाए।</string>
 
   <string name="pref_cat_autostart" formatted="false">ऑटो स्टार्ट</string>
@@ -400,7 +390,7 @@
     \n
     अंत में, आप पूरी तरह से अपने आधार पर भविष्यवाणी कर सकते हैं दीर्घकालिक औसत उपयोग।</string>
 
-  <string name="pref_cat_language" formatted="false">भाषा</string>
+  <string name="pref_cat_language" formatted="false">भाषा और फ़ॉर्मेटिंग</string>
   <string name="pref_change_app_language" formatted="false">ऐप की भाषा</string>
   <string name="pref_change_app_language_help" formatted="false">Battery Monitor द्वारा इस्तेमाल की जाने वाली भाषा चुनें। सिस्टम डिफ़ॉल्ट आपके डिवाइस की भाषा का अनुसरण करता है।</string>
   <string name="pref_long_duration_format" formatted="false">लंबी अवधि का फ़ॉर्मेट</string>
@@ -537,6 +527,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s का क्रम बदलें</string>
 
   <string name="pref_backup_restore" formatted="false">बैकअप और पुनर्स्थापना</string>
+  <string name="backup_restore_settings_summary" formatted="false">अपनी ऐप सेटिंग्स और बैटरी डेटा का बैकअप लें, उन्हें पुनर्स्थापित करें और स्थानांतरित करें।</string>
   <string name="pref_auto_log_export" formatted="false">स्वचालित लॉग निर्यात</string>
   <string name="pref_set_auto_log_export" formatted="false">स्वचालित लॉग निर्यात सेट करें</string>
   <string name="pref_edit_auto_log_export" formatted="false">स्वचालित लॉग निर्यात संपादित करें</string>

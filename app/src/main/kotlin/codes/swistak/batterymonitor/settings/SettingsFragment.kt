@@ -364,7 +364,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
         var prefRes = prefScreen
 
-        if ((prefScreen == R.xml.status_bar_icon_pref_screen || prefScreen == R.xml.status_bar_chip_pref_screen || prefScreen == R.xml.notification_pref_screen) && (!appNotifsEnabled || !mainNotifsEnabled)) {
+        if (prefScreen == R.xml.notification_pref_screen && (!appNotifsEnabled || !mainNotifsEnabled)) {
             prefRes = R.xml.main_notifs_disabled_pref_screen
         }
 
@@ -376,12 +376,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         mPreferenceScreen = preferenceScreen
 
         val liveUpdateSupported: Boolean = BatteryInfoService.supportsLiveUpdates()
-
-        if (prefScreen == R.xml.main_pref_screen && !liveUpdateSupported) {
-            val p =
-                mPreferenceScreen!!.findPreference<Preference?>(SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS)
-            if (p != null) mPreferenceScreen!!.removePreference(p)
-        }
 
         if (prefRes == R.xml.main_notifs_disabled_pref_screen) {
             val prefB =
@@ -400,15 +394,12 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             val prefB =
                 mPreferenceScreen!!.findPreference<Preference?>(SettingsContract.KEY_ENABLE_NOTIFS_B)
             prefB!!.setSummary(R.string.pref_manage_main_channel)
-        } else if (prefScreen == R.xml.status_bar_chip_pref_screen) {
+
             if (!liveUpdateSupported) {
                 val chipCat = mPreferenceScreen!!.findPreference<Preference?>(
                     SettingsContract.KEY_CAT_STATUS_BAR_CHIP
                 ) as PreferenceCategory?
-                if (chipCat != null) {
-                    chipCat.removeAll()
-                    chipCat.layoutResource = R.layout.none
-                }
+                chipCat?.isVisible = false
             } else {
                 setupChipSwitchingIntervalPreference()
                 updateChipIntervalVisibility()
@@ -458,7 +449,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 return false
             }
 
-            SettingsContract.KEY_NOTIFICATION_SETTINGS, SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS, SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS, SettingsContract.KEY_CURRENT_STATE_SETTINGS, SettingsContract.KEY_OTHER_SETTINGS, SettingsContract.KEY_UNITS_FORMATTING_SETTINGS, SettingsContract.KEY_TIME_ESTIMATES_SETTINGS, SettingsContract.KEY_ADVANCED_SETTINGS, SettingsContract.KEY_BACKUP_RESTORE_SETTINGS, SettingsContract.KEY_DIAGNOSTICS_SETTINGS -> {
+            SettingsContract.KEY_NOTIFICATION_SETTINGS, SettingsContract.KEY_CURRENT_STATE_SETTINGS, SettingsContract.KEY_OTHER_SETTINGS, SettingsContract.KEY_TIME_ESTIMATES_SETTINGS, SettingsContract.KEY_ADVANCED_SETTINGS, SettingsContract.KEY_BACKUP_RESTORE_SETTINGS, SettingsContract.KEY_DIAGNOSTICS_SETTINGS -> {
                 val comp = ComponentName(
                     requireActivity().packageName, SettingsActivity::class.java.getName()
                 )
@@ -2071,12 +2062,13 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         pref.setSummary(
             res.getString(R.string.currently_set_to) + " " + Locale.getDefault().displayLanguage
         )
+        category.isVisible = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            category.isVisible = true
+            pref.isVisible = true
             pref.onPreferenceClickListener =
                 Preference.OnPreferenceClickListener { _: Preference? -> this.launchChangeAppLanguageIntent() }
         } else {
-            category.isVisible = false
+            pref.isVisible = false
         }
     }
 

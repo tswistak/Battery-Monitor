@@ -244,13 +244,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Gérer ce type d’alarme</string>
 
   <string name="notification_settings" formatted="false">Notification principale</string>
-  <string name="notification_settings_summary" formatted="false">Configurer la notification principale</string>
+  <string name="notification_settings_summary" formatted="false">Configurez le contenu de la notification, l’icône de la barre d’état et la puce Live Update.</string>
   <string name="notification_settings_help" formatted="false">Vous pouvez choisir le contenu à afficher dans la notification déroulante.</string>
   <string name="status_bar_icon_settings" formatted="false">Icône de barre d’état</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Choisir le contenu de l’icône</string>
   <string name="status_bar_icon_settings_help" formatted="false">Choisissez si l’icône de notification affiche le pourcentage de batterie ou la température, si le symbole de l’unité est affiché dans l’icône et si la charge utilise une icône dédiée. À partir d’Android 16, l’icône de la barre d’état peut ne pas fonctionner sur toutes les variantes du système d’exploitation.</string>
   <string name="status_bar_chip_settings" formatted="false">Puce de barre d’état</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Configurer le contenu de la puce Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">Avec Live Updates, vous pouvez configurer ce que la puce affiche et la fréquence de changement de son contenu.</string>
   <string name="current_state_settings_summary" formatted="false">Réglages de l’écran Infos actuelles</string>
   <string name="current_state_settings_help" formatted="false">Configurez les informations affichées sur l’écran Infos actuelles. Les options de courant de la batterie contrôlent la mesure en direct affichée avec les autres détails de la batterie.</string>
@@ -260,9 +258,6 @@
   <string name="other_settings" formatted="false">Général</string>
   <string name="other_settings_summary" formatted="false">Configurez le comportement général et les préférences courantes de l’application.</string>
   <string name="other_settings_help" formatted="false">Utilisez ces réglages pour adapter Battery Monitor à votre usage quotidien. Ils concernent le comportement général et les préférences qui permettent à l’application de s’intégrer naturellement à votre façon d’utiliser l’appareil.</string>
-  <string name="units_formatting_settings" formatted="false">Unités et formatage</string>
-  <string name="units_formatting_settings_summary" formatted="false">Choisissez les unités et les formats utilisés pour afficher les données de la batterie dans toute l’application.</string>
-  <string name="units_formatting_settings_help" formatted="false">Utilisez ces réglages pour rendre les informations sur la batterie familières et faciles à lire. Vos choix sont appliqués de manière cohérente partout où les valeurs et durées correspondantes apparaissent dans Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Avancé</string>
   <string name="advanced_settings_summary" formatted="false">Affinez Battery Monitor avec des commandes supplémentaires pour les usages spécialisés.</string>
   <string name="advanced_settings_help" formatted="false">Utilisez ces réglages lorsque vous souhaitez contrôler davantage le fonctionnement de Battery Monitor au-delà des préférences courantes. Les valeurs par défaut conviennent à la plupart des utilisateurs, tandis que des ajustements supplémentaires permettent de mieux adapter l’application à des besoins de suivi particuliers.</string>
@@ -292,7 +287,6 @@
   <string name="pref_manage_main_channel" formatted="false">Gérer le canal principal</string>
 
   <string name="pref_cat_notification_content" formatted="false">Contenu</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Puce de barre d’état</string>
   <string name="pref_live_update_display" formatted="false">Afficher la mise a jour en direct</string>
   <string name="pref_live_update_display_summary" formatted="false">Afficher dans la barre d etat :</string>
   <string name="pref_live_update_display_help" formatted="false">Choisissez quand la puce de mise a jour en direct d Android 16+ doit s afficher dans la barre d etat.</string>
@@ -328,7 +322,6 @@
 
   <string name="custom" formatted="false">Personnalisé...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Icône de notification</string>
   <string name="pref_icon_content" formatted="false">Contenu de l’icône</string>
   <string name="pref_icon_content_help" formatted="false">Choisissez si l’icône affiche le pourcentage batterie ou la température batterie.</string>
   <string name="pref_show_icon_unit" formatted="false">Afficher le symbole d’unité</string>
@@ -362,7 +355,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Saisissez une valeur comprise entre 1 et 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d secondes</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Indicateur de charge</string>
   <string name="pref_indicate_charging" formatted="false">Indiquer la charge</string>
   <string name="pref_indicate_charging_summary" formatted="false">Modifier l’icône pendant la charge ?</string>
   <string name="pref_indicate_charging_help" formatted="false">L’icône de charge peut afficher un éclair sous le nombre. Désactivez ce réglage si vous préférez la même icône en charge et en décharge.</string>
@@ -375,9 +367,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Supprimer les journaux plus ancients que :</string>
   <string name="pref_max_log_age_help" formatted="false">Si la journalisation est activée, chaque fois que vous branchez votre appareil, les journaux plus anciens que cette valeur seront supprimés. Sélectionnez Ne jamais supprimer pour les conserver tant que vous ne les effacez pas manuellement.</string>
 
-  <string name="pref_cat_units" formatted="false">Unités</string>
   <string name="pref_temperature_unit" formatted="false">Unité de température</string>
-  <string name="pref_cat_formatting" formatted="false">Formatage</string>
   <string name="pref_temperature_unit_help" formatted="false">Choisissez si les températures sont affichées en Celsius ou en Fahrenheit.</string>
 
   <string name="pref_cat_autostart" formatted="false">Démarrage automatique</string>
@@ -396,7 +386,7 @@
   <string name="pref_prediction_type" formatted="false">Type d’estimation</string>
   <string name="pref_prediction_type_help" formatted="false">Ici, vous pouvez choisir comment Battery Monitor estime l’autonomie restante / le temps jusqu’à charge complète.</string>
 
-  <string name="pref_cat_language" formatted="false">Langue</string>
+  <string name="pref_cat_language" formatted="false">Langue et formatage</string>
   <string name="pref_change_app_language" formatted="false">Langue de l’application</string>
   <string name="pref_change_app_language_help" formatted="false">Sélectionnez la langue utilisée par Battery Monitor. La valeur par défaut du système suit la langue de l’appareil.</string>
   <string name="pref_long_duration_format" formatted="false">Format des longues durées</string>
@@ -533,6 +523,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">Réorganiser %1$s</string>
 
   <string name="pref_backup_restore" formatted="false">Sauvegarde et restauration</string>
+  <string name="backup_restore_settings_summary" formatted="false">Sauvegardez, restaurez et transférez les paramètres de l’application et les données de la batterie.</string>
   <string name="pref_auto_log_export" formatted="false">Export automatique des journaux</string>
   <string name="pref_set_auto_log_export" formatted="false">Configurer les exports automatiques</string>
   <string name="pref_edit_auto_log_export" formatted="false">Modifier les exports automatiques</string>

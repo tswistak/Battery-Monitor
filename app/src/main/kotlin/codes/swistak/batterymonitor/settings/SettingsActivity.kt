@@ -74,39 +74,46 @@ class SettingsActivity : AppCompatActivity() {
             frag = supportFragmentManager.findFragmentByTag("") as SettingsFragment?
         }
 
-        if (prefScreen == null) {
-            frag!!.setScreen(R.xml.main_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.settings_activity_subtitle))
-        } else if (prefScreen == SettingsContract.KEY_STATUS_BAR_ICON_SETTINGS) {
-            frag!!.setScreen(R.xml.status_bar_icon_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.status_bar_icon_settings))
-        } else if (prefScreen == SettingsContract.KEY_STATUS_BAR_CHIP_SETTINGS) {
-            frag!!.setScreen(R.xml.status_bar_chip_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.status_bar_chip_settings))
-        } else if (prefScreen == SettingsContract.KEY_NOTIFICATION_SETTINGS) {
-            frag!!.setScreen(R.xml.notification_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.notification_settings))
-        } else if (prefScreen == SettingsContract.KEY_CURRENT_STATE_SETTINGS) {
-            frag!!.setScreen(R.xml.current_state_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.tab_current_info))
-        } else if (prefScreen == SettingsContract.KEY_OTHER_SETTINGS) {
-            frag!!.setScreen(R.xml.other_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.other_settings))
-        } else if (prefScreen == SettingsContract.KEY_UNITS_FORMATTING_SETTINGS) {
-            frag!!.setScreen(R.xml.units_formatting_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.units_formatting_settings))
-        } else if (prefScreen == SettingsContract.KEY_TIME_ESTIMATES_SETTINGS) {
-            frag!!.setScreen(R.xml.time_estimates_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.time_estimates_settings))
-        } else if (prefScreen == SettingsContract.KEY_ADVANCED_SETTINGS) {
-            frag!!.setScreen(R.xml.advanced_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.advanced_settings))
-        } else if (prefScreen == SettingsContract.KEY_BACKUP_RESTORE_SETTINGS) {
-            frag!!.setScreen(R.xml.backup_restore_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.pref_backup_restore))
-        } else {
-            frag!!.setScreen(R.xml.main_pref_screen)
-            setWindowSubtitle(res!!.getString(R.string.settings_activity_subtitle))
+        when (prefScreen) {
+            null -> {
+                frag!!.setScreen(R.xml.main_pref_screen)
+                setWindowSubtitle(res!!.getString(R.string.settings_activity_subtitle))
+            }
+
+            SettingsContract.KEY_NOTIFICATION_SETTINGS -> {
+                frag!!.setScreen(R.xml.notification_pref_screen)
+                setWindowSubtitle(res!!.getString(R.string.notification_settings))
+            }
+
+            SettingsContract.KEY_CURRENT_STATE_SETTINGS -> {
+                frag!!.setScreen(R.xml.current_state_pref_screen)
+                setWindowSubtitle(res!!.getString(R.string.tab_current_info))
+            }
+
+            SettingsContract.KEY_OTHER_SETTINGS -> {
+                frag!!.setScreen(R.xml.other_pref_screen)
+                setWindowSubtitle(res!!.getString(R.string.other_settings))
+            }
+
+            SettingsContract.KEY_TIME_ESTIMATES_SETTINGS -> {
+                frag!!.setScreen(R.xml.time_estimates_pref_screen)
+                setWindowSubtitle(res!!.getString(R.string.time_estimates_settings))
+            }
+
+            SettingsContract.KEY_ADVANCED_SETTINGS -> {
+                frag!!.setScreen(R.xml.advanced_pref_screen)
+                setWindowSubtitle(res!!.getString(R.string.advanced_settings))
+            }
+
+            SettingsContract.KEY_BACKUP_RESTORE_SETTINGS -> {
+                frag!!.setScreen(R.xml.backup_restore_pref_screen)
+                setWindowSubtitle(res!!.getString(R.string.pref_backup_restore))
+            }
+
+            else -> {
+                frag!!.setScreen(R.xml.main_pref_screen)
+                setWindowSubtitle(res!!.getString(R.string.settings_activity_subtitle))
+            }
         }
     }
 

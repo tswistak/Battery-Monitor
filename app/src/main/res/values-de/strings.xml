@@ -240,13 +240,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Diesen Alarmtyp verwalten</string>
 
   <string name="notification_settings" formatted="false">Benachrichtigungen</string>
-  <string name="notification_settings_summary" formatted="false">Bearbeite die Benachrichtigungen</string>
+  <string name="notification_settings_summary" formatted="false">Konfigurieren Sie Benachrichtigungsinhalte, Statusleistensymbol und Live-Update-Chip.</string>
   <string name="notification_settings_help" formatted="false">Sie können konfigurieren, welche Inhalte in der Benachrichtigung angezeigt werden.</string>
   <string name="status_bar_icon_settings" formatted="false">Statusleistensymbol</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Symbolinhalt auswählen</string>
   <string name="status_bar_icon_settings_help" formatted="false">Wählen Sie aus, ob das Benachrichtigungssymbol den Akkustand oder die Temperatur anzeigt, ob das Einheitssymbol im Symbol angezeigt wird und ob beim Laden ein eigenes Symbol verwendet wird. Ab Android 16 funktioniert das Statusleistensymbol möglicherweise nicht auf jeder Betriebssystemvariante.</string>
   <string name="status_bar_chip_settings" formatted="false">Statusleisten-Chip</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Inhalt des Live-Updates-Chips konfigurieren</string>
   <string name="status_bar_chip_settings_help" formatted="false">Mit Live Updates können Sie konfigurieren, was der Statusleisten-Chip zeigt, wie oft sich sein Inhalt ändert und ob das Lade-Emoji angezeigt wird.</string>
   <string name="current_state_settings_summary" formatted="false">Einstellungen für den Bildschirm „Aktuelle Info“</string>
   <string name="current_state_settings_help" formatted="false">Legen Sie fest, welche Informationen auf dem Bildschirm „Aktuelle Info“ angezeigt werden. Die Batteriestromoptionen steuern den Live-Messwert neben den übrigen Batteriedetails.</string>
@@ -256,9 +254,6 @@
   <string name="other_settings" formatted="false">Allgemein</string>
   <string name="other_settings_summary" formatted="false">Konfigurieren Sie das allgemeine Verhalten und die alltäglichen Einstellungen der App.</string>
   <string name="other_settings_help" formatted="false">Mit diesen Einstellungen passen Sie Battery Monitor an Ihre tägliche Nutzung an. Sie betreffen das allgemeine Verhalten und Präferenzen, damit sich die App natürlich in die Nutzung Ihres Geräts einfügt.</string>
-  <string name="units_formatting_settings" formatted="false">Einheiten und Formatierung</string>
-  <string name="units_formatting_settings_summary" formatted="false">Wählen Sie die Einheiten und Formate zur Anzeige von Akkudaten in der gesamten App.</string>
-  <string name="units_formatting_settings_help" formatted="false">Mit diesen Einstellungen bleiben Akkuinformationen vertraut und leicht lesbar. Ihre Auswahl wird überall einheitlich verwendet, wo die entsprechenden Werte und Zeitangaben in Battery Monitor erscheinen.</string>
   <string name="advanced_settings" formatted="false">Erweitert</string>
   <string name="advanced_settings_summary" formatted="false">Passen Sie Battery Monitor mit zusätzlichen Steuerelementen für spezielle Anwendungsfälle an.</string>
   <string name="advanced_settings_help" formatted="false">Verwenden Sie diese Einstellungen, wenn Sie über die alltäglichen Präferenzen hinaus mehr Kontrolle über Battery Monitor wünschen. Die Standardwerte eignen sich für die meisten Nutzer, zusätzliche Anpassungen können die App jedoch besser auf besondere Überwachungsanforderungen abstimmen.</string>
@@ -288,7 +283,6 @@
   <string name="pref_manage_main_channel" formatted="false">Hauptkanal verwalten</string>
 
   <string name="pref_cat_notification_content" formatted="false">Inhalt</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Statusleisten-Chip</string>
   <string name="pref_live_update_display" formatted="false">Live-Update anzeigen</string>
   <string name="pref_live_update_display_summary" formatted="false">In der Statusleiste anzeigen:</string>
   <string name="pref_live_update_display_help" formatted="false">Wählen Sie, wann der Live-Update-Chip unter Android 16+ in der Statusleiste angezeigt werden soll.</string>
@@ -324,7 +318,6 @@
 
   <string name="custom" formatted="false">Benutzerdefiniert...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Benachrichtigungssymbol</string>
   <string name="pref_icon_content" formatted="false">Icon-Inhalt</string>
   <string name="pref_icon_content_help" formatted="false">Wählen Sie, ob das Statusleisten-Icon Akkustand oder Akkutemperatur anzeigt.</string>
   <string name="pref_show_icon_unit" formatted="false">Einheitensymbol anzeigen</string>
@@ -358,7 +351,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Geben Sie einen Wert von 1 bis 3600 ein.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d Sekunden</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Ladeindikator</string>
   <string name="pref_indicate_charging" formatted="false">Ladevorgang anzeigen</string>
   <string name="pref_indicate_charging_summary" formatted="false">Icon bei Ladevorgang anpassen?</string>
   <string name="pref_indicate_charging_help" formatted="false">Das Ladesymbol kann unter der Zahl einen Blitz anzeigen. Deaktivieren Sie diese Option, wenn Sie beim Laden und Entladen dasselbe Symbol bevorzugen.</string>
@@ -371,9 +363,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Löschen von Protokollen älter als:</string>
   <string name="pref_max_log_age_help" formatted="false">Wenn die Protokollierung aktiviert ist, werden beim Anschließen des Geräts Protokolle gelöscht, die älter als diese Einstellung sind. Wähle Nie löschen, um Protokolle zu behalten, bis du sie manuell löschst.</string>
 
-  <string name="pref_cat_units" formatted="false">Einheiten</string>
   <string name="pref_temperature_unit" formatted="false">Temperatureinheit</string>
-  <string name="pref_cat_formatting" formatted="false">Formatierung</string>
   <string name="pref_temperature_unit_help" formatted="false">Wählen Sie, ob Temperaturen in Celsius oder Fahrenheit angezeigt werden.</string>
 
   <string name="pref_cat_autostart" formatted="false">Autostart</string>
@@ -390,7 +380,7 @@
   <string name="pref_prediction_type" formatted="false">Schätztyp</string>
   <string name="pref_prediction_type_help" formatted="false">Hier können Sie auswählen, wie Battery Monitor die verbleibende Akkulaufzeit bzw. die Zeit bis zur vollständigen Ladung schätzt.</string>
 
-  <string name="pref_cat_language" formatted="false">Sprache</string>
+  <string name="pref_cat_language" formatted="false">Sprache und Formatierung</string>
   <string name="pref_change_app_language" formatted="false">App-Sprache</string>
   <string name="pref_change_app_language_help" formatted="false">Wählen Sie die von Battery Monitor verwendete Sprache. Die Systemvorgabe folgt der Gerätesprache.</string>
   <string name="pref_long_duration_format" formatted="false">Format langer Zeiträume</string>
@@ -512,6 +502,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s neu anordnen</string>
 
   <string name="pref_backup_restore" formatted="false">Sichern und Wiederherstellen</string>
+  <string name="backup_restore_settings_summary" formatted="false">Sichern, wiederherstellen und übertragen Sie Ihre App-Einstellungen und Akkudaten.</string>
   <string name="pref_auto_log_export" formatted="false">Automatischer Protokollexport</string>
   <string name="pref_set_auto_log_export" formatted="false">Automatische Protokollexporte einrichten</string>
   <string name="pref_edit_auto_log_export" formatted="false">Automatische Protokollexporte bearbeiten</string>

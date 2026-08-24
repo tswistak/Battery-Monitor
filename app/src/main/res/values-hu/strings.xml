@@ -244,13 +244,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Riasztástípus kezelése</string>
 
   <string name="notification_settings" formatted="false">Fő értesítés</string>
-  <string name="notification_settings_summary" formatted="false">A fő értesítés beállítása</string>
+  <string name="notification_settings_summary" formatted="false">Állítsa be az értesítés tartalmát, az állapotsor ikonját és az Élő frissítés chipjét.</string>
   <string name="notification_settings_help" formatted="false">Beállíthatod, milyen tartalom jelenjen meg a lehúzható értesítésben.</string>
   <string name="status_bar_icon_settings" formatted="false">Állapotsor ikon</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Ikontartalom kiválasztása</string>
   <string name="status_bar_icon_settings_help" formatted="false">Válaszd ki, hogy az értesítési ikon az akkumulátor százalékát vagy a hőmérsékletét jelenítse meg, hogy az egységjel megjelenjen-e az ikonban, és hogy töltéskor külön ikon legyen-e. Az Android 16-tól kezdve előfordulhat, hogy az állapotsor ikonja nem működik minden operációsrendszer-változaton.</string>
   <string name="status_bar_chip_settings" formatted="false">Állapotsor chip</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">A Live Updates chip tartalmának beállítása</string>
   <string name="status_bar_chip_settings_help" formatted="false">A Live Updates beállításaiban megadhatod az állapotsor chip tartalmát és a váltási időközt.</string>
   <string name="current_state_settings_summary" formatted="false">A Jelenlegi információ képernyő beállításai</string>
   <string name="current_state_settings_help" formatted="false">Állítsd be a Jelenlegi információ képernyőn megjelenő adatokat. Az akkumulátoráram beállításai a többi akkumulátoradat mellett látható élő értéket vezérlik.</string>
@@ -260,9 +258,6 @@
   <string name="other_settings" formatted="false">Általános</string>
   <string name="other_settings_summary" formatted="false">Állítsa be az alkalmazás általános működését és mindennapi beállításait.</string>
   <string name="other_settings_help" formatted="false">Ezekkel a beállításokkal a Battery Monitor a mindennapi használathoz igazítható. Az alkalmazás általános működését és azokat a beállításokat foglalják magukban, amelyek révén természetesen illeszkedik az eszköz használatához.</string>
-  <string name="units_formatting_settings" formatted="false">Mértékegységek és formázás</string>
-  <string name="units_formatting_settings_summary" formatted="false">Válassza ki az akkumulátoradatok megjelenítéséhez használt mértékegységeket és formátumokat.</string>
-  <string name="units_formatting_settings_help" formatted="false">Ezekkel a beállításokkal az akkumulátor adatai megszokottak és könnyen olvashatók maradnak. A választások következetesen érvényesülnek mindenhol, ahol a kapcsolódó értékek és időtartamok megjelennek a Battery Monitorban.</string>
   <string name="advanced_settings" formatted="false">Speciális</string>
   <string name="advanced_settings_summary" formatted="false">Finomhangolja a Battery Monitort további vezérlőkkel a speciális felhasználási esetekhez.</string>
   <string name="advanced_settings_help" formatted="false">Akkor használja ezeket a beállításokat, ha a mindennapi beállításokon túl nagyobb irányítást szeretne a Battery Monitor működése felett. Az alapértékek a legtöbb felhasználónak megfelelnek, a további módosítások pedig konkrétabb megfigyelési igényekhez igazíthatják az alkalmazást.</string>
@@ -292,7 +287,6 @@
   <string name="pref_manage_main_channel" formatted="false">Fő csatorna kezelése</string>
 
   <string name="pref_cat_notification_content" formatted="false">Tartalom</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Állapotsor chip</string>
   <string name="pref_live_update_display" formatted="false">Élő frissítés megjelenítése</string>
   <string name="pref_live_update_display_summary" formatted="false">Megjelenítés az állapotsávban:</string>
   <string name="pref_live_update_display_help" formatted="false">Válaszd ki, hogy az Android 16+ élő frissítési chipje mikor jelenjen meg az állapotsávban.</string>
@@ -328,7 +322,6 @@
 
   <string name="custom" formatted="false">Egyéni...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Értesítési ikon</string>
   <string name="pref_icon_content" formatted="false">Ikon tartalma</string>
   <string name="pref_icon_content_help" formatted="false">Válaszd ki, hogy az állapotsor ikon akkumulátor százalékot vagy hőmérsékletet mutasson.</string>
   <string name="pref_show_icon_unit" formatted="false">Egységjel megjelenítése</string>
@@ -362,7 +355,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">1 és 3600 közötti értéket adjon meg.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d másodperc</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Töltésjelző</string>
   <string name="pref_indicate_charging" formatted="false">Töltés jelzése</string>
   <string name="pref_indicate_charging_summary" formatted="false">Látszódjon az ikonon a töltés?</string>
   <string name="pref_indicate_charging_help" formatted="false">A töltési ikon villámjelet jeleníthet meg a szám alatt. Kapcsold ki ezt a beállítást, ha töltéskor és merüléskor ugyanazt az ikont szeretnéd.</string>
@@ -375,9 +367,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Törölje az ennél régebbi bejegyzéseket:</string>
   <string name="pref_max_log_age_help" formatted="false">Ha a naplózás engedélyezett, az eszköz csatlakoztatásakor az ennél régebbi naplók törlődnek. Válaszd a Soha ne törölje lehetőséget, hogy a naplók megmaradjanak, amíg kézzel nem törlöd őket.</string>
 
-  <string name="pref_cat_units" formatted="false">Mértékegységek</string>
   <string name="pref_temperature_unit" formatted="false">Hőmérséklet mértékegysége</string>
-  <string name="pref_cat_formatting" formatted="false">Formázás</string>
   <string name="pref_temperature_unit_help" formatted="false">Válassza ki, hogy a hőmérséklet Celsius- vagy Fahrenheit-fokban jelenjen meg.</string>
 
   <string name="pref_cat_autostart" formatted="false">Automatikus indítás</string>
@@ -396,7 +386,7 @@
   <string name="pref_prediction_type" formatted="false">Becslés típusa</string>
   <string name="pref_prediction_type_help" formatted="false">Itt kiválaszthatod, hogyan becsülje a Battery Monitor a hátralévő akkuidőt.</string>
 
-  <string name="pref_cat_language" formatted="false">Nyelv</string>
+  <string name="pref_cat_language" formatted="false">Nyelv és formázás</string>
   <string name="pref_change_app_language" formatted="false">Alkalmazás nyelve</string>
   <string name="pref_change_app_language_help" formatted="false">Válassza ki a Battery Monitor nyelvét. A rendszer alapértelmezése az eszköz nyelvét követi.</string>
   <string name="pref_long_duration_format" formatted="false">Hosszú időtartam formátuma</string>
@@ -525,6 +515,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s átrendezése</string>
 
   <string name="pref_backup_restore" formatted="false">Biztonsági mentés és visszaállítás</string>
+  <string name="backup_restore_settings_summary" formatted="false">Készítsen biztonsági másolatot az alkalmazás beállításairól és az akkumulátoradatokról, majd állítsa vissza vagy vigye át őket.</string>
   <string name="pref_auto_log_export" formatted="false">Automatikus naplóexport</string>
   <string name="pref_set_auto_log_export" formatted="false">Automatikus naplóexport beállítása</string>
   <string name="pref_edit_auto_log_export" formatted="false">Automatikus naplóexport szerkesztése</string>

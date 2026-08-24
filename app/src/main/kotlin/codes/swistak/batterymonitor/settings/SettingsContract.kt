@@ -20,14 +20,11 @@ internal object SettingsContract {
     const val EXTRA_SCREEN: String = "codes.swistak.batterymonitor.PrefScreen"
 
     const val KEY_NOTIFICATION_SETTINGS: String = "notification_settings"
-    const val KEY_STATUS_BAR_ICON_SETTINGS: String = "status_bar_icon_settings"
-    const val KEY_STATUS_BAR_CHIP_SETTINGS: String = "status_bar_chip_settings"
     const val KEY_CURRENT_STATE_SETTINGS: String = "current_state_settings"
     const val KEY_ALARMS_SETTINGS: String = "alarms_settings"
     const val KEY_ALARM_EDIT_SETTINGS: String = "alarm_edit_settings"
     const val KEY_ADVANCED_INFO_HELP: String = "advanced_info_help"
     const val KEY_OTHER_SETTINGS: String = "other_settings"
-    const val KEY_UNITS_FORMATTING_SETTINGS: String = "units_formatting_settings"
     const val KEY_TIME_ESTIMATES_SETTINGS: String = "time_estimates_settings"
 
     const val KEY_ADVANCED_SETTINGS: String = "advanced_settings"

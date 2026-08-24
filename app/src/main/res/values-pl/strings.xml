@@ -252,13 +252,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Zarządzaj tym typem alarmu</string>
 
   <string name="notification_settings" formatted="false">Główne powiadomienie</string>
-  <string name="notification_settings_summary" formatted="false">Skonfiguruj główne powiadomienie</string>
+  <string name="notification_settings_summary" formatted="false">Skonfiguruj zawartość powiadomienia, ikonę paska stanu i kapsułkę aktualizacji na żywo.</string>
   <string name="notification_settings_help" formatted="false">Możesz skonfigurować, co wyświetlać w rozwijanym powiadomieniu.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikona na pasku stanu</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Wybierz zawartość ikony</string>
   <string name="status_bar_icon_settings_help" formatted="false">Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Wybierz także, czy symbol jednostki ma być pokazywany w ikonie i czy ładowanie ma mieć własną ikonę. Począwszy od Androida 16 ikona na pasku stanu może nie działać w każdym wariancie systemu.</string>
   <string name="status_bar_chip_settings" formatted="false">Kapsułka na pasku stanu</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Skonfiguruj zawartość kapsułki powiadomień na żywo</string>
   <string name="status_bar_chip_settings_help" formatted="false">Skonfiguruj, co ma pokazywać kapsułka na pasku stanu, jak często będzie się zmieniać jej zawartość i czy wyświetlać emoji ładowania.</string>
   <string name="current_state_settings_summary" formatted="false">Ustawienia ekranu „Aktualny stan”</string>
   <string name="current_state_settings_help" formatted="false">Skonfiguruj informacje wyświetlane na ekranie „Aktualny stan”. Opcje prądu baterii sterują bieżącym odczytem pokazywanym razem z innymi szczegółami o baterii.</string>
@@ -268,9 +266,6 @@
   <string name="other_settings" formatted="false">Ogólne</string>
   <string name="other_settings_summary" formatted="false">Skonfiguruj ogólne zachowanie aplikacji i codzienne preferencje</string>
   <string name="other_settings_help" formatted="false">Użyj tych ustawień, aby dostosować Monitor baterii do Twojego codziennego użytkowania. Obejmują ogólne zachowanie aplikacji i preferencje, co pomaga jej dopasować się naturalnie do Twojego sposobu korzystania z urządzenia.</string>
-  <string name="units_formatting_settings" formatted="false">Jednostki i formatowanie</string>
-  <string name="units_formatting_settings_summary" formatted="false">Wybierz jednostki i formaty używane do wyświetlania danych baterii w całej aplikacji</string>
-  <string name="units_formatting_settings_help" formatted="false">Użyj tych ustawień, aby informacje o baterii pozostały rozpoznawalne i łatwe do odczytania. Twoje wybory są stosowane spójnie wszędzie tam, gdzie odpowiednie wartości i czasy trwania pojawiają się w Monitorze baterii.</string>
   <string name="advanced_settings" formatted="false">Zaawansowane</string>
   <string name="advanced_settings_summary" formatted="false">Dostosuj Monitor baterii za pomocą dodatkowych opcji do specjalistycznych zastosowań</string>
   <string name="advanced_settings_help" formatted="false">Użyj tych ustawień, gdy chcesz większej kontroli nad tym, jak Monitor baterii działa, wykraczając poza codzienne preferencje. Wartości domyślne są odpowiednie dla większości użytkowników, a dodatkowe modyfikacje mogą pomóc dostosować aplikację do bardziej specyficznych potrzeb monitorowania.</string>
@@ -300,7 +295,6 @@
   <string name="pref_manage_main_channel" formatted="false">Zarządzaj głównym kanałem</string>
 
   <string name="pref_cat_notification_content" formatted="false">Zawartość</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Kapsułka na pasku stanu</string>
   <string name="pref_live_update_display" formatted="false">Wyświetlaj aktualizację na żywo</string>
   <string name="pref_live_update_display_summary" formatted="false">Wyświetlaj na pasku stanu:</string>
   <string name="pref_live_update_display_help" formatted="false">Wybierz, kiedy kapsułka aktualizacji na żywo ma być wyświetlana na pasku stanu.</string>
@@ -336,7 +330,6 @@
 
   <string name="custom" formatted="false">Niestandardowe…</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Ikona powiadomienia</string>
   <string name="pref_icon_content" formatted="false">Zawartość ikony</string>
   <string name="pref_icon_content_help" formatted="false">Wybierz, czy ikona na pasku stanu ma pokazywać procent baterii, czy temperaturę baterii. Temperatura jest podawana w wybranej przez Ciebie jednostce.</string>
   <string name="pref_show_icon_unit" formatted="false">Pokazuj symbol jednostki</string>
@@ -370,7 +363,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Wprowadź wartość od 1 do 3600</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d s</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Wskaźnik ładowania</string>
   <string name="pref_indicate_charging" formatted="false">Wskazuj ładowanie</string>
   <string name="pref_indicate_charging_summary" formatted="false">Czy zmieniać ikonę, aby wskazywać ładowanie?</string>
   <string name="pref_indicate_charging_help" formatted="false">Ikona może pokazywać błyskawicę pod liczbą podczas ładowania. Wyłącz to ustawienie, jeśli preferujesz tę samą ikonę cały czas.</string>
@@ -383,9 +375,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Usuwaj logi starsze niż:</string>
   <string name="pref_max_log_age_help" formatted="false">Jeśli logowanie jest włączone, kiedy tylko podłączysz swoje urządzenie, logi starsze od tej wartości zostaną usunięte. Wybierz „Nigdy nie usuwaj”, aby przechowywać logi, dopóki ich nie wyczyścisz ręcznie.</string>
 
-  <string name="pref_cat_units" formatted="false">Jednostki</string>
   <string name="pref_temperature_unit" formatted="false">Jednostka temperatury</string>
-  <string name="pref_cat_formatting" formatted="false">Formatowanie</string>
   <string name="pref_temperature_unit_help" formatted="false">Wybierz, czy temperatury mają być wyświetlane w stopniach Celsjusza, czy Fahrenheita.</string>
 
   <string name="pref_cat_autostart" formatted="false">Automatyczne uruchamianie</string>
@@ -414,7 +404,7 @@
     \n
     Ostatecznie możesz mieć przewidywanie oparte wyłącznie na średnim użyciu długoterminowym.</string>
 
-  <string name="pref_cat_language" formatted="false">Język</string>
+  <string name="pref_cat_language" formatted="false">Język i formatowanie</string>
   <string name="pref_change_app_language" formatted="false">Język aplikacji</string>
   <string name="pref_change_app_language_help" formatted="false">Wybierz język używany przez Monitora baterii. Domyślny systemowy jest zgodny z językiem Twojego urządzenia.</string>
   <string name="pref_long_duration_format" formatted="false">Format długiego czasu trwania</string>
@@ -551,6 +541,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">Zmień kolejność %1$s</string>
 
   <string name="pref_backup_restore" formatted="false">Kopia zapasowa i przywracanie</string>
+  <string name="backup_restore_settings_summary" formatted="false">Twórz kopie zapasowe, przywracaj je i przenoś swoje ustawienia oraz dane baterii</string>
   <string name="pref_auto_log_export" formatted="false">Automatyczny eksport logów</string>
   <string name="pref_set_auto_log_export" formatted="false">Ustaw automatyczne kopie zapasowe logów</string>
   <string name="pref_edit_auto_log_export" formatted="false">Edytuj automatyczne kopie zapasowe logów</string>

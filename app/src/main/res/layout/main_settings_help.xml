@@ -26,14 +26,6 @@
 
         <TextView
             style="@style/help_cat"
-            android:text="@string/units_formatting_settings" />
-
-        <TextView
-            style="@style/help_text"
-            android:text="@string/units_formatting_settings_help" />
-
-        <TextView
-            style="@style/help_cat"
             android:text="@string/time_estimates_settings" />
 
         <TextView
@@ -57,16 +49,8 @@
             android:text="@string/notification_settings_help" />
 
         <TextView
-            style="@style/help_cat"
-            android:text="@string/status_bar_icon_settings" />
-
-        <TextView
             style="@style/help_text"
             android:text="@string/status_bar_icon_settings_help" />
-
-        <TextView
-            style="@style/help_cat"
-            android:text="@string/status_bar_chip_settings" />
 
         <TextView
             style="@style/help_text"

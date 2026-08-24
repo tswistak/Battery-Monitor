@@ -264,13 +264,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Spravovať tento typ alarmu</string>
 
   <string name="notification_settings" formatted="false">Hlavné oznámenie</string>
-  <string name="notification_settings_summary" formatted="false">Nakonfigurujte hlavné upozornenie</string>
+  <string name="notification_settings_summary" formatted="false">Nastavte obsah upozornenia, ikonu stavového riadka a čip živých aktualizácií.</string>
   <string name="notification_settings_help" formatted="false">Môžete nakonfigurovať, ktorý obsah sa má zobraziť v rozbaľovacom upozornení.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikona stavového riadka</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Vyberte obsah ikony</string>
   <string name="status_bar_icon_settings_help" formatted="false">Vyberte, či ikona upozornenia zobrazuje percento batérie alebo teplotu, či sa v ikone zobrazuje symbol jednotky a či má mať nabíjanie vlastnú ikonu. Od Androidu 16 nemusí ikona stavového riadka fungovať vo všetkých variantoch operačného systému.</string>
   <string name="status_bar_chip_settings" formatted="false">Čip stavového riadka</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Nakonfigurujte obsah čipu Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">Pri živých aktualizáciách môžete nastaviť obsah čipu stavového riadka, interval zmeny a zobrazenie emodži nabíjania.</string>
   <string name="current_state_settings_summary" formatted="false">Nastavenia obrazovky Aktuálne informácie</string>
   <string name="current_state_settings_help" formatted="false">Nastavte informácie zobrazované na obrazovke Aktuálne informácie. Možnosti prúdu batérie riadia živý údaj zobrazený spolu s ostatnými podrobnosťami o batérii.</string>
@@ -280,9 +278,6 @@
   <string name="other_settings" formatted="false">Všeobecné</string>
   <string name="other_settings_summary" formatted="false">Nastavte všeobecné správanie aplikácie a bežné predvoľby.</string>
   <string name="other_settings_help" formatted="false">Pomocou týchto nastavení prispôsobíte Battery Monitor každodennému používaniu. Zahŕňajú všeobecné správanie a predvoľby, vďaka ktorým aplikácia prirodzene zapadne do spôsobu používania zariadenia.</string>
-  <string name="units_formatting_settings" formatted="false">Jednotky a formátovanie</string>
-  <string name="units_formatting_settings_summary" formatted="false">Vyberte jednotky a formáty používané na zobrazenie údajov o batérii v celej aplikácii.</string>
-  <string name="units_formatting_settings_help" formatted="false">Pomocou týchto nastavení zostanú informácie o batérii zrozumiteľné a ľahko čitateľné. Vaše voľby sa používajú jednotne všade, kde sa v Battery Monitor zobrazujú príslušné hodnoty a trvania.</string>
   <string name="advanced_settings" formatted="false">Rozšírené</string>
   <string name="advanced_settings_summary" formatted="false">Dolaďte Battery Monitor pomocou ďalších ovládacích prvkov na špecializované použitie.</string>
   <string name="advanced_settings_help" formatted="false">Tieto nastavenia použite, keď chcete mať nad fungovaním Battery Monitor väčšiu kontrolu než pri bežných predvoľbách. Predvolené hodnoty vyhovujú väčšine používateľov, ďalšie úpravy však môžu aplikáciu lepšie prispôsobiť konkrétnym potrebám monitorovania.</string>
@@ -312,7 +307,6 @@
   <string name="pref_manage_main_channel" formatted="false">Spravovať hlavný kanál</string>
 
   <string name="pref_cat_notification_content" formatted="false">Obsah</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Čip stavového riadka</string>
   <string name="pref_live_update_display" formatted="false">Zobrazovat Live Update</string>
   <string name="pref_live_update_display_summary" formatted="false">Zobrazit v stavovom riadku:</string>
   <string name="pref_live_update_display_help" formatted="false">Vyberte, kedy sa ma v stavovom riadku zobrazovat cip Live Update v Androide 16+.</string>
@@ -348,7 +342,6 @@
 
   <string name="custom" formatted="false">Vlastné...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Ikona upozornenia</string>
   <string name="pref_icon_content" formatted="false">Obsah ikony</string>
   <string name="pref_icon_content_help" formatted="false">Vyberte, či ikona stavového riadka zobrazuje percento batérie alebo teplota batérie. Teplota sa riadi vami zvolenou jednotkou.</string>
   <string name="pref_show_icon_unit" formatted="false">Zobraziť symbol jednotky</string>
@@ -382,7 +375,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Zadajte hodnotu od 1 do 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d sekúnd</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Indikátor nabíjania</string>
   <string name="pref_indicate_charging" formatted="false">Označte nabíjanie</string>
   <string name="pref_indicate_charging_summary" formatted="false">Zmeniť ikonu na označenie pri nabíjaní?</string>
   <string name="pref_indicate_charging_help" formatted="false">Ikona nabíjania môže pod číslom zobrazovať blesk. Túto možnosť vypnite, ak chcete rovnakú ikonu pri nabíjaní aj vybíjaní.</string>
@@ -395,9 +387,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Zmazať záznamy staršie ako:</string>
   <string name="pref_max_log_age_help" formatted="false">Ak je zaznamenávanie zapnuté, pri každom pripojení zariadenia sa odstránia záznamy staršie ako táto hodnota. Výberom Nikdy neodstraňovať ich ponecháte, kým ich nevymažete ručne.</string>
 
-  <string name="pref_cat_units" formatted="false">Jednotky</string>
   <string name="pref_temperature_unit" formatted="false">Jednotka teploty</string>
-  <string name="pref_cat_formatting" formatted="false">Formátovanie</string>
   <string name="pref_temperature_unit_help" formatted="false">Vyberte, či sa teploty zobrazujú v stupňoch Celzia alebo Fahrenheita.</string>
 
   <string name="pref_cat_autostart" formatted="false">Automatické spustenie</string>
@@ -425,7 +415,7 @@
     \n
     Nakoniec môžete mať predpoveď založenú výlučne na vašej dlhodobé priemerné používanie.</string>
 
-  <string name="pref_cat_language" formatted="false">Jazyk</string>
+  <string name="pref_cat_language" formatted="false">Jazyk a formátovanie</string>
   <string name="pref_change_app_language" formatted="false">Jazyk aplikácie</string>
   <string name="pref_change_app_language_help" formatted="false">Vyberte jazyk používaný aplikáciou Battery Monitor. Predvolená hodnota systému sa riadi jazykom zariadenia.</string>
   <string name="pref_long_duration_format" formatted="false">Formát dlhého trvania</string>
@@ -562,6 +552,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">Zmeniť poradie: %1$s</string>
 
   <string name="pref_backup_restore" formatted="false">Záloha a obnovenie</string>
+  <string name="backup_restore_settings_summary" formatted="false">Zálohujte, obnovujte a prenášajte nastavenia aplikácie a údaje o batérii.</string>
   <string name="pref_auto_log_export" formatted="false">Automatický export záznamov</string>
   <string name="pref_set_auto_log_export" formatted="false">Nastaviť automatický export záznamov</string>
   <string name="pref_edit_auto_log_export" formatted="false">Upraviť automatický export záznamov</string>

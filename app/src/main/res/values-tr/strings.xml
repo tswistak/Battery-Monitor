@@ -238,13 +238,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Bu Alarm Türünü Yönet</string>
 
   <string name="notification_settings" formatted="false">Ana Bildirim</string>
-  <string name="notification_settings_summary" formatted="false">Ana bildirimi yapılandır</string>
+  <string name="notification_settings_summary" formatted="false">Bildirim içeriğini, durum çubuğu simgesini ve Canlı Güncelleme çipini yapılandırın.</string>
   <string name="notification_settings_help" formatted="false">Açılır bildirimde hangi içeriğin gösterileceğini yapılandırabilirsiniz.</string>
   <string name="status_bar_icon_settings" formatted="false">Durum Çubuğu Simgesi</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Simge içeriğini seçin</string>
   <string name="status_bar_icon_settings_help" formatted="false">Bildirim simgesinin pil yüzdesini mi yoksa sıcaklığı mı göstereceğini, simgede birim sembolünün gösterilip gösterilmeyeceğini ve şarj için ayrı bir simge kullanılıp kullanılmayacağını seçin. Android 16 ve sonrasında durum çubuğu simgesi her işletim sistemi varyantında çalışmayabilir.</string>
   <string name="status_bar_chip_settings" formatted="false">Durum Çubuğu Çipi</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Live Updates çip içeriğini ayarla</string>
   <string name="status_bar_chip_settings_help" formatted="false">Live Updates ile durum çubuğu çipinin içeriğini ve değişme aralığını ayarlayabilirsiniz.</string>
   <string name="current_state_settings_summary" formatted="false">Güncel Bilgi ekranı ayarları</string>
   <string name="current_state_settings_help" formatted="false">Güncel Bilgi ekranında gösterilen bilgileri yapılandırın. Pil akımı seçenekleri, diğer pil ayrıntılarıyla birlikte gösterilen canlı ölçümü kontrol eder.</string>
@@ -254,9 +252,6 @@
   <string name="other_settings" formatted="false">Genel</string>
   <string name="other_settings_summary" formatted="false">Uygulamanın genel davranışını ve günlük tercihlerini yapılandırın.</string>
   <string name="other_settings_help" formatted="false">Battery Monitor’ü günlük kullanımınıza uyarlamak için bu ayarları kullanın. Bunlar, uygulamanın cihazınızı kullanma biçiminize doğal olarak uyum sağlamasına yardımcı olan genel davranış ve tercihleri kapsar.</string>
-  <string name="units_formatting_settings" formatted="false">Birimler ve biçimlendirme</string>
-  <string name="units_formatting_settings_summary" formatted="false">Uygulama genelinde pil verilerini göstermek için kullanılan birimleri ve biçimleri seçin.</string>
-  <string name="units_formatting_settings_help" formatted="false">Pil bilgilerinin tanıdık ve kolay okunur kalması için bu ayarları kullanın. Seçimleriniz, ilgili değerlerin ve sürelerin Battery Monitor’de göründüğü her yerde tutarlı biçimde uygulanır.</string>
   <string name="advanced_settings" formatted="false">Gelişmiş</string>
   <string name="advanced_settings_summary" formatted="false">Battery Monitor’ü özel kullanım alanları için ek kontrollerle ayrıntılı olarak ayarlayın.</string>
   <string name="advanced_settings_help" formatted="false">Battery Monitor’ün çalışma biçimi üzerinde günlük tercihlerin ötesinde daha fazla kontrol istediğinizde bu ayarları kullanın. Varsayılanlar çoğu kullanıcı için uygundur; ek düzenlemeler ise uygulamayı belirli izleme ihtiyaçlarına daha iyi uyarlayabilir.</string>
@@ -286,7 +281,6 @@
   <string name="pref_manage_main_channel" formatted="false">Ana Kanalı Yönet</string>
 
   <string name="pref_cat_notification_content" formatted="false">İçerik</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Durum Çubuğu Çipi</string>
   <string name="pref_live_update_display" formatted="false">Canli guncellemeyi goster</string>
   <string name="pref_live_update_display_summary" formatted="false">Durum cubugunda goster:</string>
   <string name="pref_live_update_display_help" formatted="false">Android 16+ Canli Guncelleme rozetinin durum cubugunda ne zaman gosterilecegini secin.</string>
@@ -322,7 +316,6 @@
 
   <string name="custom" formatted="false">Özel...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Bildirim simgesi</string>
   <string name="pref_icon_content" formatted="false">Simge İçeriği</string>
   <string name="pref_icon_content_help" formatted="false">Durum çubuğu simgesinin pil yüzdesini mi sıcaklığı mı göstereceğini seçin.</string>
   <string name="pref_show_icon_unit" formatted="false">Birim sembolünü göster</string>
@@ -356,7 +349,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">1 ile 3600 arasında bir değer girin.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d saniye</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Şarj oluyor Göstergesi</string>
   <string name="pref_indicate_charging" formatted="false">Şarjı Göster</string>
   <string name="pref_indicate_charging_summary" formatted="false">Şarj olurken simge değişsin mi?</string>
   <string name="pref_indicate_charging_help" formatted="false">Şarj simgesi sayının altında bir yıldırım gösterebilir. Şarj ve deşarj sırasında aynı simgeyi tercih ediyorsanız bu ayarı kapatın.</string>
@@ -369,9 +361,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Şundan eski kayıtları sil:</string>
   <string name="pref_max_log_age_help" formatted="false">Kayıt tutma açıksa, cihazı her bağladığınızda bu değerden eski kayıtlar silinir. Kayıtları elle temizleyene kadar saklamak için Asla silme seçeneğini seçin.</string>
 
-  <string name="pref_cat_units" formatted="false">Birimler</string>
   <string name="pref_temperature_unit" formatted="false">Sıcaklık birimi</string>
-  <string name="pref_cat_formatting" formatted="false">Biçimlendirme</string>
   <string name="pref_temperature_unit_help" formatted="false">Sıcaklıkların Santigrat veya Fahrenhayt olarak gösterilmesini seçin.</string>
 
   <string name="pref_cat_autostart" formatted="false">Otomatik başlat</string>
@@ -388,7 +378,7 @@
   <string name="pref_prediction_type" formatted="false">Tahmin Türü</string>
   <string name="pref_prediction_type_help" formatted="false">Battery Monitor\'un kalan pil ömrünü / tam doluma kalan süreyi nasıl tahmin edeceğini buradan seçebilirsiniz.</string>
 
-  <string name="pref_cat_language" formatted="false">Dil</string>
+  <string name="pref_cat_language" formatted="false">Dil ve biçimlendirme</string>
   <string name="pref_change_app_language" formatted="false">Uygulama dili</string>
   <string name="pref_change_app_language_help" formatted="false">Battery Monitor’ün kullanacağı dili seçin. Sistem varsayılanı cihazınızın dilini izler.</string>
   <string name="pref_long_duration_format" formatted="false">Uzun süre biçimi</string>
@@ -513,6 +503,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s öğesini yeniden sırala</string>
 
   <string name="pref_backup_restore" formatted="false">Yedekleme ve geri yükleme</string>
+  <string name="backup_restore_settings_summary" formatted="false">Uygulama ayarlarınızı ve pil verilerinizi yedekleyin, geri yükleyin ve aktarın.</string>
   <string name="pref_auto_log_export" formatted="false">Otomatik günlük dışa aktarımı</string>
   <string name="pref_set_auto_log_export" formatted="false">Otomatik dışa aktarımı ayarla</string>
   <string name="pref_edit_auto_log_export" formatted="false">Otomatik dışa aktarımı düzenle</string>

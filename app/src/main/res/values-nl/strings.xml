@@ -242,13 +242,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Dit alarmtype beheren</string>
 
   <string name="notification_settings" formatted="false">Hoofdmelding</string>
-  <string name="notification_settings_summary" formatted="false">Hoofdmelding configureren</string>
+  <string name="notification_settings_summary" formatted="false">Configureer meldingsinhoud, statusbalkpictogram en Live Update-chip.</string>
   <string name="notification_settings_help" formatted="false">Je kunt de inhoud en het uiterlijk van de melding aanpassen.</string>
   <string name="status_bar_icon_settings" formatted="false">Statusicoon</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Kies de icooninhoud</string>
   <string name="status_bar_icon_settings_help" formatted="false">Kies of het meldingsicoon het batterijpercentage of de temperatuur toont, of het eenheidssymbool in het icoon wordt weergegeven en of laden een apart icoon gebruikt. Vanaf Android 16 werkt het statusbalkpictogram mogelijk niet op elke variant van het besturingssysteem.</string>
   <string name="status_bar_chip_settings" formatted="false">Statusbalkchip</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Stel de inhoud van de Live Updates-chip in</string>
   <string name="status_bar_chip_settings_help" formatted="false">Met Live Updates kun je instellen wat de statusbalkchip toont, hoe vaak de inhoud wisselt en of de laad-emoji wordt weergegeven.</string>
   <string name="current_state_settings_summary" formatted="false">Instellingen voor het statusscherm</string>
   <string name="current_state_settings_help" formatted="false">Stel in welke informatie op het statusscherm wordt getoond. De opties voor batterijstroom bepalen de actuele meting die naast de andere batterijgegevens verschijnt.</string>
@@ -258,9 +256,6 @@
   <string name="other_settings" formatted="false">Algemeen</string>
   <string name="other_settings_summary" formatted="false">Configureer het algemene gedrag en de dagelijkse voorkeuren van de app.</string>
   <string name="other_settings_help" formatted="false">Gebruik deze instellingen om Battery Monitor aan te passen aan dagelijks gebruik. Ze omvatten algemeen appgedrag en voorkeuren waarmee de app vanzelfsprekend aansluit op de manier waarop je het apparaat gebruikt.</string>
-  <string name="units_formatting_settings" formatted="false">Eenheden en opmaak</string>
-  <string name="units_formatting_settings_summary" formatted="false">Kies de eenheden en indelingen waarmee batterijgegevens in de hele app worden weergegeven.</string>
-  <string name="units_formatting_settings_help" formatted="false">Gebruik deze instellingen om batterijgegevens vertrouwd en gemakkelijk leesbaar te houden. Je keuzes worden overal consequent toegepast waar de bijbehorende waarden en tijdsduren in Battery Monitor verschijnen.</string>
   <string name="advanced_settings" formatted="false">Geavanceerd</string>
   <string name="advanced_settings_summary" formatted="false">Stem Battery Monitor nauwkeurig af met extra bediening voor gespecialiseerde toepassingen.</string>
   <string name="advanced_settings_help" formatted="false">Gebruik deze instellingen als je meer controle wilt over de werking van Battery Monitor dan de dagelijkse voorkeuren bieden. De standaardwaarden zijn geschikt voor de meeste gebruikers, terwijl aanvullende aanpassingen de app beter kunnen afstemmen op specifieke controlebehoeften.</string>
@@ -290,7 +285,6 @@
   <string name="pref_manage_main_channel" formatted="false">Hoofdkanaal beheren</string>
 
   <string name="pref_cat_notification_content" formatted="false">Inhoud</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Statusbalkchip</string>
   <string name="pref_live_update_display" formatted="false">Live-update tonen</string>
   <string name="pref_live_update_display_summary" formatted="false">Tonen in statusbalk:</string>
   <string name="pref_live_update_display_help" formatted="false">Kies wanneer de live-updatechip van Android 16+ in de statusbalk moet worden getoond.</string>
@@ -326,7 +320,6 @@
 
   <string name="custom" formatted="false">Aangepast...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Meldingsicoon</string>
   <string name="pref_icon_content" formatted="false">Icooninhoud</string>
   <string name="pref_icon_content_help" formatted="false">Kies of het statusbalkicoon batterijpercentage of batterijtemperatuur toont. Temperatuur volgt je gekozen eenheid.</string>
   <string name="pref_show_icon_unit" formatted="false">Eenheidssymbool tonen</string>
@@ -360,7 +353,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Voer een waarde van 1 tot 3600 in.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d seconden</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Indicatie tijdens opladen</string>
   <string name="pref_indicate_charging" formatted="false">Indicatie tonen tijdens opladen</string>
   <string name="pref_indicate_charging_summary" formatted="false">Icoon veranderen tijdens opladen</string>
   <string name="pref_indicate_charging_help" formatted="false">Het laadicoon kan een bliksemschicht onder het getal tonen. Schakel dit uit als je tijdens laden en ontladen hetzelfde icoon wilt.</string>
@@ -373,9 +365,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Verwijder logboeken ouder dan:</string>
   <string name="pref_max_log_age_help" formatted="false">Als logboekregistratie is ingeschakeld, worden telkens wanneer je het apparaat aansluit logs verwijderd die ouder zijn dan deze waarde. Kies Nooit verwijderen om logs te bewaren totdat je ze handmatig wist.</string>
 
-  <string name="pref_cat_units" formatted="false">Eenheden</string>
   <string name="pref_temperature_unit" formatted="false">Temperatuureenheid</string>
-  <string name="pref_cat_formatting" formatted="false">Opmaak</string>
   <string name="pref_temperature_unit_help" formatted="false">Kies of temperaturen in Celsius of Fahrenheit worden weergegeven.</string>
 
   <string name="pref_cat_autostart" formatted="false">Automatisch starten</string>
@@ -404,7 +394,7 @@
     \n
     Tot slot kun je de voorspelling uitsluitend op je langetermijngemiddelde gebruik baseren.</string>
 
-  <string name="pref_cat_language" formatted="false">Taal</string>
+  <string name="pref_cat_language" formatted="false">Taal en opmaak</string>
   <string name="pref_change_app_language" formatted="false">App-taal</string>
   <string name="pref_change_app_language_help" formatted="false">Selecteer de taal die Battery Monitor gebruikt. De systeemstandaard volgt de taal van je apparaat.</string>
   <string name="pref_long_duration_format" formatted="false">Opmaak van lange duur</string>
@@ -541,6 +531,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s verplaatsen</string>
 
   <string name="pref_backup_restore" formatted="false">Back-up en herstel</string>
+  <string name="backup_restore_settings_summary" formatted="false">Maak back-ups van je app-instellingen en batterijgegevens, herstel ze en draag ze over.</string>
   <string name="pref_auto_log_export" formatted="false">Automatische logboekexport</string>
   <string name="pref_set_auto_log_export" formatted="false">Automatische logboekexport instellen</string>
   <string name="pref_edit_auto_log_export" formatted="false">Automatische logboekexport bewerken</string>

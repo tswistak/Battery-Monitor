@@ -262,13 +262,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Настроить этот тип предупреждения</string>
 
   <string name="notification_settings" formatted="false">Основное уведомление</string>
-  <string name="notification_settings_summary" formatted="false">Настройте основное уведомление</string>
+  <string name="notification_settings_summary" formatted="false">Настройте содержимое уведомления, значок строки состояния и чип Live Update.</string>
   <string name="notification_settings_help" formatted="false">Вы можете настроить, что и как показывать в уведомлении (на опускающейся шторке).</string>
   <string name="status_bar_icon_settings" formatted="false">Значок строки уведомлений</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Выберите содержимое значка</string>
   <string name="status_bar_icon_settings_help" formatted="false">Выберите, будет ли значок уведомления показывать процент заряда или температуру, будет ли в значке отображаться символ единицы и нужен ли отдельный значок во время зарядки. Начиная с Android 16 значок строки состояния может работать не во всех вариантах операционной системы.</string>
   <string name="status_bar_chip_settings" formatted="false">Чип в строке состояния</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Настройка содержимого чипа Live Updates</string>
   <string name="status_bar_chip_settings_help" formatted="false">Для Live Updates можно настроить содержимое чипа строки состояния, частоту его смены и отображение эмодзи зарядки.</string>
   <string name="current_state_settings_summary" formatted="false">Настройки экрана «Текущая информация»</string>
   <string name="current_state_settings_help" formatted="false">Настройте информацию на экране «Текущая информация». Параметры тока батареи управляют показом текущего значения вместе с остальными сведениями о батарее.</string>
@@ -278,9 +276,6 @@
   <string name="other_settings" formatted="false">Общие</string>
   <string name="other_settings_summary" formatted="false">Настройте общее поведение приложения и повседневные параметры.</string>
   <string name="other_settings_help" formatted="false">Используйте эти настройки, чтобы адаптировать Battery Monitor к повседневному использованию. Они охватывают общее поведение и параметры, которые помогают приложению естественно вписаться в привычный способ использования устройства.</string>
-  <string name="units_formatting_settings" formatted="false">Единицы и форматирование</string>
-  <string name="units_formatting_settings_summary" formatted="false">Выберите единицы и форматы отображения данных аккумулятора во всём приложении.</string>
-  <string name="units_formatting_settings_help" formatted="false">Используйте эти настройки, чтобы информация об аккумуляторе была привычной и легко читалась. Выбранные параметры применяются одинаково везде, где в Battery Monitor отображаются соответствующие значения и интервалы времени.</string>
   <string name="advanced_settings" formatted="false">Расширенные</string>
   <string name="advanced_settings_summary" formatted="false">Точно настройте Battery Monitor с помощью дополнительных элементов управления для специальных сценариев.</string>
   <string name="advanced_settings_help" formatted="false">Используйте эти настройки, если вам нужен больший контроль над работой Battery Monitor, чем дают повседневные параметры. Значения по умолчанию подходят большинству пользователей, а дополнительные настройки помогают лучше адаптировать приложение к особым задачам мониторинга.</string>
@@ -310,7 +305,6 @@
   <string name="pref_manage_main_channel" formatted="false">Настроить основной канал</string>
 
   <string name="pref_cat_notification_content" formatted="false">Содержание</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Чип в строке состояния</string>
   <string name="pref_live_update_display" formatted="false">Показывать Live Update</string>
   <string name="pref_live_update_display_summary" formatted="false">Показывать в строке состояния:</string>
   <string name="pref_live_update_display_help" formatted="false">Выберите, когда в строке состояния должен показываться чип Live Update в Android 16+.</string>
@@ -346,7 +340,6 @@
 
   <string name="custom" formatted="false">Настраиваемый...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Значок уведомления</string>
   <string name="pref_icon_content" formatted="false">Содержимое значка</string>
   <string name="pref_icon_content_help" formatted="false">Выберите, что показывать в значке строки состояния: процент заряда батареи или ее температуру. Для температуры используется выбранная единица измерения.</string>
   <string name="pref_show_icon_unit" formatted="false">Показывать символ единицы</string>
@@ -380,7 +373,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Введите значение от 1 до 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d с</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Индикатор зарядки</string>
   <string name="pref_indicate_charging" formatted="false">Показывать зарядку</string>
   <string name="pref_indicate_charging_summary" formatted="false">Изменять значок во время зарядки?</string>
   <string name="pref_indicate_charging_help" formatted="false">Значок зарядки может показывать молнию под числом. Отключите этот параметр, если хотите видеть один и тот же значок при зарядке и разрядке.</string>
@@ -393,9 +385,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Удалить журналы старше:</string>
   <string name="pref_max_log_age_help" formatted="false">Если ведение журнала включено, при каждом подключении устройства будут удаляться записи старше этого значения. Выберите Никогда не удалять, чтобы хранить записи, пока вы не очистите их вручную.</string>
 
-  <string name="pref_cat_units" formatted="false">Единицы</string>
   <string name="pref_temperature_unit" formatted="false">Единица измерения температуры</string>
-  <string name="pref_cat_formatting" formatted="false">Форматирование</string>
   <string name="pref_temperature_unit_help" formatted="false">Выберите отображение температуры в градусах Цельсия или Фаренгейта.</string>
 
   <string name="pref_cat_autostart" formatted="false">Автозапуск</string>
@@ -422,7 +412,7 @@
     \n
     И, наконец, прогноз может основываться исключительно на усредненных данных об использовании за длительный период времени.</string>
 
-  <string name="pref_cat_language" formatted="false">Язык</string>
+  <string name="pref_cat_language" formatted="false">Язык и форматирование</string>
   <string name="pref_change_app_language" formatted="false">Язык приложения</string>
   <string name="pref_change_app_language_help" formatted="false">Выберите язык Battery Monitor. Системное значение по умолчанию соответствует языку устройства.</string>
   <string name="pref_long_duration_format" formatted="false">Формат длительных интервалов</string>
@@ -557,6 +547,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">Изменить порядок: %1$s</string>
 
   <string name="pref_backup_restore" formatted="false">Резервное копирование и восстановление</string>
+  <string name="backup_restore_settings_summary" formatted="false">Создавайте резервные копии, восстанавливайте и переносите настройки приложения и данные аккумулятора.</string>
   <string name="pref_auto_log_export" formatted="false">Автоматический экспорт журналов</string>
   <string name="pref_set_auto_log_export" formatted="false">Настроить автоматический экспорт</string>
   <string name="pref_edit_auto_log_export" formatted="false">Изменить автоматический экспорт</string>

@@ -260,13 +260,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Tvarkyti šį aliarmo tipą</string>
 
   <string name="notification_settings" formatted="false">Pagrindinis pranešimas</string>
-  <string name="notification_settings_summary" formatted="false">Konfigūruokite pagrindinį pranešimą</string>
+  <string name="notification_settings_summary" formatted="false">Konfigūruokite pranešimo turinį, būsenos juostos piktogramą ir tiesioginio naujinimo lustą.</string>
   <string name="notification_settings_help" formatted="false">Galite konfigūruoti, kurį turinį rodyti išskleidžiamajame pranešime.</string>
   <string name="status_bar_icon_settings" formatted="false">Būsenos juostos piktograma</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Pasirinkite piktogramos turinį</string>
   <string name="status_bar_icon_settings_help" formatted="false">Pasirinkite, ar pranešimo piktograma rodo akumuliatoriaus procentą ar temperatūrą, ar piktogramoje rodomas vieneto simbolis ir ar įkrovimui turi būti naudojama atskira piktograma. Nuo „Android 16“ būsenos juostos piktograma gali veikti ne visuose operacinės sistemos variantuose.</string>
   <string name="status_bar_chip_settings" formatted="false">Būsenos juostos lustas</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Konfigūruokite tiesioginių atnaujinimų lusto turinį</string>
   <string name="status_bar_chip_settings_help" formatted="false">Tiesioginiuose naujiniuose galite konfigūruoti būsenos juostos lusto turinį, jo keitimo intervalą ir įkrovimo jaustuką.</string>
   <string name="current_state_settings_summary" formatted="false">Dabartinės informacijos ekrano nustatymai</string>
   <string name="current_state_settings_help" formatted="false">Nustatykite, kokia informacija rodoma Dabartinės informacijos ekrane. Akumuliatoriaus srovės parinktys valdo tiesioginį rodmenį, pateikiamą su kitais akumuliatoriaus duomenimis.</string>
@@ -276,9 +274,6 @@
   <string name="other_settings" formatted="false">Bendrieji</string>
   <string name="other_settings_summary" formatted="false">Nustatykite bendrą programėlės veikimą ir kasdienes nuostatas.</string>
   <string name="other_settings_help" formatted="false">Naudokite šiuos nustatymus, kad pritaikytumėte „Battery Monitor“ kasdieniam naudojimui. Jie apima bendrą programėlės veikimą ir nuostatas, padedančias jai natūraliai derėti prie jūsų įrenginio naudojimo būdo.</string>
-  <string name="units_formatting_settings" formatted="false">Vienetai ir formatavimas</string>
-  <string name="units_formatting_settings_summary" formatted="false">Pasirinkite visoje programėlėje naudojamus akumuliatoriaus duomenų vienetus ir formatus.</string>
-  <string name="units_formatting_settings_help" formatted="false">Naudokite šiuos nustatymus, kad akumuliatoriaus informacija būtų įprasta ir lengvai skaitoma. Jūsų pasirinkimai nuosekliai taikomi visur, kur „Battery Monitor“ rodomos susijusios reikšmės ir trukmės.</string>
   <string name="advanced_settings" formatted="false">Išplėstiniai</string>
   <string name="advanced_settings_summary" formatted="false">Tiksliau pritaikykite „Battery Monitor“ papildomais valdikliais specializuotoms reikmėms.</string>
   <string name="advanced_settings_help" formatted="false">Naudokite šiuos nustatymus, kai norite labiau valdyti „Battery Monitor“ veikimą nei leidžia kasdienės nuostatos. Numatytieji nustatymai tinka daugumai naudotojų, o papildomi pakeitimai gali geriau pritaikyti programėlę konkretiems stebėjimo poreikiams.</string>
@@ -308,7 +303,6 @@
   <string name="pref_manage_main_channel" formatted="false">Valdykite pagrindinį kanalą</string>
 
   <string name="pref_cat_notification_content" formatted="false">Turinys</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Būsenos juostos lustas</string>
   <string name="pref_live_update_display" formatted="false">Rodyti tiesioginį atnaujinimą</string>
   <string name="pref_live_update_display_summary" formatted="false">Rodyti būsenos juostoje:</string>
   <string name="pref_live_update_display_help" formatted="false">Pasirinkite, kada Android 16+ tiesioginio atnaujinimo žetonas turi būti rodomas būsenos juostoje.</string>
@@ -344,7 +338,6 @@
 
   <string name="custom" formatted="false">Pasirinktinis...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Pranešimo piktograma</string>
   <string name="pref_icon_content" formatted="false">Piktogramos turinys</string>
   <string name="pref_icon_content_help" formatted="false">Pasirinkite, ar būsenos juostos piktograma rodo akumuliatoriaus procentą arba akumuliatoriaus temperatūra. Temperatūra atitinka jūsų pasirinktą vienetą.</string>
   <string name="pref_show_icon_unit" formatted="false">Rodyti vieneto simbolį</string>
@@ -378,7 +371,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Įveskite reikšmę nuo 1 iki 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d sek.</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Įkrovimo indikatorius</string>
   <string name="pref_indicate_charging" formatted="false">Nurodykite įkrovimą</string>
   <string name="pref_indicate_charging_summary" formatted="false">Keisti piktogramą, kad būtų rodomas įkrovimas?</string>
   <string name="pref_indicate_charging_help" formatted="false">Įkrovimo piktograma gali rodyti žaibą po skaičiumi. Išjunkite šį nustatymą, jei norite tos pačios piktogramos kraunant ir išsikraunant.</string>
@@ -391,9 +383,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Ištrinti senesnius įrašus nei:</string>
   <string name="pref_max_log_age_help" formatted="false">Jei registravimas įjungtas, kiekvieną kartą prijungus įrenginį bus ištrinti už šią reikšmę senesni įrašai. Pasirinkite Niekada netrinti, kad įrašai būtų saugomi, kol juos ištrinsite rankiniu būdu.</string>
 
-  <string name="pref_cat_units" formatted="false">Vienetai</string>
   <string name="pref_temperature_unit" formatted="false">Temperatūros vienetas</string>
-  <string name="pref_cat_formatting" formatted="false">Formatavimas</string>
   <string name="pref_temperature_unit_help" formatted="false">Pasirinkite, ar temperatūra rodoma Celsijaus, ar Farenheito laipsniais.</string>
 
   <string name="pref_cat_autostart" formatted="false">Auto-Paleidimas</string>
@@ -421,7 +411,7 @@
     \n
     Galiausiai galite turėti prognozę, pagrįstą tik jūsų ilgalaikis vidutinis naudojimas.</string>
 
-  <string name="pref_cat_language" formatted="false">Kalba</string>
+  <string name="pref_cat_language" formatted="false">Kalba ir formatavimas</string>
   <string name="pref_change_app_language" formatted="false">Programos kalba</string>
   <string name="pref_change_app_language_help" formatted="false">Pasirinkite „Battery Monitor“ naudojamą kalbą. Sistemos numatytoji nuostata atitinka įrenginio kalbą.</string>
   <string name="pref_long_duration_format" formatted="false">Ilgos trukmės formatas</string>
@@ -558,6 +548,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">Keisti „%1$s“ tvarką</string>
 
   <string name="pref_backup_restore" formatted="false">Atsarginė kopija ir atkūrimas</string>
+  <string name="backup_restore_settings_summary" formatted="false">Kurkite programėlės nustatymų ir akumuliatoriaus duomenų atsargines kopijas, juos atkurkite ir perkelkite.</string>
   <string name="pref_auto_log_export" formatted="false">Automatinis žurnalų eksportas</string>
   <string name="pref_set_auto_log_export" formatted="false">Nustatyti automatinį žurnalų eksportą</string>
   <string name="pref_edit_auto_log_export" formatted="false">Redaguoti automatinį žurnalų eksportą</string>

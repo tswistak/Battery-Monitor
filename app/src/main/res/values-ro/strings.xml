@@ -248,13 +248,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Gestionați acest tip de alarmă</string>
 
   <string name="notification_settings" formatted="false">Notificare principală</string>
-  <string name="notification_settings_summary" formatted="false">Configurați notificarea principală</string>
+  <string name="notification_settings_summary" formatted="false">Configurați conținutul notificării, pictograma barei de stare și cipul de actualizare live.</string>
   <string name="notification_settings_help" formatted="false">Puteți configura ce conținut să se afișeze în notificarea derulantă.</string>
   <string name="status_bar_icon_settings" formatted="false">Pictograma barei de stare</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Alege conținutul pictogramei</string>
   <string name="status_bar_icon_settings_help" formatted="false">Alege dacă pictograma notificării afișează procentul bateriei sau temperatura, dacă simbolul unității este afișat în pictogramă și dacă încărcarea folosește o pictogramă dedicată. Începând cu Android 16, este posibil ca pictograma barei de stare să nu funcționeze pe toate variantele sistemului de operare.</string>
   <string name="status_bar_chip_settings" formatted="false">Cip bară de stare</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Configurați conținutul cipului actualizărilor în direct</string>
   <string name="status_bar_chip_settings_help" formatted="false">Cu actualizări live, puteți configura conținutul cipului barei de stare, intervalul de schimbare și emoji-ul de încărcare.</string>
   <string name="current_state_settings_summary" formatted="false">Setări pentru ecranul Informații actuale</string>
   <string name="current_state_settings_help" formatted="false">Configurează informațiile afișate pe ecranul Informații actuale. Opțiunile pentru curentul bateriei controlează valoarea în timp real afișată împreună cu celelalte detalii ale bateriei.</string>
@@ -264,9 +262,6 @@
   <string name="other_settings" formatted="false">General</string>
   <string name="other_settings_summary" formatted="false">Configurați comportamentul general și preferințele uzuale ale aplicației.</string>
   <string name="other_settings_help" formatted="false">Folosiți aceste setări pentru a adapta Battery Monitor utilizării de zi cu zi. Ele acoperă comportamentul general și preferințele care ajută aplicația să se integreze firesc în modul în care folosiți dispozitivul.</string>
-  <string name="units_formatting_settings" formatted="false">Unități și formatare</string>
-  <string name="units_formatting_settings_summary" formatted="false">Alegeți unitățile și formatele folosite pentru afișarea datelor bateriei în întreaga aplicație.</string>
-  <string name="units_formatting_settings_help" formatted="false">Folosiți aceste setări pentru ca informațiile despre baterie să fie familiare și ușor de citit. Alegerile sunt aplicate consecvent oriunde apar valorile și duratele relevante în Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Avansat</string>
   <string name="advanced_settings_summary" formatted="false">Reglați Battery Monitor cu opțiuni suplimentare pentru utilizări specializate.</string>
   <string name="advanced_settings_help" formatted="false">Folosiți aceste setări când doriți mai mult control asupra modului în care funcționează Battery Monitor decât oferă preferințele uzuale. Valorile implicite sunt potrivite pentru majoritatea utilizatorilor, iar ajustările suplimentare pot adapta mai bine aplicația unor nevoi specifice de monitorizare.</string>
@@ -296,7 +291,6 @@
   <string name="pref_manage_main_channel" formatted="false">Gestionați canalul principal</string>
 
   <string name="pref_cat_notification_content" formatted="false">Conţinut</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Cip bară de stare</string>
   <string name="pref_live_update_display" formatted="false">Afiseaza actualizarea live</string>
   <string name="pref_live_update_display_summary" formatted="false">Afiseaza in bara de stare:</string>
   <string name="pref_live_update_display_help" formatted="false">Alege cand trebuie afisat in bara de stare chipul de actualizare live din Android 16+.</string>
@@ -332,7 +326,6 @@
 
   <string name="custom" formatted="false">Personalizat...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Pictograma notificării</string>
   <string name="pref_icon_content" formatted="false">Conținutul pictogramei</string>
   <string name="pref_icon_content_help" formatted="false">Alegeți dacă pictograma barei de stare arată procentul bateriei sau temperatura bateriei. Temperatura urmează unitatea selectată.</string>
   <string name="pref_show_icon_unit" formatted="false">Afișați simbolul unității</string>
@@ -366,7 +359,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Introdu o valoare între 1 și 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d secunde</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Indicator de încărcare</string>
   <string name="pref_indicate_charging" formatted="false">Indicați încărcarea</string>
   <string name="pref_indicate_charging_summary" formatted="false">Modificați pictograma pentru a indica când se încarcă?</string>
   <string name="pref_indicate_charging_help" formatted="false">Pictograma de încărcare poate afișa un fulger sub număr. Dezactivează această opțiune dacă preferi aceeași pictogramă la încărcare și descărcare.</string>
@@ -379,9 +371,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Ștergeți jurnalele mai vechi de:</string>
   <string name="pref_max_log_age_help" formatted="false">Dacă înregistrarea este activată, de fiecare dată când conectați dispozitivul, jurnalele mai vechi decât această valoare vor fi șterse. Selectați Nu șterge niciodată pentru a le păstra până când le ștergeți manual.</string>
 
-  <string name="pref_cat_units" formatted="false">Unități</string>
   <string name="pref_temperature_unit" formatted="false">Unitate de temperatură</string>
-  <string name="pref_cat_formatting" formatted="false">Formatare</string>
   <string name="pref_temperature_unit_help" formatted="false">Alegeți dacă temperaturile sunt afișate în Celsius sau Fahrenheit.</string>
 
   <string name="pref_cat_autostart" formatted="false">Pornire automată</string>
@@ -410,7 +400,7 @@
     \n
     În cele din urmă, puteți avea predicția bazată exclusiv pe dvs utilizare medie pe termen lung.</string>
 
-  <string name="pref_cat_language" formatted="false">Limbă</string>
+  <string name="pref_cat_language" formatted="false">Limbă și formatare</string>
   <string name="pref_change_app_language" formatted="false">Limba aplicației</string>
   <string name="pref_change_app_language_help" formatted="false">Selectați limba folosită de Battery Monitor. Valoarea implicită a sistemului urmează limba dispozitivului.</string>
   <string name="pref_long_duration_format" formatted="false">Format pentru durate lungi</string>
@@ -547,6 +537,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">Reordonați %1$s</string>
 
   <string name="pref_backup_restore" formatted="false">Copiere de rezervă și restaurare</string>
+  <string name="backup_restore_settings_summary" formatted="false">Faceți copii de rezervă, restaurați și transferați setările aplicației și datele bateriei.</string>
   <string name="pref_auto_log_export" formatted="false">Export automat al jurnalelor</string>
   <string name="pref_set_auto_log_export" formatted="false">Configurează exporturile automate</string>
   <string name="pref_edit_auto_log_export" formatted="false">Editează exporturile automate</string>

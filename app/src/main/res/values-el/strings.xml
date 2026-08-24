@@ -240,13 +240,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Διαχείριση αυτού του τύπου συναγερμού</string>
 
   <string name="notification_settings" formatted="false">Κύρια ειδοποίηση</string>
-  <string name="notification_settings_summary" formatted="false">Διαμόρφωση της κύριας ειδοποίησης</string>
+  <string name="notification_settings_summary" formatted="false">Διαμορφώστε το περιεχόμενο ειδοποιήσεων, το εικονίδιο της γραμμής κατάστασης και το τσιπ Ζωντανών ενημερώσεων.</string>
   <string name="notification_settings_help" formatted="false">Μπορείτε να διαμορφώσετε ποιο περιεχόμενο θα εμφανίζεται στην αναπτυσσόμενη ειδοποίηση.</string>
   <string name="status_bar_icon_settings" formatted="false">Εικονίδιο γραμμής κατάστασης</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Επιλέξτε περιεχόμενο εικονιδίου</string>
   <string name="status_bar_icon_settings_help" formatted="false">Επιλέξτε αν το εικονίδιο ειδοποίησης εμφανίζει ποσοστό μπαταρίας ή θερμοκρασία, αν εμφανίζεται το σύμβολο της μονάδας μέσα στο εικονίδιο και αν η φόρτιση θα έχει ξεχωριστό εικονίδιο. Από το Android 16 και μετά, το εικονίδιο της γραμμής κατάστασης ενδέχεται να μη λειτουργεί σε κάθε παραλλαγή του λειτουργικού συστήματος.</string>
   <string name="status_bar_chip_settings" formatted="false">Τσιπ γραμμής κατάστασης</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Διαμόρφωση περιεχομένου τσιπ Ζωντανών ενημερώσεων</string>
   <string name="status_bar_chip_settings_help" formatted="false">Με τις Ζωντανές ενημερώσεις μπορείτε να διαμορφώσετε τι εμφανίζει το τσιπ, πόσο συχνά αλλάζει και αν θα εμφανιστεί το emoji φόρτισης.</string>
   <string name="current_state_settings_summary" formatted="false">Ρυθμίσεις για την οθόνη Τρέχουσες πληροφορίες</string>
   <string name="current_state_settings_help" formatted="false">Διαμορφώστε τις πληροφορίες που εμφανίζονται στην οθόνη Τρέχουσες πληροφορίες. Οι επιλογές ρεύματος μπαταρίας ελέγχουν τη ζωντανή ένδειξη μαζί με τις άλλες λεπτομέρειες της μπαταρίας.</string>
@@ -256,9 +254,6 @@
   <string name="other_settings" formatted="false">Γενικά</string>
   <string name="other_settings_summary" formatted="false">Ρυθμίστε τη γενική συμπεριφορά και τις καθημερινές προτιμήσεις της εφαρμογής.</string>
   <string name="other_settings_help" formatted="false">Χρησιμοποιήστε αυτές τις ρυθμίσεις για να προσαρμόσετε το Battery Monitor στην καθημερινή σας χρήση. Καλύπτουν τη γενική συμπεριφορά και τις προτιμήσεις που βοηθούν την εφαρμογή να ταιριάζει φυσικά στον τρόπο με τον οποίο χρησιμοποιείτε τη συσκευή σας.</string>
-  <string name="units_formatting_settings" formatted="false">Μονάδες και μορφοποίηση</string>
-  <string name="units_formatting_settings_summary" formatted="false">Επιλέξτε τις μονάδες και τις μορφές εμφάνισης των δεδομένων μπαταρίας σε όλη την εφαρμογή.</string>
-  <string name="units_formatting_settings_help" formatted="false">Χρησιμοποιήστε αυτές τις ρυθμίσεις ώστε οι πληροφορίες μπαταρίας να είναι οικείες και ευανάγνωστες. Οι επιλογές σας εφαρμόζονται με συνέπεια όπου εμφανίζονται οι σχετικές τιμές και διάρκειες στο Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Για προχωρημένους</string>
   <string name="advanced_settings_summary" formatted="false">Προσαρμόστε με ακρίβεια το Battery Monitor με πρόσθετα στοιχεία ελέγχου για εξειδικευμένες χρήσεις.</string>
   <string name="advanced_settings_help" formatted="false">Χρησιμοποιήστε αυτές τις ρυθμίσεις όταν θέλετε περισσότερο έλεγχο στον τρόπο λειτουργίας του Battery Monitor πέρα από τις καθημερινές προτιμήσεις. Οι προεπιλογές είναι κατάλληλες για τους περισσότερους χρήστες, ενώ πρόσθετες προσαρμογές μπορούν να ταιριάξουν καλύτερα την εφαρμογή σε συγκεκριμένες ανάγκες παρακολούθησης.</string>
@@ -288,7 +283,6 @@
   <string name="pref_manage_main_channel" formatted="false">Διαχείριση Κύριου Καναλιού</string>
 
   <string name="pref_cat_notification_content" formatted="false">Περιεχόμενο</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Τσιπ γραμμής κατάστασης</string>
   <string name="pref_live_update_display" formatted="false">Εμφάνιση Live Update</string>
   <string name="pref_live_update_display_summary" formatted="false">Εμφάνιση στη γραμμή κατάστασης:</string>
   <string name="pref_live_update_display_help" formatted="false">Επιλέξτε πότε θα εμφανίζεται το chip Live Update του Android 16+ στη γραμμή κατάστασης.</string>
@@ -324,7 +318,6 @@
 
   <string name="custom" formatted="false">Προσαρμοσμένο...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Εικονίδιο ειδοποίησης</string>
   <string name="pref_icon_content" formatted="false">Περιεχόμενο εικονιδίου</string>
   <string name="pref_icon_content_help" formatted="false">Επιλέξτε εάν το εικονίδιο της γραμμής κατάστασης εμφανίζει ποσοστό μπαταρίας ή θερμοκρασία μπαταρίας. Η θερμοκρασία ακολουθεί τη μονάδα που έχετε επιλέξει.</string>
   <string name="pref_show_icon_unit" formatted="false">Εμφάνιση συμβόλου μονάδας</string>
@@ -358,7 +351,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Εισαγάγετε τιμή από 1 έως 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d δευτερόλεπτα</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Ένδειξη φόρτισης</string>
   <string name="pref_indicate_charging" formatted="false">Υποδεικνύεται Φόρτιση</string>
   <string name="pref_indicate_charging_summary" formatted="false">Αλλαγή εικονιδίου για ένδειξη κατά τη φόρτιση;</string>
   <string name="pref_indicate_charging_help" formatted="false">Το εικονίδιο φόρτισης μπορεί να εμφανίζει έναν κεραυνό κάτω από τον αριθμό. Απενεργοποιήστε αυτή τη ρύθμιση αν προτιμάτε το ίδιο εικονίδιο κατά τη φόρτιση και την αποφόρτιση.</string>
@@ -371,9 +363,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Διαγραφή λίστας δεδομένων παλαιότερης από:</string>
   <string name="pref_max_log_age_help" formatted="false">Αν η καταγραφή είναι ενεργή, κάθε φορά που συνδέετε τη συσκευή θα διαγράφονται οι καταγραφές που είναι παλαιότερες από αυτήν την επιλογή. Επιλέξτε Να μη διαγράφονται ποτέ για να τις κρατήσετε μέχρι να τις διαγράψετε χειροκίνητα.</string>
 
-  <string name="pref_cat_units" formatted="false">Μονάδες</string>
   <string name="pref_temperature_unit" formatted="false">Μονάδα θερμοκρασίας</string>
-  <string name="pref_cat_formatting" formatted="false">Μορφοποίηση</string>
   <string name="pref_temperature_unit_help" formatted="false">Επιλέξτε αν οι θερμοκρασίες εμφανίζονται σε Κελσίου ή Φάρεναϊτ.</string>
 
   <string name="pref_cat_autostart" formatted="false">Αυτόματη Ενεργοποίηση</string>
@@ -400,7 +390,7 @@
     \n
     Τέλος, μπορείτε να έχετε την πρόβλεψη βασισμένη αποκλειστικά στη δική σας μακροπρόθεσμη μέση χρήση.</string>
 
-  <string name="pref_cat_language" formatted="false">Γλώσσα</string>
+  <string name="pref_cat_language" formatted="false">Γλώσσα και μορφοποίηση</string>
   <string name="pref_change_app_language" formatted="false">Γλώσσα εφαρμογής</string>
   <string name="pref_change_app_language_help" formatted="false">Επιλέξτε τη γλώσσα που χρησιμοποιεί το Battery Monitor. Η προεπιλογή συστήματος ακολουθεί τη γλώσσα της συσκευής.</string>
   <string name="pref_long_duration_format" formatted="false">Μορφή μεγάλης διάρκειας</string>
@@ -537,6 +527,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">Αλλαγή σειράς: %1$s</string>
 
   <string name="pref_backup_restore" formatted="false">Δημιουργία και επαναφορά αντιγράφων ασφαλείας</string>
+  <string name="backup_restore_settings_summary" formatted="false">Δημιουργήστε αντίγραφα ασφαλείας, επαναφέρετε και μεταφέρετε τις ρυθμίσεις της εφαρμογής και τα δεδομένα μπαταρίας.</string>
   <string name="pref_auto_log_export" formatted="false">Αυτόματη εξαγωγή αρχείων καταγραφής</string>
   <string name="pref_set_auto_log_export" formatted="false">Ρύθμιση αυτόματων εξαγωγών</string>
   <string name="pref_edit_auto_log_export" formatted="false">Επεξεργασία αυτόματων εξαγωγών</string>

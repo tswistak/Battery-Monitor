@@ -240,13 +240,11 @@
   <string name="alarm_chan_settings_b" formatted="false">Manage This Alarm Type</string>
 
   <string name="notification_settings" formatted="false">Main Notification</string>
-  <string name="notification_settings_summary" formatted="false">Configure the main notification</string>
+  <string name="notification_settings_summary" formatted="false">Configure notification content, status bar icon, and Live Update chip.</string>
   <string name="notification_settings_help" formatted="false">You can configure which content to show in the pull-down notification.</string>
   <string name="status_bar_icon_settings" formatted="false">Status Bar Icon</string>
-  <string name="status_bar_icon_settings_summary" formatted="false">Choose icon content</string>
   <string name="status_bar_icon_settings_help" formatted="false">Choose whether the notification icon shows battery percentage or temperature. Also choose, whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon. Starting with Android 16, the status bar icon may not work on every OS variant.</string>
   <string name="status_bar_chip_settings" formatted="false">Status Bar Chip</string>
-  <string name="status_bar_chip_settings_summary" formatted="false">Configure Live Updates\' chip content</string>
   <string name="status_bar_chip_settings_help" formatted="false">Configure what the status bar chip shows, how often its content changes, and whether to display the charging emoji.</string>
   <string name="current_state_settings_summary" formatted="false">Settings for the Current state screen</string>
   <string name="current_state_settings_help" formatted="false">Configure the information shown on the Current state screen. Battery-current options control the live reading displayed with the other battery details.</string>
@@ -256,9 +254,6 @@
   <string name="other_settings" formatted="false">General</string>
   <string name="other_settings_summary" formatted="false">Configure the app’s general behavior and everyday preferences.</string>
   <string name="other_settings_help" formatted="false">Use these settings to adapt Battery Monitor to your everyday use. They cover general app behavior and preferences that help the app fit naturally into how you use your device.</string>
-  <string name="units_formatting_settings" formatted="false">Units &amp; formatting</string>
-  <string name="units_formatting_settings_summary" formatted="false">Choose the units and formats used to display battery data throughout the app.</string>
-  <string name="units_formatting_settings_help" formatted="false">Use these settings to keep battery information familiar and easy to read. Your choices are applied consistently wherever the relevant values and durations appear in Battery Monitor.</string>
   <string name="advanced_settings" formatted="false">Advanced</string>
   <string name="advanced_settings_summary" formatted="false">Fine-tune Battery Monitor with additional controls for specialized use cases.</string>
   <string name="advanced_settings_help" formatted="false">Use these settings when you want more control over how Battery Monitor works beyond everyday preferences. The defaults suit most users, while additional adjustments can help tailor the app to more specific monitoring needs.</string>
@@ -288,7 +283,6 @@
   <string name="pref_manage_main_channel" formatted="false">Manage Main Channel</string>
 
   <string name="pref_cat_notification_content" formatted="false">Content</string>
-  <string name="pref_cat_status_bar_chip" formatted="false">Status Bar Chip</string>
   <string name="pref_live_update_display" formatted="false">Show Live Update</string>
   <string name="pref_live_update_display_summary" formatted="false">Show in status bar:</string>
   <string name="pref_live_update_display_help" formatted="false">Choose when the Live Update chip should be shown in the status bar.</string>
@@ -324,7 +318,6 @@
 
   <string name="custom" formatted="false">Custom...</string>
 
-  <string name="pref_cat_icon_set" formatted="false">Notification Icon</string>
   <string name="pref_icon_content" formatted="false">Icon Content</string>
   <string name="pref_icon_content_help" formatted="false">Choose whether the status bar icon shows battery percentage or battery temperature. Temperature follows your selected unit.</string>
   <string name="pref_show_icon_unit" formatted="false">Show Unit Symbol</string>
@@ -358,7 +351,6 @@
   <string name="pref_battery_current_refresh_interval_error" formatted="false">Enter a value from 1 to 3600.</string>
   <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d seconds</string>
 
-  <string name="pref_cat_charging_indicator" formatted="false">Charging Indicator</string>
   <string name="pref_indicate_charging" formatted="false">Indicate Charging</string>
   <string name="pref_indicate_charging_summary" formatted="false">Alter icon to indicate when charging?</string>
   <string name="pref_indicate_charging_help" formatted="false">Icon can show a lightning bolt below the number during charging. Disable this setting if you would prefer the same icon all the time.</string>
@@ -371,9 +363,7 @@
   <string name="pref_max_log_age_summary" formatted="false">Delete logs older than:</string>
   <string name="pref_max_log_age_help" formatted="false">If logging is enabled, then whenever you plug in your device, logs older than this will be deleted. Select "Never delete" to keep logs until you clear them manually.</string>
 
-  <string name="pref_cat_units" formatted="false">Units</string>
   <string name="pref_temperature_unit" formatted="false">Temperature unit</string>
-  <string name="pref_cat_formatting" formatted="false">Formatting</string>
   <string name="pref_temperature_unit_help" formatted="false">Choose whether temperatures are displayed in Celsius or Fahrenheit.</string>
 
   <string name="pref_cat_autostart" formatted="false">Autostart</string>
@@ -402,7 +392,7 @@
     \n
     Finally, you can have the prediction based solely on your long-term average usage.</string>
 
-  <string name="pref_cat_language" formatted="false">Language</string>
+  <string name="pref_cat_language" formatted="false">Language &amp;formatting</string>
   <string name="pref_change_app_language" formatted="false">App language</string>
   <string name="pref_change_app_language_help" formatted="false">Select the language used by Battery Monitor. The system default follows your device language.</string>
   <string name="pref_long_duration_format" formatted="false">Long duration format</string>
@@ -538,6 +528,7 @@
   <string name="pref_vital_signs_reorder_handle" formatted="true">Reorder %1$s</string>
 
   <string name="pref_backup_restore" formatted="false">Backup and restore</string>
+  <string name="backup_restore_settings_summary" formatted="false">Back up, restore, and transfer your app settings and battery data.</string>
   <string name="pref_auto_log_export" formatted="false">Automatic log export</string>
   <string name="pref_set_auto_log_export" formatted="false">Set log auto-backups</string>
   <string name="pref_edit_auto_log_export" formatted="false">Edit log auto-backups</string>
