@@ -1,6 +1,8 @@
 # CHANGELOG
 
-## Unreleased
+## 1.7.0
+
+This is the last feature-oriented release before version 2.0 (October/November). The next releases will be less frequent and will consist only of bug fixes and small improvements.  
 
 ### New
 
@@ -12,6 +14,10 @@
 
 - Reorganized settings.
 - Show day count for time higher than 24 hours (#71).
+
+### Development
+
+- Release PGP signing.
 
 ## 1.6.0
 

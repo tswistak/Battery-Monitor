@@ -1,0 +1,12 @@
+This is the last feature-oriented release before version 2.0 (October/November). The next releases will be less frequent and will consist only of bug fixes and small improvements.  
+
+New:
+
+- Possibility to set charging and discharging targets for time estimations (#72).
+- Automated detection of charging limits on supported devices.
+- Alarms for charging and discharging limits (#144).
+
+Improved:
+
+- Reorganized settings.
+- Show day count for time higher than 24 hours (#71).
