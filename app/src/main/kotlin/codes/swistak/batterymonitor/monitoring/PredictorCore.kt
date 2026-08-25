@@ -86,19 +86,19 @@ internal class PredictorCore(
 
         if (!canPredict()) {
             lastPrediction = 0
-            curInfo!!.prediction.clear()
+            updateExposedPredictions()
             return
         }
 
         usePartial = false
-        lastPrediction = prediction()
+        updateReferencePrediction()
 
         if (timestamps[lastLevel] != now && shouldUsePartial()) {
             usePartial = true
-            lastPrediction = prediction()
+            updateReferencePrediction()
         }
 
-        saveLastPredictionToInfo()
+        updateExposedPredictions()
     }
 
     fun setTargets(chargingTargetPercent: Int, dischargingTargetPercent: Int) {
@@ -108,36 +108,25 @@ internal class PredictorCore(
 
         this.chargingTargetPercent = newChargingTarget
         this.dischargingTargetPercent = newDischargingTarget
-        lastPrediction = 0
-        lastStatus = -1
     }
 
     fun update(info: BatteryInfo, whenUpdated: Long) {
         if (info.status == BatteryInfo.STATUS_UNKNOWN) {
             info.prediction.clear()
+            info.fullRangePrediction.clear()
             return
         }
 
         curInfo = info
         now = whenUpdated
 
-        val target = targetFor(info)
-        if (isAtDischargingTarget(info)) {
-            lastPrediction = 0
-            info.prediction.markDischargingTargetReached(target)
-            setLastsWithoutPrediction()
-            return
-        }
-        if (isTargetReached(info, target)) {
-            lastPrediction = 0
-            info.prediction.markTargetReached(target)
-            setLastsWithoutPrediction()
-            return
-        }
+        updatePredictionState(info)
+        updateExposedPredictions()
+    }
 
+    private fun updatePredictionState(info: BatteryInfo) {
         if (!canPredict()) {
             lastPrediction = 0
-            info.prediction.clear()
             setLastsWithoutPrediction()
             return
         }
@@ -146,7 +135,6 @@ internal class PredictorCore(
 
         if (lastPrediction < now + MIN_PREDICTION) {
             lastPrediction = now + MIN_PREDICTION
-            info.prediction.update(lastPrediction, target)
         }
 
         if (info.status != lastStatus || info.plugged != lastPlugged || info.status == BatteryInfo.STATUS_FULLY_CHARGED || (info.status == BatteryInfo.STATUS_CHARGING && info.percent < tsHead) || (info.status == BatteryInfo.STATUS_UNPLUGGED && info.percent > tsHead)) {
@@ -158,14 +146,14 @@ internal class PredictorCore(
 
             timestamps[info.percent] = now
 
-            updateInfoPrediction()
+            finishPredictionStateUpdate()
             return
         }
 
         if ((info.status == BatteryInfo.STATUS_CHARGING && info.percent < lastLevel) || (info.status != BatteryInfo.STATUS_CHARGING && info.percent > lastLevel)) {
             usePartial = false
             timestamps[info.percent] = now
-            updateInfoPrediction()
+            finishPredictionStateUpdate()
             return
         }
 
@@ -202,7 +190,41 @@ internal class PredictorCore(
             }
         }
 
-        updateInfoPrediction()
+        finishPredictionStateUpdate()
+    }
+
+    private fun updateExposedPredictions() {
+        val info = curInfo!!
+        if (!canPredict()) {
+            info.prediction.clear()
+            info.fullRangePrediction.clear()
+        } else {
+            info.prediction.update(
+                predictionAtLeastOneMinute(
+                    prediction(chargingTargetPercent, dischargingTargetPercent)
+                ), targetFor(info, chargingTargetPercent, dischargingTargetPercent)
+            )
+            info.fullRangePrediction.update(
+                predictionAtLeastOneMinute(
+                    prediction(
+                        chargingTargetPercent = 100, dischargingTargetPercent = 0
+                    )
+                ), targetFor(
+                    info = info, chargingTargetPercent = 100, dischargingTargetPercent = 0
+                )
+            )
+        }
+
+        val target = targetFor(info, chargingTargetPercent, dischargingTargetPercent)
+        when {
+            isAtDischargingTarget(info) -> {
+                info.prediction.markDischargingTargetReached(target)
+            }
+
+            isTargetReached(info, target) -> {
+                info.prediction.markTargetReached(target)
+            }
+        }
     }
 
     val longTermAverage: Double
@@ -224,33 +246,34 @@ internal class PredictorCore(
     private fun predictionIfPartialIs(supposed: Boolean): Long {
         val oldPartial = usePartial
         usePartial = supposed
-        val ret = prediction()
+        val ret = prediction(chargingTargetPercent = 100, dischargingTargetPercent = 0)
         usePartial = oldPartial
         return ret
     }
 
-    private fun updateInfoPrediction() {
-        lastPrediction = prediction()
-
-        saveLastPredictionToInfo()
+    private fun finishPredictionStateUpdate() {
+        updateReferencePrediction()
         setLasts()
     }
 
-    private fun saveLastPredictionToInfo() {
-        if (lastPrediction < now + MIN_PREDICTION) lastPrediction = now + MIN_PREDICTION
-
-        curInfo!!.prediction.update(lastPrediction, targetFor(curInfo!!))
+    private fun updateReferencePrediction() {
+        lastPrediction = predictionAtLeastOneMinute(
+            prediction(chargingTargetPercent = 100, dischargingTargetPercent = 0)
+        )
     }
 
-    private fun prediction(): Long {
+    private fun predictionAtLeastOneMinute(prediction: Long): Long =
+        maxOf(prediction, now + MIN_PREDICTION)
+
+    private fun prediction(chargingTargetPercent: Int, dischargingTargetPercent: Int): Long {
         return when (curInfo!!.status) {
-            BatteryInfo.STATUS_CHARGING -> whenCharged()
-            BatteryInfo.STATUS_UNPLUGGED -> whenDrained()
+            BatteryInfo.STATUS_CHARGING -> whenCharged(chargingTargetPercent)
+            BatteryInfo.STATUS_UNPLUGGED -> whenDrained(dischargingTargetPercent)
             else -> 0
         }
     }
 
-    private fun whenDrained(): Long {
+    private fun whenDrained(dischargingTargetPercent: Int): Long {
         var level = curInfo!!.percent
         var from = timestamps[curInfo!!.percent]
 
@@ -259,10 +282,15 @@ internal class PredictorCore(
             from = now
         }
 
-        return from + (recentAverage() * (level - targetFor(curInfo!!))).toLong()
+        val target = targetFor(
+            info = curInfo!!,
+            chargingTargetPercent = chargingTargetPercent,
+            dischargingTargetPercent = dischargingTargetPercent
+        )
+        return from + (recentAverage() * (level - target)).toLong()
     }
 
-    private fun whenCharged(): Long {
+    private fun whenCharged(chargingTargetPercent: Int): Long {
         var level = curInfo!!.percent
         var from = timestamps[curInfo!!.percent]
 
@@ -279,16 +307,17 @@ internal class PredictorCore(
         return from + (pointsRemaining * recentAverage()).toLong()
     }
 
-    private fun targetFor(info: BatteryInfo): Int =
-        if (info.status == BatteryInfo.STATUS_UNPLUGGED) {
-            if (dischargingTargetPercent > 0 && info.percent < dischargingTargetPercent) {
-                0
-            } else {
-                dischargingTargetPercent
-            }
+    private fun targetFor(
+        info: BatteryInfo, chargingTargetPercent: Int, dischargingTargetPercent: Int
+    ): Int = if (info.status == BatteryInfo.STATUS_UNPLUGGED) {
+        if (dischargingTargetPercent > 0 && info.percent < dischargingTargetPercent) {
+            0
         } else {
-            chargingTargetPercent
+            dischargingTargetPercent
         }
+    } else {
+        chargingTargetPercent
+    }
 
     private fun isAtDischargingTarget(info: BatteryInfo): Boolean =
         info.status == BatteryInfo.STATUS_UNPLUGGED && dischargingTargetPercent > 0 && info.percent == dischargingTargetPercent

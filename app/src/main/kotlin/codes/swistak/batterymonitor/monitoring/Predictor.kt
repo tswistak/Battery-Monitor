@@ -16,6 +16,7 @@ package codes.swistak.batterymonitor.monitoring
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.SystemClock
+import androidx.core.content.edit
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingTargetResolver
 import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceChargingLimitProvider
 import codes.swistak.batterymonitor.monitoring.charginglimit.ResolvedTarget
@@ -34,9 +35,24 @@ internal class Predictor(context: Context) {
             "key_ave_recharge_wl",
             "key_ave_recharge_usb"
         )
+
+        internal const val KEY_STATE_VERSION = "key_predictor_state_version"
+        internal const val STATE_VERSION = 2
+
+        internal fun migratePredictorState(preferences: SharedPreferences): Boolean {
+            if (preferences.getInt(KEY_STATE_VERSION, 1) >= STATE_VERSION) return false
+
+            preferences.edit(commit = true) {
+                remove(KEY_AVERAGE[PredictorCore.DISCHARGE]).putInt(
+                    KEY_STATE_VERSION, STATE_VERSION
+                )
+            }
+            return true
+        }
     }
 
-    private val spPredictor: SharedPreferences = context.getSharedPreferences(STORE_NAME, 0)
+    private val spPredictor: SharedPreferences =
+        context.getSharedPreferences(STORE_NAME, 0).also { migratePredictorState(it) }
 
     private val settings =
         context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
@@ -56,33 +72,22 @@ internal class Predictor(context: Context) {
         spPredictor.getFloat(KEY_AVERAGE[PredictorCore.RECHARGE_USB], -1f)
     )
 
-    private val fullRangePc: PredictorCore = PredictorCore(
-        spPredictor.getFloat(KEY_AVERAGE[PredictorCore.DISCHARGE], -1f),
-        spPredictor.getFloat(KEY_AVERAGE[PredictorCore.RECHARGE_AC], -1f),
-        spPredictor.getFloat(KEY_AVERAGE[PredictorCore.RECHARGE_WL], -1f),
-        spPredictor.getFloat(KEY_AVERAGE[PredictorCore.RECHARGE_USB], -1f)
-    )
-    private val fullRangeInfo = BatteryInfo()
-
     fun setPredictionType(type: String) {
         pc.setPredictionType(type.toInt())
-        fullRangePc.setPredictionType(type.toInt())
     }
 
     fun update(info: BatteryInfo): ResolvedPredictionTargets {
         val chargingTarget = targetResolver.resolveChargingTarget()
         val dischargingTarget = targetResolver.resolveDischargingTarget()
         pc.setTargets(chargingTarget.percent, dischargingTarget.percent)
-        fullRangePc.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 0)
         val now = SystemClock.elapsedRealtime()
         pc.update(info, now)
 
-        fullRangeInfo.percent = info.percent
-        fullRangeInfo.status = info.status
-        fullRangeInfo.plugged = info.plugged
-        fullRangePc.update(fullRangeInfo, now)
-        info.fullRangePrediction.copyFrom(fullRangeInfo.prediction)
-        editor.putFloat(KEY_AVERAGE[pc.curChargingStatus], pc.longTermAverage.toFloat()).apply()
+        if (info.status == BatteryInfo.STATUS_CHARGING || info.status == BatteryInfo.STATUS_UNPLUGGED) {
+            editor.putFloat(
+                KEY_AVERAGE[pc.curChargingStatus], pc.longTermAverage.toFloat()
+            ).apply()
+        }
         return ResolvedPredictionTargets(chargingTarget, dischargingTarget)
     }
 }

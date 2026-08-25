@@ -149,6 +149,134 @@ class PredictorCoreTest {
     }
 
     @Test
+    fun `crossing discharging target preserves predictor state`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 20)
+        setDischargingLevel(percent = 22, whenUpdated = 0L)
+        setDischargingLevel(percent = 21, whenUpdated = 30 * ONE_MINUTE)
+        setDischargingLevel(percent = 20, whenUpdated = 60 * ONE_MINUTE)
+        info.prediction.updateRelativeTime()
+
+        Assert.assertEquals(20, info.prediction.targetPercent)
+        Assert.assertTrue(info.prediction.targetReached)
+        Assert.assertEquals(0, info.prediction.lastRTime.minutes)
+
+        val averageAtTarget = predictor.longTermAverage
+        val now = 90 * ONE_MINUTE
+        setDischargingLevel(percent = 19, whenUpdated = now)
+
+        Assert.assertEquals(0, info.prediction.targetPercent)
+        Assert.assertFalse(info.prediction.targetReached)
+        Assert.assertTrue(info.prediction.whenHappened > now)
+        Assert.assertTrue(predictor.longTermAverage > averageAtTarget)
+        Assert.assertTrue(predictor.longTermAverage < 2 * ONE_MINUTE)
+    }
+
+    @Test
+    fun `refreshing at discharging target does not move its timestamp`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 20)
+        setDischargingLevel(percent = 21, whenUpdated = 30 * ONE_MINUTE)
+        setDischargingLevel(percent = 20, whenUpdated = 60 * ONE_MINUTE)
+        setDischargingLevel(percent = 20, whenUpdated = 65 * ONE_MINUTE)
+        setDischargingLevel(percent = 20, whenUpdated = 70 * ONE_MINUTE)
+        setDischargingLevel(percent = 20, whenUpdated = 80 * ONE_MINUTE)
+        setDischargingLevel(percent = 19, whenUpdated = 90 * ONE_MINUTE)
+
+        val expectedAverageAfterTwoThirtyMinuteSamples =
+            ((DISCHARGE_MS_PER_PERCENT * 0.998 + 30 * ONE_MINUTE * 0.002) * 0.998) + (30 * ONE_MINUTE * 0.002)
+        Assert.assertEquals(
+            expectedAverageAfterTwoThirtyMinuteSamples, predictor.longTermAverage, 0.01
+        )
+    }
+
+    @Test
+    fun `custom target estimate is shorter than full range estimate`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 20)
+        setDischargingLevel(percent = 79, whenUpdated = 0L)
+        val customTargetEta = info.prediction.whenHappened
+        val fullRangeEta = info.fullRangePrediction.whenHappened
+
+        Assert.assertTrue(customTargetEta < fullRangeEta)
+        Assert.assertEquals(59L * DISCHARGE_MS_PER_PERCENT, customTargetEta)
+        Assert.assertEquals(79L * DISCHARGE_MS_PER_PERCENT, fullRangeEta)
+    }
+
+    @Test
+    fun `charging target then direct unplug keeps both discharge projections on one rate`() {
+        replayChargingLimitScenario(includeNotChargingState = false)
+    }
+
+    @Test
+    fun `OEM charging limit then unplug keeps both discharge projections on one rate`() {
+        replayChargingLimitScenario(includeNotChargingState = true)
+    }
+
+    @Test
+    fun `skipping over discharging target still switches to full range safely`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 20)
+        setDischargingLevel(percent = 21, whenUpdated = 0L)
+        val now = 60 * ONE_MINUTE
+        setDischargingLevel(percent = 19, whenUpdated = now)
+
+        Assert.assertEquals(0, info.prediction.targetPercent)
+        Assert.assertFalse(info.prediction.targetReached)
+        Assert.assertTrue(info.prediction.whenHappened > now)
+        Assert.assertTrue(predictor.longTermAverage < 2 * ONE_MINUTE)
+    }
+
+    @Test
+    fun `starting at target and refreshing preserves the next discharge sample`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 20)
+        setDischargingLevel(percent = 20, whenUpdated = 0L)
+        setDischargingLevel(percent = 20, whenUpdated = 10 * ONE_MINUTE)
+        setDischargingLevel(percent = 20, whenUpdated = 20 * ONE_MINUTE)
+        setDischargingLevel(percent = 19, whenUpdated = 30 * ONE_MINUTE)
+
+        Assert.assertEquals(0, info.prediction.targetPercent)
+        Assert.assertFalse(info.prediction.targetReached)
+        Assert.assertEquals(
+            DISCHARGE_MS_PER_PERCENT * 0.998 + 30 * ONE_MINUTE * 0.002,
+            predictor.longTermAverage,
+            0.01
+        )
+    }
+
+    @Test
+    fun `starting below discharging target continues full range measurements`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 20)
+        setDischargingLevel(percent = 19, whenUpdated = 0L)
+        val now = 30 * ONE_MINUTE
+        setDischargingLevel(percent = 18, whenUpdated = now)
+
+        Assert.assertEquals(0, info.prediction.targetPercent)
+        Assert.assertFalse(info.prediction.targetReached)
+        Assert.assertTrue(info.prediction.whenHappened > now)
+        Assert.assertEquals(
+            DISCHARGE_MS_PER_PERCENT * 0.998 + 30 * ONE_MINUTE * 0.002,
+            predictor.longTermAverage,
+            0.01
+        )
+    }
+
+    @Test
+    fun `changing discharging target updates projection without corrupting average`() {
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 20)
+        setDischargingLevel(percent = 40, whenUpdated = 0L)
+        setDischargingLevel(percent = 39, whenUpdated = 30 * ONE_MINUTE)
+        val averageBeforeTargetChange = predictor.longTermAverage
+
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 0)
+        setDischargingLevel(percent = 38, whenUpdated = 60 * ONE_MINUTE)
+        Assert.assertEquals(0, info.prediction.targetPercent)
+        Assert.assertTrue(predictor.longTermAverage > averageBeforeTargetChange)
+        val averageAfterZeroTarget = predictor.longTermAverage
+
+        predictor.setTargets(chargingTargetPercent = 100, dischargingTargetPercent = 30)
+        setDischargingLevel(percent = 37, whenUpdated = 90 * ONE_MINUTE)
+        Assert.assertEquals(30, info.prediction.targetPercent)
+        Assert.assertTrue(predictor.longTermAverage > averageAfterZeroTarget)
+    }
+
+    @Test
     fun `charging target reached clears countdown and records target`() {
         predictor.setTargets(chargingTargetPercent = 80, dischargingTargetPercent = 0)
         info.status = BatteryInfo.STATUS_NOT_CHARGING
@@ -301,5 +429,101 @@ class PredictorCoreTest {
         predictor.update(info, now)
 
         return now
+    }
+
+    private fun setDischargingLevel(percent: Int, whenUpdated: Long) {
+        info.status = BatteryInfo.STATUS_UNPLUGGED
+        info.plugged = BatteryInfo.PLUGGED_UNPLUGGED
+        info.percent = percent
+        predictor.update(info, whenUpdated)
+    }
+
+    private fun replayChargingLimitScenario(includeNotChargingState: Boolean) {
+        predictor.setTargets(chargingTargetPercent = 80, dischargingTargetPercent = 20)
+
+        setBatteryState(50, BatteryInfo.STATUS_UNPLUGGED, BatteryInfo.PLUGGED_UNPLUGGED, 0L)
+        setBatteryState(
+            49, BatteryInfo.STATUS_UNPLUGGED, BatteryInfo.PLUGGED_UNPLUGGED, 30 * ONE_MINUTE
+        )
+        setBatteryState(
+            48, BatteryInfo.STATUS_UNPLUGGED, BatteryInfo.PLUGGED_UNPLUGGED, 60 * ONE_MINUTE
+        )
+
+        setBatteryState(48, BatteryInfo.STATUS_CHARGING, BatteryInfo.PLUGGED_USB, 62 * ONE_MINUTE)
+        setBatteryState(60, BatteryInfo.STATUS_CHARGING, BatteryInfo.PLUGGED_USB, 86 * ONE_MINUTE)
+        setBatteryState(79, BatteryInfo.STATUS_CHARGING, BatteryInfo.PLUGGED_USB, 124 * ONE_MINUTE)
+        setBatteryState(80, BatteryInfo.STATUS_CHARGING, BatteryInfo.PLUGGED_USB, 126 * ONE_MINUTE)
+        setBatteryState(80, BatteryInfo.STATUS_CHARGING, BatteryInfo.PLUGGED_USB, 128 * ONE_MINUTE)
+
+        Assert.assertEquals(80, info.prediction.targetPercent)
+        Assert.assertTrue(info.prediction.targetReached)
+
+        if (includeNotChargingState) {
+            setBatteryState(
+                80, BatteryInfo.STATUS_NOT_CHARGING, BatteryInfo.PLUGGED_USB, 130 * ONE_MINUTE
+            )
+            setBatteryState(
+                80, BatteryInfo.STATUS_NOT_CHARGING, BatteryInfo.PLUGGED_USB, 132 * ONE_MINUTE
+            )
+            setBatteryState(
+                80, BatteryInfo.STATUS_NOT_CHARGING, BatteryInfo.PLUGGED_USB, 134 * ONE_MINUTE
+            )
+            Assert.assertEquals(BatteryInfo.Prediction.NONE, info.fullRangePrediction.whatHappened)
+            Assert.assertTrue(info.prediction.targetReached)
+        }
+
+        val unpluggedAt = if (includeNotChargingState) 136L else 130L
+        setBatteryState(
+            80,
+            BatteryInfo.STATUS_UNPLUGGED,
+            BatteryInfo.PLUGGED_UNPLUGGED,
+            unpluggedAt * ONE_MINUTE
+        )
+        setBatteryState(
+            80,
+            BatteryInfo.STATUS_UNPLUGGED,
+            BatteryInfo.PLUGGED_UNPLUGGED,
+            (unpluggedAt + 2) * ONE_MINUTE
+        )
+        setBatteryState(
+            80,
+            BatteryInfo.STATUS_UNPLUGGED,
+            BatteryInfo.PLUGGED_UNPLUGGED,
+            (unpluggedAt + 4) * ONE_MINUTE
+        )
+
+        (79 downTo 77).forEachIndexed { index, percent ->
+            val whenUpdated = (unpluggedAt + 30 + index * 30) * ONE_MINUTE
+            setBatteryState(
+                percent, BatteryInfo.STATUS_UNPLUGGED, BatteryInfo.PLUGGED_UNPLUGGED, whenUpdated
+            )
+            assertDischargeProjectionsShareRate(whenUpdated)
+        }
+    }
+
+    private fun setBatteryState(percent: Int, status: Int, plugged: Int, whenUpdated: Long) {
+        info.percent = percent
+        info.status = status
+        info.plugged = plugged
+        predictor.update(info, whenUpdated)
+    }
+
+    private fun assertDischargeProjectionsShareRate(whenUpdated: Long) {
+        Assert.assertEquals(20, info.prediction.targetPercent)
+        Assert.assertFalse(info.prediction.targetReached)
+        Assert.assertEquals(0, info.fullRangePrediction.targetPercent)
+        Assert.assertFalse(info.fullRangePrediction.targetReached)
+
+        val customDuration = info.prediction.whenHappened - whenUpdated
+        val fullRangeDuration = info.fullRangePrediction.whenHappened - whenUpdated
+        val customPointsRemaining = info.percent - info.prediction.targetPercent
+        val fullRangePointsRemaining = info.percent
+
+        Assert.assertTrue(customDuration < fullRangeDuration)
+        Assert.assertEquals(
+            customDuration / customPointsRemaining.toDouble(),
+            fullRangeDuration / fullRangePointsRemaining.toDouble(),
+            1.0
+        )
     }
 }
