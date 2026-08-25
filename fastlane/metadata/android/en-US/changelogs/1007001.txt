@@ -1,0 +1,6 @@
+1.7.0 was the last feature-oriented release before version 2.0 (October/November). The next releases will be less frequent and will consist only of bug fixes and small improvements.
+
+Fixed:
+
+- Fixed battery time estimates becoming incorrect after charging or discharging with custom prediction targets enabled.
+- Reset potentially corrupted cached long-term discharge estimates after updating.

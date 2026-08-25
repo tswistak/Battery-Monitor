@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 1.7.1
 
 1.7.0 was the last feature-oriented release before version 2.0 (October/November). The next releases will be less frequent and will consist only of bug fixes and small improvements.
 
