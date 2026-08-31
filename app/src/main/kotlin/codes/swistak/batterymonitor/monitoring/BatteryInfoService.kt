@@ -1473,7 +1473,7 @@ class BatteryInfoService : Service() {
     private fun parseAlarmCursor(c: Cursor?): Notification.Builder {
         val nb =
             Notification.Builder(this, CHAN_ID_A_CHARGED).setSmallIcon(R.drawable.stat_notify_alarm)
-                .setAutoCancel(true).setContentIntent(alarmsPendingIntent)
+                .setAutoCancel(true).setContentIntent(currentInfoPendingIntent)
 
         return nb
     }
