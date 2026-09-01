@@ -16,6 +16,7 @@ import android.content.Context
 import android.os.Build
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import java.io.BufferedWriter
 import java.io.OutputStream
 import java.io.OutputStreamWriter
@@ -98,7 +99,7 @@ internal object LogExport {
                 (record.charge ?: 0).toString(),
                 (temperature / 10.0).toString(),
                 ((temperature * 9 / 5.0).roundToInt() / 10.0 + 32.0).toString(),
-                ((record.voltage ?: 0) / 1000.0).toString()
+                csvVoltageField(record.voltage)
             )
             writer.write(values.joinToString(",", transform = ::csvField))
             writer.write("\r\n")
@@ -127,6 +128,11 @@ internal object LogExport {
     private fun csvField(value: String): String {
         if (value.none { it == ',' || it == '"' || it == '\r' || it == '\n' }) return value
         return "\"${value.replace("\"", "\"\"")}\""
+    }
+
+    internal fun csvVoltageField(millivolts: Int?): String {
+        return millivolts?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
+            ?.let { (it / 1000.0).toString() } ?: ""
     }
 
     private fun fileNamePrefix(): String {

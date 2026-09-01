@@ -406,7 +406,7 @@ class CurrentInfoFragment : Fragment() {
 
         tvHealth!!.text = DisplayStrings.healths[info.health]
         tvTemp!!.text = DisplayStrings.formatTemp(info.temperature, convertF)
-        if (info.voltage > 500) tvVoltage!!.text = DisplayStrings.formatVoltage(info.voltage)
+        tvVoltage!!.text = info.voltage?.let { DisplayStrings.formatVoltage(it) } ?: ""
 
         if (info.lastStatus == BatteryInfo.STATUS_UNPLUGGED) pluggedIcon!!.setImageResource(
             R.drawable.unplugged

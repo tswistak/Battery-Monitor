@@ -59,6 +59,7 @@ import codes.swistak.batterymonitor.common.DurationFormatter
 import codes.swistak.batterymonitor.logs.AutoLogExporter
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogResult
+import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageResolver
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.LongDurationFormat
@@ -277,6 +278,8 @@ class BatteryInfoService : Service() {
     private var cwbg: CircleWidgetBackground? = null
     private var info: BatteryInfo? = null
 
+    private var voltageResolver: BatteryVoltageResolver? = null
+
     private lateinit var remainingChargeReader: RemainingChargeReader
 
     private var now: Long = 0
@@ -392,6 +395,13 @@ class BatteryInfoService : Service() {
 
         info = BatteryInfo()
 
+        voltageResolver = BatteryVoltageResolver(
+            onPrivilegedRefresh = { reading ->
+                if (reading != null) mHandler.post {
+                    if (mainNotificationForegroundStarted) update(null)
+                }
+            })
+
         remainingChargeReader = RemainingChargeReader(applicationContext)
 
         messenger = Messenger(MessageHandler(this))
@@ -453,7 +463,7 @@ class BatteryInfoService : Service() {
         }
 
         val bcIntent = registerReceiver(mBatteryInfoReceiver, batteryChanged)
-        if (bcIntent != null) info!!.load(bcIntent, spService)
+        applyBatteryIntent(bcIntent)
     }
 
     override fun onTimeout(startId: Int, fgsType: Int) {
@@ -463,6 +473,8 @@ class BatteryInfoService : Service() {
 
     override fun onDestroy() {
         PrivilegedAccess.setReadyListener(null)
+        voltageResolver?.shutdown()
+        voltageResolver = null
         if (alarms != null) alarms!!.close()
         try {
             unregisterReceiver(mBatteryInfoReceiver)
@@ -682,6 +694,14 @@ class BatteryInfoService : Service() {
         settingsEditor.apply()
     }
 
+    private fun applyBatteryIntent(intent: Intent?) {
+        if (intent == null) return
+        info!!.load(intent, spService)
+        info!!.voltage = voltageResolver?.resolve(
+            intent.getIntExtra(BatteryInfo.EXTRA_VOLTAGE, 0)
+        )?.millivolts
+    }
+
     private fun update(intent: Intent?) {
         now = System.currentTimeMillis()
         spsEditor = spService.edit()
@@ -690,7 +710,7 @@ class BatteryInfoService : Service() {
         var batteryIntent = intent
         if (batteryIntent == null) batteryIntent = registerReceiver(null, batteryChanged)
 
-        if (batteryIntent != null) info!!.load(batteryIntent, spService)
+        applyBatteryIntent(batteryIntent)
 
         info!!.remainingChargeUah = remainingChargeReader.readMicroAmpHours()
 
@@ -918,8 +938,7 @@ class BatteryInfoService : Service() {
             val promotionAllowed =
                 NotificationManagerCompat.from(this).canPostPromotedNotifications()
             Log.d(
-                LOG_TAG,
-                ("Live Update: promotable=$promotable, promotionAllowed=$promotionAllowed")
+                LOG_TAG, ("Live Update: promotable=$promotable, promotionAllowed=$promotionAllowed")
             )
         }
 
@@ -990,7 +1009,7 @@ class BatteryInfoService : Service() {
             }
 
             SettingsContract.CHIP_CONTENT_VOLTAGE -> {
-                if (info!!.voltage > 500) DisplayStrings.formatVoltage(info!!.voltage) else "—"
+                info!!.voltage?.let { DisplayStrings.formatVoltage(it) } ?: "—"
             }
 
             SettingsContract.CHIP_CONTENT_CURRENT -> {
@@ -1145,7 +1164,7 @@ class BatteryInfoService : Service() {
                 }
 
                 SettingsContract.VITAL_SIGN_VOLTAGE -> {
-                    if (info!!.voltage > 500) values += DisplayStrings.formatVoltage(info!!.voltage)
+                    info!!.voltage?.let { values += DisplayStrings.formatVoltage(it) }
                 }
 
                 SettingsContract.VITAL_SIGN_CURRENT -> if (batteryCurrentEnabled) {

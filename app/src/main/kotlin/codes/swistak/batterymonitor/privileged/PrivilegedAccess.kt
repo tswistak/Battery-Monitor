@@ -98,6 +98,8 @@ internal object PrivilegedAccess : CommandExecutor {
         if (value) ensureShizukuConnection() else disconnectShizukuConnection()
     }
 
+    fun isEnabled(): Boolean = enabled
+
     fun setReadyListener(listener: (() -> Unit)?) {
         readyListener = listener
     }
