@@ -18,6 +18,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
+import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileNotFoundException
@@ -26,7 +27,7 @@ import java.io.IOException
 
 internal class BatteryInfo {
     companion object {
-        const val LOG_TAG = "codes.swistak.batterymonitor - BatteryInfo";
+        const val LOG_TAG = "codes.swistak.batterymonitor - BatteryInfo"
         const val STATUS_UNPLUGGED: Int = 0
         const val STATUS_UNKNOWN: Int = 1
         const val STATUS_CHARGING: Int = 2
@@ -53,13 +54,13 @@ internal class BatteryInfo {
         private const val EXTRA_HEALTH = "health"
         private const val EXTRA_PLUGGED = "plugged"
         private const val EXTRA_TEMPERATURE = "temperature"
-        private const val EXTRA_VOLTAGE = "voltage"
+        internal const val EXTRA_VOLTAGE = "voltage"
         private const val FIELD_PERCENT = "percent"
         private const val FIELD_STATUS = "status"
         private const val FIELD_HEALTH = "health"
         private const val FIELD_PLUGGED = "plugged"
         private const val FIELD_TEMPERATURE = "temperature"
-        private const val FIELD_VOLTAGE = "voltage"
+        internal const val FIELD_VOLTAGE = "voltage"
         private const val FIELD_LAST_STATUS = "last_status"
         private const val FIELD_LAST_PLUGGED = "last_plugged"
         private const val FIELD_LAST_PERCENT = "last_percent"
@@ -104,14 +105,14 @@ internal class BatteryInfo {
                         Log.e(
                             LOG_TAG,
                             "charge_counter file exists but with value $chargeCounter which is inconsistent with percent: $percent"
-                        );
+                        )
                     }
                 } catch (e: FileNotFoundException) {
-                    Log.e(LOG_TAG, "charge_counter file doesn't exist");
+                    Log.e(LOG_TAG, "charge_counter file doesn't exist")
                 } catch (e: IOException) {
-                    Log.e(LOG_TAG, "Error reading charge_counter file");
+                    Log.e(LOG_TAG, "Error reading charge_counter file")
                 } catch (e: NumberFormatException) {
-                    Log.e(LOG_TAG, "Read charge_counter file but couldn't convert contents to int");
+                    Log.e(LOG_TAG, "Read charge_counter file but couldn't convert contents to int")
                 }
             }
 
@@ -124,7 +125,8 @@ internal class BatteryInfo {
     var health: Int = 0
     var plugged: Int = 0
     var temperature: Int = 0
-    var voltage: Int = 0
+
+    var voltage: Int? = null
 
     var remainingChargeUah: Long? = null
     var lastStatus: Int = 0
@@ -161,10 +163,12 @@ internal class BatteryInfo {
             this.targetPercent = targetPercent
             targetReached = false
 
-            if (batteryInfo.status == STATUS_FULLY_CHARGED || batteryInfo.status == STATUS_NOT_CHARGING || batteryInfo.status == STATUS_UNKNOWN) whatHappened =
-                NONE
-            else if (batteryInfo.status == STATUS_CHARGING) whatHappened = UNTIL_CHARGED
-            else whatHappened = UNTIL_DRAINED
+            whatHappened =
+                when (batteryInfo.status) {
+                    STATUS_FULLY_CHARGED, STATUS_NOT_CHARGING, STATUS_UNKNOWN -> NONE
+                    STATUS_CHARGING -> UNTIL_CHARGED
+                    else -> UNTIL_DRAINED
+                }
         }
 
         fun markTargetReached(targetPercent: Int) {
@@ -238,7 +242,9 @@ internal class BatteryInfo {
         health = intent.getIntExtra(EXTRA_HEALTH, HEALTH_UNKNOWN)
         plugged = intent.getIntExtra(EXTRA_PLUGGED, PLUGGED_UNKNOWN)
         temperature = intent.getIntExtra(EXTRA_TEMPERATURE, 0)
-        voltage = intent.getIntExtra(EXTRA_VOLTAGE, 0)
+        val rawVoltage = intent.getIntExtra(EXTRA_VOLTAGE, 0)
+        voltage =
+            if (BatteryVoltageValidator.isValidBroadcastMillivolts(rawVoltage)) rawVoltage else null
 
         percent = level * 100 / scale
         percent = attemptOnePercentHack(percent)
@@ -273,7 +279,7 @@ internal class BatteryInfo {
         bundle.putInt(FIELD_HEALTH, health)
         bundle.putInt(FIELD_PLUGGED, plugged)
         bundle.putInt(FIELD_TEMPERATURE, temperature)
-        bundle.putInt(FIELD_VOLTAGE, voltage)
+        writeVoltageField(bundle.asFieldAccessor(), voltage)
         bundle.putInt(FIELD_LAST_STATUS, lastStatus)
         bundle.putInt(FIELD_LAST_PLUGGED, lastPlugged)
         bundle.putInt(FIELD_LAST_PERCENT, lastPercent)
@@ -308,7 +314,7 @@ internal class BatteryInfo {
         health = bundle.getInt(FIELD_HEALTH)
         plugged = bundle.getInt(FIELD_PLUGGED)
         temperature = bundle.getInt(FIELD_TEMPERATURE)
-        voltage = bundle.getInt(FIELD_VOLTAGE)
+        voltage = readVoltageField(bundle.asFieldAccessor())
         lastStatus = bundle.getInt(FIELD_LAST_STATUS)
         lastPlugged = bundle.getInt(FIELD_LAST_PLUGGED)
         lastPercent = bundle.getInt(FIELD_LAST_PERCENT)
@@ -351,5 +357,31 @@ internal class BatteryInfo {
         } else {
             null
         }
+    }
+}
+
+internal interface BundleFieldAccessor {
+    fun containsKey(key: String): Boolean
+    fun getInt(key: String): Int
+    fun putInt(key: String, value: Int)
+}
+
+private fun Bundle.asFieldAccessor(): BundleFieldAccessor = object : BundleFieldAccessor {
+    override fun containsKey(key: String): Boolean = this@asFieldAccessor.containsKey(key)
+
+    override fun getInt(key: String): Int = this@asFieldAccessor.getInt(key)
+
+    override fun putInt(key: String, value: Int) = this@asFieldAccessor.putInt(key, value)
+}
+
+internal fun writeVoltageField(accessor: BundleFieldAccessor, voltage: Int?) {
+    voltage?.let { accessor.putInt(BatteryInfo.FIELD_VOLTAGE, it) }
+}
+
+internal fun readVoltageField(accessor: BundleFieldAccessor): Int? {
+    return if (accessor.containsKey(BatteryInfo.FIELD_VOLTAGE)) {
+        accessor.getInt(BatteryInfo.FIELD_VOLTAGE)
+    } else {
+        null
     }
 }

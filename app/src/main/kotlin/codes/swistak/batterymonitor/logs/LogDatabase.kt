@@ -22,6 +22,8 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import androidx.core.database.sqlite.transaction
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
+import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
+
 
 internal data class LogRecord(
     val status: Int, val charge: Int?, val time: Long, val temperature: Int?, val voltage: Int?
@@ -223,6 +225,7 @@ internal class LogDatabase(context: Context?) {
                             time = it.getLong(timeColumn),
                             temperature = it.getNullableInt(temperatureColumn),
                             voltage = it.getNullableInt(voltageColumn)
+                                ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
                         )
                     )
                 }
@@ -287,7 +290,7 @@ internal class LogDatabase(context: Context?) {
                     put(KEY_CHARGE, info.percent)
                     put(KEY_TIME, time)
                     put(KEY_TEMPERATURE, info.temperature)
-                    put(KEY_VOLTAGE, info.voltage)
+                    putNullable(KEY_VOLTAGE, info.voltage)
                 }
                 writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
                 LogResult.Inserted

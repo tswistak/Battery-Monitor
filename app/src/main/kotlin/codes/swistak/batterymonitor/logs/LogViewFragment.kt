@@ -19,7 +19,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.database.Cursor
 import android.database.CursorWrapper
 import android.os.Bundle
@@ -41,6 +40,7 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.app.PersistentFragment
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
+import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import java.text.DateFormat
@@ -288,7 +288,6 @@ class LogViewFragment : ListFragment() {
     @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val df: DialogFragment?
-        val spmEditor: SharedPreferences.Editor
 
         if (item.itemId == R.id.menu_clear) {
             df = ConfirmClearLogsDialogFragment()
@@ -894,9 +893,15 @@ class LogViewFragment : ListFragment() {
                 "" + DisplayStrings.formatTemp(temperature, convertF)
             else tempVoltTv.text = ""
 
-            val voltage = cursor.getInt(voltageIndex)
-            if (voltage != 0) tempVoltTv.text =
-                tempVoltTv.getText().toString() + " / " + DisplayStrings.formatVoltage(voltage)
+            if (!cursor.isNull(voltageIndex)) {
+                val voltage = cursor.getInt(voltageIndex)
+                if (BatteryVoltageValidator.isValidBroadcastMillivolts(voltage)) {
+                    tempVoltTv.text =
+                        tempVoltTv.getText().toString() + " / " + DisplayStrings.formatVoltage(
+                            voltage
+                        )
+                }
+            }
         }
     }
 
