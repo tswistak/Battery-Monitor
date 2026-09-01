@@ -1,0 +1,7 @@
+Improved:
+
+- More reliable voltage reading (#142).
+
+Fixed:
+
+- Notifications opening Alarms instead of Current State (#139, thanks @matiamb).
