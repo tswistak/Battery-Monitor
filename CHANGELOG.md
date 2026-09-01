@@ -1,14 +1,14 @@
 # CHANGELOG
 
-## Unreleased
-
-### Fixed
-
-- Notifications opening Alarms instead of Current State (#139, thanks @matiamb).
+## 1.7.2
 
 ### Improved
 
 - More reliable voltage reading (#142).
+
+### Fixed
+
+- Notifications opening Alarms instead of Current State (#139, thanks @matiamb).
 
 ## 1.7.1
 
