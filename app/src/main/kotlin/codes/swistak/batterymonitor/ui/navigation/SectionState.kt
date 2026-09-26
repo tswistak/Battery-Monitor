@@ -1,7 +1,7 @@
 package codes.swistak.batterymonitor.ui.navigation
 
 internal enum class SectionOwner(val route: String) {
-    CURRENT("current"), HISTORY("history"), ALARMS("alarms"), DIAGNOSTICS("diagnostics"), WIDGETS("widgets"), SETTINGS(
+    CURRENT("current"), HISTORY("history"), ALARMS("alarms"), DIAGNOSTICS("diagnostics"), SETTINGS(
         "settings"
     ),
     HELP("help")

@@ -1,139 +1,212 @@
-/*
-    Copyright (c) 2009-2020 Darshan Computing, LLC
-    Modified in 2026 by Tomasz Świstak <tomasz@swistak.codes> for the Battery Monitor fork.
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-*/
 package codes.swistak.batterymonitor.app
 
-
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
-import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ListView
+import android.widget.PopupMenu
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.viewpager.widget.PagerTitleStrip
-import androidx.viewpager.widget.ViewPager
+import androidx.fragment.app.commitNow
+import androidx.lifecycle.Lifecycle
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedInfoFragment
 import codes.swistak.batterymonitor.alarms.AlarmsFragment
-import codes.swistak.batterymonitor.common.EdgeToEdgeHelper
 import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.CurrentInfoFragment
-import codes.swistak.batterymonitor.settings.SettingsContract
-import java.util.Locale
+import codes.swistak.batterymonitor.settings.SettingsFragment
+import codes.swistak.batterymonitor.settings.SettingsHelpActivity
+import codes.swistak.batterymonitor.ui.help.LegacyHelpFragment
+import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
+import codes.swistak.batterymonitor.ui.navigation.SectionOwner
+import codes.swistak.batterymonitor.ui.navigation.SectionRegistry
+import codes.swistak.batterymonitor.ui.navigation.SideNavigationShell
 
 class BatteryInfoActivity : AppCompatActivity() {
     companion object {
-        const val PR_LVF_WRITE_STORAGE: Int = 1
+        const val PR_LVF_WRITE_STORAGE = 1
+        const val EXTRA_SECTION = "codes.swistak.batterymonitor.EXTRA_SECTION"
     }
 
-    private var pagerAdapter: BatteryInfoPagerAdapter? = null
-    private var viewPager: ViewPager? = null
-    private var advancedStatsEnabled = false
+    private lateinit var navigator: SectionNavigator
+    private var selected by mutableStateOf(SectionOwner.CURRENT)
+    private var containerReady = false
+    private var shown: SectionOwner? = null
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.bi_main_theme)
         super.onCreate(savedInstanceState)
-
-        supportActionBar!!.elevation = 0f
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        supportActionBar?.hide()
         PersistentFragment.getInstance(supportFragmentManager)
 
-        setContentView(R.layout.battery_info)
-        EdgeToEdgeHelper.applyIfNeeded(this)
+        navigator = SectionNavigator.restore(savedInstanceState)
+        selected = navigator.selected
+        if (savedInstanceState == null && (intent.hasExtra(EXTRA_SECTION) || intent.hasExtra(
+                BatteryInfoService.EXTRA_CURRENT_INFO
+            ) || intent.hasExtra(BatteryInfoService.EXTRA_EDIT_ALARMS))
+        ) routeIntent(intent)
 
-        advancedStatsEnabled = isAdvancedStatsEnabled()
-        pagerAdapter = BatteryInfoPagerAdapter(supportFragmentManager, advancedStatsEnabled)
+        setContentView(ComposeView(this).apply {
+            setContent {
+                SideNavigationShell(
+                    selected = selected,
+                    onSelect = ::selectSection,
+                    onLegacyActions = if (selected == SectionOwner.HELP) {
+                        null
+                    } else ::showLegacyActions
+                ) { modifier ->
+                    AndroidView(
+                        factory = { context ->
+                            FrameLayout(context).apply {
+                                id = R.id.section_container
+                                post {
+                                    containerReady = true
+                                    showSection(selected)
+                                }
+                            }
+                        }, modifier = modifier
+                    )
+                }
+            }
+        })
 
-        pagerAdapter!!.setContext(this)
-
-        viewPager = findViewById<View?>(R.id.pager) as ViewPager
-        viewPager!!.setAdapter(pagerAdapter)
-
-        viewPager!!.setCurrentItem(1)
-        routeIntent(intent)
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (navigator.back()) {
+                    selected = navigator.selected
+                    showSection(selected)
+                } else {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                    isEnabled = true
+                }
+            }
+        })
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        maybeRebuildPager()
-
-        val tabStrip = findViewById<View?>(R.id.pager_tab_strip) as PagerTitleStrip
-        tabStrip.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16f)
-    }
-
-    public override fun onNewIntent(intent: Intent) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        setIntent(intent)
         routeIntent(intent)
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        if (containerReady) showSection(selected)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        captureHistoryScroll()
+        navigator.save(outState)
+        super.onSaveInstanceState(outState)
+    }
+
+    internal fun selectSection(owner: SectionOwner) {
+        navigator.select(owner)
+        selected = navigator.selected
+        showSection(selected)
     }
 
     private fun routeIntent(intent: Intent) {
-        if (intent.hasExtra(BatteryInfoService.EXTRA_EDIT_ALARMS)) viewPager!!.setCurrentItem(
-            pagerAdapter!!.alarmsPosition
-        )
-        else if (intent.hasExtra(BatteryInfoService.EXTRA_CURRENT_INFO)) viewPager!!.setCurrentItem(
-            1
-        )
-    }
+        val owner = when {
+            intent.hasExtra(BatteryInfoService.EXTRA_EDIT_ALARMS) -> SectionOwner.ALARMS
+            intent.hasExtra(EXTRA_SECTION) -> SectionRegistry.owner(
+                intent.getStringExtra(
+                    EXTRA_SECTION
+                )
+            )
 
-    public override fun onStart() {
-        super.onStart()
-
-        pagerAdapter!!.setContext(this)
-    }
-
-    public override fun onStop() {
-        super.onStop()
-
-        pagerAdapter!!.setContext(null)
-    }
-
-    private fun isAdvancedStatsEnabled(): Boolean {
-        val settings = getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
-        return settings.getBoolean(SettingsContract.KEY_ENABLE_ADVANCED_STATS, false)
-    }
-
-    private fun maybeRebuildPager() {
-        val newAdvancedStatsEnabled = isAdvancedStatsEnabled()
-        if (newAdvancedStatsEnabled == advancedStatsEnabled) return
-
-        val currentItem = viewPager!!.currentItem
-        val oldAdvancedStatsEnabled = advancedStatsEnabled
-
-        advancedStatsEnabled = newAdvancedStatsEnabled
-        pagerAdapter = BatteryInfoPagerAdapter(supportFragmentManager, advancedStatsEnabled)
-        pagerAdapter!!.setContext(this)
-        viewPager!!.setAdapter(pagerAdapter)
-
-        var newCurrentItem = currentItem
-        if (oldAdvancedStatsEnabled && !advancedStatsEnabled && currentItem == 2) newCurrentItem = 1
-        else if (currentItem == (if (oldAdvancedStatsEnabled) 3 else 2)) newCurrentItem =
-            pagerAdapter!!.alarmsPosition
-
-        viewPager!!.setCurrentItem(newCurrentItem, false)
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && viewPager!!.currentItem != 1) {
-            viewPager!!.setCurrentItem(1)
-            return true
+            else -> SectionOwner.CURRENT
         }
+        selectSection(owner)
+    }
 
-        return super.onKeyDown(keyCode, event)
+    private fun showSection(owner: SectionOwner) {
+        if (!containerReady || supportFragmentManager.isStateSaved || shown == owner) return
+        val manager = supportFragmentManager
+        captureHistoryScroll()
+        val targetTag = "section:${owner.route}"
+        val target = manager.findFragmentByTag(targetTag) ?: newFragment(owner)
+        manager.commitNow {
+            setReorderingAllowed(true)
+            for (fragment in manager.fragments) {
+                if (fragment.tag?.startsWith("section:") == true && fragment !== target) {
+                    if (fragment is AdvancedInfoFragment) fragment.setSectionVisible(false)
+                    hide(fragment)
+                    setMaxLifecycle(fragment, Lifecycle.State.CREATED)
+                }
+            }
+            if (target.isAdded) {
+                show(target)
+                setMaxLifecycle(target, Lifecycle.State.RESUMED)
+            } else {
+                add(R.id.section_container, target, targetTag)
+            }
+        }
+        if (target is AdvancedInfoFragment) target.setSectionVisible(true)
+        if (owner == SectionOwner.HISTORY) {
+            val state = navigator.state(SectionOwner.HISTORY)
+            target.view?.findViewById<ListView>(android.R.id.list)?.post {
+                target.view?.findViewById<ListView>(android.R.id.list)
+                    ?.setSelectionFromTop(state.scrollIndex, state.scrollOffset)
+            }
+        }
+        shown = owner
+    }
+
+    private fun captureHistoryScroll() {
+        if (shown != SectionOwner.HISTORY) return
+        val list =
+            supportFragmentManager.findFragmentByTag("section:history")?.view?.findViewById<ListView>(
+                android.R.id.list
+            ) ?: return
+        navigator.update(
+            SectionOwner.HISTORY, navigator.state(SectionOwner.HISTORY).copy(
+                selectedTab = "logs",
+                scrollIndex = list.firstVisiblePosition,
+                scrollOffset = list.getChildAt(0)?.top ?: 0
+            )
+        )
+    }
+
+    private fun newFragment(owner: SectionOwner): Fragment = when (owner) {
+        SectionOwner.CURRENT -> CurrentInfoFragment()
+        SectionOwner.HISTORY -> LogViewFragment()
+        SectionOwner.ALARMS -> AlarmsFragment()
+        SectionOwner.DIAGNOSTICS -> AdvancedInfoFragment()
+        SectionOwner.SETTINGS -> SettingsFragment().apply { setScreen(R.xml.main_pref_screen) }
+        SectionOwner.HELP -> LegacyHelpFragment()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun showLegacyActions(anchor: View) {
+        val fragment =
+            supportFragmentManager.findFragmentByTag("section:${selected.route}") ?: return
+        val popup = PopupMenu(this, anchor)
+        if (selected == SectionOwner.SETTINGS) {
+            menuInflater.inflate(R.menu.settings, popup.menu)
+            popup.setOnMenuItemClickListener { item ->
+                if (item.itemId == R.id.menu_help) {
+                    startActivity(Intent(this, SettingsHelpActivity::class.java))
+                    true
+                } else false
+            }
+        } else {
+            fragment.onCreateOptionsMenu(popup.menu, menuInflater)
+            fragment.onPrepareOptionsMenu(popup.menu)
+            popup.setOnMenuItemClickListener { fragment.onOptionsItemSelected(it) }
+        }
+        popup.show()
     }
 
     @Suppress("DEPRECATION")
@@ -141,88 +214,12 @@ class BatteryInfoActivity : AppCompatActivity() {
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PR_LVF_WRITE_STORAGE -> {
-                val lvf: LogViewFragment? = pagerAdapter!!.lVF
-
-                if (lvf != null) lvf.onRequestPermissionsResult(
-                    requestCode, permissions, grantResults
-                )
-            }
-        }
-    }
-
-    @Suppress("DEPRECATION")
-    private class BatteryInfoPagerAdapter(
-        fm: FragmentManager, private val showAdvancedTab: Boolean
-    ) : androidx.fragment.app.FragmentPagerAdapter(fm) {
-        private var context: Context? = null
-        var lVF: LogViewFragment? = null
-            private set
-
-        fun setContext(c: Context?) {
-            context = c
-        }
-
-        override fun getCount(): Int {
-            return if (showAdvancedTab) 4 else 3
-        }
-
-        val alarmsPosition: Int
-            get() = if (showAdvancedTab) 3 else 2
-
-        override fun getItemId(position: Int): Long {
-            return when (position) {
-                0 -> 0
-                1 -> 1
-                2 -> (if (showAdvancedTab) 2 else 3).toLong()
-                3 -> 3
-                else -> position.toLong()
-            }
-        }
-
-        override fun getItem(position: Int): Fragment {
-            when (position) {
-                0 -> return LogViewFragment()
-                1 -> return CurrentInfoFragment()
-                2 -> {
-                    if (showAdvancedTab) return AdvancedInfoFragment()
-
-                    return AlarmsFragment()
-                }
-
-                3 -> return AlarmsFragment()
-                else -> throw IllegalArgumentException("Unknown page position: $position")
-            }
-        }
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val fragment = super.instantiateItem(container, position) as Fragment
-
-            if (position == 0) this.lVF = fragment as LogViewFragment
-
-            return fragment
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            if (context == null) return null
-
-            val res = context!!.resources
-
-            when (position) {
-                0 -> return res.getString(R.string.tab_history).uppercase(Locale.getDefault())
-                1 -> return res.getString(R.string.tab_current_info).uppercase(Locale.getDefault())
-                2 -> {
-                    if (showAdvancedTab) return res.getString(R.string.tab_advanced).uppercase(
-                        Locale.getDefault()
-                    )
-
-                    return res.getString(R.string.alarm_settings).uppercase(Locale.getDefault())
-                }
-
-                3 -> return res.getString(R.string.alarm_settings).uppercase(Locale.getDefault())
-                else -> return null
-            }
+        if (requestCode == PR_LVF_WRITE_STORAGE) {
+            (supportFragmentManager.findFragmentByTag("section:history") as? LogViewFragment)?.onRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+            )
         }
     }
 }

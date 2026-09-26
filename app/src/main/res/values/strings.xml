@@ -691,4 +691,18 @@
   <string name="pref_discharging_target" formatted="false">Discharging target</string>
   <string name="pref_discharging_target_help" formatted="false">Set the battery level used as the end point of discharging estimates. This is independent of low-battery alarms.</string>
   <string name="pref_target_level_summary" formatted="true">Estimate until %1$d%%.</string>
+  <string name="nav_current">Current state</string>
+  <string name="nav_history">History</string>
+  <string name="nav_alarms">Alarms</string>
+  <string name="nav_diagnostics">Diagnostics</string>
+  <string name="nav_settings">Settings</string>
+  <string name="nav_help">Help &amp; about</string>
+  <string name="nav_battery_group">Battery</string>
+  <string name="nav_tools_group">Tools and app</string>
+  <string name="nav_open_menu">Open menu</string>
+  <string name="nav_focus_menu">Focus menu</string>
+  <string name="nav_close_menu">Close menu</string>
+  <string name="nav_up">Navigate up</string>
+  <string name="nav_actions">More actions</string>
+  <string name="nav_help_version">%1$s %2$s</string>
 </resources>

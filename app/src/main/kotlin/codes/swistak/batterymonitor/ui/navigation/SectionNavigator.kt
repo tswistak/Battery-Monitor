@@ -1,0 +1,84 @@
+package codes.swistak.batterymonitor.ui.navigation
+
+import android.os.Bundle
+
+internal class SectionNavigator(initial: SectionOwner = SectionOwner.CURRENT) {
+    var selected: SectionOwner = initial
+        private set
+    var detail: String? = null
+        private set
+    private var returnTo: SectionOwner = SectionOwner.CURRENT
+    private val sectionStates = mutableMapOf<SectionOwner, SectionState>()
+
+    fun state(owner: SectionOwner): SectionState = sectionStates[owner] ?: SectionState()
+
+    fun update(owner: SectionOwner, state: SectionState) {
+        sectionStates[owner] = state
+    }
+
+    fun select(owner: SectionOwner) {
+        if (owner == selected && detail == null) return
+        selected = owner
+        detail = null
+    }
+
+    fun openDetail(owner: SectionOwner, route: String, origin: SectionOwner = selected) {
+        selected = owner
+        detail = route
+        returnTo = origin
+    }
+
+    fun back(): Boolean {
+        if (detail != null) {
+            detail = null
+            selected = returnTo
+            return true
+        }
+        if (selected == SectionOwner.CURRENT) return false
+        selected = SectionOwner.CURRENT
+        return true
+    }
+
+    fun save(out: Bundle) {
+        out.putString("nav_selected", selected.route)
+        out.putString("nav_detail", detail)
+        out.putString("nav_return_to", returnTo.route)
+        for ((owner, state) in sectionStates) {
+            val key = "nav_${owner.route}_"
+            out.putBoolean("${key}saved", true)
+            out.putString("${key}tab", state.selectedTab)
+            state.rangeStartMillis?.let { out.putLong("${key}start", it) }
+            state.rangeEndMillis?.let { out.putLong("${key}end", it) }
+            out.putStringArrayList("${key}filters", ArrayList(state.filters))
+            out.putString("${key}item", state.selectedItemId)
+            out.putInt("${key}scroll_index", state.scrollIndex)
+            out.putInt("${key}scroll_offset", state.scrollOffset)
+        }
+    }
+
+    companion object {
+        fun restore(saved: Bundle?): SectionNavigator {
+            val navigator =
+                SectionNavigator(SectionRegistry.owner(saved?.getString("nav_selected")))
+            if (saved == null) return navigator
+            navigator.detail = saved.getString("nav_detail")
+            navigator.returnTo = SectionRegistry.owner(saved.getString("nav_return_to"))
+            for (owner in SectionOwner.entries) {
+                val key = "nav_${owner.route}_"
+                if (!saved.getBoolean("${key}saved")) continue
+                navigator.update(
+                    owner, SectionState(
+                        selectedTab = saved.getString("${key}tab"),
+                        rangeStartMillis = saved.takeIf { it.containsKey("${key}start") }
+                            ?.getLong("${key}start"),
+                        rangeEndMillis = saved.takeIf { it.containsKey("${key}end") }
+                            ?.getLong("${key}end"),
+                        filters = saved.getStringArrayList("${key}filters")?.toSet() ?: emptySet(),
+                        selectedItemId = saved.getString("${key}item"),
+                        scrollIndex = saved.getInt("${key}scroll_index"),
+                        scrollOffset = saved.getInt("${key}scroll_offset")))
+            }
+            return navigator
+        }
+    }
+}

@@ -177,6 +177,12 @@ class AdvancedInfoFragment : Fragment() {
         if (tabVisible && isResumed) refreshStats()
     }
 
+    fun setSectionVisible(visible: Boolean) {
+        if (tabVisible == visible) return
+        tabVisible = visible
+        if (visible && isResumed) refreshStats()
+    }
+
     override fun onResume() {
         super.onResume()
 

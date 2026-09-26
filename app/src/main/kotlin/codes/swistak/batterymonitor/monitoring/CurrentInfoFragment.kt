@@ -46,6 +46,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.app.PersistentFragment
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
@@ -55,6 +56,7 @@ import codes.swistak.batterymonitor.settings.LongDurationFormat
 import codes.swistak.batterymonitor.settings.SettingsActivity
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
+import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 
 class CurrentInfoFragment : Fragment() {
     companion object {
@@ -221,7 +223,8 @@ class CurrentInfoFragment : Fragment() {
     @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_settings) {
-            mStartActivity(SettingsActivity::class.java)
+            (activity as? BatteryInfoActivity)?.selectSection(SectionOwner.SETTINGS)
+                ?: mStartActivity(SettingsActivity::class.java)
 
             return true
         }
@@ -239,7 +242,9 @@ class CurrentInfoFragment : Fragment() {
         }
 
         if (item.itemId == R.id.menu_help) {
-            mStartActivity(HelpActivity::class.java)
+            (activity as? BatteryInfoActivity)?.selectSection(SectionOwner.HELP) ?: mStartActivity(
+                HelpActivity::class.java
+            )
 
             return true
         }

@@ -40,7 +40,6 @@ private val batterySections = listOf(
 )
 private val toolSections = listOf(
     MenuSection("diagnostics", "Diagnostics"),
-    MenuSection("widgets", "Widgets"),
     MenuSection("settings", "Settings"),
     MenuSection("help", "Help & about")
 )
@@ -214,7 +213,6 @@ private fun RtlMenuPreview() = BatteryTheme(ColorSource.BatteryBlue, Brightness.
                     ),
                     toolSections = listOf(
                         MenuSection("diagnostics", "التشخيص"),
-                        MenuSection("widgets", "الأدوات"),
                         MenuSection("settings", "الإعدادات"),
                         MenuSection("help", "المساعدة")
                     ),

@@ -705,4 +705,18 @@
   <string name="pref_discharging_target" formatted="false">Cel rozładowania</string>
   <string name="pref_discharging_target_help" formatted="false">Ustaw poziom naładowania baterii używany jako punkt końcowy szacunków rozładowania. Jest to niezależne od alarmów niskiego poziomu naładowania baterii.</string>
   <string name="pref_target_level_summary" formatted="true">Szacuj do %1$d%%</string>
+  <string name="nav_current">Stan bieżący</string>
+  <string name="nav_history">Historia</string>
+  <string name="nav_alarms">Alarmy</string>
+  <string name="nav_diagnostics">Diagnostyka</string>
+  <string name="nav_settings">Ustawienia</string>
+  <string name="nav_help">Pomoc i informacje</string>
+  <string name="nav_battery_group">Bateria</string>
+  <string name="nav_tools_group">Narzędzia i aplikacja</string>
+  <string name="nav_open_menu">Otwórz menu</string>
+  <string name="nav_focus_menu">Przejdź do menu</string>
+  <string name="nav_close_menu">Zamknij menu</string>
+  <string name="nav_up">Wróć</string>
+  <string name="nav_actions">Więcej działań</string>
+  <string name="nav_help_version">%1$s %2$s</string>
 </resources>
