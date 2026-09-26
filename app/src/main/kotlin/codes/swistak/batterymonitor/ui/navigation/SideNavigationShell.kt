@@ -1,3 +1,10 @@
+/*
+    Copyright (c) 2026 Tomasz Świstak <tomasz@swistak.codes>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+*/
 package codes.swistak.batterymonitor.ui.navigation
 
 import android.view.Gravity
@@ -183,15 +190,16 @@ internal fun SideNavigationShell(
                                     .focusable()
                             )
                         }, navigationIcon = {
-                            IconButton(onClick = {
-                                if (detailTitle != null) onUp()
-                                else if (persistent) panelFocus.requestFocus()
-                                else scope.launch { drawerState.open() }
-                            }, modifier = Modifier
-                                .focusRequester(menuFocus)
-                                .semantics {
-                                    contentDescription = navigationLabel
-                                }) {
+                            IconButton(
+                                onClick = {
+                                    if (detailTitle != null) onUp()
+                                    else if (persistent) panelFocus.requestFocus()
+                                    else scope.launch { drawerState.open() }
+                                }, modifier = Modifier
+                                    .focusRequester(menuFocus)
+                                    .semantics {
+                                        contentDescription = navigationLabel
+                                    }) {
                                 Text(if (detailTitle == null) "☰" else "‹")
                             }
                         }, actions = {
