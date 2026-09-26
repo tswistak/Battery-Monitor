@@ -45,6 +45,7 @@ import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.CurrentInfoFragment
+import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
 import codes.swistak.batterymonitor.settings.SettingsContract
 
 class PersistentFragment : Fragment() {
@@ -70,6 +71,8 @@ class PersistentFragment : Fragment() {
     private val messenger = Messenger(messageHandler)
     private var serviceConnection: BatteryInfoService.RemoteConnection? = null
     private var serviceConnected = false
+    internal val monitoring = MonitoringConnection()
+
     private var cif: CurrentInfoFragment? = null
     private var lvf: LogViewFragment? = null
 
@@ -98,11 +101,13 @@ class PersistentFragment : Fragment() {
 
             when (incoming.what) {
                 BatteryInfoService.RemoteConnection.CLIENT_SERVICE_CONNECTED -> {
+                    if (!pf.monitoring.onHandshake(incoming.arg1, incoming.data)) return
                     pf.serviceMessenger = incoming.replyTo
                     pf.sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_REGISTER_CLIENT)
                 }
 
                 BatteryInfoService.RemoteConnection.CLIENT_BATTERY_INFO_UPDATED -> {
+                    if (!pf.monitoring.onSnapshot(incoming.arg1, incoming.data)) return
                     if (pf.cif != null) pf.cif!!.batteryInfoUpdated(incoming.getData())
                     if (pf.lvf != null) pf.lvf!!.batteryInfoUpdated()
                 }
@@ -124,7 +129,14 @@ class PersistentFragment : Fragment() {
 
         setRetainInstance(true)
 
-        serviceConnection = BatteryInfoService.RemoteConnection(messenger)
+        serviceConnection = BatteryInfoService.RemoteConnection(
+            messenger,
+            generation = { monitoring.generation },
+            onConnected = { monitoring.onServiceConnected() },
+            onDisconnected = {
+                serviceMessenger = null
+                monitoring.onServiceDisconnected()
+            })
         biServiceIntent = Intent(activity, BatteryInfoService::class.java)
 
         loadSettingsFiles()
@@ -142,7 +154,12 @@ class PersistentFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_REGISTER_CLIENT)
+        monitoring.start()
+        serviceMessenger = serviceConnection?.serviceMessenger
+        if (serviceMessenger != null) {
+            monitoring.onServiceConnected()
+            sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_CLIENT_CONNECTED)
+        }
 
         spMain.edit { putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, true) }
 
@@ -288,6 +305,7 @@ class PersistentFragment : Fragment() {
         super.onStop()
 
         sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_UNREGISTER_CLIENT)
+        monitoring.stop()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -325,6 +343,7 @@ class PersistentFragment : Fragment() {
 
         val outgoing = Message.obtain()
         outgoing.what = what
+        outgoing.arg1 = monitoring.generation
         outgoing.replyTo = messenger
         try {
             serviceMessenger!!.send(outgoing)

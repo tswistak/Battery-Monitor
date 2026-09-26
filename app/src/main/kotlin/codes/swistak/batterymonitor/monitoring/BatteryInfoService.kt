@@ -60,6 +60,7 @@ import codes.swistak.batterymonitor.logs.AutoLogExporter
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogResult
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageResolver
+import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.LongDurationFormat
@@ -72,6 +73,7 @@ import codes.swistak.batterymonitor.widgets.CircleWidgetBackground
 import codes.swistak.batterymonitor.widgets.FullAppWidgetProvider
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -84,7 +86,8 @@ class BatteryInfoService : Service() {
 
     companion object {
         private const val LOG_TAG = "BatteryInfoService"
-        private var clientMessengers: HashSet<Messenger>? = null
+        private var clientMessengers: HashMap<Messenger, Int>? = null
+
         private var messenger: Messenger? = null
         private val widgetIds = HashSet<Int>()
         private var widgetManager: AppWidgetManager? = null
@@ -143,9 +146,12 @@ class BatteryInfoService : Service() {
         private const val LIVE_UPDATE_MODE_CHARGING = "charging"
         private const val LIVE_UPDATE_MODE_NEVER = "never"
 
-        private fun sendClientMessage(clientMessenger: Messenger, what: Int, data: Bundle? = null) {
+        private fun sendClientMessage(
+            clientMessenger: Messenger, what: Int, data: Bundle? = null, generation: Int = 0
+        ) {
             val outgoing = Message.obtain()
             outgoing.what = what
+            outgoing.arg1 = generation
             outgoing.replyTo = messenger
             outgoing.data = data
             try {
@@ -277,6 +283,14 @@ class BatteryInfoService : Service() {
     private var bl: BatteryLevel? = null
     private var cwbg: CircleWidgetBackground? = null
     private var info: BatteryInfo? = null
+    private val monitoringProcessId = UUID.randomUUID().toString()
+    private var monitoringSequence = 0L
+
+    private fun monitoringBundle() = info!!.toBundle().apply {
+        putString(MonitoringConnection.FIELD_PROCESS_ID, monitoringProcessId)
+        putLong(MonitoringConnection.FIELD_SEQUENCE, monitoringSequence)
+        putLong(MonitoringConnection.FIELD_OBSERVED_AT, now)
+    }
 
     private var voltageResolver: BatteryVoltageResolver? = null
 
@@ -405,7 +419,7 @@ class BatteryInfoService : Service() {
         remainingChargeReader = RemainingChargeReader(applicationContext)
 
         messenger = Messenger(MessageHandler(this))
-        clientMessengers = HashSet()
+        clientMessengers = HashMap()
 
         predictor = Predictor(this)
         bl = BatteryLevel.getSmallInstance(this)
@@ -533,15 +547,18 @@ class BatteryInfoService : Service() {
         override fun handleMessage(incoming: Message) {
             when (incoming.what) {
                 RemoteConnection.SERVICE_CLIENT_CONNECTED -> sendClientMessage(
-                    incoming.replyTo, RemoteConnection.CLIENT_SERVICE_CONNECTED
+                    incoming.replyTo, RemoteConnection.CLIENT_SERVICE_CONNECTED, Bundle().apply {
+                        putString(MonitoringConnection.FIELD_PROCESS_ID, bis.monitoringProcessId)
+                    }, incoming.arg1
                 )
 
                 RemoteConnection.SERVICE_REGISTER_CLIENT -> {
-                    clientMessengers!!.add(incoming.replyTo)
+                    clientMessengers!![incoming.replyTo] = incoming.arg1
                     sendClientMessage(
                         incoming.replyTo,
                         RemoteConnection.CLIENT_BATTERY_INFO_UPDATED,
-                        bis.info!!.toBundle()
+                        bis.monitoringBundle(),
+                        incoming.arg1
                     )
                 }
 
@@ -567,7 +584,12 @@ class BatteryInfoService : Service() {
         }
     }
 
-    internal class RemoteConnection(private val clientMessenger: Messenger?) : ServiceConnection {
+    internal class RemoteConnection(
+        private val clientMessenger: Messenger?,
+        private val generation: () -> Int = { 0 },
+        private val onConnected: () -> Unit = {},
+        private val onDisconnected: () -> Unit = {}
+    ) : ServiceConnection {
         companion object {
             const val SERVICE_CLIENT_CONNECTED: Int = 0
             const val SERVICE_REGISTER_CLIENT: Int = 1
@@ -584,9 +606,11 @@ class BatteryInfoService : Service() {
 
         override fun onServiceConnected(name: ComponentName?, iBinder: IBinder?) {
             serviceMessenger = Messenger(iBinder)
+            onConnected()
 
             val outgoing = Message.obtain()
             outgoing.what = SERVICE_CLIENT_CONNECTED
+            outgoing.arg1 = generation()
             outgoing.replyTo = clientMessenger
             try {
                 serviceMessenger!!.send(outgoing)
@@ -596,6 +620,7 @@ class BatteryInfoService : Service() {
 
         override fun onServiceDisconnected(name: ComponentName?) {
             serviceMessenger = null
+            onDisconnected()
         }
     }
 
@@ -743,9 +768,13 @@ class BatteryInfoService : Service() {
 
         syncSpsEditor()
 
-        for (messenger in clientMessengers!!) {
+        monitoringSequence++
+        for ((messenger, generation) in clientMessengers!!) {
             sendClientMessage(
-                messenger, RemoteConnection.CLIENT_BATTERY_INFO_UPDATED, info!!.toBundle()
+                messenger,
+                RemoteConnection.CLIENT_BATTERY_INFO_UPDATED,
+                monitoringBundle(),
+                generation
             )
         }
 
