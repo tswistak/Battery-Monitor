@@ -37,6 +37,13 @@
             android:summary="@string/pref_vital_signs_content_summary"
             android:title="@string/pref_vital_signs_content"
             app:singleLineTitle="false" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="expanded_notification_details"
+            android:summary="@string/pref_expanded_notification_summary"
+            android:title="@string/pref_expanded_notification"
+            app:singleLineTitle="false" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/status_bar_icon_settings">

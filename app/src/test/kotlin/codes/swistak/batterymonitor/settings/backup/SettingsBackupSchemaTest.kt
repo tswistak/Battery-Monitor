@@ -210,6 +210,14 @@ class SettingsBackupSchemaTest {
     }
 
     @Test
+    fun `version four includes expanded notification details`() {
+        assertEquals(
+            Boolean::class.java,
+            Version4SettingsImporter.schema[SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS]
+        )
+    }
+
+    @Test
     fun `version four restores its settings through the shared codec`() {
         val restored = mutableMapOf<String, Any?>()
         val editor = java.lang.reflect.Proxy.newProxyInstance(

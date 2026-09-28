@@ -46,6 +46,14 @@
             style="@style/help_text"
             android:text="@string/pref_vital_signs_content_summary" />
 
+        <TextView
+            style="@style/help_pref"
+            android:text="@string/pref_expanded_notification" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/pref_expanded_notification_help" />
+
         <View style="@style/help_cat_pre_margin" />
 
         <TextView
