@@ -13,6 +13,7 @@
 */
 package codes.swistak.batterymonitor.app
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -21,9 +22,12 @@ import android.widget.ListView
 import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
@@ -33,11 +37,13 @@ import androidx.lifecycle.Lifecycle
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedInfoFragment
 import codes.swistak.batterymonitor.alarms.AlarmsFragment
+import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
-import codes.swistak.batterymonitor.monitoring.CurrentInfoFragment
+import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsFragment
 import codes.swistak.batterymonitor.settings.SettingsHelpActivity
+import codes.swistak.batterymonitor.ui.current.CurrentStateRoute
 import codes.swistak.batterymonitor.ui.help.LegacyHelpFragment
 import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
@@ -60,7 +66,13 @@ class BatteryInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         supportActionBar?.hide()
-        PersistentFragment.getInstance(supportFragmentManager)
+        val persistent = PersistentFragment.getInstance(supportFragmentManager)
+        DisplayStrings.setResources(resources)
+        val currentSettings =
+            getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+        supportFragmentManager.findFragmentByTag("section:current")?.let { legacyCurrent ->
+            supportFragmentManager.commitNow { remove(legacyCurrent) }
+        }
 
         navigator = SectionNavigator.restore(savedInstanceState)
         selected = navigator.selected
@@ -74,21 +86,34 @@ class BatteryInfoActivity : AppCompatActivity() {
                 SideNavigationShell(
                     selected = selected,
                     onSelect = ::selectSection,
-                    onLegacyActions = if (selected == SectionOwner.HELP) {
+                    onSettings = if (selected == SectionOwner.CURRENT) {
+                        { selectSection(SectionOwner.SETTINGS) }
+                    } else null,
+                    onLegacyActions = if (selected == SectionOwner.HELP || selected == SectionOwner.CURRENT) {
                         null
-                    } else ::showLegacyActions
-                ) { modifier ->
-                    AndroidView(
-                        factory = { context ->
-                            FrameLayout(context).apply {
-                                id = R.id.section_container
-                                post {
-                                    containerReady = true
-                                    showSection(selected)
+                    } else ::showLegacyActions) { modifier ->
+                    Box(modifier) {
+                        AndroidView(
+                            factory = { context ->
+                                FrameLayout(context).apply {
+                                    id = R.id.section_container
+                                    post {
+                                        containerReady = true
+                                        showSection(selected)
+                                    }
                                 }
-                            }
-                        }, modifier = modifier
-                    )
+                            }, modifier = Modifier.fillMaxSize()
+                        )
+                        if (selected == SectionOwner.CURRENT) {
+                            CurrentStateRoute(
+                                monitoring = persistent.monitoring.state,
+                                settings = currentSettings,
+                                onSection = ::selectSection,
+                                onBatteryUsage = ::openBatteryUsage,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                    }
                 }
             }
         })
@@ -149,7 +174,8 @@ class BatteryInfoActivity : AppCompatActivity() {
         val manager = supportFragmentManager
         captureHistoryScroll()
         val targetTag = "section:${owner.route}"
-        val target = manager.findFragmentByTag(targetTag) ?: newFragment(owner)
+        val target = if (owner == SectionOwner.CURRENT) null
+        else manager.findFragmentByTag(targetTag) ?: newFragment(owner)
         manager.commitNow {
             setReorderingAllowed(true)
             for (fragment in manager.fragments) {
@@ -159,17 +185,19 @@ class BatteryInfoActivity : AppCompatActivity() {
                     setMaxLifecycle(fragment, Lifecycle.State.CREATED)
                 }
             }
-            if (target.isAdded) {
-                show(target)
-                setMaxLifecycle(target, Lifecycle.State.RESUMED)
-            } else {
-                add(R.id.section_container, target, targetTag)
+            if (target != null) {
+                if (target.isAdded) {
+                    show(target)
+                    setMaxLifecycle(target, Lifecycle.State.RESUMED)
+                } else {
+                    add(R.id.section_container, target, targetTag)
+                }
             }
         }
         if (target is AdvancedInfoFragment) target.setSectionVisible(true)
         if (owner == SectionOwner.HISTORY) {
             val state = navigator.state(SectionOwner.HISTORY)
-            target.view?.findViewById<ListView>(android.R.id.list)?.post {
+            target?.view?.findViewById<ListView>(android.R.id.list)?.post {
                 target.view?.findViewById<ListView>(android.R.id.list)
                     ?.setSelectionFromTop(state.scrollIndex, state.scrollOffset)
             }
@@ -193,12 +221,22 @@ class BatteryInfoActivity : AppCompatActivity() {
     }
 
     private fun newFragment(owner: SectionOwner): Fragment = when (owner) {
-        SectionOwner.CURRENT -> CurrentInfoFragment()
+        SectionOwner.CURRENT -> error("Current State is rendered by Compose")
         SectionOwner.HISTORY -> LogViewFragment()
         SectionOwner.ALARMS -> AlarmsFragment()
         SectionOwner.DIAGNOSTICS -> AdvancedInfoFragment()
         SectionOwner.SETTINGS -> SettingsFragment().apply { setScreen(R.xml.main_pref_screen) }
         SectionOwner.HELP -> LegacyHelpFragment()
+    }
+
+    private fun openBatteryUsage() {
+        try {
+            startActivity(Intent(Intent.ACTION_POWER_USAGE_SUMMARY))
+        } catch (_: Exception) {
+            android.widget.Toast.makeText(
+                this, R.string.current_usage_unavailable, android.widget.Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     @Suppress("DEPRECATION")
@@ -229,9 +267,7 @@ class BatteryInfoActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PR_LVF_WRITE_STORAGE) {
             (supportFragmentManager.findFragmentByTag("section:history") as? LogViewFragment)?.onRequestPermissionsResult(
-                requestCode,
-                permissions,
-                grantResults
+                requestCode, permissions, grantResults
             )
         }
     }

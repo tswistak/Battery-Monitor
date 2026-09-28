@@ -12,6 +12,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
@@ -55,15 +57,21 @@ fun BatteryCellHero(
         colors = CardDefaults.cardColors(containerColor = colors.primaryContainer),
         shape = MaterialTheme.shapes.large
     ) {
-        Row(
+        BoxWithConstraints(
             Modifier
                 .fillMaxWidth()
-                .padding(BatterySpacing.lg),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .heightIn(min = 208.dp)
         ) {
+            val compact = maxWidth < 360.dp || LocalDensity.current.fontScale >= 1.6f
             Column(
-                Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+                Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = BatterySpacing.lg,
+                        top = BatterySpacing.lg,
+                        end = if (compact) BatterySpacing.lg else 120.dp,
+                        bottom = BatterySpacing.lg
+                    ), verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
             ) {
                 Text(
                     title,
@@ -71,7 +79,7 @@ fun BatteryCellHero(
                     color = colors.onPrimaryContainer
                 )
                 Text(level?.let { "$it%" } ?: "—",
-                    style = MaterialTheme.typography.displayLarge,
+                    style = if (compact) MaterialTheme.typography.displayMedium else MaterialTheme.typography.displayLarge,
                     color = colors.onPrimaryContainer)
                 Text(
                     status,
@@ -84,8 +92,12 @@ fun BatteryCellHero(
                     color = colors.onPrimaryContainer
                 )
             }
-            Spacer(Modifier.width(BatterySpacing.normal))
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            if (!compact) Column(
+                Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = BatterySpacing.lg),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Box(
                     Modifier
                         .width(32.dp)
@@ -114,20 +126,33 @@ fun BatteryCellHero(
 }
 
 @Composable
-fun MetricGrid(metrics: List<MetricDisplay>, modifier: Modifier = Modifier) {
+fun MetricGrid(
+    metrics: List<MetricDisplay>,
+    modifier: Modifier = Modifier,
+    columns: Int = 2,
+    onMetricClick: ((Int) -> Unit)? = null
+) {
     require(metrics.size == 4)
+    require(columns in 1..2)
     Card(
         modifier,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column {
-            repeat(2) { row ->
+            repeat(4 / columns) { row ->
                 Row {
-                    repeat(2) { column ->
-                        val metric = metrics[row * 2 + column]
+                    repeat(columns) { column ->
+                        val index = row * columns + column
+                        val metric = metrics[index]
                         Column(
                             Modifier
                                 .weight(1f)
+                                .then(if (onMetricClick == null) Modifier else Modifier.clickable {
+                                    onMetricClick(
+                                        index
+                                    )
+                                })
+                                .heightIn(min = BatterySpacing.touch)
                                 .padding(BatterySpacing.normal),
                             verticalArrangement = Arrangement.spacedBy(BatterySpacing.xs)
                         ) {

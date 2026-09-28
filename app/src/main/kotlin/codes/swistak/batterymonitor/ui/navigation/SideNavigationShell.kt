@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -52,6 +53,7 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -68,6 +70,7 @@ internal fun SideNavigationShell(
     detailTitle: String? = null,
     onSelect: (SectionOwner) -> Unit,
     onUp: () -> Unit = {},
+    onSettings: (() -> Unit)? = null,
     onLegacyActions: ((View) -> Unit)? = null,
     content: @Composable (Modifier) -> Unit
 ) {
@@ -85,6 +88,7 @@ internal fun SideNavigationShell(
         val toolSections = destinations.filter { it.group == SectionGroup.TOOLS }
             .map { MenuSection(it.owner.route, stringResource(it.label)) }
         val label = stringResource(destinations.first { it.owner == selected }.label)
+        val settingsLabel = stringResource(R.string.nav_settings)
         val density = LocalDensity.current
         val hinge =
             currentWindowAdaptiveInfoV2().windowPosture.separatingVerticalHingeBounds.firstOrNull()
@@ -190,19 +194,24 @@ internal fun SideNavigationShell(
                                     .focusable()
                             )
                         }, navigationIcon = {
-                            IconButton(
-                                onClick = {
-                                    if (detailTitle != null) onUp()
-                                    else if (persistent) panelFocus.requestFocus()
-                                    else scope.launch { drawerState.open() }
-                                }, modifier = Modifier
-                                    .focusRequester(menuFocus)
-                                    .semantics {
-                                        contentDescription = navigationLabel
-                                    }) {
+                            IconButton(onClick = {
+                                if (detailTitle != null) onUp()
+                                else if (persistent) panelFocus.requestFocus()
+                                else scope.launch { drawerState.open() }
+                            }, modifier = Modifier
+                                .focusRequester(menuFocus)
+                                .semantics {
+                                    contentDescription = navigationLabel
+                                }) {
                                 Text(if (detailTitle == null) "☰" else "‹")
                             }
                         }, actions = {
+                            if (onSettings != null) IconButton(onClick = onSettings) {
+                                Icon(
+                                    painterResource(R.drawable.menu_settings_base),
+                                    contentDescription = settingsLabel
+                                )
+                            }
                             if (onLegacyActions != null) AndroidView(
                                 factory = { context ->
                                     TextView(context).apply {

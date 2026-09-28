@@ -1,0 +1,564 @@
+/*
+    Copyright (c) 2026 Tomasz Świstak <tomasz@swistak.codes>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+*/
+package codes.swistak.batterymonitor.ui.current
+
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.os.PowerManager
+import android.provider.Settings
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.common.DurationFormatter
+import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
+import codes.swistak.batterymonitor.monitoring.BatteryCurrent
+import codes.swistak.batterymonitor.monitoring.BatteryInfo
+import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
+import codes.swistak.batterymonitor.settings.LongDurationFormat
+import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.temperatureUnit
+import codes.swistak.batterymonitor.ui.components.BatteryCellHero
+import codes.swistak.batterymonitor.ui.components.CapabilityNotice
+import codes.swistak.batterymonitor.ui.components.MetricDisplay
+import codes.swistak.batterymonitor.ui.components.MetricGrid
+import codes.swistak.batterymonitor.ui.navigation.SectionOwner
+import codes.swistak.batterymonitor.ui.theme.BatterySpacing
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.withContext
+import java.util.Date
+import kotlin.time.Duration.Companion.milliseconds
+
+internal data class CurrentPreferences(
+    val showRemainingCharge: Boolean,
+    val currentEnabled: Boolean,
+    val preferAverageCurrent: Boolean,
+    val currentRefreshMillis: Long,
+    val currentMultiplier: Int,
+    val fahrenheit: Boolean,
+    val longDurationFormat: LongDurationFormat,
+    val predictionMethod: String,
+    val loggingEnabled: Boolean
+)
+
+private fun SharedPreferences.currentPreferences(defaultTemperatureUnit: String) =
+    CurrentPreferences(
+        showRemainingCharge = getBoolean(SettingsContract.KEY_SHOW_REMAINING_CHARGE, true),
+        currentEnabled = getBoolean(SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false),
+        preferAverageCurrent = getBoolean(
+            SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
+        ),
+        currentRefreshMillis = (getString(
+            SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL, "2"
+        )?.toLongOrNull()?.coerceIn(1, 3600) ?: 2) * 1000,
+        currentMultiplier = getString(
+            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1"
+        )?.toIntOrNull() ?: 1,
+        fahrenheit = temperatureUnit(defaultTemperatureUnit).convertToFahrenheit,
+        longDurationFormat = LongDurationFormat.fromPreference(
+            getString(SettingsContract.KEY_LONG_DURATION_FORMAT, null)
+        ),
+        predictionMethod = getString(SettingsContract.KEY_PREDICTION_TYPE, "-3") ?: "-3",
+        loggingEnabled = getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)
+    )
+
+internal data class CurrentReading(
+    val milliAmps: Double?, val observedAtMillis: Long, val average: Boolean = false
+)
+
+@Composable
+internal fun CurrentStateRoute(
+    monitoring: StateFlow<MonitoringUiState>,
+    settings: SharedPreferences,
+    onSection: (SectionOwner) -> Unit,
+    onBatteryUsage: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    val defaultTemperatureUnit = stringResource(R.string.default_temperature_unit)
+    val state by monitoring.collectAsStateWithLifecycle()
+    var settingsVersion by remember { mutableIntStateOf(0) }
+    var notificationsEnabled by remember {
+        mutableStateOf(
+            NotificationManagerCompat.from(context).areNotificationsEnabled()
+        )
+    }
+    var powerUnrestricted by remember {
+        mutableStateOf(
+            (context.getSystemService(Context.POWER_SERVICE) as PowerManager).isIgnoringBatteryOptimizations(
+                context.packageName
+            )
+        )
+    }
+    DisposableEffect(settings) {
+        val listener =
+            SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> settingsVersion++ }
+        settings.registerOnSharedPreferenceChangeListener(listener)
+        onDispose { settings.unregisterOnSharedPreferenceChangeListener(listener) }
+    }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        notificationsEnabled = NotificationManagerCompat.from(context).areNotificationsEnabled()
+        powerUnrestricted =
+            (context.getSystemService(Context.POWER_SERVICE) as PowerManager).isIgnoringBatteryOptimizations(
+                context.packageName
+            )
+    }
+    val preferences = remember(settingsVersion, defaultTemperatureUnit) {
+        settings.currentPreferences(defaultTemperatureUnit)
+    }
+    var refreshCurrent by remember { mutableIntStateOf(0) }
+    val currentReading by produceState<CurrentReading?>(
+        initialValue = null,
+        preferences.currentEnabled,
+        preferences.preferAverageCurrent,
+        preferences.currentRefreshMillis,
+        preferences.currentMultiplier,
+        refreshCurrent
+    ) {
+        if (!preferences.currentEnabled) return@produceState
+        BatteryCurrent.setContext(context)
+        BatteryCurrent.setMultiplier(preferences.currentMultiplier)
+        while (true) {
+            value = withContext(Dispatchers.IO) {
+                val average =
+                    if (preferences.preferAverageCurrent) BatteryCurrent.avgCurrent else null
+                CurrentReading(
+                    average ?: BatteryCurrent.current, System.currentTimeMillis(), average != null
+                )
+            }
+            delay(preferences.currentRefreshMillis.milliseconds)
+        }
+    }
+    var showFullRange by rememberSaveable { mutableStateOf(false) }
+    val model = currentStateModel(state, showFullRange, notificationsEnabled = notificationsEnabled)
+    LaunchedEffect(state.snapshot?.status, state.snapshot?.configuredPrediction?.targetPercent) {
+        showFullRange = false
+    }
+    CurrentStateScreen(
+        model = model,
+        preferences = preferences,
+        currentReading = currentReading,
+        onToggleTarget = { showFullRange = !showFullRange },
+        onSection = onSection,
+        onBatteryUsage = onBatteryUsage,
+        onRefreshCurrent = { refreshCurrent++ },
+        powerOptimized = !powerUnrestricted,
+        onNotificationSettings = { NotificationSettingsNavigator.openNotifications(context) },
+        onPowerSettings = {
+            runCatching { context.startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)) }
+        },
+        modifier = modifier
+    )
+}
+
+private data class MetricDetail(
+    val display: MetricDisplay,
+    val unit: String,
+    val source: String,
+    val observedAtMillis: Long?,
+    val missingReason: String? = null
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun CurrentStateScreen(
+    model: CurrentStateModel,
+    preferences: CurrentPreferences,
+    currentReading: CurrentReading?,
+    onToggleTarget: () -> Unit,
+    onSection: (SectionOwner) -> Unit,
+    onBatteryUsage: () -> Unit,
+    onRefreshCurrent: () -> Unit = {},
+    powerOptimized: Boolean = false,
+    onNotificationSettings: () -> Unit = {},
+    onPowerSettings: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    val configuration = LocalConfiguration.current
+    val resources = context.resources
+    val snapshot = model.snapshot
+    val prediction = model.prediction
+    val stale =
+        model.condition == CurrentCondition.STALE || model.condition == CurrentCondition.DISABLED
+    val status = when (model.condition) {
+        CurrentCondition.WAITING -> stringResource(R.string.current_waiting)
+        CurrentCondition.DISABLED -> stringResource(R.string.current_monitor_disabled)
+        CurrentCondition.STALE -> stringResource(R.string.current_stale)
+        CurrentCondition.FULL -> stringResource(R.string.status_fully_charged)
+        CurrentCondition.PAUSED -> stringResource(R.string.current_paused)
+        CurrentCondition.TARGET_REACHED -> stringResource(
+            R.string.current_target_reached, prediction?.targetPercent ?: 100
+        )
+
+        CurrentCondition.BELOW_TARGET -> stringResource(
+            R.string.current_below_target, prediction?.targetPercent ?: 0
+        )
+
+        CurrentCondition.LOW -> snapshot?.let { DisplayStrings.statuses.getOrNull(it.status) }
+            ?: stringResource(R.string.current_low)
+
+        CurrentCondition.INSUFFICIENT -> snapshot?.let { DisplayStrings.statuses.getOrNull(it.status) }
+            ?: stringResource(R.string.current_waiting)
+
+        CurrentCondition.UNKNOWN -> snapshot?.let { DisplayStrings.statuses.getOrNull(it.status) }
+            ?: stringResource(R.string.status_unknown)
+
+        CurrentCondition.CHARGING -> stringResource(R.string.status_charging)
+        CurrentCondition.DISCHARGING -> stringResource(R.string.status_discharging)
+    }
+    val plug = snapshot?.takeIf { it.plugged != BatteryInfo.PLUGGED_UNPLUGGED }
+        ?.let { DisplayStrings.pluggeds.getOrNull(it.plugged) }?.trim(' ', '(', ')')
+    val remainingCharge =
+        if (preferences.showRemainingCharge && snapshot?.remainingChargeMicroampHours != null) {
+            stringResource(
+                R.string.current_remaining_charge,
+                DisplayStrings.formatChargeCompact(snapshot.remainingChargeMicroampHours)
+            )
+        } else ""
+    val estimate = when {
+        snapshot == null || stale -> "—"
+        snapshot.status == BatteryInfo.STATUS_FULLY_CHARGED -> stringResource(R.string.status_fully_charged)
+        prediction?.targetReached == true && prediction.direction == BatteryInfo.Prediction.UNTIL_DRAINED -> stringResource(
+            R.string.current_below_target, prediction.targetPercent
+        )
+
+        prediction?.targetReached == true -> stringResource(
+            R.string.current_target_reached, prediction.targetPercent
+        )
+
+        prediction?.direction == BatteryInfo.Prediction.NONE || prediction == null -> stringResource(
+            R.string.current_no_prediction
+        )
+
+        else -> "≈" + DurationFormatter.formatShort(
+            resources,
+            prediction.days * 1440 + prediction.hours * 60 + prediction.minutes,
+            preferences.longDurationFormat
+        )
+    }
+    val target = when {
+        prediction == null -> ""
+        prediction.targetReached -> stringResource(
+            R.string.current_prediction_target, prediction.targetPercent
+        )
+
+        prediction.direction == BatteryInfo.Prediction.NONE -> ""
+        else -> stringResource(R.string.activity_until_target, prediction.targetPercent)
+    }
+    val method = when (preferences.predictionMethod) {
+        "-1" -> stringResource(R.string.predictor_since_status_change)
+        "-2" -> stringResource(R.string.predictor_long_term_ave)
+        "-3" -> stringResource(R.string.predictor_conservative)
+        else -> stringResource(R.string.predictor_sensitive)
+    }
+    val snapshotTime = snapshot?.observedAtMillis?.takeIf { it > 0 }
+    val snapshotSource = snapshot?.source ?: stringResource(R.string.advanced_value_not_available)
+    val unavailable = stringResource(R.string.current_unavailable)
+    val metrics = listOf(
+        MetricDetail(
+            MetricDisplay(
+                stringResource(R.string.current_temperature),
+                snapshot?.let {
+                    DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
+                } ?: unavailable),
+            if (preferences.fahrenheit) "°F" else "°C",
+            snapshotSource,
+            snapshotTime),
+        MetricDetail(
+            MetricDisplay(
+                stringResource(R.string.current_voltage),
+                snapshot?.voltageMillivolts?.let {
+                    DisplayStrings.formatVoltage(it)
+                } ?: unavailable),
+            "V",
+            snapshotSource,
+            snapshotTime,
+            if (snapshot?.voltageMillivolts == null) unavailable else null),
+        MetricDetail(
+            MetricDisplay(
+                stringResource(R.string.pref_cat_battery_current_main), when {
+                    !preferences.currentEnabled -> stringResource(R.string.current_off)
+                    currentReading?.milliAmps == null -> unavailable
+                    else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
+                        currentReading.milliAmps, configuration.locales[0]
+                    ) + " mA"
+                }
+            ),
+            "mA",
+            stringResource(R.string.current_current_source) + " · " + stringResource(if (currentReading?.average == true) R.string.advanced_field_current_average else R.string.advanced_field_current_now),
+            currentReading?.observedAtMillis,
+            when {
+                !preferences.currentEnabled -> stringResource(R.string.current_off_explanation)
+                currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
+                else -> null
+            }
+        ),
+        MetricDetail(
+            MetricDisplay(stringResource(R.string.current_android_health), snapshot?.let {
+                DisplayStrings.healths.getOrNull(it.health)
+            } ?: unavailable),
+            stringResource(R.string.current_status_unit),
+            snapshotSource,
+            snapshotTime,
+            stringResource(R.string.current_health_explanation)))
+    var selectedMetric by remember { mutableStateOf<Int?>(null) }
+    var showPredictionDetails by remember { mutableStateOf(false) }
+    BoxWithConstraints(modifier) {
+        val singleColumn = maxWidth < 360.dp || LocalDensity.current.fontScale >= 1.6f
+        LazyColumn(
+            Modifier.fillMaxSize(),
+            contentPadding = androidx.compose.foundation.layout.PaddingValues(BatterySpacing.content),
+            verticalArrangement = Arrangement.spacedBy(BatterySpacing.normal)
+        ) {
+            item {
+                Text(
+                    when (model.condition) {
+                        CurrentCondition.STALE -> stringResource(
+                            R.string.current_last_reading, formatTimestamp(snapshotTime)
+                        )
+
+                        CurrentCondition.DISABLED -> stringResource(R.string.current_monitor_disabled)
+                        CurrentCondition.WAITING -> stringResource(R.string.current_waiting)
+                        else -> stringResource(
+                            R.string.current_monitor_data, formatTimestamp(snapshotTime)
+                        )
+                    },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = if (stale) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            if (model.notificationsDisabled || powerOptimized) item {
+                CapabilityNotice(
+                    title = stringResource(
+                        when {
+                            model.notificationsDisabled && powerOptimized -> R.string.current_monitor_attention
+                            model.notificationsDisabled -> R.string.current_notifications_off
+                            else -> R.string.current_power_optimized
+                        }
+                    ), message = listOfNotNull(
+                        stringResource(R.string.current_notifications_off_body).takeIf { model.notificationsDisabled },
+                        stringResource(R.string.current_power_optimized_body).takeIf { powerOptimized }).joinToString(
+                        "\n"
+                    )
+                )
+                if (model.notificationsDisabled) TextButton(onClick = onNotificationSettings) {
+                    Text(stringResource(R.string.diagnostics_notifications))
+                }
+                if (powerOptimized) TextButton(onClick = onPowerSettings) {
+                    Text(stringResource(R.string.diagnostics_battery_optimization))
+                }
+            }
+            if (model.condition == CurrentCondition.STALE || model.condition == CurrentCondition.DISABLED) item {
+                CapabilityNotice(status, stringResource(R.string.current_monitor_action))
+                TextButton(onClick = { onSection(SectionOwner.DIAGNOSTICS) }) {
+                    Text(
+                        stringResource(
+                            R.string.nav_diagnostics
+                        )
+                    )
+                }
+            }
+            item {
+                BatteryCellHero(
+                    title = stringResource(R.string.nav_battery_group),
+                    level = snapshot?.levelPercent,
+                    status = status,
+                    detail = listOfNotNull(
+                        plug, remainingCharge.takeIf(String::isNotBlank)
+                    ).joinToString(" · "),
+                    spokenSummary = listOfNotNull(
+                        snapshot?.levelPercent?.let { "$it%" }, status, plug, remainingCharge
+                    ).joinToString(", "),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            if (model.condition == CurrentCondition.LOW) item {
+                CapabilityNotice(
+                    stringResource(R.string.current_low), stringResource(R.string.current_low_body)
+                )
+            }
+            item {
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(
+                        Modifier.padding(BatterySpacing.content),
+                        verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+                    ) {
+                        Text(
+                            stringResource(R.string.time_remaining),
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Text(estimate, style = MaterialTheme.typography.headlineMedium)
+                        if (target.isNotBlank()) Text(
+                            target, style = MaterialTheme.typography.bodyLarge
+                        )
+                        TextButton(onClick = {
+                            showPredictionDetails = true
+                        }) { Text(method + " ⓘ") }
+                        if (model.hasAlternative) {
+                            TextButton(onClick = onToggleTarget) {
+                                Text(
+                                    stringResource(
+                                        R.string.current_show_to_target,
+                                        if (model.showingFullRange) snapshot!!.configuredPrediction.targetPercent
+                                        else snapshot!!.fullRangePrediction.targetPercent
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            if (snapshot != null && snapshot.lastStatusTimeMillis > 0 && snapshot.lastPercent >= 0) item {
+                val duration =
+                    ((System.currentTimeMillis() - snapshot.lastStatusTimeMillis) / 60000).coerceAtLeast(
+                        0
+                    ).coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
+                Text(
+                    stringResource(
+                        when (snapshot.lastStatus) {
+                            BatteryInfo.STATUS_UNPLUGGED, BatteryInfo.STATUS_DISCHARGING -> R.string.current_since_unplugged
+                            BatteryInfo.STATUS_CHARGING -> R.string.current_since_connected
+                            else -> R.string.current_since_change
+                        },
+                        snapshot.lastPercent,
+                        snapshot.levelPercent,
+                        DurationFormatter.formatShort(
+                            resources, duration, preferences.longDurationFormat
+                        )
+                    ), style = MaterialTheme.typography.bodyMedium
+                )
+            }
+            item {
+                Text(
+                    stringResource(R.string.current_measurements),
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+            item {
+                MetricGrid(
+                    metrics.map { it.display },
+                    columns = if (singleColumn) 1 else 2,
+                    onMetricClick = { selectedMetric = it },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            item {
+                TextButton(onClick = { onSection(SectionOwner.HISTORY) }) {
+                    Text(
+                        if (preferences.loggingEnabled) stringResource(R.string.nav_history)
+                        else stringResource(R.string.current_history_off)
+                    )
+                }
+            }
+            item {
+                TextButton(onClick = { onSection(SectionOwner.ALARMS) }) { Text(stringResource(R.string.nav_alarms)) }
+            }
+            item {
+                Button(onClick = onBatteryUsage) { Text(stringResource(R.string.current_system_usage)) }
+            }
+        }
+    }
+    selectedMetric?.let { index ->
+        val metric = metrics[index]
+        ModalBottomSheet(onDismissRequest = { selectedMetric = null }) {
+            Column(
+                Modifier.padding(BatterySpacing.content),
+                verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+            ) {
+                Text(metric.display.label, style = MaterialTheme.typography.titleLarge)
+                Text(metric.display.value, style = MaterialTheme.typography.headlineMedium)
+                Text(stringResource(R.string.current_detail_unit, metric.unit))
+                Text(stringResource(R.string.current_detail_source, metric.source))
+                Text(
+                    stringResource(
+                        R.string.current_detail_time, formatTimestamp(metric.observedAtMillis)
+                    )
+                )
+                metric.missingReason?.let { Text(it) }
+                if (stale) Text(stringResource(R.string.current_stale))
+                if (index == 2 && preferences.currentEnabled) TextButton(onClick = onRefreshCurrent) {
+                    Text(stringResource(R.string.advanced_action_refresh))
+                }
+                TextButton(onClick = {
+                    selectedMetric = null; onSection(SectionOwner.DIAGNOSTICS)
+                }) {
+                    Text(stringResource(R.string.nav_diagnostics))
+                }
+            }
+        }
+    }
+    if (showPredictionDetails) ModalBottomSheet(onDismissRequest = {
+        showPredictionDetails = false
+    }) {
+        Column(
+            Modifier.padding(BatterySpacing.content),
+            verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+        ) {
+            Text(
+                stringResource(R.string.time_remaining), style = MaterialTheme.typography.titleLarge
+            )
+            Text(stringResource(R.string.current_prediction_method, method))
+            Text(stringResource(R.string.current_prediction_target, prediction?.targetPercent ?: 0))
+            Text(
+                stringResource(
+                    R.string.current_prediction_snapshot_time, formatTimestamp(snapshotTime)
+                )
+            )
+            Text(stringResource(R.string.current_prediction_basis_unavailable))
+            Text(stringResource(R.string.current_prediction_explanation))
+        }
+    }
+}
+
+@Composable
+private fun formatTimestamp(value: Long?): String {
+    val context = LocalContext.current
+    return if (value == null || value <= 0) stringResource(R.string.status_unknown)
+    else android.text.format.DateFormat.getDateFormat(context)
+        .format(Date(value)) + " " + DisplayStrings.formatTime(context, Date(value))
+}
