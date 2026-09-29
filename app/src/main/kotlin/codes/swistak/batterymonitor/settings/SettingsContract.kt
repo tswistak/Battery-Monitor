@@ -115,6 +115,7 @@ internal object SettingsContract {
     const val KEY_VITAL_SIGNS_CONTENT: String = "vital_signs_content"
     const val KEY_VITAL_SIGNS_ORDER: String = "vital_signs_order"
     const val KEY_EXPANDED_NOTIFICATION_DETAILS: String = "expanded_notification_details"
+    const val KEY_EXPANDED_LIVE_UPDATE_DETAILS: String = "expanded_live_update_details"
     const val VITAL_SIGN_HEALTH: String = "health"
     const val VITAL_SIGN_TEMPERATURE: String = "temperature"
     const val VITAL_SIGN_VOLTAGE: String = "voltage"

@@ -923,7 +923,12 @@ class BatteryInfoService : Service() {
 
         nb.setContentTitle(mainNotificationTopLine).setContentText(mainNotificationBottomLine)
 
-        if (isExpandedNotificationDetailsEnabled()) {
+        val expandedEnabled = if (requestLiveUpdateChip) {
+            isExpandedLiveUpdateDetailsEnabled()
+        } else {
+            isExpandedNotificationDetailsEnabled()
+        }
+        if (expandedEnabled) {
             val detailedVitals = vitalStatsDetailed()
             if (detailedVitals.isNotEmpty()) {
                 nb.setStyle(NotificationCompat.BigTextStyle().bigText(detailedVitals))
@@ -1164,6 +1169,10 @@ class BatteryInfoService : Service() {
         return settings.getBoolean(SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS, true)
     }
 
+    private fun isExpandedLiveUpdateDetailsEnabled(): Boolean {
+        return settings.getBoolean(SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS, true)
+    }
+
     private fun vitalStatEntries(): List<Pair<String, String>> {
         val convertF = settings.temperatureUnit(
             res.getString(R.string.default_temperature_unit)
@@ -1232,8 +1241,20 @@ class BatteryInfoService : Service() {
         return VitalSignsDetailsFormatter.collapsedLine(vitalStatEntries())
     }
 
+    private fun expandedDetailEntries(): List<Pair<String, String>> {
+        val entries = mutableListOf<Pair<String, String>>()
+        entries += getString(R.string.time_remaining) to predictionLine()
+        entries += getString(R.string.time_since_status_change) to statusDurationLine()
+        for ((label, value) in vitalStatEntries()) {
+            if (entries.any { it.first == label }) continue
+            entries += label to value
+        }
+        return entries
+    }
+
     private fun vitalStatsDetailed(): String {
-        return VitalSignsDetailsFormatter.detailedText(vitalStatEntries())
+        val format = getString(R.string.pref_expanded_notification_format)
+        return VitalSignsDetailsFormatter.detailedText(expandedDetailEntries(), format)
     }
 
     private fun statusDurationLine(): String {

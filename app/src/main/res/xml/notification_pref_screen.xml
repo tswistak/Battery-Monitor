@@ -88,6 +88,13 @@
             android:title="@string/pref_live_update_keep_main_notification"
             app:singleLineTitle="false" />
 
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="expanded_live_update_details"
+            android:summary="@string/pref_expanded_live_update_summary"
+            android:title="@string/pref_expanded_live_update"
+            app:singleLineTitle="false" />
+
         <Preference
             android:key="chip_content"
             android:summary="@string/pref_chip_content_summary"

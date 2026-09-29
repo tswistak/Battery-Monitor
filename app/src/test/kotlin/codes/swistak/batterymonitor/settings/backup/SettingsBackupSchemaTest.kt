@@ -215,6 +215,10 @@ class SettingsBackupSchemaTest {
             Boolean::class.java,
             Version4SettingsImporter.schema[SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS]
         )
+        assertEquals(
+            Boolean::class.java,
+            Version4SettingsImporter.schema[SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS]
+        )
     }
 
     @Test

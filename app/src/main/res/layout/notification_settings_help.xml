@@ -120,6 +120,14 @@
 
         <TextView
             style="@style/help_pref"
+            android:text="@string/pref_expanded_live_update" />
+
+        <TextView
+            style="@style/help_text"
+            android:text="@string/pref_expanded_live_update_help" />
+
+        <TextView
+            style="@style/help_pref"
             android:text="@string/pref_chip_content" />
 
         <TextView

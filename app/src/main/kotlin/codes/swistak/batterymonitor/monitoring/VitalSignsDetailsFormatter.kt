@@ -16,7 +16,7 @@ internal object VitalSignsDetailsFormatter {
         return entries.joinToString(" / ") { it.second }
     }
 
-    fun detailedText(entries: List<Pair<String, String>>): String {
-        return entries.joinToString("\n") { (label, value) -> "$label: $value" }
+    fun detailedText(entries: List<Pair<String, String>>, format: String): String {
+        return entries.joinToString("\n") { (label, value) -> format.format(label, value) }
     }
 }
