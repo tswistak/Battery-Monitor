@@ -1170,7 +1170,7 @@ class BatteryInfoService : Service() {
     }
 
     private fun isExpandedLiveUpdateDetailsEnabled(): Boolean {
-        return settings.getBoolean(SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS, true)
+        return settings.getBoolean(SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS, false)
     }
 
     private fun vitalStatEntries(): List<Pair<String, String>> {

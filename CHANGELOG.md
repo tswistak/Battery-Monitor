@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+### Improved
+
+- Main notification is now expandable with vital signs details (#129, thanks @LiberiFatali).
+
 ## 1.7.2
 
 ### Improved
