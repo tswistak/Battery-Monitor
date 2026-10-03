@@ -428,6 +428,7 @@ class LogViewFragment : ListFragment() {
                 requireContext(), pendingExportAfter, pendingExportThrough
             )
             val empty = append && isDocumentEmpty(uri)
+            if (append && !empty) LogExport.requireCurrentCsvHeader(requireContext(), uri)
             requireActivity().contentResolver.openOutputStream(
                 uri, if (append) "wa" else "w"
             )?.use { output ->
@@ -440,7 +441,10 @@ class LogViewFragment : ListFragment() {
             }
             Toast.makeText(activity, DisplayStrings.fileWritten, Toast.LENGTH_SHORT).show()
         } catch (exception: Exception) {
-            Toast.makeText(activity, DisplayStrings.inaccessibleStorage, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                activity, if (exception is IllegalArgumentException) exception.message
+                else DisplayStrings.inaccessibleStorage, Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

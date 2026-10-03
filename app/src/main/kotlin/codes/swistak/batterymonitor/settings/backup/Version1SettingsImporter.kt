@@ -71,9 +71,7 @@ internal object Version1SettingsImporter : SettingsImporter {
 
         for ((key, value) in settings) {
             when (key) {
-                SettingsContract.LEGACY_KEY_ENABLE_CURRENT -> editor.putBoolean(
-                    SettingsContract.KEY_ENABLE_BATTERY_CURRENT, value as Boolean
-                )
+                SettingsContract.LEGACY_KEY_ENABLE_CURRENT -> Unit
 
                 SettingsContract.LEGACY_KEY_PREFER_FILE_SYSTEM -> Unit
 

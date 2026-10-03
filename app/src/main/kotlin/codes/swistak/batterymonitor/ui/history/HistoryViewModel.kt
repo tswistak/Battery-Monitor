@@ -232,10 +232,18 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
 
     suspend fun duration(record: HistoryRecord) = repository.duration(record)
 
-    fun export(uri: Uri, onDone: (Boolean) -> Unit) {
+    fun export(uri: Uri, onDone: (Boolean, String?) -> Unit) {
         val request = pendingExport ?: return
         pendingExport = null
-        operation(onDone, reload = false) { exportHistory(getApplication(), uri, request) }
+        var formatError: String? = null
+        operation({ onDone(it, formatError) }, reload = false) {
+            try {
+                exportHistory(getApplication(), uri, request)
+            } catch (exception: IllegalArgumentException) {
+                formatError = exception.message
+                throw exception
+            }
+        }
     }
 
     fun delete(all: Boolean, onDone: (Boolean) -> Unit) {

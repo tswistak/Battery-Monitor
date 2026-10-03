@@ -324,9 +324,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Wenn aktiviert, zeigt das Symbol ein Prozentzeichen für den Akkustand und ein Gradsymbol für die Akkutemperatur. Deaktivieren Sie dies, wenn nur die Zahl angezeigt werden soll.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Batteriestrom</string>
-  <string name="pref_enable_battery_current" formatted="false">Batteriestrom aktivieren</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Batteriestrom im Hauptfenster anzeigen?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Wenn aktiviert, wird der Batteriestrom im Hauptfenster angezeigt und die zugehörigen Optionen werden verfügbar.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Privilegierter Zugriff</string>
   <string name="pref_use_privileged_access" formatted="false">Privilegierten Zugriff verwenden</string>

@@ -52,17 +52,20 @@ internal object BatteryCurrent {
     val avgCurrent: Double?
         get() = read(true)
 
-    private fun read(average: Boolean, appliedMultiplier: Int = multiplier): Double? {
-        return readAndroidSystem(average, appliedMultiplier) ?: readFileSystem(
-            average, appliedMultiplier
-        ) ?: readPrivileged(average, appliedMultiplier)
-    }
+    val rawCurrentMicroAmps: Long?
+        get() = readMicroAmps(average = false)
+
+    private fun read(average: Boolean, appliedMultiplier: Int = multiplier): Double? =
+        readMicroAmps(average)?.let { scaleMicroAmps(it, appliedMultiplier) }
+
+    private fun readMicroAmps(average: Boolean): Long? =
+        readAndroidSystem(average) ?: readFileSystem(average) ?: readPrivileged(average)
 
     internal fun readForMultiplierDetection(average: Boolean): Double? {
         return read(average, appliedMultiplier = 1)
     }
 
-    private fun readAndroidSystem(average: Boolean, appliedMultiplier: Int): Double? {
+    private fun readAndroidSystem(average: Boolean): Long? {
         val manager = batteryManager ?: return null
         val property = if (average) {
             BatteryManager.BATTERY_PROPERTY_CURRENT_AVERAGE
@@ -72,13 +75,13 @@ internal object BatteryCurrent {
         val microAmps = manager.getIntProperty(property)
         if (microAmps == Int.MIN_VALUE) return null
 
-        return scaleMicroAmps(microAmps.toLong(), appliedMultiplier)
+        return microAmps.toLong()
     }
 
-    private fun readFileSystem(average: Boolean, appliedMultiplier: Int): Double? {
+    private fun readFileSystem(average: Boolean): Long? {
         val cachedFile = if (average) currentAverageFile else currentNowFile
         val cachedValue = cachedFile?.let(::readLong)
-        if (cachedValue != null) return scaleMicroAmps(cachedValue, appliedMultiplier)
+        if (cachedValue != null) return cachedValue
 
         if (average) currentAverageFile = null else currentNowFile = null
         val discoveredFile = findCurrentFile(File(SYSFS_ROOT), average) ?: return null
@@ -89,8 +92,9 @@ internal object BatteryCurrent {
             currentNowFile = discoveredFile
         }
 
-        return scaleMicroAmps(microAmps, appliedMultiplier)
+        return microAmps
     }
+
 
     internal fun findCurrentFile(root: File, average: Boolean): File? {
         val fileName = if (average) "current_avg" else "current_now"
@@ -146,10 +150,9 @@ internal object BatteryCurrent {
         }
     }
 
-    private fun readPrivileged(average: Boolean, appliedMultiplier: Int): Double? {
+    private fun readPrivileged(average: Boolean): Long? {
         val property = if (average) "current_average" else "current_now"
-        val microAmps = readPrivilegedMicroAmps(property, PrivilegedAccess) { null }
-        return microAmps?.let { scaleMicroAmps(it, appliedMultiplier) }
+        return readPrivilegedMicroAmps(property, PrivilegedAccess) { null }
     }
 
     internal fun readPrivilegedMicroAmps(

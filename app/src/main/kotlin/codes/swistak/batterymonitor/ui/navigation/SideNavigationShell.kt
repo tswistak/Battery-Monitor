@@ -28,9 +28,11 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.PermanentDrawerSheet
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
@@ -47,6 +49,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
@@ -72,6 +75,7 @@ internal fun SideNavigationShell(
     onUp: () -> Unit = {},
     onSettings: (() -> Unit)? = null,
     onLegacyActions: ((View) -> Unit)? = null,
+    actions: @Composable () -> Unit = {},
     content: @Composable (Modifier) -> Unit
 ) {
     BatteryTheme {
@@ -93,146 +97,170 @@ internal fun SideNavigationShell(
         val hinge =
             currentWindowAdaptiveInfoV2().windowPosture.separatingVerticalHingeBounds.firstOrNull()
 
-        BoxWithConstraints(
-            Modifier
-                .fillMaxSize()
-                .safeDrawingPadding()
+        Surface(
+            Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground
         ) {
-            val persistent = maxWidth >= 840.dp && maxHeight >= 480.dp && hinge == null
-            val contentWidth = hinge?.let { with(density) { it.left.toDp() } } ?: maxWidth
-            val navigationLabel = stringResource(
-                when {
-                    detailTitle != null -> R.string.nav_up
-                    persistent -> R.string.nav_focus_menu
-                    else -> R.string.nav_open_menu
-                }
-            )
-            LaunchedEffect(persistent) {
-                if (persistent) drawerState.close()
-            }
-            LaunchedEffect(drawerState.currentValue) {
-                if (drawerState.isOpen) wasOpen = true
-                else if (wasOpen) {
-                    if (focusHeadingOnClose) headingFocus.requestFocus()
-                    else menuFocus.requestFocus()
-                    wasOpen = false
-                    focusHeadingOnClose = false
-                }
-            }
-            BackHandler(drawerState.isOpen && !persistent) {
-                scope.launch { drawerState.close() }
-            }
-            ModalNavigationDrawer(
-                drawerState = drawerState,
-                gesturesEnabled = !persistent && detailTitle == null,
-                drawerContent = {
-                    if (!persistent) ModalDrawerSheet(
-                        modifier = Modifier
-                            .widthIn(max = 360.dp)
-                            .fillMaxHeight(),
-                        drawerShape = RoundedCornerShape(topEnd = 26.dp, bottomEnd = 26.dp),
-                        windowInsets = WindowInsets(0, 0, 0, 0)
-                    ) {
-                        SideMenuContent(
-                            appName = stringResource(R.string.app_full_name),
-                            closeLabel = stringResource(R.string.nav_close_menu),
-                            batteryGroupLabel = stringResource(R.string.nav_battery_group),
-                            toolsGroupLabel = stringResource(R.string.nav_tools_group),
-                            batterySections = batterySections,
-                            toolSections = toolSections,
-                            selectedId = selected.route,
-                            onSelect = { route ->
-                                val owner = SectionRegistry.owner(route)
-                                scope.launch {
-                                    focusHeadingOnClose = owner != selected
-                                    if (owner != selected) onSelect(owner)
-                                    drawerState.close()
-                                }
-                            },
-                            onClose = { scope.launch { drawerState.close() } })
-                    }
-                },
-                modifier = Modifier
+            BoxWithConstraints(
+                Modifier
                     .fillMaxSize()
-                    .onPreviewKeyEvent {
-                        if (it.key == Key.Escape && it.type == KeyEventType.KeyUp && drawerState.isOpen) {
-                            scope.launch { drawerState.close() }
-                            true
-                        } else false
-                    }) {
-                Row(Modifier.fillMaxSize()) {
-                    if (persistent) PermanentDrawerSheet(
-                        modifier = Modifier
-                            .width(280.dp)
-                            .fillMaxHeight(),
-                        windowInsets = WindowInsets(0, 0, 0, 0)
-                    ) {
-                        SideMenuContent(
-                            appName = stringResource(R.string.app_full_name),
-                            closeLabel = stringResource(R.string.nav_close_menu),
-                            batteryGroupLabel = stringResource(R.string.nav_battery_group),
-                            toolsGroupLabel = stringResource(R.string.nav_tools_group),
-                            batterySections = batterySections,
-                            toolSections = toolSections,
-                            selectedId = selected.route,
-                            onSelect = { route -> onSelect(SectionRegistry.owner(route)) },
-                            onClose = { menuFocus.requestFocus() },
-                            showCloseButton = false,
-                            firstItemFocusRequester = panelFocus
-                        )
+                    .safeDrawingPadding()
+            ) {
+                val persistent = maxWidth >= 840.dp && maxHeight >= 480.dp && hinge == null
+                val contentWidth = hinge?.let { with(density) { it.left.toDp() } } ?: maxWidth
+                val navigationLabel = stringResource(
+                    when {
+                        detailTitle != null -> R.string.nav_up
+                        persistent -> R.string.nav_focus_menu
+                        else -> R.string.nav_open_menu
                     }
-                    Column(
-                        Modifier
-                            .weight(1f)
-                            .fillMaxHeight()
-                    ) {
-                        TopAppBar(title = {
-                            Text(
-                                detailTitle ?: label,
-                                modifier = Modifier
-                                    .focusRequester(headingFocus)
-                                    .focusable()
-                            )
-                        }, navigationIcon = {
-                            IconButton(onClick = {
-                                if (detailTitle != null) onUp()
-                                else if (persistent) panelFocus.requestFocus()
-                                else scope.launch { drawerState.open() }
-                            }, modifier = Modifier
-                                .focusRequester(menuFocus)
-                                .semantics {
-                                    contentDescription = navigationLabel
-                                }) {
-                                Text(if (detailTitle == null) "☰" else "‹")
-                            }
-                        }, actions = {
-                            if (onSettings != null) IconButton(onClick = onSettings) {
-                                Icon(
-                                    painterResource(R.drawable.menu_settings_base),
-                                    contentDescription = settingsLabel
-                                )
-                            }
-                            if (onLegacyActions != null) AndroidView(
-                                factory = { context ->
-                                    TextView(context).apply {
-                                        text = "⋮"
-                                        textSize = 24f
-                                        gravity = Gravity.CENTER
-                                        isClickable = true
-                                        isFocusable = true
-                                        contentDescription = context.getString(R.string.nav_actions)
-                                        setOnClickListener { onLegacyActions(this) }
-                                    }
-                                }, modifier = Modifier.size(48.dp)
-                            )
-                        })
-                        Box(
-                            Modifier
-                                .fillMaxSize()
-                                .widthIn(max = 600.dp)
-                                .widthIn(max = contentWidth), contentAlignment = Alignment.TopStart
+                )
+                LaunchedEffect(persistent) {
+                    if (persistent) drawerState.close()
+                }
+                LaunchedEffect(drawerState.currentValue) {
+                    if (drawerState.isOpen) wasOpen = true
+                    else if (wasOpen) {
+                        if (focusHeadingOnClose) headingFocus.requestFocus()
+                        else menuFocus.requestFocus()
+                        wasOpen = false
+                        focusHeadingOnClose = false
+                    }
+                }
+                BackHandler(drawerState.isOpen && !persistent) {
+                    scope.launch { drawerState.close() }
+                }
+                ModalNavigationDrawer(
+                    drawerState = drawerState,
+                    gesturesEnabled = !persistent && detailTitle == null,
+                    drawerContent = {
+                        if (!persistent) ModalDrawerSheet(
+                            modifier = Modifier
+                                .widthIn(max = 360.dp)
+                                .fillMaxHeight(),
+                            drawerShape = RoundedCornerShape(topEnd = 26.dp, bottomEnd = 26.dp),
+                            windowInsets = WindowInsets(0, 0, 0, 0)
                         ) {
-                            content(Modifier.fillMaxSize())
+                            SideMenuContent(
+                                appName = stringResource(R.string.app_full_name),
+                                closeLabel = stringResource(R.string.nav_close_menu),
+                                batteryGroupLabel = stringResource(R.string.nav_battery_group),
+                                toolsGroupLabel = stringResource(R.string.nav_tools_group),
+                                batterySections = batterySections,
+                                toolSections = toolSections,
+                                selectedId = selected.route,
+                                onSelect = { route ->
+                                    val owner = SectionRegistry.owner(route)
+                                    scope.launch {
+                                        focusHeadingOnClose = owner != selected
+                                        if (owner != selected) onSelect(owner)
+                                        drawerState.close()
+                                    }
+                                },
+                                onClose = { scope.launch { drawerState.close() } })
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .onPreviewKeyEvent {
+                            if (it.key == Key.Escape && it.type == KeyEventType.KeyUp && drawerState.isOpen) {
+                                scope.launch { drawerState.close() }
+                                true
+                            } else false
+                        }) {
+                    Row(Modifier.fillMaxSize()) {
+                        if (persistent) PermanentDrawerSheet(
+                            modifier = Modifier
+                                .width(280.dp)
+                                .fillMaxHeight(),
+                            windowInsets = WindowInsets(0, 0, 0, 0)
+                        ) {
+                            SideMenuContent(
+                                appName = stringResource(R.string.app_full_name),
+                                closeLabel = stringResource(R.string.nav_close_menu),
+                                batteryGroupLabel = stringResource(R.string.nav_battery_group),
+                                toolsGroupLabel = stringResource(R.string.nav_tools_group),
+                                batterySections = batterySections,
+                                toolSections = toolSections,
+                                selectedId = selected.route,
+                                onSelect = { route -> onSelect(SectionRegistry.owner(route)) },
+                                onClose = { menuFocus.requestFocus() },
+                                showCloseButton = false,
+                                firstItemFocusRequester = panelFocus
+                            )
+                        }
+                        Column(
+                            Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                        ) {
+                            TopAppBar(
+                                windowInsets = WindowInsets(0, 0, 0, 0),
+                                colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
+                                    containerColor = MaterialTheme.colorScheme.background
+                                ),
+                                title = {
+                                    Text(
+                                        detailTitle ?: label,
+                                        modifier = Modifier
+                                            .focusRequester(headingFocus)
+                                            .focusable()
+                                    )
+                                },
+                                navigationIcon = {
+                                    IconButton(onClick = {
+                                        if (detailTitle != null) onUp()
+                                        else if (persistent) panelFocus.requestFocus()
+                                        else scope.launch { drawerState.open() }
+                                    }, modifier = Modifier
+                                        .focusRequester(menuFocus)
+                                        .semantics {
+                                            contentDescription = navigationLabel
+                                        }) {
+                                        Icon(
+                                            painterResource(if (detailTitle == null) R.drawable.ui_menu else R.drawable.ui_back),
+                                            contentDescription = null,
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
+                                },
+                                actions = {
+                                    if (onSettings != null) IconButton(onClick = onSettings) {
+                                        Icon(
+                                            painterResource(R.drawable.ui_settings),
+                                            contentDescription = settingsLabel,
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
+                                    actions()
+                                    val actionColor = MaterialTheme.colorScheme.onSurface.toArgb()
+                                    if (onLegacyActions != null) AndroidView(
+                                        factory = { context ->
+                                        TextView(context).apply {
+                                            text = "⋮"
+                                            textSize = 24f
+                                            gravity = Gravity.CENTER
+                                            isClickable = true
+                                            isFocusable = true
+                                            contentDescription =
+                                                context.getString(R.string.nav_actions)
+                                            setOnClickListener { onLegacyActions(this) }
+                                        }
+                                    },
+                                        update = { it.setTextColor(actionColor) },
+                                        modifier = Modifier.size(48.dp)
+                                    )
+                                })
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .widthIn(max = 600.dp)
+                                    .widthIn(max = contentWidth),
+                                contentAlignment = Alignment.TopStart
+                            ) {
+                                content(Modifier.fillMaxSize())
+                            }
                         }
                     }
                 }

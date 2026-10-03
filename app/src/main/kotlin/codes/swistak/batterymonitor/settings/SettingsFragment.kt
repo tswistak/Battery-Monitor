@@ -132,12 +132,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             arrayOf(SettingsContract.KEY_GREEN_THRESH)
         )
 
-        private val BATTERY_CURRENT_DEPENDENTS = arrayOf<String?>(
-            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
-            SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL,
-            SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT
-        )
-
         private val INVERSE_PARENTS = arrayOf<String?>()
         private val INVERSE_DEPENDENTS = arrayOf<String?>()
 
@@ -187,10 +181,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             SettingsContract.KEY_VITAL_SIGNS_ORDER,
             SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS,
             SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS,
-            SettingsContract.KEY_ENABLE_BATTERY_CURRENT,
             SettingsContract.KEY_USE_PRIVILEGED_ACCESS,
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
-            SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT,
             SettingsContract.KEY_UI_COLOR,
             SettingsContract.KEY_PREDICTION_TYPE,
             SettingsContract.KEY_CHARGING_TARGET_MODE,
@@ -198,7 +190,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             SettingsContract.KEY_DISCHARGING_TARGET,
             SettingsContract.KEY_LONG_DURATION_FORMAT
         )
-
         private val RESET_SERVICE_WITH_CANCEL_NOTIFICATION = arrayOf<String?>()
 
     }
@@ -419,6 +410,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             )
             setupBatteryCurrentMultiplierPreference()
             setupBatteryCurrentRefreshIntervalPreference()
+            maybeDetectBatteryCurrentMultiplier()
         } else if (prefScreen == R.xml.time_estimates_pref_screen) {
             setupTimeEstimatePreferences()
         } else if (prefScreen == R.xml.advanced_pref_screen) {
@@ -432,11 +424,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         for (i in INVERSE_PARENTS.indices) setEnablednessOfInverseDeps(i)
 
         for (i in LIST_PREFS.indices) updateListPrefSummary(LIST_PREFS[i]!!)
-
-        if (prefScreen == R.xml.current_state_pref_screen && !mSharedPreferences!!.getBoolean(
-                SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false
-            )
-        ) setEnablednessOfBatteryCurrentDeps(false)
 
         setupLanguage()
 
@@ -818,23 +805,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             setupTimeEstimatePreferences()
         }
 
-        if (key == SettingsContract.KEY_ENABLE_BATTERY_CURRENT) {
-            val enabled = mSharedPreferences.getBoolean(
-                SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false
-            )
-            if (enabled) {
-                setEnablednessOfBatteryCurrentDeps(true)
-                maybeDetectBatteryCurrentMultiplier(showFailureMessage = true)
-            }
-
-            for (i in PARENTS.indices) setEnablednessOfDeps(i)
-
-            if (!mSharedPreferences.getBoolean(
-                    SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false
-                )
-            ) setEnablednessOfBatteryCurrentDeps(false)
-        }
-
         if (key == SettingsContract.KEY_ENABLE_ADVANCED_STATS && mSharedPreferences.getBoolean(
                 SettingsContract.KEY_ENABLE_ADVANCED_STATS, false
             )
@@ -1040,16 +1010,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         }
     }
 
-    private fun setEnablednessOfBatteryCurrentDeps(enabled: Boolean) {
-        for (i in BATTERY_CURRENT_DEPENDENTS.indices) {
-            val dependent =
-                mPreferenceScreen!!.findPreference<Preference?>(BATTERY_CURRENT_DEPENDENTS[i]!!)
-                    ?: return
-
-            dependent.isEnabled = enabled
-        }
-    }
-
     private fun prepareBatteryCurrentMultiplierDetection() {
         if (mSharedPreferences.contains(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER)) return
         if (mSharedPreferences.getBoolean(
@@ -1112,19 +1072,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             return
         }
         val batteryInfo = BatteryInfo().apply { load(batteryIntent) }
-        val preferAverage = mSharedPreferences.getBoolean(
-            SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
-        )
         batteryCurrentMultiplierDetectionRunning = true
 
         Thread {
             val rawCurrent = runCatching {
-                if (preferAverage) {
-                    BatteryCurrent.readForMultiplierDetection(average = true)
-                        ?: BatteryCurrent.readForMultiplierDetection(average = false)
-                } else {
-                    BatteryCurrent.readForMultiplierDetection(average = false)
-                }
+                BatteryCurrent.readForMultiplierDetection(average = false)
             }.getOrNull()
             val detectedMultiplier = rawCurrent?.let {
                 BatteryCurrentMultiplierDetector.detect(
@@ -1148,8 +1100,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                     return@post
                 }
                 if (!mSharedPreferences.getBoolean(
-                        SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false
-                    ) || !mSharedPreferences.getBoolean(
                         SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING, false
                     )
                 ) return@post

@@ -348,9 +348,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Ak je zapnuté, ikona zobrazuje znak percenta pre stav batérie a symbol stupňa pre teplotu batérie. Vypnite túto možnosť, ak chcete zobrazovať len číslo.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Prúd batérie</string>
-  <string name="pref_enable_battery_current" formatted="false">Povoliť prúd batérie</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Zobraziť prúd batérie v hlavnom okne?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Po povolení sa prúd batérie zobrazí v hlavnom okne a sprístupnia sa súvisiace možnosti.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Privilegovaný prístup</string>
   <string name="pref_use_privileged_access" formatted="false">Použiť privilegovaný prístup</string>

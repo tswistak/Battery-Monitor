@@ -344,9 +344,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Če je omogočeno, ikona prikazuje znak za odstotek pri odstotku baterije in simbol stopinje pri temperaturi baterije. Izklopite to možnost, če želite prikazati samo številko.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Tok baterije</string>
-  <string name="pref_enable_battery_current" formatted="false">Omogoči tok baterije</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Prikažem tok baterije v glavnem oknu?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Ko je omogočeno, je tok baterije prikazan v glavnem oknu in povezane možnosti postanejo na voljo.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Privilegiran dostop</string>
   <string name="pref_use_privileged_access" formatted="false">Uporabi privilegiran dostop</string>

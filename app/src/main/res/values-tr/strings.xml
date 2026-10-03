@@ -322,9 +322,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Etkinse simge, pil yüzdesi için yüzde işareti ve pil sıcaklığı için derece simgesi gösterir. Yalnızca sayıyı göstermek için bunu kapatın.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Pil akımı</string>
-  <string name="pref_enable_battery_current" formatted="false">Pil akımını etkinleştir</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Pil akımı ana pencerede gösterilsin mi?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Etkinleştirildiğinde pil akımı ana pencerede gösterilir ve ilgili seçenekler kullanılabilir olur.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Ayrıcalıklı erişim</string>
   <string name="pref_use_privileged_access" formatted="false">Ayrıcalıklı erişimi kullan</string>

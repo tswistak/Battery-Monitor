@@ -326,9 +326,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">यदि यह चालू है, तो आइकन बैटरी प्रतिशत के लिए प्रतिशत चिह्न और बैटरी तापमान के लिए डिग्री चिह्न दिखाता है। केवल संख्या दिखाने के लिए इसे बंद करें।</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">बैटरी करंट</string>
-  <string name="pref_enable_battery_current" formatted="false">बैटरी करंट सक्षम करें</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">मुख्य विंडो में बैटरी करंट दिखाएँ?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">सक्षम होने पर बैटरी करंट मुख्य विंडो में दिखता है और उससे जुड़े विकल्प उपलब्ध हो जाते हैं।</string>
 
   <string name="pref_cat_privileged_access" formatted="false">विशेषाधिकार प्राप्त पहुँच</string>
   <string name="pref_use_privileged_access" formatted="false">विशेषाधिकार प्राप्त पहुँच का उपयोग करें</string>

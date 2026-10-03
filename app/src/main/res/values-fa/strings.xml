@@ -326,9 +326,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">اگر فعال باشد، آیکون برای درصد باتری علامت درصد و برای دمای باتری علامت درجه را نشان می‌دهد. برای نمایش فقط عدد، این گزینه را غیرفعال کنید.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">جریان باتری</string>
-  <string name="pref_enable_battery_current" formatted="false">فعال‌کردن جریان باتری</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">جریان باتری در پنجره اصلی نمایش داده شود؟</string>
-  <string name="pref_enable_battery_current_help" formatted="false">با فعال‌کردن، جریان باتری در پنجره اصلی نمایش داده می‌شود و گزینه‌های مرتبط در دسترس قرار می‌گیرند.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">دسترسی ویژه</string>
   <string name="pref_use_privileged_access" formatted="false">استفاده از دسترسی ویژه</string>

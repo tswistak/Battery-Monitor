@@ -328,9 +328,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Se ativado, o ícone mostra o sinal de porcentagem para a carga da bateria e o símbolo de grau para a temperatura da bateria. Desative para mostrar apenas o número.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Corrente da bateria</string>
-  <string name="pref_enable_battery_current" formatted="false">Ativar corrente da bateria</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Mostrar a corrente da bateria na janela principal?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Quando ativada, a corrente da bateria é mostrada na janela principal e as opções relacionadas ficam disponíveis.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Acesso privilegiado</string>
   <string name="pref_use_privileged_access" formatted="false">Usar acesso privilegiado</string>

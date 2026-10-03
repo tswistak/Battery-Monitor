@@ -312,9 +312,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">启用后，图标会为电池百分比显示百分号，为电池温度显示度数符号。关闭此选项可只显示数字。</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">电池电流</string>
-  <string name="pref_enable_battery_current" formatted="false">启用电池电流</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">在主窗口中显示电池电流？</string>
-  <string name="pref_enable_battery_current_help" formatted="false">启用后，电池电流会显示在主窗口中，并可使用相关选项。</string>
 
   <string name="pref_cat_privileged_access" formatted="false">特权访问</string>
   <string name="pref_use_privileged_access" formatted="false">使用特权访问</string>

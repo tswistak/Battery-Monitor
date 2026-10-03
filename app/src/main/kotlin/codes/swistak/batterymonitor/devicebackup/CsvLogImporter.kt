@@ -101,7 +101,15 @@ internal object CsvLogImporter {
 
         return rows.drop(1).mapIndexed { index, row ->
             require(row.size >= COLUMN_COUNT) { "Invalid CSV row ${index + 2}" }
-            val trailingColumnStart = row.size - 4
+            // Old exports can contain unquoted commas in the status label. Check the status
+            // and charge together to distinguish those rows from the new current column.
+            val trailingColumnStart = listOf(row.size - 5, row.size - 4).firstOrNull { start ->
+                if (start < 3) false else {
+                    val code = statusCodeFor(row.subList(2, start).joinToString(","))
+                    code != null && (code == LogDatabase.STATUS_BOOT_COMPLETED || row[start].trim()
+                        .toIntOrNull() != null)
+                }
+            } ?: throw IllegalArgumentException("Invalid status or charge in CSV row ${index + 2}")
             val statusLabel = row.subList(2, trailingColumnStart).joinToString(",")
             val statusCode = statusCodeFor(statusLabel)
                 ?: throw IllegalArgumentException("Unknown status in CSV row ${index + 2}")
@@ -119,7 +127,12 @@ internal object CsvLogImporter {
                 ),
                 voltage = if (isBoot) null else parseScaledDecimal(
                     row[trailingColumnStart + 3], 1000.0, "voltage", index + 2
-                )
+                ),
+                currentMicroAmps = if (isBoot || row.size - trailingColumnStart == 4 || row.last()
+                        .isBlank()
+                ) null
+                else row.last().trim().toLongOrNull()
+                    ?: throw IllegalArgumentException("Invalid current in CSV row ${index + 2}")
             )
         }
     }
@@ -228,7 +241,7 @@ internal object CsvLogImporter {
         return scaled.roundToInt()
     }
 
-    private fun parseCsv(csv: String): List<List<String>> {
+    internal fun parseCsv(csv: String): List<List<String>> {
         val rows = mutableListOf<MutableList<String>>()
         var row = mutableListOf<String>()
         val field = StringBuilder()

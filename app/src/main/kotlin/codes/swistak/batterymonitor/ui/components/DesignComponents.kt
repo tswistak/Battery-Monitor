@@ -7,6 +7,7 @@
 */
 package codes.swistak.batterymonitor.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -21,11 +23,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
@@ -40,7 +47,9 @@ import androidx.compose.ui.unit.dp
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
 import codes.swistak.batterymonitor.ui.theme.LocalBatterySemanticColors
 
-data class MetricDisplay(val label: String, val value: String, val unit: String = "")
+data class MetricDisplay(
+    val label: String, val value: String, val unit: String = "", val icon: Int? = null
+)
 
 @Composable
 fun BatteryCellHero(
@@ -134,13 +143,15 @@ fun MetricGrid(
 ) {
     require(metrics.size == 4)
     require(columns in 1..2)
-    Card(
+    OutlinedCard(
         modifier,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
     ) {
         Column {
             repeat(4 / columns) { row ->
-                Row {
+                Row(Modifier.height(IntrinsicSize.Min)) {
                     repeat(columns) { column ->
                         val index = row * columns + column
                         val metric = metrics[index]
@@ -152,27 +163,48 @@ fun MetricGrid(
                                         index
                                     )
                                 })
-                                .heightIn(min = BatterySpacing.touch)
+                                .heightIn(min = 84.dp)
                                 .padding(BatterySpacing.normal),
                             verticalArrangement = Arrangement.spacedBy(BatterySpacing.xs)
                         ) {
-                            Text(
-                                metric.label,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                            ) {
+                                metric.icon?.let {
+                                    Icon(
+                                        painterResource(it),
+                                        null,
+                                        Modifier.size(17.dp),
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                                Text(
+                                    metric.label,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                             Text(
                                 "${metric.value}${if (metric.unit.isEmpty()) "" else " ${metric.unit}"}",
                                 style = MaterialTheme.typography.titleLarge,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                         }
+                        if (column < columns - 1) Box(
+                            Modifier
+                                .width(1.dp)
+                                .fillMaxHeight()
+                                .background(MaterialTheme.colorScheme.outlineVariant)
+                        )
                     }
                 }
+                if (row < 4 / columns - 1) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
             }
         }
     }
 }
+
 
 @Composable
 fun SettingRow(
@@ -230,5 +262,16 @@ fun CapabilityNotice(
                 style = MaterialTheme.typography.bodyMedium
             )
         }
+    }
+}
+
+@Composable
+internal fun ActionLabel(label: String, icon: Int) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Icon(painterResource(icon), null, Modifier.size(19.dp))
+        Text(label)
     }
 }

@@ -36,7 +36,7 @@ class SettingsMigrationManagerTest {
 
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
         assertEquals(5, preferences.commitCount)
-        assertEquals(true, preferences.values[SettingsContract.KEY_ENABLE_BATTERY_CURRENT])
+        assertFalse(preferences.values.containsKey("enable_battery_current"))
         assertEquals("1000", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER])
         assertEquals(true, preferences.values[SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT])
         assertEquals(false, preferences.values[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])

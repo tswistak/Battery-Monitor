@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +34,7 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.contentDescription
@@ -45,6 +48,7 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryChartModel
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistorySeries
+import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import java.text.NumberFormat
 import java.time.Instant
 import java.time.ZoneId
@@ -59,7 +63,11 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 
 internal fun historyValue(
-    value: Double?, metric: HistoryMetric, fahrenheit: Boolean, locale: Locale
+    value: Double?,
+    metric: HistoryMetric,
+    fahrenheit: Boolean,
+    locale: Locale,
+    currentMultiplier: Int = 1
 ): String {
     if (value == null) return "—"
     return when (metric) {
@@ -72,23 +80,59 @@ internal fun historyValue(
         )
 
         HistoryMetric.VOLTAGE -> String.format(locale, "%.2f V", value)
+        HistoryMetric.CURRENT -> BatteryCurrent.formatMilliAmps(
+            value * currentMultiplier, locale
+        ) + " mA"
     }
+}
+
+
+private fun historyUnit(metric: HistoryMetric, fahrenheit: Boolean): String = when (metric) {
+    HistoryMetric.LEVEL -> "%"
+    HistoryMetric.TEMPERATURE -> if (fahrenheit) "°F" else "°C"
+    HistoryMetric.VOLTAGE -> "V"
+    HistoryMetric.CURRENT -> "mA"
+}
+
+internal fun historyRangeValue(
+    series: HistorySeries,
+    metric: HistoryMetric,
+    fahrenheit: Boolean,
+    locale: Locale,
+    currentMultiplier: Int = 1
+): String {
+    if (series.min == null || series.max == null) return "—"
+    val reversed = metric == HistoryMetric.CURRENT && currentMultiplier < 0
+    val maximum = historyValue(
+        if (reversed) series.min else series.max, metric, fahrenheit, locale, currentMultiplier
+    )
+    if (series.min == series.max) return maximum
+    return historyValue(
+        if (reversed) series.max else series.min, metric, fahrenheit, locale, currentMultiplier
+    ).removeSuffix(historyUnit(metric, fahrenheit)).trimEnd() + "–" + maximum
 }
 
 internal data class HistoryChartScale(
     val minimum: Double, val maximum: Double, val ticks: List<Double>
 )
 
-private fun chartValue(value: Double, metric: HistoryMetric, fahrenheit: Boolean) =
-    if (metric == HistoryMetric.TEMPERATURE && fahrenheit) value * 1.8 + 32 else value
+private fun chartValue(
+    value: Double, metric: HistoryMetric, fahrenheit: Boolean, currentMultiplier: Int
+) = when (metric) {
+    HistoryMetric.TEMPERATURE if fahrenheit -> value * 1.8 + 32
+    HistoryMetric.CURRENT -> value * currentMultiplier
+    else -> value
+}
 
 internal fun historyChartScale(
-    series: HistorySeries, metric: HistoryMetric, fahrenheit: Boolean
+    series: HistorySeries, metric: HistoryMetric, fahrenheit: Boolean, currentMultiplier: Int = 1
 ): HistoryChartScale {
-    val minimum = chartValue(series.min ?: 0.0, metric, fahrenheit)
-    val maximum = chartValue(series.max ?: series.min ?: 0.0, metric, fahrenheit)
+    val first = chartValue(series.min ?: 0.0, metric, fahrenheit, currentMultiplier)
+    val last = chartValue(series.max ?: series.min ?: 0.0, metric, fahrenheit, currentMultiplier)
+    val minimum = minOf(first, last)
+    val maximum = maxOf(first, last)
     val fallback = when (metric) {
-        HistoryMetric.LEVEL -> 20.0; HistoryMetric.TEMPERATURE -> 5.0; HistoryMetric.VOLTAGE -> 0.2
+        HistoryMetric.LEVEL -> 20.0; HistoryMetric.TEMPERATURE -> 5.0; HistoryMetric.VOLTAGE -> 0.2; HistoryMetric.CURRENT -> 100.0
     }
     val rawStep = maxOf((maximum - minimum) / 3, fallback / 4)
     val magnitude = 10.0.pow(floor(log10(rawStep)))
@@ -113,7 +157,8 @@ internal fun MeasurementChart(
     selectedId: Long?,
     onSelect: (Long) -> Unit,
     modifier: Modifier = Modifier,
-    compact: Boolean = false
+    compact: Boolean = false,
+    currentMultiplier: Int = 1
 ) {
     val locale = LocalConfiguration.current.locales[0]
     val series = model.series.getValue(metric)
@@ -127,15 +172,14 @@ internal fun MeasurementChart(
         return
     }
     val selected = points.firstOrNull { it.key.id == selectedId } ?: points.lastOrNull()
-    val scale = remember(series, metric, fahrenheit, compact) {
+    val scale = remember(series, metric, fahrenheit, compact, currentMultiplier) {
         if (compact) {
-            val min = chartValue(series.min ?: 0.0, metric, fahrenheit)
+            val first = chartValue(series.min ?: 0.0, metric, fahrenheit, currentMultiplier)
+            val last = chartValue(series.max ?: 1.0, metric, fahrenheit, currentMultiplier)
             HistoryChartScale(
-                min,
-                maxOf(chartValue(series.max ?: 1.0, metric, fahrenheit), min + 0.1),
-                emptyList()
+                minOf(first, last), maxOf(first, last, minOf(first, last) + 0.1), emptyList()
             )
-        } else historyChartScale(series, metric, fahrenheit)
+        } else historyChartScale(series, metric, fahrenheit, currentMultiplier)
     }
     val formatter = remember(locale, compact) {
         DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(locale)
@@ -157,8 +201,20 @@ internal fun MeasurementChart(
         R.string.history_chart_description,
         time(model.range.start),
         time(model.range.end - 1),
-        historyValue(series.min, metric, fahrenheit, locale),
-        historyValue(series.max, metric, fahrenheit, locale)
+        historyValue(
+            if (metric == HistoryMetric.CURRENT && currentMultiplier < 0) series.max else series.min,
+            metric,
+            fahrenheit,
+            locale,
+            currentMultiplier
+        ),
+        historyValue(
+            if (metric == HistoryMetric.CURRENT && currentMultiplier < 0) series.min else series.max,
+            metric,
+            fahrenheit,
+            locale,
+            currentMultiplier
+        )
     )
     val previous = stringResource(R.string.history_previous_point)
     val next = stringResource(R.string.history_next_point)
@@ -174,10 +230,9 @@ internal fun MeasurementChart(
     val eventColor = MaterialTheme.colorScheme.onSurfaceVariant
     Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         if (!compact) {
-            val formatted = historyValue(selected?.value, metric, fahrenheit, locale)
-            val unit = when (metric) {
-                HistoryMetric.LEVEL -> "%"; HistoryMetric.TEMPERATURE -> if (fahrenheit) "°F" else "°C"; HistoryMetric.VOLTAGE -> "V"
-            }
+            val formatted =
+                historyValue(selected?.value, metric, fahrenheit, locale, currentMultiplier)
+            val unit = historyUnit(metric, fahrenheit)
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(
                     formatted.removeSuffix(unit).trim(),
@@ -224,41 +279,42 @@ internal fun MeasurementChart(
                 }
             }
             Column(Modifier.weight(1f)) {
-                Canvas(Modifier
-                    .fillMaxWidth()
-                    .height(if (compact) 56.dp else 160.dp)
-                    .semantics {
-                        contentDescription = description
-                        stateDescription = selected?.let {
-                            "${time(it.key.time)}, ${
-                                historyValue(
-                                    it.value, metric, fahrenheit, locale
-                                )
-                            }"
-                        } ?: "—"
-                        if (!compact) customActions = listOf(
-                            CustomAccessibilityAction(previous) { move(-1) },
-                            CustomAccessibilityAction(next) { move(1) })
-                    }
-                    .onKeyEvent {
-                        if (it.type != KeyEventType.KeyDown || compact) false
-                        else when (it.key) {
-                            Key.DirectionLeft -> move(-1); Key.DirectionRight -> move(1); else -> false
+                Canvas(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(if (compact) 56.dp else 160.dp)
+                        .semantics {
+                            contentDescription = description
+                            stateDescription = selected?.let {
+                                "${time(it.key.time)}, ${
+                                    historyValue(
+                                        it.value, metric, fahrenheit, locale, currentMultiplier
+                                    )
+                                }"
+                            } ?: "—"
+                            if (!compact) customActions = listOf(
+                                CustomAccessibilityAction(previous) { move(-1) },
+                                CustomAccessibilityAction(next) { move(1) })
                         }
-                    }
-                    .focusable(!compact)
-                    .pointerInput(points, model.range, onSelect) {
-                        if (!compact) detectTapGestures { offset ->
-                            val fraction =
-                                ((offset.x - 8.dp.toPx()) / (size.width - 16.dp.toPx())).coerceIn(
-                                    0f, 1f
-                                )
-                            val timestamp =
-                                model.range.start + fraction.toDouble() * (model.range.end - model.range.start)
-                            points.minByOrNull { abs(it.key.time - timestamp) }
-                                ?.let { onSelect(it.key.id) }
+                        .onKeyEvent {
+                            if (it.type != KeyEventType.KeyDown || compact) false
+                            else when (it.key) {
+                                Key.DirectionLeft -> move(-1); Key.DirectionRight -> move(1); else -> false
+                            }
                         }
-                    }) {
+                        .focusable(!compact)
+                        .pointerInput(points, model.range, onSelect) {
+                            if (!compact) detectTapGestures { offset ->
+                                val fraction =
+                                    ((offset.x - 8.dp.toPx()) / (size.width - 16.dp.toPx())).coerceIn(
+                                        0f, 1f
+                                    )
+                                val timestamp =
+                                    model.range.start + fraction.toDouble() * (model.range.end - model.range.start)
+                                points.minByOrNull { abs(it.key.time - timestamp) }
+                                    ?.let { onSelect(it.key.id) }
+                            }
+                        }) {
                     val inset = 8.dp.toPx()
                     fun x(time: Long) =
                         inset + ((time - model.range.start).toDouble() / (model.range.end - model.range.start) * (size.width - 2 * inset)).toFloat()
@@ -277,7 +333,6 @@ internal fun MeasurementChart(
                         )
                     }
                     if (!compact) model.events.forEach { event ->
-                        // Dense events retain first/last timestamps and counts rather than unbounded markers.
                         listOf(event.first, event.last).distinct().forEach { time ->
                             drawLine(
                                 eventColor,
@@ -309,9 +364,11 @@ internal fun MeasurementChart(
                     points.zipWithNext().forEach { (first, last) ->
                         if (first.segment == last.segment) drawLine(
                             line, Offset(
-                                x(first.key.time), y(chartValue(first.value!!, metric, fahrenheit))
+                                x(first.key.time),
+                                y(chartValue(first.value!!, metric, fahrenheit, currentMultiplier))
                             ), Offset(
-                                x(last.key.time), y(chartValue(last.value!!, metric, fahrenheit))
+                                x(last.key.time),
+                                y(chartValue(last.value!!, metric, fahrenheit, currentMultiplier))
                             ), if (compact) 2.5.dp.toPx() else 3.dp.toPx(), cap = StrokeCap.Round
                         )
                     }
@@ -322,7 +379,8 @@ internal fun MeasurementChart(
                             )?.segment != point.segment
                         if (point == selected || isolated) drawCircle(
                             line, if (point == selected) 4.dp.toPx() else 2.5.dp.toPx(), Offset(
-                                x(point.key.time), y(chartValue(point.value!!, metric, fahrenheit))
+                                x(point.key.time),
+                                y(chartValue(point.value!!, metric, fahrenheit, currentMultiplier))
                             )
                         )
                     }
@@ -350,9 +408,19 @@ internal fun MeasurementChart(
                 }
             }
         }
-        if (!compact) Text(
-            stringResource(R.string.history_observations),
-            style = MaterialTheme.typography.bodySmall
-        )
+        if (!compact) Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Icon(
+                painterResource(R.drawable.ui_info),
+                null,
+                Modifier.size(16.dp),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Text(
+                stringResource(R.string.history_observations),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
     }
 }
+

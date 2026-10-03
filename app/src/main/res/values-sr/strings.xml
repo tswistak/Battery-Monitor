@@ -336,9 +336,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Ako je uključeno, ikonica prikazuje znak procenta za procenat baterije i znak stepena za temperaturu baterije. Isključite ovu opciju ako želite da se prikazuje samo broj.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Struja baterije</string>
-  <string name="pref_enable_battery_current" formatted="false">Omogući struju baterije</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Prikazati struju baterije u glavnom prozoru?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Kada je omogućeno, struja baterije se prikazuje u glavnom prozoru i povezane opcije postaju dostupne.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Privilegovani pristup</string>
   <string name="pref_use_privileged_access" formatted="false">Koristi privilegovani pristup</string>

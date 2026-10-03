@@ -33,7 +33,6 @@ private fun PreviewCurrentState(
     availability: MonitoringAvailability = MonitoringAvailability.LIVE,
     notificationsEnabled: Boolean = true,
     monitoringEnabled: Boolean = true,
-    currentEnabled: Boolean = true,
     current: Double? = -240.0
 ) {
     DisplayStrings.setResources(LocalResources.current)
@@ -65,15 +64,7 @@ private fun PreviewCurrentState(
             notificationsEnabled = notificationsEnabled
         ),
             CurrentPreferences(
-                true,
-                currentEnabled,
-                false,
-                2000,
-                1,
-                false,
-                LongDurationFormat.DAYS_AND_HOURS,
-                "-2",
-                true
+                true, false, 2000, 1, false, LongDurationFormat.DAYS_AND_HOURS, "-2", true
             ),
             CurrentReading(current, System.currentTimeMillis()),
             onToggleTarget = {},
@@ -81,6 +72,7 @@ private fun PreviewCurrentState(
             onBatteryUsage = {})
     }
 }
+
 
 @Preview(name = "Discharging", widthDp = 390, heightDp = 900, showBackground = true)
 @Composable
@@ -144,9 +136,6 @@ private fun NotificationsDeniedPreview() = PreviewCurrentState(notificationsEnab
 private fun MonitoringDisabledPreview() =
     PreviewCurrentState(monitoringEnabled = false, current = null)
 
-@Preview(name = "Current measurement off", widthDp = 390, heightDp = 900, showBackground = true)
-@Composable
-private fun CurrentOffPreview() = PreviewCurrentState(currentEnabled = false, current = null)
 
 @Preview(
     name = "320 dp, font scale 2",

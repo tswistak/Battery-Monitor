@@ -26,7 +26,12 @@ import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageVali
 
 
 internal data class LogRecord(
-    val status: Int, val charge: Int?, val time: Long, val temperature: Int?, val voltage: Int?
+    val status: Int,
+    val charge: Int?,
+    val time: Long,
+    val temperature: Int?,
+    val voltage: Int?,
+    val currentMicroAmps: Long? = null
 )
 
 internal sealed interface LogResult {
@@ -40,7 +45,8 @@ internal class LogDatabase(context: Context?) {
         private const val LOG_TAG = "LogDatabase"
 
         private const val DATABASE_NAME = "logs.db"
-        private const val DATABASE_VERSION = 4
+        private const val DATABASE_VERSION = 5
+
         private const val LOG_TABLE_NAME = "logs"
 
         private const val KEY_ID = "_id"
@@ -49,6 +55,7 @@ internal class LogDatabase(context: Context?) {
         const val KEY_TIME: String = "time"
         const val KEY_TEMPERATURE: String = "temperature"
         const val KEY_VOLTAGE: String = "voltage"
+        const val KEY_CURRENT: String = "current"
 
         const val STATUS_BOOT_COMPLETED: Int = -1
 
@@ -204,7 +211,8 @@ internal class LogDatabase(context: Context?) {
                                 time = cursor.getLong(3),
                                 temperature = cursor.getNullableInt(4),
                                 voltage = cursor.getNullableInt(5)
-                                    ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
+                                    ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts),
+                                currentMicroAmps = cursor.getNullableLong(6)
                             )
                         )
                     )
@@ -261,7 +269,7 @@ internal class LogDatabase(context: Context?) {
         }
         val where = if (whereParts.isEmpty()) "" else " WHERE ${whereParts.joinToString(" AND ")}"
         val cursor = rdb?.rawQuery(
-            "SELECT $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE FROM $LOG_TABLE_NAME$where ORDER BY $KEY_TIME ASC",
+            "SELECT $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE, $KEY_CURRENT FROM $LOG_TABLE_NAME$where ORDER BY $KEY_TIME ASC",
             whereArgs.takeIf { it.isNotEmpty() }?.toTypedArray()
         ) ?: return emptyList()
         cursor.use {
@@ -270,6 +278,7 @@ internal class LogDatabase(context: Context?) {
             val timeColumn = it.getColumnIndexOrThrow(KEY_TIME)
             val temperatureColumn = it.getColumnIndexOrThrow(KEY_TEMPERATURE)
             val voltageColumn = it.getColumnIndexOrThrow(KEY_VOLTAGE)
+            val currentColumn = it.getColumnIndexOrThrow(KEY_CURRENT)
             return buildList {
                 while (it.moveToNext()) {
                     add(
@@ -279,7 +288,8 @@ internal class LogDatabase(context: Context?) {
                             time = it.getLong(timeColumn),
                             temperature = it.getNullableInt(temperatureColumn),
                             voltage = it.getNullableInt(voltageColumn)
-                                ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
+                                ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts),
+                            currentMicroAmps = it.getNullableLong(currentColumn)
                         )
                     )
                 }
@@ -303,6 +313,7 @@ internal class LogDatabase(context: Context?) {
                     put(KEY_TIME, record.time)
                     putNullable(KEY_TEMPERATURE, record.temperature)
                     putNullable(KEY_VOLTAGE, record.voltage)
+                    putNullable(KEY_CURRENT, record.currentMicroAmps)
                 }
                 check(database.insertOrThrow(LOG_TABLE_NAME, null, values) >= 0) {
                     "Could not restore log entry"
@@ -318,38 +329,47 @@ internal class LogDatabase(context: Context?) {
         if (value == null) putNull(key) else put(key, value)
     }
 
-    fun logStatus(info: BatteryInfo, time: Long, statusAge: Int): LogResult =
-        writeWithRetry("Logging battery status") { readableDatabase, writableDatabase ->
-            var duplicate = false
-            readableDatabase.rawQuery(
-                "SELECT * FROM $LOG_TABLE_NAME ORDER BY $KEY_TIME DESC LIMIT 1", null
-            ).use { lastLog ->
-                if (lastLog.moveToFirst()) {
-                    val statusCode = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_STATUS_CODE))
-                    val lastCharge = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_CHARGE))
-                    val decodedStatus: IntArray = decodeStatus(statusCode)
-                    val lastStatus = decodedStatus[0]
-                    val lastPlugged = decodedStatus[1]
+    private fun Cursor.getNullableLong(columnIndex: Int): Long? =
+        if (isNull(columnIndex)) null else getLong(columnIndex)
 
-                    duplicate =
-                        info.percent == lastCharge && info.status == lastStatus && info.plugged == lastPlugged
-                }
-            }
+    private fun ContentValues.putNullable(key: String, value: Long?) {
+        if (value == null) putNull(key) else put(key, value)
+    }
 
-            if (duplicate) {
-                LogResult.Duplicate
-            } else {
-                val values = ContentValues().apply {
-                    put(KEY_STATUS_CODE, encodeStatus(info.status, info.plugged, statusAge))
-                    put(KEY_CHARGE, info.percent)
-                    put(KEY_TIME, time)
-                    put(KEY_TEMPERATURE, info.temperature)
-                    putNullable(KEY_VOLTAGE, info.voltage)
-                }
-                writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
-                LogResult.Inserted
+    fun logStatus(
+        info: BatteryInfo, time: Long, statusAge: Int, currentMicroAmps: Long?
+    ): LogResult = writeWithRetry("Logging battery status") { readableDatabase, writableDatabase ->
+        var duplicate = false
+        readableDatabase.rawQuery(
+            "SELECT * FROM $LOG_TABLE_NAME ORDER BY $KEY_TIME DESC LIMIT 1", null
+        ).use { lastLog ->
+            if (lastLog.moveToFirst()) {
+                val statusCode = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_STATUS_CODE))
+                val lastCharge = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_CHARGE))
+                val decodedStatus: IntArray = decodeStatus(statusCode)
+                val lastStatus = decodedStatus[0]
+                val lastPlugged = decodedStatus[1]
+
+                duplicate =
+                    info.percent == lastCharge && info.status == lastStatus && info.plugged == lastPlugged
             }
         }
+
+        if (duplicate) {
+            LogResult.Duplicate
+        } else {
+            val values = ContentValues().apply {
+                put(KEY_STATUS_CODE, encodeStatus(info.status, info.plugged, statusAge))
+                put(KEY_CHARGE, info.percent)
+                put(KEY_TIME, time)
+                put(KEY_TEMPERATURE, info.temperature)
+                putNullable(KEY_VOLTAGE, info.voltage)
+                putNullable(KEY_CURRENT, currentMicroAmps)
+            }
+            writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
+            LogResult.Inserted
+        }
+    }
 
     fun logBoot(): LogResult = writeWithRetry("Logging boot completion") { _, writableDatabase ->
         val values = ContentValues().apply {
@@ -358,6 +378,7 @@ internal class LogDatabase(context: Context?) {
             put(KEY_TIME, System.currentTimeMillis())
             putNull(KEY_TEMPERATURE)
             putNull(KEY_VOLTAGE)
+            putNull(KEY_CURRENT)
         }
         writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
         LogResult.Inserted
@@ -421,17 +442,22 @@ internal class LogDatabase(context: Context?) {
 
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(
-                "CREATE TABLE $LOG_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_STATUS_CODE INTEGER,$KEY_CHARGE INTEGER,$KEY_TIME INTEGER,$KEY_TEMPERATURE INTEGER,$KEY_VOLTAGE INTEGER);"
+                "CREATE TABLE $LOG_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_STATUS_CODE INTEGER,$KEY_CHARGE INTEGER,$KEY_TIME INTEGER,$KEY_TEMPERATURE INTEGER,$KEY_VOLTAGE INTEGER,$KEY_CURRENT INTEGER);"
             )
         }
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-            if (oldVersion == 3 && newVersion == 4) {
-                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_TEMPERATURE INTEGER;")
-                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_VOLTAGE INTEGER;")
-            } else {
+            if (oldVersion < 3) {
                 db.execSQL("DROP TABLE IF EXISTS $LOG_TABLE_NAME")
                 onCreate(db)
+                return
+            }
+            if (oldVersion < 4) {
+                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_TEMPERATURE INTEGER;")
+                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_VOLTAGE INTEGER;")
+            }
+            if (oldVersion < 5) {
+                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_CURRENT INTEGER;")
             }
         }
 

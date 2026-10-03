@@ -332,9 +332,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Dacă este activată, pictograma afișează semnul procentului pentru nivelul bateriei și simbolul gradului pentru temperatura bateriei. Dezactivează opțiunea pentru a afișa doar numărul.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Curentul bateriei</string>
-  <string name="pref_enable_battery_current" formatted="false">Activează curentul bateriei</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Afișezi curentul bateriei în fereastra principală?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Când este activat, curentul bateriei apare în fereastra principală, iar opțiunile asociate devin disponibile.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Acces privilegiat</string>
   <string name="pref_use_privileged_access" formatted="false">Folosește acces privilegiat</string>

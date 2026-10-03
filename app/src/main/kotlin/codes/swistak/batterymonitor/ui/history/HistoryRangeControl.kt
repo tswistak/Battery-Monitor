@@ -10,14 +10,21 @@ package codes.swistak.batterymonitor.ui.history
 import android.app.DatePickerDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -26,9 +33,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -69,17 +78,51 @@ internal fun HistoryRangeControl(
         "7d" -> stringResource(R.string.history_last_7d)
         else -> stringResource(R.string.history_range)
     }
-    OutlinedButton(onClick = { mode = "choose" }, modifier = Modifier.fillMaxWidth()) {
-        Column {
-            Text(title)
-            Text(
-                "${format.format(Instant.ofEpochMilli(state.range.start))} – ${
-                    format.format(
-                        Instant.ofEpochMilli(
-                            state.range.end - 1
+    Surface(
+        onClick = { mode = "choose" },
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(18.dp),
+        color = MaterialTheme.colorScheme.surfaceVariant
+    ) {
+        Row(
+            Modifier
+                .heightIn(min = 48.dp)
+                .padding(horizontal = 15.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(
+                painterResource(R.drawable.ui_calendar),
+                null,
+                Modifier.size(20.dp),
+                tint = MaterialTheme.colorScheme.primary
+            )
+            Column(Modifier.weight(1f)) {
+                Text(
+                    title,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold
+                )
+                if (state.rangeLabel != "24h" && state.rangeLabel != "7d") Text(
+                    "${format.format(Instant.ofEpochMilli(state.range.start))} – ${
+                        format.format(
+                            Instant.ofEpochMilli(state.range.end - 1)
                         )
-                    )
-                }", style = MaterialTheme.typography.labelSmall
+                    }",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Text(
+                stringResource(R.string.history_change_range),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Icon(
+                painterResource(R.drawable.ui_chev),
+                null,
+                Modifier.size(20.dp),
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -203,3 +246,4 @@ internal fun HistoryRangeControl(
             })
     }
 }
+

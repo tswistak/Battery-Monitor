@@ -8,6 +8,7 @@
 package codes.swistak.batterymonitor.diagnostics
 
 import android.content.ComponentName
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -79,6 +80,16 @@ internal object BackgroundSettingsNavigator {
             if (start(context, intent)) return true
         }
         return openPerAppBatterySettings(context) || openApplicationDetails(context)
+    }
+
+    @SuppressLint("BatteryLife")
+    fun openBatteryOptimization(context: Context): Boolean {
+        val appUri = "package:${context.packageName}".toUri()
+        return listOf(
+            Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, appUri),
+            Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS),
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, appUri)
+        ).any { start(context, it) }
     }
 
     fun openApplicationDetails(context: Context): Boolean = start(

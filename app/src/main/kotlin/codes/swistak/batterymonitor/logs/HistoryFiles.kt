@@ -43,6 +43,7 @@ internal suspend fun exportHistory(context: Context, uri: Uri, request: HistoryE
             } ?: resolver.openInputStream(uri)?.use { it.read() == -1 }
             ?: error("Could not read append target")
         } else true
+        if (request.append && !empty) LogExport.requireCurrentCsvHeader(context, uri)
         val database = LogDatabase(context.applicationContext)
         try {
             completeHistoryExport(request, write = {

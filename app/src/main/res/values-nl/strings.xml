@@ -326,9 +326,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Als dit is ingeschakeld, toont het pictogram een procentteken voor het batterijpercentage en een gradensymbool voor de batterijtemperatuur. Schakel dit uit om alleen het getal te tonen.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Batterijstroom</string>
-  <string name="pref_enable_battery_current" formatted="false">Batterijstroom inschakelen</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Batterijstroom in het hoofdvenster tonen?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Na inschakelen wordt de batterijstroom in het hoofdvenster getoond en worden de bijbehorende opties beschikbaar.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Toegang met extra rechten</string>
   <string name="pref_use_privileged_access" formatted="false">Toegang met extra rechten gebruiken</string>

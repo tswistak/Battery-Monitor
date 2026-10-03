@@ -148,22 +148,12 @@ internal class CurrentReadingRepository(context: Context) {
     }
 
     suspend fun read(): MonitoringReading<Double> = withContext(Dispatchers.IO) {
-        if (!preferences.getBoolean(SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false)) {
-            return@withContext MonitoringReading(null, "disabled", System.currentTimeMillis())
-        }
         val multiplier = preferences.getString(
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1"
         )?.toIntOrNull() ?: 1
         BatteryCurrent.setMultiplier(multiplier)
-        val preferredAverage = preferences.getBoolean(
-            SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
-        )
-        val average = if (preferredAverage) BatteryCurrent.avgCurrent else null
-        val current = average ?: BatteryCurrent.current
         MonitoringReading(
-            current,
-            if (average != null) "BatteryCurrent average" else "BatteryCurrent instant",
-            System.currentTimeMillis()
+            BatteryCurrent.current, "BatteryCurrent instant", System.currentTimeMillis()
         )
     }
 }

@@ -13,12 +13,47 @@
 package codes.swistak.batterymonitor.devicebackup
 
 import codes.swistak.batterymonitor.logs.LogDatabase
+import codes.swistak.batterymonitor.logs.LogExport
 import codes.swistak.batterymonitor.logs.LogRecord
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class CsvLogImporterTest {
+    @Test
+    fun `append accepts the raw current format and rejects older headers before writing`() {
+        assertTrue(LogExport.hasRawCurrentCsvHeader("Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Battery current (µA)"))
+        assertTrue(LogExport.hasRawCurrentCsvHeader("Data,Czas,Stan,Poziom,Temperatura,Temperatura F,Napięcie,\"Prąd, baterii (µA)\""))
+        assertFalse(LogExport.hasRawCurrentCsvHeader("Date,Time,Status,Charge,Temperature,Temperature F,Voltage"))
+        assertFalse(LogExport.hasRawCurrentCsvHeader("Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (mA)"))
+    }
+
+    @Test
+    fun `old and new CSV rows preserve missing signed fractional and zero current`() {
+        val csv =
+            "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA)\n" + "date,time,Discharging,50,30,86,4.0\n" + "date,time,Discharging,50,30,86,4.0,-240125\n" + "date,time,Charging,50,30,86,4.0,1200250\n" + "date,time,Charging,50,30,86,4.0,0\n" + "date,time,Charging,50,30,86,4.0,\n" + "date,time,Boot Completed,0,0,32,0,\n"
+        val records = CsvLogImporter.parseRecords(csv, {
+            when (it) {
+                "Discharging" -> 100; "Charging" -> 122; "Boot Completed" -> -1; else -> null
+            }
+        }, { _, _ -> 1L })
+        assertEquals(
+            listOf(null, -240125L, 1200250L, 0L, null, null), records.map { it.currentMicroAmps })
+        for (invalid in listOf(
+            "NaN", "Infinity", "-Infinity", "invalid", "1.5", "9223372036854775808"
+        )) {
+            assertThrows(IllegalArgumentException::class.java) {
+                CsvLogImporter.parseRecords(csv.replace("-240125", invalid), {
+                    when (it) {
+                        "Discharging" -> 100; "Charging" -> 122; "Boot Completed" -> -1; else -> null
+                    }
+                }, { _, _ -> 1L })
+            }
+        }
+    }
+
     @Test
     fun `translated column names are ignored and columns are read by position`() {
         val statusCode = LogDatabase.encodeStatus(2, 1, LogDatabase.STATUS_NEW)

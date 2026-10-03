@@ -7,7 +7,6 @@
 */
 package codes.swistak.batterymonitor.diagnostics
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.NotificationManager
 import android.content.ClipData
@@ -25,7 +24,6 @@ import android.os.Looper
 import android.os.PowerManager
 import android.os.ResultReceiver
 import android.os.SystemClock
-import android.provider.Settings
 import android.widget.FrameLayout
 import android.widget.NumberPicker
 import android.widget.ScrollView
@@ -652,17 +650,8 @@ class DiagnosticsFragment : PreferenceFragmentCompat(),
     private fun BatteryInfoService.ServiceStartResult.isRequestAccepted(): Boolean =
         this == BatteryInfoService.ServiceStartResult.START_REQUESTED || this == BatteryInfoService.ServiceStartResult.FALLBACK_REQUESTED
 
-    @SuppressLint("BatteryLife")
-    private fun openBatteryOptimizationSettings(): Boolean {
-        val context = requireContext()
-        val appUri = "package:${context.packageName}".toUri()
-        val intents = listOf(
-            Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, appUri),
-            Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS),
-            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, appUri)
-        )
-        return intents.any { intent -> runCatching { startActivity(intent) }.isSuccess }
-    }
+    private fun openBatteryOptimizationSettings(): Boolean =
+        BackgroundSettingsNavigator.openBatteryOptimization(requireContext())
 
     private fun refreshDebugLoggingSummary() {
         findPreference<SwitchPreferenceCompat>(SettingsContract.KEY_DEBUG_LOGGING)?.summary =

@@ -322,9 +322,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">有効にすると、アイコンにバッテリー残量はパーセント記号、バッテリー温度は度記号を表示します。数字だけを表示したい場合は無効にしてください。</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">バッテリー電流</string>
-  <string name="pref_enable_battery_current" formatted="false">バッテリー電流を有効にする</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">メイン画面にバッテリー電流を表示しますか？</string>
-  <string name="pref_enable_battery_current_help" formatted="false">有効にすると、メイン画面にバッテリー電流が表示され、関連する設定が利用できます。</string>
 
   <string name="pref_cat_privileged_access" formatted="false">特権アクセス</string>
   <string name="pref_use_privileged_access" formatted="false">特権アクセスを使用</string>

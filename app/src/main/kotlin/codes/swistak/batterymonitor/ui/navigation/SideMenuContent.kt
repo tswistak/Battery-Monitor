@@ -7,10 +7,11 @@
 */
 package codes.swistak.batterymonitor.ui.navigation
 
+import android.view.View
+import android.widget.ImageView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 
 data class MenuSection(val id: String, val label: String)
 
@@ -71,14 +73,14 @@ fun SideMenuContent(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                Modifier
-                    .size(30.dp)
-                    .background(Color(0xFF03A9F4), CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                NavigationGlyph("brand", Color.White, Modifier.size(19.dp))
-            }
+            AndroidView(
+                factory = { context ->
+                    ImageView(context).apply {
+                        setImageDrawable(context.applicationInfo.loadIcon(context.packageManager))
+                        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                    }
+                }, modifier = Modifier.size(30.dp)
+            )
             Text(
                 appName,
                 Modifier.weight(1f),

@@ -364,9 +364,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">عند التفعيل، تعرض الأيقونة علامة النسبة المئوية لنسبة البطارية وعلامة الدرجة لدرجة حرارة البطارية. عطّل هذا الخيار لعرض الرقم فقط.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">تيار البطارية</string>
-  <string name="pref_enable_battery_current" formatted="false">تفعيل تيار البطارية</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">عرض تيار البطارية في النافذة الرئيسية؟</string>
-  <string name="pref_enable_battery_current_help" formatted="false">عند التفعيل، يظهر تيار البطارية في النافذة الرئيسية وتصبح الخيارات المرتبطة به متاحة.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">الوصول المميّز</string>
   <string name="pref_use_privileged_access" formatted="false">استخدام الوصول المميّز</string>

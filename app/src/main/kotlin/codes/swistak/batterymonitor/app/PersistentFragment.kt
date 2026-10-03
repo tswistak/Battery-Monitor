@@ -30,6 +30,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.os.Messenger
+import android.os.PowerManager
 import android.os.RemoteException
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -41,6 +42,7 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.common.showToast
+import codes.swistak.batterymonitor.diagnostics.BackgroundSettingsNavigator
 import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
@@ -82,6 +84,8 @@ class PersistentFragment : Fragment() {
     lateinit var res: Resources
 
     private var mHasShownOnboardingInThisSession = false
+    private var notificationRequestInFlight = false
+    private var hasShownBatteryPrompt = false
 
     private fun bindService() {
         if (!serviceConnected && activity != null) {
@@ -180,12 +184,18 @@ class PersistentFragment : Fragment() {
                 requireActivity(), Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            if (spMain.getBoolean(SettingsContract.KEY_FIRST_RUN, true)) {
+            if (spMain.getBoolean(
+                    SettingsContract.KEY_FIRST_RUN, true
+                ) && !mHasShownOnboardingInThisSession
+            ) {
                 showNotificationOnboarding()
+                return
             } else if (!mHasShownOnboardingInThisSession) {
-                requestNotificationPermission()
                 mHasShownOnboardingInThisSession = true
+                requestNotificationPermission()
+                return
             }
+            showBatteryOptimizationPrompt()
             return
         }
 
@@ -194,6 +204,7 @@ class PersistentFragment : Fragment() {
         }
 
         startServiceIfNeeded()
+        showBatteryOptimizationPrompt()
     }
 
     @Suppress("OVERRIDE_DEPRECATION")
@@ -201,10 +212,35 @@ class PersistentFragment : Fragment() {
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         if (requestCode == 101) {
+            notificationRequestInFlight = false
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startServiceIfNeeded()
             }
+            showBatteryOptimizationPrompt()
         }
+    }
+
+    private fun showBatteryOptimizationPrompt() {
+        if (!isResumed || parentFragmentManager.isStateSaved || notificationRequestInFlight || hasShownBatteryPrompt || parentFragmentManager.findFragmentByTag(
+                "onboarding"
+            ) != null || parentFragmentManager.findFragmentByTag("battery_optimization") != null
+        ) return
+        val context = requireContext()
+        val power = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+        if (power.isIgnoringBatteryOptimizations(context.packageName)) return
+        hasShownBatteryPrompt = true
+        BatteryOptimizationDialogFragment().show(parentFragmentManager, "battery_optimization")
+    }
+
+    class BatteryOptimizationDialogFragment : DialogFragment() {
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+            AlertDialog.Builder(requireContext()).setTitle(R.string.battery_optimized)
+                .setMessage(R.string.battery_optimized_message)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    if (!BackgroundSettingsNavigator.openBatteryOptimization(requireContext())) {
+                        requireContext().showToast(R.string.advanced_value_not_available)
+                    }
+                }.setNegativeButton(R.string.cancel, null).create()
     }
 
     private fun startServiceIfNeeded() {
@@ -224,6 +260,7 @@ class PersistentFragment : Fragment() {
 
     @Suppress("DEPRECATION")
     private fun requestNotificationPermission() {
+        notificationRequestInFlight = true
         if (Build.VERSION.SDK_INT >= 36) {
             requestPermissions(
                 arrayOf(
@@ -298,6 +335,7 @@ class PersistentFragment : Fragment() {
             pf?.spMain?.edit {
                 putBoolean(SettingsContract.KEY_FIRST_RUN, false)
             }
+            activity?.window?.decorView?.post { pf?.showBatteryOptimizationPrompt() }
         }
     }
 

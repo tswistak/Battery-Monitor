@@ -160,24 +160,6 @@ class BatteryInfoService : Service() {
             }
         }
 
-        private fun colorFromHex(hex: String): Int {
-            if (hex.length != 7) return 0
-            if (hex[0] != '#') return 0
-
-            var color = 0xff
-
-            for (i in 1..6) {
-                color = color shl 4
-                when (val c = hex[i]) {
-                    in '0'..'9' -> color += c.code - '0'.code
-                    in 'A'..'F' -> color += c.code - 'A'.code + 10
-                    in 'a'..'f' -> color += c.code - 'a'.code + 10
-                }
-            }
-
-            return color
-        }
-
         fun onWidgetUpdate(
             context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray
         ) {
@@ -267,17 +249,15 @@ class BatteryInfoService : Service() {
     private lateinit var settings: SharedPreferences
     private lateinit var spService: SharedPreferences
     private var spsEditor: SharedPreferences.Editor? = null
-    private var batteryCurrentEnabled = false
-
     private var vitalSignsContent: Set<String> = SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
+
     private var vitalSignsOrder: List<String> = SettingsContract.ALL_VITAL_SIGNS_CONTENT
     private var chipContent: Set<String> = SettingsContract.DEFAULT_CHIP_CONTENT
     private var chipContentOrder: List<String> = SettingsContract.ALL_CHIP_CONTENT
     private var chipContentIndex = 0
 
-    private var preferAverageBatteryCurrent = false
-
     private lateinit var res: Resources
+
     private var alarms: AlarmDatabase? = null
     private var logDb: LogDatabase? = null
     private var bl: BatteryLevel? = null
@@ -454,9 +434,6 @@ class BatteryInfoService : Service() {
         alarmsIntent =
             Intent(this, BatteryInfoActivity::class.java).putExtra(EXTRA_EDIT_ALARMS, true)
 
-        val serviceAlarmsIntent = Intent(this, BatteryInfoService::class.java).putExtra(
-            EXTRA_EDIT_ALARMS, true
-        )
         alarmsPendingIntent = PendingIntent.getActivity(
             this, RC_ALARMS_EDIT, alarmsIntent, PendingIntent.FLAG_IMMUTABLE
         )
@@ -647,19 +624,12 @@ class BatteryInfoService : Service() {
     }
 
     private fun configureBatteryCurrent() {
-        batteryCurrentEnabled = settings.getBoolean(
-            SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false
-        )
         vitalSignsContent = settings.getStringSet(
             SettingsContract.KEY_VITAL_SIGNS_CONTENT, SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
         )?.toSet() ?: SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
         vitalSignsOrder = VitalSignsOrder.parse(
             settings.getString(SettingsContract.KEY_VITAL_SIGNS_ORDER, null)
         )
-        preferAverageBatteryCurrent = settings.getBoolean(
-            SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
-        )
-
         PrivilegedAccess.setEnabled(
             settings.getBoolean(
                 SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
@@ -1061,10 +1031,7 @@ class BatteryInfoService : Service() {
             }
 
             SettingsContract.CHIP_CONTENT_CURRENT -> {
-                var current: Double? = null
-                if (preferAverageBatteryCurrent) current = BatteryCurrent.avgCurrent
-                if (current == null) current = BatteryCurrent.current
-                current?.let {
+                BatteryCurrent.current?.let {
                     BatteryCurrent.formatMilliAmps(it, res.configuration.locales[0]) + "mA"
                 } ?: "—"
             }
@@ -1225,19 +1192,8 @@ class BatteryInfoService : Service() {
                     info!!.voltage?.let { DisplayStrings.formatVoltage(it) }
                 }
 
-                SettingsContract.VITAL_SIGN_CURRENT -> if (batteryCurrentEnabled) {
-                    var current: Double? = null
-                    if (preferAverageBatteryCurrent) current = BatteryCurrent.avgCurrent
-                    if (current == null) current = BatteryCurrent.current
-                    if (current != null) {
-                        BatteryCurrent.formatMilliAmps(
-                            current, res.configuration.locales[0]
-                        ) + "mA"
-                    } else {
-                        null
-                    }
-                } else {
-                    null
+                SettingsContract.VITAL_SIGN_CURRENT -> BatteryCurrent.current?.let {
+                    BatteryCurrent.formatMilliAmps(it, res.configuration.locales[0]) + "mA"
                 }
 
                 SettingsContract.VITAL_SIGN_CHARGE -> {
@@ -1367,7 +1323,11 @@ class BatteryInfoService : Service() {
 
     private fun handleUpdateWithChangedStatus() {
         if (settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
-            recordLogResult(logDb!!.logStatus(info!!, now, LogDatabase.STATUS_NEW))
+            recordLogResult(
+                logDb!!.logStatus(
+                    info!!, now, LogDatabase.STATUS_NEW, BatteryCurrent.rawCurrentMicroAmps
+                )
+            )
 
             if (info!!.status != info!!.lastStatus && info!!.lastStatus == BatteryInfo.STATUS_UNPLUGGED) {
                 val maxLogAge = settings.getString(
@@ -1382,7 +1342,7 @@ class BatteryInfoService : Service() {
             }
         }
 
-        if (batteryCurrentEnabled && SettingsContract.VITAL_SIGN_CURRENT in vitalSignsContent) {
+        if (SettingsContract.VITAL_SIGN_CURRENT in vitalSignsContent) {
             mHandler.postDelayed(runRenotify, 1000)
             mHandler.postDelayed(runRenotify, 3000)
             mHandler.postDelayed(runRenotify, 9000)
@@ -1407,7 +1367,11 @@ class BatteryInfoService : Service() {
         if (settings.getBoolean(
                 SettingsContract.KEY_ENABLE_LOGGING, true
             )
-        ) recordLogResult(logDb!!.logStatus(info!!, now, LogDatabase.STATUS_OLD))
+        ) recordLogResult(
+            logDb!!.logStatus(
+                info!!, now, LogDatabase.STATUS_OLD, BatteryCurrent.rawCurrentMicroAmps
+            )
+        )
 
         if (info!!.percent % 10 == 0) {
             spsEditor!!.putInt(KEY_PREVIOUS_CHARGE, info!!.percent)
@@ -1436,7 +1400,7 @@ class BatteryInfoService : Service() {
         var c: Cursor?
         var nb: Notification.Builder?
 
-        val previousCharge = spService!!.getInt(KEY_PREVIOUS_CHARGE, 100)
+        val previousCharge = spService.getInt(KEY_PREVIOUS_CHARGE, 100)
 
         if (info!!.status == BatteryInfo.STATUS_FULLY_CHARGED && info!!.status != info!!.lastStatus) {
             c = alarms!!.activeAlarmFull()
@@ -1587,5 +1551,4 @@ class BatteryInfoService : Service() {
     private fun notifyAlarm(n: Notification?) {
         mNotificationManager!!.notify(NOTIFICATION_ALARM, n)
     }
-
 }

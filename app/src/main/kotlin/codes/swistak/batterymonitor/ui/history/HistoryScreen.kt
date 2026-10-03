@@ -15,31 +15,44 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SecondaryTabRow
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -53,12 +66,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -78,20 +98,66 @@ import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.MeasurementChart
+import codes.swistak.batterymonitor.ui.components.historyRangeValue
 import codes.swistak.batterymonitor.ui.components.historyValue
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Date
 
 @Composable
+internal fun HistoryActionsMenu(enabled: Boolean, onAction: (String) -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+    val label = stringResource(R.string.nav_actions)
+    val preferences = LocalContext.current.getSharedPreferences(
+        SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
+    )
+    Box {
+        IconButton(onClick = { expanded = true }, enabled = enabled, modifier = Modifier.semantics {
+            contentDescription = label
+        }) { Icon(painterResource(R.drawable.ui_share), null) }
+        DropdownMenu(expanded, onDismissRequest = { expanded = false }) {
+            listOf(
+                R.string.log_export_mode_title to "export",
+                R.string.log_import_mode_title to "import",
+                R.string.menu_clear to "delete",
+                (if (preferences.getBoolean(
+                        "show_seconds", false
+                    )
+                ) R.string.menu_hide_seconds else R.string.menu_show_seconds) to "seconds",
+                R.string.history_settings to "settings"
+            ).forEach { (label, action) ->
+                DropdownMenuItem(text = { Text(stringResource(label)) }, leadingIcon = {
+                    Icon(
+                        painterResource(
+                            when (action) {
+                                "export" -> R.drawable.ui_share
+                                "import" -> R.drawable.ui_down
+                                "delete" -> R.drawable.ui_minus
+                                "seconds" -> R.drawable.ui_clock
+                                else -> R.drawable.ui_settings
+                            }
+                        ), null
+                    )
+                }, onClick = {
+                    expanded = false
+                    onAction(action)
+                })
+            }
+        }
+    }
+}
+
+@Composable
 internal fun HistoryRoute(
     viewModel: HistoryViewModel,
     monitoring: StateFlow<MonitoringUiState>,
-    onSettings: () -> Unit,
+    requestedAction: String?,
+    onActionHandled: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -126,8 +192,20 @@ internal fun HistoryRoute(
     val fahrenheit = remember(
         settingsVersion, defaultTemperature
     ) { settings.temperatureUnit(defaultTemperature).convertToFahrenheit }
+    val currentMultiplier = remember(settingsVersion) {
+        settings.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")?.toIntOrNull() ?: 1
+    }
     val seconds = remember(settingsVersion) { mainPreferences.getBoolean("show_seconds", false) }
-    var dialog by rememberSaveable { mutableStateOf<String?>(if (viewModel.pendingImportUri != null) "importMode" else null) }
+    var dialog by rememberSaveable { mutableStateOf(if (viewModel.pendingImportUri != null) "importMode" else null) }
+    LaunchedEffect(requestedAction) {
+        if (requestedAction != null) {
+            if (requestedAction == "seconds") mainPreferences.edit {
+                putBoolean("show_seconds", !seconds)
+            }
+            else dialog = requestedAction
+            onActionHandled()
+        }
+    }
     var detailsId by rememberSaveable { mutableStateOf<Long?>(null) }
     var importingJson by rememberSaveable { mutableStateOf(false) }
     val statuses = stringArrayResource(R.array.log_statuses)
@@ -154,10 +232,10 @@ internal fun HistoryRoute(
     val exporter =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val uri = it.data?.data
-            if (it.resultCode == Activity.RESULT_OK && uri != null) viewModel.export(uri) { success ->
-                result(
-                    success, R.string.file_written
-                )
+            if (it.resultCode == Activity.RESULT_OK && uri != null) viewModel.export(uri) { success, formatError ->
+                if (formatError != null) Toast.makeText(appContext, formatError, Toast.LENGTH_LONG)
+                    .show()
+                else result(success, R.string.file_written)
             }
             else viewModel.pendingExport = null
         }
@@ -197,7 +275,6 @@ internal fun HistoryRoute(
         dialog = null
     }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.refresh() }
-    // The legacy logger deduplicates on these three fields, not temperature/current updates.
     LaunchedEffect(
         snapshot.snapshot?.levelPercent, snapshot.snapshot?.status, snapshot.snapshot?.plugged
     ) { viewModel.refresh() }
@@ -212,7 +289,11 @@ internal fun HistoryRoute(
         if (state.scrollIndex == 0 && state.scrollOffset == 0) logList.scrollToItem(0)
     }
     val dateFormat = remember(locale) {
-        DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
+        DateTimeFormatter.ofPattern(
+            android.text.format.DateFormat.getBestDateTimePattern(
+                locale, "MMMMd"
+            ), locale
+        )
     }
     val timestampFormat = remember(locale) {
         DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(locale)
@@ -226,15 +307,38 @@ internal fun HistoryRoute(
     ) {
         item { HistoryRangeControl(state, viewModel::range) }
         item {
-            SecondaryTabRow(selectedTabIndex = if (state.tab == "logs") 1 else 0) {
+            SecondaryTabRow(
+                selectedTabIndex = if (state.tab == "logs") 1 else 0,
+                containerColor = MaterialTheme.colorScheme.background,
+                indicator = {
+                    TabRowDefaults.PrimaryIndicator(
+                        modifier = Modifier.tabIndicatorOffset(
+                            if (state.tab == "logs") 1 else 0, matchContentSize = false
+                        ), width = 46.dp, height = 3.dp, color = MaterialTheme.colorScheme.primary
+                    )
+                }) {
                 Tab(
                     state.tab != "logs",
                     { viewModel.tab("charts") },
-                    text = { Text(stringResource(R.string.history_charts)) })
+                    selectedContentColor = MaterialTheme.colorScheme.primary,
+                    unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    text = {
+                        Text(
+                            stringResource(R.string.history_charts),
+                            fontWeight = if (state.tab == "charts") FontWeight.SemiBold else FontWeight.Normal
+                        )
+                    })
                 Tab(
                     state.tab == "logs",
                     { viewModel.tab("logs") },
-                    text = { Text(stringResource(R.string.device_data_logs)) })
+                    selectedContentColor = MaterialTheme.colorScheme.primary,
+                    unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    text = {
+                        Text(
+                            stringResource(R.string.history_events),
+                            fontWeight = if (state.tab == "logs") FontWeight.SemiBold else FontWeight.Normal
+                        )
+                    })
             }
         }
         if (state.loading || state.busy) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
@@ -247,14 +351,18 @@ internal fun HistoryRoute(
         }
         if (state.tab == "charts") {
             item {
-                Row(
-                    Modifier.horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                FlowRow(
+                    Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     HistoryMetric.entries.forEach { metric ->
                         FilterChip(
                             state.metric == metric,
                             { viewModel.metric(metric) },
+                            shape = RoundedCornerShape(11.dp),
+                            colors = FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            ),
                             label = { Text(metricLabel(metric)) })
                     }
                 }
@@ -281,7 +389,8 @@ internal fun HistoryRoute(
                                 state.metric,
                                 fahrenheit,
                                 state.selectedPointId,
-                                viewModel::selectPoint
+                                viewModel::selectPoint,
+                                currentMultiplier = currentMultiplier
                             )
                         } else if (!state.loading) Text(stringResource(R.string.logs_empty))
                     }
@@ -289,52 +398,55 @@ internal fun HistoryRoute(
             }
             state.chart?.takeIf { it.count > 0 }?.let { chart ->
                 item {
-                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Card(
-                            Modifier.weight(1f),
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+                    BoxWithConstraints(Modifier.fillMaxWidth()) {
+                        val cardWidth =
+                            if (state.metric == HistoryMetric.CURRENT || LocalDensity.current.fontScale >= 1.3f) maxWidth else (maxWidth - 12.dp) / 2
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
-                            Column(
-                                Modifier.padding(16.dp),
-                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                            Card(
+                                Modifier.width(cardWidth),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
                             ) {
-                                Text(
-                                    "${
-                                        historyValue(
-                                            chart.series.getValue(state.metric).min,
+                                Column(
+                                    Modifier.padding(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    Text(
+                                        historyRangeValue(
+                                            chart.series.getValue(state.metric),
                                             state.metric,
                                             fahrenheit,
-                                            locale
-                                        )
-                                    } – ${
-                                        historyValue(
-                                            chart.series.getValue(state.metric).max,
-                                            state.metric,
-                                            fahrenheit,
-                                            locale
-                                        )
-                                    }", style = MaterialTheme.typography.titleLarge
-                                )
-                                Text(
-                                    stringResource(R.string.history_reading_range_label),
-                                    style = MaterialTheme.typography.bodySmall
-                                )
+                                            locale,
+                                            currentMultiplier
+                                        ).let {
+                                            if (state.metric == HistoryMetric.CURRENT) it.replace(
+                                                "–", " – "
+                                            ) else it
+                                        }, style = MaterialTheme.typography.titleLarge
+                                    )
+                                    Text(
+                                        stringResource(R.string.history_reading_range_label),
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                }
                             }
-                        }
-                        Card(
-                            Modifier.weight(1f),
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
-                        ) {
-                            Column(
-                                Modifier.padding(16.dp),
-                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                            Card(
+                                Modifier.width(cardWidth),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
                             ) {
-                                Text(chart.events.filter { it.code == 2 }.sumOf { it.count }
-                                    .toString(), style = MaterialTheme.typography.titleLarge)
-                                Text(
-                                    stringResource(R.string.history_connections),
-                                    style = MaterialTheme.typography.bodySmall
-                                )
+                                Column(
+                                    Modifier.padding(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    Text(chart.events.filter { it.code == 2 }.sumOf { it.count }
+                                        .toString(), style = MaterialTheme.typography.titleLarge)
+                                    Text(
+                                        stringResource(R.string.history_connections),
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                }
                             }
                         }
                     }
@@ -351,56 +463,175 @@ internal fun HistoryRoute(
             }
         } else {
             item {
-                Row(
-                    Modifier.horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    OutlinedButton(onClick = {
-                        dialog = "filters"
-                    }) { Text(stringResource(R.string.menu_log_filter)) }
-                    OutlinedButton(onClick = { viewModel.reverse() }) { Text(stringResource(R.string.menu_reverse)) }
-                    OutlinedButton(onClick = {
-                        mainPreferences.edit { putBoolean("show_seconds", !seconds) }
-                    }) {
-                        Text(stringResource(if (seconds) R.string.menu_hide_seconds else R.string.menu_show_seconds))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilterChip(
+                        selected = state.filters.size == historyFilterKeys.size,
+                        onClick = { dialog = "filters" },
+                        shape = RoundedCornerShape(11.dp),
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        ),
+                        label = {
+                            Text(
+                                if (state.filters.size == historyFilterKeys.size) stringResource(R.string.history_all_types)
+                                else stringResource(
+                                    R.string.history_filtered_types, state.filters.size
+                                ), fontWeight = FontWeight.SemiBold
+                            )
+                        })
+                    OutlinedButton(
+                        onClick = { viewModel.reverse() },
+                        shape = RoundedCornerShape(11.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
+                    ) {
+                        Text(
+                            stringResource(if (state.ascending) R.string.history_oldest else R.string.history_newest),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Icon(
+                            painterResource(if (state.ascending) R.drawable.ui_up else R.drawable.ui_down),
+                            null,
+                            Modifier.size(16.dp)
+                        )
                     }
                 }
                 if (!state.loading && state.page.isEmpty()) Text(stringResource(R.string.logs_empty))
             }
-            itemsIndexed(state.page, key = { _, entry -> entry.id }) { index, entry ->
-                val record = entry.record
-                val date =
-                    Instant.ofEpochMilli(record.time).atZone(ZoneId.systemDefault()).toLocalDate()
-                val previous = state.page.getOrNull(index - 1)?.record?.time?.let {
-                    Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
-                }
-                if (date != previous) Text(
-                    dateFormat.format(date),
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                )
-                Card(
-                    Modifier
-                        .fillMaxWidth()
-                        .clickable { detailsId = entry.id }) {
-                    Column(
-                        Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)
+            state.page.groupBy {
+                Instant.ofEpochMilli(it.record.time).atZone(ZoneId.systemDefault()).toLocalDate()
+            }.forEach { (date, entries) ->
+                item(key = "day:$date") {
+                    val day = if (date.year == LocalDate.now().year) dateFormat.format(date)
+                    else DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
+                        .format(date)
+                    Text(
+                        when (date) {
+                            LocalDate.now() -> stringResource(R.string.history_today, day)
+                            LocalDate.now()
+                                .minusDays(1) -> stringResource(R.string.history_yesterday, day)
+
+                            else -> day
+                        },
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 8.dp, bottom = 10.dp)
+                    )
+                    OutlinedCard(
+                        Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(20.dp),
+                        colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
                     ) {
-                        Text(status(record), style = MaterialTheme.typography.titleMedium)
-                        Text(
-                            "${
-                                historyValue(
-                                    HistoryMetric.LEVEL.value(record),
-                                    HistoryMetric.LEVEL,
-                                    fahrenheit,
-                                    locale
-                                )
-                            } · ${DisplayStrings.formatTime(context, Date(record.time), seconds)}"
-                        )
+                        entries.forEachIndexed { index, entry ->
+                            val record = entry.record
+                            val code = LogDatabase.decodeStatus(record.status)
+                            val icon = when {
+                                record.status == -1 -> R.drawable.ui_refresh
+                                code[0] == 0 && code[2] == 0 -> R.drawable.ui_plug
+                                code[0] == 2 -> R.drawable.ui_bolt
+                                code[0] == 5 -> R.drawable.ui_battery
+                                else -> R.drawable.ui_down
+                            }
+                            val title = when {
+                                code[0] == 0 && code[2] == 0 -> stringResource(R.string.history_disconnected)
+                                code[0] == 2 && code[2] == 0 -> stringResource(R.string.history_charge_started)
+                                else -> status(record).substringBefore(" · ")
+                            }
+                            val description =
+                                if (record.status == -1) stringResource(R.string.history_system_event)
+                                else listOfNotNull(
+                                    HistoryMetric.CURRENT.value(record)?.let {
+                                    historyValue(
+                                        it,
+                                        HistoryMetric.CURRENT,
+                                        fahrenheit,
+                                        locale,
+                                        currentMultiplier
+                                    )
+                                },
+                                    plugged.getOrNull(code[1])?.takeIf { code[1] > 0 },
+                                    HistoryMetric.TEMPERATURE.value(record)?.let {
+                                        historyValue(
+                                            it, HistoryMetric.TEMPERATURE, fahrenheit, locale
+                                        )
+                                    },
+                                    HistoryMetric.VOLTAGE.value(record)?.let {
+                                        historyValue(
+                                            it, HistoryMetric.VOLTAGE, fahrenheit, locale
+                                        )
+                                    }).joinToString(" · ")
+                                    .ifEmpty { stringResource(R.string.current_unavailable) }
+                            Row(Modifier
+                                .fillMaxWidth()
+                                .clickable { detailsId = entry.id }
+                                .heightIn(min = 67.dp)
+                                .padding(horizontal = 13.dp, vertical = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(11.dp)) {
+                                Surface(
+                                    shape = RoundedCornerShape(12.dp),
+                                    color = MaterialTheme.colorScheme.surfaceVariant
+                                ) {
+                                    Box(
+                                        Modifier.size(35.dp), contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            painterResource(icon),
+                                            null,
+                                            Modifier.size(19.dp),
+                                            tint = MaterialTheme.colorScheme.primary
+                                        )
+                                    }
+                                }
+                                Column(Modifier.weight(1f)) {
+                                    Text(
+                                        title,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                    Text(
+                                        description,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
+                                Column(horizontalAlignment = Alignment.End) {
+                                    Text(
+                                        historyValue(
+                                            HistoryMetric.LEVEL.value(record),
+                                            HistoryMetric.LEVEL,
+                                            fahrenheit,
+                                            locale
+                                        ),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
+                                    Text(
+                                        DisplayStrings.formatTime(
+                                            context, Date(record.time), seconds
+                                        ),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
+                            if (index < entries.lastIndex) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                        }
                     }
                 }
             }
-            item {
+            if (state.page.isNotEmpty()) item {
+                Text(
+                    stringResource(R.string.history_raw_observations),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 6.dp)
+                )
+            }
+            if (state.hasPrevious || state.hasNext) item {
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     TextButton(
                         onClick = { viewModel.next(true) },
@@ -415,28 +646,19 @@ internal fun HistoryRoute(
         }
         item {
             OutlinedButton(
-                onClick = { dialog = "export" }, Modifier.fillMaxWidth(), enabled = !state.busy
-            ) { Text(stringResource(R.string.history_export_selected)) }
-        }
-        item {
-            Row(
-                Modifier.horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                onClick = { dialog = "export" },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !state.busy,
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                contentPadding = PaddingValues(12.dp)
             ) {
-                TextButton(onClick = { dialog = "import" }, enabled = !state.busy) {
-                    Text(
-                        stringResource(R.string.log_import_mode_title)
-                    )
-                }
-                TextButton(onClick = { dialog = "delete" }, enabled = !state.busy) {
-                    Text(
-                        stringResource(R.string.menu_clear)
-                    )
-                }
-                TextButton(onClick = onSettings) { Text(stringResource(R.string.history_settings)) }
+                Icon(painterResource(R.drawable.ui_share), null, Modifier.size(19.dp))
+                Spacer(Modifier.width(8.dp))
+                Text(stringResource(R.string.history_export_selected))
             }
         }
     }
+
     val filterLabels = stringArrayResource(R.array.log_filters)
     if (dialog == "filters") AlertDialog(
         onDismissRequest = { dialog = null },
@@ -453,7 +675,7 @@ internal fun HistoryRoute(
                                 role = Role.Checkbox,
                                 onValueChange = { checked -> viewModel.filters(if (checked) state.filters + key else state.filters - key) }),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Checkbox(key in state.filters, null)
                         Text(filterLabels[index], Modifier.padding(vertical = 12.dp))
@@ -513,8 +735,8 @@ internal fun HistoryRoute(
     })
     if (dialog == "replace") AlertDialog(
         onDismissRequest = {
-            dialog = null; viewModel.pendingImportUri = null
-        },
+        dialog = null; viewModel.pendingImportUri = null
+    },
         title = { Text(stringResource(R.string.log_import_replace)) },
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
@@ -536,21 +758,24 @@ internal fun HistoryRoute(
         { dialog = null },
         listOf(
             R.string.history_delete_selected to { dialog = "deleteSelected" },
-            R.string.confirm_clear_logs to { dialog = "deleteAll" })
+            R.string.history_delete_all to { dialog = "deleteAll" })
     )
     if (dialog == "deleteSelected" || dialog == "deleteAll") AlertDialog(
         onDismissRequest = {
-            dialog = null
-        },
-        title = { Text(stringResource(if (dialog == "deleteAll") R.string.confirm_clear_logs else R.string.history_delete_selected_confirm)) },
+        dialog = null
+    },
+        title = { Text(stringResource(if (dialog == "deleteAll") R.string.history_delete_all else R.string.history_delete_selected)) },
         text = {
-            Text(
-                "${timestampFormat.format(Instant.ofEpochMilli(state.range.start))} – ${
-                    timestampFormat.format(
-                        Instant.ofEpochMilli(state.range.end - 1)
-                    )
-                }"
-            )
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(stringResource(if (dialog == "deleteAll") R.string.confirm_clear_logs else R.string.history_delete_selected_confirm))
+                if (dialog == "deleteSelected") Text(
+                    "${timestampFormat.format(Instant.ofEpochMilli(state.range.start))} – ${
+                        timestampFormat.format(
+                            Instant.ofEpochMilli(state.range.end - 1)
+                        )
+                    }"
+                )
+            }
         },
         confirmButton = {
             TextButton(onClick = {
@@ -559,7 +784,7 @@ internal fun HistoryRoute(
                         it, R.string.history_deleted
                     )
                 }; dialog = null
-            }) { Text(stringResource(R.string.yes)) }
+            }) { Text(stringResource(R.string.menu_clear)) }
         },
         dismissButton = {
             TextButton(onClick = {
@@ -590,7 +815,11 @@ internal fun HistoryRoute(
                         Text(
                             "${metricLabel(metric)}: ${
                                 historyValue(
-                                    metric.value(detail.record), metric, fahrenheit, locale
+                                    metric.value(detail.record),
+                                    metric,
+                                    fahrenheit,
+                                    locale,
+                                    currentMultiplier
                                 )
                             }"
                         )
@@ -611,10 +840,6 @@ internal fun HistoryRoute(
                             )
                         )
                     }
-                    Text(
-                        stringResource(R.string.history_observations),
-                        style = MaterialTheme.typography.bodySmall
-                    )
                 }
             },
             confirmButton = {
@@ -631,6 +856,7 @@ private fun metricLabel(metric: HistoryMetric): String = stringResource(
         HistoryMetric.LEVEL -> R.string.history_level
         HistoryMetric.TEMPERATURE -> R.string.current_temperature
         HistoryMetric.VOLTAGE -> R.string.current_voltage
+        HistoryMetric.CURRENT -> R.string.pref_cat_battery_current_main
     }
 )
 
@@ -640,11 +866,14 @@ private fun ChoiceDialog(title: Int, onDismiss: () -> Unit, choices: List<Pair<I
         onDismissRequest = onDismiss,
         title = { Text(stringResource(title)) },
         text = {
-            Column(Modifier.verticalScroll(rememberScrollState())) {
+            Column(
+                Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 choices.forEach { (label, action) ->
-                    TextButton(
+                    OutlinedButton(
                         onClick = action, modifier = Modifier.fillMaxWidth()
-                    ) { Text(stringResource(label)) }
+                    ) { Text(stringResource(label), Modifier.fillMaxWidth()) }
                 }
             }
         },

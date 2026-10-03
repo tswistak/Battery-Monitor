@@ -344,9 +344,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Jei įjungta, piktograma rodo procento ženklą akumuliatoriaus lygiui ir laipsnio simbolį akumuliatoriaus temperatūrai. Išjunkite, jei norite rodyti tik skaičių.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Akumuliatoriaus srovė</string>
-  <string name="pref_enable_battery_current" formatted="false">Įjungti akumuliatoriaus srovę</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Rodyti akumuliatoriaus srovę pagrindiniame lange?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Įjungus akumuliatoriaus srovė rodoma pagrindiniame lange ir tampa pasiekiamos susijusios parinktys.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Privilegijuota prieiga</string>
   <string name="pref_use_privileged_access" formatted="false">Naudoti privilegijuotą prieigą</string>

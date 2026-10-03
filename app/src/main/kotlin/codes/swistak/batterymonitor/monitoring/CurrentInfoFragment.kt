@@ -200,10 +200,7 @@ class CurrentInfoFragment : Fragment() {
         info.load(pFrag!!.spService)
         handleUpdatedBatteryInfo()
 
-        if (pFrag!!.settings.getBoolean(
-                SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false
-            )
-        ) mHandler.postDelayed(mARefresher, batteryCurrentRefreshIntervalMillis())
+        mHandler.postDelayed(mARefresher, batteryCurrentRefreshIntervalMillis())
     }
 
     override fun onStop() {
@@ -483,29 +480,14 @@ class CurrentInfoFragment : Fragment() {
     }
 
     private fun refreshCurrent() {
-        var s = ""
-
-        if (pFrag!!.settings.getBoolean(
-                SettingsContract.KEY_ENABLE_BATTERY_CURRENT, false
+        currentIcon!!.visibility = View.VISIBLE
+        val average = if (pFrag!!.settings.getBoolean(
+                SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
             )
-        ) {
-            currentIcon!!.visibility = View.VISIBLE
-
-            var current: Double? = null
-
-            if (pFrag!!.settings.getBoolean(
-                    SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT, false
-                )
-            ) current = BatteryCurrent.avgCurrent
-            if (current == null) current = BatteryCurrent.current
-            if (current != null) s += BatteryCurrent.formatMilliAmps(
-                current, pFrag!!.res.configuration.locales[0]
-            ) + "mA"
-        } else {
-            currentIcon!!.visibility = View.INVISIBLE
-        }
-
-        tvCurrent!!.text = s
+        ) BatteryCurrent.avgCurrent else null
+        tvCurrent!!.text = (average ?: BatteryCurrent.current)?.let {
+            BatteryCurrent.formatMilliAmps(it, pFrag!!.res.configuration.locales[0]) + "mA"
+        } ?: "—"
     }
 
     private fun batteryCurrentRefreshIntervalMillis(): Long {

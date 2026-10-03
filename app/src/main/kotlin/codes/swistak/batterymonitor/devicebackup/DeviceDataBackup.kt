@@ -38,7 +38,7 @@ internal enum class LogImportMode {
 }
 
 internal object DeviceDataBackup {
-    const val SCHEMA_VERSION: Int = Version1DeviceDataImporter.VERSION
+    const val SCHEMA_VERSION: Int = Version2DeviceDataImporter.VERSION
 
     private const val KEY_VERSION = "version"
     private const val KEY_LOGS = "logs"
@@ -216,6 +216,9 @@ internal object DeviceDataBackup {
                     .put(Version1DeviceDataImporter.KEY_LOG_TIME, record.time).putNullable(
                         Version1DeviceDataImporter.KEY_LOG_TEMPERATURE, record.temperature
                     ).putNullable(Version1DeviceDataImporter.KEY_LOG_VOLTAGE, record.voltage)
+                    .putNullable(
+                        Version2DeviceDataImporter.KEY_LOG_CURRENT, record.currentMicroAmps
+                    )
             )
         }
     }
@@ -229,12 +232,13 @@ internal object DeviceDataBackup {
                     Version1DeviceDataImporter.KEY_LOG_CHARGE,
                     Version1DeviceDataImporter.KEY_LOG_TIME,
                     Version1DeviceDataImporter.KEY_LOG_TEMPERATURE,
-                    Version1DeviceDataImporter.KEY_LOG_VOLTAGE
+                    Version1DeviceDataImporter.KEY_LOG_VOLTAGE,
+                    Version2DeviceDataImporter.KEY_LOG_CURRENT
                 )) {
                     if (log.has(key)) put(key, if (log.isNull(key)) null else log.get(key))
                 }
             }
-            add(Version1DeviceDataImporter.restoreLog(values))
+            add(Version2DeviceDataImporter.restoreLog(values))
         }
     }
 
@@ -247,6 +251,6 @@ internal object DeviceDataBackup {
         return Version1DeviceDataImporter.restorePredictor(values)
     }
 
-    private fun JSONObject.putNullable(key: String, value: Int?): JSONObject =
+    private fun JSONObject.putNullable(key: String, value: Number?): JSONObject =
         put(key, value ?: JSONObject.NULL)
 }

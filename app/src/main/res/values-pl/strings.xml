@@ -336,9 +336,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Jeśli włączone, ikona pokazuje znak procenta dla poziomu naładowania baterii i symbol stopnia dla temperatury baterii. Wyłącz to ustawienie, aby pokazywać tylko liczbę.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Prąd baterii</string>
-  <string name="pref_enable_battery_current" formatted="false">Włącz prąd baterii</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Czy wyświetlać prąd baterii w głównym oknie?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Gdy włączone, prąd baterii zostanie wyświetlony w głównym oknie i związane z nim opcje staną się dostępne.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Dostęp uprzywilejowany</string>
   <string name="pref_use_privileged_access" formatted="false">Używaj dostępu uprzywilejowanego</string>
@@ -354,8 +351,8 @@
     Orientacyjnie dla telefonu standardowy znak Androida jest dodatni podczas ładowania i ujemny podczas rozładowywania. Aktywne ładowanie często jest w przybliżeniu między +500 a +5000 mA, podczas gdy zwykłe rozładowywanie zwykle między -100 a -3000 mA. Wartości bliskie zeru mogą być normalne, gdy bateria jest prawie pełna lub telefon jest bezczynny. Jeśli rząd wielkości wygląda na około 1000 razy za mały lub za duży albo znak jest odwrócony, dostosuj mnożnik.</string>
 
   <string name="pref_prefer_average_battery_current" formatted="false">Preferuj średni prąd</string>
-  <string name="pref_prefer_average_battery_current_summary" formatted="false">Czy użyć ostatniej średniej, gdy jest dostępna?</string>
-  <string name="pref_prefer_current_avg_help" formatted="false">Niektóre systemy podają ostatnią średnią oprócz prądu chwilowego. Okres i jakość uśredniania zależą od urządzenia. Wyłącz tę opcję, jeśli średnia jest niedostępna lub nieprzydatna.</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Czy na ekranie Stan bieżący użyć ostatniej średniej, gdy jest dostępna?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Niektóre urządzenia podają ostatnią średnią oprócz prądu chwilowego. Okres uśredniania zależy od urządzenia. Ta opcja dotyczy tylko ekranu Stan bieżący; logi zawsze zapisują prąd chwilowy.</string>
 
   <string name="pref_battery_current_refresh_interval" formatted="false">Interwał automatycznego odświeżania</string>
   <string name="pref_battery_current_refresh_interval_help" formatted="false">Wybierz, jak często odczyt prądu baterii ma być odświeżany, gdy główne okno jest widoczne.</string>
@@ -755,14 +752,12 @@
   <string name="current_voltage">Napięcie</string>
   <string name="current_android_health">Stan według Androida</string>
   <string name="current_unavailable">Brak odczytu</string>
-  <string name="current_off">Wyłączony</string>
-  <string name="current_off_explanation">Pomiar prądu baterii jest wyłączony w Ustawieniach.</string>
   <string name="current_current_unavailable">Brak odczytu prądu. Diagnostyka może wskazać problem z dostępem albo nieobsługiwane źródło.</string>
   <string name="current_current_source">BatteryManager lub plik zasilania urządzenia</string>
   <string name="current_status_unit">Stan Androida</string>
   <string name="current_health_explanation">Ten stan Androida nie jest procentową kondycją baterii.</string>
   <string name="current_history_off">Zapisywanie historii wyłączone · Otwórz Historię</string>
-  <string name="current_system_usage">Otwórz systemowe zużycie baterii ↗</string>
+  <string name="current_system_usage">Otwórz systemowe zużycie baterii</string>
   <string name="current_usage_unavailable">Systemowy ekran zużycia baterii jest niedostępny</string>
   <string name="current_detail_unit">Jednostka: %1$s</string>
   <string name="current_detail_source">Źródło: %1$s</string>
@@ -776,7 +771,7 @@
   <string name="history_last_7d">Ostatnie 7 dni</string>
   <string name="history_range">Zakres historii</string>
   <string name="history_custom_range">Własny zakres dat</string>
-  <string name="history_month">Miesiąc (1–12)</string>
+  <string name="history_month">Miesiąc</string>
   <string name="history_year">Rok</string>
   <string name="history_from">Od: %1$s</string>
   <string name="history_through">Do: %1$s</string>
@@ -785,14 +780,13 @@
   <string name="history_charts">Wykresy</string>
   <string name="history_level">Poziom</string>
   <string name="history_level_24h">Poziom · ostatnie 24 godziny</string>
-  <string name="history_observations">Zapisane obserwacje; ciągłość między nimi jest nieznana. Przerwy oznaczają brak odczytu lub restart. Pionowe linie oznaczają grupowane zdarzenia.</string>
-  <string name="history_chart_description">Zakres obserwacji od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Otwórz Logi i dotknij wpisu, aby zobaczyć szczegóły odczytów.</string>
+  <string name="history_observations">Obserwacje z historii; nie ciągły pomiar. Pionowe linie oznaczają zdarzenia zasilania i restarty.</string>
+  <string name="history_chart_description">Zakres obserwacji od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Otwórz Zdarzenia i dotknij wpisu, aby zobaczyć szczegóły odczytów.</string>
   <string name="history_event_counts">Podłączenia (krótkie kreski): %1$d · Odłączenia (długie kreski): %2$d · Restarty (kropki): %3$d</string>
   <string name="history_previous_point">Poprzednia obserwacja</string>
   <string name="history_next_point">Następna obserwacja</string>
   <string name="history_previous_page">Poprzednia strona</string>
   <string name="history_next_page">Następna strona</string>
-  <string name="history_export_selected">Eksportuj wybrany zakres</string>
   <string name="history_export_csv">Wybrany zakres · CSV</string>
   <string name="history_export_json">Wybrany zakres · JSON</string>
   <string name="history_import_json">Importuj zdarzenia z kopii JSON</string>
@@ -807,4 +801,19 @@
   <string name="history_reading_range_label">Zakres odczytów</string>
   <string name="history_connections">Podłączenia do zasilania</string>
   <string name="history_battery_level">Poziom baterii</string>
+  <string name="history_delete_all">Wyczyść wszystkie logi</string>
+  <string name="history_events">Zdarzenia</string>
+  <string name="history_all_types">Wszystkie typy</string>
+  <string name="history_filtered_types">Typy: %1$d/8</string>
+  <string name="history_newest">Najnowsze</string>
+  <string name="history_oldest">Najstarsze</string>
+  <string name="history_today">Dzisiaj · %1$s</string>
+  <string name="history_yesterday">Wczoraj · %1$s</string>
+  <string name="history_system_event">Zdarzenie systemowe</string>
+  <string name="history_disconnected">Odłączono od zasilania</string>
+  <string name="history_charge_started">Rozpoczęto ładowanie</string>
+  <string name="history_raw_observations">Zapisane obserwacje. Szczegóły pokazują dostępne odczyty i ich czas.</string>
+  <string name="history_export_selected">Eksportuj wybrany zakres</string>
+  <string name="history_change_range">Zmień</string>
+  <string name="history_append_current_format">Ten plik CSV używa starszego formatu logów. Wyeksportuj dane do nowego pliku, aby uwzględnić surowy prąd. Dotychczasowy plik pozostał bez zmian.</string>
 </resources>

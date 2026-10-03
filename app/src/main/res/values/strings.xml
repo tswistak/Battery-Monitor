@@ -324,9 +324,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">If enabled, the icon shows a percent sign for battery percentage and a degree symbol for battery temperature. Disable it to show only the number.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Battery current</string>
-  <string name="pref_enable_battery_current" formatted="false">Enable battery current</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Display battery current in the main window?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">When enabled, battery current is displayed in the main window and its related options become available.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Privileged access</string>
   <string name="pref_use_privileged_access" formatted="false">Use privileged access</string>
@@ -342,8 +339,8 @@
     As a rough phone reference, Android’s standard sign is positive while charging and negative while discharging. Active charging is often around +500 to +5000 mA, while ordinary discharge is often around -100 to -3000 mA. Values near zero can be normal when the battery is nearly full or the phone is idle. If the magnitude looks about 1000 times too small or too large, or the sign is reversed, adjust the multiplier.</string>
 
   <string name="pref_prefer_average_battery_current" formatted="false">Prefer average current</string>
-  <string name="pref_prefer_average_battery_current_summary" formatted="false">Use the recent average when available?</string>
-  <string name="pref_prefer_current_avg_help" formatted="false">Some systems provide a recent average in addition to the instantaneous current. The averaging period and quality vary by device. Disable this option if the average is unavailable or unusable.</string>
+  <string name="pref_prefer_average_battery_current_summary" formatted="false">Use the recent average on Current State when available?</string>
+  <string name="pref_prefer_current_avg_help" formatted="false">Some devices provide a recent average in addition to instantaneous current. The averaging period varies by device. This option applies only to Current State; logs always store instantaneous current.</string>
 
   <string name="pref_battery_current_refresh_interval" formatted="false">Auto-refresh interval</string>
   <string name="pref_battery_current_refresh_interval_help" formatted="false">Choose how often the battery-current reading is refreshed while the main window is visible.</string>
@@ -741,14 +738,12 @@
   <string name="current_voltage">Voltage</string>
   <string name="current_android_health">Status according to Android</string>
   <string name="current_unavailable">No reading</string>
-  <string name="current_off">Off</string>
-  <string name="current_off_explanation">Battery current measurement is off in Settings.</string>
   <string name="current_current_unavailable">No current reading is available. Diagnostics may show an access issue or an unsupported source.</string>
   <string name="current_current_source">BatteryManager or device power supply file</string>
   <string name="current_status_unit">Android status</string>
   <string name="current_health_explanation">This Android status is not a battery health percentage.</string>
   <string name="current_history_off">History logging is off · Open History</string>
-  <string name="current_system_usage">Open system battery usage ↗</string>
+  <string name="current_system_usage">Open system battery usage</string>
   <string name="current_usage_unavailable">System battery usage is unavailable</string>
   <string name="current_detail_unit">Unit: %1$s</string>
   <string name="current_detail_source">Source: %1$s</string>
@@ -762,7 +757,7 @@
   <string name="history_last_7d">Last 7 days</string>
   <string name="history_range">History range</string>
   <string name="history_custom_range">Custom date range</string>
-  <string name="history_month">Month (1–12)</string>
+  <string name="history_month">Month</string>
   <string name="history_year">Year</string>
   <string name="history_from">From: %1$s</string>
   <string name="history_through">Through: %1$s</string>
@@ -771,14 +766,13 @@
   <string name="history_charts">Charts</string>
   <string name="history_level">Level</string>
   <string name="history_level_24h">Level · last 24 hours</string>
-  <string name="history_observations">Stored observations; continuity between them is unknown. Breaks mark missing readings or reboots. Vertical lines mark grouped events.</string>
-  <string name="history_chart_description">Observed range from %1$s to %2$s. Minimum %3$s, maximum %4$s. Open Logs and tap a record for reading details.</string>
+  <string name="history_observations">Stored observations, not a continuous measurement. Vertical lines mark power events and restarts.</string>
+  <string name="history_chart_description">Observed range from %1$s to %2$s. Minimum %3$s, maximum %4$s. Open Events and tap a record for reading details.</string>
   <string name="history_event_counts">Connected (short dashes): %1$d · Disconnected (long dashes): %2$d · Reboots (dotted): %3$d</string>
   <string name="history_previous_point">Previous observation</string>
   <string name="history_next_point">Next observation</string>
   <string name="history_previous_page">Previous page</string>
   <string name="history_next_page">Next page</string>
-  <string name="history_export_selected">Export selected range</string>
   <string name="history_export_csv">Selected range · CSV</string>
   <string name="history_export_json">Selected range · JSON</string>
   <string name="history_import_json">Import logs from JSON backup</string>
@@ -793,4 +787,19 @@
   <string name="history_reading_range_label">Reading range</string>
   <string name="history_connections">Connections to power</string>
   <string name="history_battery_level">Battery level</string>
+  <string name="history_delete_all">Clear all logs</string>
+  <string name="history_events">Events</string>
+  <string name="history_all_types">All types</string>
+  <string name="history_filtered_types">Types: %1$d/8</string>
+  <string name="history_newest">Newest</string>
+  <string name="history_oldest">Oldest</string>
+  <string name="history_today">Today · %1$s</string>
+  <string name="history_yesterday">Yesterday · %1$s</string>
+  <string name="history_system_event">System event</string>
+  <string name="history_disconnected">Disconnected from power</string>
+  <string name="history_charge_started">Charging started</string>
+  <string name="history_raw_observations">Stored observations. Details show the available readings and their time.</string>
+  <string name="history_export_selected">Export selected range</string>
+  <string name="history_change_range">Change</string>
+  <string name="history_append_current_format">This CSV uses an older log format. Export to a new file to include raw current; the existing file has been kept intact.</string>
 </resources>

@@ -13,9 +13,11 @@
 package codes.swistak.batterymonitor.logs
 
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
+import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import java.io.BufferedWriter
 import java.io.OutputStream
@@ -36,6 +38,20 @@ internal enum class LogExportFormat(val preferenceValue: String, val extension: 
 }
 
 internal object LogExport {
+    private const val CURRENT_COLUMN_SUFFIX = " (µA)"
+
+    internal fun hasRawCurrentCsvHeader(header: String): Boolean {
+        val columns = CsvLogImporter.parseCsv(header).singleOrNull() ?: return false
+        return columns.size == 8 && columns.last().endsWith(CURRENT_COLUMN_SUFFIX)
+    }
+
+    fun requireCurrentCsvHeader(context: Context, uri: Uri) {
+        val header =
+            context.contentResolver.openInputStream(uri)?.bufferedReader(StandardCharsets.UTF_8)
+                ?.use { it.readLine() } ?: error("Could not read append target")
+        require(hasRawCurrentCsvHeader(header)) { context.getString(R.string.history_append_current_format) }
+    }
+
     fun loadRecords(
         context: Context, afterExclusive: Long? = null, throughInclusive: Long? = null
     ): List<LogRecord> {
@@ -54,7 +70,8 @@ internal object LogExport {
         return "${fileNamePrefix()}-$formattedTime.${format.extension}"
     }
 
-    fun appendFileName(format: LogExportFormat): String = "${fileNamePrefix()}.${format.extension}"
+    fun appendFileName(format: LogExportFormat): String =
+        "${fileNamePrefix()}${if (format == LogExportFormat.CSV) "-current" else ""}.${format.extension}"
 
     fun writeCsv(
         context: Context, output: OutputStream, records: List<LogRecord>, includeHeader: Boolean
@@ -79,7 +96,8 @@ internal object LogExport {
                     resources.getString(R.string.charge),
                     resources.getString(R.string.temperature),
                     resources.getString(R.string.temperature_f),
-                    resources.getString(R.string.voltage)
+                    resources.getString(R.string.voltage),
+                    resources.getString(R.string.pref_cat_battery_current_main) + CURRENT_COLUMN_SUFFIX
                 ).joinToString(",", transform = ::csvField)
             )
             writer.write("\r\n")
@@ -103,7 +121,8 @@ internal object LogExport {
                 (record.charge ?: 0).toString(),
                 (temperature / 10.0).toString(),
                 ((temperature * 9 / 5.0).roundToInt() / 10.0 + 32.0).toString(),
-                csvVoltageField(record.voltage)
+                csvVoltageField(record.voltage),
+                record.currentMicroAmps?.toString() ?: ""
             )
             writer.write(values.joinToString(",", transform = ::csvField))
             writer.write("\r\n")

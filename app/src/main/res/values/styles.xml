@@ -1,214 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <style name="help_cat_pre_margin">
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:layout_height">6dp</item>
-  </style>
 
-  <style name="help_cat">
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:paddingTop">24dp</item>
-    <item name="android:paddingBottom">6dp</item>
-    <item name="android:textColor">@color/primary_text</item>
-    <item name="android:textSize">28sp</item>
-  </style>
+    <style name="help_cat_pre_margin">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">6dp</item>
+    </style>
 
-  <style name="help_cat_post_margin">
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:layout_height">0dp</item>
-  </style>
+    <style name="help_cat">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">28sp</item>
+    </style>
 
-  <style name="help_pref">
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:paddingTop">12dp</item>
-    <item name="android:paddingBottom">7dp</item>
-    <item name="android:textColor">@color/primary_text</item>
-    <item name="android:textSize">20sp</item>
-  </style>
+    <style name="help_cat_post_margin">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
 
-  <style name="help_text">
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:paddingTop">2dp</item>
-    <item name="android:paddingBottom">7dp</item>
-    <item name="android:textColor">@color/help_text</item>
-    <item name="android:textSize">15sp</item>
-    <item name="android:lineSpacingMultiplier">1.1</item>
-  </style>
+    <style name="help_pref">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">7dp</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 
-  <style name="help_ll">
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:paddingTop">0dp</item>
-    <item name="android:paddingBottom">20dp</item>
-    <item name="android:paddingLeft">20dp</item>
-    <item name="android:paddingRight">20dp</item>
-  </style>
+    <style name="help_text">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">7dp</item>
+        <item name="android:textColor">@color/help_text</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+    </style>
 
-  <style name="bi_help_theme" parent="Theme.AppCompat.DayNight">
-    <item name="android:fontFamily">sans-serif-light"</item>
-    <item name="android:windowBackground">@color/helpWindowBackground</item>
-    <item name="android:colorAccent">@color/help_accent</item>
-    <item name="colorAccent">@color/help_accent</item>
-    <item name="colorPrimary">@color/helpWindowBackground</item>
-    <item name="colorPrimaryDark">@color/helpWindowBackground</item>
-    <item name="android:windowLightStatusBar">@bool/windowLightStatusBar</item>
-    <item name="android:navigationBarColor">@color/helpWindowBackground</item>
-    <item name="android:windowLightNavigationBar" tools:targetApi="27">@bool/windowLightStatusBar</item>
-  </style>
+    <style name="help_ll">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+    </style>
 
-  <style name="bi_main_theme" parent="Theme.AppCompat.DayNight">
-    <item name="android:windowBackground">@color/windowBackground</item>
-    <item name="colorAccent">@color/accent</item>
-    <item name="android:alertDialogTheme">@style/dialog_theme</item>
-    <item name="colorPrimary">@color/status_bar</item>
-    <item name="colorPrimaryDark">@color/status_bar</item>
-    <item name="android:windowLightStatusBar">@bool/windowLightStatusBar</item>
-    <item name="android:navigationBarColor">@color/windowBackground</item>
-    <item name="android:windowLightNavigationBar" tools:targetApi="27">@bool/windowLightStatusBar</item>
-    <item name="colorButtonNormal">@color/button_color</item>
-    <item name="android:textColorPrimary">@color/primary_text</item>
-    <item name="android:textColorSecondary">@color/primary_text</item>
-    <item name="android:textAllCaps">false</item>
-  </style>
+    <style name="bi_help_theme" parent="Theme.AppCompat.DayNight">
+        <item name="android:fontFamily">sans-serif-light"</item>
+        <item name="android:windowBackground">@color/helpWindowBackground</item>
+        <item name="android:colorAccent">@color/help_accent</item>
+        <item name="colorAccent">@color/help_accent</item>
+        <item name="colorPrimary">@color/helpWindowBackground</item>
+        <item name="colorPrimaryDark">@color/helpWindowBackground</item>
+        <item name="android:windowLightStatusBar">@bool/windowLightStatusBar</item>
+        <item name="android:navigationBarColor">@color/helpWindowBackground</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">
+            @bool/windowLightStatusBar
+        </item>
+    </style>
 
-  <style name="bi_settings_theme" parent="bi_main_theme">
-    <item name="colorAccent">@color/settings_accent</item>
-    <item name="android:textColorSecondary">@color/secondary_text</item>
-    <!-- Note the need for non android: namespace here, because Android, support libraries, whole mess -->
-    <item name="alertDialogTheme">@style/dialog_theme</item>
-  </style>
+    <style name="bi_main_theme" parent="Theme.AppCompat.DayNight">
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:alertDialogTheme">@style/dialog_theme</item>
+        <item name="colorPrimary">@color/status_bar</item>
+        <item name="colorPrimaryDark">@color/status_bar</item>
+        <item name="android:windowLightStatusBar">@bool/windowLightStatusBar</item>
+        <item name="android:navigationBarColor">@color/windowBackground</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">
+            @bool/windowLightStatusBar
+        </item>
+        <item name="colorButtonNormal">@color/button_color</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/primary_text</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
 
-  <bool name="windowLightStatusBar">true</bool>
+    <style name="bi_compose_theme" parent="bi_main_theme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-  <color name="status_bar">@color/windowBackground</color>
+    <style name="bi_settings_theme" parent="bi_main_theme">
+        <item name="colorAccent">@color/settings_accent</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <!-- Note the need for non android: namespace here, because Android, support libraries, whole mess -->
+        <item name="alertDialogTheme">@style/dialog_theme</item>
+    </style>
 
-  <style name="dialog_title_style">
-    <item name="android:textColor">@color/dialog_title</item>
-    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
-  </style>
+    <bool name="windowLightStatusBar">true</bool>
 
-  <style name="dialog_theme" parent="AlertDialog.AppCompat">
-    <item name="android:windowIsFloating">true</item>
-    <item name="android:isLightTheme" tools:targetApi="29">@bool/windowLightStatusBar</item>
-    <item name="android:colorAccent">@color/dialog_accent</item>
-    <item name="colorAccent">@color/dialog_accent</item>
-    <item name="android:windowBackground">@color/dialog_background</item>
-    <item name="android:windowTitleStyle">@style/dialog_title_style</item>
-    <item name="android:textColorPrimary">@color/dialog_primary_text</item>
-  </style>
+    <color name="status_bar">@color/windowBackground</color>
 
-  <color name="colorBackground">@color/windowBackground</color>
+    <style name="dialog_title_style">
+        <item name="android:textColor">@color/dialog_title</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
 
-  <dimen name="compound_button_width">68dp</dimen>
-  <style name="alarm_list_item_toggle">
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">@dimen/compound_button_width</item>
-    <item name="android:paddingLeft">8dp</item>
-  </style>
+    <style name="dialog_theme" parent="AlertDialog.AppCompat">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:isLightTheme" tools:targetApi="29">@bool/windowLightStatusBar</item>
+        <item name="android:colorAccent">@color/dialog_accent</item>
+        <item name="colorAccent">@color/dialog_accent</item>
+        <item name="android:windowBackground">@color/dialog_background</item>
+        <item name="android:windowTitleStyle">@style/dialog_title_style</item>
+        <item name="android:textColorPrimary">@color/dialog_primary_text</item>
+    </style>
 
-  <style name="SelectableItem">
-    <item name="android:background">?android:attr/selectableItemBackground</item>
-  </style>
+    <color name="colorBackground">@color/windowBackground</color>
 
-  <color name="menu_icon_tint">#333</color>
-  <color name="icon_tint">#484848</color>
+    <dimen name="compound_button_width">68dp</dimen>
 
-  <color name="button_color">#ccc</color>
+    <style name="alarm_list_item_toggle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/compound_button_width</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
 
-  <color name="dialog_background">@color/windowBackground</color>
-  <color name="dialog_accent">@color/dc_light_blue</color>
-  <color name="dialog_text">#000</color>
+    <style name="SelectableItem">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
 
-  <color name="dialog_title">#000</color>
-  <color name="dialog_primary_text">#222</color>
-  <color name="secondary_text">#666</color>
-  <color name="primary_text">#111</color>
-  <color name="mid_text">#383838</color>
-  <color name="help_text">#222</color>
+    <color name="menu_icon_tint">#333</color>
+    <color name="icon_tint">#484848</color>
 
-  <color name="settings_accent">@color/accent</color>
-  <color name="accent">@color/dc_sat_light_blue</color>
-  <color name="android_green">#A4C639</color>
-  <color name="android_green_darker">#7cbc1d</color>
-  <color name="ics_blue">#33b5E5</color>
-  <color name="my_yellow">#E8D018</color>
-  <color name="my_darker_yellow">#D0BF27</color>
-  <color name="my_darker_darker_yellow">#d3c314</color>
-  <color name="col2020">#3b7bda</color>
+    <color name="button_color">#ccc</color>
 
-  <color name="windowBackground">#fafafa</color>
-  <color name="widgetTextColor">#111</color>
-  <color name="helpWindowBackground">@color/windowBackground</color>
+    <color name="dialog_background">@color/windowBackground</color>
+    <color name="dialog_accent">@color/dc_light_blue</color>
+    <color name="dialog_text">#000</color>
 
-  <color name="dc_pink">#9c94db</color>
+    <color name="dialog_title">#000</color>
+    <color name="dialog_primary_text">#222</color>
+    <color name="secondary_text">#666</color>
+    <color name="primary_text">#111</color>
+    <color name="mid_text">#383838</color>
+    <color name="help_text">#222</color>
 
-  <color name="dc_blue">#248</color>
-  <color name="dc_light_blue">#586fb8</color>
-  <color name="dc_light2_blue">#5773c9</color>
-  <color name="dc_lighter_blue">#8a9deb</color>
-  <color name="dc_sat_light_blue">#3a5ab8</color>
-  <!--color name="dc_bright_light_blue">#6d90fa</color-->
-  <color name="dc_bright_light_blue">#79a3ff</color>
-  <color name="dc_dark_blue">#001e5a</color>
-  <color name="dc_blueviolet">#7f75cf</color>
-  <color name="dc_light_blueviolet">#b1a4ff</color>
-  <color name="dc_dark_blueviolet">#4e499d</color>
+    <color name="settings_accent">@color/accent</color>
+    <color name="accent">@color/dc_sat_light_blue</color>
+    <color name="android_green">#A4C639</color>
+    <color name="android_green_darker">#7cbc1d</color>
+    <color name="ics_blue">#33b5E5</color>
+    <color name="my_yellow">#E8D018</color>
+    <color name="my_darker_yellow">#D0BF27</color>
+    <color name="my_darker_darker_yellow">#d3c314</color>
+    <color name="col2020">#3b7bda</color>
 
-  <color name="help_cat_bg">@color/dc_blue</color>
-  <color name="help_cat_text">#000</color>
-  <color name="help_pref_bg">@color/dc_light_blue</color>
-  <color name="help_pref_text">#000</color>
-  <color name="help_accent">@color/dc_dark_blueviolet</color>
+    <color name="windowBackground">#fafafa</color>
+    <color name="widgetTextColor">#111</color>
+    <color name="helpWindowBackground">@color/windowBackground</color>
 
-  <color name="time_til_charged">@color/my_yellow</color>
-  <color name="light_usage">#cccc7e</color>
-  <color name="normal_usage">@color/android_green</color>
-  <color name="heavy_usage">@color/my_yellow</color>
-  <color name="constant_usage">#DD961B</color>
+    <color name="dc_pink">#9c94db</color>
 
-  <color name="log_unplugged">@color/my_darker_darker_yellow</color>
-  <color name="log_plugged">#70b2ca</color>
-  <color name="log_charged">@color/android_green_darker</color>
-  <color name="log_unknown">#cf3c3c</color>
-  <color name="log_old_status">#666</color>
-  <color name="log_boot_completed">#886bc7</color>
+    <color name="dc_blue">#248</color>
+    <color name="dc_light_blue">#586fb8</color>
+    <color name="dc_light2_blue">#5773c9</color>
+    <color name="dc_lighter_blue">#8a9deb</color>
+    <color name="dc_sat_light_blue">#3a5ab8</color>
+    <!--color name="dc_bright_light_blue">#6d90fa</color-->
+    <color name="dc_bright_light_blue">#79a3ff</color>
+    <color name="dc_dark_blue">#001e5a</color>
+    <color name="dc_blueviolet">#7f75cf</color>
+    <color name="dc_light_blueviolet">#b1a4ff</color>
+    <color name="dc_dark_blueviolet">#4e499d</color>
 
-  <!--color name="heavy_usage">#DD901C</color-->
+    <color name="help_cat_bg">@color/dc_blue</color>
+    <color name="help_cat_text">#000</color>
+    <color name="help_pref_bg">@color/dc_light_blue</color>
+    <color name="help_pref_text">#000</color>
+    <color name="help_accent">@color/dc_dark_blueviolet</color>
 
-  <integer name="current_info_top_left_weight">4</integer>
-  <integer name="current_info_top_right_weight">6</integer>
+    <color name="time_til_charged">@color/my_yellow</color>
+    <color name="light_usage">#cccc7e</color>
+    <color name="normal_usage">@color/android_green</color>
+    <color name="heavy_usage">@color/my_yellow</color>
+    <color name="constant_usage">#DD961B</color>
 
-  <integer name="bif_padding_weight">1</integer>
-  <dimen name="bis_side_padding">15dp</dimen>
+    <color name="log_unplugged">@color/my_darker_darker_yellow</color>
+    <color name="log_plugged">#70b2ca</color>
+    <color name="log_charged">@color/android_green_darker</color>
+    <color name="log_unknown">#cf3c3c</color>
+    <color name="log_old_status">#666</color>
+    <color name="log_boot_completed">#886bc7</color>
 
-  <dimen name="battery_padding">10dp</dimen>
+    <!--color name="heavy_usage">#DD901C</color-->
 
-  <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
-  <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
+    <integer name="current_info_top_left_weight">4</integer>
+    <integer name="current_info_top_right_weight">6</integer>
 
-  <style name="NotificationTextIcon" parent="NotificationTitle">
-    <item name="android:textColor">@color/main_notification_default_custom_text_color</item>
-  </style>
+    <integer name="bif_padding_weight">1</integer>
+    <dimen name="bis_side_padding">15dp</dimen>
 
-  <dimen name="main_notification_text_padding_left">10dp</dimen>
+    <dimen name="battery_padding">10dp</dimen>
 
-  <color name="notification_box_default_color">#222</color>
-  <color name="main_notification_default_custom_text_color">#000</color>
-  <bool name="default_show_box_around_icon_area">true</bool>
+    <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
 
-  <dimen name="widget_margin">0dp</dimen>
+    <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
 
-  <style name="divider">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">0.6dp</item>
-    <item name="android:layout_marginLeft">7dp</item>
-    <item name="android:layout_marginRight">7dp</item>
-    <item name="android:background">?android:attr/listDivider</item>
-  </style>
+    <style name="NotificationTextIcon" parent="NotificationTitle">
+        <item name="android:textColor">@color/main_notification_default_custom_text_color</item>
+    </style>
 
-  <dimen name="tls_button_fs">16sp</dimen>
-  <dimen name="tls_button_height">65dp</dimen>
+    <dimen name="main_notification_text_padding_left">10dp</dimen>
+
+    <color name="notification_box_default_color">#222</color>
+    <color name="main_notification_default_custom_text_color">#000</color>
+    <bool name="default_show_box_around_icon_area">true</bool>
+
+    <dimen name="widget_margin">0dp</dimen>
+
+    <style name="divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.6dp</item>
+        <item name="android:layout_marginLeft">7dp</item>
+        <item name="android:layout_marginRight">7dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <dimen name="tls_button_fs">16sp</dimen>
+    <dimen name="tls_button_height">65dp</dimen>
 </resources>

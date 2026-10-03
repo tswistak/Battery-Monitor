@@ -131,8 +131,8 @@ internal object SettingsContract {
         VITAL_SIGN_STATUS_DURATION
     )
     val DEFAULT_VITAL_SIGNS_CONTENT: Set<String> = ALL_VITAL_SIGNS_CONTENT.take(3).toSet()
-    const val KEY_ENABLE_BATTERY_CURRENT: String = "enable_battery_current"
     const val KEY_USE_PRIVILEGED_ACCESS: String = "use_privileged_access"
+
     const val KEY_BATTERY_CURRENT_MULTIPLIER: String = "battery_current_multiplier"
     const val KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING: String =
         "battery_current_multiplier_detection_pending"

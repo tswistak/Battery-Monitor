@@ -69,12 +69,13 @@ internal fun historyFilterKey(code: Int): String? {
 }
 
 internal enum class HistoryMetric {
-    LEVEL, TEMPERATURE, VOLTAGE;
+    LEVEL, TEMPERATURE, VOLTAGE, CURRENT;
 
     fun value(record: LogRecord): Double? = when (this) {
         LEVEL -> record.charge?.takeIf { it in 0..100 }?.toDouble()
         TEMPERATURE -> record.temperature?.div(10.0)
         VOLTAGE -> record.voltage?.div(1000.0)
+        CURRENT -> record.currentMicroAmps?.div(1000.0)
     }
 }
 
@@ -218,7 +219,7 @@ internal fun historyQuery(
     val order = if (ascending) "ASC" else "DESC"
     require(limit == null || limit in 1..129)
     return HistoryQuery(
-        "SELECT _id, status, charge, time, temperature, voltage FROM logs WHERE ${
+        "SELECT _id, status, charge, time, temperature, voltage, current FROM logs WHERE ${
             where.joinToString(
                 " AND "
             )

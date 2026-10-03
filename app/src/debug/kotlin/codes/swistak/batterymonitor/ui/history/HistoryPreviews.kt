@@ -60,7 +60,8 @@ private fun ChartPreview(
                             (range.start + hours[index] * 3_600_000).toLong()
                                 .coerceAtMost(range.end - 1),
                             if (reboot) null else temperatures[index],
-                            if (reboot || (gaps && index == 4)) null else voltages[index]
+                            if (reboot || (gaps && index == 4)) null else voltages[index],
+                            if (reboot) null else if (index == 9) 1200250L else -240125L - index * 10000
                         )
                     )
                 )
@@ -79,7 +80,7 @@ private fun ChartPreview(
                     Column(Modifier.padding(16.dp)) {
                         Text(
                             when (metric) {
-                                HistoryMetric.LEVEL -> "Poziom baterii"; HistoryMetric.TEMPERATURE -> "Temperatura"; HistoryMetric.VOLTAGE -> "Napięcie"
+                                HistoryMetric.LEVEL -> "Poziom baterii"; HistoryMetric.TEMPERATURE -> "Temperatura"; HistoryMetric.VOLTAGE -> "Napięcie"; HistoryMetric.CURRENT -> "Prąd baterii"
                             }, style = MaterialTheme.typography.titleMedium
                         )
                         MeasurementChart(
@@ -125,3 +126,9 @@ private fun MissingChartPreview() = ChartPreview(12, HistoryMetric.VOLTAGE, gaps
 )
 @Composable
 private fun LargeTextChartPreview() = ChartPreview(12)
+
+@Preview(
+    name = "History · instantaneous current", widthDp = 390, locale = "pl", showBackground = true
+)
+@Composable
+private fun CurrentChartPreview() = ChartPreview(12, HistoryMetric.CURRENT, gaps = true)

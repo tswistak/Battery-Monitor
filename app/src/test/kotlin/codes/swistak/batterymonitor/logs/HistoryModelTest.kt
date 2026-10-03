@@ -8,6 +8,7 @@
 package codes.swistak.batterymonitor.logs
 
 import codes.swistak.batterymonitor.ui.components.historyChartScale
+import codes.swistak.batterymonitor.ui.components.historyRangeValue
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
@@ -19,8 +20,42 @@ import org.junit.Test
 import java.io.IOException
 import java.time.LocalDate
 import java.time.ZoneId
+import java.util.Locale
 
 class HistoryModelTest {
+    @Test
+    fun `current charts preserve signed fractions zero and gaps without applying an average`() {
+        val readings = listOf(-240.125, null, 1200.25, 0.0)
+        val chart = historyChart(
+            HistoryRangeState(0, 1000), readings.asSequence().mapIndexed { index, current ->
+                HistoryRecord(
+                    index.toLong(), LogRecord(
+                        100, 50, index * 200L, 300, 4000, current?.let { (it * 1000).toLong() })
+                )
+            })
+        val series = chart.series.getValue(HistoryMetric.CURRENT)
+        assertEquals(readings, series.points.map { it.value })
+        assertEquals(-240.125, series.min)
+        assertEquals(1200.25, series.max)
+        assertNotEquals(series.points.first().segment, series.points.last().segment)
+        assertEquals(
+            "-240,125–1200,25 mA",
+            historyRangeValue(series, HistoryMetric.CURRENT, false, Locale.forLanguageTag("pl"))
+        )
+        val scale = historyChartScale(series, HistoryMetric.CURRENT, false)
+        assertTrue(scale.minimum <= -240.125)
+        assertTrue(scale.maximum >= 1200.25)
+        assertTrue(scale.ticks.any { it == 0.0 })
+        assertEquals(
+            "-1200,25–240,125 mA",
+            historyRangeValue(series, HistoryMetric.CURRENT, false, Locale.forLanguageTag("pl"), -1)
+        )
+        val calibrated = historyChartScale(series, HistoryMetric.CURRENT, false, -1000)
+        assertTrue(calibrated.minimum <= -1200250)
+        assertTrue(calibrated.maximum >= 240125)
+        assertEquals(readings, series.points.map { it.value })
+    }
+
     private val range = HistoryRangeState(100, 1000)
     private fun entry(
         id: Long,
@@ -28,8 +63,46 @@ class HistoryModelTest {
         charge: Int? = 50,
         temperature: Int? = 300,
         voltage: Int? = 4000,
-        status: Int = 100
-    ) = HistoryRecord(id, LogRecord(status, charge, time, temperature, voltage))
+        status: Int = 100,
+        currentMicroAmps: Long? = null
+    ) = HistoryRecord(id, LogRecord(status, charge, time, temperature, voltage, currentMicroAmps))
+
+    @Test
+    fun `reading range shows one unit and preserves localization unknown values and constant readings`() {
+        assertEquals(
+            "42–80%", historyRangeValue(
+                HistorySeries(emptyList(), 42.0, 80.0), HistoryMetric.LEVEL, false, Locale.US
+            )
+        )
+        assertEquals(
+            "29,8–36,4 °C", historyRangeValue(
+                HistorySeries(emptyList(), 29.8, 36.4),
+                HistoryMetric.TEMPERATURE,
+                false,
+                Locale.forLanguageTag("pl")
+            )
+        )
+        assertEquals(
+            "85.6–97.5 °F", historyRangeValue(
+                HistorySeries(emptyList(), 29.8, 36.4), HistoryMetric.TEMPERATURE, true, Locale.US
+            )
+        )
+        assertEquals(
+            "3.88–4.20 V", historyRangeValue(
+                HistorySeries(emptyList(), 3.88, 4.20), HistoryMetric.VOLTAGE, false, Locale.US
+            )
+        )
+        assertEquals(
+            "33%", historyRangeValue(
+                HistorySeries(emptyList(), 33.0, 33.0), HistoryMetric.LEVEL, false, Locale.US
+            )
+        )
+        assertEquals(
+            "—", historyRangeValue(
+                HistorySeries(emptyList(), null, null), HistoryMetric.LEVEL, false, Locale.US
+            )
+        )
+    }
 
     @Test
     fun `empty history has no values and one observation retains its timestamp and units`() {
@@ -179,6 +252,7 @@ class HistoryModelTest {
                         index % 101,
                         temperature = if (index % 13 == 0) null else index % 1000,
                         voltage = 3000 + index % 2000,
+                        currentMicroAmps = if (index % 13 == 0) null else (index % 2001 - 1000) * 1000L,
                         status = when (index % 1000) {
                             0 -> 22; 1 -> 0; 2 -> -1; else -> 100
                         }
@@ -191,6 +265,8 @@ class HistoryModelTest {
         assertTrue(result.events.size <= 300)
         assertEquals(0.0, result.series.getValue(HistoryMetric.LEVEL).min)
         assertEquals(100.0, result.series.getValue(HistoryMetric.LEVEL).max)
+        assertEquals(-1000.0, result.series.getValue(HistoryMetric.CURRENT).min)
+        assertEquals(1000.0, result.series.getValue(HistoryMetric.CURRENT).max)
         assertEquals(1000, result.events.filter { it.code == 2 }.sumOf { it.count })
         val dense =
             historyChart(range, sequenceOf(entry(1, 100, status = 22), entry(2, 101, status = 22)))

@@ -20,8 +20,30 @@ import org.junit.Test
 
 class Version1DeviceDataImporterTest {
     @Test
-    fun `device-specific data backup starts at schema version one`() {
-        assertEquals(1, DeviceDataBackup.SCHEMA_VERSION)
+    fun `version two preserves instantaneous current and accepts old records without current`() {
+        val old = mapOf("status" to 100, "charge" to 50, "time" to 123L)
+        assertEquals(
+            Version1DeviceDataImporter.restoreLog(old), Version2DeviceDataImporter.restoreLog(old)
+        )
+        for (current in listOf(null, -240125L, 1200250L, 0L, Long.MAX_VALUE, Long.MIN_VALUE)) {
+            assertEquals(
+                current,
+                Version2DeviceDataImporter.restoreLog(old + ("currentMicroAmps" to current)).currentMicroAmps
+            )
+        }
+        for (invalid in listOf(
+            Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, 1.5, "240"
+        )) {
+            assertThrows(IllegalArgumentException::class.java) {
+                Version2DeviceDataImporter.restoreLog(old + ("currentMicroAmps" to invalid))
+            }
+        }
+    }
+
+    @Test
+    fun `version one remains supported while device data exports use version two`() {
+        assertEquals(1, Version1DeviceDataImporter.VERSION)
+        assertEquals(2, DeviceDataBackup.SCHEMA_VERSION)
         assertEquals(
             "lastLogExportTime", Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME
         )

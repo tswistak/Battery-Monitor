@@ -13,27 +13,28 @@
 */
 package codes.swistak.batterymonitor.app
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedInfoFragment
 import codes.swistak.batterymonitor.alarms.AlarmsFragment
@@ -45,6 +46,7 @@ import codes.swistak.batterymonitor.settings.SettingsFragment
 import codes.swistak.batterymonitor.settings.SettingsHelpActivity
 import codes.swistak.batterymonitor.ui.current.CurrentStateRoute
 import codes.swistak.batterymonitor.ui.help.LegacyHelpFragment
+import codes.swistak.batterymonitor.ui.history.HistoryActionsMenu
 import codes.swistak.batterymonitor.ui.history.HistoryRoute
 import codes.swistak.batterymonitor.ui.history.HistoryViewModel
 import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
@@ -65,14 +67,12 @@ class BatteryInfoActivity : AppCompatActivity() {
     private lateinit var history: HistoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.bi_main_theme)
+        setTheme(R.style.bi_compose_theme)
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        supportActionBar?.hide()
+        enableEdgeToEdge()
         val persistent = PersistentFragment.getInstance(supportFragmentManager)
         DisplayStrings.setResources(resources)
-        val currentSettings =
-            getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+        val currentSettings = getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
         history = ViewModelProvider(this)[HistoryViewModel::class.java]
         history.restore(savedInstanceState?.getBundle("history_state"))
         for (tag in listOf("section:current", "section:history")) {
@@ -90,6 +90,8 @@ class BatteryInfoActivity : AppCompatActivity() {
 
         setContentView(ComposeView(this).apply {
             setContent {
+                var historyAction by rememberSaveable { mutableStateOf<String?>(null) }
+                val historyState by history.state.collectAsStateWithLifecycle()
                 SideNavigationShell(
                     selected = selected,
                     onSelect = ::selectSection,
@@ -101,7 +103,13 @@ class BatteryInfoActivity : AppCompatActivity() {
                         )
                     ) {
                         null
-                    } else ::showLegacyActions) { modifier ->
+                    } else ::showLegacyActions,
+                    actions = {
+                        if (selected == SectionOwner.HISTORY) HistoryActionsMenu(!historyState.busy) {
+                            if (it == "settings") selectSection(SectionOwner.SETTINGS)
+                            else historyAction = it
+                        }
+                    }) { modifier ->
                     Box(modifier) {
                         AndroidView(
                             factory = { context ->
@@ -127,7 +135,8 @@ class BatteryInfoActivity : AppCompatActivity() {
                             HistoryRoute(
                                 history,
                                 persistent.monitoring.state,
-                                onSettings = { selectSection(SectionOwner.SETTINGS) },
+                                requestedAction = historyAction,
+                                onActionHandled = { historyAction = null },
                                 modifier = Modifier.fillMaxSize()
                             )
                         }

@@ -22,10 +22,6 @@ internal object BatteryCurrentPreferencesMigration : SettingsMigration {
     override fun migrate(
         preferences: SharedPreferences, editor: SharedPreferences.Editor
     ) {
-        val needsEnabled =
-            !preferences.contains(SettingsContract.KEY_ENABLE_BATTERY_CURRENT) && preferences.contains(
-                SettingsContract.LEGACY_KEY_ENABLE_CURRENT
-            )
         val needsMultiplier =
             !preferences.contains(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER) && preferences.contains(
                 SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER
@@ -46,12 +42,6 @@ internal object BatteryCurrentPreferencesMigration : SettingsMigration {
             !preferences.contains(SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL)
 
         editor.apply {
-            if (needsEnabled) {
-                putBoolean(
-                    SettingsContract.KEY_ENABLE_BATTERY_CURRENT,
-                    preferences.getBoolean(SettingsContract.LEGACY_KEY_ENABLE_CURRENT, false)
-                )
-            }
             if (needsPrivileged) {
                 putBoolean(
                     SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT,

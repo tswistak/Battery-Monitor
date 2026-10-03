@@ -332,9 +332,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">כאשר האפשרות מופעלת, הסמל מציג סימן אחוז עבור אחוז הסוללה וסימן מעלה עבור טמפרטורת הסוללה. השבת אפשרות זו כדי להציג רק את המספר.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">זרם הסוללה</string>
-  <string name="pref_enable_battery_current" formatted="false">הפעלת זרם הסוללה</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">להציג את זרם הסוללה בחלון הראשי?</string>
-  <string name="pref_enable_battery_current_help" formatted="false">כאשר האפשרות מופעלת, זרם הסוללה מוצג בחלון הראשי והאפשרויות הקשורות זמינות.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">גישה מיוחסת</string>
   <string name="pref_use_privileged_access" formatted="false">שימוש בגישה מיוחסת</string>

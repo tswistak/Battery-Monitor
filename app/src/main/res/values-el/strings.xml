@@ -324,9 +324,6 @@
   <string name="pref_show_icon_unit_help" formatted="false">Αν είναι ενεργό, το εικονίδιο εμφανίζει σύμβολο ποσοστού για το ποσοστό μπαταρίας και σύμβολο βαθμών για τη θερμοκρασία της μπαταρίας. Απενεργοποιήστε το για να εμφανίζεται μόνο ο αριθμός.</string>
 
   <string name="pref_cat_battery_current_main" formatted="false">Ρεύμα μπαταρίας</string>
-  <string name="pref_enable_battery_current" formatted="false">Ενεργοποίηση ρεύματος μπαταρίας</string>
-  <string name="pref_enable_battery_current_summary" formatted="false">Εμφάνιση του ρεύματος μπαταρίας στο κύριο παράθυρο;</string>
-  <string name="pref_enable_battery_current_help" formatted="false">Όταν ενεργοποιηθεί, το ρεύμα μπαταρίας εμφανίζεται στο κύριο παράθυρο και γίνονται διαθέσιμες οι σχετικές επιλογές.</string>
 
   <string name="pref_cat_privileged_access" formatted="false">Προνομιακή πρόσβαση</string>
   <string name="pref_use_privileged_access" formatted="false">Χρήση προνομιακής πρόσβασης</string>

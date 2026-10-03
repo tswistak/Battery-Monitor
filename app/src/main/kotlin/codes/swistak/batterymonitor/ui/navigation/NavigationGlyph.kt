@@ -11,9 +11,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
@@ -35,16 +33,6 @@ internal fun NavigationGlyph(id: String, color: Color, modifier: Modifier = Modi
 
             fun path(block: Path.() -> Unit) = drawPath(Path().apply(block), color, style = stroke)
             when (id) {
-                "brand" -> {
-                    drawRoundRect(
-                        color,
-                        topLeft = Offset(9f, 5f),
-                        size = Size(6f, 16f),
-                        cornerRadius = CornerRadius(1f)
-                    )
-                    drawLine(color, Offset(11f, 3f), Offset(13f, 3f), 2f)
-                }
-
                 "current" -> {
                     path {
                         moveTo(8f, 4f); lineTo(16f, 4f); quadraticTo(18f, 4f, 18f, 6f)
