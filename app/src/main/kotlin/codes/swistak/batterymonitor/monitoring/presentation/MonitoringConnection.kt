@@ -10,7 +10,6 @@ package codes.swistak.batterymonitor.monitoring.presentation
 import android.os.Bundle
 import kotlinx.coroutines.flow.StateFlow
 
-/** Owns one UI subscription to the existing Messenger client, never a service or Activity. */
 internal class MonitoringConnection {
     companion object {
         const val FIELD_PROCESS_ID = "monitoring_process_id"

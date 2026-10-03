@@ -18,7 +18,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ListView
 import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +33,7 @@ import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedInfoFragment
 import codes.swistak.batterymonitor.alarms.AlarmsFragment
@@ -45,6 +45,8 @@ import codes.swistak.batterymonitor.settings.SettingsFragment
 import codes.swistak.batterymonitor.settings.SettingsHelpActivity
 import codes.swistak.batterymonitor.ui.current.CurrentStateRoute
 import codes.swistak.batterymonitor.ui.help.LegacyHelpFragment
+import codes.swistak.batterymonitor.ui.history.HistoryRoute
+import codes.swistak.batterymonitor.ui.history.HistoryViewModel
 import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import codes.swistak.batterymonitor.ui.navigation.SectionRegistry
@@ -60,6 +62,7 @@ class BatteryInfoActivity : AppCompatActivity() {
     private var selected by mutableStateOf(SectionOwner.CURRENT)
     private var containerReady = false
     private var shown: SectionOwner? = null
+    private lateinit var history: HistoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.bi_main_theme)
@@ -70,8 +73,12 @@ class BatteryInfoActivity : AppCompatActivity() {
         DisplayStrings.setResources(resources)
         val currentSettings =
             getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
-        supportFragmentManager.findFragmentByTag("section:current")?.let { legacyCurrent ->
-            supportFragmentManager.commitNow { remove(legacyCurrent) }
+        history = ViewModelProvider(this)[HistoryViewModel::class.java]
+        history.restore(savedInstanceState?.getBundle("history_state"))
+        for (tag in listOf("section:current", "section:history")) {
+            supportFragmentManager.findFragmentByTag(tag)?.let { legacy ->
+                supportFragmentManager.commitNow { remove(legacy) }
+            }
         }
 
         navigator = SectionNavigator.restore(savedInstanceState)
@@ -89,7 +96,10 @@ class BatteryInfoActivity : AppCompatActivity() {
                     onSettings = if (selected == SectionOwner.CURRENT) {
                         { selectSection(SectionOwner.SETTINGS) }
                     } else null,
-                    onLegacyActions = if (selected == SectionOwner.HELP || selected == SectionOwner.CURRENT) {
+                    onLegacyActions = if (selected in setOf(
+                            SectionOwner.HELP, SectionOwner.CURRENT, SectionOwner.HISTORY
+                        )
+                    ) {
                         null
                     } else ::showLegacyActions) { modifier ->
                     Box(modifier) {
@@ -110,6 +120,14 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 settings = currentSettings,
                                 onSection = ::selectSection,
                                 onBatteryUsage = ::openBatteryUsage,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                        if (selected == SectionOwner.HISTORY) {
+                            HistoryRoute(
+                                history,
+                                persistent.monitoring.state,
+                                onSettings = { selectSection(SectionOwner.SETTINGS) },
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -144,7 +162,7 @@ class BatteryInfoActivity : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        captureHistoryScroll()
+        outState.putBundle("history_state", history.save())
         navigator.save(outState)
         super.onSaveInstanceState(outState)
     }
@@ -172,9 +190,8 @@ class BatteryInfoActivity : AppCompatActivity() {
     private fun showSection(owner: SectionOwner) {
         if (!containerReady || supportFragmentManager.isStateSaved || shown == owner) return
         val manager = supportFragmentManager
-        captureHistoryScroll()
         val targetTag = "section:${owner.route}"
-        val target = if (owner == SectionOwner.CURRENT) null
+        val target = if (owner == SectionOwner.CURRENT || owner == SectionOwner.HISTORY) null
         else manager.findFragmentByTag(targetTag) ?: newFragment(owner)
         manager.commitNow {
             setReorderingAllowed(true)
@@ -195,34 +212,12 @@ class BatteryInfoActivity : AppCompatActivity() {
             }
         }
         if (target is AdvancedInfoFragment) target.setSectionVisible(true)
-        if (owner == SectionOwner.HISTORY) {
-            val state = navigator.state(SectionOwner.HISTORY)
-            target?.view?.findViewById<ListView>(android.R.id.list)?.post {
-                target.view?.findViewById<ListView>(android.R.id.list)
-                    ?.setSelectionFromTop(state.scrollIndex, state.scrollOffset)
-            }
-        }
         shown = owner
-    }
-
-    private fun captureHistoryScroll() {
-        if (shown != SectionOwner.HISTORY) return
-        val list =
-            supportFragmentManager.findFragmentByTag("section:history")?.view?.findViewById<ListView>(
-                android.R.id.list
-            ) ?: return
-        navigator.update(
-            SectionOwner.HISTORY, navigator.state(SectionOwner.HISTORY).copy(
-                selectedTab = "logs",
-                scrollIndex = list.firstVisiblePosition,
-                scrollOffset = list.getChildAt(0)?.top ?: 0
-            )
-        )
     }
 
     private fun newFragment(owner: SectionOwner): Fragment = when (owner) {
         SectionOwner.CURRENT -> error("Current State is rendered by Compose")
-        SectionOwner.HISTORY -> LogViewFragment()
+        SectionOwner.HISTORY -> error("History is rendered by Compose")
         SectionOwner.ALARMS -> AlarmsFragment()
         SectionOwner.DIAGNOSTICS -> AdvancedInfoFragment()
         SectionOwner.SETTINGS -> SettingsFragment().apply { setScreen(R.xml.main_pref_screen) }

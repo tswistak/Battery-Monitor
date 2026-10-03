@@ -20,15 +20,6 @@ import android.util.AttributeSet
 import android.widget.Checkable
 import android.widget.LinearLayout
 
-/**
- * This is a simple wrapper for [LinearLayout] that implements the [Checkable]
- * interface by keeping an internal 'checked' state flag.
- * 
- * 
- * This can be used as the root view for a custom list item layout for
- * [android.widget.AbsListView] elements with a
- * [choiceMode][android.widget.AbsListView.setChoiceMode] set.
- */
 class CheckableLinearLayout(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs),
     Checkable {
     companion object {

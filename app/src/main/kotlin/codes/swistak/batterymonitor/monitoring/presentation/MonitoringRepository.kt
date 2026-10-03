@@ -19,7 +19,6 @@ internal data class MonitoringUiState(
     val sequence: Long = -1L
 )
 
-/** Converts each accepted IPC bundle into one immutable state emission. */
 internal class MonitoringRepository {
     private val mutableState = MutableStateFlow(MonitoringUiState())
     val state: StateFlow<MonitoringUiState> = mutableState

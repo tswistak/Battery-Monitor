@@ -190,6 +190,60 @@ internal class LogDatabase(context: Context?) {
         return getLogRecordsInRange()
     }
 
+    fun <T> readHistory(query: HistoryQuery, block: (Sequence<HistoryRecord>) -> T): T {
+        openDBs()
+        val database = checkNotNull(rdb) { "Log database is unavailable" }
+        return database.rawQuery(query.sql, query.args).use { cursor ->
+            block(sequence {
+                while (cursor.moveToNext()) {
+                    yield(
+                        HistoryRecord(
+                            cursor.getLong(0), LogRecord(
+                                status = cursor.getInt(1),
+                                charge = cursor.getNullableInt(2),
+                                time = cursor.getLong(3),
+                                temperature = cursor.getNullableInt(4),
+                                voltage = cursor.getNullableInt(5)
+                                    ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
+                            )
+                        )
+                    )
+                }
+            })
+        }
+    }
+
+    fun deleteHistory(range: HistoryRangeState?) {
+        openDBs()
+        val database = checkNotNull(wdb) { "Log database is unavailable" }
+        if (range == null) database.delete(LOG_TABLE_NAME, null, null)
+        else database.delete(
+            LOG_TABLE_NAME,
+            "time >= ? AND time < ?",
+            arrayOf(range.start.toString(), range.end.toString())
+        )
+    }
+
+    fun historyDuration(entry: HistoryRecord): Long? {
+        val record = entry.record
+        val status = decodeStatus(record.status)
+        val previous = when {
+            status[0] == 5 || (status[0] == 0 && status[2] == 0) -> 2
+            status[0] == 2 && status[2] == 0 -> 0
+            else -> return null
+        }
+        openDBs()
+        return checkNotNull(rdb).rawQuery(
+            "SELECT time FROM logs WHERE (time < ? OR (time = ? AND _id < ?)) AND status >= 0 AND status < 100 AND status % 10 = ? ORDER BY time DESC, _id DESC LIMIT 1",
+            arrayOf(
+                record.time.toString(),
+                record.time.toString(),
+                entry.id.toString(),
+                previous.toString()
+            )
+        ).use { if (it.moveToFirst()) record.time - it.getLong(0) else null }
+    }
+
     fun getLogRecordsInRange(
         afterExclusive: Long? = null, throughInclusive: Long? = null
     ): List<LogRecord> {
@@ -360,6 +414,11 @@ internal class LogDatabase(context: Context?) {
 
     private class SQLOpenHelper(context: Context?) :
         SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+        override fun onOpen(db: SQLiteDatabase) {
+            super.onOpen(db)
+            if (!db.isReadOnly) db.execSQL("CREATE INDEX IF NOT EXISTS logs_time_id ON logs(time, _id)")
+        }
+
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(
                 "CREATE TABLE $LOG_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_STATUS_CODE INTEGER,$KEY_CHARGE INTEGER,$KEY_TIME INTEGER,$KEY_TEMPERATURE INTEGER,$KEY_VOLTAGE INTEGER);"

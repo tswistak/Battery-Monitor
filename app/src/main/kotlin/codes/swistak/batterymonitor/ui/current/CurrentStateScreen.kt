@@ -7,24 +7,29 @@
 */
 package codes.swistak.batterymonitor.ui.current
 
+
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.PowerManager
 import android.provider.Settings
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -51,6 +56,10 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
+import codes.swistak.batterymonitor.data.LogsRepository
+import codes.swistak.batterymonitor.logs.HistoryChartModel
+import codes.swistak.batterymonitor.logs.HistoryMetric
+import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
@@ -59,6 +68,7 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.BatteryCellHero
 import codes.swistak.batterymonitor.ui.components.CapabilityNotice
+import codes.swistak.batterymonitor.ui.components.MeasurementChart
 import codes.swistak.batterymonitor.ui.components.MetricDisplay
 import codes.swistak.batterymonitor.ui.components.MetricGrid
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
@@ -175,6 +185,25 @@ internal fun CurrentStateRoute(
     LaunchedEffect(state.snapshot?.status, state.snapshot?.configuredPrediction?.targetPercent) {
         showFullRange = false
     }
+    val logs = remember(context.applicationContext) { LogsRepository(context.applicationContext) }
+    val trend by produceState<HistoryChartModel?>(
+        null,
+        preferences.loggingEnabled,
+        state.snapshot?.levelPercent,
+        state.snapshot?.status,
+        state.snapshot?.plugged
+    ) {
+        if (!preferences.loggingEnabled) {
+            value = null; return@produceState
+        }
+        value = try {
+            logs.chart(HistoryRangeState.lastHours(24))
+        } catch (exception: kotlinx.coroutines.CancellationException) {
+            throw exception
+        } catch (_: Exception) {
+            null
+        }
+    }
     CurrentStateScreen(
         model = model,
         preferences = preferences,
@@ -184,6 +213,7 @@ internal fun CurrentStateRoute(
         onBatteryUsage = onBatteryUsage,
         onRefreshCurrent = { refreshCurrent++ },
         powerOptimized = !powerUnrestricted,
+        trend = trend,
         onNotificationSettings = { NotificationSettingsNavigator.openNotifications(context) },
         onPowerSettings = {
             runCatching { context.startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)) }
@@ -213,6 +243,7 @@ internal fun CurrentStateScreen(
     powerOptimized: Boolean = false,
     onNotificationSettings: () -> Unit = {},
     onPowerSettings: () -> Unit = {},
+    trend: HistoryChartModel? = null,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -488,11 +519,45 @@ internal fun CurrentStateScreen(
                 )
             }
             item {
-                TextButton(onClick = { onSection(SectionOwner.HISTORY) }) {
-                    Text(
-                        if (preferences.loggingEnabled) stringResource(R.string.nav_history)
-                        else stringResource(R.string.current_history_off)
-                    )
+                if (preferences.loggingEnabled && trend != null && trend.count > 0) {
+                    OutlinedCard(
+                        Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(22.dp),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                        colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface)
+                    ) {
+                        Column(Modifier.padding(horizontal = 15.dp, vertical = 9.dp)) {
+                            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+                                Text(
+                                    stringResource(R.string.history_level_24h),
+                                    Modifier.weight(1f),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                TextButton(onClick = { onSection(SectionOwner.HISTORY) }) {
+                                    Text(
+                                        stringResource(R.string.nav_history)
+                                    )
+                                }
+                            }
+                            MeasurementChart(
+                                trend,
+                                HistoryMetric.LEVEL,
+                                preferences.fahrenheit,
+                                selectedId = null,
+                                onSelect = {},
+                                compact = true,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                } else {
+                    TextButton(onClick = { onSection(SectionOwner.HISTORY) }) {
+                        Text(
+                            if (preferences.loggingEnabled) stringResource(R.string.nav_history)
+                            else stringResource(R.string.current_history_off)
+                        )
+                    }
                 }
             }
             item {

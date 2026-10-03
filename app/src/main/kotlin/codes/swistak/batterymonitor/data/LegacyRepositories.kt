@@ -14,14 +14,22 @@ import android.os.Messenger
 import android.os.RemoteException
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.AlarmRecord
+import codes.swistak.batterymonitor.logs.HistoryChartModel
+import codes.swistak.batterymonitor.logs.HistoryKey
+import codes.swistak.batterymonitor.logs.HistoryRangeState
+import codes.swistak.batterymonitor.logs.HistoryRecord
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
+import codes.swistak.batterymonitor.logs.historyChart
+import codes.swistak.batterymonitor.logs.historyQuery
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringReading
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 
 internal class SettingsRepository(context: Context) {
@@ -54,6 +62,55 @@ internal class SettingsRepository(context: Context) {
 internal class LogsRepository(context: Context) {
     private val appContext = context.applicationContext
 
+    suspend fun chart(range: HistoryRangeState): HistoryChartModel = withContext(Dispatchers.IO) {
+        val coroutine = currentCoroutineContext()
+        database {
+            readHistory(historyQuery(range)) {
+                historyChart(
+                    range, it.onEach { coroutine.ensureActive() })
+            }
+        }
+    }
+
+    suspend fun page(
+        range: HistoryRangeState,
+        filters: Set<String>?,
+        ascending: Boolean,
+        anchor: HistoryKey?,
+        backwards: Boolean = false
+    ): List<HistoryRecord> = withContext(Dispatchers.IO) {
+        database {
+            readHistory(
+                historyQuery(
+                    range, filters, ascending != backwards, anchor, 129
+                )
+            ) { it.toList() }
+        }
+    }
+
+    suspend fun duration(record: HistoryRecord): Long? = withContext(Dispatchers.IO) {
+        database { historyDuration(record) }
+    }
+
+    suspend fun delete(range: HistoryRangeState?) = withContext(Dispatchers.IO) {
+        check(
+            codes.swistak.batterymonitor.logs.AutoLogExporter.exportBeforeManualLogClearing(
+                appContext
+            )
+        ) {
+            "Automatic export failed; history was retained"
+        }
+        database { deleteHistory(range) }
+    }
+
+    private inline fun <T> database(block: LogDatabase.() -> T): T = LogDatabase(appContext).run {
+        try {
+            block()
+        } finally {
+            close()
+        }
+    }
+
     suspend fun read(
         afterExclusive: Long? = null, throughInclusive: Long? = null
     ): List<LogRecord> = withContext(Dispatchers.IO) {
@@ -81,7 +138,6 @@ internal class AlarmsRepository(context: Context) {
     }
 }
 
-/** One explicit read; the visible screen decides the existing refresh cadence. */
 internal class CurrentReadingRepository(context: Context) {
     private val preferences = context.applicationContext.getSharedPreferences(
         SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE

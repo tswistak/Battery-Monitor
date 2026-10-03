@@ -58,6 +58,10 @@ internal object LogExport {
 
     fun writeCsv(
         context: Context, output: OutputStream, records: List<LogRecord>, includeHeader: Boolean
+    ) = writeCsv(context, output, records.asSequence(), includeHeader)
+
+    fun writeCsv(
+        context: Context, output: OutputStream, records: Sequence<LogRecord>, includeHeader: Boolean
     ) {
         val resources = context.resources
         val dateFormat = android.text.format.DateFormat.getDateFormat(context)
