@@ -185,6 +185,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
             SettingsContract.KEY_VITAL_SIGNS_CONTENT,
             SettingsContract.KEY_VITAL_SIGNS_ORDER,
+            SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS,
+            SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS,
             SettingsContract.KEY_ENABLE_BATTERY_CURRENT,
             SettingsContract.KEY_USE_PRIVILEGED_ACCESS,
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,

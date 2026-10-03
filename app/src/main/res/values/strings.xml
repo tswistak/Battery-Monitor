@@ -527,6 +527,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Which values should be included in Vital Signs, and in what order?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Reorder %1$s</string>
 
+  <string name="pref_expanded_notification" formatted="false">Expand notification details</string>
+  <string name="pref_expanded_notification_summary" formatted="false">Show labeled details when the notification is expanded?</string>
+  <string name="pref_expanded_notification_help" formatted="false">If enabled, expanding the main notification shows Time Remaining, Time Since Status Change, and each Vital Signs value on its own labeled line instead of the single-line summary.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">Expand Live Update details</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">Show labeled details in the Live Update notification?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">Live Update notifications are always shown expanded. If enabled, the Live Update shows Time Remaining, Time Since Status Change, and each Vital Signs value on its own labeled line.</string>
+
   <string name="pref_backup_restore" formatted="false">Backup and restore</string>
   <string name="backup_restore_settings_summary" formatted="false">Back up, restore, and transfer your app settings and battery data.</string>
   <string name="pref_auto_log_export" formatted="false">Automatic log export</string>
