@@ -551,6 +551,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Ktoré hodnoty zahrnúť do dôležitých údajov a v akom poradí?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Zmeniť poradie: %1$s</string>
 
+  <string name="pref_expanded_notification" formatted="false">Rozbaliť podrobnosti oznámenia</string>
+  <string name="pref_expanded_notification_summary" formatted="false">Zobrazovať podrobnosti s popismi pri rozbalení oznámenia?</string>
+  <string name="pref_expanded_notification_help" formatted="false">Ak je táto možnosť zapnutá, rozbalené hlavné oznámenie zobrazuje zostávajúci čas, čas od zmeny stavu a každú hodnotu dôležitých údajov na samostatnom riadku s popisom namiesto jednoriadkového súhrnu.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">Rozbaliť podrobnosti Live Update</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">Zobrazovať podrobnosti s popismi v oznámení Live Update?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">Oznámenia Live Update sa vždy zobrazujú rozbalené. Ak je táto možnosť zapnutá, Live Update zobrazuje zostávajúci čas, čas od zmeny stavu a každú hodnotu dôležitých údajov na samostatnom riadku s popisom.</string>
+
   <string name="pref_backup_restore" formatted="false">Záloha a obnovenie</string>
   <string name="backup_restore_settings_summary" formatted="false">Zálohujte, obnovujte a prenášajte nastavenia aplikácie a údaje o batérii.</string>
   <string name="pref_auto_log_export" formatted="false">Automatický export záznamov</string>

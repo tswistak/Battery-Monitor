@@ -547,6 +547,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Které hodnoty zahrnout do důležitých údajů a v jakém pořadí?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Změnit pořadí: %1$s</string>
 
+  <string name="pref_expanded_notification" formatted="false">Rozbalit podrobnosti oznámení</string>
+  <string name="pref_expanded_notification_summary" formatted="false">Zobrazovat podrobnosti s popisky při rozbalení oznámení?</string>
+  <string name="pref_expanded_notification_help" formatted="false">Pokud je tato možnost zapnutá, rozbalené hlavní oznámení zobrazuje zbývající čas, čas od změny stavu a každou hodnotu důležitých údajů na samostatném řádku s popiskem místo jednořádkového souhrnu.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">Rozbalit podrobnosti živé aktualizace</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">Zobrazovat podrobnosti s popisky v oznámení živé aktualizace?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">Oznámení živé aktualizace se vždy zobrazují rozbalená. Pokud je tato možnost zapnutá, živá aktualizace zobrazuje zbývající čas, čas od změny stavu a každou hodnotu důležitých údajů na samostatném řádku s popiskem.</string>
+
   <string name="pref_backup_restore" formatted="false">Záloha a obnovení</string>
   <string name="backup_restore_settings_summary" formatted="false">Zálohujte, obnovujte a přenášejte nastavení aplikace a data baterie.</string>
   <string name="pref_auto_log_export" formatted="false">Automatický export záznamů</string>

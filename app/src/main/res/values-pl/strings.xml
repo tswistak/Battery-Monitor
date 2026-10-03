@@ -540,6 +540,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Które wartości mają być uwzglęniane w parametrach i w której kolejności?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Zmień kolejność %1$s</string>
 
+  <string name="pref_expanded_notification" formatted="false">Rozwijaj szczegóły powiadomienia</string>
+  <string name="pref_expanded_notification_summary" formatted="false">Czy wyświetlać szczegóły, gdy powiadomienie zostanie rozwinięte?</string>
+  <string name="pref_expanded_notification_help" formatted="false">Jeśli włączone, rozwinięcie głównego powiadomienia wyświetli Pozostały czas, Czas od zmiany stanu i wartość każdego z parametrów w oddzielnym wierszu zamiast jednowierszowego podsumowania.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">Rozwijaj szczegóły aktualizacji na żywo</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">Czy wyświetlać szczegóły w powiadomieniu aktualizacji na żywo?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">Powiadomienia aktualizacji na żywo są zawsze wyświetlane (jako? w formie? w postaci?) rozwinięte. Jeśli włączone, aktualizacja na żywo wyświetli Pozostały czas, Czas od zmiany stanu i wartość każdego z parametrów w oddzielnym wierszu.</string>
+
   <string name="pref_backup_restore" formatted="false">Kopia zapasowa i przywracanie</string>
   <string name="backup_restore_settings_summary" formatted="false">Twórz kopie zapasowe swoich ustawień aplikacji i danych baterii, przywracaj je i przenoś</string>
   <string name="pref_auto_log_export" formatted="false">Automatyczny eksport logów</string>

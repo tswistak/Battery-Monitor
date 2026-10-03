@@ -523,6 +523,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">主要情報に含める値と表示順をどうしますか？</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$sの順序を変更</string>
 
+  <string name="pref_expanded_notification" formatted="false">通知の詳細を展開</string>
+  <string name="pref_expanded_notification_summary" formatted="false">通知を展開したときにラベル付きの詳細を表示しますか？</string>
+  <string name="pref_expanded_notification_help" formatted="false">有効にすると、メイン通知を展開したときに、1行の概要の代わりに、残時間、ステータス変更からの時間、および主要情報の各値を、それぞれラベル付きの個別の行に表示します。</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s：%2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">ライブアップデートの詳細を展開</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">ライブアップデート通知にラベル付きの詳細を表示しますか？</string>
+  <string name="pref_expanded_live_update_help" formatted="false">ライブアップデート通知は常に展開された状態で表示されます。有効にすると、ライブアップデートに残時間、ステータス変更からの時間、および主要情報の各値を、それぞれラベル付きの個別の行に表示します。</string>
+
   <string name="pref_backup_restore" formatted="false">バックアップと復元</string>
   <string name="backup_restore_settings_summary" formatted="false">アプリの設定とバッテリーデータをバックアップ、復元、転送します。</string>
   <string name="pref_auto_log_export" formatted="false">ログの自動エクスポート</string>

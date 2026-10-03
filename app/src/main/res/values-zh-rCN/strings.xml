@@ -508,6 +508,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">重要数据中应包含哪些数值，并按什么顺序显示？</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">调整“%1$s”的顺序</string>
 
+  <string name="pref_expanded_notification" formatted="false">展开通知详情</string>
+  <string name="pref_expanded_notification_summary" formatted="false">展开通知时显示带标签的详细信息？</string>
+  <string name="pref_expanded_notification_help" formatted="false">启用后，展开主通知会将剩余时间、状态更改后的时长及每项重要数据的数值，分别显示在带标签的独立行中，取代单行摘要。</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s：%2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">展开实时更新详情</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">在实时更新通知中显示带标签的详细信息？</string>
+  <string name="pref_expanded_live_update_help" formatted="false">实时更新通知始终以展开状态显示。启用后，实时更新会将剩余时间、状态更改后的时长及每项重要数据的数值，分别显示在带标签的独立行中。</string>
+
   <string name="pref_backup_restore" formatted="false">备份与恢复</string>
   <string name="backup_restore_settings_summary" formatted="false">备份、恢复和传输应用设置及电池数据。</string>
   <string name="pref_auto_log_export" formatted="false">自动导出日志</string>

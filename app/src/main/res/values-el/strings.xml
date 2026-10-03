@@ -526,6 +526,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Ποιες τιμές να περιλαμβάνονται στα ζωτικά στοιχεία και με ποια σειρά;</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Αλλαγή σειράς: %1$s</string>
 
+  <string name="pref_expanded_notification" formatted="false">Ανάπτυξη λεπτομερειών ειδοποίησης</string>
+  <string name="pref_expanded_notification_summary" formatted="false">Να εμφανίζονται λεπτομέρειες με ετικέτες όταν η ειδοποίηση αναπτύσσεται;</string>
+  <string name="pref_expanded_notification_help" formatted="false">Αν ενεργοποιηθεί, η ανάπτυξη της κύριας ειδοποίησης εμφανίζει τον χρόνο που απομένει, τον χρόνο από την αλλαγή κατάστασης και κάθε τιμή των ζωτικών στοιχείων σε ξεχωριστή γραμμή με ετικέτα, αντί για τη σύνοψη μίας γραμμής.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">Ανάπτυξη λεπτομερειών Live Update</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">Να εμφανίζονται λεπτομέρειες με ετικέτες στην ειδοποίηση Live Update;</string>
+  <string name="pref_expanded_live_update_help" formatted="false">Οι ειδοποιήσεις Live Update εμφανίζονται πάντα αναπτυγμένες. Αν ενεργοποιηθεί, το Live Update εμφανίζει τον χρόνο που απομένει, τον χρόνο από την αλλαγή κατάστασης και κάθε τιμή των ζωτικών στοιχείων σε ξεχωριστή γραμμή με ετικέτα.</string>
+
   <string name="pref_backup_restore" formatted="false">Δημιουργία και επαναφορά αντιγράφων ασφαλείας</string>
   <string name="backup_restore_settings_summary" formatted="false">Δημιουργήστε αντίγραφα ασφαλείας, επαναφέρετε και μεταφέρετε τις ρυθμίσεις της εφαρμογής και τα δεδομένα μπαταρίας.</string>
   <string name="pref_auto_log_export" formatted="false">Αυτόματη εξαγωγή αρχείων καταγραφής</string>
