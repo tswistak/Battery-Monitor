@@ -532,6 +532,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">אילו ערכים לכלול בנתונים החיוניים ובאיזה סדר?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">שינוי הסדר של %1$s</string>
 
+  <string name="pref_expanded_notification" formatted="false">הרחבת פרטי ההתראה</string>
+  <string name="pref_expanded_notification_summary" formatted="false">להציג פרטים עם תוויות כשההתראה מורחבת?</string>
+  <string name="pref_expanded_notification_help" formatted="false">כשהאפשרות מופעלת, הרחבת ההתראה הראשית מציגה את משך הזמן שנותר, את הזמן מאז שינוי המצב ואת כל אחד מהנתונים החיוניים בשורה נפרדת עם תווית, במקום סיכום בשורה אחת.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">הרחבת פרטי העדכון החי</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">להציג פרטים עם תוויות בהתראת העדכון החי?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">התראות העדכון החי מוצגות תמיד במצב מורחב. כשהאפשרות מופעלת, העדכון החי מציג את משך הזמן שנותר, את הזמן מאז שינוי המצב ואת כל אחד מהנתונים החיוניים בשורה נפרדת עם תווית.</string>
+
   <string name="pref_backup_restore" formatted="false">גיבוי ושחזור</string>
   <string name="backup_restore_settings_summary" formatted="false">גבה, שחזר והעבר את הגדרות היישום ונתוני הסוללה.</string>
   <string name="pref_auto_log_export" formatted="false">ייצוא יומנים אוטומטי</string>

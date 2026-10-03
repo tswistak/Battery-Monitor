@@ -523,6 +523,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">重要資料中要包含哪些數值，並以什麼順序顯示？</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">調整「%1$s」的順序</string>
 
+  <string name="pref_expanded_notification" formatted="false">展開通知詳細資訊</string>
+  <string name="pref_expanded_notification_summary" formatted="false">展開通知時顯示附有標籤的詳細資訊？</string>
+  <string name="pref_expanded_notification_help" formatted="false">啟用後，展開主要通知會將剩餘時間、狀態變更後的時間及每項重要資料的數值，分別顯示在附有標籤的獨立行中，取代單行摘要。</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s：%2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">展開即時更新詳細資訊</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">在即時更新通知中顯示附有標籤的詳細資訊？</string>
+  <string name="pref_expanded_live_update_help" formatted="false">即時更新通知一律以展開狀態顯示。啟用後，即時更新會將剩餘時間、狀態變更後的時間及每項重要資料的數值，分別顯示在附有標籤的獨立行中。</string>
+
   <string name="pref_backup_restore" formatted="false">備份與還原</string>
   <string name="backup_restore_settings_summary" formatted="false">備份、還原及轉移應用程式設定和電池資料。</string>
   <string name="pref_auto_log_export" formatted="false">自動匯出記錄</string>

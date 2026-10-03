@@ -501,6 +501,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Welche Werte sollen in den Vitalzeichen enthalten sein und in welcher Reihenfolge?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s neu anordnen</string>
 
+  <string name="pref_expanded_notification" formatted="false">Benachrichtigungsdetails aufklappen</string>
+  <string name="pref_expanded_notification_summary" formatted="false">Beschriftete Details in der aufgeklappten Benachrichtigung anzeigen?</string>
+  <string name="pref_expanded_notification_help" formatted="false">Wenn aktiviert, zeigt die aufgeklappte Hauptbenachrichtigung die verbleibende Restlaufzeit, die vergangene Zeit seit der Statusänderung und jeden Vitalzeichenwert in einer eigenen beschrifteten Zeile statt in der einzeiligen Zusammenfassung an.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">Live-Update-Details aufklappen</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">Beschriftete Details in der Live-Update-Benachrichtigung anzeigen?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">Live-Update-Benachrichtigungen werden immer aufgeklappt angezeigt. Wenn aktiviert, zeigt das Live-Update die verbleibende Restlaufzeit, die vergangene Zeit seit der Statusänderung und jeden Vitalzeichenwert in einer eigenen beschrifteten Zeile an.</string>
+
   <string name="pref_backup_restore" formatted="false">Sichern und Wiederherstellen</string>
   <string name="backup_restore_settings_summary" formatted="false">Sichern, wiederherstellen und übertragen Sie Ihre App-Einstellungen und Akkudaten.</string>
   <string name="pref_auto_log_export" formatted="false">Automatischer Protokollexport</string>

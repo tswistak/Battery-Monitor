@@ -546,6 +546,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Какие значения включать в основные параметры и в каком порядке?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Изменить порядок: %1$s</string>
 
+  <string name="pref_expanded_notification" formatted="false">Разворачивать подробности уведомления</string>
+  <string name="pref_expanded_notification_summary" formatted="false">Показывать подробности с подписями при разворачивании уведомления?</string>
+  <string name="pref_expanded_notification_help" formatted="false">Если эта настройка включена, при разворачивании основного уведомления вместо однострочной сводки отображаются оставшееся время, время с момента изменения состояния и каждое значение основных параметров на отдельной строке с подписью.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">Разворачивать подробности Live Update</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">Показывать подробности с подписями в уведомлении Live Update?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">Уведомления Live Update всегда отображаются развёрнутыми. Если эта настройка включена, Live Update показывает оставшееся время, время с момента изменения состояния и каждое значение основных параметров на отдельной строке с подписью.</string>
+
   <string name="pref_backup_restore" formatted="false">Резервное копирование и восстановление</string>
   <string name="backup_restore_settings_summary" formatted="false">Создавайте резервные копии, восстанавливайте и переносите настройки приложения и данные аккумулятора.</string>
   <string name="pref_auto_log_export" formatted="false">Автоматический экспорт журналов</string>

@@ -526,6 +526,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">महत्वपूर्ण आँकड़ों में कौन-से मान शामिल हों और किस क्रम में?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s का क्रम बदलें</string>
 
+  <string name="pref_expanded_notification" formatted="false">सूचना के विवरण को विस्तृत करें</string>
+  <string name="pref_expanded_notification_summary" formatted="false">सूचना को विस्तृत करने पर लेबल सहित विवरण दिखाएँ?</string>
+  <string name="pref_expanded_notification_help" formatted="false">यह विकल्प सक्षम होने पर, मुख्य सूचना को विस्तृत करने से एक पंक्ति के सारांश के बजाय शेष समय, स्थिति परिवर्तन के बाद से बीता समय और महत्वपूर्ण आँकड़ों का प्रत्येक मान अपने लेबल के साथ अलग पंक्ति में दिखता है।</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">लाइव अपडेट के विवरण को विस्तृत करें</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">लाइव अपडेट सूचना में लेबल सहित विवरण दिखाएँ?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">लाइव अपडेट सूचनाएँ हमेशा विस्तृत रूप में दिखाई जाती हैं। यह विकल्प सक्षम होने पर, लाइव अपडेट शेष समय, स्थिति परिवर्तन के बाद से बीता समय और महत्वपूर्ण आँकड़ों का प्रत्येक मान अपने लेबल के साथ अलग पंक्ति में दिखाता है।</string>
+
   <string name="pref_backup_restore" formatted="false">बैकअप और पुनर्स्थापना</string>
   <string name="backup_restore_settings_summary" formatted="false">अपनी ऐप सेटिंग्स और बैटरी डेटा का बैकअप लें, उन्हें पुनर्स्थापित करें और स्थानांतरित करें।</string>
   <string name="pref_auto_log_export" formatted="false">स्वचालित लॉग निर्यात</string>

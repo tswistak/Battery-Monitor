@@ -532,6 +532,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Quais valores incluir nos dados vitais e em que ordem?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Reordenar %1$s</string>
 
+  <string name="pref_expanded_notification" formatted="false">Expandir detalhes da notificação</string>
+  <string name="pref_expanded_notification_summary" formatted="false">Mostrar detalhes com rótulos quando a notificação é expandida?</string>
+  <string name="pref_expanded_notification_help" formatted="false">Se esta opção estiver ativada, ao expandir a notificação principal são mostrados o tempo restante, o tempo desde a mudança de status e cada valor dos dados vitais em uma linha separada com seu rótulo, em vez do resumo em uma única linha.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">Expandir detalhes da atualização ao vivo</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">Mostrar detalhes com rótulos na notificação de atualização ao vivo?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">As notificações de atualização ao vivo são sempre mostradas expandidas. Se esta opção estiver ativada, a atualização ao vivo mostra o tempo restante, o tempo desde a mudança de status e cada valor dos dados vitais em uma linha separada com seu rótulo.</string>
+
   <string name="pref_backup_restore" formatted="false">Backup e restauração</string>
   <string name="backup_restore_settings_summary" formatted="false">Faça backup, restaure e transfira as configurações do aplicativo e os dados da bateria.</string>
   <string name="pref_auto_log_export" formatted="false">Exportação automática de registros</string>

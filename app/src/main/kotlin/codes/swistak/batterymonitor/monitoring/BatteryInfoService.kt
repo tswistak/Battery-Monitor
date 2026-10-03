@@ -952,6 +952,18 @@ class BatteryInfoService : Service() {
 
         nb.setContentTitle(mainNotificationTopLine).setContentText(mainNotificationBottomLine)
 
+        val expandedEnabled = if (requestLiveUpdateChip) {
+            isExpandedLiveUpdateDetailsEnabled()
+        } else {
+            isExpandedNotificationDetailsEnabled()
+        }
+        if (expandedEnabled) {
+            val detailedVitals = vitalStatsDetailed()
+            if (detailedVitals.isNotEmpty()) {
+                nb.setStyle(NotificationCompat.BigTextStyle().bigText(detailedVitals))
+            }
+        }
+
         if (requestLiveUpdateChip) {
             var text = chipContentText()
             if (shouldShowChipChargingIndicator()) {
@@ -981,6 +993,13 @@ class BatteryInfoService : Service() {
             .setShowWhen(false).setContentIntent(currentInfoPendingIntent)
             .setVisibility(Notification.VISIBILITY_PUBLIC).setContentTitle(mainNotificationTopLine)
             .setContentText(mainNotificationBottomLine)
+
+        if (isExpandedNotificationDetailsEnabled()) {
+            val detailedVitals = vitalStatsDetailed()
+            if (detailedVitals.isNotEmpty()) {
+                nb.setStyle(Notification.BigTextStyle().bigText(detailedVitals))
+            }
+        }
 
         return nb.build()
     }
@@ -1175,25 +1194,35 @@ class BatteryInfoService : Service() {
         return line
     }
 
-    private fun vitalStatsLine(): String {
+    private fun isExpandedNotificationDetailsEnabled(): Boolean {
+        return settings.getBoolean(SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS, true)
+    }
+
+    private fun isExpandedLiveUpdateDetailsEnabled(): Boolean {
+        return settings.getBoolean(SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS, false)
+    }
+
+    private fun vitalStatEntries(): List<Pair<String, String>> {
         val convertF = settings.temperatureUnit(
             res.getString(R.string.default_temperature_unit)
         ).convertToFahrenheit
+        val labelsByValue = res.getStringArray(R.array.vital_signs_content_values)
+            .zip(res.getStringArray(R.array.vital_signs_content_entries)).toMap()
 
-        val values = mutableListOf<String>()
+        val entries = mutableListOf<Pair<String, String>>()
         for (vitalSign in vitalSignsOrder) {
             if (vitalSign !in vitalSignsContent) continue
-            when (vitalSign) {
+            val value: String? = when (vitalSign) {
                 SettingsContract.VITAL_SIGN_HEALTH -> {
-                    values += DisplayStrings.healths[info!!.health]
+                    DisplayStrings.healths[info!!.health]
                 }
 
                 SettingsContract.VITAL_SIGN_TEMPERATURE -> {
-                    values += DisplayStrings.formatTemp(info!!.temperature, convertF)
+                    DisplayStrings.formatTemp(info!!.temperature, convertF)
                 }
 
                 SettingsContract.VITAL_SIGN_VOLTAGE -> {
-                    info!!.voltage?.let { values += DisplayStrings.formatVoltage(it) }
+                    info!!.voltage?.let { DisplayStrings.formatVoltage(it) }
                 }
 
                 SettingsContract.VITAL_SIGN_CURRENT -> if (batteryCurrentEnabled) {
@@ -1201,14 +1230,18 @@ class BatteryInfoService : Service() {
                     if (preferAverageBatteryCurrent) current = BatteryCurrent.avgCurrent
                     if (current == null) current = BatteryCurrent.current
                     if (current != null) {
-                        values += BatteryCurrent.formatMilliAmps(
+                        BatteryCurrent.formatMilliAmps(
                             current, res.configuration.locales[0]
                         ) + "mA"
+                    } else {
+                        null
                     }
+                } else {
+                    null
                 }
 
                 SettingsContract.VITAL_SIGN_CHARGE -> {
-                    values += info!!.remainingChargeUah?.let { remainingChargeUah ->
+                    info!!.remainingChargeUah?.let { remainingChargeUah ->
                         getString(
                             R.string.remaining_charge_value,
                             DisplayStrings.formatChargeCompact(remainingChargeUah)
@@ -1218,14 +1251,39 @@ class BatteryInfoService : Service() {
 
                 SettingsContract.VITAL_SIGN_STATUS_DURATION -> {
                     val durationMinutes = ((now - info!!.lastStatusCtm) / (60 * 1000)).toInt()
-                    values += DurationFormatter.formatShort(
+                    DurationFormatter.formatShort(
                         res, durationMinutes, longDurationFormat()
                     )
                 }
+
+                else -> null
+            }
+            if (value != null) {
+                entries += (labelsByValue[vitalSign] ?: vitalSign) to value
             }
         }
 
-        return values.joinToString(" / ")
+        return entries
+    }
+
+    private fun vitalStatsLine(): String {
+        return VitalSignsDetailsFormatter.collapsedLine(vitalStatEntries())
+    }
+
+    private fun expandedDetailEntries(): List<Pair<String, String>> {
+        val entries = mutableListOf<Pair<String, String>>()
+        entries += getString(R.string.time_remaining) to predictionLine()
+        entries += getString(R.string.time_since_status_change) to statusDurationLine()
+        for ((label, value) in vitalStatEntries()) {
+            if (entries.any { it.first == label }) continue
+            entries += label to value
+        }
+        return entries
+    }
+
+    private fun vitalStatsDetailed(): String {
+        val format = getString(R.string.pref_expanded_notification_format)
+        return VitalSignsDetailsFormatter.detailedText(expandedDetailEntries(), format)
     }
 
     private fun statusDurationLine(): String {

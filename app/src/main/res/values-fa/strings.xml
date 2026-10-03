@@ -530,6 +530,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">کدام مقادیر در آمار حیاتی گنجانده شوند و با چه ترتیبی؟</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">تغییر ترتیب %1$s</string>
 
+  <string name="pref_expanded_notification" formatted="false">گسترش جزئیات اعلان</string>
+  <string name="pref_expanded_notification_summary" formatted="false">جزئیات همراه با برچسب هنگام باز شدن اعلان نمایش داده شود؟</string>
+  <string name="pref_expanded_notification_help" formatted="false">با فعال کردن این گزینه، باز کردن اعلان اصلی زمان باقی‌مانده، زمان سپری‌شده از تغییر وضعیت و هر مقدار از آمار حیاتی را در خطی جداگانه همراه با برچسب نشان می‌دهد، به‌جای خلاصهٔ تک‌خطی.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">گسترش جزئیات به‌روزرسانی زنده</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">جزئیات همراه با برچسب در اعلان به‌روزرسانی زنده نمایش داده شود؟</string>
+  <string name="pref_expanded_live_update_help" formatted="false">اعلان‌های به‌روزرسانی زنده همیشه به‌صورت بازشده نمایش داده می‌شوند. با فعال کردن این گزینه، به‌روزرسانی زنده زمان باقی‌مانده، زمان سپری‌شده از تغییر وضعیت و هر مقدار از آمار حیاتی را در خطی جداگانه همراه با برچسب نشان می‌دهد.</string>
+
   <string name="pref_backup_restore" formatted="false">پشتیبان‌گیری و بازیابی</string>
   <string name="backup_restore_settings_summary" formatted="false">از تنظیمات برنامه و داده‌های باتری نسخهٔ پشتیبان تهیه کنید، آن‌ها را بازیابی و منتقل کنید.</string>
   <string name="pref_auto_log_export" formatted="false">برون‌بری خودکار گزارش‌ها</string>

@@ -514,6 +514,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Mely értékek szerepeljenek az életjelek között, és milyen sorrendben?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">%1$s átrendezése</string>
 
+  <string name="pref_expanded_notification" formatted="false">Értesítés részleteinek kibontása</string>
+  <string name="pref_expanded_notification_summary" formatted="false">Megjelenjenek a feliratozott részletek az értesítés kibontásakor?</string>
+  <string name="pref_expanded_notification_help" formatted="false">Ha engedélyezed, a fő értesítés kibontásakor a hátralévő idő, az állapotváltozás óta eltelt idő és az életjelek minden értéke külön, feliratozott sorban jelenik meg az egysoros összefoglaló helyett.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">Élő frissítés részleteinek kibontása</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">Megjelenjenek a feliratozott részletek az élő frissítés értesítésében?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">Az élő frissítés értesítései mindig kibontva jelennek meg. Ha engedélyezed, az élő frissítés a hátralévő időt, az állapotváltozás óta eltelt időt és az életjelek minden értékét külön, feliratozott sorban jeleníti meg.</string>
+
   <string name="pref_backup_restore" formatted="false">Biztonsági mentés és visszaállítás</string>
   <string name="backup_restore_settings_summary" formatted="false">Készítsen biztonsági másolatot az alkalmazás beállításairól és az akkumulátoradatokról, majd állítsa vissza vagy vigye át őket.</string>
   <string name="pref_auto_log_export" formatted="false">Automatikus naplóexport</string>

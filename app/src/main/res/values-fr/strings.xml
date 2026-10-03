@@ -522,6 +522,15 @@
   <string name="pref_vital_signs_content_summary" formatted="false">Quelles valeurs inclure dans les signes vitaux et dans quel ordre ?</string>
   <string name="pref_vital_signs_reorder_handle" formatted="true">Réorganiser %1$s</string>
 
+  <string name="pref_expanded_notification" formatted="false">Développer les détails de la notification</string>
+  <string name="pref_expanded_notification_summary" formatted="false">Afficher les détails avec leurs libellés lorsque la notification est développée ?</string>
+  <string name="pref_expanded_notification_help" formatted="false">Si cette option est activée, développer la notification principale affiche le temps restant, le temps écoulé depuis le changement d’état et chaque valeur des signes vitaux sur une ligne distincte avec son libellé, au lieu du résumé sur une seule ligne.</string>
+  <string name="pref_expanded_notification_format" formatted="true">%1$s : %2$s</string>
+
+  <string name="pref_expanded_live_update" formatted="false">Développer les détails de la mise à jour en direct</string>
+  <string name="pref_expanded_live_update_summary" formatted="false">Afficher les détails avec leurs libellés dans la notification de mise à jour en direct ?</string>
+  <string name="pref_expanded_live_update_help" formatted="false">Les notifications de mise à jour en direct sont toujours affichées développées. Si cette option est activée, la mise à jour en direct affiche le temps restant, le temps écoulé depuis le changement d’état et chaque valeur des signes vitaux sur une ligne distincte avec son libellé.</string>
+
   <string name="pref_backup_restore" formatted="false">Sauvegarde et restauration</string>
   <string name="backup_restore_settings_summary" formatted="false">Sauvegardez, restaurez et transférez les paramètres de l’application et les données de la batterie.</string>
   <string name="pref_auto_log_export" formatted="false">Export automatique des journaux</string>
