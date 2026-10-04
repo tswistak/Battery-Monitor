@@ -544,7 +544,7 @@
 
   <string name="pref_expanded_live_update" formatted="false">Rozwijaj szczegóły aktualizacji na żywo</string>
   <string name="pref_expanded_live_update_summary" formatted="false">Czy wyświetlać szczegóły w powiadomieniu aktualizacji na żywo?</string>
-  <string name="pref_expanded_live_update_help" formatted="false">Powiadomienia aktualizacji na żywo są zawsze wyświetlane (jako? w formie? w postaci?) rozwinięte. Jeśli włączone, aktualizacja na żywo wyświetli Pozostały czas, Czas od zmiany stanu i wartość każdego z parametrów w oddzielnym wierszu.</string>
+  <string name="pref_expanded_live_update_help" formatted="false">Powiadomienia aktualizacji na żywo są zawsze wyświetlane rozwinięte. Jeśli włączone, aktualizacja na żywo wyświetli Pozostały czas, Czas od zmiany stanu i wartość każdego z parametrów w oddzielnym wierszu.</string>
 
   <string name="pref_backup_restore" formatted="false">Kopia zapasowa i przywracanie</string>
   <string name="backup_restore_settings_summary" formatted="false">Twórz kopie zapasowe swoich ustawień aplikacji i danych baterii, przywracaj je i przenoś</string>

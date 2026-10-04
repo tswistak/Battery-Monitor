@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 1.7.3
 
 ### Improved
 
