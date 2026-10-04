@@ -15,6 +15,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +24,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
@@ -39,11 +42,15 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Lifecycle
@@ -70,6 +77,7 @@ import codes.swistak.batterymonitor.ui.components.CapabilityNotice
 import codes.swistak.batterymonitor.ui.components.MeasurementChart
 import codes.swistak.batterymonitor.ui.components.MetricDisplay
 import codes.swistak.batterymonitor.ui.components.MetricGrid
+import codes.swistak.batterymonitor.ui.components.historyValue
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
 import kotlinx.coroutines.Dispatchers
@@ -329,51 +337,65 @@ internal fun CurrentStateScreen(
     val snapshotTime = snapshot?.observedAtMillis?.takeIf { it > 0 }
     val snapshotSource = snapshot?.source ?: stringResource(R.string.advanced_value_not_available)
     val unavailable = stringResource(R.string.current_unavailable)
-    val metrics =
-        listOf(
-            MetricDetail(MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
+    val power = BatteryCurrent.powerWatts(snapshot?.voltageMillivolts, currentReading?.milliAmps)
+    val metrics = listOf(
+        MetricDetail(
+            MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
                 DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
             } ?: unavailable),
-                if (preferences.fahrenheit) "°F" else "°C",
-                snapshotSource,
-                snapshotTime),
-            MetricDetail(
-                MetricDisplay(
-                    stringResource(R.string.current_voltage),
-                    snapshot?.voltageMillivolts?.let {
-                        DisplayStrings.formatVoltage(it)
-                    } ?: unavailable),
-                "V",
-                snapshotSource,
-                snapshotTime,
-                if (snapshot?.voltageMillivolts == null) unavailable else null),
-            MetricDetail(
-                MetricDisplay(
-                    stringResource(R.string.pref_cat_battery_current_main), when {
-                        currentReading?.milliAmps == null -> unavailable
-                        else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
-                            currentReading.milliAmps, configuration.locales[0]
-                        ) + " mA"
-                    }
-                ),
-                "mA",
-                stringResource(R.string.current_current_source) + " · " + stringResource(if (currentReading?.average == true) R.string.advanced_field_current_average else R.string.advanced_field_current_now),
-                currentReading?.observedAtMillis,
-                when {
-                    currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
-                    else -> null
+            if (preferences.fahrenheit) "°F" else "°C",
+            snapshotSource,
+            snapshotTime),
+        MetricDetail(
+            MetricDisplay(
+                stringResource(R.string.current_voltage),
+                snapshot?.voltageMillivolts?.let {
+                    DisplayStrings.formatVoltage(it)
+                } ?: unavailable),
+            "V",
+            snapshotSource,
+            snapshotTime,
+            if (snapshot?.voltageMillivolts == null) unavailable else null),
+        MetricDetail(
+            MetricDisplay(
+                stringResource(R.string.pref_cat_battery_current_main), when {
+                    currentReading?.milliAmps == null -> unavailable
+                    else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
+                        currentReading.milliAmps, configuration.locales[0]
+                    ) + " mA"
                 }
             ),
-            MetricDetail(
-                MetricDisplay(
-                    stringResource(R.string.current_android_health),
-                    snapshot?.let {
-                        DisplayStrings.healths.getOrNull(it.health)
-                    } ?: unavailable),
-                stringResource(R.string.current_status_unit),
-                snapshotSource,
-                snapshotTime,
-                stringResource(R.string.current_health_explanation)))
+            "mA",
+            stringResource(R.string.current_current_source) + " · " + stringResource(if (currentReading?.average == true) R.string.advanced_field_current_average else R.string.advanced_field_current_now),
+            currentReading?.observedAtMillis,
+            when {
+                currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
+                else -> null
+            }
+        )) + listOfNotNull(power?.let {
+        MetricDetail(
+            MetricDisplay(
+                stringResource(R.string.battery_power),
+                historyValue(it, HistoryMetric.POWER, false, configuration.locales[0])
+            ),
+            "W",
+            snapshotSource + " · " + stringResource(
+                if (currentReading?.average == true) R.string.advanced_field_current_average
+                else R.string.advanced_field_current_now
+            ),
+            currentReading?.observedAtMillis,
+            stringResource(R.string.battery_power_explanation)
+        )
+    }) + MetricDetail(
+        MetricDisplay(
+            stringResource(R.string.current_android_health),
+            snapshot?.let {
+                DisplayStrings.healths.getOrNull(it.health)
+            } ?: unavailable),
+        stringResource(R.string.current_status_unit),
+        snapshotSource,
+        snapshotTime,
+        stringResource(R.string.current_health_explanation))
     var selectedMetric by remember { mutableStateOf<Int?>(null) }
     var showPredictionDetails by remember { mutableStateOf(false) }
     BoxWithConstraints(modifier) {
@@ -445,9 +467,18 @@ internal fun CurrentStateScreen(
                         plug, remainingCharge.takeIf(String::isNotBlank)
                     ).joinToString(" · "),
                     spokenSummary = listOfNotNull(
-                        snapshot?.levelPercent?.let { "$it%" }, status, plug, remainingCharge
-                    ).joinToString(", "),
-                    modifier = Modifier.fillMaxWidth()
+                        snapshot?.levelPercent?.let { "$it%" },
+                        status,
+                        plug,
+                        remainingCharge,
+                        prediction?.let {
+                            stringResource(
+                                R.string.current_prediction_target, it.targetPercent
+                            )
+                        }).joinToString(", "),
+                    modifier = Modifier.fillMaxWidth(),
+                    targetPercent = prediction?.targetPercent,
+                    charging = snapshot?.status == BatteryInfo.STATUS_CHARGING
                 )
             }
             if (model.condition == CurrentCondition.LOW) item {
@@ -464,21 +495,47 @@ internal fun CurrentStateScreen(
                 ) {
                     Column(
                         Modifier.padding(horizontal = 17.dp, vertical = 13.dp),
-                        verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
+                        Row(
+                            Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                stringResource(R.string.time_remaining),
+                                Modifier.weight(1f),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            IconButton(onClick = { showPredictionDetails = true }) {
+                                Icon(
+                                    painterResource(R.drawable.ui_info),
+                                    stringResource(R.string.time_remaining),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
                         Text(
-                            stringResource(R.string.time_remaining),
-                            style = MaterialTheme.typography.bodyMedium
+                            buildAnnotatedString {
+                                append(estimate)
+                                if (target.isNotBlank()) withStyle(MaterialTheme.typography.bodyLarge.toSpanStyle()) {
+                                    append(" $target")
+                                }
+                            }, style = MaterialTheme.typography.headlineMedium
                         )
-                        Text(estimate, style = MaterialTheme.typography.headlineMedium)
-                        if (target.isNotBlank()) Text(
-                            target, style = MaterialTheme.typography.bodyLarge
-                        )
-                        TextButton(onClick = {
-                            showPredictionDetails = true
-                        }) { ActionLabel(method, R.drawable.ui_info) }
-                        if (model.hasAlternative) {
-                            TextButton(onClick = onToggleTarget) {
+                        FlowRow(
+                            Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Text(
+                                method,
+                                Modifier.alignByBaseline(),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            if (model.hasAlternative) TextButton(
+                                onClick = onToggleTarget, modifier = Modifier.alignByBaseline()
+                            ) {
                                 Text(
                                     stringResource(
                                         R.string.current_show_to_target,
@@ -521,10 +578,11 @@ internal fun CurrentStateScreen(
                 MetricGrid(
                     metrics.mapIndexed { index, metric ->
                         metric.display.copy(
-                            icon = listOf(
+                            icon = listOfNotNull(
                                 R.drawable.ui_temp,
                                 R.drawable.ui_voltage,
                                 R.drawable.ui_current,
+                                R.drawable.ui_bolt.takeIf { power != null },
                                 R.drawable.ui_heart
                             )[index]
                         )
@@ -597,7 +655,7 @@ internal fun CurrentStateScreen(
         }
     }
     selectedMetric?.let { index ->
-        val metric = metrics[index]
+        val metric = metrics.getOrNull(index) ?: return@let
         ModalBottomSheet(onDismissRequest = { selectedMetric = null }) {
             Column(
                 Modifier.padding(BatterySpacing.content),

@@ -31,7 +31,8 @@ internal data class LogRecord(
     val time: Long,
     val temperature: Int?,
     val voltage: Int?,
-    val currentMicroAmps: Long? = null
+    val currentMicroAmps: Long? = null,
+    val remainingChargeMicroampHours: Long? = null
 )
 
 internal sealed interface LogResult {
@@ -45,7 +46,7 @@ internal class LogDatabase(context: Context?) {
         private const val LOG_TAG = "LogDatabase"
 
         private const val DATABASE_NAME = "logs.db"
-        private const val DATABASE_VERSION = 5
+        private const val DATABASE_VERSION = 6
 
         private const val LOG_TABLE_NAME = "logs"
 
@@ -56,6 +57,7 @@ internal class LogDatabase(context: Context?) {
         const val KEY_TEMPERATURE: String = "temperature"
         const val KEY_VOLTAGE: String = "voltage"
         const val KEY_CURRENT: String = "current"
+        const val KEY_REMAINING_CHARGE: String = "remaining_charge_uah"
 
         const val STATUS_BOOT_COMPLETED: Int = -1
 
@@ -212,7 +214,8 @@ internal class LogDatabase(context: Context?) {
                                 temperature = cursor.getNullableInt(4),
                                 voltage = cursor.getNullableInt(5)
                                     ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts),
-                                currentMicroAmps = cursor.getNullableLong(6)
+                                currentMicroAmps = cursor.getNullableLong(6),
+                                remainingChargeMicroampHours = cursor.getNullableLong(7)
                             )
                         )
                     )
@@ -269,7 +272,7 @@ internal class LogDatabase(context: Context?) {
         }
         val where = if (whereParts.isEmpty()) "" else " WHERE ${whereParts.joinToString(" AND ")}"
         val cursor = rdb?.rawQuery(
-            "SELECT $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE, $KEY_CURRENT FROM $LOG_TABLE_NAME$where ORDER BY $KEY_TIME ASC",
+            "SELECT $KEY_STATUS_CODE, $KEY_CHARGE, $KEY_TIME, $KEY_TEMPERATURE, $KEY_VOLTAGE, $KEY_CURRENT, $KEY_REMAINING_CHARGE FROM $LOG_TABLE_NAME$where ORDER BY $KEY_TIME ASC",
             whereArgs.takeIf { it.isNotEmpty() }?.toTypedArray()
         ) ?: return emptyList()
         cursor.use {
@@ -279,6 +282,7 @@ internal class LogDatabase(context: Context?) {
             val temperatureColumn = it.getColumnIndexOrThrow(KEY_TEMPERATURE)
             val voltageColumn = it.getColumnIndexOrThrow(KEY_VOLTAGE)
             val currentColumn = it.getColumnIndexOrThrow(KEY_CURRENT)
+            val remainingChargeColumn = it.getColumnIndexOrThrow(KEY_REMAINING_CHARGE)
             return buildList {
                 while (it.moveToNext()) {
                     add(
@@ -289,7 +293,8 @@ internal class LogDatabase(context: Context?) {
                             temperature = it.getNullableInt(temperatureColumn),
                             voltage = it.getNullableInt(voltageColumn)
                                 ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts),
-                            currentMicroAmps = it.getNullableLong(currentColumn)
+                            currentMicroAmps = it.getNullableLong(currentColumn),
+                            remainingChargeMicroampHours = it.getNullableLong(remainingChargeColumn)
                         )
                     )
                 }
@@ -314,6 +319,7 @@ internal class LogDatabase(context: Context?) {
                     putNullable(KEY_TEMPERATURE, record.temperature)
                     putNullable(KEY_VOLTAGE, record.voltage)
                     putNullable(KEY_CURRENT, record.currentMicroAmps)
+                    putNullable(KEY_REMAINING_CHARGE, record.remainingChargeMicroampHours)
                 }
                 check(database.insertOrThrow(LOG_TABLE_NAME, null, values) >= 0) {
                     "Could not restore log entry"
@@ -365,6 +371,7 @@ internal class LogDatabase(context: Context?) {
                 put(KEY_TEMPERATURE, info.temperature)
                 putNullable(KEY_VOLTAGE, info.voltage)
                 putNullable(KEY_CURRENT, currentMicroAmps)
+                putNullable(KEY_REMAINING_CHARGE, info.remainingChargeUah)
             }
             writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
             LogResult.Inserted
@@ -379,6 +386,7 @@ internal class LogDatabase(context: Context?) {
             putNull(KEY_TEMPERATURE)
             putNull(KEY_VOLTAGE)
             putNull(KEY_CURRENT)
+            putNull(KEY_REMAINING_CHARGE)
         }
         writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
         LogResult.Inserted
@@ -442,7 +450,7 @@ internal class LogDatabase(context: Context?) {
 
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(
-                "CREATE TABLE $LOG_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_STATUS_CODE INTEGER,$KEY_CHARGE INTEGER,$KEY_TIME INTEGER,$KEY_TEMPERATURE INTEGER,$KEY_VOLTAGE INTEGER,$KEY_CURRENT INTEGER);"
+                "CREATE TABLE $LOG_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_STATUS_CODE INTEGER,$KEY_CHARGE INTEGER,$KEY_TIME INTEGER,$KEY_TEMPERATURE INTEGER,$KEY_VOLTAGE INTEGER,$KEY_CURRENT INTEGER,$KEY_REMAINING_CHARGE INTEGER);"
             )
         }
 
@@ -458,6 +466,9 @@ internal class LogDatabase(context: Context?) {
             }
             if (oldVersion < 5) {
                 db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_CURRENT INTEGER;")
+            }
+            if (oldVersion < 6) {
+                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_REMAINING_CHARGE INTEGER;")
             }
         }
 

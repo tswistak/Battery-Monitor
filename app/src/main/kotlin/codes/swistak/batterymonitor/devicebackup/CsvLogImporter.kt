@@ -102,9 +102,8 @@ internal object CsvLogImporter {
 
         return rows.drop(1).mapIndexed { index, row ->
             require(row.size >= COLUMN_COUNT) { "Invalid CSV row ${index + 2}" }
-            // Old exports can contain unquoted commas in the status label. Check the status
-            // and charge together to distinguish those rows from the new current column.
-            val trailingColumnStart = listOf(row.size - 5, row.size - 4).firstOrNull { start ->
+            val trailingColumnStart = (if (rows.first().size == 10) listOf(row.size - 7)
+            else listOf(row.size - 5, row.size - 4)).firstOrNull { start ->
                 if (start < 3) false else {
                     val code = statusCodeFor(row.subList(2, start).joinToString(","))
                     code != null && (code == LogDatabase.STATUS_BOOT_COMPLETED || row[start].trim()
@@ -129,12 +128,12 @@ internal object CsvLogImporter {
                 voltage = if (isBoot) null else parseScaledDecimal(
                     row[trailingColumnStart + 3], 1000.0, "voltage", index + 2
                 ),
-                currentMicroAmps = if (isBoot || row.size - trailingColumnStart == 4 || row.last()
-                        .isBlank()
-                ) null
-                else row.last().trim().toLongOrNull()
-                    ?: throw IllegalArgumentException("Invalid current in CSV row ${index + 2}")
-            )
+                currentMicroAmps = if (isBoot || row.size - trailingColumnStart == 4) null
+                else parseOptionalLong(row[trailingColumnStart + 4], "current", index + 2),
+                remainingChargeMicroampHours = if (isBoot || rows.first().size != 10) null
+                else parseOptionalLong(
+                    row[trailingColumnStart + 5], "remaining charge", index + 2
+                )?.also { require(it >= 0) { "Invalid remaining charge in CSV row ${index + 2}" } })
         }
     }
 
@@ -231,7 +230,13 @@ internal object CsvLogImporter {
         return if (position.index == value.length) parsed.time else null
     }
 
-    private fun parseScaledDecimal(value: String, scale: Double, name: String, row: Int): Int {
+    private fun parseOptionalLong(value: String, name: String, row: Int): Long? =
+        value.trim().takeIf(String::isNotEmpty)?.let {
+            it.toLongOrNull() ?: throw IllegalArgumentException("Invalid $name in CSV row $row")
+        }
+
+    private fun parseScaledDecimal(value: String, scale: Double, name: String, row: Int): Int? {
+        if (value.isBlank()) return null
         val parsed = value.trim().toDoubleOrNull()
             ?: throw IllegalArgumentException("Invalid $name in CSV row $row")
         require(parsed.isFinite()) { "Invalid $name in CSV row $row" }

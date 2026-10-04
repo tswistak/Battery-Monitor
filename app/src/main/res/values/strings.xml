@@ -802,4 +802,6 @@
   <string name="history_export_selected">Export selected range</string>
   <string name="history_change_range">Change</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="battery_power">Battery power</string>
+    <string name="battery_power_explanation">Calculated from battery voltage and current; positive while charging, negative while discharging. This is battery-side power, not charger power.</string>
 </resources>

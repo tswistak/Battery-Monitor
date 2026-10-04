@@ -22,6 +22,29 @@ import java.util.Locale
 
 class BatteryCurrentTest {
     @Test
+    fun `battery power uses volts and amps preserves direction and requires both readings`() {
+        assertEquals(4.8, BatteryCurrent.powerWatts(4000, 1200.0)!!, 0.000001)
+        assertEquals(-0.9605, BatteryCurrent.powerWatts(4000, -240.125)!!, 0.000001)
+        assertEquals(0.0, BatteryCurrent.powerWatts(4000, 0.0)!!, 0.0)
+        assertEquals("0", BatteryCurrent.formatMilliAmps(-0.0, Locale.US))
+        assertEquals(
+            -4.8,
+            BatteryCurrent.powerWatts(4000, BatteryCurrent.scaleMicroAmps(1200000, -1))!!,
+            0.000001
+        )
+        assertNull(BatteryCurrent.powerWatts(null, 1200.0))
+        assertNull(BatteryCurrent.powerWatts(4000, null))
+        for (voltage in listOf(0, 499, 20001)) assertNull(
+            BatteryCurrent.powerWatts(
+                voltage, 1200.0
+            )
+        )
+        for (current in listOf(Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY)) {
+            assertNull(BatteryCurrent.powerWatts(4000, current))
+        }
+    }
+
+    @Test
     fun `privileged current prefers root and does not call Shizuku`() {
         var shizukuCalls = 0
         val executor = object : CommandExecutor {

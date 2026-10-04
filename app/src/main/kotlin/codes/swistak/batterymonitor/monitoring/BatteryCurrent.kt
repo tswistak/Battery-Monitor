@@ -16,6 +16,7 @@ import android.content.Context
 import android.os.BatteryManager
 import android.util.Log
 import codes.swistak.batterymonitor.common.CommandExecutor
+import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import java.io.File
 import java.math.RoundingMode
@@ -184,6 +185,11 @@ internal object BatteryCurrent {
         return microAmps.toDouble() * appliedMultiplier.toDouble() / 1000.0
     }
 
+    internal fun powerWatts(millivolts: Int?, milliAmps: Double?): Double? {
+        if (millivolts == null || !BatteryVoltageValidator.isValidBroadcastMillivolts(millivolts) || milliAmps == null || !milliAmps.isFinite()) return null
+        return (millivolts.toDouble() * milliAmps / 1_000_000.0).takeIf { it.isFinite() }
+    }
+
     internal fun formatMilliAmps(
         milliAmps: Double, locale: Locale = Locale.getDefault()
     ): String {
@@ -195,7 +201,7 @@ internal object BatteryCurrent {
             minimumFractionDigits = 0
             maximumFractionDigits = decimalPlaces
             roundingMode = RoundingMode.HALF_UP
-        }.format(milliAmps)
+        }.format(if (milliAmps == 0.0) 0.0 else milliAmps)
     }
 
     private data class RankedCurrentFile(

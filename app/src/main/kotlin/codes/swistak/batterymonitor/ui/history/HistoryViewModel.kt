@@ -197,7 +197,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     fun tab(tab: String) {
         if (mutable.value.tab == tab) return
         mutable.value = mutable.value.copy(tab = tab)
-        refresh(forceChart = false)
+        if (tab == "charts" && mutable.value.chart == null) refresh(forceChart = false)
     }
 
     fun metric(metric: HistoryMetric) {

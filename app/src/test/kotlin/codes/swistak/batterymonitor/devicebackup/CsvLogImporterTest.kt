@@ -58,12 +58,12 @@ class CsvLogImporterTest {
         val csv =
             "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\r\n" + "date,time,\"Charging,\r\nUSB \"\"slow\"\"\",50,30,86,4.0\r\n" + "date,time,Charging, AC,75,31.5,88.7,4.125"
         val writer = java.io.StringWriter()
-        val column = "µA (تيار البطارية)"
-        LogExport.upgradeLegacyCsv(csv.reader().buffered(), writer, column)
+        val columns = listOf("µA (تيار البطارية)", "Charge (µAh)", "Power (W)")
+        LogExport.upgradeLegacyCsv(csv.reader().buffered(), writer, columns, 1)
         val original = CsvLogImporter.parseCsv(csv)
         val upgraded = CsvLogImporter.parseCsv(writer.toString())
-        assertEquals(original.first() + column, upgraded.first())
-        assertEquals(original.drop(1).map { it + "" }, upgraded.drop(1))
+        assertEquals(original.first() + columns, upgraded.first())
+        assertEquals(original.drop(1).map { it + listOf("", "", "") }, upgraded.drop(1))
         assertEquals(
             CsvLogImporter.parseRecords(csv, { 122 }, { _, _ -> 1L }),
             CsvLogImporter.parseRecords(writer.toString(), { 122 }, { _, _ -> 1L })
@@ -73,7 +73,47 @@ class CsvLogImporterTest {
         )) {
             assertThrows(IllegalArgumentException::class.java) {
                 LogExport.upgradeLegacyCsv(
-                    invalid.reader().buffered(), java.io.StringWriter(), column
+                    invalid.reader().buffered(), java.io.StringWriter(), columns, 1
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `eight column CSV migration derives calibrated power and leaves old remaining charge empty`() {
+        val csv =
+            "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA)\n" + "date,time,Discharging,50,30,86,4.0,250000\n" + "date,time,Charging,50,30,86,,\n"
+        val columns = listOf("Current (µA)", "Remaining charge (µAh)", "Battery power (W)")
+        val writer = java.io.StringWriter()
+        LogExport.upgradeLegacyCsv(csv.reader(), writer, columns, -1)
+        val rows = CsvLogImporter.parseCsv(writer.toString())
+        assertTrue(LogExport.hasMeasurementCsvHeader(rows.first()))
+        assertEquals(listOf("250000", "", "-1.0"), rows[1].takeLast(3))
+        assertEquals(listOf("", "", ""), rows[2].takeLast(3))
+        assertFalse(LogExport.hasMeasurementCsvHeader(rows.first().dropLast(1)))
+    }
+
+    @Test
+    fun `CSV restores raw current and charge while ignoring derived power`() {
+        val csv =
+            "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA),Remaining charge (µAh),Battery power (W)\n" + "date,time,Discharging,50,30,86,4.0,-250125,2500125,-1.0005\n" + "date,time,Charging,50,30,86,,0,0,\n" + "date,time,Boot Completed,0,0,32,0,,,\n"
+
+        fun parse(value: String) = CsvLogImporter.parseRecords(value, {
+            when (it) {
+                "Discharging" -> 100; "Charging" -> 22; "Boot Completed" -> -1; else -> null
+            }
+        }, { _, _ -> 1L })
+
+        val records = parse(csv)
+        assertEquals(listOf(-250125L, 0L, null), records.map { it.currentMicroAmps })
+        assertEquals(listOf(2500125L, 0L, null), records.map { it.remainingChargeMicroampHours })
+        assertEquals(null, records[1].voltage)
+        for (invalid in listOf("-1", "1.5", "NaN", "Infinity", "9223372036854775808")) {
+            assertThrows(IllegalArgumentException::class.java) {
+                parse(
+                    csv.replace(
+                        ",2500125,", ",$invalid,"
+                    )
                 )
             }
         }

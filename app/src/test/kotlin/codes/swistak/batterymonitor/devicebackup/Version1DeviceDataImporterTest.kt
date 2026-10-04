@@ -20,6 +20,25 @@ import org.junit.Test
 
 class Version1DeviceDataImporterTest {
     @Test
+    fun `version two preserves raw remaining charge and treats missing charge as unavailable`() {
+        val old = mapOf("status" to 100, "charge" to 50, "time" to 123L)
+        assertEquals(null, Version2DeviceDataImporter.restoreLog(old).remainingChargeMicroampHours)
+        for (charge in listOf(null, 0L, 1_234_567L, Long.MAX_VALUE)) {
+            assertEquals(
+                charge, Version2DeviceDataImporter.restoreLog(
+                    old + ("remainingChargeMicroampHours" to charge)
+                ).remainingChargeMicroampHours
+            )
+        }
+        for (invalid in listOf(-1L, Double.NaN, Double.POSITIVE_INFINITY, 1.5, "1234")) {
+            assertThrows(IllegalArgumentException::class.java) {
+                Version2DeviceDataImporter.restoreLog(old + ("remainingChargeMicroampHours" to invalid))
+            }
+        }
+        assertEquals(2, DeviceDataBackup.SCHEMA_VERSION)
+    }
+
+    @Test
     fun `version two preserves instantaneous current and accepts old records without current`() {
         val old = mapOf("status" to 100, "charge" to 50, "time" to 123L)
         assertEquals(

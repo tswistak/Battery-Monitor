@@ -8,6 +8,7 @@
 package codes.swistak.batterymonitor.ui.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -38,12 +39,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
 import codes.swistak.batterymonitor.ui.theme.LocalBatterySemanticColors
 
@@ -58,7 +61,9 @@ fun BatteryCellHero(
     status: String,
     detail: String,
     spokenSummary: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    targetPercent: Int? = null,
+    charging: Boolean = false
 ) {
     val colors = MaterialTheme.colorScheme
     Card(
@@ -71,7 +76,7 @@ fun BatteryCellHero(
                 .fillMaxWidth()
                 .heightIn(min = 208.dp)
         ) {
-            val compact = maxWidth < 360.dp || LocalDensity.current.fontScale >= 1.6f
+            val compact = maxWidth < 300.dp || LocalDensity.current.fontScale >= 1.6f
             Column(
                 Modifier
                     .fillMaxWidth()
@@ -128,6 +133,41 @@ fun BatteryCellHero(
                             .clip(RoundedCornerShape(12.dp))
                             .background(colors.primary)
                     )
+                    Canvas(Modifier.matchParentSize()) {
+                        val tickColor = colors.onPrimaryContainer.copy(alpha = 0.35f)
+                        repeat(5) { tick ->
+                            val y = size.height * (0.05f + tick * 0.225f)
+                            drawLine(
+                                tickColor,
+                                Offset(4.dp.toPx(), y),
+                                Offset(13.dp.toPx(), y),
+                                1.dp.toPx()
+                            )
+                        }
+                        targetPercent?.takeIf { it in 0..100 }?.let { target ->
+                            val radius = 3.dp.toPx()
+                            val y = (size.height * (1 - target / 100f)).coerceIn(
+                                radius, size.height - radius
+                            )
+                            val markerColor = colors.onPrimaryContainer.copy(alpha = 0.8f)
+                            drawLine(
+                                markerColor, Offset(0f, y), Offset(size.width, y), 1.5.dp.toPx()
+                            )
+                            val center = Offset(size.width - 5.dp.toPx(), y)
+                            drawCircle(markerColor, radius + 1.dp.toPx(), center)
+                            drawCircle(colors.primaryContainer, radius, center)
+                        }
+                    }
+                    if (charging) Icon(
+                        painterResource(R.drawable.ui_bolt),
+                        null,
+                        Modifier
+                            .align(Alignment.Center)
+                            .size(28.dp),
+                        tint = if ((level
+                                ?: 0) >= 50
+                        ) colors.onPrimary else colors.onPrimaryContainer
+                    )
                 }
             }
         }
@@ -141,8 +181,9 @@ fun MetricGrid(
     columns: Int = 2,
     onMetricClick: ((Int) -> Unit)? = null
 ) {
-    require(metrics.size == 4)
+    require(metrics.isNotEmpty())
     require(columns in 1..2)
+    val rows = (metrics.size + columns - 1) / columns
     OutlinedCard(
         modifier,
         shape = RoundedCornerShape(24.dp),
@@ -150,9 +191,10 @@ fun MetricGrid(
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
     ) {
         Column {
-            repeat(4 / columns) { row ->
+            repeat(rows) { row ->
+                val rowColumns = minOf(columns, metrics.size - row * columns)
                 Row(Modifier.height(IntrinsicSize.Min)) {
-                    repeat(columns) { column ->
+                    repeat(rowColumns) { column ->
                         val index = row * columns + column
                         val metric = metrics[index]
                         Column(
@@ -191,7 +233,7 @@ fun MetricGrid(
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                         }
-                        if (column < columns - 1) Box(
+                        if (column < rowColumns - 1) Box(
                             Modifier
                                 .width(1.dp)
                                 .fillMaxHeight()
@@ -199,7 +241,7 @@ fun MetricGrid(
                         )
                     }
                 }
-                if (row < 4 / columns - 1) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                if (row < rows - 1) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
             }
         }
     }

@@ -7,8 +7,10 @@
 */
 package codes.swistak.batterymonitor.logs
 
+import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.ui.components.historyChartScale
 import codes.swistak.batterymonitor.ui.components.historyRangeValue
+import codes.swistak.batterymonitor.ui.components.historyValue
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
@@ -23,6 +25,75 @@ import java.time.ZoneId
 import java.util.Locale
 
 class HistoryModelTest {
+    @Test
+    fun `power uses the current unit and sign multiplier consistently in live readings history and CSV`() {
+        for ((rawCurrent, unitMultiplier) in listOf(1_200_000L to 1, 1_200L to 1000)) {
+            for (direction in listOf(1, -1)) {
+                val multiplier = unitMultiplier * direction
+                val expectedWatts = 4.8 * direction
+                val record = LogRecord(100, 50, 100, 300, 4000, rawCurrent)
+                assertEquals(
+                    expectedWatts, BatteryCurrent.powerWatts(
+                        record.voltage, BatteryCurrent.scaleMicroAmps(rawCurrent, multiplier)
+                    )!!, 0.000001
+                )
+                val series = historyChart(
+                    HistoryRangeState(0, 1000), sequenceOf(HistoryRecord(1, record))
+                ).series.getValue(HistoryMetric.POWER)
+                assertEquals(
+                    if (direction > 0) "+4.80 W" else "-4.80 W", historyValue(
+                        series.points.single().value,
+                        HistoryMetric.POWER,
+                        false,
+                        Locale.US,
+                        multiplier
+                    )
+                )
+                val scale = historyChartScale(series, HistoryMetric.POWER, false, multiplier)
+                assertTrue(scale.minimum <= expectedWatts && scale.maximum >= expectedWatts)
+                assertEquals(
+                    expectedWatts, LogExport.csvPowerField(record, multiplier).toDouble(), 0.000001
+                )
+                assertEquals(rawCurrent, record.currentMicroAmps)
+            }
+        }
+    }
+
+    @Test
+    fun `power and remaining charge charts preserve raw readings gaps and calibrated units`() {
+        val records = listOf(
+            LogRecord(100, 50, 100, 300, 4000, -250_000, 2_500_125),
+            LogRecord(100, 45, 300, 300, null, 500_000, null),
+            LogRecord(22, 60, 500, 300, 4000, 1_000_000, 3_000_000),
+            LogRecord(22, 60, 700, 300, 4000, 0, 0)
+        )
+        val chart = historyChart(
+            HistoryRangeState(0, 1000), records.asSequence().mapIndexed { index, record ->
+                HistoryRecord(index.toLong(), record)
+            })
+        val power = chart.series.getValue(HistoryMetric.POWER)
+        assertEquals(listOf(-1.0, null, 4.0, 0.0), power.points.map { it.value })
+        assertEquals(
+            listOf(2500.125, null, 3000.0, 0.0),
+            chart.series.getValue(HistoryMetric.REMAINING_CHARGE).points.map { it.value })
+        assertNotEquals(power.points.first().segment, power.points.last().segment)
+        assertEquals(
+            "-4.00–+1.00 W", historyRangeValue(power, HistoryMetric.POWER, false, Locale.US, -1)
+        )
+        val scale = historyChartScale(power, HistoryMetric.POWER, false, -1)
+        assertTrue(scale.minimum <= -4 && scale.maximum >= 1)
+        assertEquals("1.0", LogExport.csvPowerField(records.first(), -1))
+        assertEquals("", LogExport.csvPowerField(records[1], -1))
+        assertEquals("0.0", LogExport.csvPowerField(records[3], -1))
+        assertEquals(
+            "0.00 W", codes.swistak.batterymonitor.ui.components.historyValue(
+                0.0, HistoryMetric.POWER, false, Locale.US, -1
+            )
+        )
+        assertEquals(-250_000L, records.first().currentMicroAmps)
+        assertEquals(2_500_125L, records.first().remainingChargeMicroampHours)
+    }
+
     @Test
     fun `current charts preserve signed fractions zero and gaps without applying an average`() {
         val readings = listOf(-240.125, null, 1200.25, 0.0)

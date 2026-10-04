@@ -20,7 +20,9 @@ import androidx.core.text.BidiFormatter
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
+import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
+import codes.swistak.batterymonitor.settings.SettingsContract
 import java.io.BufferedWriter
 import java.io.File
 import java.io.InputStream
@@ -47,25 +49,51 @@ internal object LogExport {
     internal fun hasRawCurrentCsvHeader(columns: List<String>): Boolean =
         columns.size == 8 && columns.last().contains("µA")
 
-    private fun currentColumn(context: Context): String = context.getString(
-        R.string.log_csv_column_with_unit,
-        context.getString(R.string.pref_cat_battery_current_main),
-        BidiFormatter.getInstance(context.resources.configuration.locales[0]).unicodeWrap("µA")
-    )
+    internal fun hasMeasurementCsvHeader(columns: List<String>): Boolean =
+        columns.size == 10 && columns[7].contains("µA") && columns[8].contains("µAh") && columns[9].contains(
+            "W"
+        )
 
-    internal fun upgradeLegacyCsv(reader: Reader, writer: Writer, currentColumn: String) {
+    private fun measurementColumns(context: Context): List<String> = listOf(
+        R.string.pref_cat_battery_current_main to "µA",
+        R.string.remaining_charge to "µAh",
+        R.string.battery_power to "W"
+    ).map { (label, unit) ->
+        context.getString(
+            R.string.log_csv_column_with_unit,
+            context.getString(label),
+            BidiFormatter.getInstance(context.resources.configuration.locales[0]).unicodeWrap(unit)
+        )
+    }
+
+    private fun currentMultiplier(context: Context): Int =
+        context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+            .getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")?.toIntOrNull() ?: 1
+
+    internal fun upgradeLegacyCsv(
+        reader: Reader, writer: Writer, measurementColumns: List<String>, currentMultiplier: Int
+    ) {
         val rows = CsvLogImporter.readCsvRows(reader).iterator()
         require(rows.hasNext()) { "Missing CSV header" }
         val header = rows.next()
-        require(header.size == 7) { "Unsupported CSV columns" }
+        require(header.size == 7 || hasRawCurrentCsvHeader(header)) { "Unsupported CSV columns" }
+        require(measurementColumns.size == 3)
         fun write(row: List<String>) {
             writer.write(row.joinToString(",", transform = ::csvField))
             writer.write("\r\n")
         }
-        write(header + currentColumn)
+        write(header + measurementColumns.drop(header.size - 7))
         for (row in rows) {
-            require(row.size >= 7) { "Incomplete CSV row" }
-            write(row + "")
+            require(row.size >= header.size) { "Incomplete CSV row" }
+            val withCurrent = if (header.size == 7) row + "" else row
+            val rawCurrent = withCurrent.last().trim().takeIf(String::isNotEmpty)?.let {
+                it.toLongOrNull() ?: throw IllegalArgumentException("Invalid CSV current")
+            }
+            val voltage = withCurrent[withCurrent.lastIndex - 1].trim().toDoubleOrNull()
+                ?.takeIf { it.isFinite() && it in 0.5..20.0 }?.let { (it * 1000).roundToInt() }
+            val power = BatteryCurrent.powerWatts(
+                voltage, rawCurrent?.let { it.toDouble() * currentMultiplier / 1000.0 })
+            write(withCurrent + listOf("", power?.toString() ?: ""))
         }
         writer.flush()
     }
@@ -87,17 +115,17 @@ internal object LogExport {
             (resolver.openInputStream(uri) ?: error("Could not read append target")).bufferedReader(
                 StandardCharsets.UTF_8
             ).use { CsvLogImporter.readCsvRows(it).firstOrNull().orEmpty() }
-        if (header.isEmpty() || hasRawCurrentCsvHeader(header)) {
-            val needsSeparator = header.isNotEmpty() && (resolver.openInputStream(uri)
-                ?: error("Could not read append target")).use(::needsCsvSeparator)
-            resolver.openOutputStream(uri, if (header.isEmpty()) "wt" else "wa")?.use { output ->
-                if (needsSeparator) output.write("\r\n".toByteArray(StandardCharsets.UTF_8))
-                writeCsv(context, output, records, includeHeader = header.isEmpty())
-            } ?: error("Could not open append target")
-            return
-        }
-        require(header.size == 7) { "Unsupported CSV columns" }
+        if (header.isNotEmpty() && !hasMeasurementCsvHeader(header)) migrateCsv(context, uri)
+        val needsSeparator = header.isNotEmpty() && (resolver.openInputStream(uri)
+            ?: error("Could not read append target")).use(::needsCsvSeparator)
+        resolver.openOutputStream(uri, if (header.isEmpty()) "wt" else "wa")?.use { output ->
+            if (needsSeparator) output.write("\r\n".toByteArray(StandardCharsets.UTF_8))
+            writeCsv(context, output, records, includeHeader = header.isEmpty())
+        } ?: error("Could not open append target")
+    }
 
+    private fun migrateCsv(context: Context, uri: Uri) {
+        val resolver = context.contentResolver
         val original = File.createTempFile("csv-recovery-", ".csv", context.filesDir)
         val upgraded = File.createTempFile("csv-upgrade-", ".csv", context.cacheDir)
         var retainRecovery = false
@@ -108,9 +136,10 @@ internal object LogExport {
             upgraded.outputStream().use { output ->
                 original.bufferedReader(StandardCharsets.UTF_8).use { input ->
                     val writer = OutputStreamWriter(output, StandardCharsets.UTF_8).buffered()
-                    upgradeLegacyCsv(input, writer, currentColumn(context))
+                    upgradeLegacyCsv(
+                        input, writer, measurementColumns(context), currentMultiplier(context)
+                    )
                 }
-                writeCsv(context, output, records, includeHeader = false)
             }
             try {
                 resolver.openOutputStream(uri, "wt")?.use { output ->
@@ -177,14 +206,14 @@ internal object LogExport {
                     resources.getString(R.string.charge),
                     resources.getString(R.string.temperature),
                     resources.getString(R.string.temperature_f),
-                    resources.getString(R.string.voltage),
-                    currentColumn(context)
-                ).joinToString(",", transform = ::csvField)
+                    resources.getString(R.string.voltage)
+                ).plus(measurementColumns(context)).joinToString(",", transform = ::csvField)
             )
             writer.write("\r\n")
         }
 
         val date = Date()
+        val multiplier = currentMultiplier(context)
         for (record in records) {
             date.time = record.time
             val temperature = record.temperature ?: 0
@@ -203,13 +232,20 @@ internal object LogExport {
                 (temperature / 10.0).toString(),
                 ((temperature * 9 / 5.0).roundToInt() / 10.0 + 32.0).toString(),
                 csvVoltageField(record.voltage),
-                record.currentMicroAmps?.toString() ?: ""
+                record.currentMicroAmps?.toString() ?: "",
+                record.remainingChargeMicroampHours?.toString() ?: "",
+                csvPowerField(record, multiplier)
             )
             writer.write(values.joinToString(",", transform = ::csvField))
             writer.write("\r\n")
         }
         writer.flush()
     }
+
+    internal fun csvPowerField(record: LogRecord, currentMultiplier: Int): String =
+        HistoryMetric.POWER.value(record)?.let {
+            (if (it == 0.0) 0.0 else it * currentMultiplier).toString()
+        } ?: ""
 
     private fun statusLabel(
         statusCode: Int,

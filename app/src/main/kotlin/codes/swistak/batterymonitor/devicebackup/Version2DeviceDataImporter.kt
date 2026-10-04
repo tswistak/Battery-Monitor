@@ -17,14 +17,26 @@ import codes.swistak.batterymonitor.logs.LogRecord
 internal object Version2DeviceDataImporter {
     const val VERSION = 2
     const val KEY_LOG_CURRENT = "currentMicroAmps"
-    
+    const val KEY_LOG_REMAINING_CHARGE = "remainingChargeMicroampHours"
+
     fun restoreLog(values: Map<String, Any?>): LogRecord {
         val current = values[KEY_LOG_CURRENT]
         require(current == null || current is Byte || current is Short || current is Int || current is Long) {
             "Invalid log value for '$KEY_LOG_CURRENT'"
         }
+        val remainingCharge = values[KEY_LOG_REMAINING_CHARGE]
+        require(
+            remainingCharge == null || remainingCharge is Byte || remainingCharge is Short || remainingCharge is Int || remainingCharge is Long
+        ) {
+            "Invalid log value for '$KEY_LOG_REMAINING_CHARGE'"
+        }
+        val remainingChargeMicroampHours = (remainingCharge as? Number)?.toLong()
+        require(remainingChargeMicroampHours == null || remainingChargeMicroampHours >= 0) {
+            "Invalid log value for '$KEY_LOG_REMAINING_CHARGE'"
+        }
         return Version1DeviceDataImporter.restoreLog(values).copy(
-            currentMicroAmps = (current as? Number)?.toLong()
+            currentMicroAmps = (current as? Number)?.toLong(),
+            remainingChargeMicroampHours = remainingChargeMicroampHours
         )
     }
 }

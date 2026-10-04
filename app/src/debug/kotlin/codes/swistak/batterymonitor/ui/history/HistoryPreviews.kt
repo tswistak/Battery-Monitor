@@ -61,7 +61,8 @@ private fun ChartPreview(
                                 .coerceAtMost(range.end - 1),
                             if (reboot) null else temperatures[index],
                             if (reboot || (gaps && index == 4)) null else voltages[index],
-                            if (reboot) null else if (index == 9) 1200250L else -240125L - index * 10000
+                            if (reboot) null else if (index == 9) 1200250L else -240125L - index * 10000,
+                            if (reboot) null else levels[index] * 50_000L
                         )
                     )
                 )
@@ -81,6 +82,8 @@ private fun ChartPreview(
                         Text(
                             when (metric) {
                                 HistoryMetric.LEVEL -> "Poziom baterii"; HistoryMetric.TEMPERATURE -> "Temperatura"; HistoryMetric.VOLTAGE -> "Napięcie"; HistoryMetric.CURRENT -> "Prąd baterii"
+                                HistoryMetric.POWER -> "Moc baterii"
+                                HistoryMetric.REMAINING_CHARGE -> "Pozostały ładunek"
                             }, style = MaterialTheme.typography.titleMedium
                         )
                         MeasurementChart(
@@ -132,3 +135,12 @@ private fun LargeTextChartPreview() = ChartPreview(12)
 )
 @Composable
 private fun CurrentChartPreview() = ChartPreview(12, HistoryMetric.CURRENT, gaps = true)
+
+@Preview(name = "History · battery power", widthDp = 390, locale = "pl", showBackground = true)
+@Composable
+private fun PowerChartPreview() = ChartPreview(12, HistoryMetric.POWER, gaps = true)
+
+@Preview(name = "History · remaining charge", widthDp = 390, locale = "pl", showBackground = true)
+@Composable
+private fun RemainingChargeChartPreview() =
+    ChartPreview(12, HistoryMetric.REMAINING_CHARGE, gaps = true)

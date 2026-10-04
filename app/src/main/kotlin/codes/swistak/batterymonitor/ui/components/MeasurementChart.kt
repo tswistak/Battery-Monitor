@@ -83,6 +83,14 @@ internal fun historyValue(
         HistoryMetric.CURRENT -> BatteryCurrent.formatMilliAmps(
             value * currentMultiplier, locale
         ) + " mA"
+
+        HistoryMetric.POWER -> (if (value * currentMultiplier > 0) "+" else "") + String.format(
+            locale, "%.2f W", if (value == 0.0) 0.0 else value * currentMultiplier
+        )
+
+        HistoryMetric.REMAINING_CHARGE -> NumberFormat.getNumberInstance(locale).apply {
+            maximumFractionDigits = 3
+        }.format(value) + " mAh"
     }
 }
 
@@ -92,6 +100,8 @@ private fun historyUnit(metric: HistoryMetric, fahrenheit: Boolean): String = wh
     HistoryMetric.TEMPERATURE -> if (fahrenheit) "°F" else "°C"
     HistoryMetric.VOLTAGE -> "V"
     HistoryMetric.CURRENT -> "mA"
+    HistoryMetric.POWER -> "W"
+    HistoryMetric.REMAINING_CHARGE -> "mAh"
 }
 
 internal fun historyRangeValue(
@@ -102,7 +112,8 @@ internal fun historyRangeValue(
     currentMultiplier: Int = 1
 ): String {
     if (series.min == null || series.max == null) return "—"
-    val reversed = metric == HistoryMetric.CURRENT && currentMultiplier < 0
+    val reversed =
+        (metric == HistoryMetric.CURRENT || metric == HistoryMetric.POWER) && currentMultiplier < 0
     val maximum = historyValue(
         if (reversed) series.min else series.max, metric, fahrenheit, locale, currentMultiplier
     )
@@ -120,7 +131,7 @@ private fun chartValue(
     value: Double, metric: HistoryMetric, fahrenheit: Boolean, currentMultiplier: Int
 ) = when (metric) {
     HistoryMetric.TEMPERATURE if fahrenheit -> value * 1.8 + 32
-    HistoryMetric.CURRENT -> value * currentMultiplier
+    HistoryMetric.CURRENT, HistoryMetric.POWER -> value * currentMultiplier
     else -> value
 }
 
@@ -132,7 +143,9 @@ internal fun historyChartScale(
     val minimum = minOf(first, last)
     val maximum = maxOf(first, last)
     val fallback = when (metric) {
-        HistoryMetric.LEVEL -> 20.0; HistoryMetric.TEMPERATURE -> 5.0; HistoryMetric.VOLTAGE -> 0.2; HistoryMetric.CURRENT -> 100.0
+        HistoryMetric.LEVEL -> 20.0; HistoryMetric.TEMPERATURE -> 5.0; HistoryMetric.VOLTAGE -> 0.2
+        HistoryMetric.CURRENT, HistoryMetric.REMAINING_CHARGE -> 100.0
+        HistoryMetric.POWER -> 0.5
     }
     val rawStep = maxOf((maximum - minimum) / 3, fallback / 4)
     val magnitude = 10.0.pow(floor(log10(rawStep)))
@@ -202,14 +215,14 @@ internal fun MeasurementChart(
         time(model.range.start),
         time(model.range.end - 1),
         historyValue(
-            if (metric == HistoryMetric.CURRENT && currentMultiplier < 0) series.max else series.min,
+            if ((metric == HistoryMetric.CURRENT || metric == HistoryMetric.POWER) && currentMultiplier < 0) series.max else series.min,
             metric,
             fahrenheit,
             locale,
             currentMultiplier
         ),
         historyValue(
-            if (metric == HistoryMetric.CURRENT && currentMultiplier < 0) series.min else series.max,
+            if ((metric == HistoryMetric.CURRENT || metric == HistoryMetric.POWER) && currentMultiplier < 0) series.min else series.max,
             metric,
             fahrenheit,
             locale,
@@ -279,42 +292,41 @@ internal fun MeasurementChart(
                 }
             }
             Column(Modifier.weight(1f)) {
-                Canvas(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(if (compact) 56.dp else 160.dp)
-                        .semantics {
-                            contentDescription = description
-                            stateDescription = selected?.let {
-                                "${time(it.key.time)}, ${
-                                    historyValue(
-                                        it.value, metric, fahrenheit, locale, currentMultiplier
-                                    )
-                                }"
-                            } ?: "—"
-                            if (!compact) customActions = listOf(
-                                CustomAccessibilityAction(previous) { move(-1) },
-                                CustomAccessibilityAction(next) { move(1) })
+                Canvas(Modifier
+                    .fillMaxWidth()
+                    .height(if (compact) 56.dp else 160.dp)
+                    .semantics {
+                        contentDescription = description
+                        stateDescription = selected?.let {
+                            "${time(it.key.time)}, ${
+                                historyValue(
+                                    it.value, metric, fahrenheit, locale, currentMultiplier
+                                )
+                            }"
+                        } ?: "—"
+                        if (!compact) customActions = listOf(
+                            CustomAccessibilityAction(previous) { move(-1) },
+                            CustomAccessibilityAction(next) { move(1) })
+                    }
+                    .onKeyEvent {
+                        if (it.type != KeyEventType.KeyDown || compact) false
+                        else when (it.key) {
+                            Key.DirectionLeft -> move(-1); Key.DirectionRight -> move(1); else -> false
                         }
-                        .onKeyEvent {
-                            if (it.type != KeyEventType.KeyDown || compact) false
-                            else when (it.key) {
-                                Key.DirectionLeft -> move(-1); Key.DirectionRight -> move(1); else -> false
-                            }
+                    }
+                    .focusable(!compact)
+                    .pointerInput(points, model.range, onSelect) {
+                        if (!compact) detectTapGestures { offset ->
+                            val fraction =
+                                ((offset.x - 8.dp.toPx()) / (size.width - 16.dp.toPx())).coerceIn(
+                                    0f, 1f
+                                )
+                            val timestamp =
+                                model.range.start + fraction.toDouble() * (model.range.end - model.range.start)
+                            points.minByOrNull { abs(it.key.time - timestamp) }
+                                ?.let { onSelect(it.key.id) }
                         }
-                        .focusable(!compact)
-                        .pointerInput(points, model.range, onSelect) {
-                            if (!compact) detectTapGestures { offset ->
-                                val fraction =
-                                    ((offset.x - 8.dp.toPx()) / (size.width - 16.dp.toPx())).coerceIn(
-                                        0f, 1f
-                                    )
-                                val timestamp =
-                                    model.range.start + fraction.toDouble() * (model.range.end - model.range.start)
-                                points.minByOrNull { abs(it.key.time - timestamp) }
-                                    ?.let { onSelect(it.key.id) }
-                            }
-                        }) {
+                    }) {
                     val inset = 8.dp.toPx()
                     fun x(time: Long) =
                         inset + ((time - model.range.start).toDouble() / (model.range.end - model.range.start) * (size.width - 2 * inset)).toFloat()
@@ -423,4 +435,3 @@ internal fun MeasurementChart(
         }
     }
 }
-

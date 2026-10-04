@@ -66,7 +66,8 @@ private fun PreviewCatalog() {
                 72,
                 "Discharging",
                 "3,020 mAh remaining",
-                "Battery 72 percent. Discharging. 3,020 milliamp hours remaining."
+                "Battery 72 percent. Discharging. 3,020 milliamp hours remaining. Target 20 percent.",
+                targetPercent = 20
             )
             MetricGrid(
                 listOf(
@@ -185,7 +186,8 @@ private fun PolishPreview() = BatteryTheme(ColorSource.BatteryBlue, Brightness.L
         72,
         "Rozładowywanie",
         "Pozostały ładunek 3 020 mAh",
-        "Bateria 72 procent. Rozładowywanie."
+        "Bateria 72 procent. Rozładowywanie. Cel 20 procent.",
+        targetPercent = 20
     )
 }
 

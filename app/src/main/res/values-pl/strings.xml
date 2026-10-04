@@ -816,4 +816,6 @@
   <string name="history_export_selected">Eksportuj wybrany zakres</string>
   <string name="history_change_range">Zmień</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="battery_power">Moc baterii</string>
+    <string name="battery_power_explanation">Obliczana z napięcia i prądu baterii; dodatnia przy ładowaniu, ujemna przy rozładowywaniu. To moc po stronie baterii, a nie ładowarki.</string>
 </resources>

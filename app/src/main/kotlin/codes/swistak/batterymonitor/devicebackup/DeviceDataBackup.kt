@@ -218,6 +218,9 @@ internal object DeviceDataBackup {
                     ).putNullable(Version1DeviceDataImporter.KEY_LOG_VOLTAGE, record.voltage)
                     .putNullable(
                         Version2DeviceDataImporter.KEY_LOG_CURRENT, record.currentMicroAmps
+                    ).putNullable(
+                        Version2DeviceDataImporter.KEY_LOG_REMAINING_CHARGE,
+                        record.remainingChargeMicroampHours
                     )
             )
         }
@@ -233,7 +236,8 @@ internal object DeviceDataBackup {
                     Version1DeviceDataImporter.KEY_LOG_TIME,
                     Version1DeviceDataImporter.KEY_LOG_TEMPERATURE,
                     Version1DeviceDataImporter.KEY_LOG_VOLTAGE,
-                    Version2DeviceDataImporter.KEY_LOG_CURRENT
+                    Version2DeviceDataImporter.KEY_LOG_CURRENT,
+                    Version2DeviceDataImporter.KEY_LOG_REMAINING_CHARGE
                 )) {
                     if (log.has(key)) put(key, if (log.isNull(key)) null else log.get(key))
                 }
