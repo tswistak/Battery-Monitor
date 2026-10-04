@@ -768,6 +768,7 @@
   <string name="history_level_24h">Level · last 24 hours</string>
   <string name="history_observations">Stored observations, not a continuous measurement. Vertical lines mark power events and restarts.</string>
   <string name="history_chart_description">Observed range from %1$s to %2$s. Minimum %3$s, maximum %4$s. Open Events and tap a record for reading details.</string>
+  <string name="history_chart_linked_description">Observed range from %1$s to %2$s. Minimum %3$s, maximum %4$s. Selecting an observation reveals and highlights its event in the Events column.</string>
   <string name="history_event_counts">Connected (short dashes): %1$d · Disconnected (long dashes): %2$d · Reboots (dotted): %3$d</string>
   <string name="history_previous_point">Previous observation</string>
   <string name="history_next_point">Next observation</string>

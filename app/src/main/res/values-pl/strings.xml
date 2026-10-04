@@ -782,6 +782,7 @@
   <string name="history_level_24h">Poziom · ostatnie 24 godziny</string>
   <string name="history_observations">Obserwacje z historii; nie ciągły pomiar. Pionowe linie oznaczają zdarzenia zasilania i restarty.</string>
   <string name="history_chart_description">Zakres obserwacji od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Otwórz Zdarzenia i dotknij wpisu, aby zobaczyć szczegóły odczytów.</string>
+  <string name="history_chart_linked_description">Zakres obserwacji od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Wybranie obserwacji przewija do jej zdarzenia w kolumnie Zdarzenia i je wyróżnia.</string>
   <string name="history_event_counts">Podłączenia (krótkie kreski): %1$d · Odłączenia (długie kreski): %2$d · Restarty (kropki): %3$d</string>
   <string name="history_previous_point">Poprzednia obserwacja</string>
   <string name="history_next_point">Następna obserwacja</string>

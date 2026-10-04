@@ -77,14 +77,30 @@ internal class LogsRepository(context: Context) {
         filters: Set<String>?,
         ascending: Boolean,
         anchor: HistoryKey?,
-        backwards: Boolean = false
+        backwards: Boolean = false,
+        includeAnchor: Boolean = false,
+        revealedId: Long? = null
     ): List<HistoryRecord> = withContext(Dispatchers.IO) {
         database {
             readHistory(
                 historyQuery(
-                    range, filters, ascending != backwards, anchor, 129
+                    range, filters, ascending != backwards, anchor, 129, includeAnchor, revealedId
                 )
             ) { it.toList() }
+        }
+    }
+
+    suspend fun hasRecordsBefore(
+        range: HistoryRangeState,
+        filters: Set<String>,
+        ascending: Boolean,
+        key: HistoryKey,
+        revealedId: Long?
+    ): Boolean = withContext(Dispatchers.IO) {
+        database {
+            readHistory(historyQuery(range, filters, !ascending, key, 1, revealedId = revealedId)) {
+                it.any()
+            }
         }
     }
 

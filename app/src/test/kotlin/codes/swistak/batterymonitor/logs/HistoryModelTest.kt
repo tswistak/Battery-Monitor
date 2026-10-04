@@ -310,6 +310,40 @@ class HistoryModelTest {
     }
 
     @Test
+    fun `chart selection includes the exact event anchor in either sort order without including adjacent IDs`() {
+        for (ascending in listOf(true, false)) {
+            val op = if (ascending) ">" else "<"
+            val query = historyQuery(
+                range,
+                ascending = ascending,
+                anchor = HistoryKey(500, 9),
+                limit = 129,
+                includeAnchor = true
+            )
+            assertTrue(query.sql.contains("time $op ? OR (time = ? AND _id $op= ?)"))
+            assertEquals(listOf("100", "1000", "500", "500", "9"), query.args.toList())
+            assertTrue(query.sql.endsWith("LIMIT 129"))
+        }
+    }
+
+    @Test
+    fun `revealing a filtered chart observation adds only its ID and preserves the selected range and filters`() {
+        val filters = setOf("boot_completed")
+        val query = historyQuery(
+            range, filters, false, HistoryKey(500, 9), 129, includeAnchor = true, revealedId = 9
+        )
+        assertTrue(query.sql.contains("time >= ? AND time < ? AND (status = -1 OR _id = ?)"))
+        assertEquals(listOf("100", "1000", "9", "500", "500", "9"), query.args.toList())
+        assertEquals(setOf("boot_completed"), filters)
+        assertTrue(
+            historyQuery(
+                range, emptySet(), revealedId = 9
+            ).sql.contains("AND (0 OR _id = ?)")
+        )
+        assertFalse(historyQuery(range, filters).sql.contains("OR _id = ?"))
+    }
+
+    @Test
     fun `a million observations over a year keep bounded series extrema and dense event boundaries`() {
         val year = HistoryRangeState.days(
             LocalDate.of(2026, 1, 1), LocalDate.of(2026, 12, 31), ZoneId.of("UTC")

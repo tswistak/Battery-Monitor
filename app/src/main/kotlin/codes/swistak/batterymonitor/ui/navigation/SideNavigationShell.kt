@@ -266,7 +266,7 @@ internal fun SideNavigationShell(
                                 })
                             val maximumContentWidth = when (selected) {
                                 SectionOwner.CURRENT -> 1120.dp
-                                SectionOwner.HISTORY -> 840.dp
+                                SectionOwner.HISTORY -> 1120.dp
                                 else -> 600.dp
                             }
                             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {

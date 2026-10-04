@@ -172,7 +172,8 @@ internal fun MeasurementChart(
     modifier: Modifier = Modifier,
     compact: Boolean = false,
     currentMultiplier: Int = 1,
-    compactChartHeight: androidx.compose.ui.unit.Dp = 56.dp
+    compactChartHeight: androidx.compose.ui.unit.Dp = 56.dp,
+    linksToEvents: Boolean = false
 ) {
     val locale = LocalConfiguration.current.locales[0]
     val series = model.series.getValue(metric)
@@ -212,7 +213,7 @@ internal fun MeasurementChart(
         NumberFormat.getNumberInstance(locale).apply { maximumFractionDigits = 2 }
     }
     val description = stringResource(
-        R.string.history_chart_description,
+        if (linksToEvents) R.string.history_chart_linked_description else R.string.history_chart_description,
         time(model.range.start),
         time(model.range.end - 1),
         historyValue(

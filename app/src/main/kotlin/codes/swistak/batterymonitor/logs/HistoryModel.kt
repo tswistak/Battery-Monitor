@@ -196,7 +196,9 @@ internal fun historyQuery(
     filters: Set<String>? = null,
     ascending: Boolean = true,
     anchor: HistoryKey? = null,
-    limit: Int? = null
+    limit: Int? = null,
+    includeAnchor: Boolean = false,
+    revealedId: Long? = null
 ): HistoryQuery {
     val clauses = listOf(
         "(status >= 0 AND status % 10 = 2 AND status < 100)",
@@ -213,10 +215,15 @@ internal fun historyQuery(
             .map { clauses[it] }
     val args = mutableListOf(range.start.toString(), range.end.toString())
     val where = mutableListOf("time >= ?", "time < ?")
-    if (filters != null) where += "(${selected.joinToString(" OR ").ifEmpty { "0" }})"
+    if (filters != null) {
+        val selection = selected.joinToString(" OR ").ifEmpty { "0" }
+        where += if (revealedId == null) "($selection)" else "($selection OR _id = ?)"
+        revealedId?.let { args += it.toString() }
+    }
     if (anchor != null) {
         val op = if (ascending) ">" else "<"
-        where += "(time $op ? OR (time = ? AND _id $op ?))"
+        val idOp = if (includeAnchor) "$op=" else op
+        where += "(time $op ? OR (time = ? AND _id $idOp ?))"
         args += listOf(anchor.time.toString(), anchor.time.toString(), anchor.id.toString())
     }
     val order = if (ascending) "ASC" else "DESC"

@@ -24,13 +24,16 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
@@ -74,7 +77,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -86,9 +91,12 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -318,434 +326,533 @@ internal fun HistoryRoute(
         DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(locale)
             .withZone(ZoneId.systemDefault())
     }
-    Column(modifier) {
-        Column(
-            Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            HistoryRangeControl(state, viewModel::range)
-            SecondaryTabRow(
-                selectedTabIndex = if (state.tab == "logs") 1 else 0,
-                containerColor = MaterialTheme.colorScheme.background,
-                indicator = {
-                    TabRowDefaults.PrimaryIndicator(
-                        modifier = Modifier.tabIndicatorOffset(
-                            if (state.tab == "logs") 1 else 0, matchContentSize = false
-                        ), width = 46.dp, height = 3.dp, color = MaterialTheme.colorScheme.primary
-                    )
-                }) {
-                Tab(
-                    state.tab != "logs",
-                    { viewModel.tab("charts") },
-                    selectedContentColor = MaterialTheme.colorScheme.primary,
-                    unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    text = {
-                        Text(
-                            stringResource(R.string.history_charts),
-                            fontWeight = if (state.tab == "charts") FontWeight.SemiBold else FontWeight.Normal
-                        )
-                    })
-                Tab(
-                    state.tab == "logs",
-                    { viewModel.tab("logs") },
-                    selectedContentColor = MaterialTheme.colorScheme.primary,
-                    unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    text = {
-                        Text(
-                            stringResource(R.string.history_events),
-                            fontWeight = if (state.tab == "logs") FontWeight.SemiBold else FontWeight.Normal
-                        )
-                    })
+    BoxWithConstraints(modifier) {
+        val twoPane = maxWidth >= 800.dp * LocalDensity.current.fontScale && maxHeight >= 480.dp
+        LaunchedEffect(twoPane) { viewModel.twoPane(twoPane) }
+        val eventIndices = remember(logDays) {
+            buildMap {
+                var index = 1
+                logDays.values.forEach { entries ->
+                    index++
+                    entries.forEach { put(it.id, index++) }
+                }
             }
         }
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .height(4.dp)
-        ) {
-            if (state.loading || state.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
+        LaunchedEffect(twoPane, state.eventToReveal, state.page, state.loading) {
+            val id = state.eventToReveal
+            val index = eventIndices[id]
+            if (twoPane && !state.loading && id != null && index != null) {
+                logList.animateScrollToItem(index)
+                viewModel.eventRevealed(id)
+            }
         }
-        key(state.tab) {
-            LazyColumn(
-                Modifier.weight(1f),
-                state = list,
-                contentPadding = PaddingValues(
-                    start = 20.dp, end = 20.dp, top = 8.dp, bottom = 20.dp
-                ),
-                verticalArrangement = if (state.tab == "logs") Arrangement.Top else Arrangement.spacedBy(
-                    12.dp
+        val charts: LazyListScope.() -> Unit = {
+            item {
+                FlowRow(
+                    Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    HistoryMetric.entries.forEach { metric ->
+                        FilterChip(
+                            state.metric == metric,
+                            { viewModel.metric(metric) },
+                            shape = RoundedCornerShape(11.dp),
+                            colors = FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            ),
+                            label = { Text(metricLabel(metric)) })
+                    }
+                }
+            }
+            item {
+                val chart = state.chart
+                OutlinedCard(
+                    Modifier.fillMaxWidth(),
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
+                    colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                ) {
+                    Column(
+                        Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(
+                            if (state.metric == HistoryMetric.LEVEL) stringResource(R.string.history_battery_level)
+                            else metricLabel(state.metric),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        if (chart != null && chart.count > 0) {
+                            MeasurementChart(
+                                chart,
+                                state.metric,
+                                fahrenheit,
+                                state.selectedPointId,
+                                viewModel::selectPoint,
+                                currentMultiplier = currentMultiplier,
+                                linksToEvents = twoPane
+                            )
+                        } else if (state.loading) Spacer(Modifier.height(280.dp))
+                        else Text(stringResource(R.string.logs_empty))
+                    }
+                }
+            }
+            state.chart?.takeIf { it.count > 0 }?.let { chart ->
+                item {
+                    BoxWithConstraints(Modifier.fillMaxWidth()) {
+                        val cardWidth =
+                            if (state.metric == HistoryMetric.CURRENT || state.metric == HistoryMetric.POWER || state.metric == HistoryMetric.REMAINING_CHARGE || LocalDensity.current.fontScale >= 1.3f) maxWidth
+                            else with(LocalDensity.current) {
+                                ((constraints.maxWidth - 12.dp.roundToPx()) / 2).toDp()
+                            }
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Card(
+                                Modifier.width(cardWidth),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+                            ) {
+                                Column(
+                                    Modifier.padding(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    Text(
+                                        historyRangeValue(
+                                            chart.series.getValue(state.metric),
+                                            state.metric,
+                                            fahrenheit,
+                                            locale,
+                                            currentMultiplier
+                                        ).let {
+                                            if (state.metric == HistoryMetric.CURRENT || state.metric == HistoryMetric.POWER) it.replace(
+                                                "–", " – "
+                                            ) else it
+                                        }, style = MaterialTheme.typography.titleLarge
+                                    )
+                                    Text(
+                                        stringResource(R.string.history_reading_range_label),
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                }
+                            }
+                            Card(
+                                Modifier.width(cardWidth),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+                            ) {
+                                Column(
+                                    Modifier.padding(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    Text(chart.events.filter { it.code == 2 }.sumOf { it.count }
+                                        .toString(), style = MaterialTheme.typography.titleLarge)
+                                    Text(
+                                        stringResource(R.string.history_connections),
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Text(
+                        stringResource(
+                            R.string.history_event_counts,
+                            chart.events.filter { it.code == 2 }.sumOf { it.count },
+                            chart.events.filter { it.code == 0 }.sumOf { it.count },
+                            chart.events.filter { it.code == -1 }.sumOf { it.count }),
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+            }
+        }
+        val events: LazyListScope.() -> Unit = {
+            item {
+                Row(
+                    Modifier.padding(bottom = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    FilterChip(
+                        selected = state.filters.size == historyFilterKeys.size,
+                        onClick = { dialog = "filters" },
+                        shape = RoundedCornerShape(11.dp),
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        ),
+                        label = {
+                            Text(
+                                if (state.filters.size == historyFilterKeys.size) stringResource(
+                                    R.string.history_all_types
+                                )
+                                else stringResource(
+                                    R.string.history_filtered_types, state.filters.size
+                                ), fontWeight = FontWeight.SemiBold
+                            )
+                        })
+                    OutlinedButton(
+                        onClick = { viewModel.reverse() },
+                        shape = RoundedCornerShape(11.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
+                    ) {
+                        Text(
+                            stringResource(if (state.ascending) R.string.history_oldest else R.string.history_newest),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Icon(
+                            painterResource(if (state.ascending) R.drawable.ui_up else R.drawable.ui_down),
+                            null,
+                            Modifier.size(16.dp)
+                        )
+                    }
+                }
+                if (!state.loading && state.page.isEmpty()) Text(stringResource(R.string.logs_empty))
+            }
+            logDays.forEach { (date, entries) ->
+                item(key = "day:$date", contentType = "day") {
+                    val day = if (date.year == LocalDate.now().year) dateFormat.format(date)
+                    else DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
+                        .format(date)
+                    Text(
+                        when (date) {
+                            LocalDate.now() -> stringResource(R.string.history_today, day)
+                            LocalDate.now().minusDays(1) -> stringResource(
+                                R.string.history_yesterday, day
+                            )
+
+                            else -> day
+                        },
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
+                    )
+                }
+                itemsIndexed(
+                    entries,
+                    key = { _, entry -> entry.id },
+                    contentType = { _, _ -> "log" }) { index, entry ->
+                    val emphasized = twoPane && state.selectedPointId == entry.id
+                    val foreground =
+                        if (emphasized) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
+                    val secondary =
+                        if (emphasized) foreground else MaterialTheme.colorScheme.onSurfaceVariant
+                    val selectionColor = MaterialTheme.colorScheme.primary
+                    val first = index == 0
+                    val last = index == entries.lastIndex
+                    val shape = RoundedCornerShape(
+                        topStart = if (first) 20.dp else 0.dp,
+                        topEnd = if (first) 20.dp else 0.dp,
+                        bottomStart = if (last) 20.dp else 0.dp,
+                        bottomEnd = if (last) 20.dp else 0.dp
+                    )
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .clip(shape)
+                            .background(if (emphasized) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface)
+                            .logGroupBorder(
+                                first, last, MaterialTheme.colorScheme.outlineVariant
+                            )
+                    ) {
+                        val record = entry.record
+                        val code = LogDatabase.decodeStatus(record.status)
+                        val icon = when {
+                            record.status == -1 -> R.drawable.ui_refresh
+                            code[0] == 0 && code[2] == 0 -> R.drawable.ui_plug
+                            code[0] == 2 -> R.drawable.ui_bolt
+                            code[0] == 5 -> R.drawable.ui_battery
+                            else -> R.drawable.ui_down
+                        }
+                        val title = when {
+                            code[0] == 0 && code[2] == 0 -> stringResource(R.string.history_disconnected)
+                            code[0] == 2 && code[2] == 0 -> stringResource(R.string.history_charge_started)
+                            else -> status(record).substringBefore(" · ")
+                        }
+                        val description =
+                            if (record.status == -1) stringResource(R.string.history_system_event)
+                            else listOfNotNull(
+                                HistoryMetric.CURRENT.value(record)?.let {
+                                    historyValue(
+                                        it,
+                                        HistoryMetric.CURRENT,
+                                        fahrenheit,
+                                        locale,
+                                        currentMultiplier
+                                    )
+                                },
+                                HistoryMetric.POWER.value(record)?.let {
+                                    historyValue(
+                                        it,
+                                        HistoryMetric.POWER,
+                                        fahrenheit,
+                                        locale,
+                                        currentMultiplier
+                                    )
+                                },
+                                plugged.getOrNull(code[1])?.takeIf { code[1] > 0 },
+                                HistoryMetric.TEMPERATURE.value(record)?.let {
+                                    historyValue(
+                                        it, HistoryMetric.TEMPERATURE, fahrenheit, locale
+                                    )
+                                },
+                                HistoryMetric.VOLTAGE.value(record)?.let {
+                                    historyValue(
+                                        it, HistoryMetric.VOLTAGE, fahrenheit, locale
+                                    )
+                                }).joinToString(" · ")
+                                .ifEmpty { stringResource(R.string.current_unavailable) }
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .clickable { detailsId = entry.id }
+                                .then(if (twoPane) Modifier.semantics {
+                                    selected = emphasized
+                                } else Modifier)
+                                .drawBehind {
+                                    if (emphasized) {
+                                        val width = 3.dp.toPx()
+                                        val x =
+                                            if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
+                                        drawRect(
+                                            selectionColor,
+                                            topLeft = Offset(x, 0f),
+                                            size = Size(width, size.height)
+                                        )
+                                    }
+                                }
+                                .heightIn(min = 67.dp)
+                                .padding(horizontal = 13.dp, vertical = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(11.dp)) {
+                            Surface(
+                                shape = RoundedCornerShape(12.dp),
+                                color = if (emphasized) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
+                            ) {
+                                Box(
+                                    Modifier.size(35.dp), contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        painterResource(icon),
+                                        null,
+                                        Modifier.size(19.dp),
+                                        tint = if (emphasized) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
+                            Column(Modifier.weight(1f)) {
+                                Text(
+                                    title,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = foreground
+                                )
+                                Text(
+                                    description,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = secondary,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                            Column(horizontalAlignment = Alignment.End) {
+                                Text(
+                                    historyValue(
+                                        HistoryMetric.LEVEL.value(record),
+                                        HistoryMetric.LEVEL,
+                                        fahrenheit,
+                                        locale
+                                    ),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = foreground
+                                )
+                                HistoryMetric.REMAINING_CHARGE.value(record)?.let {
+                                    Text(
+                                        historyValue(
+                                            it, HistoryMetric.REMAINING_CHARGE, fahrenheit, locale
+                                        ),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = secondary
+                                    )
+                                }
+                                Text(
+                                    DisplayStrings.formatTime(
+                                        context, Date(record.time), seconds
+                                    ), style = MaterialTheme.typography.bodySmall, color = secondary
+                                )
+                            }
+                        }
+                        if (!last) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                    }
+                }
+            }
+            if (state.page.isNotEmpty()) item {
+                Text(
+                    stringResource(R.string.history_raw_observations),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 12.dp)
                 )
+            }
+            if (state.hasPrevious || state.hasNext) item {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    TextButton(
+                        onClick = { viewModel.next(true) },
+                        enabled = state.hasPrevious && !state.loading
+                    ) { Text(stringResource(R.string.history_previous_page)) }
+                    TextButton(
+                        onClick = { viewModel.next(false) },
+                        enabled = state.hasNext && !state.loading
+                    ) { Text(stringResource(R.string.history_next_page)) }
+                }
+            }
+        }
+        val exportAction: @Composable (Modifier) -> Unit = { actionModifier ->
+            OutlinedButton(
+                onClick = { dialog = "export" },
+                modifier = actionModifier.fillMaxWidth(),
+                enabled = !state.busy,
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                contentPadding = PaddingValues(12.dp)
             ) {
-                if (state.error) item {
+                Icon(painterResource(R.drawable.ui_share), null, Modifier.size(19.dp))
+                Spacer(Modifier.width(8.dp))
+                Text(stringResource(R.string.history_export_selected))
+            }
+        }
+        Column(Modifier.fillMaxSize()) {
+            Column(
+                Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                HistoryRangeControl(state, viewModel::range)
+                if (!twoPane) {
+                    SecondaryTabRow(
+                        selectedTabIndex = if (state.tab == "logs") 1 else 0,
+                        containerColor = MaterialTheme.colorScheme.background,
+                        indicator = {
+                            TabRowDefaults.PrimaryIndicator(
+                                modifier = Modifier.tabIndicatorOffset(
+                                    if (state.tab == "logs") 1 else 0, matchContentSize = false
+                                ),
+                                width = 46.dp,
+                                height = 3.dp,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }) {
+                        Tab(
+                            state.tab != "logs",
+                            { viewModel.tab("charts") },
+                            selectedContentColor = MaterialTheme.colorScheme.primary,
+                            unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            text = {
+                                Text(
+                                    stringResource(R.string.history_charts),
+                                    fontWeight = if (state.tab == "charts") FontWeight.SemiBold else FontWeight.Normal
+                                )
+                            })
+                        Tab(
+                            state.tab == "logs",
+                            { viewModel.tab("logs") },
+                            selectedContentColor = MaterialTheme.colorScheme.primary,
+                            unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            text = {
+                                Text(
+                                    stringResource(R.string.history_events),
+                                    fontWeight = if (state.tab == "logs") FontWeight.SemiBold else FontWeight.Normal
+                                )
+                            })
+                    }
+                }
+            }
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(4.dp)
+            ) {
+                if (state.loading || state.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
+            }
+            if (state.error) {
+                Column(Modifier.padding(horizontal = 20.dp)) {
                     Text(
                         stringResource(R.string.history_load_failed),
                         color = MaterialTheme.colorScheme.error
                     )
-                    TextButton(onClick = { viewModel.refresh() }) { Text(stringResource(R.string.advanced_action_refresh)) }
-                }
-                if (state.tab == "charts") {
-                    item {
-                        FlowRow(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            HistoryMetric.entries.forEach { metric ->
-                                FilterChip(
-                                    state.metric == metric,
-                                    { viewModel.metric(metric) },
-                                    shape = RoundedCornerShape(11.dp),
-                                    colors = FilterChipDefaults.filterChipColors(
-                                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                        selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                                    ),
-                                    label = { Text(metricLabel(metric)) })
-                            }
-                        }
-                    }
-                    item {
-                        val chart = state.chart
-                        OutlinedCard(
-                            Modifier.fillMaxWidth(),
-                            shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
-                            colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
-                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-                        ) {
-                            Column(
-                                Modifier.padding(16.dp),
-                                verticalArrangement = Arrangement.spacedBy(12.dp)
-                            ) {
-                                Text(
-                                    if (state.metric == HistoryMetric.LEVEL) stringResource(R.string.history_battery_level)
-                                    else metricLabel(state.metric),
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                                if (chart != null && chart.count > 0) {
-                                    MeasurementChart(
-                                        chart,
-                                        state.metric,
-                                        fahrenheit,
-                                        state.selectedPointId,
-                                        viewModel::selectPoint,
-                                        currentMultiplier = currentMultiplier
-                                    )
-                                } else if (state.loading) Spacer(Modifier.height(280.dp))
-                                else Text(stringResource(R.string.logs_empty))
-                            }
-                        }
-                    }
-                    state.chart?.takeIf { it.count > 0 }?.let { chart ->
-                        item {
-                            BoxWithConstraints(Modifier.fillMaxWidth()) {
-                                val cardWidth =
-                                    if (state.metric == HistoryMetric.CURRENT || state.metric == HistoryMetric.POWER || state.metric == HistoryMetric.REMAINING_CHARGE || LocalDensity.current.fontScale >= 1.3f) maxWidth else (maxWidth - 12.dp) / 2
-                                FlowRow(
-                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                                ) {
-                                    Card(
-                                        Modifier.width(cardWidth),
-                                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
-                                    ) {
-                                        Column(
-                                            Modifier.padding(16.dp),
-                                            verticalArrangement = Arrangement.spacedBy(4.dp)
-                                        ) {
-                                            Text(
-                                                historyRangeValue(
-                                                    chart.series.getValue(state.metric),
-                                                    state.metric,
-                                                    fahrenheit,
-                                                    locale,
-                                                    currentMultiplier
-                                                ).let {
-                                                    if (state.metric == HistoryMetric.CURRENT || state.metric == HistoryMetric.POWER) it.replace(
-                                                        "–", " – "
-                                                    ) else it
-                                                }, style = MaterialTheme.typography.titleLarge
-                                            )
-                                            Text(
-                                                stringResource(R.string.history_reading_range_label),
-                                                style = MaterialTheme.typography.bodySmall
-                                            )
-                                        }
-                                    }
-                                    Card(
-                                        Modifier.width(cardWidth),
-                                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
-                                    ) {
-                                        Column(
-                                            Modifier.padding(16.dp),
-                                            verticalArrangement = Arrangement.spacedBy(4.dp)
-                                        ) {
-                                            Text(
-                                                chart.events.filter { it.code == 2 }
-                                                .sumOf { it.count }.toString(),
-                                                style = MaterialTheme.typography.titleLarge
-                                            )
-                                            Text(
-                                                stringResource(R.string.history_connections),
-                                                style = MaterialTheme.typography.bodySmall
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                            Text(
-                                stringResource(
-                                    R.string.history_event_counts,
-                                    chart.events.filter { it.code == 2 }.sumOf { it.count },
-                                    chart.events.filter { it.code == 0 }.sumOf { it.count },
-                                    chart.events.filter { it.code == -1 }.sumOf { it.count }),
-                                style = MaterialTheme.typography.bodySmall,
-                                modifier = Modifier.padding(top = 8.dp)
-                            )
-                        }
-                    }
-                } else {
-                    item {
-                        Row(
-                            Modifier.padding(bottom = 12.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            FilterChip(
-                                selected = state.filters.size == historyFilterKeys.size,
-                                onClick = { dialog = "filters" },
-                                shape = RoundedCornerShape(11.dp),
-                                colors = FilterChipDefaults.filterChipColors(
-                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                    selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                                ),
-                                label = {
-                                    Text(
-                                        if (state.filters.size == historyFilterKeys.size) stringResource(
-                                            R.string.history_all_types
-                                        )
-                                        else stringResource(
-                                            R.string.history_filtered_types, state.filters.size
-                                        ), fontWeight = FontWeight.SemiBold
-                                    )
-                                })
-                            OutlinedButton(
-                                onClick = { viewModel.reverse() },
-                                shape = RoundedCornerShape(11.dp),
-                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
-                            ) {
-                                Text(
-                                    stringResource(if (state.ascending) R.string.history_oldest else R.string.history_newest),
-                                    style = MaterialTheme.typography.bodySmall
-                                )
-                                Icon(
-                                    painterResource(if (state.ascending) R.drawable.ui_up else R.drawable.ui_down),
-                                    null,
-                                    Modifier.size(16.dp)
-                                )
-                            }
-                        }
-                        if (!state.loading && state.page.isEmpty()) Text(stringResource(R.string.logs_empty))
-                    }
-                    logDays.forEach { (date, entries) ->
-                        item(key = "day:$date", contentType = "day") {
-                            val day = if (date.year == LocalDate.now().year) dateFormat.format(date)
-                            else DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
-                                .withLocale(locale).format(date)
-                            Text(
-                                when (date) {
-                                    LocalDate.now() -> stringResource(R.string.history_today, day)
-                                    LocalDate.now().minusDays(1) -> stringResource(
-                                        R.string.history_yesterday, day
-                                    )
-
-                                    else -> day
-                                },
-                                style = MaterialTheme.typography.titleSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
-                            )
-                        }
-                        itemsIndexed(
-                            entries,
-                            key = { _, entry -> entry.id },
-                            contentType = { _, _ -> "log" }) { index, entry ->
-                            val first = index == 0
-                            val last = index == entries.lastIndex
-                            val shape = RoundedCornerShape(
-                                topStart = if (first) 20.dp else 0.dp,
-                                topEnd = if (first) 20.dp else 0.dp,
-                                bottomStart = if (last) 20.dp else 0.dp,
-                                bottomEnd = if (last) 20.dp else 0.dp
-                            )
-                            Column(
-                                Modifier
-                                    .fillMaxWidth()
-                                    .clip(shape)
-                                    .background(MaterialTheme.colorScheme.surface)
-                                    .logGroupBorder(
-                                        first, last, MaterialTheme.colorScheme.outlineVariant
-                                    )
-                            ) {
-                                val record = entry.record
-                                val code = LogDatabase.decodeStatus(record.status)
-                                val icon = when {
-                                    record.status == -1 -> R.drawable.ui_refresh
-                                    code[0] == 0 && code[2] == 0 -> R.drawable.ui_plug
-                                    code[0] == 2 -> R.drawable.ui_bolt
-                                    code[0] == 5 -> R.drawable.ui_battery
-                                    else -> R.drawable.ui_down
-                                }
-                                val title = when {
-                                    code[0] == 0 && code[2] == 0 -> stringResource(R.string.history_disconnected)
-                                    code[0] == 2 && code[2] == 0 -> stringResource(R.string.history_charge_started)
-                                    else -> status(record).substringBefore(" · ")
-                                }
-                                val description =
-                                    if (record.status == -1) stringResource(R.string.history_system_event)
-                                    else listOfNotNull(
-                                        HistoryMetric.CURRENT.value(record)?.let {
-                                        historyValue(
-                                            it,
-                                            HistoryMetric.CURRENT,
-                                            fahrenheit,
-                                            locale,
-                                            currentMultiplier
-                                        )
-                                    },
-                                        HistoryMetric.POWER.value(record)?.let {
-                                            historyValue(
-                                                it,
-                                                HistoryMetric.POWER,
-                                                fahrenheit,
-                                                locale,
-                                                currentMultiplier
-                                            )
-                                        },
-                                        plugged.getOrNull(code[1])?.takeIf { code[1] > 0 },
-                                        HistoryMetric.TEMPERATURE.value(record)?.let {
-                                            historyValue(
-                                                it, HistoryMetric.TEMPERATURE, fahrenheit, locale
-                                            )
-                                        },
-                                        HistoryMetric.VOLTAGE.value(record)?.let {
-                                            historyValue(
-                                                it, HistoryMetric.VOLTAGE, fahrenheit, locale
-                                            )
-                                        }).joinToString(" · ")
-                                        .ifEmpty { stringResource(R.string.current_unavailable) }
-                                Row(Modifier
-                                    .fillMaxWidth()
-                                    .clickable { detailsId = entry.id }
-                                    .heightIn(min = 67.dp)
-                                    .padding(horizontal = 13.dp, vertical = 12.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(11.dp)) {
-                                    Surface(
-                                        shape = RoundedCornerShape(12.dp),
-                                        color = MaterialTheme.colorScheme.surfaceVariant
-                                    ) {
-                                        Box(
-                                            Modifier.size(35.dp),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            Icon(
-                                                painterResource(icon),
-                                                null,
-                                                Modifier.size(19.dp),
-                                                tint = MaterialTheme.colorScheme.primary
-                                            )
-                                        }
-                                    }
-                                    Column(Modifier.weight(1f)) {
-                                        Text(
-                                            title,
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            fontWeight = FontWeight.SemiBold
-                                        )
-                                        Text(
-                                            description,
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
-                                    }
-                                    Column(horizontalAlignment = Alignment.End) {
-                                        Text(
-                                            historyValue(
-                                                HistoryMetric.LEVEL.value(record),
-                                                HistoryMetric.LEVEL,
-                                                fahrenheit,
-                                                locale
-                                            ),
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            fontWeight = FontWeight.SemiBold
-                                        )
-                                        HistoryMetric.REMAINING_CHARGE.value(record)?.let {
-                                            Text(
-                                                historyValue(
-                                                    it,
-                                                    HistoryMetric.REMAINING_CHARGE,
-                                                    fahrenheit,
-                                                    locale
-                                                ),
-                                                style = MaterialTheme.typography.bodySmall,
-                                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                                            )
-                                        }
-                                        Text(
-                                            DisplayStrings.formatTime(
-                                                context, Date(record.time), seconds
-                                            ),
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                                        )
-                                    }
-                                }
-                                if (!last) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                            }
-                        }
-                    }
-                    if (state.page.isNotEmpty()) item {
-                        Text(
-                            stringResource(R.string.history_raw_observations),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = 4.dp, vertical = 12.dp)
-                        )
-                    }
-                    if (state.hasPrevious || state.hasNext) item {
-                        Row(
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(top = 12.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            TextButton(
-                                onClick = { viewModel.next(true) },
-                                enabled = state.hasPrevious && !state.loading
-                            ) { Text(stringResource(R.string.history_previous_page)) }
-                            TextButton(
-                                onClick = { viewModel.next(false) },
-                                enabled = state.hasNext && !state.loading
-                            ) { Text(stringResource(R.string.history_next_page)) }
-                        }
-                    }
-                }
-                item {
-                    OutlinedButton(
-                        onClick = { dialog = "export" },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = if (state.tab == "logs") 12.dp else 0.dp),
-                        enabled = !state.busy,
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-                        contentPadding = PaddingValues(12.dp)
-                    ) {
-                        Icon(painterResource(R.drawable.ui_share), null, Modifier.size(19.dp))
-                        Spacer(Modifier.width(8.dp))
-                        Text(stringResource(R.string.history_export_selected))
+                    TextButton(onClick = { viewModel.refresh() }) {
+                        Text(stringResource(R.string.advanced_action_refresh))
                     }
                 }
             }
-
+            if (twoPane) {
+                Row(
+                    Modifier
+                        .weight(1f)
+                        .padding(horizontal = 20.dp),
+                    horizontalArrangement = Arrangement.spacedBy(24.dp)
+                ) {
+                    Column(Modifier.weight(1.1f)) {
+                        Text(
+                            stringResource(R.string.history_charts),
+                            Modifier
+                                .padding(vertical = 12.dp)
+                                .semantics { heading() },
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        LazyColumn(
+                            Modifier.weight(1f),
+                            state = chartList,
+                            contentPadding = PaddingValues(top = 8.dp, bottom = 20.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            content = charts
+                        )
+                    }
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            stringResource(R.string.history_events),
+                            Modifier
+                                .padding(vertical = 12.dp)
+                                .semantics { heading() },
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        LazyColumn(
+                            Modifier.weight(1f),
+                            state = logList,
+                            contentPadding = PaddingValues(top = 8.dp, bottom = 20.dp),
+                            content = events
+                        )
+                    }
+                }
+                HorizontalDivider(
+                    Modifier.padding(horizontal = 20.dp),
+                    color = MaterialTheme.colorScheme.outlineVariant
+                )
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp), contentAlignment = Alignment.Center
+                ) {
+                    exportAction(Modifier.widthIn(max = 480.dp))
+                }
+            } else {
+                key(state.tab) {
+                    LazyColumn(
+                        Modifier.weight(1f),
+                        state = list,
+                        contentPadding = PaddingValues(
+                            start = 20.dp, end = 20.dp, top = 8.dp, bottom = 20.dp
+                        ),
+                        verticalArrangement = if (state.tab == "logs") Arrangement.Top else Arrangement.spacedBy(
+                            12.dp
+                        )
+                    ) {
+                        if (state.tab == "charts") charts() else events()
+                        item { exportAction(Modifier.padding(top = if (state.tab == "logs") 12.dp else 0.dp)) }
+                    }
+                }
+            }
         }
     }
 
@@ -825,8 +932,8 @@ internal fun HistoryRoute(
     })
     if (dialog == "replace") AlertDialog(
         onDismissRequest = {
-        dialog = null; viewModel.pendingImportUri = null
-    },
+            dialog = null; viewModel.pendingImportUri = null
+        },
         title = { Text(stringResource(R.string.log_import_replace)) },
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
@@ -852,8 +959,8 @@ internal fun HistoryRoute(
     )
     if (dialog == "deleteSelected" || dialog == "deleteAll") AlertDialog(
         onDismissRequest = {
-        dialog = null
-    },
+            dialog = null
+        },
         title = { Text(stringResource(if (dialog == "deleteAll") R.string.history_delete_all else R.string.history_delete_selected)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {

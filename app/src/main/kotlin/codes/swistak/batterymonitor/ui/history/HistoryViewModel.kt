@@ -53,7 +53,9 @@ internal data class HistoryUiState(
     val hasPrevious: Boolean = false,
     val anchor: HistoryKey? = null,
     val backwards: Boolean = false,
-    val selectedPointId: Long? = null
+    val selectedPointId: Long? = null,
+    val includeAnchor: Boolean = false,
+    val eventToReveal: Long? = null
 )
 
 internal class HistoryViewModel(application: Application) : AndroidViewModel(application) {
@@ -65,6 +67,8 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     private val mutable = MutableStateFlow(HistoryUiState())
     val state = mutable.asStateFlow()
     private var queryJob: Job? = null
+    private var isTwoPane = false
+
     private var restored = false
     var scrollIndex = 0
         private set
@@ -107,7 +111,8 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
                 bundle.getLong("anchorTime"), bundle.getLong("anchorId")
             ) else null,
             backwards = bundle.getBoolean("backwards"),
-            selectedPointId = if (bundle.containsKey("point")) bundle.getLong("point") else null
+            selectedPointId = if (bundle.containsKey("point")) bundle.getLong("point") else null,
+            includeAnchor = bundle.getBoolean("includeAnchor")
         )
         if (bundle.containsKey("exportThrough")) pendingExport = HistoryExportRequest(
             if (bundle.getBoolean("exportHasAfter")) bundle.getLong("exportAfter") else null,
@@ -130,6 +135,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     )
         value.anchor?.let { putLong("anchorId", it.id); putLong("anchorTime", it.time) }
         putBoolean("backwards", value.backwards)
+        putBoolean("includeAnchor", value.includeAnchor)
         putInt("scrollIndex", scrollIndex); putInt("scrollOffset", scrollOffset)
         value.selectedPointId?.let { putLong("point", it) }
         pendingExport?.let {
@@ -147,7 +153,8 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     fun refresh(
         anchor: HistoryKey? = mutable.value.anchor,
         backwards: Boolean = mutable.value.backwards,
-        forceChart: Boolean = true
+        forceChart: Boolean = true,
+        includeAnchor: Boolean = mutable.value.includeAnchor
     ) {
         queryJob?.cancel()
         val current = mutable.value
@@ -157,22 +164,54 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
             else -> current.range
         } else current.range
         val value = current.copy(range = range, chart = if (forceChart) null else current.chart)
-        mutable.value =
-            value.copy(loading = true, error = false, anchor = anchor, backwards = backwards)
+        mutable.value = value.copy(
+            loading = true,
+            error = false,
+            anchor = anchor,
+            backwards = backwards,
+            includeAnchor = includeAnchor
+        )
         queryJob = viewModelScope.launch {
             try {
-                // Events never scans the whole range to build an invisible chart.
-                val records =
-                    repository.page(value.range, value.filters, value.ascending, anchor, backwards)
-                val page = records.take(128).let { if (backwards) it.reversed() else it }
+                val revealedId = value.selectedPointId.takeIf { isTwoPane }
+                var records = repository.page(
+                    value.range,
+                    value.filters,
+                    value.ascending,
+                    anchor,
+                    backwards,
+                    includeAnchor,
+                    revealedId
+                )
+                val resetPage = records.isEmpty() && anchor != null
+                if (resetPage) {
+                    records = repository.page(
+                        value.range, value.filters, value.ascending, null, revealedId = revealedId
+                    )
+                    scroll(0, 0)
+                }
+                val pageAnchor = anchor.takeUnless { resetPage }
+                val pageBackwards = backwards && !resetPage
+                val pageIncludesAnchor = includeAnchor && !resetPage
+                val page = records.take(128).let { if (pageBackwards) it.reversed() else it }
+                val hasPrevious = if (pageIncludesAnchor && anchor != null) {
+                    repository.hasRecordsBefore(
+                        value.range, value.filters, value.ascending, anchor, revealedId
+                    )
+                } else if (pageBackwards) records.size > 128 else pageAnchor != null
                 val chart =
-                    if (value.tab == "charts" && value.chart == null) repository.chart(value.range) else value.chart
+                    if ((value.tab == "charts" || isTwoPane) && value.chart == null) repository.chart(
+                        value.range
+                    ) else value.chart
                 mutable.value = mutable.value.copy(
                     chart = chart,
                     page = page,
                     loading = false,
-                    hasNext = if (backwards) anchor != null else records.size > 128,
-                    hasPrevious = if (backwards) records.size > 128 else anchor != null
+                    hasNext = if (pageBackwards) pageAnchor != null else records.size > 128,
+                    hasPrevious = hasPrevious,
+                    anchor = pageAnchor,
+                    backwards = pageBackwards,
+                    includeAnchor = pageIncludesAnchor
                 )
             } catch (exception: CancellationException) {
                 throw exception
@@ -189,9 +228,10 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
             rangeLabel = label,
             chart = null,
             page = emptyList(),
-            selectedPointId = null
+            selectedPointId = null,
+            eventToReveal = null
         )
-        refresh(null, false)
+        refresh(null, false, includeAnchor = false)
     }
 
     fun tab(tab: String) {
@@ -200,12 +240,35 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         if (tab == "charts" && mutable.value.chart == null) refresh(forceChart = false)
     }
 
+    fun twoPane(active: Boolean) {
+        if (isTwoPane == active) return
+        isTwoPane = active
+        if (!active) mutable.value = mutable.value.copy(eventToReveal = null)
+        refresh(forceChart = false)
+    }
+
     fun metric(metric: HistoryMetric) {
-        mutable.value = mutable.value.copy(metric = metric, selectedPointId = null)
+        val hadSelection = mutable.value.selectedPointId != null
+        mutable.value =
+            mutable.value.copy(metric = metric, selectedPointId = null, eventToReveal = null)
+        if (isTwoPane && hadSelection) refresh(forceChart = false)
     }
 
     fun selectPoint(id: Long?) {
-        mutable.value = mutable.value.copy(selectedPointId = id)
+        val current = mutable.value
+        val point =
+            current.chart?.series?.get(current.metric)?.points?.firstOrNull { it.key.id == id }
+        mutable.value = current.copy(
+            selectedPointId = id, eventToReveal = id.takeIf { isTwoPane && point != null })
+        if (isTwoPane && point != null && (current.loading || current.page.none { it.id == id })) {
+            scroll(0, 0)
+            refresh(point.key, false, false, includeAnchor = true)
+        }
+    }
+
+    fun eventRevealed(id: Long) {
+        if (mutable.value.eventToReveal == id) mutable.value =
+            mutable.value.copy(eventToReveal = null)
     }
 
     fun scroll(index: Int, offset: Int) {
@@ -216,21 +279,29 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     fun reverse() {
         scroll(0, 0)
         mutable.value = mutable.value.copy(ascending = !mutable.value.ascending)
-        refresh(null, false, false)
+        mutable.value = mutable.value.copy(eventToReveal = null)
+        refresh(null, false, false, includeAnchor = false)
     }
 
     fun filters(filters: Set<String>) {
         preferences.edit { historyFilterKeys.forEach { putBoolean(it, it in filters) } }
         scroll(0, 0)
-        mutable.value = mutable.value.copy(filters = filters)
-        refresh(null, false, false)
+        mutable.value =
+            mutable.value.copy(filters = filters, selectedPointId = null, eventToReveal = null)
+        refresh(null, false, false, includeAnchor = false)
     }
 
     fun next(previous: Boolean) {
         val page = mutable.value.page
         if (page.isEmpty()) return
         scroll(0, 0)
-        refresh(if (previous) page.first().key else page.last().key, previous, false)
+        mutable.value = mutable.value.copy(eventToReveal = null)
+        refresh(
+            if (previous) page.first().key else page.last().key,
+            previous,
+            false,
+            includeAnchor = false
+        )
     }
 
     suspend fun duration(record: HistoryRecord) = repository.duration(record)
@@ -289,8 +360,8 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
             mutable.value = mutable.value.copy(busy = false)
             onDone(success)
             if (success && reload) {
-                mutable.value = mutable.value.copy(selectedPointId = null)
-                scroll(0, 0); refresh(null, false)
+                mutable.value = mutable.value.copy(selectedPointId = null, eventToReveal = null)
+                scroll(0, 0); refresh(null, false, includeAnchor = false)
             }
         }
     }
