@@ -707,4 +707,5 @@
   <string name="pref_discharging_target" formatted="false">Țintă de descărcare</string>
   <string name="pref_discharging_target_help" formatted="false">Setați nivelul final al estimărilor de descărcare. Este independent de alarmele pentru baterie descărcată.</string>
   <string name="pref_target_level_summary" formatted="true">Estimează până la %1$d%%.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
@@ -68,6 +70,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -102,6 +110,7 @@ import codes.swistak.batterymonitor.ui.components.historyRangeValue
 import codes.swistak.batterymonitor.ui.components.historyValue
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -119,7 +128,7 @@ internal fun HistoryActionsMenu(enabled: Boolean, onAction: (String) -> Unit) {
     Box {
         IconButton(onClick = { expanded = true }, enabled = enabled, modifier = Modifier.semantics {
             contentDescription = label
-        }) { Icon(painterResource(R.drawable.ui_share), null) }
+        }) { Icon(painterResource(R.drawable.ui_more), null) }
         DropdownMenu(expanded, onDismissRequest = { expanded = false }) {
             listOf(
                 R.string.log_export_mode_title to "export",
@@ -163,7 +172,13 @@ internal fun HistoryRoute(
     val context = LocalContext.current
     val appContext = context.applicationContext
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val snapshot by monitoring.collectAsStateWithLifecycle()
+    val monitoredChange by remember(monitoring) {
+        monitoring.map {
+            Triple(
+                it.snapshot?.levelPercent, it.snapshot?.status, it.snapshot?.plugged
+            )
+        }.distinctUntilChanged()
+    }.collectAsStateWithLifecycle(initialValue = Triple(null, null, null))
     val locale = LocalConfiguration.current.locales[0]
     val settings = remember {
         appContext.getSharedPreferences(
@@ -275,18 +290,20 @@ internal fun HistoryRoute(
         dialog = null
     }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.refresh() }
-    LaunchedEffect(
-        snapshot.snapshot?.levelPercent, snapshot.snapshot?.status, snapshot.snapshot?.plugged
-    ) { viewModel.refresh() }
+    LaunchedEffect(monitoredChange) { viewModel.refresh() }
     val chartList = rememberLazyListState()
-    val logList = rememberLazyListState(state.scrollIndex, state.scrollOffset)
+    val logList = rememberLazyListState(viewModel.scrollIndex, viewModel.scrollOffset)
     LaunchedEffect(logList) {
         snapshotFlow { logList.firstVisibleItemIndex to logList.firstVisibleItemScrollOffset }.distinctUntilChanged()
             .collect { (index, offset) -> viewModel.scroll(index, offset) }
     }
     val list = if (state.tab == "charts") chartList else logList
     LaunchedEffect(state.range, state.ascending, state.filters, state.anchor, state.tab) {
-        if (state.scrollIndex == 0 && state.scrollOffset == 0) logList.scrollToItem(0)
+        if (viewModel.scrollIndex == 0 && viewModel.scrollOffset == 0) logList.scrollToItem(0)
+    }
+    val zone = ZoneId.systemDefault()
+    val logDays = remember(state.page, zone) {
+        state.page.groupBy { Instant.ofEpochMilli(it.record.time).atZone(zone).toLocalDate() }
     }
     val dateFormat = remember(locale) {
         DateTimeFormatter.ofPattern(
@@ -303,11 +320,16 @@ internal fun HistoryRoute(
         modifier,
         state = list,
         contentPadding = PaddingValues(20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = if (state.tab == "logs") Arrangement.Top else Arrangement.spacedBy(12.dp)
     ) {
-        item { HistoryRangeControl(state, viewModel::range) }
+        item {
+            Box(Modifier.padding(bottom = if (state.tab == "logs") 12.dp else 0.dp)) {
+                HistoryRangeControl(state, viewModel::range)
+            }
+        }
         item {
             SecondaryTabRow(
+                modifier = Modifier.padding(bottom = if (state.tab == "logs") 12.dp else 0.dp),
                 selectedTabIndex = if (state.tab == "logs") 1 else 0,
                 containerColor = MaterialTheme.colorScheme.background,
                 indicator = {
@@ -463,7 +485,10 @@ internal fun HistoryRoute(
             }
         } else {
             item {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    Modifier.padding(bottom = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
                     FilterChip(
                         selected = state.filters.size == historyFilterKeys.size,
                         onClick = { dialog = "filters" },
@@ -498,10 +523,8 @@ internal fun HistoryRoute(
                 }
                 if (!state.loading && state.page.isEmpty()) Text(stringResource(R.string.logs_empty))
             }
-            state.page.groupBy {
-                Instant.ofEpochMilli(it.record.time).atZone(ZoneId.systemDefault()).toLocalDate()
-            }.forEach { (date, entries) ->
-                item(key = "day:$date") {
+            logDays.forEach { (date, entries) ->
+                item(key = "day:$date", contentType = "day") {
                     val day = if (date.year == LocalDate.now().year) dateFormat.format(date)
                     else DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
                         .format(date)
@@ -515,33 +538,46 @@ internal fun HistoryRoute(
                         },
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(top = 8.dp, bottom = 10.dp)
+                        modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
                     )
-                    OutlinedCard(
-                        Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(20.dp),
-                        colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                }
+                itemsIndexed(
+                    entries,
+                    key = { _, entry -> entry.id },
+                    contentType = { _, _ -> "log" }) { index, entry ->
+                    val first = index == 0
+                    val last = index == entries.lastIndex
+                    val shape = RoundedCornerShape(
+                        topStart = if (first) 20.dp else 0.dp,
+                        topEnd = if (first) 20.dp else 0.dp,
+                        bottomStart = if (last) 20.dp else 0.dp,
+                        bottomEnd = if (last) 20.dp else 0.dp
+                    )
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .clip(shape)
+                            .background(MaterialTheme.colorScheme.surface)
+                            .logGroupBorder(first, last, MaterialTheme.colorScheme.outlineVariant)
                     ) {
-                        entries.forEachIndexed { index, entry ->
-                            val record = entry.record
-                            val code = LogDatabase.decodeStatus(record.status)
-                            val icon = when {
-                                record.status == -1 -> R.drawable.ui_refresh
-                                code[0] == 0 && code[2] == 0 -> R.drawable.ui_plug
-                                code[0] == 2 -> R.drawable.ui_bolt
-                                code[0] == 5 -> R.drawable.ui_battery
-                                else -> R.drawable.ui_down
-                            }
-                            val title = when {
-                                code[0] == 0 && code[2] == 0 -> stringResource(R.string.history_disconnected)
-                                code[0] == 2 && code[2] == 0 -> stringResource(R.string.history_charge_started)
-                                else -> status(record).substringBefore(" · ")
-                            }
-                            val description =
-                                if (record.status == -1) stringResource(R.string.history_system_event)
-                                else listOfNotNull(
-                                    HistoryMetric.CURRENT.value(record)?.let {
+                        val record = entry.record
+                        val code = LogDatabase.decodeStatus(record.status)
+                        val icon = when {
+                            record.status == -1 -> R.drawable.ui_refresh
+                            code[0] == 0 && code[2] == 0 -> R.drawable.ui_plug
+                            code[0] == 2 -> R.drawable.ui_bolt
+                            code[0] == 5 -> R.drawable.ui_battery
+                            else -> R.drawable.ui_down
+                        }
+                        val title = when {
+                            code[0] == 0 && code[2] == 0 -> stringResource(R.string.history_disconnected)
+                            code[0] == 2 && code[2] == 0 -> stringResource(R.string.history_charge_started)
+                            else -> status(record).substringBefore(" · ")
+                        }
+                        val description =
+                            if (record.status == -1) stringResource(R.string.history_system_event)
+                            else listOfNotNull(
+                                HistoryMetric.CURRENT.value(record)?.let {
                                     historyValue(
                                         it,
                                         HistoryMetric.CURRENT,
@@ -550,76 +586,76 @@ internal fun HistoryRoute(
                                         currentMultiplier
                                     )
                                 },
-                                    plugged.getOrNull(code[1])?.takeIf { code[1] > 0 },
-                                    HistoryMetric.TEMPERATURE.value(record)?.let {
-                                        historyValue(
-                                            it, HistoryMetric.TEMPERATURE, fahrenheit, locale
-                                        )
-                                    },
-                                    HistoryMetric.VOLTAGE.value(record)?.let {
-                                        historyValue(
-                                            it, HistoryMetric.VOLTAGE, fahrenheit, locale
-                                        )
-                                    }).joinToString(" · ")
-                                    .ifEmpty { stringResource(R.string.current_unavailable) }
-                            Row(Modifier
+                                plugged.getOrNull(code[1])?.takeIf { code[1] > 0 },
+                                HistoryMetric.TEMPERATURE.value(record)?.let {
+                                    historyValue(
+                                        it, HistoryMetric.TEMPERATURE, fahrenheit, locale
+                                    )
+                                },
+                                HistoryMetric.VOLTAGE.value(record)?.let {
+                                    historyValue(
+                                        it, HistoryMetric.VOLTAGE, fahrenheit, locale
+                                    )
+                                }).joinToString(" · ")
+                                .ifEmpty { stringResource(R.string.current_unavailable) }
+                        Row(
+                            Modifier
                                 .fillMaxWidth()
                                 .clickable { detailsId = entry.id }
                                 .heightIn(min = 67.dp)
                                 .padding(horizontal = 13.dp, vertical = 12.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(11.dp)) {
-                                Surface(
-                                    shape = RoundedCornerShape(12.dp),
-                                    color = MaterialTheme.colorScheme.surfaceVariant
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(11.dp)) {
+                            Surface(
+                                shape = RoundedCornerShape(12.dp),
+                                color = MaterialTheme.colorScheme.surfaceVariant
+                            ) {
+                                Box(
+                                    Modifier.size(35.dp), contentAlignment = Alignment.Center
                                 ) {
-                                    Box(
-                                        Modifier.size(35.dp), contentAlignment = Alignment.Center
-                                    ) {
-                                        Icon(
-                                            painterResource(icon),
-                                            null,
-                                            Modifier.size(19.dp),
-                                            tint = MaterialTheme.colorScheme.primary
-                                        )
-                                    }
-                                }
-                                Column(Modifier.weight(1f)) {
-                                    Text(
-                                        title,
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        fontWeight = FontWeight.SemiBold
-                                    )
-                                    Text(
-                                        description,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
-                                }
-                                Column(horizontalAlignment = Alignment.End) {
-                                    Text(
-                                        historyValue(
-                                            HistoryMetric.LEVEL.value(record),
-                                            HistoryMetric.LEVEL,
-                                            fahrenheit,
-                                            locale
-                                        ),
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        fontWeight = FontWeight.SemiBold
-                                    )
-                                    Text(
-                                        DisplayStrings.formatTime(
-                                            context, Date(record.time), seconds
-                                        ),
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    Icon(
+                                        painterResource(icon),
+                                        null,
+                                        Modifier.size(19.dp),
+                                        tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
                             }
-                            if (index < entries.lastIndex) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                            Column(Modifier.weight(1f)) {
+                                Text(
+                                    title,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                Text(
+                                    description,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                            Column(horizontalAlignment = Alignment.End) {
+                                Text(
+                                    historyValue(
+                                        HistoryMetric.LEVEL.value(record),
+                                        HistoryMetric.LEVEL,
+                                        fahrenheit,
+                                        locale
+                                    ),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                Text(
+                                    DisplayStrings.formatTime(
+                                        context, Date(record.time), seconds
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                         }
+                        if (!last) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                     }
                 }
             }
@@ -628,11 +664,16 @@ internal fun HistoryRoute(
                     stringResource(R.string.history_raw_observations),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 6.dp)
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 12.dp)
                 )
             }
             if (state.hasPrevious || state.hasNext) item {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     TextButton(
                         onClick = { viewModel.next(true) },
                         enabled = state.hasPrevious && !state.loading
@@ -647,7 +688,9 @@ internal fun HistoryRoute(
         item {
             OutlinedButton(
                 onClick = { dialog = "export" },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = if (state.tab == "logs") 12.dp else 0.dp),
                 enabled = !state.busy,
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                 contentPadding = PaddingValues(12.dp)
@@ -735,8 +778,8 @@ internal fun HistoryRoute(
     })
     if (dialog == "replace") AlertDialog(
         onDismissRequest = {
-        dialog = null; viewModel.pendingImportUri = null
-    },
+            dialog = null; viewModel.pendingImportUri = null
+        },
         title = { Text(stringResource(R.string.log_import_replace)) },
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
@@ -762,8 +805,8 @@ internal fun HistoryRoute(
     )
     if (dialog == "deleteSelected" || dialog == "deleteAll") AlertDialog(
         onDismissRequest = {
-        dialog = null
-    },
+            dialog = null
+        },
         title = { Text(stringResource(if (dialog == "deleteAll") R.string.history_delete_all else R.string.history_delete_selected)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -879,4 +922,42 @@ private fun ChoiceDialog(title: Int, onDismiss: () -> Unit, choices: List<Pair<I
         },
         confirmButton = {},
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } })
+}
+
+private fun Modifier.logGroupBorder(first: Boolean, last: Boolean, color: Color) = drawBehind {
+    val width = 1.dp.toPx()
+    val half = width / 2
+    val radius = 20.dp.toPx().coerceAtMost(size.height / 2)
+    val path = Path().apply {
+        moveTo(half, if (first) radius else 0f)
+        if (first) {
+            arcTo(Rect(half, half, 2 * radius - half, 2 * radius - half), 180f, 90f, false)
+            lineTo(size.width - radius, half)
+            arcTo(
+                Rect(size.width - 2 * radius + half, half, size.width - half, 2 * radius - half),
+                270f,
+                90f,
+                false
+            )
+        } else moveTo(size.width - half, 0f)
+        lineTo(size.width - half, if (last) size.height - radius else size.height)
+        if (last) {
+            arcTo(
+                Rect(
+                    size.width - 2 * radius + half,
+                    size.height - 2 * radius + half,
+                    size.width - half,
+                    size.height - half
+                ), 0f, 90f, false
+            )
+            lineTo(radius, size.height - half)
+            arcTo(
+                Rect(
+                    half, size.height - 2 * radius + half, 2 * radius - half, size.height - half
+                ), 90f, 90f, false
+            )
+        } else moveTo(half, size.height)
+        lineTo(half, if (first) radius else 0f)
+    }
+    drawPath(path, color, style = Stroke(width))
 }

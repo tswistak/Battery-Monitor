@@ -718,4 +718,5 @@
   <string name="pref_discharging_target" formatted="false">Цель разрядки</string>
   <string name="pref_discharging_target_help" formatted="false">Задайте конечный уровень оценки разрядки. Он не зависит от предупреждений о низком заряде.</string>
   <string name="pref_target_level_summary" formatted="true">Оценивать до %1$d%%.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

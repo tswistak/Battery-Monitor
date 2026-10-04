@@ -671,4 +671,5 @@
   <string name="pref_discharging_target" formatted="false">Entladeziel</string>
   <string name="pref_discharging_target_help" formatted="false">Legt den Endstand für Entladeschätzungen fest. Dies ist unabhängig von Warnungen bei niedrigem Akkustand.</string>
   <string name="pref_target_level_summary" formatted="true">Bis %1$d%% schätzen.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

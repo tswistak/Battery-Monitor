@@ -9,7 +9,6 @@ package codes.swistak.batterymonitor.logs
 
 import android.content.Context
 import android.net.Uri
-import android.provider.OpenableColumns
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.settings.SettingsContract
 import kotlinx.coroutines.Dispatchers
@@ -36,30 +35,23 @@ internal inline fun completeHistoryExport(
 
 internal suspend fun exportHistory(context: Context, uri: Uri, request: HistoryExportRequest) =
     withContext(Dispatchers.IO) {
-        val resolver = context.contentResolver
-        val empty = if (request.append) {
-            resolver.query(uri, arrayOf(OpenableColumns.SIZE), null, null, null)?.use {
-                if (it.moveToFirst() && !it.isNull(0)) it.getLong(0) == 0L else null
-            } ?: resolver.openInputStream(uri)?.use { it.read() == -1 }
-            ?: error("Could not read append target")
-        } else true
-        if (request.append && !empty) LogExport.requireCurrentCsvHeader(context, uri)
         val database = LogDatabase(context.applicationContext)
         try {
             completeHistoryExport(request, write = {
-                resolver.openOutputStream(uri, if (request.append) "wa" else "w")?.use { output ->
-                    val start = (request.after ?: -1L) + 1
-                    val records = if (start <= request.through) {
-                        historyQuery(HistoryRangeState(start, request.through + 1))
-                    } else null
+                val start = (request.after ?: -1L) + 1
+                val records = if (start <= request.through) {
+                    historyQuery(HistoryRangeState(start, request.through + 1))
+                } else null
 
-                    fun write(sequence: Sequence<HistoryRecord>) {
+                fun write(sequence: Sequence<HistoryRecord>) {
+                    if (request.append) {
+                        LogExport.appendCsv(context, uri, sequence.map { it.record })
+                        return
+                    }
+                    context.contentResolver.openOutputStream(uri, "wt")?.use { output ->
                         when (request.format) {
                             LogExportFormat.CSV -> LogExport.writeCsv(
-                                context,
-                                output,
-                                sequence.map { it.record },
-                                !request.append || empty
+                                context, output, sequence.map { it.record }, includeHeader = true
                             )
 
                             LogExportFormat.JSON -> output.write(
@@ -68,11 +60,11 @@ internal suspend fun exportHistory(context: Context, uri: Uri, request: HistoryE
                                 ).toString().toByteArray(Charsets.UTF_8)
                             )
                         }
-                    }
-                    if (records == null) write(emptySequence()) else database.readHistory(
-                        records, ::write
-                    )
-                } ?: error("Could not open export file")
+                    } ?: error("Could not open export file")
+                }
+                if (records == null) write(emptySequence()) else database.readHistory(
+                    records, ::write
+                )
             }, saveWatermark = { through ->
                 val preferences = context.getSharedPreferences(
                     SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE

@@ -692,4 +692,5 @@
   <string name="pref_discharging_target" formatted="false">放電目標</string>
   <string name="pref_discharging_target_help" formatted="false">放電見積もりの終了残量を設定します。低残量アラームとは独立しています。</string>
   <string name="pref_target_level_summary" formatted="true">%1$d%% まで見積もります。</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

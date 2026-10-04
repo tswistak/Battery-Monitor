@@ -700,4 +700,5 @@
   <string name="pref_discharging_target" formatted="false">هدف تخلیه</string>
   <string name="pref_discharging_target_help" formatted="false">سطح پایانی برآورد تخلیه را تنظیم کنید. این گزینه از هشدارهای کمبود باتری مستقل است.</string>
   <string name="pref_target_level_summary" formatted="true">برآورد تا %1$d%%.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

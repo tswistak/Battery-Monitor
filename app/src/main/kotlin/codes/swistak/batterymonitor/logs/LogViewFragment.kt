@@ -22,7 +22,6 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.CursorWrapper
 import android.os.Bundle
-import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -427,14 +426,9 @@ class LogViewFragment : ListFragment() {
             val records = LogExport.loadRecords(
                 requireContext(), pendingExportAfter, pendingExportThrough
             )
-            val empty = append && isDocumentEmpty(uri)
-            if (append && !empty) LogExport.requireCurrentCsvHeader(requireContext(), uri)
-            requireActivity().contentResolver.openOutputStream(
-                uri, if (append) "wa" else "w"
-            )?.use { output ->
-                LogExport.writeCsv(
-                    requireContext(), output, records, includeHeader = !append || empty
-                )
+            if (append) LogExport.appendCsv(requireContext(), uri, records.asSequence())
+            else requireActivity().contentResolver.openOutputStream(uri, "wt")?.use { output ->
+                LogExport.writeCsv(requireContext(), output, records, includeHeader = true)
             } ?: error("Could not open export file")
             pFrag!!.settings.edit {
                 putLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, pendingExportThrough)
@@ -446,17 +440,6 @@ class LogViewFragment : ListFragment() {
                 else DisplayStrings.inaccessibleStorage, Toast.LENGTH_SHORT
             ).show()
         }
-    }
-
-    private fun isDocumentEmpty(uri: android.net.Uri): Boolean {
-        requireActivity().contentResolver.query(
-            uri, arrayOf(OpenableColumns.SIZE), null, null, null
-        )?.use { cursor ->
-            if (cursor.moveToFirst() && !cursor.isNull(0)) return cursor.getLong(0) == 0L
-        }
-        return requireActivity().contentResolver.openInputStream(uri)?.use {
-            it.read() == -1
-        } ?: true
     }
 
     // Based on http://stackoverflow.com/a/7343721/1427098

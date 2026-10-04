@@ -719,4 +719,5 @@
   <string name="pref_discharging_target" formatted="false">Iškrovimo tikslas</string>
   <string name="pref_discharging_target_help" formatted="false">Nustatykite galutinį iškrovimo įverčių lygį. Jis nepriklauso nuo išsikrovusio akumuliatoriaus įspėjimų.</string>
   <string name="pref_target_level_summary" formatted="true">Vertinti iki %1$d%%.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

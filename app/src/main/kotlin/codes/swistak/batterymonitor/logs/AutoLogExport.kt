@@ -41,7 +41,7 @@ internal enum class AutoLogExportFrequency(
 
         fun enabledForRetention(maxLogAgeHours: Int): List<AutoLogExportFrequency> =
             entries.filter { frequency ->
-                frequency.intervalHours?.let { maxLogAgeHours < 0 || it <= maxLogAgeHours } == true
+                frequency.intervalHours?.let { maxLogAgeHours !in 0..<it } == true
             }
 
         fun cappedForRetention(
@@ -300,9 +300,7 @@ internal object AutoLogExporter {
         existed: Boolean
     ) {
         if (format == LogExportFormat.CSV) {
-            context.contentResolver.openOutputStream(uri, if (existed) "wa" else "w")?.use {
-                LogExport.writeCsv(context, it, records, includeHeader = !existed)
-            } ?: error("Could not open automatic export file")
+            LogExport.appendCsv(context, uri, records.asSequence())
             return
         }
 

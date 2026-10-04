@@ -53,8 +53,6 @@ internal data class HistoryUiState(
     val hasPrevious: Boolean = false,
     val anchor: HistoryKey? = null,
     val backwards: Boolean = false,
-    val scrollIndex: Int = 0,
-    val scrollOffset: Int = 0,
     val selectedPointId: Long? = null
 )
 
@@ -68,6 +66,11 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     val state = mutable.asStateFlow()
     private var queryJob: Job? = null
     private var restored = false
+    var scrollIndex = 0
+        private set
+    var scrollOffset = 0
+        private set
+
     var pendingExport: HistoryExportRequest? = null
     var pendingImportUri: String? = null
     var pendingImportJson = false
@@ -93,6 +96,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         val start = bundle.getLong("start")
         val end = bundle.getLong("end")
         val range = if (start in 0..<end) HistoryRangeState(start, end) else mutable.value.range
+        scroll(bundle.getInt("scrollIndex"), bundle.getInt("scrollOffset"))
         mutable.value = mutable.value.copy(
             range = range,
             rangeLabel = bundle.getString("label", "custom"),
@@ -103,8 +107,6 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
                 bundle.getLong("anchorTime"), bundle.getLong("anchorId")
             ) else null,
             backwards = bundle.getBoolean("backwards"),
-            scrollIndex = bundle.getInt("scrollIndex"),
-            scrollOffset = bundle.getInt("scrollOffset"),
             selectedPointId = if (bundle.containsKey("point")) bundle.getLong("point") else null
         )
         if (bundle.containsKey("exportThrough")) pendingExport = HistoryExportRequest(
@@ -127,9 +129,8 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         "ascending", value.ascending
     )
         value.anchor?.let { putLong("anchorId", it.id); putLong("anchorTime", it.time) }
-        putBoolean("backwards", value.backwards); putInt(
-        "scrollIndex", value.scrollIndex
-    ); putInt("scrollOffset", value.scrollOffset)
+        putBoolean("backwards", value.backwards)
+        putInt("scrollIndex", scrollIndex); putInt("scrollOffset", scrollOffset)
         value.selectedPointId?.let { putLong("point", it) }
         pendingExport?.let {
             putBoolean(
@@ -155,16 +156,17 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
             "7d" -> HistoryRangeState.lastHours(168)
             else -> current.range
         } else current.range
-        val value = current.copy(range = range)
+        val value = current.copy(range = range, chart = if (forceChart) null else current.chart)
         mutable.value =
             value.copy(loading = true, error = false, anchor = anchor, backwards = backwards)
         queryJob = viewModelScope.launch {
             try {
-                val chart =
-                    if (forceChart || value.chart == null) repository.chart(value.range) else value.chart
+                // Events never scans the whole range to build an invisible chart.
                 val records =
                     repository.page(value.range, value.filters, value.ascending, anchor, backwards)
                 val page = records.take(128).let { if (backwards) it.reversed() else it }
+                val chart =
+                    if (value.tab == "charts" && value.chart == null) repository.chart(value.range) else value.chart
                 mutable.value = mutable.value.copy(
                     chart = chart,
                     page = page,
@@ -181,20 +183,21 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     }
 
     fun range(range: HistoryRangeState, label: String) {
+        scroll(0, 0)
         mutable.value = mutable.value.copy(
             range = range,
             rangeLabel = label,
             chart = null,
             page = emptyList(),
-            scrollIndex = 0,
-            scrollOffset = 0,
             selectedPointId = null
         )
         refresh(null, false)
     }
 
     fun tab(tab: String) {
+        if (mutable.value.tab == tab) return
         mutable.value = mutable.value.copy(tab = tab)
+        refresh(forceChart = false)
     }
 
     fun metric(metric: HistoryMetric) {
@@ -206,20 +209,20 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     }
 
     fun scroll(index: Int, offset: Int) {
-        mutable.value = mutable.value.copy(scrollIndex = index, scrollOffset = offset)
+        scrollIndex = index
+        scrollOffset = offset
     }
 
     fun reverse() {
-        mutable.value = mutable.value.copy(
-            ascending = !mutable.value.ascending, scrollIndex = 0, scrollOffset = 0
-        ); refresh(null, false, false)
+        scroll(0, 0)
+        mutable.value = mutable.value.copy(ascending = !mutable.value.ascending)
+        refresh(null, false, false)
     }
 
     fun filters(filters: Set<String>) {
-        preferences.edit {
-            historyFilterKeys.forEach { putBoolean(it, it in filters) };
-        }
-        mutable.value = mutable.value.copy(filters = filters, scrollIndex = 0, scrollOffset = 0)
+        preferences.edit { historyFilterKeys.forEach { putBoolean(it, it in filters) } }
+        scroll(0, 0)
+        mutable.value = mutable.value.copy(filters = filters)
         refresh(null, false, false)
     }
 

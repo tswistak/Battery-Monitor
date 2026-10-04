@@ -720,4 +720,5 @@
   <string name="pref_discharging_target" formatted="false">Cíl vybíjení</string>
   <string name="pref_discharging_target_help" formatted="false">Nastavte koncovou úroveň odhadů vybíjení. Je nezávislá na upozorněních na slabou baterii.</string>
   <string name="pref_target_level_summary" formatted="true">Odhadovat do %1$d%%.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

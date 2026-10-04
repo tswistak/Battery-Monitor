@@ -23,6 +23,7 @@ import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStreamReader
+import java.io.Reader
 import java.nio.charset.StandardCharsets
 import java.text.DateFormat
 import java.text.ParsePosition
@@ -239,6 +240,23 @@ internal object CsvLogImporter {
             "Invalid $name in CSV row $row"
         }
         return scaled.roundToInt()
+    }
+
+    internal fun readCsvRows(reader: Reader): Sequence<List<String>> = sequence {
+        val record = StringBuilder()
+        var quoted = false
+        while (true) {
+            val next = reader.read()
+            if (next == -1) break
+            val character = next.toChar()
+            if (character == '"') quoted = !quoted
+            if (!quoted && (character == '\r' || character == '\n')) {
+                if (record.isNotBlank()) yield(parseCsv(record.toString()).single())
+                record.clear()
+            } else record.append(character)
+        }
+        require(!quoted) { "Unterminated quoted CSV field" }
+        if (record.isNotBlank()) yield(parseCsv(record.toString()).single())
     }
 
     internal fun parseCsv(csv: String): List<List<String>> {

@@ -720,4 +720,5 @@
   <string name="pref_discharging_target" formatted="false">Cilj praznjenja</string>
   <string name="pref_discharging_target_help" formatted="false">Nastavite končno raven ocen praznjenja. Ta je neodvisna od opozoril o prazni bateriji.</string>
   <string name="pref_target_level_summary" formatted="true">Oceni do %1$d%%.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

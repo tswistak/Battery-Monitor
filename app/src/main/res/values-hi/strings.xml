@@ -696,4 +696,5 @@
   <string name="pref_discharging_target" formatted="false">डिस्चार्जिंग लक्ष्य</string>
   <string name="pref_discharging_target_help" formatted="false">डिस्चार्जिंग अनुमान का अंतिम स्तर सेट करें। यह कम बैटरी अलार्म से स्वतंत्र है।</string>
   <string name="pref_target_level_summary" formatted="true">%1$d%% तक अनुमान लगाएँ।</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

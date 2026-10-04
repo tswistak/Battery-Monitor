@@ -703,4 +703,5 @@
   <string name="pref_discharging_target" formatted="false">Objetivo de descarregamento</string>
   <string name="pref_discharging_target_help" formatted="false">Defina o nível final das estimativas de descarregamento. É independente dos alarmes de bateria fraca.</string>
   <string name="pref_target_level_summary" formatted="true">Estimar até %1$d%%.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

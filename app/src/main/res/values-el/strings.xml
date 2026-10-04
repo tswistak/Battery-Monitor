@@ -696,4 +696,5 @@
   <string name="pref_discharging_target" formatted="false">Στόχος αποφόρτισης</string>
   <string name="pref_discharging_target_help" formatted="false">Ορίστε το τελικό επίπεδο των εκτιμήσεων αποφόρτισης. Είναι ανεξάρτητο από τις ειδοποιήσεις χαμηλής μπαταρίας.</string>
   <string name="pref_target_level_summary" formatted="true">Εκτίμηση έως %1$d%%.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

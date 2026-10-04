@@ -24,6 +24,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -41,6 +43,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import codes.swistak.batterymonitor.R
 
 data class MenuSection(val id: String, val label: String)
 
@@ -95,7 +98,12 @@ fun SideMenuContent(
                 IconButton(onClick = onClose, modifier = Modifier.semantics {
                     contentDescription = closeLabel
                 }) {
-                    NavigationGlyph("close", colors.onSurfaceVariant)
+                    Icon(
+                        painterResource(R.drawable.ui_close),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp),
+                        tint = colors.onSurfaceVariant
+                    )
                 }
             }
         }
@@ -151,7 +159,23 @@ private fun MenuItem(
             .heightIn(min = 49.dp)
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically) {
-        NavigationGlyph(section.id, foreground)
+        val drawable = when (section.id) {
+            "current" -> R.drawable.ui_battery
+            "history" -> R.drawable.ui_history
+            "alarms" -> R.drawable.ui_bell
+            "diagnostics" -> R.drawable.ui_current
+            "settings" -> R.drawable.ui_settings
+            "help" -> R.drawable.ui_help
+            else -> null
+        }
+        if (drawable != null) {
+            Icon(
+                painterResource(drawable),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp),
+                tint = foreground
+            )
+        }
         Spacer(Modifier.width(14.dp))
         Text(
             section.label,

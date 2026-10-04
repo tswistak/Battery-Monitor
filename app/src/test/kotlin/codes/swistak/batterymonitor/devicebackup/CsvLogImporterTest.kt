@@ -23,11 +23,60 @@ import org.junit.Test
 
 class CsvLogImporterTest {
     @Test
-    fun `append accepts the raw current format and rejects older headers before writing`() {
-        assertTrue(LogExport.hasRawCurrentCsvHeader("Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Battery current (µA)"))
-        assertTrue(LogExport.hasRawCurrentCsvHeader("Data,Czas,Stan,Poziom,Temperatura,Temperatura F,Napięcie,\"Prąd, baterii (µA)\""))
-        assertFalse(LogExport.hasRawCurrentCsvHeader("Date,Time,Status,Charge,Temperature,Temperature F,Voltage"))
-        assertFalse(LogExport.hasRawCurrentCsvHeader("Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (mA)"))
+    fun `raw current headers support translated order and bidi controls`() {
+        val prefix = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,"
+        for (header in listOf(
+            "Battery current (µA)",
+            "µA (تيار البطارية)",
+            "تيار البطارية (\u200f\u202aµA\u202c\u200f)"
+        )) {
+            assertTrue(
+                LogExport.hasRawCurrentCsvHeader(
+                    CsvLogImporter.parseCsv(prefix + header).single()
+                )
+            )
+        }
+        assertFalse(
+            LogExport.hasRawCurrentCsvHeader(
+                CsvLogImporter.parseCsv(prefix + "Current (mA)").single()
+            )
+        )
+        assertFalse(
+            LogExport.hasRawCurrentCsvHeader(
+                CsvLogImporter.parseCsv(prefix.dropLast(1)).single()
+            )
+        )
+        for ((text, expected) in listOf(
+            "" to false, "a,b\r\n" to false, "a,b\n" to false, "a,b" to true
+        )) {
+            assertEquals(expected, LogExport.needsCsvSeparator(text.byteInputStream()))
+        }
+    }
+
+    @Test
+    fun `legacy CSV upgrade preserves quoted multiline and unquoted localized fields with empty current`() {
+        val csv =
+            "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\r\n" + "date,time,\"Charging,\r\nUSB \"\"slow\"\"\",50,30,86,4.0\r\n" + "date,time,Charging, AC,75,31.5,88.7,4.125"
+        val writer = java.io.StringWriter()
+        val column = "µA (تيار البطارية)"
+        LogExport.upgradeLegacyCsv(csv.reader().buffered(), writer, column)
+        val original = CsvLogImporter.parseCsv(csv)
+        val upgraded = CsvLogImporter.parseCsv(writer.toString())
+        assertEquals(original.first() + column, upgraded.first())
+        assertEquals(original.drop(1).map { it + "" }, upgraded.drop(1))
+        assertEquals(
+            CsvLogImporter.parseRecords(csv, { 122 }, { _, _ -> 1L }),
+            CsvLogImporter.parseRecords(writer.toString(), { 122 }, { _, _ -> 1L })
+        )
+        for (invalid in listOf(
+            "a,b,c,d,e,f\n1,2,3,4,5,6", "a,b,c,d,e,f,g\n1,2,3", "a,b,c,d,e,f,g\n\"unterminated"
+        )) {
+            assertThrows(IllegalArgumentException::class.java) {
+                LogExport.upgradeLegacyCsv(
+                    invalid.reader().buffered(), java.io.StringWriter(), column
+                )
+            }
+        }
     }
 
     @Test

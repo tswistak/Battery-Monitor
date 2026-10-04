@@ -15,13 +15,19 @@ package codes.swistak.batterymonitor.logs
 import android.content.Context
 import android.net.Uri
 import android.os.Build
+import android.util.Log
+import androidx.core.text.BidiFormatter
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import java.io.BufferedWriter
+import java.io.File
+import java.io.InputStream
 import java.io.OutputStream
 import java.io.OutputStreamWriter
+import java.io.Reader
+import java.io.Writer
 import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -38,18 +44,94 @@ internal enum class LogExportFormat(val preferenceValue: String, val extension: 
 }
 
 internal object LogExport {
-    private const val CURRENT_COLUMN_SUFFIX = " (µA)"
+    internal fun hasRawCurrentCsvHeader(columns: List<String>): Boolean =
+        columns.size == 8 && columns.last().contains("µA")
 
-    internal fun hasRawCurrentCsvHeader(header: String): Boolean {
-        val columns = CsvLogImporter.parseCsv(header).singleOrNull() ?: return false
-        return columns.size == 8 && columns.last().endsWith(CURRENT_COLUMN_SUFFIX)
+    private fun currentColumn(context: Context): String = context.getString(
+        R.string.log_csv_column_with_unit,
+        context.getString(R.string.pref_cat_battery_current_main),
+        BidiFormatter.getInstance(context.resources.configuration.locales[0]).unicodeWrap("µA")
+    )
+
+    internal fun upgradeLegacyCsv(reader: Reader, writer: Writer, currentColumn: String) {
+        val rows = CsvLogImporter.readCsvRows(reader).iterator()
+        require(rows.hasNext()) { "Missing CSV header" }
+        val header = rows.next()
+        require(header.size == 7) { "Unsupported CSV columns" }
+        fun write(row: List<String>) {
+            writer.write(row.joinToString(",", transform = ::csvField))
+            writer.write("\r\n")
+        }
+        write(header + currentColumn)
+        for (row in rows) {
+            require(row.size >= 7) { "Incomplete CSV row" }
+            write(row + "")
+        }
+        writer.flush()
     }
 
-    fun requireCurrentCsvHeader(context: Context, uri: Uri) {
+    internal fun needsCsvSeparator(input: InputStream): Boolean {
+        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+        var last = -1
+        while (true) {
+            val count = input.read(buffer)
+            if (count == -1) break
+            if (count > 0) last = buffer[count - 1].toInt() and 0xff
+        }
+        return last != -1 && last != '\r'.code && last != '\n'.code
+    }
+
+    fun appendCsv(context: Context, uri: Uri, records: Sequence<LogRecord>) {
+        val resolver = context.contentResolver
         val header =
-            context.contentResolver.openInputStream(uri)?.bufferedReader(StandardCharsets.UTF_8)
-                ?.use { it.readLine() } ?: error("Could not read append target")
-        require(hasRawCurrentCsvHeader(header)) { context.getString(R.string.history_append_current_format) }
+            (resolver.openInputStream(uri) ?: error("Could not read append target")).bufferedReader(
+                StandardCharsets.UTF_8
+            ).use { CsvLogImporter.readCsvRows(it).firstOrNull().orEmpty() }
+        if (header.isEmpty() || hasRawCurrentCsvHeader(header)) {
+            val needsSeparator = header.isNotEmpty() && (resolver.openInputStream(uri)
+                ?: error("Could not read append target")).use(::needsCsvSeparator)
+            resolver.openOutputStream(uri, if (header.isEmpty()) "wt" else "wa")?.use { output ->
+                if (needsSeparator) output.write("\r\n".toByteArray(StandardCharsets.UTF_8))
+                writeCsv(context, output, records, includeHeader = header.isEmpty())
+            } ?: error("Could not open append target")
+            return
+        }
+        require(header.size == 7) { "Unsupported CSV columns" }
+
+        val original = File.createTempFile("csv-recovery-", ".csv", context.filesDir)
+        val upgraded = File.createTempFile("csv-upgrade-", ".csv", context.cacheDir)
+        var retainRecovery = false
+        try {
+            resolver.openInputStream(uri)
+                ?.use { input -> original.outputStream().use { output -> input.copyTo(output) } }
+                ?: error("Could not read append target")
+            upgraded.outputStream().use { output ->
+                original.bufferedReader(StandardCharsets.UTF_8).use { input ->
+                    val writer = OutputStreamWriter(output, StandardCharsets.UTF_8).buffered()
+                    upgradeLegacyCsv(input, writer, currentColumn(context))
+                }
+                writeCsv(context, output, records, includeHeader = false)
+            }
+            try {
+                resolver.openOutputStream(uri, "wt")?.use { output ->
+                    upgraded.inputStream().use { it.copyTo(output) }
+                } ?: error("Could not replace append target")
+            } catch (failure: Exception) {
+                try {
+                    resolver.openOutputStream(uri, "wt")?.use { output ->
+                        original.inputStream().use { it.copyTo(output) }
+                    } ?: error("Could not restore append target")
+                } catch (recoveryFailure: Exception) {
+                    retainRecovery = true
+                    failure.addSuppressed(recoveryFailure)
+                    Log.e("LogExport", "Original CSV retained at $original", recoveryFailure)
+                }
+                throw failure
+            }
+        } finally {
+            upgraded.delete()
+            if (!retainRecovery) original.delete()
+        }
     }
 
     fun loadRecords(
@@ -70,8 +152,7 @@ internal object LogExport {
         return "${fileNamePrefix()}-$formattedTime.${format.extension}"
     }
 
-    fun appendFileName(format: LogExportFormat): String =
-        "${fileNamePrefix()}${if (format == LogExportFormat.CSV) "-current" else ""}.${format.extension}"
+    fun appendFileName(format: LogExportFormat): String = "${fileNamePrefix()}.${format.extension}"
 
     fun writeCsv(
         context: Context, output: OutputStream, records: List<LogRecord>, includeHeader: Boolean
@@ -97,7 +178,7 @@ internal object LogExport {
                     resources.getString(R.string.temperature),
                     resources.getString(R.string.temperature_f),
                     resources.getString(R.string.voltage),
-                    resources.getString(R.string.pref_cat_battery_current_main) + CURRENT_COLUMN_SUFFIX
+                    currentColumn(context)
                 ).joinToString(",", transform = ::csvField)
             )
             writer.write("\r\n")

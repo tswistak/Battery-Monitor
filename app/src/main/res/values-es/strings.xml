@@ -701,4 +701,5 @@
   <string name="pref_discharging_target" formatted="false">Objetivo de descarga</string>
   <string name="pref_discharging_target_help" formatted="false">Define el nivel final de las estimaciones de descarga. Es independiente de las alarmas de batería baja.</string>
   <string name="pref_target_level_summary" formatted="true">Estimar hasta %1$d%%.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

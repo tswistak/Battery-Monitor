@@ -740,4 +740,5 @@
   <string name="pref_discharging_target" formatted="false">هدف التفريغ</string>
   <string name="pref_discharging_target_help" formatted="false">اضبط المستوى النهائي لتقديرات التفريغ. وهو مستقل عن تنبيهات انخفاض البطارية.</string>
   <string name="pref_target_level_summary" formatted="true">تقدير حتى %1$d%%.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

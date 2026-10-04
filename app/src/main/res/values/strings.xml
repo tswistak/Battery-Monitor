@@ -801,5 +801,5 @@
   <string name="history_raw_observations">Stored observations. Details show the available readings and their time.</string>
   <string name="history_export_selected">Export selected range</string>
   <string name="history_change_range">Change</string>
-  <string name="history_append_current_format">This CSV uses an older log format. Export to a new file to include raw current; the existing file has been kept intact.</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>

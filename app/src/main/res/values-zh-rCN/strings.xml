@@ -677,4 +677,5 @@
   <string name="pref_discharging_target" formatted="false">放电目标</string>
   <string name="pref_discharging_target_help" formatted="false">设置放电估算的结束电量。此设置与低电量警报无关。</string>
   <string name="pref_target_level_summary" formatted="true">估算至 %1$d%%。</string>
+  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
 </resources>
