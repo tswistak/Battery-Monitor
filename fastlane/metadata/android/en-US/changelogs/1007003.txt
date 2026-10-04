@@ -1,0 +1,3 @@
+Improved:
+
+- Main notification is now expandable with vital signs details (#129, thanks @LiberiFatali).
