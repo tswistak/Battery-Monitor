@@ -59,10 +59,10 @@ private fun PreviewCurrentState(
     BatteryTheme(colorSource = ColorSource.BatteryBlue) {
         CurrentStateScreen(
             currentStateModel(
-            MonitoringUiState(availability, snapshot),
-            monitoringEnabled = monitoringEnabled,
-            notificationsEnabled = notificationsEnabled
-        ),
+                MonitoringUiState(availability, snapshot),
+                monitoringEnabled = monitoringEnabled,
+                notificationsEnabled = notificationsEnabled
+            ),
             CurrentPreferences(
                 true, false, 2000, 1, false, LongDurationFormat.DAYS_AND_HOURS, "-2", true
             ),
@@ -146,3 +146,17 @@ private fun MonitoringDisabledPreview() =
 )
 @Composable
 private fun LargeTextPreview() = PreviewCurrentState()
+
+@Preview(name = "Tablet content", widthDp = 1000, heightDp = 700, showBackground = true)
+@Composable
+private fun TabletPreview() = PreviewCurrentState()
+
+@Preview(
+    name = "Tablet large text",
+    widthDp = 1000,
+    heightDp = 700,
+    fontScale = 2f,
+    showBackground = true
+)
+@Composable
+private fun TabletLargeTextPreview() = PreviewCurrentState()

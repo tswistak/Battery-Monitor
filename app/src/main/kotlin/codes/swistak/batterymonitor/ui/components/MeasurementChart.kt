@@ -171,7 +171,8 @@ internal fun MeasurementChart(
     onSelect: (Long) -> Unit,
     modifier: Modifier = Modifier,
     compact: Boolean = false,
-    currentMultiplier: Int = 1
+    currentMultiplier: Int = 1,
+    compactChartHeight: androidx.compose.ui.unit.Dp = 56.dp
 ) {
     val locale = LocalConfiguration.current.locales[0]
     val series = model.series.getValue(metric)
@@ -292,41 +293,42 @@ internal fun MeasurementChart(
                 }
             }
             Column(Modifier.weight(1f)) {
-                Canvas(Modifier
-                    .fillMaxWidth()
-                    .height(if (compact) 56.dp else 160.dp)
-                    .semantics {
-                        contentDescription = description
-                        stateDescription = selected?.let {
-                            "${time(it.key.time)}, ${
-                                historyValue(
-                                    it.value, metric, fahrenheit, locale, currentMultiplier
-                                )
-                            }"
-                        } ?: "—"
-                        if (!compact) customActions = listOf(
-                            CustomAccessibilityAction(previous) { move(-1) },
-                            CustomAccessibilityAction(next) { move(1) })
-                    }
-                    .onKeyEvent {
-                        if (it.type != KeyEventType.KeyDown || compact) false
-                        else when (it.key) {
-                            Key.DirectionLeft -> move(-1); Key.DirectionRight -> move(1); else -> false
+                Canvas(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(if (compact) compactChartHeight else 160.dp)
+                        .semantics {
+                            contentDescription = description
+                            stateDescription = selected?.let {
+                                "${time(it.key.time)}, ${
+                                    historyValue(
+                                        it.value, metric, fahrenheit, locale, currentMultiplier
+                                    )
+                                }"
+                            } ?: "—"
+                            if (!compact) customActions = listOf(
+                                CustomAccessibilityAction(previous) { move(-1) },
+                                CustomAccessibilityAction(next) { move(1) })
                         }
-                    }
-                    .focusable(!compact)
-                    .pointerInput(points, model.range, onSelect) {
-                        if (!compact) detectTapGestures { offset ->
-                            val fraction =
-                                ((offset.x - 8.dp.toPx()) / (size.width - 16.dp.toPx())).coerceIn(
-                                    0f, 1f
-                                )
-                            val timestamp =
-                                model.range.start + fraction.toDouble() * (model.range.end - model.range.start)
-                            points.minByOrNull { abs(it.key.time - timestamp) }
-                                ?.let { onSelect(it.key.id) }
+                        .onKeyEvent {
+                            if (it.type != KeyEventType.KeyDown || compact) false
+                            else when (it.key) {
+                                Key.DirectionLeft -> move(-1); Key.DirectionRight -> move(1); else -> false
+                            }
                         }
-                    }) {
+                        .focusable(!compact)
+                        .pointerInput(points, model.range, onSelect) {
+                            if (!compact) detectTapGestures { offset ->
+                                val fraction =
+                                    ((offset.x - 8.dp.toPx()) / (size.width - 16.dp.toPx())).coerceIn(
+                                        0f, 1f
+                                    )
+                                val timestamp =
+                                    model.range.start + fraction.toDouble() * (model.range.end - model.range.start)
+                                points.minByOrNull { abs(it.key.time - timestamp) }
+                                    ?.let { onSelect(it.key.id) }
+                            }
+                        }) {
                     val inset = 8.dp.toPx()
                     fun x(time: Long) =
                         inset + ((time - model.range.start).toDouble() / (model.range.end - model.range.start) * (size.width - 2 * inset)).toFloat()

@@ -11,11 +11,13 @@ import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,6 +51,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
@@ -107,7 +110,8 @@ internal fun SideNavigationShell(
                     .fillMaxSize()
                     .safeDrawingPadding()
             ) {
-                val persistent = maxWidth >= 840.dp && maxHeight >= 480.dp && hinge == null
+                val persistent =
+                    maxWidth >= 840.dp * density.fontScale && maxHeight >= 480.dp && hinge == null
                 val contentWidth = hinge?.let { with(density) { it.left.toDp() } } ?: maxWidth
                 val navigationLabel = stringResource(
                     when {
@@ -174,6 +178,8 @@ internal fun SideNavigationShell(
                             modifier = Modifier
                                 .width(280.dp)
                                 .fillMaxHeight(),
+                            drawerShape = RectangleShape,
+                            drawerContainerColor = MaterialTheme.colorScheme.surface,
                             windowInsets = WindowInsets(0, 0, 0, 0)
                         ) {
                             SideMenuContent(
@@ -190,6 +196,12 @@ internal fun SideNavigationShell(
                                 firstItemFocusRequester = panelFocus
                             )
                         }
+                        if (persistent) Spacer(
+                            Modifier
+                                .width(1.dp)
+                                .fillMaxHeight()
+                                .background(MaterialTheme.colorScheme.outlineVariant)
+                        )
                         Column(
                             Modifier
                                 .weight(1f)
@@ -252,14 +264,19 @@ internal fun SideNavigationShell(
                                         modifier = Modifier.size(48.dp)
                                     )
                                 })
-                            Box(
-                                Modifier
-                                    .fillMaxSize()
-                                    .widthIn(max = 600.dp)
-                                    .widthIn(max = contentWidth),
-                                contentAlignment = Alignment.TopStart
-                            ) {
-                                content(Modifier.fillMaxSize())
+                            val maximumContentWidth = when (selected) {
+                                SectionOwner.CURRENT -> 1120.dp
+                                SectionOwner.HISTORY -> 840.dp
+                                else -> 600.dp
+                            }
+                            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+                                Box(
+                                    Modifier
+                                        .widthIn(max = minOf(maximumContentWidth, contentWidth))
+                                        .fillMaxSize()
+                                ) {
+                                    content(Modifier.fillMaxSize())
+                                }
                             }
                         }
                     }

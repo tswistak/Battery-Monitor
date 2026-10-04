@@ -30,6 +30,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -44,6 +45,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -52,6 +54,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
@@ -340,9 +343,11 @@ internal fun CurrentStateScreen(
     val power = BatteryCurrent.powerWatts(snapshot?.voltageMillivolts, currentReading?.milliAmps)
     val metrics = listOf(
         MetricDetail(
-            MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
-                DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
-            } ?: unavailable),
+            MetricDisplay(
+                stringResource(R.string.current_temperature),
+                snapshot?.let {
+                    DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
+                } ?: unavailable),
             if (preferences.fahrenheit) "°F" else "°C",
             snapshotSource,
             snapshotTime),
@@ -377,21 +382,15 @@ internal fun CurrentStateScreen(
             MetricDisplay(
                 stringResource(R.string.battery_power),
                 historyValue(it, HistoryMetric.POWER, false, configuration.locales[0])
-            ),
-            "W",
-            snapshotSource + " · " + stringResource(
+            ), "W", snapshotSource + " · " + stringResource(
                 if (currentReading?.average == true) R.string.advanced_field_current_average
                 else R.string.advanced_field_current_now
-            ),
-            currentReading?.observedAtMillis,
-            stringResource(R.string.battery_power_explanation)
+            ), currentReading?.observedAtMillis, stringResource(R.string.battery_power_explanation)
         )
     }) + MetricDetail(
-        MetricDisplay(
-            stringResource(R.string.current_android_health),
-            snapshot?.let {
-                DisplayStrings.healths.getOrNull(it.health)
-            } ?: unavailable),
+        MetricDisplay(stringResource(R.string.current_android_health), snapshot?.let {
+            DisplayStrings.healths.getOrNull(it.health)
+        } ?: unavailable),
         stringResource(R.string.current_status_unit),
         snapshotSource,
         snapshotTime,
@@ -399,10 +398,254 @@ internal fun CurrentStateScreen(
     var selectedMetric by remember { mutableStateOf<Int?>(null) }
     var showPredictionDetails by remember { mutableStateOf(false) }
     BoxWithConstraints(modifier) {
+        val expanded = maxWidth >= 800.dp * LocalDensity.current.fontScale
         val singleColumn = maxWidth < 360.dp || LocalDensity.current.fontScale >= 1.6f
+        val gap = if (expanded) 19.dp else BatterySpacing.normal
+        val overview: @Composable (Modifier) -> Unit = { columnModifier ->
+            Column(columnModifier, verticalArrangement = Arrangement.spacedBy(gap)) {
+                BatteryCellHero(
+                    title = stringResource(R.string.nav_battery_group),
+                    level = snapshot?.levelPercent,
+                    status = status,
+                    detail = listOfNotNull(
+                        plug, remainingCharge.takeIf(String::isNotBlank)
+                    ).joinToString(" · "),
+                    spokenSummary = listOfNotNull(
+                        snapshot?.levelPercent?.let { "$it%" },
+                        status,
+                        plug,
+                        remainingCharge,
+                        prediction?.let {
+                            stringResource(
+                                R.string.current_prediction_target, it.targetPercent
+                            )
+                        }).joinToString(", "),
+                    modifier = Modifier.fillMaxWidth(),
+                    targetPercent = prediction?.targetPercent,
+                    charging = snapshot?.status == BatteryInfo.STATUS_CHARGING,
+                    expanded = expanded
+                )
+                if (model.condition == CurrentCondition.LOW) CapabilityNotice(
+                    stringResource(R.string.current_low), stringResource(R.string.current_low_body)
+                )
+                OutlinedCard(
+                    shape = RoundedCornerShape(24.dp),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                    colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(
+                        Modifier.padding(
+                            horizontal = if (expanded) 24.dp else 17.dp,
+                            vertical = if (expanded) 22.dp else 13.dp
+                        ), verticalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        Row(
+                            Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                stringResource(R.string.time_remaining),
+                                Modifier.weight(1f),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            IconButton(onClick = { showPredictionDetails = true }) {
+                                Icon(
+                                    painterResource(R.drawable.ui_info),
+                                    stringResource(R.string.time_remaining),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                        Text(
+                            buildAnnotatedString {
+                                append(estimate)
+                                if (target.isNotBlank()) withStyle(MaterialTheme.typography.bodyLarge.toSpanStyle()) {
+                                    append(" $target")
+                                }
+                            }, style = if (expanded) MaterialTheme.typography.headlineMedium.copy(
+                                fontSize = 33.sp, lineHeight = 44.sp
+                            ) else MaterialTheme.typography.headlineMedium
+                        )
+                        FlowRow(
+                            Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Text(
+                                method,
+                                Modifier.alignByBaseline(),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            if (model.hasAlternative) TextButton(
+                                onClick = onToggleTarget, modifier = Modifier.alignByBaseline()
+                            ) {
+                                Text(
+                                    stringResource(
+                                        R.string.current_show_to_target,
+                                        if (model.showingFullRange) snapshot!!.configuredPrediction.targetPercent
+                                        else snapshot!!.fullRangePrediction.targetPercent
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+                if (snapshot != null && snapshot.lastStatusTimeMillis > 0 && snapshot.lastPercent >= 0) {
+                    val duration =
+                        ((System.currentTimeMillis() - snapshot.lastStatusTimeMillis) / 60000).coerceIn(
+                            0, Int.MAX_VALUE.toLong()
+                        ).toInt()
+                    Text(
+                        stringResource(
+                            when (snapshot.lastStatus) {
+                                BatteryInfo.STATUS_UNPLUGGED, BatteryInfo.STATUS_DISCHARGING -> R.string.current_since_unplugged
+                                BatteryInfo.STATUS_CHARGING -> R.string.current_since_connected
+                                else -> R.string.current_since_change
+                            },
+                            snapshot.lastPercent,
+                            snapshot.levelPercent,
+                            DurationFormatter.formatShort(
+                                resources, duration, preferences.longDurationFormat
+                            )
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                if (expanded) Surface(
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text(
+                        stringResource(R.string.current_prediction_explanation),
+                        Modifier.padding(horizontal = 20.dp, vertical = 17.dp),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+        val measurements: @Composable (Modifier) -> Unit = { columnModifier ->
+            Column(columnModifier, verticalArrangement = Arrangement.spacedBy(gap)) {
+                if (!expanded) Text(
+                    stringResource(R.string.current_measurements),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                MetricGrid(
+                    metrics.mapIndexed { index, metric ->
+                        metric.display.copy(
+                            icon = listOfNotNull(
+                                R.drawable.ui_temp,
+                                R.drawable.ui_voltage,
+                                R.drawable.ui_current,
+                                R.drawable.ui_bolt.takeIf { power != null },
+                                R.drawable.ui_heart
+                            )[index]
+                        )
+                    },
+                    columns = if (singleColumn) 1 else 2,
+                    onMetricClick = { selectedMetric = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    expanded = expanded
+                )
+                if (preferences.loggingEnabled && trend != null && trend.count > 0) {
+                    OutlinedCard(
+                        Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(22.dp),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                        colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface)
+                    ) {
+                        Column(
+                            Modifier.padding(
+                                horizontal = if (expanded) 22.dp else 15.dp,
+                                vertical = if (expanded) 16.dp else 9.dp
+                            )
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    stringResource(R.string.history_level_24h),
+                                    Modifier.weight(1f),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                TextButton(onClick = { onSection(SectionOwner.HISTORY) }) {
+                                    ActionLabel(
+                                        stringResource(R.string.nav_history), R.drawable.ui_history
+                                    )
+                                }
+                            }
+                            MeasurementChart(
+                                trend,
+                                HistoryMetric.LEVEL,
+                                preferences.fahrenheit,
+                                selectedId = null,
+                                onSelect = {},
+                                compact = true,
+                                compactChartHeight = if (expanded) 119.dp else 56.dp,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                } else TextButton(onClick = { onSection(SectionOwner.HISTORY) }) {
+                    ActionLabel(
+                        if (preferences.loggingEnabled) stringResource(R.string.nav_history)
+                        else stringResource(R.string.current_history_off), R.drawable.ui_history
+                    )
+                }
+                if (expanded) OutlinedCard(
+                    onClick = { onSection(SectionOwner.DIAGNOSTICS) },
+                    shape = RoundedCornerShape(22.dp),
+                    colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                ) {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ui_current),
+                            null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        Column(Modifier.weight(1f)) {
+                            Text(
+                                stringResource(R.string.nav_diagnostics),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(
+                                stringResource(R.string.diagnostics_summary),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Icon(painterResource(R.drawable.ui_back), null, Modifier.rotate(180f))
+                    }
+                }
+                TextButton(onClick = { onSection(SectionOwner.ALARMS) }) {
+                    ActionLabel(stringResource(R.string.nav_alarms), R.drawable.ui_bell)
+                }
+                OutlinedButton(
+                    onClick = onBatteryUsage,
+                    modifier = Modifier.fillMaxWidth(),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                ) {
+                    ActionLabel(
+                        stringResource(R.string.current_system_usage), R.drawable.ui_external
+                    )
+                }
+            }
+        }
         LazyColumn(
             Modifier.fillMaxSize(),
-            contentPadding = androidx.compose.foundation.layout.PaddingValues(BatterySpacing.content),
+            contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                horizontal = if (expanded) BatterySpacing.xl else BatterySpacing.content,
+                vertical = BatterySpacing.content
+            ),
             verticalArrangement = Arrangement.spacedBy(BatterySpacing.normal)
         ) {
             item {
@@ -459,197 +702,14 @@ internal fun CurrentStateScreen(
                 }
             }
             item {
-                BatteryCellHero(
-                    title = stringResource(R.string.nav_battery_group),
-                    level = snapshot?.levelPercent,
-                    status = status,
-                    detail = listOfNotNull(
-                        plug, remainingCharge.takeIf(String::isNotBlank)
-                    ).joinToString(" · "),
-                    spokenSummary = listOfNotNull(
-                        snapshot?.levelPercent?.let { "$it%" },
-                        status,
-                        plug,
-                        remainingCharge,
-                        prediction?.let {
-                            stringResource(
-                                R.string.current_prediction_target, it.targetPercent
-                            )
-                        }).joinToString(", "),
-                    modifier = Modifier.fillMaxWidth(),
-                    targetPercent = prediction?.targetPercent,
-                    charging = snapshot?.status == BatteryInfo.STATUS_CHARGING
-                )
-            }
-            if (model.condition == CurrentCondition.LOW) item {
-                CapabilityNotice(
-                    stringResource(R.string.current_low), stringResource(R.string.current_low_body)
-                )
-            }
-            item {
-                OutlinedCard(
-                    shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-                    colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    modifier = Modifier.fillMaxWidth()
+                if (expanded) Row(
+                    Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
-                    Column(
-                        Modifier.padding(horizontal = 17.dp, vertical = 13.dp),
-                        verticalArrangement = Arrangement.spacedBy(2.dp)
-                    ) {
-                        Row(
-                            Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                stringResource(R.string.time_remaining),
-                                Modifier.weight(1f),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            IconButton(onClick = { showPredictionDetails = true }) {
-                                Icon(
-                                    painterResource(R.drawable.ui_info),
-                                    stringResource(R.string.time_remaining),
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            }
-                        }
-                        Text(
-                            buildAnnotatedString {
-                                append(estimate)
-                                if (target.isNotBlank()) withStyle(MaterialTheme.typography.bodyLarge.toSpanStyle()) {
-                                    append(" $target")
-                                }
-                            }, style = MaterialTheme.typography.headlineMedium
-                        )
-                        FlowRow(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Text(
-                                method,
-                                Modifier.alignByBaseline(),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            if (model.hasAlternative) TextButton(
-                                onClick = onToggleTarget, modifier = Modifier.alignByBaseline()
-                            ) {
-                                Text(
-                                    stringResource(
-                                        R.string.current_show_to_target,
-                                        if (model.showingFullRange) snapshot!!.configuredPrediction.targetPercent
-                                        else snapshot!!.fullRangePrediction.targetPercent
-                                    )
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-            if (snapshot != null && snapshot.lastStatusTimeMillis > 0 && snapshot.lastPercent >= 0) item {
-                val duration =
-                    ((System.currentTimeMillis() - snapshot.lastStatusTimeMillis) / 60000).coerceAtLeast(
-                        0
-                    ).coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
-                Text(
-                    stringResource(
-                        when (snapshot.lastStatus) {
-                            BatteryInfo.STATUS_UNPLUGGED, BatteryInfo.STATUS_DISCHARGING -> R.string.current_since_unplugged
-                            BatteryInfo.STATUS_CHARGING -> R.string.current_since_connected
-                            else -> R.string.current_since_change
-                        },
-                        snapshot.lastPercent,
-                        snapshot.levelPercent,
-                        DurationFormatter.formatShort(
-                            resources, duration, preferences.longDurationFormat
-                        )
-                    ), style = MaterialTheme.typography.bodyMedium
-                )
-            }
-            item {
-                Text(
-                    stringResource(R.string.current_measurements),
-                    style = MaterialTheme.typography.titleLarge
-                )
-            }
-            item {
-                MetricGrid(
-                    metrics.mapIndexed { index, metric ->
-                        metric.display.copy(
-                            icon = listOfNotNull(
-                                R.drawable.ui_temp,
-                                R.drawable.ui_voltage,
-                                R.drawable.ui_current,
-                                R.drawable.ui_bolt.takeIf { power != null },
-                                R.drawable.ui_heart
-                            )[index]
-                        )
-                    },
-                    columns = if (singleColumn) 1 else 2,
-                    onMetricClick = { selectedMetric = it },
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            item {
-                if (preferences.loggingEnabled && trend != null && trend.count > 0) {
-                    OutlinedCard(
-                        Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(22.dp),
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-                        colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface)
-                    ) {
-                        Column(Modifier.padding(horizontal = 15.dp, vertical = 9.dp)) {
-                            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-                                Text(
-                                    stringResource(R.string.history_level_24h),
-                                    Modifier.weight(1f),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                                TextButton(onClick = { onSection(SectionOwner.HISTORY) }) {
-                                    Text(
-                                        stringResource(R.string.nav_history)
-                                    )
-                                }
-                            }
-                            MeasurementChart(
-                                trend,
-                                HistoryMetric.LEVEL,
-                                preferences.fahrenheit,
-                                selectedId = null,
-                                onSelect = {},
-                                compact = true,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-                } else {
-                    TextButton(onClick = { onSection(SectionOwner.HISTORY) }) {
-                        Text(
-                            if (preferences.loggingEnabled) stringResource(R.string.nav_history)
-                            else stringResource(R.string.current_history_off)
-                        )
-                    }
-                }
-            }
-            item {
-                TextButton(onClick = { onSection(SectionOwner.ALARMS) }) {
-                    ActionLabel(
-                        stringResource(R.string.nav_alarms), R.drawable.ui_bell
-                    )
-                }
-            }
-            item {
-                OutlinedButton(
-                    onClick = onBatteryUsage,
-                    modifier = Modifier.fillMaxWidth(),
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-                ) {
-                    ActionLabel(
-                        stringResource(R.string.current_system_usage), R.drawable.ui_external
-                    )
+                    overview(Modifier.weight(1.02f))
+                    measurements(Modifier.weight(1f))
+                } else Column(verticalArrangement = Arrangement.spacedBy(BatterySpacing.normal)) {
+                    overview(Modifier.fillMaxWidth())
+                    measurements(Modifier.fillMaxWidth())
                 }
             }
         }

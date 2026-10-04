@@ -44,8 +44,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
 import codes.swistak.batterymonitor.ui.theme.LocalBatterySemanticColors
@@ -63,7 +66,8 @@ fun BatteryCellHero(
     spokenSummary: String,
     modifier: Modifier = Modifier,
     targetPercent: Int? = null,
-    charging: Boolean = false
+    charging: Boolean = false,
+    expanded: Boolean = false
 ) {
     val colors = MaterialTheme.colorScheme
     Card(
@@ -74,27 +78,41 @@ fun BatteryCellHero(
         BoxWithConstraints(
             Modifier
                 .fillMaxWidth()
-                .heightIn(min = 208.dp)
+                .heightIn(min = if (expanded) 263.dp else 208.dp)
         ) {
             val compact = maxWidth < 300.dp || LocalDensity.current.fontScale >= 1.6f
+            val contentPadding = if (expanded) 31.dp else BatterySpacing.lg
             Column(
                 Modifier
                     .fillMaxWidth()
                     .padding(
-                        start = BatterySpacing.lg,
-                        top = BatterySpacing.lg,
-                        end = if (compact) BatterySpacing.lg else 120.dp,
-                        bottom = BatterySpacing.lg
+                        start = contentPadding,
+                        top = contentPadding,
+                        end = if (compact) contentPadding else 120.dp,
+                        bottom = contentPadding
                     ), verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
             ) {
                 Text(
                     title,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = if (expanded) MaterialTheme.typography.bodyMedium else MaterialTheme.typography.titleLarge,
                     color = colors.onPrimaryContainer
                 )
-                Text(level?.let { "$it%" } ?: "—",
-                    style = if (compact) MaterialTheme.typography.displayMedium else MaterialTheme.typography.displayLarge,
-                    color = colors.onPrimaryContainer)
+                Text(
+                    buildAnnotatedString {
+                        append(level?.toString() ?: "—")
+                        if (level != null) withStyle(
+                            MaterialTheme.typography.headlineMedium.copy(fontSize = 34.sp)
+                                .toSpanStyle()
+                        ) { append("%") }
+                    }, style = when {
+                        compact -> MaterialTheme.typography.displayMedium
+                        expanded -> MaterialTheme.typography.displayLarge.copy(
+                            fontSize = 98.sp, lineHeight = 107.sp
+                        )
+
+                        else -> MaterialTheme.typography.displayLarge
+                    }, color = colors.onPrimaryContainer
+                )
                 Text(
                     status,
                     style = MaterialTheme.typography.bodyLarge,
@@ -121,8 +139,8 @@ fun BatteryCellHero(
                 )
                 Box(
                     Modifier
-                        .width(72.dp)
-                        .height(132.dp)
+                        .width(if (expanded) 80.dp else 72.dp)
+                        .height(if (expanded) 150.dp else 132.dp)
                         .border(2.dp, colors.onPrimaryContainer, RoundedCornerShape(20.dp))
                         .padding(6.dp), contentAlignment = Alignment.BottomCenter
                 ) {
@@ -179,7 +197,8 @@ fun MetricGrid(
     metrics: List<MetricDisplay>,
     modifier: Modifier = Modifier,
     columns: Int = 2,
-    onMetricClick: ((Int) -> Unit)? = null
+    onMetricClick: ((Int) -> Unit)? = null,
+    expanded: Boolean = false
 ) {
     require(metrics.isNotEmpty())
     require(columns in 1..2)
@@ -205,8 +224,8 @@ fun MetricGrid(
                                         index
                                     )
                                 })
-                                .heightIn(min = 84.dp)
-                                .padding(BatterySpacing.normal),
+                                .heightIn(min = if (expanded) 104.dp else 84.dp)
+                                .padding(if (expanded) 19.dp else BatterySpacing.normal),
                             verticalArrangement = Arrangement.spacedBy(BatterySpacing.xs)
                         ) {
                             Row(
@@ -223,13 +242,13 @@ fun MetricGrid(
                                 }
                                 Text(
                                     metric.label,
-                                    style = MaterialTheme.typography.bodySmall,
+                                    style = if (expanded) MaterialTheme.typography.bodyMedium else MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                             Text(
                                 "${metric.value}${if (metric.unit.isEmpty()) "" else " ${metric.unit}"}",
-                                style = MaterialTheme.typography.titleLarge,
+                                style = if (expanded) MaterialTheme.typography.headlineMedium else MaterialTheme.typography.titleLarge,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                         }
