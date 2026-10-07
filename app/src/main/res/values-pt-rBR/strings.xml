@@ -400,9 +400,6 @@
   <string name="pref_long_duration_format_help" formatted="false">Dias e horas usa dias após 24 horas, por exemplo, 1d 3h. Somente horas mantém toda a duração em horas, por exemplo, 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Dias e horas</string>
   <string name="long_duration_format_hours_only" formatted="false">Somente horas</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Estatísticas avançadas da bateria</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Mostrar estatísticas avançadas da bateria</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Adiciona uma guia Avançado com estatísticas da bateria que exigem root ou Shizuku.</string>
 
   <string name="advanced_action_refresh" formatted="false">Atualizar</string>
   <string name="advanced_status_loading" formatted="false">Carregando estatísticas avançadas da bateria...</string>

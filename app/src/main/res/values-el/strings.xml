@@ -394,9 +394,6 @@
   <string name="pref_long_duration_format_help" formatted="false">Η μορφή Ημέρες και ώρες χρησιμοποιεί ημέρες μετά τις 24 ώρες, π.χ. 1d 3h. Η επιλογή Μόνο ώρες διατηρεί όλη τη διάρκεια σε ώρες, π.χ. 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Ημέρες και ώρες</string>
   <string name="long_duration_format_hours_only" formatted="false">Μόνο ώρες</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Προχωρημένα στατιστικά μπαταρίας</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Εμφάνιση προχωρημένων στατιστικών μπαταρίας</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Προσθέτει καρτέλα Για προχωρημένους με στατιστικά μπαταρίας που απαιτούν root ή Shizuku.</string>
 
   <string name="advanced_action_refresh" formatted="false">Ανανέωση</string>
   <string name="advanced_status_loading" formatted="false">Φόρτωση προχωρημένων στατιστικών μπαταρίας...</string>

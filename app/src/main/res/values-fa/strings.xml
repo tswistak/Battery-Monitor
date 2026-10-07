@@ -398,9 +398,6 @@
   <string name="pref_long_duration_format_help" formatted="false">حالت روز و ساعت پس از ۲۴ ساعت از روز استفاده می‌کند، مانند 1d 3h. حالت فقط ساعت کل مدت را به ساعت نگه می‌دارد، مانند 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">روز و ساعت</string>
   <string name="long_duration_format_hours_only" formatted="false">فقط ساعت</string>
-  <string name="pref_cat_advanced_stats" formatted="false">آمار پیشرفته باتری</string>
-  <string name="pref_enable_advanced_stats" formatted="false">نمایش آمار پیشرفته باتری</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">یک برگه پیشرفته با آمار باتری اضافه می‌کند که به root یا Shizuku نیاز دارد.</string>
 
   <string name="advanced_action_refresh" formatted="false">نوسازی</string>
   <string name="advanced_status_loading" formatted="false">در حال بارگذاری آمار پیشرفته باتری...</string>

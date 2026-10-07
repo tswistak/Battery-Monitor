@@ -384,9 +384,6 @@
   <string name="pref_long_duration_format_help" formatted="false">Tage und Stunden verwendet ab 24 Stunden Tage, zum Beispiel 1d 3h. Nur Stunden behält die gesamte Dauer in Stunden bei, zum Beispiel 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Tage und Stunden</string>
   <string name="long_duration_format_hours_only" formatted="false">Nur Stunden</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Erweiterte Akkustatistiken</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Erweiterte Akkustatistiken anzeigen</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Fügt einen Reiter Erweitert mit Akkustatistiken hinzu, die Root oder Shizuku benötigen.</string>
 
   <string name="advanced_action_refresh" formatted="false">Aktualisieren</string>
   <string name="advanced_status_loading" formatted="false">Erweiterte Akkustatistiken werden geladen...</string>

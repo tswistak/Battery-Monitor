@@ -16,31 +16,38 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.FutureTask
 
 private const val COMMAND_TIMEOUT_SECONDS = 10L
 private const val MAX_COMMAND_OUTPUT_BYTES = 256 * 1024
 
 internal interface CommandExecutor {
     fun run(command: String): String?
+    fun runRaw(command: String): String? = run(command)
 }
 
 internal class RootExecutor : CommandExecutor {
-    override fun run(command: String): String? {
-        return runCommand(arrayOf("su", "-c", command))
-    }
+    override fun run(command: String): String? = runCommand(arrayOf("su", "-c", command))
+    override fun runRaw(command: String): String? =
+        runCommand(arrayOf("su", "-c", command), trimOutput = false)
 }
 
 internal class PrivilegedShellExecutor : CommandExecutor {
-    override fun run(command: String): String? {
-        return runCommand(arrayOf("sh", "-c", command))
-    }
+    override fun run(command: String): String? = runCommand(arrayOf("sh", "-c", command))
+    override fun runRaw(command: String): String? =
+        runCommand(arrayOf("sh", "-c", command), trimOutput = false)
 }
 
-private fun runCommand(command: Array<String>): String? {
+
+private fun runCommand(command: Array<String>, trimOutput: Boolean = true): String? {
     var process: Process? = null
+    var reader: Thread? = null
 
     try {
         process = ProcessBuilder(*command).redirectErrorStream(true).start()
+        val input = process.inputStream
+        val output = FutureTask { input.use(::readFully) }
+        reader = Thread(output, "battery-command-output").apply { isDaemon = true; start() }
         if (!process.waitFor(COMMAND_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
             process.destroyForcibly()
             return null
@@ -48,14 +55,17 @@ private fun runCommand(command: Array<String>): String? {
 
         if (process.exitValue() != 0) return null
 
-        val output = readFully(process.inputStream)?.trim() ?: return null
-        return output.takeIf(String::isNotEmpty)
+        val text = output.get(1, TimeUnit.SECONDS) ?: return null
+        return if (trimOutput) text.trim().takeIf(String::isNotEmpty) else text
     } catch (_: Exception) {
         return null
     } finally {
         process?.destroy()
+        runCatching { process?.inputStream?.close() }
+        reader?.interrupt()
     }
 }
+
 
 @Throws(Exception::class)
 private fun readFully(inputStream: InputStream): String? {

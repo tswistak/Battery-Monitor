@@ -624,7 +624,14 @@ internal object ChargingDiagnosticReport {
         val values: List<Pair<ChargingDiagnosticCondition, String>>
     )
 
-    fun create(context: Context, snapshots: List<ChargingDiagnosticSnapshot>): String {
+    fun create(
+        context: Context,
+        capturedSnapshots: List<ChargingDiagnosticSnapshot>,
+        includeAppNames: Boolean = false
+    ): String {
+        val snapshots = if (includeAppNames) capturedSnapshots else capturedSnapshots.map {
+            it.copy(systemPackages = emptyMap())
+        }
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
         return buildString {
             appendLine("Battery Monitor - OEM charging-limit diagnostics")

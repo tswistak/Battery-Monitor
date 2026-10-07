@@ -17,6 +17,7 @@ package codes.swistak.batterymonitor.monitoring
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import androidx.core.content.edit
 import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -42,6 +43,12 @@ class BootCompletedReceiver : BroadcastReceiver() {
         ) spService.getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)
         else spMain.getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)
 
+        // An explicit stop lasts until Start monitoring or the configured Always autostart event.
+        if (startPref == "always") spMain.edit {
+            putBoolean(
+                BatteryInfoService.KEY_SERVICE_DESIRED, true
+            ).putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true)
+        }
         BackgroundServiceWatchdog.schedule(context)
 
         // Note: Regardless of anything here, Android will start the Service on boot if there are any desktop widgets

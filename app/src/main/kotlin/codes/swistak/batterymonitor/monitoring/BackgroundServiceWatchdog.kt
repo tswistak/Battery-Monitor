@@ -112,11 +112,6 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
             val settings = context.getSharedPreferences(
                 SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
             )
-            if ("always" == settings.getString(
-                    SettingsContract.KEY_AUTOSTART, "auto"
-                )
-            ) return true
-
             val mainPreferences = context.getSharedPreferences(
                 SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
             )
@@ -128,6 +123,12 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
                     BatteryInfoService.KEY_SERVICE_DESIRED, false
                 )
             }
+
+            if ("always" == settings.getString(
+                    SettingsContract.KEY_AUTOSTART, "auto"
+                )
+            ) return true
+
 
             return context.getSharedPreferences(
                 SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE

@@ -22,6 +22,13 @@ import org.junit.Test
 
 class SettingsBackupSchemaTest {
     @Test
+    fun `removed advanced stats preference is ignored by every backup version`() {
+        for (version in 1..SettingsBackup.SCHEMA_VERSION) {
+            assertFalse(settingsImporterForVersion(version).schema.containsKey("enable_advanced_stats"))
+        }
+    }
+
+    @Test
     fun `version three includes explicit chip content settings`() {
         assertEquals(
             String::class.java,

@@ -158,21 +158,18 @@ class PersistentFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        monitoring.start()
-        serviceMessenger = serviceConnection?.serviceMessenger
-        if (serviceMessenger != null) {
-            monitoring.onServiceConnected()
-            sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_CLIENT_CONNECTED)
-        }
-
-        spMain.edit { putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, true) }
-
-        if (!spMain.getBoolean(
-                SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false
-            )
-        ) spMain.edit {
+        if (!spMain.getBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false)) spMain.edit {
+            putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, true)
             putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true)
         }
+        if (BackgroundServiceWatchdog.isServiceDesired(requireContext())) {
+            monitoring.start()
+            serviceMessenger = serviceConnection?.serviceMessenger
+            if (serviceMessenger != null) {
+                monitoring.onServiceConnected()
+                sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_CLIENT_CONNECTED)
+            }
+        } else monitoring.stop()
 
         BackgroundServiceWatchdog.schedule(requireContext())
     }
@@ -244,6 +241,7 @@ class PersistentFragment : Fragment() {
     }
 
     private fun startServiceIfNeeded() {
+        if (!BackgroundServiceWatchdog.isServiceDesired(requireContext())) return
         if (Build.VERSION.SDK_INT < 33 || ContextCompat.checkSelfPermission(
                 requireActivity(), Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED
@@ -387,6 +385,32 @@ class PersistentFragment : Fragment() {
             serviceMessenger!!.send(outgoing)
         } catch (e: RemoteException) {
         }
+    }
+
+    fun stopMonitoring() {
+        spMain.edit {
+            putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)
+            putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true)
+        }
+        val context = requireContext().applicationContext
+        BackgroundServiceWatchdog.cancel(context)
+        monitoring.stop()
+        if (serviceConnected) {
+            context.unbindService(serviceConnection!!)
+            serviceConnected = false
+        }
+        serviceMessenger = null
+        context.stopService(biServiceIntent)
+    }
+
+    fun startMonitoring() {
+        spMain.edit {
+            putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, true)
+            putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true)
+        }
+        monitoring.start()
+        startServiceIfNeeded()
+        BackgroundServiceWatchdog.schedule(requireContext())
     }
 
     fun closeApp() {

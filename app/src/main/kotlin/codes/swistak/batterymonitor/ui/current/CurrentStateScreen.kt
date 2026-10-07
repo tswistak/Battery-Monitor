@@ -12,6 +12,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.PowerManager
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -132,6 +134,7 @@ internal fun CurrentStateRoute(
     settings: SharedPreferences,
     onSection: (SectionOwner) -> Unit,
     onBatteryUsage: () -> Unit,
+    onMonitor: () -> Unit = { onSection(SectionOwner.DIAGNOSTICS) },
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -188,7 +191,14 @@ internal fun CurrentStateRoute(
         }
     }
     var showFullRange by rememberSaveable { mutableStateOf(false) }
-    val model = currentStateModel(state, showFullRange, notificationsEnabled = notificationsEnabled)
+    val model = currentStateModel(
+        state,
+        showFullRange,
+        monitoringEnabled = codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog.isServiceDesired(
+            context
+        ),
+        notificationsEnabled = notificationsEnabled
+    )
     LaunchedEffect(state.snapshot?.status, state.snapshot?.configuredPrediction?.targetPercent) {
         showFullRange = false
     }
@@ -218,6 +228,7 @@ internal fun CurrentStateRoute(
         onToggleTarget = { showFullRange = !showFullRange },
         onSection = onSection,
         onBatteryUsage = onBatteryUsage,
+        onMonitor = onMonitor,
         onRefreshCurrent = { refreshCurrent++ },
         powerOptimized = !powerUnrestricted,
         trend = trend,
@@ -252,6 +263,7 @@ internal fun CurrentStateScreen(
     onToggleTarget: () -> Unit,
     onSection: (SectionOwner) -> Unit,
     onBatteryUsage: () -> Unit,
+    onMonitor: () -> Unit = { onSection(SectionOwner.DIAGNOSTICS) },
     onRefreshCurrent: () -> Unit = {},
     powerOptimized: Boolean = false,
     onNotificationSettings: () -> Unit = {},
@@ -343,11 +355,9 @@ internal fun CurrentStateScreen(
     val power = BatteryCurrent.powerWatts(snapshot?.voltageMillivolts, currentReading?.milliAmps)
     val metrics = listOf(
         MetricDetail(
-            MetricDisplay(
-                stringResource(R.string.current_temperature),
-                snapshot?.let {
-                    DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
-                } ?: unavailable),
+            MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
+                DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
+            } ?: unavailable),
             if (preferences.fahrenheit) "°F" else "°C",
             snapshotSource,
             snapshotTime),
@@ -382,15 +392,21 @@ internal fun CurrentStateScreen(
             MetricDisplay(
                 stringResource(R.string.battery_power),
                 historyValue(it, HistoryMetric.POWER, false, configuration.locales[0])
-            ), "W", snapshotSource + " · " + stringResource(
+            ),
+            "W",
+            snapshotSource + " · " + stringResource(
                 if (currentReading?.average == true) R.string.advanced_field_current_average
                 else R.string.advanced_field_current_now
-            ), currentReading?.observedAtMillis, stringResource(R.string.battery_power_explanation)
+            ),
+            currentReading?.observedAtMillis,
+            stringResource(R.string.battery_power_explanation)
         )
     }) + MetricDetail(
-        MetricDisplay(stringResource(R.string.current_android_health), snapshot?.let {
-            DisplayStrings.healths.getOrNull(it.health)
-        } ?: unavailable),
+        MetricDisplay(
+            stringResource(R.string.current_android_health),
+            snapshot?.let {
+                DisplayStrings.healths.getOrNull(it.health)
+            } ?: unavailable),
         stringResource(R.string.current_status_unit),
         snapshotSource,
         snapshotTime,
@@ -661,6 +677,9 @@ internal fun CurrentStateScreen(
                             R.string.current_monitor_data, formatTimestamp(snapshotTime)
                         )
                     },
+                    modifier = Modifier
+                        .clickable(onClick = onMonitor)
+                        .heightIn(min = 48.dp),
                     style = MaterialTheme.typography.bodyMedium,
                     color = if (stale) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -693,11 +712,9 @@ internal fun CurrentStateScreen(
             }
             if (model.condition == CurrentCondition.STALE || model.condition == CurrentCondition.DISABLED) item {
                 CapabilityNotice(status, stringResource(R.string.current_monitor_action))
-                TextButton(onClick = { onSection(SectionOwner.DIAGNOSTICS) }) {
-                    Text(
-                        stringResource(
-                            R.string.nav_diagnostics
-                        )
+                TextButton(onClick = onMonitor) {
+                    ActionLabel(
+                        stringResource(R.string.diag_monitor_operation), R.drawable.ui_current
                     )
                 }
             }

@@ -24,7 +24,6 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.EdgeToEdgeHelper
-import codes.swistak.batterymonitor.diagnostics.DiagnosticsFragment
 
 class SettingsActivity : AppCompatActivity() {
     private var res: Resources? = null
@@ -57,13 +56,17 @@ class SettingsActivity : AppCompatActivity() {
         EdgeToEdgeHelper.applyIfNeeded(this)
 
         if (prefScreen == SettingsContract.KEY_DIAGNOSTICS_SETTINGS) {
-            if (savedInstanceState == null) {
-                supportFragmentManager.beginTransaction().replace(
-                    R.id.settings, DiagnosticsFragment(), ""
-                ).commit()
-            }
-            frag = null
-            setWindowSubtitle(res!!.getString(R.string.diagnostics))
+            startActivity(
+                Intent(
+                    this, codes.swistak.batterymonitor.app.BatteryInfoActivity::class.java
+                ).putExtra(
+                    codes.swistak.batterymonitor.app.BatteryInfoActivity.EXTRA_SECTION,
+                    "diagnostics"
+                ).putExtra(
+                    codes.swistak.batterymonitor.app.BatteryInfoActivity.EXTRA_DETAIL, "monitor"
+                )
+            )
+            finish()
             return
         }
 

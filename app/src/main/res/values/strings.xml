@@ -396,9 +396,6 @@
   <string name="pref_long_duration_format_help" formatted="false">Days and hours uses days after 24 hours, for example 1d 3h. Hours only keeps the full duration in hours, for example 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Days and hours</string>
   <string name="long_duration_format_hours_only" formatted="false">Hours only</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Advanced battery stats</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Show advanced battery stats</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Adds an Advanced tab with battery diagnostics that require either root access or Shizuku.</string>
 
   <string name="advanced_action_refresh" formatted="false">Refresh</string>
   <string name="advanced_status_loading" formatted="false">Loading advanced battery stats...</string>
@@ -493,15 +490,15 @@
   <string name="advanced_field_battery_model_name" formatted="false">Battery model name</string>
   <string name="advanced_field_minimum_design_voltage" formatted="false">Minimum design voltage</string>
   <string name="advanced_value_not_available" formatted="false">Not available</string>
-  <string name="advanced_help_overview" formatted="false">The Advanced tab shows extra battery diagnostics collected from Android system services and kernel power-supply files. Availability depends on the device, Android build, charger IC, fuel-gauge chip, and what the manufacturer exposes.</string>
+  <string name="advanced_help_overview" formatted="false">Diagnostics combines monitor reliability and battery data in Overview, Battery, Charging and Raw tabs. Android data is available without root. Extra data depends on the device and permissions available to Battery Monitor.</string>
   <string name="advanced_help_counters" formatted="false">Counters contain live or recently sampled values such as charge counter, current, energy counter, and cycle count. Some devices expose only a subset, and units may come directly from the hardware driver.</string>
   <string name="advanced_help_capacity" formatted="false">Capacity shows full-charge capacity, design capacity, and estimated health. Estimated health is calculated as full-charge capacity divided by design capacity, so it is only as accurate as the values reported by the device.</string>
   <string name="advanced_help_charging" formatted="false">Charging shows values related to the active charging path, such as maximum charging current or voltage, charging policy, charging state, and capacity level. These fields may change between chargers and charging modes.</string>
   <string name="advanced_help_service" formatted="false">Android battery service shows raw fields reported by `dumpsys battery`. These are framework-level values that often include charging source, battery status, temperature, voltage, and other service state.</string>
-  <string name="advanced_help_sysfs" formatted="false">Kernel power-supply files show raw one-line values read from `/sys/class/power_supply`, such as battery, BMS, USB, or wireless charger nodes. This is intentionally low-level and may include driver-specific names that are useful mainly for debugging.</string>
+  <string name="advanced_help_sysfs" formatted="false">Raw shows the original names and values read from /sys/class/power_supply, including multiline values. Search by key, then tap a row to view and copy the complete value. Battery Monitor attempts reads with its own permissions even without root or Shizuku.</string>
   <string name="advanced_help_metadata" formatted="false">Metadata shows higher-level battery properties exposed through BatteryManager, such as state of health, remaining charge time, manufacturing details, or replacement status. Most of these fields require privileged access and many devices expose only a small subset.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Troubleshooting</string>
-  <string name="advanced_help_troubleshooting" formatted="false">If the tab is empty, first make sure Advanced stats are enabled in Settings. On rooted devices, Battery Monitor tries `su` first. On non-rooted devices Shizuku must be installed, running, and Battery Monitor must be granted permission inside Shizuku. Some devices expose only a few fields, which means the missing data is not available through Android or the kernel on that device.</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Android data is always available in Diagnostics. For additional root or Shizuku data, enable advanced collection and privileged access under Additional sources. Battery Monitor tries root first, then Shizuku. Shizuku must be running and permission granted. Missing fields remain unavailable; failed refreshes retain the previous snapshot and mark it stale.</string>
 
   <string name="pref_export_settings" formatted="false">Export settings</string>
   <string name="pref_export_settings_summary" formatted="false">Save current settings to a file</string>
@@ -805,4 +802,24 @@
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
     <string name="battery_power">Battery power</string>
     <string name="battery_power_explanation">Calculated from battery voltage and current; positive while charging, negative while discharging. This is battery-side power, not charger power.</string>
+
+  <string name="diag_overview">Overview</string>
+  <string name="diag_raw">Raw</string>
+  <string name="diag_monitor_operation">Monitor operation</string>
+  <string name="diag_heartbeat">Last heartbeat</string>
+  <string name="diag_additional_sources">Additional sources</string>
+  <string name="diag_source_help">Available Android readings are collected automatically while Diagnostics is open. Tap a value to inspect and copy its raw reading, source and time. Enable privileged access to also use Root or Shizuku.</string>
+  <string name="diag_include_raw">Include raw values and identifiers</string>
+  <string name="diag_include_debug">Include collected debug logs</string>
+  <string name="diag_include_apps">Include system app names</string>
+  <string name="diag_report_privacy">Excluded by default. These data may contain personal information. Review the preview before copying or saving.</string>
+  <string name="diag_timeout">Reading timed out. The previous snapshot is kept. Try refreshing again.</string>
+  <string name="diag_privileged_stale">The previous privileged readings are shown. Refresh to try again.</string>
+  <string name="diag_stop_monitor">Stop monitoring</string>
+  <string name="diag_start_monitor">Start monitoring</string>
+  <string name="diag_stop_monitor_body">Battery monitoring, history logging and automatic background recovery will stop. You can start monitoring again here.</string>
+
+  <string name="diag_search_key">Search keys</string>
+  <string name="diag_no_keys">No matching keys in the available data</string>
+  <string name="diag_raw_values">Raw values</string>
 </resources>

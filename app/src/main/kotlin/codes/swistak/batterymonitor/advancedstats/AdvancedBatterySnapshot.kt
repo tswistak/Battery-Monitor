@@ -47,6 +47,12 @@ internal class AdvancedBatterySnapshot {
         fun fromBundle(bundle: Bundle): AdvancedBatterySnapshot {
             val snapshot = AdvancedBatterySnapshot()
 
+            snapshot.capturedAtMillis = bundle.getLong("captured_at")
+            bundle.getBundle("field_sources")?.let { sources ->
+                sources.keySet().forEach { key ->
+                    sources.getString(key)?.let { snapshot.fieldSources[key] = it }
+                }
+            }
             snapshot.accessMethod = bundle.getString(KEY_ACCESS_METHOD)
             snapshot.remoteUid = bundle.getInt(KEY_REMOTE_UID, -1)
             snapshot.shizukuVersion = bundle.getInt(KEY_SHIZUKU_VERSION, -1)
@@ -98,6 +104,9 @@ internal class AdvancedBatterySnapshot {
         }
     }
 
+    var capturedAtMillis: Long = 0
+    val fieldSources = linkedMapOf<String, String>()
+
     var accessMethod: String? = null
     var remoteUid: Int = -1
     var shizukuVersion: Int = -1
@@ -124,15 +133,19 @@ internal class AdvancedBatterySnapshot {
     var metadataValues = ArrayList<String>()
 
     fun hasStats(): Boolean {
-        return chargeCounterUah != null || currentNowUa != null || currentAverageUa != null || energyCounterNwh != null || cycleCount != null || fullChargeUah != null || designChargeUah != null || maxChargingCurrentUa != null || maxChargingVoltageUv != null || chargingPolicy != null || chargingState != null || capacityLevel != null || reportedCapacityPercent != null || stateOfHealthPercent != null || chargeTimeRemainingMs != null || !serviceLabels!!.isEmpty() || !sysfsLabels!!.isEmpty() || !metadataLabels!!.isEmpty()
+        return chargeCounterUah != null || currentNowUa != null || currentAverageUa != null || energyCounterNwh != null || cycleCount != null || fullChargeUah != null || designChargeUah != null || maxChargingCurrentUa != null || maxChargingVoltageUv != null || chargingPolicy != null || chargingState != null || capacityLevel != null || reportedCapacityPercent != null || stateOfHealthPercent != null || chargeTimeRemainingMs != null || serviceLabels.isNotEmpty() || sysfsLabels.isNotEmpty() || metadataLabels.isNotEmpty()
     }
 
     fun hasPrivilegedStats(): Boolean {
-        return chargeCounterUah != null || currentNowUa != null || currentAverageUa != null || energyCounterNwh != null || cycleCount != null || fullChargeUah != null || designChargeUah != null || maxChargingCurrentUa != null || maxChargingVoltageUv != null || chargingPolicy != null || chargingState != null || capacityLevel != null || !serviceLabels!!.isEmpty() || !sysfsLabels!!.isEmpty() || !metadataLabels!!.isEmpty()
+        return chargeCounterUah != null || currentNowUa != null || currentAverageUa != null || energyCounterNwh != null || cycleCount != null || fullChargeUah != null || designChargeUah != null || maxChargingCurrentUa != null || maxChargingVoltageUv != null || chargingPolicy != null || chargingState != null || capacityLevel != null || serviceLabels.isNotEmpty() || sysfsLabels.isNotEmpty() || metadataLabels.isNotEmpty()
     }
 
     fun toBundle(): Bundle {
         val bundle = Bundle()
+        bundle.putLong("captured_at", capturedAtMillis)
+        bundle.putBundle(
+            "field_sources",
+            Bundle().apply { fieldSources.forEach { (key, value) -> putString(key, value) } })
 
         if (accessMethod != null) bundle.putString(KEY_ACCESS_METHOD, accessMethod)
         bundle.putInt(KEY_REMOTE_UID, remoteUid)

@@ -78,11 +78,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -116,6 +112,7 @@ import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.MeasurementChart
+import codes.swistak.batterymonitor.ui.components.groupedCardBorder
 import codes.swistak.batterymonitor.ui.components.historyRangeValue
 import codes.swistak.batterymonitor.ui.components.historyValue
 import kotlinx.coroutines.flow.StateFlow
@@ -548,7 +545,7 @@ internal fun HistoryRoute(
                             .fillMaxWidth()
                             .clip(shape)
                             .background(if (emphasized) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface)
-                            .logGroupBorder(
+                            .groupedCardBorder(
                                 first, last, MaterialTheme.colorScheme.outlineVariant
                             )
                     ) {
@@ -570,14 +567,14 @@ internal fun HistoryRoute(
                             if (record.status == -1) stringResource(R.string.history_system_event)
                             else listOfNotNull(
                                 HistoryMetric.CURRENT.value(record)?.let {
-                                    historyValue(
-                                        it,
-                                        HistoryMetric.CURRENT,
-                                        fahrenheit,
-                                        locale,
-                                        currentMultiplier
-                                    )
-                                },
+                                historyValue(
+                                    it,
+                                    HistoryMetric.CURRENT,
+                                    fahrenheit,
+                                    locale,
+                                    currentMultiplier
+                                )
+                            },
                                 HistoryMetric.POWER.value(record)?.let {
                                     historyValue(
                                         it,
@@ -599,27 +596,26 @@ internal fun HistoryRoute(
                                     )
                                 }).joinToString(" · ")
                                 .ifEmpty { stringResource(R.string.current_unavailable) }
-                        Row(
-                            Modifier
-                                .fillMaxWidth()
-                                .clickable { detailsId = entry.id }
-                                .then(if (twoPane) Modifier.semantics {
-                                    selected = emphasized
-                                } else Modifier)
-                                .drawBehind {
-                                    if (emphasized) {
-                                        val width = 3.dp.toPx()
-                                        val x =
-                                            if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
-                                        drawRect(
-                                            selectionColor,
-                                            topLeft = Offset(x, 0f),
-                                            size = Size(width, size.height)
-                                        )
-                                    }
+                        Row(Modifier
+                            .fillMaxWidth()
+                            .clickable { detailsId = entry.id }
+                            .then(if (twoPane) Modifier.semantics {
+                                selected = emphasized
+                            } else Modifier)
+                            .drawBehind {
+                                if (emphasized) {
+                                    val width = 3.dp.toPx()
+                                    val x =
+                                        if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
+                                    drawRect(
+                                        selectionColor,
+                                        topLeft = Offset(x, 0f),
+                                        size = Size(width, size.height)
+                                    )
                                 }
-                                .heightIn(min = 67.dp)
-                                .padding(horizontal = 13.dp, vertical = 12.dp),
+                            }
+                            .heightIn(min = 67.dp)
+                            .padding(horizontal = 13.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(11.dp)) {
                             Surface(
@@ -932,8 +928,8 @@ internal fun HistoryRoute(
     })
     if (dialog == "replace") AlertDialog(
         onDismissRequest = {
-            dialog = null; viewModel.pendingImportUri = null
-        },
+        dialog = null; viewModel.pendingImportUri = null
+    },
         title = { Text(stringResource(R.string.log_import_replace)) },
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
@@ -959,8 +955,8 @@ internal fun HistoryRoute(
     )
     if (dialog == "deleteSelected" || dialog == "deleteAll") AlertDialog(
         onDismissRequest = {
-            dialog = null
-        },
+        dialog = null
+    },
         title = { Text(stringResource(if (dialog == "deleteAll") R.string.history_delete_all else R.string.history_delete_selected)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -1081,40 +1077,3 @@ private fun ChoiceDialog(title: Int, onDismiss: () -> Unit, choices: List<Pair<I
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } })
 }
 
-private fun Modifier.logGroupBorder(first: Boolean, last: Boolean, color: Color) = drawBehind {
-    val width = 1.dp.toPx()
-    val half = width / 2
-    val radius = 20.dp.toPx().coerceAtMost(size.height / 2)
-    val path = Path().apply {
-        moveTo(half, if (first) radius else 0f)
-        if (first) {
-            arcTo(Rect(half, half, 2 * radius - half, 2 * radius - half), 180f, 90f, false)
-            lineTo(size.width - radius, half)
-            arcTo(
-                Rect(size.width - 2 * radius + half, half, size.width - half, 2 * radius - half),
-                270f,
-                90f,
-                false
-            )
-        } else moveTo(size.width - half, 0f)
-        lineTo(size.width - half, if (last) size.height - radius else size.height)
-        if (last) {
-            arcTo(
-                Rect(
-                    size.width - 2 * radius + half,
-                    size.height - 2 * radius + half,
-                    size.width - half,
-                    size.height - half
-                ), 0f, 90f, false
-            )
-            lineTo(radius, size.height - half)
-            arcTo(
-                Rect(
-                    half, size.height - 2 * radius + half, 2 * radius - half, size.height - half
-                ), 90f, 90f, false
-            )
-        } else moveTo(half, size.height)
-        lineTo(half, if (first) radius else 0f)
-    }
-    drawPath(path, color, style = Stroke(width))
-}

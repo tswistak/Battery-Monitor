@@ -400,9 +400,6 @@
   <string name="pref_long_duration_format_help" formatted="false">ימים ושעות משתמש בימים לאחר 24 שעות, למשל 1d 3h. שעות בלבד משאיר את כל משך הזמן בשעות, למשל 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">ימים ושעות</string>
   <string name="long_duration_format_hours_only" formatted="false">שעות בלבד</string>
-  <string name="pref_cat_advanced_stats" formatted="false">סטטיסטיקות סוללה מתקדמות</string>
-  <string name="pref_enable_advanced_stats" formatted="false">הצג סטטיסטיקות סוללה מתקדמות</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">מוסיף לשונית מתקדמת עם סטטיסטיקות סוללה שדורשות root או Shizuku.</string>
 
   <string name="advanced_action_refresh" formatted="false">רענון</string>
   <string name="advanced_status_loading" formatted="false">טוען סטטיסטיקות סוללה מתקדמות...</string>

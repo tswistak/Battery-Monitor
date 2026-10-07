@@ -9,7 +9,6 @@ package codes.swistak.batterymonitor.diagnostics
 
 import android.app.NotificationManager
 import android.content.Context
-import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.os.SystemClock
@@ -24,18 +23,17 @@ internal object DiagnosticsReport {
         NOT_RUNNING, PERMISSION_GRANTED, PERMISSION_MISSING
     }
 
-    fun write(
-        context: Context, uri: Uri, rootAvailable: Boolean?, shizukuStatus: ShizukuStatus
-    ) {
-        val output = requireNotNull(context.contentResolver.openOutputStream(uri))
-        output.bufferedWriter().use { writer ->
-            writer.write(summary(context, rootAvailable, shizukuStatus))
-            val logFile = DebugLogCollector.logFile(context)
-            if (logFile.isFile) {
-                writer.appendLine()
-                writer.appendLine()
-                writer.appendLine("Debug logs")
-                logFile.bufferedReader().use { it.copyTo(writer) }
+    fun create(
+        context: Context,
+        rootAvailable: Boolean?,
+        shizukuStatus: ShizukuStatus,
+        includeDebugLogs: Boolean = false
+    ): String = buildString {
+        append(summary(context, rootAvailable, shizukuStatus))
+        if (includeDebugLogs) {
+            val file = DebugLogCollector.logFile(context)
+            if (file.isFile) {
+                appendLine(); appendLine("Debug logs"); append(file.readText())
             }
         }
     }
@@ -119,6 +117,7 @@ internal object DiagnosticsReport {
     ): String {
         if (!enabled) return "Disabled"
         if (timestamp !in 1..now) return unavailableText
+        if (now - timestamp >= 300_000) return "Stale - no recent response"
         val age = DiagnosticsDurationFormatter.format(Locale.ENGLISH, now - timestamp)
         return "Working - last response $age ago"
     }

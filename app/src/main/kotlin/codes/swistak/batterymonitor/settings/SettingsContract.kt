@@ -144,7 +144,6 @@ internal object SettingsContract {
     const val KEY_SHOW_REMAINING_CHARGE: String = "show_remaining_charge"
 
     const val KEY_UI_COLOR: String = "ui_color"
-    const val KEY_ENABLE_ADVANCED_STATS: String = "enable_advanced_stats"
 
     const val LEGACY_KEY_ENABLE_CURRENT = "enable_current_hack"
     const val LEGACY_KEY_CONVERT_F = "convert_to_fahrenheit"

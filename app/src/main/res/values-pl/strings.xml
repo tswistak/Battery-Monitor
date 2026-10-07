@@ -408,9 +408,6 @@
   <string name="pref_long_duration_format_help" formatted="false">„Dni i godziny” używa dni po 24 godzinach, np. 1d 3h. „Tylko godziny” zachowuje pełny czas trwania w godzinach, np. 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Dni i godziny</string>
   <string name="long_duration_format_hours_only" formatted="false">Tylko godziny</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Zaawansowane statystyki baterii</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Pokazuj zaawansowane statystyki baterii</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Dodaje kartę „Zaawansowane” z diagnostyką baterii, która wymaga roota albo Shizuku.</string>
 
   <string name="advanced_action_refresh" formatted="false">Odśwież</string>
   <string name="advanced_status_loading" formatted="false">Ładowanie zaawansowanych statystyk baterii…</string>
@@ -506,15 +503,15 @@
   <string name="advanced_field_battery_model_name" formatted="false">Nazwa modelu baterii</string>
   <string name="advanced_field_minimum_design_voltage" formatted="false">Minimalne napięcie projektowe</string>
   <string name="advanced_value_not_available" formatted="false">Niedostępne</string>
-  <string name="advanced_help_overview" formatted="false">Karta „Zaawansowane” pokazuje dodatkową diagnostykę baterii zbieraną z usług systemowych Androida i z plików power_supply jądra. Dostępność zależy od urządzenia, wersji Androida, układu scalonego ładowarki, układu scalonego wskaźnika naładowania baterii i informacji udostępnionych przez producenta.</string>
+  <string name="advanced_help_overview" formatted="false">Diagnostyka łączy niezawodność monitora i dane baterii w kartach Przegląd, Bateria, Ładowanie i Surowe. Dane Androida są dostępne bez roota. Dodatkowe dane zależą od urządzenia i uprawnień dostępnych dla Monitora baterii.</string>
   <string name="advanced_help_counters" formatted="false">Liczniki zawierają bieżące lub niedawno spróbkowane wartości, takie jak szacunkowy pozostały poziom naładowania, prąd, licznik energii i liczba cykli. Niektóre urządzenia udostępniają jedynie część z nich, a jednostki mogą pochodzić bezpośrednio ze sterownika sprzętowego.</string>
   <string name="advanced_help_capacity" formatted="false">Pojemność pokazuje pojemność pełnego naładowania, pojemność projektową i szacowane zdrowie. Szacowane zdrowie jest obliczane jako pojemność pełnego naładowania podzielona przez pojemność projektową, więc jego dokładność zależy od wartości odnotowanych przez urządzenie.</string>
   <string name="advanced_help_charging" formatted="false">Ładowanie pokazuje wartości związane z aktywną ścieżką ładowania, takie jak maksymalny prąd lub napięcie ładowania, strategia ładowania, stan ładowania i poziom pojemności. Pola te mogą się zmieniać w zależności od ładowarki i trybu ładowania.</string>
   <string name="advanced_help_service" formatted="false">Usługa baterii Androida pokazuje nieprzetworzone pola zgłoszone przez `dumpsys battery`. Są to wartości na poziomie frameworka, które często obejmują źródło ładowania, stan baterii, temperaturę, napięcie i inne stany usługi.</string>
-  <string name="advanced_help_sysfs" formatted="false">Pliki power_supply jądra pokazują nieprzetworzone jednoliniowe wartości odczytane z `/sys/class/power_supply`, takie jak węzły baterii, BMS, USB czy ładowarki bezprzewodowej. Jest to celowo niskopoziomowe i może zawierać nazwy specyficzne dla sterownika, które są przydatne głównie do debugowania.</string>
+  <string name="advanced_help_sysfs" formatted="false">Karta Surowe pokazuje oryginalne nazwy i wartości odczytane z /sys/class/power_supply, również wielowierszowe. Wyszukaj klucz i dotknij wiersza, aby wyświetlić i skopiować pełną wartość. Monitor baterii próbuje odczytu z własnymi uprawnieniami również bez roota i Shizuku.</string>
   <string name="advanced_help_metadata" formatted="false">Metadane pokazują wysokopoziomowe właściwości baterii udostępniane przez BatteryManager, takie jak stan zdrowia, pozostały czas ładowania, szczegóły produkcyjne czy stan zamiennika. Większość tych pól wymaga dostępu uprzywilejowanego, a wiele urządzeń udostępnia jedynie niewielką ich część.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Rozwiązywanie problemów</string>
-  <string name="advanced_help_troubleshooting" formatted="false">Jeśli karta jest pusta, najpierw upewnij się, że „Zaawansowane statystyki baterii” zostały włączone w ustawieniach. Na zrootowanych urządzeniach Monitor baterii najpierw próbuje użyć `su`. Na urządzeniach bez dostępu do roota Shizuku musi być zainstalowany i uruchomiony, a Monitor baterii musi mieć w nim przyznane uprawnienie. Niektóre urządzenia udostępniają jedynie kilka pól, co oznacza, że brakujące dane nie są dostępne przez Androida lub jądro na tym urządzeniu.</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Dane Androida są zawsze dostępne w Diagnostyce. Aby zbierać dodatkowe dane przez roota lub Shizuku, włącz zbieranie danych zaawansowanych i dostęp uprzywilejowany w sekcji Dodatkowe źródła. Monitor baterii najpierw próbuje roota, potem Shizuku. Shizuku musi działać i mieć przyznane uprawnienie. Brakujące pola pozostają niedostępne; nieudane odświeżenie zachowuje poprzedni odczyt i oznacza go jako nieaktualny.</string>
 
   <string name="pref_export_settings" formatted="false">Eksportuj ustawienia</string>
   <string name="pref_export_settings_summary" formatted="false">Zapisz bieżące ustawienia do pliku</string>
@@ -819,4 +816,24 @@
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
     <string name="battery_power">Moc baterii</string>
     <string name="battery_power_explanation">Obliczana z napięcia i prądu baterii; dodatnia przy ładowaniu, ujemna przy rozładowywaniu. To moc po stronie baterii, a nie ładowarki.</string>
+
+  <string name="diag_overview">Przegląd</string>
+  <string name="diag_raw">Surowe</string>
+  <string name="diag_monitor_operation">Działanie monitora</string>
+  <string name="diag_heartbeat">Ostatni sygnał</string>
+  <string name="diag_additional_sources">Dodatkowe źródła</string>
+  <string name="diag_source_help">Dostępne odczyty Androida są pobierane automatycznie na ekranie Diagnostyka. Dotknij wartości, aby sprawdzić i skopiować jej surowy odczyt, źródło i czas. Włącz dostęp uprzywilejowany, aby korzystać również z roota lub Shizuku.</string>
+  <string name="diag_include_raw">Dołącz surowe wartości i identyfikatory</string>
+  <string name="diag_include_debug">Dołącz zebrane logi diagnostyczne</string>
+  <string name="diag_include_apps">Dołącz nazwy aplikacji systemowych</string>
+  <string name="diag_report_privacy">Domyślnie wykluczone. Te dane mogą zawierać informacje osobiste. Sprawdź podgląd przed skopiowaniem lub zapisaniem.</string>
+  <string name="diag_timeout">Przekroczono czas odczytu. Poprzedni zestaw danych został zachowany. Spróbuj odświeżyć ponownie.</string>
+  <string name="diag_privileged_stale">Wyświetlane są poprzednie odczyty uprzywilejowane. Odśwież, aby spróbować ponownie.</string>
+  <string name="diag_stop_monitor">Zatrzymaj monitorowanie</string>
+  <string name="diag_start_monitor">Uruchom monitorowanie</string>
+  <string name="diag_stop_monitor_body">Monitorowanie baterii, zapis historii i automatyczne odzyskiwanie pracy w tle zostaną zatrzymane. Tutaj możesz ponownie uruchomić monitorowanie.</string>
+
+  <string name="diag_search_key">Szukaj kluczy</string>
+  <string name="diag_no_keys">Brak pasujących kluczy w dostępnych danych</string>
+  <string name="diag_raw_values">Surowe wartości</string>
 </resources>

@@ -416,9 +416,6 @@
   <string name="pref_long_duration_format_help" formatted="false">Dnevi in ure po 24 urah uporabijo dneve, na primer 1d 3h. Samo ure ohranijo celotno trajanje v urah, na primer 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Dnevi in ure</string>
   <string name="long_duration_format_hours_only" formatted="false">Samo ure</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Napredna statistika baterije</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Prikaži napredno statistiko baterije</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Doda zavihek Napredno s statistiko baterije, ki zahteva root ali Shizuku.</string>
 
   <string name="advanced_action_refresh" formatted="false">Osveži</string>
   <string name="advanced_status_loading" formatted="false">Nalaganje napredne statistike baterije...</string>

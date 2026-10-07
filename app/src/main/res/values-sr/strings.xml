@@ -408,9 +408,6 @@
   <string name="pref_long_duration_format_help" formatted="false">Dani i sati koristi dane nakon 24 sata, na primer 1d 3h. Samo sati zadržava celo trajanje u satima, na primer 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Dani i sati</string>
   <string name="long_duration_format_hours_only" formatted="false">Samo sati</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Napredna statistika baterije</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Prikaži naprednu statistiku baterije</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Dodaje karticu Napredno sa statistikom baterije koja zahteva root ili Shizuku.</string>
 
   <string name="advanced_action_refresh" formatted="false">Osveži</string>
   <string name="advanced_status_loading" formatted="false">Učitavanje napredne statistike baterije...</string>

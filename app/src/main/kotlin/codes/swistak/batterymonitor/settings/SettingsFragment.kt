@@ -211,8 +211,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     private var prefScreen = 0
     private var batteryCurrentMultiplierDetectionRunning = false
     private var applyingDetectedBatteryCurrentMultiplier = false
-    private var pendingShizukuBinderListener: OnBinderReceivedListener? = null
     private var pendingPrivilegedShizukuBinderListener: OnBinderReceivedListener? = null
+
     private var privilegedAccessRequestInProgress = false
     private val privilegedShizukuPermissionListener =
         OnRequestPermissionResultListener { requestCode, grantResult ->
@@ -319,8 +319,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     }
 
     override fun onDestroy() {
-        pendingShizukuBinderListener?.let(Shizuku::removeBinderReceivedListener)
-        pendingShizukuBinderListener = null
         pendingPrivilegedShizukuBinderListener?.let(Shizuku::removeBinderReceivedListener)
         pendingPrivilegedShizukuBinderListener = null
         privilegedAccessRequestInProgress = false
@@ -805,11 +803,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             setupTimeEstimatePreferences()
         }
 
-        if (key == SettingsContract.KEY_ENABLE_ADVANCED_STATS && mSharedPreferences.getBoolean(
-                SettingsContract.KEY_ENABLE_ADVANCED_STATS, false
-            )
-        ) maybeRequestShizukuPermission()
-
         if (key == SettingsContract.KEY_USE_PRIVILEGED_ACCESS) {
             val enabled = mSharedPreferences.getBoolean(
                 SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
@@ -845,14 +838,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         setupLanguage()
     }
 
-    private fun maybeRequestShizukuPermission() {
-        Thread(Runnable {
-            val rootAvailable = RootExecutor().run("id") != null
-            if (rootAvailable) return@Runnable
-            mainHandler.post { this.requestShizukuPermissionIfNeeded() }
-        }).start()
-    }
-
     private fun setupPrivilegedAccessPreference() {
         val preference = mPreferenceScreen?.findPreference<CheckBoxPreference>(
             SettingsContract.KEY_USE_PRIVILEGED_ACCESS
@@ -877,7 +862,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         if (privilegedAccessRequestInProgress) return
         privilegedAccessRequestInProgress = true
 
-        Thread(Runnable {
+        Thread {
             val rootGranted = RootExecutor().run("id") != null
             mainHandler.post {
                 if (!privilegedAccessRequestInProgress || !isAdded) return@post
@@ -887,7 +872,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                     requestPrivilegedShizukuPermission()
                 }
             }
-        }).start()
+        }.start()
     }
 
     private fun requestPrivilegedShizukuPermission() {
@@ -962,49 +947,12 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         PrivilegedAccess.setEnabled(enabled)
     }
 
-    private fun requestShizukuPermissionIfNeeded() {
-        if (!isAdded || activity == null) return
-
-        if (Shizuku.pingBinder()) {
-            requestShizukuPermissionFromBinder()
-            return
-        }
-
-        if (pendingShizukuBinderListener != null) return
-        Toast.makeText(requireContext(), R.string.shizuku_not_running, Toast.LENGTH_LONG).show()
-        val listener = object : OnBinderReceivedListener {
-            override fun onBinderReceived() {
-                mainHandler.post {
-                    Shizuku.removeBinderReceivedListener(this)
-                    if (pendingShizukuBinderListener === this) pendingShizukuBinderListener = null
-                    requestShizukuPermissionFromBinder()
-                }
-            }
-        }
-        pendingShizukuBinderListener = listener
-        Shizuku.addBinderReceivedListenerSticky(listener)
-    }
-
-    private fun requestShizukuPermissionFromBinder() {
-        if (!isAdded || activity == null || Shizuku.isPreV11()) return
-
-        if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) return
-        if (Shizuku.shouldShowRequestPermissionRationale()) {
-            Toast.makeText(
-                requireContext(), R.string.shizuku_permission_denied_permanently, Toast.LENGTH_LONG
-            ).show()
-            return
-        }
-
-        Shizuku.requestPermission(SHIZUKU_PERMISSION_REQUEST_CODE)
-    }
-
     private fun setEnablednessOfDeps(index: Int) {
         for (i in DEPENDENTS[index]!!.indices) {
             val dependent =
                 mPreferenceScreen!!.findPreference<Preference?>(DEPENDENTS[index]!![i]!!) ?: return
 
-            dependent.isEnabled = mSharedPreferences!!.getBoolean(PARENTS[index], false)
+            dependent.isEnabled = mSharedPreferences.getBoolean(PARENTS[index], false)
 
             updateListPrefSummary(DEPENDENTS[index]!![i]!!)
         }

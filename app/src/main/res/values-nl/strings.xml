@@ -398,9 +398,6 @@
   <string name="pref_long_duration_format_help" formatted="false">Dagen en uren gebruikt dagen na 24 uur, bijvoorbeeld 1d 3h. Alleen uren houdt de volledige duur in uren, bijvoorbeeld 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Dagen en uren</string>
   <string name="long_duration_format_hours_only" formatted="false">Alleen uren</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Geavanceerde batterijstatistieken</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Geavanceerde batterijstatistieken tonen</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Voegt een tabblad Geavanceerd toe met batterijstatistieken waarvoor root of Shizuku nodig is.</string>
 
   <string name="advanced_action_refresh" formatted="false">Vernieuwen</string>
   <string name="advanced_status_loading" formatted="false">Geavanceerde batterijstatistieken laden...</string>

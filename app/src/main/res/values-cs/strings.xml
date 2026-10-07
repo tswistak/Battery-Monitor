@@ -415,9 +415,6 @@
   <string name="pref_long_duration_format_help" formatted="false">Dny a hodiny použijí po 24 hodinách dny, například 1d 3h. Pouze hodiny zachovají celé trvání v hodinách, například 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Dny a hodiny</string>
   <string name="long_duration_format_hours_only" formatted="false">Pouze hodiny</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Pokročilé statistiky baterie</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Zobrazit pokročilé statistiky baterie</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Přidá kartu Pokročilé se statistikami baterie, které vyžadují root nebo Shizuku.</string>
 
   <string name="advanced_action_refresh" formatted="false">Obnovit</string>
   <string name="advanced_status_loading" formatted="false">Načítání pokročilých statistik baterie...</string>

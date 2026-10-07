@@ -11,15 +11,6 @@
             app:title="@string/pref_use_privileged_access" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/pref_cat_advanced_stats">
-        <CheckBoxPreference
-            android:defaultValue="false"
-            app:key="enable_advanced_stats"
-            app:singleLineTitle="false"
-            app:summary="@string/pref_enable_advanced_stats_summary"
-            app:title="@string/pref_enable_advanced_stats" />
-    </PreferenceCategory>
-
     <PreferenceCategory app:title="@string/pref_cat_logging">
         <CheckBoxPreference
             android:defaultValue="true"

@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -39,14 +40,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import codes.swistak.batterymonitor.R
@@ -279,7 +287,11 @@ fun SettingRow(
         modifier
             .fillMaxWidth()
             .heightIn(min = BatterySpacing.touch)
-            .then(if (checked == null) Modifier.clickable(onClick = onClick) else Modifier)
+            .then(
+                if (checked == null) Modifier.clickable(onClick = onClick)
+                else Modifier.toggleable(
+                    value = checked, role = Role.Switch, onValueChange = { onClick() })
+            )
             .padding(horizontal = BatterySpacing.normal, vertical = BatterySpacing.md),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -293,7 +305,7 @@ fun SettingRow(
         }
         if (checked != null) {
             Spacer(Modifier.width(BatterySpacing.normal))
-            Switch(checked = checked, onCheckedChange = { onClick() })
+            Switch(checked = checked, onCheckedChange = null)
         }
     }
 }
@@ -335,4 +347,44 @@ internal fun ActionLabel(label: String, icon: Int) {
         Icon(painterResource(icon), null, Modifier.size(19.dp))
         Text(label)
     }
+}
+
+internal fun Modifier.groupedCardBorder(
+    first: Boolean, last: Boolean, color: Color, cornerRadius: Dp = 20.dp
+) = drawBehind {
+    val width = 1.dp.toPx()
+    val half = width / 2
+    val radius = cornerRadius.toPx().coerceAtMost(size.height / 2)
+    val path = Path().apply {
+        moveTo(half, if (first) radius else 0f)
+        if (first) {
+            arcTo(Rect(half, half, 2 * radius - half, 2 * radius - half), 180f, 90f, false)
+            lineTo(size.width - radius, half)
+            arcTo(
+                Rect(size.width - 2 * radius + half, half, size.width - half, 2 * radius - half),
+                270f,
+                90f,
+                false
+            )
+        } else moveTo(size.width - half, 0f)
+        lineTo(size.width - half, if (last) size.height - radius else size.height)
+        if (last) {
+            arcTo(
+                Rect(
+                    size.width - 2 * radius + half,
+                    size.height - 2 * radius + half,
+                    size.width - half,
+                    size.height - half
+                ), 0f, 90f, false
+            )
+            lineTo(radius, size.height - half)
+            arcTo(
+                Rect(
+                    half, size.height - 2 * radius + half, 2 * radius - half, size.height - half
+                ), 90f, 90f, false
+            )
+        } else moveTo(half, size.height)
+        lineTo(half, if (first) radius else 0f)
+    }
+    drawPath(path, color, style = Stroke(width))
 }

@@ -60,7 +60,6 @@ internal object Version1SettingsImporter : SettingsImporter {
             SettingsContract.LEGACY_KEY_AUTO_REFRESH_CURRENT_IN_MAIN_WINDOW, Boolean::class.java
         )
         put(SettingsContract.KEY_UI_COLOR, String::class.java)
-        put(SettingsContract.KEY_ENABLE_ADVANCED_STATS, Boolean::class.java)
     }
 
     override fun restore(

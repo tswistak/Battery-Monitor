@@ -394,9 +394,6 @@
   <string name="pref_long_duration_format_help" formatted="false">दिन और घंटे 24 घंटे के बाद दिनों का उपयोग करता है, जैसे 1d 3h। केवल घंटे पूरी अवधि को घंटों में रखता है, जैसे 27h।</string>
   <string name="long_duration_format_days_and_hours" formatted="false">दिन और घंटे</string>
   <string name="long_duration_format_hours_only" formatted="false">केवल घंटे</string>
-  <string name="pref_cat_advanced_stats" formatted="false">उन्नत बैटरी आँकड़े</string>
-  <string name="pref_enable_advanced_stats" formatted="false">उन्नत बैटरी आँकड़े दिखाएँ</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">एक उन्नत टैब जोड़ता है जिसमें बैटरी आँकड़े होते हैं और जिसके लिए root या Shizuku चाहिए।</string>
 
   <string name="advanced_action_refresh" formatted="false">रीफ़्रेश</string>
   <string name="advanced_status_loading" formatted="false">उन्नत बैटरी आँकड़े लोड हो रहे हैं...</string>

@@ -382,9 +382,6 @@
   <string name="pref_long_duration_format_help" formatted="false">Günler ve saatler, 24 saatten sonra günleri kullanır; örneğin 1d 3h. Yalnızca saat, tüm süreyi saat olarak tutar; örneğin 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Günler ve saatler</string>
   <string name="long_duration_format_hours_only" formatted="false">Yalnızca saat</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Gelişmiş pil istatistikleri</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Gelişmiş pil istatistiklerini göster</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Root veya Shizuku gerektiren pil istatistikleriyle bir Gelişmiş sekmesi ekler.</string>
 
   <string name="advanced_action_refresh" formatted="false">Yenile</string>
   <string name="advanced_status_loading" formatted="false">Gelişmiş pil istatistikleri yükleniyor...</string>

@@ -391,9 +391,6 @@
   <string name="pref_long_duration_format_help" formatted="false">日と時間では24時間を超えると日を使用します（例: 1d 3h）。時間のみでは全期間を時間で表示します（例: 27h）。</string>
   <string name="long_duration_format_days_and_hours" formatted="false">日と時間</string>
   <string name="long_duration_format_hours_only" formatted="false">時間のみ</string>
-  <string name="pref_cat_advanced_stats" formatted="false">高度なバッテリー統計</string>
-  <string name="pref_enable_advanced_stats" formatted="false">高度なバッテリー統計を表示</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">root または Shizuku が必要なバッテリー統計を含む詳細タブを追加します。</string>
 
   <string name="advanced_action_refresh" formatted="false">更新</string>
   <string name="advanced_status_loading" formatted="false">高度なバッテリー統計を読み込み中...</string>

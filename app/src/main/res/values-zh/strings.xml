@@ -391,9 +391,6 @@
   <string name="pref_long_duration_format_help" formatted="false">天與小時會在超過 24 小時後使用天數，例如 1d 3h。僅小時會以小時保留完整時間，例如 27h。</string>
   <string name="long_duration_format_days_and_hours" formatted="false">天與小時</string>
   <string name="long_duration_format_hours_only" formatted="false">僅小時</string>
-  <string name="pref_cat_advanced_stats" formatted="false">高级电池统计</string>
-  <string name="pref_enable_advanced_stats" formatted="false">显示高级电池统计</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">添加“高级”标签页，并显示需要 root 或 Shizuku 的电池统计。</string>
 
   <string name="advanced_action_refresh" formatted="false">刷新</string>
   <string name="advanced_status_loading" formatted="false">正在加载高级电池统计...</string>

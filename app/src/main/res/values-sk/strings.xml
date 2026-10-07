@@ -419,9 +419,6 @@
   <string name="pref_long_duration_format_help" formatted="false">Dni a hodiny použijú po 24 hodinách dni, napríklad 1d 3h. Iba hodiny zachovajú celé trvanie v hodinách, napríklad 27h.</string>
   <string name="long_duration_format_days_and_hours" formatted="false">Dni a hodiny</string>
   <string name="long_duration_format_hours_only" formatted="false">Iba hodiny</string>
-  <string name="pref_cat_advanced_stats" formatted="false">Pokročilé štatistiky batérie</string>
-  <string name="pref_enable_advanced_stats" formatted="false">Zobraziť pokročilé štatistiky batérie</string>
-  <string name="pref_enable_advanced_stats_summary" formatted="false">Pridá kartu Pokročilé so štatistikami batérie, ktoré vyžadujú root alebo Shizuku.</string>
 
   <string name="advanced_action_refresh" formatted="false">Obnoviť</string>
   <string name="advanced_status_loading" formatted="false">Načítavajú sa pokročilé štatistiky batérie...</string>
