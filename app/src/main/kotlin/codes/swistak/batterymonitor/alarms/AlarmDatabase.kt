@@ -111,6 +111,39 @@ internal class AlarmDatabase(context: Context?) {
         }
     }
 
+    fun getAlarmRules(): List<AlarmRule> {
+        val cursor = getAllAlarms(true) ?: error("Could not read alarms")
+        return cursor.use {
+            buildList {
+                while (it.moveToNext()) add(
+                    AlarmRule(
+                        id = it.getInt(it.getColumnIndexOrThrow(KEY_ID)),
+                        enabled = it.getInt(it.getColumnIndexOrThrow(KEY_ENABLED)) == 1,
+                        type = it.getString(it.getColumnIndexOrThrow(KEY_TYPE)) ?: "",
+                        threshold = it.getString(it.getColumnIndexOrThrow(KEY_THRESHOLD)) ?: ""
+                    )
+                )
+            }
+        }
+    }
+
+    fun saveAlarm(id: Int?, enabled: Boolean, type: String, threshold: String): Int {
+        if (type !in SUPPORTED_TYPES) return -1
+        if (id == null) return addAlarm(enabled = enabled, type = type, threshold = threshold)
+        openDBs()
+        val values = ContentValues().apply {
+            put(KEY_ENABLED, if (enabled) 1 else 0)
+            put(KEY_TYPE, type)
+            put(KEY_THRESHOLD, threshold)
+        }
+        return try {
+            if (wdb?.update(ALARM_TABLE_NAME, values, "$KEY_ID=?", arrayOf(id.toString())) == 1) id
+            else -1
+        } catch (_: SQLiteException) {
+            -1
+        }
+    }
+
     fun replaceAllAlarms(records: List<AlarmRecord>): Boolean {
         openDBs()
         val database = wdb ?: return false
@@ -232,89 +265,7 @@ internal class AlarmDatabase(context: Context?) {
         }
     }
 
-    fun activeAlarmChargeDrops(current: Int, previous: Int): Cursor? {
-        openDBs()
-
-        try {
-            val c = rdb!!.rawQuery(
-                "SELECT * FROM $ALARM_TABLE_NAME WHERE $KEY_TYPE='charge_drops' AND ENABLED=1 AND $KEY_THRESHOLD>$current AND $KEY_THRESHOLD<=$previous LIMIT 1",
-                null
-            )
-
-            if (c.count == 0) {
-                c.close()
-                return null
-            }
-
-            c.moveToFirst()
-            return c
-        } catch (e: Exception) {
-            return null
-        }
-    }
-
-    fun activeAlarmChargeRises(current: Int, previous: Int): Cursor? {
-        openDBs()
-
-        try {
-            val c = rdb!!.rawQuery(
-                "SELECT * FROM $ALARM_TABLE_NAME WHERE $KEY_TYPE='charge_rises' AND ENABLED=1 AND $KEY_THRESHOLD<$current AND $KEY_THRESHOLD>=$previous LIMIT 1",
-                null
-            )
-
-            if (c.count == 0) {
-                c.close()
-                return null
-            }
-
-            c.moveToFirst()
-            return c
-        } catch (e: Exception) {
-            return null
-        }
-    }
-
-    fun activeAlarmTempRises(current: Int, previous: Int): Cursor? {
-        openDBs()
-
-        try {
-            val c = rdb!!.rawQuery(
-                "SELECT * FROM $ALARM_TABLE_NAME WHERE $KEY_TYPE='temp_rises' AND ENABLED=1 AND $KEY_THRESHOLD<$current AND $KEY_THRESHOLD>=$previous LIMIT 1",
-                null
-            )
-
-            if (c.count == 0) {
-                c.close()
-                return null
-            }
-
-            c.moveToFirst()
-            return c
-        } catch (e: Exception) {
-            return null
-        }
-    }
-
-    fun activeAlarmTempDrops(current: Int, previous: Int): Cursor? {
-        openDBs()
-
-        try {
-            val c = rdb!!.rawQuery(
-                "SELECT * FROM $ALARM_TABLE_NAME WHERE $KEY_TYPE='temp_drops' AND ENABLED=1 AND $KEY_THRESHOLD>$current AND $KEY_THRESHOLD<=$previous LIMIT 1",
-                null
-            )
-
-            if (c.count == 0) {
-                c.close()
-                return null
-            }
-
-            c.moveToFirst()
-            return c
-        } catch (e: Exception) {
-            return null
-        }
-    }
+    // Custom threshold crossings are evaluated by ThresholdAlarmEvaluator.
 
     fun activeAlarmFailure(): Cursor? {
         openDBs()
@@ -401,12 +352,13 @@ internal class AlarmDatabase(context: Context?) {
         }
     }
 
-    fun deleteAlarm(id: Int) {
+    fun deleteAlarm(id: Int): Boolean {
         openDBs()
 
         try {
-            wdb!!.delete(ALARM_TABLE_NAME, "$KEY_ID=$id", null)
+            return wdb!!.delete(ALARM_TABLE_NAME, "$KEY_ID=?", arrayOf(id.toString())) == 1
         } catch (e: Exception) {
+            return false
         }
     }
 

@@ -82,6 +82,7 @@ import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
 import codes.swistak.batterymonitor.logs.AutoLogExportSetupAction
 import codes.swistak.batterymonitor.logs.LogExportFormat
 import codes.swistak.batterymonitor.logs.autoLogExportSetupAction
+import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryCurrentMultiplierDetector
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
@@ -154,6 +155,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         )
 
         private val RESET_SERVICE = arrayOf<String?>(
+            SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY,
             SettingsContract.KEY_TEMPERATURE_UNIT,
             SettingsContract.KEY_NOTIFY_STATUS_DURATION,
             SettingsContract.KEY_RED,
@@ -329,6 +331,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     @SuppressLint("ApplySharedPref", "UseKtx")
     private fun resetService(cancelFirst: Boolean = false) {
+        if (!BackgroundServiceWatchdog.isServiceDesired(requireContext())) return
         mSharedPreferences.edit().commit()
 
         val outgoing = Message.obtain()
@@ -1803,6 +1806,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             when {
                 GeneralBackupDataType.PREDICTOR_DATA in selectedData -> reloadDeviceData()
                 GeneralBackupDataType.SETTINGS in selectedData -> resetService()
+                GeneralBackupDataType.ALARMS in selectedData -> resetService()
             }
             Toast.makeText(activity, R.string.general_backup_imported, Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
@@ -1938,6 +1942,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         val database = AlarmDatabase(requireContext())
         try {
             AlarmBackup.importFromJson(database, json)
+            resetService()
             Toast.makeText(activity, R.string.alarms_imported, Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(activity, R.string.invalid_alarms_file, Toast.LENGTH_SHORT).show()

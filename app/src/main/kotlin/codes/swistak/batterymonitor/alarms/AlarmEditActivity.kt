@@ -13,94 +13,24 @@
 */
 package codes.swistak.batterymonitor.alarms
 
-import android.content.ComponentName
+import android.app.Activity
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
-import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.common.EdgeToEdgeHelper
-import codes.swistak.batterymonitor.settings.SettingsContract
-import codes.swistak.batterymonitor.settings.SettingsHelpActivity
+import codes.swistak.batterymonitor.app.BatteryInfoActivity
+import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 
-class AlarmEditActivity : AppCompatActivity() {
-    private var res: Resources? = null
-    private var frag: AlarmEditFragment? = null
+class AlarmEditActivity : Activity() {
+    companion object {
+        const val EXTRA_ALARM_ID = "codes.swistak.batterymonitor.AlarmID"
+    }
 
-    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        res = getResources()
-
-        val ab = supportActionBar
-        if (ab != null) {
-            ab.setHomeButtonEnabled(true)
-            ab.setDisplayHomeAsUpEnabled(true)
-            ab.elevation = 0f
-        }
-
-        val c = resources.getColor(R.color.windowBackground, null)
-        val w = window
-        w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        w.statusBarColor = c
-
-        setWindowSubtitle(res!!.getString(R.string.alarm_settings_subtitle))
-
-        setContentView(R.layout.prefs)
-        EdgeToEdgeHelper.applyIfNeeded(this)
-
-        frag = AlarmEditFragment()
-
-        supportFragmentManager.beginTransaction().replace(R.id.settings, frag!!, "aef").commit()
-
-        frag!!.setScreen()
-    }
-
-    private fun setWindowSubtitle(subtitle: String?) {
-        if (res!!.getBoolean(R.bool.long_activity_names)) setTitle(res!!.getString(R.string.app_full_name) + " - " + subtitle)
-        else setTitle(subtitle)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.alarm_edit, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_delete) {
-            frag!!.deleteAlarm()
-            finish()
-
-            return true
-        }
-
-        if (item.itemId == R.id.menu_help) {
-            val comp = ComponentName(packageName, SettingsHelpActivity::class.java.getName())
-            val intent: Intent = Intent().setComponent(comp).putExtra(
-                SettingsContract.EXTRA_SCREEN,
-                SettingsContract.KEY_ALARM_EDIT_SETTINGS
-            )
-            startActivity(intent)
-
-            return true
-        }
-
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-    fun enableNotifsButtonClick(v: View?) {
-        frag!!.enableNotifsButtonClick()
+        startActivity(Intent(this, BatteryInfoActivity::class.java).apply {
+            putExtra(BatteryInfoActivity.EXTRA_SECTION, SectionOwner.ALARMS.route)
+            putExtra(BatteryInfoActivity.EXTRA_DETAIL, "alarm-edit")
+            putExtra(EXTRA_ALARM_ID, intent.getIntExtra(EXTRA_ALARM_ID, -1))
+        })
+        finish()
     }
 }

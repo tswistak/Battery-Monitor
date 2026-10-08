@@ -7,6 +7,15 @@
             android:selectable="false" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/channel_group_name_alarms">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="dismiss_low_battery_on_recovery"
+            android:summary="@string/pref_dismiss_low_battery_on_recovery_summary"
+            android:title="@string/pref_dismiss_low_battery_on_recovery"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/pref_cat_notification_content">
         <ListPreference
             android:defaultValue="@string/default_top_line_content"

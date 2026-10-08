@@ -23,6 +23,8 @@ internal object SettingsContract {
     const val KEY_CURRENT_STATE_SETTINGS: String = "current_state_settings"
     const val KEY_ALARMS_SETTINGS: String = "alarms_settings"
     const val KEY_ALARM_EDIT_SETTINGS: String = "alarm_edit_settings"
+    const val KEY_DISMISS_LOW_BATTERY_ON_RECOVERY: String = "dismiss_low_battery_on_recovery"
+
     const val KEY_ADVANCED_INFO_HELP: String = "advanced_info_help"
     const val KEY_OTHER_SETTINGS: String = "other_settings"
     const val KEY_TIME_ESTIMATES_SETTINGS: String = "time_estimates_settings"

@@ -387,6 +387,22 @@ class PersistentFragment : Fragment() {
         }
     }
 
+    internal fun reloadAlarmRules() {
+        val context = requireContext().applicationContext
+        if (!BackgroundServiceWatchdog.isServiceDesired(context)) return
+        val snapshot = codes.swistak.batterymonitor.settings.SettingsSnapshot.capture(settings)
+        val message = Message.obtain().apply {
+            what = BatteryInfoService.RemoteConnection.SERVICE_RELOAD_SETTINGS
+            data = snapshot
+        }
+        try {
+            val service = serviceMessenger ?: error("Service is disconnected")
+            service.send(message)
+        } catch (_: Exception) {
+            BatteryInfoService.startForegroundServiceSafely(context, snapshot)
+        }
+    }
+
     fun stopMonitoring() {
         spMain.edit {
             putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)

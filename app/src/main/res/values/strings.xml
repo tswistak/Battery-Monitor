@@ -115,27 +115,27 @@
   <string name="alarm_type_fully_charged" formatted="false">Fully charged</string>
   <string name="alarm_type_charging_limit_met" formatted="false">Charging limit met</string>
   <string name="alarm_type_discharging_limit_met" formatted="false">Discharging limit met</string>
-  <string name="alarm_type_charge_drops" formatted="false">Charge drops below</string>
-  <string name="alarm_type_charge_rises" formatted="false">Charge rises above</string>
-  <string name="alarm_type_temperature_drops" formatted="false">Temperature drops below</string>
-  <string name="alarm_type_temperature_rises" formatted="false">Temperature rises above</string>
+  <string name="alarm_type_charge_drops" formatted="false">When charge falls to</string>
+  <string name="alarm_type_charge_rises" formatted="false">When charge rises to</string>
+  <string name="alarm_type_temperature_drops" formatted="false">When temperature falls to</string>
+  <string name="alarm_type_temperature_rises" formatted="false">When temperature rises to</string>
   <string name="alarm_type_health_failure" formatted="false">Health failure</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Becomes fully charged</string>
   <string name="alarm_type_entry_charging_limit_met" formatted="false">Charging limit met</string>
   <string name="alarm_type_entry_discharging_limit_met" formatted="false">Discharging limit met</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Charge drops below...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Charge rises above...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperature drops below...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperature rises above...</string>
+  <string name="alarm_type_entry_charge_drops" formatted="false">Charge falls to…</string>
+  <string name="alarm_type_entry_charge_rises" formatted="false">Charge rises to…</string>
+  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperature falls to…</string>
+  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperature rises to…</string>
   <string name="alarm_type_entry_health_failure" formatted="false">Health fails</string>
 
   <string name="alarm_fully_charged" formatted="false">Battery is now fully charged</string>
   <string name="alarm_charging_limit_met" formatted="true">Charging limit reached: %1$d%%</string>
   <string name="alarm_discharging_limit_met" formatted="true">Discharging limit reached: %1$d%%</string>
-  <string name="alarm_charge_drops" formatted="false">"Battery charge is below "</string>
-  <string name="alarm_charge_rises" formatted="false">"Battery charge is above "</string>
-  <string name="alarm_temp_drops" formatted="false">"Battery temp. is below "</string>
-  <string name="alarm_temp_rises" formatted="false">"Battery temp. is above "</string>
+  <string name="alarm_charge_drops" formatted="false">"Battery charge reached or fell below "</string>
+  <string name="alarm_charge_rises" formatted="false">"Battery charge reached or rose above "</string>
+  <string name="alarm_temp_drops" formatted="false">"Battery temperature reached or fell below "</string>
+  <string name="alarm_temp_rises" formatted="false">"Battery temperature reached or rose above "</string>
   <string name="alarm_health_failure" formatted="false">"Battery health is: "</string>
 
   <string name="logs_empty" formatted="false">Logs Are Empty</string>
@@ -402,15 +402,14 @@
   <string name="advanced_status_no_access" formatted="false">Root access or Shizuku is needed to show advanced battery stats.</string>
 
   <string name="alarms_overview" formatted="false">Alarms Overview</string>
-  <string name="alarms_overview_help" formatted="false">This page allows you to add new alarms, quickly enable or disable existing alarms, or delete alarms.\n
+  <string name="alarms_overview_help" formatted="false">Alarms are grouped by battery level, temperature and battery health. Each rule has its own switch.\n
     \n
-    To add a new alarm, press \"Add alarm\" — this will create a new alarm and take you to the alarm settings page, where you can control the settings for the new alarm. See the help on that page for more details.\n
+    • Press \"Add alarm\" to prepare a new rule. It is created only when you press \"Save\".\n
+    • Press a rule to edit it. Changes are applied only after \"Save\". Leaving an edited draft lets you keep editing or discard it.\n
+    • To delete a saved rule, open it and press \"Delete alarm\", then confirm.\n
+    • Android notification channels control sound, vibration and delivery for each alarm type. A blocked channel is shown separately from the rule switch.\n
     \n
-    Below the \"Add alarm\" button is a list of any alarms you have created.\n
-    \n
-    • To edit an existing alarm, just press it.\n
-    • To delete an alarm, long-press it, then select \"Delete Alarm\". (You can also delete an alarm from the individual alarm settings page by pressing MENU then \"Delete Alarm\".)\n
-    • To easily toggle whether an alarm is enabled, press the toggle switch to the side of the alarm text. (You can also enable or disable an alarm from the individual alarm settings page.)</string>
+    The alarm settings include an optional switch to dismiss a low-battery notification after the battery recovers above its threshold.</string>
 
   <string name="pref_alarm_enabled" formatted="false">Enable Alarm</string>
   <string name="pref_alarm_enabled_help" formatted="false">If you want to temporarily disable an alarm without having to recreate it when you want it again, you can turn it off and on either here or on the main alarms page.</string>
@@ -431,7 +430,7 @@
   <string name="pref_alarm_threshold" formatted="false">Threshold</string>
   <string name="alarm_pref_not_used" formatted="false">Not used for this alarm type</string>
   <string name="pref_alarm_threshold_summary" formatted="false">Alarm threshold:</string>
-  <string name="pref_alarm_threshold_help" formatted="false">For charge and temperature alarms, you need to set the temperature or charge level that will trigger the alarm.</string>
+  <string name="pref_alarm_threshold_help" formatted="false">For charge and temperature alarms, set the threshold and save the rule. The alarm fires when a reading reaches or passes the threshold in the chosen direction. Repeated readings at the threshold do not repeat the alarm. Starting the monitor, importing a rule or enabling it beyond the threshold does not fire it immediately; a later crossing is required.</string>
   <string name="alarm_custom_temp_message" formatted="true">Enter temperature in %s degrees</string>
   <string name="alarm_custom_charge_message" formatted="false">Enter charge percentage (0-100)</string>
 
@@ -822,4 +821,26 @@
   <string name="diag_search_key">Search keys</string>
   <string name="diag_no_keys">No matching keys in the available data</string>
   <string name="diag_raw_values">Raw values</string>
+  <string name="pref_dismiss_low_battery_on_recovery">Dismiss low battery alarm after recovery</string>
+  <string name="pref_dismiss_low_battery_on_recovery_summary">Remove the low battery notification when the charge rises above its threshold. Other alarm notifications remain.</string>
+  <plurals name="alarms_active_count">
+    <item quantity="one">%1$d active</item>
+    <item quantity="other">%1$d active</item>
+  </plurals>
+  <string name="alarms_monitoring_caption">Rules operate while monitoring</string>
+  <string name="alarms_channel_note">Each rule keeps its own settings. Android notification channels also control sound and delivery.</string>
+  <string name="alarms_target_help">This alarm follows the shared forecast target. It does not control charging.</string>
+  <string name="alarms_delivery_sound_vibration">Sound, vibration and notification</string>
+  <string name="alarms_delivery_sound">Sound and notification</string>
+  <string name="alarms_delivery_vibration">Vibration and notification</string>
+  <string name="alarms_delivery_notification">Notification only</string>
+  <string name="alarms_invalid_threshold">Enter a valid threshold.</string>
+  <string name="alarms_delete_confirmation">Delete this alarm?</string>
+  <string name="alarms_channel_help">Sound and delivery are controlled by this Android notification channel.</string>
+  <string name="alarms_numeric_range">Enter a whole number from %1$d to %2$d.</string>
+  <string name="alarms_temperature_range">Enter a number from %1$d to %2$d, with up to one decimal place.</string>
+  <string name="alarms_summary">Summary</string>
+  <string name="alarms_database_error">Could not access the alarm database. Try again.</string>
+  <string name="alarms_discard_confirmation">Discard your changes to this alarm?</string>
+  <string name="alarms_discard">Discard</string>
 </resources>

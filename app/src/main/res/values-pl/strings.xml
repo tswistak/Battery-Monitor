@@ -115,27 +115,27 @@
   <string name="alarm_type_fully_charged" formatted="false">W pełni naładowana</string>
   <string name="alarm_type_charging_limit_met" formatted="false">Osiągnięto limit ładowania</string>
   <string name="alarm_type_discharging_limit_met" formatted="false">Osiągnięto limit rozładowania</string>
-  <string name="alarm_type_charge_drops" formatted="false">Poziom naładowania spada poniżej</string>
-  <string name="alarm_type_charge_rises" formatted="false">Poziom naładowania wzrasta powyżej</string>
-  <string name="alarm_type_temperature_drops" formatted="false">Temperatura spada poniżej</string>
-  <string name="alarm_type_temperature_rises" formatted="false">Temperatura wzrasta powyżej</string>
+  <string name="alarm_type_charge_drops" formatted="false">Gdy poziom spadnie do</string>
+  <string name="alarm_type_charge_rises" formatted="false">Gdy poziom wzrośnie do</string>
+  <string name="alarm_type_temperature_drops" formatted="false">Gdy temperatura spadnie do</string>
+  <string name="alarm_type_temperature_rises" formatted="false">Gdy temperatura wzrośnie do</string>
   <string name="alarm_type_health_failure" formatted="false">Problemy ze zdrowiem</string>
   <string name="alarm_type_entry_fully_charged" formatted="false">Zostaje w pełni naładowana</string>
   <string name="alarm_type_entry_charging_limit_met" formatted="false">Osiągnie limit ładowania</string>
   <string name="alarm_type_entry_discharging_limit_met" formatted="false">Osiągnie limit rozładowania</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Poziom naładowania spada poniżej…</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Poziom naładowania wzrasta powyżej…</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura spada poniżej…</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatura wzrasta powyżej…</string>
+  <string name="alarm_type_entry_charge_drops" formatted="false">Poziom naładowania spada do…</string>
+  <string name="alarm_type_entry_charge_rises" formatted="false">Poziom naładowania wzrasta do…</string>
+  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura spada do…</string>
+  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatura wzrasta do…</string>
   <string name="alarm_type_entry_health_failure" formatted="false">Problemy ze zdrowiem</string>
 
   <string name="alarm_fully_charged" formatted="false">Bateria jest w pełni naładowana</string>
   <string name="alarm_charging_limit_met" formatted="true">Osiągnięto limit ładowania: %1$d%%</string>
   <string name="alarm_discharging_limit_met" formatted="true">Osiągnięto limit rozładowania: %1$d%%</string>
-  <string name="alarm_charge_drops" formatted="false">"Stan naładowania baterii jest poniżej "</string>
-  <string name="alarm_charge_rises" formatted="false">"Stan naładowania baterii jest powyżej "</string>
-  <string name="alarm_temp_drops" formatted="false">"Temperatura baterii jest poniżej "</string>
-  <string name="alarm_temp_rises" formatted="false">"Temperatura baterii jest powyżej "</string>
+  <string name="alarm_charge_drops" formatted="false">"Poziom baterii osiągnął lub spadł poniżej "</string>
+  <string name="alarm_charge_rises" formatted="false">"Poziom baterii osiągnął lub wzrósł powyżej "</string>
+  <string name="alarm_temp_drops" formatted="false">"Temperatura baterii osiągnęła lub spadła poniżej "</string>
+  <string name="alarm_temp_rises" formatted="false">"Temperatura baterii osiągnęła lub wzrosła powyżej "</string>
   <string name="alarm_health_failure" formatted="false">"Zdrowie baterii to: "</string>
 
   <string name="logs_empty" formatted="false">Logi są puste</string>
@@ -414,15 +414,14 @@
   <string name="advanced_status_no_access" formatted="false">Do wyświetlania zaawansowanych statystyk baterii potrzebny jest dostęp do roota albo Shizuku.</string>
 
   <string name="alarms_overview" formatted="false">Przegląd alarmów</string>
-  <string name="alarms_overview_help" formatted="false">Na tej stronie możesz dodawać nowe alarmy, szybko włączać lub wyłączać już istniejące lub je usuwać.\n
+  <string name="alarms_overview_help" formatted="false">Alarmy są pogrupowane według poziomu baterii, temperatury i stanu baterii. Każda reguła ma własny przełącznik.\n
     \n
-    Aby dodać nowy alarm, naciśnij „Dodaj alarm” — to utworzy nowy alarm i przeniesie Cię na stronę ustawień alarmu, gdzie możesz sterować ustawieniami dla nowego alarmu. Zobacz pomoc na tej stronie po więcej szczegółow.\n
+    • Naciśnij „Dodaj alarm”, aby przygotować nową regułę. Zostanie utworzona dopiero po naciśnięciu „Zapisz”.\n
+    • Naciśnij regułę, aby ją edytować. Zmiany zostaną zastosowane dopiero po naciśnięciu „Zapisz”. Przy opuszczaniu zmienionego formularza możesz kontynuować edycję lub odrzucić zmiany.\n
+    • Aby usunąć zapisaną regułę, otwórz ją, naciśnij „Usuń alarm” i potwierdź.\n
+    • Kanały powiadomień Androida sterują dźwiękiem, wibracjami i dostarczaniem powiadomień dla każdego typu alarmu. Zablokowany kanał jest pokazany niezależnie od przełącznika reguły.\n
     \n
-    Pod przyciskiem „Dodaj alarm” jest lista wszystkich utworzonych przez Ciebie alarmów.\n
-    \n
-    • Aby zedytować istniejący alarm, po prostu go naciśnij.\n
-    • Aby usunąć alarm, długo go naciśnij, a następnie wybierz „Usuń alarm”. (Możesz także usunąć alarm ze strony ustawień pojedynczego alarmu, naciskając MENU, a następnie „Usuń alarm”.)\n
-    • Aby łatwo włączyć/wyłączyć alarm, naciśnij przełącznik obok tekstu alarmu. (Możesz także alarm włączyć lub wyłączyć na stronie ustawień pojedynczego alarmu).</string>
+    Ustawienia alarmów zawierają opcję usuwania powiadomienia o niskim poziomie baterii po wzroście poziomu powyżej progu.</string>
 
   <string name="pref_alarm_enabled" formatted="false">Włącz alarm</string>
   <string name="pref_alarm_enabled_help" formatted="false">Jeśli chcesz tymczasowo wyłączyć alarm, bez konieczności tworzenia go od nowa, gdy będziesz go potrzebować, możesz go włączyć lub wyłączyć tutaj albo na głównej stronie alarmów.</string>
@@ -444,7 +443,7 @@
   <string name="pref_alarm_threshold" formatted="false">Próg</string>
   <string name="alarm_pref_not_used" formatted="false">Nieużywane dla tego typu alarmu</string>
   <string name="pref_alarm_threshold_summary" formatted="false">Próg alarmu:</string>
-  <string name="pref_alarm_threshold_help" formatted="false">Dla ładowania i alarmów temperatury potrzebujesz ustawić poziom ładowania i temperaturę, który wywoła alarm.</string>
+  <string name="pref_alarm_threshold_help" formatted="false">Dla alarmów poziomu baterii i temperatury ustaw próg i zapisz regułę. Alarm uruchomi się, gdy odczyt osiągnie lub przekroczy próg w wybranym kierunku. Kolejne odczyty równe progowi nie powtarzają alarmu. Uruchomienie monitora, import reguły lub włączenie jej po przekroczeniu progu nie uruchamia alarmu od razu; potrzebne jest kolejne przekroczenie.</string>
   <string name="alarm_custom_temp_message" formatted="true">Wprowadź temperaturę w stopniach %s</string>
   <string name="alarm_custom_charge_message" formatted="false">Wprowadź procent naładowania (0-100)</string>
 
@@ -836,4 +835,28 @@
   <string name="diag_search_key">Szukaj kluczy</string>
   <string name="diag_no_keys">Brak pasujących kluczy w dostępnych danych</string>
   <string name="diag_raw_values">Surowe wartości</string>
+  <string name="pref_dismiss_low_battery_on_recovery">Usuń alarm niskiego poziomu po jego wzroście</string>
+  <string name="pref_dismiss_low_battery_on_recovery_summary">Usuń powiadomienie o niskim poziomie, gdy poziom baterii wzrośnie powyżej progu alarmu. Inne powiadomienia alarmów pozostają.</string>
+  <plurals name="alarms_active_count">
+    <item quantity="one">%1$d aktywny</item>
+    <item quantity="few">%1$d aktywne</item>
+    <item quantity="many">%1$d aktywnych</item>
+    <item quantity="other">%1$d aktywnych</item>
+  </plurals>
+  <string name="alarms_monitoring_caption">Reguły działają podczas monitorowania</string>
+  <string name="alarms_channel_note">Każda reguła zachowuje własne ustawienia. Dźwięk i sposób wyświetlania kontroluje również kanał powiadomień Androida.</string>
+  <string name="alarms_target_help">Ten alarm używa wspólnego celu prognozy. Nie steruje ładowaniem.</string>
+  <string name="alarms_delivery_sound_vibration">Dźwięk, wibracje i powiadomienie</string>
+  <string name="alarms_delivery_sound">Dźwięk i powiadomienie</string>
+  <string name="alarms_delivery_vibration">Wibracje i powiadomienie</string>
+  <string name="alarms_delivery_notification">Tylko powiadomienie</string>
+  <string name="alarms_invalid_threshold">Wpisz prawidłowy próg.</string>
+  <string name="alarms_delete_confirmation">Usunąć ten alarm?</string>
+  <string name="alarms_channel_help">Dźwięk i sposób dostarczenia określa ten kanał powiadomień Androida.</string>
+  <string name="alarms_numeric_range">Wpisz liczbę całkowitą od %1$d do %2$d.</string>
+  <string name="alarms_temperature_range">Wpisz liczbę od %1$d do %2$d, z maksymalnie jednym miejscem po przecinku.</string>
+  <string name="alarms_summary">Podsumowanie</string>
+  <string name="alarms_database_error">Nie można uzyskać dostępu do bazy alarmów. Spróbuj ponownie.</string>
+  <string name="alarms_discard_confirmation">Odrzucić zmiany w tym alarmie?</string>
+  <string name="alarms_discard">Odrzuć</string>
 </resources>

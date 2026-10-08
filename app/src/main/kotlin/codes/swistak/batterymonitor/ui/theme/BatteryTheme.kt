@@ -7,6 +7,8 @@
 */
 package codes.swistak.batterymonitor.ui.theme
 
+import android.app.Activity
+import android.content.ContextWrapper
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,13 +21,16 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 
 enum class ColorSource { Dynamic, BatteryBlue }
 enum class Brightness { System, Light, Dark, TrueBlack }
@@ -209,6 +214,20 @@ fun BatteryTheme(
     content: @Composable () -> Unit
 ) {
     val dark = isDark(brightness, isSystemInDarkTheme())
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val activity =
+                generateSequence(view.context) { (it as? ContextWrapper)?.baseContext }.filterIsInstance<Activity>()
+                    .firstOrNull()
+            activity?.let {
+                WindowCompat.getInsetsController(it.window, view).apply {
+                    isAppearanceLightStatusBars = !dark
+                    isAppearanceLightNavigationBars = !dark
+                }
+            }
+        }
+    }
     val dynamic = useDynamicColors(colorSource, Build.VERSION.SDK_INT)
     val context = LocalContext.current
     val scheme = when {

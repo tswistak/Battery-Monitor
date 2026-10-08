@@ -1,14 +1,21 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  <PreferenceCategory android:title="@string/notifications_disabled_cat">
-    <Preference
-        android:key="enable_notifications_button"
-        android:layout="@layout/enable_notifications_button"
-    />
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/notifications_disabled_cat">
+        <Preference
+            android:key="enable_notifications_button"
+            android:layout="@layout/enable_notifications_button" />
 
-    <Preference
-        android:key="enable_notifications_summary"
-        android:layout="@layout/enable_notifications_summary"
-        android:enabled="false"
-    />
-  </PreferenceCategory>
+        <Preference
+            android:enabled="false"
+            android:key="enable_notifications_summary"
+            android:layout="@layout/enable_notifications_summary" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/channel_group_name_alarms">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="dismiss_low_battery_on_recovery"
+            android:summary="@string/pref_dismiss_low_battery_on_recovery_summary"
+            android:title="@string/pref_dismiss_low_battery_on_recovery"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
 </PreferenceScreen>

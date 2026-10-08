@@ -226,6 +226,10 @@ class SettingsBackupSchemaTest {
             Boolean::class.java,
             Version4SettingsImporter.schema[SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS]
         )
+        assertEquals(
+            Boolean::class.java,
+            Version4SettingsImporter.schema[SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY]
+        )
     }
 
     @Test
@@ -250,7 +254,8 @@ class SettingsBackupSchemaTest {
             SettingsContract.KEY_CHARGING_TARGET_MODE to "custom",
             SettingsContract.KEY_CUSTOM_CHARGING_TARGET to 85,
             SettingsContract.KEY_DISCHARGING_TARGET to 15,
-            SettingsContract.KEY_USE_PRIVILEGED_ACCESS to true
+            SettingsContract.KEY_USE_PRIVILEGED_ACCESS to true,
+            SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY to true
         )
 
         Version4SettingsImporter.restore(editor, settings)
@@ -259,5 +264,6 @@ class SettingsBackupSchemaTest {
         assertEquals(85, restored[SettingsContract.KEY_CUSTOM_CHARGING_TARGET])
         assertEquals(15, restored[SettingsContract.KEY_DISCHARGING_TARGET])
         assertEquals(true, restored[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
+        assertEquals(true, restored[SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY])
     }
 }

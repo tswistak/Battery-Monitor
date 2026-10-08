@@ -53,6 +53,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
+import codes.swistak.batterymonitor.alarms.AlarmRule
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
@@ -94,6 +95,8 @@ class BatteryInfoService : Service() {
         private const val NOTIFICATION_PRIMARY = 1
         private const val NOTIFICATION_MAIN_COMPANION = 2
         private const val NOTIFICATION_ALARM = 7
+        private const val EXTRA_LOW_BATTERY_THRESHOLD = "low_battery_alarm_threshold"
+
         const val CHAN_ID_MAIN: String = "main_004"
         const val CHAN_ID_LIVE_UPDATE: String = "live_update_001"
         const val CHAN_ID_A_CHARGED: String = "fully_charged"
@@ -285,6 +288,7 @@ class BatteryInfoService : Service() {
     private val iconResCache = HashMap<String?, Int?>()
     private var predictor: Predictor? = null
     private val targetAlarmEvaluator = TargetAlarmEvaluator()
+    private val thresholdAlarmEvaluator = ThresholdAlarmEvaluator()
 
     private val mHandler = Handler(Looper.getMainLooper())
 
@@ -491,7 +495,10 @@ class BatteryInfoService : Service() {
             stopSelf(startId)
             return START_NOT_STICKY
         }
-        intent?.getBundleExtra(EXTRA_SETTINGS_SNAPSHOT)?.let(::applySettingsSnapshot)
+        intent?.getBundleExtra(EXTRA_SETTINGS_SNAPSHOT)?.let { snapshot ->
+            thresholdAlarmEvaluator.reset()
+            applySettingsSnapshot(snapshot)
+        }
         configureBatteryCurrent()
         configureChipContent()
         update(null)
@@ -607,6 +614,7 @@ class BatteryInfoService : Service() {
     }
 
     private fun reloadSettings(cancelFirst: Boolean, settingsSnapshot: Bundle?) {
+        thresholdAlarmEvaluator.reset()
         loadSettingsFiles()
         settingsSnapshot?.let(::applySettingsSnapshot)
         configureBatteryCurrent()
@@ -726,13 +734,26 @@ class BatteryInfoService : Service() {
         info!!.prediction.updateRelativeTime()
         info!!.fullRangePrediction.updateRelativeTime()
 
+        val alarmRules = try {
+            alarms!!.getAlarmRules()
+        } catch (error: Exception) {
+            Log.e(LOG_TAG, "Could not read alarm rules", error)
+            emptyList()
+        }
+        val thresholdAlarms = thresholdAlarmEvaluator.evaluate(
+            info!!.percent, info!!.temperature, alarmRules
+        )
+
         if (statusHasChanged()) handleUpdateWithChangedStatus()
         else handleUpdateWithSameStatus()
 
         prepareNotification()
         startForegroundWithRetry()
 
-        if (alarms!!.anyActiveAlarms()) handleAlarms(targetAlarmResult, resolvedTargets)
+        dismissRecoveredLowBatteryAlarm()
+        if (alarms!!.anyActiveAlarms()) handleAlarms(
+            targetAlarmResult, resolvedTargets, thresholdAlarms
+        )
 
         updateWidgets(info)
 
@@ -1395,17 +1416,17 @@ class BatteryInfoService : Service() {
     }
 
     private fun handleAlarms(
-        targetAlarmResult: TargetAlarmResult, resolvedTargets: ResolvedPredictionTargets
+        targetAlarmResult: TargetAlarmResult,
+        resolvedTargets: ResolvedPredictionTargets,
+        thresholdAlarms: List<AlarmRule>
     ) {
         var c: Cursor?
         var nb: Notification.Builder?
 
-        val previousCharge = spService.getInt(KEY_PREVIOUS_CHARGE, 100)
-
         if (info!!.status == BatteryInfo.STATUS_FULLY_CHARGED && info!!.status != info!!.lastStatus) {
             c = alarms!!.activeAlarmFull()
             if (c != null) {
-                nb = parseAlarmCursor(c)
+                nb = alarmNotificationBuilder()
                 nb.setContentTitle(DisplayStrings.alarmFullyCharged).setChannelId(CHAN_ID_A_CHARGED)
 
                 nb.setVisibility(Notification.VISIBILITY_PUBLIC)
@@ -1418,7 +1439,7 @@ class BatteryInfoService : Service() {
         if (targetAlarmResult.chargingLimitReached) {
             c = alarms!!.activeAlarmChargingLimitMet()
             if (c != null) {
-                nb = parseAlarmCursor(c)
+                nb = alarmNotificationBuilder()
                 nb.setContentTitle(
                     getString(R.string.alarm_charging_limit_met, resolvedTargets.charging.percent)
                 ).setChannelId(CHAN_ID_A_CHARGING_LIMIT)
@@ -1433,7 +1454,7 @@ class BatteryInfoService : Service() {
         if (targetAlarmResult.dischargingLimitReached) {
             c = alarms!!.activeAlarmDischargingLimitMet()
             if (c != null) {
-                nb = parseAlarmCursor(c)
+                nb = alarmNotificationBuilder()
                 nb.setContentTitle(
                     getString(
                         R.string.alarm_discharging_limit_met, resolvedTargets.discharging.percent
@@ -1447,78 +1468,29 @@ class BatteryInfoService : Service() {
             }
         }
 
-        c = alarms!!.activeAlarmChargeDrops(info!!.percent, previousCharge)
-        if (c != null) {
-            spsEditor!!.putInt(KEY_PREVIOUS_CHARGE, info!!.percent)
-            nb = parseAlarmCursor(c)
-            val threshold = c.getString(c.getColumnIndexOrThrow(AlarmDatabase.KEY_THRESHOLD))
-            nb.setContentTitle(DisplayStrings.alarmChargeDrops + threshold + DisplayStrings.percentSymbol)
-                .setChannelId(CHAN_ID_A_CDROP)
-
-            nb.setVisibility(Notification.VISIBILITY_PUBLIC)
-
+        for (type in listOf(CHAN_ID_A_CDROP, CHAN_ID_A_CRISE, CHAN_ID_A_TRISE, CHAN_ID_A_TDROP)) {
+            val rule = thresholdAlarms.firstOrNull { it.type == type } ?: continue
+            if (type == CHAN_ID_A_CRISE && info!!.status == BatteryInfo.STATUS_UNPLUGGED) continue
+            val threshold = rule.threshold.toInt()
+            val title = when (type) {
+                CHAN_ID_A_CDROP -> DisplayStrings.alarmChargeDrops + threshold + DisplayStrings.percentSymbol
+                CHAN_ID_A_CRISE -> DisplayStrings.alarmChargeRises + threshold + DisplayStrings.percentSymbol
+                else -> {
+                    val prefix = if (type == CHAN_ID_A_TRISE) DisplayStrings.alarmTempRises
+                    else DisplayStrings.alarmTempDrops
+                    prefix + DisplayStrings.formatTemp(
+                        threshold, settings.temperatureUnit(
+                            res.getString(R.string.default_temperature_unit)
+                        ).convertToFahrenheit, false
+                    )
+                }
+            }
+            nb = alarmNotificationBuilder().setContentTitle(title).setChannelId(type)
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
+            if (type == CHAN_ID_A_CDROP) nb.addExtras(Bundle().apply {
+                putInt(EXTRA_LOW_BATTERY_THRESHOLD, threshold)
+            })
             notifyAlarm(nb.build())
-            c.close()
-        }
-
-        c = alarms!!.activeAlarmChargeRises(info!!.percent, previousCharge)
-        if (c != null && info!!.status != BatteryInfo.STATUS_UNPLUGGED) {
-            spsEditor!!.putInt(KEY_PREVIOUS_CHARGE, info!!.percent)
-            nb = parseAlarmCursor(c)
-            val threshold = c.getString(c.getColumnIndexOrThrow(AlarmDatabase.KEY_THRESHOLD))
-            nb.setContentTitle(DisplayStrings.alarmChargeRises + threshold + DisplayStrings.percentSymbol)
-                .setChannelId(CHAN_ID_A_CRISE)
-
-            nb.setVisibility(Notification.VISIBILITY_PUBLIC)
-
-            notifyAlarm(nb.build())
-            c.close()
-        }
-
-        c = alarms!!.activeAlarmTempRises(
-            info!!.temperature, spService.getInt(KEY_PREVIOUS_TEMP, 1)
-        )
-        if (c != null) {
-            val convertF = settings.temperatureUnit(
-                res.getString(R.string.default_temperature_unit)
-            ).convertToFahrenheit
-
-            spsEditor!!.putInt(KEY_PREVIOUS_TEMP, info!!.temperature)
-            nb = parseAlarmCursor(c)
-            val threshold = c.getString(c.getColumnIndexOrThrow(AlarmDatabase.KEY_THRESHOLD))
-            nb.setContentTitle(
-                DisplayStrings.alarmTempRises + DisplayStrings.formatTemp(
-                    threshold.toInt(), convertF, false
-                )
-            ).setChannelId(CHAN_ID_A_TRISE)
-
-            nb.setVisibility(Notification.VISIBILITY_PUBLIC)
-
-            notifyAlarm(nb.build())
-            c.close()
-        }
-
-        c = alarms!!.activeAlarmTempDrops(
-            info!!.temperature, spService.getInt(KEY_PREVIOUS_TEMP, 1)
-        )
-        if (c != null) {
-            val convertF = settings.temperatureUnit(
-                res.getString(R.string.default_temperature_unit)
-            ).convertToFahrenheit
-
-            spsEditor!!.putInt(KEY_PREVIOUS_TEMP, info!!.temperature)
-            nb = parseAlarmCursor(c)
-            val threshold = c.getString(c.getColumnIndexOrThrow(AlarmDatabase.KEY_THRESHOLD))
-            nb.setContentTitle(
-                DisplayStrings.alarmTempDrops + DisplayStrings.formatTemp(
-                    threshold.toInt(), convertF, false
-                )
-            ).setChannelId(CHAN_ID_A_TDROP)
-
-            nb.setVisibility(Notification.VISIBILITY_PUBLIC)
-
-            notifyAlarm(nb.build())
-            c.close()
         }
 
         if (info!!.health > BatteryInfo.HEALTH_GOOD && info!!.health != spService!!.getInt(
@@ -1528,7 +1500,7 @@ class BatteryInfoService : Service() {
             c = alarms!!.activeAlarmFailure()
             if (c != null) {
                 spsEditor!!.putInt(KEY_PREVIOUS_HEALTH, info!!.health)
-                nb = parseAlarmCursor(c)
+                nb = alarmNotificationBuilder()
                 nb.setContentTitle(DisplayStrings.alarmHealthFailure + DisplayStrings.healths[info!!.health])
                     .setChannelId(CHAN_ID_A_HFAIL)
 
@@ -1540,7 +1512,7 @@ class BatteryInfoService : Service() {
         }
     }
 
-    private fun parseAlarmCursor(c: Cursor?): Notification.Builder {
+    private fun alarmNotificationBuilder(): Notification.Builder {
         val nb =
             Notification.Builder(this, CHAN_ID_A_CHARGED).setSmallIcon(R.drawable.stat_notify_alarm)
                 .setAutoCancel(true).setContentIntent(currentInfoPendingIntent)
@@ -1550,5 +1522,25 @@ class BatteryInfoService : Service() {
 
     private fun notifyAlarm(n: Notification?) {
         mNotificationManager!!.notify(NOTIFICATION_ALARM, n)
+    }
+
+    private fun dismissRecoveredLowBatteryAlarm() {
+        if (!settings.getBoolean(
+                SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY, false
+            )
+        ) return
+        val notification =
+            mNotificationManager!!.activeNotifications.firstOrNull { it.id == NOTIFICATION_ALARM }?.notification
+                ?: return
+        val threshold = if (notification.extras.containsKey(EXTRA_LOW_BATTERY_THRESHOLD)) {
+            notification.extras.getInt(EXTRA_LOW_BATTERY_THRESHOLD)
+        } else null
+        if (shouldDismissRecoveredLowBatteryAlarm(
+                enabled = true,
+                percent = info!!.percent,
+                channelId = notification.channelId,
+                threshold = threshold
+            )
+        ) mNotificationManager!!.cancel(NOTIFICATION_ALARM)
     }
 }

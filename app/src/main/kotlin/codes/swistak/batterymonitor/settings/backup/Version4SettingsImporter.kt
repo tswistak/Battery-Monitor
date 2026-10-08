@@ -30,6 +30,7 @@ internal object Version4SettingsImporter : SettingsImporter {
         put(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, Boolean::class.java)
         put(SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS, Boolean::class.java)
         put(SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS, Boolean::class.java)
+        put(SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY, Boolean::class.java)
     }
 
     override fun restore(

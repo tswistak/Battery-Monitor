@@ -7,6 +7,7 @@
 */
 package codes.swistak.batterymonitor.diagnostics
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
@@ -557,7 +558,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
 
     private fun statusWithAge(
         healthy: Boolean, timestamp: Long, now: Long, unhealthyText: Int
-    ): CharSequence {
+    ): String {
         if (!healthy) return getString(unhealthyText)
         val age = DiagnosticsDurationFormatter.format(requireContext(), now - timestamp)
         return getString(R.string.diagnostics_working_last_seen, age)
@@ -704,6 +705,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
         }, SERVICE_RESTART_DELAY_MS)
     }
 
+    @SuppressLint("UsableSpace")
     private fun retryDatabaseLogging() {
         val context = requireContext()
         if (!settingsPreferences.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
