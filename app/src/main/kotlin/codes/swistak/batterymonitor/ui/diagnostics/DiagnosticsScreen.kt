@@ -37,7 +37,6 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -82,7 +81,10 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.showToast
+import codes.swistak.batterymonitor.diagnostics.DiagnosticsDurationFormatter
+import codes.swistak.batterymonitor.monitoring.presentation.MonitoringAvailability
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.ActionLabel
 import codes.swistak.batterymonitor.ui.components.SettingRow
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
@@ -113,11 +115,11 @@ internal fun DiagnosticsRoute(
         viewModel::setPrivilegedEnabled,
         viewModel::setTab,
         monitor.snapshot,
-        monitorActions
+        monitorActions,
+        monitor.availability
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun DiagnosticsScreen(
     state: DiagnosticsState,
@@ -127,7 +129,8 @@ internal fun DiagnosticsScreen(
     onPrivileged: (Boolean) -> Unit,
     onTab: (Int) -> Unit = {},
     monitor: codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot? = null,
-    monitorActions: Map<String, MonitorAction> = emptyMap()
+    monitorActions: Map<String, MonitorAction> = emptyMap(),
+    monitorAvailability: MonitoringAvailability = if (monitor == null) MonitoringAvailability.WAITING else MonitoringAvailability.LIVE
 ) {
     val context = LocalContext.current
     val resources = LocalResources.current
@@ -135,12 +138,21 @@ internal fun DiagnosticsScreen(
     val multiplier =
         preferences.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")?.toIntOrNull()
             ?: 1
-    val basic = state.basic?.let { diagnosticGroups(it, multiplier) }.orEmpty()
-    val advanced = state.advanced?.let { diagnosticGroups(it, multiplier) }.orEmpty()
-    val app = state.appRaw?.let { diagnosticGroups(it, multiplier) }.orEmpty()
+    val fahrenheit =
+        preferences.temperatureUnit(stringResource(R.string.default_temperature_unit)).convertToFahrenheit
+    val basic = state.basic?.let { diagnosticGroups(it, multiplier, fahrenheit) }.orEmpty()
+    val advanced = state.advanced?.let { diagnosticGroups(it, multiplier, fahrenheit) }.orEmpty()
+    val app = state.appRaw?.let { diagnosticGroups(it, multiplier, fahrenheit) }.orEmpty()
     val snapshots = listOfNotNull(state.basic, state.appRaw, state.advanced)
-    val normalized = mergedDiagnosticGroups(snapshots, multiplier)
-    val raw = basic.drop(3) + app.drop(3) + advanced.drop(3)
+    val normalized = mergedDiagnosticGroups(snapshots, multiplier, fahrenheit)
+    val predictor = monitor?.predictorData?.let {
+        predictorDiagnosticGroup(it, monitor.observedAtMillis) { milliseconds ->
+            DiagnosticsDurationFormatter.format(context, milliseconds)
+        }
+    }
+    val rawPredictor =
+        predictor?.let(::rawPredictorDiagnosticGroup)?.takeIf { it.rows.isNotEmpty() }
+    val raw = basic.drop(3) + app.drop(3) + advanced.drop(3) + listOfNotNull(rawPredictor)
     var tab by rememberSaveable { mutableIntStateOf(0) }
     var query by rememberSaveable { mutableStateOf("") }
     LaunchedEffect(tab) { onTab(tab) }
@@ -155,8 +167,8 @@ internal fun DiagnosticsScreen(
     )
     val scrollStates = labels.map { rememberLazyListState() }
     val groups = when (tab) {
-        1 -> normalized.take(2)
-        2 -> normalized.drop(2)
+        1 -> normalized.take(2) + deviceDiagnosticGroups(snapshots, charging = false)
+        2 -> normalized.drop(2) + deviceDiagnosticGroups(snapshots, charging = true)
         3 -> filterRawGroups(raw, query)
         else -> emptyList()
     }
@@ -176,9 +188,11 @@ internal fun DiagnosticsScreen(
                 (if (tab == 0) listOfNotNull(state.basic) else snapshots).filter { it.hasStats() }
             Text(
                 stringResource(
-                R.string.current_detail_source,
-                sources.map(::diagnosticAccessName).distinct().joinToString(" · ")
-                    .ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
+                R.string.current_detail_source, diagnosticSourceName(
+                    sources.joinToString(
+                        " · ", transform = ::diagnosticAccessName
+                    )
+                ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
                 ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -190,12 +204,13 @@ internal fun DiagnosticsScreen(
                         Text(
                             stringResource(label),
                             style = MaterialTheme.typography.bodySmall,
+                            maxLines = 1,
                             fontWeight = if (tab == index) FontWeight.SemiBold else FontWeight.Normal
                         )
                     })
                 }
             }
-            if (maxWidth < 340.dp * LocalDensity.current.fontScale) {
+            if (maxWidth < 480.dp * LocalDensity.current.fontScale) {
                 SecondaryScrollableTabRow(
                     selectedTabIndex = tab,
                     edgePadding = 12.dp,
@@ -253,9 +268,52 @@ internal fun DiagnosticsScreen(
             contentPadding = PaddingValues(20.dp),
             verticalArrangement = Arrangement.spacedBy(if (tab == 3) 0.dp else 16.dp)
         ) {
-            if (tab == 0) item {
-                DiagnosticCard(stringResource(R.string.diag_monitor_operation)) {
-                    MonitorOperationValues(monitorActions)
+            if (tab == 0) {
+                item {
+                    DiagnosticCard(stringResource(R.string.diag_monitor_operation)) {
+                        MonitorOperationValues(monitorActions)
+                    }
+                }
+                item {
+                    DiagnosticCard(stringResource(R.string.device_data_predictor)) {
+                        Text(
+                            stringResource(R.string.diag_predictor_description),
+                            Modifier.padding(16.dp),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        if (predictor == null) Text(
+                            stringResource(
+                                if (monitorActions["monitor_start"]?.isVisible == true) R.string.diag_predictor_start_monitor else R.string.current_waiting
+                            ),
+                            Modifier.padding(16.dp),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        ) else {
+                            if (monitorAvailability != MonitoringAvailability.LIVE) Text(
+                                stringResource(R.string.current_stale),
+                                Modifier.padding(horizontal = 16.dp),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            predictor.rows.forEachIndexed { index, row ->
+                                DiagnosticValue(
+                                    stringResource(row.label),
+                                    formattedDiagnosticValue(row, resources::getString).orEmpty(),
+                                    onClick = { selectedRow = row })
+                                if (index < predictor.rows.lastIndex) HorizontalDivider(
+                                    color = MaterialTheme.colorScheme.outlineVariant
+                                )
+                            }
+                            Text(
+                                stringResource(
+                                    R.string.diag_last_checked,
+                                    diagnosticTime(monitor.observedAtMillis)
+                                ),
+                                Modifier.padding(16.dp),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
             }
             if (tab in 1..2 && state.status != 0 && state.status != R.string.currently_disabled) item {
@@ -265,7 +323,9 @@ internal fun DiagnosticsScreen(
             }
             if (state.advanced != null && tab != 0) item {
                 Text(
-                    "${diagnosticAccessName(state.advanced)} · UID: ${state.advanced.remoteUid}" + if (state.advanced.shizukuVersion >= 0) " · Shizuku: ${state.advanced.shizukuVersion}" else "",
+                    diagnosticSourceName(diagnosticAccessName(state.advanced)) + if (tab == 3) {
+                        " · UID: ${state.advanced.remoteUid}" + if (state.advanced.shizukuVersion >= 0) " · Shizuku: ${state.advanced.shizukuVersion}" else ""
+                    } else "",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -354,21 +414,33 @@ internal fun DiagnosticsScreen(
                     }
                 } else item(key = "${tab}:${index}:${group.title}") {
                     DiagnosticCard(stringResource(group.title)) {
+                        if (group.title == R.string.advanced_section_capacity && inconsistentCapacities(
+                                group
+                            )
+                        ) Text(
+                            stringResource(R.string.diag_capacity_inconsistent),
+                            Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                         if (group.rows.isEmpty()) Text(
                             stringResource(R.string.advanced_status_no_stats),
                             Modifier.padding(16.dp)
                         )
                         group.rows.forEachIndexed { rowIndex, row ->
                             DiagnosticValue(
-                                if (row.label == 0) row.rawKey else stringResource(row.label),
-                                row.value ?: stringResource(R.string.advanced_value_not_available),
+                                stringResource(row.label),
+                                formattedDiagnosticValue(row, resources::getString)
+                                    ?: stringResource(R.string.advanced_value_not_available),
                                 onClick = { selectedRow = row })
                             if (rowIndex < group.rows.lastIndex) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                         }
-                        val readings = group.rows.filter { it.value != null }
+                        val readings = group.rows.filter { it.value != null || it.valueLabel != 0 }
+                        val sources =
+                            diagnosticSourceName(readings.joinToString(" · ") { it.accessMethod })
                         if (readings.isNotEmpty()) Text(
                             stringResource(
-                                R.string.current_detail_source, diagnosticGroupSources(group)
+                                R.string.current_detail_source, sources
                             ),
                             Modifier.padding(horizontal = 16.dp),
                             style = MaterialTheme.typography.bodySmall,
@@ -462,35 +534,45 @@ internal fun DiagnosticsScreen(
         }
     }
     selectedRow?.let { row ->
+        val isRaw = row.label == 0
         val title = if (row.label == 0) row.rawKey else stringResource(row.label)
-        val raw = row.rawValue ?: stringResource(R.string.advanced_value_not_available)
+        val reading =
+            if (isRaw) row.rawValue else formattedDiagnosticValue(row, resources::getString)
+        val missing = !isRaw && reading == null
+        val value = reading ?: stringResource(R.string.advanced_value_not_available)
+        val explanation = missingDiagnosticExplanation(row, reading)
+        val source = if (isRaw) "${row.source} (${diagnosticSourceName(row.accessMethod)})"
+        else diagnosticSourceName(row.accessMethod)
         AlertDialog(onDismissRequest = { selectedRow = null }, title = { Text(title) }, text = {
             SelectionContainer {
                 Column(
                     Modifier.verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text(row.rawKey, fontFamily = FontFamily.Monospace)
-                    Text(raw, fontFamily = FontFamily.Monospace)
-                    if (row.unit.isNotEmpty()) Text(
-                        stringResource(
-                            R.string.current_detail_unit, row.unit
-                        )
+                    Text(
+                        value, fontFamily = if (isRaw) FontFamily.Monospace else FontFamily.Default
                     )
+                    if (missing) Text(stringResource(R.string.diag_missing_reading))
+                    if (explanation != 0) Text(stringResource(explanation))
                     if (row.source.isNotEmpty()) Text(
                         stringResource(
-                            R.string.current_detail_source, "${row.source} (${row.accessMethod})"
+                            R.string.current_detail_source, source
                         )
                     )
                     Text(
                         stringResource(
-                            R.string.current_detail_time, diagnosticTime(row.observedAtMillis)
+                            if (missing) R.string.diag_last_checked else R.string.current_detail_time,
+                            diagnosticTime(row.observedAtMillis)
                         )
                     )
                 }
             }
         }, confirmButton = {
-            TextButton(onClick = { copyDiagnostic(context, title, "${row.rawKey}=$raw") }) {
+            TextButton(onClick = {
+                copyDiagnostic(
+                    context, title, if (isRaw) "${row.rawKey}=$value" else "$title: $value"
+                )
+            }) {
                 Text(
                     stringResource(R.string.charging_diagnostics_copy)
                 )
@@ -528,9 +610,12 @@ internal fun DiagnosticsScreen(
             appendLine(resources.getString(R.string.nav_diagnostics))
             if (state.status != 0) appendLine(resources.getString(state.status))
             if (state.stale) appendLine(resources.getString(R.string.diag_privileged_stale))
+            if (predictor != null && monitorAvailability != MonitoringAvailability.LIVE) appendLine(
+                resources.getString(R.string.current_stale)
+            )
             append(
                 diagnosticReport(
-                    normalized + if (includeRaw) raw else emptyList(),
+                    normalized + listOfNotNull(predictor) + if (includeRaw) raw else emptyList(),
                     resources::getString,
                     includeRaw
                 )
@@ -638,6 +723,17 @@ internal fun DiagnosticValue(
                 textAlign = androidx.compose.ui.text.style.TextAlign.End
             )
         }
+    }
+}
+
+internal fun missingDiagnosticExplanation(row: DiagnosticRow, value: String?): Int {
+    if (row.label == 0 || value != null) return 0
+    return when (row.rawKey) {
+        "current_average" -> R.string.diag_missing_average
+        "estimated_health" -> R.string.diag_missing_estimated_health
+        "charge_time_remaining" -> R.string.diag_missing_charge_time
+        "battery_power" -> R.string.battery_power_explanation
+        else -> 0
     }
 }
 

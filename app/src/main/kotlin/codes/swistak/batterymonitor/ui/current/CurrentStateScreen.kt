@@ -73,6 +73,7 @@ import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
+import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.LongDurationFormat
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
@@ -100,7 +101,8 @@ internal data class CurrentPreferences(
     val fahrenheit: Boolean,
     val longDurationFormat: LongDurationFormat,
     val predictionMethod: String,
-    val loggingEnabled: Boolean
+    val loggingEnabled: Boolean,
+    val usePrivilegedAccess: Boolean = false
 )
 
 private fun SharedPreferences.currentPreferences(defaultTemperatureUnit: String) =
@@ -115,6 +117,7 @@ private fun SharedPreferences.currentPreferences(defaultTemperatureUnit: String)
         currentMultiplier = getString(
             SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1"
         )?.toIntOrNull() ?: 1,
+        usePrivilegedAccess = getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false),
         fahrenheit = temperatureUnit(defaultTemperatureUnit).convertToFahrenheit,
         longDurationFormat = LongDurationFormat.fromPreference(
             getString(SettingsContract.KEY_LONG_DURATION_FORMAT, null)
@@ -175,8 +178,11 @@ internal fun CurrentStateRoute(
         preferences.preferAverageCurrent,
         preferences.currentRefreshMillis,
         preferences.currentMultiplier,
+        preferences.usePrivilegedAccess,
         refreshCurrent
     ) {
+        PrivilegedAccess.initialize(context)
+        PrivilegedAccess.setEnabled(preferences.usePrivilegedAccess)
         BatteryCurrent.setContext(context)
         BatteryCurrent.setMultiplier(preferences.currentMultiplier)
         while (true) {
@@ -355,9 +361,11 @@ internal fun CurrentStateScreen(
     val power = BatteryCurrent.powerWatts(snapshot?.voltageMillivolts, currentReading?.milliAmps)
     val metrics = listOf(
         MetricDetail(
-            MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
-                DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
-            } ?: unavailable),
+            MetricDisplay(
+                stringResource(R.string.current_temperature),
+                snapshot?.let {
+                    DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
+                } ?: unavailable),
             if (preferences.fahrenheit) "°F" else "°C",
             snapshotSource,
             snapshotTime),
@@ -392,21 +400,15 @@ internal fun CurrentStateScreen(
             MetricDisplay(
                 stringResource(R.string.battery_power),
                 historyValue(it, HistoryMetric.POWER, false, configuration.locales[0])
-            ),
-            "W",
-            snapshotSource + " · " + stringResource(
+            ), "W", snapshotSource + " · " + stringResource(
                 if (currentReading?.average == true) R.string.advanced_field_current_average
                 else R.string.advanced_field_current_now
-            ),
-            currentReading?.observedAtMillis,
-            stringResource(R.string.battery_power_explanation)
+            ), currentReading?.observedAtMillis, stringResource(R.string.battery_power_explanation)
         )
     }) + MetricDetail(
-        MetricDisplay(
-            stringResource(R.string.current_android_health),
-            snapshot?.let {
-                DisplayStrings.healths.getOrNull(it.health)
-            } ?: unavailable),
+        MetricDisplay(stringResource(R.string.current_android_health), snapshot?.let {
+            DisplayStrings.healths.getOrNull(it.health)
+        } ?: unavailable),
         stringResource(R.string.current_status_unit),
         snapshotSource,
         snapshotTime,

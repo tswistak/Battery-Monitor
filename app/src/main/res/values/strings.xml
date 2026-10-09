@@ -489,7 +489,7 @@
   <string name="advanced_field_battery_model_name" formatted="false">Battery model name</string>
   <string name="advanced_field_minimum_design_voltage" formatted="false">Minimum design voltage</string>
   <string name="advanced_value_not_available" formatted="false">Not available</string>
-  <string name="advanced_help_overview" formatted="false">Diagnostics combines monitor reliability and battery data in Overview, Battery, Charging and Raw tabs. Android data is available without root. Extra data depends on the device and permissions available to Battery Monitor.</string>
+  <string name="advanced_help_overview" formatted="false">Diagnostics combines monitor reliability, saved predictor data and battery data in App operation, Battery, Charging and Raw tabs. Android data is available without root. Extra device data depends on the device and permissions available to Battery Monitor.</string>
   <string name="advanced_help_counters" formatted="false">Counters contain live or recently sampled values such as charge counter, current, energy counter, and cycle count. Some devices expose only a subset, and units may come directly from the hardware driver.</string>
   <string name="advanced_help_capacity" formatted="false">Capacity shows full-charge capacity, design capacity, and estimated health. Estimated health is calculated as full-charge capacity divided by design capacity, so it is only as accurate as the values reported by the device.</string>
   <string name="advanced_help_charging" formatted="false">Charging shows values related to the active charging path, such as maximum charging current or voltage, charging policy, charging state, and capacity level. These fields may change between chargers and charging modes.</string>
@@ -497,7 +497,7 @@
   <string name="advanced_help_sysfs" formatted="false">Raw shows the original names and values read from /sys/class/power_supply, including multiline values. Search by key, then tap a row to view and copy the complete value. Battery Monitor attempts reads with its own permissions even without root or Shizuku.</string>
   <string name="advanced_help_metadata" formatted="false">Metadata shows higher-level battery properties exposed through BatteryManager, such as state of health, remaining charge time, manufacturing details, or replacement status. Most of these fields require privileged access and many devices expose only a small subset.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Troubleshooting</string>
-  <string name="advanced_help_troubleshooting" formatted="false">Android data is always available in Diagnostics. For additional root or Shizuku data, enable advanced collection and privileged access under Additional sources. Battery Monitor tries root first, then Shizuku. Shizuku must be running and permission granted. Missing fields remain unavailable; failed refreshes retain the previous snapshot and mark it stale.</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Android data is collected automatically in Diagnostics. For additional root or Shizuku data, enable privileged access under Additional sources. Battery Monitor tries root first, then Shizuku. Shizuku must be running and permission granted. Missing fields remain unavailable; failed refreshes retain the previous snapshot and mark it stale.</string>
 
   <string name="pref_export_settings" formatted="false">Export settings</string>
   <string name="pref_export_settings_summary" formatted="false">Save current settings to a file</string>
@@ -802,12 +802,26 @@
     <string name="battery_power">Battery power</string>
     <string name="battery_power_explanation">Calculated from battery voltage and current; positive while charging, negative while discharging. This is battery-side power, not charger power.</string>
 
-  <string name="diag_overview">Overview</string>
+  <string name="diag_overview">App operation</string>
+  <string name="diag_predictor_description">Stored long-term average time for a one percentage point change. Unsaved values and −1 use the predictor’s defaults.</string>
+  <string name="diag_predictor_ac">Charging (AC)</string>
+  <string name="diag_predictor_wireless">Charging (wireless)</string>
+  <string name="diag_predictor_usb">Charging (USB)</string>
+  <string name="diag_predictor_version">Data version</string>
+  <string name="diag_predictor_not_saved">Not saved</string>
+  <string name="diag_predictor_default">Use default</string>
+  <string name="diag_predictor_invalid">Invalid stored value</string>
+  <string name="diag_predictor_start_monitor">Start monitoring above to inspect saved predictor data.</string>
   <string name="diag_raw">Raw</string>
   <string name="diag_monitor_operation">Monitor operation</string>
   <string name="diag_heartbeat">Last heartbeat</string>
   <string name="diag_additional_sources">Additional sources</string>
-  <string name="diag_source_help">Available Android readings are collected automatically while Diagnostics is open. Tap a value to inspect and copy its raw reading, source and time. Enable privileged access to also use Root or Shizuku.</string>
+  <string name="diag_source_help">Available Android readings are collected automatically while Diagnostics is open. Tap a value to inspect and copy its reading, source and time. Original device keys and values are available in Raw. Enable privileged access to also use Root or Shizuku.</string>
+  <string name="diag_missing_reading">The enabled sources did not return a usable reading.</string>
+  <string name="diag_missing_average">Average current is a separate device reading from instantaneous current. Battery Monitor does not calculate its own average when the device provides none.</string>
+  <string name="diag_missing_estimated_health">This estimate needs positive full-charge and design capacities from the same battery. Full-charge capacity must not exceed design capacity.</string>
+  <string name="diag_missing_charge_time">This is the charging estimate reported by the device. Current State uses Battery Monitor’s configured prediction method and can show an estimate even when no device estimate is available.</string>
+  <string name="diag_last_checked">Last checked: %1$s</string>
   <string name="diag_include_raw">Include raw values and identifiers</string>
   <string name="diag_include_debug">Include collected debug logs</string>
   <string name="diag_include_apps">Include system app names</string>
@@ -821,6 +835,8 @@
   <string name="diag_search_key">Search keys</string>
   <string name="diag_no_keys">No matching keys in the available data</string>
   <string name="diag_raw_values">Raw values</string>
+  <string name="diag_device_readings">Device-reported readings</string>
+  <string name="diag_capacity_inconsistent">Reported full capacity exceeds design capacity. A reliable health estimate cannot be calculated from these readings.</string>
   <string name="pref_dismiss_low_battery_on_recovery">Dismiss low battery alarm after recovery</string>
   <string name="pref_dismiss_low_battery_on_recovery_summary">Remove the low battery notification when the charge rises above its threshold. Other alarm notifications remain.</string>
   <plurals name="alarms_active_count">
@@ -843,4 +859,40 @@
   <string name="alarms_database_error">Could not access the alarm database. Try again.</string>
   <string name="alarms_discard_confirmation">Discard your changes to this alarm?</string>
   <string name="alarms_discard">Discard</string>
+  <string name="diag_no">No</string>
+  <string name="diag_fuel_gauge">Battery fuel gauge</string>
+  <string name="diag_mains_supply">AC power supply</string>
+  <string name="diag_wireless_supply">Wireless power supply</string>
+  <string name="diag_usb_supply">USB power supply</string>
+  <string name="diag_fast_charging">Fast charging</string>
+  <string name="diag_supply_health">Reported condition</string>
+  <string name="diag_battery_technology">Battery technology</string>
+  <string name="diag_open_circuit_voltage">Open-circuit voltage</string>
+  <string name="diag_min_design_voltage">Minimum design voltage</string>
+  <string name="diag_max_design_voltage">Maximum design voltage</string>
+  <string name="diag_charge_type">Charging type</string>
+  <string name="diag_charging_input_enabled">Charging input enabled</string>
+  <string name="diag_battery_charging_enabled">Battery charging enabled</string>
+  <string name="diag_power_supply_state">Power supply state</string>
+  <string name="diag_supply_offline">Disconnected</string>
+  <string name="diag_supply_fixed">Fixed power supply</string>
+  <string name="diag_supply_programmable">Programmable power supply</string>
+  <string name="diag_input_current">Input current</string>
+  <string name="diag_input_current_limit">Input current limit</string>
+  <string name="diag_settled_input_current">Settled input current</string>
+  <string name="diag_input_voltage">Input voltage</string>
+  <string name="diag_input_voltage_limit">Input voltage limit</string>
+  <string name="diag_charge_trickle">Trickle charging</string>
+  <string name="diag_charge_fast">Fast</string>
+  <string name="diag_charge_standard">Standard</string>
+  <string name="diag_charge_long_life">Battery life protection</string>
+  <string name="diag_charge_bypass">Charging bypassed</string>
+  <string name="diag_policy_default">Default</string>
+  <string name="diag_policy_fixed_limit">Battery protection (fixed limit)</string>
+  <string name="diag_policy_adaptive_ac">Adaptive charging</string>
+  <string name="diag_charging_too_cold">Too cold to charge</string>
+  <string name="diag_charging_too_hot">Too hot to charge</string>
+  <string name="diag_capacity_critical">Critical</string>
+  <string name="diag_capacity_low">Low</string>
+  <string name="diag_capacity_high">High</string>
 </resources>

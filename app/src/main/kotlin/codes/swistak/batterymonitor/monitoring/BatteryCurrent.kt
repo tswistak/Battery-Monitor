@@ -15,9 +15,7 @@ package codes.swistak.batterymonitor.monitoring
 import android.content.Context
 import android.os.BatteryManager
 import android.util.Log
-import codes.swistak.batterymonitor.common.CommandExecutor
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
-import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import java.io.File
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -56,14 +54,21 @@ internal object BatteryCurrent {
     val rawCurrentMicroAmps: Long?
         get() = readMicroAmps(average = false)
 
-    private fun read(average: Boolean, appliedMultiplier: Int = multiplier): Double? =
-        readMicroAmps(average)?.let { scaleMicroAmps(it, appliedMultiplier) }
+    private fun read(average: Boolean): Double? = readMicroAmps(average)?.let { scaleMicroAmps(it) }
 
     private fun readMicroAmps(average: Boolean): Long? =
-        readAndroidSystem(average) ?: readFileSystem(average) ?: readPrivileged(average)
+        readAndroidSystem(average) ?: readFileSystem(average)
+        ?: PrivilegedBatteryReader.shared.read()
+            ?.let { if (average) it.currentAverageUa else it.currentNowUa }
 
-    internal fun readForMultiplierDetection(average: Boolean): Double? {
-        return read(average, appliedMultiplier = 1)
+    internal fun readForMultiplierDetection(average: Boolean, onResult: (Double?) -> Unit) {
+        val direct = readAndroidSystem(average) ?: readFileSystem(average)
+        if (direct != null) {
+            onResult(scaleMicroAmps(direct, appliedMultiplier = 1))
+        } else PrivilegedBatteryReader.shared.readWhenReady { reading ->
+            val raw = if (average) reading?.currentAverageUa else reading?.currentNowUa
+            onResult(raw?.let { scaleMicroAmps(it, appliedMultiplier = 1) })
+        }
     }
 
     private fun readAndroidSystem(average: Boolean): Long? {
@@ -73,10 +78,12 @@ internal object BatteryCurrent {
         } else {
             BatteryManager.BATTERY_PROPERTY_CURRENT_NOW
         }
-        val microAmps = manager.getIntProperty(property)
-        if (microAmps == Int.MIN_VALUE) return null
-
-        return microAmps.toLong()
+        return try {
+            manager.getIntProperty(property).takeUnless { it == Int.MIN_VALUE }?.toLong()
+        } catch (error: RuntimeException) {
+            Log.w(LOG_TAG, "Unable to read Android battery current", error)
+            null
+        }
     }
 
     private fun readFileSystem(average: Boolean): Long? {
@@ -116,9 +123,13 @@ internal object BatteryCurrent {
     }
 
     private fun batterySupplyRank(directory: File): Int? {
-        val supplyName = directory.name.lowercase()
         val declaredType =
             readText(File(directory, "type")) ?: readPowerSupplyType(File(directory, "uevent"))
+        return batterySupplyRank(directory.name, declaredType)
+    }
+
+    internal fun batterySupplyRank(name: String, declaredType: String?): Int? {
+        val supplyName = name.lowercase(Locale.ROOT)
         val hasBatteryType = declaredType.equals("Battery", ignoreCase = true)
         val hasFuelGaugeType = declaredType.equals("BMS", ignoreCase = true) || declaredType.equals(
             "Unknown", ignoreCase = true
@@ -151,33 +162,19 @@ internal object BatteryCurrent {
         }
     }
 
-    private fun readPrivileged(average: Boolean): Long? {
-        val property = if (average) "current_average" else "current_now"
-        return readPrivilegedMicroAmps(property, PrivilegedAccess) { null }
-    }
-
-    internal fun readPrivilegedMicroAmps(
-        property: String, executor: CommandExecutor, shizukuFallback: () -> Long?
-    ): Long? {
-        val refreshed = firstLong(executor.run("cmd battery get -f $property 2>/dev/null"))
-        return refreshed ?: firstLong(
-            executor.run("cmd battery get $property 2>/dev/null")
-        ) ?: shizukuFallback()
-    }
-
     private fun readLong(file: File): Long? {
         return try {
             if (!file.isFile || !file.canRead()) return null
-            file.bufferedReader().use { it.readLine()?.trim()?.toLongOrNull() }
+            file.bufferedReader()
+                .use { it.readLine()?.trim()?.toLongOrNull()?.takeIf(::isValidMicroAmps) }
         } catch (e: Exception) {
             Log.d(LOG_TAG, "Unable to read battery current from ${file.path}", e)
             null
         }
     }
 
-    private fun firstLong(value: String?): Long? {
-        return value?.trim()?.split(Regex("\\s+"))?.firstNotNullOfOrNull { it.toLongOrNull() }
-    }
+    internal fun isValidMicroAmps(value: Long): Boolean =
+        value != Int.MIN_VALUE.toLong() && value != Long.MIN_VALUE
 
     internal fun scaleMicroAmps(
         microAmps: Long, appliedMultiplier: Int = multiplier

@@ -62,6 +62,7 @@ import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogResult
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageResolver
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
+import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.LongDurationFormat
@@ -273,11 +274,21 @@ class BatteryInfoService : Service() {
         putString(MonitoringConnection.FIELD_PROCESS_ID, monitoringProcessId)
         putLong(MonitoringConnection.FIELD_SEQUENCE, monitoringSequence)
         putLong(MonitoringConnection.FIELD_OBSERVED_AT, now)
+        predictor?.storedState()?.let { state ->
+            putBundle(MonitoringSnapshot.FIELD_PREDICTOR_DATA, Bundle().apply {
+                state.averages.forEach { (key, value) -> putFloat(key, value) }
+                state.version?.let { putInt(Predictor.KEY_STATE_VERSION, it) }
+            })
+        }
     }
 
     private var voltageResolver: BatteryVoltageResolver? = null
 
     private lateinit var remainingChargeReader: RemainingChargeReader
+
+    private val pendingBatteryUpdates = java.util.ArrayDeque<Intent>()
+    private var resolvingBatteryUpdate = false
+    private var destroyed = false
 
     private var now: Long = 0
     private var updatedLasts = false
@@ -393,12 +404,8 @@ class BatteryInfoService : Service() {
 
         info = BatteryInfo()
 
-        voltageResolver = BatteryVoltageResolver(
-            onPrivilegedRefresh = { reading ->
-                if (reading != null) mHandler.post {
-                    if (mainNotificationForegroundStarted) update(null)
-                }
-            })
+        // Privileged voltage is collected together with current and charge on the shared worker.
+        voltageResolver = BatteryVoltageResolver(privilegedEnabled = { false })
 
         remainingChargeReader = RemainingChargeReader(applicationContext)
 
@@ -468,6 +475,8 @@ class BatteryInfoService : Service() {
 
     override fun onDestroy() {
         PrivilegedAccess.setReadyListener(null)
+        destroyed = true
+        pendingBatteryUpdates.clear()
         voltageResolver?.shutdown()
         voltageResolver = null
         if (alarms != null) alarms!!.close()
@@ -662,6 +671,10 @@ class BatteryInfoService : Service() {
         if (cancelFirst) {
             stopForeground(STOP_FOREGROUND_REMOVE)
             mainNotificationForegroundStarted = false
+            if (!startForegroundImmediately()) {
+                stopSelf()
+                return
+            }
         }
 
         chipContentIndex = 0
@@ -697,25 +710,70 @@ class BatteryInfoService : Service() {
         settingsEditor.apply()
     }
 
+    private fun batteryFields(intent: Intent?): Map<String, Int> {
+        val fields = BATTERY_READING_FIELDS.filter { intent?.hasExtra(it) == true }
+            .associateWith { intent!!.getIntExtra(it, Int.MIN_VALUE) }.toMutableMap()
+        voltageResolver?.resolve(fields[BatteryInfo.EXTRA_VOLTAGE] ?: 0)?.let {
+            fields[BatteryInfo.EXTRA_VOLTAGE] = it.millivolts
+        }
+        return fields
+    }
+
     private fun applyBatteryIntent(intent: Intent?) {
-        if (intent == null) return
-        info!!.load(intent, spService)
-        info!!.voltage = voltageResolver?.resolve(
-            intent.getIntExtra(BatteryInfo.EXTRA_VOLTAGE, 0)
-        )?.millivolts
+        if (intent != null) applyBatteryFields(batteryFields(intent), null)
+    }
+
+    private fun applyBatteryFields(fields: Map<String, Int>, fallback: PrivilegedBatteryReading?) {
+        val resolved = Intent(Intent.ACTION_BATTERY_CHANGED)
+        mergeBatteryFields(fields, fallback).forEach { (key, value) ->
+            resolved.putExtra(
+                key, value
+            )
+        }
+        info!!.load(resolved, spService)
     }
 
     private fun update(intent: Intent?) {
+        val batteryIntent = intent ?: registerReceiver(null, batteryChanged)
+        pendingBatteryUpdates.addLast(
+            batteryIntent?.let(::Intent) ?: Intent(Intent.ACTION_BATTERY_CHANGED)
+        )
+        processNextBatteryUpdate()
+    }
+
+    private fun processNextBatteryUpdate() {
+        if (resolvingBatteryUpdate || pendingBatteryUpdates.isEmpty()) return
+        resolvingBatteryUpdate = true
+        val fields = batteryFields(pendingBatteryUpdates.removeFirst())
+        val needsFallback =
+            missingBatteryFields(fields).isNotEmpty() || remainingChargeReader.readMicroAmpHours() == null || BatteryCurrent.rawCurrentMicroAmps == null
+        val revision = PrivilegedAccess.accessRevision
+        val complete: (PrivilegedBatteryReading?) -> Unit = { reading ->
+            mHandler.post {
+                if (!destroyed) {
+                    val allowed =
+                        PrivilegedAccess.isEnabled() && revision == PrivilegedAccess.accessRevision
+                    updateResolved(fields, reading.takeIf { allowed })
+                }
+                resolvingBatteryUpdate = false
+                processNextBatteryUpdate()
+            }
+        }
+        if (needsFallback && PrivilegedAccess.isEnabled()) {
+            PrivilegedBatteryReader.shared.readWhenReady(complete)
+        } else complete(null)
+    }
+
+    private fun updateResolved(fields: Map<String, Int>, fallback: PrivilegedBatteryReading?) {
         now = System.currentTimeMillis()
         spsEditor = spService.edit()
         updatedLasts = false
 
-        var batteryIntent = intent
-        if (batteryIntent == null) batteryIntent = registerReceiver(null, batteryChanged)
+        applyBatteryFields(fields, fallback)
 
-        applyBatteryIntent(batteryIntent)
-
-        info!!.remainingChargeUah = remainingChargeReader.readMicroAmpHours()
+        info!!.remainingChargeUah = remainingChargeReader.readMicroAmpHours {
+            fallback?.remainingChargeUah
+        }
 
         predictor!!.setPredictionType(
             settings.getString(

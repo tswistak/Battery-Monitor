@@ -163,12 +163,11 @@ internal class BatteryInfo {
             this.targetPercent = targetPercent
             targetReached = false
 
-            whatHappened =
-                when (batteryInfo.status) {
-                    STATUS_FULLY_CHARGED, STATUS_NOT_CHARGING, STATUS_UNKNOWN -> NONE
-                    STATUS_CHARGING -> UNTIL_CHARGED
-                    else -> UNTIL_DRAINED
-                }
+            whatHappened = when (batteryInfo.status) {
+                STATUS_FULLY_CHARGED, STATUS_NOT_CHARGING, STATUS_UNKNOWN -> NONE
+                STATUS_CHARGING -> UNTIL_CHARGED
+                else -> UNTIL_DRAINED
+            }
         }
 
         fun markTargetReached(targetPercent: Int) {
@@ -246,7 +245,8 @@ internal class BatteryInfo {
         voltage =
             if (BatteryVoltageValidator.isValidBroadcastMillivolts(rawVoltage)) rawVoltage else null
 
-        percent = level * 100 / scale
+        percent =
+            if (scale > 0) (level.toLong() * 100 / scale).coerceIn(0, 100).toInt() else percent
         percent = attemptOnePercentHack(percent)
 
         if (percent > 100) percent = 100
@@ -383,5 +383,46 @@ internal fun readVoltageField(accessor: BundleFieldAccessor): Int? {
         accessor.getInt(BatteryInfo.FIELD_VOLTAGE)
     } else {
         null
+    }
+}
+
+internal val BATTERY_READING_FIELDS = listOf(
+    "level", "scale", "status", "health", "plugged", "temperature", "voltage"
+)
+
+internal fun missingBatteryFields(fields: Map<String, Int>): Set<String> = buildSet {
+    val level = fields["level"]
+    val scale = fields["scale"]
+    if (level == null || scale == null || scale <= 0 || level !in 0..scale) {
+        add("level")
+        add("scale")
+    }
+    if (fields["status"] !in 2..BatteryInfo.STATUS_MAX) add("status")
+    if (fields["health"] !in 2..BatteryInfo.HEALTH_MAX) add("health")
+    if (fields["plugged"] !in setOf(0, 1, 2, 4)) add("plugged")
+    if (fields["temperature"] !in -1000..2000) add("temperature")
+    if (fields["voltage"]?.let(BatteryVoltageValidator::isValidBroadcastMillivolts) != true) {
+        add("voltage")
+    }
+}
+
+internal fun mergeBatteryFields(
+    fields: Map<String, Int>, fallback: PrivilegedBatteryReading?
+): Map<String, Int> {
+    if (fallback == null) return fields
+    val missing = missingBatteryFields(fields)
+    return fields.toMutableMap().apply {
+        fun fill(key: String, value: Int?) {
+            if (key in missing && value != null) put(key, value)
+        }
+        if ("level" in missing && fallback.percent != null) {
+            put("level", fallback.percent)
+            put("scale", 100)
+        }
+        fill("status", fallback.status)
+        fill("health", fallback.health)
+        fill("plugged", fallback.plugged)
+        fill("temperature", fallback.temperatureTenthsC)
+        fill("voltage", fallback.voltageMillivolts)
     }
 }

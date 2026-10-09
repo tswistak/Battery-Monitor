@@ -502,7 +502,7 @@
   <string name="advanced_field_battery_model_name" formatted="false">Nazwa modelu baterii</string>
   <string name="advanced_field_minimum_design_voltage" formatted="false">Minimalne napięcie projektowe</string>
   <string name="advanced_value_not_available" formatted="false">Niedostępne</string>
-  <string name="advanced_help_overview" formatted="false">Diagnostyka łączy niezawodność monitora i dane baterii w kartach Przegląd, Bateria, Ładowanie i Surowe. Dane Androida są dostępne bez roota. Dodatkowe dane zależą od urządzenia i uprawnień dostępnych dla Monitora baterii.</string>
+  <string name="advanced_help_overview" formatted="false">Diagnostyka łączy niezawodność monitora, zapisane dane predyktora i dane baterii w kartach Działanie aplikacji, Bateria, Ładowanie i Surowe. Dane Androida są dostępne bez roota. Dodatkowe dane urządzenia zależą od urządzenia i uprawnień dostępnych dla Monitora baterii.</string>
   <string name="advanced_help_counters" formatted="false">Liczniki zawierają bieżące lub niedawno spróbkowane wartości, takie jak szacunkowy pozostały poziom naładowania, prąd, licznik energii i liczba cykli. Niektóre urządzenia udostępniają jedynie część z nich, a jednostki mogą pochodzić bezpośrednio ze sterownika sprzętowego.</string>
   <string name="advanced_help_capacity" formatted="false">Pojemność pokazuje pojemność pełnego naładowania, pojemność projektową i szacowane zdrowie. Szacowane zdrowie jest obliczane jako pojemność pełnego naładowania podzielona przez pojemność projektową, więc jego dokładność zależy od wartości odnotowanych przez urządzenie.</string>
   <string name="advanced_help_charging" formatted="false">Ładowanie pokazuje wartości związane z aktywną ścieżką ładowania, takie jak maksymalny prąd lub napięcie ładowania, strategia ładowania, stan ładowania i poziom pojemności. Pola te mogą się zmieniać w zależności od ładowarki i trybu ładowania.</string>
@@ -510,7 +510,7 @@
   <string name="advanced_help_sysfs" formatted="false">Karta Surowe pokazuje oryginalne nazwy i wartości odczytane z /sys/class/power_supply, również wielowierszowe. Wyszukaj klucz i dotknij wiersza, aby wyświetlić i skopiować pełną wartość. Monitor baterii próbuje odczytu z własnymi uprawnieniami również bez roota i Shizuku.</string>
   <string name="advanced_help_metadata" formatted="false">Metadane pokazują wysokopoziomowe właściwości baterii udostępniane przez BatteryManager, takie jak stan zdrowia, pozostały czas ładowania, szczegóły produkcyjne czy stan zamiennika. Większość tych pól wymaga dostępu uprzywilejowanego, a wiele urządzeń udostępnia jedynie niewielką ich część.</string>
   <string name="advanced_help_troubleshooting_title" formatted="false">Rozwiązywanie problemów</string>
-  <string name="advanced_help_troubleshooting" formatted="false">Dane Androida są zawsze dostępne w Diagnostyce. Aby zbierać dodatkowe dane przez roota lub Shizuku, włącz zbieranie danych zaawansowanych i dostęp uprzywilejowany w sekcji Dodatkowe źródła. Monitor baterii najpierw próbuje roota, potem Shizuku. Shizuku musi działać i mieć przyznane uprawnienie. Brakujące pola pozostają niedostępne; nieudane odświeżenie zachowuje poprzedni odczyt i oznacza go jako nieaktualny.</string>
+  <string name="advanced_help_troubleshooting" formatted="false">Dane Androida są zbierane automatycznie w Diagnostyce. Aby zbierać dodatkowe dane przez roota lub Shizuku, włącz dostęp uprzywilejowany w sekcji Dodatkowe źródła. Monitor baterii najpierw próbuje roota, potem Shizuku. Shizuku musi działać i mieć przyznane uprawnienie. Brakujące pola pozostają niedostępne; nieudane odświeżenie zachowuje poprzedni odczyt i oznacza go jako nieaktualny.</string>
 
   <string name="pref_export_settings" formatted="false">Eksportuj ustawienia</string>
   <string name="pref_export_settings_summary" formatted="false">Zapisz bieżące ustawienia do pliku</string>
@@ -816,12 +816,26 @@
     <string name="battery_power">Moc baterii</string>
     <string name="battery_power_explanation">Obliczana z napięcia i prądu baterii; dodatnia przy ładowaniu, ujemna przy rozładowywaniu. To moc po stronie baterii, a nie ładowarki.</string>
 
-  <string name="diag_overview">Przegląd</string>
+  <string name="diag_overview">Działanie aplikacji</string>
+  <string name="diag_predictor_description">Zapisany średni długoterminowy czas zmiany poziomu baterii o jeden punkt procentowy. Brak wartości i −1 oznaczają użycie wartości domyślnych predyktora.</string>
+  <string name="diag_predictor_ac">Ładowanie (AC)</string>
+  <string name="diag_predictor_wireless">Ładowanie (bezprzewodowe)</string>
+  <string name="diag_predictor_usb">Ładowanie (USB)</string>
+  <string name="diag_predictor_version">Wersja danych</string>
+  <string name="diag_predictor_not_saved">Nie zapisano</string>
+  <string name="diag_predictor_default">Wartość domyślna</string>
+  <string name="diag_predictor_invalid">Nieprawidłowa zapisana wartość</string>
+  <string name="diag_predictor_start_monitor">Uruchom monitorowanie powyżej, aby sprawdzić zapisane dane predyktora.</string>
   <string name="diag_raw">Surowe</string>
   <string name="diag_monitor_operation">Działanie monitora</string>
   <string name="diag_heartbeat">Ostatni sygnał</string>
   <string name="diag_additional_sources">Dodatkowe źródła</string>
-  <string name="diag_source_help">Dostępne odczyty Androida są pobierane automatycznie na ekranie Diagnostyka. Dotknij wartości, aby sprawdzić i skopiować jej surowy odczyt, źródło i czas. Włącz dostęp uprzywilejowany, aby korzystać również z roota lub Shizuku.</string>
+  <string name="diag_source_help">Dostępne odczyty Androida są pobierane automatycznie na ekranie Diagnostyka. Dotknij wartości, aby sprawdzić i skopiować odczyt, źródło i czas. Oryginalne klucze i wartości urządzenia są dostępne w zakładce Surowe. Włącz dostęp uprzywilejowany, aby korzystać również z roota lub Shizuku.</string>
+  <string name="diag_missing_reading">Włączone źródła nie zwróciły użytecznego odczytu.</string>
+  <string name="diag_missing_average">Średni prąd to osobny odczyt urządzenia, różny od prądu chwilowego. Monitor baterii nie oblicza własnej średniej, gdy urządzenie jej nie udostępnia.</string>
+  <string name="diag_missing_estimated_health">To oszacowanie wymaga dodatnich wartości pojemności pełnego naładowania i pojemności projektowej tej samej baterii. Pełna pojemność nie może przekraczać pojemności projektowej.</string>
+  <string name="diag_missing_charge_time">To prognoza ładowania zgłoszona przez urządzenie. Stan bieżący używa wybranej metody prognozowania Monitora baterii i może wyświetlić prognozę, nawet gdy prognoza urządzenia jest niedostępna.</string>
+  <string name="diag_last_checked">Ostatnie sprawdzenie: %1$s</string>
   <string name="diag_include_raw">Dołącz surowe wartości i identyfikatory</string>
   <string name="diag_include_debug">Dołącz zebrane logi diagnostyczne</string>
   <string name="diag_include_apps">Dołącz nazwy aplikacji systemowych</string>
@@ -835,6 +849,8 @@
   <string name="diag_search_key">Szukaj kluczy</string>
   <string name="diag_no_keys">Brak pasujących kluczy w dostępnych danych</string>
   <string name="diag_raw_values">Surowe wartości</string>
+  <string name="diag_device_readings">Odczyty zgłoszone przez urządzenie</string>
+  <string name="diag_capacity_inconsistent">Zgłoszona pełna pojemność przekracza pojemność projektową. Z tych odczytów nie można obliczyć wiarygodnej kondycji baterii.</string>
   <string name="pref_dismiss_low_battery_on_recovery">Usuń alarm niskiego poziomu po jego wzroście</string>
   <string name="pref_dismiss_low_battery_on_recovery_summary">Usuń powiadomienie o niskim poziomie, gdy poziom baterii wzrośnie powyżej progu alarmu. Inne powiadomienia alarmów pozostają.</string>
   <plurals name="alarms_active_count">
@@ -859,4 +875,40 @@
   <string name="alarms_database_error">Nie można uzyskać dostępu do bazy alarmów. Spróbuj ponownie.</string>
   <string name="alarms_discard_confirmation">Odrzucić zmiany w tym alarmie?</string>
   <string name="alarms_discard">Odrzuć</string>
+  <string name="diag_no">Nie</string>
+  <string name="diag_fuel_gauge">Układ pomiarowy baterii</string>
+  <string name="diag_mains_supply">Zasilanie sieciowe</string>
+  <string name="diag_wireless_supply">Zasilanie bezprzewodowe</string>
+  <string name="diag_usb_supply">Zasilanie USB</string>
+  <string name="diag_fast_charging">Szybkie ładowanie</string>
+  <string name="diag_supply_health">Zgłoszony stan</string>
+  <string name="diag_battery_technology">Technologia baterii</string>
+  <string name="diag_open_circuit_voltage">Napięcie obwodu otwartego</string>
+  <string name="diag_min_design_voltage">Minimalne napięcie projektowe</string>
+  <string name="diag_max_design_voltage">Maksymalne napięcie projektowe</string>
+  <string name="diag_charge_type">Rodzaj ładowania</string>
+  <string name="diag_charging_input_enabled">Włączone zasilanie ładowania</string>
+  <string name="diag_battery_charging_enabled">Włączone ładowanie baterii</string>
+  <string name="diag_power_supply_state">Stan zasilania</string>
+  <string name="diag_supply_offline">Odłączone</string>
+  <string name="diag_supply_fixed">Zasilanie ze stałymi parametrami</string>
+  <string name="diag_supply_programmable">Zasilanie z regulowanymi parametrami</string>
+  <string name="diag_input_current">Prąd wejściowy</string>
+  <string name="diag_input_current_limit">Limit prądu wejściowego</string>
+  <string name="diag_settled_input_current">Ustalony prąd wejściowy</string>
+  <string name="diag_input_voltage">Napięcie wejściowe</string>
+  <string name="diag_input_voltage_limit">Limit napięcia wejściowego</string>
+  <string name="diag_charge_trickle">Ładowanie podtrzymujące</string>
+  <string name="diag_charge_fast">Szybkie</string>
+  <string name="diag_charge_standard">Standardowe</string>
+  <string name="diag_charge_long_life">Ochrona żywotności baterii</string>
+  <string name="diag_charge_bypass">Ładowanie pominięte</string>
+  <string name="diag_policy_default">Domyślna</string>
+  <string name="diag_policy_fixed_limit">Ochrona baterii (stały limit)</string>
+  <string name="diag_policy_adaptive_ac">Ładowanie adaptacyjne</string>
+  <string name="diag_charging_too_cold">Zbyt niska temperatura do ładowania</string>
+  <string name="diag_charging_too_hot">Zbyt wysoka temperatura do ładowania</string>
+  <string name="diag_capacity_critical">Krytyczny</string>
+  <string name="diag_capacity_low">Niski</string>
+  <string name="diag_capacity_high">Wysoki</string>
 </resources>

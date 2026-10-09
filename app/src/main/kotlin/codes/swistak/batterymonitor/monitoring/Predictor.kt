@@ -26,6 +26,10 @@ internal data class ResolvedPredictionTargets(
     val charging: ResolvedTarget, val discharging: ResolvedTarget
 )
 
+internal data class PredictorStoredState(
+    val averages: Map<String, Float>, val version: Int?
+)
+
 internal class Predictor(context: Context) {
     companion object {
         internal const val STORE_NAME = "predictor_sp_store"
@@ -38,6 +42,15 @@ internal class Predictor(context: Context) {
 
         internal const val KEY_STATE_VERSION = "key_predictor_state_version"
         internal const val STATE_VERSION = 2
+
+        internal fun readStoredState(values: Map<String, *>): PredictorStoredState =
+            PredictorStoredState(
+                averages = buildMap {
+                    KEY_AVERAGE.forEach { key ->
+                        (values[key] as? Float)?.let { put(key, it) }
+                    }
+                }, version = values[KEY_STATE_VERSION] as? Int
+            )
 
         internal fun migratePredictorState(preferences: SharedPreferences): Boolean {
             if (preferences.getInt(KEY_STATE_VERSION, 1) >= STATE_VERSION) return false
@@ -71,6 +84,8 @@ internal class Predictor(context: Context) {
         spPredictor.getFloat(KEY_AVERAGE[PredictorCore.RECHARGE_WL], -1f),
         spPredictor.getFloat(KEY_AVERAGE[PredictorCore.RECHARGE_USB], -1f)
     )
+
+    internal fun storedState(): PredictorStoredState = readStoredState(spPredictor.all)
 
     fun setPredictionType(type: String) {
         pc.setPredictionType(type.toInt())

@@ -12,9 +12,9 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
-import codes.swistak.batterymonitor.common.CommandExecutor
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
 import java.nio.file.Files
@@ -45,50 +45,38 @@ class BatteryCurrentTest {
     }
 
     @Test
-    fun `privileged current prefers root and does not call Shizuku`() {
-        var shizukuCalls = 0
-        val executor = object : CommandExecutor {
-            override fun run(command: String): String? = "-420001"
-        }
-
-        val result = BatteryCurrent.readPrivilegedMicroAmps("current_now", executor) {
-            shizukuCalls++
-            -390000L
-        }
-
-        assertEquals(-420001L, result)
-        assertEquals(0, shizukuCalls)
-    }
-
-    @Test
-    fun `privileged current falls back to Shizuku after both root commands fail`() {
-        val commands = mutableListOf<String>()
-        val executor = object : CommandExecutor {
-            override fun run(command: String): String? {
-                commands.add(command)
-                return null
-            }
-        }
-
-        val result = BatteryCurrent.readPrivilegedMicroAmps("current_average", executor) {
-            -390001L
-        }
-
-        assertEquals(-390001L, result)
-        assertEquals(
-            listOf(
-                "cmd battery get -f current_average 2>/dev/null",
-                "cmd battery get current_average 2>/dev/null"
-            ), commands
-        )
-    }
-
-    @Test
     fun `preserves microamp precision when converting to milliamps`() {
         BatteryCurrent.setMultiplier(1)
 
         assertEquals(420.001, BatteryCurrent.scaleMicroAmps(420001), 0.0)
         assertEquals(-0.001, BatteryCurrent.scaleMicroAmps(-1), 0.0)
+    }
+
+    @Test
+    fun `current validation preserves zero and signed readings and rejects unsupported sentinels`() {
+        assertTrue(BatteryCurrent.isValidMicroAmps(0))
+        assertTrue(BatteryCurrent.isValidMicroAmps(-293000))
+        org.junit.Assert.assertFalse(BatteryCurrent.isValidMicroAmps(Int.MIN_VALUE.toLong()))
+        org.junit.Assert.assertFalse(BatteryCurrent.isValidMicroAmps(Long.MIN_VALUE))
+    }
+
+    @Test
+    fun `unsupported average files are skipped without substituting instantaneous current`() {
+        withSysfsRoot { root ->
+            createSupply(
+                root,
+                "battery",
+                "Battery",
+                currentNow = "-293000",
+                currentAverage = Int.MIN_VALUE.toString()
+            )
+            assertNull(BatteryCurrent.findCurrentFile(root, average = true))
+            createSupply(root, "vendor-fuelgauge", "Unknown", currentAverage = "-500000")
+            assertEquals(
+                "vendor-fuelgauge/current_avg",
+                BatteryCurrent.findCurrentFile(root, average = true)?.relativeTo(root)?.path
+            )
+        }
     }
 
     @Test

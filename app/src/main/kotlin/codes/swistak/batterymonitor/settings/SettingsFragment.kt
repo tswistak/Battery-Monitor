@@ -1026,59 +1026,58 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         batteryCurrentMultiplierDetectionRunning = true
 
         Thread {
-            val rawCurrent = runCatching {
-                BatteryCurrent.readForMultiplierDetection(average = false)
-            }.getOrNull()
-            val detectedMultiplier = rawCurrent?.let {
-                BatteryCurrentMultiplierDetector.detect(
-                    milliAmpsAtMultiplierOne = it,
-                    batteryStatus = batteryInfo.status,
-                    batteryPercent = batteryInfo.percent
-                )
-            }
-
-            mainHandler.post {
-                batteryCurrentMultiplierDetectionRunning = false
-                if (!isAdded) return@post
-                if (detectedMultiplier == null) {
-                    if (showFailureMessage) {
-                        Toast.makeText(
-                            activity,
-                            R.string.pref_battery_current_multiplier_detection_unavailable,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    return@post
-                }
-                if (!mSharedPreferences.getBoolean(
-                        SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING, false
+            BatteryCurrent.readForMultiplierDetection(average = false) { rawCurrent ->
+                val detectedMultiplier = rawCurrent?.let {
+                    BatteryCurrentMultiplierDetector.detect(
+                        milliAmpsAtMultiplierOne = it,
+                        batteryStatus = batteryInfo.status,
+                        batteryPercent = batteryInfo.percent
                     )
-                ) return@post
-
-                BatteryCurrent.setMultiplier(detectedMultiplier)
-                applyingDetectedBatteryCurrentMultiplier = true
-                try {
-                    mSharedPreferences.edit {
-                        putString(
-                            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
-                            detectedMultiplier.toString()
-                        )
-                        remove(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING)
-                    }
-                } finally {
-                    applyingDetectedBatteryCurrentMultiplier = false
                 }
-                mPreferenceScreen?.findPreference<ListPreference>(
-                    SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER
-                )?.value = detectedMultiplier.toString()
-                updateListPrefSummary(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER)
-                Toast.makeText(
-                    activity, getString(
-                        R.string.pref_battery_current_multiplier_detection_result,
-                        detectedMultiplier
-                    ), Toast.LENGTH_SHORT
-                ).show()
-                resetService()
+
+                mainHandler.post {
+                    batteryCurrentMultiplierDetectionRunning = false
+                    if (!isAdded) return@post
+                    if (detectedMultiplier == null) {
+                        if (showFailureMessage) {
+                            Toast.makeText(
+                                activity,
+                                R.string.pref_battery_current_multiplier_detection_unavailable,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        return@post
+                    }
+                    if (!mSharedPreferences.getBoolean(
+                            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING, false
+                        )
+                    ) return@post
+
+                    BatteryCurrent.setMultiplier(detectedMultiplier)
+                    applyingDetectedBatteryCurrentMultiplier = true
+                    try {
+                        mSharedPreferences.edit {
+                            putString(
+                                SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
+                                detectedMultiplier.toString()
+                            )
+                            remove(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING)
+                        }
+                    } finally {
+                        applyingDetectedBatteryCurrentMultiplier = false
+                    }
+                    mPreferenceScreen?.findPreference<ListPreference>(
+                        SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER
+                    )?.value = detectedMultiplier.toString()
+                    updateListPrefSummary(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER)
+                    Toast.makeText(
+                        activity, getString(
+                            R.string.pref_battery_current_multiplier_detection_result,
+                            detectedMultiplier
+                        ), Toast.LENGTH_SHORT
+                    ).show()
+                    resetService()
+                }
             }
         }.apply { name = "battery-current-multiplier-detection" }.start()
     }

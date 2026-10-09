@@ -14,10 +14,14 @@ package codes.swistak.batterymonitor.privileged
 
 import android.content.Context
 import android.os.Binder
+import android.os.Bundle
 import android.os.IBinder
 import android.os.Parcel
+import android.os.Process
 import android.os.RemoteException
 import androidx.annotation.Keep
+import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
+import codes.swistak.batterymonitor.advancedstats.AdvancedBatteryStatsCollector
 import codes.swistak.batterymonitor.common.PrivilegedShellExecutor
 import kotlin.system.exitProcess
 
@@ -27,6 +31,8 @@ class PrivilegedCommandUserService : Binder {
         private const val DESCRIPTOR =
             "codes.swistak.batterymonitor.privileged.PrivilegedCommandUserService"
         private const val TRANSACTION_RUN_COMMAND = FIRST_CALL_TRANSACTION
+        private const val TRANSACTION_GET_BATTERY_SNAPSHOT = FIRST_CALL_TRANSACTION + 1
+
         private const val TRANSACTION_DESTROY = 16777115
 
         @Throws(RemoteException::class)
@@ -45,12 +51,32 @@ class PrivilegedCommandUserService : Binder {
                 data.recycle()
             }
         }
+
+        @Throws(RemoteException::class)
+        fun requestBatterySnapshot(binder: IBinder): Bundle? {
+            val data = Parcel.obtain()
+            val reply = Parcel.obtain()
+            try {
+                data.writeInterfaceToken(DESCRIPTOR)
+                if (!binder.transact(TRANSACTION_GET_BATTERY_SNAPSHOT, data, reply, 0)) return null
+                reply.readException()
+                return reply.readBundle(AdvancedBatterySnapshot::class.java.classLoader)
+            } finally {
+                reply.recycle()
+                data.recycle()
+            }
+        }
     }
 
-    constructor()
+    private val context: Context?
 
-    @Suppress("UNUSED_PARAMETER")
-    constructor(context: Context?)
+    constructor() {
+        context = null
+    }
+
+    constructor(context: Context?) {
+        this.context = context?.applicationContext
+    }
 
     private fun runCommand(command: String): String? = PrivilegedShellExecutor().run(command)
 
@@ -65,7 +91,10 @@ class PrivilegedCommandUserService : Binder {
             response.writeString(DESCRIPTOR)
             return true
         }
-        if (code !in setOf(TRANSACTION_RUN_COMMAND, TRANSACTION_DESTROY)) {
+        if (code !in setOf(
+                TRANSACTION_RUN_COMMAND, TRANSACTION_GET_BATTERY_SNAPSHOT, TRANSACTION_DESTROY
+            )
+        ) {
             return super.onTransact(code, data, reply, flags)
         }
 
@@ -76,7 +105,16 @@ class PrivilegedCommandUserService : Binder {
         }
 
         response.writeNoException()
-        response.writeString(runCommand(data.readString().orEmpty()))
+        if (code == TRANSACTION_GET_BATTERY_SNAPSHOT) {
+            val snapshot = runCatching {
+                AdvancedBatteryStatsCollector.collectMonitoring(PrivilegedShellExecutor(), context)
+                    .apply {
+                        accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
+                        remoteUid = Process.myUid()
+                    }.toBundle()
+            }.getOrNull()
+            response.writeBundle(snapshot)
+        } else response.writeString(runCommand(data.readString().orEmpty()))
         return true
     }
 }

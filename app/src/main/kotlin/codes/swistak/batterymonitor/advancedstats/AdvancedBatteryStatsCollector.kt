@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.advancedstats
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -32,15 +33,6 @@ internal object AdvancedBatteryStatsCollector {
     private const val BATTERY_PROPERTY_MODEL_NAME = 14
     private const val BATTERY_PROPERTY_VOLTAGE_MIN_DESIGN = 15
     private const val SYSFS_ROOT = "/sys/class/power_supply"
-    private val SYSFS_CYCLE_COUNT_PATHS = arrayOf(
-        "$SYSFS_ROOT/battery/cycle_count", "$SYSFS_ROOT/bms/cycle_count"
-    )
-    private val SYSFS_FULL_CHARGE_PATHS = arrayOf(
-        "$SYSFS_ROOT/battery/charge_full", "$SYSFS_ROOT/bms/charge_full"
-    )
-    private val SYSFS_DESIGN_CHARGE_PATHS = arrayOf(
-        "$SYSFS_ROOT/battery/charge_full_design", "$SYSFS_ROOT/bms/charge_full_design"
-    )
     private val SYSFS_FALLBACK_DIRS = arrayOf(
         "$SYSFS_ROOT/battery",
         "$SYSFS_ROOT/bms",
@@ -54,6 +46,127 @@ internal object AdvancedBatteryStatsCollector {
         )
     )
 
+    private val MONITORING_SERVICE_FIELDS = setOf(
+        "Charge counter",
+        "voltage",
+        "temperature",
+        "health",
+        "status",
+        "level",
+        "scale",
+        "plugged",
+        "AC powered",
+        "USB powered",
+        "Wireless powered",
+        "Dock powered"
+    )
+    private val MONITORING_SYSFS_FIELDS = listOf(
+        "current_now",
+        "current_avg",
+        "charge_counter",
+        "voltage_now",
+        "temp",
+        "health",
+        "status",
+        "capacity"
+    )
+    private const val MONITORING_FILE_MARKER = "__BATTERY_MONITOR_FILE__"
+
+    fun collectMonitoring(
+        executor: CommandExecutor, context: Context? = null
+    ): AdvancedBatterySnapshot {
+        val snapshot = AdvancedBatterySnapshot()
+        collectBatteryManagerFields(snapshot, context, false)
+        val batteryDump =
+            parseDump(executor.runRaw("dumpsys battery")).filterKeys { it in MONITORING_SERVICE_FIELDS }
+                .toMutableMap()
+        collectServiceFields(snapshot, batteryDump)
+
+        val supplies = discoverSysfsDirs(executor).map { it.substringAfterLast('/') }
+        val metadata = readMonitoringFiles(executor, supplies.flatMap { supply ->
+            listOf("$supply/type", "$supply/uevent")
+        })
+        val classified = metadata.toMutableMap().apply {
+            supplies.forEach { put("$it/", "") }
+        }
+        val batterySupplies = batterySupplyNames(classified)
+        val fields =
+            metadata.filterKeys { it.substringBefore('/') in batterySupplies } + readMonitoringFiles(
+                executor,
+                batterySupplies.flatMap { supply ->
+                    MONITORING_SYSFS_FIELDS.map { "$supply/$it" }
+                })
+        snapshot.sysfsLabels.addAll(fields.keys)
+        snapshot.sysfsValues.addAll(fields.values)
+        projectCollectedFields(snapshot, batteryDump)
+
+        if (snapshot.currentNowUa == null) snapshot.currentNowUa =
+            commandProperty(snapshot, executor, "current_now", BatteryCurrent::isValidMicroAmps)
+        if (snapshot.currentAverageUa == null) snapshot.currentAverageUa =
+            commandProperty(snapshot, executor, "current_average", BatteryCurrent::isValidMicroAmps)
+        if (snapshot.chargeCounterUah == null) snapshot.chargeCounterUah =
+            commandProperty(snapshot, executor, "charge_counter") { it >= 0 } ?: parseLong(
+                batteryDump["Charge counter"]
+            )?.takeIf { it >= 0 }?.also {
+                snapshot.fieldSources["charge_counter"] = "dumpsys battery / Charge counter"
+            }
+        snapshot.capturedAtMillis = System.currentTimeMillis()
+        return snapshot
+    }
+
+    private fun readMonitoringFiles(
+        executor: CommandExecutor, relativePaths: List<String>
+    ): Map<String, String> {
+        if (relativePaths.isEmpty()) return emptyMap()
+        val paths = relativePaths.map { "$SYSFS_ROOT/$it" }
+        val command = """
+            for battery_file in ${paths.joinToString(" ") { "'$it'" }}; do
+                [ -r "${'$'}battery_file" ] || continue
+                printf '\n$MONITORING_FILE_MARKER%s\n' "${'$'}battery_file"
+                cat "${'$'}battery_file" 2>/dev/null
+                printf '\n'
+            done
+        """.trimIndent()
+        val output = executor.runRaw(command) ?: return emptyMap()
+        val fields = linkedMapOf<String, String>()
+        var path: String? = null
+        val value = StringBuilder()
+        fun addField() {
+            val key = path?.takeIf { it in paths }?.removePrefix("$SYSFS_ROOT/") ?: return
+            value.toString().trim().takeIf(String::isNotEmpty)?.let { fields[key] = it }
+        }
+        output.lineSequence().forEach { line ->
+            if (line.startsWith(MONITORING_FILE_MARKER)) {
+                addField()
+                path = line.removePrefix(MONITORING_FILE_MARKER)
+                value.setLength(0)
+            } else if (path != null) value.appendLine(line)
+        }
+        addField()
+        return fields
+    }
+
+    private fun commandProperty(
+        snapshot: AdvancedBatterySnapshot,
+        executor: CommandExecutor,
+        key: String,
+        valid: (Long) -> Boolean = { true }
+    ): Long? {
+        val commands = if (key == "current_now" || key == "current_average") {
+            listOf("cmd battery get -f $key", "cmd battery get $key")
+        } else listOf("cmd battery get $key")
+        for (command in commands) {
+            val raw = executor.runRaw("$command 2>/dev/null")
+            parseLong(raw)?.let {
+                addLabeledValue(snapshot.metadataLabels, snapshot.metadataValues, command, raw)
+                if (valid(it)) {
+                    snapshot.fieldSources[key] = command
+                    return it
+                }
+            }
+        }
+        return null
+    }
 
     fun collect(
         executor: CommandExecutor,
@@ -67,106 +180,150 @@ internal object AdvancedBatteryStatsCollector {
         snapshot.remoteUid = remoteUid
         val rawDump = executor.runRaw("dumpsys battery")
         val batteryDump = parseDump(rawDump)
-        fun property(key: String): Long? {
-            val commands = if (key == "current_now" || key == "current_average") {
-                listOf("cmd battery get -f $key", "cmd battery get $key")
-            } else listOf("cmd battery get $key")
-            for (command in commands) {
-                val raw = executor.runRaw("$command 2>/dev/null")
-                parseLong(raw)?.let {
-                    addLabeledValue(snapshot.metadataLabels, snapshot.metadataValues, command, raw)
-                    snapshot.fieldSources[key] = command
-                    return it
-                }
-            }
-            return null
-        }
+        fun property(key: String, valid: (Long) -> Boolean = { true }): Long? =
+            commandProperty(snapshot, executor, key, valid)
 
-        fun sysfs(paths: Array<String>, key: String): Long? {
-            for (path in paths) {
-                parseLong(executor.run("cat $path 2>/dev/null"))?.let {
-                    snapshot.fieldSources[key] = path
-                    return it
-                }
-            }
-            return null
-        }
-        snapshot.chargeCounterUah =
-            property("charge_counter") ?: parseLong(batteryDump["Charge counter"])?.also {
+        snapshot.chargeCounterUah = property("charge_counter") { it >= 0 }
+            ?: parseLong(batteryDump["Charge counter"])?.takeIf { it >= 0 }?.also {
                 snapshot.fieldSources["charge_counter"] = "dumpsys battery / Charge counter"
             }
-        snapshot.currentNowUa = property("current_now") ?: sysfs(
-            arrayOf("$SYSFS_ROOT/battery/current_now", "$SYSFS_ROOT/bms/current_now"), "current_now"
-        )
-        snapshot.currentAverageUa = property("current_average") ?: sysfs(
-            arrayOf("$SYSFS_ROOT/battery/current_avg", "$SYSFS_ROOT/bms/current_avg"),
-            "current_average"
-        )
-        snapshot.energyCounterNwh = property("energy_counter")
-        snapshot.cycleCount = sysfs(SYSFS_CYCLE_COUNT_PATHS, "cycle_count")
-        snapshot.fullChargeUah = sysfs(SYSFS_FULL_CHARGE_PATHS, "charge_full")
-        snapshot.designChargeUah = sysfs(SYSFS_DESIGN_CHARGE_PATHS, "charge_full_design")
-        snapshot.maxChargingCurrentUa = parseLong(batteryDump["Max charging current"])
-        snapshot.maxChargingVoltageUv = parseLong(batteryDump["Max charging voltage"])
-        snapshot.chargingPolicy = cleanString(batteryDump["Charging policy"])
-        snapshot.chargingState = cleanString(batteryDump["Charging state"])
-        snapshot.capacityLevel = cleanString(batteryDump["capacity level"])
+        snapshot.currentNowUa = property("current_now", BatteryCurrent::isValidMicroAmps)
+        snapshot.currentAverageUa = property("current_average", BatteryCurrent::isValidMicroAmps)
+        snapshot.energyCounterNwh = property("energy_counter") { it >= 0 }
+        snapshot.maxChargingCurrentUa =
+            parseLong(batteryDump["Max charging current"])?.takeIf { it >= 0 }
+        snapshot.maxChargingVoltageUv =
+            parseLong(batteryDump["Max charging voltage"])?.takeIf { it >= 0 }
+        snapshot.chargingPolicy =
+            cleanString(batteryDump["Charging policy"])?.takeUnless { it == "-1" }
+        snapshot.chargingState =
+            cleanString(batteryDump["Charging state"])?.takeUnless { it == "-1" }
+        snapshot.capacityLevel =
+            cleanString(batteryDump["capacity level"])?.takeUnless { it == "-1" }
         listOf(
-            "max_charging_current" to "Max charging current",
-            "max_charging_voltage" to "Max charging voltage",
-            "charging_policy" to "Charging policy",
-            "charging_state" to "Charging state",
-            "capacity_level" to "capacity level"
-        ).forEach { (field, key) ->
-            if (batteryDump[key] != null) snapshot.fieldSources[field] = "dumpsys battery / $key"
+            Triple("max_charging_current", "Max charging current", snapshot.maxChargingCurrentUa),
+            Triple("max_charging_voltage", "Max charging voltage", snapshot.maxChargingVoltageUv),
+            Triple("charging_policy", "Charging policy", snapshot.chargingPolicy),
+            Triple("charging_state", "Charging state", snapshot.chargingState),
+            Triple("capacity_level", "capacity level", snapshot.capacityLevel)
+        ).forEach { (field, key, value) ->
+            if (value != null) snapshot.fieldSources[field] = "dumpsys battery / $key"
         }
         collectBatteryManagerFields(snapshot, context, allowPrivilegedBatteryApi)
         collectServiceFields(snapshot, batteryDump)
         collectSysfsFields(snapshot, executor)
+        projectCollectedFields(snapshot, batteryDump)
 
         snapshot.capturedAtMillis = System.currentTimeMillis()
         return snapshot
     }
 
+    internal fun batterySupplyNames(fields: Map<String, String>): List<String> =
+        fields.keys.map { it.substringBefore('/') }.distinct().mapNotNull { supply ->
+            val type = fields["$supply/type"]?.trim() ?: fields["$supply/uevent"]?.lineSequence()
+                ?.firstOrNull { it.startsWith("POWER_SUPPLY_TYPE=") }?.substringAfter('=')?.trim()
+            BatteryCurrent.batterySupplyRank(supply, type)?.let { supply to it }
+        }
+            .sortedWith(compareBy<Pair<String, Int>> { it.second }.thenBy { it.first.lowercase(java.util.Locale.ROOT) })
+            .map { it.first }
+
+    internal fun projectCollectedFields(
+        snapshot: AdvancedBatterySnapshot, batteryDump: Map<String, String>
+    ) {
+        if (snapshot.reportedCapacityPercent == null) {
+            val level = parseLong(batteryDump["level"])
+            val scale = parseLong(batteryDump["scale"])
+            if (level != null && scale != null && scale > 0 && level in 0..scale) {
+                snapshot.reportedCapacityPercent = (level.toDouble() * 100 / scale).toInt()
+                snapshot.fieldSources["capacity"] = "dumpsys battery / level / scale"
+            }
+        }
+        if (snapshot.chargingState == null) {
+            parseLong(batteryDump["status"])?.takeIf { it in 1..5 }?.let {
+                snapshot.chargingState = it.toString()
+                snapshot.fieldSources["charging_state"] = "dumpsys battery / status"
+            }
+        }
+
+        val fields = snapshot.sysfsLabels.zip(snapshot.sysfsValues).toMap()
+        val supplies = batterySupplyNames(fields)
+        fun number(field: String, key: String = field, valid: (Long) -> Boolean = { true }): Long? {
+            for (supply in supplies) {
+                val path = "$supply/$key"
+                parseLong(fields[path])?.takeIf(valid)?.let {
+                    snapshot.fieldSources[field] = "$SYSFS_ROOT/$path"
+                    return it
+                }
+            }
+            return null
+        }
+
+        fun text(field: String, key: String): String? {
+            for (supply in supplies) {
+                val path = "$supply/$key"
+                cleanString(fields[path])?.let {
+                    snapshot.fieldSources[field] = "$SYSFS_ROOT/$path"
+                    return it
+                }
+            }
+            return null
+        }
+        if (snapshot.chargeCounterUah == null) snapshot.chargeCounterUah =
+            number("charge_counter") { it >= 0 }
+        if (snapshot.currentNowUa == null) snapshot.currentNowUa =
+            number("current_now", valid = BatteryCurrent::isValidMicroAmps)
+        if (snapshot.currentAverageUa == null) snapshot.currentAverageUa =
+            number("current_average", "current_avg", BatteryCurrent::isValidMicroAmps)
+        // Linux energy_now is µWh; the BatteryManager snapshot uses nWh.
+        if (snapshot.energyCounterNwh == null) snapshot.energyCounterNwh = number(
+            "energy_counter", "energy_now"
+        ) { it >= 0 && it <= Long.MAX_VALUE / 1000 }?.let { it * 1000 }
+        if (snapshot.reportedCapacityPercent == null) snapshot.reportedCapacityPercent =
+            number("capacity") { it in 0..100 }?.toInt()
+        if (snapshot.stateOfHealthPercent == null) snapshot.stateOfHealthPercent =
+            number("state_of_health") { it in 0..100 }?.toInt()
+        // Linux time_to_full_now is seconds; the snapshot uses milliseconds.
+        if (snapshot.chargeTimeRemainingMs == null) snapshot.chargeTimeRemainingMs = number(
+            "charge_time_remaining", "time_to_full_now"
+        ) { it >= 0 && it <= Long.MAX_VALUE / 1000 }?.let { it * 1000 }
+        if (snapshot.chargingState == null) snapshot.chargingState =
+            text("charging_state", "status")
+        if (snapshot.capacityLevel == null) snapshot.capacityLevel =
+            text("capacity_level", "capacity_level")
+        if (snapshot.cycleCount == null) snapshot.cycleCount = number("cycle_count") { it > 0 }
+        if (snapshot.fullChargeUah == null) snapshot.fullChargeUah =
+            number("charge_full") { it > 0 }
+        if (snapshot.designChargeUah == null) snapshot.designChargeUah =
+            number("charge_full_design") { it > 0 }
+
+        val fullSource = snapshot.fieldSources["charge_full"]
+        val designSource = snapshot.fieldSources["charge_full_design"]
+        val mismatchedSysfsPair =
+            fullSource?.startsWith("$SYSFS_ROOT/") == true && designSource?.startsWith("$SYSFS_ROOT/") == true && fullSource.substringBeforeLast(
+                '/'
+            ) != designSource.substringBeforeLast('/')
+        val pairSupply = supplies.firstOrNull {
+            (parseLong(fields["$it/charge_full"])
+                ?: 0) > 0 && (parseLong(fields["$it/charge_full_design"]) ?: 0) > 0
+        }
+        if (pairSupply != null && mismatchedSysfsPair) {
+            snapshot.fullChargeUah = parseLong(fields["$pairSupply/charge_full"])
+            snapshot.designChargeUah = parseLong(fields["$pairSupply/charge_full_design"])
+            snapshot.fieldSources["charge_full"] = "$SYSFS_ROOT/$pairSupply/charge_full"
+            snapshot.fieldSources["charge_full_design"] =
+                "$SYSFS_ROOT/$pairSupply/charge_full_design"
+        }
+    }
+
     fun collectBasic(context: Context): AdvancedBatterySnapshot {
         val snapshot = AdvancedBatterySnapshot().apply { accessMethod = "Android" }
-        val manager = context.getSystemService(Context.BATTERY_SERVICE) as? BatteryManager
-        manager?.let {
-            snapshot.chargeCounterUah =
-                readIntProperty(it, BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER)?.toLong()
-            snapshot.currentNowUa =
-                readIntProperty(it, BatteryManager.BATTERY_PROPERTY_CURRENT_NOW)?.toLong()
-            snapshot.currentAverageUa =
-                readIntProperty(it, BatteryManager.BATTERY_PROPERTY_CURRENT_AVERAGE)?.toLong()
-            snapshot.energyCounterNwh =
-                readLongProperty(it, BatteryManager.BATTERY_PROPERTY_ENERGY_COUNTER)
-        }
         collectBatteryManagerFields(snapshot, context, false)
-        listOf(
-            "BATTERY_PROPERTY_CHARGE_COUNTER" to snapshot.chargeCounterUah,
-            "BATTERY_PROPERTY_CURRENT_NOW" to snapshot.currentNowUa,
-            "BATTERY_PROPERTY_CURRENT_AVERAGE" to snapshot.currentAverageUa,
-            "BATTERY_PROPERTY_ENERGY_COUNTER" to snapshot.energyCounterNwh,
-            "BATTERY_PROPERTY_CAPACITY" to snapshot.reportedCapacityPercent,
-            "computeChargeTimeRemaining" to snapshot.chargeTimeRemainingMs
-        ).forEach { (key, value) ->
-            addLabeledValue(
-                snapshot.metadataLabels, snapshot.metadataValues, key, value?.toString()
-            )
-        }
-        listOf(
-            "charge_counter" to "BATTERY_PROPERTY_CHARGE_COUNTER",
-            "current_now" to "BATTERY_PROPERTY_CURRENT_NOW",
-            "current_average" to "BATTERY_PROPERTY_CURRENT_AVERAGE",
-            "energy_counter" to "BATTERY_PROPERTY_ENERGY_COUNTER"
-        ).forEach { (field, property) ->
-            if (snapshot.metadataLabels.contains(property)) snapshot.fieldSources[field] =
-                "BatteryManager / $property"
-        }
         fun currentFromFile(average: Boolean, key: String): Long? {
             val file = BatteryCurrent.findCurrentFile(File(SYSFS_ROOT), average) ?: return null
             return runCatching {
-                file.bufferedReader().use { it.readLine()?.trim()?.toLongOrNull() }
+                file.bufferedReader().use {
+                    it.readLine()?.trim()?.toLongOrNull()?.takeIf(BatteryCurrent::isValidMicroAmps)
+                }
             }.getOrNull()?.also { snapshot.fieldSources[key] = file.path }
         }
         if (snapshot.currentNowUa == null) snapshot.currentNowUa =
@@ -188,12 +345,13 @@ internal object AdvancedBatteryStatsCollector {
             snapshot, snapshot.serviceLabels.zip(snapshot.serviceValues).toMap()
         )
         snapshot.cycleCount = AndroidCycleCount.read(battery)
-        if (snapshot.cycleCount != null) snapshot.fieldSources["cycle_count"] =
-            "ACTION_BATTERY_CHANGED / cycle_count"
+        if (Build.VERSION.SDK_INT >= 34 && snapshot.cycleCount != null) snapshot.fieldSources["cycle_count"] =
+            "ACTION_BATTERY_CHANGED / ${BatteryManager.EXTRA_CYCLE_COUNT}"
         snapshot.capturedAtMillis = System.currentTimeMillis()
         return snapshot
     }
 
+    @SuppressLint("InlinedApi")
     internal fun projectBatteryIntentFields(
         snapshot: AdvancedBatterySnapshot, fields: Map<String, String>
     ) {
@@ -221,9 +379,22 @@ internal object AdvancedBatteryStatsCollector {
             snapshot.fieldSources["max_charging_voltage"] =
                 "ACTION_BATTERY_CHANGED / max_charging_voltage"
         }
-        fields["status"]?.toIntOrNull()?.takeIf { it in 1..5 }?.let {
-            snapshot.chargingState = it.toString()
-            snapshot.fieldSources["charging_state"] = "ACTION_BATTERY_CHANGED / status"
+        fields[BatteryManager.EXTRA_CAPACITY_LEVEL]?.toIntOrNull()?.takeIf { it in 0..5 }?.let {
+            snapshot.capacityLevel = it.toString()
+            snapshot.fieldSources["capacity_level"] =
+                "ACTION_BATTERY_CHANGED / ${BatteryManager.EXTRA_CAPACITY_LEVEL}"
+        }
+        val hardwareStatus =
+            fields[BatteryManager.EXTRA_CHARGING_STATUS]?.toIntOrNull()?.takeIf { it in 0..5 }
+        if (hardwareStatus != null) {
+            snapshot.chargingState = hardwareStatus.toString()
+            snapshot.fieldSources["charging_state"] =
+                "ACTION_BATTERY_CHANGED / ${BatteryManager.EXTRA_CHARGING_STATUS}"
+        } else if (snapshot.chargingState == null || snapshot.fieldSources["charging_state"] == "ACTION_BATTERY_CHANGED / status") {
+            fields["status"]?.toIntOrNull()?.takeIf { it in 1..5 }?.let {
+                snapshot.chargingState = it.toString()
+                snapshot.fieldSources["charging_state"] = "ACTION_BATTERY_CHANGED / status"
+            }
         }
     }
 
@@ -267,39 +438,13 @@ internal object AdvancedBatteryStatsCollector {
         val batteryManager =
             context.getSystemService(Context.BATTERY_SERVICE) as? BatteryManager? ?: return
 
-        snapshot.reportedCapacityPercent =
-            readIntProperty(batteryManager, BatteryManager.BATTERY_PROPERTY_CAPACITY)
-        snapshot.stateOfHealthPercent =
-            readIntProperty(batteryManager, BATTERY_PROPERTY_STATE_OF_HEALTH)
-        snapshot.chargeTimeRemainingMs = readChargeTimeRemaining(batteryManager)
-        if (snapshot.reportedCapacityPercent != null) snapshot.fieldSources["capacity"] =
-            "BatteryManager / BATTERY_PROPERTY_CAPACITY"
-        if (snapshot.stateOfHealthPercent != null) snapshot.fieldSources["state_of_health"] =
-            "BatteryManager / BATTERY_PROPERTY_STATE_OF_HEALTH"
-        if (snapshot.chargeTimeRemainingMs != null) snapshot.fieldSources["charge_time_remaining"] =
-            "BatteryManager / computeChargeTimeRemaining"
+        collectBatteryManagerReadings(
+            snapshot, batteryManager::getIntProperty, batteryManager::getLongProperty, {
+                if (Build.VERSION.SDK_INT >= 28) batteryManager.computeChargeTimeRemaining() else null
+            }, allowPrivilegedBatteryApi
+        )
 
         if (!allowPrivilegedBatteryApi) return
-        addLabeledValue(
-            snapshot.metadataLabels,
-            snapshot.metadataValues,
-            "BATTERY_PROPERTY_CHARGING_POLICY",
-            readIntProperty(batteryManager, BATTERY_PROPERTY_CHARGING_POLICY)?.toString()
-        )
-        addLabeledValue(
-            snapshot.metadataLabels,
-            snapshot.metadataValues,
-            "BATTERY_PROPERTY_STATE_OF_HEALTH",
-            snapshot.stateOfHealthPercent?.toString()
-        )
-
-        val chargingPolicyFromApi =
-            formatChargingPolicy(readIntProperty(batteryManager, BATTERY_PROPERTY_CHARGING_POLICY))
-        if (snapshot.chargingPolicy == null && chargingPolicyFromApi != null) {
-            snapshot.chargingPolicy = chargingPolicyFromApi
-            snapshot.fieldSources["charging_policy"] =
-                "BatteryManager / BATTERY_PROPERTY_CHARGING_POLICY"
-        }
 
         addLabeledValue(
             snapshot.metadataLabels,
@@ -343,6 +488,62 @@ internal object AdvancedBatteryStatsCollector {
             "BATTERY_PROPERTY_VOLTAGE_MIN_DESIGN",
             readLongProperty(batteryManager, BATTERY_PROPERTY_VOLTAGE_MIN_DESIGN)?.toString()
         )
+    }
+
+    internal fun collectBatteryManagerReadings(
+        snapshot: AdvancedBatterySnapshot,
+        getIntProperty: (Int) -> Int,
+        getLongProperty: (Int) -> Long,
+        getChargeTimeRemaining: () -> Long? = { null },
+        collectChargingPolicy: Boolean = false
+    ) {
+        val properties = linkedMapOf(
+            "BATTERY_PROPERTY_CHARGE_COUNTER" to runCatching {
+                getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER).toLong()
+            }.getOrNull(), "BATTERY_PROPERTY_CURRENT_NOW" to runCatching {
+                getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW).toLong()
+            }.getOrNull(), "BATTERY_PROPERTY_CURRENT_AVERAGE" to runCatching {
+                getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_AVERAGE).toLong()
+            }.getOrNull(), "BATTERY_PROPERTY_ENERGY_COUNTER" to runCatching {
+                getLongProperty(BatteryManager.BATTERY_PROPERTY_ENERGY_COUNTER)
+            }.getOrNull(), "BATTERY_PROPERTY_CAPACITY" to runCatching {
+                getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY).toLong()
+            }.getOrNull(), "BATTERY_PROPERTY_STATE_OF_HEALTH" to runCatching {
+                getIntProperty(BATTERY_PROPERTY_STATE_OF_HEALTH).toLong()
+            }.getOrNull(), "computeChargeTimeRemaining" to runCatching {
+                getChargeTimeRemaining()
+            }.getOrNull()
+        )
+        if (collectChargingPolicy) properties["BATTERY_PROPERTY_CHARGING_POLICY"] = runCatching {
+            getIntProperty(BATTERY_PROPERTY_CHARGING_POLICY).toLong()
+        }.getOrNull()
+        properties.forEach { (key, value) ->
+            addLabeledValue(
+                snapshot.metadataLabels, snapshot.metadataValues, key, value?.toString()
+            )
+        }
+        fun value(field: String, property: String, valid: (Long) -> Boolean): Long? =
+            properties[property]?.takeIf(valid)?.also {
+                snapshot.fieldSources[field] = "BatteryManager / $property"
+            }
+        if (snapshot.chargeCounterUah == null) snapshot.chargeCounterUah =
+            value("charge_counter", "BATTERY_PROPERTY_CHARGE_COUNTER") { it >= 0 }
+        if (snapshot.currentNowUa == null) snapshot.currentNowUa =
+            value("current_now", "BATTERY_PROPERTY_CURRENT_NOW", BatteryCurrent::isValidMicroAmps)
+        if (snapshot.currentAverageUa == null) snapshot.currentAverageUa = value(
+            "current_average", "BATTERY_PROPERTY_CURRENT_AVERAGE", BatteryCurrent::isValidMicroAmps
+        )
+        if (snapshot.energyCounterNwh == null) snapshot.energyCounterNwh =
+            value("energy_counter", "BATTERY_PROPERTY_ENERGY_COUNTER") { it >= 0 }
+        if (snapshot.reportedCapacityPercent == null) snapshot.reportedCapacityPercent =
+            value("capacity", "BATTERY_PROPERTY_CAPACITY") { it in 0..100 }?.toInt()
+        if (snapshot.stateOfHealthPercent == null) snapshot.stateOfHealthPercent =
+            value("state_of_health", "BATTERY_PROPERTY_STATE_OF_HEALTH") { it in 0..100 }?.toInt()
+        if (snapshot.chargeTimeRemainingMs == null) snapshot.chargeTimeRemainingMs =
+            value("charge_time_remaining", "computeChargeTimeRemaining") { it >= 0 }
+        if (snapshot.chargingPolicy == null) snapshot.chargingPolicy =
+            value("charging_policy", "BATTERY_PROPERTY_CHARGING_POLICY") { it >= 0 }?.toInt()
+                ?.let(::formatChargingPolicy)
     }
 
 
@@ -449,18 +650,6 @@ internal object AdvancedBatteryStatsCollector {
             )
             val value = method.invoke(batteryManager, id)
             return value as? String
-        } catch (e: Throwable) {
-            return null
-        }
-    }
-
-    private fun readChargeTimeRemaining(batteryManager: BatteryManager?): Long? {
-        try {
-            val method = BatteryManager::class.java.getMethod("computeChargeTimeRemaining")
-            val value = method.invoke(batteryManager)
-            if (value !is Long) return null
-
-            return if (value >= 0) value else null
         } catch (e: Throwable) {
             return null
         }

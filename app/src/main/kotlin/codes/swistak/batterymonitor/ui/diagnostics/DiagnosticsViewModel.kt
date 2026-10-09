@@ -218,7 +218,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
                 if (statsVisible && privilegedEnabled) loadPrivileged(generation)
                 else publish {
                     copy(
-                        status = R.string.currently_disabled,
+                        status = if (privilegedEnabled) 0 else R.string.currently_disabled,
                         loading = false,
                         stale = advanced != null
                     )

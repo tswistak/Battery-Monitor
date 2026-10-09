@@ -31,13 +31,14 @@ internal class RemainingChargeReader(
         Log.w(LOG_TAG, "Unable to read the remaining battery charge", exception)
     })
 
-    fun readMicroAmpHours(): Long? {
-        return try {
+    fun readMicroAmpHours(fallback: () -> Long? = { null }): Long? {
+        val android = try {
             getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER).takeUnless { it == Int.MIN_VALUE || it < 0 }
                 ?.toLong()
         } catch (exception: RuntimeException) {
             onReadFailure(exception)
             null
         }
+        return android ?: fallback()?.takeIf { it >= 0 }
     }
 }

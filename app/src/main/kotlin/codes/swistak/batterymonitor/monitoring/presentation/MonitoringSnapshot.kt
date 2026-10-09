@@ -9,6 +9,9 @@ package codes.swistak.batterymonitor.monitoring.presentation
 
 import android.os.Bundle
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
+import codes.swistak.batterymonitor.monitoring.Predictor
+import codes.swistak.batterymonitor.monitoring.PredictorStoredState
+
 
 internal data class MonitoringReading<T>(
     val value: T?, val source: String, val observedAtMillis: Long
@@ -41,7 +44,8 @@ internal data class MonitoringSnapshot(
     val configuredPrediction: PredictionSnapshot,
     val fullRangePrediction: PredictionSnapshot,
     val observedAtMillis: Long,
-    val source: String = "BatteryInfoService bundle"
+    val source: String = "BatteryInfoService bundle",
+    val predictorData: PredictorStoredState? = null
 ) {
     val voltage: MonitoringReading<Int>
         get() = MonitoringReading(voltageMillivolts, source, observedAtMillis)
@@ -49,8 +53,14 @@ internal data class MonitoringSnapshot(
         get() = MonitoringReading(remainingChargeMicroampHours, source, observedAtMillis)
 
     companion object {
+        const val FIELD_PREDICTOR_DATA = "monitoring_predictor_data"
+
         fun fromBundle(bundle: Bundle): MonitoringSnapshot {
             val info = BatteryInfo().apply { loadBundle(bundle) }
+            @Suppress("DEPRECATION") val predictorData =
+                bundle.getBundle(FIELD_PREDICTOR_DATA)?.let { data ->
+                    Predictor.readStoredState(data.keySet().associateWith { data[it] })
+                }
             return MonitoringSnapshot(
                 levelPercent = info.percent,
                 status = info.status,
@@ -65,7 +75,8 @@ internal data class MonitoringSnapshot(
                 lastStatusTimeMillis = info.lastStatusCtm,
                 configuredPrediction = info.prediction.toSnapshot(),
                 fullRangePrediction = info.fullRangePrediction.toSnapshot(),
-                observedAtMillis = bundle.getLong(MonitoringConnection.FIELD_OBSERVED_AT)
+                observedAtMillis = bundle.getLong(MonitoringConnection.FIELD_OBSERVED_AT),
+                predictorData = predictorData
             )
         }
     }
