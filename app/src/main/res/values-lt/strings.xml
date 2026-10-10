@@ -362,11 +362,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">Naudoti naujausią vidurkį, kai jis pasiekiamas?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Kai kurios sistemos kartu su momentine srove pateikia naujausią vidurkį. Vidurkinimo laikotarpis ir kokybė priklauso nuo įrenginio. Išjunkite, jei vidurkis nepasiekiamas arba netinkamas.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Automatinio atnaujinimo intervalas</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Pasirinkite, kaip dažnai atnaujinti srovės rodmenį, kol matomas pagrindinis langas.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Įveskite intervalą sekundėmis (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Įveskite reikšmę nuo 1 iki 3600.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d sek.</string>
 
   <string name="pref_indicate_charging" formatted="false">Nurodykite įkrovimą</string>
   <string name="pref_indicate_charging_summary" formatted="false">Keisti piktogramą, kad būtų rodomas įkrovimas?</string>

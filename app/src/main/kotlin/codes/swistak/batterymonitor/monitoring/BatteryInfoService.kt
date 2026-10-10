@@ -136,6 +136,7 @@ class BatteryInfoService : Service() {
         // Carries fresh preference values to the service's separate BIS process.
         private const val EXTRA_SETTINGS_SNAPSHOT =
             "codes.swistak.batterymonitor.EXTRA_SETTINGS_SNAPSHOT"
+        const val EXTRA_PREDICTOR_SNAPSHOT = "predictor_snapshot"
 
         private const val ACTION_DIAGNOSTICS_CHECK =
             "codes.swistak.batterymonitor.action.DIAGNOSTICS_CHECK"
@@ -507,6 +508,7 @@ class BatteryInfoService : Service() {
         intent?.getBundleExtra(EXTRA_SETTINGS_SNAPSHOT)?.let { snapshot ->
             thresholdAlarmEvaluator.reset()
             applySettingsSnapshot(snapshot)
+            snapshot.getBundle(EXTRA_PREDICTOR_SNAPSHOT)?.let(::reloadPredictor)
         }
         configureBatteryCurrent()
         configureChipContent()
@@ -568,7 +570,7 @@ class BatteryInfoService : Service() {
                 )
 
                 RemoteConnection.SERVICE_RELOAD_DEVICE_DATA -> {
-                    bis.predictor = Predictor(bis)
+                    bis.reloadPredictor(incoming.data.getBundle(EXTRA_PREDICTOR_SNAPSHOT))
                     bis.reloadSettings(false, incoming.data)
                 }
 
@@ -632,6 +634,17 @@ class BatteryInfoService : Service() {
         DisplayStrings.setResources(res)
 
         applyNewSettings(cancelFirst)
+    }
+
+    private fun reloadPredictor(snapshot: Bundle?) {
+        if (snapshot != null && !SettingsSnapshot.apply(
+                getSharedPreferences(Predictor.STORE_NAME, MODE_PRIVATE), snapshot
+            )
+        ) {
+            Log.e(LOG_TAG, "Failed to apply imported predictor data")
+            return
+        }
+        predictor = Predictor(this)
     }
 
     private fun applySettingsSnapshot(snapshot: Bundle) {

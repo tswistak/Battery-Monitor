@@ -364,11 +364,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">Использовать последнее среднее значение, когда оно доступно?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Некоторые системы предоставляют последнее среднее значение вместе с мгновенным током. Период и качество усреднения зависят от устройства. Отключите параметр, если среднее значение недоступно или непригодно.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Интервал автообновления</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Выберите частоту обновления тока, пока главное окно отображается.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Введите интервал в секундах (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Введите значение от 1 до 3600.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d с</string>
 
   <string name="pref_indicate_charging" formatted="false">Показывать зарядку</string>
   <string name="pref_indicate_charging_summary" formatted="false">Изменять значок во время зарядки?</string>

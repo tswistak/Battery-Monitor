@@ -54,7 +54,7 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticReportDialog
 import codes.swistak.batterymonitor.ui.diagnostics.MonitorAction
 import codes.swistak.batterymonitor.ui.diagnostics.MonitorOperationScreen
-import codes.swistak.batterymonitor.ui.theme.BatteryTheme
+import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import rikka.shizuku.Shizuku
 import java.text.DateFormat
 import java.util.Date
@@ -131,6 +131,11 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
     private lateinit var actions: Map<String, MonitorAction>
     internal val monitorActions: Map<String, MonitorAction> get() = actions
     private val actionsOnly: Boolean get() = arguments?.getBoolean("actionsOnly") == true
+    private var highlightedAction by mutableStateOf<String?>(null)
+    internal fun highlightAction(key: String?) {
+        highlightedAction = key
+    }
+
     private fun action(key: String): MonitorAction? = actions[key]
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -210,7 +215,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                BatteryTheme {
+                AppBatteryTheme {
                     val groups = listOf(
                         R.string.diagnostics_permissions to listOf(
                             "diagnostics_notifications",
@@ -238,7 +243,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
                             "charging"
                         ) == true)
                     }
-                    MonitorOperationScreen(groups, actions)
+                    MonitorOperationScreen(groups, actions, highlightedAction)
                     reportKind?.let { kind ->
                         val appContext = requireContext().applicationContext
                         val root = rootAvailable

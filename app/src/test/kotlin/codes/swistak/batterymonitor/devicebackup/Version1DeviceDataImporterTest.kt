@@ -20,6 +20,36 @@ import org.junit.Test
 
 class Version1DeviceDataImporterTest {
     @Test
+    fun `current predictor backups preserve discharge and record the state version`() {
+        val averages = Predictor.KEY_AVERAGE.zip(listOf(10f, 20f, 30f, 40f)).toMap()
+        for (version in listOf(null, Predictor.STATE_VERSION)) {
+            val restored = Version2DeviceDataImporter.restorePredictor(averages, 2, version)
+            assertEquals(averages, restored.averages)
+            assertEquals(Predictor.STATE_VERSION, restored.version)
+        }
+    }
+
+    @Test
+    fun `legacy predictor backups discard only discharge learned with the old formula`() {
+        val averages = Predictor.KEY_AVERAGE.zip(listOf(10f, 20f, 30f, 40f)).toMap()
+        for ((backupVersion, stateVersion) in listOf(1 to null, 2 to 1)) {
+            val restored =
+                Version2DeviceDataImporter.restorePredictor(averages, backupVersion, stateVersion)
+            assertEquals(averages - Predictor.KEY_AVERAGE[0], restored.averages)
+            assertEquals(Predictor.STATE_VERSION, restored.version)
+        }
+    }
+
+    @Test
+    fun `predictor imports reject invalid or unsupported state versions`() {
+        for (version in listOf(0, -1, 3, 2.0, "2")) {
+            assertThrows(IllegalArgumentException::class.java) {
+                Version2DeviceDataImporter.restorePredictor(emptyMap(), 2, version)
+            }
+        }
+    }
+
+    @Test
     fun `version two preserves raw remaining charge and treats missing charge as unavailable`() {
         val old = mapOf("status" to 100, "charge" to 50, "time" to 123L)
         assertEquals(null, Version2DeviceDataImporter.restoreLog(old).remainingChargeMicroampHours)

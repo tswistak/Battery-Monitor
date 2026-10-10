@@ -42,13 +42,6 @@
             style="@style/help_text"
             android:text="@string/pref_prefer_current_avg_help" />
 
-        <TextView
-            style="@style/help_pref"
-            android:text="@string/pref_battery_current_refresh_interval" />
-
-        <TextView
-            style="@style/help_text"
-            android:text="@string/pref_battery_current_refresh_interval_help" />
 
     </LinearLayout>
 </ScrollView>

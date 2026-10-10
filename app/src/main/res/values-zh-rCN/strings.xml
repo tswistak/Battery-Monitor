@@ -330,11 +330,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">可用时使用最近的平均值？</string>
   <string name="pref_prefer_current_avg_help" formatted="false">某些系统除了瞬时电流外还会提供最近的平均值。平均周期和质量因设备而异。如果平均值不可用或无法使用，请关闭此选项。</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">自动刷新间隔</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">选择主窗口可见时电池电流读数的刷新频率。</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">输入以秒为单位的间隔（1–3600）。</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">请输入 1 到 3600 之间的值。</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d 秒</string>
 
   <string name="pref_indicate_charging" formatted="false">指示正在充电</string>
   <string name="pref_indicate_charging_summary" formatted="false">更改图标以指示充电时？</string>

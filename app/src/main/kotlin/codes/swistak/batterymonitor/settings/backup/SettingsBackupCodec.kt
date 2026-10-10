@@ -87,10 +87,19 @@ internal object SettingsBackupCodec {
     fun restore(editor: SharedPreferences.Editor, settings: Map<String, Any>) {
         for ((key, value) in settings) {
             if (key !in vitalSignsBackupKeys && key !in chipContentBackupKeys) {
-                editor.putSetting(key, value)
+                if (key == SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT) {
+                    if (SettingsContract.KEY_USE_PRIVILEGED_ACCESS !in settings) {
+                        editor.putBoolean(
+                            SettingsContract.KEY_USE_PRIVILEGED_ACCESS, value as Boolean
+                        )
+                    }
+                } else {
+                    editor.putSetting(key, value)
+                }
             }
         }
 
+        editor.remove(SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT)
         editor.putStringSet(
             SettingsContract.KEY_VITAL_SIGNS_CONTENT, vitalSignsContentFromBackup(settings)
         )

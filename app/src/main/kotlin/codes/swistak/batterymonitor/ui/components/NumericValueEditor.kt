@@ -112,22 +112,6 @@ fun NumericValueEditor(
             modifier = Modifier.fillMaxWidth()
         )
         Row(horizontalArrangement = Arrangement.spacedBy(BatterySpacing.sm)) {
-            OutlinedButton(
-                onClick = {
-                    val base = valid ?: initialValue
-                    draft =
-                        formatter.format(if (base.toLong() - step >= min) base.toLong() - step else base)
-                }, modifier = Modifier.heightIn(min = 48.dp)
-            ) { Text("−") }
-            OutlinedButton(
-                onClick = {
-                    val base = valid ?: initialValue
-                    draft =
-                        formatter.format(if (base.toLong() + step <= max) base.toLong() + step else base)
-                }, modifier = Modifier.heightIn(min = 48.dp)
-            ) { Text("+") }
-        }
-        Row(horizontalArrangement = Arrangement.spacedBy(BatterySpacing.sm)) {
             OutlinedButton(onClick = onCancel, modifier = Modifier.heightIn(min = 48.dp)) {
                 Text(cancelLabel)
             }

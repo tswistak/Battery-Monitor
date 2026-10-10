@@ -362,11 +362,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">Použít poslední průměr, pokud je dostupný?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Některé systémy poskytují vedle okamžitého proudu i nedávný průměr. Doba a kvalita průměrování se liší podle zařízení. Pokud je průměr nedostupný nebo nepoužitelný, tuto možnost vypněte.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Interval automatického obnovení</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Zvolte, jak často se má údaj proudu baterie obnovovat, když je hlavní okno viditelné.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Zadejte interval v sekundách (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Zadejte hodnotu od 1 do 3600.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d sekund</string>
 
   <string name="pref_indicate_charging" formatted="false">Označte nabíjení</string>
   <string name="pref_indicate_charging_summary" formatted="false">Změnit ikonu pro indikaci při nabíjení?</string>

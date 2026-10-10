@@ -27,12 +27,5 @@
             android:title="@string/pref_prefer_average_battery_current"
             app:singleLineTitle="false" />
 
-        <ListPreference
-            android:defaultValue="2"
-            android:entries="@array/battery_current_refresh_interval_entries"
-            android:entryValues="@array/battery_current_refresh_interval_values"
-            android:key="battery_current_refresh_interval"
-            android:title="@string/pref_battery_current_refresh_interval"
-            app:singleLineTitle="false" />
     </PreferenceCategory>
 </PreferenceScreen>

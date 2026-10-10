@@ -240,7 +240,7 @@
   <string name="alarm_chan_settings_b" formatted="false">Manage This Alarm Type</string>
 
   <string name="notification_settings" formatted="false">Main Notification</string>
-  <string name="notification_settings_summary" formatted="false">Configure notification content, status bar icon, and Live Update chip.</string>
+  <string name="notification_settings_summary" formatted="false">Configure notification content and status bar appearance.</string>
   <string name="notification_settings_help" formatted="false">You can configure which content to show in the pull-down notification.</string>
   <string name="status_bar_icon_settings" formatted="false">Status Bar Icon</string>
   <string name="status_bar_icon_settings_help" formatted="false">Choose whether the notification icon shows battery percentage or temperature. Also choose, whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon. Starting with Android 16, the status bar icon may not work on every OS variant.</string>
@@ -342,11 +342,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">Use the recent average on Current State when available?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Some devices provide a recent average in addition to instantaneous current. The averaging period varies by device. This option applies only to Current State; logs always store instantaneous current.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Auto-refresh interval</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Choose how often the battery-current reading is refreshed while the main window is visible.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Enter an interval in seconds (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Enter a value from 1 to 3600.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d seconds</string>
 
   <string name="pref_indicate_charging" formatted="false">Indicate Charging</string>
   <string name="pref_indicate_charging_summary" formatted="false">Alter icon to indicate when charging?</string>
@@ -895,4 +890,45 @@
   <string name="diag_capacity_critical">Critical</string>
   <string name="diag_capacity_low">Low</string>
   <string name="diag_capacity_high">High</string>
+
+  <string name="settings_restore_partial">Some data could not be restored. Successfully restored: %1$s. Data that may have been partly restored: %2$s. Please check these sections before trying again.</string>
+  <string name="settings_restore_none">None</string>
+
+  <string name="settings_numeric_value">Value</string>
+  <string name="settings_move_item_up">Move %1$s up</string>
+  <string name="settings_move_item_down">Move %1$s down</string>
+  <string name="settings_operation_processing">Processing…</string>
+
+  <string name="settings_reset_title">Restore default settings</string>
+  <string name="settings_reset_summary">Reset app preferences while keeping history, alarms and learned estimates.</string>
+  <string name="settings_reset_question">Restore all app settings to their defaults? History, alarms and learned estimates will be kept. Background monitoring will stay running or stopped as it is now.</string>
+  <string name="settings_reset_confirm">Restore defaults</string>
+  <string name="settings_reset_done">Default settings restored</string>
+  <string name="settings_reset_failed">Could not finish restoring default settings. Some settings may already have changed. Check available storage and try again.</string>
+
+  <string name="settings_general_summary">Language, appearance, units and duration format</string>
+  <string name="settings_appearance">Appearance</string>
+  <string name="settings_notification">Notification</string>
+  <string name="settings_history_export">History and export</string>
+  <string name="settings_data_permissions">Data and permissions</string>
+  <string name="settings_search_hint">Search settings</string>
+  <string name="settings_search_no_results">No matching settings</string>
+  <string name="settings_color_palette">Color palette</string>
+  <string name="settings_color_palette_summary">Use system colors or Battery Blue</string>
+  <string name="settings_brightness">Brightness</string>
+  <string name="settings_brightness_summary">Follow the system or choose light, dark or true black</string>
+  <string name="settings_color_palette_material_you">Material You</string>
+  <string name="settings_color_palette_battery_blue">Battery Blue</string>
+  <string name="settings_brightness_system">System</string>
+  <string name="settings_brightness_light">Light</string>
+  <string name="settings_brightness_dark">Dark</string>
+  <string name="settings_brightness_true_black">True black</string>
+  <string name="settings_color_palette_unavailable">System colors require Android 12. Battery Blue is used on this device.</string>
+  <string name="settings_app_language_unavailable">The system app language selector requires Android 13.</string>
+  <string name="settings_dependency_disabled">Enable or configure the related option above to change this setting.</string>
+  <string name="settings_notification_disabled">Enable app notifications and the main notification channel to customize this option.</string>
+  <string name="settings_notification_preview">Illustrative notification preview</string>
+  <string name="settings_notification_preview_note">Example content. Android and device manufacturers may display notifications differently.</string>
+  <string name="settings_legacy_general">Other</string>
+  <string name="settings_live_update_summary">Allow or block promoted battery notifications in Android settings.</string>
 </resources>

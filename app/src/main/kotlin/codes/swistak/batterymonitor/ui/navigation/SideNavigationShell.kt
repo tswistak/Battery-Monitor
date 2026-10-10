@@ -66,7 +66,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.ui.theme.BatteryTheme
+import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,7 +81,7 @@ internal fun SideNavigationShell(
     actions: @Composable () -> Unit = {},
     content: @Composable (Modifier) -> Unit
 ) {
-    BatteryTheme {
+    AppBatteryTheme {
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val scope = rememberCoroutineScope()
         val menuFocus = remember { FocusRequester() }

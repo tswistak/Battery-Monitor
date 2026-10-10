@@ -346,11 +346,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">A legutóbbi átlag használata, ha elérhető?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Egyes rendszerek a pillanatnyi áram mellett közelmúltbeli átlagot is adnak. Az átlagolás időtartama és minősége eszközfüggő. Kapcsolja ki, ha az átlag nem érhető el vagy használhatatlan.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Automatikus frissítés időköze</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Válassza ki, milyen gyakran frissüljön az akkumulátoráram, amíg a főablak látható.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Adja meg az időközt másodpercben (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">1 és 3600 közötti értéket adjon meg.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d másodperc</string>
 
   <string name="pref_indicate_charging" formatted="false">Töltés jelzése</string>
   <string name="pref_indicate_charging_summary" formatted="false">Látszódjon az ikonon a töltés?</string>

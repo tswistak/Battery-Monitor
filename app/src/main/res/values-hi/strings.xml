@@ -344,11 +344,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">उपलब्ध होने पर हाल का औसत उपयोग करें?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">कुछ सिस्टम तात्कालिक करंट के साथ हाल का औसत भी देते हैं। औसत की अवधि और गुणवत्ता डिवाइस के अनुसार बदलती है। औसत अनुपलब्ध या अनुपयोगी हो तो इसे बंद करें।</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">अपने-आप रीफ़्रेश अंतराल</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">मुख्य विंडो दिखाई देने पर बैटरी करंट कितनी बार रीफ़्रेश हो, यह चुनें।</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">सेकंड में अंतराल दर्ज करें (1–3600)।</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">1 से 3600 तक का मान दर्ज करें।</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d सेकंड</string>
 
   <string name="pref_indicate_charging" formatted="false">चार्जिंग का संकेत दें</string>
   <string name="pref_indicate_charging_summary" formatted="false">चार्ज करते समय इंगित करने के लिए आइकन बदलें?</string>

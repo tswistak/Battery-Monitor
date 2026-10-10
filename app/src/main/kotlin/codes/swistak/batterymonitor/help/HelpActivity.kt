@@ -14,73 +14,20 @@
 */
 package codes.swistak.batterymonitor.help
 
-import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
-import android.text.util.Linkify
-import android.view.MenuItem
-import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.common.EdgeToEdgeHelper
+import codes.swistak.batterymonitor.app.BatteryInfoActivity
 
 class HelpActivity : AppCompatActivity() {
-    companion object {
-        private val HAS_LINKS = intArrayOf(
-            R.id.open_source,
-            R.id.acknowledgments,
-            R.id.frequently_asked_questions,
-            R.id.contact
-        )
-    }
-
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val ab = supportActionBar
-        if (ab != null) {
-            ab.setHomeButtonEnabled(true)
-            ab.setDisplayHomeAsUpEnabled(true)
-            ab.elevation = 0f
-        }
-
-        setContentView(R.layout.help)
-        EdgeToEdgeHelper.applyIfNeeded(this)
-
-        setTitle(getResources().getString(R.string.help_activity_subtitle))
-
-        var tv: TextView
-        val linkMovement = LinkMovementMethod.getInstance()
-
-        for (i in HAS_LINKS.indices) {
-            tv = findViewById<View?>(HAS_LINKS[i]) as TextView
-            tv.movementMethod = linkMovement
-            tv.autoLinkMask = Linkify.WEB_URLS or Linkify.EMAIL_ADDRESSES
-        }
-
-        tv = findViewById<View?>(R.id.version) as TextView
-        try {
-            tv.text = getResources().getString(R.string.app_full_name) + " " +
-                    packageManager.getPackageInfo(packageName, 0).versionName
-        } catch (e: Exception) {
-            tv.text = "..."
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                return true
-            }
-
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
+        startActivity(
+            Intent(
+                this, BatteryInfoActivity::class.java
+            ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                .putExtra(BatteryInfoActivity.EXTRA_SECTION, "help")
+        )
+        finish()
     }
 }

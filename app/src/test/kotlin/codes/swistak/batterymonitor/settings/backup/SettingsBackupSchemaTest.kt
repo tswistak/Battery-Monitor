@@ -265,5 +265,11 @@ class SettingsBackupSchemaTest {
         assertEquals(15, restored[SettingsContract.KEY_DISCHARGING_TARGET])
         assertEquals(true, restored[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
         assertEquals(true, restored[SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY])
+        restored.clear()
+        Version3SettingsImporter.restore(
+            editor, mapOf(SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT to true)
+        )
+        assertEquals(true, restored[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
+        assertFalse(restored.containsKey(SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT))
     }
 }

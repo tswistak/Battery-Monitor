@@ -81,6 +81,10 @@
     <PreferenceCategory
         android:key="category_status_bar_chip"
         android:title="@string/status_bar_chip_settings">
+        <Preference
+            app:key="live_update_system_settings"
+            app:summary="@string/settings_live_update_summary"
+            app:title="@string/live_updates_notif_chan_name" />
         <ListPreference
             android:defaultValue="@string/default_live_update_display_mode"
             android:entries="@array/live_update_display_entries"

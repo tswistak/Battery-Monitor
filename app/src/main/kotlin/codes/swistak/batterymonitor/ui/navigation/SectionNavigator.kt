@@ -14,7 +14,8 @@ internal class SectionNavigator(initial: SectionOwner = SectionOwner.CURRENT) {
         private set
     var detail: String? = null
         private set
-    private var returnTo: SectionOwner = SectionOwner.CURRENT
+    private val detailOrigins = mutableListOf<Pair<SectionOwner, String?>>()
+
     private val sectionStates = mutableMapOf<SectionOwner, SectionState>()
 
     fun state(owner: SectionOwner): SectionState = sectionStates[owner] ?: SectionState()
@@ -27,18 +28,20 @@ internal class SectionNavigator(initial: SectionOwner = SectionOwner.CURRENT) {
         if (owner == selected && detail == null) return
         selected = owner
         detail = null
+        detailOrigins.clear()
     }
 
     fun openDetail(owner: SectionOwner, route: String, origin: SectionOwner = selected) {
+        detailOrigins.add(origin to if (origin == selected) detail else null)
         selected = owner
         detail = route
-        returnTo = origin
     }
 
     fun back(): Boolean {
         if (detail != null) {
-            detail = null
-            selected = returnTo
+            val origin = detailOrigins.removeLastOrNull() ?: (SectionOwner.CURRENT to null)
+            selected = origin.first
+            detail = origin.second
             return true
         }
         if (selected == SectionOwner.CURRENT) return false
@@ -49,7 +52,10 @@ internal class SectionNavigator(initial: SectionOwner = SectionOwner.CURRENT) {
     fun save(out: Bundle) {
         out.putString("nav_selected", selected.route)
         out.putString("nav_detail", detail)
-        out.putString("nav_return_to", returnTo.route)
+        out.putStringArrayList("nav_detail_owners", ArrayList(detailOrigins.map { it.first.route }))
+        out.putStringArrayList(
+            "nav_detail_routes", ArrayList(detailOrigins.map { it.second ?: "" })
+        )
         for ((owner, state) in sectionStates) {
             val key = "nav_${owner.route}_"
             out.putBoolean("${key}saved", true)
@@ -69,21 +75,29 @@ internal class SectionNavigator(initial: SectionOwner = SectionOwner.CURRENT) {
                 SectionNavigator(SectionRegistry.owner(saved?.getString("nav_selected")))
             if (saved == null) return navigator
             navigator.detail = saved.getString("nav_detail")
-            navigator.returnTo = SectionRegistry.owner(saved.getString("nav_return_to"))
+            val owners = saved.getStringArrayList("nav_detail_owners")
+            val details = saved.getStringArrayList("nav_detail_routes")
+            if (owners != null && details != null && owners.size == details.size) {
+                owners.zip(details).forEach { (owner, route) ->
+                    navigator.detailOrigins.add(SectionRegistry.owner(owner) to route.ifEmpty { null })
+                }
+            } else if (navigator.detail != null) {
+                navigator.detailOrigins.add(SectionRegistry.owner(saved.getString("nav_return_to")) to null)
+            }
             for (owner in SectionOwner.entries) {
                 val key = "nav_${owner.route}_"
                 if (!saved.getBoolean("${key}saved")) continue
                 navigator.update(
                     owner, SectionState(
                         selectedTab = saved.getString("${key}tab"),
-                        rangeStartMillis = saved.takeIf { it.containsKey("${key}start") }
-                            ?.getLong("${key}start"),
-                        rangeEndMillis = saved.takeIf { it.containsKey("${key}end") }
-                            ?.getLong("${key}end"),
-                        filters = saved.getStringArrayList("${key}filters")?.toSet() ?: emptySet(),
-                        selectedItemId = saved.getString("${key}item"),
-                        scrollIndex = saved.getInt("${key}scroll_index"),
-                        scrollOffset = saved.getInt("${key}scroll_offset")))
+                    rangeStartMillis = saved.takeIf { it.containsKey("${key}start") }
+                        ?.getLong("${key}start"),
+                    rangeEndMillis = saved.takeIf { it.containsKey("${key}end") }
+                        ?.getLong("${key}end"),
+                    filters = saved.getStringArrayList("${key}filters")?.toSet() ?: emptySet(),
+                    selectedItemId = saved.getString("${key}item"),
+                    scrollIndex = saved.getInt("${key}scroll_index"),
+                    scrollOffset = saved.getInt("${key}scroll_offset")))
             }
             return navigator
         }

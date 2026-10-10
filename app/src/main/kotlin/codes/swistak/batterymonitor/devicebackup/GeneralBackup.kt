@@ -18,12 +18,14 @@ import android.content.SharedPreferences
 import android.net.Uri
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
+import codes.swistak.batterymonitor.monitoring.PredictorStoredState
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
 import java.util.zip.ZipEntry
@@ -37,6 +39,12 @@ internal enum class GeneralBackupDataType {
 internal data class GeneralBackupArchive(
     val schemaVersion: Int, val declaredFiles: Set<String>, val fileContents: Map<String, String>
 )
+
+internal class GeneralBackupRestoreException(
+    val completedData: Set<GeneralBackupDataType>,
+    val failedData: Set<GeneralBackupDataType>,
+    cause: Exception
+) : IOException("Could not completely restore the backup", cause)
 
 internal object Version1GeneralBackupSchema {
     const val VERSION = 1
@@ -58,7 +66,10 @@ internal object GeneralBackup {
     private const val MAX_TOTAL_BYTES = 150 * 1024 * 1024
 
     fun exportToUri(
-        context: Context, uri: Uri, settingsPreferences: SharedPreferences
+        context: Context,
+        uri: Uri,
+        settingsPreferences: SharedPreferences,
+        predictorState: PredictorStoredState? = null
     ) {
         val settings = SettingsBackup.exportToJson(settingsPreferences).toString()
         val alarms = AlarmDatabase(context).let { database ->
@@ -69,12 +80,13 @@ internal object GeneralBackup {
             }
         }
         val deviceSpecific = DeviceDataBackup.exportToJson(
-            context, setOf(DeviceDataType.LOGS, DeviceDataType.PREDICTOR_DATA)
+            context, setOf(DeviceDataType.LOGS, DeviceDataType.PREDICTOR_DATA), predictorState
         ).toString()
         val metadata = JSONObject().put(KEY_VERSION, SCHEMA_VERSION)
             .put(KEY_FILES, JSONArray(Version1GeneralBackupSchema.expectedFiles)).toString()
 
-        val pfd = context.contentResolver.openFileDescriptor(uri, "w") ?: return
+        val pfd = context.contentResolver.openFileDescriptor(uri, "w")
+            ?: throw IOException("Could not open backup destination")
         pfd.use {
             ZipOutputStream(FileOutputStream(it.fileDescriptor)).use { output ->
                 output.writeTextEntry(METADATA_FILE, metadata)
@@ -87,8 +99,9 @@ internal object GeneralBackup {
         }
     }
 
-    fun readFromUri(context: Context, uri: Uri): GeneralBackupArchive? {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r") ?: return null
+    fun readFromUri(context: Context, uri: Uri): GeneralBackupArchive {
+        val pfd = context.contentResolver.openFileDescriptor(uri, "r")
+            ?: throw IOException("Could not open backup source")
         pfd.use {
             FileInputStream(it.fileDescriptor).use { input ->
                 return readArchive(input)
@@ -175,6 +188,32 @@ internal object GeneralBackup {
         return false
     }
 
+    fun validateSelectedData(
+        archive: GeneralBackupArchive, selectedData: Set<GeneralBackupDataType>
+    ) {
+        require(selectedData.isNotEmpty()) { "No general backup data selected" }
+        require(selectedData.all { it in getAvailableData(archive) }) {
+            "Selected data is not available in the general backup"
+        }
+        if (GeneralBackupDataType.SETTINGS in selectedData) {
+            SettingsBackup.validateJson(
+                archive.fileContents.getValue(Version1GeneralBackupSchema.SETTINGS_FILE)
+            )
+        }
+        if (GeneralBackupDataType.ALARMS in selectedData) {
+            AlarmBackup.validateJson(
+                archive.fileContents.getValue(Version1GeneralBackupSchema.ALARMS_FILE)
+            )
+        }
+        val deviceSelection = deviceSelection(selectedData)
+        if (deviceSelection.isNotEmpty()) {
+            DeviceDataBackup.validateJson(
+                archive.fileContents.getValue(Version1GeneralBackupSchema.DEVICE_SPECIFIC_FILE),
+                deviceSelection
+            )
+        }
+    }
+
     @SuppressLint("UseKtx")
     fun restore(
         context: Context,
@@ -183,44 +222,55 @@ internal object GeneralBackup {
         selectedData: Set<GeneralBackupDataType>,
         logImportMode: LogImportMode
     ) {
-        require(selectedData.isNotEmpty()) { "No general backup data selected" }
-        require(selectedData.all { it in getAvailableData(archive) }) {
-            "Selected data is not available in the general backup"
-        }
-
-        if (GeneralBackupDataType.SETTINGS in selectedData) {
-            val editor = settingsPreferences.edit()
-            SettingsBackup.importFromJson(
-                editor, archive.fileContents.getValue(Version1GeneralBackupSchema.SETTINGS_FILE)
-            )
-            check(editor.commit()) { "Could not restore settings" }
-        }
-        if (GeneralBackupDataType.ALARMS in selectedData) {
-            val database = AlarmDatabase(context)
-            try {
-                AlarmBackup.importFromJson(
-                    database, archive.fileContents.getValue(Version1GeneralBackupSchema.ALARMS_FILE)
+        validateSelectedData(archive, selectedData)
+        val completed = linkedSetOf<GeneralBackupDataType>()
+        var attempted = emptySet<GeneralBackupDataType>()
+        try {
+            if (GeneralBackupDataType.SETTINGS in selectedData) {
+                attempted = setOf(GeneralBackupDataType.SETTINGS)
+                val editor = settingsPreferences.edit()
+                SettingsBackup.importFromJson(
+                    editor, archive.fileContents.getValue(Version1GeneralBackupSchema.SETTINGS_FILE)
                 )
-            } finally {
-                database.close()
+                check(editor.commit()) { "Could not restore settings" }
+                completed += attempted
             }
-        }
-
-        val deviceSelection = buildSet {
-            if (GeneralBackupDataType.LOGS in selectedData) add(DeviceDataType.LOGS)
-            if (GeneralBackupDataType.PREDICTOR_DATA in selectedData) {
-                add(DeviceDataType.PREDICTOR_DATA)
+            if (GeneralBackupDataType.ALARMS in selectedData) {
+                attempted = setOf(GeneralBackupDataType.ALARMS)
+                val database = AlarmDatabase(context)
+                try {
+                    AlarmBackup.importFromJson(
+                        database,
+                        archive.fileContents.getValue(Version1GeneralBackupSchema.ALARMS_FILE)
+                    )
+                } finally {
+                    database.close()
+                }
+                completed += attempted
             }
-        }
-        if (deviceSelection.isNotEmpty()) {
-            DeviceDataBackup.importFromJson(
-                context,
-                archive.fileContents.getValue(Version1GeneralBackupSchema.DEVICE_SPECIFIC_FILE),
-                deviceSelection,
-                logImportMode
-            )
+            val deviceSelection = deviceSelection(selectedData)
+            if (deviceSelection.isNotEmpty()) {
+                attempted = selectedData.intersect(
+                    setOf(GeneralBackupDataType.LOGS, GeneralBackupDataType.PREDICTOR_DATA)
+                )
+                DeviceDataBackup.importFromJson(
+                    context,
+                    archive.fileContents.getValue(Version1GeneralBackupSchema.DEVICE_SPECIFIC_FILE),
+                    deviceSelection,
+                    logImportMode
+                )
+                completed += attempted
+            }
+        } catch (error: Exception) {
+            throw GeneralBackupRestoreException(completed.toSet(), attempted, error)
         }
     }
+
+    private fun deviceSelection(selectedData: Set<GeneralBackupDataType>): Set<DeviceDataType> =
+        buildSet {
+            if (GeneralBackupDataType.LOGS in selectedData) add(DeviceDataType.LOGS)
+            if (GeneralBackupDataType.PREDICTOR_DATA in selectedData) add(DeviceDataType.PREDICTOR_DATA)
+        }
 
     private fun ZipOutputStream.writeTextEntry(name: String, value: String) {
         putNextEntry(ZipEntry(name))

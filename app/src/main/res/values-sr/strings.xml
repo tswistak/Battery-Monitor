@@ -354,11 +354,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">Koristiti skorašnji prosek kada je dostupan?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Neki sistemi uz trenutnu struju daju i skorašnji prosek. Period i kvalitet zavise od uređaja. Isključite opciju ako prosek nije dostupan ili upotrebljiv.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Interval automatskog osvežavanja</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Izaberite koliko često se struja osvežava dok je glavni prozor vidljiv.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Unesite interval u sekundama (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Unesite vrednost od 1 do 3600.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d sekundi</string>
 
   <string name="pref_indicate_charging" formatted="false">Označi punjenje</string>
   <string name="pref_indicate_charging_summary" formatted="false">Izmeni ikonicu da označi kada je na punjenju?</string>

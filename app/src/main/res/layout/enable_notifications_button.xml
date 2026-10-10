@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:paddingBottom="10dp"
->
-  <Button android:id="@android:id/summary"
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:layout_marginLeft="69dp"
-          android:layout_gravity="center_horizontal"
-          android:textAllCaps="false"
-          android:paddingLeft="15dp"
-          android:paddingRight="15dp"
-          android:onClick="enableNotifsButtonClick"
-          android:textColor="@color/windowBackground"
-          android:backgroundTint="@color/accent"
-  />
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp">
+
+    <Button
+        android:id="@android:id/summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="69dp"
+        android:backgroundTint="@color/accent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textAllCaps="false"
+        android:textColor="@color/windowBackground" />
 </LinearLayout>
+

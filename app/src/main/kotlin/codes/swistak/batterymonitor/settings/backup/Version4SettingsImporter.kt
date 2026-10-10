@@ -20,6 +20,8 @@ internal object Version4SettingsImporter : SettingsImporter {
 
     override val schema: Map<String, Class<*>> = buildMap {
         putAll(Version3SettingsImporter.schema)
+        put(SettingsContract.KEY_COLOR_SOURCE, String::class.java)
+        put(SettingsContract.KEY_BRIGHTNESS, String::class.java)
         remove(SettingsContract.LEGACY_KEY_CONVERT_F)
         put(SettingsContract.KEY_TEMPERATURE_UNIT, String::class.java)
         put(SettingsContract.KEY_LONG_DURATION_FORMAT, String::class.java)

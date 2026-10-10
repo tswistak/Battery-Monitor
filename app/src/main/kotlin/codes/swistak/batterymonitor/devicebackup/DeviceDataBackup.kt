@@ -15,10 +15,13 @@ package codes.swistak.batterymonitor.devicebackup
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
+import android.os.Bundle
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.monitoring.Predictor
+import codes.swistak.batterymonitor.monitoring.PredictorStoredState
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.SettingsSnapshot
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -63,7 +66,11 @@ internal object DeviceDataBackup {
     }
 
     @Throws(JSONException::class)
-    fun exportToJson(context: Context, selectedData: Set<DeviceDataType>): JSONObject {
+    fun exportToJson(
+        context: Context,
+        selectedData: Set<DeviceDataType>,
+        predictorState: PredictorStoredState? = null
+    ): JSONObject {
         require(selectedData.isNotEmpty()) { "No device-specific data selected" }
         val root = JSONObject().put(KEY_VERSION, SCHEMA_VERSION)
 
@@ -78,19 +85,37 @@ internal object DeviceDataBackup {
         }
 
         if (DeviceDataType.PREDICTOR_DATA in selectedData) {
-            val preferences =
-                context.getSharedPreferences(Predictor.STORE_NAME, Context.MODE_PRIVATE)
+            val state = PredictorBackupReader.state(predictorState) {
+                PredictorBackupReader.read(context.dataDir)
+            }
             val predictor = JSONObject()
             for ((backupKey, preferenceKey) in Version1DeviceDataImporter.predictorPreferenceKeysByBackupKey) {
-                if (preferences.contains(preferenceKey)) {
-                    predictor.put(backupKey, preferences.getFloat(preferenceKey, -1f).toDouble())
-                }
+                state.averages[preferenceKey]?.let { predictor.put(backupKey, it.toDouble()) }
             }
+            predictor.put(
+                Version2DeviceDataImporter.KEY_PREDICTOR_STATE_VERSION, state.version ?: 1
+            )
             root.put(KEY_PREDICTOR, predictor)
         }
 
         return root
     }
+
+    fun validateJson(jsonString: String, selectedData: Set<DeviceDataType>) {
+        require(selectedData.isNotEmpty()) { "No device-specific data selected" }
+        val root = parseRoot(jsonString)
+        if (DeviceDataType.LOGS in selectedData) {
+            parseLogs(root.getJSONArray(KEY_LOGS))
+            if (root.has(Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)) {
+                parseLong(root, Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)
+            }
+        }
+        if (DeviceDataType.PREDICTOR_DATA in selectedData) parsePredictor(root)
+    }
+
+    fun predictorSnapshot(context: Context): Bundle = SettingsSnapshot.capture(
+        context.getSharedPreferences(Predictor.STORE_NAME, Context.MODE_PRIVATE)
+    )
 
     @Throws(JSONException::class, IllegalArgumentException::class, IllegalStateException::class)
     @SuppressLint("UseKtx")
@@ -115,7 +140,7 @@ internal object DeviceDataBackup {
                 null
             }
         val predictor = if (DeviceDataType.PREDICTOR_DATA in selectedData) {
-            parsePredictor(root.getJSONObject(KEY_PREDICTOR))
+            parsePredictor(root)
         } else {
             null
         }
@@ -142,14 +167,16 @@ internal object DeviceDataBackup {
             val preferences =
                 context.getSharedPreferences(Predictor.STORE_NAME, Context.MODE_PRIVATE)
             val editor = preferences.edit().clear()
-            for ((key, value) in it) editor.putFloat(key, value)
+            for ((key, value) in it.averages) editor.putFloat(key, value)
+            editor.putInt(Predictor.KEY_STATE_VERSION, requireNotNull(it.version))
             check(editor.commit()) { "Could not restore predictor data" }
         }
     }
 
     @Throws(IOException::class)
     fun writeToUri(context: Context, uri: Uri, json: JSONObject) {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "w") ?: return
+        val pfd = context.contentResolver.openFileDescriptor(uri, "w")
+            ?: throw IOException("Could not open backup destination")
         pfd.use {
             FileOutputStream(it.fileDescriptor).use { output ->
                 output.write(json.toString().toByteArray(StandardCharsets.UTF_8))
@@ -158,8 +185,9 @@ internal object DeviceDataBackup {
     }
 
     @Throws(IOException::class)
-    fun readFromUri(context: Context, uri: Uri): String? {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r") ?: return null
+    fun readFromUri(context: Context, uri: Uri): String {
+        val pfd = context.contentResolver.openFileDescriptor(uri, "r")
+            ?: throw IOException("Could not open backup source")
         pfd.use {
             BufferedReader(
                 InputStreamReader(FileInputStream(it.fileDescriptor), StandardCharsets.UTF_8)
@@ -209,18 +237,17 @@ internal object DeviceDataBackup {
     }
 
     private fun logsToJson(records: List<LogRecord>): JSONArray = JSONArray().apply {
-        for (record in records) {
+        for ((status, charge, time, temperature, voltage, currentMicroAmps, remainingChargeMicroampHours) in records) {
             put(
-                JSONObject().put(Version1DeviceDataImporter.KEY_LOG_STATUS, record.status)
-                    .putNullable(Version1DeviceDataImporter.KEY_LOG_CHARGE, record.charge)
-                    .put(Version1DeviceDataImporter.KEY_LOG_TIME, record.time).putNullable(
-                        Version1DeviceDataImporter.KEY_LOG_TEMPERATURE, record.temperature
-                    ).putNullable(Version1DeviceDataImporter.KEY_LOG_VOLTAGE, record.voltage)
-                    .putNullable(
-                        Version2DeviceDataImporter.KEY_LOG_CURRENT, record.currentMicroAmps
+                JSONObject().put(Version1DeviceDataImporter.KEY_LOG_STATUS, status)
+                    .putNullable(Version1DeviceDataImporter.KEY_LOG_CHARGE, charge)
+                    .put(Version1DeviceDataImporter.KEY_LOG_TIME, time).putNullable(
+                        Version1DeviceDataImporter.KEY_LOG_TEMPERATURE, temperature
+                    ).putNullable(Version1DeviceDataImporter.KEY_LOG_VOLTAGE, voltage).putNullable(
+                        Version2DeviceDataImporter.KEY_LOG_CURRENT, currentMicroAmps
                     ).putNullable(
                         Version2DeviceDataImporter.KEY_LOG_REMAINING_CHARGE,
-                        record.remainingChargeMicroampHours
+                        remainingChargeMicroampHours
                     )
             )
         }
@@ -229,7 +256,7 @@ internal object DeviceDataBackup {
     private fun parseLogs(logs: JSONArray): List<LogRecord> = buildList {
         for (index in 0 until logs.length()) {
             val log = logs.getJSONObject(index)
-            val values = buildMap<String, Any?> {
+            val values = buildMap {
                 for (key in listOf(
                     Version1DeviceDataImporter.KEY_LOG_STATUS,
                     Version1DeviceDataImporter.KEY_LOG_CHARGE,
@@ -246,13 +273,18 @@ internal object DeviceDataBackup {
         }
     }
 
-    private fun parsePredictor(predictor: JSONObject): Map<String, Float> {
+    private fun parsePredictor(root: JSONObject): PredictorStoredState {
+        val predictor = root.getJSONObject(KEY_PREDICTOR)
         val values = buildMap<String, Any?> {
             for (key in Version1DeviceDataImporter.predictorPreferenceKeysByBackupKey.keys) {
                 if (predictor.has(key) && !predictor.isNull(key)) put(key, predictor.get(key))
             }
         }
-        return Version1DeviceDataImporter.restorePredictor(values)
+        return Version2DeviceDataImporter.restorePredictor(
+            Version1DeviceDataImporter.restorePredictor(values),
+            root.optInt(KEY_VERSION, 0),
+            predictor.opt(Version2DeviceDataImporter.KEY_PREDICTOR_STATE_VERSION)
+        )
     }
 
     private fun JSONObject.putNullable(key: String, value: Number?): JSONObject =

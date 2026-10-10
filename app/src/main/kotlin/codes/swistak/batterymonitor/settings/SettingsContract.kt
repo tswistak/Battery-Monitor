@@ -35,12 +35,9 @@ internal object SettingsContract {
     const val KEY_DIAGNOSTICS_SETTINGS: String = "diagnostics_settings"
     const val KEY_CHANGE_APP_LANGUAGE_HOLDER: String = "change_app_language_holder"
     const val KEY_CHANGE_APP_LANGUAGE: String = "change_app_language"
-    const val KEY_PLUGIN_SETTINGS: String = "plugin_settings"
-    const val KEY_CAT_STATUS_BAR_CHIP: String = "category_status_bar_chip"
     const val KEY_FIRST_RUN: String = "first_run"
     const val KEY_MIGRATED_SERVICE_DESIRED: String = "service_desired_migrated_to_sp_main"
     const val KEY_ENABLE_NOTIFS_B: String = "enable_notifications_button"
-    const val KEY_ENABLE_NOTIFS_SUMMARY: String = "enable_notifications_summary"
     const val KEY_EXPORT_SETTINGS: String = "export_settings_backup"
     const val KEY_IMPORT_SETTINGS: String = "import_settings_backup"
     const val KEY_EXPORT_ALARMS: String = "export_alarms_backup"
@@ -146,6 +143,8 @@ internal object SettingsContract {
     const val KEY_SHOW_REMAINING_CHARGE: String = "show_remaining_charge"
 
     const val KEY_UI_COLOR: String = "ui_color"
+    const val KEY_COLOR_SOURCE: String = "ui_color_source"
+    const val KEY_BRIGHTNESS: String = "ui_brightness"
 
     const val LEGACY_KEY_ENABLE_CURRENT = "enable_current_hack"
     const val LEGACY_KEY_CONVERT_F = "convert_to_fahrenheit"

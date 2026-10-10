@@ -362,11 +362,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">Uporabim nedavno povprečje, ko je na voljo?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Nekateri sistemi poleg trenutnega toka ponudijo tudi nedavno povprečje. Obdobje in kakovost sta odvisna od naprave. Izklopite možnost, če povprečje ni na voljo ali ni uporabno.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Interval samodejnega osveževanja</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Izberite, kako pogosto se tok osveži, ko je glavno okno vidno.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Vnesite interval v sekundah (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Vnesite vrednost od 1 do 3600.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d sekund</string>
 
   <string name="pref_indicate_charging" formatted="false">Označite Polnjenje</string>
   <string name="pref_indicate_charging_summary" formatted="false">Ali želite spremeniti ikono za prikaz med polnjenjem?</string>

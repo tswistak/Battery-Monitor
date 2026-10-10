@@ -342,11 +342,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">Χρήση του πρόσφατου μέσου όρου όταν είναι διαθέσιμος;</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Ορισμένα συστήματα παρέχουν πρόσφατο μέσο όρο μαζί με το στιγμιαίο ρεύμα. Η περίοδος και η ποιότητα διαφέρουν ανά συσκευή. Απενεργοποιήστε την επιλογή αν ο μέσος όρος δεν είναι διαθέσιμος ή χρήσιμος.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Διάστημα αυτόματης ανανέωσης</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Επιλέξτε πόσο συχνά ανανεώνεται η ένδειξη ρεύματος όταν είναι ορατό το κύριο παράθυρο.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Εισαγάγετε διάστημα σε δευτερόλεπτα (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Εισαγάγετε τιμή από 1 έως 3600.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d δευτερόλεπτα</string>
 
   <string name="pref_indicate_charging" formatted="false">Υποδεικνύεται Φόρτιση</string>
   <string name="pref_indicate_charging_summary" formatted="false">Αλλαγή εικονιδίου για ένδειξη κατά τη φόρτιση;</string>

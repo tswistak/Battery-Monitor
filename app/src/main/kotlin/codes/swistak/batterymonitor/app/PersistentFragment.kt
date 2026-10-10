@@ -47,8 +47,14 @@ import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.CurrentInfoFragment
+import codes.swistak.batterymonitor.monitoring.Predictor
+import codes.swistak.batterymonitor.monitoring.PredictorStoredState
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
+import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
 import codes.swistak.batterymonitor.settings.SettingsContract
+import java.io.IOException
+import java.util.concurrent.CompletableFuture
+
 
 class PersistentFragment : Fragment() {
     companion object {
@@ -385,6 +391,49 @@ class PersistentFragment : Fragment() {
             serviceMessenger!!.send(outgoing)
         } catch (e: RemoteException) {
         }
+    }
+
+    internal fun predictorForBackup(): CompletableFuture<PredictorStoredState> {
+        val result = CompletableFuture<PredictorStoredState>()
+        val service = serviceMessenger
+        if (service == null) {
+            result.completeExceptionally(IOException("Monitoring service is disconnected"))
+            return result
+        }
+        val handler = Handler(Looper.getMainLooper())
+        val timeout = Runnable {
+            result.completeExceptionally(IOException("Monitoring snapshot timed out"))
+        }
+        val reply = Messenger(object : Handler(Looper.getMainLooper()) {
+            override fun handleMessage(message: Message) {
+                if (message.what != BatteryInfoService.RemoteConnection.CLIENT_BATTERY_INFO_UPDATED) return
+                runCatching {
+                    val data =
+                        requireNotNull(message.data.getBundle(MonitoringSnapshot.FIELD_PREDICTOR_DATA))
+                    @Suppress("DEPRECATION") Predictor.readStoredState(
+                        data.keySet().associateWith { data[it] })
+                }.fold(result::complete, result::completeExceptionally)
+            }
+        })
+        result.whenComplete { _, _ ->
+            handler.post {
+                handler.removeCallbacks(timeout)
+                runCatching {
+                    service.send(Message.obtain().apply {
+                        what = BatteryInfoService.RemoteConnection.SERVICE_UNREGISTER_CLIENT
+                        replyTo = reply
+                    })
+                }
+            }
+        }
+        handler.postDelayed(timeout, 5_000L)
+        runCatching {
+            service.send(Message.obtain().apply {
+                what = BatteryInfoService.RemoteConnection.SERVICE_REGISTER_CLIENT
+                replyTo = reply
+            })
+        }.onFailure { result.completeExceptionally(it) }
+        return result
     }
 
     internal fun reloadAlarmRules() {

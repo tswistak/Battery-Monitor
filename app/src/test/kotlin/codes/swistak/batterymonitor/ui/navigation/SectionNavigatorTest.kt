@@ -63,4 +63,52 @@ class SectionNavigatorTest {
         assertEquals(SectionOwner.HISTORY, navigator.selected)
         assertEquals(null, navigator.detail)
     }
+
+    @Test
+    fun `back from settings help preserves the category before returning to the settings root`() {
+        val navigator = SectionNavigator()
+        navigator.select(SectionOwner.SETTINGS)
+        navigator.openDetail(SectionOwner.SETTINGS, "history")
+        navigator.openDetail(SectionOwner.HELP, "history")
+
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.SETTINGS, navigator.selected)
+        assertEquals("history", navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.SETTINGS, navigator.selected)
+        assertEquals(null, navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.CURRENT, navigator.selected)
+        assertFalse(navigator.back())
+    }
+
+    @Test
+    fun `leaving contextual help through the menu clears its nested return path`() {
+        val navigator = SectionNavigator()
+        navigator.select(SectionOwner.SETTINGS)
+        navigator.openDetail(SectionOwner.SETTINGS, "notification")
+        navigator.openDetail(SectionOwner.HELP, "notification")
+        navigator.select(SectionOwner.HISTORY)
+
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.CURRENT, navigator.selected)
+        assertEquals(null, navigator.detail)
+        assertFalse(navigator.back())
+    }
+
+    @Test
+    fun `a diagnostics search destination returns to the originating settings category`() {
+        val navigator = SectionNavigator()
+        navigator.select(SectionOwner.SETTINGS)
+        navigator.openDetail(SectionOwner.SETTINGS, "settings:data")
+        navigator.openDetail(SectionOwner.DIAGNOSTICS, "monitor:debug_logging")
+
+        assertEquals("monitor:debug_logging", navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.SETTINGS, navigator.selected)
+        assertEquals("settings:data", navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.SETTINGS, navigator.selected)
+        assertEquals(null, navigator.detail)
+    }
 }

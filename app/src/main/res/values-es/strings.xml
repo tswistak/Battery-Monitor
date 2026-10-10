@@ -346,11 +346,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">¿Usar la media reciente cuando esté disponible?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Algunos sistemas proporcionan una media reciente además de la corriente instantánea. El periodo y la calidad varían según el dispositivo. Desactiva esta opción si la media no está disponible o no es útil.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Intervalo de actualización automática</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Elige cada cuánto se actualiza la lectura mientras la ventana principal está visible.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Introduce un intervalo en segundos (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Introduce un valor entre 1 y 3600.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d segundos</string>
 
   <string name="pref_indicate_charging" formatted="false">Indicar cargando</string>
   <string name="pref_indicate_charging_summary" formatted="false">¿Modificar el icono para indicar cuándo se está cargando?</string>

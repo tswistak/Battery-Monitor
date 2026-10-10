@@ -252,7 +252,7 @@
   <string name="alarm_chan_settings_b" formatted="false">Zarządzaj tym typem alarmu</string>
 
   <string name="notification_settings" formatted="false">Główne powiadomienie</string>
-  <string name="notification_settings_summary" formatted="false">Skonfiguruj zawartość powiadomienia, ikonę na pasku stanu i kapsułkę aktualizacji na żywo</string>
+  <string name="notification_settings_summary" formatted="false">Skonfiguruj zawartość powiadomienia i wygląd paska stanu</string>
   <string name="notification_settings_help" formatted="false">Możesz skonfigurować, co wyświetlać w rozwijanym powiadomieniu.</string>
   <string name="status_bar_icon_settings" formatted="false">Ikona na pasku stanu</string>
   <string name="status_bar_icon_settings_help" formatted="false">Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Wybierz także, czy symbol jednostki ma być pokazywany w ikonie i czy ładowanie ma mieć własną ikonę. Począwszy od Androida 16 ikona na pasku stanu może nie działać w każdym wariancie systemu.</string>
@@ -354,11 +354,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">Czy na ekranie Stan bieżący użyć ostatniej średniej, gdy jest dostępna?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Niektóre urządzenia podają ostatnią średnią oprócz prądu chwilowego. Okres uśredniania zależy od urządzenia. Ta opcja dotyczy tylko ekranu Stan bieżący; logi zawsze zapisują prąd chwilowy.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Interwał automatycznego odświeżania</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Wybierz, jak często odczyt prądu baterii ma być odświeżany, gdy główne okno jest widoczne.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Wprowadź interwał w sekundach (1-3600)</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Wprowadź wartość od 1 do 3600</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d s</string>
 
   <string name="pref_indicate_charging" formatted="false">Wskazuj ładowanie</string>
   <string name="pref_indicate_charging_summary" formatted="false">Czy zmieniać ikonę, aby wskazywać ładowanie?</string>
@@ -911,4 +906,45 @@
   <string name="diag_capacity_critical">Krytyczny</string>
   <string name="diag_capacity_low">Niski</string>
   <string name="diag_capacity_high">Wysoki</string>
+
+  <string name="settings_restore_partial">Nie udało się przywrócić części danych. Przywrócono: %1$s. Dane, które mogły zostać przywrócone częściowo: %2$s. Sprawdź te sekcje przed ponowną próbą.</string>
+  <string name="settings_restore_none">Brak</string>
+
+  <string name="settings_numeric_value">Wartość</string>
+  <string name="settings_move_item_up">Przesuń %1$s w górę</string>
+  <string name="settings_move_item_down">Przesuń %1$s w dół</string>
+  <string name="settings_operation_processing">Przetwarzanie…</string>
+
+  <string name="settings_reset_title">Przywróć ustawienia domyślne</string>
+  <string name="settings_reset_summary">Wyzeruj preferencje aplikacji, zachowując historię, alarmy i wyuczone szacunki.</string>
+  <string name="settings_reset_question">Przywrócić wszystkie ustawienia domyślne aplikacji? Historia, alarmy i wyuczone szacunki zostaną zachowane. Monitorowanie w tle pozostanie w obecnym stanie: uruchomione lub zatrzymane.</string>
+  <string name="settings_reset_confirm">Przywróć domyślne</string>
+  <string name="settings_reset_done">Przywrócono ustawienia domyślne</string>
+  <string name="settings_reset_failed">Nie udało się dokończyć przywracania ustawień domyślnych. Niektóre ustawienia mogły już zostać zmienione. Sprawdź dostępne miejsce i spróbuj ponownie.</string>
+
+  <string name="settings_general_summary">Język, wygląd, jednostki i format czasu</string>
+  <string name="settings_appearance">Wygląd</string>
+  <string name="settings_notification">Powiadomienie</string>
+  <string name="settings_history_export">Historia i eksport</string>
+  <string name="settings_data_permissions">Dane i uprawnienia</string>
+  <string name="settings_search_hint">Szukaj ustawień</string>
+  <string name="settings_search_no_results">Nie znaleziono ustawień</string>
+  <string name="settings_color_palette">Paleta kolorów</string>
+  <string name="settings_color_palette_summary">Kolory systemowe lub Battery Blue</string>
+  <string name="settings_brightness">Jasność</string>
+  <string name="settings_brightness_summary">Użyj ustawienia systemowego lub wybierz motyw jasny, ciemny albo true black</string>
+  <string name="settings_color_palette_material_you">Material You</string>
+  <string name="settings_color_palette_battery_blue">Battery Blue</string>
+  <string name="settings_brightness_system">Systemowa</string>
+  <string name="settings_brightness_light">Jasna</string>
+  <string name="settings_brightness_dark">Ciemna</string>
+  <string name="settings_brightness_true_black">True black</string>
+  <string name="settings_color_palette_unavailable">Kolory systemowe wymagają Androida 12. Na tym urządzeniu używana jest paleta Battery Blue.</string>
+  <string name="settings_app_language_unavailable">Systemowy wybór języka aplikacji wymaga Androida 13.</string>
+  <string name="settings_dependency_disabled">Włącz lub skonfiguruj powiązaną opcję powyżej, aby zmienić to ustawienie.</string>
+  <string name="settings_notification_disabled">Włącz powiadomienia aplikacji i kanał głównego powiadomienia, aby zmienić tę opcję.</string>
+  <string name="settings_notification_preview">Przykładowy podgląd powiadomienia</string>
+  <string name="settings_notification_preview_note">Przykładowa treść. Android i producenci urządzeń mogą inaczej wyświetlać powiadomienia.</string>
+  <string name="settings_legacy_general">Inne</string>
+  <string name="settings_live_update_summary">Zezwól na promowane powiadomienia baterii lub zablokuj je w ustawieniach Androida.</string>
 </resources>

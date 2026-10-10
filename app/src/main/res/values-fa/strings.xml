@@ -344,11 +344,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">در صورت وجود، از میانگین اخیر استفاده شود؟</string>
   <string name="pref_prefer_current_avg_help" formatted="false">برخی سیستم‌ها علاوه بر جریان لحظه‌ای، میانگین اخیر را ارائه می‌کنند. دوره و کیفیت میانگین‌گیری در دستگاه‌ها متفاوت است. اگر میانگین موجود یا قابل استفاده نیست، این گزینه را خاموش کنید.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">فاصله نوسازی خودکار</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">تعیین کنید هنگام نمایش پنجره اصلی، جریان باتری هر چند وقت یک‌بار نوسازی شود.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">فاصله را به ثانیه وارد کنید (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">مقداری بین 1 تا 3600 وارد کنید.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d ثانیه</string>
 
   <string name="pref_indicate_charging" formatted="false">شارژ را نشان می دهد</string>
   <string name="pref_indicate_charging_summary" formatted="false">نماد تغییر دهید تا هنگام شارژ نشان داده شود؟</string>

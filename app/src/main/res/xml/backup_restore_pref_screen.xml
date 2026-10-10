@@ -21,6 +21,11 @@
             app:key="import_settings_backup"
             app:summary="@string/pref_import_settings_summary"
             app:title="@string/pref_import_settings" />
+
+        <Preference
+            app:key="reset_default_settings"
+            app:summary="@string/settings_reset_summary"
+            app:title="@string/settings_reset_title" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/alarm_settings">

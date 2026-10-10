@@ -33,32 +33,28 @@ import java.nio.charset.StandardCharsets
 internal object SettingsBackup {
     const val SCHEMA_VERSION: Int = Version4SettingsImporter.VERSION
 
-    private fun validateSettings(
-        settings: JSONObject, schema: Map<String, Class<*>>
-    ): Map<String, Any> = buildMap {
-        val keys = settings.keys()
-        while (keys.hasNext()) {
-            val key = keys.next()
-            val expectedType = schema[key] ?: continue
-            val value = settings.get(key)
-
-            when (expectedType) {
-                Boolean::class.java -> require(value is Boolean) {
-                    "Invalid type for '$key': expected boolean"
-                }
-
-                String::class.java -> require(value is String) {
-                    "Invalid type for '$key': expected string"
-                }
-
-                Int::class.java -> require(value is Int) {
-                    "Invalid type for '$key': expected integer"
-                }
-
-                else -> error("Unsupported settings type for '$key'")
+    private fun parsedSettings(jsonString: String): Pair<Int, Map<String, Any>> {
+        val root = JSONObject(jsonString)
+        val version = root.optInt("version", 0)
+        val importer = settingsImporterForVersion(version)
+        val settings = root.getJSONObject("settings")
+        val values = buildMap<String, Any> {
+            val keys = settings.keys()
+            while (keys.hasNext()) {
+                val key = keys.next()
+                if (key in importer.schema) put(key, settings.get(key))
             }
-            put(key, value)
         }
+        SettingsBackupValidation.validate(values, importer.schema)
+        if (version >= Version3SettingsImporter.VERSION) {
+            SettingsBackupCodec.vitalSignsOrderFromBackup(values)
+            SettingsBackupCodec.chipContentOrderFromBackup(values)
+        }
+        return version to values
+    }
+
+    fun validateJson(jsonString: String) {
+        parsedSettings(jsonString)
     }
 
     @Throws(JSONException::class)
@@ -109,12 +105,8 @@ internal object SettingsBackup {
 
     @Throws(JSONException::class, IllegalArgumentException::class)
     fun importFromJson(editor: SharedPreferences.Editor, jsonString: String) {
-        val root = JSONObject(jsonString)
-        val version = root.optInt("version", 0)
-        val importer = settingsImporterForVersion(version)
-        val settings = root.optJSONObject("settings") ?: return
-        val validatedSettings = validateSettings(settings, importer.schema)
-        importer.restore(editor, validatedSettings)
+        val (version, validatedSettings) = parsedSettings(jsonString)
+        settingsImporterForVersion(version).restore(editor, validatedSettings)
         TemperatureUnitPreferencesMigration.restoreImportedSettings(editor, validatedSettings)
         if (version < Version3SettingsImporter.VERSION) {
             VitalSignsContentMigration.restoreImportedSettings(editor, validatedSettings)
@@ -124,7 +116,8 @@ internal object SettingsBackup {
 
     @Throws(IOException::class)
     fun writeToUri(context: Context, uri: Uri, json: JSONObject) {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "w") ?: return
+        val pfd = context.contentResolver.openFileDescriptor(uri, "w")
+            ?: throw IOException("Could not open backup destination")
         pfd.use { pfd ->
             val fos = FileOutputStream(pfd.fileDescriptor)
             fos.write(json.toString().toByteArray(StandardCharsets.UTF_8))
@@ -134,7 +127,8 @@ internal object SettingsBackup {
 
     @Throws(IOException::class)
     fun readFromUri(context: Context, uri: Uri): String? {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r") ?: return null
+        val pfd = context.contentResolver.openFileDescriptor(uri, "r")
+            ?: throw IOException("Could not open backup source")
         pfd.use { pfd ->
             val reader = BufferedReader(
                 InputStreamReader(FileInputStream(pfd.fileDescriptor), StandardCharsets.UTF_8)

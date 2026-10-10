@@ -15,9 +15,6 @@ package codes.swistak.batterymonitor.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.FrameLayout
-import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -55,7 +52,6 @@ import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.settings.SettingsActivity
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsFragment
-import codes.swistak.batterymonitor.settings.SettingsHelpActivity
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.alarms.AlarmEditorScreen
 import codes.swistak.batterymonitor.ui.alarms.AlarmsScreen
@@ -72,6 +68,7 @@ import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import codes.swistak.batterymonitor.ui.navigation.SectionRegistry
 import codes.swistak.batterymonitor.ui.navigation.SideNavigationShell
+import codes.swistak.batterymonitor.ui.settings.SettingsCategory
 
 class BatteryInfoActivity : AppCompatActivity() {
     companion object {
@@ -176,7 +173,14 @@ class BatteryInfoActivity : AppCompatActivity() {
                         getString(
                             when {
                                 selected == SectionOwner.ALARMS -> if (alarmState.draft?.id == null) R.string.add_alarm else R.string.alarm_settings_subtitle
-                                it == "charging-tools" -> R.string.charging_diagnostics_title
+                                selected == SectionOwner.SETTINGS -> SettingsCategory.fromRoute(
+                                    it.substringAfter(
+                                        "settings:"
+                                    ).substringBefore(':')
+                                )?.title ?: R.string.settings_activity_subtitle
+
+                                selected == SectionOwner.HELP -> R.string.nav_help
+                                it.substringBefore(':') == "charging-tools" -> R.string.charging_diagnostics_title
                                 else -> R.string.diag_monitor_operation
                             }
                         )
@@ -186,35 +190,35 @@ class BatteryInfoActivity : AppCompatActivity() {
                     onSettings = if (selected == SectionOwner.CURRENT) {
                         { selectSection(SectionOwner.SETTINGS) }
                     } else null,
-                    onLegacyActions = if (selected in setOf(
-                            SectionOwner.HELP,
-                            SectionOwner.CURRENT,
-                            SectionOwner.HISTORY,
-                            SectionOwner.DIAGNOSTICS,
-                            SectionOwner.ALARMS
-                        )
-                    ) {
-                        null
-                    } else ::showLegacyActions,
+                    onLegacyActions = null,
                     actions = {
-                        if (selected == SectionOwner.DIAGNOSTICS || selected == SectionOwner.ALARMS) androidx.compose.material3.IconButton(
+                        if (selected in setOf(
+                                SectionOwner.DIAGNOSTICS, SectionOwner.ALARMS, SectionOwner.SETTINGS
+                            )
+                        ) androidx.compose.material3.IconButton(
                             onClick = {
-                                startActivity(
-                                    Intent(
-                                        this@BatteryInfoActivity, SettingsHelpActivity::class.java
-                                    ).putExtra(
-                                        SettingsContract.EXTRA_SCREEN, when {
-                                            selected == SectionOwner.ALARMS -> if (detail == null) SettingsContract.KEY_ALARMS_SETTINGS else SettingsContract.KEY_ALARM_EDIT_SETTINGS
-                                            detail == null -> SettingsContract.KEY_ADVANCED_INFO_HELP
-                                            else -> SettingsContract.KEY_DIAGNOSTICS_SETTINGS
-                                        }
-                                    )
-                                )
+                                val topic = when (selected) {
+                                    SectionOwner.ALARMS -> if (detail == null) SettingsContract.KEY_ALARMS_SETTINGS else SettingsContract.KEY_ALARM_EDIT_SETTINGS
+                                    SectionOwner.DIAGNOSTICS -> if (detail == null) SettingsContract.KEY_ADVANCED_INFO_HELP else SettingsContract.KEY_DIAGNOSTICS_SETTINGS
+                                    else -> when (SettingsCategory.fromRoute(
+                                        detail?.substringAfter(
+                                            "settings:"
+                                        )?.substringBefore(':')
+                                    )) {
+                                        SettingsCategory.General -> SettingsContract.KEY_OTHER_SETTINGS
+                                        SettingsCategory.Current -> SettingsContract.KEY_CURRENT_STATE_SETTINGS
+                                        SettingsCategory.Time -> SettingsContract.KEY_TIME_ESTIMATES_SETTINGS
+                                        SettingsCategory.Notification -> SettingsContract.KEY_NOTIFICATION_SETTINGS
+                                        SettingsCategory.Advanced -> SettingsContract.KEY_ADVANCED_SETTINGS
+                                        SettingsCategory.Backup -> SettingsContract.KEY_BACKUP_RESTORE_SETTINGS
+                                        else -> "settings"
+                                    }
+                                }
+                                openHelp(topic)
                             }) {
                             androidx.compose.material3.Icon(
-                                androidx.compose.ui.res.painterResource(
-                                    R.drawable.ui_info
-                                ), getString(R.string.nav_help)
+                                androidx.compose.ui.res.painterResource(R.drawable.ui_info),
+                                getString(R.string.nav_help)
                             )
                         }
                         if (selected == SectionOwner.HISTORY) HistoryActionsMenu(!historyState.busy) {
@@ -224,14 +228,14 @@ class BatteryInfoActivity : AppCompatActivity() {
                     }) { modifier ->
                     Box(modifier) {
                         AndroidView(
-                            factory = { context ->
-                                FrameLayout(context).apply {
-                                    id = R.id.section_container
-                                    post {
-                                        containerReady = true
-                                        showSection(selected)
+                            factory = {
+                                layoutInflater.inflate(R.layout.compose_section_container, null)
+                                    .apply {
+                                        post {
+                                            containerReady = true
+                                            showSection(selected)
+                                        }
                                     }
-                                }
                             }, modifier = Modifier.fillMaxSize()
                         )
                         if (selected == SectionOwner.CURRENT) {
@@ -345,7 +349,8 @@ class BatteryInfoActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                leaveAlarmEditor { handleNavigationBack(this) }
+                if (selected == SectionOwner.HELP && detail != null) handleNavigationBack(this)
+                else leaveAlarmEditor { handleNavigationBack(this) }
             }
         })
     }
@@ -391,19 +396,40 @@ class BatteryInfoActivity : AppCompatActivity() {
         showSection(selected)
     }
 
-    private fun openDiagnosticDetail(route: String) {
-        navigator.openDetail(SectionOwner.DIAGNOSTICS, route)
+    fun openSettingsCategory(category: String?, highlight: String? = null) {
+        if (category == null) {
+            performSelectSection(SectionOwner.SETTINGS)
+            return
+        }
+        navigator.openDetail(
+            SectionOwner.SETTINGS,
+            "settings:$category" + (highlight?.let { ":$it" } ?: ""))
+        selected = navigator.selected
+        detail = navigator.detail
+        showSection(selected)
+    }
+
+    private fun openHelp(topic: String) {
+        navigator.openDetail(SectionOwner.HELP, "help:$topic")
+        selected = navigator.selected
+        detail = navigator.detail
+        showSection(selected)
+    }
+
+    internal fun openDiagnosticDetail(route: String, highlight: String? = null) {
+        navigator.openDetail(SectionOwner.DIAGNOSTICS, route + (highlight?.let { ":$it" } ?: ""))
         selected = navigator.selected
         detail = navigator.detail
         showSection(selected)
     }
 
     private fun navigateUp() {
-        leaveAlarmEditor { performNavigateUp() }
+        if (selected == SectionOwner.HELP && detail != null) performNavigateUp()
+        else leaveAlarmEditor { performNavigateUp() }
     }
 
     private fun leaveAlarmEditor(navigation: () -> Unit) {
-        if (selected == SectionOwner.ALARMS && detail != null) {
+        if (alarms.state.value.draft != null) {
             if (alarms.state.value.busy) return
             if (alarms.hasUnsavedChanges) {
                 pendingAlarmNavigation = navigation
@@ -446,9 +472,23 @@ class BatteryInfoActivity : AppCompatActivity() {
 
             else -> SectionOwner.CURRENT
         }
+        val requestedDetail = intent.getStringExtra(EXTRA_DETAIL)
+        if (owner == SectionOwner.HELP && requestedDetail?.startsWith("help:") == true) {
+            openHelp(requestedDetail.removePrefix("help:"))
+            return
+        }
+        if (owner == SectionOwner.SETTINGS && requestedDetail?.startsWith("settings:") == true) {
+            val route = requestedDetail.removePrefix("settings:")
+            openSettingsCategory(
+                route.substringBefore(':'), route.substringAfter(':', "").ifEmpty { null })
+            return
+        }
         performSelectSection(owner)
         if (owner == SectionOwner.DIAGNOSTICS) intent.getStringExtra(EXTRA_DETAIL)
-            ?.takeIf { it in setOf("monitor", "charging-tools") }?.let(::openDiagnosticDetail)
+            ?.takeIf { it.substringBefore(':') in setOf("monitor", "charging-tools") }?.let {
+                openDiagnosticDetail(
+                    it.substringBefore(':'), it.substringAfter(':', "").ifEmpty { null })
+            }
         if (owner == SectionOwner.ALARMS && intent.getStringExtra(EXTRA_DETAIL) == "alarm-edit") {
             openAlarmEditor(
                 intent.getIntExtra(AlarmEditActivity.EXTRA_ALARM_ID, -1).takeIf { it >= 0 })
@@ -459,8 +499,13 @@ class BatteryInfoActivity : AppCompatActivity() {
         if (!containerReady || supportFragmentManager.isStateSaved || (shown == owner && shownDetail == detail)) return
         val manager = supportFragmentManager
         val actionsOnly = owner == SectionOwner.DIAGNOSTICS && detail == null
-        val targetTag =
-            if (owner == SectionOwner.DIAGNOSTICS) "section:diagnostics:${detail ?: "actions"}" else "section:${owner.route}"
+        val targetTag = if (owner == SectionOwner.DIAGNOSTICS) "section:diagnostics:${
+            detail?.substringBefore(
+                ':'
+            ) ?: "actions"
+        }"
+        else if (owner == SectionOwner.HELP) "section:help:${detail ?: "root"}"
+        else "section:${owner.route}"
         val target = if (owner in setOf(
                 SectionOwner.CURRENT, SectionOwner.HISTORY, SectionOwner.ALARMS
             )
@@ -468,7 +513,7 @@ class BatteryInfoActivity : AppCompatActivity() {
         else manager.findFragmentByTag(targetTag)
             ?: if (owner == SectionOwner.DIAGNOSTICS) DiagnosticsFragment().apply {
                 arguments = Bundle().apply {
-                    putBoolean("charging", detail == "charging-tools")
+                    putBoolean("charging", detail?.substringBefore(':') == "charging-tools")
                     putBoolean("actionsOnly", actionsOnly)
                 }
             } else newFragment(owner)
@@ -487,10 +532,17 @@ class BatteryInfoActivity : AppCompatActivity() {
                 else add(R.id.section_container, target, targetTag)
             }
         }
+        if (target is DiagnosticsFragment) target.highlightAction(
+            detail?.substringAfter(':', "")?.ifEmpty { null })
         if (actionsOnly) {
             val actions = (target as DiagnosticsFragment).monitorActions
             monitorActions =
                 DiagnosticsFragment.OVERVIEW_KEYS.associateWith { actions.getValue(it) }
+        }
+        if (target is SettingsFragment) {
+            val route = detail?.removePrefix("settings:")
+            target.showCategory(
+                route?.substringBefore(':'), route?.substringAfter(':', "")?.ifEmpty { null })
         }
         shown = owner
         shownDetail = detail
@@ -501,8 +553,10 @@ class BatteryInfoActivity : AppCompatActivity() {
         SectionOwner.HISTORY -> error("History is rendered by Compose")
         SectionOwner.ALARMS -> error("Alarms is rendered by Compose")
         SectionOwner.DIAGNOSTICS -> error("Diagnostics is rendered by Compose")
-        SectionOwner.SETTINGS -> SettingsFragment().apply { setScreen(R.xml.main_pref_screen) }
-        SectionOwner.HELP -> LegacyHelpFragment()
+        SectionOwner.SETTINGS -> SettingsFragment()
+        SectionOwner.HELP -> LegacyHelpFragment().apply {
+            arguments = Bundle().apply { putString("topic", detail?.removePrefix("help:")) }
+        }
     }
 
     private fun openBatteryUsage() {
@@ -513,27 +567,6 @@ class BatteryInfoActivity : AppCompatActivity() {
                 this, R.string.current_usage_unavailable, android.widget.Toast.LENGTH_SHORT
             ).show()
         }
-    }
-
-    @Suppress("DEPRECATION")
-    private fun showLegacyActions(anchor: View) {
-        val fragment =
-            supportFragmentManager.findFragmentByTag("section:${selected.route}") ?: return
-        val popup = PopupMenu(this, anchor)
-        if (selected == SectionOwner.SETTINGS) {
-            menuInflater.inflate(R.menu.settings, popup.menu)
-            popup.setOnMenuItemClickListener { item ->
-                if (item.itemId == R.id.menu_help) {
-                    startActivity(Intent(this, SettingsHelpActivity::class.java))
-                    true
-                } else false
-            }
-        } else {
-            fragment.onCreateOptionsMenu(popup.menu, menuInflater)
-            fragment.onPrepareOptionsMenu(popup.menu)
-            popup.setOnMenuItemClickListener { fragment.onOptionsItemSelected(it) }
-        }
-        popup.show()
     }
 
     @Suppress("DEPRECATION")

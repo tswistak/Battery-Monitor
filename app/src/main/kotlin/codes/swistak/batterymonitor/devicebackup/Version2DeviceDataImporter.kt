@@ -13,11 +13,29 @@
 package codes.swistak.batterymonitor.devicebackup
 
 import codes.swistak.batterymonitor.logs.LogRecord
+import codes.swistak.batterymonitor.monitoring.Predictor
+import codes.swistak.batterymonitor.monitoring.PredictorStoredState
+
 
 internal object Version2DeviceDataImporter {
     const val VERSION = 2
     const val KEY_LOG_CURRENT = "currentMicroAmps"
     const val KEY_LOG_REMAINING_CHARGE = "remainingChargeMicroampHours"
+
+    const val KEY_PREDICTOR_STATE_VERSION = "stateVersion"
+
+    fun restorePredictor(
+        averages: Map<String, Float>, backupVersion: Int, storedVersion: Any?
+    ): PredictorStoredState {
+        val version = storedVersion ?: if (backupVersion >= VERSION) Predictor.STATE_VERSION else 1
+        require(version is Int && version in 1..Predictor.STATE_VERSION) {
+            "Unsupported predictor state version"
+        }
+        val restored = if (version < Predictor.STATE_VERSION) {
+            averages - Predictor.KEY_AVERAGE[0]
+        } else averages
+        return PredictorStoredState(restored, Predictor.STATE_VERSION)
+    }
 
     fun restoreLog(values: Map<String, Any?>): LogRecord {
         val current = values[KEY_LOG_CURRENT]

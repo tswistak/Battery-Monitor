@@ -350,11 +350,6 @@
   <string name="pref_prefer_average_battery_current_summary" formatted="false">Folosești media recentă când este disponibilă?</string>
   <string name="pref_prefer_current_avg_help" formatted="false">Unele sisteme oferă o medie recentă pe lângă curentul instantaneu. Perioada și calitatea diferă în funcție de dispozitiv. Dezactivează opțiunea dacă media nu este disponibilă sau utilizabilă.</string>
 
-  <string name="pref_battery_current_refresh_interval" formatted="false">Interval de reîmprospătare automată</string>
-  <string name="pref_battery_current_refresh_interval_help" formatted="false">Alege cât de des se actualizează curentul cât timp fereastra principală este vizibilă.</string>
-  <string name="pref_battery_current_refresh_interval_custom_message" formatted="false">Introdu un interval în secunde (1–3600).</string>
-  <string name="pref_battery_current_refresh_interval_error" formatted="false">Introdu o valoare între 1 și 3600.</string>
-  <string name="pref_battery_current_refresh_interval_custom_summary" formatted="true">%1$d secunde</string>
 
   <string name="pref_indicate_charging" formatted="false">Indicați încărcarea</string>
   <string name="pref_indicate_charging_summary" formatted="false">Modificați pictograma pentru a indica când se încarcă?</string>

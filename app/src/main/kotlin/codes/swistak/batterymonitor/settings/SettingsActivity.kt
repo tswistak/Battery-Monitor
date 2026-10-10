@@ -13,146 +13,29 @@
 */
 package codes.swistak.batterymonitor.settings
 
-import android.content.ComponentName
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.common.EdgeToEdgeHelper
+import codes.swistak.batterymonitor.app.BatteryInfoActivity
+import codes.swistak.batterymonitor.ui.settings.SettingsCategory
 
 class SettingsActivity : AppCompatActivity() {
-    private var res: Resources? = null
-    private var prefScreen: String? = null
-    private val menuRes = R.menu.settings
-    private var frag: SettingsFragment? = null
-
-    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val intent = getIntent()
-        prefScreen = intent.getStringExtra(SettingsContract.EXTRA_SCREEN)
-        res = resources
-
-        val ab = supportActionBar
-        if (ab != null) {
-            ab.setHomeButtonEnabled(true)
-            ab.setDisplayHomeAsUpEnabled(true)
-            ab.elevation = 0f
-        }
-
-        val c = resources.getColor(R.color.windowBackground, null)
-        val w = window
-        w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        w.statusBarColor = c
-
-        setContentView(R.layout.prefs)
-        EdgeToEdgeHelper.applyIfNeeded(this)
-
-        if (prefScreen == SettingsContract.KEY_DIAGNOSTICS_SETTINGS) {
-            startActivity(
-                Intent(
-                    this, codes.swistak.batterymonitor.app.BatteryInfoActivity::class.java
-                ).putExtra(
-                    codes.swistak.batterymonitor.app.BatteryInfoActivity.EXTRA_SECTION,
-                    "diagnostics"
-                ).putExtra(
-                    codes.swistak.batterymonitor.app.BatteryInfoActivity.EXTRA_DETAIL, "monitor"
-                )
-            )
-            finish()
-            return
-        }
-
-        if (savedInstanceState == null) {
-            frag = SettingsFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.settings, frag!!, "").commit()
+        val key = intent.getStringExtra(SettingsContract.EXTRA_SCREEN)
+        val destination = Intent(this, BatteryInfoActivity::class.java).addFlags(
+            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        )
+        if (key == SettingsContract.KEY_DIAGNOSTICS_SETTINGS) {
+            destination.putExtra(BatteryInfoActivity.EXTRA_SECTION, "diagnostics")
+            destination.putExtra(BatteryInfoActivity.EXTRA_DETAIL, "monitor")
         } else {
-            frag = supportFragmentManager.findFragmentByTag("") as SettingsFragment?
-        }
-
-        when (prefScreen) {
-            null -> {
-                frag!!.setScreen(R.xml.main_pref_screen)
-                setWindowSubtitle(res!!.getString(R.string.settings_activity_subtitle))
-            }
-
-            SettingsContract.KEY_NOTIFICATION_SETTINGS -> {
-                frag!!.setScreen(R.xml.notification_pref_screen)
-                setWindowSubtitle(res!!.getString(R.string.notification_settings))
-            }
-
-            SettingsContract.KEY_CURRENT_STATE_SETTINGS -> {
-                frag!!.setScreen(R.xml.current_state_pref_screen)
-                setWindowSubtitle(res!!.getString(R.string.tab_current_info))
-            }
-
-            SettingsContract.KEY_OTHER_SETTINGS -> {
-                frag!!.setScreen(R.xml.other_pref_screen)
-                setWindowSubtitle(res!!.getString(R.string.other_settings))
-            }
-
-            SettingsContract.KEY_TIME_ESTIMATES_SETTINGS -> {
-                frag!!.setScreen(R.xml.time_estimates_pref_screen)
-                setWindowSubtitle(res!!.getString(R.string.time_estimates_settings))
-            }
-
-            SettingsContract.KEY_ADVANCED_SETTINGS -> {
-                frag!!.setScreen(R.xml.advanced_pref_screen)
-                setWindowSubtitle(res!!.getString(R.string.advanced_settings))
-            }
-
-            SettingsContract.KEY_BACKUP_RESTORE_SETTINGS -> {
-                frag!!.setScreen(R.xml.backup_restore_pref_screen)
-                setWindowSubtitle(res!!.getString(R.string.pref_backup_restore))
-            }
-
-            else -> {
-                frag!!.setScreen(R.xml.main_pref_screen)
-                setWindowSubtitle(res!!.getString(R.string.settings_activity_subtitle))
+            destination.putExtra(BatteryInfoActivity.EXTRA_SECTION, "settings")
+            SettingsCategory.fromLegacy(key)?.let {
+                destination.putExtra(BatteryInfoActivity.EXTRA_DETAIL, "settings:${it.route}")
             }
         }
-    }
-
-    private fun setWindowSubtitle(subtitle: String?) {
-        if (res!!.getBoolean(R.bool.long_activity_names)) setTitle(res!!.getString(R.string.app_full_name) + " - " + subtitle)
-        else setTitle(subtitle)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(menuRes, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_help) {
-            val comp = ComponentName(packageName, SettingsHelpActivity::class.java.getName())
-            val intent = Intent().setComponent(comp)
-
-            if (prefScreen != null) intent.putExtra(SettingsContract.EXTRA_SCREEN, prefScreen)
-
-            startActivity(intent)
-
-            return true
-        }
-
-        if (item.itemId == android.R.id.home) {
-            finish()
-
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-    fun enableNotifsButtonClick(v: View?) {
-        frag?.enableNotifsButtonClick()
+        startActivity(destination)
+        finish()
     }
 }

@@ -382,24 +382,6 @@
         <item>-1000</item>
     </string-array>
 
-    <string-array name="battery_current_refresh_interval_entries">
-        <item>@string/chip_switching_interval_2_seconds</item>
-        <item>@string/chip_switching_interval_5_seconds</item>
-        <item>@string/chip_switching_interval_10_seconds</item>
-        <item>@string/chip_switching_interval_15_seconds</item>
-        <item>@string/chip_switching_interval_30_seconds</item>
-        <item>@string/custom</item>
-    </string-array>
-
-    <string-array name="battery_current_refresh_interval_values" translatable="false">
-        <item>2</item>
-        <item>5</item>
-        <item>10</item>
-        <item>15</item>
-        <item>30</item>
-        <item>custom</item>
-    </string-array>
-
     <string name="default_prediction_type">-3</string>
 
     <string-array name="temperature_unit_entries">

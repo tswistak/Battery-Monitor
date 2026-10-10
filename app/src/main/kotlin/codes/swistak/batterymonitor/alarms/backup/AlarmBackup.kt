@@ -15,6 +15,7 @@ package codes.swistak.batterymonitor.alarms.backup
 import android.content.Context
 import android.net.Uri
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
+import codes.swistak.batterymonitor.alarms.AlarmRecord
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -34,11 +35,11 @@ internal object AlarmBackup {
     @Throws(JSONException::class)
     fun exportToJson(database: AlarmDatabase): JSONObject {
         val alarms = JSONArray()
-        for (record in database.getAllAlarmRecords()) {
+        for ((enabled, type, threshold) in database.getAllAlarmRecords()) {
             alarms.put(
-                JSONObject().put(Version1AlarmImporter.KEY_ENABLED, record.enabled)
-                    .put(Version1AlarmImporter.KEY_TYPE, record.type)
-                    .put(Version1AlarmImporter.KEY_THRESHOLD, record.threshold)
+                JSONObject().put(Version1AlarmImporter.KEY_ENABLED, enabled)
+                    .put(Version1AlarmImporter.KEY_TYPE, type)
+                    .put(Version1AlarmImporter.KEY_THRESHOLD, threshold)
             )
         }
         return JSONObject().put("version", SCHEMA_VERSION).put("alarms", alarms)
@@ -46,6 +47,16 @@ internal object AlarmBackup {
 
     @Throws(JSONException::class, IllegalArgumentException::class)
     fun importFromJson(database: AlarmDatabase, jsonString: String): Int {
+        val restored = validatedRecords(jsonString)
+        check(database.replaceAllAlarms(restored)) { "Could not restore alarms" }
+        return restored.size
+    }
+
+    fun validateJson(jsonString: String) {
+        validatedRecords(jsonString)
+    }
+
+    private fun validatedRecords(jsonString: String): List<AlarmRecord> {
         val root = JSONObject(jsonString)
         val importer = alarmImporterForVersion(root.optInt("version", 0))
         val alarms = root.getJSONArray("alarms")
@@ -63,13 +74,13 @@ internal object AlarmBackup {
         require(alarms.length() == 0 || restored.isNotEmpty()) {
             "The backup contains no supported alarms"
         }
-        check(database.replaceAllAlarms(restored)) { "Could not restore alarms" }
-        return restored.size
+        return restored
     }
 
     @Throws(IOException::class)
     fun writeToUri(context: Context, uri: Uri, json: JSONObject) {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "w") ?: return
+        val pfd = context.contentResolver.openFileDescriptor(uri, "w")
+            ?: throw IOException("Could not open backup destination")
         pfd.use {
             FileOutputStream(it.fileDescriptor).use { output ->
                 output.write(json.toString().toByteArray(StandardCharsets.UTF_8))
@@ -78,8 +89,9 @@ internal object AlarmBackup {
     }
 
     @Throws(IOException::class)
-    fun readFromUri(context: Context, uri: Uri): String? {
-        val pfd = context.contentResolver.openFileDescriptor(uri, "r") ?: return null
+    fun readFromUri(context: Context, uri: Uri): String {
+        val pfd = context.contentResolver.openFileDescriptor(uri, "r")
+            ?: throw IOException("Could not open backup source")
         pfd.use {
             BufferedReader(
                 InputStreamReader(FileInputStream(it.fileDescriptor), StandardCharsets.UTF_8)
