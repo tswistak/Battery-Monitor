@@ -58,7 +58,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -235,8 +234,11 @@ private fun WidgetConfigurationScreen(
         TopAppBar(
             title = { Text(stringResource(R.string.widget_configure_title)) },
             navigationIcon = {
-                TextButton(onClick = onCancel, enabled = !saving) {
-                    Text(stringResource(R.string.cancel))
+                IconButton(onClick = onCancel, enabled = !saving) {
+                    Icon(
+                        painterResource(R.drawable.ui_close),
+                        contentDescription = stringResource(R.string.cancel)
+                    )
                 }
             })
     }, bottomBar = {
@@ -275,10 +277,6 @@ private fun WidgetConfigurationScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(
-                stringResource(R.string.widget_preview),
-                style = MaterialTheme.typography.titleMedium
-            )
             WidgetPreview(family, providerInfo, draft, Color(0xFFE1E8EF), previewVersion)
             if (draft.backgroundOpacityPercent == 0) {
                 WidgetPreview(family, providerInfo, draft, Color(0xFF17232D), previewVersion)
@@ -314,13 +312,28 @@ private fun WidgetConfigurationScreen(
                     )
                 }
 
-                WidgetFamily.TREND -> ChoiceField(
-                    stringResource(R.string.history_range), draft.trendHours, listOf(
-                        24 to stringResource(R.string.history_last_24h),
-                        72 to stringResource(R.string.history_last_3d),
-                        168 to stringResource(R.string.history_last_7d)
-                    )
-                ) { update(draft.copy(trendHours = it)) }
+                WidgetFamily.TREND -> {
+                    ChoiceField(
+                        stringResource(R.string.history_range), draft.trendHours, listOf(
+                            24 to stringResource(R.string.history_last_24h),
+                            72 to stringResource(R.string.history_last_3d),
+                            168 to stringResource(R.string.history_last_7d)
+                        )
+                    ) { update(draft.copy(trendHours = it)) }
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp)
+                            .toggleable(
+                                value = draft.showYAxisLabels,
+                                role = Role.Checkbox,
+                                onValueChange = { update(draft.copy(showYAxisLabels = it)) }),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(checked = draft.showYAxisLabels, onCheckedChange = null)
+                        Text(stringResource(R.string.widget_y_axis_labels))
+                    }
+                }
             }
             ChoiceField(
                 stringResource(R.string.widget_presentation), draft.variant, listOf(
@@ -406,6 +419,7 @@ private fun WidgetConfigurationScreen(
         }
     }
 }
+
 
 @Composable
 private fun <T> ChoiceField(
@@ -529,15 +543,15 @@ private fun WidgetPreview(
     ) {
         AndroidView(
             factory = { viewContext ->
-            object : AppWidgetHostView(viewContext) {
-                override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
-                override fun onTouchEvent(event: MotionEvent): Boolean = true
-            }.apply {
-                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-                setAppWidget(AppWidgetManager.INVALID_APPWIDGET_ID, providerInfo)
-                setPadding(0, 0, 0, 0)
-            }
-        },
+                object : AppWidgetHostView(viewContext) {
+                    override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
+                    override fun onTouchEvent(event: MotionEvent): Boolean = true
+                }.apply {
+                    importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+                    setAppWidget(AppWidgetManager.INVALID_APPWIDGET_ID, providerInfo)
+                    setPadding(0, 0, 0, 0)
+                }
+            },
             update = { it.updateAppWidget(remoteViews) },
             modifier = Modifier
                 .widthIn(max = if (family == WidgetFamily.STATUS) 220.dp else 350.dp)

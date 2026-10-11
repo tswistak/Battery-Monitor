@@ -9,6 +9,8 @@ package codes.swistak.batterymonitor.ui.diagnostics
 
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.monitoring.Predictor
+import codes.swistak.batterymonitor.monitoring.PredictorCore
+import codes.swistak.batterymonitor.monitoring.PredictorRecentState
 import codes.swistak.batterymonitor.monitoring.PredictorStoredState
 import java.text.NumberFormat
 
@@ -54,6 +56,118 @@ internal fun predictorDiagnosticGroup(
         valueLabel = if (data.version == null) R.string.diag_predictor_not_saved else 0
     )
     return DiagnosticGroup(R.string.device_data_predictor, averages + version)
+}
+
+internal fun recentPredictorDiagnosticGroup(
+    data: PredictorRecentState, observedAtMillis: Long, formatDuration: (Long) -> String
+): DiagnosticGroup {
+    fun row(
+        label: Int,
+        key: String,
+        raw: Any,
+        value: String? = null,
+        valueLabel: Int = 0,
+        unit: String = ""
+    ) = DiagnosticRow(
+        label = label,
+        rawKey = key,
+        value = value,
+        rawValue = raw.toString(),
+        unit = unit,
+        source = "PredictorCore",
+        observedAtMillis = observedAtMillis,
+        accessMethod = "Battery Monitor",
+        valueLabel = valueLabel
+    )
+
+    fun rate(label: Int, key: String, raw: Double): DiagnosticRow {
+        val valid = raw.isFinite() && raw > 0 && raw < Long.MAX_VALUE.toDouble()
+        return row(
+            label,
+            key,
+            raw,
+            value = if (valid) formatDuration(raw.toLong()) else null,
+            valueLabel = if (valid) 0 else R.string.advanced_value_not_available,
+            unit = "ms per percentage point"
+        )
+    }
+
+    val method = when (data.predictionType) {
+        PredictorCore.AUTOMAGIC -> R.string.predictor_conservative
+        PredictorCore.SINCE_STATUS_CHANGE -> R.string.predictor_since_status_change
+        else -> if (data.predictionType > 0) R.string.predictor_sensitive else R.string.predictor_long_term_ave
+    }
+    val activeState = when (data.chargingStatus) {
+        PredictorCore.DISCHARGE -> R.string.status_discharging
+        PredictorCore.RECHARGE_AC -> R.string.diag_predictor_ac
+        PredictorCore.RECHARGE_WL -> R.string.diag_predictor_wireless
+        PredictorCore.RECHARGE_USB -> R.string.diag_predictor_usb
+        else -> R.string.status_unknown
+    }
+    return DiagnosticGroup(
+        R.string.diag_predictor_recent, listOf(
+            row(
+                R.string.pref_prediction_type,
+                "predictionType",
+                data.predictionType,
+                valueLabel = method
+            ), row(
+                R.string.diag_predictor_active_state,
+                "chargingStatus",
+                data.chargingStatus,
+                valueLabel = activeState
+            ), rate(
+                R.string.diag_predictor_effective_rate,
+                "effectiveMsPerPoint",
+                data.effectiveMsPerPoint
+            ), rate(
+                R.string.diag_predictor_five_minute_rate,
+                "fiveMinuteMsPerPoint",
+                data.fiveMinuteMsPerPoint
+            ), rate(
+                R.string.diag_predictor_five_point_rate,
+                "fivePointMsPerPoint",
+                data.fivePointMsPerPoint
+            ), rate(
+                R.string.predictor_since_status_change, "sessionMsPerPoint", data.sessionMsPerPoint
+            ), rate(
+                R.string.diag_predictor_active_long_term_rate,
+                "longTermMsPerPoint",
+                data.longTermMsPerPoint
+            ), row(
+                R.string.diag_predictor_observed_points,
+                "observedPoints",
+                data.observedPoints,
+                value = NumberFormat.getIntegerInstance().format(data.observedPoints)
+            ), row(
+                R.string.diag_predictor_observation_duration,
+                "observationDurationMillis",
+                data.observationDurationMillis,
+                value = formatDuration(data.observationDurationMillis),
+                unit = "ms"
+            ), row(
+                R.string.diag_predictor_current_level_duration,
+                "currentLevelDurationMillis",
+                data.currentLevelDurationMillis,
+                value = formatDuration(data.currentLevelDurationMillis),
+                unit = "ms"
+            ), row(
+                R.string.diag_predictor_uses_partial,
+                "usesPartial",
+                data.usesPartial,
+                valueLabel = if (data.usesPartial) R.string.yes else R.string.diag_no
+            )
+        )
+    )
+}
+
+internal fun combinedPredictorDiagnosticGroup(
+    stored: DiagnosticGroup?, recent: DiagnosticGroup?
+): DiagnosticGroup? {
+    if (stored == null && recent == null) return null
+    return DiagnosticGroup(
+        R.string.device_data_predictor, stored?.rows.orEmpty() + recent?.rows.orEmpty()
+    )
 }
 
 internal fun rawPredictorDiagnosticGroup(group: DiagnosticGroup): DiagnosticGroup =

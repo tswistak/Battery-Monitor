@@ -87,6 +87,8 @@ internal class Predictor(context: Context) {
 
     internal fun storedState(): PredictorStoredState = readStoredState(spPredictor.all)
 
+    internal fun recentState(): PredictorRecentState? = pc.recentState()
+
     fun setPredictionType(type: String) {
         pc.setPredictionType(type.toInt())
     }

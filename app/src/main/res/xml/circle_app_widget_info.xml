@@ -1,17 +1,10 @@
-<appwidget-provider
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/circle_app_widget"
     android:minWidth="40dp"
     android:minHeight="40dp"
     android:minResizeWidth="40dp"
     android:minResizeHeight="40dp"
-    android:updatePeriodMillis="0"
-    android:widgetCategory="home_screen|keyguard"
-    android:initialLayout="@layout/circle_app_widget"
     android:previewImage="@drawable/circle_widget_preview"
-/>
-<!--
-    android:resizeMode="horizontal|vertical"
-    android:initialKeyguardLayout="@layout/battery_info_keyguard_app_widget"
-    android:previewImage="@drawable/widget_preview"
-
--->
+    android:previewLayout="@layout/circle_widget_preview"
+    android:updatePeriodMillis="0"
+    android:widgetCategory="home_screen|keyguard" />

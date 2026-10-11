@@ -189,7 +189,10 @@ fun SettingsScreen(
                                 },
                                 leadingContent = {
                                     Icon(
-                                        painterResource(descriptor.category.icon), null
+                                        painterResource(settingIcon(descriptor.key)),
+                                        null,
+                                        Modifier.size(24.dp),
+                                        tint = MaterialTheme.colorScheme.primary
                                     )
                                 },
                                 trailingContent = {
@@ -199,7 +202,6 @@ fun SettingsScreen(
                                 },
                                 colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.background),
                                 modifier = Modifier.clickable {
-                                    // Navigation is deliberately separate from preference activation.
                                     focus.clearFocus()
                                     keyboard?.hide()
                                     if (descriptor.diagnosticDetail != null) {
@@ -456,6 +458,13 @@ private fun SettingItem(
             )
             .padding(16.dp), verticalAlignment = Alignment.CenterVertically
     ) {
+        Icon(
+            painterResource(settingIcon(descriptor.key)),
+            null,
+            Modifier.size(24.dp),
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Spacer(Modifier.width(14.dp))
         Column(Modifier.weight(1f)) {
             Text(descriptor.title, color = MaterialTheme.colorScheme.onSurface)
             if (summary.isNotBlank() && summary != descriptor.title) Text(
@@ -479,13 +488,13 @@ private fun SettingItem(
 private fun unavailableReason(
     descriptor: SettingDescriptor, screen: PreferenceScreen, context: Context
 ): String? {
-    if (descriptor.key == "change_app_language" && Build.VERSION.SDK_INT < 33) return context.getString(
+    if (descriptor.key == SettingsContract.KEY_CHANGE_APP_LANGUAGE && Build.VERSION.SDK_INT < 33) return context.getString(
         R.string.settings_app_language_unavailable
     )
     if (descriptor.category == SettingsCategory.Notification && descriptor.key !in setOf(
-            "enable_notifications_button",
-            "live_update_system_settings",
-            "dismiss_low_battery_on_recovery"
+            SettingsContract.KEY_ENABLE_NOTIFS_B,
+            SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS,
+            SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY
         )
     ) {
         val manager = NotificationManagerCompat.from(context)

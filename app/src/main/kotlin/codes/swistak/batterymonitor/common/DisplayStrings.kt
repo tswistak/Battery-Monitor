@@ -33,7 +33,6 @@ import kotlin.math.roundToLong
 internal object DisplayStrings {
     private lateinit var res: Resources
 
-    var defUiColor: Int = 0
     var accentColor: Int = 0
 
     lateinit var degreeSymbol: String
@@ -42,22 +41,8 @@ internal object DisplayStrings {
     lateinit var voltSymbol: String
     lateinit var percentSymbol: String
     lateinit var since: String
-    lateinit var defaultStatusDurEst: String
-    lateinit var defaultRedThresh: String
-    lateinit var defaultAmberThresh: String
-    lateinit var defaultGreenThresh: String
     lateinit var defaultMaxLogAge: String
     lateinit var defaultPredictionType: String
-
-    lateinit var logsEmpty: String
-    lateinit var confirmClearLogs: String
-    lateinit var configureLogFilter: String
-    lateinit var yes: String
-    lateinit var cancel: String
-    lateinit var okay: String
-
-    lateinit var currentlySetTo: String
-    lateinit var alarmPrefNotUsed: String
 
     lateinit var alarmFullyCharged: String
     lateinit var alarmChargeDrops: String
@@ -66,38 +51,13 @@ internal object DisplayStrings {
     lateinit var alarmTempRises: String
     lateinit var alarmHealthFailure: String
 
-    lateinit var inaccessibleStorage: String
-    lateinit var inaccessibleWReason: String
-    lateinit var readOnlyStorage: String
-    lateinit var noStoragePermission: String
-    lateinit var fileWritten: String
-
-    lateinit var time: String
-    lateinit var date: String
-    lateinit var status: String
-    lateinit var charge: String
-    lateinit var temperature: String
-    lateinit var temperatureF: String
-    lateinit var voltage: String
-
-    lateinit var statusBootCompleted: String
-
     lateinit var statuses: Array<String>
-    lateinit var logStatuses: Array<String>
-    lateinit var logStatusesOld: Array<String>
     lateinit var healths: Array<String>
     lateinit var pluggeds: Array<String>
-    lateinit var alarmTypesDisplay: Array<String>
-    lateinit var alarmTypeEntries: Array<String>
-    lateinit var alarmTypeValues: Array<String>
-    lateinit var tempAlarmValues: Array<String>
-
-    lateinit var logFilterPrefKeys: Array<String>
 
     fun setResources(r: Resources) {
         res = r
 
-        defUiColor = res.getColor(R.color.col2020, null)
         accentColor = res.getColor(R.color.accent, null)
 
         degreeSymbol = res.getString(R.string.degree_symbol)
@@ -106,23 +66,8 @@ internal object DisplayStrings {
         voltSymbol = res.getString(R.string.volt_symbol)
         percentSymbol = res.getString(R.string.percent_symbol)
         since = res.getString(R.string.since)
-        defaultStatusDurEst = res.getString(R.string.default_status_dur_est)
-        defaultRedThresh = res.getString(R.string.default_red_thresh)
-        defaultAmberThresh = res.getString(R.string.default_amber_thresh)
-        defaultGreenThresh = res.getString(R.string.default_green_thresh)
         defaultMaxLogAge = res.getString(R.string.default_max_log_age)
         defaultPredictionType = res.getString(R.string.default_prediction_type)
-
-        logsEmpty = res.getString(R.string.logs_empty)
-        confirmClearLogs = res.getString(R.string.confirm_clear_logs)
-        yes = res.getString(R.string.yes)
-        cancel = res.getString(R.string.cancel)
-        okay = res.getString(R.string.okay)
-
-        configureLogFilter = res.getString(R.string.configure_log_filter)
-
-        currentlySetTo = res.getString(R.string.currently_set_to)
-        alarmPrefNotUsed = res.getString(R.string.alarm_pref_not_used)
 
         alarmFullyCharged = res.getString(R.string.alarm_fully_charged)
         alarmChargeDrops = res.getString(R.string.alarm_charge_drops)
@@ -131,33 +76,9 @@ internal object DisplayStrings {
         alarmTempRises = res.getString(R.string.alarm_temp_rises)
         alarmHealthFailure = res.getString(R.string.alarm_health_failure)
 
-        inaccessibleStorage = res.getString(R.string.inaccessible_storage)
-        inaccessibleWReason = res.getString(R.string.inaccessible_w_reason)
-        readOnlyStorage = res.getString(R.string.read_only_storage)
-        noStoragePermission = res.getString(R.string.no_storage_permission)
-        fileWritten = res.getString(R.string.file_written)
-
-        date = res.getString(R.string.date)
-        time = res.getString(R.string.time)
-        status = res.getString(R.string.status)
-        charge = res.getString(R.string.charge)
-        temperature = res.getString(R.string.temperature)
-        temperatureF = res.getString(R.string.temperature_f)
-        voltage = res.getString(R.string.voltage)
-
-        statusBootCompleted = res.getString(R.string.status_boot_completed)
-
         statuses = res.getStringArray(R.array.statuses)
-        logStatuses = res.getStringArray(R.array.log_statuses)
-        logStatusesOld = res.getStringArray(R.array.log_statuses_old)
         healths = res.getStringArray(R.array.healths)
         pluggeds = res.getStringArray(R.array.pluggeds)
-        alarmTypesDisplay = res.getStringArray(R.array.alarm_types_display)
-        alarmTypeEntries = res.getStringArray(R.array.alarm_type_entries)
-        alarmTypeValues = res.getStringArray(R.array.alarm_type_values)
-        tempAlarmValues = res.getStringArray(R.array.temp_alarm_values)
-
-        logFilterPrefKeys = res.getStringArray(R.array.log_filter_pref_keys)
     }
 
     fun nHoursMMinutesLong(n: Int, m: Int): String {
@@ -180,10 +101,6 @@ internal object DisplayStrings {
         return (String.format(
             res.getQuantityString(R.plurals.n_hours_long, n), n
         ) + String.format(res.getQuantityString(R.plurals.n_minutes_medium, m), m))
-    }
-
-    fun nLogItems(n: Int): String {
-        return String.format(res.getQuantityString(R.plurals.n_log_items, n), n)
     }
 
     @JvmOverloads
@@ -216,10 +133,6 @@ internal object DisplayStrings {
 
     internal fun formatVoltage(voltage: Int, locale: Locale): String {
         return formatDecimal(voltage / 1000.0, 1, 3, locale) + voltSymbol
-    }
-
-    fun formatChargeDetailed(microAmpHours: Long): String {
-        return formatChargeDetailed(microAmpHours, resourceLocale())
     }
 
     internal fun formatChargeDetailed(microAmpHours: Long, locale: Locale): String {
@@ -281,17 +194,6 @@ internal object DisplayStrings {
         return res.configuration.locales[0]
     }
 
-    fun indexOf(a: Array<out String?>, key: String): Int {
-        var i = 0
-        val size = a.size
-        while (i < size) {
-            if (key == a[i]) return i
-            i++
-        }
-
-        return -1
-    }
-
     fun timeRemaining(
         info: BatteryInfo,
         longDurationFormat: LongDurationFormat,
@@ -336,17 +238,6 @@ internal object DisplayStrings {
                 )
             }
         }
-    }
-
-    fun timeRemainingMainScreen(
-        info: BatteryInfo,
-        longDurationFormat: LongDurationFormat,
-        prediction: BatteryInfo.Prediction = info.prediction
-    ): Spanned? {
-        return if (prediction.whatHappened == BatteryInfo.Prediction.NONE) fromHtmlLegacy(
-            "&nbsp;&nbsp;&nbsp;&mdash;&nbsp;&nbsp;&nbsp;"
-        )
-        else timeRemaining(info, longDurationFormat, prediction)
     }
 
     private fun fromHtmlLegacy(source: String): Spanned {

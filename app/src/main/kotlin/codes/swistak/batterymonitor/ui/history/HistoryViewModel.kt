@@ -14,7 +14,6 @@ import android.os.Bundle
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import codes.swistak.batterymonitor.data.LogsRepository
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.devicebackup.DeviceDataType
@@ -26,6 +25,7 @@ import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.logs.HistoryRecord
 import codes.swistak.batterymonitor.logs.LogExportFormat
+import codes.swistak.batterymonitor.logs.LogsRepository
 import codes.swistak.batterymonitor.logs.exportHistory
 import codes.swistak.batterymonitor.logs.historyFilterKeys
 import codes.swistak.batterymonitor.settings.SettingsContract

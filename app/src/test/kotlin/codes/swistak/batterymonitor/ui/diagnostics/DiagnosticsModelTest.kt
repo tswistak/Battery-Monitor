@@ -23,6 +23,29 @@ import java.util.Locale
 
 class DiagnosticsModelTest {
     @Test
+    fun `privileged access only reports yes after a successful privileged reading`() {
+        val enabled = DiagnosticsState(privilegedEnabled = true)
+        assertEquals(R.string.advanced_status_no_access, enabled.privilegedAccessStatus)
+        assertEquals(
+            R.string.advanced_status_loading, enabled.copy(loading = true).privilegedAccessStatus
+        )
+        val available = enabled.copy(advanced = AdvancedBatterySnapshot().apply {
+            accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
+            currentNowUa = -900000
+        })
+        assertEquals(R.string.yes, available.privilegedAccessStatus)
+        assertEquals(
+            R.string.advanced_status_no_access, available.copy(
+                status = R.string.advanced_status_no_access, stale = true
+            ).privilegedAccessStatus
+        )
+        assertEquals(
+            R.string.currently_disabled,
+            available.copy(privilegedEnabled = false).privilegedAccessStatus
+        )
+    }
+
+    @Test
     fun `raw search matches original keys without formatting values or exposing identifiers by default`() {
         val snapshot = AdvancedBatterySnapshot().apply {
             accessMethod = "Android"

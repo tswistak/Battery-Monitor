@@ -124,14 +124,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     companion object {
         const val ARG_CATEGORY = "category"
         const val ARG_HIGHLIGHT = "highlight"
-        private val PREFERENCE_SCREENS = listOf(
-            R.xml.other_pref_screen,
-            R.xml.current_state_pref_screen,
-            R.xml.time_estimates_pref_screen,
-            R.xml.notification_pref_screen,
-            R.xml.advanced_pref_screen,
-            R.xml.backup_restore_pref_screen
-        )
 
         private const val EXPORT_REQUEST = 1
         private const val IMPORT_REQUEST = 2
@@ -434,7 +426,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 })
         } else if (preference.key == SettingsContract.KEY_ENABLE_NOTIFS_B) {
             enableNotifsButtonClick()
-        } else if (preference.key == "live_update_system_settings") {
+        } else if (preference.key == SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS) {
             if (!NotificationSettingsNavigator.openLiveUpdates(requireContext())) {
                 requireContext().showToast(R.string.advanced_value_not_available)
             }
@@ -521,12 +513,9 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         systemPromotedEnabled = BatteryInfoService.isLiveUpdateEnabledInSystem(requireContext())
         if (mPreferenceScreen == null || reinflate) {
             prepareBatteryCurrentMultiplierDetection()
-            var screen: PreferenceScreen? = null
-            PREFERENCE_SCREENS.forEach { xml ->
-                screen = preferenceManager.inflateFromResource(requireContext(), xml, screen)
-            }
-            mPreferenceScreen = requireNotNull(screen)
-            preferenceManager.setPreferences(screen)
+            mPreferenceScreen =
+                SettingsDefinitions.createScreen(requireContext(), preferenceManager)
+            preferenceManager.setPreferences(mPreferenceScreen)
         }
         syncPreferenceValues(requireNotNull(mPreferenceScreen))
         mPreferenceScreen?.findPreference<Preference>(SettingsContract.KEY_ENABLE_NOTIFS_B)?.apply {
@@ -584,7 +573,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 return false
             }
 
-            "reset_default_settings" -> {
+            SettingsContract.KEY_RESET_DEFAULT_SETTINGS -> {
                 dialog = SettingsDialog.Confirm(
                     message = getString(R.string.settings_reset_question),
                     title = getString(R.string.settings_reset_title),
@@ -1898,20 +1887,19 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 } else context
                 val editor = settings.edit()
                 SettingsReset.reset(editor)
+                SettingsDefinitions.defaultValues(defaultsContext::getString)
+                    .forEach { (key, value) ->
+                        when (value) {
+                            is Boolean -> editor.putBoolean(key, value)
+                            is Int -> editor.putInt(key, value)
+                            is String -> editor.putString(key, value)
+                            else -> error("Unsupported default value for $key")
+                        }
+                    }
                 editor.putBoolean(
                     SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING, true
                 )
                 check(editor.commit()) { "Could not reset settings" }
-                PREFERENCE_SCREENS.forEach { xml ->
-                    PreferenceManager.setDefaultValues(
-                        defaultsContext,
-                        SettingsContract.SETTINGS_FILE,
-                        Context.MODE_PRIVATE,
-                        xml,
-                        true
-                    )
-                }
-                check(settings.edit().commit()) { "Could not save default settings" }
                 DebugLogCollector.sync(context, false)
                 PrivilegedAccess.setEnabled(false)
                 AutoLogExportScheduler.cancel(context)

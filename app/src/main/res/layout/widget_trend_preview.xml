@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/widget_surface"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:ignore="UseAppTint">
+    android:padding="16dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -19,24 +18,93 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:text="@string/widget_value_placeholder"
+        android:includeFontPadding="false"
+        android:text="@string/widget_preview_level"
         android:textColor="#17232D"
         android:textSize="42sp" />
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:importantForAccessibility="no"
-        android:padding="8dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ui_history"
-        android:tint="#006B8C" />
+        android:layoutDirection="ltr"
+        android:orientation="horizontal">
 
-    <TextView
+        <LinearLayout
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:gravity="fill_vertical"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="top"
+                android:text="@string/widget_preview_axis_top"
+                android:textColor="#4D606F"
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/widget_preview_axis_upper"
+                android:textColor="#4D606F"
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/widget_preview_axis_lower"
+                android:textColor="#4D606F"
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="@string/widget_preview_axis_bottom"
+                android:textColor="#4D606F"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            android:src="@drawable/widget_trend_preview_line"
+            tools:ignore="NestedWeights" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/widget_preview"
-        android:textColor="#4D606F"
-        android:textSize="11sp" />
+        android:layoutDirection="ltr"
+        android:orientation="horizontal"
+        android:paddingStart="32dp"
+        android:paddingEnd="0dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/widget_preview_time_start"
+            android:textColor="#4D606F"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/widget_preview_time_end"
+            android:textColor="#4D606F"
+            android:textSize="11sp" />
+    </LinearLayout>
 </LinearLayout>

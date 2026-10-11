@@ -34,12 +34,11 @@ class MonitoringConnectionTest {
             voltageMillivolts = 3900,
             remainingChargeMicroampHours = 2_100_000,
             lastStatus = status,
-            lastPlugged = if (status == 0) 0 else 1,
             lastPercent = 75,
             lastStatusTimeMillis = 1000,
-            configuredPrediction = PredictionSnapshot(direction, target, false, 2000, 0, 1, 10),
+            configuredPrediction = PredictionSnapshot(direction, target, false, 0, 1, 10),
             fullRangePrediction = PredictionSnapshot(
-                direction, if (status == 0) 0 else 100, false, 3000, 0, 2, 0
+                direction, if (status == 0) 0 else 100, false, 0, 2, 0
             ),
             observedAtMillis = 1500
         )

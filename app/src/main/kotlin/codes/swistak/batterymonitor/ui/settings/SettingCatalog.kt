@@ -10,8 +10,7 @@ package codes.swistak.batterymonitor.ui.settings
 import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.settings.SettingsContract.KEY_BRIGHTNESS
-import codes.swistak.batterymonitor.settings.SettingsContract.KEY_COLOR_SOURCE
+import codes.swistak.batterymonitor.settings.SettingsContract
 import java.text.Normalizer
 import java.util.Locale
 
@@ -69,12 +68,12 @@ internal enum class SettingsCategory(
         }
 
         fun fromLegacy(key: String?) = when (key) {
-            "other_settings" -> General
-            "current_state_settings" -> Current
-            "time_estimates_settings" -> Time
-            "notification_settings" -> Notification
-            "advanced_settings" -> Advanced
-            "backup_restore_settings" -> Backup
+            SettingsContract.KEY_OTHER_SETTINGS -> General
+            SettingsContract.KEY_CURRENT_STATE_SETTINGS -> Current
+            SettingsContract.KEY_TIME_ESTIMATES_SETTINGS -> Time
+            SettingsContract.KEY_NOTIFICATION_SETTINGS -> Notification
+            SettingsContract.KEY_ADVANCED_SETTINGS -> Advanced
+            SettingsContract.KEY_BACKUP_RESTORE_SETTINGS -> Backup
             else -> null
         }
     }
@@ -112,7 +111,7 @@ internal object SettingCatalog {
             "background_monitoring", R.string.diagnostics_monitoring, R.string.diagnostics_summary
         ),
         DiagnosticEntry(
-            "debug_logging",
+            SettingsContract.KEY_DEBUG_LOGGING,
             R.string.diagnostics_debug_logs,
             R.string.diagnostics_debug_logs_warning
         ),
@@ -163,50 +162,55 @@ internal object SettingCatalog {
     }
     private val groups = linkedMapOf(
         SettingsCategory.General to listOf(
-            "change_app_language",
-            "temperature_unit",
-            "long_duration_format",
-            "autostart",
-            KEY_COLOR_SOURCE,
-            KEY_BRIGHTNESS
+            SettingsContract.KEY_CHANGE_APP_LANGUAGE,
+            SettingsContract.KEY_TEMPERATURE_UNIT,
+            SettingsContract.KEY_LONG_DURATION_FORMAT,
+            SettingsContract.KEY_AUTOSTART,
+            SettingsContract.KEY_COLOR_SOURCE,
+            SettingsContract.KEY_BRIGHTNESS
         ), SettingsCategory.Current to listOf(
-            "show_remaining_charge", "battery_current_multiplier", "prefer_average_battery_current"
+            SettingsContract.KEY_SHOW_REMAINING_CHARGE,
+            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
+            SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT
         ), SettingsCategory.Time to listOf(
-            "prediction_type",
-            "charging_target_mode",
-            "custom_charging_target",
-            "discharging_target"
+            SettingsContract.KEY_PREDICTION_TYPE,
+            SettingsContract.KEY_CHARGING_TARGET_MODE,
+            SettingsContract.KEY_CUSTOM_CHARGING_TARGET,
+            SettingsContract.KEY_DISCHARGING_TARGET
         ), SettingsCategory.Notification to listOf(
-            "enable_notifications_button",
-            "dismiss_low_battery_on_recovery",
-            "top_line",
-            "bottom_line",
-            "time_remaining_verbosity",
-            "vital_signs_content",
-            "expanded_notification_details",
-            "icon_content",
-            "show_icon_unit",
-            "indicate_charging",
-            "live_update_system_settings",
-            "live_update_display",
-            "live_update_keep_main_notification",
-            "expanded_live_update_details",
-            "chip_content",
-            "chip_switching_interval",
-            "chip_indicate_charging"
+            SettingsContract.KEY_ENABLE_NOTIFS_B,
+            SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY,
+            SettingsContract.KEY_TOP_LINE,
+            SettingsContract.KEY_BOTTOM_LINE,
+            SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
+            SettingsContract.KEY_VITAL_SIGNS_CONTENT,
+            SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS,
+            SettingsContract.KEY_ICON_CONTENT,
+            SettingsContract.KEY_SHOW_ICON_UNIT,
+            SettingsContract.KEY_INDICATE_CHARGING,
+            SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS,
+            SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
+            SettingsContract.KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION,
+            SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS,
+            SettingsContract.KEY_CHIP_CONTENT,
+            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL,
+            SettingsContract.KEY_CHIP_INDICATE_CHARGING
         ), SettingsCategory.Advanced to listOf(
-            "use_privileged_access", "enable_logging", "max_log_age", "auto_log_export"
+            SettingsContract.KEY_USE_PRIVILEGED_ACCESS,
+            SettingsContract.KEY_ENABLE_LOGGING,
+            SettingsContract.KEY_MAX_LOG_AGE,
+            SettingsContract.KEY_AUTO_LOG_EXPORT
         ), SettingsCategory.Backup to listOf(
-            "export_general_backup",
-            "import_general_backup",
-            "export_settings_backup",
-            "import_settings_backup",
-            "export_alarms_backup",
-            "import_alarms_backup",
-            "export_device_data_backup",
-            "import_device_data_backup",
-            "import_logs_csv_backup",
-            "reset_default_settings"
+            SettingsContract.KEY_EXPORT_GENERAL_BACKUP,
+            SettingsContract.KEY_IMPORT_GENERAL_BACKUP,
+            SettingsContract.KEY_EXPORT_SETTINGS,
+            SettingsContract.KEY_IMPORT_SETTINGS,
+            SettingsContract.KEY_EXPORT_ALARMS,
+            SettingsContract.KEY_IMPORT_ALARMS,
+            SettingsContract.KEY_EXPORT_DEVICE_DATA,
+            SettingsContract.KEY_IMPORT_DEVICE_DATA,
+            SettingsContract.KEY_IMPORT_LOGS_CSV,
+            SettingsContract.KEY_RESET_DEFAULT_SETTINGS
         )
     )
     val routes: Map<String, SettingsCategory> = groups.flatMap { (category, keys) ->
@@ -214,26 +218,45 @@ internal object SettingCatalog {
     }.toMap() + diagnosticRoutes.keys.associateWith { SettingsCategory.Advanced }
 
     private val chipKeys = setOf(
-        "live_update_system_settings",
-        "live_update_display",
-        "live_update_keep_main_notification",
-        "expanded_live_update_details",
-        "chip_content",
-        "chip_switching_interval",
-        "chip_indicate_charging"
+        SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS,
+        SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
+        SettingsContract.KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION,
+        SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS,
+        SettingsContract.KEY_CHIP_CONTENT,
+        SettingsContract.KEY_CHIP_SWITCHING_INTERVAL,
+        SettingsContract.KEY_CHIP_INDICATE_CHARGING
     )
 
     internal fun isVisible(key: String, sdkInt: Int, chargingTargetMode: String?): Boolean = when {
-        key == "custom_charging_target" -> chargingTargetMode == "custom"
+        key == SettingsContract.KEY_CUSTOM_CHARGING_TARGET -> chargingTargetMode == SettingsContract.CHARGING_TARGET_MODE_CUSTOM
+
         key in chipKeys -> sdkInt >= 36
         else -> true
     }
 
     internal fun aliasesFor(key: String): List<String> =
-        if (key == "live_update_system_settings") listOf("diagnostics_live_updates") else emptyList()
+        if (key == SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS) listOf("diagnostics_live_updates") else emptyList()
+
 
     fun entries(screen: PreferenceGroup, text: (Int) -> String): List<SettingDescriptor> {
-        val result = mutableListOf<SettingDescriptor>()
+        val result = mutableListOf(
+            SettingDescriptor(
+                SettingsContract.KEY_COLOR_SOURCE,
+                SettingsCategory.General,
+                text(R.string.settings_color_palette),
+                text(R.string.settings_color_palette_summary),
+                text(R.string.settings_appearance),
+                listOf(text(R.string.settings_appearance), text(SettingsCategory.General.title))
+            ), SettingDescriptor(
+                SettingsContract.KEY_BRIGHTNESS,
+                SettingsCategory.General,
+                text(R.string.settings_brightness),
+                text(R.string.settings_brightness_summary),
+                text(R.string.settings_appearance),
+                listOf(text(R.string.settings_appearance), text(SettingsCategory.General.title))
+            )
+        )
+
         fun visit(group: PreferenceGroup, heading: String) {
             for (index in 0 until group.preferenceCount) {
                 val preference = group.getPreference(index)
@@ -245,9 +268,11 @@ internal object SettingCatalog {
                     val category = routes[key] ?: continue
                     result += SettingDescriptor(
                         key, category, preference.title?.toString().orEmpty().ifBlank {
-                            if (key == "enable_notifications_button") text(R.string.pref_cat_channel_settings) else key
+                            if (key == SettingsContract.KEY_ENABLE_NOTIFS_B) text(R.string.pref_cat_channel_settings) else key
                         }, preference.summary?.toString().orEmpty(), if (key in setOf(
-                                "enable_logging", "max_log_age", "auto_log_export"
+                                SettingsContract.KEY_ENABLE_LOGGING,
+                                SettingsContract.KEY_MAX_LOG_AGE,
+                                SettingsContract.KEY_AUTO_LOG_EXPORT
                             )
                         ) text(R.string.settings_history_export) else heading, listOf(
                             text(category.title), text(category.legacyTitle)
@@ -265,23 +290,6 @@ internal object SettingCatalog {
             }
         }
         visit(screen, "")
-        result += listOf(
-            SettingDescriptor(
-                KEY_COLOR_SOURCE,
-                SettingsCategory.General,
-                text(R.string.settings_color_palette),
-                text(R.string.settings_color_palette_summary),
-                text(R.string.settings_appearance),
-                listOf(text(R.string.settings_appearance), text(SettingsCategory.General.title))
-            ), SettingDescriptor(
-                KEY_BRIGHTNESS,
-                SettingsCategory.General,
-                text(R.string.settings_brightness),
-                text(R.string.settings_brightness_summary),
-                text(R.string.settings_appearance),
-                listOf(text(R.string.settings_appearance), text(SettingsCategory.General.title))
-            )
-        )
         result += diagnosticEntries(text)
         return result
     }

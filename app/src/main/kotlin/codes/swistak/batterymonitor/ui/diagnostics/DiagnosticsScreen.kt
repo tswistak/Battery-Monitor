@@ -150,8 +150,14 @@ internal fun DiagnosticsScreen(
             DiagnosticsDurationFormatter.format(context, milliseconds)
         }
     }
+    val recentPredictor = monitor?.recentPredictorData?.let {
+        recentPredictorDiagnosticGroup(it, monitor.observedAtMillis) { milliseconds ->
+            DiagnosticsDurationFormatter.format(context, milliseconds)
+        }
+    }
+    val combinedPredictor = combinedPredictorDiagnosticGroup(predictor, recentPredictor)
     val rawPredictor =
-        predictor?.let(::rawPredictorDiagnosticGroup)?.takeIf { it.rows.isNotEmpty() }
+        combinedPredictor?.let(::rawPredictorDiagnosticGroup)?.takeIf { it.rows.isNotEmpty() }
     val raw = basic.drop(3) + app.drop(3) + advanced.drop(3) + listOfNotNull(rawPredictor)
     var tab by rememberSaveable { mutableIntStateOf(0) }
     var query by rememberSaveable { mutableStateOf("") }
@@ -275,45 +281,14 @@ internal fun DiagnosticsScreen(
                     }
                 }
                 item {
-                    DiagnosticCard(stringResource(R.string.device_data_predictor)) {
-                        Text(
-                            stringResource(R.string.diag_predictor_description),
-                            Modifier.padding(16.dp),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        if (predictor == null) Text(
-                            stringResource(
-                                if (monitorActions["monitor_start"]?.isVisible == true) R.string.diag_predictor_start_monitor else R.string.current_waiting
-                            ),
-                            Modifier.padding(16.dp),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        ) else {
-                            if (monitorAvailability != MonitoringAvailability.LIVE) Text(
-                                stringResource(R.string.current_stale),
-                                Modifier.padding(horizontal = 16.dp),
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            predictor.rows.forEachIndexed { index, row ->
-                                DiagnosticValue(
-                                    stringResource(row.label),
-                                    formattedDiagnosticValue(row, resources::getString).orEmpty(),
-                                    onClick = { selectedRow = row })
-                                if (index < predictor.rows.lastIndex) HorizontalDivider(
-                                    color = MaterialTheme.colorScheme.outlineVariant
-                                )
-                            }
-                            Text(
-                                stringResource(
-                                    R.string.diag_last_checked,
-                                    diagnosticTime(monitor.observedAtMillis)
-                                ),
-                                Modifier.padding(16.dp),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    }
+                    PredictorDiagnosticCard(
+                        predictor,
+                        recentPredictor,
+                        if (monitorActions["monitor_start"]?.isVisible == true) R.string.diag_predictor_start_monitor else R.string.current_waiting,
+                        if (monitor == null) R.string.current_waiting else R.string.diag_predictor_no_recent,
+                        monitor?.observedAtMillis ?: 0,
+                        monitorAvailability != MonitoringAvailability.LIVE,
+                        onSelect = { selectedRow = it })
                 }
             }
             if (tab in 1..2 && state.status != 0 && state.status != R.string.currently_disabled) item {
@@ -499,7 +474,7 @@ internal fun DiagnosticsScreen(
                 DiagnosticCard {
                     DiagnosticsLink(
                         stringResource(R.string.pref_cat_privileged_access),
-                        stringResource(if (!state.privilegedEnabled) R.string.currently_disabled else if (state.status != 0) state.status else R.string.yes),
+                        stringResource(state.privilegedAccessStatus),
                         R.drawable.ui_storage,
                         { access = true })
                     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
@@ -610,18 +585,74 @@ internal fun DiagnosticsScreen(
             appendLine(resources.getString(R.string.nav_diagnostics))
             if (state.status != 0) appendLine(resources.getString(state.status))
             if (state.stale) appendLine(resources.getString(R.string.diag_privileged_stale))
-            if (predictor != null && monitorAvailability != MonitoringAvailability.LIVE) appendLine(
+            if (combinedPredictor != null && monitorAvailability != MonitoringAvailability.LIVE) appendLine(
                 resources.getString(R.string.current_stale)
             )
             append(
                 diagnosticReport(
-                    normalized + listOfNotNull(predictor) + if (includeRaw) raw else emptyList(),
+                    normalized + listOfNotNull(combinedPredictor) + if (includeRaw) raw else emptyList(),
                     resources::getString,
                     includeRaw
                 )
             )
         }
     }, onDismiss = { report = false })
+}
+
+@Composable
+private fun PredictorDiagnosticCard(
+    stored: DiagnosticGroup?,
+    recent: DiagnosticGroup?,
+    storedEmptyLabel: Int,
+    recentEmptyLabel: Int,
+    observedAtMillis: Long,
+    stale: Boolean,
+    onSelect: (DiagnosticRow) -> Unit
+) {
+    val resources = LocalResources.current
+    DiagnosticCard(stringResource(R.string.device_data_predictor)) {
+        Text(
+            stringResource(R.string.diag_predictor_description),
+            Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        if (stale && (stored != null || recent != null)) Text(
+            stringResource(R.string.current_stale),
+            Modifier.padding(horizontal = 16.dp),
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        listOf(
+            Triple(R.string.diag_predictor_recent, recent, recentEmptyLabel),
+            Triple(R.string.diag_predictor_saved_averages, stored, storedEmptyLabel)
+        ).forEach { (title, group, emptyLabel) ->
+            Text(
+                stringResource(title),
+                Modifier.padding(16.dp),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            if (group == null) Text(
+                stringResource(emptyLabel),
+                Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            ) else group.rows.forEachIndexed { index, row ->
+                DiagnosticValue(
+                    stringResource(row.label),
+                    formattedDiagnosticValue(row, resources::getString).orEmpty(),
+                    onClick = { onSelect(row) })
+                if (index < group.rows.lastIndex) HorizontalDivider(
+                    color = MaterialTheme.colorScheme.outlineVariant
+                )
+            }
+        }
+        if (stored != null || recent != null) Text(
+            stringResource(R.string.diag_last_checked, diagnosticTime(observedAtMillis)),
+            Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
 }
 
 @Composable

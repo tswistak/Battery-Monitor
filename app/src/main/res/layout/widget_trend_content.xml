@@ -13,14 +13,60 @@
         android:maxLines="1"
         android:textSize="42sp" />
 
-    <ImageView
-        android:id="@+id/widget_chart"
+    <RelativeLayout
+        android:id="@+id/widget_chart_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/widget_trend"
-        android:scaleType="fitXY" />
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:id="@+id/widget_chart_y_axis"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="6dp"
+            android:importantForAccessibility="noHideDescendants">
+
+            <TextView
+                android:id="@+id/widget_chart_y_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/widget_chart_y_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/widget_chart_y_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textSize="11sp" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/widget_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@id/widget_chart_y_axis"
+            android:contentDescription="@string/widget_trend"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/widget_chart_axis"

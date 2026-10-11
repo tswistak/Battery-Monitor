@@ -136,9 +136,6 @@ internal class AdvancedBatterySnapshot {
         return chargeCounterUah != null || currentNowUa != null || currentAverageUa != null || energyCounterNwh != null || cycleCount != null || fullChargeUah != null || designChargeUah != null || maxChargingCurrentUa != null || maxChargingVoltageUv != null || chargingPolicy != null || chargingState != null || capacityLevel != null || reportedCapacityPercent != null || stateOfHealthPercent != null || chargeTimeRemainingMs != null || serviceLabels.isNotEmpty() || sysfsLabels.isNotEmpty() || metadataLabels.isNotEmpty()
     }
 
-    fun hasPrivilegedStats(): Boolean {
-        return chargeCounterUah != null || currentNowUa != null || currentAverageUa != null || energyCounterNwh != null || cycleCount != null || fullChargeUah != null || designChargeUah != null || maxChargingCurrentUa != null || maxChargingVoltageUv != null || chargingPolicy != null || chargingState != null || capacityLevel != null || serviceLabels.isNotEmpty() || sysfsLabels.isNotEmpty() || metadataLabels.isNotEmpty()
-    }
 
     fun toBundle(): Bundle {
         val bundle = Bundle()

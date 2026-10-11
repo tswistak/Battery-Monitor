@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -34,6 +35,7 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
@@ -42,6 +44,7 @@ import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import codes.swistak.batterymonitor.R
@@ -176,6 +179,7 @@ internal fun MeasurementChart(
     linksToEvents: Boolean = false
 ) {
     val locale = LocalConfiguration.current.locales[0]
+    val zone = ZoneId.systemDefault()
     val series = model.series.getValue(metric)
     val points = remember(series) { series.points.filter { it.value != null } }
     if (points.isEmpty()) {
@@ -196,18 +200,17 @@ internal fun MeasurementChart(
             )
         } else historyChartScale(series, metric, fahrenheit, currentMultiplier)
     }
-    val formatter = remember(locale, compact) {
-        DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(locale)
-            .withZone(ZoneId.systemDefault())
+    val formatter = remember(locale, compact, zone) {
+        DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(locale).withZone(zone)
     }
 
     fun time(value: Long) = formatter.format(Instant.ofEpochMilli(value))
-    val axisFormatter = remember(locale, model.range, compact) {
+    val axisFormatter = remember(locale, model.range, compact, zone) {
         (if (model.range.end - model.range.start <= 48 * 3_600_000L || compact) DateTimeFormatter.ofLocalizedTime(
             FormatStyle.SHORT
         ) else DateTimeFormatter.ofLocalizedDate(
             FormatStyle.SHORT
-        )).withLocale(locale).withZone(ZoneId.systemDefault())
+        )).withLocale(locale).withZone(zone)
     }
     val numberFormat = remember(locale) {
         NumberFormat.getNumberInstance(locale).apply { maximumFractionDigits = 2 }
@@ -400,25 +403,27 @@ internal fun MeasurementChart(
                         )
                     }
                 }
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    for (index in 0..(if (compact) 1 else 3)) {
-                        val steps = if (compact) 1 else 3
-                        val timestamp =
-                            model.range.start + (model.range.end - model.range.start - 1) * index / steps
-                        Text(
-                            axisFormatter.format(Instant.ofEpochMilli(timestamp)),
-                            Modifier.weight(1f),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = when (index) {
-                                0 -> androidx.compose.ui.text.style.TextAlign.Start; steps -> androidx.compose.ui.text.style.TextAlign.End; else -> androidx.compose.ui.text.style.TextAlign.Center
-                            }
-                        )
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        for (index in 0..(if (compact) 1 else 3)) {
+                            val steps = if (compact) 1 else 3
+                            val timestamp =
+                                model.range.start + (model.range.end - model.range.start - 1) * index / steps
+                            Text(
+                                axisFormatter.format(Instant.ofEpochMilli(timestamp)),
+                                Modifier.weight(1f),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = when (index) {
+                                    0 -> androidx.compose.ui.text.style.TextAlign.Start; steps -> androidx.compose.ui.text.style.TextAlign.End; else -> androidx.compose.ui.text.style.TextAlign.Center
+                                }
+                            )
+                        }
                     }
                 }
             }

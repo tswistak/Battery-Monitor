@@ -1,12 +1,11 @@
-<appwidget-provider
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/full_app_widget"
     android:minWidth="250dp"
     android:minHeight="40dp"
     android:minResizeWidth="180dp"
     android:minResizeHeight="40dp"
+    android:previewImage="@drawable/full_widget_preview"
+    android:previewLayout="@layout/full_widget_preview"
     android:resizeMode="horizontal"
     android:updatePeriodMillis="0"
-    android:widgetCategory="home_screen|keyguard"
-    android:initialLayout="@layout/full_app_widget"
-    android:previewImage="@drawable/full_widget_preview"
-/>
+    android:widgetCategory="home_screen|keyguard" />

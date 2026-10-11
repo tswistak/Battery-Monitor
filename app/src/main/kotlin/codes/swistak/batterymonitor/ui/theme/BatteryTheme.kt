@@ -190,19 +190,11 @@ private val BatteryTypography = Typography(
 )
 
 data class BatterySemanticColors(
-    val warning: Color,
-    val onWarning: Color,
-    val measurementOne: Color,
-    val measurementTwo: Color,
-    val measurementThree: Color
+    val warning: Color
 )
 
 val LocalBatterySemanticColors = staticCompositionLocalOf {
     BatterySemanticColors(
-        Color.Unspecified,
-        Color.Unspecified,
-        Color.Unspecified,
-        Color.Unspecified,
         Color.Unspecified
     )
 }
@@ -262,11 +254,7 @@ fun BatteryTheme(
     val context = LocalContext.current
     val scheme = batteryColorScheme(context, colorSource, brightness, isSystemInDarkTheme())
     val semantic = BatterySemanticColors(
-        warning = if (dark) Color(0xFFFFC56E) else Color(0xFF805600),
-        onWarning = if (dark) Color(0xFF412B00) else Color.White,
-        measurementOne = scheme.primary,
-        measurementTwo = scheme.tertiary,
-        measurementThree = scheme.secondary
+        warning = if (dark) Color(0xFFFFC56E) else Color(0xFF805600)
     )
     CompositionLocalProvider(LocalBatterySemanticColors provides semantic) {
         MaterialTheme(

@@ -8,10 +8,12 @@
 package codes.swistak.batterymonitor.ui.navigation
 
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.View
 import android.widget.TextView
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -21,6 +23,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -41,6 +44,7 @@ import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.adaptive.separatingVerticalHingeBounds
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,21 +54,30 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalInputModeManager
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.view.ViewCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import kotlinx.coroutines.launch
@@ -87,6 +100,20 @@ internal fun SideNavigationShell(
         val menuFocus = remember { FocusRequester() }
         val headingFocus = remember { FocusRequester() }
         val panelFocus = remember { FocusRequester() }
+        val inputModeManager = LocalInputModeManager.current
+        val keyboardNavigation = inputModeManager.inputMode == InputMode.Keyboard
+        val view = LocalView.current
+        DisposableEffect(view, drawerState, inputModeManager) {
+            val listener = ViewCompat.OnUnhandledKeyEventListenerCompat { _, event ->
+                if (event.keyCode == KeyEvent.KEYCODE_ESCAPE && drawerState.isOpen) {
+                    inputModeManager.requestInputMode(InputMode.Keyboard)
+                    if (event.action == KeyEvent.ACTION_UP) scope.launch { drawerState.close() }
+                    true
+                } else false
+            }
+            ViewCompat.addOnUnhandledKeyEventListener(view, listener)
+            onDispose { ViewCompat.removeOnUnhandledKeyEventListener(view, listener) }
+        }
         var wasOpen by remember { mutableStateOf(false) }
         var focusHeadingOnClose by remember { mutableStateOf(false) }
         val destinations = SectionRegistry.destinations
@@ -97,6 +124,10 @@ internal fun SideNavigationShell(
         val label = stringResource(destinations.first { it.owner == selected }.label)
         val settingsLabel = stringResource(R.string.nav_settings)
         val density = LocalDensity.current
+        val layoutDirection = LocalLayoutDirection.current
+        val safeLeft = with(density) {
+            WindowInsets.safeDrawing.getLeft(density, layoutDirection).toDp()
+        }
         val hinge =
             currentWindowAdaptiveInfoV2().windowPosture.separatingVerticalHingeBounds.firstOrNull()
 
@@ -112,7 +143,17 @@ internal fun SideNavigationShell(
             ) {
                 val persistent =
                     maxWidth >= 840.dp * density.fontScale && maxHeight >= 480.dp && hinge == null
-                val contentWidth = hinge?.let { with(density) { it.left.toDp() } } ?: maxWidth
+                val contentWidth = hinge?.let {
+                    with(density) {
+                        startPaneWidth(
+                            maxWidth,
+                            it.left.toDp() - safeLeft,
+                            it.right.toDp() - safeLeft,
+                            layoutDirection
+                        )
+                    }
+                } ?: maxWidth
+                val modalOpen = !persistent && drawerState.isOpen
                 val navigationLabel = stringResource(
                     when {
                         detailTitle != null -> R.string.nav_up
@@ -123,11 +164,15 @@ internal fun SideNavigationShell(
                 LaunchedEffect(persistent) {
                     if (persistent) drawerState.close()
                 }
-                LaunchedEffect(drawerState.currentValue) {
-                    if (drawerState.isOpen) wasOpen = true
-                    else if (wasOpen) {
-                        if (focusHeadingOnClose) headingFocus.requestFocus()
-                        else menuFocus.requestFocus()
+                LaunchedEffect(drawerState.currentValue, keyboardNavigation) {
+                    if (drawerState.isOpen) {
+                        wasOpen = true
+                        if (keyboardNavigation) panelFocus.requestFocus()
+                    } else if (wasOpen) {
+                        if (keyboardNavigation) {
+                            if (focusHeadingOnClose) headingFocus.requestFocus()
+                            else menuFocus.requestFocus()
+                        }
                         wasOpen = false
                         focusHeadingOnClose = false
                     }
@@ -141,11 +186,27 @@ internal fun SideNavigationShell(
                     drawerContent = {
                         if (!persistent) ModalDrawerSheet(
                             modifier = Modifier
-                                .widthIn(max = 360.dp)
+                                .widthIn(
+                                    max = minOf(
+                                        360.dp, contentWidth
+                                    )
+                                )
+                                .focusProperties {
+                                    onEnter = {
+                                        if (!drawerState.isOpen) cancelFocusChange()
+                                        else if (keyboardNavigation) panelFocus.requestFocus()
+                                    }
+                                    onExit = {
+                                        if (drawerState.isOpen) cancelFocusChange()
+                                    }
+                                }
+                                .focusGroup()
+                                .semantics {
+                                    if (!drawerState.isOpen) hideFromAccessibility()
+                                }
                                 .fillMaxHeight(),
                             drawerShape = RoundedCornerShape(topEnd = 26.dp, bottomEnd = 26.dp),
-                            windowInsets = WindowInsets(0, 0, 0, 0)
-                        ) {
+                            windowInsets = WindowInsets(0, 0, 0, 0)) {
                             SideMenuContent(
                                 appName = stringResource(R.string.app_full_name),
                                 closeLabel = stringResource(R.string.nav_close_menu),
@@ -154,6 +215,7 @@ internal fun SideNavigationShell(
                                 batterySections = batterySections,
                                 toolSections = toolSections,
                                 selectedId = selected.route,
+                                firstItemFocusRequester = panelFocus,
                                 onSelect = { route ->
                                     val owner = SectionRegistry.owner(route)
                                     scope.launch {
@@ -168,12 +230,20 @@ internal fun SideNavigationShell(
                     modifier = Modifier
                         .fillMaxSize()
                         .onPreviewKeyEvent {
-                            if (it.key == Key.Escape && it.type == KeyEventType.KeyUp && drawerState.isOpen) {
-                                scope.launch { drawerState.close() }
+                            if (it.key == Key.Escape && drawerState.isOpen) {
+                                inputModeManager.requestInputMode(InputMode.Keyboard)
+                                if (it.type == KeyEventType.KeyUp) scope.launch { drawerState.close() }
                                 true
                             } else false
                         }) {
-                    Row(Modifier.fillMaxSize()) {
+                    Row(
+                        Modifier
+                            .fillMaxSize()
+                            .focusProperties {
+                                onEnter = { if (modalOpen) cancelFocusChange() }
+                            }
+                            .focusGroup()
+                            .semantics { if (modalOpen) hideFromAccessibility() }) {
                         if (persistent) PermanentDrawerSheet(
                             modifier = Modifier
                                 .width(280.dp)
@@ -191,7 +261,7 @@ internal fun SideNavigationShell(
                                 toolSections = toolSections,
                                 selectedId = selected.route,
                                 onSelect = { route -> onSelect(SectionRegistry.owner(route)) },
-                                onClose = { menuFocus.requestFocus() },
+                                onClose = { if (keyboardNavigation) menuFocus.requestFocus() },
                                 showCloseButton = false,
                                 firstItemFocusRequester = panelFocus
                             )
@@ -204,7 +274,11 @@ internal fun SideNavigationShell(
                         )
                         Column(
                             Modifier
-                                .weight(1f)
+                                .then(
+                                    if (hinge != null) Modifier.width(contentWidth) else Modifier.weight(
+                                        1f
+                                    )
+                                )
                                 .fillMaxHeight()
                         ) {
                             TopAppBar(
@@ -221,15 +295,17 @@ internal fun SideNavigationShell(
                                     )
                                 },
                                 navigationIcon = {
-                                    IconButton(onClick = {
-                                        if (detailTitle != null) onUp()
-                                        else if (persistent) panelFocus.requestFocus()
-                                        else scope.launch { drawerState.open() }
-                                    }, modifier = Modifier
-                                        .focusRequester(menuFocus)
-                                        .semantics {
-                                            contentDescription = navigationLabel
-                                        }) {
+                                    IconButton(
+                                        onClick = {
+                                            if (detailTitle != null) onUp()
+                                            else if (persistent) {
+                                                if (keyboardNavigation) panelFocus.requestFocus()
+                                            } else scope.launch { drawerState.open() }
+                                        }, modifier = Modifier
+                                            .focusRequester(menuFocus)
+                                            .semantics {
+                                                contentDescription = navigationLabel
+                                            }) {
                                         Icon(
                                             painterResource(if (detailTitle == null) R.drawable.ui_menu else R.drawable.ui_back),
                                             contentDescription = null,
@@ -249,17 +325,17 @@ internal fun SideNavigationShell(
                                     val actionColor = MaterialTheme.colorScheme.onSurface.toArgb()
                                     if (onLegacyActions != null) AndroidView(
                                         factory = { context ->
-                                        TextView(context).apply {
-                                            text = "⋮"
-                                            textSize = 24f
-                                            gravity = Gravity.CENTER
-                                            isClickable = true
-                                            isFocusable = true
-                                            contentDescription =
-                                                context.getString(R.string.nav_actions)
-                                            setOnClickListener { onLegacyActions(this) }
-                                        }
-                                    },
+                                            TextView(context).apply {
+                                                text = "⋮"
+                                                textSize = 24f
+                                                gravity = Gravity.CENTER
+                                                isClickable = true
+                                                isFocusable = true
+                                                contentDescription =
+                                                    context.getString(R.string.nav_actions)
+                                                setOnClickListener { onLegacyActions(this) }
+                                            }
+                                        },
                                         update = { it.setTextColor(actionColor) },
                                         modifier = Modifier.size(48.dp)
                                     )
@@ -285,3 +361,9 @@ internal fun SideNavigationShell(
         }
     }
 }
+
+internal fun startPaneWidth(
+    availableWidth: Dp, hingeLeft: Dp, hingeRight: Dp, direction: LayoutDirection
+): Dp = (if (direction == LayoutDirection.Rtl) availableWidth - hingeRight else hingeLeft).coerceIn(
+    0.dp, availableWidth
+)

@@ -20,7 +20,7 @@ import org.junit.Test
 class CurrentStateModelTest {
     private fun prediction(direction: Int, target: Int, reached: Boolean = false) =
         PredictionSnapshot(
-            direction, target, reached, 0L, 0, 2, 20
+            direction, target, reached, 0, 2, 20
         )
 
     private fun snapshot(
@@ -37,7 +37,6 @@ class CurrentStateModelTest {
         3880,
         1840000L,
         status,
-        BatteryInfo.PLUGGED_UNPLUGGED,
         80,
         1000L,
         configured,
@@ -93,6 +92,43 @@ class CurrentStateModelTest {
         val denied = currentStateModel(live(reading), notificationsEnabled = false)
         assertTrue(denied.notificationsDisabled)
         assertEquals(CurrentCondition.DISCHARGING, denied.condition)
+    }
+
+    @Test
+    fun `discharge exactly at twenty percent reaches the target with an explicit full range alternative`() {
+        val reading = snapshot(
+            level = 20,
+            configured = prediction(BatteryInfo.Prediction.UNTIL_DRAINED, 20, true),
+            fullRange = prediction(BatteryInfo.Prediction.UNTIL_DRAINED, 0)
+        )
+
+        val configured = currentStateModel(live(reading))
+        assertEquals(CurrentCondition.TARGET_REACHED, configured.condition)
+        assertEquals(20, configured.prediction?.targetPercent)
+        assertTrue(configured.prediction?.targetReached == true)
+        assertTrue(configured.hasAlternative)
+
+        val alternative = currentStateModel(live(reading), showingFullRange = true)
+        assertEquals(CurrentCondition.TARGET_REACHED, alternative.condition)
+        assertEquals(20, alternative.snapshot?.configuredPrediction?.targetPercent)
+        assertEquals(0, alternative.prediction?.targetPercent)
+        assertFalse(alternative.prediction?.targetReached == true)
+    }
+
+    @Test
+    fun `discharge below twenty percent resumes the full range estimate without a reached target label`() {
+        val reading = snapshot(
+            level = 19,
+            configured = prediction(BatteryInfo.Prediction.UNTIL_DRAINED, 0),
+            fullRange = prediction(BatteryInfo.Prediction.UNTIL_DRAINED, 0)
+        )
+
+        val model = currentStateModel(live(reading), showingFullRange = true)
+        assertEquals(CurrentCondition.DISCHARGING, model.condition)
+        assertEquals(0, model.prediction?.targetPercent)
+        assertFalse(model.prediction?.targetReached == true)
+        assertFalse(model.hasAlternative)
+        assertFalse(model.showingFullRange)
     }
 
     @Test

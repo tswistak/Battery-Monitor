@@ -27,7 +27,7 @@
             android:fontFamily="sans-serif-medium"
             android:paddingStart="0dp"
             android:paddingEnd="44dp"
-            android:text="@string/widget_value_placeholder"
+            android:text="@string/widget_preview_level"
             android:textColor="#12384F"
             android:textSize="54sp" />
 
@@ -43,7 +43,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/widget_preview"
-        android:textColor="#4D606F"
-        android:textSize="11sp" />
+        android:text="@string/status_discharging"
+        android:textColor="#12384F"
+        android:textSize="12sp" />
+
 </LinearLayout>

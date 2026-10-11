@@ -41,9 +41,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/widget_value_placeholder"
+                android:maxLines="1"
+                android:text="@string/widget_preview_temperature"
                 android:textColor="#17232D"
-                android:textSize="21sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -56,9 +57,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/widget_value_placeholder"
+                android:maxLines="1"
+                android:text="@string/widget_preview_current"
                 android:textColor="#17232D"
-                android:textSize="21sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,9 +79,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/widget_value_placeholder"
+                android:maxLines="1"
+                android:text="@string/widget_preview_voltage"
                 android:textColor="#17232D"
-                android:textSize="21sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -92,16 +95,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/widget_value_placeholder"
+                android:maxLines="1"
+                android:text="@string/widget_preview_charge"
                 android:textColor="#17232D"
-                android:textSize="21sp" />
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/widget_preview"
-        android:textColor="#4D606F"
-        android:textSize="11sp" />
 </LinearLayout>

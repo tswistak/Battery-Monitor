@@ -69,6 +69,58 @@ class LegacyWidgetContractTest {
         }
     }
 
+    @Test
+    fun `legacy picker labels and previews preserve the original provider size contracts`() {
+        val receivers = parse("AndroidManifest.xml").getElementsByTagName("receiver")
+        for ((receiverName, metadata) in providers) {
+            val resourceName = metadata.removeSuffix("_app_widget_info") + "_widget"
+            val receiver = (0 until receivers.length).map { receivers.item(it) as Element }
+                .single { it.androidAttribute("name") == receiverName }
+            assertEquals("@string/$resourceName", receiver.androidAttribute("label"))
+
+            val info = parse("res/xml/$metadata.xml").documentElement
+            assertEquals("@layout/${resourceName}_preview", info.androidAttribute("previewLayout"))
+            assertEquals("@drawable/${resourceName}_preview", info.androidAttribute("previewImage"))
+            parse("res/layout/${resourceName}_preview.xml")
+            for (qualifier in listOf("drawable-nodpi", "drawable-night-nodpi")) {
+                assertTrue(
+                    File(
+                        mainDirectory(), "res/$qualifier/${resourceName}_preview.png"
+                    ).isFile
+                )
+            }
+
+            val circle = resourceName == "circle_widget"
+            val originalDimensions = mapOf(
+                "minWidth" to if (circle) "40dp" else "250dp",
+                "minHeight" to "40dp",
+                "minResizeWidth" to if (circle) "40dp" else "180dp",
+                "minResizeHeight" to "40dp"
+            )
+            originalDimensions.forEach { (attribute, value) ->
+                assertEquals("$metadata $attribute", value, info.androidAttribute(attribute))
+            }
+            assertEquals(if (circle) "" else "horizontal", info.androidAttribute("resizeMode"))
+        }
+    }
+
+    @Test
+    fun `new widgets retain layout previews and supply PNG fallbacks for older launchers`() {
+        for (family in listOf("status", "measurements", "trend")) {
+            val preview = "widget_${family}_preview"
+            val info = parse("res/xml/widget_${family}_info.xml").documentElement
+            assertEquals("@layout/$preview", info.androidAttribute("previewLayout"))
+            assertEquals("@drawable/$preview", info.androidAttribute("previewImage"))
+            val png = File(mainDirectory(), "res/drawable-nodpi/$preview.png").readBytes()
+            assertTrue(png.size > 24)
+            assertTrue(
+                png.take(8).toByteArray().contentEquals(
+                    byteArrayOf(0x89.toByte(), 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a)
+                )
+            )
+        }
+    }
+
     private fun parse(path: String) = DocumentBuilderFactory.newInstance().apply {
         isNamespaceAware = true
         setFeature("http://apache.org/xml/features/disallow-doctype-decl", true)

@@ -5,8 +5,8 @@
     <string name="help_activity_subtitle" formatted="false">Battery Monitor Help</string>
 
     <string name="battery_use_b" formatted="false">View Battery Use</string>
-    <string name="circle_widget" formatted="false">Circle</string>
-    <string name="full_widget" formatted="false">Full</string>
+    <string name="circle_widget" formatted="false">Circle (old)</string>
+    <string name="full_widget" formatted="false">Full (old)</string>
     <string name="yes" formatted="false">Yes</string>
     <string name="cancel" formatted="false">Cancel</string>
 
@@ -221,11 +221,11 @@
     <string name="help_cat_frequently_asked_questions" formatted="false">Frequently Asked Questions</string>
     <string name="help_frequently_asked_questions" formatted="false">You can find answers to the most popular questions at <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
-    <string name="help_cat_contact" formatted="false">Contact</string>
-    <string name="help_contact" formatted="false">If you have a question, a problem, or a comment, please <a href="mailto:tomasz@swistak.codes">email me</a>.</string>
+    <string name="help_cat_contact" formatted="false">Contact and feedback</string>
+    <string name="help_contact" formatted="false">You are welcome to <a href="https://github.com/tswistak/Battery-Monitor/issues">report bugs on GitHub</a>. For questions, ideas, and feedback, join <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a>. You can also <a href="mailto:tomasz@swistak.codes">email me</a>.</string>
 
     <string name="settings_overview" formatted="false">Overview</string>
-    <string name="settings_overview_help" formatted="false">Battery Monitor\'s settings are organized into separate pages as described below. Each page of settings has its own help page describing the settings available there.</string>
+    <string name="settings_overview_help" formatted="false">Settings are grouped into General, Current state, Time estimates, Notifications, Advanced, and Backup and restore. Use search to find an option. Each page has help for its settings. Diagnostics is available separately from the sidebar.</string>
 
     <string name="notifications_disabled_cat" formatted="false">Notifications Disabled</string>
     <string name="app_notifs_disabled_b" formatted="false">Enable App Notifications</string>
@@ -245,18 +245,18 @@
     <string name="status_bar_icon_settings" formatted="false">Status Bar Icon</string>
     <string name="status_bar_icon_settings_help" formatted="false">Choose whether the notification icon shows battery percentage or temperature. Also choose, whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon. Starting with Android 16, the status bar icon may not work on every OS variant.</string>
     <string name="status_bar_chip_settings" formatted="false">Status Bar Chip</string>
-    <string name="status_bar_chip_settings_help" formatted="false">Configure what the status bar chip shows, how often its content changes, and whether to display the charging emoji.</string>
+    <string name="status_bar_chip_settings_help" formatted="false">On Android 16 or later, choose when the Live Update chip appears, which values it cycles through, and whether it shows a charging emoji. Availability also depends on the device and system notification settings.</string>
     <string name="current_state_settings_summary" formatted="false">Settings for the Current state screen</string>
-    <string name="current_state_settings_help" formatted="false">Configure the information shown on the Current state screen. Battery-current options control the live reading displayed with the other battery details.</string>
+    <string name="current_state_settings_help" formatted="false">Choose whether to show remaining charge and whether Current state prefers average battery current. Current is always measured when available. The multiplier corrects current and calculated power throughout the app; logs retain the original instantaneous current so the multiplier can be changed later.</string>
     <string name="alarm_settings_subtitle" formatted="false">Alarm Settings</string>
     <string name="alarm_settings" formatted="false">Alarms</string>
     <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
     <string name="other_settings" formatted="false">General</string>
     <string name="other_settings_summary" formatted="false">Configure the app’s general behavior and everyday preferences.</string>
-    <string name="other_settings_help" formatted="false">Use these settings to adapt Battery Monitor to your everyday use. They cover general app behavior and preferences that help the app fit naturally into how you use your device.</string>
+    <string name="other_settings_help" formatted="false">Choose the color palette and brightness, app language, temperature unit, duration format, and whether monitoring starts after a device restart.</string>
     <string name="advanced_settings" formatted="false">Advanced</string>
     <string name="advanced_settings_summary" formatted="false">Fine-tune Battery Monitor with additional controls for specialized use cases.</string>
-    <string name="advanced_settings_help" formatted="false">Use these settings when you want more control over how Battery Monitor works beyond everyday preferences. The defaults suit most users, while additional adjustments can help tailor the app to more specific monitoring needs.</string>
+    <string name="advanced_settings_help" formatted="false">Control privileged access, history logging, log retention, and automatic exports. Background monitoring opens checks and tools for permissions, monitor reliability, debug logs, and charging-limit reports.</string>
 
     <string name="live_updates_onboarding_title">Status Bar Battery Chip</string>
     <string name="live_updates_onboarding_message_on">Your device supports showing the battery percentage as a chip in the status bar. This is enabled by default.\n
@@ -328,7 +328,7 @@
     <string name="pref_cat_privileged_access" formatted="false">Privileged access</string>
     <string name="pref_use_privileged_access" formatted="false">Use privileged access</string>
     <string name="pref_use_privileged_access_summary" formatted="false">Use granted root or Shizuku access for more complete and accurate device data?</string>
-    <string name="pref_use_privileged_access_help" formatted="false">Privileged access can make additional device data available and improve some measurements. Battery Monitor uses only root or Shizuku access that you explicitly grant.</string>
+    <string name="pref_use_privileged_access_help" formatted="false">Enable additional device readings through root or Shizuku access that you grant. When Android cannot provide a supported value, Battery Monitor also uses these readings on Current state and in logs. Extra diagnostics are collected automatically; there is no separate switch for advanced statistics.</string>
 
     <string name="pref_battery_current_multiplier" formatted="false">Multiplier</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detect automatically</string>
@@ -340,7 +340,7 @@
 
     <string name="pref_prefer_average_battery_current" formatted="false">Prefer average current</string>
     <string name="pref_prefer_average_battery_current_summary" formatted="false">Use the recent average on Current State when available?</string>
-    <string name="pref_prefer_current_avg_help" formatted="false">Some devices provide a recent average in addition to instantaneous current. The averaging period varies by device. This option applies only to Current State; logs always store instantaneous current.</string>
+    <string name="pref_prefer_current_avg_help" formatted="false">Some devices provide a recent average in addition to instantaneous current. The averaging period varies by device. Current state uses instantaneous current when the average is unavailable. This option applies only to Current state; logs always store the original instantaneous reading.</string>
 
 
     <string name="pref_indicate_charging" formatted="false">Indicate Charging</string>
@@ -350,10 +350,10 @@
     <string name="pref_cat_logging" formatted="false">Logging</string>
     <string name="pref_enable_logging" formatted="false">Enable Logging</string>
     <string name="pref_enable_logging_summary" formatted="false">Log battery state changes?</string>
-    <string name="pref_enable_logging_help" formatted="false">If enabled, Battery Monitor will log battery state changes.</string>
+    <string name="pref_enable_logging_help" formatted="false">Save battery observations and status changes for History. Available measurements include level, temperature, voltage, original instantaneous current, and remaining charge. Power is calculated from voltage and current when displayed or exported; it is not stored separately. Turning logging off does not erase existing history or stop time estimates.</string>
     <string name="pref_max_log_age" formatted="false">Maximum Log Age</string>
     <string name="pref_max_log_age_summary" formatted="false">Delete logs older than:</string>
-    <string name="pref_max_log_age_help" formatted="false">If logging is enabled, then whenever you plug in your device, logs older than this will be deleted. Select "Never delete" to keep logs until you clear them manually.</string>
+    <string name="pref_max_log_age_help" formatted="false">When logging is enabled, connecting to power removes logs older than this limit. Never delete keeps them until you clear them manually. If automatic export is enabled, Battery Monitor exports pending logs before deleting old entries; a failed export prevents that deletion.</string>
 
     <string name="pref_temperature_unit" formatted="false">Temperature unit</string>
     <string name="pref_temperature_unit_help" formatted="false">Choose whether temperatures are displayed in Celsius or Fahrenheit.</string>
@@ -361,11 +361,7 @@
     <string name="pref_cat_autostart" formatted="false">Autostart</string>
     <string name="pref_autostart_at_boot" formatted="false">Autostart at Boot</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Start Battery Monitor when device boots:</string>
-    <string name="pref_autostart_at_boot_help" formatted="false">Controls whether Battery Monitor should start itself automatically when the device boots up.\n
-    \n
-    The \"If Running on Shutdown\" option works with regard to whether you\'ve most recently manually started or stopped Battery Monitor. So if you kill Battery Monitor through some other means, like a task killer, then Battery Monitor doesn\'t know you stopped it, and it will still start at boot up if you have it set to this.\n
-    \n
-    NOTE: Android will always start Battery Monitor on boot if you have an Battery Monitor desktop widgets. In that case this settings is irrelevant.</string>
+    <string name="pref_autostart_at_boot_help" formatted="false">“Always” starts background monitoring after a device restart. “Never” skips the automatic start at boot. “If Running on Shutdown” follows whether you last started or stopped monitoring in Battery Monitor. Closing the app or ending its process does not count as stopping monitoring. Widgets do not override this choice.</string>
 
     <string name="predictor_sensitive" formatted="false">Sensitive</string>
     <string name="predictor_conservative" formatted="false">Conservative</string>
@@ -374,17 +370,9 @@
 
     <string name="pref_cat_predictor" formatted="false">Time-Remaining Estimates</string>
     <string name="pref_prediction_type" formatted="false">Estimate Type</string>
-    <string name="pref_prediction_type_help" formatted="false">Here you can select how Battery Monitor will predict your remaining battery life / time until fully charged.\n
-    \n
-    The \"Sensitive\" algorithm is strictly based on your last five minutes of usage. If your primary concern is \"How long will my battery last if I keep doing what I\'m doing?\" then this is the algorithm for you.\n
-    \n
-    The \"Conservative\" algorithm is the default. It is also based on recent usage, but it tries not to vary from your long-term average too freely.\n
-    \n
-    Select \"Since Status Change\" to have the prediction based strictly on your current session.\n
-    \n
-    Finally, you can have the prediction based solely on your long-term average usage.</string>
+    <string name="pref_prediction_type_help" formatted="false">Sensitive uses the recent five-minute rate. Conservative, the default, combines recent rates with the learned long-term average to reduce sudden changes. Since Status Change uses the current charging or discharging session. Long-Term Average uses the learned rate for discharge or the active charging source. Until enough observations are available, estimates use the stored average or an initial default.</string>
 
-    <string name="pref_cat_language" formatted="false">Language &amp;formatting</string>
+    <string name="pref_cat_language" formatted="false">Language &amp; formatting</string>
     <string name="pref_change_app_language" formatted="false">App language</string>
     <string name="pref_change_app_language_help" formatted="false">Select the language used by Battery Monitor. The system default follows your device language.</string>
     <string name="pref_long_duration_format" formatted="false">Long duration format</string>
@@ -404,7 +392,7 @@
     • To delete a saved rule, open it and press \"Delete alarm\", then confirm.\n
     • Android notification channels control sound, vibration and delivery for each alarm type. A blocked channel is shown separately from the rule switch.\n
     \n
-    The alarm settings include an optional switch to dismiss a low-battery notification after the battery recovers above its threshold.</string>
+    In Notifications settings, an optional switch dismisses a low-battery notification after the battery recovers above its threshold.</string>
 
     <string name="pref_alarm_enabled" formatted="false">Enable Alarm</string>
     <string name="pref_alarm_enabled_help" formatted="false">If you want to temporarily disable an alarm without having to recreate it when you want it again, you can turn it off and on either here or on the main alarms page.</string>
@@ -415,7 +403,7 @@
     <string name="pref_alarm_type_summary" formatted="false">Trigger alarm when battery:</string>
     <string name="pref_alarm_type_help" formatted="false">There are currently eight types of alarm that you can choose from.\n
     \n
-    The \"Becomes fully charged\" alarm will notify you when the status of your battery changes from \"Charging\" to \"Fully Charged\". Note that on many devices, this isn\'t necessarily the same thing as being at 100% charge.\n
+    The \"Becomes fully charged\" alarm will notify you when Android reports that the battery has become fully charged. Note that on many devices, this isn\'t necessarily the same thing as being at 100% charge.\n
     \n
     The \"Charging limit met\" and \"Discharging limit met\" alarms will notify you when the battery reaches your charging or discharging target. They need no threshold and always follow the current target settings.\n
     \n
@@ -485,12 +473,12 @@
     <string name="advanced_field_minimum_design_voltage" formatted="false">Minimum design voltage</string>
     <string name="advanced_value_not_available" formatted="false">Not available</string>
     <string name="advanced_help_overview" formatted="false">Diagnostics combines monitor reliability, saved predictor data and battery data in App operation, Battery, Charging and Raw tabs. Android data is available without root. Extra device data depends on the device and permissions available to Battery Monitor.</string>
-    <string name="advanced_help_counters" formatted="false">Counters contain live or recently sampled values such as charge counter, current, energy counter, and cycle count. Some devices expose only a subset, and units may come directly from the hardware driver.</string>
+    <string name="advanced_help_counters" formatted="false">Battery readings are labeled and formatted as remaining charge in mAh, current in mA, energy in mWh, voltage in V, temperature in your selected unit, and power in W. The current multiplier also applies to calculated power. Average current and cycle count depend on device support.</string>
     <string name="advanced_help_capacity" formatted="false">Capacity shows full-charge capacity, design capacity, and estimated health. Estimated health is calculated as full-charge capacity divided by design capacity, so it is only as accurate as the values reported by the device.</string>
     <string name="advanced_help_charging" formatted="false">Charging shows values related to the active charging path, such as maximum charging current or voltage, charging policy, charging state, and capacity level. These fields may change between chargers and charging modes.</string>
-    <string name="advanced_help_service" formatted="false">Android battery service shows raw fields reported by `dumpsys battery`. These are framework-level values that often include charging source, battery status, temperature, voltage, and other service state.</string>
-    <string name="advanced_help_sysfs" formatted="false">Raw shows the original names and values read from /sys/class/power_supply, including multiline values. Search by key, then tap a row to view and copy the complete value. Battery Monitor attempts reads with its own permissions even without root or Shizuku.</string>
-    <string name="advanced_help_metadata" formatted="false">Metadata shows higher-level battery properties exposed through BatteryManager, such as state of health, remaining charge time, manufacturing details, or replacement status. Most of these fields require privileged access and many devices expose only a small subset.</string>
+    <string name="advanced_help_service" formatted="false">Raw includes original names and values from Android battery broadcasts and, when accessible, dumpsys battery. These can include charging source, battery status, temperature, voltage, and other battery-service state.</string>
+    <string name="advanced_help_sysfs" formatted="false">Raw shows the original names and values read from /sys/class/power_supply, including multiline values. Search by key and tap a row to view and copy its complete value. Use Refresh to collect new readings. Battery Monitor also tries reads with its normal Android permissions, without root or Shizuku.</string>
+    <string name="advanced_help_metadata" formatted="false">Raw also includes original BatteryManager property names and values, including available counters and current readings. Additional properties such as manufacturing details or replacement status depend on Android version, device support, and permissions.</string>
     <string name="advanced_help_troubleshooting_title" formatted="false">Troubleshooting</string>
     <string name="advanced_help_troubleshooting" formatted="false">Android data is collected automatically in Diagnostics. For additional root or Shizuku data, enable privileged access under Additional sources. Battery Monitor tries root first, then Shizuku. Shizuku must be running and permission granted. Missing fields remain unavailable; failed refreshes retain the previous snapshot and mark it stale.</string>
 
@@ -537,8 +525,8 @@
     <string name="pref_auto_log_export_mode" formatted="false">File handling</string>
     <string name="pref_auto_log_export_format" formatted="false">Export format</string>
     <string name="pref_auto_log_export_directory" formatted="false">Change folder</string>
-    <string name="auto_log_export_help" formatted="false">Automatic exports save only logs collected since the previous automatic export. Choose how often they run and whether each export creates a separate file or appends the new entries to one ongoing file. Android may delay an export while the device is idle.</string>
-    <string name="auto_log_export_format_help" formatted="false">Choose CSV for reading, filtering, charting, or auditing logs manually in a spreadsheet or text editor. Choose JSON when the file is primarily a backup: it preserves Battery Monitor’s structured log data.</string>
+    <string name="auto_log_export_help" formatted="false">Configure automatic export in Advanced. Choose a folder, frequency, format, and whether to create separate files or append to one file. Exports normally save logs since the previous automatic export; a new ongoing file includes all available logs. Android may delay exports while idle. Logging must remain enabled.</string>
+    <string name="auto_log_export_format_help" formatted="false">CSV is useful in a spreadsheet or text editor. It includes the original current, remaining charge, and power calculated using the multiplier selected at export time. JSON preserves structured log data for backups. Unavailable current, remaining charge, and power cells remain empty.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Create a new file</string>
     <string name="auto_log_export_mode_append" formatted="false">Append new logs to the existing file</string>
     <string name="pref_export_alarms" formatted="false">Export alarms</string>
@@ -578,12 +566,12 @@
     <string name="general_backup_exported" formatted="false">General backup exported successfully</string>
     <string name="general_backup_imported" formatted="false">General backup imported successfully</string>
     <string name="invalid_general_backup_file" formatted="false">Invalid or incompatible general backup file</string>
-    <string name="backup_restore_help_overview" formatted="false">Use backups to save a copy of your app data and restore it later.</string>
+    <string name="backup_restore_help_overview" formatted="false">Save and restore settings, alarms, logs, and learned prediction data. Restore default settings resets app preferences after confirmation while keeping history, alarms, learned estimates, and whether monitoring is running.</string>
     <string name="general_backup_help" formatted="false">A general backup saves settings, alarms, and device-specific data together. When restoring it, you can choose which available data to import.</string>
     <string name="settings_backup_help" formatted="false">A settings backup saves your app preferences. Importing it restores the saved preferences.</string>
     <string name="alarms_backup_help" formatted="false">An alarms backup saves your alarms. Importing it replaces all current alarms with those from the backup.</string>
     <string name="device_specific_backup_help" formatted="false">A device-specific data backup saves logs and predictor data. You can select either or both during import. This data belongs to the source device; using it on another device can cause incorrect predictions or unexpected behavior. When importing logs, choose whether to add them or replace existing logs.</string>
-    <string name="csv_logs_import_help" formatted="false">You can import logs from a previously exported CSV file. Import may not work correctly between different app versions. Choose whether to add imported logs or replace existing logs.</string>
+    <string name="csv_logs_import_help" formatted="false">Import logs from a CSV exported by Battery Monitor and choose whether to add them or replace existing logs. Older exports may not contain current or remaining charge; those measurements stay empty for older entries. JSON backups preserve the structured data and are preferable for restoring it.</string>
 
     <string name="diagnostics" formatted="false">Diagnostics</string>
     <string name="diagnostics_summary" formatted="false">Check permissions, monitoring reliability, and create a report for troubleshooting</string>
@@ -621,7 +609,7 @@
     <string name="diagnostics_exported" formatted="false">Diagnostics report exported</string>
     <string name="diagnostics_export_failed" formatted="false">Could not export diagnostics report</string>
     <string name="diagnostics_help_title" formatted="false">How diagnostics help</string>
-    <string name="diagnostics_help_overview" formatted="false">This screen checks whether Battery Monitor has what it needs to keep monitoring in the background. If something is missing, tap that item to open the place where you can fix it.</string>
+    <string name="diagnostics_help_overview" formatted="false">Background monitoring checks permissions and monitor reliability. Use its controls to start or stop monitoring, change debug logging, open battery optimization and notification settings, or create a troubleshooting report. Not every unavailable reading indicates a permission problem; some devices do not provide it.</string>
     <string name="diagnostics_help_report" formatted="false">If you report a problem, the diagnostics report may be vital for finding its cause. It includes device and app status information and, if you enabled them, debug logs. Debug logs may contain personal information, so review the file and share it carefully.</string>
     <string name="diagnostics_service_restarting" formatted="false">The service did not respond. Restarting it…</string>
     <string name="diagnostics_service_restart_failed" formatted="false">The monitoring service did not respond after restarting. Try restarting the app.</string>
@@ -670,7 +658,7 @@
 
     <string name="time_estimates_settings" formatted="false">Time estimates</string>
     <string name="time_estimates_settings_summary" formatted="false">Choose how remaining time is calculated and which battery levels it targets.</string>
-    <string name="time_estimates_settings_help" formatted="false">These settings control Battery Monitor’s time estimates. Target levels affect estimates only; they do not make Battery Monitor start or stop charging.</string>
+    <string name="time_estimates_settings_help" formatted="false">Choose how Battery Monitor estimates remaining time and the target battery levels. Targets also apply to Charging limit met and Discharging limit met alarms. Battery Monitor does not start or stop charging.</string>
     <string name="pref_cat_target_levels" formatted="false">Target levels</string>
     <string name="pref_charging_target_mode" formatted="false">Charging target</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Device charging limit: %1$d%%</string>
@@ -679,14 +667,14 @@
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
     If this value does not look correct, you can help improve device detection. Open Diagnostics and generate an OEM charging-limit report, carefully following the instructions in Help.</string>
-    <string name="pref_charging_target_mode_help" formatted="false">Automatic uses a fixed device charging limit when Battery Monitor can read one, and otherwise uses 100%. Adaptive charging still targets 100%. Choose Custom to override the device value for estimates.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">Automatic uses a fixed device charging limit when Battery Monitor can read one, and otherwise uses 100%. Adaptive charging still targets 100%. Custom uses your chosen level for charging estimates and Charging limit met alarms.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Automatic detection may work on Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme, and Sony Xperia devices, and on devices running GrapheneOS or LineageOS—particularly when root or Shizuku access is available. It relies on software signals, so availability and accuracy are not guaranteed even for the listed manufacturers. Untested models or OS versions in these families may also work, but devices from other manufacturers are not currently detected automatically.</string>
     <string name="charging_target_mode_automatic" formatted="false">Automatic (recommended)</string>
     <string name="charging_target_mode_custom" formatted="false">Custom</string>
     <string name="pref_custom_charging_target" formatted="false">Custom charging target</string>
     <string name="pref_custom_charging_target_help" formatted="false">Set the battery level used as the end point of charging estimates when Charging target is Custom.</string>
     <string name="pref_discharging_target" formatted="false">Discharging target</string>
-    <string name="pref_discharging_target_help" formatted="false">Set the battery level used as the end point of discharging estimates. This is independent of low-battery alarms.</string>
+    <string name="pref_discharging_target_help" formatted="false">Set the end point of discharging estimates and Discharging limit met alarms. Below this level, time estimates continue toward 0%. Low-battery alarms with their own threshold remain independent.</string>
     <string name="pref_target_level_summary" formatted="true">Estimate until %1$d%%.</string>
     <string name="nav_current">Current state</string>
     <string name="nav_history">History</string>
@@ -742,7 +730,7 @@
     <string name="current_prediction_method">Method: %1$s</string>
     <string name="current_prediction_target">Target: %1$d%%</string>
     <string name="current_prediction_snapshot_time">Battery snapshot: %1$s</string>
-    <string name="current_prediction_basis_unavailable">The service does not provide the predictor’s source window, fallback, or separate calculation time.</string>
+    <string name="current_prediction_diagnostics" formatted="false">Recent rates and learned averages are available in Diagnostics, under App operation.</string>
     <string name="current_prediction_explanation">This estimate uses the configured Battery Monitor predictor. Its target does not control charging or shutdown.</string>
     <string name="history_last_24h">Last 24 hours</string>
     <string name="history_last_7d">Last 7 days</string>
@@ -798,7 +786,19 @@
     <string name="battery_power_explanation">Calculated from battery voltage and current; positive while charging, negative while discharging. This is battery-side power, not charger power.</string>
 
     <string name="diag_overview">App operation</string>
-    <string name="diag_predictor_description">Stored long-term average time for a one percentage point change. Unsaved values and −1 use the predictor’s defaults.</string>
+    <string name="diag_predictor_description">Rates show the time for one percentage point. Recent calculations are kept in memory; saved averages survive a restart. Incomplete windows use the long-term rate, and unsaved averages use defaults.</string>
+    <string name="diag_predictor_recent" formatted="false">Recent calculations</string>
+    <string name="diag_predictor_saved_averages" formatted="false">Saved long-term averages</string>
+    <string name="diag_predictor_no_recent" formatted="false">No active estimate. Recent data is available after a monitor reading while charging or discharging.</string>
+    <string name="diag_predictor_active_state" formatted="false">Active battery state</string>
+    <string name="diag_predictor_effective_rate" formatted="false">Rate used for the estimate</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">Last 5 minutes</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">Last 5 percentage points</string>
+    <string name="diag_predictor_active_long_term_rate" formatted="false">Active long-term rate</string>
+    <string name="diag_predictor_observed_points" formatted="false">Completed percentage points</string>
+    <string name="diag_predictor_observation_duration" formatted="false">Observed session duration</string>
+    <string name="diag_predictor_current_level_duration" formatted="false">Time at the current level</string>
+    <string name="diag_predictor_uses_partial" formatted="false">Unfinished interval included</string>
     <string name="diag_predictor_ac">Charging (AC)</string>
     <string name="diag_predictor_wireless">Charging (wireless)</string>
     <string name="diag_predictor_usb">Charging (USB)</string>
@@ -940,6 +940,7 @@
     <string name="widget_background_opacity">Background opacity</string>
     <string name="widget_background_opacity_error">Enter a whole number from 0 to 100.</string>
     <string name="widget_transparent_warning">With a transparent background, readability depends on your wallpaper.</string>
+    <string name="widget_y_axis_labels">Show Y-axis values</string>
     <string name="widget_presentation">Presentation</string>
     <string name="widget_presentation_adaptive">Adapt to available space</string>
     <string name="widget_presentation_compact">Compact</string>
@@ -947,6 +948,18 @@
     <string name="widget_measurement_details">Measurement details</string>
     <string name="widget_tap_measurement">Measurement to open</string>
     <string name="widget_preview">Widget preview</string>
+    <string name="widget_preview_level" translatable="false">77%</string>
+    <string name="widget_preview_temperature" translatable="false">31.6°C</string>
+    <string name="widget_preview_voltage" translatable="false">4.08 V</string>
+    <string name="widget_preview_current" translatable="false">−320 mA</string>
+    <string name="widget_preview_charge" translatable="false">2,695 mAh</string>
+    <string name="widget_preview_time_start" translatable="false">08:00</string>
+    <string name="widget_preview_time_end" translatable="false">14:00</string>
+    <string name="widget_preview_axis_top" translatable="false">100</string>
+    <string name="widget_preview_axis_upper" translatable="false">80</string>
+    <string name="widget_preview_axis_lower" translatable="false">60</string>
+    <string name="widget_preview_axis_bottom" translatable="false">40</string>
+    <string name="widget_preview_duration" translatable="false"><font color="#6fc14b">14h</font> <font color="#33b5e5"><small>54m</small></font></string>
     <string name="widget_preview_note">Preview uses the last monitor reading. Widget size is set by your launcher.</string>
     <string name="widget_save_failed">Could not save this widget. Please try again.</string>
     <string name="widget_invalid_instance">This widget is no longer available.</string>
@@ -960,4 +973,7 @@
     <string name="widget_chart_description">Stored battery level from %1$s to %2$s. Minimum %3$s, maximum %4$s.</string>
     <string name="history_last_3d">Last 3 days</string>
     <string name="monitoring_state_save_failed">Could not save the monitoring state. Check available storage and try again.</string>
+    <string name="settings_reset_help" formatted="false">Restore default settings asks for confirmation, then resets app preferences. It keeps history, alarms, learned estimates, widget configurations, and whether background monitoring is running. System permissions and notification-channel settings are not reset.</string>
+    <string name="diagnostics_predictor_help" formatted="false">App operation shows saved long-term averages and the recent predictor inputs. Recent rates use changes in battery percentage and show the time for one percentage point, the selected method, the active charging source, observed points and durations, and whether the unfinished interval is included. The five-minute and five-point windows use the active long-term rate for unobserved portions; skipped levels are interpolated. Recent state is kept in memory and resets when monitoring restarts, switches between charging and discharging, or the charging source changes. Saved learned averages survive a restart. This data is independent of history logs; clearing logs does not reset estimates.</string>
+    <string name="notification_channels_help" formatted="false">Open Android notification settings to allow or block notifications and configure sound, vibration, and delivery for the main notification and each alarm type. Enabling an alarm rule does not override a blocked notification channel.</string>
 </resources>

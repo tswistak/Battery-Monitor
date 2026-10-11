@@ -319,9 +319,8 @@ internal fun HistoryRoute(
             ), locale
         )
     }
-    val timestampFormat = remember(locale) {
-        DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(locale)
-            .withZone(ZoneId.systemDefault())
+    val timestampFormat = remember(locale, zone) {
+        DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(locale).withZone(zone)
     }
     BoxWithConstraints(modifier) {
         val twoPane = maxWidth >= 800.dp * LocalDensity.current.fontScale && maxHeight >= 480.dp
@@ -567,14 +566,14 @@ internal fun HistoryRoute(
                             if (record.status == -1) stringResource(R.string.history_system_event)
                             else listOfNotNull(
                                 HistoryMetric.CURRENT.value(record)?.let {
-                                historyValue(
-                                    it,
-                                    HistoryMetric.CURRENT,
-                                    fahrenheit,
-                                    locale,
-                                    currentMultiplier
-                                )
-                            },
+                                    historyValue(
+                                        it,
+                                        HistoryMetric.CURRENT,
+                                        fahrenheit,
+                                        locale,
+                                        currentMultiplier
+                                    )
+                                },
                                 HistoryMetric.POWER.value(record)?.let {
                                     historyValue(
                                         it,
@@ -596,26 +595,27 @@ internal fun HistoryRoute(
                                     )
                                 }).joinToString(" · ")
                                 .ifEmpty { stringResource(R.string.current_unavailable) }
-                        Row(Modifier
-                            .fillMaxWidth()
-                            .clickable { detailsId = entry.id }
-                            .then(if (twoPane) Modifier.semantics {
-                                selected = emphasized
-                            } else Modifier)
-                            .drawBehind {
-                                if (emphasized) {
-                                    val width = 3.dp.toPx()
-                                    val x =
-                                        if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
-                                    drawRect(
-                                        selectionColor,
-                                        topLeft = Offset(x, 0f),
-                                        size = Size(width, size.height)
-                                    )
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .clickable { detailsId = entry.id }
+                                .then(if (twoPane) Modifier.semantics {
+                                    selected = emphasized
+                                } else Modifier)
+                                .drawBehind {
+                                    if (emphasized) {
+                                        val width = 3.dp.toPx()
+                                        val x =
+                                            if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
+                                        drawRect(
+                                            selectionColor,
+                                            topLeft = Offset(x, 0f),
+                                            size = Size(width, size.height)
+                                        )
+                                    }
                                 }
-                            }
-                            .heightIn(min = 67.dp)
-                            .padding(horizontal = 13.dp, vertical = 12.dp),
+                                .heightIn(min = 67.dp)
+                                .padding(horizontal = 13.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(11.dp)) {
                             Surface(
@@ -928,8 +928,8 @@ internal fun HistoryRoute(
     })
     if (dialog == "replace") AlertDialog(
         onDismissRequest = {
-        dialog = null; viewModel.pendingImportUri = null
-    },
+            dialog = null; viewModel.pendingImportUri = null
+        },
         title = { Text(stringResource(R.string.log_import_replace)) },
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
@@ -955,8 +955,8 @@ internal fun HistoryRoute(
     )
     if (dialog == "deleteSelected" || dialog == "deleteAll") AlertDialog(
         onDismissRequest = {
-        dialog = null
-    },
+            dialog = null
+        },
         title = { Text(stringResource(if (dialog == "deleteAll") R.string.history_delete_all else R.string.history_delete_selected)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -1076,4 +1076,3 @@ private fun ChoiceDialog(title: Int, onDismiss: () -> Unit, choices: List<Pair<I
         confirmButton = {},
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } })
 }
-

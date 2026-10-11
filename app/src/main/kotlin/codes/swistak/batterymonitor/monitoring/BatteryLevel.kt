@@ -13,7 +13,6 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -23,26 +22,16 @@ import android.graphics.RectF
 import android.util.DisplayMetrics
 import androidx.core.graphics.createBitmap
 
-internal class BatteryLevel private constructor(context: Context, sizeFactor: Float) {
+internal class BatteryLevel private constructor(sizeFactor: Float) {
     companion object {
-        private const val FACTOR_LARGE = 33.25f
         private const val FACTOR_SMALL = 13.33f
 
-        private var largeInstance: BatteryLevel? = null
         private var smallInstance: BatteryLevel? = null
 
-        fun getLargeInstance(context: Context): BatteryLevel {
-            if (largeInstance != null) return largeInstance!!
-
-            largeInstance = BatteryLevel(context, FACTOR_LARGE)
-
-            return largeInstance!!
-        }
-
-        fun getSmallInstance(context: Context): BatteryLevel {
+        fun getSmallInstance(): BatteryLevel {
             if (smallInstance != null) return smallInstance!!
 
-            smallInstance = BatteryLevel(context, FACTOR_SMALL)
+            smallInstance = BatteryLevel(FACTOR_SMALL)
 
             return smallInstance!!
         }

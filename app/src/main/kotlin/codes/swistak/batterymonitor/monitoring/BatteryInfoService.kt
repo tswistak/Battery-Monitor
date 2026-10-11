@@ -13,7 +13,6 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
-
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.ForegroundServiceStartNotAllowedException
@@ -165,7 +164,7 @@ class BatteryInfoService : Service() {
             outgoing.data = data
             try {
                 clientMessenger.send(outgoing)
-            } catch (e: RemoteException) {
+            } catch (_: RemoteException) {
             }
         }
 
@@ -252,8 +251,8 @@ class BatteryInfoService : Service() {
         }
 
         fun isLiveUpdateEnabledInSystem(context: Context): Boolean {
-            if (!supportsLiveUpdates()) return true
-            return NotificationManagerCompat.from(context).canPostPromotedNotifications()
+            return !supportsLiveUpdates() || NotificationManagerCompat.from(context)
+                .canPostPromotedNotifications()
         }
     }
 
@@ -297,6 +296,12 @@ class BatteryInfoService : Service() {
                 state.averages.forEach { (key, value) -> putFloat(key, value) }
                 state.version?.let { putInt(Predictor.KEY_STATE_VERSION, it) }
             })
+        }
+        predictor?.recentState()?.let { state ->
+            putBundle(
+                MonitoringSnapshot.FIELD_RECENT_PREDICTOR_DATA,
+                MonitoringSnapshot.recentPredictorBundle(state)
+            )
         }
     }
 
@@ -431,7 +436,7 @@ class BatteryInfoService : Service() {
         clientMessengers = HashMap()
 
         predictor = Predictor(this)
-        bl = BatteryLevel.getSmallInstance(this)
+        bl = BatteryLevel.getSmallInstance()
         cwbg = CircleWidgetBackground(this)
 
         alarms = AlarmDatabase(this)
@@ -500,7 +505,7 @@ class BatteryInfoService : Service() {
         if (alarms != null) alarms!!.close()
         try {
             unregisterReceiver(mBatteryInfoReceiver)
-        } catch (ignored: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
         }
         mHandler.removeCallbacks(runRenotify)
         mHandler.removeCallbacks(runChipSwitch)
@@ -636,7 +641,7 @@ class BatteryInfoService : Service() {
             outgoing.replyTo = clientMessenger
             try {
                 serviceMessenger!!.send(outgoing)
-            } catch (e: RemoteException) {
+            } catch (_: RemoteException) {
             }
         }
 
@@ -919,7 +924,7 @@ class BatteryInfoService : Service() {
             startForegroundWithNotification(notification)
             mainNotificationForegroundStarted = true
             return true
-        } catch (firstError: RuntimeException) {
+        } catch (_: RuntimeException) {
             try {
                 setUpMinimalForegroundChannel()
                 startForegroundWithNotification(notification)
@@ -942,7 +947,7 @@ class BatteryInfoService : Service() {
                 startForegroundWithNotification(mainNotification)
                 mainNotificationForegroundStarted = true
             }
-        } catch (e: RuntimeException) {
+        } catch (_: RuntimeException) {
             try {
                 setUpChannels()
                 mainNotification = prepareNotification()
@@ -1036,7 +1041,7 @@ class BatteryInfoService : Service() {
             rv.setOnClickPendingIntent(R.id.widget_layout, currentInfoPendingIntent)
             try {
                 widgetManager!!.updateAppWidget(widgetId, rv)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
         }
     }
@@ -1243,11 +1248,9 @@ class BatteryInfoService : Service() {
     }
 
     private fun shouldShowChipChargingIndicator(): Boolean {
-        if (!settings.getBoolean(
-                SettingsContract.KEY_CHIP_INDICATE_CHARGING, true
-            )
-        ) return false
-        return info!!.status == BatteryInfo.STATUS_CHARGING || info!!.status == BatteryInfo.STATUS_FULLY_CHARGED
+        return settings.getBoolean(
+            SettingsContract.KEY_CHIP_INDICATE_CHARGING, true
+        ) && (info!!.status == BatteryInfo.STATUS_CHARGING || info!!.status == BatteryInfo.STATUS_FULLY_CHARGED)
     }
 
     private fun lineFor(key: String): String {

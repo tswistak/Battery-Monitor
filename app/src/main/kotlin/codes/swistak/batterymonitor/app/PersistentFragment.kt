@@ -13,7 +13,6 @@
 */
 package codes.swistak.batterymonitor.app
 
-
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
@@ -43,10 +42,8 @@ import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.common.showToast
 import codes.swistak.batterymonitor.diagnostics.BackgroundSettingsNavigator
-import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
-import codes.swistak.batterymonitor.monitoring.CurrentInfoFragment
 import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import codes.swistak.batterymonitor.monitoring.Predictor
 import codes.swistak.batterymonitor.monitoring.PredictorStoredState
@@ -56,7 +53,6 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
 import java.io.IOException
 import java.util.concurrent.CompletableFuture
-
 
 class PersistentFragment : Fragment() {
     companion object {
@@ -83,11 +79,7 @@ class PersistentFragment : Fragment() {
     private var serviceConnected = false
     internal val monitoring = MonitoringConnection()
 
-    private var cif: CurrentInfoFragment? = null
-    private var lvf: LogViewFragment? = null
-
     lateinit var settings: SharedPreferences
-    lateinit var spService: SharedPreferences
     lateinit var spMain: SharedPreferences
     lateinit var res: Resources
 
@@ -119,8 +111,6 @@ class PersistentFragment : Fragment() {
 
                 BatteryInfoService.RemoteConnection.CLIENT_BATTERY_INFO_UPDATED -> {
                     if (!pf.monitoring.onSnapshot(incoming.arg1, incoming.data)) return
-                    if (pf.cif != null) pf.cif!!.batteryInfoUpdated(incoming.getData())
-                    if (pf.lvf != null) pf.lvf!!.batteryInfoUpdated()
                 }
 
                 else -> super.handleMessage(incoming)
@@ -361,20 +351,9 @@ class PersistentFragment : Fragment() {
         DisplayStrings.setResources(res)
     }
 
-    fun setCIF(f: CurrentInfoFragment?) {
-        cif = f
-    }
-
-    fun setLVF(f: LogViewFragment?) {
-        lvf = f
-    }
-
     fun loadSettingsFiles() {
         settings = requireActivity().getSharedPreferences(
             SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-        )
-        spService = requireActivity().getSharedPreferences(
-            SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
         )
         spMain = requireActivity().getSharedPreferences(
             SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
@@ -472,23 +451,6 @@ class PersistentFragment : Fragment() {
         monitoring.start()
         startServiceIfNeeded()
         BackgroundServiceWatchdog.schedule(requireContext())
-    }
-
-    fun closeApp() {
-        if (!saveMonitoringDesired(false)) return
-        if (activity != null) BackgroundServiceWatchdog.cancel(requireActivity().applicationContext)
-
-        if (activity == null) return
-
-        if (serviceConnected) {
-            requireActivity().applicationContext.unbindService(serviceConnection!!)
-            requireActivity().stopService(biServiceIntent)
-            serviceConnected = false
-        }
-        serviceConnection?.serviceMessenger = null
-        serviceMessenger = null
-
-        requireActivity().finish()
     }
 
     private fun saveMonitoringDesired(desired: Boolean): Boolean {

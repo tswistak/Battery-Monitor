@@ -180,21 +180,6 @@ internal class LogDatabase(context: Context?) {
         closeDatabaseHandles()
     }
 
-    fun getAllLogs(reversed: Boolean): Cursor? {
-        var order = "DESC"
-        if (reversed) order = "ASC"
-
-        openDBs()
-
-        return try {
-            rdb!!.rawQuery(
-                "SELECT * FROM $LOG_TABLE_NAME ORDER BY $KEY_TIME $order", null
-            )
-        } catch (e: Exception) {
-            null
-        }
-    }
-
     fun getAllLogRecords(): List<LogRecord> {
         return getLogRecordsInRange()
     }
@@ -311,15 +296,15 @@ internal class LogDatabase(context: Context?) {
         val database = checkNotNull(wdb) { "Log database is unavailable" }
         database.transaction {
             if (replaceExisting) database.delete(LOG_TABLE_NAME, null, null)
-            for (record in records) {
+            for ((status, charge, time, temperature, voltage, currentMicroAmps, remainingChargeMicroampHours) in records) {
                 val values = ContentValues().apply {
-                    put(KEY_STATUS_CODE, record.status)
-                    putNullable(KEY_CHARGE, record.charge)
-                    put(KEY_TIME, record.time)
-                    putNullable(KEY_TEMPERATURE, record.temperature)
-                    putNullable(KEY_VOLTAGE, record.voltage)
-                    putNullable(KEY_CURRENT, record.currentMicroAmps)
-                    putNullable(KEY_REMAINING_CHARGE, record.remainingChargeMicroampHours)
+                    put(KEY_STATUS_CODE, status)
+                    putNullable(KEY_CHARGE, charge)
+                    put(KEY_TIME, time)
+                    putNullable(KEY_TEMPERATURE, temperature)
+                    putNullable(KEY_VOLTAGE, voltage)
+                    putNullable(KEY_CURRENT, currentMicroAmps)
+                    putNullable(KEY_REMAINING_CHARGE, remainingChargeMicroampHours)
                 }
                 check(database.insertOrThrow(LOG_TABLE_NAME, null, values) >= 0) {
                     "Could not restore log entry"
@@ -437,10 +422,6 @@ internal class LogDatabase(context: Context?) {
         }
     }
 
-    fun clearAllLogs() {
-        mSQLOpenHelper.reset()
-    }
-
     private class SQLOpenHelper(context: Context?) :
         SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
         override fun onOpen(db: SQLiteDatabase) {
@@ -472,10 +453,5 @@ internal class LogDatabase(context: Context?) {
             }
         }
 
-        fun reset() {
-            val db = writableDatabase
-            db.execSQL("DROP TABLE IF EXISTS $LOG_TABLE_NAME")
-            onCreate(db)
-        }
     }
 }

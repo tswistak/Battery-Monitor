@@ -16,6 +16,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.rememberScrollState
@@ -41,6 +44,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -54,6 +58,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.ui.components.NumericInputResult
 import codes.swistak.batterymonitor.ui.components.parseLocalizedInt
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
@@ -164,20 +169,20 @@ private fun SettingsAlert(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss, title = title?.let { { Text(it) } }, text = {
-        Column(
-            Modifier
-                .heightIn(max = 440.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
-        ) { content() }
-    }, confirmButton = {
-        TextButton(onClick = {
-            onDismiss()
-            onConfirm()
-        }, enabled = enabled) { Text(stringResource(confirmLabel)) }
-    }, dismissButton = if (cancellable) {
-        { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } }
-    } else null)
+            Column(
+                Modifier
+                    .heightIn(max = 440.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+            ) { content() }
+        }, confirmButton = {
+            TextButton(onClick = {
+                onDismiss()
+                onConfirm()
+            }, enabled = enabled) { Text(stringResource(confirmLabel)) }
+        }, dismissButton = if (cancellable) {
+            { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } }
+        } else null)
 }
 
 @Composable
@@ -313,9 +318,9 @@ private fun OrderedDialog(dialog: SettingsDialog.Ordered, onDismiss: () -> Unit)
 
 @Composable
 private fun AutoExportDialog(dialog: SettingsDialog.AutoExport, onDismiss: () -> Unit) {
-    var frequency by remember { mutableStateOf(dialog.frequencyIndex) }
-    var mode by remember { mutableStateOf(dialog.modeIndex) }
-    var format by remember { mutableStateOf(dialog.formatIndex) }
+    var frequency by remember { mutableIntStateOf(dialog.frequencyIndex) }
+    var mode by remember { mutableIntStateOf(dialog.modeIndex) }
+    var format by remember { mutableIntStateOf(dialog.formatIndex) }
     SettingsAlert(
         title = dialog.title,
         onDismiss = onDismiss,
@@ -326,6 +331,7 @@ private fun AutoExportDialog(dialog: SettingsDialog.AutoExport, onDismiss: () ->
     ) {
         Text(dialog.directoryLabel, style = MaterialTheme.typography.bodySmall)
         SettingsDropdown(
+            SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY,
             stringResource(R.string.pref_auto_log_export_frequency),
             dialog.frequencyLabels,
             frequency,
@@ -333,11 +339,13 @@ private fun AutoExportDialog(dialog: SettingsDialog.AutoExport, onDismiss: () ->
             dialog.frequencyEnabled
         )
         SettingsDropdown(
+            SettingsContract.KEY_AUTO_LOG_EXPORT_MODE,
             stringResource(R.string.pref_auto_log_export_mode),
             dialog.modeLabels,
             mode,
             { mode = it })
         SettingsDropdown(
+            SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT,
             stringResource(R.string.pref_auto_log_export_format),
             dialog.formatLabels,
             format,
@@ -345,11 +353,26 @@ private fun AutoExportDialog(dialog: SettingsDialog.AutoExport, onDismiss: () ->
         TextButton(onClick = {
             onDismiss()
             dialog.onChooseDirectory()
-        }) { Text(stringResource(R.string.pref_auto_log_export_directory)) }
+        }) {
+            Icon(
+                painterResource(settingIcon(SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY)),
+                null,
+                Modifier.size(20.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.pref_auto_log_export_directory))
+        }
         if (dialog.configured) TextButton(onClick = {
             onDismiss()
             dialog.onDisable()
         }) {
+            Icon(
+                painterResource(R.drawable.ui_close),
+                null,
+                Modifier.size(20.dp),
+                tint = MaterialTheme.colorScheme.error
+            )
+            Spacer(Modifier.width(8.dp))
             Text(
                 stringResource(R.string.pref_disable_auto_log_export),
                 color = MaterialTheme.colorScheme.error
@@ -360,6 +383,7 @@ private fun AutoExportDialog(dialog: SettingsDialog.AutoExport, onDismiss: () ->
 
 @Composable
 private fun SettingsDropdown(
+    settingKey: String,
     label: String,
     options: List<String>,
     selected: Int,
@@ -371,6 +395,8 @@ private fun SettingsDropdown(
         Text(label, style = MaterialTheme.typography.labelMedium)
         Box {
             OutlinedButton(onClick = { expanded = true }, modifier = Modifier.fillMaxWidth()) {
+                Icon(painterResource(settingIcon(settingKey)), null, Modifier.size(20.dp))
+                Spacer(Modifier.width(8.dp))
                 Text(options.getOrNull(selected).orEmpty(), modifier = Modifier.weight(1f))
                 Icon(painterResource(R.drawable.ui_chev), contentDescription = null)
             }
@@ -382,12 +408,13 @@ private fun SettingsDropdown(
                 options.forEachIndexed { index, option ->
                     DropdownMenuItem(
                         text = { Text(option) }, onClick = {
-                        expanded = false
-                        onSelect(index)
-                    }, enabled = enabled.getOrNull(index) == true
+                            expanded = false
+                            onSelect(index)
+                        }, enabled = enabled.getOrNull(index) == true
                     )
                 }
             }
         }
     }
 }
+

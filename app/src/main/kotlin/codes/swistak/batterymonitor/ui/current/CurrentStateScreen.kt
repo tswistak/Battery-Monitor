@@ -23,7 +23,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -51,6 +53,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
@@ -60,16 +63,18 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
-import codes.swistak.batterymonitor.data.LogsRepository
 import codes.swistak.batterymonitor.diagnostics.BackgroundSettingsNavigator
 import codes.swistak.batterymonitor.logs.HistoryChartModel
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
+import codes.swistak.batterymonitor.logs.LogsRepository
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
@@ -133,6 +138,7 @@ internal data class CurrentReading(
 
 @Composable
 internal fun CurrentStateRoute(
+    viewModel: CurrentStateViewModel,
     monitoring: StateFlow<MonitoringUiState>,
     settings: SharedPreferences,
     onSection: (SectionOwner) -> Unit,
@@ -175,51 +181,70 @@ internal fun CurrentStateRoute(
         settings.currentPreferences(defaultTemperatureUnit)
     }
     var refreshCurrent by remember { mutableIntStateOf(0) }
+    val lifecycleOwner = LocalLifecycleOwner.current
     val currentReading by produceState<CurrentReading?>(
-        initialValue = null,
+        initialValue = viewModel.reading,
         preferences.preferAverageCurrent,
         preferences.currentRefreshMillis,
         preferences.currentMultiplier,
         preferences.usePrivilegedAccess,
-        refreshCurrent
+        refreshCurrent,
+        lifecycleOwner
     ) {
-        PrivilegedAccess.initialize(context)
-        PrivilegedAccess.setEnabled(preferences.usePrivilegedAccess)
-        BatteryCurrent.setContext(context)
-        BatteryCurrent.setMultiplier(preferences.currentMultiplier)
-        while (true) {
-            value = withContext(Dispatchers.IO) {
-                val average =
-                    if (preferences.preferAverageCurrent) BatteryCurrent.avgCurrent else null
-                CurrentReading(
-                    average ?: BatteryCurrent.current, System.currentTimeMillis(), average != null
-                )
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            PrivilegedAccess.initialize(context)
+            PrivilegedAccess.setEnabled(preferences.usePrivilegedAccess)
+            BatteryCurrent.setContext(context)
+            BatteryCurrent.setMultiplier(preferences.currentMultiplier)
+            while (true) {
+                value = withContext(Dispatchers.IO) {
+                    val average =
+                        if (preferences.preferAverageCurrent) BatteryCurrent.avgCurrent else null
+                    CurrentReading(
+                        average ?: BatteryCurrent.current,
+                        System.currentTimeMillis(),
+                        average != null
+                    )
+                }.also { viewModel.reading = it }
+                delay(preferences.currentRefreshMillis.milliseconds)
             }
-            delay(preferences.currentRefreshMillis.milliseconds)
         }
     }
     var showFullRange by rememberSaveable { mutableStateOf(false) }
+    var rangeStatus by rememberSaveable { mutableStateOf(state.snapshot?.status) }
+    var rangeTarget by rememberSaveable {
+        mutableStateOf(state.snapshot?.configuredPrediction?.targetPercent)
+    }
+    val samePredictionContext = state.snapshot?.let {
+        it.status == rangeStatus && it.configuredPrediction.targetPercent == rangeTarget
+    } ?: true
+    LaunchedEffect(state.snapshot?.status, state.snapshot?.configuredPrediction?.targetPercent) {
+        state.snapshot?.let {
+            if (!samePredictionContext) showFullRange = false
+            rangeStatus = it.status
+            rangeTarget = it.configuredPrediction.targetPercent
+        }
+    }
     val model = currentStateModel(
         state,
-        showFullRange,
+        showFullRange && samePredictionContext,
         monitoringEnabled = codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog.isServiceDesired(
             context
         ),
         notificationsEnabled = notificationsEnabled
     )
-    LaunchedEffect(state.snapshot?.status, state.snapshot?.configuredPrediction?.targetPercent) {
-        showFullRange = false
-    }
     val logs = remember(context.applicationContext) { LogsRepository(context.applicationContext) }
     val trend by produceState<HistoryChartModel?>(
-        null,
+        viewModel.trend,
         preferences.loggingEnabled,
         state.snapshot?.levelPercent,
         state.snapshot?.status,
         state.snapshot?.plugged
     ) {
         if (!preferences.loggingEnabled) {
-            value = null; return@produceState
+            value = null
+            viewModel.trend = null
+            return@produceState
         }
         value = try {
             logs.chart(HistoryRangeState.lastHours(24))
@@ -227,7 +252,7 @@ internal fun CurrentStateRoute(
             throw exception
         } catch (_: Exception) {
             null
-        }
+        }.also { viewModel.trend = it }
     }
     CurrentStateScreen(
         model = model,
@@ -284,9 +309,8 @@ internal fun CurrentStateScreen(
     requestedMeasurement: CurrentMeasurement? = null,
     onMeasurementHandled: () -> Unit = {}
 ) {
-    val context = LocalContext.current
     val configuration = LocalConfiguration.current
-    val resources = context.resources
+    val resources = LocalResources.current
     val snapshot = model.snapshot
     val prediction = model.prediction
     val stale =
@@ -298,11 +322,11 @@ internal fun CurrentStateScreen(
         CurrentCondition.FULL -> stringResource(R.string.status_fully_charged)
         CurrentCondition.PAUSED -> stringResource(R.string.current_paused)
         CurrentCondition.TARGET_REACHED -> stringResource(
-            R.string.current_target_reached, prediction?.targetPercent ?: 100
+            R.string.current_target_reached, snapshot?.configuredPrediction?.targetPercent ?: 100
         )
 
         CurrentCondition.BELOW_TARGET -> stringResource(
-            R.string.current_below_target, prediction?.targetPercent ?: 0
+            R.string.current_below_target, snapshot?.configuredPrediction?.targetPercent ?: 0
         )
 
         CurrentCondition.LOW -> snapshot?.let { DisplayStrings.statuses.getOrNull(it.status) }
@@ -329,7 +353,7 @@ internal fun CurrentStateScreen(
     val estimate = when {
         snapshot == null || stale -> "—"
         snapshot.status == BatteryInfo.STATUS_FULLY_CHARGED -> stringResource(R.string.status_fully_charged)
-        prediction?.targetReached == true && prediction.direction == BatteryInfo.Prediction.UNTIL_DRAINED -> stringResource(
+        prediction?.targetReached == true && prediction.direction == BatteryInfo.Prediction.UNTIL_DRAINED && snapshot.levelPercent < prediction.targetPercent -> stringResource(
             R.string.current_below_target, prediction.targetPercent
         )
 
@@ -368,7 +392,7 @@ internal fun CurrentStateScreen(
     val power = BatteryCurrent.powerWatts(snapshot?.voltageMillivolts, currentReading?.milliAmps)
     val metrics = listOf(
         MetricDetail(
-            CurrentMeasurement.TEMPERATURE,
+        CurrentMeasurement.TEMPERATURE,
         MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
             DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
         } ?: unavailable),
@@ -763,7 +787,9 @@ internal fun CurrentStateScreen(
         val metric = detailMetrics.firstOrNull { it.measurement.route == route } ?: return@let
         ModalBottomSheet(onDismissRequest = { selectedMetric = null }) {
             Column(
-                Modifier.padding(BatterySpacing.content),
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(BatterySpacing.content),
                 verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
             ) {
                 Text(metric.display.label, style = MaterialTheme.typography.titleLarge)
@@ -794,7 +820,9 @@ internal fun CurrentStateScreen(
         showPredictionDetails = false
     }) {
         Column(
-            Modifier.padding(BatterySpacing.content),
+            Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(BatterySpacing.content),
             verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
         ) {
             Text(
@@ -807,7 +835,7 @@ internal fun CurrentStateScreen(
                     R.string.current_prediction_snapshot_time, formatTimestamp(snapshotTime)
                 )
             )
-            Text(stringResource(R.string.current_prediction_basis_unavailable))
+            Text(stringResource(R.string.current_prediction_diagnostics))
             Text(stringResource(R.string.current_prediction_explanation))
         }
     }

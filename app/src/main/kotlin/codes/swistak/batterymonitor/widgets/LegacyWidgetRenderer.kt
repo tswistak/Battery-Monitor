@@ -1,4 +1,5 @@
 /*
+    Copyright (c) 2009-2021 Darshan Computing, LLC
     Copyright (c) 2026 Tomasz Świstak <tomasz@swistak.codes>
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

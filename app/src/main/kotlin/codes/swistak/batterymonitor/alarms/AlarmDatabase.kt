@@ -173,20 +173,6 @@ internal class AlarmDatabase(context: Context?) {
         }
     }
 
-    fun getAlarm(id: Int): Cursor? {
-        openDBs()
-
-        try {
-            val c = rdb!!.rawQuery(
-                "SELECT * FROM $ALARM_TABLE_NAME WHERE $KEY_ID=$id LIMIT 1", null
-            )
-            c.moveToFirst()
-            return c
-        } catch (e: Exception) {
-            return null
-        }
-    }
-
     fun anyActiveAlarms(): Boolean {
         openDBs()
 
@@ -316,32 +302,6 @@ internal class AlarmDatabase(context: Context?) {
     fun setEnabled(id: Int, enabled: Boolean): Int {
         val cv = ContentValues()
         cv.put(KEY_ENABLED, if (enabled) 1 else 0)
-
-        openDBs()
-
-        return try {
-            wdb!!.update(ALARM_TABLE_NAME, cv, "$KEY_ID=$id", null)
-        } catch (e: Exception) {
-            -1
-        }
-    }
-
-    fun setType(id: Int, type: String?): Int {
-        val cv = ContentValues()
-        cv.put(KEY_TYPE, type)
-
-        openDBs()
-
-        return try {
-            wdb!!.update(ALARM_TABLE_NAME, cv, "$KEY_ID=$id", null)
-        } catch (e: Exception) {
-            -1
-        }
-    }
-
-    fun setThreshold(id: Int, threshold: String?): Int {
-        val cv = ContentValues()
-        cv.put(KEY_THRESHOLD, threshold)
 
         openDBs()
 

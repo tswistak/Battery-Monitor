@@ -37,6 +37,7 @@ class WidgetConfigurationTest {
             assertNull(configuration.temperatureUnit)
             assertEquals(100, configuration.backgroundOpacityPercent)
             assertEquals(24, configuration.trendHours)
+            assertTrue(configuration.showYAxisLabels)
         }
     }
 
@@ -52,13 +53,36 @@ class WidgetConfigurationTest {
             variant = WidgetVariant.COMPACT,
             tapAction = WidgetTapAction.HISTORY,
             tapMetric = WidgetMetric.VOLTAGE,
-            trendHours = 168
+            trendHours = 168,
+            showYAxisLabels = false
         )
         assertEquals(configuration, WidgetConfiguration.decode(configuration.encode()))
         for (family in WidgetFamily.entries) {
             val defaults = WidgetConfiguration.defaults(family)
             assertEquals(defaults, WidgetConfiguration.decode(defaults.encode()))
         }
+    }
+
+    @Test
+    fun `existing configuration records keep every override and enable Y axis labels without migration`() {
+        val legacy =
+            "1|Dark|BatteryBlue|fahrenheit|45|VOLTAGE,CURRENT|NONE|COMPACT|HISTORY|VOLTAGE|72"
+        assertEquals(
+            WidgetConfiguration(
+                brightness = Brightness.Dark,
+                colorSource = ColorSource.BatteryBlue,
+                temperatureUnit = WidgetConfiguration.TEMPERATURE_FAHRENHEIT,
+                backgroundOpacityPercent = 45,
+                metrics = listOf(WidgetMetric.VOLTAGE, WidgetMetric.CURRENT),
+                statusExtra = WidgetStatusExtra.NONE,
+                variant = WidgetVariant.COMPACT,
+                tapAction = WidgetTapAction.HISTORY,
+                tapMetric = WidgetMetric.VOLTAGE,
+                trendHours = 72,
+                showYAxisLabels = true
+            ), WidgetConfiguration.decode(legacy)
+        )
+        assertNull(WidgetConfiguration.decode("$legacy|false"))
     }
 
     @Test
@@ -100,7 +124,8 @@ class WidgetConfigurationTest {
         for (invalid in listOf(
             "",
             record.substringBeforeLast('|'),
-            "2" + record.drop(1),
+            "3" + record.drop(1),
+            record.replace("|true", "|yes"),
             record.replace("|100|", "|101|"),
             record.replace("|100|", "|invalid|"),
             record.replace("TEMPERATURE,VOLTAGE,CURRENT,REMAINING_CHARGE", "UNKNOWN,VOLTAGE"),

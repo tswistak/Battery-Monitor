@@ -15,6 +15,20 @@ package codes.swistak.batterymonitor.monitoring
 
 import kotlin.math.abs
 
+internal data class PredictorRecentState(
+    val predictionType: Int,
+    val chargingStatus: Int,
+    val effectiveMsPerPoint: Double,
+    val fiveMinuteMsPerPoint: Double,
+    val fivePointMsPerPoint: Double,
+    val sessionMsPerPoint: Double,
+    val longTermMsPerPoint: Double,
+    val observedPoints: Int,
+    val observationDurationMillis: Long,
+    val currentLevelDurationMillis: Long,
+    val usesPartial: Boolean
+)
+
 internal class PredictorCore(
     avgDischarge: Float, avgRechargeAc: Float, avgRechargeWl: Float, avgRechargeUsb: Float
 ) {
@@ -114,14 +128,14 @@ internal class PredictorCore(
     }
 
     fun update(info: BatteryInfo, whenUpdated: Long) {
+        curInfo = info
+        now = whenUpdated
+
         if (info.status == BatteryInfo.STATUS_UNKNOWN) {
             info.prediction.clear()
             info.fullRangePrediction.clear()
             return
         }
-
-        curInfo = info
-        now = whenUpdated
 
         updatePredictionState(info)
         updateExposedPredictions()
@@ -235,6 +249,24 @@ internal class PredictorCore(
 
     val longTermAverage: Double
         get() = average[curChargingStatus]
+
+    fun recentState(): PredictorRecentState? {
+        val info = curInfo ?: return null
+        if (!canPredict()) return null
+        return PredictorRecentState(
+            predictionType = predictionType,
+            chargingStatus = curChargingStatus,
+            effectiveMsPerPoint = recentAverage(),
+            fiveMinuteMsPerPoint = recentAverageByTime(FIVE_MINUTES.toDouble()),
+            fivePointMsPerPoint = recentAverageByPoints(5.0),
+            sessionMsPerPoint = recentAverageBySession(),
+            longTermMsPerPoint = longTermAverage,
+            observedPoints = abs(tsHead - info.percent),
+            observationDurationMillis = now - timestamps[tsHead],
+            currentLevelDurationMillis = now - timestamps[info.percent],
+            usesPartial = usePartial
+        )
+    }
 
     private fun shouldUsePartial(): Boolean {
         if (usePartial) return true
@@ -454,8 +486,7 @@ internal class PredictorCore(
         }
 
         totalMs += (timestamps[curInfo!!.percent] - timestamps[tsHead]).toDouble()
-        totalPoints += (tsHead - curInfo!!.percent).toDouble()
-
+        totalPoints += abs(tsHead - curInfo!!.percent).toDouble()
         if (totalPoints < 1) return average[curChargingStatus]
 
         return totalMs / totalPoints

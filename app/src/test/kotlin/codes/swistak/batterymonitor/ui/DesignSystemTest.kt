@@ -7,7 +7,11 @@
 */
 package codes.swistak.batterymonitor.ui
 
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import codes.swistak.batterymonitor.ui.navigation.startPaneWidth
 import codes.swistak.batterymonitor.ui.components.NumericInputError
+
 import codes.swistak.batterymonitor.ui.components.NumericInputResult
 import codes.swistak.batterymonitor.ui.components.parseLocalizedInt
 import codes.swistak.batterymonitor.ui.theme.Brightness
@@ -19,6 +23,18 @@ import org.junit.Test
 import java.util.Locale
 
 class DesignSystemTest {
+    @Test
+    fun `separating hinge keeps content in the start pane in both directions`() {
+        assertEquals(480.dp, startPaneWidth(1060.dp, 480.dp, 500.dp, LayoutDirection.Ltr))
+        assertEquals(560.dp, startPaneWidth(1060.dp, 480.dp, 500.dp, LayoutDirection.Rtl))
+        assertEquals(460.dp, startPaneWidth(1040.dp, 460.dp, 480.dp, LayoutDirection.Ltr))
+        assertEquals(560.dp, startPaneWidth(1040.dp, 460.dp, 480.dp, LayoutDirection.Rtl))
+        assertEquals(0.dp, startPaneWidth(300.dp, (-20).dp, 0.dp, LayoutDirection.Ltr))
+        assertEquals(0.dp, startPaneWidth(300.dp, 300.dp, 320.dp, LayoutDirection.Rtl))
+        assertEquals(300.dp, startPaneWidth(300.dp, 320.dp, 340.dp, LayoutDirection.Ltr))
+    }
+
+
     @Test
     fun `numeric input accepts localized whole numbers and rejects invalid range and step`() {
         assertEquals(NumericInputResult.Valid(80), parseLocalizedInt("80", Locale.US, 0, 100, 5))

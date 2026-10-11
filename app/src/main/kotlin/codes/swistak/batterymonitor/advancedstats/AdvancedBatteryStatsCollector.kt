@@ -92,8 +92,7 @@ internal object AdvancedBatteryStatsCollector {
         val batterySupplies = batterySupplyNames(classified)
         val fields =
             metadata.filterKeys { it.substringBefore('/') in batterySupplies } + readMonitoringFiles(
-                executor,
-                batterySupplies.flatMap { supply ->
+                executor, batterySupplies.flatMap { supply ->
                     MONITORING_SYSFS_FIELDS.map { "$supply/$it" }
                 })
         snapshot.sysfsLabels.addAll(fields.keys)
@@ -119,11 +118,11 @@ internal object AdvancedBatteryStatsCollector {
     ): Map<String, String> {
         if (relativePaths.isEmpty()) return emptyMap()
         val paths = relativePaths.map { "$SYSFS_ROOT/$it" }
-        val command = """
-            for battery_file in ${paths.joinToString(" ") { "'$it'" }}; do
-                [ -r "${'$'}battery_file" ] || continue
-                printf '\n$MONITORING_FILE_MARKER%s\n' "${'$'}battery_file"
-                cat "${'$'}battery_file" 2>/dev/null
+        val command = $$"""
+            for battery_file in $${paths.joinToString(" ") { "'$it'" }}; do
+                [ -r "$battery_file" ] || continue
+                printf '\n$$MONITORING_FILE_MARKER%s\n' "$battery_file"
+                cat "$battery_file" 2>/dev/null
                 printf '\n'
             done
         """.trimIndent()
@@ -219,13 +218,13 @@ internal object AdvancedBatteryStatsCollector {
     }
 
     internal fun batterySupplyNames(fields: Map<String, String>): List<String> =
-        fields.keys.map { it.substringBefore('/') }.distinct().mapNotNull { supply ->
+        fields.keys.asSequence().map { it.substringBefore('/') }.distinct().mapNotNull { supply ->
             val type = fields["$supply/type"]?.trim() ?: fields["$supply/uevent"]?.lineSequence()
                 ?.firstOrNull { it.startsWith("POWER_SUPPLY_TYPE=") }?.substringAfter('=')?.trim()
             BatteryCurrent.batterySupplyRank(supply, type)?.let { supply to it }
         }
             .sortedWith(compareBy<Pair<String, Int>> { it.second }.thenBy { it.first.lowercase(java.util.Locale.ROOT) })
-            .map { it.first }
+            .map { it.first }.toList()
 
     internal fun projectCollectedFields(
         snapshot: AdvancedBatterySnapshot, batteryDump: Map<String, String>
@@ -424,7 +423,7 @@ internal object AdvancedBatteryStatsCollector {
 
             val key = line.substring(0, separator).trim()
             val value = line.substring(separator + 1).trim()
-            if (key.isNotEmpty() && value.isNotEmpty()) values.put(key, value)
+            if (key.isNotEmpty() && value.isNotEmpty()) values[key] = value
         }
 
         return values
@@ -629,7 +628,7 @@ internal object AdvancedBatteryStatsCollector {
         try {
             val value = batteryManager.getIntProperty(id)
             return if (value != Int.MIN_VALUE) value else null
-        } catch (e: Throwable) {
+        } catch (_: Throwable) {
             return null
         }
     }
@@ -638,7 +637,7 @@ internal object AdvancedBatteryStatsCollector {
         try {
             val value = batteryManager.getLongProperty(id)
             return if (value != Long.MIN_VALUE) value else null
-        } catch (e: Throwable) {
+        } catch (_: Throwable) {
             return null
         }
     }
@@ -650,7 +649,7 @@ internal object AdvancedBatteryStatsCollector {
             )
             val value = method.invoke(batteryManager, id)
             return value as? String
-        } catch (e: Throwable) {
+        } catch (_: Throwable) {
             return null
         }
     }

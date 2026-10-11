@@ -23,9 +23,7 @@ def computedVersionCode = defaultVersionCode
 if (ciVersionName) {
     def matcher = (ciVersionName =~ /^(\d+)\.(\d+)\.(\d+)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/)
     if (!matcher.matches()) {
-        throw new GradleException(
-                "ciVersionName must match SemVer (example: 1.0.0, 1.0.0-prerelease, 1.0.0+build.1)"
-        )
+        throw new GradleException("ciVersionName must match SemVer (example: 1.0.0, 1.0.0-prerelease, 1.0.0+build.1)")
     }
 
     int major = matcher.group(1).toInteger()
@@ -43,10 +41,7 @@ def releaseKeyAliasProp = project.findProperty("releaseKeyAlias") ?: System.gete
 def releaseKeyPasswordProp = project.findProperty("releaseKeyPassword") ?: System.getenv("RELEASE_KEY_PASSWORD") ?: secureProperties['key.alias.password']
 
 def hasReleaseSigning =
-        releaseStoreFileProp &&
-                releaseStorePasswordProp &&
-                releaseKeyAliasProp &&
-                releaseKeyPasswordProp
+        releaseStoreFileProp && releaseStorePasswordProp && releaseKeyAliasProp && releaseKeyPasswordProp
 
 android {
     namespace = "codes.swistak.batterymonitor"
@@ -118,22 +113,19 @@ dependencies {
     def composeBom = platform('androidx.compose:compose-bom:2026.09.00')
     implementation composeBom
     implementation 'androidx.compose.material3:material3'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    debugImplementation 'androidx.compose.ui:ui-tooling'
     implementation 'androidx.activity:activity-compose:1.13.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.10.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.11.0'
     implementation 'androidx.compose.material3.adaptive:adaptive:1.3.0'
 
     testImplementation "junit:junit:4.13.2"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "androidx.core:core:1.19.0"
-    implementation "androidx.fragment:fragment:1.8.9"
-    implementation "androidx.viewpager:viewpager:1.1.0"
+    implementation "androidx.core:core:1.19.1"
+    implementation "androidx.fragment:fragment:1.9.1"
 
-    implementation "androidx.appcompat:appcompat:1.7.1"
-    implementation "androidx.appcompat:appcompat-resources:1.7.1"
+    implementation "androidx.appcompat:appcompat:1.8.0"
+    implementation "androidx.appcompat:appcompat-resources:1.8.0"
 
     implementation "androidx.preference:preference:1.2.1"
     implementation "dev.rikka.shizuku:api:13.1.5"

@@ -5,8 +5,8 @@
     <string name="help_activity_subtitle" formatted="false">Pomoc</string>
 
     <string name="battery_use_b" formatted="false">Wyświetl zużycie baterii</string>
-    <string name="circle_widget" formatted="false">Okrągły</string>
-    <string name="full_widget" formatted="false">Pełny</string>
+    <string name="circle_widget" formatted="false">Okrągły (stary)</string>
+    <string name="full_widget" formatted="false">Pełny (stary)</string>
     <string name="yes" formatted="false">Tak</string>
     <string name="cancel" formatted="false">Anuluj</string>
 
@@ -233,11 +233,11 @@
     <string name="help_cat_frequently_asked_questions" formatted="false">Najczęściej zadawane pytania</string>
     <string name="help_frequently_asked_questions" formatted="false">Możesz znaleźć odpowiedzi na najpopularniejsze pytania na <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a>.</string>
 
-    <string name="help_cat_contact" formatted="false">Kontakt</string>
-    <string name="help_contact" formatted="false">Jeśli masz pytanie, problem lub komentarz, napisz do mnie <a href="mailto:tomasz@swistak.codes">e-maila</a>.</string>
+    <string name="help_cat_contact" formatted="false">Kontakt i opinie</string>
+    <string name="help_contact" formatted="false">Możesz <a href="https://github.com/tswistak/Battery-Monitor/issues">zgłosić błąd na GitHubie</a>. Pytania, pomysły i opinie są mile widziane w <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a>. Możesz też <a href="mailto:tomasz@swistak.codes">napisać do mnie e-mail</a>.</string>
 
     <string name="settings_overview" formatted="false">Przegląd</string>
-    <string name="settings_overview_help" formatted="false">Ustawienia Monitora baterii zostały zorganizowane w osobne strony jak opisano poniżej. Każda strona ustawień ma swoją własną stronę pomocy opisującą dostępne tam opcje.</string>
+    <string name="settings_overview_help" formatted="false">Ustawienia są pogrupowane w kategorie: Ogólne, Stan bieżący, Szacowanie czasu, Powiadomienia, Zaawansowane oraz Kopia zapasowa i przywracanie. Użyj wyszukiwania, aby znaleźć opcję. Każda strona ma pomoc dotyczącą swoich ustawień. Diagnostyka jest dostępna osobno w menu bocznym.</string>
 
     <string name="notifications_disabled_cat" formatted="false">Powiadomienia wyłączone</string>
     <string name="app_notifs_disabled_b" formatted="false">Włącz powiadomienia aplikacji</string>
@@ -257,18 +257,18 @@
     <string name="status_bar_icon_settings" formatted="false">Ikona na pasku stanu</string>
     <string name="status_bar_icon_settings_help" formatted="false">Wybierz, czy ikona powiadomienia ma pokazywać procent baterii, czy temperaturę. Wybierz także, czy symbol jednostki ma być pokazywany w ikonie i czy ładowanie ma mieć własną ikonę. Począwszy od Androida 16 ikona na pasku stanu może nie działać w każdym wariancie systemu.</string>
     <string name="status_bar_chip_settings" formatted="false">Kapsułka na pasku stanu</string>
-    <string name="status_bar_chip_settings_help" formatted="false">Skonfiguruj, co ma pokazywać kapsułka na pasku stanu, jak często będzie się zmieniać jej zawartość i czy wyświetlać emoji ładowania.</string>
+    <string name="status_bar_chip_settings_help" formatted="false">Na Androidzie 16 lub nowszym wybierz, kiedy pojawia się kapsułka aktualizacji na żywo, jakie wartości pokazuje kolejno i czy wyświetla emoji ładowania. Dostępność zależy także od urządzenia i systemowych ustawień powiadomień.</string>
     <string name="current_state_settings_summary" formatted="false">Ustawienia ekranu „Aktualny stan”</string>
-    <string name="current_state_settings_help" formatted="false">Skonfiguruj informacje wyświetlane na ekranie „Aktualny stan”. Opcje prądu baterii sterują bieżącym odczytem pokazywanym razem z innymi szczegółami o baterii.</string>
+    <string name="current_state_settings_help" formatted="false">Wybierz, czy pokazywać pozostały ładunek i czy ekran Stan bieżący ma preferować średni prąd baterii. Prąd jest zawsze mierzony, gdy odczyt jest dostępny. Mnożnik koryguje prąd i obliczaną moc w całej aplikacji; logi zachowują oryginalny prąd chwilowy, aby można było później zmienić mnożnik.</string>
     <string name="alarm_settings_subtitle" formatted="false">Ustawienia alarmów</string>
     <string name="alarm_settings" formatted="false">Alarmy</string>
     <string name="alarm_settings_help" formatted="false">Możesz ustawić, aby Monitor baterii powiadamiał Cię, gdy poziom naładowania Twojej baterii osiąga określony warunek (np. bateria staje się w pełni naładowana, poziom naładowania baterii spada poniżej 20% i wiele innych).</string>
     <string name="other_settings" formatted="false">Ogólne</string>
     <string name="other_settings_summary" formatted="false">Skonfiguruj ogólne zachowanie aplikacji i codzienne preferencje</string>
-    <string name="other_settings_help" formatted="false">Użyj tych ustawień, aby dostosować Monitor baterii do Twojego codziennego użytkowania. Obejmują ogólne zachowanie aplikacji i preferencje, co pomaga jej dopasować się naturalnie do Twojego sposobu korzystania z urządzenia.</string>
+    <string name="other_settings_help" formatted="false">Wybierz paletę kolorów i jasność, język aplikacji, jednostkę temperatury, format czasu oraz sposób uruchamiania monitorowania po ponownym uruchomieniu urządzenia.</string>
     <string name="advanced_settings" formatted="false">Zaawansowane</string>
     <string name="advanced_settings_summary" formatted="false">Dostosuj Monitor baterii za pomocą dodatkowych opcji do specjalistycznych zastosowań</string>
-    <string name="advanced_settings_help" formatted="false">Użyj tych ustawień, gdy chcesz większej kontroli nad tym, jak Monitor baterii działa, wykraczając poza codzienne preferencje. Wartości domyślne są odpowiednie dla większości użytkowników, a dodatkowe modyfikacje mogą pomóc dostosować aplikację do bardziej specyficznych potrzeb monitorowania.</string>
+    <string name="advanced_settings_help" formatted="false">Zarządzaj dostępem uprzywilejowanym, zapisywaniem historii, czasem przechowywania logów i automatycznym eksportem. Monitorowanie w tle otwiera kontrole i narzędzia dotyczące uprawnień, niezawodności monitora, logów debugowania oraz raportów limitów ładowania.</string>
 
     <string name="live_updates_onboarding_title">Kapsułka baterii na pasku stanu</string>
     <string name="live_updates_onboarding_message_on">Twoje urządzenie obsługuje wyświetlanie procenta baterii jako kapsułki na pasku stanu. Jest to włączone domyślnie.\n
@@ -340,7 +340,7 @@
     <string name="pref_cat_privileged_access" formatted="false">Dostęp uprzywilejowany</string>
     <string name="pref_use_privileged_access" formatted="false">Używaj dostępu uprzywilejowanego</string>
     <string name="pref_use_privileged_access_summary" formatted="false">Czy używać przyznanego dostępu do roota albo Shizuku dla bardziej kompletnych i dokładniejszych danych urządzenia?</string>
-    <string name="pref_use_privileged_access_help" formatted="false">Dostęp uprzywilejowany może udostępniać dodatkowe dane urządzenia i poprawiać dokładność niektórych pomiarów. Monitor baterii używa wyłącznie dostępu do roota albo Shizuku, który jawnie przyznasz.</string>
+    <string name="pref_use_privileged_access_help" formatted="false">Włącz dodatkowe odczyty urządzenia przez przyznany dostęp do roota lub Shizuku. Gdy Android nie udostępnia obsługiwanej wartości, Monitor baterii używa tych odczytów także na ekranie Stan bieżący i w logach. Dodatkowe dane diagnostyczne są zbierane automatycznie; nie ma osobnego przełącznika zaawansowanych statystyk.</string>
 
     <string name="pref_battery_current_multiplier" formatted="false">Mnożnik</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Wykryj automatycznie</string>
@@ -352,7 +352,7 @@
 
     <string name="pref_prefer_average_battery_current" formatted="false">Preferuj średni prąd</string>
     <string name="pref_prefer_average_battery_current_summary" formatted="false">Czy na ekranie Stan bieżący użyć ostatniej średniej, gdy jest dostępna?</string>
-    <string name="pref_prefer_current_avg_help" formatted="false">Niektóre urządzenia podają ostatnią średnią oprócz prądu chwilowego. Okres uśredniania zależy od urządzenia. Ta opcja dotyczy tylko ekranu Stan bieżący; logi zawsze zapisują prąd chwilowy.</string>
+    <string name="pref_prefer_current_avg_help" formatted="false">Niektóre urządzenia udostępniają średni prąd oprócz prądu chwilowego. Okres uśredniania zależy od urządzenia. Gdy średni prąd jest niedostępny, ekran Stan bieżący pokazuje prąd chwilowy. Ta opcja dotyczy tylko tego ekranu; logi zawsze zapisują oryginalny odczyt prądu chwilowego.</string>
 
 
     <string name="pref_indicate_charging" formatted="false">Wskazuj ładowanie</string>
@@ -362,10 +362,10 @@
     <string name="pref_cat_logging" formatted="false">Logowanie</string>
     <string name="pref_enable_logging" formatted="false">Włącz logowanie</string>
     <string name="pref_enable_logging_summary" formatted="false">Czy logować zmiany stanu baterii?</string>
-    <string name="pref_enable_logging_help" formatted="false">Jeśli włączone, Monitor baterii będzie rejestrować zmiany stanu baterii.</string>
+    <string name="pref_enable_logging_help" formatted="false">Zapisuj obserwacje baterii i zmiany stanu w Historii. Dostępne pomiary obejmują poziom baterii, temperaturę, napięcie, oryginalny prąd chwilowy oraz pozostały ładunek. Moc jest obliczana z napięcia i prądu podczas wyświetlania lub eksportu; nie jest zapisywana osobno. Wyłączenie logowania nie usuwa historii ani nie zatrzymuje szacowania czasu.</string>
     <string name="pref_max_log_age" formatted="false">Maksymalny czas przechowywania logów</string>
     <string name="pref_max_log_age_summary" formatted="false">Usuwaj logi starsze niż:</string>
-    <string name="pref_max_log_age_help" formatted="false">Jeśli logowanie jest włączone, kiedy tylko podłączysz swoje urządzenie, logi starsze od tej wartości zostaną usunięte. Wybierz „Nigdy nie usuwaj”, aby przechowywać logi, dopóki ich nie wyczyścisz ręcznie.</string>
+    <string name="pref_max_log_age_help" formatted="false">Gdy logowanie jest włączone, podłączenie do zasilania usuwa logi starsze niż wybrany limit. Nigdy nie usuwaj zachowuje je do ręcznego wyczyszczenia. Jeśli automatyczny eksport jest włączony, Monitor baterii eksportuje oczekujące logi przed usunięciem starych wpisów; nieudany eksport zapobiega temu usunięciu.</string>
 
     <string name="pref_temperature_unit" formatted="false">Jednostka temperatury</string>
     <string name="pref_temperature_unit_help" formatted="false">Wybierz, czy temperatury mają być wyświetlane w stopniach Celsjusza, czy Fahrenheita.</string>
@@ -373,11 +373,7 @@
     <string name="pref_cat_autostart" formatted="false">Automatyczne uruchamianie</string>
     <string name="pref_autostart_at_boot" formatted="false">Uruchamiaj automatycznie przy starcie systemu</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Monitora baterii podczas włączania urządzenia:</string>
-    <string name="pref_autostart_at_boot_help" formatted="false">Określa, czy Monitor baterii ma uruchamiać się automatycznie podczas włączania urządzenia urządzenia.\n
-    \n
-    Opcja „Jeśli działała przy wyłączaniu systemu” działa w zależności od tego, czy ostatnio ręcznie uruchamiałeś(-aś) lub zatrzymywałeś(-aś) Monitora baterii. Jeśli więc zabijasz Monitor baterii w inny sposób, jak na przykład za pomocą narzędzia do zamykania procesów, Monitor baterii nie wie, że ją zatrzymałeś(-aś) i nadal będzie się uruchamiać przy starcie systemu, jeśli masz tak ustawione.\n
-    \n
-    UWAGA: Android będzie zawsze uruchamiać Monitora baterii przy starcie systemu, jeśli na pulpicie masz widżety Monitor baterii. W takim przypadku ustawienie to nie ma znaczenia.</string>
+    <string name="pref_autostart_at_boot_help" formatted="false">Opcja „Zawsze” uruchamia monitorowanie w tle po ponownym uruchomieniu urządzenia. „Nigdy” pomija automatyczne uruchomienie podczas startu systemu. Opcja „Jeśli działała przy wyłączaniu systemu” uwzględnia to, czy ostatnio uruchomiono lub zatrzymano monitorowanie w Monitorze baterii. Zamknięcie aplikacji lub zakończenie jej procesu nie oznacza zatrzymania monitorowania. Widżety nie zmieniają tego wyboru.</string>
 
     <string name="predictor_sensitive" formatted="false">Czułe</string>
     <string name="predictor_conservative" formatted="false">Konserwatywne</string>
@@ -386,15 +382,7 @@
 
     <string name="pref_cat_predictor" formatted="false">Szacowanie pozostałego czasu</string>
     <string name="pref_prediction_type" formatted="false">Typ szacowania</string>
-    <string name="pref_prediction_type_help" formatted="false">Tutaj możesz wybrać, w jaki sposób Monitor baterii będzie przewidywać pozostały czas pracy baterii/czas do pełnego naładowania.\n
-    \n
-    Algorytm „Czułe” jest oparty wyłącznie na ostatnich pięciu minutach użytkowania. Jeśli Twoim głównym zmartwieniem jest „Jak długo moja bateria wytrzyma, jeśli dalej będę robić to, co robię?”, wtedy algorytm jest dla Ciebie.\n
-    \n
-    Algorytm „Konserwatywne” jest domyślny. Również opiera się na ostatnim użyciu, ale stara się nie odbiegać zbyt mocno od średniej długoterminowej.\n
-    \n
-    Wybierz „Od zmiany stanu”, aby mieć przewidywanie oparte wyłącznie na bieżącej sesji.\n
-    \n
-    Ostatecznie możesz mieć przewidywanie oparte wyłącznie na średnim użyciu długoterminowym.</string>
+    <string name="pref_prediction_type_help" formatted="false">Czułe korzysta z tempa z ostatnich pięciu minut. Domyślna opcja Konserwatywne łączy niedawne tempo z wyuczoną średnią długoterminową, aby ograniczyć nagłe zmiany. Od zmiany stanu korzysta z bieżącej sesji ładowania lub rozładowania. Średnie długoterminowe używa wyuczonego tempa rozładowania lub aktywnego źródła ładowania. Dopóki obserwacji jest zbyt mało, szacunki korzystają z zapisanej średniej albo wartości początkowej.</string>
 
     <string name="pref_cat_language" formatted="false">Język i formatowanie</string>
     <string name="pref_change_app_language" formatted="false">Język aplikacji</string>
@@ -416,7 +404,7 @@
     • Aby usunąć zapisaną regułę, otwórz ją, naciśnij „Usuń alarm” i potwierdź.\n
     • Kanały powiadomień Androida sterują dźwiękiem, wibracjami i dostarczaniem powiadomień dla każdego typu alarmu. Zablokowany kanał jest pokazany niezależnie od przełącznika reguły.\n
     \n
-    Ustawienia alarmów zawierają opcję usuwania powiadomienia o niskim poziomie baterii po wzroście poziomu powyżej progu.</string>
+    W ustawieniach Powiadomienia dostępna jest opcja usuwania powiadomienia o niskim poziomie baterii po wzroście poziomu powyżej progu.</string>
 
     <string name="pref_alarm_enabled" formatted="false">Włącz alarm</string>
     <string name="pref_alarm_enabled_help" formatted="false">Jeśli chcesz tymczasowo wyłączyć alarm, bez konieczności tworzenia go od nowa, gdy będziesz go potrzebować, możesz go włączyć lub wyłączyć tutaj albo na głównej stronie alarmów.</string>
@@ -427,7 +415,7 @@
     <string name="pref_alarm_type_summary" formatted="false">Wywołaj alarm, gdy bateria:</string>
     <string name="pref_alarm_type_help" formatted="false">Obecnie możesz wybierać spośród ośmiu typów alarmu.\n
     \n
-    Alarm „Zostaje w pełni naładowana” powiadomi Cię, gdy stan Twojej baterii zmieni się z „Ładowanie” na „W pełni naładowana”. Pamiętaj, że na wielu urządzeniach nie jest to koniecznie to samo co 100% nałdowania.\n
+    Alarm „Zostaje w pełni naładowana” powiadomi Cię, gdy Android zgłosi zmianę stanu baterii na w pełni naładowaną. Pamiętaj, że na wielu urządzeniach nie jest to koniecznie to samo co 100% naładowania.\n
     \n
     \n
     Alarmy „Osiągnie limit ładowania” i „Osiągnie limit rozładowania” powiadomią Cię, gdy bateria osiągnie docelowy poziom ładowania lub rozładowania. Nie wymagają progu i zawsze podążają za bieżącymi ustawieniami celu.\n
@@ -498,12 +486,12 @@
     <string name="advanced_field_minimum_design_voltage" formatted="false">Minimalne napięcie projektowe</string>
     <string name="advanced_value_not_available" formatted="false">Niedostępne</string>
     <string name="advanced_help_overview" formatted="false">Diagnostyka łączy niezawodność monitora, zapisane dane predyktora i dane baterii w kartach Działanie aplikacji, Bateria, Ładowanie i Surowe. Dane Androida są dostępne bez roota. Dodatkowe dane urządzenia zależą od urządzenia i uprawnień dostępnych dla Monitora baterii.</string>
-    <string name="advanced_help_counters" formatted="false">Liczniki zawierają bieżące lub niedawno spróbkowane wartości, takie jak szacunkowy pozostały poziom naładowania, prąd, licznik energii i liczba cykli. Niektóre urządzenia udostępniają jedynie część z nich, a jednostki mogą pochodzić bezpośrednio ze sterownika sprzętowego.</string>
+    <string name="advanced_help_counters" formatted="false">Odczyty baterii mają czytelne etykiety i jednostki: pozostały ładunek w mAh, prąd w mA, energia w mWh, napięcie w V, temperatura w wybranej jednostce oraz moc w W. Mnożnik prądu dotyczy także obliczanej mocy. Dostępność średniego prądu i liczby cykli zależy od obsługi przez urządzenie.</string>
     <string name="advanced_help_capacity" formatted="false">Pojemność pokazuje pojemność pełnego naładowania, pojemność projektową i szacowane zdrowie. Szacowane zdrowie jest obliczane jako pojemność pełnego naładowania podzielona przez pojemność projektową, więc jego dokładność zależy od wartości odnotowanych przez urządzenie.</string>
     <string name="advanced_help_charging" formatted="false">Ładowanie pokazuje wartości związane z aktywną ścieżką ładowania, takie jak maksymalny prąd lub napięcie ładowania, strategia ładowania, stan ładowania i poziom pojemności. Pola te mogą się zmieniać w zależności od ładowarki i trybu ładowania.</string>
-    <string name="advanced_help_service" formatted="false">Usługa baterii Androida pokazuje nieprzetworzone pola zgłoszone przez `dumpsys battery`. Są to wartości na poziomie frameworka, które często obejmują źródło ładowania, stan baterii, temperaturę, napięcie i inne stany usługi.</string>
-    <string name="advanced_help_sysfs" formatted="false">Karta Surowe pokazuje oryginalne nazwy i wartości odczytane z /sys/class/power_supply, również wielowierszowe. Wyszukaj klucz i dotknij wiersza, aby wyświetlić i skopiować pełną wartość. Monitor baterii próbuje odczytu z własnymi uprawnieniami również bez roota i Shizuku.</string>
-    <string name="advanced_help_metadata" formatted="false">Metadane pokazują wysokopoziomowe właściwości baterii udostępniane przez BatteryManager, takie jak stan zdrowia, pozostały czas ładowania, szczegóły produkcyjne czy stan zamiennika. Większość tych pól wymaga dostępu uprzywilejowanego, a wiele urządzeń udostępnia jedynie niewielką ich część.</string>
+    <string name="advanced_help_service" formatted="false">Karta Surowe zawiera oryginalne nazwy i wartości z rozgłoszeń baterii Androida oraz, gdy jest dostępne, dumpsys battery. Mogą one obejmować źródło zasilania, stan baterii, temperaturę, napięcie i inne dane usługi baterii.</string>
+    <string name="advanced_help_sysfs" formatted="false">Karta Surowe pokazuje oryginalne nazwy i wartości z /sys/class/power_supply, w tym wartości wielowierszowe. Wyszukaj klucz i dotknij wiersza, aby wyświetlić oraz skopiować pełną wartość. Użyj Odśwież, aby zebrać nowe odczyty. Monitor baterii próbuje też odczytów ze zwykłymi uprawnieniami Androida, bez roota lub Shizuku.</string>
+    <string name="advanced_help_metadata" formatted="false">Karta Surowe zawiera też oryginalne nazwy i wartości właściwości BatteryManager, w tym dostępne liczniki oraz odczyty prądu. Dodatkowe właściwości, takie jak dane produkcji lub status wymiany baterii, zależą od wersji Androida, obsługi przez urządzenie i uprawnień.</string>
     <string name="advanced_help_troubleshooting_title" formatted="false">Rozwiązywanie problemów</string>
     <string name="advanced_help_troubleshooting" formatted="false">Dane Androida są zbierane automatycznie w Diagnostyce. Aby zbierać dodatkowe dane przez roota lub Shizuku, włącz dostęp uprzywilejowany w sekcji Dodatkowe źródła. Monitor baterii najpierw próbuje roota, potem Shizuku. Shizuku musi działać i mieć przyznane uprawnienie. Brakujące pola pozostają niedostępne; nieudane odświeżenie zachowuje poprzedni odczyt i oznacza go jako nieaktualny.</string>
 
@@ -550,8 +538,8 @@
     <string name="pref_auto_log_export_mode" formatted="false">Obsługa plików</string>
     <string name="pref_auto_log_export_format" formatted="false">Format eksportu</string>
     <string name="pref_auto_log_export_directory" formatted="false">Zmień folder</string>
-    <string name="auto_log_export_help" formatted="false">Automatyczne eksporty zapisują logi zebrane tylko od poprzedniego automatycznego eksportu. Wybierz częstotliwość ich uruchamiania i czy każdy eksport ma tworzyć osobny plik, czy dodawać nowe wpisy do jednego bieżącego pliku. Android może opóźniać eksport, gdy urządzenie jest bezczynne.</string>
-    <string name="auto_log_export_format_help" formatted="false">Wybierz CSV do czytania, filtrowania, tworzenia wykresów lub ręcznego analizowania logów w arkuszu kalkulacyjnym albo edytorze tekstu. Wybierz JSON, gdy plik jest głównie kopią zapasową: zachowuje ustrukturyzowane dane logów Monitora baterii.</string>
+    <string name="auto_log_export_help" formatted="false">Skonfiguruj automatyczny eksport w ustawieniach Zaawansowane. Wybierz folder, częstotliwość, format oraz tworzenie osobnych plików lub dopisywanie do jednego pliku. Eksport zwykle zapisuje logi od poprzedniego automatycznego eksportu; nowy plik do dopisywania obejmuje wszystkie dostępne logi. Android może opóźniać eksport podczas bezczynności. Logowanie musi pozostać włączone.</string>
+    <string name="auto_log_export_format_help" formatted="false">CSV ułatwia analizę w arkuszu kalkulacyjnym lub edytorze tekstu. Zawiera oryginalny prąd, pozostały ładunek oraz moc obliczoną z mnożnikiem wybranym podczas eksportu. JSON zachowuje strukturę danych logów do kopii zapasowych. Komórki z niedostępnym prądem, pozostałym ładunkiem i mocą pozostają puste.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Utwórz nowy plik</string>
     <string name="auto_log_export_mode_append" formatted="false">Dodawaj nowe logi do istniejącego pliku</string>
     <string name="pref_export_alarms" formatted="false">Eksportuj alarmy</string>
@@ -591,12 +579,12 @@
     <string name="general_backup_exported" formatted="false">Ogólna kopia zapasowa została wyeksportowana</string>
     <string name="general_backup_imported" formatted="false">Ogólna kopia zapasowa została zaimportowana</string>
     <string name="invalid_general_backup_file" formatted="false">Nieprawidłowy lub niekompatybilny plik ogólnej kopii zapasowej</string>
-    <string name="backup_restore_help_overview" formatted="false">Użyj kopii zapasowych, aby zapisać kopię Twoich danych aplikacji i przywrócić ją później.</string>
+    <string name="backup_restore_help_overview" formatted="false">Zapisuj i przywracaj ustawienia, alarmy, logi oraz wyuczone dane szacowania. Przywracanie ustawień domyślnych po potwierdzeniu resetuje preferencje aplikacji, zachowując historię, alarmy, wyuczone szacunki oraz bieżący stan uruchomienia monitorowania.</string>
     <string name="general_backup_help" formatted="false">Ogólna kopia zapasowa zapisuje razem ustawienia, alarmy i dane specyficzne dla urządzenia. Podczas jej przywracania możesz wybrać, które dostępne dane zaimportować.</string>
     <string name="settings_backup_help" formatted="false">Kopia zapasowa ustawień zapisuje Twoje preferencje aplikacji. Zaimportowanie jej przywraca zapisane preferencje.</string>
     <string name="alarms_backup_help" formatted="false">Kopia zapasowa alarmów zapisuje Twoje alarmy. Zaimportowanie jej zastępuje wszystkie bieżące alarmy alarmami z kopii zapasowej.</string>
     <string name="device_specific_backup_help" formatted="false">Kopia zapasowa danych specyficznych dla urządzenia zapisuje logi i dane predykcyjne. Możesz wybrać którekolwiek lub oba podczas importu. Dane te należą do urządzenia źródłowego; użycie ich na innym urządzeniu może spowodować błędne przewidywania lub nieoczekiwane zachowanie. Podczas importowania logów wybierz, czy je dodać, czy zastąpić istniejące logi.</string>
-    <string name="csv_logs_import_help" formatted="false">Możesz zaimportować logi z poprzednio wyeksportowanego pliku CSV. Import może nie działać prawidłowo między różnymi wersjami aplikacji. Wybierz, czy dodać zaimportowane logi, czy zastąpić istniejące.</string>
+    <string name="csv_logs_import_help" formatted="false">Importuj logi z pliku CSV wyeksportowanego przez Monitor baterii i wybierz, czy dodać je do obecnych logów, czy je zastąpić. Starsze eksporty mogą nie zawierać prądu lub pozostałego ładunku; te pomiary pozostaną puste przy starszych wpisach. Kopie JSON zachowują strukturę danych i są zalecane do ich przywracania.</string>
 
     <string name="diagnostics" formatted="false">Diagnostyka</string>
     <string name="diagnostics_summary" formatted="false">Sprawdź uprawnienia, niezawodność monitorowania i utwórz raport do rozwiązywania problemów</string>
@@ -634,7 +622,7 @@
     <string name="diagnostics_exported" formatted="false">Wyeksportowano raport diagnostyczny</string>
     <string name="diagnostics_export_failed" formatted="false">Nie udało się wyeksportować raportu diagnostycznego</string>
     <string name="diagnostics_help_title" formatted="false">Jak pomaga diagnostyka</string>
-    <string name="diagnostics_help_overview" formatted="false">Ten ekran sprawdza, czy Monitor baterii ma to, czego potrzebuje, aby utrzymywać monitorowanie w tle. Jeśli czegoś brakuje, naciśnij ten element, aby otworzyć miejsce, gdzie możesz go naprawić.</string>
+    <string name="diagnostics_help_overview" formatted="false">Monitorowanie w tle sprawdza uprawnienia i niezawodność monitora. Dostępne elementy pozwalają uruchomić lub zatrzymać monitorowanie, zmienić logowanie debugowania, otworzyć ustawienia optymalizacji baterii i powiadomień albo utworzyć raport diagnostyczny. Niedostępny odczyt nie zawsze oznacza brak uprawnień; niektóre urządzenia go nie udostępniają.</string>
     <string name="diagnostics_help_report" formatted="false">Jeśli zgłaszasz problem, raport diagnostyczny może być istotny w znalezieniu jego przyczyny. Zawiera on informacje o urządzeniu i stanie aplikacji oraz (jeśli je włączyłeś(-aś)) logi debugowania. Logi debugowania mogą zawierać dane osobowe, dlatego przejrzyj plik i udostępnij go ostrożnie.</string>
     <string name="diagnostics_service_restarting" formatted="false">Usługa nie odpowiedziała. Ponowne jej uruchamianie…</string>
     <string name="diagnostics_service_restart_failed" formatted="false">Usługa monitorowania nie odpowiedziała po ponownym uruchomieniu. Spróbuj ponownie uruchomić aplikację.</string>
@@ -684,7 +672,7 @@
 
     <string name="time_estimates_settings" formatted="false">Szacowanie czasu</string>
     <string name="time_estimates_settings_summary" formatted="false">Wybierz, jak pozostały czas ma być obliczany i do których docelowych poziomów naładowania baterii</string>
-    <string name="time_estimates_settings_help" formatted="false">Te ustawienia sterują szacowaniem czasu przez Monitor baterii. Docelowe poziomy wpływają tylko na szacunki; Monitor baterii nie rozpoczyna ani nie zatrzymuje ładowania.</string>
+    <string name="time_estimates_settings_help" formatted="false">Wybierz sposób szacowania pozostałego czasu i docelowe poziomy baterii. Cele dotyczą także alarmów osiągnięcia limitu ładowania i rozładowania. Monitor baterii nie rozpoczyna ani nie zatrzymuje ładowania.</string>
     <string name="pref_cat_target_levels" formatted="false">Docelowe poziomy</string>
     <string name="pref_charging_target_mode" formatted="false">Cel ładowania</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Limit ładowania urządzenia: %1$d%%</string>
@@ -693,14 +681,14 @@
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
     Jeśli ta wartość nie wygląda na prawidłową, możesz pomóc ulepszyć wykrywanie urządzeń. Otwórz Diagnostykę i wygeneruj raport limitu ładowania OEM, dokładnie przestrzegając instrukcji w Pomocy</string>
-    <string name="pref_charging_target_mode_help" formatted="false">„Automatyczny” używa stałego limitu ładowania urządzenia, gdy Monitor baterii może go odczytać, a w przeciwnym razie 100%. Ładowanie adaptacyjne nadal ma cel 100%. Wybierz „Własny”, aby nadpisać wartość urządzenia dla szacunków.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">Automatyczny używa stałego limitu ładowania urządzenia, jeśli Monitor baterii może go odczytać, a w przeciwnym razie używa 100%. Ładowanie adaptacyjne nadal ma cel 100%. Własny używa wybranego poziomu do szacowania czasu ładowania i alarmów osiągnięcia limitu ładowania.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Automatyczne wykrywanie może działać na urządzeniach Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme i Sony Xperia, a także na urządzeniach z GrapheneOS lub LineageOS — szczególnie gdy możliwy jest dostęp do roota albo Shizuku. Opiera się na sygnałach programowych, dlatego dostępność i dokładność nie są gwarantowane nawet u wymienionych producentów. Nieprzetestowane modele lub wersje systemów z tych rodzin mogą również działać, ale urządzenia innych producentów nie są obecnie wykrywane automatycznie.</string>
     <string name="charging_target_mode_automatic" formatted="false">Automatyczny (zalecany)</string>
     <string name="charging_target_mode_custom" formatted="false">Własny</string>
     <string name="pref_custom_charging_target" formatted="false">Własny cel ładowania</string>
     <string name="pref_custom_charging_target_help" formatted="false">Ustaw poziom naładowania baterii używany jako punkt końcowy szacunków ładowania, gdy „Cel ładowania” jest „Własny”.</string>
     <string name="pref_discharging_target" formatted="false">Cel rozładowania</string>
-    <string name="pref_discharging_target_help" formatted="false">Ustaw poziom naładowania baterii używany jako punkt końcowy szacunków rozładowania. Jest to niezależne od alarmów niskiego poziomu naładowania baterii.</string>
+    <string name="pref_discharging_target_help" formatted="false">Ustaw punkt końcowy szacowania rozładowania i alarmów osiągnięcia limitu rozładowania. Poniżej tego poziomu czas jest szacowany do 0%. Alarmy niskiego poziomu baterii z własnym progiem pozostają niezależne.</string>
     <string name="pref_target_level_summary" formatted="true">Szacuj do %1$d%%</string>
     <string name="nav_current">Stan bieżący</string>
     <string name="nav_history">Historia</string>
@@ -756,7 +744,7 @@
     <string name="current_prediction_method">Metoda: %1$s</string>
     <string name="current_prediction_target">Cel: %1$d%%</string>
     <string name="current_prediction_snapshot_time">Odczyt baterii: %1$s</string>
-    <string name="current_prediction_basis_unavailable">Usługa nie przekazuje okresu bazowego, użytej metody zapasowej ani osobnego czasu obliczenia prognozy.</string>
+    <string name="current_prediction_diagnostics" formatted="false">Bieżące tempa zmian i wyuczone średnie są dostępne w Diagnostyce, w zakładce Działanie aplikacji.</string>
     <string name="current_prediction_explanation">Prognoza używa wybranej metody Battery Monitor. Jej cel nie steruje ładowaniem ani wyłączeniem telefonu.</string>
     <string name="history_last_24h">Ostatnie 24 godziny</string>
     <string name="history_last_7d">Ostatnie 7 dni</string>
@@ -812,7 +800,19 @@
     <string name="battery_power_explanation">Obliczana z napięcia i prądu baterii; dodatnia przy ładowaniu, ujemna przy rozładowywaniu. To moc po stronie baterii, a nie ładowarki.</string>
 
     <string name="diag_overview">Działanie aplikacji</string>
-    <string name="diag_predictor_description">Zapisany średni długoterminowy czas zmiany poziomu baterii o jeden punkt procentowy. Brak wartości i −1 oznaczają użycie wartości domyślnych predyktora.</string>
+    <string name="diag_predictor_description">Tempa zmian pokazują czas zmiany o jeden punkt procentowy. Bieżące obliczenia są przechowywane w pamięci, a zapisane średnie pozostają po ponownym uruchomieniu. Niepełne okna są uzupełniane średnią długoterminową, a niezapisane średnie używają wartości domyślnych.</string>
+    <string name="diag_predictor_recent" formatted="false">Bieżące obliczenia</string>
+    <string name="diag_predictor_saved_averages" formatted="false">Zapisane średnie długoterminowe</string>
+    <string name="diag_predictor_no_recent" formatted="false">Brak aktywnej prognozy. Bieżące dane są dostępne po odczycie monitora podczas ładowania lub rozładowywania.</string>
+    <string name="diag_predictor_active_state" formatted="false">Aktywny stan baterii</string>
+    <string name="diag_predictor_effective_rate" formatted="false">Tempo zmian użyte w prognozie</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">Ostatnie 5 minut</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">Ostatnie 5 punktów procentowych</string>
+    <string name="diag_predictor_active_long_term_rate" formatted="false">Aktywne tempo długoterminowe</string>
+    <string name="diag_predictor_observed_points" formatted="false">Pełne punkty procentowe</string>
+    <string name="diag_predictor_observation_duration" formatted="false">Czas obserwacji sesji</string>
+    <string name="diag_predictor_current_level_duration" formatted="false">Czas na bieżącym poziomie</string>
+    <string name="diag_predictor_uses_partial" formatted="false">Uwzględniono niepełny przedział</string>
     <string name="diag_predictor_ac">Ładowanie (AC)</string>
     <string name="diag_predictor_wireless">Ładowanie (bezprzewodowe)</string>
     <string name="diag_predictor_usb">Ładowanie (USB)</string>
@@ -956,6 +956,7 @@
     <string name="widget_background_opacity">Krycie tła</string>
     <string name="widget_background_opacity_error">Wpisz liczbę całkowitą od 0 do 100.</string>
     <string name="widget_transparent_warning">Przy przezroczystym tle czytelność zależy od tapety.</string>
+    <string name="widget_y_axis_labels">Pokaż wartości na osi Y</string>
     <string name="widget_presentation">Układ</string>
     <string name="widget_presentation_adaptive">Dostosuj do dostępnego miejsca</string>
     <string name="widget_presentation_compact">Kompaktowy</string>
@@ -976,4 +977,7 @@
     <string name="widget_chart_description">Zapisany poziom baterii od %1$s do %2$s. Minimum %3$s, maksimum %4$s.</string>
     <string name="history_last_3d">Ostatnie 3 dni</string>
     <string name="monitoring_state_save_failed">Nie udało się zapisać stanu monitorowania. Sprawdź wolne miejsce i spróbuj ponownie.</string>
+    <string name="settings_reset_help" formatted="false">Przywrócenie ustawień domyślnych wymaga potwierdzenia, a następnie resetuje preferencje aplikacji. Zachowuje historię, alarmy, wyuczone szacunki, konfiguracje widżetów oraz bieżący stan uruchomienia monitorowania w tle. Nie resetuje uprawnień systemowych ani ustawień kanałów powiadomień.</string>
+    <string name="diagnostics_predictor_help" formatted="false">Działanie aplikacji pokazuje zapisane średnie długoterminowe oraz bieżące dane predyktora. Tempa zmian są obliczane ze zmian procentowego poziomu baterii i pokazują czas zmiany o jeden punkt procentowy. Dostępne są też wybrana metoda, aktywne źródło ładowania, liczba zaobserwowanych punktów, czas obserwacji i informacja o uwzględnieniu niepełnego przedziału. W obliczeniach dla pięciu minut i pięciu punktów procentowych brakujące obserwacje są uzupełniane aktywną średnią długoterminową, a pominięte poziomy są interpolowane. Bieżące dane są przechowywane w pamięci i zerowane po ponownym uruchomieniu monitorowania, przejściu między ładowaniem i rozładowywaniem lub zmianie źródła ładowania. Zapisane wyuczone średnie pozostają po ponownym uruchomieniu. Dane te są niezależne od logów historii; wyczyszczenie logów nie resetuje prognoz.</string>
+    <string name="notification_channels_help" formatted="false">Otwórz ustawienia powiadomień Androida, aby zezwolić na powiadomienia lub je zablokować oraz skonfigurować dźwięk, wibracje i sposób dostarczania powiadomienia głównego oraz każdego typu alarmu. Włączenie reguły alarmu nie odblokowuje kanału powiadomień.</string>
 </resources>

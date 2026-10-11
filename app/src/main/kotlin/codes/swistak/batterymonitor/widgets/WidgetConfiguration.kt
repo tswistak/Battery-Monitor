@@ -36,7 +36,8 @@ internal data class WidgetConfiguration(
     val variant: WidgetVariant = WidgetVariant.ADAPTIVE,
     val tapAction: WidgetTapAction = WidgetTapAction.CURRENT_STATE,
     val tapMetric: WidgetMetric = WidgetMetric.CURRENT,
-    val trendHours: Int = 24
+    val trendHours: Int = 24,
+    val showYAxisLabels: Boolean = true
 ) {
     fun isValid(): Boolean = backgroundOpacityPercent in 0..100 && temperatureUnit in listOf(
         null, TEMPERATURE_CELSIUS, TEMPERATURE_FAHRENHEIT
@@ -55,13 +56,14 @@ internal data class WidgetConfiguration(
         variant.name,
         tapAction.name,
         tapMetric.name,
-        trendHours.toString()
+        trendHours.toString(),
+        showYAxisLabels.toString()
     ).joinToString("|")
 
     companion object {
         const val TEMPERATURE_CELSIUS = "celsius"
         const val TEMPERATURE_FAHRENHEIT = "fahrenheit"
-        private const val SCHEMA_VERSION = 1
+        private const val SCHEMA_VERSION = 2
 
         fun defaults(family: WidgetFamily): WidgetConfiguration = WidgetConfiguration(
             tapAction = when (family) {
@@ -73,7 +75,8 @@ internal data class WidgetConfiguration(
 
         internal fun decode(value: String): WidgetConfiguration? = runCatching {
             val parts = value.split('|')
-            require(parts.size == 11 && parts[0].toInt() == SCHEMA_VERSION)
+            val version = parts[0].toInt()
+            require((version == 1 && parts.size == 11) || (version == SCHEMA_VERSION && parts.size == 12))
             WidgetConfiguration(
                 brightness = parts[1].takeIf(String::isNotEmpty)?.let(Brightness::valueOf),
                 colorSource = parts[2].takeIf(String::isNotEmpty)?.let(ColorSource::valueOf),
@@ -84,7 +87,8 @@ internal data class WidgetConfiguration(
                 variant = WidgetVariant.valueOf(parts[7]),
                 tapAction = WidgetTapAction.valueOf(parts[8]),
                 tapMetric = WidgetMetric.valueOf(parts[9]),
-                trendHours = parts[10].toInt()
+                trendHours = parts[10].toInt(),
+                showYAxisLabels = version == 1 || parts[11].toBooleanStrict()
             ).takeIf(WidgetConfiguration::isValid)
         }.getOrNull()
     }

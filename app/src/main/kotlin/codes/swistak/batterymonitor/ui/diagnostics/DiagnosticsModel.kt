@@ -669,7 +669,8 @@ internal fun diagnosticReport(
     groups.forEachIndexed { index, group ->
         appendLine(label(group.title))
         group.rows.forEach { row ->
-            if (includeRaw || ((index < 3 || (group.title == R.string.device_data_predictor && row.label != 0)) && row.rawValue?.toDoubleOrNull() != null)) {
+            val predictor = row.label != 0 && group.title == R.string.device_data_predictor
+            if (includeRaw || predictor || (index < 3 && row.label != 0 && row.rawValue?.toDoubleOrNull() != null)) {
                 appendLine(
                     "${row.rawKey}: ${
                         formattedDiagnosticValue(

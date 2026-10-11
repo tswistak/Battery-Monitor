@@ -30,12 +30,15 @@ import androidx.core.graphics.createBitmap
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
+import codes.swistak.batterymonitor.logs.HistoryMetric
+import codes.swistak.batterymonitor.logs.HistorySeries
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.settings.LongDurationFormat
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.TemperatureUnit
+import codes.swistak.batterymonitor.ui.components.historyChartScale
 import codes.swistak.batterymonitor.ui.theme.batteryColorScheme
 import codes.swistak.batterymonitor.ui.theme.brightness
 import codes.swistak.batterymonitor.ui.theme.colorSource
@@ -92,8 +95,7 @@ internal object WidgetRenderer {
             else -> null
         }
         val age = listOfNotNull(
-            state,
-            time?.let { context.getString(R.string.widget_read_at, it) }).joinToString(" · ")
+            state, time?.let { context.getString(R.string.widget_read_at, it) }).joinToString(" · ")
         val views = RemoteViews(context.packageName, R.layout.battery_widget)
         views.setInt(
             R.id.widget_root, "setLayoutDirection", context.resources.configuration.layoutDirection
@@ -200,8 +202,7 @@ internal object WidgetRenderer {
                 val prediction = when {
                     currentReading == null -> null
                     currentReading.targetReached && currentReading.predictionTarget != null -> context.getString(
-                        if (currentReading.status == BatteryInfo.STATUS_CHARGING) R.string.current_target_reached else R.string.current_below_target,
-                        currentReading.predictionTarget
+                        targetReachedLabel(currentReading), currentReading.predictionTarget
                     )
 
                     currentReading.predictionMinutes != null && currentReading.predictionTarget != null -> "≈" + DurationFormatter.formatShort(
@@ -306,9 +307,37 @@ internal object WidgetRenderer {
                 ) else context.getString(R.string.logs_empty)
                 body.setTextViewText(R.id.widget_trend_summary, summary)
                 body.setViewVisibility(
-                    R.id.widget_chart, if (hasHistory) View.VISIBLE else View.GONE
+                    R.id.widget_chart_container, if (hasHistory) View.VISIBLE else View.GONE
                 )
                 if (trend != null && hasHistory) {
+                    val scale = historyChartScale(
+                        HistorySeries(emptyList(), trend.min, trend.max), HistoryMetric.LEVEL, false
+                    )
+                    val axisValues = chartAxisValues(scale.minimum, scale.maximum, compact)
+                    val numberFormat = NumberFormat.getNumberInstance(
+                        context.resources.configuration.locales[0]
+                    ).apply { maximumFractionDigits = 1 }
+                    for ((id, value) in listOf(
+                        R.id.widget_chart_y_top to scale.maximum,
+                        R.id.widget_chart_y_middle to (scale.minimum + scale.maximum) / 2,
+                        R.id.widget_chart_y_bottom to scale.minimum
+                    )) {
+                        body.setTextViewText(id, numberFormat.format(value))
+                        body.setTextColor(id, muted)
+                        body.setViewVisibility(
+                            id, if (value in axisValues) View.VISIBLE else View.GONE
+                        )
+                    }
+                    body.setViewVisibility(
+                        R.id.widget_chart_y_axis,
+                        if (config.showYAxisLabels) View.VISIBLE else View.GONE
+                    )
+                    val labelInset = if (config.showYAxisLabels && !compact) Paint().apply {
+                        textSize = TypedValue.applyDimension(
+                            TypedValue.COMPLEX_UNIT_SP, 11f, context.resources.displayMetrics
+                        )
+                    }.fontMetricsInt.let { (it.descent - it.ascent + 1) / 2 } else 0
+                    body.setViewPadding(R.id.widget_chart, 0, labelInset, 0, labelInset)
                     val chartWidth =
                         dp(context, (widthDp - 32).coerceAtLeast(100)).coerceAtMost(512)
                     val chartHeight = dp(
@@ -378,6 +407,9 @@ internal object WidgetRenderer {
             nowMillis
         )
 
+    internal fun targetReachedLabel(snapshot: WidgetSnapshot): Int =
+        if ((snapshot.status == BatteryInfo.STATUS_DISCHARGING || snapshot.status == BatteryInfo.STATUS_UNPLUGGED) && snapshot.predictionTarget != null && snapshot.levelPercent < snapshot.predictionTarget) R.string.current_below_target else R.string.current_target_reached
+
     private fun metricLabel(metric: WidgetMetric): Int = when (metric) {
         WidgetMetric.TEMPERATURE -> R.string.current_temperature
         WidgetMetric.VOLTAGE -> R.string.current_voltage
@@ -439,13 +471,22 @@ internal object WidgetRenderer {
         chartCache[key]?.let { return it }
         val bitmap = createBitmap(width, height)
         val canvas = Canvas(bitmap)
+        val scale = historyChartScale(
+            HistorySeries(emptyList(), trend.min, trend.max), HistoryMetric.LEVEL, false
+        )
+
+        fun y(value: Double): Float =
+            ((scale.maximum - value) / (scale.maximum - scale.minimum) * (height - 1)).toFloat()
+
         val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = grid
             strokeWidth = 1f
             style = Paint.Style.STROKE
             pathEffect = DashPathEffect(floatArrayOf(5f, 5f), 0f)
         }
-        canvas.drawLine(4f, height - 5f, width - 4f, height - 5f, paint)
+        for (tick in chartAxisValues(scale.minimum, scale.maximum, false)) {
+            canvas.drawLine(4f, y(tick), width - 4f, y(tick), paint)
+        }
         paint.color = line
         paint.strokeWidth = (width / 160f).coerceIn(2f, 4f)
         paint.strokeJoin = Paint.Join.ROUND
@@ -453,24 +494,17 @@ internal object WidgetRenderer {
         paint.pathEffect = null
         val start = trend.rangeStart
         val span = (trend.rangeEnd - start).coerceAtLeast(1)
-        val minimum = (trend.min ?: 0.0).coerceIn(0.0, 100.0)
-        val maximum = (trend.max ?: 100.0).coerceIn(minimum, 100.0)
-        val lower = (minimum - 5).coerceAtLeast(0.0)
-        val upper = (maximum + 5).coerceAtMost(100.0).coerceAtLeast(lower + 1)
         fun x(point: WidgetTrendPoint): Float =
             (4 + (point.time - start).toDouble() / span * (width - 8)).toFloat()
-
-        fun y(point: WidgetTrendPoint): Float =
-            (4 + (upper - point.value!!) / (upper - lower) * (height - 12)).toFloat()
         for (run in chartRuns(trend.points, start, trend.rangeEnd)) {
             if (run.size == 1) {
                 paint.style = Paint.Style.FILL
-                canvas.drawCircle(x(run[0]), y(run[0]), paint.strokeWidth, paint)
+                canvas.drawCircle(x(run[0]), y(run[0].value!!), paint.strokeWidth, paint)
                 paint.style = Paint.Style.STROKE
             } else {
                 val path = Path()
-                path.moveTo(x(run.first()), y(run.first()))
-                run.drop(1).forEach { path.lineTo(x(it), y(it)) }
+                path.moveTo(x(run.first()), y(run.first().value!!))
+                run.drop(1).forEach { path.lineTo(x(it), y(it.value!!)) }
                 canvas.drawPath(path, paint)
             }
         }
@@ -478,6 +512,10 @@ internal object WidgetRenderer {
         if (chartCache.size > MAX_CHARTS) chartCache.remove(chartCache.keys.first())
         return bitmap
     }
+
+    internal fun chartAxisValues(minimum: Double, maximum: Double, compact: Boolean): List<Double> =
+        if (compact) listOf((minimum + maximum) / 2)
+        else listOf(maximum, (minimum + maximum) / 2, minimum)
 
     internal fun chartRuns(
         points: List<WidgetTrendPoint>, start: Long, end: Long

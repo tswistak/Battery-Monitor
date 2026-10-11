@@ -1,6 +1,5 @@
 /*
-    Copyright (c) 2009-2020 Darshan Computing, LLC
-    Modified in 2026 by Tomasz Świstak <tomasz@swistak.codes> for the Battery Monitor fork.
+    Copyright (c) 2026 Tomasz Świstak <tomasz@swistak.codes>
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or

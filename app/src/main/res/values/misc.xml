@@ -1,39 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Resources that are neither styles nor strings to be translated. -->
 <resources>
-    <string-array name="temp_alarm_values">
-        <item>0</item>
-        <item>20</item>
-        <item>40</item>
-        <item>60</item>
-        <item>80</item>
-        <item>100</item>
-        <item>120</item>
-        <item>140</item>
-        <item>160</item>
-        <item>180</item>
-        <item>200</item>
-        <item>220</item>
-        <item>240</item>
-        <item>260</item>
-        <item>280</item>
-        <item>300</item>
-        <item>320</item>
-        <item>340</item>
-        <item>360</item>
-        <item>380</item>
-        <item>400</item>
-        <item>420</item>
-        <item>440</item>
-        <item>460</item>
-        <item>480</item>
-        <item>500</item>
-        <item>520</item>
-        <item>540</item>
-        <item>560</item>
-        <item>580</item>
-        <item>600</item>
-    </string-array>
-
     <string-array name="chip_switching_interval_entries">
         <item>@string/chip_switching_interval_2_seconds</item>
         <item>@string/chip_switching_interval_5_seconds</item>
@@ -51,12 +17,6 @@
         <item>30</item>
         <item>custom</item>
     </string-array>
-
-    <string name="default_red_thresh">15</string>
-    <string name="default_amber_thresh">40</string>
-    <string name="default_green_thresh">@string/default_amber_thresh</string>
-
-    <string name="default_status_dur_est">12</string>
 
     <string name="default_max_log_age">672</string>
 
@@ -128,19 +88,6 @@
         <item>csv</item>
         <item>json</item>
     </string-array>
-
-    <string-array name="log_filter_pref_keys">
-        <item>plugged_in</item>
-        <item>unplugged</item>
-        <item>charging</item>
-        <item>discharging</item>
-        <item>not_charging</item>
-        <item>fully_charged</item>
-        <item>boot_completed</item>
-        <item>unknown</item>
-    </string-array>
-
-    <bool name="long_activity_names">true</bool>
 
     <string-array name="statuses">
         <item>@string/status_unplugged</item>
@@ -272,7 +219,6 @@
     </string-array>
 
     <string name="default_icon_content">percentage</string>
-    <string name="default_chip_content">percentage</string>
     <string name="default_live_update_display_mode">charging</string>
 
     <string-array name="notification_line_content_entries">
@@ -395,5 +341,4 @@
     </string-array>
 
     <string name="default_temperature_unit" translatable="false">celsius</string>
-
 </resources>

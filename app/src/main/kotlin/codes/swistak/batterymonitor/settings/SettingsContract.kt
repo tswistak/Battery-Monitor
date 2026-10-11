@@ -47,6 +47,10 @@ internal object SettingsContract {
     const val KEY_IMPORT_LOGS_CSV: String = "import_logs_csv_backup"
     const val KEY_EXPORT_GENERAL_BACKUP: String = "export_general_backup"
     const val KEY_IMPORT_GENERAL_BACKUP: String = "import_general_backup"
+    const val KEY_RESET_DEFAULT_SETTINGS = "reset_default_settings"
+    const val KEY_LIVE_UPDATE_SYSTEM_SETTINGS = "live_update_system_settings"
+    const val KEY_CATEGORY_BATTERY_CURRENT_MAIN = "category_battery_current_main"
+    const val KEY_CATEGORY_STATUS_BAR_CHIP = "category_status_bar_chip"
 
     const val KEY_AUTO_LOG_EXPORT: String = "auto_log_export"
     const val KEY_LAST_LOG_EXPORT_TIME: String = "last_log_export_time"

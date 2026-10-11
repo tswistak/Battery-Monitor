@@ -47,7 +47,6 @@ import codes.swistak.batterymonitor.alarms.AlarmEditActivity
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.diagnostics.DiagnosticsFragment
-import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.settings.SettingsActivity
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -58,6 +57,7 @@ import codes.swistak.batterymonitor.ui.alarms.AlarmsScreen
 import codes.swistak.batterymonitor.ui.alarms.AlarmsViewModel
 import codes.swistak.batterymonitor.ui.current.CurrentMeasurement
 import codes.swistak.batterymonitor.ui.current.CurrentStateRoute
+import codes.swistak.batterymonitor.ui.current.CurrentStateViewModel
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsRoute
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsViewModel
 import codes.swistak.batterymonitor.ui.diagnostics.MonitorAction
@@ -73,7 +73,6 @@ import codes.swistak.batterymonitor.ui.settings.SettingsCategory
 
 class BatteryInfoActivity : AppCompatActivity() {
     companion object {
-        const val PR_LVF_WRITE_STORAGE = 1
         const val EXTRA_DETAIL = "codes.swistak.batterymonitor.EXTRA_DETAIL"
 
         const val EXTRA_SECTION = "codes.swistak.batterymonitor.EXTRA_SECTION"
@@ -88,6 +87,7 @@ class BatteryInfoActivity : AppCompatActivity() {
     private var currentMeasurement by mutableStateOf<CurrentMeasurement?>(null)
 
     private lateinit var diagnostics: DiagnosticsViewModel
+    private lateinit var current: CurrentStateViewModel
     private var monitorActions by mutableStateOf<Map<String, MonitorAction>>(emptyMap())
 
     private var shown: SectionOwner? = null
@@ -104,6 +104,7 @@ class BatteryInfoActivity : AppCompatActivity() {
         DisplayStrings.setResources(resources)
         val currentSettings = getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
         diagnostics = ViewModelProvider(this)[DiagnosticsViewModel::class.java]
+        current = ViewModelProvider(this)[CurrentStateViewModel::class.java]
         history = ViewModelProvider(this)[HistoryViewModel::class.java]
         alarms = ViewModelProvider(this)[AlarmsViewModel::class.java]
         history.restore(savedInstanceState?.getBundle("history_state"))
@@ -185,7 +186,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     ).substringBefore(':')
                                 )?.title ?: R.string.settings_activity_subtitle
 
-                                selected == SectionOwner.HELP -> R.string.nav_help
+                                selected == SectionOwner.HELP -> R.string.menu_help
                                 it.substringBefore(':') == "charging-tools" -> R.string.charging_diagnostics_title
                                 else -> R.string.diag_monitor_operation
                             }
@@ -224,7 +225,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                             }) {
                             androidx.compose.material3.Icon(
                                 androidx.compose.ui.res.painterResource(R.drawable.ui_info),
-                                getString(R.string.nav_help)
+                                getString(R.string.menu_help)
                             )
                         }
                         if (selected == SectionOwner.HISTORY) HistoryActionsMenu(!historyState.busy) {
@@ -244,8 +245,9 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     }
                             }, modifier = Modifier.fillMaxSize()
                         )
-                        if (selected == SectionOwner.CURRENT) {
+                        if (selected == SectionOwner.CURRENT) sections.SaveableStateProvider("current") {
                             CurrentStateRoute(
+                                viewModel = current,
                                 monitoring = persistent.monitoring.state,
                                 settings = currentSettings,
                                 onSection = ::selectSection,
@@ -267,7 +269,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 )
                             }
                         }
-                        if (selected == SectionOwner.HISTORY) {
+                        if (selected == SectionOwner.HISTORY) sections.SaveableStateProvider("history") {
                             HistoryRoute(
                                 history,
                                 persistent.monitoring.state,
@@ -332,8 +334,8 @@ class BatteryInfoActivity : AppCompatActivity() {
                         }
                         if (pendingAlarmNavigation != null) AlertDialog(
                             onDismissRequest = {
-                                pendingAlarmNavigation = null
-                            },
+                            pendingAlarmNavigation = null
+                        },
                             title = { Text(getString(R.string.alarms_discard_confirmation)) },
                             confirmButton = {
                                 TextButton(onClick = {
@@ -584,15 +586,4 @@ class BatteryInfoActivity : AppCompatActivity() {
         }
     }
 
-    @Suppress("DEPRECATION")
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PR_LVF_WRITE_STORAGE) {
-            (supportFragmentManager.findFragmentByTag("section:history") as? LogViewFragment)?.onRequestPermissionsResult(
-                requestCode, permissions, grantResults
-            )
-        }
-    }
 }

@@ -42,7 +42,16 @@ internal data class DiagnosticsState(
     val loading: Boolean = false,
     val stale: Boolean = false,
     val privilegedEnabled: Boolean = false
-)
+) {
+    val privilegedAccessStatus: Int
+        get() = when {
+            !privilegedEnabled -> R.string.currently_disabled
+            status != 0 -> status
+            loading -> R.string.advanced_status_loading
+            advanced?.hasStats() == true -> R.string.yes
+            else -> R.string.advanced_status_no_access
+        }
+}
 
 internal class DiagnosticsViewModel(application: Application) : AndroidViewModel(application) {
     companion object {
@@ -135,7 +144,6 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
     }
 
     fun setTab(tab: Int) {
-        val previousStatsVisible = statsVisible
         statsVisible = tab != 0
         if (statsVisible && active && state.value.appRaw == null && !state.value.rawLoading) refreshRaw()
         if (!statsVisible) {
@@ -143,12 +151,6 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
             rawWorker?.interrupt()
             publish { copy(rawLoading = false) }
         }
-        if (!statsVisible && previousStatsVisible) {
-            loadGeneration++
-            cancelActiveConnection()
-            loadState = LoadState.IDLE
-            publish { copy(loading = false, stale = advanced != null) }
-        } else if (statsVisible && !previousStatsVisible && active) refreshStats()
     }
 
     private fun refreshRaw() {
@@ -204,6 +206,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         publish {
             copy(
                 loading = true,
+                status = if (privilegedEnabled) R.string.advanced_status_loading else R.string.currently_disabled,
                 privilegedEnabled = privilegedEnabled,
                 advanced = if (privilegedEnabled) advanced else null,
                 stale = privilegedEnabled && stale
@@ -215,10 +218,10 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
             mainHandler.post {
                 if (generation != loadGeneration || !active) return@post
                 publish { copy(basic = basic ?: this.basic) }
-                if (statsVisible && privilegedEnabled) loadPrivileged(generation)
+                if (privilegedEnabled) loadPrivileged(generation)
                 else publish {
                     copy(
-                        status = if (privilegedEnabled) 0 else R.string.currently_disabled,
+                        status = R.string.currently_disabled,
                         loading = false,
                         stale = advanced != null
                     )

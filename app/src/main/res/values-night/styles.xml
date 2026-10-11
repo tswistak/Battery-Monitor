@@ -1,45 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="button_color">#444</color>
+    <color name="button_color">#444</color>
 
-  <color name="dialog_background">#2a2a2a</color>
-  <!--color name="dialog_accent">#4f70d3</color-->
-  <color name="dialog_accent">#5f80e3</color>
-  <color name="dialog_text">#eee</color>
+    <color name="dialog_background">#2a2a2a</color>
+    <color name="dialog_accent">#5f80e3</color>
 
-  <color name="dialog_title">#fff</color>
-  <color name="dialog_primary_text">#ddd</color>
-  <color name="secondary_text">#999</color>
-  <color name="primary_text">#eee</color>
-  <color name="mid_text">#b8b8b8</color>
-  <color name="help_text">#eee</color>
+    <color name="dialog_title">#fff</color>
+    <color name="dialog_primary_text">#ddd</color>
+    <color name="secondary_text">#999</color>
+    <color name="primary_text">#eee</color>
 
-  <color name="menu_icon_tint">#ccc</color>
-  <color name="icon_tint">#eee</color>
+    <color name="windowBackground">#181818</color>
+    <color name="widgetTextColor">#eee</color>
 
-  <color name="windowBackground">#181818</color>
-  <color name="widgetTextColor">#eee</color>
+    <color name="helpWindowBackground">#222</color>
 
-  <color name="helpWindowBackground">#222</color>
+    <color name="settings_accent">@color/dc_bright_light_blue</color>
+    <color name="accent">@color/dc_light2_blue</color>
 
-  <color name="settings_accent">@color/dc_bright_light_blue</color>
-  <color name="accent">@color/dc_light2_blue</color>
-  <!--color name="accent">#5f9aff</color-->
+    <color name="help_accent">@color/dc_lighter_blue</color>
 
-  <color name="log_unplugged">@color/my_darker_yellow</color>
-  <color name="log_plugged">#5f97ac</color>
-  <color name="log_charged">@color/android_green</color>
-  <color name="log_unknown">#f66</color>
-  <color name="log_old_status">#ccc</color>
+    <color name="status_bar">@color/windowBackground</color>
 
-  <color name="help_cat_bg">@color/dc_blue</color>
-  <color name="help_cat_text">#fff</color>
-  <color name="help_pref_bg">@color/dc_lighter_blue</color>
-  <color name="help_pref_text">#111</color>
-  <color name="help_accent">@color/dc_lighter_blue</color>
-
-  <color name="status_bar">@color/windowBackground</color>
-
-  <color name="colorBackground">@color/button_color</color>
-  <bool name="windowLightStatusBar">false</bool>
+    <bool name="windowLightStatusBar">false</bool>
 </resources>

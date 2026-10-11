@@ -12,12 +12,37 @@
 */
 package codes.swistak.batterymonitor.widgets
 
+import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class WidgetRendererTest {
+    @Test
+    fun `status widget labels exact charge and discharge targets as reached and only lower discharge levels as below`() {
+        val reached = WidgetSnapshot(
+            20, BatteryInfo.STATUS_UNPLUGGED, 320, 4000, -500000, 3000000, 0, 20, true, 2000000L
+        )
+        assertEquals(R.string.current_target_reached, WidgetRenderer.targetReachedLabel(reached))
+        assertEquals(
+            R.string.current_target_reached,
+            WidgetRenderer.targetReachedLabel(reached.copy(status = BatteryInfo.STATUS_DISCHARGING))
+        )
+        assertEquals(
+            R.string.current_below_target,
+            WidgetRenderer.targetReachedLabel(reached.copy(levelPercent = 19))
+        )
+        assertEquals(
+            R.string.current_target_reached, WidgetRenderer.targetReachedLabel(
+                reached.copy(
+                    levelPercent = 80, status = BatteryInfo.STATUS_CHARGING, predictionTarget = 80
+                )
+            )
+        )
+    }
+
     @Test
     fun `a short host allocation selects compact content without changing widget configuration`() {
         assertTrue(WidgetRenderer.usesCompactLayout(WidgetVariant.ADAPTIVE, 100))
@@ -67,6 +92,13 @@ class WidgetRendererTest {
         assertFalse(WidgetRenderer.canShowPrediction(fresh.copy(observedAtMillis = now + 1), now))
         assertFalse(WidgetRenderer.canShowPrediction(fresh.copy(observedAtMillis = 0), now))
         assertFalse(WidgetRenderer.canShowPrediction(null, now))
+    }
+
+    @Test
+    fun `Y axis preserves the plotted midpoint and shows only it for compact widgets`() {
+        assertEquals(listOf(45.0, 37.5, 30.0), WidgetRenderer.chartAxisValues(30.0, 45.0, false))
+        assertEquals(listOf(37.5), WidgetRenderer.chartAxisValues(30.0, 45.0, true))
+        assertEquals(listOf(100.0, 70.0, 40.0), WidgetRenderer.chartAxisValues(40.0, 100.0, false))
     }
 
     @Test

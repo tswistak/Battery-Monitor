@@ -57,8 +57,7 @@ internal fun currentStateModel(
         snapshot == null -> CurrentCondition.WAITING
         snapshot.status == BatteryInfo.STATUS_FULLY_CHARGED -> CurrentCondition.FULL
         snapshot.status == BatteryInfo.STATUS_NOT_CHARGING -> CurrentCondition.PAUSED
-        configured?.targetReached == true && configured.direction == BatteryInfo.Prediction.UNTIL_DRAINED -> CurrentCondition.BELOW_TARGET
-
+        configured?.targetReached == true && configured.direction == BatteryInfo.Prediction.UNTIL_DRAINED && snapshot.levelPercent < configured.targetPercent -> CurrentCondition.BELOW_TARGET
         configured?.targetReached == true -> CurrentCondition.TARGET_REACHED
         snapshot.levelPercent <= 10 -> CurrentCondition.LOW
         configured?.direction == BatteryInfo.Prediction.NONE -> CurrentCondition.INSUFFICIENT

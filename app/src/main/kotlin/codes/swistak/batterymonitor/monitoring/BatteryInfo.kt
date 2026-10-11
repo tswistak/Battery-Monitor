@@ -107,11 +107,11 @@ internal class BatteryInfo {
                             "charge_counter file exists but with value $chargeCounter which is inconsistent with percent: $percent"
                         )
                     }
-                } catch (e: FileNotFoundException) {
+                } catch (_: FileNotFoundException) {
                     Log.e(LOG_TAG, "charge_counter file doesn't exist")
-                } catch (e: IOException) {
+                } catch (_: IOException) {
                     Log.e(LOG_TAG, "Error reading charge_counter file")
-                } catch (e: NumberFormatException) {
+                } catch (_: NumberFormatException) {
                     Log.e(LOG_TAG, "Read charge_counter file but couldn't convert contents to int")
                 }
             }
@@ -184,16 +184,6 @@ internal class BatteryInfo {
             this.targetPercent = targetPercent
             targetReached = true
             lastRTime.update(0, 0)
-        }
-
-        fun copyFrom(other: Prediction) {
-            whatHappened = other.whatHappened
-            whenHappened = other.whenHappened
-            targetPercent = other.targetPercent
-            targetReached = other.targetReached
-            lastRTime.days = other.lastRTime.days
-            lastRTime.hours = other.lastRTime.hours
-            lastRTime.minutes = other.lastRTime.minutes
         }
 
         fun updateRelativeTime() {

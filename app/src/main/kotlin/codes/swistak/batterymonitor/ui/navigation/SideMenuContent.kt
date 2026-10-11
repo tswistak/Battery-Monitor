@@ -115,7 +115,8 @@ fun SideMenuContent(
                 onSelect,
                 if (index == 0 && firstItemFocusRequester != null) Modifier.focusRequester(
                     firstItemFocusRequester
-                ) else Modifier
+                )
+                else Modifier
             )
         }
         HorizontalDivider(
@@ -127,6 +128,7 @@ fun SideMenuContent(
         }
     }
 }
+
 
 @Composable
 private fun MenuGroupHeading(label: String, modifier: Modifier = Modifier) {
@@ -182,9 +184,7 @@ private fun MenuItem(
             fontSize = 14.sp,
             lineHeight = 21.sp,
             fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
-            color = foreground,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            color = foreground
         )
     }
 }

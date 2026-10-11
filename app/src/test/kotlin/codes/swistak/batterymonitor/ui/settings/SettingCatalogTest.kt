@@ -10,6 +10,7 @@ package codes.swistak.batterymonitor.ui.settings
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_BRIGHTNESS
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_COLOR_SOURCE
+import codes.swistak.batterymonitor.settings.SettingsDefinitions
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -237,25 +238,8 @@ class SettingCatalogTest {
         }
     }
 
-    private fun preferenceKeys(): Set<String> = listOf(
-        "other_pref_screen.xml",
-        "current_state_pref_screen.xml",
-        "time_estimates_pref_screen.xml",
-        "notification_pref_screen.xml",
-        "advanced_pref_screen.xml",
-        "backup_restore_pref_screen.xml"
-    ).flatMap { filename ->
-        val nodes = parse(File(resourcesDirectory(), "xml/$filename")).getElementsByTagName("*")
-        (0 until nodes.length).mapNotNull { index ->
-            val element = nodes.item(index) as Element
-            if (element.tagName.endsWith("PreferenceCategory") || element.tagName.endsWith("PreferenceScreen")) null
-            else element.getAttributeNS("http://schemas.android.com/apk/res-auto", "key").ifBlank {
-                element.getAttributeNS(
-                    "http://schemas.android.com/apk/res/android", "key"
-                )
-            }.takeIf(String::isNotBlank)
-        }
-    }.toSet()
+    private fun preferenceKeys(): Set<String> =
+        SettingsDefinitions.preferences.mapTo(mutableSetOf()) { it.key }
 
     private fun translatedStrings(directory: String): Map<String, String> {
         val files = requireNotNull(File(resourcesDirectory(), directory).listFiles())
