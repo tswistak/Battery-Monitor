@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/widget_level"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-medium"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="#12384F"
+            android:textSize="54sp" />
+
+        <FrameLayout
+            android:id="@+id/widget_battery_cell"
+            android:layout_width="36dp"
+            android:layout_height="58dp"
+            android:importantForAccessibility="noHideDescendants">
+
+            <ImageView
+                android:id="@+id/widget_battery_terminal"
+                android:layout_width="14dp"
+                android:layout_height="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:src="@drawable/widget_surface" />
+
+            <ImageView
+                android:id="@+id/widget_battery_outline"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_gravity="bottom"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:src="@drawable/widget_battery_outline" />
+
+            <ImageView
+                android:id="@+id/widget_battery_fill"
+                android:layout_width="26dp"
+                android:layout_height="44dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY"
+                android:src="@drawable/widget_battery_fill" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/widget_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/widget_prediction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/widget_extra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="13sp" />
+</LinearLayout>

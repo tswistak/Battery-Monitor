@@ -13,6 +13,18 @@ import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
 import codes.swistak.batterymonitor.monitoring.presentation.PredictionSnapshot
 
+internal enum class CurrentMeasurement(val route: String) {
+    TEMPERATURE("temperature"), VOLTAGE("voltage"), CURRENT("current"), POWER("power"), ANDROID_HEALTH(
+        "android-health"
+    ),
+    REMAINING_CHARGE("remaining-charge");
+
+    companion object {
+        fun fromRoute(route: String?): CurrentMeasurement? =
+            entries.firstOrNull { it.route == route }
+    }
+}
+
 internal enum class CurrentCondition {
     WAITING, DISABLED, STALE, CHARGING, DISCHARGING, FULL, PAUSED, TARGET_REACHED, BELOW_TARGET, LOW, INSUFFICIENT, UNKNOWN
 }

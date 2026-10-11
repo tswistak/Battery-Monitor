@@ -77,6 +77,108 @@ class PredictorCoreTest {
     }
 
     @Test
+    fun `USB connected discharging battery uses discharge rate and targets`() {
+        predictor.setTargets(chargingTargetPercent = 85, dischargingTargetPercent = 40)
+        setBatteryState(80, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, 0L)
+
+        Assert.assertEquals(BatteryInfo.STATUS_DISCHARGING, info.status)
+        Assert.assertEquals(BatteryInfo.PLUGGED_USB, info.plugged)
+        Assert.assertEquals(PredictorCore.DISCHARGE, predictor.curChargingStatus)
+        Assert.assertEquals(DISCHARGE_MS_PER_PERCENT.toDouble(), predictor.longTermAverage, 0.0)
+        Assert.assertEquals(BatteryInfo.Prediction.UNTIL_DRAINED, info.prediction.whatHappened)
+        Assert.assertEquals(40, info.prediction.targetPercent)
+        Assert.assertEquals(40L * DISCHARGE_MS_PER_PERCENT, info.prediction.whenHappened)
+        Assert.assertEquals(
+            BatteryInfo.Prediction.UNTIL_DRAINED, info.fullRangePrediction.whatHappened
+        )
+        Assert.assertEquals(0, info.fullRangePrediction.targetPercent)
+        Assert.assertEquals(80L * DISCHARGE_MS_PER_PERCENT, info.fullRangePrediction.whenHappened)
+    }
+
+    @Test
+    fun `USB connected discharge crosses its target without losing learned rate`() {
+        predictor.setTargets(chargingTargetPercent = 85, dischargingTargetPercent = 20)
+        setBatteryState(22, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, 0L)
+        setBatteryState(
+            21, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, 30 * ONE_MINUTE
+        )
+        setBatteryState(
+            20, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, 60 * ONE_MINUTE
+        )
+
+        Assert.assertEquals(BatteryInfo.Prediction.UNTIL_DRAINED, info.prediction.whatHappened)
+        Assert.assertEquals(20, info.prediction.targetPercent)
+        Assert.assertTrue(info.prediction.targetReached)
+        Assert.assertEquals(0, info.prediction.lastRTime.minutes)
+        Assert.assertEquals(0, info.fullRangePrediction.targetPercent)
+        Assert.assertFalse(info.fullRangePrediction.targetReached)
+
+        val averageAtTarget = predictor.longTermAverage
+        val now = 90 * ONE_MINUTE
+        setBatteryState(19, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, now)
+
+        Assert.assertEquals(PredictorCore.DISCHARGE, predictor.curChargingStatus)
+        Assert.assertEquals(0, info.prediction.targetPercent)
+        Assert.assertFalse(info.prediction.targetReached)
+        Assert.assertTrue(info.prediction.whenHappened > now)
+        Assert.assertEquals(info.fullRangePrediction.whenHappened, info.prediction.whenHappened)
+        Assert.assertEquals(
+            averageAtTarget * 0.998 + 30 * ONE_MINUTE * 0.002, predictor.longTermAverage, 0.01
+        )
+    }
+
+    @Test
+    fun `charging to discharging while USB remains connected starts discharge predictions`() {
+        predictor.setTargets(chargingTargetPercent = 85, dischargingTargetPercent = 20)
+        setBatteryState(70, BatteryInfo.STATUS_CHARGING, BatteryInfo.PLUGGED_USB, 0L)
+        Assert.assertEquals(BatteryInfo.Prediction.UNTIL_CHARGED, info.prediction.whatHappened)
+
+        setBatteryState(70, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, ONE_MINUTE)
+
+        Assert.assertEquals(BatteryInfo.PLUGGED_USB, info.plugged)
+        Assert.assertEquals(PredictorCore.DISCHARGE, predictor.curChargingStatus)
+        Assert.assertEquals(BatteryInfo.Prediction.UNTIL_DRAINED, info.prediction.whatHappened)
+        Assert.assertEquals(20, info.prediction.targetPercent)
+        Assert.assertEquals(
+            ONE_MINUTE + 50L * DISCHARGE_MS_PER_PERCENT, info.prediction.whenHappened
+        )
+        Assert.assertEquals(
+            ONE_MINUTE + 70L * DISCHARGE_MS_PER_PERCENT, info.fullRangePrediction.whenHappened
+        )
+
+        val now = 31 * ONE_MINUTE
+        setBatteryState(69, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, now)
+        Assert.assertEquals(
+            DISCHARGE_MS_PER_PERCENT * 0.998 + 30 * ONE_MINUTE * 0.002,
+            predictor.longTermAverage,
+            0.01
+        )
+        assertDischargeProjectionsShareRate(now)
+    }
+
+    @Test
+    fun `level increase during USB connected discharge restarts observation timestamps`() {
+        predictor.setTargets(chargingTargetPercent = 85, dischargingTargetPercent = 20)
+        setBatteryState(80, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, 0L)
+        setBatteryState(
+            79, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, 30 * ONE_MINUTE
+        )
+        val averageBeforeIncrease = predictor.longTermAverage
+
+        setBatteryState(
+            90, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, 31 * ONE_MINUTE
+        )
+        Assert.assertEquals(averageBeforeIncrease, predictor.longTermAverage, 0.0)
+
+        val now = 61 * ONE_MINUTE
+        setBatteryState(89, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, now)
+        Assert.assertEquals(
+            averageBeforeIncrease * 0.998 + 30 * ONE_MINUTE * 0.002, predictor.longTermAverage, 0.01
+        )
+        assertDischargeProjectionsShareRate(now)
+    }
+
+    @Test
     fun `charging battery predicts time until custom target`() {
         predictor.setTargets(chargingTargetPercent = 85, dischargingTargetPercent = 0)
         info.status = BatteryInfo.STATUS_CHARGING

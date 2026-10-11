@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_surface"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:ignore="UseAppTint">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/widget_status"
+        android:textColor="#12384F"
+        android:textSize="12sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="sans-serif-medium"
+            android:paddingStart="0dp"
+            android:paddingEnd="44dp"
+            android:text="@string/widget_value_placeholder"
+            android:textColor="#12384F"
+            android:textSize="54sp" />
+
+        <ImageView
+            android:layout_width="44dp"
+            android:layout_height="64dp"
+            android:layout_gravity="end|center_vertical"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ui_battery"
+            android:tint="#006B8C" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/widget_preview"
+        android:textColor="#4D606F"
+        android:textSize="11sp" />
+</LinearLayout>

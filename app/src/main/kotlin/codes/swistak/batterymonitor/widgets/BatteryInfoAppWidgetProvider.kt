@@ -17,6 +17,8 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
+import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
+
 
 /*
  * Each widget type needs its own AppWidgetProvider class in order to show up in the widget list.
@@ -30,6 +32,10 @@ open class BatteryInfoAppWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(
         context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray
     ) {
+        if (!BackgroundServiceWatchdog.isServiceDesired(context)) {
+            LegacyWidgetRenderer.renderStopped(context, appWidgetIds)
+            return
+        }
         BatteryInfoService.onWidgetUpdate(context, appWidgetManager, appWidgetIds)
     }
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@id/widget_level"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textSize="42sp" />
+
+    <ImageView
+        android:id="@+id/widget_chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/widget_trend"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:id="@+id/widget_chart_axis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/widget_chart_start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:textAlignment="viewStart"
+            android:textDirection="locale"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/widget_chart_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textAlignment="viewEnd"
+            android:textDirection="locale"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/widget_trend_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="11sp" />
+</LinearLayout>

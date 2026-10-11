@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:paddingStart="0dp"
+    android:paddingEnd="8dp">
+
+    <TextView
+        android:id="@+id/widget_metric_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/widget_metric_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textSize="21sp" />
+</LinearLayout>

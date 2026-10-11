@@ -75,6 +75,7 @@ internal fun HistoryRangeControl(
     var year by rememberSaveable { mutableStateOf(LocalDate.now().year.toString()) }
     val title = when (state.rangeLabel) {
         "24h" -> stringResource(R.string.history_last_24h)
+        "72h" -> stringResource(R.string.history_last_3d)
         "7d" -> stringResource(R.string.history_last_7d)
         else -> stringResource(R.string.history_range)
     }
@@ -103,7 +104,7 @@ internal fun HistoryRangeControl(
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold
                 )
-                if (state.rangeLabel != "24h" && state.rangeLabel != "7d") Text(
+                if (state.rangeLabel !in setOf("24h", "72h", "7d")) Text(
                     "${format.format(Instant.ofEpochMilli(state.range.start))} – ${
                         format.format(
                             Instant.ofEpochMilli(state.range.end - 1)
@@ -246,4 +247,3 @@ internal fun HistoryRangeControl(
             })
     }
 }
-

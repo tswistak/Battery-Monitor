@@ -73,6 +73,10 @@ import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.widgets.BatteryInfoAppWidgetProvider
 import codes.swistak.batterymonitor.widgets.CircleWidgetBackground
 import codes.swistak.batterymonitor.widgets.FullAppWidgetProvider
+import codes.swistak.batterymonitor.widgets.LegacyWidgetRenderer
+import codes.swistak.batterymonitor.widgets.WidgetSnapshot
+import codes.swistak.batterymonitor.widgets.WidgetSnapshotStore
+import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
@@ -170,11 +174,20 @@ class BatteryInfoService : Service() {
         ) {
             widgetManager = appWidgetManager
 
-            for (i in appWidgetIds.indices) {
-                widgetIds.add(appWidgetIds[i])
+            val ownedIds = appWidgetIds.filter { id ->
+                val provider = appWidgetManager.getAppWidgetInfo(id)?.provider
+                provider == ComponentName(
+                    context, BatteryInfoAppWidgetProvider::class.java
+                ) || provider == ComponentName(context, FullAppWidgetProvider::class.java)
             }
+            widgetIds.addAll(ownedIds)
+            if (ownedIds.isEmpty()) return
 
-            startForegroundServiceSafely(context)
+            if (BackgroundServiceWatchdog.isServiceDesired(context)) {
+                startForegroundServiceSafely(context)
+            } else {
+                LegacyWidgetRenderer.renderStopped(context, ownedIds.toIntArray())
+            }
         }
 
         fun startForegroundServiceSafely(
@@ -267,6 +280,10 @@ class BatteryInfoService : Service() {
     private var logDb: LogDatabase? = null
     private var bl: BatteryLevel? = null
     private var cwbg: CircleWidgetBackground? = null
+    private var currentMicroAmps: Long? = null
+    private var forceWidgetUpdate = true
+    private var lastWidgetSnapshot: WidgetSnapshot? = null
+
     private var info: BatteryInfo? = null
     private val monitoringProcessId = UUID.randomUUID().toString()
     private var monitoringSequence = 0L
@@ -490,7 +507,17 @@ class BatteryInfoService : Service() {
         mHandler.removeCallbacks(runPredictorUpdate)
         if (mNotificationManager != null) mNotificationManager!!.cancelAll()
         if (logDb != null) logDb!!.close()
-        if (cwbg != null) updateWidgets(null)
+        if (cwbg != null) {
+            if (BackgroundServiceWatchdog.isServiceDesired(this)) updateWidgets(null)
+            else LegacyWidgetRenderer.renderStopped(this, widgetIds.toIntArray())
+        }
+        (lastWidgetSnapshot ?: WidgetSnapshotStore.read(this))?.let {
+            WidgetUpdateDispatcher.publish(
+                this,
+                it.copy(monitoringEnabled = BackgroundServiceWatchdog.isServiceDesired(this)),
+                force = true
+            )
+        }
         stopForeground(STOP_FOREGROUND_REMOVE)
         mainNotificationForegroundStarted = false
     }
@@ -648,6 +675,7 @@ class BatteryInfoService : Service() {
     }
 
     private fun applySettingsSnapshot(snapshot: Bundle) {
+        forceWidgetUpdate = true
         if (!SettingsSnapshot.apply(settings, snapshot)) {
             Log.e(LOG_TAG, "Failed to apply cross-process settings snapshot")
         }
@@ -758,15 +786,16 @@ class BatteryInfoService : Service() {
         if (resolvingBatteryUpdate || pendingBatteryUpdates.isEmpty()) return
         resolvingBatteryUpdate = true
         val fields = batteryFields(pendingBatteryUpdates.removeFirst())
+        val rawCurrent = BatteryCurrent.rawCurrentMicroAmps
         val needsFallback =
-            missingBatteryFields(fields).isNotEmpty() || remainingChargeReader.readMicroAmpHours() == null || BatteryCurrent.rawCurrentMicroAmps == null
+            missingBatteryFields(fields).isNotEmpty() || remainingChargeReader.readMicroAmpHours() == null || rawCurrent == null
         val revision = PrivilegedAccess.accessRevision
         val complete: (PrivilegedBatteryReading?) -> Unit = { reading ->
             mHandler.post {
                 if (!destroyed) {
                     val allowed =
                         PrivilegedAccess.isEnabled() && revision == PrivilegedAccess.accessRevision
-                    updateResolved(fields, reading.takeIf { allowed })
+                    updateResolved(fields, reading.takeIf { allowed }, rawCurrent)
                 }
                 resolvingBatteryUpdate = false
                 processNextBatteryUpdate()
@@ -777,7 +806,10 @@ class BatteryInfoService : Service() {
         } else complete(null)
     }
 
-    private fun updateResolved(fields: Map<String, Int>, fallback: PrivilegedBatteryReading?) {
+    private fun updateResolved(
+        fields: Map<String, Int>, fallback: PrivilegedBatteryReading?, rawCurrent: Long?
+    ) {
+        currentMicroAmps = rawCurrent ?: fallback?.currentNowUa
         now = System.currentTimeMillis()
         spsEditor = spService.edit()
         updatedLasts = false
@@ -827,6 +859,22 @@ class BatteryInfoService : Service() {
         )
 
         updateWidgets(info)
+        val prediction = info!!.prediction
+        val widgetSnapshot = WidgetSnapshot(
+            info!!.percent,
+            info!!.status,
+            info!!.temperature,
+            info!!.voltage,
+            currentMicroAmps,
+            info!!.remainingChargeUah,
+            if (prediction.whatHappened == BatteryInfo.Prediction.NONE) null else prediction.lastRTime.days * 1440 + prediction.lastRTime.hours * 60 + prediction.lastRTime.minutes,
+            prediction.targetPercent.takeIf { prediction.whatHappened != BatteryInfo.Prediction.NONE },
+            prediction.targetReached,
+            now
+        )
+        lastWidgetSnapshot = widgetSnapshot
+        WidgetUpdateDispatcher.publish(this, widgetSnapshot, force = forceWidgetUpdate)
+        forceWidgetUpdate = false
 
         syncSpsEditor()
 
@@ -940,6 +988,10 @@ class BatteryInfoService : Service() {
             val awpInfo: AppWidgetProviderInfo =
                 widgetManager!!.getAppWidgetInfo(widgetId) ?: continue
 
+            if (awpInfo.provider != ComponentName(
+                    this, BatteryInfoAppWidgetProvider::class.java
+                ) && awpInfo.provider != ComponentName(this, FullAppWidgetProvider::class.java)
+            ) continue
             val initLayout = awpInfo.initialLayout
 
             if (initLayout == R.layout.circle_app_widget) {
@@ -1123,7 +1175,7 @@ class BatteryInfoService : Service() {
             }
 
             SettingsContract.CHIP_CONTENT_CURRENT -> {
-                BatteryCurrent.current?.let {
+                currentMicroAmps?.let { BatteryCurrent.scaleMicroAmps(it) }?.let {
                     BatteryCurrent.formatMilliAmps(it, res.configuration.locales[0]) + "mA"
                 } ?: "—"
             }
@@ -1284,7 +1336,11 @@ class BatteryInfoService : Service() {
                     info!!.voltage?.let { DisplayStrings.formatVoltage(it) }
                 }
 
-                SettingsContract.VITAL_SIGN_CURRENT -> BatteryCurrent.current?.let {
+                SettingsContract.VITAL_SIGN_CURRENT -> currentMicroAmps?.let {
+                    BatteryCurrent.scaleMicroAmps(
+                        it
+                    )
+                }?.let {
                     BatteryCurrent.formatMilliAmps(it, res.configuration.locales[0]) + "mA"
                 }
 
@@ -1417,7 +1473,7 @@ class BatteryInfoService : Service() {
         if (settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
             recordLogResult(
                 logDb!!.logStatus(
-                    info!!, now, LogDatabase.STATUS_NEW, BatteryCurrent.rawCurrentMicroAmps
+                    info!!, now, LogDatabase.STATUS_NEW, currentMicroAmps
                 )
             )
 
@@ -1461,7 +1517,7 @@ class BatteryInfoService : Service() {
             )
         ) recordLogResult(
             logDb!!.logStatus(
-                info!!, now, LogDatabase.STATUS_OLD, BatteryCurrent.rawCurrentMicroAmps
+                info!!, now, LogDatabase.STATUS_OLD, currentMicroAmps
             )
         )
 
@@ -1564,7 +1620,7 @@ class BatteryInfoService : Service() {
             notifyAlarm(nb.build())
         }
 
-        if (info!!.health > BatteryInfo.HEALTH_GOOD && info!!.health != spService!!.getInt(
+        if (info!!.health > BatteryInfo.HEALTH_GOOD && info!!.health != spService.getInt(
                 KEY_PREVIOUS_HEALTH, BatteryInfo.HEALTH_GOOD
             )
         ) {

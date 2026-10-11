@@ -31,6 +31,9 @@ internal class PredictorCore(
         const val LONG_TERM: Int = -2
         const val AUTOMAGIC: Int = -3
 
+        fun isDischarging(status: Int): Boolean =
+            status == BatteryInfo.STATUS_DISCHARGING || status == BatteryInfo.STATUS_UNPLUGGED
+
         private const val MIN_PREDICTION: Int = ONE_MINUTE
 
         private const val WEIGHT_OLD_AVERAGE = 0.998
@@ -137,7 +140,10 @@ internal class PredictorCore(
             lastPrediction = now + MIN_PREDICTION
         }
 
-        if (info.status != lastStatus || info.plugged != lastPlugged || info.status == BatteryInfo.STATUS_FULLY_CHARGED || (info.status == BatteryInfo.STATUS_CHARGING && info.percent < tsHead) || (info.status == BatteryInfo.STATUS_UNPLUGGED && info.percent > tsHead)) {
+        if (info.status != lastStatus || info.plugged != lastPlugged || info.status == BatteryInfo.STATUS_FULLY_CHARGED || (info.status == BatteryInfo.STATUS_CHARGING && info.percent < tsHead) || (isDischarging(
+                info.status
+            ) && info.percent > tsHead)
+        ) {
             initial = true
             usePartial = false
 
@@ -268,7 +274,10 @@ internal class PredictorCore(
     private fun prediction(chargingTargetPercent: Int, dischargingTargetPercent: Int): Long {
         return when (curInfo!!.status) {
             BatteryInfo.STATUS_CHARGING -> whenCharged(chargingTargetPercent)
-            BatteryInfo.STATUS_UNPLUGGED -> whenDrained(dischargingTargetPercent)
+            BatteryInfo.STATUS_DISCHARGING, BatteryInfo.STATUS_UNPLUGGED -> whenDrained(
+                dischargingTargetPercent
+            )
+
             else -> 0
         }
     }
@@ -309,7 +318,7 @@ internal class PredictorCore(
 
     private fun targetFor(
         info: BatteryInfo, chargingTargetPercent: Int, dischargingTargetPercent: Int
-    ): Int = if (info.status == BatteryInfo.STATUS_UNPLUGGED) {
+    ): Int = if (isDischarging(info.status)) {
         if (dischargingTargetPercent > 0 && info.percent < dischargingTargetPercent) {
             0
         } else {
@@ -320,7 +329,7 @@ internal class PredictorCore(
     }
 
     private fun isAtDischargingTarget(info: BatteryInfo): Boolean =
-        info.status == BatteryInfo.STATUS_UNPLUGGED && dischargingTargetPercent > 0 && info.percent == dischargingTargetPercent
+        isDischarging(info.status) && dischargingTargetPercent > 0 && info.percent == dischargingTargetPercent
 
     private fun isTargetReached(info: BatteryInfo, target: Int): Boolean {
         return when {
@@ -348,7 +357,7 @@ internal class PredictorCore(
     }
 
     private fun canPredict(): Boolean {
-        return curInfo!!.status == BatteryInfo.STATUS_CHARGING || curInfo!!.status == BatteryInfo.STATUS_UNPLUGGED
+        return curInfo!!.status == BatteryInfo.STATUS_CHARGING || isDischarging(curInfo!!.status)
     }
 
     private fun recentAverage(): Double {

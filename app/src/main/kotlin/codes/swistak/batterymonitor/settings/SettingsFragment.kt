@@ -184,6 +184,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         )
 
         private val RESET_SERVICE = arrayOf<String?>(
+            SettingsContract.KEY_COLOR_SOURCE,
+            SettingsContract.KEY_BRIGHTNESS,
             SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY,
             SettingsContract.KEY_TEMPERATURE_UNIT,
             SettingsContract.KEY_NOTIFY_STATUS_DURATION,
@@ -231,8 +233,13 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             predictor: Boolean = false,
             cancelFirst: Boolean = false
         ) {
-            if (!BackgroundServiceWatchdog.isServiceDesired(context)) return
             settings.edit().commit()
+            if (!BackgroundServiceWatchdog.isServiceDesired(context)) {
+                codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver.synchronize(
+                    context, settings
+                )
+                return
+            }
             val outgoing = Message.obtain().apply {
                 what = when {
                     predictor -> BatteryInfoService.RemoteConnection.SERVICE_RELOAD_DEVICE_DATA

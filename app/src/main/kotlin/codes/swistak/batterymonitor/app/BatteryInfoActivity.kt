@@ -56,6 +56,7 @@ import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.alarms.AlarmEditorScreen
 import codes.swistak.batterymonitor.ui.alarms.AlarmsScreen
 import codes.swistak.batterymonitor.ui.alarms.AlarmsViewModel
+import codes.swistak.batterymonitor.ui.current.CurrentMeasurement
 import codes.swistak.batterymonitor.ui.current.CurrentStateRoute
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsRoute
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsViewModel
@@ -76,6 +77,7 @@ class BatteryInfoActivity : AppCompatActivity() {
         const val EXTRA_DETAIL = "codes.swistak.batterymonitor.EXTRA_DETAIL"
 
         const val EXTRA_SECTION = "codes.swistak.batterymonitor.EXTRA_SECTION"
+        const val EXTRA_HISTORY_HOURS = "codes.swistak.batterymonitor.EXTRA_HISTORY_HOURS"
     }
 
     private lateinit var navigator: SectionNavigator
@@ -83,6 +85,8 @@ class BatteryInfoActivity : AppCompatActivity() {
     private var containerReady = false
     private var shownDetail: String? = null
     private var detail by mutableStateOf<String?>(null)
+    private var currentMeasurement by mutableStateOf<CurrentMeasurement?>(null)
+
     private lateinit var diagnostics: DiagnosticsViewModel
     private var monitorActions by mutableStateOf<Map<String, MonitorAction>>(emptyMap())
 
@@ -103,6 +107,8 @@ class BatteryInfoActivity : AppCompatActivity() {
         history = ViewModelProvider(this)[HistoryViewModel::class.java]
         alarms = ViewModelProvider(this)[AlarmsViewModel::class.java]
         history.restore(savedInstanceState?.getBundle("history_state"))
+        currentMeasurement =
+            CurrentMeasurement.fromRoute(savedInstanceState?.getString("current_measurement"))
         for (tag in listOf(
             "section:current", "section:history", "section:diagnostics", "section:alarms"
         )) {
@@ -245,6 +251,8 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 onSection = ::selectSection,
                                 onBatteryUsage = ::openBatteryUsage,
                                 onMonitor = { openDiagnosticDetail("monitor") },
+                                requestedMeasurement = currentMeasurement,
+                                onMeasurementHandled = { currentMeasurement = null },
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -381,6 +389,7 @@ class BatteryInfoActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putBundle("history_state", history.save())
+        outState.putString("current_measurement", currentMeasurement?.route)
         navigator.save(outState)
         super.onSaveInstanceState(outState)
     }
@@ -473,6 +482,12 @@ class BatteryInfoActivity : AppCompatActivity() {
             else -> SectionOwner.CURRENT
         }
         val requestedDetail = intent.getStringExtra(EXTRA_DETAIL)
+        currentMeasurement = requestedDetail?.takeIf {
+            owner == SectionOwner.CURRENT && it.startsWith("measurement:")
+        }?.removePrefix("measurement:")?.let(CurrentMeasurement::fromRoute)
+        if (owner == SectionOwner.HISTORY && intent.hasExtra(EXTRA_HISTORY_HOURS)) {
+            history.openWidgetRange(intent.getIntExtra(EXTRA_HISTORY_HOURS, -1))
+        }
         if (owner == SectionOwner.HELP && requestedDetail?.startsWith("help:") == true) {
             openHelp(requestedDetail.removePrefix("help:"))
             return

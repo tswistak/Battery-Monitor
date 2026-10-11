@@ -108,32 +108,7 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
             alarmManager?.cancel(pendingIntent(context)!!)
         }
 
-        fun isServiceDesired(context: Context): Boolean {
-            val settings = context.getSharedPreferences(
-                SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-            )
-            val mainPreferences = context.getSharedPreferences(
-                SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
-            )
-            if (mainPreferences.getBoolean(
-                    SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false
-                )
-            ) {
-                return mainPreferences.getBoolean(
-                    BatteryInfoService.KEY_SERVICE_DESIRED, false
-                )
-            }
-
-            if ("always" == settings.getString(
-                    SettingsContract.KEY_AUTOSTART, "auto"
-                )
-            ) return true
-
-
-            return context.getSharedPreferences(
-                SettingsContract.SP_SERVICE_FILE, Context.MODE_PRIVATE
-            ).getBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)
-        }
+        fun isServiceDesired(context: Context): Boolean = MonitoringDesiredState.read(context)
 
         private fun pendingIntent(context: Context?): PendingIntent? {
             val intent = Intent(context, BackgroundServiceWatchdog::class.java)

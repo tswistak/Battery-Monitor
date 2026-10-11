@@ -98,7 +98,7 @@ internal class Predictor(context: Context) {
         val now = SystemClock.elapsedRealtime()
         pc.update(info, now)
 
-        if (info.status == BatteryInfo.STATUS_CHARGING || info.status == BatteryInfo.STATUS_UNPLUGGED) {
+        if (info.status == BatteryInfo.STATUS_CHARGING || PredictorCore.isDischarging(info.status)) {
             editor.putFloat(
                 KEY_AVERAGE[pc.curChargingStatus], pc.longTermAverage.toFloat()
             ).apply()

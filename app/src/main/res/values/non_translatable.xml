@@ -3,4 +3,5 @@
     <string name="app_full_name" formatted="false" translatable="false">Battery Monitor</string>
     <string name="auto_log_export_format_csv" formatted="false" translatable="false">CSV</string>
     <string name="auto_log_export_format_json" formatted="false" translatable="false">JSON</string>
+    <string name="widget_value_placeholder" translatable="false">—</string>
 </resources>

@@ -207,6 +207,37 @@ val LocalBatterySemanticColors = staticCompositionLocalOf {
     )
 }
 
+internal fun batteryColorScheme(
+    context: android.content.Context,
+    source: ColorSource,
+    brightness: Brightness,
+    systemDark: Boolean = context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK == android.content.res.Configuration.UI_MODE_NIGHT_YES
+): androidx.compose.material3.ColorScheme {
+    val dark = isDark(brightness, systemDark)
+    val dynamic = useDynamicColors(source, Build.VERSION.SDK_INT)
+    return when {
+        dynamic && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && dark -> dynamicDarkColorScheme(
+            context
+        )
+
+        dynamic && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> dynamicLightColorScheme(context)
+        brightness == Brightness.TrueBlack -> BlueBlack
+        dark -> BlueDark
+        else -> BlueLight
+    }.let { colors ->
+        if (brightness == Brightness.TrueBlack && dynamic) colors.copy(
+            background = Color.Black,
+            surface = Color(0xFF10151B),
+            surfaceDim = Color.Black,
+            surfaceContainerLowest = Color.Black,
+            surfaceContainerLow = Color(0xFF0B1015),
+            surfaceContainer = Color(0xFF10151B),
+            surfaceContainerHigh = Color(0xFF1A242D),
+            surfaceContainerHighest = Color(0xFF26343E)
+        ) else colors
+    }
+}
+
 @Composable
 fun BatteryTheme(
     colorSource: ColorSource = ColorSource.Dynamic,
@@ -228,29 +259,8 @@ fun BatteryTheme(
             }
         }
     }
-    val dynamic = useDynamicColors(colorSource, Build.VERSION.SDK_INT)
     val context = LocalContext.current
-    val scheme = when {
-        dynamic && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && dark -> dynamicDarkColorScheme(
-            context
-        )
-
-        dynamic && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> dynamicLightColorScheme(context)
-        brightness == Brightness.TrueBlack -> BlueBlack
-        dark -> BlueDark
-        else -> BlueLight
-    }.let { colors ->
-        if (brightness == Brightness.TrueBlack && dynamic) colors.copy(
-            background = Color.Black,
-            surface = Color(0xFF10151B),
-            surfaceDim = Color.Black,
-            surfaceContainerLowest = Color.Black,
-            surfaceContainerLow = Color(0xFF0B1015),
-            surfaceContainer = Color(0xFF10151B),
-            surfaceContainerHigh = Color(0xFF1A242D),
-            surfaceContainerHighest = Color(0xFF26343E)
-        ) else colors
-    }
+    val scheme = batteryColorScheme(context, colorSource, brightness, isSystemInDarkTheme())
     val semantic = BatterySemanticColors(
         warning = if (dark) Color(0xFFFFC56E) else Color(0xFF805600),
         onWarning = if (dark) Color(0xFF412B00) else Color.White,

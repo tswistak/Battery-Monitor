@@ -160,6 +160,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         val current = mutable.value
         val range = if (forceChart) when (current.rangeLabel) {
             "24h" -> HistoryRangeState.lastHours(24)
+            "72h" -> HistoryRangeState.lastHours(72)
             "7d" -> HistoryRangeState.lastHours(168)
             else -> current.range
         } else current.range
@@ -219,6 +220,12 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
                 mutable.value = mutable.value.copy(loading = false, error = true)
             }
         }
+    }
+
+    fun openWidgetRange(hours: Int) {
+        if (hours !in setOf(24, 72, 168)) return
+        mutable.value = mutable.value.copy(tab = "charts", metric = HistoryMetric.LEVEL)
+        range(HistoryRangeState.lastHours(hours), if (hours == 168) "7d" else "${hours}h")
     }
 
     fun range(range: HistoryRangeState, label: String) {

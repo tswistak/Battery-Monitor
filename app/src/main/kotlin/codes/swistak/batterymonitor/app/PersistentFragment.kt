@@ -47,11 +47,13 @@ import codes.swistak.batterymonitor.logs.LogViewFragment
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.CurrentInfoFragment
+import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import codes.swistak.batterymonitor.monitoring.Predictor
 import codes.swistak.batterymonitor.monitoring.PredictorStoredState
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver
 import java.io.IOException
 import java.util.concurrent.CompletableFuture
 
@@ -95,10 +97,9 @@ class PersistentFragment : Fragment() {
 
     private fun bindService() {
         if (!serviceConnected && activity != null) {
-            requireActivity().applicationContext.bindService(
+            serviceConnected = requireActivity().applicationContext.bindService(
                 biServiceIntent!!, serviceConnection!!, 0
             )
-            serviceConnected = true
         }
     }
 
@@ -159,15 +160,17 @@ class PersistentFragment : Fragment() {
             requireActivity().applicationContext.unbindService(serviceConnection!!)
             serviceConnected = false
         }
+        serviceConnection?.serviceMessenger = null
+        serviceMessenger = null
     }
 
     override fun onStart() {
         super.onStart()
 
-        if (!spMain.getBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false)) spMain.edit {
-            putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, true)
-            putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true)
-        }
+        if (!spMain.getBoolean(
+                SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, false
+            ) && !MonitoringDesiredState.initialize(requireContext())
+        ) requireContext().showToast(R.string.monitoring_state_save_failed)
         if (BackgroundServiceWatchdog.isServiceDesired(requireContext())) {
             monitoring.start()
             serviceMessenger = serviceConnection?.serviceMessenger
@@ -182,6 +185,8 @@ class PersistentFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        startServiceIfNeeded()
 
         if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(
                 requireActivity(), Manifest.permission.POST_NOTIFICATIONS
@@ -206,7 +211,6 @@ class PersistentFragment : Fragment() {
             spMain.edit { putBoolean(SettingsContract.KEY_FIRST_RUN, false) }
         }
 
-        startServiceIfNeeded()
         showBatteryOptimizationPrompt()
     }
 
@@ -216,9 +220,7 @@ class PersistentFragment : Fragment() {
     ) {
         if (requestCode == 101) {
             notificationRequestInFlight = false
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startServiceIfNeeded()
-            }
+            startServiceIfNeeded()
             showBatteryOptimizationPrompt()
         }
     }
@@ -253,13 +255,12 @@ class PersistentFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             val selfHealRequested = BackgroundServiceWatchdog.selfHealIfNeeded(requireContext())
-            if (!serviceConnected) {
-                if (!selfHealRequested) BatteryInfoService.startForegroundServiceSafely(
-                    requireContext()
-                )
-                bindService()
+            if ((!serviceConnected || serviceConnection?.serviceMessenger == null) && !selfHealRequested) {
+                BatteryInfoService.startForegroundServiceSafely(requireContext())
             }
         }
+        // A notification denial must not disconnect the UI from an existing monitor.
+        bindService()
     }
 
     @Suppress("DEPRECATION")
@@ -453,10 +454,7 @@ class PersistentFragment : Fragment() {
     }
 
     fun stopMonitoring() {
-        spMain.edit {
-            putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false)
-            putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true)
-        }
+        if (!saveMonitoringDesired(false)) return
         val context = requireContext().applicationContext
         BackgroundServiceWatchdog.cancel(context)
         monitoring.stop()
@@ -464,22 +462,20 @@ class PersistentFragment : Fragment() {
             context.unbindService(serviceConnection!!)
             serviceConnected = false
         }
+        serviceConnection?.serviceMessenger = null
         serviceMessenger = null
         context.stopService(biServiceIntent)
     }
 
     fun startMonitoring() {
-        spMain.edit {
-            putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, true)
-            putBoolean(SettingsContract.KEY_MIGRATED_SERVICE_DESIRED, true)
-        }
+        if (!saveMonitoringDesired(true)) return
         monitoring.start()
         startServiceIfNeeded()
         BackgroundServiceWatchdog.schedule(requireContext())
     }
 
     fun closeApp() {
-        spMain.edit { putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, false) }
+        if (!saveMonitoringDesired(false)) return
         if (activity != null) BackgroundServiceWatchdog.cancel(requireActivity().applicationContext)
 
         if (activity == null) return
@@ -489,7 +485,18 @@ class PersistentFragment : Fragment() {
             requireActivity().stopService(biServiceIntent)
             serviceConnected = false
         }
+        serviceConnection?.serviceMessenger = null
+        serviceMessenger = null
 
         requireActivity().finish()
+    }
+
+    private fun saveMonitoringDesired(desired: Boolean): Boolean {
+        if (MonitoringDesiredState.write(requireContext(), desired)) {
+            if (!desired) WidgetSettingsReceiver.refresh(requireContext())
+            return true
+        }
+        requireContext().showToast(R.string.monitoring_state_save_failed)
+        return false
     }
 }
