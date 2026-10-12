@@ -52,11 +52,10 @@ import java.time.format.FormatStyle
 
 @Composable
 internal fun HistoryRangeControl(
-    state: HistoryUiState, onRange: (HistoryRangeState, String) -> Unit
+    state: HistoryUiState, onRange: (HistoryRangeState, String) -> Unit, zone: ZoneId
 ) {
     val locale = LocalConfiguration.current.locales[0]
     val context = LocalContext.current
-    val zone = ZoneId.systemDefault()
     val format = remember(locale, zone) {
         DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(locale).withZone(zone)
     }
@@ -71,8 +70,8 @@ internal fun HistoryRangeControl(
             Instant.ofEpochMilli(state.range.end - 1).atZone(zone).toLocalDate().toString()
         )
     }
-    var month by rememberSaveable { mutableStateOf(LocalDate.now().monthValue.toString()) }
-    var year by rememberSaveable { mutableStateOf(LocalDate.now().year.toString()) }
+    var month by rememberSaveable { mutableStateOf(LocalDate.now(zone).monthValue.toString()) }
+    var year by rememberSaveable { mutableStateOf(LocalDate.now(zone).year.toString()) }
     val title = when (state.rangeLabel) {
         "24h" -> stringResource(R.string.history_last_24h)
         "72h" -> stringResource(R.string.history_last_3d)

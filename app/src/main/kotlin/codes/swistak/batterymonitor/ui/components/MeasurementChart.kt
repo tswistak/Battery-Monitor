@@ -176,10 +176,10 @@ internal fun MeasurementChart(
     compact: Boolean = false,
     currentMultiplier: Int = 1,
     compactChartHeight: androidx.compose.ui.unit.Dp = 56.dp,
-    linksToEvents: Boolean = false
+    linksToEvents: Boolean = false,
+    zone: ZoneId = ZoneId.systemDefault()
 ) {
     val locale = LocalConfiguration.current.locales[0]
-    val zone = ZoneId.systemDefault()
     val series = model.series.getValue(metric)
     val points = remember(series) { series.points.filter { it.value != null } }
     if (points.isEmpty()) {

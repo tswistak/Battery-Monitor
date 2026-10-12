@@ -15,8 +15,11 @@ package codes.swistak.batterymonitor.common
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.time.Instant
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class DisplayStringsTest {
     @Before
@@ -115,6 +118,32 @@ class DisplayStringsTest {
             expectedSkeleton = "Hms",
             expectedTime = "17:04:09"
         )
+    }
+
+    @Test
+    fun `explicit time zone overrides a stale process default without changing it`() {
+        val previousDefault = TimeZone.getDefault()
+        try {
+            TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
+            val date = Date.from(Instant.parse("2026-03-29T00:30:00Z"))
+            fun format(timeZone: TimeZone? = null) = DisplayStrings.formatTime(
+                date = date,
+                locale = Locale.US,
+                is24Hour = true,
+                includeSeconds = false,
+                timeZone = timeZone
+            ) { locale, skeleton ->
+                assertEquals(Locale.US, locale)
+                assertEquals("Hm", skeleton)
+                "HH:mm"
+            }
+
+            assertEquals("00:30", format())
+            assertEquals("17:30", format(TimeZone.getTimeZone("America/Los_Angeles")))
+            assertEquals("00:30", format())
+        } finally {
+            TimeZone.setDefault(previousDefault)
+        }
     }
 
     private fun assertTimeFormatting(

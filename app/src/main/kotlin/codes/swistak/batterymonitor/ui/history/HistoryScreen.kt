@@ -8,8 +8,10 @@
 package codes.swistak.batterymonitor.ui.history
 
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -94,6 +96,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
@@ -124,6 +127,36 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Date
+import java.util.TimeZone
+
+internal fun historyTimeZone(broadcastId: String?, fallback: ZoneId): ZoneId =
+    broadcastId?.let { runCatching { ZoneId.of(it) }.getOrNull() } ?: fallback
+
+@Composable
+private fun rememberHistoryTimeZone(): ZoneId {
+    val appContext = LocalContext.current.applicationContext
+    var zone by remember { mutableStateOf(ZoneId.systemDefault()) }
+    DisposableEffect(appContext) {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action == Intent.ACTION_TIMEZONE_CHANGED) {
+                    zone = historyTimeZone(
+                        intent.getStringExtra("time-zone"), ZoneId.systemDefault()
+                    )
+                }
+            }
+        }
+        ContextCompat.registerReceiver(
+            appContext,
+            receiver,
+            IntentFilter(Intent.ACTION_TIMEZONE_CHANGED),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+        onDispose { appContext.unregisterReceiver(receiver) }
+    }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { zone = ZoneId.systemDefault() }
+    return zone
+}
 
 @Composable
 internal fun HistoryActionsMenu(enabled: Boolean, onAction: (String) -> Unit) {
@@ -179,6 +212,8 @@ internal fun HistoryRoute(
     val context = LocalContext.current
     val appContext = context.applicationContext
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val zone = rememberHistoryTimeZone()
+    val today = LocalDate.now(zone)
     val monitoredChange by remember(monitoring) {
         monitoring.map {
             Triple(
@@ -308,7 +343,6 @@ internal fun HistoryRoute(
     LaunchedEffect(state.range, state.ascending, state.filters, state.anchor, state.tab) {
         if (viewModel.scrollIndex == 0 && viewModel.scrollOffset == 0) logList.scrollToItem(0)
     }
-    val zone = ZoneId.systemDefault()
     val logDays = remember(state.page, zone) {
         state.page.groupBy { Instant.ofEpochMilli(it.record.time).atZone(zone).toLocalDate() }
     }
@@ -384,7 +418,8 @@ internal fun HistoryRoute(
                                 state.selectedPointId,
                                 viewModel::selectPoint,
                                 currentMultiplier = currentMultiplier,
-                                linksToEvents = twoPane
+                                linksToEvents = twoPane,
+                                zone = zone
                             )
                         } else if (state.loading) Spacer(Modifier.height(280.dp))
                         else Text(stringResource(R.string.logs_empty))
@@ -504,13 +539,13 @@ internal fun HistoryRoute(
             }
             logDays.forEach { (date, entries) ->
                 item(key = "day:$date", contentType = "day") {
-                    val day = if (date.year == LocalDate.now().year) dateFormat.format(date)
+                    val day = if (date.year == today.year) dateFormat.format(date)
                     else DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
                         .format(date)
                     Text(
                         when (date) {
-                            LocalDate.now() -> stringResource(R.string.history_today, day)
-                            LocalDate.now().minusDays(1) -> stringResource(
+                            today -> stringResource(R.string.history_today, day)
+                            today.minusDays(1) -> stringResource(
                                 R.string.history_yesterday, day
                             )
 
@@ -671,7 +706,10 @@ internal fun HistoryRoute(
                                 }
                                 Text(
                                     DisplayStrings.formatTime(
-                                        context, Date(record.time), seconds
+                                        context,
+                                        Date(record.time),
+                                        seconds,
+                                        timeZone = TimeZone.getTimeZone(zone)
                                     ), style = MaterialTheme.typography.bodySmall, color = secondary
                                 )
                             }
@@ -724,7 +762,7 @@ internal fun HistoryRoute(
                 Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                HistoryRangeControl(state, viewModel::range)
+                HistoryRangeControl(state, viewModel::range, zone)
                 if (!twoPane) {
                     SecondaryTabRow(
                         selectedTabIndex = if (state.tab == "logs") 1 else 0,

@@ -27,6 +27,7 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
@@ -152,11 +153,15 @@ internal object DisplayStrings {
         )
     }
 
-    fun formatTime(context: Context, date: Date, includeSeconds: Boolean = false): String {
+    fun formatTime(
+        context: Context, date: Date, includeSeconds: Boolean = false, timeZone: TimeZone? = null
+    ): String {
         val locale = context.resources.configuration.locales[0]
         val is24Hour = android.text.format.DateFormat.is24HourFormat(context)
 
-        return formatTime(date, locale, is24Hour, includeSeconds) { requestedLocale, skeleton ->
+        return formatTime(
+            date, locale, is24Hour, includeSeconds, timeZone
+        ) { requestedLocale, skeleton ->
             android.text.format.DateFormat.getBestDateTimePattern(requestedLocale, skeleton)
         }
     }
@@ -166,6 +171,7 @@ internal object DisplayStrings {
         locale: Locale,
         is24Hour: Boolean,
         includeSeconds: Boolean,
+        timeZone: TimeZone? = null,
         bestPattern: (Locale, String) -> String
     ): String {
         val skeleton = when {
@@ -176,7 +182,9 @@ internal object DisplayStrings {
         }
         val pattern = bestPattern(locale, skeleton)
 
-        return SimpleDateFormat(pattern, locale).format(date)
+        return SimpleDateFormat(pattern, locale).apply {
+            if (timeZone != null) this.timeZone = timeZone
+        }.format(date)
     }
 
     private fun formatDecimal(
