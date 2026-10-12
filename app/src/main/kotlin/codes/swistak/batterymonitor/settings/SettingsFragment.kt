@@ -1863,7 +1863,14 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         fileOperation(
             SettingsOperationAction.ImportDeviceData, R.string.invalid_device_data_file
         ) { context ->
-            DeviceDataBackup.importFromJson(context, json, selectedData, logImportMode)
+            try {
+                DeviceDataBackup.importFromJson(context, json, selectedData, logImportMode)
+            } catch (failure: GeneralBackupRestoreException) {
+                reloadRestoredData(
+                    context, settings, messenger, failure.completedData + failure.failedData
+                )
+                throw failure
+            }
             if (DeviceDataType.PREDICTOR_DATA in selectedData) reloadService(
                 context, settings, messenger, predictor = true
             )

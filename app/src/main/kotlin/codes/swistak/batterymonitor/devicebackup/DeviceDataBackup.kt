@@ -117,7 +117,9 @@ internal object DeviceDataBackup {
         context.getSharedPreferences(Predictor.STORE_NAME, Context.MODE_PRIVATE)
     )
 
-    @Throws(JSONException::class, IllegalArgumentException::class, IllegalStateException::class)
+    @Throws(
+        JSONException::class, IllegalArgumentException::class, GeneralBackupRestoreException::class
+    )
     @SuppressLint("UseKtx")
     fun importFromJson(
         context: Context,
@@ -145,31 +147,53 @@ internal object DeviceDataBackup {
             null
         }
 
-        logs?.let {
-            val database = LogDatabase(context)
-            try {
-                when (logImportMode) {
-                    LogImportMode.REPLACE -> database.replaceAllLogs(it)
-                    LogImportMode.ADD -> database.addLogs(it)
+        restoreData(restoreLogs = logs?.let { records ->
+            {
+                val database = LogDatabase(context)
+                try {
+                    when (logImportMode) {
+                        LogImportMode.REPLACE -> database.replaceAllLogs(records)
+                        LogImportMode.ADD -> database.addLogs(records)
+                    }
+                } finally {
+                    database.close()
                 }
-            } finally {
-                database.close()
+                lastLogExportTime?.let {
+                    check(
+                        context.getSharedPreferences(
+                            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+                        ).edit().putLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, it).commit()
+                    ) { "Could not restore the last log export time" }
+                }
             }
-        }
-        lastLogExportTime?.let {
-            check(
-                context.getSharedPreferences(
-                    SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-                ).edit().putLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, it).commit()
-            ) { "Could not restore the last log export time" }
-        }
-        predictor?.let {
-            val preferences =
-                context.getSharedPreferences(Predictor.STORE_NAME, Context.MODE_PRIVATE)
-            val editor = preferences.edit().clear()
-            for ((key, value) in it.averages) editor.putFloat(key, value)
-            editor.putInt(Predictor.KEY_STATE_VERSION, requireNotNull(it.version))
-            check(editor.commit()) { "Could not restore predictor data" }
+        }, restorePredictor = predictor?.let { state ->
+            {
+                val preferences =
+                    context.getSharedPreferences(Predictor.STORE_NAME, Context.MODE_PRIVATE)
+                val editor = preferences.edit().clear()
+                for ((key, value) in state.averages) editor.putFloat(key, value)
+                editor.putInt(Predictor.KEY_STATE_VERSION, requireNotNull(state.version))
+                check(editor.commit()) { "Could not restore predictor data" }
+            }
+        })
+    }
+
+    internal fun restoreData(restoreLogs: (() -> Unit)?, restorePredictor: (() -> Unit)?) {
+        val completed = linkedSetOf<GeneralBackupDataType>()
+        var attempted = emptySet<GeneralBackupDataType>()
+        try {
+            restoreLogs?.let {
+                attempted = setOf(GeneralBackupDataType.LOGS)
+                it()
+                completed += attempted
+            }
+            restorePredictor?.let {
+                attempted = setOf(GeneralBackupDataType.PREDICTOR_DATA)
+                it()
+                completed += attempted
+            }
+        } catch (error: Exception) {
+            throw GeneralBackupRestoreException(completed.toSet(), attempted, error)
         }
     }
 

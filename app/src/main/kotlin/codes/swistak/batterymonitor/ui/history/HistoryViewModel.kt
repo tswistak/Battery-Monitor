@@ -14,9 +14,11 @@ import android.os.Bundle
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.devicebackup.DeviceDataType
+import codes.swistak.batterymonitor.devicebackup.GeneralBackupRestoreException
 import codes.swistak.batterymonitor.devicebackup.LogImportMode
 import codes.swistak.batterymonitor.logs.HistoryChartModel
 import codes.swistak.batterymonitor.logs.HistoryExportRequest
@@ -269,7 +271,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
             selectedPointId = id, eventToReveal = id.takeIf { isTwoPane && point != null })
         if (isTwoPane && point != null && (current.loading || current.page.none { it.id == id })) {
             scroll(0, 0)
-            refresh(point.key, false, false, includeAnchor = true)
+            refresh(point.key, backwards = false, forceChart = false, includeAnchor = true)
         }
     }
 
@@ -287,7 +289,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         scroll(0, 0)
         mutable.value = mutable.value.copy(ascending = !mutable.value.ascending)
         mutable.value = mutable.value.copy(eventToReveal = null)
-        refresh(null, false, false, includeAnchor = false)
+        refresh(null, backwards = false, forceChart = false, includeAnchor = false)
     }
 
     fun filters(filters: Set<String>) {
@@ -295,7 +297,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         scroll(0, 0)
         mutable.value =
             mutable.value.copy(filters = filters, selectedPointId = null, eventToReveal = null)
-        refresh(null, false, false, includeAnchor = false)
+        refresh(null, backwards = false, forceChart = false, includeAnchor = false)
     }
 
     fun next(previous: Boolean) {
@@ -332,21 +334,41 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         operation(onDone) { repository.delete(if (all) null else range) }
     }
 
-    fun import(mode: LogImportMode, onDone: (Boolean) -> Unit) {
+    fun import(mode: LogImportMode, onDone: (Boolean, String?) -> Unit) {
         val uri = pendingImportUri?.let(Uri::parse) ?: return
         val json = pendingImportJson
         pendingImportUri = null
-        operation(onDone) {
-            withContext(Dispatchers.IO) {
-                val context = getApplication<Application>()
-                if (json) {
-                    val text =
-                        DeviceDataBackup.readFromUri(context, uri) ?: error("Unreadable JSON")
-                    DeviceDataBackup.importFromJson(context, text, setOf(DeviceDataType.LOGS), mode)
-                } else {
-                    val text = CsvLogImporter.readFromUri(context, uri) ?: error("Unreadable CSV")
-                    CsvLogImporter.importFromCsv(context, text, mode)
+        var restoreError: String? = null
+        operation({ success ->
+            onDone(success, restoreError)
+            if (restoreError != null) {
+                mutable.value = mutable.value.copy(selectedPointId = null, eventToReveal = null)
+                scroll(0, 0); refresh(null, false, includeAnchor = false)
+            }
+        }) {
+            try {
+                withContext(Dispatchers.IO) {
+                    val context = getApplication<Application>()
+                    if (json) {
+                        val text =
+                            DeviceDataBackup.readFromUri(context, uri) ?: error("Unreadable JSON")
+                        DeviceDataBackup.importFromJson(
+                            context, text, setOf(DeviceDataType.LOGS), mode
+                        )
+                    } else {
+                        val text =
+                            CsvLogImporter.readFromUri(context, uri) ?: error("Unreadable CSV")
+                        CsvLogImporter.importFromCsv(context, text, mode)
+                    }
                 }
+            } catch (failure: GeneralBackupRestoreException) {
+                val context = getApplication<Application>()
+                restoreError = context.getString(
+                    R.string.settings_restore_partial,
+                    context.getString(R.string.settings_restore_none),
+                    context.getString(R.string.device_data_logs)
+                )
+                throw failure
             }
         }
     }

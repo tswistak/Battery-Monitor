@@ -261,6 +261,10 @@ internal object GeneralBackup {
                 )
                 completed += attempted
             }
+        } catch (error: GeneralBackupRestoreException) {
+            throw GeneralBackupRestoreException(
+                completed + error.completedData, error.failedData, error
+            )
         } catch (error: Exception) {
             throw GeneralBackupRestoreException(completed.toSet(), attempted, error)
         }

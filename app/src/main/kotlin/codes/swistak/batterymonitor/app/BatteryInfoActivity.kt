@@ -85,6 +85,7 @@ class BatteryInfoActivity : AppCompatActivity() {
     private var shownDetail: String? = null
     private var detail by mutableStateOf<String?>(null)
     private var currentMeasurement by mutableStateOf<CurrentMeasurement?>(null)
+    private var externalNavigationRequest by mutableIntStateOf(0)
 
     private lateinit var diagnostics: DiagnosticsViewModel
     private lateinit var current: CurrentStateViewModel
@@ -176,6 +177,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                 }
                 SideNavigationShell(
                     selected = selected,
+                    externalNavigationRequest = externalNavigationRequest,
                     detailTitle = detail?.let {
                         getString(
                             when {
@@ -473,6 +475,7 @@ class BatteryInfoActivity : AppCompatActivity() {
     }
 
     private fun performRouteIntent(intent: Intent) {
+        externalNavigationRequest++
         val owner = when {
             intent.hasExtra(BatteryInfoService.EXTRA_EDIT_ALARMS) -> SectionOwner.ALARMS
             intent.hasExtra(EXTRA_SECTION) -> SectionRegistry.owner(

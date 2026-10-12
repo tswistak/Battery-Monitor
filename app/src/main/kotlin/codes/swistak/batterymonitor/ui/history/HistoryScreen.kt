@@ -911,10 +911,11 @@ internal fun HistoryRoute(
     }, confirmButton = {
         Column {
             TextButton(onClick = {
-                viewModel.import(LogImportMode.ADD) {
-                    result(
-                        it, R.string.csv_logs_imported
-                    )
+                viewModel.import(LogImportMode.ADD) { success, restoreError ->
+                    if (restoreError != null) Toast.makeText(
+                        appContext, restoreError, Toast.LENGTH_LONG
+                    ).show()
+                    else result(success, R.string.csv_logs_imported)
                 }; dialog = null
             }) { Text(stringResource(R.string.log_import_add)) }
             TextButton(onClick = {
@@ -934,10 +935,11 @@ internal fun HistoryRoute(
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
             TextButton(onClick = {
-                viewModel.import(LogImportMode.REPLACE) {
-                    result(
-                        it, R.string.device_data_imported
-                    )
+                viewModel.import(LogImportMode.REPLACE) { success, restoreError ->
+                    if (restoreError != null) Toast.makeText(
+                        appContext, restoreError, Toast.LENGTH_LONG
+                    ).show()
+                    else result(success, R.string.device_data_imported)
                 }; dialog = null
             }) { Text(stringResource(R.string.yes)) }
         },
@@ -987,12 +989,12 @@ internal fun HistoryRoute(
     val detail = state.page.firstOrNull { it.id == detailsId }
     if (detail != null) {
         val duration by produceState<Long?>(null, detail.id) {
-            try {
-                value = viewModel.duration(detail)
+            value = try {
+                viewModel.duration(detail)
             } catch (exception: kotlinx.coroutines.CancellationException) {
                 throw exception
             } catch (_: Exception) {
-                value = null
+                null
             }
         }
         AlertDialog(

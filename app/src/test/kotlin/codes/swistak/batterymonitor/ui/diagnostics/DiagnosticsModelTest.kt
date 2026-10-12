@@ -27,7 +27,7 @@ class DiagnosticsModelTest {
         val enabled = DiagnosticsState(privilegedEnabled = true)
         assertEquals(R.string.advanced_status_no_access, enabled.privilegedAccessStatus)
         assertEquals(
-            R.string.advanced_status_loading, enabled.copy(loading = true).privilegedAccessStatus
+            R.string.advanced_status_no_access, enabled.copy(loading = true).privilegedAccessStatus
         )
         val available = enabled.copy(advanced = AdvancedBatterySnapshot().apply {
             accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
@@ -43,6 +43,78 @@ class DiagnosticsModelTest {
             R.string.currently_disabled,
             available.copy(privilegedEnabled = false).privilegedAccessStatus
         )
+    }
+
+    @Test
+    fun `privileged collection requires an active statistics tab and explicit access setting`() {
+        val enabled = DiagnosticsState(privilegedEnabled = true)
+        assertFalse(enabled.allowsPrivilegedCollection(active = true, statsVisible = false))
+        assertFalse(enabled.allowsPrivilegedCollection(active = false, statsVisible = true))
+        assertFalse(
+            enabled.copy(privilegedEnabled = false).allowsPrivilegedCollection(
+                active = true, statsVisible = true
+            )
+        )
+        assertTrue(enabled.allowsPrivilegedCollection(active = true, statsVisible = true))
+    }
+
+    @Test
+    fun `overview Android refresh does not report a privileged attempt after access was enabled elsewhere`() {
+        val disabled = DiagnosticsState(status = R.string.currently_disabled)
+        val overview = disabled.startingRefresh(enabled = true, statsVisible = false)
+        assertTrue(overview.loading)
+        assertTrue(overview.privilegedEnabled)
+        assertEquals(R.string.advanced_status_no_access, overview.privilegedAccessStatus)
+        val statistics = overview.startingRefresh(enabled = true, statsVisible = true)
+        assertEquals(R.string.advanced_status_loading, statistics.privilegedAccessStatus)
+    }
+
+    @Test
+    fun `leaving statistics clears pending access status and keeps the last readings stale`() {
+        val basic = AdvancedBatterySnapshot().apply { reportedCapacityPercent = 72 }
+        val advanced = AdvancedBatterySnapshot().apply {
+            accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
+            currentNowUa = -900000
+        }
+        for (pending in listOf(
+            R.string.advanced_status_loading, R.string.advanced_status_waiting_permission
+        )) {
+            val stopped = DiagnosticsState(
+                basic = basic,
+                advanced = advanced,
+                privilegedEnabled = true,
+                loading = true,
+                rawLoading = true,
+                status = pending
+            ).withoutPendingLoad()
+            assertFalse(stopped.loading)
+            assertFalse(stopped.rawLoading)
+            assertTrue(stopped.stale)
+            assertEquals(basic, stopped.basic)
+            assertEquals(advanced, stopped.advanced)
+            assertEquals(R.string.yes, stopped.privilegedAccessStatus)
+            assertEquals(
+                R.string.advanced_status_no_access,
+                stopped.copy(advanced = null).privilegedAccessStatus
+            )
+        }
+    }
+
+    @Test
+    fun `overview refresh preserves real access failure while disabling clears privileged readings`() {
+        val failed = DiagnosticsState(
+            advanced = AdvancedBatterySnapshot().apply { currentNowUa = -900000 },
+            privilegedEnabled = true,
+            status = R.string.diag_timeout,
+            stale = true
+        )
+        val overview = failed.startingRefresh(enabled = true, statsVisible = false)
+        assertEquals(R.string.diag_timeout, overview.privilegedAccessStatus)
+        assertEquals(R.string.diag_timeout, overview.withoutPendingLoad().privilegedAccessStatus)
+        val disabled = overview.startingRefresh(enabled = false, statsVisible = true)
+        assertEquals(R.string.currently_disabled, disabled.privilegedAccessStatus)
+        assertNull(disabled.advanced)
+        assertFalse(disabled.stale)
     }
 
     @Test

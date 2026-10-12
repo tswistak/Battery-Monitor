@@ -53,7 +53,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -102,9 +101,13 @@ internal fun DiagnosticsRoute(
     monitoring: kotlinx.coroutines.flow.StateFlow<codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState>,
     monitorActions: Map<String, MonitorAction>
 ) {
+    var tab by rememberSaveable { mutableIntStateOf(0) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val monitor by monitoring.collectAsStateWithLifecycle()
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.setActive(true) }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        viewModel.setTab(tab)
+        viewModel.setActive(true)
+    }
     LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) { viewModel.setActive(false) }
     DisposableEffect(viewModel) { onDispose { viewModel.setActive(false) } }
     DiagnosticsScreen(
@@ -113,10 +116,14 @@ internal fun DiagnosticsRoute(
         onMonitor,
         onChargingTools,
         viewModel::setPrivilegedEnabled,
-        viewModel::setTab,
+        { selected ->
+            viewModel.setTab(selected)
+            tab = selected
+        },
         monitor.snapshot,
         monitorActions,
-        monitor.availability
+        monitor.availability,
+        tab
     )
 }
 
@@ -130,7 +137,8 @@ internal fun DiagnosticsScreen(
     onTab: (Int) -> Unit = {},
     monitor: codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot? = null,
     monitorActions: Map<String, MonitorAction> = emptyMap(),
-    monitorAvailability: MonitoringAvailability = if (monitor == null) MonitoringAvailability.WAITING else MonitoringAvailability.LIVE
+    monitorAvailability: MonitoringAvailability = if (monitor == null) MonitoringAvailability.WAITING else MonitoringAvailability.LIVE,
+    tab: Int = 0
 ) {
     val context = LocalContext.current
     val resources = LocalResources.current
@@ -159,9 +167,7 @@ internal fun DiagnosticsScreen(
     val rawPredictor =
         combinedPredictor?.let(::rawPredictorDiagnosticGroup)?.takeIf { it.rows.isNotEmpty() }
     val raw = basic.drop(3) + app.drop(3) + advanced.drop(3) + listOfNotNull(rawPredictor)
-    var tab by rememberSaveable { mutableIntStateOf(0) }
     var query by rememberSaveable { mutableStateOf("") }
-    LaunchedEffect(tab) { onTab(tab) }
     var access by rememberSaveable { mutableStateOf(false) }
     var report by rememberSaveable { mutableStateOf(false) }
     var selectedRow by remember { mutableStateOf<DiagnosticRow?>(null) }
@@ -194,19 +200,19 @@ internal fun DiagnosticsScreen(
                 (if (tab == 0) listOfNotNull(state.basic) else snapshots).filter { it.hasStats() }
             Text(
                 stringResource(
-                R.string.current_detail_source, diagnosticSourceName(
-                    sources.joinToString(
-                        " · ", transform = ::diagnosticAccessName
-                    )
-                ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
-                ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
+                    R.string.current_detail_source, diagnosticSourceName(
+                        sources.joinToString(
+                            " · ", transform = ::diagnosticAccessName
+                        )
+                    ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
+                    ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         BoxWithConstraints {
             val tabs: @Composable () -> Unit = {
                 labels.forEachIndexed { index, label ->
-                    Tab(selected = tab == index, onClick = { tab = index }, text = {
+                    Tab(selected = tab == index, onClick = { onTab(index) }, text = {
                         Text(
                             stringResource(label),
                             style = MaterialTheme.typography.bodySmall,
@@ -475,8 +481,8 @@ internal fun DiagnosticsScreen(
                     DiagnosticsLink(
                         stringResource(R.string.pref_cat_privileged_access),
                         stringResource(state.privilegedAccessStatus),
-                        R.drawable.ui_storage,
-                        { access = true })
+                        R.drawable.ui_storage
+                    ) { access = true }
                     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                     DiagnosticsLink(
                         stringResource(R.string.diagnostics_monitoring),

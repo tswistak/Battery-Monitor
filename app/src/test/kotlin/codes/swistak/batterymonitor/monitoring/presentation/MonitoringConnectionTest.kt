@@ -7,6 +7,9 @@
 */
 package codes.swistak.batterymonitor.monitoring.presentation
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -111,19 +114,31 @@ class MonitoringConnectionTest {
     }
 
     @Test
-    fun `unplug snapshot changes status direction and target in one state emission`() {
-        val connection = MonitoringConnection()
-        connection.start()
-        val generation = connection.onServiceConnected()
-        assertTrue(connection.onHandshake(generation, "process-a"))
-        val messenger = FakeMessenger(connection)
-        assertTrue(messenger.send(generation, "process-a", 1))
-
-        assertTrue(messenger.send(generation, "process-a", 2, snapshot(0, 1, 20)))
-        val state = connection.state.value.snapshot!!
-        assertEquals(0, state.status)
-        assertEquals(1, state.configuredPrediction.direction)
-        assertEquals(20, state.configuredPrediction.targetPercent)
-        assertEquals(0, state.fullRangePrediction.targetPercent)
-    }
+    fun `unplug snapshot changes status direction and target in one state emission`() =
+        runBlocking {
+            val connection = MonitoringConnection()
+            connection.start()
+            val generation = connection.onServiceConnected()
+            assertTrue(connection.onHandshake(generation, "process-a"))
+            val messenger = FakeMessenger(connection)
+            val emissions = mutableListOf<MonitoringUiState>()
+            val collector = launch(Dispatchers.Unconfined) {
+                connection.state.collect { emissions += it }
+            }
+            try {
+                val charging = snapshot()
+                val unplugged = snapshot(0, 1, 20)
+                assertTrue(messenger.send(generation, "process-a", 1, charging))
+                assertTrue(messenger.send(generation, "process-a", 2, unplugged))
+                assertEquals(
+                    listOf(
+                        MonitoringUiState(),
+                        MonitoringUiState(MonitoringAvailability.LIVE, charging, "process-a", 1),
+                        MonitoringUiState(MonitoringAvailability.LIVE, unplugged, "process-a", 2)
+                    ), emissions
+                )
+            } finally {
+                collector.cancel()
+            }
+        }
 }

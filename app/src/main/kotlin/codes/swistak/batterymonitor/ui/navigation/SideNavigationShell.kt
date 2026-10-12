@@ -86,6 +86,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun SideNavigationShell(
     selected: SectionOwner,
+    externalNavigationRequest: Int = 0,
     detailTitle: String? = null,
     onSelect: (SectionOwner) -> Unit,
     onUp: () -> Unit = {},
@@ -116,6 +117,9 @@ internal fun SideNavigationShell(
         }
         var wasOpen by remember { mutableStateOf(false) }
         var focusHeadingOnClose by remember { mutableStateOf(false) }
+        LaunchedEffect(externalNavigationRequest) {
+            if (externalNavigationRequest > 0) drawerState.close()
+        }
         val destinations = SectionRegistry.destinations
         val batterySections = destinations.filter { it.group == SectionGroup.BATTERY }
             .map { MenuSection(it.owner.route, stringResource(it.label)) }
@@ -236,14 +240,13 @@ internal fun SideNavigationShell(
                                 true
                             } else false
                         }) {
-                    Row(
-                        Modifier
-                            .fillMaxSize()
-                            .focusProperties {
-                                onEnter = { if (modalOpen) cancelFocusChange() }
-                            }
-                            .focusGroup()
-                            .semantics { if (modalOpen) hideFromAccessibility() }) {
+                    Row(Modifier
+                        .fillMaxSize()
+                        .focusProperties {
+                            onEnter = { if (modalOpen) cancelFocusChange() }
+                        }
+                        .focusGroup()
+                        .semantics { if (modalOpen) hideFromAccessibility() }) {
                         if (persistent) PermanentDrawerSheet(
                             modifier = Modifier
                                 .width(280.dp)
@@ -295,17 +298,16 @@ internal fun SideNavigationShell(
                                     )
                                 },
                                 navigationIcon = {
-                                    IconButton(
-                                        onClick = {
-                                            if (detailTitle != null) onUp()
-                                            else if (persistent) {
-                                                if (keyboardNavigation) panelFocus.requestFocus()
-                                            } else scope.launch { drawerState.open() }
-                                        }, modifier = Modifier
-                                            .focusRequester(menuFocus)
-                                            .semantics {
-                                                contentDescription = navigationLabel
-                                            }) {
+                                    IconButton(onClick = {
+                                        if (detailTitle != null) onUp()
+                                        else if (persistent) {
+                                            if (keyboardNavigation) panelFocus.requestFocus()
+                                        } else scope.launch { drawerState.open() }
+                                    }, modifier = Modifier
+                                        .focusRequester(menuFocus)
+                                        .semantics {
+                                            contentDescription = navigationLabel
+                                        }) {
                                         Icon(
                                             painterResource(if (detailTitle == null) R.drawable.ui_menu else R.drawable.ui_back),
                                             contentDescription = null,
@@ -325,17 +327,17 @@ internal fun SideNavigationShell(
                                     val actionColor = MaterialTheme.colorScheme.onSurface.toArgb()
                                     if (onLegacyActions != null) AndroidView(
                                         factory = { context ->
-                                            TextView(context).apply {
-                                                text = "⋮"
-                                                textSize = 24f
-                                                gravity = Gravity.CENTER
-                                                isClickable = true
-                                                isFocusable = true
-                                                contentDescription =
-                                                    context.getString(R.string.nav_actions)
-                                                setOnClickListener { onLegacyActions(this) }
-                                            }
-                                        },
+                                        TextView(context).apply {
+                                            text = "⋮"
+                                            textSize = 24f
+                                            gravity = Gravity.CENTER
+                                            isClickable = true
+                                            isFocusable = true
+                                            contentDescription =
+                                                context.getString(R.string.nav_actions)
+                                            setOnClickListener { onLegacyActions(this) }
+                                        }
+                                    },
                                         update = { it.setTextColor(actionColor) },
                                         modifier = Modifier.size(48.dp)
                                     )

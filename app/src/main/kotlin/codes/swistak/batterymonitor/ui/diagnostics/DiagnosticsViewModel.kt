@@ -47,10 +47,34 @@ internal data class DiagnosticsState(
         get() = when {
             !privilegedEnabled -> R.string.currently_disabled
             status != 0 -> status
-            loading -> R.string.advanced_status_loading
             advanced?.hasStats() == true -> R.string.yes
             else -> R.string.advanced_status_no_access
         }
+
+    fun allowsPrivilegedCollection(active: Boolean, statsVisible: Boolean): Boolean =
+        active && statsVisible && privilegedEnabled
+
+    fun startingRefresh(enabled: Boolean, statsVisible: Boolean): DiagnosticsState = copy(
+        loading = true,
+        status = when {
+            !enabled -> R.string.currently_disabled
+            statsVisible -> R.string.advanced_status_loading
+            else -> settledStatus()
+        },
+        privilegedEnabled = enabled,
+        advanced = if (enabled) advanced else null,
+        stale = enabled && (stale || statsVisible && advanced != null)
+    )
+
+    fun withoutPendingLoad(): DiagnosticsState = copy(
+        status = settledStatus(), loading = false, rawLoading = false, stale = advanced != null
+    )
+
+    private fun settledStatus(): Int = when (status) {
+        R.string.currently_disabled, R.string.advanced_status_loading, R.string.advanced_status_waiting_permission -> 0
+
+        else -> status
+    }
 }
 
 internal class DiagnosticsViewModel(application: Application) : AndroidViewModel(application) {
@@ -59,11 +83,14 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         private const val TAG = "Diagnostics"
     }
 
-    private enum class LoadState { IDLE, CHECKING_ROOT, WAITING_FOR_SHIZUKU, WAITING_FOR_PERMISSION, BINDING_USER_SERVICE }
+    private enum class LoadState { IDLE, READING_ANDROID, CHECKING_ROOT, WAITING_FOR_SHIZUKU, WAITING_FOR_PERMISSION, BINDING_USER_SERVICE }
 
     private val mainHandler = Handler(Looper.getMainLooper())
     private var loadState = LoadState.IDLE
+
+    @Volatile
     private var loadGeneration = 0
+
     private var activeConnection: ShizukuUserServiceConnection? = null
     private var worker: Thread? = null
 
@@ -72,34 +99,45 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
 
     @Volatile
     private var rawGeneration = 0
+
+    @Volatile
     private var statsVisible = false
+
     private var rawWorker: Thread? = null
     private val mutableState = MutableStateFlow(DiagnosticsState())
     val state: StateFlow<DiagnosticsState> = mutableState
     private val preferences = application.getSharedPreferences(SettingsContract.SETTINGS_FILE, 0)
     private val timeout = Runnable {
-        if (active && loadState != LoadState.IDLE) finishWithNoAccess(
+        if (canLoadPrivileged(loadGeneration) && loadState != LoadState.IDLE) finishWithNoAccess(
             "Snapshot timeout", status = R.string.diag_timeout
         )
     }
     private val binderReceivedListener = Shizuku.OnBinderReceivedListener {
         mainHandler.post {
-            if (active && loadState == LoadState.WAITING_FOR_SHIZUKU) continueViaShizuku(
+            if (canLoadPrivileged(loadGeneration) && loadState == LoadState.WAITING_FOR_SHIZUKU) continueViaShizuku(
                 loadGeneration
             )
         }
     }
     private val binderDeadListener = Shizuku.OnBinderDeadListener {
         mainHandler.post {
-            if (active && (loadState == LoadState.BINDING_USER_SERVICE || loadState == LoadState.WAITING_FOR_PERMISSION || state.value.advanced?.accessMethod == AdvancedBatterySnapshot.ACCESS_SHIZUKU)) {
+            if (!active) return@post
+            if (loadState == LoadState.BINDING_USER_SERVICE || loadState == LoadState.WAITING_FOR_PERMISSION) {
                 finishWithNoAccess("Shizuku binder died")
+            } else if (state.value.advanced?.accessMethod == AdvancedBatterySnapshot.ACCESS_SHIZUKU) {
+                publish {
+                    copy(
+                        status = if (statsVisible && loadState != LoadState.IDLE) status else R.string.advanced_status_no_access,
+                        stale = true
+                    )
+                }
             }
         }
     }
     private val permissionListener =
         Shizuku.OnRequestPermissionResultListener { requestCode, grantResult ->
             mainHandler.post {
-                if (requestCode == REQUEST_CODE_SHIZUKU && active && loadState == LoadState.WAITING_FOR_PERMISSION) {
+                if (requestCode == REQUEST_CODE_SHIZUKU && canLoadPrivileged(loadGeneration) && loadState == LoadState.WAITING_FOR_PERMISSION) {
                     if (grantResult == PackageManager.PERMISSION_GRANTED) bindUserService(
                         loadGeneration
                     )
@@ -139,19 +177,34 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
             rawWorker?.interrupt()
             cancelActiveConnection()
             loadState = LoadState.IDLE
-            publish { copy(loading = false, rawLoading = false, stale = advanced != null) }
+            publish { withoutPendingLoad() }
         }
     }
 
     fun setTab(tab: Int) {
+        val wasStatsVisible = statsVisible
         statsVisible = tab != 0
-        if (statsVisible && active && state.value.appRaw == null && !state.value.rawLoading) refreshRaw()
-        if (!statsVisible) {
+        if (statsVisible) {
+            if (active && state.value.appRaw == null && !state.value.rawLoading) refreshRaw()
+            if (!wasStatsVisible && active) refreshStats()
+        } else {
             rawGeneration++
             rawWorker?.interrupt()
-            publish { copy(rawLoading = false) }
+            if (loadState != LoadState.IDLE) {
+                if (loadState != LoadState.READING_ANDROID) {
+                    loadGeneration++
+                    cancelActiveConnection()
+                    loadState = LoadState.IDLE
+                }
+                publish { withoutPendingLoad().copy(loading = loadState == LoadState.READING_ANDROID) }
+            } else {
+                publish { copy(rawLoading = false) }
+            }
         }
     }
+
+    private fun canLoadPrivileged(generation: Int): Boolean =
+        state.value.allowsPrivilegedCollection(active, statsVisible) && generation == loadGeneration
 
     private fun refreshRaw() {
         if (!active || state.value.rawLoading) return
@@ -203,55 +256,50 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         val privilegedEnabled =
             preferences.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
         val generation = ++loadGeneration
-        publish {
-            copy(
-                loading = true,
-                status = if (privilegedEnabled) R.string.advanced_status_loading else R.string.currently_disabled,
-                privilegedEnabled = privilegedEnabled,
-                advanced = if (privilegedEnabled) advanced else null,
-                stale = privilegedEnabled && stale
-            )
-        }
+        loadState = LoadState.READING_ANDROID
+        publish { startingRefresh(privilegedEnabled, statsVisible) }
         worker = Thread {
             val basic =
                 runCatching { AdvancedBatteryStatsCollector.collectBasic(getApplication()) }.getOrNull()
             mainHandler.post {
                 if (generation != loadGeneration || !active) return@post
                 publish { copy(basic = basic ?: this.basic) }
-                if (privilegedEnabled) loadPrivileged(generation)
-                else publish {
-                    copy(
-                        status = R.string.currently_disabled,
-                        loading = false,
-                        stale = advanced != null
-                    )
+                if (canLoadPrivileged(generation)) loadPrivileged(generation)
+                else {
+                    loadState = LoadState.IDLE
+                    publish { copy(loading = false) }
                 }
             }
         }.apply { name = "diagnostics-android"; start() }
     }
 
     private fun loadPrivileged(generation: Int) {
+        if (!canLoadPrivileged(generation)) return
         loadState = LoadState.CHECKING_ROOT
         showStatus(R.string.advanced_status_loading)
         mainHandler.postDelayed(timeout, 45_000)
         worker = Thread {
             val executor = RootExecutor()
             val snapshot = runCatching {
-                if (executor.run("id")?.contains("uid=0") != true) null
+                if (!canLoadPrivileged(generation) || executor.run("id")
+                        ?.contains("uid=0") != true
+                ) null
                 else AdvancedBatteryStatsCollector.collect(
                     object : CommandExecutor {
                         override fun run(command: String): String? =
-                            if (Thread.currentThread().isInterrupted) null else executor.run(command)
+                            if (!canLoadPrivileged(generation) || Thread.currentThread().isInterrupted) null else executor.run(
+                                command
+                            )
 
                         override fun runRaw(command: String): String? =
-                            if (Thread.currentThread().isInterrupted) null else executor.runRaw(
+                            if (!canLoadPrivileged(generation) || Thread.currentThread().isInterrupted) null else executor.runRaw(
                                 command
                             )
                     }, AdvancedBatterySnapshot.ACCESS_ROOT, 0, null, false
                 )
             }.getOrNull()
             mainHandler.post {
-                if (generation != loadGeneration || !active) return@post
+                if (!canLoadPrivileged(generation)) return@post
                 if (snapshot != null) postSnapshot(snapshot, generation) else continueViaShizuku(
                     generation
                 )
@@ -260,7 +308,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
     }
 
     private fun continueViaShizuku(generation: Int) {
-        if (generation != loadGeneration || !active) return
+        if (!canLoadPrivileged(generation)) return
         mainHandler.removeCallbacks(timeout)
         mainHandler.postDelayed(timeout, 45_000)
 
@@ -300,7 +348,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
 
     @Suppress("USELESS_ELVIS")
     private fun bindUserService(generation: Int) {
-        if (generation != loadGeneration || !active || activeConnection != null) return
+        if (!canLoadPrivileged(generation) || activeConnection != null) return
 
         val appContext = getApplication<Application>() ?: run {
             finishLoading(generation)
@@ -334,7 +382,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
 
     private fun postSnapshot(snapshot: AdvancedBatterySnapshot, generation: Int) {
         mainHandler.post {
-            if (generation != loadGeneration) return@post
+            if (!canLoadPrivileged(generation)) return@post
 
             mainHandler.removeCallbacks(timeout)
             activeConnection?.let(::clearConnection)
@@ -376,14 +424,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
     }
 
     private fun clearConnection(connection: ShizukuUserServiceConnection) {
-        if (activeConnection === connection) activeConnection = null
-    }
-
-    private fun cancelActiveConnection() {
-        worker?.interrupt()
-        worker = null
-        mainHandler.removeCallbacks(timeout)
-        val connection = activeConnection ?: return
+        if (activeConnection !== connection) return
         activeConnection = null
         try {
             connection.unbind(remove = true)
@@ -392,11 +433,20 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         }
     }
 
+    private fun cancelActiveConnection() {
+        worker?.interrupt()
+        worker = null
+        mainHandler.removeCallbacks(timeout)
+        activeConnection?.let(::clearConnection)
+    }
+
     private fun collectShizukuSnapshot(
         connection: ShizukuUserServiceConnection, service: IBinder, generation: Int
     ) {
+        if (!canLoadPrivileged(generation) || activeConnection !== connection) return
         worker = Thread {
             try {
+                if (!canLoadPrivileged(generation)) return@Thread
                 val snapshot = AdvancedBatterySnapshot.fromBundle(
                     requireNotNull(AdvancedStatsUserService.requestSnapshot(service))
                 )
@@ -409,11 +459,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
                     }
                 }
             } finally {
-                try {
-                    connection.unbind(remove = true)
-                } catch (error: Throwable) {
-                    Log.w(TAG, "Unable to unbind Shizuku user service", error)
-                }
+                mainHandler.post { clearConnection(connection) }
             }
         }.apply { name = "diagnostics-shizuku"; start() }
     }

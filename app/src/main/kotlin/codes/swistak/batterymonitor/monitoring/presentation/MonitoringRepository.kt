@@ -32,10 +32,6 @@ internal class MonitoringRepository {
         )
     }
 
-    internal fun recordVersion(processId: String?, sequence: Long) {
-        mutableState.value = mutableState.value.copy(processId = processId, sequence = sequence)
-    }
-
     fun markInactive() {
         mutableState.value = mutableState.value.copy(
             availability = if (mutableState.value.snapshot == null) {

@@ -69,19 +69,12 @@ internal class MonitoringConnection {
         return old.processId != processId || sequence >= old.sequence
     }
 
-    internal fun acceptVersion(generation: Int, processId: String?, sequence: Long): Boolean {
-        if (!acceptsSnapshot(generation, processId, sequence)) return false
-        repository.recordVersion(processId, sequence)
-        return true
-    }
-
     fun onSnapshot(generation: Int, bundle: Bundle): Boolean {
         if (!accepts(generation)) return false
         if (bundle.getLong(FIELD_OBSERVED_AT) <= 0L) return false
         val processId = bundle.getString(FIELD_PROCESS_ID) ?: return false
         val sequence = bundle.getLong(FIELD_SEQUENCE, -1L)
-        if (!acceptsSnapshot(generation, processId, sequence)) return false
-        return publishSnapshot(
+        return acceptsSnapshot(generation, processId, sequence) && publishSnapshot(
             generation, processId, sequence, MonitoringSnapshot.fromBundle(bundle)
         )
     }
@@ -89,7 +82,7 @@ internal class MonitoringConnection {
     internal fun publishSnapshot(
         generation: Int, processId: String, sequence: Long, snapshot: MonitoringSnapshot
     ): Boolean {
-        if (!acceptVersion(generation, processId, sequence)) return false
+        if (!acceptsSnapshot(generation, processId, sequence)) return false
         repository.publish(snapshot, processId, sequence)
         return true
     }
