@@ -182,7 +182,7 @@ internal fun CurrentStateRoute(
     }
     var refreshCurrent by remember { mutableIntStateOf(0) }
     val lifecycleOwner = LocalLifecycleOwner.current
-    val currentReading by produceState<CurrentReading?>(
+    val currentReading by produceState(
         initialValue = viewModel.reading,
         preferences.preferAverageCurrent,
         preferences.currentRefreshMillis,
@@ -234,7 +234,7 @@ internal fun CurrentStateRoute(
         notificationsEnabled = notificationsEnabled
     )
     val logs = remember(context.applicationContext) { LogsRepository(context.applicationContext) }
-    val trend by produceState<HistoryChartModel?>(
+    val trend by produceState(
         viewModel.trend,
         preferences.loggingEnabled,
         state.snapshot?.levelPercent,
@@ -392,40 +392,40 @@ internal fun CurrentStateScreen(
     val power = BatteryCurrent.powerWatts(snapshot?.voltageMillivolts, currentReading?.milliAmps)
     val metrics = listOf(
         MetricDetail(
-        CurrentMeasurement.TEMPERATURE,
-        MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
-            DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
-        } ?: unavailable),
-        if (preferences.fahrenheit) "°F" else "°C",
-        snapshotSource,
-        snapshotTime), MetricDetail(
-        CurrentMeasurement.VOLTAGE,
-        MetricDisplay(
-            stringResource(R.string.current_voltage),
-            snapshot?.voltageMillivolts?.let {
-                DisplayStrings.formatVoltage(it)
+            CurrentMeasurement.TEMPERATURE,
+            MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
+                DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
             } ?: unavailable),
-        "V",
-        snapshotSource,
-        snapshotTime,
-        if (snapshot?.voltageMillivolts == null) unavailable else null), MetricDetail(
-        CurrentMeasurement.CURRENT,
-        MetricDisplay(
-            stringResource(R.string.pref_cat_battery_current_main), when {
-                currentReading?.milliAmps == null -> unavailable
-                else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
-                    currentReading.milliAmps, configuration.locales[0]
-                ) + " mA"
+            if (preferences.fahrenheit) "°F" else "°C",
+            snapshotSource,
+            snapshotTime), MetricDetail(
+            CurrentMeasurement.VOLTAGE,
+            MetricDisplay(
+                stringResource(R.string.current_voltage),
+                snapshot?.voltageMillivolts?.let {
+                    DisplayStrings.formatVoltage(it)
+                } ?: unavailable),
+            "V",
+            snapshotSource,
+            snapshotTime,
+            if (snapshot?.voltageMillivolts == null) unavailable else null), MetricDetail(
+            CurrentMeasurement.CURRENT,
+            MetricDisplay(
+                stringResource(R.string.pref_cat_battery_current_main), when {
+                    currentReading?.milliAmps == null -> unavailable
+                    else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
+                        currentReading.milliAmps, configuration.locales[0]
+                    ) + " mA"
+                }
+            ),
+            "mA",
+            stringResource(R.string.current_current_source) + " · " + stringResource(if (currentReading?.average == true) R.string.advanced_field_current_average else R.string.advanced_field_current_now),
+            currentReading?.observedAtMillis,
+            when {
+                currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
+                else -> null
             }
-        ),
-        "mA",
-        stringResource(R.string.current_current_source) + " · " + stringResource(if (currentReading?.average == true) R.string.advanced_field_current_average else R.string.advanced_field_current_now),
-        currentReading?.observedAtMillis,
-        when {
-            currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
-            else -> null
-        }
-    )) + listOfNotNull(power?.let {
+        )) + listOfNotNull(power?.let {
         MetricDetail(
             CurrentMeasurement.POWER, MetricDisplay(
                 stringResource(R.string.battery_power),
@@ -603,16 +603,16 @@ internal fun CurrentStateScreen(
                 )
                 MetricGrid(
                     metrics.mapIndexed { index, metric ->
-                    metric.display.copy(
-                        icon = listOfNotNull(
-                            R.drawable.ui_temp,
-                            R.drawable.ui_voltage,
-                            R.drawable.ui_current,
-                            R.drawable.ui_bolt.takeIf { power != null },
-                            R.drawable.ui_heart
-                        )[index]
-                    )
-                },
+                        metric.display.copy(
+                            icon = listOfNotNull(
+                                R.drawable.ui_temp,
+                                R.drawable.ui_voltage,
+                                R.drawable.ui_current,
+                                R.drawable.ui_bolt.takeIf { power != null },
+                                R.drawable.ui_heart
+                            )[index]
+                        )
+                    },
                     columns = if (singleColumn) 1 else 2,
                     onMetricClick = { selectedMetric = metrics[it].measurement.route },
                     modifier = Modifier.fillMaxWidth(),
@@ -809,7 +809,8 @@ internal fun CurrentStateScreen(
                     )
                 }
                 TextButton(onClick = {
-                    selectedMetric = null; onSection(SectionOwner.DIAGNOSTICS)
+                    selectedMetric = null
+                    onSection(SectionOwner.DIAGNOSTICS)
                 }) {
                     ActionLabel(stringResource(R.string.nav_diagnostics), R.drawable.ui_current)
                 }

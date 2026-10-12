@@ -146,7 +146,9 @@ internal fun historyChartScale(
     val minimum = minOf(first, last)
     val maximum = maxOf(first, last)
     val fallback = when (metric) {
-        HistoryMetric.LEVEL -> 20.0; HistoryMetric.TEMPERATURE -> 5.0; HistoryMetric.VOLTAGE -> 0.2
+        HistoryMetric.LEVEL -> 20.0
+        HistoryMetric.TEMPERATURE -> 5.0
+        HistoryMetric.VOLTAGE -> 0.2
         HistoryMetric.CURRENT, HistoryMetric.REMAINING_CHARGE -> 100.0
         HistoryMetric.POWER -> 0.5
     }
@@ -317,7 +319,9 @@ internal fun MeasurementChart(
                         .onKeyEvent {
                             if (it.type != KeyEventType.KeyDown || compact) false
                             else when (it.key) {
-                                Key.DirectionLeft -> move(-1); Key.DirectionRight -> move(1); else -> false
+                                Key.DirectionLeft -> move(-1)
+                                Key.DirectionRight -> move(1)
+                                else -> false
                             }
                         }
                         .focusable(!compact)
@@ -420,7 +424,9 @@ internal fun MeasurementChart(
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 textAlign = when (index) {
-                                    0 -> androidx.compose.ui.text.style.TextAlign.Start; steps -> androidx.compose.ui.text.style.TextAlign.End; else -> androidx.compose.ui.text.style.TextAlign.Center
+                                    0 -> androidx.compose.ui.text.style.TextAlign.Start
+                                    steps -> androidx.compose.ui.text.style.TextAlign.End
+                                    else -> androidx.compose.ui.text.style.TextAlign.Center
                                 }
                             )
                         }

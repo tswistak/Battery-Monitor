@@ -118,14 +118,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">氣溫降至以下</string>
   <string name="alarm_type_temperature_rises" formatted="false">溫度升至以上</string>
   <string name="alarm_type_health_failure" formatted="false">健康失敗</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">充滿電</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">已達充電上限</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">已達放電下限</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">電荷下降到以下...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">電荷上升到以上...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">氣溫降至以下...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">溫度升至以上...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">健康狀況不佳</string>
 
   <string name="alarm_fully_charged" formatted="false">電池已充滿</string>
   <string name="alarm_charging_limit_met" formatted="true">已達充電上限：%1$d%%</string>
@@ -229,11 +221,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">您已停用此應用程式的所有通知。  請允許他們存取這些設定。</string>
   <string name="main_notifs_disabled_b" formatted="false">啟用主通知</string>
   <string name="main_notifs_disabled_summary" formatted="false">您已停用此應用程式的主要通知。  請啟用它以存取這些設定。</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">您已停用此應用程式的所有通知。  請允許他們存取您的警報。</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">啟用警報</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">您已停用此應用的鬧鐘通知群組。請啟用它以存取您的鬧鐘。</string>
   <string name="alarm_chan_disabled" formatted="false">您已停用此警報類型的通知。  請允許他們使用此類警報。</string>
-  <string name="alarm_chan_disabled_b" formatted="false">啟用此警報類型</string>
   <string name="alarm_chan_settings_b" formatted="false">管理此警報類型</string>
 
   <string name="notification_settings" formatted="false">主要通知</string>
@@ -274,7 +263,6 @@
     \n
     注意：授予此权限有时可能会导致应用关闭。若发生这种情况，请重新打开应用。</string>
 
-  <string name="add_alarm" formatted="false">添加鬧鐘</string>
 
   <string name="pref_cat_channel_settings" formatted="false">通知頻道設定</string>
   <string name="pref_manage_main_channel" formatted="false">管理主通路</string>
@@ -402,29 +390,10 @@
     • 若要刪除鬧鐘，請長按該鬧鐘，然後選擇“刪除” 警報\”。（您也可以從單一警報中刪除警報） 按 MENU 然後按「刪除警報」設定頁面。 ）\n
     • 若要輕鬆切換是否啟用警報，請按切換鈕 切換到警報文字一側。 （您也可以啟用或 從單獨的警報設定頁面停用警報。 ）</string>
 
-  <string name="pref_alarm_enabled" formatted="false">啟用警報</string>
-  <string name="pref_alarm_enabled_help" formatted="false">如果你想暫時 禁用警報而無需在需要時重新建立它 同樣，您可以在此處或主警報上將其關閉和打開 頁。</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">警報條件</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">這是你可以的地方 控制觸發警報的條件。</string>
-  <string name="pref_alarm_type" formatted="false">警報類型</string>
-  <string name="pref_alarm_type_summary" formatted="false">電池觸發警報：</string>
-  <string name="pref_alarm_type_help" formatted="false">目前有八種類型的警報可供您設定。\n
-    \n
-    「已達充電上限」和「已達放電下限」警報會在電池達到充電或放電目標時通知您。它們不需要設定門檻，且會一律依照目前的目標設定。\n
-    \n
-    \n
-    「充滿電」鬧鐘會在電池狀態從 「充電中」變為「已充滿」時觸發。請注意， 在許多裝置上，這與 100% 電量並不完全相同。\n
-    \n
-    與充電量或溫度相關的鬧鐘會在 電池指標跨過您設定的門檻時觸發。\n
-    \n
-    「健康異常」鬧鐘會在電池健康狀態變為 非「未知」或非「良好」時觸發（依 Android 系統回報）。</string>
   <string name="pref_alarm_threshold" formatted="false">臨界點</string>
-  <string name="alarm_pref_not_used" formatted="false">不用於此警報類型</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">警報閾值：</string>
   <string name="pref_alarm_threshold_help" formatted="false">對於充電和溫度警報，需要設定溫度 或將觸發警報的電量水準。</string>
-  <string name="alarm_custom_temp_message" formatted="true">輸入 %s 度的溫度</string>
-  <string name="alarm_custom_charge_message" formatted="false">輸入費用百分比（0-100）</string>
 
   <string name="boot_pref_always" formatted="false">始終</string>
   <string name="boot_pref_never" formatted="false">從不</string>

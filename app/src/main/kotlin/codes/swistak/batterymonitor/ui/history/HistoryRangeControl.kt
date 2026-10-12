@@ -132,16 +132,19 @@ internal fun HistoryRangeControl(
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 TextButton(onClick = {
-                    onRange(HistoryRangeState.lastHours(24), "24h"); mode = null
+                    onRange(HistoryRangeState.lastHours(24), "24h")
+                    mode = null
                 }) { Text(stringResource(R.string.history_last_24h)) }
                 TextButton(onClick = {
-                    onRange(HistoryRangeState.lastHours(168), "7d"); mode = null
+                    onRange(HistoryRangeState.lastHours(168), "7d")
+                    mode = null
                 }) { Text(stringResource(R.string.history_last_7d)) }
                 TextButton(onClick = {
                     first = Instant.ofEpochMilli(state.range.start).atZone(zone).toLocalDate()
-                        .toString(); last =
-                    Instant.ofEpochMilli(state.range.end - 1).atZone(zone).toLocalDate()
-                        .toString(); mode = "custom"
+                        .toString()
+                    last = Instant.ofEpochMilli(state.range.end - 1).atZone(zone).toLocalDate()
+                        .toString()
+                    mode = "custom"
                 }) { Text(stringResource(R.string.history_custom_range)) }
                 TextButton(onClick = {
                     mode = "month"
@@ -235,7 +238,8 @@ internal fun HistoryRangeControl(
             confirmButton = {
                 TextButton(onClick = {
                     range?.let {
-                        onRange(it, mode!!); mode = null
+                        onRange(it, mode!!)
+                        mode = null
                     }
                 }, enabled = range != null) { Text(stringResource(R.string.okay)) }
             },

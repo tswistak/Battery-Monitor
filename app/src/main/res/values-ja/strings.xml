@@ -118,14 +118,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">温度が次を下回る</string>
   <string name="alarm_type_temperature_rises" formatted="false">温度が上昇しました</string>
   <string name="alarm_type_health_failure" formatted="false">ステータス障害</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">フル充電になりました</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">充電上限に到達</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">放電下限に到達</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">残量が低下しました...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">残量が上昇しました...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">温度が次を下回る...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">温度が上昇しました...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">ステータス障害</string>
 
   <string name="alarm_fully_charged" formatted="false">バッテリーがフル充電されました</string>
   <string name="alarm_charging_limit_met" formatted="true">充電上限に到達: %1$d%%</string>
@@ -230,11 +222,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">このアプリの通知がすべて無効になっています。これらの設定にアクセスするには有効にしてください。</string>
   <string name="main_notifs_disabled_b" formatted="false">メイン通知を有効化</string>
   <string name="main_notifs_disabled_summary" formatted="false">このアプリのメイン通知が無効になっています。これらの設定にアクセスするには有効にしてください。</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">このアプリの通知がすべて無効になっています。アラームにアクセスするには有効にしてください。</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">アラーム通知を有効化</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">このアプリのアラーム通知グループが無効になっています。アラームにアクセスするには有効にしてください。</string>
   <string name="alarm_chan_disabled" formatted="false">この種類のアラーム通知が無効です。このアラーム種類を使用するには有効にしてください。</string>
-  <string name="alarm_chan_disabled_b" formatted="false">このアラーム種類を有効化</string>
   <string name="alarm_chan_settings_b" formatted="false">このアラーム種類を管理</string>
 
   <string name="notification_settings" formatted="false">メイン通知</string>
@@ -275,7 +264,6 @@
     \n
     注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
 
-  <string name="add_alarm" formatted="false">アラームを追加</string>
 
   <string name="pref_cat_channel_settings" formatted="false">通知チャンネル設定</string>
   <string name="pref_manage_main_channel" formatted="false">メインチャンネルを管理</string>
@@ -402,29 +390,10 @@
     • 削除するには、それを長押しします。その後 \"アラームを削除\" を選択します。 (個々のアラーム設定ページから、メニューを押して、 その後 \"アラームを削除\" でアラームを削除することもできます。)\n
     • すばやくアラームを有効にするかどうかを切り替えるには、 アラームテキストの左側の、目覚まし時計のアイコンを押します。 (また、個々のアラーム設定ページから、アラームを有効または 無効にすることもできます。)</string>
 
-  <string name="pref_alarm_enabled" formatted="false">アラームを有効にする</string>
-  <string name="pref_alarm_enabled_help" formatted="false">一時的にアラームを無効にするだけで、再び使用したくなったときに 再作成したくない場合、ここまたはメインのアラームのページで、 オフにすることができます。</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">アラームの条件</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">ここでアラームの発生する条件を指定します。</string>
-  <string name="pref_alarm_type" formatted="false">アラームの種類</string>
-  <string name="pref_alarm_type_summary" formatted="false">バッテリーでアラームを発生します:</string>
-  <string name="pref_alarm_type_help" formatted="false">現在、8 種類のアラームを選択できます。\n
-    \n
-    「充電上限に到達」と「放電下限に到達」アラームは、バッテリーが充電または放電の目標値に達したときに通知します。しきい値を設定する必要はなく、常に現在の目標設定に従います。\n
-    \n
-    \n
-    \"フル充電されました\" アラームは、お使いのバッテリーの状態が \"充電中\" から \"フル充電\" に変わったときに通知します。 これは、多くのデバイスで 100% 充電と同じ意味ではないことに ご注意ください。\n
-    \n
-    充電の状態と温度のアラームは、そのアラームの種類を選択した後で、 以下のしきい値を設定する必要があります。\n
-    \n
-    \"ステータス障害\" のアラームは、Android から報告される お使いのバッテリーの状態が、\"不明\" や \"良好\" 以外のものになると通知されます。</string>
   <string name="pref_alarm_threshold" formatted="false">しきい値</string>
-  <string name="alarm_pref_not_used" formatted="false">このアラームの種類では使用しません</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">アラームのしきい値:</string>
   <string name="pref_alarm_threshold_help" formatted="false">充電の状態と温度のアラームには、アラームを発生する 温度や充電のレベルを設定する必要があります。</string>
-  <string name="alarm_custom_temp_message" formatted="true">温度を%s度で入力してください</string>
-  <string name="alarm_custom_charge_message" formatted="false">充電率を入力してください (0 ～ 100)</string>
 
   <string name="boot_pref_always" formatted="false">常に</string>
   <string name="boot_pref_never" formatted="false">なし</string>

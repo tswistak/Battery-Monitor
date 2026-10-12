@@ -149,7 +149,8 @@ class DiagnosticsModelTest {
         try {
             Locale.setDefault(Locale.US)
             val snapshot = AdvancedBatterySnapshot().apply {
-                currentNowUa = -900; maxChargingCurrentUa = 2000000
+                currentNowUa = -900
+                maxChargingCurrentUa = 2000000
             }
             val groups = diagnosticGroups(snapshot, 1000)
             assertEquals(
@@ -220,8 +221,10 @@ class DiagnosticsModelTest {
 
     @Test
     fun `estimated health requires positive capacities from the same power supply`() {
-        val snapshot =
-            AdvancedBatterySnapshot().apply { fullChargeUah = 3000000; designChargeUah = 4000000 }
+        val snapshot = AdvancedBatterySnapshot().apply {
+            fullChargeUah = 3000000
+            designChargeUah = 4000000
+        }
         assertNull(capacityHealth(snapshot))
         snapshot.fieldSources["charge_full"] = "/sys/class/power_supply/battery/charge_full"
         snapshot.fieldSources["charge_full_design"] =

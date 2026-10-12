@@ -118,14 +118,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">Temperatur fällt unter</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperatur überschreitet</string>
   <string name="alarm_type_health_failure" formatted="false">Zustand Störung</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Wird voll geladen</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">Ladelimit erreicht</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Entladelimit erreicht</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Ladung unterschreitet...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Ladung überschreitet...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatur fällt unter...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatur überschreitet...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">Status gestört</string>
 
   <string name="alarm_fully_charged" formatted="false">Akku ist nun voll geladen</string>
   <string name="alarm_charging_limit_met" formatted="true">Ladelimit erreicht: %1$d%%</string>
@@ -232,11 +224,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">Sie haben alle Benachrichtigungen für diese App deaktiviert. Bitte aktivieren Sie sie, um auf diese Einstellungen zuzugreifen.</string>
   <string name="main_notifs_disabled_b" formatted="false">Hauptbenachrichtigung aktivieren</string>
   <string name="main_notifs_disabled_summary" formatted="false">Sie haben die Hauptbenachrichtigung für diese App deaktiviert. Bitte aktivieren Sie sie, um auf diese Einstellungen zuzugreifen.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">Sie haben alle Benachrichtigungen für diese App deaktiviert. Bitte aktivieren Sie sie, um auf Ihre Alarme zuzugreifen.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">Alarme aktivieren</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Sie haben die Alarm-Benachrichtigungsgruppe für diese App deaktiviert. Bitte aktivieren Sie sie, um auf Ihre Alarme zuzugreifen.</string>
   <string name="alarm_chan_disabled" formatted="false">Sie haben Benachrichtigungen für diesen Alarmtyp deaktiviert. Bitte aktivieren Sie sie, um diesen Alarmtyp zu verwenden.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">Diesen Alarmtyp aktivieren</string>
   <string name="alarm_chan_settings_b" formatted="false">Diesen Alarmtyp verwalten</string>
 
   <string name="notification_settings" formatted="false">Benachrichtigungen</string>
@@ -277,7 +266,6 @@
     \n
     Hinweis: Das Erteilen dieser Berechtigung kann gelegentlich dazu führen, dass sich die App schließt. Falls das passiert, öffnen Sie sie einfach erneut.</string>
 
-  <string name="add_alarm" formatted="false">Alarm hinzufügen</string>
 
   <string name="pref_cat_channel_settings" formatted="false">Benachrichtigungskanal-Einstellungen</string>
   <string name="pref_manage_main_channel" formatted="false">Hauptkanal verwalten</string>
@@ -387,22 +375,10 @@
   <string name="alarms_overview" formatted="false">Übersicht Alarme</string>
   <string name="alarms_overview_help" formatted="false">Auf dieser Seite können Sie neue Alarme hinzufügen, bestehende schnell aktivieren/deaktivieren oder löschen.</string>
 
-  <string name="pref_alarm_enabled" formatted="false">Alarm einschalten</string>
-  <string name="pref_alarm_enabled_help" formatted="false">Wenn Sie einen Alarm vorübergehend deaktivieren möchten, können Sie ihn hier oder auf der Hauptalarmseite aus- und wieder einschalten.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Alarm-Bedingungen</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Hier legen Sie fest, welche Bedingungen den Alarm auslösen.</string>
-  <string name="pref_alarm_type" formatted="false">Alarmtyp</string>
-  <string name="pref_alarm_type_summary" formatted="false">Alarm auslösen wenn Batterie:</string>
-  <string name="pref_alarm_type_help" formatted="false">Aktuell stehen acht Alarmtypen zur Auswahl.\n
-    \n
-    Die Alarme „Ladelimit erreicht“ und „Entladelimit erreicht“ benachrichtigen Sie, wenn der Akku sein Lade- oder Entladeziel erreicht. Sie benötigen keinen Grenzwert und folgen immer den aktuellen Zieleinstellungen.</string>
   <string name="pref_alarm_threshold" formatted="false">Grenzwert</string>
-  <string name="alarm_pref_not_used" formatted="false">Nicht benutzt für diesen Alarmtyp</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Alarm-Grenzwert:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Für Lade- und Temperaturalarme müssen Sie den Schwellenwert festlegen.</string>
-  <string name="alarm_custom_temp_message" formatted="true">Geben Sie die Temperatur in %s Grad ein</string>
-  <string name="alarm_custom_charge_message" formatted="false">Geben Sie den Gebührenprozentsatz ein (0–100).</string>
 
   <string name="boot_pref_always" formatted="false">Immer</string>
   <string name="boot_pref_never" formatted="false">Nie</string>

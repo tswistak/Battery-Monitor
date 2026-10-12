@@ -120,14 +120,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">Температура ниже</string>
   <string name="alarm_type_temperature_rises" formatted="false">Температура выше</string>
   <string name="alarm_type_health_failure" formatted="false">Неисправность</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Становится полностью заряженным</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">Достигнут лимит зарядки</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Достигнут лимит разрядки</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Заряд ниже...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Заряд выше...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Температура ниже...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Температура выше...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">Неисправность</string>
 
   <string name="alarm_fully_charged" formatted="false">Аккумулятор теперь полностью заряжен</string>
   <string name="alarm_charging_limit_met" formatted="true">Достигнут лимит зарядки: %1$d%%</string>
@@ -254,11 +246,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">Вы отключили все уведомления этого приложения. Включите их, чтобы открыть эти настройки.</string>
   <string name="main_notifs_disabled_b" formatted="false">Включить основное уведомление</string>
   <string name="main_notifs_disabled_summary" formatted="false">Вы отключили основное уведомление этого приложения. Включите его, чтобы открыть эти настройки.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">Вы отключили все уведомления этого приложения. Включите их, чтобы получить доступ к предупреждениям.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">Включить предупреждения</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Вы отключили группу уведомлений предупреждений для этого приложения. Включите ее, чтобы получить доступ к предупреждениям.</string>
   <string name="alarm_chan_disabled" formatted="false">Вы отключили уведомления для этого типа предупреждений. Включите их, чтобы использовать этот тип предупреждения.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">Включить этот тип предупреждения</string>
   <string name="alarm_chan_settings_b" formatted="false">Настроить этот тип предупреждения</string>
 
   <string name="notification_settings" formatted="false">Основное уведомление</string>
@@ -299,7 +288,6 @@
     \n
     Примечание: предоставление этого разрешения может иногда приводить к закрытию приложения. Если это произойдет, просто откройте его снова.</string>
 
-  <string name="add_alarm" formatted="false">Добавить предупреждение</string>
 
   <string name="pref_cat_channel_settings" formatted="false">Настройки каналов уведомлений</string>
   <string name="pref_manage_main_channel" formatted="false">Настроить основной канал</string>
@@ -427,27 +415,10 @@
     • Для удаления существующего предупреждения прикоснитесь и задержите палец на нем, затем выберите \"Удалить предупреждение\". (Удалить предупреждение также можно на странице настроек предупреждения нажав MENU, затем \"Удалить предупреждение\".)\n
     • Для быстрого переключения предупреждения нажмите значок часов слева от названия предупреждения. (Включить или выключить предупреждение также можно на странице настроек предупреждения.)</string>
 
-  <string name="pref_alarm_enabled" formatted="false">Включить предупреждение</string>
-  <string name="pref_alarm_enabled_help" formatted="false">На основной странице предупреждений вы можете отключать и включать предупреждения.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Условия выдачи предупреждения</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Здесь настраиваются события, приводящие к появлению предупреждения.</string>
-  <string name="pref_alarm_type" formatted="false">Тип предупреждения</string>
-  <string name="pref_alarm_type_summary" formatted="false">Предупредить, если аккумулятор:</string>
-  <string name="pref_alarm_type_help" formatted="false">Вы можете выбрать один из восьми типов предупреждений.\n
-    \n
-    Предупреждения «Достигнут лимит зарядки» и «Достигнут лимит разрядки» сообщат вам, когда аккумулятор достигнет цели зарядки или разрядки. Для них не нужно задавать порог: они всегда следуют текущим настройкам цели.\n
-    \n
-    \n
-    Предупреждение \"Становится полностью заряженным\" сообщит вам, что состояние аккумулятора меняется с \"Заряжается\" на \"Полностью заряжен\". Учтите, что для многих устройств это не обязательно то же самое, что и 100% заряд.\n
-    \n
-    </string>
   <string name="pref_alarm_threshold" formatted="false">Порог</string>
-  <string name="alarm_pref_not_used" formatted="false">Не используется для этого типа предупреждения</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Порог срабатывания:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Для предупреждений о заряде и температуре необходимо установить температуру или уровень заряда, приводящих к возникновению предупреждения.</string>
-  <string name="alarm_custom_temp_message" formatted="true">Введите температуру в градусах %s.</string>
-  <string name="alarm_custom_charge_message" formatted="false">Введите процент заряда (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">Всегда</string>
   <string name="boot_pref_never" formatted="false">Никогда</string>

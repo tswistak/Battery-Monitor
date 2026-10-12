@@ -120,14 +120,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">دما به زیر می رسد</string>
   <string name="alarm_type_temperature_rises" formatted="false">دما بالاتر می رود</string>
   <string name="alarm_type_health_failure" formatted="false">شکست سلامتی</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">شارژ کامل می شود</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">حد شارژ رسید</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">حد تخلیه رسید</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">شارژ پایین تر میاد...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">شارژ بالاتر از ...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">کاهش دما به زیر ...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">افزایش دما از ...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">سلامتی شکست می خورد</string>
 
   <string name="alarm_fully_charged" formatted="false">اکنون باتری کاملاً شارژ شده است</string>
   <string name="alarm_charging_limit_met" formatted="true">حد شارژ رسید: %1$d%%</string>
@@ -234,11 +226,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">شما همه اعلان‌ها را برای این برنامه غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا به این تنظیمات دسترسی داشته باشند.</string>
   <string name="main_notifs_disabled_b" formatted="false">اعلان اصلی را فعال کنید</string>
   <string name="main_notifs_disabled_summary" formatted="false">شما اعلان اصلی این برنامه را غیرفعال کرده اید.  لطفاً برای دسترسی به این تنظیمات آن را فعال کنید.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">شما همه اعلان‌ها را برای این برنامه غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا به آلارم های شما دسترسی داشته باشند.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">فعال کردن هشدارها</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">شما گروه اعلان هشدار را برای این برنامه غیرفعال کرده اید.  لطفاً آن را برای دسترسی به آلارم های خود فعال کنید.</string>
   <string name="alarm_chan_disabled" formatted="false">شما اعلان‌ها را برای این نوع زنگ هشدار غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا از این نوع زنگ هشدار استفاده کنند.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">این نوع زنگ هشدار را فعال کنید</string>
   <string name="alarm_chan_settings_b" formatted="false">این نوع زنگ هشدار را مدیریت کنید</string>
 
   <string name="notification_settings" formatted="false">اطلاعیه اصلی</string>
@@ -279,7 +268,6 @@
     \n
     نکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
 
-  <string name="add_alarm" formatted="false">هشدار اضافه کنید</string>
 
   <string name="pref_cat_channel_settings" formatted="false">تنظیمات کانال اعلان</string>
   <string name="pref_manage_main_channel" formatted="false">کانال اصلی را مدیریت کنید</string>
@@ -409,29 +397,10 @@
     • برای حذف زنگ هشدار، آن را به مدت طولانی فشار دهید، سپس \"حذف" را انتخاب کنید زنگ هشدار\". (همچنین می توانید یک زنگ هشدار را از آلارم فردی حذف کنید صفحه تنظیمات با فشار دادن MENU سپس \"Delete Alarm\".)\n
     • برای اینکه به راحتی فعال بودن زنگ هشدار را تغییر دهید، کلید را فشار دهید به سمت متن زنگ هشدار بروید. (همچنین می توانید یا را فعال کنید زنگ هشدار را از صفحه تنظیمات زنگ جداگانه غیرفعال کنید.)</string>
 
-  <string name="pref_alarm_enabled" formatted="false">فعال کردن هشدار</string>
-  <string name="pref_alarm_enabled_help" formatted="false">اگر می خواهید موقتا زنگ هشدار را بدون نیاز به ایجاد مجدد آن در زمانی که می خواهید غیرفعال کنید دوباره، می‌توانید آن را خاموش و روشن کنید یا در اینجا یا روی آلارم‌های اصلی صفحه</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">شرایط هشدار</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">اینجا جایی است که می توانید کنترل کنید که چه شرایطی باعث ایجاد زنگ هشدار می شود.</string>
-  <string name="pref_alarm_type" formatted="false">نوع زنگ هشدار</string>
-  <string name="pref_alarm_type_summary" formatted="false">زنگ هشدار هنگام باتری:</string>
-  <string name="pref_alarm_type_help" formatted="false">در حال حاضر هشت نوع زنگ هشدار وجود دارد که می‌توانید انتخاب کنید.\n
-    \n
-    هشدارهای «حد شارژ رسید» و «حد تخلیه رسید» هنگام رسیدن باتری به هدف شارژ یا تخلیه به شما اطلاع می‌دهند. به آستانه نیاز ندارند و همیشه از تنظیمات هدف فعلی پیروی می‌کنند.\n
-    \n
-    \n
-    زنگ \"کاملا شارژ می شود\" به شما اطلاع می دهد وضعیت باتری شما از \"شارژ\" به \"کاملاً" تغییر می کند شارژ شد\". توجه داشته باشید که در بسیاری از دستگاه‌ها، این لزوماً اینطور نیست همان چیزی که 100٪ شارژ است.\n
-    \n
-    هشدارهای شارژ و دما از شما می خواهند که آستانه ای را تنظیم کنید در زیر، پس از انتخاب آن نوع زنگ هشدار.\n
-    \n
-    هشدار \"Health Fails\" در صورت سلامت باتری شما را مطلع می کند به چیزی غیر از \"ناشناخته\" یا \"سلامت خوب\" تبدیل می شود توسط اندروید گزارش شده است.</string>
   <string name="pref_alarm_threshold" formatted="false">آستانه</string>
-  <string name="alarm_pref_not_used" formatted="false">برای این نوع زنگ هشدار استفاده نمی شود</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">آستانه هشدار:</string>
   <string name="pref_alarm_threshold_help" formatted="false">برای هشدارهای شارژ و دما، باید دما را تنظیم کنید یا سطح شارژی که باعث ایجاد زنگ هشدار می شود.</string>
-  <string name="alarm_custom_temp_message" formatted="true">دما را بر حسب %s درجه وارد کنید</string>
-  <string name="alarm_custom_charge_message" formatted="false">درصد شارژ را وارد کنید (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">همیشه</string>
   <string name="boot_pref_never" formatted="false">هرگز</string>

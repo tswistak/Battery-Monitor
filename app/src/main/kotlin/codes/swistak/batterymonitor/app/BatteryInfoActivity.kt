@@ -20,8 +20,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.DisposableEffect
@@ -33,10 +35,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.window.DialogProperties
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
@@ -48,13 +51,13 @@ import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.diagnostics.DiagnosticsFragment
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
-import codes.swistak.batterymonitor.settings.SettingsActivity
+import codes.swistak.batterymonitor.monitoring.presentation.MonitoringAvailability
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsFragment
 import codes.swistak.batterymonitor.settings.temperatureUnit
-import codes.swistak.batterymonitor.ui.alarms.AlarmEditorScreen
 import codes.swistak.batterymonitor.ui.alarms.AlarmsScreen
 import codes.swistak.batterymonitor.ui.alarms.AlarmsViewModel
+import codes.swistak.batterymonitor.ui.alarms.ThresholdDialog
 import codes.swistak.batterymonitor.ui.current.CurrentMeasurement
 import codes.swistak.batterymonitor.ui.current.CurrentStateRoute
 import codes.swistak.batterymonitor.ui.current.CurrentStateViewModel
@@ -123,6 +126,10 @@ class BatteryInfoActivity : AppCompatActivity() {
         navigator = SectionNavigator.restore(savedInstanceState)
         selected = navigator.selected
         detail = navigator.detail
+        if (selected == SectionOwner.ALARMS && detail == "alarm-edit") {
+            navigator.select(SectionOwner.ALARMS)
+            detail = null
+        }
         if (savedInstanceState == null && (intent.hasExtra(EXTRA_SECTION) || intent.hasExtra(
                 BatteryInfoService.EXTRA_CURRENT_INFO
             ) || intent.hasExtra(BatteryInfoService.EXTRA_EDIT_ALARMS))
@@ -165,23 +172,14 @@ class BatteryInfoActivity : AppCompatActivity() {
                     SettingsContract.DEFAULT_DISCHARGING_TARGET
                 ).coerceIn(0, 99)
                 LaunchedEffect(selected) { if (selected == SectionOwner.ALARMS) alarms.refresh() }
-                LaunchedEffect(
-                    selected,
-                    detail,
-                    alarmState.draft,
-                    alarmState.busy,
-                    alarmState.loading,
-                    alarmState.error
-                ) {
-                    if (selected == SectionOwner.ALARMS && detail != null && alarmState.draft == null && !alarmState.busy && !alarmState.loading && alarmState.error == null) performNavigateUp()
-                }
+                val alarmLocale = LocalConfiguration.current.locales[0]
                 SideNavigationShell(
                     selected = selected,
                     externalNavigationRequest = externalNavigationRequest,
                     detailTitle = detail?.let {
                         getString(
                             when {
-                                selected == SectionOwner.ALARMS -> if (alarmState.draft?.id == null) R.string.add_alarm else R.string.alarm_settings_subtitle
+                                selected == SectionOwner.ALARMS -> R.string.alarm_settings_subtitle
                                 selected == SectionOwner.SETTINGS -> SettingsCategory.fromRoute(
                                     it.substringAfter(
                                         "settings:"
@@ -281,64 +279,82 @@ class BatteryInfoActivity : AppCompatActivity() {
                             )
                         }
                         if (selected == SectionOwner.ALARMS) {
-                            if (detail == null) sections.SaveableStateProvider("alarms:list") {
+                            sections.SaveableStateProvider("alarms:list") {
                                 AlarmsScreen(
-                                    alarmState,
-                                    temperatureUnit.convertToFahrenheit,
-                                    chargingTarget,
-                                    dischargingTarget,
-                                    onEdit = ::openAlarmEditor,
-                                    onAdd = { openAlarmEditor(null) },
-                                    onEnabled = { id, enabled ->
-                                        alarms.setEnabled(
-                                            id, enabled, persistent::reloadAlarmRules
+                                    state = alarmState,
+                                    convertFahrenheit = temperatureUnit.convertToFahrenheit,
+                                    chargingTarget = chargingTarget,
+                                    dischargingTarget = dischargingTarget,
+                                    monitoringAvailable = monitoringState.availability == MonitoringAvailability.LIVE,
+                                    onEdit = {
+                                        alarms.beginDraft(
+                                            it, temperatureUnit.convertToFahrenheit, alarmLocale
                                         )
                                     },
-                                    onNotificationSettings = {
-                                        startActivity(
-                                            Intent(
-                                                this@BatteryInfoActivity,
-                                                SettingsActivity::class.java
-                                            ).putExtra(
-                                                SettingsContract.EXTRA_SCREEN,
-                                                SettingsContract.KEY_NOTIFICATION_SETTINGS
-                                            )
+                                    onAdd = {
+                                        alarms.beginThreshold(
+                                            it, temperatureUnit.convertToFahrenheit, alarmLocale
                                         )
-                                    })
-                            } else {
-                                val draft = alarmState.draft
-                                if (draft != null) AlarmEditorScreen(
-                                    draft,
-                                    alarmState.channels[draft.type],
-                                    alarmState.notificationsBlocked,
-                                    temperatureUnit.convertToFahrenheit,
-                                    chargingTarget,
-                                    dischargingTarget,
-                                    alarmState.busy,
-                                    alarmState.error,
-                                    onDraftChange = alarms::changeDraft,
-                                    onSave = { alarms.saveDraft { persistent.reloadAlarmRules() } },
-                                    onDelete = { alarms.deleteDraft { persistent.reloadAlarmRules() } },
+                                    },
+                                    onEnabled = { type, rule, enabled ->
+                                        alarms.setEnabled(
+                                            type, rule, enabled, persistent::reloadAlarmRules
+                                        )
+                                    },
                                     onChannelSettings = { type ->
-                                        NotificationSettingsNavigator.openNotificationChannel(
-                                            this@BatteryInfoActivity, type
+                                        if (!NotificationSettingsNavigator.openNotificationChannel(
+                                                this@BatteryInfoActivity, type
+                                            )
+                                        ) {
+                                            alarms.reportSettingsFailure()
+                                        }
+                                    },
+                                    onNotificationSettings = {
+                                        if (!NotificationSettingsNavigator.openNotifications(this@BatteryInfoActivity)) {
+                                            alarms.reportSettingsFailure()
+                                        }
+                                    },
+                                    onTargets = {
+                                        openSettingsCategory(
+                                            SettingsCategory.Time.route,
+                                            SettingsContract.KEY_CHARGING_TARGET_MODE
                                         )
-                                    }) else Box(
-                                    Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                                ) {
-                                    if (alarmState.busy || alarmState.loading) CircularProgressIndicator()
-                                    else Text(
-                                        alarmState.error
-                                            ?: getString(R.string.alarms_database_error)
-                                    )
-                                }
+                                    },
+                                    onRetry = alarms::refresh,
+                                    onDisableInvalid = {
+                                        alarms.disableInvalid(
+                                            it, persistent::reloadAlarmRules
+                                        )
+                                    },
+                                    onDeleteInvalid = {
+                                        alarms.deleteInvalid(
+                                            it, persistent::reloadAlarmRules
+                                        )
+                                    },
+                                    onNoticeHandled = alarms::clearNotice,
+                                    onRevealHandled = alarms::clearReveal
+                                )
                             }
+                            ThresholdDialog(
+                                state = alarmState,
+                                onInput = alarms::changeDraftInput,
+                                onSave = { alarms.saveDraft(persistent::reloadAlarmRules) },
+                                onDelete = { alarms.deleteDraft(persistent::reloadAlarmRules) },
+                                onDismiss = { leaveAlarmEditor {} },
+                                onEditExisting = alarms::editExistingThreshold,
+                                onRetry = alarms::refresh
+                            )
                         }
                         if (pendingAlarmNavigation != null) AlertDialog(
-                            onDismissRequest = {
-                            pendingAlarmNavigation = null
-                        },
-                            title = { Text(getString(R.string.alarms_discard_confirmation)) },
+                            modifier = Modifier.imePadding(),
+                            properties = DialogProperties(decorFitsSystemWindows = false),
+                            onDismissRequest = { pendingAlarmNavigation = null },
+                            text = {
+                                Text(
+                                    getString(R.string.alarms_discard_confirmation),
+                                    Modifier.verticalScroll(rememberScrollState())
+                                )
+                            },
                             confirmButton = {
                                 TextButton(onClick = {
                                     val navigation = pendingAlarmNavigation
@@ -361,8 +377,11 @@ class BatteryInfoActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (selected == SectionOwner.HELP && detail != null) handleNavigationBack(this)
-                else leaveAlarmEditor { handleNavigationBack(this) }
+                when (selected) {
+                    SectionOwner.HELP if detail != null -> handleNavigationBack(this)
+                    SectionOwner.ALARMS if alarms.state.value.draft != null -> leaveAlarmEditor {}
+                    else -> leaveAlarmEditor { handleNavigationBack(this) }
+                }
             }
         })
     }
@@ -455,11 +474,8 @@ class BatteryInfoActivity : AppCompatActivity() {
 
     private fun openAlarmEditor(id: Int?) {
         leaveAlarmEditor {
-            alarms.beginDraft(id)
-            navigator.openDetail(SectionOwner.ALARMS, "alarm-edit", SectionOwner.ALARMS)
-            selected = navigator.selected
-            detail = navigator.detail
-            showSection(selected)
+            performSelectSection(SectionOwner.ALARMS)
+            alarms.openLegacyAlarm(id ?: -1)
         }
     }
 
@@ -519,13 +535,16 @@ class BatteryInfoActivity : AppCompatActivity() {
         if (!containerReady || supportFragmentManager.isStateSaved || (shown == owner && shownDetail == detail)) return
         val manager = supportFragmentManager
         val actionsOnly = owner == SectionOwner.DIAGNOSTICS && detail == null
-        val targetTag = if (owner == SectionOwner.DIAGNOSTICS) "section:diagnostics:${
-            detail?.substringBefore(
-                ':'
-            ) ?: "actions"
-        }"
-        else if (owner == SectionOwner.HELP) "section:help:${detail ?: "root"}"
-        else "section:${owner.route}"
+        val targetTag = when (owner) {
+            SectionOwner.DIAGNOSTICS -> "section:diagnostics:${
+                detail?.substringBefore(
+                    ':'
+                ) ?: "actions"
+            }"
+
+            SectionOwner.HELP -> "section:help:${detail ?: "root"}"
+            else -> "section:${owner.route}"
+        }
         val target = if (owner in setOf(
                 SectionOwner.CURRENT, SectionOwner.HISTORY, SectionOwner.ALARMS
             )
@@ -547,7 +566,8 @@ class BatteryInfoActivity : AppCompatActivity() {
             }
             if (target != null) {
                 if (target.isAdded) {
-                    show(target); setMaxLifecycle(target, Lifecycle.State.RESUMED)
+                    show(target)
+                    setMaxLifecycle(target, Lifecycle.State.RESUMED)
                 } else if (actionsOnly) add(target, targetTag)
                 else add(R.id.section_container, target, targetTag)
             }

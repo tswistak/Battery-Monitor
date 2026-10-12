@@ -98,7 +98,7 @@ class PersistentFragment : Fragment() {
     private class MessageHandler(var pf: PersistentFragment) : Handler(Looper.getMainLooper()) {
         override fun handleMessage(incoming: Message) {
             if (!pf.serviceConnected) {
-                Log.i(LOG_TAG, "serviceConected is false; ignoring message: $incoming");
+                Log.i(LOG_TAG, "serviceConected is false; ignoring message: $incoming")
                 return
             }
 

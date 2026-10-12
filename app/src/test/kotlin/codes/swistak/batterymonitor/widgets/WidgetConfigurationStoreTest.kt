@@ -139,11 +139,13 @@ class WidgetConfigurationStoreTest {
             ) { proxy, method, arguments ->
                 when (method.name) {
                     "putString" -> {
-                        pending[arguments!![0] as String] = arguments[1] as String?; proxy
+                        pending[arguments!![0] as String] = arguments[1] as String?
+                        proxy
                     }
 
                     "remove" -> {
-                        pending[arguments!![0] as String] = null; proxy
+                        pending[arguments!![0] as String] = null
+                        proxy
                     }
 
                     "commit" -> {

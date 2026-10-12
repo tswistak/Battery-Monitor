@@ -25,8 +25,20 @@ internal data class AlarmDraft(
     val enabled: Boolean = true,
     val type: String = "fully_charged",
     val threshold: String = "",
-    val thresholdInput: String? = null
+    val thresholdInput: String? = null,
+    val members: List<codes.swistak.batterymonitor.alarms.AlarmRule> = emptyList(),
+    val originalThreshold: String = threshold,
+    val initialInput: String? = null,
+    val inputLocale: String? = null,
+    val inputFahrenheit: Boolean = false
 )
+
+internal fun editThresholdInput(draft: AlarmDraft, text: String): AlarmDraft {
+    val locale = Locale.forLanguageTag(requireNotNull(draft.inputLocale))
+    val edited = if (text == draft.initialInput) draft.copy(threshold = draft.originalThreshold)
+    else withAlarmThresholdInput(draft, text, draft.inputFahrenheit, locale)
+    return edited.copy(thresholdInput = text)
+}
 
 internal fun defaultAlarmThreshold(type: String): String = when (type) {
     "charge_drops" -> "20"
@@ -37,8 +49,7 @@ internal fun defaultAlarmThreshold(type: String): String = when (type) {
 }
 
 internal fun validAlarmDraft(draft: AlarmDraft): Boolean {
-    if (draft.type !in AlarmDatabase.SUPPORTED_TYPES) return false
-    return when (draft.type) {
+    return draft.type in AlarmDatabase.SUPPORTED_TYPES && when (draft.type) {
         "charge_drops", "charge_rises" -> draft.threshold.toIntOrNull() in 0..100
         "temp_drops", "temp_rises" -> draft.threshold.toIntOrNull() in -500..1000
         else -> draft.threshold.isEmpty()

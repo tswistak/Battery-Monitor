@@ -120,14 +120,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">Temperatuur onder</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperatuur boven</string>
   <string name="alarm_type_health_failure" formatted="false">Probleem met batterij</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Is volledig opgeladen</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">Laadlimiet bereikt</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Ontlaadlimiet bereikt</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Batterijniveau onder...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Batterijniveau boven...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatuur onder...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatuur boven...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">Probleem met batterij</string>
 
   <string name="alarm_fully_charged" formatted="false">Batterij is volledig opgeladen</string>
   <string name="alarm_charging_limit_met" formatted="true">Laadlimiet bereikt: %1$d%%</string>
@@ -234,11 +226,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">Je hebt alle meldingen voor deze app uitgeschakeld. Schakel ze in om toegang te krijgen tot deze instellingen.</string>
   <string name="main_notifs_disabled_b" formatted="false">Hoofdmelding inschakelen</string>
   <string name="main_notifs_disabled_summary" formatted="false">Je hebt de hoofdmelding voor deze app uitgeschakeld. Schakel die in om toegang te krijgen tot deze instellingen.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">Je hebt alle meldingen voor deze app uitgeschakeld. Schakel ze in om toegang te krijgen tot je alarmen.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">Alarmen inschakelen</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Je hebt de meldingsgroep voor alarmen van deze app uitgeschakeld. Schakel die in om toegang te krijgen tot je alarmen.</string>
   <string name="alarm_chan_disabled" formatted="false">Je hebt meldingen voor dit alarmtype uitgeschakeld. Schakel ze in om dit type alarm te gebruiken.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">Dit alarmtype inschakelen</string>
   <string name="alarm_chan_settings_b" formatted="false">Dit alarmtype beheren</string>
 
   <string name="notification_settings" formatted="false">Hoofdmelding</string>
@@ -279,7 +268,6 @@
     \n
     Opmerking: Het verlenen van deze toestemming kan er soms voor zorgen dat de app sluit. Als dat gebeurt, open je de app gewoon opnieuw.</string>
 
-  <string name="add_alarm" formatted="false">Alarm toevoegen</string>
 
   <string name="pref_cat_channel_settings" formatted="false">Instellingen meldingskanalen</string>
   <string name="pref_manage_main_channel" formatted="false">Hoofdkanaal beheren</string>
@@ -409,29 +397,10 @@
     • Om een alarm te verwijderen, druk je lang op het alarm en kies je \"Alarm verwijderen\". (Je kunt een alarm ook verwijderen via de MENU-knop in de alarminstellingen)\n
     • Om een alarm eenvoudig in of uit te schakelen, druk je op de schakelaar naast de alarmtekst. (Je kunt een alarm ook in- of uitschakelen in de alarminstellingen.)</string>
 
-  <string name="pref_alarm_enabled" formatted="false">Alarm inschakelen</string>
-  <string name="pref_alarm_enabled_help" formatted="false">Als je tijdelijk een alarm wilt uitschakelen zonder het daarna weer te moeten instellen, kun je hem hier of op de alarmen pagina uitschakelen.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Voorwaarden voor alarm</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Hier kun je de voorwaarden instellen voor het alarm</string>
-  <string name="pref_alarm_type" formatted="false">Type alarm</string>
-  <string name="pref_alarm_type_summary" formatted="false">Geef alarm wanneer batterij:</string>
-  <string name="pref_alarm_type_help" formatted="false">Er zijn acht typen alarm om uit te kiezen.\n
-    \n
-    De alarmen ‘Laadlimiet bereikt’ en ‘Ontlaadlimiet bereikt’ waarschuwen je wanneer de batterij het laad- of ontlaaddoel bereikt. Ze vereisen geen drempelwaarde en volgen altijd de huidige doelinstellingen.\n
-    \n
-    \n
-    Het alarmtype \"Is volledig opgeladen\" zal je een melding sturen wanneer de status van je batterij verandert van \"Opladen\" to \"Volledig opgeladen\". Houd er rekening mee dat dit op veel apparaten niet per se hetzelfde is als een laadniveau van 100%.\n
-    \n
-    Voor de laad- en temperatuuralarmen moet je een drempelwaarde instellen.\n
-    \n
-    Het alarmtype \"Probleem met batterij\" waarschuwt je wanneer Android een batterijstatus anders dan \"Onbekend\" of \"Gezond\" rapporteert.</string>
   <string name="pref_alarm_threshold" formatted="false">Voorwaarde</string>
-  <string name="alarm_pref_not_used" formatted="false">Niet gebruikt voor dit alarmtype</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Voorwaarde voor alarm:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Voor lading en temperatuuralarmen moet je de lading of temperatuur instellen waarop het alarm afgaat.</string>
-  <string name="alarm_custom_temp_message" formatted="true">Voer de temperatuur in %s graden in</string>
-  <string name="alarm_custom_charge_message" formatted="false">Voer het kostenpercentage in (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">Altijd</string>
   <string name="boot_pref_never" formatted="false">Nooit</string>

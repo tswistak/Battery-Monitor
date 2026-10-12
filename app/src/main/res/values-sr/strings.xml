@@ -120,14 +120,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">Temperatura padne ispod</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperatura pređe iznad</string>
   <string name="alarm_type_health_failure" formatted="false">Stanje baterije narušeno</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Kad se 100% nanpuni</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">Dostignut limit punjenja</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Dostignut limit pražnjenja</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Procenat baterije padne ispod...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Procenat baterije pređe iznad...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura padne ispod...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatura pređe iznad</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">Baterija zakaže</string>
 
   <string name="alarm_fully_charged" formatted="false">Baterija je sada 100% napunjena</string>
   <string name="alarm_charging_limit_met" formatted="true">Dostignut limit punjenja: %1$d%%</string>
@@ -244,11 +236,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">Isključili ste sva obaveštenja za ovu aplikaciju. Omogućite ih da biste pristupili ovim podešavanjima.</string>
   <string name="main_notifs_disabled_b" formatted="false">Omogući glavno obaveštenje</string>
   <string name="main_notifs_disabled_summary" formatted="false">Isključili ste glavno obaveštenje za ovu aplikaciju. Omogućite ga da biste pristupili ovim podešavanjima.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">Isključili ste sva obaveštenja za ovu aplikaciju. Omogućite ih da biste pristupili alarmima.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">Omogući alarme</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Isključili ste grupu obaveštenja za alarme ove aplikacije. Omogućite je da biste pristupili alarmima.</string>
   <string name="alarm_chan_disabled" formatted="false">Isključili ste obaveštenja za ovaj tip alarma. Omogućite ih da biste koristili ovaj tip alarma.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">Omogući ovaj tip alarma</string>
   <string name="alarm_chan_settings_b" formatted="false">Upravljaj ovim tipom alarma</string>
 
   <string name="notification_settings" formatted="false">Glavno obaveštenje</string>
@@ -289,7 +278,6 @@
     \n
     Napomena: Davanje ove dozvole može povremeno izazvati zatvaranje aplikacije. Ako se to desi, samo je ponovo otvorite.</string>
 
-  <string name="add_alarm" formatted="false">Dodaj alarm</string>
 
   <string name="pref_cat_channel_settings" formatted="false">Podešavanja kanala obaveštenja</string>
   <string name="pref_manage_main_channel" formatted="false">Upravljaj glavnim kanalom</string>
@@ -419,29 +407,10 @@
     • Za brisanje alarma, držite ga pritisnutim pa izaberite „Izbriši alarm”. (Alarm možete obrisati i sa stranice pojedinačnog alarma preko menija.)\n
     • Za brzo uključivanje/isključivanje alarma, pritisnite prekidač pored teksta alarma. (Alarm možete uključiti ili isključiti i na stranici podešavanja pojedinačnog alarma.)</string>
 
-  <string name="pref_alarm_enabled" formatted="false">Omogući alarm</string>
-  <string name="pref_alarm_enabled_help" formatted="false">Ako želite privremeno da isključite alarm bez potrebe da ga kasnije ponovo pravite, možete ga isključiti i ponovo uključiti ovde ili na glavnoj stranici alarma.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Uslovi za aktivaciju alarma</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Ovde možete da kontrolišete koji uslovi će aktivirati alarm.</string>
-  <string name="pref_alarm_type" formatted="false">Vrsta alarma</string>
-  <string name="pref_alarm_type_summary" formatted="false">Pokreni alarm kada je baterija:</string>
-  <string name="pref_alarm_type_help" formatted="false">Trenutno možete izabrati između osam tipova alarma.\n
-    \n
-    Alarmi „Dostignut limit punjenja” i „Dostignut limit pražnjenja” obavestiće vas kada baterija dostigne cilj punjenja ili pražnjenja. Ne zahtevaju prag i uvek prate trenutna podešavanja cilja.\n
-    \n
-    \n
-    Alarm „Kad se 100% napuni” obavestiće vas kada status baterije pređe iz „Punjenje u toku” u „100% puno”. Imajte u vidu da na mnogim uređajima to ne mora nužno značiti baš 100% napunjenosti.\n
-    \n
-    Alarmi za procenat i temperaturu zahtevaju da nakon izbora tipa alarma ispod podesite prag.\n
-    \n
-    Alarm „Baterija zakaže” obavestiće vas ako zdravlje baterije postane nešto drugo osim „Nepoznato” ili „Dobro stanje”, prema onome što Android prijavi.</string>
   <string name="pref_alarm_threshold" formatted="false">Granica</string>
-  <string name="alarm_pref_not_used" formatted="false">Ne koristi se za ovaj tip alarma</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Granice alarma:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Kad su u pitanju alarm za procenat baterije i alarm za temperaturu, potrebno je podesiti nivo temperature ili procenta baterije koji će pokrenuti alarm.</string>
-  <string name="alarm_custom_temp_message" formatted="true">Унесите температуру у ЗЗПХ0ЗЗ степенима</string>
-  <string name="alarm_custom_charge_message" formatted="false">Унесите проценат наплате (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">Uvek</string>
   <string name="boot_pref_never" formatted="false">Nikad</string>

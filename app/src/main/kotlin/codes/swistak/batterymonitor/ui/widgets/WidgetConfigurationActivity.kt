@@ -62,6 +62,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -155,7 +156,7 @@ class WidgetConfigurationActivity : ComponentActivity() {
                             }) {
                             false
                         } else {
-                            suspendCancellableCoroutine<Unit> { continuation ->
+                            suspendCancellableCoroutine { continuation ->
                                 WidgetUpdateDispatcher.refresh(this, intArrayOf(widgetId)) {
                                     if (continuation.isActive) continuation.resume(Unit)
                                 }
@@ -204,11 +205,11 @@ private fun WidgetConfigurationScreen(
     var draftRecord by rememberSaveable(widgetId) { mutableStateOf(initial.encode()) }
     val draft = WidgetConfiguration.decode(draftRecord) ?: initial
     val update: (WidgetConfiguration) -> Unit = { draftRecord = it.encode() }
-    var previewVersion by remember { mutableStateOf(0) }
+    var previewVersion by remember { mutableIntStateOf(0) }
     val context = LocalContext.current
     LaunchedEffect(family, draft.trendHours) {
         if (family == WidgetFamily.TREND) {
-            suspendCancellableCoroutine<Unit> { continuation ->
+            suspendCancellableCoroutine { continuation ->
                 WidgetUpdateDispatcher.preparePreview(context, draft.trendHours) {
                     if (continuation.isActive) continuation.resume(Unit)
                 }
@@ -440,10 +441,10 @@ private fun <T> ChoiceField(
             }
             DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                 options.forEach { (value, label) ->
-                    DropdownMenuItem(
-                        text = { Text(label) },
-                        onClick = { expanded = false; onSelect(value) },
-                        modifier = Modifier.semantics { this.selected = value == selected })
+                    DropdownMenuItem(text = { Text(label) }, onClick = {
+                        expanded = false
+                        onSelect(value)
+                    }, modifier = Modifier.semantics { this.selected = value == selected })
                 }
             }
         }
@@ -543,15 +544,15 @@ private fun WidgetPreview(
     ) {
         AndroidView(
             factory = { viewContext ->
-                object : AppWidgetHostView(viewContext) {
-                    override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
-                    override fun onTouchEvent(event: MotionEvent): Boolean = true
-                }.apply {
-                    importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-                    setAppWidget(AppWidgetManager.INVALID_APPWIDGET_ID, providerInfo)
-                    setPadding(0, 0, 0, 0)
-                }
-            },
+            object : AppWidgetHostView(viewContext) {
+                override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
+                override fun onTouchEvent(event: MotionEvent): Boolean = true
+            }.apply {
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+                setAppWidget(AppWidgetManager.INVALID_APPWIDGET_ID, providerInfo)
+                setPadding(0, 0, 0, 0)
+            }
+        },
             update = { it.updateAppWidget(remoteViews) },
             modifier = Modifier
                 .widthIn(max = if (family == WidgetFamily.STATUS) 220.dp else 350.dp)

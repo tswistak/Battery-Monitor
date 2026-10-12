@@ -229,7 +229,10 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
                     }
                 }
             }
-        }.apply { name = "diagnostics-app-raw"; start() }
+        }.apply {
+            name = "diagnostics-app-raw"
+            start()
+        }
     }
 
     fun setPrivilegedEnabled(enabled: Boolean) {
@@ -270,7 +273,10 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
                     publish { copy(loading = false) }
                 }
             }
-        }.apply { name = "diagnostics-android"; start() }
+        }.apply {
+            name = "diagnostics-android"
+            start()
+        }
     }
 
     private fun loadPrivileged(generation: Int) {
@@ -304,7 +310,10 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
                     generation
                 )
             }
-        }.apply { name = "diagnostics-root"; start() }
+        }.apply {
+            name = "diagnostics-root"
+            start()
+        }
     }
 
     private fun continueViaShizuku(generation: Int) {
@@ -461,10 +470,14 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
             } finally {
                 mainHandler.post { clearConnection(connection) }
             }
-        }.apply { name = "diagnostics-shizuku"; start() }
+        }.apply {
+            name = "diagnostics-shizuku"
+            start()
+        }
     }
 
     override fun onCleared() {
-        setActive(false); mainHandler.removeCallbacksAndMessages(null)
+        setActive(false)
+        mainHandler.removeCallbacksAndMessages(null)
     }
 }

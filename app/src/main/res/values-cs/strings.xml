@@ -118,14 +118,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">Teplota klesá níže</string>
   <string name="alarm_type_temperature_rises" formatted="false">Teplota překročí hranici</string>
   <string name="alarm_type_health_failure" formatted="false">Selhání</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Jakmile je plně nabito...</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">Dosažen limit nabíjení</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Dosažen limit vybíjení</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Stav klesne pod...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Stav překročí hranici...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Teplota klesá pod...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Teplota překročí hranici...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">Selhání</string>
 
   <string name="alarm_fully_charged" formatted="false">Baterie je plně nabitá</string>
   <string name="alarm_charging_limit_met" formatted="true">Dosažen limit nabíjení: %1$d%%</string>
@@ -252,11 +244,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">Zakázali jste všechna oznámení pro tuto aplikaci.  Povolte jim přístup k těmto nastavením.</string>
   <string name="main_notifs_disabled_b" formatted="false">Povolit hlavní upozornění</string>
   <string name="main_notifs_disabled_summary" formatted="false">Vypnuli jste hlavní upozornění pro tuto aplikaci.  Pro přístup k těmto nastavením jej povolte.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">Zakázali jste všechna oznámení pro tuto aplikaci.  Povolte jim prosím přístup k vašim alarmům.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">Povolit alarmy</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Pro tuto aplikaci jste zakázali skupinu upozornění na alarm.  Povolte jej pro přístup ke svým alarmům.</string>
   <string name="alarm_chan_disabled" formatted="false">Pro tento typ budíku jste zakázali upozornění.  Umožněte jim používat tento typ alarmu.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">Povolit tento typ alarmu</string>
   <string name="alarm_chan_settings_b" formatted="false">Spravovat tento typ alarmu</string>
 
   <string name="notification_settings" formatted="false">Hlavní oznámení</string>
@@ -297,7 +286,6 @@
     \n
     Poznámka: Udělení tohoto oprávnění může občas způsobit zavření aplikace. Pokud se to stane, jednoduše ji znovu otevřete.</string>
 
-  <string name="add_alarm" formatted="false">Přidat upozornění</string>
 
   <string name="pref_cat_channel_settings" formatted="false">Nastavení kanálu oznámení</string>
   <string name="pref_manage_main_channel" formatted="false">Správa hlavního kanálu</string>
@@ -426,29 +414,10 @@
     • Chcete-li budík smazat, dlouze jej stiskněte a vyberte možnost \"Smazat Alarm\". (Alarm můžete také odstranit z jednotlivého alarmu stránku nastavení stisknutím MENU a poté \"Smazat alarm\".)\n
     • Chcete-li snadno přepínat, zda je alarm povolen, stiskněte přepínač přepněte na stranu textu alarmu. (Můžete také povolit nebo deaktivujte alarm na stránce nastavení jednotlivých alarmů.)</string>
 
-  <string name="pref_alarm_enabled" formatted="false">Povolit upozorňování</string>
-  <string name="pref_alarm_enabled_help" formatted="false">Pokud potřebujete dočasně zakázat upozorňování. Stávající upozornění nebudou smazána ani upravena. Dojde pouze k vypnutí funkce upozorňování.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Podmínky pro upozornění</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Zde můžeze měnit nastavení podmínek pro spuštění upozornění.</string>
-  <string name="pref_alarm_type" formatted="false">Druh upozornění</string>
-  <string name="pref_alarm_type_summary" formatted="false">Spustit upozornění jakmile baterie:</string>
-  <string name="pref_alarm_type_help" formatted="false">Můžete nastavit osm různých typů upozornění.\n
-    \n
-    Upozornění „Dosažen limit nabíjení“ a „Dosažen limit vybíjení“ vás upozorní, když baterie dosáhne cíle nabíjení nebo vybíjení. Nevyžadují prahovou hodnotu a vždy se řídí aktuálním nastavením cílů.\n
-    \n
-    \n
-    \"Jakmile je plně nabito\" upozornění se spustí jakmile se stav baterie změní z\"Nabíjí se\" na \"Plně nabito\". Pozor u spousty zařízení toto nemá stejný význam jako když baterie ukazuje stav nabití 100%.\n
-    \n
-    Upozorňování vzathující se k úrovni nabití nebo teplotě vyžaduje nastavení prahu, který upozornění spustí.\n
-    \n
-    \"Špatný stav baterie\" upozornění se spustí jakmile se stav baterie změní na cokoliv jiného než \"Neznámo\" nebo \"Stav dobrý\", tak jak je oznámováno systémem Android</string>
   <string name="pref_alarm_threshold" formatted="false">Práh</string>
-  <string name="alarm_pref_not_used" formatted="false">Není použito pro tento druh upozornění.</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Práh pro upozornění:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Pro upozorňování vzathující se k úrovni nabití nebo teplotě musíte nastavit práh, který spustí upozornění.</string>
-  <string name="alarm_custom_temp_message" formatted="true">Zadejte teplotu ve stupnch %s</string>
-  <string name="alarm_custom_charge_message" formatted="false">Zadejte procento poplatku (0–100)</string>
 
   <string name="boot_pref_always" formatted="false">Vždy</string>
   <string name="boot_pref_never" formatted="false">Nikdy</string>

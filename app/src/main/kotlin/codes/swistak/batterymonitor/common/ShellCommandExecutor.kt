@@ -47,7 +47,10 @@ private fun runCommand(command: Array<String>, trimOutput: Boolean = true): Stri
         process = ProcessBuilder(*command).redirectErrorStream(true).start()
         val input = process.inputStream
         val output = FutureTask { input.use(::readFully) }
-        reader = Thread(output, "battery-command-output").apply { isDaemon = true; start() }
+        reader = Thread(output, "battery-command-output").apply {
+            isDaemon = true
+            start()
+        }
         if (!process.waitFor(COMMAND_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
             process.destroyForcibly()
             return null

@@ -33,7 +33,6 @@
 
     <string name="main_notif_chan_name" formatted="false">Main Notification</string>
     <string name="live_updates_notif_chan_name" formatted="false">Live Updates</string>
-    <string name="channel_group_name_alarms" formatted="false">Alarms</string>
 
     <string name="confirm_clear_logs" formatted="false">Really clear all logs?</string>
 
@@ -63,7 +62,6 @@
     <string name="log_export_range_title" formatted="false">Which logs should be exported?</string>
     <string name="log_export_all_logs" formatted="false">Everything</string>
     <string name="log_export_from_last" formatted="false">From last export</string>
-    <string name="menu_delete_alarm" formatted="false">Delete Alarm</string>
     <string name="menu_show_seconds" formatted="false">Show Seconds</string>
     <string name="menu_hide_seconds" formatted="false">Hide Seconds</string>
 
@@ -112,31 +110,7 @@
     <string name="plugged_unknown" formatted="false">(?)</string>
     <string name="plugged_wireless" formatted="false">(Wireless)</string>
 
-    <string name="alarm_type_fully_charged" formatted="false">Fully charged</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Charging limit met</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Discharging limit met</string>
-    <string name="alarm_type_charge_drops" formatted="false">When charge falls to</string>
-    <string name="alarm_type_charge_rises" formatted="false">When charge rises to</string>
-    <string name="alarm_type_temperature_drops" formatted="false">When temperature falls to</string>
-    <string name="alarm_type_temperature_rises" formatted="false">When temperature rises to</string>
-    <string name="alarm_type_health_failure" formatted="false">Health failure</string>
-    <string name="alarm_type_entry_fully_charged" formatted="false">Becomes fully charged</string>
-    <string name="alarm_type_entry_charging_limit_met" formatted="false">Charging limit met</string>
-    <string name="alarm_type_entry_discharging_limit_met" formatted="false">Discharging limit met</string>
-    <string name="alarm_type_entry_charge_drops" formatted="false">Charge falls to…</string>
-    <string name="alarm_type_entry_charge_rises" formatted="false">Charge rises to…</string>
-    <string name="alarm_type_entry_temperature_drops" formatted="false">Temperature falls to…</string>
-    <string name="alarm_type_entry_temperature_rises" formatted="false">Temperature rises to…</string>
-    <string name="alarm_type_entry_health_failure" formatted="false">Health fails</string>
 
-    <string name="alarm_fully_charged" formatted="false">Battery is now fully charged</string>
-    <string name="alarm_charging_limit_met" formatted="true">Charging limit reached: %1$d%%</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Discharging limit reached: %1$d%%</string>
-    <string name="alarm_charge_drops" formatted="false">"Battery charge reached or fell below "</string>
-    <string name="alarm_charge_rises" formatted="false">"Battery charge reached or rose above "</string>
-    <string name="alarm_temp_drops" formatted="false">"Battery temperature reached or fell below "</string>
-    <string name="alarm_temp_rises" formatted="false">"Battery temperature reached or rose above "</string>
-    <string name="alarm_health_failure" formatted="false">"Battery health is: "</string>
 
     <string name="logs_empty" formatted="false">Logs Are Empty</string>
     <plurals name="n_log_items">
@@ -232,12 +206,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">You have disabled all notifications for this app. Please enable them to access these settings.</string>
     <string name="main_notifs_disabled_b" formatted="false">Enable Main Notification</string>
     <string name="main_notifs_disabled_summary" formatted="false">You have disabled the main notification for this app. Please enable it to access these settings.</string>
-    <string name="app_notifs_alarms_disabled_summary" formatted="false">You have disabled all notifications for this app. Please enable them to access your alarms.</string>
-    <string name="alarm_notifs_disabled_b" formatted="false">Enable Alarms</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">You have disabled the alarm notification group for this app. Please enable it to access your alarms.</string>
-    <string name="alarm_chan_disabled" formatted="false">You have disabled notifications for this alarm type.  Please enable them to use this type of alarm.</string>
-    <string name="alarm_chan_disabled_b" formatted="false">Enable This Alarm Type</string>
-    <string name="alarm_chan_settings_b" formatted="false">Manage This Alarm Type</string>
 
     <string name="notification_settings" formatted="false">Main Notification</string>
     <string name="notification_settings_summary" formatted="false">Configure notification content and status bar appearance.</string>
@@ -248,9 +216,6 @@
     <string name="status_bar_chip_settings_help" formatted="false">On Android 16 or later, choose when the Live Update chip appears, which values it cycles through, and whether it shows a charging emoji. Availability also depends on the device and system notification settings.</string>
     <string name="current_state_settings_summary" formatted="false">Settings for the Current state screen</string>
     <string name="current_state_settings_help" formatted="false">Choose whether to show remaining charge and whether Current state prefers average battery current. Current is always measured when available. The multiplier corrects current and calculated power throughout the app; logs retain the original instantaneous current so the multiplier can be changed later.</string>
-    <string name="alarm_settings_subtitle" formatted="false">Alarm Settings</string>
-    <string name="alarm_settings" formatted="false">Alarms</string>
-    <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
     <string name="other_settings" formatted="false">General</string>
     <string name="other_settings_summary" formatted="false">Configure the app’s general behavior and everyday preferences.</string>
     <string name="other_settings_help" formatted="false">Choose the color palette and brightness, app language, temperature unit, duration format, and whether monitoring starts after a device restart.</string>
@@ -277,7 +242,6 @@
     \n
     Note: Granting this permission may occasionally cause the app to close. If it does, please simply reopen it.</string>
 
-    <string name="add_alarm" formatted="false">Add alarm</string>
 
     <string name="pref_cat_channel_settings" formatted="false">Notification Channel Settings</string>
     <string name="pref_manage_main_channel" formatted="false">Manage Main Channel</string>
@@ -384,38 +348,8 @@
     <string name="advanced_status_loading" formatted="false">Loading advanced battery stats...</string>
     <string name="advanced_status_no_access" formatted="false">Root access or Shizuku is needed to show advanced battery stats.</string>
 
-    <string name="alarms_overview" formatted="false">Alarms Overview</string>
-    <string name="alarms_overview_help" formatted="false">Alarms are grouped by battery level, temperature and battery health. Each rule has its own switch.\n
-    \n
-    • Press \"Add alarm\" to prepare a new rule. It is created only when you press \"Save\".\n
-    • Press a rule to edit it. Changes are applied only after \"Save\". Leaving an edited draft lets you keep editing or discard it.\n
-    • To delete a saved rule, open it and press \"Delete alarm\", then confirm.\n
-    • Android notification channels control sound, vibration and delivery for each alarm type. A blocked channel is shown separately from the rule switch.\n
-    \n
-    In Notifications settings, an optional switch dismisses a low-battery notification after the battery recovers above its threshold.</string>
 
-    <string name="pref_alarm_enabled" formatted="false">Enable Alarm</string>
-    <string name="pref_alarm_enabled_help" formatted="false">If you want to temporarily disable an alarm without having to recreate it when you want it again, you can turn it off and on either here or on the main alarms page.</string>
 
-    <string name="pref_cat_alarm_conditions" formatted="false">Alarm Conditions</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">This is where you can control what conditions trigger the alarm.</string>
-    <string name="pref_alarm_type" formatted="false">Alarm Type</string>
-    <string name="pref_alarm_type_summary" formatted="false">Trigger alarm when battery:</string>
-    <string name="pref_alarm_type_help" formatted="false">There are currently eight types of alarm that you can choose from.\n
-    \n
-    The \"Becomes fully charged\" alarm will notify you when Android reports that the battery has become fully charged. Note that on many devices, this isn\'t necessarily the same thing as being at 100% charge.\n
-    \n
-    The \"Charging limit met\" and \"Discharging limit met\" alarms will notify you when the battery reaches your charging or discharging target. They need no threshold and always follow the current target settings.\n
-    \n
-    The charge and temperature alarms require you to set a threshold below, after choosing that alarm type.\n
-    \n
-    The \"Health Fails\" alarm will notify you if your battery health becomes something other than \"Unknown\" or \"Healthy\", as reported by Android.</string>
-    <string name="pref_alarm_threshold" formatted="false">Threshold</string>
-    <string name="alarm_pref_not_used" formatted="false">Not used for this alarm type</string>
-    <string name="pref_alarm_threshold_summary" formatted="false">Alarm threshold:</string>
-    <string name="pref_alarm_threshold_help" formatted="false">For charge and temperature alarms, set the threshold and save the rule. The alarm fires when a reading reaches or passes the threshold in the chosen direction. Repeated readings at the threshold do not repeat the alarm. Starting the monitor, importing a rule or enabling it beyond the threshold does not fire it immediately; a later crossing is required.</string>
-    <string name="alarm_custom_temp_message" formatted="true">Enter temperature in %s degrees</string>
-    <string name="alarm_custom_charge_message" formatted="false">Enter charge percentage (0-100)</string>
 
     <string name="boot_pref_always" formatted="false">Always</string>
     <string name="boot_pref_never" formatted="false">Never</string>
@@ -529,13 +463,6 @@
     <string name="auto_log_export_format_help" formatted="false">CSV is useful in a spreadsheet or text editor. It includes the original current, remaining charge, and power calculated using the multiplier selected at export time. JSON preserves structured log data for backups. Unavailable current, remaining charge, and power cells remain empty.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Create a new file</string>
     <string name="auto_log_export_mode_append" formatted="false">Append new logs to the existing file</string>
-    <string name="pref_export_alarms" formatted="false">Export alarms</string>
-    <string name="pref_export_alarms_summary" formatted="false">Save current alarms to a file</string>
-    <string name="pref_import_alarms" formatted="false">Import alarms</string>
-    <string name="pref_import_alarms_summary" formatted="false">Replace current alarms with alarms from a file</string>
-    <string name="alarms_exported" formatted="false">Alarms exported successfully</string>
-    <string name="alarms_imported" formatted="false">Alarms imported successfully</string>
-    <string name="invalid_alarms_file" formatted="false">Invalid alarms file</string>
     <string name="pref_backup_device_data" formatted="false">Backup device-specific data</string>
     <string name="pref_export_device_data" formatted="false">Export device-specific data</string>
     <string name="pref_export_device_data_summary" formatted="false">Save logs and predictor data to a file</string>
@@ -569,7 +496,6 @@
     <string name="backup_restore_help_overview" formatted="false">Save and restore settings, alarms, logs, and learned prediction data. Restore default settings resets app preferences after confirmation while keeping history, alarms, learned estimates, and whether monitoring is running.</string>
     <string name="general_backup_help" formatted="false">A general backup saves settings, alarms, and device-specific data together. When restoring it, you can choose which available data to import.</string>
     <string name="settings_backup_help" formatted="false">A settings backup saves your app preferences. Importing it restores the saved preferences.</string>
-    <string name="alarms_backup_help" formatted="false">An alarms backup saves your alarms. Importing it replaces all current alarms with those from the backup.</string>
     <string name="device_specific_backup_help" formatted="false">A device-specific data backup saves logs and predictor data. You can select either or both during import. This data belongs to the source device; using it on another device can cause incorrect predictions or unexpected behavior. When importing logs, choose whether to add them or replace existing logs.</string>
     <string name="csv_logs_import_help" formatted="false">Import logs from a CSV exported by Battery Monitor and choose whether to add them or replace existing logs. Older exports may not contain current or remaining charge; those measurements stay empty for older entries. JSON backups preserve the structured data and are preferable for restoring it.</string>
 
@@ -678,7 +604,6 @@
     <string name="pref_target_level_summary" formatted="true">Estimate until %1$d%%.</string>
     <string name="nav_current">Current state</string>
     <string name="nav_history">History</string>
-    <string name="nav_alarms">Alarms</string>
     <string name="nav_diagnostics">Diagnostics</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_help">Help &amp; about</string>
@@ -832,28 +757,6 @@
     <string name="diag_raw_values">Raw values</string>
     <string name="diag_device_readings">Device-reported readings</string>
     <string name="diag_capacity_inconsistent">Reported full capacity exceeds design capacity. A reliable health estimate cannot be calculated from these readings.</string>
-    <string name="pref_dismiss_low_battery_on_recovery">Dismiss low battery alarm after recovery</string>
-    <string name="pref_dismiss_low_battery_on_recovery_summary">Remove the low battery notification when the charge rises above its threshold. Other alarm notifications remain.</string>
-    <plurals name="alarms_active_count">
-        <item quantity="one">%1$d active</item>
-        <item quantity="other">%1$d active</item>
-    </plurals>
-    <string name="alarms_monitoring_caption">Rules operate while monitoring</string>
-    <string name="alarms_channel_note">Each rule keeps its own settings. Android notification channels also control sound and delivery.</string>
-    <string name="alarms_target_help">This alarm follows the shared forecast target. It does not control charging.</string>
-    <string name="alarms_delivery_sound_vibration">Sound, vibration and notification</string>
-    <string name="alarms_delivery_sound">Sound and notification</string>
-    <string name="alarms_delivery_vibration">Vibration and notification</string>
-    <string name="alarms_delivery_notification">Notification only</string>
-    <string name="alarms_invalid_threshold">Enter a valid threshold.</string>
-    <string name="alarms_delete_confirmation">Delete this alarm?</string>
-    <string name="alarms_channel_help">Sound and delivery are controlled by this Android notification channel.</string>
-    <string name="alarms_numeric_range">Enter a whole number from %1$d to %2$d.</string>
-    <string name="alarms_temperature_range">Enter a number from %1$d to %2$d, with up to one decimal place.</string>
-    <string name="alarms_summary">Summary</string>
-    <string name="alarms_database_error">Could not access the alarm database. Try again.</string>
-    <string name="alarms_discard_confirmation">Discard your changes to this alarm?</string>
-    <string name="alarms_discard">Discard</string>
     <string name="diag_no">No</string>
     <string name="diag_fuel_gauge">Battery fuel gauge</string>
     <string name="diag_mains_supply">AC power supply</string>
@@ -976,4 +879,88 @@
     <string name="settings_reset_help" formatted="false">Restore default settings asks for confirmation, then resets app preferences. It keeps history, alarms, learned estimates, widget configurations, and whether background monitoring is running. System permissions and notification-channel settings are not reset.</string>
     <string name="diagnostics_predictor_help" formatted="false">App operation shows saved long-term averages and the recent predictor inputs. Recent rates use changes in battery percentage and show the time for one percentage point, the selected method, the active charging source, observed points and durations, and whether the unfinished interval is included. The five-minute and five-point windows use the active long-term rate for unobserved portions; skipped levels are interpolated. Recent state is kept in memory and resets when monitoring restarts, switches between charging and discharging, or the charging source changes. Saved learned averages survive a restart. This data is independent of history logs; clearing logs does not reset estimates.</string>
     <string name="notification_channels_help" formatted="false">Open Android notification settings to allow or block notifications and configure sound, vibration, and delivery for the main notification and each alarm type. Enabling an alarm rule does not override a blocked notification channel.</string>
+
+    <string name="channel_group_name_alarms" formatted="false">Alarms</string>
+    <string name="menu_delete_alarm" formatted="false">Delete Alarm</string>
+    <string name="alarm_type_fully_charged" formatted="false">Fully charged</string>
+    <string name="alarm_type_charging_limit_met" formatted="false">Charging limit met</string>
+    <string name="alarm_type_discharging_limit_met" formatted="false">Discharging limit met</string>
+    <string name="alarm_type_charge_drops" formatted="false">When charge falls to</string>
+    <string name="alarm_type_charge_rises" formatted="false">When charge rises to</string>
+    <string name="alarm_type_temperature_drops" formatted="false">When temperature falls to</string>
+    <string name="alarm_type_temperature_rises" formatted="false">When temperature rises to</string>
+    <string name="alarm_type_health_failure" formatted="false">Health failure</string>
+    <string name="alarm_fully_charged" formatted="false">Battery is now fully charged</string>
+    <string name="alarm_charging_limit_met" formatted="true">Charging limit reached: %1$d%%</string>
+    <string name="alarm_discharging_limit_met" formatted="true">Discharging limit reached: %1$d%%</string>
+    <string name="alarm_charge_drops" formatted="false">"Battery charge reached or fell below "</string>
+    <string name="alarm_charge_rises" formatted="false">"Battery charge reached or rose above "</string>
+    <string name="alarm_temp_drops" formatted="false">"Battery temperature reached or fell below "</string>
+    <string name="alarm_temp_rises" formatted="false">"Battery temperature reached or rose above "</string>
+    <string name="alarm_health_failure" formatted="false">"Battery health is: "</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">You have disabled the alarm notification group for this app. Please enable it to access your alarms.</string>
+    <string name="alarm_chan_disabled" formatted="false">You have disabled notifications for this alarm type.  Please enable them to use this type of alarm.</string>
+    <string name="alarm_chan_settings_b" formatted="false">Manage This Alarm Type</string>
+    <string name="alarm_settings_subtitle" formatted="false">Alarm Settings</string>
+    <string name="alarm_settings" formatted="false">Alarms</string>
+    <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
+    <string name="alarms_overview" formatted="false">Alarms Overview</string>
+    <string name="alarms_overview_help">All eight alarm types are always available. Switch events on directly, or use Add threshold under a charge or temperature type. New thresholds are enabled after saving. Tap a value to edit it; editing keeps its on/off state. Disabled values remain listed. Delete asks for confirmation. Sound and vibration are shared by type in Android notification settings. Existing duplicate records appear as one logical alarm; switching or deleting affects all copies. Charging and discharging alarms follow estimate targets and do not control charging. A blocked channel or stopped monitor does not change saved switches.</string>
+    <string name="pref_cat_alarm_conditions" formatted="false">Alarm Conditions</string>
+    <string name="pref_cat_alarm_conditions_help" formatted="false">This is where you can control what conditions trigger the alarm.</string>
+    <string name="pref_alarm_threshold" formatted="false">Threshold</string>
+    <string name="pref_alarm_threshold_help" formatted="false">For charge and temperature alarms, set the threshold and save the rule. The alarm fires when a reading reaches or passes the threshold in the chosen direction. Repeated readings at the threshold do not repeat the alarm. Starting the monitor, importing a rule or enabling it beyond the threshold does not fire it immediately; a later crossing is required.</string>
+    <string name="pref_export_alarms" formatted="false">Export alarms</string>
+    <string name="pref_export_alarms_summary" formatted="false">Save current alarms to a file</string>
+    <string name="pref_import_alarms" formatted="false">Import alarms</string>
+    <string name="pref_import_alarms_summary" formatted="false">Replace current alarms with alarms from a file</string>
+    <string name="alarms_exported" formatted="false">Alarms exported successfully</string>
+    <string name="alarms_imported" formatted="false">Alarms imported successfully</string>
+    <string name="invalid_alarms_file" formatted="false">Invalid alarms file</string>
+    <string name="alarms_backup_help" formatted="false">An alarms backup saves your alarms. Importing it replaces all current alarms with those from the backup.</string>
+    <string name="nav_alarms">Alarms</string>
+    <string name="pref_dismiss_low_battery_on_recovery">Dismiss low battery alarm after recovery</string>
+    <string name="pref_dismiss_low_battery_on_recovery_summary">Remove the low battery notification when the charge rises above its threshold. Other alarm notifications remain.</string>
+    <plurals name="alarms_active_count">
+        <item quantity="one">%1$d alarm enabled</item>
+        <item quantity="other">%1$d alarms enabled</item>
+    </plurals>
+    <string name="alarms_delivery_sound_vibration">Sound, vibration and notification</string>
+    <string name="alarms_delivery_sound">Sound and notification</string>
+    <string name="alarms_delivery_vibration">Vibration and notification</string>
+    <string name="alarms_delivery_notification">Notification only</string>
+    <string name="alarms_channel_help">Sound and delivery are controlled by this Android notification channel.</string>
+    <string name="alarms_numeric_range">Enter a whole number from %1$d to %2$d.</string>
+    <string name="alarms_temperature_range">Enter a number from %1$d to %2$d, with up to one decimal place.</string>
+    <string name="alarms_database_error">Could not access the alarm database. Try again.</string>
+    <string name="alarms_discard_confirmation">Discard your changes to this alarm?</string>
+    <string name="alarms_discard">Discard</string>
+    <string name="alarms_targets_group">Charging &amp; discharging targets</string>
+    <string name="alarms_charging_target">Charging target reached</string>
+    <string name="alarms_discharging_target">Discharging target reached</string>
+    <string name="alarms_android_problem">Problem reported by Android</string>
+    <string name="alarms_android_problem_help">A system-reported battery problem, not a capacity-health percentage.</string>
+    <string name="alarms_add_threshold">Add threshold</string>
+    <string name="alarms_edit_threshold">Edit threshold</string>
+    <string name="alarms_edit_existing">Edit existing threshold</string>
+    <string name="alarms_duplicate">This threshold already exists for this type.</string>
+    <string name="alarms_new_enabled">The alarm will be enabled when added.</string>
+    <string name="alarms_edit_keeps_enabled">Editing keeps the current on/off setting.</string>
+    <string name="alarms_state_unknown">Alarm settings unavailable</string>
+    <string name="alarms_stale">Previous settings are shown. Refresh before making changes.</string>
+    <string name="alarms_channel_unavailable">Notification channel not created or unavailable</string>
+    <string name="alarms_target_unknown">Target unavailable. Open estimate settings.</string>
+    <string name="alarms_conflict">Saved alarms changed. Refresh and reopen the threshold before making changes.</string>
+    <string name="alarms_missing_rule">This alarm is missing or invalid. Review the alarm catalog.</string>
+    <string name="alarms_settings_unavailable">Android notification settings could not be opened.</string>
+    <string name="alarms_saved">Alarm settings saved.</string>
+    <string name="alarms_saved_reload_failed">Saved, but the monitor could not be notified. Review monitoring status.</string>
+    <string name="alarms_monitor_stopped">Monitoring is stopped. Saved alarms are not being evaluated.</string>
+    <string name="alarms_monitor_unconfirmed">No current monitor connection. Alarm evaluation is not confirmed.</string>
+    <string name="alarms_options">Options: %1$s</string>
+    <string name="alarms_delete_threshold_confirmation">Delete %1$s — %2$s? All copies of this threshold will be removed.</string>
+    <string name="alarms_invalid_records">Some saved alarms are invalid. Review these records; they have not been removed.</string>
+    <string name="alarms_enabled">Enabled</string>
+    <string name="alarms_disable">Disable</string>
+
 </resources>

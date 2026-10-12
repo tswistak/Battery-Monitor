@@ -359,7 +359,10 @@ class HistoryModelTest {
                         voltage = 3000 + index % 2000,
                         currentMicroAmps = if (index % 13 == 0) null else (index % 2001 - 1000) * 1000L,
                         status = when (index % 1000) {
-                            0 -> 22; 1 -> 0; 2 -> -1; else -> 100
+                            0 -> 22
+                            1 -> 0
+                            2 -> -1
+                            else -> 100
                         }
                     )
                 )
@@ -387,7 +390,8 @@ class HistoryModelTest {
             java.util.concurrent.CancellationException("cancelled")
         )) {
             try {
-                completeHistoryExport(request, { throw failure }, { watermark = it }); fail()
+                completeHistoryExport(request, { throw failure }, { watermark = it })
+                fail()
             } catch (exception: Exception) {
                 assertSame(failure, exception)
             }

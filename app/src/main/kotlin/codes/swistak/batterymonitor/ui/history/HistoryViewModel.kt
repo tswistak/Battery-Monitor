@@ -129,27 +129,31 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
 
     fun save(): Bundle = Bundle().apply {
         val value = mutable.value
-        putLong("start", value.range.start); putLong("end", value.range.end); putString(
-        "label", value.rangeLabel
-    )
-        putString("tab", value.tab); putInt("metric", value.metric.ordinal); putBoolean(
-        "ascending", value.ascending
-    )
-        value.anchor?.let { putLong("anchorId", it.id); putLong("anchorTime", it.time) }
+        putLong("start", value.range.start)
+        putLong("end", value.range.end)
+        putString("label", value.rangeLabel)
+        putString("tab", value.tab)
+        putInt("metric", value.metric.ordinal)
+        putBoolean("ascending", value.ascending)
+        value.anchor?.let {
+            putLong("anchorId", it.id)
+            putLong("anchorTime", it.time)
+        }
         putBoolean("backwards", value.backwards)
         putBoolean("includeAnchor", value.includeAnchor)
-        putInt("scrollIndex", scrollIndex); putInt("scrollOffset", scrollOffset)
+        putInt("scrollIndex", scrollIndex)
+        putInt("scrollOffset", scrollOffset)
         value.selectedPointId?.let { putLong("point", it) }
         pendingExport?.let {
-            putBoolean(
-                "exportHasAfter", it.after != null
-            ); it.after?.let { after -> putLong("exportAfter", after) }
-            putLong("exportThrough", it.through); putInt("exportFormat", it.format.ordinal)
-            putBoolean("exportAppend", it.append); putBoolean(
-            "exportWatermark", it.advanceWatermark
-        )
+            putBoolean("exportHasAfter", it.after != null)
+            it.after?.let { after -> putLong("exportAfter", after) }
+            putLong("exportThrough", it.through)
+            putInt("exportFormat", it.format.ordinal)
+            putBoolean("exportAppend", it.append)
+            putBoolean("exportWatermark", it.advanceWatermark)
         }
-        putString("importUri", pendingImportUri); putBoolean("importJson", pendingImportJson)
+        putString("importUri", pendingImportUri)
+        putBoolean("importJson", pendingImportJson)
     }
 
     fun refresh(
@@ -343,7 +347,8 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
             onDone(success, restoreError)
             if (restoreError != null) {
                 mutable.value = mutable.value.copy(selectedPointId = null, eventToReveal = null)
-                scroll(0, 0); refresh(null, false, includeAnchor = false)
+                scroll(0, 0)
+                refresh(null, false, includeAnchor = false)
             }
         }) {
             try {
@@ -380,7 +385,8 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         mutable.value = mutable.value.copy(busy = true)
         viewModelScope.launch {
             val success = try {
-                block(); true
+                block()
+                true
             } catch (exception: CancellationException) {
                 throw exception
             } catch (_: Exception) {
@@ -390,7 +396,8 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
             onDone(success)
             if (success && reload) {
                 mutable.value = mutable.value.copy(selectedPointId = null, eventToReveal = null)
-                scroll(0, 0); refresh(null, false, includeAnchor = false)
+                scroll(0, 0)
+                refresh(null, false, includeAnchor = false)
             }
         }
     }

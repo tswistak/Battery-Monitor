@@ -448,7 +448,9 @@ internal fun deviceDiagnosticGroups(
                     key in setOf("charging_enabled", "battery_charging_enabled") -> enumeration(
                         if (key == "charging_enabled") R.string.diag_charging_input_enabled else R.string.diag_battery_charging_enabled,
                         when (text) {
-                            "1" -> R.string.yes; "0" -> R.string.diag_no; else -> 0
+                            "1" -> R.string.yes
+                            "0" -> R.string.diag_no
+                            else -> 0
                         }
                     )
 

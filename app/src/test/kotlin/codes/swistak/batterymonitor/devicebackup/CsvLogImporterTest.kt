@@ -100,7 +100,10 @@ class CsvLogImporterTest {
 
         fun parse(value: String) = CsvLogImporter.parseRecords(value, {
             when (it) {
-                "Discharging" -> 100; "Charging" -> 22; "Boot Completed" -> -1; else -> null
+                "Discharging" -> 100
+                "Charging" -> 22
+                "Boot Completed" -> -1
+                else -> null
             }
         }, { _, _ -> 1L })
 
@@ -125,7 +128,10 @@ class CsvLogImporterTest {
             "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA)\n" + "date,time,Discharging,50,30,86,4.0\n" + "date,time,Discharging,50,30,86,4.0,-240125\n" + "date,time,Charging,50,30,86,4.0,1200250\n" + "date,time,Charging,50,30,86,4.0,0\n" + "date,time,Charging,50,30,86,4.0,\n" + "date,time,Boot Completed,0,0,32,0,\n"
         val records = CsvLogImporter.parseRecords(csv, {
             when (it) {
-                "Discharging" -> 100; "Charging" -> 122; "Boot Completed" -> -1; else -> null
+                "Discharging" -> 100
+                "Charging" -> 122
+                "Boot Completed" -> -1
+                else -> null
             }
         }, { _, _ -> 1L })
         assertEquals(
@@ -136,7 +142,10 @@ class CsvLogImporterTest {
             assertThrows(IllegalArgumentException::class.java) {
                 CsvLogImporter.parseRecords(csv.replace("-240125", invalid), {
                     when (it) {
-                        "Discharging" -> 100; "Charging" -> 122; "Boot Completed" -> -1; else -> null
+                        "Discharging" -> 100
+                        "Charging" -> 122
+                        "Boot Completed" -> -1
+                        else -> null
                     }
                 }, { _, _ -> 1L })
             }

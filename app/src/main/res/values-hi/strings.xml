@@ -120,14 +120,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">तापमान नीचे चला जाता है</string>
   <string name="alarm_type_temperature_rises" formatted="false">तापमान ऊपर बढ़ जाता है</string>
   <string name="alarm_type_health_failure" formatted="false">स्वास्थ्य विफलता</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">फुल चार्ज हो जाता है</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">चार्जिंग सीमा पूरी हुई</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">डिस्चार्जिंग सीमा पूरी हुई</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">चार्ज नीचे चला जाता है...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">चार्ज ऊपर उठता है...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">तापमान नीचे चला गया...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">तापमान ऊपर चला जाता है...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">स्वास्थ्य खराब रहता है</string>
 
   <string name="alarm_fully_charged" formatted="false">बैटरी अब पूरी तरह चार्ज हो गई है</string>
   <string name="alarm_charging_limit_met" formatted="true">चार्जिंग सीमा पूरी हुई: %1$d%%</string>
@@ -234,11 +226,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए सभी सूचनाएं अक्षम कर दी हैं.  कृपया उन्हें इन सेटिंग्स तक पहुंचने में सक्षम करें।</string>
   <string name="main_notifs_disabled_b" formatted="false">मुख्य अधिसूचना सक्षम करें</string>
   <string name="main_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए मुख्य अधिसूचना अक्षम कर दी है.  कृपया इन सेटिंग्स तक पहुंचने के लिए इसे सक्षम करें।</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">आपने इस ऐप के लिए सभी सूचनाएं अक्षम कर दी हैं.  कृपया उन्हें अपने अलार्म तक पहुंचने में सक्षम करें।</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">अलार्म सक्षम करें</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए अलार्म अधिसूचना समूह को अक्षम कर दिया है।  कृपया इसे अपने अलार्म तक पहुंचने के लिए सक्षम करें।</string>
   <string name="alarm_chan_disabled" formatted="false">आपने इस अलार्म प्रकार के लिए सूचनाएं अक्षम कर दी हैं।  कृपया उन्हें इस प्रकार के अलार्म का उपयोग करने में सक्षम करें।</string>
-  <string name="alarm_chan_disabled_b" formatted="false">इस अलार्म प्रकार को सक्षम करें</string>
   <string name="alarm_chan_settings_b" formatted="false">इस अलार्म प्रकार को प्रबंधित करें</string>
 
   <string name="notification_settings" formatted="false">मुख्य अधिसूचना</string>
@@ -279,7 +268,6 @@
     \n
     नोट: यह अनुमति देने पर कभी-कभी ऐप बंद हो सकती है। अगर ऐसा हो, तो बस ऐप को दोबारा खोलें।</string>
 
-  <string name="add_alarm" formatted="false">अलार्म जोड़ें</string>
 
   <string name="pref_cat_channel_settings" formatted="false">अधिसूचना चैनल सेटिंग्स</string>
   <string name="pref_manage_main_channel" formatted="false">मुख्य चैनल प्रबंधित करें</string>
@@ -405,29 +393,10 @@
     • किसी अलार्म को हटाने के लिए, उसे देर तक दबाएँ, फिर \"हटाएँ चुनें अलार्म\"। (आप व्यक्तिगत अलार्म से अलार्म भी हटा सकते हैं पहले मेनू और फिर \"अलार्म हटाएं\" दबाकर सेटिंग पेज खोलें।)\n
     • अलार्म सक्षम है या नहीं, इसे आसानी से टॉगल करने के लिए टॉगल दबाएं अलार्म टेक्स्ट के किनारे पर स्विच करें. (आप सक्षम भी कर सकते हैं या व्यक्तिगत अलार्म सेटिंग पृष्ठ से अलार्म अक्षम करें।)</string>
 
-  <string name="pref_alarm_enabled" formatted="false">अलार्म सक्षम करें</string>
-  <string name="pref_alarm_enabled_help" formatted="false">यदि आप अस्थायी रूप से चाहते हैं जब आप चाहें तो अलार्म को दोबारा बनाए बिना उसे अक्षम कर दें फिर, आप इसे यहां या मुख्य अलार्म पर बंद और चालू कर सकते हैं पेज.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">अलार्म की स्थिति</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">यहीं आप कर सकते हैं नियंत्रित करें कि कौन सी स्थितियाँ अलार्म को ट्रिगर करती हैं।</string>
-  <string name="pref_alarm_type" formatted="false">अलार्म प्रकार</string>
-  <string name="pref_alarm_type_summary" formatted="false">बैटरी होने पर ट्रिगर अलार्म:</string>
-  <string name="pref_alarm_type_help" formatted="false">वर्तमान में आठ प्रकार के अलार्म हैं जिन्हें आप चुन सकते हैं।\n
-    \n
-    "चार्जिंग सीमा पूरी हुई" और "डिस्चार्जिंग सीमा पूरी हुई" अलार्म आपको तब सूचित करेंगे जब बैटरी अपने चार्जिंग या डिस्चार्जिंग लक्ष्य तक पहुँचती है। इनके लिए कोई सीमा निर्धारित करने की आवश्यकता नहीं है और ये हमेशा वर्तमान लक्ष्य सेटिंग का पालन करते हैं।\n
-    \n
-    \n
-    "पूरी तरह चार्ज हो जाता है" अलार्म आपको सूचित करेगा जब आपकी बैटरी की स्थिति "चार्जिंग" से "पूरी तरह" में बदल जाती है आरोप लगाया\"। ध्यान दें कि कई उपकरणों पर, यह आवश्यक नहीं है 100% चार्ज पर होने जैसी ही बात।\n
-    \n
-    चार्ज और तापमान अलार्म के लिए आपको एक सीमा निर्धारित करने की आवश्यकता होती है नीचे, उस अलार्म प्रकार को चुनने के बाद.\n
-    \n
-    यदि आपकी बैटरी ख़राब है तो \"स्वास्थ्य विफल\" अलार्म आपको सूचित करेगा "अज्ञात" या "अच्छे स्वास्थ्य" के अलावा कुछ और बन जाता है, जैसे एंड्रॉइड द्वारा रिपोर्ट किया गया।</string>
   <string name="pref_alarm_threshold" formatted="false">सीमा</string>
-  <string name="alarm_pref_not_used" formatted="false">इस अलार्म प्रकार के लिए उपयोग नहीं किया जाता है</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">अलार्म सीमा:</string>
   <string name="pref_alarm_threshold_help" formatted="false">चार्ज और तापमान अलार्म के लिए, आपको तापमान सेट करना होगा या चार्ज स्तर जो अलार्म को ट्रिगर करेगा।</string>
-  <string name="alarm_custom_temp_message" formatted="true">तापमान %s डिग्री में दर्ज करें</string>
-  <string name="alarm_custom_charge_message" formatted="false">चार्ज प्रतिशत दर्ज करें (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">हमेशा</string>
   <string name="boot_pref_never" formatted="false">कभी नहीं</string>

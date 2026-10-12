@@ -118,14 +118,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">Temperatūra nukrenta žemiau</string>
   <string name="alarm_type_temperature_rises" formatted="false">Temperatūra aukščiau</string>
   <string name="alarm_type_health_failure" formatted="false">Būklės klaida</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Visiškai įkrauta</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">Pasiekta įkrovimo riba</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Pasiekta iškrovimo riba</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Įkrovimas žemiau...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Įkrovimas aukščiau...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatūra nukrenta žemiau...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatūra aukščiau...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">Būklės klaida</string>
 
   <string name="alarm_fully_charged" formatted="false">Baterija pilnai įkrauta</string>
   <string name="alarm_charging_limit_met" formatted="true">Pasiekta įkrovimo riba: %1$d%%</string>
@@ -252,11 +244,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">Išjungėte visus šios programos pranešimus.  Leiskite jiems pasiekti šiuos nustatymus.</string>
   <string name="main_notifs_disabled_b" formatted="false">Įgalinti pagrindinį pranešimą</string>
   <string name="main_notifs_disabled_summary" formatted="false">Išjungėte pagrindinį šios programos pranešimą.  Įgalinkite jį, kad galėtumėte pasiekti šiuos nustatymus.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">Išjungėte visus šios programos pranešimus.  Leiskite jiems pasiekti jūsų signalus.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">Įgalinti signalus</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Išjungėte šios programos aliarmo pranešimų grupę.  Įgalinkite jį, kad galėtumėte pasiekti signalus.</string>
   <string name="alarm_chan_disabled" formatted="false">Išjungėte šio tipo įspėjimus.  Leiskite jiems naudoti šio tipo signalizaciją.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">Įgalinti šį aliarmo tipą</string>
   <string name="alarm_chan_settings_b" formatted="false">Tvarkyti šį aliarmo tipą</string>
 
   <string name="notification_settings" formatted="false">Pagrindinis pranešimas</string>
@@ -297,7 +286,6 @@
     \n
     Pastaba: Suteikus šį leidimą, programa kartais gali užsidaryti. Jei taip nutiktų, tiesiog atidarykite ją iš naujo.</string>
 
-  <string name="add_alarm" formatted="false">Pridėti aliarmą</string>
 
   <string name="pref_cat_channel_settings" formatted="false">Pranešimų kanalo nustatymai</string>
   <string name="pref_manage_main_channel" formatted="false">Valdykite pagrindinį kanalą</string>
@@ -426,29 +414,10 @@
     • Norėdami ištrinti signalą, ilgai paspauskite jį, tada pasirinkite \"Ištrinti Signalizacija\". (Taip pat galite ištrinti signalą iš atskiro signalo nustatymų puslapyje paspausdami MENIU, tada \"Ištrinti aliarmą\".)\n
     • Norėdami lengvai perjungti, ar žadintuvas įjungtas, paspauskite jungiklį pereiti į aliarmo teksto pusę. (Taip pat galite įjungti arba išjungti pavojaus signalą atskirų signalų nustatymų puslapyje.)</string>
 
-  <string name="pref_alarm_enabled" formatted="false">Įjungti Aliarmą</string>
-  <string name="pref_alarm_enabled_help" formatted="false">Jei norite laikinai išjungti žadintuvą ir nereikia jo sukurti iš naujo, kai to norite vėlgi galite jį išjungti ir įjungti čia arba pagrindiniuose signaluose puslapį.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Aliarmo Sąlygos</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Čia galite valdyti tai, kas iškviečia aliarmą.</string>
-  <string name="pref_alarm_type" formatted="false">Aliarmo Tipas</string>
-  <string name="pref_alarm_type_summary" formatted="false">Iškviesti aliarmą kai baterija:</string>
-  <string name="pref_alarm_type_help" formatted="false">Šiuo metu galite pasirinkti iš aštuonių signalizacijos tipų.\n
-    \n
-    Signalizacijos „Pasiekta įkrovimo riba“ ir „Pasiekta iškrovimo riba“ praneš, kai akumuliatorius pasieks įkrovimo ar iškrovimo tikslą. Joms nereikia nustatyti slenksčio ir jos visada laikosi dabartinių tikslų nustatymų.\n
-    \n
-    \n
-    Aliarmas \"Visiškai įkrautas\" jums praneš, kai akumuliatoriaus būsena pasikeičia iš \"Įkraunama\" į \"Visiškai Įkrauta\". Atminkite, kad daugelyje įrenginių tai nebūtinai yra tas pats, kas 100 % įkrovimo.\n
-    \n
-    Įkrovimo ir temperatūros pavojaus signalams reikia nustatyti slenkstį žemiau pasirinkę tą signalizacijos tipą.\n
-    \n
-    Aliarmas „Sveikata sugenda“ jums praneš, jei jūsų akumuliatorius bus sveikas tampa ne \"Nežinoma\" arba \"Gera sveikata\", kaip pranešė Android.</string>
   <string name="pref_alarm_threshold" formatted="false">Riba</string>
-  <string name="alarm_pref_not_used" formatted="false">Nenaudojama šiam aliarmo tipui</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Aliarmo riba:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Įkrovimo ir temperatūros aliarmams Jūs turite nustatyti temperatūros arba įkrovimo lygį, kuris iškvies aliarmą.</string>
-  <string name="alarm_custom_temp_message" formatted="true">Įveskite temperatūrą %s laipsniais</string>
-  <string name="alarm_custom_charge_message" formatted="false">Įveskite apmokestinimo procentą (0–100)</string>
 
   <string name="boot_pref_always" formatted="false">Visada</string>
   <string name="boot_pref_never" formatted="false">Niekada</string>

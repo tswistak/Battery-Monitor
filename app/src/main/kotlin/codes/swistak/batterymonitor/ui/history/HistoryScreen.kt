@@ -236,13 +236,11 @@ internal fun HistoryRoute(
     DisposableEffect(settings, mainPreferences) {
         val listener =
             android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> settingsVersion++ }
-        settings.registerOnSharedPreferenceChangeListener(listener); mainPreferences.registerOnSharedPreferenceChangeListener(
-        listener
-    )
+        settings.registerOnSharedPreferenceChangeListener(listener)
+        mainPreferences.registerOnSharedPreferenceChangeListener(listener)
         onDispose {
-            settings.unregisterOnSharedPreferenceChangeListener(listener); mainPreferences.unregisterOnSharedPreferenceChangeListener(
-            listener
-        )
+            settings.unregisterOnSharedPreferenceChangeListener(listener)
+            mainPreferences.unregisterOnSharedPreferenceChangeListener(listener)
         }
     }
     val defaultTemperature = stringResource(R.string.default_temperature_unit)
@@ -299,8 +297,9 @@ internal fun HistoryRoute(
     val importer =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null) {
-                viewModel.pendingImportUri = uri.toString(); viewModel.pendingImportJson =
-                    importingJson; dialog = "importMode"
+                viewModel.pendingImportUri = uri.toString()
+                viewModel.pendingImportJson = importingJson
+                dialog = "importMode"
             }
         }
 
@@ -933,18 +932,22 @@ internal fun HistoryRoute(
         R.string.log_import_mode_title,
         { dialog = null },
         listOf(R.string.pref_import_logs_csv to {
-            importingJson = false; importer.launch(arrayOf("*/*")); dialog = null
+            importingJson = false
+            importer.launch(arrayOf("*/*"))
+            dialog = null
         }, R.string.history_import_json to {
-            importingJson = true; importer.launch(arrayOf("*/*")); dialog = null
+            importingJson = true
+            importer.launch(arrayOf("*/*"))
+            dialog = null
         })
     )
     if (dialog == "importMode") AlertDialog(onDismissRequest = {
-        dialog = null; viewModel.pendingImportUri = null
+        dialog = null
+        viewModel.pendingImportUri = null
     }, title = { Text(stringResource(R.string.log_import_mode_title)) }, text = {
         Column {
-            Text(stringResource(if (viewModel.pendingImportJson) R.string.device_data_backup_warning else R.string.csv_logs_import_warning)); Text(
-            stringResource(R.string.log_import_mode_message)
-        )
+            Text(stringResource(if (viewModel.pendingImportJson) R.string.device_data_backup_warning else R.string.csv_logs_import_warning))
+            Text(stringResource(R.string.log_import_mode_message))
         }
     }, confirmButton = {
         Column {
@@ -954,7 +957,8 @@ internal fun HistoryRoute(
                         appContext, restoreError, Toast.LENGTH_LONG
                     ).show()
                     else result(success, R.string.csv_logs_imported)
-                }; dialog = null
+                }
+                dialog = null
             }) { Text(stringResource(R.string.log_import_add)) }
             TextButton(onClick = {
                 dialog = "replace"
@@ -962,12 +966,14 @@ internal fun HistoryRoute(
         }
     }, dismissButton = {
         TextButton(onClick = {
-            dialog = null; viewModel.pendingImportUri = null
+            dialog = null
+            viewModel.pendingImportUri = null
         }) { Text(stringResource(R.string.cancel)) }
     })
     if (dialog == "replace") AlertDialog(
         onDismissRequest = {
-            dialog = null; viewModel.pendingImportUri = null
+            dialog = null
+            viewModel.pendingImportUri = null
         },
         title = { Text(stringResource(R.string.log_import_replace)) },
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
@@ -978,12 +984,14 @@ internal fun HistoryRoute(
                         appContext, restoreError, Toast.LENGTH_LONG
                     ).show()
                     else result(success, R.string.device_data_imported)
-                }; dialog = null
+                }
+                dialog = null
             }) { Text(stringResource(R.string.yes)) }
         },
         dismissButton = {
             TextButton(onClick = {
-                dialog = null; viewModel.pendingImportUri = null
+                dialog = null
+                viewModel.pendingImportUri = null
             }) { Text(stringResource(R.string.cancel)) }
         })
     if (dialog == "delete") ChoiceDialog(
@@ -1016,7 +1024,8 @@ internal fun HistoryRoute(
                     result(
                         it, R.string.history_deleted
                     )
-                }; dialog = null
+                }
+                dialog = null
             }) { Text(stringResource(R.string.menu_clear)) }
         },
         dismissButton = {

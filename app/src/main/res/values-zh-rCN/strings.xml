@@ -116,14 +116,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">温度低于</string>
   <string name="alarm_type_temperature_rises" formatted="false">温度升至以上</string>
   <string name="alarm_type_health_failure" formatted="false">电池健康异常</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">充满电</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">已达到充电上限</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">已达到放电下限</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">电量低于...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">电量高于...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">温度低于...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">温度升至以上...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">电池健康异常</string>
 
   <string name="alarm_fully_charged" formatted="false">电池已充满！</string>
   <string name="alarm_charging_limit_met" formatted="true">已达到充电上限：%1$d%%</string>
@@ -220,11 +212,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">您已禁用此应用程序的所有通知。  请允许他们访问这些设置。</string>
   <string name="main_notifs_disabled_b" formatted="false">启用主通知</string>
   <string name="main_notifs_disabled_summary" formatted="false">您已禁用此应用程序的主要通知。  请启用它以访问这些设置。</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">您已禁用此应用程序的所有通知。  请允许他们访问您的警报。</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">启用警报</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">您已禁用此应用程序的警报通知组。  请启用它来访问您的警报。</string>
   <string name="alarm_chan_disabled" formatted="false">您已禁用此警报类型的通知。  请允许他们使用此类警报。</string>
-  <string name="alarm_chan_disabled_b" formatted="false">启用此警报类型</string>
   <string name="alarm_chan_settings_b" formatted="false">管理此警报类型</string>
 
   <string name="notification_settings" formatted="false">主要通知</string>
@@ -265,7 +254,6 @@
     \n
     注意：授予此权限有时可能会导致应用关闭。若发生这种情况，请重新打开应用。</string>
 
-  <string name="add_alarm" formatted="false">添加闹钟</string>
 
   <string name="pref_cat_channel_settings" formatted="false">通知渠道设置</string>
   <string name="pref_manage_main_channel" formatted="false">管理主渠道</string>
@@ -387,29 +375,10 @@
     \n
     下方列表会显示您已创建的闹钟：点击可编辑，长按可删除，点击旁边的开关可启用或停用。</string>
 
-  <string name="pref_alarm_enabled" formatted="false">启用闹钟</string>
-  <string name="pref_alarm_enabled_help" formatted="false">如果你想暂时 禁用警报而无需在需要时重新创建它 同样，您可以在此处或主警报上将其关闭和打开 页。</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">报警条件</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">这是你可以的地方 控制触发警报的条件。</string>
-  <string name="pref_alarm_type" formatted="false">报警类型</string>
-  <string name="pref_alarm_type_summary" formatted="false">电池触发警报：</string>
-  <string name="pref_alarm_type_help" formatted="false">目前有八种类型的警报可供您选择。\n
-    \n
-    “已达到充电上限”和“已达到放电下限”警报会在电池达到充电或放电目标时通知您。它们不需要设置阈值，并且始终遵循当前的目标设置。\n
-    \n
-    \n
-    “充满电”警报会在电量耗尽时通知您 电池状态从“正在充电”更改为“完全充电” 已收费”。 请注意，在许多设备上，这不一定是 与 100% 充电相同。\n
-    \n
-    充电和温度警报需要您设置阈值 选择警报类型后如下。\n
-    \n
-    如果您的电池健康状况不佳，“健康失败”警报将通知您 变成“未知”或“身体健康”以外的东西，如 安卓系统报道。</string>
   <string name="pref_alarm_threshold" formatted="false">阈值</string>
-  <string name="alarm_pref_not_used" formatted="false">此闹钟类型不使用该项</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">闹钟阈值：</string>
   <string name="pref_alarm_threshold_help" formatted="false">对于充电和温度报警，需要设置温度 或将触发警报的电量水平。</string>
-  <string name="alarm_custom_temp_message" formatted="true">输入 %s 度的温度</string>
-  <string name="alarm_custom_charge_message" formatted="false">输入电量百分比（0-100）</string>
 
   <string name="boot_pref_always" formatted="false">始终</string>
   <string name="boot_pref_never" formatted="false">从不</string>

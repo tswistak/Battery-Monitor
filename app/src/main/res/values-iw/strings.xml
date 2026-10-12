@@ -116,14 +116,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">הטמפרטורה יורדת מתחת</string>
   <string name="alarm_type_temperature_rises" formatted="false">הטמפרטורה גבוהה מ-</string>
   <string name="alarm_type_health_failure" formatted="false">כשל בריאותי</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">טעינה מלאה הושלמה</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">הושגה מגבלת הטעינה</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">הושגה מגבלת הפריקה</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">המטען פחות מ-</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">המטען יותר מ-</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">הטמפרטורה יורדת מתחת...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">הטמפרטורה גבוהה מ-</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">בריאות לא-טובה</string>
 
   <string name="alarm_fully_charged" formatted="false">הסוללה טעונה כעת במלואה</string>
   <string name="alarm_charging_limit_met" formatted="true">הושגה מגבלת הטעינה: %1$d%%</string>
@@ -240,11 +232,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">השבתת את כל ההתראות עבור האפליקציה הזו.  אנא אפשר להם לגשת להגדרות אלה.</string>
   <string name="main_notifs_disabled_b" formatted="false">אפשר הודעה ראשית</string>
   <string name="main_notifs_disabled_summary" formatted="false">השבתת את ההתראה הראשית עבור אפליקציה זו.  אנא הפעל אותו כדי לגשת להגדרות אלה.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">השבתת את כל ההתראות עבור האפליקציה הזו.  אנא אפשר להם לגשת להתראות שלך.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">אפשר אזעקות</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">השבתת את קבוצת התראות האזעקה עבור אפליקציה זו.  אנא הפעל אותו כדי לגשת להתראות שלך.</string>
   <string name="alarm_chan_disabled" formatted="false">השבתת התראות עבור סוג התראה זה.  אנא אפשר להם להשתמש בסוג זה של אזעקה.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">אפשר סוג אזעקה זה</string>
   <string name="alarm_chan_settings_b" formatted="false">נהל את סוג האזעקה הזה</string>
 
   <string name="notification_settings" formatted="false">הודעה ראשית</string>
@@ -285,7 +274,6 @@
     \n
     הערה: מתן ההרשאה הזו עלול לגרום לעיתים לסגירת האפליקציה. אם זה קורה, פשוט פתח אותה מחדש.</string>
 
-  <string name="add_alarm" formatted="false">הוספת התראה</string>
 
   <string name="pref_cat_channel_settings" formatted="false">הגדרות ערוץ הודעות</string>
   <string name="pref_manage_main_channel" formatted="false">ניהול הערוץ הראשי</string>
@@ -411,29 +399,10 @@
     • כדי למחוק התראה, לחץ עליה לחיצה ארוכה ולאחר מכן בחר \"מחק אזעקה\". (תוכל גם למחוק התראה מהאזעקה הבודדת דף ההגדרות על ידי לחיצה על MENU ואז על \"מחק אזעקה\".)\n
     • כדי לשנות בקלות אם אזעקה מופעלת, לחץ על המתג לעבור לצד טקסט האזעקה. (אתה יכול גם להפעיל או השבת התראה מדף הגדרות האזעקה הבודדים.)</string>
 
-  <string name="pref_alarm_enabled" formatted="false">אפשר אזעקה</string>
-  <string name="pref_alarm_enabled_help" formatted="false">אם אתה רוצה זמנית השבת התראה מבלי שתצטרך ליצור אותה מחדש כשאתה רוצה אותה שוב, אתה יכול לכבות ולהדליק אותו כאן או על האזעקות הראשיות עמוד.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">תנאי אזעקה</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">זה המקום שבו אתה יכול לשלוט באילו תנאים מפעילים את האזעקה.</string>
-  <string name="pref_alarm_type" formatted="false">סוג אזעקה</string>
-  <string name="pref_alarm_type_summary" formatted="false">הפעל אזעקה כאשר הסוללה:</string>
-  <string name="pref_alarm_type_help" formatted="false">ישנם כיום שמונה סוגים של אזעקות שניתן לבחור ביניהם.\n
-    \n
-    האזעקות „הושגה מגבלת הטעינה” ו„הושגה מגבלת הפריקה” יתריעו כאשר הסוללה מגיעה ליעד הטעינה או הפריקה שלה. הן אינן דורשות סף ותמיד פועלות לפי הגדרות היעד הנוכחיות.\n
-    \n
-    \n
-    אזעקת \"הופך לטעון במלואו\" תודיע לך כאשר סטטוס הסוללה שלך משתנה מ-\"טעינה\" ל\"ללא עלות". טעון\". שים לב שבמכשירים רבים, זה לא בהכרח אותו דבר כמו להיות ב-100% טעינה.\n
-    \n
-    אזעקות הטעינה והטמפרטורה מחייבות אותך להגדיר סף להלן, לאחר בחירת סוג האזעקה.\n
-    \n
-    אזעקת \"בריאות נכשל\" תודיע לך אם הסוללה שלך תקינה הופך למשהו אחר מאשר \"לא ידוע\" או \"בריאות טובה\", כמו דווח על ידי אנדרואיד.</string>
   <string name="pref_alarm_threshold" formatted="false">סַף</string>
-  <string name="alarm_pref_not_used" formatted="false">לא בשימוש עבור סוג אזעקה זה</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">סף אזעקה:</string>
   <string name="pref_alarm_threshold_help" formatted="false">עבור אזעקות טעינה וטמפרטורה, עליך להגדיר את הטמפרטורה או רמת טעינה שתפעיל את האזעקה.</string>
-  <string name="alarm_custom_temp_message" formatted="true">הזן טמפרטורה ב-%s מעלות</string>
-  <string name="alarm_custom_charge_message" formatted="false">הזן אחוז חיוב (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">תָמִיד</string>
   <string name="boot_pref_never" formatted="false">לְעוֹלָם לֹא</string>

@@ -120,14 +120,6 @@
     <string name="alarm_type_temperature_drops" formatted="false">Gdy temperatura spadnie do</string>
     <string name="alarm_type_temperature_rises" formatted="false">Gdy temperatura wzrośnie do</string>
     <string name="alarm_type_health_failure" formatted="false">Problemy ze zdrowiem</string>
-    <string name="alarm_type_entry_fully_charged" formatted="false">Zostaje w pełni naładowana</string>
-    <string name="alarm_type_entry_charging_limit_met" formatted="false">Osiągnie limit ładowania</string>
-    <string name="alarm_type_entry_discharging_limit_met" formatted="false">Osiągnie limit rozładowania</string>
-    <string name="alarm_type_entry_charge_drops" formatted="false">Poziom naładowania spada do…</string>
-    <string name="alarm_type_entry_charge_rises" formatted="false">Poziom naładowania wzrasta do…</string>
-    <string name="alarm_type_entry_temperature_drops" formatted="false">Temperatura spada do…</string>
-    <string name="alarm_type_entry_temperature_rises" formatted="false">Temperatura wzrasta do…</string>
-    <string name="alarm_type_entry_health_failure" formatted="false">Problemy ze zdrowiem</string>
 
     <string name="alarm_fully_charged" formatted="false">Bateria jest w pełni naładowana</string>
     <string name="alarm_charging_limit_met" formatted="true">Osiągnięto limit ładowania: %1$d%%</string>
@@ -244,11 +236,8 @@
     <string name="app_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) wszystkie powiadomienia dla tej aplikacji. Włącz je, aby uzyskać dostęp do tych ustawień.</string>
     <string name="main_notifs_disabled_b" formatted="false">Włącz główne powiadomienie</string>
     <string name="main_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) główne powiadomienie dla tej aplikacji. Włącz je, aby uzyskać dostęp do tych ustawień.</string>
-    <string name="app_notifs_alarms_disabled_summary" formatted="false">Wyłączyłeś(-aś) wszystkie powiadomienia dla tej aplikacji. Włącz je, aby uzyskać dostęp do swoich alarmów.</string>
-    <string name="alarm_notifs_disabled_b" formatted="false">Włącz alarmy</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) grupę powiadomień alarmów dla tej aplikacji. Włącz ją, aby uzyskać dostęp do alarmów.</string>
     <string name="alarm_chan_disabled" formatted="false">Wyłączyłeś(-aś) powiadomienia dla tego typu alarmu. Włącz je, aby używać tego typu alarmu.</string>
-    <string name="alarm_chan_disabled_b" formatted="false">Włącz ten typ alarmu</string>
     <string name="alarm_chan_settings_b" formatted="false">Zarządzaj tym typem alarmu</string>
 
     <string name="notification_settings" formatted="false">Główne powiadomienie</string>
@@ -289,7 +278,6 @@
     \n
     Uwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
 
-    <string name="add_alarm" formatted="false">Dodaj alarm</string>
 
     <string name="pref_cat_channel_settings" formatted="false">Ustawienia kanałów powiadomień</string>
     <string name="pref_manage_main_channel" formatted="false">Zarządzaj głównym kanałem</string>
@@ -397,38 +385,12 @@
     <string name="advanced_status_no_access" formatted="false">Do wyświetlania zaawansowanych statystyk baterii potrzebny jest dostęp do roota albo Shizuku.</string>
 
     <string name="alarms_overview" formatted="false">Przegląd alarmów</string>
-    <string name="alarms_overview_help" formatted="false">Alarmy są pogrupowane według poziomu baterii, temperatury i stanu baterii. Każda reguła ma własny przełącznik.\n
-    \n
-    • Naciśnij „Dodaj alarm”, aby przygotować nową regułę. Zostanie utworzona dopiero po naciśnięciu „Zapisz”.\n
-    • Naciśnij regułę, aby ją edytować. Zmiany zostaną zastosowane dopiero po naciśnięciu „Zapisz”. Przy opuszczaniu zmienionego formularza możesz kontynuować edycję lub odrzucić zmiany.\n
-    • Aby usunąć zapisaną regułę, otwórz ją, naciśnij „Usuń alarm” i potwierdź.\n
-    • Kanały powiadomień Androida sterują dźwiękiem, wibracjami i dostarczaniem powiadomień dla każdego typu alarmu. Zablokowany kanał jest pokazany niezależnie od przełącznika reguły.\n
-    \n
-    W ustawieniach Powiadomienia dostępna jest opcja usuwania powiadomienia o niskim poziomie baterii po wzroście poziomu powyżej progu.</string>
-
-    <string name="pref_alarm_enabled" formatted="false">Włącz alarm</string>
-    <string name="pref_alarm_enabled_help" formatted="false">Jeśli chcesz tymczasowo wyłączyć alarm, bez konieczności tworzenia go od nowa, gdy będziesz go potrzebować, możesz go włączyć lub wyłączyć tutaj albo na głównej stronie alarmów.</string>
+    <string name="alarms_overview_help">Wszystkie osiem typów alarmów jest zawsze dostępnych. Zdarzenia włączaj przełącznikiem, a w typach poziomu lub temperatury użyj „Dodaj próg”. Nowy próg jest włączony po zapisie. Dotknij wartości, aby ją edytować; edycja zachowuje stan włączenia. Wyłączone wartości pozostają na liście. Usuwanie wymaga potwierdzenia. Dźwięk i wibracje są wspólne dla typu w ustawieniach powiadomień Androida. Stare duplikaty tworzą jeden logiczny alarm; przełączenie lub usunięcie obejmuje wszystkie kopie. Alarmy celów korzystają z ustawień prognoz i nie sterują ładowaniem. Blokada kanału lub zatrzymanie monitora nie zmienia zapisanych przełączników.</string>
 
     <string name="pref_cat_alarm_conditions" formatted="false">Warunki uruchomienia alarmu</string>
     <string name="pref_cat_alarm_conditions_help" formatted="false">W tym miejscu możesz określić, jakie warunki spowodują wywołanie alarmu.</string>
-    <string name="pref_alarm_type" formatted="false">Typ alarmu</string>
-    <string name="pref_alarm_type_summary" formatted="false">Wywołaj alarm, gdy bateria:</string>
-    <string name="pref_alarm_type_help" formatted="false">Obecnie możesz wybierać spośród ośmiu typów alarmu.\n
-    \n
-    Alarm „Zostaje w pełni naładowana” powiadomi Cię, gdy Android zgłosi zmianę stanu baterii na w pełni naładowaną. Pamiętaj, że na wielu urządzeniach nie jest to koniecznie to samo co 100% naładowania.\n
-    \n
-    \n
-    Alarmy „Osiągnie limit ładowania” i „Osiągnie limit rozładowania” powiadomią Cię, gdy bateria osiągnie docelowy poziom ładowania lub rozładowania. Nie wymagają progu i zawsze podążają za bieżącymi ustawieniami celu.\n
-    \n
-    Alarmy ładowania i temperatury wymagają od Ciebie ustawienia progu po wybraniu tego typu alarmu.\n
-    \n
-    Alarm „Problemy ze zdrowiem” powiadomi Cię, jeśli zdrowie Twojej baterii stanie się inne niż „Nieznane” lub „Zdrowa”, jak zgłasza Android.</string>
     <string name="pref_alarm_threshold" formatted="false">Próg</string>
-    <string name="alarm_pref_not_used" formatted="false">Nieużywane dla tego typu alarmu</string>
-    <string name="pref_alarm_threshold_summary" formatted="false">Próg alarmu:</string>
     <string name="pref_alarm_threshold_help" formatted="false">Dla alarmów poziomu baterii i temperatury ustaw próg i zapisz regułę. Alarm uruchomi się, gdy odczyt osiągnie lub przekroczy próg w wybranym kierunku. Kolejne odczyty równe progowi nie powtarzają alarmu. Uruchomienie monitora, import reguły lub włączenie jej po przekroczeniu progu nie uruchamia alarmu od razu; potrzebne jest kolejne przekroczenie.</string>
-    <string name="alarm_custom_temp_message" formatted="true">Wprowadź temperaturę w stopniach %s</string>
-    <string name="alarm_custom_charge_message" formatted="false">Wprowadź procent naładowania (0-100)</string>
 
     <string name="boot_pref_always" formatted="false">Zawsze</string>
     <string name="boot_pref_never" formatted="false">Nigdy</string>
@@ -849,24 +811,18 @@
     <string name="pref_dismiss_low_battery_on_recovery">Usuń alarm niskiego poziomu po jego wzroście</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Usuń powiadomienie o niskim poziomie, gdy poziom baterii wzrośnie powyżej progu alarmu. Inne powiadomienia alarmów pozostają.</string>
     <plurals name="alarms_active_count">
-        <item quantity="one">%1$d aktywny</item>
-        <item quantity="few">%1$d aktywne</item>
-        <item quantity="many">%1$d aktywnych</item>
-        <item quantity="other">%1$d aktywnych</item>
+        <item quantity="one">Włączone alarmy: %1$d</item>
+        <item quantity="few">Włączone alarmy: %1$d</item>
+        <item quantity="many">Włączone alarmy: %1$d</item>
+        <item quantity="other">Włączone alarmy: %1$d</item>
     </plurals>
-    <string name="alarms_monitoring_caption">Reguły działają podczas monitorowania</string>
-    <string name="alarms_channel_note">Każda reguła zachowuje własne ustawienia. Dźwięk i sposób wyświetlania kontroluje również kanał powiadomień Androida.</string>
-    <string name="alarms_target_help">Ten alarm używa wspólnego celu prognozy. Nie steruje ładowaniem.</string>
     <string name="alarms_delivery_sound_vibration">Dźwięk, wibracje i powiadomienie</string>
     <string name="alarms_delivery_sound">Dźwięk i powiadomienie</string>
     <string name="alarms_delivery_vibration">Wibracje i powiadomienie</string>
     <string name="alarms_delivery_notification">Tylko powiadomienie</string>
-    <string name="alarms_invalid_threshold">Wpisz prawidłowy próg.</string>
-    <string name="alarms_delete_confirmation">Usunąć ten alarm?</string>
     <string name="alarms_channel_help">Dźwięk i sposób dostarczenia określa ten kanał powiadomień Androida.</string>
     <string name="alarms_numeric_range">Wpisz liczbę całkowitą od %1$d do %2$d.</string>
     <string name="alarms_temperature_range">Wpisz liczbę od %1$d do %2$d, z maksymalnie jednym miejscem po przecinku.</string>
-    <string name="alarms_summary">Podsumowanie</string>
     <string name="alarms_database_error">Nie można uzyskać dostępu do bazy alarmów. Spróbuj ponownie.</string>
     <string name="alarms_discard_confirmation">Odrzucić zmiany w tym alarmie?</string>
     <string name="alarms_discard">Odrzuć</string>
@@ -980,4 +936,31 @@
     <string name="settings_reset_help" formatted="false">Przywrócenie ustawień domyślnych wymaga potwierdzenia, a następnie resetuje preferencje aplikacji. Zachowuje historię, alarmy, wyuczone szacunki, konfiguracje widżetów oraz bieżący stan uruchomienia monitorowania w tle. Nie resetuje uprawnień systemowych ani ustawień kanałów powiadomień.</string>
     <string name="diagnostics_predictor_help" formatted="false">Działanie aplikacji pokazuje zapisane średnie długoterminowe oraz bieżące dane predyktora. Tempa zmian są obliczane ze zmian procentowego poziomu baterii i pokazują czas zmiany o jeden punkt procentowy. Dostępne są też wybrana metoda, aktywne źródło ładowania, liczba zaobserwowanych punktów, czas obserwacji i informacja o uwzględnieniu niepełnego przedziału. W obliczeniach dla pięciu minut i pięciu punktów procentowych brakujące obserwacje są uzupełniane aktywną średnią długoterminową, a pominięte poziomy są interpolowane. Bieżące dane są przechowywane w pamięci i zerowane po ponownym uruchomieniu monitorowania, przejściu między ładowaniem i rozładowywaniem lub zmianie źródła ładowania. Zapisane wyuczone średnie pozostają po ponownym uruchomieniu. Dane te są niezależne od logów historii; wyczyszczenie logów nie resetuje prognoz.</string>
     <string name="notification_channels_help" formatted="false">Otwórz ustawienia powiadomień Androida, aby zezwolić na powiadomienia lub je zablokować oraz skonfigurować dźwięk, wibracje i sposób dostarczania powiadomienia głównego oraz każdego typu alarmu. Włączenie reguły alarmu nie odblokowuje kanału powiadomień.</string>
+    <string name="alarms_targets_group">Cele ładowania i rozładowania</string>
+    <string name="alarms_charging_target">Osiągnięcie celu ładowania</string>
+    <string name="alarms_discharging_target">Osiągnięcie celu rozładowania</string>
+    <string name="alarms_android_problem">Problem zgłoszony przez Androida</string>
+    <string name="alarms_android_problem_help">Problem baterii zgłoszony przez system, a nie procent jej kondycji.</string>
+    <string name="alarms_add_threshold">Dodaj próg</string>
+    <string name="alarms_edit_threshold">Edytuj próg</string>
+    <string name="alarms_edit_existing">Edytuj istniejący próg</string>
+    <string name="alarms_duplicate">Ten próg już istnieje dla tego typu.</string>
+    <string name="alarms_new_enabled">Alarm zostanie włączony po dodaniu.</string>
+    <string name="alarms_edit_keeps_enabled">Edycja zachowuje obecny stan włączenia.</string>
+    <string name="alarms_state_unknown">Ustawienia alarmów niedostępne</string>
+    <string name="alarms_stale">Wyświetlane są poprzednie ustawienia. Odśwież przed zmianami.</string>
+    <string name="alarms_channel_unavailable">Kanał powiadomień nieutworzony lub niedostępny</string>
+    <string name="alarms_target_unknown">Cel niedostępny. Otwórz ustawienia prognoz.</string>
+    <string name="alarms_conflict">Zapisane alarmy zmieniły się. Odśwież i ponownie otwórz próg przed zmianami.</string>
+    <string name="alarms_missing_rule">Ten alarm nie istnieje lub jest nieprawidłowy. Sprawdź katalog alarmów.</string>
+    <string name="alarms_settings_unavailable">Nie można otworzyć ustawień powiadomień Androida.</string>
+    <string name="alarms_saved">Zapisano ustawienia alarmów.</string>
+    <string name="alarms_saved_reload_failed">Zapisano, ale nie udało się powiadomić monitora. Sprawdź stan monitorowania.</string>
+    <string name="alarms_monitor_stopped">Monitorowanie zatrzymane. Zapisane alarmy nie są sprawdzane.</string>
+    <string name="alarms_monitor_unconfirmed">Brak bieżącego połączenia z monitorem. Sprawdzanie alarmów nie jest potwierdzone.</string>
+    <string name="alarms_options">Opcje: %1$s</string>
+    <string name="alarms_delete_threshold_confirmation">Usunąć %1$s — %2$s? Usunięte zostaną wszystkie kopie tego progu.</string>
+    <string name="alarms_invalid_records">Niektóre zapisane alarmy są nieprawidłowe. Sprawdź je; nie zostały usunięte.</string>
+    <string name="alarms_enabled">Włączony</string>
+    <string name="alarms_disable">Wyłącz</string>
 </resources>

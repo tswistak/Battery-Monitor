@@ -118,14 +118,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">La temperatura cae por debajo</string>
   <string name="alarm_type_temperature_rises" formatted="false">La temperatura es superior a</string>
   <string name="alarm_type_health_failure" formatted="false">Fallo de salud</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Se carga completamente</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">Límite de carga alcanzado</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Límite de descarga alcanzado</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">La carga cae por debajo...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">La carga sube por encima...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">La temperatura cae por debajo...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">La temperatura sube por encima...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">La salud falla</string>
 
   <string name="alarm_fully_charged" formatted="false">La bateria esta completamente cargada</string>
   <string name="alarm_charging_limit_met" formatted="true">Límite de carga alcanzado: %1$d%%</string>
@@ -236,11 +228,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">Has desactivado todas las notificaciones de esta aplicación.  Permítales acceder a esta configuración.</string>
   <string name="main_notifs_disabled_b" formatted="false">Habilitar notificación principal</string>
   <string name="main_notifs_disabled_summary" formatted="false">Has desactivado la notificación principal de esta aplicación.  Habilítelo para acceder a esta configuración.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">Has desactivado todas las notificaciones de esta aplicación.  Permítales acceder a sus alarmas.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">Habilitar alarmas</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Ha desactivado el grupo de notificación de alarma para esta aplicación.  Habilítelo para acceder a sus alarmas.</string>
   <string name="alarm_chan_disabled" formatted="false">Ha desactivado las notificaciones para este tipo de alarma.  Por favor, permítales utilizar este tipo de alarma.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">Habilitar este tipo de alarma</string>
   <string name="alarm_chan_settings_b" formatted="false">Administrar este tipo de alarma</string>
 
   <string name="notification_settings" formatted="false">Notificaciones</string>
@@ -281,7 +270,6 @@
     \n
     Nota: Conceder este permiso puede hacer que la aplicación se cierre ocasionalmente. Si sucede, simplemente vuelve a abrirla.</string>
 
-  <string name="add_alarm" formatted="false">Agregar alarma</string>
 
   <string name="pref_cat_channel_settings" formatted="false">Configuración del canal de notificación</string>
   <string name="pref_manage_main_channel" formatted="false">Administrar canal principal</string>
@@ -409,29 +397,10 @@
     • Para eliminar una alarma, manténgala presionada y luego seleccione \"Eliminar Alarma\". (También puede eliminar una alarma de la lista de alarmas individuales página de configuración presionando MENÚ y luego \"Eliminar alarma\".)\n
     • Para alternar fácilmente si una alarma está habilitada, presione el botón cambia al lado del texto de alarma. (También puedes habilitar o deshabilite una alarma desde la página de configuración de alarma individual).</string>
 
-  <string name="pref_alarm_enabled" formatted="false">Habilitar alarma</string>
-  <string name="pref_alarm_enabled_help" formatted="false">Si quieres temporalmente desactivar una alarma sin tener que volver a crearla cuando quieras Nuevamente, puedes apagarlo y encenderlo aquí o en las alarmas principales. página.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Condiciones de alarma</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Aquí es donde puedes controlar qué condiciones activan la alarma.</string>
-  <string name="pref_alarm_type" formatted="false">Tipo de alarma</string>
-  <string name="pref_alarm_type_summary" formatted="false">Activar alarma cuando la batería:</string>
-  <string name="pref_alarm_type_help" formatted="false">Actualmente hay ocho tipos de alarma entre los que puedes elegir.\n
-    \n
-    Las alarmas «Límite de carga alcanzado» y «Límite de descarga alcanzado» te avisarán cuando la batería alcance el objetivo de carga o descarga. No necesitan umbral y siempre siguen la configuración actual de objetivos.\n
-    \n
-    \n
-    La alarma \"Se carga completamente\" le notificará cuando el El estado de la batería cambia de \"Cargando\" a \"Completamente Cargado\". Tenga en cuenta que en muchos dispositivos, esto no es necesariamente el lo mismo que estar al 100% de carga.\n
-    \n
-    Las alarmas de carga y temperatura requieren que establezcas un umbral a continuación, después de elegir ese tipo de alarma.\n
-    \n
-    La alarma \"Health Fails\" le notificará si el estado de su batería se convierte en algo distinto de \"Desconocido\" o \"Buena Salud\", como informado por Android.</string>
   <string name="pref_alarm_threshold" formatted="false">Límite</string>
-  <string name="alarm_pref_not_used" formatted="false">No se utiliza para este tipo de alarma</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Umbral de alarma:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Para alarmas de carga y temperatura, debe configurar la temperatura o nivel de carga que activará la alarma.</string>
-  <string name="alarm_custom_temp_message" formatted="true">Introduzca la temperatura en grados %s</string>
-  <string name="alarm_custom_charge_message" formatted="false">Ingrese el porcentaje de cargo (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">Siempre</string>
   <string name="boot_pref_never" formatted="false">Nunca</string>

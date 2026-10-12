@@ -109,7 +109,10 @@ class BatteryVoltageResolverTest {
             files["/sys/class/power_supply/battery/voltage_now"] = "3874000"
         }
         var privilegedCalls = 0
-        val harness = ResolverHarness(sysfs, privilegedCommand = { privilegedCalls++; null })
+        val harness = ResolverHarness(sysfs, privilegedCommand = {
+            privilegedCalls++
+            null
+        })
 
         val reading = harness.resolver.resolve(3)
 
@@ -195,7 +198,10 @@ class BatteryVoltageResolverTest {
         val sysfs = FakeSysfsAccessor()
         var privilegedCalls = 0
         val harness = ResolverHarness(
-            sysfs, privilegedCommand = { privilegedCalls++; null }, privilegedEnabled = false
+            sysfs, privilegedCommand = {
+                privilegedCalls++
+                null
+            }, privilegedEnabled = false
         )
 
         assertNull(harness.resolver.resolve(3))

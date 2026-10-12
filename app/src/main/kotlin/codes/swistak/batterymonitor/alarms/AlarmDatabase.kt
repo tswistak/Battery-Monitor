@@ -37,16 +37,7 @@ internal class AlarmDatabase(context: Context?) {
         const val KEY_VIBRATE: String = "vibrate"
         const val KEY_LIGHTS: String = "lights"
 
-        val SUPPORTED_TYPES: Set<String> = setOf(
-            "fully_charged",
-            "charging_limit_met",
-            "discharging_limit_met",
-            "charge_drops",
-            "charge_rises",
-            "temp_drops",
-            "temp_rises",
-            "health_failure"
-        )
+        val SUPPORTED_TYPES: Set<String> = ALARM_TYPES.mapTo(linkedSetOf()) { it.type }
     }
 
     private val mSQLOpenHelper: SQLOpenHelper = SQLOpenHelper(context)
@@ -112,8 +103,12 @@ internal class AlarmDatabase(context: Context?) {
     }
 
     fun getAlarmRules(): List<AlarmRule> {
-        val cursor = getAllAlarms(true) ?: error("Could not read alarms")
-        return cursor.use {
+        openDBs()
+        return readAlarmRules(checkNotNull(rdb) { "Could not read alarms" })
+    }
+
+    private fun readAlarmRules(database: SQLiteDatabase): List<AlarmRule> =
+        database.rawQuery("SELECT * FROM $ALARM_TABLE_NAME ORDER BY $KEY_ID ASC", null).use {
             buildList {
                 while (it.moveToNext()) add(
                     AlarmRule(
@@ -125,22 +120,78 @@ internal class AlarmDatabase(context: Context?) {
                 )
             }
         }
+
+    fun saveThreshold(type: String, threshold: String, expected: List<AlarmRule>): Int =
+        transaction { database, current ->
+            val definition = ALARM_TYPES.single { it.type == type }
+            require(definition.bounds != null && threshold.toIntOrNull() in definition.bounds)
+            if (expected.isNotEmpty()) {
+                require(expected.all { it.type == type && validStoredAlarm(it) })
+                requireAlarmMembers(current, expected)
+            }
+            thresholdCollision(current, type, threshold, expected.map(AlarmRule::id))?.let {
+                throw AlarmCollisionException(it)
+            }
+            if (expected.isEmpty()) {
+                addAlarm(true, type, threshold).also { check(it >= 0) }
+            } else {
+                updateMembers(
+                    database, expected, ContentValues().apply { put(KEY_THRESHOLD, threshold) })
+                expected.minOf(AlarmRule::id)
+            }
+        }
+
+    fun setLogicalEnabled(type: String, expected: List<AlarmRule>, enabled: Boolean) {
+        transaction { database, current ->
+            if (expected.isEmpty()) {
+                require(ALARM_TYPES.any { it.type == type && it.bounds == null } && enabled)
+                if (current.any { it.type == type }) throw AlarmConflictException()
+                check(addAlarm(true, type, "") >= 0)
+            } else {
+                require(expected.all { it.type == type })
+                requireAlarmMembers(current, expected)
+                updateMembers(
+                    database,
+                    expected,
+                    ContentValues().apply { put(KEY_ENABLED, if (enabled) 1 else 0) })
+            }
+        }
     }
 
-    fun saveAlarm(id: Int?, enabled: Boolean, type: String, threshold: String): Int {
-        if (type !in SUPPORTED_TYPES) return -1
-        if (id == null) return addAlarm(enabled = enabled, type = type, threshold = threshold)
-        openDBs()
-        val values = ContentValues().apply {
-            put(KEY_ENABLED, if (enabled) 1 else 0)
-            put(KEY_TYPE, type)
-            put(KEY_THRESHOLD, threshold)
+    fun deleteLogicalAlarm(expected: List<AlarmRule>) {
+        transaction { database, current ->
+            requireAlarmMembers(current, expected)
+            check(
+                database.delete(
+                    ALARM_TABLE_NAME, memberSelection(expected), null
+                ) == expected.size
+            )
         }
-        return try {
-            if (wdb?.update(ALARM_TABLE_NAME, values, "$KEY_ID=?", arrayOf(id.toString())) == 1) id
-            else -1
-        } catch (_: SQLiteException) {
-            -1
+    }
+
+    private fun memberSelection(members: List<AlarmRule>): String =
+        "$KEY_ID IN (${members.joinToString(",") { it.id.toString() }})"
+
+    private fun updateMembers(
+        database: SQLiteDatabase, members: List<AlarmRule>, values: ContentValues
+    ) {
+        check(
+            database.update(
+                ALARM_TABLE_NAME, values, memberSelection(members), null
+            ) == members.size
+        )
+    }
+
+    private fun <T> transaction(operation: (SQLiteDatabase, List<AlarmRule>) -> T): T {
+        openDBs()
+        val database = checkNotNull(wdb) { "Could not write alarms" }
+        database.beginTransaction()
+        try {
+            val result = operation(database, readAlarmRules(database))
+            database.setTransactionSuccessful()
+            return result
+        } finally {
+            database.endTransaction()
         }
     }
 
@@ -151,11 +202,11 @@ internal class AlarmDatabase(context: Context?) {
         return try {
             database.beginTransaction()
             database.delete(ALARM_TABLE_NAME, null, null)
-            for (record in records) {
+            for ((enabled, type, threshold) in records) {
                 val values = ContentValues().apply {
-                    put(KEY_ENABLED, if (record.enabled) 1 else 0)
-                    put(KEY_TYPE, record.type)
-                    put(KEY_THRESHOLD, record.threshold)
+                    put(KEY_ENABLED, if (enabled) 1 else 0)
+                    put(KEY_TYPE, type)
+                    put(KEY_THRESHOLD, threshold)
                     put(KEY_RINGTONE, Settings.System.DEFAULT_NOTIFICATION_URI.toString())
                     put(KEY_VIBRATE, 0)
                     put(KEY_LIGHTS, 1)
@@ -296,29 +347,6 @@ internal class AlarmDatabase(context: Context?) {
             return wdb!!.insert(ALARM_TABLE_NAME, null, cv).toInt()
         } catch (e: Exception) {
             return -1
-        }
-    }
-
-    fun setEnabled(id: Int, enabled: Boolean): Int {
-        val cv = ContentValues()
-        cv.put(KEY_ENABLED, if (enabled) 1 else 0)
-
-        openDBs()
-
-        return try {
-            wdb!!.update(ALARM_TABLE_NAME, cv, "$KEY_ID=$id", null)
-        } catch (e: Exception) {
-            -1
-        }
-    }
-
-    fun deleteAlarm(id: Int): Boolean {
-        openDBs()
-
-        try {
-            return wdb!!.delete(ALARM_TABLE_NAME, "$KEY_ID=?", arrayOf(id.toString())) == 1
-        } catch (e: Exception) {
-            return false
         }
     }
 

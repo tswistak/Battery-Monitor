@@ -124,7 +124,8 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
     private val refreshTick = object : Runnable {
         override fun run() {
             if (isResumed) {
-                refresh(); mainHandler.postDelayed(this, 5_000)
+                refresh()
+                mainHandler.postDelayed(this, 5_000)
             }
         }
     }

@@ -299,17 +299,15 @@ internal fun helpSections(
         SettingsContract.KEY_ALARM_EDIT_SETTINGS -> listOf(
             HelpSection(
                 null, listOf(
-                    HelpParagraph(R.string.pref_alarm_enabled, subheading = true),
-                    HelpParagraph(R.string.pref_alarm_enabled_help),
+                    HelpParagraph(R.string.alarms_overview_help),
                 )
             ),
             HelpSection(
                 R.string.pref_cat_alarm_conditions, listOf(
                     HelpParagraph(R.string.pref_cat_alarm_conditions_help),
-                    HelpParagraph(R.string.pref_alarm_type, subheading = true),
-                    HelpParagraph(R.string.pref_alarm_type_help),
                     HelpParagraph(R.string.pref_alarm_threshold, subheading = true),
                     HelpParagraph(R.string.pref_alarm_threshold_help),
+                    HelpParagraph(R.string.alarms_channel_help),
                 )
             ),
         )

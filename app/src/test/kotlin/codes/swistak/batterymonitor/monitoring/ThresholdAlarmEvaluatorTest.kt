@@ -20,6 +20,17 @@ import org.junit.Test
 
 class ThresholdAlarmEvaluatorTest {
     @Test
+    fun `21 to 14 keeps the first crossed rule in database order for both input orders`() {
+        val twenty = AlarmRule(1, true, "charge_drops", "20")
+        val fifteen = AlarmRule(2, true, "charge_drops", "15")
+        for (rules in listOf(listOf(twenty, fifteen), listOf(fifteen, twenty))) {
+            val evaluator = ThresholdAlarmEvaluator()
+            assertTrue(evaluator.evaluate(21, 250, rules).isEmpty())
+            assertEquals(listOf(rules.first()), evaluator.evaluate(14, 250, rules))
+        }
+    }
+
+    @Test
     fun `each threshold type fires at an exact or skipped crossing but not at repeated equal values`() {
         for ((rule, before, beyond) in listOf(
             Triple(AlarmRule(1, true, "charge_rises", "80"), 79, 82),

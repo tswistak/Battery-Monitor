@@ -33,7 +33,9 @@ internal object DiagnosticsReport {
         if (includeDebugLogs) {
             val file = DebugLogCollector.logFile(context)
             if (file.isFile) {
-                appendLine(); appendLine("Debug logs"); append(file.readText())
+                appendLine()
+                appendLine("Debug logs")
+                append(file.readText())
             }
         }
     }

@@ -118,14 +118,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">Η θερμοκρασία πέφτει παρακάτω</string>
   <string name="alarm_type_temperature_rises" formatted="false">Η θερμοκρασία ανεβαίνει πάνω από</string>
   <string name="alarm_type_health_failure" formatted="false">Καλή υγεία απέτυχε</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Καθίσταται πλήρως φορτισμένη</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">Επιτεύχθηκε όριο φόρτισης</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Επιτεύχθηκε όριο εκφόρτισης</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Το επίπεδο φόρτισης πέφτει κάτω από...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Το επίπεδο φόρτισης ανεβαίνει πάνω από...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Η θερμοκρασία πέφτει κάτω από...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Η θερμοκρασία ανεβαίνει πάνω από...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">Καλή υγεία αποτυγχάνει</string>
 
   <string name="alarm_fully_charged" formatted="false">Η μπαταρία είναι φορτισμένη πλήρως</string>
   <string name="alarm_charging_limit_met" formatted="true">Επιτεύχθηκε όριο φόρτισης: %1$d%%</string>
@@ -232,11 +224,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">Έχετε απενεργοποιήσει όλες τις ειδοποιήσεις για αυτήν την εφαρμογή.  Ενεργοποιήστε τους να έχουν πρόσβαση σε αυτές τις ρυθμίσεις.</string>
   <string name="main_notifs_disabled_b" formatted="false">Ενεργοποιήστε την κύρια ειδοποίηση</string>
   <string name="main_notifs_disabled_summary" formatted="false">Έχετε απενεργοποιήσει την κύρια ειδοποίηση για αυτήν την εφαρμογή.  Ενεργοποιήστε το για πρόσβαση σε αυτές τις ρυθμίσεις.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">Έχετε απενεργοποιήσει όλες τις ειδοποιήσεις για αυτήν την εφαρμογή.  Επιτρέψτε τους να έχουν πρόσβαση στους συναγερμούς σας.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">Ενεργοποίηση συναγερμών</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Έχετε απενεργοποιήσει την ομάδα ειδοποιήσεων συναγερμού για αυτήν την εφαρμογή.  Ενεργοποιήστε το για πρόσβαση στους συναγερμούς σας.</string>
   <string name="alarm_chan_disabled" formatted="false">Έχετε απενεργοποιήσει τις ειδοποιήσεις για αυτόν τον τύπο συναγερμού.  Επιτρέψτε τους να χρησιμοποιούν αυτόν τον τύπο συναγερμού.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">Ενεργοποιήστε αυτόν τον τύπο συναγερμού</string>
   <string name="alarm_chan_settings_b" formatted="false">Διαχείριση αυτού του τύπου συναγερμού</string>
 
   <string name="notification_settings" formatted="false">Κύρια ειδοποίηση</string>
@@ -277,7 +266,6 @@
     \n
     Σημείωση: Η παραχώρηση αυτής της άδειας μπορεί περιστασιακά να προκαλέσει το κλείσιμο της εφαρμογής. Αν συμβεί, απλώς ανοίξτε την ξανά.</string>
 
-  <string name="add_alarm" formatted="false">Προσθήκη ειδοποίησης</string>
 
   <string name="pref_cat_channel_settings" formatted="false">Ρυθμίσεις καναλιού ειδοποιήσεων</string>
   <string name="pref_manage_main_channel" formatted="false">Διαχείριση Κύριου Καναλιού</string>
@@ -405,29 +393,10 @@
     • Για να διαγράψετε μια ειδοποίηση, πατήστε παρατεταμένα πάνω της, μετά επιλέξτε \"Διαγραφή Ειδιποίησης\". (Μπορείτε επίσης να διαγράψετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης πατώντας το MENU και μετά \"Διαγραφή Ειδιποίησης\").\n
     • Για γρήγορη εναλλαγή μεταξύ ενεργοποίησης και απενεργοποίησης μιας ειδοποίησης, πατήστε την εικόνα ρολογιού ειδοποίησης στα αριστερά του κειμένου ειδοποίησης. (Μπορείτε να ενεργοποιήσετε ή να απενεργοποιήσετε μια ειδοποίηση από τη σελίδα ρυθμίσεων ειδοποίησης)</string>
 
-  <string name="pref_alarm_enabled" formatted="false">Ενεργοποίηση Ειδοποίησης</string>
-  <string name="pref_alarm_enabled_help" formatted="false">Αν θέλετε να απενεργοποιήσετε προσωρινά μια ειδοποίηση χωρίς να χρειάζεται να τη ξαναδημιουργήσετε όταν τη χρειάζεστε ξανά, μπορείτε να την απενεργοποιήσετε είτε από εδώ είτε από τη κυρίως σελίδα των ειδοποιήσεων.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Συνθήκες Ειδοποίησης</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Εδώ ελέγχετε τις συνθήκες που ενεργοποιούν μια ειδοποίηση.</string>
-  <string name="pref_alarm_type" formatted="false">Τύπος Ειδοποίησης</string>
-  <string name="pref_alarm_type_summary" formatted="false">Ενεργοποίηση Ειδοποίησης όταν η μπαταρία:</string>
-  <string name="pref_alarm_type_help" formatted="false">Υπάρχουν μέχρι τώρα οκτώ τύποι ειδοποιήσεων από τις οποίες μπορείτε να διαλέξετε.\n
-    \n
-    Οι ειδοποιήσεις «Επιτεύχθηκε όριο φόρτισης» και «Επιτεύχθηκε όριο εκφόρτισης» θα σας ενημερώνουν όταν η μπαταρία φτάνει τον στόχο φόρτισης ή εκφόρτισης. Δεν χρειάζονται όριο και ακολουθούν πάντα τις τρέχουσες ρυθμίσεις στόχου.\n
-    \n
-    \n
-    Η \"Πλήρως Φορτισμένη\" ειδοποίηση θα σας ενημερώνει όταν η κατάσταση της μπαταρίας αλλάζει από το \"Φορτίζει\" στο \"Πλήρως Φορτισμένη\". Σημειώστε ότι σε πολλές συσκευές, αυτό δε σημαίνει αναγκαστικά το ίδιο πράγμα με το 100% φορτισμένη.\n
-    \n
-    Για τις ειδοποιήσεις φόρτισης και θερμοκρασίας χρειάζεται να θέσετε ένα κάτω όριο, μετά που θα επιλέξετε τον τύπο αυτό της ειδοποίησης.\n
-    \n
-    Η ειδοποίηση \"Όχι καλή υγεία μπαταρίας\" θα σας προειδοποιήσει αν η υγεία της μπαταρίας σας μετατραπεί σε κάτι διαφορετικό από το \"Άγνωστο\" ή \"Καλή Υγεία\", όπως αναφέρεται από το Abdroid.</string>
   <string name="pref_alarm_threshold" formatted="false">Όριο</string>
-  <string name="alarm_pref_not_used" formatted="false">Δε χρησιμοποιείται για αυτόν τον τύπο ειδοποίησης</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Όριο Ειδιποίησης:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Για τις ειδοποιήσεις φόρτισης και θερμοκρασίας, πρέπει να καθορίσετε το όριο φόρτισης ή θερμοκρασίας το οποίο θα ενεργοποιεί την ειδοποίηση.</string>
-  <string name="alarm_custom_temp_message" formatted="true">Εισαγάγετε τη θερμοκρασία σε %s βαθμούς</string>
-  <string name="alarm_custom_charge_message" formatted="false">Εισαγάγετε το ποσοστό χρέωσης (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">Πάντα</string>
   <string name="boot_pref_never" formatted="false">Ποτέ</string>

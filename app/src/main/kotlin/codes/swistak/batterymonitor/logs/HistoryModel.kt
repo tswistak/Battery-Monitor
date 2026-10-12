@@ -58,11 +58,15 @@ internal fun historyFilterKey(code: Int): String? {
         status == 4 -> "not_charging"
         status == 1 || status == 3 || status > 5 -> "unknown"
         status == 0 -> when (decoded[2]) {
-            0 -> "unplugged"; 1 -> "discharging"; else -> null
+            0 -> "unplugged"
+            1 -> "discharging"
+            else -> null
         }
 
         status == 2 -> when (decoded[2]) {
-            0 -> "plugged_in"; 1 -> "charging"; else -> null
+            0 -> "plugged_in"
+            1 -> "charging"
+            else -> null
         }
 
         else -> null
@@ -112,7 +116,8 @@ internal fun historyChart(
                 eventLast[event] = point
             }
             if (point.value == null) {
-                missing = missing ?: point; return
+                missing = missing ?: point
+                return
             }
             first = first ?: point
             last = point
@@ -138,7 +143,10 @@ internal fun historyChart(
                 .coerceIn(0, 41)
         val type = historyFilterKey(record.status)
         val event = when (type) {
-            "plugged_in" -> 0; "unplugged" -> 1; "boot_completed" -> 2; else -> null
+            "plugged_in" -> 0
+            "unplugged" -> 1
+            "boot_completed" -> 2
+            else -> null
         }
         for (metric in HistoryMetric.entries) {
             val value = if (record.status == -1) null else metric.value(record)
@@ -151,7 +159,9 @@ internal fun historyChart(
         }
         if (type == "plugged_in" || type == "unplugged" || type == "boot_completed") {
             val eventCode = when (type) {
-                "plugged_in" -> 2; "unplugged" -> 0; else -> -1
+                "plugged_in" -> 2
+                "unplugged" -> 0
+                else -> -1
             }
             val key = bucket to eventCode
             val old = events[key]

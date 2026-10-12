@@ -118,14 +118,6 @@
   <string name="alarm_type_temperature_drops" formatted="false">Sıcaklık şu değerin altına düşerse</string>
   <string name="alarm_type_temperature_rises" formatted="false">Sıcaklık üzerine çıkarsa</string>
   <string name="alarm_type_health_failure" formatted="false">Sağlık yetersiz</string>
-  <string name="alarm_type_entry_fully_charged" formatted="false">Tam şarjlı hale geldi</string>
-  <string name="alarm_type_entry_charging_limit_met" formatted="false">Şarj sınırına ulaşıldı</string>
-  <string name="alarm_type_entry_discharging_limit_met" formatted="false">Deşarj sınırına ulaşıldı</string>
-  <string name="alarm_type_entry_charge_drops" formatted="false">Şarj altına düşerse...</string>
-  <string name="alarm_type_entry_charge_rises" formatted="false">Şarj üstüne çıkarsa...</string>
-  <string name="alarm_type_entry_temperature_drops" formatted="false">Sıcaklık şu değerin altına düşerse...</string>
-  <string name="alarm_type_entry_temperature_rises" formatted="false">Sıcaklı üzerine çıkarsa...</string>
-  <string name="alarm_type_entry_health_failure" formatted="false">Sağlık başarısız</string>
 
   <string name="alarm_fully_charged" formatted="false">Pil şimdi tamamen şarj oldu</string>
   <string name="alarm_charging_limit_met" formatted="true">Şarj sınırına ulaşıldı: %1$d%%</string>
@@ -230,11 +222,8 @@
   <string name="app_notifs_disabled_summary" formatted="false">Bu uygulama için tüm bildirimleri kapattınız. Bu ayarlara erişmek için etkinleştirin.</string>
   <string name="main_notifs_disabled_b" formatted="false">Ana Bildirimi Etkinleştir</string>
   <string name="main_notifs_disabled_summary" formatted="false">Bu uygulama için ana bildirimi kapattınız. Bu ayarlara erişmek için etkinleştirin.</string>
-  <string name="app_notifs_alarms_disabled_summary" formatted="false">Bu uygulama için tüm bildirimleri kapattınız. Alarmlara erişmek için etkinleştirin.</string>
-  <string name="alarm_notifs_disabled_b" formatted="false">Alarmları Etkinleştir</string>
   <string name="alarm_notifs_disabled_summary" formatted="false">Bu uygulama için alarm bildirim grubunu kapattınız. Alarmlara erişmek için etkinleştirin.</string>
   <string name="alarm_chan_disabled" formatted="false">Bu alarm türü için bildirimleri kapattınız. Bu alarm türünü kullanmak için etkinleştirin.</string>
-  <string name="alarm_chan_disabled_b" formatted="false">Bu Alarm Türünü Etkinleştir</string>
   <string name="alarm_chan_settings_b" formatted="false">Bu Alarm Türünü Yönet</string>
 
   <string name="notification_settings" formatted="false">Ana Bildirim</string>
@@ -275,7 +264,6 @@
     \n
     Not: Bu izni vermek bazen uygulamanın kapanmasına neden olabilir. Böyle olursa uygulamayı yeniden açmanız yeterlidir.</string>
 
-  <string name="add_alarm" formatted="false">Alarm ekle</string>
 
   <string name="pref_cat_channel_settings" formatted="false">Bildirim Kanalı Ayarları</string>
   <string name="pref_manage_main_channel" formatted="false">Ana Kanalı Yönet</string>
@@ -385,25 +373,10 @@
   <string name="alarms_overview" formatted="false">Alarmlara Genel Bakış</string>
   <string name="alarms_overview_help" formatted="false">Bu sayfa yeni alarm eklemenizi, mevcut alarmları hızlıca etkinleştirip devre dışı bırakmanızı veya silmenizi sağlar.</string>
 
-  <string name="pref_alarm_enabled" formatted="false">Alarmı Etkinleştir</string>
-  <string name="pref_alarm_enabled_help" formatted="false">Bir alarmı yeniden oluşturmadan geçici olarak kapatmak istiyorsanız burada veya ana alarm sayfasında açıp kapatabilirsiniz.</string>
-
   <string name="pref_cat_alarm_conditions" formatted="false">Alarm Koşulları</string>
   <string name="pref_cat_alarm_conditions_help" formatted="false">Burada hangi koşulların alarm tetikleyeceğini kontrol edebilirsiniz.</string>
-  <string name="pref_alarm_type" formatted="false">Alarm Türü</string>
-  <string name="pref_alarm_type_summary" formatted="false">Pil şu durumdayken alarm tetikle:</string>
-  <string name="pref_alarm_type_help" formatted="false">Şu anda seçebileceğiniz sekiz tür alarm var.\n
-    \n
-    „Şarj sınırına ulaşıldı” ve „Deşarj sınırına ulaşıldı” alarmları, pil şarj veya deşarj hedefine ulaştığında sizi bilgilendirir. Eşik gerektirmezler ve her zaman geçerli hedef ayarlarını izlerler.\n
-    \n
-    \n
-    </string>
   <string name="pref_alarm_threshold" formatted="false">Eşik</string>
-  <string name="alarm_pref_not_used" formatted="false">Bu alarm türü için kullanılmıyor</string>
-  <string name="pref_alarm_threshold_summary" formatted="false">Alarm eşiği:</string>
   <string name="pref_alarm_threshold_help" formatted="false">Şarj ve sıcaklık alarmı için, şarj ve ya sıcaklık alarmını tetikleyecek seviyeleri belirlemeye ihtiyacınız var.</string>
-  <string name="alarm_custom_temp_message" formatted="true">Sıcaklığı %s derece cinsinden girin</string>
-  <string name="alarm_custom_charge_message" formatted="false">Ücret yüzdesini girin (0-100)</string>
 
   <string name="boot_pref_always" formatted="false">Daima</string>
   <string name="boot_pref_never" formatted="false">Asla</string>
