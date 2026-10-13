@@ -144,11 +144,13 @@ internal class PrivilegedBatteryReader(
 
     fun read(): PrivilegedBatteryReading? = readInternal(null)
 
-    fun readWhenReady(onResult: (PrivilegedBatteryReading?) -> Unit) {
-        readInternal(onResult)
+    fun readWhenReady(allowCached: Boolean = true, onResult: (PrivilegedBatteryReading?) -> Unit) {
+        readInternal(onResult, allowCached)
     }
 
-    private fun readInternal(onResult: ((PrivilegedBatteryReading?) -> Unit)?): PrivilegedBatteryReading? {
+    private fun readInternal(
+        onResult: ((PrivilegedBatteryReading?) -> Unit)?, allowCached: Boolean = true
+    ): PrivilegedBatteryReading? {
         var request: Pair<Long, Long>? = null
         var revoked = emptyList<(PrivilegedBatteryReading?) -> Unit>()
         var immediate = false
@@ -163,17 +165,19 @@ internal class PrivilegedBatteryReader(
             } else {
                 val now = clock()
                 if (now - cachedAtMillis !in 0..CACHE_TTL_MS) cache = null
-                if (onResult != null) {
-                    if (cache == null) waiters += onResult else immediate = true
-                }
                 val lastRefresh = lastRefreshAtMillis
+                val refreshDue = lastRefresh == null || now - lastRefresh >= REFRESH_INTERVAL_MS
+                if (onResult != null) {
+                    if (cache == null || !allowCached && (refreshInFlight || refreshDue)) waiters += onResult
+                    else immediate = true
+                }
                 val mustResolve = onResult != null && cache == null
                 if (!refreshInFlight && (mustResolve || lastRefresh == null || now - lastRefresh >= REFRESH_INTERVAL_MS)) {
                     refreshInFlight = true
                     lastRefreshAtMillis = now
                     request = ++requestId to currentRevision
                 }
-                cache
+                cache.takeIf { allowCached }
             }
         }
         deliver(revoked, null)
@@ -193,6 +197,7 @@ internal class PrivilegedBatteryReader(
         }
         return reading?.takeIf { enabled() && accessRevision() == readingRevision }
     }
+
 
     private fun invalidate(currentRevision: Long): List<(PrivilegedBatteryReading?) -> Unit> {
         revision = currentRevision

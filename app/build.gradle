@@ -60,7 +60,7 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 37
-        testInstrumentationRunner "codes.swistak.batterymonitor.alarms.GroupedAlarmsTestRunner"
+        testInstrumentationRunner "codes.swistak.batterymonitor.BatteryMonitorTestRunner"
         versionName baseVersionName
         versionCode computedVersionCode
 

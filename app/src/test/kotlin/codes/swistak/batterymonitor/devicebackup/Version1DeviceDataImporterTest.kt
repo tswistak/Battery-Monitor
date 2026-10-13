@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.devicebackup
 
+import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.monitoring.Predictor
 import org.junit.Assert.assertEquals
@@ -19,6 +20,36 @@ import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class Version1DeviceDataImporterTest {
+    @Test
+    fun `version two preserves boot event and sample encodings without migration`() {
+        val codes = listOf(LogDatabase.STATUS_BOOT_COMPLETED) + (0..2).flatMap { age ->
+            (0..4).flatMap { plugged ->
+                (0..5).map { status -> LogDatabase.encodeStatus(status, plugged, age) }
+            }
+        }
+        for (code in codes) {
+            val values = mapOf(
+                "status" to code,
+                "charge" to 74,
+                "time" to 1_754_000_000_000L,
+                "temperature" to 315,
+                "voltage" to 4125,
+                "currentMicroAmps" to -240_125L,
+                "remainingChargeMicroampHours" to 2_500_000L
+            )
+            assertEquals(
+                LogRecord(code, 74, 1_754_000_000_000L, 315, 4125, -240_125L, 2_500_000L),
+                Version2DeviceDataImporter.restoreLog(values)
+            )
+            assertEquals(
+                LogRecord(code, null, 1_754_000_000_000L, null, null),
+                Version2DeviceDataImporter.restoreLog(
+                    mapOf("status" to code, "time" to 1_754_000_000_000L)
+                )
+            )
+        }
+    }
+
     @Test
     fun `current predictor backups preserve discharge and record the state version`() {
         val averages = Predictor.KEY_AVERAGE.zip(listOf(10f, 20f, 30f, 40f)).toMap()

@@ -46,6 +46,7 @@ import android.os.Messenger
 import android.os.RemoteException
 import android.os.ResultReceiver
 import android.os.SystemClock
+import android.provider.Settings
 import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -57,8 +58,12 @@ import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
 import codes.swistak.batterymonitor.logs.AutoLogExporter
+import codes.swistak.batterymonitor.logs.BatteryHistorySampler
+import codes.swistak.batterymonitor.logs.HISTORY_MAINTENANCE_INTERVAL_MS
+import codes.swistak.batterymonitor.logs.HISTORY_SAMPLE_INTERVAL_MS
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogResult
+import codes.swistak.batterymonitor.logs.maintainHistory
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageResolver
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
@@ -79,6 +84,7 @@ import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
+import java.util.concurrent.Executors
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -277,6 +283,13 @@ class BatteryInfoService : Service() {
 
     private var alarms: AlarmDatabase? = null
     private var logDb: LogDatabase? = null
+    private lateinit var historySampler: BatteryHistorySampler
+    private var historyBootCount = -1
+    private var lastHistoryMaintenance: Long? = null
+    private val historyMaintenance = Executors.newSingleThreadExecutor { task ->
+        Thread(task, "HistoryMaintenance").apply { isDaemon = true }
+    }
+
     private var bl: BatteryLevel? = null
     private var cwbg: CircleWidgetBackground? = null
     private var currentMicroAmps: Long? = null
@@ -444,6 +457,15 @@ class BatteryInfoService : Service() {
         alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager?
 
         loadSettingsFiles()
+        historyBootCount = Settings.Global.getInt(contentResolver, Settings.Global.BOOT_COUNT, -1)
+        historySampler = BatteryHistorySampler(
+            BatteryHistorySampler.restoreElapsed(
+                spService.getLong("history_sample_elapsed", -1),
+                spService.getInt("history_sample_boot", -1),
+                historyBootCount,
+                SystemClock.elapsedRealtime()
+            )
+        )
         setUpChannels()
 
         sdkVersioning()
@@ -500,6 +522,7 @@ class BatteryInfoService : Service() {
         PrivilegedAccess.setReadyListener(null)
         destroyed = true
         pendingBatteryUpdates.clear()
+        historyMaintenance.shutdown()
         voltageResolver?.shutdown()
         voltageResolver = null
         if (alarms != null) alarms!!.close()
@@ -769,15 +792,20 @@ class BatteryInfoService : Service() {
         if (intent != null) applyBatteryFields(batteryFields(intent), null)
     }
 
-    private fun applyBatteryFields(fields: Map<String, Int>, fallback: PrivilegedBatteryReading?) {
+    private fun applyBatteryFields(
+        fields: Map<String, Int>, fallback: PrivilegedBatteryReading?
+    ): Map<String, Int> {
+        val merged = mergeBatteryFields(fields, fallback)
         val resolved = Intent(Intent.ACTION_BATTERY_CHANGED)
-        mergeBatteryFields(fields, fallback).forEach { (key, value) ->
+        merged.forEach { (key, value) ->
             resolved.putExtra(
                 key, value
             )
         }
         info!!.load(resolved, spService)
+        return merged
     }
+
 
     private fun update(intent: Intent?) {
         val batteryIntent = intent ?: registerReceiver(null, batteryChanged)
@@ -790,40 +818,54 @@ class BatteryInfoService : Service() {
     private fun processNextBatteryUpdate() {
         if (resolvingBatteryUpdate || pendingBatteryUpdates.isEmpty()) return
         resolvingBatteryUpdate = true
+        val observedAt = System.currentTimeMillis()
+        val observedElapsed = SystemClock.elapsedRealtime()
         val fields = batteryFields(pendingBatteryUpdates.removeFirst())
+        val remainingCharge = remainingChargeReader.readMicroAmpHours()
         val rawCurrent = BatteryCurrent.rawCurrentMicroAmps
         val needsFallback =
-            missingBatteryFields(fields).isNotEmpty() || remainingChargeReader.readMicroAmpHours() == null || rawCurrent == null
+            missingBatteryFields(fields).isNotEmpty() || remainingCharge == null || rawCurrent == null
         val revision = PrivilegedAccess.accessRevision
         val complete: (PrivilegedBatteryReading?) -> Unit = { reading ->
             mHandler.post {
                 if (!destroyed) {
                     val allowed =
                         PrivilegedAccess.isEnabled() && revision == PrivilegedAccess.accessRevision
-                    updateResolved(fields, reading.takeIf { allowed }, rawCurrent)
+                    updateResolved(
+                        fields,
+                        reading.takeIf { allowed },
+                        rawCurrent,
+                        remainingCharge,
+                        observedAt,
+                        observedElapsed
+                    )
                 }
                 resolvingBatteryUpdate = false
                 processNextBatteryUpdate()
             }
         }
         if (needsFallback && PrivilegedAccess.isEnabled()) {
-            PrivilegedBatteryReader.shared.readWhenReady(complete)
+            PrivilegedBatteryReader.shared.readWhenReady(allowCached = false, onResult = complete)
         } else complete(null)
     }
 
+
     private fun updateResolved(
-        fields: Map<String, Int>, fallback: PrivilegedBatteryReading?, rawCurrent: Long?
+        fields: Map<String, Int>,
+        fallback: PrivilegedBatteryReading?,
+        rawCurrent: Long?,
+        remainingCharge: Long?,
+        observedAt: Long,
+        observedElapsed: Long
     ) {
         currentMicroAmps = rawCurrent ?: fallback?.currentNowUa
-        now = System.currentTimeMillis()
+        now = observedAt
         spsEditor = spService.edit()
         updatedLasts = false
 
-        applyBatteryFields(fields, fallback)
-
-        info!!.remainingChargeUah = remainingChargeReader.readMicroAmpHours {
-            fallback?.remainingChargeUah
-        }
+        val resolvedFields = applyBatteryFields(fields, fallback)
+        info!!.remainingChargeUah = remainingCharge ?: fallback?.remainingChargeUah
+        recordHistory(resolvedFields, observedElapsed)
 
         predictor!!.setPredictionType(
             settings.getString(
@@ -896,8 +938,15 @@ class BatteryInfoService : Service() {
         BackgroundServiceWatchdog.recordHeartbeat(this)
         BackgroundServiceWatchdog.schedule(this)
         mHandler.removeCallbacks(runPredictorUpdate)
-        mHandler.postDelayed(runPredictorUpdate, 2L * 60L * 1000L)
+        if (pendingBatteryUpdates.isEmpty()) {
+            val nextUpdateDelay =
+                if (settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
+                    historySampler.nextUpdateDelay(SystemClock.elapsedRealtime(), observedElapsed)
+                } else HISTORY_SAMPLE_INTERVAL_MS
+            mHandler.postDelayed(runPredictorUpdate, nextUpdateDelay)
+        }
     }
+
 
     private fun setUpMinimalForegroundChannel() {
         if (mNotificationManager == null) return
@@ -1473,26 +1522,6 @@ class BatteryInfoService : Service() {
     }
 
     private fun handleUpdateWithChangedStatus() {
-        if (settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) {
-            recordLogResult(
-                logDb!!.logStatus(
-                    info!!, now, LogDatabase.STATUS_NEW, currentMicroAmps
-                )
-            )
-
-            if (info!!.status != info!!.lastStatus && info!!.lastStatus == BatteryInfo.STATUS_UNPLUGGED) {
-                val maxLogAge = settings.getString(
-                    SettingsContract.KEY_MAX_LOG_AGE, DisplayStrings.defaultMaxLogAge
-                )!!.toInt()
-                if (maxLogAge >= 0 && logDb!!.hasLogsOlderThan(maxLogAge) && AutoLogExporter.exportBeforeAutomaticLogPruning(
-                        this
-                    )
-                ) {
-                    logDb!!.prune(maxLogAge)
-                }
-            }
-        }
-
         if (SettingsContract.VITAL_SIGN_CURRENT in vitalSignsContent) {
             mHandler.postDelayed(runRenotify, 1000)
             mHandler.postDelayed(runRenotify, 3000)
@@ -1514,20 +1543,51 @@ class BatteryInfoService : Service() {
         spsEditor!!.putInt(KEY_PREVIOUS_HEALTH, info!!.health)
     }
 
-    private fun handleUpdateWithSameStatus() {
-        if (settings.getBoolean(
-                SettingsContract.KEY_ENABLE_LOGGING, true
-            )
-        ) recordLogResult(
-            logDb!!.logStatus(
-                info!!, now, LogDatabase.STATUS_OLD, currentMicroAmps
-            )
-        )
 
+    private fun handleUpdateWithSameStatus() {
         if (info!!.percent % 10 == 0) {
             spsEditor!!.putInt(KEY_PREVIOUS_CHARGE, info!!.percent)
             spsEditor!!.putInt(KEY_PREVIOUS_TEMP, info!!.temperature)
             spsEditor!!.putInt(KEY_PREVIOUS_HEALTH, info!!.health)
+        }
+    }
+
+
+    private fun recordHistory(fields: Map<String, Int>, elapsed: Long) {
+        val result = logDb!!.logObservation(
+            batteryHistoryObservation(
+                fields, now, currentMicroAmps, info!!.remainingChargeUah, info!!.percent
+            ),
+            elapsed,
+            historySampler,
+            settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true),
+            newStatus = statusHasChanged() && info!!.lastStatusCtm <= now
+        )
+        result?.let(::recordLogResult)
+        if (result != LogResult.Inserted) return
+        spsEditor!!.putLong("history_sample_elapsed", elapsed)
+        spsEditor!!.putInt("history_sample_boot", historyBootCount)
+        val lastMaintenance = lastHistoryMaintenance
+        if (lastMaintenance != null && elapsed - lastMaintenance in 0..<HISTORY_MAINTENANCE_INTERVAL_MS) return
+        lastHistoryMaintenance = elapsed
+        val maxAge =
+            settings.getString(SettingsContract.KEY_MAX_LOG_AGE, DisplayStrings.defaultMaxLogAge)
+                ?.toIntOrNull() ?: return
+        if (maxAge < 0) return
+        historyMaintenance.execute {
+            val database = LogDatabase(applicationContext)
+            try {
+                if (settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)) maintainHistory(
+                    maxAge,
+                    database::hasLogsOlderThan,
+                    { AutoLogExporter.exportBeforeAutomaticLogPruning(applicationContext) },
+                    database::prune
+                )
+            } catch (error: Exception) {
+                Log.e(LOG_TAG, "History maintenance failed; retaining history", error)
+            } finally {
+                database.close()
+            }
         }
     }
 

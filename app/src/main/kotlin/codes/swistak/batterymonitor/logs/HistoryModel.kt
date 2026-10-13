@@ -46,11 +46,13 @@ internal val historyFilterKeys = listOf(
     "not_charging",
     "fully_charged",
     "boot_completed",
-    "unknown"
+    "unknown",
+    "battery_measurement"
 )
 
 internal fun historyFilterKey(code: Int): String? {
     val decoded = LogDatabase.decodeStatus(code)
+    if (decoded[2] == LogDatabase.STATUS_SAMPLE) return "battery_measurement"
     val status = decoded[0]
     return when {
         status == -1 -> "boot_completed"
@@ -72,6 +74,7 @@ internal fun historyFilterKey(code: Int): String? {
         else -> null
     }
 }
+
 
 internal enum class HistoryMetric {
     LEVEL, TEMPERATURE, VOLTAGE, CURRENT, POWER, REMAINING_CHARGE;
@@ -181,6 +184,7 @@ internal fun historyChart(
     }, events.values.sortedBy { it.first })
 }
 
+
 internal data class HistoryQuery(val sql: String, val args: Array<String>) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -215,10 +219,11 @@ internal fun historyQuery(
         "(status >= 0 AND status % 10 = 0 AND status < 100)",
         "(status >= 100 AND status < 200 AND status % 10 = 2)",
         "(status >= 100 AND status < 200 AND status % 10 = 0)",
-        "(status >= 0 AND status % 10 = 4)",
-        "(status >= 0 AND status % 10 = 5)",
+        "(status >= 0 AND status < 200 AND status % 10 = 4)",
+        "(status >= 0 AND status < 200 AND status % 10 = 5)",
         "status = -1",
-        "(status >= 0 AND (status % 10 IN (1,3,6,7,8,9)))"
+        "(status >= 0 AND status < 200 AND (status % 10 IN (1,3,6,7,8,9)))",
+        "(status >= 200 AND status < 300)"
     )
     val selected =
         historyFilterKeys.indices.filter { filters?.contains(historyFilterKeys[it]) == true }
@@ -240,9 +245,9 @@ internal fun historyQuery(
     require(limit == null || limit in 1..129)
     return HistoryQuery(
         "SELECT _id, status, charge, time, temperature, voltage, current, remaining_charge_uah FROM logs WHERE ${
-            where.joinToString(
-                " AND "
-            )
-        } ORDER BY time $order, _id $order" + (limit?.let { " LIMIT $it" } ?: ""),
+        where.joinToString(
+            " AND "
+        )
+    } ORDER BY time $order, _id $order" + (limit?.let { " LIMIT $it" } ?: ""),
         args.toTypedArray())
 }

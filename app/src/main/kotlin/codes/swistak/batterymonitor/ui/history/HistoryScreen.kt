@@ -268,10 +268,15 @@ internal fun HistoryRoute(
     val plugged = stringArrayResource(R.array.pluggeds)
     val boot = stringResource(R.string.status_boot_completed)
     val unknown = stringResource(R.string.status_unknown)
+    val measurement = stringResource(R.string.history_periodic_measurement)
+
     fun status(record: LogRecord): String {
         if (record.status == -1) return boot
         val code = LogDatabase.decodeStatus(record.status)
-        return (if (code[2] == 1) oldStatuses else statuses).getOrElse(code[0]) { unknown } + (plugged.getOrNull(
+        val prefix = if (code[2] == LogDatabase.STATUS_SAMPLE) "$measurement · " else ""
+        return prefix + (if (code[2] != LogDatabase.STATUS_NEW) oldStatuses else statuses).getOrElse(
+            code[0]
+        ) { unknown } + (plugged.getOrNull(
             code[1]
         )?.takeIf { code[1] > 0 }?.let { " · $it" } ?: "")
     }
@@ -514,7 +519,9 @@ internal fun HistoryRoute(
                                     R.string.history_all_types
                                 )
                                 else stringResource(
-                                    R.string.history_filtered_types, state.filters.size
+                                    R.string.history_filtered_types,
+                                    state.filters.size,
+                                    historyFilterKeys.size
                                 ), fontWeight = FontWeight.SemiBold
                             )
                         })
@@ -889,7 +896,7 @@ internal fun HistoryRoute(
         }
     }
 
-    val filterLabels = stringArrayResource(R.array.log_filters)
+    val filterLabels = stringArrayResource(R.array.log_filters).toList() + measurement
     if (dialog == "filters") AlertDialog(
         onDismissRequest = { dialog = null },
         title = { Text(stringResource(R.string.configure_log_filter)) },

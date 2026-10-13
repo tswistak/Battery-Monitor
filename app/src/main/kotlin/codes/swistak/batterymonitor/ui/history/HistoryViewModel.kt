@@ -82,10 +82,18 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     var pendingImportJson = false
 
     init {
+        val measurementFilter = "battery_measurement"
+        val legacyFilterKeys = historyFilterKeys.filterNot { it == measurementFilter }
         if (!preferences.getBoolean("log_filters_migrated_to_sp_main", false)) {
             preferences.edit {
-                historyFilterKeys.forEach { putBoolean(it, settings.getBoolean(it, true)) }
+                legacyFilterKeys.forEach { putBoolean(it, settings.getBoolean(it, true)) }
                 putBoolean("log_filters_migrated_to_sp_main", true)
+            }
+        }
+        if (!preferences.contains(measurementFilter)) {
+            preferences.edit {
+                putBoolean(
+                    measurementFilter, legacyFilterKeys.all { preferences.getBoolean(it, true) })
             }
         }
         mutable.value = mutable.value.copy(filters = historyFilterKeys.filter {

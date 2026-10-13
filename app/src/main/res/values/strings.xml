@@ -670,6 +670,7 @@
     <string name="history_charts">Charts</string>
     <string name="history_level">Level</string>
     <string name="history_level_24h">Level · last 24 hours</string>
+    <string name="history_periodic_measurement">Battery measurement</string>
     <string name="history_observations">Stored observations, not a continuous measurement. Vertical lines mark power events and restarts.</string>
     <string name="history_chart_description">Observed range from %1$s to %2$s. Minimum %3$s, maximum %4$s. Open Events and tap a record for reading details.</string>
     <string name="history_chart_linked_description">Observed range from %1$s to %2$s. Minimum %3$s, maximum %4$s. Selecting an observation reveals and highlights its event in the Events column.</string>
@@ -695,7 +696,7 @@
     <string name="history_delete_all">Clear all logs</string>
     <string name="history_events">Events</string>
     <string name="history_all_types">All types</string>
-    <string name="history_filtered_types">Types: %1$d/8</string>
+    <string name="history_filtered_types">Types: %1$d/%2$d</string>
     <string name="history_newest">Newest</string>
     <string name="history_oldest">Oldest</string>
     <string name="history_today">Today · %1$s</string>

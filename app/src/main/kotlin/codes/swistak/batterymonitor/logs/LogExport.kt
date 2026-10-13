@@ -216,7 +216,7 @@ internal object LogExport {
         val multiplier = currentMultiplier(context)
         for (record in records) {
             date.time = record.time
-            val temperature = record.temperature ?: 0
+            val temperature = record.temperature
             val values = listOf(
                 dateFormat.format(date),
                 DisplayStrings.formatTime(context, date, includeSeconds = true),
@@ -228,14 +228,13 @@ internal object LogExport {
                     resources.getString(R.string.status_boot_completed),
                     resources.getString(R.string.status_unknown)
                 ),
-                (record.charge ?: 0).toString(),
-                (temperature / 10.0).toString(),
-                ((temperature * 9 / 5.0).roundToInt() / 10.0 + 32.0).toString(),
+                record.charge?.toString() ?: "",
+                temperature?.let { (it / 10.0).toString() } ?: "",
+                temperature?.let { ((it * 9 / 5.0).roundToInt() / 10.0 + 32.0).toString() } ?: "",
                 csvVoltageField(record.voltage),
                 record.currentMicroAmps?.toString() ?: "",
                 record.remainingChargeMicroampHours?.toString() ?: "",
-                csvPowerField(record, multiplier)
-            )
+                csvPowerField(record, multiplier))
             writer.write(values.joinToString(",", transform = ::csvField))
             writer.write("\r\n")
         }
@@ -247,7 +246,7 @@ internal object LogExport {
             (if (it == 0.0) 0.0 else it * currentMultiplier).toString()
         } ?: ""
 
-    private fun statusLabel(
+    internal fun statusLabel(
         statusCode: Int,
         statuses: Array<String>,
         oldStatuses: Array<String>,
@@ -260,10 +259,13 @@ internal object LogExport {
         val status = decoded[0]
         val plugged = decoded[1]
         val statusAge = decoded[2]
-        val labels = if (statusAge == LogDatabase.STATUS_OLD) oldStatuses else statuses
+        val labels = if (statusAge != LogDatabase.STATUS_NEW) oldStatuses else statuses
         val label = labels.getOrElse(status) { unknownLabel }
-        return if (plugged in 1 until pluggedValues.size) "$label ${pluggedValues[plugged]}" else label
+        val text =
+            if (plugged in 1 until pluggedValues.size) "$label ${pluggedValues[plugged]}" else label
+        return if (statusAge == LogDatabase.STATUS_SAMPLE) "[sample=$statusCode] $text" else text
     }
+
 
     private fun csvField(value: String): String {
         if (value.none { it == ',' || it == '"' || it == '\r' || it == '\n' }) return value

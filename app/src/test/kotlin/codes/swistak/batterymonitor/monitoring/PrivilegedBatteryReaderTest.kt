@@ -437,7 +437,7 @@ class PrivilegedBatteryReaderTest {
             collector = { error("must not collect") },
             enabled = { true },
             accessRevision = { 0 },
-            backgroundExecutor = Executor { throw RejectedExecutionException("stopped") },
+            backgroundExecutor = { throw RejectedExecutionException("stopped") },
             clock = { 0 })
         val results = mutableListOf<PrivilegedBatteryReading?>()
         reader.readWhenReady { results += it }
@@ -500,4 +500,37 @@ class PrivilegedBatteryReaderTest {
             tasks.removeFirst().run()
         }
     }
+
+    @Test
+    fun `history requests never reuse cached readings or increase the refresh frequency`() {
+        var now = 0L
+        var calls = 0
+        val tasks = ArrayDeque<Runnable>()
+        val reader = PrivilegedBatteryReader(
+            collector = {
+            calls++; snapshot().apply {
+            currentNowUa = calls.toLong()
+        }
+        },
+            enabled = { true },
+            accessRevision = { 1 },
+            backgroundExecutor = { tasks.add(it) },
+            clock = { now })
+        var result: PrivilegedBatteryReading? = null
+        reader.readWhenReady(allowCached = false) { result = it }
+        tasks.removeFirst().run()
+        assertEquals(1L, result?.currentNowUa)
+        now = 100
+        reader.readWhenReady(allowCached = false) { result = it }
+        assertNull(result)
+        assertEquals(1, calls)
+        assertEquals(0, tasks.size)
+        now = 2000
+        reader.readWhenReady(allowCached = false) { result = it }
+        assertEquals(1, tasks.size)
+        tasks.removeFirst().run()
+        assertEquals(2L, result?.currentNowUa)
+        assertEquals(2, calls)
+    }
+
 }

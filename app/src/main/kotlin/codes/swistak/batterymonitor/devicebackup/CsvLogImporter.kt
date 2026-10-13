@@ -100,18 +100,19 @@ internal object CsvLogImporter {
         val rows = parseCsv(csv).filterNot { row -> row.all(String::isBlank) }
         require(rows.size > 1) { "The CSV file contains no log entries" }
 
+        fun codeFor(label: String): Int? = sampleStatusCode(label) ?: statusCodeFor(label)
         return rows.drop(1).mapIndexed { index, row ->
             require(row.size >= COLUMN_COUNT) { "Invalid CSV row ${index + 2}" }
             val trailingColumnStart = (if (rows.first().size == 10) listOf(row.size - 7)
             else listOf(row.size - 5, row.size - 4)).firstOrNull { start ->
                 if (start < 3) false else {
-                    val code = statusCodeFor(row.subList(2, start).joinToString(","))
-                    code != null && (code == LogDatabase.STATUS_BOOT_COMPLETED || row[start].trim()
+                    val code = codeFor(row.subList(2, start).joinToString(","))
+                    code != null && (code == LogDatabase.STATUS_BOOT_COMPLETED || row[start].isBlank() || row[start].trim()
                         .toIntOrNull() != null)
                 }
             } ?: throw IllegalArgumentException("Invalid status or charge in CSV row ${index + 2}")
             val statusLabel = row.subList(2, trailingColumnStart).joinToString(",")
-            val statusCode = statusCodeFor(statusLabel)
+            val statusCode = codeFor(statusLabel)
                 ?: throw IllegalArgumentException("Unknown status in CSV row ${index + 2}")
             val timestamp = timestampFor(row[0].trim(), row[1].trim())
                 ?: throw IllegalArgumentException("Invalid timestamp in CSV row ${index + 2}")
@@ -119,7 +120,8 @@ internal object CsvLogImporter {
 
             LogRecord(
                 status = statusCode,
-                charge = if (isBoot) null else row[trailingColumnStart].trim().toIntOrNull()
+                charge = if (isBoot || row[trailingColumnStart].isBlank()) null
+                else row[trailingColumnStart].trim().toIntOrNull()
                     ?: throw IllegalArgumentException("Invalid charge in CSV row ${index + 2}"),
                 time = timestamp,
                 temperature = if (isBoot) null else parseScaledDecimal(
@@ -137,6 +139,17 @@ internal object CsvLogImporter {
         }
     }
 
+    private fun sampleStatusCode(label: String): Int? {
+        if (!label.startsWith("[sample=")) return null
+        val end = label.indexOf(']')
+        require(end >= 0) { "Invalid periodic sample status" }
+        val code = label.substring(8, end).toIntOrNull()
+        require(code != null && code in 200..299 && code % 10 in 0..5 && code / 10 % 10 in 0..4) {
+            "Invalid periodic sample status"
+        }
+        return code
+    }
+    
     @Throws(IOException::class)
     fun readFromUri(context: Context, uri: Uri): String {
         val pfd = context.contentResolver.openFileDescriptor(uri, "r")

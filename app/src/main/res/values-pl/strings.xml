@@ -721,6 +721,7 @@
     <string name="history_charts">Wykresy</string>
     <string name="history_level">Poziom</string>
     <string name="history_level_24h">Poziom · ostatnie 24 godziny</string>
+    <string name="history_periodic_measurement">Pomiar baterii</string>
     <string name="history_observations">Obserwacje z historii; nie ciągły pomiar. Pionowe linie oznaczają zdarzenia zasilania i restarty.</string>
     <string name="history_chart_description">Zakres obserwacji od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Otwórz Zdarzenia i dotknij wpisu, aby zobaczyć szczegóły odczytów.</string>
     <string name="history_chart_linked_description">Zakres obserwacji od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Wybranie obserwacji przewija do jej zdarzenia w kolumnie Zdarzenia i je wyróżnia.</string>
@@ -746,7 +747,7 @@
     <string name="history_delete_all">Wyczyść wszystkie logi</string>
     <string name="history_events">Zdarzenia</string>
     <string name="history_all_types">Wszystkie typy</string>
-    <string name="history_filtered_types">Typy: %1$d/8</string>
+    <string name="history_filtered_types">Typy: %1$d/%2$d</string>
     <string name="history_newest">Najnowsze</string>
     <string name="history_oldest">Najstarsze</string>
     <string name="history_today">Dzisiaj · %1$s</string>

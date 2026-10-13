@@ -204,4 +204,35 @@ class CsvLogImporterTest {
                 timestampFor = { _, _ -> 1L })
         }
     }
+
+    @Test
+    fun `periodic CSV round trips status source and missing values without localized lookup`() {
+        val statuses =
+            arrayOf("Disconnected", "Unknown", "Connected", "Unknown", "Not charging", "Full")
+        val old = arrayOf("Discharging", "Unknown", "Charging", "Unknown", "Not charging", "Full")
+        for (status in 0..5) for (plugged in 0..4) {
+            val code = LogDatabase.encodeStatus(status, plugged, LogDatabase.STATUS_SAMPLE)
+            val label = LogExport.statusLabel(
+                code,
+                statuses,
+                old,
+                arrayOf("", "AC", "USB", "Unknown", "Wireless"),
+                "Boot",
+                "Unknown"
+            )
+            val csv =
+                "Date,Time,Status,Charge,C,F,V,Current (µA),Charge (µAh),Power (W)\ndate,time,$label,,,,,,,\n"
+            val parsed = CsvLogImporter.parseRecords(csv, { null }, { _, _ -> 123 })
+            assertEquals(listOf(LogRecord(code, null, 123, null, null)), parsed)
+        }
+        for (marker in listOf("[sample=12] Charging", "[sample=299] Unknown", "[sample=no] Bad")) {
+            assertThrows(IllegalArgumentException::class.java) {
+                CsvLogImporter.parseRecords(
+                    "a,b,c,d,e,f,g,h,i,j\nd,t,$marker,50,30,86,4,1,2,3",
+                    { null },
+                    { _, _ -> 1 })
+            }
+        }
+    }
+
 }

@@ -52,7 +52,7 @@ internal object BatteryCurrent {
         get() = read(true)
 
     val rawCurrentMicroAmps: Long?
-        get() = readMicroAmps(average = false)
+        get() = readAndroidSystem(average = false) ?: readFileSystem(average = false)
 
     private fun read(average: Boolean): Double? = readMicroAmps(average)?.let { scaleMicroAmps(it) }
 

@@ -10,17 +10,19 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 */
-package codes.swistak.batterymonitor.alarms
+package codes.swistak.batterymonitor
 
 import android.app.Instrumentation
 import android.os.Bundle
+import codes.swistak.batterymonitor.alarms.AlarmDatabaseInstrumentedTest
+import codes.swistak.batterymonitor.logs.BatteryHistoryInstrumentedTest
 import org.junit.runner.Description
 import org.junit.runner.JUnitCore
 import org.junit.runner.Request
 import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunListener
 
-class GroupedAlarmsTestRunner : Instrumentation() {
+class BatteryMonitorTestRunner : Instrumentation() {
     companion object {
         lateinit var instrumentation: Instrumentation
     }
@@ -33,7 +35,9 @@ class GroupedAlarmsTestRunner : Instrumentation() {
 
     override fun onStart() {
         val junit = JUnitCore()
-        val runner = Request.aClass(AlarmDatabaseInstrumentedTest::class.java).runner
+        val runner = Request.classes(
+            AlarmDatabaseInstrumentedTest::class.java, BatteryHistoryInstrumentedTest::class.java
+        ).runner
         val total = runner.testCount()
         var failed = false
         var index = 0
@@ -58,7 +62,7 @@ class GroupedAlarmsTestRunner : Instrumentation() {
                 putString("class", description.className)
                 putString("test", description.methodName)
                 putInt("current", index)
-                putString("id", "GroupedAlarmsTestRunner")
+                putString("id", "BatteryMonitorTestRunner")
                 putInt("numtests", total)
             }
         })

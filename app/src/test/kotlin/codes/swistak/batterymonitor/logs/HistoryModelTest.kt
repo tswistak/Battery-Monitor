@@ -86,7 +86,7 @@ class HistoryModelTest {
         assertEquals("", LogExport.csvPowerField(records[1], -1))
         assertEquals("0.0", LogExport.csvPowerField(records[3], -1))
         assertEquals(
-            "0.00 W", codes.swistak.batterymonitor.ui.components.historyValue(
+            "0.00 W", historyValue(
                 0.0, HistoryMetric.POWER, false, Locale.US, -1
             )
         )
@@ -344,7 +344,7 @@ class HistoryModelTest {
     }
 
     @Test
-    fun `a million observations over a year keep bounded series extrema and dense event boundaries`() {
+    fun `a million periodic observations over a year keep bounded series extrema and dense event boundaries`() {
         val year = HistoryRangeState.days(
             LocalDate.of(2026, 1, 1), LocalDate.of(2026, 12, 31), ZoneId.of("UTC")
         )
@@ -362,7 +362,7 @@ class HistoryModelTest {
                             0 -> 22
                             1 -> 0
                             2 -> -1
-                            else -> 100
+                            else -> 200
                         }
                     )
                 )
@@ -380,6 +380,7 @@ class HistoryModelTest {
             historyChart(range, sequenceOf(entry(1, 100, status = 22), entry(2, 101, status = 22)))
         assertEquals(HistoryEvent(100, 101, 2, 2), dense.events.single())
     }
+
 
     @Test
     fun `a failed or cancelled write cannot advance the export watermark`() {
@@ -405,4 +406,125 @@ class HistoryModelTest {
             { watermark = it })
         assertEquals(20, watermark)
     }
+
+    @Test
+    fun `samples feed every metric without adding events or changing filter meanings`() {
+        val observations = listOf(200, 212, 224, 225, 231, 243).mapIndexed { index, code ->
+            entry(index.toLong(), 100L + index * 100, status = code, currentMicroAmps = 1000)
+        }
+        for ((_, record1) in observations) assertEquals(
+            "battery_measurement", historyFilterKey(record1.status)
+        )
+        val chart = historyChart(range, observations.asSequence())
+        assertEquals(6L, chart.count)
+        assertTrue(chart.events.isEmpty())
+        assertEquals(6, chart.series.getValue(HistoryMetric.CURRENT).points.size)
+        val query = historyQuery(range, historyFilterKeys.toSet(), revealedId = 3)
+        assertTrue(query.sql.contains("status < 200"))
+        assertTrue(query.sql.contains("(status >= 200 AND status < 300)"))
+        assertTrue(query.sql.contains("OR _id = ?"))
+    }
+
+    @Test
+    fun `measurement filter selects samples independently of every event filter`() {
+        val all = historyFilterKeys.toSet()
+        for (ascending in listOf(true, false)) {
+            val query = historyQuery(range, all, ascending, HistoryKey(500, 9), 129)
+            assertTrue(query.sql.contains("(status >= 200 AND status < 300)"))
+            assertEquals(listOf("100", "1000", "500", "500", "9"), query.args.toList())
+            assertTrue(query.sql.endsWith("LIMIT 129"))
+        }
+        for (filter in historyFilterKeys - "battery_measurement") {
+            assertFalse(historyQuery(range, setOf(filter)).sql.contains("status >= 200"))
+            assertTrue(historyQuery(range, all - filter).sql.contains("status >= 200"))
+        }
+        assertFalse(historyQuery(range, all - "battery_measurement").sql.contains("status >= 200"))
+        val samples = historyQuery(range, setOf("battery_measurement"))
+        assertTrue(samples.sql.contains("AND ((status >= 200 AND status < 300))"))
+        assertFalse(samples.sql.contains("status = -1"))
+        val mixed = historyQuery(range, setOf("battery_measurement", "charging"))
+        assertTrue(mixed.sql.contains("status >= 200"))
+        assertTrue(mixed.sql.contains("status >= 100 AND status < 200 AND status % 10 = 2"))
+        assertTrue(historyQuery(range, emptySet()).sql.contains("AND (0)"))
+    }
+
+    @Test
+    fun `legacy sparse readings remain continuous through the first periodic sample`() {
+        val range = HistoryRangeState(0, 10_000_000)
+        val old = listOf(entry(1, 1, status = 100), entry(2, 1_000_000, status = 100))
+        for (records in listOf(old, old + entry(3, 9_000_000, status = 200))) {
+            val points = historyChart(
+                range, records.asSequence()
+            ).series.getValue(HistoryMetric.LEVEL).points
+            assertEquals(1, points.map { it.segment }.distinct().size)
+        }
+    }
+
+    @Test
+    fun `mixed periodic and ordinary events keep their original line continuity despite sparse updates`() {
+        val range = HistoryRangeState(0, 10_000_000)
+        val records = listOf(
+            entry(1, 1, status = 200),
+            entry(2, 1_000_000, status = 100),
+            entry(3, 2_000_000, status = 200),
+            entry(4, 3_000_000, status = 100),
+            entry(5, 4_000_000, status = 100),
+            entry(6, 5_000_000, status = 22)
+        )
+        val points =
+            historyChart(range, records.asSequence()).series.getValue(HistoryMetric.LEVEL).points
+        assertEquals(1, points.map { it.segment }.distinct().size)
+        assertEquals(records.map { it.id }, points.map { it.key.id })
+    }
+
+    @Test
+    fun `irregular real device sample intervals stay connected on every chart after reduction`() {
+        val start = LocalDate.of(2026, 10, 13).atStartOfDay(ZoneId.of("Europe/Warsaw")).toInstant()
+            .toEpochMilli()
+        val range = HistoryRangeState(start, start + 86_400_000)
+        fun time(hour: Int, minute: Int, second: Int) =
+            start + (hour * 3600 + minute * 60 + second) * 1000L
+
+        val records = listOf(
+            HistoryRecord(1, LogRecord(200, 42, time(14, 2, 11), 327, 3790, -18_000, 1_471_000)),
+            HistoryRecord(2, LogRecord(200, 42, time(14, 12, 52), 295, 3830, -11_000, 1_461_000)),
+            HistoryRecord(3, LogRecord(200, 42, time(14, 14, 52), 293, 3810, -13_000, 1_452_000))
+        )
+        val chart = historyChart(range, records.asSequence())
+        assertEquals(3L, chart.count)
+        assertTrue(chart.events.isEmpty())
+        for (metric in HistoryMetric.entries) {
+            val series = chart.series.getValue(metric)
+            val values = records.mapNotNull { metric.value(it.record) }
+            assertEquals(values.minOrNull(), series.min)
+            assertEquals(values.maxOrNull(), series.max)
+            assertEquals(1L, series.points.first().key.id)
+            assertEquals(3L, series.points.last().key.id)
+            assertEquals(1, series.points.map { it.segment }.distinct().size)
+            assertTrue(
+                series.points.zipWithNext().all { (first, last) -> first.segment == last.segment })
+        }
+        assertTrue(chart.series.getValue(HistoryMetric.VOLTAGE).points.any { it.key.id == 2L })
+        assertTrue(chart.series.getValue(HistoryMetric.CURRENT).points.any { it.key.id == 2L })
+
+        val unavailableCurrent = records.map { row ->
+            if (row.id == 2L) row.copy(record = row.record.copy(currentMicroAmps = null)) else row
+        }
+        val missing = historyChart(range, unavailableCurrent.asSequence())
+        for (metric in HistoryMetric.entries) {
+            val points = missing.series.getValue(metric).points
+            if (metric == HistoryMetric.CURRENT || metric == HistoryMetric.POWER) {
+                assertTrue(points.any { it.key.id == 2L && it.value == null })
+                assertNotEquals(points.first().segment, points.last().segment)
+            } else assertEquals(1, points.map { it.segment }.distinct().size)
+        }
+
+        val boot = HistoryRecord(4, LogRecord(-1, null, time(14, 5, 0), null, null))
+        val restarted = historyChart(range, (records.take(1) + boot + records.drop(1)).asSequence())
+        for ((points) in restarted.series.values) {
+            assertTrue(points.any { it.key.id == 4L && it.value == null })
+            assertNotEquals(points.first().segment, points.last().segment)
+        }
+    }
+
 }

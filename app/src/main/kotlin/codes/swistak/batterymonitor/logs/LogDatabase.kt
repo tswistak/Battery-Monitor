@@ -21,7 +21,6 @@ import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import androidx.core.database.sqlite.transaction
-import codes.swistak.batterymonitor.monitoring.BatteryInfo
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 
 
@@ -64,6 +63,7 @@ internal class LogDatabase(context: Context?) {
         // Values for status_age
         const val STATUS_NEW: Int = 0
         const val STATUS_OLD: Int = 1
+        const val STATUS_SAMPLE: Int = 2
 
         /* My cursor adapter was getting a bit complicated since it could only see one datum at a time, and
        how I want to present the data depends on several interrelated factors.  Storing all three of
@@ -223,6 +223,7 @@ internal class LogDatabase(context: Context?) {
     fun historyDuration(entry: HistoryRecord): Long? {
         val record = entry.record
         val status = decodeStatus(record.status)
+        if (status[2] == STATUS_SAMPLE) return null
         val previous = when {
             status[0] == 5 || (status[0] == 0 && status[2] == 0) -> 2
             status[0] == 2 && status[2] == 0 -> 0
@@ -239,6 +240,7 @@ internal class LogDatabase(context: Context?) {
             )
         ).use { if (it.moveToFirst()) record.time - it.getLong(0) else null }
     }
+
 
     fun getLogRecordsInRange(
         afterExclusive: Long? = null, throughInclusive: Long? = null
@@ -327,40 +329,42 @@ internal class LogDatabase(context: Context?) {
         if (value == null) putNull(key) else put(key, value)
     }
 
-    fun logStatus(
-        info: BatteryInfo, time: Long, statusAge: Int, currentMicroAmps: Long?
-    ): LogResult = writeWithRetry("Logging battery status") { readableDatabase, writableDatabase ->
-        var duplicate = false
-        readableDatabase.rawQuery(
-            "SELECT * FROM $LOG_TABLE_NAME ORDER BY $KEY_TIME DESC LIMIT 1", null
-        ).use { lastLog ->
-            if (lastLog.moveToFirst()) {
-                val statusCode = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_STATUS_CODE))
-                val lastCharge = lastLog.getInt(lastLog.getColumnIndexOrThrow(KEY_CHARGE))
-                val decodedStatus: IntArray = decodeStatus(statusCode)
-                val lastStatus = decodedStatus[0]
-                val lastPlugged = decodedStatus[1]
-
-                duplicate =
-                    info.percent == lastCharge && info.status == lastStatus && info.plugged == lastPlugged
+    fun logObservation(
+        observation: LogRecord,
+        elapsed: Long,
+        sampler: BatteryHistorySampler,
+        loggingEnabled: Boolean,
+        newStatus: Boolean = false
+    ): LogResult? {
+        if (!loggingEnabled) return null
+        val result = writeWithRetry("Logging battery observation") { _, database ->
+            database.transaction {
+                val previous = rawQuery(
+                    "SELECT status, charge FROM logs ORDER BY _id DESC LIMIT 1", null
+                ).use { cursor ->
+                    if (!cursor.moveToFirst()) null else LogRecord(
+                        cursor.getInt(0), cursor.getNullableInt(1), 0, null, null
+                    )
+                }
+                val age = sampler.statusAge(previous, observation, elapsed, newStatus)
+                if (age == null) LogResult.Duplicate else {
+                    val decoded = decodeStatus(observation.status)
+                    val values = ContentValues().apply {
+                        put(KEY_STATUS_CODE, encodeStatus(decoded[0], decoded[1], age))
+                        putNullable(KEY_CHARGE, observation.charge)
+                        put(KEY_TIME, observation.time)
+                        putNullable(KEY_TEMPERATURE, observation.temperature)
+                        putNullable(KEY_VOLTAGE, observation.voltage)
+                        putNullable(KEY_CURRENT, observation.currentMicroAmps)
+                        putNullable(KEY_REMAINING_CHARGE, observation.remainingChargeMicroampHours)
+                    }
+                    insertOrThrow(LOG_TABLE_NAME, null, values)
+                    LogResult.Inserted
+                }
             }
         }
-
-        if (duplicate) {
-            LogResult.Duplicate
-        } else {
-            val values = ContentValues().apply {
-                put(KEY_STATUS_CODE, encodeStatus(info.status, info.plugged, statusAge))
-                put(KEY_CHARGE, info.percent)
-                put(KEY_TIME, time)
-                put(KEY_TEMPERATURE, info.temperature)
-                putNullable(KEY_VOLTAGE, info.voltage)
-                putNullable(KEY_CURRENT, currentMicroAmps)
-                putNullable(KEY_REMAINING_CHARGE, info.remainingChargeUah)
-            }
-            writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
-            LogResult.Inserted
-        }
+        if (result == LogResult.Inserted) sampler.inserted(elapsed)
+        return result
     }
 
     fun logBoot(): LogResult = writeWithRetry("Logging boot completion") { _, writableDatabase ->
@@ -405,7 +409,7 @@ internal class LogDatabase(context: Context?) {
 
         try {
             wdb!!.execSQL("DELETE FROM $LOG_TABLE_NAME WHERE $KEY_TIME < $oldestLog")
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 
@@ -417,7 +421,7 @@ internal class LogDatabase(context: Context?) {
                 "SELECT 1 FROM $LOG_TABLE_NAME WHERE $KEY_TIME < ? LIMIT 1",
                 arrayOf(oldestAllowedLog.toString())
             )?.use { it.moveToFirst() } ?: false
-        } catch (exception: Exception) {
+        } catch (_: Exception) {
             false
         }
     }
