@@ -65,6 +65,7 @@ import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsRoute
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsViewModel
 import codes.swistak.batterymonitor.ui.diagnostics.MonitorAction
 import codes.swistak.batterymonitor.ui.help.LegacyHelpFragment
+import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.history.HistoryActionsMenu
 import codes.swistak.batterymonitor.ui.history.HistoryRoute
 import codes.swistak.batterymonitor.ui.history.HistoryViewModel
@@ -275,6 +276,14 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 persistent.monitoring.state,
                                 requestedAction = historyAction,
                                 onActionHandled = { historyAction = null },
+                                onOpenFullscreen = { metric, range, label ->
+                                    history.retainExactRange()
+                                    startActivity(
+                                        FullscreenChartActivity.intent(
+                                            this@BatteryInfoActivity, metric, range, label
+                                        )
+                                    )
+                                },
                                 modifier = Modifier.fillMaxSize()
                             )
                         }

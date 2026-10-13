@@ -662,4 +662,35 @@
   <string name="pref_discharging_target_help" formatted="false">سطح پایانی برآورد تخلیه را تنظیم کنید. این گزینه از هشدارهای کمبود باتری مستقل است.</string>
   <string name="pref_target_level_summary" formatted="true">برآورد تا %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="history_open_fullscreen">باز کردن نمودار تمام‌صفحه</string>
+    <string name="history_chart_scale">مقیاس محور عمودی</string>
+    <string name="history_chart_scale_auto">خودکار · داده‌های قابل مشاهده</string>
+    <string name="history_chart_scale_fixed">ثابت · کل بازهٔ انتخاب‌شده</string>
+    <string name="history_chart_scale_manual">بزرگ‌نمایی عمودی دستی</string>
+    <string name="history_chart_zoom_in">بزرگ‌نمایی</string>
+    <string name="history_chart_zoom_out">کوچک‌نمایی</string>
+    <string name="history_chart_pan_left">بازهٔ زمانی قبلی</string>
+    <string name="history_chart_pan_right">بازهٔ زمانی بعدی</string>
+    <string name="history_chart_reset">نمایش کامل بازهٔ انتخاب‌شده</string>
+    <string name="history_chart_select_point">انتخاب داده‌ها</string>
+    <string name="history_chart_1h">۱ ساعت گذشته</string>
+    <string name="history_chart_6h">۶ ساعت گذشته</string>
+    <string name="history_chart_event_summary">متصل (خط‌چین کوتاه): %1$d · قطع اتصال (خط‌چین بلند): %2$d · وقفه‌های پایش (نقطه‌چین): %3$d</string>
+    <string name="history_chart_description_fullscreen">%1$s. داده‌ها از %2$s تا %3$s.</string>
+    <string name="history_all_history">همهٔ سابقه</string>
+    <string name="history_chart_compare">مقایسه</string>
+    <string name="history_chart_remove_comparison">حذف مقایسه</string>
+    <string name="history_chart_y_auto">Y: خودکار</string>
+    <string name="history_chart_y_fixed">Y: ثابت</string>
+    <string name="history_chart_y_manual">Y: دستی</string>
+    <string name="history_chart_settings">تنظیمات نمایش نمودار</string>
+    <string name="history_chart_display_style">سبک نمایش</string>
+    <string name="history_chart_connected">داده‌های متصل</string>
+    <string name="history_chart_points">فقط نقاط</string>
+    <string name="history_chart_value_scale">مقیاس مقادیر</string>
+    <string name="history_chart_linear">خطی</string>
+    <string name="history_chart_logarithmic">لگاریتمی</string>
+    <string name="history_chart_log_unavailable">مقیاس لگاریتمی به داده‌های مثبت برای هر دو معیار انتخاب‌شده نیاز دارد.</string>
+    <string name="history_chart_more">اقدامات بیشتر نمودار</string>
+    <string name="history_chart_events">رویدادهای نمودار</string>
 </resources>

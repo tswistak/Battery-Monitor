@@ -8,6 +8,7 @@
 package codes.swistak.batterymonitor.logs
 
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
+import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -17,7 +18,11 @@ internal data class HistoryRangeState(val start: Long, val end: Long) {
     }
 
     val exportAfter: Long get() = start - 1
-    val exportThrough: Long get() = end - 1
+    val exportThrough: Long get() = if (end == Long.MAX_VALUE) end else end - 1
+    val endOperator: String get() = if (end == Long.MAX_VALUE) "<=" else "<"
+
+    fun contains(time: Long): Boolean =
+        time >= start && (time < end || (end == Long.MAX_VALUE && time == end))
 
     companion object {
         fun lastHours(hours: Int, now: Long = System.currentTimeMillis()) =
@@ -32,6 +37,7 @@ internal data class HistoryRangeState(val start: Long, val end: Long) {
         }
     }
 }
+
 
 internal data class HistoryKey(val time: Long, val id: Long)
 internal data class HistoryRecord(val id: Long, val record: LogRecord) {
@@ -76,6 +82,21 @@ internal fun historyFilterKey(code: Int): String? {
 }
 
 
+internal fun historyExclusiveEnd(time: Long): Long = if (time == Long.MAX_VALUE) time else time + 1
+
+internal fun historyEventCode(status: Int): Int? = when (historyFilterKey(status)) {
+    "plugged_in" -> HistoryEvent.CONNECTED
+    "unplugged" -> HistoryEvent.DISCONNECTED
+    "boot_completed" -> HistoryEvent.REBOOT
+    else -> null
+}
+
+internal fun historyObservationValue(metric: HistoryMetric, record: LogRecord): Double? {
+    if (record.status == LogDatabase.STATUS_BOOT_COMPLETED) return null
+    val voltage = record.voltage?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
+    return metric.value(record.copy(voltage = voltage))?.takeIf(Double::isFinite)
+}
+
 internal enum class HistoryMetric {
     LEVEL, TEMPERATURE, VOLTAGE, CURRENT, POWER, REMAINING_CHARGE;
 
@@ -90,7 +111,26 @@ internal enum class HistoryMetric {
 }
 
 internal data class HistoryPoint(val key: HistoryKey, val value: Double?, val segment: Long = 0)
-internal data class HistoryEvent(val first: Long, val last: Long, val count: Long, val code: Int)
+internal data class HistoryEvent(val first: Long, val last: Long, val count: Long, val code: Int) {
+    companion object {
+        const val CONNECTED = 2
+        const val DISCONNECTED = 0
+        const val REBOOT = LogDatabase.STATUS_BOOT_COMPLETED
+
+        private const val CONNECTED_INDEX = 0
+        private const val DISCONNECTED_INDEX = 1
+        private const val REBOOT_INDEX = 2
+        const val TYPE_COUNT = 3
+
+        fun indexFor(code: Int?): Int? = when (code) {
+            CONNECTED -> CONNECTED_INDEX
+            DISCONNECTED -> DISCONNECTED_INDEX
+            REBOOT -> REBOOT_INDEX
+            else -> null
+        }
+    }
+}
+
 internal data class HistorySeries(
     val points: List<HistoryPoint>, val min: Double?, val max: Double?
 )
@@ -111,8 +151,9 @@ internal fun historyChart(
         var min: HistoryPoint? = null
         var max: HistoryPoint? = null
         var missing: HistoryPoint? = null
-        val eventFirst = arrayOfNulls<HistoryPoint>(3)
-        val eventLast = arrayOfNulls<HistoryPoint>(3)
+        val eventFirst = arrayOfNulls<HistoryPoint>(HistoryEvent.TYPE_COUNT)
+        val eventLast = arrayOfNulls<HistoryPoint>(HistoryEvent.TYPE_COUNT)
+
         fun add(point: HistoryPoint, event: Int?) {
             if (event != null) {
                 eventFirst[event] = eventFirst[event] ?: point
@@ -139,20 +180,15 @@ internal fun historyChart(
     var count = 0L
     for (entry in records) {
         val record = entry.record
-        if (record.time < range.start || record.time >= range.end) continue
+        if (!range.contains(record.time)) continue
         count++
         val bucket =
             (((record.time - range.start).toDouble() / (range.end - range.start)) * 42).toInt()
                 .coerceIn(0, 41)
-        val type = historyFilterKey(record.status)
-        val event = when (type) {
-            "plugged_in" -> 0
-            "unplugged" -> 1
-            "boot_completed" -> 2
-            else -> null
-        }
+        val eventCode = historyEventCode(record.status)
+        val event = HistoryEvent.indexFor(eventCode)
         for (metric in HistoryMetric.entries) {
-            val value = if (record.status == -1) null else metric.value(record)
+            val value = historyObservationValue(metric, record)
             if (value == null) segments[metric.ordinal]++
             buckets.getValue(metric)[bucket].add(
                 HistoryPoint(
@@ -160,12 +196,7 @@ internal fun historyChart(
                 ), event
             )
         }
-        if (type == "plugged_in" || type == "unplugged" || type == "boot_completed") {
-            val eventCode = when (type) {
-                "plugged_in" -> 2
-                "unplugged" -> 0
-                else -> -1
-            }
+        if (eventCode != null) {
             val key = bucket to eventCode
             val old = events[key]
             events[key] = HistoryEvent(
@@ -229,7 +260,7 @@ internal fun historyQuery(
         historyFilterKeys.indices.filter { filters?.contains(historyFilterKeys[it]) == true }
             .map { clauses[it] }
     val args = mutableListOf(range.start.toString(), range.end.toString())
-    val where = mutableListOf("time >= ?", "time < ?")
+    val where = mutableListOf("time >= ?", "time ${range.endOperator} ?")
     if (filters != null) {
         val selection = selected.joinToString(" OR ").ifEmpty { "0" }
         where += if (revealedId == null) "($selection)" else "($selection OR _id = ?)"
@@ -245,9 +276,9 @@ internal fun historyQuery(
     require(limit == null || limit in 1..129)
     return HistoryQuery(
         "SELECT _id, status, charge, time, temperature, voltage, current, remaining_charge_uah FROM logs WHERE ${
-        where.joinToString(
-            " AND "
-        )
-    } ORDER BY time $order, _id $order" + (limit?.let { " LIMIT $it" } ?: ""),
+            where.joinToString(
+                " AND "
+            )
+        } ORDER BY time $order, _id $order" + (limit?.let { " LIMIT $it" } ?: ""),
         args.toTypedArray())
 }

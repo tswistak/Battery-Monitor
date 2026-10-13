@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryChartModel
+import codes.swistak.batterymonitor.logs.HistoryEvent
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistorySeries
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
@@ -98,13 +99,27 @@ internal fun historyValue(
 }
 
 
-private fun historyUnit(metric: HistoryMetric, fahrenheit: Boolean): String = when (metric) {
+internal fun historyUnit(metric: HistoryMetric, fahrenheit: Boolean): String = when (metric) {
     HistoryMetric.LEVEL -> "%"
     HistoryMetric.TEMPERATURE -> if (fahrenheit) "°F" else "°C"
     HistoryMetric.VOLTAGE -> "V"
     HistoryMetric.CURRENT -> "mA"
     HistoryMetric.POWER -> "W"
     HistoryMetric.REMAINING_CHARGE -> "mAh"
+}
+
+internal fun historyAxisFormatter(
+    span: Long, locale: Locale, zone: ZoneId, compact: Boolean = false
+): DateTimeFormatter {
+    val day = 24 * 3_600_000L
+    val formatter = when {
+        span >= 730 * day -> DateTimeFormatter.ofPattern("uuuu", locale)
+        span >= 90 * day -> DateTimeFormatter.ofPattern("LLL uuuu", locale)
+        span > 2 * day && !compact -> DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+        span <= 3_600_000L -> DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)
+        else -> DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+    }
+    return formatter.withLocale(locale).withZone(zone)
 }
 
 internal fun historyRangeValue(
@@ -208,11 +223,7 @@ internal fun MeasurementChart(
 
     fun time(value: Long) = formatter.format(Instant.ofEpochMilli(value))
     val axisFormatter = remember(locale, model.range, compact, zone) {
-        (if (model.range.end - model.range.start <= 48 * 3_600_000L || compact) DateTimeFormatter.ofLocalizedTime(
-            FormatStyle.SHORT
-        ) else DateTimeFormatter.ofLocalizedDate(
-            FormatStyle.SHORT
-        )).withLocale(locale).withZone(zone)
+        historyAxisFormatter(model.range.end - model.range.start, locale, zone, compact)
     }
     val numberFormat = remember(locale) {
         NumberFormat.getNumberInstance(locale).apply { maximumFractionDigits = 2 }
@@ -317,8 +328,7 @@ internal fun MeasurementChart(
                                 CustomAccessibilityAction(next) { move(1) })
                         }
                         .onKeyEvent {
-                            if (it.type != KeyEventType.KeyDown || compact) false
-                            else when (it.key) {
+                            !(it.type != KeyEventType.KeyDown || compact) && when (it.key) {
                                 Key.DirectionLeft -> move(-1)
                                 Key.DirectionRight -> move(1)
                                 else -> false
@@ -362,13 +372,13 @@ internal fun MeasurementChart(
                                 Offset(x(time), size.height - inset),
                                 1.dp.toPx(),
                                 pathEffect = when (event.code) {
-                                    2 -> PathEffect.dashPathEffect(
+                                    HistoryEvent.CONNECTED -> PathEffect.dashPathEffect(
                                         floatArrayOf(
                                             3.dp.toPx(), 4.dp.toPx()
                                         )
                                     )
 
-                                    0 -> PathEffect.dashPathEffect(
+                                    HistoryEvent.DISCONNECTED -> PathEffect.dashPathEffect(
                                         floatArrayOf(
                                             7.dp.toPx(), 4.dp.toPx()
                                         )

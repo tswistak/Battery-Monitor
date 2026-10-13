@@ -655,4 +655,35 @@
   <string name="pref_discharging_target_help" formatted="false">Définissez le niveau final des estimations de décharge. Il est indépendant des alertes de batterie faible.</string>
   <string name="pref_target_level_summary" formatted="true">Estimer jusqu’à %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Ouvrir le graphique en plein écran</string>
+  <string name="history_chart_scale">Échelle de l’axe Y</string>
+  <string name="history_chart_scale_auto">Automatique · mesures visibles</string>
+  <string name="history_chart_scale_fixed">Fixe · toute la période sélectionnée</string>
+  <string name="history_chart_scale_manual">Zoom vertical manuel</string>
+  <string name="history_chart_zoom_in">Zoom avant</string>
+  <string name="history_chart_zoom_out">Zoom arrière</string>
+  <string name="history_chart_pan_left">Intervalle précédent</string>
+  <string name="history_chart_pan_right">Intervalle suivant</string>
+  <string name="history_chart_reset">Afficher toute la période sélectionnée</string>
+  <string name="history_chart_select_point">Sélectionner des mesures</string>
+  <string name="history_chart_1h">Dernière heure</string>
+  <string name="history_chart_6h">6 dernières heures</string>
+  <string name="history_chart_event_summary">Branché (tirets courts) : %1$d · Débranché (tirets longs) : %2$d · Interruptions de la surveillance (pointillés) : %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Mesures de %2$s à %3$s.</string>
+  <string name="history_all_history">Tout l’historique</string>
+  <string name="history_chart_compare">Comparer</string>
+  <string name="history_chart_remove_comparison">Supprimer la comparaison</string>
+  <string name="history_chart_y_auto">Y : Auto</string>
+  <string name="history_chart_y_fixed">Y : Fixe</string>
+  <string name="history_chart_y_manual">Y : Manuel</string>
+  <string name="history_chart_settings">Paramètres d’affichage du graphique</string>
+  <string name="history_chart_display_style">Style d’affichage</string>
+  <string name="history_chart_connected">Mesures reliées</string>
+  <string name="history_chart_points">Points uniquement</string>
+  <string name="history_chart_value_scale">Échelle des valeurs</string>
+  <string name="history_chart_linear">Linéaire</string>
+  <string name="history_chart_logarithmic">Logarithmique</string>
+  <string name="history_chart_log_unavailable">L’échelle logarithmique nécessite des mesures positives pour les deux grandeurs sélectionnées.</string>
+  <string name="history_chart_more">Autres actions du graphique</string>
+  <string name="history_chart_events">Événements du graphique</string>
 </resources>

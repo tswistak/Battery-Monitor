@@ -663,4 +663,35 @@
   <string name="pref_discharging_target_help" formatted="false">Define el nivel final de las estimaciones de descarga. Es independiente de las alarmas de batería baja.</string>
   <string name="pref_target_level_summary" formatted="true">Estimar hasta %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Abrir gráfico a pantalla completa</string>
+  <string name="history_chart_scale">Escala del eje Y</string>
+  <string name="history_chart_scale_auto">Automática · mediciones visibles</string>
+  <string name="history_chart_scale_fixed">Fija · todo el intervalo seleccionado</string>
+  <string name="history_chart_scale_manual">Zoom vertical manual</string>
+  <string name="history_chart_zoom_in">Acercar</string>
+  <string name="history_chart_zoom_out">Alejar</string>
+  <string name="history_chart_pan_left">Intervalo anterior</string>
+  <string name="history_chart_pan_right">Intervalo siguiente</string>
+  <string name="history_chart_reset">Ajustar al intervalo seleccionado</string>
+  <string name="history_chart_select_point">Seleccionar mediciones</string>
+  <string name="history_chart_1h">Última hora</string>
+  <string name="history_chart_6h">Últimas 6 horas</string>
+  <string name="history_chart_event_summary">Conectado (guiones cortos): %1$d · Desconectado (guiones largos): %2$d · Interrupciones del monitoreo (puntos): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Mediciones de %2$s a %3$s.</string>
+  <string name="history_all_history">Todo el historial</string>
+  <string name="history_chart_compare">Comparar</string>
+  <string name="history_chart_remove_comparison">Quitar comparación</string>
+  <string name="history_chart_y_auto">Y: Auto</string>
+  <string name="history_chart_y_fixed">Y: Fija</string>
+  <string name="history_chart_y_manual">Y: Manual</string>
+  <string name="history_chart_settings">Ajustes de visualización del gráfico</string>
+  <string name="history_chart_display_style">Estilo de visualización</string>
+  <string name="history_chart_connected">Mediciones conectadas</string>
+  <string name="history_chart_points">Solo puntos</string>
+  <string name="history_chart_value_scale">Escala de valores</string>
+  <string name="history_chart_linear">Lineal</string>
+  <string name="history_chart_logarithmic">Logarítmica</string>
+  <string name="history_chart_log_unavailable">La escala logarítmica requiere mediciones positivas para ambas métricas seleccionadas.</string>
+  <string name="history_chart_more">Más acciones del gráfico</string>
+  <string name="history_chart_events">Eventos del gráfico</string>
 </resources>

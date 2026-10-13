@@ -16,6 +16,8 @@ import android.app.Instrumentation
 import android.os.Bundle
 import codes.swistak.batterymonitor.alarms.AlarmDatabaseInstrumentedTest
 import codes.swistak.batterymonitor.logs.BatteryHistoryInstrumentedTest
+import codes.swistak.batterymonitor.logs.DetailedHistoryInstrumentedTest
+import codes.swistak.batterymonitor.ui.history.FullscreenChartStateInstrumentedTest
 import org.junit.runner.Description
 import org.junit.runner.JUnitCore
 import org.junit.runner.Request
@@ -36,7 +38,10 @@ class BatteryMonitorTestRunner : Instrumentation() {
     override fun onStart() {
         val junit = JUnitCore()
         val runner = Request.classes(
-            AlarmDatabaseInstrumentedTest::class.java, BatteryHistoryInstrumentedTest::class.java
+            AlarmDatabaseInstrumentedTest::class.java,
+            BatteryHistoryInstrumentedTest::class.java,
+            DetailedHistoryInstrumentedTest::class.java,
+            FullscreenChartStateInstrumentedTest::class.java
         ).runner
         val total = runner.testCount()
         var failed = false

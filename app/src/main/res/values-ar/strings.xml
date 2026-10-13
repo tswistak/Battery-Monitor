@@ -702,4 +702,35 @@
   <string name="pref_discharging_target_help" formatted="false">اضبط المستوى النهائي لتقديرات التفريغ. وهو مستقل عن تنبيهات انخفاض البطارية.</string>
   <string name="pref_target_level_summary" formatted="true">تقدير حتى %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="history_open_fullscreen">فتح الرسم البياني بملء الشاشة</string>
+    <string name="history_chart_scale">مقياس المحور الرأسي</string>
+    <string name="history_chart_scale_auto">تلقائي · القراءات الظاهرة</string>
+    <string name="history_chart_scale_fixed">ثابت · النطاق المحدد بالكامل</string>
+    <string name="history_chart_scale_manual">تكبير رأسي يدوي</string>
+    <string name="history_chart_zoom_in">تكبير</string>
+    <string name="history_chart_zoom_out">تصغير</string>
+    <string name="history_chart_pan_left">فترة زمنية أسبق</string>
+    <string name="history_chart_pan_right">فترة زمنية لاحقة</string>
+    <string name="history_chart_reset">ملاءمة النطاق المحدد</string>
+    <string name="history_chart_select_point">تحديد القراءات</string>
+    <string name="history_chart_1h">آخر ساعة</string>
+    <string name="history_chart_6h">آخر 6 ساعات</string>
+    <string name="history_chart_event_summary">متصل (شرطات قصيرة): %1$d · غير متصل (شرطات طويلة): %2$d · انقطاعات المراقبة (منقّط): %3$d</string>
+    <string name="history_chart_description_fullscreen">%1$s. القراءات من %2$s إلى %3$s.</string>
+    <string name="history_all_history">السجل بالكامل</string>
+    <string name="history_chart_compare">مقارنة</string>
+    <string name="history_chart_remove_comparison">إزالة المقارنة</string>
+    <string name="history_chart_y_auto">Y: تلقائي</string>
+    <string name="history_chart_y_fixed">Y: ثابت</string>
+    <string name="history_chart_y_manual">Y: يدوي</string>
+    <string name="history_chart_settings">إعدادات عرض الرسم البياني</string>
+    <string name="history_chart_display_style">نمط العرض</string>
+    <string name="history_chart_connected">قراءات متصلة</string>
+    <string name="history_chart_points">نقاط فقط</string>
+    <string name="history_chart_value_scale">مقياس القيم</string>
+    <string name="history_chart_linear">خطي</string>
+    <string name="history_chart_logarithmic">لوغاريتمي</string>
+    <string name="history_chart_log_unavailable">يتطلب المقياس اللوغاريتمي قراءات موجبة لكلا المقياسين المحددين.</string>
+    <string name="history_chart_more">المزيد من إجراءات الرسم البياني</string>
+    <string name="history_chart_events">أحداث الرسم البياني</string>
 </resources>

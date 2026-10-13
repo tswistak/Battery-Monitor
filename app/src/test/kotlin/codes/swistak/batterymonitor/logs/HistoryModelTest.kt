@@ -26,6 +26,27 @@ import java.util.Locale
 
 class HistoryModelTest {
     @Test
+    fun `event constants preserve codes and map to distinct bounded bucket indexes`() {
+        val mappings = listOf(12 to (2 to 0), 0 to (0 to 1), -1 to (-1 to 2))
+        for ((status, expected) in mappings) {
+            val code = historyEventCode(status)
+            assertEquals(expected.first, code)
+            assertEquals(expected.second, HistoryEvent.indexFor(code))
+            assertTrue(HistoryEvent.indexFor(code)!! in 0 until HistoryEvent.TYPE_COUNT)
+        }
+        assertEquals(
+            HistoryEvent.TYPE_COUNT,
+            mappings.map { HistoryEvent.indexFor(it.second.first) }.toSet().size
+        )
+        for (code in listOf(null, -2, 1, 3, Int.MAX_VALUE)) {
+            assertNull(HistoryEvent.indexFor(code))
+        }
+        for (status in 200..299) {
+            assertNull(historyEventCode(status))
+        }
+    }
+
+    @Test
     fun `power uses the current unit and sign multiplier consistently in live readings history and CSV`() {
         for ((rawCurrent, unitMultiplier) in listOf(1_200_000L to 1, 1_200L to 1000)) {
             for (direction in listOf(1, -1)) {

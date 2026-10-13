@@ -662,4 +662,35 @@
   <string name="pref_discharging_target_help" formatted="false">Stel het eindniveau voor ontlaadschattingen in. Dit staat los van waarschuwingen voor een bijna lege batterij.</string>
   <string name="pref_target_level_summary" formatted="true">Schatten tot %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Grafiek op volledig scherm openen</string>
+  <string name="history_chart_scale">Schaal van de Y-as</string>
+  <string name="history_chart_scale_auto">Automatisch · zichtbare metingen</string>
+  <string name="history_chart_scale_fixed">Vast · volledige geselecteerde periode</string>
+  <string name="history_chart_scale_manual">Handmatig verticaal zoomen</string>
+  <string name="history_chart_zoom_in">Inzoomen</string>
+  <string name="history_chart_zoom_out">Uitzoomen</string>
+  <string name="history_chart_pan_left">Eerder tijdsinterval</string>
+  <string name="history_chart_pan_right">Later tijdsinterval</string>
+  <string name="history_chart_reset">Geselecteerde periode passend maken</string>
+  <string name="history_chart_select_point">Metingen selecteren</string>
+  <string name="history_chart_1h">Afgelopen uur</string>
+  <string name="history_chart_6h">Afgelopen 6 uur</string>
+  <string name="history_chart_event_summary">Aangesloten (korte streepjes): %1$d · Losgekoppeld (lange streepjes): %2$d · Onderbrekingen van de bewaking (stippellijn): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Metingen van %2$s tot %3$s.</string>
+  <string name="history_all_history">Volledige geschiedenis</string>
+  <string name="history_chart_compare">Vergelijken</string>
+  <string name="history_chart_remove_comparison">Vergelijking verwijderen</string>
+  <string name="history_chart_y_auto">Y: Auto</string>
+  <string name="history_chart_y_fixed">Y: Vast</string>
+  <string name="history_chart_y_manual">Y: Handmatig</string>
+  <string name="history_chart_settings">Weergave-instellingen van de grafiek</string>
+  <string name="history_chart_display_style">Weergavestijl</string>
+  <string name="history_chart_connected">Verbonden metingen</string>
+  <string name="history_chart_points">Alleen punten</string>
+  <string name="history_chart_value_scale">Waardeschaal</string>
+  <string name="history_chart_linear">Lineair</string>
+  <string name="history_chart_logarithmic">Logaritmisch</string>
+  <string name="history_chart_log_unavailable">De logaritmische schaal vereist positieve metingen voor beide geselecteerde meetwaarden.</string>
+  <string name="history_chart_more">Meer grafiekacties</string>
+  <string name="history_chart_events">Grafiekgebeurtenissen</string>
 </resources>

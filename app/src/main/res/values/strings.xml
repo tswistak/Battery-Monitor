@@ -658,6 +658,21 @@
     <string name="current_prediction_diagnostics" formatted="false">Recent rates and learned averages are available in Diagnostics, under App operation.</string>
     <string name="current_prediction_explanation">This estimate uses the configured Battery Monitor predictor. Its target does not control charging or shutdown.</string>
     <string name="history_last_24h">Last 24 hours</string>
+    <string name="history_open_fullscreen">Open full-screen chart</string>
+    <string name="history_chart_scale">Y-axis scale</string>
+    <string name="history_chart_scale_auto">Automatic · visible observations</string>
+    <string name="history_chart_scale_fixed">Fixed · full selected range</string>
+    <string name="history_chart_scale_manual">Manual vertical zoom</string>
+    <string name="history_chart_zoom_in">Zoom in</string>
+    <string name="history_chart_zoom_out">Zoom out</string>
+    <string name="history_chart_pan_left">Earlier time interval</string>
+    <string name="history_chart_pan_right">Later time interval</string>
+    <string name="history_chart_reset">Fit selected range</string>
+    <string name="history_chart_select_point">Select observations</string>
+    <string name="history_chart_1h">Last 1 hour</string>
+    <string name="history_chart_6h">Last 6 hours</string>
+    <string name="history_chart_event_summary">Connected (short dashes): %1$d · Disconnected (long dashes): %2$d · Monitoring interruptions (dotted): %3$d</string>
+    <string name="history_chart_description_fullscreen">%1$s. Observations from %2$s to %3$s.</string>
     <string name="history_last_7d">Last 7 days</string>
     <string name="history_range">History range</string>
     <string name="history_custom_range">Custom date range</string>
@@ -964,4 +979,20 @@
     <string name="alarms_enabled">Enabled</string>
     <string name="alarms_disable">Disable</string>
 
+    <string name="history_chart_compare">Compare</string>
+    <string name="history_chart_remove_comparison">Remove comparison</string>
+    <string name="history_chart_y_auto">Y: Auto</string>
+    <string name="history_chart_y_fixed">Y: Fixed</string>
+    <string name="history_chart_y_manual">Y: Manual</string>
+    <string name="history_chart_settings">Chart display settings</string>
+    <string name="history_chart_display_style">Display style</string>
+    <string name="history_chart_connected">Connected readings</string>
+    <string name="history_chart_points">Points only</string>
+    <string name="history_chart_value_scale">Value scale</string>
+    <string name="history_chart_linear">Linear</string>
+    <string name="history_chart_logarithmic">Logarithmic</string>
+    <string name="history_chart_log_unavailable">Logarithmic scale requires positive observations for both selected metrics.</string>
+    <string name="history_chart_more">More chart actions</string>
+    <string name="history_chart_events">Chart events</string>
+    <string name="history_all_history">All history</string>
 </resources>

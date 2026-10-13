@@ -26,6 +26,74 @@ internal class LogsRepository(context: Context) {
         }
     }
 
+    suspend fun detailedChart(
+        range: HistoryRangeState,
+        metric: HistoryMetric,
+        viewport: HistoryRangeState = range,
+        pixelWidth: Int
+    ): DetailedHistoryChartModel = detailedCharts(
+        range, listOf(metric), viewport, pixelWidth
+    ).getValue(metric)
+
+    suspend fun detailedCharts(
+        range: HistoryRangeState,
+        metrics: List<HistoryMetric>,
+        viewport: HistoryRangeState = range,
+        pixelWidth: Int
+    ): Map<HistoryMetric, DetailedHistoryChartModel> = withContext(Dispatchers.IO) {
+        require(viewport.start >= range.start && viewport.end <= range.end)
+        val coroutine = currentCoroutineContext()
+        database {
+            val before = if (viewport.start > range.start) readHistory(
+                historyQuery(
+                    HistoryRangeState(range.start, viewport.start), ascending = false, limit = 1
+                )
+            ) { it.firstOrNull() } else null
+            coroutine.ensureActive()
+            val after = if (viewport.end < range.end) readHistory(
+                historyQuery(HistoryRangeState(viewport.end, range.end), limit = 1)
+            ) { it.firstOrNull() } else null
+            coroutine.ensureActive()
+            readHistory(historyQuery(viewport)) { visible ->
+                detailedHistoryCharts(range, viewport, metrics, pixelWidth, sequence {
+                    before?.let { yield(it) }
+                    yieldAll(visible)
+                    after?.let { yield(it) }
+                }.onEach { coroutine.ensureActive() })
+            }
+        }
+    }
+
+    suspend fun detailedBounds(
+        range: HistoryRangeState, metric: HistoryMetric
+    ): DetailedHistoryBounds = detailedBounds(range, listOf(metric)).getValue(metric)
+
+    suspend fun detailedBounds(
+        range: HistoryRangeState, metrics: List<HistoryMetric>
+    ): Map<HistoryMetric, DetailedHistoryBounds> = withContext(Dispatchers.IO) {
+        val coroutine = currentCoroutineContext()
+        database {
+            readHistory(historyQuery(range)) {
+                detailedHistoryBounds(metrics, it.onEach { coroutine.ensureActive() })
+            }
+        }
+    }
+
+    suspend fun historyRange(): HistoryRangeState? = withContext(Dispatchers.IO) {
+        database { retainedHistoryRange() }
+    }
+
+    suspend fun detailedSelection(key: HistoryKey): HistoryRecord? = withContext(Dispatchers.IO) {
+        database {
+            readHistory(
+                HistoryQuery(
+                    "SELECT _id, status, charge, time, temperature, voltage, current, remaining_charge_uah " + "FROM logs WHERE _id = ? AND time = ?",
+                    arrayOf(key.id.toString(), key.time.toString())
+                )
+            ) { it.firstOrNull() }
+        }
+    }
+
     suspend fun page(
         range: HistoryRangeState,
         filters: Set<String>?,

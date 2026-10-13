@@ -640,4 +640,35 @@
   <string name="pref_discharging_target_help" formatted="false">Legt den Endstand für Entladeschätzungen fest. Dies ist unabhängig von Warnungen bei niedrigem Akkustand.</string>
   <string name="pref_target_level_summary" formatted="true">Bis %1$d%% schätzen.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Diagramm im Vollbild öffnen</string>
+  <string name="history_chart_scale">Skalierung der Y-Achse</string>
+  <string name="history_chart_scale_auto">Automatisch · sichtbare Messwerte</string>
+  <string name="history_chart_scale_fixed">Fest · gesamter ausgewählter Zeitraum</string>
+  <string name="history_chart_scale_manual">Manueller vertikaler Zoom</string>
+  <string name="history_chart_zoom_in">Vergrößern</string>
+  <string name="history_chart_zoom_out">Verkleinern</string>
+  <string name="history_chart_pan_left">Früherer Zeitraum</string>
+  <string name="history_chart_pan_right">Späterer Zeitraum</string>
+  <string name="history_chart_reset">Ausgewählten Zeitraum einpassen</string>
+  <string name="history_chart_select_point">Messwerte auswählen</string>
+  <string name="history_chart_1h">Letzte Stunde</string>
+  <string name="history_chart_6h">Letzte 6 Stunden</string>
+  <string name="history_chart_event_summary">Verbunden (kurze Striche): %1$d · Getrennt (lange Striche): %2$d · Unterbrechungen der Überwachung (gepunktet): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Messwerte von %2$s bis %3$s.</string>
+  <string name="history_all_history">Gesamter Verlauf</string>
+  <string name="history_chart_compare">Vergleichen</string>
+  <string name="history_chart_remove_comparison">Vergleich entfernen</string>
+  <string name="history_chart_y_auto">Y: Auto</string>
+  <string name="history_chart_y_fixed">Y: Fest</string>
+  <string name="history_chart_y_manual">Y: Manuell</string>
+  <string name="history_chart_settings">Diagrammdarstellung</string>
+  <string name="history_chart_display_style">Darstellungsart</string>
+  <string name="history_chart_connected">Verbundene Messwerte</string>
+  <string name="history_chart_points">Nur Punkte</string>
+  <string name="history_chart_value_scale">Werteskala</string>
+  <string name="history_chart_linear">Linear</string>
+  <string name="history_chart_logarithmic">Logarithmisch</string>
+  <string name="history_chart_log_unavailable">Die logarithmische Skala erfordert positive Messwerte für beide ausgewählten Messgrößen.</string>
+  <string name="history_chart_more">Weitere Diagrammaktionen</string>
+  <string name="history_chart_events">Diagrammereignisse</string>
 </resources>

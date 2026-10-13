@@ -682,4 +682,35 @@
   <string name="pref_discharging_target_help" formatted="false">Nastavite končno raven ocen praznjenja. Ta je neodvisna od opozoril o prazni bateriji.</string>
   <string name="pref_target_level_summary" formatted="true">Oceni do %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Odpri celozaslonski graf</string>
+  <string name="history_chart_scale">Merilo osi Y</string>
+  <string name="history_chart_scale_auto">Samodejno · vidne meritve</string>
+  <string name="history_chart_scale_fixed">Fiksno · celoten izbrani razpon</string>
+  <string name="history_chart_scale_manual">Ročna navpična povečava</string>
+  <string name="history_chart_zoom_in">Povečaj</string>
+  <string name="history_chart_zoom_out">Pomanjšaj</string>
+  <string name="history_chart_pan_left">Prejšnji časovni interval</string>
+  <string name="history_chart_pan_right">Poznejši časovni interval</string>
+  <string name="history_chart_reset">Prikaži celoten izbrani razpon</string>
+  <string name="history_chart_select_point">Izberi meritve</string>
+  <string name="history_chart_1h">Zadnja ura</string>
+  <string name="history_chart_6h">Zadnjih 6 ur</string>
+  <string name="history_chart_event_summary">Priklopi (kratke črtice): %1$d · Odklopi (dolge črtice): %2$d · Prekinitve spremljanja (pike): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Meritve od %2$s do %3$s.</string>
+  <string name="history_all_history">Celotna zgodovina</string>
+  <string name="history_chart_compare">Primerjaj</string>
+  <string name="history_chart_remove_comparison">Odstrani primerjavo</string>
+  <string name="history_chart_y_auto">Y: Samodejno</string>
+  <string name="history_chart_y_fixed">Y: Fiksno</string>
+  <string name="history_chart_y_manual">Y: Ročno</string>
+  <string name="history_chart_settings">Nastavitve prikaza grafa</string>
+  <string name="history_chart_display_style">Slog prikaza</string>
+  <string name="history_chart_connected">Povezane meritve</string>
+  <string name="history_chart_points">Samo točke</string>
+  <string name="history_chart_value_scale">Lestvica vrednosti</string>
+  <string name="history_chart_linear">Linearna</string>
+  <string name="history_chart_logarithmic">Logaritemska</string>
+  <string name="history_chart_log_unavailable">Logaritemska lestvica zahteva pozitivne meritve obeh izbranih veličin.</string>
+  <string name="history_chart_more">Več dejanj grafa</string>
+  <string name="history_chart_events">Dogodki v grafu</string>
 </resources>

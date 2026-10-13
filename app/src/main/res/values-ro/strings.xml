@@ -669,4 +669,35 @@
   <string name="pref_discharging_target_help" formatted="false">Setați nivelul final al estimărilor de descărcare. Este independent de alarmele pentru baterie descărcată.</string>
   <string name="pref_target_level_summary" formatted="true">Estimează până la %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Deschide graficul pe tot ecranul</string>
+  <string name="history_chart_scale">Scara axei Y</string>
+  <string name="history_chart_scale_auto">Automată · măsurători vizibile</string>
+  <string name="history_chart_scale_fixed">Fixă · întregul interval selectat</string>
+  <string name="history_chart_scale_manual">Zoom vertical manual</string>
+  <string name="history_chart_zoom_in">Mărește</string>
+  <string name="history_chart_zoom_out">Micșorează</string>
+  <string name="history_chart_pan_left">Interval de timp anterior</string>
+  <string name="history_chart_pan_right">Interval de timp ulterior</string>
+  <string name="history_chart_reset">Afișează întregul interval selectat</string>
+  <string name="history_chart_select_point">Selectează măsurători</string>
+  <string name="history_chart_1h">Ultima oră</string>
+  <string name="history_chart_6h">Ultimele 6 ore</string>
+  <string name="history_chart_event_summary">Conectări (liniuțe scurte): %1$d · Deconectări (liniuțe lungi): %2$d · Întreruperi ale monitorizării (puncte): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Măsurători de la %2$s la %3$s.</string>
+  <string name="history_all_history">Tot istoricul</string>
+  <string name="history_chart_compare">Compară</string>
+  <string name="history_chart_remove_comparison">Elimină comparația</string>
+  <string name="history_chart_y_auto">Y: Automată</string>
+  <string name="history_chart_y_fixed">Y: Fixă</string>
+  <string name="history_chart_y_manual">Y: Manuală</string>
+  <string name="history_chart_settings">Setări de afișare a graficului</string>
+  <string name="history_chart_display_style">Stil de afișare</string>
+  <string name="history_chart_connected">Măsurători conectate</string>
+  <string name="history_chart_points">Doar puncte</string>
+  <string name="history_chart_value_scale">Scara valorilor</string>
+  <string name="history_chart_linear">Liniară</string>
+  <string name="history_chart_logarithmic">Logaritmică</string>
+  <string name="history_chart_log_unavailable">Scara logaritmică necesită măsurători pozitive pentru ambii parametri selectați.</string>
+  <string name="history_chart_more">Mai multe acțiuni pentru grafic</string>
+  <string name="history_chart_events">Evenimente în grafic</string>
 </resources>

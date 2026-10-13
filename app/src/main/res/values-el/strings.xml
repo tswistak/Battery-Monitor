@@ -658,4 +658,35 @@
   <string name="pref_discharging_target_help" formatted="false">Ορίστε το τελικό επίπεδο των εκτιμήσεων αποφόρτισης. Είναι ανεξάρτητο από τις ειδοποιήσεις χαμηλής μπαταρίας.</string>
   <string name="pref_target_level_summary" formatted="true">Εκτίμηση έως %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Άνοιγμα γραφήματος σε πλήρη οθόνη</string>
+  <string name="history_chart_scale">Κλίμακα άξονα Y</string>
+  <string name="history_chart_scale_auto">Αυτόματη · ορατές μετρήσεις</string>
+  <string name="history_chart_scale_fixed">Σταθερή · όλο το επιλεγμένο διάστημα</string>
+  <string name="history_chart_scale_manual">Χειροκίνητο κατακόρυφο ζουμ</string>
+  <string name="history_chart_zoom_in">Μεγέθυνση</string>
+  <string name="history_chart_zoom_out">Σμίκρυνση</string>
+  <string name="history_chart_pan_left">Προηγούμενο χρονικό διάστημα</string>
+  <string name="history_chart_pan_right">Επόμενο χρονικό διάστημα</string>
+  <string name="history_chart_reset">Εμφάνιση όλου του επιλεγμένου διαστήματος</string>
+  <string name="history_chart_select_point">Επιλογή μετρήσεων</string>
+  <string name="history_chart_1h">Τελευταία ώρα</string>
+  <string name="history_chart_6h">Τελευταίες 6 ώρες</string>
+  <string name="history_chart_event_summary">Συνδέσεις (μικρές παύλες): %1$d · Αποσυνδέσεις (μεγάλες παύλες): %2$d · Διακοπές παρακολούθησης (τελείες): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Μετρήσεις από %2$s έως %3$s.</string>
+  <string name="history_all_history">Όλο το ιστορικό</string>
+  <string name="history_chart_compare">Σύγκριση</string>
+  <string name="history_chart_remove_comparison">Κατάργηση σύγκρισης</string>
+  <string name="history_chart_y_auto">Y: Αυτόματη</string>
+  <string name="history_chart_y_fixed">Y: Σταθερή</string>
+  <string name="history_chart_y_manual">Y: Χειροκίνητη</string>
+  <string name="history_chart_settings">Ρυθμίσεις εμφάνισης γραφήματος</string>
+  <string name="history_chart_display_style">Στυλ εμφάνισης</string>
+  <string name="history_chart_connected">Συνδεδεμένες μετρήσεις</string>
+  <string name="history_chart_points">Μόνο σημεία</string>
+  <string name="history_chart_value_scale">Κλίμακα τιμών</string>
+  <string name="history_chart_linear">Γραμμική</string>
+  <string name="history_chart_logarithmic">Λογαριθμική</string>
+  <string name="history_chart_log_unavailable">Η λογαριθμική κλίμακα απαιτεί θετικές μετρήσεις και για τα δύο επιλεγμένα μεγέθη.</string>
+  <string name="history_chart_more">Περισσότερες ενέργειες γραφήματος</string>
+  <string name="history_chart_events">Συμβάντα γραφήματος</string>
 </resources>

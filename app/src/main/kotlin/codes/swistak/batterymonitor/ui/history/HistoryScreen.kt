@@ -100,10 +100,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.devicebackup.LogImportMode
+import codes.swistak.batterymonitor.logs.HistoryEvent
 import codes.swistak.batterymonitor.logs.HistoryExportRequest
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.LogDatabase
@@ -133,7 +135,7 @@ internal fun historyTimeZone(broadcastId: String?, fallback: ZoneId): ZoneId =
     broadcastId?.let { runCatching { ZoneId.of(it) }.getOrNull() } ?: fallback
 
 @Composable
-private fun rememberHistoryTimeZone(): ZoneId {
+internal fun rememberHistoryTimeZone(): ZoneId {
     val appContext = LocalContext.current.applicationContext
     var zone by remember { mutableStateOf(ZoneId.systemDefault()) }
     DisposableEffect(appContext) {
@@ -207,11 +209,30 @@ internal fun HistoryRoute(
     monitoring: StateFlow<MonitoringUiState>,
     requestedAction: String?,
     onActionHandled: () -> Unit,
+    onOpenFullscreen: (HistoryMetric, codes.swistak.batterymonitor.logs.HistoryRangeState, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val appContext = context.applicationContext
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    DisposableEffect(appContext, viewModel, lifecycle) {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action == LogDatabase.ACTION_HISTORY_CHANGED && viewModel.state.value.rangeLabel == "all" && lifecycle.currentState.isAtLeast(
+                        Lifecycle.State.STARTED
+                    )
+                ) viewModel.refresh()
+            }
+        }
+        ContextCompat.registerReceiver(
+            appContext,
+            receiver,
+            IntentFilter(LogDatabase.ACTION_HISTORY_CHANGED),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+        onDispose { appContext.unregisterReceiver(receiver) }
+    }
     val zone = rememberHistoryTimeZone()
     val today = LocalDate.now(zone)
     val monitoredChange by remember(monitoring) {
@@ -335,8 +356,12 @@ internal fun HistoryRoute(
         )
         dialog = null
     }
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.refresh() }
-    LaunchedEffect(monitoredChange) { viewModel.refresh() }
+
+    fun latestMonitoredChange() = monitoring.value.snapshot.let {
+        Triple(it?.levelPercent, it?.status, it?.plugged)
+    }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.resume(latestMonitoredChange()) }
+    LaunchedEffect(monitoredChange) { viewModel.monitoringChanged(latestMonitoredChange()) }
     val chartList = rememberLazyListState()
     val logList = rememberLazyListState(viewModel.scrollIndex, viewModel.scrollOffset)
     LaunchedEffect(logList) {
@@ -409,11 +434,31 @@ internal fun HistoryRoute(
                     Column(
                         Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        Text(
-                            if (state.metric == HistoryMetric.LEVEL) stringResource(R.string.history_battery_level)
-                            else metricLabel(state.metric),
-                            style = MaterialTheme.typography.titleMedium
-                        )
+                        Row(
+                            Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                if (state.metric == HistoryMetric.LEVEL) stringResource(R.string.history_battery_level)
+                                else metricLabel(state.metric),
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.weight(1f)
+                            )
+                            IconButton(
+                                onClick = {
+                                onOpenFullscreen(
+                                    state.metric, state.range, state.rangeLabel
+                                )
+                            },
+                                enabled = chart?.series?.get(state.metric)?.points?.any { it.value != null } == true,
+                                modifier = Modifier.size(48.dp)) {
+                                Icon(
+                                    painterResource(R.drawable.ui_fullscreen),
+                                    stringResource(R.string.history_open_fullscreen),
+                                    Modifier.size(24.dp),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
                         if (chart != null && chart.count > 0) {
                             MeasurementChart(
                                 chart,
@@ -477,8 +522,11 @@ internal fun HistoryRoute(
                                     Modifier.padding(16.dp),
                                     verticalArrangement = Arrangement.spacedBy(4.dp)
                                 ) {
-                                    Text(chart.events.filter { it.code == 2 }.sumOf { it.count }
-                                        .toString(), style = MaterialTheme.typography.titleLarge)
+                                    Text(
+                                        chart.events.filter { it.code == HistoryEvent.CONNECTED }
+                                        .sumOf { it.count }.toString(),
+                                        style = MaterialTheme.typography.titleLarge
+                                    )
                                     Text(
                                         stringResource(R.string.history_connections),
                                         style = MaterialTheme.typography.bodySmall
@@ -490,9 +538,12 @@ internal fun HistoryRoute(
                     Text(
                         stringResource(
                             R.string.history_event_counts,
-                            chart.events.filter { it.code == 2 }.sumOf { it.count },
-                            chart.events.filter { it.code == 0 }.sumOf { it.count },
-                            chart.events.filter { it.code == -1 }.sumOf { it.count }),
+                            chart.events.filter { it.code == HistoryEvent.CONNECTED }
+                                .sumOf { it.count },
+                            chart.events.filter { it.code == HistoryEvent.DISCONNECTED }
+                                .sumOf { it.count },
+                            chart.events.filter { it.code == HistoryEvent.REBOOT }
+                                .sumOf { it.count }),
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(top = 8.dp)
                     )
@@ -607,14 +658,14 @@ internal fun HistoryRoute(
                             if (record.status == -1) stringResource(R.string.history_system_event)
                             else listOfNotNull(
                                 HistoryMetric.CURRENT.value(record)?.let {
-                                    historyValue(
-                                        it,
-                                        HistoryMetric.CURRENT,
-                                        fahrenheit,
-                                        locale,
-                                        currentMultiplier
-                                    )
-                                },
+                                historyValue(
+                                    it,
+                                    HistoryMetric.CURRENT,
+                                    fahrenheit,
+                                    locale,
+                                    currentMultiplier
+                                )
+                            },
                                 HistoryMetric.POWER.value(record)?.let {
                                     historyValue(
                                         it,
@@ -636,27 +687,26 @@ internal fun HistoryRoute(
                                     )
                                 }).joinToString(" · ")
                                 .ifEmpty { stringResource(R.string.current_unavailable) }
-                        Row(
-                            Modifier
-                                .fillMaxWidth()
-                                .clickable { detailsId = entry.id }
-                                .then(if (twoPane) Modifier.semantics {
-                                    selected = emphasized
-                                } else Modifier)
-                                .drawBehind {
-                                    if (emphasized) {
-                                        val width = 3.dp.toPx()
-                                        val x =
-                                            if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
-                                        drawRect(
-                                            selectionColor,
-                                            topLeft = Offset(x, 0f),
-                                            size = Size(width, size.height)
-                                        )
-                                    }
+                        Row(Modifier
+                            .fillMaxWidth()
+                            .clickable { detailsId = entry.id }
+                            .then(if (twoPane) Modifier.semantics {
+                                selected = emphasized
+                            } else Modifier)
+                            .drawBehind {
+                                if (emphasized) {
+                                    val width = 3.dp.toPx()
+                                    val x =
+                                        if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
+                                    drawRect(
+                                        selectionColor,
+                                        topLeft = Offset(x, 0f),
+                                        size = Size(width, size.height)
+                                    )
                                 }
-                                .heightIn(min = 67.dp)
-                                .padding(horizontal = 13.dp, vertical = 12.dp),
+                            }
+                            .heightIn(min = 67.dp)
+                            .padding(horizontal = 13.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(11.dp)) {
                             Surface(
@@ -979,9 +1029,9 @@ internal fun HistoryRoute(
     })
     if (dialog == "replace") AlertDialog(
         onDismissRequest = {
-            dialog = null
-            viewModel.pendingImportUri = null
-        },
+        dialog = null
+        viewModel.pendingImportUri = null
+    },
         title = { Text(stringResource(R.string.log_import_replace)) },
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
@@ -1010,8 +1060,8 @@ internal fun HistoryRoute(
     )
     if (dialog == "deleteSelected" || dialog == "deleteAll") AlertDialog(
         onDismissRequest = {
-            dialog = null
-        },
+        dialog = null
+    },
         title = { Text(stringResource(if (dialog == "deleteAll") R.string.history_delete_all else R.string.history_delete_selected)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -1101,7 +1151,7 @@ internal fun HistoryRoute(
 }
 
 @Composable
-private fun metricLabel(metric: HistoryMetric): String = stringResource(
+internal fun metricLabel(metric: HistoryMetric): String = stringResource(
     when (metric) {
         HistoryMetric.LEVEL -> R.string.history_level
         HistoryMetric.TEMPERATURE -> R.string.current_temperature

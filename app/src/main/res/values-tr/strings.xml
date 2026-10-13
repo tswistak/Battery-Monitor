@@ -638,4 +638,35 @@
   <string name="pref_discharging_target_help" formatted="false">Deşarj tahminlerinin bitiş seviyesini ayarlayın. Bu, düşük pil alarmlarından bağımsızdır.</string>
   <string name="pref_target_level_summary" formatted="true">%1$d%% seviyesine kadar tahmin et.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="history_open_fullscreen">Tam ekran grafiği aç</string>
+    <string name="history_chart_scale">Y ekseni ölçeği</string>
+    <string name="history_chart_scale_auto">Otomatik · görünür ölçümler</string>
+    <string name="history_chart_scale_fixed">Sabit · seçilen aralığın tamamı</string>
+    <string name="history_chart_scale_manual">Manuel dikey yakınlaştırma</string>
+    <string name="history_chart_zoom_in">Yakınlaştır</string>
+    <string name="history_chart_zoom_out">Uzaklaştır</string>
+    <string name="history_chart_pan_left">Daha önceki zaman aralığı</string>
+    <string name="history_chart_pan_right">Daha sonraki zaman aralığı</string>
+    <string name="history_chart_reset">Seçilen aralığı sığdır</string>
+    <string name="history_chart_select_point">Ölçümleri seç</string>
+    <string name="history_chart_1h">Son 1 saat</string>
+    <string name="history_chart_6h">Son 6 saat</string>
+    <string name="history_chart_event_summary">Bağlandı (kısa çizgiler): %1$d · Bağlantı kesildi (uzun çizgiler): %2$d · İzleme kesintileri (noktalı): %3$d</string>
+    <string name="history_chart_description_fullscreen">%1$s. %2$s ile %3$s arasındaki ölçümler.</string>
+    <string name="history_all_history">Tüm geçmiş</string>
+    <string name="history_chart_compare">Karşılaştır</string>
+    <string name="history_chart_remove_comparison">Karşılaştırmayı kaldır</string>
+    <string name="history_chart_y_auto">Y: Otomatik</string>
+    <string name="history_chart_y_fixed">Y: Sabit</string>
+    <string name="history_chart_y_manual">Y: Manuel</string>
+    <string name="history_chart_settings">Grafik görüntüleme ayarları</string>
+    <string name="history_chart_display_style">Görüntüleme biçimi</string>
+    <string name="history_chart_connected">Birleştirilmiş ölçümler</string>
+    <string name="history_chart_points">Yalnızca noktalar</string>
+    <string name="history_chart_value_scale">Değer ölçeği</string>
+    <string name="history_chart_linear">Doğrusal</string>
+    <string name="history_chart_logarithmic">Logaritmik</string>
+    <string name="history_chart_log_unavailable">Logaritmik ölçek, seçilen her iki ölçüt için de pozitif ölçümler gerektirir.</string>
+    <string name="history_chart_more">Diğer grafik işlemleri</string>
+    <string name="history_chart_events">Grafik olayları</string>
 </resources>

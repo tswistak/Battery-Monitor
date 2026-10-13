@@ -639,4 +639,35 @@
   <string name="pref_discharging_target_help" formatted="false">设置放电估算的结束电量。此设置与低电量警报无关。</string>
   <string name="pref_target_level_summary" formatted="true">估算至 %1$d%%。</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="history_open_fullscreen">打开全屏图表</string>
+    <string name="history_chart_scale">Y 轴刻度</string>
+    <string name="history_chart_scale_auto">自动 · 可见的测量值</string>
+    <string name="history_chart_scale_fixed">固定 · 完整的所选范围</string>
+    <string name="history_chart_scale_manual">手动垂直缩放</string>
+    <string name="history_chart_zoom_in">放大</string>
+    <string name="history_chart_zoom_out">缩小</string>
+    <string name="history_chart_pan_left">更早的时段</string>
+    <string name="history_chart_pan_right">更晚的时段</string>
+    <string name="history_chart_reset">显示完整的所选范围</string>
+    <string name="history_chart_select_point">选择测量值</string>
+    <string name="history_chart_1h">最近 1 小时</string>
+    <string name="history_chart_6h">最近 6 小时</string>
+    <string name="history_chart_event_summary">已连接（短虚线）：%1$d · 已断开连接（长虚线）：%2$d · 监测中断（点线）：%3$d</string>
+    <string name="history_chart_description_fullscreen">%1$s。从 %2$s 到 %3$s 的测量值。</string>
+    <string name="history_all_history">全部历史记录</string>
+    <string name="history_chart_compare">比较</string>
+    <string name="history_chart_remove_comparison">移除比较</string>
+    <string name="history_chart_y_auto">Y: 自动</string>
+    <string name="history_chart_y_fixed">Y: 固定</string>
+    <string name="history_chart_y_manual">Y: 手动</string>
+    <string name="history_chart_settings">图表显示设置</string>
+    <string name="history_chart_display_style">显示样式</string>
+    <string name="history_chart_connected">连接测量值</string>
+    <string name="history_chart_points">仅显示数据点</string>
+    <string name="history_chart_value_scale">数值刻度</string>
+    <string name="history_chart_linear">线性</string>
+    <string name="history_chart_logarithmic">对数</string>
+    <string name="history_chart_log_unavailable">对数刻度要求所选两个指标的测量值均为正值。</string>
+    <string name="history_chart_more">更多图表操作</string>
+    <string name="history_chart_events">图表事件</string>
 </resources>

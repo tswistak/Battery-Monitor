@@ -60,6 +60,11 @@
         </activity>
 
         <activity
+            android:name=".ui.history.FullscreenChartActivity"
+            android:exported="false"
+            android:theme="@style/bi_compose_theme" />
+
+        <activity
             android:name=".settings.SettingsActivity"
             android:excludeFromRecents="true"
             android:exported="false"

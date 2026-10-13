@@ -681,4 +681,35 @@
   <string name="pref_discharging_target_help" formatted="false">Nustatykite galutinį iškrovimo įverčių lygį. Jis nepriklauso nuo išsikrovusio akumuliatoriaus įspėjimų.</string>
   <string name="pref_target_level_summary" formatted="true">Vertinti iki %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Atverti grafiką visame ekrane</string>
+  <string name="history_chart_scale">Y ašies mastelis</string>
+  <string name="history_chart_scale_auto">Automatinis · matomi matavimai</string>
+  <string name="history_chart_scale_fixed">Fiksuotas · visas pasirinktas intervalas</string>
+  <string name="history_chart_scale_manual">Rankinis vertikalus mastelio keitimas</string>
+  <string name="history_chart_zoom_in">Padidinti</string>
+  <string name="history_chart_zoom_out">Sumažinti</string>
+  <string name="history_chart_pan_left">Ankstesnis laiko intervalas</string>
+  <string name="history_chart_pan_right">Vėlesnis laiko intervalas</string>
+  <string name="history_chart_reset">Rodyti visą pasirinktą intervalą</string>
+  <string name="history_chart_select_point">Pasirinkti matavimus</string>
+  <string name="history_chart_1h">Paskutinė valanda</string>
+  <string name="history_chart_6h">Paskutinės 6 valandos</string>
+  <string name="history_chart_event_summary">Prijungimai (trumpi brūkšniai): %1$d · Atjungimai (ilgi brūkšniai): %2$d · Stebėjimo pertrūkiai (taškai): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Matavimai nuo %2$s iki %3$s.</string>
+  <string name="history_all_history">Visa istorija</string>
+  <string name="history_chart_compare">Palyginti</string>
+  <string name="history_chart_remove_comparison">Pašalinti palyginimą</string>
+  <string name="history_chart_y_auto">Y: Automatinis</string>
+  <string name="history_chart_y_fixed">Y: Fiksuotas</string>
+  <string name="history_chart_y_manual">Y: Rankinis</string>
+  <string name="history_chart_settings">Grafiko rodymo nuostatos</string>
+  <string name="history_chart_display_style">Rodymo stilius</string>
+  <string name="history_chart_connected">Sujungti matavimai</string>
+  <string name="history_chart_points">Tik taškai</string>
+  <string name="history_chart_value_scale">Reikšmių skalė</string>
+  <string name="history_chart_linear">Tiesinė</string>
+  <string name="history_chart_logarithmic">Logaritminė</string>
+  <string name="history_chart_log_unavailable">Logaritminei skalei reikia teigiamų abiejų pasirinktų rodiklių matavimų.</string>
+  <string name="history_chart_more">Daugiau grafiko veiksmų</string>
+  <string name="history_chart_events">Grafiko įvykiai</string>
 </resources>

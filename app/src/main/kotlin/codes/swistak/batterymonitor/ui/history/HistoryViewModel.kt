@@ -70,6 +70,25 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     val state = mutable.asStateFlow()
     private var queryJob: Job? = null
     private var isTwoPane = false
+    private var retainExactRange = false
+
+    fun retainExactRange() {
+        retainExactRange = true
+    }
+
+    fun resume(change: Triple<Int?, Int?, Int?>? = null) {
+        if (change != null) lastMonitoredChange = change
+        refresh()
+        retainExactRange = false
+    }
+
+    private var lastMonitoredChange: Triple<Int?, Int?, Int?>? = null
+
+    fun monitoringChanged(change: Triple<Int?, Int?, Int?>) {
+        val before = lastMonitoredChange
+        lastMonitoredChange = change
+        if (before != null && before != change) refresh()
+    }
 
     private var restored = false
     var scrollIndex = 0
@@ -107,6 +126,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         if (restored) return
         restored = true
         if (bundle == null) return
+        retainExactRange = bundle.getBoolean("retainExactRange")
         val start = bundle.getLong("start")
         val end = bundle.getLong("end")
         val range = if (start in 0..<end) HistoryRangeState(start, end) else mutable.value.range
@@ -137,6 +157,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
 
     fun save(): Bundle = Bundle().apply {
         val value = mutable.value
+        putBoolean("retainExactRange", retainExactRange)
         putLong("start", value.range.start)
         putLong("end", value.range.end)
         putString("label", value.rangeLabel)
@@ -172,13 +193,13 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     ) {
         queryJob?.cancel()
         val current = mutable.value
-        val range = if (forceChart) when (current.rangeLabel) {
+        val range = if (forceChart && !retainExactRange) when (current.rangeLabel) {
             "24h" -> HistoryRangeState.lastHours(24)
             "72h" -> HistoryRangeState.lastHours(72)
             "7d" -> HistoryRangeState.lastHours(168)
             else -> current.range
         } else current.range
-        val value = current.copy(range = range, chart = if (forceChart) null else current.chart)
+        var value = current.copy(range = range, chart = if (forceChart) null else current.chart)
         mutable.value = value.copy(
             loading = true,
             error = false,
@@ -188,6 +209,13 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         )
         queryJob = viewModelScope.launch {
             try {
+                if (value.rangeLabel == "all") {
+                    val retainedRange = repository.historyRange() ?: HistoryRangeState(0, 1)
+                    value = value.copy(
+                        range = retainedRange,
+                        chart = value.chart.takeIf { retainedRange == value.range })
+                    mutable.value = mutable.value.copy(range = retainedRange)
+                }
                 val revealedId = value.selectedPointId.takeIf { isTwoPane }
                 var records = repository.page(
                     value.range,
@@ -243,6 +271,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     }
 
     fun range(range: HistoryRangeState, label: String) {
+        retainExactRange = false
         scroll(0, 0)
         mutable.value = mutable.value.copy(
             range = range,

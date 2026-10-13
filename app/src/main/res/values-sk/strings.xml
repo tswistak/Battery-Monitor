@@ -685,4 +685,35 @@
   <string name="pref_discharging_target_help" formatted="false">Nastavte koncovú úroveň odhadov vybíjania. Je nezávislá od upozornení na slabú batériu.</string>
   <string name="pref_target_level_summary" formatted="true">Odhadovať do %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Otvoriť graf na celú obrazovku</string>
+  <string name="history_chart_scale">Mierka osi Y</string>
+  <string name="history_chart_scale_auto">Automatická · viditeľné merania</string>
+  <string name="history_chart_scale_fixed">Pevná · celý vybraný rozsah</string>
+  <string name="history_chart_scale_manual">Ručné zvislé priblíženie</string>
+  <string name="history_chart_zoom_in">Priblížiť</string>
+  <string name="history_chart_zoom_out">Oddialiť</string>
+  <string name="history_chart_pan_left">Skorší časový úsek</string>
+  <string name="history_chart_pan_right">Neskorší časový úsek</string>
+  <string name="history_chart_reset">Zobraziť celý vybraný rozsah</string>
+  <string name="history_chart_select_point">Vybrať merania</string>
+  <string name="history_chart_1h">Posledná hodina</string>
+  <string name="history_chart_6h">Posledných 6 hodín</string>
+  <string name="history_chart_event_summary">Pripojenia (krátke čiarky): %1$d · Odpojenia (dlhé čiarky): %2$d · Prerušenia sledovania (bodky): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Merania od %2$s do %3$s.</string>
+  <string name="history_all_history">Celá história</string>
+  <string name="history_chart_compare">Porovnať</string>
+  <string name="history_chart_remove_comparison">Odstrániť porovnanie</string>
+  <string name="history_chart_y_auto">Y: Automatická</string>
+  <string name="history_chart_y_fixed">Y: Pevná</string>
+  <string name="history_chart_y_manual">Y: Ručná</string>
+  <string name="history_chart_settings">Nastavenia zobrazenia grafu</string>
+  <string name="history_chart_display_style">Štýl zobrazenia</string>
+  <string name="history_chart_connected">Spojené merania</string>
+  <string name="history_chart_points">Len body</string>
+  <string name="history_chart_value_scale">Stupnica hodnôt</string>
+  <string name="history_chart_linear">Lineárna</string>
+  <string name="history_chart_logarithmic">Logaritmická</string>
+  <string name="history_chart_log_unavailable">Logaritmická stupnica vyžaduje kladné merania oboch vybraných veličín.</string>
+  <string name="history_chart_more">Ďalšie akcie grafu</string>
+  <string name="history_chart_events">Udalosti v grafe</string>
 </resources>

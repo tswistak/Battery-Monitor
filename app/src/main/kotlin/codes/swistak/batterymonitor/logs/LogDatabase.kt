@@ -15,6 +15,7 @@ package codes.swistak.batterymonitor.logs
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
@@ -58,6 +59,8 @@ internal class LogDatabase(context: Context?) {
         const val KEY_CURRENT: String = "current"
         const val KEY_REMAINING_CHARGE: String = "remaining_charge_uah"
 
+        const val ACTION_HISTORY_CHANGED = "codes.swistak.batterymonitor.HISTORY_CHANGED"
+
         const val STATUS_BOOT_COMPLETED: Int = -1
 
         // Values for status_age
@@ -86,6 +89,16 @@ internal class LogDatabase(context: Context?) {
             a[0] = statusCode
 
             return a
+        }
+    }
+
+    private val appContext = context?.applicationContext
+
+    private fun historyChanged() {
+        try {
+            appContext?.let { it.sendBroadcast(Intent(ACTION_HISTORY_CHANGED).setPackage(it.packageName)) }
+        } catch (error: RuntimeException) {
+            Log.w(LOG_TAG, "Unable to notify history consumers", error)
         }
     }
 
@@ -209,15 +222,32 @@ internal class LogDatabase(context: Context?) {
         }
     }
 
+    fun retainedHistoryRange(): HistoryRangeState? {
+        openDBs()
+        val database = checkNotNull(rdb) { "Log database is unavailable" }
+        return database.rawQuery(
+            "SELECT (SELECT time FROM logs WHERE time >= 0 ORDER BY time ASC, _id ASC LIMIT 1), " + "(SELECT time FROM logs WHERE time >= 0 ORDER BY time DESC, _id DESC LIMIT 1)",
+            null
+        ).use { cursor ->
+            if (!cursor.moveToFirst() || cursor.isNull(0)) null else {
+                val first = cursor.getLong(0).coerceAtMost(Long.MAX_VALUE - 1)
+                val last = cursor.getLong(1)
+                val end = historyExclusiveEnd(last)
+                HistoryRangeState(first, end)
+            }
+        }
+    }
+
     fun deleteHistory(range: HistoryRangeState?) {
         openDBs()
         val database = checkNotNull(wdb) { "Log database is unavailable" }
-        if (range == null) database.delete(LOG_TABLE_NAME, null, null)
+        val deleted = if (range == null) database.delete(LOG_TABLE_NAME, null, null)
         else database.delete(
             LOG_TABLE_NAME,
-            "time >= ? AND time < ?",
+            "time >= ? AND time ${range.endOperator} ?",
             arrayOf(range.start.toString(), range.end.toString())
         )
+        if (deleted > 0) historyChanged()
     }
 
     fun historyDuration(entry: HistoryRecord): Long? {
@@ -296,8 +326,8 @@ internal class LogDatabase(context: Context?) {
     private fun writeLogs(records: List<LogRecord>, replaceExisting: Boolean) {
         openDBs()
         val database = checkNotNull(wdb) { "Log database is unavailable" }
-        database.transaction {
-            if (replaceExisting) database.delete(LOG_TABLE_NAME, null, null)
+        val changed = database.transaction {
+            val deleted = if (replaceExisting) database.delete(LOG_TABLE_NAME, null, null) else 0
             for ((status, charge, time, temperature, voltage, currentMicroAmps, remainingChargeMicroampHours) in records) {
                 val values = ContentValues().apply {
                     put(KEY_STATUS_CODE, status)
@@ -312,7 +342,9 @@ internal class LogDatabase(context: Context?) {
                     "Could not restore log entry"
                 }
             }
+            deleted > 0 || records.isNotEmpty()
         }
+        if (changed) historyChanged()
     }
 
     private fun Cursor.getNullableInt(columnIndex: Int): Int? =
@@ -363,22 +395,29 @@ internal class LogDatabase(context: Context?) {
                 }
             }
         }
-        if (result == LogResult.Inserted) sampler.inserted(elapsed)
+        if (result == LogResult.Inserted) {
+            sampler.inserted(elapsed)
+            historyChanged()
+        }
         return result
     }
 
-    fun logBoot(): LogResult = writeWithRetry("Logging boot completion") { _, writableDatabase ->
-        val values = ContentValues().apply {
-            put(KEY_STATUS_CODE, STATUS_BOOT_COMPLETED)
-            putNull(KEY_CHARGE)
-            put(KEY_TIME, System.currentTimeMillis())
-            putNull(KEY_TEMPERATURE)
-            putNull(KEY_VOLTAGE)
-            putNull(KEY_CURRENT)
-            putNull(KEY_REMAINING_CHARGE)
+    fun logBoot(): LogResult {
+        val result = writeWithRetry("Logging boot completion") { _, writableDatabase ->
+            val values = ContentValues().apply {
+                put(KEY_STATUS_CODE, STATUS_BOOT_COMPLETED)
+                putNull(KEY_CHARGE)
+                put(KEY_TIME, System.currentTimeMillis())
+                putNull(KEY_TEMPERATURE)
+                putNull(KEY_VOLTAGE)
+                putNull(KEY_CURRENT)
+                putNull(KEY_REMAINING_CHARGE)
+            }
+            writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
+            LogResult.Inserted
         }
-        writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
-        LogResult.Inserted
+        if (result == LogResult.Inserted) historyChanged()
+        return result
     }
 
     fun checkHealth(): LogResult =
@@ -408,7 +447,10 @@ internal class LogDatabase(context: Context?) {
         openDBs()
 
         try {
-            wdb!!.execSQL("DELETE FROM $LOG_TABLE_NAME WHERE $KEY_TIME < $oldestLog")
+            val deleted = checkNotNull(wdb).delete(
+                LOG_TABLE_NAME, "$KEY_TIME < ?", arrayOf(oldestLog.toString())
+            )
+            if (deleted > 0) historyChanged()
         } catch (_: Exception) {
         }
     }

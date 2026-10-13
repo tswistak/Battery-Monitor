@@ -40,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryRangeState
@@ -52,7 +53,10 @@ import java.time.format.FormatStyle
 
 @Composable
 internal fun HistoryRangeControl(
-    state: HistoryUiState, onRange: (HistoryRangeState, String) -> Unit, zone: ZoneId
+    state: HistoryUiState,
+    onRange: (HistoryRangeState, String) -> Unit,
+    zone: ZoneId,
+    compact: Boolean = false
 ) {
     val locale = LocalConfiguration.current.locales[0]
     val context = LocalContext.current
@@ -73,9 +77,12 @@ internal fun HistoryRangeControl(
     var month by rememberSaveable { mutableStateOf(LocalDate.now(zone).monthValue.toString()) }
     var year by rememberSaveable { mutableStateOf(LocalDate.now(zone).year.toString()) }
     val title = when (state.rangeLabel) {
+        "1h" -> stringResource(R.string.history_chart_1h)
+        "6h" -> stringResource(R.string.history_chart_6h)
         "24h" -> stringResource(R.string.history_last_24h)
         "72h" -> stringResource(R.string.history_last_3d)
         "7d" -> stringResource(R.string.history_last_7d)
+        "all" -> stringResource(R.string.history_all_history)
         else -> stringResource(R.string.history_range)
     }
     Surface(
@@ -87,7 +94,10 @@ internal fun HistoryRangeControl(
         Row(
             Modifier
                 .heightIn(min = 48.dp)
-                .padding(horizontal = 15.dp, vertical = 12.dp),
+                .padding(
+                    horizontal = if (compact) 8.dp else 15.dp,
+                    vertical = if (compact) 4.dp else 12.dp
+                ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -101,9 +111,11 @@ internal fun HistoryRangeControl(
                 Text(
                     title,
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
+                    maxLines = if (compact) 1 else Int.MAX_VALUE,
+                    overflow = TextOverflow.Ellipsis
                 )
-                if (state.rangeLabel !in setOf("24h", "72h", "7d")) Text(
+                if (!compact && state.rangeLabel !in setOf("24h", "72h", "7d")) Text(
                     "${format.format(Instant.ofEpochMilli(state.range.start))} – ${
                         format.format(
                             Instant.ofEpochMilli(state.range.end - 1)
@@ -113,7 +125,7 @@ internal fun HistoryRangeControl(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            Text(
+            if (!compact) Text(
                 stringResource(R.string.history_change_range),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -131,6 +143,16 @@ internal fun HistoryRangeControl(
         title = { Text(stringResource(R.string.history_range)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
+                if (compact) {
+                    TextButton(onClick = {
+                        onRange(HistoryRangeState.lastHours(1), "1h")
+                        mode = null
+                    }) { Text(stringResource(R.string.history_chart_1h)) }
+                    TextButton(onClick = {
+                        onRange(HistoryRangeState.lastHours(6), "6h")
+                        mode = null
+                    }) { Text(stringResource(R.string.history_chart_6h)) }
+                }
                 TextButton(onClick = {
                     onRange(HistoryRangeState.lastHours(24), "24h")
                     mode = null
@@ -139,6 +161,10 @@ internal fun HistoryRangeControl(
                     onRange(HistoryRangeState.lastHours(168), "7d")
                     mode = null
                 }) { Text(stringResource(R.string.history_last_7d)) }
+                TextButton(onClick = {
+                    onRange(state.range, "all")
+                    mode = null
+                }) { Text(stringResource(R.string.history_all_history)) }
                 TextButton(onClick = {
                     first = Instant.ofEpochMilli(state.range.start).atZone(zone).toLocalDate()
                         .toString()

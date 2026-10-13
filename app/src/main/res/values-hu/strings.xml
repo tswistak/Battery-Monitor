@@ -646,4 +646,35 @@
   <string name="pref_discharging_target_help" formatted="false">Állítsa be a merítési becslés végszintjét. Ez független az alacsony töltöttségi riasztásoktól.</string>
   <string name="pref_target_level_summary" formatted="true">Becslés %1$d%%-ig.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Teljes képernyős grafikon megnyitása</string>
+  <string name="history_chart_scale">Y tengely skálája</string>
+  <string name="history_chart_scale_auto">Automatikus · látható mérések</string>
+  <string name="history_chart_scale_fixed">Rögzített · teljes kijelölt tartomány</string>
+  <string name="history_chart_scale_manual">Kézi függőleges nagyítás</string>
+  <string name="history_chart_zoom_in">Nagyítás</string>
+  <string name="history_chart_zoom_out">Kicsinyítés</string>
+  <string name="history_chart_pan_left">Korábbi időszak</string>
+  <string name="history_chart_pan_right">Későbbi időszak</string>
+  <string name="history_chart_reset">Teljes kijelölt tartomány megjelenítése</string>
+  <string name="history_chart_select_point">Mérések kiválasztása</string>
+  <string name="history_chart_1h">Elmúlt 1 óra</string>
+  <string name="history_chart_6h">Elmúlt 6 óra</string>
+  <string name="history_chart_event_summary">Csatlakoztatások (rövid szaggatott vonalak): %1$d · Leválasztások (hosszú szaggatott vonalak): %2$d · Megfigyelési szünetek (pontozott vonalak): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Mérések %2$s és %3$s között.</string>
+  <string name="history_all_history">Összes előzmény</string>
+  <string name="history_chart_compare">Összehasonlítás</string>
+  <string name="history_chart_remove_comparison">Összehasonlítás eltávolítása</string>
+  <string name="history_chart_y_auto">Y: Automatikus</string>
+  <string name="history_chart_y_fixed">Y: Rögzített</string>
+  <string name="history_chart_y_manual">Y: Kézi</string>
+  <string name="history_chart_settings">Grafikon megjelenítési beállításai</string>
+  <string name="history_chart_display_style">Megjelenítési mód</string>
+  <string name="history_chart_connected">Összekötött mérések</string>
+  <string name="history_chart_points">Csak pontok</string>
+  <string name="history_chart_value_scale">Értékskála</string>
+  <string name="history_chart_linear">Lineáris</string>
+  <string name="history_chart_logarithmic">Logaritmikus</string>
+  <string name="history_chart_log_unavailable">A logaritmikus skálához mindkét kiválasztott mérőszám minden mérésének pozitívnak kell lennie.</string>
+  <string name="history_chart_more">További grafikonműveletek</string>
+  <string name="history_chart_events">Grafikon eseményei</string>
 </resources>

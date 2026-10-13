@@ -673,4 +673,35 @@
   <string name="pref_discharging_target_help" formatted="false">Podesite krajnji nivo procena pražnjenja. Nezavisan je od alarma za nizak nivo baterije.</string>
   <string name="pref_target_level_summary" formatted="true">Proceni do %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Отвори графикон преко целог екрана</string>
+  <string name="history_chart_scale">Размера Y осе</string>
+  <string name="history_chart_scale_auto">Аутоматска · видљива мерења</string>
+  <string name="history_chart_scale_fixed">Фиксна · цео изабрани опсег</string>
+  <string name="history_chart_scale_manual">Ручно вертикално зумирање</string>
+  <string name="history_chart_zoom_in">Увећај</string>
+  <string name="history_chart_zoom_out">Умањи</string>
+  <string name="history_chart_pan_left">Ранији временски интервал</string>
+  <string name="history_chart_pan_right">Каснији временски интервал</string>
+  <string name="history_chart_reset">Прикажи цео изабрани опсег</string>
+  <string name="history_chart_select_point">Изабери мерења</string>
+  <string name="history_chart_1h">Последњи сат</string>
+  <string name="history_chart_6h">Последњих 6 сати</string>
+  <string name="history_chart_event_summary">Повезивања (кратке цртице): %1$d · Прекиди везе (дуге цртице): %2$d · Прекиди праћења (тачке): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Мерења од %2$s до %3$s.</string>
+  <string name="history_all_history">Цела историја</string>
+  <string name="history_chart_compare">Упореди</string>
+  <string name="history_chart_remove_comparison">Уклони поређење</string>
+  <string name="history_chart_y_auto">Y: Аутоматска</string>
+  <string name="history_chart_y_fixed">Y: Фиксна</string>
+  <string name="history_chart_y_manual">Y: Ручна</string>
+  <string name="history_chart_settings">Подешавања приказа графикона</string>
+  <string name="history_chart_display_style">Стил приказа</string>
+  <string name="history_chart_connected">Повезана мерења</string>
+  <string name="history_chart_points">Само тачке</string>
+  <string name="history_chart_value_scale">Скала вредности</string>
+  <string name="history_chart_linear">Линеарна</string>
+  <string name="history_chart_logarithmic">Логаритамска</string>
+  <string name="history_chart_log_unavailable">Логаритамска скала захтева позитивна мерења за оба изабрана показатеља.</string>
+  <string name="history_chart_more">Још радњи графикона</string>
+  <string name="history_chart_events">Догађаји на графикону</string>
 </resources>

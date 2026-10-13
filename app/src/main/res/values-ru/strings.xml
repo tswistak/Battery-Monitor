@@ -682,4 +682,35 @@
   <string name="pref_discharging_target_help" formatted="false">Задайте конечный уровень оценки разрядки. Он не зависит от предупреждений о низком заряде.</string>
   <string name="pref_target_level_summary" formatted="true">Оценивать до %1$d%%.</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+  <string name="history_open_fullscreen">Открыть полноэкранный график</string>
+  <string name="history_chart_scale">Масштаб оси Y</string>
+  <string name="history_chart_scale_auto">Автоматический · видимые измерения</string>
+  <string name="history_chart_scale_fixed">Фиксированный · весь выбранный диапазон</string>
+  <string name="history_chart_scale_manual">Ручное масштабирование по вертикали</string>
+  <string name="history_chart_zoom_in">Увеличить</string>
+  <string name="history_chart_zoom_out">Уменьшить</string>
+  <string name="history_chart_pan_left">Более ранний интервал</string>
+  <string name="history_chart_pan_right">Более поздний интервал</string>
+  <string name="history_chart_reset">Показать весь выбранный диапазон</string>
+  <string name="history_chart_select_point">Выбрать измерения</string>
+  <string name="history_chart_1h">Последний час</string>
+  <string name="history_chart_6h">Последние 6 часов</string>
+  <string name="history_chart_event_summary">Подключения (короткие штрихи): %1$d · Отключения (длинные штрихи): %2$d · Перерывы мониторинга (точки): %3$d</string>
+  <string name="history_chart_description_fullscreen">%1$s. Измерения с %2$s по %3$s.</string>
+  <string name="history_all_history">Вся история</string>
+  <string name="history_chart_compare">Сравнить</string>
+  <string name="history_chart_remove_comparison">Убрать сравнение</string>
+  <string name="history_chart_y_auto">Y: Авто</string>
+  <string name="history_chart_y_fixed">Y: Фиксированный</string>
+  <string name="history_chart_y_manual">Y: Ручной</string>
+  <string name="history_chart_settings">Настройки отображения графика</string>
+  <string name="history_chart_display_style">Стиль отображения</string>
+  <string name="history_chart_connected">Соединённые измерения</string>
+  <string name="history_chart_points">Только точки</string>
+  <string name="history_chart_value_scale">Шкала значений</string>
+  <string name="history_chart_linear">Линейная</string>
+  <string name="history_chart_logarithmic">Логарифмическая</string>
+  <string name="history_chart_log_unavailable">Для логарифмической шкалы нужны положительные измерения обоих выбранных показателей.</string>
+  <string name="history_chart_more">Другие действия с графиком</string>
+  <string name="history_chart_events">События на графике</string>
 </resources>

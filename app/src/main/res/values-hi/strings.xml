@@ -658,4 +658,35 @@
   <string name="pref_discharging_target_help" formatted="false">डिस्चार्जिंग अनुमान का अंतिम स्तर सेट करें। यह कम बैटरी अलार्म से स्वतंत्र है।</string>
   <string name="pref_target_level_summary" formatted="true">%1$d%% तक अनुमान लगाएँ।</string>
   <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="history_open_fullscreen">चार्ट को फ़ुल स्क्रीन में खोलें</string>
+    <string name="history_chart_scale">Y-अक्ष का पैमाना</string>
+    <string name="history_chart_scale_auto">स्वचालित · दिखाई दे रहे माप</string>
+    <string name="history_chart_scale_fixed">निश्चित · पूरी चुनी हुई अवधि</string>
+    <string name="history_chart_scale_manual">मैन्युअल लंबवत ज़ूम</string>
+    <string name="history_chart_zoom_in">ज़ूम इन करें</string>
+    <string name="history_chart_zoom_out">ज़ूम आउट करें</string>
+    <string name="history_chart_pan_left">पहले की समय अवधि</string>
+    <string name="history_chart_pan_right">बाद की समय अवधि</string>
+    <string name="history_chart_reset">पूरी चुनी हुई अवधि दिखाएँ</string>
+    <string name="history_chart_select_point">माप चुनें</string>
+    <string name="history_chart_1h">पिछला 1 घंटा</string>
+    <string name="history_chart_6h">पिछले 6 घंटे</string>
+    <string name="history_chart_event_summary">कनेक्ट हुआ (छोटे डैश): %1$d · डिस्कनेक्ट हुआ (लंबे डैश): %2$d · निगरानी में रुकावटें (बिंदुदार): %3$d</string>
+    <string name="history_chart_description_fullscreen">%1$s. %2$s से %3$s तक के माप।</string>
+    <string name="history_all_history">पूरा इतिहास</string>
+    <string name="history_chart_compare">तुलना</string>
+    <string name="history_chart_remove_comparison">तुलना हटाएँ</string>
+    <string name="history_chart_y_auto">Y: स्वचालित</string>
+    <string name="history_chart_y_fixed">Y: निश्चित</string>
+    <string name="history_chart_y_manual">Y: मैन्युअल</string>
+    <string name="history_chart_settings">चार्ट प्रदर्शन सेटिंग</string>
+    <string name="history_chart_display_style">प्रदर्शन शैली</string>
+    <string name="history_chart_connected">जुड़े हुए माप</string>
+    <string name="history_chart_points">केवल बिंदु</string>
+    <string name="history_chart_value_scale">मान का पैमाना</string>
+    <string name="history_chart_linear">रैखिक</string>
+    <string name="history_chart_logarithmic">लघुगणकीय</string>
+    <string name="history_chart_log_unavailable">लघुगणकीय पैमाने के लिए दोनों चुने हुए मापदंडों के माप धनात्मक होने चाहिए।</string>
+    <string name="history_chart_more">चार्ट की और कार्रवाइयाँ</string>
+    <string name="history_chart_events">चार्ट की घटनाएँ</string>
 </resources>
