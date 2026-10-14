@@ -98,7 +98,11 @@ class BatteryVoltageResolverTest {
 
         val reading = harness.resolver.resolve(3874)
 
-        assertEquals(BatteryVoltageReading(3874, BatteryVoltageSource.BROADCAST), reading)
+        assertEquals(
+            BatteryVoltageReading(
+                3874, BatteryVoltageSource.BROADCAST, "ACTION_BATTERY_CHANGED / voltage"
+            ), reading
+        )
         assertEquals(0, sysfs.readCount)
         assertEquals(0, sysfs.listCount)
     }
@@ -116,7 +120,11 @@ class BatteryVoltageResolverTest {
 
         val reading = harness.resolver.resolve(3)
 
-        assertEquals(BatteryVoltageReading(3874, BatteryVoltageSource.SYSFS_DIRECT), reading)
+        val expected = BatteryVoltageReading(
+            3874, BatteryVoltageSource.SYSFS_DIRECT, "/sys/class/power_supply/battery/voltage_now"
+        )
+        assertEquals(expected, reading)
+        assertEquals(expected, harness.resolver.resolve(3))
         assertEquals(0, privilegedCalls)
     }
 
@@ -138,11 +146,13 @@ class BatteryVoltageResolverTest {
 
         val reading = harness.resolver.resolve(3)
 
-        assertEquals(BatteryVoltageReading(3874, BatteryVoltageSource.DUMPSYS_PRIVILEGED), reading)
+        val expected = BatteryVoltageReading(
+            3874, BatteryVoltageSource.DUMPSYS_PRIVILEGED, "dumpsys battery / voltage"
+        )
+        assertEquals(expected, reading)
         assertEquals(1, dumpsysCalls)
         assertEquals(
-            listOf(BatteryVoltageReading(3874, BatteryVoltageSource.DUMPSYS_PRIVILEGED)),
-            harness.refreshResults
+            listOf(expected), harness.refreshResults
         )
     }
 
@@ -158,7 +168,16 @@ class BatteryVoltageResolverTest {
         harness.resolver.resolve(3)
         val reading = harness.resolver.resolve(3)
 
-        assertEquals(BatteryVoltageReading(3874, BatteryVoltageSource.SYSFS_PRIVILEGED), reading)
+        val expected = BatteryVoltageReading(
+            3874,
+            BatteryVoltageSource.SYSFS_PRIVILEGED,
+            "/sys/class/power_supply/battery/voltage_now"
+        )
+        assertEquals(expected, reading)
+        harness.nowMs += 6 * 60_000
+        assertNull(harness.resolver.resolve(3))
+        assertEquals(expected, harness.resolver.resolve(3))
+        assertEquals(listOf(expected, expected), harness.refreshResults)
         assertFalse(commands.contains("dumpsys battery"))
     }
 
@@ -181,7 +200,13 @@ class BatteryVoltageResolverTest {
         harness.resolver.resolve(3)
         val reading = harness.resolver.resolve(3)
 
-        assertEquals(BatteryVoltageReading(3874, BatteryVoltageSource.SYSFS_PRIVILEGED), reading)
+        assertEquals(
+            BatteryVoltageReading(
+                3874,
+                BatteryVoltageSource.SYSFS_PRIVILEGED,
+                "/sys/class/power_supply/vendor-pack/voltage_now"
+            ), reading
+        )
     }
 
     @Test
@@ -268,11 +293,21 @@ class BatteryVoltageResolverTest {
             val sysfs = PrefixedSysfsAccessor(root.path, DirectSysfsAccessor())
             val harness = ResolverHarness(sysfs, privilegedCommand = { null })
 
-            assertEquals(3874, harness.resolver.resolve(3)?.millivolts)
+            assertEquals(
+                BatteryVoltageReading(
+                    3874,
+                    BatteryVoltageSource.SYSFS_DIRECT,
+                    "/sys/class/power_supply/battery/voltage_now"
+                ), harness.resolver.resolve(3)
+            )
 
             File(sysfsRoot, "battery/voltage_now").writeText("garbage")
 
-            assertEquals(3900, harness.resolver.resolve(3)?.millivolts)
+            val expected = BatteryVoltageReading(
+                3900, BatteryVoltageSource.SYSFS_DIRECT, "/sys/class/power_supply/bms/voltage_now"
+            )
+            assertEquals(expected, harness.resolver.resolve(3))
+            assertEquals(expected, harness.resolver.resolve(3))
         }
     }
 

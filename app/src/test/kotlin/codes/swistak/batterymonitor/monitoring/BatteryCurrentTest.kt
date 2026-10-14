@@ -22,6 +22,85 @@ import java.util.Locale
 
 class BatteryCurrentTest {
     @Test
+    fun `current source identifies the requested Android property and skips fallbacks`() {
+        for (average in listOf(false, true)) {
+            val reading = BatteryCurrent.readWithSource(
+                average,
+                readAndroid = { requestedAverage ->
+                    assertEquals(average, requestedAverage)
+                    0L
+                },
+                readSysfs = { error("Android reading should win") },
+                readPrivileged = { error("Android reading should win") })
+            val property =
+                if (average) "BATTERY_PROPERTY_CURRENT_AVERAGE" else "BATTERY_PROPERTY_CURRENT_NOW"
+            assertEquals(BatteryCurrentReading(0L, "BatteryManager / $property"), reading)
+        }
+    }
+
+    @Test
+    fun `sysfs reading retains the exact selected battery file path`() {
+        withSysfsRoot { root ->
+            createSupply(root, "usb-main", "USB", currentNow = "3000000")
+            createSupply(root, "vendor-pack", "Battery", currentNow = "-420000")
+            val reading = BatteryCurrent.readWithSource(
+                false,
+                readAndroid = { null },
+                readSysfs = { average ->
+                    BatteryCurrent.findCurrentFile(root, average)
+                        ?.let(BatteryCurrent::readCurrentFile)
+                },
+                readPrivileged = { error("Sysfs reading should win") })
+            assertEquals(
+                BatteryCurrentReading(-420000, File(root, "vendor-pack/current_now").path), reading
+            )
+        }
+    }
+
+    @Test
+    fun `privileged current source stays paired with instantaneous or average value`() {
+        val privileged = PrivilegedBatteryReading(
+            currentNowUa = -420000, currentAverageUa = -390000, fieldSources = mapOf(
+                "current_now" to "/sys/class/power_supply/bms/current_now",
+                "current_average" to "cmd battery get current_average"
+            )
+        )
+        for (average in listOf(false, true)) {
+            val reading = BatteryCurrent.readWithSource(
+                average,
+                readAndroid = { null },
+                readSysfs = { null },
+                readPrivileged = { privileged })
+            assertEquals(
+                if (average) BatteryCurrentReading(-390000, "cmd battery get current_average")
+                else BatteryCurrentReading(-420000, "/sys/class/power_supply/bms/current_now"),
+                reading
+            )
+        }
+        assertNull(
+            BatteryCurrent.readWithSource(
+                true,
+                readAndroid = { null },
+                readSysfs = { null },
+                readPrivileged = { privileged.copy(currentAverageUa = null) })
+        )
+        assertEquals(
+            BatteryCurrentReading(-420000, null), BatteryCurrent.readWithSource(
+                false,
+                readAndroid = { null },
+                readSysfs = { null },
+                readPrivileged = { privileged.copy(fieldSources = emptyMap()) })
+        )
+        assertNull(
+            BatteryCurrent.readWithSource(
+                false,
+                readAndroid = { null },
+                readSysfs = { null },
+                readPrivileged = { null })
+        )
+    }
+
+    @Test
     fun `battery power uses volts and amps preserves direction and requires both readings`() {
         assertEquals(4.8, BatteryCurrent.powerWatts(4000, 1200.0)!!, 0.000001)
         assertEquals(-0.9605, BatteryCurrent.powerWatts(4000, -240.125)!!, 0.000001)

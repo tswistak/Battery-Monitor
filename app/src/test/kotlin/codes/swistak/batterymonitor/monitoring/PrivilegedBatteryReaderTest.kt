@@ -46,11 +46,22 @@ class PrivilegedBatteryReaderTest {
             currentNowUa = -2000
             currentAverageUa = -1000
             chargeCounterUah = 2500000
+            fieldSources["current_now"] = "cmd battery get current_now"
+            fieldSources["current_average"] = "BatteryManager / BATTERY_PROPERTY_CURRENT_AVERAGE"
+            fieldSources["charge_counter"] = "BatteryManager / BATTERY_PROPERTY_CHARGE_COUNTER"
         }
 
         assertEquals(
-            PrivilegedBatteryReading(80, 2, 2, 0, 0, 3890, 2500000, -2000, -1000),
-            projectPrivilegedBatteryReading(snapshot)
+            PrivilegedBatteryReading(
+                80, 2, 2, 0, 0, 3890, 2500000, -2000, -1000, fieldSources = mapOf(
+                    "health" to "dumpsys battery / health",
+                    "temperature" to "dumpsys battery / temperature",
+                    "voltage" to "dumpsys battery / voltage",
+                    "charge_counter" to "BatteryManager / BATTERY_PROPERTY_CHARGE_COUNTER",
+                    "current_now" to "cmd battery get current_now",
+                    "current_average" to "BatteryManager / BATTERY_PROPERTY_CURRENT_AVERAGE"
+                )
+            ), projectPrivilegedBatteryReading(snapshot)
         )
     }
 
@@ -77,8 +88,16 @@ class PrivilegedBatteryReaderTest {
         )
 
         assertEquals(
-            PrivilegedBatteryReading(57, 3, 2, null, 258, 3845, 0, 0, -600),
-            projectPrivilegedBatteryReading(snapshot)
+            PrivilegedBatteryReading(
+                57, 3, 2, null, 258, 3845, 0, 0, -600, fieldSources = mapOf(
+                    "health" to "/sys/class/power_supply/battery/health",
+                    "temperature" to "/sys/class/power_supply/battery/temp",
+                    "voltage" to "/sys/class/power_supply/battery/voltage_now",
+                    "charge_counter" to "/sys/class/power_supply/battery/charge_counter",
+                    "current_now" to "/sys/class/power_supply/battery/current_now",
+                    "current_average" to "/sys/class/power_supply/battery/current_avg"
+                )
+            ), projectPrivilegedBatteryReading(snapshot)
         )
     }
 
@@ -102,6 +121,9 @@ class PrivilegedBatteryReaderTest {
             currentAverageUa = Long.MIN_VALUE
             chargeCounterUah = -1
             reportedCapacityPercent = 101
+            fieldSources["charge_counter"] = "cmd battery get charge_counter"
+            fieldSources["current_now"] = "cmd battery get current_now"
+            fieldSources["current_average"] = "cmd battery get current_average"
         }
 
         assertEquals(PrivilegedBatteryReading(), projectPrivilegedBatteryReading(snapshot))
@@ -121,8 +143,13 @@ class PrivilegedBatteryReaderTest {
         )
 
         assertEquals(
-            PrivilegedBatteryReading(50, 4, 5, 2, -50, 3900),
-            projectPrivilegedBatteryReading(snapshot)
+            PrivilegedBatteryReading(
+                50, 4, 5, 2, -50, 3900, fieldSources = mapOf(
+                    "health" to "/sys/class/power_supply/vendor-pack/health",
+                    "temperature" to "/sys/class/power_supply/vendor-pack/temp",
+                    "voltage" to "/sys/class/power_supply/vendor-pack/voltage_now"
+                )
+            ), projectPrivilegedBatteryReading(snapshot)
         )
         snapshot.serviceValues[snapshot.serviceLabels.indexOf("USB powered")] = "false"
         assertNull(projectPrivilegedBatteryReading(snapshot).plugged)
@@ -138,7 +165,9 @@ class PrivilegedBatteryReaderTest {
             "dumpsys battery / Charge counter", "ACTION_BATTERY_CHANGED / charge_counter", ""
         )) {
             snapshot.fieldSources["charge_counter"] = source
-            assertNull(projectPrivilegedBatteryReading(snapshot).remainingChargeUah)
+            val reading = projectPrivilegedBatteryReading(snapshot)
+            assertNull(reading.remainingChargeUah)
+            assertNull(reading.fieldSources["charge_counter"])
         }
         for (source in listOf(
             "BatteryManager / BATTERY_PROPERTY_CHARGE_COUNTER",
@@ -146,11 +175,82 @@ class PrivilegedBatteryReaderTest {
             "/sys/class/power_supply/battery/charge_counter"
         )) {
             snapshot.fieldSources["charge_counter"] = source
-            assertEquals(0L, projectPrivilegedBatteryReading(snapshot).remainingChargeUah)
+            val reading = projectPrivilegedBatteryReading(snapshot)
+            assertEquals(0L, reading.remainingChargeUah)
+            assertEquals(source, reading.fieldSources["charge_counter"])
         }
         snapshot.fieldSources.clear()
         snapshot.chargeCounterUah = 1234
         assertEquals(1234L, projectPrivilegedBatteryReading(snapshot).remainingChargeUah)
+    }
+
+    @Test
+    fun `projection pairs fallback values with the battery supply that passed validation`() {
+        val snapshot = snapshot(
+            battery = mapOf(
+                "health" to "invalid",
+                "temp" to "3000",
+                "voltage_now" to "3",
+                "charge_counter" to "-1",
+                "current_now" to Long.MIN_VALUE.toString(),
+                "current_avg" to Long.MIN_VALUE.toString()
+            ), sysfs = mapOf(
+                "bms/type" to "Battery",
+                "bms/health" to "Good",
+                "bms/temp" to "237",
+                "bms/voltage_now" to "3900000",
+                "bms/charge_counter" to "400",
+                "bms/current_now" to "850",
+                "bms/current_avg" to "500"
+            )
+        ).apply {
+            chargeCounterUah = -1
+            currentNowUa = Long.MIN_VALUE
+            currentAverageUa = Long.MIN_VALUE
+            fieldSources["charge_counter"] = "cmd battery get charge_counter"
+            fieldSources["current_now"] = "cmd battery get current_now"
+            fieldSources["current_average"] = "cmd battery get current_average"
+        }
+
+        assertEquals(
+            PrivilegedBatteryReading(
+                health = 2,
+                temperatureTenthsC = 237,
+                voltageMillivolts = 3900,
+                remainingChargeUah = 400,
+                currentNowUa = 850,
+                currentAverageUa = 500,
+                fieldSources = mapOf(
+                    "health" to "/sys/class/power_supply/bms/health",
+                    "temperature" to "/sys/class/power_supply/bms/temp",
+                    "voltage" to "/sys/class/power_supply/bms/voltage_now",
+                    "charge_counter" to "/sys/class/power_supply/bms/charge_counter",
+                    "current_now" to "/sys/class/power_supply/bms/current_now",
+                    "current_average" to "/sys/class/power_supply/bms/current_avg"
+                )
+            ), projectPrivilegedBatteryReading(snapshot)
+        )
+    }
+
+    @Test
+    fun `projection leaves unknown typed sources missing rather than borrowing raw sysfs provenance`() {
+        val snapshot = snapshot(
+            battery = mapOf(
+                "charge_counter" to "400", "current_now" to "850", "current_avg" to "500"
+            )
+        ).apply {
+            chargeCounterUah = 1234
+            currentNowUa = -100
+            currentAverageUa = -200
+            fieldSources["current_now"] = " "
+            fieldSources["current_avg"] = "/sys/class/power_supply/battery/current_avg"
+        }
+
+        assertEquals(
+            PrivilegedBatteryReading(
+                remainingChargeUah = 1234, currentNowUa = -100, currentAverageUa = -200
+            ), projectPrivilegedBatteryReading(snapshot)
+        )
     }
 
     @Test

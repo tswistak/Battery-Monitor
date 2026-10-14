@@ -38,7 +38,8 @@ internal data class MonitoringSnapshot(
     val observedAtMillis: Long,
     val source: String = "BatteryInfoService bundle",
     val predictorData: PredictorStoredState? = null,
-    val recentPredictorData: PredictorRecentState? = null
+    val recentPredictorData: PredictorRecentState? = null,
+    val fieldSources: Map<String, String> = emptyMap()
 ) {
     companion object {
         const val FIELD_PREDICTOR_DATA = "monitoring_predictor_data"
@@ -107,7 +108,8 @@ internal data class MonitoringSnapshot(
                 observedAtMillis = bundle.getLong(MonitoringConnection.FIELD_OBSERVED_AT),
                 predictorData = predictorData,
                 recentPredictorData = bundle.getBundle(FIELD_RECENT_PREDICTOR_DATA)
-                    ?.let(::recentPredictorState)
+                    ?.let(::recentPredictorState),
+                fieldSources = info.fieldSources
             )
         }
     }

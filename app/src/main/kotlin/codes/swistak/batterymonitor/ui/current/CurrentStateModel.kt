@@ -29,6 +29,19 @@ internal enum class CurrentCondition {
     WAITING, DISABLED, STALE, CHARGING, DISCHARGING, FULL, PAUSED, TARGET_REACHED, BELOW_TARGET, LOW, INSUFFICIENT, UNKNOWN
 }
 
+internal fun currentMeasurementSource(
+    measurement: CurrentMeasurement, snapshot: MonitoringSnapshot?, currentSource: String?
+): String? = when (measurement) {
+    CurrentMeasurement.TEMPERATURE -> snapshot?.fieldSources?.get("temperature")
+    CurrentMeasurement.VOLTAGE -> snapshot?.fieldSources?.get("voltage")
+    CurrentMeasurement.ANDROID_HEALTH -> snapshot?.fieldSources?.get("health")
+    CurrentMeasurement.REMAINING_CHARGE -> snapshot?.fieldSources?.get("charge_counter")
+    CurrentMeasurement.CURRENT -> currentSource
+    CurrentMeasurement.POWER -> snapshot?.fieldSources?.get("voltage")?.let { voltage ->
+        currentSource?.let { "$voltage × $it" }
+    }
+}
+
 internal data class CurrentStateModel(
     val snapshot: MonitoringSnapshot?,
     val condition: CurrentCondition,

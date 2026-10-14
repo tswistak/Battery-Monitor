@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 internal data class BatteryVoltageReading(
-    val millivolts: Int, val source: BatteryVoltageSource
+    val millivolts: Int, val source: BatteryVoltageSource, val sourceDetail: String? = null
 )
 
 internal enum class BatteryVoltageSource {
@@ -110,7 +110,11 @@ internal class BatteryVoltageResolver(
     fun resolve(rawBroadcastMillivolts: Int): BatteryVoltageReading? {
         if (BatteryVoltageValidator.isValidBroadcastMillivolts(rawBroadcastMillivolts)) {
             logSource(BatteryVoltageSource.BROADCAST)
-            return BatteryVoltageReading(rawBroadcastMillivolts, BatteryVoltageSource.BROADCAST)
+            return BatteryVoltageReading(
+                rawBroadcastMillivolts,
+                BatteryVoltageSource.BROADCAST,
+                "ACTION_BATTERY_CHANGED / voltage"
+            )
         }
 
         if (rawBroadcastMillivolts != lastLoggedInvalidBroadcast) {
@@ -146,7 +150,7 @@ internal class BatteryVoltageResolver(
         val cachedPath = directSysfsPath
         if (cachedPath != null) {
             BatteryVoltageValidator.normalizeSysfsVoltage(directSysfs.read(cachedPath))?.let {
-                return BatteryVoltageReading(it, BatteryVoltageSource.SYSFS_DIRECT)
+                return BatteryVoltageReading(it, BatteryVoltageSource.SYSFS_DIRECT, cachedPath)
             }
             directSysfsPath = null
             logger(
@@ -163,7 +167,9 @@ internal class BatteryVoltageResolver(
             LOG_TAG,
             "Using battery voltage fallback: SYSFS_DIRECT, path=${discovered.first}"
         )
-        return BatteryVoltageReading(discovered.second, BatteryVoltageSource.SYSFS_DIRECT)
+        return BatteryVoltageReading(
+            discovered.second, BatteryVoltageSource.SYSFS_DIRECT, discovered.first
+        )
     }
 
     private fun freshCachedPrivileged(): BatteryVoltageReading? {
@@ -227,7 +233,9 @@ internal class BatteryVoltageResolver(
             BatteryVoltageValidator.parseDumpsysVoltageMillivolts(privilegedExecutor.run("dumpsys battery"))
         if (millivolts != null) {
             logger(Log.INFO, LOG_TAG, "Using battery voltage fallback: DUMPSYS_PRIVILEGED")
-            return BatteryVoltageReading(millivolts, BatteryVoltageSource.DUMPSYS_PRIVILEGED)
+            return BatteryVoltageReading(
+                millivolts, BatteryVoltageSource.DUMPSYS_PRIVILEGED, "dumpsys battery / voltage"
+            )
         }
         return null
     }
@@ -237,14 +245,16 @@ internal class BatteryVoltageResolver(
         val cachedPath = privilegedSysfsPath
         if (cachedPath != null) {
             BatteryVoltageValidator.normalizeSysfsVoltage(accessor.read(cachedPath))?.let {
-                return BatteryVoltageReading(it, BatteryVoltageSource.SYSFS_PRIVILEGED)
+                return BatteryVoltageReading(it, BatteryVoltageSource.SYSFS_PRIVILEGED, cachedPath)
             }
             privilegedSysfsPath = null
         }
 
         val discovered = discoverBatteryVoltage(accessor) ?: return null
         privilegedSysfsPath = discovered.first
-        return BatteryVoltageReading(discovered.second, BatteryVoltageSource.SYSFS_PRIVILEGED)
+        return BatteryVoltageReading(
+            discovered.second, BatteryVoltageSource.SYSFS_PRIVILEGED, discovered.first
+        )
     }
 
     private fun logSource(source: BatteryVoltageSource?) {

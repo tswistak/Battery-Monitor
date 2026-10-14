@@ -18,6 +18,36 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class CurrentStateModelTest {
+    @Test
+    fun `measurement details use each actual source and both power inputs`() {
+        val reading = snapshot().copy(
+            fieldSources = mapOf(
+                "temperature" to "ACTION_BATTERY_CHANGED / temperature",
+                "voltage" to "/sys/class/power_supply/bms/voltage_now",
+                "health" to "dumpsys battery / health",
+                "charge_counter" to "BatteryManager / BATTERY_PROPERTY_CHARGE_COUNTER"
+            )
+        )
+        val current = "BatteryManager / BATTERY_PROPERTY_CURRENT_AVERAGE"
+        val expected = mapOf(
+            CurrentMeasurement.TEMPERATURE to reading.fieldSources["temperature"],
+            CurrentMeasurement.VOLTAGE to reading.fieldSources["voltage"],
+            CurrentMeasurement.CURRENT to current,
+            CurrentMeasurement.POWER to "/sys/class/power_supply/bms/voltage_now × $current",
+            CurrentMeasurement.ANDROID_HEALTH to reading.fieldSources["health"],
+            CurrentMeasurement.REMAINING_CHARGE to reading.fieldSources["charge_counter"]
+        )
+        for ((measurement, source) in expected) {
+            assertEquals(source, currentMeasurementSource(measurement, reading, current))
+        }
+        for (measurement in CurrentMeasurement.entries) {
+            assertEquals(null, currentMeasurementSource(measurement, snapshot(), null))
+            assertEquals(null, currentMeasurementSource(measurement, null, null))
+        }
+        assertEquals(null, currentMeasurementSource(CurrentMeasurement.POWER, reading, null))
+        assertEquals(null, currentMeasurementSource(CurrentMeasurement.POWER, snapshot(), current))
+    }
+
     private fun prediction(direction: Int, target: Int, reached: Boolean = false) =
         PredictionSnapshot(
             direction, target, reached, 0, 2, 20

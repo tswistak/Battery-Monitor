@@ -84,4 +84,70 @@ class BatteryReadingFallbackTest {
         )
         assertEquals(android, mergeBatteryFields(android, null))
     }
+
+    @Test
+    fun `sources follow valid Android fields and the exact resolved voltage file`() {
+        val fields = mapOf("temperature" to 0, "health" to 7, "voltage" to 3700)
+        val voltageSource = "/sys/class/power_supply/bms/voltage_now"
+        val fallbackWithSources = fallback.copy(
+            fieldSources = mapOf(
+                "temperature" to "dumpsys battery / temperature",
+                "health" to "dumpsys battery / health",
+                "voltage" to "dumpsys battery / voltage"
+            )
+        )
+
+        assertEquals(
+            mapOf(
+                "temperature" to "ACTION_BATTERY_CHANGED / temperature",
+                "health" to "ACTION_BATTERY_CHANGED / health",
+                "voltage" to voltageSource
+            ), mergeBatteryFieldSources(fields, fallbackWithSources, voltageSource)
+        )
+    }
+
+    @Test
+    fun `invalid Android fields use provenance only for fallback values actually selected`() {
+        val fields = mapOf("temperature" to 250, "health" to 1, "voltage" to 0)
+        val fallbackWithSources = fallback.copy(
+            fieldSources = mapOf(
+                "temperature" to "dumpsys battery / temperature",
+                "health" to "/sys/class/power_supply/battery/health",
+                "voltage" to "dumpsys battery / voltage"
+            )
+        )
+
+        assertEquals(
+            mapOf(
+                "temperature" to "ACTION_BATTERY_CHANGED / temperature",
+                "health" to "/sys/class/power_supply/battery/health",
+                "voltage" to "dumpsys battery / voltage"
+            ), mergeBatteryFieldSources(fields, fallbackWithSources, null)
+        )
+        assertEquals(
+            mapOf("voltage" to "ACTION_BATTERY_CHANGED / voltage"), mergeBatteryFieldSources(
+                mapOf("voltage" to 3800), fallback, "ACTION_BATTERY_CHANGED / voltage"
+            )
+        )
+    }
+
+    @Test
+    fun `missing defaults and values without known provenance do not claim a source`() {
+        assertTrue(mergeBatteryFieldSources(emptyMap(), null, null).isEmpty())
+        assertTrue(
+            mergeBatteryFieldSources(
+                mapOf("temperature" to Int.MIN_VALUE, "health" to 1, "voltage" to 0),
+                null,
+                "ACTION_BATTERY_CHANGED / voltage"
+            ).isEmpty()
+        )
+        assertTrue(mergeBatteryFieldSources(mapOf("voltage" to 3800), null, null).isEmpty())
+        assertTrue(
+            mergeBatteryFieldSources(
+                emptyMap(),
+                PrivilegedBatteryReading(fieldSources = mapOf("temperature" to "dumpsys battery / temperature")),
+                null
+            ).isEmpty()
+        )
+    }
 }

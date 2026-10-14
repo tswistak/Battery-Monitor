@@ -779,21 +779,28 @@ class BatteryInfoService : Service() {
         settingsEditor.apply()
     }
 
-    private fun batteryFields(intent: Intent?): Map<String, Int> {
+    private fun batteryFields(intent: Intent?): Pair<Map<String, Int>, String?> {
         val fields = BATTERY_READING_FIELDS.filter { intent?.hasExtra(it) == true }
             .associateWith { intent!!.getIntExtra(it, Int.MIN_VALUE) }.toMutableMap()
+        var voltageSource = "ACTION_BATTERY_CHANGED / voltage".takeIf {
+            BatteryInfo.EXTRA_VOLTAGE in fields
+        }
         voltageResolver?.resolve(fields[BatteryInfo.EXTRA_VOLTAGE] ?: 0)?.let {
             fields[BatteryInfo.EXTRA_VOLTAGE] = it.millivolts
+            voltageSource = it.sourceDetail
         }
-        return fields
+        return fields to voltageSource
     }
 
     private fun applyBatteryIntent(intent: Intent?) {
-        if (intent != null) applyBatteryFields(batteryFields(intent), null)
+        if (intent != null) {
+            val (fields, voltageSource) = batteryFields(intent)
+            applyBatteryFields(fields, null, voltageSource)
+        }
     }
 
     private fun applyBatteryFields(
-        fields: Map<String, Int>, fallback: PrivilegedBatteryReading?
+        fields: Map<String, Int>, fallback: PrivilegedBatteryReading?, voltageSource: String?
     ): Map<String, Int> {
         val merged = mergeBatteryFields(fields, fallback)
         val resolved = Intent(Intent.ACTION_BATTERY_CHANGED)
@@ -803,6 +810,7 @@ class BatteryInfoService : Service() {
             )
         }
         info!!.load(resolved, spService)
+        info!!.fieldSources = mergeBatteryFieldSources(fields, fallback, voltageSource)
         return merged
     }
 
@@ -820,7 +828,7 @@ class BatteryInfoService : Service() {
         resolvingBatteryUpdate = true
         val observedAt = System.currentTimeMillis()
         val observedElapsed = SystemClock.elapsedRealtime()
-        val fields = batteryFields(pendingBatteryUpdates.removeFirst())
+        val (fields, voltageSource) = batteryFields(pendingBatteryUpdates.removeFirst())
         val remainingCharge = remainingChargeReader.readMicroAmpHours()
         val rawCurrent = BatteryCurrent.rawCurrentMicroAmps
         val needsFallback =
@@ -837,7 +845,8 @@ class BatteryInfoService : Service() {
                         rawCurrent,
                         remainingCharge,
                         observedAt,
-                        observedElapsed
+                        observedElapsed,
+                        voltageSource
                     )
                 }
                 resolvingBatteryUpdate = false
@@ -856,15 +865,23 @@ class BatteryInfoService : Service() {
         rawCurrent: Long?,
         remainingCharge: Long?,
         observedAt: Long,
-        observedElapsed: Long
+        observedElapsed: Long,
+        voltageSource: String?
     ) {
         currentMicroAmps = rawCurrent ?: fallback?.currentNowUa
         now = observedAt
         spsEditor = spService.edit()
         updatedLasts = false
 
-        val resolvedFields = applyBatteryFields(fields, fallback)
+        val resolvedFields = applyBatteryFields(fields, fallback, voltageSource)
         info!!.remainingChargeUah = remainingCharge ?: fallback?.remainingChargeUah
+        val remainingChargeSource = if (remainingCharge != null) {
+            "BatteryManager / BATTERY_PROPERTY_CHARGE_COUNTER"
+        } else fallback?.fieldSources?.get("charge_counter")
+            ?.takeIf { fallback.remainingChargeUah != null }
+        if (remainingChargeSource != null) {
+            info!!.fieldSources += "charge_counter" to remainingChargeSource
+        }
         recordHistory(resolvedFields, observedElapsed)
 
         predictor!!.setPredictionType(

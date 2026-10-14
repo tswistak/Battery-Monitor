@@ -650,7 +650,6 @@
     <string name="current_android_health">Status according to Android</string>
     <string name="current_unavailable">No reading</string>
     <string name="current_current_unavailable">No current reading is available. Diagnostics may show an access issue or an unsupported source.</string>
-    <string name="current_current_source">BatteryManager or device power supply file</string>
     <string name="current_status_unit">Android status</string>
     <string name="current_health_explanation">This Android status is not a battery health percentage.</string>
     <string name="current_history_off">History logging is off · Open History</string>

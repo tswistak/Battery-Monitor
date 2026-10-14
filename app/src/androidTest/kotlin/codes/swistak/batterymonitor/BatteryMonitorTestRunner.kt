@@ -17,6 +17,7 @@ import android.os.Bundle
 import codes.swistak.batterymonitor.alarms.AlarmDatabaseInstrumentedTest
 import codes.swistak.batterymonitor.logs.BatteryHistoryInstrumentedTest
 import codes.swistak.batterymonitor.logs.DetailedHistoryInstrumentedTest
+import codes.swistak.batterymonitor.monitoring.BatteryReadingSourcesInstrumentedTest
 import codes.swistak.batterymonitor.ui.help.LicenseScreenInstrumentedTest
 import codes.swistak.batterymonitor.ui.history.FullscreenChartStateInstrumentedTest
 import org.junit.runner.Description
@@ -45,6 +46,7 @@ class BatteryMonitorTestRunner : Instrumentation() {
             AlarmDatabaseInstrumentedTest::class.java,
             BatteryHistoryInstrumentedTest::class.java,
             DetailedHistoryInstrumentedTest::class.java,
+            BatteryReadingSourcesInstrumentedTest::class.java,
             FullscreenChartStateInstrumentedTest::class.java,
             LicenseScreenInstrumentedTest::class.java
         ).filter { requestedClasses == null || it.name in requestedClasses.orEmpty() }

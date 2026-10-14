@@ -133,7 +133,7 @@ private fun SharedPreferences.currentPreferences(defaultTemperatureUnit: String)
 
 
 internal data class CurrentReading(
-    val milliAmps: Double?, val observedAtMillis: Long, val average: Boolean = false
+    val milliAmps: Double?, val observedAtMillis: Long, val source: String? = null
 )
 
 @Composable
@@ -199,11 +199,12 @@ internal fun CurrentStateRoute(
             while (true) {
                 value = withContext(Dispatchers.IO) {
                     val average =
-                        if (preferences.preferAverageCurrent) BatteryCurrent.avgCurrent else null
+                        if (preferences.preferAverageCurrent) BatteryCurrent.readWithSource(true) else null
+                    val reading = average ?: BatteryCurrent.readWithSource(false)
                     CurrentReading(
-                        average ?: BatteryCurrent.current,
+                        reading?.let { BatteryCurrent.scaleMicroAmps(it.microAmps) },
                         System.currentTimeMillis(),
-                        average != null
+                        reading?.source
                     )
                 }.also { viewModel.reading = it }
                 delay(preferences.currentRefreshMillis.milliseconds)
@@ -387,7 +388,10 @@ internal fun CurrentStateScreen(
         else -> stringResource(R.string.predictor_sensitive)
     }
     val snapshotTime = snapshot?.observedAtMillis?.takeIf { it > 0 }
-    val snapshotSource = snapshot?.source ?: stringResource(R.string.advanced_value_not_available)
+    val sourceUnavailable = stringResource(R.string.advanced_value_not_available)
+    fun source(measurement: CurrentMeasurement): String =
+        currentMeasurementSource(measurement, snapshot, currentReading?.source) ?: sourceUnavailable
+
     val unavailable = stringResource(R.string.current_unavailable)
     val power = BatteryCurrent.powerWatts(snapshot?.voltageMillivolts, currentReading?.milliAmps)
     val metrics = listOf(
@@ -397,7 +401,7 @@ internal fun CurrentStateScreen(
                 DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
             } ?: unavailable),
             if (preferences.fahrenheit) "°F" else "°C",
-            snapshotSource,
+            source(CurrentMeasurement.TEMPERATURE),
             snapshotTime), MetricDetail(
             CurrentMeasurement.VOLTAGE,
             MetricDisplay(
@@ -406,34 +410,31 @@ internal fun CurrentStateScreen(
                     DisplayStrings.formatVoltage(it)
                 } ?: unavailable),
             "V",
-            snapshotSource,
+            source(CurrentMeasurement.VOLTAGE),
             snapshotTime,
             if (snapshot?.voltageMillivolts == null) unavailable else null), MetricDetail(
-            CurrentMeasurement.CURRENT,
-            MetricDisplay(
+            CurrentMeasurement.CURRENT, MetricDisplay(
                 stringResource(R.string.pref_cat_battery_current_main), when {
                     currentReading?.milliAmps == null -> unavailable
                     else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
                         currentReading.milliAmps, configuration.locales[0]
                     ) + " mA"
                 }
-            ),
-            "mA",
-            stringResource(R.string.current_current_source) + " · " + stringResource(if (currentReading?.average == true) R.string.advanced_field_current_average else R.string.advanced_field_current_now),
-            currentReading?.observedAtMillis,
-            when {
+            ), "mA", source(CurrentMeasurement.CURRENT), currentReading?.observedAtMillis, when {
                 currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
                 else -> null
             }
         )) + listOfNotNull(power?.let {
         MetricDetail(
-            CurrentMeasurement.POWER, MetricDisplay(
+            CurrentMeasurement.POWER,
+            MetricDisplay(
                 stringResource(R.string.battery_power),
                 historyValue(it, HistoryMetric.POWER, false, configuration.locales[0])
-            ), "W", "$snapshotSource · " + stringResource(
-                if (currentReading?.average == true) R.string.advanced_field_current_average
-                else R.string.advanced_field_current_now
-            ), currentReading?.observedAtMillis, stringResource(R.string.battery_power_explanation)
+            ),
+            "W",
+            source(CurrentMeasurement.POWER),
+            currentReading?.observedAtMillis,
+            stringResource(R.string.battery_power_explanation)
         )
     }) + MetricDetail(
         CurrentMeasurement.ANDROID_HEALTH,
@@ -441,7 +442,7 @@ internal fun CurrentStateScreen(
             DisplayStrings.healths.getOrNull(it.health)
         } ?: unavailable),
         stringResource(R.string.current_status_unit),
-        snapshotSource,
+        source(CurrentMeasurement.ANDROID_HEALTH),
         snapshotTime,
         stringResource(R.string.current_health_explanation))
     val detailMetrics = metrics + MetricDetail(
@@ -454,7 +455,7 @@ internal fun CurrentStateScreen(
                 )
             } ?: unavailable),
         "mAh",
-        snapshotSource,
+        source(CurrentMeasurement.REMAINING_CHARGE),
         snapshotTime,
         if (snapshot?.remainingChargeMicroampHours == null) stringResource(R.string.remaining_charge_unavailable) else null)
     var selectedMetric by rememberSaveable { mutableStateOf<String?>(null) }

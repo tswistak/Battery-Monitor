@@ -30,15 +30,24 @@ internal data class PrivilegedBatteryReading(
     val voltageMillivolts: Int? = null,
     val remainingChargeUah: Long? = null,
     val currentNowUa: Long? = null,
-    val currentAverageUa: Long? = null
+    val currentAverageUa: Long? = null,
+    val fieldSources: Map<String, String> = emptyMap()
 )
 
 internal fun projectPrivilegedBatteryReading(snapshot: AdvancedBatterySnapshot): PrivilegedBatteryReading {
     val service = snapshot.serviceLabels.zip(snapshot.serviceValues).toMap()
     val sysfs = snapshot.sysfsLabels.zip(snapshot.sysfsValues).toMap()
     val supplies = AdvancedBatteryStatsCollector.batterySupplyNames(sysfs)
-    fun <T : Any> batteryField(key: String, parse: (String) -> T?): T? =
-        supplies.firstNotNullOfOrNull { supply -> sysfs["$supply/$key"]?.let(parse) }
+    val fieldSources = linkedMapOf<String, String>()
+    fun <T : Any> batteryField(key: String, parse: (String) -> T?): Pair<T, String>? =
+        supplies.firstNotNullOfOrNull { supply ->
+            sysfs["$supply/$key"]?.let(parse)?.let { it to "/sys/class/power_supply/$supply/$key" }
+        }
+
+    fun <T : Any> selectedField(key: String, reading: Pair<T, String?>?): T? {
+        reading?.second?.takeIf { it.isNotBlank() }?.let { fieldSources[key] = it }
+        return reading?.first
+    }
 
     fun percent(raw: String?): Int? = raw?.trim()?.toIntOrNull()?.takeIf { it in 0..100 }
     fun temperature(raw: String?): Int? = raw?.trim()?.toIntOrNull()?.takeIf { it in -1000..2000 }
@@ -53,6 +62,7 @@ internal fun projectPrivilegedBatteryReading(snapshot: AdvancedBatterySnapshot):
     } else null
     val serviceStatus = service["status"]?.trim()?.toIntOrNull()?.takeIf { it in 1..5 }
     val serviceHealth = service["health"]?.trim()?.toIntOrNull()?.takeIf { it in 1..7 }
+        ?.let { it to "dumpsys battery / health" }
     val sysfsStatus = batteryField("status") {
         when (it.trim().lowercase(Locale.ROOT)) {
             "charging" -> BatteryInfo.STATUS_CHARGING
@@ -94,28 +104,44 @@ internal fun projectPrivilegedBatteryReading(snapshot: AdvancedBatterySnapshot):
     // Battery-service dumps can report zero when the charge counter is unsupported.
     val remainingCharge =
         snapshot.chargeCounterUah?.takeIf { it > 0 || it == 0L && confirmedChargeSource }
+            ?.let { it to snapshot.fieldSources["charge_counter"] }
             ?: batteryField("charge_counter", ::charge)
 
     return PrivilegedBatteryReading(percent = snapshot.reportedCapacityPercent?.takeIf { it in 0..100 }
-        ?: servicePercent ?: batteryField("capacity", ::percent),
+        ?: servicePercent ?: batteryField("capacity", ::percent)?.first,
         status = serviceStatus?.takeUnless { it == BatteryInfo.STATUS_UNKNOWN }
-            ?: sysfsStatus?.takeUnless { it == BatteryInfo.STATUS_UNKNOWN } ?: serviceStatus
-            ?: sysfsStatus,
-        health = serviceHealth?.takeUnless { it == BatteryInfo.HEALTH_UNKNOWN }
-            ?: sysfsHealth?.takeUnless { it == BatteryInfo.HEALTH_UNKNOWN } ?: serviceHealth
-            ?: sysfsHealth,
+            ?: sysfsStatus?.first?.takeUnless { it == BatteryInfo.STATUS_UNKNOWN } ?: serviceStatus
+            ?: sysfsStatus?.first,
+        health = selectedField(
+            "health",
+            serviceHealth?.takeUnless { it.first == BatteryInfo.HEALTH_UNKNOWN }
+                ?: sysfsHealth?.takeUnless { it.first == BatteryInfo.HEALTH_UNKNOWN }
+                ?: serviceHealth ?: sysfsHealth),
         plugged = plugged,
-        temperatureTenthsC = temperature(service["temperature"]) ?: batteryField(
-            "temp", ::temperature
-        ),
-        voltageMillivolts = service["voltage"]?.trim()?.toIntOrNull()
-            ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
-            ?: batteryField("voltage_now", BatteryVoltageValidator::normalizeSysfsVoltage),
-        remainingChargeUah = remainingCharge,
-        currentNowUa = snapshot.currentNowUa?.takeIf(BatteryCurrent::isValidMicroAmps)
-            ?: batteryField("current_now", ::current),
-        currentAverageUa = snapshot.currentAverageUa?.takeIf(BatteryCurrent::isValidMicroAmps)
-            ?: batteryField("current_avg", ::current))
+        temperatureTenthsC = selectedField(
+            "temperature",
+            temperature(service["temperature"])?.let { it to "dumpsys battery / temperature" }
+                ?: batteryField("temp", ::temperature)),
+        voltageMillivolts = selectedField(
+            "voltage",
+            service["voltage"]?.trim()?.toIntOrNull()
+                ?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
+                ?.let { it to "dumpsys battery / voltage" } ?: batteryField(
+                "voltage_now", BatteryVoltageValidator::normalizeSysfsVoltage
+            )),
+        remainingChargeUah = selectedField("charge_counter", remainingCharge),
+        currentNowUa = selectedField(
+            "current_now",
+            snapshot.currentNowUa?.takeIf(BatteryCurrent::isValidMicroAmps)
+                ?.let { it to snapshot.fieldSources["current_now"] } ?: batteryField(
+                "current_now", ::current
+            )),
+        currentAverageUa = selectedField(
+            "current_average",
+            snapshot.currentAverageUa?.takeIf(BatteryCurrent::isValidMicroAmps)
+                ?.let { it to snapshot.fieldSources["current_average"] }
+                ?: batteryField("current_avg", ::current)),
+        fieldSources = fieldSources)
 }
 
 internal class PrivilegedBatteryReader(
