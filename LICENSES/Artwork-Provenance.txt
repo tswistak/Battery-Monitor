@@ -1,0 +1,11 @@
+Battery Monitor UI line-vector provenance
+
+The 46 ui_*.xml line-vector resources other than ui_fullscreen.xml were
+generated for Battery Monitor using Codex.
+
+These icons are included with Battery Monitor's original artwork under
+the project's GPL-3.0-or-later terms, to the extent of the project's rights.
+The complete GPLv3 text is packaged as GPL-3.0.txt.
+
+The Material fullscreen glyph and Material launcher battery are covered
+separately by Google-Material-Icons-Notices.txt and Apache-2.0.txt.

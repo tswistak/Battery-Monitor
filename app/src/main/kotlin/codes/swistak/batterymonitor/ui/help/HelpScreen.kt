@@ -53,11 +53,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.ui.components.SettingRow
 import codes.swistak.batterymonitor.ui.settings.SettingsCategory
 import codes.swistak.batterymonitor.ui.settings.helpHeadingIcon
 
 @Composable
-fun HelpScreen(topic: String? = null) {
+fun HelpScreen(topic: String? = null, onOpenLicenses: () -> Unit = {}) {
     val context = LocalContext.current
     val resources = LocalResources.current
     val settings = remember(context) {
@@ -105,13 +106,12 @@ fun HelpScreen(topic: String? = null) {
                     }
                     SelectionContainer {
                         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                            for (paragraph in section.paragraphs) {
-                                val text =
-                                    if (paragraph.textResource == R.string.nav_help_version) {
-                                        versionText
-                                    } else resources.getText(paragraph.textResource)
-                                if (paragraph.subheading) {
-                                    HelpHeading(text, paragraph.textResource, small = true)
+                            for ((textResource, subheading) in section.paragraphs) {
+                                val text = if (textResource == R.string.nav_help_version) {
+                                    versionText
+                                } else resources.getText(textResource)
+                                if (subheading) {
+                                    HelpHeading(text, textResource, small = true)
                                 } else Text(
                                     helpText(text),
                                     style = MaterialTheme.typography.bodyMedium,
@@ -120,6 +120,13 @@ fun HelpScreen(topic: String? = null) {
                             }
                         }
                     }
+                    if (section.titleResource == R.string.help_cat_open_source) {
+                        SettingRow(
+                            title = stringResource(R.string.help_licenses_title),
+                            summary = stringResource(R.string.help_licenses_summary),
+                            onClick = onOpenLicenses
+                        )
+                    }
                 }
             }
         }
@@ -127,7 +134,7 @@ fun HelpScreen(topic: String? = null) {
 }
 
 @Composable
-private fun HelpHeading(
+internal fun HelpHeading(
     text: CharSequence, textResource: Int, small: Boolean = false, showIcon: Boolean = true
 ) {
     Row(
@@ -153,7 +160,7 @@ private fun HelpHeading(
 }
 
 @Composable
-private fun helpText(text: CharSequence): AnnotatedString {
+internal fun helpText(text: CharSequence): AnnotatedString {
     val linkColor = MaterialTheme.colorScheme.primary
     return remember(text, linkColor) {
         val linked = SpannableString(text)

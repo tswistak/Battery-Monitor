@@ -208,7 +208,14 @@
 
     <string name="help_cat_version" formatted="false">Wersja</string>
 
-    <string name="help_cat_open_source" formatted="false">Otwarte źródło</string>
+  <string name="help_cat_open_source" formatted="false">Otwarte źródło</string>
+  <string name="help_licenses_title">Licencje open source</string>
+  <string name="help_licenses_summary">Licencje i informacje prawne dotyczące aplikacji, grafiki i bibliotek</string>
+  <string name="help_licenses_application">Aplikacja</string>
+  <string name="help_licenses_artwork">Grafika i ikony</string>
+  <string name="help_licenses_libraries">Biblioteki</string>
+  <string name="help_licenses_loading">Wczytywanie licencji…</string>
+  <string name="help_licenses_unavailable">Nie udało się odczytać informacji o licencji. Wróć do listy licencji lub zainstaluj aplikację ponownie.</string>
     <string name="help_open_source" formatted="false">Ten projekt jest otwartoźródłowy. Możesz uzyskać dostęp do kodu źródłowego na <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
 
     <string name="help_cat_privacy" formatted="false">Prywatność</string>

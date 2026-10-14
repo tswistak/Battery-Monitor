@@ -1,0 +1,1842 @@
+[
+  {
+    "id": "androidx-activity-activity-compose",
+    "name": "AndroidX Activity Compose",
+    "version": "1.13.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/activity/activity-compose/1.13.0/activity-compose-1.13.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/activity/activity-compose/1.13.0/activity-compose-1.13.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.activity:activity-compose:1.13.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-activity-activity-ktx",
+    "name": "AndroidX Activity Kotlin Extensions",
+    "version": "1.13.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/activity/activity-ktx/1.13.0/activity-ktx-1.13.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/activity/activity-ktx/1.13.0/activity-ktx-1.13.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.activity:activity-ktx:1.13.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-activity-activity",
+    "name": "AndroidX Activity",
+    "version": "1.13.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2020 The Android Open Source Project\nCopyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/activity/activity/1.13.0/activity-1.13.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/activity/activity/1.13.0/activity-1.13.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.activity:activity:1.13.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-annotation-annotation-experimental",
+    "name": "AndroidX Experimental annotation",
+    "version": "1.5.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/annotation/annotation-experimental/1.5.1/annotation-experimental-1.5.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/annotation/annotation-experimental/1.5.1/annotation-experimental-1.5.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.annotation:annotation-experimental:1.5.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-annotation-annotation-jvm",
+    "name": "AndroidX Annotation JVM",
+    "version": "1.10.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2013 The Android Open Source Project\nCopyright (C) 2014 The Android Open Source Project\nCopyright (C) 2015 The Android Open Source Project\nCopyright (C) 2016 The Android Open Source Project\nCopyright (C) 2017 The Android Open Source Project\nCopyright (C) 2020 The Android Open Source Project\nCopyright (C) 2021 The Android Open Source Project\nCopyright (C) 2022 The Android Open Source Project\nCopyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/annotation/annotation-jvm/1.10.0/annotation-jvm-1.10.0.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/annotation/annotation-jvm/1.10.0/annotation-jvm-1.10.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.annotation:annotation-jvm:1.10.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-appcompat-appcompat-resources",
+    "name": "AndroidX AppCompat Resources",
+    "version": "1.8.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2014 The Android Open Source Project\nCopyright (C) 2015 The Android Open Source Project\nCopyright (C) 2018 The Android Open Source Project\nCopyright (C) 2019 The Android Open Source Project\nCopyright 2016 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/appcompat/appcompat-resources/1.8.0/appcompat-resources-1.8.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/appcompat/appcompat-resources/1.8.0/appcompat-resources-1.8.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.appcompat:appcompat-resources:1.8.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-appcompat-appcompat",
+    "name": "AndroidX AppCompat",
+    "version": "1.8.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2006 The Android Open Source Project\nCopyright (C) 2010 The Android Open Source Project\nCopyright (C) 2011 The Android Open Source Project\nCopyright (C) 2012 The Android Open Source Project\nCopyright (C) 2013 The Android Open Source Project\nCopyright (C) 2014 The Android Open Source Project\nCopyright (C) 2015 Google Inc.\nCopyright (C) 2015 The Android Open Source Project\nCopyright (C) 2016 The Android Open Source Project\nCopyright (C) 2017 The Android Open Source Project\nCopyright (C) 2021 The Android Open Source Project\nCopyright 2017 The Android Open Source Project\nCopyright 2018 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/appcompat/appcompat/1.8.0/appcompat-1.8.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/appcompat/appcompat/1.8.0/appcompat-1.8.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.appcompat:appcompat:1.8.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-arch-core-core-common",
+    "name": "AndroidX Core Common",
+    "version": "2.2.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/arch/core/core-common/2.2.0/core-common-2.2.0.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/arch/core/core-common/2.2.0/core-common-2.2.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.arch.core:core-common:2.2.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-arch-core-core-runtime",
+    "name": "AndroidX Core Runtime",
+    "version": "2.2.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2017 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/arch/core/core-runtime/2.2.0/core-runtime-2.2.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/arch/core/core-runtime/2.2.0/core-runtime-2.2.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.arch.core:core-runtime:2.2.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-asynclayoutinflater-asynclayoutinflater",
+    "name": "AndroidX Asynclayoutinflater",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-autofill-autofill",
+    "name": "AndroidX Autofill",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2019 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/autofill/autofill/1.0.0/autofill-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/autofill/autofill/1.0.0/autofill-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.autofill:autofill:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-collection-collection-jvm",
+    "name": "AndroidX collections",
+    "version": "1.6.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright (C) 2019 The Android Open Source Project\nCopyright 2018 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/collection/collection-jvm/1.6.0/collection-jvm-1.6.0.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/collection/collection-jvm/1.6.0/collection-jvm-1.6.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.collection:collection-jvm:1.6.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-collection-collection-ktx",
+    "name": "AndroidX Collections Kotlin Extensions",
+    "version": "1.6.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/collection/collection-ktx/1.6.0/collection-ktx-1.6.0.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/collection/collection-ktx/1.6.0/collection-ktx-1.6.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.collection:collection-ktx:1.6.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-animation-animation-android",
+    "name": "AndroidX Compose Animation",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/animation/animation-android/1.12.1/animation-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/animation/animation-android/1.12.1/animation-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.animation:animation-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-animation-animation-core-android",
+    "name": "AndroidX Compose Animation Core",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/animation/animation-core-android/1.12.1/animation-core-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/animation/animation-core-android/1.12.1/animation-core-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.animation:animation-core-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-foundation-foundation-android",
+    "name": "AndroidX Compose Foundation",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/foundation/foundation-android/1.12.1/foundation-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/foundation/foundation-android/1.12.1/foundation-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.foundation:foundation-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-foundation-foundation-layout-android",
+    "name": "AndroidX Compose Layouts",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/foundation/foundation-layout-android/1.12.1/foundation-layout-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/foundation/foundation-layout-android/1.12.1/foundation-layout-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.foundation:foundation-layout-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-material3-adaptive-adaptive-android",
+    "name": "AndroidX Material Adaptive",
+    "version": "1.3.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/material3/adaptive/adaptive-android/1.3.0/adaptive-android-1.3.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/material3/adaptive/adaptive-android/1.3.0/adaptive-android-1.3.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.material3.adaptive:adaptive-android:1.3.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-material3-material3-android",
+    "name": "AndroidX Compose Material3 Components",
+    "version": "1.4.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/material3/material3-android/1.4.0/material3-android-1.4.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/material3/material3-android/1.4.0/material3-android-1.4.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.material3:material3-android:1.4.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-material-material-ripple-android",
+    "name": "AndroidX Compose Material Ripple",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/material/material-ripple-android/1.12.1/material-ripple-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/material/material-ripple-android/1.12.1/material-ripple-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.material:material-ripple-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-runtime-runtime-android",
+    "name": "AndroidX Compose Runtime",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2016-2019 JetBrains s.r.o.\nCopyright 2016-2020 JetBrains s.r.o.\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project\nEmbeds kotlinx.collections.immutable, licensed under Apache-2.0.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime-android/1.12.1/runtime-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime-android/1.12.1/runtime-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt",
+      "https://github.com/Kotlin/kotlinx.collections.immutable"
+    ],
+    "artifacts": [
+      "androidx.compose.runtime:runtime-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-runtime-runtime-annotation-android",
+    "name": "AndroidX Compose Runtime Annotation",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2019 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime-annotation-android/1.12.1/runtime-annotation-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime-annotation-android/1.12.1/runtime-annotation-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.runtime:runtime-annotation-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-runtime-runtime-retain-android",
+    "name": "AndroidX Compose Runtime Retain",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime-retain-android/1.12.1/runtime-retain-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime-retain-android/1.12.1/runtime-retain-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.runtime:runtime-retain-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-runtime-runtime-saveable-android",
+    "name": "AndroidX Compose Saveable",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime-saveable-android/1.12.1/runtime-saveable-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/runtime/runtime-saveable-android/1.12.1/runtime-saveable-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.runtime:runtime-saveable-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-ui-ui-android",
+    "name": "AndroidX Compose UI",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-android/1.12.1/ui-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-android/1.12.1/ui-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.ui:ui-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-ui-ui-geometry-android",
+    "name": "AndroidX Compose Geometry",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2023 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-geometry-android/1.12.1/ui-geometry-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-geometry-android/1.12.1/ui-geometry-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.ui:ui-geometry-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-ui-ui-graphics-android",
+    "name": "AndroidX Compose Graphics",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-graphics-android/1.12.1/ui-graphics-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-graphics-android/1.12.1/ui-graphics-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.ui:ui-graphics-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-ui-ui-text-android",
+    "name": "AndroidX Compose UI Text",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-text-android/1.12.1/ui-text-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-text-android/1.12.1/ui-text-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.ui:ui-text-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-ui-ui-unit-android",
+    "name": "AndroidX Compose Unit",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-unit-android/1.12.1/ui-unit-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-unit-android/1.12.1/ui-unit-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.ui:ui-unit-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-compose-ui-ui-util-android",
+    "name": "AndroidX Compose Util",
+    "version": "1.12.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-util-android/1.12.1/ui-util-android-1.12.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-util-android/1.12.1/ui-util-android-1.12.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.compose.ui:ui-util-android:1.12.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-concurrent-concurrent-futures",
+    "name": "AndroidX Concurrent Futures",
+    "version": "1.1.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/concurrent/concurrent-futures/1.1.0/concurrent-futures-1.1.0.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/concurrent/concurrent-futures/1.1.0/concurrent-futures-1.1.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.concurrent:concurrent-futures:1.1.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-coordinatorlayout-coordinatorlayout",
+    "name": "AndroidX Coordinatorlayout",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.coordinatorlayout:coordinatorlayout:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-core-core-ktx",
+    "name": "AndroidX Core Kotlin Extensions",
+    "version": "1.19.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/core/core-ktx/1.19.1/core-ktx-1.19.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/core/core-ktx/1.19.1/core-ktx-1.19.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.core:core-ktx:1.19.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-core-core-viewtree",
+    "name": "AndroidX Core Viewtree",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2024 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/core/core-viewtree/1.0.0/core-viewtree-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/core/core-viewtree/1.0.0/core-viewtree-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.core:core-viewtree:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-core-core",
+    "name": "AndroidX Core",
+    "version": "1.19.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2009 The Android Open Source Project\nCopyright (C) 2011 The Android Open Source Project\nCopyright (C) 2012 The Android Open Source Project\nCopyright (C) 2013 The Android Open Source Project\nCopyright (C) 2014 The Android Open Source Project\nCopyright (C) 2015 The Android Open Source Project\nCopyright (C) 2016 The Android Open Source Project\nCopyright (C) 2017 The Android Open Source Project\nCopyright (C) 2018 The Android Open Source Project\nCopyright (C) 2019 The Android Open Source Project\nCopyright (C) 2021 The Android Open Source Project\nCopyright (C) 2022 The Android Open Source Project\nCopyright (C) 2023 The Android Open Source Project\nCopyright (C) 2024 The Android Open Source Project\nCopyright (C) 2026 The Android Open Source Project\nCopyright 2015 The Android Open Source Project\nCopyright 2017 The Android Open Source Project\nCopyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/core/core/1.19.1/core-1.19.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/core/core/1.19.1/core-1.19.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.core:core:1.19.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-cursoradapter-cursoradapter",
+    "name": "AndroidX Cursoradapter",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.cursoradapter:cursoradapter:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-customview-customview-poolingcontainer",
+    "name": "AndroidX androidx.customview:poolingcontainer",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2021 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/customview/customview-poolingcontainer/1.0.0/customview-poolingcontainer-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/customview/customview-poolingcontainer/1.0.0/customview-poolingcontainer-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.customview:customview-poolingcontainer:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-customview-customview",
+    "name": "AndroidX Customview",
+    "version": "1.1.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/customview/customview/1.1.0/customview-1.1.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/customview/customview/1.1.0/customview-1.1.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.customview:customview:1.1.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-documentfile-documentfile",
+    "name": "AndroidX Documentfile",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.documentfile:documentfile:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-drawerlayout-drawerlayout",
+    "name": "AndroidX Drawerlayout",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.drawerlayout:drawerlayout:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-emoji2-emoji2-views-helper",
+    "name": "AndroidX Emoji2 Views Helper",
+    "version": "1.4.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2021 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/emoji2/emoji2-views-helper/1.4.0/emoji2-views-helper-1.4.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/emoji2/emoji2-views-helper/1.4.0/emoji2-views-helper-1.4.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.emoji2:emoji2-views-helper:1.4.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-emoji2-emoji2",
+    "name": "AndroidX Emoji2",
+    "version": "1.4.0",
+    "group": "libraries",
+    "license": "Apache-2.0 AND BSD-3-Clause",
+    "attribution": "Copyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nEmbedded FlatBuffers 1.12.0:\nCopyright 2014 Google Inc. All rights reserved.\nCopyright 2017 Google Inc. All rights reserved.\nCopyright 2019 Google Inc. All rights reserved.\nCopyright 2008 Google Inc.  All rights reserved. (Protocol Buffers-derived Utf8Safe)",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/emoji2/emoji2/1.4.0/emoji2-1.4.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/emoji2/emoji2/1.4.0/emoji2-1.4.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt",
+      "https://github.com/google/flatbuffers/blob/v1.12.0/LICENSE.txt",
+      "https://github.com/google/flatbuffers/blob/v1.12.0/java/com/google/flatbuffers/Utf8Safe.java"
+    ],
+    "artifacts": [
+      "androidx.emoji2:emoji2:1.4.0"
+    ],
+    "files": [
+      "Apache-2.0.txt",
+      "FlatBuffers-Utf8Safe-BSD-3-Clause.txt"
+    ]
+  },
+  {
+    "id": "androidx-fragment-fragment-ktx",
+    "name": "AndroidX Fragment Kotlin Extensions",
+    "version": "1.9.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/fragment/fragment-ktx/1.9.1/fragment-ktx-1.9.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/fragment/fragment-ktx/1.9.1/fragment-ktx-1.9.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.fragment:fragment-ktx:1.9.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-fragment-fragment",
+    "name": "AndroidX fragment",
+    "version": "1.9.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/fragment/fragment/1.9.1/fragment-1.9.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/fragment/fragment/1.9.1/fragment-1.9.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.fragment:fragment:1.9.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-graphics-graphics-path",
+    "name": "AndroidX Android Graphics Path",
+    "version": "1.0.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2022 The Android Open Source Project\nNative sources also retain:\nCopyright (C) 2006 The Android Open Source Project\nCopyright 2013 The Android Open Source Project\nCopyright (C) 2017 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/graphics/graphics-path/1.0.1/graphics-path-1.0.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/graphics/graphics-path/1.0.1/graphics-path-1.0.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt",
+      "https://github.com/androidx/androidx/blob/125da6901a0b3152d8eb4b6323266f45dfe82382/graphics/graphics-path/src/main/cpp/CMakeLists.txt"
+    ],
+    "artifacts": [
+      "androidx.graphics:graphics-path:1.0.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-interpolator-interpolator",
+    "name": "AndroidX Interpolator",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.interpolator:interpolator:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-legacy-legacy-support-core-ui",
+    "name": "AndroidX Legacy Support Core UI",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.legacy:legacy-support-core-ui:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-legacy-legacy-support-core-utils",
+    "name": "AndroidX Legacy Support Core Utils",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.legacy:legacy-support-core-utils:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-common-java8",
+    "name": "AndroidX Lifecycle-Common for Java 8",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-java8/2.11.0/lifecycle-common-java8-2.11.0.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-java8/2.11.0/lifecycle-common-java8-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-common-java8:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-common-jvm",
+    "name": "AndroidX Lifecycle-Common",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-jvm/2.11.0/lifecycle-common-jvm-2.11.0.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common-jvm/2.11.0/lifecycle-common-jvm-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-common-jvm:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-livedata-core-ktx",
+    "name": "AndroidX LiveData Core Kotlin Extensions",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core-ktx/2.11.0/lifecycle-livedata-core-ktx-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core-ktx/2.11.0/lifecycle-livedata-core-ktx-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-livedata-core-ktx:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-livedata-core",
+    "name": "AndroidX Lifecycle LiveData Core",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core/2.11.0/lifecycle-livedata-core-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core/2.11.0/lifecycle-livedata-core-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-livedata-core:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-livedata",
+    "name": "AndroidX Lifecycle LiveData",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright 2019 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata/2.11.0/lifecycle-livedata-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata/2.11.0/lifecycle-livedata-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-livedata:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-process",
+    "name": "AndroidX Lifecycle Process",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright 2021 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-process/2.11.0/lifecycle-process-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-process/2.11.0/lifecycle-process-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-process:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-runtime-android",
+    "name": "AndroidX Lifecycle Runtime",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-android/2.11.0/lifecycle-runtime-android-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-android/2.11.0/lifecycle-runtime-android-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-runtime-android:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-runtime-compose-android",
+    "name": "AndroidX Lifecycle Runtime Compose",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-compose-android/2.11.0/lifecycle-runtime-compose-android-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-compose-android/2.11.0/lifecycle-runtime-compose-android-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-runtime-compose-android:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-runtime-ktx-android",
+    "name": "AndroidX Lifecycle Kotlin Extensions",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-ktx-android/2.11.0/lifecycle-runtime-ktx-android-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime-ktx-android/2.11.0/lifecycle-runtime-ktx-android-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-runtime-ktx-android:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-viewmodel-android",
+    "name": "AndroidX Lifecycle ViewModel",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2017 The Android Open Source Project\nCopyright (C) 2024 The Android Open Source Project\nCopyright 2017 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-android/2.11.0/lifecycle-viewmodel-android-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-android/2.11.0/lifecycle-viewmodel-android-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-viewmodel-android:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-viewmodel-ktx",
+    "name": "AndroidX Lifecycle ViewModel Kotlin Extensions",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-ktx/2.11.0/lifecycle-viewmodel-ktx-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-ktx/2.11.0/lifecycle-viewmodel-ktx-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-viewmodel-ktx:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-viewmodel-savedstate-android",
+    "name": "AndroidX Lifecycle ViewModel with SavedState",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-savedstate-android/2.11.0/lifecycle-viewmodel-savedstate-android-2.11.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel-savedstate-android/2.11.0/lifecycle-viewmodel-savedstate-android-2.11.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-lifecycle-lifecycle-viewmodel",
+    "name": "AndroidX Lifecycle ViewModel",
+    "version": "2.11.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel/2.11.0/lifecycle-viewmodel-2.11.0.aar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.lifecycle:lifecycle-viewmodel:2.11.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-loader-loader",
+    "name": "AndroidX Loader",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/loader/loader/1.0.0/loader-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/loader/loader/1.0.0/loader-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.loader:loader:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-localbroadcastmanager-localbroadcastmanager",
+    "name": "AndroidX Localbroadcastmanager",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-navigationevent-navigationevent-android",
+    "name": "AndroidX Navigation Event",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/navigationevent/navigationevent-android/1.0.0/navigationevent-android-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/navigationevent/navigationevent-android/1.0.0/navigationevent-android-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.navigationevent:navigationevent-android:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-navigationevent-navigationevent-compose-android",
+    "name": "AndroidX NavigationEvent Compose",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/navigationevent/navigationevent-compose-android/1.0.0/navigationevent-compose-android-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/navigationevent/navigationevent-compose-android/1.0.0/navigationevent-compose-android-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.navigationevent:navigationevent-compose-android:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-preference-preference",
+    "name": "AndroidX Preference",
+    "version": "1.2.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2015 The Android Open Source Project\nCopyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2021 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/preference/preference/1.2.1/preference-1.2.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/preference/preference/1.2.1/preference-1.2.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.preference:preference:1.2.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-print-print",
+    "name": "AndroidX Print",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/print/print/1.0.0/print-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/print/print/1.0.0/print-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.print:print:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-profileinstaller-profileinstaller",
+    "name": "AndroidX Profile Installer",
+    "version": "1.4.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2021 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/profileinstaller/profileinstaller/1.4.0/profileinstaller-1.4.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/profileinstaller/profileinstaller/1.4.0/profileinstaller-1.4.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.profileinstaller:profileinstaller:1.4.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-recyclerview-recyclerview",
+    "name": "AndroidX Recyclerview",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/recyclerview/recyclerview/1.0.0/recyclerview-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/recyclerview/recyclerview/1.0.0/recyclerview-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.recyclerview:recyclerview:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-resourceinspection-resourceinspection-annotation",
+    "name": "AndroidX Resourceinspection Annotation",
+    "version": "1.0.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2021 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/resourceinspection/resourceinspection-annotation/1.0.1/resourceinspection-annotation-1.0.1.jar",
+      "https://dl.google.com/dl/android/maven2/androidx/resourceinspection/resourceinspection-annotation/1.0.1/resourceinspection-annotation-1.0.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.resourceinspection:resourceinspection-annotation:1.0.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-savedstate-savedstate-android",
+    "name": "AndroidX Saved State",
+    "version": "1.4.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2019 The Android Open Source Project\nCopyright 2020 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/savedstate/savedstate-android/1.4.0/savedstate-android-1.4.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/savedstate/savedstate-android/1.4.0/savedstate-android-1.4.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.savedstate:savedstate-android:1.4.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-savedstate-savedstate-compose-android",
+    "name": "AndroidX Saved State Compose",
+    "version": "1.4.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/savedstate/savedstate-compose-android/1.4.0/savedstate-compose-android-1.4.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/savedstate/savedstate-compose-android/1.4.0/savedstate-compose-android-1.4.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.savedstate:savedstate-compose-android:1.4.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-savedstate-savedstate-ktx",
+    "name": "AndroidX SavedState Kotlin Extensions",
+    "version": "1.4.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "No implementation copyright notice is present in this compatibility artifact; AndroidX license terms apply.",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/savedstate/savedstate-ktx/1.4.0/savedstate-ktx-1.4.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/savedstate/savedstate-ktx/1.4.0/savedstate-ktx-1.4.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.savedstate:savedstate-ktx:1.4.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-slidingpanelayout-slidingpanelayout",
+    "name": "AndroidX Slidingpanelayout",
+    "version": "1.2.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project\nCopyright 2021 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/slidingpanelayout/slidingpanelayout/1.2.0/slidingpanelayout-1.2.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/slidingpanelayout/slidingpanelayout/1.2.0/slidingpanelayout-1.2.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.slidingpanelayout:slidingpanelayout:1.2.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-startup-startup-runtime",
+    "name": "AndroidX Startup Runtime",
+    "version": "1.1.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2020 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/startup/startup-runtime/1.1.1/startup-runtime-1.1.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/startup/startup-runtime/1.1.1/startup-runtime-1.1.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.startup:startup-runtime:1.1.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-swiperefreshlayout-swiperefreshlayout",
+    "name": "AndroidX Swiperefreshlayout",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-tracing-tracing-android",
+    "name": "AndroidX Tracing",
+    "version": "2.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2020 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project\nCopyright 2026 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/tracing/tracing-android/2.0.0/tracing-android-2.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/tracing/tracing-android/2.0.0/tracing-android-2.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.tracing:tracing-android:2.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-transition-transition",
+    "name": "AndroidX Transition",
+    "version": "1.4.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2016 The Android Open Source Project\nCopyright (C) 2017 The Android Open Source Project\nCopyright 2019 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/transition/transition/1.4.1/transition-1.4.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/transition/transition/1.4.1/transition-1.4.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.transition:transition:1.4.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-vectordrawable-vectordrawable-animated",
+    "name": "AndroidX Vectordrawable Animated",
+    "version": "1.1.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2015 The Android Open Source Project\nCopyright (C) 2017 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/vectordrawable/vectordrawable-animated/1.1.0/vectordrawable-animated-1.1.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/vectordrawable/vectordrawable-animated/1.1.0/vectordrawable-animated-1.1.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.vectordrawable:vectordrawable-animated:1.1.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-vectordrawable-vectordrawable",
+    "name": "AndroidX Vectordrawable",
+    "version": "1.1.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2015 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/vectordrawable/vectordrawable/1.1.0/vectordrawable-1.1.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/vectordrawable/vectordrawable/1.1.0/vectordrawable-1.1.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.vectordrawable:vectordrawable:1.1.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-versionedparcelable-versionedparcelable",
+    "name": "AndroidX Versionedparcelable",
+    "version": "1.1.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/versionedparcelable/versionedparcelable/1.1.1/versionedparcelable-1.1.1.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/versionedparcelable/versionedparcelable/1.1.1/versionedparcelable-1.1.1-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.versionedparcelable:versionedparcelable:1.1.1"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-viewpager-viewpager",
+    "name": "AndroidX Android Support Library View Pager",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/viewpager/viewpager/1.0.0/viewpager-1.0.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/viewpager/viewpager/1.0.0/viewpager-1.0.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.viewpager:viewpager:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-window-window-core-android",
+    "name": "AndroidX WindowManager Core",
+    "version": "1.5.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2024 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/window/window-core-android/1.5.0/window-core-android-1.5.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/window/window-core-android/1.5.0/window-core-android-1.5.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.window:window-core-android:1.5.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "androidx-window-window",
+    "name": "AndroidX WindowManager",
+    "version": "1.5.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2024 The Android Open Source Project\nCopyright 2021 The Android Open Source Project\nCopyright 2022 The Android Open Source Project\nCopyright 2023 The Android Open Source Project\nCopyright 2024 The Android Open Source Project\nCopyright 2025 The Android Open Source Project",
+    "sources": [
+      "https://dl.google.com/dl/android/maven2/androidx/window/window/1.5.0/window-1.5.0.aar",
+      "https://dl.google.com/dl/android/maven2/androidx/window/window/1.5.0/window-1.5.0-sources.jar",
+      "https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt"
+    ],
+    "artifacts": [
+      "androidx.window:window:1.5.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "com-github-philjay-mpandroidchart-mpchartcompose",
+    "name": "MPAndroidChart Compose",
+    "version": "v4.0.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2014-2026 Philipp Jahoda",
+    "sources": [
+      "https://github.com/PhilJay/MPAndroidChart/blob/v4.0.1/LICENSE",
+      "https://github.com/PhilJay/MPAndroidChart/blob/v4.0.1/NOTICE"
+    ],
+    "artifacts": [
+      "com.github.PhilJay.MPAndroidChart:MPChartCompose:v4.0.1"
+    ],
+    "files": [
+      "Apache-2.0.txt",
+      "MPAndroidChart-NOTICE.txt"
+    ]
+  },
+  {
+    "id": "com-github-philjay-mpandroidchart-mpchartlib",
+    "name": "MPAndroidChart Library",
+    "version": "v4.0.1",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2014-2026 Philipp Jahoda",
+    "sources": [
+      "https://github.com/PhilJay/MPAndroidChart/blob/v4.0.1/LICENSE",
+      "https://github.com/PhilJay/MPAndroidChart/blob/v4.0.1/NOTICE"
+    ],
+    "artifacts": [
+      "com.github.PhilJay.MPAndroidChart:MPChartLib:v4.0.1"
+    ],
+    "files": [
+      "Apache-2.0.txt",
+      "MPAndroidChart-NOTICE.txt"
+    ]
+  },
+  {
+    "id": "com-google-guava-listenablefuture",
+    "name": "Guava ListenableFuture",
+    "version": "1.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright (C) 2007 The Guava Authors",
+    "sources": [
+      "https://github.com/google/guava/blob/v26.0/android/guava/src/com/google/common/util/concurrent/ListenableFuture.java",
+      "https://github.com/google/guava/blob/v26.0/LICENSE"
+    ],
+    "artifacts": [
+      "com.google.guava:listenablefuture:1.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "dev-rikka-shizuku-aidl",
+    "name": "Shizuku AIDL",
+    "version": "13.1.5",
+    "group": "libraries",
+    "license": "MIT",
+    "attribution": "Copyright (c) 2021 RikkaW",
+    "sources": [
+      "https://github.com/RikkaApps/Shizuku-API/blob/master/LICENSE",
+      "https://github.com/RikkaApps/Shizuku-API"
+    ],
+    "artifacts": [
+      "dev.rikka.shizuku:aidl:13.1.5"
+    ],
+    "files": [
+      "Shizuku-API-MIT.txt"
+    ]
+  },
+  {
+    "id": "dev-rikka-shizuku-api",
+    "name": "Shizuku API",
+    "version": "13.1.5",
+    "group": "libraries",
+    "license": "MIT",
+    "attribution": "Copyright (c) 2021 RikkaW",
+    "sources": [
+      "https://github.com/RikkaApps/Shizuku-API/blob/master/LICENSE",
+      "https://github.com/RikkaApps/Shizuku-API"
+    ],
+    "artifacts": [
+      "dev.rikka.shizuku:api:13.1.5"
+    ],
+    "files": [
+      "Shizuku-API-MIT.txt"
+    ]
+  },
+  {
+    "id": "dev-rikka-shizuku-provider",
+    "name": "Shizuku Provider",
+    "version": "13.1.5",
+    "group": "libraries",
+    "license": "MIT",
+    "attribution": "Copyright (c) 2021 RikkaW",
+    "sources": [
+      "https://github.com/RikkaApps/Shizuku-API/blob/master/LICENSE",
+      "https://github.com/RikkaApps/Shizuku-API"
+    ],
+    "artifacts": [
+      "dev.rikka.shizuku:provider:13.1.5"
+    ],
+    "files": [
+      "Shizuku-API-MIT.txt"
+    ]
+  },
+  {
+    "id": "dev-rikka-shizuku-shared",
+    "name": "Shizuku Shared",
+    "version": "13.1.5",
+    "group": "libraries",
+    "license": "MIT",
+    "attribution": "Copyright (c) 2021 RikkaW",
+    "sources": [
+      "https://github.com/RikkaApps/Shizuku-API/blob/master/LICENSE",
+      "https://github.com/RikkaApps/Shizuku-API"
+    ],
+    "artifacts": [
+      "dev.rikka.shizuku:shared:13.1.5"
+    ],
+    "files": [
+      "Shizuku-API-MIT.txt"
+    ]
+  },
+  {
+    "id": "org-jetbrains-kotlin-kotlin-stdlib",
+    "name": "Kotlin standard library",
+    "version": "2.4.21",
+    "group": "libraries",
+    "license": "Apache-2.0 AND BSD-3-Clause AND BSL-1.0",
+    "attribution": "Copyright (c) 2007-present, Stephen Colebourne & Michael Nascimento Santos\nCopyright 2007 Google Inc.\nCopyright 2010-2015 JetBrains s.r.o.\nCopyright 2010-2016 JetBrains s.r.o.\nCopyright 2010-2017 JetBrains s.r.o.\nCopyright 2010-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license\nCopyright 2010-2018 JetBrains s.r.o. and Kotlin Programming Language contributors.\nCopyright 2010-2019 JetBrains s.r.o. and Kotlin Programming Language contributors.\nCopyright 2010-2020 JetBrains s.r.o. and Kotlin Programming Language contributors.\nCopyright 2010-2021 JetBrains s.r.o. and Kotlin Programming Language contributors.\nCopyright 2010-2022 JetBrains s.r.o. and Kotlin Programming Language contributors.\nCopyright 2010-2023 JetBrains s.r.o. and Kotlin Programming Language contributors.\nCopyright 2010-2024 JetBrains s.r.o. and Kotlin Programming Language contributors.\nCopyright 2010-2025 JetBrains s.r.o. and Kotlin Programming Language contributors.\nCopyright 2010-2026 JetBrains s.r.o. and Kotlin Programming Language contributors.\nCopyright 2011 The Guava Authors\nCopyright Eric Ford & Hubert Holin 2001.",
+    "sources": [
+      "https://github.com/JetBrains/kotlin/blob/v2.4.21/license/README.md",
+      "https://github.com/JetBrains/kotlin/blob/v2.4.21/license/third_party/threetenbp_license.txt",
+      "https://github.com/JetBrains/kotlin/blob/v2.4.21/license/third_party/boost_LICENSE.txt"
+    ],
+    "artifacts": [
+      "org.jetbrains.kotlin:kotlin-stdlib:2.4.21"
+    ],
+    "files": [
+      "Apache-2.0.txt",
+      "Kotlin-ThreeTenBP-BSD-3-Clause.txt",
+      "Kotlin-Boost-BSL-1.0.txt"
+    ]
+  },
+  {
+    "id": "org-jetbrains-kotlinx-kotlinx-coroutines-android",
+    "name": "Kotlin coroutines Android",
+    "version": "1.9.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2016-2024 JetBrains s.r.o and contributors",
+    "sources": [
+      "https://github.com/Kotlin/kotlinx.coroutines/blob/1.9.0/LICENSE.txt",
+      "https://github.com/Kotlin/kotlinx.coroutines/blob/1.9.0/license/NOTICE.txt"
+    ],
+    "artifacts": [
+      "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0"
+    ],
+    "files": [
+      "Apache-2.0.txt",
+      "Kotlin-Coroutines-NOTICE.txt"
+    ]
+  },
+  {
+    "id": "org-jetbrains-kotlinx-kotlinx-coroutines-core-jvm",
+    "name": "Kotlin coroutines Core JVM",
+    "version": "1.9.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2016-2024 JetBrains s.r.o and contributors",
+    "sources": [
+      "https://github.com/Kotlin/kotlinx.coroutines/blob/1.9.0/LICENSE.txt",
+      "https://github.com/Kotlin/kotlinx.coroutines/blob/1.9.0/license/NOTICE.txt"
+    ],
+    "artifacts": [
+      "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0"
+    ],
+    "files": [
+      "Apache-2.0.txt",
+      "Kotlin-Coroutines-NOTICE.txt"
+    ]
+  },
+  {
+    "id": "org-jetbrains-kotlinx-kotlinx-serialization-core-jvm",
+    "name": "Kotlin serialization Core JVM",
+    "version": "1.7.3",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2017-2019 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.\nCopyright 2017-2020 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.\nCopyright 2017-2021 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.\nCopyright 2017-2022 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.\nCopyright 2017-2023 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.\nCopyright 2017-2019 JetBrains s.r.o and respective authors and developers",
+    "sources": [
+      "https://github.com/Kotlin/kotlinx.serialization/blob/v1.7.3/LICENSE.txt",
+      "https://github.com/Kotlin/kotlinx.serialization/blob/v1.7.3/license/NOTICE.txt"
+    ],
+    "artifacts": [
+      "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.3"
+    ],
+    "files": [
+      "Apache-2.0.txt",
+      "Kotlin-Serialization-NOTICE.txt"
+    ]
+  },
+  {
+    "id": "org-jetbrains-annotations",
+    "name": "JetBrains Java annotations",
+    "version": "23.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2000-2020 JetBrains s.r.o.\nCopyright 2000-2021 JetBrains s.r.o.",
+    "sources": [
+      "https://github.com/JetBrains/java-annotations/blob/23.0.0/LICENSE.txt"
+    ],
+    "artifacts": [
+      "org.jetbrains:annotations:23.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  },
+  {
+    "id": "org-jspecify-jspecify",
+    "name": "JSpecify",
+    "version": "1.0.0",
+    "group": "libraries",
+    "license": "Apache-2.0",
+    "attribution": "Copyright 2018-2020 The JSpecify Authors.\nCopyright 2022 The JSpecify Authors.",
+    "sources": [
+      "https://github.com/jspecify/jspecify/blob/v1.0.0/LICENSE"
+    ],
+    "artifacts": [
+      "org.jspecify:jspecify:1.0.0"
+    ],
+    "files": [
+      "Apache-2.0.txt"
+    ]
+  }
+]

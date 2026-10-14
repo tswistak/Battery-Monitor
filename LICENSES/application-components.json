@@ -1,0 +1,56 @@
+[
+  {
+    "id": "battery-monitor",
+    "name": "Battery Monitor",
+    "version": "",
+    "group": "application",
+    "license": "GPL-3.0-or-later",
+    "attribution": "Copyright © 2009–2020 Darshan Computing, LLC. The legacy widget implementation also preserves Copyright © 2009–2021 Darshan Computing, LLC. Modifications and new contributions: Copyright © 2026 Tomasz Świstak. Additional notices in individual source files remain applicable. Based on Battery Indicator Pro / BatteryBot Pro.",
+    "sources": [
+      "https://github.com/tswistak/Battery-Monitor",
+      "https://github.com/darshan-/Battery-Indicator-Pro",
+      "https://www.gnu.org/licenses/gpl-3.0.txt"
+    ],
+    "artifacts": [],
+    "files": ["GPL-3.0.txt"]
+  },
+  {
+    "id": "battery-indicator-pro-artwork",
+    "name": "Battery Indicator Pro artwork and modified status icons",
+    "version": "",
+    "group": "artwork",
+    "license": "CC-BY-SA-3.0",
+    "attribution": "Copyright © 2009–2020 Darshan Computing, LLC. Attribution: The Android application Battery Indicator Pro by Darshan Computing, LLC. Modified in 2026 by Tomasz Świstak: regenerated status-icon typography and layout, percentage and temperature variants, retaining the inherited charging overlay. Modified derivatives retain CC BY-SA 3.0.",
+    "sources": [
+      "https://github.com/darshan-/Battery-Indicator-Pro/blob/master/LICENSE",
+      "https://creativecommons.org/licenses/by-sa/3.0/legalcode.txt"
+    ],
+    "artifacts": [],
+    "files": ["CC-BY-SA-3.0.txt", "Artwork-Notices.txt"]
+  },
+  {
+    "id": "google-material-icons",
+    "name": "Google Material Icons and Material Symbols",
+    "version": "",
+    "group": "artwork",
+    "license": "Apache-2.0",
+    "attribution": "Original icon design: Google LLC. The battery_full symbol is adapted in the launcher icon through changed coordinates, scale, colors and shadow. The fullscreen glyph is converted to an Android vector drawable.",
+    "sources": [
+      "https://github.com/google/material-design-icons",
+      "https://github.com/google/material-design-icons/blob/master/LICENSE"
+    ],
+    "artifacts": [],
+    "files": ["Apache-2.0.txt", "Google-Material-Icons-Notices.txt"]
+  },
+  {
+    "id": "battery-monitor-artwork",
+    "name": "Battery Monitor original artwork",
+    "version": "",
+    "group": "artwork",
+    "license": "GPL-3.0-or-later",
+    "attribution": "Copyright © 2026 Tomasz Świstak. Applies to new original widget presentation, backgrounds and artwork to the extent of the project's rights, including UI line icons generated for Battery Monitor using Codex. Third-party material and inherited derivatives retain their own licenses.",
+    "sources": ["https://github.com/tswistak/Battery-Monitor"],
+    "artifacts": [],
+    "files": ["GPL-3.0.txt", "Artwork-Provenance.txt"]
+  }
+]

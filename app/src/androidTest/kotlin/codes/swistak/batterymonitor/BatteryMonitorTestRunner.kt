@@ -17,6 +17,7 @@ import android.os.Bundle
 import codes.swistak.batterymonitor.alarms.AlarmDatabaseInstrumentedTest
 import codes.swistak.batterymonitor.logs.BatteryHistoryInstrumentedTest
 import codes.swistak.batterymonitor.logs.DetailedHistoryInstrumentedTest
+import codes.swistak.batterymonitor.ui.help.LicenseScreenInstrumentedTest
 import codes.swistak.batterymonitor.ui.history.FullscreenChartStateInstrumentedTest
 import org.junit.runner.Description
 import org.junit.runner.JUnitCore
@@ -29,20 +30,26 @@ class BatteryMonitorTestRunner : Instrumentation() {
         lateinit var instrumentation: Instrumentation
     }
 
+    private var requestedClasses: Set<String>? = null
+
     override fun onCreate(arguments: Bundle?) {
         super.onCreate(arguments)
         instrumentation = this
+        requestedClasses = arguments?.getString("class")?.split(',')?.map(String::trim)?.toSet()
         start()
     }
 
     override fun onStart() {
         val junit = JUnitCore()
-        val runner = Request.classes(
+        val testClasses = arrayOf(
             AlarmDatabaseInstrumentedTest::class.java,
             BatteryHistoryInstrumentedTest::class.java,
             DetailedHistoryInstrumentedTest::class.java,
-            FullscreenChartStateInstrumentedTest::class.java
-        ).runner
+            FullscreenChartStateInstrumentedTest::class.java,
+            LicenseScreenInstrumentedTest::class.java
+        ).filter { requestedClasses == null || it.name in requestedClasses.orEmpty() }
+        require(testClasses.isNotEmpty()) { "No registered test classes match $requestedClasses" }
+        val runner = Request.classes(*testClasses.toTypedArray()).runner
         val total = runner.testCount()
         var failed = false
         var index = 0

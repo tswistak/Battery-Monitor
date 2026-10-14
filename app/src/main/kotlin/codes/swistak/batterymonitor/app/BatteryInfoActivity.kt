@@ -41,6 +41,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.DialogProperties
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -64,7 +65,8 @@ import codes.swistak.batterymonitor.ui.current.CurrentStateViewModel
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsRoute
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsViewModel
 import codes.swistak.batterymonitor.ui.diagnostics.MonitorAction
-import codes.swistak.batterymonitor.ui.help.LegacyHelpFragment
+import codes.swistak.batterymonitor.ui.help.HelpScreen
+import codes.swistak.batterymonitor.ui.help.LicenseScreen
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.history.HistoryActionsMenu
 import codes.swistak.batterymonitor.ui.history.HistoryRoute
@@ -103,6 +105,13 @@ class BatteryInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.bi_compose_theme)
+        // FragmentManager restores old class names inside super.onCreate, before cleanup can run.
+        supportFragmentManager.fragmentFactory = object : FragmentFactory() {
+            override fun instantiate(classLoader: ClassLoader, className: String): Fragment =
+                if (className == "codes.swistak.batterymonitor.ui.help.LegacyHelpFragment") {
+                    Fragment()
+                } else super.instantiate(classLoader, className)
+        }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val persistent = PersistentFragment.getInstance(supportFragmentManager)
@@ -121,6 +130,11 @@ class BatteryInfoActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentByTag(tag)?.let { legacy ->
                 supportFragmentManager.commitNow { remove(legacy) }
             }
+        }
+        supportFragmentManager.fragments.filter {
+            it.tag?.startsWith("section:help:") == true
+        }.forEach { obsolete ->
+            supportFragmentManager.commitNow { remove(obsolete) }
         }
 
 
@@ -187,7 +201,11 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     ).substringBefore(':')
                                 )?.title ?: R.string.settings_activity_subtitle
 
-                                selected == SectionOwner.HELP -> R.string.menu_help
+                                selected == SectionOwner.HELP -> if (it == "help:licenses" || it.startsWith(
+                                        "help:licenses:"
+                                    )
+                                ) R.string.help_licenses_title else R.string.menu_help
+
                                 it.substringBefore(':') == "charging-tools" -> R.string.charging_diagnostics_title
                                 else -> R.string.diag_monitor_operation
                             }
@@ -246,6 +264,19 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     }
                             }, modifier = Modifier.fillMaxSize()
                         )
+                        if (selected == SectionOwner.HELP) {
+                            sections.SaveableStateProvider(detail ?: "help:root") {
+                                val topic = detail?.removePrefix("help:")
+                                if (topic == "licenses" || topic?.startsWith("licenses:") == true) {
+                                    LicenseScreen(
+                                        componentId = topic.substringAfter(':', "")
+                                        .ifEmpty { null },
+                                        onOpenComponent = { openHelp("licenses:$it") })
+                                } else {
+                                    HelpScreen(topic, onOpenLicenses = { openHelp("licenses") })
+                                }
+                            }
+                        }
                         if (selected == SectionOwner.CURRENT) sections.SaveableStateProvider("current") {
                             CurrentStateRoute(
                                 viewModel = current,
@@ -450,7 +481,7 @@ class BatteryInfoActivity : AppCompatActivity() {
         showSection(selected)
     }
 
-    private fun openHelp(topic: String) {
+    internal fun openHelp(topic: String) {
         navigator.openDetail(SectionOwner.HELP, "help:$topic")
         selected = navigator.selected
         detail = navigator.detail
@@ -551,11 +582,10 @@ class BatteryInfoActivity : AppCompatActivity() {
                 ) ?: "actions"
             }"
 
-            SectionOwner.HELP -> "section:help:${detail ?: "root"}"
             else -> "section:${owner.route}"
         }
         val target = if (owner in setOf(
-                SectionOwner.CURRENT, SectionOwner.HISTORY, SectionOwner.ALARMS
+                SectionOwner.CURRENT, SectionOwner.HISTORY, SectionOwner.ALARMS, SectionOwner.HELP
             )
         ) null
         else manager.findFragmentByTag(targetTag)
@@ -603,9 +633,7 @@ class BatteryInfoActivity : AppCompatActivity() {
         SectionOwner.ALARMS -> error("Alarms is rendered by Compose")
         SectionOwner.DIAGNOSTICS -> error("Diagnostics is rendered by Compose")
         SectionOwner.SETTINGS -> SettingsFragment()
-        SectionOwner.HELP -> LegacyHelpFragment().apply {
-            arguments = Bundle().apply { putString("topic", detail?.removePrefix("help:")) }
-        }
+        SectionOwner.HELP -> error("Help is rendered by Compose")
     }
 
     private fun openBatteryUsage() {

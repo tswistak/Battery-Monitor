@@ -1,37 +1,56 @@
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# Battery Monitor — License
 
-The file 'res/drawable[mh]dpi/battery.png' is based on an icon from
-the Oxygen icon theme at [ http://www.oxygen-icons.org ].  You may
-copy it under the Creative Commons Attribution-ShareAlike 3.0 License
-[ http://creativecommons.org/licenses/by-sa/3.0/ ].
+Battery Monitor is based on [Battery Indicator Pro / BatteryBot Pro](https://github.com/darshan-/Battery-Indicator-Pro).
 
-Several icons were downloaded from icons8.com, which advertises the icons
-as "Free for open source."  Some other icons are from, or based upon, the
-Material design icons from Google, available under Apache license version
-2.0.
+## Source Code
 
-The other icons/artwork are copyright © 2009-2020 Darshan Computing, LLC and
-also released under the Creative Commons Attribution-ShareAlike 3.0
-License [ http://creativecommons.org/licenses/by-sa/3.0/ ].  If you
-use the icons, please attribute them as coming from: "The Android
-application Battery Indicator Pro by Darshan Computing, LLC".  Of
-course you must include the copyright and license information as well.
+Unless otherwise noted, the source code is licensed under the **GNU General Public License, version 3 or later (GPL-3.0-or-later)**.
 
-The source code is copyright © 2009-2020 Darshan Computing, LLC and released as follows:
+- Original source code: Copyright © 2009–2020 Darshan Computing, LLC (some individual files carry notices through 2021).
+- Modifications and new contributions: Copyright © 2026 Tomasz Świstak.
 
-Modifications for this fork are copyright © 2026 Tomasz Świstak and are
-also released under the GNU General Public License, version 3 or later.
+Copyright notices in individual files remain applicable.
 
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-  See the COPYING file in this repository for the full GPLv3 text,
-  or [ http://www.gnu.org/licenses/gpl-3.0.txt ].
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-If you have any questions about the licensing terms or would like
-permission to use code or artwork under some other license, please
-contact me at tomasz@swistak.codes.
+See [`COPYING`](COPYING) for the full GPLv3 license text.
+
+## Artwork and Icons
+
+### Battery Indicator Pro Artwork
+
+Some artwork inherited from Battery Indicator Pro, including the alarm notification icons and elements retained in the regenerated charging status icons, is copyright © 2009–2020 Darshan Computing, LLC and licensed under the **Creative Commons Attribution-ShareAlike 3.0 Unported License (CC BY-SA 3.0)**.
+
+This also applies to derivative artwork. The regenerated status icons include changes to typography, layout, and percentage and temperature variants.
+
+When redistributing these assets, retain the applicable copyright and license information, indicate modifications, and provide the attribution:
+
+> The Android application Battery Indicator Pro by Darshan Computing, LLC
+
+See [`LICENSES/CC-BY-SA-3.0.txt`](LICENSES/CC-BY-SA-3.0.txt) and [`LICENSES/Artwork-Notices.txt`](LICENSES/Artwork-Notices.txt) for the license text and asset-specific notices.
+
+### Google Material Icons
+
+The battery symbol in the Battery Monitor application icon and the fullscreen UI icon (`app/src/main/res/drawable/ui_fullscreen.xml`) are adapted from **Google Material Icons**, licensed under the **Apache License, Version 2.0**.
+
+- Original design: Google LLC.
+- Source: https://github.com/google/material-design-icons
+- License: https://www.apache.org/licenses/LICENSE-2.0
+
+See [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt) and [`LICENSES/Google-Material-Icons-Notices.txt`](LICENSES/Google-Material-Icons-Notices.txt) for the license and applicable notices.
+
+### Other Artwork
+
+Original artwork created specifically for Battery Monitor is distributed under GPL-3.0-or-later, unless otherwise noted. This does not change the licensing of any third-party material used or adapted in the application.
+
+## Third-Party Components
+
+Third-party libraries and other components retain their respective copyright notices and licenses. Their inclusion does not change those terms.
+
+Applicable license texts and attribution notices are provided in the [`LICENSES`](LICENSES/) directory and made available within the application.
+
+## Contact
+
+For licensing inquiries concerning original contributions by Tomasz Świstak, contact tomasz@swistak.codes. Permissions concerning third-party materials must be obtained from the respective rights holders.

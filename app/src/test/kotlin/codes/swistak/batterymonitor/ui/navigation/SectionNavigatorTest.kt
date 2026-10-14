@@ -111,4 +111,21 @@ class SectionNavigatorTest {
         assertEquals(SectionOwner.SETTINGS, navigator.selected)
         assertEquals(null, navigator.detail)
     }
+
+    @Test
+    fun `license details return through the list to Help and About`() {
+        val navigator = SectionNavigator(SectionOwner.HELP)
+        navigator.openDetail(SectionOwner.HELP, "help:licenses")
+        navigator.openDetail(SectionOwner.HELP, "help:licenses:battery-monitor")
+
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.HELP, navigator.selected)
+        assertEquals("help:licenses", navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.HELP, navigator.selected)
+        assertEquals(null, navigator.detail)
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.CURRENT, navigator.selected)
+        assertFalse(navigator.back())
+    }
 }

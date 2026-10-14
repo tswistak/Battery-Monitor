@@ -31,6 +31,9 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Verify dependency license versions
+        run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:verifyLicenseInventory
+
       - name: Build debug APK
         run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:assembleDebug
 

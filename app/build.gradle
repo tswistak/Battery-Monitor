@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 
@@ -133,4 +135,102 @@ dependencies {
     implementation "androidx.preference:preference:1.2.1"
     implementation "dev.rikka.shizuku:api:13.1.5"
     implementation "dev.rikka.shizuku:provider:13.1.5"
+}
+
+def licenseDirectory = rootProject.file('LICENSES')
+def licenseInventoryFiles = [new File(licenseDirectory, 'application-components.json'),
+                             new File(licenseDirectory, 'runtime-components.json')]
+
+def verifyLicenseInventory = tasks.register('verifyLicenseInventory') {
+    group = 'verification'
+    description = 'Checks packaged legal texts and the complete release runtime artifact inventory.'
+    inputs.files(licenseInventoryFiles, rootProject.file('COPYING'))
+    inputs.dir(licenseDirectory)
+
+    doLast {
+        def components = licenseInventoryFiles.collectMany { inventoryFile ->
+            if (!inventoryFile.isFile()) {
+                throw new GradleException("Missing license inventory: ${inventoryFile}")
+            }
+            def inventory = new JsonSlurper().parse(inventoryFile, 'UTF-8')
+            if (!(inventory instanceof List)) {
+                throw new GradleException("License inventory must be a JSON array: ${inventoryFile}")
+            }
+            inventory
+        }
+        def ids = [] as Set
+        def auditedArtifacts = [] as Set
+        components.each { component ->
+            if (!(component instanceof Map)) {
+                throw new GradleException('Each license component must be a JSON object.')
+            }
+            ['id', 'name', 'version', 'group', 'license', 'attribution'].each { field ->
+                if (!(component[field] instanceof String) || (field != 'version' && component[field].isBlank())) {
+                    throw new GradleException("License component has an invalid ${field}: ${component.id}")
+                }
+            }
+            if (!(component.id ==~ /[A-Za-z0-9][A-Za-z0-9._-]*/) || !ids.add(component.id)) {
+                throw new GradleException("Invalid or duplicate license component id: ${component.id}")
+            }
+            ['sources', 'artifacts', 'files'].each { field ->
+                if (!(component[field] instanceof List) || component[field].any { !(it instanceof String) || it.isBlank() }) {
+                    throw new GradleException("License component has an invalid ${field}: ${component.id}")
+                }
+            }
+            if (component.sources.isEmpty() || component.files.isEmpty()) {
+                throw new GradleException("License component needs sources and legal texts: ${component.id}")
+            }
+            component.files.each { filename ->
+                if (!(filename ==~ /[A-Za-z0-9][A-Za-z0-9._-]*/)) {
+                    throw new GradleException("Invalid legal text filename: ${filename}")
+                }
+                def legalText = filename == 'GPL-3.0.txt' ? rootProject.file('COPYING') : new File(licenseDirectory, filename)
+                if (!legalText.isFile() || legalText.getText('UTF-8').isBlank()) {
+                    throw new GradleException("Missing or empty legal text: ${legalText}")
+                }
+            }
+            component.artifacts.each { coordinate ->
+                if (!(coordinate ==~ /[^:\s]+:[^:\s]+:[^:\s]+/) || !auditedArtifacts.add(coordinate)) {
+                    throw new GradleException("Invalid or duplicate audited runtime artifact: ${coordinate}")
+                }
+                if (component.version != coordinate.tokenize(':').last()) {
+                    throw new GradleException("License version '${component.version}' for ${component.id} " + "does not match its artifact coordinate: ${coordinate}")
+                }
+            }
+        }
+
+        def runtimeArtifacts = [] as Set
+        configurations.releaseRuntimeClasspath.incoming.artifacts.artifacts.each { artifact ->
+            if (artifact.file.name.endsWith('.jar') || artifact.file.name.endsWith('.aar')) {
+                def component = artifact.id.componentIdentifier
+                if (!(component instanceof ModuleComponentIdentifier)) {
+                    throw new GradleException("Audit the uncoordinated runtime artifact: ${artifact.file}")
+                }
+                runtimeArtifacts.add("${component.group}:${component.module}:${component.version}".toString())
+            }
+        }
+        def missing = runtimeArtifacts - auditedArtifacts
+        def stale = auditedArtifacts - runtimeArtifacts
+        if (!missing.isEmpty() || !stale.isEmpty()) {
+            throw new GradleException("Runtime license inventory differs from the release artifacts. " + "Missing: ${missing.sort()}; no longer packaged: ${stale.sort()}. " + 'Update LICENSES/runtime-components.json after auditing the change.')
+        }
+    }
+}
+
+def packageLicenseAssets = tasks.register('packageLicenseAssets', Sync) {
+    dependsOn verifyLicenseInventory
+    into layout.buildDirectory.dir('generated/licenseAssets/licenses')
+    from(licenseDirectory) {
+        include '*.txt', 'application-components.json', 'runtime-components.json'
+    }
+    from(rootProject.file('COPYING')) {
+        rename { 'GPL-3.0.txt' }
+    }
+}
+
+android.sourceSets.named('main') {
+    assets.srcDir(layout.buildDirectory.dir('generated/licenseAssets').get().asFile)
+}
+tasks.named('preBuild').configure {
+    dependsOn packageLicenseAssets
 }
