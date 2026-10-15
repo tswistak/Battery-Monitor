@@ -14,7 +14,7 @@
         android:padding="2.5dp"
         android:scaleType="centerInside"
         android:src="@drawable/circle" />
-    
+
     <ImageView
         android:id="@+id/circle_widget_image_view"
         android:layout_width="fill_parent"

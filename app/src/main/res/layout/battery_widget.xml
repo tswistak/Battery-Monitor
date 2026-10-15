@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
-        
+
         <LinearLayout
             android:id="@+id/widget_header"
             android:layout_width="match_parent"

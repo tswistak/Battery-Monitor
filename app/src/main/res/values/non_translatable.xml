@@ -4,4 +4,16 @@
     <string name="auto_log_export_format_csv" formatted="false" translatable="false">CSV</string>
     <string name="auto_log_export_format_json" formatted="false" translatable="false">JSON</string>
     <string name="widget_value_placeholder" translatable="false">—</string>
+    <string name="widget_preview_level" translatable="false">77%</string>
+    <string name="widget_preview_temperature" translatable="false">31.6°C</string>
+    <string name="widget_preview_voltage" translatable="false">4.08 V</string>
+    <string name="widget_preview_current" translatable="false">−320 mA</string>
+    <string name="widget_preview_charge" translatable="false">2,695 mAh</string>
+    <string name="widget_preview_time_start" translatable="false">08:00</string>
+    <string name="widget_preview_time_end" translatable="false">14:00</string>
+    <string name="widget_preview_axis_top" translatable="false">100</string>
+    <string name="widget_preview_axis_upper" translatable="false">80</string>
+    <string name="widget_preview_axis_lower" translatable="false">60</string>
+    <string name="widget_preview_axis_bottom" translatable="false">40</string>
+    <string name="widget_preview_duration" translatable="false"><font color="#6fc14b">14h</font> <font color="#33b5e5"><small>54m</small></font></string>
 </resources>

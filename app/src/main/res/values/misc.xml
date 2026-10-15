@@ -20,7 +20,6 @@
 
     <string name="default_max_log_age">672</string>
 
-
     <string-array name="boot_pref_values">
         <item>always</item>
         <item>never</item>
@@ -86,7 +85,7 @@
         <item>@string/status_not_charging</item>
         <item>@string/status_fully_charged</item>
     </string-array>
-    <string-array name="log_statuses"><!-- The same as above, worded for the Log screen -->
+    <string-array name="log_statuses">
         <item>@string/status_unplugged</item>
         <item>@string/status_unknown</item>
         <item>@string/status_plugged_in</item>
@@ -94,8 +93,8 @@
         <item>@string/status_not_charging</item>
         <item>@string/status_fully_charged</item>
     </string-array>
-    <string-array name="log_statuses_old"><!-- The same as above, worded for old Log screen statuses -->
-        <item>@string/status_discharging</item><!-- E.g., Unplugged is called Discharging after the first time it is logged -->
+    <string-array name="log_statuses_old">
+        <item>@string/status_discharging</item>
         <item>@string/status_unknown</item>
         <item>@string/status_charging</item>
         <item>@string/status_discharging</item>
@@ -130,7 +129,6 @@
         <item>@string/plugged_unknown</item>
         <item>@string/plugged_wireless</item>
     </string-array>
-
 
     <string-array name="boot_pref_entries">
         <item>@string/boot_pref_always</item>
@@ -220,7 +218,6 @@
         <item>status_duration</item>
     </string-array>
 
-
     <string name="default_top_line_content">remaining</string>
     <string name="default_bottom_line_content">vitals</string>
 
@@ -255,7 +252,6 @@
         <item>@string/predictor_long_term_ave</item>
     </string-array>
 
-    <!-- See PredictorCore.java -->
     <string-array name="prediction_type_values">
         <item>300000</item>
         <item>-3</item>

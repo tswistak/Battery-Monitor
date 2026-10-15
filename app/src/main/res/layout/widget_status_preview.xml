@@ -46,5 +46,4 @@
         android:text="@string/status_discharging"
         android:textColor="#12384F"
         android:textSize="12sp" />
-
 </LinearLayout>

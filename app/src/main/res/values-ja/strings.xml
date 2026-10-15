@@ -1,676 +1,399 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_launcher_name" formatted="false">Battery Monitor</string>
-  <string name="settings_activity_subtitle" formatted="false">設定</string>
-  <string name="help_activity_subtitle" formatted="false">ヘルプ</string>
+    <string name="app_launcher_name" formatted="false">Battery Monitor</string>
+    <string name="yes" formatted="false">はい</string>
+    <string name="okay" formatted="false">OK</string>
+    <string name="cancel" formatted="false">キャンセル</string>
+    <string name="custom" formatted="false">カスタム...</string>
+    <string name="currently_using" formatted="false">現在使用中</string>
+    <string name="currently_set_to" formatted="false">"現在の設定: "</string>
+    <string name="currently_disabled" formatted="false">現在無効</string>
+    <string name="settings_numeric_value">値</string>
+    <string name="settings_move_item_up">%1$s を上へ移動</string>
+    <string name="settings_move_item_down">%1$s を下へ移動</string>
+    <string name="settings_operation_processing">処理中…</string>
 
-  <string name="battery_use_b" formatted="false">バッテリーの使用を表示する</string>
-  <string name="circle_widget" formatted="false">Battery Monitor サークル</string>
-  <string name="full_widget" formatted="false">Battery Monitor フル</string>
-  <string name="yes" formatted="false">はい</string>
-  <string name="cancel" formatted="false">キャンセル</string>
+    <string name="nav_battery_group">バッテリー</string>
+    <string name="nav_current">現在の状態</string>
+    <string name="nav_history">履歴</string>
+    <string name="nav_alarms">アラーム</string>
+    <string name="nav_tools_group">ツールとアプリ</string>
+    <string name="nav_diagnostics">診断</string>
+    <string name="nav_settings">設定</string>
+    <string name="nav_help">ヘルプとアプリ情報</string>
+    <string name="nav_help_version">%1$s %2$s</string>
+    <string name="nav_open_menu">メニューを開く</string>
+    <string name="nav_focus_menu">メニューにフォーカス</string>
+    <string name="nav_close_menu">メニューを閉じる</string>
+    <string name="nav_up">上へ移動</string>
+    <string name="nav_actions">その他の操作</string>
+    <string name="tab_current_info" formatted="false">現在の情報</string>
+    <string name="tab_history" formatted="false">履歴</string>
+    <string name="tab_advanced" formatted="false">詳細</string>
+    <string name="menu_settings" formatted="false">設定</string>
+    <string name="menu_help" formatted="false">ヘルプ</string>
+    <string name="menu_close" formatted="false">閉じる</string>
+    <string name="battery_use_b" formatted="false">バッテリーの使用を表示する</string>
 
-  <string name="confirm_close" formatted="false">閉じてもよろしいですか?</string>
-  <string name="confirm_close_hint" formatted="false">Battery Monitor は完全に閉じます。ステータスバーに 表示されなくなります。\n
+    <string name="current_monitor_data">監視データ · %1$s</string>
+    <string name="current_last_reading">前回の測定 · %1$s</string>
+    <string name="current_waiting">監視データを待機中</string>
+    <string name="current_monitor_disabled">監視はオフです</string>
+    <string name="current_stale">監視データが古くなっています</string>
+    <string name="current_monitor_action">「診断」で監視を確認してください。</string>
+    <string name="current_monitor_attention">監視の確認が必要です</string>
+    <string name="current_notifications_off">通知はオフです</string>
+    <string name="current_notifications_off_body">Battery Monitor の通知が無効です。通知設定を確認してアラートを再開してください。</string>
+    <string name="current_power_optimized">バックグラウンド動作が制限される場合があります</string>
+    <string name="current_power_optimized_body">Android のバッテリー最適化で監視の更新が遅れる場合があります。更新が止まったら、このアプリのバッテリー設定を確認してください。</string>
+    <string name="current_paused">電源に接続中 · 充電していません</string>
+    <string name="current_target_reached">目標の %1$d%% に到達</string>
+    <string name="current_below_target">目標の %1$d%% 未満</string>
+    <string name="current_low">バッテリー残量が非常に少なくなっています</string>
+    <string name="current_low_body">有効なアラームを確認し、必要に応じて電源に接続してください。</string>
+    <string name="status_unknown" formatted="false">不明</string>
+    <string name="status_unplugged" formatted="false">未接続</string>
+    <string name="status_plugged_in" formatted="false">接続済</string>
+    <string name="status_charging" formatted="false">充電中</string>
+    <string name="status_discharging" formatted="false">放電中</string>
+    <string name="status_not_charging" formatted="false">非充電中</string>
+    <string name="status_fully_charged" formatted="false">フル充電</string>
+    <string name="status_boot_completed" formatted="false">起動完了</string>
+    <string name="plugged_unplugged" formatted="false">未接続</string>
+    <string name="plugged_ac" formatted="false">(AC)</string>
+    <string name="plugged_usb" formatted="false">(USB)</string>
+    <string name="plugged_wireless" formatted="false">(無線)</string>
+    <string name="plugged_unknown" formatted="false">(?)</string>
+    <string name="current_measurements">測定値</string>
+    <string name="current_temperature">温度</string>
+    <string name="current_voltage">電圧</string>
+    <string name="vital_sign_voltage" formatted="false">バッテリー電圧</string>
+    <string name="pref_cat_battery_current_main" formatted="false">バッテリー電流</string>
+    <string name="remaining_charge" formatted="false">残りの充電量</string>
+    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_unavailable">残りの充電量を取得できません</string>
+    <string name="current_remaining_charge">残りの充電量: %1$s mAh</string>
+    <string name="battery_power">バッテリー電力</string>
+    <string name="battery_power_explanation">バッテリーの電圧と電流から計算します。充電中は正、放電中は負になります。充電器側ではなく、バッテリー側の電力です。</string>
+    <string name="current_android_health">Android による状態</string>
+    <string name="current_status_unit">Android の状態</string>
+    <string name="current_health_explanation">この Android の状態は、バッテリーの健全性を示す割合ではありません。</string>
+    <string name="health_unknown" formatted="false">不明</string>
+    <string name="health_good" formatted="false">良好</string>
+    <string name="health_overheat" formatted="false">過熱</string>
+    <string name="health_dead" formatted="false">使用不能</string>
+    <string name="health_overvoltage" formatted="false">過電圧</string>
+    <string name="health_failure" formatted="false">障害</string>
+    <string name="health_cold" formatted="false">低温</string>
+    <string name="current_unavailable">測定値なし</string>
+    <string name="current_current_unavailable">電流の測定値がありません。「診断」でアクセスの問題や非対応の取得元を確認できる場合があります。</string>
+    <string name="current_detail_unit">単位: %1$s</string>
+    <string name="current_detail_source">取得元: %1$s</string>
+    <string name="current_detail_time">前回の測定: %1$s</string>
+    <string name="current_history_off">履歴の記録はオフです · 履歴を開く</string>
+    <string name="current_system_usage">システムのバッテリー使用状況を開く</string>
+    <string name="current_usage_unavailable">システムのバッテリー使用状況を表示できません</string>
+    <string name="current_state_settings_summary" formatted="false">「現在の情報」画面の設定</string>
+    <string name="current_state_settings_help" formatted="false">残りの充電量を表示するか、「現在の状態」で平均電流を優先するかを選びます。電流は取得できる場合に常に測定します。倍率はアプリ全体の電流と計算した電力を補正します。ログは元の瞬間電流を保持するため、後から倍率を変更できます。</string>
+    <string name="pref_show_remaining_charge" formatted="false">残りの充電量を表示</string>
+    <string name="pref_show_remaining_charge_summary" formatted="false">端末が報告するバッテリーの残りの充電量を mAh で表示しますか？</string>
+    <string name="pref_battery_current_multiplier" formatted="false">倍率</string>
+    <string name="pref_battery_current_multiplier_help" formatted="false">一部の端末では、予期しない単位や符号で電流が報告されます。表示結果を補正するには、報告値にここで指定した倍率を掛けます。\n
     \n
-    メインウインドウから離れるだけで、インジケーターの 実行を続ける場合は、キャンセルまたはデバイスの戻る ボタンを押してください。</string>
+    スマートフォンのおおよその目安として、Android の標準では充電中が正、放電中が負です。充電中は +500～+5000 mA、通常の放電中は -100～-3000 mA 程度になることがよくあります。満充電に近い場合や端末がアイドル状態の場合は、ゼロに近い値でも正常です。値が約 1000 倍小さい、または大きい場合や、符号が逆の場合は倍率を調整してください。</string>
+    <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">自動検出</string>
+    <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">現在のバッテリー状態または測定値では自動検出を利用できません。</string>
+    <string name="pref_battery_current_multiplier_detection_result">倍率を自動的に %1$d に設定しました。</string>
+    <string name="pref_prefer_average_battery_current" formatted="false">平均電流を優先</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">利用できる場合、「現在の状態」で直近の平均値を使用しますか？</string>
+    <string name="pref_prefer_current_avg_help" formatted="false">一部の端末は瞬間電流に加えて直近の平均値も提供します。平均期間は端末によって異なります。「現在の状態」は平均値がなければ瞬間電流を使います。この設定は「現在の状態」のみに適用され、ログは常に元の瞬間電流を保存します。</string>
 
-  <string name="notifications_disabled" formatted="false">通知が無効です！</string>
-  <string name="notifications_disabled_message" formatted="false">Battery Monitor のすべての通知がブロックされています。これにより、メイン通知および設定したアラーム通知は表示されません。\n
+    <string name="activity_until_charged" formatted="false">充電まで</string>
+    <string name="activity_until_drained" formatted="false">放電まで</string>
+    <string name="activity_until_target" formatted="true">%1$d%% まで</string>
+    <string name="activity_target_reached" formatted="true">目標に到達（%1$d%%）</string>
+    <string name="current_no_prediction">推定に必要なデータが足りません</string>
+    <string name="current_show_to_target">%1$d%% までを表示</string>
+    <string name="current_since_unplugged">電源を外してから: %1$d%% → %2$d%% · %3$s</string>
+    <string name="current_since_connected">電源に接続してから: %1$d%% → %2$d%% · %3$s</string>
+    <string name="current_since_change">状態が変わってから: %1$d%% → %2$d%% · %3$s</string>
+    <string name="current_prediction_method">方式: %1$s</string>
+    <string name="current_prediction_target">目標: %1$d%%</string>
+    <string name="current_prediction_snapshot_time">バッテリーの取得時点: %1$s</string>
+    <string name="current_prediction_diagnostics" formatted="false">最近の変化率と学習済みの平均値は、「診断」の「アプリの動作」で確認できます。</string>
+    <string name="current_prediction_explanation">この推定は、設定された Battery Monitor の予測方式を使用します。目標値は充電やシャットダウンを制御しません。</string>
+    <string name="time_estimates_settings" formatted="false">時間の見積もり</string>
+    <string name="time_estimates_settings_summary" formatted="false">残り時間の計算方法と目標バッテリー残量を選択します。</string>
+    <string name="time_estimates_settings_help" formatted="false">Battery Monitor の残り時間の推定方法と目標残量を選びます。目標は、充電上限と放電下限に達したアラームにも適用します。Battery Monitor は充電を開始・停止しません。</string>
+    <string name="pref_cat_predictor" formatted="false">残時間の見積</string>
+    <string name="pref_prediction_type" formatted="false">見積の種類</string>
+    <string name="pref_prediction_type_help" formatted="false">「高感度」は直近5分間の変化率を使います。既定の「保守的」は、最近の変化率と学習済みの長期平均を組み合わせ、急な変動を抑えます。「ステータスが変わってから」は現在の充電・放電セッションを使います。「長期平均」は放電または有効な充電元の学習済み変化率を使います。十分な観測値が集まるまでは、保存済みの平均値または初期値を使います。</string>
+    <string name="predictor_sensitive" formatted="false">高感度</string>
+    <string name="predictor_conservative" formatted="false">保守的</string>
+    <string name="predictor_since_status_change" formatted="false">ステータスが変わったら</string>
+    <string name="predictor_long_term_ave" formatted="false">長期平均</string>
+    <string name="pref_cat_target_levels" formatted="false">目標残量</string>
+    <string name="pref_charging_target_mode" formatted="false">充電目標</string>
+    <string name="pref_charging_target_mode_help" formatted="false">「自動」は、Battery Monitor が読み取れる場合は端末の固定充電上限を、それ以外は 100% を使います。アダプティブ充電でも目標は 100% です。「カスタム」は、充電の推定と充電上限到達のアラームに、選択した残量を使います。</string>
+    <string name="pref_charging_target_mode_support_help" formatted="false">自動検出は、Google Pixel、Samsung Galaxy、Xiaomi/Redmi/POCO、OnePlus/Oppo/Realme、Sony Xperia、およびGrapheneOSまたはLineageOSを搭載した端末で動作する場合があります。rootまたはShizukuアクセスが利用できる場合は特に有効です。ソフトウェア信号に依存するため、記載したメーカーの端末でも利用可否や精度は保証されません。これらの系統の未検証モデルやOSバージョンでも動作する可能性がありますが、他メーカーの端末は現在自動検出されません。</string>
+    <string name="pref_charging_target_mode_summary_device" formatted="true">端末の充電上限：%1$d%%</string>
+    <string name="pref_charging_target_mode_summary_custom" formatted="false">カスタム目標</string>
+    <string name="pref_charging_target_mode_summary_default" formatted="false">固定された端末上限を検出できません — 100% を使用します。</string>
+    <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    この値が正しくないように見える場合は、端末検出の改善に協力できます。診断を開き、ヘルプの手順に注意深く従ってOEM充電上限レポートを作成してください。</string>
+    <string name="charging_target_mode_automatic" formatted="false">自動（推奨）</string>
+    <string name="charging_target_mode_custom" formatted="false">カスタム</string>
+    <string name="pref_custom_charging_target" formatted="false">カスタム充電目標</string>
+    <string name="pref_custom_charging_target_help" formatted="false">充電目標がカスタムの場合に、充電見積もりの終了残量を設定します。</string>
+    <string name="pref_discharging_target" formatted="false">放電目標</string>
+    <string name="pref_discharging_target_help" formatted="false">放電の推定と放電下限到達のアラームの終了残量を設定します。この残量を下回ると、時間の推定は 0% に向けて続きます。独自のしきい値を持つ低残量アラームは独立しています。</string>
+    <string name="pref_target_level_summary" formatted="true">%1$d%% まで見積もります。</string>
+
+    <string name="main_notif_chan_name" formatted="false">メイン通知</string>
+    <string name="live_updates_notif_chan_name" formatted="false">ライブアップデート</string>
+    <string name="notification_settings" formatted="false">メイン通知</string>
+    <string name="settings_notification">通知</string>
+    <string name="notification_settings_summary" formatted="false">通知内容、ステータスバーアイコン、ライブ更新チップを設定します。</string>
+    <string name="notification_settings_help" formatted="false">プルダウン通知に表示される内容を設定し、その外観をコントロールすることができます。</string>
+    <string name="notification_channels_help" formatted="false">Android の通知設定で通知を許可またはブロックし、メイン通知と各アラーム種別の音、振動、通知方法を設定できます。アラームのルールを有効にしても、ブロックされた通知チャンネルは有効になりません。</string>
+    <string name="notifications_disabled" formatted="false">通知が無効です！</string>
+    <string name="notifications_disabled_message" formatted="false">Battery Monitor のすべての通知がブロックされています。これにより、メイン通知および設定したアラーム通知は表示されません。\n
     \n
     Battery Monitor では、メイン通知のオン/オフや個別アラームの一時無効化をアプリ内で行えるため、システム側で通知ブロックを解除することを強くおすすめします。通知がブロックされている間は、Battery Monitor が正常に動作していないように見える場合があります。\n
     \n
     OK を押してシステム設定を開き、Battery Monitor の通知ブロックを解除してください。</string>
-
-  <string name="battery_optimized" formatted="false">バックグラウンドでの監視</string>
-  <string name="battery_optimized_message" formatted="false">バックグラウンドでの実行を制限しないことで、監視の信頼性が向上する場合があります。Android のバッテリー最適化により、更新やアラームが遅れる場合があります。\n\n制限なしで実行すると、バックグラウンドでのバッテリー消費が増える場合があります。この設定は後で Android の設定 &gt; アプリ &gt; Battery Monitor &gt; バッテリーから変更できます。</string>
-
-  <string name="main_notif_chan_name" formatted="false">メイン通知</string>
-  <string name="live_updates_notif_chan_name" formatted="false">ライブアップデート</string>
-  <string name="channel_group_name_alarms" formatted="false">アラーム</string>
-
-  <string name="confirm_clear_logs" formatted="false">ログをすべてクリアしてもよろしいですか?</string>
-
-  <string name="configure_log_filter" formatted="false">どのログ項目を表示しますか?</string>
-
-  <string name="okay" formatted="false">OK</string>
-
-  <string name="tab_current_info" formatted="false">現在の情報</string>
-  <string name="tab_history" formatted="false">履歴</string>
-  <string name="tab_advanced" formatted="false">詳細</string>
-
-  <string name="notification_until_charged" formatted="false">" 充電まで"</string>
-  <string name="notification_until_drained" formatted="false">" 残"</string>
-  <string name="activity_until_charged" formatted="false">充電まで</string>
-  <string name="activity_until_drained" formatted="false">放電まで</string>
-
-  <string name="menu_settings" formatted="false">設定</string>
-  <string name="menu_close" formatted="false">閉じる</string>
-  <string name="menu_help" formatted="false">ヘルプ</string>
-  <string name="menu_clear" formatted="false">クリア</string>
-  <string name="menu_reverse" formatted="false">逆順</string>
-  <string name="menu_log_filter" formatted="false">フィルター</string>
-  <string name="menu_export" formatted="false">CSV をエクスポート</string>
-  <string name="log_export_mode_title" formatted="false">ログをエクスポート</string>
-  <string name="log_export_append" formatted="false">既存のファイルに追加</string>
-  <string name="log_export_new_file" formatted="false">新しいファイルを作成</string>
-  <string name="log_export_range_title" formatted="false">どのログをエクスポートしますか？</string>
-  <string name="log_export_all_logs" formatted="false">すべて</string>
-  <string name="log_export_from_last" formatted="false">前回のエクスポート以降</string>
-  <string name="menu_delete_alarm" formatted="false">アラームを削除</string>
-  <string name="menu_show_seconds" formatted="false">秒を表示</string>
-  <string name="menu_hide_seconds" formatted="false">秒を非表示</string>
-
-  <string name="percent_symbol" formatted="false">%</string>
-  <string name="degree_symbol" formatted="false">°</string>
-  <string name="fahrenheit" formatted="false">華氏</string>
-  <string name="fahrenheit_symbol" formatted="false">F</string>
-  <string name="celsius" formatted="false">セ氏</string>
-  <string name="celsius_symbol" formatted="false">C</string>
-  <string name="volt_symbol" formatted="false">V</string>
-
-  <string name="inaccessible_storage" formatted="false">SD カードにアクセスできません。</string>
-  <string name="inaccessible_w_reason" formatted="false">SD カードにアクセスできません:</string>
-  <string name="read_only_storage" formatted="false">SD カードは読み取り専用です。</string>
-  <string name="no_storage_permission" formatted="false">ストレージ権限が許可されていません。</string>
-  <string name="file_written" formatted="false">ファイルが SD カードのルートに正常に書き込まれました。</string>
-
-  <string name="date" formatted="false">日付</string>
-  <string name="time" formatted="false">時刻</string>
-  <string name="status" formatted="false">ステータス</string>
-  <string name="charge" formatted="false">充電率</string>
-  <string name="temperature" formatted="false">セ氏度</string>
-  <string name="temperature_f" formatted="false">華氏度</string>
-  <string name="voltage" formatted="false">電圧</string>
-
-  <string name="status_unplugged" formatted="false">未接続</string>
-  <string name="status_unknown" formatted="false">不明</string>
-  <string name="status_charging" formatted="false">充電中</string>
-  <string name="status_discharging" formatted="false">放電中</string>
-  <string name="status_not_charging" formatted="false">非充電中</string>
-  <string name="status_fully_charged" formatted="false">フル充電</string>
-  <string name="status_plugged_in" formatted="false">接続済</string>
-
-  <string name="status_boot_completed" formatted="false">起動完了</string>
-
-  <string name="health_unknown" formatted="false">不明</string>
-  <string name="health_good" formatted="false">良好</string>
-  <string name="health_overheat" formatted="false">過熱</string>
-  <string name="health_dead" formatted="false">使用不能</string>
-  <string name="health_overvoltage" formatted="false">過電圧</string>
-  <string name="health_failure" formatted="false">障害</string>
-  <string name="health_cold" formatted="false">低温</string>
-  <string name="plugged_unplugged" formatted="false">未接続</string>
-  <string name="plugged_ac" formatted="false">(AC)</string>
-  <string name="plugged_usb" formatted="false">(USB)</string>
-  <string name="plugged_unknown" formatted="false">(?)</string>
-  <string name="plugged_wireless" formatted="false">(無線)</string>
-
-  <string name="alarm_type_fully_charged" formatted="false">フル充電されました</string>
-  <string name="alarm_type_charging_limit_met" formatted="false">充電上限に到達</string>
-  <string name="alarm_type_discharging_limit_met" formatted="false">放電下限に到達</string>
-  <string name="alarm_type_charge_drops" formatted="false">残量が低下しました</string>
-  <string name="alarm_type_charge_rises" formatted="false">残量が上昇しました</string>
-  <string name="alarm_type_temperature_drops" formatted="false">温度が次を下回る</string>
-  <string name="alarm_type_temperature_rises" formatted="false">温度が上昇しました</string>
-  <string name="alarm_type_health_failure" formatted="false">ステータス障害</string>
-
-  <string name="alarm_fully_charged" formatted="false">バッテリーがフル充電されました</string>
-  <string name="alarm_charging_limit_met" formatted="true">充電上限に到達: %1$d%%</string>
-  <string name="alarm_discharging_limit_met" formatted="true">放電下限に到達: %1$d%%</string>
-  <string name="alarm_charge_drops" formatted="false">"バッテリー残量が低下しました "</string>
-  <string name="alarm_charge_rises" formatted="false">"バッテリー残量が上昇しました "</string>
-  <string name="alarm_temp_drops" formatted="false">"バッテリー温度が次を下回りました "</string>
-  <string name="alarm_temp_rises" formatted="false">"バッテリーの温度が上昇しました "</string>
-  <string name="alarm_health_failure" formatted="false">"バッテリーのステータス: "</string>
-
-  <string name="logs_empty" formatted="false">ログは空です</string>
-  <plurals name="n_log_items">
-    <item quantity="one">%d ログアイテム</item>
-    <item quantity="other">%d ログアイテム</item>
-  </plurals>
-
-  <string name="after_nh_mm_unplugged" formatted="true">プラグを抜いてから %1$d時間%2$d分</string>
-  <string name="after_nh_mm_plugged_in" formatted="true">プラグを挿してから %1$d時間%2$d分</string>
-  <string name="after_nm_ms_unplugged" formatted="true">プラグを抜いてから %1$d分%2$d秒</string>
-  <string name="after_nm_ms_plugged_in" formatted="true">プラグを挿してから %1$d分%2$d秒</string>
-
-  <plurals name="n_hours_long">
-    <item quantity="one">"%d 時間 "</item>
-    <item quantity="other">"%d 時間 "</item>
-  </plurals>
-
-  <plurals name="n_minutes_long">
-    <item quantity="one">%d 分</item>
-    <item quantity="other">%d 分</item>
-  </plurals>
-
-  <plurals name="n_hours_medium">
-    <item quantity="one">"%d 時間 "</item>
-    <item quantity="other">"%d 時間 "</item>
-  </plurals>
-
-  <plurals name="n_minutes_medium">
-    <item quantity="one">%d 分</item>
-    <item quantity="other">%d 分</item>
-  </plurals>
-
-  <plurals name="n_hours_short">
-    <item quantity="other">"%d時間 "</item>
-  </plurals>
-
-  <plurals name="n_minutes_short">
-    <item quantity="other">%d分</item>
-  </plurals>
-
-  <plurals name="n_days">
-    <item quantity="one">"%d 日 "</item>
-    <item quantity="other">"%d 日 "</item>
-  </plurals>
-
-  <plurals name="n_hours">
-    <item quantity="one">%d 時間</item>
-    <item quantity="other">%d 時間</item>
-  </plurals>
-
-  <plurals name="for_n_hours">
-    <item quantity="one">%d 時間</item>
-    <item quantity="other">%d 時間</item>
-  </plurals>
-
-  <string name="duration_for">%1$s の間</string>
-  <string name="unit_days">%d日</string>
-  <string name="unit_hours">%d時間</string>
-  <string name="unit_minutes">%d分</string>
-  <string name="since" formatted="false">から</string>
-
-  <string name="currently_using" formatted="false">現在使用中</string>
-  <string name="currently_set_to" formatted="false">"現在の設定: "</string>
-  <string name="currently_disabled" formatted="false">現在無効</string>
-
-  <string name="help_cat_version" formatted="false">バージョン</string>
-
-  <string name="help_cat_open_source" formatted="false">オープンソース</string>
-  <string name="help_open_source" formatted="false">これ プロジェクトはオープンソースです。ソースコードには次の場所からアクセスできます。 <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>。</string>
-
-  <string name="help_cat_privacy" formatted="false">プライバシー</string>
-  <string name="help_privacy" formatted="false">Battery Monitor は、バッテリーのシリアル番号など、端末が公開する値を含むバッテリーおよび端末の情報を端末内で処理します。この情報を送信したり、外部サーバーで収集したりすることはありません。</string>
-
-  <string name="help_cat_no_warranty" formatted="false">無保証</string>
-  <string name="help_no_warranty" formatted="false">このプログラムは有用であることを願って頒布されますが、 *全くの無保証* です。商業可能性の保証や特定目的への適合性は、言外に示されたものも含め、全く存在しません。\n
+    <string name="notifications_disabled_cat" formatted="false">通知が無効</string>
+    <string name="app_notifs_disabled_b" formatted="false">アプリ通知を有効化</string>
+    <string name="app_notifs_disabled_summary" formatted="false">このアプリの通知がすべて無効になっています。これらの設定にアクセスするには有効にしてください。</string>
+    <string name="main_notifs_disabled_b" formatted="false">メイン通知を有効化</string>
+    <string name="main_notifs_disabled_summary" formatted="false">このアプリのメイン通知が無効になっています。これらの設定にアクセスするには有効にしてください。</string>
+    <string name="settings_notification_disabled">この設定を変更するには、アプリの通知とメイン通知チャンネルを有効にしてください。</string>
+    <string name="notifications_onboarding_message">Battery Monitor がステータスバーにバッテリー残量を表示し、アラームについて通知するには、権限が必要です。\n
     \n
-    確実にこれが正しく機能し、問題を引き起こさないようにするため最善を尽くしますが、いかなる状況下においても、 あらゆる損害や不便の責任は負いません。</string>
-
-  <string name="help_cat_acknowledgments" formatted="false">謝辞</string>
-  <string name="help_acknowledgments" formatted="false">Battery Monitor は、Battery Indicator Pro / BatteryBot Pro のフォークです。 ダルシャン コンピューティング LLC。 原作者と協力者に感謝します 上流プロジェクトの作成と維持に使用します。</string>
-
-  <string name="help_cat_frequently_asked_questions" formatted="false">よくある質問</string>
-  <string name="help_frequently_asked_questions" formatted="false">よくある質問への回答は <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a> で確認できます。</string>
-
-  <string name="help_cat_contact" formatted="false">問い合わせ</string>
-  <string name="help_contact" formatted="false">ご質問、問題、コメントがありましたら、お気軽にお問い合わせください <a href="mailto:tomasz@swistak.codes">メールしてください</a>.</string>
-
-  <string name="settings_overview" formatted="false">概要</string>
-  <string name="settings_overview_help" formatted="false">下記のように、設定は別のページにまとめられています。 各ページに、 そのページの設定を記載した、独自のヘルプページがあります。 ヘルプを表示するには、今いる設定ページでメニューを押すだけです。 (タブレットではメニューは必要ありません)</string>
-
-  <string name="notifications_disabled_cat" formatted="false">通知が無効</string>
-  <string name="app_notifs_disabled_b" formatted="false">アプリ通知を有効化</string>
-  <string name="app_notifs_disabled_summary" formatted="false">このアプリの通知がすべて無効になっています。これらの設定にアクセスするには有効にしてください。</string>
-  <string name="main_notifs_disabled_b" formatted="false">メイン通知を有効化</string>
-  <string name="main_notifs_disabled_summary" formatted="false">このアプリのメイン通知が無効になっています。これらの設定にアクセスするには有効にしてください。</string>
-  <string name="alarm_notifs_disabled_summary" formatted="false">このアプリのアラーム通知グループが無効になっています。アラームにアクセスするには有効にしてください。</string>
-  <string name="alarm_chan_disabled" formatted="false">この種類のアラーム通知が無効です。このアラーム種類を使用するには有効にしてください。</string>
-  <string name="alarm_chan_settings_b" formatted="false">このアラーム種類を管理</string>
-
-  <string name="notification_settings" formatted="false">メイン通知</string>
-  <string name="notification_settings_summary" formatted="false">通知内容、ステータスバーアイコン、ライブ更新チップを設定します。</string>
-  <string name="notification_settings_help" formatted="false">プルダウン通知に表示される内容を設定し、その外観をコントロールすることができます。</string>
-  <string name="status_bar_icon_settings" formatted="false">ステータスバー アイコン</string>
-  <string name="status_bar_icon_settings_help" formatted="false">通知アイコンにバッテリー残量を表示するか温度を表示するか、アイコン内に単位記号を表示するか、また充電時に専用アイコンを使うかを選択します。Android 16 以降では、OS の種類によってはステータスバーアイコンが機能しない場合があります。</string>
-  <string name="status_bar_chip_settings" formatted="false">ステータスバーチップ</string>
-  <string name="status_bar_chip_settings_help" formatted="false">ライブ更新では、ステータスバーチップの表示内容、切り替え間隔、充電絵文字の表示有無を設定できます。</string>
-  <string name="current_state_settings_summary" formatted="false">「現在の情報」画面の設定</string>
-  <string name="current_state_settings_help" formatted="false">「現在の情報」画面に表示する内容を設定します。バッテリー電流のオプションは、ほかのバッテリー情報と一緒に表示されるリアルタイム値を制御します。</string>
-  <string name="alarm_settings_subtitle" formatted="false">アラーム設定</string>
-  <string name="alarm_settings" formatted="false">アラーム</string>
-  <string name="alarm_settings_help" formatted="false">お使いのバッテリー残量が一定のレベルに達したときに、 Battery Monitor があなたに通知することができます (例、バッテリーがフル充電された、 バッテリー残量が 20% を下回った)。</string>
-  <string name="other_settings" formatted="false">一般</string>
-  <string name="other_settings_summary" formatted="false">アプリの全般的な動作と日常的な設定を構成します。</string>
-  <string name="other_settings_help" formatted="false">Battery Monitor を日常の使い方に合わせるための設定です。アプリの全般的な動作や、端末の使い方に自然になじませるための設定を扱います。</string>
-  <string name="advanced_settings" formatted="false">詳細設定</string>
-  <string name="advanced_settings_summary" formatted="false">特殊な用途向けの追加コントロールで Battery Monitor を細かく調整します。</string>
-  <string name="advanced_settings_help" formatted="false">日常的な設定よりも Battery Monitor の動作を細かく制御したい場合に使用します。初期設定はほとんどのユーザーに適していますが、追加の調整によって特定の監視ニーズに合わせることができます。</string>
-
-  <string name="live_updates_onboarding_title">ステータスバーのバッテリーチップ</string>
-  <string name="live_updates_onboarding_message_on">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できます。このオプションはデフォルトで有効です。\n
+    注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
+    <string name="pref_cat_channel_settings" formatted="false">通知チャンネル設定</string>
+    <string name="pref_manage_main_channel" formatted="false">メインチャンネルを管理</string>
+    <string name="pref_cat_notification_content" formatted="false">コンテンツ</string>
+    <string name="pref_top_line_content" formatted="false">最上行のコンテンツ</string>
+    <string name="pref_top_line_content_help" formatted="false">通知の上段に、推定残り時間、状態が変わってからの時間、または設定した主要情報のどれを表示するか選択します。</string>
+    <string name="pref_bottom_line_content" formatted="false">最下行のコンテンツ</string>
+    <string name="pref_bottom_line_content_help" formatted="false">最上行と同様に、最下行にも同じオプションがあります。</string>
+    <string name="time_remaining" formatted="false">残時間</string>
+    <string name="time_since_status_change" formatted="false">ステータス変更からの時間</string>
+    <string name="vital_signs" formatted="false">バイタルサイン</string>
+    <string name="notification_until_charged" formatted="false">" 充電まで"</string>
+    <string name="notification_until_drained" formatted="false">" 残"</string>
+    <string name="pref_time_remaining_verbosity" formatted="false">残時間の詳細</string>
+    <string name="pref_time_remaining_verbosity_help" formatted="false">デバイスにはすべての形やサイズ入っているので、見積残り時間が 通知エリアにフィットするように適切に略語を使用して調整するだけです。 それでもフィットしない場合は、圧縮した形式を選ぶことができます。 たくさんのスペースがある場合は、詳細な設定を行うことができます。</string>
+    <string name="condensed" formatted="false">圧縮</string>
+    <string name="normal" formatted="false">通常</string>
+    <string name="verbose" formatted="false">詳細</string>
+    <string name="pref_vital_signs_content" formatted="false">主要情報の内容</string>
+    <string name="pref_vital_signs_content_summary" formatted="false">主要情報に含める値と表示順をどうしますか？</string>
+    <string name="pref_vital_signs_reorder_handle" formatted="true">%1$sの順序を変更</string>
+    <string name="pref_expanded_notification" formatted="false">通知の詳細を展開</string>
+    <string name="pref_expanded_notification_summary" formatted="false">通知を展開したときにラベル付きの詳細を表示しますか？</string>
+    <string name="pref_expanded_notification_help" formatted="false">有効にすると、メイン通知を展開したときに、1行の概要の代わりに、残時間、ステータス変更からの時間、および主要情報の各値を、それぞれラベル付きの個別の行に表示します。</string>
+    <string name="pref_expanded_notification_format" formatted="true">%1$s：%2$s</string>
+    <string name="settings_notification_preview">通知のイメージ</string>
+    <string name="settings_notification_preview_note">内容は例です。Android や端末メーカーによって通知の表示が異なる場合があります。</string>
+    <string name="status_bar_icon_settings" formatted="false">ステータスバー アイコン</string>
+    <string name="status_bar_icon_settings_help" formatted="false">通知アイコンにバッテリー残量を表示するか温度を表示するか、アイコン内に単位記号を表示するか、また充電時に専用アイコンを使うかを選択します。Android 16 以降では、OS の種類によってはステータスバーアイコンが機能しない場合があります。</string>
+    <string name="pref_icon_content" formatted="false">アイコン内容</string>
+    <string name="pref_icon_content_help" formatted="false">ステータスバーアイコンにバッテリー残量を表示するか、バッテリー温度を表示するかを選択します。温度は選択した単位に従います。</string>
+    <string name="pref_content_percent" formatted="false">バッテリー残量</string>
+    <string name="pref_content_temperature" formatted="false">バッテリー温度</string>
+    <string name="pref_show_icon_unit" formatted="false">単位記号を表示</string>
+    <string name="pref_show_icon_unit_help" formatted="false">有効にすると、アイコンにバッテリー残量はパーセント記号、バッテリー温度は度記号を表示します。数字だけを表示したい場合は無効にしてください。</string>
+    <string name="pref_indicate_charging" formatted="false">充電中を示す</string>
+    <string name="pref_indicate_charging_summary" formatted="false">充電中を示すアイコンを使用しますか?</string>
+    <string name="pref_indicate_charging_help" formatted="false">充電アイコンでは数字の下に稲妻を表示できます。充電中と放電中で同じアイコンにしたい場合は、この設定を無効にしてください。</string>
+    <string name="status_bar_chip_settings" formatted="false">ステータスバーチップ</string>
+    <string name="status_bar_chip_settings_help" formatted="false">Android 16 以降で、ライブ更新チップの表示条件、切り替える値、充電絵文字の表示を選べます。利用できるかどうかは、端末とシステムの通知設定にも依存します。</string>
+    <string name="settings_live_update_summary">Android の設定で、優先表示されるバッテリー通知を許可またはブロックします。</string>
+    <string name="live_updates_onboarding_title">ステータスバーのバッテリーチップ</string>
+    <string name="live_updates_onboarding_message_on">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できます。このオプションはデフォルトで有効です。\n
     \n
     従来の通知アイコンを使いたい場合は、このアプリの Android システム設定で「ライブ更新」をオフにできます。\n
     \n
     注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
-  <string name="live_updates_onboarding_message_off">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できますが、このオプションは現在システム設定で無効になっています。\n
+    <string name="live_updates_onboarding_message_off">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できますが、このオプションは現在システム設定で無効になっています。\n
     \n
     最適な体験のため、有効にすることをおすすめします。従来の通知アイコンを使いたい場合は、無効のままでも構いません。\n
     \n
     注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
-  <string name="live_updates_onboarding_positive_on">了解</string>
-  <string name="live_updates_onboarding_positive_off">設定へ移動</string>
-  <string name="live_updates_onboarding_negative_off">閉じる</string>
+    <string name="live_updates_onboarding_positive_on">了解</string>
+    <string name="live_updates_onboarding_positive_off">設定へ移動</string>
+    <string name="live_updates_onboarding_negative_off">閉じる</string>
+    <string name="pref_live_update_display" formatted="false">ライブアップデートを表示</string>
+    <string name="pref_live_update_display_summary" formatted="false">ステータスバーに表示:</string>
+    <string name="pref_live_update_display_help" formatted="false">Android 16+ のライブアップデート チップをステータスバーに表示するタイミングを選択します。</string>
+    <string name="pref_live_update_display_charging" formatted="false">充電中のみ</string>
+    <string name="pref_live_update_keep_main_notification" formatted="false">ライブアップデート中もメイン通知を表示</string>
+    <string name="pref_live_update_keep_main_notification_summary" formatted="false">ライブアップデートが有効な間も、メイン通知を完全表示しますか？</string>
+    <string name="pref_live_update_keep_main_notification_help" formatted="false">有効にすると、ステータスバーのチップに加えて通常のメイン通知も表示されます。</string>
+    <string name="pref_expanded_live_update" formatted="false">ライブアップデートの詳細を展開</string>
+    <string name="pref_expanded_live_update_summary" formatted="false">ライブアップデート通知にラベル付きの詳細を表示しますか？</string>
+    <string name="pref_expanded_live_update_help" formatted="false">ライブアップデート通知は常に展開された状態で表示されます。有効にすると、ライブアップデートに残時間、ステータス変更からの時間、および主要情報の各値を、それぞれラベル付きの個別の行に表示します。</string>
+    <string name="pref_chip_content" formatted="false">チップ内容</string>
+    <string name="pref_chip_content_summary" formatted="false">チップに表示する値とその順序を設定します。</string>
+    <string name="pref_chip_content_help" formatted="false">ステータスバーチップで切り替えて表示する値を選択し、順序を並べ替えます。</string>
+    <string name="pref_chip_switching_interval" formatted="false">切り替え間隔</string>
+    <string name="pref_chip_switching_interval_summary" formatted="false">チップが次の選択値に切り替わる頻度を選択します。</string>
+    <string name="pref_chip_switching_interval_help" formatted="false">チップが次の選択値に切り替わる頻度を選択します。この設定は複数の値を選択した場合に使用できます。</string>
+    <string name="pref_chip_switching_interval_custom_message" formatted="false">間隔を秒単位で入力してください（1～3600）。</string>
+    <string name="pref_chip_switching_interval_error" formatted="false">1～3600の値を入力してください。</string>
+    <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d 秒</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2秒</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5秒</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10秒</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15秒</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30秒</string>
+    <string name="pref_chip_indicate_charging" formatted="false">充電絵文字を表示</string>
+    <string name="pref_chip_indicate_charging_summary" formatted="false">充電中または満充電時に稲妻絵文字を表示しますか？</string>
+    <string name="pref_chip_indicate_charging_help" formatted="false">有効にすると、充電中または満充電時に、ステータスバーチップの値の横に稲妻絵文字が表示されます。</string>
 
-  <string name="notifications_onboarding_message">Battery Monitor がステータスバーにバッテリー残量を表示し、アラームについて通知するには、権限が必要です。\n
-    \n
-    注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
+    <string name="alarm_settings_subtitle" formatted="false">アラーム設定</string>
+    <string name="alarm_settings" formatted="false">アラーム</string>
+    <string name="alarm_settings_help" formatted="false">お使いのバッテリー残量が一定のレベルに達したときに、 Battery Monitor があなたに通知することができます (例、バッテリーがフル充電された、 バッテリー残量が 20% を下回った)。</string>
+    <string name="alarms_overview" formatted="false">アラームの概要</string>
+    <string name="alarms_overview_help">8種類すべてのアラームを常に利用できます。イベントを直接オンにするか、残量・温度の種別で「しきい値を追加」を使います。新しいしきい値は保存後に有効になります。値をタップして編集しても、オン・オフ状態は維持します。無効な値も一覧に残ります。削除時は確認します。音と振動は、Android の通知設定で種別ごとに共有します。既存の重複記録は1つのアラームとして表示し、切り替えや削除はすべてのコピーに適用します。充放電アラームは推定の目標に従い、充電を制御しません。チャンネルのブロックや監視の停止は、保存済みスイッチを変更しません。</string>
+    <plurals name="alarms_active_count">
+        <item quantity="other">%1$d 件のアラームが有効</item>
+    </plurals>
+    <string name="channel_group_name_alarms" formatted="false">アラーム</string>
+    <string name="alarm_type_fully_charged" formatted="false">フル充電されました</string>
+    <string name="alarm_fully_charged" formatted="false">バッテリーがフル充電されました</string>
+    <string name="alarms_targets_group">充電と放電の目標</string>
+    <string name="alarms_charging_target">充電目標に到達</string>
+    <string name="alarm_type_charging_limit_met" formatted="false">充電上限に到達</string>
+    <string name="alarm_charging_limit_met" formatted="true">充電上限に到達: %1$d%%</string>
+    <string name="alarms_discharging_target">放電目標に到達</string>
+    <string name="alarm_type_discharging_limit_met" formatted="false">放電下限に到達</string>
+    <string name="alarm_discharging_limit_met" formatted="true">放電下限に到達: %1$d%%</string>
+    <string name="alarm_type_charge_drops" formatted="false">残量が次の値に下がったとき</string>
+    <string name="alarm_charge_drops" formatted="false">"バッテリー残量が次の値以下になりました: "</string>
+    <string name="alarm_type_charge_rises" formatted="false">残量が次の値に上がったとき</string>
+    <string name="alarm_charge_rises" formatted="false">"バッテリー残量が次の値以上になりました: "</string>
+    <string name="alarm_type_temperature_drops" formatted="false">温度が次の値に下がったとき</string>
+    <string name="alarm_temp_drops" formatted="false">"バッテリー温度が次の値以下になりました: "</string>
+    <string name="alarm_type_temperature_rises" formatted="false">温度が次の値に上がったとき</string>
+    <string name="alarm_temp_rises" formatted="false">"バッテリー温度が次の値以上になりました: "</string>
+    <string name="alarms_android_problem">Android が報告した問題</string>
+    <string name="alarms_android_problem_help">システムが報告したバッテリーの問題です。容量の健全性を示す割合ではありません。</string>
+    <string name="alarm_type_health_failure" formatted="false">ステータス障害</string>
+    <string name="alarm_health_failure" formatted="false">"バッテリーのステータス: "</string>
+    <string name="pref_cat_alarm_conditions" formatted="false">アラームの条件</string>
+    <string name="pref_cat_alarm_conditions_help" formatted="false">ここでアラームの発生する条件を指定します。</string>
+    <string name="pref_alarm_threshold" formatted="false">しきい値</string>
+    <string name="pref_alarm_threshold_help" formatted="false">残量・温度アラームは、しきい値を設定してルールを保存します。指定した方向で測定値がしきい値に達するか超えると発動します。しきい値で同じ測定が続いても再発動しません。監視の開始、ルールのインポート、しきい値を超えた状態での有効化ではすぐに発動せず、その後にしきい値を越える必要があります。</string>
+    <string name="alarms_add_threshold">しきい値を追加</string>
+    <string name="alarms_edit_threshold">しきい値を編集</string>
+    <string name="alarms_edit_existing">既存のしきい値を編集</string>
+    <string name="alarms_new_enabled">追加するとアラームが有効になります。</string>
+    <string name="alarms_edit_keeps_enabled">編集しても、現在のオン・オフ状態は維持されます。</string>
+    <string name="alarms_enabled">有効</string>
+    <string name="alarms_disable">無効にする</string>
+    <string name="alarms_options">オプション: %1$s</string>
+    <string name="alarms_numeric_range">%1$d から %2$d までの整数を入力してください。</string>
+    <string name="alarms_temperature_range">%1$d から %2$d までの数値を、小数第1位までで入力してください。</string>
+    <string name="alarms_duplicate">この種別には、同じしきい値が既にあります。</string>
+    <string name="alarms_discard_confirmation">このアラームへの変更を破棄しますか？</string>
+    <string name="alarms_discard">破棄</string>
+    <string name="menu_delete_alarm" formatted="false">アラームを削除</string>
+    <string name="alarms_delete_threshold_confirmation">%1$s — %2$s を削除しますか？このしきい値のすべてのコピーが削除されます。</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">このアプリのアラーム通知グループが無効になっています。アラームにアクセスするには有効にしてください。</string>
+    <string name="alarm_chan_disabled" formatted="false">この種類のアラーム通知が無効です。このアラーム種類を使用するには有効にしてください。</string>
+    <string name="alarm_chan_settings_b" formatted="false">このアラーム種類を管理</string>
+    <string name="alarms_delivery_sound_vibration">音、振動、通知</string>
+    <string name="alarms_delivery_sound">音と通知</string>
+    <string name="alarms_delivery_vibration">振動と通知</string>
+    <string name="alarms_delivery_notification">通知のみ</string>
+    <string name="alarms_channel_help">音と通知方法は、この Android の通知チャンネルで設定します。</string>
+    <string name="pref_dismiss_low_battery_on_recovery">残量回復時に低残量アラームを消す</string>
+    <string name="pref_dismiss_low_battery_on_recovery_summary">残量がしきい値を超えたら、低残量の通知を削除します。他のアラーム通知は残ります。</string>
+    <string name="alarms_channel_unavailable">通知チャンネルが未作成、または利用できません</string>
+    <string name="alarms_settings_unavailable">Android の通知設定を開けませんでした。</string>
+    <string name="alarms_target_unknown">目標を取得できません。推定の設定を開いてください。</string>
+    <string name="alarms_monitor_stopped">監視が停止しています。保存済みアラームは判定されていません。</string>
+    <string name="alarms_monitor_unconfirmed">現在、監視サービスに接続されていません。アラームの判定状況は確認できません。</string>
+    <string name="alarms_state_unknown">アラーム設定を取得できません</string>
+    <string name="alarms_stale">以前の設定を表示しています。変更する前に更新してください。</string>
+    <string name="alarms_conflict">保存済みアラームが変更されました。更新してしきい値を開き直してから変更してください。</string>
+    <string name="alarms_missing_rule">このアラームは存在しないか無効です。アラーム一覧を確認してください。</string>
+    <string name="alarms_invalid_records">一部の保存済みアラームが無効です。記録を確認してください。削除はされていません。</string>
+    <string name="alarms_database_error">アラームのデータベースにアクセスできませんでした。再試行してください。</string>
+    <string name="alarms_saved">アラーム設定を保存しました。</string>
+    <string name="alarms_saved_reload_failed">保存しましたが、監視サービスに通知できませんでした。監視の状態を確認してください。</string>
 
-
-  <string name="pref_cat_channel_settings" formatted="false">通知チャンネル設定</string>
-  <string name="pref_manage_main_channel" formatted="false">メインチャンネルを管理</string>
-
-  <string name="pref_cat_notification_content" formatted="false">コンテンツ</string>
-  <string name="pref_live_update_display" formatted="false">ライブアップデートを表示</string>
-  <string name="pref_live_update_display_summary" formatted="false">ステータスバーに表示:</string>
-  <string name="pref_live_update_display_help" formatted="false">Android 16+ のライブアップデート チップをステータスバーに表示するタイミングを選択します。</string>
-  <string name="pref_live_update_display_charging" formatted="false">充電中のみ</string>
-  <string name="pref_live_update_keep_main_notification" formatted="false">ライブアップデート中もメイン通知を表示</string>
-  <string name="pref_live_update_keep_main_notification_summary" formatted="false">ライブアップデートが有効な間も、メイン通知を完全表示しますか？</string>
-  <string name="pref_live_update_keep_main_notification_help" formatted="false">有効にすると、ステータスバーのチップに加えて通常のメイン通知も表示されます。</string>
-  <string name="pref_chip_content" formatted="false">チップ内容</string>
-  <string name="pref_chip_switching_interval" formatted="false">切り替え間隔</string>
-  <string name="pref_chip_content_summary" formatted="false">チップに表示する値とその順序を設定します。</string>
-  <string name="pref_chip_content_help" formatted="false">ステータスバーチップで切り替えて表示する値を選択し、順序を並べ替えます。</string>
-  <string name="pref_chip_switching_interval_summary" formatted="false">チップが次の選択値に切り替わる頻度を選択します。</string>
-  <string name="pref_chip_switching_interval_help" formatted="false">チップが次の選択値に切り替わる頻度を選択します。この設定は複数の値を選択した場合に使用できます。</string>
-  <string name="pref_chip_switching_interval_custom_message" formatted="false">間隔を秒単位で入力してください（1～3600）。</string>
-  <string name="pref_chip_switching_interval_error" formatted="false">1～3600の値を入力してください。</string>
-  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d 秒</string>
-  <string name="pref_chip_indicate_charging" formatted="false">充電絵文字を表示</string>
-  <string name="pref_chip_indicate_charging_summary" formatted="false">充電中または満充電時に稲妻絵文字を表示しますか？</string>
-  <string name="pref_chip_indicate_charging_help" formatted="false">有効にすると、充電中または満充電時に、ステータスバーチップの値の横に稲妻絵文字が表示されます。</string>
-  <string name="pref_top_line_content" formatted="false">最上行のコンテンツ</string>
-  <string name="pref_top_line_content_help" formatted="false">通知の上段に、推定残り時間、状態が変わってからの時間、または設定した主要情報のどれを表示するか選択します。</string>
-  <string name="pref_bottom_line_content" formatted="false">最下行のコンテンツ</string>
-  <string name="pref_bottom_line_content_help" formatted="false">最上行と同様に、最下行にも同じオプションがあります。</string>
-  <string name="time_remaining" formatted="false">残時間</string>
-  <string name="time_since_status_change" formatted="false">ステータス変更からの時間</string>
-  <string name="vital_signs" formatted="false">バイタルサイン</string>
-
-  <string name="pref_time_remaining_verbosity" formatted="false">残時間の詳細</string>
-  <string name="pref_time_remaining_verbosity_help" formatted="false">デバイスにはすべての形やサイズ入っているので、見積残り時間が 通知エリアにフィットするように適切に略語を使用して調整するだけです。 それでもフィットしない場合は、圧縮した形式を選ぶことができます。 たくさんのスペースがある場合は、詳細な設定を行うことができます。</string>
-  <string name="condensed" formatted="false">圧縮</string>
-  <string name="normal" formatted="false">通常</string>
-  <string name="verbose" formatted="false">詳細</string>
-
-  <string name="custom" formatted="false">カスタム...</string>
-
-  <string name="pref_icon_content" formatted="false">アイコン内容</string>
-  <string name="pref_icon_content_help" formatted="false">ステータスバーアイコンにバッテリー残量を表示するか、バッテリー温度を表示するかを選択します。温度は選択した単位に従います。</string>
-  <string name="pref_show_icon_unit" formatted="false">単位記号を表示</string>
-  <string name="pref_show_icon_unit_help" formatted="false">有効にすると、アイコンにバッテリー残量はパーセント記号、バッテリー温度は度記号を表示します。数字だけを表示したい場合は無効にしてください。</string>
-
-  <string name="pref_cat_battery_current_main" formatted="false">バッテリー電流</string>
-
-  <string name="pref_cat_privileged_access" formatted="false">特権アクセス</string>
-  <string name="pref_use_privileged_access" formatted="false">特権アクセスを使用</string>
-  <string name="pref_use_privileged_access_summary" formatted="false">許可済みの root または Shizuku アクセスを使用して、より完全で正確な端末データを取得しますか？</string>
-  <string name="pref_use_privileged_access_help" formatted="false">特権アクセスにより、追加の端末データを取得し、一部の測定を改善できる場合があります。Battery Monitor は、明示的に許可された root または Shizuku アクセスのみを使用します。</string>
-
-  <string name="pref_battery_current_multiplier" formatted="false">倍率</string>
-  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">自動検出</string>
-  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">現在のバッテリー状態または測定値では自動検出を利用できません。</string>
-  <string name="pref_battery_current_multiplier_detection_result">倍率を自動的に %1$d に設定しました。</string>
-  <string name="pref_battery_current_multiplier_help" formatted="false">一部の端末では、予期しない単位や符号で電流が報告されます。表示結果を補正するには、報告値にここで指定した倍率を掛けます。\n
-    \n
-    スマートフォンのおおよその目安として、Android の標準では充電中が正、放電中が負です。充電中は +500～+5000 mA、通常の放電中は -100～-3000 mA 程度になることがよくあります。満充電に近い場合や端末がアイドル状態の場合は、ゼロに近い値でも正常です。値が約 1000 倍小さい、または大きい場合や、符号が逆の場合は倍率を調整してください。</string>
-
-  <string name="pref_prefer_average_battery_current" formatted="false">平均電流を優先</string>
-  <string name="pref_prefer_average_battery_current_summary" formatted="false">利用できる場合は直近の平均値を使用しますか？</string>
-  <string name="pref_prefer_current_avg_help" formatted="false">一部のシステムでは瞬間電流に加えて直近の平均値も提供されます。平均期間と品質は端末によって異なります。利用できない、または不適切な場合は無効にしてください。</string>
-
-
-  <string name="pref_indicate_charging" formatted="false">充電中を示す</string>
-  <string name="pref_indicate_charging_summary" formatted="false">充電中を示すアイコンを使用しますか?</string>
-  <string name="pref_indicate_charging_help" formatted="false">充電アイコンでは数字の下に稲妻を表示できます。充電中と放電中で同じアイコンにしたい場合は、この設定を無効にしてください。</string>
-
-  <string name="pref_cat_logging" formatted="false">ロギング</string>
-  <string name="pref_enable_logging" formatted="false">ログを有効にする</string>
-  <string name="pref_enable_logging_summary" formatted="false">バッテリーステータスの変更ログを取得しますか?</string>
-  <string name="pref_enable_logging_help" formatted="false">有効にした場合、Battery Monitor はバッテリーのステータスの変更を記録します。</string>
-  <string name="pref_max_log_age" formatted="false">最大ログ履歴</string>
-  <string name="pref_max_log_age_summary" formatted="false">次より古いログを削除します:</string>
-  <string name="pref_max_log_age_help" formatted="false">ロギングが有効な場合、デバイスを接続するたびに、この値より古いログが削除されます。手動で消去するまでログを保持するには「削除しない」を選択してください。</string>
-
-  <string name="pref_temperature_unit" formatted="false">温度の単位</string>
-  <string name="pref_temperature_unit_help" formatted="false">温度を摂氏または華氏のどちらで表示するかを選択します。</string>
-
-  <string name="pref_cat_autostart" formatted="false">自動開始</string>
-  <string name="pref_autostart_at_boot" formatted="false">起動時に自動開始</string>
-  <string name="pref_autostart_at_boot_summary" formatted="false">デバイスが起動した時に Battery Monitor を開始します:</string>
-  <string name="pref_autostart_at_boot_help" formatted="false">デバイスの起動時に、Battery Monitor が自動的に起動する必要があるか コントロールします。\n
-    \n
-    \"シャットダウン時に実行中の場合\" オプションは、Battery Monitor を 直近に手動で開始または停止したかを考慮して動作します。 そのため、タスクキラーのように、他の手段で Battery Monitor を kill した場合、 Battery Monitor はあなたが停止したことがわからないため、 このオプションを設定していると、起動時に開始します。</string>
-
-  <string name="predictor_sensitive" formatted="false">高感度</string>
-  <string name="predictor_conservative" formatted="false">保守的</string>
-  <string name="predictor_since_status_change" formatted="false">ステータスが変わったら</string>
-  <string name="predictor_long_term_ave" formatted="false">長期平均</string>
-
-  <string name="pref_cat_predictor" formatted="false">残時間の見積</string>
-  <string name="pref_prediction_type" formatted="false">見積の種類</string>
-  <string name="pref_prediction_type_help" formatted="false">ここでは、バッテリーのフル充電からの残量/残時間を Battery Monitor が予測する方法を選択することができます。\n
-    \n
-    \"高感度\" アルゴリズムは、厳密に直近の5分間の使用量に基づいて求めます。 主に \"あとどのくらい今の操作を続けることができるか?\" に関心がある場合は、このアルゴリズムをご利用ください。\n
-    \"保守的\" なアルゴリズムがデフォルトです。最近の使用状況に 基づいていますが、長期的な平均の使用状況から あまり大きく変化しないようにします\n
-    \n
-    厳密に現在のセッションに基づいて予測するには、 \"ステータスが変わってから\" を選択してください。\n
-    \n
-    最終的に、長期的な平均の使用状況のみに基づいて、 予測することができます。</string>
-
-  <string name="pref_cat_language" formatted="false">言語と表示形式</string>
-  <string name="pref_change_app_language" formatted="false">アプリの言語</string>
-  <string name="pref_change_app_language_help" formatted="false">Battery Monitor で使用する言語を選択します。システムのデフォルトでは端末の言語が使用されます。</string>
-  <string name="pref_long_duration_format" formatted="false">長時間の表示形式</string>
-  <string name="pref_long_duration_format_help" formatted="false">日と時間では24時間を超えると日を使用します（例: 1d 3h）。時間のみでは全期間を時間で表示します（例: 27h）。</string>
-  <string name="long_duration_format_days_and_hours" formatted="false">日と時間</string>
-  <string name="long_duration_format_hours_only" formatted="false">時間のみ</string>
-
-  <string name="advanced_action_refresh" formatted="false">更新</string>
-  <string name="advanced_status_loading" formatted="false">高度なバッテリー統計を読み込み中...</string>
-  <string name="advanced_status_no_access" formatted="false">高度なバッテリー統計を表示するには root または Shizuku が必要です。</string>
-
-  <string name="alarms_overview" formatted="false">アラームの概要</string>
-  <string name="alarms_overview_help" formatted="false">このページで、新しいアラームを追加する、既存のアラームをすばやく 有効または無効にする、アラームを削除することができます。\n
-    \n
-    新しいアラームを追加するには、\"アラームを追加\" を押します - これで、新しいアラームを作成して、アラーム設定ページへ移動します。 そこで新しいアラームの設定を変更することができます。 詳細については、そのページのヘルプを参照してください。\n
-    \n
-    作成したすべてのアラームのリストの下に \"\アラームを追加\"\ ボタンがあります\n
-    \n
-    • 既存のアラームを編集するには、それを押すだけです。\n
-    • 削除するには、それを長押しします。その後 \"アラームを削除\" を選択します。 (個々のアラーム設定ページから、メニューを押して、 その後 \"アラームを削除\" でアラームを削除することもできます。)\n
-    • すばやくアラームを有効にするかどうかを切り替えるには、 アラームテキストの左側の、目覚まし時計のアイコンを押します。 (また、個々のアラーム設定ページから、アラームを有効または 無効にすることもできます。)</string>
-
-  <string name="pref_cat_alarm_conditions" formatted="false">アラームの条件</string>
-  <string name="pref_cat_alarm_conditions_help" formatted="false">ここでアラームの発生する条件を指定します。</string>
-  <string name="pref_alarm_threshold" formatted="false">しきい値</string>
-  <string name="pref_alarm_threshold_help" formatted="false">充電の状態と温度のアラームには、アラームを発生する 温度や充電のレベルを設定する必要があります。</string>
-
-  <string name="boot_pref_always" formatted="false">常に</string>
-  <string name="boot_pref_never" formatted="false">なし</string>
-  <string name="boot_pref_if_running" formatted="false">シャットダウン時に実行中の場合</string>
-
-  <string name="age_1_day" formatted="false">1 日</string>
-  <string name="age_2_days" formatted="false">2 日</string>
-  <string name="age_4_days" formatted="false">4 日</string>
-  <string name="age_1_week" formatted="false">1 週間</string>
-  <string name="age_2_weeks" formatted="false">2 週間</string>
-  <string name="age_3_weeks" formatted="false">3 週間</string>
-  <string name="age_4_weeks" formatted="false">4 週間</string>
-  <string name="age_never_delete" formatted="false">削除しない</string>
-  <string name="pref_content_percent" formatted="false">バッテリー残量</string>
-  <string name="pref_content_temperature" formatted="false">バッテリー温度</string>
-
-  <string name="chip_switching_interval_2_seconds" formatted="false">2秒</string>
-  <string name="chip_switching_interval_5_seconds" formatted="false">5秒</string>
-  <string name="chip_switching_interval_10_seconds" formatted="false">10秒</string>
-  <string name="chip_switching_interval_15_seconds" formatted="false">15秒</string>
-  <string name="chip_switching_interval_30_seconds" formatted="false">30秒</string>
-
-  <string name="advanced_status_waiting_permission" formatted="false">Shizuku の権限を待機中...</string>
-  <string name="shizuku_not_running" formatted="false">Shizuku を起動して、Battery Monitor に特権アクセスを許可してください。</string>
-  <string name="shizuku_permission_denied_permanently" formatted="false">Shizuku で Battery Monitor の権限を手動で許可してください。</string>
-  <string name="advanced_status_no_stats" formatted="false">この端末では現在利用できる高度なバッテリー統計がありません。</string>
-  <string name="advanced_section_counters" formatted="false">カウンター</string>
-  <string name="advanced_section_capacity" formatted="false">容量</string>
-  <string name="advanced_section_charging" formatted="false">充電</string>
-  <string name="advanced_section_service" formatted="false">Android バッテリーサービス</string>
-  <string name="advanced_section_sysfs" formatted="false">カーネル power_supply ファイル</string>
-  <string name="advanced_section_metadata" formatted="false">メタデータ</string>
-  <string name="advanced_field_charge_counter" formatted="false">推定残量</string>
-  <string name="advanced_field_current_now" formatted="false">現在の電流</string>
-  <string name="advanced_field_current_average" formatted="false">平均電流</string>
-  <string name="advanced_field_energy_counter" formatted="false">エネルギーカウンター</string>
-  <string name="advanced_field_cycle_count" formatted="false">サイクル回数</string>
-  <string name="advanced_field_reported_capacity" formatted="false">報告容量</string>
-  <string name="advanced_field_state_of_health" formatted="false">健全性</string>
-  <string name="advanced_field_full_charge_capacity" formatted="false">満充電容量</string>
-  <string name="advanced_field_design_capacity" formatted="false">設計容量</string>
-  <string name="advanced_field_estimated_health" formatted="false">推定状態</string>
-  <string name="advanced_field_charge_time_remaining" formatted="false">充電残り時間</string>
-  <string name="advanced_field_max_charging_current" formatted="false">最大充電電流</string>
-  <string name="advanced_field_max_charging_voltage" formatted="false">最大充電電圧</string>
-  <string name="advanced_field_charging_policy" formatted="false">充電ポリシー</string>
-  <string name="advanced_field_charging_state" formatted="false">充電状態</string>
-  <string name="advanced_field_capacity_level" formatted="false">容量レベル</string>
-  <string name="advanced_field_manufacturing_date" formatted="false">製造日</string>
-  <string name="advanced_field_first_use_date" formatted="false">初回使用日</string>
-  <string name="advanced_field_battery_serial_number" formatted="false">バッテリーのシリアル番号</string>
-  <string name="advanced_field_battery_part_status" formatted="false">バッテリー部品の状態</string>
-  <string name="advanced_field_battery_part_manufacturer" formatted="false">バッテリー部品メーカー</string>
-  <string name="advanced_field_battery_model_name" formatted="false">バッテリーモデル名</string>
-  <string name="advanced_field_minimum_design_voltage" formatted="false">最小設計電圧</string>
-  <string name="advanced_value_not_available" formatted="false">利用不可</string>
-  <string name="advanced_help_overview" formatted="false">詳細タブには、Android のシステムサービスとカーネルの power_supply ファイルから取得した追加のバッテリー診断情報が表示されます。利用できる項目は、端末、Android のバージョン、充電チップ、fuel gauge チップ、およびメーカーが公開している情報に依存します。</string>
-  <string name="advanced_help_counters" formatted="false">カウンターには、充電カウンター、電流、エネルギーカウンター、サイクル回数などのライブ値または最近取得された値が含まれます。端末によっては一部しか公開されず、単位はハードウェアドライバー由来の場合があります。</string>
-  <string name="advanced_help_capacity" formatted="false">容量には、満充電容量、設計容量、推定状態が表示されます。推定状態は満充電容量を設計容量で割って計算されるため、精度は端末が報告する値に依存します。</string>
-  <string name="advanced_help_charging" formatted="false">充電には、最大充電電流や最大充電電圧、充電ポリシー、充電状態、容量レベルなど、現在の充電経路に関連する値が表示されます。これらの項目は充電器や充電モードによって変わる場合があります。</string>
-  <string name="advanced_help_service" formatted="false">Android バッテリーサービスには、`dumpsys battery` が報告する生の項目が表示されます。これらはフレームワークレベルの値で、充電元、バッテリー状態、温度、電圧、その他の状態情報を含むことがあります。</string>
-  <string name="advanced_help_sysfs" formatted="false">カーネル power_supply ファイルには、`/sys/class/power_supply` から読み取った 1 行の生データが表示されます。battery、BMS、USB、ワイヤレス充電器などのノードが含まれます。これは意図的に低レベルな表示であり、主にデバッグ向けのドライバー固有名が含まれる場合があります。</string>
-  <string name="advanced_help_metadata" formatted="false">メタデータには、BatteryManager が公開する高レベルなバッテリー情報が表示されます。たとえば健全性、充電残り時間、製造情報、交換状態などです。これらの項目の多くは特権アクセスが必要で、対応する値を一部しか公開しない端末も多くあります。</string>
-  <string name="advanced_help_troubleshooting_title" formatted="false">トラブルシューティング</string>
-  <string name="advanced_help_troubleshooting" formatted="false">タブが空の場合は、まず設定で詳細統計が有効になっていることを確認してください。root 化された端末では Battery Monitor は最初に `su` を試します。root 化されていない端末で Shizuku を使う場合は、Shizuku がインストールされて起動しており、Battery Monitor に Shizuku 内で権限が与えられている必要があります。それでも一部の端末では数個の項目しか公開されず、その場合は不足しているデータがその端末で Android やカーネル経由では利用できないことを意味します。</string>
-
-  <string name="pref_export_settings" formatted="false">設定をエクスポート</string>
-  <string name="pref_export_settings_summary" formatted="false">現在の設定をファイルに保存</string>
-  <string name="pref_import_settings" formatted="false">設定をインポート</string>
-  <string name="pref_import_settings_summary" formatted="false">ファイルから設定を復元</string>
-  <string name="settings_exported" formatted="false">設定を正常にエクスポートしました</string>
-  <string name="settings_imported" formatted="false">設定を正常にインポートしました</string>
-  <string name="invalid_settings_file" formatted="false">無効な設定ファイル</string>
-  <string name="settings_file_version_warning" formatted="false">このファイルは新しいバージョンのアプリで作成されています。インポートすると予期しない動作が発生する可能性があります。それでも続行しますか？</string>
-
-  <string name="background_service_starting" formatted="false">Battery Monitor を起動しています…</string>
-  <string name="remaining_charge" formatted="false">残りの充電量</string>
-  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
-  <string name="remaining_charge_unavailable">残りの充電量を取得できません</string>
-  <string name="pref_show_remaining_charge" formatted="false">残りの充電量を表示</string>
-  <string name="pref_show_remaining_charge_summary" formatted="false">端末が報告するバッテリーの残りの充電量を mAh で表示しますか？</string>
-  <string name="vital_sign_voltage" formatted="false">バッテリー電圧</string>
-
-  <string name="pref_vital_signs_content" formatted="false">主要情報の内容</string>
-  <string name="pref_vital_signs_content_summary" formatted="false">主要情報に含める値と表示順をどうしますか？</string>
-  <string name="pref_vital_signs_reorder_handle" formatted="true">%1$sの順序を変更</string>
-
-  <string name="pref_expanded_notification" formatted="false">通知の詳細を展開</string>
-  <string name="pref_expanded_notification_summary" formatted="false">通知を展開したときにラベル付きの詳細を表示しますか？</string>
-  <string name="pref_expanded_notification_help" formatted="false">有効にすると、メイン通知を展開したときに、1行の概要の代わりに、残時間、ステータス変更からの時間、および主要情報の各値を、それぞれラベル付きの個別の行に表示します。</string>
-  <string name="pref_expanded_notification_format" formatted="true">%1$s：%2$s</string>
-
-  <string name="pref_expanded_live_update" formatted="false">ライブアップデートの詳細を展開</string>
-  <string name="pref_expanded_live_update_summary" formatted="false">ライブアップデート通知にラベル付きの詳細を表示しますか？</string>
-  <string name="pref_expanded_live_update_help" formatted="false">ライブアップデート通知は常に展開された状態で表示されます。有効にすると、ライブアップデートに残時間、ステータス変更からの時間、および主要情報の各値を、それぞれラベル付きの個別の行に表示します。</string>
-
-  <string name="pref_backup_restore" formatted="false">バックアップと復元</string>
-  <string name="backup_restore_settings_summary" formatted="false">アプリの設定とバッテリーデータをバックアップ、復元、転送します。</string>
-  <string name="pref_auto_log_export" formatted="false">ログの自動エクスポート</string>
-  <string name="pref_set_auto_log_export" formatted="false">ログの自動エクスポートを設定</string>
-  <string name="pref_edit_auto_log_export" formatted="false">ログの自動エクスポートを編集</string>
-  <string name="pref_disable_auto_log_export" formatted="false">自動エクスポートを無効化</string>
-  <string name="pref_auto_log_export_not_set_summary" formatted="false">新しいログを定期的にフォルダーへ保存</string>
-  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
-    %4$s</string>
-  <string name="pref_auto_log_export_frequency" formatted="false">エクスポート頻度</string>
-  <string name="pref_auto_log_export_mode" formatted="false">ファイルの処理</string>
-  <string name="pref_auto_log_export_format" formatted="false">エクスポート形式</string>
-  <string name="pref_auto_log_export_directory" formatted="false">フォルダーを変更</string>
-  <string name="auto_log_export_help" formatted="false">自動エクスポートでは、前回の自動エクスポート以降に収集されたログだけが保存されます。実行頻度と、毎回別のファイルを作成するか、新しい項目を1つの継続ファイルに追加するかを選択できます。端末がアイドル状態のときは、Androidによってエクスポートが遅れる場合があります。</string>
-  <string name="auto_log_export_format_help" formatted="false">スプレッドシートやテキストエディターでログを手動で読み取り、絞り込み、グラフ化、監査する場合はCSVを選択してください。主にバックアップとして使う場合はJSONを選択してください。Battery Monitorの構造化ログデータが保持されます。</string>
-  <string name="auto_log_export_mode_new_file" formatted="false">新しいファイルを作成</string>
-  <string name="auto_log_export_mode_append" formatted="false">新しいログを既存のファイルに追加</string>
-  <string name="pref_export_alarms" formatted="false">アラームをエクスポート</string>
-  <string name="pref_export_alarms_summary" formatted="false">現在のアラームをファイルに保存します</string>
-  <string name="pref_import_alarms" formatted="false">アラームをインポート</string>
-  <string name="pref_import_alarms_summary" formatted="false">現在のアラームをファイル内のアラームで置き換えます</string>
-  <string name="alarms_exported" formatted="false">アラームをエクスポートしました</string>
-  <string name="alarms_imported" formatted="false">アラームをインポートしました</string>
-  <string name="invalid_alarms_file" formatted="false">無効なアラームファイルです</string>
-  <string name="pref_backup_device_data" formatted="false">デバイス固有データをバックアップ</string>
-  <string name="pref_export_device_data" formatted="false">デバイス固有データをエクスポート</string>
-  <string name="pref_export_device_data_summary" formatted="false">ログと予測データをファイルに保存します</string>
-  <string name="pref_import_device_data" formatted="false">デバイス固有データをインポート</string>
-  <string name="pref_import_device_data_summary" formatted="false">ファイルからログと予測データを復元します</string>
-  <string name="device_data_logs" formatted="false">ログ</string>
-  <string name="device_data_predictor" formatted="false">予測データ</string>
-  <string name="device_data_backup_warning" formatted="false">このデバイス固有データは収集元のデバイスに属します。別のデバイスにインポートすると、予測が不正確になったり、アプリが予期しない動作をしたりする可能性があります。</string>
-  <string name="device_data_exported" formatted="false">デバイス固有データを正常にエクスポートしました</string>
-  <string name="device_data_imported" formatted="false">デバイス固有データを正常にインポートしました</string>
-  <string name="invalid_device_data_file" formatted="false">デバイス固有データファイルが無効です</string>
-  <string name="device_data_file_empty" formatted="false">このファイルには対応しているデバイス固有データが含まれていません</string>
-  <string name="pref_import_logs_csv" formatted="false">CSVからログをインポート</string>
-  <string name="pref_import_logs_csv_summary" formatted="false">エクスポート済みCSVファイルからログをインポートします</string>
-  <string name="csv_logs_import_warning" formatted="false">CSV形式はアプリのバージョンによって異なる場合があるため、インポートが正しく機能しないことがあります。</string>
-  <string name="csv_logs_imported" formatted="false">CSVログを正常にインポートしました</string>
-  <string name="invalid_csv_logs_file" formatted="false">CSVログファイルが無効か、互換性がありません</string>
-  <string name="log_import_mode_title" formatted="false">ログをインポート</string>
-  <string name="log_import_mode_message" formatted="false">インポートしたログをどのように処理しますか？</string>
-  <string name="log_import_replace" formatted="false">既存のログを置き換える</string>
-  <string name="log_import_add" formatted="false">既存のログに追加する</string>
-  <string name="pref_general_backup" formatted="false">アプリ全体のバックアップ</string>
-  <string name="pref_export_general_backup" formatted="false">全体バックアップをエクスポート</string>
-  <string name="pref_export_general_backup_summary" formatted="false">設定、アラーム、デバイス固有データをZIPファイルに保存します</string>
-  <string name="pref_import_general_backup" formatted="false">全体バックアップをインポート</string>
-  <string name="pref_import_general_backup_summary" formatted="false">全体バックアップのZIPファイルから選択したデータを復元します</string>
-  <string name="general_backup_restore_message" formatted="false">復元する項目を選択してください。</string>
-  <string name="general_backup_exported" formatted="false">全体バックアップを正常にエクスポートしました</string>
-  <string name="general_backup_imported" formatted="false">全体バックアップを正常にインポートしました</string>
-  <string name="invalid_general_backup_file" formatted="false">全体バックアップファイルが無効か、互換性がありません</string>
-  <string name="backup_restore_help_overview" formatted="false">バックアップを使用してアプリデータのコピーを保存し、後で復元できます。</string>
-  <string name="general_backup_help" formatted="false">一般バックアップでは、設定、アラーム、端末固有データをまとめて保存します。復元時に、利用可能なデータからインポートする項目を選択できます。</string>
-  <string name="settings_backup_help" formatted="false">設定バックアップではアプリの設定を保存します。インポートすると保存した設定が復元されます。</string>
-  <string name="alarms_backup_help" formatted="false">アラームのバックアップではアラームを保存します。インポートすると、現在のすべてのアラームがバックアップ内のアラームに置き換えられます。</string>
-  <string name="device_specific_backup_help" formatted="false">端末固有バックアップでは、ログと予測データを保存します。インポート時に一方または両方を選択できます。このデータは元の端末のものであるため、別の端末で使用すると予測が不正確になったり、予期しない動作が発生したりする場合があります。ログをインポートするときは、既存のログに追加するか置き換えるかを選択してください。</string>
-  <string name="csv_logs_import_help" formatted="false">以前にエクスポートした CSV ファイルからログをインポートできます。異なるアプリバージョン間では正しくインポートできない場合があります。インポートしたログを追加するか、既存のログを置き換えるかを選択してください。</string>
-
-  <string name="diagnostics" formatted="false">診断</string>
-  <string name="diagnostics_summary" formatted="false">権限と監視の信頼性を確認し、トラブルシューティング用レポートを作成します</string>
-  <string name="diagnostics_permissions" formatted="false">権限とアクセス</string>
-  <string name="diagnostics_notifications" formatted="false">通知</string>
-  <string name="diagnostics_root" formatted="false">root アクセス</string>
-  <string name="diagnostics_shizuku" formatted="false">Shizuku アクセス</string>
-  <string name="diagnostics_monitoring" formatted="false">バックグラウンド監視</string>
-  <string name="diagnostics_service" formatted="false">監視サービス</string>
-  <string name="diagnostics_database" formatted="false">ログデータベース</string>
-  <string name="diagnostics_battery_optimization" formatted="false">バッテリー最適化</string>
-  <string name="diagnostics_vendor_settings" formatted="false">メーカー設定</string>
-  <string name="diagnostics_vendor_settings_summary" formatted="false">この端末で利用できる追加のバックグラウンド動作または自動起動設定を開きます</string>
-  <string name="diagnostics_dont_kill_my_app" formatted="false">バックグラウンド動作のヘルプ</string>
-  <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Don’t Kill My App で端末固有のガイドを開きます</string>
-  <string name="diagnostics_device_and_logs" formatted="false">端末と診断レポート</string>
-  <string name="diagnostics_debug_logs" formatted="false">デバッグログを収集</string>
-  <string name="diagnostics_export" formatted="false">診断レポートをエクスポート</string>
-  <string name="diagnostics_export_summary" formatted="false">端末、権限、監視、利用可能なログ情報をテキストファイルに保存します</string>
-  <string name="diagnostics_clear" formatted="false">収集したデバッグログを削除</string>
-  <string name="diagnostics_clear_summary" formatted="false">アプリが現在保存しているデバッグログを削除します</string>
-  <string name="diagnostics_checking" formatted="false">確認中…</string>
-  <string name="diagnostics_root_unavailable" formatted="false">利用できません。タップして root アクセスを要求または確認します。</string>
-  <string name="diagnostics_tap_to_check" formatted="false">未確認です。タップしてアクセスを要求または確認します。</string>
-  <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">権限がありません。タップして設定を開きます。</string>
-  <string name="diagnostics_shizuku_permission_missing" formatted="false">権限がありません。タップして Shizuku に要求します。</string>
-  <string name="diagnostics_unrestricted" formatted="false">制限なし</string>
-  <string name="diagnostics_restricted_tap_to_fix" formatted="false">制限されています。タップして信頼できるバックグラウンド監視を許可します。</string>
-  <string name="diagnostics_not_running_tap_to_start" formatted="false">最近の応答がありません。タップして再起動を要求します。</string>
-  <string name="diagnostics_no_recent_database_access" formatted="false">最近成功したデータベースアクセスがありません</string>
-  <string name="diagnostics_working_last_seen" formatted="true">動作中 · 最終応答は %1$s 前</string>
-  <string name="diagnostics_debug_logs_warning" formatted="false">デバッグログには個人情報が含まれる場合があります。問題の調査中だけ有効にし、エクスポートしたファイルを確認して、公開共有には注意してください。</string>
-  <string name="diagnostics_logs_cleared" formatted="false">デバッグログを削除しました</string>
-  <string name="diagnostics_logs_clear_failed" formatted="false">デバッグログを削除できませんでした</string>
-  <string name="diagnostics_exported" formatted="false">診断レポートをエクスポートしました</string>
-  <string name="diagnostics_export_failed" formatted="false">診断レポートをエクスポートできませんでした</string>
-  <string name="diagnostics_help_title" formatted="false">診断の役割</string>
-  <string name="diagnostics_help_overview" formatted="false">この画面では、Battery Monitor がバックグラウンド監視に必要な条件を満たしているか確認します。不足している項目をタップすると、修正できる設定が開きます。</string>
-  <string name="diagnostics_help_report" formatted="false">問題を報告する際、原因の特定に診断レポートが重要となる場合があります。端末とアプリの状態、および有効にしたログが含まれます。ログには個人情報が含まれる場合があるため、ファイルを確認し慎重に共有してください。</string>
-  <string name="diagnostics_service_restarting" formatted="false">サービスが応答しませんでした。再起動しています…</string>
-  <string name="diagnostics_service_restart_failed" formatted="false">再起動後も監視サービスが応答しませんでした。アプリを再起動してみてください。</string>
-  <string name="diagnostics_database_failed_storage" formatted="false">データベースの確認に失敗しました。端末の空き容量を増やして、もう一度お試しください。</string>
-  <string name="diagnostics_database_failed" formatted="false">データベースの確認に失敗しました。アプリを再起動して、もう一度お試しください。</string>
-  <string name="diagnostics_service_responded" formatted="false">監視サービスが応答しました</string>
-  <string name="diagnostics_database_check_succeeded" formatted="false">データベースの読み書き確認に成功しました</string>
-
-  <string name="charging_diagnostics_title" formatted="false">OEM充電上限の診断</string>
-  <string name="charging_diagnostics_instructions_hint" formatted="false">有用なレポートを作成するには、スナップショットを取得する前にヘルプを開き、準備手順に従ってください。</string>
-  <string name="charging_diagnostics_capture" formatted="false">スナップショットを取得</string>
-  <string name="charging_diagnostics_capture_summary" formatted="false">端末設定で充電モードを選び、その信号を取得します</string>
-  <string name="charging_diagnostics_report" formatted="false">比較レポートを作成</string>
-  <string name="charging_diagnostics_report_summary" formatted="false">最初に2種類以上のOEM充電モードを取得してください</string>
-  <string name="charging_diagnostics_clear" formatted="false">充電スナップショットを消去</string>
-  <string name="charging_diagnostics_clear_summary" formatted="false">端末内に保存したOEM充電スナップショットを削除します</string>
-  <string name="charging_diagnostics_choose_state" formatted="false">どの端末設定が有効ですか？</string>
-  <string name="charging_diagnostics_condition_off" formatted="false">保護オフ / 制限なし</string>
-  <string name="charging_diagnostics_condition_fixed" formatted="false">固定上限…</string>
-  <string name="charging_diagnostics_condition_adaptive" formatted="false">アダプティブ / スマート充電</string>
-  <string name="charging_diagnostics_condition_scheduled" formatted="false">スケジュール充電</string>
-  <string name="charging_diagnostics_condition_other" formatted="false">その他のOEMモード</string>
-  <string name="charging_diagnostics_capturing" formatted="false">充電信号を取得中…</string>
-  <string name="charging_diagnostics_captured" formatted="false">充電スナップショットを取得しました</string>
-  <string name="charging_diagnostics_capture_failed" formatted="false">充電スナップショットを取得できませんでした</string>
-  <string name="charging_diagnostics_privileged_hint" formatted="false">特権アクセスを使用すると、より多くの診断情報を取得できる場合があります。より有用なOEM充電上限レポートを作成するには、Shizukuまたはrootアクセスを許可し、詳細設定で特権アクセスを有効にしてください。</string>
-  <plurals name="charging_diagnostics_snapshot_count">
-    <item quantity="other">%1$d件のスナップショットを取得しました。タップして比較を確認します。</item>
-  </plurals>
-  <string name="charging_diagnostics_need_two" formatted="false">最初に2種類以上の充電モードを取得してください</string>
-  <string name="charging_diagnostics_cleared" formatted="false">充電スナップショットを削除しました</string>
-  <string name="charging_diagnostics_copy" formatted="false">クリップボードにコピー</string>
-  <string name="charging_diagnostics_save" formatted="false">保存</string>
-  <string name="charging_diagnostics_copied" formatted="false">レポートをコピーしました</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. 端末を充電器から外し、設定スナップショットの取得中は接続しないでください。スナップショット間ではメーカーの充電保護設定だけを変更します。\n
-    2. 充電保護をオフにし、2–5秒待ってスナップショットを取得します。\n
-    3. 固定上限を選び、2–5秒待って取得します。可能なら別の上限で繰り返します。\n
-    4. アダプティブ、スマート、またはスケジュール充電を有効にし、2–5秒待って取得します。\n
-    5. 設定の比較で明確な結果が得られない場合は、充電中に同じ手順を任意で繰り返し、動作中だけ現れる状態を取得できます。\n
-    6. 比較レポートを作成して確認します。データはフィルターされ、潜在的に機密な値は隠されますが、共有前にレポート全体を確認してください。</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">レポートを確認後、コピーまたは保存し、メールで <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> へ送信してください。</string>
-
-  <string name="activity_until_target" formatted="true">%1$d%% まで</string>
-  <string name="activity_target_reached" formatted="true">目標に到達（%1$d%%）</string>
-
-  <string name="time_estimates_settings" formatted="false">時間の見積もり</string>
-  <string name="time_estimates_settings_summary" formatted="false">残り時間の計算方法と目標バッテリー残量を選択します。</string>
-  <string name="time_estimates_settings_help" formatted="false">これらの設定は Battery Monitor の時間見積もりを制御します。目標残量は見積もりにのみ影響し、充電の開始や停止は行いません。</string>
-  <string name="pref_cat_target_levels" formatted="false">目標残量</string>
-  <string name="pref_charging_target_mode" formatted="false">充電目標</string>
-  <string name="pref_charging_target_mode_summary_device" formatted="true">端末の充電上限：%1$d%%</string>
-  <string name="pref_charging_target_mode_summary_custom" formatted="false">カスタム目標</string>
-  <string name="pref_charging_target_mode_summary_default" formatted="false">固定された端末上限を検出できません — 100% を使用します。</string>
-  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
-    \n
-    この値が正しくないように見える場合は、端末検出の改善に協力できます。診断を開き、ヘルプの手順に注意深く従ってOEM充電上限レポートを作成してください。</string>
-  <string name="pref_charging_target_mode_help" formatted="false">自動では、Battery Monitor が読み取れる場合は端末の固定上限を使用し、それ以外は 100% を使用します。アダプティブ充電の目標は引き続き 100% です。見積もりで端末の値を上書きするにはカスタムを選択します。</string>
-  <string name="pref_charging_target_mode_support_help" formatted="false">自動検出は、Google Pixel、Samsung Galaxy、Xiaomi/Redmi/POCO、OnePlus/Oppo/Realme、Sony Xperia、およびGrapheneOSまたはLineageOSを搭載した端末で動作する場合があります。rootまたはShizukuアクセスが利用できる場合は特に有効です。ソフトウェア信号に依存するため、記載したメーカーの端末でも利用可否や精度は保証されません。これらの系統の未検証モデルやOSバージョンでも動作する可能性がありますが、他メーカーの端末は現在自動検出されません。</string>
-  <string name="charging_target_mode_automatic" formatted="false">自動（推奨）</string>
-  <string name="charging_target_mode_custom" formatted="false">カスタム</string>
-  <string name="pref_custom_charging_target" formatted="false">カスタム充電目標</string>
-  <string name="pref_custom_charging_target_help" formatted="false">充電目標がカスタムの場合に、充電見積もりの終了残量を設定します。</string>
-  <string name="pref_discharging_target" formatted="false">放電目標</string>
-  <string name="pref_discharging_target_help" formatted="false">放電見積もりの終了残量を設定します。低残量アラームとは独立しています。</string>
-  <string name="pref_target_level_summary" formatted="true">%1$d%% まで見積もります。</string>
-  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="history_range">履歴の期間</string>
+    <string name="history_last_24h">過去24時間</string>
+    <string name="history_last_3d">過去3日間</string>
+    <string name="history_last_7d">過去7日間</string>
+    <string name="history_all_history">すべての履歴</string>
+    <string name="history_custom_range">日付範囲を指定</string>
+    <string name="history_month">月</string>
+    <string name="history_year">年</string>
+    <string name="history_from">開始: %1$s</string>
+    <string name="history_through">終了: %1$s</string>
+    <string name="history_calendar_days">現地のタイムゾーンで、選択した両方の日付を含みます。</string>
+    <string name="history_invalid_range">有効な日付範囲を入力してください。</string>
+    <string name="history_change_range">変更</string>
+    <string name="history_charts">グラフ</string>
+    <string name="history_level">残量</string>
+    <string name="history_level_24h">残量 · 過去24時間</string>
+    <string name="history_battery_level">バッテリー残量</string>
+    <string name="history_observations">保存済みの観測値であり、連続測定ではありません。縦線は電源の変化と再起動を示します。</string>
+    <string name="history_chart_description">%1$s から %2$s までの観測範囲。最小 %3$s、最大 %4$s。「イベント」を開いて記録をタップすると、測定の詳細を確認できます。</string>
+    <string name="history_chart_linked_description">%1$s から %2$s までの観測範囲。最小 %3$s、最大 %4$s。観測値を選ぶと、「イベント」列で対応するイベントが表示され、強調されます。</string>
+    <string name="history_last_reading">前回の保存済み測定 · %1$s</string>
+    <string name="history_selected_reading">選択した観測値 · %1$s</string>
+    <string name="history_reading_range_label">測定範囲</string>
+    <string name="history_previous_point">前の観測値</string>
+    <string name="history_next_point">次の観測値</string>
+    <string name="history_previous_page">前のページ</string>
+    <string name="history_next_page">次のページ</string>
+    <string name="history_connections">電源への接続</string>
+    <string name="history_events">イベント</string>
+    <string name="history_event_counts">接続（短い破線）: %1$d · 切断（長い破線）: %2$d · 再起動（点線）: %3$d</string>
+    <string name="history_all_types">すべての種別</string>
+    <string name="history_filtered_types">種別: %1$d/%2$d</string>
+    <string name="history_newest">新しい順</string>
+    <string name="history_oldest">古い順</string>
+    <string name="history_today">今日 · %1$s</string>
+    <string name="history_yesterday">昨日 · %1$s</string>
+    <string name="history_system_event">システムイベント</string>
+    <string name="history_disconnected">電源から切断</string>
+    <string name="history_charge_started">充電を開始</string>
+    <string name="history_periodic_measurement">バッテリーの測定</string>
+    <string name="history_raw_observations">保存済みの観測値です。詳細には、取得できた測定値とその時刻が表示されます。</string>
+    <string name="history_export_selected">選択した期間をエクスポート</string>
+    <string name="history_export_csv">選択した期間 · CSV</string>
+    <string name="history_export_json">選択した期間 · JSON</string>
+    <string name="history_import_json">JSON バックアップからログをインポート</string>
+    <string name="history_delete_selected">選択した期間を消去</string>
+    <string name="history_delete_selected_confirm">選択した期間のログを消去しますか？</string>
+    <string name="history_delete_all">すべてのログを消去</string>
+    <string name="history_deleted">ログを消去しました</string>
+    <string name="history_load_failed">履歴を読み込めませんでした。</string>
+    <string name="history_operation_failed">操作に失敗しました。ファイルへのアクセスを確認して再試行してください。</string>
+    <string name="history_settings">履歴とバックアップの設定</string>
     <string name="history_open_fullscreen">全画面のグラフを開く</string>
-    <string name="history_chart_scale">Y軸のスケール</string>
-    <string name="history_chart_scale_auto">自動 · 表示中の測定値</string>
-    <string name="history_chart_scale_fixed">固定 · 選択した期間全体</string>
-    <string name="history_chart_scale_manual">手動で縦方向にズーム</string>
+    <string name="history_chart_description_fullscreen">%1$s。%2$sから%3$sまでの測定値。</string>
+    <string name="history_chart_select_point">測定値を選択</string>
+    <string name="history_chart_event_summary">接続（短い破線）：%1$d · 切断（長い破線）：%2$d · 監視の中断（点線）：%3$d</string>
+    <string name="history_chart_events">グラフのイベント</string>
+    <string name="history_chart_1h">直近1時間</string>
+    <string name="history_chart_6h">直近6時間</string>
     <string name="history_chart_zoom_in">拡大</string>
     <string name="history_chart_zoom_out">縮小</string>
     <string name="history_chart_pan_left">前の時間帯</string>
     <string name="history_chart_pan_right">次の時間帯</string>
     <string name="history_chart_reset">選択した期間全体を表示</string>
-    <string name="history_chart_select_point">測定値を選択</string>
-    <string name="history_chart_1h">直近1時間</string>
-    <string name="history_chart_6h">直近6時間</string>
-    <string name="history_chart_event_summary">接続（短い破線）：%1$d · 切断（長い破線）：%2$d · 監視の中断（点線）：%3$d</string>
-    <string name="history_chart_description_fullscreen">%1$s。%2$sから%3$sまでの測定値。</string>
-    <string name="history_all_history">すべての履歴</string>
     <string name="history_chart_compare">比較</string>
     <string name="history_chart_remove_comparison">比較を解除</string>
-    <string name="history_chart_y_auto">Y: 自動</string>
-    <string name="history_chart_y_fixed">Y: 固定</string>
-    <string name="history_chart_y_manual">Y: 手動</string>
+    <string name="history_chart_more">その他のグラフ操作</string>
     <string name="history_chart_settings">グラフの表示設定</string>
     <string name="history_chart_display_style">表示スタイル</string>
     <string name="history_chart_connected">測定値を線で結ぶ</string>
@@ -679,9 +402,515 @@
     <string name="history_chart_linear">線形</string>
     <string name="history_chart_logarithmic">対数</string>
     <string name="history_chart_log_unavailable">対数スケールを使用するには、選択した両方の項目の測定値が正である必要があります。</string>
-    <string name="history_chart_more">その他のグラフ操作</string>
-    <string name="history_chart_events">グラフのイベント</string>
-  <string name="changelog_title">Battery Monitor の新機能</string>
-  <string name="changelog_version">バージョン %1$s</string>
-  <string name="changelog_got_it">確認しました</string>
+    <string name="history_chart_scale">Y軸のスケール</string>
+    <string name="history_chart_scale_auto">自動 · 表示中の測定値</string>
+    <string name="history_chart_scale_fixed">固定 · 選択した期間全体</string>
+    <string name="history_chart_scale_manual">手動で縦方向にズーム</string>
+    <string name="history_chart_y_auto">Y: 自動</string>
+    <string name="history_chart_y_fixed">Y: 固定</string>
+    <string name="history_chart_y_manual">Y: 手動</string>
+
+    <string name="logs_empty" formatted="false">ログは空です</string>
+    <plurals name="n_log_items">
+        <item quantity="one">%d ログアイテム</item>
+        <item quantity="other">%d ログアイテム</item>
+    </plurals>
+    <string name="configure_log_filter" formatted="false">どのログ項目を表示しますか?</string>
+    <string name="menu_log_filter" formatted="false">フィルター</string>
+    <string name="menu_reverse" formatted="false">逆順</string>
+    <string name="menu_show_seconds" formatted="false">秒を表示</string>
+    <string name="menu_hide_seconds" formatted="false">秒を非表示</string>
+    <string name="menu_clear" formatted="false">クリア</string>
+    <string name="confirm_clear_logs" formatted="false">ログをすべてクリアしてもよろしいですか?</string>
+    <string name="after_nh_mm_unplugged" formatted="true">プラグを抜いてから %1$d時間%2$d分</string>
+    <string name="after_nh_mm_plugged_in" formatted="true">プラグを挿してから %1$d時間%2$d分</string>
+    <string name="after_nm_ms_unplugged" formatted="true">プラグを抜いてから %1$d分%2$d秒</string>
+    <string name="after_nm_ms_plugged_in" formatted="true">プラグを挿してから %1$d分%2$d秒</string>
+    <string name="pref_cat_logging" formatted="false">ロギング</string>
+    <string name="pref_enable_logging" formatted="false">ログを有効にする</string>
+    <string name="pref_enable_logging_summary" formatted="false">バッテリーステータスの変更ログを取得しますか?</string>
+    <string name="pref_enable_logging_help" formatted="false">履歴用にバッテリーの観測値と状態変化を保存します。取得できる測定値には、残量、温度、電圧、元の瞬間電流、残りの充電量があります。電力は表示時やエクスポート時に電圧と電流から計算し、個別には保存しません。記録をオフにしても、既存の履歴は消えず、時間の推定も続きます。</string>
+    <string name="pref_max_log_age" formatted="false">最大ログ履歴</string>
+    <string name="pref_max_log_age_summary" formatted="false">次より古いログを削除します:</string>
+    <string name="pref_max_log_age_help" formatted="false">記録が有効な場合、電源への接続時にこの期間より古いログを削除します。「削除しない」では、手動で消去するまで保持します。自動エクスポートが有効な場合、Battery Monitor は古い項目を削除する前に未処理のログをエクスポートします。失敗した場合は削除しません。</string>
+    <string name="age_1_day" formatted="false">1 日</string>
+    <string name="age_2_days" formatted="false">2 日</string>
+    <string name="age_4_days" formatted="false">4 日</string>
+    <string name="age_1_week" formatted="false">1 週間</string>
+    <string name="age_2_weeks" formatted="false">2 週間</string>
+    <string name="age_3_weeks" formatted="false">3 週間</string>
+    <string name="age_4_weeks" formatted="false">4 週間</string>
+    <string name="age_never_delete" formatted="false">削除しない</string>
+    <string name="settings_history_export">履歴とエクスポート</string>
+    <string name="menu_export" formatted="false">CSV をエクスポート</string>
+    <string name="log_export_mode_title" formatted="false">ログをエクスポート</string>
+    <string name="log_export_new_file" formatted="false">新しいファイルを作成</string>
+    <string name="log_export_append" formatted="false">既存のファイルに追加</string>
+    <string name="log_export_range_title" formatted="false">どのログをエクスポートしますか？</string>
+    <string name="log_export_all_logs" formatted="false">すべて</string>
+    <string name="log_export_from_last" formatted="false">前回のエクスポート以降</string>
+    <string name="pref_auto_log_export" formatted="false">ログの自動エクスポート</string>
+    <string name="pref_auto_log_export_not_set_summary" formatted="false">新しいログを定期的にフォルダーへ保存</string>
+    <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+    <string name="pref_set_auto_log_export" formatted="false">ログの自動エクスポートを設定</string>
+    <string name="pref_edit_auto_log_export" formatted="false">ログの自動エクスポートを編集</string>
+    <string name="pref_disable_auto_log_export" formatted="false">自動エクスポートを無効化</string>
+    <string name="pref_auto_log_export_frequency" formatted="false">エクスポート頻度</string>
+    <string name="pref_auto_log_export_mode" formatted="false">ファイルの処理</string>
+    <string name="pref_auto_log_export_format" formatted="false">エクスポート形式</string>
+    <string name="pref_auto_log_export_directory" formatted="false">フォルダーを変更</string>
+    <string name="auto_log_export_help" formatted="false">「詳細」で自動エクスポートを設定します。フォルダー、頻度、形式、個別のファイルを作るか1つのファイルに追記するかを選びます。通常は前回の自動エクスポート以降のログを保存しますが、新しい継続ファイルには取得できるすべてのログを含めます。アイドル中は Android がエクスポートを遅らせる場合があります。記録は有効にしておく必要があります。</string>
+    <string name="auto_log_export_format_help" formatted="false">CSV はスプレッドシートやテキストエディターで役立ちます。元の電流、残りの充電量、エクスポート時に選択した倍率で計算した電力を含みます。JSON はバックアップ用に構造化ログデータを保持します。電流、残りの充電量、電力が取得できないセルは空のままです。</string>
+    <string name="auto_log_export_mode_new_file" formatted="false">新しいファイルを作成</string>
+    <string name="auto_log_export_mode_append" formatted="false">新しいログを既存のファイルに追加</string>
+    <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="date" formatted="false">日付</string>
+    <string name="time" formatted="false">時刻</string>
+    <string name="status" formatted="false">ステータス</string>
+    <string name="charge" formatted="false">充電率</string>
+    <string name="temperature" formatted="false">セ氏度</string>
+    <string name="temperature_f" formatted="false">華氏度</string>
+    <string name="voltage" formatted="false">電圧</string>
+    <string name="inaccessible_storage" formatted="false">SD カードにアクセスできません。</string>
+    <string name="inaccessible_w_reason" formatted="false">SD カードにアクセスできません:</string>
+    <string name="read_only_storage" formatted="false">SD カードは読み取り専用です。</string>
+    <string name="no_storage_permission" formatted="false">ストレージ権限が許可されていません。</string>
+    <string name="file_written" formatted="false">ファイルが SD カードのルートに正常に書き込まれました。</string>
+
+    <string name="widget_status">バッテリー状態</string>
+    <string name="widget_measurements">バッテリーの測定値</string>
+    <string name="widget_trend">バッテリーの推移</string>
+    <string name="circle_widget" formatted="false">Battery Monitor サークル（旧）</string>
+    <string name="full_widget" formatted="false">Battery Monitor フル（旧）</string>
+    <string name="widget_configure_title">ウィジェットをカスタマイズ</string>
+    <string name="widget_customize">カスタマイズ</string>
+    <string name="widget_follow_app">アプリの設定に従う</string>
+    <string name="widget_status_extra">追加の測定値</string>
+    <string name="widget_metric_selection">測定値と表示順</string>
+    <string name="widget_metric_selection_hint">測定値を2〜4個選んでください。矢印で順序を変更できます。</string>
+    <string name="widget_background_opacity">背景の不透明度</string>
+    <string name="widget_background_opacity_error">0 から 100 までの整数を入力してください。</string>
+    <string name="widget_transparent_warning">背景が透明な場合、読みやすさは壁紙によって変わります。</string>
+    <string name="widget_y_axis_labels">Y軸の値を表示</string>
+    <string name="widget_presentation">表示形式</string>
+    <string name="widget_presentation_adaptive">空きスペースに合わせる</string>
+    <string name="widget_presentation_compact">コンパクト</string>
+    <string name="widget_tap_action">タップ時の動作</string>
+    <string name="widget_measurement_details">測定の詳細</string>
+    <string name="widget_tap_measurement">開く測定値</string>
+    <string name="widget_preview">ウィジェットのプレビュー</string>
+    <string name="widget_preview_note">プレビューは監視の前回の測定値を使います。ウィジェットのサイズはランチャーで設定します。</string>
+    <string name="widget_read_at">測定 %1$s</string>
+    <string name="widget_trend_range">残量 · 過去 %1$d 時間</string>
+    <string name="widget_observed_range">観測 %1$s–%2$s</string>
+    <string name="widget_chart_description">%1$s から %2$s までの保存済みバッテリー残量。最小 %3$s、最大 %4$s。</string>
+    <string name="widget_save_failed">このウィジェットを保存できませんでした。再試行してください。</string>
+    <string name="widget_invalid_instance">このウィジェットは利用できなくなりました。</string>
+
+    <string name="settings_activity_subtitle" formatted="false">設定</string>
+    <string name="settings_overview" formatted="false">概要</string>
+    <string name="settings_overview_help" formatted="false">設定は「全般」「現在の状態」「時間の推定」「通知」「詳細」「バックアップと復元」に分かれています。検索で項目を探せます。各ページには設定のヘルプがあります。「診断」はサイドバーから別途開けます。</string>
+    <string name="settings_search_hint">設定を検索</string>
+    <string name="settings_search_no_results">一致する設定はありません</string>
+    <string name="settings_dependency_disabled">この設定を変更するには、上の関連する項目を有効にするか設定してください。</string>
+    <string name="other_settings" formatted="false">一般</string>
+    <string name="settings_general_summary">言語、外観、単位、時間の表示形式</string>
+    <string name="other_settings_summary" formatted="false">アプリの全般的な動作と日常的な設定を構成します。</string>
+    <string name="other_settings_help" formatted="false">カラーパレットと明るさ、アプリの言語、温度の単位、時間の表示形式、端末の再起動後に監視を開始するかを選びます。</string>
+    <string name="settings_legacy_general">その他</string>
+    <string name="pref_cat_language" formatted="false">言語と表示形式</string>
+    <string name="pref_change_app_language" formatted="false">アプリの言語</string>
+    <string name="pref_change_app_language_help" formatted="false">Battery Monitor で使用する言語を選択します。システムのデフォルトでは端末の言語が使用されます。</string>
+    <string name="settings_app_language_unavailable">システムでアプリの言語を選ぶには Android 13 が必要です。</string>
+    <string name="pref_temperature_unit" formatted="false">温度の単位</string>
+    <string name="pref_temperature_unit_help" formatted="false">温度を摂氏または華氏のどちらで表示するかを選択します。</string>
+    <string name="celsius" formatted="false">セ氏</string>
+    <string name="fahrenheit" formatted="false">華氏</string>
+    <string name="pref_long_duration_format" formatted="false">長時間の表示形式</string>
+    <string name="pref_long_duration_format_help" formatted="false">日と時間では24時間を超えると日を使用します（例: 1d 3h）。時間のみでは全期間を時間で表示します（例: 27h）。</string>
+    <string name="long_duration_format_days_and_hours" formatted="false">日と時間</string>
+    <string name="long_duration_format_hours_only" formatted="false">時間のみ</string>
+    <string name="settings_appearance">外観</string>
+    <string name="settings_color_palette">カラーパレット</string>
+    <string name="settings_color_palette_summary">システムの色または Battery Blue を使用</string>
+    <string name="settings_color_palette_material_you">Material You</string>
+    <string name="settings_color_palette_battery_blue">Battery Blue</string>
+    <string name="settings_color_palette_unavailable">システムの色には Android 12 が必要です。この端末では Battery Blue を使用します。</string>
+    <string name="settings_brightness">明るさ</string>
+    <string name="settings_brightness_summary">システムに従うか、ライト、ダーク、完全な黒を選択</string>
+    <string name="settings_brightness_system">システム</string>
+    <string name="settings_brightness_light">ライト</string>
+    <string name="settings_brightness_dark">ダーク</string>
+    <string name="settings_brightness_true_black">完全な黒</string>
+
+    <string name="background_service_starting" formatted="false">Battery Monitor を起動しています…</string>
+    <string name="monitoring_state_save_failed">監視の状態を保存できませんでした。ストレージの空き容量を確認して再試行してください。</string>
+    <string name="confirm_close" formatted="false">閉じてもよろしいですか?</string>
+    <string name="confirm_close_hint" formatted="false">Battery Monitor は完全に閉じます。ステータスバーに 表示されなくなります。\n
+    \n
+    メインウインドウから離れるだけで、インジケーターの 実行を続ける場合は、キャンセルまたはデバイスの戻る ボタンを押してください。</string>
+    <string name="battery_optimized" formatted="false">バックグラウンドでの監視</string>
+    <string name="battery_optimized_message" formatted="false">バックグラウンドでの実行を制限しないことで、監視の信頼性が向上する場合があります。Android のバッテリー最適化により、更新やアラームが遅れる場合があります。\n
+    \n
+    制限なしで実行すると、バックグラウンドでのバッテリー消費が増える場合があります。この設定は後で Android の設定 &gt; アプリ &gt; Battery Monitor &gt; バッテリーから変更できます。</string>
+    <string name="pref_cat_autostart" formatted="false">自動開始</string>
+    <string name="pref_autostart_at_boot" formatted="false">起動時に自動開始</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">デバイスが起動した時に Battery Monitor を開始します:</string>
+    <string name="pref_autostart_at_boot_help" formatted="false">「常に」は端末の再起動後にバックグラウンド監視を開始します。「なし」は起動時に自動開始しません。「シャットダウン時に実行中の場合」は、Battery Monitor で最後に監視を開始・停止した状態に従います。アプリを閉じたりプロセスを終了したりしても、監視を停止した扱いにはなりません。ウィジェットはこの選択を変更しません。</string>
+    <string name="boot_pref_always" formatted="false">常に</string>
+    <string name="boot_pref_never" formatted="false">なし</string>
+    <string name="boot_pref_if_running" formatted="false">シャットダウン時に実行中の場合</string>
+    <string name="settings_data_permissions">データと権限</string>
+    <string name="advanced_settings" formatted="false">詳細設定</string>
+    <string name="advanced_settings_summary" formatted="false">特殊な用途向けの追加コントロールで Battery Monitor を細かく調整します。</string>
+    <string name="advanced_settings_help" formatted="false">特権アクセス、履歴の記録、ログの保存期間、自動エクスポートを設定します。「バックグラウンドでの監視」では、権限、監視の信頼性、デバッグログ、充電上限レポートの確認や操作ができます。</string>
+    <string name="pref_cat_privileged_access" formatted="false">特権アクセス</string>
+    <string name="pref_use_privileged_access" formatted="false">特権アクセスを使用</string>
+    <string name="pref_use_privileged_access_summary" formatted="false">許可済みの root または Shizuku アクセスを使用して、より完全で正確な端末データを取得しますか？</string>
+    <string name="pref_use_privileged_access_help" formatted="false">許可した root または Shizuku のアクセスで、追加の端末測定値を取得します。Android が対応する値を提供できない場合、Battery Monitor は「現在の状態」とログにもこれらの値を使います。追加の診断情報は自動収集され、詳細統計用の個別スイッチはありません。</string>
+    <string name="shizuku_not_running" formatted="false">Shizuku を起動して、Battery Monitor に特権アクセスを許可してください。</string>
+    <string name="shizuku_permission_denied_permanently" formatted="false">Shizuku で Battery Monitor の権限を手動で許可してください。</string>
+
+    <string name="advanced_action_refresh" formatted="false">更新</string>
+    <string name="advanced_status_loading" formatted="false">高度なバッテリー統計を読み込み中...</string>
+    <string name="advanced_status_no_access" formatted="false">高度なバッテリー統計を表示するには root または Shizuku が必要です。</string>
+    <string name="advanced_status_waiting_permission" formatted="false">Shizuku の権限を待機中...</string>
+    <string name="advanced_status_no_stats" formatted="false">この端末では現在利用できる高度なバッテリー統計がありません。</string>
+    <string name="advanced_value_not_available" formatted="false">利用不可</string>
+    <string name="advanced_help_overview" formatted="false">「診断」は「アプリの動作」「バッテリー」「充電」「生データ」の各タブに、監視の信頼性、保存済みの予測データ、バッテリーデータをまとめています。Android のデータは root なしで取得できます。追加の端末データは、端末と Battery Monitor に与えた権限によって異なります。</string>
+    <string name="advanced_section_counters" formatted="false">カウンター</string>
+    <string name="advanced_help_counters" formatted="false">バッテリーの測定値は、残りの充電量を mAh、電流を mA、エネルギーを mWh、電圧を V、温度を選択した単位、電力を W としてラベル付きで表示します。電流の倍率は計算した電力にも適用します。平均電流と充電サイクル数は端末の対応状況に依存します。</string>
+    <string name="advanced_field_charge_counter" formatted="false">推定残量</string>
+    <string name="advanced_field_current_now" formatted="false">現在の電流</string>
+    <string name="advanced_field_current_average" formatted="false">平均電流</string>
+    <string name="advanced_field_energy_counter" formatted="false">エネルギーカウンター</string>
+    <string name="advanced_section_capacity" formatted="false">容量</string>
+    <string name="advanced_help_capacity" formatted="false">容量には、満充電容量、設計容量、推定状態が表示されます。推定状態は満充電容量を設計容量で割って計算されるため、精度は端末が報告する値に依存します。</string>
+    <string name="advanced_field_cycle_count" formatted="false">サイクル回数</string>
+    <string name="advanced_field_reported_capacity" formatted="false">報告容量</string>
+    <string name="advanced_field_state_of_health" formatted="false">健全性</string>
+    <string name="advanced_field_full_charge_capacity" formatted="false">満充電容量</string>
+    <string name="advanced_field_design_capacity" formatted="false">設計容量</string>
+    <string name="advanced_field_estimated_health" formatted="false">推定状態</string>
+    <string name="diag_capacity_inconsistent">報告された満充電容量が設計容量を超えています。これらの測定値では健全性を正確に推定できません。</string>
+    <string name="advanced_field_capacity_level" formatted="false">容量レベル</string>
+    <string name="diag_capacity_critical">危険</string>
+    <string name="diag_capacity_low">低い</string>
+    <string name="diag_capacity_high">高い</string>
+    <string name="advanced_section_charging" formatted="false">充電</string>
+    <string name="advanced_help_charging" formatted="false">充電には、最大充電電流や最大充電電圧、充電ポリシー、充電状態、容量レベルなど、現在の充電経路に関連する値が表示されます。これらの項目は充電器や充電モードによって変わる場合があります。</string>
+    <string name="advanced_field_charge_time_remaining" formatted="false">充電残り時間</string>
+    <string name="advanced_field_max_charging_current" formatted="false">最大充電電流</string>
+    <string name="advanced_field_max_charging_voltage" formatted="false">最大充電電圧</string>
+    <string name="advanced_field_charging_policy" formatted="false">充電ポリシー</string>
+    <string name="diag_policy_default">標準</string>
+    <string name="diag_policy_fixed_limit">バッテリー保護（固定上限）</string>
+    <string name="diag_policy_adaptive_ac">アダプティブ充電</string>
+    <string name="advanced_field_charging_state" formatted="false">充電状態</string>
+    <string name="diag_charging_too_cold">低温のため充電できません</string>
+    <string name="diag_charging_too_hot">高温のため充電できません</string>
+    <string name="advanced_section_service" formatted="false">Android バッテリーサービス</string>
+    <string name="advanced_help_service" formatted="false">「生データ」には Android のバッテリーブロードキャストと、アクセスできる場合は dumpsys battery の元の名前と値が含まれます。充電元、バッテリー状態、温度、電圧、その他のバッテリーサービスの状態が含まれる場合があります。</string>
+    <string name="advanced_section_sysfs" formatted="false">カーネル power_supply ファイル</string>
+    <string name="advanced_help_sysfs" formatted="false">「生データ」は /sys/class/power_supply から読み取った元の名前と値を、複数行の値も含めて表示します。キーで検索し、行をタップすると値全体を確認してコピーできます。「更新」で新しい測定値を取得します。Battery Monitor は root や Shizuku を使わず、通常の Android 権限での読み取りも試みます。</string>
+    <string name="diag_fuel_gauge">バッテリー残量計</string>
+    <string name="diag_mains_supply">AC 電源</string>
+    <string name="diag_wireless_supply">ワイヤレス電源</string>
+    <string name="diag_usb_supply">USB 電源</string>
+    <string name="diag_fast_charging">急速充電</string>
+    <string name="diag_supply_health">報告された状態</string>
+    <string name="diag_battery_technology">バッテリー技術</string>
+    <string name="diag_open_circuit_voltage">開回路電圧</string>
+    <string name="diag_min_design_voltage">設計最小電圧</string>
+    <string name="diag_max_design_voltage">設計最大電圧</string>
+    <string name="diag_charge_type">充電の種類</string>
+    <string name="diag_charge_trickle">トリクル充電</string>
+    <string name="diag_charge_fast">急速</string>
+    <string name="diag_charge_standard">標準</string>
+    <string name="diag_charge_long_life">バッテリー寿命保護</string>
+    <string name="diag_charge_bypass">充電をバイパス中</string>
+    <string name="diag_charging_input_enabled">充電入力が有効</string>
+    <string name="diag_battery_charging_enabled">バッテリー充電が有効</string>
+    <string name="diag_power_supply_state">電源の状態</string>
+    <string name="diag_supply_offline">未接続</string>
+    <string name="diag_supply_fixed">固定電源</string>
+    <string name="diag_supply_programmable">プログラマブル電源</string>
+    <string name="diag_input_current">入力電流</string>
+    <string name="diag_input_current_limit">入力電流の上限</string>
+    <string name="diag_settled_input_current">安定時の入力電流</string>
+    <string name="diag_input_voltage">入力電圧</string>
+    <string name="diag_input_voltage_limit">入力電圧の上限</string>
+    <string name="advanced_section_metadata" formatted="false">メタデータ</string>
+    <string name="advanced_help_metadata" formatted="false">「生データ」には、取得できるカウンターや電流の測定値など、BatteryManager の元のプロパティ名と値も含まれます。製造情報や交換状態などの追加プロパティは、Android のバージョン、端末の対応状況、権限に依存します。</string>
+    <string name="advanced_field_manufacturing_date" formatted="false">製造日</string>
+    <string name="advanced_field_first_use_date" formatted="false">初回使用日</string>
+    <string name="advanced_field_battery_serial_number" formatted="false">バッテリーのシリアル番号</string>
+    <string name="advanced_field_battery_part_status" formatted="false">バッテリー部品の状態</string>
+    <string name="advanced_field_battery_part_manufacturer" formatted="false">バッテリー部品メーカー</string>
+    <string name="advanced_field_battery_model_name" formatted="false">バッテリーモデル名</string>
+    <string name="advanced_field_minimum_design_voltage" formatted="false">最小設計電圧</string>
+    <string name="diag_raw">生データ</string>
+    <string name="diag_search_key">キーを検索</string>
+    <string name="diag_no_keys">取得したデータに一致するキーはありません</string>
+    <string name="diag_raw_values">生の値</string>
+    <string name="diag_device_readings">端末が報告した測定値</string>
+    <string name="diag_last_checked">最終確認: %1$s</string>
+    <string name="diag_privileged_stale">以前取得した特権アクセスの測定値を表示しています。更新して再試行してください。</string>
+    <string name="advanced_help_troubleshooting_title" formatted="false">トラブルシューティング</string>
+    <string name="advanced_help_troubleshooting" formatted="false">Android のデータは「診断」で自動収集します。追加の root または Shizuku のデータには、「追加の取得元」で特権アクセスを有効にしてください。Battery Monitor は root、次に Shizuku を試します。Shizuku の起動と権限の許可が必要です。ない項目は取得できないままです。更新に失敗すると、前回のスナップショットを保持し、古いものとして表示します。</string>
+
+    <string name="diagnostics" formatted="false">診断</string>
+    <string name="diagnostics_summary" formatted="false">権限と監視の信頼性を確認し、トラブルシューティング用レポートを作成します</string>
+    <string name="diag_overview">アプリの動作</string>
+    <string name="diagnostics_help_title" formatted="false">診断の役割</string>
+    <string name="diagnostics_help_overview" formatted="false">「バックグラウンドでの監視」は権限と監視の信頼性を確認します。監視の開始・停止、デバッグログの変更、バッテリー最適化と通知設定の表示、問題調査レポートの作成ができます。取得できない値がすべて権限の問題とは限りません。端末が提供しない値もあります。</string>
+    <string name="diagnostics_monitoring" formatted="false">バックグラウンド監視</string>
+    <string name="diag_monitor_operation">監視の動作</string>
+    <string name="diag_heartbeat">最終ハートビート</string>
+    <string name="diag_start_monitor">監視を開始</string>
+    <string name="diag_stop_monitor">監視を停止</string>
+    <string name="diag_stop_monitor_body">バッテリーの監視、履歴の記録、バックグラウンドでの自動復旧を停止します。ここから監視を再開できます。</string>
+    <string name="diagnostics_not_running_tap_to_start" formatted="false">最近の応答がありません。タップして再起動を要求します。</string>
+    <string name="diagnostics_service" formatted="false">監視サービス</string>
+    <string name="diagnostics_service_responded" formatted="false">監視サービスが応答しました</string>
+    <string name="diagnostics_service_restarting" formatted="false">サービスが応答しませんでした。再起動しています…</string>
+    <string name="diagnostics_service_restart_failed" formatted="false">再起動後も監視サービスが応答しませんでした。アプリを再起動してみてください。</string>
+    <string name="diagnostics_database" formatted="false">ログデータベース</string>
+    <string name="diagnostics_no_recent_database_access" formatted="false">最近成功したデータベースアクセスがありません</string>
+    <string name="diagnostics_working_last_seen" formatted="true">動作中 · 最終応答は %1$s 前</string>
+    <string name="diagnostics_database_check_succeeded" formatted="false">データベースの読み書き確認に成功しました</string>
+    <string name="diagnostics_database_failed" formatted="false">データベースの確認に失敗しました。アプリを再起動して、もう一度お試しください。</string>
+    <string name="diagnostics_database_failed_storage" formatted="false">データベースの確認に失敗しました。端末の空き容量を増やして、もう一度お試しください。</string>
+    <string name="diagnostics_permissions" formatted="false">権限とアクセス</string>
+    <string name="diagnostics_notifications" formatted="false">通知</string>
+    <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">権限がありません。タップして設定を開きます。</string>
+    <string name="diagnostics_battery_optimization" formatted="false">バッテリー最適化</string>
+    <string name="diagnostics_unrestricted" formatted="false">制限なし</string>
+    <string name="diagnostics_restricted_tap_to_fix" formatted="false">制限されています。タップして信頼できるバックグラウンド監視を許可します。</string>
+    <string name="diagnostics_vendor_settings" formatted="false">メーカー設定</string>
+    <string name="diagnostics_vendor_settings_summary" formatted="false">この端末で利用できる追加のバックグラウンド動作または自動起動設定を開きます</string>
+    <string name="diagnostics_dont_kill_my_app" formatted="false">バックグラウンド動作のヘルプ</string>
+    <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Don’t Kill My App で端末固有のガイドを開きます</string>
+    <string name="diagnostics_root" formatted="false">root アクセス</string>
+    <string name="diagnostics_root_unavailable" formatted="false">利用できません。タップして root アクセスを要求または確認します。</string>
+    <string name="diagnostics_shizuku" formatted="false">Shizuku アクセス</string>
+    <string name="diagnostics_shizuku_permission_missing" formatted="false">権限がありません。タップして Shizuku に要求します。</string>
+    <string name="diagnostics_checking" formatted="false">確認中…</string>
+    <string name="diagnostics_tap_to_check" formatted="false">未確認です。タップしてアクセスを要求または確認します。</string>
+    <string name="diag_timeout">測定がタイムアウトしました。前回のスナップショットを保持しています。再度更新してください。</string>
+    <string name="diag_no">いいえ</string>
+    <string name="diag_additional_sources">追加の取得元</string>
+    <string name="diag_source_help">「診断」を開いている間、取得できる Android の測定値を自動収集します。値をタップすると、測定値、取得元、時刻を確認してコピーできます。端末の元のキーと値は「生データ」にあります。Root または Shizuku も使うには、特権アクセスを有効にしてください。</string>
+    <string name="diag_missing_reading">有効な取得元から、利用できる測定値が返されませんでした。</string>
+    <string name="diag_missing_average">平均電流は、瞬間電流とは別の端末の測定値です。端末が平均値を提供しない場合、Battery Monitor は独自の平均値を計算しません。</string>
+    <string name="diag_missing_estimated_health">この推定には、同じバッテリーの正の満充電容量と設計容量が必要です。満充電容量が設計容量を超えてはいけません。</string>
+    <string name="diag_missing_charge_time">これは端末が報告した充電時間の推定です。「現在の状態」は Battery Monitor で設定した予測方式を使うため、端末の推定値がなくても推定を表示できる場合があります。</string>
+    <string name="diag_predictor_description">変化率は1パーセントポイントにかかる時間を示します。最近の計算はメモリ内に保持され、保存済みの平均値は再起動後も残ります。不完全な期間には長期の変化率を、未保存の平均値には既定値を使います。</string>
+    <string name="diagnostics_predictor_help" formatted="false">「アプリの動作」には、保存済みの長期平均と最近の予測入力が表示されます。最近の変化率はバッテリー残量の変化を使い、1パーセントポイントの時間、選択した方式、有効な充電元、観測したポイントと期間、未完了の区間を含むかを示します。5分間と5ポイントの計算では、未観測部分に有効な長期変化率を使い、飛ばされた残量を補間します。最近の状態はメモリ内にあり、監視の再開、充放電の切り替え、充電元の変更でリセットされます。学習して保存した平均値は再起動後も残ります。履歴ログとは独立しており、ログを消去しても推定はリセットされません。</string>
+    <string name="diag_predictor_recent" formatted="false">最近の計算</string>
+    <string name="diag_predictor_no_recent" formatted="false">有効な推定はありません。充電中または放電中に監視の測定値を取得すると、最近のデータを表示できます。</string>
+    <string name="diag_predictor_start_monitor">保存済みの予測データを確認するには、上で監視を開始してください。</string>
+    <string name="diag_predictor_active_state" formatted="false">現在のバッテリー状態</string>
+    <string name="diag_predictor_effective_rate" formatted="false">推定に使った変化率</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">直近5分間</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">直近5パーセントポイント</string>
+    <string name="diag_predictor_active_long_term_rate" formatted="false">有効な長期変化率</string>
+    <string name="diag_predictor_observed_points" formatted="false">完了したパーセントポイント</string>
+    <string name="diag_predictor_observation_duration" formatted="false">観測したセッションの時間</string>
+    <string name="diag_predictor_current_level_duration" formatted="false">現在の残量での経過時間</string>
+    <string name="diag_predictor_uses_partial" formatted="false">未完了の区間を含む</string>
+    <string name="diag_predictor_saved_averages" formatted="false">保存済みの長期平均</string>
+    <string name="diag_predictor_ac">充電（AC）</string>
+    <string name="diag_predictor_wireless">充電（ワイヤレス）</string>
+    <string name="diag_predictor_usb">充電（USB）</string>
+    <string name="diag_predictor_version">データのバージョン</string>
+    <string name="diag_predictor_not_saved">未保存</string>
+    <string name="diag_predictor_default">既定値を使用</string>
+    <string name="diag_predictor_invalid">保存された値が無効です</string>
+    <string name="diagnostics_device_and_logs" formatted="false">端末と診断レポート</string>
+    <string name="diagnostics_debug_logs" formatted="false">デバッグログを収集</string>
+    <string name="diagnostics_debug_logs_warning" formatted="false">デバッグログには個人情報が含まれる場合があります。問題の調査中だけ有効にし、エクスポートしたファイルを確認して、公開共有には注意してください。</string>
+    <string name="diagnostics_clear" formatted="false">収集したデバッグログを削除</string>
+    <string name="diagnostics_clear_summary" formatted="false">アプリが現在保存しているデバッグログを削除します</string>
+    <string name="diagnostics_logs_cleared" formatted="false">デバッグログを削除しました</string>
+    <string name="diagnostics_logs_clear_failed" formatted="false">デバッグログを削除できませんでした</string>
+    <string name="diagnostics_export" formatted="false">診断レポートをエクスポート</string>
+    <string name="diagnostics_export_summary" formatted="false">端末、権限、監視、利用可能なログ情報をテキストファイルに保存します</string>
+    <string name="diagnostics_exported" formatted="false">診断レポートをエクスポートしました</string>
+    <string name="diagnostics_export_failed" formatted="false">診断レポートをエクスポートできませんでした</string>
+    <string name="diagnostics_help_report" formatted="false">問題を報告する際、原因の特定に診断レポートが重要となる場合があります。端末とアプリの状態、および有効にしたログが含まれます。ログには個人情報が含まれる場合があるため、ファイルを確認し慎重に共有してください。</string>
+    <string name="diag_include_raw">生の値と識別子を含める</string>
+    <string name="diag_include_debug">収集したデバッグログを含める</string>
+    <string name="diag_include_apps">システムアプリ名を含める</string>
+    <string name="diag_report_privacy">既定では含めません。個人情報が含まれる場合があります。コピーや保存の前にプレビューを確認してください。</string>
+
+    <string name="charging_diagnostics_title" formatted="false">OEM充電上限の診断</string>
+    <string name="charging_diagnostics_instructions_hint" formatted="false">有用なレポートを作成するには、スナップショットを取得する前にヘルプを開き、準備手順に従ってください。</string>
+    <string name="charging_diagnostics_privileged_hint" formatted="false">特権アクセスを使用すると、より多くの診断情報を取得できる場合があります。より有用なOEM充電上限レポートを作成するには、Shizukuまたはrootアクセスを許可し、詳細設定で特権アクセスを有効にしてください。</string>
+    <string name="charging_diagnostics_capture" formatted="false">スナップショットを取得</string>
+    <string name="charging_diagnostics_capture_summary" formatted="false">端末設定で充電モードを選び、その信号を取得します</string>
+    <string name="charging_diagnostics_choose_state" formatted="false">どの端末設定が有効ですか？</string>
+    <string name="charging_diagnostics_condition_off" formatted="false">保護オフ / 制限なし</string>
+    <string name="charging_diagnostics_condition_fixed" formatted="false">固定上限…</string>
+    <string name="charging_diagnostics_condition_adaptive" formatted="false">アダプティブ / スマート充電</string>
+    <string name="charging_diagnostics_condition_scheduled" formatted="false">スケジュール充電</string>
+    <string name="charging_diagnostics_condition_other" formatted="false">その他のOEMモード</string>
+    <string name="charging_diagnostics_capturing" formatted="false">充電信号を取得中…</string>
+    <string name="charging_diagnostics_captured" formatted="false">充電スナップショットを取得しました</string>
+    <string name="charging_diagnostics_capture_failed" formatted="false">充電スナップショットを取得できませんでした</string>
+    <plurals name="charging_diagnostics_snapshot_count">
+        <item quantity="other">%1$d件のスナップショットを取得しました。タップして比較を確認します。</item>
+    </plurals>
+    <string name="charging_diagnostics_need_two" formatted="false">最初に2種類以上の充電モードを取得してください</string>
+    <string name="charging_diagnostics_report" formatted="false">比較レポートを作成</string>
+    <string name="charging_diagnostics_report_summary" formatted="false">最初に2種類以上のOEM充電モードを取得してください</string>
+    <string name="charging_diagnostics_copy" formatted="false">クリップボードにコピー</string>
+    <string name="charging_diagnostics_save" formatted="false">保存</string>
+    <string name="charging_diagnostics_copied" formatted="false">レポートをコピーしました</string>
+    <string name="charging_diagnostics_clear" formatted="false">充電スナップショットを消去</string>
+    <string name="charging_diagnostics_clear_summary" formatted="false">端末内に保存したOEM充電スナップショットを削除します</string>
+    <string name="charging_diagnostics_cleared" formatted="false">充電スナップショットを削除しました</string>
+    <string name="charging_diagnostics_help_steps" formatted="false">1. 端末を充電器から外し、設定スナップショットの取得中は接続しないでください。スナップショット間ではメーカーの充電保護設定だけを変更します。\n
+    2. 充電保護をオフにし、2–5秒待ってスナップショットを取得します。\n
+    3. 固定上限を選び、2–5秒待って取得します。可能なら別の上限で繰り返します。\n
+    4. アダプティブ、スマート、またはスケジュール充電を有効にし、2–5秒待って取得します。\n
+    5. 設定の比較で明確な結果が得られない場合は、充電中に同じ手順を任意で繰り返し、動作中だけ現れる状態を取得できます。\n
+    6. 比較レポートを作成して確認します。データはフィルターされ、潜在的に機密な値は隠されますが、共有前にレポート全体を確認してください。</string>
+    <string name="charging_diagnostics_help_contact" formatted="false">レポートを確認後、コピーまたは保存し、メールで <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> へ送信してください。</string>
+
+    <string name="pref_backup_restore" formatted="false">バックアップと復元</string>
+    <string name="backup_restore_settings_summary" formatted="false">アプリの設定とバッテリーデータをバックアップ、復元、転送します。</string>
+    <string name="backup_restore_help_overview" formatted="false">設定、アラーム、ログ、学習済みの予測データを保存・復元します。既定の設定に戻す操作は、確認後にアプリの設定をリセットしますが、履歴、アラーム、学習済みの推定、監視の実行状態は保持します。</string>
+    <string name="pref_general_backup" formatted="false">アプリ全体のバックアップ</string>
+    <string name="general_backup_help" formatted="false">一般バックアップでは、設定、アラーム、端末固有データをまとめて保存します。復元時に、利用可能なデータからインポートする項目を選択できます。</string>
+    <string name="pref_export_general_backup" formatted="false">全体バックアップをエクスポート</string>
+    <string name="pref_export_general_backup_summary" formatted="false">設定、アラーム、デバイス固有データをZIPファイルに保存します</string>
+    <string name="general_backup_exported" formatted="false">全体バックアップを正常にエクスポートしました</string>
+    <string name="pref_import_general_backup" formatted="false">全体バックアップをインポート</string>
+    <string name="pref_import_general_backup_summary" formatted="false">全体バックアップのZIPファイルから選択したデータを復元します</string>
+    <string name="general_backup_restore_message" formatted="false">復元する項目を選択してください。</string>
+    <string name="general_backup_imported" formatted="false">全体バックアップを正常にインポートしました</string>
+    <string name="invalid_general_backup_file" formatted="false">全体バックアップファイルが無効か、互換性がありません</string>
+    <string name="settings_restore_partial">一部のデータを復元できませんでした。復元済み: %1$s。一部だけ復元された可能性があるデータ: %2$s。再試行する前に、これらの項目を確認してください。</string>
+    <string name="settings_restore_none">なし</string>
+    <string name="settings_backup_help" formatted="false">設定バックアップではアプリの設定を保存します。インポートすると保存した設定が復元されます。</string>
+    <string name="pref_export_settings" formatted="false">設定をエクスポート</string>
+    <string name="pref_export_settings_summary" formatted="false">現在の設定をファイルに保存</string>
+    <string name="settings_exported" formatted="false">設定を正常にエクスポートしました</string>
+    <string name="pref_import_settings" formatted="false">設定をインポート</string>
+    <string name="pref_import_settings_summary" formatted="false">ファイルから設定を復元</string>
+    <string name="settings_imported" formatted="false">設定を正常にインポートしました</string>
+    <string name="invalid_settings_file" formatted="false">無効な設定ファイル</string>
+    <string name="settings_file_version_warning" formatted="false">このファイルは新しいバージョンのアプリで作成されています。インポートすると予期しない動作が発生する可能性があります。それでも続行しますか？</string>
+    <string name="alarms_backup_help" formatted="false">アラームのバックアップではアラームを保存します。インポートすると、現在のすべてのアラームがバックアップ内のアラームに置き換えられます。</string>
+    <string name="pref_export_alarms" formatted="false">アラームをエクスポート</string>
+    <string name="pref_export_alarms_summary" formatted="false">現在のアラームをファイルに保存します</string>
+    <string name="alarms_exported" formatted="false">アラームをエクスポートしました</string>
+    <string name="pref_import_alarms" formatted="false">アラームをインポート</string>
+    <string name="pref_import_alarms_summary" formatted="false">現在のアラームをファイル内のアラームで置き換えます</string>
+    <string name="alarms_imported" formatted="false">アラームをインポートしました</string>
+    <string name="invalid_alarms_file" formatted="false">無効なアラームファイルです</string>
+    <string name="pref_backup_device_data" formatted="false">デバイス固有データをバックアップ</string>
+    <string name="device_specific_backup_help" formatted="false">端末固有バックアップでは、ログと予測データを保存します。インポート時に一方または両方を選択できます。このデータは元の端末のものであるため、別の端末で使用すると予測が不正確になったり、予期しない動作が発生したりする場合があります。ログをインポートするときは、既存のログに追加するか置き換えるかを選択してください。</string>
+    <string name="device_data_logs" formatted="false">ログ</string>
+    <string name="device_data_predictor" formatted="false">予測データ</string>
+    <string name="device_data_backup_warning" formatted="false">このデバイス固有データは収集元のデバイスに属します。別のデバイスにインポートすると、予測が不正確になったり、アプリが予期しない動作をしたりする可能性があります。</string>
+    <string name="pref_export_device_data" formatted="false">デバイス固有データをエクスポート</string>
+    <string name="pref_export_device_data_summary" formatted="false">ログと予測データをファイルに保存します</string>
+    <string name="device_data_exported" formatted="false">デバイス固有データを正常にエクスポートしました</string>
+    <string name="pref_import_device_data" formatted="false">デバイス固有データをインポート</string>
+    <string name="pref_import_device_data_summary" formatted="false">ファイルからログと予測データを復元します</string>
+    <string name="device_data_imported" formatted="false">デバイス固有データを正常にインポートしました</string>
+    <string name="invalid_device_data_file" formatted="false">デバイス固有データファイルが無効です</string>
+    <string name="device_data_file_empty" formatted="false">このファイルには対応しているデバイス固有データが含まれていません</string>
+    <string name="pref_import_logs_csv" formatted="false">CSVからログをインポート</string>
+    <string name="pref_import_logs_csv_summary" formatted="false">エクスポート済みCSVファイルからログをインポートします</string>
+    <string name="csv_logs_import_help" formatted="false">Battery Monitor でエクスポートした CSV からログをインポートし、既存のログに追加するか置き換えるかを選びます。古いエクスポートには電流や残りの充電量がない場合があり、その測定値は空のままです。構造化データを保持する JSON バックアップの方が、復元に適しています。</string>
+    <string name="csv_logs_import_warning" formatted="false">CSV形式はアプリのバージョンによって異なる場合があるため、インポートが正しく機能しないことがあります。</string>
+    <string name="log_import_mode_title" formatted="false">ログをインポート</string>
+    <string name="log_import_mode_message" formatted="false">インポートしたログをどのように処理しますか？</string>
+    <string name="log_import_add" formatted="false">既存のログに追加する</string>
+    <string name="log_import_replace" formatted="false">既存のログを置き換える</string>
+    <string name="csv_logs_imported" formatted="false">CSVログを正常にインポートしました</string>
+    <string name="invalid_csv_logs_file" formatted="false">CSVログファイルが無効か、互換性がありません</string>
+    <string name="settings_reset_title">既定の設定に戻す</string>
+    <string name="settings_reset_summary">履歴、アラーム、学習済みの推定を保持して、アプリの設定をリセットします。</string>
+    <string name="settings_reset_help" formatted="false">既定の設定に戻す操作では、確認後にアプリの設定をリセットします。履歴、アラーム、学習済みの推定、ウィジェット設定、バックグラウンド監視の実行状態は保持します。システムの権限と通知チャンネル設定はリセットしません。</string>
+    <string name="settings_reset_question">アプリのすべての設定を既定値に戻しますか？履歴、アラーム、学習済みの推定は保持します。バックグラウンド監視は現在の実行・停止状態を維持します。</string>
+    <string name="settings_reset_confirm">既定値に戻す</string>
+    <string name="settings_reset_done">既定の設定に戻しました</string>
+    <string name="settings_reset_failed">既定の設定への復元を完了できませんでした。一部の設定は変更された可能性があります。ストレージの空き容量を確認して再試行してください。</string>
+
+    <string name="help_activity_subtitle" formatted="false">ヘルプ</string>
+    <string name="help_cat_version" formatted="false">バージョン</string>
+    <string name="help_cat_open_source" formatted="false">オープンソース</string>
+    <string name="help_open_source" formatted="false">これ プロジェクトはオープンソースです。ソースコードには次の場所からアクセスできます。 <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>。</string>
+    <string name="help_licenses_title">オープンソースライセンス</string>
+    <string name="help_licenses_summary">アプリ、アートワーク、ライブラリのライセンスと告知</string>
+    <string name="help_licenses_application">アプリ</string>
+    <string name="help_licenses_artwork">アートワークとアイコン</string>
+    <string name="help_licenses_libraries">ライブラリ</string>
+    <string name="help_licenses_loading">ライセンスを読み込み中…</string>
+    <string name="help_licenses_unavailable">このライセンス情報を読み込めませんでした。ライセンス一覧に戻るか、アプリを再インストールしてください。</string>
+    <string name="help_cat_privacy" formatted="false">プライバシー</string>
+    <string name="help_privacy" formatted="false">Battery Monitor は、バッテリーのシリアル番号など、端末が公開する値を含むバッテリーおよび端末の情報を端末内で処理します。この情報を送信したり、外部サーバーで収集したりすることはありません。</string>
+    <string name="help_cat_no_warranty" formatted="false">無保証</string>
+    <string name="help_no_warranty" formatted="false">このプログラムは有用であることを願って頒布されますが、 *全くの無保証* です。商業可能性の保証や特定目的への適合性は、言外に示されたものも含め、全く存在しません。\n
+    \n
+    確実にこれが正しく機能し、問題を引き起こさないようにするため最善を尽くしますが、いかなる状況下においても、 あらゆる損害や不便の責任は負いません。</string>
+    <string name="help_cat_acknowledgments" formatted="false">謝辞</string>
+    <string name="help_acknowledgments" formatted="false">Battery Monitor は、Battery Indicator Pro / BatteryBot Pro のフォークです。 ダルシャン コンピューティング LLC。 原作者と協力者に感謝します 上流プロジェクトの作成と維持に使用します。</string>
+    <string name="help_cat_frequently_asked_questions" formatted="false">よくある質問</string>
+    <string name="help_frequently_asked_questions" formatted="false">よくある質問への回答は <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a> で確認できます。</string>
+    <string name="help_cat_contact" formatted="false">問い合わせとフィードバック</string>
+    <string name="help_contact" formatted="false"><a href="https://github.com/tswistak/Battery-Monitor/issues">GitHub で不具合を報告</a>できます。質問、アイデア、フィードバックは <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a> へどうぞ。<a href="mailto:tomasz@swistak.codes">メールでの問い合わせ</a>もできます。</string>
+    <string name="changelog_title">Battery Monitor の新機能</string>
+    <string name="changelog_version">バージョン %1$s</string>
+    <string name="changelog_got_it">確認しました</string>
+
+    <string name="percent_symbol" formatted="false">%</string>
+    <string name="degree_symbol" formatted="false">°</string>
+    <string name="celsius_symbol" formatted="false">C</string>
+    <string name="fahrenheit_symbol" formatted="false">F</string>
+    <string name="volt_symbol" formatted="false">V</string>
+    <string name="since" formatted="false">から</string>
+    <string name="duration_for">%1$s の間</string>
+    <plurals name="for_n_hours">
+        <item quantity="one">%d 時間</item>
+        <item quantity="other">%d 時間</item>
+    </plurals>
+    <plurals name="n_days">
+        <item quantity="one">"%d 日 "</item>
+        <item quantity="other">"%d 日 "</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="one">%d 時間</item>
+        <item quantity="other">%d 時間</item>
+    </plurals>
+    <plurals name="n_hours_long">
+        <item quantity="one">"%d 時間 "</item>
+        <item quantity="other">"%d 時間 "</item>
+    </plurals>
+    <plurals name="n_minutes_long">
+        <item quantity="one">%d 分</item>
+        <item quantity="other">%d 分</item>
+    </plurals>
+    <plurals name="n_hours_medium">
+        <item quantity="one">"%d 時間 "</item>
+        <item quantity="other">"%d 時間 "</item>
+    </plurals>
+    <plurals name="n_minutes_medium">
+        <item quantity="one">%d 分</item>
+        <item quantity="other">%d 分</item>
+    </plurals>
+    <plurals name="n_hours_short">
+        <item quantity="other">"%d時間 "</item>
+    </plurals>
+    <plurals name="n_minutes_short">
+        <item quantity="other">%d分</item>
+    </plurals>
+    <string name="unit_days">%d日</string>
+    <string name="unit_hours">%d時間</string>
+    <string name="unit_minutes">%d分</string>
 </resources>

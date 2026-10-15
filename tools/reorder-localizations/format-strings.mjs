@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "../..");
 const resDir = path.join(repoRoot, "app", "src", "main", "res");
-const topLevelIndent = "  ";
+const topLevelIndent = "    ";
 
 main().catch((error) => {
   console.error(error instanceof Error ? error.message : String(error));
@@ -154,6 +154,15 @@ function rebuildDocument(document, blocks, blankLineAfterLineNumbers) {
 }
 
 function flattenBlock(block) {
+  if (block.tagName === "plurals") {
+    return {
+      ...block,
+      raw: block.raw
+        .replace(/^[ \t]*(?=<item\b)/gm, topLevelIndent.repeat(2))
+        .replace(/^[ \t]*(?=<\/plurals>)/gm, topLevelIndent),
+    };
+  }
+
   if (block.tagName !== "string") {
     return block;
   }

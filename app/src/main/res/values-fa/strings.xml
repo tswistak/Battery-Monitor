@@ -1,684 +1,400 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_launcher_name" formatted="false">Battery Monitor</string>
-  <string name="settings_activity_subtitle" formatted="false">تنظیمات</string>
-  <string name="help_activity_subtitle" formatted="false">کمک</string>
+    <string name="app_launcher_name" formatted="false">Battery Monitor</string>
+    <string name="yes" formatted="false">آری</string>
+    <string name="okay" formatted="false">باشه</string>
+    <string name="cancel" formatted="false">لغو</string>
+    <string name="custom" formatted="false">سفارشی...</string>
+    <string name="currently_using" formatted="false">در حال حاضر استفاده می شود</string>
+    <string name="currently_set_to" formatted="false">"در حال حاضر روی:"</string>
+    <string name="currently_disabled" formatted="false">در حال حاضر غیر فعال است</string>
+    <string name="settings_numeric_value">مقدار</string>
+    <string name="settings_move_item_up">انتقال %1$s به بالا</string>
+    <string name="settings_move_item_down">انتقال %1$s به پایین</string>
+    <string name="settings_operation_processing">در حال پردازش…</string>
 
-  <string name="battery_use_b" formatted="false">نمایش کاربرد باتری</string>
-  <string name="circle_widget" formatted="false">چرخه باتری پات</string>
-  <string name="full_widget" formatted="false">باتری پات کامل</string>
-  <string name="yes" formatted="false">آری</string>
-  <string name="cancel" formatted="false">لغو</string>
+    <string name="nav_battery_group">باتری</string>
+    <string name="nav_current">وضعیت فعلی</string>
+    <string name="nav_history">تاریخچه</string>
+    <string name="nav_alarms">هشدارها</string>
+    <string name="nav_tools_group">ابزارها و برنامه</string>
+    <string name="nav_diagnostics">عیب‌یابی</string>
+    <string name="nav_settings">تنظیمات</string>
+    <string name="nav_help">راهنما و درباره</string>
+    <string name="nav_help_version">%1$s %2$s</string>
+    <string name="nav_open_menu">باز کردن منو</string>
+    <string name="nav_focus_menu">انتقال تمرکز به منو</string>
+    <string name="nav_close_menu">بستن منو</string>
+    <string name="nav_up">رفتن به سطح بالاتر</string>
+    <string name="nav_actions">کنش‌های بیشتر</string>
+    <string name="tab_current_info" formatted="false">اطلاعات فعلی</string>
+    <string name="tab_history" formatted="false">تاریخچه</string>
+    <string name="tab_advanced" formatted="false">پیشرفته</string>
+    <string name="menu_settings" formatted="false">تنظیمات</string>
+    <string name="menu_help" formatted="false">کمک کنید</string>
+    <string name="menu_close" formatted="false">بستن</string>
+    <string name="battery_use_b" formatted="false">نمایش کاربرد باتری</string>
 
-  <string name="confirm_close" formatted="false">بستن</string>
-  <string name="confirm_close_hint" formatted="false">مانیتور باتری کاملاً بسته خواهد شد و شما آن را نخواهید دید دیگر در نوار وضعیت شما. هر ویجت دسکتاپ بی فایده خواهد بود.\n
+    <string name="current_monitor_data">داده‌های پایش · %1$s</string>
+    <string name="current_last_reading">آخرین خوانش · %1$s</string>
+    <string name="current_waiting">در انتظار داده‌های پایش</string>
+    <string name="current_monitor_disabled">پایش خاموش است</string>
+    <string name="current_stale">داده‌های پایش قدیمی هستند</string>
+    <string name="current_monitor_action">پایشگر را در بخش عیب‌یابی بررسی کنید.</string>
+    <string name="current_monitor_attention">پایشگر نیاز به رسیدگی دارد</string>
+    <string name="current_notifications_off">اعلان‌ها خاموش هستند</string>
+    <string name="current_notifications_off_body">اعلان‌های Battery Monitor غیرفعال هستند. برای فعال شدن دوباره هشدارها، تنظیمات اعلان را بررسی کنید.</string>
+    <string name="current_power_optimized">ممکن است فعالیت پس‌زمینه محدود باشد</string>
+    <string name="current_power_optimized_body">بهینه‌سازی باتری Android ممکن است به‌روزرسانی‌های پایش را به تأخیر بیندازد. اگر به‌روزرسانی‌ها متوقف شدند، تنظیم باتری این برنامه را بررسی کنید.</string>
+    <string name="current_paused">متصل به برق · در حال شارژ نیست</string>
+    <string name="current_target_reached">به هدف %1$d%% رسید</string>
+    <string name="current_below_target">کمتر از هدف %1$d%%</string>
+    <string name="current_low">باتری بسیار کم است</string>
+    <string name="current_low_body">هشدارهای فعال را بررسی کنید و در صورت نیاز دستگاه را به برق وصل کنید.</string>
+    <string name="status_unknown" formatted="false">ناشناس</string>
+    <string name="status_unplugged" formatted="false">قطع شده</string>
+    <string name="status_plugged_in" formatted="false">متصل به برق</string>
+    <string name="status_charging" formatted="false">شارژ کردن</string>
+    <string name="status_discharging" formatted="false">تخلیه</string>
+    <string name="status_not_charging" formatted="false">شارژ نشدن</string>
+    <string name="status_fully_charged" formatted="false">کاملا شارژ شده</string>
+    <string name="status_boot_completed" formatted="false">بوت کامل شد</string>
+    <string name="plugged_unplugged" formatted="false">قطع شده</string>
+    <string name="plugged_ac" formatted="false">(AC)</string>
+    <string name="plugged_usb" formatted="false">(USB)</string>
+    <string name="plugged_wireless" formatted="false">(بی سیم)</string>
+    <string name="plugged_unknown" formatted="false">(?)</string>
+    <string name="current_measurements">اندازه‌گیری‌ها</string>
+    <string name="current_temperature">دما</string>
+    <string name="current_voltage">ولتاژ</string>
+    <string name="vital_sign_voltage" formatted="false">ولتاژ باتری</string>
+    <string name="pref_cat_battery_current_main" formatted="false">جریان باتری</string>
+    <string name="remaining_charge" formatted="false">شارژ باقی‌مانده</string>
+    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_unavailable">شارژ باقی‌مانده در دسترس نیست</string>
+    <string name="current_remaining_charge">شارژ باقی‌مانده: %1$s mAh</string>
+    <string name="battery_power">توان باتری</string>
+    <string name="battery_power_explanation">از ولتاژ و جریان باتری محاسبه می‌شود؛ هنگام شارژ مثبت و هنگام تخلیه منفی است. این توان سمت باتری است، نه توان شارژر.</string>
+    <string name="current_android_health">وضعیت طبق Android</string>
+    <string name="current_status_unit">وضعیت Android</string>
+    <string name="current_health_explanation">این وضعیت Android درصد سلامت باتری نیست.</string>
+    <string name="health_unknown" formatted="false">ناشناس</string>
+    <string name="health_good" formatted="false">سلامتی</string>
+    <string name="health_overheat" formatted="false">بیش از حد گرم شود</string>
+    <string name="health_dead" formatted="false">مرده</string>
+    <string name="health_overvoltage" formatted="false">اضافه ولتاژ</string>
+    <string name="health_failure" formatted="false">شکست</string>
+    <string name="health_cold" formatted="false">سرد</string>
+    <string name="current_unavailable">خوانشی موجود نیست</string>
+    <string name="current_current_unavailable">خوانش جریان در دسترس نیست. عیب‌یابی ممکن است مشکل دسترسی یا منبع پشتیبانی‌نشده را نشان دهد.</string>
+    <string name="current_detail_unit">واحد: %1$s</string>
+    <string name="current_detail_source">منبع: %1$s</string>
+    <string name="current_detail_time">آخرین خوانش: %1$s</string>
+    <string name="current_history_off">ثبت تاریخچه خاموش است · باز کردن تاریخچه</string>
+    <string name="current_system_usage">باز کردن مصرف باتری سیستم</string>
+    <string name="current_usage_unavailable">مصرف باتری سیستم در دسترس نیست</string>
+    <string name="current_state_settings_summary" formatted="false">تنظیمات صفحه اطلاعات فعلی</string>
+    <string name="current_state_settings_help" formatted="false">نمایش شارژ باقی‌مانده و ترجیح جریان میانگین باتری در وضعیت فعلی را انتخاب کنید. جریان هر زمان موجود باشد اندازه‌گیری می‌شود. ضریب، جریان و توان محاسبه‌شده را در سراسر برنامه اصلاح می‌کند؛ گزارش‌ها جریان لحظه‌ای اصلی را نگه می‌دارند تا ضریب بعداً قابل تغییر باشد.</string>
+    <string name="pref_show_remaining_charge" formatted="false">نمایش شارژ باقی‌مانده</string>
+    <string name="pref_show_remaining_charge_summary" formatted="false">شارژ باقی‌مانده باتری که دستگاه گزارش می‌کند بر حسب mAh نمایش داده شود؟</string>
+    <string name="pref_battery_current_multiplier" formatted="false">ضرب کننده</string>
+    <string name="pref_battery_current_multiplier_help" formatted="false">برخی دستگاه‌ها واحدها یا علامت‌های غیرمنتظره گزارش می‌کنند. برای اصلاح نتیجه نمایش‌داده‌شده، مقدار گزارش‌شده را در اینجا ضرب کنید.\n
     \n
-    اگر فقط می خواهید پنجره اصلی را ترک کرده و سرویس را حفظ کنید در حال اجرا، Cancel را فشار دهید و سپس فقط دکمه BACK دستگاه خود را فشار دهید دکمه خروج از پنجره اصلی.\n
-    \n
-    Z اگر می خواهید اعلان را مخفی کنید اما ویجت ها را در حال اجرا نگه دارید، Cancel را فشار دهید و سپس تنظیمات را تغییر دهید تا اعلان پنهان شود.</string>
+    به‌عنوان یک مرجع تقریبی برای تلفن‌ها، علامت استاندارد Android هنگام شارژ مثبت و هنگام تخلیه منفی است. شارژ فعال معمولاً حدود +500 تا +5000 mA و تخلیه عادی حدود -100 تا -3000 mA است. وقتی باتری تقریباً پر است یا تلفن بیکار است، مقادیر نزدیک صفر می‌توانند طبیعی باشند. اگر اندازه مقدار حدود 1000 برابر کوچک‌تر یا بزرگ‌تر به نظر می‌رسد، یا علامت برعکس است، ضریب را تنظیم کنید.</string>
+    <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">تشخیص خودکار</string>
+    <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">تشخیص خودکار برای وضعیت یا خوانش فعلی باتری در دسترس نیست.</string>
+    <string name="pref_battery_current_multiplier_detection_result">ضریب به‌طور خودکار روی %1$d تنظیم شد.</string>
+    <string name="pref_prefer_average_battery_current" formatted="false">ترجیح جریان میانگین</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">در وضعیت فعلی، در صورت وجود از میانگین اخیر استفاده شود؟</string>
+    <string name="pref_prefer_current_avg_help" formatted="false">برخی دستگاه‌ها علاوه بر جریان لحظه‌ای، میانگین اخیر را ارائه می‌کنند. دوره میانگین‌گیری در دستگاه‌ها متفاوت است. وضعیت فعلی وقتی میانگین موجود نیست از جریان لحظه‌ای استفاده می‌کند. این گزینه فقط برای وضعیت فعلی است؛ گزارش‌ها همیشه خوانش لحظه‌ای اصلی را ذخیره می‌کنند.</string>
 
-  <string name="notifications_disabled" formatted="false">اعلان ها غیرفعال هستند!</string>
-  <string name="notifications_disabled_message" formatted="false">شما همه اعلان‌های مانیتور باتری را مسدود کرده‌اید. این خواهد شد جلوگیری از نمایش هر گونه اعلان توسط مانیتور باتری: اصلی اعلان و هر آلارمی که تنظیم کرده اید همگی مسدود خواهند شد.\n
+    <string name="activity_until_charged" formatted="false">تا زمانی که شارژ شود</string>
+    <string name="activity_until_drained" formatted="false">تا زمانی که تخلیه شود</string>
+    <string name="activity_until_target" formatted="true">تا %1$d%%</string>
+    <string name="activity_target_reached" formatted="true">هدف رسید (%1$d%%)</string>
+    <string name="current_no_prediction">داده برای تخمین کافی نیست</string>
+    <string name="current_show_to_target">نمایش تا %1$d%%</string>
+    <string name="current_since_unplugged">از زمان قطع برق: %1$d%% → %2$d%% · %3$s</string>
+    <string name="current_since_connected">از زمان اتصال برق: %1$d%% → %2$d%% · %3$s</string>
+    <string name="current_since_change">از زمان تغییر وضعیت: %1$d%% → %2$d%% · %3$s</string>
+    <string name="current_prediction_method">روش: %1$s</string>
+    <string name="current_prediction_target">هدف: %1$d%%</string>
+    <string name="current_prediction_snapshot_time">تصویر وضعیت باتری: %1$s</string>
+    <string name="current_prediction_diagnostics" formatted="false">نرخ‌های اخیر و میانگین‌های آموخته‌شده در بخش عیب‌یابی، زیر عملکرد برنامه موجود هستند.</string>
+    <string name="current_prediction_explanation">این تخمین از روش پیش‌بینی تنظیم‌شده Battery Monitor استفاده می‌کند. هدف آن شارژ یا خاموش شدن را کنترل نمی‌کند.</string>
+    <string name="time_estimates_settings" formatted="false">برآوردهای زمان</string>
+    <string name="time_estimates_settings_summary" formatted="false">روش محاسبه زمان باقی‌مانده و سطح‌های هدف باتری را انتخاب کنید.</string>
+    <string name="time_estimates_settings_help" formatted="false">روش تخمین زمان باقی‌مانده Battery Monitor و سطح‌های هدف باتری را انتخاب کنید. هدف‌ها بر هشدارهای رسیدن به حد شارژ و تخلیه نیز اعمال می‌شوند. Battery Monitor شارژ را شروع یا متوقف نمی‌کند.</string>
+    <string name="pref_cat_predictor" formatted="false">برآوردهای زمان باقی مانده</string>
+    <string name="pref_prediction_type" formatted="false">نوع تخمین</string>
+    <string name="pref_prediction_type_help" formatted="false">حساس از نرخ پنج دقیقه اخیر استفاده می‌کند. محافظه‌کار، که پیش‌فرض است، نرخ‌های اخیر را با میانگین بلندمدت آموخته‌شده ترکیب می‌کند تا تغییرات ناگهانی کاهش یابد. از زمان تغییر وضعیت، از نشست فعلی شارژ یا تخلیه استفاده می‌کند. میانگین بلندمدت از نرخ آموخته‌شده تخلیه یا منبع شارژ فعال استفاده می‌کند. تا فراهم شدن مشاهدات کافی، تخمین‌ها از میانگین ذخیره‌شده یا پیش‌فرض اولیه استفاده می‌کنند.</string>
+    <string name="predictor_sensitive" formatted="false">حساس</string>
+    <string name="predictor_conservative" formatted="false">محافظه کار</string>
+    <string name="predictor_since_status_change" formatted="false">از زمان تغییر وضعیت</string>
+    <string name="predictor_long_term_ave" formatted="false">میانگین بلند مدت</string>
+    <string name="pref_cat_target_levels" formatted="false">سطح‌های هدف</string>
+    <string name="pref_charging_target_mode" formatted="false">هدف شارژ</string>
+    <string name="pref_charging_target_mode_help" formatted="false">خودکار از حد ثابت شارژ دستگاه، اگر Battery Monitor بتواند آن را بخواند، و در غیر این صورت از 100% استفاده می‌کند. شارژ تطبیقی همچنان 100% را هدف می‌گیرد. سفارشی از سطح انتخابی شما برای تخمین شارژ و هشدارهای رسیدن به حد شارژ استفاده می‌کند.</string>
+    <string name="pref_charging_target_mode_support_help" formatted="false">تشخیص خودکار ممکن است روی دستگاه‌های Google Pixel، Samsung Galaxy، Xiaomi/Redmi/POCO، OnePlus/Oppo/Realme و Sony Xperia و نیز دستگاه‌های دارای GrapheneOS یا LineageOS، به‌ویژه با دسترسی root یا Shizuku، کار کند. این قابلیت به سیگنال‌های نرم‌افزاری متکی است؛ بنابراین حتی برای سازندگان نام‌برده نیز دسترس‌پذیری و دقت تضمین نمی‌شود. مدل‌ها یا نسخه‌های آزمایش‌نشده در این خانواده‌ها نیز ممکن است کار کنند، اما دستگاه‌های سازندگان دیگر در حال حاضر خودکار شناسایی نمی‌شوند.</string>
+    <string name="pref_charging_target_mode_summary_device" formatted="true">محدودیت شارژ دستگاه: %1$d%%</string>
+    <string name="pref_charging_target_mode_summary_custom" formatted="false">هدف سفارشی</string>
+    <string name="pref_charging_target_mode_summary_default" formatted="false">محدودیت ثابت دستگاه شناسایی نشد — 100% استفاده می‌شود.</string>
+    <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
+    \n
+    اگر این مقدار درست به نظر نمی‌رسد، می‌توانید به بهبود تشخیص دستگاه کمک کنید. «عیب‌یابی» را باز کنید و با پیروی دقیق از دستورالعمل‌های «راهنما»، گزارش محدودیت شارژ سازنده را بسازید.</string>
+    <string name="charging_target_mode_automatic" formatted="false">خودکار (پیشنهادی)</string>
+    <string name="charging_target_mode_custom" formatted="false">سفارشی</string>
+    <string name="pref_custom_charging_target" formatted="false">هدف شارژ سفارشی</string>
+    <string name="pref_custom_charging_target_help" formatted="false">هنگامی که هدف شارژ سفارشی است، سطح پایانی برآورد شارژ را تنظیم کنید.</string>
+    <string name="pref_discharging_target" formatted="false">هدف تخلیه</string>
+    <string name="pref_discharging_target_help" formatted="false">نقطه پایان تخمین تخلیه و هشدارهای رسیدن به حد تخلیه را تنظیم کنید. زیر این سطح، تخمین زمان تا 0% ادامه می‌یابد. هشدارهای باتری کم که آستانه خودشان را دارند مستقل می‌مانند.</string>
+    <string name="pref_target_level_summary" formatted="true">برآورد تا %1$d%%.</string>
+
+    <string name="main_notif_chan_name" formatted="false">اطلاعیه اصلی</string>
+    <string name="live_updates_notif_chan_name" formatted="false">به‌روزرسانی‌های زنده</string>
+    <string name="notification_settings" formatted="false">اطلاعیه اصلی</string>
+    <string name="settings_notification">اعلان</string>
+    <string name="notification_settings_summary" formatted="false">محتوای اعلان، نماد نوار وضعیت و تراشهٔ به‌روزرسانی زنده را پیکربندی کنید.</string>
+    <string name="notification_settings_help" formatted="false">می توانید پیکربندی کنید که کدام محتوا در اعلان کشویی نمایش داده شود.</string>
+    <string name="notification_channels_help" formatted="false">تنظیمات اعلان Android را باز کنید تا اعلان‌ها را مجاز یا مسدود کنید و صدا، لرزش و نحوه ارائه اعلان اصلی و هر نوع هشدار را تنظیم کنید. فعال کردن قانون هشدار، کانال اعلان مسدودشده را دور نمی‌زند.</string>
+    <string name="notifications_disabled" formatted="false">اعلان ها غیرفعال هستند!</string>
+    <string name="notifications_disabled_message" formatted="false">شما همه اعلان‌های مانیتور باتری را مسدود کرده‌اید. این خواهد شد جلوگیری از نمایش هر گونه اعلان توسط مانیتور باتری: اصلی اعلان و هر آلارمی که تنظیم کرده اید همگی مسدود خواهند شد.\n
     \n
     Since Battery Monitor به شما امکان می دهد اعلان اصلی را روشن یا خاموش کنید به طور جداگانه، و همچنین به طور موقت هر آلارم را غیرفعال کنید شما ایجاد کرده اید، اکیداً توصیه می شود که آن را رفع انسداد کنید اعلان های مانیتور باتری در حالی که آنها مسدود هستند، ظاهر می شود که مانیتور باتری خراب است.\n
     \n
     لطفاً OK را فشار دهید تا به تنظیمات سیستم در جایی که می توانید منتقل شوید رفع انسداد اعلان‌ها برای مانیتور باتری</string>
-
-  <string name="battery_optimized" formatted="false">پایش در پس‌زمینه</string>
-  <string name="battery_optimized_message" formatted="false">اجرای بدون محدودیت در پس‌زمینه می‌تواند قابلیت اطمینان پایش را بهبود دهد. بهینه‌سازی باتری Android ممکن است به‌روزرسانی‌ها و هشدارها را به تأخیر بیندازد.\n\nاجرای بدون محدودیت ممکن است مصرف باتری در پس‌زمینه را افزایش دهد. می‌توانید بعداً این گزینه را در تنظیمات Android &gt; برنامه‌ها &gt; Battery Monitor &gt; باتری تغییر دهید.</string>
-
-  <string name="main_notif_chan_name" formatted="false">اطلاعیه اصلی</string>
-  <string name="live_updates_notif_chan_name" formatted="false">به‌روزرسانی‌های زنده</string>
-  <string name="channel_group_name_alarms" formatted="false">آلارم ها</string>
-
-  <string name="confirm_clear_logs" formatted="false">واقعاً همه گزارش‌ها پاک می‌شوند؟</string>
-
-  <string name="configure_log_filter" formatted="false">کدام موارد گزارش را نشان دهید؟</string>
-
-  <string name="okay" formatted="false">باشه</string>
-
-  <string name="tab_current_info" formatted="false">اطلاعات فعلی</string>
-  <string name="tab_history" formatted="false">تاریخچه</string>
-  <string name="tab_advanced" formatted="false">پیشرفته</string>
-
-  <string name="notification_until_charged" formatted="false">"تا زمانی که شارژ شود"</string>
-  <string name="notification_until_drained" formatted="false">"چپ"</string>
-  <string name="activity_until_charged" formatted="false">تا زمانی که شارژ شود</string>
-  <string name="activity_until_drained" formatted="false">تا زمانی که تخلیه شود</string>
-
-  <string name="menu_settings" formatted="false">تنظیمات</string>
-  <string name="menu_close" formatted="false">بستن</string>
-  <string name="menu_help" formatted="false">کمک کنید</string>
-  <string name="menu_clear" formatted="false">پاک کردن</string>
-  <string name="menu_reverse" formatted="false">ترتیب معکوس</string>
-  <string name="menu_log_filter" formatted="false">فیلتر کنید</string>
-  <string name="menu_export" formatted="false">صادرات CSV</string>
-  <string name="log_export_mode_title" formatted="false">برون‌بری گزارش‌ها</string>
-  <string name="log_export_append" formatted="false">افزودن به پروندهٔ موجود</string>
-  <string name="log_export_new_file" formatted="false">ایجاد پروندهٔ جدید</string>
-  <string name="log_export_range_title" formatted="false">کدام گزارش‌ها برون‌بری شوند؟</string>
-  <string name="log_export_all_logs" formatted="false">همه‌چیز</string>
-  <string name="log_export_from_last" formatted="false">از آخرین برون‌بری</string>
-  <string name="menu_delete_alarm" formatted="false">حذف هشدار</string>
-  <string name="menu_show_seconds" formatted="false">نمایش ثانیه ها</string>
-  <string name="menu_hide_seconds" formatted="false">مخفی کردن ثانیه ها</string>
-
-  <string name="percent_symbol" formatted="false">%</string>
-  <string name="degree_symbol" formatted="false">°</string>
-  <string name="fahrenheit" formatted="false">فارنهایت</string>
-  <string name="fahrenheit_symbol" formatted="false">F</string>
-  <string name="celsius" formatted="false">درجه سانتیگراد</string>
-  <string name="celsius_symbol" formatted="false">C</string>
-  <string name="volt_symbol" formatted="false">V</string>
-
-  <string name="inaccessible_storage" formatted="false">کارت SD غیر قابل دسترسی است.</string>
-  <string name="inaccessible_w_reason" formatted="false">کارت SD غیر قابل دسترسی است:</string>
-  <string name="read_only_storage" formatted="false">کارت SD فقط خواندنی است.</string>
-  <string name="no_storage_permission" formatted="false">مجوز ذخیره سازی داده نشده است.</string>
-  <string name="file_written" formatted="false">فایل با موفقیت در مکان انتخابی نوشته شد.</string>
-
-  <string name="date" formatted="false">تاریخ</string>
-  <string name="time" formatted="false">زمان</string>
-  <string name="status" formatted="false">وضعیت</string>
-  <string name="charge" formatted="false">شارژ_درصد</string>
-  <string name="temperature" formatted="false">درجه_سلسیوس</string>
-  <string name="temperature_f" formatted="false">degrees_fahrenheit</string>
-  <string name="voltage" formatted="false">ولت</string>
-
-  <string name="status_unplugged" formatted="false">قطع شده</string>
-  <string name="status_unknown" formatted="false">ناشناس</string>
-  <string name="status_charging" formatted="false">شارژ کردن</string>
-  <string name="status_discharging" formatted="false">تخلیه</string>
-  <string name="status_not_charging" formatted="false">شارژ نشدن</string>
-  <string name="status_fully_charged" formatted="false">کاملا شارژ شده</string>
-  <string name="status_plugged_in" formatted="false">متصل به برق</string>
-
-  <string name="status_boot_completed" formatted="false">بوت کامل شد</string>
-
-  <string name="health_unknown" formatted="false">ناشناس</string>
-  <string name="health_good" formatted="false">سلامتی</string>
-  <string name="health_overheat" formatted="false">بیش از حد گرم شود</string>
-  <string name="health_dead" formatted="false">مرده</string>
-  <string name="health_overvoltage" formatted="false">اضافه ولتاژ</string>
-  <string name="health_failure" formatted="false">شکست</string>
-  <string name="health_cold" formatted="false">سرد</string>
-  <string name="plugged_unplugged" formatted="false">قطع شده</string>
-  <string name="plugged_ac" formatted="false">(AC)</string>
-  <string name="plugged_usb" formatted="false">(USB)</string>
-  <string name="plugged_unknown" formatted="false">(?)</string>
-  <string name="plugged_wireless" formatted="false">(بی سیم)</string>
-
-  <string name="alarm_type_fully_charged" formatted="false">کاملا شارژ شده</string>
-  <string name="alarm_type_charging_limit_met" formatted="false">حد شارژ رسید</string>
-  <string name="alarm_type_discharging_limit_met" formatted="false">حد تخلیه رسید</string>
-  <string name="alarm_type_charge_drops" formatted="false">شارژ پایین می آید</string>
-  <string name="alarm_type_charge_rises" formatted="false">شارژ بالاتر می رود</string>
-  <string name="alarm_type_temperature_drops" formatted="false">دما به زیر می رسد</string>
-  <string name="alarm_type_temperature_rises" formatted="false">دما بالاتر می رود</string>
-  <string name="alarm_type_health_failure" formatted="false">شکست سلامتی</string>
-
-  <string name="alarm_fully_charged" formatted="false">اکنون باتری کاملاً شارژ شده است</string>
-  <string name="alarm_charging_limit_met" formatted="true">حد شارژ رسید: %1$d%%</string>
-  <string name="alarm_discharging_limit_met" formatted="true">حد تخلیه رسید: %1$d%%</string>
-  <string name="alarm_charge_drops" formatted="false">"شارژ باتری زیر است"</string>
-  <string name="alarm_charge_rises" formatted="false">"شارژ باتری بالاتر است"</string>
-  <string name="alarm_temp_drops" formatted="false">"دمای باتری پایین است"</string>
-  <string name="alarm_temp_rises" formatted="false">"دمای باتری بالاتر است"</string>
-  <string name="alarm_health_failure" formatted="false">"سلامت باتری این است:"</string>
-
-  <string name="logs_empty" formatted="false">سیاههها خالی هستند</string>
-  <plurals name="n_log_items">
-    <item quantity="one">%d مورد گزارش</item>
-    <item quantity="other">%d مورد گزارش</item>
-  </plurals>
-
-  <string name="after_nh_mm_unplugged" formatted="true">پس از قطع %1$dh %2$dm از برق</string>
-  <string name="after_nh_mm_plugged_in" formatted="true">بعد از اینکه %1$dh %2$dm وصل شد</string>
-  <string name="after_nm_ms_unplugged" formatted="true">پس از قطع %1$dm %2$ds از برق</string>
-  <string name="after_nm_ms_plugged_in" formatted="true">بعد از اینکه %1$dm %2$ds وصل شد</string>
-
-  <plurals name="n_hours_long">
-    <item quantity="one">"%d ساعت، "</item>
-    <item quantity="other">"%d ساعت، "</item>
-  </plurals>
-
-  <plurals name="n_minutes_long">
-    <item quantity="one">%d دقیقه</item>
-    <item quantity="other">%d دقیقه</item>
-  </plurals>
-
-  <plurals name="n_hours_medium">
-    <item quantity="one">"%d س، "</item>
-    <item quantity="other">"%d س، "</item>
-  </plurals>
-
-  <plurals name="n_minutes_medium">
-    <item quantity="one">%d د</item>
-    <item quantity="other">%d د</item>
-  </plurals>
-
-  <plurals name="n_hours_short">
-    <item quantity="one">"%d س "</item>
-    <item quantity="other">"%d س "</item>
-  </plurals>
-
-  <plurals name="n_minutes_short">
-    <item quantity="one">%d د</item>
-    <item quantity="other">%d د</item>
-  </plurals>
-
-  <plurals name="n_days">
-    <item quantity="one">"%d روز، "</item>
-    <item quantity="other">"%d روز، "</item>
-  </plurals>
-
-  <plurals name="n_hours">
-    <item quantity="one">%d ساعت</item>
-    <item quantity="other">%d ساعت</item>
-  </plurals>
-
-  <plurals name="for_n_hours">
-    <item quantity="one">برای %d ساعت</item>
-    <item quantity="other">برای %d ساعت</item>
-  </plurals>
-
-  <string name="duration_for">به مدت %1$s</string>
-  <string name="unit_days">%dروز</string>
-  <string name="unit_hours">%dس</string>
-  <string name="unit_minutes">%dد</string>
-  <string name="since" formatted="false">از آنجایی که</string>
-
-  <string name="currently_using" formatted="false">در حال حاضر استفاده می شود</string>
-  <string name="currently_set_to" formatted="false">"در حال حاضر روی:"</string>
-  <string name="currently_disabled" formatted="false">در حال حاضر غیر فعال است</string>
-
-  <string name="help_cat_version" formatted="false">نسخه</string>
-
-  <string name="help_cat_open_source" formatted="false">منبع باز</string>
-  <string name="help_open_source" formatted="false">این پروژه متن باز است می توانید به کد منبع دسترسی پیدا کنید <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
-
-  <string name="help_cat_privacy" formatted="false">حریم خصوصی</string>
-  <string name="help_privacy" formatted="false">Battery Monitor اطلاعات باتری و دستگاه را به‌صورت محلی پردازش می‌کند، از جمله مقادیری که دستگاه در اختیار می‌گذارد مانند شماره سریال باتری. این اطلاعات را منتقل نمی‌کند و در سرورهای خارجی نیز جمع‌آوری نمی‌کند.</string>
-
-  <string name="help_cat_no_warranty" formatted="false">بدون گارانتی</string>
-  <string name="help_no_warranty" formatted="false">این نرم افزار به امید اینکه مفید واقع شود توزیع شده است اما بدون ضمانت؛ حتی بدون ضمانت ضمنی قابلیت خرید و فروش یا تناسب اندام برای یک هدف خاص.\n
+    <string name="notifications_disabled_cat" formatted="false">اعلان‌ها غیرفعال است</string>
+    <string name="app_notifs_disabled_b" formatted="false">اعلان‌های برنامه را فعال کنید</string>
+    <string name="app_notifs_disabled_summary" formatted="false">شما همه اعلان‌ها را برای این برنامه غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا به این تنظیمات دسترسی داشته باشند.</string>
+    <string name="main_notifs_disabled_b" formatted="false">اعلان اصلی را فعال کنید</string>
+    <string name="main_notifs_disabled_summary" formatted="false">شما اعلان اصلی این برنامه را غیرفعال کرده اید.  لطفاً برای دسترسی به این تنظیمات آن را فعال کنید.</string>
+    <string name="settings_notification_disabled">برای سفارشی کردن این گزینه، اعلان‌های برنامه و کانال اعلان اصلی را فعال کنید.</string>
+    <string name="notifications_onboarding_message">Battery Monitor برای نمایش سطح باتری در نوار وضعیت و اطلاع‌رسانی درباره هشدارها به اجازه شما نیاز دارد.\n
     \n
-    در حالی که من تمام تلاشم را می کنم تا مطمئن شوم که خوب کار می کند و نمی کند مشکل ایجاد کنید، من مسئول هیچ گونه آسیب یا ناراحتی نیستم ممکن است تحت هر شرایطی ایجاد شود.</string>
-
-  <string name="help_cat_acknowledgments" formatted="false">قدردانی ها</string>
-  <string name="help_acknowledgments" formatted="false">Battery Monitor یک چنگال از Battery Indicator Pro / BatteryBot Pro توسط است Darshan Computing, LLC. با تشکر از نویسندگان و مشارکت کنندگان اصلی برای ایجاد و نگهداری پروژه بالادست.</string>
-
-  <string name="help_cat_frequently_asked_questions" formatted="false">پرسش‌های متداول</string>
-  <string name="help_frequently_asked_questions" formatted="false">پاسخ‌های رایج‌ترین پرسش‌ها را می‌توانید در <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a> پیدا کنید.</string>
-
-  <string name="help_cat_contact" formatted="false">تماس بگیرید</string>
-  <string name="help_contact" formatted="false">اگر سوالی دارید، مشکلی دارید یا نظری دارید، لطفا <a href="mailto:tomasz@swistak.codes">به من ایمیل بزنید</a>.</string>
-
-  <string name="settings_overview" formatted="false">نمای کلی</string>
-  <string name="settings_overview_help" formatted="false">تنظیمات مانیتور باتری طبق توضیحات در صفحات جداگانه سازماندهی شده است زیر هر صفحه از تنظیمات صفحه راهنمای خود را دارد که آن را توصیف می کند تنظیمات موجود در آنجا</string>
-
-  <string name="notifications_disabled_cat" formatted="false">اعلان‌ها غیرفعال است</string>
-  <string name="app_notifs_disabled_b" formatted="false">اعلان‌های برنامه را فعال کنید</string>
-  <string name="app_notifs_disabled_summary" formatted="false">شما همه اعلان‌ها را برای این برنامه غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا به این تنظیمات دسترسی داشته باشند.</string>
-  <string name="main_notifs_disabled_b" formatted="false">اعلان اصلی را فعال کنید</string>
-  <string name="main_notifs_disabled_summary" formatted="false">شما اعلان اصلی این برنامه را غیرفعال کرده اید.  لطفاً برای دسترسی به این تنظیمات آن را فعال کنید.</string>
-  <string name="alarm_notifs_disabled_summary" formatted="false">شما گروه اعلان هشدار را برای این برنامه غیرفعال کرده اید.  لطفاً آن را برای دسترسی به آلارم های خود فعال کنید.</string>
-  <string name="alarm_chan_disabled" formatted="false">شما اعلان‌ها را برای این نوع زنگ هشدار غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا از این نوع زنگ هشدار استفاده کنند.</string>
-  <string name="alarm_chan_settings_b" formatted="false">این نوع زنگ هشدار را مدیریت کنید</string>
-
-  <string name="notification_settings" formatted="false">اطلاعیه اصلی</string>
-  <string name="notification_settings_summary" formatted="false">محتوای اعلان، نماد نوار وضعیت و تراشهٔ به‌روزرسانی زنده را پیکربندی کنید.</string>
-  <string name="notification_settings_help" formatted="false">می توانید پیکربندی کنید که کدام محتوا در اعلان کشویی نمایش داده شود.</string>
-  <string name="status_bar_icon_settings" formatted="false">نماد نوار وضعیت</string>
-  <string name="status_bar_icon_settings_help" formatted="false">انتخاب کنید که آیکون اعلان درصد باتری را نشان دهد یا دما، اینکه نماد واحد داخل آیکون نمایش داده شود یا نه، و اینکه هنگام شارژ از آیکون جداگانه استفاده شود یا نه. از Android 16 به بعد، ممکن است نماد نوار وضعیت در همه نسخه‌های سیستم‌عامل کار نکند.</string>
-  <string name="status_bar_chip_settings" formatted="false">تراشه نوار وضعیت</string>
-  <string name="status_bar_chip_settings_help" formatted="false">با به‌روزرسانی‌های زنده می‌توانید محتوای تراشه نوار وضعیت، فاصله تغییر آن و نمایش ایموجی شارژ را پیکربندی کنید.</string>
-  <string name="current_state_settings_summary" formatted="false">تنظیمات صفحه اطلاعات فعلی</string>
-  <string name="current_state_settings_help" formatted="false">اطلاعات نمایش‌داده‌شده در صفحه اطلاعات فعلی را تنظیم کنید. گزینه‌های جریان باتری، خوانش زنده‌ای را که کنار سایر جزئیات باتری نشان داده می‌شود کنترل می‌کنند.</string>
-  <string name="alarm_settings_subtitle" formatted="false">تنظیمات هشدار</string>
-  <string name="alarm_settings" formatted="false">آلارم ها</string>
-  <string name="alarm_settings_help" formatted="false">می‌توانید از مانیتور باتری به شما اطلاع دهید که وقتی باتری شما تمام می‌شود به شرایط خاصی می رسد (به عنوان مثال، باتری کاملاً شارژ می شود، سطح باتری به زیر 20٪ می رسد و بسیاری دیگر).</string>
-  <string name="other_settings" formatted="false">عمومی</string>
-  <string name="other_settings_summary" formatted="false">رفتار عمومی برنامه و ترجیحات روزمره را تنظیم کنید.</string>
-  <string name="other_settings_help" formatted="false">از این تنظیمات برای هماهنگ کردن Battery Monitor با استفادهٔ روزمرهٔ خود بهره ببرید. این بخش رفتار عمومی برنامه و ترجیحاتی را پوشش می‌دهد که کمک می‌کنند برنامه به‌طور طبیعی با شیوهٔ استفادهٔ شما از دستگاه سازگار شود.</string>
-  <string name="advanced_settings" formatted="false">پیشرفته</string>
-  <string name="advanced_settings_summary" formatted="false">Battery Monitor را با کنترل‌های بیشتر برای کاربردهای تخصصی دقیق‌تر تنظیم کنید.</string>
-  <string name="advanced_settings_help" formatted="false">وقتی فراتر از ترجیحات روزمره به کنترل بیشتری بر نحوهٔ کار Battery Monitor نیاز دارید، از این تنظیمات استفاده کنید. مقادیر پیش‌فرض برای بیشتر کاربران مناسب‌اند و تنظیمات اضافی می‌توانند برنامه را بهتر با نیازهای خاص پایش هماهنگ کنند.</string>
-
-  <string name="live_updates_onboarding_title">نوار وضعیت تراشه باتری</string>
-  <string name="live_updates_onboarding_message_on">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند. این گزینه به‌صورت پیش‌فرض فعال است.\n
+    نکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
+    <string name="pref_cat_channel_settings" formatted="false">تنظیمات کانال اعلان</string>
+    <string name="pref_manage_main_channel" formatted="false">کانال اصلی را مدیریت کنید</string>
+    <string name="pref_cat_notification_content" formatted="false">محتوا</string>
+    <string name="pref_top_line_content" formatted="false">محتوای خط برتر</string>
+    <string name="pref_top_line_content_help" formatted="false">انتخاب کنید خط بالای اعلان زمان تخمینی باقی‌مانده، زمان سپری‌شده از تغییر وضعیت یا آمار حیاتی انتخاب‌شده را نشان دهد.</string>
+    <string name="pref_bottom_line_content" formatted="false">محتوای خط پایین</string>
+    <string name="pref_bottom_line_content_help" formatted="false">شما همان گزینه هایی را برای خط پایین دارید که برای خط بالا.</string>
+    <string name="time_remaining" formatted="false">زمان باقی مانده</string>
+    <string name="time_since_status_change" formatted="false">زمان از تغییر وضعیت</string>
+    <string name="vital_signs" formatted="false">علائم حیاتی</string>
+    <string name="notification_until_charged" formatted="false">"تا زمانی که شارژ شود"</string>
+    <string name="notification_until_drained" formatted="false">"چپ"</string>
+    <string name="pref_time_remaining_verbosity" formatted="false">زمان باقی مانده پرحرفی</string>
+    <string name="pref_time_remaining_verbosity_help" formatted="false">دستگاه‌ها در اشکال و اندازه‌های مختلف وجود دارند، بنابراین اکثر ترجمه‌ها به این نیاز دارند از اختصارات استفاده کنید تا اطمینان حاصل کنید که برآورد زمان باقیمانده مطابقت دارد به راحتی در منطقه اطلاع رسانی. اگر هنوز جا نیفتاد، می توانید فرمت فشرده را انتخاب کنید. اگر فضای زیادی دارید، ممکن است تنظیمات پرمخاطب را ترجیح دهید.</string>
+    <string name="condensed" formatted="false">متراکم شده</string>
+    <string name="normal" formatted="false">Normal</string>
+    <string name="verbose" formatted="false">پرمخاطب</string>
+    <string name="pref_vital_signs_content" formatted="false">محتوای آمار حیاتی</string>
+    <string name="pref_vital_signs_content_summary" formatted="false">کدام مقادیر در آمار حیاتی گنجانده شوند و با چه ترتیبی؟</string>
+    <string name="pref_vital_signs_reorder_handle" formatted="true">تغییر ترتیب %1$s</string>
+    <string name="pref_expanded_notification" formatted="false">گسترش جزئیات اعلان</string>
+    <string name="pref_expanded_notification_summary" formatted="false">جزئیات همراه با برچسب هنگام باز شدن اعلان نمایش داده شود؟</string>
+    <string name="pref_expanded_notification_help" formatted="false">با فعال کردن این گزینه، باز کردن اعلان اصلی زمان باقی‌مانده، زمان سپری‌شده از تغییر وضعیت و هر مقدار از آمار حیاتی را در خطی جداگانه همراه با برچسب نشان می‌دهد، به‌جای خلاصهٔ تک‌خطی.</string>
+    <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
+    <string name="settings_notification_preview">پیش‌نمایش نمونه اعلان</string>
+    <string name="settings_notification_preview_note">محتوای نمونه. Android و سازندگان دستگاه ممکن است اعلان‌ها را متفاوت نمایش دهند.</string>
+    <string name="status_bar_icon_settings" formatted="false">نماد نوار وضعیت</string>
+    <string name="status_bar_icon_settings_help" formatted="false">انتخاب کنید که آیکون اعلان درصد باتری را نشان دهد یا دما، اینکه نماد واحد داخل آیکون نمایش داده شود یا نه، و اینکه هنگام شارژ از آیکون جداگانه استفاده شود یا نه. از Android 16 به بعد، ممکن است نماد نوار وضعیت در همه نسخه‌های سیستم‌عامل کار نکند.</string>
+    <string name="pref_icon_content" formatted="false">محتوای آیکون</string>
+    <string name="pref_icon_content_help" formatted="false">انتخاب کنید آیا نماد نوار وضعیت درصد باتری را نشان دهد یا خیر دمای باتری دما از واحد انتخابی شما پیروی می کند.</string>
+    <string name="pref_content_percent" formatted="false">درصد باتری</string>
+    <string name="pref_content_temperature" formatted="false">دمای باتری</string>
+    <string name="pref_show_icon_unit" formatted="false">نمایش نماد واحد</string>
+    <string name="pref_show_icon_unit_help" formatted="false">اگر فعال باشد، آیکون برای درصد باتری علامت درصد و برای دمای باتری علامت درجه را نشان می‌دهد. برای نمایش فقط عدد، این گزینه را غیرفعال کنید.</string>
+    <string name="pref_indicate_charging" formatted="false">شارژ را نشان می دهد</string>
+    <string name="pref_indicate_charging_summary" formatted="false">نماد تغییر دهید تا هنگام شارژ نشان داده شود؟</string>
+    <string name="pref_indicate_charging_help" formatted="false">آیکون شارژ می‌تواند یک نماد صاعقه زیر عدد نشان دهد. اگر همان آیکون را هنگام شارژ و تخلیه ترجیح می‌دهید، این گزینه را غیرفعال کنید.</string>
+    <string name="status_bar_chip_settings" formatted="false">تراشه نوار وضعیت</string>
+    <string name="status_bar_chip_settings_help" formatted="false">در Android 16 یا جدیدتر، زمان نمایش تراشه به‌روزرسانی زنده، مقادیری که به نوبت نشان می‌دهد و نمایش ایموجی شارژ را انتخاب کنید. دسترسی به آن به دستگاه و تنظیمات اعلان سیستم نیز بستگی دارد.</string>
+    <string name="settings_live_update_summary">اجازه دادن یا مسدود کردن اعلان‌های برجسته باتری در تنظیمات Android.</string>
+    <string name="live_updates_onboarding_title">نوار وضعیت تراشه باتری</string>
+    <string name="live_updates_onboarding_message_on">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند. این گزینه به‌صورت پیش‌فرض فعال است.\n
     \n
     اگر نماد اعلان سنتی را ترجیح می‌دهید، می‌توانید «Live Updates» را در تنظیمات سیستم Android برای این برنامه غیرفعال کنید.\n
     \n
     نکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
-  <string name="live_updates_onboarding_message_off">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند، اما این گزینه در حال حاضر در تنظیمات سیستم غیرفعال است.\n
+    <string name="live_updates_onboarding_message_off">دستگاه شما از نمایش درصد باتری به‌صورت چیپ در نوار وضعیت پشتیبانی می‌کند، اما این گزینه در حال حاضر در تنظیمات سیستم غیرفعال است.\n
     \n
     برای بهترین تجربه، توصیه می‌کنیم آن را فعال کنید. اگر نماد اعلان سنتی را ترجیح می‌دهید، می‌توانید آن را غیرفعال نگه دارید.\n
     \n
     نکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
-  <string name="live_updates_onboarding_positive_on">متوجه شدم</string>
-  <string name="live_updates_onboarding_positive_off">به تنظیمات بروید</string>
-  <string name="live_updates_onboarding_negative_off">رد کردن</string>
+    <string name="live_updates_onboarding_positive_on">متوجه شدم</string>
+    <string name="live_updates_onboarding_positive_off">به تنظیمات بروید</string>
+    <string name="live_updates_onboarding_negative_off">رد کردن</string>
+    <string name="pref_live_update_display" formatted="false">نمایش به‌روزرسانی زنده</string>
+    <string name="pref_live_update_display_summary" formatted="false">نمایش در نوار وضعیت:</string>
+    <string name="pref_live_update_display_help" formatted="false">انتخاب کنید تراشهٔ به‌روزرسانی زندهٔ Android 16+ چه زمانی در نوار وضعیت نمایش داده شود.</string>
+    <string name="pref_live_update_display_charging" formatted="false">فقط هنگام شارژ</string>
+    <string name="pref_live_update_keep_main_notification" formatted="false">نگه داشتن اعلان اصلی همراه با به‌روزرسانی زنده</string>
+    <string name="pref_live_update_keep_main_notification_summary" formatted="false">وقتی به‌روزرسانی زنده فعال است، اعلان اصلی کامل نمایش داده شود؟</string>
+    <string name="pref_live_update_keep_main_notification_help" formatted="false">اگر فعال باشد، اعلان اصلی معمولی علاوه بر تراشهٔ نوار وضعیت قابل مشاهده می‌ماند.</string>
+    <string name="pref_expanded_live_update" formatted="false">گسترش جزئیات به‌روزرسانی زنده</string>
+    <string name="pref_expanded_live_update_summary" formatted="false">جزئیات همراه با برچسب در اعلان به‌روزرسانی زنده نمایش داده شود؟</string>
+    <string name="pref_expanded_live_update_help" formatted="false">اعلان‌های به‌روزرسانی زنده همیشه به‌صورت بازشده نمایش داده می‌شوند. با فعال کردن این گزینه، به‌روزرسانی زنده زمان باقی‌مانده، زمان سپری‌شده از تغییر وضعیت و هر مقدار از آمار حیاتی را در خطی جداگانه همراه با برچسب نشان می‌دهد.</string>
+    <string name="pref_chip_content" formatted="false">محتوای تراشه</string>
+    <string name="pref_chip_content_summary" formatted="false">کدام مقادیر و با چه ترتیبی در تراشه نشان داده شوند؟</string>
+    <string name="pref_chip_content_help" formatted="false">مقادیری را که تراشهٔ نوار وضعیت میان آن‌ها جابه‌جا می‌شود انتخاب و ترتیبشان را تنظیم کنید.</string>
+    <string name="pref_chip_switching_interval" formatted="false">فاصله تعویض</string>
+    <string name="pref_chip_switching_interval_summary" formatted="false">انتخاب کنید تراشه هر چند وقت یک‌بار به مقدار انتخاب‌شدهٔ بعدی تغییر کند.</string>
+    <string name="pref_chip_switching_interval_help" formatted="false">انتخاب کنید تراشه هر چند وقت یک‌بار به مقدار انتخاب‌شدهٔ بعدی تغییر کند. این تنظیم زمانی در دسترس است که بیش از یک مقدار انتخاب شده باشد.</string>
+    <string name="pref_chip_switching_interval_custom_message" formatted="false">فاصله را بر حسب ثانیه وارد کنید (1–3600).</string>
+    <string name="pref_chip_switching_interval_error" formatted="false">مقداری از 1 تا 3600 وارد کنید.</string>
+    <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d ثانیه</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2 ثانیه</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5 ثانیه</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10 ثانیه</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15 ثانیه</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30 ثانیه</string>
+    <string name="pref_chip_indicate_charging" formatted="false">نمایش شکلک شارژ</string>
+    <string name="pref_chip_indicate_charging_summary" formatted="false">یک شکلک رعد و برق هنگام شارژ یا شارژ کامل نشان داده شود؟</string>
+    <string name="pref_chip_indicate_charging_help" formatted="false">اگر فعال باشد، تراشه نوار وضعیت یک شکلک رعد و برق را در کنار آن نشان می دهد مقدار تراشه در هنگام شارژ یا در هنگام شارژ کامل.</string>
 
-  <string name="notifications_onboarding_message">Battery Monitor برای نمایش سطح باتری در نوار وضعیت و اطلاع‌رسانی درباره هشدارها به اجازه شما نیاز دارد.\n
-    \n
-    نکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
+    <string name="alarm_settings_subtitle" formatted="false">تنظیمات هشدار</string>
+    <string name="alarm_settings" formatted="false">آلارم ها</string>
+    <string name="alarm_settings_help" formatted="false">می‌توانید از مانیتور باتری به شما اطلاع دهید که وقتی باتری شما تمام می‌شود به شرایط خاصی می رسد (به عنوان مثال، باتری کاملاً شارژ می شود، سطح باتری به زیر 20٪ می رسد و بسیاری دیگر).</string>
+    <string name="alarms_overview" formatted="false">بررسی اجمالی هشدارها</string>
+    <string name="alarms_overview_help">هر هشت نوع هشدار همیشه در دسترس‌اند. رویدادها را مستقیم روشن کنید یا زیر نوع شارژ یا دما از افزودن آستانه استفاده کنید. آستانه‌های جدید پس از ذخیره فعال می‌شوند. برای ویرایش روی مقدار بزنید؛ ویرایش وضعیت روشن یا خاموش آن را حفظ می‌کند. مقادیر غیرفعال در فهرست می‌مانند. حذف نیاز به تأیید دارد. صدا و لرزش در تنظیمات اعلان Android برای هر نوع مشترک‌اند. رکوردهای تکراری موجود به صورت یک هشدار منطقی ظاهر می‌شوند؛ تغییر وضعیت یا حذف بر همه نسخه‌ها اثر دارد. هشدارهای شارژ و تخلیه از هدف‌های تخمین پیروی می‌کنند و شارژ را کنترل نمی‌کنند. کانال مسدود یا پایشگر متوقف، کلیدهای ذخیره‌شده را تغییر نمی‌دهد.</string>
+    <plurals name="alarms_active_count">
+        <item quantity="one">%1$d هشدار فعال است</item>
+        <item quantity="other">%1$d هشدار فعال هستند</item>
+    </plurals>
+    <string name="channel_group_name_alarms" formatted="false">آلارم ها</string>
+    <string name="alarm_type_fully_charged" formatted="false">کاملا شارژ شده</string>
+    <string name="alarm_fully_charged" formatted="false">اکنون باتری کاملاً شارژ شده است</string>
+    <string name="alarms_targets_group">هدف‌های شارژ و تخلیه</string>
+    <string name="alarms_charging_target">هدف شارژ محقق شد</string>
+    <string name="alarm_type_charging_limit_met" formatted="false">حد شارژ رسید</string>
+    <string name="alarm_charging_limit_met" formatted="true">حد شارژ رسید: %1$d%%</string>
+    <string name="alarms_discharging_target">هدف تخلیه محقق شد</string>
+    <string name="alarm_type_discharging_limit_met" formatted="false">حد تخلیه رسید</string>
+    <string name="alarm_discharging_limit_met" formatted="true">حد تخلیه رسید: %1$d%%</string>
+    <string name="alarm_type_charge_drops" formatted="false">وقتی شارژ کاهش یابد به</string>
+    <string name="alarm_charge_drops" formatted="false">"شارژ باتری رسید به یا کمتر از "</string>
+    <string name="alarm_type_charge_rises" formatted="false">وقتی شارژ افزایش یابد به</string>
+    <string name="alarm_charge_rises" formatted="false">"شارژ باتری رسید به یا بیشتر از "</string>
+    <string name="alarm_type_temperature_drops" formatted="false">وقتی دما کاهش یابد به</string>
+    <string name="alarm_temp_drops" formatted="false">"دمای باتری رسید به یا کمتر از "</string>
+    <string name="alarm_type_temperature_rises" formatted="false">وقتی دما افزایش یابد به</string>
+    <string name="alarm_temp_rises" formatted="false">"دمای باتری رسید به یا بیشتر از "</string>
+    <string name="alarms_android_problem">مشکل گزارش‌شده توسط Android</string>
+    <string name="alarms_android_problem_help">مشکل باتری گزارش‌شده توسط سیستم است، نه درصد سلامت ظرفیت.</string>
+    <string name="alarm_type_health_failure" formatted="false">شکست سلامتی</string>
+    <string name="alarm_health_failure" formatted="false">"سلامت باتری این است:"</string>
+    <string name="pref_cat_alarm_conditions" formatted="false">شرایط هشدار</string>
+    <string name="pref_cat_alarm_conditions_help" formatted="false">اینجا جایی است که می توانید کنترل کنید که چه شرایطی باعث ایجاد زنگ هشدار می شود.</string>
+    <string name="pref_alarm_threshold" formatted="false">آستانه</string>
+    <string name="pref_alarm_threshold_help" formatted="false">برای هشدارهای شارژ و دما، آستانه را تنظیم و قانون را ذخیره کنید. هشدار وقتی فعال می‌شود که خوانش در جهت انتخاب‌شده به آستانه برسد یا از آن عبور کند. خوانش‌های تکراری در آستانه، هشدار را تکرار نمی‌کنند. شروع پایش، درون‌ریزی قانون یا فعال کردن آن پس از آستانه، هشدار را فوراً فعال نمی‌کند؛ عبور بعدی لازم است.</string>
+    <string name="alarms_add_threshold">افزودن آستانه</string>
+    <string name="alarms_edit_threshold">ویرایش آستانه</string>
+    <string name="alarms_edit_existing">ویرایش آستانه موجود</string>
+    <string name="alarms_new_enabled">هشدار هنگام افزودن فعال می‌شود.</string>
+    <string name="alarms_edit_keeps_enabled">ویرایش، وضعیت روشن یا خاموش فعلی را حفظ می‌کند.</string>
+    <string name="alarms_enabled">فعال</string>
+    <string name="alarms_disable">غیرفعال کردن</string>
+    <string name="alarms_options">گزینه‌ها: %1$s</string>
+    <string name="alarms_numeric_range">یک عدد صحیح از %1$d تا %2$d وارد کنید.</string>
+    <string name="alarms_temperature_range">عددی از %1$d تا %2$d با حداکثر یک رقم اعشار وارد کنید.</string>
+    <string name="alarms_duplicate">این آستانه از قبل برای این نوع وجود دارد.</string>
+    <string name="alarms_discard_confirmation">تغییرات این هشدار کنار گذاشته شوند؟</string>
+    <string name="alarms_discard">کنار گذاشتن</string>
+    <string name="menu_delete_alarm" formatted="false">حذف هشدار</string>
+    <string name="alarms_delete_threshold_confirmation">%1$s — %2$s حذف شود؟ همه نسخه‌های این آستانه حذف می‌شوند.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">شما گروه اعلان هشدار را برای این برنامه غیرفعال کرده اید.  لطفاً آن را برای دسترسی به آلارم های خود فعال کنید.</string>
+    <string name="alarm_chan_disabled" formatted="false">شما اعلان‌ها را برای این نوع زنگ هشدار غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا از این نوع زنگ هشدار استفاده کنند.</string>
+    <string name="alarm_chan_settings_b" formatted="false">این نوع زنگ هشدار را مدیریت کنید</string>
+    <string name="alarms_delivery_sound_vibration">صدا، لرزش و اعلان</string>
+    <string name="alarms_delivery_sound">صدا و اعلان</string>
+    <string name="alarms_delivery_vibration">لرزش و اعلان</string>
+    <string name="alarms_delivery_notification">فقط اعلان</string>
+    <string name="alarms_channel_help">صدا و نحوه ارائه را این کانال اعلان Android کنترل می‌کند.</string>
+    <string name="pref_dismiss_low_battery_on_recovery">بستن هشدار باتری کم پس از افزایش شارژ</string>
+    <string name="pref_dismiss_low_battery_on_recovery_summary">وقتی شارژ از آستانه بالاتر رفت، اعلان باتری کم حذف شود. سایر اعلان‌های هشدار باقی می‌مانند.</string>
+    <string name="alarms_channel_unavailable">کانال اعلان ساخته نشده یا در دسترس نیست</string>
+    <string name="alarms_settings_unavailable">باز کردن تنظیمات اعلان Android ممکن نشد.</string>
+    <string name="alarms_target_unknown">هدف در دسترس نیست. تنظیمات تخمین را باز کنید.</string>
+    <string name="alarms_monitor_stopped">پایش متوقف است. هشدارهای ذخیره‌شده ارزیابی نمی‌شوند.</string>
+    <string name="alarms_monitor_unconfirmed">اتصال فعالی به پایشگر نیست. ارزیابی هشدارها تأیید نشده است.</string>
+    <string name="alarms_state_unknown">تنظیمات هشدار در دسترس نیست</string>
+    <string name="alarms_stale">تنظیمات قبلی نمایش داده می‌شوند. پیش از تغییر تازه‌سازی کنید.</string>
+    <string name="alarms_conflict">هشدارهای ذخیره‌شده تغییر کردند. پیش از تغییر، تازه‌سازی کنید و آستانه را دوباره باز کنید.</string>
+    <string name="alarms_missing_rule">این هشدار موجود نیست یا نامعتبر است. فهرست هشدارها را بررسی کنید.</string>
+    <string name="alarms_invalid_records">برخی هشدارهای ذخیره‌شده نامعتبرند. این رکوردها را بررسی کنید؛ حذف نشده‌اند.</string>
+    <string name="alarms_database_error">دسترسی به پایگاه داده هشدارها ممکن نشد. دوباره تلاش کنید.</string>
+    <string name="alarms_saved">تنظیمات هشدار ذخیره شدند.</string>
+    <string name="alarms_saved_reload_failed">ذخیره شد، اما آگاه کردن پایشگر ممکن نشد. وضعیت پایش را بررسی کنید.</string>
 
-
-  <string name="pref_cat_channel_settings" formatted="false">تنظیمات کانال اعلان</string>
-  <string name="pref_manage_main_channel" formatted="false">کانال اصلی را مدیریت کنید</string>
-
-  <string name="pref_cat_notification_content" formatted="false">محتوا</string>
-  <string name="pref_live_update_display" formatted="false">نمایش به‌روزرسانی زنده</string>
-  <string name="pref_live_update_display_summary" formatted="false">نمایش در نوار وضعیت:</string>
-  <string name="pref_live_update_display_help" formatted="false">انتخاب کنید تراشهٔ به‌روزرسانی زندهٔ Android 16+ چه زمانی در نوار وضعیت نمایش داده شود.</string>
-  <string name="pref_live_update_display_charging" formatted="false">فقط هنگام شارژ</string>
-  <string name="pref_live_update_keep_main_notification" formatted="false">نگه داشتن اعلان اصلی همراه با به‌روزرسانی زنده</string>
-  <string name="pref_live_update_keep_main_notification_summary" formatted="false">وقتی به‌روزرسانی زنده فعال است، اعلان اصلی کامل نمایش داده شود؟</string>
-  <string name="pref_live_update_keep_main_notification_help" formatted="false">اگر فعال باشد، اعلان اصلی معمولی علاوه بر تراشهٔ نوار وضعیت قابل مشاهده می‌ماند.</string>
-  <string name="pref_chip_content" formatted="false">محتوای تراشه</string>
-  <string name="pref_chip_switching_interval" formatted="false">فاصله تعویض</string>
-  <string name="pref_chip_content_summary" formatted="false">کدام مقادیر و با چه ترتیبی در تراشه نشان داده شوند؟</string>
-  <string name="pref_chip_content_help" formatted="false">مقادیری را که تراشهٔ نوار وضعیت میان آن‌ها جابه‌جا می‌شود انتخاب و ترتیبشان را تنظیم کنید.</string>
-  <string name="pref_chip_switching_interval_summary" formatted="false">انتخاب کنید تراشه هر چند وقت یک‌بار به مقدار انتخاب‌شدهٔ بعدی تغییر کند.</string>
-  <string name="pref_chip_switching_interval_help" formatted="false">انتخاب کنید تراشه هر چند وقت یک‌بار به مقدار انتخاب‌شدهٔ بعدی تغییر کند. این تنظیم زمانی در دسترس است که بیش از یک مقدار انتخاب شده باشد.</string>
-  <string name="pref_chip_switching_interval_custom_message" formatted="false">فاصله را بر حسب ثانیه وارد کنید (1–3600).</string>
-  <string name="pref_chip_switching_interval_error" formatted="false">مقداری از 1 تا 3600 وارد کنید.</string>
-  <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d ثانیه</string>
-  <string name="pref_chip_indicate_charging" formatted="false">نمایش شکلک شارژ</string>
-  <string name="pref_chip_indicate_charging_summary" formatted="false">یک شکلک رعد و برق هنگام شارژ یا شارژ کامل نشان داده شود؟</string>
-  <string name="pref_chip_indicate_charging_help" formatted="false">اگر فعال باشد، تراشه نوار وضعیت یک شکلک رعد و برق را در کنار آن نشان می دهد مقدار تراشه در هنگام شارژ یا در هنگام شارژ کامل.</string>
-  <string name="pref_top_line_content" formatted="false">محتوای خط برتر</string>
-  <string name="pref_top_line_content_help" formatted="false">انتخاب کنید خط بالای اعلان زمان تخمینی باقی‌مانده، زمان سپری‌شده از تغییر وضعیت یا آمار حیاتی انتخاب‌شده را نشان دهد.</string>
-  <string name="pref_bottom_line_content" formatted="false">محتوای خط پایین</string>
-  <string name="pref_bottom_line_content_help" formatted="false">شما همان گزینه هایی را برای خط پایین دارید که برای خط بالا.</string>
-  <string name="time_remaining" formatted="false">زمان باقی مانده</string>
-  <string name="time_since_status_change" formatted="false">زمان از تغییر وضعیت</string>
-  <string name="vital_signs" formatted="false">علائم حیاتی</string>
-
-  <string name="pref_time_remaining_verbosity" formatted="false">زمان باقی مانده پرحرفی</string>
-  <string name="pref_time_remaining_verbosity_help" formatted="false">دستگاه‌ها در اشکال و اندازه‌های مختلف وجود دارند، بنابراین اکثر ترجمه‌ها به این نیاز دارند از اختصارات استفاده کنید تا اطمینان حاصل کنید که برآورد زمان باقیمانده مطابقت دارد به راحتی در منطقه اطلاع رسانی. اگر هنوز جا نیفتاد، می توانید فرمت فشرده را انتخاب کنید. اگر فضای زیادی دارید، ممکن است تنظیمات پرمخاطب را ترجیح دهید.</string>
-  <string name="condensed" formatted="false">متراکم شده</string>
-  <string name="normal" formatted="false">Normal</string>
-  <string name="verbose" formatted="false">پرمخاطب</string>
-
-  <string name="custom" formatted="false">سفارشی...</string>
-
-  <string name="pref_icon_content" formatted="false">محتوای آیکون</string>
-  <string name="pref_icon_content_help" formatted="false">انتخاب کنید آیا نماد نوار وضعیت درصد باتری را نشان دهد یا خیر دمای باتری دما از واحد انتخابی شما پیروی می کند.</string>
-  <string name="pref_show_icon_unit" formatted="false">نمایش نماد واحد</string>
-  <string name="pref_show_icon_unit_help" formatted="false">اگر فعال باشد، آیکون برای درصد باتری علامت درصد و برای دمای باتری علامت درجه را نشان می‌دهد. برای نمایش فقط عدد، این گزینه را غیرفعال کنید.</string>
-
-  <string name="pref_cat_battery_current_main" formatted="false">جریان باتری</string>
-
-  <string name="pref_cat_privileged_access" formatted="false">دسترسی ویژه</string>
-  <string name="pref_use_privileged_access" formatted="false">استفاده از دسترسی ویژه</string>
-  <string name="pref_use_privileged_access_summary" formatted="false">از دسترسی اعطاشدهٔ root یا Shizuku برای داده‌های کامل‌تر و دقیق‌تر دستگاه استفاده شود؟</string>
-  <string name="pref_use_privileged_access_help" formatted="false">دسترسی ویژه می‌تواند داده‌های بیشتری از دستگاه را در دسترس قرار دهد و برخی اندازه‌گیری‌ها را بهبود بخشد. Battery Monitor فقط از دسترسی root یا Shizuku که صریحاً اعطا می‌کنید استفاده می‌کند.</string>
-
-  <string name="pref_battery_current_multiplier" formatted="false">ضرب کننده</string>
-  <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">تشخیص خودکار</string>
-  <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">تشخیص خودکار برای وضعیت یا خوانش فعلی باتری در دسترس نیست.</string>
-  <string name="pref_battery_current_multiplier_detection_result">ضریب به‌طور خودکار روی %1$d تنظیم شد.</string>
-  <string name="pref_battery_current_multiplier_help" formatted="false">برخی دستگاه‌ها واحدها یا علامت‌های غیرمنتظره گزارش می‌کنند. برای اصلاح نتیجه نمایش‌داده‌شده، مقدار گزارش‌شده را در اینجا ضرب کنید.\n
-    \n
-    به‌عنوان یک مرجع تقریبی برای تلفن‌ها، علامت استاندارد Android هنگام شارژ مثبت و هنگام تخلیه منفی است. شارژ فعال معمولاً حدود +500 تا +5000 mA و تخلیه عادی حدود -100 تا -3000 mA است. وقتی باتری تقریباً پر است یا تلفن بیکار است، مقادیر نزدیک صفر می‌توانند طبیعی باشند. اگر اندازه مقدار حدود 1000 برابر کوچک‌تر یا بزرگ‌تر به نظر می‌رسد، یا علامت برعکس است، ضریب را تنظیم کنید.</string>
-
-  <string name="pref_prefer_average_battery_current" formatted="false">ترجیح جریان میانگین</string>
-  <string name="pref_prefer_average_battery_current_summary" formatted="false">در صورت وجود، از میانگین اخیر استفاده شود؟</string>
-  <string name="pref_prefer_current_avg_help" formatted="false">برخی سیستم‌ها علاوه بر جریان لحظه‌ای، میانگین اخیر را ارائه می‌کنند. دوره و کیفیت میانگین‌گیری در دستگاه‌ها متفاوت است. اگر میانگین موجود یا قابل استفاده نیست، این گزینه را خاموش کنید.</string>
-
-
-  <string name="pref_indicate_charging" formatted="false">شارژ را نشان می دهد</string>
-  <string name="pref_indicate_charging_summary" formatted="false">نماد تغییر دهید تا هنگام شارژ نشان داده شود؟</string>
-  <string name="pref_indicate_charging_help" formatted="false">آیکون شارژ می‌تواند یک نماد صاعقه زیر عدد نشان دهد. اگر همان آیکون را هنگام شارژ و تخلیه ترجیح می‌دهید، این گزینه را غیرفعال کنید.</string>
-
-  <string name="pref_cat_logging" formatted="false">ورود به سیستم</string>
-  <string name="pref_enable_logging" formatted="false">Logging را فعال کنید</string>
-  <string name="pref_enable_logging_summary" formatted="false">گزارش وضعیت باتری تغییر می کند؟</string>
-  <string name="pref_enable_logging_help" formatted="false">اگر فعال باشد، Battery Monitor تغییرات وضعیت باتری را ثبت می کند.</string>
-  <string name="pref_max_log_age" formatted="false">حداکثر سن ورود</string>
-  <string name="pref_max_log_age_summary" formatted="false">حذف گزارش های قدیمی تر از:</string>
-  <string name="pref_max_log_age_help" formatted="false">اگر ثبت گزارش فعال باشد، هر بار که دستگاه را به برق وصل کنید، گزارش‌های قدیمی‌تر از این مقدار حذف می‌شوند. گزینه هرگز حذف نشود را انتخاب کنید تا گزارش‌ها تا زمانی که خودتان آن‌ها را پاک کنید باقی بمانند.</string>
-
-  <string name="pref_temperature_unit" formatted="false">واحد دما</string>
-  <string name="pref_temperature_unit_help" formatted="false">انتخاب کنید دما با درجهٔ سانتی‌گراد یا فارنهایت نمایش داده شود.</string>
-
-  <string name="pref_cat_autostart" formatted="false">شروع خودکار</string>
-  <string name="pref_autostart_at_boot" formatted="false">شروع خودکار در بوت</string>
-  <string name="pref_autostart_at_boot_summary" formatted="false">هنگام بوت شدن دستگاه، مانیتور باتری را راه اندازی کنید:</string>
-  <string name="pref_autostart_at_boot_help" formatted="false">کنترل می کند که آیا مانیتور باتری باید خودش روشن شود یا خیر به طور خودکار هنگام بوت شدن دستگاه.\n
-    \n
-    گزینه \"If Running on Shutdown\" با توجه به کار می کند آیا اخیراً مانیتور باتری را به صورت دستی راه اندازی کرده اید یا متوقف کرده اید. بنابراین اگر مانیتور باتری را از طریق برخی دیگر بکشید یعنی مانند یک قاتل وظیفه، مانیتور باتری نمی داند شما آن را متوقف کردید، و اگر آن را داشته باشید همچنان در هنگام راه اندازی شروع می شود این را تنظیم کنید.\n
-    \n
-    NOTE: اگر شما یک مانیتور باتری داشته باشید، آندروید همیشه مانیتور باتری را در بوت راه اندازی می کند ویجت های دسکتاپ مانیتور باتری در این صورت این تنظیمات بی ربط است.</string>
-
-  <string name="predictor_sensitive" formatted="false">حساس</string>
-  <string name="predictor_conservative" formatted="false">محافظه کار</string>
-  <string name="predictor_since_status_change" formatted="false">از زمان تغییر وضعیت</string>
-  <string name="predictor_long_term_ave" formatted="false">میانگین بلند مدت</string>
-
-  <string name="pref_cat_predictor" formatted="false">برآوردهای زمان باقی مانده</string>
-  <string name="pref_prediction_type" formatted="false">نوع تخمین</string>
-  <string name="pref_prediction_type_help" formatted="false">در اینجا می توانید انتخاب کنید که چگونه مانیتور باتری باقیمانده شما را پیش بینی کند عمر باتری / زمان تا شارژ کامل.\n
-    \n
-    الگوریتم \"حساس\" دقیقاً بر اساس پنج مورد آخر شما است دقیقه استفاده اگر نگرانی اصلی شما این است که \"تا کی؟ باتری دوام می آورد اگر به کاری که می کنم ادامه دهم؟\" پس این است الگوریتم برای شما.\n
-    \n
-    الگوریتم \"محافظه کار\" پیش فرض است. همچنین مبتنی است در استفاده اخیر، اما سعی می کند با طولانی مدت شما متفاوت نباشد میانگین خیلی آزادانه.\n
-    \n
-    \"Since Status Change\" را انتخاب کنید تا بر اساس پیش‌بینی انجام شود دقیقاً در جلسه فعلی شما.\n
-    \n
-    در نهایت، شما می توانید پیش بینی را تنها بر اساس خود داشته باشید متوسط استفاده طولانی مدت</string>
-
-  <string name="pref_cat_language" formatted="false">زبان و قالب‌بندی</string>
-  <string name="pref_change_app_language" formatted="false">زبان برنامه</string>
-  <string name="pref_change_app_language_help" formatted="false">زبان مورد استفادهٔ Battery Monitor را انتخاب کنید. پیش‌فرض سیستم از زبان دستگاه پیروی می‌کند.</string>
-  <string name="pref_long_duration_format" formatted="false">قالب مدت‌زمان طولانی</string>
-  <string name="pref_long_duration_format_help" formatted="false">حالت روز و ساعت پس از ۲۴ ساعت از روز استفاده می‌کند، مانند 1d 3h. حالت فقط ساعت کل مدت را به ساعت نگه می‌دارد، مانند 27h.</string>
-  <string name="long_duration_format_days_and_hours" formatted="false">روز و ساعت</string>
-  <string name="long_duration_format_hours_only" formatted="false">فقط ساعت</string>
-
-  <string name="advanced_action_refresh" formatted="false">نوسازی</string>
-  <string name="advanced_status_loading" formatted="false">در حال بارگذاری آمار پیشرفته باتری...</string>
-  <string name="advanced_status_no_access" formatted="false">برای نمایش آمار پیشرفته باتری به root یا Shizuku نیاز است.</string>
-
-  <string name="alarms_overview" formatted="false">بررسی اجمالی هشدارها</string>
-  <string name="alarms_overview_help" formatted="false">این صفحه به شما امکان می دهد آلارم های جدید اضافه کنید، به سرعت فعال یا غیرفعال کنید آلارم های موجود، یا حذف آلارم ها.\n
-    \n
-    برای افزودن زنگ هشدار جدید، \"افزودن زنگ\" را فشار دهید — با این کار یک زنگ جدید ایجاد می شود زنگ هشدار و شما را به صفحه تنظیمات آلارم می برد، جایی که می توانید تنظیمات زنگ جدید را کنترل کنید. به کمک آن صفحه مراجعه کنید برای جزئیات بیشتر.\n
-    \n
-    در زیر دکمه \"افزودن زنگ هشدار\" لیستی از هر زنگ هشداری وجود دارد ایجاد شد.\n
-    \n
-    • برای ویرایش زنگ موجود، فقط آن را فشار دهید.\n
-    • برای حذف زنگ هشدار، آن را به مدت طولانی فشار دهید، سپس \"حذف" را انتخاب کنید زنگ هشدار\". (همچنین می توانید یک زنگ هشدار را از آلارم فردی حذف کنید صفحه تنظیمات با فشار دادن MENU سپس \"Delete Alarm\".)\n
-    • برای اینکه به راحتی فعال بودن زنگ هشدار را تغییر دهید، کلید را فشار دهید به سمت متن زنگ هشدار بروید. (همچنین می توانید یا را فعال کنید زنگ هشدار را از صفحه تنظیمات زنگ جداگانه غیرفعال کنید.)</string>
-
-  <string name="pref_cat_alarm_conditions" formatted="false">شرایط هشدار</string>
-  <string name="pref_cat_alarm_conditions_help" formatted="false">اینجا جایی است که می توانید کنترل کنید که چه شرایطی باعث ایجاد زنگ هشدار می شود.</string>
-  <string name="pref_alarm_threshold" formatted="false">آستانه</string>
-  <string name="pref_alarm_threshold_help" formatted="false">برای هشدارهای شارژ و دما، باید دما را تنظیم کنید یا سطح شارژی که باعث ایجاد زنگ هشدار می شود.</string>
-
-  <string name="boot_pref_always" formatted="false">همیشه</string>
-  <string name="boot_pref_never" formatted="false">هرگز</string>
-  <string name="boot_pref_if_running" formatted="false">اگر در حالت خاموش شدن اجرا می شود</string>
-
-  <string name="age_1_day" formatted="false">1 روز</string>
-  <string name="age_2_days" formatted="false">2 روز</string>
-  <string name="age_4_days" formatted="false">4 روز</string>
-  <string name="age_1_week" formatted="false">1 هفته</string>
-  <string name="age_2_weeks" formatted="false">2 هفته</string>
-  <string name="age_3_weeks" formatted="false">3 هفته</string>
-  <string name="age_4_weeks" formatted="false">4 هفته</string>
-  <string name="age_never_delete" formatted="false">هرگز حذف نشود</string>
-  <string name="pref_content_percent" formatted="false">درصد باتری</string>
-  <string name="pref_content_temperature" formatted="false">دمای باتری</string>
-
-  <string name="chip_switching_interval_2_seconds" formatted="false">2 ثانیه</string>
-  <string name="chip_switching_interval_5_seconds" formatted="false">5 ثانیه</string>
-  <string name="chip_switching_interval_10_seconds" formatted="false">10 ثانیه</string>
-  <string name="chip_switching_interval_15_seconds" formatted="false">15 ثانیه</string>
-  <string name="chip_switching_interval_30_seconds" formatted="false">30 ثانیه</string>
-
-  <string name="advanced_status_waiting_permission" formatted="false">در انتظار مجوز Shizuku...</string>
-  <string name="shizuku_not_running" formatted="false">Shizuku را اجرا کنید تا دسترسی ویژه به Battery Monitor داده شود.</string>
-  <string name="shizuku_permission_denied_permanently" formatted="false">مجوز Battery Monitor را به‌صورت دستی در Shizuku اعطا کنید.</string>
-  <string name="advanced_status_no_stats" formatted="false">در حال حاضر هیچ آمار پیشرفته‌ای از باتری روی این دستگاه در دسترس نیست.</string>
-  <string name="advanced_section_counters" formatted="false">شمارنده‌ها</string>
-  <string name="advanced_section_capacity" formatted="false">ظرفیت</string>
-  <string name="advanced_section_charging" formatted="false">شارژ</string>
-  <string name="advanced_section_service" formatted="false">سرویس باتری Android</string>
-  <string name="advanced_section_sysfs" formatted="false">فایل های power_supply هسته</string>
-  <string name="advanced_section_metadata" formatted="false">فراداده</string>
-  <string name="advanced_field_charge_counter" formatted="false">برآورد شارژ باقی‌مانده</string>
-  <string name="advanced_field_current_now" formatted="false">جریان فعلی</string>
-  <string name="advanced_field_current_average" formatted="false">میانگین جریان</string>
-  <string name="advanced_field_energy_counter" formatted="false">شمارنده انرژی</string>
-  <string name="advanced_field_cycle_count" formatted="false">تعداد چرخه</string>
-  <string name="advanced_field_reported_capacity" formatted="false">ظرفیت گزارش شده</string>
-  <string name="advanced_field_state_of_health" formatted="false">وضعیت سلامت</string>
-  <string name="advanced_field_full_charge_capacity" formatted="false">ظرفیت شارژ کامل</string>
-  <string name="advanced_field_design_capacity" formatted="false">ظرفیت طراحی</string>
-  <string name="advanced_field_estimated_health" formatted="false">سلامت تخمینی</string>
-  <string name="advanced_field_charge_time_remaining" formatted="false">زمان باقی مانده تا تکمیل شارژ</string>
-  <string name="advanced_field_max_charging_current" formatted="false">حداکثر جریان شارژ</string>
-  <string name="advanced_field_max_charging_voltage" formatted="false">حداکثر ولتاژ شارژ</string>
-  <string name="advanced_field_charging_policy" formatted="false">سیاست شارژ</string>
-  <string name="advanced_field_charging_state" formatted="false">وضعیت شارژ</string>
-  <string name="advanced_field_capacity_level" formatted="false">سطح ظرفیت</string>
-  <string name="advanced_field_manufacturing_date" formatted="false">تاریخ ساخت</string>
-  <string name="advanced_field_first_use_date" formatted="false">تاریخ اولین استفاده</string>
-  <string name="advanced_field_battery_serial_number" formatted="false">شماره سریال باتری</string>
-  <string name="advanced_field_battery_part_status" formatted="false">وضعیت قطعه باتری</string>
-  <string name="advanced_field_battery_part_manufacturer" formatted="false">سازنده قطعه باتری</string>
-  <string name="advanced_field_battery_model_name" formatted="false">نام مدل باتری</string>
-  <string name="advanced_field_minimum_design_voltage" formatted="false">حداقل ولتاژ طراحی</string>
-  <string name="advanced_value_not_available" formatted="false">در دسترس نیست</string>
-  <string name="advanced_help_overview" formatted="false">زبانه پیشرفته، عیب یابی های اضافی باتری را که از سرویس های سیستمی Android و فایل های power_supply هسته جمع آوری می شوند نشان می دهد. در دسترس بودن این داده ها به دستگاه، نسخه Android، تراشه شارژ، تراشه اندازه گیری باتری و مواردی که سازنده در اختیار می گذارد بستگی دارد.</string>
-  <string name="advanced_help_counters" formatted="false">شمارنده ها شامل مقادیر زنده یا نمونه برداری شده اخیر مانند شمارنده شارژ، جریان، شمارنده انرژی و تعداد چرخه ها هستند. بعضی دستگاه ها فقط بخشی از این مقادیر را ارائه می دهند و واحدها ممکن است مستقیما از درایور سخت افزار بیایند.</string>
-  <string name="advanced_help_capacity" formatted="false">ظرفیت، ظرفیت شارژ کامل، ظرفیت طراحی و سلامت تخمینی را نشان می دهد. سلامت تخمینی از تقسیم ظرفیت شارژ کامل بر ظرفیت طراحی به دست می آید، بنابراین دقت آن به داده های گزارش شده توسط دستگاه بستگی دارد.</string>
-  <string name="advanced_help_charging" formatted="false">بخش شارژ مقادیر مربوط به مسیر فعال شارژ را نشان می دهد، مانند بیشینه جریان یا ولتاژ شارژ، سیاست شارژ، وضعیت شارژ و سطح ظرفیت. این فیلدها ممکن است بین شارژرها و حالت های شارژ تغییر کنند.</string>
-  <string name="advanced_help_service" formatted="false">سرویس باتری Android فیلدهای خام گزارش شده توسط `dumpsys battery` را نشان می دهد. این ها مقادیر سطح چارچوب هستند و معمولا منبع شارژ، وضعیت باتری، دما، ولتاژ و اطلاعات وضعیتی دیگر را شامل می شوند.</string>
-  <string name="advanced_help_sysfs" formatted="false">فایل های power_supply هسته مقادیر خام تک خطی خوانده شده از `/sys/class/power_supply` را نشان می دهند، مانند گره های battery یا BMS یا USB یا شارژر بی سیم. این نما عمدا سطح پایین است و ممکن است نام های مخصوص درایور داشته باشد که بیشتر برای اشکال زدایی مفید هستند.</string>
-  <string name="advanced_help_metadata" formatted="false">فراداده، ویژگی های سطح بالاتر باتری را که از طریق BatteryManager در دسترس هستند نشان می دهد؛ مانند وضعیت سلامت، زمان باقی مانده تا تکمیل شارژ، جزئیات ساخت یا وضعیت تعویض. بیشتر این فیلدها به دسترسی ویژه نیاز دارند و بسیاری از دستگاه ها فقط بخش کوچکی از آنها را ارائه می دهند.</string>
-  <string name="advanced_help_troubleshooting_title" formatted="false">عیب یابی</string>
-  <string name="advanced_help_troubleshooting" formatted="false">اگر زبانه خالی است، ابتدا مطمئن شوید آمارهای پیشرفته در تنظیمات فعال شده اند. در دستگاه های روت شده Battery Monitor ابتدا `su` را امتحان می کند. در دستگاه های بدون روت با Shizuku، Shizuku باید نصب و فعال باشد و Battery Monitor باید درون Shizuku مجوز گرفته باشد. بعضی دستگاه ها همچنان فقط چند فیلد را ارائه می دهند و این یعنی داده های بیشتر از طریق Android یا هسته روی آن دستگاه در دسترس نیست.</string>
-
-  <string name="pref_export_settings" formatted="false">صادر کردن تنظیمات</string>
-  <string name="pref_export_settings_summary" formatted="false">ذخیره تنظیمات فعلی در یک فایل</string>
-  <string name="pref_import_settings" formatted="false">وارد کردن تنظیمات</string>
-  <string name="pref_import_settings_summary" formatted="false">بازیابی تنظیمات از یک فایل</string>
-  <string name="settings_exported" formatted="false">تنظیمات با موفقیت صادر شد</string>
-  <string name="settings_imported" formatted="false">تنظیمات با موفقیت وارد شد</string>
-  <string name="invalid_settings_file" formatted="false">فایل تنظیمات نامعتبر است</string>
-  <string name="settings_file_version_warning" formatted="false">این فایل با نسخه جدیدتری از برنامه ایجاد شده است. وارد کردن آن ممکن است باعث رفتار غیرمنتظره شود. با این حال ادامه می‌دهید؟</string>
-
-  <string name="background_service_starting" formatted="false">پایشگر باتری در حال راه‌اندازی است…</string>
-  <string name="remaining_charge" formatted="false">شارژ باقی‌مانده</string>
-  <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
-  <string name="remaining_charge_unavailable">شارژ باقی‌مانده در دسترس نیست</string>
-  <string name="pref_show_remaining_charge" formatted="false">نمایش شارژ باقی‌مانده</string>
-  <string name="pref_show_remaining_charge_summary" formatted="false">شارژ باقی‌مانده باتری که دستگاه گزارش می‌کند بر حسب mAh نمایش داده شود؟</string>
-  <string name="vital_sign_voltage" formatted="false">ولتاژ باتری</string>
-
-  <string name="pref_vital_signs_content" formatted="false">محتوای آمار حیاتی</string>
-  <string name="pref_vital_signs_content_summary" formatted="false">کدام مقادیر در آمار حیاتی گنجانده شوند و با چه ترتیبی؟</string>
-  <string name="pref_vital_signs_reorder_handle" formatted="true">تغییر ترتیب %1$s</string>
-
-  <string name="pref_expanded_notification" formatted="false">گسترش جزئیات اعلان</string>
-  <string name="pref_expanded_notification_summary" formatted="false">جزئیات همراه با برچسب هنگام باز شدن اعلان نمایش داده شود؟</string>
-  <string name="pref_expanded_notification_help" formatted="false">با فعال کردن این گزینه، باز کردن اعلان اصلی زمان باقی‌مانده، زمان سپری‌شده از تغییر وضعیت و هر مقدار از آمار حیاتی را در خطی جداگانه همراه با برچسب نشان می‌دهد، به‌جای خلاصهٔ تک‌خطی.</string>
-  <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
-
-  <string name="pref_expanded_live_update" formatted="false">گسترش جزئیات به‌روزرسانی زنده</string>
-  <string name="pref_expanded_live_update_summary" formatted="false">جزئیات همراه با برچسب در اعلان به‌روزرسانی زنده نمایش داده شود؟</string>
-  <string name="pref_expanded_live_update_help" formatted="false">اعلان‌های به‌روزرسانی زنده همیشه به‌صورت بازشده نمایش داده می‌شوند. با فعال کردن این گزینه، به‌روزرسانی زنده زمان باقی‌مانده، زمان سپری‌شده از تغییر وضعیت و هر مقدار از آمار حیاتی را در خطی جداگانه همراه با برچسب نشان می‌دهد.</string>
-
-  <string name="pref_backup_restore" formatted="false">پشتیبان‌گیری و بازیابی</string>
-  <string name="backup_restore_settings_summary" formatted="false">از تنظیمات برنامه و داده‌های باتری نسخهٔ پشتیبان تهیه کنید، آن‌ها را بازیابی و منتقل کنید.</string>
-  <string name="pref_auto_log_export" formatted="false">برون‌بری خودکار گزارش‌ها</string>
-  <string name="pref_set_auto_log_export" formatted="false">تنظیم برون‌بری خودکار گزارش‌ها</string>
-  <string name="pref_edit_auto_log_export" formatted="false">ویرایش برون‌بری خودکار گزارش‌ها</string>
-  <string name="pref_disable_auto_log_export" formatted="false">غیرفعال کردن برون‌بری خودکار</string>
-  <string name="pref_auto_log_export_not_set_summary" formatted="false">ذخیرهٔ دوره‌ای گزارش‌های جدید در یک پوشه</string>
-  <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
-    %4$s</string>
-  <string name="pref_auto_log_export_frequency" formatted="false">فاصلهٔ برون‌بری</string>
-  <string name="pref_auto_log_export_mode" formatted="false">مدیریت پرونده</string>
-  <string name="pref_auto_log_export_format" formatted="false">قالب برون‌بری</string>
-  <string name="pref_auto_log_export_directory" formatted="false">تغییر پوشه</string>
-  <string name="auto_log_export_help" formatted="false">برون‌بری خودکار فقط گزارش‌هایی را ذخیره می‌کند که از برون‌بری خودکار قبلی جمع‌آوری شده‌اند. فاصلهٔ اجرا و ایجاد پروندهٔ جداگانه یا افزودن ورودی‌های جدید به یک پروندهٔ پیوسته را انتخاب کنید. ممکن است Android هنگام بی‌کار بودن دستگاه برون‌بری را به تأخیر بیندازد.</string>
-  <string name="auto_log_export_format_help" formatted="false">برای خواندن، پالایش، رسم نمودار یا بررسی دستی گزارش‌ها در صفحه‌گسترده یا ویرایشگر متن، CSV را انتخاب کنید. اگر پرونده بیشتر برای پشتیبان‌گیری است JSON را انتخاب کنید؛ این قالب داده‌های ساختاریافتهٔ Battery Monitor را حفظ می‌کند.</string>
-  <string name="auto_log_export_mode_new_file" formatted="false">ایجاد پروندهٔ جدید</string>
-  <string name="auto_log_export_mode_append" formatted="false">افزودن گزارش‌های جدید به پروندهٔ موجود</string>
-  <string name="pref_export_alarms" formatted="false">صادر کردن هشدارها</string>
-  <string name="pref_export_alarms_summary" formatted="false">ذخیره هشدارهای فعلی در یک فایل</string>
-  <string name="pref_import_alarms" formatted="false">وارد کردن هشدارها</string>
-  <string name="pref_import_alarms_summary" formatted="false">جایگزینی هشدارهای فعلی با هشدارهای یک فایل</string>
-  <string name="alarms_exported" formatted="false">هشدارها با موفقیت صادر شدند</string>
-  <string name="alarms_imported" formatted="false">هشدارها با موفقیت وارد شدند</string>
-  <string name="invalid_alarms_file" formatted="false">فایل هشدار نامعتبر است</string>
-  <string name="pref_backup_device_data" formatted="false">پشتیبان‌گیری از داده‌های ویژه دستگاه</string>
-  <string name="pref_export_device_data" formatted="false">صادر کردن داده‌های ویژه دستگاه</string>
-  <string name="pref_export_device_data_summary" formatted="false">ذخیره گزارش‌ها و داده‌های پیش‌بینی در یک فایل</string>
-  <string name="pref_import_device_data" formatted="false">وارد کردن داده‌های ویژه دستگاه</string>
-  <string name="pref_import_device_data_summary" formatted="false">بازیابی گزارش‌ها و داده‌های پیش‌بینی از یک فایل</string>
-  <string name="device_data_logs" formatted="false">گزارش‌ها</string>
-  <string name="device_data_predictor" formatted="false">داده‌های پیش‌بینی</string>
-  <string name="device_data_backup_warning" formatted="false">این داده‌ها ویژه دستگاهی هستند که در آن جمع‌آوری شده‌اند. وارد کردن آن‌ها در دستگاهی دیگر ممکن است باعث پیش‌بینی‌های نادرست یا رفتار غیرمنتظره دیگری در برنامه شود.</string>
-  <string name="device_data_exported" formatted="false">داده‌های ویژه دستگاه با موفقیت صادر شدند</string>
-  <string name="device_data_imported" formatted="false">داده‌های ویژه دستگاه با موفقیت وارد شدند</string>
-  <string name="invalid_device_data_file" formatted="false">فایل داده‌های ویژه دستگاه نامعتبر است</string>
-  <string name="device_data_file_empty" formatted="false">این فایل حاوی هیچ داده پشتیبانی‌شده ویژه دستگاه نیست</string>
-  <string name="pref_import_logs_csv" formatted="false">وارد کردن گزارش‌ها از CSV</string>
-  <string name="pref_import_logs_csv_summary" formatted="false">وارد کردن گزارش‌ها از یک فایل CSV صادرشده</string>
-  <string name="csv_logs_import_warning" formatted="false">قالب‌های CSV ممکن است بین نسخه‌های برنامه متفاوت باشند، بنابراین وارد کردن همیشه به‌درستی کار نمی‌کند.</string>
-  <string name="csv_logs_imported" formatted="false">گزارش‌های CSV با موفقیت وارد شدند</string>
-  <string name="invalid_csv_logs_file" formatted="false">فایل گزارش‌های CSV نامعتبر یا ناسازگار است</string>
-  <string name="log_import_mode_title" formatted="false">وارد کردن گزارش‌ها</string>
-  <string name="log_import_mode_message" formatted="false">با گزارش‌های واردشده چگونه برخورد شود؟</string>
-  <string name="log_import_replace" formatted="false">جایگزینی گزارش‌های موجود</string>
-  <string name="log_import_add" formatted="false">افزودن به گزارش‌های موجود</string>
-  <string name="pref_general_backup" formatted="false">پشتیبان‌گیری عمومی برنامه</string>
-  <string name="pref_export_general_backup" formatted="false">صادر کردن پشتیبان عمومی</string>
-  <string name="pref_export_general_backup_summary" formatted="false">ذخیره تنظیمات، هشدارها و داده‌های ویژه دستگاه در یک فایل ZIP</string>
-  <string name="pref_import_general_backup" formatted="false">وارد کردن پشتیبان عمومی</string>
-  <string name="pref_import_general_backup_summary" formatted="false">بازیابی داده‌های انتخاب‌شده از فایل ZIP پشتیبان عمومی</string>
-  <string name="general_backup_restore_message" formatted="false">مواردی را که می‌خواهید بازیابی شوند انتخاب کنید.</string>
-  <string name="general_backup_exported" formatted="false">پشتیبان عمومی با موفقیت صادر شد</string>
-  <string name="general_backup_imported" formatted="false">پشتیبان عمومی با موفقیت وارد شد</string>
-  <string name="invalid_general_backup_file" formatted="false">فایل پشتیبان عمومی نامعتبر یا ناسازگار است</string>
-  <string name="backup_restore_help_overview" formatted="false">از پشتیبان‌گیری برای ذخیرهٔ نسخه‌ای از داده‌های برنامه و بازیابی آن در آینده استفاده کنید.</string>
-  <string name="general_backup_help" formatted="false">پشتیبان‌گیری عمومی تنظیمات، هشدارها و داده‌های مختص دستگاه را با هم ذخیره می‌کند. هنگام بازیابی می‌توانید انتخاب کنید کدام داده‌های موجود وارد شوند.</string>
-  <string name="settings_backup_help" formatted="false">پشتیبان تنظیمات، ترجیحات برنامه را ذخیره می‌کند. وارد کردن آن ترجیحات ذخیره‌شده را بازیابی می‌کند.</string>
-  <string name="alarms_backup_help" formatted="false">پشتیبان هشدارها، هشدارهای شما را ذخیره می‌کند. وارد کردن آن همهٔ هشدارهای فعلی را با هشدارهای نسخهٔ پشتیبان جایگزین می‌کند.</string>
-  <string name="device_specific_backup_help" formatted="false">پشتیبان مختص دستگاه، گزارش‌ها و داده‌های پیش‌بینی‌کننده را ذخیره می‌کند. هنگام وارد کردن می‌توانید یکی یا هر دو را انتخاب کنید. این داده‌ها متعلق به دستگاه مبدأ هستند؛ استفاده از آن‌ها در دستگاهی دیگر ممکن است باعث پیش‌بینی‌های نادرست یا رفتار غیرمنتظره شود. هنگام وارد کردن گزارش‌ها، افزودن آن‌ها یا جایگزینی گزارش‌های موجود را انتخاب کنید.</string>
-  <string name="csv_logs_import_help" formatted="false">می‌توانید گزارش‌ها را از یک فایل CSV که قبلاً صادر شده است وارد کنید. وارد کردن بین نسخه‌های مختلف برنامه همیشه به‌درستی کار نمی‌کند. افزودن گزارش‌های واردشده یا جایگزینی گزارش‌های موجود را انتخاب کنید.</string>
-
-  <string name="diagnostics" formatted="false">عیب‌یابی</string>
-  <string name="diagnostics_summary" formatted="false">مجوزها و پایداری پایش را بررسی کنید و گزارشی برای رفع مشکل بسازید</string>
-  <string name="diagnostics_permissions" formatted="false">مجوزها و دسترسی</string>
-  <string name="diagnostics_notifications" formatted="false">اعلان‌ها</string>
-  <string name="diagnostics_root" formatted="false">دسترسی روت</string>
-  <string name="diagnostics_shizuku" formatted="false">دسترسی Shizuku</string>
-  <string name="diagnostics_monitoring" formatted="false">پایش پس‌زمینه</string>
-  <string name="diagnostics_service" formatted="false">سرویس پایش</string>
-  <string name="diagnostics_database" formatted="false">پایگاه داده گزارش‌ها</string>
-  <string name="diagnostics_battery_optimization" formatted="false">بهینه‌سازی باتری</string>
-  <string name="diagnostics_vendor_settings" formatted="false">تنظیمات سازنده</string>
-  <string name="diagnostics_vendor_settings_summary" formatted="false">تنظیمات اضافی فعالیت پس‌زمینه یا شروع خودکار موجود در دستگاه را باز کنید</string>
-  <string name="diagnostics_dont_kill_my_app" formatted="false">راهنمای فعالیت پس‌زمینه</string>
-  <string name="diagnostics_dont_kill_my_app_summary" formatted="false">راهنمای ویژه دستگاه را در Don’t Kill My App باز کنید</string>
-  <string name="diagnostics_device_and_logs" formatted="false">دستگاه و گزارش عیب‌یابی</string>
-  <string name="diagnostics_debug_logs" formatted="false">جمع‌آوری گزارش‌های اشکال‌زدایی</string>
-  <string name="diagnostics_export" formatted="false">صدور گزارش عیب‌یابی</string>
-  <string name="diagnostics_export_summary" formatted="false">اطلاعات دستگاه، مجوزها، پایش و گزارش‌های موجود را در یک فایل متنی ذخیره کنید</string>
-  <string name="diagnostics_clear" formatted="false">حذف گزارش‌های اشکال‌زدایی جمع‌آوری‌شده</string>
-  <string name="diagnostics_clear_summary" formatted="false">گزارش‌های اشکال‌زدایی ذخیره‌شده توسط برنامه را حذف کنید</string>
-  <string name="diagnostics_checking" formatted="false">در حال بررسی…</string>
-  <string name="diagnostics_root_unavailable" formatted="false">در دسترس نیست. برای درخواست یا بررسی دسترسی روت بزنید.</string>
-  <string name="diagnostics_tap_to_check" formatted="false">بررسی نشده است. برای درخواست یا بررسی دسترسی بزنید.</string>
-  <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">مجوز موجود نیست. برای باز کردن تنظیمات بزنید.</string>
-  <string name="diagnostics_shizuku_permission_missing" formatted="false">مجوز موجود نیست. برای درخواست آن از Shizuku بزنید.</string>
-  <string name="diagnostics_unrestricted" formatted="false">بدون محدودیت</string>
-  <string name="diagnostics_restricted_tap_to_fix" formatted="false">محدود شده است. برای پایش مطمئن در پس‌زمینه بزنید.</string>
-  <string name="diagnostics_not_running_tap_to_start" formatted="false">پاسخ جدیدی نیست. برای درخواست راه‌اندازی مجدد بزنید.</string>
-  <string name="diagnostics_no_recent_database_access" formatted="false">دسترسی موفق جدیدی به پایگاه داده نیست</string>
-  <string name="diagnostics_working_last_seen" formatted="true">در حال کار · آخرین پاسخ %1$s پیش</string>
-  <string name="diagnostics_debug_logs_warning" formatted="false">گزارش‌های اشکال‌زدایی ممکن است اطلاعات شخصی داشته باشند. فقط هنگام بررسی مشکل فعال کنید، فایل صادرشده را ببینید و در اشتراک‌گذاری عمومی احتیاط کنید.</string>
-  <string name="diagnostics_logs_cleared" formatted="false">گزارش‌های اشکال‌زدایی حذف شدند</string>
-  <string name="diagnostics_logs_clear_failed" formatted="false">گزارش‌های اشکال‌زدایی حذف نشدند</string>
-  <string name="diagnostics_exported" formatted="false">گزارش عیب‌یابی صادر شد</string>
-  <string name="diagnostics_export_failed" formatted="false">گزارش عیب‌یابی صادر نشد</string>
-  <string name="diagnostics_help_title" formatted="false">عیب‌یابی چگونه کمک می‌کند</string>
-  <string name="diagnostics_help_overview" formatted="false">این صفحه بررسی می‌کند که Battery Monitor همه چیز لازم برای پایش پس‌زمینه را دارد. اگر چیزی کم است، برای باز کردن محل رفع آن روی مورد بزنید.</string>
-  <string name="diagnostics_help_report" formatted="false">هنگام گزارش مشکل، این گزارش می‌تواند برای یافتن علت ضروری باشد. وضعیت دستگاه و برنامه و گزارش‌های فعال را شامل می‌شود. گزارش‌ها ممکن است اطلاعات شخصی داشته باشند؛ فایل را بررسی و با احتیاط به اشتراک بگذارید.</string>
-  <string name="diagnostics_service_restarting" formatted="false">سرویس پاسخ نداد. در حال راه‌اندازی مجدد…</string>
-  <string name="diagnostics_service_restart_failed" formatted="false">سرویس پایش پس از راه‌اندازی مجدد پاسخ نداد. برنامه را دوباره راه‌اندازی کنید.</string>
-  <string name="diagnostics_database_failed_storage" formatted="false">بررسی پایگاه داده ناموفق بود. مقداری از فضای ذخیره‌سازی دستگاه را آزاد کنید و دوباره امتحان کنید.</string>
-  <string name="diagnostics_database_failed" formatted="false">بررسی پایگاه داده ناموفق بود. برنامه را دوباره راه‌اندازی و مجدداً امتحان کنید.</string>
-  <string name="diagnostics_service_responded" formatted="false">سرویس پایش پاسخ داد</string>
-  <string name="diagnostics_database_check_succeeded" formatted="false">بررسی خواندن و نوشتن پایگاه داده موفق بود</string>
-
-  <string name="charging_diagnostics_title" formatted="false">عیب‌یابی محدودیت شارژ سازنده</string>
-  <string name="charging_diagnostics_instructions_hint" formatted="false">برای تهیه گزارشی مفید، پیش از ثبت تصاویر «راهنما» را باز کنید و مراحل آماده‌سازی را انجام دهید.</string>
-  <string name="charging_diagnostics_capture" formatted="false">گرفتن تصویر لحظه‌ای</string>
-  <string name="charging_diagnostics_capture_summary" formatted="false">یک حالت شارژ را در تنظیمات دستگاه انتخاب کنید و سپس سیگنال‌های آن را ثبت کنید</string>
-  <string name="charging_diagnostics_report" formatted="false">ایجاد گزارش مقایسه</string>
-  <string name="charging_diagnostics_report_summary" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ سازنده را ثبت کنید</string>
-  <string name="charging_diagnostics_clear" formatted="false">پاک کردن تصاویر شارژ</string>
-  <string name="charging_diagnostics_clear_summary" formatted="false">حذف تصاویر شارژ ذخیره‌شده در دستگاه</string>
-  <string name="charging_diagnostics_choose_state" formatted="false">کدام تنظیم دستگاه فعال است؟</string>
-  <string name="charging_diagnostics_condition_off" formatted="false">محافظت خاموش / بدون محدودیت</string>
-  <string name="charging_diagnostics_condition_fixed" formatted="false">محدودیت ثابت…</string>
-  <string name="charging_diagnostics_condition_adaptive" formatted="false">شارژ تطبیقی / هوشمند</string>
-  <string name="charging_diagnostics_condition_scheduled" formatted="false">شارژ زمان‌بندی‌شده</string>
-  <string name="charging_diagnostics_condition_other" formatted="false">حالت دیگر سازنده</string>
-  <string name="charging_diagnostics_capturing" formatted="false">در حال ثبت سیگنال‌های شارژ…</string>
-  <string name="charging_diagnostics_captured" formatted="false">تصویر شارژ ثبت شد</string>
-  <string name="charging_diagnostics_capture_failed" formatted="false">ثبت تصویر شارژ ممکن نشد</string>
-  <string name="charging_diagnostics_privileged_hint" formatted="false">با دسترسی ویژه ممکن است اطلاعات تشخیصی بیشتری در دسترس باشد. برای گزارش مفیدتر از محدودیت شارژ سازنده، دسترسی Shizuku یا root را بدهید و دسترسی ویژه را در تنظیمات پیشرفته فعال کنید.</string>
-  <plurals name="charging_diagnostics_snapshot_count">
-    <item quantity="one">%1$d تصویر ثبت شد. حالت شارژ دیگری را ثبت کنید.</item>
-    <item quantity="other">%1$d تصویر ثبت شد. برای بررسی مقایسه بزنید.</item>
-  </plurals>
-  <string name="charging_diagnostics_need_two" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ را ثبت کنید</string>
-  <string name="charging_diagnostics_cleared" formatted="false">تصاویر شارژ حذف شدند</string>
-  <string name="charging_diagnostics_copy" formatted="false">کپی در کلیپ‌بورد</string>
-  <string name="charging_diagnostics_save" formatted="false">ذخیره</string>
-  <string name="charging_diagnostics_copied" formatted="false">گزارش کپی شد</string>
-  <string name="charging_diagnostics_help_steps" formatted="false">1. گوشی را از شارژر جدا کنید و هنگام ثبت تصاویر پیکربندی، جدا نگه دارید. بین تصاویر فقط تنظیم محافظت شارژ سازنده را تغییر دهید.\n
-    2. محافظت شارژ را خاموش کنید، 2–5 ثانیه صبر و تصویری ثبت کنید.\n
-    3. محدودیتی ثابت انتخاب کنید، 2–5 ثانیه صبر و تصویری ثبت کنید. در صورت امکان با محدودیتی دیگر تکرار کنید.\n
-    4. شارژ تطبیقی، هوشمند یا زمان‌بندی‌شده را فعال کنید، 2–5 ثانیه صبر و تصویری ثبت کنید.\n
-    5. اگر مقایسه پیکربندی نتیجه روشنی نداشت، می‌توانید برای ثبت وضعیت‌هایی که فقط هنگام کار دیده می‌شوند، این مراحل را هنگام شارژ نیز تکرار کنید.\n
-    6. گزارش مقایسه را بسازید و بررسی کنید. داده‌ها فیلتر و مقادیر احتمالاً حساس پنهان می‌شوند، اما پیش از اشتراک‌گذاری کل گزارش را بررسی کنید.</string>
-  <string name="charging_diagnostics_help_contact" formatted="false">پس از بررسی گزارش، آن را کپی یا ذخیره کنید و با ایمیل به <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> بفرستید.</string>
-
-  <string name="activity_until_target" formatted="true">تا %1$d%%</string>
-  <string name="activity_target_reached" formatted="true">هدف رسید (%1$d%%)</string>
-
-  <string name="time_estimates_settings" formatted="false">برآوردهای زمان</string>
-  <string name="time_estimates_settings_summary" formatted="false">روش محاسبه زمان باقی‌مانده و سطح‌های هدف باتری را انتخاب کنید.</string>
-  <string name="time_estimates_settings_help" formatted="false">این تنظیمات برآوردهای Battery Monitor را کنترل می‌کنند. سطح‌های هدف فقط بر برآوردها اثر دارند و شارژ را شروع یا متوقف نمی‌کنند.</string>
-  <string name="pref_cat_target_levels" formatted="false">سطح‌های هدف</string>
-  <string name="pref_charging_target_mode" formatted="false">هدف شارژ</string>
-  <string name="pref_charging_target_mode_summary_device" formatted="true">محدودیت شارژ دستگاه: %1$d%%</string>
-  <string name="pref_charging_target_mode_summary_custom" formatted="false">هدف سفارشی</string>
-  <string name="pref_charging_target_mode_summary_default" formatted="false">محدودیت ثابت دستگاه شناسایی نشد — 100% استفاده می‌شود.</string>
-  <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
-    \n
-    اگر این مقدار درست به نظر نمی‌رسد، می‌توانید به بهبود تشخیص دستگاه کمک کنید. «عیب‌یابی» را باز کنید و با پیروی دقیق از دستورالعمل‌های «راهنما»، گزارش محدودیت شارژ سازنده را بسازید.</string>
-  <string name="pref_charging_target_mode_help" formatted="false">حالت خودکار در صورت امکان محدودیت ثابت دستگاه را می‌خواند و در غیر این صورت از 100% استفاده می‌کند. شارژ تطبیقی همچنان 100% را هدف می‌گیرد. برای جایگزینی مقدار دستگاه در برآوردها، سفارشی را انتخاب کنید.</string>
-  <string name="pref_charging_target_mode_support_help" formatted="false">تشخیص خودکار ممکن است روی دستگاه‌های Google Pixel، Samsung Galaxy، Xiaomi/Redmi/POCO، OnePlus/Oppo/Realme و Sony Xperia و نیز دستگاه‌های دارای GrapheneOS یا LineageOS، به‌ویژه با دسترسی root یا Shizuku، کار کند. این قابلیت به سیگنال‌های نرم‌افزاری متکی است؛ بنابراین حتی برای سازندگان نام‌برده نیز دسترس‌پذیری و دقت تضمین نمی‌شود. مدل‌ها یا نسخه‌های آزمایش‌نشده در این خانواده‌ها نیز ممکن است کار کنند، اما دستگاه‌های سازندگان دیگر در حال حاضر خودکار شناسایی نمی‌شوند.</string>
-  <string name="charging_target_mode_automatic" formatted="false">خودکار (پیشنهادی)</string>
-  <string name="charging_target_mode_custom" formatted="false">سفارشی</string>
-  <string name="pref_custom_charging_target" formatted="false">هدف شارژ سفارشی</string>
-  <string name="pref_custom_charging_target_help" formatted="false">هنگامی که هدف شارژ سفارشی است، سطح پایانی برآورد شارژ را تنظیم کنید.</string>
-  <string name="pref_discharging_target" formatted="false">هدف تخلیه</string>
-  <string name="pref_discharging_target_help" formatted="false">سطح پایانی برآورد تخلیه را تنظیم کنید. این گزینه از هشدارهای کمبود باتری مستقل است.</string>
-  <string name="pref_target_level_summary" formatted="true">برآورد تا %1$d%%.</string>
-  <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="history_range">بازه تاریخچه</string>
+    <string name="history_last_24h">۲۴ ساعت گذشته</string>
+    <string name="history_last_3d">۳ روز گذشته</string>
+    <string name="history_last_7d">۷ روز گذشته</string>
+    <string name="history_all_history">همهٔ سابقه</string>
+    <string name="history_custom_range">بازه تاریخ دلخواه</string>
+    <string name="history_month">ماه</string>
+    <string name="history_year">سال</string>
+    <string name="history_from">از: %1$s</string>
+    <string name="history_through">تا: %1$s</string>
+    <string name="history_calendar_days">هر دو تاریخ انتخاب‌شده را در منطقه زمانی محلی شامل می‌شود.</string>
+    <string name="history_invalid_range">بازه تاریخ معتبری وارد کنید.</string>
+    <string name="history_change_range">تغییر</string>
+    <string name="history_charts">نمودارها</string>
+    <string name="history_level">سطح</string>
+    <string name="history_level_24h">سطح · ۲۴ ساعت گذشته</string>
+    <string name="history_battery_level">سطح باتری</string>
+    <string name="history_observations">مشاهدات ذخیره‌شده هستند، نه اندازه‌گیری پیوسته. خطوط عمودی رویدادهای برق و راه‌اندازی مجدد را نشان می‌دهند.</string>
+    <string name="history_chart_description">بازه مشاهده‌شده از %1$s تا %2$s. کمینه %3$s، بیشینه %4$s. برای جزئیات خوانش، رویدادها را باز کنید و روی یک رکورد بزنید.</string>
+    <string name="history_chart_linked_description">بازه مشاهده‌شده از %1$s تا %2$s. کمینه %3$s، بیشینه %4$s. انتخاب یک مشاهده، رویداد آن را در ستون رویدادها نمایان و برجسته می‌کند.</string>
+    <string name="history_last_reading">آخرین خوانش ذخیره‌شده · %1$s</string>
+    <string name="history_selected_reading">مشاهده انتخاب‌شده · %1$s</string>
+    <string name="history_reading_range_label">بازه خوانش‌ها</string>
+    <string name="history_previous_point">مشاهده قبلی</string>
+    <string name="history_next_point">مشاهده بعدی</string>
+    <string name="history_previous_page">صفحه قبلی</string>
+    <string name="history_next_page">صفحه بعدی</string>
+    <string name="history_connections">اتصال‌ها به برق</string>
+    <string name="history_events">رویدادها</string>
+    <string name="history_event_counts">اتصال (خط‌چین کوتاه): %1$d · قطع (خط‌چین بلند): %2$d · راه‌اندازی مجدد (نقطه‌چین): %3$d</string>
+    <string name="history_all_types">همه نوع‌ها</string>
+    <string name="history_filtered_types">نوع‌ها: %1$d/%2$d</string>
+    <string name="history_newest">جدیدترین</string>
+    <string name="history_oldest">قدیمی‌ترین</string>
+    <string name="history_today">امروز · %1$s</string>
+    <string name="history_yesterday">دیروز · %1$s</string>
+    <string name="history_system_event">رویداد سیستم</string>
+    <string name="history_disconnected">از برق جدا شد</string>
+    <string name="history_charge_started">شارژ آغاز شد</string>
+    <string name="history_periodic_measurement">اندازه‌گیری باتری</string>
+    <string name="history_raw_observations">مشاهدات ذخیره‌شده. جزئیات، خوانش‌های موجود و زمان آن‌ها را نشان می‌دهند.</string>
+    <string name="history_export_selected">برون‌ریزی بازه انتخاب‌شده</string>
+    <string name="history_export_csv">بازه انتخاب‌شده · CSV</string>
+    <string name="history_export_json">بازه انتخاب‌شده · JSON</string>
+    <string name="history_import_json">درون‌ریزی گزارش‌ها از پشتیبان JSON</string>
+    <string name="history_delete_selected">پاک کردن بازه انتخاب‌شده</string>
+    <string name="history_delete_selected_confirm">گزارش‌های بازه انتخاب‌شده پاک شوند؟</string>
+    <string name="history_delete_all">پاک کردن همه گزارش‌ها</string>
+    <string name="history_deleted">گزارش‌ها پاک شدند</string>
+    <string name="history_load_failed">خواندن تاریخچه ممکن نشد.</string>
+    <string name="history_operation_failed">عملیات ناموفق بود. دسترسی به پرونده را بررسی کنید و دوباره تلاش کنید.</string>
+    <string name="history_settings">تنظیمات تاریخچه و پشتیبان‌گیری</string>
     <string name="history_open_fullscreen">باز کردن نمودار تمام‌صفحه</string>
-    <string name="history_chart_scale">مقیاس محور عمودی</string>
-    <string name="history_chart_scale_auto">خودکار · داده‌های قابل مشاهده</string>
-    <string name="history_chart_scale_fixed">ثابت · کل بازهٔ انتخاب‌شده</string>
-    <string name="history_chart_scale_manual">بزرگ‌نمایی عمودی دستی</string>
+    <string name="history_chart_description_fullscreen">%1$s. داده‌ها از %2$s تا %3$s.</string>
+    <string name="history_chart_select_point">انتخاب داده‌ها</string>
+    <string name="history_chart_event_summary">متصل (خط‌چین کوتاه): %1$d · قطع اتصال (خط‌چین بلند): %2$d · وقفه‌های پایش (نقطه‌چین): %3$d</string>
+    <string name="history_chart_events">رویدادهای نمودار</string>
+    <string name="history_chart_1h">۱ ساعت گذشته</string>
+    <string name="history_chart_6h">۶ ساعت گذشته</string>
     <string name="history_chart_zoom_in">بزرگ‌نمایی</string>
     <string name="history_chart_zoom_out">کوچک‌نمایی</string>
     <string name="history_chart_pan_left">بازهٔ زمانی قبلی</string>
     <string name="history_chart_pan_right">بازهٔ زمانی بعدی</string>
     <string name="history_chart_reset">نمایش کامل بازهٔ انتخاب‌شده</string>
-    <string name="history_chart_select_point">انتخاب داده‌ها</string>
-    <string name="history_chart_1h">۱ ساعت گذشته</string>
-    <string name="history_chart_6h">۶ ساعت گذشته</string>
-    <string name="history_chart_event_summary">متصل (خط‌چین کوتاه): %1$d · قطع اتصال (خط‌چین بلند): %2$d · وقفه‌های پایش (نقطه‌چین): %3$d</string>
-    <string name="history_chart_description_fullscreen">%1$s. داده‌ها از %2$s تا %3$s.</string>
-    <string name="history_all_history">همهٔ سابقه</string>
     <string name="history_chart_compare">مقایسه</string>
     <string name="history_chart_remove_comparison">حذف مقایسه</string>
-    <string name="history_chart_y_auto">Y: خودکار</string>
-    <string name="history_chart_y_fixed">Y: ثابت</string>
-    <string name="history_chart_y_manual">Y: دستی</string>
+    <string name="history_chart_more">اقدامات بیشتر نمودار</string>
     <string name="history_chart_settings">تنظیمات نمایش نمودار</string>
     <string name="history_chart_display_style">سبک نمایش</string>
     <string name="history_chart_connected">داده‌های متصل</string>
@@ -687,9 +403,520 @@
     <string name="history_chart_linear">خطی</string>
     <string name="history_chart_logarithmic">لگاریتمی</string>
     <string name="history_chart_log_unavailable">مقیاس لگاریتمی به داده‌های مثبت برای هر دو معیار انتخاب‌شده نیاز دارد.</string>
-    <string name="history_chart_more">اقدامات بیشتر نمودار</string>
-    <string name="history_chart_events">رویدادهای نمودار</string>
-  <string name="changelog_title">تازه‌های Battery Monitor</string>
-  <string name="changelog_version">نسخهٔ %1$s</string>
-  <string name="changelog_got_it">متوجه شدم</string>
+    <string name="history_chart_scale">مقیاس محور عمودی</string>
+    <string name="history_chart_scale_auto">خودکار · داده‌های قابل مشاهده</string>
+    <string name="history_chart_scale_fixed">ثابت · کل بازهٔ انتخاب‌شده</string>
+    <string name="history_chart_scale_manual">بزرگ‌نمایی عمودی دستی</string>
+    <string name="history_chart_y_auto">Y: خودکار</string>
+    <string name="history_chart_y_fixed">Y: ثابت</string>
+    <string name="history_chart_y_manual">Y: دستی</string>
+
+    <string name="logs_empty" formatted="false">سیاههها خالی هستند</string>
+    <plurals name="n_log_items">
+        <item quantity="one">%d مورد گزارش</item>
+        <item quantity="other">%d مورد گزارش</item>
+    </plurals>
+    <string name="configure_log_filter" formatted="false">کدام موارد گزارش را نشان دهید؟</string>
+    <string name="menu_log_filter" formatted="false">فیلتر کنید</string>
+    <string name="menu_reverse" formatted="false">ترتیب معکوس</string>
+    <string name="menu_show_seconds" formatted="false">نمایش ثانیه ها</string>
+    <string name="menu_hide_seconds" formatted="false">مخفی کردن ثانیه ها</string>
+    <string name="menu_clear" formatted="false">پاک کردن</string>
+    <string name="confirm_clear_logs" formatted="false">واقعاً همه گزارش‌ها پاک می‌شوند؟</string>
+    <string name="after_nh_mm_unplugged" formatted="true">پس از قطع %1$dh %2$dm از برق</string>
+    <string name="after_nh_mm_plugged_in" formatted="true">بعد از اینکه %1$dh %2$dm وصل شد</string>
+    <string name="after_nm_ms_unplugged" formatted="true">پس از قطع %1$dm %2$ds از برق</string>
+    <string name="after_nm_ms_plugged_in" formatted="true">بعد از اینکه %1$dm %2$ds وصل شد</string>
+    <string name="pref_cat_logging" formatted="false">ورود به سیستم</string>
+    <string name="pref_enable_logging" formatted="false">Logging را فعال کنید</string>
+    <string name="pref_enable_logging_summary" formatted="false">گزارش وضعیت باتری تغییر می کند؟</string>
+    <string name="pref_enable_logging_help" formatted="false">مشاهدات باتری و تغییرات وضعیت را برای تاریخچه ذخیره کنید. اندازه‌گیری‌های موجود شامل سطح، دما، ولتاژ، جریان لحظه‌ای اصلی و شارژ باقی‌مانده هستند. توان هنگام نمایش یا برون‌ریزی از ولتاژ و جریان محاسبه می‌شود؛ جداگانه ذخیره نمی‌شود. خاموش کردن ثبت گزارش، تاریخچه موجود را پاک نمی‌کند و تخمین زمان را متوقف نمی‌کند.</string>
+    <string name="pref_max_log_age" formatted="false">حداکثر سن ورود</string>
+    <string name="pref_max_log_age_summary" formatted="false">حذف گزارش های قدیمی تر از:</string>
+    <string name="pref_max_log_age_help" formatted="false">وقتی ثبت گزارش فعال باشد، اتصال به برق گزارش‌های قدیمی‌تر از این حد را حذف می‌کند. گزینه هرگز حذف نشود آن‌ها را تا پاک کردن دستی نگه می‌دارد. اگر برون‌ریزی خودکار فعال باشد، Battery Monitor گزارش‌های در انتظار را پیش از حذف ورودی‌های قدیمی برون‌ریزی می‌کند؛ ناموفق بودن برون‌ریزی مانع این حذف می‌شود.</string>
+    <string name="age_1_day" formatted="false">1 روز</string>
+    <string name="age_2_days" formatted="false">2 روز</string>
+    <string name="age_4_days" formatted="false">4 روز</string>
+    <string name="age_1_week" formatted="false">1 هفته</string>
+    <string name="age_2_weeks" formatted="false">2 هفته</string>
+    <string name="age_3_weeks" formatted="false">3 هفته</string>
+    <string name="age_4_weeks" formatted="false">4 هفته</string>
+    <string name="age_never_delete" formatted="false">هرگز حذف نشود</string>
+    <string name="settings_history_export">تاریخچه و برون‌ریزی</string>
+    <string name="menu_export" formatted="false">صادرات CSV</string>
+    <string name="log_export_mode_title" formatted="false">برون‌بری گزارش‌ها</string>
+    <string name="log_export_new_file" formatted="false">ایجاد پروندهٔ جدید</string>
+    <string name="log_export_append" formatted="false">افزودن به پروندهٔ موجود</string>
+    <string name="log_export_range_title" formatted="false">کدام گزارش‌ها برون‌بری شوند؟</string>
+    <string name="log_export_all_logs" formatted="false">همه‌چیز</string>
+    <string name="log_export_from_last" formatted="false">از آخرین برون‌بری</string>
+    <string name="pref_auto_log_export" formatted="false">برون‌بری خودکار گزارش‌ها</string>
+    <string name="pref_auto_log_export_not_set_summary" formatted="false">ذخیرهٔ دوره‌ای گزارش‌های جدید در یک پوشه</string>
+    <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
+    %4$s</string>
+    <string name="pref_set_auto_log_export" formatted="false">تنظیم برون‌بری خودکار گزارش‌ها</string>
+    <string name="pref_edit_auto_log_export" formatted="false">ویرایش برون‌بری خودکار گزارش‌ها</string>
+    <string name="pref_disable_auto_log_export" formatted="false">غیرفعال کردن برون‌بری خودکار</string>
+    <string name="pref_auto_log_export_frequency" formatted="false">فاصلهٔ برون‌بری</string>
+    <string name="pref_auto_log_export_mode" formatted="false">مدیریت پرونده</string>
+    <string name="pref_auto_log_export_format" formatted="false">قالب برون‌بری</string>
+    <string name="pref_auto_log_export_directory" formatted="false">تغییر پوشه</string>
+    <string name="auto_log_export_help" formatted="false">برون‌ریزی خودکار را در بخش پیشرفته تنظیم کنید. پوشه، بسامد، قالب و ساخت پرونده‌های جداگانه یا افزودن به یک پرونده را انتخاب کنید. برون‌ریزی معمولاً گزارش‌های پس از برون‌ریزی خودکار قبلی را ذخیره می‌کند؛ یک پرونده پیوسته جدید شامل همه گزارش‌های موجود است. Android ممکن است هنگام بی‌کاری برون‌ریزی را به تأخیر بیندازد. ثبت گزارش باید فعال بماند.</string>
+    <string name="auto_log_export_format_help" formatted="false">CSV برای صفحه‌گسترده یا ویرایشگر متن مفید است. جریان اصلی، شارژ باقی‌مانده و توان محاسبه‌شده با ضریب انتخاب‌شده هنگام برون‌ریزی را شامل می‌شود. JSON داده‌های ساختاریافته گزارش را برای پشتیبان‌گیری حفظ می‌کند. خانه‌های جریان، شارژ باقی‌مانده و توان ناموجود خالی می‌مانند.</string>
+    <string name="auto_log_export_mode_new_file" formatted="false">ایجاد پروندهٔ جدید</string>
+    <string name="auto_log_export_mode_append" formatted="false">افزودن گزارش‌های جدید به پروندهٔ موجود</string>
+    <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
+    <string name="date" formatted="false">تاریخ</string>
+    <string name="time" formatted="false">زمان</string>
+    <string name="status" formatted="false">وضعیت</string>
+    <string name="charge" formatted="false">شارژ_درصد</string>
+    <string name="temperature" formatted="false">درجه_سلسیوس</string>
+    <string name="temperature_f" formatted="false">degrees_fahrenheit</string>
+    <string name="voltage" formatted="false">ولت</string>
+    <string name="inaccessible_storage" formatted="false">کارت SD غیر قابل دسترسی است.</string>
+    <string name="inaccessible_w_reason" formatted="false">کارت SD غیر قابل دسترسی است:</string>
+    <string name="read_only_storage" formatted="false">کارت SD فقط خواندنی است.</string>
+    <string name="no_storage_permission" formatted="false">مجوز ذخیره سازی داده نشده است.</string>
+    <string name="file_written" formatted="false">فایل با موفقیت در مکان انتخابی نوشته شد.</string>
+
+    <string name="widget_status">وضعیت باتری</string>
+    <string name="widget_measurements">اندازه‌گیری‌های باتری</string>
+    <string name="widget_trend">روند باتری</string>
+    <string name="circle_widget" formatted="false">چرخه باتری پات (قدیمی)</string>
+    <string name="full_widget" formatted="false">باتری پات کامل (قدیمی)</string>
+    <string name="widget_configure_title">سفارشی کردن ابزارک</string>
+    <string name="widget_customize">سفارشی‌سازی</string>
+    <string name="widget_follow_app">پیروی از تنظیمات برنامه</string>
+    <string name="widget_status_extra">خوانش اضافی</string>
+    <string name="widget_metric_selection">اندازه‌گیری‌ها و ترتیب</string>
+    <string name="widget_metric_selection_hint">دو تا چهار اندازه‌گیری انتخاب کنید. برای تغییر ترتیب آن‌ها از پیکان‌ها استفاده کنید.</string>
+    <string name="widget_background_opacity">میزان کدری پس‌زمینه</string>
+    <string name="widget_background_opacity_error">یک عدد صحیح از ۰ تا ۱۰۰ وارد کنید.</string>
+    <string name="widget_transparent_warning">با پس‌زمینه شفاف، خوانایی به تصویر زمینه شما بستگی دارد.</string>
+    <string name="widget_y_axis_labels">نمایش مقادیر محور Y</string>
+    <string name="widget_presentation">شیوه نمایش</string>
+    <string name="widget_presentation_adaptive">سازگار با فضای موجود</string>
+    <string name="widget_presentation_compact">فشرده</string>
+    <string name="widget_tap_action">عملکرد ضربه زدن</string>
+    <string name="widget_measurement_details">جزئیات اندازه‌گیری</string>
+    <string name="widget_tap_measurement">اندازه‌گیری برای باز کردن</string>
+    <string name="widget_preview">پیش‌نمایش ابزارک</string>
+    <string name="widget_preview_note">پیش‌نمایش از آخرین خوانش پایشگر استفاده می‌کند. اندازه ابزارک را راه‌انداز شما تعیین می‌کند.</string>
+    <string name="widget_read_at">خوانش %1$s</string>
+    <string name="widget_trend_range">سطح · %1$d ساعت گذشته</string>
+    <string name="widget_observed_range">مشاهده %1$s–%2$s</string>
+    <string name="widget_chart_description">سطح ذخیره‌شده باتری از %1$s تا %2$s. کمینه %3$s، بیشینه %4$s.</string>
+    <string name="widget_save_failed">ذخیره این ابزارک ممکن نشد. دوباره تلاش کنید.</string>
+    <string name="widget_invalid_instance">این ابزارک دیگر در دسترس نیست.</string>
+
+    <string name="settings_activity_subtitle" formatted="false">تنظیمات</string>
+    <string name="settings_overview" formatted="false">نمای کلی</string>
+    <string name="settings_overview_help" formatted="false">تنظیمات در بخش‌های عمومی، وضعیت فعلی، تخمین زمان، اعلان‌ها، پیشرفته و پشتیبان‌گیری و بازیابی گروه‌بندی شده‌اند. برای یافتن گزینه از جستجو استفاده کنید. هر صفحه راهنمای تنظیمات خودش را دارد. عیب‌یابی جداگانه از نوار کناری در دسترس است.</string>
+    <string name="settings_search_hint">جستجوی تنظیمات</string>
+    <string name="settings_search_no_results">تنظیم منطبقی نیست</string>
+    <string name="settings_dependency_disabled">برای تغییر این تنظیم، گزینه مرتبط در بالا را فعال یا تنظیم کنید.</string>
+    <string name="other_settings" formatted="false">عمومی</string>
+    <string name="settings_general_summary">زبان، ظاهر، واحدها و قالب مدت زمان</string>
+    <string name="other_settings_summary" formatted="false">رفتار عمومی برنامه و ترجیحات روزمره را تنظیم کنید.</string>
+    <string name="other_settings_help" formatted="false">پالت رنگ و روشنایی، زبان برنامه، واحد دما، قالب مدت زمان و شروع پایش پس از راه‌اندازی مجدد دستگاه را انتخاب کنید.</string>
+    <string name="settings_legacy_general">سایر</string>
+    <string name="pref_cat_language" formatted="false">زبان و قالب‌بندی</string>
+    <string name="pref_change_app_language" formatted="false">زبان برنامه</string>
+    <string name="pref_change_app_language_help" formatted="false">زبان مورد استفادهٔ Battery Monitor را انتخاب کنید. پیش‌فرض سیستم از زبان دستگاه پیروی می‌کند.</string>
+    <string name="settings_app_language_unavailable">انتخابگر زبان برنامه در سیستم به Android 13 نیاز دارد.</string>
+    <string name="pref_temperature_unit" formatted="false">واحد دما</string>
+    <string name="pref_temperature_unit_help" formatted="false">انتخاب کنید دما با درجهٔ سانتی‌گراد یا فارنهایت نمایش داده شود.</string>
+    <string name="celsius" formatted="false">درجه سانتیگراد</string>
+    <string name="fahrenheit" formatted="false">فارنهایت</string>
+    <string name="pref_long_duration_format" formatted="false">قالب مدت‌زمان طولانی</string>
+    <string name="pref_long_duration_format_help" formatted="false">حالت روز و ساعت پس از ۲۴ ساعت از روز استفاده می‌کند، مانند 1d 3h. حالت فقط ساعت کل مدت را به ساعت نگه می‌دارد، مانند 27h.</string>
+    <string name="long_duration_format_days_and_hours" formatted="false">روز و ساعت</string>
+    <string name="long_duration_format_hours_only" formatted="false">فقط ساعت</string>
+    <string name="settings_appearance">ظاهر</string>
+    <string name="settings_color_palette">پالت رنگ</string>
+    <string name="settings_color_palette_summary">استفاده از رنگ‌های سیستم یا Battery Blue</string>
+    <string name="settings_color_palette_material_you">Material You</string>
+    <string name="settings_color_palette_battery_blue">Battery Blue</string>
+    <string name="settings_color_palette_unavailable">رنگ‌های سیستم به Android 12 نیاز دارند. در این دستگاه از Battery Blue استفاده می‌شود.</string>
+    <string name="settings_brightness">روشنایی</string>
+    <string name="settings_brightness_summary">پیروی از سیستم یا انتخاب روشن، تیره یا سیاه خالص</string>
+    <string name="settings_brightness_system">سیستم</string>
+    <string name="settings_brightness_light">روشن</string>
+    <string name="settings_brightness_dark">تیره</string>
+    <string name="settings_brightness_true_black">سیاه خالص</string>
+
+    <string name="background_service_starting" formatted="false">پایشگر باتری در حال راه‌اندازی است…</string>
+    <string name="monitoring_state_save_failed">ذخیره وضعیت پایش ممکن نشد. فضای ذخیره‌سازی موجود را بررسی کنید و دوباره تلاش کنید.</string>
+    <string name="confirm_close" formatted="false">بستن</string>
+    <string name="confirm_close_hint" formatted="false">مانیتور باتری کاملاً بسته خواهد شد و شما آن را نخواهید دید دیگر در نوار وضعیت شما. هر ویجت دسکتاپ بی فایده خواهد بود.\n
+    \n
+    اگر فقط می خواهید پنجره اصلی را ترک کرده و سرویس را حفظ کنید در حال اجرا، Cancel را فشار دهید و سپس فقط دکمه BACK دستگاه خود را فشار دهید دکمه خروج از پنجره اصلی.\n
+    \n
+    Z اگر می خواهید اعلان را مخفی کنید اما ویجت ها را در حال اجرا نگه دارید، Cancel را فشار دهید و سپس تنظیمات را تغییر دهید تا اعلان پنهان شود.</string>
+    <string name="battery_optimized" formatted="false">پایش در پس‌زمینه</string>
+    <string name="battery_optimized_message" formatted="false">اجرای بدون محدودیت در پس‌زمینه می‌تواند قابلیت اطمینان پایش را بهبود دهد. بهینه‌سازی باتری Android ممکن است به‌روزرسانی‌ها و هشدارها را به تأخیر بیندازد.\n
+    \n
+    اجرای بدون محدودیت ممکن است مصرف باتری در پس‌زمینه را افزایش دهد. می‌توانید بعداً این گزینه را در تنظیمات Android &gt; برنامه‌ها &gt; Battery Monitor &gt; باتری تغییر دهید.</string>
+    <string name="pref_cat_autostart" formatted="false">شروع خودکار</string>
+    <string name="pref_autostart_at_boot" formatted="false">شروع خودکار در بوت</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">هنگام بوت شدن دستگاه، مانیتور باتری را راه اندازی کنید:</string>
+    <string name="pref_autostart_at_boot_help" formatted="false">«همیشه» پایش پس‌زمینه را پس از راه‌اندازی مجدد دستگاه آغاز می‌کند. «هرگز» شروع خودکار هنگام راه‌اندازی را رد می‌کند. «اگر هنگام خاموش شدن اجرا می‌شد» از آخرین شروع یا توقف پایش در Battery Monitor پیروی می‌کند. بستن برنامه یا پایان دادن به پردازه آن، توقف پایش محسوب نمی‌شود. ابزارک‌ها این انتخاب را تغییر نمی‌دهند.</string>
+    <string name="boot_pref_always" formatted="false">همیشه</string>
+    <string name="boot_pref_never" formatted="false">هرگز</string>
+    <string name="boot_pref_if_running" formatted="false">اگر در حالت خاموش شدن اجرا می شود</string>
+    <string name="settings_data_permissions">داده‌ها و مجوزها</string>
+    <string name="advanced_settings" formatted="false">پیشرفته</string>
+    <string name="advanced_settings_summary" formatted="false">Battery Monitor را با کنترل‌های بیشتر برای کاربردهای تخصصی دقیق‌تر تنظیم کنید.</string>
+    <string name="advanced_settings_help" formatted="false">دسترسی ویژه، ثبت تاریخچه، نگهداری گزارش‌ها و برون‌ریزی خودکار را کنترل کنید. پایش در پس‌زمینه بررسی‌ها و ابزارهای مجوزها، قابلیت اطمینان پایشگر، گزارش‌های اشکال‌زدایی و گزارش‌های حد شارژ را باز می‌کند.</string>
+    <string name="pref_cat_privileged_access" formatted="false">دسترسی ویژه</string>
+    <string name="pref_use_privileged_access" formatted="false">استفاده از دسترسی ویژه</string>
+    <string name="pref_use_privileged_access_summary" formatted="false">از دسترسی اعطاشدهٔ root یا Shizuku برای داده‌های کامل‌تر و دقیق‌تر دستگاه استفاده شود؟</string>
+    <string name="pref_use_privileged_access_help" formatted="false">خوانش‌های اضافی دستگاه را با دسترسی root یا Shizuku که اعطا می‌کنید فعال کنید. وقتی Android مقدار پشتیبانی‌شده‌ای ارائه نکند، Battery Monitor از این خوانش‌ها در وضعیت فعلی و گزارش‌ها نیز استفاده می‌کند. داده‌های عیب‌یابی اضافی خودکار جمع‌آوری می‌شوند؛ کلید جداگانه‌ای برای آمار پیشرفته وجود ندارد.</string>
+    <string name="shizuku_not_running" formatted="false">Shizuku را اجرا کنید تا دسترسی ویژه به Battery Monitor داده شود.</string>
+    <string name="shizuku_permission_denied_permanently" formatted="false">مجوز Battery Monitor را به‌صورت دستی در Shizuku اعطا کنید.</string>
+
+    <string name="advanced_action_refresh" formatted="false">نوسازی</string>
+    <string name="advanced_status_loading" formatted="false">در حال بارگذاری آمار پیشرفته باتری...</string>
+    <string name="advanced_status_no_access" formatted="false">برای نمایش آمار پیشرفته باتری به root یا Shizuku نیاز است.</string>
+    <string name="advanced_status_waiting_permission" formatted="false">در انتظار مجوز Shizuku...</string>
+    <string name="advanced_status_no_stats" formatted="false">در حال حاضر هیچ آمار پیشرفته‌ای از باتری روی این دستگاه در دسترس نیست.</string>
+    <string name="advanced_value_not_available" formatted="false">در دسترس نیست</string>
+    <string name="advanced_help_overview" formatted="false">عیب‌یابی قابلیت اطمینان پایشگر، داده‌های پیش‌بینی ذخیره‌شده و داده‌های باتری را در زبانه‌های عملکرد برنامه، باتری، شارژ و خام ترکیب می‌کند. داده‌های Android بدون root موجودند. داده‌های اضافی دستگاه به دستگاه و مجوزهای در دسترس Battery Monitor بستگی دارند.</string>
+    <string name="advanced_section_counters" formatted="false">شمارنده‌ها</string>
+    <string name="advanced_help_counters" formatted="false">خوانش‌های باتری با برچسب و قالب مناسب به صورت شارژ باقی‌مانده با mAh، جریان با mA، انرژی با mWh، ولتاژ با V، دما با واحد انتخابی و توان با W نمایش داده می‌شوند. ضریب جریان بر توان محاسبه‌شده نیز اعمال می‌شود. جریان میانگین و تعداد چرخه‌ها به پشتیبانی دستگاه بستگی دارند.</string>
+    <string name="advanced_field_charge_counter" formatted="false">برآورد شارژ باقی‌مانده</string>
+    <string name="advanced_field_current_now" formatted="false">جریان فعلی</string>
+    <string name="advanced_field_current_average" formatted="false">میانگین جریان</string>
+    <string name="advanced_field_energy_counter" formatted="false">شمارنده انرژی</string>
+    <string name="advanced_section_capacity" formatted="false">ظرفیت</string>
+    <string name="advanced_help_capacity" formatted="false">ظرفیت، ظرفیت شارژ کامل، ظرفیت طراحی و سلامت تخمینی را نشان می دهد. سلامت تخمینی از تقسیم ظرفیت شارژ کامل بر ظرفیت طراحی به دست می آید، بنابراین دقت آن به داده های گزارش شده توسط دستگاه بستگی دارد.</string>
+    <string name="advanced_field_cycle_count" formatted="false">تعداد چرخه</string>
+    <string name="advanced_field_reported_capacity" formatted="false">ظرفیت گزارش شده</string>
+    <string name="advanced_field_state_of_health" formatted="false">وضعیت سلامت</string>
+    <string name="advanced_field_full_charge_capacity" formatted="false">ظرفیت شارژ کامل</string>
+    <string name="advanced_field_design_capacity" formatted="false">ظرفیت طراحی</string>
+    <string name="advanced_field_estimated_health" formatted="false">سلامت تخمینی</string>
+    <string name="diag_capacity_inconsistent">ظرفیت کامل گزارش‌شده از ظرفیت طراحی بیشتر است. از این خوانش‌ها نمی‌توان تخمین سلامت قابل اعتمادی محاسبه کرد.</string>
+    <string name="advanced_field_capacity_level" formatted="false">سطح ظرفیت</string>
+    <string name="diag_capacity_critical">بحرانی</string>
+    <string name="diag_capacity_low">کم</string>
+    <string name="diag_capacity_high">زیاد</string>
+    <string name="advanced_section_charging" formatted="false">شارژ</string>
+    <string name="advanced_help_charging" formatted="false">بخش شارژ مقادیر مربوط به مسیر فعال شارژ را نشان می دهد، مانند بیشینه جریان یا ولتاژ شارژ، سیاست شارژ، وضعیت شارژ و سطح ظرفیت. این فیلدها ممکن است بین شارژرها و حالت های شارژ تغییر کنند.</string>
+    <string name="advanced_field_charge_time_remaining" formatted="false">زمان باقی مانده تا تکمیل شارژ</string>
+    <string name="advanced_field_max_charging_current" formatted="false">حداکثر جریان شارژ</string>
+    <string name="advanced_field_max_charging_voltage" formatted="false">حداکثر ولتاژ شارژ</string>
+    <string name="advanced_field_charging_policy" formatted="false">سیاست شارژ</string>
+    <string name="diag_policy_default">پیش‌فرض</string>
+    <string name="diag_policy_fixed_limit">محافظت باتری (حد ثابت)</string>
+    <string name="diag_policy_adaptive_ac">شارژ تطبیقی</string>
+    <string name="advanced_field_charging_state" formatted="false">وضعیت شارژ</string>
+    <string name="diag_charging_too_cold">برای شارژ بیش از حد سرد است</string>
+    <string name="diag_charging_too_hot">برای شارژ بیش از حد گرم است</string>
+    <string name="advanced_section_service" formatted="false">سرویس باتری Android</string>
+    <string name="advanced_help_service" formatted="false">بخش خام نام‌ها و مقادیر اصلی پخش‌های باتری Android و، در صورت دسترسی، dumpsys battery را شامل می‌شود. این داده‌ها می‌توانند منبع شارژ، وضعیت باتری، دما، ولتاژ و سایر وضعیت‌های سرویس باتری باشند.</string>
+    <string name="advanced_section_sysfs" formatted="false">فایل های power_supply هسته</string>
+    <string name="advanced_help_sysfs" formatted="false">بخش خام نام‌ها و مقادیر اصلی خوانده‌شده از /sys/class/power_supply، از جمله مقادیر چندخطی را نشان می‌دهد. با کلید جستجو کنید و برای دیدن و کپی مقدار کامل روی ردیف بزنید. برای جمع‌آوری خوانش‌های جدید از تازه‌سازی استفاده کنید. Battery Monitor با مجوزهای عادی Android، بدون root یا Shizuku نیز خواندن را امتحان می‌کند.</string>
+    <string name="diag_fuel_gauge">سنجشگر شارژ باتری</string>
+    <string name="diag_mains_supply">منبع تغذیه AC</string>
+    <string name="diag_wireless_supply">منبع تغذیه بی‌سیم</string>
+    <string name="diag_usb_supply">منبع تغذیه USB</string>
+    <string name="diag_fast_charging">شارژ سریع</string>
+    <string name="diag_supply_health">وضعیت گزارش‌شده</string>
+    <string name="diag_battery_technology">فناوری باتری</string>
+    <string name="diag_open_circuit_voltage">ولتاژ مدار باز</string>
+    <string name="diag_min_design_voltage">کمینه ولتاژ طراحی</string>
+    <string name="diag_max_design_voltage">بیشینه ولتاژ طراحی</string>
+    <string name="diag_charge_type">نوع شارژ</string>
+    <string name="diag_charge_trickle">شارژ قطره‌ای</string>
+    <string name="diag_charge_fast">سریع</string>
+    <string name="diag_charge_standard">استاندارد</string>
+    <string name="diag_charge_long_life">محافظت از عمر باتری</string>
+    <string name="diag_charge_bypass">شارژ باتری کنار گذاشته شده</string>
+    <string name="diag_charging_input_enabled">ورودی شارژ فعال است</string>
+    <string name="diag_battery_charging_enabled">شارژ باتری فعال است</string>
+    <string name="diag_power_supply_state">وضعیت منبع تغذیه</string>
+    <string name="diag_supply_offline">قطع</string>
+    <string name="diag_supply_fixed">منبع تغذیه ثابت</string>
+    <string name="diag_supply_programmable">منبع تغذیه برنامه‌پذیر</string>
+    <string name="diag_input_current">جریان ورودی</string>
+    <string name="diag_input_current_limit">حد جریان ورودی</string>
+    <string name="diag_settled_input_current">جریان ورودی پایدار</string>
+    <string name="diag_input_voltage">ولتاژ ورودی</string>
+    <string name="diag_input_voltage_limit">حد ولتاژ ورودی</string>
+    <string name="advanced_section_metadata" formatted="false">فراداده</string>
+    <string name="advanced_help_metadata" formatted="false">بخش خام نام‌ها و مقادیر اصلی ویژگی‌های BatteryManager، از جمله شمارنده‌ها و خوانش‌های جریان موجود را نیز شامل می‌شود. ویژگی‌های اضافی مانند جزئیات ساخت یا وضعیت تعویض به نسخه Android، پشتیبانی دستگاه و مجوزها بستگی دارند.</string>
+    <string name="advanced_field_manufacturing_date" formatted="false">تاریخ ساخت</string>
+    <string name="advanced_field_first_use_date" formatted="false">تاریخ اولین استفاده</string>
+    <string name="advanced_field_battery_serial_number" formatted="false">شماره سریال باتری</string>
+    <string name="advanced_field_battery_part_status" formatted="false">وضعیت قطعه باتری</string>
+    <string name="advanced_field_battery_part_manufacturer" formatted="false">سازنده قطعه باتری</string>
+    <string name="advanced_field_battery_model_name" formatted="false">نام مدل باتری</string>
+    <string name="advanced_field_minimum_design_voltage" formatted="false">حداقل ولتاژ طراحی</string>
+    <string name="diag_raw">خام</string>
+    <string name="diag_search_key">جستجوی کلیدها</string>
+    <string name="diag_no_keys">کلید منطبقی در داده‌های موجود نیست</string>
+    <string name="diag_raw_values">مقادیر خام</string>
+    <string name="diag_device_readings">خوانش‌های گزارش‌شده توسط دستگاه</string>
+    <string name="diag_last_checked">آخرین بررسی: %1$s</string>
+    <string name="diag_privileged_stale">خوانش‌های قبلی با دسترسی ویژه نمایش داده می‌شوند. برای تلاش دوباره تازه‌سازی کنید.</string>
+    <string name="advanced_help_troubleshooting_title" formatted="false">عیب یابی</string>
+    <string name="advanced_help_troubleshooting" formatted="false">داده‌های Android در عیب‌یابی خودکار جمع‌آوری می‌شوند. برای داده‌های اضافی root یا Shizuku، دسترسی ویژه را در منابع اضافی فعال کنید. Battery Monitor ابتدا root و سپس Shizuku را امتحان می‌کند. Shizuku باید در حال اجرا باشد و مجوز داده شده باشد. فیلدهای ناموجود در دسترس نمی‌شوند؛ تازه‌سازی ناموفق تصویر وضعیت قبلی را حفظ و قدیمی علامت‌گذاری می‌کند.</string>
+
+    <string name="diagnostics" formatted="false">عیب‌یابی</string>
+    <string name="diagnostics_summary" formatted="false">مجوزها و پایداری پایش را بررسی کنید و گزارشی برای رفع مشکل بسازید</string>
+    <string name="diag_overview">عملکرد برنامه</string>
+    <string name="diagnostics_help_title" formatted="false">عیب‌یابی چگونه کمک می‌کند</string>
+    <string name="diagnostics_help_overview" formatted="false">پایش در پس‌زمینه مجوزها و قابلیت اطمینان پایشگر را بررسی می‌کند. از کنترل‌های آن برای شروع یا توقف پایش، تغییر ثبت اشکال‌زدایی، باز کردن تنظیمات بهینه‌سازی باتری و اعلان یا ساخت گزارش عیب‌یابی استفاده کنید. هر خوانش ناموجود نشانه مشکل مجوز نیست؛ برخی دستگاه‌ها آن را ارائه نمی‌کنند.</string>
+    <string name="diagnostics_monitoring" formatted="false">پایش پس‌زمینه</string>
+    <string name="diag_monitor_operation">عملکرد پایشگر</string>
+    <string name="diag_heartbeat">آخرین ضربان</string>
+    <string name="diag_start_monitor">شروع پایش</string>
+    <string name="diag_stop_monitor">توقف پایش</string>
+    <string name="diag_stop_monitor_body">پایش باتری، ثبت تاریخچه و بازیابی خودکار پس‌زمینه متوقف می‌شوند. می‌توانید پایش را دوباره از اینجا شروع کنید.</string>
+    <string name="diagnostics_not_running_tap_to_start" formatted="false">پاسخ جدیدی نیست. برای درخواست راه‌اندازی مجدد بزنید.</string>
+    <string name="diagnostics_service" formatted="false">سرویس پایش</string>
+    <string name="diagnostics_service_responded" formatted="false">سرویس پایش پاسخ داد</string>
+    <string name="diagnostics_service_restarting" formatted="false">سرویس پاسخ نداد. در حال راه‌اندازی مجدد…</string>
+    <string name="diagnostics_service_restart_failed" formatted="false">سرویس پایش پس از راه‌اندازی مجدد پاسخ نداد. برنامه را دوباره راه‌اندازی کنید.</string>
+    <string name="diagnostics_database" formatted="false">پایگاه داده گزارش‌ها</string>
+    <string name="diagnostics_no_recent_database_access" formatted="false">دسترسی موفق جدیدی به پایگاه داده نیست</string>
+    <string name="diagnostics_working_last_seen" formatted="true">در حال کار · آخرین پاسخ %1$s پیش</string>
+    <string name="diagnostics_database_check_succeeded" formatted="false">بررسی خواندن و نوشتن پایگاه داده موفق بود</string>
+    <string name="diagnostics_database_failed" formatted="false">بررسی پایگاه داده ناموفق بود. برنامه را دوباره راه‌اندازی و مجدداً امتحان کنید.</string>
+    <string name="diagnostics_database_failed_storage" formatted="false">بررسی پایگاه داده ناموفق بود. مقداری از فضای ذخیره‌سازی دستگاه را آزاد کنید و دوباره امتحان کنید.</string>
+    <string name="diagnostics_permissions" formatted="false">مجوزها و دسترسی</string>
+    <string name="diagnostics_notifications" formatted="false">اعلان‌ها</string>
+    <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">مجوز موجود نیست. برای باز کردن تنظیمات بزنید.</string>
+    <string name="diagnostics_battery_optimization" formatted="false">بهینه‌سازی باتری</string>
+    <string name="diagnostics_unrestricted" formatted="false">بدون محدودیت</string>
+    <string name="diagnostics_restricted_tap_to_fix" formatted="false">محدود شده است. برای پایش مطمئن در پس‌زمینه بزنید.</string>
+    <string name="diagnostics_vendor_settings" formatted="false">تنظیمات سازنده</string>
+    <string name="diagnostics_vendor_settings_summary" formatted="false">تنظیمات اضافی فعالیت پس‌زمینه یا شروع خودکار موجود در دستگاه را باز کنید</string>
+    <string name="diagnostics_dont_kill_my_app" formatted="false">راهنمای فعالیت پس‌زمینه</string>
+    <string name="diagnostics_dont_kill_my_app_summary" formatted="false">راهنمای ویژه دستگاه را در Don’t Kill My App باز کنید</string>
+    <string name="diagnostics_root" formatted="false">دسترسی روت</string>
+    <string name="diagnostics_root_unavailable" formatted="false">در دسترس نیست. برای درخواست یا بررسی دسترسی روت بزنید.</string>
+    <string name="diagnostics_shizuku" formatted="false">دسترسی Shizuku</string>
+    <string name="diagnostics_shizuku_permission_missing" formatted="false">مجوز موجود نیست. برای درخواست آن از Shizuku بزنید.</string>
+    <string name="diagnostics_checking" formatted="false">در حال بررسی…</string>
+    <string name="diagnostics_tap_to_check" formatted="false">بررسی نشده است. برای درخواست یا بررسی دسترسی بزنید.</string>
+    <string name="diag_timeout">زمان خوانش تمام شد. تصویر وضعیت قبلی حفظ می‌شود. دوباره تازه‌سازی کنید.</string>
+    <string name="diag_no">خیر</string>
+    <string name="diag_additional_sources">منابع اضافی</string>
+    <string name="diag_source_help">خوانش‌های موجود Android هنگام باز بودن عیب‌یابی خودکار جمع‌آوری می‌شوند. برای بررسی و کپی خوانش، منبع و زمان آن، روی یک مقدار بزنید. کلیدها و مقادیر اصلی دستگاه در بخش خام موجودند. برای استفاده از Root یا Shizuku نیز دسترسی ویژه را فعال کنید.</string>
+    <string name="diag_missing_reading">منابع فعال خوانش قابل استفاده‌ای برنگرداندند.</string>
+    <string name="diag_missing_average">جریان میانگین خوانشی جدا از جریان لحظه‌ای است که دستگاه ارائه می‌دهد. اگر دستگاه آن را ارائه نکند، Battery Monitor میانگین خودش را محاسبه نمی‌کند.</string>
+    <string name="diag_missing_estimated_health">این تخمین به ظرفیت شارژ کامل و ظرفیت طراحی مثبت از همان باتری نیاز دارد. ظرفیت شارژ کامل نباید از ظرفیت طراحی بیشتر باشد.</string>
+    <string name="diag_missing_charge_time">این تخمین شارژ گزارش‌شده توسط دستگاه است. وضعیت فعلی از روش پیش‌بینی تنظیم‌شده Battery Monitor استفاده می‌کند و حتی بدون تخمین دستگاه می‌تواند تخمین نشان دهد.</string>
+    <string name="diag_predictor_description">نرخ‌ها زمان لازم برای یک واحد درصد را نشان می‌دهند. محاسبات اخیر در حافظه نگه داشته می‌شوند؛ میانگین‌های ذخیره‌شده پس از راه‌اندازی مجدد باقی می‌مانند. بازه‌های ناقص از نرخ بلندمدت و میانگین‌های ذخیره‌نشده از پیش‌فرض‌ها استفاده می‌کنند.</string>
+    <string name="diagnostics_predictor_help" formatted="false">عملکرد برنامه میانگین‌های بلندمدت ذخیره‌شده و ورودی‌های اخیر پیش‌بینی را نشان می‌دهد. نرخ‌های اخیر از تغییر درصد باتری استفاده می‌کنند و زمان یک واحد درصد، روش انتخاب‌شده، منبع شارژ فعال، نقاط و مدت‌های مشاهده‌شده و لحاظ شدن بازه ناتمام را نشان می‌دهند. پنجره‌های پنج‌دقیقه‌ای و پنج‌واحددرصدی برای بخش‌های مشاهده‌نشده از نرخ بلندمدت فعال استفاده می‌کنند؛ سطح‌های ردشده درون‌یابی می‌شوند. وضعیت اخیر در حافظه نگه داشته می‌شود و با شروع دوباره پایش، تغییر بین شارژ و تخلیه یا تغییر منبع شارژ بازنشانی می‌شود. میانگین‌های آموخته‌شده ذخیره‌شده پس از راه‌اندازی مجدد باقی می‌مانند. این داده‌ها مستقل از گزارش‌های تاریخچه‌اند؛ پاک کردن گزارش‌ها تخمین‌ها را بازنشانی نمی‌کند.</string>
+    <string name="diag_predictor_recent" formatted="false">محاسبات اخیر</string>
+    <string name="diag_predictor_no_recent" formatted="false">تخمین فعالی وجود ندارد. داده‌های اخیر پس از خوانش پایشگر هنگام شارژ یا تخلیه در دسترس قرار می‌گیرند.</string>
+    <string name="diag_predictor_start_monitor">برای بررسی داده‌های پیش‌بینی ذخیره‌شده، پایش را از بالا شروع کنید.</string>
+    <string name="diag_predictor_active_state" formatted="false">وضعیت فعال باتری</string>
+    <string name="diag_predictor_effective_rate" formatted="false">نرخ استفاده‌شده برای تخمین</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">۵ دقیقه گذشته</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">۵ واحد درصد گذشته</string>
+    <string name="diag_predictor_active_long_term_rate" formatted="false">نرخ بلندمدت فعال</string>
+    <string name="diag_predictor_observed_points" formatted="false">واحدهای درصد تکمیل‌شده</string>
+    <string name="diag_predictor_observation_duration" formatted="false">مدت نشست مشاهده‌شده</string>
+    <string name="diag_predictor_current_level_duration" formatted="false">زمان در سطح فعلی</string>
+    <string name="diag_predictor_uses_partial" formatted="false">بازه ناتمام لحاظ شده است</string>
+    <string name="diag_predictor_saved_averages" formatted="false">میانگین‌های بلندمدت ذخیره‌شده</string>
+    <string name="diag_predictor_ac">شارژ (AC)</string>
+    <string name="diag_predictor_wireless">شارژ (بی‌سیم)</string>
+    <string name="diag_predictor_usb">شارژ (USB)</string>
+    <string name="diag_predictor_version">نسخه داده‌ها</string>
+    <string name="diag_predictor_not_saved">ذخیره نشده</string>
+    <string name="diag_predictor_default">استفاده از پیش‌فرض</string>
+    <string name="diag_predictor_invalid">مقدار ذخیره‌شده نامعتبر</string>
+    <string name="diagnostics_device_and_logs" formatted="false">دستگاه و گزارش عیب‌یابی</string>
+    <string name="diagnostics_debug_logs" formatted="false">جمع‌آوری گزارش‌های اشکال‌زدایی</string>
+    <string name="diagnostics_debug_logs_warning" formatted="false">گزارش‌های اشکال‌زدایی ممکن است اطلاعات شخصی داشته باشند. فقط هنگام بررسی مشکل فعال کنید، فایل صادرشده را ببینید و در اشتراک‌گذاری عمومی احتیاط کنید.</string>
+    <string name="diagnostics_clear" formatted="false">حذف گزارش‌های اشکال‌زدایی جمع‌آوری‌شده</string>
+    <string name="diagnostics_clear_summary" formatted="false">گزارش‌های اشکال‌زدایی ذخیره‌شده توسط برنامه را حذف کنید</string>
+    <string name="diagnostics_logs_cleared" formatted="false">گزارش‌های اشکال‌زدایی حذف شدند</string>
+    <string name="diagnostics_logs_clear_failed" formatted="false">گزارش‌های اشکال‌زدایی حذف نشدند</string>
+    <string name="diagnostics_export" formatted="false">صدور گزارش عیب‌یابی</string>
+    <string name="diagnostics_export_summary" formatted="false">اطلاعات دستگاه، مجوزها، پایش و گزارش‌های موجود را در یک فایل متنی ذخیره کنید</string>
+    <string name="diagnostics_exported" formatted="false">گزارش عیب‌یابی صادر شد</string>
+    <string name="diagnostics_export_failed" formatted="false">گزارش عیب‌یابی صادر نشد</string>
+    <string name="diagnostics_help_report" formatted="false">هنگام گزارش مشکل، این گزارش می‌تواند برای یافتن علت ضروری باشد. وضعیت دستگاه و برنامه و گزارش‌های فعال را شامل می‌شود. گزارش‌ها ممکن است اطلاعات شخصی داشته باشند؛ فایل را بررسی و با احتیاط به اشتراک بگذارید.</string>
+    <string name="diag_include_raw">گنجاندن مقادیر خام و شناسه‌ها</string>
+    <string name="diag_include_debug">گنجاندن گزارش‌های اشکال‌زدایی جمع‌آوری‌شده</string>
+    <string name="diag_include_apps">گنجاندن نام برنامه‌های سیستم</string>
+    <string name="diag_report_privacy">به‌طور پیش‌فرض کنار گذاشته می‌شوند. این داده‌ها ممکن است اطلاعات شخصی داشته باشند. پیش از کپی یا ذخیره، پیش‌نمایش را بررسی کنید.</string>
+
+    <string name="charging_diagnostics_title" formatted="false">عیب‌یابی محدودیت شارژ سازنده</string>
+    <string name="charging_diagnostics_instructions_hint" formatted="false">برای تهیه گزارشی مفید، پیش از ثبت تصاویر «راهنما» را باز کنید و مراحل آماده‌سازی را انجام دهید.</string>
+    <string name="charging_diagnostics_privileged_hint" formatted="false">با دسترسی ویژه ممکن است اطلاعات تشخیصی بیشتری در دسترس باشد. برای گزارش مفیدتر از محدودیت شارژ سازنده، دسترسی Shizuku یا root را بدهید و دسترسی ویژه را در تنظیمات پیشرفته فعال کنید.</string>
+    <string name="charging_diagnostics_capture" formatted="false">گرفتن تصویر لحظه‌ای</string>
+    <string name="charging_diagnostics_capture_summary" formatted="false">یک حالت شارژ را در تنظیمات دستگاه انتخاب کنید و سپس سیگنال‌های آن را ثبت کنید</string>
+    <string name="charging_diagnostics_choose_state" formatted="false">کدام تنظیم دستگاه فعال است؟</string>
+    <string name="charging_diagnostics_condition_off" formatted="false">محافظت خاموش / بدون محدودیت</string>
+    <string name="charging_diagnostics_condition_fixed" formatted="false">محدودیت ثابت…</string>
+    <string name="charging_diagnostics_condition_adaptive" formatted="false">شارژ تطبیقی / هوشمند</string>
+    <string name="charging_diagnostics_condition_scheduled" formatted="false">شارژ زمان‌بندی‌شده</string>
+    <string name="charging_diagnostics_condition_other" formatted="false">حالت دیگر سازنده</string>
+    <string name="charging_diagnostics_capturing" formatted="false">در حال ثبت سیگنال‌های شارژ…</string>
+    <string name="charging_diagnostics_captured" formatted="false">تصویر شارژ ثبت شد</string>
+    <string name="charging_diagnostics_capture_failed" formatted="false">ثبت تصویر شارژ ممکن نشد</string>
+    <plurals name="charging_diagnostics_snapshot_count">
+        <item quantity="one">%1$d تصویر ثبت شد. حالت شارژ دیگری را ثبت کنید.</item>
+        <item quantity="other">%1$d تصویر ثبت شد. برای بررسی مقایسه بزنید.</item>
+    </plurals>
+    <string name="charging_diagnostics_need_two" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ را ثبت کنید</string>
+    <string name="charging_diagnostics_report" formatted="false">ایجاد گزارش مقایسه</string>
+    <string name="charging_diagnostics_report_summary" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ سازنده را ثبت کنید</string>
+    <string name="charging_diagnostics_copy" formatted="false">کپی در کلیپ‌بورد</string>
+    <string name="charging_diagnostics_save" formatted="false">ذخیره</string>
+    <string name="charging_diagnostics_copied" formatted="false">گزارش کپی شد</string>
+    <string name="charging_diagnostics_clear" formatted="false">پاک کردن تصاویر شارژ</string>
+    <string name="charging_diagnostics_clear_summary" formatted="false">حذف تصاویر شارژ ذخیره‌شده در دستگاه</string>
+    <string name="charging_diagnostics_cleared" formatted="false">تصاویر شارژ حذف شدند</string>
+    <string name="charging_diagnostics_help_steps" formatted="false">1. گوشی را از شارژر جدا کنید و هنگام ثبت تصاویر پیکربندی، جدا نگه دارید. بین تصاویر فقط تنظیم محافظت شارژ سازنده را تغییر دهید.\n
+    2. محافظت شارژ را خاموش کنید، 2–5 ثانیه صبر و تصویری ثبت کنید.\n
+    3. محدودیتی ثابت انتخاب کنید، 2–5 ثانیه صبر و تصویری ثبت کنید. در صورت امکان با محدودیتی دیگر تکرار کنید.\n
+    4. شارژ تطبیقی، هوشمند یا زمان‌بندی‌شده را فعال کنید، 2–5 ثانیه صبر و تصویری ثبت کنید.\n
+    5. اگر مقایسه پیکربندی نتیجه روشنی نداشت، می‌توانید برای ثبت وضعیت‌هایی که فقط هنگام کار دیده می‌شوند، این مراحل را هنگام شارژ نیز تکرار کنید.\n
+    6. گزارش مقایسه را بسازید و بررسی کنید. داده‌ها فیلتر و مقادیر احتمالاً حساس پنهان می‌شوند، اما پیش از اشتراک‌گذاری کل گزارش را بررسی کنید.</string>
+    <string name="charging_diagnostics_help_contact" formatted="false">پس از بررسی گزارش، آن را کپی یا ذخیره کنید و با ایمیل به <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> بفرستید.</string>
+
+    <string name="pref_backup_restore" formatted="false">پشتیبان‌گیری و بازیابی</string>
+    <string name="backup_restore_settings_summary" formatted="false">از تنظیمات برنامه و داده‌های باتری نسخهٔ پشتیبان تهیه کنید، آن‌ها را بازیابی و منتقل کنید.</string>
+    <string name="backup_restore_help_overview" formatted="false">تنظیمات، هشدارها، گزارش‌ها و داده‌های پیش‌بینی آموخته‌شده را ذخیره و بازیابی کنید. بازیابی تنظیمات پیش‌فرض پس از تأیید، ترجیحات برنامه را بازنشانی می‌کند و تاریخچه، هشدارها، تخمین‌های آموخته‌شده و وضعیت اجرای پایش را حفظ می‌کند.</string>
+    <string name="pref_general_backup" formatted="false">پشتیبان‌گیری عمومی برنامه</string>
+    <string name="general_backup_help" formatted="false">پشتیبان‌گیری عمومی تنظیمات، هشدارها و داده‌های مختص دستگاه را با هم ذخیره می‌کند. هنگام بازیابی می‌توانید انتخاب کنید کدام داده‌های موجود وارد شوند.</string>
+    <string name="pref_export_general_backup" formatted="false">صادر کردن پشتیبان عمومی</string>
+    <string name="pref_export_general_backup_summary" formatted="false">ذخیره تنظیمات، هشدارها و داده‌های ویژه دستگاه در یک فایل ZIP</string>
+    <string name="general_backup_exported" formatted="false">پشتیبان عمومی با موفقیت صادر شد</string>
+    <string name="pref_import_general_backup" formatted="false">وارد کردن پشتیبان عمومی</string>
+    <string name="pref_import_general_backup_summary" formatted="false">بازیابی داده‌های انتخاب‌شده از فایل ZIP پشتیبان عمومی</string>
+    <string name="general_backup_restore_message" formatted="false">مواردی را که می‌خواهید بازیابی شوند انتخاب کنید.</string>
+    <string name="general_backup_imported" formatted="false">پشتیبان عمومی با موفقیت وارد شد</string>
+    <string name="invalid_general_backup_file" formatted="false">فایل پشتیبان عمومی نامعتبر یا ناسازگار است</string>
+    <string name="settings_restore_partial">بازیابی برخی داده‌ها ممکن نشد. با موفقیت بازیابی شد: %1$s. داده‌هایی که شاید بخشی از آن‌ها بازیابی شده باشد: %2$s. پیش از تلاش دوباره این بخش‌ها را بررسی کنید.</string>
+    <string name="settings_restore_none">هیچ‌کدام</string>
+    <string name="settings_backup_help" formatted="false">پشتیبان تنظیمات، ترجیحات برنامه را ذخیره می‌کند. وارد کردن آن ترجیحات ذخیره‌شده را بازیابی می‌کند.</string>
+    <string name="pref_export_settings" formatted="false">صادر کردن تنظیمات</string>
+    <string name="pref_export_settings_summary" formatted="false">ذخیره تنظیمات فعلی در یک فایل</string>
+    <string name="settings_exported" formatted="false">تنظیمات با موفقیت صادر شد</string>
+    <string name="pref_import_settings" formatted="false">وارد کردن تنظیمات</string>
+    <string name="pref_import_settings_summary" formatted="false">بازیابی تنظیمات از یک فایل</string>
+    <string name="settings_imported" formatted="false">تنظیمات با موفقیت وارد شد</string>
+    <string name="invalid_settings_file" formatted="false">فایل تنظیمات نامعتبر است</string>
+    <string name="settings_file_version_warning" formatted="false">این فایل با نسخه جدیدتری از برنامه ایجاد شده است. وارد کردن آن ممکن است باعث رفتار غیرمنتظره شود. با این حال ادامه می‌دهید؟</string>
+    <string name="alarms_backup_help" formatted="false">پشتیبان هشدارها، هشدارهای شما را ذخیره می‌کند. وارد کردن آن همهٔ هشدارهای فعلی را با هشدارهای نسخهٔ پشتیبان جایگزین می‌کند.</string>
+    <string name="pref_export_alarms" formatted="false">صادر کردن هشدارها</string>
+    <string name="pref_export_alarms_summary" formatted="false">ذخیره هشدارهای فعلی در یک فایل</string>
+    <string name="alarms_exported" formatted="false">هشدارها با موفقیت صادر شدند</string>
+    <string name="pref_import_alarms" formatted="false">وارد کردن هشدارها</string>
+    <string name="pref_import_alarms_summary" formatted="false">جایگزینی هشدارهای فعلی با هشدارهای یک فایل</string>
+    <string name="alarms_imported" formatted="false">هشدارها با موفقیت وارد شدند</string>
+    <string name="invalid_alarms_file" formatted="false">فایل هشدار نامعتبر است</string>
+    <string name="pref_backup_device_data" formatted="false">پشتیبان‌گیری از داده‌های ویژه دستگاه</string>
+    <string name="device_specific_backup_help" formatted="false">پشتیبان مختص دستگاه، گزارش‌ها و داده‌های پیش‌بینی‌کننده را ذخیره می‌کند. هنگام وارد کردن می‌توانید یکی یا هر دو را انتخاب کنید. این داده‌ها متعلق به دستگاه مبدأ هستند؛ استفاده از آن‌ها در دستگاهی دیگر ممکن است باعث پیش‌بینی‌های نادرست یا رفتار غیرمنتظره شود. هنگام وارد کردن گزارش‌ها، افزودن آن‌ها یا جایگزینی گزارش‌های موجود را انتخاب کنید.</string>
+    <string name="device_data_logs" formatted="false">گزارش‌ها</string>
+    <string name="device_data_predictor" formatted="false">داده‌های پیش‌بینی</string>
+    <string name="device_data_backup_warning" formatted="false">این داده‌ها ویژه دستگاهی هستند که در آن جمع‌آوری شده‌اند. وارد کردن آن‌ها در دستگاهی دیگر ممکن است باعث پیش‌بینی‌های نادرست یا رفتار غیرمنتظره دیگری در برنامه شود.</string>
+    <string name="pref_export_device_data" formatted="false">صادر کردن داده‌های ویژه دستگاه</string>
+    <string name="pref_export_device_data_summary" formatted="false">ذخیره گزارش‌ها و داده‌های پیش‌بینی در یک فایل</string>
+    <string name="device_data_exported" formatted="false">داده‌های ویژه دستگاه با موفقیت صادر شدند</string>
+    <string name="pref_import_device_data" formatted="false">وارد کردن داده‌های ویژه دستگاه</string>
+    <string name="pref_import_device_data_summary" formatted="false">بازیابی گزارش‌ها و داده‌های پیش‌بینی از یک فایل</string>
+    <string name="device_data_imported" formatted="false">داده‌های ویژه دستگاه با موفقیت وارد شدند</string>
+    <string name="invalid_device_data_file" formatted="false">فایل داده‌های ویژه دستگاه نامعتبر است</string>
+    <string name="device_data_file_empty" formatted="false">این فایل حاوی هیچ داده پشتیبانی‌شده ویژه دستگاه نیست</string>
+    <string name="pref_import_logs_csv" formatted="false">وارد کردن گزارش‌ها از CSV</string>
+    <string name="pref_import_logs_csv_summary" formatted="false">وارد کردن گزارش‌ها از یک فایل CSV صادرشده</string>
+    <string name="csv_logs_import_help" formatted="false">گزارش‌ها را از CSV برون‌ریزی‌شده با Battery Monitor درون‌ریزی کنید و افزودن یا جایگزینی گزارش‌های موجود را انتخاب کنید. خروجی‌های قدیمی ممکن است جریان یا شارژ باقی‌مانده نداشته باشند؛ این اندازه‌گیری‌ها برای ورودی‌های قدیمی خالی می‌مانند. پشتیبان‌های JSON داده‌های ساختاریافته را حفظ می‌کنند و برای بازیابی بهترند.</string>
+    <string name="csv_logs_import_warning" formatted="false">قالب‌های CSV ممکن است بین نسخه‌های برنامه متفاوت باشند، بنابراین وارد کردن همیشه به‌درستی کار نمی‌کند.</string>
+    <string name="log_import_mode_title" formatted="false">وارد کردن گزارش‌ها</string>
+    <string name="log_import_mode_message" formatted="false">با گزارش‌های واردشده چگونه برخورد شود؟</string>
+    <string name="log_import_add" formatted="false">افزودن به گزارش‌های موجود</string>
+    <string name="log_import_replace" formatted="false">جایگزینی گزارش‌های موجود</string>
+    <string name="csv_logs_imported" formatted="false">گزارش‌های CSV با موفقیت وارد شدند</string>
+    <string name="invalid_csv_logs_file" formatted="false">فایل گزارش‌های CSV نامعتبر یا ناسازگار است</string>
+    <string name="settings_reset_title">بازیابی تنظیمات پیش‌فرض</string>
+    <string name="settings_reset_summary">بازنشانی ترجیحات برنامه با حفظ تاریخچه، هشدارها و تخمین‌های آموخته‌شده.</string>
+    <string name="settings_reset_help" formatted="false">بازیابی تنظیمات پیش‌فرض پس از تأیید، ترجیحات برنامه را بازنشانی می‌کند. تاریخچه، هشدارها، تخمین‌های آموخته‌شده، پیکربندی ابزارک‌ها و وضعیت اجرای پایش پس‌زمینه حفظ می‌شوند. مجوزهای سیستم و تنظیمات کانال اعلان بازنشانی نمی‌شوند.</string>
+    <string name="settings_reset_question">همه تنظیمات برنامه به پیش‌فرض بازگردند؟ تاریخچه، هشدارها و تخمین‌های آموخته‌شده حفظ می‌شوند. پایش پس‌زمینه مانند اکنون روشن یا متوقف می‌ماند.</string>
+    <string name="settings_reset_confirm">بازیابی پیش‌فرض‌ها</string>
+    <string name="settings_reset_done">تنظیمات پیش‌فرض بازیابی شدند</string>
+    <string name="settings_reset_failed">بازیابی تنظیمات پیش‌فرض کامل نشد. ممکن است برخی تنظیمات تغییر کرده باشند. فضای ذخیره‌سازی موجود را بررسی کنید و دوباره تلاش کنید.</string>
+
+    <string name="help_activity_subtitle" formatted="false">کمک</string>
+    <string name="help_cat_version" formatted="false">نسخه</string>
+    <string name="help_cat_open_source" formatted="false">منبع باز</string>
+    <string name="help_open_source" formatted="false">این پروژه متن باز است می توانید به کد منبع دسترسی پیدا کنید <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>
+    <string name="help_licenses_title">مجوزهای متن‌باز</string>
+    <string name="help_licenses_summary">مجوزها و اعلان‌های برنامه، آثار گرافیکی و کتابخانه‌ها</string>
+    <string name="help_licenses_application">برنامه</string>
+    <string name="help_licenses_artwork">آثار گرافیکی و نمادها</string>
+    <string name="help_licenses_libraries">کتابخانه‌ها</string>
+    <string name="help_licenses_loading">در حال بارگیری مجوزها…</string>
+    <string name="help_licenses_unavailable">خواندن اطلاعات این مجوز ممکن نشد. به فهرست مجوزها برگردید یا برنامه را دوباره نصب کنید.</string>
+    <string name="help_cat_privacy" formatted="false">حریم خصوصی</string>
+    <string name="help_privacy" formatted="false">Battery Monitor اطلاعات باتری و دستگاه را به‌صورت محلی پردازش می‌کند، از جمله مقادیری که دستگاه در اختیار می‌گذارد مانند شماره سریال باتری. این اطلاعات را منتقل نمی‌کند و در سرورهای خارجی نیز جمع‌آوری نمی‌کند.</string>
+    <string name="help_cat_no_warranty" formatted="false">بدون گارانتی</string>
+    <string name="help_no_warranty" formatted="false">این نرم افزار به امید اینکه مفید واقع شود توزیع شده است اما بدون ضمانت؛ حتی بدون ضمانت ضمنی قابلیت خرید و فروش یا تناسب اندام برای یک هدف خاص.\n
+    \n
+    در حالی که من تمام تلاشم را می کنم تا مطمئن شوم که خوب کار می کند و نمی کند مشکل ایجاد کنید، من مسئول هیچ گونه آسیب یا ناراحتی نیستم ممکن است تحت هر شرایطی ایجاد شود.</string>
+    <string name="help_cat_acknowledgments" formatted="false">قدردانی ها</string>
+    <string name="help_acknowledgments" formatted="false">Battery Monitor یک چنگال از Battery Indicator Pro / BatteryBot Pro توسط است Darshan Computing, LLC. با تشکر از نویسندگان و مشارکت کنندگان اصلی برای ایجاد و نگهداری پروژه بالادست.</string>
+    <string name="help_cat_frequently_asked_questions" formatted="false">پرسش‌های متداول</string>
+    <string name="help_frequently_asked_questions" formatted="false">پاسخ‌های رایج‌ترین پرسش‌ها را می‌توانید در <a href="https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md">https://github.com/tswistak/Battery-Monitor/blob/master/FAQ.md</a> پیدا کنید.</string>
+    <string name="help_cat_contact" formatted="false">تماس و بازخورد</string>
+    <string name="help_contact" formatted="false">می‌توانید <a href="https://github.com/tswistak/Battery-Monitor/issues">اشکال‌ها را در GitHub گزارش کنید</a>. برای پرسش‌ها، ایده‌ها و بازخورد به <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a> بپیوندید. همچنین می‌توانید <a href="mailto:tomasz@swistak.codes">به من ایمیل بزنید</a>.</string>
+    <string name="changelog_title">تازه‌های Battery Monitor</string>
+    <string name="changelog_version">نسخهٔ %1$s</string>
+    <string name="changelog_got_it">متوجه شدم</string>
+
+    <string name="percent_symbol" formatted="false">%</string>
+    <string name="degree_symbol" formatted="false">°</string>
+    <string name="celsius_symbol" formatted="false">C</string>
+    <string name="fahrenheit_symbol" formatted="false">F</string>
+    <string name="volt_symbol" formatted="false">V</string>
+    <string name="since" formatted="false">از آنجایی که</string>
+    <string name="duration_for">به مدت %1$s</string>
+    <plurals name="for_n_hours">
+        <item quantity="one">برای %d ساعت</item>
+        <item quantity="other">برای %d ساعت</item>
+    </plurals>
+    <plurals name="n_days">
+        <item quantity="one">"%d روز، "</item>
+        <item quantity="other">"%d روز، "</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="one">%d ساعت</item>
+        <item quantity="other">%d ساعت</item>
+    </plurals>
+    <plurals name="n_hours_long">
+        <item quantity="one">"%d ساعت، "</item>
+        <item quantity="other">"%d ساعت، "</item>
+    </plurals>
+    <plurals name="n_minutes_long">
+        <item quantity="one">%d دقیقه</item>
+        <item quantity="other">%d دقیقه</item>
+    </plurals>
+    <plurals name="n_hours_medium">
+        <item quantity="one">"%d س، "</item>
+        <item quantity="other">"%d س، "</item>
+    </plurals>
+    <plurals name="n_minutes_medium">
+        <item quantity="one">%d د</item>
+        <item quantity="other">%d د</item>
+    </plurals>
+    <plurals name="n_hours_short">
+        <item quantity="one">"%d س "</item>
+        <item quantity="other">"%d س "</item>
+    </plurals>
+    <plurals name="n_minutes_short">
+        <item quantity="one">%d د</item>
+        <item quantity="other">%d د</item>
+    </plurals>
+    <string name="unit_days">%dروز</string>
+    <string name="unit_hours">%dس</string>
+    <string name="unit_minutes">%dد</string>
 </resources>
