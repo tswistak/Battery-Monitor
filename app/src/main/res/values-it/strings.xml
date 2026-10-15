@@ -22,12 +22,8 @@
     \n
     Premi OK per andare alle impostazioni di sistema dove puoi sbloccare le notifiche di Battery Monitor.</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor è limitato!</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor è limitato e non può funzionare correttamente. Questa \"ottimizzazione batteria\" è una funzione Android progettata per limitare app mal progettate ed evitare un consumo eccessivo della batteria in background.\n
-    \n
-    Battery Monitor, però, è un\'app ben progettata che deve poter funzionare senza limitazioni in background per operare correttamente. È estremamente efficiente e non ridurrà la durata della batteria.\n
-    \n
-    Premi OK per andare alle impostazioni di sistema dove puoi disattivare l\'ottimizzazione batteria per Battery Monitor.</string>
+  <string name="battery_optimized" formatted="false">Monitoraggio in background</string>
+  <string name="battery_optimized_message" formatted="false">L’esecuzione senza restrizioni in background può migliorare l’affidabilità del monitoraggio. L’ottimizzazione della batteria di Android può ritardare aggiornamenti e avvisi.\n\nL’esecuzione senza restrizioni può aumentare il consumo della batteria in background. Puoi modificare questa scelta in seguito in Impostazioni Android &gt; App &gt; Battery Monitor &gt; Batteria.</string>
 
   <string name="main_notif_chan_name" formatted="false">Notifica principale</string>
   <string name="live_updates_notif_chan_name" formatted="false">Aggiornamenti in tempo reale</string>
@@ -685,4 +681,7 @@
   <string name="history_chart_log_unavailable">La scala logaritmica richiede misurazioni positive per entrambe le grandezze selezionate.</string>
   <string name="history_chart_more">Altre azioni del grafico</string>
   <string name="history_chart_events">Eventi del grafico</string>
+  <string name="changelog_title">Novità di Battery Monitor</string>
+  <string name="changelog_version">Versione %1$s</string>
+  <string name="changelog_got_it">Ho capito</string>
 </resources>

@@ -88,6 +88,7 @@ import codes.swistak.batterymonitor.ui.components.CapabilityNotice
 import codes.swistak.batterymonitor.ui.components.MeasurementChart
 import codes.swistak.batterymonitor.ui.components.MetricDisplay
 import codes.swistak.batterymonitor.ui.components.MetricGrid
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.historyValue
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
@@ -397,34 +398,34 @@ internal fun CurrentStateScreen(
     val metrics = listOf(
         MetricDetail(
             CurrentMeasurement.TEMPERATURE,
-            MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
-                DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
-            } ?: unavailable),
-            if (preferences.fahrenheit) "°F" else "°C",
-            source(CurrentMeasurement.TEMPERATURE),
-            snapshotTime), MetricDetail(
+        MetricDisplay(stringResource(R.string.current_temperature), snapshot?.let {
+            DisplayStrings.formatTemp(it.temperatureTenthsCelsius, preferences.fahrenheit)
+        } ?: unavailable),
+        if (preferences.fahrenheit) "°F" else "°C",
+        source(CurrentMeasurement.TEMPERATURE),
+        snapshotTime), MetricDetail(
             CurrentMeasurement.VOLTAGE,
-            MetricDisplay(
-                stringResource(R.string.current_voltage),
-                snapshot?.voltageMillivolts?.let {
-                    DisplayStrings.formatVoltage(it)
-                } ?: unavailable),
-            "V",
-            source(CurrentMeasurement.VOLTAGE),
-            snapshotTime,
-            if (snapshot?.voltageMillivolts == null) unavailable else null), MetricDetail(
-            CurrentMeasurement.CURRENT, MetricDisplay(
-                stringResource(R.string.pref_cat_battery_current_main), when {
-                    currentReading?.milliAmps == null -> unavailable
-                    else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
-                        currentReading.milliAmps, configuration.locales[0]
-                    ) + " mA"
-                }
-            ), "mA", source(CurrentMeasurement.CURRENT), currentReading?.observedAtMillis, when {
-                currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
-                else -> null
+        MetricDisplay(
+            stringResource(R.string.current_voltage),
+            snapshot?.voltageMillivolts?.let {
+                DisplayStrings.formatVoltage(it)
+            } ?: unavailable),
+        "V",
+        source(CurrentMeasurement.VOLTAGE),
+        snapshotTime,
+        if (snapshot?.voltageMillivolts == null) unavailable else null), MetricDetail(
+        CurrentMeasurement.CURRENT, MetricDisplay(
+            stringResource(R.string.pref_cat_battery_current_main), when {
+                currentReading?.milliAmps == null -> unavailable
+                else -> (if (currentReading.milliAmps > 0) "+" else "") + BatteryCurrent.formatMilliAmps(
+                    currentReading.milliAmps, configuration.locales[0]
+                ) + " mA"
             }
-        )) + listOfNotNull(power?.let {
+        ), "mA", source(CurrentMeasurement.CURRENT), currentReading?.observedAtMillis, when {
+            currentReading?.milliAmps == null -> stringResource(R.string.current_current_unavailable)
+            else -> null
+        }
+    )) + listOfNotNull(power?.let {
         MetricDetail(
             CurrentMeasurement.POWER,
             MetricDisplay(
@@ -458,14 +459,14 @@ internal fun CurrentStateScreen(
         source(CurrentMeasurement.REMAINING_CHARGE),
         snapshotTime,
         if (snapshot?.remainingChargeMicroampHours == null) stringResource(R.string.remaining_charge_unavailable) else null)
-    var selectedMetric by rememberSaveable { mutableStateOf<String?>(null) }
+    val dialogsAllowed = applicationDialogsAllowed()
+    var detailSheet by rememberSaveable { mutableStateOf<String?>(null) }
     LaunchedEffect(requestedMeasurement) {
         requestedMeasurement?.let {
-            selectedMetric = it.route
+            detailSheet = it.route
             onMeasurementHandled()
         }
     }
-    var showPredictionDetails by remember { mutableStateOf(false) }
     BoxWithConstraints(modifier) {
         val expanded = maxWidth >= 800.dp * LocalDensity.current.fontScale
         val singleColumn = maxWidth < 360.dp || LocalDensity.current.fontScale >= 1.6f
@@ -518,7 +519,7 @@ internal fun CurrentStateScreen(
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
-                            IconButton(onClick = { showPredictionDetails = true }) {
+                            IconButton(onClick = { detailSheet = "prediction" }) {
                                 Icon(
                                     painterResource(R.drawable.ui_info),
                                     stringResource(R.string.time_remaining),
@@ -604,18 +605,18 @@ internal fun CurrentStateScreen(
                 )
                 MetricGrid(
                     metrics.mapIndexed { index, metric ->
-                        metric.display.copy(
-                            icon = listOfNotNull(
-                                R.drawable.ui_temp,
-                                R.drawable.ui_voltage,
-                                R.drawable.ui_current,
-                                R.drawable.ui_bolt.takeIf { power != null },
-                                R.drawable.ui_heart
-                            )[index]
-                        )
-                    },
+                    metric.display.copy(
+                        icon = listOfNotNull(
+                            R.drawable.ui_temp,
+                            R.drawable.ui_voltage,
+                            R.drawable.ui_current,
+                            R.drawable.ui_bolt.takeIf { power != null },
+                            R.drawable.ui_heart
+                        )[index]
+                    )
+                },
                     columns = if (singleColumn) 1 else 2,
-                    onMetricClick = { selectedMetric = metrics[it].measurement.route },
+                    onMetricClick = { detailSheet = metrics[it].measurement.route },
                     modifier = Modifier.fillMaxWidth(),
                     expanded = expanded
                 )
@@ -784,9 +785,9 @@ internal fun CurrentStateScreen(
             }
         }
     }
-    selectedMetric?.let { route ->
+    if (dialogsAllowed) detailSheet?.let { route ->
         val metric = detailMetrics.firstOrNull { it.measurement.route == route } ?: return@let
-        ModalBottomSheet(onDismissRequest = { selectedMetric = null }) {
+        ModalBottomSheet(onDismissRequest = { detailSheet = null }) {
             Column(
                 Modifier
                     .verticalScroll(rememberScrollState())
@@ -810,7 +811,7 @@ internal fun CurrentStateScreen(
                     )
                 }
                 TextButton(onClick = {
-                    selectedMetric = null
+                    detailSheet = null
                     onSection(SectionOwner.DIAGNOSTICS)
                 }) {
                     ActionLabel(stringResource(R.string.nav_diagnostics), R.drawable.ui_current)
@@ -818,8 +819,8 @@ internal fun CurrentStateScreen(
             }
         }
     }
-    if (showPredictionDetails) ModalBottomSheet(onDismissRequest = {
-        showPredictionDetails = false
+    if (dialogsAllowed && detailSheet == "prediction") ModalBottomSheet(onDismissRequest = {
+        detailSheet = null
     }) {
         Column(
             Modifier

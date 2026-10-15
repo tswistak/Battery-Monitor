@@ -24,12 +24,8 @@
     \n
     لطفاً OK را فشار دهید تا به تنظیمات سیستم در جایی که می توانید منتقل شوید رفع انسداد اعلان‌ها برای مانیتور باتری</string>
 
-  <string name="battery_optimized" formatted="false">مانیتور باتری محدود شد!</string>
-  <string name="battery_optimized_message" formatted="false">عملکرد مانیتور باتری به درستی محدود شده است. این \"بهینه سازی باتری\" یک ویژگی اندروید است که برای محدود کردن برنامه‌های طراحی ضعیف برای جلوگیری از آنها طراحی شده است از استفاده بیش از حد باتری در پس زمینه.\n
-    با این حال،\n
-    Battery Monitor یک برنامه خوب طراحی شده است که باید بدون محدودیت در پس زمینه برای عملکرد صحیح فوق العاده کارآمد است و عمر باتری شما را کاهش نخواهد داد.\n
-    \n
-    لطفاً OK را فشار دهید تا به تنظیمات سیستم در جایی که می توانید منتقل شوید بهینه سازی باتری را برای مانیتور باتری غیرفعال کنید.</string>
+  <string name="battery_optimized" formatted="false">پایش در پس‌زمینه</string>
+  <string name="battery_optimized_message" formatted="false">اجرای بدون محدودیت در پس‌زمینه می‌تواند قابلیت اطمینان پایش را بهبود دهد. بهینه‌سازی باتری Android ممکن است به‌روزرسانی‌ها و هشدارها را به تأخیر بیندازد.\n\nاجرای بدون محدودیت ممکن است مصرف باتری در پس‌زمینه را افزایش دهد. می‌توانید بعداً این گزینه را در تنظیمات Android &gt; برنامه‌ها &gt; Battery Monitor &gt; باتری تغییر دهید.</string>
 
   <string name="main_notif_chan_name" formatted="false">اطلاعیه اصلی</string>
   <string name="live_updates_notif_chan_name" formatted="false">به‌روزرسانی‌های زنده</string>
@@ -693,4 +689,7 @@
     <string name="history_chart_log_unavailable">مقیاس لگاریتمی به داده‌های مثبت برای هر دو معیار انتخاب‌شده نیاز دارد.</string>
     <string name="history_chart_more">اقدامات بیشتر نمودار</string>
     <string name="history_chart_events">رویدادهای نمودار</string>
+  <string name="changelog_title">تازه‌های Battery Monitor</string>
+  <string name="changelog_version">نسخهٔ %1$s</string>
+  <string name="changelog_got_it">متوجه شدم</string>
 </resources>

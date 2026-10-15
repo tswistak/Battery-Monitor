@@ -22,12 +22,8 @@
     \n
     OK\'a basarak Battery Monitor bildirimlerini yeniden etkinleştirebileceğiniz sistem ayarlarına gidebilirsiniz.</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor kısıtlandı!</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor doğru çalışamayacak şekilde kısıtlandı. Bu \"pil optimizasyonu\", arka planda çok pil tüketen uygulamaları sınırlamak için Android özelliğidir.\n
-    \n
-    Battery Monitor ise düzgün çalışmak için arka planda kısıtlanmadan çalışması gereken, verimli bir uygulamadır.\n
-    \n
-    OK\'a basarak Battery Monitor için pil optimizasyonunu kapatabileceğiniz sistem ayarlarına gidebilirsiniz.</string>
+  <string name="battery_optimized" formatted="false">Arka planda izleme</string>
+  <string name="battery_optimized_message" formatted="false">Arka planda kısıtlamasız çalışma, izlemenin güvenilirliğini artırabilir. Android pil optimizasyonu güncellemeleri ve uyarıları geciktirebilir.\n\nKısıtlamasız çalışma, arka plandaki pil tüketimini artırabilir. Bunu daha sonra Android Ayarları &gt; Uygulamalar &gt; Battery Monitor &gt; Pil bölümünden değiştirebilirsiniz.</string>
 
   <string name="main_notif_chan_name" formatted="false">Ana Bildirim</string>
   <string name="live_updates_notif_chan_name" formatted="false">Canlı Güncellemeler</string>
@@ -669,4 +665,7 @@
     <string name="history_chart_log_unavailable">Logaritmik ölçek, seçilen her iki ölçüt için de pozitif ölçümler gerektirir.</string>
     <string name="history_chart_more">Diğer grafik işlemleri</string>
     <string name="history_chart_events">Grafik olayları</string>
+  <string name="changelog_title">Battery Monitor yenilikleri</string>
+  <string name="changelog_version">Sürüm %1$s</string>
+  <string name="changelog_got_it">Anladım</string>
 </resources>

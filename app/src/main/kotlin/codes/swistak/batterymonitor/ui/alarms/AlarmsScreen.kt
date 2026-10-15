@@ -73,6 +73,7 @@ import codes.swistak.batterymonitor.alarms.AlarmRule
 import codes.swistak.batterymonitor.alarms.AlarmTypeDefinition
 import codes.swistak.batterymonitor.alarms.LogicalAlarm
 import codes.swistak.batterymonitor.ui.components.ActionLabel
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
 
 internal fun alarmTypeLabel(type: String): Int = when (type) {
@@ -330,7 +331,7 @@ internal fun AlarmsScreen(
         SnackbarHost(snackbar, Modifier.align(Alignment.BottomCenter))
     }
     recoveryAction?.let { (rule, delete) ->
-        AlertDialog(
+        if (applicationDialogsAllowed()) AlertDialog(
             onDismissRequest = { recoveryAction = null },
             title = { Text(stringResource(if (delete) R.string.menu_delete_alarm else R.string.alarms_disable)) },
             text = { Text("#${rule.id} · ${rule.type} · ${rule.threshold}") },
@@ -514,16 +515,16 @@ private fun ThresholdRow(
                 verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     buildAnnotatedString {
-                    append(value)
-                    withStyle(
-                        SpanStyle(
-                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                            fontWeight = FontWeight.Medium
-                        )
-                    ) {
-                        append(" $unit")
-                    }
-                },
+                        append(value)
+                        withStyle(
+                            SpanStyle(
+                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                fontWeight = FontWeight.Medium
+                            )
+                        ) {
+                            append(" $unit")
+                        }
+                    },
                     Modifier
                         .weight(1f, fill = false)
                         .clearAndSetSemantics {},

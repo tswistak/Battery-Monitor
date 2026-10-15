@@ -10,6 +10,7 @@ package codes.swistak.batterymonitor.ui.diagnostics
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.os.Bundle
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -53,6 +54,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -60,6 +62,7 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -86,12 +89,41 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.ActionLabel
 import codes.swistak.batterymonitor.ui.components.SettingRow
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.DateFormat
 import java.util.Date
+
+internal val DiagnosticRowSaver = Saver<DiagnosticRow?, Bundle>(save = { row ->
+    row?.let {
+        Bundle().apply {
+            putInt("label", it.label)
+            putString("rawKey", it.rawKey)
+            putString("value", it.value)
+            putString("rawValue", it.rawValue)
+            putString("unit", it.unit)
+            putString("source", it.source)
+            putLong("observedAtMillis", it.observedAtMillis)
+            putString("accessMethod", it.accessMethod)
+            putInt("valueLabel", it.valueLabel)
+        }
+    }
+}, restore = { saved ->
+    DiagnosticRow(
+        label = saved.getInt("label"),
+        rawKey = saved.getString("rawKey").orEmpty(),
+        value = saved.getString("value"),
+        rawValue = saved.getString("rawValue"),
+        unit = saved.getString("unit").orEmpty(),
+        source = saved.getString("source").orEmpty(),
+        observedAtMillis = saved.getLong("observedAtMillis"),
+        accessMethod = saved.getString("accessMethod").orEmpty(),
+        valueLabel = saved.getInt("valueLabel")
+    )
+})
 
 @Composable
 internal fun DiagnosticsRoute(
@@ -168,9 +200,30 @@ internal fun DiagnosticsScreen(
         combinedPredictor?.let(::rawPredictorDiagnosticGroup)?.takeIf { it.rows.isNotEmpty() }
     val raw = basic.drop(3) + app.drop(3) + advanced.drop(3) + listOfNotNull(rawPredictor)
     var query by rememberSaveable { mutableStateOf("") }
-    var access by rememberSaveable { mutableStateOf(false) }
-    var report by rememberSaveable { mutableStateOf(false) }
-    var selectedRow by remember { mutableStateOf<DiagnosticRow?>(null) }
+    val dialogsAllowed = applicationDialogsAllowed()
+    var dialog by rememberSaveable { mutableStateOf<String?>(null) }
+    var pendingPrivilegedChange by rememberSaveable { mutableStateOf<Boolean?>(null) }
+    var selectedRow by rememberSaveable(stateSaver = DiagnosticRowSaver) {
+        mutableStateOf(null)
+    }
+    LaunchedEffect(dialogsAllowed, dialog, pendingPrivilegedChange) {
+        if (dialogsAllowed && dialog == null) {
+            pendingPrivilegedChange?.let { enabled ->
+                pendingPrivilegedChange = null
+                onPrivileged(enabled)
+            }
+        }
+    }
+    fun selectRow(row: DiagnosticRow) {
+        selectedRow = row
+        dialog = "reading"
+    }
+
+    fun dismissReading() {
+        dialog = null
+        selectedRow = null
+    }
+
     val labels = listOf(
         R.string.diag_overview,
         R.string.nav_battery_group,
@@ -200,12 +253,12 @@ internal fun DiagnosticsScreen(
                 (if (tab == 0) listOfNotNull(state.basic) else snapshots).filter { it.hasStats() }
             Text(
                 stringResource(
-                    R.string.current_detail_source, diagnosticSourceName(
-                        sources.joinToString(
-                            " · ", transform = ::diagnosticAccessName
-                        )
-                    ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
-                    ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
+                R.string.current_detail_source, diagnosticSourceName(
+                    sources.joinToString(
+                        " · ", transform = ::diagnosticAccessName
+                    )
+                ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
+                ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
@@ -294,7 +347,8 @@ internal fun DiagnosticsScreen(
                         if (monitor == null) R.string.current_waiting else R.string.diag_predictor_no_recent,
                         monitor?.observedAtMillis ?: 0,
                         monitorAvailability != MonitoringAvailability.LIVE,
-                        onSelect = { selectedRow = it })
+                        onSelect = ::selectRow
+                    )
                 }
             }
             if (tab in 1..2 && state.status != 0 && state.status != R.string.currently_disabled) item {
@@ -345,7 +399,10 @@ internal fun DiagnosticsScreen(
                                 .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                                 .background(MaterialTheme.colorScheme.surface)
                                 .groupedCardBorder(
-                                    true, false, MaterialTheme.colorScheme.outlineVariant, 24.dp
+                                    first = true,
+                                    last = false,
+                                    color = MaterialTheme.colorScheme.outlineVariant,
+                                    cornerRadius = 24.dp
                                 )
                                 .padding(16.dp)
                         ) {
@@ -384,7 +441,7 @@ internal fun DiagnosticsScreen(
                             DiagnosticValue(
                                 row.rawKey,
                                 row.rawValue.orEmpty(),
-                                onClick = { selectedRow = row },
+                                onClick = { selectRow(row) },
                                 raw = true
                             )
                             if (!last) HorizontalDivider(
@@ -413,7 +470,7 @@ internal fun DiagnosticsScreen(
                                 stringResource(row.label),
                                 formattedDiagnosticValue(row, resources::getString)
                                     ?: stringResource(R.string.advanced_value_not_available),
-                                onClick = { selectedRow = row })
+                                onClick = { selectRow(row) })
                             if (rowIndex < group.rows.lastIndex) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                         }
                         val readings = group.rows.filter { it.value != null || it.valueLabel != 0 }
@@ -482,7 +539,7 @@ internal fun DiagnosticsScreen(
                         stringResource(R.string.pref_cat_privileged_access),
                         stringResource(state.privilegedAccessStatus),
                         R.drawable.ui_storage
-                    ) { access = true }
+                    ) { dialog = "access" }
                     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                     DiagnosticsLink(
                         stringResource(R.string.diagnostics_monitoring),
@@ -503,7 +560,7 @@ internal fun DiagnosticsScreen(
                         stringResource(R.string.advanced_action_refresh), R.drawable.ui_refresh
                     )
                 }
-                TextButton(onClick = { report = true }, modifier = Modifier.fillMaxWidth()) {
+                TextButton(onClick = { dialog = "report" }, modifier = Modifier.fillMaxWidth()) {
                     ActionLabel(stringResource(R.string.diagnostics_export), R.drawable.ui_share)
                 }
                 Text(
@@ -514,7 +571,7 @@ internal fun DiagnosticsScreen(
             }
         }
     }
-    selectedRow?.let { row ->
+    if (dialogsAllowed && dialog == "reading") selectedRow?.let { row ->
         val isRaw = row.label == 0
         val title = if (row.label == 0) row.rawKey else stringResource(row.label)
         val reading =
@@ -524,7 +581,7 @@ internal fun DiagnosticsScreen(
         val explanation = missingDiagnosticExplanation(row, reading)
         val source = if (isRaw) "${row.source} (${diagnosticSourceName(row.accessMethod)})"
         else diagnosticSourceName(row.accessMethod)
-        AlertDialog(onDismissRequest = { selectedRow = null }, title = { Text(title) }, text = {
+        AlertDialog(onDismissRequest = ::dismissReading, title = { Text(title) }, text = {
             SelectionContainer {
                 Column(
                     Modifier.verticalScroll(rememberScrollState()),
@@ -560,19 +617,22 @@ internal fun DiagnosticsScreen(
             }
         }, dismissButton = {
             TextButton(onClick = {
-                selectedRow = null
+                dismissReading()
             }) { Text(stringResource(R.string.cancel)) }
         })
     }
-    if (access) AlertDialog(
-        onDismissRequest = { access = false },
+    if (dialogsAllowed && dialog == "access") AlertDialog(
+        onDismissRequest = { dialog = null },
         title = { Text(stringResource(R.string.pref_cat_privileged_access)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 SettingRow(
                     stringResource(R.string.pref_use_privileged_access),
                     stringResource(R.string.pref_use_privileged_access_summary),
-                    { onPrivileged(!state.privilegedEnabled) },
+                    {
+                        pendingPrivilegedChange = !state.privilegedEnabled
+                        dialog = null
+                    },
                     checked = state.privilegedEnabled
                 )
                 Text(
@@ -583,10 +643,10 @@ internal fun DiagnosticsScreen(
         },
         confirmButton = {
             TextButton(onClick = {
-                access = false
+                dialog = null
             }) { Text(stringResource(android.R.string.ok)) }
         })
-    if (report) DiagnosticReportDialog({ includeRaw ->
+    if (dialogsAllowed && dialog == "report") DiagnosticReportDialog({ includeRaw ->
         buildString {
             appendLine(resources.getString(R.string.nav_diagnostics))
             if (state.status != 0) appendLine(resources.getString(state.status))
@@ -602,7 +662,7 @@ internal fun DiagnosticsScreen(
                 )
             )
         }
-    }, onDismiss = { report = false })
+    }, onDismiss = { dialog = null })
 }
 
 @Composable

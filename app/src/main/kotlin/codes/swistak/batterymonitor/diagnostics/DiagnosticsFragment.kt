@@ -23,18 +23,39 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.NumberPicker
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.currentStateAsState
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.app.PersistentFragment
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
@@ -51,6 +72,8 @@ import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingDiagnosticR
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingDiagnosticStore
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitDiagnostics
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.ui.components.NumericValueDialog
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticReportDialog
 import codes.swistak.batterymonitor.ui.diagnostics.MonitorAction
 import codes.swistak.batterymonitor.ui.diagnostics.MonitorOperationScreen
@@ -94,6 +117,9 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
         private const val KEY_CHARGING_CAPTURE = "charging_diagnostics_capture"
         private const val KEY_CHARGING_REPORT = "charging_diagnostics_report"
         private const val KEY_CHARGING_CLEAR = "charging_diagnostics_clear"
+        private const val KEY_DIALOG = "diagnostics.dialog"
+        private const val KEY_CONDITION = "diagnostics.condition"
+        private const val KEY_PENDING_HINT = "charging_diagnostics_privileged_hint_pending"
     }
 
     private lateinit var settingsPreferences: SharedPreferences
@@ -115,11 +141,11 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
     private val shizukuBinderListener = Shizuku.OnBinderReceivedListener { refresh() }
     private val shizukuDeadListener = Shizuku.OnBinderDeadListener { refresh() }
 
-    private var reportKind by mutableStateOf<String?>(null)
+    private lateinit var dialogModel: DiagnosticsDialogViewModel
+    private val dialogState get() = dialogModel.state
+    internal val hasDialog: Boolean get() = dialogState.dialog != null
+    private val capturing: Boolean get() = dialogState.capturing
 
-    @Volatile
-    private var capturing = false
-    private var captureGeneration = 0
     private var rootGeneration = 0
     private val refreshTick = object : Runnable {
         override fun run() {
@@ -144,6 +170,14 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
         settingsPreferences = requireContext().getSharedPreferences(
             SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
         )
+        dialogModel = ViewModelProvider(this)[DiagnosticsDialogViewModel::class.java]
+        if (!dialogModel.initialized) {
+            dialogState.restore(
+                savedInstanceState?.getString(KEY_DIALOG),
+                savedInstanceState?.getInt(KEY_CONDITION, -1)
+            )
+            dialogModel.initialized = true
+        }
         actions = linkedMapOf(
             "diagnostics_notifications" to MonitorAction(R.string.diagnostics_notifications),
             "diagnostics_live_updates" to MonitorAction(R.string.live_updates_notif_chan_name),
@@ -196,12 +230,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
             }
         }
         action("monitor_stop")?.onClick = {
-            AlertDialog.Builder(requireContext()).setTitle(R.string.diag_stop_monitor)
-                .setMessage(R.string.diag_stop_monitor_body)
-                .setPositiveButton(R.string.diag_stop_monitor) { _, _ ->
-                    PersistentFragment.getInstance(parentFragmentManager).stopMonitoring()
-                    refresh()
-                }.setNegativeButton(R.string.cancel, null).show()
+            dialogState.open(DiagnosticsDialog.STOP_MONITORING)
         }
         action("monitor_start")?.onClick = {
             PersistentFragment.getInstance(parentFragmentManager).startMonitoring()
@@ -245,20 +274,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
                         ) == true)
                     }
                     MonitorOperationScreen(groups, actions, highlightedAction)
-                    reportKind?.let { kind ->
-                        val appContext = requireContext().applicationContext
-                        val root = rootAvailable
-                        val shizuku = shizukuReportStatus()
-                        DiagnosticReportDialog(
-                            create = { include ->
-                                if (kind == "charging") ChargingDiagnosticReport.create(
-                                    appContext, ChargingDiagnosticStore.read(appContext), include
-                                )
-                                else DiagnosticsReport.create(appContext, root, shizuku, include)
-                            },
-                            optionLabel = if (kind == "charging") R.string.diag_include_apps else R.string.diag_include_debug,
-                            onDismiss = { reportKind = null })
-                    }
+                    Dialogs()
                 }
             }
         }
@@ -273,6 +289,11 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
             Shizuku.addRequestPermissionResultListener(shizukuPermissionListener)
         }
         refresh()
+        if (settingsPreferences.getBoolean(KEY_PENDING_HINT, false)) {
+            dialogState.offerPrivilegedHint()
+        } else {
+            dialogState.clearPrivilegedHint()
+        }
         mainHandler.postDelayed(refreshTick, 5_000)
     }
 
@@ -280,7 +301,6 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
         serviceCheckGeneration++
         databaseCheckGeneration++
         rootGeneration++
-        captureGeneration++
         checkingRoot = false
         mainHandler.removeCallbacksAndMessages(null)
         settingsPreferences.unregisterOnSharedPreferenceChangeListener(this)
@@ -290,6 +310,159 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
             Shizuku.removeRequestPermissionResultListener(shizukuPermissionListener)
         }
         super.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_DIALOG, dialogState.dialog?.name)
+        outState.putInt(KEY_CONDITION, dialogState.selectedCondition ?: -1)
+    }
+
+    @Composable
+    internal fun Dialogs() {
+        val state = dialogState
+        val savedDialogs = rememberSaveableStateHolder()
+        val dialogsAllowed = applicationDialogsAllowed()
+        val lifecycleState by lifecycle.currentStateAsState()
+        val dialog = state.dialog
+        LaunchedEffect(state.capturing, lifecycleState) {
+            if (lifecycleState.isAtLeast(Lifecycle.State.RESUMED)) refresh()
+        }
+        LaunchedEffect(dialog) {
+            for (previous in DiagnosticsDialog.entries) {
+                if (previous != dialog) savedDialogs.removeState(previous.name)
+            }
+        }
+        if (!lifecycleState.isAtLeast(Lifecycle.State.RESUMED) || dialog == null || !dialogsAllowed) return
+        savedDialogs.SaveableStateProvider(dialog.name) { PresentDialog(dialog) }
+    }
+
+    @Composable
+    private fun PresentDialog(dialog: DiagnosticsDialog) {
+        val state = dialogState
+        when (dialog) {
+            DiagnosticsDialog.STOP_MONITORING -> AlertDialog(
+                onDismissRequest = state::dismiss,
+                title = { Text(stringResource(R.string.diag_stop_monitor)) },
+                text = { Text(stringResource(R.string.diag_stop_monitor_body)) },
+                confirmButton = {
+                    TextButton(onClick = {
+                        state.dismiss()
+                        PersistentFragment.getInstance(parentFragmentManager).stopMonitoring()
+                        refresh()
+                    }) { Text(stringResource(R.string.diag_stop_monitor)) }
+                },
+                dismissButton = {
+                    TextButton(onClick = state::dismiss) { Text(stringResource(R.string.cancel)) }
+                })
+
+            DiagnosticsDialog.CHARGING_CONDITION -> AlertDialog(
+                onDismissRequest = state::dismiss,
+                title = { Text(stringResource(R.string.charging_diagnostics_choose_state)) },
+                text = {
+                    val labels = listOf(
+                        R.string.charging_diagnostics_condition_off,
+                        R.string.charging_diagnostics_condition_fixed,
+                        R.string.charging_diagnostics_condition_adaptive,
+                        R.string.charging_diagnostics_condition_scheduled,
+                        R.string.charging_diagnostics_condition_other
+                    )
+                    Column(
+                        Modifier
+                            .verticalScroll(rememberScrollState())
+                            .selectableGroup()
+                    ) {
+                        labels.forEachIndexed { index, label ->
+                            Row(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .heightIn(min = 48.dp)
+                                    .selectable(
+                                        selected = state.selectedCondition == index,
+                                        role = Role.RadioButton,
+                                        onClick = { state.selectedCondition = index })
+                                    .padding(vertical = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                RadioButton(
+                                    selected = state.selectedCondition == index, onClick = null
+                                )
+                                Text(stringResource(label), Modifier.padding(start = 12.dp))
+                            }
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(
+                        enabled = state.selectedCondition != null,
+                        onClick = {
+                            state.confirmCondition()?.let(::captureChargingSnapshot)
+                        }) { Text(stringResource(R.string.okay)) }
+                },
+                dismissButton = {
+                    TextButton(onClick = state::dismiss) { Text(stringResource(R.string.cancel)) }
+                })
+
+            DiagnosticsDialog.FIXED_CHARGING_LIMIT -> NumericValueDialog(
+                label = stringResource(R.string.charging_diagnostics_condition_fixed),
+                unit = stringResource(R.string.percent_symbol),
+                initialValue = DEFAULT_FIXED_CHARGING_LIMIT_PERCENT,
+                min = ChargingDiagnosticCondition.MIN_FIXED_PERCENT,
+                max = ChargingDiagnosticCondition.MAX_FIXED_PERCENT,
+                step = 1,
+                saveLabel = stringResource(R.string.okay),
+                cancelLabel = stringResource(R.string.cancel),
+                errorMessage = {
+                    getString(
+                        R.string.alarms_numeric_range,
+                        ChargingDiagnosticCondition.MIN_FIXED_PERCENT,
+                        ChargingDiagnosticCondition.MAX_FIXED_PERCENT
+                    )
+                },
+                onSave = {
+                    state.dismiss()
+                    captureChargingSnapshot(ChargingDiagnosticCondition.Fixed(it))
+                },
+                onCancel = state::dismiss,
+                fieldLabel = stringResource(R.string.settings_numeric_value)
+            )
+
+            DiagnosticsDialog.PRIVILEGED_HINT -> AlertDialog(
+                onDismissRequest = ::dismissPrivilegedHint,
+                title = { Text(stringResource(R.string.charging_diagnostics_title)) },
+                text = {
+                    Text(
+                        stringResource(R.string.charging_diagnostics_privileged_hint),
+                        Modifier.verticalScroll(rememberScrollState())
+                    )
+                },
+                confirmButton = {
+                    TextButton(onClick = ::dismissPrivilegedHint) {
+                        Text(stringResource(R.string.okay))
+                    }
+                })
+
+            DiagnosticsDialog.MONITOR_REPORT, DiagnosticsDialog.CHARGING_REPORT -> {
+                val appContext = requireContext().applicationContext
+                val root = rootAvailable
+                val shizuku = shizukuReportStatus()
+                val charging = dialog == DiagnosticsDialog.CHARGING_REPORT
+                DiagnosticReportDialog(
+                    create = { include ->
+                        if (charging) ChargingDiagnosticReport.create(
+                            appContext, ChargingDiagnosticStore.read(appContext), include
+                        ) else DiagnosticsReport.create(appContext, root, shizuku, include)
+                    },
+                    optionLabel = if (charging) R.string.diag_include_apps else R.string.diag_include_debug,
+                    onDismiss = state::dismiss
+                )
+            }
+        }
+    }
+
+    private fun dismissPrivilegedHint() {
+        settingsPreferences.edit { putBoolean(KEY_PENDING_HINT, false) }
+        dialogState.dismiss()
     }
 
     override fun onDestroyView() {
@@ -356,7 +529,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
         action(KEY_DONT_KILL_MY_APP)?.onClick = {
             BackgroundSettingsNavigator.openDontKillMyApp(requireContext(), family)
         }
-        action(KEY_EXPORT)?.onClick = { reportKind = "monitor" }
+        action(KEY_EXPORT)?.onClick = { dialogState.open(DiagnosticsDialog.MONITOR_REPORT) }
         action(KEY_CLEAR)?.onClick = {
             val cleared = DebugLogCollector.clear(requireContext())
             requireContext().showToast(
@@ -409,59 +582,19 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
             )
 
         refreshDebugLoggingSummary()
+        action(KEY_CHARGING_CAPTURE)?.isEnabled = !capturing
         if (!actionsOnly) {
-            action(KEY_CHARGING_CAPTURE)?.isEnabled = !capturing
             refreshChargingDiagnosticsSummary()
         }
     }
 
     private fun showChargingConditionPicker() {
-        val labels = intArrayOf(
-            R.string.charging_diagnostics_condition_off,
-            R.string.charging_diagnostics_condition_fixed,
-            R.string.charging_diagnostics_condition_adaptive,
-            R.string.charging_diagnostics_condition_scheduled,
-            R.string.charging_diagnostics_condition_other
-        ).map(::getString).toTypedArray()
-        AlertDialog.Builder(requireContext()).setTitle(R.string.charging_diagnostics_choose_state)
-            .setItems(labels) { _, which ->
-                when (which) {
-                    0 -> captureChargingSnapshot(ChargingDiagnosticCondition.Off)
-                    1 -> showFixedChargingLimitPicker()
-                    2 -> captureChargingSnapshot(ChargingDiagnosticCondition.Adaptive)
-                    3 -> captureChargingSnapshot(ChargingDiagnosticCondition.Scheduled)
-                    4 -> captureChargingSnapshot(ChargingDiagnosticCondition.Other)
-                }
-            }.setNegativeButton(R.string.cancel, null).show()
-    }
-
-    private fun showFixedChargingLimitPicker() {
-        val context = requireContext()
-        val horizontalPadding = (24 * resources.displayMetrics.density).toInt()
-        val picker = NumberPicker(context).apply {
-            minValue = ChargingDiagnosticCondition.MIN_FIXED_PERCENT
-            maxValue = ChargingDiagnosticCondition.MAX_FIXED_PERCENT
-            value = 80
-            wrapSelectorWheel = false
-        }
-        val container = FrameLayout(context).apply {
-            setPadding(horizontalPadding, 0, horizontalPadding, 0)
-            addView(
-                picker, FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
-                )
-            )
-        }
-        AlertDialog.Builder(context).setTitle(R.string.charging_diagnostics_condition_fixed)
-            .setView(container).setPositiveButton(android.R.string.ok) { _, _ ->
-                captureChargingSnapshot(ChargingDiagnosticCondition.Fixed(picker.value))
-            }.setNegativeButton(R.string.cancel, null).show()
+        if (!capturing) dialogState.open(DiagnosticsDialog.CHARGING_CONDITION)
     }
 
     private fun captureChargingSnapshot(condition: ChargingDiagnosticCondition) {
-        if (capturing) return
-        capturing = true
-        val generation = ++captureGeneration
+        val state = dialogState
+        if (!state.beginCapture()) return
         val preference = action(KEY_CHARGING_CAPTURE)
         preference?.isEnabled = false
         preference?.summary = getString(R.string.charging_diagnostics_capturing)
@@ -478,21 +611,19 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
             }.getOrNull()
             val snapshot = result?.first
             val snapshotCount = result?.second ?: 0
-            capturing = false
-            mainHandler.post {
-                if (generation != captureGeneration || !isResumed) return@post
+            val needsHint =
+                snapshotCount == 1 && snapshot?.hasLimitedUnprivilegedDiscovery() == true
+            if (needsHint) settingsPreferences.edit { putBoolean(KEY_PENDING_HINT, true) }
+            // Completion belongs to the retained model, even while its fragment is paused or recreated.
+            Handler(Looper.getMainLooper()).post {
+                state.finishCapture(needsHint)
+                if (!isResumed || !isAdded) return@post
                 preference?.isEnabled = true
                 refreshChargingDiagnosticsSummary()
                 requireContext().showToast(
                     if (snapshot != null) R.string.charging_diagnostics_captured
                     else R.string.charging_diagnostics_capture_failed
                 )
-                if (snapshotCount == 1 && snapshot?.hasLimitedUnprivilegedDiscovery() == true) {
-                    AlertDialog.Builder(requireContext())
-                        .setTitle(R.string.charging_diagnostics_title)
-                        .setMessage(R.string.charging_diagnostics_privileged_hint)
-                        .setPositiveButton(android.R.string.ok, null).show()
-                }
             }
         }.apply { name = "charging-limit-diagnostics" }.start()
     }
@@ -516,7 +647,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
 
     private fun showChargingReportActions() {
         if (ChargingDiagnosticStore.read(requireContext()).size < 2) requireContext().showToast(R.string.charging_diagnostics_need_two)
-        else reportKind = "charging"
+        else dialogState.open(DiagnosticsDialog.CHARGING_REPORT)
     }
 
     private fun refreshMonitoringStatus() {

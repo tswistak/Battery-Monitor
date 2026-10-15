@@ -22,12 +22,8 @@
     \n
     Presione OK para ir a la configuración del sistema donde podrá desbloquear notificaciones para Battery Monitor.</string>
 
-  <string name="battery_optimized" formatted="false">¡Battery Monitor restringido!</string>
-  <string name="battery_optimized_message" formatted="false">El Battery Monitor no puede funcionar correctamente. Esta \"optimización de la batería\" es una función de Android diseñada para restringir aplicaciones mal diseñadas para evitarlas por usar demasiada batería en segundo plano.\n
-    \n
-    Battery Monitor, sin embargo, es una aplicación bien diseñada que debe ejecutarse sin restricciones en fondo para que funcione correctamente. Es extremadamente eficiente y no reducirá la duración de la batería.\n
-    \n
-    Presione OK para ir a la configuración del sistema donde podrá deshabilite la optimización de la batería para Battery Monitor.</string>
+  <string name="battery_optimized" formatted="false">Monitorización en segundo plano</string>
+  <string name="battery_optimized_message" formatted="false">La ejecución sin restricciones en segundo plano puede mejorar la fiabilidad de la monitorización. La optimización de batería de Android puede retrasar las actualizaciones y las alertas.\n\nLa ejecución sin restricciones puede aumentar el consumo de batería en segundo plano. Puedes cambiarlo más adelante en Ajustes de Android &gt; Aplicaciones &gt; Battery Monitor &gt; Batería.</string>
 
   <string name="main_notif_chan_name" formatted="false">Notificación principal</string>
   <string name="live_updates_notif_chan_name" formatted="false">Actualizaciones en vivo</string>
@@ -694,4 +690,7 @@
   <string name="history_chart_log_unavailable">La escala logarítmica requiere mediciones positivas para ambas métricas seleccionadas.</string>
   <string name="history_chart_more">Más acciones del gráfico</string>
   <string name="history_chart_events">Eventos del gráfico</string>
+  <string name="changelog_title">Novedades de Battery Monitor</string>
+  <string name="changelog_version">Versión %1$s</string>
+  <string name="changelog_got_it">Entendido</string>
 </resources>

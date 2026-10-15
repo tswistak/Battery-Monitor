@@ -17,16 +17,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
@@ -37,7 +36,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -47,25 +45,25 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.SettingsContract
-import codes.swistak.batterymonitor.ui.components.NumericInputResult
-import codes.swistak.batterymonitor.ui.components.parseLocalizedInt
+import codes.swistak.batterymonitor.ui.components.NumericValueDialog
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
-import java.text.NumberFormat
+import java.io.Serializable
 import java.util.Collections
 
-internal data class SettingsOrderItem(val value: String, val label: String, val selected: Boolean)
+internal data class SettingsOrderItem(val value: String, val label: String, val selected: Boolean) :
+    Serializable
 
 internal sealed interface SettingsDialog {
     data class Choices(
@@ -125,19 +123,30 @@ internal sealed interface SettingsDialog {
 @Composable
 internal fun SettingsDialogs(dialog: SettingsDialog?, busy: Boolean, onDismiss: () -> Unit) {
     if (busy) {
-        AlertDialog(onDismissRequest = {}, confirmButton = {}, text = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(BatterySpacing.md)
-            ) {
-                CircularProgressIndicator()
-                Text(stringResource(R.string.settings_operation_processing))
-            }
-        })
+        if (applicationDialogsAllowed()) AlertDialog(
+            onDismissRequest = {},
+            confirmButton = {},
+            text = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(BatterySpacing.md)
+                ) {
+                    CircularProgressIndicator()
+                    Text(stringResource(R.string.settings_operation_processing))
+                }
+            })
         return
     }
     if (dialog == null) return
-    key(dialog) {
+    val identity = when (dialog) {
+        is SettingsDialog.Choices -> listOf(dialog.title, dialog.options, dialog.selected)
+        is SettingsDialog.Number -> listOf(dialog.title, dialog.initial, dialog.min, dialog.max)
+        is SettingsDialog.Ordered -> listOf(dialog.title, dialog.items)
+        is SettingsDialog.AutoExport -> listOf(dialog.title, dialog.directoryLabel)
+        is SettingsDialog.Confirm -> listOf(dialog.title, dialog.message)
+        is SettingsDialog.Message -> listOf(dialog.message)
+    }
+    key(dialog.javaClass.name, identity) {
         when (dialog) {
             is SettingsDialog.Choices -> ChoicesDialog(dialog, onDismiss)
             is SettingsDialog.Number -> NumberDialog(dialog, onDismiss)
@@ -167,27 +176,33 @@ private fun SettingsAlert(
     cancellable: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    AlertDialog(
-        onDismissRequest = onDismiss, title = title?.let { { Text(it) } }, text = {
+    if (applicationDialogsAllowed()) AlertDialog(
+        modifier = Modifier.imePadding(),
+        properties = DialogProperties(decorFitsSystemWindows = false),
+        onDismissRequest = onDismiss,
+        title = title?.let { { Text(it) } },
+        text = {
             Column(
                 Modifier
                     .heightIn(max = 440.dp)
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
             ) { content() }
-        }, confirmButton = {
+        },
+        confirmButton = {
             TextButton(onClick = {
                 onDismiss()
                 onConfirm()
             }, enabled = enabled) { Text(stringResource(confirmLabel)) }
-        }, dismissButton = if (cancellable) {
+        },
+        dismissButton = if (cancellable) {
             { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } }
         } else null)
 }
 
 @Composable
 private fun ChoicesDialog(dialog: SettingsDialog.Choices, onDismiss: () -> Unit) {
-    var selected by remember {
+    var selected by rememberSaveable {
         mutableStateOf(dialog.selected.filter { it in dialog.options.indices }.toSet())
     }
     SettingsAlert(
@@ -227,48 +242,29 @@ private fun ChoicesDialog(dialog: SettingsDialog.Choices, onDismiss: () -> Unit)
 
 @Composable
 private fun NumberDialog(dialog: SettingsDialog.Number, onDismiss: () -> Unit) {
-    val locale = LocalConfiguration.current.locales[0]
-    val formatter = remember(locale) {
-        NumberFormat.getIntegerInstance(locale).apply { isGroupingUsed = false }
-    }
-    var input by remember(locale) { mutableStateOf(formatter.format(dialog.initial)) }
-    val value = (parseLocalizedInt(
-        input, locale, dialog.min, dialog.max, 1
-    ) as? NumericInputResult.Valid)?.value
-    val confirm = {
-        value?.let {
+    NumericValueDialog(
+        label = dialog.title,
+        fieldLabel = stringResource(R.string.settings_numeric_value),
+        message = dialog.message,
+        unit = "",
+        initialValue = dialog.initial,
+        min = dialog.min,
+        max = dialog.max,
+        step = 1,
+        saveLabel = stringResource(R.string.okay),
+        cancelLabel = stringResource(R.string.cancel),
+        errorMessage = { dialog.error },
+        onSave = {
             onDismiss()
             dialog.onConfirm(it)
-        }
-    }
-    SettingsAlert(
-        title = dialog.title,
-        onDismiss = onDismiss,
-        onConfirm = { value?.let(dialog.onConfirm) },
-        enabled = value != null
-    ) {
-        if (dialog.message.isNotBlank()) Text(dialog.message)
-        OutlinedTextField(
-            value = input,
-            onValueChange = { input = it },
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text(stringResource(R.string.settings_numeric_value)) },
-            isError = value == null,
-            supportingText = if (value == null) {
-                { Text(dialog.error) }
-            } else null,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(onDone = { confirm() })
-        )
-    }
+        },
+        onCancel = onDismiss
+    )
 }
 
 @Composable
 private fun OrderedDialog(dialog: SettingsDialog.Ordered, onDismiss: () -> Unit) {
-    var items by remember { mutableStateOf(dialog.items) }
+    var items by rememberSaveable { mutableStateOf(dialog.items) }
     SettingsAlert(
         title = dialog.title,
         onDismiss = onDismiss,
@@ -318,9 +314,9 @@ private fun OrderedDialog(dialog: SettingsDialog.Ordered, onDismiss: () -> Unit)
 
 @Composable
 private fun AutoExportDialog(dialog: SettingsDialog.AutoExport, onDismiss: () -> Unit) {
-    var frequency by remember { mutableIntStateOf(dialog.frequencyIndex) }
-    var mode by remember { mutableIntStateOf(dialog.modeIndex) }
-    var format by remember { mutableIntStateOf(dialog.formatIndex) }
+    var frequency by rememberSaveable { mutableIntStateOf(dialog.frequencyIndex) }
+    var mode by rememberSaveable { mutableIntStateOf(dialog.modeIndex) }
+    var format by rememberSaveable { mutableIntStateOf(dialog.formatIndex) }
     SettingsAlert(
         title = dialog.title,
         onDismiss = onDismiss,
@@ -408,13 +404,12 @@ private fun SettingsDropdown(
                 options.forEachIndexed { index, option ->
                     DropdownMenuItem(
                         text = { Text(option) }, onClick = {
-                            expanded = false
-                            onSelect(index)
-                        }, enabled = enabled.getOrNull(index) == true
+                        expanded = false
+                        onSelect(index)
+                    }, enabled = enabled.getOrNull(index) == true
                     )
                 }
             }
         }
     }
 }
-

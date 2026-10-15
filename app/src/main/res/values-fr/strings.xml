@@ -22,12 +22,8 @@
     \n
     Appuyez sur OK pour ouvrir les paramètres système afin de réactiver les notifications de Battery Monitor.</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor est limité !</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor est limité par l’optimisation batterie d’Android et ne peut pas fonctionner correctement. Cette optimisation est conçue pour restreindre les applications mal conçues en arrière-plan.\n
-    \n
-    Battery Monitor est une application efficace qui doit fonctionner sans restriction en arrière-plan pour fonctionner correctement.\n
-    \n
-    Appuyez sur OK pour ouvrir les paramètres système et désactiver l’optimisation batterie pour Battery Monitor.</string>
+  <string name="battery_optimized" formatted="false">Surveillance en arrière-plan</string>
+  <string name="battery_optimized_message" formatted="false">Une exécution sans restriction en arrière-plan peut améliorer la fiabilité de la surveillance. L’optimisation de la batterie Android peut retarder les mises à jour et les alertes.\n\nUne exécution sans restriction peut augmenter la consommation de batterie en arrière-plan. Vous pouvez modifier ce choix plus tard dans Paramètres Android &gt; Applications &gt; Battery Monitor &gt; Batterie.</string>
 
   <string name="main_notif_chan_name" formatted="false">Notification principale</string>
   <string name="live_updates_notif_chan_name" formatted="false">Mises a jour en direct</string>
@@ -686,4 +682,7 @@
   <string name="history_chart_log_unavailable">L’échelle logarithmique nécessite des mesures positives pour les deux grandeurs sélectionnées.</string>
   <string name="history_chart_more">Autres actions du graphique</string>
   <string name="history_chart_events">Événements du graphique</string>
+  <string name="changelog_title">Nouveautés de Battery Monitor</string>
+  <string name="changelog_version">Version %1$s</string>
+  <string name="changelog_got_it">Compris</string>
 </resources>

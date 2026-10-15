@@ -24,12 +24,8 @@
     \n
     Please press OK to be taken to the system settings where you can unblock notifications for Battery Monitor.</string>
 
-    <string name="battery_optimized" formatted="false">Battery Monitor restricted!</string>
-    <string name="battery_optimized_message" formatted="false">Battery Monitor is restricted from running correctly. This \"battery optimization\" is an Android feature designed to restrict poorly designed apps to prevent them from using too much battery in the background.\n
-    \n
-    Battery Monitor, however, is a well-designed app that must run unrestricted in the background in order to function properly. It is extremely efficient and will not reduce your battery life.\n
-    \n
-    Please press OK to be taken to the system settings where you can disable battery optimization for Battery Monitor.</string>
+    <string name="battery_optimized" formatted="false">Background monitoring</string>
+    <string name="battery_optimized_message" formatted="false">Unrestricted background execution can improve monitoring reliability. Android battery optimization may delay updates and alerts.\n\nAllowing unrestricted background execution may increase background battery use. You can change this later in Android Settings &gt; Apps &gt; Battery Monitor &gt; Battery.</string>
 
     <string name="main_notif_chan_name" formatted="false">Main Notification</string>
     <string name="live_updates_notif_chan_name" formatted="false">Live Updates</string>
@@ -1001,4 +997,7 @@
     <string name="history_chart_more">More chart actions</string>
     <string name="history_chart_events">Chart events</string>
     <string name="history_all_history">All history</string>
+    <string name="changelog_title">What\'s new in Battery Monitor</string>
+    <string name="changelog_version">Version %1$s</string>
+    <string name="changelog_got_it">Got it</string>
 </resources>

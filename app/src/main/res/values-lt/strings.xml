@@ -22,12 +22,8 @@
     \n
     Paspauskite OK, kad patektumėte į sistemos nustatymus, kur galite atblokuoti Battery Monitor pranešimus.</string>
 
-  <string name="battery_optimized" formatted="false">Baterijos monitorius apribotas!</string>
-  <string name="battery_optimized_message" formatted="false">Baterijos monitorius negali tinkamai veikti. Šis \"baterijos optimizavimas\" yra „Android“ funkcija, skirta apriboti prastai sukurtas programas, kad jų nebūtų nuo per daug akumuliatoriaus naudojimo fone.\n
-    Tačiau\n
-    Battery Monitor yra gerai suprojektuota programa, kuri turi veikti neribotai fone, kad tinkamai veiktų. Tai itin efektyvu ir nesumažins baterijos veikimo laiko.\n
-    \n
-    Paspauskite OK, kad patektumėte į sistemos nustatymus, kur galite išjungti akumuliatoriaus optimizavimą „Battery Monitor“.</string>
+  <string name="battery_optimized" formatted="false">Stebėjimas fone</string>
+  <string name="battery_optimized_message" formatted="false">Neribotas veikimas fone gali pagerinti stebėjimo patikimumą. „Android“ akumuliatoriaus optimizavimas gali uždelsti atnaujinimus ir įspėjimus.\n\nNeribotas veikimas gali padidinti akumuliatoriaus sąnaudas fone. Tai galėsite pakeisti vėliau: „Android“ nustatymai &gt; Programos &gt; Battery Monitor &gt; Akumuliatorius.</string>
 
   <string name="main_notif_chan_name" formatted="false">Pagrindinis pranešimas</string>
   <string name="live_updates_notif_chan_name" formatted="false">Tiesioginiai naujiniai</string>
@@ -712,4 +708,7 @@
   <string name="history_chart_log_unavailable">Logaritminei skalei reikia teigiamų abiejų pasirinktų rodiklių matavimų.</string>
   <string name="history_chart_more">Daugiau grafiko veiksmų</string>
   <string name="history_chart_events">Grafiko įvykiai</string>
+  <string name="changelog_title">Battery Monitor naujienos</string>
+  <string name="changelog_version">Versija %1$s</string>
+  <string name="changelog_got_it">Supratau</string>
 </resources>

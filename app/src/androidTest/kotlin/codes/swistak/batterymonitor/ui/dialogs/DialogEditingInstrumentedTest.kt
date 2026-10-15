@@ -1,0 +1,413 @@
+/*
+    Copyright (c) 2026 Tomasz Świstak <tomasz@swistak.codes>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+*/
+package codes.swistak.batterymonitor.ui.dialogs
+
+import android.content.Context
+import android.content.ContextWrapper
+import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
+import android.view.KeyEvent
+import android.view.View
+import android.view.ViewGroup
+import android.view.inspector.WindowInspector
+import androidx.activity.compose.setContent
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.LocalSaveableStateRegistry
+import androidx.compose.runtime.saveable.SaveableStateRegistry
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsNode
+import androidx.compose.ui.semantics.SemanticsOwner
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
+import androidx.compose.ui.text.AnnotatedString
+import androidx.lifecycle.Lifecycle
+import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.alarms.AlarmEditActivity
+import codes.swistak.batterymonitor.app.AlarmEditorDestination
+import codes.swistak.batterymonitor.app.AlarmEditorNavigation
+import codes.swistak.batterymonitor.app.BatteryInfoActivity
+import codes.swistak.batterymonitor.logs.HistoryMetric
+import codes.swistak.batterymonitor.logs.HistoryRangeState
+import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.ui.alarms.AlarmDraft
+import codes.swistak.batterymonitor.ui.alarms.AlarmsState
+import codes.swistak.batterymonitor.ui.alarms.ThresholdDialog
+import codes.swistak.batterymonitor.ui.alarms.editThresholdInput
+import codes.swistak.batterymonitor.ui.components.NumericValueDialog
+import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
+import codes.swistak.batterymonitor.ui.navigation.SectionOwner
+import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
+import codes.swistak.batterymonitor.ui.theme.Brightness
+import codes.swistak.batterymonitor.ui.theme.ColorSource
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
+import org.junit.Assume.assumeTrue
+import org.junit.Test
+
+class DialogEditingInstrumentedTest {
+    private val instrumentation = BatteryMonitorTestRunner.instrumentation
+    private val target = instrumentation.targetContext
+    private lateinit var activity: FullscreenChartActivity
+    private lateinit var registry: SaveableStateRegistry
+    private lateinit var fixture: @Composable () -> Unit
+    private lateinit var themedContext: Context
+
+    @Test
+    fun pending_alarm_navigation_restores_each_target_without_an_activity_callback() {
+        for (destination in AlarmEditorDestination.entries.filter { it != AlarmEditorDestination.INTENT }) {
+            val original = AlarmEditorNavigation(
+                destination,
+                section = SectionOwner.SETTINGS.takeIf { destination == AlarmEditorDestination.SECTION },
+                alarmId = 42.takeIf { destination == AlarmEditorDestination.EDIT_ALARM })
+            assertEquals(original, AlarmEditorNavigation.restore(original.save()))
+        }
+        val intent = Intent().putExtra(BatteryInfoActivity.EXTRA_SECTION, "history")
+            .putExtra(BatteryInfoActivity.EXTRA_DETAIL, "alarm-edit")
+            .putExtra(BatteryInfoActivity.EXTRA_HISTORY_HOURS, 24)
+            .putExtra(AlarmEditActivity.EXTRA_ALARM_ID, 42)
+            .putExtra("unrelated_payload", ByteArray(1024))
+        val restored = requireNotNull(
+            AlarmEditorNavigation.restore(
+                AlarmEditorNavigation.route(intent).save()
+            )
+        )
+        assertEquals(AlarmEditorDestination.INTENT, restored.destination)
+        val extras = requireNotNull(restored.intentExtras)
+        assertEquals("history", extras.getString(BatteryInfoActivity.EXTRA_SECTION))
+        assertEquals("alarm-edit", extras.getString(BatteryInfoActivity.EXTRA_DETAIL))
+        assertEquals(24, extras.getInt(BatteryInfoActivity.EXTRA_HISTORY_HOURS))
+        assertEquals(42, extras.getInt(AlarmEditActivity.EXTRA_ALARM_ID))
+        assertFalse(extras.containsKey("unrelated_payload"))
+    }
+
+    @Test
+    fun malformed_pending_alarm_navigation_does_not_navigate_to_a_different_section() {
+        assertNull(AlarmEditorNavigation.restore(null))
+        assertNull(
+            AlarmEditorNavigation.restore(
+                android.os.Bundle().apply { putString("destination", "unknown") })
+        )
+        assertNull(AlarmEditorNavigation.restore(AlarmEditorNavigation(AlarmEditorDestination.SECTION).save()))
+        assertNull(AlarmEditorNavigation.restore(AlarmEditorNavigation(AlarmEditorDestination.INTENT).save()))
+    }
+
+    @Test
+    fun numeric_validation_keyboard_done_and_confirmation_commit_once() = withHost {
+        val visible = mutableStateOf(true)
+        val saved = mutableListOf<Int>()
+        show {
+            if (visible.value) Numeric(onSave = {
+                saved += it
+                visible.value = false
+            }, onCancel = { visible.value = false })
+        }
+        for (invalid in listOf("", "abc", "0", "101", "81", "80.5")) {
+            input(invalid)
+            await("Invalid numeric input must disable Save") { saveDisabled() }
+            main {
+                assertTrue(button("Save").config.contains(SemanticsProperties.Disabled))
+                field().config[SemanticsActions.OnImeAction].action?.invoke()
+            }
+            assertTrue(saved.isEmpty())
+        }
+        input("85")
+        await("Valid numeric input must enable Save") { !saveDisabled() }
+        main {
+            assertFalse(button("Save").config.contains(SemanticsProperties.Disabled))
+            assertTrue(field().config[SemanticsActions.OnImeAction].action?.invoke() == true)
+        }
+        await { dialogs() == 0 }
+        assertEquals(listOf(85), saved)
+    }
+
+    @Test
+    fun numeric_draft_restores_and_cancel_or_back_never_commits() = withHost {
+        val visible = mutableStateOf(true)
+        var saved: Int? = null
+        show {
+            if (visible.value) Numeric(
+                onSave = { saved = it },
+                onCancel = { visible.value = false })
+        }
+        input("90")
+        restoreComposition()
+        main { assertEquals("90", field().config[SemanticsProperties.EditableText].text) }
+        click("Cancel")
+        await { dialogs() == 0 }
+        assertNull(saved)
+        main { visible.value = true }
+        await { dialogs() == 1 }
+        instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+        await { dialogs() == 0 }
+        assertNull(saved)
+    }
+
+    @Test
+    fun deletion_replaces_editor_and_cancellation_restores_the_unsaved_draft() = withHost {
+        val state = mutableStateOf(
+            AlarmsState(
+                hasSnapshot = true, loading = false, draft = AlarmDraft(
+                    id = 7,
+                    type = "charge_rises",
+                    threshold = "80",
+                    thresholdInput = "80",
+                    initialInput = "80",
+                    inputLocale = "en-US"
+                )
+            )
+        )
+        var deleted = 0
+        show {
+            ThresholdDialog(state = state.value, onInput = { input ->
+                state.value = state.value.copy(
+                    draft = editThresholdInput(requireNotNull(state.value.draft), input)
+                )
+            }, onSave = {}, onDelete = {
+                deleted++
+                state.value = state.value.copy(draft = null)
+            }, onDismiss = {}, onEditExisting = {}, onRetry = {})
+        }
+        input("91")
+        click(target.getString(R.string.menu_delete_alarm))
+        await { dialogs() == 1 && fieldOrNull() == null }
+        restoreComposition()
+        assertEquals(1, dialogs())
+        assertNull(fieldOrNull())
+        click(target.getString(R.string.cancel))
+        await { fieldOrNull() != null }
+        main {
+            assertEquals("91", field().config[SemanticsProperties.EditableText].text)
+            assertEquals(1, dialogNodes().size)
+        }
+        assertEquals(0, deleted)
+        click(target.getString(R.string.menu_delete_alarm))
+        await { fieldOrNull() == null }
+        click(target.getString(R.string.menu_delete_alarm))
+        await { dialogs() == 0 }
+        assertEquals(1, deleted)
+    }
+
+    @Test
+    fun numeric_dialog_uses_the_app_light_and_true_black_surfaces() = withHost {
+        val preferences = themedContext.getSharedPreferences(
+            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+        )
+        for (brightness in listOf(Brightness.Light, Brightness.TrueBlack)) {
+            main {
+                assertTrue(
+                    preferences.edit()
+                        .putString(SettingsContract.KEY_COLOR_SOURCE, ColorSource.BatteryBlue.name)
+                        .putString(SettingsContract.KEY_BRIGHTNESS, brightness.name).commit()
+                )
+            }
+            var color = 0
+            show {
+                val surface = AlertDialogDefaults.containerColor.toArgb()
+                SideEffect { color = surface }
+                Numeric(onSave = {}, onCancel = {})
+            }
+            await { dialogs() == 1 && color != 0 }
+            instrumentation.waitForIdleSync()
+            await("The $brightness dialog must use the app surface color") {
+                val screenshot = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
+                var pixels = 0
+                for (y in 0 until screenshot.height step 3) {
+                    for (x in 0 until screenshot.width step 3) {
+                        if (screenshot.getPixel(x, y) == color) pixels++
+                    }
+                }
+                screenshot.recycle()
+                pixels > 100
+            }
+        }
+    }
+
+    @Composable
+    private fun Numeric(onSave: (Int) -> Unit, onCancel: () -> Unit) {
+        NumericValueDialog(
+            label = "Numeric fixture",
+            fieldLabel = "Value",
+            unit = "%",
+            initialValue = 80,
+            min = 5,
+            max = 100,
+            step = 5,
+            saveLabel = "Save",
+            cancelLabel = "Cancel",
+            errorMessage = { "Invalid value" },
+            onSave = onSave,
+            onCancel = onCancel
+        )
+    }
+
+    private fun withHost(test: () -> Unit) {
+        assumeTrue(
+            "Global dialog window inspection requires Android 10", Build.VERSION.SDK_INT >= 29
+        )
+        val preferencesName = "dialog-fixture-${System.nanoTime()}"
+        themedContext = object : ContextWrapper(target) {
+            override fun getSharedPreferences(name: String, mode: Int) =
+                target.getSharedPreferences("$preferencesName-$name", mode)
+        }
+        val monitor =
+            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        instrumentation.startActivitySync(
+            FullscreenChartActivity.intent(
+                target, HistoryMetric.LEVEL, HistoryRangeState(0, 1), "custom"
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        try {
+            await {
+                val latest = monitor.lastActivity as? FullscreenChartActivity
+                latest != null && !latest.isDestroyed && latest.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && latest.lifecycle.currentState == Lifecycle.State.RESUMED
+            }
+            instrumentation.waitForIdleSync()
+            activity = monitor.lastActivity as FullscreenChartActivity
+            registry = SaveableStateRegistry(null) { true }
+            test()
+        } finally {
+            main { monitor.lastActivity?.finish() }
+            instrumentation.waitForIdleSync()
+            instrumentation.removeMonitor(monitor)
+            themedContext.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+                .edit().clear().commit()
+        }
+    }
+
+    private fun show(content: @Composable () -> Unit) {
+        fixture = content
+        render()
+        await { dialogs() == 1 }
+    }
+
+    private fun render() = main {
+        activity.setContent {
+            CompositionLocalProvider(
+                LocalSaveableStateRegistry provides registry, LocalContext provides themedContext
+            ) {
+                AppBatteryTheme { fixture() }
+            }
+        }
+    }
+
+    private fun restoreComposition() {
+        lateinit var saved: Map<String, List<Any?>>
+        main {
+            saved = registry.performSave()
+            activity.setContent {}
+        }
+        instrumentation.waitForIdleSync()
+        registry = SaveableStateRegistry(saved) { true }
+        render()
+        await { dialogs() == 1 }
+    }
+
+    private fun input(value: String) {
+        main {
+            assertTrue(
+                field().config[SemanticsActions.SetText].action?.invoke(
+                    AnnotatedString(
+                        value
+                    )
+                ) == true
+            )
+        }
+        await("The numeric field must display the requested draft") {
+            var rendered = false
+            main {
+                rendered = field().config[SemanticsProperties.EditableText].text == value
+            }
+            rendered
+        }
+    }
+
+    private fun saveDisabled(): Boolean {
+        var disabled = false
+        main { disabled = button("Save").config.contains(SemanticsProperties.Disabled) }
+        return disabled
+    }
+
+    private fun click(text: String) {
+        main { assertTrue(button(text).config[SemanticsActions.OnClick].action?.invoke() == true) }
+        instrumentation.waitForIdleSync()
+    }
+
+    private fun button(text: String) = nodes().first {
+        it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(SemanticsProperties.Text)
+            ?.any { value -> value.text == text } == true
+    }
+
+    private fun field() = requireNotNull(fieldOrNull())
+
+    private fun fieldOrNull(): SemanticsNode? {
+        var found: SemanticsNode? = null
+        main { found = nodes().firstOrNull { it.config.contains(SemanticsActions.SetText) } }
+        return found
+    }
+
+    private fun dialogs(): Int {
+        var count = 0
+        main { count = dialogNodes().size }
+        return count
+    }
+
+    private fun dialogNodes() = nodes().filter { it.config.contains(SemanticsProperties.IsDialog) }
+
+    private fun nodes(): List<SemanticsNode> {
+        fun descendants(node: SemanticsNode): List<SemanticsNode> =
+            listOf(node) + node.children.flatMap(::descendants)
+
+        fun owners(view: View): List<SemanticsOwner> {
+            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
+                ?.invoke(view) as? SemanticsOwner
+            if (owner != null) return listOf(owner)
+            if (view !is ViewGroup) return emptyList()
+            return (0 until view.childCount).flatMap { owners(view.getChildAt(it)) }
+        }
+        return WindowInspector.getGlobalWindowViews().flatMap(::owners)
+            .flatMap { descendants(it.rootSemanticsNode) }
+    }
+
+    private fun main(action: () -> Unit) {
+        if (android.os.Looper.myLooper() == android.os.Looper.getMainLooper()) action()
+        else {
+            var failure: Throwable? = null
+            instrumentation.runOnMainSync {
+                try {
+                    action()
+                } catch (error: Throwable) {
+                    failure = error
+                }
+            }
+            failure?.let { throw it }
+        }
+    }
+
+    private fun await(
+        message: String = "Dialog did not reach the expected state", ready: () -> Boolean
+    ) {
+        val deadline = System.nanoTime() + 10_000_000_000
+        while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
+        assertTrue(message, ready())
+    }
+}

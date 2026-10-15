@@ -14,10 +14,7 @@
 package codes.swistak.batterymonitor.app
 
 import android.Manifest
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -29,19 +26,14 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.os.Messenger
-import android.os.PowerManager
 import android.os.RemoteException
 import android.util.Log
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
-import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.common.showToast
-import codes.swistak.batterymonitor.diagnostics.BackgroundSettingsNavigator
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
@@ -83,9 +75,6 @@ class PersistentFragment : Fragment() {
     lateinit var spMain: SharedPreferences
     lateinit var res: Resources
 
-    private var mHasShownOnboardingInThisSession = false
-    private var notificationRequestInFlight = false
-    private var hasShownBatteryPrompt = false
 
     private fun bindService() {
         if (!serviceConnected && activity != null) {
@@ -175,68 +164,10 @@ class PersistentFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
         startServiceIfNeeded()
-
-        if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(
-                requireActivity(), Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (spMain.getBoolean(
-                    SettingsContract.KEY_FIRST_RUN, true
-                ) && !mHasShownOnboardingInThisSession
-            ) {
-                showNotificationOnboarding()
-                return
-            } else if (!mHasShownOnboardingInThisSession) {
-                mHasShownOnboardingInThisSession = true
-                requestNotificationPermission()
-                return
-            }
-            showBatteryOptimizationPrompt()
-            return
-        }
-
-        if (spMain.getBoolean(SettingsContract.KEY_FIRST_RUN, true)) {
-            spMain.edit { putBoolean(SettingsContract.KEY_FIRST_RUN, false) }
-        }
-
-        showBatteryOptimizationPrompt()
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
-        if (requestCode == 101) {
-            notificationRequestInFlight = false
-            startServiceIfNeeded()
-            showBatteryOptimizationPrompt()
-        }
-    }
-
-    private fun showBatteryOptimizationPrompt() {
-        if (!isResumed || parentFragmentManager.isStateSaved || notificationRequestInFlight || hasShownBatteryPrompt || parentFragmentManager.findFragmentByTag(
-                "onboarding"
-            ) != null || parentFragmentManager.findFragmentByTag("battery_optimization") != null
-        ) return
-        val context = requireContext()
-        val power = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        if (power.isIgnoringBatteryOptimizations(context.packageName)) return
-        hasShownBatteryPrompt = true
-        BatteryOptimizationDialogFragment().show(parentFragmentManager, "battery_optimization")
-    }
-
-    class BatteryOptimizationDialogFragment : DialogFragment() {
-        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-            AlertDialog.Builder(requireContext()).setTitle(R.string.battery_optimized)
-                .setMessage(R.string.battery_optimized_message)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    if (!BackgroundSettingsNavigator.openBatteryOptimization(requireContext())) {
-                        requireContext().showToast(R.string.advanced_value_not_available)
-                    }
-                }.setNegativeButton(R.string.cancel, null).create()
-    }
+    internal fun refreshMonitoringAfterPermission() = startServiceIfNeeded()
 
     private fun startServiceIfNeeded() {
         if (!BackgroundServiceWatchdog.isServiceDesired(requireContext())) return
@@ -251,87 +182,6 @@ class PersistentFragment : Fragment() {
         }
         // A notification denial must not disconnect the UI from an existing monitor.
         bindService()
-    }
-
-    @Suppress("DEPRECATION")
-    private fun requestNotificationPermission() {
-        notificationRequestInFlight = true
-        if (Build.VERSION.SDK_INT >= 36) {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.POST_NOTIFICATIONS,
-                    "android.permission.POST_PROMOTED_NOTIFICATIONS"
-                ), 101
-            )
-        } else if (Build.VERSION.SDK_INT >= 33) {
-            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 101)
-        }
-    }
-
-    private fun showNotificationOnboarding() {
-        if (mHasShownOnboardingInThisSession) return
-        mHasShownOnboardingInThisSession = true
-
-        val dialog = OnboardingDialogFragment()
-        dialog.show(getParentFragmentManager(), "onboarding")
-    }
-
-    class OnboardingDialogFragment : DialogFragment() {
-        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val pf = getParentFragmentManager().findFragmentByTag(FRAG_TAG) as PersistentFragment?
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setCancelable(false)
-
-            if (BatteryInfoService.supportsLiveUpdates()) {
-                val enabled: Boolean =
-                    BatteryInfoService.isLiveUpdateEnabledInSystem(requireContext())
-                builder.setTitle(R.string.live_updates_onboarding_title)
-
-                if (enabled) {
-                    builder.setMessage(R.string.live_updates_onboarding_message_on)
-                        .setPositiveButton(
-                            R.string.live_updates_onboarding_positive_on
-                        ) { _, _ -> pf?.requestNotificationPermission() }
-                } else {
-                    builder.setMessage(R.string.live_updates_onboarding_message_off)
-                        .setPositiveButton(
-                            R.string.live_updates_onboarding_positive_off
-                        ) { _, _ ->
-                            val context = requireContext()
-                            if (!NotificationSettingsNavigator.openLiveUpdates(context)) {
-                                context.showToast(R.string.advanced_value_not_available)
-                            }
-                        }.setNegativeButton(
-                            R.string.live_updates_onboarding_negative_off
-                        ) { _, _ -> pf?.requestNotificationPermission() }
-                }
-            } else {
-                builder.setTitle(R.string.app_full_name)
-                    .setMessage(R.string.notifications_onboarding_message).setPositiveButton(
-                        android.R.string.ok
-                    ) { _, _ -> pf?.requestNotificationPermission() }.setNegativeButton(
-                        R.string.cancel
-                    ) { _, _ ->
-                        if (pf != null) {
-                            pf.spMain.edit {
-                                putBoolean(SettingsContract.KEY_FIRST_RUN, false)
-                            }
-                            pf.startServiceIfNeeded()
-                        }
-                    }
-            }
-
-            return builder.create()
-        }
-
-        override fun onDismiss(dialog: DialogInterface) {
-            super.onDismiss(dialog)
-            val pf = getParentFragmentManager().findFragmentByTag(FRAG_TAG) as PersistentFragment?
-            pf?.spMain?.edit {
-                putBoolean(SettingsContract.KEY_FIRST_RUN, false)
-            }
-            activity?.window?.decorView?.post { pf?.showBatteryOptimizationPrompt() }
-        }
     }
 
     override fun onStop() {
@@ -369,7 +219,7 @@ class PersistentFragment : Fragment() {
         outgoing.replyTo = messenger
         try {
             serviceMessenger!!.send(outgoing)
-        } catch (e: RemoteException) {
+        } catch (_: RemoteException) {
         }
     }
 

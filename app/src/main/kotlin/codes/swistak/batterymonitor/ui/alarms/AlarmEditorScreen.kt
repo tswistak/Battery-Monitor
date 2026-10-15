@@ -39,6 +39,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -48,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import java.util.Locale
 
 @Composable
@@ -68,8 +71,13 @@ internal fun ThresholdDialog(
     val canSave = state.canMutate && valid
     val focus = remember(draft.id, draft.type) { FocusRequester() }
     var confirmDelete by rememberSaveable(draft.id, draft.type) { mutableStateOf(false) }
-    LaunchedEffect(draft.id, draft.type) { focus.requestFocus() }
-    Dialog(
+    val focusManager = LocalFocusManager.current
+    val keyboard = LocalSoftwareKeyboardController.current
+    val dialogsAllowed = applicationDialogsAllowed()
+    LaunchedEffect(draft.id, draft.type, confirmDelete, dialogsAllowed) {
+        if (!confirmDelete && dialogsAllowed) focus.requestFocus()
+    }
+    if (!confirmDelete && dialogsAllowed) Dialog(
         properties = DialogProperties(decorFitsSystemWindows = false),
         onDismissRequest = { if (!state.busy) onDismiss() }) {
         Surface(
@@ -147,8 +155,11 @@ internal fun ThresholdDialog(
                     Text(stringResource(R.string.advanced_action_refresh))
                 }
                 if (draft.id != null) TextButton(
-                    onClick = { confirmDelete = true },
-                    enabled = state.canMutate && !state.draftConflict
+                    onClick = {
+                        focusManager.clearFocus()
+                        keyboard?.hide()
+                        confirmDelete = true
+                    }, enabled = state.canMutate && !state.draftConflict
                 ) {
                     Text(
                         stringResource(R.string.menu_delete_alarm),
@@ -166,7 +177,7 @@ internal fun ThresholdDialog(
             }
         }
     }
-    if (confirmDelete) AlertDialog(
+    if (confirmDelete && dialogsAllowed) AlertDialog(
         modifier = Modifier.imePadding(),
         properties = DialogProperties(decorFitsSystemWindows = false),
         onDismissRequest = { confirmDelete = false },

@@ -20,12 +20,8 @@
     \n
     Vă rugăm să apăsați pe OK pentru a fi dus la setările sistemului unde puteți deblocați notificările pentru Battery Monitor.</string>
 
-  <string name="battery_optimized" formatted="false">Monitorul bateriei este restricționat!</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor are restricție să funcționeze corect. Această „optimizare a bateriei” este o caracteristică Android concepută pentru a restricționa aplicațiile prost proiectate pentru a le preveni de la folosirea prea multă baterie în fundal.\n
-    \n
-    Battery Monitor, totuși, este o aplicație bine concepută, care trebuie să ruleze fără restricții fundalul pentru a funcționa corect. Este extrem de eficient si nu vă va reduce durata de viață a bateriei.\n
-    \n
-    Vă rugăm să apăsați pe OK pentru a fi dus la setările sistemului unde puteți dezactivați optimizarea bateriei pentru Battery Monitor.</string>
+  <string name="battery_optimized" formatted="false">Monitorizare în fundal</string>
+  <string name="battery_optimized_message" formatted="false">Rularea fără restricții în fundal poate îmbunătăți fiabilitatea monitorizării. Optimizarea bateriei din Android poate întârzia actualizările și alertele.\n\nRularea fără restricții poate crește consumul bateriei în fundal. Puteți schimba ulterior această opțiune în Setări Android &gt; Aplicații &gt; Battery Monitor &gt; Baterie.</string>
 
   <string name="main_notif_chan_name" formatted="false">Notificare principală</string>
   <string name="live_updates_notif_chan_name" formatted="false">Actualizări live</string>
@@ -700,4 +696,7 @@
   <string name="history_chart_log_unavailable">Scara logaritmică necesită măsurători pozitive pentru ambii parametri selectați.</string>
   <string name="history_chart_more">Mai multe acțiuni pentru grafic</string>
   <string name="history_chart_events">Evenimente în grafic</string>
+  <string name="changelog_title">Noutăți în Battery Monitor</string>
+  <string name="changelog_version">Versiunea %1$s</string>
+  <string name="changelog_got_it">Am înțeles</string>
 </resources>

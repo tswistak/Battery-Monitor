@@ -22,12 +22,8 @@
     \n
     Πατήστε OK για να μεταφερθείτε στις ρυθμίσεις συστήματος όπου μπορείτε ξεμπλοκάρετε τις ειδοποιήσεις για την οθόνη μπαταρίας.</string>
 
-  <string name="battery_optimized" formatted="false">Περιορίστηκε η οθόνη μπαταρίας!</string>
-  <string name="battery_optimized_message" formatted="false">Η οθόνη μπαταρίας δεν λειτουργεί σωστά. Αυτή η \"βελτιστοποίηση μπαταρίας\" είναι μια λειτουργία Android που έχει σχεδιαστεί για να περιορίζει τις κακοσχεδιασμένες εφαρμογές για την αποτροπή τους από τη χρήση υπερβολικής μπαταρίας στο παρασκήνιο.\n
-    Το\n
-    Battery Monitor, ωστόσο, είναι μια καλά σχεδιασμένη εφαρμογή που πρέπει να εκτελείται απεριόριστα σε το φόντο για να λειτουργήσει σωστά. Είναι εξαιρετικά αποτελεσματικό και δεν θα μειώσει τη διάρκεια ζωής της μπαταρίας σας.\n
-    \n
-    Πατήστε OK για να μεταφερθείτε στις ρυθμίσεις συστήματος όπου μπορείτε απενεργοποιήστε τη βελτιστοποίηση μπαταρίας για την οθόνη μπαταρίας.</string>
+  <string name="battery_optimized" formatted="false">Παρακολούθηση στο παρασκήνιο</string>
+  <string name="battery_optimized_message" formatted="false">Η απεριόριστη εκτέλεση στο παρασκήνιο μπορεί να βελτιώσει την αξιοπιστία της παρακολούθησης. Η βελτιστοποίηση μπαταρίας του Android μπορεί να καθυστερεί ενημερώσεις και ειδοποιήσεις.\n\nΗ απεριόριστη εκτέλεση μπορεί να αυξήσει την κατανάλωση μπαταρίας στο παρασκήνιο. Μπορείτε να το αλλάξετε αργότερα στις Ρυθμίσεις Android &gt; Εφαρμογές &gt; Battery Monitor &gt; Μπαταρία.</string>
 
   <string name="main_notif_chan_name" formatted="false">Κύρια ειδοποίηση</string>
   <string name="live_updates_notif_chan_name" formatted="false">Ζωντανές ενημερώσεις</string>
@@ -689,4 +685,7 @@
   <string name="history_chart_log_unavailable">Η λογαριθμική κλίμακα απαιτεί θετικές μετρήσεις και για τα δύο επιλεγμένα μεγέθη.</string>
   <string name="history_chart_more">Περισσότερες ενέργειες γραφήματος</string>
   <string name="history_chart_events">Συμβάντα γραφήματος</string>
+  <string name="changelog_title">Τι νέο υπάρχει στο Battery Monitor</string>
+  <string name="changelog_version">Έκδοση %1$s</string>
+  <string name="changelog_got_it">Κατάλαβα</string>
 </resources>

@@ -25,12 +25,14 @@ import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
+import androidx.lifecycle.ViewModelProvider
 import codes.swistak.batterymonitor.BatteryMonitorTestRunner
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
+import codes.swistak.batterymonitor.app.StartupDialogViewModel
+import codes.swistak.batterymonitor.app.StartupEnvironment
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
@@ -190,7 +192,7 @@ class LicenseScreenInstrumentedTest {
                 loadLicenseInventory(context.assets).single { it.id == "google-material-icons" }
             await { visibleText("Battery Monitor") }
             assertNavigation(launched, SectionOwner.HELP, "help:licenses")
-            instrumentation.runOnMainSync {
+            main {
                 val list = scrollNode(launched, "Copyright")
                 val index = list.config[SemanticsProperties.IndexForKey](google.id)
                 assertTrue(index >= 0)
@@ -204,18 +206,18 @@ class LicenseScreenInstrumentedTest {
             assertTrue(scrollForward())
             val apacheScroll = scrollValue(launched, "Apache License")
             assertTrue(apacheScroll > 0f)
-            instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+            navigateBack(launched)
             await { visibleText(google.name) && !visibleText("Apache License", contains = true) }
             assertEquals(
                 "License list scroll", listScroll, scrollValue(launched, google.name), 0.0001f
             )
 
-            instrumentation.runOnMainSync { launched.openHelp("licenses:battery-monitor") }
+            main { launched.openHelp("licenses:battery-monitor") }
             await { visibleText("GNU GENERAL PUBLIC LICENSE", contains = true) }
             repeat(2) { assertTrue(scrollForward()) }
             val gplScroll = scrollValue(launched, "GNU GENERAL PUBLIC LICENSE")
             assertTrue(gplScroll > apacheScroll)
-            instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+            navigateBack(launched)
             await {
                 visibleText(google.name) && !visibleText(
                     "GNU GENERAL PUBLIC LICENSE", contains = true
@@ -224,7 +226,7 @@ class LicenseScreenInstrumentedTest {
             assertEquals(
                 "License list scroll", listScroll, scrollValue(launched, google.name), 0.0001f
             )
-            instrumentation.runOnMainSync { launched.openHelp("licenses:battery-monitor") }
+            main { launched.openHelp("licenses:battery-monitor") }
             await { visibleText("GNU GENERAL PUBLIC LICENSE", contains = true) }
             assertEquals(
                 "GPL route scroll",
@@ -242,7 +244,7 @@ class LicenseScreenInstrumentedTest {
                 1f
             )
             assertNavigation(restored, SectionOwner.HELP, "help:licenses:battery-monitor")
-            instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+            navigateBack(restored)
             await {
                 visibleText(google.name) && !visibleText(
                     "GNU GENERAL PUBLIC LICENSE", contains = true
@@ -266,7 +268,7 @@ class LicenseScreenInstrumentedTest {
             await { visibleText(context.getString(R.string.settings_notification)) }
             assertNavigation(activity, SectionOwner.SETTINGS, "settings:notification")
             repeat(2) { index ->
-                instrumentation.runOnMainSync { activity.openHelp(SettingsContract.KEY_NOTIFICATION_SETTINGS) }
+                main { activity.openHelp(SettingsContract.KEY_NOTIFICATION_SETTINGS) }
                 await { visibleText(context.getString(R.string.pref_cat_channel_settings)) }
                 assertNavigation(
                     activity,
@@ -279,7 +281,7 @@ class LicenseScreenInstrumentedTest {
                 await { visibleText(context.getString(R.string.settings_notification)) }
                 assertNavigation(activity, SectionOwner.SETTINGS, "settings:notification")
             }
-            instrumentation.runOnMainSync { activity.selectSection(SectionOwner.HELP) }
+            main { activity.selectSection(SectionOwner.HELP) }
             await { visibleText(context.getString(R.string.help_cat_version)) }
             assertNavigation(activity, SectionOwner.HELP, null)
             assertNoHelpFragments(activity)
@@ -296,7 +298,7 @@ class LicenseScreenInstrumentedTest {
             await { visibleText(context.getString(R.string.help_cat_version)) }
             val legacyClass = "codes.swistak.batterymonitor.ui.help.LegacyHelpFragment"
             val legacyTag = "section:help:help:licenses"
-            instrumentation.runOnMainSync {
+            main {
                 val manager = activity.supportFragmentManager
                 val placeholder = manager.fragmentFactory.instantiate(
                     context.classLoader, legacyClass
@@ -346,14 +348,14 @@ class LicenseScreenInstrumentedTest {
 
                 override fun onActivityDestroyed(activity: Activity) = Unit
             }
-            instrumentation.runOnMainSync {
+            main {
                 activity.application.registerActivityLifecycleCallbacks(
                     callbacks
                 )
             }
             try {
                 val restored = recreate(activity)
-                instrumentation.runOnMainSync {
+                main {
                     assertEquals(
                         "Rewrote the serialized legacy class", 1, patched
                     )
@@ -362,7 +364,7 @@ class LicenseScreenInstrumentedTest {
                 assertNavigation(restored, SectionOwner.HELP, null)
                 assertNoHelpFragments(restored)
             } finally {
-                instrumentation.runOnMainSync {
+                main {
                     activity.application.unregisterActivityLifecycleCallbacks(
                         callbacks
                     )
@@ -378,6 +380,10 @@ class LicenseScreenInstrumentedTest {
             context.getSharedPreferences(SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE)
         val hadFirstRun = preferences.contains(SettingsContract.KEY_FIRST_RUN)
         val firstRun = preferences.getBoolean(SettingsContract.KEY_FIRST_RUN, true)
+        val hadAcknowledgement =
+            preferences.contains(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION)
+        val acknowledgedVersion =
+            preferences.getLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, 0)
         val monitor = instrumentation.addMonitor(BatteryInfoActivity::class.java.name, null, false)
         try {
             prepareOnboarding()
@@ -391,12 +397,16 @@ class LicenseScreenInstrumentedTest {
             dismissStartupDialogs(launched)
             test(launched)
         } finally {
-            instrumentation.runOnMainSync { monitor.lastActivity?.finish() }
+            main { monitor.lastActivity?.finish() }
             instrumentation.waitForIdleSync()
             instrumentation.removeMonitor(monitor)
             val restore = preferences.edit()
             if (hadFirstRun) restore.putBoolean(SettingsContract.KEY_FIRST_RUN, firstRun)
             else restore.remove(SettingsContract.KEY_FIRST_RUN)
+            if (hadAcknowledgement) restore.putLong(
+                StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, acknowledgedVersion
+            )
+            else restore.remove(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION)
             assertTrue("Restore the original onboarding preference", restore.commit())
         }
     }
@@ -416,7 +426,7 @@ class LicenseScreenInstrumentedTest {
         val monitor = instrumentation.addMonitor(BatteryInfoActivity::class.java.name, null, false)
         try {
             prepareOnboarding()
-            instrumentation.runOnMainSync { activity.recreate() }
+            main { activity.recreate() }
             await { monitor.lastActivity != null && monitor.lastActivity !== activity }
             val restored = monitor.lastActivity as BatteryInfoActivity
             dismissStartupDialogs(restored)
@@ -427,17 +437,22 @@ class LicenseScreenInstrumentedTest {
     }
 
     private fun assertNoHelpFragments(activity: BatteryInfoActivity) {
-        instrumentation.runOnMainSync {
+        main {
             assertTrue(activity.supportFragmentManager.fragments.none {
                 it.tag?.startsWith("section:help:") == true
             })
         }
     }
 
+    private fun navigateBack(activity: BatteryInfoActivity) {
+        main { activity.onBackPressedDispatcher.onBackPressed() }
+        instrumentation.waitForIdleSync()
+    }
+
     private fun assertNavigation(
         activity: BatteryInfoActivity, owner: SectionOwner, detail: String?
     ) {
-        instrumentation.runOnMainSync {
+        main {
             val field = BatteryInfoActivity::class.java.getDeclaredField("navigator")
             field.isAccessible = true
             val navigator = field.get(activity) as SectionNavigator
@@ -473,8 +488,25 @@ class LicenseScreenInstrumentedTest {
     }
 
     private fun scrollValue(activity: BatteryInfoActivity, marker: String): Float {
+        var value = readScrollValue(activity, marker)
+        var stableSince = System.nanoTime()
+        val deadline = stableSince + 5_000_000_000L
+        while (System.nanoTime() < deadline && System.nanoTime() - stableSince < 150_000_000L) {
+            Thread.sleep(20)
+            val next = readScrollValue(activity, marker)
+            if (next != value) stableSince = System.nanoTime()
+            value = next
+        }
+        assertTrue(
+            "License scroll must settle before saving or comparing it",
+            System.nanoTime() - stableSince >= 150_000_000L
+        )
+        return value
+    }
+
+    private fun readScrollValue(activity: BatteryInfoActivity, marker: String): Float {
         var value = 0f
-        instrumentation.runOnMainSync {
+        main {
             value = scrollNode(
                 activity, marker
             ).config[SemanticsProperties.VerticalScrollAxisRange].value()
@@ -483,16 +515,21 @@ class LicenseScreenInstrumentedTest {
     }
 
     private fun dismissStartupDialogs(activity: BatteryInfoActivity) {
-        repeat(2) {
-            instrumentation.runOnMainSync {
-                val fragments = activity.supportFragmentManager
-                fragments.executePendingTransactions()
-                for (tag in listOf("onboarding", "battery_optimization")) {
-                    (fragments.findFragmentByTag(tag) as? DialogFragment)?.dismissNow()
-                }
-            }
-            instrumentation.waitForIdleSync()
+        main {
+            val controller = ViewModelProvider(activity)[StartupDialogViewModel::class.java]
+            assertTrue(controller.acknowledgeChangelog())
+            controller.cancelOnboarding()
+            controller.advance(
+                StartupEnvironment(
+                    notificationPermissionRequired = false,
+                    notificationsGranted = true,
+                    batteryOptimized = true
+                )
+            )
+            controller.dismissBatteryPrompt()
+            assertFalse(controller.blocksContentDialogs)
         }
+        instrumentation.waitForIdleSync()
     }
 
     private fun visibleText(text: String, contains: Boolean = false): Boolean = findNode { node ->
@@ -538,5 +575,17 @@ class LicenseScreenInstrumentedTest {
         val deadline = System.nanoTime() + 10_000_000_000
         while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
         assertTrue("License screen did not reach the expected state", ready())
+    }
+
+    private fun main(action: () -> Unit) {
+        var failure: Throwable? = null
+        instrumentation.runOnMainSync {
+            try {
+                action()
+            } catch (error: Throwable) {
+                failure = error
+            }
+        }
+        failure?.let { throw it }
     }
 }

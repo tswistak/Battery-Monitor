@@ -24,12 +24,8 @@
     \n
     Naciśnij OK, aby przejść do ustawień systemowych, gdzie możesz odblokować powiadomienia dla Monitora baterii.</string>
 
-    <string name="battery_optimized" formatted="false">Monitor baterii jest ograniczony!</string>
-    <string name="battery_optimized_message" formatted="false">Monitor baterii ma ograniczoną możliwość prawidłowego działania. Ta „optymalizacja baterii” to funkcja Androida zaprojektowana w celu ograniczenia działania słabo zaprojektowanych aplikacji, aby zapobiegać zbyt dużemu zużywaniu baterii w tle.\n
-    \n
-    Monitor baterii jest jednak dobrze zaprojektowaną aplikacją, która musi działać bez ograniczeń w tle, aby funkcjonować prawidłowo. Jest to niezwykle wydajne i nie będzie skracać żywotności baterii.\n
-    \n
-    Naciśnij OK, aby przejść do ustawień systemowych, gdzie możesz wyłączyć optymalizację baterii dla Monitora baterii.</string>
+    <string name="battery_optimized" formatted="false">Monitorowanie w tle</string>
+    <string name="battery_optimized_message" formatted="false">Nieograniczone działanie w tle może poprawić niezawodność monitorowania. Optymalizacja baterii w Androidzie może opóźniać aktualizacje i alarmy.\n\nNieograniczone działanie może zwiększyć zużycie baterii w tle. Możesz później zmienić tę decyzję w ustawieniach Androida &gt; Aplikacje &gt; Battery Monitor &gt; Bateria.</string>
 
     <string name="main_notif_chan_name" formatted="false">Główne powiadomienie</string>
     <string name="live_updates_notif_chan_name" formatted="false">Aktualizacje na żywo</string>
@@ -1001,4 +997,7 @@
     <string name="history_chart_log_unavailable">Skala logarytmiczna wymaga dodatnich odczytów dla obu wybranych wielkości.</string>
     <string name="history_chart_more">Więcej działań wykresu</string>
     <string name="history_chart_events">Zdarzenia na wykresie</string>
+    <string name="changelog_title">Co nowego w Battery Monitor</string>
+    <string name="changelog_version">Wersja %1$s</string>
+    <string name="changelog_got_it">Rozumiem</string>
 </resources>

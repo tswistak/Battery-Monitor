@@ -24,12 +24,8 @@
     \n
     कृपया सिस्टम सेटिंग्स पर जाने के लिए ओके दबाएं जहां आप कर सकते हैं बैटरी मॉनिटर के लिए नोटिफिकेशन अनब्लॉक करें।</string>
 
-  <string name="battery_optimized" formatted="false">बैटरी मॉनिटर प्रतिबंधित!</string>
-  <string name="battery_optimized_message" formatted="false">बैटरी मॉनिटर को ठीक से चलने से प्रतिबंधित किया गया है। यह \"बैटरी अनुकूलन\" एक एंड्रॉइड फीचर है जिसे खराब डिज़ाइन वाले ऐप्स को रोकने के लिए प्रतिबंधित करने के लिए डिज़ाइन किया गया है पृष्ठभूमि में बहुत अधिक बैटरी का उपयोग करने से।\n
-    हालाँकि,\n
-    बैटरी मॉनिटर एक अच्छी तरह से डिज़ाइन किया गया ऐप है जिसे अप्रतिबंधित रूप से चलना चाहिए ठीक से काम करने के लिए पृष्ठभूमि। यह अत्यंत कुशल है और आपकी बैटरी लाइफ कम नहीं होगी.\n
-    \n
-    कृपया सिस्टम सेटिंग्स पर जाने के लिए ओके दबाएं जहां आप कर सकते हैं बैटरी मॉनिटर के लिए बैटरी अनुकूलन अक्षम करें।</string>
+  <string name="battery_optimized" formatted="false">बैकग्राउंड में निगरानी</string>
+  <string name="battery_optimized_message" formatted="false">बैकग्राउंड में बिना प्रतिबंध चलने से निगरानी की विश्वसनीयता बेहतर हो सकती है। Android का बैटरी ऑप्टिमाइज़ेशन अपडेट और अलर्ट में देरी कर सकता है।\n\nबिना प्रतिबंध चलने से बैकग्राउंड में बैटरी की खपत बढ़ सकती है। आप इसे बाद में Android सेटिंग &gt; ऐप्स &gt; Battery Monitor &gt; बैटरी में बदल सकते हैं।</string>
 
   <string name="main_notif_chan_name" formatted="false">मुख्य अधिसूचना</string>
   <string name="live_updates_notif_chan_name" formatted="false">लाइव अपडेट</string>
@@ -689,4 +685,7 @@
     <string name="history_chart_log_unavailable">लघुगणकीय पैमाने के लिए दोनों चुने हुए मापदंडों के माप धनात्मक होने चाहिए।</string>
     <string name="history_chart_more">चार्ट की और कार्रवाइयाँ</string>
     <string name="history_chart_events">चार्ट की घटनाएँ</string>
+  <string name="changelog_title">Battery Monitor में नया क्या है</string>
+  <string name="changelog_version">संस्करण %1$s</string>
+  <string name="changelog_got_it">समझ गया</string>
 </resources>

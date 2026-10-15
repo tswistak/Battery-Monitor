@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="latest_release_changelog" translatable="false" formatted="false">Improved:
+
+- Main notification is now expandable with vital signs details (#129, thanks @LiberiFatali).
+    </string>
+</resources>

@@ -22,12 +22,8 @@
     \n
     請按下「確定」前往系統設定， 在那裡解除封鎖 Battery Monitor 的通知。</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor受限！</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor 無法在受限制模式下正確運作。這項「電池最佳化」 是 Android 的一項功能，設計用來限制設計不良的應用程式，避免它們 在背景中耗用過多電量。\n
-    \n
-    不過，Battery Monitor 是一款設計良好的應用程式，必須在背景中 不受限制地執行，才能正常運作。它非常高效， 不會縮短您的電池續航力。\n
-    \n
-    請按下「確定」前往系統設定，在那裡您可以 停用 Battery Monitor 的電池最佳化。</string>
+  <string name="battery_optimized" formatted="false">背景監測</string>
+  <string name="battery_optimized_message" formatted="false">允許在背景不受限制地執行，可提升監測的可靠性。Android 電池最佳化可能會延遲更新和警報。\n\n不受限制地執行可能會增加背景耗電量。您可以稍後在 Android 設定 &gt; 應用程式 &gt; Battery Monitor &gt; 電池中變更此設定。</string>
 
   <string name="main_notif_chan_name" formatted="false">主要通知</string>
   <string name="live_updates_notif_chan_name" formatted="false">即時更新</string>
@@ -685,4 +681,7 @@
     <string name="history_chart_log_unavailable">對數刻度要求所選兩個指標的測量值均為正值。</string>
     <string name="history_chart_more">更多圖表操作</string>
     <string name="history_chart_events">圖表事件</string>
+  <string name="changelog_title">Battery Monitor 更新內容</string>
+  <string name="changelog_version">版本 %1$s</string>
+  <string name="changelog_got_it">知道了</string>
 </resources>

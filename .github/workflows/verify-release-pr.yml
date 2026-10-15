@@ -175,6 +175,22 @@ jobs:
 
           echo "$CHANGELOG_FILE contains $CHARACTER_COUNT of 500 allowed characters"
 
+      - name: Set up Node
+        if: ${{ !cancelled() }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: .github/package-lock.json
+
+      - name: Install script dependencies
+        if: ${{ !cancelled() }}
+        run: npm ci --prefix .github
+
+      - name: Validate in-app release notes
+        if: ${{ !cancelled() }}
+        run: node .github/scripts/verify-release-changelog.mjs
+
       - name: Validate CHANGELOG version
         if: ${{ !cancelled() }}
         shell: bash

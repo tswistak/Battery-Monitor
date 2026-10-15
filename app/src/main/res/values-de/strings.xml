@@ -22,12 +22,8 @@
     \n
     Bitte drücken Sie OK, um zu den Systemeinstellungen zu gelangen, wo Sie die Benachrichtigungen für Battery Monitor wieder freigeben können.</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor ist eingeschränkt!</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor ist in der Ausführung eingeschränkt und kann nicht korrekt arbeiten. Diese „Akku-Optimierung“ ist eine Android-Funktion, die schlecht entwickelte Apps im Hintergrund begrenzen soll.\n
-    \n
-    Battery Monitor ist jedoch eine gut entwickelte App, die ohne Einschränkungen im Hintergrund laufen muss, um korrekt zu funktionieren. Sie ist sehr effizient und verkürzt die Akkulaufzeit nicht.\n
-    \n
-    Bitte drücken Sie OK, um zu den Systemeinstellungen zu gelangen, wo Sie die Akku-Optimierung für Battery Monitor deaktivieren können.</string>
+  <string name="battery_optimized" formatted="false">Überwachung im Hintergrund</string>
+  <string name="battery_optimized_message" formatted="false">Uneingeschränkte Ausführung im Hintergrund kann die Zuverlässigkeit der Überwachung verbessern. Die Akkuoptimierung von Android kann Aktualisierungen und Alarme verzögern.\n\nUneingeschränkte Ausführung kann den Akkuverbrauch im Hintergrund erhöhen. Du kannst dies später unter Android-Einstellungen &gt; Apps &gt; Battery Monitor &gt; Akku ändern.</string>
 
   <string name="main_notif_chan_name" formatted="false">Hauptbenachrichtigung</string>
   <string name="live_updates_notif_chan_name" formatted="false">Live-Updates</string>
@@ -671,4 +667,7 @@
   <string name="history_chart_log_unavailable">Die logarithmische Skala erfordert positive Messwerte für beide ausgewählten Messgrößen.</string>
   <string name="history_chart_more">Weitere Diagrammaktionen</string>
   <string name="history_chart_events">Diagrammereignisse</string>
+  <string name="changelog_title">Neu in Battery Monitor</string>
+  <string name="changelog_version">Version %1$s</string>
+  <string name="changelog_got_it">Verstanden</string>
 </resources>

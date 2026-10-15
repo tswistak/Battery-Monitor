@@ -24,12 +24,8 @@
     \n
     Druk op OK om naar de systeeminstellingen te gaan waar je meldingen voor Battery Monitor kunt deblokkeren.</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor is beperkt!</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor wordt beperkt en kan daardoor niet correct werken. Deze \"batterijoptimalisatie\" is een Android-functie die bedoeld is om slecht ontworpen apps te beperken zodat ze op de achtergrond niet te veel batterij verbruiken.\n
-    \n
-    Battery Monitor is echter een goed ontworpen app die onbeperkt op de achtergrond moet kunnen draaien om goed te werken. De app is zeer efficiënt en verkort je batterijduur niet.\n
-    \n
-    Druk op OK om naar de systeeminstellingen te gaan waar je batterijoptimalisatie voor Battery Monitor kunt uitschakelen.</string>
+  <string name="battery_optimized" formatted="false">Bewaking op de achtergrond</string>
+  <string name="battery_optimized_message" formatted="false">Onbeperkte uitvoering op de achtergrond kan de betrouwbaarheid van de bewaking verbeteren. Batterijoptimalisatie van Android kan updates en meldingen vertragen.\n\nOnbeperkte uitvoering kan het batterijverbruik op de achtergrond verhogen. Je kunt dit later wijzigen via Android-instellingen &gt; Apps &gt; Battery Monitor &gt; Batterij.</string>
 
   <string name="main_notif_chan_name" formatted="false">Hoofdmelding</string>
   <string name="live_updates_notif_chan_name" formatted="false">Live-updates</string>
@@ -693,4 +689,7 @@
   <string name="history_chart_log_unavailable">De logaritmische schaal vereist positieve metingen voor beide geselecteerde meetwaarden.</string>
   <string name="history_chart_more">Meer grafiekacties</string>
   <string name="history_chart_events">Grafiekgebeurtenissen</string>
+  <string name="changelog_title">Nieuw in Battery Monitor</string>
+  <string name="changelog_version">Versie %1$s</string>
+  <string name="changelog_got_it">Begrepen</string>
 </resources>

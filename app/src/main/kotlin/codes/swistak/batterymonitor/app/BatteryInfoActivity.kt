@@ -13,11 +13,18 @@
 */
 package codes.swistak.batterymonitor.app
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -40,16 +47,20 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.withResumed
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmEditActivity
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
+import codes.swistak.batterymonitor.common.showToast
+import codes.swistak.batterymonitor.diagnostics.BackgroundSettingsNavigator
 import codes.swistak.batterymonitor.diagnostics.DiagnosticsFragment
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringAvailability
@@ -101,19 +112,50 @@ class BatteryInfoActivity : AppCompatActivity() {
     private lateinit var history: HistoryViewModel
 
     private lateinit var alarms: AlarmsViewModel
-    private var pendingAlarmNavigation by mutableStateOf<(() -> Unit)?>(null)
+    private var pendingAlarmNavigation by mutableStateOf<AlarmEditorNavigation?>(null)
+    private val navigationBackCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            when (selected) {
+                SectionOwner.HELP if detail != null -> handleNavigationBack(this)
+                SectionOwner.ALARMS if alarms.state.value.draft != null -> leaveAlarmEditor(
+                    AlarmEditorNavigation(AlarmEditorDestination.DISMISS)
+                )
+
+                else -> leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.BACK))
+            }
+        }
+    }
+
+    private lateinit var startup: StartupDialogViewModel
+    private var activeDiagnosticsFragment by mutableStateOf<DiagnosticsFragment?>(null)
+    private val notificationPermissionRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) {
+        startup.systemReturned()
+        PersistentFragment.getInstance(supportFragmentManager).refreshMonitoringAfterPermission()
+        continueStartup()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.bi_compose_theme)
         // FragmentManager restores old class names inside super.onCreate, before cleanup can run.
         supportFragmentManager.fragmentFactory = object : FragmentFactory() {
             override fun instantiate(classLoader: ClassLoader, className: String): Fragment =
-                if (className == "codes.swistak.batterymonitor.ui.help.LegacyHelpFragment") {
+                if (className in setOf(
+                        "codes.swistak.batterymonitor.ui.help.LegacyHelpFragment",
+                        $$"codes.swistak.batterymonitor.app.PersistentFragment$OnboardingDialogFragment",
+                        $$"codes.swistak.batterymonitor.app.PersistentFragment$BatteryOptimizationDialogFragment",
+                        "codes.swistak.batterymonitor.app.OnboardingDialogFragment",
+                        "codes.swistak.batterymonitor.app.BatteryOptimizationDialogFragment"
+                    )
+                ) {
                     Fragment()
                 } else super.instantiate(classLoader, className)
         }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        startup = ViewModelProvider(this)[StartupDialogViewModel::class.java]
+        startup.advance(startupEnvironment())
         val persistent = PersistentFragment.getInstance(supportFragmentManager)
         DisplayStrings.setResources(resources)
         val currentSettings = getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
@@ -121,11 +163,19 @@ class BatteryInfoActivity : AppCompatActivity() {
         current = ViewModelProvider(this)[CurrentStateViewModel::class.java]
         history = ViewModelProvider(this)[HistoryViewModel::class.java]
         alarms = ViewModelProvider(this)[AlarmsViewModel::class.java]
+        pendingAlarmNavigation = AlarmEditorNavigation.restore(
+            savedInstanceState?.getBundle("pending_alarm_navigation")
+        ).takeIf { alarms.state.value.draft != null }
         history.restore(savedInstanceState?.getBundle("history_state"))
         currentMeasurement =
             CurrentMeasurement.fromRoute(savedInstanceState?.getString("current_measurement"))
         for (tag in listOf(
-            "section:current", "section:history", "section:diagnostics", "section:alarms"
+            "section:current",
+            "section:history",
+            "section:diagnostics",
+            "section:alarms",
+            "onboarding",
+            "battery_optimization"
         )) {
             supportFragmentManager.findFragmentByTag(tag)?.let { legacy ->
                 supportFragmentManager.commitNow { remove(legacy) }
@@ -152,6 +202,13 @@ class BatteryInfoActivity : AppCompatActivity() {
 
         setContentView(ComposeView(this).apply {
             setContent {
+                LaunchedEffect(startup.systemAction) {
+                    if (startup.systemAction == null) return@LaunchedEffect
+                    // Dispose the application dialog before Android shows its permission UI.
+                    lifecycle.withResumed {
+                        dispatchStartupSystemAction()
+                    }
+                }
                 val sections = rememberSaveableStateHolder()
                 var historyAction by rememberSaveable { mutableStateOf<String?>(null) }
                 val historyState by history.state.collectAsStateWithLifecycle()
@@ -270,7 +327,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 if (topic == "licenses" || topic?.startsWith("licenses:") == true) {
                                     LicenseScreen(
                                         componentId = topic.substringAfter(':', "")
-                                        .ifEmpty { null },
+                                            .ifEmpty { null },
                                         onOpenComponent = { openHelp("licenses:$it") })
                                 } else {
                                     HelpScreen(topic, onOpenLicenses = { openHelp("licenses") })
@@ -375,17 +432,19 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     onRevealHandled = alarms::clearReveal
                                 )
                             }
-                            ThresholdDialog(
+                            if (pendingAlarmNavigation == null) ThresholdDialog(
                                 state = alarmState,
                                 onInput = alarms::changeDraftInput,
                                 onSave = { alarms.saveDraft(persistent::reloadAlarmRules) },
                                 onDelete = { alarms.deleteDraft(persistent::reloadAlarmRules) },
-                                onDismiss = { leaveAlarmEditor {} },
+                                onDismiss = {
+                                    leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.DISMISS))
+                                },
                                 onEditExisting = alarms::editExistingThreshold,
                                 onRetry = alarms::refresh
                             )
                         }
-                        if (pendingAlarmNavigation != null) AlertDialog(
+                        if (pendingAlarmNavigation != null && !startup.blocksContentDialogs) AlertDialog(
                             modifier = Modifier.imePadding(),
                             properties = DialogProperties(decorFitsSystemWindows = false),
                             onDismissRequest = { pendingAlarmNavigation = null },
@@ -400,7 +459,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     val navigation = pendingAlarmNavigation
                                     pendingAlarmNavigation = null
                                     alarms.discardDraft()
-                                    navigation?.invoke()
+                                    navigation?.let(::performAlarmNavigation)
                                 }) { Text(getString(R.string.alarms_discard)) }
                             },
                             dismissButton = {
@@ -410,20 +469,28 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     )
                                 }
                             })
+                        if (selected == SectionOwner.DIAGNOSTICS && detail == null) {
+                            activeDiagnosticsFragment?.let { fragment ->
+                                androidx.compose.runtime.key(fragment) { fragment.Dialogs() }
+                            }
+                        }
+                        if (startup.blocksContentDialogs) {
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .clickable(
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        indication = null,
+                                        onClick = {})
+                            )
+                        }
+                        StartupDialogs(startup, ::continueStartup)
                     }
                 }
             }
         })
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                when (selected) {
-                    SectionOwner.HELP if detail != null -> handleNavigationBack(this)
-                    SectionOwner.ALARMS if alarms.state.value.draft != null -> leaveAlarmEditor {}
-                    else -> leaveAlarmEditor { handleNavigationBack(this) }
-                }
-            }
-        })
+        onBackPressedDispatcher.addCallback(this, navigationBackCallback)
     }
 
     private fun handleNavigationBack(callback: OnBackPressedCallback) {
@@ -448,9 +515,79 @@ class BatteryInfoActivity : AppCompatActivity() {
         super.onPostResume()
         if (containerReady) showSection(selected)
         if (::alarms.isInitialized && selected == SectionOwner.ALARMS) alarms.refresh()
+        dispatchStartupSystemAction()
+        continueStartup()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (::startup.isInitialized) {
+            startup.onWindowFocusChanged(hasFocus, startupEnvironment())
+        }
+    }
+
+    override fun onPause() {
+        if (::startup.isInitialized) startup.onLeavingActivity()
+        super.onPause()
+    }
+
+    private fun continueStartup() {
+        window.decorView.post {
+            if (!isFinishing && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) && window.decorView.hasWindowFocus()) startup.advance(
+                startupEnvironment()
+            )
+        }
+    }
+
+    private fun dispatchStartupSystemAction() {
+        window.decorView.post {
+            if (!isDestroyed && !isFinishing && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                startup.takeSystemAction()?.let(::launchStartupSystemAction)
+            }
+        }
+    }
+
+    private fun startupEnvironment() = StartupEnvironment(
+        notificationPermissionRequired = Build.VERSION.SDK_INT >= 33,
+        notificationsGranted = Build.VERSION.SDK_INT < 33 || ContextCompat.checkSelfPermission(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED,
+        batteryOptimized = !(getSystemService(POWER_SERVICE) as PowerManager).isIgnoringBatteryOptimizations(
+            packageName
+        )
+    )
+
+    private fun launchStartupSystemAction(action: StartupSystemAction) {
+        if (isFinishing) return
+        val launched = when (action) {
+            StartupSystemAction.NOTIFICATIONS -> {
+                if (Build.VERSION.SDK_INT >= 33) {
+                    val permissions = if (Build.VERSION.SDK_INT >= 36) arrayOf(
+                        Manifest.permission.POST_NOTIFICATIONS,
+                        "android.permission.POST_PROMOTED_NOTIFICATIONS"
+                    ) else arrayOf(Manifest.permission.POST_NOTIFICATIONS)
+                    notificationPermissionRequest.launch(permissions)
+                    true
+                } else false
+            }
+
+            StartupSystemAction.LIVE_UPDATE_SETTINGS -> NotificationSettingsNavigator.openLiveUpdates(
+                this
+            )
+
+            StartupSystemAction.BATTERY_SETTINGS -> BackgroundSettingsNavigator.openBatteryOptimization(
+                this
+            )
+        }
+        if (!launched) {
+            startup.systemReturned()
+            if (action != StartupSystemAction.NOTIFICATIONS) showToast(R.string.advanced_value_not_available)
+            continueStartup()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBundle("pending_alarm_navigation", pendingAlarmNavigation?.save())
         outState.putBundle("history_state", history.save())
         outState.putString("current_measurement", currentMeasurement?.route)
         navigator.save(outState)
@@ -458,7 +595,7 @@ class BatteryInfoActivity : AppCompatActivity() {
     }
 
     internal fun selectSection(owner: SectionOwner) {
-        leaveAlarmEditor { performSelectSection(owner) }
+        leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.SECTION, section = owner))
     }
 
     private fun performSelectSection(owner: SectionOwner) {
@@ -497,10 +634,10 @@ class BatteryInfoActivity : AppCompatActivity() {
 
     private fun navigateUp() {
         if (selected == SectionOwner.HELP && detail != null) performNavigateUp()
-        else leaveAlarmEditor { performNavigateUp() }
+        else leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.UP))
     }
 
-    private fun leaveAlarmEditor(navigation: () -> Unit) {
+    private fun leaveAlarmEditor(navigation: AlarmEditorNavigation) {
         if (alarms.state.value.draft != null) {
             if (alarms.state.value.busy) return
             if (alarms.hasUnsavedChanges) {
@@ -509,13 +646,27 @@ class BatteryInfoActivity : AppCompatActivity() {
             }
             alarms.discardDraft()
         }
-        navigation()
+        performAlarmNavigation(navigation)
     }
 
     private fun openAlarmEditor(id: Int?) {
-        leaveAlarmEditor {
-            performSelectSection(SectionOwner.ALARMS)
-            alarms.openLegacyAlarm(id ?: -1)
+        leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.EDIT_ALARM, alarmId = id))
+    }
+
+    private fun performAlarmNavigation(navigation: AlarmEditorNavigation) {
+        when (navigation.destination) {
+            AlarmEditorDestination.DISMISS -> Unit
+            AlarmEditorDestination.SECTION -> performSelectSection(requireNotNull(navigation.section))
+            AlarmEditorDestination.UP -> performNavigateUp()
+            AlarmEditorDestination.BACK -> handleNavigationBack(navigationBackCallback)
+            AlarmEditorDestination.EDIT_ALARM -> {
+                performSelectSection(SectionOwner.ALARMS)
+                alarms.openLegacyAlarm(navigation.alarmId ?: -1)
+            }
+
+            AlarmEditorDestination.INTENT -> performRouteIntent(
+                Intent().putExtras(requireNotNull(navigation.intentExtras))
+            )
         }
     }
 
@@ -527,7 +678,7 @@ class BatteryInfoActivity : AppCompatActivity() {
     }
 
     private fun routeIntent(intent: Intent) {
-        leaveAlarmEditor { performRouteIntent(intent) }
+        leaveAlarmEditor(AlarmEditorNavigation.route(intent))
     }
 
     private fun performRouteIntent(intent: Intent) {
@@ -613,6 +764,7 @@ class BatteryInfoActivity : AppCompatActivity() {
         }
         if (target is DiagnosticsFragment) target.highlightAction(
             detail?.substringAfter(':', "")?.ifEmpty { null })
+        activeDiagnosticsFragment = target as? DiagnosticsFragment
         if (actionsOnly) {
             val actions = (target as DiagnosticsFragment).monitorActions
             monitorActions =

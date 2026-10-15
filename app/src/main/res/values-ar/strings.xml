@@ -22,12 +22,8 @@
     \n
     يرجى الضغط على موافق للانتقال إلى إعدادات النظام حيث يمكنك إلغاء حظر إشعارات Battery Monitor.</string>
 
-  <string name="battery_optimized" formatted="false">تم تقييد Battery Monitor!</string>
-  <string name="battery_optimized_message" formatted="false">تم تقييد Battery Monitor من العمل بشكل صحيح. «تحسين البطارية» ميزة في Android صُممت لتقييد التطبيقات سيئة التصميم حتى لا تستهلك الكثير من البطارية في الخلفية.\n
-    \n
-    لكن Battery Monitor تطبيق مصمم جيدًا ويحتاج للعمل دون تقييد في الخلفية لكي يعمل بصورة صحيحة. وهو فعال جدًا ولن يقلل عمر البطارية.\n
-    \n
-    يرجى الضغط على موافق للانتقال إلى إعدادات النظام حيث يمكنك تعطيل تحسين البطارية لتطبيق Battery Monitor.</string>
+  <string name="battery_optimized" formatted="false">المراقبة في الخلفية</string>
+  <string name="battery_optimized_message" formatted="false">يمكن أن يؤدي السماح بالتشغيل غير المقيّد في الخلفية إلى تحسين موثوقية المراقبة. قد يؤخر تحسين البطارية في Android التحديثات والتنبيهات.\n\nقد يزيد التشغيل غير المقيّد من استهلاك البطارية في الخلفية. يمكنك تغيير هذا لاحقًا من إعدادات Android &gt; التطبيقات &gt; Battery Monitor &gt; البطارية.</string>
 
   <string name="main_notif_chan_name" formatted="false">الإشعار الرئيسي</string>
   <string name="live_updates_notif_chan_name" formatted="false">التحديثات المباشرة</string>
@@ -733,4 +729,7 @@
     <string name="history_chart_log_unavailable">يتطلب المقياس اللوغاريتمي قراءات موجبة لكلا المقياسين المحددين.</string>
     <string name="history_chart_more">المزيد من إجراءات الرسم البياني</string>
     <string name="history_chart_events">أحداث الرسم البياني</string>
+  <string name="changelog_title">الجديد في Battery Monitor</string>
+  <string name="changelog_version">الإصدار %1$s</string>
+  <string name="changelog_got_it">حسنًا</string>
 </resources>

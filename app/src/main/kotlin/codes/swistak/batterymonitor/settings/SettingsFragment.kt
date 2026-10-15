@@ -36,6 +36,7 @@ import android.os.Message
 import android.os.Messenger
 import android.provider.DocumentsContract
 import android.provider.Settings
+import android.util.AtomicFile
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -107,16 +108,39 @@ import kotlinx.coroutines.withContext
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnBinderReceivedListener
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
+import java.io.File
 import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
 
 
 internal fun displayPathForDocumentId(documentId: String): String =
     documentId.removePrefix("primary:")
+
+// GeneralBackup allows 150 MiB of entry contents; reserve 10 MiB for ZIP headers and metadata.
+internal const val GENERAL_BACKUP_DIALOG_CACHE_LIMIT_BYTES = 160L * 1024 * 1024
+
+internal fun copyGeneralBackupDialogSource(
+    input: InputStream,
+    output: OutputStream,
+    maxBytes: Long = GENERAL_BACKUP_DIALOG_CACHE_LIMIT_BYTES
+) {
+    val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+    var total = 0L
+    var count = input.read(buffer)
+    while (count != -1) {
+        total += count
+        require(total <= maxBytes) { "General backup is too large" }
+        output.write(buffer, 0, count)
+        count = input.read(buffer)
+    }
+}
 
 class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     PreferenceManager.OnPreferenceTreeClickListener {
@@ -290,7 +314,16 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     private var modelVersion by mutableIntStateOf(0)
     private var selectedCategory by mutableStateOf<String?>(null)
     private var highlightedKey by mutableStateOf<String?>(null)
-    private var dialog by mutableStateOf<SettingsDialog?>(null)
+    private var activeDialog by mutableStateOf<SettingsDialog?>(null)
+    private var dialogRequest: Bundle? = null
+    private var pendingBackupDialog: Bundle? = null
+    private var dialog: SettingsDialog?
+        get() = activeDialog
+        set(value) {
+            activeDialog = value
+            dialogRequest = null
+        }
+
     private lateinit var operationModel: SettingsOperationViewModel
     private val busy: Boolean get() = operationModel.busy
     private var serviceBound = false
@@ -377,6 +410,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 runCatching { DeviceDataType.valueOf(name) }.getOrNull()
             }?.toSet().orEmpty()
         setPreferences()
+        pendingBackupDialog = savedInstanceState?.getBundle("settings_backup_dialog")
+        savedInstanceState?.getBundle("settings_dialog")?.let(::restoreDialog)
+        if (dialog == null && !busy && operationModel.outcome == null) {
+            pendingBackupDialog?.let(::readBackupImport)
+        }
     }
 
     override fun onCreateView(
@@ -401,7 +439,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 LaunchedEffect(operationModel.outcome) {
                     if (isResumed) operationModel.takeOutcome()?.let(::handleOperationOutcome)
                 }
-                SettingsDialogs(dialog, busy) { dialog = null }
+                SettingsDialogs(dialog, busy, ::dismissSettingsDialog)
             }
         }
     }
@@ -424,6 +462,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     if (preference.callChangeListener(value)) preference.value = value
                     modelVersion++
                 })
+            rememberPreferenceDialog(preference)
         } else if (preference.key == SettingsContract.KEY_ENABLE_NOTIFS_B) {
             enableNotifsButtonClick()
         } else if (preference.key == SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS) {
@@ -440,6 +479,14 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        val request = dialogRequest ?: (dialog as? SettingsDialog.Message)?.let {
+            Bundle().apply {
+                putString("action", "message")
+                putString("message", it.message)
+            }
+        }
+        outState.putBundle("settings_dialog", request)
+        outState.putBundle("settings_backup_dialog", pendingBackupDialog)
         outState.putInt("document_request", pendingDocumentRequest)
         outState.putString(ARG_CATEGORY, selectedCategory)
         outState.putString(ARG_HIGHLIGHT, highlightedKey)
@@ -447,6 +494,147 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             STATE_DEVICE_DATA_EXPORT, pendingDeviceDataExport.map { it.name }.toTypedArray()
         )
         super.onSaveInstanceState(outState)
+    }
+
+    private fun rememberPreferenceDialog(preference: Preference) {
+        dialogRequest = Bundle().apply {
+            putString("action", "preference")
+            putString("key", preference.key)
+        }
+    }
+
+    private fun restoreDialog(request: Bundle) {
+        if (busy || pendingDocumentRequest != 0) return
+        when (request.getString("action")) {
+            "preference" -> request.getString("key")?.let { key ->
+                mPreferenceScreen?.findPreference<Preference>(key)?.let(::activatePreference)
+            }
+
+            "interval" -> request.getString("key")?.let { key ->
+                mPreferenceScreen?.findPreference<ListPreference>(key)?.let { preference ->
+                    showIntervalDialog(
+                        preference,
+                        requireNotNull(request.getString("fallback")),
+                        request.getInt("message"),
+                        request.getInt("error")
+                    )
+                }
+            }
+
+            "auto_export" -> showAutoLogExportDialog(
+                request.getString("directory")?.let(Uri::parse),
+                request.getInt("permission_flags")
+                    .takeIf { request.containsKey("permission_flags") })
+
+            "message" -> request.getString("message")?.let { dialog = SettingsDialog.Message(it) }
+            "backup_import" -> readBackupImport(request)
+            "device_export" -> showDeviceDataExportDialog()
+        }
+    }
+
+    private fun dismissSettingsDialog() {
+        val backup = pendingBackupDialog
+        dialog = null
+        pendingBackupDialog = null
+        if (backup != null) {
+            // Confirmation can synchronously replace a preview with the log-mode dialog.
+            mainHandler.post {
+                if (pendingBackupDialog?.getString("cache") != backup.getString("cache")) {
+                    deleteBackupDialogCache(backup)
+                }
+            }
+        }
+    }
+
+    private fun rememberBackupDialog(
+        request: Bundle?, stage: String = "preview", selected: List<String> = emptyList()
+    ) {
+        if (request == null || dialog == null) return
+        pendingBackupDialog = Bundle(request).apply {
+            putString("stage", stage)
+            putStringArrayList("selected", ArrayList(selected))
+        }
+        dialogRequest = pendingBackupDialog
+    }
+
+    private fun deleteBackupDialogCache(request: Bundle) {
+        val name = request.getString("cache") ?: return
+        if (File(name).name == name && name.startsWith("settings-import-")) {
+            AtomicFile(File(applicationContext.cacheDir, name)).delete()
+        }
+    }
+
+    private fun clearBackupDialog() {
+        pendingBackupDialog?.let(::deleteBackupDialogCache)
+        pendingBackupDialog = null
+        if (dialogRequest?.getString("action") == "backup_import") dialogRequest = null
+    }
+
+    private fun readBackupImport(request: Bundle, source: Uri? = null) {
+        val requestCode = request.getInt("request")
+        val (action, error) = when (requestCode) {
+            IMPORT_REQUEST -> SettingsOperationAction.ReadSettings to R.string.invalid_settings_file
+            IMPORT_ALARMS_REQUEST -> SettingsOperationAction.ReadAlarms to R.string.invalid_alarms_file
+            IMPORT_DEVICE_DATA_REQUEST -> SettingsOperationAction.ReadDeviceData to R.string.invalid_device_data_file
+            IMPORT_LOGS_CSV_REQUEST -> SettingsOperationAction.ReadCsvLogs to R.string.invalid_csv_logs_file
+            IMPORT_GENERAL_BACKUP_REQUEST -> SettingsOperationAction.ReadGeneralBackup to R.string.invalid_general_backup_file
+            else -> return
+        }
+        pendingBackupDialog = request
+        fileOperation(action, error) { context ->
+            val name = requireNotNull(request.getString("cache"))
+            require(File(name).name == name && name.startsWith("settings-import-"))
+            val cache = AtomicFile(File(context.cacheDir, name))
+            if (source != null) {
+                val input = context.contentResolver.openInputStream(source)
+                    ?: throw IOException("Could not open backup source")
+                input.use {
+                    val output = cache.startWrite()
+                    try {
+                        if (requestCode == IMPORT_GENERAL_BACKUP_REQUEST) {
+                            copyGeneralBackupDialogSource(it, output)
+                        } else {
+                            it.copyTo(output)
+                        }
+                        cache.finishWrite(output)
+                    } catch (failure: Exception) {
+                        cache.failWrite(output)
+                        throw failure
+                    }
+                }
+            }
+            val cachedUri = Uri.fromFile(cache.baseFile)
+            when (requestCode) {
+                IMPORT_REQUEST -> {
+                    val json = requireNotNull(SettingsBackup.readFromUri(context, cachedUri))
+                    JsonBackupImportPreview(json, SettingsBackup.getSchemaVersion(json))
+                }
+
+                IMPORT_ALARMS_REQUEST -> {
+                    val json = AlarmBackup.readFromUri(context, cachedUri)
+                    JsonBackupImportPreview(json, AlarmBackup.getSchemaVersion(json))
+                }
+
+                IMPORT_DEVICE_DATA_REQUEST -> {
+                    val json = DeviceDataBackup.readFromUri(context, cachedUri)
+                    DeviceBackupImportPreview(
+                        json,
+                        DeviceDataBackup.getAvailableData(json),
+                        DeviceDataBackup.getSchemaVersion(json)
+                    )
+                }
+
+                IMPORT_LOGS_CSV_REQUEST -> CsvLogImporter.readFromUri(context, cachedUri)
+                else -> {
+                    val archive = GeneralBackup.readFromUri(context, cachedUri)
+                    GeneralBackupImportPreview(
+                        archive,
+                        GeneralBackup.getAvailableData(archive),
+                        GeneralBackup.containsNewerSchema(archive)
+                    )
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -580,6 +768,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     confirmLabel = R.string.settings_reset_confirm,
                     onConfirm = ::resetSettingsToDefaults
                 )
+                rememberPreferenceDialog(preference)
                 return true
             }
 
@@ -757,6 +946,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 resetService()
                 modelVersion++
             })
+        rememberPreferenceDialog(preference)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
@@ -1101,6 +1291,13 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 updateChipSwitchingIntervalSummary()
                 modelVersion++
             })
+        dialogRequest = Bundle().apply {
+            putString("action", "interval")
+            putString("key", preference.key)
+            putString("fallback", fallback)
+            putInt("message", message)
+            putInt("error", error)
+        }
     }
 
     private fun setupChipSwitchingIntervalPreference() {
@@ -1272,6 +1469,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun handleOperationOutcome(outcome: SettingsOperationOutcome) {
+        val backupRequest = pendingBackupDialog
         try {
             outcome.result.fold(onSuccess = { value ->
                 when (outcome.action) {
@@ -1282,6 +1480,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                                 SettingsDialog.Confirm(getString(R.string.settings_file_version_warning)) {
                                     doImport(preview.json)
                                 }
+                            rememberBackupDialog(backupRequest)
                         } else doImport(preview.json)
                     }
 
@@ -1292,6 +1491,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                                 SettingsDialog.Confirm(getString(R.string.settings_file_version_warning)) {
                                     doAlarmImport(preview.json)
                                 }
+                            rememberBackupDialog(backupRequest)
                         } else doAlarmImport(preview.json)
                     }
 
@@ -1320,12 +1520,14 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     }
                 }
             }, onFailure = { failure ->
+                clearBackupDialog()
                 if (outcome.action == SettingsOperationAction.ResetSettings) setPreferences(
                     reinflate = true
                 )
                 dialog = SettingsDialog.Message(backupFailureMessage(outcome.errorMessage, failure))
             })
         } catch (failure: Exception) {
+            clearBackupDialog()
             dialog = SettingsDialog.Message(backupFailureMessage(outcome.errorMessage, failure))
         } finally {
             if (isResumed && !busy) mSharedPreferences.registerOnSharedPreferenceChangeListener(this)
@@ -1374,11 +1576,14 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 SettingsBackup.writeToUri(context, uri, SettingsBackup.exportToJson(settings))
             }
 
-            IMPORT_REQUEST -> fileOperation(
-                SettingsOperationAction.ReadSettings, R.string.invalid_settings_file
-            ) { context ->
-                val json = requireNotNull(SettingsBackup.readFromUri(context, uri))
-                JsonBackupImportPreview(json, SettingsBackup.getSchemaVersion(json))
+            IMPORT_REQUEST, IMPORT_ALARMS_REQUEST, IMPORT_DEVICE_DATA_REQUEST, IMPORT_LOGS_CSV_REQUEST, IMPORT_GENERAL_BACKUP_REQUEST -> {
+                clearBackupDialog()
+                readBackupImport(Bundle().apply {
+                    putString("action", "backup_import")
+                    putInt("request", requestCode)
+                    putString("cache", "settings-import-${UUID.randomUUID()}.backup")
+                    putString("stage", "preview")
+                }, uri)
             }
 
             EXPORT_ALARMS_REQUEST -> fileOperation(
@@ -1390,13 +1595,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 } finally {
                     database.close()
                 }
-            }
-
-            IMPORT_ALARMS_REQUEST -> fileOperation(
-                SettingsOperationAction.ReadAlarms, R.string.invalid_alarms_file
-            ) { context ->
-                val json = requireNotNull(AlarmBackup.readFromUri(context, uri))
-                JsonBackupImportPreview(json, AlarmBackup.getSchemaVersion(json))
             }
 
             EXPORT_DEVICE_DATA_REQUEST -> {
@@ -1413,23 +1611,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 }
             }
 
-            IMPORT_DEVICE_DATA_REQUEST -> fileOperation(
-                SettingsOperationAction.ReadDeviceData, R.string.invalid_device_data_file
-            ) { context ->
-                val json = requireNotNull(DeviceDataBackup.readFromUri(context, uri))
-                DeviceBackupImportPreview(
-                    json,
-                    DeviceDataBackup.getAvailableData(json),
-                    DeviceDataBackup.getSchemaVersion(json)
-                )
-            }
-
-            IMPORT_LOGS_CSV_REQUEST -> fileOperation(
-                SettingsOperationAction.ReadCsvLogs, R.string.invalid_csv_logs_file
-            ) { context ->
-                requireNotNull(CsvLogImporter.readFromUri(context, uri))
-            }
-
             EXPORT_GENERAL_BACKUP_REQUEST -> {
                 val predictor = predictorExportRequest()
                 fileOperation(
@@ -1441,16 +1622,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 }
             }
 
-            IMPORT_GENERAL_BACKUP_REQUEST -> fileOperation(
-                SettingsOperationAction.ReadGeneralBackup, R.string.invalid_general_backup_file
-            ) { context ->
-                val archive = requireNotNull(GeneralBackup.readFromUri(context, uri))
-                GeneralBackupImportPreview(
-                    archive,
-                    GeneralBackup.getAvailableData(archive),
-                    GeneralBackup.containsNewerSchema(archive)
-                )
-            }
         }
     }
 
@@ -1598,6 +1769,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             onChooseDirectory = ::openAutoLogExportDirectoryPicker,
             onDisable = ::disableAutoLogExport
         )
+        dialogRequest = Bundle().apply {
+            putString("action", "auto_export")
+            putString("directory", directory.toString())
+            permissionFlags?.let { putInt("permission_flags", it) }
+        }
     }
 
     private fun disableAutoLogExport() {
@@ -1702,6 +1878,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     )
             launchDocument(exportIntent, EXPORT_DEVICE_DATA_REQUEST)
         }
+        dialogRequest = Bundle().apply { putString("action", "device_export") }
     }
 
     private fun openCsvLogFilePicker() {
@@ -1711,21 +1888,35 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun showCsvLogImportModeDialog(csv: String) {
+        val request = pendingBackupDialog
         showLogImportModeDialog(
             getString(R.string.csv_logs_import_warning) + "\n\n" + getString(R.string.log_import_mode_message)
         ) { mode ->
+            clearBackupDialog()
             fileOperation(
                 SettingsOperationAction.ImportCsvLogs, R.string.invalid_csv_logs_file
             ) { context ->
                 CsvLogImporter.importFromCsv(context, csv, mode)
             }
         }
+        rememberBackupDialog(request, "log_mode")
     }
 
     private fun showGeneralBackupImportDialog(preview: GeneralBackupImportPreview) {
         runCatching {
             val archive = preview.archive
             val available = preview.available
+            val request = pendingBackupDialog
+            if (request?.getString("stage") == "log_mode") {
+                val selected = request.getStringArrayList("selected").orEmpty()
+                    .mapTo(linkedSetOf()) { GeneralBackupDataType.valueOf(it) }
+                require(selected.isNotEmpty() && available.containsAll(selected))
+                showLogImportModeDialog(getString(R.string.log_import_mode_message)) { mode ->
+                    doGeneralBackupImport(archive, selected, mode)
+                }
+                rememberBackupDialog(request, "log_mode", selected.map { it.name })
+                return
+            }
             val types = GeneralBackupDataType.entries.filter { it in available }
             val warning = buildString {
                 append(getString(R.string.general_backup_restore_message))
@@ -1744,9 +1935,12 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                         showLogImportModeDialog(getString(R.string.log_import_mode_message)) { mode ->
                             doGeneralBackupImport(archive, selectedData, mode)
                         }
+                        rememberBackupDialog(request, "log_mode", selectedData.map { it.name })
                     } else doGeneralBackupImport(archive, selectedData, LogImportMode.REPLACE)
                 })
+            rememberBackupDialog(request)
         }.onFailure {
+            clearBackupDialog()
             dialog = SettingsDialog.Message(getString(R.string.invalid_general_backup_file))
         }
     }
@@ -1772,6 +1966,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         selectedData: Set<GeneralBackupDataType>,
         logImportMode: LogImportMode
     ) {
+        clearBackupDialog()
         val settings = mSharedPreferences
         val messenger = serviceMessenger
         settings.unregisterOnSharedPreferenceChangeListener(this)
@@ -1795,7 +1990,19 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         try {
             val json = preview.json
             val availableData = preview.available
+            val request = pendingBackupDialog
+            if (request?.getString("stage") == "log_mode") {
+                val selected = request.getStringArrayList("selected").orEmpty()
+                    .mapTo(linkedSetOf()) { DeviceDataType.valueOf(it) }
+                require(selected.isNotEmpty() && availableData.containsAll(selected))
+                showLogImportModeDialog(getString(R.string.log_import_mode_message)) { mode ->
+                    doDeviceDataImport(json, selected, mode)
+                }
+                rememberBackupDialog(request, "log_mode", selected.map { it.name })
+                return
+            }
             if (availableData.isEmpty()) {
+                clearBackupDialog()
                 Toast.makeText(activity, R.string.device_data_file_empty, Toast.LENGTH_SHORT).show()
                 return
             }
@@ -1812,11 +2019,14 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     showLogImportModeDialog(getString(R.string.log_import_mode_message)) { logImportMode ->
                         doDeviceDataImport(json, selectedData, logImportMode)
                     }
+                    rememberBackupDialog(request, "log_mode", selectedData.map { it.name })
                 } else {
                     doDeviceDataImport(json, selectedData, LogImportMode.REPLACE)
                 }
             }
+            rememberBackupDialog(request)
         } catch (e: Exception) {
+            clearBackupDialog()
             Toast.makeText(activity, R.string.invalid_device_data_file, Toast.LENGTH_SHORT).show()
         }
     }
@@ -1858,6 +2068,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     private fun doDeviceDataImport(
         json: String, selectedData: Set<DeviceDataType>, logImportMode: LogImportMode
     ) {
+        clearBackupDialog()
         val settings = mSharedPreferences
         val messenger = serviceMessenger
         fileOperation(
@@ -1947,6 +2158,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun doImport(json: String) {
+        clearBackupDialog()
         val settings = mSharedPreferences
         val messenger = serviceMessenger
         settings.unregisterOnSharedPreferenceChangeListener(this)
@@ -1961,6 +2173,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun doAlarmImport(json: String) {
+        clearBackupDialog()
         val settings = mSharedPreferences
         val messenger = serviceMessenger
         fileOperation(

@@ -24,12 +24,8 @@
     \n
     Pritiskom na dugme OK pristupićete sistemskim podešavanjima gde možete ponovo uključiti obaveštenja za Battery Monitor.</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor je ograničen!</string>
-  <string name="battery_optimized_message" formatted="false">Sistem ograničava ispravan rad aplikacije Battery Monitor. Ova Android funkcija „optimizacije baterije” služi da ograniči loše dizajnirane aplikacije kako ne bi previše trošile bateriju u pozadini.\n
-    \n
-    Battery Monitor je, međutim, dobro optimizovana aplikacija koja mora da radi bez ograničenja u pozadini da bi radila ispravno. Veoma je efikasna i neće smanjiti trajanje baterije.\n
-    \n
-    Pritisnite OK da otvorite sistemska podešavanja i isključite optimizaciju baterije za Battery Monitor.</string>
+  <string name="battery_optimized" formatted="false">Praćenje u pozadini</string>
+  <string name="battery_optimized_message" formatted="false">Neograničen rad u pozadini može poboljšati pouzdanost praćenja. Android optimizacija baterije može odložiti ažuriranja i upozorenja.\n\nNeograničen rad može povećati potrošnju baterije u pozadini. To možete kasnije promeniti u Android podešavanjima &gt; Aplikacije &gt; Battery Monitor &gt; Baterija.</string>
 
   <string name="main_notif_chan_name" formatted="false">Glavno obaveštenje</string>
   <string name="live_updates_notif_chan_name" formatted="false">Ažuriranja uživo</string>
@@ -704,4 +700,7 @@
   <string name="history_chart_log_unavailable">Логаритамска скала захтева позитивна мерења за оба изабрана показатеља.</string>
   <string name="history_chart_more">Још радњи графикона</string>
   <string name="history_chart_events">Догађаји на графикону</string>
+  <string name="changelog_title">Šta je novo u aplikaciji Battery Monitor</string>
+  <string name="changelog_version">Verzija %1$s</string>
+  <string name="changelog_got_it">Razumem</string>
 </resources>

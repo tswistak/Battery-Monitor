@@ -22,12 +22,8 @@
     \n
     PStlačte tlačidlo OK, aby ste sa dostali do systémových nastavení, kde môžete odblokovať upozornenia pre Monitor batérie.</string>
 
-  <string name="battery_optimized" formatted="false">Monitor batérie je obmedzený!</string>
-  <string name="battery_optimized_message" formatted="false">Monitor batérie nefunguje správne. Táto \"optimalizácia batérie\" je funkcia systému Android navrhnutá na obmedzenie zle navrhnutých aplikácií, aby sa im zabránilo z prílišného používania batérie na pozadí.\n
-    \n
-    Battery Monitor je však dobre navrhnutá aplikácia, ktorá musí bežať bez obmedzenia pozadia, aby správne fungovali. Je mimoriadne efektívny a nezníži životnosť batérie.\n
-    \n
-    PStlačte tlačidlo OK, aby ste sa dostali do systémových nastavení, kde môžete zakázať optimalizáciu batérie pre Monitor batérie.</string>
+  <string name="battery_optimized" formatted="false">Monitorovanie na pozadí</string>
+  <string name="battery_optimized_message" formatted="false">Neobmedzený beh na pozadí môže zlepšiť spoľahlivosť monitorovania. Optimalizácia batérie v Androide môže oneskoriť aktualizácie a upozornenia.\n\nNeobmedzený beh môže zvýšiť spotrebu batérie na pozadí. Nastavenie môžete neskôr zmeniť v Nastavenia Androidu &gt; Aplikácie &gt; Battery Monitor &gt; Batéria.</string>
 
   <string name="main_notif_chan_name" formatted="false">Hlavné oznámenie</string>
   <string name="live_updates_notif_chan_name" formatted="false">Živé aktualizácie</string>
@@ -716,4 +712,7 @@
   <string name="history_chart_log_unavailable">Logaritmická stupnica vyžaduje kladné merania oboch vybraných veličín.</string>
   <string name="history_chart_more">Ďalšie akcie grafu</string>
   <string name="history_chart_events">Udalosti v grafe</string>
+  <string name="changelog_title">Čo je nové v Battery Monitor</string>
+  <string name="changelog_version">Verzia %1$s</string>
+  <string name="changelog_got_it">Rozumiem</string>
 </resources>

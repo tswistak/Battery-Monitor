@@ -20,12 +20,8 @@
     \n
     אנא לחץ על אישור כדי לעבור להגדרות המערכת שבהן תוכל בטל את חסימת ההתראות עבור Battery Monitor.</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor מוגבל!</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor מוגבל לפעול כהלכה. זה \"אופטימיזציה של סוללה\" היא תכונת אנדרואיד שנועדה להגביל אפליקציות מעוצבות בצורה גרועה כדי למנוע אותן משימוש ביותר מדי סוללה ברקע.\n
-    \n
-    Battery Monitor, לעומת זאת, היא אפליקציה מעוצבת היטב שחייבת לפעול ללא הגבלה הרקע על מנת לתפקד כראוי. זה מאוד יעיל ו לא יקטין את חיי הסוללה שלך.\n
-    \n
-    אנא לחץ על אישור כדי לעבור להגדרות המערכת שבהן תוכל השבת את אופטימיזציית הסוללה עבור Battery Monitor.</string>
+  <string name="battery_optimized" formatted="false">ניטור ברקע</string>
+  <string name="battery_optimized_message" formatted="false">פעילות בלתי מוגבלת ברקע עשויה לשפר את אמינות הניטור. אופטימיזציית הסוללה של Android עלולה לעכב עדכונים והתראות.\n\nפעילות בלתי מוגבלת עשויה להגביר את צריכת הסוללה ברקע. ניתן לשנות זאת בהמשך בהגדרות Android &gt; אפליקציות &gt; Battery Monitor &gt; סוללה.</string>
 
   <string name="main_notif_chan_name" formatted="false">הודעה ראשית</string>
   <string name="live_updates_notif_chan_name" formatted="false">עדכונים חיים</string>
@@ -696,4 +692,7 @@
     <string name="history_chart_log_unavailable">קנה מידה לוגריתמי מחייב מדידות חיוביות בשני המדדים שנבחרו.</string>
     <string name="history_chart_more">פעולות נוספות בתרשים</string>
     <string name="history_chart_events">אירועי התרשים</string>
+  <string name="changelog_title">מה חדש ב־Battery Monitor</string>
+  <string name="changelog_version">גרסה %1$s</string>
+  <string name="changelog_got_it">הבנתי</string>
 </resources>

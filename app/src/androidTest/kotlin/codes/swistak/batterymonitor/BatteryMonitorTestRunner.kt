@@ -20,6 +20,11 @@ import codes.swistak.batterymonitor.logs.DetailedHistoryInstrumentedTest
 import codes.swistak.batterymonitor.monitoring.BatteryReadingSourcesInstrumentedTest
 import codes.swistak.batterymonitor.ui.help.LicenseScreenInstrumentedTest
 import codes.swistak.batterymonitor.ui.history.FullscreenChartStateInstrumentedTest
+import codes.swistak.batterymonitor.app.StartupDialogsInstrumentedTest
+import codes.swistak.batterymonitor.diagnostics.DiagnosticsDialogsInstrumentedTest
+import codes.swistak.batterymonitor.settings.SettingsBackupDialogStateInstrumentedTest
+import codes.swistak.batterymonitor.ui.dialogs.DialogEditingInstrumentedTest
+import codes.swistak.batterymonitor.ui.history.HistoryRangeDialogInstrumentedTest
 import org.junit.runner.Description
 import org.junit.runner.JUnitCore
 import org.junit.runner.Request
@@ -48,7 +53,12 @@ class BatteryMonitorTestRunner : Instrumentation() {
             DetailedHistoryInstrumentedTest::class.java,
             BatteryReadingSourcesInstrumentedTest::class.java,
             FullscreenChartStateInstrumentedTest::class.java,
-            LicenseScreenInstrumentedTest::class.java
+            LicenseScreenInstrumentedTest::class.java,
+            StartupDialogsInstrumentedTest::class.java,
+            DialogEditingInstrumentedTest::class.java,
+            HistoryRangeDialogInstrumentedTest::class.java,
+            DiagnosticsDialogsInstrumentedTest::class.java,
+            SettingsBackupDialogStateInstrumentedTest::class.java
         ).filter { requestedClasses == null || it.name in requestedClasses.orEmpty() }
         require(testClasses.isNotEmpty()) { "No registered test classes match $requestedClasses" }
         val runner = Request.classes(*testClasses.toTypedArray()).runner

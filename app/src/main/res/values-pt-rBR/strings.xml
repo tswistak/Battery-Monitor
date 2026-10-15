@@ -22,12 +22,8 @@
     \n
     Por favor, pressione OK para ir para as configurações do sistema onde você pode desbloquear notificações para o Battery Monitor.</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor restrito!</string>
-  <string name="battery_optimized_message" formatted="false">O Battery Monitor está impedido de funcionar corretamente. Esta \"otimização da bateria\" é um recurso do Android projetado para restringir aplicativos mal projetados para evitá-los de usar muita bateria em segundo plano.\n
-    \n
-    Battery Monitor, no entanto, é um aplicativo bem projetado que deve ser executado sem restrições em fundo para funcionar corretamente. É extremamente eficiente e não reduzirá a vida útil da bateria.\n
-    \n
-    Por favor, pressione OK para ir para as configurações do sistema onde você pode desativar a otimização da bateria para o Battery Monitor.</string>
+  <string name="battery_optimized" formatted="false">Monitoramento em segundo plano</string>
+  <string name="battery_optimized_message" formatted="false">A execução sem restrições em segundo plano pode melhorar a confiabilidade do monitoramento. A otimização da bateria do Android pode atrasar atualizações e alertas.\n\nA execução sem restrições pode aumentar o consumo de bateria em segundo plano. Você pode alterar essa opção depois em Configurações do Android &gt; Apps &gt; Battery Monitor &gt; Bateria.</string>
 
   <string name="main_notif_chan_name" formatted="false">Notificação Principal</string>
   <string name="live_updates_notif_chan_name" formatted="false">Atualizações ao vivo</string>
@@ -696,4 +692,7 @@
   <string name="history_chart_log_unavailable">A escala logarítmica exige medições positivas para ambas as grandezas selecionadas.</string>
   <string name="history_chart_more">Mais ações do gráfico</string>
   <string name="history_chart_events">Eventos do gráfico</string>
+  <string name="changelog_title">Novidades do Battery Monitor</string>
+  <string name="changelog_version">Versão %1$s</string>
+  <string name="changelog_got_it">Entendi</string>
 </resources>

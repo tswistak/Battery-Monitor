@@ -79,7 +79,8 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_BRIGHTNESS
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_COLOR_SOURCE
-import codes.swistak.batterymonitor.ui.components.NumericValueEditor
+import codes.swistak.batterymonitor.ui.components.NumericValueDialog
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
 import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
@@ -113,8 +114,8 @@ fun SettingsScreen(
     val category = SettingsCategory.fromRoute(initialCategory)
     var query by rememberSaveable { mutableStateOf("") }
     val states = rememberSaveableStateHolder()
-    var numeric by remember { mutableStateOf<SeekBarPreference?>(null) }
-    var appearance by remember { mutableStateOf<String?>(null) }
+    var numericKey by rememberSaveable { mutableStateOf<String?>(null) }
+    var appearance by rememberSaveable { mutableStateOf<String?>(null) }
     var localVersion by remember { mutableIntStateOf(0) }
 
     fun activate(descriptor: SettingDescriptor) {
@@ -122,15 +123,14 @@ fun SettingsScreen(
             onDiagnostics(route, descriptor.key.takeUnless { it == "background_monitoring" })
             return
         }
-        val preference = descriptor.preference
-        when (preference) {
+        when (val preference = descriptor.preference) {
             is CheckBoxPreference -> {
                 val checked = !preference.isChecked
                 if (preference.callChangeListener(checked)) preference.isChecked = checked
                 localVersion++
             }
 
-            is SeekBarPreference -> numeric = preference
+            is SeekBarPreference -> numericKey = preference.key
             null -> appearance = descriptor.key
             else -> onActivate(preference)
         }
@@ -275,33 +275,26 @@ fun SettingsScreen(
         }
 
     }
-    numeric?.let { preference ->
-        AlertDialog(
-            onDismissRequest = { numeric = null },
-            title = { Text(preference.title.toString()) },
-            text = {
-                NumericValueEditor(
-                    preference.title.toString(),
-                    "%",
-                    preference.value,
-                    preference.min,
-                    preference.max,
-                    maxOf(1, preference.seekBarIncrement),
-                    stringResource(R.string.okay),
-                    stringResource(R.string.cancel),
-                    {
-                        resources.getString(
-                            R.string.alarms_numeric_range, preference.min, preference.max
-                        )
-                    },
-                    onSave = {
-                        if (preference.callChangeListener(it)) preference.value = it
-                        localVersion++
-                        numeric = null
-                    },
-                    onCancel = { numeric = null })
+    (numericKey?.let { preferences.findPreference<SeekBarPreference>(it) })?.let { preference ->
+        NumericValueDialog(
+            label = preference.title.toString(),
+            fieldLabel = stringResource(R.string.settings_numeric_value),
+            unit = stringResource(R.string.percent_symbol),
+            initialValue = preference.value,
+            min = preference.min,
+            max = preference.max,
+            step = maxOf(1, preference.seekBarIncrement),
+            saveLabel = stringResource(R.string.okay),
+            cancelLabel = stringResource(R.string.cancel),
+            errorMessage = {
+                resources.getString(R.string.alarms_numeric_range, preference.min, preference.max)
             },
-            confirmButton = {})
+            onSave = {
+                if (preference.callChangeListener(it)) preference.value = it
+                localVersion++
+                numericKey = null
+            },
+            onCancel = { numericKey = null })
     }
     appearance?.let { key ->
         val settings =
@@ -316,7 +309,7 @@ fun SettingsScreen(
             Brightness.TrueBlack.name to R.string.settings_brightness_true_black
         )
         val value = settings.getString(key, choices.first().first)
-        AlertDialog(
+        if (applicationDialogsAllowed()) AlertDialog(
             onDismissRequest = { appearance = null },
             title = { Text(stringResource(if (key == KEY_COLOR_SOURCE) R.string.settings_color_palette else R.string.settings_brightness)) },
             text = {

@@ -117,6 +117,7 @@ import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.MeasurementChart
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
 import codes.swistak.batterymonitor.ui.components.historyRangeValue
 import codes.swistak.batterymonitor.ui.components.historyValue
@@ -445,10 +446,10 @@ internal fun HistoryRoute(
                             )
                             IconButton(
                                 onClick = {
-                                onOpenFullscreen(
-                                    state.metric, state.range, state.rangeLabel
-                                )
-                            },
+                                    onOpenFullscreen(
+                                        state.metric, state.range, state.rangeLabel
+                                    )
+                                },
                                 enabled = chart?.series?.get(state.metric)?.points?.any { it.value != null } == true,
                                 modifier = Modifier.size(48.dp)) {
                                 Icon(
@@ -524,7 +525,7 @@ internal fun HistoryRoute(
                                 ) {
                                     Text(
                                         chart.events.filter { it.code == HistoryEvent.CONNECTED }
-                                        .sumOf { it.count }.toString(),
+                                            .sumOf { it.count }.toString(),
                                         style = MaterialTheme.typography.titleLarge
                                     )
                                     Text(
@@ -658,14 +659,14 @@ internal fun HistoryRoute(
                             if (record.status == -1) stringResource(R.string.history_system_event)
                             else listOfNotNull(
                                 HistoryMetric.CURRENT.value(record)?.let {
-                                historyValue(
-                                    it,
-                                    HistoryMetric.CURRENT,
-                                    fahrenheit,
-                                    locale,
-                                    currentMultiplier
-                                )
-                            },
+                                    historyValue(
+                                        it,
+                                        HistoryMetric.CURRENT,
+                                        fahrenheit,
+                                        locale,
+                                        currentMultiplier
+                                    )
+                                },
                                 HistoryMetric.POWER.value(record)?.let {
                                     historyValue(
                                         it,
@@ -687,26 +688,27 @@ internal fun HistoryRoute(
                                     )
                                 }).joinToString(" · ")
                                 .ifEmpty { stringResource(R.string.current_unavailable) }
-                        Row(Modifier
-                            .fillMaxWidth()
-                            .clickable { detailsId = entry.id }
-                            .then(if (twoPane) Modifier.semantics {
-                                selected = emphasized
-                            } else Modifier)
-                            .drawBehind {
-                                if (emphasized) {
-                                    val width = 3.dp.toPx()
-                                    val x =
-                                        if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
-                                    drawRect(
-                                        selectionColor,
-                                        topLeft = Offset(x, 0f),
-                                        size = Size(width, size.height)
-                                    )
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .clickable { detailsId = entry.id }
+                                .then(if (twoPane) Modifier.semantics {
+                                    selected = emphasized
+                                } else Modifier)
+                                .drawBehind {
+                                    if (emphasized) {
+                                        val width = 3.dp.toPx()
+                                        val x =
+                                            if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
+                                        drawRect(
+                                            selectionColor,
+                                            topLeft = Offset(x, 0f),
+                                            size = Size(width, size.height)
+                                        )
+                                    }
                                 }
-                            }
-                            .heightIn(min = 67.dp)
-                            .padding(horizontal = 13.dp, vertical = 12.dp),
+                                .heightIn(min = 67.dp)
+                                .padding(horizontal = 13.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(11.dp)) {
                             Surface(
@@ -946,8 +948,9 @@ internal fun HistoryRoute(
         }
     }
 
+    val dialogsAllowed = applicationDialogsAllowed()
     val filterLabels = stringArrayResource(R.array.log_filters).toList() + measurement
-    if (dialog == "filters") AlertDialog(
+    if (dialogsAllowed && dialog == "filters") AlertDialog(
         onDismissRequest = { dialog = null },
         title = { Text(stringResource(R.string.configure_log_filter)) },
         text = {
@@ -998,7 +1001,7 @@ internal fun HistoryRoute(
             dialog = null
         })
     )
-    if (dialog == "importMode") AlertDialog(onDismissRequest = {
+    if (dialogsAllowed && dialog == "importMode") AlertDialog(onDismissRequest = {
         dialog = null
         viewModel.pendingImportUri = null
     }, title = { Text(stringResource(R.string.log_import_mode_title)) }, text = {
@@ -1027,11 +1030,11 @@ internal fun HistoryRoute(
             viewModel.pendingImportUri = null
         }) { Text(stringResource(R.string.cancel)) }
     })
-    if (dialog == "replace") AlertDialog(
+    if (dialogsAllowed && dialog == "replace") AlertDialog(
         onDismissRequest = {
-        dialog = null
-        viewModel.pendingImportUri = null
-    },
+            dialog = null
+            viewModel.pendingImportUri = null
+        },
         title = { Text(stringResource(R.string.log_import_replace)) },
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
@@ -1058,10 +1061,10 @@ internal fun HistoryRoute(
             R.string.history_delete_selected to { dialog = "deleteSelected" },
             R.string.history_delete_all to { dialog = "deleteAll" })
     )
-    if (dialog == "deleteSelected" || dialog == "deleteAll") AlertDialog(
+    if (dialogsAllowed && (dialog == "deleteSelected" || dialog == "deleteAll")) AlertDialog(
         onDismissRequest = {
-        dialog = null
-    },
+            dialog = null
+        },
         title = { Text(stringResource(if (dialog == "deleteAll") R.string.history_delete_all else R.string.history_delete_selected)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -1101,7 +1104,7 @@ internal fun HistoryRoute(
                 null
             }
         }
-        AlertDialog(
+        if (dialogsAllowed) AlertDialog(
             onDismissRequest = { detailsId = null },
             title = { Text(status(detail.record)) },
             text = {
@@ -1164,7 +1167,7 @@ internal fun metricLabel(metric: HistoryMetric): String = stringResource(
 
 @Composable
 private fun ChoiceDialog(title: Int, onDismiss: () -> Unit, choices: List<Pair<Int, () -> Unit>>) {
-    AlertDialog(
+    if (applicationDialogsAllowed()) AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(title)) },
         text = {

@@ -9,15 +9,17 @@ package codes.swistak.batterymonitor.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +30,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
 import java.math.BigDecimal
 import java.text.DecimalFormat
@@ -72,7 +75,7 @@ fun parseLocalizedInt(
 }
 
 @Composable
-fun NumericValueEditor(
+fun NumericValueDialog(
     label: String,
     unit: String,
     initialValue: Int,
@@ -84,7 +87,9 @@ fun NumericValueEditor(
     errorMessage: (NumericInputError) -> String,
     onSave: (Int) -> Unit,
     onCancel: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    message: String? = null,
+    fieldLabel: String = label
 ) {
     val locale = LocalConfiguration.current.locales[0]
     val formatter = NumberFormat.getIntegerInstance(locale).apply { isGroupingUsed = false }
@@ -94,34 +99,45 @@ fun NumericValueEditor(
     val result = parseLocalizedInt(draft, locale, min, max, step)
     val valid = (result as? NumericInputResult.Valid)?.value
 
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)) {
-        OutlinedTextField(
-            value = draft,
-            onValueChange = { draft = it },
-            label = { Text(label) },
-            suffix = { Text(unit) },
-            supportingText = {
-                if (result is NumericInputResult.Error) Text(errorMessage(result.reason))
-            },
-            isError = result is NumericInputResult.Error,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(onDone = { valid?.let(onSave) }),
-            modifier = Modifier.fillMaxWidth()
-        )
-        Row(horizontalArrangement = Arrangement.spacedBy(BatterySpacing.sm)) {
-            OutlinedButton(onClick = onCancel, modifier = Modifier.heightIn(min = 48.dp)) {
-                Text(cancelLabel)
+    if (applicationDialogsAllowed()) AlertDialog(
+        modifier = modifier.imePadding(),
+        properties = DialogProperties(decorFitsSystemWindows = false),
+        onDismissRequest = onCancel,
+        title = { Text(label) },
+        text = {
+            Column(
+                Modifier
+                    .heightIn(max = 440.dp)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
+            ) {
+                message?.takeIf { it.isNotBlank() }?.let { Text(it) }
+                OutlinedTextField(
+                    value = draft,
+                    onValueChange = { draft = it },
+                    label = { Text(fieldLabel) },
+                    suffix = if (unit.isNotEmpty()) {
+                        { Text(unit) }
+                    } else null,
+                    supportingText = {
+                        if (result is NumericInputResult.Error) Text(errorMessage(result.reason))
+                    },
+                    isError = result is NumericInputResult.Error,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(onDone = { valid?.let(onSave) }),
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
-            Button(
-                onClick = { valid?.let(onSave) },
-                enabled = valid != null,
-                modifier = Modifier.heightIn(min = 48.dp)
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { valid?.let(onSave) }, enabled = valid != null
             ) {
                 Text(saveLabel)
             }
-        }
-    }
+        },
+        dismissButton = { TextButton(onClick = onCancel) { Text(cancelLabel) } })
 }

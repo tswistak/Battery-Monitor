@@ -22,12 +22,8 @@
     \n
     OK を押してシステム設定を開き、Battery Monitor の通知ブロックを解除してください。</string>
 
-  <string name="battery_optimized" formatted="false">Battery Monitor が制限されています！</string>
-  <string name="battery_optimized_message" formatted="false">Battery Monitor はバックグラウンドで正しく動作するための実行が制限されています。これは、設計の悪いアプリの過剰なバッテリー消費を防ぐ Android の「バッテリー最適化」機能によるものです。\n
-    \n
-    ただし Battery Monitor は、バックグラウンドで制限なく実行される必要がある、効率的に設計されたアプリです。非常に省電力で、バッテリー駆動時間を短くしません。\n
-    \n
-    OK を押してシステム設定を開き、Battery Monitor のバッテリー最適化を無効にしてください。</string>
+  <string name="battery_optimized" formatted="false">バックグラウンドでの監視</string>
+  <string name="battery_optimized_message" formatted="false">バックグラウンドでの実行を制限しないことで、監視の信頼性が向上する場合があります。Android のバッテリー最適化により、更新やアラームが遅れる場合があります。\n\n制限なしで実行すると、バックグラウンドでのバッテリー消費が増える場合があります。この設定は後で Android の設定 &gt; アプリ &gt; Battery Monitor &gt; バッテリーから変更できます。</string>
 
   <string name="main_notif_chan_name" formatted="false">メイン通知</string>
   <string name="live_updates_notif_chan_name" formatted="false">ライブアップデート</string>
@@ -685,4 +681,7 @@
     <string name="history_chart_log_unavailable">対数スケールを使用するには、選択した両方の項目の測定値が正である必要があります。</string>
     <string name="history_chart_more">その他のグラフ操作</string>
     <string name="history_chart_events">グラフのイベント</string>
+  <string name="changelog_title">Battery Monitor の新機能</string>
+  <string name="changelog_version">バージョン %1$s</string>
+  <string name="changelog_got_it">確認しました</string>
 </resources>

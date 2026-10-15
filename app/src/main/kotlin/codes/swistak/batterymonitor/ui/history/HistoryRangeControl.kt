@@ -7,12 +7,12 @@
 */
 package codes.swistak.batterymonitor.ui.history
 
-import android.app.DatePickerDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -20,6 +20,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -27,6 +30,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +40,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,12 +47,41 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryRangeState
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import java.time.Instant
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+
+internal fun historyDatePickerMillis(date: LocalDate): Long =
+    date.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+
+internal fun historyDatePickerDate(millis: Long): LocalDate =
+    Instant.ofEpochMilli(millis).atZone(ZoneOffset.UTC).toLocalDate()
+
+internal fun historyDraftRange(
+    mode: String, first: String, last: String, month: String, year: String, zone: ZoneId
+): HistoryRangeState? = runCatching {
+    when (mode) {
+        "month" -> {
+            val selected =
+                YearMonth.of(year.toInt().also { require(it in 1970..9999) }, month.toInt())
+            HistoryRangeState.days(selected.atDay(1), selected.atEndOfMonth(), zone)
+        }
+
+        "year" -> {
+            val selected = year.toInt().also { require(it in 1970..9999) }
+            HistoryRangeState.days(
+                LocalDate.of(selected, 1, 1), LocalDate.of(selected, 12, 31), zone
+            )
+        }
+
+        else -> HistoryRangeState.days(LocalDate.parse(first), LocalDate.parse(last), zone)
+    }
+}.getOrNull()
 
 @Composable
 internal fun HistoryRangeControl(
@@ -59,9 +91,13 @@ internal fun HistoryRangeControl(
     compact: Boolean = false
 ) {
     val locale = LocalConfiguration.current.locales[0]
-    val context = LocalContext.current
+    val configuration = LocalConfiguration.current
+    val dialogsAllowed = applicationDialogsAllowed()
     val format = remember(locale, zone) {
         DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(locale).withZone(zone)
+    }
+    val dateFormat = remember(locale) {
+        DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
     }
     var mode by rememberSaveable { mutableStateOf<String?>(null) }
     var first by rememberSaveable {
@@ -138,7 +174,7 @@ internal fun HistoryRangeControl(
             )
         }
     }
-    if (mode == "choose") AlertDialog(
+    if (mode == "choose" && dialogsAllowed) AlertDialog(
         onDismissRequest = { mode = null },
         title = { Text(stringResource(R.string.history_range)) },
         text = {
@@ -186,38 +222,47 @@ internal fun HistoryRangeControl(
                 mode = null
             }) { Text(stringResource(R.string.cancel)) }
         })
-    if (mode != null && mode != "choose") {
-        val range = runCatching {
-            when (mode) {
-                "month" -> {
-                    val ym =
-                        YearMonth.of(year.toInt().also { require(it in 1970..9999) }, month.toInt())
-                    HistoryRangeState.days(ym.atDay(1), ym.atEndOfMonth(), zone)
-                }
-
-                "year" -> {
-                    val selectedYear = year.toInt().also { require(it in 1970..9999) }
-                    HistoryRangeState.days(
-                        LocalDate.of(selectedYear, 1, 1), LocalDate.of(selectedYear, 12, 31), zone
-                    )
-                }
-
-                else -> HistoryRangeState.days(LocalDate.parse(first), LocalDate.parse(last), zone)
+    if (mode == "startDate" || mode == "endDate") {
+        val pickerState = rememberDatePickerState(
+            initialSelectedDateMillis = historyDatePickerMillis(
+                LocalDate.parse(if (mode == "startDate") first else last).coerceIn(
+                    LocalDate.of(1900, 1, 1), LocalDate.of(9999, 12, 31)
+                )
+            ),
+            yearRange = 1900..9999,
+            initialDisplayMode = if (configuration.screenHeightDp < 480) {
+                DisplayMode.Input
+            } else {
+                DisplayMode.Picker
             }
-        }.getOrNull()
-
-        fun pick(date: String, selected: (String) -> Unit) {
-            val initial = LocalDate.parse(date)
-            DatePickerDialog(
-                context,
-                { _, y, m, d -> selected(LocalDate.of(y, m + 1, d).toString()) },
-                initial.year,
-                initial.monthValue - 1,
-                initial.dayOfMonth
-            ).show()
+        )
+        if (dialogsAllowed) DatePickerDialog(
+            onDismissRequest = { mode = "custom" },
+            modifier = Modifier.imePadding(),
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        pickerState.selectedDateMillis?.let {
+                            val selected = historyDatePickerDate(it).toString()
+                            if (mode == "startDate") first = selected else last = selected
+                            mode = "custom"
+                        }
+                    }, enabled = pickerState.selectedDateMillis != null
+                ) { Text(stringResource(R.string.okay)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { mode = "custom" }) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }) {
+            DatePicker(pickerState, modifier = Modifier.verticalScroll(rememberScrollState()))
         }
-        AlertDialog(
+    }
+    if (mode in setOf("custom", "month", "year")) {
+        val range = historyDraftRange(mode!!, first, last, month, year, zone)
+        if (dialogsAllowed) AlertDialog(
             onDismissRequest = { mode = null },
+            modifier = Modifier.imePadding(),
             title = { Text(stringResource(R.string.history_range)) },
             text = {
                 Column(
@@ -225,16 +270,21 @@ internal fun HistoryRangeControl(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     if (mode == "custom") {
-                        OutlinedButton(onClick = { pick(first) { first = it } }) {
+                        OutlinedButton(onClick = { mode = "startDate" }) {
                             Text(
-                                stringResource(R.string.history_from, first)
+                                stringResource(
+                                    R.string.history_from, dateFormat.format(LocalDate.parse(first))
+                                )
                             )
                         }
-                        OutlinedButton(onClick = {
-                            pick(last) {
-                                last = it
-                            }
-                        }) { Text(stringResource(R.string.history_through, last)) }
+                        OutlinedButton(onClick = { mode = "endDate" }) {
+                            Text(
+                                stringResource(
+                                    R.string.history_through,
+                                    dateFormat.format(LocalDate.parse(last))
+                                )
+                            )
+                        }
                         Text(
                             stringResource(R.string.history_calendar_days),
                             style = MaterialTheme.typography.bodySmall

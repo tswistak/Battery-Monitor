@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="button_color">#444</color>
-
-    <color name="dialog_background">#2a2a2a</color>
-    <color name="dialog_accent">#5f80e3</color>
-
-    <color name="dialog_title">#fff</color>
-    <color name="dialog_primary_text">#ddd</color>
     <color name="secondary_text">#999</color>
     <color name="primary_text">#eee</color>
 
