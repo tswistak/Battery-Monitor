@@ -36,10 +36,10 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Verify dependency license versions
-        run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:verifyLicenseInventory
+        run: ./gradlew --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g' -Dorg.gradle.java.home="$JAVA_HOME" :app:verifyLicenseInventory
 
       - name: Build debug APK
-        run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:assembleDebug
+        run: ./gradlew --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g' -Dorg.gradle.java.home="$JAVA_HOME" :app:assembleDebug
 
       - name: Upload build diagnostics
         if: always()
@@ -70,7 +70,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Run Android lint
-        run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:lintDebug
+        run: ./gradlew --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g' -Dorg.gradle.java.home="$JAVA_HOME" :app:lintDebug
 
       - name: Upload lint reports
         if: always()
@@ -108,7 +108,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Run unit tests
-        run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:testDebugUnitTest
+        run: ./gradlew --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g' -Dorg.gradle.java.home="$JAVA_HOME" :app:testDebugUnitTest
 
       - name: Summarize JVM tests
         if: always()
@@ -174,9 +174,13 @@ jobs:
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-          test -r /dev/kvm
-          test -w /dev/kvm
+          sudo udevadm trigger --name-match=kvm --settle
+          ls -l /dev/kvm
+          if [ ! -r /dev/kvm ] || [ ! -w /dev/kvm ]; then
+            echo "::error::KVM is not readable and writable after udev finished applying its permissions."
+            id
+            exit 1
+          fi
 
       - name: Record emulator initialization start
         run: echo "ANDROID_EMULATOR_INITIALIZATION_STARTED=$(date +%s)" >> "$GITHUB_ENV"
@@ -239,7 +243,6 @@ jobs:
 
   e2e:
     name: Critical E2E regression tests
-    # Opt in to PR runs after measuring the full job: set repository variable E2E_ON_PULL_REQUEST=true.
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request' && vars.E2E_ON_PULL_REQUEST == 'true')
     runs-on: ubuntu-24.04
     timeout-minutes: 90
@@ -280,9 +283,13 @@ jobs:
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-          test -r /dev/kvm
-          test -w /dev/kvm
+          sudo udevadm trigger --name-match=kvm --settle
+          ls -l /dev/kvm
+          if [ ! -r /dev/kvm ] || [ ! -w /dev/kvm ]; then
+            echo "::error::KVM is not readable and writable after udev finished applying its permissions."
+            id
+            exit 1
+          fi
 
       - name: Record emulator initialization start
         run: echo "ANDROID_EMULATOR_INITIALIZATION_STARTED=$(date +%s)" >> "$GITHUB_ENV"
