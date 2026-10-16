@@ -33,7 +33,7 @@ import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
@@ -53,7 +53,7 @@ import org.junit.Assume.assumeTrue
 import org.junit.Test
 
 class DiagnosticsDialogsInstrumentedTest {
-    private val instrumentation get() = BatteryMonitorTestRunner.instrumentation
+    private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
     private val context get() = instrumentation.targetContext
     private lateinit var activity: FullscreenChartActivity
     private lateinit var fragment: DiagnosticsFragment
@@ -142,9 +142,7 @@ class DiagnosticsDialogsInstrumentedTest {
                     await { dialogs() == 1 }
                     instrumentation.waitForIdleSync()
                     val color = batteryColorScheme(
-                        context,
-                        ColorSource.BatteryBlue,
-                        brightness
+                        context, ColorSource.BatteryBlue, brightness
                     ).surfaceContainerHigh.toArgb()
                     await("$actionsOnly / $brightness dialog must draw the app surface") {
                         surfacePixels(color) > 100

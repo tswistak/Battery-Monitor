@@ -34,9 +34,9 @@ class BootCompletedReceiver : BroadcastReceiver() {
         )
         val startPref: String = settings.getString(SettingsContract.KEY_AUTOSTART, "auto")!!
         val serviceDesired = BackgroundServiceWatchdog.isServiceDesired(context)
-        val shouldStart = if (startPref == "always") {
+        val shouldStart = if (action == Intent.ACTION_BOOT_COMPLETED && startPref == "always") {
             MonitoringDesiredState.write(context, desired = true, mirrorPreferences = false)
-        } else startPref == "auto" && serviceDesired
+        } else shouldStartMonitoringAfterSystemEvent(action, startPref, serviceDesired)
         BackgroundServiceWatchdog.schedule(context)
         if (shouldStart) {
             BatteryInfoService.startForegroundServiceSafely(context)
@@ -54,4 +54,13 @@ class BootCompletedReceiver : BroadcastReceiver() {
         codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher.refresh(context) { pending.finish() }
         AutoLogExportScheduler.ensureScheduled(context)
     }
+}
+
+internal fun shouldStartMonitoringAfterSystemEvent(
+    action: String?, autostart: String?, serviceDesired: Boolean
+): Boolean = when (action) {
+    // Package replacement resumes the user's last choice; autostart controls reboot behavior.
+    Intent.ACTION_MY_PACKAGE_REPLACED -> serviceDesired
+    Intent.ACTION_BOOT_COMPLETED -> autostart == "always" || autostart == "auto" && serviceDesired
+    else -> false
 }

@@ -1,0 +1,12 @@
+{
+  "producerVersion": "1.7.3",
+  "producerApkSha256": "eb5d370187c3699a9d4d74d1890e8226a165ed65f66a16e6a968aa5baf19aec7",
+  "producer": "Unmodified historical APK code; dedicated CI signature",
+  "sha256": {
+    "historical-1.7.3-settings.json": "495bd3994dcab17b39ec9283328295d021c8936b78dc9277872c0d7013461f3f",
+    "historical-1.7.3-alarms.json": "7f9c4557b2a0ed27bee23b02150d553b12dde57192b851cc8a553e8415797875",
+    "historical-1.7.3-device.json": "7dfb4ab2acf272c4e645f3a48518bca9ca276acf598a8eb85cc3ad2c7ef968cc",
+    "historical-1.7.3-general.zip": "fd3085aa8f64a4c6a366ddabd41b96e0a9d9f9b07fd13a25bde5065a1b4afe4a",
+    "historical-1.7.3-history.csv": "8a518cc1d2955054a71b11954c0fb41670444faa71f811df8e70295cd3d0e9bb"
+  }
+}

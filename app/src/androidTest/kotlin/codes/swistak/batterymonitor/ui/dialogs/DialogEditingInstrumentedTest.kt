@@ -38,7 +38,7 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.Lifecycle
-import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmEditActivity
 import codes.swistak.batterymonitor.app.AlarmEditorDestination
@@ -65,7 +65,7 @@ import org.junit.Assume.assumeTrue
 import org.junit.Test
 
 class DialogEditingInstrumentedTest {
-    private val instrumentation = BatteryMonitorTestRunner.instrumentation
+    private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val target = instrumentation.targetContext
     private lateinit var activity: FullscreenChartActivity
     private lateinit var registry: SaveableStateRegistry

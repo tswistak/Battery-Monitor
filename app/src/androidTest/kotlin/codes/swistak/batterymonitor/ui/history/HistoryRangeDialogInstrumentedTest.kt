@@ -24,7 +24,7 @@ import android.view.inspector.WindowInspector
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
-import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
@@ -40,7 +40,7 @@ import java.time.format.FormatStyle
 class HistoryRangeDialogInstrumentedTest {
     @Test
     fun date_picker_replaces_parent_and_recreation_and_cancellation_preserve_custom_draft() {
-        val instrumentation = BatteryMonitorTestRunner.instrumentation
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
         val context = instrumentation.targetContext
         val zone = ZoneId.systemDefault()
         val first = LocalDate.of(2026, 3, 29)
@@ -109,7 +109,7 @@ class HistoryRangeDialogInstrumentedTest {
     }
 
     private fun applicationWindows(): Int {
-        val instrumentation = BatteryMonitorTestRunner.instrumentation
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
         instrumentation.waitForIdleSync()
         return instrumentation.uiAutomation.windows.count {
             it.type == AccessibilityWindowInfo.TYPE_APPLICATION && it.root?.packageName?.toString() == instrumentation.targetContext.packageName
@@ -156,7 +156,14 @@ class HistoryRangeDialogInstrumentedTest {
             }
             return null
         }
-        return BatteryMonitorTestRunner.instrumentation.uiAutomation.rootInActiveWindow?.let(::search)
+
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val automation = instrumentation.uiAutomation
+        val roots =
+            listOfNotNull(automation.rootInActiveWindow) + automation.windows.filter { it.type == AccessibilityWindowInfo.TYPE_APPLICATION }
+                .mapNotNull { it.root }
+        return roots.filter { it.packageName?.toString() == instrumentation.targetContext.packageName }
+            .firstNotNullOfOrNull(::search)
     }
 
     private fun click(text: String) {
@@ -173,12 +180,12 @@ class HistoryRangeDialogInstrumentedTest {
             "No clickable control for $text",
             clickable?.performAction(AccessibilityNodeInfo.ACTION_CLICK) == true
         )
-        BatteryMonitorTestRunner.instrumentation.waitForIdleSync()
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
     }
 
     private fun main(action: () -> Unit) {
         var failure: Throwable? = null
-        BatteryMonitorTestRunner.instrumentation.runOnMainSync {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
             try {
                 action()
             } catch (error: Throwable) {

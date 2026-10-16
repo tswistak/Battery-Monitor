@@ -16,7 +16,7 @@ import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.database.sqlite.SQLiteDatabase
-import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.devicebackup.DeviceDataType
@@ -44,7 +44,7 @@ class BatteryHistoryInstrumentedTest {
 
     @Before
     fun setUp() {
-        val target = BatteryMonitorTestRunner.instrumentation.targetContext
+        val target = InstrumentationRegistry.getInstrumentation().targetContext
         directory = File(target.cacheDir, "battery-history-${System.nanoTime()}").apply { mkdirs() }
         context = object : ContextWrapper(target) {
             override fun getApplicationContext(): Context = this
@@ -216,7 +216,7 @@ class BatteryHistoryInstrumentedTest {
                 if (alreadyMigrated) preferences.edit()
                     .putBoolean("log_filters_migrated_to_sp_main", true).commit()
                 lateinit var model: HistoryViewModel
-                BatteryMonitorTestRunner.instrumentation.runOnMainSync {
+                InstrumentationRegistry.getInstrumentation().runOnMainSync {
                     model = HistoryViewModel(app)
                 }
                 val expected = if (selected == legacy) historyFilterKeys.toSet() else selected
@@ -224,7 +224,7 @@ class BatteryHistoryInstrumentedTest {
                 assertEquals(
                     selected == legacy, preferences.getBoolean(measurement, selected != legacy)
                 )
-                BatteryMonitorTestRunner.instrumentation.runOnMainSync {
+                InstrumentationRegistry.getInstrumentation().runOnMainSync {
                     model = HistoryViewModel(app)
                 }
                 assertEquals(expected, model.state.value.filters)
@@ -242,7 +242,7 @@ class BatteryHistoryInstrumentedTest {
         }
         lateinit var model: HistoryViewModel
         fun main(action: () -> Unit) =
-            BatteryMonitorTestRunner.instrumentation.runOnMainSync(action)
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(action)
         main { model = HistoryViewModel(app) }
         for (selected in listOf(legacy, setOf("unplugged", measurement))) {
             main { model.filters(selected) }
@@ -392,7 +392,7 @@ class BatteryHistoryInstrumentedTest {
         }
         lateinit var model: HistoryViewModel
         fun main(action: () -> Unit) =
-            BatteryMonitorTestRunner.instrumentation.runOnMainSync(action)
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(action)
 
         fun idle() {
             val deadline = System.nanoTime() + 10_000_000_000

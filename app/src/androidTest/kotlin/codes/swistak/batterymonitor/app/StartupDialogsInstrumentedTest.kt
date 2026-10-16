@@ -41,7 +41,7 @@ import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.SavedStateHandle
-import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
@@ -60,7 +60,7 @@ import org.junit.Before
 import org.junit.Test
 
 class StartupDialogsInstrumentedTest {
-    private val instrumentation get() = BatteryMonitorTestRunner.instrumentation
+    private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
     private lateinit var context: Context
     private lateinit var application: Application
     private lateinit var preferencePrefix: String

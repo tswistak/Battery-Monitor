@@ -18,7 +18,7 @@ import android.content.ContextWrapper
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import androidx.lifecycle.SavedStateHandle
-import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.alarms.backup.Version2AlarmImporter
 import codes.swistak.batterymonitor.ui.alarms.AlarmDraft
@@ -49,7 +49,7 @@ class AlarmDatabaseInstrumentedTest {
 
     @Before
     fun setUp() {
-        val testContext = BatteryMonitorTestRunner.instrumentation.targetContext
+        val testContext = InstrumentationRegistry.getInstrumentation().targetContext
         directory =
             File(testContext.cacheDir, "grouped-alarms-${System.nanoTime()}").apply { mkdirs() }
         context = object : ContextWrapper(testContext) {
@@ -376,7 +376,7 @@ class AlarmDatabaseInstrumentedTest {
     }
 
     private fun main(action: () -> Unit) =
-        BatteryMonitorTestRunner.instrumentation.runOnMainSync(action)
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(action)
 
     private fun idle(
         model: AlarmsViewModel, condition: (AlarmsState) -> Boolean = { !it.loading && !it.busy }

@@ -17,7 +17,7 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
-import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -39,7 +39,7 @@ class DetailedHistoryInstrumentedTest {
 
     @Before
     fun setUp() {
-        val target = BatteryMonitorTestRunner.instrumentation.targetContext
+        val target = InstrumentationRegistry.getInstrumentation().targetContext
         directory =
             File(target.cacheDir, "detailed-history-${System.nanoTime()}").apply { mkdirs() }
         context = object : ContextWrapper(target) {

@@ -12,6 +12,7 @@ release.keystore
 .gradle
 build
 .github/node_modules/
+e2e/node_modules/
 
 !build.properties
 !ant.properties

@@ -75,11 +75,23 @@ Use Android Studio for development.
 ./gradlew assembleDebug
 ```
 
-### Unit tests
+### Tests
 
-```bash
-./gradlew test
+JVM tests protect decision logic and backup/migration compatibility. Run them without an emulator:
+
+```sh
+./gradlew :app:testDebugUnitTest
 ```
+
+Ordinary instrumented tests protect real Android storage and UI behavior. With a dedicated Android runtime running:
+
+```sh
+./gradlew :app:connectedDebugAndroidTest
+```
+
+Use JDK 21. The instrumented command uses AndroidJUnitRunner and excludes the separate Appium E2E suite. JVM reports are under `app/build/reports/tests/`; Android reports are under `app/build/reports/androidTests/`.
+
+[E2E test guide](E2E.md) covers emulator setup, fresh-build execution, fixture inputs, reports and GitHub Actions.
 
 ## License
 

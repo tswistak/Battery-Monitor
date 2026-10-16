@@ -14,6 +14,7 @@ package codes.swistak.batterymonitor.settings.migration
 
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.content.edit
 
 internal object SettingsMigrationManager {
     private const val LOG_TAG = "BatteryMonitor - SettingsMigration"
@@ -50,6 +51,7 @@ internal object SettingsMigrationManager {
             migration.migrate(preferences, editor)
             editor.putInt(APPLIED_VERSION_KEY, migration.version)
             if (!editor.commit()) {
+                preferences.edit { putInt(APPLIED_VERSION_KEY, appliedVersion) }
                 Log.e(LOG_TAG, "Failed to persist settings migration ${migration.version}")
                 return false
             }

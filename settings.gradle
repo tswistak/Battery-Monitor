@@ -1,2 +1,6 @@
 rootProject.name = "Battery-Indicator-Pro"
 include ':app'
+if (providers.gradleProperty('e2e').isPresent()) {
+    include ':e2eHelper'
+    project(':e2eHelper').projectDir = file('e2e/helper')
+}

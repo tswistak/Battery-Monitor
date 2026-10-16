@@ -1288,13 +1288,12 @@ class BatteryInfoService : Service() {
         get() = info!!.status == BatteryInfo.STATUS_CHARGING || info!!.status == BatteryInfo.STATUS_FULLY_CHARGED
 
     private fun shouldRequestLiveUpdateChip(): Boolean {
-        if (!supportsLiveUpdates()) return false
-
-        val mode = liveUpdateMode()
-        if (LIVE_UPDATE_MODE_NEVER == mode) return false
-        if (LIVE_UPDATE_MODE_ALWAYS == mode) return true
-
-        return this.isChargingOrFull
+        return shouldRequestLiveUpdate(
+            supported = supportsLiveUpdates(),
+            enabledInSystem = isLiveUpdateEnabledInSystem(this),
+            mode = liveUpdateMode(),
+            chargingOrFull = isChargingOrFull
+        )
     }
 
     private fun shouldKeepMainNotificationWithLiveUpdate(): Boolean {

@@ -45,6 +45,8 @@ def releaseKeyPasswordProp = project.findProperty("releaseKeyPassword") ?: Syste
 def hasReleaseSigning =
         releaseStoreFileProp && releaseStorePasswordProp && releaseKeyAliasProp && releaseKeyPasswordProp
 
+def isE2eBuild = project.hasProperty('e2e')
+
 android {
     namespace = "codes.swistak.batterymonitor"
 
@@ -62,9 +64,10 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 37
-        testInstrumentationRunner "codes.swistak.batterymonitor.BatteryMonitorTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionName baseVersionName
-        versionCode computedVersionCode
+        // The current checkout may share the last release's code; APK replacement must be an upgrade.
+        versionCode isE2eBuild ? Math.addExact(computedVersionCode, 1) : computedVersionCode
 
         vectorDrawables.useSupportLibrary = false
         resourceConfigurations += ['ar', 'cs', 'de', 'el', 'en', 'en-rUS', 'es', 'es-rUS', 'fa', 'fr', 'hi', 'hu', 'it', 'iw', 'ja', 'lt', 'nl', 'pl', 'pt', 'pt-rBR', 'ro', 'ru', 'sk', 'sl', 'sr', 'tr', 'zh', 'zh-rCN']
@@ -80,7 +83,19 @@ android {
         disable 'MissingTranslation'
     }
 
+    testOptions {
+        animationsDisabled true
+    }
+
     signingConfigs {
+        if (isE2eBuild) {
+            e2e {
+                storeFile rootProject.file('e2e/build/test-signing.p12')
+                storePassword 'battery-monitor-e2e'
+                keyAlias 'e2e'
+                keyPassword 'battery-monitor-e2e'
+            }
+        }
         release {
             if (hasReleaseSigning) {
                 storeFile file(releaseStoreFileProp)
@@ -93,7 +108,11 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
+            if (isE2eBuild) {
+                signingConfig signingConfigs.e2e
+            } else {
+                applicationIdSuffix ".debug"
+            }
             versionNameSuffix "-debug"
         }
 
@@ -123,6 +142,7 @@ dependencies {
 
     testImplementation "junit:junit:4.13.2"
     androidTestImplementation "junit:junit:4.13.2"
+    androidTestImplementation 'androidx.test:runner:1.7.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 

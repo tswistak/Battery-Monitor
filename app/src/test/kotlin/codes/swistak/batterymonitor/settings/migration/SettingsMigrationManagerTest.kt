@@ -58,7 +58,9 @@ class SettingsMigrationManagerTest {
             )
         )
 
+        val completedValues = preferences.values.toMap()
         assertTrue(SettingsMigrationManager.migrate(preferences.instance))
+        assertEquals(completedValues, preferences.values)
         assertEquals(5, preferences.commitCount)
     }
 
@@ -150,10 +152,9 @@ class SettingsMigrationManagerTest {
     @Test
     fun `vital signs migration defaults to health temperature and voltage`() {
         assertEquals(
-            SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT,
             VitalSignsContentMigration.migratedContent(
                 existing = null, displayCurrent = false, displayStatusDuration = false
-            )
+            ), SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT
         )
     }
 
@@ -217,6 +218,41 @@ class SettingsMigrationManagerTest {
             "fahrenheit", preferences.values[SettingsContract.KEY_TEMPERATURE_UNIT]
         )
         assertFalse(preferences.values.containsKey(SettingsContract.LEGACY_KEY_CONVERT_F))
+    }
+
+    @Test
+    fun `existing current settings take precedence over conflicting legacy choices`() {
+        val preferences = FakeSharedPreferences(
+            mapOf(
+                SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER to "-1000",
+                SettingsContract.LEGACY_KEY_BATTERY_CURRENT_MULTIPLIER to "10",
+                SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT to false,
+                SettingsContract.LEGACY_KEY_PREFER_CURRENT_AVG_IN_MAIN_WINDOW to true,
+                SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL to "17",
+                SettingsContract.KEY_USE_PRIVILEGED_ACCESS to false,
+                SettingsContract.LEGACY_KEY_USE_PRIVILEGED_BATTERY_CURRENT to true,
+                SettingsContract.KEY_TEMPERATURE_UNIT to "celsius",
+                SettingsContract.LEGACY_KEY_CONVERT_F to true,
+                SettingsContract.KEY_AUTOSTART to "never"
+            )
+        )
+
+        assertTrue(SettingsMigrationManager.migrate(preferences.instance))
+        assertEquals("-1000", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER])
+        assertEquals(false, preferences.values[SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT])
+        assertEquals(
+            "17", preferences.values[SettingsContract.KEY_BATTERY_CURRENT_REFRESH_INTERVAL]
+        )
+        assertEquals(false, preferences.values[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
+        assertEquals("celsius", preferences.values[SettingsContract.KEY_TEMPERATURE_UNIT])
+        assertEquals("never", preferences.values[SettingsContract.KEY_AUTOSTART])
+
+        preferences.values[SettingsContract.KEY_TEMPERATURE_UNIT] = "fahrenheit"
+        preferences.values[SettingsContract.KEY_USE_PRIVILEGED_ACCESS] = true
+        val userChanges = preferences.values.toMap()
+        assertTrue(SettingsMigrationManager.migrate(preferences.instance))
+        assertEquals(userChanges, preferences.values)
+        assertEquals(5, preferences.commitCount)
     }
 
     private fun recordingMigration(

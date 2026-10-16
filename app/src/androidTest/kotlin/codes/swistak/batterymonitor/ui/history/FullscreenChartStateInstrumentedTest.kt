@@ -37,7 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelStore
-import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.DetailedHistoryChartModel
 import codes.swistak.batterymonitor.logs.DetailedHistoryTimeAxis
@@ -79,7 +79,7 @@ class FullscreenChartStateInstrumentedTest {
 
     @Before
     fun setUp() {
-        val target = BatteryMonitorTestRunner.instrumentation.targetContext
+        val target = InstrumentationRegistry.getInstrumentation().targetContext
         directory =
             File(target.cacheDir, "fullscreen-state-${System.nanoTime()}").apply { mkdirs() }
         context = object : ContextWrapper(target) {
@@ -601,7 +601,7 @@ class FullscreenChartStateInstrumentedTest {
             .putString(SettingsContract.KEY_COLOR_SOURCE, "Dynamic").commit()
         val model = model(HistoryMetric.LEVEL, fullRange, "24h")
         loaded(model)
-        val instrumentation = BatteryMonitorTestRunner.instrumentation
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
         val monitor =
             instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
         instrumentation.startActivitySync(
@@ -986,7 +986,7 @@ class FullscreenChartStateInstrumentedTest {
     }
 
     private fun main(action: () -> Unit) =
-        BatteryMonitorTestRunner.instrumentation.runOnMainSync(action)
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(action)
 
     private fun nativeChart(view: View): LineChart? {
         if (view is LineChart) return view
@@ -1038,13 +1038,13 @@ class FullscreenChartStateInstrumentedTest {
             }
             rendered
         }
-        BatteryMonitorTestRunner.instrumentation.waitForIdleSync()
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         android.os.SystemClock.sleep(150)
         captureFixtureScreenshot(name)
     }
 
     private fun captureFixtureMenu(name: String) {
-        val instrumentation = BatteryMonitorTestRunner.instrumentation
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
         if (!clickFixtureText(context.getString(R.string.history_chart_settings))) {
             assertTrue(clickFixtureText(context.getString(R.string.history_chart_more)))
             instrumentation.waitForIdleSync()
@@ -1062,7 +1062,7 @@ class FullscreenChartStateInstrumentedTest {
         model: FullscreenChartViewModel,
         requested: HistoryRangeState
     ) {
-        BatteryMonitorTestRunner.instrumentation.waitForIdleSync()
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         android.os.SystemClock.sleep(250)
         loaded(model)
         main {
@@ -1093,7 +1093,7 @@ class FullscreenChartStateInstrumentedTest {
     }
 
     private fun clickFixtureText(text: String): Boolean {
-        val automation = BatteryMonitorTestRunner.instrumentation.uiAutomation
+        val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
         val root = automation.rootInActiveWindow ?: return false
         fun find(node: AccessibilityNodeInfo): AccessibilityNodeInfo? {
             if (node.isVisibleToUser && (node.text?.toString() == text || node.contentDescription?.toString() == text)) {
@@ -1137,7 +1137,7 @@ class FullscreenChartStateInstrumentedTest {
     }
 
     private fun captureFixtureScreenshot(name: String) {
-        val instrumentation = BatteryMonitorTestRunner.instrumentation
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
         val screenshots =
             File(instrumentation.targetContext.cacheDir, "chart-v2-fixture").apply { mkdirs() }
         val bitmap = requireNotNull(instrumentation.uiAutomation.takeScreenshot())

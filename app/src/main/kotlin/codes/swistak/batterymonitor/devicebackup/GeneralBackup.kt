@@ -62,8 +62,8 @@ internal object GeneralBackup {
 
     private const val KEY_VERSION = "version"
     private const val KEY_FILES = "files"
-    private const val MAX_ENTRY_BYTES = 100 * 1024 * 1024
-    private const val MAX_TOTAL_BYTES = 150 * 1024 * 1024
+    internal const val MAX_ENTRY_BYTES = 100 * 1024 * 1024
+    internal const val MAX_TOTAL_BYTES = 150 * 1024 * 1024
 
     fun exportToUri(
         context: Context,
@@ -109,7 +109,11 @@ internal object GeneralBackup {
         }
     }
 
-    internal fun readArchive(input: InputStream): GeneralBackupArchive {
+    internal fun readArchive(
+        input: InputStream,
+        maxEntryBytes: Int = MAX_ENTRY_BYTES,
+        maxTotalBytes: Int = MAX_TOTAL_BYTES
+    ): GeneralBackupArchive {
         val entries = linkedMapOf<String, String>()
         var totalBytes = 0
         ZipInputStream(input).use { zip ->
@@ -120,9 +124,9 @@ internal object GeneralBackup {
                 require('/' !in entry.name && '\\' !in entry.name) {
                     "Invalid general backup entry name"
                 }
-                val bytes = zip.readEntryBytes(MAX_ENTRY_BYTES)
+                val bytes = zip.readEntryBytes(maxEntryBytes)
                 totalBytes += bytes.size
-                require(totalBytes <= MAX_TOTAL_BYTES) { "General backup is too large" }
+                require(totalBytes <= maxTotalBytes) { "General backup is too large" }
                 entries[entry.name] = bytes.toString(StandardCharsets.UTF_8)
                 zip.closeEntry()
                 entry = zip.nextEntry

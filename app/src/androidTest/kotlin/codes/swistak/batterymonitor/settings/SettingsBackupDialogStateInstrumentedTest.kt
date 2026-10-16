@@ -23,7 +23,7 @@ import android.os.Parcel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentHostCallback
 import androidx.lifecycle.ViewModelStore
-import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
@@ -45,7 +45,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 class SettingsBackupDialogStateInstrumentedTest {
-    private val instrumentation = BatteryMonitorTestRunner.instrumentation
+    private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private lateinit var directory: File
     private lateinit var context: Context
     private lateinit var application: Application

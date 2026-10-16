@@ -1,0 +1,14 @@
+{
+  "historicalApk": {
+    "versionName": "1.7.3",
+    "versionCode": 1007003,
+    "applicationId": "codes.swistak.batterymonitor",
+    "release": "https://github.com/tswistak/Battery-Monitor/releases/tag/1.7.3",
+    "assetId": 609283001,
+    "url": "https://github.com/tswistak/Battery-Monitor/releases/download/1.7.3/battery-monitor-1.7.3.apk",
+    "sha256": "eb5d370187c3699a9d4d74d1890e8226a165ed65f66a16e6a968aa5baf19aec7",
+    "size": 4264097,
+    "provenance": "GitHub release asset digest retrieved read-only on 2026-10-16. Historical code, resources and manifest are preserved when re-signed locally."
+  },
+  "newUiBaseline": null
+}

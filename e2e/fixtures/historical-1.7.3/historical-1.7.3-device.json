@@ -1,0 +1,1 @@
+{"version":1,"logs":[{"status":3,"charge":72,"time":1700000000000,"temperature":287,"voltage":4011},{"status":3,"charge":71,"time":1700000060000,"temperature":291,"voltage":4007}],"predictor":{"averageRechargeAc":123456,"averageRechargeWireless":234567,"averageRechargeUsb":345678}}

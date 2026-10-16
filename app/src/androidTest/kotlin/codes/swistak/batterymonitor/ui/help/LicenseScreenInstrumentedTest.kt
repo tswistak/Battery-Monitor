@@ -28,7 +28,7 @@ import androidx.compose.ui.semantics.getOrNull
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.ViewModelProvider
-import codes.swistak.batterymonitor.BatteryMonitorTestRunner
+import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.app.StartupDialogViewModel
@@ -47,7 +47,7 @@ import java.security.MessageDigest
 
 class LicenseScreenInstrumentedTest {
     private val instrumentation: Instrumentation
-        get() = BatteryMonitorTestRunner.instrumentation
+        get() = InstrumentationRegistry.getInstrumentation()
     private val context
         get() = instrumentation.targetContext
 

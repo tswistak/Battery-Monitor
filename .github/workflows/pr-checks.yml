@@ -7,6 +7,9 @@ on:
       - reopened
       - synchronize
   workflow_dispatch:
+  push:
+    branches:
+      - master
 
 permissions:
   contents: read
@@ -14,10 +17,10 @@ permissions:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout pull request
+      - name: Checkout selected revision
         uses: actions/checkout@v4
 
       - name: Set up Java
@@ -38,12 +41,20 @@ jobs:
       - name: Build debug APK
         run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:assembleDebug
 
+      - name: Upload build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-diagnostics
+          path: app/build/reports/
+          if-no-files-found: warn
+
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout pull request
+      - name: Checkout selected revision
         uses: actions/checkout@v4
 
       - name: Set up Java
@@ -61,12 +72,87 @@ jobs:
       - name: Run Android lint
         run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:lintDebug
 
+      - name: Upload lint reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-reports
+          path: app/build/reports/lint-results-debug.*
+          if-no-files-found: warn
+
   unit-tests:
     name: Unit tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout pull request
+      - name: Checkout selected revision
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run unit tests
+        run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:testDebugUnitTest
+
+      - name: Summarize JVM tests
+        if: always()
+        id: jvm-summary
+        uses: test-summary/action@v2
+        with:
+          paths: app/build/test-results/testDebugUnitTest/TEST-*.xml
+
+      - name: Require executed successful JVM tests
+        if: always()
+        env:
+          PASSED_TESTS: ${{ steps.jvm-summary.outputs.passed }}
+          FAILED_TESTS: ${{ steps.jvm-summary.outputs.failed }}
+        run: |
+          echo "JVM tests: passed=${PASSED_TESTS:-0}, failed=${FAILED_TESTS:-0}"
+          test "${PASSED_TESTS:-0}" -gt 0
+          test "${FAILED_TESTS:-0}" -eq 0
+
+      - name: Install pinned E2E tooling
+        run: npm ci --prefix e2e
+
+      - name: Type-check E2E code
+        run: npm run typecheck --prefix e2e
+
+      - name: Test APK preparation and fixture validation
+        run: npm run test:preparation --prefix e2e
+
+      - name: Upload unit test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-reports
+          path: |
+            app/build/reports/tests/
+            app/build/test-results/
+          if-no-files-found: warn
+
+  instrumented-tests:
+    name: Android instrumented tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout selected revision
         uses: actions/checkout@v4
 
       - name: Set up Java
@@ -81,5 +167,164 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Run unit tests
-        run: ./gradlew --no-daemon -Dorg.gradle.java.home="$JAVA_HOME" :app:testDebugUnitTest
+      - name: Build instrumented APKs and resolve dependencies
+        run: ./gradlew --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g' -Dorg.gradle.java.home="$JAVA_HOME" :app:assembleDebug :app:assembleDebugAndroidTest
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          test -r /dev/kvm
+          test -w /dev/kvm
+
+      - name: Record emulator initialization start
+        run: echo "ANDROID_EMULATOR_INITIALIZATION_STARTED=$(date +%s)" >> "$GITHUB_ENV"
+
+      - name: Initialize emulator and run all non-E2E instrumented tests
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          ANDROID_TEST_SCRIPT: |
+            echo "Emulator initialization: $(($(date +%s) - ANDROID_EMULATOR_INITIALIZATION_STARTED)) seconds" >> "$GITHUB_STEP_SUMMARY"
+            mkdir -p app/build/outputs/androidTest-diagnostics
+            collect_diagnostics() {
+              test_exit_code=$?
+              set +e
+              adb logcat -d -v threadtime > app/build/outputs/androidTest-diagnostics/logcat.txt 2> app/build/outputs/androidTest-diagnostics/logcat-error.txt
+              adb shell dumpsys package codes.swistak.batterymonitor.debug > app/build/outputs/androidTest-diagnostics/installed-package.txt 2> app/build/outputs/androidTest-diagnostics/package-error.txt
+              if [ "$test_exit_code" -ne 0 ]; then
+                adb exec-out screencap -p > app/build/outputs/androidTest-diagnostics/screenshot.png 2> app/build/outputs/androidTest-diagnostics/screenshot-error.txt
+              fi
+              exit "$test_exit_code"
+            }
+            trap collect_diagnostics EXIT
+            ./gradlew --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=1g' -Dorg.gradle.java.home="$JAVA_HOME" :app:connectedDebugAndroidTest
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          emulator-boot-timeout: 600
+          disable-linux-hw-accel: false
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          script: bash -e -c "$ANDROID_TEST_SCRIPT"
+
+      - name: Summarize instrumented tests
+        if: always()
+        id: android-summary
+        uses: test-summary/action@v2
+        with:
+          paths: app/build/outputs/androidTest-results/connected/**/*.xml
+
+      - name: Require executed successful instrumented tests
+        if: always()
+        env:
+          PASSED_TESTS: ${{ steps.android-summary.outputs.passed }}
+          FAILED_TESTS: ${{ steps.android-summary.outputs.failed }}
+        run: |
+          echo "Android tests: passed=${PASSED_TESTS:-0}, failed=${FAILED_TESTS:-0}"
+          test "${PASSED_TESTS:-0}" -gt 0
+          test "${FAILED_TESTS:-0}" -eq 0
+
+      - name: Collect instrumented test reports and failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: instrumented-test-reports
+          path: |
+            app/build/reports/androidTests/
+            app/build/outputs/androidTest-results/
+            app/build/outputs/androidTest-diagnostics/
+          if-no-files-found: warn
+
+  e2e:
+    name: Critical E2E regression tests
+    # Opt in to PR runs after measuring the full job: set repository variable E2E_ON_PULL_REQUEST=true.
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request' && vars.E2E_ON_PULL_REQUEST == 'true')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout selected revision
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Install APK inspection and signing tools
+        run: sdkmanager "build-tools;37.0.0"
+
+      - name: Install pinned Appium and WebdriverIO tooling
+        run: npm ci --prefix e2e
+
+      - name: Build and prepare pinned upgrade APKs
+        run: npm run prepare:apks --prefix e2e
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          test -r /dev/kvm
+          test -w /dev/kvm
+
+      - name: Record emulator initialization start
+        run: echo "ANDROID_EMULATOR_INITIALIZATION_STARTED=$(date +%s)" >> "$GITHUB_ENV"
+
+      - name: Initialize emulator and run critical E2E scenarios
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          emulator-boot-timeout: 600
+          disable-linux-hw-accel: false
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          script: |
+            echo "Emulator initialization: $(($(date +%s) - ANDROID_EMULATOR_INITIALIZATION_STARTED)) seconds" >> "$GITHUB_STEP_SUMMARY"
+            E2E_ALLOW_WIPE=true npm run e2e --prefix e2e
+
+      - name: Summarize Appium E2E tests
+        if: always()
+        id: e2e-summary
+        uses: test-summary/action@v2
+        with:
+          paths: e2e/build/reports/junit/*.xml
+
+      - name: Require executed successful E2E tests
+        if: always()
+        env:
+          PASSED_TESTS: ${{ steps.e2e-summary.outputs.passed }}
+          FAILED_TESTS: ${{ steps.e2e-summary.outputs.failed }}
+        run: |
+          echo "E2E tests: passed=${PASSED_TESTS:-0}, failed=${FAILED_TESTS:-0}"
+          test "${PASSED_TESTS:-0}" -gt 0
+          test "${FAILED_TESTS:-0}" -eq 0
+
+      - name: Collect E2E reports, timings and failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-test-reports
+          path: |
+            e2e/build/apks.json
+            e2e/build/reports/
+            app/build/reports/
+          if-no-files-found: warn

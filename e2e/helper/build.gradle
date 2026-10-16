@@ -1,0 +1,63 @@
+/*
+    Copyright (c) 2026 Tomasz Świstak <tomasz@swistak.codes>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <https://www.gnu.org/licenses/>.
+*/
+apply plugin: 'com.android.application'
+
+configurations.configureEach {
+    exclude group: 'org.jetbrains.kotlin'
+    exclude group: 'org.jetbrains'
+}
+
+android {
+    namespace 'codes.swistak.batterymonitor.e2ehelper'
+    compileSdk 37
+    defaultConfig {
+        applicationId 'codes.swistak.batterymonitor.e2ehelper'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    signingConfigs {
+        e2e {
+            storeFile rootProject.file('e2e/build/test-signing.p12')
+            storePassword 'battery-monitor-e2e'
+            keyAlias 'e2e'
+            keyPassword 'battery-monitor-e2e'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.e2e
+        }
+    }
+}
+
+tasks.register('verifyPlatformOnlyRuntime') {
+    doLast {
+        def libraries = configurations.debugRuntimeClasspath.files
+        if (!libraries.isEmpty()) {
+            throw new GradleException("Historical instrumentation helper must contain only platform Java; found ${libraries}")
+        }
+    }
+}
+
+tasks.named('preBuild').configure {
+    dependsOn 'verifyPlatformOnlyRuntime'
+}
