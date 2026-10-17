@@ -4,17 +4,19 @@ Run these commands from the repository root. E2E execution is separate from the 
 
 ## Requirements and emulator setup
 
-Use JDK 21, Node.js 22.19+ from the Node 22 release line or Node 24+, npm 10 or newer, `unzip`, and the Android SDK command-line tools. Set `ANDROID_HOME` and put `platform-tools`, `emulator` and the command-line tools' `bin` directory on `PATH`. The project requires the API 37 compilation platform; the commands below use an API 35 Google APIs emulator. Accept SDK licenses with `sdkmanager --licenses`.
+Use JDK 21, Node.js 22.19+ from the Node 22 release line or Node 24+, npm 10 or newer, `unzip`, and the Android SDK command-line tools. Set `ANDROID_HOME` and put `platform-tools`, `emulator` and the command-line tools' `bin` directory on `PATH`. The project requires the API 37 compilation platform; the commands below use a full AOSP API 35 emulator. Accept SDK licenses with `sdkmanager --licenses`.
 
 For an Intel/AMD Linux or Intel macOS host:
 
 ```sh
-sdkmanager "platform-tools" "emulator" "platforms;android-37.0" "build-tools;37.0.0" "system-images;android-35;google_apis;x86_64"
-avdmanager create avd --name battery-monitor-tests --package "system-images;android-35;google_apis;x86_64" --device pixel_2
-emulator -avd battery-monitor-tests -wipe-data -no-snapshot -no-boot-anim -noaudio
+sdkmanager "platform-tools" "emulator" "platforms;android-37.0" "build-tools;37.0.0" "system-images;android-35;default;x86_64"
+avdmanager create avd --name battery-monitor-tests --package "system-images;android-35;default;x86_64" --device pixel_2
+emulator -avd battery-monitor-tests -memory 4096 -cores 2 -wipe-data -no-snapshot -no-boot-anim -noaudio
 ```
 
-Keep the emulator running and use a second terminal for tests. On Apple Silicon, use an available `arm64-v8a` Google APIs image instead of `x86_64`. Linux requires working KVM acceleration and access to `/dev/kvm`. Avoid a Play Store image. Use English (United States) for stable application and DocumentsUI labels. Select one emulator with `ANDROID_SERIAL` if other devices are connected.
+Keep the emulator running and use a second terminal for tests. On Apple Silicon, replace `x86_64` with `arm64-v8a` in both commands. Linux requires working KVM acceleration and access to `/dev/kvm`. Use English (United States) for stable application and DocumentsUI labels. Select one emulator with `ANDROID_SERIAL` if other devices are connected.
+
+Use the full AOSP (`default`) image to avoid unrelated Google background applications. ATD images remove SystemUI, Settings and launcher components needed by these workflows.
 
 **E2E wipes application data and changes emulator battery state. Use a dedicated test emulator, never your personal installation.** Physical devices are rejected. The suite also sets the emulator timezone to Europe/Warsaw for historical CSV timestamps and locks portrait rotation.
 
