@@ -73,10 +73,18 @@ export async function checkSystemAppError({dismissBootLauncherAnr = false} = {})
     await close.waitForDisplayed({reverse: true, timeout, timeoutMsg: 'Pixel Launcher ANR dialog did not close'});
 }
 
+async function allowStartupPermission() {
+    const allow = await browser.$(resourceSelector('com.android.permissioncontroller:id/permission_allow_button'));
+    if (!await allow.isDisplayed()) return false;
+    await allow.click();
+    return true;
+}
+
 export async function launchApplication(section?: string, detail?: string) {
     await launchApp({ section, detail });
     await browser.waitUntil(async () => {
         await checkSystemAppError();
+        if (await allowStartupPermission()) return false;
         return await browser.getCurrentPackage() === appId;
     }, {
         timeout,
@@ -98,8 +106,8 @@ export async function completeOnboarding(
         if (await browser.$(textSelector("What's new in Battery Monitor")).isDisplayed()) {
             throw new Error('Unexpected changelog interrupted startup');
         }
+        if (await allowStartupPermission()) return false;
         for (const selector of [
-            resourceSelector('com.android.permissioncontroller:id/permission_allow_button'),
             textSelector('Cancel'),
             textSelector('Got it'),
         ]) {
@@ -194,8 +202,7 @@ async function clickDocumentControl(selector: string) {
 }
 
 async function openDocumentRoots() {
-    const showRoots = await browser.$('~Show roots');
-    await clickDocumentControl(await showRoots.isDisplayed() ? '~Show roots' : '~Show navigation drawer');
+    await clickDocumentControl('android=new UiSelector().descriptionMatches("Show roots|Show navigation drawer")');
 }
 
 type Bounds = { left: number; top: number; right: number; bottom: number };
