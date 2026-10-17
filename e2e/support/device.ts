@@ -14,6 +14,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {mkdirSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
@@ -131,7 +132,10 @@ export async function setBattery({level, ac = 0, status = 3}: {level: number; ac
 }
 
 export async function resetBattery() {
-    await shell('dumpsys', ['battery', 'reset']);
+    // Native ADB waits for transport readiness and executes cleanup once, even if UiAutomator2 has stopped.
+    execFileSync(join(process.env.ANDROID_HOME!, 'platform-tools', 'adb'), [
+        '-s', process.env.ANDROID_SERIAL!, 'wait-for-device', 'shell', 'dumpsys', 'battery', 'reset',
+    ], {timeout: 15_000, encoding: 'utf8'});
 }
 
 export async function pullSharedFile(name: string): Promise<Buffer> {

@@ -93,7 +93,7 @@ export const config: WebdriverIO.Config = {
         Object.assign(capabilities, {'appium:udid': process.env.ANDROID_SERIAL});
     },
     async afterTest(test, _context, {passed}) {
-        await collectDiagnostics(`${passed ? 'passed' : 'failed'}-${test.title}`);
+        if (!passed) await collectDiagnostics(`failed-${test.title}`);
     },
     async afterHook(_test, _context, {passed}) {
         if (!passed) await collectDiagnostics('failed-hook');

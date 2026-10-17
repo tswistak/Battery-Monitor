@@ -22,6 +22,7 @@ import {test} from 'node:test';
 import {buildCurrentApks, isJarSignatureEntry, parseApkBadging, parseSigningCertificate,
     prepareApks, validateUpgrade, verifyPinnedFile} from './prepare.js';
 import type {ApkMetadata} from './prepare.js';
+import {resetBattery} from './support/device.js';
 
 test('historical APK integrity rejects changed bytes, size and unpinned input', () => {
     const directory = mkdtempSync(join(tmpdir(), 'battery-monitor-apk-integrity-'));
@@ -128,6 +129,42 @@ test('failed preparation removes stale APK metadata before checking prerequisite
         else process.env.ANDROID_SDK_ROOT = previousSdk;
         if (previousHome === undefined) delete process.env.ANDROID_HOME;
         else process.env.ANDROID_HOME = previousHome;
+        rmSync(directory, {recursive: true, force: true});
+    }
+});
+
+test('battery cleanup waits for the selected ADB transport once and propagates a native failure', async () => {
+    const directory = mkdtempSync(join(tmpdir(), 'battery-monitor-battery-cleanup-'));
+    const previousHome = process.env.ANDROID_HOME;
+    const previousSerial = process.env.ANDROID_SERIAL;
+    const platformTools = join(directory, 'platform-tools');
+    const invocations = join(platformTools, 'invocations.jsonl');
+    const expectedArguments = ['-s', 'controlled-emulator', 'wait-for-device', 'shell',
+        'dumpsys', 'battery', 'reset'];
+    try {
+        mkdirSync(platformTools);
+        writeFileSync(join(platformTools, 'adb'), `#!${process.execPath}
+const fs = require('node:fs');
+const path = require('node:path');
+fs.appendFileSync(path.join(__dirname, 'invocations.jsonl'), JSON.stringify(process.argv.slice(2)) + '\\n');
+if (fs.existsSync(path.join(__dirname, 'fail'))) process.exit(17);
+`, {mode: 0o755});
+        process.env.ANDROID_HOME = directory;
+        process.env.ANDROID_SERIAL = 'controlled-emulator';
+
+        await resetBattery();
+        assert.deepEqual(readFileSync(invocations, 'utf8').trim().split('\n').map(line => JSON.parse(line)),
+            [expectedArguments]);
+
+        writeFileSync(join(platformTools, 'fail'), 'controlled native failure');
+        await assert.rejects(() => resetBattery(), {status: 17});
+        assert.deepEqual(readFileSync(invocations, 'utf8').trim().split('\n').map(line => JSON.parse(line)),
+            [expectedArguments, expectedArguments]);
+    } finally {
+        if (previousHome === undefined) delete process.env.ANDROID_HOME;
+        else process.env.ANDROID_HOME = previousHome;
+        if (previousSerial === undefined) delete process.env.ANDROID_SERIAL;
+        else process.env.ANDROID_SERIAL = previousSerial;
         rmSync(directory, {recursive: true, force: true});
     }
 });

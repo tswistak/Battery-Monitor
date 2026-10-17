@@ -19,9 +19,9 @@ import {join} from 'node:path';
 import {browser} from '@wdio/globals';
 import {apks, directory, helperId, reports, resetBattery, shell} from './device.js';
 
-// Mocha root hooks make setup and cleanup errors fail the test process and JUnit report.
+// Per-test root hooks run inside the scenario suite so JUnit includes setup and cleanup failures.
 export const mochaHooks = {
-    async beforeAll() {
+    async beforeEach() {
         const started = Date.now();
         await browser.installApp(apks().helper.path, {replace: true, allowTestPackages: true});
         await shell('mkdir', ['-p', directory]);
@@ -33,7 +33,7 @@ export const mochaHooks = {
         await shell('wm', ['dismiss-keyguard']);
         console.log(`Test APK installation and device preparation: ${(Date.now() - started) / 1000}s`);
     },
-    async afterAll() {
+    async afterEach() {
         const started = Date.now();
         await resetBattery();
         try {
