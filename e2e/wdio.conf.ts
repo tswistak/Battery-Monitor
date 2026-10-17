@@ -57,7 +57,7 @@ export const config: WebdriverIO.Config = {
         'appium:autoLaunch': false,
         'appium:skipUnlock': true,
         'appium:disableWindowAnimation': true,
-        'appium:clearDeviceLogsOnStart': true,
+        'appium:clearDeviceLogsOnStart': false,
         'appium:allowTestPackages': true,
         'appium:printPageSourceOnFindFailure': true,
         'appium:newCommandTimeout': 180,

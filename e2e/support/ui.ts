@@ -59,9 +59,26 @@ export async function clickTextStartingWith(text: string) {
     await (await scrollToText(textStartsWithSelector(text))).click();
 }
 
+export async function checkSystemAppError({dismissBootLauncherAnr = false} = {}) {
+    const close = await browser.$('android=new UiSelector().packageName("android").resourceId("android:id/aerr_close")');
+    if (!await close.isDisplayed()) return;
+    const title = await browser.$('android=new UiSelector().packageName("android").resourceId("android:id/alertTitle")');
+    const message = await title.getText();
+    if (!dismissBootLauncherAnr || message !== "Pixel Launcher isn't responding") {
+        throw new Error(`Android app error blocks E2E: ${message}`);
+    }
+    // A cold-boot launcher ANR can outlive every APK installation; never dismiss the app under test's errors.
+    console.warn(`Closing unrelated emulator dialog: ${message}`);
+    await close.click();
+    await close.waitForDisplayed({reverse: true, timeout, timeoutMsg: 'Pixel Launcher ANR dialog did not close'});
+}
+
 export async function launchApplication(section?: string, detail?: string) {
     await launchApp({ section, detail });
-    await browser.waitUntil(async () => await browser.getCurrentPackage() === appId, {
+    await browser.waitUntil(async () => {
+        await checkSystemAppError();
+        return await browser.getCurrentPackage() === appId;
+    }, {
         timeout,
         timeoutMsg: 'Battery Monitor Activity did not become foreground',
     });
@@ -77,6 +94,7 @@ export async function completeOnboarding(
     { verifyFirstRunPreference = true }: { verifyFirstRunPreference?: boolean } = {},
 ) {
     await browser.waitUntil(async () => {
+        await checkSystemAppError();
         if (await browser.$(textSelector("What's new in Battery Monitor")).isDisplayed()) {
             throw new Error('Unexpected changelog interrupted startup');
         }

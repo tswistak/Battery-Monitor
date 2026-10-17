@@ -18,6 +18,7 @@ import {writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {browser} from '@wdio/globals';
 import {apks, directory, helperId, reports, resetBattery, shell} from './device.js';
+import {checkSystemAppError} from './ui.js';
 
 // Per-test root hooks run inside the scenario suite so JUnit includes setup and cleanup failures.
 export const mochaHooks = {
@@ -31,11 +32,13 @@ export const mochaHooks = {
         await shell('wm', ['user-rotation', 'lock', '0']);
         await shell('input', ['keyevent', 'KEYCODE_WAKEUP']);
         await shell('wm', ['dismiss-keyguard']);
+        await checkSystemAppError({dismissBootLauncherAnr: true});
         console.log(`Test APK installation and device preparation: ${(Date.now() - started) / 1000}s`);
     },
     async afterEach() {
         const started = Date.now();
         await resetBattery();
+        await checkSystemAppError();
         try {
             const bytes = await browser.pullFolder(`/sdcard/Android/data/${helperId}/files/diagnostics`);
             writeFileSync(join(reports, `widget-screenshots-${browser.sessionId}.zip`), Buffer.from(bytes, 'base64'));

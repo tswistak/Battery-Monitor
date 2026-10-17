@@ -252,7 +252,9 @@ export async function collectDiagnostics(label: string) {
     const captures: [string, () => Promise<unknown>][] = [
         ['screenshot.png', () => browser.saveScreenshot(join(destination, 'screenshot.png'))],
         ['page.xml', () => browser.getPageSource()],
-        ['logcat.txt', () => shell('logcat', ['-d', '-v', 'threadtime'])],
+        ['logcat.txt', () => shell('logcat', ['-b', 'all', '-d', '-v', 'threadtime'])],
+        ['last-anr.txt', () => shell('dumpsys', ['activity', 'lastanr'])],
+        ['memory.txt', () => shell('dumpsys', ['meminfo'])],
         ['package.txt', () => shell('dumpsys', ['package', appId])],
         ['services.txt', () => shell('dumpsys', ['activity', 'services', appId])],
         ['widgets.txt', () => shell('dumpsys', ['appwidget'])],
