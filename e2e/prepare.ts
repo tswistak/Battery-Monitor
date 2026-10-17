@@ -213,7 +213,10 @@ export async function prepareApks(root = projectRoot): Promise<PreparedApks> {
 
     let newUiBaseline: ApkMetadata | null = null;
     let newUiBaselineUnavailableReason: string | null =
-        'New-UI cross-version widget scenario NOT EXECUTED: no genuine prior redesigned-UI APK was supplied. Set NEW_UI_BASELINE_APK and NEW_UI_BASELINE_SHA256 when a genuine older build exists.';
+        'The released 1.7.3 APK and freshly built/signed current APK are prepared for the released-upgrade tests. ' +
+        'Only the additional older-new-UI → current-new-UI widget upgrade is NOT EXECUTED: ' +
+        '1.7.3 predates the redesigned widgets, so this separate test needs an earlier APK that already contains them. ' +
+        'Supply NEW_UI_BASELINE_APK and NEW_UI_BASELINE_SHA256 for that additional scenario.';
     if (process.env.NEW_UI_BASELINE_APK) {
         const source = resolve(process.env.NEW_UI_BASELINE_APK);
         assert.match(process.env.NEW_UI_BASELINE_SHA256 ?? '', /^[a-f\d]{64}$/i, 'Supply pinned NEW_UI_BASELINE_SHA256.');
