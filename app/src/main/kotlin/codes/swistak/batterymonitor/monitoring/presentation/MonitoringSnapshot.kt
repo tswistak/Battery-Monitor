@@ -9,6 +9,7 @@ package codes.swistak.batterymonitor.monitoring.presentation
 
 import android.os.Bundle
 import codes.swistak.batterymonitor.monitoring.BatteryInfo
+import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
 import codes.swistak.batterymonitor.monitoring.Predictor
 import codes.swistak.batterymonitor.monitoring.PredictorRecentState
 import codes.swistak.batterymonitor.monitoring.PredictorStoredState
@@ -39,7 +40,8 @@ internal data class MonitoringSnapshot(
     val source: String = "BatteryInfoService bundle",
     val predictorData: PredictorStoredState? = null,
     val recentPredictorData: PredictorRecentState? = null,
-    val fieldSources: Map<String, String> = emptyMap()
+    val fieldSources: Map<String, String> = emptyMap(),
+    val fieldMeasurementTimes: Map<String, BatteryMeasurementTime> = emptyMap()
 ) {
     companion object {
         const val FIELD_PREDICTOR_DATA = "monitoring_predictor_data"
@@ -109,7 +111,8 @@ internal data class MonitoringSnapshot(
                 predictorData = predictorData,
                 recentPredictorData = bundle.getBundle(FIELD_RECENT_PREDICTOR_DATA)
                     ?.let(::recentPredictorState),
-                fieldSources = info.fieldSources
+                fieldSources = info.fieldSources,
+                fieldMeasurementTimes = info.fieldMeasurementTimes
             )
         }
     }

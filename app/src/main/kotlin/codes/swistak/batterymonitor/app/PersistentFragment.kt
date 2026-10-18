@@ -39,6 +39,7 @@ import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import codes.swistak.batterymonitor.monitoring.Predictor
 import codes.swistak.batterymonitor.monitoring.PredictorStoredState
+import codes.swistak.batterymonitor.monitoring.presentation.CurrentDemand
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -70,6 +71,39 @@ class PersistentFragment : Fragment() {
     private var serviceConnection: BatteryInfoService.RemoteConnection? = null
     private var serviceConnected = false
     internal val monitoring = MonitoringConnection()
+    private var currentDemand: CurrentDemand? = null
+    private var currentToken = 0L
+
+    internal fun setCurrentDemand(demand: CurrentDemand?) {
+        if (currentDemand == demand) return
+        currentDemand = demand
+        currentToken++
+        monitoring.expectCurrent(currentToken.takeIf { demand != null })
+        syncCurrentDemand()
+    }
+
+    private fun syncCurrentDemand() {
+        if (serviceMessenger == null) return
+        monitoring.expectCurrent(currentToken.takeIf { currentDemand != null })
+        val bundle = currentDemand?.toBundle(currentToken) ?: Bundle().apply {
+            putBoolean("current_active", false)
+            putLong("current_token", currentToken)
+        }
+        sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_SET_CURRENT_DEMAND, bundle)
+    }
+
+    internal fun refreshCurrent() {
+        if (currentDemand == null) return
+        sendServiceMessage(
+            BatteryInfoService.RemoteConnection.SERVICE_REFRESH_CURRENT, Bundle().apply {
+                putLong("current_token", currentToken)
+            })
+    }
+
+    private fun monitoringDisconnected() {
+        serviceMessenger = null
+        monitoring.onServiceDisconnected()
+    }
 
     lateinit var settings: SharedPreferences
     lateinit var spMain: SharedPreferences
@@ -96,10 +130,15 @@ class PersistentFragment : Fragment() {
                     if (!pf.monitoring.onHandshake(incoming.arg1, incoming.data)) return
                     pf.serviceMessenger = incoming.replyTo
                     pf.sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_REGISTER_CLIENT)
+                    pf.syncCurrentDemand()
                 }
 
                 BatteryInfoService.RemoteConnection.CLIENT_BATTERY_INFO_UPDATED -> {
                     if (!pf.monitoring.onSnapshot(incoming.arg1, incoming.data)) return
+                }
+
+                BatteryInfoService.RemoteConnection.CLIENT_CURRENT_UPDATED -> {
+                    pf.monitoring.onCurrent(incoming.arg1, incoming.data)
                 }
 
                 else -> super.handleMessage(incoming)
@@ -123,16 +162,14 @@ class PersistentFragment : Fragment() {
             messenger,
             generation = { monitoring.generation },
             onConnected = { monitoring.onServiceConnected() },
-            onDisconnected = {
-                serviceMessenger = null
-                monitoring.onServiceDisconnected()
-            })
+            onDisconnected = { monitoringDisconnected() })
         biServiceIntent = Intent(activity, BatteryInfoService::class.java)
 
         loadSettingsFiles()
     }
 
     override fun onDestroy() {
+        setCurrentDemand(null)
         super.onDestroy()
 
         if (serviceConnected && activity != null) {
@@ -187,6 +224,8 @@ class PersistentFragment : Fragment() {
     override fun onStop() {
         super.onStop()
 
+        setCurrentDemand(null)
+
         sendServiceMessage(BatteryInfoService.RemoteConnection.SERVICE_UNREGISTER_CLIENT)
         monitoring.stop()
     }
@@ -210,16 +249,20 @@ class PersistentFragment : Fragment() {
         )
     }
 
-    fun sendServiceMessage(what: Int) {
-        if (serviceMessenger == null) return
+    fun sendServiceMessage(what: Int, data: Bundle? = null): Boolean {
+        if (serviceMessenger == null) return false
 
         val outgoing = Message.obtain()
         outgoing.what = what
         outgoing.arg1 = monitoring.generation
         outgoing.replyTo = messenger
+        if (data != null) outgoing.data = data
         try {
             serviceMessenger!!.send(outgoing)
+            return true
         } catch (_: RemoteException) {
+            monitoringDisconnected()
+            return false
         }
     }
 
@@ -284,6 +327,7 @@ class PersistentFragment : Fragment() {
 
     fun stopMonitoring() {
         if (!saveMonitoringDesired(false)) return
+        setCurrentDemand(null)
         val context = requireContext().applicationContext
         BackgroundServiceWatchdog.cancel(context)
         monitoring.stop()

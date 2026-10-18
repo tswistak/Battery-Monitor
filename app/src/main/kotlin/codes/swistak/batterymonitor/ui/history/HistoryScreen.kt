@@ -100,7 +100,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
@@ -123,7 +122,6 @@ import codes.swistak.batterymonitor.ui.components.historyRangeValue
 import codes.swistak.batterymonitor.ui.components.historyValue
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -216,33 +214,14 @@ internal fun HistoryRoute(
     val context = LocalContext.current
     val appContext = context.applicationContext
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    DisposableEffect(appContext, viewModel, lifecycle) {
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                if (intent?.action == LogDatabase.ACTION_HISTORY_CHANGED && viewModel.state.value.rangeLabel == "all" && lifecycle.currentState.isAtLeast(
-                        Lifecycle.State.STARTED
-                    )
-                ) viewModel.refresh()
-            }
-        }
-        ContextCompat.registerReceiver(
-            appContext,
-            receiver,
-            IntentFilter(LogDatabase.ACTION_HISTORY_CHANGED),
-            ContextCompat.RECEIVER_NOT_EXPORTED
-        )
-        onDispose { appContext.unregisterReceiver(receiver) }
-    }
+    HistoryChangeEffect(
+        onActivated = {
+            val snapshot = monitoring.value.snapshot
+            viewModel.resume(Triple(snapshot?.levelPercent, snapshot?.status, snapshot?.plugged))
+        }, onChanged = viewModel::historyChanged
+    )
     val zone = rememberHistoryTimeZone()
     val today = LocalDate.now(zone)
-    val monitoredChange by remember(monitoring) {
-        monitoring.map {
-            Triple(
-                it.snapshot?.levelPercent, it.snapshot?.status, it.snapshot?.plugged
-            )
-        }.distinctUntilChanged()
-    }.collectAsStateWithLifecycle(initialValue = Triple(null, null, null))
     val locale = LocalConfiguration.current.locales[0]
     val settings = remember {
         appContext.getSharedPreferences(
@@ -284,6 +263,7 @@ internal fun HistoryRoute(
         }
     }
     var detailsId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var detailsTime by rememberSaveable { mutableStateOf<Long?>(null) }
     var importingJson by rememberSaveable { mutableStateOf(false) }
     val statuses = stringArrayResource(R.array.log_statuses)
     val oldStatuses = stringArrayResource(R.array.log_statuses_old)
@@ -358,11 +338,6 @@ internal fun HistoryRoute(
         dialog = null
     }
 
-    fun latestMonitoredChange() = monitoring.value.snapshot.let {
-        Triple(it?.levelPercent, it?.status, it?.plugged)
-    }
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.resume(latestMonitoredChange()) }
-    LaunchedEffect(monitoredChange) { viewModel.monitoringChanged(latestMonitoredChange()) }
     val chartList = rememberLazyListState()
     val logList = rememberLazyListState(viewModel.scrollIndex, viewModel.scrollOffset)
     LaunchedEffect(logList) {
@@ -691,7 +666,10 @@ internal fun HistoryRoute(
                         Row(
                             Modifier
                                 .fillMaxWidth()
-                                .clickable { detailsId = entry.id }
+                                .clickable {
+                                    detailsId = entry.id
+                                    detailsTime = entry.record.time
+                                }
                                 .then(if (twoPane) Modifier.semantics {
                                     selected = emphasized
                                 } else Modifier)
@@ -1093,9 +1071,9 @@ internal fun HistoryRoute(
                 dialog = null
             }) { Text(stringResource(R.string.cancel)) }
         })
-    val detail = state.page.firstOrNull { it.id == detailsId }
+    val detail = state.page.firstOrNull { it.id == detailsId && it.record.time == detailsTime }
     if (detail != null) {
-        val duration by produceState<Long?>(null, detail.id) {
+        val duration by produceState<Long?>(null, detail, state.revision) {
             value = try {
                 viewModel.duration(detail)
             } catch (exception: kotlinx.coroutines.CancellationException) {

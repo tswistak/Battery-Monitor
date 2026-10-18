@@ -40,6 +40,8 @@ internal data class HistoryRangeState(val start: Long, val end: Long) {
 
 
 internal data class HistoryKey(val time: Long, val id: Long)
+internal data class HistoryChanges(val revision: Long, val affectsRange: Boolean)
+
 internal data class HistoryRecord(val id: Long, val record: LogRecord) {
     val key get() = HistoryKey(record.time, id)
 }
@@ -143,9 +145,11 @@ internal data class HistoryChartModel(
 )
 
 internal fun historyChart(
-    range: HistoryRangeState, records: Sequence<HistoryRecord>
+    range: HistoryRangeState, records: Sequence<HistoryRecord>, selectedKey: HistoryKey? = null
 ): HistoryChartModel {
     class Bucket {
+        var selected: HistoryPoint? = null
+
         var first: HistoryPoint? = null
         var last: HistoryPoint? = null
         var min: HistoryPoint? = null
@@ -170,7 +174,7 @@ internal fun historyChart(
         }
 
         fun points() = (listOfNotNull(
-            first, min, max, last, missing
+            first, min, max, last, missing, selected
         ) + eventFirst.filterNotNull() + eventLast.filterNotNull()).distinctBy { it.key }
     }
 
@@ -190,11 +194,11 @@ internal fun historyChart(
         for (metric in HistoryMetric.entries) {
             val value = historyObservationValue(metric, record)
             if (value == null) segments[metric.ordinal]++
-            buckets.getValue(metric)[bucket].add(
-                HistoryPoint(
-                    entry.key, value, segments[metric.ordinal]
-                ), event
-            )
+            val point = HistoryPoint(entry.key, value, segments[metric.ordinal])
+            buckets.getValue(metric)[bucket].apply {
+                add(point, event)
+                if (entry.key == selectedKey) selected = point
+            }
         }
         if (eventCode != null) {
             val key = bucket to eventCode

@@ -23,7 +23,6 @@ import android.os.Looper
 import android.util.Log
 import androidx.core.content.pm.PackageInfoCompat
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
-import codes.swistak.batterymonitor.advancedstats.AdvancedBatteryStatsCollector
 import codes.swistak.batterymonitor.common.CommandExecutor
 import codes.swistak.batterymonitor.common.RootExecutor
 import rikka.shizuku.Shizuku
@@ -32,6 +31,8 @@ import rikka.shizuku.Shizuku.OnBinderReceivedListener
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
 import rikka.shizuku.Shizuku.UserServiceArgs
 import rikka.shizuku.ShizukuProvider
+import java.util.concurrent.atomic.AtomicLong
+
 
 internal object PrivilegedAccess : CommandExecutor {
     internal enum class Backend {
@@ -47,6 +48,7 @@ internal object PrivilegedAccess : CommandExecutor {
 
     private const val SHIZUKU_CONNECTION_TIMEOUT_MS = 4_000L
     private val shizukuLock = Object()
+    private val rootMonitoringBackend = PrivilegedMonitoringBackend(requireRoot = true)
 
     private var appContext: Context? = null
     private var mainHandler: Handler? = null
@@ -54,9 +56,9 @@ internal object PrivilegedAccess : CommandExecutor {
     @Volatile
     private var enabled = false
 
-    @Volatile
-    var accessRevision: Long = 0L
-        private set
+    private val revision = AtomicLong()
+    val accessRevision: Long
+        get() = revision.get()
 
     private var shizukuListenersRegistered = false
     private var shizukuMultiProcessEnabled = false
@@ -71,6 +73,7 @@ internal object PrivilegedAccess : CommandExecutor {
     }
     private val binderDeadListener = OnBinderDeadListener {
         synchronized(shizukuLock) {
+            revision.incrementAndGet()
             shizukuUserService = null
             shizukuConnection = null
             shizukuLock.notifyAll()
@@ -79,6 +82,7 @@ internal object PrivilegedAccess : CommandExecutor {
     private val permissionResultListener =
         OnRequestPermissionResultListener { requestCode, grantResult ->
             if (requestCode == SHIZUKU_PERMISSION_REQUEST_CODE) {
+                revision.incrementAndGet()
                 if (grantResult == PackageManager.PERMISSION_GRANTED) ensureShizukuConnection()
                 else disconnectShizukuConnection()
             }
@@ -107,7 +111,7 @@ internal object PrivilegedAccess : CommandExecutor {
     @Synchronized
     fun setEnabled(value: Boolean) {
         if (enabled != value) {
-            accessRevision++
+            revision.incrementAndGet()
             enabled = value
         }
         if (value) ensureShizukuConnection() else disconnectShizukuConnection()
@@ -121,47 +125,56 @@ internal object PrivilegedAccess : CommandExecutor {
 
     override fun run(command: String): String? = runWithBackend(command)?.output
 
+    private fun canRead(capturedRevision: Long): Boolean =
+        enabled && capturedRevision == accessRevision && !Thread.currentThread().isInterrupted
+
+    private fun serviceLost(service: IBinder) {
+        synchronized(shizukuLock) {
+            if (shizukuUserService === service) {
+                revision.incrementAndGet()
+                shizukuUserService = null
+                shizukuConnection = null
+                shizukuLock.notifyAll()
+            }
+        }
+    }
+
     fun readBatterySnapshot(): AdvancedBatterySnapshot? {
-        if (!enabled) return null
+        if (!enabled || Thread.currentThread().isInterrupted) return null
         val revision = accessRevision
-        val root = runCatching {
-            val executor = RootExecutor()
-            if (executor.run("id")?.contains("uid=0") != true) null
-            else AdvancedBatteryStatsCollector.collectMonitoring(executor).apply {
-                accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
-                remoteUid = 0
-            }.takeIf { it.hasStats() }
-        }.getOrNull()
-        if (!enabled || revision != accessRevision) return null
+        val root = runCatching { readRootBatterySnapshot() }.getOrNull()
+        if (!canRead(revision)) return null
         if (root != null) return root
 
         val service = awaitShizukuService(revision) ?: return null
         return try {
-            PrivilegedCommandUserService.requestBatterySnapshot(service)
-                ?.let { AdvancedBatterySnapshot.fromBundle(it) }
-                ?.takeIf { enabled && revision == accessRevision && it.hasStats() }
+            whilePrivilegedAccessAllowed({ canRead(revision) }) {
+                PrivilegedCommandUserService.requestBatterySnapshot(service, revision)
+            }?.let { AdvancedBatterySnapshot.fromBundle(it) }
+                ?.takeIf { canRead(revision) && it.hasStats() }
         } catch (error: Throwable) {
             Log.e(LOG_TAG, "Unable to read a battery snapshot through Shizuku", error)
-            synchronized(shizukuLock) {
-                if (shizukuUserService === service) {
-                    shizukuUserService = null
-                    shizukuConnection = null
-                    shizukuLock.notifyAll()
-                }
-            }
+            serviceLost(service)
             ensureShizukuConnection()
             null
         }
     }
 
+    internal fun readRootBatterySnapshot(
+        executor: CommandExecutor = RootExecutor()
+    ): AdvancedBatterySnapshot? {
+        val revision = accessRevision
+        return rootMonitoringBackend.read(executor, revision, { canRead(revision) })?.apply {
+            accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
+            remoteUid = 0
+        }
+    }
+
     private fun awaitShizukuService(revision: Long): IBinder? {
         synchronized(shizukuLock) {
-            if (!enabled || revision != accessRevision) return null
+            if (!canRead(revision)) return null
             shizukuUserService?.takeIf { it.isBinderAlive }?.let { return it }
-            if (shizukuUserService != null) {
-                shizukuUserService = null
-                shizukuConnection = null
-            }
+            shizukuUserService?.let(::serviceLost)
         }
         if (!ensureShizukuConnection()) return null
         val handler = mainHandler ?: return null
@@ -173,7 +186,7 @@ internal object PrivilegedAccess : CommandExecutor {
                     awaitShizukuConnection(
                         timeoutMillis = SHIZUKU_CONNECTION_TIMEOUT_MS,
                         canWait = {
-                            enabled && revision == accessRevision && connection != null && shizukuConnection === connection
+                            canRead(revision) && connection != null && shizukuConnection === connection
                         },
                         isConnected = { shizukuUserService?.isBinderAlive == true },
                         awaitChange = { shizukuLock.wait(it) })
@@ -186,33 +199,33 @@ internal object PrivilegedAccess : CommandExecutor {
     }
 
     fun runWithBackend(command: String): CommandResult? {
-        if (!enabled) return null
-        RootExecutor().run(command)?.let { return CommandResult(it, Backend.ROOT) }
-        return runShizukuCommand(command)?.let { CommandResult(it, Backend.SHIZUKU) }
+        val revision = accessRevision
+        val allowed = { canRead(revision) }
+        val root = GuardedPrivilegedCommandExecutor(RootExecutor(), allowed).run(command)
+        if (!allowed()) return null
+        if (root != null) return CommandResult(root, Backend.ROOT)
+        return whilePrivilegedAccessAllowed(allowed) {
+            runShizukuCommand(command)?.let { CommandResult(it, Backend.SHIZUKU) }
+        }
     }
 
     fun runShizukuCommand(command: String): String? {
-        if (!enabled) return null
+        val revision = accessRevision
+        if (!canRead(revision)) return null
         val service = shizukuUserService
         if (service == null || !service.isBinderAlive) {
-            synchronized(shizukuLock) {
-                if (shizukuUserService === service) shizukuUserService = null
-            }
+            if (service != null) serviceLost(service)
             ensureShizukuConnection()
             return null
         }
 
         return try {
-            PrivilegedCommandUserService.requestCommand(service, command)
+            whilePrivilegedAccessAllowed({ canRead(revision) }) {
+                PrivilegedCommandUserService.requestCommand(service, command)
+            }
         } catch (error: Throwable) {
             Log.e(LOG_TAG, "Unable to run command through Shizuku", error)
-            synchronized(shizukuLock) {
-                if (shizukuUserService === service) {
-                    shizukuUserService = null
-                    shizukuConnection = null
-                    shizukuLock.notifyAll()
-                }
-            }
+            serviceLost(service)
             ensureShizukuConnection()
             null
         }
@@ -273,6 +286,7 @@ internal object PrivilegedAccess : CommandExecutor {
                 onDisconnected = { disconnected ->
                     synchronized(shizukuLock) {
                         if (shizukuConnection === disconnected) {
+                            revision.incrementAndGet()
                             shizukuUserService = null
                             shizukuConnection = null
                         }
@@ -291,16 +305,22 @@ internal object PrivilegedAccess : CommandExecutor {
                 if (current) connection.bind()
             } catch (error: Throwable) {
                 synchronized(shizukuLock) {
-                    if (shizukuConnection === connection) shizukuConnection = null
+                    if (shizukuConnection === connection) {
+                        revision.incrementAndGet()
+                        shizukuConnection = null
+                    }
                     shizukuLock.notifyAll()
                 }
                 Log.e(LOG_TAG, "Unable to bind privileged command user service", error)
             }
         }
-        if (Looper.myLooper() == handler.looper) bind.run()
-        else if (!handler.post(bind)) {
+        // Shizuku iterates its listeners during disconnect; bind after its dead cache entry is removed.
+        if (!handler.post(bind)) {
             synchronized(shizukuLock) {
-                if (shizukuConnection === connection) shizukuConnection = null
+                if (shizukuConnection === connection) {
+                    revision.incrementAndGet()
+                    shizukuConnection = null
+                }
                 shizukuLock.notifyAll()
             }
         }
@@ -383,4 +403,19 @@ internal fun awaitShizukuConnection(
         awaitChange(remaining)
     }
     return false
+}
+
+internal fun <T> whilePrivilegedAccessAllowed(allowed: () -> Boolean, read: () -> T?): T? {
+    if (!allowed()) return null
+    return read()?.takeIf { allowed() }
+}
+
+internal class GuardedPrivilegedCommandExecutor(
+    private val delegate: CommandExecutor, private val allowed: () -> Boolean
+) : CommandExecutor {
+    override fun run(command: String): String? =
+        whilePrivilegedAccessAllowed(allowed) { delegate.run(command) }
+
+    override fun runRaw(command: String): String? =
+        whilePrivilegedAccessAllowed(allowed) { delegate.runRaw(command) }
 }

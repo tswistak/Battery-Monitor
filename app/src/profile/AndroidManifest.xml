@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:remove="android:sharedUserId,android:sharedUserMaxSdkVersion">
+
+    <permission
+        android:name="${applicationId}.permission.PROFILE_FIXTURES"
+        android:protectionLevel="signature" />
+
+    <application
+        android:process="${applicationId}"
+        tools:replace="android:process">
+        <profileable android:shell="true" />
+        <service
+            android:name=".monitoring.BatteryInfoService"
+            android:process=":BIS"
+            tools:replace="android:process" />
+
+        <receiver
+            android:name=".monitoring.BackgroundServiceWatchdog"
+            android:process=":BIS"
+            tools:replace="android:process" />
+        <receiver
+            android:name=".monitoring.BootCompletedReceiver"
+            android:process=":BIS"
+            tools:replace="android:process" />
+        <receiver
+            android:name=".widgets.BatteryInfoAppWidgetProvider"
+            android:process=":BIS"
+            tools:replace="android:process" />
+        <receiver
+            android:name=".widgets.FullAppWidgetProvider"
+            android:process=":BIS"
+            tools:replace="android:process" />
+        <receiver
+            android:name=".widgets.WidgetSettingsReceiver"
+            android:process=":BIS"
+            tools:replace="android:process" />
+
+        <activity
+            android:name=".ui.widgets.WidgetConfigurationActivity"
+            android:process=":BIS"
+            tools:replace="android:process" />
+
+        <receiver
+            android:name=".widgets.StatusWidgetProvider"
+            android:process=":BIS"
+            tools:replace="android:process" />
+        <receiver
+            android:name=".widgets.MeasurementsWidgetProvider"
+            android:process=":BIS"
+            tools:replace="android:process" />
+        <receiver
+            android:name=".widgets.TrendWidgetProvider"
+            android:process=":BIS"
+            tools:replace="android:process" />
+        <receiver
+            android:name=".profiling.ProfileHistoryReceiver"
+            android:exported="true"
+            android:permission="${applicationId}.permission.PROFILE_FIXTURES"
+            android:process=":BIS" />
+        <receiver
+            android:name=".profiling.ProfileFixtureReceiver"
+            android:exported="true"
+            android:permission="${applicationId}.permission.PROFILE_FIXTURES" />
+    </application>
+</manifest>

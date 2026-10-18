@@ -16,18 +16,26 @@ import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.database.sqlite.SQLiteDatabase
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.viewModelScope
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.devicebackup.DeviceDataType
 import codes.swistak.batterymonitor.devicebackup.LogImportMode
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.ui.current.CurrentStateViewModel
 import codes.swistak.batterymonitor.ui.history.HistoryViewModel
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertSame
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -480,6 +488,270 @@ class BatteryHistoryInstrumentedTest {
             assertEquals(sample, records.last())
         }
     }
+
+    @Test
+    fun history_samples_resume_and_mutations_refresh_without_resetting_the_existing_context() {
+        database.addLogs(listOf(observation))
+        val app = object : Application() {
+            init {
+                attachBaseContext(context)
+            }
+        }
+        val store = ViewModelStore()
+        lateinit var model: HistoryViewModel
+        fun main(action: () -> Unit) =
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(action)
+
+        fun await(ready: () -> Boolean) {
+            val deadline = System.nanoTime() + 10_000_000_000L
+            while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
+            assertTrue("History refresh did not complete", ready())
+        }
+        try {
+            main {
+                model = HistoryViewModel(app)
+                store.put("history", model)
+                model.range(HistoryRangeState(0, 200_000), "custom")
+            }
+            await { !model.state.value.loading }
+            val selected =
+                model.state.value.chart!!.series.getValue(HistoryMetric.LEVEL).points.first().key
+            main {
+                model.scroll(7, 34)
+                model.selectPoint(selected.id)
+            }
+            val before = model.state.value.chart
+            assertEquals(
+                LogResult.Inserted, database.logObservation(
+                    observation.copy(time = 121_000), 120_000, BatteryHistorySampler(0), true
+                )
+            )
+            main {
+                model.historyChanged()
+                assertSame(before, model.state.value.chart)
+            }
+            await { model.state.value.chart?.count == 2L }
+            assertEquals(selected.id, model.state.value.selectedPointId)
+            assertEquals(7, model.scrollIndex)
+            assertEquals(34, model.scrollOffset)
+            val unchanged = model.state.value.chart
+            database.addLogs(listOf(observation.copy(time = 300_000)))
+            database.addLogs(listOf(observation.copy(time = 400_000)))
+            val outsideRevision = database.historyChanges(null, null).revision
+            main { repeat(20) { model.historyChanged() } }
+            await { model.state.value.revision == outsideRevision }
+            assertSame(unchanged, model.state.value.chart)
+
+            database.addLogs(listOf(observation.copy(time = 150_000)))
+            main { model.resume() }
+            await { !model.state.value.loading && model.state.value.chart?.count == 3L }
+            assertEquals(HistoryRangeState(0, 200_000), model.state.value.range)
+            assertEquals("charts", model.state.value.tab)
+            assertEquals(selected.id, model.state.value.selectedPointId)
+            assertEquals(7, model.scrollIndex)
+            assertEquals(34, model.scrollOffset)
+
+            database.replaceAllLogs(listOf(observation.copy(time = 170_000, charge = 49)))
+            main { model.historyChanged() }
+            await { model.state.value.chart?.series?.get(HistoryMetric.LEVEL)?.min == 49.0 }
+            assertNull(model.state.value.selectedPointId)
+            database.deleteHistory(null)
+            main { model.historyChanged() }
+            await { model.state.value.chart?.count == 0L }
+            assertFalse(model.state.value.error)
+        } finally {
+            main { store.clear() }
+        }
+    }
+
+    @Test
+    fun selecting_a_cached_point_during_refresh_keeps_it_after_new_extrema_replace_its_bucket_role() {
+        database.addLogs(
+            listOf(
+                observation.copy(status = 200, time = 100, charge = 50),
+                observation.copy(status = 200, time = 200, charge = 80),
+                observation.copy(status = 200, time = 300, charge = 60)
+            )
+        )
+        val app = object : Application() {
+            init {
+                attachBaseContext(context)
+            }
+        }
+        val store = ViewModelStore()
+        lateinit var model: HistoryViewModel
+        fun main(action: () -> Unit) =
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(action)
+
+        fun await(ready: () -> Boolean) {
+            val deadline = System.nanoTime() + 10_000_000_000L
+            while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
+            assertTrue("Selected history point refresh did not complete", ready())
+        }
+        try {
+            main {
+                model = HistoryViewModel(app)
+                store.put("selection-race", model)
+                model.range(HistoryRangeState(0, 42_000), "custom")
+            }
+            await { !model.state.value.loading }
+            val selected =
+                model.state.value.chart!!.series.getValue(HistoryMetric.LEVEL).points.single { it.value == 80.0 }.key
+            database.addLogs(listOf(observation.copy(status = 200, time = 250, charge = 90)))
+            main {
+                val selection = model.viewModelScope.launch(
+                    Dispatchers.Main.immediate, start = CoroutineStart.UNDISPATCHED
+                ) {
+                    model.state.first { it.loading }
+                    model.selectPoint(selected.id)
+                    model.selectPoint(model.state.value.chart!!.series.getValue(HistoryMetric.LEVEL).points.first().key.id)
+                    model.selectPoint(selected.id)
+                }
+                model.refresh()
+                assertTrue(
+                    "Selection must arrive after preferred-key capture and before the IO result",
+                    selection.isCompleted
+                )
+                assertTrue(model.state.value.loading)
+                assertEquals(selected.id, model.state.value.selectedPointId)
+                assertEquals(
+                    80.0, model.state.value.chart!!.series.getValue(HistoryMetric.LEVEL).max!!, 0.0
+                )
+            }
+            await {
+                !model.state.value.loading && model.state.value.chart?.series?.get(HistoryMetric.LEVEL)?.max == 90.0
+            }
+            assertFalse(model.state.value.error)
+            assertEquals(selected.id, model.state.value.selectedPointId)
+            assertEquals(
+                80.0,
+                model.state.value.chart!!.series.getValue(HistoryMetric.LEVEL).points.single { it.key == selected }.value!!,
+                0.0
+            )
+        } finally {
+            main { store.clear() }
+        }
+    }
+
+    @Test
+    fun a_new_same_level_sample_advances_the_ordinary_rolling_history_range() {
+        var now = 200_000_000L
+        database.addLogs(listOf(observation.copy(time = now - 120_000)))
+        val app = object : Application() {
+            init {
+                attachBaseContext(context)
+            }
+        }
+        val store = ViewModelStore()
+        lateinit var model: HistoryViewModel
+        fun main(action: () -> Unit) =
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(action)
+
+        fun await(ready: () -> Boolean) {
+            val deadline = System.nanoTime() + 10_000_000_000L
+            while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
+            assertTrue("Rolling history refresh did not complete", ready())
+        }
+        try {
+            main {
+                model = HistoryViewModel(app) { now }
+                store.put("rolling-history", model)
+                model.range(HistoryRangeState.lastHours(24, now), "24h")
+            }
+            await { !model.state.value.loading }
+            now += 120_000
+            database.addLogs(listOf(observation.copy(time = now)))
+            main { model.historyChanged() }
+            await { model.state.value.chart?.count == 2L }
+            assertEquals(now + 1, model.state.value.range.end)
+            assertEquals(
+                50.0, model.state.value.chart!!.series.getValue(HistoryMetric.LEVEL).min!!, 0.0
+            )
+        } finally {
+            main { store.clear() }
+        }
+    }
+
+    @Test
+    fun samples_keep_the_visible_page_window_and_read_errors_finish_without_clearing_the_chart() {
+        database.addLogs((0..<200).map { observation.copy(time = it * 1_000L) })
+        val app = object : Application() {
+            init {
+                attachBaseContext(context)
+            }
+        }
+        val store = ViewModelStore()
+        lateinit var model: HistoryViewModel
+        fun main(action: () -> Unit) =
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(action)
+
+        fun await(ready: () -> Boolean) {
+            val deadline = System.nanoTime() + 10_000_000_000L
+            while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
+            assertTrue("History page refresh did not complete", ready())
+        }
+        try {
+            main {
+                model = HistoryViewModel(app)
+                store.put("anchored-history", model)
+                model.range(HistoryRangeState(0, 300_000), "custom")
+            }
+            await { !model.state.value.loading }
+            val page = model.state.value.page.map { it.key }
+            main { model.scroll(20, 35) }
+            database.addLogs(listOf(observation.copy(time = 201_000)))
+            main { model.historyChanged() }
+            await { model.state.value.chart?.count == 201L }
+            assertEquals(page, model.state.value.page.map { it.key })
+            assertEquals(20, model.scrollIndex)
+            assertEquals(35, model.scrollOffset)
+            assertTrue(model.state.value.hasPrevious)
+
+            val previous = model.state.value.chart
+            sql("ALTER TABLE logs RENAME TO unavailable_logs")
+            main { model.refresh() }
+            await { !model.state.value.loading }
+            assertTrue(model.state.value.error)
+            assertSame(previous, model.state.value.chart)
+            sql("ALTER TABLE unavailable_logs RENAME TO logs")
+            main { model.resume() }
+            await { !model.state.value.loading && !model.state.value.error }
+            assertEquals(201L, model.state.value.chart!!.count)
+        } finally {
+            main { store.clear() }
+        }
+    }
+
+    @Test
+    fun the_current_trend_uses_committed_changes_and_a_controllable_rolling_clock(): Unit =
+        runBlocking {
+            var now = 200_000_000L
+            val model = CurrentStateViewModel()
+            val repository = LogsRepository(context)
+            database.addLogs(listOf(observation.copy(time = now - 1_000)))
+            assertEquals(
+                1L, model.refreshTrend(repository, activated = true, now = { now })!!.count
+            )
+            now += 120_000
+            database.addLogs(listOf(observation.copy(time = now)))
+            val refreshed = model.refreshTrend(repository, activated = false, now = { now })!!
+            assertEquals(2L, refreshed.count)
+            assertEquals(now + 1, refreshed.range.end)
+            database.addLogs(listOf(observation.copy(time = now - 2 * 24 * 3_600_000L)))
+            assertSame(refreshed, model.refreshTrend(repository, activated = false, now = { now }))
+            now += 25 * 3_600_000L
+            assertEquals(
+                0L, model.refreshTrend(repository, activated = true, now = { now })!!.count
+            )
+            database.replaceAllLogs(listOf(observation.copy(time = now)))
+            assertEquals(
+                1L, model.refreshTrend(repository, activated = false, now = { now })!!.count
+            )
+            database.deleteHistory(null)
+            assertEquals(
+                0L, model.refreshTrend(repository, activated = false, now = { now })!!.count
+            )
+        }
 
     @Test
     fun default_retention_volume_keeps_chart_memory_bounded_and_records_SQLite_latency() {

@@ -13,9 +13,18 @@ import codes.swistak.batterymonitor.monitoring.PredictorCore
 import codes.swistak.batterymonitor.monitoring.PredictorRecentState
 import codes.swistak.batterymonitor.monitoring.PredictorStoredState
 import java.text.NumberFormat
+import java.util.Locale
 
 internal fun predictorDiagnosticGroup(
     data: PredictorStoredState, observedAtMillis: Long, formatDuration: (Long) -> String
+): DiagnosticGroup =
+    predictorDiagnosticGroup(data, observedAtMillis, Locale.getDefault(), formatDuration)
+
+internal fun predictorDiagnosticGroup(
+    data: PredictorStoredState,
+    observedAtMillis: Long,
+    locale: Locale,
+    formatDuration: (Long) -> String
 ): DiagnosticGroup {
     val labels = listOf(
         R.string.status_discharging,
@@ -47,7 +56,7 @@ internal fun predictorDiagnosticGroup(
     val version = DiagnosticRow(
         label = R.string.diag_predictor_version,
         rawKey = Predictor.KEY_STATE_VERSION,
-        value = data.version?.let { NumberFormat.getIntegerInstance().format(it) },
+        value = data.version?.let { NumberFormat.getIntegerInstance(locale).format(it) },
         rawValue = data.version?.toString(),
         unit = "",
         source = Predictor.STORE_NAME,
@@ -60,6 +69,14 @@ internal fun predictorDiagnosticGroup(
 
 internal fun recentPredictorDiagnosticGroup(
     data: PredictorRecentState, observedAtMillis: Long, formatDuration: (Long) -> String
+): DiagnosticGroup =
+    recentPredictorDiagnosticGroup(data, observedAtMillis, Locale.getDefault(), formatDuration)
+
+internal fun recentPredictorDiagnosticGroup(
+    data: PredictorRecentState,
+    observedAtMillis: Long,
+    locale: Locale,
+    formatDuration: (Long) -> String
 ): DiagnosticGroup {
     fun row(
         label: Int,
@@ -138,7 +155,7 @@ internal fun recentPredictorDiagnosticGroup(
                 R.string.diag_predictor_observed_points,
                 "observedPoints",
                 data.observedPoints,
-                value = NumberFormat.getIntegerInstance().format(data.observedPoints)
+                value = NumberFormat.getIntegerInstance(locale).format(data.observedPoints)
             ), row(
                 R.string.diag_predictor_observation_duration,
                 "observationDurationMillis",
@@ -160,6 +177,7 @@ internal fun recentPredictorDiagnosticGroup(
         )
     )
 }
+
 
 internal fun combinedPredictorDiagnosticGroup(
     stored: DiagnosticGroup?, recent: DiagnosticGroup?

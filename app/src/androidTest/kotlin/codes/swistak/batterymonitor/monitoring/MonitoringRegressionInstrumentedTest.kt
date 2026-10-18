@@ -20,6 +20,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
+import android.os.Handler
+import android.os.IBinder
+import android.os.Looper
+import android.os.Message
+import android.os.Messenger
 import android.os.SystemClock
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.test.platform.app.InstrumentationRegistry
@@ -31,6 +36,8 @@ import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.logs.historyQuery
+import codes.swistak.batterymonitor.monitoring.presentation.CurrentDemand
+import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
 import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
@@ -38,6 +45,7 @@ import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -105,6 +113,11 @@ class MonitoringRegressionInstrumentedTest {
 
     @After
     fun tearDown() {
+        (field("currentAcquisition") as CurrentAcquisition).close()
+        (field("currentWorker") as ExecutorService).shutdownNow()
+        instrumentation.runOnMainSync {
+            (field("mHandler") as Handler).removeCallbacks(field("currentTick") as Runnable)
+        }
         (field("historyMaintenance") as ExecutorService).shutdownNow()
         database.close()
         for (name in listOf(
@@ -267,6 +280,264 @@ class MonitoringRegressionInstrumentedTest {
             assertTrue(SettingsSnapshot.apply(targetSettings, settingsBefore))
             assertTrue(SettingsSnapshot.apply(mainPreferences, mainBefore))
         }
+    }
+
+    @Test
+    fun current_refresh_joins_one_acquisition_without_history_prediction_alarm_or_widget_updates() {
+        val pending = ArrayDeque<Runnable>()
+        var reads = 0
+        set("clientMessengers", hashMapOf<Messenger, Any>())
+        set(
+            "currentAcquisition", CurrentAcquisition(
+                readNow = {
+                    reads++
+                    BatteryCurrentReading(
+                        -400_000, "fake/current_now", BatteryMeasurementTime(2_000L, 2_000L)
+                    )
+                },
+                readAverage = { error("Average current was not requested") },
+                executor = { pending.addLast(it) },
+                deliver = { it() })
+        )
+        assertTrue(MonitoringDesiredState.write(context, true))
+        val client = Messenger(Handler(Looper.getMainLooper()))
+        val sequence = field("monitoringSequence")
+        instrumentation.runOnMainSync {
+            registerCurrentClient(client, 4)
+            sendCurrentDemand(client, 4, 20, CurrentDemand(3_600_000, false))
+            serviceMessage(Message.obtain().apply {
+                what = BatteryInfoService.RemoteConnection.SERVICE_REFRESH_CURRENT
+                replyTo = client
+                arg1 = 4
+                data.putLong("current_token", 20)
+            })
+            assertEquals(1, pending.size)
+            pending.removeFirst().run()
+        }
+        instrumentation.waitForIdleSync()
+        assertEquals(1, reads)
+        assertEquals(sequence, field("monitoringSequence"))
+        assertEquals(-123_000L, field("currentMicroAmps"))
+        assertEquals(1_000L, field("now"))
+        assertNull(field("lastWidgetSnapshot"))
+        assertEquals(-400_000L, (field("latestCurrent") as CurrentSample).now?.microAmps)
+        assertTrue(
+            database.readHistory(
+                historyQuery(
+                    HistoryRangeState(
+                        0, Long.MAX_VALUE
+                    )
+                )
+            ) { it.none() })
+        instrumentation.runOnMainSync { service.onUnbind(null) }
+    }
+
+    @Test
+    fun current_demand_expires_on_cancel_unregister_binder_death_and_last_unbind() {
+        set("clientMessengers", hashMapOf<Messenger, Any>())
+        set(
+            "currentAcquisition",
+            CurrentAcquisition(
+                readNow = { null },
+                readAverage = { null },
+                executor = { },
+                deliver = { it() })
+        )
+        assertTrue(MonitoringDesiredState.write(context, true))
+        for (ending in listOf("cancel", "unregister", "death", "unbind")) {
+            val client = Messenger(Handler(Looper.getMainLooper()))
+            instrumentation.runOnMainSync {
+                registerCurrentClient(client, 1)
+                sendCurrentDemand(client, 1, 1, CurrentDemand(3_600_000, false))
+                val registration = currentClients().getValue(client)
+                when (ending) {
+                    "cancel" -> sendCurrentDemand(client, 1, 2, null)
+                    "unregister" -> serviceMessage(Message.obtain().apply {
+                        what = BatteryInfoService.RemoteConnection.SERVICE_UNREGISTER_CLIENT
+                        replyTo = client
+                        arg1 = 1
+                    })
+
+                    "death" -> {
+                        val death = registration.javaClass.getDeclaredField("deathRecipient")
+                            .apply { isAccessible = true }
+                            .get(registration) as IBinder.DeathRecipient
+                        death.binderDied()
+                    }
+
+                    "unbind" -> service.onUnbind(null)
+                }
+            }
+            instrumentation.waitForIdleSync()
+            instrumentation.runOnMainSync {
+                val registration = currentClients()[client]
+                if (registration != null) {
+                    assertNull(
+                        registration.javaClass.getDeclaredField("demand")
+                            .apply { isAccessible = true }.get(registration)
+                    )
+                }
+                service.onUnbind(null)
+            }
+        }
+        assertTrue(currentClients().isEmpty())
+    }
+
+    @Test
+    fun average_demand_upgrades_the_in_flight_service_read_without_waiting_for_the_next_interval() {
+        val pending = ArrayDeque<Runnable>()
+        var nowReads = 0
+        var averageReads = 0
+        set("clientMessengers", hashMapOf<Messenger, Any>())
+        set("currentAcquisition", CurrentAcquisition(readNow = {
+            nowReads++
+            BatteryCurrentReading(
+                -400_000, "fake/current_now", BatteryMeasurementTime(2_000, 2_000)
+            )
+        }, readAverage = {
+            averageReads++
+            BatteryCurrentReading(
+                -350_000, "fake/current_average", BatteryMeasurementTime(2_001, 2_001)
+            )
+        }, executor = { pending.addLast(it) }, deliver = { it() }))
+        assertTrue(MonitoringDesiredState.write(context, true))
+        val client = Messenger(Handler(Looper.getMainLooper()))
+        instrumentation.runOnMainSync {
+            registerCurrentClient(client, 1)
+            sendCurrentDemand(client, 1, 1, CurrentDemand(3_600_000, false))
+            sendCurrentDemand(client, 1, 2, CurrentDemand(3_600_000, true))
+            assertEquals(1, pending.size)
+            pending.removeFirst().run()
+        }
+        instrumentation.waitForIdleSync()
+        assertEquals(1, nowReads)
+        assertEquals(1, averageReads)
+        assertEquals(-350_000L, (field("latestCurrent") as CurrentSample).selected(true)?.microAmps)
+        instrumentation.runOnMainSync { service.onUnbind(null) }
+    }
+
+    @Test
+    fun delayed_unknown_time_fallback_cannot_replace_a_newer_direct_observation() {
+        val record = BatteryInfoService::class.java.getDeclaredMethod(
+            "recordDirectCurrent", CurrentSample::class.java
+        ).apply { isAccessible = true }
+        val publish = BatteryInfoService::class.java.getDeclaredMethod(
+            "publishCurrent", CurrentSample::class.java, Long::class.javaPrimitiveType
+        ).apply { isAccessible = true }
+        val direct = CurrentSample(
+            BatteryCurrentReading(
+                -500_000, "direct", BatteryMeasurementTime(2_000, 2_000)
+            ), null
+        )
+        instrumentation.runOnMainSync {
+            val oldRequest = record.invoke(service, CurrentSample(null, null)) as Long
+            val newRequest = record.invoke(service, direct) as Long
+            publish.invoke(service, direct, newRequest)
+            publish.invoke(
+                service,
+                CurrentSample(BatteryCurrentReading(-400_000, "old privileged"), null),
+                oldRequest
+            )
+            assertEquals(direct, field("latestCurrent"))
+        }
+    }
+
+    @Test
+    fun old_generation_cannot_remove_a_reregistered_client_or_install_current_demand() {
+        set("clientMessengers", hashMapOf<Messenger, Any>())
+        val client = Messenger(Handler(Looper.getMainLooper()))
+        instrumentation.runOnMainSync {
+            registerCurrentClient(client, 1)
+            registerCurrentClient(client, 2)
+            sendCurrentDemand(client, 1, 99, CurrentDemand(1_000, false))
+            serviceMessage(Message.obtain().apply {
+                what = BatteryInfoService.RemoteConnection.SERVICE_UNREGISTER_CLIENT
+                replyTo = client
+                arg1 = 1
+            })
+            val registration = currentClients().getValue(client)
+            assertNull(
+                registration.javaClass.getDeclaredField("demand")
+                    .apply { isAccessible = true }.get(registration)
+            )
+            service.onUnbind(null)
+        }
+    }
+
+    @Test
+    fun current_demand_cannot_restart_explicitly_disabled_monitoring() {
+        set("clientMessengers", hashMapOf<Messenger, Any>())
+        var acquisitions = 0
+        set(
+            "currentAcquisition", CurrentAcquisition(
+                readNow = { null },
+                readAverage = { null },
+                executor = { acquisitions++ },
+                deliver = { it() })
+        )
+        assertTrue(MonitoringDesiredState.write(context, false))
+        val client = Messenger(Handler(Looper.getMainLooper()))
+        instrumentation.runOnMainSync {
+            registerCurrentClient(client, 1)
+            sendCurrentDemand(client, 1, 1, CurrentDemand(1_000, false))
+            val registration = currentClients().getValue(client)
+            assertNull(
+                registration.javaClass.getDeclaredField("demand")
+                    .apply { isAccessible = true }.get(registration)
+            )
+            assertEquals(0, acquisitions)
+            assertFalse(MonitoringDesiredState.read(context))
+            service.onUnbind(null)
+        }
+    }
+
+    @Test
+    fun service_destruction_stops_acquisition_and_revokes_process_privileged_access() {
+        val wasEnabled = PrivilegedAccess.isEnabled()
+        try {
+            set("clientMessengers", hashMapOf<Messenger, Any>())
+            instrumentation.runOnMainSync {
+                PrivilegedAccess.setEnabled(true)
+                call("stopAcquisition")
+                assertFalse(PrivilegedAccess.isEnabled())
+                assertEquals(true, field("destroyed"))
+                assertTrue((field("currentWorker") as ExecutorService).isShutdown)
+                (field("currentAcquisition") as CurrentAcquisition).read(false) {
+                    error("Destroyed service must not deliver another native reading")
+                }
+            }
+        } finally {
+            instrumentation.runOnMainSync { PrivilegedAccess.setEnabled(wasEnabled) }
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun currentClients() = field("clientMessengers") as MutableMap<Messenger, Any>
+
+    private fun registerCurrentClient(client: Messenger, generation: Int) {
+        BatteryInfoService::class.java.getDeclaredMethod(
+            "registerClient", Messenger::class.java, Int::class.javaPrimitiveType
+        ).apply { isAccessible = true }.invoke(service, client, generation)
+    }
+
+    private fun sendCurrentDemand(
+        client: Messenger, generation: Int, token: Long, demand: CurrentDemand?
+    ) {
+        serviceMessage(Message.obtain().apply {
+            what = BatteryInfoService.RemoteConnection.SERVICE_SET_CURRENT_DEMAND
+            replyTo = client
+            arg1 = generation
+            data = demand?.toBundle(token) ?: android.os.Bundle()
+                .apply { putLong("current_token", token) }
+        })
+    }
+
+    private fun serviceMessage(message: Message) {
+        val type =
+            BatteryInfoService::class.java.declaredClasses.first { it.simpleName == "MessageHandler" }
+        val handler = type.getDeclaredConstructor(BatteryInfoService::class.java)
+            .apply { isAccessible = true }.newInstance(service) as Handler
+        handler.handleMessage(message)
     }
 
     private fun navigator(activity: BatteryInfoActivity): SectionNavigator =

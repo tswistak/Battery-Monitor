@@ -65,8 +65,11 @@ import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogResult
 import codes.swistak.batterymonitor.logs.maintainHistory
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageResolver
+import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageSource
+import codes.swistak.batterymonitor.monitoring.presentation.CurrentDemand
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
+import codes.swistak.batterymonitor.monitoring.presentation.toBundle
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.LongDurationFormat
@@ -91,13 +94,20 @@ import kotlin.math.roundToInt
 
 class BatteryInfoService : Service() {
 
+    private class ClientRegistration(
+        var generation: Int,
+        val deathRecipient: IBinder.DeathRecipient,
+        var demand: CurrentDemand? = null,
+        var token: Long = 0L
+    )
+
     enum class ServiceStartResult {
         START_REQUESTED, FALLBACK_REQUESTED, NOT_ALLOWED, FAILED
     }
 
     companion object {
         private const val LOG_TAG = "BatteryInfoService"
-        private var clientMessengers: HashMap<Messenger, Int>? = null
+        private var clientMessengers: HashMap<Messenger, ClientRegistration>? = null
 
         private var messenger: Messenger? = null
         private val widgetIds = HashSet<Int>()
@@ -162,7 +172,7 @@ class BatteryInfoService : Service() {
 
         private fun sendClientMessage(
             clientMessenger: Messenger, what: Int, data: Bundle? = null, generation: Int = 0
-        ) {
+        ): Boolean {
             val outgoing = Message.obtain()
             outgoing.what = what
             outgoing.arg1 = generation
@@ -170,7 +180,9 @@ class BatteryInfoService : Service() {
             outgoing.data = data
             try {
                 clientMessenger.send(outgoing)
+                return true
             } catch (_: RemoteException) {
+                return false
             }
         }
 
@@ -293,6 +305,28 @@ class BatteryInfoService : Service() {
     private var bl: BatteryLevel? = null
     private var cwbg: CircleWidgetBackground? = null
     private var currentMicroAmps: Long? = null
+    private val currentWorker = Executors.newSingleThreadExecutor { task ->
+        Thread(task, "CurrentAcquisition").apply { isDaemon = true }
+    }
+    private val currentAcquisition = CurrentAcquisition(
+        readNow = {
+            BatteryCurrent.readWithSource(
+                false, readPrivileged = { null })
+        },
+        readAverage = { BatteryCurrent.readWithSource(true, readPrivileged = { null }) },
+        executor = currentWorker,
+        deliver = { callback -> mHandler.post { callback() } })
+    private var latestCurrent = CurrentSample(null, null)
+    private var latestDirectCurrent = CurrentSample(null, null)
+    private var currentRequestId = 0L
+    private var currentSequence = 0L
+    private var currentAccessRevision: Long? = null
+    private var currentRefreshInFlight = false
+    private var currentPrivilegedInFlight = false
+    private var currentPrivilegedRevision: Long? = null
+    private var currentPrivilegedRequestId = 0L
+    private val currentTick = Runnable { refreshCurrent() }
+
     private var forceWidgetUpdate = true
     private var lastWidgetSnapshot: WidgetSnapshot? = null
 
@@ -322,7 +356,12 @@ class BatteryInfoService : Service() {
 
     private lateinit var remainingChargeReader: RemainingChargeReader
 
-    private val pendingBatteryUpdates = java.util.ArrayDeque<Intent>()
+    private data class PendingBatteryUpdate(
+        val intent: Intent, val acquiredAt: BatteryMeasurementTime
+    )
+
+    private val pendingBatteryUpdates = java.util.ArrayDeque<PendingBatteryUpdate>()
+
     private var resolvingBatteryUpdate = false
     private var destroyed = false
 
@@ -520,7 +559,7 @@ class BatteryInfoService : Service() {
 
     override fun onDestroy() {
         PrivilegedAccess.setReadyListener(null)
-        destroyed = true
+        stopAcquisition()
         pendingBatteryUpdates.clear()
         historyMaintenance.shutdown()
         voltageResolver?.shutdown()
@@ -548,6 +587,15 @@ class BatteryInfoService : Service() {
         }
         stopForeground(STOP_FOREGROUND_REMOVE)
         mainNotificationForegroundStarted = false
+    }
+
+    private fun stopAcquisition() {
+        destroyed = true
+        PrivilegedAccess.setEnabled(false)
+        mHandler.removeCallbacks(currentTick)
+        currentAcquisition.close()
+        currentWorker.shutdownNow()
+        clientMessengers?.keys?.toList()?.forEach(::removeClient)
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
@@ -592,6 +640,169 @@ class BatteryInfoService : Service() {
         return messenger!!.binder
     }
 
+    override fun onUnbind(intent: Intent?): Boolean {
+        clientMessengers?.keys?.toList()?.forEach(::removeClient)
+        return super.onUnbind(intent)
+    }
+
+    private fun registerClient(client: Messenger, generation: Int) {
+        val registrations = clientMessengers ?: return
+        val old = registrations[client]
+        if (old == null) {
+            val death = IBinder.DeathRecipient { mHandler.post { removeClient(client) } }
+            try {
+                client.binder.linkToDeath(death, 0)
+            } catch (_: RemoteException) {
+                return
+            }
+            registrations[client] = ClientRegistration(generation, death)
+        } else if (old.generation != generation) {
+            old.generation = generation
+            old.demand = null
+            old.token = 0
+            scheduleCurrentTick()
+        }
+        if (!sendClientMessage(
+                client, RemoteConnection.CLIENT_BATTERY_INFO_UPDATED, monitoringBundle(), generation
+            )
+        ) {
+            removeClient(client)
+        }
+    }
+
+    private fun removeClient(client: Messenger) {
+        val registration = clientMessengers?.remove(client) ?: return
+        runCatching { client.binder.unlinkToDeath(registration.deathRecipient, 0) }
+        scheduleCurrentTick()
+    }
+
+    private fun setCurrentDemand(message: Message) {
+        val registration = clientMessengers?.get(message.replyTo) ?: return
+        if (registration.generation != message.arg1) return
+        val token = message.data.getLong("current_token", -1)
+        if (token < registration.token || token < 0) return
+        registration.token = token
+        registration.demand = CurrentDemand.fromBundle(message.data).takeIf {
+            BackgroundServiceWatchdog.isServiceDesired(this) && !destroyed
+        }
+        if (registration.demand != null) {
+            sendCurrentTo(message.replyTo, registration)
+            refreshCurrent()
+        } else scheduleCurrentTick()
+    }
+
+    private fun wantsAverageCurrent(): Boolean =
+        clientMessengers?.values?.any { it.demand?.preferAverage == true } == true
+
+    private fun scheduleCurrentTick() {
+        mHandler.removeCallbacks(currentTick)
+        if (destroyed || currentRefreshInFlight) return
+        val interval =
+            clientMessengers?.values?.mapNotNull { it.demand?.refreshMillis }?.minOrNull() ?: return
+        mHandler.postDelayed(currentTick, interval)
+    }
+
+    private fun refreshCurrent() {
+        if (destroyed || clientMessengers?.values?.none { it.demand != null } != false) return
+        if (currentRefreshInFlight) {
+            if (wantsAverageCurrent()) currentAcquisition.requestAverage()
+            return
+        }
+        currentRefreshInFlight = true
+        mHandler.removeCallbacks(currentTick)
+        currentAcquisition.read(wantsAverageCurrent()) { direct ->
+            currentRefreshInFlight = false
+            if (destroyed || clientMessengers?.values?.none { it.demand != null } != false) {
+                return@read
+            }
+            recordDirectCurrent(direct)
+            val needsFallback =
+                direct.now == null || wantsAverageCurrent() && direct.average == null
+            val revision = PrivilegedAccess.accessRevision
+            val cached =
+                if (needsFallback && PrivilegedAccess.isEnabled()) PrivilegedBatteryReader.shared.read() else null
+            val allowed =
+                PrivilegedAccess.isEnabled() && revision == PrivilegedAccess.accessRevision
+            publishCurrent(resolveCurrent(direct, cached.takeIf { allowed }))
+            scheduleCurrentTick()
+            if (needsFallback && PrivilegedAccess.isEnabled() && (!currentPrivilegedInFlight || currentPrivilegedRevision != revision)) {
+                currentPrivilegedInFlight = true
+                currentPrivilegedRevision = revision
+                val requestId = ++currentPrivilegedRequestId
+                PrivilegedBatteryReader.shared.readWhenReady(false) { reading ->
+                    mHandler.post {
+                        if (requestId != currentPrivilegedRequestId) return@post
+                        currentPrivilegedInFlight = false
+                        val allowed =
+                            PrivilegedAccess.isEnabled() && revision == PrivilegedAccess.accessRevision
+                        if (!destroyed && allowed && clientMessengers?.values?.any { it.demand != null } == true) {
+                            val fallback = reading ?: PrivilegedBatteryReader.shared.read()
+                            publishCurrent(resolveCurrent(latestDirectCurrent, fallback))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun recordDirectCurrent(sample: CurrentSample): Long {
+        if (sample !== latestDirectCurrent) {
+            latestDirectCurrent = sample
+            currentRequestId++
+        }
+        return currentRequestId
+    }
+
+    private fun resolveCurrent(
+        direct: CurrentSample, fallback: PrivilegedBatteryReading?
+    ): CurrentSample {
+        fun privileged(average: Boolean): BatteryCurrentReading? {
+            val key = if (average) "current_average" else "current_now"
+            val raw = if (average) fallback?.currentAverageUa else fallback?.currentNowUa
+            return raw?.let {
+                BatteryCurrentReading(
+                    it, fallback?.fieldSources?.get(key), fallback?.fieldMeasurementTimes?.get(key)
+                )
+            }
+        }
+        return CurrentSample(direct.now ?: privileged(false), direct.average ?: privileged(true))
+    }
+
+    private fun publishCurrent(sample: CurrentSample, requestId: Long = currentRequestId) {
+        if (requestId < currentRequestId) return
+        fun newer(
+            next: BatteryCurrentReading?, previous: BatteryCurrentReading?
+        ): BatteryCurrentReading? {
+            val nextElapsed = next?.acquiredAt?.elapsedMillis
+            val previousElapsed = previous?.acquiredAt?.elapsedMillis
+            return if (nextElapsed != null && previousElapsed != null && nextElapsed < previousElapsed) previous else next
+        }
+
+        val accepted = CurrentSample(
+            newer(sample.now, latestCurrent.now), newer(sample.average, latestCurrent.average)
+        )
+        if (accepted == latestCurrent) return
+        latestCurrent = accepted
+        currentSequence++
+        clientMessengers?.toList()?.forEach { (client, registration) ->
+            if (registration.demand != null) sendCurrentTo(client, registration)
+        }
+    }
+
+    private fun sendCurrentTo(client: Messenger, registration: ClientRegistration) {
+        val bundle = latestCurrent.toBundle().apply {
+            putString(MonitoringConnection.FIELD_PROCESS_ID, monitoringProcessId)
+            putLong("current_sequence", currentSequence)
+            putLong("current_token", registration.token)
+        }
+        if (!sendClientMessage(
+                client, RemoteConnection.CLIENT_CURRENT_UPDATED, bundle, registration.generation
+            )
+        ) {
+            removeClient(client)
+        }
+    }
+
     private class MessageHandler(private val bis: BatteryInfoService) :
         Handler(Looper.getMainLooper()) {
         override fun handleMessage(incoming: Message) {
@@ -602,19 +813,24 @@ class BatteryInfoService : Service() {
                     }, incoming.arg1
                 )
 
-                RemoteConnection.SERVICE_REGISTER_CLIENT -> {
-                    clientMessengers!![incoming.replyTo] = incoming.arg1
-                    sendClientMessage(
-                        incoming.replyTo,
-                        RemoteConnection.CLIENT_BATTERY_INFO_UPDATED,
-                        bis.monitoringBundle(),
-                        incoming.arg1
-                    )
+                RemoteConnection.SERVICE_REGISTER_CLIENT -> bis.registerClient(
+                    incoming.replyTo, incoming.arg1
+                )
+
+                RemoteConnection.SERVICE_UNREGISTER_CLIENT -> {
+                    if (clientMessengers?.get(incoming.replyTo)?.generation == incoming.arg1) {
+                        bis.removeClient(incoming.replyTo)
+                    }
                 }
 
-                RemoteConnection.SERVICE_UNREGISTER_CLIENT -> clientMessengers!!.remove(
-                    incoming.replyTo
-                )
+                RemoteConnection.SERVICE_SET_CURRENT_DEMAND -> bis.setCurrentDemand(incoming)
+                RemoteConnection.SERVICE_REFRESH_CURRENT -> {
+                    val registration = clientMessengers?.get(incoming.replyTo)
+                    if (registration?.generation == incoming.arg1 && registration.demand != null && registration.token == incoming.data.getLong(
+                            "current_token", -1
+                        )
+                    ) bis.refreshCurrent()
+                }
 
                 RemoteConnection.SERVICE_RELOAD_SETTINGS -> bis.reloadSettings(
                     false, incoming.data
@@ -647,9 +863,12 @@ class BatteryInfoService : Service() {
             const val SERVICE_RELOAD_SETTINGS: Int = 3
             const val SERVICE_CANCEL_NOTIFICATION_AND_RELOAD_SETTINGS: Int = 4
             const val SERVICE_RELOAD_DEVICE_DATA: Int = 5
+            const val SERVICE_SET_CURRENT_DEMAND: Int = 6
+            const val SERVICE_REFRESH_CURRENT: Int = 7
 
             const val CLIENT_SERVICE_CONNECTED: Int = 0
             const val CLIENT_BATTERY_INFO_UPDATED: Int = 1
+            const val CLIENT_CURRENT_UPDATED: Int = 2
         }
 
         var serviceMessenger: Messenger? = null
@@ -721,6 +940,10 @@ class BatteryInfoService : Service() {
                 SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false
             )
         )
+        if (currentAccessRevision != PrivilegedAccess.accessRevision) {
+            currentAccessRevision = PrivilegedAccess.accessRevision
+            publishCurrent(CurrentSample(null, null))
+        }
         val multiplier = settings.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
         BatteryCurrent.setMultiplier(multiplier?.toIntOrNull() ?: 1)
     }
@@ -779,28 +1002,37 @@ class BatteryInfoService : Service() {
         settingsEditor.apply()
     }
 
-    private fun batteryFields(intent: Intent?): Pair<Map<String, Int>, String?> {
+    private fun batteryFields(
+        intent: Intent?, acquiredAt: BatteryMeasurementTime = BatteryMeasurementTime.now()
+    ): Triple<Map<String, Int>, String?, Map<String, BatteryMeasurementTime>> {
         val fields = BATTERY_READING_FIELDS.filter { intent?.hasExtra(it) == true }
             .associateWith { intent!!.getIntExtra(it, Int.MIN_VALUE) }.toMutableMap()
         var voltageSource = "ACTION_BATTERY_CHANGED / voltage".takeIf {
             BatteryInfo.EXTRA_VOLTAGE in fields
         }
+        val times = fields.keys.associateWith { acquiredAt }.toMutableMap()
+        val voltageReadAt = BatteryMeasurementTime.now()
         voltageResolver?.resolve(fields[BatteryInfo.EXTRA_VOLTAGE] ?: 0)?.let {
             fields[BatteryInfo.EXTRA_VOLTAGE] = it.millivolts
             voltageSource = it.sourceDetail
+            times[BatteryInfo.EXTRA_VOLTAGE] =
+                if (it.source == BatteryVoltageSource.BROADCAST) acquiredAt else voltageReadAt
         }
-        return fields to voltageSource
+        return Triple(fields, voltageSource, times)
     }
 
     private fun applyBatteryIntent(intent: Intent?) {
         if (intent != null) {
-            val (fields, voltageSource) = batteryFields(intent)
-            applyBatteryFields(fields, null, voltageSource)
+            val (fields, voltageSource, times) = batteryFields(intent)
+            applyBatteryFields(fields, null, voltageSource, times)
         }
     }
 
     private fun applyBatteryFields(
-        fields: Map<String, Int>, fallback: PrivilegedBatteryReading?, voltageSource: String?
+        fields: Map<String, Int>,
+        fallback: PrivilegedBatteryReading?,
+        voltageSource: String?,
+        times: Map<String, BatteryMeasurementTime>
     ): Map<String, Int> {
         val merged = mergeBatteryFields(fields, fallback)
         val resolved = Intent(Intent.ACTION_BATTERY_CHANGED)
@@ -811,14 +1043,18 @@ class BatteryInfoService : Service() {
         }
         info!!.load(resolved, spService)
         info!!.fieldSources = mergeBatteryFieldSources(fields, fallback, voltageSource)
+        info!!.fieldMeasurementTimes = mergeBatteryFieldMeasurementTimes(fields, fallback, times)
         return merged
     }
 
 
     private fun update(intent: Intent?) {
+        val acquiredAt = BatteryMeasurementTime.now()
         val batteryIntent = intent ?: registerReceiver(null, batteryChanged)
         pendingBatteryUpdates.addLast(
-            batteryIntent?.let(::Intent) ?: Intent(Intent.ACTION_BATTERY_CHANGED)
+            PendingBatteryUpdate(
+                batteryIntent?.let(::Intent) ?: Intent(Intent.ACTION_BATTERY_CHANGED), acquiredAt
+            )
         )
         processNextBatteryUpdate()
     }
@@ -828,34 +1064,54 @@ class BatteryInfoService : Service() {
         resolvingBatteryUpdate = true
         val observedAt = System.currentTimeMillis()
         val observedElapsed = SystemClock.elapsedRealtime()
-        val (fields, voltageSource) = batteryFields(pendingBatteryUpdates.removeFirst())
+        val pending = pendingBatteryUpdates.removeFirst()
+        val (fields, voltageSource, fieldTimes) = batteryFields(pending.intent, pending.acquiredAt)
+        val remainingChargeTime = BatteryMeasurementTime.now()
         val remainingCharge = remainingChargeReader.readMicroAmpHours()
-        val rawCurrent = BatteryCurrent.rawCurrentMicroAmps
-        val needsFallback =
-            missingBatteryFields(fields).isNotEmpty() || remainingCharge == null || rawCurrent == null
-        val revision = PrivilegedAccess.accessRevision
-        val complete: (PrivilegedBatteryReading?) -> Unit = { reading ->
-            mHandler.post {
-                if (!destroyed) {
-                    val allowed =
-                        PrivilegedAccess.isEnabled() && revision == PrivilegedAccess.accessRevision
-                    updateResolved(
-                        fields,
-                        reading.takeIf { allowed },
-                        rawCurrent,
-                        remainingCharge,
-                        observedAt,
-                        observedElapsed,
-                        voltageSource
-                    )
-                }
-                resolvingBatteryUpdate = false
-                processNextBatteryUpdate()
+        val times =
+            fieldTimes + if (remainingCharge != null) mapOf("charge_counter" to remainingChargeTime) else emptyMap()
+        currentAcquisition.read(wantsAverageCurrent()) { direct ->
+            if (destroyed) return@read
+            val requestId = recordDirectCurrent(direct)
+            if (direct.now != null || direct.average != null) {
+                publishCurrent(direct)
+                scheduleCurrentTick()
             }
+            val needsFallback =
+                missingBatteryFields(fields).isNotEmpty() || remainingCharge == null || direct.now == null
+            val revision = PrivilegedAccess.accessRevision
+            val complete: (PrivilegedBatteryReading?) -> Unit = { reading ->
+                mHandler.post {
+                    if (!destroyed) {
+                        val allowed =
+                            PrivilegedAccess.isEnabled() && revision == PrivilegedAccess.accessRevision
+                        val fallback = reading.takeIf { allowed }
+                        val current = resolveCurrent(direct, fallback)
+                        if (current.now != null || current.average != null) {
+                            publishCurrent(current, requestId)
+                            scheduleCurrentTick()
+                        }
+                        updateResolved(
+                            fields,
+                            fallback,
+                            direct.now?.microAmps,
+                            remainingCharge,
+                            observedAt,
+                            observedElapsed,
+                            voltageSource,
+                            times
+                        )
+                    }
+                    resolvingBatteryUpdate = false
+                    processNextBatteryUpdate()
+                }
+            }
+            if (needsFallback && PrivilegedAccess.isEnabled()) {
+                PrivilegedBatteryReader.shared.readWhenReady(
+                    allowCached = false, onResult = complete
+                )
+            } else complete(null)
         }
-        if (needsFallback && PrivilegedAccess.isEnabled()) {
-            PrivilegedBatteryReader.shared.readWhenReady(allowCached = false, onResult = complete)
-        } else complete(null)
     }
 
 
@@ -866,14 +1122,15 @@ class BatteryInfoService : Service() {
         remainingCharge: Long?,
         observedAt: Long,
         observedElapsed: Long,
-        voltageSource: String?
+        voltageSource: String?,
+        times: Map<String, BatteryMeasurementTime>
     ) {
         currentMicroAmps = rawCurrent ?: fallback?.currentNowUa
         now = observedAt
         spsEditor = spService.edit()
         updatedLasts = false
 
-        val resolvedFields = applyBatteryFields(fields, fallback, voltageSource)
+        val resolvedFields = applyBatteryFields(fields, fallback, voltageSource, times)
         info!!.remainingChargeUah = remainingCharge ?: fallback?.remainingChargeUah
         val remainingChargeSource = if (remainingCharge != null) {
             "BatteryManager / BATTERY_PROPERTY_CHARGE_COUNTER"
@@ -882,6 +1139,10 @@ class BatteryInfoService : Service() {
         if (remainingChargeSource != null) {
             info!!.fieldSources += "charge_counter" to remainingChargeSource
         }
+        val chargeTime = if (remainingCharge != null) times["charge_counter"]
+        else fallback?.fieldMeasurementTimes?.get("charge_counter")
+            ?.takeIf { fallback.remainingChargeUah != null }
+        if (chargeTime != null) info!!.fieldMeasurementTimes += "charge_counter" to chargeTime
         recordHistory(resolvedFields, observedElapsed)
 
         predictor!!.setPredictionType(
@@ -943,13 +1204,14 @@ class BatteryInfoService : Service() {
         syncSpsEditor()
 
         monitoringSequence++
-        for ((messenger, generation) in clientMessengers!!) {
-            sendClientMessage(
-                messenger,
-                RemoteConnection.CLIENT_BATTERY_INFO_UPDATED,
-                monitoringBundle(),
-                generation
-            )
+        for ((messenger, registration) in clientMessengers!!.toList()) {
+            if (!sendClientMessage(
+                    messenger,
+                    RemoteConnection.CLIENT_BATTERY_INFO_UPDATED,
+                    monitoringBundle(),
+                    registration.generation
+                )
+            ) removeClient(messenger)
         }
 
         BackgroundServiceWatchdog.recordHeartbeat(this)

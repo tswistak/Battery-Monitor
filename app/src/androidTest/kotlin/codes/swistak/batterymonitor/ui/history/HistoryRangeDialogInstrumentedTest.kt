@@ -13,18 +13,21 @@
 package codes.swistak.batterymonitor.ui.history
 
 import android.accessibilityservice.AccessibilityServiceInfo
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
-import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
-import android.view.inspector.WindowInspector
+import android.view.inputmethod.InputMethodManager
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.platform.view.inspector.WindowInspectorCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
@@ -108,21 +111,13 @@ class HistoryRangeDialogInstrumentedTest {
         }
     }
 
-    private fun applicationWindows(): Int {
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        instrumentation.waitForIdleSync()
-        return instrumentation.uiAutomation.windows.count {
-            it.type == AccessibilityWindowInfo.TYPE_APPLICATION && it.root?.packageName?.toString() == instrumentation.targetContext.packageName
-        }
-    }
-
     private fun assertOneDialog() {
         await { dialogs() == 1 }
         assertEquals("Only one Compose dialog window may be attached", 1, dialogs())
     }
 
+    @SuppressLint("RestrictedApi")
     private fun dialogs(): Int {
-        if (Build.VERSION.SDK_INT < 29) return applicationWindows() - 1
         fun descendants(node: SemanticsNode): List<SemanticsNode> =
             listOf(node) + node.children.flatMap(::descendants)
 
@@ -136,7 +131,7 @@ class HistoryRangeDialogInstrumentedTest {
 
         var count = 0
         main {
-            count = WindowInspector.getGlobalWindowViews().flatMap(::owners)
+            count = WindowInspectorCompat.getGlobalWindowViews().flatMap(::owners)
                 .flatMap { descendants(it.rootSemanticsNode) }
                 .count { it.config.contains(SemanticsProperties.IsDialog) }
         }
@@ -167,8 +162,9 @@ class HistoryRangeDialogInstrumentedTest {
     }
 
     private fun click(text: String) {
-        await {
+        await("The visible dialog must expose the button: $text") {
             if (!textVisible(text)) {
+                hideKeyboard()
                 findNode { it.isScrollable }?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
             }
             textVisible(text)
@@ -183,6 +179,46 @@ class HistoryRangeDialogInstrumentedTest {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync()
     }
 
+    @SuppressLint("RestrictedApi")
+    private fun hideKeyboard() {
+        main {
+            WindowInspectorCompat.getGlobalWindowViews().filter { it.hasWindowFocus() }
+                .forEach { view ->
+                    view.context.getSystemService(InputMethodManager::class.java)
+                        ?.hideSoftInputFromWindow(view.windowToken, 0)
+                }
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun failureDetails(): String {
+        fun texts(node: AccessibilityNodeInfo): List<String> = buildList {
+            node.text?.let { add(it.toString()) }
+            for (index in 0 until node.childCount) {
+                node.getChild(index)?.let { addAll(texts(it)) }
+            }
+        }
+
+        val windows =
+            InstrumentationRegistry.getInstrumentation().uiAutomation.windows.joinToString { window ->
+                val root = window.root
+                "type=${window.type}, active=${window.isActive}, focused=${window.isFocused}, " + "package=${root?.packageName}, texts=${
+                    root?.let(
+                        ::texts
+                    )?.take(40)
+                }"
+            }
+        var views = ""
+        main {
+            views = WindowInspectorCompat.getGlobalWindowViews().joinToString { view ->
+                val ime =
+                    ViewCompat.getRootWindowInsets(view)?.isVisible(WindowInsetsCompat.Type.ime())
+                "focused=${view.hasWindowFocus()}, ime=$ime, focus=${view.findFocus()}"
+            }
+        }
+        return "accessibility windows: $windows; app windows: $views"
+    }
+
     private fun main(action: () -> Unit) {
         var failure: Throwable? = null
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
@@ -195,11 +231,15 @@ class HistoryRangeDialogInstrumentedTest {
         failure?.let { throw it }
     }
 
-    private fun await(condition: () -> Boolean) {
+    private fun await(
+        message: String = "Dialog UI did not reach the expected state", condition: () -> Boolean
+    ) {
         val until = android.os.SystemClock.uptimeMillis() + 10_000
         while (!condition() && android.os.SystemClock.uptimeMillis() < until) {
             android.os.SystemClock.sleep(50)
         }
-        assertTrue("Dialog UI did not reach the expected state", condition())
+        if (!condition()) {
+            assertTrue("$message; ${failureDetails()}", false)
+        }
     }
 }

@@ -21,7 +21,6 @@ import android.os.Process
 import android.os.RemoteException
 import androidx.annotation.Keep
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
-import codes.swistak.batterymonitor.advancedstats.AdvancedBatteryStatsCollector
 import codes.swistak.batterymonitor.common.PrivilegedShellExecutor
 import kotlin.system.exitProcess
 
@@ -53,11 +52,12 @@ class PrivilegedCommandUserService : Binder {
         }
 
         @Throws(RemoteException::class)
-        fun requestBatterySnapshot(binder: IBinder): Bundle? {
+        fun requestBatterySnapshot(binder: IBinder, accessRevision: Long): Bundle? {
             val data = Parcel.obtain()
             val reply = Parcel.obtain()
             try {
                 data.writeInterfaceToken(DESCRIPTOR)
+                data.writeLong(accessRevision)
                 if (!binder.transact(TRANSACTION_GET_BATTERY_SNAPSHOT, data, reply, 0)) return null
                 reply.readException()
                 return reply.readBundle(AdvancedBatterySnapshot::class.java.classLoader)
@@ -69,6 +69,7 @@ class PrivilegedCommandUserService : Binder {
     }
 
     private val context: Context?
+    private val monitoringBackend = PrivilegedMonitoringBackend(requireRoot = false)
 
     constructor() {
         context = null
@@ -106,12 +107,15 @@ class PrivilegedCommandUserService : Binder {
 
         response.writeNoException()
         if (code == TRANSACTION_GET_BATTERY_SNAPSHOT) {
+            val accessRevision =
+                if (data.dataAvail() >= java.lang.Long.BYTES) data.readLong() else 0L
             val snapshot = runCatching {
-                AdvancedBatteryStatsCollector.collectMonitoring(PrivilegedShellExecutor(), context)
-                    .apply {
-                        accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
-                        remoteUid = Process.myUid()
-                    }.toBundle()
+                monitoringBackend.read(
+                    PrivilegedShellExecutor(), accessRevision, { true }, context, getCallingPid()
+                )?.apply {
+                    accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
+                    remoteUid = Process.myUid()
+                }?.toBundle()
             }.getOrNull()
             response.writeBundle(snapshot)
         } else response.writeString(runCommand(data.readString().orEmpty()))

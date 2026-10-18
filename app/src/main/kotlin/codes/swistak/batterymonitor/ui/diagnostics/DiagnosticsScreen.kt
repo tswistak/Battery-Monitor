@@ -10,6 +10,7 @@ package codes.swistak.batterymonitor.ui.diagnostics
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -69,6 +70,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
@@ -83,7 +85,6 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.showToast
-import codes.swistak.batterymonitor.diagnostics.DiagnosticsDurationFormatter
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringAvailability
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
@@ -174,31 +175,62 @@ internal fun DiagnosticsScreen(
 ) {
     val context = LocalContext.current
     val resources = LocalResources.current
-    val preferences = context.getSharedPreferences(SettingsContract.SETTINGS_FILE, 0)
-    val multiplier =
-        preferences.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")?.toIntOrNull()
-            ?: 1
-    val fahrenheit =
-        preferences.temperatureUnit(stringResource(R.string.default_temperature_unit)).convertToFahrenheit
-    val basic = state.basic?.let { diagnosticGroups(it, multiplier, fahrenheit) }.orEmpty()
-    val advanced = state.advanced?.let { diagnosticGroups(it, multiplier, fahrenheit) }.orEmpty()
-    val app = state.appRaw?.let { diagnosticGroups(it, multiplier, fahrenheit) }.orEmpty()
-    val snapshots = listOfNotNull(state.basic, state.appRaw, state.advanced)
-    val normalized = mergedDiagnosticGroups(snapshots, multiplier, fahrenheit)
-    val predictor = monitor?.predictorData?.let {
-        predictorDiagnosticGroup(it, monitor.observedAtMillis) { milliseconds ->
-            DiagnosticsDurationFormatter.format(context, milliseconds)
+    val locale = LocalConfiguration.current.locales[0]
+    val preferences =
+        remember(context) { context.getSharedPreferences(SettingsContract.SETTINGS_FILE, 0) }
+    var displayRevision by remember { mutableIntStateOf(0) }
+    DisposableEffect(preferences) {
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == null || key == SettingsContract.KEY_TEMPERATURE_UNIT || key == SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER) {
+                displayRevision++
+            }
+        }
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+        onDispose { preferences.unregisterOnSharedPreferenceChangeListener(listener) }
+    }
+    val defaultTemperatureUnit = stringResource(R.string.default_temperature_unit)
+    val display = remember(displayRevision, locale, defaultTemperatureUnit) {
+        DiagnosticsFormat(
+            preferences.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")
+                ?.toIntOrNull() ?: 1,
+            preferences.temperatureUnit(defaultTemperatureUnit).convertToFahrenheit,
+            locale
+        )
+    }
+    val snapshots = remember(state.basic, state.appRaw, state.advanced) {
+        listOfNotNull(state.basic, state.appRaw, state.advanced)
+    }
+    val projections = remember { List(4) { mutableStateOf<List<DiagnosticGroup>>(emptyList()) } }
+    val projectionCache = remember { DiagnosticsProjectionCache() }
+    LaunchedEffect(snapshots, display, tab) {
+        if (tab != 0) {
+            projections[tab].value =
+                withContext(Dispatchers.Default) { projectionCache.groups(snapshots, display, tab) }
         }
     }
-    val recentPredictor = monitor?.recentPredictorData?.let {
-        recentPredictorDiagnosticGroup(it, monitor.observedAtMillis) { milliseconds ->
-            DiagnosticsDurationFormatter.format(context, milliseconds)
+    val needsPredictor = tab == 0 || tab == 3
+    val storedPredictor = monitor?.predictorData
+    val recentPredictorState = monitor?.recentPredictorData
+    val predictorTime = monitor?.observedAtMillis ?: 0
+    val predictorProjection by produceState(
+        PredictorDiagnosticsProjection(),
+        needsPredictor,
+        storedPredictor,
+        recentPredictorState,
+        predictorTime,
+        locale
+    ) {
+        if (needsPredictor) value = withContext(Dispatchers.Default) {
+            preparePredictorDiagnostics(
+                storedPredictor, recentPredictorState, predictorTime, locale
+            )
         }
     }
-    val combinedPredictor = combinedPredictorDiagnosticGroup(predictor, recentPredictor)
-    val rawPredictor =
-        combinedPredictor?.let(::rawPredictorDiagnosticGroup)?.takeIf { it.rows.isNotEmpty() }
-    val raw = basic.drop(3) + app.drop(3) + advanced.drop(3) + listOfNotNull(rawPredictor)
+    val predictor = predictorProjection.stored
+    val recentPredictor = predictorProjection.recent
+    val raw = remember(tab == 3, projections[3].value, predictorProjection.raw) {
+        if (tab == 3) projections[3].value + listOfNotNull(predictorProjection.raw) else emptyList()
+    }
     var query by rememberSaveable { mutableStateOf("") }
     val dialogsAllowed = applicationDialogsAllowed()
     var dialog by rememberSaveable { mutableStateOf<String?>(null) }
@@ -231,10 +263,10 @@ internal fun DiagnosticsScreen(
         R.string.diag_raw
     )
     val scrollStates = labels.map { rememberLazyListState() }
+    val filteredRaw = remember(raw, query) { filterRawGroups(raw, query) }
     val groups = when (tab) {
-        1 -> normalized.take(2) + deviceDiagnosticGroups(snapshots, charging = false)
-        2 -> normalized.drop(2) + deviceDiagnosticGroups(snapshots, charging = true)
-        3 -> filterRawGroups(raw, query)
+        1, 2 -> projections[tab].value
+        3 -> filteredRaw
         else -> emptyList()
     }
     Column(Modifier.fillMaxSize()) {
@@ -253,12 +285,12 @@ internal fun DiagnosticsScreen(
                 (if (tab == 0) listOfNotNull(state.basic) else snapshots).filter { it.hasStats() }
             Text(
                 stringResource(
-                R.string.current_detail_source, diagnosticSourceName(
-                    sources.joinToString(
-                        " · ", transform = ::diagnosticAccessName
-                    )
-                ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
-                ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
+                    R.string.current_detail_source, diagnosticSourceName(
+                        sources.joinToString(
+                            " · ", transform = ::diagnosticAccessName
+                        )
+                    ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
+                    ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
@@ -366,8 +398,7 @@ internal fun DiagnosticsScreen(
                 )
                 Text(
                     stringResource(
-                        R.string.current_detail_time,
-                        diagnosticTime(state.advanced.capturedAtMillis)
+                        R.string.diag_last_checked, diagnosticTime(state.advanced.capturedAtMillis)
                     ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -468,7 +499,7 @@ internal fun DiagnosticsScreen(
                         group.rows.forEachIndexed { rowIndex, row ->
                             DiagnosticValue(
                                 stringResource(row.label),
-                                formattedDiagnosticValue(row, resources::getString)
+                                formattedDiagnosticValue(row, resources::getString, locale)
                                     ?: stringResource(R.string.advanced_value_not_available),
                                 onClick = { selectRow(row) })
                             if (rowIndex < group.rows.lastIndex) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
@@ -487,7 +518,7 @@ internal fun DiagnosticsScreen(
                         if (readings.isNotEmpty()) Text(
                             stringResource(
                                 R.string.current_detail_time,
-                                diagnosticTime(readings.maxOf { it.observedAtMillis })
+                                diagnosticTime(checkNotNull(latestDiagnosticReading(readings)).observedAtMillis)
                             ),
                             Modifier.padding(16.dp),
                             style = MaterialTheme.typography.bodySmall,
@@ -575,7 +606,7 @@ internal fun DiagnosticsScreen(
         val isRaw = row.label == 0
         val title = if (row.label == 0) row.rawKey else stringResource(row.label)
         val reading =
-            if (isRaw) row.rawValue else formattedDiagnosticValue(row, resources::getString)
+            if (isRaw) row.rawValue else formattedDiagnosticValue(row, resources::getString, locale)
         val missing = !isRaw && reading == null
         val value = reading ?: stringResource(R.string.advanced_value_not_available)
         val explanation = missingDiagnosticExplanation(row, reading)
@@ -647,18 +678,28 @@ internal fun DiagnosticsScreen(
             }) { Text(stringResource(android.R.string.ok)) }
         })
     if (dialogsAllowed && dialog == "report") DiagnosticReportDialog({ includeRaw ->
+        // The dialog invokes this callback on IO, only when a report is requested.
+        val reportPredictor = preparePredictorDiagnostics(
+            storedPredictor, recentPredictorState, predictorTime, locale
+        )
+        val normalized =
+            mergedDiagnosticGroups(snapshots, display.multiplier, display.fahrenheit, locale)
+        val reportRaw =
+            if (includeRaw) snapshots.flatMap(::rawDiagnosticGroups) + listOfNotNull(reportPredictor.raw)
+            else emptyList()
         buildString {
             appendLine(resources.getString(R.string.nav_diagnostics))
             if (state.status != 0) appendLine(resources.getString(state.status))
             if (state.stale) appendLine(resources.getString(R.string.diag_privileged_stale))
-            if (combinedPredictor != null && monitorAvailability != MonitoringAvailability.LIVE) appendLine(
+            if (reportPredictor.combined != null && monitorAvailability != MonitoringAvailability.LIVE) appendLine(
                 resources.getString(R.string.current_stale)
             )
             append(
                 diagnosticReport(
-                    normalized + listOfNotNull(combinedPredictor) + if (includeRaw) raw else emptyList(),
+                    normalized + listOfNotNull(reportPredictor.combined) + reportRaw,
                     resources::getString,
-                    includeRaw
+                    includeRaw,
+                    locale
                 )
             )
         }

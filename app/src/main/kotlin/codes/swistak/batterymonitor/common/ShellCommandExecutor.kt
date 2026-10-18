@@ -15,8 +15,8 @@ package codes.swistak.batterymonitor.common
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.FutureTask
+import java.util.concurrent.TimeUnit
 
 private const val COMMAND_TIMEOUT_SECONDS = 10L
 private const val MAX_COMMAND_OUTPUT_BYTES = 256 * 1024
@@ -40,6 +40,8 @@ internal class PrivilegedShellExecutor : CommandExecutor {
 
 
 private fun runCommand(command: Array<String>, trimOutput: Boolean = true): String? {
+    if (Thread.currentThread().isInterrupted) return null
+
     var process: Process? = null
     var reader: Thread? = null
 
@@ -60,6 +62,9 @@ private fun runCommand(command: Array<String>, trimOutput: Boolean = true): Stri
 
         val text = output.get(1, TimeUnit.SECONDS) ?: return null
         return if (trimOutput) text.trim().takeIf(String::isNotEmpty) else text
+    } catch (_: InterruptedException) {
+        Thread.currentThread().interrupt()
+        return null
     } catch (_: Exception) {
         return null
     } finally {
@@ -77,7 +82,9 @@ private fun readFully(inputStream: InputStream): String? {
     var bytesRead: Int
 
     while ((inputStream.read(buffer).also { bytesRead = it }) != -1) {
-        if (outputStream.size() + bytesRead > MAX_COMMAND_OUTPUT_BYTES) return null
+        if (outputStream.size() + bytesRead > MAX_COMMAND_OUTPUT_BYTES) {
+            return null
+        }
 
         outputStream.write(buffer, 0, bytesRead)
     }

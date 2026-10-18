@@ -14,13 +14,177 @@ package codes.swistak.batterymonitor.monitoring
 
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.util.ArrayDeque
 import java.util.concurrent.Executor
 import java.util.concurrent.RejectedExecutionException
 
 class PrivilegedBatteryReaderTest {
+    @Test
+    fun `projection keeps acquisition metadata paired with each selected exact source`() {
+        val serviceTime = BatteryMeasurementTime(1_000, 100)
+        val nowTime = BatteryMeasurementTime(1_100, 200)
+        val averageTime = BatteryMeasurementTime(1_200, 300)
+        val snapshot = snapshot(
+            service = mapOf("health" to "2", "temperature" to "0", "voltage" to "3890"),
+            battery = mapOf("current_now" to "2000", "current_avg" to "-1000")
+        ).apply {
+            capturedAtMillis = 9_000
+            currentNowUa = -2_000
+            currentAverageUa = Long.MIN_VALUE
+            fieldSources["current_now"] = "cmd battery get current_now"
+            fieldSources["current_average"] = "cmd battery get current_average"
+            sourceReadTimes["dumpsys battery / health"] = serviceTime
+            sourceReadTimes["dumpsys battery / temperature"] = serviceTime
+            sourceReadTimes["dumpsys battery / voltage"] = serviceTime
+            sourceReadTimes["cmd battery get current_now"] = nowTime
+            sourceReadTimes["cmd battery get current_average"] = nowTime
+            sourceReadTimes["/sys/class/power_supply/battery/current_now"] = averageTime
+            sourceReadTimes["/sys/class/power_supply/battery/current_avg"] = averageTime
+        }
+
+        val reading = projectPrivilegedBatteryReading(snapshot)
+
+        assertEquals(-2_000L, reading.currentNowUa)
+        assertEquals(-1_000L, reading.currentAverageUa)
+        assertEquals("cmd battery get current_now", reading.fieldSources["current_now"])
+        assertEquals(
+            "/sys/class/power_supply/battery/current_avg", reading.fieldSources["current_average"]
+        )
+        assertEquals(
+            mapOf(
+                "health" to serviceTime,
+                "temperature" to serviceTime,
+                "voltage" to serviceTime,
+                "current_now" to nowTime,
+                "current_average" to averageTime
+            ), reading.fieldMeasurementTimes
+        )
+    }
+
+    @Test
+    fun `projection leaves missing acquisition metadata unknown despite snapshot completion time`() {
+        val snapshot = snapshot(service = mapOf("voltage" to "3900")).apply {
+            capturedAtMillis = 9_000
+            sourceReadTimes["/sys/class/power_supply/battery/voltage_now"] =
+                BatteryMeasurementTime(1_000, 100)
+        }
+
+        val reading = projectPrivilegedBatteryReading(snapshot)
+
+        assertEquals(3900, reading.voltageMillivolts)
+        assertEquals("dumpsys battery / voltage", reading.fieldSources["voltage"])
+        assertTrue(reading.fieldMeasurementTimes.isEmpty())
+    }
+
+    @Test
+    fun `measurement presence ignores metadata and preserves valid zero readings`() {
+        val metadataOnly = PrivilegedBatteryReading(
+            fieldSources = mapOf("current_now" to "cmd battery get current_now"),
+            fieldMeasurementTimes = mapOf("current_now" to BatteryMeasurementTime(1_000, 100))
+        )
+        assertFalse(PrivilegedBatteryReading().hasMeasurements())
+        assertFalse(metadataOnly.hasMeasurements())
+        for (reading in listOf(
+            PrivilegedBatteryReading(percent = 0),
+            PrivilegedBatteryReading(status = 1),
+            PrivilegedBatteryReading(health = 1),
+            PrivilegedBatteryReading(plugged = 0),
+            PrivilegedBatteryReading(temperatureTenthsC = 0),
+            PrivilegedBatteryReading(voltageMillivolts = 3900),
+            PrivilegedBatteryReading(remainingChargeUah = 0),
+            PrivilegedBatteryReading(currentNowUa = 0),
+            PrivilegedBatteryReading(currentAverageUa = 0)
+        )) {
+            assertTrue(reading.hasMeasurements())
+        }
+    }
+
+    @Test
+    fun `cached acquisition times survive lookup and failed refresh and same values acquire a new time`() {
+        val harness = Harness()
+        val firstTime = BatteryMeasurementTime(5_000, 0)
+        val secondTime = BatteryMeasurementTime(4_000, 2_000)
+        fun currentSnapshot(time: BatteryMeasurementTime) = snapshot().apply {
+            currentNowUa = -200_000
+            fieldSources["current_now"] = "cmd battery get current_now"
+            sourceReadTimes["cmd battery get current_now"] = time
+        }
+        harness.nextSnapshot = currentSnapshot(firstTime)
+        harness.reader.read()
+        harness.executor.runNext()
+        harness.now = 1_999
+        assertEquals(firstTime, harness.reader.read()?.fieldMeasurementTimes?.get("current_now"))
+        assertTrue(harness.executor.tasks.isEmpty())
+
+        harness.now = 2_000
+        harness.nextSnapshot = currentSnapshot(secondTime)
+        assertEquals(firstTime, harness.reader.read()?.fieldMeasurementTimes?.get("current_now"))
+        harness.executor.runNext()
+        val refreshed = harness.reader.read()
+        assertEquals(-200_000L, refreshed?.currentNowUa)
+        assertEquals(secondTime, refreshed?.fieldMeasurementTimes?.get("current_now"))
+
+        harness.now = 4_000
+        harness.duringCollection = { throw IllegalStateException("Unavailable") }
+        harness.reader.read()
+        harness.executor.runNext()
+        assertEquals(secondTime, harness.reader.read()?.fieldMeasurementTimes?.get("current_now"))
+        harness.now = 12_001
+        assertNull(harness.reader.read())
+    }
+
+    @Test
+    fun `metadata-only snapshots release waiters without becoming an available cached reading`() {
+        val harness = Harness()
+        val results = mutableListOf<PrivilegedBatteryReading?>()
+        harness.nextSnapshot = snapshot().apply {
+            capturedAtMillis = 9_000
+            fieldSources["current_now"] = "cmd battery get current_now"
+            sourceReadTimes["cmd battery get current_now"] = BatteryMeasurementTime(1_000, 100)
+        }
+
+        harness.reader.readWhenReady { results += it }
+        harness.executor.runNext()
+
+        assertEquals(listOf<PrivilegedBatteryReading?>(null), results)
+        assertNull(harness.reader.read())
+        assertTrue(harness.executor.tasks.isEmpty())
+    }
+
+    @Test
+    fun `idle barrier completes after the earlier collection and its waiting callback`() {
+        val harness = Harness()
+        val events = mutableListOf<String>()
+        harness.reader.readWhenReady { events += "reading" }
+        val idle = harness.reader.whenIdle()
+        idle.thenRun { events += "idle" }
+
+        assertFalse(idle.isDone)
+        assertEquals(2, harness.executor.tasks.size)
+        harness.executor.runNext()
+        assertEquals(listOf("reading"), events)
+        assertFalse(idle.isDone)
+        harness.executor.runNext()
+        assertTrue(idle.isDone)
+        assertEquals(listOf("reading", "idle"), events)
+    }
+
+    @Test
+    fun `idle barrier resolves if its executor has already stopped`() {
+        val reader = PrivilegedBatteryReader(
+            collector = { error("Barrier must not collect") },
+            enabled = { true },
+            accessRevision = { 0 },
+            backgroundExecutor = { throw RejectedExecutionException("Stopped") },
+            clock = { 0 })
+
+        assertTrue(reader.whenIdle().isDone)
+    }
+
     @Test
     fun `projection preserves API and service readings ahead of sysfs including valid zero values`() {
         val snapshot = snapshot(
@@ -265,7 +429,7 @@ class PrivilegedBatteryReaderTest {
             )
         )
         assertNull(projectPrivilegedBatteryReading(snapshot).plugged)
-        org.junit.Assert.assertTrue("plugged" in missingBatteryFields(mapOf("plugged" to 8)))
+        assertTrue("plugged" in missingBatteryFields(mapOf("plugged" to 8)))
     }
 
     @Test
@@ -580,10 +744,10 @@ class PrivilegedBatteryReaderTest {
         var duringCollection: () -> Unit = {}
         val reader = PrivilegedBatteryReader(
             collector = {
-            collections++
-            duringCollection()
-            nextSnapshot
-        },
+                collections++
+                duringCollection()
+                nextSnapshot
+            },
             enabled = { accessEnabled },
             accessRevision = { revision },
             backgroundExecutor = executor,
@@ -608,10 +772,11 @@ class PrivilegedBatteryReaderTest {
         val tasks = ArrayDeque<Runnable>()
         val reader = PrivilegedBatteryReader(
             collector = {
-            calls++; snapshot().apply {
-            currentNowUa = calls.toLong()
-        }
-        },
+                calls++
+                snapshot().apply {
+                    currentNowUa = calls.toLong()
+                }
+            },
             enabled = { true },
             accessRevision = { 1 },
             backgroundExecutor = { tasks.add(it) },

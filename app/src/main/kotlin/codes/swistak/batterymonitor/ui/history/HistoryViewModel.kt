@@ -57,18 +57,30 @@ internal data class HistoryUiState(
     val backwards: Boolean = false,
     val selectedPointId: Long? = null,
     val includeAnchor: Boolean = false,
-    val eventToReveal: Long? = null
+    val eventToReveal: Long? = null,
+    val revision: Long = 0
 )
 
-internal class HistoryViewModel(application: Application) : AndroidViewModel(application) {
+internal class HistoryViewModel(
+    application: Application, private val now: () -> Long
+) : AndroidViewModel(application) {
+    constructor(application: Application) : this(application, System::currentTimeMillis)
+
     private val repository = LogsRepository(application)
     private val preferences =
         application.getSharedPreferences(SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE)
     private val settings =
         application.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
-    private val mutable = MutableStateFlow(HistoryUiState())
+    private val mutable =
+        MutableStateFlow(HistoryUiState(range = HistoryRangeState.lastHours(24, now())))
+
     val state = mutable.asStateFlow()
     private var queryJob: Job? = null
+    private var freshnessJob: Job? = null
+    private var queryGeneration = 0L
+    private var appliedRevision: Long? = null
+    private var retainedSelection: HistoryKey? = null
+
     private var isTwoPane = false
     private var retainExactRange = false
 
@@ -78,8 +90,41 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
 
     fun resume(change: Triple<Int?, Int?, Int?>? = null) {
         if (change != null) lastMonitoredChange = change
-        refresh()
+        checkFreshness(activated = true, keepRange = retainExactRange)
         retainExactRange = false
+    }
+
+    fun historyChanged() = checkFreshness(activated = false)
+
+    private fun checkFreshness(activated: Boolean, keepRange: Boolean = false) {
+        freshnessJob?.cancel()
+        if (activated) mutable.value = mutable.value.copy(loading = true, error = false)
+        val generation = queryGeneration
+        freshnessJob = viewModelScope.launch {
+            queryJob?.join()
+            if (generation != queryGeneration) return@launch
+            val current = mutable.value
+            try {
+                val changes = repository.historyChanges(
+                    appliedRevision, current.range.takeUnless { current.rangeLabel == "all" })
+                if (generation != queryGeneration) return@launch
+                val rolling = current.rangeLabel in setOf("24h", "72h", "7d") && !keepRange
+                if (changes.affectsRange || (rolling && (activated || changes.revision != appliedRevision))) {
+                    refresh(keepRange = keepRange)
+                } else {
+                    appliedRevision = changes.revision
+                    mutable.value = mutable.value.copy(
+                        revision = changes.revision, loading = false, error = false
+                    )
+                }
+            } catch (exception: CancellationException) {
+                throw exception
+            } catch (_: Exception) {
+                if (generation == queryGeneration) {
+                    mutable.value = mutable.value.copy(loading = false, error = true)
+                }
+            }
+        }
     }
 
     private var lastMonitoredChange: Triple<Int?, Int?, Int?>? = null
@@ -141,9 +186,13 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
                 bundle.getLong("anchorTime"), bundle.getLong("anchorId")
             ) else null,
             backwards = bundle.getBoolean("backwards"),
-            selectedPointId = if (bundle.containsKey("point")) bundle.getLong("point") else null,
+            selectedPointId = if (bundle.containsKey("point") && bundle.containsKey("pointTime")) {
+                bundle.getLong("point")
+            } else null,
             includeAnchor = bundle.getBoolean("includeAnchor")
         )
+        retainedSelection =
+            mutable.value.selectedPointId?.let { HistoryKey(bundle.getLong("pointTime"), it) }
         if (bundle.containsKey("exportThrough")) pendingExport = HistoryExportRequest(
             if (bundle.getBoolean("exportHasAfter")) bundle.getLong("exportAfter") else null,
             bundle.getLong("exportThrough"),
@@ -172,7 +221,10 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         putBoolean("includeAnchor", value.includeAnchor)
         putInt("scrollIndex", scrollIndex)
         putInt("scrollOffset", scrollOffset)
-        value.selectedPointId?.let { putLong("point", it) }
+        retainedSelection?.takeIf { it.id == value.selectedPointId }?.let {
+            putLong("point", it.id)
+            putLong("pointTime", it.time)
+        }
         pendingExport?.let {
             putBoolean("exportHasAfter", it.after != null)
             it.after?.let { after -> putLong("exportAfter", after) }
@@ -189,26 +241,36 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         anchor: HistoryKey? = mutable.value.anchor,
         backwards: Boolean = mutable.value.backwards,
         forceChart: Boolean = true,
-        includeAnchor: Boolean = mutable.value.includeAnchor
+        includeAnchor: Boolean = mutable.value.includeAnchor,
+        keepRange: Boolean = retainExactRange
     ) {
         queryJob?.cancel()
+        val generation = ++queryGeneration
         val current = mutable.value
-        val range = if (forceChart && !retainExactRange) when (current.rangeLabel) {
-            "24h" -> HistoryRangeState.lastHours(24)
-            "72h" -> HistoryRangeState.lastHours(72)
-            "7d" -> HistoryRangeState.lastHours(168)
+        val retainPage =
+            forceChart && anchor == null && scrollIndex > 0 && current.page.isNotEmpty()
+        val requestAnchor = if (retainPage) current.page.first().key else anchor
+        val requestIncludesAnchor = includeAnchor || retainPage
+        val range = if (forceChart && !keepRange) when (current.rangeLabel) {
+            "24h" -> HistoryRangeState.lastHours(24, now())
+            "72h" -> HistoryRangeState.lastHours(72, now())
+            "7d" -> HistoryRangeState.lastHours(168, now())
             else -> current.range
         } else current.range
-        var value = current.copy(range = range, chart = if (forceChart) null else current.chart)
+        val selectedKey = retainedSelection?.takeIf { it.id == current.selectedPointId }
+            ?: current.chart?.series?.get(current.metric)?.points?.firstOrNull { it.key.id == current.selectedPointId }?.key
+        var value = current.copy(range = range)
         mutable.value = value.copy(
             loading = true,
             error = false,
-            anchor = anchor,
+            anchor = requestAnchor,
             backwards = backwards,
-            includeAnchor = includeAnchor
+            includeAnchor = requestIncludesAnchor
         )
+        if (generation != queryGeneration) return
         queryJob = viewModelScope.launch {
             try {
+                val revision = repository.historyChanges(null, null).revision
                 if (value.rangeLabel == "all") {
                     val retainedRange = repository.historyRange() ?: HistoryRangeState(0, 1)
                     value = value.copy(
@@ -221,31 +283,44 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
                     value.range,
                     value.filters,
                     value.ascending,
-                    anchor,
+                    requestAnchor,
                     backwards,
-                    includeAnchor,
+                    requestIncludesAnchor,
                     revealedId
                 )
-                val resetPage = records.isEmpty() && anchor != null
+                val resetPage = records.isEmpty() && requestAnchor != null
                 if (resetPage) {
                     records = repository.page(
                         value.range, value.filters, value.ascending, null, revealedId = revealedId
                     )
                     scroll(0, 0)
                 }
-                val pageAnchor = anchor.takeUnless { resetPage }
+                val pageAnchor = requestAnchor.takeUnless { resetPage }
                 val pageBackwards = backwards && !resetPage
-                val pageIncludesAnchor = includeAnchor && !resetPage
+                val pageIncludesAnchor = requestIncludesAnchor && !resetPage
                 val page = records.take(128).let { if (pageBackwards) it.reversed() else it }
-                val hasPrevious = if (pageIncludesAnchor && anchor != null) {
+                val hasPrevious = if (pageIncludesAnchor && pageAnchor != null) {
                     repository.hasRecordsBefore(
-                        value.range, value.filters, value.ascending, anchor, revealedId
+                        value.range, value.filters, value.ascending, pageAnchor, revealedId
                     )
                 } else if (pageBackwards) records.size > 128 else pageAnchor != null
-                val chart =
-                    if ((value.tab == "charts" || isTwoPane) && value.chart == null) repository.chart(
-                        value.range
-                    ) else value.chart
+                val chartVisible = value.tab == "charts" || isTwoPane
+                val loadChart = chartVisible && (forceChart || value.chart == null)
+                val chart = when {
+                    loadChart -> repository.chart(value.range, selectedKey)
+                    forceChart && !chartVisible -> null
+                    else -> value.chart
+                }
+                if (generation != queryGeneration) return@launch
+                val latest = retainedSelection?.takeIf { it.id == mutable.value.selectedPointId }
+                    ?: selectedKey?.takeIf { it.id == mutable.value.selectedPointId }
+                val selected = latest?.takeIf { key ->
+                    chart?.series?.get(mutable.value.metric)?.points?.any {
+                        it.key == key && it.value != null
+                    } == true
+                }
+                retainedSelection = if (chart == null) latest else selected
+                if (forceChart || loadChart || chart == null) appliedRevision = revision
                 mutable.value = mutable.value.copy(
                     chart = chart,
                     page = page,
@@ -254,12 +329,18 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
                     hasPrevious = hasPrevious,
                     anchor = pageAnchor,
                     backwards = pageBackwards,
-                    includeAnchor = pageIncludesAnchor
+                    includeAnchor = pageIncludesAnchor,
+                    revision = appliedRevision ?: revision,
+                    selectedPointId = if (chart == null) mutable.value.selectedPointId else selected?.id
                 )
+                historyChanged()
             } catch (exception: CancellationException) {
                 throw exception
             } catch (_: Exception) {
-                mutable.value = mutable.value.copy(loading = false, error = true)
+                if (generation == queryGeneration) {
+                    appliedRevision = null
+                    mutable.value = mutable.value.copy(loading = false, error = true)
+                }
             }
         }
     }
@@ -267,7 +348,7 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
     fun openWidgetRange(hours: Int) {
         if (hours !in setOf(24, 72, 168)) return
         mutable.value = mutable.value.copy(tab = "charts", metric = HistoryMetric.LEVEL)
-        range(HistoryRangeState.lastHours(hours), if (hours == 168) "7d" else "${hours}h")
+        range(HistoryRangeState.lastHours(hours, now()), if (hours == 168) "7d" else "${hours}h")
     }
 
     fun range(range: HistoryRangeState, label: String) {
@@ -308,11 +389,20 @@ internal class HistoryViewModel(application: Application) : AndroidViewModel(app
         val current = mutable.value
         val point =
             current.chart?.series?.get(current.metric)?.points?.firstOrNull { it.key.id == id }
+        retainedSelection = point?.key
         mutable.value = current.copy(
             selectedPointId = id, eventToReveal = id.takeIf { isTwoPane && point != null })
         if (isTwoPane && point != null && (current.loading || current.page.none { it.id == id })) {
             scroll(0, 0)
             refresh(point.key, backwards = false, forceChart = false, includeAnchor = true)
+        } else if (point != null && current.loading && current.selectedPointId != id) {
+            queryJob?.cancel()
+            val selectionGeneration = ++queryGeneration
+            freshnessJob?.cancel()
+            // Queue the replacement after state observers finish; only the latest selection restarts it.
+            freshnessJob = viewModelScope.launch(Dispatchers.Main) {
+                if (selectionGeneration == queryGeneration) refresh()
+            }
         }
     }
 

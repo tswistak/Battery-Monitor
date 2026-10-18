@@ -16,12 +16,18 @@ import kotlinx.coroutines.withContext
 internal class LogsRepository(context: Context) {
     private val appContext = context.applicationContext
 
-    suspend fun chart(range: HistoryRangeState): HistoryChartModel = withContext(Dispatchers.IO) {
+    suspend fun historyChanges(since: Long?, range: HistoryRangeState?): HistoryChanges =
+        withContext(Dispatchers.IO) { database { historyChanges(since, range) } }
+
+    suspend fun chart(
+        range: HistoryRangeState, selectedKey: HistoryKey? = null
+    ): HistoryChartModel = withContext(Dispatchers.IO) {
         val coroutine = currentCoroutineContext()
         database {
             readHistory(historyQuery(range)) {
                 historyChart(
-                    range, it.onEach { coroutine.ensureActive() })
+                    range, it.onEach { coroutine.ensureActive() }, selectedKey
+                )
             }
         }
     }

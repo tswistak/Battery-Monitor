@@ -46,7 +46,9 @@ internal class LogDatabase(context: Context?) {
         private const val LOG_TAG = "LogDatabase"
 
         private const val DATABASE_NAME = "logs.db"
-        private const val DATABASE_VERSION = 6
+        private const val DATABASE_VERSION = 7
+        internal const val HISTORY_CHANGE_LIMIT = 128
+        private const val HISTORY_CHANGES_TABLE = "history_changes"
 
         private const val LOG_TABLE_NAME = "logs"
 
@@ -93,6 +95,52 @@ internal class LogDatabase(context: Context?) {
     }
 
     private val appContext = context?.applicationContext
+
+    fun historyChanges(since: Long?, range: HistoryRangeState?): HistoryChanges {
+        openDBs()
+        return checkNotNull(rdb).rawQuery(
+            "SELECT MIN(revision), MAX(revision), " + "MAX(CASE WHEN revision > ? AND first_time <= ? AND last_time >= ? THEN 1 ELSE 0 END) " + "FROM $HISTORY_CHANGES_TABLE",
+            arrayOf(
+                (since ?: -1).toString(),
+                (range?.exportThrough ?: Long.MAX_VALUE).toString(),
+                (range?.start ?: Long.MIN_VALUE).toString()
+            )
+        ).use { cursor ->
+            cursor.moveToFirst()
+            val first = if (cursor.isNull(0)) 0L else cursor.getLong(0)
+            val latest = if (cursor.isNull(1)) 0L else cursor.getLong(1)
+            // A cursor older than the bounded journal must refresh rather than miss a committed change.
+            HistoryChanges(
+                latest,
+                since == null || since > latest || since < first - 1 || cursor.getInt(2) != 0
+            )
+        }
+    }
+
+    private fun SQLiteDatabase.recordHistoryChange(first: Long, last: Long) {
+        val values = ContentValues().apply {
+            put("first_time", first)
+            put("last_time", last)
+        }
+        val revision = insertOrThrow(HISTORY_CHANGES_TABLE, null, values)
+        delete(
+            HISTORY_CHANGES_TABLE,
+            "revision <= ?",
+            arrayOf((revision - HISTORY_CHANGE_LIMIT).toString())
+        )
+    }
+
+    private fun SQLiteDatabase.affectedTimes(
+        where: String? = null, args: Array<String>? = null
+    ): LongRange? {
+        val predicate = " WHERE time IS NOT NULL" + where?.let { " AND ($it)" }.orEmpty()
+        return rawQuery(
+            "SELECT (SELECT time FROM logs$predicate ORDER BY time ASC, _id ASC LIMIT 1), " + "(SELECT time FROM logs$predicate ORDER BY time DESC, _id DESC LIMIT 1)",
+            args?.let { it + it }).use { cursor ->
+            cursor.moveToFirst()
+            if (cursor.isNull(0)) null else cursor.getLong(0)..cursor.getLong(1)
+        }
+    }
 
     private fun historyChanged() {
         try {
@@ -241,12 +289,16 @@ internal class LogDatabase(context: Context?) {
     fun deleteHistory(range: HistoryRangeState?) {
         openDBs()
         val database = checkNotNull(wdb) { "Log database is unavailable" }
-        val deleted = if (range == null) database.delete(LOG_TABLE_NAME, null, null)
-        else database.delete(
-            LOG_TABLE_NAME,
-            "time >= ? AND time ${range.endOperator} ?",
-            arrayOf(range.start.toString(), range.end.toString())
-        )
+        val deleted = database.transaction {
+            val where = range?.let { "time >= ? AND time ${it.endOperator} ?" } ?: "1"
+            val args = range?.let { arrayOf(it.start.toString(), it.end.toString()) }
+            val times = affectedTimes(where, args)
+            delete(LOG_TABLE_NAME, where, args).also { deleted ->
+                if (deleted > 0) recordHistoryChange(
+                    times?.first ?: Long.MIN_VALUE, times?.last ?: Long.MAX_VALUE
+                )
+            }
+        }
         if (deleted > 0) historyChanged()
     }
 
@@ -327,7 +379,8 @@ internal class LogDatabase(context: Context?) {
         openDBs()
         val database = checkNotNull(wdb) { "Log database is unavailable" }
         val changed = database.transaction {
-            val deleted = if (replaceExisting) database.delete(LOG_TABLE_NAME, null, null) else 0
+            val previousTimes = if (replaceExisting) affectedTimes() else null
+            val deleted = if (replaceExisting) database.delete(LOG_TABLE_NAME, "1", null) else 0
             for ((status, charge, time, temperature, voltage, currentMicroAmps, remainingChargeMicroampHours) in records) {
                 val values = ContentValues().apply {
                     put(KEY_STATUS_CODE, status)
@@ -342,7 +395,17 @@ internal class LogDatabase(context: Context?) {
                     "Could not restore log entry"
                 }
             }
-            deleted > 0 || records.isNotEmpty()
+            val changed = deleted > 0 || records.isNotEmpty()
+            if (changed) {
+                val first =
+                    listOfNotNull(previousTimes?.first, records.minOfOrNull { it.time }).minOrNull()
+                        ?: Long.MIN_VALUE
+                val last =
+                    listOfNotNull(previousTimes?.last, records.maxOfOrNull { it.time }).maxOrNull()
+                        ?: Long.MAX_VALUE
+                recordHistoryChange(first, last)
+            }
+            changed
         }
         if (changed) historyChanged()
     }
@@ -391,6 +454,7 @@ internal class LogDatabase(context: Context?) {
                         putNullable(KEY_REMAINING_CHARGE, observation.remainingChargeMicroampHours)
                     }
                     insertOrThrow(LOG_TABLE_NAME, null, values)
+                    recordHistoryChange(observation.time, observation.time)
                     LogResult.Inserted
                 }
             }
@@ -413,7 +477,11 @@ internal class LogDatabase(context: Context?) {
                 putNull(KEY_CURRENT)
                 putNull(KEY_REMAINING_CHARGE)
             }
-            writableDatabase.insertOrThrow(LOG_TABLE_NAME, null, values)
+            writableDatabase.transaction {
+                insertOrThrow(LOG_TABLE_NAME, null, values)
+                val time = values.getAsLong(KEY_TIME)
+                recordHistoryChange(time, time)
+            }
             LogResult.Inserted
         }
         if (result == LogResult.Inserted) historyChanged()
@@ -447,9 +515,16 @@ internal class LogDatabase(context: Context?) {
         openDBs()
 
         try {
-            val deleted = checkNotNull(wdb).delete(
-                LOG_TABLE_NAME, "$KEY_TIME < ?", arrayOf(oldestLog.toString())
-            )
+            val deleted = checkNotNull(wdb).transaction {
+                val where = "$KEY_TIME < ?"
+                val args = arrayOf(oldestLog.toString())
+                val times = affectedTimes(where, args)
+                delete(LOG_TABLE_NAME, where, args).also { deleted ->
+                    if (deleted > 0) recordHistoryChange(
+                        times?.first ?: Long.MIN_VALUE, times?.last ?: Long.MAX_VALUE
+                    )
+                }
+            }
             if (deleted > 0) historyChanged()
         } catch (_: Exception) {
         }
@@ -479,6 +554,7 @@ internal class LogDatabase(context: Context?) {
             db.execSQL(
                 "CREATE TABLE $LOG_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_STATUS_CODE INTEGER,$KEY_CHARGE INTEGER,$KEY_TIME INTEGER,$KEY_TEMPERATURE INTEGER,$KEY_VOLTAGE INTEGER,$KEY_CURRENT INTEGER,$KEY_REMAINING_CHARGE INTEGER);"
             )
+            createHistoryChanges(db)
         }
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -497,6 +573,13 @@ internal class LogDatabase(context: Context?) {
             if (oldVersion < 6) {
                 db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_REMAINING_CHARGE INTEGER;")
             }
+            if (oldVersion < 7) createHistoryChanges(db)
+        }
+
+        private fun createHistoryChanges(db: SQLiteDatabase) {
+            db.execSQL(
+                "CREATE TABLE $HISTORY_CHANGES_TABLE " + "(revision INTEGER PRIMARY KEY, first_time INTEGER NOT NULL, last_time INTEGER NOT NULL)"
+            )
         }
 
     }

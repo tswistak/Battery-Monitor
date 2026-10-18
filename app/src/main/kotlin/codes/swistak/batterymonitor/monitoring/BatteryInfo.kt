@@ -131,6 +131,7 @@ internal class BatteryInfo {
 
     var remainingChargeUah: Long? = null
     var fieldSources: Map<String, String> = emptyMap()
+    var fieldMeasurementTimes: Map<String, BatteryMeasurementTime> = emptyMap()
 
     var lastStatus: Int = 0
     var lastPlugged: Int = 0
@@ -227,6 +228,7 @@ internal class BatteryInfo {
 
     fun load(intent: Intent?) {
         if (intent == null) return
+        fieldMeasurementTimes = emptyMap()
         val level = intent.getIntExtra(EXTRA_LEVEL, 50)
         val scale = intent.getIntExtra(EXTRA_SCALE, 100)
 
@@ -300,11 +302,16 @@ internal class BatteryInfo {
         bundle.putBundle(FIELD_SOURCES, Bundle().apply {
             fieldSources.forEach { (key, source) -> putString(key, source) }
         })
+        bundle.putBundle("field_measurement_times", Bundle().apply {
+            fieldMeasurementTimes.forEach { (key, time) -> putBundle(key, time.toBundle()) }
+        })
 
         return bundle
     }
 
     fun loadBundle(bundle: Bundle) {
+        fieldMeasurementTimes =
+            BatteryMeasurementTime.readMap(bundle.getBundle("field_measurement_times"))
         fieldSources = bundle.getBundle(FIELD_SOURCES)?.let { sources ->
             sources.keySet().mapNotNull { key -> sources.getString(key)?.let { key to it } }.toMap()
         } ?: emptyMap()
@@ -437,6 +444,24 @@ internal fun mergeBatteryFieldSources(
                 else "ACTION_BATTERY_CHANGED / $key"
             } else fallback?.fieldSources?.get(key)?.takeIf { fallbackValue != null }
             source?.let { put(key, it) }
+        }
+        record("temperature", fallback?.temperatureTenthsC)
+        record("health", fallback?.health)
+        record("voltage", fallback?.voltageMillivolts)
+    }
+}
+
+internal fun mergeBatteryFieldMeasurementTimes(
+    fields: Map<String, Int>,
+    fallback: PrivilegedBatteryReading?,
+    direct: Map<String, BatteryMeasurementTime>
+): Map<String, BatteryMeasurementTime> {
+    val missing = missingBatteryFields(fields)
+    return buildMap {
+        fun record(key: String, fallbackValue: Int?) {
+            val time = if (key !in missing) direct[key]
+            else fallback?.fieldMeasurementTimes?.get(key)?.takeIf { fallbackValue != null }
+            time?.let { put(key, it) }
         }
         record("temperature", fallback?.temperatureTenthsC)
         record("health", fallback?.health)

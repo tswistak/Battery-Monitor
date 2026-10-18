@@ -12,28 +12,22 @@
 */
 package codes.swistak.batterymonitor.ui.history
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.getValue
-import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
-import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 
 internal data class FullscreenChartRequest(val metric: HistoryMetric, val range: HistoryRangeState)
@@ -48,12 +42,6 @@ internal fun fullscreenChartRequest(
 
 class FullscreenChartActivity : AppCompatActivity() {
     private lateinit var viewModel: FullscreenChartViewModel
-    private var observingHistory = false
-    private val historyChanged = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (::viewModel.isInitialized) viewModel.refresh()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.bi_compose_theme)
@@ -83,7 +71,7 @@ class FullscreenChartActivity : AppCompatActivity() {
         setContent {
             AppBatteryTheme {
                 val state by viewModel.state.collectAsStateWithLifecycle()
-                LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.refresh() }
+                HistoryChangeEffect(viewModel::historyChanged, viewModel::historyChanged)
                 state?.let {
                     FullscreenChartScreen(
                         state = it,
@@ -101,27 +89,6 @@ class FullscreenChartActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (::viewModel.isInitialized) {
-            ContextCompat.registerReceiver(
-                this,
-                historyChanged,
-                IntentFilter(LogDatabase.ACTION_HISTORY_CHANGED),
-                ContextCompat.RECEIVER_NOT_EXPORTED
-            )
-            observingHistory = true
-        }
-    }
-
-    override fun onStop() {
-        if (observingHistory) {
-            unregisterReceiver(historyChanged)
-            observingHistory = false
-        }
-        super.onStop()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

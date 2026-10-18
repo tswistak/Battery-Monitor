@@ -7,10 +7,7 @@
 */
 package codes.swistak.batterymonitor.ui.navigation
 
-import android.view.Gravity
 import android.view.KeyEvent
-import android.view.View
-import android.widget.TextView
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusGroup
@@ -50,6 +47,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,7 +55,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
@@ -76,7 +73,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.ViewCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
@@ -91,7 +87,6 @@ internal fun SideNavigationShell(
     onSelect: (SectionOwner) -> Unit,
     onUp: () -> Unit = {},
     onSettings: (() -> Unit)? = null,
-    onLegacyActions: ((View) -> Unit)? = null,
     actions: @Composable () -> Unit = {},
     content: @Composable (Modifier) -> Unit
 ) {
@@ -117,8 +112,18 @@ internal fun SideNavigationShell(
         }
         var wasOpen by remember { mutableStateOf(false) }
         var focusHeadingOnClose by remember { mutableStateOf(false) }
+        val currentSelect by rememberUpdatedState(onSelect)
+        val pendingNavigation = remember(scope, drawerState) {
+            PendingDrawerNavigation(scope, { drawerState.close() }) { owner ->
+                currentSelect(owner)
+            }
+        }
+        DisposableEffect(pendingNavigation) { onDispose { pendingNavigation.cancel() } }
         LaunchedEffect(externalNavigationRequest) {
-            if (externalNavigationRequest > 0) drawerState.close()
+            if (externalNavigationRequest > 0) {
+                pendingNavigation.cancel()
+                drawerState.close()
+            }
         }
         val destinations = SectionRegistry.destinations
         val batterySections = destinations.filter { it.group == SectionGroup.BATTERY }
@@ -166,7 +171,10 @@ internal fun SideNavigationShell(
                     }
                 )
                 LaunchedEffect(persistent) {
-                    if (persistent) drawerState.close()
+                    if (persistent) {
+                        pendingNavigation.cancel()
+                        drawerState.close()
+                    }
                 }
                 LaunchedEffect(drawerState.currentValue, keyboardNavigation) {
                     if (drawerState.isOpen) {
@@ -222,11 +230,8 @@ internal fun SideNavigationShell(
                                 firstItemFocusRequester = panelFocus,
                                 onSelect = { route ->
                                     val owner = SectionRegistry.owner(route)
-                                    scope.launch {
-                                        focusHeadingOnClose = owner != selected
-                                        if (owner != selected) onSelect(owner)
-                                        drawerState.close()
-                                    }
+                                    focusHeadingOnClose = owner != selected
+                                    pendingNavigation.select(owner)
                                 },
                                 onClose = { scope.launch { drawerState.close() } })
                         }
@@ -324,23 +329,6 @@ internal fun SideNavigationShell(
                                         )
                                     }
                                     actions()
-                                    val actionColor = MaterialTheme.colorScheme.onSurface.toArgb()
-                                    if (onLegacyActions != null) AndroidView(
-                                        factory = { context ->
-                                        TextView(context).apply {
-                                            text = "⋮"
-                                            textSize = 24f
-                                            gravity = Gravity.CENTER
-                                            isClickable = true
-                                            isFocusable = true
-                                            contentDescription =
-                                                context.getString(R.string.nav_actions)
-                                            setOnClickListener { onLegacyActions(this) }
-                                        }
-                                    },
-                                        update = { it.setTextColor(actionColor) },
-                                        modifier = Modifier.size(48.dp)
-                                    )
                                 })
                             val maximumContentWidth = when (selected) {
                                 SectionOwner.CURRENT -> 1120.dp

@@ -25,7 +25,7 @@ class ChargingLimitDiagnosticsTest {
 
     @Test
     fun `unexpected strings get stable opaque tokens that preserve changes`() {
-        val privateValue = "tomasz@example.com /Users/tomasz/private"
+        val privateValue = "reader@example.invalid private-location"
         val first = DiagnosticValueRedactor.sanitizeWithKey(privateValue, redactionKey)
         val second = DiagnosticValueRedactor.sanitizeWithKey(privateValue, redactionKey)
         val different = DiagnosticValueRedactor.sanitizeWithKey("different", redactionKey)
@@ -33,9 +33,9 @@ class ChargingLimitDiagnosticsTest {
         assertEquals(first, second)
         assertFalse(first == different)
         assertFalse(first == "<redacted>")
-        assertFalse(first.contains("tomasz"))
-        assertFalse(first.contains("example.com"))
-        assertFalse(first.contains("/Users"))
+        assertFalse(first.contains("reader"))
+        assertFalse(first.contains("example.invalid"))
+        assertFalse(first.contains("private-location"))
     }
 
     @Test
@@ -43,10 +43,10 @@ class ChargingLimitDiagnosticsTest {
         val condition = ChargingDiagnosticCondition.Fixed(85)
 
         assertEquals("FIXED:85", condition.toStorageValue())
-        assertEquals(condition, ChargingDiagnosticCondition.fromStorageValue("FIXED:85"))
+        assertEquals(ChargingDiagnosticCondition.fromStorageValue("FIXED:85"), condition)
         assertEquals(
-            ChargingDiagnosticCondition.Fixed(70),
-            ChargingDiagnosticCondition.fromStorageValue("FIXED_70")
+            ChargingDiagnosticCondition.fromStorageValue("FIXED_70"),
+            ChargingDiagnosticCondition.Fixed(70)
         )
     }
 

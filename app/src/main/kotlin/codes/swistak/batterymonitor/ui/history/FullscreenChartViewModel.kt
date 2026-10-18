@@ -80,6 +80,37 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
     private var generation = 0L
     private var pixelWidth = 800
     private var boundsStale = true
+    private var appliedRevision: Long? = null
+    private var freshness: Job? = null
+
+    fun historyChanged() {
+        freshness?.cancel()
+        val requestGeneration = generation
+        freshness = viewModelScope.launch {
+            query?.join()
+            if (requestGeneration != generation) return@launch
+            val current = mutable.value ?: return@launch
+            try {
+                val changes = repository.historyChanges(
+                    appliedRevision, current.range.takeUnless { current.rangeLabel == "all" })
+                if (requestGeneration != generation) return@launch
+                if (changes.affectsRange) refresh()
+                else {
+                    appliedRevision = changes.revision
+                    if (mutable.value?.error == true) mutable.value =
+                        mutable.value?.copy(error = false)
+                }
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (_: Exception) {
+                if (requestGeneration == generation) {
+                    appliedRevision = null
+                    boundsStale = true
+                    mutable.value = mutable.value?.copy(loading = false, error = true)
+                }
+            }
+        }
+    }
 
     fun initialize(metric: HistoryMetric, range: HistoryRangeState, label: String, saved: Bundle?) {
         if (mutable.value != null) return
@@ -181,7 +212,11 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
         query = viewModelScope.launch {
             try {
                 if (debounce) delay(120.milliseconds)
-                var resolved = request
+                val changes = repository.historyChanges(
+                    appliedRevision, request.range.takeUnless { request.rangeLabel == "all" })
+                val revision = changes.revision
+                var resolved =
+                    if (changes.affectsRange) request.copy(boundsByMetric = emptyMap()) else request
                 if (request.rangeLabel == "all") {
                     val range = repository.historyRange() ?: HistoryRangeState(0, 1)
                     if (range != request.range) {
@@ -189,12 +224,6 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
                             range = range,
                             viewport = if (request.viewport == request.range) range
                             else boundedChartViewport(range, request.viewport),
-                            charts = emptyMap(),
-                            boundsByMetric = emptyMap()
-                        )
-                        if (requestGeneration == generation) mutable.value = mutable.value?.copy(
-                            range = resolved.range,
-                            viewport = resolved.viewport,
                             charts = emptyMap(),
                             boundsByMetric = emptyMap()
                         )
@@ -213,15 +242,23 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
                 )
                 ensureActive()
                 if (requestGeneration == generation) {
+                    appliedRevision = revision
                     mutable.value = mutable.value?.copy(
-                        charts = charts, boundsByMetric = bounds, loading = false
+                        range = resolved.range,
+                        viewport = resolved.viewport,
+                        charts = charts,
+                        boundsByMetric = bounds,
+                        loading = false
                     )
                     loadSelection(mutable.value?.selectedKey)
+                    historyChanged()
                 }
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (_: Exception) {
                 if (requestGeneration == generation) {
+                    appliedRevision = null
+                    boundsStale = true
                     mutable.value = mutable.value?.copy(loading = false, error = true)
                 }
             }
@@ -235,7 +272,9 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
             try {
                 val record = repository.detailedSelection(key)
                 if (mutable.value?.selectedKey == key) {
-                    mutable.value = mutable.value?.copy(selectedRecord = record)
+                    mutable.value = mutable.value?.copy(
+                        selectedKey = key.takeIf { record != null }, selectedRecord = record
+                    )
                 }
             } catch (cancelled: CancellationException) {
                 throw cancelled

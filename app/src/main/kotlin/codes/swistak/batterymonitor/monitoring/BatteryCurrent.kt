@@ -16,6 +16,10 @@ import android.content.Context
 import android.os.BatteryManager
 import android.util.Log
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
+import codes.swistak.batterymonitor.privileged.PrivilegedAccess
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.isActive
 import java.io.File
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -25,7 +29,10 @@ import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.log10
 
-internal data class BatteryCurrentReading(val microAmps: Long, val source: String?)
+
+internal data class BatteryCurrentReading(
+    val microAmps: Long, val source: String?, val acquiredAt: BatteryMeasurementTime? = null
+)
 
 internal object BatteryCurrent {
     private const val LOG_TAG = "codes.swistak.batterymonitor - BatteryCurrent"
@@ -63,18 +70,44 @@ internal object BatteryCurrent {
         average: Boolean,
         readAndroid: (Boolean) -> Long? = ::readAndroidSystem,
         readSysfs: (Boolean) -> BatteryCurrentReading? = ::readFileSystem,
-        readPrivileged: () -> PrivilegedBatteryReading? = { PrivilegedBatteryReader.shared.read() }
+        readPrivileged: () -> PrivilegedBatteryReading? = { PrivilegedBatteryReader.shared.read() },
+        readTime: () -> BatteryMeasurementTime = { BatteryMeasurementTime.now() }
     ): BatteryCurrentReading? {
+        val acquiredAt = readTime()
         readAndroid(average)?.let {
             val property =
                 if (average) "BATTERY_PROPERTY_CURRENT_AVERAGE" else "BATTERY_PROPERTY_CURRENT_NOW"
-            return BatteryCurrentReading(it, "BatteryManager / $property")
+            return BatteryCurrentReading(it, "BatteryManager / $property", acquiredAt)
         }
         readSysfs(average)?.let { return it }
         val privileged = readPrivileged() ?: return null
         val value = if (average) privileged.currentAverageUa else privileged.currentNowUa
         val key = if (average) "current_average" else "current_now"
-        return value?.let { BatteryCurrentReading(it, privileged.fieldSources[key]) }
+        return value?.let {
+            BatteryCurrentReading(
+                it, privileged.fieldSources[key], privileged.fieldMeasurementTimes[key]
+            )
+        }
+    }
+
+    internal suspend fun readVisibleCurrent(
+        preferAverage: Boolean,
+        read: (Boolean, () -> PrivilegedBatteryReading?) -> BatteryCurrentReading? = { average, privileged ->
+            readWithSource(average, readPrivileged = privileged)
+        },
+        readPrivileged: () -> PrivilegedBatteryReading? = { PrivilegedBatteryReader.shared.read() },
+        privilegedEnabled: () -> Boolean = PrivilegedAccess::isEnabled
+    ): BatteryCurrentReading? {
+        val context = currentCoroutineContext()
+        val privileged = {
+            if (context.isActive && privilegedEnabled()) readPrivileged() else null
+        }
+        context.ensureActive()
+        val average = if (preferAverage) read(true, privileged) else null
+        context.ensureActive()
+        val result = average ?: read(false, privileged)
+        context.ensureActive()
+        return result
     }
 
     internal fun readForMultiplierDetection(average: Boolean, onResult: (Double?) -> Unit) {
@@ -119,8 +152,12 @@ internal object BatteryCurrent {
         return reading
     }
 
-    internal fun readCurrentFile(file: File): BatteryCurrentReading? =
-        readLong(file)?.let { BatteryCurrentReading(it, file.path) }
+    internal fun readCurrentFile(
+        file: File, readTime: () -> BatteryMeasurementTime = { BatteryMeasurementTime.now() }
+    ): BatteryCurrentReading? {
+        val acquiredAt = readTime()
+        return readLong(file)?.let { BatteryCurrentReading(it, file.path, acquiredAt) }
+    }
 
     internal fun findCurrentFile(root: File, average: Boolean): File? {
         val fileName = if (average) "current_avg" else "current_now"

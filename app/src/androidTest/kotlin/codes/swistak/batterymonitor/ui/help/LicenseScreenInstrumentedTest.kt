@@ -50,6 +50,7 @@ class LicenseScreenInstrumentedTest {
         get() = InstrumentationRegistry.getInstrumentation()
     private val context
         get() = instrumentation.targetContext
+    private var activityMonitor: Instrumentation.ActivityMonitor? = null
 
     @Test
     fun inventory_preserves_component_mappings_attributions_and_all_offline_files() {
@@ -385,6 +386,7 @@ class LicenseScreenInstrumentedTest {
         val acknowledgedVersion =
             preferences.getLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, 0)
         val monitor = instrumentation.addMonitor(BatteryInfoActivity::class.java.name, null, false)
+        activityMonitor = monitor
         try {
             prepareOnboarding()
             val launched = instrumentation.startActivitySync(
@@ -400,6 +402,7 @@ class LicenseScreenInstrumentedTest {
             main { monitor.lastActivity?.finish() }
             instrumentation.waitForIdleSync()
             instrumentation.removeMonitor(monitor)
+            activityMonitor = null
             val restore = preferences.edit()
             if (hadFirstRun) restore.putBoolean(SettingsContract.KEY_FIRST_RUN, firstRun)
             else restore.remove(SettingsContract.KEY_FIRST_RUN)
@@ -532,10 +535,13 @@ class LicenseScreenInstrumentedTest {
         instrumentation.waitForIdleSync()
     }
 
-    private fun visibleText(text: String, contains: Boolean = false): Boolean = findNode { node ->
-        val values = listOfNotNull(node.text?.toString(), node.contentDescription?.toString())
-        values.any { if (contains) it.contains(text) else text in it.lines() }
-    } != null
+    private fun visibleText(text: String, contains: Boolean = false): Boolean {
+        fun matches(values: List<String>): Boolean =
+            values.any { if (contains) it.contains(text) else text in it.lines() }
+        return findNode { node ->
+            matches(listOfNotNull(node.text?.toString(), node.contentDescription?.toString()))
+        } != null || withApi26ComposeNode({ node -> matches(composeText(node)) }) { true }
+    }
 
     private fun tapText(text: String): Boolean {
         var node = findNode {
@@ -549,15 +555,78 @@ class LicenseScreenInstrumentedTest {
             }
             node = node.parent
         }
-        return false
+        val clicked =
+            withApi26ComposeNode({ node -> composeText(node).any { text in it.lines() } }) {
+                var target: SemanticsNode? = it
+                var performed = false
+                while (target != null && !performed) {
+                    if (!target.config.contains(SemanticsProperties.Disabled)) {
+                        performed =
+                            target.config.getOrNull(SemanticsActions.OnClick)?.action?.invoke() == true
+                    }
+                    target = target.parent
+                }
+                performed
+            }
+        if (clicked) instrumentation.waitForIdleSync()
+        return clicked
     }
 
     private fun scrollForward(): Boolean {
-        val node = findNode { it.isScrollable } ?: return false
-        val scrolled = node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
+        val node = findNode { it.isScrollable }
+        val scrolled = node?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
+            ?: withApi26ComposeNode({ candidate ->
+                candidate.config.getOrNull(SemanticsProperties.VerticalScrollAxisRange)?.let {
+                    it.value() < it.maxValue()
+                } == true && candidate.config.contains(SemanticsActions.ScrollBy)
+            }) {
+                it.config[SemanticsActions.ScrollBy].action?.invoke(
+                    0f, it.boundsInWindow.height * 0.8f
+                ) == true
+            }
         instrumentation.waitForIdleSync()
         Thread.sleep(250)
         return scrolled
+    }
+
+    private fun composeText(node: SemanticsNode): List<String> =
+        node.config.getOrNull(SemanticsProperties.Text).orEmpty()
+            .map { it.text } + node.config.getOrNull(SemanticsProperties.ContentDescription)
+            .orEmpty()
+
+    private fun withApi26ComposeNode(
+        matches: (SemanticsNode) -> Boolean, action: (SemanticsNode) -> Boolean
+    ): Boolean {
+        // API26 sometimes exposes no active accessibility root while the focused Compose screen is ready.
+        if (Build.VERSION.SDK_INT != 26 || instrumentation.uiAutomation.rootInActiveWindow != null) return false
+        var performed = false
+        main {
+            val activity = activityMonitor?.lastActivity as? BatteryInfoActivity ?: return@main
+            if (!activity.window.decorView.hasWindowFocus()) return@main
+            fun hidden(node: SemanticsNode): Boolean =
+                node.config.contains(SemanticsProperties.HideFromAccessibility) || node.parent?.let(
+                    ::hidden
+                ) == true
+
+            fun findSemantics(node: SemanticsNode): SemanticsNode? {
+                val bounds = node.boundsInWindow
+                if (bounds.width > 0 && bounds.height > 0 && !hidden(node) && matches(node)) return node
+                return node.children.firstNotNullOfOrNull(::findSemantics)
+            }
+
+            fun findView(view: View): SemanticsNode? {
+                if (!view.isShown) return null
+                val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
+                    ?.invoke(view) as? SemanticsOwner
+                owner?.let { findSemantics(it.rootSemanticsNode)?.let { node -> return node } }
+                if (view is ViewGroup) {
+                    for (index in 0 until view.childCount) findView(view.getChildAt(index))?.let { return it }
+                }
+                return null
+            }
+            findView(activity.window.decorView)?.let { performed = action(it) }
+        }
+        return performed
     }
 
     private fun findNode(matches: (AccessibilityNodeInfo) -> Boolean): AccessibilityNodeInfo? {
@@ -574,7 +643,94 @@ class LicenseScreenInstrumentedTest {
     private fun await(ready: () -> Boolean) {
         val deadline = System.nanoTime() + 10_000_000_000
         while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
-        assertTrue("License screen did not reach the expected state", ready())
+        val reached = ready()
+        if (!reached) runCatching { reportReadinessTimeout() }
+        assertTrue("License screen did not reach the expected state", reached)
+    }
+
+    @Suppress("DEPRECATION")
+    private fun reportReadinessTimeout() {
+        val record = Bundle().apply {
+            putString("helpReadinessDiagnostic", "timeout")
+            putString("contextConfiguration", context.resources.configuration.toString())
+        }
+        runCatching {
+            main {
+                val activity = activityMonitor?.lastActivity as? BatteryInfoActivity
+                record.putString("activity", activity?.let {
+                    "destroyed=${it.isDestroyed}, finishing=${it.isFinishing}, " + "lifecycle=${it.lifecycle.currentState}, focus=${it.window.decorView.hasWindowFocus()}, " + "configuration=${it.resources.configuration}"
+                })
+                activity?.let {
+                    val field = BatteryInfoActivity::class.java.getDeclaredField("navigator")
+                    field.isAccessible = true
+                    val navigator = field.get(it) as SectionNavigator
+                    val startup = ViewModelProvider(it)[StartupDialogViewModel::class.java]
+                    record.putString(
+                        "navigationAndStartup",
+                        "owner=${navigator.selected}, detail=${navigator.detail}, " + "startup=${startup.presentation}, blocked=${startup.blocksContentDialogs}"
+                    )
+                    val texts = mutableListOf<String>()
+                    fun collect(node: SemanticsNode) {
+                        if (texts.size >= 60) return
+                        val text = node.config.getOrNull(SemanticsProperties.Text)
+                            ?.joinToString(" | ") { value -> value.text }
+                        val description =
+                            node.config.getOrNull(SemanticsProperties.ContentDescription)
+                                ?.joinToString(" | ")
+                        if (text != null || description != null) {
+                            texts += "bounds=${node.boundsInWindow}, text=${text?.take(160)}, " + "description=${
+                                description?.take(
+                                    80
+                                )
+                            }"
+                        }
+                        node.children.forEach(::collect)
+                    }
+
+                    fun inspect(view: View) {
+                        if (!view.isShown) return
+                        val owner = view.javaClass.methods.firstOrNull { method ->
+                            method.name == "getSemanticsOwner"
+                        }?.invoke(view) as? SemanticsOwner
+                        owner?.rootSemanticsNode?.let(::collect)
+                        if (view is ViewGroup) {
+                            for (index in 0 until view.childCount) inspect(view.getChildAt(index))
+                        }
+                    }
+                    inspect(it.window.decorView)
+                    record.putStringArrayList("activityComposeText", ArrayList(texts))
+                }
+            }
+        }.onFailure { record.putString("activityDiagnosticError", it.toString()) }
+        val nodes = mutableListOf<String>()
+        fun collect(node: AccessibilityNodeInfo) {
+            if (nodes.size >= 80) return
+            val bounds = android.graphics.Rect()
+            node.getBoundsInScreen(bounds)
+            nodes += "window=${node.windowId}, package=${node.packageName}, class=${node.className}, " + "visible=${node.isVisibleToUser}, focused=${node.isFocused}, bounds=$bounds, " + "text=${
+                node.text?.toString()?.take(160)
+            }, " + "description=${node.contentDescription?.toString()?.take(80)}"
+            for (index in 0 until node.childCount) {
+                if (nodes.size >= 80) break
+                val child = node.getChild(index) ?: continue
+                try {
+                    collect(child)
+                } finally {
+                    child.recycle()
+                }
+            }
+        }
+        runCatching {
+            instrumentation.uiAutomation.rootInActiveWindow?.let { root ->
+                try {
+                    collect(root)
+                } finally {
+                    root.recycle()
+                }
+            }
+        }.onFailure { record.putString("accessibilityDiagnosticError", it.toString()) }
+        record.putStringArrayList("activeWindowAccessibility", ArrayList(nodes))
+        instrumentation.sendStatus(0, record)
     }
 
     private fun main(action: () -> Unit) {

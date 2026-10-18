@@ -269,11 +269,14 @@ class BatteryInfoActivity : AppCompatActivity() {
                         )
                     },
                     onUp = ::navigateUp,
-                    onSelect = ::selectSection,
+                    onSelect = { owner ->
+                        if (owner != this@BatteryInfoActivity.selected || this@BatteryInfoActivity.detail != null) {
+                            selectSection(owner)
+                        }
+                    },
                     onSettings = if (selected == SectionOwner.CURRENT) {
                         { selectSection(SectionOwner.SETTINGS) }
                     } else null,
-                    onLegacyActions = null,
                     actions = {
                         if (selected in setOf(
                                 SectionOwner.DIAGNOSTICS, SectionOwner.ALARMS, SectionOwner.SETTINGS
@@ -338,6 +341,9 @@ class BatteryInfoActivity : AppCompatActivity() {
                             CurrentStateRoute(
                                 viewModel = current,
                                 monitoring = persistent.monitoring.state,
+                                serviceCurrent = persistent.monitoring.current,
+                                onCurrentDemand = persistent::setCurrentDemand,
+                                onRefreshServiceCurrent = persistent::refreshCurrent,
                                 settings = currentSettings,
                                 onSection = ::selectSection,
                                 onBatteryUsage = ::openBatteryUsage,

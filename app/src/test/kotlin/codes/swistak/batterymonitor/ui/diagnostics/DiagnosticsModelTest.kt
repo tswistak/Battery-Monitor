@@ -14,6 +14,7 @@ package codes.swistak.batterymonitor.ui.diagnostics
 
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
+import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -29,7 +30,7 @@ class DiagnosticsModelTest {
         assertEquals(
             R.string.advanced_status_no_access, enabled.copy(loading = true).privilegedAccessStatus
         )
-        val available = enabled.copy(advanced = AdvancedBatterySnapshot().apply {
+        val available = enabled.copy(advanced = acquiredSnapshot {
             accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
             currentNowUa = -900000
         })
@@ -71,8 +72,8 @@ class DiagnosticsModelTest {
 
     @Test
     fun `leaving statistics clears pending access status and keeps the last readings stale`() {
-        val basic = AdvancedBatterySnapshot().apply { reportedCapacityPercent = 72 }
-        val advanced = AdvancedBatterySnapshot().apply {
+        val basic = acquiredSnapshot { reportedCapacityPercent = 72 }
+        val advanced = acquiredSnapshot {
             accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
             currentNowUa = -900000
         }
@@ -103,7 +104,7 @@ class DiagnosticsModelTest {
     @Test
     fun `overview refresh preserves real access failure while disabling clears privileged readings`() {
         val failed = DiagnosticsState(
-            advanced = AdvancedBatterySnapshot().apply { currentNowUa = -900000 },
+            advanced = acquiredSnapshot { currentNowUa = -900000 },
             privilegedEnabled = true,
             status = R.string.diag_timeout,
             stale = true
@@ -119,7 +120,7 @@ class DiagnosticsModelTest {
 
     @Test
     fun `raw search matches original keys without formatting values or exposing identifiers by default`() {
-        val snapshot = AdvancedBatterySnapshot().apply {
+        val snapshot = acquiredSnapshot {
             accessMethod = "Android"
             capturedAtMillis = 42
             currentNowUa = -900000
@@ -148,7 +149,7 @@ class DiagnosticsModelTest {
         val previousLocale = Locale.getDefault()
         try {
             Locale.setDefault(Locale.US)
-            val snapshot = AdvancedBatterySnapshot().apply {
+            val snapshot = acquiredSnapshot {
                 currentNowUa = -900
                 maxChargingCurrentUa = 2000000
             }
@@ -172,7 +173,7 @@ class DiagnosticsModelTest {
 
     @Test
     fun `normalized groups use available readings once and preserve each reading source and time`() {
-        val android = AdvancedBatterySnapshot().apply {
+        val android = acquiredSnapshot {
             accessMethod = "Android"
             capturedAtMillis = 200
             currentNowUa = -493000
@@ -181,7 +182,7 @@ class DiagnosticsModelTest {
             fieldSources["current_now"] = "BatteryManager / BATTERY_PROPERTY_CURRENT_NOW"
             fieldSources["capacity"] = "ACTION_BATTERY_CHANGED / level / scale"
         }
-        val shizuku = AdvancedBatterySnapshot().apply {
+        val shizuku = acquiredSnapshot {
             accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
             capturedAtMillis = 100
             chargeCounterUah = 2655000
@@ -211,6 +212,7 @@ class DiagnosticsModelTest {
         assertTrue(diagnosticGroupSources(groups[1]).contains("/sys/class/power_supply (Shizuku)"))
         shizuku.currentNowUa = -600000
         shizuku.capturedAtMillis = 300
+        stampAcquisitionTimes(shizuku, 300)
         assertEquals(
             "-600000", mergedDiagnosticGroups(
                 listOf(android, shizuku), 1
@@ -221,7 +223,7 @@ class DiagnosticsModelTest {
 
     @Test
     fun `estimated health requires positive capacities from the same power supply`() {
-        val snapshot = AdvancedBatterySnapshot().apply {
+        val snapshot = acquiredSnapshot {
             fullChargeUah = 3000000
             designChargeUah = 4000000
         }
@@ -246,7 +248,7 @@ class DiagnosticsModelTest {
             diagnosticSourceName("Root · Shizuku · App UID · Android · Root")
         )
         val rawValue = " 00012\n"
-        val app = AdvancedBatterySnapshot().apply {
+        val app = acquiredSnapshot {
             accessMethod = "App UID"
             capturedAtMillis = 200
             chargeCounterUah = 12000
@@ -273,7 +275,7 @@ class DiagnosticsModelTest {
 
     @Test
     fun `unsupported app charge counter suppresses broadcast and dumpsys default zeros without changing raw data`() {
-        val broadcast = AdvancedBatterySnapshot().apply {
+        val broadcast = acquiredSnapshot {
             accessMethod = "Android"
             capturedAtMillis = 100
             chargeCounterUah = 0
@@ -281,7 +283,7 @@ class DiagnosticsModelTest {
             serviceLabels.add("charge_counter")
             serviceValues.add("0")
         }
-        val root = AdvancedBatterySnapshot().apply {
+        val root = acquiredSnapshot {
             accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
             capturedAtMillis = 200
             chargeCounterUah = 0
@@ -291,7 +293,7 @@ class DiagnosticsModelTest {
         }
         for (access in listOf("Android", "App UID")) {
             for (sentinel in listOf(Int.MIN_VALUE.toLong(), Long.MIN_VALUE)) {
-                val api = AdvancedBatterySnapshot().apply {
+                val api = acquiredSnapshot {
                     accessMethod = access
                     capturedAtMillis = 300
                     metadataLabels.add("BATTERY_PROPERTY_CHARGE_COUNTER")
@@ -323,13 +325,13 @@ class DiagnosticsModelTest {
 
     @Test
     fun `charge counter keeps verified zeros and positive fallbacks and uses the newest explicit app API result`() {
-        val unsupported = AdvancedBatterySnapshot().apply {
+        val unsupported = acquiredSnapshot {
             accessMethod = "App UID"
             capturedAtMillis = 300
             metadataLabels.add("BATTERY_PROPERTY_CHARGE_COUNTER")
             metadataValues.add(Int.MIN_VALUE.toString())
         }
-        val defaultZero = AdvancedBatterySnapshot().apply {
+        val defaultZero = acquiredSnapshot {
             accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
             capturedAtMillis = 200
             chargeCounterUah = 0
@@ -343,7 +345,7 @@ class DiagnosticsModelTest {
             "dumpsys battery / Charge counter" to 2651000L
         )
         sources.forEach { (source, value) ->
-            val fallback = AdvancedBatterySnapshot().apply {
+            val fallback = acquiredSnapshot {
                 accessMethod = "Android"
                 capturedAtMillis = 100
                 chargeCounterUah = value
@@ -362,7 +364,7 @@ class DiagnosticsModelTest {
             )[0].rows.single { it.rawKey == "charge_counter" }.rawValue
         )
         for (value in listOf(0L, 2651000L)) {
-            val latestApi = AdvancedBatterySnapshot().apply {
+            val latestApi = acquiredSnapshot {
                 accessMethod = "Android"
                 capturedAtMillis = 400
                 chargeCounterUah = value
@@ -371,6 +373,7 @@ class DiagnosticsModelTest {
                 metadataValues.add(value.toString())
             }
             defaultZero.capturedAtMillis = 500
+            stampAcquisitionTimes(defaultZero, 500)
             val reading = mergedDiagnosticGroups(
                 listOf(defaultZero, unsupported, latestApi), 1
             )[0].rows.single { it.rawKey == "charge_counter" }
@@ -385,7 +388,7 @@ class DiagnosticsModelTest {
         val previousLocale = Locale.getDefault()
         try {
             Locale.setDefault(Locale.US)
-            val snapshot = AdvancedBatterySnapshot().apply {
+            val snapshot = acquiredSnapshot {
                 accessMethod = "Android"
                 currentNowUa = -900
                 fieldSources["current_now"] = "BatteryManager / BATTERY_PROPERTY_CURRENT_NOW"
@@ -423,7 +426,7 @@ class DiagnosticsModelTest {
         try {
             Locale.setDefault(Locale.US)
             for ((raw, unit) in listOf(" 3900123\n" to "µV", " 3900\n" to "mV")) {
-                val snapshot = AdvancedBatterySnapshot().apply {
+                val snapshot = acquiredSnapshot {
                     accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
                     capturedAtMillis = 300
                     currentNowUa = -500000
@@ -458,14 +461,14 @@ class DiagnosticsModelTest {
                     ).first().rows.single { it.rawKey == "battery_power" }.value
                 )
             }
-            val android = AdvancedBatterySnapshot().apply {
+            val android = acquiredSnapshot {
                 accessMethod = "Android"
                 capturedAtMillis = 200
                 currentNowUa = -500000
                 serviceLabels.add("voltage")
                 serviceValues.add("4000")
             }
-            val invalid = AdvancedBatterySnapshot().apply {
+            val invalid = acquiredSnapshot {
                 accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
                 capturedAtMillis = 300
                 serviceLabels.add("voltage")
@@ -493,7 +496,7 @@ class DiagnosticsModelTest {
         val previousLocale = Locale.getDefault()
         try {
             Locale.setDefault(Locale.US)
-            val older = AdvancedBatterySnapshot().apply {
+            val older = acquiredSnapshot {
                 accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
                 capturedAtMillis = 100
                 maxChargingVoltageUv = 0
@@ -554,7 +557,7 @@ class DiagnosticsModelTest {
                     )
                 )
             }
-            val newer = AdvancedBatterySnapshot().apply {
+            val newer = acquiredSnapshot {
                 accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
                 capturedAtMillis = 200
                 sysfsLabels.addAll(listOf("usb/current_max", "usb/type"))
@@ -647,7 +650,7 @@ class DiagnosticsModelTest {
 
     @Test
     fun `charging enums are localized using their original source schema`() {
-        val snapshot = AdvancedBatterySnapshot().apply {
+        val snapshot = acquiredSnapshot {
             chargingState = "2"
             chargingPolicy = "2"
             capacityLevel = "3"
@@ -686,7 +689,7 @@ class DiagnosticsModelTest {
         snapshot.chargingState = "vendor_code_31"
         assertNull(formattedDiagnosticValue(row("charging_state")) { it.toString() })
         assertEquals("vendor_code_31", row("charging_state").rawValue)
-        val newer = AdvancedBatterySnapshot().apply {
+        val newer = acquiredSnapshot {
             capturedAtMillis = 100
             chargingState = "Full"
             fieldSources["charging_state"] = "/sys/class/power_supply/battery/status"
@@ -701,7 +704,7 @@ class DiagnosticsModelTest {
 
     @Test
     fun `inconsistent learned capacity remains visible without a misleading health estimate`() {
-        val snapshot = AdvancedBatterySnapshot().apply {
+        val snapshot = acquiredSnapshot {
             fullChargeUah = 18772000
             designChargeUah = 3292000
             fieldSources["charge_full"] = "/sys/class/power_supply/bms/charge_full"
@@ -719,7 +722,7 @@ class DiagnosticsModelTest {
 
     @Test
     fun `merged health uses coherent capacities and power follows displayed voltage and current`() {
-        val older = AdvancedBatterySnapshot().apply {
+        val older = acquiredSnapshot {
             accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
             capturedAtMillis = 100
             fullChargeUah = 3000000
@@ -730,7 +733,7 @@ class DiagnosticsModelTest {
             fieldSources["charge_full"] = "/sys/class/power_supply/bms/charge_full"
             fieldSources["charge_full_design"] = "/sys/class/power_supply/bms/charge_full_design"
         }
-        val newer = AdvancedBatterySnapshot().apply {
+        val newer = acquiredSnapshot {
             accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
             capturedAtMillis = 200
             fullChargeUah = 18772000
@@ -744,7 +747,7 @@ class DiagnosticsModelTest {
         assertEquals("500000", merged[0].rows.single { it.rawKey == "current_now" }.rawValue)
         val power = merged[0].rows.single { it.rawKey == "battery_power" }
         assertEquals("2.5", power.rawValue)
-        assertEquals(200L, power.observedAtMillis)
+        assertEquals(100L, power.observedAtMillis)
         assertTrue(power.source.contains("voltage"))
         assertTrue(power.source.contains("current_now"))
         newer.fullChargeUah = 3000000
@@ -788,5 +791,137 @@ class DiagnosticsModelTest {
             assertEquals(0, missingDiagnosticExplanation(missing.copy(label = 0), null))
         }
         assertEquals(0, missingDiagnosticExplanation(row.copy(rawKey = "energy_counter"), null))
+    }
+
+    @Test
+    fun `completion and cached redisplay do not invent measurement times`() {
+        val snapshot = AdvancedBatterySnapshot().apply {
+            accessMethod = "Android"
+            capturedAtMillis = 900
+            currentNowUa = -500000
+            fieldSources["current_now"] = "BatteryManager / BATTERY_PROPERTY_CURRENT_NOW"
+        }
+
+        fun reading() =
+            diagnosticGroups(snapshot, 1).first().rows.single { it.rawKey == "current_now" }
+        assertEquals(0L, reading().observedAtMillis)
+        assertNull(reading().observedElapsedMillis)
+        snapshot.sourceReadTimes[fieldSource(snapshot)] = BatteryMeasurementTime(100, 10)
+        assertEquals(100L, reading().observedAtMillis)
+        snapshot.capturedAtMillis = 1200
+        assertEquals(100L, reading().observedAtMillis)
+        snapshot.sourceReadTimes[fieldSource(snapshot)] = BatteryMeasurementTime(80, 20)
+        assertEquals(80L, reading().observedAtMillis)
+        assertEquals(20L, reading().observedElapsedMillis)
+        snapshot.currentNowUa = null
+        assertEquals(0L, reading().observedAtMillis)
+    }
+
+    @Test
+    fun `merged readings use monotonic acquisition ordering across wall clock rollback`() {
+        fun observed(current: Long, wall: Long, elapsed: Long) = AdvancedBatterySnapshot().apply {
+            accessMethod = "Android"
+            capturedAtMillis = wall + 1000
+            currentNowUa = current
+            fieldSources["current_now"] = "BatteryManager / BATTERY_PROPERTY_CURRENT_NOW"
+            sourceReadTimes[fieldSource(this)] = BatteryMeasurementTime(wall, elapsed)
+        }
+
+        val beforeClockChange = observed(-500000, 500, 10)
+        val afterClockChange = observed(-600000, 100, 20)
+        val row = mergedDiagnosticGroups(
+            listOf(beforeClockChange, afterClockChange), 1
+        ).first().rows.single { it.rawKey == "current_now" }
+        assertEquals("-600000", row.rawValue)
+        assertEquals(100L, row.observedAtMillis)
+        assertEquals(20L, row.observedElapsedMillis)
+    }
+
+    @Test
+    fun `power uses the older required acquisition and unknown legacy inputs remain unknown`() {
+        val voltage = AdvancedBatterySnapshot().apply {
+            accessMethod = "Android"
+            capturedAtMillis = 3000
+            serviceLabels.add("voltage")
+            serviceValues.add("4000")
+            sourceReadTimes["ACTION_BATTERY_CHANGED / voltage"] = BatteryMeasurementTime(500, 10)
+        }
+        val current = AdvancedBatterySnapshot().apply {
+            accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
+            capturedAtMillis = 4000
+            currentNowUa = -500000
+            fieldSources["current_now"] = "/sys/class/power_supply/battery/current_now"
+            sourceReadTimes[fieldSource(this)] = BatteryMeasurementTime(100, 20)
+        }
+
+        fun power() = mergedDiagnosticGroups(
+            listOf(voltage, current), 1
+        ).first().rows.single { it.rawKey == "battery_power" }
+        assertEquals("-2.0", power().rawValue)
+        assertEquals(500L, power().observedAtMillis)
+        assertEquals(10L, power().observedElapsedMillis)
+        current.sourceReadTimes[fieldSource(current)] = BatteryMeasurementTime(100, 5)
+        assertEquals(100L, power().observedAtMillis)
+        assertEquals(5L, power().observedElapsedMillis)
+        current.sourceReadTimes[fieldSource(current)] = BatteryMeasurementTime(100)
+        assertEquals(0L, power().observedAtMillis)
+        assertNull(power().observedElapsedMillis)
+        current.sourceReadTimes.clear()
+        assertEquals("-2.0", power().rawValue)
+        assertEquals(0L, power().observedAtMillis)
+    }
+
+    @Test
+    fun `raw display separators do not change canonical acquisition lookup`() {
+        val snapshot = AdvancedBatterySnapshot().apply {
+            capturedAtMillis = 999
+            sysfsLabels.add("battery/current_now")
+            sysfsValues.add("-500000")
+            sourceReadTimes["/sys/class/power_supply/battery/current_now"] =
+                BatteryMeasurementTime(50, 5)
+        }
+        val raw = rawDiagnosticGroups(snapshot).flatMap { it.rows }.single()
+        assertEquals("/sys/class/power_supply / battery/current_now", raw.source)
+        assertEquals(50L, raw.observedAtMillis)
+        assertEquals(5L, raw.observedElapsedMillis)
+    }
+
+    private fun fieldSource(snapshot: AdvancedBatterySnapshot) =
+        snapshot.fieldSources.getValue("current_now")
+
+    private fun acquiredSnapshot(configure: AdvancedBatterySnapshot.() -> Unit): AdvancedBatterySnapshot =
+        AdvancedBatterySnapshot().apply(configure)
+            .also { stampAcquisitionTimes(it, it.capturedAtMillis) }
+
+    private fun stampAcquisitionTimes(snapshot: AdvancedBatterySnapshot, time: Long) {
+        if (time <= 0) return
+        val service =
+            if (snapshot.accessMethod == "Android") "ACTION_BATTERY_CHANGED" else "dumpsys battery"
+        val fields = listOf(
+            "charge_counter",
+            "current_now",
+            "current_average",
+            "energy_counter",
+            "cycle_count",
+            "capacity",
+            "state_of_health",
+            "charge_full",
+            "charge_full_design",
+            "charge_time_remaining",
+            "max_charging_current",
+            "max_charging_voltage",
+            "charging_policy",
+            "charging_state",
+            "capacity_level"
+        )
+        val fallback =
+            if (snapshot.accessMethod == "Android") "BatteryManager" else "dumpsys battery"
+        val sources =
+            snapshot.fieldSources.values + fields.map { "$fallback / $it" } + snapshot.serviceLabels.map { "$service / $it" } + snapshot.sysfsLabels.map { "/sys/class/power_supply/$it" } + snapshot.metadataLabels.map {
+                if (it.startsWith("cmd battery ")) it else "BatteryManager / $it"
+            }
+        sources.forEach { source ->
+            snapshot.sourceReadTimes[source] = BatteryMeasurementTime(time, time)
+        }
     }
 }

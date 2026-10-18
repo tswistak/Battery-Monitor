@@ -93,6 +93,8 @@ Use JDK 21. The instrumented command uses AndroidJUnitRunner and excludes the se
 
 [E2E test guide](E2E.md) covers emulator setup, fresh-build execution, fixture inputs, reports and GitHub Actions.
 
+[Profiling guide](profiling.md) covers isolated profiling builds, benchmark execution, supporting traces and local analysis.
+
 ## License
 
 GNU GPL v3.0-or-later.  

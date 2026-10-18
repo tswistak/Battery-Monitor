@@ -13,6 +13,7 @@
 package codes.swistak.batterymonitor.app
 
 import android.accessibilityservice.AccessibilityServiceInfo
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
@@ -20,12 +21,12 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Rect
 import android.os.Build
+import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
-import android.view.inspector.WindowInspector
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialogDefaults
@@ -33,20 +34,30 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModelProvider
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.platform.view.inspector.WindowInspectorCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
+import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.SettingsSnapshot
+import codes.swistak.batterymonitor.ui.alarms.AlarmsViewModel
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
+import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
+import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
@@ -319,6 +330,262 @@ class StartupDialogsInstrumentedTest {
     }
 
     @Test
+    fun dirty_alarm_drawer_navigation_survives_activity_recreation_and_cancel_or_discard() {
+        val target = instrumentation.targetContext
+        val mainPreferences =
+            target.getSharedPreferences(SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE)
+        val targetSettings =
+            target.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+        val mainBefore = SettingsSnapshot.capture(mainPreferences)
+        val settingsBefore = SettingsSnapshot.capture(targetSettings)
+        val desiredBefore = MonitoringDesiredState.read(target)
+        val monitor = instrumentation.addMonitor(BatteryInfoActivity::class.java.name, null, false)
+        val automation = instrumentation.uiAutomation
+        val info = automation.serviceInfo
+        val oldFlags = info.flags
+        info.flags = oldFlags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+        automation.serviceInfo = info
+        try {
+            assertTrue(MonitoringDesiredState.write(target, desired = false))
+            assertTrue(
+                mainPreferences.edit().putBoolean(SettingsContract.KEY_FIRST_RUN, false)
+                    .putLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, installedVersion)
+                    .commit()
+            )
+            val original = instrumentation.startActivitySync(
+                Intent(
+                    target, BatteryInfoActivity::class.java
+                ).putExtra(BatteryInfoActivity.EXTRA_SECTION, SectionOwner.ALARMS.route)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            ) as BatteryInfoActivity
+            lateinit var alarms: AlarmsViewModel
+            lateinit var startup: StartupDialogViewModel
+            main {
+                alarms = ViewModelProvider(original)[AlarmsViewModel::class.java]
+                startup = ViewModelProvider(original)[StartupDialogViewModel::class.java]
+            }
+            await {
+                startup.presentation == StartupPresentation.NONE || find(target.getString(R.string.battery_optimized)) != null
+            }
+            if (startup.presentation == StartupPresentation.BATTERY_OPTIMIZATION) {
+                click(target.getString(R.string.cancel))
+            }
+            await { !startup.blocksContentDialogs && alarms.state.value.canMutate }
+            openActivityDrawer(original)
+            main {
+                val destination = activityDrawerItem(original, R.string.nav_current)
+                alarms.beginThreshold(
+                    "charge_rises", false, target.resources.configuration.locales[0]
+                )
+                alarms.changeDraftInput("47")
+                assertTrue(alarms.hasUnsavedChanges)
+                assertTrue(destination.config[SemanticsActions.OnClick].action?.invoke() == true)
+            }
+            val confirmation = target.getString(R.string.alarms_discard_confirmation)
+            await { find(confirmation) != null && dialogs() == 1 }
+            val focusStartedAt = android.os.SystemClock.uptimeMillis()
+            var focusReady = false
+            var focusWindowCount = 0
+            var lastFocusWindows = ""
+            var manualNodeWindowId = -1
+            try {
+                await {
+                    focusReady = false
+                    val manualConfirmation = find(confirmation)
+                    manualNodeWindowId = manualConfirmation?.windowId ?: -1
+                    val windows = applicationWindows()
+                    focusWindowCount = windows.size
+                    val states = windows.map { window ->
+                        val active = window.isActive
+                        val focused = window.isFocused
+                        val platformContainsConfirmation =
+                            window.root?.findAccessibilityNodeInfosByText(confirmation)
+                                ?.isNotEmpty() == true
+                        val manualContainsConfirmation =
+                            manualConfirmation != null && manualNodeWindowId == window.id
+                        if (active && focused && manualContainsConfirmation) focusReady = true
+                        "id=${window.id},type=${window.type},active=$active,focused=$focused," + "platformContainsConfirmation=$platformContainsConfirmation," + "manualContainsConfirmation=$manualContainsConfirmation"
+                    }
+                    lastFocusWindows = states.take(8).joinToString(";")
+                    focusReady
+                }
+            } finally {
+                instrumentation.sendStatus(0, Bundle().apply {
+                    putString("testDiagnostic", "alarmConfirmationFocus")
+                    putLong("elapsedMillis", android.os.SystemClock.uptimeMillis() - focusStartedAt)
+                    putBoolean("ready", focusReady)
+                    putInt("windowCount", focusWindowCount)
+                    putInt("manualNodeWindowId", manualNodeWindowId)
+                    putString("windows", lastFocusWindows)
+                })
+            }
+            await {
+                var closed = false
+                main { closed = activityDrawerClosed(original) }
+                closed
+            }
+            main {
+                val saved = Bundle()
+                instrumentation.callActivityOnSaveInstanceState(original, saved)
+                assertEquals(SectionOwner.ALARMS.route, saved.getString("nav_selected"))
+                assertEquals(
+                    SectionOwner.CURRENT.route,
+                    saved.getBundle("pending_alarm_navigation")?.getString("section")
+                )
+                assertEquals("47", alarms.state.value.draft?.thresholdInput)
+            }
+            main { original.recreate() }
+            await {
+                monitor.lastActivity != null && monitor.lastActivity !== original && !monitor.lastActivity.isDestroyed
+            }
+            val restored = monitor.lastActivity as BatteryInfoActivity
+            await { find(confirmation) != null && dialogs() == 1 }
+            click(target.getString(R.string.cancel))
+            await { find("47") != null && find(confirmation) == null && dialogs() == 1 }
+            main {
+                assertEquals(
+                    "47",
+                    ViewModelProvider(restored)[AlarmsViewModel::class.java].state.value.draft?.thresholdInput
+                )
+                restored.selectSection(SectionOwner.CURRENT)
+            }
+            await { find(confirmation) != null && dialogs() == 1 }
+            click(target.getString(R.string.alarms_discard))
+            await { dialogs() == 0 && alarms.state.value.draft == null }
+            instrumentation.waitForIdleSync()
+            main {
+                assertTrue(
+                    "Discard must first activate Current State",
+                    activityHasVisibleLabel(restored, R.string.nav_current)
+                )
+            }
+            openActivityDrawer(restored)
+            main {
+                val destination = activityDrawerItem(restored, R.string.nav_history)
+                assertTrue(destination.config[SemanticsActions.OnClick].action?.invoke() == true)
+                val beforeExternal = activityNavigationState(restored)
+                assertEquals(
+                    "History must dispatch synchronously before the external intent",
+                    SectionOwner.HISTORY.route,
+                    beforeExternal.getString("nav_selected")
+                )
+                instrumentation.callActivityOnNewIntent(
+                    restored, Intent(
+                        target, BatteryInfoActivity::class.java
+                    ).putExtra(BatteryInfoActivity.EXTRA_SECTION, SectionOwner.HELP.route)
+                )
+            }
+            val externalStartedAt = android.os.SystemClock.uptimeMillis()
+            var externalReady = false
+            var lastExternalState = Bundle()
+            try {
+                await {
+                    main {
+                        val drawerClosed = activityDrawerClosed(restored)
+                        val helpVisible = activityHasVisibleLabel(restored, R.string.nav_help)
+                        val navigation = activityNavigationState(restored)
+                        val nodes = activitySemantics(restored.window.decorView)
+                        lastExternalState = Bundle().apply {
+                            putBoolean("drawerClosed", drawerClosed)
+                            putBoolean("helpVisible", helpVisible)
+                            putString("navSelected", navigation.getString("nav_selected"))
+                            putString("navDetail", navigation.getString("nav_detail"))
+                            putBoolean(
+                                "pendingAlarmNavigation",
+                                navigation.getBundle("pending_alarm_navigation") != null
+                            )
+                            putString("lifecycle", restored.lifecycle.currentState.name)
+                            putBoolean(
+                                "fragmentStateSaved", restored.supportFragmentManager.isStateSaved
+                            )
+                            putString(
+                                "visibleLabels",
+                                nodes.filterNot(::hiddenActivityNode).flatMap {
+                                    it.config.getOrNull(SemanticsProperties.Text).orEmpty()
+                                }.take(12).joinToString("|") { it.text.take(80) })
+                            putString(
+                                "drawerItems",
+                                nodes.filter { it.config.contains(SemanticsProperties.Selected) }
+                                    .take(12).joinToString("|") {
+                                        "${
+                                            it.config.getOrNull(SemanticsProperties.Text).orEmpty()
+                                                .joinToString { text -> text.text }.take(80)
+                                        }:" + "selected=${it.config[SemanticsProperties.Selected]},hidden=${
+                                            hiddenActivityNode(
+                                                it
+                                            )
+                                        }"
+                                    })
+                        }
+                        externalReady = drawerClosed && helpVisible
+                    }
+                    externalReady
+                }
+            } finally {
+                lastExternalState.putString("testDiagnostic", "externalHelpReadiness")
+                lastExternalState.putLong(
+                    "elapsedMillis", android.os.SystemClock.uptimeMillis() - externalStartedAt
+                )
+                lastExternalState.putBoolean("ready", externalReady)
+                instrumentation.sendStatus(0, lastExternalState)
+            }
+            main {
+                val saved = activityNavigationState(restored)
+                assertEquals(SectionOwner.HELP.route, saved.getString("nav_selected"))
+                assertNull(saved.getString("nav_detail"))
+                assertNull(
+                    "Discard must consume the pending navigation",
+                    saved.getBundle("pending_alarm_navigation")
+                )
+            }
+            main { restored.openHelp("licenses") }
+            await {
+                var opened = false
+                main {
+                    val saved = activityNavigationState(restored)
+                    opened =
+                        saved.getString("nav_selected") == SectionOwner.HELP.route && saved.getString(
+                            "nav_detail"
+                        ) == "help:licenses" && activityHasVisibleLabel(
+                            restored, R.string.help_licenses_title
+                        )
+                }
+                opened
+            }
+            main {
+                val sameOwner =
+                    activityDrawerItem(restored, R.string.nav_help, includeHidden = true)
+                assertTrue(sameOwner.config[SemanticsProperties.Selected])
+                assertTrue(sameOwner.config[SemanticsActions.OnClick].action?.invoke() == true)
+                val saved = activityNavigationState(restored)
+                assertEquals(SectionOwner.HELP.route, saved.getString("nav_selected"))
+                assertNull(
+                    "Same-owner navigation must leave the license detail for the section root",
+                    saved.getString("nav_detail")
+                )
+            }
+            await {
+                var rootVisible = false
+                main {
+                    rootVisible = activityDrawerClosed(restored) && activityHasVisibleLabel(
+                        restored, R.string.nav_help
+                    ) && activityHasVisibleLabel(restored, R.string.help_cat_version)
+                }
+                rootVisible
+            }
+        } finally {
+            main { monitor.lastActivity?.finish() }
+            instrumentation.waitForIdleSync()
+            instrumentation.removeMonitor(monitor)
+            info.flags = oldFlags
+            automation.serviceInfo = info
+            assertTrue(MonitoringDesiredState.write(target, desiredBefore))
+            assertTrue(SettingsSnapshot.apply(targetSettings, settingsBefore))
+            assertTrue(SettingsSnapshot.apply(mainPreferences, mainBefore))
+        }
+    }
+
+    @Test
     fun changelog_uses_the_app_palette_is_non_dismissable_and_acknowledges_only_on_confirmation() {
         baseline(firstRun = false, acknowledged = installedVersion - 1)
         val controller = controller()
@@ -434,8 +701,8 @@ class StartupDialogsInstrumentedTest {
         it.type == AccessibilityWindowInfo.TYPE_APPLICATION && it.root?.packageName?.toString() == instrumentation.targetContext.packageName
     }
 
+    @SuppressLint("RestrictedApi")
     private fun dialogs(): Int {
-        if (Build.VERSION.SDK_INT < 29) return applicationWindows().size - 1
         fun descendants(node: SemanticsNode): List<SemanticsNode> =
             listOf(node) + node.children.flatMap(::descendants)
 
@@ -449,12 +716,85 @@ class StartupDialogsInstrumentedTest {
 
         var count = 0
         main {
-            count = WindowInspector.getGlobalWindowViews().flatMap(::owners)
+            count = WindowInspectorCompat.getGlobalWindowViews().flatMap(::owners)
                 .flatMap { descendants(it.rootSemanticsNode) }
                 .count { it.config.contains(SemanticsProperties.IsDialog) }
         }
         return count
     }
+
+    private fun activityNavigationState(activity: BatteryInfoActivity): Bundle {
+        val fields = BatteryInfoActivity::class.java
+        val navigator = fields.getDeclaredField("navigator").apply { isAccessible = true }
+            .get(activity) as SectionNavigator
+        val pendingState = fields.getDeclaredField($$"pendingAlarmNavigation$delegate")
+            .apply { isAccessible = true }.get(activity) as State<*>
+        val pending = pendingState.value as AlarmEditorNavigation?
+        return Bundle().also {
+            navigator.save(it)
+            it.putBundle("pending_alarm_navigation", pending?.save())
+        }
+    }
+
+    private fun activitySemantics(root: View): List<SemanticsNode> {
+        fun descendants(node: SemanticsNode): List<SemanticsNode> =
+            listOf(node) + node.children.flatMap(::descendants)
+
+        fun owners(view: View): List<SemanticsOwner> {
+            val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
+                ?.invoke(view) as? SemanticsOwner
+            if (owner != null) return listOf(owner)
+            if (view !is ViewGroup) return emptyList()
+            return (0 until view.childCount).flatMap { owners(view.getChildAt(it)) }
+        }
+        return owners(root).flatMap { descendants(it.rootSemanticsNode) }
+    }
+
+    private fun openActivityDrawer(activity: BatteryInfoActivity) {
+        main {
+            val menu = activitySemantics(activity.window.decorView).first {
+                it.config.getOrNull(SemanticsProperties.ContentDescription)
+                    ?.contains(activity.getString(R.string.nav_open_menu)) == true
+            }
+            assertTrue(menu.config[SemanticsActions.OnClick].action?.invoke() == true)
+        }
+        await {
+            var open = false
+            main {
+                open = activitySemantics(activity.window.decorView).any {
+                    it.config.contains(SemanticsProperties.Selected) && !hiddenActivityNode(it)
+                }
+            }
+            open
+        }
+    }
+
+    private fun activityDrawerItem(
+        activity: BatteryInfoActivity, label: Int, includeHidden: Boolean = false
+    ): SemanticsNode = activitySemantics(activity.window.decorView).first {
+        it.config.contains(SemanticsProperties.Selected) && (includeHidden || !hiddenActivityNode(
+            it
+        )) && it.config.getOrNull(SemanticsProperties.Text)?.any { text ->
+            text.text == activity.getString(label)
+        } == true
+    }
+
+    private fun activityDrawerClosed(activity: BatteryInfoActivity): Boolean {
+        val destinations = activitySemantics(activity.window.decorView).filter {
+            it.config.contains(SemanticsProperties.Selected)
+        }
+        return destinations.isNotEmpty() && destinations.all(::hiddenActivityNode)
+    }
+
+    private fun activityHasVisibleLabel(activity: BatteryInfoActivity, label: Int): Boolean =
+        activitySemantics(activity.window.decorView).any {
+            !hiddenActivityNode(it) && it.config.getOrNull(SemanticsProperties.Text)?.any { text ->
+                text.text == activity.getString(label)
+            } == true
+        }
+
+    private fun hiddenActivityNode(node: SemanticsNode): Boolean =
+        node.config.contains(SemanticsProperties.HideFromAccessibility) || node.parent?.let(::hiddenActivityNode) == true
 
     private fun surfacePixels(color: Int): Int {
         val dialog = applicationWindows().firstOrNull { it.isActive } ?: return 0

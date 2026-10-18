@@ -13,6 +13,7 @@
 package codes.swistak.batterymonitor.advancedstats
 
 import android.os.Bundle
+import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
 
 internal class AdvancedBatterySnapshot {
     companion object {
@@ -48,6 +49,7 @@ internal class AdvancedBatterySnapshot {
             val snapshot = AdvancedBatterySnapshot()
 
             snapshot.capturedAtMillis = bundle.getLong("captured_at")
+            snapshot.sourceReadTimes.putAll(BatteryMeasurementTime.readMap(bundle.getBundle("source_read_times")))
             bundle.getBundle("field_sources")?.let { sources ->
                 sources.keySet().forEach { key ->
                     sources.getString(key)?.let { snapshot.fieldSources[key] = it }
@@ -105,6 +107,8 @@ internal class AdvancedBatterySnapshot {
     }
 
     var capturedAtMillis: Long = 0
+    val sourceReadTimes = linkedMapOf<String, BatteryMeasurementTime>()
+
     val fieldSources = linkedMapOf<String, String>()
 
     var accessMethod: String? = null
@@ -140,6 +144,9 @@ internal class AdvancedBatterySnapshot {
     fun toBundle(): Bundle {
         val bundle = Bundle()
         bundle.putLong("captured_at", capturedAtMillis)
+        bundle.putBundle("source_read_times", Bundle().apply {
+            sourceReadTimes.forEach { (source, time) -> putBundle(source, time.toBundle()) }
+        })
         bundle.putBundle(
             "field_sources",
             Bundle().apply { fieldSources.forEach { (key, value) -> putString(key, value) } })

@@ -102,6 +102,7 @@ import codes.swistak.batterymonitor.logs.historyExclusiveEnd
 import codes.swistak.batterymonitor.logs.historyObservationValue
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
+import codes.swistak.batterymonitor.ui.components.HistoryChartScale
 import codes.swistak.batterymonitor.ui.components.historyAxisFormatter
 import codes.swistak.batterymonitor.ui.components.historyUnit
 import codes.swistak.batterymonitor.ui.components.historyValue
@@ -183,6 +184,8 @@ internal fun FullscreenChartScreen(
     var appliedViewport by remember { mutableStateOf<HistoryRangeState?>(null) }
     var viewportRevision by remember { mutableIntStateOf(0) }
     var appliedRevision by remember { mutableIntStateOf(-1) }
+    var appliedLineData by remember { mutableStateOf<LineData?>(null) }
+    var appliedYBounds by remember { mutableStateOf<Map<HistoryMetric, HistoryChartScale>?>(null) }
     var pendingTopY by remember { mutableStateOf<Float?>(null) }
     var chartWidth by remember { mutableIntStateOf(1) }
     var metricMenu by remember { mutableStateOf(false) }
@@ -741,7 +744,7 @@ internal fun FullscreenChartScreen(
                     },
                     update = {
                         val restoreViewport =
-                            appliedCoordinates != coordinateRange || appliedViewport != state.viewport || appliedRevision != viewportRevision
+                            appliedCoordinates != coordinateRange || appliedViewport != state.viewport || appliedRevision != viewportRevision || appliedLineData !== lineData || appliedYBounds != yBounds
                         if (restoreViewport && viewportReady && state.scaleMode == ChartScaleMode.MANUAL) {
                             pendingTopY = fullscreenChartTopY(this)
                         }
@@ -838,11 +841,13 @@ internal fun FullscreenChartScreen(
                             appliedCoordinates = coordinateRange
                             appliedViewport = state.viewport
                             appliedRevision = viewportRevision
+                            appliedLineData = lineData
+                            appliedYBounds = yBounds
                             val restoringRevision = viewportRevision
                             addViewportJob {
                                 // Run after Compose's queued restoration of the saved vertical scroll.
                                 post {
-                                    if (appliedCoordinates == coordinateRange && appliedViewport == state.viewport && appliedRevision == restoringRevision) {
+                                    if (appliedCoordinates == coordinateRange && appliedViewport == state.viewport && appliedRevision == restoringRevision && appliedLineData === lineData && appliedYBounds == yBounds) {
                                         restoreFullscreenViewport(
                                             this,
                                             coordinateRange,
@@ -851,7 +856,7 @@ internal fun FullscreenChartScreen(
                                         )
                                         post {
                                             doOnPreDraw {
-                                                if (appliedCoordinates == coordinateRange && appliedViewport == state.viewport && appliedRevision == restoringRevision) {
+                                                if (appliedCoordinates == coordinateRange && appliedViewport == state.viewport && appliedRevision == restoringRevision && appliedLineData === lineData && appliedYBounds == yBounds) {
                                                     viewportReady = true
                                                     pendingTopY = null
                                                 }

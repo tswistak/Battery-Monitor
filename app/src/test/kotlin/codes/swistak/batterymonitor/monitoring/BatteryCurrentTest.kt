@@ -12,7 +12,13 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -23,6 +29,7 @@ import java.util.Locale
 class BatteryCurrentTest {
     @Test
     fun `current source identifies the requested Android property and skips fallbacks`() {
+        val acquiredAt = BatteryMeasurementTime(1_000, 100)
         for (average in listOf(false, true)) {
             val reading = BatteryCurrent.readWithSource(
                 average,
@@ -31,15 +38,19 @@ class BatteryCurrentTest {
                     0L
                 },
                 readSysfs = { error("Android reading should win") },
-                readPrivileged = { error("Android reading should win") })
+                readPrivileged = { error("Android reading should win") },
+                readTime = { acquiredAt })
             val property =
                 if (average) "BATTERY_PROPERTY_CURRENT_AVERAGE" else "BATTERY_PROPERTY_CURRENT_NOW"
-            assertEquals(BatteryCurrentReading(0L, "BatteryManager / $property"), reading)
+            assertEquals(
+                BatteryCurrentReading(0L, "BatteryManager / $property", acquiredAt), reading
+            )
         }
     }
 
     @Test
     fun `sysfs reading retains the exact selected battery file path`() {
+        val acquiredAt = BatteryMeasurementTime(2_000, 200)
         withSysfsRoot { root ->
             createSupply(root, "usb-main", "USB", currentNow = "3000000")
             createSupply(root, "vendor-pack", "Battery", currentNow = "-420000")
@@ -48,21 +59,28 @@ class BatteryCurrentTest {
                 readAndroid = { null },
                 readSysfs = { average ->
                     BatteryCurrent.findCurrentFile(root, average)
-                        ?.let(BatteryCurrent::readCurrentFile)
+                        ?.let { BatteryCurrent.readCurrentFile(it, readTime = { acquiredAt }) }
                 },
-                readPrivileged = { error("Sysfs reading should win") })
+                readPrivileged = { error("Sysfs reading should win") },
+                readTime = { BatteryMeasurementTime(1_000, 100) })
             assertEquals(
-                BatteryCurrentReading(-420000, File(root, "vendor-pack/current_now").path), reading
+                BatteryCurrentReading(
+                    -420000, File(root, "vendor-pack/current_now").path, acquiredAt
+                ), reading
             )
         }
     }
 
     @Test
     fun `privileged current source stays paired with instantaneous or average value`() {
+        val nowTime = BatteryMeasurementTime(1_000, 100)
+        val averageTime = BatteryMeasurementTime(900, 90)
         val privileged = PrivilegedBatteryReading(
             currentNowUa = -420000, currentAverageUa = -390000, fieldSources = mapOf(
                 "current_now" to "/sys/class/power_supply/bms/current_now",
                 "current_average" to "cmd battery get current_average"
+            ), fieldMeasurementTimes = mapOf(
+                "current_now" to nowTime, "current_average" to averageTime
             )
         )
         for (average in listOf(false, true)) {
@@ -70,11 +88,14 @@ class BatteryCurrentTest {
                 average,
                 readAndroid = { null },
                 readSysfs = { null },
-                readPrivileged = { privileged })
+                readPrivileged = { privileged },
+                readTime = { BatteryMeasurementTime(5_000, 500) })
             assertEquals(
-                if (average) BatteryCurrentReading(-390000, "cmd battery get current_average")
-                else BatteryCurrentReading(-420000, "/sys/class/power_supply/bms/current_now"),
-                reading
+                if (average) BatteryCurrentReading(
+                    -390000, "cmd battery get current_average", averageTime
+                ) else BatteryCurrentReading(
+                    -420000, "/sys/class/power_supply/bms/current_now", nowTime
+                ), reading
             )
         }
         assertNull(
@@ -82,23 +103,173 @@ class BatteryCurrentTest {
                 true,
                 readAndroid = { null },
                 readSysfs = { null },
-                readPrivileged = { privileged.copy(currentAverageUa = null) })
+                readPrivileged = { privileged.copy(currentAverageUa = null) },
+                readTime = { BatteryMeasurementTime(5_000, 500) })
         )
         assertEquals(
-            BatteryCurrentReading(-420000, null), BatteryCurrent.readWithSource(
+            BatteryCurrentReading(-420000, null),
+            BatteryCurrent.readWithSource(
                 false,
                 readAndroid = { null },
                 readSysfs = { null },
-                readPrivileged = { privileged.copy(fieldSources = emptyMap()) })
+                readPrivileged = {
+                    privileged.copy(fieldSources = emptyMap(), fieldMeasurementTimes = emptyMap())
+                },
+                readTime = { BatteryMeasurementTime(5_000, 500) })
         )
         assertNull(
             BatteryCurrent.readWithSource(
                 false,
                 readAndroid = { null },
                 readSysfs = { null },
-                readPrivileged = { null })
+                readPrivileged = { null },
+                readTime = { BatteryMeasurementTime(5_000, 500) })
         )
     }
+
+    @Test
+    fun `same Android value is timestamped at each acquisition before the read despite wall clock rollback`() {
+        var wall = 1_000L
+        var elapsed = 100L
+        fun read() = BatteryCurrent.readWithSource(
+            average = false,
+            readAndroid = {
+                wall += 5
+                elapsed += 5
+                -420_000L
+            },
+            readSysfs = { error("Android reading should win") },
+            readPrivileged = { error("Android reading should win") },
+            readTime = { BatteryMeasurementTime(wall, elapsed) })
+
+        val first = read()
+        wall = 500
+        elapsed = 200
+        val second = read()
+
+        assertEquals(-420_000L, first?.microAmps)
+        assertEquals(first?.microAmps, second?.microAmps)
+        assertEquals(BatteryMeasurementTime(1_000, 100), first?.acquiredAt)
+        assertEquals(BatteryMeasurementTime(500, 200), second?.acquiredAt)
+    }
+
+    @Test
+    fun `same sysfs value retains a distinct acquisition time on each actual file read`() {
+        withSysfsRoot { root ->
+            createSupply(root, "battery", "Battery", currentNow = "-420000")
+            val file = File(root, "battery/current_now")
+            val first = BatteryCurrent.readCurrentFile(file) { BatteryMeasurementTime(1_000, 100) }
+            val second = BatteryCurrent.readCurrentFile(file) { BatteryMeasurementTime(1_100, 200) }
+
+            assertEquals(first?.microAmps, second?.microAmps)
+            assertEquals(BatteryMeasurementTime(1_000, 100), first?.acquiredAt)
+            assertEquals(BatteryMeasurementTime(1_100, 200), second?.acquiredAt)
+        }
+    }
+
+    @Test
+    fun `legacy privileged values keep unknown acquisition time instead of using lookup time`() {
+        val privileged = PrivilegedBatteryReading(
+            currentNowUa = -420_000,
+            fieldSources = mapOf("current_now" to "cmd battery get current_now")
+        )
+        val reading = BatteryCurrent.readWithSource(
+            average = false,
+            readAndroid = { null },
+            readSysfs = { null },
+            readPrivileged = { privileged },
+            readTime = { BatteryMeasurementTime(5_000, 500) })
+
+        assertEquals(-420_000L, reading?.microAmps)
+        assertNull(reading?.acquiredAt)
+    }
+
+    @Test
+    fun `cancelling a native visible read prevents privileged work subsequent reads and publication`() =
+        runBlocking {
+            for (preferAverage in listOf(true, false)) {
+                val nativeReads = mutableListOf<Boolean>()
+                var privilegedCalls = 0
+                var published = false
+                var cancellationPropagated = false
+                lateinit var child: Job
+                child = launch(start = CoroutineStart.LAZY) {
+                    try {
+                        BatteryCurrent.readVisibleCurrent(
+                            preferAverage = preferAverage,
+                            read = { average, guardedPrivileged ->
+                                BatteryCurrent.readWithSource(
+                                    average,
+                                    readAndroid = { requestedAverage ->
+                                        nativeReads += requestedAverage
+                                        child.cancel()
+                                        null
+                                    },
+                                    readSysfs = { null },
+                                    readPrivileged = guardedPrivileged,
+                                    readTime = { BatteryMeasurementTime(1_000, 100) })
+                            },
+                            readPrivileged = {
+                                privilegedCalls++
+                                PrivilegedBatteryReading(currentNowUa = -420_000)
+                            },
+                            privilegedEnabled = { true })
+                        published = true
+                    } catch (exception: CancellationException) {
+                        cancellationPropagated = true
+                        throw exception
+                    }
+                }
+
+                child.start()
+                child.join()
+
+                assertEquals(listOf(preferAverage), nativeReads)
+                assertEquals(0, privilegedCalls)
+                assertFalse(published)
+                assertTrue(cancellationPropagated)
+                assertTrue(child.isCancelled)
+            }
+        }
+
+    @Test
+    fun `visible current keeps average preference and falls back to instantaneous when unavailable`() =
+        runBlocking {
+            for (averageAvailable in listOf(true, false)) {
+                val nativeReads = mutableListOf<Boolean>()
+                val acquiredAt = BatteryMeasurementTime(1_000, 100)
+                var privilegedCalls = 0
+                val reading = BatteryCurrent.readVisibleCurrent(
+                    preferAverage = true,
+                    read = { average, guardedPrivileged ->
+                        BatteryCurrent.readWithSource(
+                            average,
+                            readAndroid = { requestedAverage ->
+                                nativeReads += requestedAverage
+                                when {
+                                    requestedAverage && !averageAvailable -> null
+                                    requestedAverage -> -390_000L
+                                    else -> -420_000L
+                                }
+                            },
+                            readSysfs = { null },
+                            readPrivileged = guardedPrivileged,
+                            readTime = { acquiredAt })
+                    },
+                    readPrivileged = {
+                        privilegedCalls++
+                        null
+                    },
+                    privilegedEnabled = { true })
+
+                assertEquals(
+                    if (averageAvailable) listOf(true) else listOf(true, false), nativeReads
+                )
+                assertEquals(if (averageAvailable) 0 else 1, privilegedCalls)
+                assertEquals(if (averageAvailable) -390_000L else -420_000L, reading?.microAmps)
+                assertEquals(acquiredAt, reading?.acquiredAt)
+            }
+        }
 
     @Test
     fun `battery power uses volts and amps preserves direction and requires both readings`() {
@@ -135,8 +306,8 @@ class BatteryCurrentTest {
     fun `current validation preserves zero and signed readings and rejects unsupported sentinels`() {
         assertTrue(BatteryCurrent.isValidMicroAmps(0))
         assertTrue(BatteryCurrent.isValidMicroAmps(-293000))
-        org.junit.Assert.assertFalse(BatteryCurrent.isValidMicroAmps(Int.MIN_VALUE.toLong()))
-        org.junit.Assert.assertFalse(BatteryCurrent.isValidMicroAmps(Long.MIN_VALUE))
+        assertFalse(BatteryCurrent.isValidMicroAmps(Int.MIN_VALUE.toLong()))
+        assertFalse(BatteryCurrent.isValidMicroAmps(Long.MIN_VALUE))
     }
 
     @Test

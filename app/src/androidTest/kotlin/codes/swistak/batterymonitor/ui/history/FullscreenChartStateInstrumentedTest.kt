@@ -13,6 +13,7 @@
 package codes.swistak.batterymonitor.ui.history
 
 import android.app.Application
+import android.content.ComponentCallbacks
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -36,7 +37,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.DetailedHistoryChartModel
@@ -65,8 +70,10 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.abs
 
+@Suppress("DEPRECATION")
 class FullscreenChartStateInstrumentedTest {
     private lateinit var context: Context
     private lateinit var application: Application
@@ -74,6 +81,8 @@ class FullscreenChartStateInstrumentedTest {
     private lateinit var database: LogDatabase
     private val store = ViewModelStore()
     private var models = 0
+    private var reportedFullscreenInsets = false
+
     private val range = HistoryRangeState(0, 10_000)
     private val observation = LogRecord(200, 50, 1_000, 300, 4000, -100_000, 2_500_000)
 
@@ -84,6 +93,15 @@ class FullscreenChartStateInstrumentedTest {
             File(target.cacheDir, "fullscreen-state-${System.nanoTime()}").apply { mkdirs() }
         context = object : ContextWrapper(target) {
             override fun getApplicationContext(): Context = this
+
+            override fun registerComponentCallbacks(callback: ComponentCallbacks) {
+                baseContext.registerComponentCallbacks(callback)
+            }
+
+            override fun unregisterComponentCallbacks(callback: ComponentCallbacks) {
+                baseContext.unregisterComponentCallbacks(callback)
+            }
+
             override fun getSharedPreferences(name: String, mode: Int) =
                 target.getSharedPreferences("${directory.name}-$name", mode)
 
@@ -132,6 +150,97 @@ class FullscreenChartStateInstrumentedTest {
             )
         )
         assertEquals("custom", intent.getStringExtra("chart.label"))
+    }
+
+    @Test
+    fun history_refresh_retains_viewport_and_exact_selection_for_an_unchanged_level_sample() {
+        database.addLogs(listOf(observation))
+        val model = model(HistoryMetric.LEVEL, range, "custom")
+        loaded(model)
+        val key = model.state.value!!.chart!!.points.first().key
+        main {
+            model.viewport(HistoryRangeState(500, 2_500), 600)
+            model.select(key)
+        }
+        loaded(model)
+        await { model.state.value!!.selectedRecord?.key == key }
+        val viewport = model.state.value!!.viewport
+        val previousChart = model.state.value!!.chart
+        database.addLogs(listOf(observation.copy(time = 2_000)))
+        main {
+            model.historyChanged()
+            assertSame(previousChart, model.state.value!!.chart)
+        }
+        await { model.state.value!!.chart?.count == 2L && !model.state.value!!.loading }
+        assertEquals(viewport, model.state.value!!.viewport)
+        assertEquals(key, model.state.value!!.selectedKey)
+        await { model.state.value!!.selectedRecord?.key == key }
+        database.deleteHistory(HistoryRangeState(1_000, 1_001))
+        main { model.historyChanged() }
+        await { model.state.value!!.chart?.count == 1L && !model.state.value!!.loading }
+        await { model.state.value!!.selectedRecord == null }
+        assertNull(model.state.value!!.selectedKey)
+        assertFalse(model.state.value!!.error)
+    }
+
+    @Test
+    fun history_observation_coalesces_bursts_and_checks_again_after_inactive_changes() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val target = instrumentation.targetContext
+        val monitor =
+            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        instrumentation.startActivitySync(
+            FullscreenChartActivity.intent(target, HistoryMetric.LEVEL, range, "custom")
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        val activated = AtomicInteger()
+        val changed = AtomicInteger()
+        val owner = object : LifecycleOwner {
+            val registry = LifecycleRegistry(this)
+            override val lifecycle: Lifecycle get() = registry
+        }
+        try {
+            await { monitor.lastActivity != null && !monitor.lastActivity.isDestroyed }
+            val activity = monitor.lastActivity as FullscreenChartActivity
+            main {
+                owner.registry.currentState = Lifecycle.State.RESUMED
+                activity.setContent {
+                    CompositionLocalProvider(LocalLifecycleOwner provides owner) {
+                        HistoryChangeEffect(
+                            onActivated = { activated.incrementAndGet() },
+                            onChanged = { changed.incrementAndGet() })
+                    }
+                }
+            }
+            await { activated.get() == 1 }
+            main {
+                repeat(20) {
+                    target.sendBroadcast(
+                        Intent(LogDatabase.ACTION_HISTORY_CHANGED).setPackage(
+                            target.packageName
+                        )
+                    )
+                }
+            }
+            await { changed.get() == 1 }
+            instrumentation.waitForIdleSync()
+            Thread.sleep(300)
+            assertEquals(1, changed.get())
+            main { owner.registry.currentState = Lifecycle.State.CREATED }
+            target.sendBroadcast(Intent(LogDatabase.ACTION_HISTORY_CHANGED).setPackage(target.packageName))
+            instrumentation.waitForIdleSync()
+            Thread.sleep(300)
+            assertEquals(1, changed.get())
+            main { owner.registry.currentState = Lifecycle.State.RESUMED }
+            await { activated.get() == 2 }
+        } finally {
+            main {
+                owner.registry.currentState = Lifecycle.State.DESTROYED
+                monitor.lastActivity?.finish()
+            }
+            instrumentation.waitForIdleSync()
+            instrumentation.removeMonitor(monitor)
+        }
     }
 
     @Test
@@ -314,6 +423,36 @@ class FullscreenChartStateInstrumentedTest {
         assertEquals(50.0, state.chart!!.min!!, 0.0)
         assertEquals(0.0, bounds.min!!, 0.0)
         assertEquals(3L, bounds.count)
+        assertFalse(fullscreenLogAvailable(state.metrics, state.boundsByMetric, false, 1))
+    }
+
+    @Test
+    fun viewport_load_checks_durable_changes_before_reusing_full_range_bounds() {
+        database.addLogs(listOf(observation, observation.copy(time = 2_000, charge = 80)))
+        val model = model()
+        loaded(model)
+        val key = model.state.value!!.chart!!.points.first().key
+        main {
+            model.select(key)
+            model.scale(ChartScaleMode.FIXED)
+        }
+        await { model.state.value!!.selectedRecord?.key == key }
+        assertEquals(50.0, model.state.value!!.bounds!!.min!!, 0.0)
+
+        // No history hint reaches this detached model before its viewport request.
+        database.addLogs(listOf(observation.copy(time = 6_000, charge = 0)))
+        val viewport = HistoryRangeState(1_000, 3_000)
+        main { model.viewport(viewport, 300) }
+        loaded(model)
+        val state = model.state.value!!
+        assertEquals(viewport, state.viewport)
+        assertEquals(ChartScaleMode.FIXED, state.scaleMode)
+        assertEquals(key, state.selectedKey)
+        await { model.state.value!!.selectedRecord?.key == key }
+        assertEquals(50.0, state.chart!!.min!!, 0.0)
+        assertEquals(0.0, state.bounds!!.min!!, 0.0)
+        assertEquals(80.0, state.bounds!!.max!!, 0.0)
+        assertEquals(3L, state.bounds!!.count)
         assertFalse(fullscreenLogAvailable(state.metrics, state.boundsByMetric, false, 1))
     }
 
@@ -567,6 +706,139 @@ class FullscreenChartStateInstrumentedTest {
         assertEquals(60f, entries[1].x, 0f)
         assertEquals(120f, entries[1].x - entries[0].x, 0f)
         assertEquals(points.map { it.key }, entries.map { it.data })
+    }
+
+    @Test
+    fun in_range_voltage_refresh_retains_native_viewport_and_selection_when_y_labels_change() {
+        val hour = 3_600_000L
+        val start = System.currentTimeMillis() - 3 * 24 * hour
+        val fullRange = HistoryRangeState(start, start + 24 * hour)
+        database.addLogs((0 until 48).map { index ->
+            observation.copy(time = start + index * hour / 2, voltage = 4000)
+        })
+        val model = model(HistoryMetric.VOLTAGE, fullRange, "custom")
+        loaded(model)
+        val selected =
+            model.state.value!!.charts.getValue(HistoryMetric.VOLTAGE).points.single { it.key.time == start + 10 * hour }.key
+        val requested = HistoryRangeState(start + 8 * hour, start + 14 * hour)
+        main {
+            model.viewport(requested, 1000)
+            model.select(selected)
+        }
+        loaded(model)
+        await { model.state.value!!.selectedRecord?.key == selected }
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val monitor =
+            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        instrumentation.startActivitySync(
+            FullscreenChartActivity.intent(
+                instrumentation.targetContext, HistoryMetric.VOLTAGE, fullRange, "custom"
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        try {
+            await {
+                val activity = monitor.lastActivity
+                activity != null && !activity.isDestroyed && activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            }
+            instrumentation.waitForIdleSync()
+            val activity = monitor.lastActivity as FullscreenChartActivity
+            main {
+                activity.setContent {
+                    CompositionLocalProvider(LocalContext provides context) {
+                        AppBatteryTheme {
+                            val state by model.state.collectAsState()
+                            state?.let {
+                                FullscreenChartScreen(
+                                    it,
+                                    model::metric,
+                                    model::comparison,
+                                    model::range,
+                                    model::viewport,
+                                    model::scale,
+                                    model::style,
+                                    model::valueScale,
+                                    model::select,
+                                    model::refresh,
+                                    activity::finish
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            captureFixture(activity, model, "voltage-refresh-before-y-label-change")
+            assertFixtureViewport(activity, model, requested)
+            var retainedViewport = requested
+            var contentLeft = 0f
+            var contentWidth = 0f
+            var oldAxisMaximum = 0f
+            main {
+                retainedViewport = model.state.value!!.viewport
+                val chart = requireNotNull(nativeChart(activity.window.decorView))
+                contentLeft = chart.viewPortHandler.contentRect.left
+                contentWidth = chart.viewPortHandler.contentRect.width()
+                oldAxisMaximum = chart.axisLeft.axisMaximum
+                assertEquals(selected, model.state.value!!.selectedKey)
+                val highlight = requireNotNull(chart.highlighted.singleOrNull())
+                val set =
+                    requireNotNull(chart.data).dataSets[highlight.dataSetIndex] as LineDataSet<*>
+                assertEquals(selected, set.entries.single {
+                    it.x == highlight.x && it.y == highlight.y
+                }.data)
+            }
+            val inserted = observation.copy(time = start + 11 * hour + 971, voltage = 19_999)
+            database.addLogs(listOf(inserted))
+            val insertedKey = database.readHistory(
+                codes.swistak.batterymonitor.logs.historyQuery(fullRange)
+            ) { rows -> rows.single { it.record.time == inserted.time }.key }
+            main { model.historyChanged() }
+            await {
+                val state = model.state.value!!
+                !state.loading && state.charts[HistoryMetric.VOLTAGE]?.points?.any { point ->
+                    point.key == insertedKey && point.value?.let { abs(it - 19.999) < 0.000001 } == true
+                } == true
+            }
+            captureFixture(activity, model, "voltage-refresh-after-y-label-change")
+            await {
+                var updatedGeometry = false
+                main {
+                    val chart = requireNotNull(nativeChart(activity.window.decorView))
+                    val renderedInsertedPoint =
+                        chart.data?.dataSets?.filterIsInstance<LineDataSet<*>>()
+                            ?.flatMap { it.entries }?.any {
+                                it.data == insertedKey && abs(it.y - 19.999f) < 0.0001f
+                            } == true
+                    updatedGeometry =
+                        renderedInsertedPoint && chart.axisLeft.axisMaximum > oldAxisMaximum && (abs(
+                            chart.viewPortHandler.contentRect.left - contentLeft
+                        ) > 0.5f || abs(chart.viewPortHandler.contentRect.width() - contentWidth) > 0.5f)
+                }
+                updatedGeometry
+            }
+            assertFixtureViewport(activity, model, retainedViewport)
+            main {
+                val state = model.state.value!!
+                assertEquals(fullRange, state.range)
+                assertEquals("custom", state.rangeLabel)
+                assertEquals(HistoryMetric.VOLTAGE, state.metric)
+                assertEquals(ChartScaleMode.AUTOMATIC, state.scaleMode)
+                assertEquals(selected, state.selectedKey)
+                val record = requireNotNull(state.selectedRecord)
+                assertEquals(selected, record.key)
+                val chart = requireNotNull(nativeChart(activity.window.decorView))
+                val highlight = requireNotNull(chart.highlighted.singleOrNull())
+                val set =
+                    requireNotNull(chart.data).dataSets[highlight.dataSetIndex] as LineDataSet<*>
+                val entry = set.entries.single { it.x == highlight.x && it.y == highlight.y }
+                assertEquals(
+                    "The native highlight must retain the exact selected key", selected, entry.data
+                )
+                assertEquals(4f, entry.y, 0.0001f)
+            }
+        } finally {
+            main { monitor.lastActivity?.finish() }
+            instrumentation.removeMonitor(monitor)
+        }
     }
 
     @Test
@@ -1030,13 +1302,54 @@ class FullscreenChartStateInstrumentedTest {
                     chart != null && chart.width > 0 && chart.height > 0 && labels == state.metrics.map { it.name }
                         .toSet() && chart.axisRight.isEnabled == (state.comparison != null) && valuesMatch
                 if (rendered) {
-                    assertFalse(
-                        ViewCompat.getRootWindowInsets(activity.window.decorView)!!
-                            .isVisible(WindowInsetsCompat.Type.statusBars())
-                    )
+                    val decor = activity.window.decorView
+                    val platformInsets = decor.rootWindowInsets
+                    val viewAwareInsets = platformInsets?.let {
+                        WindowInsetsCompat.toWindowInsetsCompat(it, decor)
+                    }
+                    if (!reportedFullscreenInsets) {
+                        InstrumentationRegistry.getInstrumentation().sendStatus(0, Bundle().apply {
+                            putString("testDiagnostic", "fullscreenInsets")
+                            putString(
+                                "oldStatusBarVisible",
+                                ViewCompat.getRootWindowInsets(decor)
+                                    ?.isVisible(WindowInsetsCompat.Type.statusBars())?.toString()
+                                    ?: "unknown"
+                            )
+                            putString(
+                                "viewAwareStatusBarVisible",
+                                viewAwareInsets?.isVisible(WindowInsetsCompat.Type.statusBars())
+                                    ?.toString() ?: "unknown"
+                            )
+                            putInt("windowSystemUiVisibility", decor.windowSystemUiVisibility)
+                            putInt("decorSystemUiVisibility", decor.systemUiVisibility)
+                            putInt("fullscreenBit", View.SYSTEM_UI_FLAG_FULLSCREEN)
+                            putBoolean(
+                                "windowFullscreenBitSet",
+                                decor.windowSystemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN != 0
+                            )
+                            putBoolean(
+                                "decorFullscreenBitSet",
+                                decor.systemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN != 0
+                            )
+                            putBoolean("hasWindowFocus", decor.hasWindowFocus())
+                            putInt("rawTopInsetPx", platformInsets?.systemWindowInsetTop ?: -1)
+                        })
+                        reportedFullscreenInsets = true
+                    }
+                    rendered =
+                        viewAwareInsets?.isVisible(WindowInsetsCompat.Type.statusBars()) == false
                 }
             }
             rendered
+        }
+        main {
+            val decor = activity.window.decorView
+            assertFalse(
+                WindowInsetsCompat.toWindowInsetsCompat(
+                    requireNotNull(decor.rootWindowInsets), decor
+                ).isVisible(WindowInsetsCompat.Type.statusBars())
+            )
         }
         InstrumentationRegistry.getInstrumentation().waitForIdleSync()
         android.os.SystemClock.sleep(150)

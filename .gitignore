@@ -18,17 +18,6 @@ e2e/node_modules/
 !ant.properties
 !fdroid-version.properties
 
-# res/drawable*/b???.*
-# res/drawable*/r???.*
-# res/drawable*/a???.*
-# res/drawable*/g???.*
-# res/drawable*/n???.*
-# res/drawable*/charging???.*
-# res/drawable*/b_outline.png
-# res/drawable*/r_outline.png
-# res/drawable*/a_outline.png
-# res/drawable*/g_outline.png
-
 release-versions/current
 
 *.class
@@ -68,3 +57,15 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Local Python/Kotlin caches, virtual environments and OS metadata
+__pycache__/
+*.py[cod]
+.venv/
+/venv/
+/tools/profiling/venv/
+/.kotlin/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store

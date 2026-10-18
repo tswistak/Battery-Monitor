@@ -12,7 +12,9 @@ import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatteryStatsCollector
 import codes.swistak.batterymonitor.diagnostics.DiagnosticsDurationFormatter
 import codes.swistak.batterymonitor.monitoring.BatteryCurrent
+import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
+import codes.swistak.batterymonitor.monitoring.oldestMeasurementTime
 import java.util.Locale
 
 internal data class DiagnosticRow(
@@ -24,13 +26,27 @@ internal data class DiagnosticRow(
     val source: String,
     val observedAtMillis: Long,
     val accessMethod: String,
-    val valueLabel: Int = 0
+    val valueLabel: Int = 0,
+    val observedElapsedMillis: Long? = null
 )
 
 internal data class DiagnosticGroup(val title: Int, val rows: List<DiagnosticRow>)
 
 internal fun diagnosticGroups(
-    snapshot: AdvancedBatterySnapshot, multiplier: Int, fahrenheit: Boolean = false
+    snapshot: AdvancedBatterySnapshot,
+    multiplier: Int,
+    fahrenheit: Boolean = false,
+    locale: Locale = Locale.getDefault()
+): List<DiagnosticGroup> =
+    normalizedDiagnosticGroups(snapshot, multiplier, fahrenheit, locale) + rawDiagnosticGroups(
+        snapshot
+    )
+
+internal fun normalizedDiagnosticGroups(
+    snapshot: AdvancedBatterySnapshot,
+    multiplier: Int,
+    fahrenheit: Boolean = false,
+    locale: Locale = Locale.getDefault()
 ): List<DiagnosticGroup> {
     val android = snapshot.accessMethod == "Android"
     val access = diagnosticAccessName(snapshot)
@@ -41,30 +57,32 @@ internal fun diagnosticGroups(
         unit: String = "",
         value: String? = raw?.toString(),
         source: String? = null
-    ) = DiagnosticRow(
-        label,
-        key,
-        value,
-        raw?.toString(),
-        unit,
-        if (raw == null) "" else source ?: snapshot.fieldSources[key]
-        ?: if (android) "BatteryManager / $key" else "dumpsys battery / $key",
-        snapshot.capturedAtMillis,
-        access
-    )
+    ): DiagnosticRow {
+        val selectedSource = if (raw == null) "" else source ?: snapshot.fieldSources[key]
+        ?: if (android) "BatteryManager / $key" else "dumpsys battery / $key"
+        val time =
+            snapshot.sourceReadTimes[selectedSource]?.takeIf { raw != null && it.wallMillis > 0 }
+        return DiagnosticRow(
+            label,
+            key,
+            value,
+            raw?.toString(),
+            unit,
+            selectedSource,
+            time?.wallMillis ?: 0,
+            access,
+            observedElapsedMillis = time?.elapsedMillis
+        )
+    }
 
-    fun charge(raw: Long?) =
-        raw?.let { String.format(Locale.getDefault(), "%.1f mAh", it / 1000.0) }
+    fun charge(raw: Long?) = raw?.let { String.format(locale, "%.1f mAh", it / 1000.0) }
 
     fun current(raw: Long?) = raw?.let {
         BatteryCurrent.formatMilliAmps(
-            BatteryCurrent.scaleMicroAmps(
-                it, multiplier
-            )
+            BatteryCurrent.scaleMicroAmps(it, multiplier), locale
         ) + " mA"
     }
 
-    val batteryManager = "BatteryManager"
     val health = snapshot.serviceLabels.indexOf("health").takeIf { it >= 0 }
         ?.let { snapshot.serviceValues.getOrNull(it)?.toIntOrNull() }
     val service = snapshot.serviceLabels.zip(snapshot.serviceValues).toMap()
@@ -82,7 +100,7 @@ internal fun diagnosticGroups(
             "voltage",
             raw,
             unit,
-            String.format(Locale.getDefault(), "%.3f V", millivolts / 1000.0),
+            String.format(locale, "%.3f V", millivolts / 1000.0),
             source
         )
     }
@@ -99,6 +117,18 @@ internal fun diagnosticGroups(
     val power = BatteryCurrent.powerWatts(
         diagnosticVoltageMillivolts(voltage),
         snapshot.currentNowUa?.let { BatteryCurrent.scaleMicroAmps(it, multiplier) })
+    val currentNow = row(
+        R.string.advanced_field_current_now,
+        "current_now",
+        snapshot.currentNowUa,
+        "µA × $multiplier",
+        current(snapshot.currentNowUa)
+    )
+    val powerTime = oldestMeasurementTime(voltage.measurementTime(), currentNow.measurementTime())
+    val healthTime = oldestMeasurementTime(
+        snapshot.fieldSources["charge_full"]?.let(snapshot.sourceReadTimes::get),
+        snapshot.fieldSources["charge_full_design"]?.let(snapshot.sourceReadTimes::get)
+    )
     return listOf(
         DiagnosticGroup(
             R.string.advanced_section_counters, listOf(
@@ -109,13 +139,7 @@ internal fun diagnosticGroups(
                     "µAh",
                     charge(snapshot.chargeCounterUah)
                 ),
-                row(
-                    R.string.advanced_field_current_now,
-                    "current_now",
-                    snapshot.currentNowUa,
-                    "µA × $multiplier",
-                    current(snapshot.currentNowUa)
-                ),
+                currentNow,
                 row(
                     R.string.advanced_field_current_average,
                     "current_average",
@@ -130,7 +154,7 @@ internal fun diagnosticGroups(
                     "nWh",
                     snapshot.energyCounterNwh?.let {
                         String.format(
-                            Locale.getDefault(), "%.1f mWh", it / 1_000_000.0
+                            locale, "%.1f mWh", it / 1_000_000.0
                         )
                     }),
                 row(R.string.advanced_field_cycle_count, "cycle_count", snapshot.cycleCount),
@@ -142,7 +166,7 @@ internal fun diagnosticGroups(
                     "0.1°C",
                     temperature?.let {
                         String.format(
-                            Locale.getDefault(),
+                            locale,
                             if (fahrenheit) "%.1f°F" else "%.1f°C",
                             if (fahrenheit) it * 0.18 + 32 else it / 10.0
                         )
@@ -154,8 +178,11 @@ internal fun diagnosticGroups(
                     "battery_power",
                     power,
                     "W",
-                    power?.let { String.format(Locale.getDefault(), "%.2f W", it) },
+                    power?.let { String.format(locale, "%.2f W", it) },
                     "${voltage.source} × ${snapshot.fieldSources["current_now"] ?: if (android) "BatteryManager / current_now" else "dumpsys battery / current_now"}"
+                ).copy(
+                    observedAtMillis = powerTime?.wallMillis ?: 0,
+                    observedElapsedMillis = powerTime?.elapsedMillis
                 )
             )
         ), DiagnosticGroup(
@@ -200,10 +227,13 @@ internal fun diagnosticGroups(
                     "%",
                     capacityHealth(snapshot)?.let {
                         String.format(
-                            Locale.getDefault(), "%.1f%%", it
+                            locale, "%.1f%%", it
                         )
                     },
                     "${snapshot.fieldSources["charge_full"]} / ${snapshot.fieldSources["charge_full_design"]}"
+                ).copy(
+                    observedAtMillis = healthTime?.wallMillis ?: 0,
+                    observedElapsedMillis = healthTime?.elapsedMillis
                 )
             )
         ), DiagnosticGroup(
@@ -212,14 +242,17 @@ internal fun diagnosticGroups(
                     R.string.advanced_field_charge_time_remaining,
                     "charge_time_remaining",
                     snapshot.chargeTimeRemainingMs,
-                    "ms"
-                ), row(
+                    "ms",
+                    snapshot.chargeTimeRemainingMs?.takeIf { it >= 0 }
+                        ?.let { DiagnosticsDurationFormatter.format(locale, it) }), row(
                     R.string.advanced_field_max_charging_current,
                     "max_charging_current",
                     snapshot.maxChargingCurrentUa,
                     "µA",
                     snapshot.maxChargingCurrentUa?.let {
-                        BatteryCurrent.formatMilliAmps(BatteryCurrent.scaleMicroAmps(it, 1)) + " mA"
+                        BatteryCurrent.formatMilliAmps(
+                            BatteryCurrent.scaleMicroAmps(it, 1), locale
+                        ) + " mA"
                     }), row(
                     R.string.advanced_field_max_charging_voltage,
                     "max_charging_voltage",
@@ -227,7 +260,7 @@ internal fun diagnosticGroups(
                     "µV",
                     snapshot.maxChargingVoltageUv?.let {
                         String.format(
-                            Locale.getDefault(), "%.2f V", it / 1_000_000.0
+                            locale, "%.2f V", it / 1_000_000.0
                         )
                     }), row(
                     R.string.advanced_field_charging_policy,
@@ -246,12 +279,19 @@ internal fun diagnosticGroups(
                     value = null
                 ).copy(valueLabel = capacityLevelLabel(snapshot.capacityLevel))
             )
-        ), DiagnosticGroup(
+        )
+    )
+}
+
+internal fun rawDiagnosticGroups(snapshot: AdvancedBatterySnapshot): List<DiagnosticGroup> {
+    val access = diagnosticAccessName(snapshot)
+    return listOf(
+        DiagnosticGroup(
             R.string.advanced_section_service, rawRows(
                 snapshot.serviceLabels,
                 snapshot.serviceValues,
-                if (android) "ACTION_BATTERY_CHANGED" else "dumpsys battery",
-                snapshot.capturedAtMillis,
+                if (snapshot.accessMethod == "Android") "ACTION_BATTERY_CHANGED" else "dumpsys battery",
+                snapshot,
                 access
             )
         ), DiagnosticGroup(
@@ -259,16 +299,12 @@ internal fun diagnosticGroups(
                 snapshot.sysfsLabels,
                 snapshot.sysfsValues,
                 "/sys/class/power_supply",
-                snapshot.capturedAtMillis,
+                snapshot,
                 access
             )
         ), DiagnosticGroup(
             R.string.advanced_section_metadata, rawRows(
-                snapshot.metadataLabels,
-                snapshot.metadataValues,
-                batteryManager,
-                snapshot.capturedAtMillis,
-                access
+                snapshot.metadataLabels, snapshot.metadataValues, "BatteryManager", snapshot, access
             )
         )
     )
@@ -296,10 +332,23 @@ private fun diagnosticVoltageMillivolts(row: DiagnosticRow): Int? {
     return millivolts.toInt()
 }
 
+private fun DiagnosticRow.measurementTime(): BatteryMeasurementTime? =
+    observedAtMillis.takeIf { it > 0 }?.let { BatteryMeasurementTime(it, observedElapsedMillis) }
+
+internal fun latestDiagnosticReading(rows: List<DiagnosticRow>): DiagnosticRow? {
+    val monotonic =
+        rows.filter { it.observedAtMillis > 0 && it.observedElapsedMillis?.let { elapsed -> elapsed >= 0 } == true }
+    return if (monotonic.isNotEmpty()) monotonic.maxByOrNull { it.observedElapsedMillis!! }
+    else rows.maxByOrNull { it.observedAtMillis }
+}
+
 internal fun mergedDiagnosticGroups(
-    snapshots: List<AdvancedBatterySnapshot>, multiplier: Int, fahrenheit: Boolean = false
+    snapshots: List<AdvancedBatterySnapshot>,
+    multiplier: Int,
+    fahrenheit: Boolean = false,
+    locale: Locale = Locale.getDefault()
 ): List<DiagnosticGroup> {
-    val groups = snapshots.map { diagnosticGroups(it, multiplier, fahrenheit).take(3) }
+    val groups = snapshots.map { normalizedDiagnosticGroups(it, multiplier, fahrenheit, locale) }
     val chargeCounterApi = snapshots.filter {
         it.accessMethod in listOf(
             "Android", "App UID"
@@ -319,11 +368,11 @@ internal fun mergedDiagnosticGroups(
         group.copy(rows = group.rows.map { row ->
             val readings =
                 groups.mapNotNull { it[index].rows.firstOrNull { candidate -> candidate.rawKey == row.rawKey } }
-            readings.filter {
+            latestDiagnosticReading(readings.filter {
                 (it.value != null || it.valueLabel != 0) && !unavailableChargeDefault(
                     it
                 )
-            }.maxByOrNull { it.observedAtMillis } ?: if (unavailableChargeDefault(row)) row.copy(
+            }) ?: if (unavailableChargeDefault(row)) row.copy(
                 value = null, rawValue = null, source = ""
             ) else row
         })
@@ -337,13 +386,16 @@ internal fun mergedDiagnosticGroups(
                     diagnosticVoltageMillivolts(voltage),
                     current.rawValue?.toLongOrNull()
                         ?.let { BatteryCurrent.scaleMicroAmps(it, multiplier) })
+                val time =
+                    oldestMeasurementTime(voltage.measurementTime(), current.measurementTime())
                 return@map row.copy(
-                    value = power?.let { String.format(Locale.getDefault(), "%.2f W", it) },
+                    value = power?.let { String.format(locale, "%.2f W", it) },
                     rawValue = power?.toString(),
                     source = if (power == null) "" else "${voltage.source} × ${current.source}",
                     accessMethod = listOf(voltage.accessMethod, current.accessMethod).distinct()
                         .joinToString(" · "),
-                    observedAtMillis = maxOf(voltage.observedAtMillis, current.observedAtMillis)
+                    observedAtMillis = time?.wallMillis ?: 0,
+                    observedElapsedMillis = time?.elapsedMillis
                 )
             }
             if (row.rawKey != "estimated_health") return@map row
@@ -361,7 +413,9 @@ internal fun mergedDiagnosticGroups(
 }
 
 internal fun deviceDiagnosticGroups(
-    snapshots: List<AdvancedBatterySnapshot>, charging: Boolean
+    snapshots: List<AdvancedBatterySnapshot>,
+    charging: Boolean,
+    locale: Locale = Locale.getDefault()
 ): List<DiagnosticGroup> {
     val groups = snapshots.flatMap { snapshot ->
         val access = diagnosticAccessName(snapshot)
@@ -372,11 +426,7 @@ internal fun deviceDiagnosticGroups(
             fields
         )
         val service = if (charging) rawRows(
-            snapshot.serviceLabels,
-            snapshot.serviceValues,
-            serviceSource,
-            snapshot.capturedAtMillis,
-            access
+            snapshot.serviceLabels, snapshot.serviceValues, serviceSource, snapshot, access
         ).mapNotNull { row ->
             if (row.rawKey != "ChargeFastCharger") return@mapNotNull null
             val enabled = when (row.rawValue?.trim()?.lowercase(Locale.ROOT)) {
@@ -387,11 +437,7 @@ internal fun deviceDiagnosticGroups(
             row.copy(label = R.string.diag_fast_charging, value = null, valueLabel = enabled)
         } else emptyList()
         val sysfs = rawRows(
-            snapshot.sysfsLabels,
-            snapshot.sysfsValues,
-            "/sys/class/power_supply",
-            snapshot.capturedAtMillis,
-            access
+            snapshot.sysfsLabels, snapshot.sysfsValues, "/sys/class/power_supply", snapshot, access
         ).groupBy { it.rawKey.substringBefore('/') }.mapNotNull { (node, rows) ->
             val battery = node in batterySupplies
             if (!charging && !battery) return@mapNotNull null
@@ -410,9 +456,9 @@ internal fun deviceDiagnosticGroups(
                     val value = text.toLongOrNull()?.takeIf { it >= 0 } ?: return null
                     return row.copy(
                         label = label, unit = unit, value = if (unit == "µV") String.format(
-                            Locale.getDefault(), "%.3f V", value / divisor
+                            locale, "%.3f V", value / divisor
                         )
-                        else BatteryCurrent.formatMilliAmps(value / divisor) + " mA"
+                        else BatteryCurrent.formatMilliAmps(value / divisor, locale) + " mA"
                     )
                 }
 
@@ -508,16 +554,23 @@ internal fun deviceDiagnosticGroups(
         DiagnosticGroup(
             title,
             readings.flatMap { it.rows }.groupBy { it.rawKey }.values.map { candidates ->
-                candidates.maxBy { it.observedAtMillis }
+                checkNotNull(latestDiagnosticReading(candidates))
             })
     }
 }
 
-internal fun formattedDiagnosticValue(row: DiagnosticRow, label: (Int) -> String): String? {
+internal fun formattedDiagnosticValue(
+    row: DiagnosticRow, label: (Int) -> String
+): String? = formattedDiagnosticValue(row, label, Locale.getDefault())
+
+internal fun formattedDiagnosticValue(
+    row: DiagnosticRow, label: (Int) -> String, locale: Locale
+): String? {
     if (row.valueLabel != 0) return label(row.valueLabel)
     if (row.label == R.string.advanced_field_charge_time_remaining) {
         val milliseconds = row.rawValue?.toLongOrNull()?.takeIf { it >= 0 } ?: return null
-        return DiagnosticsDurationFormatter.format(Locale.getDefault(), milliseconds)
+        row.value?.takeIf { it != row.rawValue }?.let { return it }
+        return DiagnosticsDurationFormatter.format(locale, milliseconds)
     }
     return row.value
 }
@@ -644,14 +697,26 @@ internal fun inconsistentCapacities(group: DiagnosticGroup): Boolean =
             ?.takeIf { it > 0 }?.let { full > it }
     } == true
 
-internal fun filterRawGroups(groups: List<DiagnosticGroup>, query: String): List<DiagnosticGroup> =
-    groups.map { group ->
-        group.copy(rows = group.rows.filter { it.rawKey.contains(query.trim(), ignoreCase = true) })
+internal fun filterRawGroups(groups: List<DiagnosticGroup>, query: String): List<DiagnosticGroup> {
+    val trimmed = query.trim()
+    return groups.map { group ->
+        group.copy(rows = group.rows.filter { it.rawKey.contains(trimmed, ignoreCase = true) })
     }.filter { it.rows.isNotEmpty() }
+}
 
 private fun rawRows(
-    keys: List<String>, values: List<String>, source: String, at: Long, access: String
+    keys: List<String>,
+    values: List<String>,
+    source: String,
+    snapshot: AdvancedBatterySnapshot,
+    access: String
 ) = keys.zip(values).map { (key, value) ->
+    val canonicalSource = when {
+        key.startsWith("cmd battery ") -> key.substringBefore(" 2>")
+        source == "/sys/class/power_supply" -> "$source/$key"
+        else -> "$source / $key"
+    }
+    val time = snapshot.sourceReadTimes[canonicalSource]?.takeIf { it.wallMillis > 0 }
     DiagnosticRow(
         0,
         key,
@@ -659,14 +724,18 @@ private fun rawRows(
         value,
         "",
         if (key.startsWith("cmd battery ")) key else "$source / $key",
-        at,
-        access
+        time?.wallMillis ?: 0,
+        access,
+        observedElapsedMillis = time?.elapsedMillis
     )
 }
 
 // A conservative default: arbitrary device values and identifiers stay out of reports.
 internal fun diagnosticReport(
-    groups: List<DiagnosticGroup>, label: (Int) -> String, includeRaw: Boolean
+    groups: List<DiagnosticGroup>,
+    label: (Int) -> String,
+    includeRaw: Boolean,
+    locale: Locale = Locale.getDefault()
 ): String = buildString {
     groups.forEachIndexed { index, group ->
         appendLine(label(group.title))
@@ -676,7 +745,7 @@ internal fun diagnosticReport(
                 appendLine(
                     "${row.rawKey}: ${
                         formattedDiagnosticValue(
-                            row, label
+                            row, label, locale
                         ) ?: "<unsupported>"
                     }"
                 )

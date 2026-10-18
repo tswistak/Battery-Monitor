@@ -163,8 +163,13 @@ class BatteryHistorySamplerTest {
         var queries = 0
         var exports = 0
         var deletions = 0
-        fun run(age: Int, expired: Boolean, success: Boolean) =
-            maintainHistory(age, { queries++; expired }, { exports++; success }, { deletions++ })
+        fun run(age: Int, expired: Boolean, success: Boolean) = maintainHistory(age, {
+            queries++
+            expired
+        }, {
+            exports++
+            success
+        }, { deletions++ })
         run(-1, expired = true, success = true)
         assertEquals(0, queries)
         run(672, expired = false, success = true)

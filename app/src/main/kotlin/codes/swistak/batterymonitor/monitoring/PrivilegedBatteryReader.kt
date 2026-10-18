@@ -18,8 +18,10 @@ import codes.swistak.batterymonitor.advancedstats.AdvancedBatteryStatsCollector
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import java.util.Locale
+import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
+
 
 internal data class PrivilegedBatteryReading(
     val percent: Int? = null,
@@ -31,8 +33,12 @@ internal data class PrivilegedBatteryReading(
     val remainingChargeUah: Long? = null,
     val currentNowUa: Long? = null,
     val currentAverageUa: Long? = null,
-    val fieldSources: Map<String, String> = emptyMap()
-)
+    val fieldSources: Map<String, String> = emptyMap(),
+    val fieldMeasurementTimes: Map<String, BatteryMeasurementTime> = emptyMap()
+) {
+    fun hasMeasurements(): Boolean =
+        percent != null || status != null || health != null || plugged != null || temperatureTenthsC != null || voltageMillivolts != null || remainingChargeUah != null || currentNowUa != null || currentAverageUa != null
+}
 
 internal fun projectPrivilegedBatteryReading(snapshot: AdvancedBatterySnapshot): PrivilegedBatteryReading {
     val service = snapshot.serviceLabels.zip(snapshot.serviceValues).toMap()
@@ -141,7 +147,10 @@ internal fun projectPrivilegedBatteryReading(snapshot: AdvancedBatterySnapshot):
             snapshot.currentAverageUa?.takeIf(BatteryCurrent::isValidMicroAmps)
                 ?.let { it to snapshot.fieldSources["current_average"] }
                 ?: batteryField("current_avg", ::current)),
-        fieldSources = fieldSources)
+        fieldSources = fieldSources,
+        fieldMeasurementTimes = fieldSources.mapNotNull { (field, source) ->
+            snapshot.sourceReadTimes[source]?.let { field to it }
+        }.toMap())
 }
 
 internal class PrivilegedBatteryReader(
@@ -172,6 +181,16 @@ internal class PrivilegedBatteryReader(
 
     fun readWhenReady(allowCached: Boolean = true, onResult: (PrivilegedBatteryReading?) -> Unit) {
         readInternal(onResult, allowCached)
+    }
+
+    fun whenIdle(): CompletableFuture<Unit> {
+        val result = CompletableFuture<Unit>()
+        try {
+            backgroundExecutor.execute { result.complete(Unit) }
+        } catch (_: RuntimeException) {
+            result.complete(Unit)
+        }
+        return result
     }
 
     private fun readInternal(
@@ -276,7 +295,7 @@ internal class PrivilegedBatteryReader(
             }
             val now = clock()
             lastRefreshAtMillis = now
-            if (now - collectedAtMillis in 0..CACHE_TTL_MS && reading != null && reading != PrivilegedBatteryReading()) {
+            if (now - collectedAtMillis in 0..CACHE_TTL_MS && reading?.hasMeasurements() == true) {
                 cache = reading
                 cachedAtMillis = collectedAtMillis
                 result = reading

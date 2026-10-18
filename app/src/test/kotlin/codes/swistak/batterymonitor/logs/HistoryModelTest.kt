@@ -26,6 +26,25 @@ import java.util.Locale
 
 class HistoryModelTest {
     @Test
+    fun `refresh keeps an exact selected observation that downsampling would otherwise omit`() {
+        val range = HistoryRangeState(0, 42_000)
+        val records = (1L..100L).map { id ->
+            HistoryRecord(id, LogRecord(200, 50, id, 300, 4000))
+        }
+        val selected = HistoryKey(50, 50)
+        val ordinary = historyChart(range, records.asSequence())
+        assertFalse(ordinary.series.getValue(HistoryMetric.LEVEL).points.any { it.key == selected })
+        val refreshed = historyChart(range, records.asSequence(), selected)
+        for (metric in listOf(
+            HistoryMetric.LEVEL, HistoryMetric.TEMPERATURE, HistoryMetric.VOLTAGE
+        )) {
+            assertEquals(1, refreshed.series.getValue(metric).points.count { it.key == selected })
+        }
+        val replacedIdentity = historyChart(range, records.asSequence(), HistoryKey(51, 50))
+        assertFalse(replacedIdentity.series.getValue(HistoryMetric.LEVEL).points.any { it.key == selected })
+    }
+
+    @Test
     fun `event constants preserve codes and map to distinct bounded bucket indexes`() {
         val mappings = listOf(12 to (2 to 0), 0 to (0 to 1), -1 to (-1 to 2))
         for ((status, expected) in mappings) {

@@ -99,6 +99,127 @@ class DetailedHistoryInstrumentedTest {
         }
 
     @Test
+    fun durable_changes_survive_missed_notifications_and_same_identity_replacement() {
+        database.addLogs(listOf(observation))
+        val original =
+            database.readHistory(historyQuery(HistoryRangeState(0, 10_000))) { it.single() }
+        val revision = database.historyChanges(null, null).revision
+        notificationFailure = true
+        val otherConnection = LogDatabase(context)
+        try {
+            otherConnection.addLogs(listOf(observation.copy(time = 2_000)))
+            otherConnection.addLogs(listOf(observation.copy(time = 3_000)))
+        } finally {
+            otherConnection.close()
+        }
+        assertTrue(database.historyChanges(revision, HistoryRangeState(0, 4_000)).affectsRange)
+        assertFalse(database.historyChanges(revision, HistoryRangeState(100, 500)).affectsRange)
+        val beforeReplacement = database.historyChanges(null, null).revision
+        database.replaceAllLogs(listOf(observation.copy(charge = 49)))
+        val replacement =
+            database.readHistory(historyQuery(HistoryRangeState(0, 10_000))) { it.single() }
+        assertEquals(original.key, replacement.key)
+        assertNotEquals(original.record.charge, replacement.record.charge)
+        assertTrue(
+            database.historyChanges(
+                beforeReplacement, HistoryRangeState(1_000, 1_001)
+            ).affectsRange
+        )
+        assertFalse(
+            database.historyChanges(
+                beforeReplacement, HistoryRangeState(0, 1_000)
+            ).affectsRange
+        )
+        val beforeDelete = database.historyChanges(null, null).revision
+        database.deleteHistory(HistoryRangeState(1_000, 1_001))
+        assertTrue(
+            database.historyChanges(
+                beforeDelete, HistoryRangeState(1_000, 1_001)
+            ).affectsRange
+        )
+        val afterDelete = database.historyChanges(null, null).revision
+        database.deleteHistory(null)
+        database.addLogs(emptyList())
+        assertEquals(afterDelete, database.historyChanges(null, null).revision)
+    }
+
+    @Test
+    fun bounded_changes_exclude_closed_ranges_until_the_retained_revision_window_is_exceeded() {
+        database.addLogs(listOf(observation))
+        val revision = database.historyChanges(null, null).revision
+        val closed = HistoryRangeState(0, 2_000)
+        repeat(LogDatabase.HISTORY_CHANGE_LIMIT) { index ->
+            database.addLogs(listOf(observation.copy(time = 10_000L + index)))
+        }
+        assertFalse(database.historyChanges(revision, closed).affectsRange)
+        database.addLogs(listOf(observation.copy(time = 20_000)))
+        assertTrue(database.historyChanges(revision, closed).affectsRange)
+        SQLiteDatabase.openDatabase(
+            context.getDatabasePath("logs.db").path, null, SQLiteDatabase.OPEN_READONLY
+        ).use { handle ->
+            handle.rawQuery("SELECT COUNT(*) FROM history_changes", null).use { cursor ->
+                cursor.moveToFirst()
+                assertEquals(LogDatabase.HISTORY_CHANGE_LIMIT, cursor.getInt(0))
+            }
+        }
+        val beforeBoundary = database.historyChanges(null, null).revision
+        database.addLogs(listOf(observation.copy(time = Long.MAX_VALUE)))
+        assertTrue(
+            database.historyChanges(
+                beforeBoundary, HistoryRangeState(1, Long.MAX_VALUE)
+            ).affectsRange
+        )
+    }
+
+    @Test
+    fun a_failed_revision_write_rolls_back_the_observation_and_does_not_advance_the_sampler() {
+        SQLiteDatabase.openDatabase(
+            context.getDatabasePath("logs.db").path, null, SQLiteDatabase.OPEN_READWRITE
+        ).use { handle ->
+            handle.execSQL(
+                "CREATE TRIGGER fail_revision BEFORE INSERT ON history_changes " + "BEGIN SELECT RAISE(ABORT, 'revision failure'); END"
+            )
+        }
+        val sampler = BatteryHistorySampler()
+        assertTrue(database.logObservation(observation, 1_000, sampler, true) is LogResult.Failed)
+        assertEquals(0L, database.historyChanges(null, null).revision)
+        assertTrue(database.getAllLogRecords().isEmpty())
+        assertTrue(notifications.isEmpty())
+        assertNull(sampler.lastRecordedElapsed)
+    }
+
+    @Test
+    fun commits_after_a_read_snapshot_remain_visible_to_the_next_freshness_check() {
+        database.addLogs((0..<10_000).map { observation.copy(time = it.toLong()) })
+        val before = database.historyChanges(null, null).revision
+        val start = java.util.concurrent.CountDownLatch(1)
+        val failure = java.util.concurrent.atomic.AtomicReference<Throwable?>()
+        val writer = Thread {
+            try {
+                start.await()
+                val other = LogDatabase(context)
+                try {
+                    other.addLogs(listOf(observation.copy(time = 10_001)))
+                } finally {
+                    other.close()
+                }
+            } catch (error: Throwable) {
+                failure.set(error)
+            }
+        }
+        writer.start()
+        val rows = database.readHistory(historyQuery(HistoryRangeState(0, 20_000))) { records ->
+            records.onEach { start.countDown() }.count()
+        }
+        writer.join(10_000)
+        assertFalse(writer.isAlive)
+        failure.get()?.let { throw AssertionError("Concurrent history write failed", it) }
+        assertEquals(10_000, rows)
+        assertTrue(database.historyChanges(before, HistoryRangeState(0, 20_000)).affectsRange)
+        assertEquals(10_001, database.getAllLogRecords().size)
+    }
+
+    @Test
     fun realistic_retention_overview_is_bounded_and_zoom_loads_every_real_reading(): Unit =
         runBlocking {
             val count = 20_160

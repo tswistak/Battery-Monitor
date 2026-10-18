@@ -9,8 +9,36 @@ package codes.swistak.batterymonitor.ui.current
 
 import androidx.lifecycle.ViewModel
 import codes.swistak.batterymonitor.logs.HistoryChartModel
+import codes.swistak.batterymonitor.logs.HistoryRangeState
+import codes.swistak.batterymonitor.logs.LogsRepository
+import codes.swistak.batterymonitor.monitoring.BatteryCurrentReading
+import kotlinx.coroutines.sync.Mutex
 
 internal class CurrentStateViewModel : ViewModel() {
-    var reading: CurrentReading? = null
+    var reading: BatteryCurrentReading? = null
+    val currentOwner = Mutex()
+
     var trend: HistoryChartModel? = null
+    var trendRevision: Long? = null
+
+    suspend fun refreshTrend(
+        repository: LogsRepository, activated: Boolean, now: () -> Long = System::currentTimeMillis
+    ): HistoryChartModel? {
+        var activation = activated
+        while (true) {
+            val range = HistoryRangeState.lastHours(24, now())
+            val changes = repository.historyChanges(trendRevision, range)
+            if (!activation && !changes.affectsRange) {
+                trendRevision = changes.revision
+                return trend
+            }
+            trend = repository.chart(range)
+            trendRevision = changes.revision
+            activation = false
+            if (repository.historyChanges(
+                    trendRevision, range
+                ).revision == trendRevision
+            ) return trend
+        }
+    }
 }

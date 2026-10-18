@@ -8,6 +8,8 @@
 package codes.swistak.batterymonitor.monitoring.presentation
 
 import android.os.Bundle
+import codes.swistak.batterymonitor.monitoring.CurrentSample
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 internal class MonitoringConnection {
@@ -19,6 +21,31 @@ internal class MonitoringConnection {
 
     private val repository = MonitoringRepository()
     val state: StateFlow<MonitoringUiState> = repository.state
+    private val mutableCurrent = MutableStateFlow(MonitoringCurrentState())
+    val current: StateFlow<MonitoringCurrentState> = mutableCurrent
+    private var currentToken: Long? = null
+
+    fun expectCurrent(token: Long?) {
+        currentToken = token
+    }
+
+    fun onCurrent(generation: Int, bundle: Bundle): Boolean = publishCurrent(
+        generation,
+        bundle.getString(FIELD_PROCESS_ID),
+        bundle.getLong("current_sequence", -1),
+        bundle.getLong("current_token", -1),
+        currentSampleFromBundle(bundle)
+    )
+
+    internal fun publishCurrent(
+        generation: Int, processId: String?, sequence: Long, token: Long, sample: CurrentSample
+    ): Boolean {
+        if (!accepts(generation) || processId == null || processId != expectedProcessId || sequence < 0 || token != currentToken) return false
+        val old = current.value
+        if (old.processId == processId && sequence < old.sequence) return false
+        mutableCurrent.value = MonitoringCurrentState(true, sample, processId, sequence)
+        return true
+    }
 
     private var started = false
     private var connected = false
@@ -60,6 +87,9 @@ internal class MonitoringConnection {
     internal fun onHandshake(generation: Int, processId: String?): Boolean {
         if (!accepts(generation) || processId == null) return false
         expectedProcessId = processId
+        val old = current.value
+        mutableCurrent.value = if (old.processId == processId) old.copy(connected = true)
+        else MonitoringCurrentState(connected = true, processId = processId)
         return true
     }
 
@@ -90,6 +120,8 @@ internal class MonitoringConnection {
     private fun markDisconnected() {
         connected = false
         expectedProcessId = null
+        currentToken = null
+        mutableCurrent.value = current.value.copy(connected = false)
         repository.markInactive()
     }
 }

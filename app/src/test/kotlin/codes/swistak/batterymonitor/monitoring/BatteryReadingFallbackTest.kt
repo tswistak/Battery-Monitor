@@ -150,4 +150,94 @@ class BatteryReadingFallbackTest {
             ).isEmpty()
         )
     }
+
+    @Test
+    fun `valid direct readings use their acquisition times including zero temperature`() {
+        val fields = mapOf("temperature" to 0, "health" to 7, "voltage" to 3700)
+        val directTimes = mapOf(
+            "temperature" to BatteryMeasurementTime(1_000, 100),
+            "health" to BatteryMeasurementTime(1_100, 200),
+            "voltage" to BatteryMeasurementTime(1_200, 300)
+        )
+        val fallbackWithTimes = fallback.copy(
+            fieldMeasurementTimes = fields.keys.associateWith { BatteryMeasurementTime(900, 90) })
+
+        val merged = mergeBatteryFields(fields, fallbackWithTimes)
+
+        assertEquals(0, merged["temperature"])
+        assertEquals(7, merged["health"])
+        assertEquals(3700, merged["voltage"])
+        assertEquals(
+            directTimes, mergeBatteryFieldMeasurementTimes(fields, fallbackWithTimes, directTimes)
+        )
+    }
+
+    @Test
+    fun `invalid direct fields use acquisition times of the fallback values actually selected`() {
+        val fields = mapOf("temperature" to 250, "health" to 1, "voltage" to 0)
+        val directTime = BatteryMeasurementTime(1_000, 100)
+        val fallbackHealthTime = BatteryMeasurementTime(1_100, 200)
+        val fallbackVoltageTime = BatteryMeasurementTime(1_200, 300)
+        val fallbackWithTimes = fallback.copy(
+            fieldMeasurementTimes = mapOf(
+                "temperature" to BatteryMeasurementTime(900, 90),
+                "health" to fallbackHealthTime,
+                "voltage" to fallbackVoltageTime
+            )
+        )
+
+        val merged = mergeBatteryFields(fields, fallbackWithTimes)
+        val times = mergeBatteryFieldMeasurementTimes(
+            fields, fallbackWithTimes, fields.keys.associateWith { directTime })
+
+        assertEquals(250, merged["temperature"])
+        assertEquals(fallback.health, merged["health"])
+        assertEquals(fallback.voltageMillivolts, merged["voltage"])
+        assertEquals(
+            mapOf(
+                "temperature" to directTime,
+                "health" to fallbackHealthTime,
+                "voltage" to fallbackVoltageTime
+            ), times
+        )
+    }
+
+    @Test
+    fun `unknown selected acquisition time cannot be borrowed from the discarded alternative`() {
+        val time = BatteryMeasurementTime(1_000, 100)
+        val fallbackWithTimes = fallback.copy(fieldMeasurementTimes = mapOf("voltage" to time))
+
+        assertTrue(
+            mergeBatteryFieldMeasurementTimes(
+                mapOf("voltage" to 3700), fallbackWithTimes, emptyMap()
+            ).isEmpty()
+        )
+        assertTrue(
+            mergeBatteryFieldMeasurementTimes(
+                mapOf("voltage" to 0), fallback, mapOf("voltage" to time)
+            ).isEmpty()
+        )
+        assertEquals(4200, mergeBatteryFields(mapOf("voltage" to 0), fallback)["voltage"])
+    }
+
+    @Test
+    fun `metadata alone cannot create a measurement while zero fallback temperature retains its time`() {
+        val fields = mapOf("temperature" to Int.MIN_VALUE, "health" to 1, "voltage" to 0)
+        val time = BatteryMeasurementTime(1_000, 100)
+        val metadataOnly = PrivilegedBatteryReading(
+            fieldSources = mapOf("temperature" to "dumpsys battery / temperature"),
+            fieldMeasurementTimes = fields.keys.associateWith { time })
+
+        assertEquals(fields, mergeBatteryFields(fields, metadataOnly))
+        assertTrue(
+            mergeBatteryFieldMeasurementTimes(
+                fields, metadataOnly, fields.keys.associateWith { time }).isEmpty()
+        )
+        val zeroTemperature = metadataOnly.copy(temperatureTenthsC = 0)
+        assertEquals(0, mergeBatteryFields(fields, zeroTemperature)["temperature"])
+        assertEquals(
+            mapOf("temperature" to time),
+            mergeBatteryFieldMeasurementTimes(fields, zeroTemperature, emptyMap())
+        )
+    }
 }
