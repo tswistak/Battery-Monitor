@@ -102,6 +102,55 @@ These options depend on available capabilities, independently of device brand. U
 
 For recovery checks, manually stop/restart the optional service or revoke/restore only the isolated application's permission between separate selected-method runs. Do not reinstall the APKs between live connection phases. Retain failed phases and restore the intended service/permission state afterward. Neither root nor Shizuku is required for standard benchmarks or ordinary application operation.
 
+### Root session verification
+
+Keep Magisk's notifications for Battery Monitor enabled throughout verification. The root acquisition report (`privileged-acquisition-v3`) separates `rootExecutorInvocationCount` from `rootSessionOpenCount`: the former counts commands; the latter counts actual `su` process starts, including denied acquisition and recovery, within the measured Android process. A healthy shell should serve all five acquisitions without further session opens. A session already open before the probe can give a total of zero. The UI and monitoring service use separate processes and may each need their own first session.
+
+On the rooted device:
+
+1. Enable privileged access and allow root. Run `#privilegedAcquisitionCost` with the arguments above; retain its JSON and confirm all five snapshots report root access, real measurement values and fresh acquisition timestamps.
+2. Keep Battery Monitor visible for several minutes. Confirm measurements update, the UI responds and ordinary polling produces no recurring Magisk grant toasts.
+3. Repeat with another app in the foreground and the screen on, then turn the screen off and on. Confirm monitoring continues without repeatedly reopening sessions.
+4. Open diagnostics, run the explicit root test and exercise charging-limit reads. Confirm these root-backed operations share the healthy session rather than causing a new grant toast for each command.
+5. Disable privileged access. Confirm automatic privileged work stops. Exercise the explicit diagnostics root test while automatic access is disabled, then re-enable privileged access and confirm fresh readings resume.
+6. Using only the disposable test installation, test denial followed by an explicit retry/re-enable and controlled root-session/process death. Confirm denied access does not cause repeated automatic requests, and legitimate recovery restores readings. Restore the intended permission afterward.
+
+Initial acquisition and recovery may produce a grant toast. Record which steps were actually performed; a passing acquisition probe alone does not establish several minutes of background monitoring or visual toast behavior.
+
+#### Focused root transport tests
+
+These instrumented tests use the debug installation (`codes.swistak.batterymonitor.debug`), separately from the `.profile` acquisition benchmark. Build and install its target/test APKs with the project wrapper and SDK tools:
+
+```sh
+rtk proxy ./gradlew :app:assembleDebug :app:assembleDebugAndroidTest
+rtk proxy "$ADB" -s "$SERIAL" install -r app/build/outputs/apk/debug/app-debug.apk
+rtk proxy "$ADB" -s "$SERIAL" install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+ROOT_TEST_CLASS="codes.swistak.batterymonitor.common.RootShellSessionInstrumentedTest"
+ROOT_TEST_RUNNER="codes.swistak.batterymonitor.debug.test/androidx.test.runner.AndroidJUnitRunner"
+```
+
+Keep Magisk notifications enabled and grant root to the debug target. Select both normal tests explicitly:
+
+```sh
+rtk proxy "$ADB" -s "$SERIAL" shell am instrument -w -r \
+  -e class "$ROOT_TEST_CLASS#rawCommandsReuseRootAndPreserveBytesStatusAndIsolation,$ROOT_TEST_CLASS#timeoutDisableAndInterruptionStopActualChildrenAndAllowRecovery" \
+  -e rootSessionTests true \
+  "$ROOT_TEST_RUNNER"
+```
+
+The first test checks real root-session reuse, raw UTF-8 bytes, exit status, command isolation and the output cap. The second checks that timeout, disable and interruption stop the actual child command, reject stale output and allow recovery. Confirm the final result reports two executed tests without assumption skips.
+
+For the separate denial test, first change only the disposable debug target's policy to **Deny** in Magisk. The `rootDeniedTests` flag selects the denial scenario; it does not change Magisk policy. Run:
+
+```sh
+rtk proxy "$ADB" -s "$SERIAL" shell am instrument -w -r \
+  -e class "$ROOT_TEST_CLASS#deniedMagiskPolicyStopsAutomaticRetriesAndPermitsOneExplicitRetry" \
+  -e rootDeniedTests true \
+  "$ROOT_TEST_RUNNER"
+```
+
+Confirm one executed test, then restore the debug target's previous Magisk policy. The test requires a real denial and verifies one initial automatic acquisition plus one deliberate retry, without repeated automatic authorization attempts. Without the matching `rootSessionTests=true` or `rootDeniedTests=true` flag, these device tests skip root work during ordinary instrumented suites.
+
 ## Host checks and analysis
 
 The optional host helpers use Python 3.10 or newer and the standard library. They invoke `rtk proxy` internally, so `rtk` must be on `PATH`. Run parser/safety checks without a device:

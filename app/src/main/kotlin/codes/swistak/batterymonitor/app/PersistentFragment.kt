@@ -309,7 +309,7 @@ class PersistentFragment : Fragment() {
         return result
     }
 
-    internal fun reloadAlarmRules() {
+    internal fun reloadSettings() {
         val context = requireContext().applicationContext
         if (!BackgroundServiceWatchdog.isServiceDesired(context)) return
         val snapshot = codes.swistak.batterymonitor.settings.SettingsSnapshot.capture(settings)

@@ -46,12 +46,14 @@ internal object PrivilegedProfilingProbe {
     }
 
     private fun measureEnabledRootMonitoring(context: Context): Bundle {
+        val sessionOpensBeforeProbe = RootExecutor.sessionOpenCount
         val deadline = SystemClock.elapsedRealtimeNanos() + ACQUISITION_BUDGET_NS
         val repetitions = JSONArray()
         var completedRepetitions = 0
         var rootAvailable = false
         var timedOut = false
         for (index in 0 until REPETITIONS) {
+            val sessionOpensBeforeReading = RootExecutor.sessionOpenCount
             val executor = TimedExecutor(
                 RootExecutor(), mayStartCommand = {
                     deadline - SystemClock.elapsedRealtimeNanos() >= COMMAND_RESERVE_NS
@@ -89,6 +91,10 @@ internal object PrivilegedProfilingProbe {
                 put("collectorCommandDurationNs", collectorCommandDuration)
                 put("collectorNonCommandOverheadNs", collectorDuration - collectorCommandDuration)
                 put("rootExecutorInvocationCount", executor.commands.size)
+                put(
+                    "rootSessionOpenCount",
+                    RootExecutor.sessionOpenCount - sessionOpensBeforeReading
+                )
                 put("collectorCommandCount", collectorCommands.size)
                 put("nullResultCommandCount", executor.commands.count { !it.returnedOutput })
                 put("commands", JSONArray().apply {
@@ -101,7 +107,8 @@ internal object PrivilegedProfilingProbe {
         }
         val selfCheck = checkUnavailableSources()
         val report = JSONObject().apply {
-            put("format", "privileged-acquisition-v2")
+            put("format", "privileged-acquisition-v3")
+            put("rootSessionOpenCount", RootExecutor.sessionOpenCount - sessionOpensBeforeProbe)
             put("backend", "PrivilegedAccess root monitoring backend with RootExecutor")
             put("repetitions", REPETITIONS)
             put("completedRepetitions", completedRepetitions)
@@ -112,7 +119,7 @@ internal object PrivilegedProfilingProbe {
             put("durationClock", "SystemClock.elapsedRealtimeNanos")
             put(
                 "processCountScope",
-                "One attempted su -c launch per RootExecutor invocation; child processes excluded"
+                "Actual su process starts in this Android process during the probe, including denied acquisition and recovery; command invocations and child processes excluded"
             )
             put(
                 "acquisitionScope",
@@ -177,7 +184,7 @@ internal object PrivilegedProfilingProbe {
         check(propertyCounts.getInt(1) == 0)
         check(delegateCalls == executor.commands.size)
         val throwingExecutor = TimedExecutor(object : CommandExecutor {
-            override fun run(command: String): String? = error("Synthetic executor failure")
+            override fun run(command: String): String = error("Synthetic executor failure")
         }, clock = { nanos.also { nanos += 10 } })
         check(runCatching { throwingExecutor.run("synthetic failure") }.isFailure)
         check(throwingExecutor.commands.single().threw)
@@ -218,6 +225,8 @@ internal object PrivilegedProfilingProbe {
         private val clock: () -> Long = SystemClock::elapsedRealtimeNanos,
         private val mayStartCommand: () -> Boolean = { true }
     ) : CommandExecutor {
+        override val isValid: Boolean get() = delegate.isValid
+
         val commands = mutableListOf<CommandMeasurement>()
         var rootIdentityAccepted = false
             private set

@@ -1,0 +1,16 @@
+libsu Core 6.0.0
+
+Copyright 2023 John "topjohnwu" Wu
+Copyright 2024 John "topjohnwu" Wu
+
+Licensed under the Apache License, Version 2.0. The complete license is
+packaged as Apache-2.0.txt.
+
+Source and license:
+https://github.com/topjohnwu/libsu/tree/6.0.0/core
+https://github.com/topjohnwu/libsu/blob/6.0.0/LICENSE
+
+Copyright notices retained from core source headers, including:
+https://github.com/topjohnwu/libsu/blob/6.0.0/core/src/main/java/com/topjohnwu/superuser/internal/StreamGobbler.java
+https://github.com/topjohnwu/libsu/blob/6.0.0/core/src/main/java/com/topjohnwu/superuser/internal/BuilderImpl.java
+https://github.com/topjohnwu/libsu/blob/6.0.0/core/src/main/java/com/topjohnwu/superuser/Shell.java

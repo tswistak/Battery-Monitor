@@ -47,7 +47,8 @@ internal class PrivilegedMonitoringBackend(
         context: Context? = null,
         callingPid: Int = 0
     ): AdvancedBatterySnapshot? {
-        if (!allowed()) {
+        val canRead = { allowed() && executor.isValid }
+        if (!canRead()) {
             invalidate()
             return null
         }
@@ -56,11 +57,13 @@ internal class PrivilegedMonitoringBackend(
             revision = accessRevision
             ownerPid = callingPid
         }
-        val guarded = GuardedPrivilegedCommandExecutor(executor, allowed)
+        val guarded = GuardedPrivilegedCommandExecutor(executor, canRead)
         try {
             if (requireRoot && !rootAvailable(guarded)) return null
             var backendFailed = false
             val monitoringExecutor = object : CommandExecutor {
+                override val isValid: Boolean get() = guarded.isValid
+
                 override fun run(command: String): String? = guarded.run(command)
 
                 override fun runRaw(command: String): String? = guarded.runRaw(command).also {
@@ -72,13 +75,13 @@ internal class PrivilegedMonitoringBackend(
             )
             if (backendFailed) invalidate()
             return snapshot.takeIf {
-                allowed() && projectPrivilegedBatteryReading(it).hasMeasurements()
+                canRead() && projectPrivilegedBatteryReading(it).hasMeasurements()
             }
         } catch (error: Throwable) {
             invalidate()
             throw error
         } finally {
-            if (!allowed()) invalidate()
+            if (!canRead()) invalidate()
         }
     }
 

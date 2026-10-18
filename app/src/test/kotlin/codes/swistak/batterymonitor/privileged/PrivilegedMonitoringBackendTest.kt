@@ -16,6 +16,10 @@
 package codes.swistak.batterymonitor.privileged
 
 import codes.swistak.batterymonitor.common.CommandExecutor
+import codes.swistak.batterymonitor.common.RootCommandResult
+import codes.swistak.batterymonitor.common.RootExecutor
+import codes.swistak.batterymonitor.common.RootSession
+import codes.swistak.batterymonitor.common.RootSessionOwner
 import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -23,8 +27,179 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.IOException
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.Executor
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 
 class PrivilegedMonitoringBackendTest {
+    @Test
+    fun `fresh monitoring values and source times share one root session across access revisions`() {
+        val fixture = Fixture()
+        val transport = fixture.executor()
+        var acquisitions = 0
+        var closes = 0
+        val owner = RootSessionOwner(factory = {
+            object : RootSession {
+                override fun acquire(): Boolean {
+                    acquisitions++
+                    return true
+                }
+
+                override fun execute(command: String): RootCommandResult {
+                    val output = transport.runRaw(command)
+                    return RootCommandResult(if (output == null) 1 else 0, output)
+                }
+
+                override fun close() {
+                    closes++
+                }
+            }
+        }, clock = { fixture.elapsed }, workers = Executor { it.run() })
+        owner.setEnabled(true)
+        try {
+            val snapshots = (1..3).map { cycle ->
+                fixture.elapsed += 2_000
+                fixture.current = -100_000L * cycle
+                // A Shizuku event invalidates measurement caches, not this process's root shell.
+                if (cycle == 3) fixture.revision++
+                val revision = fixture.revision
+                val executor = RootExecutor(
+                    allowed = { fixture.allowed && fixture.revision == revision }, owner = owner
+                )
+                requireNotNull(fixture.read(executor = executor))
+            }
+
+            assertEquals(listOf(-100_000L, -200_000L, -300_000L), snapshots.map { it.currentNowUa })
+            val times = snapshots.map {
+                it.sourceReadTimes.getValue(it.fieldSources.getValue("current_now"))
+            }
+            assertEquals(3, times.distinct().size)
+            assertTrue(times.zipWithNext().all { (first, next) ->
+                next.wallMillis > first.wallMillis && next.elapsedMillis!! > first.elapsedMillis!!
+            })
+            assertEquals(1, acquisitions)
+            assertEquals(0, closes)
+            assertEquals(2, fixture.commands.count { it == "id" })
+
+            val staleRevision = fixture.revision
+            fixture.onDump = { fixture.revision++ }
+            assertNull(
+                fixture.read(
+                    executor = RootExecutor(
+                        allowed = { fixture.allowed && fixture.revision == staleRevision },
+                        owner = owner
+                    )
+                )
+            )
+            assertEquals(0, closes)
+            fixture.onDump = {}
+            fixture.elapsed += 2_000
+            fixture.current = -400_000
+            val revision = fixture.revision
+            val fresh = fixture.read(
+                executor = RootExecutor(
+                    allowed = { fixture.allowed && fixture.revision == revision }, owner = owner
+                )
+            )
+            assertEquals(-400_000L, fresh?.currentNowUa)
+            assertEquals(1, acquisitions)
+        } finally {
+            owner.setEnabled(false)
+        }
+        assertEquals(1, closes)
+    }
+
+    @Test
+    fun `transport death or timeout after successful dumpsys discards partial snapshot and fresh wrapper recovers`() {
+        for (timeout in listOf(false, true)) {
+            val fixture = Fixture()
+            val transport = fixture.executor()
+            val release = CountDownLatch(1)
+            val created = AtomicInteger()
+            val owner = RootSessionOwner(factory = {
+                val fails = created.incrementAndGet() == 1
+                object : RootSession {
+                    override fun acquire(): Boolean = true
+
+                    override fun execute(command: String): RootCommandResult {
+                        val output = transport.runRaw(command)
+                        if (fails && command == "ls /sys/class/power_supply 2>/dev/null") {
+                            if (timeout) release.await(3, TimeUnit.SECONDS)
+                            throw IOException("Session lost after dumpsys")
+                        }
+                        return RootCommandResult(if (output == null) 1 else 0, output)
+                    }
+
+                    override fun close() {
+                        release.countDown()
+                    }
+                }
+            }, timeoutMillis = 200, clock = { fixture.elapsed })
+            owner.setEnabled(true)
+            try {
+                val stale = RootExecutor(owner = owner)
+                assertTrue(stale.isValid)
+                assertNull(fixture.read(executor = stale))
+                assertEquals(1, fixture.commands.count { it == "dumpsys battery" })
+                assertTrue(
+                    fixture.commands.indexOf("dumpsys battery") < fixture.commands.indexOf("ls /sys/class/power_supply 2>/dev/null")
+                )
+                assertFalse(stale.isValid)
+                fixture.elapsed += 1_000
+                val fresh = RootExecutor(owner = owner)
+                assertEquals(-100_000L, fixture.read(executor = fresh)?.currentNowUa)
+                assertTrue(fresh.isValid)
+                assertEquals(2, created.get())
+            } finally {
+                release.countDown()
+                owner.setEnabled(false)
+            }
+        }
+    }
+
+    @Test
+    fun `ordinary nonzero probe after successful dumpsys preserves valid partial snapshot and session`() {
+        val fixture = Fixture()
+        val transport = fixture.executor()
+        var acquisitions = 0
+        var closes = 0
+        val owner = RootSessionOwner(factory = {
+            object : RootSession {
+                override fun acquire(): Boolean {
+                    acquisitions++
+                    return true
+                }
+
+                override fun execute(command: String): RootCommandResult {
+                    val output = transport.runRaw(command)
+                    return if (command == "ls /sys/class/power_supply 2>/dev/null") {
+                        RootCommandResult(1, null)
+                    } else RootCommandResult(if (output == null) 1 else 0, output)
+                }
+
+                override fun close() {
+                    closes++
+                }
+            }
+        }, workers = Executor { it.run() })
+        owner.setEnabled(true)
+        try {
+            val executor = RootExecutor(owner = owner)
+            val snapshot = fixture.read(executor = executor)
+            assertNotNull(snapshot)
+            assertEquals(50, snapshot?.reportedCapacityPercent)
+            assertTrue(executor.isValid)
+            assertNotNull(fixture.read(executor = RootExecutor(owner = owner)))
+            assertEquals(1, acquisitions)
+            assertEquals(0, closes)
+        } finally {
+            owner.setEnabled(false)
+        }
+        assertEquals(1, closes)
+    }
+
     @Test
     fun `root identity and topology survive new executor wrappers but battery values stay fresh`() {
         val fixture = Fixture()
@@ -156,7 +331,10 @@ class PrivilegedMonitoringBackendTest {
             clock = { elapsed },
             measurementTime = { BatteryMeasurementTime(10_000 + elapsed, elapsed) })
 
-        fun read(callingPid: Int = 111) = backend.read(object : CommandExecutor {
+        fun read(callingPid: Int = 111, executor: CommandExecutor = executor()) =
+            backend.read(executor, revision, { allowed }, callingPid = callingPid)
+
+        fun executor(): CommandExecutor = object : CommandExecutor {
             override fun run(command: String): String? = runRaw(command)?.trim()
 
             override fun runRaw(command: String): String? {
@@ -191,6 +369,6 @@ class PrivilegedMonitoringBackendTest {
                     else -> error("Unexpected command: $command")
                 }
             }
-        }, revision, { allowed }, callingPid = callingPid)
+        }
     }
 }

@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.common
 
+import android.os.Looper
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
@@ -22,14 +23,37 @@ private const val COMMAND_TIMEOUT_SECONDS = 10L
 private const val MAX_COMMAND_OUTPUT_BYTES = 256 * 1024
 
 internal interface CommandExecutor {
+    val isValid: Boolean get() = true
     fun run(command: String): String?
     fun runRaw(command: String): String? = run(command)
 }
 
-internal class RootExecutor : CommandExecutor {
-    override fun run(command: String): String? = runCommand(arrayOf("su", "-c", command))
-    override fun runRaw(command: String): String? =
-        runCommand(arrayOf("su", "-c", command), trimOutput = false)
+internal class RootExecutor(
+    private val allowed: () -> Boolean = { true }, private val owner: RootSessionOwner = sharedOwner
+) : CommandExecutor {
+    private val generation = owner.generation
+
+    override val isValid: Boolean
+        get() = generation == owner.generation && allowed() && !Thread.currentThread().isInterrupted
+
+    override fun run(command: String): String? = runRaw(command)?.trim()?.takeIf(String::isNotEmpty)
+
+    override fun runRaw(command: String): String? = owner.run(command, generation, allowed)
+
+    companion object {
+        private val sharedOwner = RootSessionOwner(
+            factory = { RootShellSession() },
+            isMainThread = { Looper.myLooper() != null && Looper.myLooper() == Looper.getMainLooper() })
+
+        val sessionOpenCount: Long get() = RootShellSession.openCount.get()
+
+        fun setEnabled(enabled: Boolean, onChanged: () -> Unit = {}) =
+            sharedOwner.setEnabled(enabled, onChanged)
+
+        fun requestAccess(
+            allowed: () -> Boolean = { true }, onGranted: () -> Unit = {}
+        ): Boolean = sharedOwner.requestAccess(allowed, onGranted)
+    }
 }
 
 internal class PrivilegedShellExecutor : CommandExecutor {

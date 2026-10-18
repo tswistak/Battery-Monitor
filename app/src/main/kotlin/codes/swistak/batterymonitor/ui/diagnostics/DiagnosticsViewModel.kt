@@ -24,8 +24,8 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatteryStatsCollector
 import codes.swistak.batterymonitor.advancedstats.AdvancedStatsUserService
-import codes.swistak.batterymonitor.common.CommandExecutor
 import codes.swistak.batterymonitor.common.RootExecutor
+import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.privileged.ShizukuUserServiceConnection
 import codes.swistak.batterymonitor.settings.SettingsContract
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -237,7 +237,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
 
     fun setPrivilegedEnabled(enabled: Boolean) {
         preferences.edit { putBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, enabled) }
-        codes.swistak.batterymonitor.privileged.PrivilegedAccess.setEnabled(enabled)
+        PrivilegedAccess.setEnabled(enabled)
         publish { copy(privilegedEnabled = enabled, advanced = null, status = 0, stale = false) }
         resetAndRefresh()
     }
@@ -258,6 +258,8 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         if (!active || loadState != LoadState.IDLE) return
         val privilegedEnabled =
             preferences.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
+        PrivilegedAccess.initialize(getApplication())
+        PrivilegedAccess.setEnabled(privilegedEnabled)
         val generation = ++loadGeneration
         loadState = LoadState.READING_ANDROID
         publish { startingRefresh(privilegedEnabled, statsVisible) }
@@ -284,29 +286,23 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         loadState = LoadState.CHECKING_ROOT
         showStatus(R.string.advanced_status_loading)
         mainHandler.postDelayed(timeout, 45_000)
+        val revision = PrivilegedAccess.accessRevision
+        val allowed = {
+            canLoadPrivileged(generation) && PrivilegedAccess.isEnabled() && revision == PrivilegedAccess.accessRevision
+        }
         worker = Thread {
-            val executor = RootExecutor()
+            val executor = RootExecutor(allowed)
             val snapshot = runCatching {
-                if (!canLoadPrivileged(generation) || executor.run("id")
-                        ?.contains("uid=0") != true
-                ) null
+                if (!allowed() || executor.run("id")?.contains("uid=0") != true) null
                 else AdvancedBatteryStatsCollector.collect(
-                    object : CommandExecutor {
-                        override fun run(command: String): String? =
-                            if (!canLoadPrivileged(generation) || Thread.currentThread().isInterrupted) null else executor.run(
-                                command
-                            )
-
-                        override fun runRaw(command: String): String? =
-                            if (!canLoadPrivileged(generation) || Thread.currentThread().isInterrupted) null else executor.runRaw(
-                                command
-                            )
-                    }, AdvancedBatterySnapshot.ACCESS_ROOT, 0, null, false
-                )
+                    executor, AdvancedBatterySnapshot.ACCESS_ROOT, 0, null, false
+                ).takeIf { allowed() && executor.isValid }
             }.getOrNull()
             mainHandler.post {
                 if (!canLoadPrivileged(generation)) return@post
-                if (snapshot != null) postSnapshot(snapshot, generation) else continueViaShizuku(
+                if (snapshot != null && executor.isValid) postSnapshot(
+                    snapshot, generation, revision
+                ) { executor.isValid } else continueViaShizuku(
                     generation
                 )
             }
@@ -389,9 +385,19 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         }
     }
 
-    private fun postSnapshot(snapshot: AdvancedBatterySnapshot, generation: Int) {
+    private fun postSnapshot(
+        snapshot: AdvancedBatterySnapshot,
+        generation: Int,
+        accessRevision: Long? = null,
+        valid: () -> Boolean = { true }
+    ) {
         mainHandler.post {
             if (!canLoadPrivileged(generation)) return@post
+            if (!valid() || accessRevision != null && accessRevision != PrivilegedAccess.accessRevision) {
+                finishLoading(generation)
+                publish { withoutPendingLoad() }
+                return@post
+            }
 
             mainHandler.removeCallbacks(timeout)
             activeConnection?.let(::clearConnection)

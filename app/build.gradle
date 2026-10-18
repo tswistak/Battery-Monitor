@@ -116,6 +116,7 @@ android {
 
     buildTypes {
         debug {
+            setDefault(true)
             if (isE2eBuild) {
                 signingConfig signingConfigs.e2e
             } else {
@@ -135,7 +136,6 @@ android {
         if (isProfilingBuild) {
             profile {
                 initWith release
-                setDefault(true)
                 applicationIdSuffix '.profile'
                 debuggable false
                 signingConfig signingConfigs.profile
@@ -180,6 +180,7 @@ dependencies {
     implementation "androidx.preference:preference:1.2.1"
     implementation "dev.rikka.shizuku:api:13.1.5"
     implementation "dev.rikka.shizuku:provider:13.1.5"
+    implementation "com.github.topjohnwu.libsu:core:6.0.0"
 }
 
 def licenseDirectory = rootProject.file('LICENSES')

@@ -339,7 +339,12 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     private var applyingDetectedBatteryCurrentMultiplier = false
     private var pendingPrivilegedShizukuBinderListener: OnBinderReceivedListener? = null
 
+    @Volatile
     private var privilegedAccessRequestInProgress = false
+
+    @Volatile
+    private var privilegedAccessRequestGeneration = 0L
+
     private val privilegedShizukuPermissionListener =
         OnRequestPermissionResultListener { requestCode, grantResult ->
             if (requestCode != SHIZUKU_PERMISSION_REQUEST_CODE || !privilegedAccessRequestInProgress) return@OnRequestPermissionResultListener
@@ -1057,18 +1062,28 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     private fun requestPrivilegedAccessEnable() {
         if (privilegedAccessRequestInProgress) return
         privilegedAccessRequestInProgress = true
+        val generation = ++privilegedAccessRequestGeneration
+        val allowed = {
+            privilegedAccessRequestInProgress && generation == privilegedAccessRequestGeneration && isAdded
+        }
 
         Thread {
-            val rootGranted = RootExecutor().run("id") != null
+            val rootGranted = RootExecutor.requestAccess(allowed, onGranted = {
+                // Retain this verified session when the explicit request becomes monitoring access.
+                PrivilegedAccess.setEnabled(true)
+                mSharedPreferences.edit {
+                    putBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, true)
+                }
+            })
             mainHandler.post {
-                if (!privilegedAccessRequestInProgress || !isAdded) return@post
+                if (!allowed()) return@post
                 if (rootGranted) {
                     completePrivilegedAccessEnable()
                 } else {
                     requestPrivilegedShizukuPermission()
                 }
             }
-        }.start()
+        }.apply { name = "settings-root-access" }.start()
     }
 
     private fun requestPrivilegedShizukuPermission() {

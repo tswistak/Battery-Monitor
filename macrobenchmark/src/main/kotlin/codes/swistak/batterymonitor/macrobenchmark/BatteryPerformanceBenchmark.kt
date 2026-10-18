@@ -49,6 +49,7 @@ import androidx.test.uiautomator.Direction
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
+import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -57,10 +58,9 @@ import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.junit.rules.TestName
 import org.junit.rules.TestRule
-import org.json.JSONObject
+import org.junit.runner.RunWith
 import java.io.File
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -230,6 +230,11 @@ class BatteryPerformanceBenchmark {
         assertTrue(
             "Root acquisition measurements are incomplete or unavailable; retained report describes the failure",
             complete
+        )
+        assertEquals(
+            "Five root acquisitions must share one session",
+            1L,
+            details.getLong("rootSessionOpenCount")
         )
     }
 
@@ -857,7 +862,7 @@ class BatteryPerformanceBenchmark {
             "text",
             ArrayList(
                 device.findObjects(By.pkg(TARGET).textStartsWith("")).mapNotNull { it.text }
-                    .filter { it.isNotBlank() }.distinct()
+                .filter { it.isNotBlank() }.distinct()
             )
         )
     })

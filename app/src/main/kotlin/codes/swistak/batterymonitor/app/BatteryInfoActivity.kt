@@ -360,7 +360,8 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     { openDiagnosticDetail("monitor") },
                                     { openDiagnosticDetail("charging-tools") },
                                     persistent.monitoring.state,
-                                    monitorActions
+                                    monitorActions,
+                                    persistent::reloadSettings
                                 )
                             }
                         }
@@ -401,7 +402,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     },
                                     onEnabled = { type, rule, enabled ->
                                         alarms.setEnabled(
-                                            type, rule, enabled, persistent::reloadAlarmRules
+                                            type, rule, enabled, persistent::reloadSettings
                                         )
                                     },
                                     onChannelSettings = { type ->
@@ -426,12 +427,12 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     onRetry = alarms::refresh,
                                     onDisableInvalid = {
                                         alarms.disableInvalid(
-                                            it, persistent::reloadAlarmRules
+                                            it, persistent::reloadSettings
                                         )
                                     },
                                     onDeleteInvalid = {
                                         alarms.deleteInvalid(
-                                            it, persistent::reloadAlarmRules
+                                            it, persistent::reloadSettings
                                         )
                                     },
                                     onNoticeHandled = alarms::clearNotice,
@@ -441,8 +442,8 @@ class BatteryInfoActivity : AppCompatActivity() {
                             if (pendingAlarmNavigation == null) ThresholdDialog(
                                 state = alarmState,
                                 onInput = alarms::changeDraftInput,
-                                onSave = { alarms.saveDraft(persistent::reloadAlarmRules) },
-                                onDelete = { alarms.deleteDraft(persistent::reloadAlarmRules) },
+                                onSave = { alarms.saveDraft(persistent::reloadSettings) },
+                                onDelete = { alarms.deleteDraft(persistent::reloadSettings) },
                                 onDismiss = {
                                     leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.DISMISS))
                                 },

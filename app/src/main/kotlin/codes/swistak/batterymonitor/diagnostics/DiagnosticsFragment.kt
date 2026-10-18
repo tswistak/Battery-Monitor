@@ -93,7 +93,6 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
             "diagnostics_battery_optimization"
         )
 
-        private const val ROOT_CHECK_COMMAND = "id"
         private const val HEALTHY_HEARTBEAT_AGE_MS = 5L * 60L * 1000L
         private const val SHIZUKU_PERMISSION_REQUEST_CODE = 7128
 
@@ -146,7 +145,9 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
     internal val hasDialog: Boolean get() = dialogState.dialog != null
     private val capturing: Boolean get() = dialogState.capturing
 
+    @Volatile
     private var rootGeneration = 0
+
     private val refreshTick = object : Runnable {
         override fun run() {
             if (isResumed) {
@@ -394,8 +395,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
                 },
                 confirmButton = {
                     TextButton(
-                        enabled = state.selectedCondition != null,
-                        onClick = {
+                        enabled = state.selectedCondition != null, onClick = {
                             state.confirmCondition()?.let(::captureChargingSnapshot)
                         }) { Text(stringResource(R.string.okay)) }
                 },
@@ -735,7 +735,9 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
         checkingRoot = true
         refresh()
         Thread {
-            val available = RootExecutor().run(ROOT_CHECK_COMMAND)?.contains("uid=0") == true
+            val available = RootExecutor.requestAccess(allowed = {
+                generation == rootGeneration && isResumed
+            })
             mainHandler.post {
                 if (generation != rootGeneration || !isResumed) return@post
                 checkingRoot = false

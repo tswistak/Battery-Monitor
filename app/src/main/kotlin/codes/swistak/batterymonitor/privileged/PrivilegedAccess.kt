@@ -108,13 +108,14 @@ internal object PrivilegedAccess : CommandExecutor {
         }
     }
 
-    @Synchronized
     fun setEnabled(value: Boolean) {
-        if (enabled != value) {
-            revision.incrementAndGet()
-            enabled = value
+        RootExecutor.setEnabled(value) {
+            if (enabled != value) {
+                revision.incrementAndGet()
+                enabled = value
+            }
         }
-        if (value) ensureShizukuConnection() else disconnectShizukuConnection()
+        if (enabled) ensureShizukuConnection() else disconnectShizukuConnection()
     }
 
     fun isEnabled(): Boolean = enabled
@@ -161,13 +162,15 @@ internal object PrivilegedAccess : CommandExecutor {
     }
 
     internal fun readRootBatterySnapshot(
-        executor: CommandExecutor = RootExecutor()
+        executor: CommandExecutor? = null
     ): AdvancedBatterySnapshot? {
         val revision = accessRevision
-        return rootMonitoringBackend.read(executor, revision, { canRead(revision) })?.apply {
-            accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
-            remoteUid = 0
-        }
+        val allowed = { canRead(revision) }
+        return rootMonitoringBackend.read(executor ?: RootExecutor(allowed), revision, allowed)
+            ?.apply {
+                accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
+                remoteUid = 0
+            }
     }
 
     private fun awaitShizukuService(revision: Long): IBinder? {
@@ -201,7 +204,7 @@ internal object PrivilegedAccess : CommandExecutor {
     fun runWithBackend(command: String): CommandResult? {
         val revision = accessRevision
         val allowed = { canRead(revision) }
-        val root = GuardedPrivilegedCommandExecutor(RootExecutor(), allowed).run(command)
+        val root = GuardedPrivilegedCommandExecutor(RootExecutor(allowed), allowed).run(command)
         if (!allowed()) return null
         if (root != null) return CommandResult(root, Backend.ROOT)
         return whilePrivilegedAccessAllowed(allowed) {
@@ -413,9 +416,11 @@ internal fun <T> whilePrivilegedAccessAllowed(allowed: () -> Boolean, read: () -
 internal class GuardedPrivilegedCommandExecutor(
     private val delegate: CommandExecutor, private val allowed: () -> Boolean
 ) : CommandExecutor {
+    override val isValid: Boolean get() = allowed() && delegate.isValid
+
     override fun run(command: String): String? =
-        whilePrivilegedAccessAllowed(allowed) { delegate.run(command) }
+        whilePrivilegedAccessAllowed({ isValid }) { delegate.run(command) }
 
     override fun runRaw(command: String): String? =
-        whilePrivilegedAccessAllowed(allowed) { delegate.runRaw(command) }
+        whilePrivilegedAccessAllowed({ isValid }) { delegate.runRaw(command) }
 }

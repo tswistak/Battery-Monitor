@@ -132,7 +132,8 @@ internal fun DiagnosticsRoute(
     onMonitor: () -> Unit,
     onChargingTools: () -> Unit,
     monitoring: kotlinx.coroutines.flow.StateFlow<codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState>,
-    monitorActions: Map<String, MonitorAction>
+    monitorActions: Map<String, MonitorAction>,
+    onPrivilegedChanged: () -> Unit
 ) {
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -144,19 +145,13 @@ internal fun DiagnosticsRoute(
     LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) { viewModel.setActive(false) }
     DisposableEffect(viewModel) { onDispose { viewModel.setActive(false) } }
     DiagnosticsScreen(
-        state,
-        viewModel::refreshStats,
-        onMonitor,
-        onChargingTools,
-        viewModel::setPrivilegedEnabled,
-        { selected ->
+        state, viewModel::refreshStats, onMonitor, onChargingTools, {
+            viewModel.setPrivilegedEnabled(it)
+            onPrivilegedChanged()
+        }, { selected ->
             viewModel.setTab(selected)
             tab = selected
-        },
-        monitor.snapshot,
-        monitorActions,
-        monitor.availability,
-        tab
+        }, monitor.snapshot, monitorActions, monitor.availability, tab
     )
 }
 
