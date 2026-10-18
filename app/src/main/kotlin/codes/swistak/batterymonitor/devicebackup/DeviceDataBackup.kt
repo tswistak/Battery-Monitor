@@ -214,7 +214,10 @@ internal object DeviceDataBackup {
             ?: throw IOException("Could not open backup source")
         pfd.use {
             BufferedReader(
-                InputStreamReader(FileInputStream(it.fileDescriptor), StandardCharsets.UTF_8)
+                InputStreamReader(
+                    BackupImportInputStream(FileInputStream(it.fileDescriptor)),
+                    StandardCharsets.UTF_8
+                )
             ).use { reader ->
                 return reader.readText()
             }

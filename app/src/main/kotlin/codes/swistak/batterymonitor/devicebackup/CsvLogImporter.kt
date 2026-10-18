@@ -149,14 +149,17 @@ internal object CsvLogImporter {
         }
         return code
     }
-    
+
     @Throws(IOException::class)
     fun readFromUri(context: Context, uri: Uri): String {
         val pfd = context.contentResolver.openFileDescriptor(uri, "r")
             ?: throw IOException("Could not open CSV source")
         pfd.use {
             BufferedReader(
-                InputStreamReader(FileInputStream(it.fileDescriptor), StandardCharsets.UTF_8)
+                InputStreamReader(
+                    BackupImportInputStream(FileInputStream(it.fileDescriptor)),
+                    StandardCharsets.UTF_8
+                )
             ).use { reader ->
                 return reader.readText()
             }

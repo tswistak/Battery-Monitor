@@ -15,6 +15,7 @@ package codes.swistak.batterymonitor.settings.backup
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import codes.swistak.batterymonitor.devicebackup.BackupImportInputStream
 import codes.swistak.batterymonitor.settings.ChipContentOrder
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.VitalSignsOrder
@@ -65,9 +66,9 @@ internal object SettingsBackup {
     @Throws(JSONException::class)
     fun exportToJson(prefs: SharedPreferences): JSONObject {
         val settings = JSONObject()
-        for (entry in prefs.all.entries) {
-            if (Version4SettingsImporter.schema.containsKey(entry.key)) {
-                settings.put(entry.key, entry.value)
+        for ((key, value) in prefs.all) {
+            if (Version4SettingsImporter.schema.containsKey(key)) {
+                settings.put(key, value)
             }
         }
 
@@ -126,18 +127,21 @@ internal object SettingsBackup {
     }
 
     @Throws(IOException::class)
-    fun readFromUri(context: Context, uri: Uri): String? {
+    fun readFromUri(context: Context, uri: Uri): String {
         val pfd = context.contentResolver.openFileDescriptor(uri, "r")
             ?: throw IOException("Could not open backup source")
         pfd.use { pfd ->
-            val reader = BufferedReader(
-                InputStreamReader(FileInputStream(pfd.fileDescriptor), StandardCharsets.UTF_8)
-            )
-            val sb = StringBuilder()
-            var line: String?
-            while ((reader.readLine().also { line = it }) != null) sb.append(line).append('\n')
-            reader.close()
-            return sb.toString()
+            BufferedReader(
+                InputStreamReader(
+                    BackupImportInputStream(FileInputStream(pfd.fileDescriptor)),
+                    StandardCharsets.UTF_8
+                )
+            ).use { reader ->
+                val sb = StringBuilder()
+                var line: String?
+                while ((reader.readLine().also { line = it }) != null) sb.append(line).append('\n')
+                return sb.toString()
+            }
         }
     }
 }

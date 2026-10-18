@@ -16,6 +16,7 @@ import android.content.Context
 import android.net.Uri
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.AlarmRecord
+import codes.swistak.batterymonitor.devicebackup.BackupImportInputStream
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -94,7 +95,10 @@ internal object AlarmBackup {
             ?: throw IOException("Could not open backup source")
         pfd.use {
             BufferedReader(
-                InputStreamReader(FileInputStream(it.fileDescriptor), StandardCharsets.UTF_8)
+                InputStreamReader(
+                    BackupImportInputStream(FileInputStream(it.fileDescriptor)),
+                    StandardCharsets.UTF_8
+                )
             ).use { reader ->
                 return reader.readText()
             }

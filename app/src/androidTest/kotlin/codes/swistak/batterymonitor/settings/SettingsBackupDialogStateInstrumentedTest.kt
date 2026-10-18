@@ -26,6 +26,9 @@ import androidx.lifecycle.ViewModelStore
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
+import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
+import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
+import codes.swistak.batterymonitor.devicebackup.GeneralBackup
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import codes.swistak.batterymonitor.ui.settings.SettingsDialog
 import org.junit.After
@@ -40,6 +43,7 @@ import org.junit.Test
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.RandomAccessFile
 import java.util.UUID
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
@@ -111,6 +115,32 @@ class SettingsBackupDialogStateInstrumentedTest {
         assertEquals(choices(first).options, choices(restored).options)
         cancel(restored)
         assertNull(save(restored).getBundle("settings_backup_dialog"))
+        assertFalse(directory.listFiles().orEmpty().any { it.name.startsWith("settings-import-") })
+    }
+
+    @Test
+    fun standalone_uri_readers_preserve_UTF8_and_settings_line_normalization() {
+        val text = "ą💡\r\n"
+        val source = File(directory, "utf8-source").apply { writeText(text, Charsets.UTF_8) }
+        val uri = Uri.fromFile(source)
+        assertEquals("ą💡\n", SettingsBackup.readFromUri(context, uri))
+        assertEquals(text, AlarmBackup.readFromUri(context, uri))
+        assertEquals(text, DeviceDataBackup.readFromUri(context, uri))
+        assertEquals(text, CsvLogImporter.readFromUri(context, uri))
+    }
+
+    @Test
+    fun oversized_standalone_source_rolls_back_the_preview_cache() {
+        val source = File(directory, "oversized-source")
+        RandomAccessFile(source, "rw").use {
+            it.setLength(GeneralBackup.MAX_ENTRY_BYTES.toLong() + 1)
+        }
+        val fragment = fragment()
+        val request = request(6)
+        read(fragment, request, Uri.fromFile(source))
+        complete(fragment)
+        assertTrue(dialog(fragment) is SettingsDialog.Message)
+        assertNull(save(fragment).getBundle("settings_backup_dialog"))
         assertFalse(directory.listFiles().orEmpty().any { it.name.startsWith("settings-import-") })
     }
 

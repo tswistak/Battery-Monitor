@@ -69,6 +69,7 @@ import codes.swistak.batterymonitor.app.PersistentFragment
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.common.RootExecutor
 import codes.swistak.batterymonitor.common.showToast
+import codes.swistak.batterymonitor.devicebackup.BackupImportInputStream
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.devicebackup.DeviceDataType
@@ -599,7 +600,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                         if (requestCode == IMPORT_GENERAL_BACKUP_REQUEST) {
                             copyGeneralBackupDialogSource(it, output)
                         } else {
-                            it.copyTo(output)
+                            BackupImportInputStream(it).copyTo(output)
                         }
                         cache.finishWrite(output)
                     } catch (failure: Exception) {

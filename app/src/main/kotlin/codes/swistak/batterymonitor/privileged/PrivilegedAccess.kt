@@ -12,8 +12,12 @@
 */
 package codes.swistak.batterymonitor.privileged
 
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
+import android.content.ContextWrapper
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.ServiceConnection
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -21,6 +25,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.core.content.pm.PackageInfoCompat
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
 import codes.swistak.batterymonitor.common.CommandExecutor
@@ -33,6 +38,12 @@ import rikka.shizuku.Shizuku.UserServiceArgs
 import rikka.shizuku.ShizukuProvider
 import java.util.concurrent.atomic.AtomicLong
 
+internal class ShizukuReceiverContext(context: Context) : ContextWrapper(context) {
+    override fun registerReceiver(receiver: BroadcastReceiver?, filter: IntentFilter): Intent? =
+        ContextCompat.registerReceiver(
+            baseContext, receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+}
 
 internal object PrivilegedAccess : CommandExecutor {
     internal enum class Backend {
@@ -101,7 +112,9 @@ internal object PrivilegedAccess : CommandExecutor {
 
         try {
             ShizukuProvider.enableMultiProcessSupport(false)
-            ShizukuProvider.requestBinderForNonProviderProcess(context.applicationContext)
+            ShizukuProvider.requestBinderForNonProviderProcess(
+                ShizukuReceiverContext(context.applicationContext)
+            )
             shizukuMultiProcessEnabled = true
         } catch (error: Throwable) {
             Log.e(LOG_TAG, "Unable to initialize Shizuku in this process", error)
