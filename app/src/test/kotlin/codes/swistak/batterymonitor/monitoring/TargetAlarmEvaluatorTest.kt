@@ -72,6 +72,20 @@ class TargetAlarmEvaluatorTest {
     }
 
     @Test
+    fun `unplugged device cannot arm or fire charging alarm even when crossing eighty`() {
+        val evaluator = TargetAlarmEvaluator()
+
+        for (percent in listOf(79, 80, 85)) {
+            assertFalse(charging(evaluator, percent, pluggedValue = unplugged).chargingLimitReached)
+            assertFalse(evaluator.chargingArmed)
+        }
+        charging(evaluator, 79)
+        assertTrue(evaluator.chargingArmed)
+        assertFalse(charging(evaluator, 85, pluggedValue = unplugged).chargingLimitReached)
+        assertFalse(evaluator.chargingArmed)
+    }
+
+    @Test
     fun `charging limit does not fire when enabled above the target`() {
         val evaluator = TargetAlarmEvaluator()
 

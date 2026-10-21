@@ -227,24 +227,19 @@ class BatteryInfoActivity : AppCompatActivity() {
                 val temperatureUnit = remember(alarmSettingsVersion) {
                     currentSettings.temperatureUnit(getString(R.string.default_temperature_unit))
                 }
-                val chargingTarget = when {
-                    currentSettings.getString(
-                        SettingsContract.KEY_CHARGING_TARGET_MODE,
-                        SettingsContract.CHARGING_TARGET_MODE_AUTOMATIC
-                    ) == SettingsContract.CHARGING_TARGET_MODE_CUSTOM -> currentSettings.getInt(
-                        SettingsContract.KEY_CUSTOM_CHARGING_TARGET,
-                        SettingsContract.DEFAULT_CUSTOM_CHARGING_TARGET
-                    ).coerceIn(1, 100)
-
-                    monitoringState.snapshot?.plugged != 0 -> monitoringState.snapshot?.configuredPrediction?.targetPercent?.takeIf { it in 1..100 }
-
-                    else -> null
-                }
+                val chargingTarget by alarms.chargingTarget.collectAsStateWithLifecycle()
                 val dischargingTarget = currentSettings.getInt(
                     SettingsContract.KEY_DISCHARGING_TARGET,
                     SettingsContract.DEFAULT_DISCHARGING_TARGET
                 ).coerceIn(0, 99)
-                LaunchedEffect(selected) { if (selected == SectionOwner.ALARMS) alarms.refresh() }
+                LaunchedEffect(selected) {
+                    alarms.setTargetActive(
+                        selected == SectionOwner.ALARMS && lifecycle.currentState.isAtLeast(
+                            Lifecycle.State.RESUMED
+                        )
+                    )
+                    if (selected == SectionOwner.ALARMS) alarms.refresh()
+                }
                 val alarmLocale = LocalConfiguration.current.locales[0]
                 SideNavigationShell(
                     selected = selected,
@@ -333,7 +328,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 if (topic == "licenses" || topic?.startsWith("licenses:") == true) {
                                     LicenseScreen(
                                         componentId = topic.substringAfter(':', "")
-                                        .ifEmpty { null },
+                                            .ifEmpty { null },
                                         onOpenComponent = { openHelp("licenses:$it") })
                                 } else {
                                     HelpScreen(topic, onOpenLicenses = { openHelp("licenses") })
@@ -524,7 +519,10 @@ class BatteryInfoActivity : AppCompatActivity() {
     override fun onPostResume() {
         super.onPostResume()
         if (containerReady) showSection(selected)
-        if (::alarms.isInitialized && selected == SectionOwner.ALARMS) alarms.refresh()
+        if (::alarms.isInitialized) {
+            alarms.setTargetActive(selected == SectionOwner.ALARMS)
+            if (selected == SectionOwner.ALARMS) alarms.refresh()
+        }
         dispatchStartupSystemAction()
         continueStartup()
     }
@@ -537,6 +535,7 @@ class BatteryInfoActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+        if (::alarms.isInitialized) alarms.setTargetActive(false)
         if (::startup.isInitialized) startup.onLeavingActivity()
         super.onPause()
     }

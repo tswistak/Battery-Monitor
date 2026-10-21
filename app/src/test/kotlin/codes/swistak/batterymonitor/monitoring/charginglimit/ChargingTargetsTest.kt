@@ -254,6 +254,25 @@ class ChargingTargetsTest {
     }
 
     @Test
+    fun `Samsung configured eighty percent limit survives plug and unplug transitions`() {
+        for (plugged in listOf(false, true, false)) {
+            val state = detect(
+                samsungProfile(), SamsungChargingLimitAdapter, settings = settings(
+                    SettingNamespace.GLOBAL,
+                    "protect_battery",
+                    value("1"),
+                    SettingNamespace.GLOBAL,
+                    "battery_protection_threshold",
+                    value("80")
+                ), battery = battery(plugged)
+            )
+            assertEquals(
+                ResolvedTarget(80, TargetSource.DEVICE), resolveDetectedChargingTarget(state)
+            )
+        }
+    }
+
+    @Test
     fun `Samsung does not guess when the live threshold is absent or fails`() {
         val absent = detect(
             samsungProfile(), SamsungChargingLimitAdapter, settings = settings(

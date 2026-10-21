@@ -33,6 +33,8 @@ import codes.swistak.batterymonitor.alarms.thresholdCollision
 import codes.swistak.batterymonitor.alarms.validStoredAlarm
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.BatteryInfoService
+import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceChargingLimitProvider
+import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import kotlinx.coroutines.Dispatchers
@@ -88,11 +90,30 @@ internal class AlarmsViewModel(
         AlarmsState(draft = restoreDraft(savedState.get<Bundle>("alarm_draft")))
     )
     val state = mutableState.asStateFlow()
+    private val settings = application.getSharedPreferences(
+        SettingsContract.SETTINGS_FILE, Application.MODE_PRIVATE
+    )
+    private val chargingTargetState =
+        AlarmChargingTargetState(preferences = settings, scope = viewModelScope, createProvider = {
+            DeviceChargingLimitProvider(application, privilegedAccessEnabled = {
+                settings.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
+            })
+        }, accessChanges = PrivilegedAccess.accessChanges, prepareAccess = {
+            PrivilegedAccess.initialize(application)
+            PrivilegedAccess.setEnabled(
+                settings.getBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, false)
+            )
+        })
+    val chargingTarget = chargingTargetState.target
+
+    fun setTargetActive(active: Boolean) = chargingTargetState.setActive(active)
+
     private var refreshJob: Job? = null
     val hasUnsavedChanges: Boolean
         get() = state.value.draft != null && state.value.draft != originalDraft
 
     fun refresh() {
+        chargingTargetState.refresh()
         if (state.value.busy) return
         refreshJob?.cancel()
         mutableState.update { it.copy(loading = true) }

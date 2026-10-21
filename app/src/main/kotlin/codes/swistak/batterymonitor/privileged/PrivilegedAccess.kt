@@ -30,6 +30,9 @@ import androidx.core.content.pm.PackageInfoCompat
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
 import codes.swistak.batterymonitor.common.CommandExecutor
 import codes.swistak.batterymonitor.common.RootExecutor
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnBinderDeadListener
 import rikka.shizuku.Shizuku.OnBinderReceivedListener
@@ -75,6 +78,9 @@ internal object PrivilegedAccess : CommandExecutor {
     val accessRevision: Long
         get() = revision.get()
 
+    private val mutableAccessChanges = MutableStateFlow(0L)
+    val accessChanges = mutableAccessChanges.asStateFlow()
+
     private var shizukuListenersRegistered = false
     private var shizukuMultiProcessEnabled = false
     private var shizukuConnection: ShizukuUserServiceConnection? = null
@@ -91,6 +97,7 @@ internal object PrivilegedAccess : CommandExecutor {
             revision.incrementAndGet()
             shizukuUserService = null
             shizukuConnection = null
+            mutableAccessChanges.update { it + 1 }
             shizukuLock.notifyAll()
         }
     }
@@ -100,6 +107,7 @@ internal object PrivilegedAccess : CommandExecutor {
                 revision.incrementAndGet()
                 if (grantResult == PackageManager.PERMISSION_GRANTED) ensureShizukuConnection()
                 else disconnectShizukuConnection()
+                mutableAccessChanges.update { it + 1 }
             }
         }
 
@@ -130,6 +138,7 @@ internal object PrivilegedAccess : CommandExecutor {
             if (enabled != value) {
                 revision.incrementAndGet()
                 enabled = value
+                mutableAccessChanges.update { it + 1 }
             }
         }
         if (enabled) ensureShizukuConnection() else disconnectShizukuConnection()
@@ -152,6 +161,7 @@ internal object PrivilegedAccess : CommandExecutor {
                 revision.incrementAndGet()
                 shizukuUserService = null
                 shizukuConnection = null
+                mutableAccessChanges.update { it + 1 }
                 shizukuLock.notifyAll()
             }
         }
@@ -301,14 +311,19 @@ internal object PrivilegedAccess : CommandExecutor {
                         }
                         shizukuLock.notifyAll()
                     }
-                    if (notifyReady) readyListener?.invoke()
+                    if (notifyReady) {
+                        mutableAccessChanges.update { it + 1 }
+                        readyListener?.invoke()
+                    }
                 },
                 onDisconnected = { disconnected ->
                     synchronized(shizukuLock) {
                         if (shizukuConnection === disconnected) {
+                            val wasConnected = shizukuUserService != null
                             revision.incrementAndGet()
                             shizukuUserService = null
                             shizukuConnection = null
+                            if (wasConnected) mutableAccessChanges.update { it + 1 }
                         }
                         shizukuLock.notifyAll()
                     }
