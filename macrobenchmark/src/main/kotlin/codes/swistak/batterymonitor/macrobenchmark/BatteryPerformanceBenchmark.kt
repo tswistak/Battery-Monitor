@@ -531,8 +531,22 @@ class BatteryPerformanceBenchmark {
                         .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
                 )
                 awaitText("widget_configure_title")
-                scroll(Direction.DOWN)
-                scroll(Direction.UP)
+                awaitText("widget_preview_note")
+                if (device.hasObject(By.pkg(TARGET).scrollable(true))) {
+                    scroll(Direction.DOWN)
+                    scroll(Direction.UP)
+                } else {
+                    // A large viewport can display the complete configuration without overflow.
+                    awaitText("widget_tap_action")
+                    check(
+                        device.wait(
+                            Until.hasObject(
+                                By.pkg(TARGET).text(text("charging_diagnostics_save")).enabled(true)
+                            ), UI_TIMEOUT
+                        )
+                    ) { "Widget configuration save action did not become ready" }
+                    awaitDescription("cancel")
+                }
                 clickDescription("cancel")
                 startActivityAndWait(sectionIntent("current"))
                 awaitDescription("nav_open_menu")
