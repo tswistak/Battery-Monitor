@@ -308,7 +308,7 @@ internal class HistoryViewModel(
                 val loadChart = chartVisible && (forceChart || value.chart == null)
                 val chart = when {
                     loadChart -> repository.chart(value.range, selectedKey)
-                    forceChart && !chartVisible -> null
+                    forceChart -> null
                     else -> value.chart
                 }
                 if (generation != queryGeneration) return@launch
@@ -482,14 +482,12 @@ internal class HistoryViewModel(
                 withContext(Dispatchers.IO) {
                     val context = getApplication<Application>()
                     if (json) {
-                        val text =
-                            DeviceDataBackup.readFromUri(context, uri) ?: error("Unreadable JSON")
+                        val text = DeviceDataBackup.readFromUri(context, uri)
                         DeviceDataBackup.importFromJson(
                             context, text, setOf(DeviceDataType.LOGS), mode
                         )
                     } else {
-                        val text =
-                            CsvLogImporter.readFromUri(context, uri) ?: error("Unreadable CSV")
+                        val text = CsvLogImporter.readFromUri(context, uri)
                         CsvLogImporter.importFromCsv(context, text, mode)
                     }
                 }

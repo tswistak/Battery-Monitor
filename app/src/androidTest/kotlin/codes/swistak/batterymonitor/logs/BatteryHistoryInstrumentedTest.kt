@@ -143,7 +143,7 @@ class BatteryHistoryInstrumentedTest {
     }
 
     @Test
-    fun SQL_filters_match_Kotlin_and_samples_can_be_revealed_by_ID_and_paginated() {
+    fun sql_filters_match_Kotlin_and_samples_can_be_revealed_by_ID_and_paginated() {
         val codes = listOf(-1) + (0..2).flatMap { age ->
             (0..4).flatMap { plugged -> (0..9).map { LogDatabase.encodeStatus(it, plugged, age) } }
         }
@@ -274,7 +274,7 @@ class BatteryHistoryInstrumentedTest {
     }
 
     @Test
-    fun JSON_and_actual_CSV_preserve_samples_and_null_measurements_alongside_legacy_records() {
+    fun json_and_actual_CSV_preserve_samples_and_null_measurements_alongside_legacy_records() {
         val records = listOf(
             observation, observation.copy(
                 status = 215,
@@ -374,7 +374,7 @@ class BatteryHistoryInstrumentedTest {
         database.close()
         context.getDatabasePath("logs.db").delete()
         SQLiteDatabase.openOrCreateDatabase(context.getDatabasePath("logs.db"), null).use {
-            it.execSQL("CREATE TABLE logs (_id INTEGER PRIMARY KEY,status INTEGER,charge INTEGER,time INTEGER,temperature INTEGER,voltage INTEGER,current INTEGER)")
+            it.execSQL("CREATE TABLE logs (_id INTEGER PRIMARY KEY,status INTEGER,charge INTEGER,time INTEGER,temperature INTEGER,voltage INTEGER,\"current\" INTEGER)")
             it.execSQL("INSERT INTO logs VALUES (42,100,50,1000,NULL,4000,NULL)")
             it.version = 5
         }
@@ -458,7 +458,7 @@ class BatteryHistoryInstrumentedTest {
     }
 
     @Test
-    fun CSV_appends_preserve_existing_rows_headers_and_sample_semantics_for_every_supported_format() {
+    fun csv_appends_preserve_existing_rows_headers_and_sample_semantics_for_every_supported_format() {
         for (columns in listOf(7, 8, 10)) {
             val header = listOf(
                 "Date",

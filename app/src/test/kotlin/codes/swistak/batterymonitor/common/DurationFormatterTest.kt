@@ -16,6 +16,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class DurationFormatterTest {
+    // JUnit expects the expected Pair first and the actual roundedDaysAndHours result second.
+    @Suppress("KotlinMisorderedAssertEqualsArguments")
     @Test
     fun `day and hour display rounds minutes without changing stored duration`() {
         assertEquals(1 to 3, DurationFormatter.roundedDaysAndHours(1, 3, 15))

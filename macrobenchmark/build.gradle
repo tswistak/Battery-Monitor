@@ -1,9 +1,9 @@
 apply plugin: 'com.android.test'
 
 android {
-    namespace 'codes.swistak.batterymonitor.macrobenchmark'
+    namespace = 'codes.swistak.batterymonitor.macrobenchmark'
     compileSdk 37
-    targetProjectPath ':app'
+    targetProjectPath = ':app'
     experimentalProperties['android.experimental.self-instrumenting'] = true
 
     defaultConfig {
@@ -23,12 +23,12 @@ android {
     buildTypes {
         profile {
             debuggable true
-            signingConfig signingConfigs.profile
+            signingConfig = signingConfigs.profile
             matchingFallbacks = ['release']
         }
     }
     testOptions {
-        animationsDisabled false
+        animationsDisabled = false
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

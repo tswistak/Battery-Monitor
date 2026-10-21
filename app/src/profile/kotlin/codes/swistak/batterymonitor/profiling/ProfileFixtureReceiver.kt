@@ -15,6 +15,7 @@
 */
 package codes.swistak.batterymonitor.profiling
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -22,6 +23,7 @@ import android.content.Intent
 import android.os.BatteryManager
 import android.os.Bundle
 import android.util.Log
+import androidx.core.content.pm.PackageInfoCompat
 import codes.swistak.batterymonitor.app.StartupDialogViewModel
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
@@ -108,10 +110,8 @@ class ProfileFixtureReceiver : BroadcastReceiver() {
                 .putString(SettingsContract.KEY_TEMPERATURE_UNIT, "celsius")
                 .putString(SettingsContract.KEY_AUTOSTART, "auto").commit()
         )
-        @Suppress("DEPRECATION") val installed =
-            context.packageManager.getPackageInfo(context.packageName, 0)
-        val version = if (android.os.Build.VERSION.SDK_INT >= 28) installed.longVersionCode
-        else installed.versionCode.toLong()
+        val installed = context.packageManager.getPackageInfo(context.packageName, 0)
+        val version = PackageInfoCompat.getLongVersionCode(installed)
         check(
             context.getSharedPreferences(SettingsContract.SP_MAIN_FILE, 0).edit().clear()
                 .putBoolean(SettingsContract.KEY_FIRST_RUN, false)
@@ -124,8 +124,11 @@ class ProfileFixtureReceiver : BroadcastReceiver() {
         check(context.getSharedPreferences(Predictor.STORE_NAME, 0).edit().clear().commit())
         check(MonitoringDesiredState.write(context, monitoring))
         context.deleteDatabase("alarms.db")
-        context.getSharedPreferences("profile_fixture", 0).edit().clear()
-            .putLong("anchorMillis", anchor).putInt("appended", 0).commit().also { check(it) }
+        // The next process needs durable fixture state; KTX edit discards commit failures.
+        @SuppressLint("UseKtx") val fixtureCommitted =
+            context.getSharedPreferences("profile_fixture", 0).edit().clear()
+                .putLong("anchorMillis", anchor).putInt("appended", 0).commit()
+        check(fixtureCommitted)
         val records = (0 until SAMPLE_COUNT).mapNotNull { index ->
             // A bounded missing-data interval and reboot exercise chart segmentation.
             if (index in 10_000..10_029) return@mapNotNull null
@@ -189,7 +192,10 @@ class ProfileFixtureReceiver : BroadcastReceiver() {
         } finally {
             database.close()
         }
-        check(fixture.edit().putInt("appended", sequence).commit())
+        // Verify durable sequencing before reporting success; KTX edit discards commit failures.
+        @SuppressLint("UseKtx") val fixtureCommitted =
+            fixture.edit().putInt("appended", sequence).commit()
+        check(fixtureCommitted)
         return Bundle().apply { putInt("appended", sequence) }
     }
 

@@ -40,6 +40,6 @@ open class BatteryInfoAppWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
-        BatteryInfoService.onWidgetDeleted(context, appWidgetIds)
+        BatteryInfoService.onWidgetDeleted(appWidgetIds)
     }
 }

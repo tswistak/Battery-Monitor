@@ -121,7 +121,7 @@ class PersistentFragment : Fragment() {
     private class MessageHandler(var pf: PersistentFragment) : Handler(Looper.getMainLooper()) {
         override fun handleMessage(incoming: Message) {
             if (!pf.serviceConnected) {
-                Log.i(LOG_TAG, "serviceConected is false; ignoring message: $incoming")
+                Log.i(LOG_TAG, "serviceConnected is false; ignoring message: $incoming")
                 return
             }
 
@@ -152,11 +152,11 @@ class PersistentFragment : Fragment() {
         updateResources()
     }
 
-    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setRetainInstance(true)
+        // Retain the service binding across activity recreation until it moves to a ViewModel.
+        @Suppress("DEPRECATION") setRetainInstance(true)
 
         serviceConnection = BatteryInfoService.RemoteConnection(
             messenger,
@@ -283,6 +283,7 @@ class PersistentFragment : Fragment() {
                 runCatching {
                     val data =
                         requireNotNull(message.data.getBundle(MonitoringSnapshot.FIELD_PREDICTOR_DATA))
+                    // Predictor snapshots contain mixed primitive types, so typed getters cannot decode them generically.
                     @Suppress("DEPRECATION") Predictor.readStoredState(
                         data.keySet().associateWith { data[it] })
                 }.fold(result::complete, result::completeExceptionally)

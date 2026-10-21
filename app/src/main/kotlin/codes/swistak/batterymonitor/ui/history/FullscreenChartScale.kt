@@ -25,7 +25,7 @@ import kotlin.math.pow
 internal fun fullscreenDisplayValue(
     value: Double, metric: HistoryMetric, fahrenheit: Boolean, currentMultiplier: Int
 ): Double = when (metric) {
-    HistoryMetric.TEMPERATURE if fahrenheit -> value * 1.8 + 32
+    HistoryMetric.TEMPERATURE -> if (fahrenheit) value * 1.8 + 32 else value
     HistoryMetric.CURRENT, HistoryMetric.POWER -> value * currentMultiplier
     else -> value
 }
@@ -56,7 +56,7 @@ internal fun fullscreenRawValue(
         10.0.pow(value).coerceIn(Double.MIN_VALUE, Double.MAX_VALUE)
     } else value
     return when (metric) {
-        HistoryMetric.TEMPERATURE if fahrenheit -> (displayed - 32.0) / 1.8
+        HistoryMetric.TEMPERATURE -> if (fahrenheit) (displayed - 32.0) / 1.8 else displayed
         HistoryMetric.CURRENT, HistoryMetric.POWER -> {
             require(currentMultiplier != 0)
             displayed / currentMultiplier

@@ -16,16 +16,13 @@ import org.junit.Test
 
 class VitalSignsDetailsFormatterTest {
     private val entries = listOf(
-        "Health" to "Healthy",
-        "Temperature" to "25.0°C",
-        "Voltage" to "4.1V"
+        "Health" to "Healthy", "Temperature" to "25.0°C", "Voltage" to "4.1V"
     )
 
     @Test
     fun `collapsed line joins values without labels`() {
         assertEquals(
-            "Healthy / 25.0°C / 4.1V",
-            VitalSignsDetailsFormatter.collapsedLine(entries)
+            "Healthy / 25.0°C / 4.1V", VitalSignsDetailsFormatter.collapsedLine(entries)
         )
     }
 
@@ -33,13 +30,13 @@ class VitalSignsDetailsFormatterTest {
     fun `detailed text shows one labeled value per line in order`() {
         assertEquals(
             "Health: Healthy\nTemperature: 25.0°C\nVoltage: 4.1V",
-            VitalSignsDetailsFormatter.detailedText(entries, "%1\$s: %2\$s")
+            VitalSignsDetailsFormatter.detailedText(entries, $$"%1$s: %2$s")
         )
     }
 
     @Test
     fun `empty entries produce empty texts`() {
         assertEquals("", VitalSignsDetailsFormatter.collapsedLine(emptyList()))
-        assertEquals("", VitalSignsDetailsFormatter.detailedText(emptyList(), "%1\$s: %2\$s"))
+        assertEquals("", VitalSignsDetailsFormatter.detailedText(emptyList(), $$"%1$s: %2$s"))
     }
 }

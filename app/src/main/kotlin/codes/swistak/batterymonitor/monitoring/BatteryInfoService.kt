@@ -51,6 +51,7 @@ import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.IntentCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.AlarmRule
@@ -258,7 +259,7 @@ class BatteryInfoService : Service() {
             }
         }
 
-        fun onWidgetDeleted(context: Context?, appWidgetIds: IntArray) {
+        fun onWidgetDeleted(appWidgetIds: IntArray) {
             for (i in appWidgetIds.indices) {
                 widgetIds.remove(appWidgetIds[i])
             }
@@ -310,9 +311,9 @@ class BatteryInfoService : Service() {
     }
     private val currentAcquisition = CurrentAcquisition(
         readNow = {
-            BatteryCurrent.readWithSource(
-                false, readPrivileged = { null })
-        },
+        BatteryCurrent.readWithSource(
+            false, readPrivileged = { null })
+    },
         readAverage = { BatteryCurrent.readWithSource(true, readPrivileged = { null }) },
         executor = currentWorker,
         deliver = { callback -> mHandler.post { callback() } })
@@ -619,14 +620,9 @@ class BatteryInfoService : Service() {
         restartChipSwitcher()
 
         if (intent?.action == ACTION_DIAGNOSTICS_CHECK) {
-            @Suppress("DEPRECATION") val receiver =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    intent.getParcelableExtra(
-                        EXTRA_DIAGNOSTICS_RECEIVER, ResultReceiver::class.java
-                    )
-                } else {
-                    intent.getParcelableExtra(EXTRA_DIAGNOSTICS_RECEIVER)
-                }
+            val receiver = IntentCompat.getParcelableExtra(
+                intent, EXTRA_DIAGNOSTICS_RECEIVER, ResultReceiver::class.java
+            )
             receiver?.send(
                 DIAGNOSTICS_RESULT_OK, Bundle().apply {
                     putLong(DIAGNOSTICS_RESULT_TIMESTAMP, SystemClock.elapsedRealtime())
@@ -1462,8 +1458,10 @@ class BatteryInfoService : Service() {
         )
     }
 
-    private fun contentPreference(key: String?, defaultValue: String?): String {
-        val content = settings.getString(key, defaultValue)
+    private fun contentPreference(): String {
+        val content = settings.getString(
+            SettingsContract.KEY_ICON_CONTENT, res.getString(R.string.default_icon_content)
+        )
         return if (CONTENT_TEMPERATURE == content) CONTENT_TEMPERATURE else CONTENT_PERCENTAGE
     }
 
@@ -1752,9 +1750,7 @@ class BatteryInfoService : Service() {
 
     @SuppressLint("DiscouragedApi")
     private fun iconForLegacyMainNotification(): Int {
-        val content = contentPreference(
-            SettingsContract.KEY_ICON_CONTENT, res.getString(R.string.default_icon_content)
-        )
+        val content = contentPreference()
         val indicateCharging = settings.getBoolean(SettingsContract.KEY_INDICATE_CHARGING, true)
         val showUnit = settings.getBoolean(SettingsContract.KEY_SHOW_ICON_UNIT, true)
         val clampedValue = max(0, min(maxIconContentValue(content), iconContentValue(content)))

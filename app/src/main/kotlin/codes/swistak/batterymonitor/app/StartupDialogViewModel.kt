@@ -31,8 +31,8 @@ internal class StartupDialogViewModel(
         SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
     )
 
-    @Suppress("DEPRECATION")
     private val installed = application.packageManager.getPackageInfo(application.packageName, 0)
+
     val versionCode = PackageInfoCompat.getLongVersionCode(installed)
     val versionName: String = installed.versionName.orEmpty()
 

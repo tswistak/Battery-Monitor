@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.settings
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 
@@ -29,11 +30,12 @@ internal object SettingsSnapshot {
         }
     }
 
-    @Suppress("DEPRECATION")
     fun apply(preferences: SharedPreferences, snapshot: Bundle): Boolean {
-        val editor = preferences.edit().clear()
+        // KTX edit discards commit's Boolean; callers must detect a failed settings restore.
+        @SuppressLint("UseKtx") val editor = preferences.edit().clear()
         for (key in snapshot.keySet()) {
-            when (val value = snapshot.get(key)) {
+            // Preference values have heterogeneous types that must be inspected before choosing a setter.
+            when (@Suppress("DEPRECATION") val value = snapshot.get(key)) {
                 is Boolean -> editor.putBoolean(key, value)
                 is Float -> editor.putFloat(key, value)
                 is Int -> editor.putInt(key, value)

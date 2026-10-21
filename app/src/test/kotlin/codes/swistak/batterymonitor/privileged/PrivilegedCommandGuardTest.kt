@@ -19,6 +19,7 @@ import codes.swistak.batterymonitor.common.CommandExecutor
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
+import java.util.concurrent.atomic.AtomicLong
 
 class PrivilegedCommandGuardTest {
     @Test
@@ -55,20 +56,20 @@ class PrivilegedCommandGuardTest {
 
     @Test
     fun `simulated Binder death revision discards late output and prevents later collection commands`() {
-        var revision = 0L
-        val capturedRevision = revision
-        val allowed = { revision == capturedRevision }
+        val revision = AtomicLong()
+        val capturedRevision = revision.get()
+        val allowed = { revision.get() == capturedRevision }
 
         val output = whilePrivilegedAccessAllowed(allowed) {
             // Simulate Binder death's revision change without loading the Android singleton.
-            revision++
+            revision.incrementAndGet()
             "late Binder output"
         }
         val executor = GuardedPrivilegedCommandExecutor(object : CommandExecutor {
             override fun run(command: String): String = error("Stale revision launched a command")
         }, allowed)
 
-        assertEquals(1L, revision)
+        assertEquals(1L, revision.get())
         assertNull(output)
         assertNull(executor.run("ls /sys/class/power_supply"))
         assertNull(executor.runRaw("dumpsys battery"))

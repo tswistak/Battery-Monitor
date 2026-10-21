@@ -278,12 +278,8 @@ internal class PredictorCore(
     }
 
     private fun predictionIfPartial(): Long {
-        return predictionIfPartialIs(true)
-    }
-
-    private fun predictionIfPartialIs(supposed: Boolean): Long {
         val oldPartial = usePartial
-        usePartial = supposed
+        usePartial = true
         val ret = prediction(chargingTargetPercent = 100, dischargingTargetPercent = 0)
         usePartial = oldPartial
         return ret
@@ -419,8 +415,6 @@ internal class PredictorCore(
 
         var i = start
         while (i != tsHead) {
-            val potentialMs: Double
-
             // 20170803:
             if (i < 0) i = 0
             if (i > 100) i = 100
@@ -429,9 +423,9 @@ internal class PredictorCore(
             // dir_inc is either 1 (discharging) or -1 (charging)
             // if (i + dir_inc) is outside that range, the first branch is taken
             // so an index out of range in the second branch has to be from i itself
-            if ((i == start && usePartial) || (i + dirInc > 100) || (i + dirInc < 0)) potentialMs =
-                (now - timestamps[curInfo!!.percent]).toDouble()
-            else potentialMs = (timestamps[i] - timestamps[i + dirInc]).toDouble()
+            val potentialMs =
+                if ((i == start && usePartial) || (i + dirInc > 100) || (i + dirInc < 0)) (now - timestamps[curInfo!!.percent]).toDouble()
+                else (timestamps[i] - timestamps[i + dirInc]).toDouble()
 
             if (potentialMs > neededMs) {
                 totalPoints += neededMs / potentialMs
@@ -460,11 +454,9 @@ internal class PredictorCore(
 
         var i = start
         while (i != tsHead && neededPoints > 0) {
-            val newMs: Double
-
-            if ((i == start && usePartial) || (i + dirInc > 100) || (i + dirInc < 0)) newMs =
-                (now - timestamps[curInfo!!.percent]).toDouble()
-            else newMs = (timestamps[i] - timestamps[i + dirInc]).toDouble()
+            val newMs =
+                if ((i == start && usePartial) || (i + dirInc > 100) || (i + dirInc < 0)) (now - timestamps[curInfo!!.percent]).toDouble()
+                else (timestamps[i] - timestamps[i + dirInc]).toDouble()
 
             totalMs += newMs
             neededPoints -= 1.0

@@ -166,6 +166,7 @@ internal object CsvLogImporter {
         }
     }
 
+    // Historical CSV labels need each bundled locale; releases ship a universal APK.
     @SuppressLint("AppBundleLocaleChanges")
     private fun localizedStatusCodes(context: Context): Map<String, Int> = buildMap {
         for (localeTag in supportedLocaleTags) {
@@ -204,6 +205,7 @@ internal object CsvLogImporter {
         }
     }
 
+    // Locale contexts recognize historical timestamps without changing the app locale.
     @SuppressLint("AppBundleLocaleChanges")
     private fun timestampFormats(context: Context): List<DateFormat> {
         val formats = mutableListOf<DateFormat>()

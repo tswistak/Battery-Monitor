@@ -262,7 +262,7 @@ class GeneralBackupInstrumentedTest {
                     "metadata.json" to metadata, "settings.json" to settings, "directory/" to ""
                 )
             ),
-            duplicateEntryArchive(metadata, settings)
+            duplicateEntryArchive(metadata)
         )
         for ((index, archive) in invalidArchives.withIndex()) {
             assertThrows(
@@ -564,7 +564,8 @@ class GeneralBackupInstrumentedTest {
         return bytes.toByteArray()
     }
 
-    private fun duplicateEntryArchive(metadata: String, settings: String): ByteArray {
+    private fun duplicateEntryArchive(metadata: String): ByteArray {
+        val settings = """{"version":4,"settings":{}}"""
         val duplicateName = "settings2json".toByteArray(Charsets.UTF_8)
         val actualName = "settings.json".toByteArray(Charsets.UTF_8)
         val bytes = zip(

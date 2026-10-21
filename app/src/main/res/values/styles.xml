@@ -51,13 +51,11 @@
 
     <color name="settings_accent">@color/accent</color>
     <color name="accent">@color/dc_sat_light_blue</color>
-    <color name="col2020">#3b7bda</color>
 
     <color name="windowBackground">#fafafa</color>
     <color name="widgetTextColor">#111</color>
     <color name="helpWindowBackground">@color/windowBackground</color>
 
-    <color name="dc_light_blue">#586fb8</color>
     <color name="dc_light2_blue">#5773c9</color>
     <color name="dc_lighter_blue">#8a9deb</color>
     <color name="dc_sat_light_blue">#3a5ab8</color>

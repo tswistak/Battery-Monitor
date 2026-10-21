@@ -44,6 +44,7 @@ class ChipContentOrderTest {
 
     @Test
     fun `missing stored order uses the default order`() {
-        assertEquals(SettingsContract.ALL_CHIP_CONTENT, ChipContentOrder.parse(null))
+        val expected = SettingsContract.ALL_CHIP_CONTENT
+        assertEquals(expected, ChipContentOrder.parse(null))
     }
 }

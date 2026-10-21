@@ -16,6 +16,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 
+// KTX edit discards the commit result needed to report persistence failures.
 @SuppressLint("UseKtx")
 internal class WidgetConfigurationStore(private val preferences: SharedPreferences) {
     constructor(context: Context) : this(

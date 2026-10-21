@@ -334,10 +334,10 @@ internal class ChargingLimitDiagnostics(
     private fun buildPowerSupplyBatchCommand(absolutePaths: List<String>): String = buildString {
         append("for f in ")
         append(absolutePaths.joinToString(" "))
-        append("; do printf '%s\\t' \"\$f\"; ")
-        append("if [ -r \"\$f\" ]; then value=\$(head -c 512 \"\$f\" 2>/dev/null); ")
-        append("code=\$?; if [ \"\$code\" -eq 0 ]; then ")
-        append("printf 'OK\\t%s\\n' \"\$value\"; else printf 'FAILED\\n'; fi; ")
+        append($$"; do printf '%s\\t' \"$f\"; ")
+        append($$"if [ -r \"$f\" ]; then value=$(head -c 512 \"$f\" 2>/dev/null); ")
+        append($$"code=$?; if [ \"$code\" -eq 0 ]; then ")
+        append($$"printf 'OK\\t%s\\n' \"$value\"; else printf 'FAILED\\n'; fi; ")
         append("else printf 'FAILED\\n'; fi; done")
     }
 
@@ -426,7 +426,7 @@ internal class ChargingLimitDiagnostics(
     }
 
     private fun wrapCommandWithExitStatus(command: String): String =
-        "{ $command; }; code=\$?; printf '\\n${COMMAND_EXIT_MARKER}%s\\n' \"\$code\""
+        $$"{ $$command; }; code=$?; printf '\\n$$COMMAND_EXIT_MARKER%s\\n' \"$code\""
 
     private fun ReadResult<String>.statusText(): String = when (this) {
         is ReadResult.Value -> "OK [${source.name}]"
@@ -496,8 +496,7 @@ internal class ChargingLimitDiagnostics(
         )
 
         private fun sanitizeKnownProperty(value: String): String =
-            Regex("(?i)(?:v)?[0-9]+(?:\\.[0-9]+)+|[0-9]+").find(value)?.value
-                ?: "<present:redacted>"
+            Regex("(?i)v?[0-9]+(?:\\.[0-9]+)+|[0-9]+").find(value)?.value ?: "<present:redacted>"
     }
 }
 

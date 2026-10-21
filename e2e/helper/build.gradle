@@ -15,17 +15,20 @@
 */
 apply plugin: 'com.android.application'
 
-configurations.configureEach {
+// Keep the historical helper APK platform-only without removing Kotlin from lint's own tools.
+configurations.matching { it.name.endsWith('RuntimeClasspath') }.configureEach {
     exclude group: 'org.jetbrains.kotlin'
     exclude group: 'org.jetbrains'
 }
 
 android {
-    namespace 'codes.swistak.batterymonitor.e2ehelper'
+    namespace = 'codes.swistak.batterymonitor.e2ehelper'
     compileSdk 37
     defaultConfig {
         applicationId 'codes.swistak.batterymonitor.e2ehelper'
         minSdk 26
+        // Preserve API 35 compatibility behavior in the historical instrumentation helper.
+        //noinspection OldTargetApi
         targetSdk 35
         versionCode 1
         versionName '1'
@@ -44,7 +47,7 @@ android {
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.e2e
+            signingConfig = signingConfigs.e2e
         }
     }
 }

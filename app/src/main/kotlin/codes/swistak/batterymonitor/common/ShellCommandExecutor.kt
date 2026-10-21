@@ -45,6 +45,8 @@ internal class RootExecutor(
             factory = { RootShellSession() },
             isMainThread = { Looper.myLooper() != null && Looper.myLooper() == Looper.getMainLooper() })
 
+        // The profile source set records session reuse; the debug variant has no caller.
+        @Suppress("unused")
         val sessionOpenCount: Long get() = RootShellSession.openCount.get()
 
         fun setEnabled(enabled: Boolean, onChanged: () -> Unit = {}) =

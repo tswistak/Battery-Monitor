@@ -1,4 +1,5 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:initialLayout="@layout/full_app_widget"
     android:minWidth="250dp"
     android:minHeight="40dp"
@@ -8,4 +9,5 @@
     android:previewLayout="@layout/full_widget_preview"
     android:resizeMode="horizontal"
     android:updatePeriodMillis="0"
-    android:widgetCategory="home_screen|keyguard" />
+    android:widgetCategory="home_screen|keyguard"
+    tools:targetApi="31" />

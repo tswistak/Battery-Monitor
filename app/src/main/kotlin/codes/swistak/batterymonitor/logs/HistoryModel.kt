@@ -21,8 +21,7 @@ internal data class HistoryRangeState(val start: Long, val end: Long) {
     val exportThrough: Long get() = if (end == Long.MAX_VALUE) end else end - 1
     val endOperator: String get() = if (end == Long.MAX_VALUE) "<=" else "<"
 
-    fun contains(time: Long): Boolean =
-        time >= start && (time < end || (end == Long.MAX_VALUE && time == end))
+    fun contains(time: Long): Boolean = time >= start && (time < end || end == Long.MAX_VALUE)
 
     companion object {
         fun lastHours(hours: Int, now: Long = System.currentTimeMillis()) =

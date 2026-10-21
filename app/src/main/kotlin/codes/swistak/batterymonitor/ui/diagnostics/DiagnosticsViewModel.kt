@@ -147,7 +147,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         }
 
     private fun publish(change: DiagnosticsState.() -> DiagnosticsState) {
-        mutableState.value = state.value.change()
+        mutableState.value = change(state.value)
     }
 
     private fun showStatus(resource: Int) {
@@ -351,14 +351,10 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         }
     }
 
-    @Suppress("USELESS_ELVIS")
     private fun bindUserService(generation: Int) {
         if (!canLoadPrivileged(generation) || activeConnection != null) return
 
-        val appContext = getApplication<Application>() ?: run {
-            finishLoading(generation)
-            return
-        }
+        val appContext = getApplication<Application>()
         val connection = ShizukuUserServiceConnection(
             appContext,
             AdvancedStatsUserService::class.java,

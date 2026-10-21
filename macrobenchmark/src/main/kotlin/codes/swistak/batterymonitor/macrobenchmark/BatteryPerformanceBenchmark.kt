@@ -695,7 +695,8 @@ class BatteryPerformanceBenchmark {
         val actionDescription = text(label)
         val overflowDescription = text("history_chart_more")
         // Wait through fullscreen Activity creation before choosing its responsive toolbar variant.
-        val descriptions = Pattern.compile(
+        // Runtime action and overflow descriptions are distinct, although both are unknown to the IDE.
+        @Suppress("RegExpDuplicateAlternationBranch") val descriptions = Pattern.compile(
             "${Pattern.quote(actionDescription)}|${Pattern.quote(overflowDescription)}"
         )
         val control = device.wait(
@@ -777,7 +778,6 @@ class BatteryPerformanceBenchmark {
         else device.pressHome()
     }
 
-    @Suppress("DEPRECATION")
     private fun dismissKeyboard() {
         val windows = instrumentation.uiAutomation.windows
         try {
@@ -787,6 +787,7 @@ class BatteryPerformanceBenchmark {
         }
     }
 
+    // Accessibility nodes still require recycling on Android 12L and older.
     @Suppress("DEPRECATION")
     private fun accessibilityAction(target: UiObject2, action: Int, arguments: Bundle? = null) {
         val bounds = target.visibleBounds
@@ -830,6 +831,7 @@ class BatteryPerformanceBenchmark {
         }
     }
 
+    // The copy constructor requires API 30; pooled nodes also need recycling before API 33.
     @Suppress("DEPRECATION")
     private fun findAccessibilityNode(
         node: AccessibilityNodeInfo, matches: (AccessibilityNodeInfo) -> Boolean
@@ -862,7 +864,7 @@ class BatteryPerformanceBenchmark {
             "text",
             ArrayList(
                 device.findObjects(By.pkg(TARGET).textStartsWith("")).mapNotNull { it.text }
-                .filter { it.isNotBlank() }.distinct()
+                    .filter { it.isNotBlank() }.distinct()
             )
         )
     })

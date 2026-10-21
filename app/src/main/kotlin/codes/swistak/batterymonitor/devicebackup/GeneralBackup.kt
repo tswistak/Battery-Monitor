@@ -218,6 +218,7 @@ internal object GeneralBackup {
         }
     }
 
+    // KTX edit discards the commit result required before marking settings restored.
     @SuppressLint("UseKtx")
     fun restore(
         context: Context,

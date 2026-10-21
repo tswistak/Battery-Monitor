@@ -87,8 +87,7 @@ class StartupDialogsInstrumentedTest {
         )
     private val installedVersion: Long
         get() {
-            @Suppress("DEPRECATION") val installed =
-                context.packageManager.getPackageInfo(context.packageName, 0)
+            val installed = context.packageManager.getPackageInfo(context.packageName, 0)
             return PackageInfoCompat.getLongVersionCode(installed)
         }
 

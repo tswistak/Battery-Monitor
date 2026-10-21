@@ -69,6 +69,7 @@ internal object MonitoringDesiredState {
             }
             if (mirrorPreferences) {
                 try {
+                    // KTX edit discards the commit result used to diagnose a failed mirror.
                     @SuppressLint("UseKtx") val committed = context.getSharedPreferences(
                         SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
                     ).edit().putBoolean(BatteryInfoService.KEY_SERVICE_DESIRED, value)

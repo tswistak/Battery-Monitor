@@ -85,6 +85,7 @@ internal object ProfileHistoryObserver : Application.ActivityLifecycleCallbacks 
             .put("activityStage", activityStage).put("fullscreenStage", fullscreenStage)
             .put("resumedCallbacks", resumed).put("stoppedCallbacks", stopped)
 
+        // Android still exposes the caller's own services for debugging.
         @Suppress("DEPRECATION") val service =
             (context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).getRunningServices(
                 100

@@ -14,6 +14,7 @@
 package codes.swistak.batterymonitor.app
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -315,13 +316,15 @@ class BatteryInfoActivity : AppCompatActivity() {
                     Box(modifier) {
                         AndroidView(
                             factory = {
-                                layoutInflater.inflate(R.layout.compose_section_container, null)
-                                    .apply {
-                                        post {
-                                            containerReady = true
-                                            showSection(selected)
-                                        }
+                                // AndroidView supplies sizing; XML inflation also reattaches restored fragments.
+                                @SuppressLint("InflateParams") val container =
+                                    layoutInflater.inflate(R.layout.compose_section_container, null)
+                                container.apply {
+                                    post {
+                                        containerReady = true
+                                        showSection(selected)
                                     }
+                                }
                             }, modifier = Modifier.fillMaxSize()
                         )
                         if (selected == SectionOwner.HELP) {
@@ -330,7 +333,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 if (topic == "licenses" || topic?.startsWith("licenses:") == true) {
                                     LicenseScreen(
                                         componentId = topic.substringAfter(':', "")
-                                            .ifEmpty { null },
+                                        .ifEmpty { null },
                                         onOpenComponent = { openHelp("licenses:$it") })
                                 } else {
                                     HelpScreen(topic, onOpenLicenses = { openHelp("licenses") })

@@ -37,8 +37,9 @@ class AutoLogExportSchedulerTest {
     @Test
     fun `scheduling uses the same hour intervals as log retention`() {
         val start = 1_700_000_000_000L
+        val expected = start + TimeUnit.HOURS.toMillis(96)
         assertEquals(
-            start + TimeUnit.HOURS.toMillis(96), AutoLogExportScheduler.nextOccurrence(
+            expected, AutoLogExportScheduler.nextOccurrence(
                 start, AutoLogExportFrequency.FOUR_DAYS
             )
         )

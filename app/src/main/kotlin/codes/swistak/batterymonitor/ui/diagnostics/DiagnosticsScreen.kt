@@ -875,6 +875,8 @@ internal fun diagnosticTime(time: Long): String =
         .format(Date(time))
 
 
+// This SDK exposes primaryClip as read-only to the Kotlin compiler.
+@Suppress("UsePropertyAccessSyntax")
 internal fun copyDiagnostic(context: Context, title: String, text: String) {
     (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(
         ClipData.newPlainText(title, text)

@@ -88,8 +88,11 @@ class RootShellProtocolTest {
             """printf '  Zażółć "quoted"\r\n'""" to "  Zażółć \"quoted\"\r\n",
             "printf '%s' '  Zażółć 😀\r\n\t'" to "  Zażółć 😀\r\n\t"
         )) {
+            // Keep the parent shell alive until its background stub has emitted the supervisor.
             val supervisor = shell(
-                $$"setsid() { printf '%s' \"$3\"; }\n" + RootShellProtocol.command(command, token)
+                $$"setsid() { printf '%s' \"$3\"; }\n" + RootShellProtocol.command(
+                    command, token
+                ) + "wait\n"
             ).toString(Charsets.UTF_8)
             val commandStart = supervisor.indexOf("sh -c ")
             val commandEnd = supervisor.indexOf("\n__bm_status=", commandStart)

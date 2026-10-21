@@ -90,6 +90,7 @@ internal data class MonitoringSnapshot(
 
         fun fromBundle(bundle: Bundle): MonitoringSnapshot {
             val info = BatteryInfo().apply { loadBundle(bundle) }
+            // Predictor snapshots contain mixed primitive types, so typed getters cannot decode them generically.
             @Suppress("DEPRECATION") val predictorData =
                 bundle.getBundle(FIELD_PREDICTOR_DATA)?.let { data ->
                     Predictor.readStoredState(data.keySet().associateWith { data[it] })

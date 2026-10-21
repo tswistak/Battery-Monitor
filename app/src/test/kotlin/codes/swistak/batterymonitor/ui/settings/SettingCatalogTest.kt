@@ -232,7 +232,7 @@ class SettingCatalogTest {
         )
         for (sdk in listOf(26, 33, 35, 36, 37)) {
             val visible = controls.filter { SettingCatalog.isVisible(it, sdk, "automatic") }.toSet()
-            assertEquals("SDK $sdk", if (sdk >= 36) controls else emptySet<String>(), visible)
+            assertEquals("SDK $sdk", if (sdk >= 36) controls else emptySet(), visible)
             assertTrue(SettingCatalog.isVisible("icon_content", sdk, "automatic"))
             assertTrue(SettingCatalog.isVisible("expanded_notification_details", sdk, "automatic"))
         }

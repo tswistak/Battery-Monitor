@@ -7,8 +7,8 @@
 */
 package codes.swistak.batterymonitor.diagnostics
 
-import android.content.ComponentName
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -82,6 +82,7 @@ internal object BackgroundSettingsNavigator {
         return openPerAppBatterySettings(context) || openApplicationDetails(context)
     }
 
+    // Continuous monitoring needs this exemption, requested only by an explicit user action.
     @SuppressLint("BatteryLife")
     fun openBatteryOptimization(context: Context): Boolean {
         val appUri = "package:${context.packageName}".toUri()

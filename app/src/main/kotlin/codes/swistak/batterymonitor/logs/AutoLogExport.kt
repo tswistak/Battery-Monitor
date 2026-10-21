@@ -216,8 +216,7 @@ internal object AutoLogExporter {
     private fun exportBeforeLogDeletion(
         context: Context, rescheduleAfterExport: Boolean
     ): Boolean {
-        if (!isEnabled(context)) return true
-        return try {
+        return !isEnabled(context) || try {
             export(context)
             if (rescheduleAfterExport) AutoLogExportScheduler.reschedule(context)
             true
@@ -288,7 +287,7 @@ internal object AutoLogExporter {
         context: Context, uri: Uri, format: LogExportFormat, records: List<LogRecord>
     ) {
         context.contentResolver.openOutputStream(uri, "w")?.use { output ->
-            write(context, output, format, records, includeCsvHeader = true)
+            write(context, output, format, records)
         } ?: error("Could not open automatic export file")
     }
 
@@ -311,20 +310,16 @@ internal object AutoLogExporter {
             emptyList()
         }
         context.contentResolver.openOutputStream(uri, "w")?.use { output ->
-            write(context, output, format, existingRecords + records, includeCsvHeader = true)
+            write(context, output, format, existingRecords + records)
         } ?: error("Could not open automatic export file")
     }
 
     private fun write(
-        context: Context,
-        output: OutputStream,
-        format: LogExportFormat,
-        records: List<LogRecord>,
-        includeCsvHeader: Boolean
+        context: Context, output: OutputStream, format: LogExportFormat, records: List<LogRecord>
     ) {
         when (format) {
             LogExportFormat.CSV -> LogExport.writeCsv(
-                context, output, records, includeCsvHeader
+                context, output, records, includeHeader = true
             )
 
             LogExportFormat.JSON -> output.write(

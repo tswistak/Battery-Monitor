@@ -148,7 +148,7 @@ internal data class HistoryChartScale(
 private fun chartValue(
     value: Double, metric: HistoryMetric, fahrenheit: Boolean, currentMultiplier: Int
 ) = when (metric) {
-    HistoryMetric.TEMPERATURE if fahrenheit -> value * 1.8 + 32
+    HistoryMetric.TEMPERATURE -> if (fahrenheit) value * 1.8 + 32 else value
     HistoryMetric.CURRENT, HistoryMetric.POWER -> value * currentMultiplier
     else -> value
 }

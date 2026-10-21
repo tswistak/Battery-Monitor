@@ -107,7 +107,7 @@ internal object DeviceDataBackup {
         if (DeviceDataType.LOGS in selectedData) {
             parseLogs(root.getJSONArray(KEY_LOGS))
             if (root.has(Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)) {
-                parseLong(root, Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)
+                parseLastLogExportTime(root)
             }
         }
         if (DeviceDataType.PREDICTOR_DATA in selectedData) parsePredictor(root)
@@ -120,6 +120,7 @@ internal object DeviceDataBackup {
     @Throws(
         JSONException::class, IllegalArgumentException::class, GeneralBackupRestoreException::class
     )
+    // KTX edit discards the commit results required before marking restored data complete.
     @SuppressLint("UseKtx")
     fun importFromJson(
         context: Context,
@@ -137,7 +138,7 @@ internal object DeviceDataBackup {
         }
         val lastLogExportTime =
             if (DeviceDataType.LOGS in selectedData && root.has(Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)) {
-                parseLong(root, Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)
+                parseLastLogExportTime(root)
             } else {
                 null
             }
@@ -244,7 +245,8 @@ internal object DeviceDataBackup {
         }
     }
 
-    private fun parseLong(root: JSONObject, key: String): Long {
+    private fun parseLastLogExportTime(root: JSONObject): Long {
+        val key = Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME
         val value = root.get(key)
         require(value is Number) { "Invalid value for '$key'" }
         val longValue = value.toLong()

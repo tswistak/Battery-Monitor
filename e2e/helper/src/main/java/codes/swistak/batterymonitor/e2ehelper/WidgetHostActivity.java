@@ -15,6 +15,7 @@
 */
 package codes.swistak.batterymonitor.e2ehelper;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetHostView;
@@ -74,6 +75,8 @@ public final class WidgetHostActivity extends Activity {
         super.onStop();
     }
 
+    // This E2E-only screen displays widget IDs and provider class names as diagnostics.
+    @SuppressLint("SetTextI18n")
     void refresh() {
         content.removeAllViews();
         views.clear();

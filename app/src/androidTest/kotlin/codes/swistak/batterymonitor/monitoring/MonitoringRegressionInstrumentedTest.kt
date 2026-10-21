@@ -241,7 +241,7 @@ class MonitoringRegressionInstrumentedTest {
         var activity: BatteryInfoActivity? = null
         try {
             assertTrue(MonitoringDesiredState.write(target, desired = false))
-            @Suppress("DEPRECATION") val version = PackageInfoCompat.getLongVersionCode(
+            val version = PackageInfoCompat.getLongVersionCode(
                 target.packageManager.getPackageInfo(target.packageName, 0)
             )
             assertTrue(
@@ -290,11 +290,11 @@ class MonitoringRegressionInstrumentedTest {
         set(
             "currentAcquisition", CurrentAcquisition(
                 readNow = {
-                    reads++
-                    BatteryCurrentReading(
-                        -400_000, "fake/current_now", BatteryMeasurementTime(2_000L, 2_000L)
-                    )
-                },
+                reads++
+                BatteryCurrentReading(
+                    -400_000, "fake/current_now", BatteryMeasurementTime(2_000L, 2_000L)
+                )
+            },
                 readAverage = { error("Average current was not requested") },
                 executor = { pending.addLast(it) },
                 deliver = { it() })
@@ -458,8 +458,7 @@ class MonitoringRegressionInstrumentedTest {
             val registration = currentClients().getValue(client)
             assertNull(
                 registration.javaClass.getDeclaredField("demand")
-                    .apply { isAccessible = true }.get(registration)
-            )
+                .apply { isAccessible = true }.get(registration))
             service.onUnbind(null)
         }
     }
@@ -483,8 +482,7 @@ class MonitoringRegressionInstrumentedTest {
             val registration = currentClients().getValue(client)
             assertNull(
                 registration.javaClass.getDeclaredField("demand")
-                    .apply { isAccessible = true }.get(registration)
-            )
+                .apply { isAccessible = true }.get(registration))
             assertEquals(0, acquisitions)
             assertFalse(MonitoringDesiredState.read(context))
             service.onUnbind(null)

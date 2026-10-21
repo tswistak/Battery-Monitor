@@ -23,6 +23,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.ParcelFileDescriptor
 import androidx.core.content.ContextCompat
+import androidx.core.content.pm.PermissionInfoCompat
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -59,7 +60,9 @@ class ShizukuReceiverInstrumentedTest {
         try {
             val permission = "${context.packageName}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
             val info = context.packageManager.getPermissionInfo(permission, 0)
-            assertEquals(PermissionInfo.PROTECTION_SIGNATURE, info.protectionLevel and 0xf)
+            assertEquals(
+                PermissionInfo.PROTECTION_SIGNATURE, PermissionInfoCompat.getProtection(info)
+            )
             ParcelFileDescriptor.AutoCloseInputStream(
                 instrumentation.uiAutomation.executeShellCommand(
                     "am broadcast -a $action -p ${context.packageName} --receiver-foreground"
@@ -76,8 +79,7 @@ class ShizukuReceiverInstrumentedTest {
 
             context.sendBroadcast(Intent(action).setPackage(context.packageName))
             assertTrue(
-                "Same-app Binder sharing must remain possible",
-                delivered.await(5, TimeUnit.SECONDS)
+                "Same-app Binder sharing must remain possible", delivered.await(5, TimeUnit.SECONDS)
             )
             assertEquals(1, received.get())
         } finally {
@@ -95,8 +97,10 @@ class ShizukuReceiverInstrumentedTest {
         val recording = object : ContextWrapper(context) {
             @SuppressLint("UnspecifiedRegisterReceiverFlag")
             override fun registerReceiver(
-                receiver: BroadcastReceiver?, filter: IntentFilter,
-                broadcastPermission: String?, scheduler: Handler?
+                receiver: BroadcastReceiver?,
+                filter: IntentFilter,
+                broadcastPermission: String?,
+                scheduler: Handler?
             ): Intent? {
                 registered = receiver
                 senderPermission = broadcastPermission

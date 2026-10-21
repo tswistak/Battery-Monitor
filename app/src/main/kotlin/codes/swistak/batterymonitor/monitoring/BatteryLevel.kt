@@ -22,7 +22,7 @@ import android.graphics.RectF
 import android.util.DisplayMetrics
 import androidx.core.graphics.createBitmap
 
-internal class BatteryLevel private constructor(sizeFactor: Float) {
+internal class BatteryLevel private constructor() {
     companion object {
         private const val FACTOR_SMALL = 13.33f
 
@@ -31,7 +31,7 @@ internal class BatteryLevel private constructor(sizeFactor: Float) {
         fun getSmallInstance(): BatteryLevel {
             if (smallInstance != null) return smallInstance!!
 
-            smallInstance = BatteryLevel(FACTOR_SMALL)
+            smallInstance = BatteryLevel()
 
             return smallInstance!!
         }
@@ -49,12 +49,12 @@ internal class BatteryLevel private constructor(sizeFactor: Float) {
     private val factorTopH = 1.5f
     private val factorStroke = 1.0f
 
-    private val width: Int = (sizeFactor * factorWidth).toInt()
-    private val bodH: Int = (sizeFactor * factorBodH).toInt()
-    private val topW: Int = (sizeFactor * factorTopW).toInt()
-    private val topH: Int = (sizeFactor * factorTopH).toInt()
+    private val width: Int = (FACTOR_SMALL * factorWidth).toInt()
+    private val bodH: Int = (FACTOR_SMALL * factorBodH).toInt()
+    private val topW: Int = (FACTOR_SMALL * factorTopW).toInt()
+    private val topH: Int = (FACTOR_SMALL * factorTopH).toInt()
     private val totalH: Int = (bodH + topH)
-    private val strokeW: Int = (sizeFactor * factorStroke).toInt()
+    private val strokeW: Int = (FACTOR_SMALL * factorStroke).toInt()
 
     init {
         battery = createBitmap(width, totalH)

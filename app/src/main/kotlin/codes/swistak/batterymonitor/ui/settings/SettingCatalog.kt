@@ -227,12 +227,13 @@ internal object SettingCatalog {
         SettingsContract.KEY_CHIP_INDICATE_CHARGING
     )
 
-    internal fun isVisible(key: String, sdkInt: Int, chargingTargetMode: String?): Boolean = when {
-        key == SettingsContract.KEY_CUSTOM_CHARGING_TARGET -> chargingTargetMode == SettingsContract.CHARGING_TARGET_MODE_CUSTOM
+    internal fun isVisible(key: String, sdkInt: Int, chargingTargetMode: String?): Boolean =
+        when (key) {
+            SettingsContract.KEY_CUSTOM_CHARGING_TARGET -> chargingTargetMode == SettingsContract.CHARGING_TARGET_MODE_CUSTOM
 
-        key in chipKeys -> sdkInt >= 36
-        else -> true
-    }
+            in chipKeys -> sdkInt >= 36
+            else -> true
+        }
 
     internal fun aliasesFor(key: String): List<String> =
         if (key == SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS) listOf("diagnostics_live_updates") else emptyList()

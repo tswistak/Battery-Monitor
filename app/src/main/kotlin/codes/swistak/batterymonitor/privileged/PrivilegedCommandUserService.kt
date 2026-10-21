@@ -71,10 +71,16 @@ class PrivilegedCommandUserService : Binder {
     private val context: Context?
     private val monitoringBackend = PrivilegedMonitoringBackend(requireRoot = false)
 
+    // Shizuku instantiates this fallback constructor reflectively before API v13.
+    @Keep
+    @Suppress("unused")
     constructor() {
         context = null
     }
 
+    // Shizuku API v13+ selects this constructor reflectively to supply the package context.
+    @Keep
+    @Suppress("unused")
     constructor(context: Context?) {
         this.context = context?.applicationContext
     }

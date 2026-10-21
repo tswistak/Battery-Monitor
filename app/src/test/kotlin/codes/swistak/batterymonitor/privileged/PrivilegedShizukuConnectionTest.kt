@@ -18,7 +18,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.util.concurrent.Executor
 
 class PrivilegedShizukuConnectionTest {
     @Test
@@ -48,7 +47,7 @@ class PrivilegedShizukuConnectionTest {
             },
             enabled = { true },
             accessRevision = { 0L },
-            backgroundExecutor = Executor { it.run() },
+            backgroundExecutor = { it.run() },
             clock = { now })
 
         reader.readWhenReady {

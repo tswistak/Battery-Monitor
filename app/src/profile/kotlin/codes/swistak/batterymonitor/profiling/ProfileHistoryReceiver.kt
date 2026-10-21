@@ -48,6 +48,7 @@ class ProfileHistoryReceiver : BroadcastReceiver() {
                 )
                 val processName = File("/proc/self/cmdline").readText().substringBefore('\u0000')
                 check(processName == "${context.packageName}:BIS")
+                // Android still exposes the caller's own services for debugging.
                 @Suppress("DEPRECATION") val service = checkNotNull(
                     (context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).getRunningServices(
                         100

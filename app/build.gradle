@@ -51,7 +51,7 @@ android {
     namespace = "codes.swistak.batterymonitor"
 
     buildFeatures {
-        compose true
+        compose = true
     }
 
     compileSdk 37
@@ -79,12 +79,18 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     lint {
         disable 'MissingTranslation'
     }
 
     testOptions {
-        animationsDisabled true
+        animationsDisabled = true
     }
 
     signingConfigs {
@@ -118,7 +124,7 @@ android {
         debug {
             setDefault(true)
             if (isE2eBuild) {
-                signingConfig signingConfigs.e2e
+                signingConfig = signingConfigs.e2e
             } else {
                 applicationIdSuffix ".debug"
             }
@@ -127,10 +133,11 @@ android {
 
         release {
             if (hasReleaseSigning) {
-                signingConfig signingConfigs.release
+                signingConfig = signingConfigs.release
             }
 
-            minifyEnabled true
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), rootProject.file('proguard-no-obfuscation')
         }
         if (isProfilingBuild) {
@@ -138,7 +145,7 @@ android {
                 initWith release
                 applicationIdSuffix '.profile'
                 debuggable false
-                signingConfig signingConfigs.profile
+                signingConfig = signingConfigs.profile
                 matchingFallbacks = ['release']
                 vcsInfo {
                     include = false

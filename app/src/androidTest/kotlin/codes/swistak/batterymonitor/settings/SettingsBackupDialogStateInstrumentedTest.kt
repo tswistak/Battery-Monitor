@@ -12,9 +12,11 @@
 */
 package codes.swistak.batterymonitor.settings
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -154,7 +156,7 @@ class SettingsBackupDialogStateInstrumentedTest {
         complete(first)
         val preview = choices(first)
         main {
-            call(first, "dismissSettingsDialog")
+            dismiss(first)
             preview.onConfirm(setOf(0))
         }
         val saved = save(first)
@@ -192,7 +194,7 @@ class SettingsBackupDialogStateInstrumentedTest {
         complete(first)
         val preview = choices(first)
         main {
-            call(first, "dismissSettingsDialog")
+            dismiss(first)
             preview.onConfirm(setOf(0))
         }
         val restored = restore(save(first))
@@ -231,6 +233,48 @@ class SettingsBackupDialogStateInstrumentedTest {
             assertNull(save(unavailable).getBundle("settings_backup_dialog"))
             cancel(restored)
         }
+    }
+
+    @Test
+    fun document_result_uses_saved_request_and_cancellation_releases_the_picker() {
+        val first = fragment()
+        val pending = SettingsFragment::class.java.getDeclaredField("pendingDocumentRequest")
+            .apply { isAccessible = true }
+        main { pending.setInt(first, 2) }
+        val saved = save(first)
+        assertEquals(2, saved.getInt("document_request"))
+        val restored = fragment()
+        main {
+            pending.setInt(restored, saved.getInt("document_request"))
+            SettingsFragment::class.java.getDeclaredMethod(
+                "handleDocumentResult", Int::class.javaPrimitiveType, Intent::class.java
+            ).apply { isAccessible = true }.invoke(restored, Activity.RESULT_CANCELED, null)
+        }
+        assertEquals(0, save(restored).getInt("document_request"))
+        assertNull(dialog(restored))
+        assertFalse(models.getValue(restored).busy)
+
+        val source = File(directory, "picker-settings.json").apply {
+            writeText("""{"version":${SettingsBackup.SCHEMA_VERSION + 1}}""")
+        }
+        main {
+            pending.setInt(restored, saved.getInt("document_request"))
+            SettingsFragment::class.java.getDeclaredField("mSharedPreferences")
+                .apply { isAccessible = true }.set(
+                    restored,
+                    context.getSharedPreferences("picker-result-test", Context.MODE_PRIVATE)
+                )
+            SettingsFragment::class.java.getDeclaredMethod(
+                "handleDocumentResult", Int::class.javaPrimitiveType, Intent::class.java
+            ).apply { isAccessible = true }.invoke(
+                restored, Activity.RESULT_OK, Intent().setData(Uri.fromFile(source))
+            )
+        }
+        complete(restored)
+        assertEquals(0, save(restored).getInt("document_request"))
+        assertTrue(dialog(restored) is SettingsDialog.Confirm)
+        assertEquals(2, save(restored).getBundle("settings_backup_dialog")!!.getInt("request"))
+        cancel(restored)
     }
 
     private fun fragment(): SettingsFragment {
@@ -293,7 +337,7 @@ class SettingsBackupDialogStateInstrumentedTest {
     }
 
     private fun cancel(fragment: SettingsFragment) {
-        main { call(fragment, "dismissSettingsDialog") }
+        main { dismiss(fragment) }
         instrumentation.waitForIdleSync()
     }
 
@@ -308,9 +352,9 @@ class SettingsBackupDialogStateInstrumentedTest {
 
     private fun choices(fragment: SettingsFragment) = dialog(fragment) as SettingsDialog.Choices
 
-    private fun call(fragment: SettingsFragment, name: String) {
-        SettingsFragment::class.java.getDeclaredMethod(name).apply { isAccessible = true }
-            .invoke(fragment)
+    private fun dismiss(fragment: SettingsFragment) {
+        SettingsFragment::class.java.getDeclaredMethod("dismissSettingsDialog")
+            .apply { isAccessible = true }.invoke(fragment)
     }
 
     private fun main(action: () -> Unit) {

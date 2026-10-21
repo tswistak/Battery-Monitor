@@ -10,7 +10,9 @@
     <application
         android:process="${applicationId}"
         tools:replace="android:process">
-        <profileable android:shell="true" />
+        <profileable
+            android:shell="true"
+            tools:targetApi="29" />
         <service
             android:name=".monitoring.BatteryInfoService"
             android:process=":BIS"

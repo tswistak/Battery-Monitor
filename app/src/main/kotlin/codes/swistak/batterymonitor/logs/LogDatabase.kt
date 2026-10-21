@@ -99,7 +99,7 @@ internal class LogDatabase(context: Context?) {
     fun historyChanges(since: Long?, range: HistoryRangeState?): HistoryChanges {
         openDBs()
         return checkNotNull(rdb).rawQuery(
-            "SELECT MIN(revision), MAX(revision), " + "MAX(CASE WHEN revision > ? AND first_time <= ? AND last_time >= ? THEN 1 ELSE 0 END) " + "FROM $HISTORY_CHANGES_TABLE",
+            "SELECT MIN(revision), MAX(revision), MAX(CASE WHEN revision > ? AND first_time <= ? AND last_time >= ? THEN 1 ELSE 0 END) FROM $HISTORY_CHANGES_TABLE",
             arrayOf(
                 (since ?: -1).toString(),
                 (range?.exportThrough ?: Long.MAX_VALUE).toString(),
@@ -135,7 +135,7 @@ internal class LogDatabase(context: Context?) {
     ): LongRange? {
         val predicate = " WHERE time IS NOT NULL" + where?.let { " AND ($it)" }.orEmpty()
         return rawQuery(
-            "SELECT (SELECT time FROM logs$predicate ORDER BY time ASC, _id ASC LIMIT 1), " + "(SELECT time FROM logs$predicate ORDER BY time DESC, _id DESC LIMIT 1)",
+            "SELECT (SELECT time FROM logs$predicate ORDER BY time ASC, _id ASC LIMIT 1), (SELECT time FROM logs$predicate ORDER BY time DESC, _id DESC LIMIT 1)",
             args?.let { it + it }).use { cursor ->
             cursor.moveToFirst()
             if (cursor.isNull(0)) null else cursor.getLong(0)..cursor.getLong(1)
@@ -552,7 +552,7 @@ internal class LogDatabase(context: Context?) {
 
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(
-                "CREATE TABLE $LOG_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_STATUS_CODE INTEGER,$KEY_CHARGE INTEGER,$KEY_TIME INTEGER,$KEY_TEMPERATURE INTEGER,$KEY_VOLTAGE INTEGER,$KEY_CURRENT INTEGER,$KEY_REMAINING_CHARGE INTEGER);"
+                "CREATE TABLE $LOG_TABLE_NAME ($KEY_ID INTEGER PRIMARY KEY,$KEY_STATUS_CODE INTEGER,$KEY_CHARGE INTEGER,$KEY_TIME INTEGER,$KEY_TEMPERATURE INTEGER,$KEY_VOLTAGE INTEGER,\"$KEY_CURRENT\" INTEGER,$KEY_REMAINING_CHARGE INTEGER);"
             )
             createHistoryChanges(db)
         }
@@ -568,7 +568,7 @@ internal class LogDatabase(context: Context?) {
                 db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_VOLTAGE INTEGER;")
             }
             if (oldVersion < 5) {
-                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_CURRENT INTEGER;")
+                db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN \"$KEY_CURRENT\" INTEGER;")
             }
             if (oldVersion < 6) {
                 db.execSQL("ALTER TABLE $LOG_TABLE_NAME ADD COLUMN $KEY_REMAINING_CHARGE INTEGER;")
@@ -578,7 +578,7 @@ internal class LogDatabase(context: Context?) {
 
         private fun createHistoryChanges(db: SQLiteDatabase) {
             db.execSQL(
-                "CREATE TABLE $HISTORY_CHANGES_TABLE " + "(revision INTEGER PRIMARY KEY, first_time INTEGER NOT NULL, last_time INTEGER NOT NULL)"
+                "CREATE TABLE $HISTORY_CHANGES_TABLE (revision INTEGER PRIMARY KEY, first_time INTEGER NOT NULL, last_time INTEGER NOT NULL)"
             )
         }
 

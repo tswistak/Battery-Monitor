@@ -26,6 +26,9 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.icu.text.MeasureFormat
+import android.icu.util.Measure
+import android.icu.util.MeasureUnit
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -41,6 +44,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -242,7 +246,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         )
         private val RESET_SERVICE_WITH_CANCEL_NOTIFICATION = arrayOf<String?>()
 
-        @SuppressLint("ApplySharedPref", "UseKtx")
         private fun reloadService(
             context: Context,
             settings: SharedPreferences,
@@ -250,7 +253,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             predictor: Boolean = false,
             cancelFirst: Boolean = false
         ) {
-            settings.edit().commit()
             if (!BackgroundServiceWatchdog.isServiceDesired(context)) {
                 codes.swistak.batterymonitor.widgets.WidgetSettingsReceiver.synchronize(
                     context, settings
@@ -272,7 +274,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             }
             try {
                 requireNotNull(messenger).send(outgoing)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 BatteryInfoService.startForegroundServiceSafely(context, outgoing.data)
             }
         }
@@ -329,6 +331,12 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     private val busy: Boolean get() = operationModel.busy
     private var serviceBound = false
     private var pendingDocumentRequest = 0
+    private val documentRequest = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        handleDocumentResult(result.resultCode, result.data)
+    }
+
     private lateinit var applicationContext: Context
     private var timeEstimateJob: Job? = null
     private var chargingLimitProvider: DeviceChargingLimitProvider? = null
@@ -378,6 +386,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         highlightedKey = highlight
     }
 
+    // Compose renders the preference model without a PreferenceFragmentCompat to create its manager.
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -699,7 +708,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         )
     }
 
-    @SuppressLint("RestrictedApi")
     private fun setPreferences(reinflate: Boolean = false) {
         mNotificationManager = requireContext().getSystemService(NotificationManager::class.java)
         appNotifsEnabled = mNotificationManager!!.areNotificationsEnabled()
@@ -760,7 +768,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         }
     }
 
-    @Suppress("DEPRECATION")
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
             null -> {
@@ -785,7 +792,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 val exportIntent =
                     Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
                         .setType("application/json")
-                        .putExtra(Intent.EXTRA_TITLE, "battery_monitor_settings_" + ts + ".json")
+                        .putExtra(Intent.EXTRA_TITLE, "battery_monitor_settings_$ts.json")
                 launchDocument(exportIntent, EXPORT_REQUEST)
                 return true
             }
@@ -879,6 +886,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             else -> return false
         }
     }
+
 
     private fun showVitalSignsDialog(preference: Preference) = showOrderedContentDialog(
         preference,
@@ -1211,7 +1219,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         maybeDetectBatteryCurrentMultiplier(showFailureMessage = true)
     }
 
-    @Suppress("DEPRECATION")
     private fun maybeDetectBatteryCurrentMultiplier(showFailureMessage: Boolean = false) {
         if (batteryCurrentMultiplierDetectionRunning || !mSharedPreferences.getBoolean(
                 SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER_DETECTION_PENDING, false
@@ -1342,9 +1349,9 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         val entry = preference.entries.getOrNull(
             preference.findIndexOfValue(seconds.toString())
         )
-        val value = entry ?: getString(
-            R.string.pref_chip_switching_interval_custom_summary, seconds
-        )
+        val value = entry ?: MeasureFormat.getInstance(
+            resources.configuration.locales[0], MeasureFormat.FormatWidth.WIDE
+        ).formatMeasures(Measure(seconds, MeasureUnit.SECOND))
         preference.summary = getString(R.string.currently_set_to) + value
     }
 
@@ -1385,7 +1392,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         val pref: ListPreference?
         try {
             pref = mPreferenceScreen!!.findPreference<Preference?>(key) as ListPreference?
-        } catch (e: ClassCastException) {
+        } catch (_: ClassCastException) {
             return
         }
 
@@ -1466,12 +1473,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         }
     }
 
-    @Suppress("DEPRECATION")
     private fun launchDocument(intent: Intent, requestCode: Int) {
         if (pendingDocumentRequest != 0 || busy) return
         runCatching {
             pendingDocumentRequest = requestCode
-            startActivityForResult(intent, requestCode)
+            documentRequest.launch(intent)
         }.onFailure {
             pendingDocumentRequest = 0
             dialog = SettingsDialog.Message(getString(R.string.advanced_value_not_available))
@@ -1553,11 +1559,12 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     private fun backupFailureMessage(error: Int, failure: Throwable): String {
         if (failure !is GeneralBackupRestoreException) return getString(error)
         setPreferences(reinflate = true)
-        val completed =
-            failure.completedData.map { generalBackupItemLabel(it).substringBefore('\n') }
-                .joinToString(", ")
-        val failed = failure.failedData.map { generalBackupItemLabel(it).substringBefore('\n') }
-            .joinToString(", ")
+        val completed = failure.completedData.joinToString(", ") {
+            generalBackupItemLabel(it).substringBefore('\n')
+        }
+        val failed = failure.failedData.joinToString(", ") {
+            generalBackupItemLabel(it).substringBefore('\n')
+        }
         return getString(
             R.string.settings_restore_partial,
             completed.ifEmpty { getString(R.string.settings_restore_none) },
@@ -1574,9 +1581,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         }
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    private fun handleDocumentResult(resultCode: Int, data: Intent?) {
+        val requestCode = pendingDocumentRequest
         pendingDocumentRequest = 0
         if (requestCode == AUTO_LOG_EXPORT_DIRECTORY_REQUEST) {
             handleAutoLogExportDirectoryResult(resultCode, data)
@@ -1641,6 +1647,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         }
     }
 
+
     private fun setupAutoLogExportPreference() {
         val preference = mPreferenceScreen?.findPreference<Preference>(
             SettingsContract.KEY_AUTO_LOG_EXPORT
@@ -1691,7 +1698,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         launchDocument(intent, AUTO_LOG_EXPORT_DIRECTORY_REQUEST)
     }
 
-    @SuppressLint("WrongConstant")
     private fun handleAutoLogExportDirectoryResult(resultCode: Int, data: Intent?) {
         val uri = data?.data
         if (resultCode != Activity.RESULT_OK || uri == null) {
@@ -1706,7 +1712,6 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         showAutoLogExportDialog(uri, flags)
     }
 
-    @SuppressLint("WrongConstant")
     private fun showAutoLogExportDialog(directory: Uri?, permissionFlags: Int? = null) {
         if (directory == null) {
             openAutoLogExportDirectoryPicker()
@@ -1750,7 +1755,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     val oldDirectory = currentAutoLogExportDirectory()
                     permissionFlags?.let {
                         requireContext().contentResolver.takePersistableUriPermission(
-                            directory, it
+                            directory,
+                            it and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                         )
                     }
                     mSharedPreferences.edit {
@@ -2041,7 +2047,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 }
             }
             rememberBackupDialog(request)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             clearBackupDialog()
             Toast.makeText(activity, R.string.invalid_device_data_file, Toast.LENGTH_SHORT).show()
         }
@@ -2113,13 +2119,16 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             SettingsOperationAction.ResetSettings, R.string.settings_reset_failed
         ) { context ->
             try {
-                val defaultsContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    val manager = context.getSystemService(LocaleManager::class.java)
-                    context.createConfigurationContext(Configuration(context.resources.configuration).apply {
-                        setLocales(manager.systemLocales)
-                    })
-                } else context
-                val editor = settings.edit()
+                // This context only reads defaults in the system locale; it does not change the app locale.
+                @SuppressLint("AppBundleLocaleChanges") val defaultsContext =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        val manager = context.getSystemService(LocaleManager::class.java)
+                        context.createConfigurationContext(Configuration(context.resources.configuration).apply {
+                            setLocales(manager.systemLocales)
+                        })
+                    } else context
+                // Keep commit's Boolean result so failed resets are reported to the user.
+                @SuppressLint("UseKtx") val editor = settings.edit()
                 SettingsReset.reset(editor)
                 SettingsDefinitions.defaultValues(defaultsContext::getString)
                     .forEach { (key, value) ->
@@ -2181,7 +2190,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         fileOperation(
             SettingsOperationAction.ImportSettings, R.string.invalid_settings_file
         ) { context ->
-            val editor = settings.edit()
+            // Keep commit's Boolean result so failed imports are reported to the user.
+            @SuppressLint("UseKtx") val editor = settings.edit()
             SettingsBackup.importFromJson(editor, json)
             check(editor.commit()) { "Could not save imported settings" }
             reloadService(context, settings, messenger)
@@ -2213,7 +2223,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 SettingsContract.KEY_CHANGE_APP_LANGUAGE_HOLDER
             )
             pref = mPreferenceScreen!!.findPreference(SettingsContract.KEY_CHANGE_APP_LANGUAGE)
-        } catch (e: ClassCastException) {
+        } catch (_: ClassCastException) {
             return
         }
 
@@ -2236,7 +2246,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             intent.setData(Uri.fromParts("package", requireContext().packageName, null))
             startActivity(intent)
             return true
-        } catch (ignored: Exception) {
+        } catch (_: Exception) {
         }
         return false
     }

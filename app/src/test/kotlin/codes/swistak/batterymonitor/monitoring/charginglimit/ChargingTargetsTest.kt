@@ -196,9 +196,7 @@ class ChargingTargetsTest {
     @Test
     fun `Pixel plugged long life state is fixed eighty with hardware evidence`() {
         val state = detect(
-            pixelProfile(),
-            PixelChargingLimitAdapter,
-            battery = battery(plugged = true, chargingState = 4)
+            pixelProfile(), PixelChargingLimitAdapter, battery = battery(plugged = true)
         )
 
         assertFixed(80, state)
@@ -211,9 +209,7 @@ class ChargingTargetsTest {
     @Test
     fun `Pixel ignores stale long life state while unplugged`() {
         val state = detect(
-            pixelProfile(),
-            PixelChargingLimitAdapter,
-            battery = battery(plugged = false, chargingState = 4)
+            pixelProfile(), PixelChargingLimitAdapter, battery = battery(plugged = false)
         )
 
         assertUnavailable(ChargingLimitUnavailableReason.SETTING_ABSENT, state)
@@ -515,11 +511,9 @@ class ChargingTargetsTest {
             value(limit)
         )
 
-    private fun battery(
-        plugged: Boolean, chargingState: Int
-    ): BatteryChargingStateReader = BatteryChargingStateReader {
+    private fun battery(plugged: Boolean): BatteryChargingStateReader = BatteryChargingStateReader {
         ReadResult.Value(
-            BatteryChargingSnapshot(plugged, chargingState), ReadSource.SYSTEM_API
+            BatteryChargingSnapshot(plugged, chargingState = 4), ReadSource.SYSTEM_API
         )
     }
 

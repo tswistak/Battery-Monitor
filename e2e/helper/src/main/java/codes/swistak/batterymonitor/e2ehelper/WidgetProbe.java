@@ -15,6 +15,7 @@
 */
 package codes.swistak.batterymonitor.e2ehelper;
 
+import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
@@ -79,6 +80,8 @@ public final class WidgetProbe extends Probe {
         });
     }
 
+    // Probe released and current APK resources by name without linking either app's generated IDs.
+    @SuppressLint("DiscouragedApi")
     private void verify(WidgetHostActivity activity, boolean newUi, boolean stopped) throws Exception {
         Context appContext = activity.createPackageContext(APP, 0);
         int levelId = appContext.getResources().getIdentifier(newUi ? "widget_level" : "level", "id", APP);

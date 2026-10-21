@@ -52,7 +52,7 @@ internal class AlarmDatabase(context: Context?) {
         if (rdb == null || !rdb!!.isOpen) {
             rdb = try {
                 mSQLOpenHelper.readableDatabase
-            } catch (e: SQLiteException) {
+            } catch (_: SQLiteException) {
                 null
             }
         }
@@ -60,7 +60,7 @@ internal class AlarmDatabase(context: Context?) {
         if (wdb == null || !wdb!!.isOpen) {
             try {
                 wdb = mSQLOpenHelper.writableDatabase
-            } catch (e: SQLiteException) {
+            } catch (_: SQLiteException) {
                 rdb = null
             }
         }
@@ -81,7 +81,7 @@ internal class AlarmDatabase(context: Context?) {
             rdb!!.rawQuery(
                 "SELECT * FROM $ALARM_TABLE_NAME ORDER BY $KEY_ID $order", null
             )
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -217,7 +217,7 @@ internal class AlarmDatabase(context: Context?) {
             }
             database.setTransactionSuccessful()
             true
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             false
         } finally {
             if (database.inTransaction()) database.endTransaction()
@@ -234,7 +234,7 @@ internal class AlarmDatabase(context: Context?) {
             val b = (c.count > 0)
             c.close()
             return b
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return false
         }
     }
@@ -255,7 +255,7 @@ internal class AlarmDatabase(context: Context?) {
 
             c.moveToFirst()
             return c
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return null
         }
     }
@@ -276,7 +276,7 @@ internal class AlarmDatabase(context: Context?) {
 
             c.moveToFirst()
             return c
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return null
         }
     }
@@ -297,7 +297,7 @@ internal class AlarmDatabase(context: Context?) {
 
             c.moveToFirst()
             return c
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return null
         }
     }
@@ -320,7 +320,7 @@ internal class AlarmDatabase(context: Context?) {
 
             c.moveToFirst()
             return c
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return null
         }
     }
@@ -345,13 +345,14 @@ internal class AlarmDatabase(context: Context?) {
             cv.put(KEY_VIBRATE, if (vibrate) 1 else 0)
             cv.put(KEY_LIGHTS, if (lights) 1 else 0)
             return wdb!!.insert(ALARM_TABLE_NAME, null, cv).toInt()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return -1
         }
     }
 
     private class SQLOpenHelper(context: Context?) :
         SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+        // shortcut: v5 STRING columns retain numeric affinity, change only with a preserving migration.
         @SuppressLint("SQLiteString")
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(

@@ -59,7 +59,7 @@ class LegacyWidgetContractTest {
             val layout = metadata.removeSuffix("_info")
             assertEquals("@layout/$layout", info.androidAttribute("initialLayout"))
             assertEquals("0", info.androidAttribute("updatePeriodMillis"))
-            assertFalse(info.hasAttributeNS(androidNamespace, "configure"))
+            assertFalse(info.hasAttributeNS(ANDROID_NAMESPACE, "configure"))
 
             val views = parse("res/layout/$layout.xml").getElementsByTagName("*")
             val viewIds = (0 until views.length).map {
@@ -130,10 +130,11 @@ class LegacyWidgetContractTest {
         listOf(File("src/main"), File("app/src/main")).first { it.isDirectory }
 
     private fun Element.androidAttribute(name: String): String =
-        getAttributeNS(androidNamespace, name)
+        getAttributeNS(ANDROID_NAMESPACE, name)
 
     private companion object {
-        const val androidNamespace = "http://schemas.android.com/apk/res/android"
+        const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
+
         val providers = mapOf(
             ".widgets.BatteryInfoAppWidgetProvider" to "circle_app_widget_info",
             ".widgets.FullAppWidgetProvider" to "full_app_widget_info"

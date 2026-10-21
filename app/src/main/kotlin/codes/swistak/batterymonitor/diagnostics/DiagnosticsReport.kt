@@ -12,6 +12,7 @@ import android.content.Context
 import android.os.Build
 import android.os.PowerManager
 import android.os.SystemClock
+import androidx.core.content.pm.PackageInfoCompat
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.MonitoringHealthStore
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -76,7 +77,13 @@ internal object DiagnosticsReport {
             appendLine("Generated: ${Instant.now()}")
             appendLine("Device: ${Build.MANUFACTURER} ${Build.MODEL}")
             appendLine("Android: ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})")
-            appendLine("Battery Monitor: ${packageInfo.versionName} (${versionCode(packageInfo)})")
+            appendLine(
+                "Battery Monitor: ${packageInfo.versionName} (${
+                    PackageInfoCompat.getLongVersionCode(
+                        packageInfo
+                    )
+                })"
+            )
             appendLine(
                 line(
                     "Notifications", booleanStatus(notificationManager.areNotificationsEnabled())
@@ -123,12 +130,4 @@ internal object DiagnosticsReport {
         val age = DiagnosticsDurationFormatter.format(Locale.ENGLISH, now - timestamp)
         return "Working - last response $age ago"
     }
-
-    @Suppress("DEPRECATION")
-    private fun versionCode(packageInfo: android.content.pm.PackageInfo): Long =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            packageInfo.longVersionCode
-        } else {
-            packageInfo.versionCode.toLong()
-        }
 }

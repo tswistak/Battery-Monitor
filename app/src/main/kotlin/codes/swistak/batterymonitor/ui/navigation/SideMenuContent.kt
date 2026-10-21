@@ -58,9 +58,9 @@ fun SideMenuContent(
     selectedId: String,
     onSelect: (String) -> Unit,
     onClose: () -> Unit,
+    modifier: Modifier = Modifier,
     showCloseButton: Boolean = true,
-    firstItemFocusRequester: FocusRequester? = null,
-    modifier: Modifier = Modifier
+    firstItemFocusRequester: FocusRequester? = null
 ) {
     val colors = MaterialTheme.colorScheme
     Column(

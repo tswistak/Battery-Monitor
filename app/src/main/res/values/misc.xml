@@ -18,15 +18,15 @@
         <item>custom</item>
     </string-array>
 
-    <string name="default_max_log_age">672</string>
+    <string name="default_max_log_age" translatable="false">672</string>
 
-    <string-array name="boot_pref_values">
+    <string-array name="boot_pref_values" translatable="false">
         <item>always</item>
         <item>never</item>
         <item>auto</item>
     </string-array>
 
-    <string-array name="max_log_age_values">
+    <string-array name="max_log_age_values" translatable="false">
         <item>24</item>
         <item>48</item>
         <item>96</item>
@@ -47,7 +47,7 @@
         <item>@string/age_4_weeks</item>
     </string-array>
 
-    <string-array name="auto_log_export_frequency_values">
+    <string-array name="auto_log_export_frequency_values" translatable="false">
         <item>24</item>
         <item>48</item>
         <item>96</item>
@@ -62,7 +62,7 @@
         <item>@string/auto_log_export_mode_append</item>
     </string-array>
 
-    <string-array name="auto_log_export_mode_values">
+    <string-array name="auto_log_export_mode_values" translatable="false">
         <item>new</item>
         <item>append</item>
     </string-array>
@@ -72,7 +72,7 @@
         <item>@string/auto_log_export_format_json</item>
     </string-array>
 
-    <string-array name="auto_log_export_format_values">
+    <string-array name="auto_log_export_format_values" translatable="false">
         <item>csv</item>
         <item>json</item>
     </string-array>
@@ -152,7 +152,7 @@
         <item>@string/pref_content_temperature</item>
     </string-array>
 
-    <string-array name="icon_content_values">
+    <string-array name="icon_content_values" translatable="false">
         <item>percentage</item>
         <item>temperature</item>
     </string-array>
@@ -179,14 +179,14 @@
         <item>@string/boot_pref_never</item>
     </string-array>
 
-    <string-array name="live_update_display_values">
+    <string-array name="live_update_display_values" translatable="false">
         <item>always</item>
         <item>charging</item>
         <item>never</item>
     </string-array>
 
-    <string name="default_icon_content">percentage</string>
-    <string name="default_live_update_display_mode">charging</string>
+    <string name="default_icon_content" translatable="false">percentage</string>
+    <string name="default_live_update_display_mode" translatable="false">charging</string>
 
     <string-array name="notification_line_content_entries">
         <item>@string/time_remaining</item>
@@ -194,7 +194,7 @@
         <item>@string/vital_signs</item>
     </string-array>
 
-    <string-array name="notification_line_content_values">
+    <string-array name="notification_line_content_values" translatable="false">
         <item>remaining</item>
         <item>since</item>
         <item>vitals</item>
@@ -218,8 +218,8 @@
         <item>status_duration</item>
     </string-array>
 
-    <string name="default_top_line_content">remaining</string>
-    <string name="default_bottom_line_content">vitals</string>
+    <string name="default_top_line_content" translatable="false">remaining</string>
+    <string name="default_bottom_line_content" translatable="false">vitals</string>
 
     <string-array name="time_remaining_verbosity_entries">
         <item>@string/condensed</item>
@@ -227,13 +227,13 @@
         <item>@string/verbose</item>
     </string-array>
 
-    <string-array name="time_remaining_verbosity_values">
+    <string-array name="time_remaining_verbosity_values" translatable="false">
         <item>condensed</item>
         <item>normal</item>
         <item>verbose</item>
     </string-array>
 
-    <string name="default_time_remaining_verbosity">normal</string>
+    <string name="default_time_remaining_verbosity" translatable="false">normal</string>
 
     <string-array name="long_duration_format_entries">
         <item>@string/long_duration_format_days_and_hours</item>
@@ -252,7 +252,7 @@
         <item>@string/predictor_long_term_ave</item>
     </string-array>
 
-    <string-array name="prediction_type_values">
+    <string-array name="prediction_type_values" translatable="false">
         <item>300000</item>
         <item>-3</item>
         <item>-1</item>
@@ -293,7 +293,7 @@
         <item>-1000</item>
     </string-array>
 
-    <string name="default_prediction_type">-3</string>
+    <string name="default_prediction_type" translatable="false">-3</string>
 
     <string-array name="temperature_unit_entries">
         <item>@string/celsius</item>

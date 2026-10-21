@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!-- Legacy notification bitmaps intentionally retain their default/hdpi sizing and platform scaling. -->
+    <issue id="IconLocation">
+        <ignore
+            regexp="^src/main/res/drawable/(charging|plain)(_percentage|_temp)?[0-9]{3}\.png$" />
+    </issue>
+    <!-- These legacy bitmap families supply default and hdpi assets; Android scales other densities. -->
+    <issue id="IconMissingDensityFolder">
+        <ignore regexp="^src/main/res$" />
+    </issue>
+    <!-- BCP 47 locale configuration uses he; Android's legacy resource qualifier is the equivalent iw. -->
+    <issue id="UnusedTranslation">
+        <ignore
+            regexp="^The language `iw \(Hebrew\)` is present in this project, but not declared in the `localeConfig` resource$" />
+    </issue>
+</lint>

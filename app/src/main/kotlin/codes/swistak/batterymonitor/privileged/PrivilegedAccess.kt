@@ -58,7 +58,11 @@ internal object PrivilegedAccess : CommandExecutor {
     private const val COMMAND_SERVICE_TAG = "privileged_commands"
 
     private const val SHIZUKU_CONNECTION_TIMEOUT_MS = 4_000L
+
+    // Object exposes wait/notifyAll required by this shared monitor.
+    @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private val shizukuLock = Object()
+
     private val rootMonitoringBackend = PrivilegedMonitoringBackend(requireRoot = true)
 
     private var appContext: Context? = null

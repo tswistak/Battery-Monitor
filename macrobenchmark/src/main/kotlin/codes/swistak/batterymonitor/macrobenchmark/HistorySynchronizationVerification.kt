@@ -272,8 +272,8 @@ class HistorySynchronizationVerification {
             ready(it, "fullscreen") && it.getJSONObject("fullscreen")
                 .getString("metric") == "VOLTAGE"
         }
-        chartAction("history_chart_zoom_in")
-        chartAction("history_chart_zoom_in")
+        zoomChartIn()
+        zoomChartIn()
         val zoomed = awaitSnapshot {
             ready(it, "fullscreen") && it.getJSONObject("fullscreen").getJSONObject("viewport")
                 .toString() != it.getJSONObject("fullscreen").getJSONObject("range").toString()
@@ -569,7 +569,6 @@ class HistorySynchronizationVerification {
         clickText("okay", last = true)
     }
 
-    @Suppress("DEPRECATION")
     private fun dismissImeIfNeeded() {
         val windows = instrumentation.uiAutomation.windows
         try {
@@ -579,21 +578,22 @@ class HistorySynchronizationVerification {
         }
     }
 
-    private fun chartAction(name: String) {
-        val wanted = text(name)
+    private fun zoomChartIn() {
+        val wanted = text("history_chart_zoom_in")
         val overflow = text("history_chart_more")
+        // Runtime action and overflow descriptions are distinct, although both are unknown to the IDE.
+        @Suppress("RegExpDuplicateAlternationBranch") val descriptions =
+            Pattern.compile("${Pattern.quote(wanted)}|${Pattern.quote(overflow)}")
         val node = checkNotNull(
             device.wait(
                 Until.findObject(
-                    By.pkg(TARGET).desc(
-                        Pattern.compile("${Pattern.quote(wanted)}|${Pattern.quote(overflow)}")
-                    ).enabled(true)
+                    By.pkg(TARGET).desc(descriptions).enabled(true)
                 ), TIMEOUT
             )
         )
         val menu = node.contentDescription == overflow
         node.click()
-        if (menu) clickText(name)
+        if (menu) clickText("history_chart_zoom_in")
     }
 
     private fun launch(route: String, detail: String? = null) {
@@ -664,11 +664,11 @@ class HistorySynchronizationVerification {
     private fun recordUi(stage: String) {
         observations.put(
             JSONObject().put("stage", "$stage-visible")
-                .put(
-                    "texts",
-                    JSONArray(
-                        device.findObjects(By.pkg(TARGET).textStartsWith("")).mapNotNull { it.text }
-                            .distinct())))
+            .put(
+                "texts",
+                JSONArray(
+                    device.findObjects(By.pkg(TARGET).textStartsWith("")).mapNotNull { it.text }
+                        .distinct())))
         val root = outputDirectory()
         device.takeScreenshot(File(root, "history-${phase()}-$stage.png"))
     }

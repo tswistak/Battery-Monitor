@@ -407,6 +407,7 @@ internal object AdvancedBatteryStatsCollector {
         val battery = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         battery?.extras?.let { extras ->
             extras.keySet().sorted().forEach { key ->
+                // Battery broadcasts can include vendor fields whose types are unknown until inspected.
                 @Suppress("DEPRECATION") val value = extras.get(key)
                 if (value is Number || value is Boolean || value is String) {
                     addLabeledValue(
@@ -544,7 +545,7 @@ internal object AdvancedBatteryStatsCollector {
             readStringProperty(batteryManager, BATTERY_PROPERTY_SERIAL_NUMBER)
         }
         property("BATTERY_PROPERTY_PART_STATUS") {
-            readIntProperty(batteryManager, BATTERY_PROPERTY_PART_STATUS)?.toString()
+            readPartStatus(batteryManager)?.toString()
         }
         property("BATTERY_PROPERTY_MANUFACTURER") {
             readStringProperty(batteryManager, BATTERY_PROPERTY_MANUFACTURER)
@@ -714,9 +715,9 @@ internal object AdvancedBatteryStatsCollector {
         values.add(value)
     }
 
-    private fun readIntProperty(batteryManager: BatteryManager, id: Int): Int? {
+    private fun readPartStatus(batteryManager: BatteryManager): Int? {
         try {
-            val value = batteryManager.getIntProperty(id)
+            val value = batteryManager.getIntProperty(BATTERY_PROPERTY_PART_STATUS)
             return if (value != Int.MIN_VALUE) value else null
         } catch (_: Throwable) {
             return null

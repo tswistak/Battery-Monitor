@@ -470,27 +470,27 @@ internal object SettingsDefinitions {
         get() = categories.values.flatten().flatMap { it.preferences }
 
     fun defaultValues(text: (Int) -> String): Map<String, Any> = buildMap {
-        for (definition in preferences) {
-            defaultValue(definition.control, text)?.let { put(definition.key, it) }
+        for ((key, _, _, _, _, control) in preferences) {
+            defaultValue(control, text)?.let { put(key, it) }
         }
     }
 
     fun createScreen(context: Context, manager: PreferenceManager): PreferenceScreen {
         val screen = manager.createPreferenceScreen(context)
-        for (group in categories.values.flatten()) {
+        for ((groupTitle, groupKey, definitions) in categories.values.flatten()) {
             val category = PreferenceCategory(context).apply {
-                group.key?.let { key = it }
-                setTitle(group.title)
+                groupKey?.let { key = it }
+                setTitle(groupTitle)
             }
             screen.addPreference(category)
-            for (definition in group.preferences) {
-                val preference = when (val control = definition.control) {
+            for ((key, title, summary, singleLineTitle, selectable, control) in definitions) {
+                val preference = when (control) {
                     SettingsControl.Action -> Preference(context)
                     is SettingsControl.Toggle -> CheckBoxPreference(context)
                     is SettingsControl.Choice -> ListPreference(context).apply {
                         setEntries(control.entries)
                         setEntryValues(control.entryValues)
-                        (control.dialogTitle ?: definition.title)?.let { setDialogTitle(it) }
+                        (control.dialogTitle ?: title)?.let { setDialogTitle(it) }
                     }
 
                     is SettingsControl.Number -> SeekBarPreference(context).apply {
@@ -501,14 +501,12 @@ internal object SettingsDefinitions {
                         showSeekBarValue = control.showValue
                     }
                 }
-                preference.key = definition.key
-                definition.title?.let { preference.setTitle(it) }
-                definition.summary?.let { preference.setSummary(it) }
-                definition.singleLineTitle?.let { preference.isSingleLineTitle = it }
-                definition.selectable?.let { preference.isSelectable = it }
-                defaultValue(
-                    definition.control, context::getString
-                )?.let { preference.setDefaultValue(it) }
+                preference.key = key
+                title?.let { preference.setTitle(it) }
+                summary?.let { preference.setSummary(it) }
+                singleLineTitle?.let { preference.isSingleLineTitle = it }
+                selectable?.let { preference.isSelectable = it }
+                defaultValue(control, context::getString)?.let { preference.setDefaultValue(it) }
                 category.addPreference(preference)
             }
         }

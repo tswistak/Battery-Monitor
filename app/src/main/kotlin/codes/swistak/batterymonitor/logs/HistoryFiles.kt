@@ -7,6 +7,7 @@
 */
 package codes.swistak.batterymonitor.logs
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
@@ -70,11 +71,11 @@ internal suspend fun exportHistory(context: Context, uri: Uri, request: HistoryE
                     SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
                 )
                 val old = preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0)
-                check(
-                    preferences.edit().putLong(
-                        SettingsContract.KEY_LAST_LOG_EXPORT_TIME, maxOf(old, through)
-                    ).commit()
-                ) { "Could not save export watermark" }
+                // KTX edit discards commit's Boolean; a failed watermark write must fail the export.
+                @SuppressLint("UseKtx") val saved = preferences.edit().putLong(
+                    SettingsContract.KEY_LAST_LOG_EXPORT_TIME, maxOf(old, through)
+                ).commit()
+                check(saved) { "Could not save export watermark" }
             })
         } finally {
             database.close()

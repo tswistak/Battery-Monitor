@@ -51,7 +51,7 @@ class BackgroundServiceWatchdog : BroadcastReceiver() {
         }
 
         private fun isHeartbeatStale(lastHeartbeat: Long, elapsedRealtime: Long): Boolean {
-            return lastHeartbeat <= 0L || lastHeartbeat > elapsedRealtime || elapsedRealtime - lastHeartbeat >= WATCHDOG_INTERVAL_MS
+            return lastHeartbeat !in 1L..elapsedRealtime || elapsedRealtime - lastHeartbeat >= WATCHDOG_INTERVAL_MS
         }
 
         private fun staleReason(context: Context): String? {

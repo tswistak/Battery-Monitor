@@ -27,14 +27,12 @@ internal class CircleWidgetBackground(context: Context) {
     private val arcStrokeWidth: Float
 
     val bitmap: Bitmap
-    private val canvas: Canvas
+    private val canvas: Canvas = Canvas()
     private val arcPaint: Paint
     private var mLevel = 0
     private var mColor = 0
 
     init {
-        canvas = Canvas()
-
         val metrics = context.resources.displayMetrics
         dimension = (72 * (metrics.densityDpi / 160.0)).toInt()
         arcStrokeWidth = dimension * 0.07f
@@ -64,10 +62,7 @@ internal class CircleWidgetBackground(context: Context) {
         val bottomRight = dimension - (arcStrokeWidth / 2).toInt()
 
         val oval = RectF(
-            topLeft.toFloat(),
-            topLeft.toFloat(),
-            bottomRight.toFloat(),
-            bottomRight.toFloat()
+            topLeft.toFloat(), topLeft.toFloat(), bottomRight.toFloat(), bottomRight.toFloat()
         )
 
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)

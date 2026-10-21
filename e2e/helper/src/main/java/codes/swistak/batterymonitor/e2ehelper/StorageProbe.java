@@ -205,7 +205,9 @@ public final class StorageProbe extends Probe {
         long deadline = SystemClock.elapsedRealtime() + 10000;
         do {
             boolean found = false;
-            for (ActivityManager.RunningServiceInfo info : manager.getRunningServices(Integer.MAX_VALUE)) {
+            // Instrumentation shares the target UID, whose own services remain visible for lifecycle checks.
+            @SuppressWarnings("deprecation") List<ActivityManager.RunningServiceInfo> services = manager.getRunningServices(Integer.MAX_VALUE);
+            for (ActivityManager.RunningServiceInfo info : services) {
                 if (service.equals(info.service)) found = true;
             }
             if (!found) {

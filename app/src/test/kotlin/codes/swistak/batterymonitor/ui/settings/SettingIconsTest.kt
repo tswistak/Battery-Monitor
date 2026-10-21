@@ -81,13 +81,12 @@ class SettingIconsTest {
                 topic, 37, SettingsContract.CHARGING_TARGET_MODE_CUSTOM
             )
             assertTrue("Help topic $topic must contain content", sections.isNotEmpty())
-            for (section in sections) {
+            for ((titleResource, paragraphs) in sections) {
                 assertTrue(
-                    "Help topic $topic must contain paragraphs", section.paragraphs.isNotEmpty()
+                    "Help topic $topic must contain paragraphs", paragraphs.isNotEmpty()
                 )
-                val headings =
-                    listOfNotNull(section.titleResource) + section.paragraphs.filter { it.subheading }
-                        .map { it.textResource }
+                val headings = listOfNotNull(titleResource) + paragraphs.filter { it.subheading }
+                    .map { it.textResource }
                 for (title in headings) {
                     assertNotNull("Heading $title in $topic", helpHeadingIcon(title))
                 }

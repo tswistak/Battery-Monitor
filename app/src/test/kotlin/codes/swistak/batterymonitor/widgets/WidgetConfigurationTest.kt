@@ -67,21 +67,20 @@ class WidgetConfigurationTest {
     fun `existing configuration records keep every override and enable Y axis labels without migration`() {
         val legacy =
             "1|Dark|BatteryBlue|fahrenheit|45|VOLTAGE,CURRENT|NONE|COMPACT|HISTORY|VOLTAGE|72"
-        assertEquals(
-            WidgetConfiguration(
-                brightness = Brightness.Dark,
-                colorSource = ColorSource.BatteryBlue,
-                temperatureUnit = WidgetConfiguration.TEMPERATURE_FAHRENHEIT,
-                backgroundOpacityPercent = 45,
-                metrics = listOf(WidgetMetric.VOLTAGE, WidgetMetric.CURRENT),
-                statusExtra = WidgetStatusExtra.NONE,
-                variant = WidgetVariant.COMPACT,
-                tapAction = WidgetTapAction.HISTORY,
-                tapMetric = WidgetMetric.VOLTAGE,
-                trendHours = 72,
-                showYAxisLabels = true
-            ), WidgetConfiguration.decode(legacy)
+        val expected = WidgetConfiguration(
+            brightness = Brightness.Dark,
+            colorSource = ColorSource.BatteryBlue,
+            temperatureUnit = WidgetConfiguration.TEMPERATURE_FAHRENHEIT,
+            backgroundOpacityPercent = 45,
+            metrics = listOf(WidgetMetric.VOLTAGE, WidgetMetric.CURRENT),
+            statusExtra = WidgetStatusExtra.NONE,
+            variant = WidgetVariant.COMPACT,
+            tapAction = WidgetTapAction.HISTORY,
+            tapMetric = WidgetMetric.VOLTAGE,
+            trendHours = 72,
+            showYAxisLabels = true
         )
+        assertEquals(expected, WidgetConfiguration.decode(legacy))
         assertNull(WidgetConfiguration.decode("$legacy|false"))
     }
 

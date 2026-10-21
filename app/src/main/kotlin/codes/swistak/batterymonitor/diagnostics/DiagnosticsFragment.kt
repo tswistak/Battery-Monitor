@@ -142,7 +142,6 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
 
     private lateinit var dialogModel: DiagnosticsDialogViewModel
     private val dialogState get() = dialogModel.state
-    internal val hasDialog: Boolean get() = dialogState.dialog != null
     private val capturing: Boolean get() = dialogState.capturing
 
     @Volatile
@@ -844,6 +843,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
         }, SERVICE_RESTART_DELAY_MS)
     }
 
+    // This is a best-effort diagnosis after a failed write, based on immediately free space.
     @SuppressLint("UsableSpace")
     private fun retryDatabaseLogging() {
         val context = requireContext()

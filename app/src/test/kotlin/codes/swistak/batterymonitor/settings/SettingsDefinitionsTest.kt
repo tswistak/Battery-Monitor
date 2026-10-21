@@ -196,11 +196,11 @@ class SettingsDefinitionsTest {
                 SettingsContract.KEY_DISCHARGING_TARGET to SettingsControl.Number(0, 0, 99)
             ), numbers
         )
-        for (control in numbers.values) {
-            assertTrue(control.defaultValue in control.min..control.max)
-            assertEquals(1, control.increment)
-            assertTrue(control.adjustable)
-            assertTrue(control.showValue)
+        for ((defaultValue, min, max, increment, adjustable, showValue) in numbers.values) {
+            assertTrue(defaultValue in min..max)
+            assertEquals(1, increment)
+            assertTrue(adjustable)
+            assertTrue(showValue)
         }
     }
 }

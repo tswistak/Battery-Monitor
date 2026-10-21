@@ -40,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -91,7 +92,7 @@ internal fun HistoryRangeControl(
     compact: Boolean = false
 ) {
     val locale = LocalConfiguration.current.locales[0]
-    val configuration = LocalConfiguration.current
+    val windowHeight = LocalWindowInfo.current.containerDpSize.height
     val dialogsAllowed = applicationDialogsAllowed()
     val format = remember(locale, zone) {
         DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(locale).withZone(zone)
@@ -228,9 +229,7 @@ internal fun HistoryRangeControl(
                 LocalDate.parse(if (mode == "startDate") first else last).coerceIn(
                     LocalDate.of(1900, 1, 1), LocalDate.of(9999, 12, 31)
                 )
-            ),
-            yearRange = 1900..9999,
-            initialDisplayMode = if (configuration.screenHeightDp < 480) {
+            ), yearRange = 1900..9999, initialDisplayMode = if (windowHeight < 480.dp) {
                 DisplayMode.Input
             } else {
                 DisplayMode.Picker

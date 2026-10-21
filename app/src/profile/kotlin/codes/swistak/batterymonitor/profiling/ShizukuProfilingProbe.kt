@@ -369,10 +369,10 @@ internal object ShizukuProfilingProbe {
         }
     }
 
-    @Suppress("DEPRECATION")
     private fun Bundle.json(): JSONObject = JSONObject().also { json ->
         keySet().forEach { key ->
-            val value = get(key)
+            // Diagnostic keys contain mixed types, so no typed getter can inspect every value.
+            @Suppress("DEPRECATION") val value = get(key)
             json.put(
                 key, when (value) {
                     null -> JSONObject.NULL

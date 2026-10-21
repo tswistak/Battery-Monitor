@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/widget_margin"
-    tools:ignore="SpUsage,NestedWeights">
+    tools:ignore="SpUsage">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
         android:orientation="horizontal"
         tools:ignore="UselessParent">
 
+        <!-- The small RemoteViews preview distributes width and height on separate axes. -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -50,7 +51,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
 
             <TextView
                 android:layout_width="match_parent"

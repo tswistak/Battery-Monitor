@@ -14,16 +14,12 @@ import android.provider.Settings
 import androidx.core.net.toUri
 
 internal object NotificationSettingsNavigator {
-    fun openLiveUpdates(context: Context): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA && openFirstAvailable(
-                context, Intent(Settings.ACTION_APP_NOTIFICATION_PROMOTION_SETTINGS).putExtra(
-                    Settings.EXTRA_APP_PACKAGE, context.packageName
-                )
+    fun openLiveUpdates(context: Context): Boolean =
+        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA && openFirstAvailable(
+            context, Intent(Settings.ACTION_APP_NOTIFICATION_PROMOTION_SETTINGS).putExtra(
+                Settings.EXTRA_APP_PACKAGE, context.packageName
             )
-        ) return true
-
-        return openNotifications(context)
-    }
+        )) || openNotifications(context)
 
     fun openNotifications(context: Context): Boolean = openFirstAvailable(
         context, Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(

@@ -309,11 +309,11 @@ class LicenseScreenInstrumentedTest {
             }
 
             // shortcut: this fixture uses Fragment 1.9.1 state fields; update it when Fragment changes.
-            @Suppress("DEPRECATION")
             fun restoreLegacyClass(bundle: Bundle): Int {
                 var patched = 0
                 for (key in bundle.keySet()) {
-                    val value = bundle.get(key)
+                    // The saved-state fixture must inspect values whose types are not known in advance.
+                    @Suppress("DEPRECATION") val value = bundle.get(key)
                     if (value is Bundle) patched += restoreLegacyClass(value)
                     else if (value?.javaClass?.name == "androidx.fragment.app.FragmentState") {
                         val tag = value.javaClass.getDeclaredField("mTag")
@@ -648,7 +648,6 @@ class LicenseScreenInstrumentedTest {
         assertTrue("License screen did not reach the expected state", reached)
     }
 
-    @Suppress("DEPRECATION")
     private fun reportReadinessTimeout() {
         val record = Bundle().apply {
             putString("helpReadinessDiagnostic", "timeout")
@@ -716,7 +715,8 @@ class LicenseScreenInstrumentedTest {
                 try {
                     collect(child)
                 } finally {
-                    child.recycle()
+                    // Accessibility nodes still require recycling before API 33.
+                    @Suppress("DEPRECATION") child.recycle()
                 }
             }
         }
@@ -725,7 +725,7 @@ class LicenseScreenInstrumentedTest {
                 try {
                     collect(root)
                 } finally {
-                    root.recycle()
+                    @Suppress("DEPRECATION") root.recycle()
                 }
             }
         }.onFailure { record.putString("accessibilityDiagnosticError", it.toString()) }

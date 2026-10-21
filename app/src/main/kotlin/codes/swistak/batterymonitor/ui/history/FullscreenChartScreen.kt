@@ -541,40 +541,39 @@ internal fun FullscreenChartScreen(
                             )
                         }
                     }
-                    if (!showZoom || !showScale) Box {
+                    if (!showZoom) Box {
                         ChartIcon(
                             R.drawable.ui_more, R.string.history_chart_more, true
                         ) { overflowMenu = true }
-                        DropdownMenu(overflowMenu, onDismissRequest = { overflowMenu = false }) {
+                        DropdownMenu(
+                            overflowMenu, onDismissRequest = { overflowMenu = false }) {
                             if (!showScale) DropdownMenuItem(
                                 text = { Text(stringResource(R.string.history_chart_settings)) },
                                 onClick = {
                                     overflowMenu = false
                                     settingsMenu = true
                                 })
-                            if (!showZoom) {
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.history_chart_zoom_in)) },
-                                    enabled = lineData != null,
-                                    onClick = {
-                                        overflowMenu = false
-                                        chartView?.zoomToCenter(1.4f, 1f)
-                                    })
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.history_chart_zoom_out)) },
-                                    enabled = lineData != null,
-                                    onClick = {
-                                        overflowMenu = false
-                                        chartView?.zoomToCenter(0.7f, 1f)
-                                    })
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.history_chart_reset)) },
-                                    enabled = lineData != null,
-                                    onClick = {
-                                        overflowMenu = false
-                                        fitViewport()
-                                    })
-                            }
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.history_chart_zoom_in)) },
+                                enabled = lineData != null,
+                                onClick = {
+                                    overflowMenu = false
+                                    chartView?.zoomToCenter(1.4f, 1f)
+                                })
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.history_chart_zoom_out)) },
+                                enabled = lineData != null,
+                                onClick = {
+                                    overflowMenu = false
+                                    chartView?.zoomToCenter(0.7f, 1f)
+                                })
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.history_chart_reset)) },
+                                enabled = lineData != null,
+                                onClick = {
+                                    overflowMenu = false
+                                    fitViewport()
+                                })
                             if (!showScale) {
                                 HorizontalDivider()
                                 Text(

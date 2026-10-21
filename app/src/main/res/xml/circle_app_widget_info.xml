@@ -1,4 +1,5 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:initialLayout="@layout/circle_app_widget"
     android:minWidth="40dp"
     android:minHeight="40dp"
@@ -7,4 +8,5 @@
     android:previewImage="@drawable/circle_widget_preview"
     android:previewLayout="@layout/circle_widget_preview"
     android:updatePeriodMillis="0"
-    android:widgetCategory="home_screen|keyguard" />
+    android:widgetCategory="home_screen|keyguard"
+    tools:targetApi="31" />

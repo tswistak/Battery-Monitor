@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.ui.widgets
 
+import android.annotation.SuppressLint
 import android.appwidget.AppWidgetHostView
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
@@ -546,6 +547,9 @@ private fun WidgetPreview(
             factory = { viewContext ->
             object : AppWidgetHostView(viewContext) {
                 override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
+
+                // This read-only preview has no click action; its Compose parent supplies the description.
+                @SuppressLint("ClickableViewAccessibility")
                 override fun onTouchEvent(event: MotionEvent): Boolean = true
             }.apply {
                 importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS

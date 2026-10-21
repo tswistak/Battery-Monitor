@@ -244,7 +244,7 @@ fun SettingsScreen(
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        val unavailable = unavailableReason(descriptor, preferences, context)
+                        val unavailable = unavailableReason(descriptor, context)
                         SettingItem(
                             descriptor,
                             first,
@@ -479,7 +479,7 @@ private fun SettingItem(
 }
 
 private fun unavailableReason(
-    descriptor: SettingDescriptor, screen: PreferenceScreen, context: Context
+    descriptor: SettingDescriptor, context: Context
 ): String? {
     if (descriptor.key == SettingsContract.KEY_CHANGE_APP_LANGUAGE && Build.VERSION.SDK_INT < 33) return context.getString(
         R.string.settings_app_language_unavailable

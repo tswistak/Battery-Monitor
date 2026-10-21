@@ -73,7 +73,6 @@ import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.abs
 
-@Suppress("DEPRECATION")
 class FullscreenChartStateInstrumentedTest {
     private lateinit var context: Context
     private lateinit var application: Application
@@ -1308,33 +1307,34 @@ class FullscreenChartStateInstrumentedTest {
                         WindowInsetsCompat.toWindowInsetsCompat(it, decor)
                     }
                     if (!reportedFullscreenInsets) {
-                        InstrumentationRegistry.getInstrumentation().sendStatus(0, Bundle().apply {
-                            putString("testDiagnostic", "fullscreenInsets")
-                            putString(
-                                "oldStatusBarVisible",
-                                ViewCompat.getRootWindowInsets(decor)
-                                    ?.isVisible(WindowInsetsCompat.Type.statusBars())?.toString()
-                                    ?: "unknown"
-                            )
-                            putString(
-                                "viewAwareStatusBarVisible",
-                                viewAwareInsets?.isVisible(WindowInsetsCompat.Type.statusBars())
-                                    ?.toString() ?: "unknown"
-                            )
-                            putInt("windowSystemUiVisibility", decor.windowSystemUiVisibility)
-                            putInt("decorSystemUiVisibility", decor.systemUiVisibility)
-                            putInt("fullscreenBit", View.SYSTEM_UI_FLAG_FULLSCREEN)
-                            putBoolean(
-                                "windowFullscreenBitSet",
-                                decor.windowSystemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN != 0
-                            )
-                            putBoolean(
-                                "decorFullscreenBitSet",
-                                decor.systemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN != 0
-                            )
-                            putBoolean("hasWindowFocus", decor.hasWindowFocus())
-                            putInt("rawTopInsetPx", platformInsets?.systemWindowInsetTop ?: -1)
-                        })
+                        @Suppress("DEPRECATION") InstrumentationRegistry.getInstrumentation()
+                            .sendStatus(0, Bundle().apply {
+                                putString("testDiagnostic", "fullscreenInsets")
+                                putString(
+                                    "oldStatusBarVisible",
+                                    ViewCompat.getRootWindowInsets(decor)
+                                        ?.isVisible(WindowInsetsCompat.Type.statusBars())
+                                        ?.toString() ?: "unknown"
+                                )
+                                putString(
+                                    "viewAwareStatusBarVisible",
+                                    viewAwareInsets?.isVisible(WindowInsetsCompat.Type.statusBars())
+                                        ?.toString() ?: "unknown"
+                                )
+                                putInt("windowSystemUiVisibility", decor.windowSystemUiVisibility)
+                                putInt("decorSystemUiVisibility", decor.systemUiVisibility)
+                                putInt("fullscreenBit", View.SYSTEM_UI_FLAG_FULLSCREEN)
+                                putBoolean(
+                                    "windowFullscreenBitSet",
+                                    decor.windowSystemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN != 0
+                                )
+                                putBoolean(
+                                    "decorFullscreenBitSet",
+                                    decor.systemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN != 0
+                                )
+                                putBoolean("hasWindowFocus", decor.hasWindowFocus())
+                                putInt("rawTopInsetPx", platformInsets?.systemWindowInsetTop ?: -1)
+                            })
                         reportedFullscreenInsets = true
                     }
                     rendered =

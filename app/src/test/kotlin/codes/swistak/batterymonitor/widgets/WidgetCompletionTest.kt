@@ -24,7 +24,7 @@ class WidgetCompletionTest {
         WidgetUpdateDispatcher.finishCallbacks(
             listOf({ completed += 1 }, { throw failure }, { completed += 3 }), errors::add
         )
-        WidgetUpdateDispatcher.finishCallbacks(listOf({ completed += 4 }), errors::add)
+        WidgetUpdateDispatcher.finishCallbacks(listOf { completed += 4 }, errors::add)
 
         assertEquals(listOf(1, 3, 4), completed)
         assertEquals(listOf(failure), errors)
