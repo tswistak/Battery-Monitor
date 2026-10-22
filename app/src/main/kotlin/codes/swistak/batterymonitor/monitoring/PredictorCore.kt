@@ -215,6 +215,8 @@ internal class PredictorCore(
 
     private fun updateExposedPredictions() {
         val info = curInfo!!
+        info.effectivePredictionTargetPercent =
+            targetFor(info, chargingTargetPercent, dischargingTargetPercent)
         if (!canPredict()) {
             info.prediction.clear()
             info.fullRangePrediction.clear()

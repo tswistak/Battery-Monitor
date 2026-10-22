@@ -20,7 +20,7 @@ class BatteryHistorySamplerTest {
     private val record = LogRecord(100, 50, 1_000_000, 300, 4000, -100_000, 2_500_000)
 
     @Test
-    fun unchanged_state_samples_at_120_seconds_and_measurement_fluctuations_do_not_write() {
+    fun `unchanged state samples at 120 seconds and measurement fluctuations do not write`() {
         val sampler = BatteryHistorySampler(0)
         for (elapsed in 1L..<HISTORY_SAMPLE_INTERVAL_MS step 100) {
             val reading = record.copy(
@@ -38,7 +38,7 @@ class BatteryHistorySamplerTest {
     }
 
     @Test
-    fun every_level_status_and_source_change_is_immediate_and_resets_the_interval() {
+    fun `every level status and source change is immediate and resets the interval`() {
         val sampler = BatteryHistorySampler(0)
         for ((observation, age) in listOf(
             record.copy(charge = 51) to LogDatabase.STATUS_OLD,
@@ -60,7 +60,7 @@ class BatteryHistorySamplerTest {
     }
 
     @Test
-    fun failed_writes_do_not_advance_sampling_or_lose_an_event_on_retry() {
+    fun `failed writes do not advance sampling or lose an event on retry`() {
         val sampler = BatteryHistorySampler(0)
         repeat(3) {
             assertEquals(
@@ -79,7 +79,7 @@ class BatteryHistorySamplerTest {
     }
 
     @Test
-    fun skipped_updates_preserve_the_periodic_deadline_and_successful_events_reset_it() {
+    fun `skipped updates preserve the periodic deadline and successful events reset it`() {
         val sampler = BatteryHistorySampler(0)
         for (elapsed in listOf(1_000L, 60_000L, 119_999L)) {
             val changedMeasurements = record.copy(temperature = 310, currentMicroAmps = elapsed)
@@ -98,7 +98,7 @@ class BatteryHistorySamplerTest {
     }
 
     @Test
-    fun restored_deadlines_resume_without_tight_retries_after_long_gaps_or_failures() {
+    fun `restored deadlines resume without tight retries after long gaps or failures`() {
         val restored =
             BatteryHistorySampler(BatteryHistorySampler.restoreElapsed(10_000, 7, 7, 70_000))
         assertEquals(60_000L, restored.nextUpdateDelay(70_000))
@@ -115,7 +115,7 @@ class BatteryHistorySamplerTest {
     }
 
     @Test
-    fun resolved_updates_crossing_the_deadline_request_one_fresh_observation_without_failed_write_spin() {
+    fun `resolved updates crossing the deadline request one fresh observation without failed write spin`() {
         val sampler = BatteryHistorySampler(0)
         assertNull(sampler.statusAge(record, record, 119_999))
         assertEquals(1L, sampler.nextUpdateDelay(120_010, observedElapsed = 119_999))
@@ -133,7 +133,7 @@ class BatteryHistorySamplerTest {
     }
 
     @Test
-    fun restarts_clocks_imports_and_sleep_never_catch_up_or_suppress_future_samples() {
+    fun `restarts clocks imports and sleep never catch up or suppress future samples`() {
         val saved = BatteryHistorySampler.restoreElapsed(10_000, 7, 7, 20_000)
         val restarted = BatteryHistorySampler(saved)
         assertNull(restarted.statusAge(record, record, 20_000))
@@ -159,7 +159,7 @@ class BatteryHistorySamplerTest {
     }
 
     @Test
-    fun retention_checks_are_skipped_for_unlimited_history_and_failed_export_prevents_deletion() {
+    fun `retention checks are skipped for unlimited history and failed export prevents deletion`() {
         var queries = 0
         var exports = 0
         var deletions = 0
@@ -181,7 +181,7 @@ class BatteryHistorySamplerTest {
     }
 
     @Test
-    fun legacy_unplugged_percentage_reset_can_still_start_a_status_period() {
+    fun `legacy unplugged percentage reset can still start a status period`() {
         val sampler = BatteryHistorySampler(0)
         assertEquals(
             LogDatabase.STATUS_NEW,

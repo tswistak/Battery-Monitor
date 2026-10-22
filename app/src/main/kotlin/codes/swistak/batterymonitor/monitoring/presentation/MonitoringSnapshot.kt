@@ -41,7 +41,8 @@ internal data class MonitoringSnapshot(
     val predictorData: PredictorStoredState? = null,
     val recentPredictorData: PredictorRecentState? = null,
     val fieldSources: Map<String, String> = emptyMap(),
-    val fieldMeasurementTimes: Map<String, BatteryMeasurementTime> = emptyMap()
+    val fieldMeasurementTimes: Map<String, BatteryMeasurementTime> = emptyMap(),
+    val effectivePredictionTargetPercent: Int = configuredPrediction.targetPercent
 ) {
     companion object {
         const val FIELD_PREDICTOR_DATA = "monitoring_predictor_data"
@@ -108,6 +109,7 @@ internal data class MonitoringSnapshot(
                 lastStatusTimeMillis = info.lastStatusCtm,
                 configuredPrediction = info.prediction.toSnapshot(),
                 fullRangePrediction = info.fullRangePrediction.toSnapshot(),
+                effectivePredictionTargetPercent = info.effectivePredictionTargetPercent,
                 observedAtMillis = bundle.getLong(MonitoringConnection.FIELD_OBSERVED_AT),
                 predictorData = predictorData,
                 recentPredictorData = bundle.getBundle(FIELD_RECENT_PREDICTOR_DATA)

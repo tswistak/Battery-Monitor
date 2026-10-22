@@ -20,7 +20,7 @@ import org.junit.Test
 
 class BatteryHistoryObservationTest {
     @Test
-    fun unavailable_fields_never_become_UI_defaults_or_previous_readings() {
+    fun `unavailable fields never become UI defaults or previous readings`() {
         val reading = batteryHistoryObservation(emptyMap(), 123, null, null, 50)
         assertNull(reading.charge)
         assertNull(reading.temperature)
@@ -37,7 +37,7 @@ class BatteryHistoryObservationTest {
     }
 
     @Test
-    fun resolved_standard_and_privileged_fields_preserve_actual_readings_and_valid_zeros() {
+    fun `resolved standard and privileged fields preserve actual readings and valid zeros`() {
         val fields = mergeBatteryFields(
             mapOf("level" to 50, "scale" to 100, "plugged" to 0),
             PrivilegedBatteryReading(status = 3, temperatureTenthsC = 0, voltageMillivolts = 4000)

@@ -27,7 +27,7 @@ import java.util.TimeZone
 
 class HistoryDatePickerTest {
     @Test
-    fun picker_timestamps_are_utc_dates_regardless_of_device_timezone() {
+    fun `picker timestamps are UTC dates regardless of device timezone`() {
         val original = TimeZone.getDefault()
         try {
             for (zone in listOf(
@@ -49,7 +49,7 @@ class HistoryDatePickerTest {
     }
 
     @Test
-    fun western_timezones_do_not_shift_the_selected_day_backwards() {
+    fun `western timezones do not shift the selected day backwards`() {
         val date = LocalDate.of(2026, 3, 8)
         val millis = historyDatePickerMillis(date)
         val zone = ZoneId.of("America/Los_Angeles")
@@ -58,7 +58,7 @@ class HistoryDatePickerTest {
     }
 
     @Test
-    fun selected_calendar_days_remain_inclusive_through_local_dst_transitions() {
+    fun `selected calendar days remain inclusive through local DST transitions`() {
         for ((zoneName, spring, autumn) in listOf(
             Triple("Europe/Warsaw", "2026-03-29", "2026-10-25"),
             Triple("America/Los_Angeles", "2026-03-08", "2026-11-01")
@@ -81,7 +81,7 @@ class HistoryDatePickerTest {
     }
 
     @Test
-    fun month_and_year_ranges_keep_all_calendar_days_and_leap_days() {
+    fun `month and year ranges keep all calendar days and leap days`() {
         val zone = ZoneId.of("Europe/Warsaw")
         assertEquals(
             HistoryRangeState.days(LocalDate.of(2028, 2, 1), LocalDate.of(2028, 2, 29), zone),
@@ -94,7 +94,7 @@ class HistoryDatePickerTest {
     }
 
     @Test
-    fun invalid_drafts_do_not_produce_ranges() {
+    fun `invalid drafts do not produce ranges`() {
         val zone = ZoneOffset.UTC
         assertNull(historyDraftRange("custom", "2026-04-02", "2026-04-01", "", "", zone))
         assertNull(historyDraftRange("custom", "invalid", "2026-04-01", "", "", zone))
@@ -107,7 +107,7 @@ class HistoryDatePickerTest {
     }
 
     @Test
-    fun epoch_boundary_dates_keep_existing_nonnegative_history_validation() {
+    fun `epoch boundary dates keep existing nonnegative history validation`() {
         val west = ZoneId.of("America/Los_Angeles")
         assertEquals(
             LocalDate.of(1969, 12, 31),

@@ -39,7 +39,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
@@ -71,7 +70,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import androidx.preference.CheckBoxPreference
-import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceScreen
 import androidx.preference.SeekBarPreference
@@ -227,11 +225,6 @@ fun SettingsScreen(
                 LazyColumn(
                     state = state, contentPadding = PaddingValues(top = 8.dp, bottom = 24.dp)
                 ) {
-                    if (category == SettingsCategory.Notification) item {
-                        NotificationPreview(
-                            preferences
-                        )
-                    }
                     itemsIndexed(rows, key = { _, item -> item.key }) { index, descriptor ->
                         val first = index == 0 || rows[index - 1].group != descriptor.group
                         val last =
@@ -499,37 +492,4 @@ private fun unavailableReason(
         R.string.settings_dependency_disabled
     )
     return null
-}
-
-@Composable
-private fun NotificationPreview(screen: PreferenceScreen) {
-    OutlinedCard(Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(
-                stringResource(R.string.settings_notification_preview),
-                style = MaterialTheme.typography.labelLarge
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Icon(
-                    painterResource(R.drawable.ui_battery),
-                    null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Column {
-                    Text(
-                        stringResource(R.string.app_full_name) + " · 72%",
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    listOf("top_line", "bottom_line").forEach { key ->
-                        screen.findPreference<ListPreference>(key)?.entry?.let { Text(it.toString()) }
-                    }
-                }
-            }
-            Text(
-                stringResource(R.string.settings_notification_preview_note),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
 }

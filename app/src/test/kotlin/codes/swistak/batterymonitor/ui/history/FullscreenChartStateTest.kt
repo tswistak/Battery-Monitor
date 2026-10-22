@@ -29,7 +29,46 @@ import java.util.Locale
 
 class FullscreenChartStateTest {
     @Test
-    fun adjacent_observation_viewports_preserve_span_and_stay_inside_selected_range() {
+    fun `coordinates rebase only when zoom precision or window edges require it`() {
+        val late = 1_800_000_000_000L
+        val range = HistoryRangeState(0, Long.MAX_VALUE)
+        val coordinates = HistoryRangeState(late - 120_000, late + 180_000)
+        assertFalse(
+            fullscreenCoordinatesNeedRebase(
+                coordinates, range, HistoryRangeState(late, late + 60_000)
+            )
+        )
+        assertFalse(
+            fullscreenCoordinatesNeedRebase(
+                coordinates, range, HistoryRangeState(late + 10_000, late + 70_000)
+            )
+        )
+        assertTrue(
+            fullscreenCoordinatesNeedRebase(
+                coordinates, range, HistoryRangeState(late, late + 5_000)
+            )
+        )
+        assertTrue(
+            fullscreenCoordinatesNeedRebase(
+                coordinates, range, HistoryRangeState(late + 140_000, late + 200_000)
+            )
+        )
+        assertTrue(
+            fullscreenCoordinatesNeedRebase(
+                coordinates, range, HistoryRangeState(late + 110_000, late + 170_000)
+            )
+        )
+        assertTrue(
+            fullscreenCoordinatesNeedRebase(
+                coordinates,
+                HistoryRangeState(late, late + 60_000),
+                HistoryRangeState(late, late + 60_000)
+            )
+        )
+    }
+
+    @Test
+    fun `adjacent observation viewports preserve span and stay inside selected range`() {
         val range = HistoryRangeState(100, 1000)
         val viewport = HistoryRangeState(400, 600)
         assertEquals(HistoryRangeState(200, 400), fullscreenViewportAround(range, viewport, 300))
@@ -44,7 +83,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun viewport_recentering_does_not_overflow_near_long_maximum() {
+    fun `viewport recentering does not overflow near long maximum`() {
         val range = HistoryRangeState(0, Long.MAX_VALUE)
         val viewport = HistoryRangeState(Long.MAX_VALUE - 1000, Long.MAX_VALUE - 500)
         assertEquals(
@@ -55,7 +94,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun request_keeps_every_metric_and_exact_inclusive_exclusive_range() {
+    fun `request keeps every metric and exact inclusive exclusive range`() {
         val range = HistoryRangeState(1_800_000_000_123, 1_800_003_600_124)
         for (metric in HistoryMetric.entries) {
             assertEquals(
@@ -70,7 +109,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun request_rejects_missing_unknown_metrics_and_invalid_ranges() {
+    fun `request rejects missing unknown metrics and invalid ranges`() {
         for (metric in listOf(null, "", "level", "UNKNOWN")) {
             assertNull(fullscreenChartRequest(metric, 0, 100))
         }
@@ -80,7 +119,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun viewport_stays_inside_selected_range_with_a_nonempty_interval() {
+    fun `viewport stays inside selected range with a nonempty interval`() {
         val range = HistoryRangeState(100, 200)
         assertEquals(range, boundedChartViewport(range, HistoryRangeState(0, 300)))
         assertEquals(
@@ -101,7 +140,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun automatic_scale_uses_local_extrema_and_fixed_scale_uses_full_period() {
+    fun `automatic scale uses local extrema and fixed scale uses full period`() {
         val automatic = fullscreenYBounds(
             HistoryMetric.TEMPERATURE, ChartScaleMode.AUTOMATIC, 34.2, 35.1, 20.0, 45.0, false, 1
         )
@@ -121,7 +160,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun unit_preferences_convert_values_and_reorder_reversed_current_bounds() {
+    fun `unit preferences convert values and reorder reversed current bounds`() {
         assertEquals(95.0, fullscreenDisplayValue(35.0, HistoryMetric.TEMPERATURE, true, 1), 0.0001)
         assertEquals(35.0, fullscreenDisplayValue(35.0, HistoryMetric.TEMPERATURE, false, -1), 0.0)
         assertEquals(100.0, fullscreenDisplayValue(-100.0, HistoryMetric.CURRENT, false, -1), 0.0)
@@ -142,7 +181,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun metric_selection_keeps_one_primary_and_at_most_one_distinct_comparison() {
+    fun `metric selection keeps one primary and at most one distinct comparison`() {
         val range = HistoryRangeState(100, 1000)
         val initial = FullscreenChartUiState(range, "all", HistoryMetric.LEVEL)
         assertEquals(listOf(HistoryMetric.LEVEL), initial.metrics)
@@ -166,7 +205,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun metric_and_presentation_changes_preserve_range_viewport_selection_and_loaded_data() {
+    fun `metric and presentation changes preserve range viewport selection and loaded data`() {
         val range = HistoryRangeState(100, 1000)
         val chart = DetailedHistoryChartModel(
             range, range, HistoryMetric.LEVEL, 2, emptyList(), emptyList(), 20.0, 80.0, true
@@ -201,7 +240,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun constant_and_empty_series_have_finite_nondegenerate_axes_for_every_metric() {
+    fun `constant and empty series have finite nondegenerate axes for every metric`() {
         for (metric in HistoryMetric.entries) {
             for (mode in ChartScaleMode.entries) {
                 for (value in listOf(null, 0.0, 50.0)) {
@@ -218,7 +257,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun selected_measurement_formatting_uses_existing_units_locale_and_preferences() {
+    fun `selected measurement formatting uses existing units locale and preferences`() {
         val polish = Locale.forLanguageTag("pl-PL")
         val values = listOf(57.0, 34.2, 4.215, -12.5, -0.4, 2500.125)
         val expected = listOf("57%", "93,6 °F", "4,22 V", "12,5 mA", "+0,40 W", "2 500,125 mAh")
@@ -234,7 +273,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun both_axes_scale_independently_in_actual_units() {
+    fun `both axes scale independently in actual units`() {
         for (mode in ChartScaleMode.entries) {
             val level = fullscreenYBounds(
                 HistoryMetric.LEVEL, mode, 55.0, 56.0, 20.0, 80.0, false, 1
@@ -254,7 +293,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun logarithmic_coordinates_and_inverse_labels_preserve_real_units_and_preferences() {
+    fun `logarithmic coordinates and inverse labels preserve real units and preferences`() {
         val values = listOf(57.0, -5.0, 4.215, -12.5, -0.4, 2500.125)
         for ((index, metric) in HistoryMetric.entries.withIndex()) {
             val value = values[index]
@@ -282,7 +321,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun logarithmic_availability_checks_every_metric_in_the_complete_selected_range() {
+    fun `logarithmic availability checks every metric in the complete selected range`() {
         val metrics = listOf(HistoryMetric.LEVEL, HistoryMetric.CURRENT)
         val positive = DetailedHistoryBounds(3, 10.0, 100.0)
         assertTrue(fullscreenLogAvailable(metrics, metrics.associateWith { positive }, false, 1))
@@ -312,7 +351,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun logarithmic_availability_applies_fahrenheit_and_current_sign_before_validation() {
+    fun `logarithmic availability applies fahrenheit and current sign before validation`() {
         val temperature = listOf(HistoryMetric.TEMPERATURE)
         val cold = mapOf(HistoryMetric.TEMPERATURE to DetailedHistoryBounds(2, -5.0, 5.0))
         assertFalse(fullscreenLogAvailable(temperature, cold, false, 1))
@@ -329,7 +368,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun fresh_positive_bounds_do_not_admit_stale_nonpositive_chart_data_during_refresh() {
+    fun `fresh positive bounds do not admit stale nonpositive chart data during refresh`() {
         val range = HistoryRangeState(100, 1000)
         val metric = HistoryMetric.LEVEL
         val bounds = mapOf(metric to DetailedHistoryBounds(2, 10.0, 80.0))
@@ -379,7 +418,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun logarithmic_axis_bounds_use_local_or_complete_extrema_for_both_axes() {
+    fun `logarithmic axis bounds use local or complete extrema for both axes`() {
         for (metric in listOf(HistoryMetric.CURRENT, HistoryMetric.POWER)) {
             val automatic = fullscreenYBounds(
                 metric,
@@ -412,7 +451,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun positive_fixed_level_logarithmic_axis_uses_real_lower_bound_and_hundred_percent_upper_bound() {
+    fun `positive fixed level logarithmic axis uses real lower bound and hundred percent upper bound`() {
         for (mode in listOf(ChartScaleMode.FIXED, ChartScaleMode.MANUAL)) {
             val scale = fullscreenYBounds(
                 HistoryMetric.LEVEL,
@@ -437,7 +476,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun flat_and_empty_logarithmic_axes_and_inverse_float_labels_remain_finite() {
+    fun `flat and empty logarithmic axes and inverse float labels remain finite`() {
         for (metric in HistoryMetric.entries) {
             for (mode in ChartScaleMode.entries) {
                 for (value in listOf(null, 1.0, 50.0)) {
@@ -486,7 +525,7 @@ class FullscreenChartStateTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun nonpositive_observations_are_rejected_instead_of_silently_transformed() {
+    fun `nonpositive observations are rejected instead of silently transformed`() {
         fullscreenChartValue(0.0, HistoryMetric.LEVEL, false, 1, ChartValueScale.LOGARITHMIC)
     }
 }

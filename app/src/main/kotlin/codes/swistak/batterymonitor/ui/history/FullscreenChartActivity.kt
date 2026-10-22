@@ -57,8 +57,7 @@ class FullscreenChartActivity : AppCompatActivity() {
         }
         enableEdgeToEdge()
         hideStatusBar()
-        // Let large screens and multi-window choose their own orientation.
-        if (resources.configuration.smallestScreenWidthDp < 600 && !isInMultiWindowMode) {
+        if (!isInMultiWindowMode) {
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
         }
         viewModel = ViewModelProvider(this)[FullscreenChartViewModel::class.java]
@@ -84,7 +83,8 @@ class FullscreenChartActivity : AppCompatActivity() {
                         onValueScale = viewModel::valueScale,
                         onSelect = viewModel::select,
                         onRetry = viewModel::refresh,
-                        onBack = ::finish
+                        onBack = ::finish,
+                        onViewportObserved = viewModel::observeViewport
                     )
                 }
             }

@@ -50,7 +50,8 @@ internal data class FullscreenChartUiState(
     val valueScale: ChartValueScale = ChartValueScale.LINEAR,
     val selectedRecord: HistoryRecord? = null,
     val loading: Boolean = false,
-    val error: Boolean = false
+    val error: Boolean = false,
+    val viewportCommand: Long = 0
 ) {
     val metrics: List<HistoryMetric> get() = listOfNotNull(metric, comparison)
     val chart: DetailedHistoryChartModel? get() = charts[metric]
@@ -161,6 +162,7 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
             range = range,
             rangeLabel = label,
             viewport = range,
+            viewportCommand = before.viewportCommand + 1,
             selectedKey = null,
             selectedRecord = null,
             charts = emptyMap(),
@@ -170,12 +172,22 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
     }
 
     fun viewport(viewport: HistoryRangeState, width: Int) {
+        updateViewport(viewport, width, command = true)
+    }
+
+    fun observeViewport(viewport: HistoryRangeState, width: Int) {
+        updateViewport(viewport, width, command = false)
+    }
+
+    private fun updateViewport(viewport: HistoryRangeState, width: Int, command: Boolean) {
         val before = mutable.value ?: return
         val bounded = boundedChartViewport(before.range, viewport)
         val pixels = width.coerceIn(64, 4096)
         if (before.viewport == bounded && pixels == pixelWidth) return
         pixelWidth = pixels
-        mutable.value = before.copy(viewport = bounded)
+        mutable.value = before.copy(
+            viewport = bounded, viewportCommand = before.viewportCommand + if (command) 1 else 0
+        )
         load(debounce = true)
     }
 

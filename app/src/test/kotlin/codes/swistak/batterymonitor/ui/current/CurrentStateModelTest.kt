@@ -19,6 +19,57 @@ import org.junit.Test
 
 class CurrentStateModelTest {
     @Test
+    fun `paused charging target is independent of a cleared ETA and survives resuming`() {
+        val reached = prediction(BatteryInfo.Prediction.NONE, 80, true).copy(hours = 0, minutes = 0)
+        val cleared = prediction(BatteryInfo.Prediction.NONE, 0)
+        val paused = snapshot(BatteryInfo.STATUS_NOT_CHARGING, 88, reached, cleared).copy(
+            plugged = BatteryInfo.PLUGGED_USB, effectivePredictionTargetPercent = 80
+        )
+        val configured = currentStateModel(live(paused))
+        assertTrue(configured.hasAlternative)
+        assertEquals(80, configured.targetPercent)
+        assertEquals(100, configured.alternativeTargetPercent)
+        val full = currentStateModel(live(paused), showingFullRange = true)
+        assertEquals(100, full.targetPercent)
+        assertEquals(80, full.alternativeTargetPercent)
+        assertEquals(BatteryInfo.Prediction.NONE, full.prediction?.direction)
+        assertFalse(full.prediction!!.targetReached)
+        assertEquals(CurrentCondition.PAUSED, full.condition)
+        val resumed = paused.copy(
+            status = BatteryInfo.STATUS_CHARGING,
+            fullRangePrediction = prediction(BatteryInfo.Prediction.UNTIL_CHARGED, 100)
+        )
+        assertEquals(paused.predictionSelectionContext(), resumed.predictionSelectionContext())
+        assertTrue(currentStateModel(live(resumed), true).showingFullRange)
+        for (level in listOf(70, 80, 88)) {
+            val reading = resumed.copy(levelPercent = level)
+            assertTrue(currentStateModel(live(reading)).hasAlternative)
+            assertEquals(100, currentStateModel(live(reading), true).targetPercent)
+        }
+        val noEta = paused.copy(configuredPrediction = cleared)
+        assertEquals(80, currentStateModel(live(noEta)).targetPercent)
+        assertTrue(currentStateModel(live(noEta)).hasAlternative)
+        val missingTarget = noEta.copy(effectivePredictionTargetPercent = 0)
+        assertEquals(null, currentStateModel(live(missingTarget)).targetPercent)
+        assertFalse(currentStateModel(live(missingTarget)).hasAlternative)
+        assertFalse(currentStateModel(live(paused.copy(effectivePredictionTargetPercent = 100))).hasAlternative)
+        assertEquals(null, currentStateModel(MonitoringUiState()).targetPercent)
+        val stale = currentStateModel(MonitoringUiState(MonitoringAvailability.STALE, paused), true)
+        assertEquals(CurrentCondition.STALE, stale.condition)
+        assertEquals(100, stale.targetPercent)
+        for (plug in listOf(BatteryInfo.PLUGGED_USB, BatteryInfo.PLUGGED_UNPLUGGED)) {
+            val discharge = snapshot().copy(plugged = plug)
+            assertEquals(false to 20, discharge.predictionSelectionContext())
+            assertEquals(0, currentStateModel(live(discharge), true).targetPercent)
+            assertEquals(
+                BatteryInfo.Prediction.UNTIL_DRAINED,
+                currentStateModel(live(discharge), true).prediction?.direction
+            )
+            assertFalse(paused.predictionSelectionContext() == discharge.predictionSelectionContext())
+        }
+    }
+
+    @Test
     fun `measurement details use each actual source and both power inputs`() {
         val reading = snapshot().copy(
             fieldSources = mapOf(

@@ -71,6 +71,8 @@ internal class BatteryInfo {
         private const val FIELD_PREDICTION_WHAT = "prediction_what"
         private const val FIELD_PREDICTION_WHEN = "prediction_when"
         private const val FIELD_PREDICTION_TARGET_PERCENT = "prediction_target_percent"
+        private const val FIELD_EFFECTIVE_PREDICTION_TARGET = "effective_prediction_target"
+
         private const val FIELD_PREDICTION_TARGET_REACHED = "prediction_target_reached"
         private const val FIELD_FULL_RANGE_PREDICTION_DAYS = "full_range_prediction_days"
         private const val FIELD_FULL_RANGE_PREDICTION_HOURS = "full_range_prediction_hours"
@@ -139,6 +141,8 @@ internal class BatteryInfo {
     var lastStatusCtm: Long = 0
     var prediction: Prediction = Prediction(this)
     var fullRangePrediction: Prediction = Prediction(this)
+
+    var effectivePredictionTargetPercent: Int = 0
 
     internal class Prediction(private val batteryInfo: BatteryInfo) {
         companion object {
@@ -288,6 +292,7 @@ internal class BatteryInfo {
         bundle.putInt(FIELD_PREDICTION_WHAT, prediction.whatHappened)
         bundle.putLong(FIELD_PREDICTION_WHEN, prediction.whenHappened)
         bundle.putInt(FIELD_PREDICTION_TARGET_PERCENT, prediction.targetPercent)
+        bundle.putInt(FIELD_EFFECTIVE_PREDICTION_TARGET, effectivePredictionTargetPercent)
         bundle.putBoolean(FIELD_PREDICTION_TARGET_REACHED, prediction.targetReached)
         bundle.putInt(FIELD_FULL_RANGE_PREDICTION_DAYS, fullRangePrediction.lastRTime.days)
         bundle.putInt(FIELD_FULL_RANGE_PREDICTION_HOURS, fullRangePrediction.lastRTime.hours)
@@ -341,6 +346,9 @@ internal class BatteryInfo {
             0
         }
         prediction.targetReached = bundle.getBoolean(FIELD_PREDICTION_TARGET_REACHED, false)
+        effectivePredictionTargetPercent = bundle.getInt(
+            FIELD_EFFECTIVE_PREDICTION_TARGET, prediction.targetPercent
+        )
 
         if (bundle.containsKey(FIELD_FULL_RANGE_PREDICTION_WHAT)) {
             fullRangePrediction.lastRTime.days = bundle.getInt(FIELD_FULL_RANGE_PREDICTION_DAYS)

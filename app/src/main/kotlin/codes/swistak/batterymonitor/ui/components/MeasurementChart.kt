@@ -194,7 +194,8 @@ internal fun MeasurementChart(
     currentMultiplier: Int = 1,
     compactChartHeight: androidx.compose.ui.unit.Dp = 56.dp,
     linksToEvents: Boolean = false,
-    zone: ZoneId = ZoneId.systemDefault()
+    zone: ZoneId = ZoneId.systemDefault(),
+    fixedPercentageScale: Boolean = false
 ) {
     val locale = LocalConfiguration.current.locales[0]
     val series = model.series.getValue(metric)
@@ -208,8 +209,12 @@ internal fun MeasurementChart(
         return
     }
     val selected = points.firstOrNull { it.key.id == selectedId } ?: points.lastOrNull()
-    val scale = remember(series, metric, fahrenheit, compact, currentMultiplier) {
-        if (compact) {
+    val scale = remember(
+        series, metric, fahrenheit, compact, currentMultiplier, fixedPercentageScale
+    ) {
+        if (fixedPercentageScale && metric == HistoryMetric.LEVEL) {
+            HistoryChartScale(0.0, 100.0, emptyList())
+        } else if (compact) {
             val first = chartValue(series.min ?: 0.0, metric, fahrenheit, currentMultiplier)
             val last = chartValue(series.max ?: 1.0, metric, fahrenheit, currentMultiplier)
             HistoryChartScale(

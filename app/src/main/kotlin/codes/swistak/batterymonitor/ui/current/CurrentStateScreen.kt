@@ -266,18 +266,21 @@ internal fun CurrentStateRoute(
         )
     }
     var showFullRange by rememberSaveable { mutableStateOf(false) }
-    var rangeStatus by rememberSaveable { mutableStateOf(state.snapshot?.status) }
-    var rangeTarget by rememberSaveable {
-        mutableStateOf(state.snapshot?.configuredPrediction?.targetPercent)
+    var rangeCharging by rememberSaveable {
+        mutableStateOf(state.snapshot?.predictionSelectionContext()?.first)
     }
-    val samePredictionContext = state.snapshot?.let {
-        it.status == rangeStatus && it.configuredPrediction.targetPercent == rangeTarget
+    var rangeTarget by rememberSaveable {
+        mutableStateOf(state.snapshot?.predictionSelectionContext()?.second)
+    }
+    val selectionContext = state.snapshot?.predictionSelectionContext()
+    val samePredictionContext = selectionContext?.let {
+        it.first == rangeCharging && it.second == rangeTarget
     } ?: true
-    LaunchedEffect(state.snapshot?.status, state.snapshot?.configuredPrediction?.targetPercent) {
-        state.snapshot?.let {
+    LaunchedEffect(selectionContext) {
+        selectionContext?.let {
             if (!samePredictionContext) showFullRange = false
-            rangeStatus = it.status
-            rangeTarget = it.configuredPrediction.targetPercent
+            rangeCharging = it.first
+            rangeTarget = it.second
         }
     }
     val model = currentStateModel(
@@ -409,15 +412,21 @@ internal fun CurrentStateScreen(
                 DisplayStrings.formatChargeCompact(snapshot.remainingChargeMicroampHours)
             )
         } else ""
+    val fullyCharged =
+        snapshot?.status == BatteryInfo.STATUS_FULLY_CHARGED && snapshot.levelPercent >= 100
     val estimate = when {
         snapshot == null || stale -> "—"
-        snapshot.status == BatteryInfo.STATUS_FULLY_CHARGED -> stringResource(R.string.status_fully_charged)
+        fullyCharged -> stringResource(R.string.status_fully_charged)
         prediction?.targetReached == true && prediction.direction == BatteryInfo.Prediction.UNTIL_DRAINED && snapshot.levelPercent < prediction.targetPercent -> stringResource(
             R.string.current_below_target, prediction.targetPercent
         )
 
         prediction?.targetReached == true -> stringResource(
             R.string.current_target_reached, prediction.targetPercent
+        )
+
+        snapshot.status == BatteryInfo.STATUS_NOT_CHARGING || snapshot.status == BatteryInfo.STATUS_FULLY_CHARGED -> stringResource(
+            R.string.current_paused
         )
 
         prediction?.direction == BatteryInfo.Prediction.NONE || prediction == null -> stringResource(
@@ -430,15 +439,16 @@ internal fun CurrentStateScreen(
             preferences.longDurationFormat
         )
     }
-    val target = when {
-        prediction == null -> ""
-        prediction.targetReached -> stringResource(
-            R.string.current_prediction_target, prediction.targetPercent
-        )
+    val target = model.targetPercent?.let { percent ->
+        when {
+            prediction?.targetReached == true && !stale && !fullyCharged -> ""
+            prediction != null && prediction.direction != BatteryInfo.Prediction.NONE && !stale -> stringResource(
+                R.string.activity_until_target, percent
+            )
 
-        prediction.direction == BatteryInfo.Prediction.NONE -> ""
-        else -> stringResource(R.string.activity_until_target, prediction.targetPercent)
-    }
+            else -> stringResource(R.string.current_prediction_target, percent)
+        }
+    }.orEmpty()
     val method = when (preferences.predictionMethod) {
         "-1" -> stringResource(R.string.predictor_since_status_change)
         "-2" -> stringResource(R.string.predictor_long_term_ave)
@@ -545,13 +555,13 @@ internal fun CurrentStateScreen(
                     status,
                     plug,
                     remainingCharge,
-                    prediction?.let {
+                    snapshot?.predictionSelectionContext()?.second?.let {
                         stringResource(
-                            R.string.current_prediction_target, it.targetPercent
+                            R.string.current_prediction_target, it
                         )
                     }).joinToString(", "),
                 modifier = Modifier.fillMaxWidth(),
-                targetPercent = prediction?.targetPercent,
+                targetPercent = snapshot?.predictionSelectionContext()?.second,
                 charging = snapshot?.status == BatteryInfo.STATUS_CHARGING,
                 expanded = expanded
             )
@@ -612,14 +622,12 @@ internal fun CurrentStateScreen(
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        if (model.hasAlternative) TextButton(
+                        if (model.hasAlternative && model.alternativeTargetPercent != null) TextButton(
                             onClick = onToggleTarget, modifier = Modifier.alignByBaseline()
                         ) {
                             Text(
                                 stringResource(
-                                    R.string.current_show_to_target,
-                                    if (model.showingFullRange) snapshot!!.configuredPrediction.targetPercent
-                                    else snapshot!!.fullRangePrediction.targetPercent
+                                    R.string.current_show_to_target, model.alternativeTargetPercent
                                 )
                             )
                         }
@@ -704,6 +712,7 @@ internal fun CurrentStateScreen(
                             selectedId = null,
                             onSelect = {},
                             compact = true,
+                            fixedPercentageScale = true,
                             compactChartHeight = if (expanded) 119.dp else 56.dp,
                             modifier = Modifier.fillMaxWidth()
                         )

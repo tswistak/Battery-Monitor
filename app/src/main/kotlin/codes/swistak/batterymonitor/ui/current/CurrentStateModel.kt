@@ -48,8 +48,23 @@ internal data class CurrentStateModel(
     val prediction: PredictionSnapshot?,
     val hasAlternative: Boolean,
     val showingFullRange: Boolean,
-    val notificationsDisabled: Boolean
+    val notificationsDisabled: Boolean,
+    val targetPercent: Int? = prediction?.targetPercent,
+    val alternativeTargetPercent: Int? = null
 )
+
+internal fun MonitoringSnapshot.predictionSelectionContext(): Pair<Boolean, Int>? {
+    val charging = when (status) {
+        BatteryInfo.STATUS_DISCHARGING, BatteryInfo.STATUS_UNPLUGGED -> false
+        BatteryInfo.STATUS_CHARGING -> true
+        BatteryInfo.STATUS_NOT_CHARGING, BatteryInfo.STATUS_FULLY_CHARGED -> if (plugged != BatteryInfo.PLUGGED_UNPLUGGED) true else return null
+
+        else -> return null
+    }
+    val target = effectivePredictionTargetPercent
+    if (charging && target !in 1..100 || !charging && target !in 0..99) return null
+    return charging to target
+}
 
 internal fun currentStateModel(
     state: MonitoringUiState,
@@ -60,10 +75,17 @@ internal fun currentStateModel(
     val snapshot = state.snapshot
     val configured = snapshot?.configuredPrediction
     val fullRange = snapshot?.fullRangePrediction
-    val alternative =
-        configured != null && fullRange != null && configured.targetPercent != fullRange.targetPercent && (configured.direction != BatteryInfo.Prediction.NONE || configured.targetReached) && fullRange.direction != BatteryInfo.Prediction.NONE
+    val context = snapshot?.predictionSelectionContext()
+    val configuredTarget = context?.second
+    val fullTarget = context?.let { if (it.first) 100 else 0 }
+    val alternative = if (context?.first == true) {
+        configuredTarget in 1..99
+    } else {
+        context != null && configuredTarget in 1..99 && (configured?.direction == BatteryInfo.Prediction.UNTIL_DRAINED || configured?.targetReached == true) && fullRange?.direction == BatteryInfo.Prediction.UNTIL_DRAINED
+    }
     val useFullRange = showingFullRange && alternative
     val prediction = if (useFullRange) fullRange else configured
+    val target = if (useFullRange) fullTarget else configuredTarget
     val condition = when {
         !monitoringEnabled -> CurrentCondition.DISABLED
         state.availability == MonitoringAvailability.STALE -> CurrentCondition.STALE
@@ -80,6 +102,13 @@ internal fun currentStateModel(
         else -> CurrentCondition.UNKNOWN
     }
     return CurrentStateModel(
-        snapshot, condition, prediction, alternative, useFullRange, !notificationsEnabled
+        snapshot,
+        condition,
+        prediction,
+        alternative,
+        useFullRange,
+        !notificationsEnabled,
+        target,
+        if (useFullRange) configuredTarget else fullTarget
     )
 }

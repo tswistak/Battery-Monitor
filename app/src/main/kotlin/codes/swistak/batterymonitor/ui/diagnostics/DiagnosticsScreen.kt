@@ -258,6 +258,9 @@ internal fun DiagnosticsScreen(
         R.string.diag_raw
     )
     val scrollStates = labels.map { rememberLazyListState() }
+    LaunchedEffect(tab) {
+        if (tab == 3) scrollStates[3].requestScrollToItem(0)
+    }
     val filteredRaw = remember(raw, query) { filterRawGroups(raw, query) }
     val groups = when (tab) {
         1, 2 -> projections[tab].value
@@ -360,6 +363,9 @@ internal fun DiagnosticsScreen(
             contentPadding = PaddingValues(20.dp),
             verticalArrangement = Arrangement.spacedBy(if (tab == 3) 0.dp else 16.dp)
         ) {
+            if (tab == 3) item(key = "raw:start", contentType = "rawStart") {
+                Spacer(Modifier.height(1.dp))
+            }
             if (tab == 0) {
                 item {
                     DiagnosticCard(stringResource(R.string.diag_monitor_operation)) {

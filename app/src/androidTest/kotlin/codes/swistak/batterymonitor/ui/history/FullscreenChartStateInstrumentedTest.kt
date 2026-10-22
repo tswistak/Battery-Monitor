@@ -40,6 +40,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.test.platform.app.InstrumentationRegistry
@@ -52,7 +53,6 @@ import codes.swistak.batterymonitor.logs.HistoryPoint
 import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
-import codes.swistak.batterymonitor.logs.detailedHistoryCoordinateRange
 import codes.swistak.batterymonitor.logs.historyObservationValue
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
@@ -74,6 +74,361 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.abs
 
 class FullscreenChartStateInstrumentedTest {
+    @Test
+    fun close_and_back_return_to_the_previous_orientation_and_system_bars() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val target = instrumentation.targetContext
+        val parent = instrumentation.addMonitor(
+            "codes.swistak.batterymonitor.app.BatteryInfoActivity", null, false
+        )
+        val viewer =
+            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        main {
+            target.startActivity(
+                Intent(
+                    target, codes.swistak.batterymonitor.app.BatteryInfoActivity::class.java
+                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            )
+        }
+        try {
+            await {
+                (parent.lastActivity as? codes.swistak.batterymonitor.app.BatteryInfoActivity)?.lifecycle?.currentState == Lifecycle.State.RESUMED
+            }
+            await { parent.lastActivity?.window?.decorView?.rootWindowInsets != null }
+            val initial = parent.lastActivity
+            val orientation = initial.resources.configuration.orientation
+            val requested = initial.requestedOrientation
+            val bars = WindowInsetsCompat.toWindowInsetsCompat(
+                requireNotNull(initial.window.decorView.rootWindowInsets), initial.window.decorView
+            ).isVisible(WindowInsetsCompat.Type.statusBars())
+            for (back in listOf(false, true)) {
+                main {
+                    parent.lastActivity.startActivity(
+                        FullscreenChartActivity.intent(
+                            target, HistoryMetric.LEVEL, range, "custom"
+                        )
+                    )
+                }
+                await { viewer.lastActivity?.hasWindowFocus() == true && !viewer.lastActivity.isFinishing }
+                val activity = viewer.lastActivity
+                await { activity.window.decorView.rootWindowInsets != null }
+                await {
+                    !WindowInsetsCompat.toWindowInsetsCompat(
+                        requireNotNull(activity.window.decorView.rootWindowInsets),
+                        activity.window.decorView
+                    ).isVisible(WindowInsetsCompat.Type.statusBars())
+                }
+                if (back) instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+                else assertTrue(clickFixtureText(target.getString(R.string.nav_up)))
+                await {
+                    (parent.lastActivity as? codes.swistak.batterymonitor.app.BatteryInfoActivity)?.lifecycle?.currentState == Lifecycle.State.RESUMED && !parent.lastActivity.isDestroyed
+                }
+                await { parent.lastActivity.resources.configuration.orientation == orientation }
+                val returned = parent.lastActivity
+                assertEquals(requested, returned.requestedOrientation)
+                await { returned.window.decorView.rootWindowInsets != null }
+                await {
+                    WindowInsetsCompat.toWindowInsetsCompat(
+                        requireNotNull(returned.window.decorView.rootWindowInsets),
+                        returned.window.decorView
+                    ).isVisible(WindowInsetsCompat.Type.statusBars()) == bars
+                }
+            }
+        } finally {
+            main {
+                viewer.lastActivity?.takeUnless { it.isDestroyed }?.finish()
+                parent.lastActivity?.finish()
+            }
+            instrumentation.removeMonitor(viewer)
+            instrumentation.removeMonitor(parent)
+        }
+    }
+
+    @Test
+    fun actual_activity_recreation_retains_window_independent_chart_state() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val host = instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        instrumentation.startActivitySync(
+            FullscreenChartActivity.intent(
+                instrumentation.targetContext, HistoryMetric.LEVEL, range, "custom"
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        try {
+            await { host.lastActivity?.hasWindowFocus() == true && !host.lastActivity.isDestroyed }
+            val first = host.lastActivity as FullscreenChartActivity
+            lateinit var model: FullscreenChartViewModel
+            main {
+                model = ViewModelProvider(first)[FullscreenChartViewModel::class.java]
+                model.metric(HistoryMetric.VOLTAGE)
+                model.comparison(HistoryMetric.TEMPERATURE)
+                model.viewport(HistoryRangeState(1000, 3000), 600)
+                model.scale(ChartScaleMode.MANUAL)
+                model.style(ChartDrawingStyle.POINTS)
+            }
+            loaded(model)
+            instrumentation.waitForIdleSync()
+            val before = model.state.value!!
+            main { first.recreate() }
+            await { host.lastActivity !== first && host.lastActivity?.hasWindowFocus() == true }
+            val recreated = host.lastActivity as FullscreenChartActivity
+            main {
+                instrumentation.sendStatus(0, Bundle().apply {
+                    putBoolean("multiWindow", recreated.isInMultiWindowMode)
+                    putInt("orientation", recreated.resources.configuration.orientation)
+                    putInt("requestedOrientation", recreated.requestedOrientation)
+                })
+                val restored = ViewModelProvider(recreated)[FullscreenChartViewModel::class.java]
+                assertSame(model, restored)
+                val after = restored.state.value!!
+                assertEquals(before.range, after.range)
+                assertEquals(before.rangeLabel, after.rangeLabel)
+                assertEquals(before.viewport, after.viewport)
+                assertEquals(before.metrics, after.metrics)
+                assertEquals(before.scaleMode, after.scaleMode)
+                assertEquals(before.style, after.style)
+                assertEquals(before.valueScale, after.valueScale)
+                assertEquals(before.selectedKey, after.selectedKey)
+                if (recreated.isInMultiWindowMode) {
+                    assertEquals(
+                        android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED,
+                        recreated.requestedOrientation
+                    )
+                } else if ((android.os.Build.VERSION.SDK_INT < 36 || recreated.resources.configuration.smallestScreenWidthDp < 600)) {
+                    assertEquals(
+                        android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE,
+                        recreated.requestedOrientation
+                    )
+                    assertEquals(
+                        Configuration.ORIENTATION_LANDSCAPE,
+                        recreated.resources.configuration.orientation
+                    )
+                }
+            }
+        } finally {
+            main { host.lastActivity?.finish() }
+            instrumentation.removeMonitor(host)
+        }
+    }
+
+    @Test
+    fun touch_pan_keeps_duration_through_finger_down_load_fling_and_reversal() {
+        val late = 1_800_000_000_000L
+        val hour = 3_600_000L
+        val retained = HistoryRangeState(0, late + 48 * hour)
+        database.addLogs((0..2880).map { index ->
+            observation.copy(time = late - 24 * hour + index * 60_000L, charge = 45 + index % 20)
+        } + (0..120).map { index ->
+            observation.copy(time = index * 60_000L, charge = 45 + index % 20)
+        })
+        val model = model(HistoryMetric.LEVEL, retained, "custom")
+        // Near a history edge, the old moving coordinate window also changed its X span.
+        main { model.viewport(HistoryRangeState(0, hour), 1000) }
+        loaded(model)
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val host = instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        instrumentation.startActivitySync(
+            FullscreenChartActivity.intent(
+                instrumentation.targetContext, HistoryMetric.LEVEL, retained, "custom"
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        try {
+            await {
+                val hostActivity = host.lastActivity as? FullscreenChartActivity
+                hostActivity != null && !hostActivity.isDestroyed && hostActivity.lifecycle.currentState == Lifecycle.State.RESUMED && (hostActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE || android.os.Build.VERSION.SDK_INT >= 36 && hostActivity.resources.configuration.smallestScreenWidthDp >= 600 || hostActivity.isInMultiWindowMode)
+            }
+            val activity = host.lastActivity as FullscreenChartActivity
+            main {
+                activity.setContent {
+                    CompositionLocalProvider(LocalContext provides context) {
+                        AppBatteryTheme {
+                            val state by model.state.collectAsState()
+                            state?.let {
+                                FullscreenChartScreen(
+                                    it,
+                                    model::metric,
+                                    model::comparison,
+                                    model::range,
+                                    model::viewport,
+                                    model::scale,
+                                    model::style,
+                                    model::valueScale,
+                                    model::select,
+                                    model::refresh,
+                                    activity::finish,
+                                    onViewportObserved = model::observeViewport
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            captureFixture(activity, model, "gesture-initial")
+            lateinit var chart: LineChart
+            main { chart = requireNotNull(nativeChart(activity.window.decorView)) }
+            val initial = visibleTimes(chart)
+            // A real double tap exercises the native zoom recognizer.
+            repeat(2) {
+                val down = android.os.SystemClock.uptimeMillis()
+                touch(chart, down, MotionEvent.ACTION_DOWN, 0.5f)
+                Thread.sleep(25)
+                touch(chart, down, MotionEvent.ACTION_UP, 0.5f)
+                Thread.sleep(50)
+            }
+            await { visibleTimes(chart).let { it.end - it.start < (initial.end - initial.start) * 0.8 } }
+            loaded(model)
+            instrumentation.waitForIdleSync()
+            Thread.sleep(100)
+            val zoomed = visibleTimes(chart)
+            val duration = zoomed.end - zoomed.start
+            var down = android.os.SystemClock.uptimeMillis()
+            touch(chart, down, MotionEvent.ACTION_DOWN, 0.8f)
+            for (x in listOf(0.77f, 0.68f, 0.58f)) {
+                Thread.sleep(25)
+                touch(chart, down, MotionEvent.ACTION_MOVE, x)
+            }
+            val dragged = visibleTimes(chart)
+            assertTrue("Pan must move timestamps forward", dragged.start > zoomed.start)
+            assertDuration(chart, duration)
+            val beforeLoad = model.state.value!!.chart
+            database.addLogs(
+                listOf(
+                    observation.copy(
+                        time = dragged.start + duration / 2, charge = 97
+                    )
+                )
+            )
+            main { model.historyChanged() }
+            await { model.state.value!!.chart !== beforeLoad && !model.state.value!!.loading }
+            Thread.sleep(180) // The finger stays down beyond the query debounce and data preparation.
+            main { assertTrue("A pending replacement must not clear the plot", chart.data != null) }
+            assertDuration(chart, duration)
+            val loadedPosition = visibleTimes(chart)
+            touch(chart, down, MotionEvent.ACTION_MOVE, 0.43f)
+            assertDuration(chart, duration)
+            assertTrue(
+                "Dragging must continue after loading",
+                visibleTimes(chart).start > loadedPosition.start
+            )
+            assertTrue(
+                "Loading moved a stationary viewport: $dragged to $loadedPosition",
+                abs(dragged.start - loadedPosition.start) <= 5
+            )
+            lateinit var released: HistoryRangeState
+            main {
+                // Deliver a frame-paced release batch without instrumentation round trips between samples.
+                for (x in listOf(0.39f, 0.35f, 0.31f)) {
+                    Thread.sleep(16)
+                    dispatchTouch(chart, down, MotionEvent.ACTION_MOVE, x)
+                }
+                released = visibleTimesOnMain(chart)
+                dispatchTouch(chart, down, MotionEvent.ACTION_UP, 0.31f)
+            }
+            repeat(8) {
+                Thread.sleep(16)
+                assertDuration(chart, duration)
+            }
+            assertTrue(
+                "ACTION_UP must exercise native fling deceleration",
+                visibleTimes(chart).start > released.start + 5
+            )
+            // Reverse direction while native deceleration may still be running.
+            val beforeReverse = visibleTimes(chart)
+            down = android.os.SystemClock.uptimeMillis()
+            touch(chart, down, MotionEvent.ACTION_DOWN, 0.2f)
+            for (x in listOf(0.23f, 0.36f, 0.5f, 0.68f)) {
+                Thread.sleep(20)
+                touch(chart, down, MotionEvent.ACTION_MOVE, x)
+                assertDuration(chart, duration)
+            }
+            assertTrue(
+                "Reversal must move timestamps backward",
+                visibleTimes(chart).start < beforeReverse.start
+            )
+            touch(chart, down, MotionEvent.ACTION_UP, 0.68f)
+            repeat(40) {
+                Thread.sleep(16)
+                assertDuration(chart, duration)
+            }
+            loaded(model)
+            main { model.viewport(HistoryRangeState(0, duration), 1000) }
+            loaded(model)
+            await { visibleTimes(chart).start <= 5 }
+            down = android.os.SystemClock.uptimeMillis()
+            touch(chart, down, MotionEvent.ACTION_DOWN, 0.2f)
+            touch(chart, down, MotionEvent.ACTION_MOVE, 0.3f)
+            touch(chart, down, MotionEvent.ACTION_MOVE, 0.8f)
+            touch(chart, down, MotionEvent.ACTION_UP, 0.8f)
+            assertDuration(chart, duration)
+            assertTrue(visibleTimes(chart).start >= 0)
+            main { model.viewport(HistoryRangeState(late, late + duration), 1000) }
+            loaded(model)
+            await { abs(visibleTimes(chart).start - late) <= 5 }
+            down = android.os.SystemClock.uptimeMillis()
+            touch(chart, down, MotionEvent.ACTION_DOWN, 0.8f)
+            for (x in listOf(0.77f, 0.5f, 0.2f)) {
+                Thread.sleep(20)
+                touch(chart, down, MotionEvent.ACTION_MOVE, x)
+                assertDuration(chart, duration)
+            }
+            assertTrue(
+                "A late viewport must keep precise relative timestamps",
+                visibleTimes(chart).start > late
+            )
+            touch(chart, down, MotionEvent.ACTION_UP, 0.2f)
+        } finally {
+            main { host.lastActivity?.finish() }
+            instrumentation.waitForIdleSync()
+            instrumentation.removeMonitor(host)
+        }
+    }
+
+    private fun touch(chart: LineChart, down: Long, action: Int, fraction: Float) {
+        main { dispatchTouch(chart, down, action, fraction) }
+    }
+
+    private fun dispatchTouch(chart: LineChart, down: Long, action: Int, fraction: Float) {
+        val rect = chart.viewPortHandler.contentRect
+        val event = MotionEvent.obtain(
+            down,
+            android.os.SystemClock.uptimeMillis(),
+            action,
+            rect.left + rect.width() * fraction,
+            rect.centerY(),
+            0
+        )
+        event.source = InputDevice.SOURCE_TOUCHSCREEN
+        try {
+            assertTrue(chart.dispatchTouchEvent(event))
+        } finally {
+            event.recycle()
+        }
+    }
+
+    private fun visibleTimes(chart: LineChart): HistoryRangeState {
+        var result = HistoryRangeState(0, 1)
+        main { result = visibleTimesOnMain(chart) }
+        return result
+    }
+
+    private fun visibleTimesOnMain(chart: LineChart): HistoryRangeState {
+        val entry = requireNotNull(chart.data).dataSets.filterIsInstance<LineDataSet<*>>()
+            .flatMap { it.entries }.first { it.data is HistoryKey }
+        val origin = (entry.data as HistoryKey).time - (entry.x.toDouble() * 1000).toLong()
+        return HistoryRangeState(
+            origin + (chart.lowestVisibleX.toDouble() * 1000).toLong(),
+            origin + (chart.highestVisibleX.toDouble() * 1000).toLong()
+        )
+    }
+
+    private fun assertDuration(chart: LineChart, expected: Long) {
+        val actual = visibleTimes(chart)
+        // Relative floats round at sub-ms resolution in this hour-wide fixture; allow 5 ms end-to-end.
+        assertTrue(
+            "X duration changed: expected $expected, actual $actual",
+            abs(actual.end - actual.start - expected) <= 5
+        )
+    }
+
     private lateinit var context: Context
     private lateinit var application: Application
     private lateinit var directory: File
@@ -737,7 +1092,7 @@ class FullscreenChartStateInstrumentedTest {
         try {
             await {
                 val activity = monitor.lastActivity
-                activity != null && !activity.isDestroyed && activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+                activity != null && !activity.isDestroyed && (activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE || android.os.Build.VERSION.SDK_INT >= 36 && activity.resources.configuration.smallestScreenWidthDp >= 600 || activity.isInMultiWindowMode)
             }
             instrumentation.waitForIdleSync()
             val activity = monitor.lastActivity as FullscreenChartActivity
@@ -758,7 +1113,8 @@ class FullscreenChartStateInstrumentedTest {
                                     model::valueScale,
                                     model::select,
                                     model::refresh,
-                                    activity::finish
+                                    activity::finish,
+                                    onViewportObserved = model::observeViewport
                                 )
                             }
                         }
@@ -883,7 +1239,7 @@ class FullscreenChartStateInstrumentedTest {
         try {
             await {
                 val activity = monitor.lastActivity
-                activity != null && !activity.isDestroyed && activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+                activity != null && !activity.isDestroyed && (activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE || android.os.Build.VERSION.SDK_INT >= 36 && activity.resources.configuration.smallestScreenWidthDp >= 600 || activity.isInMultiWindowMode)
             }
             instrumentation.waitForIdleSync()
             val activity = monitor.lastActivity as FullscreenChartActivity
@@ -904,7 +1260,8 @@ class FullscreenChartStateInstrumentedTest {
                                     model::valueScale,
                                     model::select,
                                     model::refresh,
-                                    activity::finish
+                                    activity::finish,
+                                    onViewportObserved = model::observeViewport
                                 )
                             }
                         }
@@ -1333,6 +1690,16 @@ class FullscreenChartStateInstrumentedTest {
                                     decor.systemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN != 0
                                 )
                                 putBoolean("hasWindowFocus", decor.hasWindowFocus())
+                                putInt("orientation", activity.resources.configuration.orientation)
+                                putInt("requestedOrientation", activity.requestedOrientation)
+                                putInt(
+                                    "smallestWidthDp",
+                                    activity.resources.configuration.smallestScreenWidthDp
+                                )
+                                putFloat("fontScale", activity.resources.configuration.fontScale)
+                                putBoolean("multiWindow", activity.isInMultiWindowMode)
+                                putInt("windowWidth", decor.width)
+                                putInt("windowHeight", decor.height)
                                 putInt("rawTopInsetPx", platformInsets?.systemWindowInsetTop ?: -1)
                             })
                         reportedFullscreenInsets = true
@@ -1380,11 +1747,19 @@ class FullscreenChartStateInstrumentedTest {
         loaded(model)
         main {
             val state = model.state.value!!
+            val chart = requireNotNull(nativeChart(activity.window.decorView))
+            val entry = requireNotNull(chart.data).dataSets.filterIsInstance<LineDataSet<*>>()
+                .flatMap { it.entries }.first { it.data is HistoryKey }
+            val origin = (entry.data as HistoryKey).time - (entry.x.toDouble() * 1000).toLong()
             val axis =
-                DetailedHistoryTimeAxis(detailedHistoryCoordinateRange(state.range, state.viewport))
-            val precision =
-                maxOf(Math.ulp(axis.x(requested.start)), Math.ulp(axis.x(requested.end)))
-            val tolerance = maxOf(3L, kotlin.math.ceil(precision * 2000.0).toLong() + 1)
+                DetailedHistoryTimeAxis(HistoryRangeState(origin.coerceAtLeast(0), state.range.end))
+            val precision = maxOf(
+                Math.ulp(axis.x(requested.start)),
+                Math.ulp(axis.x(requested.end)),
+                Math.ulp(chart.xAxis.axisRange)
+            )
+            // Forward/inverse zoom and move matrices round across the full coordinate span.
+            val tolerance = maxOf(5L, kotlin.math.ceil(precision * 8000.0).toLong() + 1)
             assertTrue(
                 "Requested start drifted: ${state.viewport} / $requested",
                 abs(state.viewport.start - requested.start) <= tolerance
@@ -1393,7 +1768,6 @@ class FullscreenChartStateInstrumentedTest {
                 "Requested end drifted: ${state.viewport} / $requested",
                 abs(state.viewport.end - requested.end) <= tolerance
             )
-            val chart = requireNotNull(nativeChart(activity.window.decorView))
             assertTrue(
                 "Native start drifted",
                 abs(axis.time(chart.lowestVisibleX) - requested.start) <= tolerance

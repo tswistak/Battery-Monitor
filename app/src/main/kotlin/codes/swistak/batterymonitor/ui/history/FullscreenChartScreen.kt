@@ -14,6 +14,7 @@ package codes.swistak.batterymonitor.ui.history
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.MotionEvent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
@@ -55,12 +56,14 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.PathEffect
@@ -89,7 +92,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.view.doOnPreDraw
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.DetailedHistoryChartModel
 import codes.swistak.batterymonitor.logs.DetailedHistoryTimeAxis
@@ -98,7 +100,6 @@ import codes.swistak.batterymonitor.logs.HistoryKey
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.logs.detailedHistoryCoordinateRange
-import codes.swistak.batterymonitor.logs.historyExclusiveEnd
 import codes.swistak.batterymonitor.logs.historyObservationValue
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
@@ -119,6 +120,9 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.jobs.MoveViewJob
+import com.github.mikephil.charting.listener.BarLineChartTouchListener
+import com.github.mikephil.charting.listener.ChartTouchListener
+import com.github.mikephil.charting.listener.OnChartGestureListener
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.MPPointD
 import kotlinx.coroutines.Dispatchers
@@ -142,7 +146,8 @@ internal fun FullscreenChartScreen(
     onValueScale: (ChartValueScale) -> Unit,
     onSelect: (HistoryKey?) -> Unit,
     onRetry: () -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onViewportObserved: (HistoryRangeState, Int) -> Unit
 ) {
     val context = LocalContext.current
     val locale = LocalConfiguration.current.locales[0]
@@ -171,10 +176,23 @@ internal fun FullscreenChartScreen(
     val axisFormatter = remember(locale, zone, state.viewport) {
         historyAxisFormatter(state.viewport.end - state.viewport.start, locale, zone)
     }
-    val coordinateRange = remember(state.range, state.viewport) {
-        detailedHistoryCoordinateRange(
-            state.range, state.viewport
+    val motion = remember { FullscreenChartMotion() }
+    var requestedCoordinates by remember {
+        mutableStateOf(
+            detailedHistoryCoordinateRange(
+                state.range, state.viewport
+            )
         )
+    }
+    var displayed by remember { mutableStateOf<PreparedChartData?>(null) }
+    val coordinateRange = displayed?.coordinates ?: requestedCoordinates
+    LaunchedEffect(state.range, state.viewport, motion.active) {
+        if (!motion.active && fullscreenCoordinatesNeedRebase(
+                requestedCoordinates, state.range, state.viewport
+            )
+        ) {
+            requestedCoordinates = detailedHistoryCoordinateRange(state.range, state.viewport)
+        }
     }
     val timeAxis = remember(coordinateRange) { DetailedHistoryTimeAxis(coordinateRange) }
     val chartState = rememberChartState()
@@ -184,6 +202,8 @@ internal fun FullscreenChartScreen(
     var appliedViewport by remember { mutableStateOf<HistoryRangeState?>(null) }
     var viewportRevision by remember { mutableIntStateOf(0) }
     var appliedRevision by remember { mutableIntStateOf(-1) }
+    var appliedCommand by remember { mutableLongStateOf(-1L) }
+    var pendingViewport by remember { mutableStateOf<HistoryRangeState?>(null) }
     var appliedLineData by remember { mutableStateOf<LineData?>(null) }
     var appliedYBounds by remember { mutableStateOf<Map<HistoryMetric, HistoryChartScale>?>(null) }
     var pendingTopY by remember { mutableStateOf<Float?>(null) }
@@ -195,7 +215,9 @@ internal fun FullscreenChartScreen(
     var overflowMenu by remember { mutableStateOf(false) }
     var eventsMenu by remember { mutableStateOf(false) }
     val currentViewport by rememberUpdatedState(state.viewport)
-    val reportViewport by rememberUpdatedState(onViewport)
+    val currentCommand by rememberUpdatedState(state.viewportCommand)
+    val currentRange by rememberUpdatedState(state.range)
+    val reportViewport by rememberUpdatedState(onViewportObserved)
     val selectPoint by rememberUpdatedState(onSelect)
     val metrics = listOfNotNull(state.metric, state.comparison)
     val models =
@@ -277,16 +299,24 @@ internal fun FullscreenChartScreen(
         state.style,
         metrics,
         chartWidth,
-        coordinateRange
+        requestedCoordinates
     ) {
         value = models.takeIf { it.isNotEmpty() }?.let { charts ->
             withContext(Dispatchers.Default) {
                 PreparedChartData(
-                    coordinateRange, metrics, state.style, valueScale, fullscreenLineData(
+                    requestedCoordinates,
+                    state.range,
+                    metrics,
+                    state.style,
+                    valueScale,
+                    fahrenheit,
+                    currentMultiplier,
+                    charts,
+                    fullscreenLineData(
                         charts,
                         state.metric,
                         state.comparison,
-                        coordinateRange,
+                        requestedCoordinates,
                         state.style,
                         valueScale,
                         fahrenheit,
@@ -297,9 +327,35 @@ internal fun FullscreenChartScreen(
             }
         }
     }
-    val lineData = prepared?.takeIf {
-        it.coordinates == coordinateRange && it.metrics == metrics && it.style == state.style && it.valueScale == valueScale
-    }?.data
+    LaunchedEffect(prepared, motion.active, models, requestedCoordinates) {
+        val next = prepared ?: return@LaunchedEffect
+        if (!motion.active && next !== displayed && next.coordinates == requestedCoordinates && next.range == state.range && next.metrics == metrics && next.style == state.style && next.valueScale == valueScale && next.fahrenheit == fahrenheit && next.currentMultiplier == currentMultiplier && next.models == models && (appliedCommand == state.viewportCommand && appliedRevision == viewportRevision || next.models.values.all { it.viewport == state.viewport })) {
+            if (viewportReady) chartView?.let { chart ->
+                pendingViewport = fullscreenVisibleViewport(chart, coordinateRange, state.range)
+            }
+            displayed = next
+        }
+    }
+    val lineData = displayed?.data
+    LaunchedEffect(chartView, motion.active) {
+        val chart = chartView ?: return@LaunchedEffect
+        if (!motion.active) return@LaunchedEffect
+        if (appliedCoordinates != null) viewportReady = true
+        var previous: Triple<Float, Float, Float>? = null
+        var stationaryFrames = 0
+        while (motion.active) {
+            withFrameNanos { }
+            val visible =
+                Triple(chart.lowestVisibleX, chart.highestVisibleX, fullscreenChartTopY(chart))
+            stationaryFrames =
+                if (!motion.touching && visible == previous) stationaryFrames + 1 else 0
+            previous = visible
+            if (stationaryFrames >= 2) {
+                (chart.chartTouchListener as? BarLineChartTouchListener)?.stopDeceleration()
+                motion.active = false
+            }
+        }
+    }
 
     fun reading(metric: HistoryMetric, key: HistoryKey): Double? {
         val record = state.selectedRecord?.takeIf { it.id == key.id && it.record.time == key.time }
@@ -314,13 +370,28 @@ internal fun FullscreenChartScreen(
         formatter.format(Instant.ofEpochMilli(state.viewport.end - 1))
     )
 
+    fun stopNativeMotion() {
+        (chartView?.chartTouchListener as? BarLineChartTouchListener)?.stopDeceleration()
+        motion.touching = false
+        motion.active = false
+        motion.revision++
+        pendingViewport = null
+    }
+
+    fun zoomViewport(factor: Float) {
+        stopNativeMotion()
+        chartView?.zoomToCenter(factor, 1f)
+    }
+
     fun moveViewport(viewport: HistoryRangeState) {
+        stopNativeMotion()
         viewportReady = false
         viewportRevision++
         onViewport(viewport, chartWidth)
     }
 
     fun fitViewport() {
+        stopNativeMotion()
         viewportReady = false
         pendingTopY = null
         viewportRevision++
@@ -348,17 +419,24 @@ internal fun FullscreenChartScreen(
         return true
     }
 
+    LaunchedEffect(state.viewportCommand, viewportRevision, chartView) {
+        if (chartView != null && (appliedCommand != state.viewportCommand || appliedRevision != viewportRevision)) {
+            viewportReady = false
+            stopNativeMotion()
+        }
+    }
+
     LaunchedEffect(chartWidth) {
         if (chartWidth > 1) reportViewport(currentViewport, chartWidth)
     }
     LaunchedEffect(chartState, timeAxis, chartWidth) {
         snapshotFlow {
-            if (viewportReady) chartState.lowestVisibleX to chartState.highestVisibleX else null
+            if (viewportReady && currentCommand == appliedCommand && viewportRevision == appliedRevision) chartState.lowestVisibleX to chartState.highestVisibleX else null
         }.filterNotNull().distinctUntilChanged().collect { (first, last) ->
             if (last > first && first.isFinite() && last.isFinite()) {
-                val start = timeAxis.time(first).coerceIn(state.range.start, state.range.end - 1)
-                val end = historyExclusiveEnd(timeAxis.time(last)).coerceIn(
-                    start + 1, state.range.end
+                val start = timeAxis.time(first).coerceIn(currentRange.start, currentRange.end - 1)
+                val end = timeAxis.time(last).coerceIn(
+                    start + 1, currentRange.end
                 )
                 val precision = maxOf(
                     Math.ulp(timeAxis.x(currentViewport.start)),
@@ -380,8 +458,8 @@ internal fun FullscreenChartScreen(
             BoxWithConstraints(
                 Modifier
                     .fillMaxWidth()
-                    .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
-                    .padding(horizontal = BatterySpacing.xs)
+                    .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top))
+                    .padding(horizontal = BatterySpacing.xs, vertical = BatterySpacing.xs)
             ) {
                 val available = maxWidth.value / LocalDensity.current.fontScale
                 val showZoom = available >= 800
@@ -446,6 +524,7 @@ internal fun FullscreenChartScreen(
                         HistoryRangeControl(
                             HistoryUiState(range = state.range, rangeLabel = state.rangeLabel),
                             { range, label ->
+                                stopNativeMotion()
                                 viewportReady = false
                                 pendingTopY = null
                                 viewportRevision++
@@ -460,12 +539,12 @@ internal fun FullscreenChartScreen(
                         ChartIcon(
                             R.drawable.ui_plus, R.string.history_chart_zoom_in, lineData != null
                         ) {
-                            chartView?.zoomToCenter(1.4f, 1f)
+                            zoomViewport(1.4f)
                         }
                         ChartIcon(
                             R.drawable.ui_minus, R.string.history_chart_zoom_out, lineData != null
                         ) {
-                            chartView?.zoomToCenter(0.7f, 1f)
+                            zoomViewport(0.7f)
                         }
                         ChartIcon(
                             R.drawable.ui_refresh, R.string.history_chart_reset, lineData != null
@@ -558,14 +637,14 @@ internal fun FullscreenChartScreen(
                                 enabled = lineData != null,
                                 onClick = {
                                     overflowMenu = false
-                                    chartView?.zoomToCenter(1.4f, 1f)
+                                    zoomViewport(1.4f)
                                 })
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.history_chart_zoom_out)) },
                                 enabled = lineData != null,
                                 onClick = {
                                     overflowMenu = false
-                                    chartView?.zoomToCenter(0.7f, 1f)
+                                    zoomViewport(0.7f)
                                 })
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.history_chart_reset)) },
@@ -651,7 +730,7 @@ internal fun FullscreenChartScreen(
                 Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .padding(horizontal = BatterySpacing.sm)
+                    .padding(horizontal = BatterySpacing.sm, vertical = BatterySpacing.sm)
             ) {
                 if (lineData != null || chartView != null) LineChart(
                     data = lineData,
@@ -722,6 +801,7 @@ internal fun FullscreenChartScreen(
                     },
                     setup = {
                         chartView = this
+                        onChartGestureListener = motion
                         noDataText = ""
                         isNoDataIconEnabled = false
                         description.isEnabled = false
@@ -741,9 +821,20 @@ internal fun FullscreenChartScreen(
                         axisLeft.labelCount = 4
                         minOffset = 8f
                     },
-                    update = {
+                    update = update@{
+                        if (motion.active) return@update
+                        val explicitCommand =
+                            appliedCommand != state.viewportCommand || appliedRevision != viewportRevision
+                        if (explicitCommand && (state.viewport.start < coordinateRange.start || state.viewport.end > coordinateRange.end)) {
+                            viewportReady = false
+                            return@update
+                        }
                         val restoreViewport =
-                            appliedCoordinates != coordinateRange || appliedViewport != state.viewport || appliedRevision != viewportRevision || appliedLineData !== lineData || appliedYBounds != yBounds
+                            explicitCommand || appliedCoordinates != coordinateRange || appliedLineData !== lineData || appliedYBounds != yBounds
+                        val restoreTarget = if (explicitCommand || !viewportReady) state.viewport
+                        else pendingViewport ?: appliedCoordinates?.let {
+                            fullscreenVisibleViewport(this, it, state.range)
+                        } ?: state.viewport
                         if (restoreViewport && viewportReady && state.scaleMode == ChartScaleMode.MANUAL) {
                             pendingTopY = fullscreenChartTopY(this)
                         }
@@ -837,33 +928,30 @@ internal fun FullscreenChartScreen(
                         setVisibleXRangeMaximum(xAxis.axisMaximum)
                         viewPortHandler.setMaximumScaleY(if (state.scaleMode == ChartScaleMode.MANUAL) 100f else 1f)
                         if (restoreViewport && lineData != null) {
+                            val initial = appliedCoordinates == null
                             appliedCoordinates = coordinateRange
-                            appliedViewport = state.viewport
+                            appliedViewport = restoreTarget
+                            appliedCommand = state.viewportCommand
                             appliedRevision = viewportRevision
                             appliedLineData = lineData
                             appliedYBounds = yBounds
                             val restoringRevision = viewportRevision
-                            addViewportJob {
-                                // Run after Compose's queued restoration of the saved vertical scroll.
-                                post {
-                                    if (appliedCoordinates == coordinateRange && appliedViewport == state.viewport && appliedRevision == restoringRevision && appliedLineData === lineData && appliedYBounds == yBounds) {
-                                        restoreFullscreenViewport(
-                                            this,
-                                            coordinateRange,
-                                            state.viewport,
-                                            preservedTopY ?: fullscreenChartTopY(this)
-                                        )
-                                        post {
-                                            doOnPreDraw {
-                                                if (appliedCoordinates == coordinateRange && appliedViewport == state.viewport && appliedRevision == restoringRevision && appliedLineData === lineData && appliedYBounds == yBounds) {
-                                                    viewportReady = true
-                                                    pendingTopY = null
-                                                }
-                                            }
-                                        }
-                                    }
+                            val restoringMotion = motion.revision
+                            val restoringCommand = state.viewportCommand
+                            val restore = {
+                                if (!motion.active && motion.revision == restoringMotion && appliedCommand == restoringCommand && appliedCoordinates == coordinateRange && appliedViewport == restoreTarget && appliedRevision == restoringRevision && appliedLineData === lineData && appliedYBounds == yBounds) {
+                                    restoreFullscreenViewport(
+                                        this,
+                                        coordinateRange,
+                                        restoreTarget,
+                                        preservedTopY ?: fullscreenChartTopY(this)
+                                    )
+                                    viewportReady = true
+                                    pendingTopY = null
+                                    pendingViewport = null
                                 }
                             }
+                            if (initial) addViewportJob { post { restore() } } else restore()
                         }
                         val index = lineData?.dataSets?.indexOfFirst { set ->
                             (set as? LineDataSet<*>)?.entries?.any { it.data == state.selectedKey } == true
@@ -911,7 +999,7 @@ internal fun FullscreenChartScreen(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = BatterySpacing.normal),
+                    .padding(horizontal = BatterySpacing.normal, vertical = BatterySpacing.xs),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 ChartIcon(
@@ -995,11 +1083,70 @@ internal fun FullscreenChartScreen(
 
 private data class PreparedChartData(
     val coordinates: HistoryRangeState,
+    val range: HistoryRangeState,
     val metrics: List<HistoryMetric>,
     val style: ChartDrawingStyle,
     val valueScale: ChartValueScale,
+    val fahrenheit: Boolean,
+    val currentMultiplier: Int,
+    val models: Map<HistoryMetric, DetailedHistoryChartModel>,
     val data: LineData
 )
+
+private class FullscreenChartMotion : OnChartGestureListener {
+    var active by mutableStateOf(false)
+    var touching = false
+    var revision = 0L
+
+    override fun onChartGestureStart(
+        me: MotionEvent, lastPerformedGesture: ChartTouchListener.ChartGesture
+    ) {
+        touching = true
+        active = true
+        revision++
+    }
+
+    override fun onChartGestureEnd(
+        me: MotionEvent, lastPerformedGesture: ChartTouchListener.ChartGesture
+    ) {
+        touching = false
+    }
+
+    override fun onChartTranslate(me: MotionEvent, dX: Float, dY: Float) {
+        revision++
+    }
+
+    override fun onChartScale(me: MotionEvent, scaleX: Float, scaleY: Float) {
+        revision++
+    }
+
+    override fun onChartFling(
+        me1: MotionEvent?, me2: MotionEvent, velocityX: Float, velocityY: Float
+    ) = Unit
+
+    override fun onChartLongPressed(me: MotionEvent) = Unit
+    override fun onChartDoubleTapped(me: MotionEvent) = Unit
+    override fun onChartSingleTapped(me: MotionEvent) = Unit
+}
+
+internal fun fullscreenCoordinatesNeedRebase(
+    coordinates: HistoryRangeState, range: HistoryRangeState, viewport: HistoryRangeState
+): Boolean {
+    val span = viewport.end - viewport.start
+    val coordinateSpan = coordinates.end - coordinates.start
+    return coordinates.start < range.start || coordinates.end > range.end || viewport.start < coordinates.start || viewport.end > coordinates.end || span < coordinateSpan / 10 || span > coordinateSpan / 2 ||
+            coordinates.start > range.start && viewport.start - coordinates.start < span || coordinates.end < range.end && coordinates.end - viewport.end < span
+}
+
+internal fun fullscreenVisibleViewport(
+    chart: LineChartView, coordinates: HistoryRangeState, range: HistoryRangeState
+): HistoryRangeState {
+    val timeAxis = DetailedHistoryTimeAxis(coordinates)
+    val start = timeAxis.time(chart.lowestVisibleX).coerceIn(range.start, range.end - 1)
+    return HistoryRangeState(
+        start, timeAxis.time(chart.highestVisibleX).coerceIn(start + 1, range.end)
+    )
+}
 
 internal fun fullscreenChartTopY(chart: LineChartView): Float {
     val topLeft = MPPointD(0.0, 0.0)
@@ -1022,15 +1169,13 @@ internal fun restoreFullscreenViewport(
     val span = (viewport.end - viewport.start).toDouble() / 1000
     val targetScale = (chart.xAxis.axisRange / span).toFloat().coerceAtLeast(1f)
     chart.zoomToCenter(targetScale / chart.viewPortHandler.scaleX, 1f)
-    chart.addViewportJob(
-        MoveViewJob.getInstance(
-            chart.viewPortHandler,
-            timeAxis.x(viewport.start),
-            preservedTopY,
-            chart.getTransformer(YAxis.AxisDependency.LEFT),
-            chart
-        )
-    )
+    MoveViewJob.getInstance(
+        chart.viewPortHandler,
+        timeAxis.x(viewport.start),
+        preservedTopY,
+        chart.getTransformer(YAxis.AxisDependency.LEFT),
+        chart
+    ).run()
 }
 
 internal fun fullscreenLineData(

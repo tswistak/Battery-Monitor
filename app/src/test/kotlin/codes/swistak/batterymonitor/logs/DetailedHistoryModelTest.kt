@@ -28,7 +28,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun narrow_views_keep_every_observation_and_duplicate_timestamp_identity() {
+    fun `narrow views keep every observation and duplicate timestamp identity`() {
         val range = HistoryRangeState(1_000, 901_000)
         val records = rows(8).toMutableList()
         records.add(1, HistoryRecord(99, records.first().record))
@@ -43,7 +43,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun zoom_queries_reveal_real_observations_omitted_from_the_wide_view() {
+    fun `zoom queries reveal real observations omitted from the wide view`() {
         val range = HistoryRangeState(0, 100_000_000)
         val wide = detailedHistoryChart(range, range, HistoryMetric.LEVEL, 12, rows(600))
         val viewport = HistoryRangeState(30_001_000, 30_901_000)
@@ -57,7 +57,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun downsampling_keeps_spikes_troughs_boundaries_and_transition_neighbors() {
+    fun `downsampling keeps spikes troughs boundaries and transition neighbors`() {
         val range = HistoryRangeState(0, 100_000_000)
         val records = rows(600).mapIndexed { index, entry ->
             entry.copy(
@@ -88,7 +88,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun nulls_and_boots_break_segments_even_when_the_gap_is_downsampled() {
+    fun `nulls and boots break segments even when the gap is downsampled`() {
         val range = HistoryRangeState(0, 100_000_000)
         val records = rows(600).mapIndexed { index, entry ->
             entry.copy(
@@ -109,7 +109,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun irregular_periodic_observations_remain_connected_without_fabricating_samples() {
+    fun `irregular periodic observations remain connected without fabricating samples`() {
         val range = HistoryRangeState(0, 2_000_000)
         val records = listOf(
             HistoryRecord(1, observation),
@@ -130,7 +130,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun legacy_sparse_readings_and_mixed_periodic_events_match_compact_continuity() {
+    fun `legacy sparse readings and mixed periodic events match compact continuity`() {
         val range = HistoryRangeState(0, 10_000_000)
         val legacy = listOf(
             HistoryRecord(1, observation.copy(time = 1, status = 100)),
@@ -160,7 +160,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun irregular_real_device_samples_match_compact_segments_before_and_after_reduction() {
+    fun `irregular real device samples match compact segments before and after reduction`() {
         val range = HistoryRangeState(0, 1_000_000_000)
         val records = (0..<800).map { index ->
             HistoryRecord(
@@ -206,7 +206,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun two_metrics_consume_one_stream_and_keep_independent_actual_units_and_extrema() {
+    fun `two metrics consume one stream and keep independent actual units and extrema`() {
         val range = HistoryRangeState(0, 1_000)
         val metrics = listOf(HistoryMetric.LEVEL, HistoryMetric.CURRENT)
         val records = listOf(
@@ -242,13 +242,13 @@ class DetailedHistoryModelTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun detailed_pipeline_rejects_a_third_metric() {
+    fun `detailed pipeline rejects a third metric`() {
         val range = HistoryRangeState(0, 1_000)
         detailedHistoryCharts(range, range, HistoryMetric.entries.take(3), 800, emptySequence())
     }
 
     @Test
-    fun saturated_range_retains_the_last_representable_timestamp_without_overflow() {
+    fun `saturated range retains the last representable timestamp without overflow`() {
         val range = HistoryRangeState(Long.MAX_VALUE - 1, Long.MAX_VALUE)
         val rows = sequenceOf(HistoryRecord(1, observation.copy(time = Long.MAX_VALUE)))
         val chart = detailedHistoryChart(range, range, HistoryMetric.LEVEL, 800, rows)
@@ -259,7 +259,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun viewport_statistics_exclude_guard_neighbors_and_end_is_exclusive() {
+    fun `viewport statistics exclude guard neighbors and end is exclusive`() {
         val range = HistoryRangeState(0, 1_000)
         val viewport = HistoryRangeState(100, 200)
         val records = listOf(
@@ -278,7 +278,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun bounds_and_chart_share_metric_units_validation_and_unavailable_values() {
+    fun `bounds and chart share metric units validation and unavailable values`() {
         val range = HistoryRangeState(0, 1_000)
         val record = HistoryRecord(1, observation.copy(time = 1))
         val expected = listOf(50.0, 30.0, 4.0, -100.0, -0.4, 2500.0)
@@ -302,7 +302,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun rendering_memory_is_bounded_by_pixels_even_with_many_events_and_gaps() {
+    fun `rendering memory is bounded by pixels even with many events and gaps`() {
         val range = HistoryRangeState(0, 200_000_000_000)
         val records = rows(1_000_001).mapIndexed { index, entry ->
             entry.copy(
@@ -324,7 +324,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun nearby_coordinate_window_preserves_deep_zoom_after_thirty_years() {
+    fun `nearby coordinate window preserves deep zoom after thirty years`() {
         val range = HistoryRangeState(0, 30L * 365 * 86_400_000)
         val viewport = HistoryRangeState(range.end - 3_600_000, range.end - 3_540_000)
         val coordinates = detailedHistoryCoordinateRange(range, viewport)
@@ -343,7 +343,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun coordinate_window_padding_clamps_at_both_edges_without_overflow() {
+    fun `coordinate window padding clamps at both edges without overflow`() {
         val range = HistoryRangeState(0, Long.MAX_VALUE)
         val first = HistoryRangeState(10, 70)
         assertEquals(HistoryRangeState(0, 190), detailedHistoryCoordinateRange(range, first))
@@ -364,7 +364,7 @@ class DetailedHistoryModelTest {
     }
 
     @Test
-    fun relative_seconds_keep_deep_zoom_precision_and_keys_keep_exact_timestamps() {
+    fun `relative seconds keep deep zoom precision and keys keep exact timestamps`() {
         val start = 1_800_000_000_123L
         val range = HistoryRangeState(start, start + 28 * 86_400_000L)
         val axis = DetailedHistoryTimeAxis(range)

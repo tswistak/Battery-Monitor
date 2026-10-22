@@ -507,6 +507,40 @@ class PredictorCoreTest {
         Assert.assertEquals(0L, info.prediction.whenHappened)
     }
 
+    @Test
+    fun `prediction setting refresh publishes the new target without a battery level event`() {
+        setBatteryState(70, BatteryInfo.STATUS_CHARGING, BatteryInfo.PLUGGED_USB, 0)
+        Assert.assertEquals(100, info.effectivePredictionTargetPercent)
+        predictor.setTargets(chargingTargetPercent = 80, dischargingTargetPercent = 20)
+        predictor.setPredictionType(PredictorCore.FIVE_MINUTES)
+        Assert.assertEquals(80, info.prediction.targetPercent)
+        Assert.assertEquals(80, info.effectivePredictionTargetPercent)
+    }
+
+    @Test
+    fun `effective display target survives clearing predictions below and above charging limit`() {
+        predictor.setTargets(chargingTargetPercent = 80, dischargingTargetPercent = 20)
+        for (percent in listOf(70, 80, 88)) {
+            setBatteryState(percent, BatteryInfo.STATUS_NOT_CHARGING, BatteryInfo.PLUGGED_USB, 0)
+            Assert.assertEquals(80, info.effectivePredictionTargetPercent)
+            Assert.assertEquals(BatteryInfo.Prediction.NONE, info.fullRangePrediction.whatHappened)
+            Assert.assertEquals(0, info.fullRangePrediction.targetPercent)
+            Assert.assertEquals(percent >= 80, info.prediction.targetReached)
+        }
+        setBatteryState(88, BatteryInfo.STATUS_CHARGING, BatteryInfo.PLUGGED_USB, ONE_MINUTE)
+        Assert.assertEquals(80, info.effectivePredictionTargetPercent)
+        Assert.assertEquals(100, info.fullRangePrediction.targetPercent)
+        setBatteryState(88, BatteryInfo.STATUS_DISCHARGING, BatteryInfo.PLUGGED_USB, 2 * ONE_MINUTE)
+        Assert.assertEquals(20, info.effectivePredictionTargetPercent)
+        Assert.assertEquals(
+            BatteryInfo.Prediction.UNTIL_DRAINED, info.fullRangePrediction.whatHappened
+        )
+        setBatteryState(
+            19, BatteryInfo.STATUS_UNPLUGGED, BatteryInfo.PLUGGED_UNPLUGGED, 3 * ONE_MINUTE
+        )
+        Assert.assertEquals(0, info.effectivePredictionTargetPercent)
+    }
+
     private fun replayLegacyIrregularDischargeScenario(): Long {
         val minutesByLevel = intArrayOf(300, 145, 21, 11, 2, 3, 2, 2, 1, 2, 3, 1, 2)
 

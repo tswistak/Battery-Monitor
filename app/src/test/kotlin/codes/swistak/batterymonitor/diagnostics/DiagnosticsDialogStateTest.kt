@@ -19,7 +19,7 @@ import java.util.Locale
 
 class DiagnosticsDialogStateTest {
     @Test
-    fun only_one_dialog_is_open_and_cancel_has_no_monitoring_or_capture_effect() {
+    fun `only one dialog is open and cancel has no monitoring or capture effect`() {
         val state = DiagnosticsDialogState()
         state.open(DiagnosticsDialog.STOP_MONITORING)
         state.open(DiagnosticsDialog.CHARGING_CONDITION)
@@ -31,7 +31,7 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun selecting_a_condition_does_not_capture_until_confirmation() {
+    fun `selecting a condition does not capture until confirmation`() {
         val state = DiagnosticsDialogState()
         state.open(DiagnosticsDialog.CHARGING_CONDITION)
         assertNull(state.confirmCondition())
@@ -43,7 +43,7 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun every_non_fixed_choice_preserves_its_charging_condition() {
+    fun `every non fixed choice preserves its charging condition`() {
         for ((selection, condition) in mapOf(
             0 to ChargingDiagnosticCondition.Off,
             2 to ChargingDiagnosticCondition.Adaptive,
@@ -58,7 +58,7 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun fixed_choice_replaces_the_picker_and_cancellation_does_not_capture() {
+    fun `fixed choice replaces the picker and cancellation does not capture`() {
         val state = DiagnosticsDialogState()
         state.open(DiagnosticsDialog.CHARGING_CONDITION)
         state.selectedCondition = 1
@@ -71,7 +71,7 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun fixed_limit_uses_existing_localized_whole_number_validation_and_original_range() {
+    fun `fixed limit uses existing localized whole number validation and original range`() {
         val min = ChargingDiagnosticCondition.MIN_FIXED_PERCENT
         val max = ChargingDiagnosticCondition.MAX_FIXED_PERCENT
         for (value in listOf(60, 80, 100)) {
@@ -90,7 +90,7 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun capture_cannot_start_twice_and_limited_discovery_shows_one_hint() {
+    fun `capture cannot start twice and limited discovery shows one hint`() {
         val state = DiagnosticsDialogState()
         assertTrue(state.beginCapture())
         assertFalse(state.beginCapture())
@@ -103,7 +103,7 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun asynchronous_hint_waits_for_existing_dialog_instead_of_overlapping_it() {
+    fun `asynchronous hint waits for existing dialog instead of overlapping it`() {
         val state = DiagnosticsDialogState()
         state.open(DiagnosticsDialog.MONITOR_REPORT)
         state.finishCapture(true)
@@ -115,7 +115,7 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun successful_unrestricted_capture_does_not_show_a_privileged_hint() {
+    fun `successful unrestricted capture does not show a privileged hint`() {
         val state = DiagnosticsDialogState()
         state.beginCapture()
         state.finishCapture(false)
@@ -124,7 +124,7 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun process_restoration_retains_dialog_and_selection_without_running_actions() {
+    fun `process restoration retains dialog and selection without running actions`() {
         val previous = DiagnosticsDialogState()
         previous.open(DiagnosticsDialog.CHARGING_CONDITION)
         previous.selectedCondition = 3
@@ -140,7 +140,7 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun malformed_saved_dialog_and_selection_are_ignored() {
+    fun `malformed saved dialog and selection are ignored`() {
         val state = DiagnosticsDialogState()
         state.restore("missing", 9)
         assertNull(state.dialog)
@@ -148,7 +148,7 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun hint_acknowledged_on_another_diagnostics_screen_is_not_shown_again() {
+    fun `hint acknowledged on another diagnostics screen is not shown again`() {
         val state = DiagnosticsDialogState()
         state.offerPrivilegedHint()
         state.clearPrivilegedHint()
