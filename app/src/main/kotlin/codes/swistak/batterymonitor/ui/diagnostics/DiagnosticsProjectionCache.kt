@@ -46,7 +46,7 @@ internal class DiagnosticsProjectionCache {
             charging = null
             raw = null
         }
-        if (tab == 3) return raw ?: sources.flatMap(::rawDiagnosticGroups).also { raw = it }
+        if (tab == 3) return raw ?: mergedRawDiagnosticGroups(sources).also { raw = it }
         if (format != display) {
             format = display
             normalized = null

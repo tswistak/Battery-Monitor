@@ -310,6 +310,15 @@ internal fun rawDiagnosticGroups(snapshot: AdvancedBatterySnapshot): List<Diagno
     )
 }
 
+internal fun mergedRawDiagnosticGroups(snapshots: List<AdvancedBatterySnapshot>): List<DiagnosticGroup> =
+    snapshots.flatMap(::rawDiagnosticGroups).groupBy { it.title }.map { (title, groups) ->
+        DiagnosticGroup(
+            title,
+            groups.flatMap { it.rows }.groupBy { it.rawKey }.values.map { readings ->
+                checkNotNull(latestDiagnosticReading(readings))
+            })
+    }
+
 internal fun diagnosticAccessName(snapshot: AdvancedBatterySnapshot): String =
     when (snapshot.accessMethod) {
         AdvancedBatterySnapshot.ACCESS_SHIZUKU -> "Shizuku"

@@ -422,7 +422,7 @@ internal fun DiagnosticsScreen(
             }
             groups.forEachIndexed { index, group ->
                 if (tab == 3) {
-                    val groupKey = "${group.title}:${group.rows.first().accessMethod}"
+                    val groupKey = group.title.toString()
                     item(key = "raw:$groupKey:header", contentType = "rawHeader") {
                         if (index > 0) Spacer(Modifier.height(16.dp))
                         Column(
@@ -686,7 +686,7 @@ internal fun DiagnosticsScreen(
         val normalized =
             mergedDiagnosticGroups(snapshots, display.multiplier, display.fahrenheit, locale)
         val reportRaw =
-            if (includeRaw) snapshots.flatMap(::rawDiagnosticGroups) + listOfNotNull(reportPredictor.raw)
+            if (includeRaw) mergedRawDiagnosticGroups(snapshots) + listOfNotNull(reportPredictor.raw)
             else emptyList()
         buildString {
             appendLine(resources.getString(R.string.nav_diagnostics))

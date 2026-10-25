@@ -15,6 +15,7 @@
 */
 package codes.swistak.batterymonitor.ui.diagnostics
 
+import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
 import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
 import org.junit.Assert.assertEquals
@@ -26,6 +27,73 @@ import java.util.Locale
 
 class DiagnosticsProjectionCacheTest {
     private val defaults = DiagnosticsFormat(1, false, Locale.US)
+
+    @Test
+    fun `raw sections merge all collector fields once using each fields latest acquisition`() {
+        val basic = snapshot(-900, 10).apply {
+            metadataLabels.addAll(
+                listOf(
+                    "BATTERY_PROPERTY_CURRENT_NOW", "computeChargeTimeRemaining"
+                )
+            )
+            metadataValues.addAll(listOf("-900", "-1"))
+            sourceReadTimes["BatteryManager / computeChargeTimeRemaining"] =
+                BatteryMeasurementTime(10, 10)
+        }
+        val app = snapshot(-1200, 20).apply {
+            accessMethod = "App UID"
+            metadataLabels.addAll(
+                listOf(
+                    "BATTERY_PROPERTY_CURRENT_NOW", "BATTERY_PROPERTY_CHARGING_POLICY"
+                )
+            )
+            metadataValues.addAll(listOf("  -1200\n", Int.MIN_VALUE.toString()))
+            sourceReadTimes["BatteryManager / BATTERY_PROPERTY_CHARGING_POLICY"] =
+                BatteryMeasurementTime(20, 20)
+        }
+        val root = snapshot(-1500, 15).apply {
+            accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
+            metadataLabels.add("BATTERY_PROPERTY_CURRENT_NOW")
+            metadataValues.add("-1500")
+            serviceLabels.add("root_only")
+            serviceValues.add("root value")
+        }
+        val sources = listOf(basic, app, root)
+        val cache = DiagnosticsProjectionCache()
+        val raw = cache.groups(sources, defaults, 3)
+        assertEquals(3, raw.size)
+        assertEquals(raw.size, raw.map { it.title }.distinct().size)
+        raw.forEach { group ->
+            assertEquals(group.rows.size, group.rows.map { it.rawKey }.distinct().size)
+            assertEquals(
+                sources.asSequence().flatMap(::rawDiagnosticGroups)
+                .filter { it.title == group.title }.flatMap { it.rows }.map { it.rawKey }.toSet(),
+                group.rows.map { it.rawKey }.toSet()
+            )
+        }
+        val metadata = raw.single { it.title == R.string.advanced_section_metadata }
+        assertEquals(3, metadata.rows.size)
+        val current = row(listOf(metadata), "BATTERY_PROPERTY_CURRENT_NOW")
+        assertEquals("  -1200\n", current.rawValue)
+        assertEquals("App UID", current.accessMethod)
+        assertEquals("BatteryManager / BATTERY_PROPERTY_CURRENT_NOW", current.source)
+        assertEquals(20L, current.observedAtMillis)
+        assertEquals(20L, current.observedElapsedMillis)
+        assertEquals("-1", row(raw, "computeChargeTimeRemaining").rawValue)
+        assertEquals(
+            Int.MIN_VALUE.toString(), row(raw, "BATTERY_PROPERTY_CHARGING_POLICY").rawValue
+        )
+        assertEquals("-1200", row(raw, "battery/current_now").rawValue)
+        assertEquals("root value", row(raw, "root_only").rawValue)
+        assertEquals(listOf(current), filterRawGroups(raw, "PROPERTY_CURRENT_NOW").single().rows)
+        val report = diagnosticReport(raw, { it.toString() }, true)
+        assertEquals(
+            1, report.lineSequence().count { it == R.string.advanced_section_metadata.toString() })
+        assertEquals(
+            1, report.lineSequence().count { it.startsWith("BATTERY_PROPERTY_CURRENT_NOW:") })
+        assertSame(raw, cache.groups(sources, defaults, 3))
+        assertTrue(cache.groups(emptyList(), defaults, 3).isEmpty())
+    }
 
     @Test
     fun `raw searches and tab revisits reuse prepared sources`() {

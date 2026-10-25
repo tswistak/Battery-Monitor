@@ -97,17 +97,27 @@ class DiagnosticsScrollInstrumentedTest {
             }
             instrumentation.waitForIdleSync()
             main { tab = 3 }
-            await { indexOf("raw:${R.string.device_data_predictor}:Battery Monitor:header") >= 0 }
+            await { indexOf("raw:${R.string.device_data_predictor}:header") >= 0 }
             assertTop()
             main { state = state.copy(basic = snapshot("Android", "basic")) }
-            await { indexOf("raw:${R.string.advanced_section_service}:Android:basic_0") >= 0 }
+            await { indexOf("raw:${R.string.advanced_section_service}:basic_0") >= 0 }
             assertTop()
             main { state = state.copy(appRaw = snapshot("App UID", "app")) }
-            await { indexOf("raw:${R.string.advanced_section_service}:App UID:app_0") >= 0 }
+            await { indexOf("raw:${R.string.advanced_section_service}:app_0") >= 0 }
             assertTop()
             main { state = state.copy(advanced = snapshot("root", "root"), rawLoading = false) }
-            await { indexOf("raw:${R.string.advanced_section_service}:Root:root_0") >= 0 }
+            await { indexOf("raw:${R.string.advanced_section_service}:root_0") >= 0 }
             assertTop()
+            val metadataHeader = indexOf("raw:${R.string.advanced_section_metadata}:header")
+            val metadataCurrent =
+                indexOf("raw:${R.string.advanced_section_metadata}:BATTERY_PROPERTY_CURRENT_NOW")
+            assertEquals(metadataHeader + 1, metadataCurrent)
+            for ((offset, prefix) in listOf("basic", "app", "root").withIndex()) {
+                assertEquals(
+                    metadataCurrent + offset + 1,
+                    indexOf("raw:${R.string.advanced_section_metadata}:$prefix/metadata")
+                )
+            }
 
             main { assertTrue(list().config[SemanticsActions.ScrollToIndex].action!!.invoke(30)) }
             await { scroll() >= 30f }
@@ -121,7 +131,7 @@ class DiagnosticsScrollInstrumentedTest {
             main { list().config[SemanticsActions.ScrollToIndex].action!!.invoke(2) }
             await { scroll() > 0f }
             main { tab = 3 }
-            await { indexOf("raw:${R.string.advanced_section_service}:Android:basic_0") >= 0 }
+            await { indexOf("raw:${R.string.advanced_section_service}:basic_0") >= 0 }
             assertTop()
             main { tab = 0 }
             instrumentation.waitForIdleSync()
@@ -141,6 +151,8 @@ class DiagnosticsScrollInstrumentedTest {
             serviceValues.addAll(List(50) { value })
             sysfsLabels.add("$prefix/sysfs")
             sysfsValues.add(value)
+            metadataLabels.add("BATTERY_PROPERTY_CURRENT_NOW")
+            metadataValues.add(value)
             metadataLabels.add("$prefix/metadata")
             metadataValues.add(value)
         }
