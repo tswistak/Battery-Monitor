@@ -619,6 +619,7 @@
     <string name="advanced_help_sysfs" formatted="false">Raw shows the original names and values read from /sys/class/power_supply, including multiline values. Search by key and tap a row to view and copy its complete value. Use Refresh to collect new readings. Battery Monitor also tries reads with its normal Android permissions, without root or Shizuku.</string>
     <string name="diag_fuel_gauge">Battery fuel gauge</string>
     <string name="diag_mains_supply">AC power supply</string>
+    <string name="diag_charging_source">Charging source</string>
     <string name="diag_wireless_supply">Wireless power supply</string>
     <string name="diag_usb_supply">USB power supply</string>
     <string name="diag_fast_charging">Fast charging</string>

@@ -24,6 +24,146 @@ import java.util.Locale
 
 class DiagnosticsModelTest {
     @Test
+    fun `charging source is available from the Android broadcast without privileged access`() {
+        for ((plugged, label) in listOf(
+            "0" to R.string.plugged_unplugged,
+            "1" to R.string.diag_mains_supply,
+            "2" to R.string.diag_usb_supply,
+            "4" to R.string.diag_wireless_supply
+        )) {
+            val snapshot = acquiredSnapshot {
+                accessMethod = "Android"
+                capturedAtMillis = 100
+                serviceLabels.add("plugged")
+                serviceValues.add(plugged)
+            }
+            val groups = DiagnosticsProjectionCache().groups(
+                listOf(snapshot), DiagnosticsFormat(1, false, Locale.US), tab = 2
+            )
+            val row = groups.flatMap { it.rows }.single { it.rawKey == "plugged" }
+            assertEquals(R.string.diag_charging_source, row.label)
+            assertEquals(label, row.valueLabel)
+            assertEquals(plugged, row.rawValue)
+            assertEquals("ACTION_BATTERY_CHANGED / plugged", row.source)
+            assertEquals(100L, row.observedAtMillis)
+            assertEquals(100L, row.observedElapsedMillis)
+            assertEquals("Android", row.accessMethod)
+            assertTrue(deviceDiagnosticGroups(listOf(snapshot), charging = true).isEmpty())
+            assertTrue(
+                diagnosticReport(
+                    groups, { it.toString() }, false
+                ).contains(label.toString())
+            )
+        }
+    }
+
+    @Test
+    fun `charging source reuses battery service power flags and retains their acquisition time`() {
+        val snapshot = acquiredSnapshot {
+            accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
+            capturedAtMillis = 200
+            serviceLabels.addAll(listOf("AC powered", "USB powered", "Wireless powered"))
+            serviceValues.addAll(listOf("true", "false", "false"))
+        }
+        val row = normalizedDiagnosticGroups(snapshot, 1)[2].rows.single { it.rawKey == "plugged" }
+        assertEquals(R.string.diag_mains_supply, row.valueLabel)
+        assertEquals("dumpsys battery / AC powered", row.source)
+        assertEquals(200L, row.observedAtMillis)
+        assertEquals("Shizuku", row.accessMethod)
+    }
+
+    @Test
+    fun `charging source updates to unplugged without treating missing or invalid data as unplugged`() {
+        fun snapshot(value: String?, time: Long) = acquiredSnapshot {
+            accessMethod = "Android"
+            capturedAtMillis = time
+            if (value != null) {
+                serviceLabels.add("plugged")
+                serviceValues.add(value)
+            }
+        }
+
+        val charging = snapshot("1", 100)
+        val unplugged = snapshot("0", 200)
+        for (invalid in listOf(null, "-1", "3", "8", "invalid")) {
+            val unknown = snapshot(invalid, 300)
+            val missing =
+                normalizedDiagnosticGroups(unknown, 1)[2].rows.single { it.rawKey == "plugged" }
+            assertNull(formattedDiagnosticValue(missing) { it.toString() })
+            assertEquals("", missing.source)
+            val merged = mergedDiagnosticGroups(listOf(charging, unplugged, unknown), 1)
+            val latest = merged[2].rows.single { it.rawKey == "plugged" }
+            assertEquals(R.string.plugged_unplugged, latest.valueLabel)
+            assertEquals(200L, latest.observedAtMillis)
+        }
+    }
+
+    @Test
+    fun `Samsung high voltage broadcast confirms active wired fast charging with its original source`() {
+        val snapshot = acquiredSnapshot {
+            accessMethod = "Android"
+            capturedAtMillis = 100
+            serviceLabels.addAll(
+                listOf(
+                    "hv_charger", "plugged", "status", "charger_type", "online"
+                )
+            )
+            serviceValues.addAll(listOf("true", "1", "2", "1", "9"))
+        }
+        val rows = normalizedDiagnosticGroups(snapshot, 1)[2].rows
+        val row = rows.single { it.rawKey == "fast_charging" }
+        assertEquals(R.string.diag_fast_charging, row.label)
+        assertEquals(R.string.yes, row.valueLabel)
+        assertEquals("true", row.rawValue)
+        assertEquals("ACTION_BATTERY_CHANGED / hv_charger", row.source)
+        assertEquals(100L, row.observedAtMillis)
+        assertEquals("Android", row.accessMethod)
+        assertTrue(deviceDiagnosticGroups(listOf(snapshot), charging = false).isEmpty())
+        val older = acquiredSnapshot {
+            accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
+            capturedAtMillis = 50
+            serviceLabels.add("ChargeFastCharger")
+            serviceValues.add("false")
+        }
+        assertEquals(
+            row,
+            mergedDiagnosticGroups(
+                listOf(older, snapshot),
+                1
+            )[2].rows.single { it.rawKey == "fast_charging" })
+        val groups = DiagnosticsProjectionCache().groups(
+            listOf(older, snapshot), DiagnosticsFormat(1, false, Locale.US), tab = 2
+        )
+        assertEquals(R.string.advanced_section_charging, groups.single().title)
+        assertEquals(row, groups.single().rows.single { it.rawKey == "fast_charging" })
+        assertTrue(
+            diagnosticReport(
+                groups,
+                { it.toString() },
+                false
+            ).contains("fast_charging: ${R.string.yes}")
+        )
+
+        for ((flag, plugged, status) in listOf(
+            Triple("false", "1", "2"),
+            Triple("unknown", "1", "2"),
+            Triple("1", "1", "2"),
+            Triple("true", "0", "3"),
+            Triple("true", "4", "2"),
+            Triple("true", "1", "4")
+        )) {
+            snapshot.serviceValues[0] = flag
+            snapshot.serviceValues[1] = plugged
+            snapshot.serviceValues[2] = status
+            val missing = normalizedDiagnosticGroups(
+                snapshot,
+                1
+            )[2].rows.single { it.rawKey == "fast_charging" }
+            assertNull(formattedDiagnosticValue(missing) { it.toString() })
+        }
+    }
+
+    @Test
     fun `privileged access only reports yes after a successful privileged reading`() {
         val enabled = DiagnosticsState(privilegedEnabled = true)
         assertEquals(R.string.advanced_status_no_access, enabled.privilegedAccessStatus)
@@ -583,7 +723,11 @@ class DiagnosticsModelTest {
             assertEquals(200L, current.observedAtMillis)
             assertEquals("/sys/class/power_supply / usb/current_max", current.source)
             assertEquals(
-                R.string.yes, charging.single { it.rawKey == "ChargeFastCharger" }.valueLabel
+                R.string.yes,
+                normalizedDiagnosticGroups(
+                    older,
+                    1
+                )[2].rows.single { it.rawKey == "fast_charging" }.valueLabel
             )
             assertEquals(
                 R.string.diag_charge_fast,

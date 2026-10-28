@@ -15,6 +15,7 @@ import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import codes.swistak.batterymonitor.monitoring.oldestMeasurementTime
+import codes.swistak.batterymonitor.monitoring.projectPrivilegedBatteryReading
 import java.util.Locale
 
 internal data class DiagnosticRow(
@@ -88,6 +89,40 @@ internal fun normalizedDiagnosticGroups(
     val service = snapshot.serviceLabels.zip(snapshot.serviceValues).toMap()
     val temperature = service["temperature"]?.trim()?.toIntOrNull()
     val serviceSource = if (android) "ACTION_BATTERY_CHANGED" else "dumpsys battery"
+    val plugged = projectPrivilegedBatteryReading(snapshot).plugged
+    val pluggedField = if (service["plugged"]?.trim()?.toIntOrNull() == plugged) "plugged"
+    else when (plugged) {
+        1 -> "AC powered"
+        2 -> "USB powered"
+        4 -> "Wireless powered"
+        else -> "AC powered"
+    }
+    val fastCharging = latestDiagnosticReading(
+        rawRows(
+            snapshot.serviceLabels, snapshot.serviceValues, serviceSource, snapshot, access
+        ).mapNotNull { reading ->
+            val samsungHighVoltage = reading.rawKey == "hv_charger"
+            if (reading.rawKey != "ChargeFastCharger" && !samsungHighVoltage) return@mapNotNull null
+            val enabled = when (reading.rawValue?.trim()?.lowercase(Locale.ROOT)) {
+                "true" -> R.string.yes
+                "false" -> R.string.diag_no
+                else -> return@mapNotNull null
+            }
+            // Samsung's high-voltage flag confirms fast charging; false does not exclude other modes.
+            if (samsungHighVoltage && (!android || enabled != R.string.yes || service["status"]?.trim() != "2" || service["plugged"]?.trim() !in setOf(
+                    "1", "2"
+                ))
+            ) {
+                return@mapNotNull null
+            }
+            reading.copy(
+                label = R.string.diag_fast_charging,
+                rawKey = "fast_charging",
+                value = null,
+                valueLabel = enabled
+            )
+        })
+
     fun voltageReading(raw: String?, source: String, sysfs: Boolean = false): DiagnosticRow? {
         val millivolts = if (sysfs) BatteryVoltageValidator.normalizeSysfsVoltage(raw)
         else raw?.trim()?.toIntOrNull()?.takeIf(BatteryVoltageValidator::isValidBroadcastMillivolts)
@@ -239,12 +274,29 @@ internal fun normalizedDiagnosticGroups(
         ), DiagnosticGroup(
             R.string.advanced_section_charging, listOf(
                 row(
+                    R.string.diag_charging_source,
+                    "plugged",
+                    plugged,
+                    value = null,
+                    source = "$serviceSource / $pluggedField"
+                ).copy(
+                    valueLabel = when (plugged) {
+                        0 -> R.string.plugged_unplugged
+                        1 -> R.string.diag_mains_supply
+                        2 -> R.string.diag_usb_supply
+                        4 -> R.string.diag_wireless_supply
+                        else -> 0
+                    }
+                ),
+                fastCharging ?: row(R.string.diag_fast_charging, "fast_charging", null),
+                row(
                     R.string.advanced_field_charge_time_remaining,
                     "charge_time_remaining",
                     snapshot.chargeTimeRemainingMs,
                     "ms",
                     snapshot.chargeTimeRemainingMs?.takeIf { it >= 0 }
-                        ?.let { DiagnosticsDurationFormatter.format(locale, it) }), row(
+                        ?.let { DiagnosticsDurationFormatter.format(locale, it) }),
+                row(
                     R.string.advanced_field_max_charging_current,
                     "max_charging_current",
                     snapshot.maxChargingCurrentUa,
@@ -253,7 +305,8 @@ internal fun normalizedDiagnosticGroups(
                         BatteryCurrent.formatMilliAmps(
                             BatteryCurrent.scaleMicroAmps(it, 1), locale
                         ) + " mA"
-                    }), row(
+                    }),
+                row(
                     R.string.advanced_field_max_charging_voltage,
                     "max_charging_voltage",
                     snapshot.maxChargingVoltageUv,
@@ -262,17 +315,20 @@ internal fun normalizedDiagnosticGroups(
                         String.format(
                             locale, "%.2f V", it / 1_000_000.0
                         )
-                    }), row(
+                    }),
+                row(
                     R.string.advanced_field_charging_policy,
                     "charging_policy",
                     snapshot.chargingPolicy,
                     value = null
-                ).copy(valueLabel = chargingPolicyLabel(snapshot)), row(
+                ).copy(valueLabel = chargingPolicyLabel(snapshot)),
+                row(
                     R.string.advanced_field_charging_state,
                     "charging_state",
                     snapshot.chargingState,
                     value = null
-                ).copy(valueLabel = chargingStateLabel(snapshot)), row(
+                ).copy(valueLabel = chargingStateLabel(snapshot)),
+                row(
                     R.string.advanced_field_capacity_level,
                     "capacity_level",
                     snapshot.capacityLevel,
@@ -428,23 +484,10 @@ internal fun deviceDiagnosticGroups(
 ): List<DiagnosticGroup> {
     val groups = snapshots.flatMap { snapshot ->
         val access = diagnosticAccessName(snapshot)
-        val serviceSource =
-            if (snapshot.accessMethod == "Android") "ACTION_BATTERY_CHANGED" else "dumpsys battery"
         val fields = snapshot.sysfsLabels.zip(snapshot.sysfsValues).toMap()
         val batterySupplies = AdvancedBatteryStatsCollector.batterySupplyNames(
             fields
         )
-        val service = if (charging) rawRows(
-            snapshot.serviceLabels, snapshot.serviceValues, serviceSource, snapshot, access
-        ).mapNotNull { row ->
-            if (row.rawKey != "ChargeFastCharger") return@mapNotNull null
-            val enabled = when (row.rawValue?.trim()?.lowercase(Locale.ROOT)) {
-                "true" -> R.string.yes
-                "false" -> R.string.diag_no
-                else -> return@mapNotNull null
-            }
-            row.copy(label = R.string.diag_fast_charging, value = null, valueLabel = enabled)
-        } else emptyList()
         val sysfs = rawRows(
             snapshot.sysfsLabels, snapshot.sysfsValues, "/sys/class/power_supply", snapshot, access
         ).groupBy { it.rawKey.substringBefore('/') }.mapNotNull { (node, rows) ->
@@ -553,11 +596,7 @@ internal fun deviceDiagnosticGroups(
             }
             DiagnosticGroup(title, readings).takeIf { readings.isNotEmpty() }
         }
-        sysfs + if (service.isEmpty()) emptyList() else listOf(
-            DiagnosticGroup(
-                R.string.diag_device_readings, service
-            )
-        )
+        sysfs
     }
     return groups.groupBy { it.title }.map { (title, readings) ->
         DiagnosticGroup(
@@ -750,7 +789,8 @@ internal fun diagnosticReport(
         appendLine(label(group.title))
         group.rows.forEach { row ->
             val predictor = row.label != 0 && group.title == R.string.device_data_predictor
-            if (includeRaw || predictor || (index < 3 && row.label != 0 && row.rawValue?.toDoubleOrNull() != null)) {
+            val knownFastCharging = row.rawKey == "fast_charging" && row.valueLabel != 0
+            if (includeRaw || predictor || (index < 3 && row.label != 0 && (row.rawValue?.toDoubleOrNull() != null || knownFastCharging))) {
                 appendLine(
                     "${row.rawKey}: ${
                         formattedDiagnosticValue(

@@ -15,17 +15,65 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
 import android.os.Bundle
+import androidx.test.platform.app.InstrumentationRegistry
+import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
+import codes.swistak.batterymonitor.advancedstats.AdvancedBatteryStatsCollector
+import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
 import codes.swistak.batterymonitor.monitoring.presentation.currentSampleFromBundle
 import codes.swistak.batterymonitor.monitoring.presentation.toBundle
+import codes.swistak.batterymonitor.ui.diagnostics.normalizedDiagnosticGroups
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class BatteryReadingSourcesInstrumentedTest {
+    @Test
+    fun live_android_charging_source_reaches_diagnostics_without_privileged_collection() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val context = instrumentation.targetContext
+        DisplayStrings.setResources(context.resources)
+        val intent = requireNotNull(
+            context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        )
+        val snapshot = AdvancedBatteryStatsCollector.collectBasic(context)
+        val charging = normalizedDiagnosticGroups(snapshot, 1)[2].rows
+        val row = charging.single { it.rawKey == "plugged" }
+
+        assertEquals(intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1).toString(), row.rawValue)
+        assertEquals("ACTION_BATTERY_CHANGED / plugged", row.source)
+        assertEquals("Android", row.accessMethod)
+        assertTrue(row.valueLabel != 0)
+        assertTrue(row.observedAtMillis > 0)
+        val fields = snapshot.serviceLabels.zip(snapshot.serviceValues).toMap()
+        val fastCharging = charging.single { it.rawKey == "fast_charging" }
+        if (fields["hv_charger"] == "true" && fields["status"] == "2" && fields["plugged"] in setOf(
+                "1",
+                "2"
+            )
+        ) {
+            assertEquals("ACTION_BATTERY_CHANGED / hv_charger", fastCharging.source)
+            assertEquals(R.string.yes, fastCharging.valueLabel)
+        }
+        instrumentation.sendStatus(0, Bundle().apply {
+            putString("charging_source", row.rawValue)
+            putString("source", row.source)
+            putString(
+                "fast_charging", fastCharging.valueLabel.takeIf { it != 0 }?.let(context::getString)
+            )
+            putString(
+                "battery_broadcast",
+                snapshot.serviceLabels.zip(snapshot.serviceValues).joinToString()
+            )
+        })
+    }
+
     @Test
     fun battery_sources_survive_the_service_bundle_and_presentation_snapshot() {
         val info = BatteryInfo().apply {
