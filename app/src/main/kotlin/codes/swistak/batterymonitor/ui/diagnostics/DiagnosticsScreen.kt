@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -80,6 +81,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -146,12 +148,12 @@ internal fun DiagnosticsRoute(
     DisposableEffect(viewModel) { onDispose { viewModel.setActive(false) } }
     DiagnosticsScreen(
         state, viewModel::refreshStats, onMonitor, onChargingTools, {
-            viewModel.setPrivilegedEnabled(it)
-            onPrivilegedChanged()
-        }, { selected ->
-            viewModel.setTab(selected)
-            tab = selected
-        }, monitor.snapshot, monitorActions, monitor.availability, tab
+        viewModel.setPrivilegedEnabled(it)
+        onPrivilegedChanged()
+    }, { selected ->
+        viewModel.setTab(selected)
+        tab = selected
+    }, monitor.snapshot, monitorActions, monitor.availability, tab
     )
 }
 
@@ -283,12 +285,12 @@ internal fun DiagnosticsScreen(
                 (if (tab == 0) listOfNotNull(state.basic) else snapshots).filter { it.hasStats() }
             Text(
                 stringResource(
-                    R.string.current_detail_source, diagnosticSourceName(
-                        sources.joinToString(
-                            " · ", transform = ::diagnosticAccessName
-                        )
-                    ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
-                    ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
+                R.string.current_detail_source, diagnosticSourceName(
+                    sources.joinToString(
+                        " · ", transform = ::diagnosticAccessName
+                    )
+                ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
+                ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
@@ -923,25 +925,40 @@ internal fun DiagnosticReportDialog(
         }
     AlertDialog(
         onDismissRequest = onDismiss,
+        modifier = Modifier.padding(horizontal = 24.dp),
+        properties = DialogProperties(usePlatformDefaultWidth = false),
         title = { Text(stringResource(R.string.diagnostics_export)) },
         text = {
-            Column {
+            Column(
+                Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 SettingRow(
                     stringResource(optionLabel),
                     stringResource(R.string.diag_report_privacy),
                     { include = !include },
                     checked = include
                 )
-                SelectionContainer {
-                    Text(
-                        report
-                            ?: stringResource(if (reportFailed) R.string.diagnostics_export_failed else R.string.diagnostics_checking),
-                        Modifier
-                            .heightIn(max = 300.dp)
-                            .verticalScroll(rememberScrollState()),
-                        fontFamily = FontFamily.Monospace,
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                OutlinedCard(
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 300.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                ) {
+                    SelectionContainer(Modifier.padding(16.dp)) {
+                        Text(
+                            report
+                                ?: stringResource(if (reportFailed) R.string.diagnostics_export_failed else R.string.diagnostics_checking),
+                            Modifier
+                                .fillMaxWidth()
+                                .verticalScroll(rememberScrollState()),
+                            fontFamily = FontFamily.Monospace,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
                 }
             }
         },
@@ -957,7 +974,7 @@ internal fun DiagnosticReportDialog(
             }) { Text(stringResource(R.string.charging_diagnostics_save)) }
         },
         dismissButton = {
-            Row {
+            FlowRow(horizontalArrangement = Arrangement.End) {
                 TextButton(
                     enabled = report != null, onClick = {
                         copyDiagnostic(

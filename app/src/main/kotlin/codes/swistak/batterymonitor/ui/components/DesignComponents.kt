@@ -295,7 +295,9 @@ fun SettingRow(
             .padding(horizontal = BatterySpacing.normal, vertical = BatterySpacing.md),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(Modifier.weight(1f)) {
+        Column(
+            Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(BatterySpacing.xs)
+        ) {
             Text(title, style = MaterialTheme.typography.bodyLarge)
             Text(
                 summary,
