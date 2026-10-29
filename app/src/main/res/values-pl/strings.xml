@@ -348,7 +348,7 @@
     <string name="history_level_24h">Poziom · ostatnie 24 godziny</string>
     <string name="history_battery_level">Poziom naładowania baterii</string>
     <string name="history_observations">Przechowywane obserwacje, a nie ciągły pomiar. Pionowe linie oznaczają zdarzenia zasilania i ponowne uruchomienia.</string>
-    <string name="history_chart_description">Zaobserwowany zakres od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Otwórz  i naciśnij wpis dla szczegółów odczytu.</string>
+    <string name="history_chart_description">Zaobserwowany zakres od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Otwórz i naciśnij wpis dla szczegółów odczytu.</string>
     <string name="history_chart_linked_description">Zaoberwowany zakres od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Wybranie obserwacji ujawnia i wyróżnia jej zdarzenie w kolumnie „Zdarzenia”.</string>
     <string name="history_last_reading">Ostatnio przechowany odczyt · %1$s</string>
     <string name="history_selected_reading">Wybrana obserwacja · %1$s</string>
