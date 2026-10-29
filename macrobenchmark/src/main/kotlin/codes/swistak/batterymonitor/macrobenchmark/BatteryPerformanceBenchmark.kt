@@ -477,7 +477,7 @@ class BatteryPerformanceBenchmark {
         awaitText("settings_color_palette")
         clickDescription("nav_up")
         clickText("settings_notification")
-        awaitText("settings_notification_preview")
+        awaitText("pref_cat_channel_settings")
         scroll(Direction.DOWN)
         scroll(Direction.UP)
         clickDescription("nav_up")

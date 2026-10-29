@@ -463,7 +463,7 @@ private fun AlarmTypeHeader(
             )
         }
         if (definition.type == "health_failure") Text(
-            stringResource(R.string.alarms_android_problem_help),
+            stringResource(R.string.alarms_android_problem_summary),
             Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant

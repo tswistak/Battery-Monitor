@@ -88,6 +88,7 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.ui.components.NumericInputResult
 import codes.swistak.batterymonitor.ui.components.parseLocalizedInt
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
+import codes.swistak.batterymonitor.ui.theme.BatterySpacing
 import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
 import codes.swistak.batterymonitor.widgets.WidgetConfiguration
@@ -330,7 +331,8 @@ private fun WidgetConfigurationScreen(
                                 value = draft.showYAxisLabels,
                                 role = Role.Checkbox,
                                 onValueChange = { update(draft.copy(showYAxisLabels = it)) }),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
                     ) {
                         Checkbox(checked = draft.showYAxisLabels, onCheckedChange = null)
                         Text(stringResource(R.string.widget_y_axis_labels))
@@ -477,7 +479,8 @@ private fun MetricSelection(selected: List<WidgetMetric>, onChange: (List<Widget
                             enabled = index < 0 || selected.size > 2,
                             role = Role.Checkbox,
                             onValueChange = { checked -> onChange(if (checked) selected + metric else selected - metric) }),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(BatterySpacing.sm)
                 ) {
                     Checkbox(
                         checked = index >= 0,
@@ -545,18 +548,18 @@ private fun WidgetPreview(
     ) {
         AndroidView(
             factory = { viewContext ->
-            object : AppWidgetHostView(viewContext) {
-                override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
+                object : AppWidgetHostView(viewContext) {
+                    override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
 
-                // This read-only preview has no click action; its Compose parent supplies the description.
-                @SuppressLint("ClickableViewAccessibility")
-                override fun onTouchEvent(event: MotionEvent): Boolean = true
-            }.apply {
-                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-                setAppWidget(AppWidgetManager.INVALID_APPWIDGET_ID, providerInfo)
-                setPadding(0, 0, 0, 0)
-            }
-        },
+                    // This read-only preview has no click action; its Compose parent supplies the description.
+                    @SuppressLint("ClickableViewAccessibility")
+                    override fun onTouchEvent(event: MotionEvent): Boolean = true
+                }.apply {
+                    importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+                    setAppWidget(AppWidgetManager.INVALID_APPWIDGET_ID, providerInfo)
+                    setPadding(0, 0, 0, 0)
+                }
+            },
             update = { it.updateAppWidget(remoteViews) },
             modifier = Modifier
                 .widthIn(max = if (family == WidgetFamily.STATUS) 220.dp else 350.dp)

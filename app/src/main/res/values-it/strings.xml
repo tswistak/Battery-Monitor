@@ -4,8 +4,7 @@
     <string name="yes" formatted="false">Sì</string>
     <string name="okay" formatted="false">Ok</string>
     <string name="cancel" formatted="false">Annulla</string>
-    <string name="custom" formatted="false">Personalizzato...</string>
-    <string name="currently_using" formatted="false">Attualmente in uso</string>
+    <string name="custom" formatted="false">Personalizzato…</string>
     <string name="currently_set_to" formatted="false">"Attualmente impostato su: "</string>
     <string name="currently_disabled" formatted="false">Attualmente disattivato</string>
     <string name="settings_numeric_value">Valore</string>
@@ -29,18 +28,14 @@
     <string name="nav_actions">Altre azioni</string>
     <string name="tab_current_info" formatted="false">Info correnti</string>
     <string name="tab_history" formatted="false">Storico</string>
-    <string name="tab_advanced" formatted="false">Avanzate</string>
-    <string name="menu_settings" formatted="false">Impostazioni</string>
     <string name="menu_help" formatted="false">Aiuto</string>
-    <string name="menu_close" formatted="false">Chiudi</string>
-    <string name="battery_use_b" formatted="false">Mostra utilizzo batteria</string>
 
     <string name="current_monitor_data">Dati di monitoraggio · %1$s</string>
     <string name="current_last_reading">Ultima lettura · %1$s</string>
     <string name="current_waiting">In attesa dei dati di monitoraggio</string>
     <string name="current_monitor_disabled">Monitoraggio disattivato</string>
     <string name="current_stale">I dati di monitoraggio non sono aggiornati</string>
-    <string name="current_monitor_action">Controlla il monitoraggio in Diagnostica.</string>
+    <string name="current_monitor_action">Controlla il monitoraggio in «Diagnostica».</string>
     <string name="current_monitor_attention">Il monitoraggio richiede attenzione</string>
     <string name="current_notifications_off">Notifiche disattivate</string>
     <string name="current_notifications_off_body">Le notifiche di Battery Monitor sono disattivate. Controlla le impostazioni delle notifiche per ripristinare gli avvisi.</string>
@@ -86,15 +81,15 @@
     <string name="health_failure" formatted="false">Non riuscito</string>
     <string name="health_cold" formatted="false">Freddo</string>
     <string name="current_unavailable">Nessuna lettura</string>
-    <string name="current_current_unavailable">Nessuna lettura della corrente disponibile. Diagnostica potrebbe mostrare un problema di accesso o una sorgente non supportata.</string>
+    <string name="current_current_unavailable">Nessuna lettura della corrente disponibile. «Diagnostica» potrebbe mostrare un problema di accesso o una sorgente non supportata.</string>
     <string name="current_detail_unit">Unità: %1$s</string>
     <string name="current_detail_source">Sorgente: %1$s</string>
     <string name="current_detail_time">Ultima lettura: %1$s</string>
-    <string name="current_history_off">Registrazione della cronologia disattivata · Apri Cronologia</string>
+    <string name="current_history_off">Registrazione della cronologia disattivata · Apri «Cronologia»</string>
     <string name="current_system_usage">Apri utilizzo batteria di sistema</string>
     <string name="current_usage_unavailable">Utilizzo batteria di sistema non disponibile</string>
-    <string name="current_state_settings_summary" formatted="false">Impostazioni della schermata Info correnti</string>
-    <string name="current_state_settings_help" formatted="false">Scegli se mostrare la carica residua e se Info correnti deve preferire la corrente media della batteria. La corrente viene sempre misurata quando disponibile. Il moltiplicatore corregge corrente e potenza calcolata in tutta l’app; i registri mantengono la corrente istantanea originale per poter cambiare il moltiplicatore in seguito.</string>
+    <string name="current_state_settings_summary" formatted="false">Impostazioni della schermata «Info correnti»</string>
+    <string name="current_state_settings_help" formatted="false">Scegli se mostrare la carica residua e se «Info correnti» deve preferire la corrente media della batteria. La corrente viene sempre misurata quando disponibile. Il moltiplicatore corregge corrente e potenza calcolata in tutta l’app; i registri mantengono la corrente istantanea originale per poter cambiare il moltiplicatore in seguito.</string>
     <string name="pref_show_remaining_charge" formatted="false">Mostra carica residua</string>
     <string name="pref_show_remaining_charge_summary" formatted="false">Mostrare la carica residua della batteria segnalata dal dispositivo in mAh?</string>
     <string name="pref_battery_current_multiplier" formatted="false">Moltiplicatore</string>
@@ -102,11 +97,11 @@
     \n
     Come riferimento approssimativo per uno smartphone, la convenzione Android usa valori positivi durante la carica e negativi durante la scarica. La carica attiva è spesso compresa tra +500 e +5000 mA, mentre una scarica normale è spesso tra -100 e -3000 mA. Valori vicini a zero possono essere normali quando la batteria è quasi piena o il telefono è inattivo. Se il valore sembra circa 1000 volte troppo piccolo o troppo grande, oppure il segno è invertito, regola il moltiplicatore.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Rileva automaticamente</string>
-    <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Il rilevamento automatico non è disponibile per lo stato o la lettura attuale della batteria.</string>
-    <string name="pref_battery_current_multiplier_detection_result">Il moltiplicatore è stato impostato automaticamente su %1$d.</string>
+    <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Il rilevamento automatico non è disponibile per lo stato o la lettura attuale della batteria</string>
+    <string name="pref_battery_current_multiplier_detection_result">Il moltiplicatore è stato impostato automaticamente su %1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Preferisci la corrente media</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">Usare la media recente in Info correnti quando disponibile?</string>
-    <string name="pref_prefer_current_avg_help" formatted="false">Alcuni dispositivi forniscono una media recente oltre alla corrente istantanea. Il periodo di calcolo varia in base al dispositivo. Info correnti usa la corrente istantanea quando la media non è disponibile. Questa opzione si applica solo a Info correnti; i registri salvano sempre la lettura istantanea originale.</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">Usare la media recente in «Info correnti» quando disponibile?</string>
+    <string name="pref_prefer_current_avg_help" formatted="false">Alcuni dispositivi forniscono una media recente oltre alla corrente istantanea. Il periodo di calcolo varia in base al dispositivo. «Info correnti» usa la corrente istantanea quando la media non è disponibile. Questa opzione si applica solo a «Info correnti»; i registri salvano sempre la lettura istantanea originale.</string>
 
     <string name="activity_until_charged" formatted="false">alla ricarica</string>
     <string name="activity_until_drained" formatted="false">al completo scaricamento</string>
@@ -120,55 +115,46 @@
     <string name="current_prediction_method">Metodo: %1$s</string>
     <string name="current_prediction_target">Obiettivo: %1$d%%</string>
     <string name="current_prediction_snapshot_time">Istantanea della batteria: %1$s</string>
-    <string name="current_prediction_diagnostics" formatted="false">I tassi recenti e le medie apprese sono disponibili in Diagnostica, sotto Funzionamento dell’app.</string>
+    <string name="current_prediction_diagnostics" formatted="false">I tassi recenti e le medie apprese sono disponibili in «Diagnostica», sotto «Funzionamento dell’app».</string>
     <string name="current_prediction_explanation">Questa stima usa il metodo di previsione configurato in Battery Monitor. Il suo obiettivo non controlla la ricarica né lo spegnimento.</string>
     <string name="time_estimates_settings" formatted="false">Stime del tempo</string>
-    <string name="time_estimates_settings_summary" formatted="false">Scegli come calcolare il tempo rimanente e i livelli batteria obiettivo.</string>
-    <string name="time_estimates_settings_help" formatted="false">Scegli come Battery Monitor stima il tempo rimanente e i livelli obiettivo della batteria. Gli obiettivi si applicano anche agli allarmi Obiettivo di carica raggiunto e Obiettivo di scarica raggiunto. Battery Monitor non avvia né interrompe la ricarica.</string>
+    <string name="time_estimates_settings_summary" formatted="false">Scegli come calcolare il tempo rimanente e i livelli batteria obiettivo</string>
+    <string name="time_estimates_settings_help" formatted="false">Scegli come Battery Monitor stima il tempo rimanente e i livelli obiettivo della batteria. Gli obiettivi si applicano anche agli allarmi «Limite di carica raggiunto» e «Limite di scarica raggiunto». Battery Monitor non avvia né interrompe la ricarica.</string>
     <string name="pref_cat_predictor" formatted="false">Stime tempo rimanente</string>
     <string name="pref_prediction_type" formatted="false">Tipo di stima</string>
-    <string name="pref_prediction_type_help" formatted="false">Sensibile usa il tasso degli ultimi cinque minuti. Conservativo, il valore predefinito, combina i tassi recenti con la media a lungo termine appresa per ridurre i cambiamenti improvvisi. Dal cambio di stato usa la sessione attuale di carica o scarica. Media a lungo termine usa il tasso appreso per la scarica o la sorgente di ricarica attiva. Finché non sono disponibili abbastanza osservazioni, le stime usano la media salvata o un valore iniziale predefinito.</string>
+    <string name="pref_prediction_type_help" formatted="false">«Sensibile» usa il tasso degli ultimi cinque minuti. «Conservativo», il valore predefinito, combina i tassi recenti con la media a lungo termine appresa per ridurre i cambiamenti improvvisi. «Dal cambio stato» usa la sessione attuale di carica o scarica. «Media a lungo termine» usa il tasso appreso per la scarica o la sorgente di ricarica attiva. Finché non sono disponibili abbastanza osservazioni, le stime usano la media salvata o un valore iniziale predefinito.</string>
     <string name="predictor_sensitive" formatted="false">Sensibile</string>
     <string name="predictor_conservative" formatted="false">Conservativo</string>
     <string name="predictor_since_status_change" formatted="false">Dal cambio stato</string>
     <string name="predictor_long_term_ave" formatted="false">Media a lungo termine</string>
     <string name="pref_cat_target_levels" formatted="false">Livelli obiettivo</string>
     <string name="pref_charging_target_mode" formatted="false">Obiettivo di carica</string>
-    <string name="pref_charging_target_mode_help" formatted="false">Automatico usa un limite di ricarica fisso del dispositivo quando Battery Monitor riesce a leggerlo, altrimenti usa il 100%. La ricarica adattiva punta comunque al 100%. Personalizzato usa il livello scelto per le stime di ricarica e gli allarmi Obiettivo di carica raggiunto.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">«Automatico (consigliato)» usa un limite di ricarica fisso del dispositivo quando Battery Monitor riesce a leggerlo, altrimenti usa il 100%. La ricarica adattiva punta comunque al 100%. «Personalizzato» usa il livello scelto per le stime di ricarica e gli allarmi «Limite di carica raggiunto».</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Il rilevamento automatico può funzionare sui dispositivi Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme e Sony Xperia, oltre che sui dispositivi con GrapheneOS o LineageOS, soprattutto quando è disponibile l’accesso root o Shizuku. Si basa su segnali software, quindi disponibilità e precisione non sono garantite nemmeno per i produttori elencati. Potrebbero funzionare anche modelli o versioni del sistema non testati di queste famiglie, mentre i dispositivi di altri produttori al momento non vengono rilevati automaticamente.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Limite di carica del dispositivo: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Obiettivo personalizzato</string>
-    <string name="pref_charging_target_mode_summary_default" formatted="false">Nessun limite fisso rilevato — verrà usato il 100%.</string>
+    <string name="pref_charging_target_mode_summary_default" formatted="false">Nessun limite fisso rilevato — verrà usato il 100%</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    Se questo valore non sembra corretto, puoi contribuire a migliorare il rilevamento dei dispositivi. Apri Diagnostica e genera un rapporto sul limite di ricarica OEM seguendo attentamente le istruzioni della Guida.</string>
+    Se questo valore non sembra corretto, puoi contribuire a migliorare il rilevamento dei dispositivi. Apri «Impostazioni» → «Avanzate» → «Diagnostica del limite di carica OEM» e genera un rapporto sul limite di ricarica OEM seguendo attentamente le istruzioni di «Aiuto»</string>
     <string name="charging_target_mode_automatic" formatted="false">Automatico (consigliato)</string>
     <string name="charging_target_mode_custom" formatted="false">Personalizzato</string>
     <string name="pref_custom_charging_target" formatted="false">Obiettivo di carica personalizzato</string>
-    <string name="pref_custom_charging_target_help" formatted="false">Imposta il livello finale delle stime di carica quando l’obiettivo è personalizzato.</string>
+    <string name="pref_custom_charging_target_help" formatted="false">Imposta il livello finale delle stime di carica quando l’«Obiettivo di carica» è «Personalizzato».</string>
     <string name="pref_discharging_target" formatted="false">Obiettivo di scarica</string>
-    <string name="pref_discharging_target_help" formatted="false">Imposta il livello finale delle stime di scarica e degli allarmi Obiettivo di scarica raggiunto. Sotto questo livello, le stime continuano verso lo 0%. Gli allarmi di batteria scarica con una propria soglia restano indipendenti.</string>
-    <string name="pref_target_level_summary" formatted="true">Stima fino al %1$d%%.</string>
+    <string name="pref_discharging_target_help" formatted="false">Imposta il livello finale delle stime di scarica e degli allarmi «Limite di scarica raggiunto». Sotto questo livello, le stime continuano verso lo 0%. Gli allarmi di batteria scarica con una propria soglia restano indipendenti.</string>
+    <string name="pref_target_level_summary" formatted="true">Stima fino al %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Notifica principale</string>
     <string name="live_updates_notif_chan_name" formatted="false">Aggiornamenti in tempo reale</string>
     <string name="notification_settings" formatted="false">Notifiche principali</string>
     <string name="settings_notification">Notifica</string>
-    <string name="notification_settings_summary" formatted="false">Configura il contenuto della notifica, l’icona della barra di stato e il chip Live Update.</string>
+    <string name="notification_settings_summary" formatted="false">Configura il contenuto della notifica, l’icona della barra di stato e il chip Live Update</string>
     <string name="notification_settings_help" formatted="false">Puoi configurare quali contenuto mostrare nella notifica a tendina e controllarne l\'aspetto.</string>
     <string name="notification_channels_help" formatted="false">Apri le impostazioni delle notifiche di Android per consentire o bloccare le notifiche e configurare suono, vibrazione e consegna per la notifica principale e ogni tipo di allarme. Abilitare una regola di allarme non aggira un canale di notifica bloccato.</string>
-    <string name="notifications_disabled" formatted="false">Le notifiche sono disabilitate!</string>
-    <string name="notifications_disabled_message" formatted="false">Hai bloccato tutte le notifiche di Battery Monitor. Questo impedirà a Battery Monitor di mostrare qualsiasi notifica: la notifica principale e tutti gli allarmi impostati saranno bloccati.\n
-    \n
-    Poiché Battery Monitor consente di attivare/disattivare separatamente la notifica principale e di disabilitare temporaneamente gli allarmi creati, è fortemente consigliato sbloccare le notifiche di Battery Monitor. Finché sono bloccate, sembrerà che Battery Monitor non funzioni.\n
-    \n
-    Premi OK per andare alle impostazioni di sistema dove puoi sbloccare le notifiche di Battery Monitor.</string>
-    <string name="notifications_disabled_cat" formatted="false">Notifiche disabilitate</string>
-    <string name="app_notifs_disabled_b" formatted="false">Abilita notifiche app</string>
-    <string name="app_notifs_disabled_summary" formatted="false">Hai disabilitato tutte le notifiche per questa app. Abilita le notifiche per accedere a queste impostazioni.</string>
-    <string name="main_notifs_disabled_b" formatted="false">Abilita notifica principale</string>
-    <string name="main_notifs_disabled_summary" formatted="false">Hai disabilitato la notifica principale per questa app. Abilitala per accedere a queste impostazioni.</string>
-    <string name="settings_notification_disabled">Abilita le notifiche dell’app e il canale di notifica principale per personalizzare questa opzione.</string>
+    <string name="app_notifs_disabled_summary" formatted="false">Hai disabilitato tutte le notifiche per questa app. Abilita le notifiche per accedere a queste impostazioni</string>
+    <string name="main_notifs_disabled_summary" formatted="false">Hai disabilitato la notifica principale per questa app. Abilitala per accedere a queste impostazioni</string>
+    <string name="settings_notification_disabled">Abilita le notifiche dell’app e il canale di notifica principale per personalizzare questa opzione</string>
     <string name="notifications_onboarding_message">Battery Monitor ha bisogno della tua autorizzazione per mostrare il livello della batteria nella barra di stato e avvisarti sugli allarmi.\n
     \n
     Nota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell\'app. Se succede, riaprila semplicemente.</string>
@@ -176,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Gestisci canale principale</string>
     <string name="pref_cat_notification_content" formatted="false">Contenuto</string>
     <string name="pref_top_line_content" formatted="false">Contenuto riga superiore</string>
-    <string name="pref_top_line_content_help" formatted="false">Scegli se la riga superiore della notifica mostra il tempo residuo stimato, il tempo trascorso dal cambio di stato o i parametri vitali configurati.</string>
+    <string name="pref_top_line_content_help" formatted="false">Scegli se la riga superiore della notifica mostra il tempo residuo stimato, il tempo trascorso dal cambio di stato o i «Segni vitali» configurati.</string>
     <string name="pref_bottom_line_content" formatted="false">Contenuto riga inferiore</string>
     <string name="pref_bottom_line_content_help" formatted="false">Hai le stesse opzioni per la riga inferiore e la riga superiore.</string>
     <string name="time_remaining" formatted="false">Tempo rimanente</string>
@@ -190,14 +176,11 @@
     <string name="normal" formatted="false">Normale</string>
     <string name="verbose" formatted="false">Dettagliato</string>
     <string name="pref_vital_signs_content" formatted="false">Contenuto dei parametri vitali</string>
-    <string name="pref_vital_signs_content_summary" formatted="false">Quali valori includere nei parametri vitali e in quale ordine?</string>
-    <string name="pref_vital_signs_reorder_handle" formatted="true">Riordina %1$s</string>
+    <string name="pref_vital_signs_content_summary" formatted="false">Quali valori includere nei «Segni vitali» e in quale ordine?</string>
     <string name="pref_expanded_notification" formatted="false">Espandi i dettagli della notifica</string>
     <string name="pref_expanded_notification_summary" formatted="false">Mostrare i dettagli con etichette quando la notifica viene espansa?</string>
-    <string name="pref_expanded_notification_help" formatted="false">Se attivata, questa opzione mostra il tempo rimanente, il tempo trascorso dal cambio di stato e ogni valore dei parametri vitali su una riga separata con la propria etichetta quando si espande la notifica principale, al posto del riepilogo su una sola riga.</string>
+    <string name="pref_expanded_notification_help" formatted="false">Se attivata, questa opzione mostra il «Tempo rimanente», il «Tempo dal cambio stato» e ogni valore dei «Segni vitali» su una riga separata con la propria etichetta quando si espande la notifica principale, al posto del riepilogo su una sola riga.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
-    <string name="settings_notification_preview">Anteprima illustrativa della notifica</string>
-    <string name="settings_notification_preview_note">Contenuto di esempio. Android e i produttori dei dispositivi potrebbero mostrare le notifiche in modo diverso.</string>
     <string name="status_bar_icon_settings" formatted="false">Icona barra di stato</string>
     <string name="status_bar_icon_settings_help" formatted="false">Scegli se l’icona della notifica mostra la percentuale della batteria o la temperatura, se il simbolo dell’unità viene mostrato nell’icona e se la ricarica usa un’icona dedicata. A partire da Android 16, l’icona della barra di stato potrebbe non funzionare su tutte le varianti del sistema operativo.</string>
     <string name="pref_icon_content" formatted="false">Contenuto icona</string>
@@ -211,7 +194,7 @@
     <string name="pref_indicate_charging_help" formatted="false">L’icona di ricarica può mostrare un fulmine sotto il numero. Disattiva questa opzione se preferisci la stessa icona durante carica e scarica.</string>
     <string name="status_bar_chip_settings" formatted="false">Chip barra di stato</string>
     <string name="status_bar_chip_settings_help" formatted="false">Su Android 16 o versioni successive, scegli quando appare il chip Live Update, quali valori mostra a rotazione e se visualizza un’emoji di ricarica. La disponibilità dipende anche dal dispositivo e dalle impostazioni delle notifiche di sistema.</string>
-    <string name="settings_live_update_summary">Consenti o blocca le notifiche della batteria in evidenza nelle impostazioni di Android.</string>
+    <string name="settings_live_update_summary">Consenti o blocca le notifiche della batteria in evidenza nelle impostazioni di Android</string>
     <string name="live_updates_onboarding_title">Chip batteria barra di stato</string>
     <string name="live_updates_onboarding_message_on">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato. Questa opzione è abilitata per impostazione predefinita.\n
     \n
@@ -235,16 +218,15 @@
     <string name="pref_live_update_keep_main_notification_help" formatted="false">Se abilitato, la normale notifica principale resta visibile insieme al chip nella barra di stato.</string>
     <string name="pref_expanded_live_update" formatted="false">Espandi i dettagli dell’aggiornamento live</string>
     <string name="pref_expanded_live_update_summary" formatted="false">Mostrare i dettagli con etichette nella notifica dell’aggiornamento live?</string>
-    <string name="pref_expanded_live_update_help" formatted="false">Le notifiche dell’aggiornamento live vengono sempre mostrate espanse. Se attivata, questa opzione mostra nell’aggiornamento live il tempo rimanente, il tempo trascorso dal cambio di stato e ogni valore dei parametri vitali su una riga separata con la propria etichetta.</string>
+    <string name="pref_expanded_live_update_help" formatted="false">Le notifiche dell’aggiornamento live vengono sempre mostrate espanse. Se attivata, questa opzione mostra nell’aggiornamento live il «Tempo rimanente», il «Tempo dal cambio stato» e ogni valore dei «Segni vitali» su una riga separata con la propria etichetta.</string>
     <string name="pref_chip_content" formatted="false">Contenuto chip</string>
     <string name="pref_chip_content_summary" formatted="false">Quali valori devono essere mostrati nel chip e in quale ordine?</string>
     <string name="pref_chip_content_help" formatted="false">Scegli i valori tra cui alternare il chip nella barra di stato e disponili nell’ordine desiderato.</string>
     <string name="pref_chip_switching_interval" formatted="false">Intervallo alternanza</string>
-    <string name="pref_chip_switching_interval_summary" formatted="false">Scegli con quale frequenza il chip passa al valore selezionato successivo.</string>
+    <string name="pref_chip_switching_interval_summary" formatted="false">Scegli con quale frequenza il chip passa al valore selezionato successivo</string>
     <string name="pref_chip_switching_interval_help" formatted="false">Scegli con quale frequenza il chip passa al valore selezionato successivo. Questa impostazione è disponibile quando è selezionato più di un valore.</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">Inserisci un intervallo in secondi (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">Inserisci un valore compreso tra 1 e 3600.</string>
-    <string name="pref_chip_switching_interval_custom_summary" formatted="true">%1$d secondi</string>
     <string name="chip_switching_interval_2_seconds" formatted="false">2 secondi</string>
     <string name="chip_switching_interval_5_seconds" formatted="false">5 secondi</string>
     <string name="chip_switching_interval_10_seconds" formatted="false">10 secondi</string>
@@ -258,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Allarmi</string>
     <string name="alarm_settings_help" formatted="false">Puoi ottenere una notifica da Battery Monitor quando il livello della batteria raggiunge un certo punto (es., la batteria diventa completamente carica, la batteria scende sotto il 20%).</string>
     <string name="alarms_overview" formatted="false">Panoramica allarmi</string>
-    <string name="alarms_overview_help">Tutti gli otto tipi di allarme sono sempre disponibili. Attiva direttamente gli eventi oppure usa Aggiungi soglia sotto un tipo di carica o temperatura. Le nuove soglie vengono abilitate dopo il salvataggio. Tocca un valore per modificarlo; la modifica ne mantiene lo stato di attivazione. I valori disabilitati restano elencati. L’eliminazione chiede conferma. Suono e vibrazione sono condivisi per tipo nelle impostazioni delle notifiche di Android. I record duplicati esistenti appaiono come un unico allarme logico; attivazione, disattivazione o eliminazione influiscono su tutte le copie. Gli allarmi di carica e scarica seguono gli obiettivi delle stime e non controllano la ricarica. Un canale bloccato o il monitoraggio fermo non modifica gli interruttori salvati.</string>
+    <string name="alarms_overview_help">Tutti gli otto tipi di allarme sono sempre disponibili. Attiva direttamente gli eventi oppure usa «Aggiungi soglia» sotto un tipo di carica o temperatura. Le nuove soglie vengono abilitate dopo il salvataggio. Tocca un valore per modificarlo; la modifica ne mantiene lo stato di attivazione. I valori disabilitati restano elencati. L’eliminazione chiede conferma. Suono e vibrazione sono condivisi per tipo nelle impostazioni delle notifiche di Android. I record duplicati esistenti appaiono come un unico allarme logico; attivazione, disattivazione o eliminazione influiscono su tutte le copie. Gli allarmi di carica e scarica seguono gli obiettivi delle stime e non controllano la ricarica. Un canale bloccato o il monitoraggio fermo non modifica gli interruttori salvati.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d allarme abilitato</item>
         <item quantity="many">%1$d allarmi abilitati</item>
@@ -283,7 +265,7 @@
     <string name="alarm_type_temperature_rises" formatted="false">Quando la temperatura sale a</string>
     <string name="alarm_temp_rises" formatted="false">"La temperatura della batteria ha raggiunto o superato "</string>
     <string name="alarms_android_problem">Problema segnalato da Android</string>
-    <string name="alarms_android_problem_help">Un problema della batteria segnalato dal sistema, non la salute della batteria espressa in percentuale.</string>
+    <string name="alarms_android_problem_summary">Un problema della batteria segnalato dal sistema, non la salute della batteria espressa in percentuale</string>
     <string name="alarm_type_health_failure" formatted="false">Recupero stato non riuscito</string>
     <string name="alarm_health_failure" formatted="false">"La salute della batteria è: "</string>
     <string name="pref_cat_alarm_conditions" formatted="false">Condizioni Allarme</string>
@@ -305,7 +287,7 @@
     <string name="alarms_discard">Scarta</string>
     <string name="menu_delete_alarm" formatted="false">Elimina allarme</string>
     <string name="alarms_delete_threshold_confirmation">Eliminare %1$s — %2$s? Saranno rimosse tutte le copie di questa soglia.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Hai disabilitato il gruppo notifiche degli allarmi per questa app. Abilitalo per accedere ai tuoi allarmi.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Hai disabilitato il gruppo notifiche degli allarmi per questa app. Abilitalo per accedere ai tuoi allarmi</string>
     <string name="alarm_chan_disabled" formatted="false">Hai disabilitato le notifiche per questo tipo di allarme. Abilitale per usare questo tipo di allarme.</string>
     <string name="alarm_chan_settings_b" formatted="false">Gestisci questo tipo di allarme</string>
     <string name="alarms_delivery_sound_vibration">Suono, vibrazione e notifica</string>
@@ -314,9 +296,9 @@
     <string name="alarms_delivery_notification">Solo notifica</string>
     <string name="alarms_channel_help">Suono e consegna sono controllati da questo canale di notifica di Android.</string>
     <string name="pref_dismiss_low_battery_on_recovery">Rimuovi allarme batteria scarica dopo il recupero</string>
-    <string name="pref_dismiss_low_battery_on_recovery_summary">Rimuovi la notifica di batteria scarica quando la carica risale sopra la soglia. Le altre notifiche di allarme rimangono.</string>
+    <string name="pref_dismiss_low_battery_on_recovery_summary">Rimuovi la notifica di batteria scarica quando la carica risale sopra la soglia. Le altre notifiche di allarme rimangono</string>
     <string name="alarms_channel_unavailable">Canale di notifica non creato o non disponibile</string>
-    <string name="alarms_settings_unavailable">Impossibile aprire le impostazioni delle notifiche di Android.</string>
+    <string name="alarms_settings_unavailable">Impossibile aprire le impostazioni delle notifiche di Android</string>
     <string name="alarms_target_unknown">Obiettivo non disponibile. Apri le impostazioni delle stime.</string>
     <string name="alarms_monitor_stopped">Il monitoraggio è fermo. Gli allarmi salvati non vengono valutati.</string>
     <string name="alarms_monitor_unconfirmed">Nessuna connessione attuale al monitoraggio. La valutazione degli allarmi non è confermata.</string>
@@ -326,7 +308,7 @@
     <string name="alarms_missing_rule">Questo allarme è mancante o non valido. Controlla il catalogo degli allarmi.</string>
     <string name="alarms_invalid_records">Alcuni allarmi salvati non sono validi. Controlla queste voci; non sono state rimosse.</string>
     <string name="alarms_database_error">Impossibile accedere al database degli allarmi. Riprova.</string>
-    <string name="alarms_saved">Impostazioni allarmi salvate.</string>
+    <string name="alarms_saved">Impostazioni allarmi salvate</string>
     <string name="alarms_saved_reload_failed">Salvato, ma non è stato possibile avvisare il monitoraggio. Controllane lo stato.</string>
 
     <string name="history_range">Intervallo della cronologia</string>
@@ -347,8 +329,8 @@
     <string name="history_level_24h">Livello · ultime 24 ore</string>
     <string name="history_battery_level">Livello della batteria</string>
     <string name="history_observations">Osservazioni salvate, non una misurazione continua. Le linee verticali indicano gli eventi di alimentazione e i riavvii.</string>
-    <string name="history_chart_description">Intervallo osservato dal %1$s al %2$s. Minimo %3$s, massimo %4$s. Apri Eventi e tocca una voce per i dettagli delle letture.</string>
-    <string name="history_chart_linked_description">Intervallo osservato dal %1$s al %2$s. Minimo %3$s, massimo %4$s. Selezionando un’osservazione, il relativo evento viene mostrato ed evidenziato nella colonna Eventi.</string>
+    <string name="history_chart_description">Intervallo osservato dal %1$s al %2$s. Minimo %3$s, massimo %4$s. Apri «Eventi» e tocca una voce per i dettagli delle letture.</string>
+    <string name="history_chart_linked_description">Intervallo osservato dal %1$s al %2$s. Minimo %3$s, massimo %4$s. Selezionando un’osservazione, il relativo evento viene mostrato ed evidenziato nella colonna «Eventi».</string>
     <string name="history_last_reading">Ultima lettura salvata · %1$s</string>
     <string name="history_selected_reading">Osservazione selezionata · %1$s</string>
     <string name="history_reading_range_label">Intervallo delle letture</string>
@@ -378,7 +360,7 @@
     <string name="history_delete_selected_confirm">Vuoi cancellare i registri nell’intervallo selezionato?</string>
     <string name="history_delete_all">Cancella tutti i registri</string>
     <string name="history_deleted">Registri cancellati</string>
-    <string name="history_load_failed">Impossibile leggere la cronologia.</string>
+    <string name="history_load_failed">Impossibile leggere la cronologia</string>
     <string name="history_operation_failed">Operazione non riuscita. Controlla l’accesso ai file e riprova.</string>
     <string name="history_settings">Impostazioni cronologia e backup</string>
     <string name="history_open_fullscreen">Apri il grafico a schermo intero</string>
@@ -413,14 +395,7 @@
     <string name="history_chart_y_manual">Y: Manuale</string>
 
     <string name="logs_empty" formatted="false">Registro vuoto</string>
-    <plurals name="n_log_items">
-        <item quantity="one">%d elemento log</item>
-        <item quantity="many">%d elementi log</item>
-        <item quantity="other">%d elementi log</item>
-    </plurals>
     <string name="configure_log_filter" formatted="false">Quali log mostrare?</string>
-    <string name="menu_log_filter" formatted="false">Filtro</string>
-    <string name="menu_reverse" formatted="false">Inverti ordine</string>
     <string name="menu_show_seconds" formatted="false">Mostra secondi</string>
     <string name="menu_hide_seconds" formatted="false">Nascondi secondi</string>
     <string name="menu_clear" formatted="false">Cancella</string>
@@ -432,10 +407,10 @@
     <string name="pref_cat_logging" formatted="false">Registro</string>
     <string name="pref_enable_logging" formatted="false">Abilita registro</string>
     <string name="pref_enable_logging_summary" formatted="false">Registrare i cambiamenti di stato della batteria?</string>
-    <string name="pref_enable_logging_help" formatted="false">Salva osservazioni della batteria e cambiamenti di stato per la cronologia. Le misurazioni disponibili includono livello, temperatura, tensione, corrente istantanea originale e carica residua. La potenza viene calcolata da tensione e corrente quando viene mostrata o esportata; non è salvata separatamente. Disattivare la registrazione non cancella la cronologia esistente né interrompe le stime del tempo.</string>
+    <string name="pref_enable_logging_help" formatted="false">Salva osservazioni della batteria e cambiamenti di stato per la «Cronologia». Le misurazioni disponibili includono livello, temperatura, tensione, corrente istantanea originale e carica residua. La potenza viene calcolata da tensione e corrente quando viene mostrata o esportata; non è salvata separatamente. Disattivare la registrazione non cancella la cronologia esistente né interrompe le stime del tempo.</string>
     <string name="pref_max_log_age" formatted="false">Periodo massimo registro</string>
     <string name="pref_max_log_age_summary" formatted="false">Cancella registri più vecchi di:</string>
-    <string name="pref_max_log_age_help" formatted="false">Quando la registrazione è abilitata, collegare l’alimentazione rimuove i registri più vecchi di questo limite. Non eliminare mai li mantiene finché non li cancelli manualmente. Se l’esportazione automatica è abilitata, Battery Monitor esporta i registri in attesa prima di eliminare le vecchie voci; un’esportazione non riuscita impedisce tale eliminazione.</string>
+    <string name="pref_max_log_age_help" formatted="false">Quando la registrazione è abilitata, collegare l’alimentazione rimuove i registri più vecchi di questo limite. «Non eliminare mai» li mantiene finché non li cancelli manualmente. Se l’esportazione automatica è abilitata, Battery Monitor esporta i registri in attesa prima di eliminare le vecchie voci; un’esportazione non riuscita impedisce tale eliminazione.</string>
     <string name="age_1_day" formatted="false">1 giorno</string>
     <string name="age_2_days" formatted="false">2 giorni</string>
     <string name="age_4_days" formatted="false">4 giorni</string>
@@ -445,11 +420,8 @@
     <string name="age_4_weeks" formatted="false">4 settimane</string>
     <string name="age_never_delete" formatted="false">Non eliminare mai</string>
     <string name="settings_history_export">Cronologia ed esportazione</string>
-    <string name="menu_export" formatted="false">Esporta CSV</string>
     <string name="log_export_mode_title" formatted="false">Esporta registri</string>
-    <string name="log_export_new_file" formatted="false">Crea un nuovo file</string>
     <string name="log_export_append" formatted="false">Aggiungi a un file esistente</string>
-    <string name="log_export_range_title" formatted="false">Quali registri devono essere esportati?</string>
     <string name="log_export_all_logs" formatted="false">Tutto</string>
     <string name="log_export_from_last" formatted="false">Dall’ultima esportazione</string>
     <string name="pref_auto_log_export" formatted="false">Esportazione automatica dei registri</string>
@@ -463,7 +435,7 @@
     <string name="pref_auto_log_export_mode" formatted="false">Gestione dei file</string>
     <string name="pref_auto_log_export_format" formatted="false">Formato di esportazione</string>
     <string name="pref_auto_log_export_directory" formatted="false">Cambia cartella</string>
-    <string name="auto_log_export_help" formatted="false">Configura l’esportazione automatica in Avanzate. Scegli cartella, frequenza, formato e se creare file separati o aggiungere a un solo file. Le esportazioni normalmente salvano i registri dalla precedente esportazione automatica; un nuovo file continuo include tutti i registri disponibili. Android può ritardare le esportazioni quando è inattivo. La registrazione deve restare abilitata.</string>
+    <string name="auto_log_export_help" formatted="false">Configura l’esportazione automatica in «Impostazioni» → «Avanzate». Scegli cartella, frequenza, formato e se creare file separati o aggiungere a un solo file. Le esportazioni normalmente salvano i registri dalla precedente esportazione automatica; un nuovo file continuo include tutti i registri disponibili. Android può ritardare le esportazioni quando è inattivo. La registrazione deve restare abilitata.</string>
     <string name="auto_log_export_format_help" formatted="false">CSV è utile in un foglio di calcolo o editor di testo. Include corrente originale, carica residua e potenza calcolata con il moltiplicatore selezionato al momento dell’esportazione. JSON conserva i dati strutturati per i backup. Le celle di corrente, carica residua e potenza restano vuote quando i dati non sono disponibili.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Crea un nuovo file</string>
     <string name="auto_log_export_mode_append" formatted="false">Aggiungi i nuovi registri al file esistente</string>
@@ -475,11 +447,7 @@
     <string name="temperature" formatted="false">gradi_celsius</string>
     <string name="temperature_f" formatted="false">gradi_fahrenheit</string>
     <string name="voltage" formatted="false">volt</string>
-    <string name="inaccessible_storage" formatted="false">Scheda SD inaccessibile.</string>
-    <string name="inaccessible_w_reason" formatted="false">Scheda SD inaccessibile:</string>
-    <string name="read_only_storage" formatted="false">Scheda SD in sola lettura.</string>
-    <string name="no_storage_permission" formatted="false">Permesso di archiviazione non concesso.</string>
-    <string name="file_written" formatted="false">File scritti con successo nella root della scheda SD.</string>
+    <string name="file_written" formatted="false">File scritti con successo nella root della scheda SD</string>
 
     <string name="widget_status">Stato della batteria</string>
     <string name="widget_measurements">Misurazioni della batteria</string>
@@ -505,41 +473,44 @@
     <string name="widget_preview">Anteprima del widget</string>
     <string name="widget_preview_note">L’anteprima usa l’ultima lettura del monitoraggio. La dimensione del widget è definita dal launcher.</string>
     <string name="widget_read_at">Lettura %1$s</string>
-    <string name="widget_trend_range">Livello · ultime %1$d ore</string>
+    <plurals name="widget_trend_range">
+        <item quantity="one">Livello · ultima %1$d ora</item>
+        <item quantity="many">Livello · ultime %1$d ore</item>
+        <item quantity="other">Livello · ultime %1$d ore</item>
+    </plurals>
     <string name="widget_observed_range">Osservato %1$s–%2$s</string>
     <string name="widget_chart_description">Livello della batteria salvato dal %1$s al %2$s. Minimo %3$s, massimo %4$s.</string>
     <string name="widget_save_failed">Impossibile salvare questo widget. Riprova.</string>
-    <string name="widget_invalid_instance">Questo widget non è più disponibile.</string>
+    <string name="widget_invalid_instance">Questo widget non è più disponibile</string>
 
     <string name="settings_activity_subtitle" formatted="false">Impostazioni</string>
     <string name="settings_overview" formatted="false">Panoramica</string>
-    <string name="settings_overview_help" formatted="false">Le impostazioni sono raggruppate in Generali, Info correnti, Stime del tempo, Notifiche, Avanzate e Backup e ripristino. Usa la ricerca per trovare un’opzione. Ogni pagina offre aiuto per le proprie impostazioni. Diagnostica è disponibile separatamente nel menu laterale.</string>
+    <string name="settings_overview_help" formatted="false">Le impostazioni sono raggruppate in «Generali», «Info correnti», «Stime del tempo», «Notifica», «Avanzate» e «Backup e ripristino». Usa la ricerca per trovare un’opzione. Ogni pagina offre aiuto per le proprie impostazioni. “Diagnostica” è disponibile separatamente nel menu laterale.</string>
     <string name="settings_search_hint">Cerca impostazioni</string>
     <string name="settings_search_no_results">Nessuna impostazione corrispondente</string>
-    <string name="settings_dependency_disabled">Abilita o configura l’opzione correlata qui sopra per modificare questa impostazione.</string>
+    <string name="settings_dependency_disabled">Abilita o configura l’opzione correlata qui sopra per modificare questa impostazione</string>
     <string name="other_settings" formatted="false">Generali</string>
     <string name="settings_general_summary">Lingua, aspetto, unità e formato della durata</string>
-    <string name="other_settings_summary" formatted="false">Configura il comportamento generale e le preferenze quotidiane dell’app.</string>
     <string name="other_settings_help" formatted="false">Scegli tavolozza dei colori e luminosità, lingua dell’app, unità di temperatura, formato della durata e se avviare il monitoraggio dopo un riavvio del dispositivo.</string>
     <string name="settings_legacy_general">Altro</string>
     <string name="pref_cat_language" formatted="false">Lingua e formattazione</string>
     <string name="pref_change_app_language" formatted="false">Lingua dell\'app</string>
     <string name="pref_change_app_language_help" formatted="false">Seleziona la lingua usata da Battery Monitor. L’impostazione predefinita di sistema segue la lingua del dispositivo.</string>
-    <string name="settings_app_language_unavailable">Il selettore di sistema per la lingua delle app richiede Android 13.</string>
+    <string name="settings_app_language_unavailable">Il selettore di sistema per la lingua delle app richiede Android 13 o versioni successive</string>
     <string name="pref_temperature_unit" formatted="false">Unità temperatura</string>
     <string name="pref_temperature_unit_help" formatted="false">Scegli se mostrare le temperature in Celsius o Fahrenheit.</string>
     <string name="celsius" formatted="false">Centigrado</string>
     <string name="fahrenheit" formatted="false">Fahrenheit</string>
     <string name="pref_long_duration_format" formatted="false">Formato delle durate lunghe</string>
-    <string name="pref_long_duration_format_help" formatted="false">Giorni e ore usa i giorni oltre le 24 ore, ad esempio 1d 3h. Solo ore mantiene l’intera durata in ore, ad esempio 27h.</string>
+    <string name="pref_long_duration_format_help" formatted="false">«Giorni e ore» usa i giorni oltre le 24 ore, ad esempio 1d 3h. «Solo ore» mantiene l’intera durata in ore, ad esempio 27h</string>
     <string name="long_duration_format_days_and_hours" formatted="false">Giorni e ore</string>
     <string name="long_duration_format_hours_only" formatted="false">Solo ore</string>
     <string name="settings_appearance">Aspetto</string>
     <string name="settings_color_palette">Tavolozza dei colori</string>
-    <string name="settings_color_palette_summary">Usa i colori di sistema o Blu batteria</string>
+    <string name="settings_color_palette_summary">Usa i colori di sistema o “Blu batteria”</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Blu batteria</string>
-    <string name="settings_color_palette_unavailable">I colori di sistema richiedono Android 12. Su questo dispositivo viene usato Blu batteria.</string>
+    <string name="settings_color_palette_unavailable">I colori di sistema richiedono Android 12 o versioni successive. Su questo dispositivo viene usato “Blu batteria”.</string>
     <string name="settings_brightness">Luminosità</string>
     <string name="settings_brightness_summary">Segui il sistema o scegli chiaro, scuro o nero assoluto</string>
     <string name="settings_brightness_system">Sistema</string>
@@ -549,39 +520,35 @@
 
     <string name="background_service_starting" formatted="false">Battery Monitor si sta avviando…</string>
     <string name="monitoring_state_save_failed">Impossibile salvare lo stato del monitoraggio. Controlla lo spazio disponibile e riprova.</string>
-    <string name="confirm_close" formatted="false">Vuoi davvero uscire?</string>
-    <string name="confirm_close_hint" formatted="false">Battery Monitor sarà completamente chiuso, e non sarà più visualizzato nella barra di stato.\n
-    \n
-    Se si desidera solo abbandonare la finestra principale e mantenere l\'indicatore in esecuzione, premere Annulla e quindi premere il pulsante INDIETRO del tuo cellulare per uscire dalla finestra principale.</string>
     <string name="battery_optimized" formatted="false">Monitoraggio in background</string>
     <string name="battery_optimized_message" formatted="false">L’esecuzione senza restrizioni in background può migliorare l’affidabilità del monitoraggio. L’ottimizzazione della batteria di Android può ritardare aggiornamenti e avvisi.\n
     \n
-    L’esecuzione senza restrizioni può aumentare il consumo della batteria in background. Puoi modificare questa scelta in seguito in Impostazioni Android &gt; App &gt; Battery Monitor &gt; Batteria.</string>
+    L’esecuzione senza restrizioni può aumentare il consumo della batteria in background. Puoi modificare questa scelta in seguito in «Impostazioni» Android → «App» → «Battery Monitor» → «Batteria».</string>
     <string name="pref_cat_autostart" formatted="false">Avvio automatico</string>
     <string name="pref_autostart_at_boot" formatted="false">Autostart all\'avvio</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Avviare Battery Monitor quando si accende il dispositivo?</string>
-    <string name="pref_autostart_at_boot_help" formatted="false">“Sempre” avvia il monitoraggio in background dopo un riavvio del dispositivo. “Mai” evita l’avvio automatico. “Se è in Esecuzione Allo Spegnimento” segue l’ultima scelta di avviare o fermare il monitoraggio in Battery Monitor. Chiudere l’app o terminarne il processo non equivale a fermare il monitoraggio. I widget non ignorano questa scelta.</string>
+    <string name="pref_autostart_at_boot_help" formatted="false">“Sempre” avvia il monitoraggio in background dopo un riavvio del dispositivo. “Mai” evita l’avvio automatico. “Se è in esecuzione allo spegnimento” segue l’ultima scelta di avviare o fermare il monitoraggio in Battery Monitor. Chiudere l’app o terminarne il processo non equivale a fermare il monitoraggio. I widget non ignorano questa scelta.</string>
     <string name="boot_pref_always" formatted="false">Sempre</string>
     <string name="boot_pref_never" formatted="false">Mai</string>
     <string name="boot_pref_if_running" formatted="false">Se è in esecuzione allo spegnimento</string>
     <string name="settings_data_permissions">Dati e autorizzazioni</string>
     <string name="advanced_settings" formatted="false">Avanzate</string>
-    <string name="advanced_settings_summary" formatted="false">Perfeziona Battery Monitor con controlli aggiuntivi per gli utilizzi specializzati.</string>
-    <string name="advanced_settings_help" formatted="false">Controlla accesso privilegiato, registrazione della cronologia, conservazione dei registri ed esportazioni automatiche. Monitoraggio in background apre controlli e strumenti per autorizzazioni, affidabilità del monitoraggio, registri di debug e rapporti sui limiti di ricarica.</string>
+    <string name="advanced_settings_summary" formatted="false">Perfeziona Battery Monitor con controlli aggiuntivi per gli utilizzi specializzati</string>
+    <string name="advanced_settings_help" formatted="false">Controlla accesso privilegiato, registrazione della cronologia, conservazione dei registri ed esportazioni automatiche. «Monitoraggio in background» apre controlli e strumenti per autorizzazioni, affidabilità del monitoraggio e registri di debug. Apri «Diagnostica del limite di carica OEM» per creare rapporti sui limiti di ricarica.</string>
     <string name="pref_cat_privileged_access" formatted="false">Accesso privilegiato</string>
     <string name="pref_use_privileged_access" formatted="false">Usa l’accesso privilegiato</string>
     <string name="pref_use_privileged_access_summary" formatted="false">Usare l’accesso root o Shizuku concesso per dati del dispositivo più completi e precisi?</string>
-    <string name="pref_use_privileged_access_help" formatted="false">Abilita letture aggiuntive del dispositivo tramite l’accesso root o Shizuku che concedi. Quando Android non può fornire un valore supportato, Battery Monitor usa queste letture anche in Info correnti e nei registri. La diagnostica aggiuntiva viene raccolta automaticamente; non c’è un interruttore separato per le statistiche avanzate.</string>
-    <string name="shizuku_not_running" formatted="false">Avvia Shizuku per concedere a Battery Monitor l\'accesso privilegiato.</string>
-    <string name="shizuku_permission_denied_permanently" formatted="false">Concedi manualmente a Battery Monitor l\'autorizzazione in Shizuku.</string>
+    <string name="pref_use_privileged_access_help" formatted="false">Abilita letture aggiuntive del dispositivo tramite l’accesso root o Shizuku che concedi. Quando Android non può fornire un valore supportato, Battery Monitor usa queste letture anche in «Info correnti» e nei registri. La diagnostica aggiuntiva viene raccolta automaticamente; non c’è un interruttore separato per le statistiche avanzate.</string>
+    <string name="shizuku_not_running" formatted="false">Avvia Shizuku per concedere a Battery Monitor l\'accesso privilegiato</string>
+    <string name="shizuku_permission_denied_permanently" formatted="false">Concedi manualmente a Battery Monitor l\'autorizzazione in Shizuku</string>
 
     <string name="advanced_action_refresh" formatted="false">Aggiorna</string>
-    <string name="advanced_status_loading" formatted="false">Caricamento statistiche avanzate della batteria...</string>
+    <string name="advanced_status_loading" formatted="false">Caricamento statistiche avanzate della batteria…</string>
     <string name="advanced_status_no_access" formatted="false">Per mostrare le statistiche avanzate della batteria è necessario root o Shizuku.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">In attesa dell\'autorizzazione Shizuku...</string>
+    <string name="advanced_status_waiting_permission" formatted="false">In attesa dell\'autorizzazione Shizuku…</string>
     <string name="advanced_status_no_stats" formatted="false">Nessuna statistica avanzata della batteria è attualmente disponibile su questo dispositivo.</string>
     <string name="advanced_value_not_available" formatted="false">Non disponibile</string>
-    <string name="advanced_help_overview" formatted="false">Diagnostica riunisce affidabilità del monitoraggio, dati di previsione salvati e dati della batteria nelle schede Funzionamento dell’app, Batteria, Ricarica e Dati grezzi. I dati Android sono disponibili senza root. I dati aggiuntivi dipendono dal dispositivo e dalle autorizzazioni disponibili per Battery Monitor.</string>
+    <string name="advanced_help_overview" formatted="false">«Diagnostica» riunisce affidabilità del monitoraggio, dati di previsione salvati e dati della batteria nelle schede «Funzionamento dell’app», «Batteria», «Ricarica» e «Dati grezzi». I dati Android sono disponibili senza root. I dati aggiuntivi dipendono dal dispositivo e dalle autorizzazioni disponibili per Battery Monitor.</string>
     <string name="advanced_section_counters" formatted="false">Contatori</string>
     <string name="advanced_help_counters" formatted="false">Le letture della batteria sono etichettate e formattate come carica residua in mAh, corrente in mA, energia in mWh, tensione in V, temperatura nell’unità selezionata e potenza in W. Il moltiplicatore della corrente si applica anche alla potenza calcolata. Corrente media e numero di cicli dipendono dal supporto del dispositivo.</string>
     <string name="advanced_field_charge_counter" formatted="false">Stima carica residua</string>
@@ -589,7 +556,7 @@
     <string name="advanced_field_current_average" formatted="false">Corrente media</string>
     <string name="advanced_field_energy_counter" formatted="false">Contatore di energia</string>
     <string name="advanced_section_capacity" formatted="false">Capacità</string>
-    <string name="advanced_help_capacity" formatted="false">Capacità mostra la capacità a carica completa, la capacità di progetto e la salute stimata. La salute stimata viene calcolata come capacità a carica completa divisa per la capacità di progetto, quindi è accurata solo quanto lo sono i valori riportati dal dispositivo.</string>
+    <string name="advanced_help_capacity" formatted="false">«Capacità» mostra la capacità a carica completa, la capacità di progetto e la salute stimata. La salute stimata viene calcolata come capacità a carica completa divisa per la capacità di progetto, quindi è accurata solo quanto lo sono i valori riportati dal dispositivo.</string>
     <string name="advanced_field_cycle_count" formatted="false">Numero di cicli</string>
     <string name="advanced_field_reported_capacity" formatted="false">Capacità riportata</string>
     <string name="advanced_field_state_of_health" formatted="false">Stato di salute</string>
@@ -602,7 +569,7 @@
     <string name="diag_capacity_low">Bassa</string>
     <string name="diag_capacity_high">Alta</string>
     <string name="advanced_section_charging" formatted="false">Ricarica</string>
-    <string name="advanced_help_charging" formatted="false">Ricarica mostra valori relativi al percorso di ricarica attivo, come corrente o tensione massima di ricarica, politica di ricarica, stato di ricarica e livello di capacità. Questi campi possono cambiare tra caricabatterie e modalità di ricarica.</string>
+    <string name="advanced_help_charging" formatted="false">«Ricarica» mostra valori relativi al percorso di ricarica attivo, come corrente o tensione massima di ricarica, politica di ricarica, stato di ricarica e livello di capacità. Questi campi possono cambiare tra caricabatterie e modalità di ricarica.</string>
     <string name="advanced_field_charge_time_remaining" formatted="false">Tempo di carica rimanente</string>
     <string name="advanced_field_max_charging_current" formatted="false">Corrente massima di ricarica</string>
     <string name="advanced_field_max_charging_voltage" formatted="false">Tensione massima di ricarica</string>
@@ -614,11 +581,12 @@
     <string name="diag_charging_too_cold">Troppo freddo per ricaricare</string>
     <string name="diag_charging_too_hot">Troppo caldo per ricaricare</string>
     <string name="advanced_section_service" formatted="false">Servizio batteria di Android</string>
-    <string name="advanced_help_service" formatted="false">Dati grezzi include nomi e valori originali delle trasmissioni Android sulla batteria e, quando accessibile, di dumpsys battery. Possono includere sorgente di ricarica, stato della batteria, temperatura, tensione e altri stati del servizio batteria.</string>
+    <string name="advanced_help_service" formatted="false">«Dati grezzi» include nomi e valori originali delle trasmissioni Android sulla batteria e, quando accessibile, di dumpsys battery. Possono includere sorgente di ricarica, stato della batteria, temperatura, tensione e altri stati del servizio batteria.</string>
     <string name="advanced_section_sysfs" formatted="false">File power_supply del kernel</string>
-    <string name="advanced_help_sysfs" formatted="false">Dati grezzi mostra nomi e valori originali letti da /sys/class/power_supply, inclusi quelli su più righe. Cerca per chiave e tocca una riga per visualizzare e copiare il valore completo. Usa Aggiorna per raccogliere nuove letture. Battery Monitor tenta anche la lettura con le normali autorizzazioni Android, senza root o Shizuku.</string>
+    <string name="advanced_help_sysfs" formatted="false">«Dati grezzi» mostra nomi e valori originali letti da /sys/class/power_supply, inclusi quelli su più righe. Cerca per chiave e tocca una riga per visualizzare e copiare il valore completo. Usa «Aggiorna» per raccogliere nuove letture. Battery Monitor tenta anche la lettura con le normali autorizzazioni Android, senza root o Shizuku.</string>
     <string name="diag_fuel_gauge">Indicatore di carica della batteria</string>
     <string name="diag_mains_supply">Alimentazione CA</string>
+    <string name="diag_charging_source">Fonte di ricarica</string>
     <string name="diag_wireless_supply">Alimentazione wireless</string>
     <string name="diag_usb_supply">Alimentazione USB</string>
     <string name="diag_fast_charging">Ricarica rapida</string>
@@ -645,36 +613,28 @@
     <string name="diag_input_voltage">Tensione in ingresso</string>
     <string name="diag_input_voltage_limit">Limite di tensione in ingresso</string>
     <string name="advanced_section_metadata" formatted="false">Metadati</string>
-    <string name="advanced_help_metadata" formatted="false">Dati grezzi include anche nomi e valori originali delle proprietà BatteryManager, compresi contatori e letture della corrente disponibili. Proprietà aggiuntive, come dettagli di produzione o stato di sostituzione, dipendono dalla versione di Android, dal supporto del dispositivo e dalle autorizzazioni.</string>
-    <string name="advanced_field_manufacturing_date" formatted="false">Data di produzione</string>
-    <string name="advanced_field_first_use_date" formatted="false">Data del primo utilizzo</string>
-    <string name="advanced_field_battery_serial_number" formatted="false">Numero di serie della batteria</string>
-    <string name="advanced_field_battery_part_status" formatted="false">Stato del componente della batteria</string>
-    <string name="advanced_field_battery_part_manufacturer" formatted="false">Produttore del componente della batteria</string>
-    <string name="advanced_field_battery_model_name" formatted="false">Nome del modello della batteria</string>
-    <string name="advanced_field_minimum_design_voltage" formatted="false">Tensione minima di progetto</string>
+    <string name="advanced_help_metadata" formatted="false">«Dati grezzi» include anche nomi e valori originali delle proprietà BatteryManager, compresi contatori e letture della corrente disponibili. Proprietà aggiuntive, come dettagli di produzione o stato di sostituzione, dipendono dalla versione di Android, dal supporto del dispositivo e dalle autorizzazioni.</string>
     <string name="diag_raw">Dati grezzi</string>
     <string name="diag_search_key">Cerca chiavi</string>
     <string name="diag_no_keys">Nessuna chiave corrispondente nei dati disponibili</string>
     <string name="diag_raw_values">Valori grezzi</string>
-    <string name="diag_device_readings">Letture fornite dal dispositivo</string>
     <string name="diag_last_checked">Ultimo controllo: %1$s</string>
     <string name="diag_privileged_stale">Sono mostrate le precedenti letture privilegiate. Aggiorna per riprovare.</string>
     <string name="advanced_help_troubleshooting_title" formatted="false">Risoluzione dei problemi</string>
-    <string name="advanced_help_troubleshooting" formatted="false">I dati Android vengono raccolti automaticamente in Diagnostica. Per dati aggiuntivi tramite root o Shizuku, abilita l’accesso privilegiato in Sorgenti aggiuntive. Battery Monitor prova prima root, poi Shizuku. Shizuku deve essere in esecuzione e l’autorizzazione concessa. I campi mancanti restano indisponibili; gli aggiornamenti non riusciti mantengono l’istantanea precedente e la contrassegnano come non aggiornata.</string>
+    <string name="advanced_help_troubleshooting" formatted="false">I dati Android vengono raccolti automaticamente in «Diagnostica». Per dati aggiuntivi tramite root o Shizuku, abilita l’accesso privilegiato in «Sorgenti aggiuntive». Battery Monitor prova prima root, poi Shizuku. Shizuku deve essere in esecuzione e l’autorizzazione concessa. I campi mancanti restano indisponibili; gli aggiornamenti non riusciti mantengono l’istantanea precedente e la contrassegnano come non aggiornata.</string>
 
     <string name="diagnostics" formatted="false">Diagnostica</string>
     <string name="diagnostics_summary" formatted="false">Controlla autorizzazioni e affidabilità del monitoraggio e crea un rapporto per la risoluzione dei problemi</string>
     <string name="diag_overview">Funzionamento dell’app</string>
     <string name="diagnostics_help_title" formatted="false">Come aiuta la diagnostica</string>
-    <string name="diagnostics_help_overview" formatted="false">Monitoraggio in background controlla autorizzazioni e affidabilità del monitoraggio. Usa i suoi controlli per avviare o fermare il monitoraggio, cambiare la registrazione di debug, aprire le impostazioni di ottimizzazione della batteria e delle notifiche o creare un rapporto per la risoluzione dei problemi. Non tutte le letture indisponibili indicano un problema di autorizzazioni; alcuni dispositivi non le forniscono.</string>
+    <string name="diagnostics_help_overview" formatted="false">«Monitoraggio in background» controlla autorizzazioni e affidabilità del monitoraggio. Usa i suoi controlli per avviare o fermare il monitoraggio, cambiare la registrazione di debug, aprire le impostazioni di ottimizzazione della batteria e delle notifiche o creare un rapporto per la risoluzione dei problemi. Non tutte le letture indisponibili indicano un problema di autorizzazioni; alcuni dispositivi non le forniscono.</string>
     <string name="diagnostics_monitoring" formatted="false">Monitoraggio in background</string>
     <string name="diag_monitor_operation">Funzionamento del monitoraggio</string>
     <string name="diag_heartbeat">Ultimo segnale di attività</string>
     <string name="diag_start_monitor">Avvia monitoraggio</string>
     <string name="diag_stop_monitor">Arresta monitoraggio</string>
     <string name="diag_stop_monitor_body">Il monitoraggio della batteria, la registrazione della cronologia e il ripristino automatico in background si fermeranno. Puoi riavviare il monitoraggio qui.</string>
-    <string name="diagnostics_not_running_tap_to_start" formatted="false">Nessuna risposta recente. Tocca per richiedere un riavvio.</string>
+    <string name="diagnostics_not_running_tap_to_start" formatted="false">Nessuna risposta recente. Tocca per richiedere un riavvio</string>
     <string name="diagnostics_service" formatted="false">Servizio di monitoraggio</string>
     <string name="diagnostics_service_responded" formatted="false">Il servizio di monitoraggio ha risposto</string>
     <string name="diagnostics_service_restarting" formatted="false">Il servizio non ha risposto. Riavvio in corso…</string>
@@ -687,30 +647,30 @@
     <string name="diagnostics_database_failed_storage" formatted="false">Il controllo del database non è riuscito. Libera spazio sul dispositivo e riprova.</string>
     <string name="diagnostics_permissions" formatted="false">Autorizzazioni e accesso</string>
     <string name="diagnostics_notifications" formatted="false">Notifiche</string>
-    <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Autorizzazione mancante. Tocca per aprire le impostazioni.</string>
+    <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Autorizzazione mancante. Tocca per aprire le impostazioni</string>
     <string name="diagnostics_battery_optimization" formatted="false">Ottimizzazione batteria</string>
     <string name="diagnostics_unrestricted" formatted="false">Senza restrizioni</string>
-    <string name="diagnostics_restricted_tap_to_fix" formatted="false">Limitato. Tocca per consentire un monitoraggio affidabile in background.</string>
+    <string name="diagnostics_restricted_tap_to_fix" formatted="false">Limitato. Tocca per consentire un monitoraggio affidabile in background</string>
     <string name="diagnostics_vendor_settings" formatted="false">Impostazioni del produttore</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Apri impostazioni aggiuntive per attività in background o avvio automatico disponibili sul dispositivo</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Guida per le attività in background</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Apri la guida specifica del dispositivo su Don’t Kill My App</string>
     <string name="diagnostics_root" formatted="false">Accesso root</string>
-    <string name="diagnostics_root_unavailable" formatted="false">Non disponibile. Tocca per richiedere o controllare l’accesso root.</string>
+    <string name="diagnostics_root_unavailable" formatted="false">Non disponibile. Tocca per richiedere o controllare l’accesso root</string>
     <string name="diagnostics_shizuku" formatted="false">Accesso Shizuku</string>
-    <string name="diagnostics_shizuku_permission_missing" formatted="false">Autorizzazione mancante. Tocca per richiederla a Shizuku.</string>
+    <string name="diagnostics_shizuku_permission_missing" formatted="false">Autorizzazione mancante. Tocca per richiederla a Shizuku</string>
     <string name="diagnostics_checking" formatted="false">Controllo…</string>
-    <string name="diagnostics_tap_to_check" formatted="false">Non controllato. Tocca per richiedere o controllare l’accesso.</string>
+    <string name="diagnostics_tap_to_check" formatted="false">Non controllato. Tocca per richiedere o controllare l’accesso</string>
     <string name="diag_timeout">Tempo di lettura scaduto. L’istantanea precedente viene conservata. Prova di nuovo ad aggiornare.</string>
     <string name="diag_no">No</string>
     <string name="diag_additional_sources">Sorgenti aggiuntive</string>
-    <string name="diag_source_help">Le letture Android disponibili vengono raccolte automaticamente mentre Diagnostica è aperta. Tocca un valore per esaminare e copiare la lettura, la sorgente e l’orario. Le chiavi e i valori originali del dispositivo sono disponibili in Dati grezzi. Abilita l’accesso privilegiato per usare anche root o Shizuku.</string>
+    <string name="diag_source_help">Le letture Android disponibili vengono raccolte automaticamente mentre «Diagnostica» è aperta. Tocca un valore per esaminare e copiare la lettura, la sorgente e l’orario. Le chiavi e i valori originali del dispositivo sono disponibili in «Dati grezzi». Abilita l’accesso privilegiato per usare anche root o Shizuku.</string>
     <string name="diag_missing_reading">Le sorgenti abilitate non hanno restituito una lettura utilizzabile.</string>
     <string name="diag_missing_average">La corrente media è una lettura del dispositivo distinta dalla corrente istantanea. Battery Monitor non calcola una propria media quando il dispositivo non ne fornisce una.</string>
     <string name="diag_missing_estimated_health">Questa stima richiede capacità a piena carica e di progetto positive della stessa batteria. La capacità a piena carica non deve superare quella di progetto.</string>
-    <string name="diag_missing_charge_time">Questa è la stima di ricarica fornita dal dispositivo. Info correnti usa il metodo di previsione configurato in Battery Monitor e può mostrare una stima anche quando il dispositivo non ne fornisce una.</string>
+    <string name="diag_missing_charge_time">Questa è la stima di ricarica fornita dal dispositivo. «Info correnti» usa il metodo di previsione configurato in Battery Monitor e può mostrare una stima anche quando il dispositivo non ne fornisce una.</string>
     <string name="diag_predictor_description">I tassi indicano il tempo per un punto percentuale. I calcoli recenti restano in memoria; le medie salvate vengono conservate dopo un riavvio. Le finestre incomplete usano il tasso a lungo termine e le medie non salvate usano i valori predefiniti.</string>
-    <string name="diagnostics_predictor_help" formatted="false">Funzionamento dell’app mostra le medie a lungo termine salvate e i dati recenti usati per le previsioni. I tassi recenti usano le variazioni della percentuale della batteria e mostrano il tempo per un punto percentuale, il metodo selezionato, la sorgente di ricarica attiva, i punti e le durate osservati e se è incluso l’intervallo incompleto. Le finestre di cinque minuti e cinque punti usano il tasso a lungo termine attivo per le parti non osservate; i livelli saltati vengono interpolati. Lo stato recente resta in memoria e si azzera al riavvio del monitoraggio, al passaggio tra carica e scarica o al cambio della sorgente di ricarica. Le medie apprese salvate vengono conservate dopo un riavvio. Questi dati sono indipendenti dai registri della cronologia; cancellare i registri non azzera le stime.</string>
+    <string name="diagnostics_predictor_help" formatted="false">«Funzionamento dell’app» mostra le medie a lungo termine salvate e i dati recenti usati per le previsioni. I tassi recenti usano le variazioni della percentuale della batteria e mostrano il tempo per un punto percentuale, il metodo selezionato, la sorgente di ricarica attiva, i punti e le durate osservati e se è incluso l’intervallo incompleto. Le finestre di cinque minuti e cinque punti usano il tasso a lungo termine attivo per le parti non osservate; i livelli saltati vengono interpolati. Lo stato recente resta in memoria e si azzera al riavvio del monitoraggio, al passaggio tra carica e scarica o al cambio della sorgente di ricarica. Le medie apprese salvate vengono conservate dopo un riavvio. Questi dati sono indipendenti dai registri della cronologia; cancellare i registri non azzera le stime.</string>
     <string name="diag_predictor_recent" formatted="false">Calcoli recenti</string>
     <string name="diag_predictor_no_recent" formatted="false">Nessuna stima attiva. I dati recenti sono disponibili dopo una lettura del monitoraggio durante la carica o la scarica.</string>
     <string name="diag_predictor_start_monitor">Avvia il monitoraggio qui sopra per esaminare i dati di previsione salvati.</string>
@@ -729,11 +689,11 @@
     <string name="diag_predictor_usb">Ricarica (USB)</string>
     <string name="diag_predictor_version">Versione dei dati</string>
     <string name="diag_predictor_not_saved">Non salvato</string>
-    <string name="diag_predictor_default">Usa valore predefinito</string>
+    <string name="diag_predictor_default">Valore predefinito</string>
     <string name="diag_predictor_invalid">Valore salvato non valido</string>
     <string name="diagnostics_device_and_logs" formatted="false">Dispositivo e rapporto diagnostico</string>
     <string name="diagnostics_debug_logs" formatted="false">Raccogli registri di debug</string>
-    <string name="diagnostics_debug_logs_warning" formatted="false">I registri di debug possono contenere informazioni personali. Attivali solo durante l’analisi di un problema, controlla il file esportato e condividilo pubblicamente con cautela.</string>
+    <string name="diagnostics_debug_logs_warning" formatted="false">I registri di debug possono contenere informazioni personali. Attivali solo durante l’analisi di un problema, controlla il file esportato e condividilo pubblicamente con cautela</string>
     <string name="diagnostics_clear" formatted="false">Elimina i registri di debug raccolti</string>
     <string name="diagnostics_clear_summary" formatted="false">Rimuovi i registri di debug attualmente salvati dall’app</string>
     <string name="diagnostics_logs_cleared" formatted="false">Registri di debug eliminati</string>
@@ -749,8 +709,8 @@
     <string name="diag_report_privacy">Esclusi per impostazione predefinita. Questi dati possono contenere informazioni personali. Controlla l’anteprima prima di copiare o salvare.</string>
 
     <string name="charging_diagnostics_title" formatted="false">Diagnostica del limite di carica OEM</string>
-    <string name="charging_diagnostics_instructions_hint" formatted="false">Per ottenere un rapporto utile, apri la Guida e segui i passaggi di preparazione prima di acquisire le istantanee.</string>
-    <string name="charging_diagnostics_privileged_hint" formatted="false">Con l’accesso privilegiato potrebbero essere disponibili più informazioni diagnostiche. Concedi l’accesso tramite Shizuku o root e attiva l’accesso privilegiato nelle impostazioni avanzate per ottenere un rapporto sui limiti di ricarica OEM più utile.</string>
+    <string name="charging_diagnostics_instructions_hint" formatted="false">Per ottenere un rapporto utile, apri la «Aiuto» e segui i passaggi di preparazione prima di acquisire le istantanee.</string>
+    <string name="charging_diagnostics_privileged_hint" formatted="false">Con l’accesso privilegiato potrebbero essere disponibili più informazioni diagnostiche. Concedi l’accesso tramite Shizuku o root e attiva l’accesso privilegiato in «Impostazioni» → «Avanzate» → «Usa l’accesso privilegiato» per ottenere un rapporto sui limiti di ricarica OEM più utile.</string>
     <string name="charging_diagnostics_capture" formatted="false">Acquisisci istantanea</string>
     <string name="charging_diagnostics_capture_summary" formatted="false">Imposta una modalità di ricarica nelle impostazioni del dispositivo, quindi acquisisci i relativi segnali</string>
     <string name="charging_diagnostics_choose_state" formatted="false">Quale impostazione del dispositivo è attiva?</string>
@@ -763,9 +723,9 @@
     <string name="charging_diagnostics_captured" formatted="false">Istantanea di ricarica acquisita</string>
     <string name="charging_diagnostics_capture_failed" formatted="false">Impossibile acquisire l’istantanea di ricarica</string>
     <plurals name="charging_diagnostics_snapshot_count">
-        <item quantity="one">%1$d istantanea acquisita. Acquisisci un’altra modalità di ricarica.</item>
-        <item quantity="many">%1$d istantanee acquisite. Tocca per esaminare il confronto.</item>
-        <item quantity="other">%1$d istantanee acquisite. Tocca per esaminare il confronto.</item>
+        <item quantity="one">%1$d istantanea acquisita. Acquisisci un’altra modalità di ricarica</item>
+        <item quantity="many">%1$d istantanee acquisite. Tocca per esaminare il confronto</item>
+        <item quantity="other">%1$d istantanee acquisite. Tocca per esaminare il confronto</item>
     </plurals>
     <string name="charging_diagnostics_need_two" formatted="false">Acquisisci prima almeno due diverse modalità di ricarica</string>
     <string name="charging_diagnostics_report" formatted="false">Crea rapporto di confronto</string>
@@ -785,8 +745,8 @@
     <string name="charging_diagnostics_help_contact" formatted="false">Dopo aver esaminato il rapporto, copialo o salvalo e invialo tramite e-mail a <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Backup e ripristino</string>
-    <string name="backup_restore_settings_summary" formatted="false">Esegui il backup, il ripristino e il trasferimento delle impostazioni dell’app e dei dati della batteria.</string>
-    <string name="backup_restore_help_overview" formatted="false">Salva e ripristina impostazioni, allarmi, registri e dati di previsione appresi. Ripristina impostazioni predefinite reimposta le preferenze dell’app dopo conferma, mantenendo cronologia, allarmi, stime apprese e lo stato del monitoraggio.</string>
+    <string name="backup_restore_settings_summary" formatted="false">Esegui il backup, il ripristino e il trasferimento delle impostazioni dell’app e dei dati della batteria</string>
+    <string name="backup_restore_help_overview" formatted="false">Salva e ripristina impostazioni, allarmi, registri e dati di previsione appresi. «Ripristina impostazioni predefinite» reimposta le preferenze dell’app dopo conferma, mantenendo cronologia, allarmi, stime apprese e lo stato del monitoraggio.</string>
     <string name="pref_general_backup" formatted="false">Backup generale dell’app</string>
     <string name="general_backup_help" formatted="false">Un backup generale salva insieme impostazioni, allarmi e dati specifici del dispositivo. Durante il ripristino puoi scegliere quali dati disponibili importare.</string>
     <string name="pref_export_general_backup" formatted="false">Esporta backup generale</string>
@@ -840,14 +800,13 @@
     <string name="csv_logs_imported" formatted="false">Registri CSV importati correttamente</string>
     <string name="invalid_csv_logs_file" formatted="false">File di registri CSV non valido o incompatibile</string>
     <string name="settings_reset_title">Ripristina impostazioni predefinite</string>
-    <string name="settings_reset_summary">Reimposta le preferenze dell’app mantenendo cronologia, allarmi e stime apprese.</string>
-    <string name="settings_reset_help" formatted="false">Ripristina impostazioni predefinite chiede conferma, poi reimposta le preferenze dell’app. Mantiene cronologia, allarmi, stime apprese, configurazioni dei widget e lo stato del monitoraggio in background. Le autorizzazioni di sistema e le impostazioni dei canali di notifica non vengono reimpostate.</string>
+    <string name="settings_reset_summary">Reimposta le preferenze dell’app mantenendo cronologia, allarmi e stime apprese</string>
+    <string name="settings_reset_help" formatted="false">«Ripristina impostazioni predefinite» chiede conferma, poi reimposta le preferenze dell’app. Mantiene cronologia, allarmi, stime apprese, configurazioni dei widget e lo stato del monitoraggio in background. Le autorizzazioni di sistema e le impostazioni dei canali di notifica non vengono reimpostate.</string>
     <string name="settings_reset_question">Ripristinare tutte le impostazioni predefinite dell’app? Cronologia, allarmi e stime apprese saranno mantenuti. Il monitoraggio in background resterà attivo o fermo come adesso.</string>
     <string name="settings_reset_confirm">Ripristina valori predefiniti</string>
     <string name="settings_reset_done">Impostazioni predefinite ripristinate</string>
     <string name="settings_reset_failed">Impossibile completare il ripristino delle impostazioni predefinite. Alcune impostazioni potrebbero essere già cambiate. Controlla lo spazio disponibile e riprova.</string>
 
-    <string name="help_activity_subtitle" formatted="false">Aiuto</string>
     <string name="help_cat_version" formatted="false">Versione</string>
     <string name="help_cat_open_source" formatted="false">Open source</string>
     <string name="help_open_source" formatted="false">Questo il progetto è open source. Puoi accedere al codice sorgente su <a href="https://github.com/tswistak/Battery-Monitor">https://github.com/tswistak/Battery-Monitor</a>.</string>

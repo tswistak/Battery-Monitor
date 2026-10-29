@@ -217,10 +217,9 @@ fun SettingsScreen(
                 val rows =
                     descriptors.filter { it.category == category && it.diagnosticDetail == null }
                 val state = rememberLazyListState()
-                val prefix = if (category == SettingsCategory.Notification) 1 else 0
                 LaunchedEffect(highlightKey) {
                     val index = rows.indexOfFirst { it.key == highlightKey }
-                    if (index >= 0) state.scrollToItem(index + prefix)
+                    if (index >= 0) state.scrollToItem(index)
                 }
                 LazyColumn(
                     state = state, contentPadding = PaddingValues(top = 8.dp, bottom = 24.dp)
@@ -261,6 +260,16 @@ fun SettingsScreen(
                             Icon(painterResource(R.drawable.ui_current), null, Modifier.size(20.dp))
                             Spacer(Modifier.width(8.dp))
                             Text(background.title)
+                        }
+                        val charging =
+                            descriptors.first { it.key == "charging_diagnostics_capture" }
+                        TextButton(
+                            onClick = {
+                                onDiagnostics(requireNotNull(charging.diagnosticDetail), null)
+                            }) {
+                            Icon(painterResource(R.drawable.ui_bolt), null, Modifier.size(20.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text(stringResource(R.string.charging_diagnostics_title))
                         }
                     }
                 }

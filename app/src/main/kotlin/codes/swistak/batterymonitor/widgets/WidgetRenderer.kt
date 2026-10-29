@@ -286,8 +286,9 @@ internal object WidgetRenderer {
 
             WidgetFamily.TREND -> {
                 views.setTextViewText(
-                    R.id.widget_title,
-                    context.getString(R.string.widget_trend_range, config.trendHours)
+                    R.id.widget_title, context.resources.getQuantityString(
+                        R.plurals.widget_trend_range, config.trendHours, config.trendHours
+                    )
                 )
                 views.setImageViewResource(R.id.widget_family_icon, R.drawable.ui_history)
                 val body = RemoteViews(context.packageName, R.layout.widget_trend_content)
