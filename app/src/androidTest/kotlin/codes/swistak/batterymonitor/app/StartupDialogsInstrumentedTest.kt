@@ -12,12 +12,14 @@
 */
 package codes.swistak.batterymonitor.app
 
+import android.Manifest
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Rect
 import android.os.Build
@@ -44,6 +46,7 @@ import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.core.content.pm.PackageInfoCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelProvider
 import androidx.test.platform.app.InstrumentationRegistry
@@ -342,35 +345,102 @@ class StartupDialogsInstrumentedTest {
         val automation = instrumentation.uiAutomation
         val info = automation.serviceInfo
         val oldFlags = info.flags
+        var stage = "Prepare alarm navigation prerequisites"
+        var activity: BatteryInfoActivity? = null
+        fun diagnostics(): String {
+            var state = "activity not launched"
+            main {
+                val current = monitor.lastActivity as? BatteryInfoActivity ?: activity
+                if (current != null) {
+                    val startup = ViewModelProvider(current)[StartupDialogViewModel::class.java]
+                    val alarms = ViewModelProvider(current)[AlarmsViewModel::class.java].state.value
+                    state =
+                        "lifecycle=${current.lifecycle.currentState},focused=${current.hasWindowFocus()}," + "destroyed=${current.isDestroyed},presentation=${startup.presentation}," + "systemAction=${startup.systemAction},blocksContentDialogs=${startup.blocksContentDialogs}," + "alarms.loading=${alarms.loading},alarms.hasSnapshot=${alarms.hasSnapshot}," + "alarms.readError=${alarms.readError},alarms.error=${alarms.error},alarms.busy=${alarms.busy}," + "visibleLabels=" + activitySemantics(
+                            current.window.decorView
+                        ).filterNot(::hiddenActivityNode).flatMap {
+                            it.config.getOrNull(SemanticsProperties.Text).orEmpty()
+                        }.take(12).joinToString("|") { it.text.take(80) }
+                }
+            }
+            val permission = when {
+                Build.VERSION.SDK_INT < 33 -> "not required"
+                target.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED -> "granted"
+                else -> "denied"
+            }
+            val windows = automation.windows.take(8).joinToString(";") {
+                "id=${it.id},type=${it.type},active=${it.isActive},focused=${it.isFocused},package=${it.root?.packageName}"
+            }
+            return "$state,notificationPermission=$permission,windows=$windows"
+        }
+
+        fun awaitNavigation(label: String, condition: () -> Boolean) {
+            stage = label
+            await(label, ::diagnostics, condition)
+        }
         info.flags = oldFlags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
         automation.serviceInfo = info
         try {
+            if (Build.VERSION.SDK_INT >= 33) {
+                // This scenario needs permission before launch; revoking it would kill instrumentation.
+                automation.grantRuntimePermission(
+                    target.packageName, Manifest.permission.POST_NOTIFICATIONS
+                )
+                assertEquals(
+                    "Notification permission prerequisite",
+                    PackageManager.PERMISSION_GRANTED,
+                    target.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
+                )
+            }
             assertTrue(MonitoringDesiredState.write(target, desired = false))
             assertTrue(
                 mainPreferences.edit().putBoolean(SettingsContract.KEY_FIRST_RUN, false)
                     .putLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, installedVersion)
                     .commit()
             )
+            stage = "Launch the alarms activity with notification permission granted"
             val original = instrumentation.startActivitySync(
                 Intent(
                     target, BatteryInfoActivity::class.java
                 ).putExtra(BatteryInfoActivity.EXTRA_SECTION, SectionOwner.ALARMS.route)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             ) as BatteryInfoActivity
+            activity = original
             lateinit var alarms: AlarmsViewModel
             lateinit var startup: StartupDialogViewModel
             main {
                 alarms = ViewModelProvider(original)[AlarmsViewModel::class.java]
                 startup = ViewModelProvider(original)[StartupDialogViewModel::class.java]
             }
-            await {
-                startup.presentation == StartupPresentation.NONE || find(target.getString(R.string.battery_optimized)) != null
+            instrumentation.waitForIdleSync()
+            var batteryPromptVisible = false
+            awaitNavigation("Wait for completed startup or the visible battery-optimization prompt") {
+                var ready = false
+                main {
+                    batteryPromptVisible =
+                        startup.presentation == StartupPresentation.BATTERY_OPTIMIZATION
+                    ready =
+                        !startup.blocksContentDialogs && original.lifecycle.currentState.isAtLeast(
+                            Lifecycle.State.RESUMED
+                        ) && original.hasWindowFocus()
+                }
+                ready || (batteryPromptVisible && find(target.getString(R.string.battery_optimized)) != null)
             }
-            if (startup.presentation == StartupPresentation.BATTERY_OPTIMIZATION) {
-                click(target.getString(R.string.cancel))
+            if (batteryPromptVisible) {
+                stage = "Dismiss the battery-optimization prompt"
+                click(target.getString(R.string.cancel), stage, ::diagnostics)
             }
-            await { !startup.blocksContentDialogs && alarms.state.value.canMutate }
-            openActivityDrawer(original)
+            awaitNavigation("Wait for a resumed, focused activity with startup complete and alarms loaded") {
+                var ready = false
+                main {
+                    ready =
+                        !startup.blocksContentDialogs && alarms.state.value.canMutate && original.lifecycle.currentState.isAtLeast(
+                            Lifecycle.State.RESUMED
+                        ) && original.hasWindowFocus()
+                }
+                ready
+            }
+            stage = "Open the original activity drawer"
+            openActivityDrawer(original, stage, ::diagnostics)
             main {
                 val destination = activityDrawerItem(original, R.string.nav_current)
                 alarms.beginThreshold(
@@ -381,14 +451,16 @@ class StartupDialogsInstrumentedTest {
                 assertTrue(destination.config[SemanticsActions.OnClick].action?.invoke() == true)
             }
             val confirmation = target.getString(R.string.alarms_discard_confirmation)
-            await { find(confirmation) != null && dialogs() == 1 }
+            awaitNavigation("Show dirty-draft navigation confirmation") {
+                find(confirmation) != null && dialogs() == 1
+            }
             val focusStartedAt = android.os.SystemClock.uptimeMillis()
             var focusReady = false
             var focusWindowCount = 0
             var lastFocusWindows = ""
             var manualNodeWindowId = -1
             try {
-                await {
+                awaitNavigation("Focus the dirty-draft navigation confirmation") {
                     focusReady = false
                     val manualConfirmation = find(confirmation)
                     manualNodeWindowId = manualConfirmation?.windowId ?: -1
@@ -418,7 +490,7 @@ class StartupDialogsInstrumentedTest {
                     putString("windows", lastFocusWindows)
                 })
             }
-            await {
+            awaitNavigation("Close the drawer behind the dirty-draft confirmation") {
                 var closed = false
                 main { closed = activityDrawerClosed(original) }
                 closed
@@ -434,13 +506,27 @@ class StartupDialogsInstrumentedTest {
                 assertEquals("47", alarms.state.value.draft?.thresholdInput)
             }
             main { original.recreate() }
-            await {
-                monitor.lastActivity != null && monitor.lastActivity !== original && !monitor.lastActivity.isDestroyed
+            awaitNavigation("Recreate the activity while retaining the dirty-draft confirmation") {
+                var ready = false
+                main {
+                    val current = monitor.lastActivity as? BatteryInfoActivity
+                    ready =
+                        current != null && current !== original && !current.isDestroyed && current.lifecycle.currentState.isAtLeast(
+                            Lifecycle.State.RESUMED
+                        ) && !ViewModelProvider(current)[StartupDialogViewModel::class.java].blocksContentDialogs
+                }
+                ready
             }
             val restored = monitor.lastActivity as BatteryInfoActivity
-            await { find(confirmation) != null && dialogs() == 1 }
-            click(target.getString(R.string.cancel))
-            await { find("47") != null && find(confirmation) == null && dialogs() == 1 }
+            activity = restored
+            awaitNavigation("Restore exactly one dirty-draft confirmation") {
+                find(confirmation) != null && dialogs() == 1
+            }
+            stage = "Cancel navigation after recreation"
+            click(target.getString(R.string.cancel), stage, ::diagnostics)
+            awaitNavigation("Cancel navigation while preserving the dirty draft") {
+                find("47") != null && find(confirmation) == null && dialogs() == 1
+            }
             main {
                 assertEquals(
                     "47",
@@ -448,9 +534,14 @@ class StartupDialogsInstrumentedTest {
                 )
                 restored.selectSection(SectionOwner.CURRENT)
             }
-            await { find(confirmation) != null && dialogs() == 1 }
-            click(target.getString(R.string.alarms_discard))
-            await { dialogs() == 0 && alarms.state.value.draft == null }
+            awaitNavigation("Confirm the next navigation away from the dirty draft") {
+                find(confirmation) != null && dialogs() == 1
+            }
+            stage = "Discard the dirty draft and apply its pending destination"
+            click(target.getString(R.string.alarms_discard), stage, ::diagnostics)
+            awaitNavigation("Remove the discarded draft and its dialogs") {
+                dialogs() == 0 && alarms.state.value.draft == null
+            }
             instrumentation.waitForIdleSync()
             main {
                 assertTrue(
@@ -458,7 +549,8 @@ class StartupDialogsInstrumentedTest {
                     activityHasVisibleLabel(restored, R.string.nav_current)
                 )
             }
-            openActivityDrawer(restored)
+            stage = "Open the recreated activity drawer"
+            openActivityDrawer(restored, stage, ::diagnostics)
             main {
                 val destination = activityDrawerItem(restored, R.string.nav_history)
                 assertTrue(destination.config[SemanticsActions.OnClick].action?.invoke() == true)
@@ -478,7 +570,7 @@ class StartupDialogsInstrumentedTest {
             var externalReady = false
             var lastExternalState = Bundle()
             try {
-                await {
+                awaitNavigation("Apply the external Help intent and close the drawer") {
                     main {
                         val drawerClosed = activityDrawerClosed(restored)
                         val helpVisible = activityHasVisibleLabel(restored, R.string.nav_help)
@@ -538,7 +630,7 @@ class StartupDialogsInstrumentedTest {
                 )
             }
             main { restored.openHelp("licenses") }
-            await {
+            awaitNavigation("Open the Help licenses detail") {
                 var opened = false
                 main {
                     val saved = activityNavigationState(restored)
@@ -563,7 +655,7 @@ class StartupDialogsInstrumentedTest {
                     saved.getString("nav_detail")
                 )
             }
-            await {
+            awaitNavigation("Return same-owner navigation to the Help root") {
                 var rootVisible = false
                 main {
                     rootVisible = activityDrawerClosed(restored) && activityHasVisibleLabel(
@@ -572,6 +664,14 @@ class StartupDialogsInstrumentedTest {
                 }
                 rootVisible
             }
+        } catch (failure: Throwable) {
+            val details = runCatching(::diagnostics).getOrElse { "Diagnostics unavailable: $it" }
+            instrumentation.sendStatus(0, Bundle().apply {
+                putString("testDiagnostic", "alarmNavigationFailure")
+                putString("stage", stage)
+                putString("state", details)
+            })
+            throw failure
         } finally {
             main { monitor.lastActivity?.finish() }
             instrumentation.waitForIdleSync()
@@ -749,7 +849,9 @@ class StartupDialogsInstrumentedTest {
         return owners(root).flatMap { descendants(it.rootSemanticsNode) }
     }
 
-    private fun openActivityDrawer(activity: BatteryInfoActivity) {
+    private fun openActivityDrawer(
+        activity: BatteryInfoActivity, stage: String, diagnostics: () -> String
+    ) {
         main {
             val menu = activitySemantics(activity.window.decorView).first {
                 it.config.getOrNull(SemanticsProperties.ContentDescription)
@@ -757,7 +859,7 @@ class StartupDialogsInstrumentedTest {
             }
             assertTrue(menu.config[SemanticsActions.OnClick].action?.invoke() == true)
         }
-        await {
+        await(stage, diagnostics) {
             var open = false
             main {
                 open = activitySemantics(activity.window.decorView).any {
@@ -824,8 +926,12 @@ class StartupDialogsInstrumentedTest {
         return instrumentation.uiAutomation.rootInActiveWindow?.let(::search)
     }
 
-    private fun click(text: String) {
-        await { find(text) != null }
+    private fun click(
+        text: String,
+        stage: String = "Find clickable text: $text",
+        diagnostics: () -> String = { "" }
+    ) {
+        await(stage, diagnostics) { find(text) != null }
         var node = find(text)
         while (node != null && !node.isClickable) node = node.parent
         assertTrue(node?.performAction(AccessibilityNodeInfo.ACTION_CLICK) == true)
@@ -844,11 +950,18 @@ class StartupDialogsInstrumentedTest {
         failure?.let { throw it }
     }
 
-    private fun await(condition: () -> Boolean) {
+    private fun await(
+        stage: String = "Startup dialogs did not reach the expected state",
+        diagnostics: () -> String = { "" },
+        condition: () -> Boolean
+    ) {
         val until = android.os.SystemClock.uptimeMillis() + 10_000
         while (!condition() && android.os.SystemClock.uptimeMillis() < until) {
             android.os.SystemClock.sleep(50)
         }
-        assertTrue("Startup dialogs did not reach the expected state", condition())
+        if (!condition()) {
+            val details = runCatching(diagnostics).getOrElse { "Diagnostics unavailable: $it" }
+            throw AssertionError("$stage: $details")
+        }
     }
 }

@@ -32,11 +32,11 @@ class WidgetLocalizationInstrumentedTest {
     }
 
     @Test
-    fun trend_title_preserves_Polish_abbreviation_with_quantity_agreement() {
+    fun trend_title_uses_Polish_singular_few_and_many_hours() {
         val locale = Locale.forLanguageTag("pl")
-        assertEquals("Poziom naładowania · ostatnia 1 godz.", renderedTitle(locale, 1))
-        assertEquals("Poziom naładowania · ostatnie 24 godz.", renderedTitle(locale, 24))
-        assertEquals("Poziom naładowania · ostatnich 168 godz.", renderedTitle(locale, 168))
+        assertEquals("Poziom naładowania · ostatnia 1 godzina", renderedTitle(locale, 1))
+        assertEquals("Poziom naładowania · ostatnie 24 godziny", renderedTitle(locale, 24))
+        assertEquals("Poziom naładowania · ostatnich 168 godzin", renderedTitle(locale, 168))
     }
 
     private fun renderedTitle(locale: Locale, hours: Int): String {

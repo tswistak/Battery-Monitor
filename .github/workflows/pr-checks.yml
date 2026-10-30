@@ -243,7 +243,6 @@ jobs:
 
   e2e:
     name: Critical E2E regression tests
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request' && vars.E2E_ON_PULL_REQUEST == 'true')
     runs-on: ubuntu-24.04
     timeout-minutes: 90
 
