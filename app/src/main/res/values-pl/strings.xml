@@ -115,7 +115,7 @@
     <string name="current_prediction_method">Metoda: %1$s</string>
     <string name="current_prediction_target">Cel: %1$d%%</string>
     <string name="current_prediction_snapshot_time">Snapshot baterii: %1$s</string>
-    <string name="current_prediction_diagnostics" formatted="false">Ostatnie tempa zmian i wyuczone średnie są dostępne w „Diagnostyka”, w „Działanie aplikacji”.</string>
+    <string name="current_prediction_diagnostics" formatted="false">Ostatnie tempa zmian i wyuczone średnie są dostępne w „Diagnostyka” → „Działanie aplikacji”.</string>
     <string name="current_prediction_explanation">To szacowanie używa skonfigurowanego przewidywania Monitora baterii. Jego cel nie steruje ładowaniem ani wyłączaniem.</string>
     <string name="time_estimates_settings" formatted="false">Szacowanie czasu</string>
     <string name="time_estimates_settings_summary" formatted="false">Wybierz, jak pozostały czas ma być obliczany i do których docelowych poziomów naładowania baterii</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Zarządzaj głównym kanałem</string>
     <string name="pref_cat_notification_content" formatted="false">Zawartość</string>
     <string name="pref_top_line_content" formatted="false">Zawartość górnego wiersza</string>
-    <string name="pref_top_line_content_help" formatted="false">Wybierz, czy górny wiersz powiadomienia ma pokazywać szacowany pozostały czas, czas od zmiany stanu, czy skonfigurowane parametry.</string>
+    <string name="pref_top_line_content_help" formatted="false">Wybierz, czy górny wiersz powiadomienia ma pokazywać szacowany „Pozostały czas”, „Czas od zmiany stanu”, czy skonfigurowane „Parametry”.</string>
     <string name="pref_bottom_line_content" formatted="false">Zawartość dolnego wiersza</string>
     <string name="pref_bottom_line_content_help" formatted="false">Masz te same opcje dla dolnego i górnego wiersza.</string>
     <string name="time_remaining" formatted="false">Pozostały czas</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Alarmy</string>
     <string name="alarm_settings_help" formatted="false">Możesz ustawić, aby Monitor baterii powiadamiał Cię, gdy poziom naładowania Twojej baterii osiąga określony warunek (np. bateria staje się w pełni naładowana, poziom naładowania baterii spada poniżej 20% i wiele innych).</string>
     <string name="alarms_overview" formatted="false">Przegląd alarmów</string>
-    <string name="alarms_overview_help">Wszystkie osiem typów alarmów jest zawsze dostępne. Włączaj zdarzenia bezpośrednio albo używaj „Dodaj próg” dla poziomu naładowania baterii lub temperatury. Nowe progi zostają włączone po zapisie. Naciśnij wartość, aby ją zedytować; edycja zachowuje stan włączenia. Wyłączone wartości pozostają na liście. Usuwanie pyta o potwierdzenie. Dźwięk i wibracje są współdzielone przez typ w ustawieniach powiadomień Androida. Istniejące zduplikowane wpisy pojawiają się jako jeden logiczny alarm; przełączanie lub usuwanie wpływa na wszystkie kopie. Alarmy ładowania i rozładowania korzystają z przybliżonych celów i nie sterują ładowaniem. Zablokowany kanał lub zatrzymany monitor nie zmienia zapisanych przełączników.</string>
+    <string name="alarms_overview_help">Wszystkie osiem typów alarmów jest zawsze dostępne. Włączaj zdarzenia bezpośrednio albo używaj „Dodaj próg” dla poziomu naładowania baterii lub temperatury. Nowe progi zostają włączone po zapisie. Naciśnij wartość, aby ją zedytować; edycja zachowuje stan włączenia. Wyłączone wartości pozostają na liście. „Usuń alarm” pyta o potwierdzenie. Dźwięk i wibracje są współdzielone przez typ w ustawieniach powiadomień Androida. Istniejące zduplikowane wpisy pojawiają się jako jeden logiczny alarm; przełączanie lub usuwanie wpływa na wszystkie kopie. Alarmy ładowania i rozładowania korzystają z przybliżonych celów i nie sterują ładowaniem. Zablokowany kanał lub zatrzymany monitor nie zmienia zapisanych przełączników.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d włączony alarm</item>
         <item quantity="few">%1$d włączone alarmy</item>
@@ -475,10 +475,10 @@
     <string name="widget_preview_note">Podgląd używa ostatniego odczytu monitora. Rozmiar widżetu jest ustawiany przez Twój launcher.</string>
     <string name="widget_read_at">Odczyt %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Poziom naładowania · ostatnia %1$d godz.</item>
-        <item quantity="few">Poziom naładowania · ostatnie %1$d godz.</item>
-        <item quantity="many">Poziom naładowania · ostatnich %1$d godz.</item>
-        <item quantity="other">Poziom naładowania · ostatnich %1$d godz.</item>
+        <item quantity="one">Poziom naładowania · ostatnia %1$d godzina</item>
+        <item quantity="few">Poziom naładowania · ostatnie %1$d godziny</item>
+        <item quantity="many">Poziom naładowania · ostatnich %1$d godzin</item>
+        <item quantity="other">Poziom naładowania · ostatnich %1$d godzin</item>
     </plurals>
     <string name="widget_observed_range">Zaobserwowano %1$s–%2$s</string>
     <string name="widget_chart_description">Przechowywany poziom naładowania baterii od %1$s do %2$s. Minimum %3$s, maksimum %4$s.</string>
@@ -525,7 +525,7 @@
     <string name="battery_optimized" formatted="false">Monitorowanie w tle</string>
     <string name="battery_optimized_message" formatted="false">Nieograniczone wykonywanie w tle może poprawić niezawodność monitorowania. Optymalizacja baterii w Androidzie może opóźniać aktualizacje i alarmy.\n
     \n
-    Zezwolenie na nieograniczone wykonywanie w tle może zwiększyć zużycie baterii. Możesz zmienić to później w ustawieniach Androida: „Aplikacje” → „Battery Monitor” → „Bateria”.</string>
+    Zezwolenie na nieograniczone wykonywanie w tle może zwiększyć zużycie baterii. Możesz zmienić to później w „Ustawienia” Androida → „Aplikacje” → „Battery Monitor” → „Bateria”.</string>
     <string name="pref_cat_autostart" formatted="false">Automatyczne uruchamianie</string>
     <string name="pref_autostart_at_boot" formatted="false">Uruchamiaj automatycznie przy starcie systemu</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Monitora baterii podczas włączania urządzenia:</string>
@@ -536,7 +536,7 @@
     <string name="settings_data_permissions">Dane i uprawnienia</string>
     <string name="advanced_settings" formatted="false">Zaawansowane</string>
     <string name="advanced_settings_summary" formatted="false">Dostosuj Monitor baterii za pomocą dodatkowych opcji do specjalistycznych zastosowań</string>
-    <string name="advanced_settings_help" formatted="false">Kontroluj dostęp uprzywilejowany, zapisywanie historii, przechowywanie logów i automatyczny eksport. „Monitorowanie w tle” otwiera sprawdzenia i narzędzia dotyczące uprawnień, niezawodności monitora i logów debugowania. Otwórz „Diagnostyka limitu ładowania OEM”, aby utworzyć raport limitu ładowania.</string>
+    <string name="advanced_settings_help" formatted="false">Kontroluj dostęp uprzywilejowany, zapisywanie historii, przechowywanie logów i automatyczny eksport. „Monitorowanie w tle” otwiera sprawdzenia i narzędzia dotyczące uprawnień, niezawodności monitora i logów debugowania. Otwórz „Diagnostyka limitu ładowania OEM”, aby uzyskać raporty dotyczące limitu ładowania..</string>
     <string name="pref_cat_privileged_access" formatted="false">Dostęp uprzywilejowany</string>
     <string name="pref_use_privileged_access" formatted="false">Używaj dostępu uprzywilejowanego</string>
     <string name="pref_use_privileged_access_summary" formatted="false">Czy używać przyznanego dostępu do roota albo Shizuku dla bardziej kompletnych i dokładniejszych danych urządzenia?</string>
@@ -749,7 +749,7 @@
 
     <string name="pref_backup_restore" formatted="false">Kopia zapasowa i przywracanie</string>
     <string name="backup_restore_settings_summary" formatted="false">Twórz kopie zapasowe swoich ustawień aplikacji i danych baterii, przywracaj je i przenoś</string>
-    <string name="backup_restore_help_overview" formatted="false">Zapisuj i przywracaj ustawienia, alarmy, logi i wyuczone dane przewidywania. Przywrócenie ustawień domyślnych resetuje preferencje aplikacji po potwierdzeniu, jednocześnie zachowując historię, alarmy, wyuczone szacunki i czy monitorowanie jest uruchomione.</string>
+    <string name="backup_restore_help_overview" formatted="false">Zapisuj i przywracaj ustawienia, alarmy, logi i wyuczone dane przewidywania. „Przywróć ustawienia domyślne” resetuje preferencje aplikacji po potwierdzeniu, jednocześnie zachowując historię, alarmy, wyuczone szacunki i czy monitorowanie jest uruchomione.</string>
     <string name="pref_general_backup" formatted="false">Ogólna kopia zapasowa aplikacji</string>
     <string name="general_backup_help" formatted="false">Ogólna kopia zapasowa zapisuje razem ustawienia, alarmy i dane specyficzne dla urządzenia. Podczas jej przywracania możesz wybrać, które dostępne dane zaimportować.</string>
     <string name="pref_export_general_backup" formatted="false">Eksportuj ogólną kopię zapasową</string>
@@ -804,7 +804,7 @@
     <string name="invalid_csv_logs_file" formatted="false">Nieprawidłowy lub niekompatybilny plik logów CSV</string>
     <string name="settings_reset_title">Przywróć ustawienia domyślne</string>
     <string name="settings_reset_summary">Zresetuj preferencje aplikacji, zachowując historię, alarmy i wyuczone szacunki</string>
-    <string name="settings_reset_help" formatted="false">Przywrócenie ustawień domyślnych pyta o potwierdzenie, a następnie resetuje preferencje aplikacji. Zachowuje historię, alarmy, wyuczone szacunki, konfiguracje widżetów i czy monitorowanie w tle jest uruchomione. Uprawnienia systemowe i ustawienia kanałów powiadomień nie są resetowane.</string>
+    <string name="settings_reset_help" formatted="false">„Przywróć ustawienia domyślne” pyta o potwierdzenie, a następnie resetuje preferencje aplikacji. Zachowuje historię, alarmy, wyuczone szacunki, konfiguracje widżetów i czy monitorowanie w tle jest uruchomione. Uprawnienia systemowe i ustawienia kanałów powiadomień nie są resetowane.</string>
     <string name="settings_reset_question">Czy przywrócić wszystkie ustawienia aplikacji do ich wartości domyślnych? Historia, alarmy i wyuczone szacunki zostaną zachowane. Monitorowanie w tle pozostanie uruchomione lub zatrzymane, tak jak jest teraz.</string>
     <string name="settings_reset_confirm">Przywróć domyślne</string>
     <string name="settings_reset_done">Przywrócono ustawienia domyślne</string>
