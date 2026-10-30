@@ -60,6 +60,33 @@ class DiagnosticsDialogsInstrumentedTest {
     private lateinit var state: DiagnosticsDialogState
 
     @Test
+    fun report_title_distinguishes_monitoring_and_oem_comparison() {
+        withHost(actionsOnly = true) {
+            for ((dialog, title, otherTitle) in listOf(
+                Triple(
+                    DiagnosticsDialog.MONITOR_REPORT,
+                    R.string.diagnostics_export,
+                    R.string.charging_diagnostics_report
+                ),
+                Triple(
+                    DiagnosticsDialog.CHARGING_REPORT,
+                    R.string.charging_diagnostics_report,
+                    R.string.diagnostics_export
+                )
+            )) {
+                main { state.open(dialog) }
+                await { dialogs() == 1 }
+                main {
+                    assertTrue(hasText(context.getString(title)))
+                    assertFalse(hasText(context.getString(otherTitle)))
+                }
+                click(R.string.cancel)
+                await { dialogs() == 0 }
+            }
+        }
+    }
+    
+    @Test
     fun stop_cancellation_and_queued_privileged_hint_use_one_dialog_in_both_hosts() {
         for (actionsOnly in listOf(false, true)) withHost(actionsOnly) {
             val monitoring = BackgroundServiceWatchdog.isServiceDesired(context)

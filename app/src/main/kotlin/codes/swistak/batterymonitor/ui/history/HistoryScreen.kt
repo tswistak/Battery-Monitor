@@ -852,7 +852,7 @@ internal fun HistoryRoute(
                         color = MaterialTheme.colorScheme.error
                     )
                     TextButton(onClick = { viewModel.refresh() }) {
-                        Text(stringResource(R.string.advanced_action_refresh))
+                        Text(stringResource(R.string.diag_action_refresh))
                     }
                 }
             }

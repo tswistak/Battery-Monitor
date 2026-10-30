@@ -16,6 +16,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.os.Build
 import android.view.KeyEvent
 import android.view.View
@@ -30,7 +31,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.LocalSaveableStateRegistry
 import androidx.compose.runtime.saveable.SaveableStateRegistry
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
@@ -54,6 +57,8 @@ import codes.swistak.batterymonitor.ui.alarms.editThresholdInput
 import codes.swistak.batterymonitor.ui.components.NumericValueDialog
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
+import codes.swistak.batterymonitor.ui.settings.SettingsDialog
+import codes.swistak.batterymonitor.ui.settings.SettingsDialogs
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
@@ -63,6 +68,9 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
+import java.io.File
+import java.io.FileOutputStream
+import java.util.Locale
 
 class DialogEditingInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -239,6 +247,124 @@ class DialogEditingInstrumentedTest {
                 screenshot.recycle()
                 pixels > 100
             }
+        }
+    }
+
+    @Test
+    fun alarm_delete_and_notification_choices_use_the_reviewed_English_and_Polish_labels() {
+        for (language in listOf("en", "pl")) withHost {
+            val configuration = Configuration(activity.resources.configuration).apply {
+                setLocale(Locale.forLanguageTag(language))
+            }
+            val localized = activity.createConfigurationContext(configuration)
+            var deleted = false
+            show {
+                CompositionLocalProvider(
+                    LocalContext provides localized,
+                    LocalResources provides localized.resources,
+                    LocalConfiguration provides configuration
+                ) {
+                    ThresholdDialog(
+                        state = AlarmsState(
+                            hasSnapshot = true, loading = false, draft = AlarmDraft(
+                                id = 7,
+                                type = "charge_rises",
+                                threshold = "80",
+                                thresholdInput = "80",
+                                initialInput = "80",
+                                inputLocale = language
+                            )
+                        ),
+                        onInput = {},
+                        onSave = {},
+                        onDelete = { deleted = true },
+                        onDismiss = {},
+                        onEditExisting = {},
+                        onRetry = {})
+                }
+            }
+            val delete = localized.getString(R.string.menu_delete_alarm)
+            assertEquals(if (language == "pl") "Usuń alarm" else "Delete alarm", delete)
+            await("The localized delete action must be rendered") {
+                var rendered = false
+                main {
+                    rendered = nodes().any {
+                        it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(
+                            SemanticsProperties.Text
+                        )?.any { text -> text.text == delete } == true
+                    }
+                }
+                rendered
+            }
+            main { assertFalse(button(delete).config.contains(SemanticsProperties.Disabled)) }
+            click(delete)
+            await { fieldOrNull() == null && dialogs() == 1 }
+            main {
+                assertTrue(nodes().count {
+                    it.config.getOrNull(SemanticsProperties.Text)
+                        ?.any { text -> text.text == delete } == true
+                } >= 2)
+            }
+            captureLocalizedControls("$language-alarm-delete")
+            click(localized.getString(R.string.cancel))
+            await { fieldOrNull() != null }
+            assertFalse("The fixture must not delete an alarm", deleted)
+            show {
+                CompositionLocalProvider(
+                    LocalContext provides localized,
+                    LocalResources provides localized.resources,
+                    LocalConfiguration provides configuration
+                ) {
+                    SettingsDialogs(
+                        SettingsDialog.Choices(
+                            title = localized.getString(R.string.pref_top_line_content),
+                            options = localized.resources.getStringArray(R.array.notification_line_content_entries)
+                                .toList(),
+                            selected = setOf(0),
+                            multiple = false,
+                            onConfirm = { error("Do not save a setting in this fixture") }),
+                        busy = false,
+                        onDismiss = {})
+                }
+            }
+            for (label in listOf(
+                R.string.time_remaining, R.string.time_since_status_change, R.string.vital_signs
+            )) {
+                await("The localized notification choice must be rendered") {
+                    var rendered = false
+                    main {
+                        rendered = nodes().any {
+                            it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(
+                                SemanticsProperties.Text
+                            )?.any { text -> text.text == localized.getString(label) } == true
+                        }
+                    }
+                    rendered
+                }
+                main {
+                    assertFalse(
+                        button(localized.getString(label)).config.contains(
+                            SemanticsProperties.Disabled
+                        )
+                    )
+                }
+            }
+            captureLocalizedControls("$language-notification-choices")
+        }
+    }
+
+    private fun captureLocalizedControls(name: String) {
+        instrumentation.waitForIdleSync()
+        val directory =
+            requireNotNull(instrumentation.targetContext.getExternalFilesDir("help-audit"))
+        assertTrue(directory.isDirectory || directory.mkdirs())
+        val bitmap = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
+        try {
+            FileOutputStream(File(directory, "$name.png")).use {
+                assertTrue(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it))
+            }
+        } finally {
+            bitmap.recycle()
         }
     }
 

@@ -14,6 +14,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -256,7 +257,7 @@ internal fun DiagnosticsScreen(
     val labels = listOf(
         R.string.diag_overview,
         R.string.nav_battery_group,
-        R.string.advanced_section_charging,
+        R.string.diag_section_charging,
         R.string.diag_raw
     )
     val scrollStates = labels.map { rememberLazyListState() }
@@ -354,7 +355,7 @@ internal fun DiagnosticsScreen(
             IconButton(onClick = onRefresh, enabled = !state.loading && !state.rawLoading) {
                 Icon(
                     painterResource(R.drawable.ui_refresh),
-                    stringResource(R.string.advanced_action_refresh)
+                    stringResource(R.string.diag_action_refresh)
                 )
             }
         }
@@ -486,7 +487,7 @@ internal fun DiagnosticsScreen(
                     }
                 } else item(key = "${tab}:${index}:${group.title}") {
                     DiagnosticCard(stringResource(group.title)) {
-                        if (group.title == R.string.advanced_section_capacity && inconsistentCapacities(
+                        if (group.title == R.string.diag_section_capacity && inconsistentCapacities(
                                 group
                             )
                         ) Text(
@@ -496,14 +497,13 @@ internal fun DiagnosticsScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         if (group.rows.isEmpty()) Text(
-                            stringResource(R.string.advanced_status_no_stats),
-                            Modifier.padding(16.dp)
+                            stringResource(R.string.diag_status_no_stats), Modifier.padding(16.dp)
                         )
                         group.rows.forEachIndexed { rowIndex, row ->
                             DiagnosticValue(
                                 stringResource(row.label),
                                 formattedDiagnosticValue(row, resources::getString, locale)
-                                    ?: stringResource(R.string.advanced_value_not_available),
+                                    ?: stringResource(R.string.diag_value_not_available),
                                 onClick = { selectRow(row) })
                             if (rowIndex < group.rows.lastIndex) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                         }
@@ -591,7 +591,7 @@ internal fun DiagnosticsScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     ActionLabel(
-                        stringResource(R.string.advanced_action_refresh), R.drawable.ui_refresh
+                        stringResource(R.string.diag_action_refresh), R.drawable.ui_refresh
                     )
                 }
                 TextButton(onClick = { dialog = "report" }, modifier = Modifier.fillMaxWidth()) {
@@ -611,7 +611,7 @@ internal fun DiagnosticsScreen(
         val reading =
             if (isRaw) row.rawValue else formattedDiagnosticValue(row, resources::getString, locale)
         val missing = !isRaw && reading == null
-        val value = reading ?: stringResource(R.string.advanced_value_not_available)
+        val value = reading ?: stringResource(R.string.diag_value_not_available)
         val explanation = missingDiagnosticExplanation(row, reading)
         val source = if (isRaw) "${row.source} (${diagnosticSourceName(row.accessMethod)})"
         else diagnosticSourceName(row.accessMethod)
@@ -670,7 +670,7 @@ internal fun DiagnosticsScreen(
                     checked = state.privilegedEnabled
                 )
                 Text(
-                    stringResource(R.string.advanced_status_no_access),
+                    stringResource(R.string.diag_status_no_access),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -894,7 +894,10 @@ internal fun copyDiagnostic(context: Context, title: String, text: String) {
 
 @Composable
 internal fun DiagnosticReportDialog(
-    create: (Boolean) -> String, optionLabel: Int = R.string.diag_include_raw, onDismiss: () -> Unit
+    create: (Boolean) -> String,
+    optionLabel: Int = R.string.diag_include_raw,
+    @StringRes titleResource: Int = R.string.diagnostics_export,
+    onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
     val resources = LocalResources.current
@@ -927,7 +930,7 @@ internal fun DiagnosticReportDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.padding(horizontal = 24.dp),
         properties = DialogProperties(usePlatformDefaultWidth = false),
-        title = { Text(stringResource(R.string.diagnostics_export)) },
+        title = { Text(stringResource(titleResource)) },
         text = {
             Column(
                 Modifier.verticalScroll(rememberScrollState()),

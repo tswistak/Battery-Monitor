@@ -9,6 +9,8 @@ package codes.swistak.batterymonitor.ui.settings
 
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.ui.help.CHARGING_TOOLS_HELP_TOPIC
+import codes.swistak.batterymonitor.ui.help.MONITORING_HELP_TOPIC
 import codes.swistak.batterymonitor.ui.help.helpSections
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
@@ -20,6 +22,32 @@ import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
 
 class SettingIconsTest {
+    @Test
+    fun `diagnostics benchmark lookups resolve renamed labels with their help icons`() {
+        val benchmark = File(
+            resourcesDirectory(),
+            "../../../../macrobenchmark/src/main/kotlin/codes/swistak/batterymonitor/macrobenchmark/BatteryPerformanceBenchmark.kt"
+        ).readText()
+        val names = Regex(
+            """(?:awaitText|clickText|clickDescription|awaitDescription|text)\("((?:advanced|diag)_[^"]+)"\)"""
+        ).findAll(benchmark).map { it.groupValues[1] }.toSet()
+        assertTrue(names.containsAll(setOf("diag_action_refresh", "diag_section_charging")))
+        for (name in names) {
+            assertTrue("Stale dynamic benchmark string $name", name.startsWith("diag_"))
+            assertNotEquals(
+                "Dynamic benchmark string $name",
+                0,
+                R.string::class.java.getField(name).getInt(null)
+            )
+        }
+        assertEquals(R.drawable.ui_plug, helpHeadingIcon(R.string.diag_section_charging))
+        assertEquals(R.drawable.ui_code, helpHeadingIcon(R.string.diag_section_sysfs))
+        assertEquals(R.drawable.ui_info, helpHeadingIcon(R.string.diag_section_metadata))
+        assertEquals(
+            R.drawable.ui_warning, helpHeadingIcon(R.string.diag_help_troubleshooting_title)
+        )
+    }
+
     @Test
     fun `every searchable setting and nested export control has its own semantic icon`() {
         val keys = SettingCatalog.routes.keys + setOf(
@@ -72,6 +100,8 @@ class SettingIconsTest {
             SettingsContract.KEY_ADVANCED_SETTINGS,
             SettingsContract.KEY_BACKUP_RESTORE_SETTINGS,
             SettingsContract.KEY_DIAGNOSTICS_SETTINGS,
+            MONITORING_HELP_TOPIC,
+            CHARGING_TOOLS_HELP_TOPIC,
             SettingsContract.KEY_ADVANCED_INFO_HELP,
             SettingsContract.KEY_ALARMS_SETTINGS,
             SettingsContract.KEY_ALARM_EDIT_SETTINGS

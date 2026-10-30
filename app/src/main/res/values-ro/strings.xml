@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">Această estimare folosește metoda de predicție configurată în Battery Monitor. Ținta ei nu controlează încărcarea sau oprirea.</string>
     <string name="time_estimates_settings" formatted="false">Estimări de timp</string>
     <string name="time_estimates_settings_summary" formatted="false">Alegeți calculul timpului rămas și nivelurile țintă ale bateriei</string>
-    <string name="time_estimates_settings_help" formatted="false">Alege cum estimează Battery Monitor timpul rămas și nivelurile țintă ale bateriei. Țintele se aplică și alarmelor „Limită de încărcare atinsă” și „Limită de descărcare atinsă”. Battery Monitor nu pornește și nu oprește încărcarea.</string>
+    <string name="time_estimates_settings_help" formatted="false">Alege cum estimează Battery Monitor timpul rămas și nivelurile țintă ale bateriei. Țintele se aplică și alarmelor „Ținta de încărcare atinsă” și „Ținta de descărcare atinsă”. Battery Monitor nu pornește și nu oprește încărcarea.</string>
     <string name="pref_cat_predictor" formatted="false">Estimări pentru timpul rămas</string>
     <string name="pref_prediction_type" formatted="false">Tip de estimare</string>
     <string name="pref_prediction_type_help" formatted="false">„Sensibil” folosește rata ultimelor cinci minute. „Conservator”, metoda implicită, combină ratele recente cu media învățată pe termen lung pentru a reduce schimbările bruște. „De la schimbarea statutului” folosește sesiunea actuală de încărcare sau descărcare. „Medie pe termen lung” folosește rata învățată pentru descărcare sau pentru sursa activă de încărcare. Până când sunt suficiente observații, estimările folosesc media salvată sau o valoare inițială implicită.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">Medie pe termen lung</string>
     <string name="pref_cat_target_levels" formatted="false">Niveluri țintă</string>
     <string name="pref_charging_target_mode" formatted="false">Țintă de încărcare</string>
-    <string name="pref_charging_target_mode_help" formatted="false">„Automat (recomandat)” folosește o limită fixă de încărcare a dispozitivului când Battery Monitor o poate citi, altfel folosește 100%. Încărcarea adaptivă țintește în continuare 100%. „Personalizat” folosește nivelul ales pentru estimările de încărcare și alarmele „Limită de încărcare atinsă”.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">„Automat (recomandat)” folosește o limită fixă de încărcare a dispozitivului când Battery Monitor o poate citi, altfel folosește 100%. Încărcarea adaptivă țintește în continuare 100%. „Personalizat” folosește nivelul ales pentru estimările de încărcare și alarmele „Ținta de încărcare atinsă”.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Detectarea automată poate funcționa pe dispozitive Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme și Sony Xperia, precum și pe dispozitive cu GrapheneOS sau LineageOS, mai ales când este disponibil accesul root sau Shizuku. Se bazează pe semnale software, astfel că disponibilitatea și precizia nu sunt garantate nici pentru producătorii enumerați. Pot funcționa și modele sau versiuni de sistem netestate din aceste familii, însă dispozitivele altor producători nu sunt detectate automat în prezent.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Limita de încărcare a dispozitivului: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Țintă personalizată</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">Țintă de încărcare personalizată</string>
     <string name="pref_custom_charging_target_help" formatted="false">Setați nivelul final al estimărilor de încărcare când „Țintă de încărcare” este „Personalizat”.</string>
     <string name="pref_discharging_target" formatted="false">Țintă de descărcare</string>
-    <string name="pref_discharging_target_help" formatted="false">Setează punctul final al estimărilor de descărcare și al alarmelor „Limită de descărcare atinsă”. Sub acest nivel, estimările de timp continuă către 0%. Alarmele de baterie descărcată cu prag propriu rămân independente.</string>
+    <string name="pref_discharging_target_help" formatted="false">Setează punctul final al estimărilor de descărcare și al alarmelor „Ținta de descărcare atinsă”. Sub acest nivel, estimările de timp continuă către 0%. Alarmele de baterie descărcată cu prag propriu rămân independente.</string>
     <string name="pref_target_level_summary" formatted="true">Estimează până la %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Notificare principală</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Gestionați canalul principal</string>
     <string name="pref_cat_notification_content" formatted="false">Conţinut</string>
     <string name="pref_top_line_content" formatted="false">Conținut de linie de sus</string>
-    <string name="pref_top_line_content_help" formatted="false">Alege dacă linia de sus a notificării afișează timpul rămas estimat, timpul de la schimbarea stării sau „Semne Vitale” configurate.</string>
+    <string name="pref_top_line_content_help" formatted="false">Alege dacă linia de sus a notificării afișează valoarea estimată „Timpul rămas”, „Timp de la schimbarea stării” sau „Semne Vitale” configurate.</string>
     <string name="pref_bottom_line_content" formatted="false">Conținutul final</string>
     <string name="pref_bottom_line_content_help" formatted="false">Aveți aceleași opțiuni pentru linia de jos ca și pentru linia de sus.</string>
     <string name="time_remaining" formatted="false">Timpul rămas</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Alarme</string>
     <string name="alarm_settings_help" formatted="false">Puteți solicita Battery Monitor să vă anunțe când nivelul bateriei este atinge o anumită condiție (de exemplu, bateria se încarcă complet, nivelul bateriei scade sub 20% și multe altele).</string>
     <string name="alarms_overview" formatted="false">Prezentare generală a alarmelor</string>
-    <string name="alarms_overview_help">Toate cele opt tipuri de alarmă sunt mereu disponibile. Activează evenimentele direct sau folosește „Adaugă prag” la un tip de alarmă pentru nivelul bateriei sau temperatură. Pragurile noi sunt activate după salvare. Atinge o valoare pentru a o edita; editarea păstrează starea activată sau dezactivată. Valorile dezactivate rămân în listă. Ștergerea cere confirmare. Sunetul și vibrațiile sunt comune fiecărui tip în setările notificărilor Android. Înregistrările duplicate existente apar ca o singură alarmă logică; activarea, dezactivarea sau ștergerea afectează toate copiile. Alarmele de încărcare și descărcare urmează țintele estimărilor și nu controlează încărcarea. Un canal blocat sau un monitor oprit nu schimbă comutatoarele salvate.</string>
+    <string name="alarms_overview_help">Toate cele opt tipuri de alarmă sunt mereu disponibile. Activează evenimentele direct sau folosește „Adaugă prag” la un tip de alarmă pentru nivelul bateriei sau temperatură. Pragurile noi sunt activate după salvare. Atinge o valoare pentru a o edita; editarea păstrează starea activată sau dezactivată. Valorile dezactivate rămân în listă. „Sterge Alarma” cere confirmare. Sunetul și vibrațiile sunt comune fiecărui tip în setările notificărilor Android. Înregistrările duplicate existente apar ca o singură alarmă logică; activarea, dezactivarea sau ștergerea afectează toate copiile. Alarmele de încărcare și descărcare urmează țintele estimărilor și nu controlează încărcarea. Un canal blocat sau un monitor oprit nu schimbă comutatoarele salvate.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarmă activată</item>
         <item quantity="few">%1$d alarme activate</item>
@@ -523,7 +523,7 @@
     <string name="battery_optimized" formatted="false">Monitorizare în fundal</string>
     <string name="battery_optimized_message" formatted="false">Rularea fără restricții în fundal poate îmbunătăți fiabilitatea monitorizării. Optimizarea bateriei din Android poate întârzia actualizările și alertele.\n
     \n
-    Rularea fără restricții poate crește consumul bateriei în fundal. Puteți schimba ulterior această opțiune în „Setări” Android → „Aplicații” → „Battery Monitor” → „Baterie”.</string>
+    Rularea fără restricții poate crește consumul bateriei în fundal. Puteți schimba ulterior această opțiune în „Setări” Android → „Aplicații” → „Battery Monitor” → „Baterie”. Numele meniurilor diferă în funcție de dispozitiv.</string>
     <string name="pref_cat_autostart" formatted="false">Pornire automată</string>
     <string name="pref_autostart_at_boot" formatted="false">Pornire automată la pornire</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Porniți monitorizarea bateriei când dispozitivul pornește:</string>
@@ -542,48 +542,48 @@
     <string name="shizuku_not_running" formatted="false">Porniți Shizuku pentru a acorda aplicației Battery Monitor acces privilegiat</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">Acordați manual permisiunea pentru Battery Monitor în Shizuku</string>
 
-    <string name="advanced_action_refresh" formatted="false">Reîmprospătează</string>
-    <string name="advanced_status_loading" formatted="false">Se încarcă statisticile avansate ale bateriei…</string>
-    <string name="advanced_status_no_access" formatted="false">Pentru a afișa statisticile avansate ale bateriei este necesar root sau Shizuku.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">Se așteaptă permisiunea Shizuku…</string>
-    <string name="advanced_status_no_stats" formatted="false">În acest moment nu sunt disponibile statistici avansate ale bateriei pe acest dispozitiv.</string>
-    <string name="advanced_value_not_available" formatted="false">Indisponibil</string>
-    <string name="advanced_help_overview" formatted="false">„Diagnosticare” combină fiabilitatea monitorului, datele de predicție salvate și datele bateriei în filele „Funcționarea aplicației”, „Baterie”, „Încărcare” și „Date brute”. Datele Android sunt disponibile fără root. Datele suplimentare depind de dispozitiv și de permisiunile disponibile pentru Battery Monitor.</string>
-    <string name="advanced_section_counters" formatted="false">Contoare</string>
-    <string name="advanced_help_counters" formatted="false">Citirile bateriei sunt etichetate și formatate ca încărcare rămasă în mAh, curent în mA, energie în mWh, tensiune în V, temperatură în unitatea selectată și putere în W. Multiplicatorul de curent se aplică și puterii calculate. Curentul mediu și numărul de cicluri depind de suportul dispozitivului.</string>
-    <string name="advanced_field_charge_counter" formatted="false">Estimarea încărcării rămase</string>
-    <string name="advanced_field_current_now" formatted="false">Curent actual</string>
-    <string name="advanced_field_current_average" formatted="false">Curent mediu</string>
-    <string name="advanced_field_energy_counter" formatted="false">Contor de energie</string>
-    <string name="advanced_section_capacity" formatted="false">Capacitate</string>
-    <string name="advanced_help_capacity" formatted="false">„Capacitate” afișează capacitatea la încărcare completă, capacitatea proiectată și starea estimată. Starea estimată se calculează ca raport între capacitatea la încărcare completă și capacitatea proiectată, astfel că precizia depinde de valorile raportate de dispozitiv.</string>
-    <string name="advanced_field_cycle_count" formatted="false">Număr de cicluri</string>
-    <string name="advanced_field_reported_capacity" formatted="false">Capacitate raportată</string>
-    <string name="advanced_field_state_of_health" formatted="false">Stare de sănătate</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">Capacitate la încărcare completă</string>
-    <string name="advanced_field_design_capacity" formatted="false">Capacitate proiectată</string>
-    <string name="advanced_field_estimated_health" formatted="false">Stare estimată</string>
+    <string name="diag_action_refresh" formatted="false">Reîmprospătează</string>
+    <string name="diag_status_loading" formatted="false">Se încarcă statisticile avansate ale bateriei…</string>
+    <string name="diag_status_no_access" formatted="false">Pentru a afișa statisticile avansate ale bateriei este necesar root sau Shizuku.</string>
+    <string name="diag_status_waiting_permission" formatted="false">Se așteaptă permisiunea Shizuku…</string>
+    <string name="diag_status_no_stats" formatted="false">În acest moment nu sunt disponibile statistici avansate ale bateriei pe acest dispozitiv.</string>
+    <string name="diag_value_not_available" formatted="false">Indisponibil</string>
+    <string name="diag_help_overview" formatted="false">„Diagnosticare” combină fiabilitatea monitorului, datele de predicție salvate și datele bateriei în filele „Funcționarea aplicației”, „Baterie”, „Încărcare” și „Date brute”. Datele Android sunt disponibile fără root. Datele suplimentare depind de dispozitiv și de permisiunile disponibile pentru Battery Monitor.</string>
+    <string name="diag_section_counters" formatted="false">Contoare</string>
+    <string name="diag_help_counters" formatted="false">Citirile bateriei sunt etichetate și formatate ca încărcare rămasă în mAh, curent în mA, energie în mWh, tensiune în V, temperatură în unitatea selectată și putere în W. Multiplicatorul de curent se aplică și puterii calculate. Curentul mediu și numărul de cicluri depind de suportul dispozitivului.</string>
+    <string name="diag_field_charge_counter" formatted="false">Estimarea încărcării rămase</string>
+    <string name="diag_field_current_now" formatted="false">Curent actual</string>
+    <string name="diag_field_current_average" formatted="false">Curent mediu</string>
+    <string name="diag_field_energy_counter" formatted="false">Contor de energie</string>
+    <string name="diag_section_capacity" formatted="false">Capacitate</string>
+    <string name="diag_help_capacity" formatted="false">„Capacitate” afișează capacitatea la încărcare completă, capacitatea proiectată și starea estimată. Starea estimată se calculează ca raport între capacitatea la încărcare completă și capacitatea proiectată, astfel că precizia depinde de valorile raportate de dispozitiv.</string>
+    <string name="diag_field_cycle_count" formatted="false">Număr de cicluri</string>
+    <string name="diag_field_reported_capacity" formatted="false">Capacitate raportată</string>
+    <string name="diag_field_state_of_health" formatted="false">Stare de sănătate</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">Capacitate la încărcare completă</string>
+    <string name="diag_field_design_capacity" formatted="false">Capacitate proiectată</string>
+    <string name="diag_field_estimated_health" formatted="false">Stare estimată</string>
     <string name="diag_capacity_inconsistent">Capacitatea completă raportată o depășește pe cea de proiectare. Nu se poate calcula o estimare fiabilă a sănătății din aceste citiri.</string>
-    <string name="advanced_field_capacity_level" formatted="false">Nivel de capacitate</string>
+    <string name="diag_field_capacity_level" formatted="false">Nivel de capacitate</string>
     <string name="diag_capacity_critical">Critică</string>
     <string name="diag_capacity_low">Scăzută</string>
     <string name="diag_capacity_high">Ridicată</string>
-    <string name="advanced_section_charging" formatted="false">Încărcare</string>
-    <string name="advanced_help_charging" formatted="false">„Încărcare” afișează valori legate de calea activă de încărcare, precum curentul sau tensiunea maximă de încărcare, politica de încărcare, starea de încărcare și nivelul de capacitate. Aceste câmpuri se pot schimba între încărcătoare și moduri de încărcare.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">Timp de încărcare rămas</string>
-    <string name="advanced_field_max_charging_current" formatted="false">Curent maxim de încărcare</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">Tensiune maximă de încărcare</string>
-    <string name="advanced_field_charging_policy" formatted="false">Politică de încărcare</string>
+    <string name="diag_section_charging" formatted="false">Încărcare</string>
+    <string name="diag_help_charging" formatted="false">„Încărcare” afișează valori legate de calea activă de încărcare, precum curentul sau tensiunea maximă de încărcare, politica de încărcare, starea de încărcare și nivelul de capacitate. Aceste câmpuri se pot schimba între încărcătoare și moduri de încărcare.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">Timp de încărcare rămas</string>
+    <string name="diag_field_max_charging_current" formatted="false">Curent maxim de încărcare</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">Tensiune maximă de încărcare</string>
+    <string name="diag_field_charging_policy" formatted="false">Politică de încărcare</string>
     <string name="diag_policy_default">Implicită</string>
     <string name="diag_policy_fixed_limit">Protecția bateriei (limită fixă)</string>
     <string name="diag_policy_adaptive_ac">Încărcare adaptivă</string>
-    <string name="advanced_field_charging_state" formatted="false">Stare de încărcare</string>
+    <string name="diag_field_charging_state" formatted="false">Stare de încărcare</string>
     <string name="diag_charging_too_cold">Prea rece pentru încărcare</string>
     <string name="diag_charging_too_hot">Prea fierbinte pentru încărcare</string>
-    <string name="advanced_section_service" formatted="false">Serviciul de baterie Android</string>
-    <string name="advanced_help_service" formatted="false">„Date brute” include numele și valorile originale din mesajele de difuzare privind bateria Android și, când este accesibil, din dumpsys battery. Acestea pot include sursa de încărcare, starea bateriei, temperatura, tensiunea și alte stări ale serviciului de baterie.</string>
-    <string name="advanced_section_sysfs" formatted="false">Fișierele power_supply ale nucleului</string>
-    <string name="advanced_help_sysfs" formatted="false">„Date brute” arată numele și valorile originale citite din /sys/class/power_supply, inclusiv valorile pe mai multe linii. Caută după cheie și atinge un rând pentru a vedea și copia valoarea completă. Folosește „Reîmprospătează” pentru a colecta citiri noi. Battery Monitor încearcă și citiri cu permisiunile Android obișnuite, fără root sau Shizuku.</string>
+    <string name="diag_section_service" formatted="false">Serviciul de baterie Android</string>
+    <string name="diag_help_service" formatted="false">„Date brute” include numele și valorile originale din mesajele de difuzare privind bateria Android și, când este accesibil, din dumpsys battery. Acestea pot include sursa de încărcare, starea bateriei, temperatura, tensiunea și alte stări ale serviciului de baterie.</string>
+    <string name="diag_section_sysfs" formatted="false">Fișierele power_supply ale nucleului</string>
+    <string name="diag_help_sysfs" formatted="false">„Date brute” arată numele și valorile originale citite din /sys/class/power_supply, inclusiv valorile pe mai multe linii. Caută după cheie și atinge un rând pentru a vedea și copia valoarea completă. Folosește „Reîmprospătează” pentru a colecta citiri noi. Battery Monitor încearcă și citiri cu permisiunile Android obișnuite, fără root sau Shizuku.</string>
     <string name="diag_fuel_gauge">Indicator de încărcare a bateriei</string>
     <string name="diag_mains_supply">Alimentare CA</string>
     <string name="diag_charging_source">Sursa de încărcare</string>
@@ -612,22 +612,23 @@
     <string name="diag_settled_input_current">Curent de intrare stabilizat</string>
     <string name="diag_input_voltage">Tensiune de intrare</string>
     <string name="diag_input_voltage_limit">Limită a tensiunii de intrare</string>
-    <string name="advanced_section_metadata" formatted="false">Metadate</string>
-    <string name="advanced_help_metadata" formatted="false">„Date brute” include și numele și valorile originale ale proprietăților BatteryManager, inclusiv contoarele și citirile de curent disponibile. Proprietăți suplimentare, precum detaliile de fabricație sau starea înlocuirii, depind de versiunea Android, de suportul dispozitivului și de permisiuni.</string>
+    <string name="diag_section_metadata" formatted="false">Metadate</string>
+    <string name="diag_help_metadata" formatted="false">„Date brute” include și numele și valorile originale ale proprietăților BatteryManager, inclusiv contoarele și citirile de curent disponibile. Proprietăți suplimentare, precum detaliile de fabricație sau starea înlocuirii, depind de versiunea Android, de suportul dispozitivului și de permisiuni.</string>
     <string name="diag_raw">Date brute</string>
     <string name="diag_search_key">Caută chei</string>
     <string name="diag_no_keys">Nicio cheie potrivită în datele disponibile</string>
     <string name="diag_raw_values">Valori brute</string>
     <string name="diag_last_checked">Ultima verificare: %1$s</string>
     <string name="diag_privileged_stale">Sunt afișate citirile privilegiate anterioare. Reîmprospătează pentru a încerca din nou.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">Depanare</string>
-    <string name="advanced_help_troubleshooting" formatted="false">Datele Android sunt colectate automat în „Diagnosticare”. Pentru date suplimentare prin root sau Shizuku, activează accesul privilegiat în „Surse suplimentare”. Battery Monitor încearcă mai întâi root, apoi Shizuku. Shizuku trebuie să ruleze, iar permisiunea să fie acordată. Câmpurile lipsă rămân indisponibile; reîmprospătările eșuate păstrează instantaneul anterior și îl marchează ca învechit.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">Depanare</string>
+    <string name="diag_help_troubleshooting" formatted="false">Datele Android sunt colectate automat în „Diagnosticare”. Pentru date suplimentare prin root sau Shizuku, activează accesul privilegiat în „Surse suplimentare”. Battery Monitor încearcă mai întâi root, apoi Shizuku. Shizuku trebuie să ruleze, iar permisiunea să fie acordată. Câmpurile lipsă rămân indisponibile; reîmprospătările eșuate păstrează instantaneul anterior și îl marchează ca învechit.</string>
 
     <string name="diagnostics" formatted="false">Diagnosticare</string>
     <string name="diagnostics_summary" formatted="false">Verificați permisiunile și fiabilitatea monitorizării și creați un raport pentru depanare</string>
     <string name="diag_overview">Funcționarea aplicației</string>
     <string name="diagnostics_help_title" formatted="false">Cum ajută diagnosticarea</string>
     <string name="diagnostics_help_overview" formatted="false">„Monitorizare în fundal” verifică permisiunile și fiabilitatea monitorului. Folosește comenzile pentru a porni sau opri monitorizarea, a schimba înregistrarea de depanare, a deschide setările optimizării bateriei și ale notificărilor sau a crea un raport de depanare. Nu orice citire indisponibilă indică o problemă de permisiuni; unele dispozitive nu o furnizează.</string>
+    <string name="monitoring_help_overview" formatted="false">Verifică permisiunea pentru notificări, accesul root sau Shizuku, serviciul de monitorizare și baza de date a istoricului. Atinge o verificare pentru a solicita acces sau a o executa. „Pornește monitorizarea” este disponibilă când monitorizarea este oprită; „Oprește monitorizarea”, când este pornită. Citirile disponibile depind de suportul dispozitivului și de accesul acordat. Verificarea serviciului necesită monitorizare activă; verificarea bazei de date necesită înregistrarea istoricului („Setări” → „Avansat”). Pentru a folosi citiri suplimentare, activează „Folosește acces privilegiat” în „Setări” → „Avansat”. Opțiunea „Setările producătorului” este disponibilă numai pe dispozitivele compatibile.</string>
     <string name="diagnostics_monitoring" formatted="false">Monitorizare în fundal</string>
     <string name="diag_monitor_operation">Funcționarea monitorului</string>
     <string name="diag_heartbeat">Ultimul semnal de activitate</string>
@@ -709,6 +710,7 @@
     <string name="diag_report_privacy">Excluse implicit. Aceste date pot conține informații personale. Verifică previzualizarea înainte de a copia sau salva.</string>
 
     <string name="charging_diagnostics_title" formatted="false">Diagnosticarea limitei de încărcare OEM</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Deschide instrumentele pentru instantanee și comparație pentru a investiga cum detectează Battery Monitor limita de încărcare a dispozitivului. Instrucțiunile de pregătire se găsesc în ajutorul propriu al ecranului de diagnosticare OEM.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Pentru un raport util, deschide „Ajutor” și urmează pașii de pregătire înainte de a captura instantaneele.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Cu acces privilegiat pot fi disponibile mai multe informații de diagnosticare. Acordă acces prin Shizuku sau root și activează accesul privilegiat în „Setări” → „Avansat” → „Folosește acces privilegiat” pentru un raport mai util despre limita de încărcare OEM.</string>
     <string name="charging_diagnostics_capture" formatted="false">Capturează instantaneu</string>

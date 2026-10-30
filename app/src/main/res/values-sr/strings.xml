@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">Ova procena koristi podešeni metod predviđanja aplikacije Battery Monitor. Njegov cilj ne upravlja punjenjem ni isključivanjem.</string>
     <string name="time_estimates_settings" formatted="false">Procene vremena</string>
     <string name="time_estimates_settings_summary" formatted="false">Izaberite način izračunavanja preostalog vremena i ciljne nivoe baterije</string>
-    <string name="time_estimates_settings_help" formatted="false">Izaberite kako Battery Monitor procenjuje preostalo vreme i ciljne nivoe baterije. Ciljevi važe i za alarme „Dostignut limit punjenja“ i „Dostignut limit pražnjenja“. Battery Monitor ne pokreće niti zaustavlja punjenje.</string>
+    <string name="time_estimates_settings_help" formatted="false">Izaberite kako Battery Monitor procenjuje preostalo vreme i ciljne nivoe baterije. Ciljevi važe i za alarme „Dostignut cilj punjenja“ i „Dostignut cilj pražnjenja“. Battery Monitor ne pokreće niti zaustavlja punjenje.</string>
     <string name="pref_cat_predictor" formatted="false">Procena preostalog vremena</string>
     <string name="pref_prediction_type" formatted="false">Vrsta procene</string>
     <string name="pref_prediction_type_help" formatted="false">„Osetljivo“ koristi nedavnu petominutnu brzinu. „Štedljivo“, podrazumevani metod, kombinuje nedavne brzine sa naučenim dugoročnim prosekom da smanji nagle promene. „Otkad se status promenio“ koristi trenutnu sesiju punjenja ili pražnjenja. „Dugoročni prosek“ koristi naučenu brzinu za pražnjenje ili aktivni izvor punjenja. Dok nema dovoljno zapažanja, procene koriste sačuvani prosek ili početnu podrazumevanu vrednost.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">Dugoročni prosek</string>
     <string name="pref_cat_target_levels" formatted="false">Ciljni nivoi</string>
     <string name="pref_charging_target_mode" formatted="false">Cilj punjenja</string>
-    <string name="pref_charging_target_mode_help" formatted="false">„Automatski (preporučeno)“ koristi fiksno ograničenje punjenja uređaja kada Battery Monitor može da ga pročita, inače 100%. Prilagodljivo punjenje i dalje cilja 100%. „Prilagođeno“ koristi izabrani nivo za procene punjenja i alarme „Dostignut limit punjenja“.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">„Automatski (preporučeno)“ koristi fiksno ograničenje punjenja uređaja kada Battery Monitor može da ga pročita, inače 100%. Prilagodljivo punjenje i dalje cilja 100%. „Prilagođeno“ koristi izabrani nivo za procene punjenja i alarme „Dostignut cilj punjenja“.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Аутоматско препознавање може да ради на уређајима Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme и Sony Xperia, као и на уређајима са GrapheneOS или LineageOS, нарочито када је доступан root или Shizuku приступ. Заснива се на софтверским сигналима, па доступност и тачност нису загарантоване ни код наведених произвођача. Могу радити и нетестирани модели или верзије система из ових породица, али уређаји других произвођача тренутно се не препознају аутоматски.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Ograničenje punjenja uređaja: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Prilagođeni cilj</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">Prilagođeni cilj punjenja</string>
     <string name="pref_custom_charging_target_help" formatted="false">Podesite krajnji nivo procena punjenja kada je „Cilj punjenja“ podešen na „Prilagođeno“.</string>
     <string name="pref_discharging_target" formatted="false">Cilj pražnjenja</string>
-    <string name="pref_discharging_target_help" formatted="false">Podesite krajnji nivo procena pražnjenja i alarma „Dostignut limit pražnjenja“. Ispod ovog nivoa procene se nastavljaju ka 0%. Alarmi za nizak nivo baterije sa sopstvenim pragom ostaju nezavisni.</string>
+    <string name="pref_discharging_target_help" formatted="false">Podesite krajnji nivo procena pražnjenja i alarma „Dostignut cilj pražnjenja“. Ispod ovog nivoa procene se nastavljaju ka 0%. Alarmi za nizak nivo baterije sa sopstvenim pragom ostaju nezavisni.</string>
     <string name="pref_target_level_summary" formatted="true">Proceni do %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Glavno obaveštenje</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Upravljaj glavnim kanalom</string>
     <string name="pref_cat_notification_content" formatted="false">Sadržaj</string>
     <string name="pref_top_line_content" formatted="false">Sadržaj gornje trake</string>
-    <string name="pref_top_line_content_help" formatted="false">Izaberite da li gornji red obaveštenja prikazuje procenjeno preostalo vreme, vreme od promene statusa ili izabrane „Vitalni znaci“.</string>
+    <string name="pref_top_line_content_help" formatted="false">Izaberite da li gornji red obaveštenja prikazuje procenjeno „Preostalo vreme“, „Vreme od promene statusa“ ili izabrane „Vitalni znaci“.</string>
     <string name="pref_bottom_line_content" formatted="false">Sadržaj donje trake</string>
     <string name="pref_bottom_line_content_help" formatted="false">Na raspolaganju su vam iste opcije i za donju i za gornju traku</string>
     <string name="time_remaining" formatted="false">Preostalo vreme</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Alarmi</string>
     <string name="alarm_settings_help" formatted="false">Možete da podesite da vas Battery Monitor obavesti kada procenat baterije dosegne određeni nivo (npr. baterija je u potpunosti napunjena, procenat baterije padne ispod 20%).</string>
     <string name="alarms_overview" formatted="false">Pregled alarma</string>
-    <string name="alarms_overview_help">Svih osam tipova alarma je uvek dostupno. Uključite događaje direktno ili koristite „Dodaj prag“ kod tipa napunjenosti ili temperature. Novi pragovi su omogućeni posle čuvanja. Dodirnite vrednost za izmenu; izmena zadržava uključeno/isključeno stanje. Isključene vrednosti ostaju na listi. Brisanje traži potvrdu. Zvuk i vibracija se dele po tipu u Android podešavanjima obaveštenja. Postojeći duplikati zapisa prikazuju se kao jedan logički alarm; prebacivanje ili brisanje utiče na sve kopije. Alarmi punjenja i pražnjenja prate ciljeve procene i ne upravljaju punjenjem. Blokirani kanal ili zaustavljeno praćenje ne menja sačuvane prekidače.</string>
+    <string name="alarms_overview_help">Svih osam tipova alarma je uvek dostupno. Uključite događaje direktno ili koristite „Dodaj prag“ kod tipa napunjenosti ili temperature. Novi pragovi su omogućeni posle čuvanja. Dodirnite vrednost za izmenu; izmena zadržava uključeno/isključeno stanje. Isključene vrednosti ostaju na listi. „Izbriši alarm“ traži potvrdu. Zvuk i vibracija se dele po tipu u Android podešavanjima obaveštenja. Postojeći duplikati zapisa prikazuju se kao jedan logički alarm; prebacivanje ili brisanje utiče na sve kopije. Alarmi punjenja i pražnjenja prate ciljeve procene i ne upravljaju punjenjem. Blokirani kanal ili zaustavljeno praćenje ne menja sačuvane prekidače.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm uključen</item>
         <item quantity="few">%1$d alarma uključena</item>
@@ -523,7 +523,7 @@
     <string name="battery_optimized" formatted="false">Praćenje u pozadini</string>
     <string name="battery_optimized_message" formatted="false">Neograničen rad u pozadini može poboljšati pouzdanost praćenja. Android optimizacija baterije može odložiti ažuriranja i upozorenja.\n
     \n
-    Neograničen rad može povećati potrošnju baterije u pozadini. To možete kasnije promeniti u Android „podešavanjima“ → „Aplikacije“ → „Battery Monitor“ → „Baterija“.</string>
+    Neograničen rad može povećati potrošnju baterije u pozadini. To možete kasnije promeniti u Android „podešavanjima“ → „Aplikacije“ → „Battery Monitor“ → „Baterija“. Nazivi menija se razlikuju u zavisnosti od uređaja.</string>
     <string name="pref_cat_autostart" formatted="false">Pokreni automatski</string>
     <string name="pref_autostart_at_boot" formatted="false">Pokreni automatski pri paljenju</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Pokreni Battery Monitor kada se uređaj upali:</string>
@@ -542,48 +542,48 @@
     <string name="shizuku_not_running" formatted="false">Pokrenite Shizuku da biste aplikaciji Battery Monitor odobrili privilegovani pristup</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">Ručno odobrite dozvolu aplikaciji Battery Monitor u aplikaciji Shizuku</string>
 
-    <string name="advanced_action_refresh" formatted="false">Osveži</string>
-    <string name="advanced_status_loading" formatted="false">Učitavanje napredne statistike baterije…</string>
-    <string name="advanced_status_no_access" formatted="false">Za prikaz napredne statistike baterije potreban je root ili Shizuku.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">Čeka se dozvola za Shizuku…</string>
-    <string name="advanced_status_no_stats" formatted="false">Na ovom uređaju trenutno nema dostupne napredne statistike baterije.</string>
-    <string name="advanced_value_not_available" formatted="false">Nije dostupno</string>
-    <string name="advanced_help_overview" formatted="false">„Dijagnostika“ objedinjuje pouzdanost praćenja, sačuvane podatke predviđanja i podatke baterije u karticama „Rad aplikacije“, „Baterija“, „Punjenje“ i „Sirovi podaci“. Android podaci su dostupni bez root pristupa. Dodatni podaci zavise od uređaja i dozvola aplikacije Battery Monitor.</string>
-    <string name="advanced_section_counters" formatted="false">Brojači</string>
-    <string name="advanced_help_counters" formatted="false">Očitavanja baterije su označena i oblikovana kao preostali naboj u mAh, struja u mA, energija u mWh, napon u V, temperatura u izabranoj jedinici i snaga u W. Množilac struje važi i za izračunatu snagu. Prosečna struja i broj ciklusa zavise od podrške uređaja.</string>
-    <string name="advanced_field_charge_counter" formatted="false">Procena preostalog naboja</string>
-    <string name="advanced_field_current_now" formatted="false">Trenutna struja</string>
-    <string name="advanced_field_current_average" formatted="false">Prosečna struja</string>
-    <string name="advanced_field_energy_counter" formatted="false">Brojač energije</string>
-    <string name="advanced_section_capacity" formatted="false">Kapacitet</string>
-    <string name="advanced_help_capacity" formatted="false">„Kapacitet“ prikazuje kapacitet punog punjenja, projektovani kapacitet i procenjeno zdravlje. Procenjeno zdravlje se računa kao kapacitet punog punjenja podeljen projektovanim kapacitetom, pa njegova tačnost zavisi od vrednosti koje uređaj prijavljuje.</string>
-    <string name="advanced_field_cycle_count" formatted="false">Broj ciklusa</string>
-    <string name="advanced_field_reported_capacity" formatted="false">Prijavljeni kapacitet</string>
-    <string name="advanced_field_state_of_health" formatted="false">Stanje zdravlja</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">Kapacitet punog punjenja</string>
-    <string name="advanced_field_design_capacity" formatted="false">Projektovani kapacitet</string>
-    <string name="advanced_field_estimated_health" formatted="false">Procenjeno stanje</string>
+    <string name="diag_action_refresh" formatted="false">Osveži</string>
+    <string name="diag_status_loading" formatted="false">Učitavanje napredne statistike baterije…</string>
+    <string name="diag_status_no_access" formatted="false">Za prikaz napredne statistike baterije potreban je root ili Shizuku.</string>
+    <string name="diag_status_waiting_permission" formatted="false">Čeka se dozvola za Shizuku…</string>
+    <string name="diag_status_no_stats" formatted="false">Na ovom uređaju trenutno nema dostupne napredne statistike baterije.</string>
+    <string name="diag_value_not_available" formatted="false">Nije dostupno</string>
+    <string name="diag_help_overview" formatted="false">„Dijagnostika“ objedinjuje pouzdanost praćenja, sačuvane podatke predviđanja i podatke baterije u karticama „Rad aplikacije“, „Baterija“, „Punjenje“ i „Sirovi podaci“. Android podaci su dostupni bez root pristupa. Dodatni podaci zavise od uređaja i dozvola aplikacije Battery Monitor.</string>
+    <string name="diag_section_counters" formatted="false">Brojači</string>
+    <string name="diag_help_counters" formatted="false">Očitavanja baterije su označena i oblikovana kao preostali naboj u mAh, struja u mA, energija u mWh, napon u V, temperatura u izabranoj jedinici i snaga u W. Množilac struje važi i za izračunatu snagu. Prosečna struja i broj ciklusa zavise od podrške uređaja.</string>
+    <string name="diag_field_charge_counter" formatted="false">Procena preostalog naboja</string>
+    <string name="diag_field_current_now" formatted="false">Trenutna struja</string>
+    <string name="diag_field_current_average" formatted="false">Prosečna struja</string>
+    <string name="diag_field_energy_counter" formatted="false">Brojač energije</string>
+    <string name="diag_section_capacity" formatted="false">Kapacitet</string>
+    <string name="diag_help_capacity" formatted="false">„Kapacitet“ prikazuje kapacitet punog punjenja, projektovani kapacitet i procenjeno zdravlje. Procenjeno zdravlje se računa kao kapacitet punog punjenja podeljen projektovanim kapacitetom, pa njegova tačnost zavisi od vrednosti koje uređaj prijavljuje.</string>
+    <string name="diag_field_cycle_count" formatted="false">Broj ciklusa</string>
+    <string name="diag_field_reported_capacity" formatted="false">Prijavljeni kapacitet</string>
+    <string name="diag_field_state_of_health" formatted="false">Stanje zdravlja</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">Kapacitet punog punjenja</string>
+    <string name="diag_field_design_capacity" formatted="false">Projektovani kapacitet</string>
+    <string name="diag_field_estimated_health" formatted="false">Procenjeno stanje</string>
     <string name="diag_capacity_inconsistent">Prijavljeni puni kapacitet premašuje projektovani. Iz ovih očitavanja nije moguće izračunati pouzdanu procenu zdravlja baterije.</string>
-    <string name="advanced_field_capacity_level" formatted="false">Nivo kapaciteta</string>
+    <string name="diag_field_capacity_level" formatted="false">Nivo kapaciteta</string>
     <string name="diag_capacity_critical">Kritična</string>
     <string name="diag_capacity_low">Niska</string>
     <string name="diag_capacity_high">Visoka</string>
-    <string name="advanced_section_charging" formatted="false">Punjenje</string>
-    <string name="advanced_help_charging" formatted="false">„Punjenje“ prikazuje vrednosti povezane sa aktivnom putanjom punjenja, kao što su maksimalna struja ili napon punjenja, politika punjenja, stanje punjenja i nivo kapaciteta. Ova polja mogu da se menjaju između punjača i režima punjenja.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">Preostalo vreme punjenja</string>
-    <string name="advanced_field_max_charging_current" formatted="false">Maksimalna struja punjenja</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">Maksimalni napon punjenja</string>
-    <string name="advanced_field_charging_policy" formatted="false">Politika punjenja</string>
+    <string name="diag_section_charging" formatted="false">Punjenje</string>
+    <string name="diag_help_charging" formatted="false">„Punjenje“ prikazuje vrednosti povezane sa aktivnom putanjom punjenja, kao što su maksimalna struja ili napon punjenja, politika punjenja, stanje punjenja i nivo kapaciteta. Ova polja mogu da se menjaju između punjača i režima punjenja.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">Preostalo vreme punjenja</string>
+    <string name="diag_field_max_charging_current" formatted="false">Maksimalna struja punjenja</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">Maksimalni napon punjenja</string>
+    <string name="diag_field_charging_policy" formatted="false">Politika punjenja</string>
     <string name="diag_policy_default">Podrazumevano</string>
     <string name="diag_policy_fixed_limit">Zaštita baterije (fiksno ograničenje)</string>
     <string name="diag_policy_adaptive_ac">Prilagodljivo punjenje</string>
-    <string name="advanced_field_charging_state" formatted="false">Stanje punjenja</string>
+    <string name="diag_field_charging_state" formatted="false">Stanje punjenja</string>
     <string name="diag_charging_too_cold">Previše hladno za punjenje</string>
     <string name="diag_charging_too_hot">Previše toplo za punjenje</string>
-    <string name="advanced_section_service" formatted="false">Android servis baterije</string>
-    <string name="advanced_help_service" formatted="false">„Sirovi podaci“ sadrže izvorne nazive i vrednosti iz Android obaveštenja o bateriji i, kada je dostupan, dumpsys battery. Mogu uključivati izvor punjenja, stanje baterije, temperaturu, napon i drugo stanje servisa baterije.</string>
-    <string name="advanced_section_sysfs" formatted="false">Kernel power_supply fajlovi</string>
-    <string name="advanced_help_sysfs" formatted="false">„Sirovi podaci“ prikazuju izvorne nazive i vrednosti pročitane iz /sys/class/power_supply, uključujući višeredne vrednosti. Pretražite po ključu i dodirnite red da pregledate i kopirate celu vrednost. Koristite „Osveži“ za nova očitavanja. Battery Monitor pokušava čitanje i sa običnim Android dozvolama, bez root ili Shizuku pristupa.</string>
+    <string name="diag_section_service" formatted="false">Android servis baterije</string>
+    <string name="diag_help_service" formatted="false">„Sirovi podaci“ sadrže izvorne nazive i vrednosti iz Android obaveštenja o bateriji i, kada je dostupan, dumpsys battery. Mogu uključivati izvor punjenja, stanje baterije, temperaturu, napon i drugo stanje servisa baterije.</string>
+    <string name="diag_section_sysfs" formatted="false">Kernel power_supply fajlovi</string>
+    <string name="diag_help_sysfs" formatted="false">„Sirovi podaci“ prikazuju izvorne nazive i vrednosti pročitane iz /sys/class/power_supply, uključujući višeredne vrednosti. Pretražite po ključu i dodirnite red da pregledate i kopirate celu vrednost. Koristite „Osveži“ za nova očitavanja. Battery Monitor pokušava čitanje i sa običnim Android dozvolama, bez root ili Shizuku pristupa.</string>
     <string name="diag_fuel_gauge">Merač napunjenosti baterije</string>
     <string name="diag_mains_supply">Mrežno napajanje AC</string>
     <string name="diag_charging_source">Izvor punjenja</string>
@@ -612,22 +612,23 @@
     <string name="diag_settled_input_current">Ustaljena ulazna struja</string>
     <string name="diag_input_voltage">Ulazni napon</string>
     <string name="diag_input_voltage_limit">Ograničenje ulaznog napona</string>
-    <string name="advanced_section_metadata" formatted="false">Metapodaci</string>
-    <string name="advanced_help_metadata" formatted="false">„Sirovi podaci“ sadrže i izvorne nazive i vrednosti BatteryManager svojstava, uključujući dostupne brojače i očitavanja struje. Dodatna svojstva poput podataka o proizvodnji ili zameni zavise od verzije Androida, podrške uređaja i dozvola.</string>
+    <string name="diag_section_metadata" formatted="false">Metapodaci</string>
+    <string name="diag_help_metadata" formatted="false">„Sirovi podaci“ sadrže i izvorne nazive i vrednosti BatteryManager svojstava, uključujući dostupne brojače i očitavanja struje. Dodatna svojstva poput podataka o proizvodnji ili zameni zavise od verzije Androida, podrške uređaja i dozvola.</string>
     <string name="diag_raw">Sirovi podaci</string>
     <string name="diag_search_key">Pretraži ključeve</string>
     <string name="diag_no_keys">Nema odgovarajućih ključeva u dostupnim podacima</string>
     <string name="diag_raw_values">Sirove vrednosti</string>
     <string name="diag_last_checked">Poslednja provera: %1$s</string>
     <string name="diag_privileged_stale">Prikazana su prethodna privilegovana očitavanja. Osvežite da pokušate ponovo.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">Rešavanje problema</string>
-    <string name="advanced_help_troubleshooting" formatted="false">Android podaci se u odeljku „Dijagnostika“ prikupljaju automatski. Za dodatne root ili Shizuku podatke omogućite privilegovani pristup u odeljku „Dodatni izvori“. Battery Monitor prvo pokušava root, zatim Shizuku. Shizuku mora biti pokrenut uz dodeljenu dozvolu. Nedostajuća polja ostaju nedostupna; neuspešna osvežavanja čuvaju prethodni snimak i označavaju ga zastarelim.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">Rešavanje problema</string>
+    <string name="diag_help_troubleshooting" formatted="false">Android podaci se u odeljku „Dijagnostika“ prikupljaju automatski. Za dodatne root ili Shizuku podatke omogućite privilegovani pristup u odeljku „Dodatni izvori“. Battery Monitor prvo pokušava root, zatim Shizuku. Shizuku mora biti pokrenut uz dodeljenu dozvolu. Nedostajuća polja ostaju nedostupna; neuspešna osvežavanja čuvaju prethodni snimak i označavaju ga zastarelim.</string>
 
     <string name="diagnostics" formatted="false">Дијагностика</string>
     <string name="diagnostics_summary" formatted="false">Проверите дозволе и поузданост надгледања и направите извештај за решавање проблема</string>
     <string name="diag_overview">Rad aplikacije</string>
     <string name="diagnostics_help_title" formatted="false">Како дијагностика помаже</string>
     <string name="diagnostics_help_overview" formatted="false">„Надгледање у позадини“ proverava dozvole i pouzdanost praćenja. Kontrolama pokrenite ili zaustavite praćenje, promenite beleženje otklanjanja grešaka, otvorite podešavanja optimizacije baterije i obaveštenja ili napravite izveštaj za rešavanje problema. Nije svako nedostupno očitavanje problem sa dozvolama; neki uređaji ga ne daju.</string>
+    <string name="monitoring_help_overview" formatted="false">Proverite dozvolu za obaveštenja, root ili Shizuku pristup, uslugu praćenja i bazu podataka istorije. Dodirnite proveru da biste zatražili pristup ili je izvršili. „Pokreni praćenje“ je dostupno kada je praćenje zaustavljeno; „Zaustavi praćenje“ kada je pokrenuto. Dostupna očitavanja zavise od podrške uređaja i odobrenog pristupa. Provera usluge zahteva pokrenuto praćenje; provera baze podataka zahteva beleženje istorije („Podešavanja“ → „Napredno“). Da biste koristili dodatna očitavanja, omogućite „Koristi privilegovani pristup“ u „Podešavanja“ → „Napredno“. „Подешавања произвођача“ su dostupna samo na podržanim uređajima.</string>
     <string name="diagnostics_monitoring" formatted="false">Надгледање у позадини</string>
     <string name="diag_monitor_operation">Rad praćenja</string>
     <string name="diag_heartbeat">Poslednji signal aktivnosti</string>
@@ -709,6 +710,7 @@
     <string name="diag_report_privacy">Podrazumevano isključeno. Ovi podaci mogu sadržati lične informacije. Pregledajte prikaz pre kopiranja ili čuvanja.</string>
 
     <string name="charging_diagnostics_title" formatted="false">Дијагностика OEM ограничења пуњења</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Otvorite alate za snimke i poređenje da biste istražili kako Battery Monitor otkriva ograničenje punjenja uređaja. Uputstva za pripremu dostupna su u pomoći samog OEM dijagnostičkog ekrana.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Да би извештај био користан, отворите „Pomoć“ и пратите кораке за припрему пре снимања стања.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Уз привилеговани приступ може бити доступно више дијагностичких података. Одобрите приступ преко Shizuku-а или root-а и укључите привилеговани приступ у „Podešavanja” → „Napredno” → „Koristi privilegovani pristup” за кориснији извештај о OEM ограничењу пуњења.</string>
     <string name="charging_diagnostics_capture" formatted="false">Сними стање</string>

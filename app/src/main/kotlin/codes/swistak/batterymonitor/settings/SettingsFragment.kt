@@ -482,7 +482,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             enableNotifsButtonClick()
         } else if (preference.key == SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS) {
             if (!NotificationSettingsNavigator.openLiveUpdates(requireContext())) {
-                requireContext().showToast(R.string.advanced_value_not_available)
+                requireContext().showToast(R.string.diag_value_not_available)
             }
         } else if (preference.key == SettingsContract.KEY_CHANGE_APP_LANGUAGE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -1480,7 +1480,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             documentRequest.launch(intent)
         }.onFailure {
             pendingDocumentRequest = 0
-            dialog = SettingsDialog.Message(getString(R.string.advanced_value_not_available))
+            dialog = SettingsDialog.Message(getString(R.string.diag_value_not_available))
         }
     }
 
@@ -1784,8 +1784,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     }
                     modelVersion++
                 }.onFailure {
-                    dialog =
-                        SettingsDialog.Message(getString(R.string.advanced_value_not_available))
+                    dialog = SettingsDialog.Message(getString(R.string.diag_value_not_available))
                 }
             },
             onChooseDirectory = ::openAutoLogExportDirectoryPicker,
@@ -2258,7 +2257,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         } else {
             NotificationSettingsNavigator.openNotificationChannel(context, mainChan!!.id)
         }
-        if (!opened) context.showToast(R.string.advanced_value_not_available)
+        if (!opened) context.showToast(R.string.diag_value_not_available)
     }
 
     private fun getMainNotifsEnabled(): Boolean {

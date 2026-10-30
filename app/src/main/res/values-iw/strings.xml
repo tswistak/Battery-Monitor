@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">הערכה זו משתמשת בשיטת החיזוי שהוגדרה ב־Battery Monitor. היעד שלה אינו שולט בטעינה או בכיבוי.</string>
     <string name="time_estimates_settings" formatted="false">הערכות זמן</string>
     <string name="time_estimates_settings_summary" formatted="false">בחרו כיצד לחשב את הזמן שנותר ואת רמות הסוללה ליעד</string>
-    <string name="time_estimates_settings_help" formatted="false">בחרו כיצד Battery Monitor מעריך את הזמן שנותר ואת רמות היעד של הסוללה. היעדים חלים גם על התרעות ״הושגה מגבלת הטעינה״ ו״הושגה מגבלת הפריקה״. Battery Monitor אינו מתחיל או עוצר טעינה.</string>
+    <string name="time_estimates_settings_help" formatted="false">בחרו כיצד Battery Monitor מעריך את הזמן שנותר ואת רמות היעד של הסוללה. היעדים חלים גם על התרעות ״יעד הטעינה הושג״ ו״יעד הפריקה הושג״. Battery Monitor אינו מתחיל או עוצר טעינה.</string>
     <string name="pref_cat_predictor" formatted="false">הערכות שנותר זמן</string>
     <string name="pref_prediction_type" formatted="false">סוג הערכה</string>
     <string name="pref_prediction_type_help" formatted="false">״רָגִישׁ״ משתמש בקצב חמש הדקות האחרונות. ״שַׁמְרָנִי״, ברירת המחדל, משלב קצבים אחרונים עם הממוצע הנלמד לטווח ארוך כדי לצמצם שינויים פתאומיים. ״מאז שינוי הסטטוס״ משתמש בהפעלת הטעינה או הפריקה הנוכחית. ״ממוצע לטווח ארוך״ משתמש בקצב שנלמד לפריקה או למקור הטעינה הפעיל. עד שיהיו מספיק תצפיות, ההערכות משתמשות בממוצע השמור או בברירת מחדל ראשונית.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">ממוצע לטווח ארוך</string>
     <string name="pref_cat_target_levels" formatted="false">רמות יעד</string>
     <string name="pref_charging_target_mode" formatted="false">יעד טעינה</string>
-    <string name="pref_charging_target_mode_help" formatted="false">״אוטומטי (מומלץ)״ משתמש במגבלת טעינה קבועה של המכשיר כש־Battery Monitor יכול לקרוא אותה, ואחרת ב־100%. טעינה מסתגלת עדיין מכוונת ל־100%. ״מותאם אישית״ משתמש ברמה שבחרתם להערכות טעינה ולהתרעות ״הושגה מגבלת הטעינה״.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">״אוטומטי (מומלץ)״ משתמש במגבלת טעינה קבועה של המכשיר כש־Battery Monitor יכול לקרוא אותה, ואחרת ב־100%. טעינה מסתגלת עדיין מכוונת ל־100%. ״מותאם אישית״ משתמש ברמה שבחרתם להערכות טעינה ולהתרעות ״יעד הטעינה הושג״.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">זיהוי אוטומטי עשוי לפעול במכשירי Google Pixel,‏ Samsung Galaxy,‏ Xiaomi/Redmi/POCO,‏ OnePlus/Oppo/Realme ו‑Sony Xperia, וגם במכשירים עם GrapheneOS או LineageOS, במיוחד כאשר זמינה גישת root או Shizuku. הזיהוי מסתמך על אותות תוכנה, ולכן הזמינות והדיוק אינם מובטחים גם אצל היצרנים שברשימה. ייתכן שגם דגמים או גרסאות מערכת שלא נבדקו ממשפחות אלו יעבדו, אך מכשירים של יצרנים אחרים אינם מזוהים אוטומטית כעת.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">מגבלת הטעינה של המכשיר: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">יעד מותאם אישית</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">יעד טעינה מותאם אישית</string>
     <string name="pref_custom_charging_target_help" formatted="false">הגדירו את רמת הסיום של הערכות הטעינה כאשר ״יעד טעינה״ ״מותאם אישית״.</string>
     <string name="pref_discharging_target" formatted="false">יעד פריקה</string>
-    <string name="pref_discharging_target_help" formatted="false">הגדירו את נקודת הסיום של הערכות פריקה והתרעות ״הושגה מגבלת הפריקה״. מתחת לרמה זו, הערכות הזמן ממשיכות לכיוון 0%. התרעות סוללה חלשה בעלות סף משלהן נשארות עצמאיות.</string>
+    <string name="pref_discharging_target_help" formatted="false">הגדירו את נקודת הסיום של הערכות פריקה והתרעות ״יעד הפריקה הושג״. מתחת לרמה זו, הערכות הזמן ממשיכות לכיוון 0%. התרעות סוללה חלשה בעלות סף משלהן נשארות עצמאיות.</string>
     <string name="pref_target_level_summary" formatted="true">הערכה עד %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">הודעה ראשית</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">ניהול הערוץ הראשי</string>
     <string name="pref_cat_notification_content" formatted="false">תוכן</string>
     <string name="pref_top_line_content" formatted="false">תוכן השורה העליונה</string>
-    <string name="pref_top_line_content_help" formatted="false">בחר אם בשורה העליונה של ההתראה יוצגו הזמן המשוער שנותר, הזמן מאז שינוי המצב או ״סימנים חיוניים״ שנבחרו.</string>
+    <string name="pref_top_line_content_help" formatted="false">בחר אם בשורה העליונה של ההתראה יוצגו ״משך הזמן שנותר״ המשוער, ״זמן מאז שינוי המצב״ או ״סימנים חיוניים״ שנבחרו.</string>
     <string name="pref_bottom_line_content" formatted="false">תוכן השורה התחתונה</string>
     <string name="pref_bottom_line_content_help" formatted="false">יש לך אותן אפשרויות לשורה התחתונה כמו לשורה העליונה.</string>
     <string name="time_remaining" formatted="false">משך הזמן שנותר</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">התראות</string>
     <string name="alarm_settings_help" formatted="false">אתה יכול לגרום ל-Battery Monitor להודיע לך מתי רמת הסוללה שלך מגיע למצב מסוים (למשל, הסוללה נטועה במלואה, רמת הסוללה יורדת מתחת ל-20%, ועוד רבים אחרים).</string>
     <string name="alarms_overview" formatted="false">סקירה כללית של אזעקות</string>
-    <string name="alarms_overview_help">כל שמונת סוגי ההתרעות זמינים תמיד. הפעילו אירועים ישירות, או השתמשו ב״הוספת סף״ תחת סוג מטען או טמפרטורה. ספים חדשים מופעלים לאחר שמירה. הקישו על ערך לעריכתו; העריכה שומרת על מצב ההפעלה שלו. ערכים מושבתים נשארים ברשימה. מחיקה מבקשת אישור. הצליל והרטט משותפים לפי סוג בהגדרות התראות Android. רשומות כפולות קיימות מופיעות כהתרעה לוגית אחת; שינוי מצב או מחיקה משפיעים על כל העותקים. התרעות טעינה ופריקה עוקבות אחר יעדי ההערכה ואינן שולטות בטעינה. ערוץ חסום או ניטור עצור אינם משנים את המתגים השמורים.</string>
+    <string name="alarms_overview_help">כל שמונת סוגי ההתרעות זמינים תמיד. הפעילו אירועים ישירות, או השתמשו ב״הוספת סף״ תחת סוג מטען או טמפרטורה. ספים חדשים מופעלים לאחר שמירה. הקישו על ערך לעריכתו; העריכה שומרת על מצב ההפעלה שלו. ערכים מושבתים נשארים ברשימה. ״מחיקת התרעה״ מבקשת אישור. הצליל והרטט משותפים לפי סוג בהגדרות התראות Android. רשומות כפולות קיימות מופיעות כהתרעה לוגית אחת; שינוי מצב או מחיקה משפיעים על כל העותקים. התרעות טעינה ופריקה עוקבות אחר יעדי ההערכה ואינן שולטות בטעינה. ערוץ חסום או ניטור עצור אינם משנים את המתגים השמורים.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d התרעה מופעלת</item>
         <item quantity="two">%1$d התרעות מופעלות</item>
@@ -523,7 +523,7 @@
     <string name="battery_optimized" formatted="false">ניטור ברקע</string>
     <string name="battery_optimized_message" formatted="false">פעילות בלתי מוגבלת ברקע עשויה לשפר את אמינות הניטור. אופטימיזציית הסוללה של Android עלולה לעכב עדכונים והתראות.\n
     \n
-    פעילות בלתי מוגבלת עשויה להגביר את צריכת הסוללה ברקע. ניתן לשנות זאת בהמשך ב״הגדרות״ Android → ״אפליקציות״ → ״Battery Monitor״ → ״סוללה״.</string>
+    פעילות בלתי מוגבלת עשויה להגביר את צריכת הסוללה ברקע. ניתן לשנות זאת בהמשך ב״הגדרות״ Android → ״אפליקציות״ → ״Battery Monitor״ → ״סוללה״. שמות התפריטים משתנים בהתאם למכשיר.</string>
     <string name="pref_cat_autostart" formatted="false">הפעלה אוטומטית</string>
     <string name="pref_autostart_at_boot" formatted="false">הפעלה אוטומטית באתחול</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">הפעל את Battery Monitor בעת אתחול המכשיר:</string>
@@ -542,48 +542,48 @@
     <string name="shizuku_not_running" formatted="false">הפעילו את Shizuku כדי להעניק ל-Battery Monitor גישה מועדפת</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">העניקו ל-Battery Monitor הרשאה באופן ידני ב-Shizuku</string>
 
-    <string name="advanced_action_refresh" formatted="false">רענון</string>
-    <string name="advanced_status_loading" formatted="false">טוען סטטיסטיקות סוללה מתקדמות…</string>
-    <string name="advanced_status_no_access" formatted="false">נדרש root או Shizuku כדי להציג סטטיסטיקות סוללה מתקדמות.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">ממתין להרשאת Shizuku…</string>
-    <string name="advanced_status_no_stats" formatted="false">כרגע אין סטטיסטיקות סוללה מתקדמות זמינות במכשיר הזה.</string>
-    <string name="advanced_value_not_available" formatted="false">לא זמין</string>
-    <string name="advanced_help_overview" formatted="false">ה״אבחון״ משלב אמינות ניטור, נתוני חיזוי שמורים ונתוני סוללה בלשוניות ״פעולת האפליקציה״, ״סוללה״, ״טעינה״ ו״נתונים גולמיים״. נתוני Android זמינים ללא root. נתוני מכשיר נוספים תלויים במכשיר ובהרשאות הזמינות ל־Battery Monitor.</string>
-    <string name="advanced_section_counters" formatted="false">מונים</string>
-    <string name="advanced_help_counters" formatted="false">קריאות הסוללה מוצגות עם תוויות ועיצוב כמטען שנותר ב־mAh, זרם ב־mA, אנרגיה ב־mWh, מתח ב־V, טמפרטורה ביחידה שנבחרה והספק ב־W. מכפיל הזרם חל גם על ההספק המחושב. זרם ממוצע ומספר מחזורים תלויים בתמיכת המכשיר.</string>
-    <string name="advanced_field_charge_counter" formatted="false">הערכת הטעינה הנותרת</string>
-    <string name="advanced_field_current_now" formatted="false">זרם נוכחי</string>
-    <string name="advanced_field_current_average" formatted="false">זרם ממוצע</string>
-    <string name="advanced_field_energy_counter" formatted="false">מונה אנרגיה</string>
-    <string name="advanced_section_capacity" formatted="false">קיבולת</string>
-    <string name="advanced_help_capacity" formatted="false">״קיבולת״ מציגה קיבולת טעינה מלאה, קיבולת תכנון ובריאות משוערת. הבריאות המשוערת מחושבת כקיבולת טעינה מלאה חלקי קיבולת התכנון, ולכן הדיוק שלה תלוי בדיוק הערכים שהמכשיר מדווח.</string>
-    <string name="advanced_field_cycle_count" formatted="false">מספר מחזורים</string>
-    <string name="advanced_field_reported_capacity" formatted="false">קיבולת מדווחת</string>
-    <string name="advanced_field_state_of_health" formatted="false">מצב בריאות</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">קיבולת טעינה מלאה</string>
-    <string name="advanced_field_design_capacity" formatted="false">קיבולת תכנונית</string>
-    <string name="advanced_field_estimated_health" formatted="false">בריאות משוערת</string>
+    <string name="diag_action_refresh" formatted="false">רענון</string>
+    <string name="diag_status_loading" formatted="false">טוען סטטיסטיקות סוללה מתקדמות…</string>
+    <string name="diag_status_no_access" formatted="false">נדרש root או Shizuku כדי להציג סטטיסטיקות סוללה מתקדמות.</string>
+    <string name="diag_status_waiting_permission" formatted="false">ממתין להרשאת Shizuku…</string>
+    <string name="diag_status_no_stats" formatted="false">כרגע אין סטטיסטיקות סוללה מתקדמות זמינות במכשיר הזה.</string>
+    <string name="diag_value_not_available" formatted="false">לא זמין</string>
+    <string name="diag_help_overview" formatted="false">ה״אבחון״ משלב אמינות ניטור, נתוני חיזוי שמורים ונתוני סוללה בלשוניות ״פעולת האפליקציה״, ״סוללה״, ״טעינה״ ו״נתונים גולמיים״. נתוני Android זמינים ללא root. נתוני מכשיר נוספים תלויים במכשיר ובהרשאות הזמינות ל־Battery Monitor.</string>
+    <string name="diag_section_counters" formatted="false">מונים</string>
+    <string name="diag_help_counters" formatted="false">קריאות הסוללה מוצגות עם תוויות ועיצוב כמטען שנותר ב־mAh, זרם ב־mA, אנרגיה ב־mWh, מתח ב־V, טמפרטורה ביחידה שנבחרה והספק ב־W. מכפיל הזרם חל גם על ההספק המחושב. זרם ממוצע ומספר מחזורים תלויים בתמיכת המכשיר.</string>
+    <string name="diag_field_charge_counter" formatted="false">הערכת הטעינה הנותרת</string>
+    <string name="diag_field_current_now" formatted="false">זרם נוכחי</string>
+    <string name="diag_field_current_average" formatted="false">זרם ממוצע</string>
+    <string name="diag_field_energy_counter" formatted="false">מונה אנרגיה</string>
+    <string name="diag_section_capacity" formatted="false">קיבולת</string>
+    <string name="diag_help_capacity" formatted="false">״קיבולת״ מציגה קיבולת טעינה מלאה, קיבולת תכנון ובריאות משוערת. הבריאות המשוערת מחושבת כקיבולת טעינה מלאה חלקי קיבולת התכנון, ולכן הדיוק שלה תלוי בדיוק הערכים שהמכשיר מדווח.</string>
+    <string name="diag_field_cycle_count" formatted="false">מספר מחזורים</string>
+    <string name="diag_field_reported_capacity" formatted="false">קיבולת מדווחת</string>
+    <string name="diag_field_state_of_health" formatted="false">מצב בריאות</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">קיבולת טעינה מלאה</string>
+    <string name="diag_field_design_capacity" formatted="false">קיבולת תכנונית</string>
+    <string name="diag_field_estimated_health" formatted="false">בריאות משוערת</string>
     <string name="diag_capacity_inconsistent">הקיבולת המלאה המדווחת עולה על קיבולת התכנון. לא ניתן לחשב הערכת בריאות אמינה מקריאות אלו.</string>
-    <string name="advanced_field_capacity_level" formatted="false">רמת קיבולת</string>
+    <string name="diag_field_capacity_level" formatted="false">רמת קיבולת</string>
     <string name="diag_capacity_critical">קריטית</string>
     <string name="diag_capacity_low">נמוכה</string>
     <string name="diag_capacity_high">גבוהה</string>
-    <string name="advanced_section_charging" formatted="false">טעינה</string>
-    <string name="advanced_help_charging" formatted="false">״טעינה״ מציגה ערכים הקשורים למסלול הטעינה הפעיל, כמו זרם או מתח טעינה מרביים, מדיניות טעינה, מצב טעינה ורמת קיבולת. שדות אלה עשויים להשתנות בין מטענים ומצבי טעינה.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">זמן טעינה נותר</string>
-    <string name="advanced_field_max_charging_current" formatted="false">זרם טעינה מרבי</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">מתח טעינה מרבי</string>
-    <string name="advanced_field_charging_policy" formatted="false">מדיניות טעינה</string>
+    <string name="diag_section_charging" formatted="false">טעינה</string>
+    <string name="diag_help_charging" formatted="false">״טעינה״ מציגה ערכים הקשורים למסלול הטעינה הפעיל, כמו זרם או מתח טעינה מרביים, מדיניות טעינה, מצב טעינה ורמת קיבולת. שדות אלה עשויים להשתנות בין מטענים ומצבי טעינה.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">זמן טעינה נותר</string>
+    <string name="diag_field_max_charging_current" formatted="false">זרם טעינה מרבי</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">מתח טעינה מרבי</string>
+    <string name="diag_field_charging_policy" formatted="false">מדיניות טעינה</string>
     <string name="diag_policy_default">ברירת מחדל</string>
     <string name="diag_policy_fixed_limit">הגנת סוללה (מגבלה קבועה)</string>
     <string name="diag_policy_adaptive_ac">טעינה מסתגלת</string>
-    <string name="advanced_field_charging_state" formatted="false">מצב טעינה</string>
+    <string name="diag_field_charging_state" formatted="false">מצב טעינה</string>
     <string name="diag_charging_too_cold">קרה מדי לטעינה</string>
     <string name="diag_charging_too_hot">חמה מדי לטעינה</string>
-    <string name="advanced_section_service" formatted="false">שירות הסוללה של Android</string>
-    <string name="advanced_help_service" formatted="false">״נתונים גולמיים״ כוללים שמות וערכים מקוריים משידורי הסוללה של Android, וכשהגישה אפשרית, מ־dumpsys battery. הם עשויים לכלול מקור טעינה, מצב סוללה, טמפרטורה, מתח ומצבים אחרים של שירות הסוללה.</string>
-    <string name="advanced_section_sysfs" formatted="false">קובצי power_supply של הליבה</string>
-    <string name="advanced_help_sysfs" formatted="false">״נתונים גולמיים״ מציגים את השמות והערכים המקוריים שנקראו מ־/sys/class/power_supply, כולל ערכים מרובי שורות. חפשו לפי מפתח והקישו על שורה כדי להציג ולהעתיק את הערך המלא. השתמשו ב״רענון״ לאיסוף קריאות חדשות. Battery Monitor מנסה לקרוא גם עם הרשאות Android הרגילות, ללא root או Shizuku.</string>
+    <string name="diag_section_service" formatted="false">שירות הסוללה של Android</string>
+    <string name="diag_help_service" formatted="false">״נתונים גולמיים״ כוללים שמות וערכים מקוריים משידורי הסוללה של Android, וכשהגישה אפשרית, מ־dumpsys battery. הם עשויים לכלול מקור טעינה, מצב סוללה, טמפרטורה, מתח ומצבים אחרים של שירות הסוללה.</string>
+    <string name="diag_section_sysfs" formatted="false">קובצי power_supply של הליבה</string>
+    <string name="diag_help_sysfs" formatted="false">״נתונים גולמיים״ מציגים את השמות והערכים המקוריים שנקראו מ־/sys/class/power_supply, כולל ערכים מרובי שורות. חפשו לפי מפתח והקישו על שורה כדי להציג ולהעתיק את הערך המלא. השתמשו ב״רענון״ לאיסוף קריאות חדשות. Battery Monitor מנסה לקרוא גם עם הרשאות Android הרגילות, ללא root או Shizuku.</string>
     <string name="diag_fuel_gauge">מד מטען הסוללה</string>
     <string name="diag_mains_supply">אספקת חשמל AC</string>
     <string name="diag_charging_source">מקור טעינה</string>
@@ -612,22 +612,23 @@
     <string name="diag_settled_input_current">זרם כניסה מיוצב</string>
     <string name="diag_input_voltage">מתח כניסה</string>
     <string name="diag_input_voltage_limit">מגבלת מתח כניסה</string>
-    <string name="advanced_section_metadata" formatted="false">מטא נתונים</string>
-    <string name="advanced_help_metadata" formatted="false">״נתונים גולמיים״ כוללים גם שמות וערכים מקוריים של מאפייני BatteryManager, כולל מונים וקריאות זרם זמינים. מאפיינים נוספים כמו פרטי ייצור או מצב החלפה תלויים בגרסת Android, בתמיכת המכשיר ובהרשאות.</string>
+    <string name="diag_section_metadata" formatted="false">מטא נתונים</string>
+    <string name="diag_help_metadata" formatted="false">״נתונים גולמיים״ כוללים גם שמות וערכים מקוריים של מאפייני BatteryManager, כולל מונים וקריאות זרם זמינים. מאפיינים נוספים כמו פרטי ייצור או מצב החלפה תלויים בגרסת Android, בתמיכת המכשיר ובהרשאות.</string>
     <string name="diag_raw">נתונים גולמיים</string>
     <string name="diag_search_key">חיפוש מפתחות</string>
     <string name="diag_no_keys">אין מפתחות תואמים בנתונים הזמינים</string>
     <string name="diag_raw_values">ערכים גולמיים</string>
     <string name="diag_last_checked">בדיקה אחרונה: %1$s</string>
     <string name="diag_privileged_stale">מוצגות הקריאות הקודמות מגישה מיוחסת. יש לרענן כדי לנסות שוב.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">פתרון בעיות</string>
-    <string name="advanced_help_troubleshooting" formatted="false">נתוני Android נאספים אוטומטית ב״אבחון״. לנתוני root או Shizuku נוספים, הפעילו גישה מיוחסת תחת ״מקורות נוספים״. Battery Monitor מנסה תחילה root ואז Shizuku. Shizuku צריך לפעול ויש להעניק הרשאה. שדות חסרים נשארים לא זמינים; רענון שנכשל שומר את תמונת המצב הקודמת ומסמן אותה כלא עדכנית.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">פתרון בעיות</string>
+    <string name="diag_help_troubleshooting" formatted="false">נתוני Android נאספים אוטומטית ב״אבחון״. לנתוני root או Shizuku נוספים, הפעילו גישה מיוחסת תחת ״מקורות נוספים״. Battery Monitor מנסה תחילה root ואז Shizuku. Shizuku צריך לפעול ויש להעניק הרשאה. שדות חסרים נשארים לא זמינים; רענון שנכשל שומר את תמונת המצב הקודמת ומסמן אותה כלא עדכנית.</string>
 
     <string name="diagnostics" formatted="false">אבחון</string>
     <string name="diagnostics_summary" formatted="false">בדיקת הרשאות ואמינות הניטור ויצירת דוח לפתרון בעיות</string>
     <string name="diag_overview">פעולת האפליקציה</string>
     <string name="diagnostics_help_title" formatted="false">כיצד האבחון עוזר</string>
     <string name="diagnostics_help_overview" formatted="false">״ניטור ברקע״ בודק הרשאות ואמינות ניטור. השתמשו בפקדים להפעלת או עצירת הניטור, לשינוי רישום ניפוי, לפתיחת הגדרות מיטוב סוללה והתראות או ליצירת דוח פתרון בעיות. לא כל קריאה שאינה זמינה מעידה על בעיית הרשאות; מכשירים מסוימים אינם מספקים אותה.</string>
+    <string name="monitoring_help_overview" formatted="false">בדקו את הרשאת ההתראות, את הגישה דרך root או Shizuku, את שירות הניטור ואת מסד הנתונים של ההיסטוריה. הקישו על בדיקה כדי לבקש גישה או להפעיל אותה. ״הפעלת הניטור״ זמינה כשהניטור מופסק; ״עצירת הניטור״ זמינה כשהוא פועל. הקריאות הזמינות תלויות בתמיכת המכשיר ובגישה שניתנה. בדיקת השירות דורשת ניטור פעיל; בדיקת מסד הנתונים דורשת רישום היסטוריה (״הגדרות״ ← ״מתקדם״). כדי להשתמש בקריאות נוספות, הפעילו את ״שימוש בגישה מיוחסת״ ב״הגדרות״ ← ״מתקדם״. האפשרות ״הגדרות היצרן״ זמינה רק במכשירים נתמכים.</string>
     <string name="diagnostics_monitoring" formatted="false">ניטור ברקע</string>
     <string name="diag_monitor_operation">פעולת הניטור</string>
     <string name="diag_heartbeat">פעימת פעילות אחרונה</string>
@@ -709,6 +710,7 @@
     <string name="diag_report_privacy">לא נכללים כברירת מחדל. נתונים אלו עשויים להכיל מידע אישי. יש לבדוק את התצוגה המקדימה לפני העתקה או שמירה.</string>
 
     <string name="charging_diagnostics_title" formatted="false">אבחון מגבלת טעינה של היצרן</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">פתחו את כלי תמונות המצב וההשוואה כדי לבדוק כיצד Battery Monitor מזהה את מגבלת הטעינה של המכשיר. הוראות ההכנה זמינות בעזרה של מסך אבחון היצרן עצמו.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">כדי ליצור דוח שימושי, פתחו את ״עזרה״ ובצעו את שלבי ההכנה לפני צילום תמונות המצב.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">ייתכן שמידע אבחון נוסף יהיה זמין עם גישה מורשית. העניקו גישה דרך Shizuku או root והפעילו גישה מורשית בנתיב ״הגדרות״ → ״מתקדם״ → ״שימוש בגישה מיוחסת״ כדי לקבל דוח שימושי יותר על מגבלת הטעינה של היצרן.</string>
     <string name="charging_diagnostics_capture" formatted="false">צילום תמונת מצב</string>

@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">Αυτή η εκτίμηση χρησιμοποιεί τη ρυθμισμένη μέθοδο πρόβλεψης του Battery Monitor. Ο στόχος της δεν ελέγχει τη φόρτιση ή τον τερματισμό λειτουργίας.</string>
     <string name="time_estimates_settings" formatted="false">Εκτιμήσεις χρόνου</string>
     <string name="time_estimates_settings_summary" formatted="false">Επιλέξτε τον υπολογισμό του χρόνου που απομένει και τα επίπεδα-στόχους της μπαταρίας</string>
-    <string name="time_estimates_settings_help" formatted="false">Επιλέξτε πώς το Battery Monitor εκτιμά τον υπολειπόμενο χρόνο και τις στάθμες-στόχους μπαταρίας. Οι στόχοι ισχύουν και για τις προειδοποιήσεις «Επιτεύχθηκε όριο φόρτισης» και «Επιτεύχθηκε όριο εκφόρτισης». Το Battery Monitor δεν ξεκινά ούτε σταματά τη φόρτιση.</string>
+    <string name="time_estimates_settings_help" formatted="false">Επιλέξτε πώς το Battery Monitor εκτιμά τον υπολειπόμενο χρόνο και τις στάθμες-στόχους μπαταρίας. Οι στόχοι ισχύουν και για τις προειδοποιήσεις «Επιτεύχθηκε ο στόχος φόρτισης» και «Επιτεύχθηκε ο στόχος εκφόρτισης». Το Battery Monitor δεν ξεκινά ούτε σταματά τη φόρτιση.</string>
     <string name="pref_cat_predictor" formatted="false">Εκτιμήσεις υπολειπόμενου χρόνου</string>
     <string name="pref_prediction_type" formatted="false">Τύπος εκτίμησης</string>
     <string name="pref_prediction_type_help" formatted="false">Ο «Ευαίσθητος» χρησιμοποιεί τον ρυθμό των τελευταίων πέντε λεπτών. Ο «Συντηρητικός», η προεπιλογή, συνδυάζει πρόσφατους ρυθμούς με τον μαθημένο μακροπρόθεσμο μέσο όρο για μείωση απότομων αλλαγών. Το «Από την Αλλαγή Κατάστασης» χρησιμοποιεί την τρέχουσα συνεδρία φόρτισης ή εκφόρτισης. Ο «Μακροπρόθεσμος Μέσος όρος» χρησιμοποιεί τον μαθημένο ρυθμό εκφόρτισης ή της ενεργής πηγής φόρτισης. Μέχρι να υπάρχουν αρκετές παρατηρήσεις, οι εκτιμήσεις χρησιμοποιούν τον αποθηκευμένο μέσο όρο ή μια αρχική προεπιλογή.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">Μακροπρόθεσμος Μέσος όρος</string>
     <string name="pref_cat_target_levels" formatted="false">Επίπεδα-στόχοι</string>
     <string name="pref_charging_target_mode" formatted="false">Στόχος φόρτισης</string>
-    <string name="pref_charging_target_mode_help" formatted="false">Η «Αυτόματα (συνιστάται)» χρησιμοποιεί σταθερό όριο φόρτισης της συσκευής όταν το Battery Monitor μπορεί να το διαβάσει, διαφορετικά 100%. Η προσαρμοστική φόρτιση εξακολουθεί να στοχεύει το 100%. Η «Προσαρμοσμένο» χρησιμοποιεί την επιλεγμένη στάθμη για εκτιμήσεις φόρτισης και προειδοποιήσεις «Επιτεύχθηκε όριο φόρτισης».</string>
+    <string name="pref_charging_target_mode_help" formatted="false">Η «Αυτόματα (συνιστάται)» χρησιμοποιεί σταθερό όριο φόρτισης της συσκευής όταν το Battery Monitor μπορεί να το διαβάσει, διαφορετικά 100%. Η προσαρμοστική φόρτιση εξακολουθεί να στοχεύει το 100%. Η «Προσαρμοσμένο» χρησιμοποιεί την επιλεγμένη στάθμη για εκτιμήσεις φόρτισης και προειδοποιήσεις «Επιτεύχθηκε ο στόχος φόρτισης».</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Η αυτόματη ανίχνευση μπορεί να λειτουργήσει σε συσκευές Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme και Sony Xperia, καθώς και σε συσκευές με GrapheneOS ή LineageOS, ιδιαίτερα όταν υπάρχει πρόσβαση root ή Shizuku. Βασίζεται σε σήματα λογισμικού, επομένως η διαθεσιμότητα και η ακρίβεια δεν είναι εγγυημένες ούτε για τους κατασκευαστές που αναφέρονται. Μπορεί επίσης να λειτουργήσει σε μη δοκιμασμένα μοντέλα ή εκδόσεις λειτουργικού αυτών των οικογενειών, αλλά συσκευές άλλων κατασκευαστών δεν ανιχνεύονται αυτόματα προς το παρόν.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Όριο φόρτισης συσκευής: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Προσαρμοσμένος στόχος</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">Προσαρμοσμένος στόχος φόρτισης</string>
     <string name="pref_custom_charging_target_help" formatted="false">Ορίστε το τελικό επίπεδο των εκτιμήσεων φόρτισης όταν ο «Στόχος φόρτισης» είναι «Προσαρμοσμένο».</string>
     <string name="pref_discharging_target" formatted="false">Στόχος αποφόρτισης</string>
-    <string name="pref_discharging_target_help" formatted="false">Ορίστε το τελικό σημείο των εκτιμήσεων εκφόρτισης και των προειδοποιήσεων «Επιτεύχθηκε όριο εκφόρτισης». Κάτω από αυτή τη στάθμη, οι εκτιμήσεις χρόνου συνεχίζουν προς το 0%. Οι προειδοποιήσεις χαμηλής μπαταρίας με δικό τους όριο παραμένουν ανεξάρτητες.</string>
+    <string name="pref_discharging_target_help" formatted="false">Ορίστε το τελικό σημείο των εκτιμήσεων εκφόρτισης και των προειδοποιήσεων «Επιτεύχθηκε ο στόχος εκφόρτισης». Κάτω από αυτή τη στάθμη, οι εκτιμήσεις χρόνου συνεχίζουν προς το 0%. Οι προειδοποιήσεις χαμηλής μπαταρίας με δικό τους όριο παραμένουν ανεξάρτητες.</string>
     <string name="pref_target_level_summary" formatted="true">Εκτίμηση έως %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Κύρια ειδοποίηση</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Διαχείριση Κύριου Καναλιού</string>
     <string name="pref_cat_notification_content" formatted="false">Περιεχόμενο</string>
     <string name="pref_top_line_content" formatted="false">Περιεχόμενο κορυφαίας γραμμής</string>
-    <string name="pref_top_line_content_help" formatted="false">Επιλέξτε αν η επάνω γραμμή ειδοποίησης εμφανίζει τον εκτιμώμενο χρόνο που απομένει, τον χρόνο από την αλλαγή κατάστασης ή τα επιλεγμένα «Ζωτικά Σημεία».</string>
+    <string name="pref_top_line_content_help" formatted="false">Επιλέξτε αν η επάνω γραμμή ειδοποίησης εμφανίζει την επιλογή «Χρόνος που απομένει» ως εκτίμηση, «Χρόνος από την αλλαγή κατάστασης» ή τα επιλεγμένα «Ζωτικά Σημεία».</string>
     <string name="pref_bottom_line_content" formatted="false">Περιεχόμενο κατώτατης γραμμής</string>
     <string name="pref_bottom_line_content_help" formatted="false">Έχετε τις ίδιες επιλογές για την κάτω γραμμή όπως και για την επάνω γραμμή.</string>
     <string name="time_remaining" formatted="false">Χρόνος που απομένει</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Ειδοποιήσεις</string>
     <string name="alarm_settings_help" formatted="false">Μπορείτε να ρυθμίσετε τον Battery Monitor να σας ενημερώνει όταν το επίπεδο της μπαταρίας φτάνει σε ένα συγκεκριμένο επίπεδο (π.χ, όταν η μπαταρία φορτίζεται πλήρως ή όταν το επίπεδο της μπαταρίας πέφτει κάτω από 20%)</string>
     <string name="alarms_overview" formatted="false">Επισκόπηση Ειδιποιήσεων</string>
-    <string name="alarms_overview_help">Και οι οκτώ τύποι προειδοποιήσεων είναι πάντα διαθέσιμοι. Ενεργοποιήστε συμβάντα απευθείας ή χρησιμοποιήστε την «Προσθήκη ορίου» κάτω από τύπο φορτίου ή θερμοκρασίας. Τα νέα όρια ενεργοποιούνται μετά την αποθήκευση. Πατήστε μια τιμή για επεξεργασία· η επεξεργασία διατηρεί την κατάσταση ενεργοποίησής της. Οι ανενεργές τιμές παραμένουν στη λίστα. Η διαγραφή ζητά επιβεβαίωση. Ο ήχος και η δόνηση είναι κοινά ανά τύπο στις ρυθμίσεις ειδοποιήσεων Android. Οι υπάρχουσες διπλότυπες εγγραφές εμφανίζονται ως μία λογική προειδοποίηση· η αλλαγή κατάστασης ή η διαγραφή επηρεάζει όλα τα αντίγραφα. Οι προειδοποιήσεις φόρτισης και εκφόρτισης ακολουθούν τους στόχους εκτίμησης και δεν ελέγχουν τη φόρτιση. Ένα αποκλεισμένο κανάλι ή η σταματημένη παρακολούθηση δεν αλλάζουν τους αποθηκευμένους διακόπτες.</string>
+    <string name="alarms_overview_help">Και οι οκτώ τύποι προειδοποιήσεων είναι πάντα διαθέσιμοι. Ενεργοποιήστε συμβάντα απευθείας ή χρησιμοποιήστε την «Προσθήκη ορίου» κάτω από τύπο φορτίου ή θερμοκρασίας. Τα νέα όρια ενεργοποιούνται μετά την αποθήκευση. Πατήστε μια τιμή για επεξεργασία· η επεξεργασία διατηρεί την κατάσταση ενεργοποίησής της. Οι ανενεργές τιμές παραμένουν στη λίστα. Η «Διαγραφή Ειδοποίησης» ζητά επιβεβαίωση. Ο ήχος και η δόνηση είναι κοινά ανά τύπο στις ρυθμίσεις ειδοποιήσεων Android. Οι υπάρχουσες διπλότυπες εγγραφές εμφανίζονται ως μία λογική προειδοποίηση· η αλλαγή κατάστασης ή η διαγραφή επηρεάζει όλα τα αντίγραφα. Οι προειδοποιήσεις φόρτισης και εκφόρτισης ακολουθούν τους στόχους εκτίμησης και δεν ελέγχουν τη φόρτιση. Ένα αποκλεισμένο κανάλι ή η σταματημένη παρακολούθηση δεν αλλάζουν τους αποθηκευμένους διακόπτες.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d ενεργή προειδοποίηση</item>
         <item quantity="other">%1$d ενεργές προειδοποιήσεις</item>
@@ -521,7 +521,7 @@
     <string name="battery_optimized" formatted="false">Παρακολούθηση στο παρασκήνιο</string>
     <string name="battery_optimized_message" formatted="false">Η απεριόριστη εκτέλεση στο παρασκήνιο μπορεί να βελτιώσει την αξιοπιστία της παρακολούθησης. Η βελτιστοποίηση μπαταρίας του Android μπορεί να καθυστερεί ενημερώσεις και ειδοποιήσεις.\n
     \n
-    Η απεριόριστη εκτέλεση μπορεί να αυξήσει την κατανάλωση μπαταρίας στο παρασκήνιο. Μπορείτε να το αλλάξετε αργότερα στις «Ρυθμίσεις» Android → «Εφαρμογές» → «Battery Monitor» → «Μπαταρία».</string>
+    Η απεριόριστη εκτέλεση μπορεί να αυξήσει την κατανάλωση μπαταρίας στο παρασκήνιο. Μπορείτε να το αλλάξετε αργότερα στις «Ρυθμίσεις» Android → «Εφαρμογές» → «Battery Monitor» → «Μπαταρία». Τα ονόματα των μενού διαφέρουν ανάλογα με τη συσκευή.</string>
     <string name="pref_cat_autostart" formatted="false">Αυτόματη Ενεργοποίηση</string>
     <string name="pref_autostart_at_boot" formatted="false">Αυτόματη Ενεργοποίηση μετά από Επανεκκίνηση</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Εκκίνηση Battery Monitor όταν η συσκευή επανεκκινά:</string>
@@ -540,48 +540,48 @@
     <string name="shizuku_not_running" formatted="false">Εκκινήστε το Shizuku για να παραχωρήσετε στο Battery Monitor προνομιακή πρόσβαση</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">Παραχωρήστε στο Battery Monitor άδεια χειροκίνητα στο Shizuku</string>
 
-    <string name="advanced_action_refresh" formatted="false">Ανανέωση</string>
-    <string name="advanced_status_loading" formatted="false">Φόρτωση προχωρημένων στατιστικών μπαταρίας…</string>
-    <string name="advanced_status_no_access" formatted="false">Απαιτείται root ή Shizuku για την εμφάνιση προχωρημένων στατιστικών μπαταρίας.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">Αναμονή για άδεια Shizuku…</string>
-    <string name="advanced_status_no_stats" formatted="false">Δεν υπάρχουν διαθέσιμα προχωρημένα στατιστικά μπαταρίας σε αυτή τη συσκευή αυτή τη στιγμή.</string>
-    <string name="advanced_value_not_available" formatted="false">Μη διαθέσιμο</string>
-    <string name="advanced_help_overview" formatted="false">Τα «Διαγνωστικά» συνδυάζουν την αξιοπιστία παρακολούθησης, τα αποθηκευμένα δεδομένα πρόβλεψης και τα δεδομένα μπαταρίας στις καρτέλες «Λειτουργία εφαρμογής», «Μπαταρία», «Φόρτιση» και «Ακατέργαστα». Τα δεδομένα Android είναι διαθέσιμα χωρίς root. Πρόσθετα δεδομένα εξαρτώνται από τη συσκευή και τις άδειες που διαθέτει το Battery Monitor.</string>
-    <string name="advanced_section_counters" formatted="false">Μετρητές</string>
-    <string name="advanced_help_counters" formatted="false">Οι μετρήσεις μπαταρίας επισημαίνονται και μορφοποιούνται ως υπολειπόμενο φορτίο σε mAh, ρεύμα σε mA, ενέργεια σε mWh, τάση σε V, θερμοκρασία στην επιλεγμένη μονάδα και ισχύς σε W. Ο πολλαπλασιαστής ρεύματος εφαρμόζεται και στην υπολογισμένη ισχύ. Το μέσο ρεύμα και ο αριθμός κύκλων εξαρτώνται από την υποστήριξη της συσκευής.</string>
-    <string name="advanced_field_charge_counter" formatted="false">Εκτιμώμενο εναπομένον φορτίο</string>
-    <string name="advanced_field_current_now" formatted="false">Τρέχον ρεύμα</string>
-    <string name="advanced_field_current_average" formatted="false">Μέσο ρεύμα</string>
-    <string name="advanced_field_energy_counter" formatted="false">Μετρητής ενέργειας</string>
-    <string name="advanced_section_capacity" formatted="false">Χωρητικότητα</string>
-    <string name="advanced_help_capacity" formatted="false">Η «Χωρητικότητα» εμφανίζει χωρητικότητα πλήρους φόρτισης, ονομαστική χωρητικότητα και εκτιμώμενη υγεία. Η εκτιμώμενη υγεία υπολογίζεται ως χωρητικότητα πλήρους φόρτισης δια την ονομαστική χωρητικότητα, επομένως είναι τόσο ακριβής όσο και οι τιμές που αναφέρει η συσκευή.</string>
-    <string name="advanced_field_cycle_count" formatted="false">Αριθμός κύκλων</string>
-    <string name="advanced_field_reported_capacity" formatted="false">Αναφερόμενη χωρητικότητα</string>
-    <string name="advanced_field_state_of_health" formatted="false">Κατάσταση υγείας</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">Χωρητικότητα πλήρους φόρτισης</string>
-    <string name="advanced_field_design_capacity" formatted="false">Ονομαστική χωρητικότητα</string>
-    <string name="advanced_field_estimated_health" formatted="false">Εκτιμώμενη υγεία</string>
+    <string name="diag_action_refresh" formatted="false">Ανανέωση</string>
+    <string name="diag_status_loading" formatted="false">Φόρτωση προχωρημένων στατιστικών μπαταρίας…</string>
+    <string name="diag_status_no_access" formatted="false">Απαιτείται root ή Shizuku για την εμφάνιση προχωρημένων στατιστικών μπαταρίας.</string>
+    <string name="diag_status_waiting_permission" formatted="false">Αναμονή για άδεια Shizuku…</string>
+    <string name="diag_status_no_stats" formatted="false">Δεν υπάρχουν διαθέσιμα προχωρημένα στατιστικά μπαταρίας σε αυτή τη συσκευή αυτή τη στιγμή.</string>
+    <string name="diag_value_not_available" formatted="false">Μη διαθέσιμο</string>
+    <string name="diag_help_overview" formatted="false">Τα «Διαγνωστικά» συνδυάζουν την αξιοπιστία παρακολούθησης, τα αποθηκευμένα δεδομένα πρόβλεψης και τα δεδομένα μπαταρίας στις καρτέλες «Λειτουργία εφαρμογής», «Μπαταρία», «Φόρτιση» και «Ακατέργαστα». Τα δεδομένα Android είναι διαθέσιμα χωρίς root. Πρόσθετα δεδομένα εξαρτώνται από τη συσκευή και τις άδειες που διαθέτει το Battery Monitor.</string>
+    <string name="diag_section_counters" formatted="false">Μετρητές</string>
+    <string name="diag_help_counters" formatted="false">Οι μετρήσεις μπαταρίας επισημαίνονται και μορφοποιούνται ως υπολειπόμενο φορτίο σε mAh, ρεύμα σε mA, ενέργεια σε mWh, τάση σε V, θερμοκρασία στην επιλεγμένη μονάδα και ισχύς σε W. Ο πολλαπλασιαστής ρεύματος εφαρμόζεται και στην υπολογισμένη ισχύ. Το μέσο ρεύμα και ο αριθμός κύκλων εξαρτώνται από την υποστήριξη της συσκευής.</string>
+    <string name="diag_field_charge_counter" formatted="false">Εκτιμώμενο εναπομένον φορτίο</string>
+    <string name="diag_field_current_now" formatted="false">Τρέχον ρεύμα</string>
+    <string name="diag_field_current_average" formatted="false">Μέσο ρεύμα</string>
+    <string name="diag_field_energy_counter" formatted="false">Μετρητής ενέργειας</string>
+    <string name="diag_section_capacity" formatted="false">Χωρητικότητα</string>
+    <string name="diag_help_capacity" formatted="false">Η «Χωρητικότητα» εμφανίζει χωρητικότητα πλήρους φόρτισης, ονομαστική χωρητικότητα και εκτιμώμενη υγεία. Η εκτιμώμενη υγεία υπολογίζεται ως χωρητικότητα πλήρους φόρτισης δια την ονομαστική χωρητικότητα, επομένως είναι τόσο ακριβής όσο και οι τιμές που αναφέρει η συσκευή.</string>
+    <string name="diag_field_cycle_count" formatted="false">Αριθμός κύκλων</string>
+    <string name="diag_field_reported_capacity" formatted="false">Αναφερόμενη χωρητικότητα</string>
+    <string name="diag_field_state_of_health" formatted="false">Κατάσταση υγείας</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">Χωρητικότητα πλήρους φόρτισης</string>
+    <string name="diag_field_design_capacity" formatted="false">Ονομαστική χωρητικότητα</string>
+    <string name="diag_field_estimated_health" formatted="false">Εκτιμώμενη υγεία</string>
     <string name="diag_capacity_inconsistent">Η αναφερόμενη πλήρης χωρητικότητα υπερβαίνει τη χωρητικότητα σχεδιασμού. Δεν μπορεί να υπολογιστεί αξιόπιστη εκτίμηση υγείας από αυτές τις μετρήσεις.</string>
-    <string name="advanced_field_capacity_level" formatted="false">Επίπεδο χωρητικότητας</string>
+    <string name="diag_field_capacity_level" formatted="false">Επίπεδο χωρητικότητας</string>
     <string name="diag_capacity_critical">Κρίσιμη</string>
     <string name="diag_capacity_low">Χαμηλή</string>
     <string name="diag_capacity_high">Υψηλή</string>
-    <string name="advanced_section_charging" formatted="false">Φόρτιση</string>
-    <string name="advanced_help_charging" formatted="false">Η «Φόρτιση» εμφανίζει τιμές που σχετίζονται με την ενεργή διαδρομή φόρτισης, όπως μέγιστο ρεύμα ή τάση φόρτισης, πολιτική φόρτισης, κατάσταση φόρτισης και επίπεδο χωρητικότητας. Αυτά τα πεδία μπορεί να αλλάζουν μεταξύ φορτιστών και τρόπων φόρτισης.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">Υπολειπόμενος χρόνος φόρτισης</string>
-    <string name="advanced_field_max_charging_current" formatted="false">Μέγιστο ρεύμα φόρτισης</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">Μέγιστη τάση φόρτισης</string>
-    <string name="advanced_field_charging_policy" formatted="false">Πολιτική φόρτισης</string>
+    <string name="diag_section_charging" formatted="false">Φόρτιση</string>
+    <string name="diag_help_charging" formatted="false">Η «Φόρτιση» εμφανίζει τιμές που σχετίζονται με την ενεργή διαδρομή φόρτισης, όπως μέγιστο ρεύμα ή τάση φόρτισης, πολιτική φόρτισης, κατάσταση φόρτισης και επίπεδο χωρητικότητας. Αυτά τα πεδία μπορεί να αλλάζουν μεταξύ φορτιστών και τρόπων φόρτισης.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">Υπολειπόμενος χρόνος φόρτισης</string>
+    <string name="diag_field_max_charging_current" formatted="false">Μέγιστο ρεύμα φόρτισης</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">Μέγιστη τάση φόρτισης</string>
+    <string name="diag_field_charging_policy" formatted="false">Πολιτική φόρτισης</string>
     <string name="diag_policy_default">Προεπιλογή</string>
     <string name="diag_policy_fixed_limit">Προστασία μπαταρίας (σταθερό όριο)</string>
     <string name="diag_policy_adaptive_ac">Προσαρμοστική φόρτιση</string>
-    <string name="advanced_field_charging_state" formatted="false">Κατάσταση φόρτισης</string>
+    <string name="diag_field_charging_state" formatted="false">Κατάσταση φόρτισης</string>
     <string name="diag_charging_too_cold">Πολύ κρύα για φόρτιση</string>
     <string name="diag_charging_too_hot">Πολύ ζεστή για φόρτιση</string>
-    <string name="advanced_section_service" formatted="false">Υπηρεσία μπαταρίας Android</string>
-    <string name="advanced_help_service" formatted="false">Τα «Ακατέργαστα» περιλαμβάνουν τα αρχικά ονόματα και τις τιμές από τις εκπομπές μπαταρίας Android και, όταν είναι προσβάσιμο, το dumpsys battery. Μπορούν να περιλαμβάνουν πηγή φόρτισης, κατάσταση μπαταρίας, θερμοκρασία, τάση και άλλες καταστάσεις της υπηρεσίας μπαταρίας.</string>
-    <string name="advanced_section_sysfs" formatted="false">Αρχεία power_supply του πυρήνα</string>
-    <string name="advanced_help_sysfs" formatted="false">Τα «Ακατέργαστα» δείχνουν τα αρχικά ονόματα και τις τιμές από το /sys/class/power_supply, συμπεριλαμβανομένων πολυγραμμικών τιμών. Αναζητήστε με κλειδί και πατήστε μια γραμμή για προβολή και αντιγραφή ολόκληρης της τιμής. Χρησιμοποιήστε την «Ανανέωση» για νέες μετρήσεις. Το Battery Monitor δοκιμάζει ανάγνωση και με τις κανονικές άδειες Android, χωρίς root ή Shizuku.</string>
+    <string name="diag_section_service" formatted="false">Υπηρεσία μπαταρίας Android</string>
+    <string name="diag_help_service" formatted="false">Τα «Ακατέργαστα» περιλαμβάνουν τα αρχικά ονόματα και τις τιμές από τις εκπομπές μπαταρίας Android και, όταν είναι προσβάσιμο, το dumpsys battery. Μπορούν να περιλαμβάνουν πηγή φόρτισης, κατάσταση μπαταρίας, θερμοκρασία, τάση και άλλες καταστάσεις της υπηρεσίας μπαταρίας.</string>
+    <string name="diag_section_sysfs" formatted="false">Αρχεία power_supply του πυρήνα</string>
+    <string name="diag_help_sysfs" formatted="false">Τα «Ακατέργαστα» δείχνουν τα αρχικά ονόματα και τις τιμές από το /sys/class/power_supply, συμπεριλαμβανομένων πολυγραμμικών τιμών. Αναζητήστε με κλειδί και πατήστε μια γραμμή για προβολή και αντιγραφή ολόκληρης της τιμής. Χρησιμοποιήστε την «Ανανέωση» για νέες μετρήσεις. Το Battery Monitor δοκιμάζει ανάγνωση και με τις κανονικές άδειες Android, χωρίς root ή Shizuku.</string>
     <string name="diag_fuel_gauge">Μετρητής φορτίου μπαταρίας</string>
     <string name="diag_mains_supply">Τροφοδοσία AC</string>
     <string name="diag_charging_source">Πηγή φόρτισης</string>
@@ -610,22 +610,23 @@
     <string name="diag_settled_input_current">Σταθεροποιημένο ρεύμα εισόδου</string>
     <string name="diag_input_voltage">Τάση εισόδου</string>
     <string name="diag_input_voltage_limit">Όριο τάσης εισόδου</string>
-    <string name="advanced_section_metadata" formatted="false">Μεταδεδομένα</string>
-    <string name="advanced_help_metadata" formatted="false">Τα «Ακατέργαστα» περιλαμβάνουν επίσης τα αρχικά ονόματα και τις τιμές ιδιοτήτων BatteryManager, μαζί με διαθέσιμους μετρητές και μετρήσεις ρεύματος. Πρόσθετες ιδιότητες, όπως στοιχεία κατασκευής ή κατάσταση αντικατάστασης, εξαρτώνται από την έκδοση Android, την υποστήριξη της συσκευής και τις άδειες.</string>
+    <string name="diag_section_metadata" formatted="false">Μεταδεδομένα</string>
+    <string name="diag_help_metadata" formatted="false">Τα «Ακατέργαστα» περιλαμβάνουν επίσης τα αρχικά ονόματα και τις τιμές ιδιοτήτων BatteryManager, μαζί με διαθέσιμους μετρητές και μετρήσεις ρεύματος. Πρόσθετες ιδιότητες, όπως στοιχεία κατασκευής ή κατάσταση αντικατάστασης, εξαρτώνται από την έκδοση Android, την υποστήριξη της συσκευής και τις άδειες.</string>
     <string name="diag_raw">Ακατέργαστα</string>
     <string name="diag_search_key">Αναζήτηση κλειδιών</string>
     <string name="diag_no_keys">Δεν υπάρχουν κλειδιά που ταιριάζουν στα διαθέσιμα δεδομένα</string>
     <string name="diag_raw_values">Ακατέργαστες τιμές</string>
     <string name="diag_last_checked">Τελευταίος έλεγχος: %1$s</string>
     <string name="diag_privileged_stale">Εμφανίζονται οι προηγούμενες προνομιακές μετρήσεις. Ανανεώστε για νέα προσπάθεια.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">Αντιμετώπιση προβλημάτων</string>
-    <string name="advanced_help_troubleshooting" formatted="false">Τα δεδομένα Android συλλέγονται αυτόματα στα «Διαγνωστικά». Για πρόσθετα δεδομένα root ή Shizuku, ενεργοποιήστε την προνομιακή πρόσβαση στις «Πρόσθετες πηγές». Το Battery Monitor δοκιμάζει πρώτα root και μετά Shizuku. Το Shizuku πρέπει να εκτελείται και να έχει δοθεί άδεια. Τα πεδία που λείπουν παραμένουν μη διαθέσιμα· οι αποτυχημένες ανανεώσεις διατηρούν το προηγούμενο στιγμιότυπο και το επισημαίνουν ως μη ενημερωμένο.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">Αντιμετώπιση προβλημάτων</string>
+    <string name="diag_help_troubleshooting" formatted="false">Τα δεδομένα Android συλλέγονται αυτόματα στα «Διαγνωστικά». Για πρόσθετα δεδομένα root ή Shizuku, ενεργοποιήστε την προνομιακή πρόσβαση στις «Πρόσθετες πηγές». Το Battery Monitor δοκιμάζει πρώτα root και μετά Shizuku. Το Shizuku πρέπει να εκτελείται και να έχει δοθεί άδεια. Τα πεδία που λείπουν παραμένουν μη διαθέσιμα· οι αποτυχημένες ανανεώσεις διατηρούν το προηγούμενο στιγμιότυπο και το επισημαίνουν ως μη ενημερωμένο.</string>
 
     <string name="diagnostics" formatted="false">Διαγνωστικά</string>
     <string name="diagnostics_summary" formatted="false">Έλεγχος αδειών και αξιοπιστίας παρακολούθησης και δημιουργία αναφοράς αντιμετώπισης προβλημάτων</string>
     <string name="diag_overview">Λειτουργία εφαρμογής</string>
     <string name="diagnostics_help_title" formatted="false">Πώς βοηθούν τα διαγνωστικά</string>
     <string name="diagnostics_help_overview" formatted="false">Η «Παρακολούθηση στο παρασκήνιο» ελέγχει άδειες και αξιοπιστία παρακολούθησης. Χρησιμοποιήστε τα χειριστήρια για έναρξη ή διακοπή παρακολούθησης, αλλαγή καταγραφής αποσφαλμάτωσης, άνοιγμα ρυθμίσεων βελτιστοποίησης μπαταρίας και ειδοποιήσεων ή δημιουργία αναφοράς αντιμετώπισης προβλημάτων. Δεν υποδεικνύει κάθε μη διαθέσιμη μέτρηση πρόβλημα άδειας· ορισμένες συσκευές δεν την παρέχουν.</string>
+    <string name="monitoring_help_overview" formatted="false">Ελέγξτε την άδεια ειδοποιήσεων, την πρόσβαση root ή Shizuku, την υπηρεσία παρακολούθησης και τη βάση δεδομένων ιστορικού. Πατήστε έναν έλεγχο για να ζητήσετε πρόσβαση ή να τον εκτελέσετε. Η επιλογή «Έναρξη παρακολούθησης» είναι διαθέσιμη όταν η παρακολούθηση έχει σταματήσει, ενώ η επιλογή «Διακοπή παρακολούθησης» όταν εκτελείται. Οι διαθέσιμες μετρήσεις εξαρτώνται από την υποστήριξη της συσκευής και την πρόσβαση που έχει παραχωρηθεί. Ο έλεγχος υπηρεσίας απαιτεί ενεργή παρακολούθηση· ο έλεγχος βάσης δεδομένων απαιτεί καταγραφή ιστορικού («Ρυθμίσεις» → «Για προχωρημένους»). Για να χρησιμοποιήσετε πρόσθετες μετρήσεις, ενεργοποιήστε την επιλογή «Χρήση προνομιακής πρόσβασης» στις «Ρυθμίσεις» → «Για προχωρημένους». Η επιλογή «Ρυθμίσεις κατασκευαστή» είναι διαθέσιμη μόνο σε υποστηριζόμενες συσκευές.</string>
     <string name="diagnostics_monitoring" formatted="false">Παρακολούθηση στο παρασκήνιο</string>
     <string name="diag_monitor_operation">Λειτουργία παρακολούθησης</string>
     <string name="diag_heartbeat">Τελευταίο σήμα λειτουργίας</string>
@@ -707,6 +708,7 @@
     <string name="diag_report_privacy">Εξαιρούνται από προεπιλογή. Αυτά τα δεδομένα ενδέχεται να περιέχουν προσωπικές πληροφορίες. Ελέγξτε την προεπισκόπηση πριν από την αντιγραφή ή αποθήκευση.</string>
 
     <string name="charging_diagnostics_title" formatted="false">Διαγνωστικά ορίου φόρτισης OEM</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Ανοίξτε τα εργαλεία στιγμιοτύπων και σύγκρισης για να διερευνήσετε πώς το Battery Monitor εντοπίζει το όριο φόρτισης της συσκευής. Οδηγίες προετοιμασίας υπάρχουν στη βοήθεια της ίδιας της οθόνης διαγνωστικών OEM.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Για μια χρήσιμη αναφορά, ανοίξτε τη «Βοήθεια» και ακολουθήστε τα βήματα προετοιμασίας πριν από τη λήψη στιγμιότυπων.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Με προνομιακή πρόσβαση ενδέχεται να είναι διαθέσιμες περισσότερες διαγνωστικές πληροφορίες. Παραχωρήστε πρόσβαση μέσω Shizuku ή root και ενεργοποιήστε την προνομιακή πρόσβαση στο «Ρυθμίσεις» → «Για προχωρημένους» → «Χρήση προνομιακής πρόσβασης» για μια πιο χρήσιμη αναφορά ορίου φόρτισης OEM.</string>
     <string name="charging_diagnostics_capture" formatted="false">Λήψη στιγμιότυπου</string>

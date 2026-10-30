@@ -126,21 +126,17 @@ class DiagnosticsModelTest {
             serviceValues.add("false")
         }
         assertEquals(
-            row,
-            mergedDiagnosticGroups(
-                listOf(older, snapshot),
-                1
+            row, mergedDiagnosticGroups(
+                listOf(older, snapshot), 1
             )[2].rows.single { it.rawKey == "fast_charging" })
         val groups = DiagnosticsProjectionCache().groups(
             listOf(older, snapshot), DiagnosticsFormat(1, false, Locale.US), tab = 2
         )
-        assertEquals(R.string.advanced_section_charging, groups.single().title)
+        assertEquals(R.string.diag_section_charging, groups.single().title)
         assertEquals(row, groups.single().rows.single { it.rawKey == "fast_charging" })
         assertTrue(
             diagnosticReport(
-                groups,
-                { it.toString() },
-                false
+                groups, { it.toString() }, false
             ).contains("fast_charging: ${R.string.yes}")
         )
 
@@ -156,8 +152,7 @@ class DiagnosticsModelTest {
             snapshot.serviceValues[1] = plugged
             snapshot.serviceValues[2] = status
             val missing = normalizedDiagnosticGroups(
-                snapshot,
-                1
+                snapshot, 1
             )[2].rows.single { it.rawKey == "fast_charging" }
             assertNull(formattedDiagnosticValue(missing) { it.toString() })
         }
@@ -166,9 +161,9 @@ class DiagnosticsModelTest {
     @Test
     fun `privileged access only reports yes after a successful privileged reading`() {
         val enabled = DiagnosticsState(privilegedEnabled = true)
-        assertEquals(R.string.advanced_status_no_access, enabled.privilegedAccessStatus)
+        assertEquals(R.string.diag_status_no_access, enabled.privilegedAccessStatus)
         assertEquals(
-            R.string.advanced_status_no_access, enabled.copy(loading = true).privilegedAccessStatus
+            R.string.diag_status_no_access, enabled.copy(loading = true).privilegedAccessStatus
         )
         val available = enabled.copy(advanced = acquiredSnapshot {
             accessMethod = AdvancedBatterySnapshot.ACCESS_ROOT
@@ -176,8 +171,8 @@ class DiagnosticsModelTest {
         })
         assertEquals(R.string.yes, available.privilegedAccessStatus)
         assertEquals(
-            R.string.advanced_status_no_access, available.copy(
-                status = R.string.advanced_status_no_access, stale = true
+            R.string.diag_status_no_access, available.copy(
+                status = R.string.diag_status_no_access, stale = true
             ).privilegedAccessStatus
         )
         assertEquals(
@@ -205,9 +200,9 @@ class DiagnosticsModelTest {
         val overview = disabled.startingRefresh(enabled = true, statsVisible = false)
         assertTrue(overview.loading)
         assertTrue(overview.privilegedEnabled)
-        assertEquals(R.string.advanced_status_no_access, overview.privilegedAccessStatus)
+        assertEquals(R.string.diag_status_no_access, overview.privilegedAccessStatus)
         val statistics = overview.startingRefresh(enabled = true, statsVisible = true)
-        assertEquals(R.string.advanced_status_loading, statistics.privilegedAccessStatus)
+        assertEquals(R.string.diag_status_loading, statistics.privilegedAccessStatus)
     }
 
     @Test
@@ -218,7 +213,7 @@ class DiagnosticsModelTest {
             currentNowUa = -900000
         }
         for (pending in listOf(
-            R.string.advanced_status_loading, R.string.advanced_status_waiting_permission
+            R.string.diag_status_loading, R.string.diag_status_waiting_permission
         )) {
             val stopped = DiagnosticsState(
                 basic = basic,
@@ -235,8 +230,7 @@ class DiagnosticsModelTest {
             assertEquals(advanced, stopped.advanced)
             assertEquals(R.string.yes, stopped.privilegedAccessStatus)
             assertEquals(
-                R.string.advanced_status_no_access,
-                stopped.copy(advanced = null).privilegedAccessStatus
+                R.string.diag_status_no_access, stopped.copy(advanced = null).privilegedAccessStatus
             )
         }
     }
@@ -296,15 +290,15 @@ class DiagnosticsModelTest {
             val groups = diagnosticGroups(snapshot, 1000)
             assertEquals(
                 "-900 mA",
-                groups[0].rows.single { it.label == R.string.advanced_field_current_now }.value
+                groups[0].rows.single { it.label == R.string.diag_field_current_now }.value
             )
             assertEquals(
                 "2000 mA",
-                groups[2].rows.single { it.label == R.string.advanced_field_max_charging_current }.value
+                groups[2].rows.single { it.label == R.string.diag_field_max_charging_current }.value
             )
             assertEquals(
                 "-900",
-                groups[0].rows.single { it.label == R.string.advanced_field_current_now }.rawValue
+                groups[0].rows.single { it.label == R.string.diag_field_current_now }.rawValue
             )
         } finally {
             Locale.setDefault(previousLocale)
@@ -716,17 +710,15 @@ class DiagnosticsModelTest {
                 )
             })
             val current = charging.single { it.rawKey == "usb/current_max" }
-            assertEquals(R.string.advanced_field_max_charging_current, current.label)
+            assertEquals(R.string.diag_field_max_charging_current, current.label)
             assertEquals("1000 mA", current.value)
             assertEquals("1000000\n", current.rawValue)
             assertEquals("Root", current.accessMethod)
             assertEquals(200L, current.observedAtMillis)
             assertEquals("/sys/class/power_supply / usb/current_max", current.source)
             assertEquals(
-                R.string.yes,
-                normalizedDiagnosticGroups(
-                    older,
-                    1
+                R.string.yes, normalizedDiagnosticGroups(
+                    older, 1
                 )[2].rows.single { it.rawKey == "fast_charging" }.valueLabel
             )
             assertEquals(
@@ -913,7 +905,7 @@ class DiagnosticsModelTest {
     @Test
     fun `missing normalized readings explain their requirements while available and raw details stay unchanged`() {
         val row = DiagnosticRow(
-            R.string.advanced_field_current_average,
+            R.string.diag_field_current_average,
             "current_average",
             null,
             null,

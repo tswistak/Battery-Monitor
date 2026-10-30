@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">Deze schatting gebruikt de ingestelde voorspellingsmethode van Battery Monitor. Het doel ervan regelt het opladen of afsluiten niet.</string>
     <string name="time_estimates_settings" formatted="false">Tijdsschattingen</string>
     <string name="time_estimates_settings_summary" formatted="false">Kies hoe de resterende tijd wordt berekend en welke batterijniveaus het doel zijn</string>
-    <string name="time_estimates_settings_help" formatted="false">Kies hoe Battery Monitor de resterende tijd schat en de doelbatterijniveaus. Doelen gelden ook voor alarmen “Laadlimiet bereikt” en “Ontlaadlimiet bereikt”. Battery Monitor start of stopt het opladen niet.</string>
+    <string name="time_estimates_settings_help" formatted="false">Kies hoe Battery Monitor de resterende tijd schat en de doelbatterijniveaus. Doelen gelden ook voor alarmen “Laaddoel bereikt” en “Ontlaaddoel bereikt”. Battery Monitor start of stopt het opladen niet.</string>
     <string name="pref_cat_predictor" formatted="false">Schattingen resterende tijd</string>
     <string name="pref_prediction_type" formatted="false">Type schatting</string>
     <string name="pref_prediction_type_help" formatted="false">“Gevoelig” gebruikt de recente snelheid over vijf minuten. “Conservatief”, de standaard, combineert recente snelheden met het aangeleerde langetermijngemiddelde om plotselinge veranderingen te beperken. “Sinds statuswijziging” gebruikt de huidige laad- of ontlaadsessie. “Langetermijngemiddelde” gebruikt de aangeleerde snelheid voor ontladen of de actieve laadbron. Tot er voldoende waarnemingen zijn, gebruiken schattingen het opgeslagen gemiddelde of een aanvankelijke standaardwaarde.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">Langetermijngemiddelde</string>
     <string name="pref_cat_target_levels" formatted="false">Doelniveaus</string>
     <string name="pref_charging_target_mode" formatted="false">Laaddoel</string>
-    <string name="pref_charging_target_mode_help" formatted="false">“Automatisch (aanbevolen)” gebruikt een vaste laadlimiet van het apparaat als Battery Monitor deze kan lezen, anders 100%. Adaptief opladen blijft gericht op 100%. “Aangepast” gebruikt je gekozen niveau voor laadschattingen en alarmen “Laadlimiet bereikt”.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">“Automatisch (aanbevolen)” gebruikt een vaste laadlimiet van het apparaat als Battery Monitor deze kan lezen, anders 100%. Adaptief opladen blijft gericht op 100%. “Aangepast” gebruikt je gekozen niveau voor laadschattingen en alarmen “Laaddoel bereikt”.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Automatische detectie kan werken op Google Pixel-, Samsung Galaxy-, Xiaomi/Redmi/POCO-, OnePlus/Oppo/Realme- en Sony Xperia-apparaten, en op apparaten met GrapheneOS of LineageOS, vooral wanneer root- of Shizuku-toegang beschikbaar is. De detectie steunt op softwaresignalen; beschikbaarheid en nauwkeurigheid zijn daarom ook bij de genoemde fabrikanten niet gegarandeerd. Ongeteste modellen of OS-versies binnen deze families kunnen eveneens werken, maar apparaten van andere fabrikanten worden momenteel niet automatisch gedetecteerd.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Laadlimiet van apparaat: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Aangepast doel</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">Aangepast laaddoel</string>
     <string name="pref_custom_charging_target_help" formatted="false">Stel het eindniveau voor laadschattingen in wanneer “Laaddoel” “Aangepast” is.</string>
     <string name="pref_discharging_target" formatted="false">Ontlaaddoel</string>
-    <string name="pref_discharging_target_help" formatted="false">Stel het eindpunt in voor ontlaadschattingen en alarmen “Ontlaadlimiet bereikt”. Onder dit niveau gaan tijdsschattingen door tot 0%. Alarmen voor een bijna lege batterij met een eigen drempel blijven onafhankelijk.</string>
+    <string name="pref_discharging_target_help" formatted="false">Stel het eindpunt in voor ontlaadschattingen en alarmen “Ontlaaddoel bereikt”. Onder dit niveau gaan tijdsschattingen door tot 0%. Alarmen voor een bijna lege batterij met een eigen drempel blijven onafhankelijk.</string>
     <string name="pref_target_level_summary" formatted="true">Schatten tot %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Hoofdmelding</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Hoofdkanaal beheren</string>
     <string name="pref_cat_notification_content" formatted="false">Inhoud</string>
     <string name="pref_top_line_content" formatted="false">Inhoud van bovenste lijn</string>
-    <string name="pref_top_line_content_help" formatted="false">Kies of de bovenste meldingsregel “Tijd resterend”, “Tijd sinds wijziging in status” of de ingestelde “Gezondheid” toont.</string>
+    <string name="pref_top_line_content_help" formatted="false">Kies of de bovenste meldingsregel de geschatte “Tijd resterend”, “Tijd sinds wijziging in status” of de ingestelde “Gezondheid” toont.</string>
     <string name="pref_bottom_line_content" formatted="false">Inhoud van onderste lijn</string>
     <string name="pref_bottom_line_content_help" formatted="false">Je kunt de onderste regel op dezelfde manier aanpassen als de bovenste regel.</string>
     <string name="time_remaining" formatted="false">Tijd resterend</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Alarmen</string>
     <string name="alarm_settings_help" formatted="false">Je kunt een melding ontvangen als je batterijniveau onder een bepaald punt komt.</string>
     <string name="alarms_overview" formatted="false">Overzicht van alarmen</string>
-    <string name="alarms_overview_help">Alle acht alarmtypen zijn altijd beschikbaar. Schakel gebeurtenissen direct in of gebruik “Drempel toevoegen” onder een laad- of temperatuurtype. Nieuwe drempels worden na opslaan ingeschakeld. Tik op een waarde om deze te bewerken; bewerken behoudt de aan-uitstatus. Uitgeschakelde waarden blijven in de lijst staan. Verwijderen vraagt om bevestiging. Geluid en trillen worden per type gedeeld in de Android-meldingsinstellingen. Bestaande dubbele vermeldingen verschijnen als één logisch alarm; schakelen of verwijderen beïnvloedt alle kopieën. Laad- en ontlaadalarmen volgen schattingsdoelen en regelen het opladen niet. Een geblokkeerd kanaal of gestopte bewaking verandert opgeslagen schakelaars niet.</string>
+    <string name="alarms_overview_help">Alle acht alarmtypen zijn altijd beschikbaar. Schakel gebeurtenissen direct in of gebruik “Drempel toevoegen” onder een laad- of temperatuurtype. Nieuwe drempels worden na opslaan ingeschakeld. Tik op een waarde om deze te bewerken; bewerken behoudt de aan-uitstatus. Uitgeschakelde waarden blijven in de lijst staan. “Alarm verwijderen” vraagt om bevestiging. Geluid en trillen worden per type gedeeld in de Android-meldingsinstellingen. Bestaande dubbele vermeldingen verschijnen als één logisch alarm; schakelen of verwijderen beïnvloedt alle kopieën. Laad- en ontlaadalarmen volgen schattingsdoelen en regelen het opladen niet. Een geblokkeerd kanaal of gestopte bewaking verandert opgeslagen schakelaars niet.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm ingeschakeld</item>
         <item quantity="other">%1$d alarmen ingeschakeld</item>
@@ -521,7 +521,7 @@
     <string name="battery_optimized" formatted="false">Bewaking op de achtergrond</string>
     <string name="battery_optimized_message" formatted="false">Onbeperkte uitvoering op de achtergrond kan de betrouwbaarheid van de bewaking verbeteren. Batterijoptimalisatie van Android kan updates en meldingen vertragen.\n
     \n
-    Onbeperkte uitvoering kan het batterijverbruik op de achtergrond verhogen. Je kunt dit later wijzigen via Android-“instellingen” → “Apps” → “Battery Monitor” → “Batterij”.</string>
+    Onbeperkte uitvoering kan het batterijverbruik op de achtergrond verhogen. Je kunt dit later wijzigen via Android-“instellingen” → “Apps” → “Battery Monitor” → “Batterij”. Menunamen verschillen per apparaat.</string>
     <string name="pref_cat_autostart" formatted="false">Automatisch starten</string>
     <string name="pref_autostart_at_boot" formatted="false">Automatisch starten bij inschakelen</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Starten als het apparaat wordt ingeschakeld:</string>
@@ -540,48 +540,48 @@
     <string name="shizuku_not_running" formatted="false">Start Shizuku om Battery Monitor bevoorrechte toegang te geven</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">Geef Battery Monitor handmatig toestemming in Shizuku</string>
 
-    <string name="advanced_action_refresh" formatted="false">Vernieuwen</string>
-    <string name="advanced_status_loading" formatted="false">Geavanceerde batterijstatistieken laden…</string>
-    <string name="advanced_status_no_access" formatted="false">Root of Shizuku is nodig om geavanceerde batterijstatistieken te tonen.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">Wachten op Shizuku-toestemming…</string>
-    <string name="advanced_status_no_stats" formatted="false">Er zijn momenteel geen geavanceerde batterijstatistieken beschikbaar op dit apparaat.</string>
-    <string name="advanced_value_not_available" formatted="false">Niet beschikbaar</string>
-    <string name="advanced_help_overview" formatted="false">“Diagnostiek” combineert betrouwbaarheid van de bewaking, opgeslagen voorspellingsgegevens en batterijgegevens in de tabbladen “Appwerking”, “Batterij”, “Laden” en “Ruwe gegevens”. Android-gegevens zijn zonder root beschikbaar. Extra apparaatgegevens hangen af van het apparaat en de rechten die Battery Monitor heeft.</string>
-    <string name="advanced_section_counters" formatted="false">Tellers</string>
-    <string name="advanced_help_counters" formatted="false">Batterijmetingen worden gelabeld en opgemaakt als resterende lading in mAh, stroom in mA, energie in mWh, spanning in V, temperatuur in de gekozen eenheid en vermogen in W. De stroomfactor geldt ook voor berekend vermogen. Gemiddelde stroom en aantal cycli hangen af van apparaatondersteuning.</string>
-    <string name="advanced_field_charge_counter" formatted="false">Geschatte resterende lading</string>
-    <string name="advanced_field_current_now" formatted="false">Huidige stroom</string>
-    <string name="advanced_field_current_average" formatted="false">Gemiddelde stroom</string>
-    <string name="advanced_field_energy_counter" formatted="false">Energieteller</string>
-    <string name="advanced_section_capacity" formatted="false">Capaciteit</string>
-    <string name="advanced_help_capacity" formatted="false">“Capaciteit” toont volledige laadcapaciteit, ontwerpcapaciteit en geschatte gezondheid. De geschatte gezondheid wordt berekend als volledige laadcapaciteit gedeeld door ontwerpcapaciteit en is dus slechts zo nauwkeurig als de waarden die het apparaat rapporteert.</string>
-    <string name="advanced_field_cycle_count" formatted="false">Aantal cycli</string>
-    <string name="advanced_field_reported_capacity" formatted="false">Gerapporteerde capaciteit</string>
-    <string name="advanced_field_state_of_health" formatted="false">Gezondheidstoestand</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">Volledige laadcapaciteit</string>
-    <string name="advanced_field_design_capacity" formatted="false">Ontwerpcapaciteit</string>
-    <string name="advanced_field_estimated_health" formatted="false">Geschatte gezondheid</string>
+    <string name="diag_action_refresh" formatted="false">Vernieuwen</string>
+    <string name="diag_status_loading" formatted="false">Geavanceerde batterijstatistieken laden…</string>
+    <string name="diag_status_no_access" formatted="false">Root of Shizuku is nodig om geavanceerde batterijstatistieken te tonen.</string>
+    <string name="diag_status_waiting_permission" formatted="false">Wachten op Shizuku-toestemming…</string>
+    <string name="diag_status_no_stats" formatted="false">Er zijn momenteel geen geavanceerde batterijstatistieken beschikbaar op dit apparaat.</string>
+    <string name="diag_value_not_available" formatted="false">Niet beschikbaar</string>
+    <string name="diag_help_overview" formatted="false">“Diagnostiek” combineert betrouwbaarheid van de bewaking, opgeslagen voorspellingsgegevens en batterijgegevens in de tabbladen “Appwerking”, “Batterij”, “Laden” en “Ruwe gegevens”. Android-gegevens zijn zonder root beschikbaar. Extra apparaatgegevens hangen af van het apparaat en de rechten die Battery Monitor heeft.</string>
+    <string name="diag_section_counters" formatted="false">Tellers</string>
+    <string name="diag_help_counters" formatted="false">Batterijmetingen worden gelabeld en opgemaakt als resterende lading in mAh, stroom in mA, energie in mWh, spanning in V, temperatuur in de gekozen eenheid en vermogen in W. De stroomfactor geldt ook voor berekend vermogen. Gemiddelde stroom en aantal cycli hangen af van apparaatondersteuning.</string>
+    <string name="diag_field_charge_counter" formatted="false">Geschatte resterende lading</string>
+    <string name="diag_field_current_now" formatted="false">Huidige stroom</string>
+    <string name="diag_field_current_average" formatted="false">Gemiddelde stroom</string>
+    <string name="diag_field_energy_counter" formatted="false">Energieteller</string>
+    <string name="diag_section_capacity" formatted="false">Capaciteit</string>
+    <string name="diag_help_capacity" formatted="false">“Capaciteit” toont volledige laadcapaciteit, ontwerpcapaciteit en geschatte gezondheid. De geschatte gezondheid wordt berekend als volledige laadcapaciteit gedeeld door ontwerpcapaciteit en is dus slechts zo nauwkeurig als de waarden die het apparaat rapporteert.</string>
+    <string name="diag_field_cycle_count" formatted="false">Aantal cycli</string>
+    <string name="diag_field_reported_capacity" formatted="false">Gerapporteerde capaciteit</string>
+    <string name="diag_field_state_of_health" formatted="false">Gezondheidstoestand</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">Volledige laadcapaciteit</string>
+    <string name="diag_field_design_capacity" formatted="false">Ontwerpcapaciteit</string>
+    <string name="diag_field_estimated_health" formatted="false">Geschatte gezondheid</string>
     <string name="diag_capacity_inconsistent">De gemelde volledige capaciteit is hoger dan de ontwerpcapaciteit. Met deze metingen kan geen betrouwbare schatting van de batterijgezondheid worden berekend.</string>
-    <string name="advanced_field_capacity_level" formatted="false">Capaciteitsniveau</string>
+    <string name="diag_field_capacity_level" formatted="false">Capaciteitsniveau</string>
     <string name="diag_capacity_critical">Kritiek</string>
     <string name="diag_capacity_low">Laag</string>
     <string name="diag_capacity_high">Hoog</string>
-    <string name="advanced_section_charging" formatted="false">Laden</string>
-    <string name="advanced_help_charging" formatted="false">“Laden” toont waarden die horen bij het actieve laadpad, zoals maximale laadstroom of laadspanning, laadbeleid, laadstatus en capaciteitsniveau. Deze velden kunnen verschillen per lader en laadmodus.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">Resterende laadtijd</string>
-    <string name="advanced_field_max_charging_current" formatted="false">Maximale laadstroom</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">Maximale laadspanning</string>
-    <string name="advanced_field_charging_policy" formatted="false">Laadbeleid</string>
+    <string name="diag_section_charging" formatted="false">Laden</string>
+    <string name="diag_help_charging" formatted="false">“Laden” toont waarden die horen bij het actieve laadpad, zoals maximale laadstroom of laadspanning, laadbeleid, laadstatus en capaciteitsniveau. Deze velden kunnen verschillen per lader en laadmodus.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">Resterende laadtijd</string>
+    <string name="diag_field_max_charging_current" formatted="false">Maximale laadstroom</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">Maximale laadspanning</string>
+    <string name="diag_field_charging_policy" formatted="false">Laadbeleid</string>
     <string name="diag_policy_default">Standaard</string>
     <string name="diag_policy_fixed_limit">Batterijbescherming (vaste limiet)</string>
     <string name="diag_policy_adaptive_ac">Adaptief opladen</string>
-    <string name="advanced_field_charging_state" formatted="false">Laadstatus</string>
+    <string name="diag_field_charging_state" formatted="false">Laadstatus</string>
     <string name="diag_charging_too_cold">Te koud om op te laden</string>
     <string name="diag_charging_too_hot">Te heet om op te laden</string>
-    <string name="advanced_section_service" formatted="false">Android-batterijservice</string>
-    <string name="advanced_help_service" formatted="false">“Ruwe gegevens” bevat oorspronkelijke namen en waarden uit Android-batterijuitzendingen en, indien toegankelijk, dumpsys battery. Dit kan de laadbron, batterijstatus, temperatuur, spanning en andere batterijservicestatus omvatten.</string>
-    <string name="advanced_section_sysfs" formatted="false">Kernel power_supply-bestanden</string>
-    <string name="advanced_help_sysfs" formatted="false">“Ruwe gegevens” toont de oorspronkelijke namen en waarden uit /sys/class/power_supply, inclusief meerregelige waarden. Zoek op sleutel en tik op een rij om de volledige waarde te bekijken en te kopiëren. Gebruik “Vernieuwen” om nieuwe metingen te verzamelen. Battery Monitor probeert ook te lezen met normale Android-rechten, zonder root of Shizuku.</string>
+    <string name="diag_section_service" formatted="false">Android-batterijservice</string>
+    <string name="diag_help_service" formatted="false">“Ruwe gegevens” bevat oorspronkelijke namen en waarden uit Android-batterijuitzendingen en, indien toegankelijk, dumpsys battery. Dit kan de laadbron, batterijstatus, temperatuur, spanning en andere batterijservicestatus omvatten.</string>
+    <string name="diag_section_sysfs" formatted="false">Kernel power_supply-bestanden</string>
+    <string name="diag_help_sysfs" formatted="false">“Ruwe gegevens” toont de oorspronkelijke namen en waarden uit /sys/class/power_supply, inclusief meerregelige waarden. Zoek op sleutel en tik op een rij om de volledige waarde te bekijken en te kopiëren. Gebruik “Vernieuwen” om nieuwe metingen te verzamelen. Battery Monitor probeert ook te lezen met normale Android-rechten, zonder root of Shizuku.</string>
     <string name="diag_fuel_gauge">Batterijladingmeter</string>
     <string name="diag_mains_supply">Netstroomvoorziening</string>
     <string name="diag_charging_source">Oplaadbron</string>
@@ -610,22 +610,23 @@
     <string name="diag_settled_input_current">Gestabiliseerde ingangsstroom</string>
     <string name="diag_input_voltage">Ingangsspanning</string>
     <string name="diag_input_voltage_limit">Ingangsspanningslimiet</string>
-    <string name="advanced_section_metadata" formatted="false">Metadata</string>
-    <string name="advanced_help_metadata" formatted="false">“Ruwe gegevens” bevat ook oorspronkelijke BatteryManager-eigenschapsnamen en -waarden, inclusief beschikbare tellers en stroommetingen. Aanvullende eigenschappen zoals productiegegevens of vervangingsstatus hangen af van de Android-versie, apparaatondersteuning en rechten.</string>
+    <string name="diag_section_metadata" formatted="false">Metadata</string>
+    <string name="diag_help_metadata" formatted="false">“Ruwe gegevens” bevat ook oorspronkelijke BatteryManager-eigenschapsnamen en -waarden, inclusief beschikbare tellers en stroommetingen. Aanvullende eigenschappen zoals productiegegevens of vervangingsstatus hangen af van de Android-versie, apparaatondersteuning en rechten.</string>
     <string name="diag_raw">Ruwe gegevens</string>
     <string name="diag_search_key">Sleutels zoeken</string>
     <string name="diag_no_keys">Geen overeenkomende sleutels in de beschikbare gegevens</string>
     <string name="diag_raw_values">Ruwe waarden</string>
     <string name="diag_last_checked">Laatst gecontroleerd: %1$s</string>
     <string name="diag_privileged_stale">De vorige metingen met extra rechten worden getoond. Vernieuw om het opnieuw te proberen.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">Probleemoplossing</string>
-    <string name="advanced_help_troubleshooting" formatted="false">Android-gegevens worden automatisch verzameld in “Diagnostiek”. Schakel voor extra root- of Shizuku-gegevens toegang met extra rechten in onder “Aanvullende bronnen”. Battery Monitor probeert eerst root, daarna Shizuku. Shizuku moet actief zijn en toestemming moet zijn verleend. Ontbrekende velden blijven niet beschikbaar; mislukte vernieuwingen behouden de vorige momentopname en markeren deze als verouderd.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">Probleemoplossing</string>
+    <string name="diag_help_troubleshooting" formatted="false">Android-gegevens worden automatisch verzameld in “Diagnostiek”. Schakel voor extra root- of Shizuku-gegevens toegang met extra rechten in onder “Aanvullende bronnen”. Battery Monitor probeert eerst root, daarna Shizuku. Shizuku moet actief zijn en toestemming moet zijn verleend. Ontbrekende velden blijven niet beschikbaar; mislukte vernieuwingen behouden de vorige momentopname en markeren deze als verouderd.</string>
 
     <string name="diagnostics" formatted="false">Diagnostiek</string>
     <string name="diagnostics_summary" formatted="false">Controleer machtigingen en betrouwbaarheid van bewaking en maak een rapport voor probleemoplossing</string>
     <string name="diag_overview">Appwerking</string>
     <string name="diagnostics_help_title" formatted="false">Hoe diagnostiek helpt</string>
     <string name="diagnostics_help_overview" formatted="false">“Achtergrondbewaking” controleert rechten en betrouwbaarheid van de bewaking. Gebruik de bediening om bewaking te starten of stoppen, debugregistratie te wijzigen, instellingen voor batterijoptimalisatie en meldingen te openen of een probleemrapport te maken. Niet elke ontbrekende meting wijst op een rechtenprobleem; sommige apparaten leveren deze niet.</string>
+    <string name="monitoring_help_overview" formatted="false">Controleer de meldingsrechten, root- of Shizuku-toegang, de bewakingsservice en de geschiedenisdatabase. Tik op een controle om toegang aan te vragen of deze uit te voeren. “Bewaking starten” is beschikbaar wanneer de bewaking is gestopt; “Bewaking stoppen” wanneer deze actief is. Welke metingen beschikbaar zijn, hangt af van de apparaatondersteuning en de verleende toegang. Voor de servicecontrole moet de bewaking actief zijn; voor de databasecontrole moet de geschiedenisregistratie zijn ingeschakeld (“Instellingen” → “Geavanceerd”). Schakel “Toegang met extra rechten gebruiken” in onder “Instellingen” → “Geavanceerd” om extra metingen te gebruiken. “Fabrikantinstellingen” zijn alleen beschikbaar op ondersteunde apparaten.</string>
     <string name="diagnostics_monitoring" formatted="false">Achtergrondbewaking</string>
     <string name="diag_monitor_operation">Werking van de bewaking</string>
     <string name="diag_heartbeat">Laatste activiteitssignaal</string>
@@ -707,6 +708,7 @@
     <string name="diag_report_privacy">Standaard uitgesloten. Deze gegevens kunnen persoonlijke informatie bevatten. Controleer het voorbeeld voordat je kopieert of opslaat.</string>
 
     <string name="charging_diagnostics_title" formatted="false">Diagnose van OEM-laadlimiet</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Open de opname- en vergelijkingshulpmiddelen om te onderzoeken hoe Battery Monitor de laadlimiet van het apparaat herkent. De voorbereidingsinstructies staan in de eigen hulp van het OEM-diagnosescherm.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Open voor een bruikbaar rapport “Hulp” en volg de voorbereidingsstappen voordat u momentopnamen maakt.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Met bevoorrechte toegang is mogelijk meer diagnostische informatie beschikbaar. Verleen toegang via Shizuku of root en schakel bevoorrechte toegang in via “Instellingen” → “Geavanceerd” → “Toegang met extra rechten gebruiken” voor een bruikbaarder rapport over OEM-laadlimieten.</string>
     <string name="charging_diagnostics_capture" formatted="false">Momentopname maken</string>

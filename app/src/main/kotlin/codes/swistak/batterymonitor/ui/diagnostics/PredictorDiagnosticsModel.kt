@@ -104,7 +104,7 @@ internal fun recentPredictorDiagnosticGroup(
             key,
             raw,
             value = if (valid) formatDuration(raw.toLong()) else null,
-            valueLabel = if (valid) 0 else R.string.advanced_value_not_available,
+            valueLabel = if (valid) 0 else R.string.diag_value_not_available,
             unit = "ms per percentage point"
         )
     }

@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">يستخدم هذا التقدير خوارزمية التنبؤ المضبوطة في Battery Monitor. لا يتحكم هدفه في الشحن أو إيقاف التشغيل.</string>
     <string name="time_estimates_settings" formatted="false">تقديرات الوقت</string>
     <string name="time_estimates_settings_summary" formatted="false">اختر كيفية حساب الوقت المتبقي ومستويات البطارية المستهدفة</string>
-    <string name="time_estimates_settings_help" formatted="false">اختر طريقة تقدير Battery Monitor للوقت المتبقي ومستويات البطارية المستهدفة. تنطبق الأهداف أيضًا على تنبيهات «تم بلوغ حد الشحن» و«تم بلوغ حد التفريغ». لا يبدأ Battery Monitor الشحن ولا يوقفه.</string>
+    <string name="time_estimates_settings_help" formatted="false">اختر طريقة تقدير Battery Monitor للوقت المتبقي ومستويات البطارية المستهدفة. تنطبق الأهداف أيضًا على تنبيهات «تم بلوغ هدف الشحن» و«تم بلوغ هدف التفريغ». لا يبدأ Battery Monitor الشحن ولا يوقفه.</string>
     <string name="pref_cat_predictor" formatted="false">تقديرات الوقت المتبقي</string>
     <string name="pref_prediction_type" formatted="false">نوع التقدير</string>
     <string name="pref_prediction_type_help" formatted="false">يستخدم «الحساس» معدل الدقائق الخمس الأخيرة. يجمع «المعتدل»، وهو الافتراضي، المعدلات الحديثة مع المتوسط طويل الأجل المتعلم لتقليل التغيرات المفاجئة. يستخدم «منذ تغيير الحالة» جلسة الشحن أو التفريغ الحالية. يستخدم «طويل الاجل» المعدل المتعلم للتفريغ أو لمصدر الشحن النشط. إلى أن تتوفر قراءات كافية، تستخدم التقديرات المتوسط المحفوظ أو قيمة افتراضية أولية.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">طويل الاجل</string>
     <string name="pref_cat_target_levels" formatted="false">المستويات المستهدفة</string>
     <string name="pref_charging_target_mode" formatted="false">هدف الشحن</string>
-    <string name="pref_charging_target_mode_help" formatted="false">يستخدم «تلقائي (موصى به)» حد شحن الجهاز الثابت عندما يستطيع Battery Monitor قراءته، وإلا يستخدم 100%. يظل هدف الشحن التكيفي 100%. يستخدم «مخصص» المستوى الذي اخترته لتقديرات الشحن وتنبيهات «تم بلوغ حد الشحن».</string>
+    <string name="pref_charging_target_mode_help" formatted="false">يستخدم «تلقائي (موصى به)» حد شحن الجهاز الثابت عندما يستطيع Battery Monitor قراءته، وإلا يستخدم 100%. يظل هدف الشحن التكيفي 100%. يستخدم «مخصص» المستوى الذي اخترته لتقديرات الشحن وتنبيهات «تم بلوغ هدف الشحن».</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">قد يعمل الاكتشاف التلقائي على أجهزة Google Pixel وSamsung Galaxy وXiaomi/Redmi/POCO وOnePlus/Oppo/Realme وSony Xperia، وعلى الأجهزة التي تعمل بنظام GrapheneOS أو LineageOS، خصوصًا عند توفر صلاحية root أو Shizuku. يعتمد الاكتشاف على إشارات برمجية، لذلك لا نضمن توفره أو دقته حتى مع الشركات المذكورة. قد تعمل أيضًا طُرز أو إصدارات نظام غير مختبرة ضمن هذه العائلات، لكن أجهزة الشركات الأخرى لا تُكتشف تلقائيًا حاليًا.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">حد شحن الجهاز: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">هدف مخصص</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">هدف شحن مخصص</string>
     <string name="pref_custom_charging_target_help" formatted="false">اضبط المستوى النهائي لتقديرات الشحن عندما يكون «هدف الشحن» «مخصص».</string>
     <string name="pref_discharging_target" formatted="false">هدف التفريغ</string>
-    <string name="pref_discharging_target_help" formatted="false">اضبط نقطة النهاية لتقديرات التفريغ وتنبيهات «تم بلوغ حد التفريغ». تحت هذا المستوى، تستمر تقديرات الوقت نحو 0%. تبقى تنبيهات انخفاض البطارية ذات العتبة الخاصة بها مستقلة.</string>
+    <string name="pref_discharging_target_help" formatted="false">اضبط نقطة النهاية لتقديرات التفريغ وتنبيهات «تم بلوغ هدف التفريغ». تحت هذا المستوى، تستمر تقديرات الوقت نحو 0%. تبقى تنبيهات انخفاض البطارية ذات العتبة الخاصة بها مستقلة.</string>
     <string name="pref_target_level_summary" formatted="true">تقدير حتى %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">الإشعار الرئيسي</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">إدارة القناة الرئيسية</string>
     <string name="pref_cat_notification_content" formatted="false">المحتوى</string>
     <string name="pref_top_line_content" formatted="false">محتوى الشريط العلوي</string>
-    <string name="pref_top_line_content_help" formatted="false">اختر ما إذا كان السطر العلوي للإشعار يعرض الوقت المتبقي المقدر أو الوقت منذ تغير الحالة أو «علامات حيوية» المحددة.</string>
+    <string name="pref_top_line_content_help" formatted="false">اختر ما إذا كان السطر العلوي للإشعار يعرض «الوقت المتبقي» المقدر أو «منذ وقت تغيير الحالة» أو «علامات حيوية» المحددة.</string>
     <string name="pref_bottom_line_content" formatted="false">المحتوى السفلي</string>
     <string name="pref_bottom_line_content_help" formatted="false">لديك نفس الخيارات للمحتوى السفلي كالمحتوى العلوي.</string>
     <string name="time_remaining" formatted="false">الوقت المتبقي</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">المنبهات</string>
     <string name="alarm_settings_help" formatted="false">يمكن للمؤشر بإعلامك عند مستوى البطارية تصل إلى نقطة معينة (على سبيل المثال، يصبح البطارية مشحونة بالكامل، وانخفاض مستوى البطارية أقل من 20٪)</string>
     <string name="alarms_overview" formatted="false">النظرة العامة على المنبهات</string>
-    <string name="alarms_overview_help">تتوفر أنواع التنبيه الثمانية دائمًا. فعّل الأحداث مباشرةً، أو استخدم «إضافة عتبة» ضمن نوع شحنة أو حرارة. تُفعّل العتبات الجديدة بعد الحفظ. اضغط على قيمة لتعديلها؛ يحتفظ التعديل بحالة التشغيل أو الإيقاف. تبقى القيم المعطلة في القائمة. يتطلب الحذف تأكيدًا. يُشترك في الصوت والاهتزاز حسب النوع في إعدادات إشعارات Android. تظهر السجلات المكررة الموجودة كتنبيه منطقي واحد؛ ويؤثر التبديل أو الحذف على كل النسخ. تتبع تنبيهات الشحن والتفريغ أهداف التقدير ولا تتحكم في الشحن. حظر قناة أو إيقاف المراقبة لا يغير المفاتيح المحفوظة.</string>
+    <string name="alarms_overview_help">تتوفر أنواع التنبيه الثمانية دائمًا. فعّل الأحداث مباشرةً، أو استخدم «إضافة عتبة» ضمن نوع شحنة أو حرارة. تُفعّل العتبات الجديدة بعد الحفظ. اضغط على قيمة لتعديلها؛ يحتفظ التعديل بحالة التشغيل أو الإيقاف. تبقى القيم المعطلة في القائمة. يتطلب «حذف التنبيه» تأكيدًا. يُشترك في الصوت والاهتزاز حسب النوع في إعدادات إشعارات Android. تظهر السجلات المكررة الموجودة كتنبيه منطقي واحد؛ ويؤثر التبديل أو الحذف على كل النسخ. تتبع تنبيهات الشحن والتفريغ أهداف التقدير ولا تتحكم في الشحن. حظر قناة أو إيقاف المراقبة لا يغير المفاتيح المحفوظة.</string>
     <plurals name="alarms_active_count">
         <item quantity="zero">التنبيهات المفعّلة: %1$d</item>
         <item quantity="one">%1$d تنبيه مفعّل</item>
@@ -529,7 +529,7 @@
     <string name="battery_optimized" formatted="false">المراقبة في الخلفية</string>
     <string name="battery_optimized_message" formatted="false">يمكن أن يؤدي السماح بالتشغيل غير المقيّد في الخلفية إلى تحسين موثوقية المراقبة. قد يؤخر تحسين البطارية في Android التحديثات والتنبيهات.\n
     \n
-    قد يزيد التشغيل غير المقيّد من استهلاك البطارية في الخلفية. يمكنك تغيير هذا لاحقًا من «إعدادات» Android → «التطبيقات» → «Battery Monitor» → «البطارية».</string>
+    قد يزيد التشغيل غير المقيّد من استهلاك البطارية في الخلفية. يمكنك تغيير هذا لاحقًا من «إعدادات» Android → «التطبيقات» → «Battery Monitor» → «البطارية». تختلف أسماء القوائم حسب الجهاز.</string>
     <string name="pref_cat_autostart" formatted="false">تشغيل تلقائي</string>
     <string name="pref_autostart_at_boot" formatted="false">تشغيل تلقائي عند بدء الهاتف</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">تشغيل التطبيق عند اقلاع الهاتف</string>
@@ -548,48 +548,48 @@
     <string name="shizuku_not_running" formatted="false">شغّل Shizuku لمنح Battery Monitor وصولاً ذا امتيازات</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">امنح Battery Monitor الإذن يدويًا في Shizuku</string>
 
-    <string name="advanced_action_refresh" formatted="false">تحديث</string>
-    <string name="advanced_status_loading" formatted="false">جارٍ تحميل إحصاءات البطارية المتقدمة…</string>
-    <string name="advanced_status_no_access" formatted="false">يلزم root أو Shizuku لعرض إحصاءات البطارية المتقدمة.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">بانتظار إذن Shizuku…</string>
-    <string name="advanced_status_no_stats" formatted="false">لا تتوفر أي إحصاءات بطارية متقدمة على هذا الجهاز حاليًا.</string>
-    <string name="advanced_value_not_available" formatted="false">غير متاح</string>
-    <string name="advanced_help_overview" formatted="false">يجمع «التشخيص» موثوقية المراقبة وبيانات التنبؤ المحفوظة وبيانات البطارية في علامات «تشغيل التطبيق» و«البطارية» و«الشحن» و«البيانات الخام». تتوفر بيانات Android دون root. تعتمد بيانات الجهاز الإضافية على الجهاز والأذونات المتاحة لـ Battery Monitor.</string>
-    <string name="advanced_section_counters" formatted="false">العدادات</string>
-    <string name="advanced_help_counters" formatted="false">تُسمى قراءات البطارية وتُنسق كشحنة متبقية بوحدة mAh وتيار بوحدة mA وطاقة بوحدة mWh وجهد بوحدة V وحرارة بالوحدة المختارة وقدرة بوحدة W. ينطبق مضاعف التيار أيضًا على القدرة المحسوبة. يعتمد متوسط التيار وعدد الدورات على دعم الجهاز.</string>
-    <string name="advanced_field_charge_counter" formatted="false">تقدير الشحنة المتبقية</string>
-    <string name="advanced_field_current_now" formatted="false">التيار الحالي</string>
-    <string name="advanced_field_current_average" formatted="false">متوسط التيار</string>
-    <string name="advanced_field_energy_counter" formatted="false">عداد الطاقة</string>
-    <string name="advanced_section_capacity" formatted="false">السعة</string>
-    <string name="advanced_help_capacity" formatted="false">تعرض «السعة» سعة الشحن الكامل والسعة التصميمية والحالة التقديرية. يتم حساب الحالة التقديرية بقسمة سعة الشحن الكامل على السعة التصميمية ولذلك تعتمد دقتها على ما يبلغه الجهاز.</string>
-    <string name="advanced_field_cycle_count" formatted="false">عدد الدورات</string>
-    <string name="advanced_field_reported_capacity" formatted="false">السعة المبلغ عنها</string>
-    <string name="advanced_field_state_of_health" formatted="false">حالة الصحة</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">سعة الشحن الكامل</string>
-    <string name="advanced_field_design_capacity" formatted="false">السعة التصميمية</string>
-    <string name="advanced_field_estimated_health" formatted="false">الحالة التقديرية</string>
+    <string name="diag_action_refresh" formatted="false">تحديث</string>
+    <string name="diag_status_loading" formatted="false">جارٍ تحميل إحصاءات البطارية المتقدمة…</string>
+    <string name="diag_status_no_access" formatted="false">يلزم root أو Shizuku لعرض إحصاءات البطارية المتقدمة.</string>
+    <string name="diag_status_waiting_permission" formatted="false">بانتظار إذن Shizuku…</string>
+    <string name="diag_status_no_stats" formatted="false">لا تتوفر أي إحصاءات بطارية متقدمة على هذا الجهاز حاليًا.</string>
+    <string name="diag_value_not_available" formatted="false">غير متاح</string>
+    <string name="diag_help_overview" formatted="false">يجمع «التشخيص» موثوقية المراقبة وبيانات التنبؤ المحفوظة وبيانات البطارية في علامات «تشغيل التطبيق» و«البطارية» و«الشحن» و«البيانات الخام». تتوفر بيانات Android دون root. تعتمد بيانات الجهاز الإضافية على الجهاز والأذونات المتاحة لـ Battery Monitor.</string>
+    <string name="diag_section_counters" formatted="false">العدادات</string>
+    <string name="diag_help_counters" formatted="false">تُسمى قراءات البطارية وتُنسق كشحنة متبقية بوحدة mAh وتيار بوحدة mA وطاقة بوحدة mWh وجهد بوحدة V وحرارة بالوحدة المختارة وقدرة بوحدة W. ينطبق مضاعف التيار أيضًا على القدرة المحسوبة. يعتمد متوسط التيار وعدد الدورات على دعم الجهاز.</string>
+    <string name="diag_field_charge_counter" formatted="false">تقدير الشحنة المتبقية</string>
+    <string name="diag_field_current_now" formatted="false">التيار الحالي</string>
+    <string name="diag_field_current_average" formatted="false">متوسط التيار</string>
+    <string name="diag_field_energy_counter" formatted="false">عداد الطاقة</string>
+    <string name="diag_section_capacity" formatted="false">السعة</string>
+    <string name="diag_help_capacity" formatted="false">تعرض «السعة» سعة الشحن الكامل والسعة التصميمية والحالة التقديرية. يتم حساب الحالة التقديرية بقسمة سعة الشحن الكامل على السعة التصميمية ولذلك تعتمد دقتها على ما يبلغه الجهاز.</string>
+    <string name="diag_field_cycle_count" formatted="false">عدد الدورات</string>
+    <string name="diag_field_reported_capacity" formatted="false">السعة المبلغ عنها</string>
+    <string name="diag_field_state_of_health" formatted="false">حالة الصحة</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">سعة الشحن الكامل</string>
+    <string name="diag_field_design_capacity" formatted="false">السعة التصميمية</string>
+    <string name="diag_field_estimated_health" formatted="false">الحالة التقديرية</string>
     <string name="diag_capacity_inconsistent">السعة الكاملة المبلغ عنها تتجاوز سعة التصميم. لا يمكن حساب تقدير موثوق للصحة من هذه القراءات.</string>
-    <string name="advanced_field_capacity_level" formatted="false">مستوى السعة</string>
+    <string name="diag_field_capacity_level" formatted="false">مستوى السعة</string>
     <string name="diag_capacity_critical">حرج</string>
     <string name="diag_capacity_low">منخفض</string>
     <string name="diag_capacity_high">مرتفع</string>
-    <string name="advanced_section_charging" formatted="false">الشحن</string>
-    <string name="advanced_help_charging" formatted="false">يعرض قسم «الشحن» قيما مرتبطة بمسار الشحن النشط مثل أقصى تيار أو جهد شحن وسياسة الشحن وحالة الشحن ومستوى السعة. قد تتغير هذه الحقول بين الشواحن وأوضاع الشحن المختلفة.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">الوقت المتبقي للشحن</string>
-    <string name="advanced_field_max_charging_current" formatted="false">أقصى تيار شحن</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">أقصى جهد شحن</string>
-    <string name="advanced_field_charging_policy" formatted="false">سياسة الشحن</string>
+    <string name="diag_section_charging" formatted="false">الشحن</string>
+    <string name="diag_help_charging" formatted="false">يعرض قسم «الشحن» قيما مرتبطة بمسار الشحن النشط مثل أقصى تيار أو جهد شحن وسياسة الشحن وحالة الشحن ومستوى السعة. قد تتغير هذه الحقول بين الشواحن وأوضاع الشحن المختلفة.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">الوقت المتبقي للشحن</string>
+    <string name="diag_field_max_charging_current" formatted="false">أقصى تيار شحن</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">أقصى جهد شحن</string>
+    <string name="diag_field_charging_policy" formatted="false">سياسة الشحن</string>
     <string name="diag_policy_default">افتراضي</string>
     <string name="diag_policy_fixed_limit">حماية البطارية (حد ثابت)</string>
     <string name="diag_policy_adaptive_ac">الشحن التكيفي</string>
-    <string name="advanced_field_charging_state" formatted="false">حالة الشحن</string>
+    <string name="diag_field_charging_state" formatted="false">حالة الشحن</string>
     <string name="diag_charging_too_cold">باردة جدًا للشحن</string>
     <string name="diag_charging_too_hot">ساخنة جدًا للشحن</string>
-    <string name="advanced_section_service" formatted="false">خدمة بطارية Android</string>
-    <string name="advanced_help_service" formatted="false">تتضمن «البيانات الخام» الأسماء والقيم الأصلية من بثوث بطارية Android، ومن dumpsys battery عند إتاحته. قد تشمل مصدر الشحن وحالة البطارية والحرارة والجهد وحالات أخرى لخدمة البطارية.</string>
-    <string name="advanced_section_sysfs" formatted="false">ملفات power_supply في النواة</string>
-    <string name="advanced_help_sysfs" formatted="false">تعرض «البيانات الخام» الأسماء والقيم الأصلية المقروءة من /sys/class/power_supply، بما فيها القيم متعددة الأسطر. ابحث بالمفتاح واضغط على صف لعرض قيمته كاملة ونسخها. استخدم «تحديث» لجمع قراءات جديدة. يحاول Battery Monitor أيضًا القراءة بأذونات Android العادية، دون root أو Shizuku.</string>
+    <string name="diag_section_service" formatted="false">خدمة بطارية Android</string>
+    <string name="diag_help_service" formatted="false">تتضمن «البيانات الخام» الأسماء والقيم الأصلية من بثوث بطارية Android، ومن dumpsys battery عند إتاحته. قد تشمل مصدر الشحن وحالة البطارية والحرارة والجهد وحالات أخرى لخدمة البطارية.</string>
+    <string name="diag_section_sysfs" formatted="false">ملفات power_supply في النواة</string>
+    <string name="diag_help_sysfs" formatted="false">تعرض «البيانات الخام» الأسماء والقيم الأصلية المقروءة من /sys/class/power_supply، بما فيها القيم متعددة الأسطر. ابحث بالمفتاح واضغط على صف لعرض قيمته كاملة ونسخها. استخدم «تحديث» لجمع قراءات جديدة. يحاول Battery Monitor أيضًا القراءة بأذونات Android العادية، دون root أو Shizuku.</string>
     <string name="diag_fuel_gauge">مقياس شحنة البطارية</string>
     <string name="diag_mains_supply">مصدر طاقة AC</string>
     <string name="diag_charging_source">مصدر الشحن</string>
@@ -618,22 +618,23 @@
     <string name="diag_settled_input_current">تيار الإدخال المستقر</string>
     <string name="diag_input_voltage">جهد الإدخال</string>
     <string name="diag_input_voltage_limit">حد جهد الإدخال</string>
-    <string name="advanced_section_metadata" formatted="false">البيانات الوصفية</string>
-    <string name="advanced_help_metadata" formatted="false">تتضمن «البيانات الخام» أيضًا أسماء خصائص BatteryManager وقيمها الأصلية، بما فيها العدادات وقراءات التيار المتاحة. تعتمد خصائص إضافية مثل تفاصيل التصنيع أو حالة الاستبدال على إصدار Android ودعم الجهاز والأذونات.</string>
+    <string name="diag_section_metadata" formatted="false">البيانات الوصفية</string>
+    <string name="diag_help_metadata" formatted="false">تتضمن «البيانات الخام» أيضًا أسماء خصائص BatteryManager وقيمها الأصلية، بما فيها العدادات وقراءات التيار المتاحة. تعتمد خصائص إضافية مثل تفاصيل التصنيع أو حالة الاستبدال على إصدار Android ودعم الجهاز والأذونات.</string>
     <string name="diag_raw">البيانات الخام</string>
     <string name="diag_search_key">البحث في المفاتيح</string>
     <string name="diag_no_keys">لا توجد مفاتيح مطابقة في البيانات المتاحة</string>
     <string name="diag_raw_values">القيم الخام</string>
     <string name="diag_last_checked">آخر تحقق: %1$s</string>
     <string name="diag_privileged_stale">تُعرض القراءات المميزة السابقة. حدّث للمحاولة مجددًا.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">استكشاف الأخطاء وإصلاحها</string>
-    <string name="advanced_help_troubleshooting" formatted="false">تُجمع بيانات Android تلقائيًا في «التشخيص». للحصول على بيانات root أو Shizuku إضافية، فعّل الوصول المميز ضمن «مصادر إضافية». يحاول Battery Monitor استخدام root أولًا ثم Shizuku. يجب أن يكون Shizuku قيد التشغيل وأن يُمنح الإذن. تبقى الحقول المفقودة غير متاحة؛ ويحافظ فشل التحديث على اللقطة السابقة ويضع علامة بأنها قديمة.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">استكشاف الأخطاء وإصلاحها</string>
+    <string name="diag_help_troubleshooting" formatted="false">تُجمع بيانات Android تلقائيًا في «التشخيص». للحصول على بيانات root أو Shizuku إضافية، فعّل الوصول المميز ضمن «مصادر إضافية». يحاول Battery Monitor استخدام root أولًا ثم Shizuku. يجب أن يكون Shizuku قيد التشغيل وأن يُمنح الإذن. تبقى الحقول المفقودة غير متاحة؛ ويحافظ فشل التحديث على اللقطة السابقة ويضع علامة بأنها قديمة.</string>
 
     <string name="diagnostics" formatted="false">التشخيص</string>
     <string name="diagnostics_summary" formatted="false">تحقق من الأذونات وموثوقية المراقبة وأنشئ تقريرًا لاستكشاف الأخطاء</string>
     <string name="diag_overview">تشغيل التطبيق</string>
     <string name="diagnostics_help_title" formatted="false">كيف يساعد التشخيص</string>
     <string name="diagnostics_help_overview" formatted="false">تتحقق «المراقبة في الخلفية» من الأذونات وموثوقية المراقبة. استخدم عناصرها لبدء المراقبة أو إيقافها وتغيير تسجيل التصحيح وفتح إعدادات تحسين البطارية والإشعارات أو إنشاء تقرير لاستكشاف الأخطاء. ليست كل قراءة غير متاحة دليلًا على مشكلة أذونات؛ بعض الأجهزة لا توفرها.</string>
+    <string name="monitoring_help_overview" formatted="false">تحقق من إذن الإشعارات والوصول عبر الروت أو Shizuku وخدمة المراقبة وقاعدة بيانات السجل. اضغط على أحد الفحوص لطلب الوصول أو اختباره. يتوفر «بدء المراقبة» عند توقف المراقبة؛ ويتوفر «إيقاف المراقبة» أثناء تشغيلها. يعتمد توفر القراءات على دعم الجهاز والوصول الممنوح. يتطلب فحص الخدمة تشغيل المراقبة؛ ويتطلب فحص قاعدة البيانات تفعيل تسجيل السجل («الإعدادات» ← «متقدم»). لاستخدام القراءات الإضافية، فعّل «استخدام الوصول المميّز» في «الإعدادات» ← «متقدم». خيار «إعدادات الشركة المصنعة» متاح على الأجهزة المدعومة فقط.</string>
     <string name="diagnostics_monitoring" formatted="false">المراقبة في الخلفية</string>
     <string name="diag_monitor_operation">تشغيل المراقبة</string>
     <string name="diag_heartbeat">آخر إشارة نشاط</string>
@@ -715,6 +716,7 @@
     <string name="diag_report_privacy">مستبعدة افتراضيًا. قد تحتوي هذه البيانات على معلومات شخصية. راجع المعاينة قبل النسخ أو الحفظ.</string>
 
     <string name="charging_diagnostics_title" formatted="false">تشخيص حد الشحن من الشركة المصنّعة</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">افتح أدوات اللقطات والمقارنة للتحقق من كيفية اكتشاف Battery Monitor لحد الشحن في الجهاز. تتوفر تعليمات التحضير في المساعدة الخاصة بشاشة تشخيص الشركة المصنّعة.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">للحصول على تقرير مفيد، افتح «مساعدة» واتبع خطوات التحضير قبل التقاط اللقطات.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">قد تتوفر معلومات تشخيصية إضافية باستخدام الوصول المميز. امنح الوصول عبر Shizuku أو root وفعّل الوصول المميز في «الإعدادات» → «متقدم» → «استخدام الوصول المميّز» للحصول على تقرير أكثر فائدة حول حد الشحن الخاص بالشركة المصنّعة.</string>
     <string name="charging_diagnostics_capture" formatted="false">التقاط لقطة</string>

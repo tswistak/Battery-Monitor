@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">A becslés a Battery Monitor beállított előrejelzési módszerét használja. A cél nem vezérli a töltést vagy a kikapcsolást.</string>
     <string name="time_estimates_settings" formatted="false">Időbecslések</string>
     <string name="time_estimates_settings_summary" formatted="false">Válassza ki a hátralévő idő számítását és a célként használt akkumulátorszinteket</string>
-    <string name="time_estimates_settings_help" formatted="false">Válassza ki a hátralévő idő becslési módját és a célzott töltöttségi szinteket. A célok a „Töltési korlát elérve” és „Kisütési korlát elérve” riasztásokra is vonatkoznak. A Battery Monitor nem indítja el és nem állítja le a töltést.</string>
+    <string name="time_estimates_settings_help" formatted="false">Válassza ki a hátralévő idő becslési módját és a célzott töltöttségi szinteket. A célok a „Töltési cél elérve” és „Merülési cél elérve” riasztásokra is vonatkoznak. A Battery Monitor nem indítja el és nem állítja le a töltést.</string>
     <string name="pref_cat_predictor" formatted="false">Hátralévő idő becslések</string>
     <string name="pref_prediction_type" formatted="false">Becslés típusa</string>
     <string name="pref_prediction_type_help" formatted="false">Az „Érzékeny” az utolsó öt perc ütemét használja. Az alapértelmezett „Konzervatív” a hirtelen változások csökkentésére a friss ütemeket a tanult hosszú távú átlaggal egyesíti. Az „Állapotváltozás óta” az aktuális töltési vagy merülési munkamenetet használja. A „Hosszú távú átlag” a merüléshez vagy az aktív töltési forráshoz tanult ütemet használja. Elegendő megfigyelésig a becslések a tárolt átlagot vagy a kezdeti alapértéket használják.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">Hosszú távú átlag</string>
     <string name="pref_cat_target_levels" formatted="false">Célszintek</string>
     <string name="pref_charging_target_mode" formatted="false">Töltési cél</string>
-    <string name="pref_charging_target_mode_help" formatted="false">Az „Automatikus (ajánlott)” a rögzített eszköztöltési korlátot használja, ha a Battery Monitor ki tudja olvasni, egyébként 100%-ot. Az adaptív töltés célja továbbra is 100%. Az „Egyéni” a választott szintet használja a töltési becslésekhez és a „Töltési korlát elérve” riasztásaihoz.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">Az „Automatikus (ajánlott)” a rögzített eszköztöltési korlátot használja, ha a Battery Monitor ki tudja olvasni, egyébként 100%-ot. Az adaptív töltés célja továbbra is 100%. Az „Egyéni” a választott szintet használja a töltési becslésekhez és a „Töltési cél elérve” riasztásaihoz.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Az automatikus felismerés működhet Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme és Sony Xperia eszközökön, valamint GrapheneOS vagy LineageOS rendszert futtató eszközökön, különösen root- vagy Shizuku-hozzáféréssel. Szoftveres jelekre támaszkodik, ezért az elérhetőség és a pontosság a felsorolt gyártóknál sem garantált. E családok nem tesztelt modelljei vagy rendszerverziói is működhetnek, más gyártók eszközeit azonban jelenleg nem ismeri fel automatikusan.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Az eszköz töltési korlátja: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Egyéni cél</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">Egyéni töltési cél</string>
     <string name="pref_custom_charging_target_help" formatted="false">Állítsa be a töltési becslés végszintjét, amikor a „Töltési cél” „Egyéni”.</string>
     <string name="pref_discharging_target" formatted="false">Merítési cél</string>
-    <string name="pref_discharging_target_help" formatted="false">Állítsa be a merülési becslések és a „Kisütési korlát elérve” riasztásai végpontját. E szint alatt az időbecslés 0%-ig folytatódik. A saját küszöbű alacsony töltöttségi riasztások függetlenek maradnak.</string>
+    <string name="pref_discharging_target_help" formatted="false">Állítsa be a merülési becslések és a „Merülési cél elérve” riasztásai végpontját. E szint alatt az időbecslés 0%-ig folytatódik. A saját küszöbű alacsony töltöttségi riasztások függetlenek maradnak.</string>
     <string name="pref_target_level_summary" formatted="true">Becslés %1$d%%-ig</string>
 
     <string name="main_notif_chan_name" formatted="false">Fő értesítés</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Fő csatorna kezelése</string>
     <string name="pref_cat_notification_content" formatted="false">Tartalom</string>
     <string name="pref_top_line_content" formatted="false">Felső sor tartalma</string>
-    <string name="pref_top_line_content_help" formatted="false">Válaszd ki, hogy az értesítés felső sora a becsült hátralévő időt, az állapotváltozás óta eltelt időt vagy a beállított „Létfontosságú adatok” mutassa.</string>
+    <string name="pref_top_line_content_help" formatted="false">Válaszd ki, hogy az értesítés felső sora a becsült „Hátralévő idő”, az „Idő az állapotváltozás óta” vagy a beállított „Létfontosságú adatok” értékét mutassa.</string>
     <string name="pref_bottom_line_content" formatted="false">Alsó sor tartalma</string>
     <string name="pref_bottom_line_content_help" formatted="false">Az alsó sorhoz ugyanazok az opciók érhetők el, mint a felső sorhoz.</string>
     <string name="time_remaining" formatted="false">Hátralévő idő</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Riasztások</string>
     <string name="alarm_settings_help" formatted="false">Beállíthatja, hogy a Battery Monitor értesítse, amikor az akku töltése elér egy bizonyos szintet (pl. ha teljesen feltöltődik, vagy mondjuk 20% alá csökken.)</string>
     <string name="alarms_overview" formatted="false">Riasztások áttekintése</string>
-    <string name="alarms_overview_help">Mind a nyolc riasztástípus mindig elérhető. Az eseményeket közvetlenül kapcsolhatja be, vagy töltöttségi és hőmérsékleti típusnál használja a „Küszöb hozzáadása” műveletet. Az új küszöbök mentés után engedélyezettek. Koppintson egy értékre a szerkesztéshez; a be- vagy kikapcsolt állapota megmarad. A letiltott értékek a listában maradnak. Törléskor megerősítés szükséges. A hang és rezgés típusonként közös az Android értesítési beállításaiban. A meglévő ismétlődő bejegyzések egy logikai riasztásként jelennek meg; a kapcsolás és törlés minden példányra hat. A töltési és merülési riasztások a becslési célokat követik, és nem vezérlik a töltést. A letiltott csatorna vagy leállított figyelés nem módosítja a mentett kapcsolókat.</string>
+    <string name="alarms_overview_help">Mind a nyolc riasztástípus mindig elérhető. Az eseményeket közvetlenül kapcsolhatja be, vagy töltöttségi és hőmérsékleti típusnál használja a „Küszöb hozzáadása” műveletet. Az új küszöbök mentés után engedélyezettek. Koppintson egy értékre a szerkesztéshez; a be- vagy kikapcsolt állapota megmarad. A letiltott értékek a listában maradnak. A „Risztás törlése” megerősítést kér. A hang és rezgés típusonként közös az Android értesítési beállításaiban. A meglévő ismétlődő bejegyzések egy logikai riasztásként jelennek meg; a kapcsolás és törlés minden példányra hat. A töltési és merülési riasztások a becslési célokat követik, és nem vezérlik a töltést. A letiltott csatorna vagy leállított figyelés nem módosítja a mentett kapcsolókat.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d riasztás engedélyezve</item>
         <item quantity="other">%1$d riasztás engedélyezve</item>
@@ -521,7 +521,7 @@
     <string name="battery_optimized" formatted="false">Háttérben végzett figyelés</string>
     <string name="battery_optimized_message" formatted="false">A korlátlan háttérbeli futás javíthatja a figyelés megbízhatóságát. Az Android akkumulátoroptimalizálása késleltetheti a frissítéseket és a riasztásokat.\n
     \n
-    A korlátlan futás növelheti a háttérbeli akkumulátorfogyasztást. Ezt később az Android „Beállítások” → „Alkalmazások” → „Battery Monitor” → „Akkumulátor” menüben módosíthatod.</string>
+    A korlátlan futás növelheti a háttérbeli akkumulátorfogyasztást. Ezt később az Android „Beállítások” → „Alkalmazások” → „Battery Monitor” → „Akkumulátor” menüben módosíthatod. A menük neve eszközönként eltérhet.</string>
     <string name="pref_cat_autostart" formatted="false">Automatikus indítás</string>
     <string name="pref_autostart_at_boot" formatted="false">Automatikus indítás bekapcsoláskor</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">A Battery Monitor elindítása a készülék bekapcsolásakor:</string>
@@ -540,48 +540,48 @@
     <string name="shizuku_not_running" formatted="false">Indítsa el a Shizukut, hogy privilegizált hozzáférést adhasson a Battery Monitornak</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">Adja meg kézzel a Battery Monitor engedélyét a Shizukuban</string>
 
-    <string name="advanced_action_refresh" formatted="false">Frissítés</string>
-    <string name="advanced_status_loading" formatted="false">Speciális akkumulátor-statisztikák betöltése…</string>
-    <string name="advanced_status_no_access" formatted="false">A speciális akkumulátor-statisztikák megjelenítéséhez root vagy Shizuku szükséges.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">Várakozás a Shizuku engedélyére…</string>
-    <string name="advanced_status_no_stats" formatted="false">Jelenleg nem érhetők el speciális akkumulátor-statisztikák ezen az eszközön.</string>
-    <string name="advanced_value_not_available" formatted="false">Nem érhető el</string>
-    <string name="advanced_help_overview" formatted="false">A „Diagnosztika” a figyelés megbízhatóságát, a mentett előrejelzési adatokat és az akkumulátoradatokat az „Alkalmazás működése”, „Akkumulátor”, „Töltés” és „Nyers adatok” füleken egyesíti. Az Android-adatok root nélkül is elérhetők. A további adatok az eszköztől és a Battery Monitor engedélyeitől függnek.</string>
-    <string name="advanced_section_counters" formatted="false">Számlálók</string>
-    <string name="advanced_help_counters" formatted="false">Az akkumulátormérések feliratozva és formázva jelennek meg: hátralévő töltés mAh-ban, áram mA-ben, energia mWh-ban, feszültség V-ban, hőmérséklet a kiválasztott egységben és teljesítmény W-ban. Az áramszorzó a számított teljesítményre is érvényes. Az átlagos áram és a ciklusszám eszköztámogatástól függ.</string>
-    <string name="advanced_field_charge_counter" formatted="false">Becsült maradék töltés</string>
-    <string name="advanced_field_current_now" formatted="false">Aktuális áram</string>
-    <string name="advanced_field_current_average" formatted="false">Átlagos áram</string>
-    <string name="advanced_field_energy_counter" formatted="false">Energia-számláló</string>
-    <string name="advanced_section_capacity" formatted="false">Kapacitás</string>
-    <string name="advanced_help_capacity" formatted="false">A „Kapacitás” a teljes töltési kapacitást, a névleges kapacitást és a becsült állapotot mutatja. A becsült állapot a teljes töltési kapacitás és a névleges kapacitás hányadosa, így pontossága a készülék által jelentett adatoktól függ.</string>
-    <string name="advanced_field_cycle_count" formatted="false">Ciklusszám</string>
-    <string name="advanced_field_reported_capacity" formatted="false">Jelentett kapacitás</string>
-    <string name="advanced_field_state_of_health" formatted="false">Egészségi állapot</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">Teljes töltési kapacitás</string>
-    <string name="advanced_field_design_capacity" formatted="false">Tervezett kapacitás</string>
-    <string name="advanced_field_estimated_health" formatted="false">Becsült állapot</string>
+    <string name="diag_action_refresh" formatted="false">Frissítés</string>
+    <string name="diag_status_loading" formatted="false">Speciális akkumulátor-statisztikák betöltése…</string>
+    <string name="diag_status_no_access" formatted="false">A speciális akkumulátor-statisztikák megjelenítéséhez root vagy Shizuku szükséges.</string>
+    <string name="diag_status_waiting_permission" formatted="false">Várakozás a Shizuku engedélyére…</string>
+    <string name="diag_status_no_stats" formatted="false">Jelenleg nem érhetők el speciális akkumulátor-statisztikák ezen az eszközön.</string>
+    <string name="diag_value_not_available" formatted="false">Nem érhető el</string>
+    <string name="diag_help_overview" formatted="false">A „Diagnosztika” a figyelés megbízhatóságát, a mentett előrejelzési adatokat és az akkumulátoradatokat az „Alkalmazás működése”, „Akkumulátor”, „Töltés” és „Nyers adatok” füleken egyesíti. Az Android-adatok root nélkül is elérhetők. A további adatok az eszköztől és a Battery Monitor engedélyeitől függnek.</string>
+    <string name="diag_section_counters" formatted="false">Számlálók</string>
+    <string name="diag_help_counters" formatted="false">Az akkumulátormérések feliratozva és formázva jelennek meg: hátralévő töltés mAh-ban, áram mA-ben, energia mWh-ban, feszültség V-ban, hőmérséklet a kiválasztott egységben és teljesítmény W-ban. Az áramszorzó a számított teljesítményre is érvényes. Az átlagos áram és a ciklusszám eszköztámogatástól függ.</string>
+    <string name="diag_field_charge_counter" formatted="false">Becsült maradék töltés</string>
+    <string name="diag_field_current_now" formatted="false">Aktuális áram</string>
+    <string name="diag_field_current_average" formatted="false">Átlagos áram</string>
+    <string name="diag_field_energy_counter" formatted="false">Energia-számláló</string>
+    <string name="diag_section_capacity" formatted="false">Kapacitás</string>
+    <string name="diag_help_capacity" formatted="false">A „Kapacitás” a teljes töltési kapacitást, a névleges kapacitást és a becsült állapotot mutatja. A becsült állapot a teljes töltési kapacitás és a névleges kapacitás hányadosa, így pontossága a készülék által jelentett adatoktól függ.</string>
+    <string name="diag_field_cycle_count" formatted="false">Ciklusszám</string>
+    <string name="diag_field_reported_capacity" formatted="false">Jelentett kapacitás</string>
+    <string name="diag_field_state_of_health" formatted="false">Egészségi állapot</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">Teljes töltési kapacitás</string>
+    <string name="diag_field_design_capacity" formatted="false">Tervezett kapacitás</string>
+    <string name="diag_field_estimated_health" formatted="false">Becsült állapot</string>
     <string name="diag_capacity_inconsistent">A jelentett teljes kapacitás meghaladja a tervezettet. Ezekből a mérésekből nem számítható megbízható állapotbecslés.</string>
-    <string name="advanced_field_capacity_level" formatted="false">Kapacitásszint</string>
+    <string name="diag_field_capacity_level" formatted="false">Kapacitásszint</string>
     <string name="diag_capacity_critical">Kritikus</string>
     <string name="diag_capacity_low">Alacsony</string>
     <string name="diag_capacity_high">Magas</string>
-    <string name="advanced_section_charging" formatted="false">Töltés</string>
-    <string name="advanced_help_charging" formatted="false">A „Töltés” az aktív töltési útvonallal kapcsolatos értékeket mutatja, például a maximális töltőáramot vagy töltési feszültséget, a töltési házirendet, a töltési állapotot és a kapacitásszintet. Ezek a mezők töltőnként és töltési módonként változhatnak.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">Hátralévő töltési idő</string>
-    <string name="advanced_field_max_charging_current" formatted="false">Maximális töltőáram</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">Maximális töltési feszültség</string>
-    <string name="advanced_field_charging_policy" formatted="false">Töltési szabályzat</string>
+    <string name="diag_section_charging" formatted="false">Töltés</string>
+    <string name="diag_help_charging" formatted="false">A „Töltés” az aktív töltési útvonallal kapcsolatos értékeket mutatja, például a maximális töltőáramot vagy töltési feszültséget, a töltési házirendet, a töltési állapotot és a kapacitásszintet. Ezek a mezők töltőnként és töltési módonként változhatnak.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">Hátralévő töltési idő</string>
+    <string name="diag_field_max_charging_current" formatted="false">Maximális töltőáram</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">Maximális töltési feszültség</string>
+    <string name="diag_field_charging_policy" formatted="false">Töltési szabályzat</string>
     <string name="diag_policy_default">Alapértelmezett</string>
     <string name="diag_policy_fixed_limit">Akkumulátorvédelem (rögzített korlát)</string>
     <string name="diag_policy_adaptive_ac">Adaptív töltés</string>
-    <string name="advanced_field_charging_state" formatted="false">Töltési állapot</string>
+    <string name="diag_field_charging_state" formatted="false">Töltési állapot</string>
     <string name="diag_charging_too_cold">Túl hideg a töltéshez</string>
     <string name="diag_charging_too_hot">Túl meleg a töltéshez</string>
-    <string name="advanced_section_service" formatted="false">Android akkumulátorszolgáltatás</string>
-    <string name="advanced_help_service" formatted="false">A „Nyers adatok” az Android akkumulátorüzeneteinek eredeti neveit és értékeit, valamint elérhetőség esetén a dumpsys battery adatait tartalmazza. Ezek között lehet a töltési forrás, akkumulátorállapot, hőmérséklet, feszültség és az akkumulátorszolgáltatás egyéb állapotadatai.</string>
-    <string name="advanced_section_sysfs" formatted="false">Kernel power_supply fájlok</string>
-    <string name="advanced_help_sysfs" formatted="false">A „Nyers adatok” a /sys/class/power_supply eredeti neveit és értékeit mutatja, a többsorosakat is. Keressen kulcs szerint, és koppintson egy sorra a teljes érték megtekintéséhez és másolásához. A „Frissítés” új méréseket gyűjt. A Battery Monitor normál Android-engedélyekkel, root és Shizuku nélkül is megpróbálja az olvasást.</string>
+    <string name="diag_section_service" formatted="false">Android akkumulátorszolgáltatás</string>
+    <string name="diag_help_service" formatted="false">A „Nyers adatok” az Android akkumulátorüzeneteinek eredeti neveit és értékeit, valamint elérhetőség esetén a dumpsys battery adatait tartalmazza. Ezek között lehet a töltési forrás, akkumulátorállapot, hőmérséklet, feszültség és az akkumulátorszolgáltatás egyéb állapotadatai.</string>
+    <string name="diag_section_sysfs" formatted="false">Kernel power_supply fájlok</string>
+    <string name="diag_help_sysfs" formatted="false">A „Nyers adatok” a /sys/class/power_supply eredeti neveit és értékeit mutatja, a többsorosakat is. Keressen kulcs szerint, és koppintson egy sorra a teljes érték megtekintéséhez és másolásához. A „Frissítés” új méréseket gyűjt. A Battery Monitor normál Android-engedélyekkel, root és Shizuku nélkül is megpróbálja az olvasást.</string>
     <string name="diag_fuel_gauge">Akkumulátor töltésmérője</string>
     <string name="diag_mains_supply">Hálózati tápellátás</string>
     <string name="diag_charging_source">Töltési forrás</string>
@@ -610,22 +610,23 @@
     <string name="diag_settled_input_current">Beállt bemeneti áram</string>
     <string name="diag_input_voltage">Bemeneti feszültség</string>
     <string name="diag_input_voltage_limit">Bemeneti feszültségkorlát</string>
-    <string name="advanced_section_metadata" formatted="false">Metaadatok</string>
-    <string name="advanced_help_metadata" formatted="false">A „Nyers adatok” az eredeti BatteryManager-tulajdonságneveket és értékeket is tartalmazza, köztük az elérhető számlálókat és áramméréseket. A további tulajdonságok, például gyártási adatok vagy csereállapot, az Android-verziótól, az eszköztámogatástól és az engedélyektől függnek.</string>
+    <string name="diag_section_metadata" formatted="false">Metaadatok</string>
+    <string name="diag_help_metadata" formatted="false">A „Nyers adatok” az eredeti BatteryManager-tulajdonságneveket és értékeket is tartalmazza, köztük az elérhető számlálókat és áramméréseket. A további tulajdonságok, például gyártási adatok vagy csereállapot, az Android-verziótól, az eszköztámogatástól és az engedélyektől függnek.</string>
     <string name="diag_raw">Nyers adatok</string>
     <string name="diag_search_key">Kulcsok keresése</string>
     <string name="diag_no_keys">Nincs megfelelő kulcs az elérhető adatokban</string>
     <string name="diag_raw_values">Nyers értékek</string>
     <string name="diag_last_checked">Utolsó ellenőrzés: %1$s</string>
     <string name="diag_privileged_stale">A korábbi privilegizált hozzáférésű mérések láthatók. Új próbához frissítsen.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">Hibaelhárítás</string>
-    <string name="advanced_help_troubleshooting" formatted="false">Az Android-adatok automatikusan gyűlnek a „Diagnosztika”. További root- vagy Shizuku-adatokhoz engedélyezze a privilegizált hozzáférést a „További források” alatt. A Battery Monitor először a rootot, majd a Shizukut próbálja. A Shizukunak futnia kell, megadott engedéllyel. A hiányzó mezők nem érhetők el; sikertelen frissítésnél az előző pillanatkép megmarad, és elavult jelzést kap.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">Hibaelhárítás</string>
+    <string name="diag_help_troubleshooting" formatted="false">Az Android-adatok automatikusan gyűlnek a „Diagnosztika”. További root- vagy Shizuku-adatokhoz engedélyezze a privilegizált hozzáférést a „További források” alatt. A Battery Monitor először a rootot, majd a Shizukut próbálja. A Shizukunak futnia kell, megadott engedéllyel. A hiányzó mezők nem érhetők el; sikertelen frissítésnél az előző pillanatkép megmarad, és elavult jelzést kap.</string>
 
     <string name="diagnostics" formatted="false">Diagnosztika</string>
     <string name="diagnostics_summary" formatted="false">Engedélyek és a megfigyelés megbízhatóságának ellenőrzése, hibakeresési jelentés készítése</string>
     <string name="diag_overview">Alkalmazás működése</string>
     <string name="diagnostics_help_title" formatted="false">Hogyan segít a diagnosztika</string>
     <string name="diagnostics_help_overview" formatted="false">A „Háttérbeli megfigyelés” ellenőrzi az engedélyeket és a figyelés megbízhatóságát. Vezérlőivel elindíthatja vagy leállíthatja a figyelést, módosíthatja a hibakeresési naplózást, megnyithatja az akkumulátoroptimalizálási és értesítési beállításokat, vagy hibakeresési jelentést készíthet. Nem minden hiányzó mérés jelent engedélyproblémát; egyes eszközök nem adnak ilyen adatot.</string>
+    <string name="monitoring_help_overview" formatted="false">Ellenőrizze az értesítési engedélyt, a root- vagy Shizuku-hozzáférést, a figyelési szolgáltatást és az előzmények adatbázisát. Érintsen meg egy ellenőrzést a hozzáférés kéréséhez vagy az ellenőrzés futtatásához. A „Figyelés indítása” leállított, a „Figyelés leállítása” futó figyelésnél érhető el. Az elérhető mérések az eszköz támogatásától és a megadott hozzáféréstől függenek. A szolgáltatás ellenőrzéséhez futó figyelés szükséges; az adatbázis ellenőrzéséhez az előzmények naplózása szükséges („Beállítások” → „Speciális”). A további mérések használatához kapcsolja be a „Privilegizált hozzáférés használata” beállítást itt: „Beállítások” → „Speciális”. A „Gyártói beállítások” lehetőség csak támogatott eszközökön érhető el.</string>
     <string name="diagnostics_monitoring" formatted="false">Háttérbeli megfigyelés</string>
     <string name="diag_monitor_operation">Figyelés működése</string>
     <string name="diag_heartbeat">Utolsó életjel</string>
@@ -707,6 +708,7 @@
     <string name="diag_report_privacy">Alapértelmezés szerint kimaradnak. Ezek az adatok személyes információkat tartalmazhatnak. Másolás vagy mentés előtt ellenőrizze az előnézetet.</string>
 
     <string name="charging_diagnostics_title" formatted="false">OEM töltési korlát diagnosztikája</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Nyissa meg a pillanatkép- és összehasonlító eszközöket annak vizsgálatához, hogyan észleli a Battery Monitor az eszköz töltési korlátját. Az előkészítési útmutató az OEM diagnosztikai képernyő saját súgójában található.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Hasznos jelentéshez nyissa meg a „Súgó”, és a pillanatképek rögzítése előtt kövesse az előkészítési lépéseket.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Kiemelt hozzáféréssel további diagnosztikai adatok válhatnak elérhetővé. Engedélyezze a Shizuku- vagy root-hozzáférést, majd kapcsolja be a kiemelt hozzáférést itt: „Beállítások” → „Speciális” → „Privilegizált hozzáférés használata” a hasznosabb OEM töltéskorlát-jelentéshez.</string>
     <string name="charging_diagnostics_capture" formatted="false">Pillanatkép rögzítése</string>

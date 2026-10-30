@@ -48,7 +48,7 @@ internal data class DiagnosticsState(
             !privilegedEnabled -> R.string.currently_disabled
             status != 0 -> status
             advanced?.hasStats() == true -> R.string.yes
-            else -> R.string.advanced_status_no_access
+            else -> R.string.diag_status_no_access
         }
 
     fun allowsPrivilegedCollection(active: Boolean, statsVisible: Boolean): Boolean =
@@ -58,7 +58,7 @@ internal data class DiagnosticsState(
         loading = true,
         status = when {
             !enabled -> R.string.currently_disabled
-            statsVisible -> R.string.advanced_status_loading
+            statsVisible -> R.string.diag_status_loading
             else -> settledStatus()
         },
         privilegedEnabled = enabled,
@@ -71,7 +71,7 @@ internal data class DiagnosticsState(
     )
 
     private fun settledStatus(): Int = when (status) {
-        R.string.currently_disabled, R.string.advanced_status_loading, R.string.advanced_status_waiting_permission -> 0
+        R.string.currently_disabled, R.string.diag_status_loading, R.string.diag_status_waiting_permission -> 0
 
         else -> status
     }
@@ -127,7 +127,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
             } else if (state.value.advanced?.accessMethod == AdvancedBatterySnapshot.ACCESS_SHIZUKU) {
                 publish {
                     copy(
-                        status = if (statsVisible && loadState != LoadState.IDLE) status else R.string.advanced_status_no_access,
+                        status = if (statsVisible && loadState != LoadState.IDLE) status else R.string.diag_status_no_access,
                         stale = true
                     )
                 }
@@ -154,7 +154,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         publish {
             copy(
                 status = resource,
-                loading = resource == R.string.advanced_status_loading,
+                loading = resource == R.string.diag_status_loading,
                 stale = advanced != null
             )
         }
@@ -224,7 +224,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
                         copy(
                             appRaw = if (timedOut) appRaw else raw ?: appRaw,
                             rawLoading = false,
-                            rawStatus = if (timedOut) R.string.diag_timeout else if (raw == null) R.string.advanced_status_no_stats else 0
+                            rawStatus = if (timedOut) R.string.diag_timeout else if (raw == null) R.string.diag_status_no_stats else 0
                         )
                     }
                 }
@@ -284,7 +284,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
     private fun loadPrivileged(generation: Int) {
         if (!canLoadPrivileged(generation)) return
         loadState = LoadState.CHECKING_ROOT
-        showStatus(R.string.advanced_status_loading)
+        showStatus(R.string.diag_status_loading)
         mainHandler.postDelayed(timeout, 45_000)
         val revision = PrivilegedAccess.accessRevision
         val allowed = {
@@ -320,7 +320,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
         if (!runCatching { Shizuku.pingBinder() }.getOrDefault(false)) {
             loadState = LoadState.WAITING_FOR_SHIZUKU
             mainHandler.removeCallbacks(timeout)
-            showStatus(R.string.advanced_status_no_access)
+            showStatus(R.string.diag_status_no_access)
             return
         }
         if (runCatching { Shizuku.isPreV11() }.getOrDefault(true)) {
@@ -341,7 +341,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
 
             else -> {
                 loadState = LoadState.WAITING_FOR_PERMISSION
-                showStatus(R.string.advanced_status_waiting_permission)
+                showStatus(R.string.diag_status_waiting_permission)
                 try {
                     Shizuku.requestPermission(REQUEST_CODE_SHIZUKU)
                 } catch (error: Throwable) {
@@ -404,7 +404,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
                 publish {
                     copy(
                         advanced = advanced ?: snapshot,
-                        status = R.string.advanced_status_no_stats,
+                        status = R.string.diag_status_no_stats,
                         stale = advanced != null,
                         loading = false
                     )
@@ -425,7 +425,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
     }
 
     private fun finishWithNoAccess(
-        message: String, error: Throwable? = null, status: Int = R.string.advanced_status_no_access
+        message: String, error: Throwable? = null, status: Int = R.string.diag_status_no_access
     ) {
         if (error == null) Log.w(TAG, message) else Log.e(TAG, message, error)
         loadGeneration++

@@ -361,7 +361,7 @@ class BatteryPerformanceBenchmark {
         }
         awaitDescription("nav_open_menu")
         startActivityAndWait(sectionIntent("current").putExtra(EXTRA_DETAIL, "measurement:current"))
-        awaitText("advanced_action_refresh")
+        awaitText("diag_action_refresh")
         goBack()
     }
 
@@ -376,9 +376,9 @@ class BatteryPerformanceBenchmark {
         scroll(Direction.DOWN)
         scroll(Direction.UP)
         startActivityAndWait(sectionIntent("current").putExtra(EXTRA_DETAIL, "measurement:current"))
-        awaitText("advanced_action_refresh")
+        awaitText("diag_action_refresh")
         reportVisibleText("current_sources")
-        clickText("advanced_action_refresh")
+        clickText("diag_action_refresh")
         goBack()
         awaitDescription("nav_open_menu")
     }
@@ -394,11 +394,11 @@ class BatteryPerformanceBenchmark {
     @Test
     fun diagnosticsTabsRefreshSearchAndScroll() = frames(section = "diagnostics") {
         clickText("nav_battery_group")
-        clickText("advanced_section_charging")
+        clickText("diag_section_charging")
         clickText("diag_raw")
         device.wait(
             Until.findObject(
-                By.pkg(TARGET).desc(text("advanced_action_refresh")).enabled(true)
+                By.pkg(TARGET).desc(text("diag_action_refresh")).enabled(true)
             ), LOAD_TIMEOUT
         ) ?: error("Diagnostics collection did not settle")
         val search = device.wait(
@@ -409,10 +409,10 @@ class BatteryPerformanceBenchmark {
         dismissKeyboard()
         scroll(Direction.DOWN)
         scroll(Direction.UP)
-        clickDescription("advanced_action_refresh")
+        clickDescription("diag_action_refresh")
         device.wait(
             Until.findObject(
-                By.pkg(TARGET).desc(text("advanced_action_refresh")).enabled(true)
+                By.pkg(TARGET).desc(text("diag_action_refresh")).enabled(true)
             ), LOAD_TIMEOUT
         ) ?: error("Diagnostics refresh timed out")
         clickText("diag_overview")

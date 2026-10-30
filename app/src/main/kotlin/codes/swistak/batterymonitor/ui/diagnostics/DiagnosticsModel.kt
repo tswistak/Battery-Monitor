@@ -153,7 +153,7 @@ internal fun normalizedDiagnosticGroups(
         diagnosticVoltageMillivolts(voltage),
         snapshot.currentNowUa?.let { BatteryCurrent.scaleMicroAmps(it, multiplier) })
     val currentNow = row(
-        R.string.advanced_field_current_now,
+        R.string.diag_field_current_now,
         "current_now",
         snapshot.currentNowUa,
         "µA × $multiplier",
@@ -166,9 +166,9 @@ internal fun normalizedDiagnosticGroups(
     )
     return listOf(
         DiagnosticGroup(
-            R.string.advanced_section_counters, listOf(
+            R.string.diag_section_counters, listOf(
                 row(
-                    R.string.advanced_field_charge_counter,
+                    R.string.diag_field_charge_counter,
                     "charge_counter",
                     snapshot.chargeCounterUah,
                     "µAh",
@@ -176,14 +176,14 @@ internal fun normalizedDiagnosticGroups(
                 ),
                 currentNow,
                 row(
-                    R.string.advanced_field_current_average,
+                    R.string.diag_field_current_average,
                     "current_average",
                     snapshot.currentAverageUa,
                     "µA × $multiplier",
                     current(snapshot.currentAverageUa)
                 ),
                 row(
-                    R.string.advanced_field_energy_counter,
+                    R.string.diag_field_energy_counter,
                     "energy_counter",
                     snapshot.energyCounterNwh,
                     "nWh",
@@ -192,7 +192,7 @@ internal fun normalizedDiagnosticGroups(
                             locale, "%.1f mWh", it / 1_000_000.0
                         )
                     }),
-                row(R.string.advanced_field_cycle_count, "cycle_count", snapshot.cycleCount),
+                row(R.string.diag_field_cycle_count, "cycle_count", snapshot.cycleCount),
                 voltage,
                 row(
                     R.string.current_temperature,
@@ -221,7 +221,7 @@ internal fun normalizedDiagnosticGroups(
                 )
             )
         ), DiagnosticGroup(
-            R.string.advanced_section_capacity, listOf(
+            R.string.diag_section_capacity, listOf(
                 row(
                     R.string.current_android_health,
                     "health",
@@ -234,29 +234,29 @@ internal fun normalizedDiagnosticGroups(
                     },
                     if (android) "ACTION_BATTERY_CHANGED / health" else "dumpsys battery / health"
                 ), row(
-                    R.string.advanced_field_reported_capacity,
+                    R.string.diag_field_reported_capacity,
                     "capacity",
                     snapshot.reportedCapacityPercent,
                     "%",
                     snapshot.reportedCapacityPercent?.let { "$it%" }), row(
-                    R.string.advanced_field_state_of_health,
+                    R.string.diag_field_state_of_health,
                     "state_of_health",
                     snapshot.stateOfHealthPercent,
                     "%",
                     snapshot.stateOfHealthPercent?.let { "$it%" }), row(
-                    R.string.advanced_field_full_charge_capacity,
+                    R.string.diag_field_full_charge_capacity,
                     "charge_full",
                     snapshot.fullChargeUah,
                     "µAh",
                     charge(snapshot.fullChargeUah)
                 ), row(
-                    R.string.advanced_field_design_capacity,
+                    R.string.diag_field_design_capacity,
                     "charge_full_design",
                     snapshot.designChargeUah,
                     "µAh",
                     charge(snapshot.designChargeUah)
                 ), row(
-                    R.string.advanced_field_estimated_health,
+                    R.string.diag_field_estimated_health,
                     "estimated_health",
                     capacityHealth(snapshot),
                     "%",
@@ -272,7 +272,7 @@ internal fun normalizedDiagnosticGroups(
                 )
             )
         ), DiagnosticGroup(
-            R.string.advanced_section_charging, listOf(
+            R.string.diag_section_charging, listOf(
                 row(
                     R.string.diag_charging_source,
                     "plugged",
@@ -290,14 +290,14 @@ internal fun normalizedDiagnosticGroups(
                 ),
                 fastCharging ?: row(R.string.diag_fast_charging, "fast_charging", null),
                 row(
-                    R.string.advanced_field_charge_time_remaining,
+                    R.string.diag_field_charge_time_remaining,
                     "charge_time_remaining",
                     snapshot.chargeTimeRemainingMs,
                     "ms",
                     snapshot.chargeTimeRemainingMs?.takeIf { it >= 0 }
                         ?.let { DiagnosticsDurationFormatter.format(locale, it) }),
                 row(
-                    R.string.advanced_field_max_charging_current,
+                    R.string.diag_field_max_charging_current,
                     "max_charging_current",
                     snapshot.maxChargingCurrentUa,
                     "µA",
@@ -307,7 +307,7 @@ internal fun normalizedDiagnosticGroups(
                         ) + " mA"
                     }),
                 row(
-                    R.string.advanced_field_max_charging_voltage,
+                    R.string.diag_field_max_charging_voltage,
                     "max_charging_voltage",
                     snapshot.maxChargingVoltageUv,
                     "µV",
@@ -317,19 +317,19 @@ internal fun normalizedDiagnosticGroups(
                         )
                     }),
                 row(
-                    R.string.advanced_field_charging_policy,
+                    R.string.diag_field_charging_policy,
                     "charging_policy",
                     snapshot.chargingPolicy,
                     value = null
                 ).copy(valueLabel = chargingPolicyLabel(snapshot)),
                 row(
-                    R.string.advanced_field_charging_state,
+                    R.string.diag_field_charging_state,
                     "charging_state",
                     snapshot.chargingState,
                     value = null
                 ).copy(valueLabel = chargingStateLabel(snapshot)),
                 row(
-                    R.string.advanced_field_capacity_level,
+                    R.string.diag_field_capacity_level,
                     "capacity_level",
                     snapshot.capacityLevel,
                     value = null
@@ -343,7 +343,7 @@ internal fun rawDiagnosticGroups(snapshot: AdvancedBatterySnapshot): List<Diagno
     val access = diagnosticAccessName(snapshot)
     return listOf(
         DiagnosticGroup(
-            R.string.advanced_section_service, rawRows(
+            R.string.diag_section_service, rawRows(
                 snapshot.serviceLabels,
                 snapshot.serviceValues,
                 if (snapshot.accessMethod == "Android") "ACTION_BATTERY_CHANGED" else "dumpsys battery",
@@ -351,7 +351,7 @@ internal fun rawDiagnosticGroups(snapshot: AdvancedBatterySnapshot): List<Diagno
                 access
             )
         ), DiagnosticGroup(
-            R.string.advanced_section_sysfs, rawRows(
+            R.string.diag_section_sysfs, rawRows(
                 snapshot.sysfsLabels,
                 snapshot.sysfsValues,
                 "/sys/class/power_supply",
@@ -359,7 +359,7 @@ internal fun rawDiagnosticGroups(snapshot: AdvancedBatterySnapshot): List<Diagno
                 access
             )
         ), DiagnosticGroup(
-            R.string.advanced_section_metadata, rawRows(
+            R.string.diag_section_metadata, rawRows(
                 snapshot.metadataLabels, snapshot.metadataValues, "BatteryManager", snapshot, access
             )
         )
@@ -580,7 +580,7 @@ internal fun deviceDiagnosticGroups(
 
                     key == "current_now" -> number(R.string.diag_input_current, "µA", 1000.0)
                     key == "current_max" -> number(
-                        R.string.advanced_field_max_charging_current, "µA", 1000.0
+                        R.string.diag_field_max_charging_current, "µA", 1000.0
                     )
 
                     key == "voltage_now" -> number(
@@ -588,7 +588,7 @@ internal fun deviceDiagnosticGroups(
                     )?.takeIf { text.toLong() > 0 }
 
                     key == "voltage_max" -> number(
-                        R.string.advanced_field_max_charging_voltage, "µV", 1_000_000.0
+                        R.string.diag_field_max_charging_voltage, "µV", 1_000_000.0
                     )
 
                     else -> null
@@ -615,7 +615,7 @@ internal fun formattedDiagnosticValue(
     row: DiagnosticRow, label: (Int) -> String, locale: Locale
 ): String? {
     if (row.valueLabel != 0) return label(row.valueLabel)
-    if (row.label == R.string.advanced_field_charge_time_remaining) {
+    if (row.label == R.string.diag_field_charge_time_remaining) {
         val milliseconds = row.rawValue?.toLongOrNull()?.takeIf { it >= 0 } ?: return null
         row.value?.takeIf { it != row.rawValue }?.let { return it }
         return DiagnosticsDurationFormatter.format(locale, milliseconds)
@@ -719,7 +719,7 @@ private fun capacityLevelLabel(value: String?): Int = when (value?.trim()?.lower
 }
 
 internal fun diagnosticGroupSources(group: DiagnosticGroup): String = group.rows.filter {
-    (it.value != null || it.valueLabel != 0) && it.label != R.string.battery_power && it.label != R.string.advanced_field_estimated_health
+    (it.value != null || it.valueLabel != 0) && it.label != R.string.battery_power && it.label != R.string.diag_field_estimated_health
 }.map { row ->
     val source = when {
         row.source.startsWith("cmd battery ") -> "cmd battery"

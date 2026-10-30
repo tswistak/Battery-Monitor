@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">Cette estimation utilise la méthode de prévision configurée dans Battery Monitor. Son objectif ne contrôle ni la charge ni l’arrêt de l’appareil.</string>
     <string name="time_estimates_settings" formatted="false">Estimations de durée</string>
     <string name="time_estimates_settings_summary" formatted="false">Choisissez le calcul du temps restant et les niveaux de batterie ciblés</string>
-    <string name="time_estimates_settings_help" formatted="false">Choisissez comment Battery Monitor estime le temps restant et les niveaux de batterie cibles. Les objectifs s’appliquent aussi aux alarmes « Limite de charge atteinte » et « Limite de décharge atteinte ». Battery Monitor ne démarre ni n’arrête la charge.</string>
+    <string name="time_estimates_settings_help" formatted="false">Choisissez comment Battery Monitor estime le temps restant et les niveaux de batterie cibles. Les objectifs s’appliquent aussi aux alarmes « Objectif de charge atteint » et « Objectif de décharge atteint ». Battery Monitor ne démarre ni n’arrête la charge.</string>
     <string name="pref_cat_predictor" formatted="false">Estimations du temps restant</string>
     <string name="pref_prediction_type" formatted="false">Type d’estimation</string>
     <string name="pref_prediction_type_help" formatted="false">« Sensible » utilise le taux des cinq dernières minutes. « Conservateur », le choix par défaut, combine les taux récents et la moyenne à long terme apprise pour réduire les variations soudaines. « Depuis changement d’état » utilise la session de charge ou de décharge actuelle. « Moyenne long terme » utilise le taux appris pour la décharge ou la source de charge active. Tant que les observations sont insuffisantes, les estimations utilisent la moyenne enregistrée ou une valeur initiale par défaut.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">Moyenne long terme</string>
     <string name="pref_cat_target_levels" formatted="false">Niveaux cibles</string>
     <string name="pref_charging_target_mode" formatted="false">Objectif de charge</string>
-    <string name="pref_charging_target_mode_help" formatted="false">« Automatique (recommandé) » utilise une limite de charge fixe de l’appareil si Battery Monitor peut la lire, sinon 100 %. La charge adaptative vise toujours 100 %. « Personnalisé » utilise le niveau choisi pour les estimations de charge et les alarmes « Limite de charge atteinte ».</string>
+    <string name="pref_charging_target_mode_help" formatted="false">« Automatique (recommandé) » utilise une limite de charge fixe de l’appareil si Battery Monitor peut la lire, sinon 100 %. La charge adaptative vise toujours 100 %. « Personnalisé » utilise le niveau choisi pour les estimations de charge et les alarmes « Objectif de charge atteint ».</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">La détection automatique peut fonctionner sur les appareils Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme et Sony Xperia, ainsi que sur les appareils sous GrapheneOS ou LineageOS, notamment lorsqu’un accès root ou Shizuku est disponible. Elle repose sur des signaux logiciels : sa disponibilité et sa précision ne sont donc pas garanties, même pour les fabricants indiqués. Des modèles ou versions de système non testés de ces familles peuvent aussi fonctionner, mais les appareils d’autres fabricants ne sont actuellement pas détectés automatiquement.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Limite de charge de l’appareil : %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Objectif personnalisé</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">Objectif de charge personnalisé</string>
     <string name="pref_custom_charging_target_help" formatted="false">Définissez le niveau final des estimations de charge lorsque l’« Objectif de charge » est « Personnalisé ».</string>
     <string name="pref_discharging_target" formatted="false">Objectif de décharge</string>
-    <string name="pref_discharging_target_help" formatted="false">Définissez le niveau final des estimations de décharge et des alarmes « Limite de décharge atteinte ». Sous ce niveau, les estimations continuent jusqu’à 0 %. Les alarmes de batterie faible avec leur propre seuil restent indépendantes.</string>
+    <string name="pref_discharging_target_help" formatted="false">Définissez le niveau final des estimations de décharge et des alarmes « Objectif de décharge atteint ». Sous ce niveau, les estimations continuent jusqu’à 0 %. Les alarmes de batterie faible avec leur propre seuil restent indépendantes.</string>
     <string name="pref_target_level_summary" formatted="true">Estimer jusqu’à %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Notification principale</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Gérer le canal principal</string>
     <string name="pref_cat_notification_content" formatted="false">Contenu</string>
     <string name="pref_top_line_content" formatted="false">Contenu de la ligne haute</string>
-    <string name="pref_top_line_content_help" formatted="false">Choisissez si la ligne supérieure affiche le temps restant estimé, le temps écoulé depuis le changement d’état ou les « Signes vitaux » configurés.</string>
+    <string name="pref_top_line_content_help" formatted="false">Choisissez si la ligne supérieure affiche le « Temps restant » estimé, le « Temps depuis changement d’état » ou les « Signes vitaux » configurés.</string>
     <string name="pref_bottom_line_content" formatted="false">Contenu de la ligne basse</string>
     <string name="pref_bottom_line_content_help" formatted="false">Les mêmes options sont disponibles pour la ligne basse et la ligne haute.</string>
     <string name="time_remaining" formatted="false">Temps restant</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Alarmes</string>
     <string name="alarm_settings_help" formatted="false">Vous pouvez configurer Battery Monitor pour qu\'il vous informe dès que la batterie a atteint un certain point (exemple : La batterie est complètement chargée, le niveau de charge a atteint 20%, etc…).</string>
     <string name="alarms_overview" formatted="false">Aperçu des alarmes</string>
-    <string name="alarms_overview_help">Les huit types d’alarme sont toujours disponibles. Activez directement les événements ou utilisez « Ajouter un seuil » sous un type de charge ou de température. Les nouveaux seuils sont activés après l’enregistrement. Touchez une valeur pour la modifier ; la modification conserve son état activé ou désactivé. Les valeurs désactivées restent affichées. La suppression demande confirmation. Le son et les vibrations sont communs à chaque type dans les paramètres de notification Android. Les enregistrements existants en double apparaissent comme une seule alarme logique ; l’activation, la désactivation ou la suppression touche toutes les copies. Les alarmes de charge et de décharge suivent les objectifs d’estimation et ne contrôlent pas la charge. Un canal bloqué ou une surveillance arrêtée ne modifie pas les commutateurs enregistrés.</string>
+    <string name="alarms_overview_help">Les huit types d’alarme sont toujours disponibles. Activez directement les événements ou utilisez « Ajouter un seuil » sous un type de charge ou de température. Les nouveaux seuils sont activés après l’enregistrement. Touchez une valeur pour la modifier ; la modification conserve son état activé ou désactivé. Les valeurs désactivées restent affichées. « Supprimer l\'alarme » demande confirmation. Le son et les vibrations sont communs à chaque type dans les paramètres de notification Android. Les enregistrements existants en double apparaissent comme une seule alarme logique ; l’activation, la désactivation ou la suppression touche toutes les copies. Les alarmes de charge et de décharge suivent les objectifs d’estimation et ne contrôlent pas la charge. Un canal bloqué ou une surveillance arrêtée ne modifie pas les commutateurs enregistrés.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarme activée</item>
         <item quantity="many">%1$d alarmes activées</item>
@@ -523,7 +523,7 @@
     <string name="battery_optimized" formatted="false">Surveillance en arrière-plan</string>
     <string name="battery_optimized_message" formatted="false">Une exécution sans restriction en arrière-plan peut améliorer la fiabilité de la surveillance. L’optimisation de la batterie Android peut retarder les mises à jour et les alertes.\n
     \n
-    Une exécution sans restriction peut augmenter la consommation de batterie en arrière-plan. Vous pouvez modifier ce choix plus tard dans «\u00a0Paramètres\u00a0» Android → «\u00a0Applications\u00a0» → «\u00a0Battery Monitor\u00a0» → «\u00a0Batterie\u00a0».</string>
+    Une exécution sans restriction peut augmenter la consommation de batterie en arrière-plan. Vous pouvez modifier ce choix plus tard dans «\u00a0Paramètres\u00a0» Android → «\u00a0Applications\u00a0» → «\u00a0Battery Monitor\u00a0» → «\u00a0Batterie\u00a0». Les noms des menus varient selon l’appareil.</string>
     <string name="pref_cat_autostart" formatted="false">Démarrage automatique</string>
     <string name="pref_autostart_at_boot" formatted="false">Démarrage automatique au lancement</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Démarrer Battery Monitor lorsque le téléphone s\'allume ?</string>
@@ -542,48 +542,48 @@
     <string name="shizuku_not_running" formatted="false">Démarrez Shizuku pour accorder un accès privilégié à Battery Monitor</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">Accordez manuellement l’autorisation à Battery Monitor dans Shizuku</string>
 
-    <string name="advanced_action_refresh" formatted="false">Actualiser</string>
-    <string name="advanced_status_loading" formatted="false">Chargement des statistiques avancées de la batterie…</string>
-    <string name="advanced_status_no_access" formatted="false">Root ou Shizuku est nécessaire pour afficher les statistiques avancées de la batterie.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">En attente de l\'autorisation Shizuku…</string>
-    <string name="advanced_status_no_stats" formatted="false">Aucune statistique avancée de batterie n\'est disponible sur cet appareil pour le moment.</string>
-    <string name="advanced_value_not_available" formatted="false">Non disponible</string>
-    <string name="advanced_help_overview" formatted="false">« Diagnostics » regroupe la fiabilité de la surveillance, les données de prévision enregistrées et les données de batterie dans les onglets « Fonctionnement de l’application », « Batterie », « Charge » et « Données brutes ». Les données Android sont disponibles sans root. Les données supplémentaires dépendent de l’appareil et des autorisations accordées à Battery Monitor.</string>
-    <string name="advanced_section_counters" formatted="false">Compteurs</string>
-    <string name="advanced_help_counters" formatted="false">Les mesures de batterie sont nommées et formatées : charge restante en mAh, courant en mA, énergie en mWh, tension en V, température dans l’unité choisie et puissance en W. Le multiplicateur de courant s’applique aussi à la puissance calculée. Le courant moyen et le nombre de cycles dépendent de la prise en charge par l’appareil.</string>
-    <string name="advanced_field_charge_counter" formatted="false">Charge restante estimée</string>
-    <string name="advanced_field_current_now" formatted="false">Courant instantané</string>
-    <string name="advanced_field_current_average" formatted="false">Courant moyen</string>
-    <string name="advanced_field_energy_counter" formatted="false">Compteur d\'énergie</string>
-    <string name="advanced_section_capacity" formatted="false">Capacité</string>
-    <string name="advanced_help_capacity" formatted="false">La « Capacité » affiche la capacité à pleine charge, la capacité nominale et l état estimé. L état estimé est calculé comme la capacité à pleine charge divisée par la capacité nominale, donc sa précision dépend des valeurs rapportées par l appareil.</string>
-    <string name="advanced_field_cycle_count" formatted="false">Nombre de cycles</string>
-    <string name="advanced_field_reported_capacity" formatted="false">Capacité rapportée</string>
-    <string name="advanced_field_state_of_health" formatted="false">État de santé</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">Capacité à pleine charge</string>
-    <string name="advanced_field_design_capacity" formatted="false">Capacité nominale</string>
-    <string name="advanced_field_estimated_health" formatted="false">État estimé</string>
+    <string name="diag_action_refresh" formatted="false">Actualiser</string>
+    <string name="diag_status_loading" formatted="false">Chargement des statistiques avancées de la batterie…</string>
+    <string name="diag_status_no_access" formatted="false">Root ou Shizuku est nécessaire pour afficher les statistiques avancées de la batterie.</string>
+    <string name="diag_status_waiting_permission" formatted="false">En attente de l\'autorisation Shizuku…</string>
+    <string name="diag_status_no_stats" formatted="false">Aucune statistique avancée de batterie n\'est disponible sur cet appareil pour le moment.</string>
+    <string name="diag_value_not_available" formatted="false">Non disponible</string>
+    <string name="diag_help_overview" formatted="false">« Diagnostics » regroupe la fiabilité de la surveillance, les données de prévision enregistrées et les données de batterie dans les onglets « Fonctionnement de l’application », « Batterie », « Charge » et « Données brutes ». Les données Android sont disponibles sans root. Les données supplémentaires dépendent de l’appareil et des autorisations accordées à Battery Monitor.</string>
+    <string name="diag_section_counters" formatted="false">Compteurs</string>
+    <string name="diag_help_counters" formatted="false">Les mesures de batterie sont nommées et formatées : charge restante en mAh, courant en mA, énergie en mWh, tension en V, température dans l’unité choisie et puissance en W. Le multiplicateur de courant s’applique aussi à la puissance calculée. Le courant moyen et le nombre de cycles dépendent de la prise en charge par l’appareil.</string>
+    <string name="diag_field_charge_counter" formatted="false">Charge restante estimée</string>
+    <string name="diag_field_current_now" formatted="false">Courant instantané</string>
+    <string name="diag_field_current_average" formatted="false">Courant moyen</string>
+    <string name="diag_field_energy_counter" formatted="false">Compteur d\'énergie</string>
+    <string name="diag_section_capacity" formatted="false">Capacité</string>
+    <string name="diag_help_capacity" formatted="false">La « Capacité » affiche la capacité à pleine charge, la capacité nominale et l état estimé. L état estimé est calculé comme la capacité à pleine charge divisée par la capacité nominale, donc sa précision dépend des valeurs rapportées par l appareil.</string>
+    <string name="diag_field_cycle_count" formatted="false">Nombre de cycles</string>
+    <string name="diag_field_reported_capacity" formatted="false">Capacité rapportée</string>
+    <string name="diag_field_state_of_health" formatted="false">État de santé</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">Capacité à pleine charge</string>
+    <string name="diag_field_design_capacity" formatted="false">Capacité nominale</string>
+    <string name="diag_field_estimated_health" formatted="false">État estimé</string>
     <string name="diag_capacity_inconsistent">La capacité totale indiquée dépasse la capacité nominale. Ces mesures ne permettent pas de calculer une estimation fiable de la santé.</string>
-    <string name="advanced_field_capacity_level" formatted="false">Niveau de capacité</string>
+    <string name="diag_field_capacity_level" formatted="false">Niveau de capacité</string>
     <string name="diag_capacity_critical">Critique</string>
     <string name="diag_capacity_low">Faible</string>
     <string name="diag_capacity_high">Élevée</string>
-    <string name="advanced_section_charging" formatted="false">Charge</string>
-    <string name="advanced_help_charging" formatted="false">La « Charge » affiche des valeurs liées au chemin de charge actif, comme le courant ou la tension maximale de charge, la politique de charge, l état de charge et le niveau de capacité. Ces champs peuvent changer selon le chargeur et le mode de charge.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">Temps de charge restant</string>
-    <string name="advanced_field_max_charging_current" formatted="false">Courant de charge maximal</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">Tension de charge maximale</string>
-    <string name="advanced_field_charging_policy" formatted="false">Politique de charge</string>
+    <string name="diag_section_charging" formatted="false">Charge</string>
+    <string name="diag_help_charging" formatted="false">La « Charge » affiche des valeurs liées au chemin de charge actif, comme le courant ou la tension maximale de charge, la politique de charge, l état de charge et le niveau de capacité. Ces champs peuvent changer selon le chargeur et le mode de charge.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">Temps de charge restant</string>
+    <string name="diag_field_max_charging_current" formatted="false">Courant de charge maximal</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">Tension de charge maximale</string>
+    <string name="diag_field_charging_policy" formatted="false">Politique de charge</string>
     <string name="diag_policy_default">Par défaut</string>
     <string name="diag_policy_fixed_limit">Protection de la batterie (limite fixe)</string>
     <string name="diag_policy_adaptive_ac">Charge adaptative</string>
-    <string name="advanced_field_charging_state" formatted="false">État de charge</string>
+    <string name="diag_field_charging_state" formatted="false">État de charge</string>
     <string name="diag_charging_too_cold">Trop froid pour charger</string>
     <string name="diag_charging_too_hot">Trop chaud pour charger</string>
-    <string name="advanced_section_service" formatted="false">Service de batterie Android</string>
-    <string name="advanced_help_service" formatted="false">« Données brutes » inclut les noms et valeurs d’origine des messages de batterie Android et, si accessible, de dumpsys battery. Ils peuvent comprendre la source de charge, l’état de la batterie, la température, la tension et d’autres états du service de batterie.</string>
-    <string name="advanced_section_sysfs" formatted="false">Fichiers power_supply du noyau</string>
-    <string name="advanced_help_sysfs" formatted="false">« Données brutes » affiche les noms et valeurs d’origine lus dans /sys/class/power_supply, y compris les valeurs sur plusieurs lignes. Recherchez une clé et touchez une ligne pour voir et copier sa valeur complète. Utilisez « Actualiser » pour collecter de nouvelles mesures. Battery Monitor tente aussi de lire avec ses autorisations Android normales, sans root ni Shizuku.</string>
+    <string name="diag_section_service" formatted="false">Service de batterie Android</string>
+    <string name="diag_help_service" formatted="false">« Données brutes » inclut les noms et valeurs d’origine des messages de batterie Android et, si accessible, de dumpsys battery. Ils peuvent comprendre la source de charge, l’état de la batterie, la température, la tension et d’autres états du service de batterie.</string>
+    <string name="diag_section_sysfs" formatted="false">Fichiers power_supply du noyau</string>
+    <string name="diag_help_sysfs" formatted="false">« Données brutes » affiche les noms et valeurs d’origine lus dans /sys/class/power_supply, y compris les valeurs sur plusieurs lignes. Recherchez une clé et touchez une ligne pour voir et copier sa valeur complète. Utilisez « Actualiser » pour collecter de nouvelles mesures. Battery Monitor tente aussi de lire avec ses autorisations Android normales, sans root ni Shizuku.</string>
     <string name="diag_fuel_gauge">Jauge de batterie</string>
     <string name="diag_mains_supply">Alimentation secteur</string>
     <string name="diag_charging_source">Source de charge</string>
@@ -612,22 +612,23 @@
     <string name="diag_settled_input_current">Courant d’entrée stabilisé</string>
     <string name="diag_input_voltage">Tension d’entrée</string>
     <string name="diag_input_voltage_limit">Limite de tension d’entrée</string>
-    <string name="advanced_section_metadata" formatted="false">Métadonnées</string>
-    <string name="advanced_help_metadata" formatted="false">« Données brutes » inclut aussi les noms et valeurs d’origine des propriétés BatteryManager, dont les compteurs et mesures de courant disponibles. Les propriétés supplémentaires, comme les détails de fabrication ou l’état de remplacement, dépendent de la version Android, de la prise en charge par l’appareil et des autorisations.</string>
+    <string name="diag_section_metadata" formatted="false">Métadonnées</string>
+    <string name="diag_help_metadata" formatted="false">« Données brutes » inclut aussi les noms et valeurs d’origine des propriétés BatteryManager, dont les compteurs et mesures de courant disponibles. Les propriétés supplémentaires, comme les détails de fabrication ou l’état de remplacement, dépendent de la version Android, de la prise en charge par l’appareil et des autorisations.</string>
     <string name="diag_raw">Données brutes</string>
     <string name="diag_search_key">Rechercher des clés</string>
     <string name="diag_no_keys">Aucune clé correspondante dans les données disponibles</string>
     <string name="diag_raw_values">Valeurs brutes</string>
     <string name="diag_last_checked">Dernière vérification : %1$s</string>
     <string name="diag_privileged_stale">Les mesures privilégiées précédentes sont affichées. Actualisez pour réessayer.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">Dépannage</string>
-    <string name="advanced_help_troubleshooting" formatted="false">Les données Android sont collectées automatiquement dans « Diagnostics ». Pour obtenir des données root ou Shizuku supplémentaires, activez l’accès privilégié dans « Sources supplémentaires ». Battery Monitor essaie root, puis Shizuku. Shizuku doit être en cours d’exécution et l’autorisation accordée. Les champs manquants restent indisponibles ; les actualisations échouées conservent l’instantané précédent et le marquent comme périmé.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">Dépannage</string>
+    <string name="diag_help_troubleshooting" formatted="false">Les données Android sont collectées automatiquement dans « Diagnostics ». Pour obtenir des données root ou Shizuku supplémentaires, activez l’accès privilégié dans « Sources supplémentaires ». Battery Monitor essaie root, puis Shizuku. Shizuku doit être en cours d’exécution et l’autorisation accordée. Les champs manquants restent indisponibles ; les actualisations échouées conservent l’instantané précédent et le marquent comme périmé.</string>
 
     <string name="diagnostics" formatted="false">Diagnostic</string>
     <string name="diagnostics_summary" formatted="false">Vérifier les autorisations et la fiabilité du suivi, et créer un rapport de dépannage</string>
     <string name="diag_overview">Fonctionnement de l’application</string>
     <string name="diagnostics_help_title" formatted="false">Utilité du diagnostic</string>
     <string name="diagnostics_help_overview" formatted="false">« Suivi en arrière-plan » vérifie les autorisations et la fiabilité de la surveillance. Ses commandes permettent de démarrer ou d’arrêter la surveillance, de modifier l’enregistrement de débogage, d’ouvrir les paramètres d’optimisation de batterie et de notification ou de créer un rapport de dépannage. Une mesure indisponible n’indique pas toujours un problème d’autorisation ; certains appareils ne la fournissent pas.</string>
+    <string name="monitoring_help_overview" formatted="false">Vérifiez l’autorisation de notification, l’accès root ou Shizuku, le service de surveillance et la base de données de l’historique. Appuyez sur une vérification pour demander l’accès ou l’exécuter. « Démarrer la surveillance » est disponible lorsque la surveillance est arrêtée ; « Arrêter la surveillance », lorsqu’elle est active. Les mesures disponibles dépendent de la prise en charge par l’appareil et de l’accès accordé. La vérification du service nécessite une surveillance active ; celle de la base de données nécessite l’enregistrement de l’historique (« Paramètres » → « Avancé »). Pour utiliser les mesures supplémentaires, activez « Utiliser l’accès privilégié » dans « Paramètres » → « Avancé ». L’option « Réglages du fabricant » est disponible uniquement sur les appareils pris en charge.</string>
     <string name="diagnostics_monitoring" formatted="false">Suivi en arrière-plan</string>
     <string name="diag_monitor_operation">Fonctionnement de la surveillance</string>
     <string name="diag_heartbeat">Dernier signe d’activité</string>
@@ -709,6 +710,7 @@
     <string name="diag_report_privacy">Exclus par défaut. Ces données peuvent contenir des informations personnelles. Vérifiez l’aperçu avant de copier ou d’enregistrer.</string>
 
     <string name="charging_diagnostics_title" formatted="false">Diagnostic de limite de charge OEM</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Ouvrez les outils d’instantanés et de comparaison pour examiner comment Battery Monitor détecte la limite de charge de l’appareil. Les instructions de préparation figurent dans l’aide de l’écran de diagnostic OEM lui-même.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Pour obtenir un rapport utile, ouvrez l’« Aide » et suivez les étapes de préparation avant de capturer les instantanés.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">L’accès privilégié peut fournir davantage d’informations de diagnostic. Accordez l’accès Shizuku ou root et activez l’accès privilégié dans « Paramètres » → « Avancé » → « Utiliser l’accès privilégié » pour obtenir un rapport de limite de charge OEM plus utile.</string>
     <string name="charging_diagnostics_capture" formatted="false">Capturer un instantané</string>

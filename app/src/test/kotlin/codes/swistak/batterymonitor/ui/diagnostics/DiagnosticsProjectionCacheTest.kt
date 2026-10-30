@@ -67,11 +67,12 @@ class DiagnosticsProjectionCacheTest {
             assertEquals(group.rows.size, group.rows.map { it.rawKey }.distinct().size)
             assertEquals(
                 sources.asSequence().flatMap(::rawDiagnosticGroups)
-                .filter { it.title == group.title }.flatMap { it.rows }.map { it.rawKey }.toSet(),
+                    .filter { it.title == group.title }.flatMap { it.rows }.map { it.rawKey }
+                    .toSet(),
                 group.rows.map { it.rawKey }.toSet()
             )
         }
-        val metadata = raw.single { it.title == R.string.advanced_section_metadata }
+        val metadata = raw.single { it.title == R.string.diag_section_metadata }
         assertEquals(3, metadata.rows.size)
         val current = row(listOf(metadata), "BATTERY_PROPERTY_CURRENT_NOW")
         assertEquals("  -1200\n", current.rawValue)
@@ -88,7 +89,7 @@ class DiagnosticsProjectionCacheTest {
         assertEquals(listOf(current), filterRawGroups(raw, "PROPERTY_CURRENT_NOW").single().rows)
         val report = diagnosticReport(raw, { it.toString() }, true)
         assertEquals(
-            1, report.lineSequence().count { it == R.string.advanced_section_metadata.toString() })
+            1, report.lineSequence().count { it == R.string.diag_section_metadata.toString() })
         assertEquals(
             1, report.lineSequence().count { it.startsWith("BATTERY_PROPERTY_CURRENT_NOW:") })
         assertSame(raw, cache.groups(sources, defaults, 3))

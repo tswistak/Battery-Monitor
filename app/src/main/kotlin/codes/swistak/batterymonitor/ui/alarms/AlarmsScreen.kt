@@ -184,8 +184,7 @@ internal fun AlarmsScreen(
                         Text(stringResource(if (state.hasSnapshot) R.string.alarms_stale else R.string.alarms_state_unknown))
                         TextButton(onClick = onRetry, enabled = !state.busy) {
                             ActionLabel(
-                                stringResource(R.string.advanced_action_refresh),
-                                R.drawable.ui_refresh
+                                stringResource(R.string.diag_action_refresh), R.drawable.ui_refresh
                             )
                         }
                     }
@@ -193,7 +192,7 @@ internal fun AlarmsScreen(
                         Text(it, color = MaterialTheme.colorScheme.error)
                         TextButton(
                             onClick = onRetry, enabled = !state.busy
-                        ) { Text(stringResource(R.string.advanced_action_refresh)) }
+                        ) { Text(stringResource(R.string.diag_action_refresh)) }
                     }
                     if (!state.monitoringDesired || !monitoringAvailable) Text(
                         stringResource(if (!state.monitoringDesired) R.string.alarms_monitor_stopped else R.string.alarms_monitor_unconfirmed),

@@ -79,6 +79,7 @@ import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsViewModel
 import codes.swistak.batterymonitor.ui.diagnostics.MonitorAction
 import codes.swistak.batterymonitor.ui.help.HelpScreen
 import codes.swistak.batterymonitor.ui.help.LicenseScreen
+import codes.swistak.batterymonitor.ui.help.diagnosticDetailHelpTopic
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.history.HistoryActionsMenu
 import codes.swistak.batterymonitor.ui.history.HistoryRoute
@@ -281,7 +282,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                             onClick = {
                                 val topic = when (selected) {
                                     SectionOwner.ALARMS -> if (detail == null) SettingsContract.KEY_ALARMS_SETTINGS else SettingsContract.KEY_ALARM_EDIT_SETTINGS
-                                    SectionOwner.DIAGNOSTICS -> if (detail == null) SettingsContract.KEY_ADVANCED_INFO_HELP else SettingsContract.KEY_DIAGNOSTICS_SETTINGS
+                                    SectionOwner.DIAGNOSTICS -> diagnosticDetailHelpTopic(detail)
                                     else -> when (SettingsCategory.fromRoute(
                                         detail?.substringAfter(
                                             "settings:"
@@ -590,7 +591,7 @@ class BatteryInfoActivity : AppCompatActivity() {
         }
         if (!launched) {
             startup.systemReturned()
-            if (action != StartupSystemAction.NOTIFICATIONS) showToast(R.string.advanced_value_not_available)
+            if (action != StartupSystemAction.NOTIFICATIONS) showToast(R.string.diag_value_not_available)
             continueStartup()
         }
     }

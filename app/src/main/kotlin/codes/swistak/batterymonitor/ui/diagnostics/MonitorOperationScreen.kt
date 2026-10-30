@@ -155,7 +155,7 @@ internal fun MonitorOperationScreen(
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     if (!action.isVisible) Text(
-                                        stringResource(R.string.advanced_value_not_available),
+                                        stringResource(R.string.diag_value_not_available),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )

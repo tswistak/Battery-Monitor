@@ -333,9 +333,7 @@ internal fun CurrentStateRoute(
         onPowerSettings = {
             if (!BackgroundSettingsNavigator.openBatteryOptimization(context)) {
                 android.widget.Toast.makeText(
-                    context,
-                    R.string.advanced_value_not_available,
-                    android.widget.Toast.LENGTH_SHORT
+                    context, R.string.diag_value_not_available, android.widget.Toast.LENGTH_SHORT
                 ).show()
             }
         },
@@ -460,7 +458,7 @@ internal fun CurrentStateScreen(
     val powerTime = oldestMeasurementTime(
         snapshot?.fieldMeasurementTimes?.get("voltage"), currentReading?.acquiredAt
     )
-    val sourceUnavailable = stringResource(R.string.advanced_value_not_available)
+    val sourceUnavailable = stringResource(R.string.diag_value_not_available)
     fun source(measurement: CurrentMeasurement): String =
         currentMeasurementSource(measurement, snapshot, currentReading?.source) ?: sourceUnavailable
 
@@ -917,7 +915,7 @@ internal fun CurrentStateScreen(
                 if (stale) Text(stringResource(R.string.current_stale))
                 if (metric.measurement == CurrentMeasurement.CURRENT) TextButton(onClick = onRefreshCurrent) {
                     ActionLabel(
-                        stringResource(R.string.advanced_action_refresh), R.drawable.ui_refresh
+                        stringResource(R.string.diag_action_refresh), R.drawable.ui_refresh
                     )
                 }
                 TextButton(onClick = {

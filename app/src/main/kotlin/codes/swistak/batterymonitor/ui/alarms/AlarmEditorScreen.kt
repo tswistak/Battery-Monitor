@@ -152,7 +152,7 @@ internal fun ThresholdDialog(
                 if (state.readError != null || state.draftConflict) TextButton(
                     onClick = onRetry, enabled = !state.busy
                 ) {
-                    Text(stringResource(R.string.advanced_action_refresh))
+                    Text(stringResource(R.string.diag_action_refresh))
                 }
                 if (draft.id != null) TextButton(
                     onClick = {

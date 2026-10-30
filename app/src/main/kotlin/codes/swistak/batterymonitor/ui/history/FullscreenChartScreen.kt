@@ -987,7 +987,7 @@ internal fun FullscreenChartScreen(
                         .padding(BatterySpacing.normal)
                 ) {
                     Text(stringResource(R.string.history_load_failed), color = colors.error)
-                    TextButton(onClick = onRetry) { Text(stringResource(R.string.advanced_action_refresh)) }
+                    TextButton(onClick = onRetry) { Text(stringResource(R.string.diag_action_refresh)) }
                 } else if (!state.loading && points.isEmpty()) {
                     Text(
                         stringResource(R.string.current_unavailable),
@@ -1134,8 +1134,7 @@ internal fun fullscreenCoordinatesNeedRebase(
 ): Boolean {
     val span = viewport.end - viewport.start
     val coordinateSpan = coordinates.end - coordinates.start
-    return coordinates.start < range.start || coordinates.end > range.end || viewport.start < coordinates.start || viewport.end > coordinates.end || span < coordinateSpan / 10 || span > coordinateSpan / 2 ||
-            coordinates.start > range.start && viewport.start - coordinates.start < span || coordinates.end < range.end && coordinates.end - viewport.end < span
+    return coordinates.start < range.start || coordinates.end > range.end || viewport.start < coordinates.start || viewport.end > coordinates.end || span < coordinateSpan / 10 || span > coordinateSpan / 2 || coordinates.start > range.start && viewport.start - coordinates.start < span || coordinates.end < range.end && coordinates.end - viewport.end < span
 }
 
 internal fun fullscreenVisibleViewport(

@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">Эта оценка использует настроенный алгоритм Battery Monitor. Его цель не управляет зарядкой или выключением.</string>
     <string name="time_estimates_settings" formatted="false">Оценка времени</string>
     <string name="time_estimates_settings_summary" formatted="false">Выберите способ расчёта оставшегося времени и целевые уровни заряда</string>
-    <string name="time_estimates_settings_help" formatted="false">Выберите способ оценки оставшегося времени и целевые уровни заряда. Цели также используются предупреждениями «Достигнут лимит зарядки» и «Достигнут лимит разрядки». Battery Monitor не запускает и не останавливает зарядку.</string>
+    <string name="time_estimates_settings_help" formatted="false">Выберите способ оценки оставшегося времени и целевые уровни заряда. Цели также используются предупреждениями «Цель зарядки достигнута» и «Цель разрядки достигнута». Battery Monitor не запускает и не останавливает зарядку.</string>
     <string name="pref_cat_predictor" formatted="false">Оценки оставшегося времени</string>
     <string name="pref_prediction_type" formatted="false">Тип оценки</string>
     <string name="pref_prediction_type_help" formatted="false">«Чувствительный» использует скорость за последние пять минут. «Консервативный», выбранный по умолчанию, сочетает последние скорости с накопленным долгосрочным средним, сглаживая резкие изменения. «С момента изменения состояния» использует текущий сеанс зарядки или разрядки. «Среднее за большой период» использует накопленную скорость для разрядки или активного источника зарядки. Пока наблюдений недостаточно, оценки используют сохранённое среднее или начальное значение по умолчанию.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">Среднее за большой период</string>
     <string name="pref_cat_target_levels" formatted="false">Целевые уровни</string>
     <string name="pref_charging_target_mode" formatted="false">Цель зарядки</string>
-    <string name="pref_charging_target_mode_help" formatted="false">Режим «Автоматически (рекомендуется)» использует фиксированный предел зарядки устройства, если Battery Monitor может его прочитать, иначе 100%. Адаптивная зарядка по-прежнему нацелена на 100%. «Пользовательский» режим использует выбранный уровень для оценок зарядки и предупреждений «Достигнут лимит зарядки».</string>
+    <string name="pref_charging_target_mode_help" formatted="false">Режим «Автоматически (рекомендуется)» использует фиксированный предел зарядки устройства, если Battery Monitor может его прочитать, иначе 100%. Адаптивная зарядка по-прежнему нацелена на 100%. «Пользовательский» режим использует выбранный уровень для оценок зарядки и предупреждений «Цель зарядки достигнута».</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Автоматическое определение может работать на устройствах Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme и Sony Xperia, а также на устройствах с GrapheneOS или LineageOS, особенно при наличии доступа root или Shizuku. Оно основано на программных сигналах, поэтому доступность и точность не гарантируются даже для перечисленных производителей. Непроверенные модели или версии ОС из этих семейств также могут работать, но устройства других производителей сейчас автоматически не определяются.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Лимит зарядки устройства: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Пользовательская цель</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">Пользовательская цель зарядки</string>
     <string name="pref_custom_charging_target_help" formatted="false">Задайте конечный уровень оценки зарядки, когда для параметра «Цель зарядки» выбран режим «Пользовательский».</string>
     <string name="pref_discharging_target" formatted="false">Цель разрядки</string>
-    <string name="pref_discharging_target_help" formatted="false">Задайте конечный уровень оценок разрядки и предупреждений «Достигнут лимит разрядки». Ниже этого уровня оценки времени продолжаются до 0%. Предупреждения о низком заряде со своим порогом остаются независимыми.</string>
+    <string name="pref_discharging_target_help" formatted="false">Задайте конечный уровень оценок разрядки и предупреждений «Цель разрядки достигнута». Ниже этого уровня оценки времени продолжаются до 0%. Предупреждения о низком заряде со своим порогом остаются независимыми.</string>
     <string name="pref_target_level_summary" formatted="true">Оценивать до %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Основное уведомление</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Настроить основной канал</string>
     <string name="pref_cat_notification_content" formatted="false">Содержание</string>
     <string name="pref_top_line_content" formatted="false">Содержимое верхней строчки</string>
-    <string name="pref_top_line_content_help" formatted="false">Выберите, что показывать в верхней строке уведомления: оценку оставшегося времени, время с момента изменения состояния или настроенные «Критически важные параметры».</string>
+    <string name="pref_top_line_content_help" formatted="false">Выберите, что показывать в верхней строке уведомления: оценку «Оставшееся время», «Время, прошедшее с момента изменения состояния» или настроенные «Критически важные параметры».</string>
     <string name="pref_bottom_line_content" formatted="false">Содержимое нижней строчки</string>
     <string name="pref_bottom_line_content_help" formatted="false">Для нижней строчки применимы те же параметры, что и для верхней.</string>
     <string name="time_remaining" formatted="false">Оставшееся время</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Оповещения</string>
     <string name="alarm_settings_help" formatted="false">Вы можете настроить Battery Monitor так, чтобы получать уведомление о том, что заряд аккумулятора достигает определенного уровня (например, аккумулятор становится полностью заряженным, заряд опустился ниже 20%).</string>
     <string name="alarms_overview" formatted="false">Обзор предупреждений</string>
-    <string name="alarms_overview_help">Все восемь типов предупреждений доступны всегда. Включайте события напрямую или используйте «Добавить порог» у типа заряда или температуры. Новые пороги включаются после сохранения. Нажмите значение для изменения; его состояние вкл./выкл. сохраняется. Отключённые значения остаются в списке. Удаление требует подтверждения. Звук и вибрация общие для типа в настройках уведомлений Android. Существующие дубликаты показаны как одно предупреждение; переключение или удаление затрагивает все копии. Предупреждения о зарядке и разрядке следуют целям оценки и не управляют зарядкой. Заблокированный канал или остановленный мониторинг не меняют сохранённые переключатели.</string>
+    <string name="alarms_overview_help">Все восемь типов предупреждений доступны всегда. Включайте события напрямую или используйте «Добавить порог» у типа заряда или температуры. Новые пороги включаются после сохранения. Нажмите значение для изменения; его состояние вкл./выкл. сохраняется. Отключённые значения остаются в списке. «Удалить предупреждение» требует подтверждения. Звук и вибрация общие для типа в настройках уведомлений Android. Существующие дубликаты показаны как одно предупреждение; переключение или удаление затрагивает все копии. Предупреждения о зарядке и разрядке следуют целям оценки и не управляют зарядкой. Заблокированный канал или остановленный мониторинг не меняют сохранённые переключатели.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d предупреждение включено</item>
         <item quantity="few">%1$d предупреждения включены</item>
@@ -525,7 +525,7 @@
     <string name="battery_optimized" formatted="false">Мониторинг в фоновом режиме</string>
     <string name="battery_optimized_message" formatted="false">Работа в фоне без ограничений может повысить надёжность мониторинга. Оптимизация батареи Android может задерживать обновления и предупреждения.\n
     \n
-    Работа без ограничений может увеличить расход батареи в фоне. Это можно изменить позже: «Настройки» Android → «Приложения» → «Battery Monitor» → «Батарея».</string>
+    Работа без ограничений может увеличить расход батареи в фоне. Это можно изменить позже: «Настройки» Android → «Приложения» → «Battery Monitor» → «Батарея». Названия меню различаются в зависимости от устройства.</string>
     <string name="pref_cat_autostart" formatted="false">Автозапуск</string>
     <string name="pref_autostart_at_boot" formatted="false">Автозапуск при загрузке</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Запустить Battery Monitor при загрузке устройства:</string>
@@ -544,48 +544,48 @@
     <string name="shizuku_not_running" formatted="false">Запустите Shizuku, чтобы предоставить Battery Monitor привилегированный доступ</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">Предоставьте Battery Monitor разрешение вручную в Shizuku</string>
 
-    <string name="advanced_action_refresh" formatted="false">Обновить</string>
-    <string name="advanced_status_loading" formatted="false">Загрузка расширенной статистики батареи…</string>
-    <string name="advanced_status_no_access" formatted="false">Для отображения расширенной статистики батареи требуется root или Shizuku.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">Ожидание разрешения Shizuku…</string>
-    <string name="advanced_status_no_stats" formatted="false">На этом устройстве сейчас нет доступной расширенной статистики батареи.</string>
-    <string name="advanced_value_not_available" formatted="false">Недоступно</string>
-    <string name="advanced_help_overview" formatted="false">«Диагностика» объединяет надёжность мониторинга, сохранённые данные прогнозирования и данные батареи во вкладках «Работа приложения», «Аккумулятор», «Зарядка» и «Исходные данные». Данные Android доступны без root. Дополнительные данные устройства зависят от устройства и разрешений Battery Monitor.</string>
-    <string name="advanced_section_counters" formatted="false">Счетчики</string>
-    <string name="advanced_help_counters" formatted="false">Измерения батареи подписаны и отформатированы: оставшийся заряд в mAh, ток в mA, энергия в mWh, напряжение в V, температура в выбранной единице и мощность в W. Множитель тока также применяется к расчётной мощности. Средний ток и число циклов зависят от поддержки устройства.</string>
-    <string name="advanced_field_charge_counter" formatted="false">Оценка оставшегося заряда</string>
-    <string name="advanced_field_current_now" formatted="false">Текущий ток</string>
-    <string name="advanced_field_current_average" formatted="false">Средний ток</string>
-    <string name="advanced_field_energy_counter" formatted="false">Счетчик энергии</string>
-    <string name="advanced_section_capacity" formatted="false">Емкость</string>
-    <string name="advanced_help_capacity" formatted="false">Раздел «Емкость» показывает емкость полного заряда, проектную емкость и расчетное состояние. Расчетное состояние вычисляется как емкость полного заряда, деленная на проектную емкость, поэтому точность зависит от значений, сообщаемых устройством.</string>
-    <string name="advanced_field_cycle_count" formatted="false">Количество циклов</string>
-    <string name="advanced_field_reported_capacity" formatted="false">Заявленная емкость</string>
-    <string name="advanced_field_state_of_health" formatted="false">Состояние здоровья</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">Емкость полного заряда</string>
-    <string name="advanced_field_design_capacity" formatted="false">Проектная емкость</string>
-    <string name="advanced_field_estimated_health" formatted="false">Оценка состояния</string>
+    <string name="diag_action_refresh" formatted="false">Обновить</string>
+    <string name="diag_status_loading" formatted="false">Загрузка расширенной статистики батареи…</string>
+    <string name="diag_status_no_access" formatted="false">Для отображения расширенной статистики батареи требуется root или Shizuku.</string>
+    <string name="diag_status_waiting_permission" formatted="false">Ожидание разрешения Shizuku…</string>
+    <string name="diag_status_no_stats" formatted="false">На этом устройстве сейчас нет доступной расширенной статистики батареи.</string>
+    <string name="diag_value_not_available" formatted="false">Недоступно</string>
+    <string name="diag_help_overview" formatted="false">«Диагностика» объединяет надёжность мониторинга, сохранённые данные прогнозирования и данные батареи во вкладках «Работа приложения», «Аккумулятор», «Зарядка» и «Исходные данные». Данные Android доступны без root. Дополнительные данные устройства зависят от устройства и разрешений Battery Monitor.</string>
+    <string name="diag_section_counters" formatted="false">Счетчики</string>
+    <string name="diag_help_counters" formatted="false">Измерения батареи подписаны и отформатированы: оставшийся заряд в mAh, ток в mA, энергия в mWh, напряжение в V, температура в выбранной единице и мощность в W. Множитель тока также применяется к расчётной мощности. Средний ток и число циклов зависят от поддержки устройства.</string>
+    <string name="diag_field_charge_counter" formatted="false">Оценка оставшегося заряда</string>
+    <string name="diag_field_current_now" formatted="false">Текущий ток</string>
+    <string name="diag_field_current_average" formatted="false">Средний ток</string>
+    <string name="diag_field_energy_counter" formatted="false">Счетчик энергии</string>
+    <string name="diag_section_capacity" formatted="false">Емкость</string>
+    <string name="diag_help_capacity" formatted="false">Раздел «Емкость» показывает емкость полного заряда, проектную емкость и расчетное состояние. Расчетное состояние вычисляется как емкость полного заряда, деленная на проектную емкость, поэтому точность зависит от значений, сообщаемых устройством.</string>
+    <string name="diag_field_cycle_count" formatted="false">Количество циклов</string>
+    <string name="diag_field_reported_capacity" formatted="false">Заявленная емкость</string>
+    <string name="diag_field_state_of_health" formatted="false">Состояние здоровья</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">Емкость полного заряда</string>
+    <string name="diag_field_design_capacity" formatted="false">Проектная емкость</string>
+    <string name="diag_field_estimated_health" formatted="false">Оценка состояния</string>
     <string name="diag_capacity_inconsistent">Сообщённая полная ёмкость превышает проектную. По этим данным нельзя надёжно оценить здоровье батареи.</string>
-    <string name="advanced_field_capacity_level" formatted="false">Уровень емкости</string>
+    <string name="diag_field_capacity_level" formatted="false">Уровень емкости</string>
     <string name="diag_capacity_critical">Критический</string>
     <string name="diag_capacity_low">Низкий</string>
     <string name="diag_capacity_high">Высокий</string>
-    <string name="advanced_section_charging" formatted="false">Зарядка</string>
-    <string name="advanced_help_charging" formatted="false">Раздел «Зарядка» показывает значения, связанные с активным путем зарядки, например максимальный ток или напряжение зарядки, политику зарядки, состояние зарядки и уровень емкости. Эти поля могут меняться в зависимости от зарядного устройства и режима зарядки.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">Оставшееся время зарядки</string>
-    <string name="advanced_field_max_charging_current" formatted="false">Максимальный ток зарядки</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">Максимальное напряжение зарядки</string>
-    <string name="advanced_field_charging_policy" formatted="false">Политика зарядки</string>
+    <string name="diag_section_charging" formatted="false">Зарядка</string>
+    <string name="diag_help_charging" formatted="false">Раздел «Зарядка» показывает значения, связанные с активным путем зарядки, например максимальный ток или напряжение зарядки, политику зарядки, состояние зарядки и уровень емкости. Эти поля могут меняться в зависимости от зарядного устройства и режима зарядки.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">Оставшееся время зарядки</string>
+    <string name="diag_field_max_charging_current" formatted="false">Максимальный ток зарядки</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">Максимальное напряжение зарядки</string>
+    <string name="diag_field_charging_policy" formatted="false">Политика зарядки</string>
     <string name="diag_policy_default">По умолчанию</string>
     <string name="diag_policy_fixed_limit">Защита батареи (фиксированный предел)</string>
     <string name="diag_policy_adaptive_ac">Адаптивная зарядка</string>
-    <string name="advanced_field_charging_state" formatted="false">Состояние зарядки</string>
+    <string name="diag_field_charging_state" formatted="false">Состояние зарядки</string>
     <string name="diag_charging_too_cold">Слишком холодно для зарядки</string>
     <string name="diag_charging_too_hot">Слишком жарко для зарядки</string>
-    <string name="advanced_section_service" formatted="false">Служба батареи Android</string>
-    <string name="advanced_help_service" formatted="false">«Исходные данные» содержат оригинальные имена и значения из сообщений Android о батарее и, если доступно, dumpsys battery. Они могут включать источник зарядки, состояние батареи, температуру, напряжение и другие данные службы батареи.</string>
-    <string name="advanced_section_sysfs" formatted="false">Файлы power_supply ядра</string>
-    <string name="advanced_help_sysfs" formatted="false">«Исходные данные» показывают оригинальные имена и значения из /sys/class/power_supply, включая многострочные. Ищите по ключу и нажмите строку, чтобы просмотреть и скопировать полное значение. Используйте «Обновить» для новых измерений. Battery Monitor также пробует читать данные с обычными разрешениями Android, без root или Shizuku.</string>
+    <string name="diag_section_service" formatted="false">Служба батареи Android</string>
+    <string name="diag_help_service" formatted="false">«Исходные данные» содержат оригинальные имена и значения из сообщений Android о батарее и, если доступно, dumpsys battery. Они могут включать источник зарядки, состояние батареи, температуру, напряжение и другие данные службы батареи.</string>
+    <string name="diag_section_sysfs" formatted="false">Файлы power_supply ядра</string>
+    <string name="diag_help_sysfs" formatted="false">«Исходные данные» показывают оригинальные имена и значения из /sys/class/power_supply, включая многострочные. Ищите по ключу и нажмите строку, чтобы просмотреть и скопировать полное значение. Используйте «Обновить» для новых измерений. Battery Monitor также пробует читать данные с обычными разрешениями Android, без root или Shizuku.</string>
     <string name="diag_fuel_gauge">Датчик заряда батареи</string>
     <string name="diag_mains_supply">Сетевое питание</string>
     <string name="diag_charging_source">Источник зарядки</string>
@@ -614,22 +614,23 @@
     <string name="diag_settled_input_current">Установившийся входной ток</string>
     <string name="diag_input_voltage">Входное напряжение</string>
     <string name="diag_input_voltage_limit">Предел входного напряжения</string>
-    <string name="advanced_section_metadata" formatted="false">Метаданные</string>
-    <string name="advanced_help_metadata" formatted="false">«Исходные данные» также включают оригинальные имена и значения свойств BatteryManager, включая доступные счётчики и измерения тока. Дополнительные свойства, например сведения о производстве или замене, зависят от версии Android, поддержки устройства и разрешений.</string>
+    <string name="diag_section_metadata" formatted="false">Метаданные</string>
+    <string name="diag_help_metadata" formatted="false">«Исходные данные» также включают оригинальные имена и значения свойств BatteryManager, включая доступные счётчики и измерения тока. Дополнительные свойства, например сведения о производстве или замене, зависят от версии Android, поддержки устройства и разрешений.</string>
     <string name="diag_raw">Исходные данные</string>
     <string name="diag_search_key">Поиск ключей</string>
     <string name="diag_no_keys">Нет подходящих ключей в доступных данных</string>
     <string name="diag_raw_values">Исходные значения</string>
     <string name="diag_last_checked">Последняя проверка: %1$s</string>
     <string name="diag_privileged_stale">Показаны предыдущие привилегированные данные. Обновите, чтобы повторить попытку.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">Устранение неполадок</string>
-    <string name="advanced_help_troubleshooting" formatted="false">Данные Android собираются в разделе «Диагностика» автоматически. Для дополнительных данных root или Shizuku включите привилегированный доступ в разделе «Дополнительные источники». Battery Monitor сначала пробует root, затем Shizuku. Shizuku должен быть запущен, а разрешение предоставлено. Отсутствующие поля остаются недоступными; при неудачном обновлении сохраняется предыдущий снимок и помечается устаревшим.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">Устранение неполадок</string>
+    <string name="diag_help_troubleshooting" formatted="false">Данные Android собираются в разделе «Диагностика» автоматически. Для дополнительных данных root или Shizuku включите привилегированный доступ в разделе «Дополнительные источники». Battery Monitor сначала пробует root, затем Shizuku. Shizuku должен быть запущен, а разрешение предоставлено. Отсутствующие поля остаются недоступными; при неудачном обновлении сохраняется предыдущий снимок и помечается устаревшим.</string>
 
     <string name="diagnostics" formatted="false">Диагностика</string>
     <string name="diagnostics_summary" formatted="false">Проверка разрешений и надёжности мониторинга, создание отчёта для устранения неполадок</string>
     <string name="diag_overview">Работа приложения</string>
     <string name="diagnostics_help_title" formatted="false">Как помогает диагностика</string>
     <string name="diagnostics_help_overview" formatted="false">«Фоновый мониторинг» проверяет разрешения и надёжность мониторинга. Его элементы управления позволяют включить или остановить мониторинг, изменить отладочную запись, открыть настройки оптимизации батареи и уведомлений или создать отчёт для устранения неполадок. Не каждое недоступное измерение означает проблему разрешений; некоторые устройства его не предоставляют.</string>
+    <string name="monitoring_help_overview" formatted="false">Проверьте разрешение на уведомления, доступ root или Shizuku, службу мониторинга и базу данных истории. Нажмите на проверку, чтобы запросить доступ или выполнить её. «Включить мониторинг» доступно, когда мониторинг остановлен; «Остановить мониторинг» — когда он работает. Доступность показаний зависит от поддержки устройством и предоставленного доступа. Проверка службы требует работающего мониторинга; проверка базы данных требует включённой записи истории («Настройки» → «Расширенные»). Чтобы использовать дополнительные показания, включите «Использовать привилегированный доступ» в «Настройки» → «Расширенные». «Настройки производителя» доступны только на поддерживаемых устройствах.</string>
     <string name="diagnostics_monitoring" formatted="false">Фоновый мониторинг</string>
     <string name="diag_monitor_operation">Работа мониторинга</string>
     <string name="diag_heartbeat">Последний сигнал активности</string>
@@ -711,6 +712,7 @@
     <string name="diag_report_privacy">По умолчанию не включены. Эти данные могут содержать личную информацию. Проверьте предпросмотр перед копированием или сохранением.</string>
 
     <string name="charging_diagnostics_title" formatted="false">Диагностика ограничения зарядки OEM</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Откройте инструменты снимков и сравнения, чтобы выяснить, как Battery Monitor определяет ограничение зарядки устройства. Инструкции по подготовке доступны в справке самого экрана диагностики OEM.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Чтобы отчёт был полезным, откройте «Помощь» и выполните шаги подготовки перед созданием снимков.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">При привилегированном доступе может быть доступно больше диагностических данных. Предоставьте доступ через Shizuku или root и включите привилегированный доступ в разделе «Настройки» → «Расширенные» → «Использовать привилегированный доступ», чтобы получить более полезный отчёт об OEM-ограничении зарядки.</string>
     <string name="charging_diagnostics_capture" formatted="false">Сделать снимок</string>

@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">Tento odhad používa nastavenú metódu predpovede aplikácie Battery Monitor. Jej cieľ neriadi nabíjanie ani vypnutie.</string>
     <string name="time_estimates_settings" formatted="false">Odhady času</string>
     <string name="time_estimates_settings_summary" formatted="false">Vyberte spôsob výpočtu zostávajúceho času a cieľové úrovne batérie</string>
-    <string name="time_estimates_settings_help" formatted="false">Zvoľte, ako Battery Monitor odhaduje zostávajúci čas a cieľové úrovne batérie. Ciele platia aj pre alarmy „Dosiahnutý limit nabíjania“ a „Dosiahnutý limit vybíjania“. Battery Monitor nespúšťa ani nezastavuje nabíjanie.</string>
+    <string name="time_estimates_settings_help" formatted="false">Zvoľte, ako Battery Monitor odhaduje zostávajúci čas a cieľové úrovne batérie. Ciele platia aj pre alarmy „Dosiahnutý cieľ nabíjania“ a „Dosiahnutý cieľ vybíjania“. Battery Monitor nespúšťa ani nezastavuje nabíjanie.</string>
     <string name="pref_cat_predictor" formatted="false">Odhady zostávajúceho času</string>
     <string name="pref_prediction_type" formatted="false">Typ odhadu</string>
     <string name="pref_prediction_type_help" formatted="false">„Citlivý“ používa nedávnu päťminútovú rýchlosť. Predvolený „konzervatívny“ kombinuje nedávne rýchlosti s naučeným dlhodobým priemerom, aby obmedzil náhle zmeny. „Od zmeny stavu“ používa aktuálnu reláciu nabíjania alebo vybíjania. „Dlhodobý priemer“ používa naučenú rýchlosť vybíjania alebo aktívneho zdroja nabíjania. Kým nie je dosť pozorovaní, odhady používajú uložený priemer alebo počiatočnú predvolenú hodnotu.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">Dlhodobý priemer</string>
     <string name="pref_cat_target_levels" formatted="false">Cieľové úrovne</string>
     <string name="pref_charging_target_mode" formatted="false">Cieľ nabíjania</string>
-    <string name="pref_charging_target_mode_help" formatted="false">„Automaticky (odporúčané)“ používa pevný limit nabíjania zariadenia, ak ho Battery Monitor môže prečítať, inak 100 %. Adaptívne nabíjanie stále cieli na 100 %. „Vlastný“ používa zvolenú úroveň na odhady nabíjania a alarmy „Dosiahnutý limit nabíjania“.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">„Automaticky (odporúčané)“ používa pevný limit nabíjania zariadenia, ak ho Battery Monitor môže prečítať, inak 100 %. Adaptívne nabíjanie stále cieli na 100 %. „Vlastný“ používa zvolenú úroveň na odhady nabíjania a alarmy „Dosiahnutý cieľ nabíjania“.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Automatické rozpoznanie môže fungovať na zariadeniach Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme a Sony Xperia, ako aj na zariadeniach s GrapheneOS alebo LineageOS, najmä ak je dostupný prístup root alebo Shizuku. Vychádza zo softvérových signálov, preto dostupnosť ani presnosť nie sú zaručené ani pri uvedených výrobcoch. Fungovať môžu aj netestované modely či verzie systému z týchto rodín, zariadenia iných výrobcov však teraz nie sú automaticky rozpoznávané.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Limit nabíjania zariadenia: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Vlastný cieľ</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">Vlastný cieľ nabíjania</string>
     <string name="pref_custom_charging_target_help" formatted="false">Nastavte koncovú úroveň odhadov nabíjania, keď je „Cieľ nabíjania“ nastavený na „Vlastný“.</string>
     <string name="pref_discharging_target" formatted="false">Cieľ vybíjania</string>
-    <string name="pref_discharging_target_help" formatted="false">Nastavte koncový bod odhadov vybíjania a alarmov „Dosiahnutý limit vybíjania“. Pod touto úrovňou odhady pokračujú k 0 %. Alarmy nízkej batérie s vlastným prahom zostávajú nezávislé.</string>
+    <string name="pref_discharging_target_help" formatted="false">Nastavte koncový bod odhadov vybíjania a alarmov „Dosiahnutý cieľ vybíjania“. Pod touto úrovňou odhady pokračujú k 0 %. Alarmy nízkej batérie s vlastným prahom zostávajú nezávislé.</string>
     <string name="pref_target_level_summary" formatted="true">Odhadovať do %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Hlavné oznámenie</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Spravovať hlavný kanál</string>
     <string name="pref_cat_notification_content" formatted="false">Obsah</string>
     <string name="pref_top_line_content" formatted="false">Obsah horného riadku</string>
-    <string name="pref_top_line_content_help" formatted="false">Vyberte, či horný riadok oznámenia zobrazí odhad zostávajúceho času, čas od zmeny stavu alebo vybrané „Vitálne znaky“.</string>
+    <string name="pref_top_line_content_help" formatted="false">Vyberte, či horný riadok oznámenia zobrazí odhadovaný „Zostávajúci čas“, „Čas od zmeny stavu“ alebo vybrané „Vitálne znaky“.</string>
     <string name="pref_bottom_line_content" formatted="false">Spodný riadok Obsah</string>
     <string name="pref_bottom_line_content_help" formatted="false">Pre spodný riadok máte rovnaké možnosti ako pre horný riadok.</string>
     <string name="time_remaining" formatted="false">Zostávajúci čas</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Upozornenia</string>
     <string name="alarm_settings_help" formatted="false">Monitor batérie vás môže upozorniť na úroveň nabitia batérie dosiahne určitý stav (napr. batéria sa úplne nabije, úroveň batérie klesne pod 20 % a mnoho ďalších).</string>
     <string name="alarms_overview" formatted="false">Prehľad upozornení</string>
-    <string name="alarms_overview_help">Všetkých osem typov alarmov je vždy dostupných. Udalosti zapnite priamo alebo použite „Pridať prah“ pri type nabitia či teploty. Nové prahy sa po uložení zapnú. Klepnutím na hodnotu ju upravíte; úprava zachová stav zapnuté/vypnuté. Vypnuté hodnoty zostávajú v zozname. Odstránenie vyžiada potvrdenie. Zvuk a vibrácie sa zdieľajú podľa typu v nastaveniach oznámení Androidu. Existujúce duplicitné záznamy sa zobrazujú ako jeden logický alarm; prepnutie či odstránenie ovplyvní všetky kópie. Alarmy nabíjania a vybíjania sa riadia cieľmi odhadov a neriadia nabíjanie. Blokovaný kanál či zastavené monitorovanie nemení uložené prepínače.</string>
+    <string name="alarms_overview_help">Všetkých osem typov alarmov je vždy dostupných. Udalosti zapnite priamo alebo použite „Pridať prah“ pri type nabitia či teploty. Nové prahy sa po uložení zapnú. Klepnutím na hodnotu ju upravíte; úprava zachová stav zapnuté/vypnuté. Vypnuté hodnoty zostávajú v zozname. „Vymazať upozornenie“ vyžiada potvrdenie. Zvuk a vibrácie sa zdieľajú podľa typu v nastaveniach oznámení Androidu. Existujúce duplicitné záznamy sa zobrazujú ako jeden logický alarm; prepnutie či odstránenie ovplyvní všetky kópie. Alarmy nabíjania a vybíjania sa riadia cieľmi odhadov a neriadia nabíjanie. Blokovaný kanál či zastavené monitorovanie nemení uložené prepínače.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm zapnutý</item>
         <item quantity="few">%1$d alarmy zapnuté</item>
@@ -525,7 +525,7 @@
     <string name="battery_optimized" formatted="false">Monitorovanie na pozadí</string>
     <string name="battery_optimized_message" formatted="false">Neobmedzený beh na pozadí môže zlepšiť spoľahlivosť monitorovania. Optimalizácia batérie v Androide môže oneskoriť aktualizácie a upozornenia.\n
     \n
-    Neobmedzený beh môže zvýšiť spotrebu batérie na pozadí. Nastavenie môžete neskôr zmeniť v „Nastavenia“ Androidu → „Aplikácie“ → „Battery Monitor“ → „Batéria“.</string>
+    Neobmedzený beh môže zvýšiť spotrebu batérie na pozadí. Nastavenie môžete neskôr zmeniť v „Nastavenia“ Androidu → „Aplikácie“ → „Battery Monitor“ → „Batéria“. Názvy ponúk sa líšia podľa zariadenia.</string>
     <string name="pref_cat_autostart" formatted="false">Automatické spustenie</string>
     <string name="pref_autostart_at_boot" formatted="false">Spustiť automaticky po zapnutí</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Spustiť Battery Monitor keď zariadenie štartuje:</string>
@@ -544,48 +544,48 @@
     <string name="shizuku_not_running" formatted="false">Spustite Shizuku, aby ste aplikácii Battery Monitor udelili privilegovaný prístup</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">Udeľte aplikácii Battery Monitor povolenie manuálne v Shizuku</string>
 
-    <string name="advanced_action_refresh" formatted="false">Obnoviť</string>
-    <string name="advanced_status_loading" formatted="false">Načítavajú sa pokročilé štatistiky batérie…</string>
-    <string name="advanced_status_no_access" formatted="false">Na zobrazenie pokročilých štatistík batérie je potrebný root alebo Shizuku.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">Čaká sa na povolenie Shizuku…</string>
-    <string name="advanced_status_no_stats" formatted="false">Na tomto zariadení momentálne nie sú dostupné žiadne pokročilé štatistiky batérie.</string>
-    <string name="advanced_value_not_available" formatted="false">Nedostupné</string>
-    <string name="advanced_help_overview" formatted="false">„Diagnostika“ spája spoľahlivosť monitorovania, uložené údaje predpovede a údaje batérie v kartách „Prevádzka aplikácie“, „Batéria“, „Nabíjanie“ a „Nespracované údaje“. Údaje Androidu sú dostupné bez rootu. Ďalšie údaje závisia od zariadenia a povolení aplikácie Battery Monitor.</string>
-    <string name="advanced_section_counters" formatted="false">Počítadlá</string>
-    <string name="advanced_help_counters" formatted="false">Merania batérie sú označené a formátované ako zostávajúci náboj v mAh, prúd v mA, energia v mWh, napätie vo V, teplota vo zvolenej jednotke a výkon vo W. Násobiteľ prúdu platí aj pre vypočítaný výkon. Priemerný prúd a počet cyklov závisia od podpory zariadenia.</string>
-    <string name="advanced_field_charge_counter" formatted="false">Odhad zostávajúceho náboja</string>
-    <string name="advanced_field_current_now" formatted="false">Aktuálny prúd</string>
-    <string name="advanced_field_current_average" formatted="false">Priemerný prúd</string>
-    <string name="advanced_field_energy_counter" formatted="false">Počítadlo energie</string>
-    <string name="advanced_section_capacity" formatted="false">Kapacita</string>
-    <string name="advanced_help_capacity" formatted="false">„Kapacita“ zobrazuje kapacitu plného nabitia, návrhovú kapacitu a odhadované zdravie. Odhadované zdravie sa počíta ako kapacita plného nabitia delená návrhovou kapacitou, takže je presné len natoľko, nakoľko presné sú hodnoty hlásené zariadením.</string>
-    <string name="advanced_field_cycle_count" formatted="false">Počet cyklov</string>
-    <string name="advanced_field_reported_capacity" formatted="false">Hlásená kapacita</string>
-    <string name="advanced_field_state_of_health" formatted="false">Stav zdravia</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">Kapacita plného nabitia</string>
-    <string name="advanced_field_design_capacity" formatted="false">Návrhová kapacita</string>
-    <string name="advanced_field_estimated_health" formatted="false">Odhadované zdravie</string>
+    <string name="diag_action_refresh" formatted="false">Obnoviť</string>
+    <string name="diag_status_loading" formatted="false">Načítavajú sa pokročilé štatistiky batérie…</string>
+    <string name="diag_status_no_access" formatted="false">Na zobrazenie pokročilých štatistík batérie je potrebný root alebo Shizuku.</string>
+    <string name="diag_status_waiting_permission" formatted="false">Čaká sa na povolenie Shizuku…</string>
+    <string name="diag_status_no_stats" formatted="false">Na tomto zariadení momentálne nie sú dostupné žiadne pokročilé štatistiky batérie.</string>
+    <string name="diag_value_not_available" formatted="false">Nedostupné</string>
+    <string name="diag_help_overview" formatted="false">„Diagnostika“ spája spoľahlivosť monitorovania, uložené údaje predpovede a údaje batérie v kartách „Prevádzka aplikácie“, „Batéria“, „Nabíjanie“ a „Nespracované údaje“. Údaje Androidu sú dostupné bez rootu. Ďalšie údaje závisia od zariadenia a povolení aplikácie Battery Monitor.</string>
+    <string name="diag_section_counters" formatted="false">Počítadlá</string>
+    <string name="diag_help_counters" formatted="false">Merania batérie sú označené a formátované ako zostávajúci náboj v mAh, prúd v mA, energia v mWh, napätie vo V, teplota vo zvolenej jednotke a výkon vo W. Násobiteľ prúdu platí aj pre vypočítaný výkon. Priemerný prúd a počet cyklov závisia od podpory zariadenia.</string>
+    <string name="diag_field_charge_counter" formatted="false">Odhad zostávajúceho náboja</string>
+    <string name="diag_field_current_now" formatted="false">Aktuálny prúd</string>
+    <string name="diag_field_current_average" formatted="false">Priemerný prúd</string>
+    <string name="diag_field_energy_counter" formatted="false">Počítadlo energie</string>
+    <string name="diag_section_capacity" formatted="false">Kapacita</string>
+    <string name="diag_help_capacity" formatted="false">„Kapacita“ zobrazuje kapacitu plného nabitia, návrhovú kapacitu a odhadované zdravie. Odhadované zdravie sa počíta ako kapacita plného nabitia delená návrhovou kapacitou, takže je presné len natoľko, nakoľko presné sú hodnoty hlásené zariadením.</string>
+    <string name="diag_field_cycle_count" formatted="false">Počet cyklov</string>
+    <string name="diag_field_reported_capacity" formatted="false">Hlásená kapacita</string>
+    <string name="diag_field_state_of_health" formatted="false">Stav zdravia</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">Kapacita plného nabitia</string>
+    <string name="diag_field_design_capacity" formatted="false">Návrhová kapacita</string>
+    <string name="diag_field_estimated_health" formatted="false">Odhadované zdravie</string>
     <string name="diag_capacity_inconsistent">Hlásená plná kapacita prekračuje konštrukčnú kapacitu. Z týchto meraní nemožno vypočítať spoľahlivý odhad zdravia batérie.</string>
-    <string name="advanced_field_capacity_level" formatted="false">Úroveň kapacity</string>
+    <string name="diag_field_capacity_level" formatted="false">Úroveň kapacity</string>
     <string name="diag_capacity_critical">Kritická</string>
     <string name="diag_capacity_low">Nízka</string>
     <string name="diag_capacity_high">Vysoká</string>
-    <string name="advanced_section_charging" formatted="false">Nabíjanie</string>
-    <string name="advanced_help_charging" formatted="false">„Nabíjanie“ zobrazuje hodnoty súvisiace s aktívnou nabíjacou cestou, ako sú maximálny nabíjací prúd alebo napätie, politika nabíjania, stav nabíjania a úroveň kapacity. Tieto polia sa môžu meniť medzi nabíjačkami a režimami nabíjania.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">Zostávajúci čas nabíjania</string>
-    <string name="advanced_field_max_charging_current" formatted="false">Maximálny nabíjací prúd</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">Maximálne nabíjacie napätie</string>
-    <string name="advanced_field_charging_policy" formatted="false">Politika nabíjania</string>
+    <string name="diag_section_charging" formatted="false">Nabíjanie</string>
+    <string name="diag_help_charging" formatted="false">„Nabíjanie“ zobrazuje hodnoty súvisiace s aktívnou nabíjacou cestou, ako sú maximálny nabíjací prúd alebo napätie, politika nabíjania, stav nabíjania a úroveň kapacity. Tieto polia sa môžu meniť medzi nabíjačkami a režimami nabíjania.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">Zostávajúci čas nabíjania</string>
+    <string name="diag_field_max_charging_current" formatted="false">Maximálny nabíjací prúd</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">Maximálne nabíjacie napätie</string>
+    <string name="diag_field_charging_policy" formatted="false">Politika nabíjania</string>
     <string name="diag_policy_default">Predvolené</string>
     <string name="diag_policy_fixed_limit">Ochrana batérie (pevný limit)</string>
     <string name="diag_policy_adaptive_ac">Adaptívne nabíjanie</string>
-    <string name="advanced_field_charging_state" formatted="false">Stav nabíjania</string>
+    <string name="diag_field_charging_state" formatted="false">Stav nabíjania</string>
     <string name="diag_charging_too_cold">Príliš chladno na nabíjanie</string>
     <string name="diag_charging_too_hot">Príliš horúco na nabíjanie</string>
-    <string name="advanced_section_service" formatted="false">Služba batérie Androidu</string>
-    <string name="advanced_help_service" formatted="false">„Nespracované údaje“ obsahujú pôvodné názvy a hodnoty z hlásení batérie Androidu a, ak je dostupný, príkazu dumpsys battery. Môžu zahŕňať zdroj nabíjania, stav batérie, teplotu, napätie a ďalší stav služby batérie.</string>
-    <string name="advanced_section_sysfs" formatted="false">Súbory power_supply jadra</string>
-    <string name="advanced_help_sysfs" formatted="false">„Nespracované údaje“ zobrazujú pôvodné názvy a hodnoty z /sys/class/power_supply vrátane viacriadkových hodnôt. Hľadajte podľa kľúča a klepnite na riadok na zobrazenie a kopírovanie celej hodnoty. Pomocou „Obnoviť“ načítajte nové merania. Battery Monitor skúša čítanie aj s bežnými povoleniami Androidu, bez rootu či Shizuku.</string>
+    <string name="diag_section_service" formatted="false">Služba batérie Androidu</string>
+    <string name="diag_help_service" formatted="false">„Nespracované údaje“ obsahujú pôvodné názvy a hodnoty z hlásení batérie Androidu a, ak je dostupný, príkazu dumpsys battery. Môžu zahŕňať zdroj nabíjania, stav batérie, teplotu, napätie a ďalší stav služby batérie.</string>
+    <string name="diag_section_sysfs" formatted="false">Súbory power_supply jadra</string>
+    <string name="diag_help_sysfs" formatted="false">„Nespracované údaje“ zobrazujú pôvodné názvy a hodnoty z /sys/class/power_supply vrátane viacriadkových hodnôt. Hľadajte podľa kľúča a klepnite na riadok na zobrazenie a kopírovanie celej hodnoty. Pomocou „Obnoviť“ načítajte nové merania. Battery Monitor skúša čítanie aj s bežnými povoleniami Androidu, bez rootu či Shizuku.</string>
     <string name="diag_fuel_gauge">Merač stavu batérie</string>
     <string name="diag_mains_supply">Sieťové napájanie AC</string>
     <string name="diag_charging_source">Zdroj nabíjania</string>
@@ -614,22 +614,23 @@
     <string name="diag_settled_input_current">Ustálený vstupný prúd</string>
     <string name="diag_input_voltage">Vstupné napätie</string>
     <string name="diag_input_voltage_limit">Limit vstupného napätia</string>
-    <string name="advanced_section_metadata" formatted="false">Metadáta</string>
-    <string name="advanced_help_metadata" formatted="false">„Nespracované údaje“ obsahujú aj pôvodné názvy a hodnoty vlastností BatteryManager vrátane dostupných počítadiel a meraní prúdu. Ďalšie vlastnosti, ako údaje o výrobe či výmene, závisia od verzie Androidu, podpory zariadenia a povolení.</string>
+    <string name="diag_section_metadata" formatted="false">Metadáta</string>
+    <string name="diag_help_metadata" formatted="false">„Nespracované údaje“ obsahujú aj pôvodné názvy a hodnoty vlastností BatteryManager vrátane dostupných počítadiel a meraní prúdu. Ďalšie vlastnosti, ako údaje o výrobe či výmene, závisia od verzie Androidu, podpory zariadenia a povolení.</string>
     <string name="diag_raw">Nespracované údaje</string>
     <string name="diag_search_key">Hľadať kľúče</string>
     <string name="diag_no_keys">V dostupných údajoch nie sú zodpovedajúce kľúče</string>
     <string name="diag_raw_values">Nespracované hodnoty</string>
     <string name="diag_last_checked">Posledná kontrola: %1$s</string>
     <string name="diag_privileged_stale">Sú zobrazené predchádzajúce privilegované merania. Obnovte pre ďalší pokus.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">Riešenie problémov</string>
-    <string name="advanced_help_troubleshooting" formatted="false">Údaje Androidu sa v časti „Diagnostika“ zhromažďujú automaticky. Pre ďalšie údaje rootu alebo Shizuku povoľte privilegovaný prístup v časti „Ďalšie zdroje“. Battery Monitor najprv skúsi root, potom Shizuku. Shizuku musí bežať a mať udelené povolenie. Chýbajúce polia zostanú nedostupné; neúspešné obnovenie zachová predchádzajúcu snímku a označí ju ako zastaranú.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">Riešenie problémov</string>
+    <string name="diag_help_troubleshooting" formatted="false">Údaje Androidu sa v časti „Diagnostika“ zhromažďujú automaticky. Pre ďalšie údaje rootu alebo Shizuku povoľte privilegovaný prístup v časti „Ďalšie zdroje“. Battery Monitor najprv skúsi root, potom Shizuku. Shizuku musí bežať a mať udelené povolenie. Chýbajúce polia zostanú nedostupné; neúspešné obnovenie zachová predchádzajúcu snímku a označí ju ako zastaranú.</string>
 
     <string name="diagnostics" formatted="false">Diagnostika</string>
     <string name="diagnostics_summary" formatted="false">Skontrolujte povolenia a spoľahlivosť monitorovania a vytvorte správu na riešenie problémov</string>
     <string name="diag_overview">Prevádzka aplikácie</string>
     <string name="diagnostics_help_title" formatted="false">Ako diagnostika pomáha</string>
     <string name="diagnostics_help_overview" formatted="false">„Monitorovanie na pozadí“ kontroluje povolenia a spoľahlivosť monitorovania. Jeho ovládacie prvky umožňujú spustiť alebo zastaviť monitorovanie, zmeniť ladiaci záznam, otvoriť nastavenia optimalizácie batérie a oznámení alebo vytvoriť hlásenie na riešenie problémov. Nie každé nedostupné meranie znamená problém s povolením; niektoré zariadenia ho neposkytujú.</string>
+    <string name="monitoring_help_overview" formatted="false">Skontrolujte povolenie oznámení, prístup root alebo Shizuku, službu monitorovania a databázu histórie. Ťuknutím na kontrolu môžete požiadať o prístup alebo ju vykonať. „Spustiť monitorovanie“ je dostupné pri zastavenom monitorovaní; „Zastaviť monitorovanie“ pri spustenom monitorovaní. Dostupnosť meraní závisí od podpory zariadenia a udeleného prístupu. Kontrola služby vyžaduje spustené monitorovanie; kontrola databázy vyžaduje zaznamenávanie histórie („Nastavenia“ → „Rozšírené“). Ak chcete používať ďalšie merania, zapnite „Použiť privilegovaný prístup“ v „Nastavenia“ → „Rozšírené“. Možnosť „Nastavenia výrobcu“ je dostupná iba na podporovaných zariadeniach.</string>
     <string name="diagnostics_monitoring" formatted="false">Monitorovanie na pozadí</string>
     <string name="diag_monitor_operation">Prevádzka monitorovania</string>
     <string name="diag_heartbeat">Posledný signál aktivity</string>
@@ -711,6 +712,7 @@
     <string name="diag_report_privacy">Predvolene nezahrnuté. Tieto údaje môžu obsahovať osobné informácie. Pred kopírovaním alebo uložením skontrolujte náhľad.</string>
 
     <string name="charging_diagnostics_title" formatted="false">Diagnostika limitu nabíjania OEM</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Otvorte nástroje na snímky a porovnávanie a preskúmajte, ako Battery Monitor zisťuje limit nabíjania zariadenia. Pokyny na prípravu nájdete v pomocníkovi samotnej diagnostickej obrazovky OEM.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Aby bola správa užitočná, pred zachytením snímok otvorte „Pomocník“ a postupujte podľa krokov prípravy.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">S privilegovaným prístupom môžu byť dostupné ďalšie diagnostické informácie. Udeľte prístup cez Shizuku alebo root a zapnite privilegovaný prístup v časti „Nastavenia“ → „Rozšírené“ → „Použiť privilegovaný prístup“, aby bola správa o limite nabíjania OEM užitočnejšia.</string>
     <string name="charging_diagnostics_capture" formatted="false">Zachytiť snímku</string>

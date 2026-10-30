@@ -453,6 +453,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
                         ) else DiagnosticsReport.create(appContext, root, shizuku, include)
                     },
                     optionLabel = if (charging) R.string.diag_include_apps else R.string.diag_include_debug,
+                    titleResource = if (charging) R.string.charging_diagnostics_report else R.string.diagnostics_export,
                     onDismiss = state::dismiss
                 )
             }
@@ -482,13 +483,13 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
         action(KEY_NOTIFICATIONS)?.onClick = {
             val context = requireContext()
             if (!NotificationSettingsNavigator.openNotifications(context)) {
-                context.showToast(R.string.advanced_value_not_available)
+                context.showToast(R.string.diag_value_not_available)
             }
         }
         action(KEY_LIVE_UPDATES)?.onClick = {
             val context = requireContext()
             if (!NotificationSettingsNavigator.openLiveUpdates(context)) {
-                context.showToast(R.string.advanced_value_not_available)
+                context.showToast(R.string.diag_value_not_available)
             }
         }
         action(KEY_ROOT)?.onClick = {
@@ -509,7 +510,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
             if (powerManager.isIgnoringBatteryOptimizations(context.packageName)) {
                 context.showToast(R.string.diagnostics_unrestricted)
             } else if (!openBatteryOptimizationSettings()) {
-                context.showToast(R.string.advanced_value_not_available)
+                context.showToast(R.string.diag_value_not_available)
             }
         }
         val family = BackgroundSettingsNavigator.vendorFamily()
@@ -521,7 +522,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
                         context, family
                     )
                 ) {
-                    context.showToast(R.string.advanced_value_not_available)
+                    context.showToast(R.string.diag_value_not_available)
                 }
             }
         }
@@ -670,7 +671,7 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
             )
         }
         action(KEY_HEARTBEAT)?.summary = when {
-            heartbeat !in 1..now -> getString(R.string.advanced_value_not_available)
+            heartbeat !in 1..now -> getString(R.string.diag_value_not_available)
             !isFresh(now, heartbeat) -> getString(R.string.current_stale)
             else -> DateFormat.getTimeInstance(DateFormat.SHORT)
                 .format(Date(System.currentTimeMillis() - (now - heartbeat)))

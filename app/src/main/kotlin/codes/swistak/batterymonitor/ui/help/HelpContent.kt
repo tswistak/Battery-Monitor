@@ -20,6 +20,16 @@ internal data class HelpSection(
     @param:StringRes val titleResource: Int?, val paragraphs: List<HelpParagraph>
 )
 
+internal const val MONITORING_HELP_TOPIC = "monitoring_help"
+internal const val CHARGING_TOOLS_HELP_TOPIC = "charging_tools_help"
+
+internal fun diagnosticDetailHelpTopic(detail: String?): String =
+    when (detail?.substringBefore(':')) {
+        null -> SettingsContract.KEY_ADVANCED_INFO_HELP
+        "charging-tools" -> CHARGING_TOOLS_HELP_TOPIC
+        else -> MONITORING_HELP_TOPIC
+    }
+
 internal fun helpSections(
     topic: String?, sdkInt: Int, chargingTargetMode: String?
 ): List<HelpSection> {
@@ -72,6 +82,7 @@ internal fun helpSections(
             HelpSection(
                 R.string.pref_cat_channel_settings, listOf(
                     HelpParagraph(R.string.notification_channels_help),
+                    HelpParagraph(R.string.settings_notification_disabled),
                 )
             ),
             HelpSection(
@@ -147,9 +158,10 @@ internal fun helpSections(
 
         SettingsContract.KEY_OTHER_SETTINGS -> listOf(
             HelpSection(
-                R.string.settings_appearance, listOf(
+                R.string.settings_appearance, listOfNotNull(
                     HelpParagraph(R.string.settings_color_palette, subheading = true),
                     HelpParagraph(R.string.settings_color_palette_summary),
+                    if (sdkInt < 31) HelpParagraph(R.string.settings_color_palette_unavailable) else null,
                     HelpParagraph(R.string.settings_brightness, subheading = true),
                     HelpParagraph(R.string.settings_brightness_summary),
                 )
@@ -157,7 +169,10 @@ internal fun helpSections(
             HelpSection(
                 R.string.pref_cat_language, listOf(
                     HelpParagraph(R.string.pref_change_app_language, subheading = true),
-                    HelpParagraph(R.string.pref_change_app_language_help),
+                    HelpParagraph(
+                        if (sdkInt >= 33) R.string.pref_change_app_language_help
+                        else R.string.settings_app_language_unavailable
+                    ),
                     HelpParagraph(R.string.pref_temperature_unit, subheading = true),
                     HelpParagraph(R.string.pref_temperature_unit_help),
                     HelpParagraph(R.string.pref_long_duration_format, subheading = true),
@@ -217,6 +232,11 @@ internal fun helpSections(
                     HelpParagraph(R.string.diagnostics_help_overview),
                 )
             ),
+            HelpSection(
+                R.string.charging_diagnostics_title, listOf(
+                    HelpParagraph(R.string.charging_diagnostics_help_overview),
+                )
+            ),
         )
 
         SettingsContract.KEY_BACKUP_RESTORE_SETTINGS -> listOf(
@@ -246,15 +266,60 @@ internal fun helpSections(
             ),
         )
 
-        SettingsContract.KEY_DIAGNOSTICS_SETTINGS -> listOf(
+        SettingsContract.KEY_DIAGNOSTICS_SETTINGS, MONITORING_HELP_TOPIC -> listOf(
             HelpSection(
-                R.string.diagnostics_help_title, listOf(
+                R.string.diagnostics_permissions, listOfNotNull(
+                    HelpParagraph(R.string.monitoring_help_overview),
+                    HelpParagraph(R.string.pref_use_privileged_access_help),
+                    HelpParagraph(R.string.diagnostics_notifications, subheading = true),
+                    HelpParagraph(R.string.notification_channels_help),
+                    if (chipVisible) HelpParagraph(
+                        R.string.live_updates_notif_chan_name, subheading = true
+                    ) else null,
+                    if (chipVisible) HelpParagraph(R.string.settings_live_update_summary) else null,
+                )
+            ),
+            HelpSection(
+                R.string.diagnostics_monitoring, listOf(
                     HelpParagraph(R.string.diagnostics_help_overview),
+                    HelpParagraph(R.string.diag_stop_monitor, subheading = true),
+                    HelpParagraph(R.string.diag_stop_monitor_body),
+                    HelpParagraph(R.string.diagnostics_battery_optimization, subheading = true),
+                    HelpParagraph(R.string.battery_optimized_message),
+                    HelpParagraph(R.string.diagnostics_vendor_settings, subheading = true),
+                    HelpParagraph(R.string.diagnostics_vendor_settings_summary),
+                    HelpParagraph(R.string.diagnostics_dont_kill_my_app, subheading = true),
+                    HelpParagraph(R.string.diagnostics_dont_kill_my_app_summary),
+                )
+            ),
+            HelpSection(
+                R.string.diagnostics_device_and_logs, listOf(
+                    HelpParagraph(R.string.diagnostics_debug_logs, subheading = true),
+                    HelpParagraph(R.string.diagnostics_debug_logs_warning),
                     HelpParagraph(R.string.diagnostics_export, subheading = true),
                     HelpParagraph(R.string.diagnostics_help_report),
-                    HelpParagraph(R.string.charging_diagnostics_title, subheading = true),
+                    HelpParagraph(R.string.diag_include_debug),
+                    HelpParagraph(R.string.diag_report_privacy),
+                    HelpParagraph(R.string.diagnostics_clear, subheading = true),
+                    HelpParagraph(R.string.diagnostics_clear_summary),
+                )
+            ),
+        )
+
+        CHARGING_TOOLS_HELP_TOPIC -> listOf(
+            HelpSection(
+                R.string.charging_diagnostics_title, listOf(
+                    HelpParagraph(R.string.charging_diagnostics_help_overview),
+                    HelpParagraph(R.string.charging_diagnostics_privileged_hint),
+                    HelpParagraph(R.string.charging_diagnostics_capture, subheading = true),
                     HelpParagraph(R.string.charging_diagnostics_help_steps),
+                    HelpParagraph(R.string.charging_diagnostics_report, subheading = true),
+                    HelpParagraph(R.string.charging_diagnostics_report_summary),
+                    HelpParagraph(R.string.diag_include_apps),
+                    HelpParagraph(R.string.diag_report_privacy),
                     HelpParagraph(R.string.charging_diagnostics_help_contact),
+                    HelpParagraph(R.string.charging_diagnostics_clear, subheading = true),
+                    HelpParagraph(R.string.charging_diagnostics_clear_summary),
                 )
             ),
         )
@@ -262,26 +327,53 @@ internal fun helpSections(
         SettingsContract.KEY_ADVANCED_INFO_HELP -> listOf(
             HelpSection(
                 R.string.nav_diagnostics, listOf(
-                    HelpParagraph(R.string.advanced_help_overview),
-                    HelpParagraph(R.string.device_data_predictor, subheading = true),
-                    HelpParagraph(R.string.diagnostics_predictor_help),
-                    HelpParagraph(R.string.advanced_section_counters, subheading = true),
-                    HelpParagraph(R.string.advanced_help_counters),
-                    HelpParagraph(R.string.advanced_section_capacity, subheading = true),
-                    HelpParagraph(R.string.advanced_help_capacity),
-                    HelpParagraph(R.string.advanced_section_charging, subheading = true),
-                    HelpParagraph(R.string.advanced_help_charging),
-                    HelpParagraph(R.string.advanced_section_service, subheading = true),
-                    HelpParagraph(R.string.advanced_help_service),
-                    HelpParagraph(R.string.advanced_section_sysfs, subheading = true),
-                    HelpParagraph(R.string.advanced_help_sysfs),
-                    HelpParagraph(R.string.advanced_section_metadata, subheading = true),
-                    HelpParagraph(R.string.advanced_help_metadata),
+                    HelpParagraph(R.string.diag_help_overview),
+                    HelpParagraph(R.string.diag_source_help),
                 )
             ),
             HelpSection(
-                R.string.advanced_help_troubleshooting_title, listOf(
-                    HelpParagraph(R.string.advanced_help_troubleshooting),
+                R.string.diag_overview, listOf(
+                    HelpParagraph(R.string.device_data_predictor, subheading = true),
+                    HelpParagraph(R.string.diagnostics_predictor_help),
+                    HelpParagraph(R.string.diagnostics_monitoring, subheading = true),
+                    HelpParagraph(R.string.diagnostics_help_overview),
+                )
+            ),
+            HelpSection(
+                R.string.nav_battery_group, listOf(
+                    HelpParagraph(R.string.diag_section_counters, subheading = true),
+                    HelpParagraph(R.string.diag_help_counters),
+                    HelpParagraph(R.string.diag_section_capacity, subheading = true),
+                    HelpParagraph(R.string.diag_help_capacity),
+                )
+            ),
+            HelpSection(
+                R.string.diag_section_charging, listOf(
+                    HelpParagraph(R.string.diag_help_charging),
+                    HelpParagraph(R.string.charging_diagnostics_title, subheading = true),
+                    HelpParagraph(R.string.charging_diagnostics_help_overview),
+                    HelpParagraph(R.string.current_prediction_explanation),
+                )
+            ),
+            HelpSection(
+                R.string.diag_raw, listOf(
+                    HelpParagraph(R.string.diag_section_service, subheading = true),
+                    HelpParagraph(R.string.diag_help_service),
+                    HelpParagraph(R.string.diag_section_sysfs, subheading = true),
+                    HelpParagraph(R.string.diag_help_sysfs),
+                    HelpParagraph(R.string.diag_section_metadata, subheading = true),
+                    HelpParagraph(R.string.diag_help_metadata),
+                )
+            ),
+            HelpSection(
+                R.string.diagnostics_export, listOf(
+                    HelpParagraph(R.string.diag_include_raw),
+                    HelpParagraph(R.string.diag_report_privacy),
+                )
+            ),
+            HelpSection(
+                R.string.diag_help_troubleshooting_title, listOf(
+                    HelpParagraph(R.string.diag_help_troubleshooting),
                 )
             ),
         )
@@ -292,13 +384,15 @@ internal fun helpSections(
                     HelpParagraph(R.string.alarm_settings_help),
                     HelpParagraph(R.string.alarms_overview, subheading = true),
                     HelpParagraph(R.string.alarms_overview_help),
+                    HelpParagraph(R.string.pref_alarm_threshold, subheading = true),
+                    HelpParagraph(R.string.pref_alarm_threshold_help),
                 )
             ),
         )
 
         SettingsContract.KEY_ALARM_EDIT_SETTINGS -> listOf(
             HelpSection(
-                null, listOf(
+                R.string.alarms_overview, listOf(
                     HelpParagraph(R.string.alarms_overview_help),
                 )
             ),
@@ -307,7 +401,7 @@ internal fun helpSections(
                     HelpParagraph(R.string.pref_cat_alarm_conditions_help),
                     HelpParagraph(R.string.pref_alarm_threshold, subheading = true),
                     HelpParagraph(R.string.pref_alarm_threshold_help),
-                    HelpParagraph(R.string.alarms_channel_help),
+                    HelpParagraph(R.string.notification_channels_help),
                 )
             ),
         )
@@ -352,7 +446,7 @@ internal fun helpSections(
             ),
             HelpSection(
                 R.string.diagnostics, listOf(
-                    HelpParagraph(R.string.advanced_help_overview),
+                    HelpParagraph(R.string.diag_help_overview),
                 )
             ),
         )

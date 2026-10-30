@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">Šis įvertis naudoja pasirinktą Battery Monitor prognozavimo metodą. Jo tikslas nevaldo įkrovimo ar išjungimo.</string>
     <string name="time_estimates_settings" formatted="false">Laiko įverčiai</string>
     <string name="time_estimates_settings_summary" formatted="false">Pasirinkite likusio laiko skaičiavimą ir tikslinius akumuliatoriaus lygius</string>
-    <string name="time_estimates_settings_help" formatted="false">Pasirinkite, kaip Battery Monitor įvertina likusį laiką, ir tikslinius akumuliatoriaus lygius. Tikslai taip pat taikomi „Pasiekta įkrovimo riba“ ir „Pasiekta iškrovimo riba“ įspėjimams. Battery Monitor nepradeda ir nesustabdo įkrovimo.</string>
+    <string name="time_estimates_settings_help" formatted="false">Pasirinkite, kaip Battery Monitor įvertina likusį laiką, ir tikslinius akumuliatoriaus lygius. Tikslai taip pat taikomi „Įkrovimo tikslas pasiektas“ ir „Iškrovimo tikslas pasiektas“ įspėjimams. Battery Monitor nepradeda ir nesustabdo įkrovimo.</string>
     <string name="pref_cat_predictor" formatted="false">Likusio laiko įvertinimai</string>
     <string name="pref_prediction_type" formatted="false">Įvertinimo tipas</string>
     <string name="pref_prediction_type_help" formatted="false">„Jautrus“ naudoja paskutinių penkių minučių greitį. „Konservatyvus“, numatytasis, derina naujausius greičius su išmoktu ilgalaikiu vidurkiu, kad sumažintų staigius pokyčius. „Nuo statuso pasikeitimo“ naudoja dabartinį įkrovimo ar iškrovimo seansą. „Ilgalaikis Vidurkis“ naudoja išmoktą iškrovimo arba aktyvaus įkrovimo šaltinio greitį. Kol nepakanka stebėjimų, įverčiai naudoja išsaugotą vidurkį arba pradinę numatytąją vertę.</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">Ilgalaikis Vidurkis</string>
     <string name="pref_cat_target_levels" formatted="false">Tiksliniai lygiai</string>
     <string name="pref_charging_target_mode" formatted="false">Įkrovimo tikslas</string>
-    <string name="pref_charging_target_mode_help" formatted="false">„Automatiškai (rekomenduojama)“ režimas naudoja fiksuotą įrenginio įkrovimo ribą, jei Battery Monitor ją gali perskaityti, kitaip 100%. Adaptyvusis įkrovimas vis tiek siekia 100%. „Pasirinktinis“ režimas naudoja pasirinktą lygį įkrovimo įverčiams ir „Pasiekta įkrovimo riba“ įspėjimams.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">„Automatiškai (rekomenduojama)“ režimas naudoja fiksuotą įrenginio įkrovimo ribą, jei Battery Monitor ją gali perskaityti, kitaip 100%. Adaptyvusis įkrovimas vis tiek siekia 100%. „Pasirinktinis“ režimas naudoja pasirinktą lygį įkrovimo įverčiams ir „Įkrovimo tikslas pasiektas“ įspėjimams.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Automatinis aptikimas gali veikti Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme ir Sony Xperia įrenginiuose bei įrenginiuose su GrapheneOS ar LineageOS, ypač kai pasiekiama root arba Shizuku prieiga. Jis remiasi programinės įrangos signalais, todėl veikimas ir tikslumas negarantuojami net nurodytų gamintojų įrenginiuose. Gali veikti ir neišbandyti šių šeimų modeliai ar OS versijos, tačiau kitų gamintojų įrenginiai šiuo metu automatiškai neaptinkami.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Įrenginio įkrovimo riba: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Pasirinktinis tikslas</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">Pasirinktinis įkrovimo tikslas</string>
     <string name="pref_custom_charging_target_help" formatted="false">Nustatykite galutinį įkrovimo įverčių lygį, kai „Įkrovimo tikslas“ yra „Pasirinktinis“.</string>
     <string name="pref_discharging_target" formatted="false">Iškrovimo tikslas</string>
-    <string name="pref_discharging_target_help" formatted="false">Nustatykite galutinį iškrovimo įverčių ir „Pasiekta iškrovimo riba“ įspėjimų lygį. Žemiau šio lygio laiko įverčiai tęsiami iki 0%. Mažos įkrovos įspėjimai su savo riba lieka nepriklausomi.</string>
+    <string name="pref_discharging_target_help" formatted="false">Nustatykite galutinį iškrovimo įverčių ir „Iškrovimo tikslas pasiektas“ įspėjimų lygį. Žemiau šio lygio laiko įverčiai tęsiami iki 0%. Mažos įkrovos įspėjimai su savo riba lieka nepriklausomi.</string>
     <string name="pref_target_level_summary" formatted="true">Vertinti iki %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Pagrindinis pranešimas</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">Valdykite pagrindinį kanalą</string>
     <string name="pref_cat_notification_content" formatted="false">Turinys</string>
     <string name="pref_top_line_content" formatted="false">Aukščiausios eilutės turinys</string>
-    <string name="pref_top_line_content_help" formatted="false">Pasirinkite, ar viršutinėje pranešimo eilutėje rodyti „Likęs laikas“, „Laikas nuo būsenos pasikeitimo“ ar pasirinktus „Gyvybiniai požymiai“.</string>
+    <string name="pref_top_line_content_help" formatted="false">Pasirinkite, ar viršutinėje pranešimo eilutėje rodyti įvertį „Likęs laikas“, „Laikas nuo būsenos pasikeitimo“ ar pasirinktus „Gyvybiniai požymiai“.</string>
     <string name="pref_bottom_line_content" formatted="false">Apatinės eilutės turinys</string>
     <string name="pref_bottom_line_content_help" formatted="false">Apatinėje eilutėje turite tas pačias parinktis kaip ir viršutinei.</string>
     <string name="time_remaining" formatted="false">Likęs laikas</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">Aliarmai</string>
     <string name="alarm_settings_help" formatted="false">Jūs galite nusistatyti Baterijos Indikatoriaus perspėjimą, kai baterijos lygis pasiekia tam tikrą tašką (pvz.: baterija pilnai įkraunama, baterijos lygtis nukrenta žemiau 20% ir pan.).</string>
     <string name="alarms_overview" formatted="false">Aliarmų Peržiūra</string>
-    <string name="alarms_overview_help">Visi aštuoni įspėjimų tipai visada pasiekiami. Įvykius įjunkite tiesiogiai arba prie įkrovos ar temperatūros tipo naudokite „Pridėti ribą“. Naujos ribos įjungiamos išsaugojus. Palieskite vertę, kad ją keistumėte; įjungimo ar išjungimo būsena išlieka. Išjungtos vertės lieka sąraše. Trinant prašoma patvirtinimo. Garsas ir vibracija bendri tipui „Android“ pranešimų nustatymuose. Esami įrašų dublikatai rodomi kaip vienas įspėjimas; perjungimas ar trynimas veikia visas kopijas. Įkrovimo ir iškrovimo įspėjimai naudoja įverčių tikslus ir nevaldo įkrovimo. Užblokuotas kanalas ar sustabdytas stebėjimas nekeičia išsaugotų jungiklių.</string>
+    <string name="alarms_overview_help">Visi aštuoni įspėjimų tipai visada pasiekiami. Įvykius įjunkite tiesiogiai arba prie įkrovos ar temperatūros tipo naudokite „Pridėti ribą“. Naujos ribos įjungiamos išsaugojus. Palieskite vertę, kad ją keistumėte; įjungimo ar išjungimo būsena išlieka. Išjungtos vertės lieka sąraše. „Ištrinti Aliarmą“ prašo patvirtinimo. Garsas ir vibracija bendri tipui „Android“ pranešimų nustatymuose. Esami įrašų dublikatai rodomi kaip vienas įspėjimas; perjungimas ar trynimas veikia visas kopijas. Įkrovimo ir iškrovimo įspėjimai naudoja įverčių tikslus ir nevaldo įkrovimo. Užblokuotas kanalas ar sustabdytas stebėjimas nekeičia išsaugotų jungiklių.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">Įjungtas %1$d įspėjimas</item>
         <item quantity="few">Įjungti %1$d įspėjimai</item>
@@ -525,7 +525,7 @@
     <string name="battery_optimized" formatted="false">Stebėjimas fone</string>
     <string name="battery_optimized_message" formatted="false">Neribotas veikimas fone gali pagerinti stebėjimo patikimumą. „Android“ akumuliatoriaus optimizavimas gali uždelsti atnaujinimus ir įspėjimus.\n
     \n
-    Neribotas veikimas gali padidinti akumuliatoriaus sąnaudas fone. Tai galėsite pakeisti vėliau: Android „nustatymai“ → „Programos“ → „Battery Monitor“ → „Akumuliatorius“.</string>
+    Neribotas veikimas gali padidinti akumuliatoriaus sąnaudas fone. Tai galėsite pakeisti vėliau: Android „nustatymai“ → „Programos“ → „Battery Monitor“ → „Akumuliatorius“. Meniu pavadinimai skiriasi priklausomai nuo įrenginio.</string>
     <string name="pref_cat_autostart" formatted="false">Auto-Paleidimas</string>
     <string name="pref_autostart_at_boot" formatted="false">Auto-Paleidimas įjungus telefoną</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Paleisti Programą kai prietaisas įjungia:</string>
@@ -544,48 +544,48 @@
     <string name="shizuku_not_running" formatted="false">Paleiskite „Shizuku“, kad suteiktumėte „Battery Monitor“ privilegijuotą prieigą</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">Rankiniu būdu suteikite „Battery Monitor“ leidimą programoje „Shizuku“</string>
 
-    <string name="advanced_action_refresh" formatted="false">Atnaujinti</string>
-    <string name="advanced_status_loading" formatted="false">Įkeliama išplėstinė baterijos statistika…</string>
-    <string name="advanced_status_no_access" formatted="false">Norint rodyti išplėstinę baterijos statistiką, reikia root arba Shizuku.</string>
-    <string name="advanced_status_waiting_permission" formatted="false">Laukiama Shizuku leidimo…</string>
-    <string name="advanced_status_no_stats" formatted="false">Šiuo metu šiame įrenginyje nėra jokios išplėstinės baterijos statistikos.</string>
-    <string name="advanced_value_not_available" formatted="false">Nėra</string>
-    <string name="advanced_help_overview" formatted="false">„Diagnostika“ sujungia stebėjimo patikimumą, išsaugotus prognozavimo duomenis ir akumuliatoriaus duomenis kortelėse „Programos veikimas“, „Akumuliatorius“, „Įkrovimas“ ir „Neapdoroti duomenys“. „Android“ duomenys pasiekiami be root. Papildomi duomenys priklauso nuo įrenginio ir Battery Monitor leidimų.</string>
-    <string name="advanced_section_counters" formatted="false">Skaitikliai</string>
-    <string name="advanced_help_counters" formatted="false">Akumuliatoriaus rodmenys pažymėti ir formatuojami kaip likęs krūvis mAh, srovė mA, energija mWh, įtampa V, temperatūra pasirinktais vienetais ir galia W. Srovės daugiklis taikomas ir apskaičiuotai galiai. Vidutinė srovė ir ciklų skaičius priklauso nuo įrenginio palaikymo.</string>
-    <string name="advanced_field_charge_counter" formatted="false">Numatomas likęs įkrovimas</string>
-    <string name="advanced_field_current_now" formatted="false">Dabartinė srovė</string>
-    <string name="advanced_field_current_average" formatted="false">Vidutinė srovė</string>
-    <string name="advanced_field_energy_counter" formatted="false">Energijos skaitiklis</string>
-    <string name="advanced_section_capacity" formatted="false">Talpa</string>
-    <string name="advanced_help_capacity" formatted="false">„Talpa“ rodo pilno įkrovimo talpą, projektinę talpą ir apskaičiuotą būklę. Apskaičiuota būklė gaunama pilno įkrovimo talpą padalijus iš projektinės talpos, todėl tikslumas priklauso nuo įrenginio pateikiamų reikšmių.</string>
-    <string name="advanced_field_cycle_count" formatted="false">Ciklų skaičius</string>
-    <string name="advanced_field_reported_capacity" formatted="false">Pateikta talpa</string>
-    <string name="advanced_field_state_of_health" formatted="false">Baterijos būklė</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">Pilnos įkrovos talpa</string>
-    <string name="advanced_field_design_capacity" formatted="false">Projektinė talpa</string>
-    <string name="advanced_field_estimated_health" formatted="false">Numatoma būklė</string>
+    <string name="diag_action_refresh" formatted="false">Atnaujinti</string>
+    <string name="diag_status_loading" formatted="false">Įkeliama išplėstinė baterijos statistika…</string>
+    <string name="diag_status_no_access" formatted="false">Norint rodyti išplėstinę baterijos statistiką, reikia root arba Shizuku.</string>
+    <string name="diag_status_waiting_permission" formatted="false">Laukiama Shizuku leidimo…</string>
+    <string name="diag_status_no_stats" formatted="false">Šiuo metu šiame įrenginyje nėra jokios išplėstinės baterijos statistikos.</string>
+    <string name="diag_value_not_available" formatted="false">Nėra</string>
+    <string name="diag_help_overview" formatted="false">„Diagnostika“ sujungia stebėjimo patikimumą, išsaugotus prognozavimo duomenis ir akumuliatoriaus duomenis kortelėse „Programos veikimas“, „Akumuliatorius“, „Įkrovimas“ ir „Neapdoroti duomenys“. „Android“ duomenys pasiekiami be root. Papildomi duomenys priklauso nuo įrenginio ir Battery Monitor leidimų.</string>
+    <string name="diag_section_counters" formatted="false">Skaitikliai</string>
+    <string name="diag_help_counters" formatted="false">Akumuliatoriaus rodmenys pažymėti ir formatuojami kaip likęs krūvis mAh, srovė mA, energija mWh, įtampa V, temperatūra pasirinktais vienetais ir galia W. Srovės daugiklis taikomas ir apskaičiuotai galiai. Vidutinė srovė ir ciklų skaičius priklauso nuo įrenginio palaikymo.</string>
+    <string name="diag_field_charge_counter" formatted="false">Numatomas likęs įkrovimas</string>
+    <string name="diag_field_current_now" formatted="false">Dabartinė srovė</string>
+    <string name="diag_field_current_average" formatted="false">Vidutinė srovė</string>
+    <string name="diag_field_energy_counter" formatted="false">Energijos skaitiklis</string>
+    <string name="diag_section_capacity" formatted="false">Talpa</string>
+    <string name="diag_help_capacity" formatted="false">„Talpa“ rodo pilno įkrovimo talpą, projektinę talpą ir apskaičiuotą būklę. Apskaičiuota būklė gaunama pilno įkrovimo talpą padalijus iš projektinės talpos, todėl tikslumas priklauso nuo įrenginio pateikiamų reikšmių.</string>
+    <string name="diag_field_cycle_count" formatted="false">Ciklų skaičius</string>
+    <string name="diag_field_reported_capacity" formatted="false">Pateikta talpa</string>
+    <string name="diag_field_state_of_health" formatted="false">Baterijos būklė</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">Pilnos įkrovos talpa</string>
+    <string name="diag_field_design_capacity" formatted="false">Projektinė talpa</string>
+    <string name="diag_field_estimated_health" formatted="false">Numatoma būklė</string>
     <string name="diag_capacity_inconsistent">Pateikta pilna talpa viršija projektinę. Pagal šiuos rodmenis negalima patikimai įvertinti akumuliatoriaus būklės.</string>
-    <string name="advanced_field_capacity_level" formatted="false">Talpos lygis</string>
+    <string name="diag_field_capacity_level" formatted="false">Talpos lygis</string>
     <string name="diag_capacity_critical">Kritinis</string>
     <string name="diag_capacity_low">Žemas</string>
     <string name="diag_capacity_high">Aukštas</string>
-    <string name="advanced_section_charging" formatted="false">Įkrovimas</string>
-    <string name="advanced_help_charging" formatted="false">„Įkrovimas“ rodo reikšmes, susijusias su aktyviu įkrovimo keliu, tokias kaip didžiausia įkrovimo srovė ar įtampa, įkrovimo politika, įkrovimo būsena ir talpos lygis. Šie laukai gali keistis priklausomai nuo įkroviklio ir įkrovimo režimo.</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">Likęs įkrovimo laikas</string>
-    <string name="advanced_field_max_charging_current" formatted="false">Didžiausia įkrovimo srovė</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">Didžiausia įkrovimo įtampa</string>
-    <string name="advanced_field_charging_policy" formatted="false">Įkrovimo politika</string>
+    <string name="diag_section_charging" formatted="false">Įkrovimas</string>
+    <string name="diag_help_charging" formatted="false">„Įkrovimas“ rodo reikšmes, susijusias su aktyviu įkrovimo keliu, tokias kaip didžiausia įkrovimo srovė ar įtampa, įkrovimo politika, įkrovimo būsena ir talpos lygis. Šie laukai gali keistis priklausomai nuo įkroviklio ir įkrovimo režimo.</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">Likęs įkrovimo laikas</string>
+    <string name="diag_field_max_charging_current" formatted="false">Didžiausia įkrovimo srovė</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">Didžiausia įkrovimo įtampa</string>
+    <string name="diag_field_charging_policy" formatted="false">Įkrovimo politika</string>
     <string name="diag_policy_default">Numatytoji</string>
     <string name="diag_policy_fixed_limit">Akumuliatoriaus apsauga (fiksuota riba)</string>
     <string name="diag_policy_adaptive_ac">Adaptyvusis įkrovimas</string>
-    <string name="advanced_field_charging_state" formatted="false">Įkrovimo būsena</string>
+    <string name="diag_field_charging_state" formatted="false">Įkrovimo būsena</string>
     <string name="diag_charging_too_cold">Per šalta įkrauti</string>
     <string name="diag_charging_too_hot">Per karšta įkrauti</string>
-    <string name="advanced_section_service" formatted="false">Android baterijos paslauga</string>
-    <string name="advanced_help_service" formatted="false">„Neapdoroti duomenys“ apima pradinius pavadinimus ir vertes iš „Android“ akumuliatoriaus pranešimų bei, kai pasiekiama, dumpsys battery. Tai gali būti įkrovimo šaltinis, akumuliatoriaus būsena, temperatūra, įtampa ir kita akumuliatoriaus tarnybos būsena.</string>
-    <string name="advanced_section_sysfs" formatted="false">Branduolio power_supply failai</string>
-    <string name="advanced_help_sysfs" formatted="false">„Neapdoroti duomenys“ rodo pradinius pavadinimus ir vertes iš /sys/class/power_supply, įskaitant kelių eilučių vertes. Ieškokite pagal raktą ir palieskite eilutę visai vertei peržiūrėti bei kopijuoti. Naujiems rodmenims rinkitės „Atnaujinti“. Battery Monitor taip pat bando skaityti su įprastais „Android“ leidimais, be root ar Shizuku.</string>
+    <string name="diag_section_service" formatted="false">Android baterijos paslauga</string>
+    <string name="diag_help_service" formatted="false">„Neapdoroti duomenys“ apima pradinius pavadinimus ir vertes iš „Android“ akumuliatoriaus pranešimų bei, kai pasiekiama, dumpsys battery. Tai gali būti įkrovimo šaltinis, akumuliatoriaus būsena, temperatūra, įtampa ir kita akumuliatoriaus tarnybos būsena.</string>
+    <string name="diag_section_sysfs" formatted="false">Branduolio power_supply failai</string>
+    <string name="diag_help_sysfs" formatted="false">„Neapdoroti duomenys“ rodo pradinius pavadinimus ir vertes iš /sys/class/power_supply, įskaitant kelių eilučių vertes. Ieškokite pagal raktą ir palieskite eilutę visai vertei peržiūrėti bei kopijuoti. Naujiems rodmenims rinkitės „Atnaujinti“. Battery Monitor taip pat bando skaityti su įprastais „Android“ leidimais, be root ar Shizuku.</string>
     <string name="diag_fuel_gauge">Akumuliatoriaus įkrovos matuoklis</string>
     <string name="diag_mains_supply">Kintamosios srovės maitinimas</string>
     <string name="diag_charging_source">Įkrovimo šaltinis</string>
@@ -614,22 +614,23 @@
     <string name="diag_settled_input_current">Nusistovėjusi įvesties srovė</string>
     <string name="diag_input_voltage">Įvesties įtampa</string>
     <string name="diag_input_voltage_limit">Įvesties įtampos riba</string>
-    <string name="advanced_section_metadata" formatted="false">Metaduomenys</string>
-    <string name="advanced_help_metadata" formatted="false">„Neapdoroti duomenys“ taip pat apima pradinius BatteryManager savybių pavadinimus ir vertes, įskaitant pasiekiamus skaitiklius ir srovės rodmenis. Papildomos savybės, pavyzdžiui, gamybos duomenys ar pakeitimo būsena, priklauso nuo „Android“ versijos, įrenginio palaikymo ir leidimų.</string>
+    <string name="diag_section_metadata" formatted="false">Metaduomenys</string>
+    <string name="diag_help_metadata" formatted="false">„Neapdoroti duomenys“ taip pat apima pradinius BatteryManager savybių pavadinimus ir vertes, įskaitant pasiekiamus skaitiklius ir srovės rodmenis. Papildomos savybės, pavyzdžiui, gamybos duomenys ar pakeitimo būsena, priklauso nuo „Android“ versijos, įrenginio palaikymo ir leidimų.</string>
     <string name="diag_raw">Neapdoroti duomenys</string>
     <string name="diag_search_key">Ieškoti raktų</string>
     <string name="diag_no_keys">Pasiekiamuose duomenyse nėra atitinkančių raktų</string>
     <string name="diag_raw_values">Neapdorotos vertės</string>
     <string name="diag_last_checked">Paskutinį kartą tikrinta: %1$s</string>
     <string name="diag_privileged_stale">Rodomi ankstesni privilegijuoti rodmenys. Atnaujinkite, kad bandytumėte dar kartą.</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">Trikčių šalinimas</string>
-    <string name="advanced_help_troubleshooting" formatted="false">„Android“ duomenys skiltyje „Diagnostika“ renkami automatiškai. Papildomiems root ar Shizuku duomenims įjunkite privilegijuotą prieigą skiltyje „Papildomi šaltiniai“. Battery Monitor pirmiausia bando root, tada Shizuku. Shizuku turi veikti ir turėti suteiktą leidimą. Trūkstami laukai lieka nepasiekiami; nepavykus atnaujinti išsaugoma ankstesnė momentinė kopija ir pažymima pasenusia.</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">Trikčių šalinimas</string>
+    <string name="diag_help_troubleshooting" formatted="false">„Android“ duomenys skiltyje „Diagnostika“ renkami automatiškai. Papildomiems root ar Shizuku duomenims įjunkite privilegijuotą prieigą skiltyje „Papildomi šaltiniai“. Battery Monitor pirmiausia bando root, tada Shizuku. Shizuku turi veikti ir turėti suteiktą leidimą. Trūkstami laukai lieka nepasiekiami; nepavykus atnaujinti išsaugoma ankstesnė momentinė kopija ir pažymima pasenusia.</string>
 
     <string name="diagnostics" formatted="false">Diagnostika</string>
     <string name="diagnostics_summary" formatted="false">Patikrinkite leidimus ir stebėjimo patikimumą bei sukurkite trikčių šalinimo ataskaitą</string>
     <string name="diag_overview">Programos veikimas</string>
     <string name="diagnostics_help_title" formatted="false">Kaip padeda diagnostika</string>
     <string name="diagnostics_help_overview" formatted="false">„Stebėjimas fone“ tikrina leidimus ir stebėjimo patikimumą. Jo valdikliais galite pradėti ar sustabdyti stebėjimą, keisti derinimo registravimą, atverti akumuliatoriaus optimizavimo ir pranešimų nustatymus arba kurti trikčių šalinimo ataskaitą. Ne kiekvienas nepasiekiamas rodmuo reiškia leidimų problemą; kai kurie įrenginiai jo nepateikia.</string>
+    <string name="monitoring_help_overview" formatted="false">Patikrinkite pranešimų leidimą, root arba Shizuku prieigą, stebėjimo tarnybą ir istorijos duomenų bazę. Bakstelėkite patikrą, kad paprašytumėte prieigos arba ją atliktumėte. „Pradėti stebėjimą“ pasiekiama, kai stebėjimas sustabdytas, o „Sustabdyti stebėjimą“ – kai jis vykdomas. Pasiekiami rodmenys priklauso nuo įrenginio palaikymo ir suteiktos prieigos. Tarnybos patikrai reikia vykdomo stebėjimo; duomenų bazės patikrai reikia įjungto istorijos registravimo („Nustatymai“ → „Išplėstiniai“). Norėdami naudoti papildomus rodmenis, įjunkite „Naudoti privilegijuotą prieigą“ skiltyje „Nustatymai“ → „Išplėstiniai“. Parinktis „Gamintojo nustatymai“ pasiekiama tik palaikomuose įrenginiuose.</string>
     <string name="diagnostics_monitoring" formatted="false">Stebėjimas fone</string>
     <string name="diag_monitor_operation">Stebėjimo veikimas</string>
     <string name="diag_heartbeat">Paskutinis veikimo signalas</string>
@@ -711,6 +712,7 @@
     <string name="diag_report_privacy">Pagal numatytuosius nustatymus neįtraukiama. Šiuose duomenyse gali būti asmeninės informacijos. Prieš kopijuodami ar išsaugodami peržiūrėkite.</string>
 
     <string name="charging_diagnostics_title" formatted="false">OEM įkrovimo ribos diagnostika</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Atverkite momentinių kopijų ir palyginimo įrankius, kad ištirtumėte, kaip Battery Monitor aptinka įrenginio įkrovimo ribą. Pasiruošimo instrukcijos pateiktos paties OEM diagnostikos ekrano žinyne.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Kad ataskaita būtų naudinga, prieš fiksuodami kopijas atverkite skiltį „Pagalba“ ir atlikite paruošimo veiksmus.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Suteikus privilegijuotą prieigą gali būti pasiekiama daugiau diagnostikos informacijos. Suteikite prieigą per „Shizuku“ arba „root“ ir skiltyje „Nustatymai“ → „Išplėstiniai“ → „Naudoti privilegijuotą prieigą“ įjunkite privilegijuotą prieigą, kad OEM įkrovimo ribos ataskaita būtų naudingesnė.</string>
     <string name="charging_diagnostics_capture" formatted="false">Užfiksuoti momentinę kopiją</string>

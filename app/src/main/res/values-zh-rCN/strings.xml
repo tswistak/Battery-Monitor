@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">此估算使用 Battery Monitor 设置的预测方法。其目标不会控制充电或关机。</string>
     <string name="time_estimates_settings" formatted="false">时间估算</string>
     <string name="time_estimates_settings_summary" formatted="false">选择剩余时间的计算方式和目标电量</string>
-    <string name="time_estimates_settings_help" formatted="false">选择 Battery Monitor 估算剩余时间的方法及目标电量。目标也适用于“已达到充电上限”和“已达到放电下限”警报。Battery Monitor 不会开始或停止充电。</string>
+    <string name="time_estimates_settings_help" formatted="false">选择 Battery Monitor 估算剩余时间的方法及目标电量。目标也适用于“已达到充电目标”和“已达到放电目标”警报。Battery Monitor 不会开始或停止充电。</string>
     <string name="pref_cat_predictor" formatted="false">剩余时间估计</string>
     <string name="pref_prediction_type" formatted="false">估算类型</string>
     <string name="pref_prediction_type_help" formatted="false">“敏感的”使用最近五分钟的速率。默认的“保守的”结合近期速率与已学习的长期平均值，以减少突然变化。“自状态变更以来”使用当前的充电或放电会话。“长期平均”使用放电或当前充电来源的已学习速率。取得足够观测值前，估算使用保存的平均值或初始默认值。</string>
@@ -129,7 +129,7 @@
     <string name="predictor_long_term_ave" formatted="false">长期平均</string>
     <string name="pref_cat_target_levels" formatted="false">目标电量</string>
     <string name="pref_charging_target_mode" formatted="false">充电目标</string>
-    <string name="pref_charging_target_mode_help" formatted="false">“自动（推荐）”模式在 Battery Monitor 可读取时使用设备的固定充电上限，否则使用 100%。自适应充电的目标仍为 100%。“自定义”模式会使用您选择的电量，作为充电估算及“已达到充电上限”警报的目标。</string>
+    <string name="pref_charging_target_mode_help" formatted="false">“自动（推荐）”模式在 Battery Monitor 可读取时使用设备的固定充电上限，否则使用 100%。自适应充电的目标仍为 100%。“自定义”模式会使用您选择的电量，作为充电估算及“已达到充电目标”警报的目标。</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">自动检测可能适用于 Google Pixel、Samsung Galaxy、Xiaomi/Redmi/POCO、OnePlus/Oppo/Realme、Sony Xperia，以及运行 GrapheneOS 或 LineageOS 的设备，尤其是在具有 root 或 Shizuku 访问权限时。检测依赖软件信号，因此即使是列出的制造商，也不保证可用性或准确性。这些系列中未经测试的型号或操作系统版本也可能适用，但目前不会自动检测其他制造商的设备。</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">设备充电上限：%1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">自定义目标</string>
@@ -142,7 +142,7 @@
     <string name="pref_custom_charging_target" formatted="false">自定义充电目标</string>
     <string name="pref_custom_charging_target_help" formatted="false">“充电目标”设为“自定义”时，设置充电估算的结束电量。</string>
     <string name="pref_discharging_target" formatted="false">放电目标</string>
-    <string name="pref_discharging_target_help" formatted="false">设置放电估算及“已达到放电下限”警报的终点电量。低于此电量时，时间估算会继续以 0% 为目标。具有独立临界值的低电量警报不受影响。</string>
+    <string name="pref_discharging_target_help" formatted="false">设置放电估算及“已达到放电目标”警报的终点电量。低于此电量时，时间估算会继续以 0% 为目标。具有独立临界值的低电量警报不受影响。</string>
     <string name="pref_target_level_summary" formatted="true">估算至 %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">主要通知</string>
@@ -162,7 +162,7 @@
     <string name="pref_manage_main_channel" formatted="false">管理主渠道</string>
     <string name="pref_cat_notification_content" formatted="false">内容</string>
     <string name="pref_top_line_content" formatted="false">顶线内容</string>
-    <string name="pref_top_line_content_help" formatted="false">选择通知顶部一行显示预计剩余时间、状态更改后的时长或已配置的“生命体征”。</string>
+    <string name="pref_top_line_content_help" formatted="false">选择通知顶部一行显示预计的“剩余时间”、“自状态更改以来的时间”或已配置的“生命体征”。</string>
     <string name="pref_bottom_line_content" formatted="false">底线内容</string>
     <string name="pref_bottom_line_content_help" formatted="false">对于底线和顶线，您有相同的选项。</string>
     <string name="time_remaining" formatted="false">剩余时间</string>
@@ -240,7 +240,7 @@
     <string name="alarm_settings" formatted="false">闹钟</string>
     <string name="alarm_settings_help" formatted="false">您可以让 Battery Monitor 在电池达到某个条件时提醒您，例如充满电、电量低于 20% 等。</string>
     <string name="alarms_overview" formatted="false">闹钟概览</string>
-    <string name="alarms_overview_help">八种警报类型始终可用。直接启用事件，或在电量与温度类型下使用“添加临界值”。新临界值保存后会启用。点击数值可编辑；编辑会保留开关状态。禁用的数值仍列在列表中。删除时会要求确认。声音与振动依类型共用 Android 通知设置。现有重复记录会显示为单一警报；切换或删除会影响所有副本。充放电警报依照估算目标，不会控制充电。屏蔽渠道或停止监测不会改变已保存的开关。</string>
+    <string name="alarms_overview_help">八种警报类型始终可用。直接启用事件，或在电量与温度类型下使用“添加临界值”。新临界值保存后会启用。点击数值可编辑；编辑会保留开关状态。禁用的数值仍列在列表中。“删除闹钟”会要求确认。声音与振动依类型共用 Android 通知设置。现有重复记录会显示为单一警报；切换或删除会影响所有副本。充放电警报依照估算目标，不会控制充电。屏蔽渠道或停止监测不会改变已保存的开关。</string>
     <plurals name="alarms_active_count">
         <item quantity="other">已启用 %1$d 个警报</item>
     </plurals>
@@ -519,7 +519,7 @@
     <string name="battery_optimized" formatted="false">后台监测</string>
     <string name="battery_optimized_message" formatted="false">允许在后台不受限制地运行，可提高监测的可靠性。Android 电池优化可能会延迟更新和警报。\n
     \n
-    不受限制地运行可能会增加后台耗电量。您可以稍后在 Android “设置” → “应用” → “Battery Monitor” → “电池”中更改此设置。</string>
+    不受限制地运行可能会增加后台耗电量。您可以稍后在 Android “设置” → “应用” → “Battery Monitor” → “电池”中更改此设置。菜单名称因设备而异。</string>
     <string name="pref_cat_autostart" formatted="false">自启动</string>
     <string name="pref_autostart_at_boot" formatted="false">开机自启动</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">设备启动时启动 Battery Monitor：</string>
@@ -538,48 +538,48 @@
     <string name="shizuku_not_running" formatted="false">启动 Shizuku 以授予 Battery Monitor 特权访问权限</string>
     <string name="shizuku_permission_denied_permanently" formatted="false">在 Shizuku 中手动授予 Battery Monitor 权限</string>
 
-    <string name="advanced_action_refresh" formatted="false">刷新</string>
-    <string name="advanced_status_loading" formatted="false">正在加载高级电池统计…</string>
-    <string name="advanced_status_no_access" formatted="false">显示高级电池统计需要 root 或 Shizuku。</string>
-    <string name="advanced_status_waiting_permission" formatted="false">正在等待 Shizuku 权限…</string>
-    <string name="advanced_status_no_stats" formatted="false">此设备当前没有可用的高级电池统计。</string>
-    <string name="advanced_value_not_available" formatted="false">不可用</string>
-    <string name="advanced_help_overview" formatted="false">“诊断”在“应用运行”、“电池”、“充电”与“原始数据”分页中整合监测可靠性、保存的预测数据与电池数据。Android 数据无需 root 即可取得。额外设备数据取决于设备与 Battery Monitor 可用的权限。</string>
-    <string name="advanced_section_counters" formatted="false">计数器</string>
-    <string name="advanced_help_counters" formatted="false">电池读数会以标签与格式显示：剩余电荷量为 mAh、电流为 mA、能量为 mWh、电压为 V、温度为所菜单位，功率为 W。电流倍率也适用于计算功率。平均电流与循环次数取决于设备支援。</string>
-    <string name="advanced_field_charge_counter" formatted="false">剩余电量估算</string>
-    <string name="advanced_field_current_now" formatted="false">当前电流</string>
-    <string name="advanced_field_current_average" formatted="false">平均电流</string>
-    <string name="advanced_field_energy_counter" formatted="false">能量计数器</string>
-    <string name="advanced_section_capacity" formatted="false">容量</string>
-    <string name="advanced_help_capacity" formatted="false">“容量”会显示满充容量、设计容量和估算健康度。估算健康度通过满充容量除以设计容量计算，因此准确性取决于设备上报的数值。</string>
-    <string name="advanced_field_cycle_count" formatted="false">循环次数</string>
-    <string name="advanced_field_reported_capacity" formatted="false">报告容量</string>
-    <string name="advanced_field_state_of_health" formatted="false">健康状态</string>
-    <string name="advanced_field_full_charge_capacity" formatted="false">满充容量</string>
-    <string name="advanced_field_design_capacity" formatted="false">设计容量</string>
-    <string name="advanced_field_estimated_health" formatted="false">估计健康度</string>
+    <string name="diag_action_refresh" formatted="false">刷新</string>
+    <string name="diag_status_loading" formatted="false">正在加载高级电池统计…</string>
+    <string name="diag_status_no_access" formatted="false">显示高级电池统计需要 root 或 Shizuku。</string>
+    <string name="diag_status_waiting_permission" formatted="false">正在等待 Shizuku 权限…</string>
+    <string name="diag_status_no_stats" formatted="false">此设备当前没有可用的高级电池统计。</string>
+    <string name="diag_value_not_available" formatted="false">不可用</string>
+    <string name="diag_help_overview" formatted="false">“诊断”在“应用运行”、“电池”、“充电”与“原始数据”分页中整合监测可靠性、保存的预测数据与电池数据。Android 数据无需 root 即可取得。额外设备数据取决于设备与 Battery Monitor 可用的权限。</string>
+    <string name="diag_section_counters" formatted="false">计数器</string>
+    <string name="diag_help_counters" formatted="false">电池读数会以标签与格式显示：剩余电荷量为 mAh、电流为 mA、能量为 mWh、电压为 V、温度为所菜单位，功率为 W。电流倍率也适用于计算功率。平均电流与循环次数取决于设备支援。</string>
+    <string name="diag_field_charge_counter" formatted="false">剩余电量估算</string>
+    <string name="diag_field_current_now" formatted="false">当前电流</string>
+    <string name="diag_field_current_average" formatted="false">平均电流</string>
+    <string name="diag_field_energy_counter" formatted="false">能量计数器</string>
+    <string name="diag_section_capacity" formatted="false">容量</string>
+    <string name="diag_help_capacity" formatted="false">“容量”会显示满充容量、设计容量和估算健康度。估算健康度通过满充容量除以设计容量计算，因此准确性取决于设备上报的数值。</string>
+    <string name="diag_field_cycle_count" formatted="false">循环次数</string>
+    <string name="diag_field_reported_capacity" formatted="false">报告容量</string>
+    <string name="diag_field_state_of_health" formatted="false">健康状态</string>
+    <string name="diag_field_full_charge_capacity" formatted="false">满充容量</string>
+    <string name="diag_field_design_capacity" formatted="false">设计容量</string>
+    <string name="diag_field_estimated_health" formatted="false">估计健康度</string>
     <string name="diag_capacity_inconsistent">报告的满充容量超过设计容量。无法根据这些读数计算可靠的健康度估算。</string>
-    <string name="advanced_field_capacity_level" formatted="false">容量级别</string>
+    <string name="diag_field_capacity_level" formatted="false">容量级别</string>
     <string name="diag_capacity_critical">极低</string>
     <string name="diag_capacity_low">低</string>
     <string name="diag_capacity_high">高</string>
-    <string name="advanced_section_charging" formatted="false">充电</string>
-    <string name="advanced_help_charging" formatted="false">“充电”部分会显示与当前充电路径相关的数值，例如最大充电电流或电压、充电策略、充电状态和容量级别。这些字段可能会随着充电器和充电模式变化。</string>
-    <string name="advanced_field_charge_time_remaining" formatted="false">剩余充电时间</string>
-    <string name="advanced_field_max_charging_current" formatted="false">最大充电电流</string>
-    <string name="advanced_field_max_charging_voltage" formatted="false">最大充电电压</string>
-    <string name="advanced_field_charging_policy" formatted="false">充电策略</string>
+    <string name="diag_section_charging" formatted="false">充电</string>
+    <string name="diag_help_charging" formatted="false">“充电”部分会显示与当前充电路径相关的数值，例如最大充电电流或电压、充电策略、充电状态和容量级别。这些字段可能会随着充电器和充电模式变化。</string>
+    <string name="diag_field_charge_time_remaining" formatted="false">剩余充电时间</string>
+    <string name="diag_field_max_charging_current" formatted="false">最大充电电流</string>
+    <string name="diag_field_max_charging_voltage" formatted="false">最大充电电压</string>
+    <string name="diag_field_charging_policy" formatted="false">充电策略</string>
     <string name="diag_policy_default">默认</string>
     <string name="diag_policy_fixed_limit">电池保护（固定上限）</string>
     <string name="diag_policy_adaptive_ac">自适应充电</string>
-    <string name="advanced_field_charging_state" formatted="false">充电状态</string>
+    <string name="diag_field_charging_state" formatted="false">充电状态</string>
     <string name="diag_charging_too_cold">温度过低，无法充电</string>
     <string name="diag_charging_too_hot">温度过高，无法充电</string>
-    <string name="advanced_section_service" formatted="false">Android 电池服务</string>
-    <string name="advanced_help_service" formatted="false">“原始数据”包含 Android 电池广播与可访问时的 dumpsys battery 原始名称及数值。内容可能包含充电来源、电池状态、温度、电压与其他电池服务状态。</string>
-    <string name="advanced_section_sysfs" formatted="false">内核 power_supply 文件</string>
-    <string name="advanced_help_sysfs" formatted="false">“原始数据”显示从 /sys/class/power_supply 读取的原始名称与数值，包含多行数值。依键搜寻，点击行可查看并复制完整数值。使用“刷新”收集新读数。Battery Monitor 也会尝试以常规 Android 权限读取，无需 root 或 Shizuku。</string>
+    <string name="diag_section_service" formatted="false">Android 电池服务</string>
+    <string name="diag_help_service" formatted="false">“原始数据”包含 Android 电池广播与可访问时的 dumpsys battery 原始名称及数值。内容可能包含充电来源、电池状态、温度、电压与其他电池服务状态。</string>
+    <string name="diag_section_sysfs" formatted="false">内核 power_supply 文件</string>
+    <string name="diag_help_sysfs" formatted="false">“原始数据”显示从 /sys/class/power_supply 读取的原始名称与数值，包含多行数值。依键搜寻，点击行可查看并复制完整数值。使用“刷新”收集新读数。Battery Monitor 也会尝试以常规 Android 权限读取，无需 root 或 Shizuku。</string>
     <string name="diag_fuel_gauge">电池电量计</string>
     <string name="diag_mains_supply">AC 电源</string>
     <string name="diag_charging_source">充电来源</string>
@@ -608,22 +608,23 @@
     <string name="diag_settled_input_current">稳定输入电流</string>
     <string name="diag_input_voltage">输入电压</string>
     <string name="diag_input_voltage_limit">输入电压上限</string>
-    <string name="advanced_section_metadata" formatted="false">元数据</string>
-    <string name="advanced_help_metadata" formatted="false">“原始数据”也包含 BatteryManager 的原始属性名称与数值，包括可用计数器与电流读数。制造详情或更换状态等额外属性取决于 Android 版本、设备支援与权限。</string>
+    <string name="diag_section_metadata" formatted="false">元数据</string>
+    <string name="diag_help_metadata" formatted="false">“原始数据”也包含 BatteryManager 的原始属性名称与数值，包括可用计数器与电流读数。制造详情或更换状态等额外属性取决于 Android 版本、设备支援与权限。</string>
     <string name="diag_raw">原始数据</string>
     <string name="diag_search_key">搜寻键</string>
     <string name="diag_no_keys">可用数据中没有相符的键</string>
     <string name="diag_raw_values">原始数值</string>
     <string name="diag_last_checked">上次检查：%1$s</string>
     <string name="diag_privileged_stale">当前显示先前通过特殊权限取得的读数。请刷新以再试一次。</string>
-    <string name="advanced_help_troubleshooting_title" formatted="false">故障排查</string>
-    <string name="advanced_help_troubleshooting" formatted="false">“诊断”会自动收集 Android 数据。如需额外 root 或 Shizuku 数据，请在“其他来源”启用特殊权限访问。Battery Monitor 会先尝试 root，再尝试 Shizuku。Shizuku 必须正在执行且已授予权限。缺少的字段仍会显示为无法取得；刷新失败时会保留先前快照并标记为过期。</string>
+    <string name="diag_help_troubleshooting_title" formatted="false">故障排查</string>
+    <string name="diag_help_troubleshooting" formatted="false">“诊断”会自动收集 Android 数据。如需额外 root 或 Shizuku 数据，请在“其他来源”启用特殊权限访问。Battery Monitor 会先尝试 root，再尝试 Shizuku。Shizuku 必须正在执行且已授予权限。缺少的字段仍会显示为无法取得；刷新失败时会保留先前快照并标记为过期。</string>
 
     <string name="diagnostics" formatted="false">诊断</string>
     <string name="diagnostics_summary" formatted="false">检查权限和监控可靠性，并创建故障排查报告</string>
     <string name="diag_overview">应用运行</string>
     <string name="diagnostics_help_title" formatted="false">诊断如何提供帮助</string>
     <string name="diagnostics_help_overview" formatted="false">“后台监控”检查权限与监测可靠性。使用其控制项开始或停止监测、变更调试记录、打开电池优化与通知设置，或建立故障排除报告。并非每个无法取得的读数都表示权限问题；有些设备不提供该读数。</string>
+    <string name="monitoring_help_overview" formatted="false">检查通知权限、root 或 Shizuku 访问权限、监测服务和历史数据库。点按检查项目以请求访问权限或执行检查。监测停止时可使用“开始监测”；运行时则可使用“停止监测”。可获取的读数取决于设备支持情况和已授予的访问权限。 服务检查需要监测正在运行；数据库检查需要启用历史记录（“设置” → “高级”）。 要使用额外读数，请在“设置” → “高级”中启用“使用特权访问”。 “制造商设置”仅在支持的设备上可用。</string>
     <string name="diagnostics_monitoring" formatted="false">后台监控</string>
     <string name="diag_monitor_operation">监测运行</string>
     <string name="diag_heartbeat">上次心跳信号</string>
@@ -705,6 +706,7 @@
     <string name="diag_report_privacy">默认不包含。这些数据可能含有个人信息。复制或保存前请检查预览。</string>
 
     <string name="charging_diagnostics_title" formatted="false">OEM 充电上限诊断</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">打开快照和比较工具，调查 Battery Monitor 如何检测设备的充电上限。准备说明可在 OEM 诊断屏幕本身的帮助中找到。</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">为了生成有用的报告，请先打开“帮助”并按照准备步骤操作，再捕获快照。</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">使用特权访问可能会获得更多诊断信息。请授予 Shizuku 或 root 访问权限，并在“设置” → “高级” → “使用特权访问”中启用特权访问，以生成更有用的 OEM 充电上限报告。</string>
     <string name="charging_diagnostics_capture" formatted="false">捕获快照</string>

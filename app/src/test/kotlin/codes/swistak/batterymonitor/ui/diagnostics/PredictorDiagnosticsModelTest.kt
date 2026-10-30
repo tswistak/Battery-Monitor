@@ -103,7 +103,7 @@ class PredictorDiagnosticsModelTest {
             milliseconds.toString()
         }
         assertTrue(
-            group.rows.subList(2, 7).all { it.valueLabel == R.string.advanced_value_not_available })
+            group.rows.subList(2, 7).all { it.valueLabel == R.string.diag_value_not_available })
         assertEquals(
             listOf("NaN", "Infinity", "0.0", "-1.0", Double.MAX_VALUE.toString()),
             rawPredictorDiagnosticGroup(group).rows.subList(2, 7).map { it.value })
@@ -141,8 +141,7 @@ class PredictorDiagnosticsModelTest {
                     .copy(rawKey = "rawOnlyExtra", value = "123", rawValue = "123")
             )
         }
-        val normalized =
-            List(3) { DiagnosticGroup(R.string.advanced_section_counters, emptyList()) }
+        val normalized = List(3) { DiagnosticGroup(R.string.diag_section_counters, emptyList()) }
         val groups = listOf(raw) + normalized + combined
         val labels = { id: Int ->
             when (id) {
@@ -227,7 +226,7 @@ class PredictorDiagnosticsModelTest {
         ) { "14m 24s" }
         val groups = List(3) {
             DiagnosticGroup(
-                R.string.advanced_section_counters, emptyList()
+                R.string.diag_section_counters, emptyList()
             )
         } + group + rawPredictorDiagnosticGroup(group)
 

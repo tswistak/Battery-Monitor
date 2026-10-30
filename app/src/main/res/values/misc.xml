@@ -201,7 +201,7 @@
     </string-array>
 
     <string-array name="vital_signs_content_entries">
-        <item>@string/advanced_field_state_of_health</item>
+        <item>@string/diag_field_state_of_health</item>
         <item>@string/pref_content_temperature</item>
         <item>@string/vital_sign_voltage</item>
         <item>@string/pref_cat_battery_current_main</item>
