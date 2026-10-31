@@ -1293,21 +1293,43 @@ class FullscreenChartStateInstrumentedTest {
             assertFixtureViewport(activity, model, requestedViewport)
             main { model.scale(ChartScaleMode.MANUAL) }
             assertFixtureRendered(activity, model)
+            awaitFixtureChart(
+                activity, model, "Manual Y configuration was not applied"
+            ) { state, chart ->
+                state.scaleMode == ChartScaleMode.MANUAL && !state.loading && !state.error && chart.isAttachedToWindow && chart.isLaidOut && !chart.isLayoutRequested && chart.width > 0 && chart.height > 0 && chart.viewPortHandler.contentWidth > 0 && chart.viewPortHandler.contentHeight > 0 && chart.isScaleYEnabled && chart.isDragYEnabled && chart.viewPortHandler.maxScaleY > 1.5f && chart.axisLeft.axisMinimum == 0f && chart.axisLeft.axisMaximum == 100f && chart.axisRight.isEnabled && fixtureViewportMatches(
+                    state, chart, requestedViewport
+                )
+            }
+            // Model state can precede the AndroidView update that lifts the native Y-scale limit.
+            main {
+                requireNotNull(nativeChart(activity.window.decorView)).zoomToCenter(1f, 2f)
+            }
+            awaitFixtureChart(activity, model, "The single Y zoom was not applied") { _, chart ->
+                chart.viewPortHandler.scaleY > 1.5f
+            }
+            var zoomedScaleY = 0f
+            var movedTopY = 0f
             main {
                 val chart = requireNotNull(nativeChart(activity.window.decorView))
-                chart.zoomToCenter(1f, 2f)
+                zoomedScaleY = chart.viewPortHandler.scaleY
+                movedTopY = fullscreenChartTopY(chart) - 8f
                 chart.addViewportJob(
                     MoveViewJob.getInstance(
                         chart.viewPortHandler,
                         chart.lowestVisibleX,
-                        fullscreenChartTopY(chart) - 8f,
+                        movedTopY,
                         chart.getTransformer(YAxis.AxisDependency.LEFT),
                         chart
                     )
                 )
             }
-            instrumentation.waitForIdleSync()
-            android.os.SystemClock.sleep(150)
+            awaitFixtureChart(
+                activity, model, "The queued vertical move was not applied"
+            ) { _, chart ->
+                abs(chart.viewPortHandler.scaleY - zoomedScaleY) <= 0.001f && abs(
+                    fullscreenChartTopY(chart) - movedTopY
+                ) <= 0.01f
+            }
             var beforeScaleY = 0f
             var beforeTopY = 0f
             main {
@@ -1315,16 +1337,33 @@ class FullscreenChartStateInstrumentedTest {
                 beforeScaleY = chart.viewPortHandler.scaleY
                 beforeTopY = fullscreenChartTopY(chart)
             }
-            assertTrue(beforeScaleY > 1.5f)
+            assertTrue(
+                "Manual Y zoom did not survive the vertical move: ${
+                    fixtureChartDiagnostic(
+                        activity, model
+                    )
+                }", beforeScaleY > 1.5f
+            )
             val shiftedViewport =
                 HistoryRangeState(requestedViewport.start + 60_000, requestedViewport.end + 60_000)
             main { model.viewport(shiftedViewport, 1000) }
             assertFixtureRendered(activity, model)
             assertFixtureViewport(activity, model, shiftedViewport)
+            val diagnostic = fixtureChartDiagnostic(activity, model)
             main {
                 val chart = requireNotNull(nativeChart(activity.window.decorView))
-                assertEquals(beforeScaleY, chart.viewPortHandler.scaleY, 0.001f)
-                assertEquals(beforeTopY, fullscreenChartTopY(chart), 0.01f)
+                assertEquals(
+                    "Horizontal viewport change lost manual Y zoom: $diagnostic",
+                    beforeScaleY,
+                    chart.viewPortHandler.scaleY,
+                    0.001f
+                )
+                assertEquals(
+                    "Horizontal viewport change lost manual Y position: $diagnostic",
+                    beforeTopY,
+                    fullscreenChartTopY(chart),
+                    0.01f
+                )
             }
             main {
                 model.scale(ChartScaleMode.AUTOMATIC)
@@ -1673,9 +1712,9 @@ class FullscreenChartStateInstrumentedTest {
         model: FullscreenChartViewModel,
         requested: HistoryRangeState
     ) {
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
-        android.os.SystemClock.sleep(250)
-        loaded(model)
+        awaitFixtureChart(activity, model, "Requested viewport was not applied") { state, chart ->
+            !state.loading && !state.error && fixtureViewportMatches(state, chart, requested)
+        }
         main {
             val state = model.state.value!!
             val chart = requireNotNull(nativeChart(activity.window.decorView))
@@ -1708,6 +1747,65 @@ class FullscreenChartStateInstrumentedTest {
                 abs(axis.time(chart.highestVisibleX) - requested.end) <= tolerance
             )
         }
+    }
+
+    private fun fixtureViewportMatches(
+        state: FullscreenChartUiState, chart: LineChart, requested: HistoryRangeState
+    ): Boolean {
+        val entry = chart.data?.dataSets?.filterIsInstance<LineDataSet<*>>()?.flatMap { it.entries }
+            ?.firstOrNull { it.data is HistoryKey } ?: return false
+        val origin = (entry.data as HistoryKey).time - (entry.x.toDouble() * 1000).toLong()
+        val axis = DetailedHistoryTimeAxis(
+            HistoryRangeState(origin.coerceAtLeast(0), state.range.end)
+        )
+        val precision = maxOf(
+            Math.ulp(axis.x(requested.start)),
+            Math.ulp(axis.x(requested.end)),
+            Math.ulp(chart.xAxis.axisRange)
+        )
+        val tolerance = maxOf(5L, kotlin.math.ceil(precision * 8000.0).toLong() + 1)
+        return abs(state.viewport.start - requested.start) <= tolerance && abs(state.viewport.end - requested.end) <= tolerance && abs(
+            axis.time(chart.lowestVisibleX) - requested.start
+        ) <= tolerance && abs(axis.time(chart.highestVisibleX) - requested.end) <= tolerance
+    }
+
+    private fun awaitFixtureChart(
+        activity: FullscreenChartActivity,
+        model: FullscreenChartViewModel,
+        phase: String,
+        ready: (FullscreenChartUiState, LineChart) -> Boolean
+    ) {
+        await({ "$phase: ${fixtureChartDiagnostic(activity, model)}" }) {
+            var matches = false
+            main {
+                val state = model.state.value
+                val chart = nativeChart(activity.window.decorView)
+                matches = state != null && chart != null && ready(state, chart)
+            }
+            matches
+        }
+    }
+
+    private fun fixtureChartDiagnostic(
+        activity: FullscreenChartActivity, model: FullscreenChartViewModel
+    ): String {
+        var diagnostic = ""
+        main {
+            val state = model.state.value
+            val chart = nativeChart(activity.window.decorView)
+            val nativeViewport =
+                chart?.data?.dataSets?.filterIsInstance<LineDataSet<*>>()?.flatMap { it.entries }
+                    ?.firstOrNull { it.data is HistoryKey }?.let { entry ->
+                        val origin =
+                            (entry.data as HistoryKey).time - (entry.x.toDouble() * 1000).toLong()
+                        "${origin + (chart.lowestVisibleX.toDouble() * 1000).toLong()}.." + "${origin + (chart.highestVisibleX.toDouble() * 1000).toLong()}"
+                    } ?: "unavailable"
+            diagnostic =
+                "mode=${state?.scaleMode}, loading=${state?.loading}, error=${state?.error}, " + "modelViewport=${state?.viewport}, nativeViewport=$nativeViewport, " + "scaleYEnabled=${chart?.isScaleYEnabled}, dragYEnabled=${chart?.isDragYEnabled}, " + "scaleY=${chart?.viewPortHandler?.scaleY}, maxScaleY=${chart?.viewPortHandler?.maxScaleY}, " + "leftY=${chart?.axisLeft?.axisMinimum}..${chart?.axisLeft?.axisMaximum}, " + "rightY=${chart?.axisRight?.axisMinimum}..${chart?.axisRight?.axisMaximum}, " + "topY=${
+                    chart?.let(::fullscreenChartTopY)
+                }, " + "size=${chart?.width}x${chart?.height}, attached=${chart?.isAttachedToWindow}, " + "laidOut=${chart?.isLaidOut}, layoutRequested=${chart?.isLayoutRequested}"
+        }
+        return diagnostic
     }
 
     private fun clickFixtureText(text: String): Boolean {
@@ -1759,9 +1857,11 @@ class FullscreenChartStateInstrumentedTest {
         assertFalse(model.state.value!!.error)
     }
 
-    private fun await(ready: () -> Boolean) {
+    private fun await(
+        diagnostic: () -> String = { "History loading did not finish" }, ready: () -> Boolean
+    ) {
         val deadline = System.nanoTime() + 10_000_000_000
         while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
-        assertTrue("History loading did not finish", ready())
+        if (!ready()) throw AssertionError(diagnostic())
     }
 }

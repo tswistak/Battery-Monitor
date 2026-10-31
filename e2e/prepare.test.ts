@@ -170,13 +170,14 @@ if (fs.existsSync(path.join(__dirname, 'fail'))) process.exit(17);
     }
 });
 
-test('system UI preparation closes only the captured Pixel Launcher ANR and preserves app failures', async context => {
+test('system UI preparation closes only known launcher ANRs and preserves other app failures', async context => {
     const previousBrowser = globalThis._wdioGlobals.get('browser');
     const hadBrowser = globalThis._wdioGlobals.has('browser');
     const warnings = context.mock.method(console, 'warn', () => {});
     let visible = false;
-    let title = "Pixel Launcher isn't responding";
+    let title = '';
     let clicks = 0;
+    let waits = 0;
     const selectors: string[] = [];
     // WDIO's locked globals package resolves its browser proxy through this registration.
     globalThis._wdioGlobals.set('browser', {
@@ -190,38 +191,53 @@ test('system UI preparation closes only the captured Pixel Launcher ANR and pres
             return {
                 async isDisplayed() {return visible;},
                 async click() {clicks++; visible = false;},
-                async waitForDisplayed(options: {reverse: boolean; timeout: number}) {
+                async waitForDisplayed(options: {reverse: boolean; timeout: number; timeoutMsg: string}) {
+                    waits++;
                     assert.equal(options.reverse, true);
                     assert.equal(options.timeout, 20_000);
+                    assert.equal(options.timeoutMsg, `Launcher ANR dialog did not close: ${title}`);
                     assert.equal(visible, false);
                 },
             };
         },
     });
     try {
-        await checkSystemAppError({dismissBootLauncherAnr: true});
-        assert.equal(selectors.length, 1);
-        assert.equal(clicks, 0);
-
-        visible = true;
-        await checkSystemAppError({dismissBootLauncherAnr: true});
-        assert.equal(clicks, 1);
-        assert.match(String(warnings.mock.calls[0].arguments[0]), /Pixel Launcher isn't responding/);
-
-        for (title of ["Battery Monitor isn't responding", 'Battery Monitor keeps stopping', "System UI isn't responding"]) {
-            visible = true;
-            await assert.rejects(checkSystemAppError({dismissBootLauncherAnr: true}),
-                {message: `Android app error blocks E2E: ${title}`});
-            assert.equal(clicks, 1, `Must preserve ${title}`);
+        for (const scenario of [
+            {title: null, preparation: true, dismiss: false},
+            {title: "Pixel Launcher isn't responding", preparation: true, dismiss: true},
+            {title: "Quickstep isn't responding", preparation: true, dismiss: true},
+            {title: "Pixel Launcher isn't responding", preparation: false, dismiss: false},
+            {title: "Quickstep isn't responding", preparation: false, dismiss: false},
+            {title: "Battery Monitor isn't responding", preparation: true, dismiss: false},
+            {title: 'Battery Monitor keeps stopping', preparation: true, dismiss: false},
+            {title: "System UI isn't responding", preparation: true, dismiss: false},
+            {title: "Unknown application isn't responding", preparation: true, dismiss: false},
+            {title: 'Quickstep keeps stopping', preparation: true, dismiss: false},
+        ]) {
+            title = scenario.title ?? '';
+            visible = scenario.title !== null;
+            const previousClicks = clicks;
+            const previousWaits = waits;
+            const previousWarnings = warnings.mock.calls.length;
+            selectors.length = 0;
+            const check = scenario.preparation
+                ? checkSystemAppError({dismissBootLauncherAnr: true}) : checkSystemAppError();
+            if (scenario.title !== null && !scenario.dismiss) {
+                await assert.rejects(check, {message: `Android app error blocks E2E: ${title}`});
+                assert.equal(visible, true, `Must preserve ${title}`);
+            } else {
+                await check;
+            }
+            assert.equal(selectors.length, scenario.title === null ? 1 : 2);
+            assert.equal(clicks - previousClicks, scenario.dismiss ? 1 : 0, title);
+            assert.equal(waits - previousWaits, scenario.dismiss ? 1 : 0, title);
+            assert.equal(warnings.mock.calls.length - previousWarnings, scenario.dismiss ? 1 : 0, title);
+            if (scenario.dismiss) {
+                assert.equal(visible, false);
+                assert.equal(warnings.mock.calls[previousWarnings].arguments[0],
+                    `Closing unrelated emulator dialog: ${title}`);
+            }
         }
-        visible = false;
-        title = "Pixel Launcher isn't responding";
-        await checkSystemAppError({dismissBootLauncherAnr: true});
-        assert.equal(clicks, 1);
-        visible = true;
-        await assert.rejects(checkSystemAppError(),
-            {message: `Android app error blocks E2E: ${title}`});
-        assert.equal(clicks, 1, 'A launcher ANR during a scenario may be a widget regression and must fail');
     } finally {
         if (hadBrowser) globalThis._wdioGlobals.set('browser', previousBrowser);
         else globalThis._wdioGlobals.delete('browser');

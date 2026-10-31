@@ -64,13 +64,13 @@ export async function checkSystemAppError({dismissBootLauncherAnr = false} = {})
     if (!await close.isDisplayed()) return;
     const title = await browser.$('android=new UiSelector().packageName("android").resourceId("android:id/alertTitle")');
     const message = await title.getText();
-    if (!dismissBootLauncherAnr || message !== "Pixel Launcher isn't responding") {
+    if (!dismissBootLauncherAnr || !["Pixel Launcher isn't responding", "Quickstep isn't responding"].includes(message)) {
         throw new Error(`Android app error blocks E2E: ${message}`);
     }
     // A cold-boot launcher ANR can outlive every APK installation; never dismiss the app under test's errors.
     console.warn(`Closing unrelated emulator dialog: ${message}`);
     await close.click();
-    await close.waitForDisplayed({reverse: true, timeout, timeoutMsg: 'Pixel Launcher ANR dialog did not close'});
+    await close.waitForDisplayed({reverse: true, timeout, timeoutMsg: `Launcher ANR dialog did not close: ${message}`});
 }
 
 async function allowStartupPermission() {

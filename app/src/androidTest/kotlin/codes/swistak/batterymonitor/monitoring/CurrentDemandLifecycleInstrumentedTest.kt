@@ -17,6 +17,7 @@ package codes.swistak.batterymonitor.monitoring
 
 import android.content.Intent
 import androidx.core.content.pm.PackageInfoCompat
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.app.PersistentFragment
@@ -40,7 +41,6 @@ class CurrentDemandLifecycleInstrumentedTest {
         val preferencesBefore = SettingsSnapshot.capture(preferences)
         val settingsBefore = SettingsSnapshot.capture(settings)
         val desiredBefore = MonitoringDesiredState.read(context)
-        var activity: BatteryInfoActivity? = null
         try {
             assertTrue(MonitoringDesiredState.write(context, false))
             val version = PackageInfoCompat.getLongVersionCode(
@@ -50,59 +50,57 @@ class CurrentDemandLifecycleInstrumentedTest {
                 preferences.edit().putBoolean(SettingsContract.KEY_FIRST_RUN, false)
                     .putLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, version).commit()
             )
-            activity = instrumentation.startActivitySync(
+            ActivityScenario.launch<BatteryInfoActivity>(
                 Intent(
-                    context,
-                    BatteryInfoActivity::class.java
+                    context, BatteryInfoActivity::class.java
                 ).putExtra(BatteryInfoService.EXTRA_EDIT_ALARMS, true)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            ) as BatteryInfoActivity
-            val launched = activity
-            lateinit var fragment: PersistentFragment
-            var generation = 0
-            var token = 0L
-            instrumentation.runOnMainSync {
-                launched.supportFragmentManager.executePendingTransactions()
-                fragment = requireNotNull(
-                    launched.supportFragmentManager.findFragmentByTag(PersistentFragment.FRAG_TAG)
-                ) as PersistentFragment
-                fragment.monitoring.start()
-                generation = fragment.monitoring.onServiceConnected()
-                assertTrue(fragment.monitoring.onHandshake(generation, "lifecycle-test"))
-                val demand = CurrentDemand(2_000, false)
-                fragment.setCurrentDemand(demand)
-                assertEquals(demand, field(fragment, "currentDemand"))
-                token = field(fragment, "currentToken") as Long
-                assertTrue(
-                    fragment.monitoring.publishCurrent(
-                        generation,
-                        "lifecycle-test",
-                        0,
-                        token,
-                        CurrentSample(BatteryCurrentReading(-400_000, "controlled"), null)
+            ).use { scenario ->
+                lateinit var launched: BatteryInfoActivity
+                lateinit var fragment: PersistentFragment
+                var generation = 0
+                var token = 0L
+                scenario.onActivity { current ->
+                    launched = current
+                    current.supportFragmentManager.executePendingTransactions()
+                    fragment = requireNotNull(
+                        current.supportFragmentManager.findFragmentByTag(PersistentFragment.FRAG_TAG)
+                    ) as PersistentFragment
+                    fragment.monitoring.start()
+                    generation = fragment.monitoring.onServiceConnected()
+                    assertTrue(fragment.monitoring.onHandshake(generation, "lifecycle-test"))
+                    val demand = CurrentDemand(2_000, false)
+                    fragment.setCurrentDemand(demand)
+                    assertEquals(demand, field(fragment, "currentDemand"))
+                    token = field(fragment, "currentToken") as Long
+                    assertTrue(
+                        fragment.monitoring.publishCurrent(
+                            generation,
+                            "lifecycle-test",
+                            0,
+                            token,
+                            CurrentSample(BatteryCurrentReading(-400_000, "controlled"), null)
+                        )
                     )
-                )
-                launched.finish()
-            }
-            instrumentation.waitForIdleSync()
-            instrumentation.runOnMainSync {
-                assertTrue(launched.isDestroyed)
-                assertNull(field(fragment, "currentDemand"))
-                assertFalse(fragment.monitoring.current.value.connected)
-                assertFalse(
-                    fragment.monitoring.publishCurrent(
-                        generation,
-                        "lifecycle-test",
-                        1,
-                        token,
-                        CurrentSample(BatteryCurrentReading(-500_000, "late"), null)
+                }
+                scenario.close()
+                instrumentation.runOnMainSync {
+                    assertTrue(launched.isDestroyed)
+                    assertNull(field(fragment, "currentDemand"))
+                    assertFalse(fragment.monitoring.current.value.connected)
+                    assertFalse(
+                        fragment.monitoring.publishCurrent(
+                            generation,
+                            "lifecycle-test",
+                            1,
+                            token,
+                            CurrentSample(BatteryCurrentReading(-500_000, "late"), null)
+                        )
                     )
-                )
-                assertEquals(-400_000L, fragment.monitoring.current.value.sample.now?.microAmps)
+                    assertEquals(-400_000L, fragment.monitoring.current.value.sample.now?.microAmps)
+                }
             }
         } finally {
-            instrumentation.runOnMainSync { activity?.finish() }
-            instrumentation.waitForIdleSync()
             assertTrue(MonitoringDesiredState.write(context, desiredBefore))
             assertTrue(SettingsSnapshot.apply(settings, settingsBefore))
             assertTrue(SettingsSnapshot.apply(preferences, preferencesBefore))
