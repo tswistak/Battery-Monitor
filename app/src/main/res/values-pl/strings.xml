@@ -119,7 +119,7 @@
     <string name="current_prediction_explanation">To szacowanie używa skonfigurowanego przewidywania Monitora baterii. Jego cel nie steruje ładowaniem ani wyłączaniem.</string>
     <string name="time_estimates_settings" formatted="false">Szacowanie czasu</string>
     <string name="time_estimates_settings_summary" formatted="false">Wybierz, jak pozostały czas ma być obliczany i do których docelowych poziomów naładowania baterii</string>
-    <string name="time_estimates_settings_help" formatted="false">Wybierz, jak Monitor baterii ma szacować pozostały czas i docelowe poziomy naładowania baterii. Cele dotyczą także alarmów „Osiągnięto cel ładowania” i „Osiągnięcie celu rozładowania”. Monitor baterii nie rozpoczyna ani nie zatrzymuje ładowania.</string>
+    <string name="time_estimates_settings_help" formatted="false">Wybierz, jak Monitor baterii ma szacować pozostały czas i docelowe poziomy naładowania baterii. Cele dotyczą także alarmów „Osiągnięto cel ładowania” i „Osiągnięto cel rozładowania”. Monitor baterii nie rozpoczyna ani nie zatrzymuje ładowania.</string>
     <string name="pref_cat_predictor" formatted="false">Szacowanie pozostałego czasu</string>
     <string name="pref_prediction_type" formatted="false">Typ szacowania</string>
     <string name="pref_prediction_type_help" formatted="false">„Czułe” używa tempa z ostatnich pięciu minut. „Konserwatywne”, domyślne, łączy ostatnie tempa z wyuczoną średnią długoterminową, aby zredukować nagłe zmiany. „Od zmiany stanu” używa z bieżącej sesji ładowania lub rozładowywania. „Średnie długoterminowe” używa wyuczonego tempa dla rozładowywania lub aktywnego źródła ładowania. Dopóki nie ma dostępnych wystarczających obserwacji, szacunki korzystają z przechowywanej średniej lub domyślnej początkowej.</string>
@@ -129,20 +129,20 @@
     <string name="predictor_long_term_ave" formatted="false">Średnie długoterminowe</string>
     <string name="pref_cat_target_levels" formatted="false">Docelowe poziomy</string>
     <string name="pref_charging_target_mode" formatted="false">Cel ładowania</string>
-    <string name="pref_charging_target_mode_help" formatted="false">„Automatyczny” używa stałego limitu ładowania urządzenia, gdy Monitor baterii potrafi go odczytać, a w przeciwnym razie używa 100%. Ładowanie adaptacyjne nadal ma cel 100%. „Własny” używa wybranego przez Ciebie poziomu do szacunków ładowania i alarmów „Osiągnięto cel ładowania”.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">„Automatyczny” używa stałego celu ładowania urządzenia, gdy Monitor baterii potrafi go odczytać, a w przeciwnym razie używa 100%. Ładowanie adaptacyjne nadal ma cel 100%. „Własny” używa wybranego przez Ciebie poziomu do szacunków ładowania i alarmów „Osiągnięto cel ładowania”.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Automatyczne wykrywanie może działać na urządzeniach Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme i Sony Xperia, a także na urządzeniach z GrapheneOS lub LineageOS — szczególnie gdy możliwy jest dostęp do roota albo Shizuku. Opiera się na sygnałach programowych, dlatego dostępność i dokładność nie są gwarantowane nawet u wymienionych producentów. Nieprzetestowane modele lub wersje systemów z tych rodzin mogą również działać, ale urządzenia innych producentów nie są obecnie wykrywane automatycznie.</string>
-    <string name="pref_charging_target_mode_summary_device" formatted="true">Limit ładowania urządzenia: %1$d%%</string>
+    <string name="pref_charging_target_mode_summary_device" formatted="true">Cel ładowania urządzenia: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Własny cel</string>
-    <string name="pref_charging_target_mode_summary_default" formatted="false">Nie wykryto stałego limitu w urządzeniu — używane 100%</string>
+    <string name="pref_charging_target_mode_summary_default" formatted="false">Nie wykryto stałego celu w urządzeniu — używane 100%</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    Jeśli ta wartość nie wygląda na prawidłową, możesz pomóc ulepszyć wykrywanie urządzeń. Otwórz „Ustawienia” → „Zaawansowane” → „Diagnostyka limitu ładowania OEM” i wygeneruj raport, dokładnie przestrzegając instrukcji w „Pomoc”</string>
+    Jeśli ta wartość nie wygląda na prawidłową, możesz pomóc ulepszyć wykrywanie urządzeń. Otwórz „Ustawienia” → „Zaawansowane” → „Diagnostyka celu ładowania OEM” i wygeneruj raport, dokładnie przestrzegając instrukcji w „Pomoc”</string>
     <string name="charging_target_mode_automatic" formatted="false">Automatyczny (zalecany)</string>
     <string name="charging_target_mode_custom" formatted="false">Własny</string>
     <string name="pref_custom_charging_target" formatted="false">Własny cel ładowania</string>
     <string name="pref_custom_charging_target_help" formatted="false">Ustaw poziom naładowania baterii używany jako punkt końcowy szacunków ładowania, gdy „Cel ładowania” jest „Własny”.</string>
     <string name="pref_discharging_target" formatted="false">Cel rozładowania</string>
-    <string name="pref_discharging_target_help" formatted="false">Ustaw punkt końcowy szacunków rozładowywania i alarmów „Osiągnięcie celu rozładowania”. Poniżej tego poziomu szacowanie czasu jest kontynuowane do 0%. Alarmy niskiego poziomu naładowania baterii ze swoim własnym progiem pozostają niezależne.</string>
+    <string name="pref_discharging_target_help" formatted="false">Ustaw punkt końcowy szacunków rozładowywania i alarmów „Osiągnięto cel rozładowania”. Poniżej tego poziomu szacowanie czasu jest kontynuowane do 0%. Alarmy niskiego poziomu naładowania baterii ze swoim własnym progiem pozostają niezależne.</string>
     <string name="pref_target_level_summary" formatted="true">Szacuj do %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Główne powiadomienie</string>
@@ -252,11 +252,11 @@
     <string name="alarm_fully_charged" formatted="false">Bateria jest w pełni naładowana</string>
     <string name="alarms_targets_group">Cele ładowania i rozładowania</string>
     <string name="alarms_charging_target">Osiągnięto cel ładowania</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Osiągnięto limit ładowania</string>
-    <string name="alarm_charging_limit_met" formatted="true">Osiągnięto limit ładowania: %1$d%%</string>
-    <string name="alarms_discharging_target">Osiągnięcie celu rozładowania</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Osiągnięto limit rozładowania</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Osiągnięto limit rozładowania: %1$d%%</string>
+    <string name="alarm_type_charging_limit_met" formatted="false">Osiągnięto cel ładowania</string>
+    <string name="alarm_charging_limit_met" formatted="true">Osiągnięto cel ładowania: %1$d%%</string>
+    <string name="alarms_discharging_target">Osiągnięto cel rozładowania</string>
+    <string name="alarm_type_discharging_limit_met" formatted="false">Osiągnięto cel rozładowania</string>
+    <string name="alarm_discharging_limit_met" formatted="true">Osiągnięto cel rozładowania: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Gdy poziom naładowania spadnie do</string>
     <string name="alarm_charge_drops" formatted="false">"Poziom naładowania baterii osiągnął lub spadł poniżej "</string>
     <string name="alarm_type_charge_rises" formatted="false">Gdy poziom naładowania wzrośnie do</string>
@@ -296,7 +296,7 @@
     <string name="alarms_delivery_vibration">Wibracje i powiadomienie</string>
     <string name="alarms_delivery_notification">Tylko powiadomienie</string>
     <string name="alarms_channel_help">Dźwięk i dostarczenie powiadomienia są kontrolowane przez ten kianał powiadomień Androida.</string>
-    <string name="pref_dismiss_low_battery_on_recovery">Odrzucaj alarm niskiego poziomu naładowania baterii, gdy poziom wzrośnie powyżej progu</string>
+    <string name="pref_dismiss_low_battery_on_recovery">Odrzucaj alarm niskiego poziomu naładowania baterii po doładowaniu</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Usuwaj powiadomienie o niskim poziomie naładowania, gdy poziom naładowania wzrośnie powyżej jego progu. Inne powiadomienia alarmów pozostają</string>
     <string name="alarms_channel_unavailable">Kanał powiadomień nieutworzony albo niedostępny</string>
     <string name="alarms_settings_unavailable">Nie udało się otworzyć ustawień powiadomień Androida</string>
@@ -525,7 +525,7 @@
     <string name="battery_optimized" formatted="false">Monitorowanie w tle</string>
     <string name="battery_optimized_message" formatted="false">Nieograniczone wykonywanie w tle może poprawić niezawodność monitorowania. Optymalizacja baterii w Androidzie może opóźniać aktualizacje i alarmy.\n
     \n
-    Zezwolenie na nieograniczone wykonywanie w tle może zwiększyć zużycie baterii. Możesz zmienić to później w „Ustawienia” Androida → „Aplikacje” → „Battery Monitor” → „Bateria”. Nazwy menu różnią się w zależności od urządzenia.</string>
+    Zezwolenie na nieograniczone wykonywanie w tle może zwiększyć zużycie baterii. Możesz zmienić to później w „Ustawienia” Androida → „Aplikacje” → „Battery Monitor” → „Bateria”. Nazwy w menu różnią się w zależności od urządzenia.</string>
     <string name="pref_cat_autostart" formatted="false">Automatyczne uruchamianie</string>
     <string name="pref_autostart_at_boot" formatted="false">Uruchamiaj automatycznie przy starcie systemu</string>
     <string name="pref_autostart_at_boot_summary" formatted="false">Uruchamiaj Monitora baterii podczas włączania urządzenia:</string>
@@ -536,7 +536,7 @@
     <string name="settings_data_permissions">Dane i uprawnienia</string>
     <string name="advanced_settings" formatted="false">Zaawansowane</string>
     <string name="advanced_settings_summary" formatted="false">Dostosuj Monitor baterii za pomocą dodatkowych opcji do specjalistycznych zastosowań</string>
-    <string name="advanced_settings_help" formatted="false">Kontroluj dostęp uprzywilejowany, zapisywanie historii, przechowywanie logów i automatyczny eksport. „Monitorowanie w tle” otwiera sprawdzenia i narzędzia dotyczące uprawnień, niezawodności monitora i logów debugowania. Otwórz „Diagnostyka limitu ładowania OEM”, aby uzyskać raporty dotyczące limitu ładowania.</string>
+    <string name="advanced_settings_help" formatted="false">Kontroluj dostęp uprzywilejowany, zapisywanie historii, przechowywanie logów i automatyczny eksport. „Monitorowanie w tle” otwiera sprawdzenia i narzędzia dotyczące uprawnień, niezawodności monitora i logów debugowania. Otwórz „Diagnostyka celu ładowania OEM”, aby uzyskać raporty dotyczące celu ładowania.</string>
     <string name="pref_cat_privileged_access" formatted="false">Dostęp uprzywilejowany</string>
     <string name="pref_use_privileged_access" formatted="false">Używaj dostępu uprzywilejowanego</string>
     <string name="pref_use_privileged_access_summary" formatted="false">Czy używać przyznanego dostępu do roota albo Shizuku dla bardziej kompletnych i dokładniejszych danych urządzenia?</string>
@@ -577,7 +577,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Maksymalne napięcie ładowania</string>
     <string name="diag_field_charging_policy" formatted="false">Strategia ładowania</string>
     <string name="diag_policy_default">Domyślna</string>
-    <string name="diag_policy_fixed_limit">Ochrona baterii (stały limit)</string>
+    <string name="diag_policy_fixed_limit">Ochrona baterii (stały cel)</string>
     <string name="diag_policy_adaptive_ac">Ładowanie adaptacyjne</string>
     <string name="diag_field_charging_state" formatted="false">Stan ładowania</string>
     <string name="diag_charging_too_cold">Za zimno, aby ładować</string>
@@ -630,7 +630,7 @@
     <string name="diag_overview">Działanie aplikacji</string>
     <string name="diagnostics_help_title" formatted="false">Jak pomaga diagnostyka</string>
     <string name="diagnostics_help_overview" formatted="false">„Monitorowanie w tle” sprawdza uprawnienia i niezawodność monitora. Używaj jego elementów sterujących, aby uruchamiać lub zatrzymywać monitorowanie, zmieniać logowanie debugowania, otwierać ustawienia optymalizacji baterii i powiadomień lub tworzyć raport do rozwiązywania problemów. Nie każdy niedostępny odczyt oznacza problem z uprawnieniami; niektóre urządzenia tego nie udostępniają.</string>
-    <string name="monitoring_help_overview" formatted="false">Sprawdź uprawnienie do powiadomień, dostęp do roota albo Shizuku, usługę monitorowania i bazę danych historii. Naciśnij element sprawdzenia, aby poprosić o dostęp lub wykonać test. „Uruchom monitorowanie” jest dostępne, gdy monitorowanie jest zatrzymane; „Zatrzymaj monitorowanie”, gdy jest uruchomione. Dostępność odczytów zależy od obsługi urządzenia i przyznanego dostępu. Sprawdzenie usługi wymaga uruchomionego monitorowania; sprawdzenie bazy danych wymaga włączonego zapisywania historii („Ustawienia” → „Zaawansowane”). Aby korzystać z dodatkowych odczytów, włącz „Używaj dostępu uprzywilejowanego” w „Ustawienia” → „Zaawansowane”. „Ustawienia producenta” są dostępne tylko na obsługiwanych urządzeniach.</string>
+    <string name="monitoring_help_overview" formatted="false">Sprawdź uprawnienie do powiadomień, dostęp do roota albo Shizuku, usługę monitorowania i bazę danych historii. Naciśnij pozycję, aby poprosić o dostęp lub ją sprawdzić. „Uruchom monitorowanie” jest dostępne, gdy jest zatrzymane; „Zatrzymaj monitorowanie” jest dostępne, gdy jest uruchomione. Możliwości urządzenia i przyznany dostęp określają, które odczyty są dostępne. Sprawdzanie usług wymaga uruchomionego monitorowania; sprawdzanie bazy danych wymaga zapisywania historii („Ustawienia” → „Zaawansowane”). Aby używać dodatkowych odczytów, włącz „Używaj dostępu uprzywilejowanego” w „Ustawienia” → „Zaawansowane”. „Ustawienia producenta” jest dostępne tylko na obsługiwanych urządzeniach.</string>
     <string name="diagnostics_monitoring" formatted="false">Monitorowanie w tle</string>
     <string name="diag_monitor_operation">Działanie monitora</string>
     <string name="diag_heartbeat">Ostatni sygnał</string>
@@ -711,15 +711,15 @@
     <string name="diag_include_apps">Uwzględnij nazwy aplikacji systemowych</string>
     <string name="diag_report_privacy">Wykluczone domyślnie. Dane te mogą zawierać dane osobowe. Przejrzyj podgląd przed kopiowaniem lub zapisywaniem.</string>
 
-    <string name="charging_diagnostics_title" formatted="false">Diagnostyka limitu ładowania OEM</string>
-    <string name="charging_diagnostics_help_overview" formatted="false">Otwórz narzędzia do snapshotów i porównań, aby zbadać, jak Monitor baterii wykrywa limit ładowania urządzenia. Instrukcje przygotowania są dostępne w pomocy samego ekranu diagnostyki OEM.</string>
+    <string name="charging_diagnostics_title" formatted="false">Diagnostyka celu ładowania OEM</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Otwórz narzędzia do snapshotów i porównań, aby zbadać, jak Monitor baterii wykrywa cel ładowania urządzenia. Instrukcje dotyczące przygotowania są dostępne w pomocy samego ekranu diagnostyki OEM.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Aby uzyskać przydatny raport, otwórz „Pomoc” i podążaj za przygotowanymi tam krokami przed wykonaniem snapshotów</string>
-    <string name="charging_diagnostics_privileged_hint" formatted="false">Więcej informacji diagnostycznych może być dostępnych z dostępem uprzywilejowanym. Przyznaj dostęp do roota albo Shizuku i włącz dostęp uprzywilejowany w „Ustawienia” → „Zaawansowane” → „Używaj dostępu uprzywilejowanego” dla bardziej przydatnego raportu limitu ładowania OEM</string>
+    <string name="charging_diagnostics_privileged_hint" formatted="false">Więcej informacji diagnostycznych może być dostępnych z dostępem uprzywilejowanym. Przyznaj dostęp do roota albo Shizuku i włącz dostęp uprzywilejowany w „Ustawienia” → „Zaawansowane” → „Używaj dostępu uprzywilejowanego” dla bardziej przydatnego raportu celu ładowania OEM</string>
     <string name="charging_diagnostics_capture" formatted="false">Wykonaj snapshot</string>
     <string name="charging_diagnostics_capture_summary" formatted="false">Ustaw tryb ładowania w ustawieniach urządzenia, a następnie przechwyć jego sygnały</string>
     <string name="charging_diagnostics_choose_state" formatted="false">Które ustawienie urządzenia jest aktywne?</string>
     <string name="charging_diagnostics_condition_off" formatted="false">Ochrona wyłączona/bez ograniczeń</string>
-    <string name="charging_diagnostics_condition_fixed" formatted="false">Stały limit…</string>
+    <string name="charging_diagnostics_condition_fixed" formatted="false">Stały cel…</string>
     <string name="charging_diagnostics_condition_adaptive" formatted="false">Ładowanie adaptacyjne/inteligentne</string>
     <string name="charging_diagnostics_condition_scheduled" formatted="false">Zaplanowane ładowanie</string>
     <string name="charging_diagnostics_condition_other" formatted="false">Inny tryb OEM</string>
@@ -743,7 +743,7 @@
     <string name="charging_diagnostics_cleared" formatted="false">Usunięto snapshoty ładowania</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. Odłącz telefon i pozostaw go odłączonego podczas wykonywania snapshotów konfiguracji. Zmieniaj tylko ustawienie ochrony ładowania OEM między snapshotami.\n
     2. Wyłącz ochronę ładowania, odczekaj 2-5 sekund i wykonaj snapshot.\n
-    3. Wybierz dowolny stały limit, odczekaj 2-5 sekund i wykonaj kolejny snapshot. Powtórz to z co najmniej jednym innym stałym limitem, jeśli jest dostępny.\n
+    3. Wybierz dowolny stały cel, odczekaj 2-5 sekund i wykonaj kolejny snapshot. Powtórz to z co najmniej jednym innym stałym celem, jeśli jest dostępny.\n
     4. Włącz ładowanie adaptacyjne, inteligentne lub zaplanowane, odczekaj 2-5 sekund i wykonaj jeszcze jeden snapshot.\n
     5. Jeśli porównanie konfiguracji jest niejednoznaczne, możesz opcjonalnie powtórzyć tę sekwencję podczas ładowania, aby uchwycić stan w trakcie działania.\n
     6. Utwórz i przejrzyj raport porównawczy. Dane w raporcie są przefiltrowane, a potencjalnie wrażliwe wartości ukrywane, ale nadal powinieneś/powinnaś przejrzeć kompletny raport przed jego udostępnieniem.</string>
