@@ -1104,7 +1104,7 @@ class FullscreenChartStateInstrumentedTest {
                     }
                 }
             }
-            assertFixtureRendered(activity, model)
+            assertFixtureRendered(activity, model, "Initial in-range voltage rendering")
             assertFixtureViewport(activity, model, requested)
             var retainedViewport = requested
             var contentLeft = 0f
@@ -1136,7 +1136,7 @@ class FullscreenChartStateInstrumentedTest {
                     point.key == insertedKey && point.value?.let { abs(it - 19.999) < 0.000001 } == true
                 } == true
             }
-            assertFixtureRendered(activity, model)
+            assertFixtureRendered(activity, model, "Refreshed in-range voltage rendering")
             await {
                 var updatedGeometry = false
                 main {
@@ -1639,72 +1639,128 @@ class FullscreenChartStateInstrumentedTest {
     }
 
     private fun assertFixtureRendered(
-        activity: FullscreenChartActivity, model: FullscreenChartViewModel
+        activity: FullscreenChartActivity,
+        model: FullscreenChartViewModel,
+        phase: String = "Native chart rendering"
     ) {
-        loaded(model)
-        await {
+        var mismatch = "No chart observation yet"
+        await({ "$phase: Chart fixture did not render: $mismatch" }) {
             var rendered = false
             main {
-                val state = model.state.value!!
+                val state = model.state.value
                 val chart = nativeChart(activity.window.decorView)
-                val labels = chart?.data?.dataSets?.map { it.label }?.toSet()
-                val valueScale =
-                    if (state.valueScale == ChartValueScale.LOGARITHMIC && !fullscreenLogAvailable(
-                            state.metrics, state.boundsByMetric, false, 1
-                        )
-                    ) ChartValueScale.LINEAR else state.valueScale
-                val valuesMatch = state.metrics.all { metric ->
-                    val point = state.charts[metric]?.points?.firstOrNull { it.value != null }
-                    val set = chart?.data?.dataSets?.filterIsInstance<LineDataSet<*>>()
-                        ?.firstOrNull { it.label == metric.name }
-                    val entry = set?.entries?.firstOrNull()
-                    point != null && set != null && entry != null && entry.data == point.key && abs(
-                        entry.y - fullscreenChartValue(
-                            point.value!!, metric, false, 1, valueScale
-                        ).toFloat()
-                    ) < 0.0001 && (state.style != ChartDrawingStyle.POINTS || set.color == Color.TRANSPARENT)
+                if (activity.isDestroyed || activity.isFinishing) {
+                    throw AssertionError(
+                        "$phase: Chart Activity is finishing or destroyed: ${
+                            fixtureChartDiagnostic(
+                                state,
+                                chart
+                            )
+                        }"
+                    )
                 }
-                val decor = activity.window.decorView
-                val statusBarHidden = decor.rootWindowInsets?.let {
-                    !WindowInsetsCompat.toWindowInsetsCompat(it, decor)
-                        .isVisible(WindowInsetsCompat.Type.statusBars())
-                } == true
-                rendered =
-                    chart != null && chart.width > 0 && chart.height > 0 && labels == state.metrics.map { it.name }
-                        .toSet() && chart.axisRight.isEnabled == (state.comparison != null) && valuesMatch && statusBarHidden
+                if (state?.error == true) {
+                    throw AssertionError(
+                        "$phase: Chart model failed: ${
+                            fixtureChartDiagnostic(
+                                state,
+                                chart
+                            )
+                        }"
+                    )
+                }
+                val failure = fixtureRenderedMismatch(activity, state, chart)
+                rendered = failure == null
+                if (failure != null) mismatch = "$failure; ${fixtureChartDiagnostic(state, chart)}"
             }
             rendered
         }
-        main {
-            val state = model.state.value!!
-            val chart = requireNotNull(nativeChart(activity.window.decorView))
-            val valueScale =
-                if (state.valueScale == ChartValueScale.LOGARITHMIC && !fullscreenLogAvailable(
-                        state.metrics, state.boundsByMetric, false, 1
-                    )
-                ) ChartValueScale.LINEAR else state.valueScale
-            for (metric in state.metrics) {
-                val sets = requireNotNull(chart.data).dataSets.filterIsInstance<LineDataSet<*>>()
-                    .filter { it.label == metric.name }
-                val segments = state.charts.getValue(metric).points.filter { it.value != null }
-                    .groupBy { it.segment }.values.toList()
-                assertEquals(segments.size, sets.size)
-                for ((segment, set) in segments.zip(sets)) {
-                    assertEquals(segment.map { it.key }, set.entries.map { it.data })
-                    assertEquals(
-                        if (metric == state.metric) YAxis.AxisDependency.LEFT else YAxis.AxisDependency.RIGHT,
-                        set.axisDependency
-                    )
-                    for ((point, entry) in segment.zip(set.entries)) {
-                        assertEquals(
-                            fullscreenChartValue(
-                                point.value!!, metric, false, 1, valueScale
-                            ).toFloat(), entry.y, 0.0001f
-                        )
+    }
+
+    private fun fixtureRenderedMismatch(
+        activity: FullscreenChartActivity, state: FullscreenChartUiState?, chart: LineChart?
+    ): String? {
+        if (state == null) return "Model state is unavailable"
+        if (state.loading) return "Model is still loading"
+        if (chart == null) return "Native chart is unavailable"
+        if (!chart.isAttachedToWindow || !chart.isLaidOut || chart.isLayoutRequested ||
+            chart.width <= 0 || chart.height <= 0 ||
+            chart.viewPortHandler.contentWidth <= 0 || chart.viewPortHandler.contentHeight <= 0
+        ) return "Native chart is not attached and laid out with a nonempty plot"
+        val data = chart.data ?: return "Native chart data is unavailable"
+        val sets = data.dataSets.filterIsInstance<LineDataSet<*>>()
+        if (sets.size != data.dataSets.size) return "Native chart has unsupported dataset types"
+        val expectedMetrics = state.metrics.map { it.name }.toSet()
+        val actualMetrics = sets.map { it.label }.toSet()
+        if (expectedMetrics != actualMetrics) {
+            return "Metric labels expected=$expectedMetrics actual=$actualMetrics"
+        }
+        if (!chart.axisLeft.isEnabled || chart.axisRight.isEnabled != (state.comparison != null)) {
+            return "Axes expected left=true right=${state.comparison != null}, " +
+                    "actual left=${chart.axisLeft.isEnabled} right=${chart.axisRight.isEnabled}"
+        }
+        val valueScale =
+            if (state.valueScale == ChartValueScale.LOGARITHMIC && !fullscreenLogAvailable(
+                    state.metrics, state.boundsByMetric, false, 1, state.charts
+                )
+            ) ChartValueScale.LINEAR else state.valueScale
+        for (metric in state.metrics) {
+            val model = state.charts[metric] ?: return "$metric model is unavailable"
+            val segments =
+                model.points.filter { it.value != null }.groupBy { it.segment }.entries.toList()
+            val metricSets = sets.filter { it.label == metric.name }
+            if (segments.size != metricSets.size) {
+                val expectedKeys = segments.flatMap { it.value }.map { it.key }
+                val actualKeys = metricSets.flatMap { it.entries }.map { it.data }
+                return "$metric segment count expected=${segments.size} actual=${metricSets.size}, " +
+                        "expected segment IDs=${segments.map { it.key }}, " +
+                        "first missing=${expectedKeys.firstOrNull { it !in actualKeys }}, " +
+                        "first unexpected=${actualKeys.firstOrNull { it !in expectedKeys }}"
+            }
+            for (segmentIndex in segments.indices) {
+                val (segmentId, points) = segments[segmentIndex]
+                val set = metricSets[segmentIndex]
+                val entries = set.entries
+                if (points.size != entries.size) {
+                    val expectedKeys = points.map { it.key }
+                    val actualKeys = entries.map { it.data }
+                    return "$metric segmentIndex=$segmentIndex segmentId=$segmentId entry count expected=${points.size} actual=${entries.size}, " +
+                            "segment count expected=${segments.size} actual=${metricSets.size}, " +
+                            "first missing=${expectedKeys.firstOrNull { it !in actualKeys }}, " +
+                            "first unexpected=${actualKeys.firstOrNull { it !in expectedKeys }}"
+                }
+                val expectedAxis =
+                    if (metric == state.metric) YAxis.AxisDependency.LEFT else YAxis.AxisDependency.RIGHT
+                if (set.axisDependency != expectedAxis) {
+                    return "$metric segmentIndex=$segmentIndex segmentId=$segmentId axis expected=$expectedAxis actual=${set.axisDependency}"
+                }
+                if (!set.isVisible ||
+                    state.style == ChartDrawingStyle.POINTS &&
+                    (set.color != Color.TRANSPARENT || !set.isDrawCirclesEnabled) ||
+                    state.style == ChartDrawingStyle.CONNECTED && set.color == Color.TRANSPARENT
+                ) return "$metric segmentIndex=$segmentIndex segmentId=$segmentId does not render style=${state.style}"
+                for (index in points.indices) {
+                    val point = points[index]
+                    val entry = entries[index]
+                    if (entry.data != point.key) {
+                        return "$metric segmentIndex=$segmentIndex segmentId=$segmentId entry=$index ordered key expected=${point.key} actual=${entry.data}"
+                    }
+                    val expectedY = fullscreenChartValue(
+                        point.value!!, metric, false, 1, valueScale
+                    ).toFloat()
+                    if (!expectedY.isFinite() || !entry.y.isFinite() || abs(expectedY - entry.y) > 0.0001f) {
+                        return "$metric segmentIndex=$segmentIndex segmentId=$segmentId entry=$index key=${point.key} " +
+                                "transformed Y expected=$expectedY actual=${entry.y} scale=$valueScale"
                     }
                 }
             }
         }
+        val decor = activity.window.decorView
+        val statusBarHidden = decor.rootWindowInsets?.let {
+            !WindowInsetsCompat.toWindowInsetsCompat(it, decor)
+                .isVisible(WindowInsetsCompat.Type.statusBars())
+        } == true
+        return if (statusBarHidden) null else "Fullscreen status bar is still visible or insets are unavailable"
     }
 
     private fun assertFixtureViewport(
@@ -1791,21 +1847,30 @@ class FullscreenChartStateInstrumentedTest {
     ): String {
         var diagnostic = ""
         main {
-            val state = model.state.value
-            val chart = nativeChart(activity.window.decorView)
-            val nativeViewport =
-                chart?.data?.dataSets?.filterIsInstance<LineDataSet<*>>()?.flatMap { it.entries }
-                    ?.firstOrNull { it.data is HistoryKey }?.let { entry ->
-                        val origin =
-                            (entry.data as HistoryKey).time - (entry.x.toDouble() * 1000).toLong()
-                        "${origin + (chart.lowestVisibleX.toDouble() * 1000).toLong()}.." + "${origin + (chart.highestVisibleX.toDouble() * 1000).toLong()}"
-                    } ?: "unavailable"
             diagnostic =
-                "mode=${state?.scaleMode}, loading=${state?.loading}, error=${state?.error}, " + "modelViewport=${state?.viewport}, nativeViewport=$nativeViewport, " + "scaleYEnabled=${chart?.isScaleYEnabled}, dragYEnabled=${chart?.isDragYEnabled}, " + "scaleY=${chart?.viewPortHandler?.scaleY}, maxScaleY=${chart?.viewPortHandler?.maxScaleY}, " + "leftY=${chart?.axisLeft?.axisMinimum}..${chart?.axisLeft?.axisMaximum}, " + "rightY=${chart?.axisRight?.axisMinimum}..${chart?.axisRight?.axisMaximum}, " + "topY=${
-                    chart?.let(::fullscreenChartTopY)
-                }, " + "size=${chart?.width}x${chart?.height}, attached=${chart?.isAttachedToWindow}, " + "laidOut=${chart?.isLaidOut}, layoutRequested=${chart?.isLayoutRequested}"
+                fixtureChartDiagnostic(model.state.value, nativeChart(activity.window.decorView))
         }
         return diagnostic
+    }
+
+    private fun fixtureChartDiagnostic(state: FullscreenChartUiState?, chart: LineChart?): String {
+        val nativeViewport =
+            chart?.data?.dataSets?.filterIsInstance<LineDataSet<*>>()?.flatMap { it.entries }
+                ?.firstOrNull { it.data is HistoryKey }?.let { entry ->
+                    val origin =
+                        (entry.data as HistoryKey).time - (entry.x.toDouble() * 1000).toLong()
+                    "${origin + (chart.lowestVisibleX.toDouble() * 1000).toLong()}.." +
+                            "${origin + (chart.highestVisibleX.toDouble() * 1000).toLong()}"
+                } ?: "unavailable"
+        return "mode=${state?.scaleMode}, loading=${state?.loading}, error=${state?.error}, " +
+                "modelViewport=${state?.viewport}, nativeViewport=$nativeViewport, " +
+                "scaleYEnabled=${chart?.isScaleYEnabled}, dragYEnabled=${chart?.isDragYEnabled}, " +
+                "scaleY=${chart?.viewPortHandler?.scaleY}, maxScaleY=${chart?.viewPortHandler?.maxScaleY}, " +
+                "leftY=${chart?.axisLeft?.axisMinimum}..${chart?.axisLeft?.axisMaximum}, " +
+                "rightY=${chart?.axisRight?.axisMinimum}..${chart?.axisRight?.axisMaximum}, " +
+                "topY=${chart?.let(::fullscreenChartTopY)}, " +
+                "size=${chart?.width}x${chart?.height}, attached=${chart?.isAttachedToWindow}, " +
+                "laidOut=${chart?.isLaidOut}, layoutRequested=${chart?.isLayoutRequested}"
     }
 
     private fun clickFixtureText(text: String): Boolean {
