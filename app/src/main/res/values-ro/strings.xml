@@ -251,11 +251,11 @@
     <string name="alarm_fully_charged" formatted="false">Bateria este acum incarcata complet</string>
     <string name="alarms_targets_group">Ținte de încărcare și descărcare</string>
     <string name="alarms_charging_target">Ținta de încărcare atinsă</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Limită de încărcare atinsă</string>
-    <string name="alarm_charging_limit_met" formatted="true">Limită de încărcare atinsă: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Limită de încărcare atinsă</string>
+    <string name="alarm_charging_target_reached" formatted="true">Limită de încărcare atinsă: %1$d%%</string>
     <string name="alarms_discharging_target">Ținta de descărcare atinsă</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Limită de descărcare atinsă</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Limită de descărcare atinsă: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Limită de descărcare atinsă</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Limită de descărcare atinsă: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Când nivelul bateriei scade la</string>
     <string name="alarm_charge_drops" formatted="false">"Nivelul bateriei a atins sau a scăzut sub "</string>
     <string name="alarm_type_charge_rises" formatted="false">Când nivelul bateriei crește la</string>
@@ -575,7 +575,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Tensiune maximă de încărcare</string>
     <string name="diag_field_charging_policy" formatted="false">Politică de încărcare</string>
     <string name="diag_policy_default">Implicită</string>
-    <string name="diag_policy_fixed_limit">Protecția bateriei (limită fixă)</string>
+    <string name="diag_policy_fixed_target">Protecția bateriei (limită fixă)</string>
     <string name="diag_policy_adaptive_ac">Încărcare adaptivă</string>
     <string name="diag_field_charging_state" formatted="false">Stare de încărcare</string>
     <string name="diag_charging_too_cold">Prea rece pentru încărcare</string>

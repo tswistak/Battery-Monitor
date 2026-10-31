@@ -653,7 +653,7 @@ private fun chargingPolicyLabel(snapshot: AdvancedBatterySnapshot): Int {
         return when (value) {
             "0" -> R.string.status_unknown
             "1" -> R.string.diag_policy_default
-            // HAL versions use different codes for protection modes; do not infer a fixed limit.
+            // HAL versions use different codes for protection modes; do not infer a fixed target.
             "2", "4" -> R.string.diag_charge_long_life
             "3" -> R.string.charging_diagnostics_condition_adaptive
             else -> 0
@@ -661,7 +661,7 @@ private fun chargingPolicyLabel(snapshot: AdvancedBatterySnapshot): Int {
     }
     return when (value) {
         "default" -> R.string.diag_policy_default
-        "adaptive_aon" -> R.string.diag_policy_fixed_limit
+        "adaptive_aon" -> R.string.diag_policy_fixed_target
         "adaptive_ac" -> R.string.diag_policy_adaptive_ac
         "adaptive_longlife" -> R.string.diag_charge_long_life
         else -> 0

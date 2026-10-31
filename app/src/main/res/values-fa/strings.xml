@@ -250,11 +250,11 @@
     <string name="alarm_fully_charged" formatted="false">اکنون باتری کاملاً شارژ شده است</string>
     <string name="alarms_targets_group">هدف‌های شارژ و تخلیه</string>
     <string name="alarms_charging_target">هدف شارژ محقق شد</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">حد شارژ رسید</string>
-    <string name="alarm_charging_limit_met" formatted="true">حد شارژ رسید: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">حد شارژ رسید</string>
+    <string name="alarm_charging_target_reached" formatted="true">حد شارژ رسید: %1$d%%</string>
     <string name="alarms_discharging_target">هدف تخلیه محقق شد</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">حد تخلیه رسید</string>
-    <string name="alarm_discharging_limit_met" formatted="true">حد تخلیه رسید: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">حد تخلیه رسید</string>
+    <string name="alarm_discharging_target_reached" formatted="true">حد تخلیه رسید: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">وقتی شارژ کاهش یابد به</string>
     <string name="alarm_charge_drops" formatted="false">"شارژ باتری رسید به یا کمتر از "</string>
     <string name="alarm_type_charge_rises" formatted="false">وقتی شارژ افزایش یابد به</string>
@@ -573,7 +573,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">حداکثر ولتاژ شارژ</string>
     <string name="diag_field_charging_policy" formatted="false">سیاست شارژ</string>
     <string name="diag_policy_default">پیش‌فرض</string>
-    <string name="diag_policy_fixed_limit">محافظت باتری (حد ثابت)</string>
+    <string name="diag_policy_fixed_target">محافظت باتری (حد ثابت)</string>
     <string name="diag_policy_adaptive_ac">شارژ تطبیقی</string>
     <string name="diag_field_charging_state" formatted="false">وضعیت شارژ</string>
     <string name="diag_charging_too_cold">برای شارژ بیش از حد سرد است</string>

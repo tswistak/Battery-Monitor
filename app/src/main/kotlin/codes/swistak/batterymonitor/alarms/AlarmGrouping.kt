@@ -12,6 +12,23 @@
 */
 package codes.swistak.batterymonitor.alarms
 
+import android.app.NotificationManager
+import android.content.Context
+import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.monitoring.BatteryInfoService
+
+internal fun refreshTargetAlarmChannelNames(context: Context) {
+    val manager = context.getSystemService(NotificationManager::class.java)
+    for ((id, name) in listOf(
+        BatteryInfoService.CHAN_ID_A_CHARGING_LIMIT to R.string.alarm_type_charging_target_reached,
+        BatteryInfoService.CHAN_ID_A_DISCHARGING_LIMIT to R.string.alarm_type_discharging_target_reached
+    )) {
+        val channel = manager.getNotificationChannel(id) ?: continue
+        channel.name = context.getString(name)
+        manager.createNotificationChannel(channel)
+    }
+}
+
 internal enum class AlarmGroup { LEVEL, TARGETS, TEMPERATURE, STATUS }
 
 internal data class AlarmTypeDefinition(

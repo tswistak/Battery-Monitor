@@ -249,11 +249,11 @@
     <string name="alarm_fully_charged" formatted="false">バッテリーがフル充電されました</string>
     <string name="alarms_targets_group">充電と放電の目標</string>
     <string name="alarms_charging_target">充電目標に到達</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">充電上限に到達</string>
-    <string name="alarm_charging_limit_met" formatted="true">充電上限に到達: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">充電上限に到達</string>
+    <string name="alarm_charging_target_reached" formatted="true">充電上限に到達: %1$d%%</string>
     <string name="alarms_discharging_target">放電目標に到達</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">放電下限に到達</string>
-    <string name="alarm_discharging_limit_met" formatted="true">放電下限に到達: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">放電下限に到達</string>
+    <string name="alarm_discharging_target_reached" formatted="true">放電下限に到達: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">残量が次の値に下がったとき</string>
     <string name="alarm_charge_drops" formatted="false">"バッテリー残量が次の値以下になりました: "</string>
     <string name="alarm_type_charge_rises" formatted="false">残量が次の値に上がったとき</string>
@@ -571,7 +571,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">最大充電電圧</string>
     <string name="diag_field_charging_policy" formatted="false">充電ポリシー</string>
     <string name="diag_policy_default">標準</string>
-    <string name="diag_policy_fixed_limit">バッテリー保護（固定上限）</string>
+    <string name="diag_policy_fixed_target">バッテリー保護（固定上限）</string>
     <string name="diag_policy_adaptive_ac">アダプティブ充電</string>
     <string name="diag_field_charging_state" formatted="false">充電状態</string>
     <string name="diag_charging_too_cold">低温のため充電できません</string>

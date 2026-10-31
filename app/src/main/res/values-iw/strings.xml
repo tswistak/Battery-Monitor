@@ -251,11 +251,11 @@
     <string name="alarm_fully_charged" formatted="false">הסוללה טעונה כעת במלואה</string>
     <string name="alarms_targets_group">יעדי טעינה ופריקה</string>
     <string name="alarms_charging_target">יעד הטעינה הושג</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">הושגה מגבלת הטעינה</string>
-    <string name="alarm_charging_limit_met" formatted="true">הושגה מגבלת הטעינה: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">הושגה מגבלת הטעינה</string>
+    <string name="alarm_charging_target_reached" formatted="true">הושגה מגבלת הטעינה: %1$d%%</string>
     <string name="alarms_discharging_target">יעד הפריקה הושג</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">הושגה מגבלת הפריקה</string>
-    <string name="alarm_discharging_limit_met" formatted="true">הושגה מגבלת הפריקה: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">הושגה מגבלת הפריקה</string>
+    <string name="alarm_discharging_target_reached" formatted="true">הושגה מגבלת הפריקה: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">כשהמטען יורד ל־</string>
     <string name="alarm_charge_drops" formatted="false">"מטען הסוללה הגיע לערך או ירד מתחת ל־ "</string>
     <string name="alarm_type_charge_rises" formatted="false">כשהמטען עולה ל־</string>
@@ -575,7 +575,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">מתח טעינה מרבי</string>
     <string name="diag_field_charging_policy" formatted="false">מדיניות טעינה</string>
     <string name="diag_policy_default">ברירת מחדל</string>
-    <string name="diag_policy_fixed_limit">הגנת סוללה (מגבלה קבועה)</string>
+    <string name="diag_policy_fixed_target">הגנת סוללה (מגבלה קבועה)</string>
     <string name="diag_policy_adaptive_ac">טעינה מסתגלת</string>
     <string name="diag_field_charging_state" formatted="false">מצב טעינה</string>
     <string name="diag_charging_too_cold">קרה מדי לטעינה</string>

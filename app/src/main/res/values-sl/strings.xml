@@ -252,11 +252,11 @@
     <string name="alarm_fully_charged" formatted="false">Baterija je popolnoma napolnjena</string>
     <string name="alarms_targets_group">Cilji polnjenja in praznjenja</string>
     <string name="alarms_charging_target">Cilj polnjenja dosežen</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Dosežena meja polnjenja</string>
-    <string name="alarm_charging_limit_met" formatted="true">Dosežena meja polnjenja: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Dosežena meja polnjenja</string>
+    <string name="alarm_charging_target_reached" formatted="true">Dosežena meja polnjenja: %1$d%%</string>
     <string name="alarms_discharging_target">Cilj praznjenja dosežen</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Dosežena meja praznjenja</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Dosežena meja praznjenja: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Dosežena meja praznjenja</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Dosežena meja praznjenja: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Ko napolnjenost pade na</string>
     <string name="alarm_charge_drops" formatted="false">"Napolnjenost baterije je dosegla ali padla pod "</string>
     <string name="alarm_type_charge_rises" formatted="false">Ko napolnjenost naraste na</string>
@@ -577,7 +577,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Največja napetost polnjenja</string>
     <string name="diag_field_charging_policy" formatted="false">Politika polnjenja</string>
     <string name="diag_policy_default">Privzeto</string>
-    <string name="diag_policy_fixed_limit">Zaščita baterije (fiksna omejitev)</string>
+    <string name="diag_policy_fixed_target">Zaščita baterije (fiksna omejitev)</string>
     <string name="diag_policy_adaptive_ac">Prilagodljivo polnjenje</string>
     <string name="diag_field_charging_state" formatted="false">Stanje polnjenja</string>
     <string name="diag_charging_too_cold">Prehladno za polnjenje</string>

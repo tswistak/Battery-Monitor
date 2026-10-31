@@ -251,11 +251,11 @@
     <string name="alarm_fully_charged" formatted="false">Bateria está completamente carregada</string>
     <string name="alarms_targets_group">Objetivos de carregamento e descarregamento</string>
     <string name="alarms_charging_target">Objetivo de carregamento atingido</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Limite de carregamento atingido</string>
-    <string name="alarm_charging_limit_met" formatted="true">Limite de carregamento atingido: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Limite de carregamento atingido</string>
+    <string name="alarm_charging_target_reached" formatted="true">Limite de carregamento atingido: %1$d%%</string>
     <string name="alarms_discharging_target">Objetivo de descarregamento atingido</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Limite de descarregamento atingido</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Limite de descarregamento atingido: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Limite de descarregamento atingido</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Limite de descarregamento atingido: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Quando a carga desce até</string>
     <string name="alarm_charge_drops" formatted="false">"A carga da bateria atingiu ou desceu abaixo de "</string>
     <string name="alarm_type_charge_rises" formatted="false">Quando a carga sobe até</string>
@@ -575,7 +575,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Tensão máxima de carregamento</string>
     <string name="diag_field_charging_policy" formatted="false">Política de carregamento</string>
     <string name="diag_policy_default">Predefinida</string>
-    <string name="diag_policy_fixed_limit">Proteção da bateria (limite fixo)</string>
+    <string name="diag_policy_fixed_target">Proteção da bateria (limite fixo)</string>
     <string name="diag_policy_adaptive_ac">Carregamento adaptativo</string>
     <string name="diag_field_charging_state" formatted="false">Estado de carregamento</string>
     <string name="diag_charging_too_cold">Demasiado fria para carregar</string>

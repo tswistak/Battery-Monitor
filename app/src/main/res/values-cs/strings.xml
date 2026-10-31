@@ -253,11 +253,11 @@
     <string name="alarm_fully_charged" formatted="false">Baterie je plně nabitá</string>
     <string name="alarms_targets_group">Cíle nabíjení a vybíjení</string>
     <string name="alarms_charging_target">Dosažen cíl nabíjení</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Dosažen limit nabíjení</string>
-    <string name="alarm_charging_limit_met" formatted="true">Dosažen limit nabíjení: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Dosažen limit nabíjení</string>
+    <string name="alarm_charging_target_reached" formatted="true">Dosažen limit nabíjení: %1$d%%</string>
     <string name="alarms_discharging_target">Dosažen cíl vybíjení</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Dosažen limit vybíjení</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Dosažen limit vybíjení: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Dosažen limit vybíjení</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Dosažen limit vybíjení: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Když nabití klesne na</string>
     <string name="alarm_charge_drops" formatted="false">"Nabití baterie dosáhlo nebo kleslo pod "</string>
     <string name="alarm_type_charge_rises" formatted="false">Když nabití stoupne na</string>
@@ -578,7 +578,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Maximální nabíjecí napětí</string>
     <string name="diag_field_charging_policy" formatted="false">Zásady nabíjení</string>
     <string name="diag_policy_default">Výchozí</string>
-    <string name="diag_policy_fixed_limit">Ochrana baterie (pevný limit)</string>
+    <string name="diag_policy_fixed_target">Ochrana baterie (pevný limit)</string>
     <string name="diag_policy_adaptive_ac">Adaptivní nabíjení</string>
     <string name="diag_field_charging_state" formatted="false">Stav nabíjení</string>
     <string name="diag_charging_too_cold">Příliš chladno pro nabíjení</string>

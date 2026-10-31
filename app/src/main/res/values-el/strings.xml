@@ -250,11 +250,11 @@
     <string name="alarm_fully_charged" formatted="false">Η μπαταρία είναι φορτισμένη πλήρως</string>
     <string name="alarms_targets_group">Στόχοι φόρτισης και εκφόρτισης</string>
     <string name="alarms_charging_target">Επιτεύχθηκε ο στόχος φόρτισης</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Επιτεύχθηκε όριο φόρτισης</string>
-    <string name="alarm_charging_limit_met" formatted="true">Επιτεύχθηκε όριο φόρτισης: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Επιτεύχθηκε όριο φόρτισης</string>
+    <string name="alarm_charging_target_reached" formatted="true">Επιτεύχθηκε όριο φόρτισης: %1$d%%</string>
     <string name="alarms_discharging_target">Επιτεύχθηκε ο στόχος εκφόρτισης</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Επιτεύχθηκε όριο εκφόρτισης</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Επιτεύχθηκε όριο εκφόρτισης: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Επιτεύχθηκε όριο εκφόρτισης</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Επιτεύχθηκε όριο εκφόρτισης: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Όταν το φορτίο πέσει στο</string>
     <string name="alarm_charge_drops" formatted="false">"Το φορτίο της μπαταρίας έφτασε ή έπεσε κάτω από "</string>
     <string name="alarm_type_charge_rises" formatted="false">Όταν το φορτίο ανέβει στο</string>
@@ -573,7 +573,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Μέγιστη τάση φόρτισης</string>
     <string name="diag_field_charging_policy" formatted="false">Πολιτική φόρτισης</string>
     <string name="diag_policy_default">Προεπιλογή</string>
-    <string name="diag_policy_fixed_limit">Προστασία μπαταρίας (σταθερό όριο)</string>
+    <string name="diag_policy_fixed_target">Προστασία μπαταρίας (σταθερό όριο)</string>
     <string name="diag_policy_adaptive_ac">Προσαρμοστική φόρτιση</string>
     <string name="diag_field_charging_state" formatted="false">Κατάσταση φόρτισης</string>
     <string name="diag_charging_too_cold">Πολύ κρύα για φόρτιση</string>

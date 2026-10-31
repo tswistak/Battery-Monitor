@@ -821,7 +821,7 @@ class DiagnosticsModelTest {
         snapshot.fieldSources["charging_policy"] =
             "BatteryManager / BATTERY_PROPERTY_CHARGING_POLICY"
         snapshot.chargingPolicy = "adaptive_aon"
-        assertEquals(R.string.diag_policy_fixed_limit, row("charging_policy").valueLabel)
+        assertEquals(R.string.diag_policy_fixed_target, row("charging_policy").valueLabel)
         snapshot.chargingState = "vendor_code_31"
         assertNull(formattedDiagnosticValue(row("charging_state")) { it.toString() })
         assertEquals("vendor_code_31", row("charging_state").rawValue)

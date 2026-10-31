@@ -251,11 +251,11 @@
     <string name="alarm_fully_charged" formatted="false">Baterija je sada 100% napunjena</string>
     <string name="alarms_targets_group">Ciljevi punjenja i pražnjenja</string>
     <string name="alarms_charging_target">Dostignut cilj punjenja</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Dostignut limit punjenja</string>
-    <string name="alarm_charging_limit_met" formatted="true">Dostignut limit punjenja: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Dostignut limit punjenja</string>
+    <string name="alarm_charging_target_reached" formatted="true">Dostignut limit punjenja: %1$d%%</string>
     <string name="alarms_discharging_target">Dostignut cilj pražnjenja</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Dostignut limit pražnjenja</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Dostignut limit pražnjenja: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Dostignut limit pražnjenja</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Dostignut limit pražnjenja: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Kada napunjenost padne na</string>
     <string name="alarm_charge_drops" formatted="false">"Napunjenost baterije je dostigla ili pala ispod "</string>
     <string name="alarm_type_charge_rises" formatted="false">Kada napunjenost poraste na</string>
@@ -575,7 +575,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Maksimalni napon punjenja</string>
     <string name="diag_field_charging_policy" formatted="false">Politika punjenja</string>
     <string name="diag_policy_default">Podrazumevano</string>
-    <string name="diag_policy_fixed_limit">Zaštita baterije (fiksno ograničenje)</string>
+    <string name="diag_policy_fixed_target">Zaštita baterije (fiksno ograničenje)</string>
     <string name="diag_policy_adaptive_ac">Prilagodljivo punjenje</string>
     <string name="diag_field_charging_state" formatted="false">Stanje punjenja</string>
     <string name="diag_charging_too_cold">Previše hladno za punjenje</string>

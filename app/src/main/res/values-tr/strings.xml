@@ -250,11 +250,11 @@
     <string name="alarm_fully_charged" formatted="false">Pil şimdi tamamen şarj oldu</string>
     <string name="alarms_targets_group">Şarj ve boşalma hedefleri</string>
     <string name="alarms_charging_target">Şarj hedefine ulaşıldı</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Şarj sınırına ulaşıldı</string>
-    <string name="alarm_charging_limit_met" formatted="true">Şarj sınırına ulaşıldı: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Şarj sınırına ulaşıldı</string>
+    <string name="alarm_charging_target_reached" formatted="true">Şarj sınırına ulaşıldı: %1$d%%</string>
     <string name="alarms_discharging_target">Boşalma hedefine ulaşıldı</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Deşarj sınırına ulaşıldı</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Deşarj sınırına ulaşıldı: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Deşarj sınırına ulaşıldı</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Deşarj sınırına ulaşıldı: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Şarj şu değere düştüğünde</string>
     <string name="alarm_charge_drops" formatted="false">"Pil şarjı şu değere ulaştı veya altına düştü "</string>
     <string name="alarm_type_charge_rises" formatted="false">Şarj şu değere yükseldiğinde</string>
@@ -573,7 +573,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Maksimum şarj voltajı</string>
     <string name="diag_field_charging_policy" formatted="false">Şarj politikası</string>
     <string name="diag_policy_default">Varsayılan</string>
-    <string name="diag_policy_fixed_limit">Pil koruması (sabit sınır)</string>
+    <string name="diag_policy_fixed_target">Pil koruması (sabit sınır)</string>
     <string name="diag_policy_adaptive_ac">Uyarlanabilir şarj</string>
     <string name="diag_field_charging_state" formatted="false">Şarj durumu</string>
     <string name="diag_charging_too_cold">Şarj için çok soğuk</string>

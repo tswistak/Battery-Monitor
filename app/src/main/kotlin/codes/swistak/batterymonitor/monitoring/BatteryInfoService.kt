@@ -311,9 +311,9 @@ class BatteryInfoService : Service() {
     }
     private val currentAcquisition = CurrentAcquisition(
         readNow = {
-        BatteryCurrent.readWithSource(
-            false, readPrivileged = { null })
-    },
+            BatteryCurrent.readWithSource(
+                false, readPrivileged = { null })
+        },
         readAverage = { BatteryCurrent.readWithSource(true, readPrivileged = { null }) },
         executor = currentWorker,
         deliver = { callback -> mHandler.post { callback() } })
@@ -431,8 +431,8 @@ class BatteryInfoService : Service() {
 
         val alarmChanNames = intArrayOf(
             R.string.alarm_type_fully_charged,
-            R.string.alarm_type_charging_limit_met,
-            R.string.alarm_type_discharging_limit_met,
+            R.string.alarm_type_charging_target_reached,
+            R.string.alarm_type_discharging_target_reached,
             R.string.alarm_type_charge_drops,
             R.string.alarm_type_charge_rises,
             R.string.alarm_type_temperature_drops,
@@ -1905,7 +1905,9 @@ class BatteryInfoService : Service() {
             if (c != null) {
                 nb = alarmNotificationBuilder()
                 nb.setContentTitle(
-                    getString(R.string.alarm_charging_limit_met, resolvedTargets.charging.percent)
+                    getString(
+                        R.string.alarm_charging_target_reached, resolvedTargets.charging.percent
+                    )
                 ).setChannelId(CHAN_ID_A_CHARGING_LIMIT)
 
                 nb.setVisibility(Notification.VISIBILITY_PUBLIC)
@@ -1921,7 +1923,8 @@ class BatteryInfoService : Service() {
                 nb = alarmNotificationBuilder()
                 nb.setContentTitle(
                     getString(
-                        R.string.alarm_discharging_limit_met, resolvedTargets.discharging.percent
+                        R.string.alarm_discharging_target_reached,
+                        resolvedTargets.discharging.percent
                     )
                 ).setChannelId(CHAN_ID_A_DISCHARGING_LIMIT)
 

@@ -252,11 +252,11 @@
     <string name="alarm_fully_charged" formatted="false">Baterija pilnai įkrauta</string>
     <string name="alarms_targets_group">Įkrovimo ir iškrovimo tikslai</string>
     <string name="alarms_charging_target">Įkrovimo tikslas pasiektas</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Pasiekta įkrovimo riba</string>
-    <string name="alarm_charging_limit_met" formatted="true">Pasiekta įkrovimo riba: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Pasiekta įkrovimo riba</string>
+    <string name="alarm_charging_target_reached" formatted="true">Pasiekta įkrovimo riba: %1$d%%</string>
     <string name="alarms_discharging_target">Iškrovimo tikslas pasiektas</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Pasiekta iškrovimo riba</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Pasiekta iškrovimo riba: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Pasiekta iškrovimo riba</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Pasiekta iškrovimo riba: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Įkrovai nukritus iki</string>
     <string name="alarm_charge_drops" formatted="false">"Akumuliatoriaus įkrova pasiekė arba nukrito žemiau "</string>
     <string name="alarm_type_charge_rises" formatted="false">Įkrovai pakilus iki</string>
@@ -577,7 +577,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Didžiausia įkrovimo įtampa</string>
     <string name="diag_field_charging_policy" formatted="false">Įkrovimo politika</string>
     <string name="diag_policy_default">Numatytoji</string>
-    <string name="diag_policy_fixed_limit">Akumuliatoriaus apsauga (fiksuota riba)</string>
+    <string name="diag_policy_fixed_target">Akumuliatoriaus apsauga (fiksuota riba)</string>
     <string name="diag_policy_adaptive_ac">Adaptyvusis įkrovimas</string>
     <string name="diag_field_charging_state" formatted="false">Įkrovimo būsena</string>
     <string name="diag_charging_too_cold">Per šalta įkrauti</string>

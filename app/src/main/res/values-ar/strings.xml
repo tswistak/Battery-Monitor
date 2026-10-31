@@ -254,11 +254,11 @@
     <string name="alarm_fully_charged" formatted="false">تم الشحن بالكالم</string>
     <string name="alarms_targets_group">أهداف الشحن والتفريغ</string>
     <string name="alarms_charging_target">تم بلوغ هدف الشحن</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">تم بلوغ حد الشحن</string>
-    <string name="alarm_charging_limit_met" formatted="true">تم الوصول إلى حد الشحن: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">تم بلوغ حد الشحن</string>
+    <string name="alarm_charging_target_reached" formatted="true">تم الوصول إلى حد الشحن: %1$d%%</string>
     <string name="alarms_discharging_target">تم بلوغ هدف التفريغ</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">تم بلوغ حد التفريغ</string>
-    <string name="alarm_discharging_limit_met" formatted="true">تم الوصول إلى حد التفريغ: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">تم بلوغ حد التفريغ</string>
+    <string name="alarm_discharging_target_reached" formatted="true">تم الوصول إلى حد التفريغ: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">عندما تنخفض الشحنة إلى</string>
     <string name="alarm_charge_drops" formatted="false">"بلغت شحنة البطارية أو انخفضت عن "</string>
     <string name="alarm_type_charge_rises" formatted="false">عندما ترتفع الشحنة إلى</string>
@@ -581,7 +581,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">أقصى جهد شحن</string>
     <string name="diag_field_charging_policy" formatted="false">سياسة الشحن</string>
     <string name="diag_policy_default">افتراضي</string>
-    <string name="diag_policy_fixed_limit">حماية البطارية (حد ثابت)</string>
+    <string name="diag_policy_fixed_target">حماية البطارية (حد ثابت)</string>
     <string name="diag_policy_adaptive_ac">الشحن التكيفي</string>
     <string name="diag_field_charging_state" formatted="false">حالة الشحن</string>
     <string name="diag_charging_too_cold">باردة جدًا للشحن</string>

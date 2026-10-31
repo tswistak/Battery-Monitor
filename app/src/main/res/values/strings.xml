@@ -129,14 +129,14 @@
     <string name="predictor_long_term_ave" formatted="false">Long-term Average</string>
     <string name="pref_cat_target_levels" formatted="false">Target levels</string>
     <string name="pref_charging_target_mode" formatted="false">Charging target</string>
-    <string name="pref_charging_target_mode_help" formatted="false">“Automatic” uses a fixed device charging limit when Battery Monitor can read one, and otherwise uses 100%. Adaptive charging still targets 100%. “Custom” uses your chosen level for charging estimates and “Charging target reached” alarms.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">“Automatic” uses a fixed device charging target when Battery Monitor can read one, and otherwise uses 100%. Adaptive charging still targets 100%. “Custom” uses your chosen level for charging estimates and “Charging target reached” alarms.</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Automatic detection may work on Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme, and Sony Xperia devices, and on devices running GrapheneOS or LineageOS—particularly when root or Shizuku access is available. It relies on software signals, so availability and accuracy are not guaranteed even for the listed manufacturers. Untested models or OS versions in these families may also work, but devices from other manufacturers are not currently detected automatically.</string>
-    <string name="pref_charging_target_mode_summary_device" formatted="true">Device charging limit: %1$d%%</string>
-    <string name="pref_charging_target_mode_summary_custom" formatted="false">Custom target</string>
-    <string name="pref_charging_target_mode_summary_default" formatted="false">No fixed device limit detected — using 100%</string>
+    <string name="pref_charging_target_mode_summary_device" formatted="true">Device charging target: %1$d%%</string>
+    <string name="pref_charging_target_mode_summary_custom" formatted="false">Custom charging target</string>
+    <string name="pref_charging_target_mode_summary_default" formatted="false">No fixed device charging target detected — using 100%</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    If this value does not look correct, you can help improve device detection. Open “Settings” → “Advanced” → “OEM charging-limit diagnostics” and generate a report, carefully following the instructions in “Help”</string>
+    If this value does not look correct, you can help improve device detection. Open “Settings” → “Advanced” → “OEM charging-target diagnostics” and generate a report, carefully following the instructions in “Help”</string>
     <string name="charging_target_mode_automatic" formatted="false">Automatic (recommended)</string>
     <string name="charging_target_mode_custom" formatted="false">Custom</string>
     <string name="pref_custom_charging_target" formatted="false">Custom charging target</string>
@@ -250,11 +250,11 @@
     <string name="alarm_fully_charged" formatted="false">Battery is now fully charged</string>
     <string name="alarms_targets_group">Charging &amp; discharging targets</string>
     <string name="alarms_charging_target">Charging target reached</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Charging limit met</string>
-    <string name="alarm_charging_limit_met" formatted="true">Charging limit reached: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Charging target reached</string>
+    <string name="alarm_charging_target_reached" formatted="true">Charging target reached: %1$d%%</string>
     <string name="alarms_discharging_target">Discharging target reached</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Discharging limit met</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Discharging limit reached: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Discharging target reached</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Discharging target reached: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">When charge falls to</string>
     <string name="alarm_charge_drops" formatted="false">"Battery charge reached or fell below "</string>
     <string name="alarm_type_charge_rises" formatted="false">When charge rises to</string>
@@ -532,7 +532,7 @@
     <string name="settings_data_permissions">Data and permissions</string>
     <string name="advanced_settings" formatted="false">Advanced</string>
     <string name="advanced_settings_summary" formatted="false">Fine-tune Battery Monitor with additional controls for specialized use cases</string>
-    <string name="advanced_settings_help" formatted="false">Control privileged access, history logging, log retention, and automatic exports. “Background monitoring” opens checks and tools for permissions, monitor reliability, and debug logs. Open “OEM charging-limit diagnostics” for charging-limit reports.</string>
+    <string name="advanced_settings_help" formatted="false">Control privileged access, history logging, log retention, and automatic exports. “Background monitoring” opens checks and tools for permissions, monitor reliability, and debug logs. Open “OEM charging-target diagnostics” for charging-target reports.</string>
     <string name="pref_cat_privileged_access" formatted="false">Privileged access</string>
     <string name="pref_use_privileged_access" formatted="false">Use privileged access</string>
     <string name="pref_use_privileged_access_summary" formatted="false">Use granted root or Shizuku access for more complete and accurate device data?</string>
@@ -573,7 +573,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Max charging voltage</string>
     <string name="diag_field_charging_policy" formatted="false">Charging policy</string>
     <string name="diag_policy_default">Default</string>
-    <string name="diag_policy_fixed_limit">Battery protection (fixed limit)</string>
+    <string name="diag_policy_fixed_target">Battery protection (fixed target)</string>
     <string name="diag_policy_adaptive_ac">Adaptive charging</string>
     <string name="diag_field_charging_state" formatted="false">Charging state</string>
     <string name="diag_charging_too_cold">Too cold to charge</string>
@@ -707,15 +707,15 @@
     <string name="diag_include_apps">Include system app names</string>
     <string name="diag_report_privacy">Excluded by default. These data may contain personal information. Review the preview before copying or saving.</string>
 
-    <string name="charging_diagnostics_title" formatted="false">OEM charging-limit diagnostics</string>
-    <string name="charging_diagnostics_help_overview" formatted="false">Open snapshot and comparison tools to investigate how Battery Monitor detects the device’s charging limit. Preparation instructions are available in the OEM diagnostic screen’s own help.</string>
+    <string name="charging_diagnostics_title" formatted="false">OEM charging-target diagnostics</string>
+    <string name="charging_diagnostics_help_overview" formatted="false">Open snapshot and comparison tools to investigate how Battery Monitor detects the device’s charging target. Preparation instructions are available in the OEM diagnostic screen’s own help.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">For a useful report, open “Help” and follow the preparation steps before capturing snapshots.</string>
-    <string name="charging_diagnostics_privileged_hint" formatted="false">More diagnostic information may be available with privileged access. Grant Shizuku or root access and enable privileged access in “Settings” → “Advanced” → “Use privileged access” for a more useful OEM charging-limit report.</string>
+    <string name="charging_diagnostics_privileged_hint" formatted="false">More diagnostic information may be available with privileged access. Grant Shizuku or root access and enable privileged access in “Settings” → “Advanced” → “Use privileged access” for a more useful OEM charging-target report.</string>
     <string name="charging_diagnostics_capture" formatted="false">Capture snapshot</string>
     <string name="charging_diagnostics_capture_summary" formatted="false">Set a charging mode in the device settings, then capture its signals</string>
     <string name="charging_diagnostics_choose_state" formatted="false">Which device setting is active?</string>
     <string name="charging_diagnostics_condition_off" formatted="false">Protection off / unrestricted</string>
-    <string name="charging_diagnostics_condition_fixed" formatted="false">Fixed limit…</string>
+    <string name="charging_diagnostics_condition_fixed" formatted="false">Fixed charging target…</string>
     <string name="charging_diagnostics_condition_adaptive" formatted="false">Adaptive / smart charging</string>
     <string name="charging_diagnostics_condition_scheduled" formatted="false">Scheduled charging</string>
     <string name="charging_diagnostics_condition_other" formatted="false">Other OEM mode</string>
@@ -737,7 +737,7 @@
     <string name="charging_diagnostics_cleared" formatted="false">Charging snapshots deleted</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. Unplug the phone and keep it disconnected while capturing configuration snapshots. Change only the OEM charging protection setting between snapshots.\n
     2. Turn charging protection off, wait 2–5 seconds, then capture a snapshot.\n
-    3. Select any fixed limit, wait 2–5 seconds, and capture another snapshot. Repeat with at least one different fixed limit if available.\n
+    3. Select any fixed charging target, wait 2–5 seconds, and capture another snapshot. Repeat with at least one different fixed charging target if available.\n
     4. Enable adaptive, smart, or scheduled charging, wait 2–5 seconds, and capture one more snapshot.\n
     5. If the configuration comparison is inconclusive, you may optionally repeat the sequence while charging to capture runtime-only state.\n
     6. Create and review the comparison report. Report data is filtered and potentially sensitive values are redacted, but you should still review the complete report before sharing it.</string>

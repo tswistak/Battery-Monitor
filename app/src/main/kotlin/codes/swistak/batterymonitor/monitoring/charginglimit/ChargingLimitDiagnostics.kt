@@ -29,7 +29,8 @@ import javax.crypto.spec.SecretKeySpec
 internal sealed class ChargingDiagnosticCondition(val reportLabel: String) {
     data object Off : ChargingDiagnosticCondition("Protection off / unrestricted")
 
-    data class Fixed(val percent: Int) : ChargingDiagnosticCondition("Fixed limit $percent%") {
+    data class Fixed(val percent: Int) :
+        ChargingDiagnosticCondition("Fixed charging target $percent%") {
         init {
             require(percent in MIN_FIXED_PERCENT..MAX_FIXED_PERCENT)
         }
@@ -633,7 +634,7 @@ internal object ChargingDiagnosticReport {
         }
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
         return buildString {
-            appendLine("Battery Monitor - OEM charging-limit diagnostics")
+            appendLine("Battery Monitor - OEM charging-target diagnostics")
             appendLine("Generated: ${Instant.now()}")
             appendLine("App version: ${packageInfo.versionName}")
             append(createCandidateSection(snapshots))

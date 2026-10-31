@@ -23,6 +23,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.Choreographer
 import android.view.InputDevice
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -68,6 +71,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.io.File
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.abs
 
@@ -89,16 +94,33 @@ class FullscreenChartStateInstrumentedTest {
             )
         }
         try {
-            await {
-                (parent.lastActivity as? codes.swistak.batterymonitor.app.BatteryInfoActivity)?.lifecycle?.currentState == Lifecycle.State.RESUMED
+            lateinit var expected: Triple<Int, Int, Boolean>
+            var initialState = "No parent Activity observed"
+            await({ "Initial parent orientation and system-bar capture did not settle: $initialState" }) {
+                var ready = false
+                main {
+                    val activity =
+                        parent.lastActivity as? codes.swistak.batterymonitor.app.BatteryInfoActivity
+                    val decor = activity?.window?.decorView
+                    val insets = decor?.rootWindowInsets
+                    val statusBarVisible = if (insets != null) {
+                        WindowInsetsCompat.toWindowInsetsCompat(insets, decor)
+                            .isVisible(WindowInsetsCompat.Type.statusBars())
+                    } else null
+                    initialState =
+                        "activity=${System.identityHashCode(activity)}, " + "finishing=${activity?.isFinishing}, destroyed=${activity?.isDestroyed}, " + "lifecycle=${activity?.lifecycle?.currentState}, focus=${activity?.hasWindowFocus()}, " + "orientation=${activity?.resources?.configuration?.orientation}, " + "requestedOrientation=${activity?.requestedOrientation}, " + "insets=${insets != null}, statusBarVisible=$statusBarVisible"
+                    if (activity != null && !activity.isFinishing && !activity.isDestroyed && activity.lifecycle.currentState == Lifecycle.State.RESUMED && statusBarVisible != null) {
+                        expected = Triple(
+                            activity.resources.configuration.orientation,
+                            activity.requestedOrientation,
+                            statusBarVisible
+                        )
+                        ready = true
+                    }
+                }
+                ready
             }
-            await { parent.lastActivity?.window?.decorView?.rootWindowInsets != null }
-            val initial = parent.lastActivity
-            val orientation = initial.resources.configuration.orientation
-            val requested = initial.requestedOrientation
-            val bars = WindowInsetsCompat.toWindowInsetsCompat(
-                requireNotNull(initial.window.decorView.rootWindowInsets), initial.window.decorView
-            ).isVisible(WindowInsetsCompat.Type.statusBars())
+            val (orientation, requested, bars) = expected
             for (back in listOf(false, true)) {
                 main {
                     parent.lastActivity.startActivity(
@@ -107,29 +129,46 @@ class FullscreenChartStateInstrumentedTest {
                         )
                     )
                 }
-                await { viewer.lastActivity?.hasWindowFocus() == true && !viewer.lastActivity.isFinishing }
-                val activity = viewer.lastActivity
-                await { activity.window.decorView.rootWindowInsets != null }
-                await {
-                    !WindowInsetsCompat.toWindowInsetsCompat(
-                        requireNotNull(activity.window.decorView.rootWindowInsets),
-                        activity.window.decorView
-                    ).isVisible(WindowInsetsCompat.Type.statusBars())
+                var viewerState = "No fullscreen viewer observed"
+                await({ "Fullscreen viewer did not finish landscape restoration (back=$back): $viewerState" }) {
+                    var ready = false
+                    main {
+                        val activity = viewer.lastActivity as? FullscreenChartActivity
+                        val decor = activity?.window?.decorView
+                        val insets = decor?.rootWindowInsets
+                        val statusBarVisible = if (insets != null) {
+                            WindowInsetsCompat.toWindowInsetsCompat(insets, decor)
+                                .isVisible(WindowInsetsCompat.Type.statusBars())
+                        } else null
+                        viewerState =
+                            "activity=${System.identityHashCode(activity)}, " + "finishing=${activity?.isFinishing}, destroyed=${activity?.isDestroyed}, " + "lifecycle=${activity?.lifecycle?.currentState}, focus=${activity?.hasWindowFocus()}, " + "orientation=${activity?.resources?.configuration?.orientation}, " + "insets=${insets != null}, statusBarVisible=$statusBarVisible"
+                        ready =
+                            activity != null && !activity.isFinishing && !activity.isDestroyed && activity.lifecycle.currentState == Lifecycle.State.RESUMED && activity.hasWindowFocus() && (activity.isInMultiWindowMode || android.os.Build.VERSION.SDK_INT >= 36 && activity.resources.configuration.smallestScreenWidthDp >= 600 || activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) && statusBarVisible == false
+                    }
+                    ready
                 }
                 if (back) instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
                 else assertTrue(clickFixtureText(target.getString(R.string.nav_up)))
-                await {
-                    (parent.lastActivity as? codes.swistak.batterymonitor.app.BatteryInfoActivity)?.lifecycle?.currentState == Lifecycle.State.RESUMED && !parent.lastActivity.isDestroyed
-                }
-                await { parent.lastActivity.resources.configuration.orientation == orientation }
-                val returned = parent.lastActivity
-                assertEquals(requested, returned.requestedOrientation)
-                await { returned.window.decorView.rootWindowInsets != null }
-                await {
-                    WindowInsetsCompat.toWindowInsetsCompat(
-                        requireNotNull(returned.window.decorView.rootWindowInsets),
-                        returned.window.decorView
-                    ).isVisible(WindowInsetsCompat.Type.statusBars()) == bars
+                var returnedState = "No returned parent Activity observed"
+                await({
+                    "Parent restoration after ${if (back) "Back" else "Close"} did not settle; " + "expected orientation=$orientation, requestedOrientation=$requested, statusBarVisible=$bars; " + "actual $returnedState"
+                }) {
+                    var restored = false
+                    main {
+                        val activity =
+                            parent.lastActivity as? codes.swistak.batterymonitor.app.BatteryInfoActivity
+                        val decor = activity?.window?.decorView
+                        val insets = decor?.rootWindowInsets
+                        val statusBarVisible = if (insets != null) {
+                            WindowInsetsCompat.toWindowInsetsCompat(insets, decor)
+                                .isVisible(WindowInsetsCompat.Type.statusBars())
+                        } else null
+                        returnedState =
+                            "activity=${System.identityHashCode(activity)}, " + "finishing=${activity?.isFinishing}, destroyed=${activity?.isDestroyed}, " + "lifecycle=${activity?.lifecycle?.currentState}, focus=${activity?.hasWindowFocus()}, " + "orientation=${activity?.resources?.configuration?.orientation}, " + "requestedOrientation=${activity?.requestedOrientation}, " + "insets=${insets != null}, statusBarVisible=$statusBarVisible"
+                        restored =
+                            activity != null && !activity.isFinishing && !activity.isDestroyed && activity.lifecycle.currentState == Lifecycle.State.RESUMED && activity.resources.configuration.orientation == orientation && activity.requestedOrientation == requested && statusBarVisible == bars
+                    }
+                    restored
                 }
             }
         } finally {
@@ -219,8 +258,9 @@ class FullscreenChartStateInstrumentedTest {
             observation.copy(time = index * 60_000L, charge = 45 + index % 20)
         })
         val model = model(HistoryMetric.LEVEL, retained, "custom")
+        val initialViewport = HistoryRangeState(0, hour)
         // Near a history edge, the old moving coordinate window also changed its X span.
-        main { model.viewport(HistoryRangeState(0, hour), 1000) }
+        main { model.viewport(initialViewport, 1000) }
         loaded(model)
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val host = instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
@@ -253,14 +293,21 @@ class FullscreenChartStateInstrumentedTest {
                                     model::select,
                                     model::refresh,
                                     activity::finish,
-                                    onViewportObserved = model::observeViewport
-                                )
+                                    onViewportObserved = { viewport, width ->
+                                        observeFixtureViewport(activity, model, viewport, width)
+                                    })
                             }
                         }
                     }
                 }
             }
-            assertFixtureRendered(activity, model)
+            assertFixtureRendered(
+                activity,
+                model,
+                "Initial touch-pan loading, restoration and width reload",
+                initialViewport
+            )
+            assertFixtureViewport(activity, model, initialViewport)
             lateinit var chart: LineChart
             main { chart = requireNotNull(nativeChart(activity.window.decorView)) }
             val initial = visibleTimes(chart)
@@ -296,7 +343,11 @@ class FullscreenChartStateInstrumentedTest {
                 )
             )
             main { model.historyChanged() }
-            await { model.state.value!!.chart !== beforeLoad && !model.state.value!!.loading }
+            awaitFixtureChart(
+                activity, model, "Touch refresh while finger is down; requested=$dragged"
+            ) { state, _ ->
+                state.chart !== beforeLoad && !state.loading
+            }
             Thread.sleep(180) // The finger stays down beyond the query debounce and data preparation.
             main { assertTrue("A pending replacement must not clear the plot", chart.data != null) }
             assertDuration(chart, duration)
@@ -374,6 +425,7 @@ class FullscreenChartStateInstrumentedTest {
             )
             touch(chart, down, MotionEvent.ACTION_UP, 0.2f)
         } finally {
+            reportFixtureViewportCallbacks("Touch-pan fixture")
             main { host.lastActivity?.finish() }
             instrumentation.waitForIdleSync()
             instrumentation.removeMonitor(host)
@@ -432,6 +484,8 @@ class FullscreenChartStateInstrumentedTest {
     private lateinit var directory: File
     private lateinit var database: LogDatabase
     private val store = ViewModelStore()
+
+    private val fixtureViewportCallbacks = ArrayDeque<String>()
     private var models = 0
 
     private val range = HistoryRangeState(0, 10_000)
@@ -1097,14 +1151,17 @@ class FullscreenChartStateInstrumentedTest {
                                     model::select,
                                     model::refresh,
                                     activity::finish,
-                                    onViewportObserved = model::observeViewport
-                                )
+                                    onViewportObserved = { viewport, width ->
+                                        observeFixtureViewport(activity, model, viewport, width)
+                                    })
                             }
                         }
                     }
                 }
             }
-            assertFixtureRendered(activity, model, "Initial in-range voltage rendering")
+            assertFixtureRendered(
+                activity, model, "Initial voltage loading, restoration and width reload", requested
+            )
             assertFixtureViewport(activity, model, requested)
             var retainedViewport = requested
             var contentLeft = 0f
@@ -1136,7 +1193,9 @@ class FullscreenChartStateInstrumentedTest {
                     point.key == insertedKey && point.value?.let { abs(it - 19.999) < 0.000001 } == true
                 } == true
             }
-            assertFixtureRendered(activity, model, "Refreshed in-range voltage rendering")
+            assertFixtureRendered(
+                activity, model, "Refreshed in-range voltage publication", retainedViewport
+            )
             await {
                 var updatedGeometry = false
                 main {
@@ -1174,6 +1233,7 @@ class FullscreenChartStateInstrumentedTest {
                 assertEquals(4f, entry.y, 0.0001f)
             }
         } finally {
+            reportFixtureViewportCallbacks("Voltage refresh fixture")
             main { monitor.lastActivity?.finish() }
             instrumentation.removeMonitor(monitor)
         }
@@ -1641,39 +1701,94 @@ class FullscreenChartStateInstrumentedTest {
     private fun assertFixtureRendered(
         activity: FullscreenChartActivity,
         model: FullscreenChartViewModel,
-        phase: String = "Native chart rendering"
+        phase: String = "Native chart rendering",
+        requestedViewport: HistoryRangeState? = null
     ) {
-        var mismatch = "No chart observation yet"
-        await({ "$phase: Chart fixture did not render: $mismatch" }) {
+        val deadline = System.nanoTime() + 10_000_000_000
+        val handler = Handler(Looper.getMainLooper())
+        var mismatch = "No completed UI frame yet; requested=$requestedViewport"
+        var previousState: FullscreenChartUiState? = null
+        var previousGeometry: List<Float>? = null
+        var matchingFrames = 0
+        while (true) {
+            val frameFinished = CountDownLatch(1)
+            val completeFrame = Runnable { frameFinished.countDown() }
+            val callback = Choreographer.FrameCallback { handler.post(completeFrame) }
+            main { Choreographer.getInstance().postFrameCallback(callback) }
+            val remaining = (deadline - System.nanoTime()).coerceAtLeast(0)
+            val frameArrived = try {
+                frameFinished.await(remaining, TimeUnit.NANOSECONDS)
+            } finally {
+                main { Choreographer.getInstance().removeFrameCallback(callback) }
+                handler.removeCallbacks(completeFrame)
+            }
+            if (!frameArrived) throw AssertionError("$phase: UI frame did not complete: $mismatch")
             var rendered = false
             main {
                 val state = model.state.value
                 val chart = nativeChart(activity.window.decorView)
+                val requested = requestedViewport ?: state?.viewport
                 if (activity.isDestroyed || activity.isFinishing) {
                     throw AssertionError(
-                        "$phase: Chart Activity is finishing or destroyed: ${
-                            fixtureChartDiagnostic(
-                                state,
-                                chart
-                            )
-                        }"
+                        "$phase: Chart Activity is finishing or destroyed; requested=$requested; " + fixtureChartDiagnostic(
+                            state,
+                            chart
+                        )
                     )
                 }
                 if (state?.error == true) {
                     throw AssertionError(
-                        "$phase: Chart model failed: ${
-                            fixtureChartDiagnostic(
-                                state,
-                                chart
-                            )
-                        }"
+                        "$phase: Chart model failed; requested=$requested; " + fixtureChartDiagnostic(
+                            state,
+                            chart
+                        )
                     )
                 }
                 val failure = fixtureRenderedMismatch(activity, state, chart)
-                rendered = failure == null
-                if (failure != null) mismatch = "$failure; ${fixtureChartDiagnostic(state, chart)}"
+                val viewportMatches =
+                    state != null && chart != null && requested != null && fixtureViewportMatches(
+                        state,
+                        chart,
+                        requested
+                    )
+                if (failure == null && viewportMatches) {
+                    val geometry = listOf(
+                        chart.width.toFloat(),
+                        chart.height.toFloat(),
+                        chart.viewPortHandler.contentLeft,
+                        chart.viewPortHandler.contentWidth,
+                        chart.lowestVisibleX,
+                        chart.highestVisibleX,
+                        chart.axisLeft.axisMinimum,
+                        chart.axisLeft.axisMaximum,
+                        chart.axisRight.axisMinimum,
+                        chart.axisRight.axisMaximum
+                    )
+                    matchingFrames =
+                        if (state == previousState && geometry == previousGeometry) matchingFrames + 1 else 1
+                    previousState = state
+                    previousGeometry = geometry
+                    rendered = matchingFrames >= 2
+                } else {
+                    matchingFrames = 0
+                    previousState = null
+                    previousGeometry = null
+                }
+                val stage = when {
+                    state == null || state.loading -> "initial loading or width-triggered reload"
+                    failure != null -> "layout, fullscreen rendering or dataset publication"
+                    !viewportMatches -> "requested viewport restoration mismatch"
+                    else -> "awaiting stable UI frames and settled chart width"
+                }
+                mismatch =
+                    "$stage; requested=$requested; stableFrames=$matchingFrames; " + "datasetMismatch=${failure ?: "none"}; ${
+                        fixtureChartDiagnostic(
+                            state, chart
+                        )
+                    }"
             }
-            rendered
+            if (rendered) return
+            if (System.nanoTime() >= deadline) throw AssertionError("$phase: Chart fixture did not settle: $mismatch")
         }
     }
 
@@ -1683,10 +1798,7 @@ class FullscreenChartStateInstrumentedTest {
         if (state == null) return "Model state is unavailable"
         if (state.loading) return "Model is still loading"
         if (chart == null) return "Native chart is unavailable"
-        if (!chart.isAttachedToWindow || !chart.isLaidOut || chart.isLayoutRequested ||
-            chart.width <= 0 || chart.height <= 0 ||
-            chart.viewPortHandler.contentWidth <= 0 || chart.viewPortHandler.contentHeight <= 0
-        ) return "Native chart is not attached and laid out with a nonempty plot"
+        if (!chart.isAttachedToWindow || !chart.isLaidOut || chart.isLayoutRequested || chart.width <= 0 || chart.height <= 0 || chart.viewPortHandler.contentWidth <= 0 || chart.viewPortHandler.contentHeight <= 0) return "Native chart is not attached and laid out with a nonempty plot"
         val data = chart.data ?: return "Native chart data is unavailable"
         val sets = data.dataSets.filterIsInstance<LineDataSet<*>>()
         if (sets.size != data.dataSets.size) return "Native chart has unsupported dataset types"
@@ -1696,8 +1808,7 @@ class FullscreenChartStateInstrumentedTest {
             return "Metric labels expected=$expectedMetrics actual=$actualMetrics"
         }
         if (!chart.axisLeft.isEnabled || chart.axisRight.isEnabled != (state.comparison != null)) {
-            return "Axes expected left=true right=${state.comparison != null}, " +
-                    "actual left=${chart.axisLeft.isEnabled} right=${chart.axisRight.isEnabled}"
+            return "Axes expected left=true right=${state.comparison != null}, " + "actual left=${chart.axisLeft.isEnabled} right=${chart.axisRight.isEnabled}"
         }
         val valueScale =
             if (state.valueScale == ChartValueScale.LOGARITHMIC && !fullscreenLogAvailable(
@@ -1712,10 +1823,7 @@ class FullscreenChartStateInstrumentedTest {
             if (segments.size != metricSets.size) {
                 val expectedKeys = segments.flatMap { it.value }.map { it.key }
                 val actualKeys = metricSets.flatMap { it.entries }.map { it.data }
-                return "$metric segment count expected=${segments.size} actual=${metricSets.size}, " +
-                        "expected segment IDs=${segments.map { it.key }}, " +
-                        "first missing=${expectedKeys.firstOrNull { it !in actualKeys }}, " +
-                        "first unexpected=${actualKeys.firstOrNull { it !in expectedKeys }}"
+                return "$metric segment count expected=${segments.size} actual=${metricSets.size}, " + "expected segment IDs=${segments.map { it.key }}, " + "first missing=${expectedKeys.firstOrNull { it !in actualKeys }}, " + "first unexpected=${actualKeys.firstOrNull { it !in expectedKeys }}"
             }
             for (segmentIndex in segments.indices) {
                 val (segmentId, points) = segments[segmentIndex]
@@ -1724,21 +1832,14 @@ class FullscreenChartStateInstrumentedTest {
                 if (points.size != entries.size) {
                     val expectedKeys = points.map { it.key }
                     val actualKeys = entries.map { it.data }
-                    return "$metric segmentIndex=$segmentIndex segmentId=$segmentId entry count expected=${points.size} actual=${entries.size}, " +
-                            "segment count expected=${segments.size} actual=${metricSets.size}, " +
-                            "first missing=${expectedKeys.firstOrNull { it !in actualKeys }}, " +
-                            "first unexpected=${actualKeys.firstOrNull { it !in expectedKeys }}"
+                    return "$metric segmentIndex=$segmentIndex segmentId=$segmentId entry count expected=${points.size} actual=${entries.size}, " + "segment count expected=${segments.size} actual=${metricSets.size}, " + "first missing=${expectedKeys.firstOrNull { it !in actualKeys }}, " + "first unexpected=${actualKeys.firstOrNull { it !in expectedKeys }}"
                 }
                 val expectedAxis =
                     if (metric == state.metric) YAxis.AxisDependency.LEFT else YAxis.AxisDependency.RIGHT
                 if (set.axisDependency != expectedAxis) {
                     return "$metric segmentIndex=$segmentIndex segmentId=$segmentId axis expected=$expectedAxis actual=${set.axisDependency}"
                 }
-                if (!set.isVisible ||
-                    state.style == ChartDrawingStyle.POINTS &&
-                    (set.color != Color.TRANSPARENT || !set.isDrawCirclesEnabled) ||
-                    state.style == ChartDrawingStyle.CONNECTED && set.color == Color.TRANSPARENT
-                ) return "$metric segmentIndex=$segmentIndex segmentId=$segmentId does not render style=${state.style}"
+                if (!set.isVisible || state.style == ChartDrawingStyle.POINTS && (set.color != Color.TRANSPARENT || !set.isDrawCirclesEnabled) || state.style == ChartDrawingStyle.CONNECTED && set.color == Color.TRANSPARENT) return "$metric segmentIndex=$segmentIndex segmentId=$segmentId does not render style=${state.style}"
                 for (index in points.indices) {
                     val point = points[index]
                     val entry = entries[index]
@@ -1749,8 +1850,7 @@ class FullscreenChartStateInstrumentedTest {
                         point.value!!, metric, false, 1, valueScale
                     ).toFloat()
                     if (!expectedY.isFinite() || !entry.y.isFinite() || abs(expectedY - entry.y) > 0.0001f) {
-                        return "$metric segmentIndex=$segmentIndex segmentId=$segmentId entry=$index key=${point.key} " +
-                                "transformed Y expected=$expectedY actual=${entry.y} scale=$valueScale"
+                        return "$metric segmentIndex=$segmentIndex segmentId=$segmentId entry=$index key=${point.key} " + "transformed Y expected=$expectedY actual=${entry.y} scale=$valueScale"
                     }
                 }
             }
@@ -1842,6 +1942,36 @@ class FullscreenChartStateInstrumentedTest {
         }
     }
 
+    private fun observeFixtureViewport(
+        activity: FullscreenChartActivity,
+        model: FullscreenChartViewModel,
+        observed: HistoryRangeState,
+        width: Int
+    ) {
+        val before = model.state.value
+        val chart = nativeChart(activity.window.decorView)
+        val observation =
+            "observed=$observed width=$width; " + "nativeX=${chart?.lowestVisibleX}..${chart?.highestVisibleX}; " + "nativeDataId=${
+                System.identityHashCode(chart?.data)
+            }; " + fixtureChartDiagnostic(before, chart, includeCallbacks = false)
+        model.observeViewport(observed, width)
+        val after = model.state.value
+        if (fixtureViewportCallbacks.size == 16) fixtureViewportCallbacks.removeFirst()
+        fixtureViewportCallbacks.addLast(
+            "$observation; afterModelViewport=${after?.viewport}; afterLoading=${after?.loading}"
+        )
+    }
+
+    private fun reportFixtureViewportCallbacks(phase: String) {
+        var trace: List<String> = emptyList()
+        main { trace = fixtureViewportCallbacks.toList() }
+        trace.forEachIndexed { index, record ->
+            android.util.Log.i(
+                "FullscreenChartTest", "$phase viewportCallback[$index/${trace.size}]: $record"
+            )
+        }
+    }
+
     private fun fixtureChartDiagnostic(
         activity: FullscreenChartActivity, model: FullscreenChartViewModel
     ): String {
@@ -1853,29 +1983,29 @@ class FullscreenChartStateInstrumentedTest {
         return diagnostic
     }
 
-    private fun fixtureChartDiagnostic(state: FullscreenChartUiState?, chart: LineChart?): String {
+    private fun fixtureChartDiagnostic(
+        state: FullscreenChartUiState?, chart: LineChart?, includeCallbacks: Boolean = true
+    ): String {
         val nativeViewport =
             chart?.data?.dataSets?.filterIsInstance<LineDataSet<*>>()?.flatMap { it.entries }
                 ?.firstOrNull { it.data is HistoryKey }?.let { entry ->
                     val origin =
                         (entry.data as HistoryKey).time - (entry.x.toDouble() * 1000).toLong()
-                    "${origin + (chart.lowestVisibleX.toDouble() * 1000).toLong()}.." +
-                            "${origin + (chart.highestVisibleX.toDouble() * 1000).toLong()}"
+                    "${origin + (chart.lowestVisibleX.toDouble() * 1000).toLong()}.." + "${origin + (chart.highestVisibleX.toDouble() * 1000).toLong()}"
                 } ?: "unavailable"
-        return "mode=${state?.scaleMode}, loading=${state?.loading}, error=${state?.error}, " +
-                "modelViewport=${state?.viewport}, nativeViewport=$nativeViewport, " +
-                "scaleYEnabled=${chart?.isScaleYEnabled}, dragYEnabled=${chart?.isDragYEnabled}, " +
-                "scaleY=${chart?.viewPortHandler?.scaleY}, maxScaleY=${chart?.viewPortHandler?.maxScaleY}, " +
-                "leftY=${chart?.axisLeft?.axisMinimum}..${chart?.axisLeft?.axisMaximum}, " +
-                "rightY=${chart?.axisRight?.axisMinimum}..${chart?.axisRight?.axisMaximum}, " +
-                "topY=${chart?.let(::fullscreenChartTopY)}, " +
-                "size=${chart?.width}x${chart?.height}, attached=${chart?.isAttachedToWindow}, " +
-                "laidOut=${chart?.isLaidOut}, layoutRequested=${chart?.isLayoutRequested}"
+        return "mode=${state?.scaleMode}, loading=${state?.loading}, error=${state?.error}, " + "modelViewport=${state?.viewport}, nativeViewport=$nativeViewport, " + "scaleYEnabled=${chart?.isScaleYEnabled}, dragYEnabled=${chart?.isDragYEnabled}, " + "scaleY=${chart?.viewPortHandler?.scaleY}, maxScaleY=${chart?.viewPortHandler?.maxScaleY}, " + "leftY=${chart?.axisLeft?.axisMinimum}..${chart?.axisLeft?.axisMaximum}, " + "rightY=${chart?.axisRight?.axisMinimum}..${chart?.axisRight?.axisMaximum}, " + "topY=${
+            chart?.let(
+                ::fullscreenChartTopY
+            )
+        }, " + "chartWidth=${chart?.width}, size=${chart?.width}x${chart?.height}, attached=${chart?.isAttachedToWindow}, " + "laidOut=${chart?.isLaidOut}, layoutRequested=${chart?.isLayoutRequested}" + if (includeCallbacks) "; viewportCallbacks=${
+            fixtureViewportCallbacks.joinToString(
+                " | "
+            )
+        }" else ""
     }
 
     private fun clickFixtureText(text: String): Boolean {
         val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
-        val root = automation.rootInActiveWindow ?: return false
         fun find(node: AccessibilityNodeInfo): AccessibilityNodeInfo? {
             if (node.isVisibleToUser && (node.text?.toString() == text || node.contentDescription?.toString() == text)) {
                 return node
@@ -1886,10 +2016,24 @@ class FullscreenChartStateInstrumentedTest {
             return null
         }
 
-        val node = find(root) ?: return false
         val bounds = Rect()
-        node.getBoundsInScreen(bounds)
-        if (bounds.isEmpty) return false
+        var lookup = "No active accessibility root"
+        await({ "Fullscreen navigation action was not available: text='$text'; $lookup" }) {
+            val root = automation.rootInActiveWindow
+            val node = root?.let(::find)
+            val candidate = Rect()
+            val windowBounds = Rect()
+            root?.getBoundsInScreen(windowBounds)
+            node?.getBoundsInScreen(candidate)
+            lookup =
+                "root=${root != null}, visibleNode=${node != null}, bounds=$candidate, window=$windowBounds"
+            val available = node != null && !candidate.isEmpty && windowBounds.contains(
+                candidate.centerX(),
+                candidate.centerY()
+            )
+            if (available) bounds.set(candidate)
+            available
+        }
         val downTime = android.os.SystemClock.uptimeMillis()
         val down = MotionEvent.obtain(
             downTime,
@@ -1926,7 +2070,10 @@ class FullscreenChartStateInstrumentedTest {
         diagnostic: () -> String = { "History loading did not finish" }, ready: () -> Boolean
     ) {
         val deadline = System.nanoTime() + 10_000_000_000
-        while (!ready() && System.nanoTime() < deadline) Thread.sleep(20)
-        if (!ready()) throw AssertionError(diagnostic())
+        while (true) {
+            if (ready()) return
+            if (System.nanoTime() >= deadline) throw AssertionError(diagnostic())
+            Thread.sleep(20)
+        }
     }
 }

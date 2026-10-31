@@ -252,11 +252,11 @@
     <string name="alarm_fully_charged" formatted="false">Аккумулятор теперь полностью заряжен</string>
     <string name="alarms_targets_group">Цели зарядки и разрядки</string>
     <string name="alarms_charging_target">Цель зарядки достигнута</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Достигнут лимит зарядки</string>
-    <string name="alarm_charging_limit_met" formatted="true">Достигнут лимит зарядки: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Достигнут лимит зарядки</string>
+    <string name="alarm_charging_target_reached" formatted="true">Достигнут лимит зарядки: %1$d%%</string>
     <string name="alarms_discharging_target">Цель разрядки достигнута</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Достигнут лимит разрядки</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Достигнут лимит разрядки: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Достигнут лимит разрядки</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Достигнут лимит разрядки: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Когда заряд падает до</string>
     <string name="alarm_charge_drops" formatted="false">"Заряд аккумулятора достиг или упал ниже "</string>
     <string name="alarm_type_charge_rises" formatted="false">Когда заряд растёт до</string>
@@ -577,7 +577,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Максимальное напряжение зарядки</string>
     <string name="diag_field_charging_policy" formatted="false">Политика зарядки</string>
     <string name="diag_policy_default">По умолчанию</string>
-    <string name="diag_policy_fixed_limit">Защита батареи (фиксированный предел)</string>
+    <string name="diag_policy_fixed_target">Защита батареи (фиксированный предел)</string>
     <string name="diag_policy_adaptive_ac">Адаптивная зарядка</string>
     <string name="diag_field_charging_state" formatted="false">Состояние зарядки</string>
     <string name="diag_charging_too_cold">Слишком холодно для зарядки</string>

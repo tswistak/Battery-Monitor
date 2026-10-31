@@ -250,11 +250,11 @@
     <string name="alarm_fully_charged" formatted="false">Batterij is volledig opgeladen</string>
     <string name="alarms_targets_group">Laad- en ontlaaddoelen</string>
     <string name="alarms_charging_target">Laaddoel bereikt</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Laadlimiet bereikt</string>
-    <string name="alarm_charging_limit_met" formatted="true">Laadlimiet bereikt: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Laadlimiet bereikt</string>
+    <string name="alarm_charging_target_reached" formatted="true">Laadlimiet bereikt: %1$d%%</string>
     <string name="alarms_discharging_target">Ontlaaddoel bereikt</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Ontlaadlimiet bereikt</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Ontlaadlimiet bereikt: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Ontlaadlimiet bereikt</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Ontlaadlimiet bereikt: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Wanneer de lading daalt tot</string>
     <string name="alarm_charge_drops" formatted="false">"Batterijlading heeft deze waarde bereikt of onderschreden: "</string>
     <string name="alarm_type_charge_rises" formatted="false">Wanneer de lading stijgt tot</string>
@@ -573,7 +573,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Maximale laadspanning</string>
     <string name="diag_field_charging_policy" formatted="false">Laadbeleid</string>
     <string name="diag_policy_default">Standaard</string>
-    <string name="diag_policy_fixed_limit">Batterijbescherming (vaste limiet)</string>
+    <string name="diag_policy_fixed_target">Batterijbescherming (vaste limiet)</string>
     <string name="diag_policy_adaptive_ac">Adaptief opladen</string>
     <string name="diag_field_charging_state" formatted="false">Laadstatus</string>
     <string name="diag_charging_too_cold">Te koud om op te laden</string>

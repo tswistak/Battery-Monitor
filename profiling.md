@@ -134,7 +134,7 @@ On the rooted device:
 1. Enable privileged access and allow root. Run `#privilegedAcquisitionCost` with the arguments above; retain its JSON and confirm all five snapshots report root access, real measurement values and fresh acquisition timestamps.
 2. Keep Battery Monitor visible for several minutes. Confirm measurements update, the UI responds and ordinary polling produces no recurring Magisk grant toasts.
 3. Repeat with another app in the foreground and the screen on, then turn the screen off and on. Confirm monitoring continues without repeatedly reopening sessions.
-4. Open diagnostics, run the explicit root test and exercise charging-limit reads. Confirm these root-backed operations share the healthy session rather than causing a new grant toast for each command.
+4. Open diagnostics, run the explicit root test and exercise charging-target reads. Confirm these root-backed operations share the healthy session rather than causing a new grant toast for each command.
 5. Disable privileged access. Confirm automatic privileged work stops. Exercise the explicit diagnostics root test while automatic access is disabled, then re-enable privileged access and confirm fresh readings resume.
 6. Using only the disposable test installation, test denial followed by an explicit retry/re-enable and controlled root-session/process death. Confirm denied access does not cause repeated automatic requests, and legitimate recovery restores readings. Restore the intended permission afterward.
 

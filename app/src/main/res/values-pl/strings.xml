@@ -252,11 +252,11 @@
     <string name="alarm_fully_charged" formatted="false">Bateria jest w pełni naładowana</string>
     <string name="alarms_targets_group">Cele ładowania i rozładowania</string>
     <string name="alarms_charging_target">Osiągnięto cel ładowania</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Osiągnięto cel ładowania</string>
-    <string name="alarm_charging_limit_met" formatted="true">Osiągnięto cel ładowania: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Osiągnięto cel ładowania</string>
+    <string name="alarm_charging_target_reached" formatted="true">Osiągnięto cel ładowania: %1$d%%</string>
     <string name="alarms_discharging_target">Osiągnięto cel rozładowania</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Osiągnięto cel rozładowania</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Osiągnięto cel rozładowania: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Osiągnięto cel rozładowania</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Osiągnięto cel rozładowania: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Gdy poziom naładowania spadnie do</string>
     <string name="alarm_charge_drops" formatted="false">"Poziom naładowania baterii osiągnął lub spadł poniżej "</string>
     <string name="alarm_type_charge_rises" formatted="false">Gdy poziom naładowania wzrośnie do</string>
@@ -577,7 +577,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Maksymalne napięcie ładowania</string>
     <string name="diag_field_charging_policy" formatted="false">Strategia ładowania</string>
     <string name="diag_policy_default">Domyślna</string>
-    <string name="diag_policy_fixed_limit">Ochrona baterii (stały cel)</string>
+    <string name="diag_policy_fixed_target">Ochrona baterii (stały cel)</string>
     <string name="diag_policy_adaptive_ac">Ładowanie adaptacyjne</string>
     <string name="diag_field_charging_state" formatted="false">Stan ładowania</string>
     <string name="diag_charging_too_cold">Za zimno, aby ładować</string>

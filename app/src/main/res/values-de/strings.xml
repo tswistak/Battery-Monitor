@@ -250,11 +250,11 @@
     <string name="alarm_fully_charged" formatted="false">Akku ist nun voll geladen</string>
     <string name="alarms_targets_group">Lade- &amp; Entladeziele</string>
     <string name="alarms_charging_target">Ladeziel erreicht</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Ladelimit erreicht</string>
-    <string name="alarm_charging_limit_met" formatted="true">Ladelimit erreicht: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Ladelimit erreicht</string>
+    <string name="alarm_charging_target_reached" formatted="true">Ladelimit erreicht: %1$d%%</string>
     <string name="alarms_discharging_target">Entladeziel erreicht</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Entladelimit erreicht</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Entladelimit erreicht: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Entladelimit erreicht</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Entladelimit erreicht: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Wenn die Ladung sinkt auf</string>
     <string name="alarm_charge_drops" formatted="false">"Akkuladung hat erreicht oder unterschritten: "</string>
     <string name="alarm_type_charge_rises" formatted="false">Wenn die Ladung steigt auf</string>
@@ -573,7 +573,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Maximale Ladespannung</string>
     <string name="diag_field_charging_policy" formatted="false">Laderichtlinie</string>
     <string name="diag_policy_default">Standard</string>
-    <string name="diag_policy_fixed_limit">Akkuschutz (feste Grenze)</string>
+    <string name="diag_policy_fixed_target">Akkuschutz (feste Grenze)</string>
     <string name="diag_policy_adaptive_ac">Adaptives Laden</string>
     <string name="diag_field_charging_state" formatted="false">Ladezustand</string>
     <string name="diag_charging_too_cold">Zu kalt zum Laden</string>

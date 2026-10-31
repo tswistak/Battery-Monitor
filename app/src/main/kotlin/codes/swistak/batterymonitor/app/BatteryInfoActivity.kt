@@ -58,6 +58,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.withResumed
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmEditActivity
+import codes.swistak.batterymonitor.alarms.refreshTargetAlarmChannelNames
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.NotificationSettingsNavigator
 import codes.swistak.batterymonitor.common.showToast
@@ -160,6 +161,7 @@ class BatteryInfoActivity : AppCompatActivity() {
         startup.advance(startupEnvironment())
         val persistent = PersistentFragment.getInstance(supportFragmentManager)
         DisplayStrings.setResources(resources)
+        refreshTargetAlarmChannelNames(this)
         val currentSettings = getSharedPreferences(SettingsContract.SETTINGS_FILE, MODE_PRIVATE)
         diagnostics = ViewModelProvider(this)[DiagnosticsViewModel::class.java]
         current = ViewModelProvider(this)[CurrentStateViewModel::class.java]

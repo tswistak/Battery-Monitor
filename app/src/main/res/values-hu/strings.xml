@@ -250,11 +250,11 @@
     <string name="alarm_fully_charged" formatted="false">Az akku teljesen feltöltve</string>
     <string name="alarms_targets_group">Töltési és merülési célok</string>
     <string name="alarms_charging_target">Töltési cél elérve</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">Töltési korlát elérve</string>
-    <string name="alarm_charging_limit_met" formatted="true">Töltési korlát elérve: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">Töltési korlát elérve</string>
+    <string name="alarm_charging_target_reached" formatted="true">Töltési korlát elérve: %1$d%%</string>
     <string name="alarms_discharging_target">Merülési cél elérve</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">Kisütési korlát elérve</string>
-    <string name="alarm_discharging_limit_met" formatted="true">Kisütési korlát elérve: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">Kisütési korlát elérve</string>
+    <string name="alarm_discharging_target_reached" formatted="true">Kisütési korlát elérve: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">Amikor a töltöttség erre csökken</string>
     <string name="alarm_charge_drops" formatted="false">"Akku töltése legfeljebb "</string>
     <string name="alarm_type_charge_rises" formatted="false">Amikor a töltöttség erre nő</string>
@@ -573,7 +573,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">Maximális töltési feszültség</string>
     <string name="diag_field_charging_policy" formatted="false">Töltési szabályzat</string>
     <string name="diag_policy_default">Alapértelmezett</string>
-    <string name="diag_policy_fixed_limit">Akkumulátorvédelem (rögzített korlát)</string>
+    <string name="diag_policy_fixed_target">Akkumulátorvédelem (rögzített korlát)</string>
     <string name="diag_policy_adaptive_ac">Adaptív töltés</string>
     <string name="diag_field_charging_state" formatted="false">Töltési állapot</string>
     <string name="diag_charging_too_cold">Túl hideg a töltéshez</string>

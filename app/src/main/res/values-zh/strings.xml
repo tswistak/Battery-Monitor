@@ -249,11 +249,11 @@
     <string name="alarm_fully_charged" formatted="false">電池已充滿</string>
     <string name="alarms_targets_group">充電與放電目標</string>
     <string name="alarms_charging_target">已達到充電目標</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">已達充電上限</string>
-    <string name="alarm_charging_limit_met" formatted="true">已達充電上限：%1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">已達充電上限</string>
+    <string name="alarm_charging_target_reached" formatted="true">已達充電上限：%1$d%%</string>
     <string name="alarms_discharging_target">已達到放電目標</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">已達放電下限</string>
-    <string name="alarm_discharging_limit_met" formatted="true">已達放電下限：%1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">已達放電下限</string>
+    <string name="alarm_discharging_target_reached" formatted="true">已達放電下限：%1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">電量降至</string>
     <string name="alarm_charge_drops" formatted="false">"電池電量已達到或低於 "</string>
     <string name="alarm_type_charge_rises" formatted="false">電量升至</string>
@@ -571,7 +571,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">最大充电电压</string>
     <string name="diag_field_charging_policy" formatted="false">充电策略</string>
     <string name="diag_policy_default">預設</string>
-    <string name="diag_policy_fixed_limit">電池保護（固定上限）</string>
+    <string name="diag_policy_fixed_target">電池保護（固定上限）</string>
     <string name="diag_policy_adaptive_ac">自適應充電</string>
     <string name="diag_field_charging_state" formatted="false">充电状态</string>
     <string name="diag_charging_too_cold">溫度過低，無法充電</string>

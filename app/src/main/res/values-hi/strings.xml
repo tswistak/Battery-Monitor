@@ -250,11 +250,11 @@
     <string name="alarm_fully_charged" formatted="false">बैटरी अब पूरी तरह चार्ज हो गई है</string>
     <string name="alarms_targets_group">चार्जिंग और डिस्चार्जिंग के लक्ष्य</string>
     <string name="alarms_charging_target">चार्जिंग लक्ष्य पूरा हुआ</string>
-    <string name="alarm_type_charging_limit_met" formatted="false">चार्जिंग सीमा पूरी हुई</string>
-    <string name="alarm_charging_limit_met" formatted="true">चार्जिंग सीमा पूरी हुई: %1$d%%</string>
+    <string name="alarm_type_charging_target_reached" formatted="false">चार्जिंग सीमा पूरी हुई</string>
+    <string name="alarm_charging_target_reached" formatted="true">चार्जिंग सीमा पूरी हुई: %1$d%%</string>
     <string name="alarms_discharging_target">डिस्चार्जिंग लक्ष्य पूरा हुआ</string>
-    <string name="alarm_type_discharging_limit_met" formatted="false">डिस्चार्जिंग सीमा पूरी हुई</string>
-    <string name="alarm_discharging_limit_met" formatted="true">डिस्चार्जिंग सीमा पूरी हुई: %1$d%%</string>
+    <string name="alarm_type_discharging_target_reached" formatted="false">डिस्चार्जिंग सीमा पूरी हुई</string>
+    <string name="alarm_discharging_target_reached" formatted="true">डिस्चार्जिंग सीमा पूरी हुई: %1$d%%</string>
     <string name="alarm_type_charge_drops" formatted="false">चार्ज इस स्तर तक गिरने पर</string>
     <string name="alarm_charge_drops" formatted="false">"बैटरी चार्ज इस स्तर तक या उससे नीचे पहुँचा: "</string>
     <string name="alarm_type_charge_rises" formatted="false">चार्ज इस स्तर तक बढ़ने पर</string>
@@ -573,7 +573,7 @@
     <string name="diag_field_max_charging_voltage" formatted="false">अधिकतम चार्जिंग वोल्टेज</string>
     <string name="diag_field_charging_policy" formatted="false">चार्जिंग नीति</string>
     <string name="diag_policy_default">डिफ़ॉल्ट</string>
-    <string name="diag_policy_fixed_limit">बैटरी सुरक्षा (निश्चित सीमा)</string>
+    <string name="diag_policy_fixed_target">बैटरी सुरक्षा (निश्चित सीमा)</string>
     <string name="diag_policy_adaptive_ac">अनुकूली चार्जिंग</string>
     <string name="diag_field_charging_state" formatted="false">चार्जिंग स्थिति</string>
     <string name="diag_charging_too_cold">चार्जिंग के लिए बहुत ठंडा</string>
