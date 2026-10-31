@@ -32,8 +32,8 @@ import codes.swistak.batterymonitor.alarms.requireAlarmMembers
 import codes.swistak.batterymonitor.alarms.thresholdCollision
 import codes.swistak.batterymonitor.alarms.validStoredAlarm
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
-import codes.swistak.batterymonitor.monitoring.BatteryInfoService
 import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceChargingLimitProvider
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
@@ -322,7 +322,7 @@ internal class AlarmsViewModel(
             },
             notificationsBlocked = !manager.areNotificationsEnabled(),
             groupBlocked = Build.VERSION.SDK_INT >= 28 && manager.getNotificationChannelGroup(
-                BatteryInfoService.CHAN_GROUP_ID_ALARMS
+                NotificationChannels.CHAN_GROUP_ID_ALARMS
             )?.isBlocked == true,
             loading = false
         )

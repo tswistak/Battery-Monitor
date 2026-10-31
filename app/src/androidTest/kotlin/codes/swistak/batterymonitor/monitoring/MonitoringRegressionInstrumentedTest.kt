@@ -36,6 +36,7 @@ import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.logs.historyQuery
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.monitoring.presentation.CurrentDemand
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -192,7 +193,7 @@ class MonitoringRegressionInstrumentedTest {
                 .putBoolean(SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS, false).commit()
         )
         val notification = call("prepareNotification") as Notification
-        assertEquals(BatteryInfoService.CHAN_ID_MAIN, notification.channelId)
+        assertEquals(NotificationChannels.CHAN_ID_MAIN, notification.channelId)
         val expanded = notification.extras.getCharSequence(Notification.EXTRA_BIG_TEXT).toString()
         assertTrue("Fallback notification lost its details: $expanded", expanded.isNotBlank())
         assertTrue(

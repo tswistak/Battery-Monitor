@@ -99,6 +99,7 @@ import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingTargetResol
 import codes.swistak.batterymonitor.monitoring.charginglimit.DeviceChargingLimitProvider
 import codes.swistak.batterymonitor.monitoring.charginglimit.ResolvedTarget
 import codes.swistak.batterymonitor.monitoring.charginglimit.TargetSource
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.privileged.PrivilegedAccess
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import codes.swistak.batterymonitor.ui.settings.SettingsDialog
@@ -2261,7 +2262,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun getMainNotifsEnabled(): Boolean {
-        mainChan = mNotificationManager!!.getNotificationChannel(BatteryInfoService.CHAN_ID_MAIN)
+        mainChan = mNotificationManager!!.getNotificationChannel(NotificationChannels.CHAN_ID_MAIN)
         return mainChan != null && mainChan!!.importance > 0
     }
 }

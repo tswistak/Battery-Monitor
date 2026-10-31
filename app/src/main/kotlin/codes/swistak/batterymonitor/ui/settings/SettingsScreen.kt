@@ -74,6 +74,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceScreen
 import androidx.preference.SeekBarPreference
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_BRIGHTNESS
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_COLOR_SOURCE
@@ -493,8 +494,9 @@ private fun unavailableReason(
         )
     ) {
         val manager = NotificationManagerCompat.from(context)
-        if (!manager.areNotificationsEnabled() || (manager.getNotificationChannel(codes.swistak.batterymonitor.monitoring.BatteryInfoService.CHAN_ID_MAIN)?.importance
-                ?: 0) == 0
+        if (!manager.areNotificationsEnabled() || (manager.getNotificationChannel(
+                NotificationChannels.CHAN_ID_MAIN
+            )?.importance ?: 0) == 0
         ) return context.getString(R.string.settings_notification_disabled)
     }
     if (descriptor.preference?.isEnabled == false || descriptor.preference?.isVisible == false) return context.getString(

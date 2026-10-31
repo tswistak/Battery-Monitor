@@ -17,8 +17,6 @@ import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.ForegroundServiceStartNotAllowedException
 import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -34,8 +32,6 @@ import android.content.SharedPreferences
 import android.content.pm.ServiceInfo
 import android.content.res.Resources
 import android.database.Cursor
-import android.media.AudioAttributes
-import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -67,6 +63,17 @@ import codes.swistak.batterymonitor.logs.LogResult
 import codes.swistak.batterymonitor.logs.maintainHistory
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageResolver
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageSource
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_CDROP
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_CHARGED
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_CHARGING_LIMIT
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_CRISE
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_DISCHARGING_LIMIT
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_HFAIL
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_TDROP
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_TRISE
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_LIVE_UPDATE
+import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_MAIN
 import codes.swistak.batterymonitor.monitoring.presentation.CurrentDemand
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
@@ -117,30 +124,6 @@ class BatteryInfoService : Service() {
         private const val NOTIFICATION_MAIN_COMPANION = 2
         private const val NOTIFICATION_ALARM = 7
         private const val EXTRA_LOW_BATTERY_THRESHOLD = "low_battery_alarm_threshold"
-
-        const val CHAN_ID_MAIN: String = "main_004"
-        const val CHAN_ID_LIVE_UPDATE: String = "live_update_001"
-        const val CHAN_ID_A_CHARGED: String = "fully_charged"
-        const val CHAN_ID_A_CHARGING_LIMIT: String = "charging_limit_met"
-        const val CHAN_ID_A_DISCHARGING_LIMIT: String = "discharging_limit_met"
-
-        const val CHAN_ID_A_CDROP: String = "charge_drops"
-        const val CHAN_ID_A_CRISE: String = "charge_rises"
-        const val CHAN_ID_A_TDROP: String = "temp_drops"
-        const val CHAN_ID_A_TRISE: String = "temp_rises"
-        const val CHAN_ID_A_HFAIL: String = "health_failure"
-        const val CHAN_GROUP_ID_ALARMS: String = "alarms"
-
-        val ALARM_CHAN_IDS: Array<String> = arrayOf(
-            CHAN_ID_A_CHARGED,
-            CHAN_ID_A_CHARGING_LIMIT,
-            CHAN_ID_A_DISCHARGING_LIMIT,
-            CHAN_ID_A_CDROP,
-            CHAN_ID_A_CRISE,
-            CHAN_ID_A_TDROP,
-            CHAN_ID_A_TRISE,
-            CHAN_ID_A_HFAIL
-        )
 
         private const val RC_MAIN = 100
         private const val RC_ALARMS_EDIT = 101
@@ -401,63 +384,7 @@ class BatteryInfoService : Service() {
         if (mNotificationManager == null) mNotificationManager = getSystemService(
             NOTIFICATION_SERVICE
         ) as NotificationManager?
-
-        val mainImportance = NotificationManager.IMPORTANCE_LOW
-        val mainNotifChanName: CharSequence = getString(R.string.main_notif_chan_name)
-        var ch = NotificationChannel(CHAN_ID_MAIN, mainNotifChanName, mainImportance)
-        ch.setSound(null, null)
-        ch.enableLights(false)
-        ch.enableVibration(false)
-        ch.setShowBadge(false)
-        ch.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-        mNotificationManager!!.createNotificationChannel(ch)
-
-        val liveUpdatesNotifChanName: CharSequence =
-            getString(R.string.live_updates_notif_chan_name)
-        ch = NotificationChannel(CHAN_ID_LIVE_UPDATE, liveUpdatesNotifChanName, mainImportance)
-        ch.setSound(null, null)
-        ch.enableLights(false)
-        ch.enableVibration(false)
-        ch.setShowBadge(false)
-        ch.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-        mNotificationManager!!.createNotificationChannel(ch)
-
-        val channelGroupNameAlarms: CharSequence = getString(R.string.channel_group_name_alarms)
-        mNotificationManager!!.createNotificationChannelGroup(
-            NotificationChannelGroup(
-                CHAN_GROUP_ID_ALARMS, channelGroupNameAlarms
-            )
-        )
-
-        val alarmChanNames = intArrayOf(
-            R.string.alarm_type_fully_charged,
-            R.string.alarm_type_charging_target_reached,
-            R.string.alarm_type_discharging_target_reached,
-            R.string.alarm_type_charge_drops,
-            R.string.alarm_type_charge_rises,
-            R.string.alarm_type_temperature_drops,
-            R.string.alarm_type_temperature_rises,
-            R.string.alarm_type_health_failure
-        )
-
-        for (i in ALARM_CHAN_IDS.indices) {
-            val ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            val chanName: CharSequence = getString(alarmChanNames[i])
-            ch = NotificationChannel(
-                ALARM_CHAN_IDS[i], chanName, NotificationManager.IMPORTANCE_HIGH
-            )
-            ch.setSound(
-                ringtone,
-                AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT).build()
-            )
-            ch.enableLights(true)
-            ch.lightColor = -0xcc4a1b
-            ch.enableVibration(true)
-            ch.setVibrationPattern(longArrayOf(0, 500, 500, 500, 500, 1000, 1000, 1000, 1000))
-            ch.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-            ch.group = CHAN_GROUP_ID_ALARMS
-            mNotificationManager!!.createNotificationChannel(ch)
-        }
+        NotificationChannels.ensureChannelsCreated(this)
     }
 
     override fun onCreate() {
@@ -1225,17 +1152,7 @@ class BatteryInfoService : Service() {
 
     private fun setUpMinimalForegroundChannel() {
         if (mNotificationManager == null) return
-
-        val channel = NotificationChannel(
-            CHAN_ID_MAIN,
-            getString(R.string.main_notif_chan_name),
-            NotificationManager.IMPORTANCE_LOW
-        )
-        channel.setSound(null, null)
-        channel.enableLights(false)
-        channel.enableVibration(false)
-        channel.setShowBadge(false)
-        mNotificationManager!!.createNotificationChannel(channel)
+        NotificationChannels.ensureForegroundChannelCreated(this)
     }
 
     private fun startForegroundImmediately(): Boolean {
