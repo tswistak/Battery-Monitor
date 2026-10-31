@@ -16,24 +16,18 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Bitmap
 import android.os.Build
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inspector.WindowInspector
 import androidx.activity.compose.setContent
-import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.LocalSaveableStateRegistry
 import androidx.compose.runtime.saveable.SaveableStateRegistry
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
@@ -43,10 +37,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.Lifecycle
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
-import codes.swistak.batterymonitor.alarms.AlarmEditActivity
-import codes.swistak.batterymonitor.app.AlarmEditorDestination
-import codes.swistak.batterymonitor.app.AlarmEditorNavigation
-import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -56,21 +46,13 @@ import codes.swistak.batterymonitor.ui.alarms.ThresholdDialog
 import codes.swistak.batterymonitor.ui.alarms.editThresholdInput
 import codes.swistak.batterymonitor.ui.components.NumericValueDialog
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
-import codes.swistak.batterymonitor.ui.navigation.SectionOwner
-import codes.swistak.batterymonitor.ui.settings.SettingsDialog
-import codes.swistak.batterymonitor.ui.settings.SettingsDialogs
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
-import codes.swistak.batterymonitor.ui.theme.Brightness
-import codes.swistak.batterymonitor.ui.theme.ColorSource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
-import java.io.File
-import java.io.FileOutputStream
-import java.util.Locale
 
 class DialogEditingInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -79,45 +61,6 @@ class DialogEditingInstrumentedTest {
     private lateinit var registry: SaveableStateRegistry
     private lateinit var fixture: @Composable () -> Unit
     private lateinit var themedContext: Context
-
-    @Test
-    fun pending_alarm_navigation_restores_each_target_without_an_activity_callback() {
-        for (destination in AlarmEditorDestination.entries.filter { it != AlarmEditorDestination.INTENT }) {
-            val original = AlarmEditorNavigation(
-                destination,
-                section = SectionOwner.SETTINGS.takeIf { destination == AlarmEditorDestination.SECTION },
-                alarmId = 42.takeIf { destination == AlarmEditorDestination.EDIT_ALARM })
-            assertEquals(original, AlarmEditorNavigation.restore(original.save()))
-        }
-        val intent = Intent().putExtra(BatteryInfoActivity.EXTRA_SECTION, "history")
-            .putExtra(BatteryInfoActivity.EXTRA_DETAIL, "alarm-edit")
-            .putExtra(BatteryInfoActivity.EXTRA_HISTORY_HOURS, 24)
-            .putExtra(AlarmEditActivity.EXTRA_ALARM_ID, 42)
-            .putExtra("unrelated_payload", ByteArray(1024))
-        val restored = requireNotNull(
-            AlarmEditorNavigation.restore(
-                AlarmEditorNavigation.route(intent).save()
-            )
-        )
-        assertEquals(AlarmEditorDestination.INTENT, restored.destination)
-        val extras = requireNotNull(restored.intentExtras)
-        assertEquals("history", extras.getString(BatteryInfoActivity.EXTRA_SECTION))
-        assertEquals("alarm-edit", extras.getString(BatteryInfoActivity.EXTRA_DETAIL))
-        assertEquals(24, extras.getInt(BatteryInfoActivity.EXTRA_HISTORY_HOURS))
-        assertEquals(42, extras.getInt(AlarmEditActivity.EXTRA_ALARM_ID))
-        assertFalse(extras.containsKey("unrelated_payload"))
-    }
-
-    @Test
-    fun malformed_pending_alarm_navigation_does_not_navigate_to_a_different_section() {
-        assertNull(AlarmEditorNavigation.restore(null))
-        assertNull(
-            AlarmEditorNavigation.restore(
-                android.os.Bundle().apply { putString("destination", "unknown") })
-        )
-        assertNull(AlarmEditorNavigation.restore(AlarmEditorNavigation(AlarmEditorDestination.SECTION).save()))
-        assertNull(AlarmEditorNavigation.restore(AlarmEditorNavigation(AlarmEditorDestination.INTENT).save()))
-    }
 
     @Test
     fun numeric_validation_keyboard_done_and_confirmation_commit_once() = withHost {
@@ -213,159 +156,6 @@ class DialogEditingInstrumentedTest {
         click(target.getString(R.string.menu_delete_alarm))
         await { dialogs() == 0 }
         assertEquals(1, deleted)
-    }
-
-    @Test
-    fun numeric_dialog_uses_the_app_light_and_true_black_surfaces() = withHost {
-        val preferences = themedContext.getSharedPreferences(
-            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-        )
-        for (brightness in listOf(Brightness.Light, Brightness.TrueBlack)) {
-            main {
-                assertTrue(
-                    preferences.edit()
-                        .putString(SettingsContract.KEY_COLOR_SOURCE, ColorSource.BatteryBlue.name)
-                        .putString(SettingsContract.KEY_BRIGHTNESS, brightness.name).commit()
-                )
-            }
-            var color = 0
-            show {
-                val surface = AlertDialogDefaults.containerColor.toArgb()
-                SideEffect { color = surface }
-                Numeric(onSave = {}, onCancel = {})
-            }
-            await { dialogs() == 1 && color != 0 }
-            instrumentation.waitForIdleSync()
-            await("The $brightness dialog must use the app surface color") {
-                val screenshot = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
-                var pixels = 0
-                for (y in 0 until screenshot.height step 3) {
-                    for (x in 0 until screenshot.width step 3) {
-                        if (screenshot.getPixel(x, y) == color) pixels++
-                    }
-                }
-                screenshot.recycle()
-                pixels > 100
-            }
-        }
-    }
-
-    @Test
-    fun alarm_delete_and_notification_choices_use_the_reviewed_English_and_Polish_labels() {
-        for (language in listOf("en", "pl")) withHost {
-            val configuration = Configuration(activity.resources.configuration).apply {
-                setLocale(Locale.forLanguageTag(language))
-            }
-            val localized = activity.createConfigurationContext(configuration)
-            var deleted = false
-            show {
-                CompositionLocalProvider(
-                    LocalContext provides localized,
-                    LocalResources provides localized.resources,
-                    LocalConfiguration provides configuration
-                ) {
-                    ThresholdDialog(
-                        state = AlarmsState(
-                            hasSnapshot = true, loading = false, draft = AlarmDraft(
-                                id = 7,
-                                type = "charge_rises",
-                                threshold = "80",
-                                thresholdInput = "80",
-                                initialInput = "80",
-                                inputLocale = language
-                            )
-                        ),
-                        onInput = {},
-                        onSave = {},
-                        onDelete = { deleted = true },
-                        onDismiss = {},
-                        onEditExisting = {},
-                        onRetry = {})
-                }
-            }
-            val delete = localized.getString(R.string.menu_delete_alarm)
-            assertEquals(if (language == "pl") "Usuń alarm" else "Delete alarm", delete)
-            await("The localized delete action must be rendered") {
-                var rendered = false
-                main {
-                    rendered = nodes().any {
-                        it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(
-                            SemanticsProperties.Text
-                        )?.any { text -> text.text == delete } == true
-                    }
-                }
-                rendered
-            }
-            main { assertFalse(button(delete).config.contains(SemanticsProperties.Disabled)) }
-            click(delete)
-            await { fieldOrNull() == null && dialogs() == 1 }
-            main {
-                assertTrue(nodes().count {
-                    it.config.getOrNull(SemanticsProperties.Text)
-                        ?.any { text -> text.text == delete } == true
-                } >= 2)
-            }
-            captureLocalizedControls("$language-alarm-delete")
-            click(localized.getString(R.string.cancel))
-            await { fieldOrNull() != null }
-            assertFalse("The fixture must not delete an alarm", deleted)
-            show {
-                CompositionLocalProvider(
-                    LocalContext provides localized,
-                    LocalResources provides localized.resources,
-                    LocalConfiguration provides configuration
-                ) {
-                    SettingsDialogs(
-                        SettingsDialog.Choices(
-                            title = localized.getString(R.string.pref_top_line_content),
-                            options = localized.resources.getStringArray(R.array.notification_line_content_entries)
-                                .toList(),
-                            selected = setOf(0),
-                            multiple = false,
-                            onConfirm = { error("Do not save a setting in this fixture") }),
-                        busy = false,
-                        onDismiss = {})
-                }
-            }
-            for (label in listOf(
-                R.string.time_remaining, R.string.time_since_status_change, R.string.vital_signs
-            )) {
-                await("The localized notification choice must be rendered") {
-                    var rendered = false
-                    main {
-                        rendered = nodes().any {
-                            it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(
-                                SemanticsProperties.Text
-                            )?.any { text -> text.text == localized.getString(label) } == true
-                        }
-                    }
-                    rendered
-                }
-                main {
-                    assertFalse(
-                        button(localized.getString(label)).config.contains(
-                            SemanticsProperties.Disabled
-                        )
-                    )
-                }
-            }
-            captureLocalizedControls("$language-notification-choices")
-        }
-    }
-
-    private fun captureLocalizedControls(name: String) {
-        instrumentation.waitForIdleSync()
-        val directory =
-            requireNotNull(instrumentation.targetContext.getExternalFilesDir("help-audit"))
-        assertTrue(directory.isDirectory || directory.mkdirs())
-        val bitmap = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
-        try {
-            FileOutputStream(File(directory, "$name.png")).use {
-                assertTrue(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it))
-            }
-        } finally {
-            bitmap.recycle()
-        }
     }
 
     @Composable

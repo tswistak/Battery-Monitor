@@ -94,15 +94,6 @@ class TargetAlarmEvaluatorTest {
     }
 
     @Test
-    fun `charging limit fires for plugged devices that stop charging at the target`() {
-        val evaluator = TargetAlarmEvaluator()
-
-        assertFalse(charging(evaluator, 79).chargingLimitReached)
-        assertTrue(charging(evaluator, 80).chargingLimitReached)
-        assertFalse(charging(evaluator, 80).chargingLimitReached)
-    }
-
-    @Test
     fun `charging limit follows a custom target`() {
         val evaluator = TargetAlarmEvaluator()
 

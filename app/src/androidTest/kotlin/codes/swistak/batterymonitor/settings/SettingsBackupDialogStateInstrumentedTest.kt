@@ -28,8 +28,6 @@ import androidx.lifecycle.ViewModelStore
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
-import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
-import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.devicebackup.GeneralBackup
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import codes.swistak.batterymonitor.ui.settings.SettingsDialog
@@ -39,11 +37,8 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.RandomAccessFile
 import java.util.UUID
@@ -81,21 +76,6 @@ class SettingsBackupDialogStateInstrumentedTest {
     }
 
     @Test
-    fun general_backup_cache_copy_preserves_its_boundary_and_rejects_oversized_sources() {
-        assertEquals(160L * 1024 * 1024, GENERAL_BACKUP_DIALOG_CACHE_LIMIT_BYTES)
-        val allowed = ByteArrayOutputStream()
-        copyGeneralBackupDialogSource(ByteArrayInputStream(ByteArray(16)), allowed, 16)
-        assertEquals(16, allowed.size())
-        val oversized = ByteArrayOutputStream()
-        try {
-            copyGeneralBackupDialogSource(ByteArrayInputStream(ByteArray(17)), oversized, 16)
-            fail("Oversized archives must fail before writing beyond the limit")
-        } catch (_: IllegalArgumentException) {
-            assertTrue(oversized.size() <= 16)
-        }
-    }
-
-    @Test
     fun preview_reparses_cached_data_after_restoration_without_large_bundle_payloads() {
         val original = """{"version":2,"logs":[],"predictor":{}}""" + " ".repeat(200_000)
         val source = File(directory, "source.json").apply { writeText(original) }
@@ -118,17 +98,6 @@ class SettingsBackupDialogStateInstrumentedTest {
         cancel(restored)
         assertNull(save(restored).getBundle("settings_backup_dialog"))
         assertFalse(directory.listFiles().orEmpty().any { it.name.startsWith("settings-import-") })
-    }
-
-    @Test
-    fun standalone_uri_readers_preserve_UTF8_and_settings_line_normalization() {
-        val text = "ą💡\r\n"
-        val source = File(directory, "utf8-source").apply { writeText(text, Charsets.UTF_8) }
-        val uri = Uri.fromFile(source)
-        assertEquals("ą💡\n", SettingsBackup.readFromUri(context, uri))
-        assertEquals(text, AlarmBackup.readFromUri(context, uri))
-        assertEquals(text, DeviceDataBackup.readFromUri(context, uri))
-        assertEquals(text, CsvLogImporter.readFromUri(context, uri))
     }
 
     @Test

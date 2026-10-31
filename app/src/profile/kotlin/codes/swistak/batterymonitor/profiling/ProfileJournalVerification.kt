@@ -77,6 +77,8 @@ internal object ProfileJournalVerification {
             put("mode", mode)
             put("correctnessExecuted", mode == "correctness")
             put("measurementExecuted", mode == "overhead")
+            put("historicalSqlExperimentExecuted", mode == "overhead")
+            put("productionPerformanceValidated", false)
             put("selectedPattern", pattern ?: JSONObject.NULL)
             put(
                 "selectedSchema7InitialJournalRows",
@@ -92,7 +94,7 @@ internal object ProfileJournalVerification {
             )
             put(
                 "measurementScope",
-                "Matched Android SQLite SQL-path microbenchmark, schema 6 control versus schema 7 journal maintenance; not original/current APK method or UI performance"
+                "Optional manual historical synthetic SQL experiment: schema 6 versus schema 7; does not measure current production LogDatabase methods, APK or UI performance"
             )
             put("backupSerializationExercised", false)
             put("hardwareOrDeviceClockChanged", false)
@@ -439,6 +441,7 @@ internal object ProfileJournalVerification {
         )
     }
 
+    // Historical SQL comparison, invoked only by the explicit overhead mode; verifyContract uses LogDatabase.
     private fun measureWriteCost(
         owner: File,
         result: JSONObject,
@@ -446,6 +449,7 @@ internal object ProfileJournalVerification {
         initialJournalRows: Int,
         budget: () -> Unit
     ) {
+        result.put("experiment", "historical-synthetic-sql-schema6-vs-schema7")
         val directory = File(owner, "write-cost").apply { check(mkdirs()) }
         val anchor = 1_792_200_000_000L
         val seed = (0 until SEED_COUNT).map { index ->

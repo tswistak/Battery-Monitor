@@ -14,7 +14,7 @@
     along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 import { expect } from '@wdio/globals';
-import { cleanScenario, readState, seedBackupData, seedSentinelData } from '../support/device.js';
+import { cleanScenario, readState, seedSentinelData, stageGeneralImportFixture } from '../support/device.js';
 import {
     acknowledgeMessage,
     chooseImportFile,
@@ -22,7 +22,6 @@ import {
     clickTextStartingWith,
     openBackupAndRestoreScreen,
     requireText,
-    saveBackupThroughFilePicker,
 } from '../support/ui.js';
 
 describe('Selective general backup import', () => {
@@ -31,16 +30,12 @@ describe('Selective general backup import', () => {
     });
 
     it('restores settings while preserving unselected alarms, history and predictor data', async () => {
-        await seedBackupData();
-        await openBackupAndRestoreScreen();
-        await clickText('Export general backup');
-        await saveBackupThroughFilePicker('current-general.zip');
-        await acknowledgeMessage('General backup exported successfully');
         await seedSentinelData();
+        await stageGeneralImportFixture();
         const before = await readState();
         await openBackupAndRestoreScreen();
 
-        await chooseImportFile('Import general backup', 'current-general.zip');
+        await chooseImportFile('Import general backup', 'prepared-general.zip');
         await requireText('Choose what you want to restore.');
         await clickText('Alarms');
         await clickTextStartingWith('Logs');

@@ -348,8 +348,12 @@ class HistorySynchronizationVerification {
         assertTrue("Journal contract failed: $json", result.getBoolean("complete"))
     }
 
+    // Optional manual experiment: select this method with explicit pattern/row arguments.
     @Test
-    fun journalWriteCost() = report("history-journal-cost") { output ->
+    fun journalWriteCost() = report("historical-journal-sql-experiment") { output ->
+        output.put(
+            "scope", "Historical synthetic SQL comparison; not production performance validation"
+        )
         val pattern = requireNotNull(arguments.getString("journalPattern"))
         val initial = requireNotNull(arguments.getString("journalInitialRows")?.toIntOrNull())
         require(pattern in setOf("single", "periodic128", "bulkAdd5000", "bulkReplace5000"))
@@ -360,7 +364,7 @@ class HistorySynchronizationVerification {
         }
         val json = JSONObject(checkNotNull(result.getString("reportJson")))
         observations.put(
-            JSONObject().put("stage", "bounded-journal-write-cost").put("result", json)
+            JSONObject().put("stage", "historical-synthetic-journal-sql").put("result", json)
         )
         output.put("appPid", json.getInt("appPid"))
         assertEquals("overhead", json.getString("mode"))
@@ -664,11 +668,11 @@ class HistorySynchronizationVerification {
     private fun recordUi(stage: String) {
         observations.put(
             JSONObject().put("stage", "$stage-visible")
-            .put(
-                "texts",
-                JSONArray(
-                    device.findObjects(By.pkg(TARGET).textStartsWith("")).mapNotNull { it.text }
-                        .distinct())))
+                .put(
+                    "texts",
+                    JSONArray(
+                        device.findObjects(By.pkg(TARGET).textStartsWith("")).mapNotNull { it.text }
+                            .distinct())))
         val root = outputDirectory()
         device.takeScreenshot(File(root, "history-${phase()}-$stage.png"))
     }

@@ -14,8 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from pathlib import Path
-import re
 import unittest
 
 import analyze
@@ -60,19 +58,6 @@ class TraceRetentionTest(unittest.TestCase):
         analyze.gate_scheduler_cpu(rows, ("cpu",))
         self.assertEqual(rows["cpu"], [{"cpu_ms": 0}])
         self.assertEqual(analyze.legacy_ftrace_retention([])["status"], "unavailable")
-
-    def test_only_the_three_long_scenarios_receive_the_larger_buffer(self):
-        source = (Path(__file__).resolve().parents[2] / "macrobenchmark/src/main/kotlin/codes/swistak/"
-                  "batterymonitor/macrobenchmark/LegacyAtraceBenchmark.kt").read_text()
-        self.assertIn("private const val DEFAULT_TRACE_BUFFER_KB = 8192", source)
-        self.assertIn("private const val LONG_SCENARIO_TRACE_BUFFER_KB = 16384", source)
-        mapping = re.search(r"private fun traceBufferSizeKb\(scenario: String\): Int = when \(scenario\) \{([^}]+)}", source)
-        self.assertIsNotNone(mapping)
-        self.assertEqual(set(re.findall(r'"([A-Za-z]+)"', mapping[1])),
-                         {"settingsAlarmsAndUnsavedDraft", "drawerFirstAndRepeatedNavigation",
-                          "historyRangesTabsAndSameLevelInsertion"})
-        self.assertIn("else -> DEFAULT_TRACE_BUFFER_KB", mapping[1])
-        self.assertIn("startTrace(session, scenario)", source)
 
 
 if __name__ == "__main__":

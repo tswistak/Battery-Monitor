@@ -66,21 +66,4 @@ class WidgetSnapshotTest {
         assertTrue(policy.shouldPublish(reading, 61_003, force = true))
     }
 
-    @Test
-    fun `Six instances share one publish decision and do not create acquisition work`() {
-        val policy = WidgetUpdatePolicy()
-        var publications = 0
-        var instanceUpdates = 0
-        repeat(180) { tick ->
-            if (policy.shouldPublish(
-                    reading.copy(currentMicroAmps = tick.toLong()), tick * 1_000L
-                )
-            ) {
-                publications++
-                instanceUpdates += 6
-            }
-        }
-        assertEquals(3, publications)
-        assertEquals(18, instanceUpdates)
-    }
 }

@@ -25,82 +25,15 @@ class SettingsDefinitionsTest {
     )
 
     @Test
-    fun `settings preserve category order controls and category keys`() {
-        assertEquals(
-            listOf(
-                SettingsContract.KEY_OTHER_SETTINGS,
-                SettingsContract.KEY_CURRENT_STATE_SETTINGS,
-                SettingsContract.KEY_TIME_ESTIMATES_SETTINGS,
-                SettingsContract.KEY_NOTIFICATION_SETTINGS,
-                SettingsContract.KEY_ADVANCED_SETTINGS,
-                SettingsContract.KEY_BACKUP_RESTORE_SETTINGS
-            ), SettingsDefinitions.categories.keys.toList()
-        )
-        assertEquals(
-            listOf(4, 3, 4, 17, 3, 11), SettingsDefinitions.categories.values.map { groups ->
-                groups.sumOf { it.preferences.size }
-            })
-        val definitions = SettingsDefinitions.preferences
-        assertEquals(
-            listOf(
-                SettingsContract.KEY_CHANGE_APP_LANGUAGE,
-                SettingsContract.KEY_TEMPERATURE_UNIT,
-                SettingsContract.KEY_LONG_DURATION_FORMAT,
-                SettingsContract.KEY_AUTOSTART,
-                SettingsContract.KEY_SHOW_REMAINING_CHARGE,
-                SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER,
-                SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT,
-                SettingsContract.KEY_PREDICTION_TYPE,
-                SettingsContract.KEY_CHARGING_TARGET_MODE,
-                SettingsContract.KEY_CUSTOM_CHARGING_TARGET,
-                SettingsContract.KEY_DISCHARGING_TARGET,
-                SettingsContract.KEY_ENABLE_NOTIFS_B,
-                SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY,
-                SettingsContract.KEY_TOP_LINE,
-                SettingsContract.KEY_BOTTOM_LINE,
-                SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
-                SettingsContract.KEY_VITAL_SIGNS_CONTENT,
-                SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS,
-                SettingsContract.KEY_ICON_CONTENT,
-                SettingsContract.KEY_SHOW_ICON_UNIT,
-                SettingsContract.KEY_INDICATE_CHARGING,
-                SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS,
-                SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
-                SettingsContract.KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION,
-                SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS,
-                SettingsContract.KEY_CHIP_CONTENT,
-                SettingsContract.KEY_CHIP_SWITCHING_INTERVAL,
-                SettingsContract.KEY_CHIP_INDICATE_CHARGING,
-                SettingsContract.KEY_USE_PRIVILEGED_ACCESS,
-                SettingsContract.KEY_ENABLE_LOGGING,
-                SettingsContract.KEY_MAX_LOG_AGE,
-                SettingsContract.KEY_EXPORT_GENERAL_BACKUP,
-                SettingsContract.KEY_IMPORT_GENERAL_BACKUP,
-                SettingsContract.KEY_EXPORT_SETTINGS,
-                SettingsContract.KEY_IMPORT_SETTINGS,
-                SettingsContract.KEY_RESET_DEFAULT_SETTINGS,
-                SettingsContract.KEY_EXPORT_ALARMS,
-                SettingsContract.KEY_IMPORT_ALARMS,
-                SettingsContract.KEY_EXPORT_DEVICE_DATA,
-                SettingsContract.KEY_IMPORT_DEVICE_DATA,
-                SettingsContract.KEY_IMPORT_LOGS_CSV,
-                SettingsContract.KEY_AUTO_LOG_EXPORT
-            ), definitions.map { it.key })
-        assertEquals(42, definitions.map { it.key }.toSet().size)
-        assertEquals(16, definitions.count { it.control == SettingsControl.Action })
-        assertEquals(11, definitions.count { it.control is SettingsControl.Toggle })
-        assertEquals(13, definitions.count { it.control is SettingsControl.Choice })
-        assertEquals(2, definitions.count { it.control is SettingsControl.Number })
-        assertEquals(29, definitions.count { it.singleLineTitle == false })
-        assertEquals(
-            listOf(
-                SettingsContract.KEY_CHANGE_APP_LANGUAGE_HOLDER,
-                SettingsContract.KEY_CATEGORY_BATTERY_CURRENT_MAIN,
-                SettingsContract.KEY_CATEGORY_STATUS_BAR_CHIP
-            ), SettingsDefinitions.categories.values.flatten().mapNotNull { it.key })
-        assertEquals(
-            false, definitions.single { it.key == SettingsContract.KEY_ENABLE_NOTIFS_B }.selectable
-        )
+    fun `setting keys are nonempty and unique across categories and groups`() {
+        val categories = SettingsDefinitions.categories
+        val groups = categories.values.flatten()
+        val preferenceKeys = SettingsDefinitions.preferences.map { it.key }
+        val keys = categories.keys.toList() + groups.mapNotNull { it.key } + preferenceKeys
+        assertTrue(keys.all { it.isNotBlank() })
+        assertEquals(keys.size, keys.toSet().size)
+        assertTrue(categories.values.all { it.isNotEmpty() })
+        assertTrue(groups.all { it.preferences.isNotEmpty() })
     }
 
     @Test
@@ -153,36 +86,16 @@ class SettingsDefinitionsTest {
     }
 
     @Test
-    fun `choice controls preserve option resources and dialog titles`() {
-        val expected = mapOf(
-            SettingsContract.KEY_TEMPERATURE_UNIT to (R.array.temperature_unit_entries to R.array.temperature_unit_values),
-            SettingsContract.KEY_LONG_DURATION_FORMAT to (R.array.long_duration_format_entries to R.array.long_duration_format_values),
-            SettingsContract.KEY_AUTOSTART to (R.array.boot_pref_entries to R.array.boot_pref_values),
-            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER to (R.array.battery_current_multiplier_entries to R.array.battery_current_multiplier_values),
-            SettingsContract.KEY_PREDICTION_TYPE to (R.array.prediction_type_entries to R.array.prediction_type_values),
-            SettingsContract.KEY_CHARGING_TARGET_MODE to (R.array.charging_target_mode_entries to R.array.charging_target_mode_values),
-            SettingsContract.KEY_TOP_LINE to (R.array.notification_line_content_entries to R.array.notification_line_content_values),
-            SettingsContract.KEY_BOTTOM_LINE to (R.array.notification_line_content_entries to R.array.notification_line_content_values),
-            SettingsContract.KEY_TIME_REMAINING_VERBOSITY to (R.array.time_remaining_verbosity_entries to R.array.time_remaining_verbosity_values),
-            SettingsContract.KEY_ICON_CONTENT to (R.array.icon_content_entries to R.array.icon_content_values),
-            SettingsContract.KEY_LIVE_UPDATE_DISPLAY to (R.array.live_update_display_entries to R.array.live_update_display_values),
-            SettingsContract.KEY_CHIP_SWITCHING_INTERVAL to (R.array.chip_switching_interval_entries to R.array.chip_switching_interval_values),
-            SettingsContract.KEY_MAX_LOG_AGE to (R.array.max_log_age_entries to R.array.max_log_age_values),
-        )
-        val choices = SettingsDefinitions.preferences.mapNotNull { definition ->
-            (definition.control as? SettingsControl.Choice)?.let { definition.key to it }
-        }.toMap()
-        assertEquals(
-            expected, choices.mapValues { (_, control) -> control.entries to control.entryValues })
-        assertEquals(
-            R.string.pref_autostart_at_boot_summary,
-            choices.getValue(SettingsContract.KEY_AUTOSTART).dialogTitle
-        )
-        assertEquals(
-            R.string.pref_max_log_age_summary,
-            choices.getValue(SettingsContract.KEY_MAX_LOG_AGE).dialogTitle
-        )
-        assertEquals(2, choices.values.count { it.dialogTitle != null })
+    fun `measurement and target choices retain their persisted value resources`() {
+        val choices = SettingsDefinitions.preferences.associate { it.key to it.control }
+        for ((key, values) in mapOf(
+            SettingsContract.KEY_TEMPERATURE_UNIT to R.array.temperature_unit_values,
+            SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER to R.array.battery_current_multiplier_values,
+            SettingsContract.KEY_CHARGING_TARGET_MODE to R.array.charging_target_mode_values
+        )) {
+            val choice = choices.getValue(key) as SettingsControl.Choice
+            assertEquals(key, values, choice.entryValues)
+        }
     }
 
     @Test

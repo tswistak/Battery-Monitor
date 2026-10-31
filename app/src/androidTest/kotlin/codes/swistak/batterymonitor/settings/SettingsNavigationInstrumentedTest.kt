@@ -10,7 +10,6 @@ package codes.swistak.batterymonitor.settings
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Bitmap
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
@@ -47,9 +46,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
-import codes.swistak.batterymonitor.ui.help.CHARGING_TOOLS_HELP_TOPIC
 import codes.swistak.batterymonitor.ui.help.HelpScreen
-import codes.swistak.batterymonitor.ui.help.MONITORING_HELP_TOPIC
 import codes.swistak.batterymonitor.ui.help.helpSections
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.settings.SettingsScreen
@@ -58,9 +55,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.io.File
-import java.io.FileOutputStream
-import java.util.Locale
 
 class SettingsNavigationInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -198,135 +192,80 @@ class SettingsNavigationInstrumentedTest {
     }
 
     @Test
-    fun contextual_help_renders_in_English_and_Polish_at_large_font_size() = withHost {
-        for (language in listOf("en", "pl")) {
-            val configuration = Configuration(activity.resources.configuration).apply {
-                setLocale(Locale.forLanguageTag(language))
-                fontScale = 1.5f
-            }
-            val localized = activity.createConfigurationContext(configuration)
-            val quote = if (language == "pl") "„" else "“"
-            for (label in listOf(
-                R.string.time_remaining, R.string.time_since_status_change, R.string.vital_signs
-            )) {
-                assertTrue(
-                    localized.getString(R.string.pref_top_line_content_help)
-                        .contains(quote + localized.getString(label) + "”")
-                )
-            }
-            assertEquals(
-                if (language == "pl") "Usuń alarm" else "Delete alarm",
-                localized.getString(R.string.menu_delete_alarm)
-            )
-            assertTrue(
-                localized.getString(R.string.alarms_overview_help)
-                    .contains(quote + localized.getString(R.string.menu_delete_alarm) + "”")
-            )
-            for (topic in listOf(
-                SettingsContract.KEY_ADVANCED_SETTINGS,
-                MONITORING_HELP_TOPIC,
-                CHARGING_TOOLS_HELP_TOPIC,
-                SettingsContract.KEY_OTHER_SETTINGS,
-                SettingsContract.KEY_NOTIFICATION_SETTINGS,
-                SettingsContract.KEY_ALARMS_SETTINGS
-            )) {
-                var safeContentBounds = Rect.Zero
-                main {
-                    activity.setContent {
-                        CompositionLocalProvider(
-                            LocalContext provides localized,
-                            LocalResources provides localized.resources,
-                            LocalConfiguration provides configuration,
-                            LocalDensity provides Density(
-                                configuration.densityDpi / 160f, configuration.fontScale
-                            )
-                        ) {
-                            AppBatteryTheme {
-                                Box(
-                                    Modifier
-                                        .fillMaxSize()
-                                        .safeDrawingPadding()
-                                ) {
-                                    Box(
-                                        Modifier
-                                            .fillMaxSize()
-                                            .onGloballyPositioned {
-                                                safeContentBounds = it.boundsInRoot()
-                                            }) { HelpScreen(topic) }
-                                }
-                            }
-                        }
-                    }
-                }
-                val sections = helpSections(topic, Build.VERSION.SDK_INT, null)
-                for ((index, section) in sections.withIndex()) {
-                    await { nodes().any { it.config.contains(SemanticsActions.ScrollToIndex) } }
-                    main {
-                        assertTrue(
-                            nodes().first { it.config.contains(SemanticsActions.ScrollToIndex) }.config[SemanticsActions.ScrollToIndex].action?.invoke(
-                                index
-                            ) == true
-                        )
-                    }
-                    val firstText = localized.getString(section.paragraphs.first().textResource)
-                    await {
-                        nodes().any { node ->
-                            node.config.getOrNull(SemanticsProperties.Text)
-                                ?.any { it.text == firstText } == true
-                        }
-                    }
-                    main {
-                        for (node in nodes().filter { it.config.contains(SemanticsActions.GetTextLayoutResult) }) {
-                            val layouts = mutableListOf<TextLayoutResult>()
-                            node.config[SemanticsActions.GetTextLayoutResult].action?.invoke(layouts)
-                            for (layout in layouts) assertFalse(
-                                "$language / $topic: ${layout.layoutInput.text.text.take(80)}",
-                                layout.hasVisualOverflow
-                            )
-                        }
-                    }
-                    instrumentation.waitForIdleSync()
-                    val directory =
-                        requireNotNull(instrumentation.targetContext.getExternalFilesDir("help-audit"))
-                    assertTrue(directory.isDirectory || directory.mkdirs())
-                    val screenshot = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
-                    try {
-                        FileOutputStream(File(directory, "$language-$topic-$index.png")).use {
-                            assertTrue(screenshot.compress(Bitmap.CompressFormat.PNG, 100, it))
-                        }
-                    } finally {
-                        screenshot.recycle()
-                    }
-                }
-                main {
-                    assertTrue(
-                        nodes().first { it.config.contains(SemanticsActions.ScrollBy) }.config[SemanticsActions.ScrollBy].action?.invoke(
-                            0f, 100_000f
-                        ) == true
+    fun contextual_help_content_is_reachable_at_large_font_size() = withHost {
+        val topic = SettingsContract.KEY_NOTIFICATION_SETTINGS
+        val configuration =
+            Configuration(activity.resources.configuration).apply { fontScale = 1.5f }
+        val largeText = activity.createConfigurationContext(configuration)
+        var safeContentBounds = Rect.Zero
+        main {
+            activity.setContent {
+                CompositionLocalProvider(
+                    LocalContext provides largeText,
+                    LocalResources provides largeText.resources,
+                    LocalConfiguration provides configuration,
+                    LocalDensity provides Density(
+                        configuration.densityDpi / 160f, configuration.fontScale
                     )
-                }
-                val finalText = localized.getString(sections.last().paragraphs.last().textResource)
-                await {
-                    val range =
-                        nodes().first { it.config.contains(SemanticsProperties.VerticalScrollAxisRange) }.config[SemanticsProperties.VerticalScrollAxisRange]
-                    range.maxValue()
-                        .isFinite() && range.value() >= range.maxValue() - 0.01f && nodes().any {
-                        it.config.getOrNull(SemanticsProperties.Text)
-                            ?.any { text -> text.text == finalText } == true && it.boundsInRoot.height > 0 && safeContentBounds.height > 0 && it.boundsInRoot.top >= safeContentBounds.top && it.boundsInRoot.bottom <= safeContentBounds.bottom
+                ) {
+                    AppBatteryTheme {
+                        Box(
+                            Modifier
+                                .fillMaxSize()
+                                .safeDrawingPadding()
+                        ) {
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .onGloballyPositioned {
+                                        safeContentBounds = it.boundsInRoot()
+                                    }) { HelpScreen(topic) }
+                        }
                     }
                 }
-                instrumentation.waitForIdleSync()
-                val directory =
-                    requireNotNull(instrumentation.targetContext.getExternalFilesDir("help-audit"))
-                assertTrue(directory.isDirectory || directory.mkdirs())
-                val screenshot = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
-                try {
-                    FileOutputStream(File(directory, "$language-$topic-end.png")).use {
-                        assertTrue(screenshot.compress(Bitmap.CompressFormat.PNG, 100, it))
-                    }
-                } finally {
-                    screenshot.recycle()
-                }
+            }
+        }
+        await {
+            nodes().any {
+                it.config.getOrNull(SemanticsProperties.Text)
+                    ?.any { text -> text.text == largeText.getString(R.string.pref_cat_channel_settings) } == true
+            }
+        }
+        val sections = helpSections(topic, Build.VERSION.SDK_INT, null)
+        main {
+            assertTrue(
+                nodes().first { it.config.contains(SemanticsActions.ScrollToIndex) }.config[SemanticsActions.ScrollToIndex].action?.invoke(
+                    sections.lastIndex
+                ) == true
+            )
+        }
+        await { nodes().any { it.config.contains(SemanticsActions.ScrollBy) } }
+        main {
+            assertTrue(
+                nodes().first { it.config.contains(SemanticsActions.ScrollBy) }.config[SemanticsActions.ScrollBy].action?.invoke(
+                    0f,
+                    100_000f
+                ) == true
+            )
+        }
+        val finalText = largeText.getString(sections.last().paragraphs.last().textResource)
+        await {
+            val range = nodes().first {
+                it.config.contains(SemanticsProperties.VerticalScrollAxisRange)
+            }.config[SemanticsProperties.VerticalScrollAxisRange]
+            range.maxValue()
+                .isFinite() && range.value() >= range.maxValue() - 0.01f && nodes().any {
+                it.config.getOrNull(SemanticsProperties.Text)
+                    ?.any { text -> text.text == finalText } == true && it.boundsInRoot.height > 0 && safeContentBounds.height > 0 && it.boundsInRoot.top >= safeContentBounds.top && it.boundsInRoot.bottom <= safeContentBounds.bottom
+            }
+        }
+        main {
+            for (node in nodes().filter { it.config.contains(SemanticsActions.GetTextLayoutResult) }) {
+                val layouts = mutableListOf<TextLayoutResult>()
+                node.config[SemanticsActions.GetTextLayoutResult].action?.invoke(layouts)
+                for (layout in layouts) assertFalse(
+                    "Large-text help must remain readable", layout.hasVisualOverflow
+                )
             }
         }
     }

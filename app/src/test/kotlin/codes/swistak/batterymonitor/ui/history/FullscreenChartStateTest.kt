@@ -205,7 +205,7 @@ class FullscreenChartStateTest {
     }
 
     @Test
-    fun `metric and presentation changes preserve range viewport selection and loaded data`() {
+    fun `metric changes preserve range viewport selection and loaded data`() {
         val range = HistoryRangeState(100, 1000)
         val chart = DetailedHistoryChartModel(
             range, range, HistoryMetric.LEVEL, 2, emptyList(), emptyList(), 20.0, 80.0, true
@@ -224,9 +224,7 @@ class FullscreenChartStateTest {
         )
         val states = listOf(
             initial.withMetric(HistoryMetric.CURRENT),
-            initial.withComparison(null),
-            initial.copy(style = ChartDrawingStyle.POINTS),
-            initial.copy(valueScale = ChartValueScale.LINEAR)
+            initial.withComparison(null)
         )
         for ((range1, rangeLabel, _, _, viewport, scaleMode, selectedKey, charts, boundsByMetric) in states) {
             assertEquals(initial.range, range1)

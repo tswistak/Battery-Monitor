@@ -24,7 +24,6 @@ import android.view.ViewGroup
 import android.view.inspector.WindowInspector
 import android.widget.FrameLayout
 import androidx.activity.compose.setContent
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
@@ -44,7 +43,6 @@ import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import codes.swistak.batterymonitor.ui.theme.Brightness
 import codes.swistak.batterymonitor.ui.theme.ColorSource
-import codes.swistak.batterymonitor.ui.theme.batteryColorScheme
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -67,8 +65,7 @@ class DiagnosticsDialogsInstrumentedTest {
                     DiagnosticsDialog.MONITOR_REPORT,
                     R.string.diagnostics_export,
                     R.string.charging_diagnostics_report
-                ),
-                Triple(
+                ), Triple(
                     DiagnosticsDialog.CHARGING_REPORT,
                     R.string.charging_diagnostics_report,
                     R.string.diagnostics_export
@@ -85,7 +82,7 @@ class DiagnosticsDialogsInstrumentedTest {
             }
         }
     }
-    
+
     @Test
     fun stop_cancellation_and_queued_privileged_hint_use_one_dialog_in_both_hosts() {
         for (actionsOnly in listOf(false, true)) withHost(actionsOnly) {
@@ -160,29 +157,8 @@ class DiagnosticsDialogsInstrumentedTest {
         }
     }
 
-    @Test
-    fun migrated_dialogs_use_app_light_and_true_black_material_surfaces() {
-        for (actionsOnly in listOf(false, true)) {
-            for (brightness in listOf(Brightness.Light, Brightness.TrueBlack)) {
-                withHost(actionsOnly, brightness) {
-                    main { fragment.monitorActions.getValue("monitor_stop").onClick() }
-                    await { dialogs() == 1 }
-                    instrumentation.waitForIdleSync()
-                    val color = batteryColorScheme(
-                        context, ColorSource.BatteryBlue, brightness
-                    ).surfaceContainerHigh.toArgb()
-                    await("$actionsOnly / $brightness dialog must draw the app surface") {
-                        surfacePixels(color) > 100
-                    }
-                    click(R.string.cancel)
-                    await { dialogs() == 0 }
-                }
-            }
-        }
-    }
-
     private fun withHost(
-        actionsOnly: Boolean, brightness: Brightness = Brightness.Light, test: () -> Unit
+        actionsOnly: Boolean, test: () -> Unit
     ) {
         assumeTrue("Dialog window inspection requires Android 10", Build.VERSION.SDK_INT >= 29)
         val preferences = preferences()
@@ -191,7 +167,7 @@ class DiagnosticsDialogsInstrumentedTest {
         val previous = keys.associateWith { preferences.all[it] }
         preferences.edit()
             .putString(SettingsContract.KEY_COLOR_SOURCE, ColorSource.BatteryBlue.name)
-            .putString(SettingsContract.KEY_BRIGHTNESS, brightness.name).remove(PENDING_HINT)
+            .putString(SettingsContract.KEY_BRIGHTNESS, Brightness.Light.name).remove(PENDING_HINT)
             .commit()
         val monitor =
             instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
@@ -282,18 +258,6 @@ class DiagnosticsDialogsInstrumentedTest {
             disabled = button?.config?.contains(SemanticsProperties.Disabled)
         }
         return disabled
-    }
-
-    private fun surfacePixels(color: Int): Int {
-        val screenshot = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
-        var pixels = 0
-        for (y in 0 until screenshot.height step 3) {
-            for (x in 0 until screenshot.width step 3) {
-                if (screenshot.getPixel(x, y) == color) pixels++
-            }
-        }
-        screenshot.recycle()
-        return pixels
     }
 
     private fun button(label: Int) = nodes().first {

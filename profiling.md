@@ -91,6 +91,29 @@ Select another existing `@Test` method from [BatteryPerformanceBenchmark.kt](mac
 
 If raw input injection is unavailable, use `-e interactionMethod accessibility` and wake/unlock the device manually. This uses accessibility actions and excludes raw fullscreen panning; compare runs using the same interaction method. Keep `privileged` and `monitoring` modes identical between comparable runs. `CompilationMode.Ignore` preserves existing ART compilation state rather than standardizing it. Full composition tracing can be enabled separately on Android 11/API 30 onward when supported; keep the tracing setting consistent.
 
+### Interpreting `currentIdleUpdates`
+
+This scenario retains its existing name and fixed Current State observation window. The standard backend collects only `FrameTimingMetric`: it describes frames rendered while this screen is idle. It does not measure battery acquisition cost, background monitoring overhead, CPU efficiency, power or wakeups. The legacy ATrace backend retains its separate measurements and limitations.
+
+The `current_idle_scope` status record reports `visibleUpdatesObserved=unavailable`: this harness has no reliable observer of battery-driven visible changes. A configured acquisition interval does not establish that a displayed value changed. Do not interpret absent frame samples as zero cost or as good performance; retain missing metrics as unavailable and use the separate acquisition/profiling probes for those questions.
+
+### Production journal checks and the manual historical SQL experiment
+
+`HistorySynchronizationVerification#journalContract` runs `ProfileJournalVerification.verifyContract`, which uses current production `LogDatabase` methods. It remains the maintained journal correctness check. Select individual verification methods with `finalVerification=true`, an owned `additionalTestOutputDir`, and a distinct `phase`; these optional profile checks are separate from ordinary functional test execution.
+
+`HistorySynchronizationVerification#journalWriteCost` is an optional, manual historical SQL experiment. It compares hand-written schema 6 and schema 7 SQL paths and does not validate current production performance. Its report is labeled `historical-journal-sql-experiment`; the target report adds `historicalSqlExperimentExecuted` and `productionPerformanceValidated=false`. `journalMode=correctness` remains the default and does not run this experiment.
+
+With the isolated profile APKs already installed and the variables above set, use fresh output directories and select one method explicitly:
+
+```sh
+rtk proxy "$ADB" -s "$SERIAL" shell am instrument -w -r \
+  -e class codes.swistak.batterymonitor.macrobenchmark.HistorySynchronizationVerification#journalContract \
+  -e finalVerification true -e phase journal-contract-01 \
+  -e additionalTestOutputDir "$REMOTE_OUTPUT" "$RUNNER"
+```
+
+For a deliberate historical experiment, select `#journalWriteCost` instead and add `-e journalPattern single -e journalInitialRows 0`. Existing patterns are `single`, `periodic128`, `bulkAdd5000`, and `bulkReplace5000`; initial rows are `0` or `128`. Keep those synthetic results separate from production correctness and performance reports. Neither experiment completion nor matching synthetic rows proves production performance.
+
 ## Optional root, Shizuku and legacy tracing
 
 These options depend on available capabilities, independently of device brand. Use the same `am instrument` command with the appropriate method/arguments and a fresh output directory for each phase.

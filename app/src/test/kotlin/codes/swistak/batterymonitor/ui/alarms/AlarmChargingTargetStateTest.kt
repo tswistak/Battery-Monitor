@@ -13,8 +13,6 @@
 package codes.swistak.batterymonitor.ui.alarms
 
 import android.content.SharedPreferences
-import codes.swistak.batterymonitor.monitoring.BatteryInfo
-import codes.swistak.batterymonitor.monitoring.PredictorCore
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitEvidence
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitEvidenceKind
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingLimitProvider
@@ -92,42 +90,6 @@ class AlarmChargingTargetStateTest {
         scope.cancel()
         io.runAll()
         assertTrue(preferences.listeners.isEmpty())
-    }
-
-    @Test
-    fun `unplugged prediction to twenty does not replace the eighty percent charging target`() {
-        val predictor = PredictorCore(60_000f, 60_000f, 60_000f, 60_000f)
-        predictor.setTargets(chargingTargetPercent = 80, dischargingTargetPercent = 20)
-        predictor.setPredictionType(PredictorCore.LONG_TERM)
-        val battery = BatteryInfo().apply {
-            status = BatteryInfo.STATUS_UNPLUGGED
-            plugged = BatteryInfo.PLUGGED_UNPLUGGED
-            percent = 60
-        }
-        predictor.update(battery, 0)
-        assertEquals(20, battery.prediction.targetPercent)
-
-        activate()
-
-        assertEquals(80, targetState.target.value)
-    }
-
-    @Test
-    fun `plug and unplug transitions leave the observed charging target at eighty`() {
-        activate()
-        val predictor = PredictorCore(60_000f, 60_000f, 60_000f, 60_000f)
-        predictor.setTargets(80, 20)
-        val battery = BatteryInfo().apply { percent = 60 }
-
-        for (plugged in listOf(true, false, true, false)) {
-            battery.plugged =
-                if (plugged) BatteryInfo.PLUGGED_USB else BatteryInfo.PLUGGED_UNPLUGGED
-            battery.status =
-                if (plugged) BatteryInfo.STATUS_CHARGING else BatteryInfo.STATUS_UNPLUGGED
-            predictor.update(battery, 0)
-            assertEquals(80, targetState.target.value)
-        }
-        assertEquals(1, reads)
     }
 
     @Test

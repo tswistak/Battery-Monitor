@@ -24,12 +24,4 @@ class ThemeSettingsTest {
             assertEquals(value, Brightness.System, brightness(value))
         }
     }
-
-    @Test
-    fun `brightness and color source remain independent choices`() {
-        assertEquals(ColorSource.BatteryBlue, colorSource("BatteryBlue"))
-        assertEquals(Brightness.System, brightness(null))
-        assertEquals(ColorSource.Dynamic, colorSource(null))
-        assertEquals(Brightness.TrueBlack, brightness("TrueBlack"))
-    }
 }

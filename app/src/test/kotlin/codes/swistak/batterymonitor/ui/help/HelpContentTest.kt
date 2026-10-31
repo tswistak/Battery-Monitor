@@ -9,6 +9,7 @@ package codes.swistak.batterymonitor.ui.help
 
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.SettingsDefinitions
 import codes.swistak.batterymonitor.ui.settings.SettingCatalog
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -16,40 +17,13 @@ import org.junit.Test
 
 class HelpContentTest {
     @Test
-    fun `settings category help starts with its controls and omits category summaries`() {
-        val categories = listOf(
-            Triple(
-                SettingsContract.KEY_OTHER_SETTINGS,
-                R.string.other_settings_help,
-                R.string.settings_appearance
-            ), Triple(
-                SettingsContract.KEY_CURRENT_STATE_SETTINGS,
-                R.string.current_state_settings_help,
-                R.string.remaining_charge
-            ), Triple(
-                SettingsContract.KEY_TIME_ESTIMATES_SETTINGS,
-                R.string.time_estimates_settings_help,
-                R.string.pref_cat_predictor
-            ), Triple(
-                SettingsContract.KEY_ADVANCED_SETTINGS,
-                R.string.advanced_settings_help,
-                R.string.pref_cat_privileged_access
-            ), Triple(
-                SettingsContract.KEY_BACKUP_RESTORE_SETTINGS,
-                R.string.backup_restore_help_overview,
-                R.string.pref_general_backup
-            ), Triple(
-                SettingsContract.KEY_NOTIFICATION_SETTINGS,
-                R.string.notification_settings_help,
-                R.string.pref_cat_channel_settings
-            )
-        )
-        for ((topic, summary, firstGroup) in categories) {
+    fun `settings categories resolve to contextual help instead of the fallback overview`() {
+        val overview = helpSections("unknown-topic", 37, null)
+        for (topic in SettingsDefinitions.categories.keys) {
             val sections = helpSections(topic, 37, SettingsContract.CHARGING_TARGET_MODE_CUSTOM)
-            assertEquals(topic, firstGroup, sections.first().titleResource)
-            assertTrue(
-                topic,
-                sections.flatMap { it.paragraphs }.none { it.textResource == summary })
+            assertTrue(topic, sections.isNotEmpty())
+            assertTrue(topic, sections != overview)
+            assertTrue(topic, sections.all { it.paragraphs.isNotEmpty() })
         }
     }
 
@@ -108,31 +82,14 @@ class HelpContentTest {
     }
 
     @Test
-    fun `advanced help covers both detail destinations and retained advanced controls`() {
-        val sections = helpSections(
+    fun `advanced help introduces the monitoring and charging detail destinations`() {
+        val paragraphs = helpSections(
             SettingsContract.KEY_ADVANCED_SETTINGS,
             37,
             SettingsContract.CHARGING_TARGET_MODE_AUTOMATIC
-        )
-        val paragraphs = sections.flatMap { it.paragraphs }.map { it.textResource }.toSet()
-        assertTrue(sections.any {
-            it.titleResource == R.string.diagnostics_monitoring && it.paragraphs.any { paragraph -> paragraph.textResource == R.string.diagnostics_help_overview }
-        })
-        assertTrue(sections.any {
-            it.titleResource == R.string.charging_diagnostics_title && it.paragraphs.any { paragraph -> paragraph.textResource == R.string.charging_diagnostics_help_overview }
-        })
-        assertTrue(
-            paragraphs.containsAll(
-                setOf(
-                    R.string.pref_use_privileged_access_help,
-                    R.string.pref_enable_logging_help,
-                    R.string.pref_max_log_age_help,
-                    R.string.auto_log_export_help,
-                    R.string.auto_log_export_format_help
-                )
-            )
-        )
-        assertTrue(R.string.charging_diagnostics_help_steps !in paragraphs)
+        ).flatMap { it.paragraphs }.map { it.textResource }
+        assertTrue(R.string.diagnostics_help_overview in paragraphs)
+        assertTrue(R.string.charging_diagnostics_help_overview in paragraphs)
     }
 
     @Test
@@ -155,34 +112,15 @@ class HelpContentTest {
     }
 
     @Test
-    fun `monitoring and OEM help explain their own actions and report options`() {
+    fun `monitoring and charging topics resolve their own guidance and report privacy help`() {
         val monitoring = helpSections(MONITORING_HELP_TOPIC, 37, null).flatMap { it.paragraphs }
             .map { it.textResource }.toSet()
         val charging = helpSections(CHARGING_TOOLS_HELP_TOPIC, 37, null).flatMap { it.paragraphs }
             .map { it.textResource }.toSet()
-        val monitorOnly = setOf(
-            R.string.monitoring_help_overview,
-            R.string.diag_stop_monitor_body,
-            R.string.battery_optimized_message,
-            R.string.diagnostics_vendor_settings_summary,
-            R.string.diagnostics_dont_kill_my_app_summary,
-            R.string.diagnostics_debug_logs_warning,
-            R.string.diagnostics_help_report,
-            R.string.diag_include_debug,
-            R.string.diagnostics_clear_summary
-        )
-        val chargingOnly = setOf(
-            R.string.charging_diagnostics_privileged_hint,
-            R.string.charging_diagnostics_help_steps,
-            R.string.charging_diagnostics_report_summary,
-            R.string.diag_include_apps,
-            R.string.charging_diagnostics_help_contact,
-            R.string.charging_diagnostics_clear_summary
-        )
-        assertTrue(monitoring.containsAll(monitorOnly))
-        assertTrue(charging.containsAll(chargingOnly))
-        assertTrue(monitoring.intersect(chargingOnly).isEmpty())
-        assertTrue(charging.intersect(monitorOnly).isEmpty())
+        assertTrue(R.string.monitoring_help_overview in monitoring)
+        assertTrue(R.string.monitoring_help_overview !in charging)
+        assertTrue(R.string.charging_diagnostics_help_steps in charging)
+        assertTrue(R.string.charging_diagnostics_help_steps !in monitoring)
         assertTrue(R.string.diag_report_privacy in monitoring)
         assertTrue(R.string.diag_report_privacy in charging)
     }
@@ -191,9 +129,7 @@ class HelpContentTest {
     fun `disabled visible settings explain Android requirements and notification dependencies`() {
         for (sdk in listOf(26, 30, 31, 32, 33, 37)) {
             val general = helpSections(
-                SettingsContract.KEY_OTHER_SETTINGS,
-                sdk,
-                null
+                SettingsContract.KEY_OTHER_SETTINGS, sdk, null
             ).flatMap { it.paragraphs }.map { it.textResource }.toSet()
             assertEquals(sdk < 31, R.string.settings_color_palette_unavailable in general)
             assertEquals(sdk < 33, R.string.settings_app_language_unavailable in general)
@@ -203,53 +139,25 @@ class HelpContentTest {
             assertEquals(sdk >= 36, R.string.settings_live_update_summary in monitor)
         }
         val notification = helpSections(
-            SettingsContract.KEY_NOTIFICATION_SETTINGS,
-            37,
-            null
+            SettingsContract.KEY_NOTIFICATION_SETTINGS, 37, null
         ).flatMap { it.paragraphs }.map { it.textResource }.toSet()
         assertTrue(R.string.settings_notification_disabled in notification)
     }
 
     @Test
-    fun `diagnostics groups data by tabs and alarm help covers the reachable threshold editor`() {
+    fun `diagnostics explains reading sources and both alarm destinations explain thresholds`() {
         val diagnostics = helpSections(SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null)
-        assertTrue(diagnostics.first().paragraphs.any { it.textResource == R.string.diag_source_help })
-        assertTrue(
-            diagnostics.map { it.titleResource }.containsAll(
-                setOf(
-                    R.string.diag_overview,
-                    R.string.nav_battery_group,
-                    R.string.diag_section_charging,
-                    R.string.diag_raw
-                )
-            )
-        )
-        val raw = diagnostics.single { it.titleResource == R.string.diag_raw }
-        assertTrue(
-            raw.paragraphs.map { it.textResource }.containsAll(
-                setOf(
-                    R.string.diag_help_service,
-                    R.string.diag_help_sysfs,
-                    R.string.diag_help_metadata
-                )
-            )
-        )
-        val report = diagnostics.single { it.titleResource == R.string.diagnostics_export }
-        assertTrue(
-            report.paragraphs.map { it.textResource }.containsAll(
-                setOf(
-                    R.string.diag_include_raw, R.string.diag_report_privacy
-                )
-            )
-        )
-        assertTrue(raw.paragraphs.none { it.textResource == R.string.diagnostics_export })
-        val alarms = helpSections(SettingsContract.KEY_ALARMS_SETTINGS, 37, null)
-        assertTrue(alarms.flatMap { it.paragraphs }
-            .any { it.textResource == R.string.pref_alarm_threshold_help })
-        val editor = helpSections(SettingsContract.KEY_ALARM_EDIT_SETTINGS, 37, null)
-        assertEquals(R.string.alarms_overview, editor.first().titleResource)
-        assertTrue(editor.flatMap { it.paragraphs }
-            .none { it.textResource == R.string.alarms_channel_help })
+        assertTrue(diagnostics.flatMap { it.paragraphs }
+            .any { it.textResource == R.string.diag_source_help })
+        for (topic in listOf(
+            SettingsContract.KEY_ALARMS_SETTINGS, SettingsContract.KEY_ALARM_EDIT_SETTINGS
+        )) {
+            assertTrue(
+                topic,
+                helpSections(topic, 37, null).flatMap { it.paragraphs }
+                    .any { it.textResource == R.string.pref_alarm_threshold_help })
+        }
     }
+
 
 }

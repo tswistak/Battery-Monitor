@@ -14,14 +14,12 @@
     along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 import { expect } from '@wdio/globals';
-import { cleanScenario, readState, seedBackupData, seedSentinelData } from '../support/device.js';
+import { cleanScenario, readState, seedSentinelData, stageGeneralImportFixture } from '../support/device.js';
 import {
-    acknowledgeMessage,
     chooseImportFile,
     clickText,
     openBackupAndRestoreScreen,
     requireText,
-    saveBackupThroughFilePicker,
 } from '../support/ui.js';
 
 describe('Cancelled general backup import', () => {
@@ -30,16 +28,12 @@ describe('Cancelled general backup import', () => {
     });
 
     it('preserves all data when the category selection is cancelled', async () => {
-        await seedBackupData();
-        await openBackupAndRestoreScreen();
-        await clickText('Export general backup');
-        await saveBackupThroughFilePicker('current-general.zip');
-        await acknowledgeMessage('General backup exported successfully');
         await seedSentinelData();
+        await stageGeneralImportFixture();
         const before = await readState();
         await openBackupAndRestoreScreen();
 
-        await chooseImportFile('Import general backup', 'current-general.zip');
+        await chooseImportFile('Import general backup', 'prepared-general.zip');
         await requireText('Choose what you want to restore.');
         await clickText('Cancel');
 

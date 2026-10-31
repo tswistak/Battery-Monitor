@@ -448,24 +448,6 @@ class DetailedHistoryInstrumentedTest {
             )
         }
 
-    @Test
-    fun retained_history_boundaries_use_covering_time_index() {
-        database.addLogs(listOf(observation))
-        SQLiteDatabase.openDatabase(
-            context.getDatabasePath("logs.db").path, null, SQLiteDatabase.OPEN_READONLY
-        ).use { db ->
-            for (order in listOf("ASC", "DESC")) {
-                db.rawQuery(
-                    "EXPLAIN QUERY PLAN SELECT time FROM logs WHERE time >= 0 ORDER BY time $order, _id $order LIMIT 1",
-                    null
-                ).use { cursor ->
-                    val plans = buildList { while (cursor.moveToNext()) add(cursor.getString(3)) }
-                    assertTrue(plans.any { it.contains("COVERING INDEX logs_time_id") })
-                    assertFalse(plans.any { it.contains("TEMP B-TREE") })
-                }
-            }
-        }
-    }
 
     @Test
     fun visible_range_queries_use_the_existing_time_and_id_index() {

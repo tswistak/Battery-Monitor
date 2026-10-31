@@ -81,31 +81,19 @@ class StartupDialogPolicyTest {
     }
 
     @Test
-    fun `an acknowledged version stays quiet on every later launch`() {
-        repeat(3) {
-            assertEquals(
-                ChangelogVersionDecision(null, false),
-                changelogVersionDecision(20L, 20L, false, 100L, 200L)
-            )
-        }
+    fun `an acknowledged installed version has no pending changelog`() {
+        assertEquals(
+            ChangelogVersionDecision(null, false),
+            changelogVersionDecision(20L, 20L, false, 100L, 200L)
+        )
     }
 
     @Test
-    fun `an interrupted presentation remains pending without acknowledgement`() {
-        repeat(3) {
-            val decision = changelogVersionDecision(21L, 20L, false, 100L, 200L)
+    fun `pending upgrade decisions do not acknowledge an interrupted presentation`() {
+        for (acknowledged in listOf(null, 20L)) {
+            val decision = changelogVersionDecision(21L, acknowledged, false, 100L, 200L)
             assertTrue(decision.pending)
             assertNull(decision.baselineVersion)
-        }
-    }
-
-    @Test
-    fun `an interrupted first-feature upgrade also remains pending`() {
-        repeat(3) {
-            assertEquals(
-                ChangelogVersionDecision(null, true),
-                changelogVersionDecision(21L, null, false, 100L, 200L)
-            )
         }
     }
 
@@ -141,14 +129,6 @@ class StartupDialogPolicyTest {
         val installed = Int.MAX_VALUE.toLong() + 10L
         assertTrue(changelogVersionDecision(installed, installed - 1L, false, 1L, 2L).pending)
         assertEquals(installed, acknowledgeVersion(installed, null))
-    }
-
-    @Test
-    fun `debug version-name changes cannot affect version-code decisions`() {
-        // The policy accepts no versionName: release and debug suffixes share this decision.
-        for (firstRun in listOf(false, true)) {
-            assertFalse(changelogVersionDecision(20L, 20L, firstRun, 100L, 200L).pending)
-        }
     }
 
     @Test
@@ -242,16 +222,12 @@ class StartupDialogPolicyTest {
     }
 
     @Test
-    fun `unchanged startup state retains one presentation until completion`() {
-        val progress = StartupProgress(firstRun = false, changelogPending = true)
-        repeat(3) {
-            assertEquals(
-                StartupPresentation.CHANGELOG, nextStartupPresentation(progress, environment())
-            )
-        }
+    fun `completed startup prompts leave no presentation`() {
         assertEquals(
             StartupPresentation.NONE, nextStartupPresentation(
-                progress.copy(changelogPending = false, batteryPromptShown = true), environment()
+                StartupProgress(
+                    firstRun = false, changelogPending = false, batteryPromptShown = true
+                ), environment()
             )
         )
     }

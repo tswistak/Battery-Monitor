@@ -15,15 +15,15 @@
 */
 package codes.swistak.batterymonitor.monitoring
 
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
-import android.os.Messenger
+import android.content.Intent
+import androidx.core.content.pm.PackageInfoCompat
 import androidx.test.platform.app.InstrumentationRegistry
+import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.app.PersistentFragment
+import codes.swistak.batterymonitor.app.StartupDialogViewModel
 import codes.swistak.batterymonitor.monitoring.presentation.CurrentDemand
-import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
+import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.SettingsSnapshot
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -31,111 +31,82 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class CurrentDemandLifecycleInstrumentedTest {
-    private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
-
     @Test
-    fun rapid_reconnect_restores_desired_demand_and_its_token_without_a_boolean_transition_observer() {
-        val messages = mutableListOf<Pair<Int, Bundle>>()
-        lateinit var fragment: PersistentFragment
-        var token = 0L
-        instrumentation.runOnMainSync {
-            fragment = fragment()
-            val service = service(messages)
-            val firstGeneration = fragment.monitoring.onServiceConnected()
-            handshake(fragment, service, firstGeneration, "first")
-            fragment.setCurrentDemand(CurrentDemand(2_000, false))
-            token = field(fragment, "currentToken") as Long
-            disconnect(fragment)
-            assertFalse(fragment.monitoring.current.value.connected)
-            assertEquals(CurrentDemand(2_000, false), field(fragment, "currentDemand"))
-            val nextGeneration = fragment.monitoring.onServiceConnected()
-            handshake(fragment, service, nextGeneration, "second")
-            assertTrue(fragment.monitoring.current.value.connected)
-            val sample = CurrentSample(BatteryCurrentReading(-400_000, "fake"), null)
+    fun finishing_the_activity_clears_its_fragments_demand_and_rejects_a_queued_reading() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val context = instrumentation.targetContext
+        val preferences = context.getSharedPreferences(SettingsContract.SP_MAIN_FILE, 0)
+        val settings = context.getSharedPreferences(SettingsContract.SETTINGS_FILE, 0)
+        val preferencesBefore = SettingsSnapshot.capture(preferences)
+        val settingsBefore = SettingsSnapshot.capture(settings)
+        val desiredBefore = MonitoringDesiredState.read(context)
+        var activity: BatteryInfoActivity? = null
+        try {
+            assertTrue(MonitoringDesiredState.write(context, false))
+            val version = PackageInfoCompat.getLongVersionCode(
+                context.packageManager.getPackageInfo(context.packageName, 0)
+            )
             assertTrue(
-                fragment.monitoring.publishCurrent(
-                    nextGeneration, "second", 0, token, sample
-                )
+                preferences.edit().putBoolean(SettingsContract.KEY_FIRST_RUN, false)
+                    .putLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, version).commit()
             )
-            assertFalse(
-                fragment.monitoring.publishCurrent(
-                    firstGeneration, "first", 1, token, sample
+            activity = instrumentation.startActivitySync(
+                Intent(
+                    context,
+                    BatteryInfoActivity::class.java
+                ).putExtra(BatteryInfoService.EXTRA_EDIT_ALARMS, true)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            ) as BatteryInfoActivity
+            val launched = activity
+            lateinit var fragment: PersistentFragment
+            var generation = 0
+            var token = 0L
+            instrumentation.runOnMainSync {
+                launched.supportFragmentManager.executePendingTransactions()
+                fragment = requireNotNull(
+                    launched.supportFragmentManager.findFragmentByTag(PersistentFragment.FRAG_TAG)
+                ) as PersistentFragment
+                fragment.monitoring.start()
+                generation = fragment.monitoring.onServiceConnected()
+                assertTrue(fragment.monitoring.onHandshake(generation, "lifecycle-test"))
+                val demand = CurrentDemand(2_000, false)
+                fragment.setCurrentDemand(demand)
+                assertEquals(demand, field(fragment, "currentDemand"))
+                token = field(fragment, "currentToken") as Long
+                assertTrue(
+                    fragment.monitoring.publishCurrent(
+                        generation,
+                        "lifecycle-test",
+                        0,
+                        token,
+                        CurrentSample(BatteryCurrentReading(-400_000, "controlled"), null)
+                    )
                 )
-            )
-        }
-        instrumentation.waitForIdleSync()
-        val restored =
-            messages.last { it.first == BatteryInfoService.RemoteConnection.SERVICE_SET_CURRENT_DEMAND }.second
-        assertTrue(restored.getBoolean("current_active"))
-        assertEquals(token, restored.getLong("current_token"))
-        instrumentation.runOnMainSync {
-            fragment.onStop()
-            fragment.onDestroy()
-        }
-    }
-
-    @Test
-    fun lifecycle_stop_clears_desired_demand_so_reconnect_cannot_restore_it() {
-        val messages = mutableListOf<Pair<Int, Bundle>>()
-        instrumentation.runOnMainSync {
-            val fragment = fragment()
-            val service = service(messages)
-            val firstGeneration = fragment.monitoring.onServiceConnected()
-            handshake(fragment, service, firstGeneration, "first")
-            fragment.setCurrentDemand(CurrentDemand(2_000, true))
-            val oldToken = field(fragment, "currentToken") as Long
-            fragment.onStop()
-            assertNull(field(fragment, "currentDemand"))
-            fragment.monitoring.start()
-            val nextGeneration = fragment.monitoring.onServiceConnected()
-            handshake(fragment, service, nextGeneration, "second")
-            fragment.refreshCurrent()
-            assertFalse(
-                fragment.monitoring.publishCurrent(
-                    nextGeneration,
-                    "second",
-                    0,
-                    oldToken,
-                    CurrentSample(BatteryCurrentReading(-400_000, "fake"), null)
-                )
-            )
-            fragment.onStop()
-            fragment.onDestroy()
-        }
-        instrumentation.waitForIdleSync()
-        assertTrue(messages.none { it.first == BatteryInfoService.RemoteConnection.SERVICE_REFRESH_CURRENT })
-        val demandMessages =
-            messages.filter { it.first == BatteryInfoService.RemoteConnection.SERVICE_SET_CURRENT_DEMAND }
-        assertFalse(demandMessages.last().second.getBoolean("current_active"))
-    }
-
-    private fun fragment() = PersistentFragment().apply {
-        javaClass.getDeclaredField("serviceConnected").apply { isAccessible = true }.set(this, true)
-        monitoring.start()
-    }
-
-    private fun service(messages: MutableList<Pair<Int, Bundle>>) =
-        Messenger(object : Handler(Looper.getMainLooper()) {
-            override fun handleMessage(message: Message) {
-                messages += message.what to Bundle(message.data)
+                launched.finish()
             }
-        })
-
-    private fun handshake(
-        fragment: PersistentFragment, service: Messenger, generation: Int, process: String
-    ) {
-        val handler = field(fragment, "messageHandler") as Handler
-        handler.handleMessage(Message.obtain().apply {
-            what = BatteryInfoService.RemoteConnection.CLIENT_SERVICE_CONNECTED
-            replyTo = service
-            arg1 = generation
-            data = Bundle().apply { putString(MonitoringConnection.FIELD_PROCESS_ID, process) }
-        })
-    }
-
-    private fun disconnect(fragment: PersistentFragment) {
-        fragment.javaClass.getDeclaredMethod("monitoringDisconnected").apply { isAccessible = true }
-            .invoke(fragment)
+            instrumentation.waitForIdleSync()
+            instrumentation.runOnMainSync {
+                assertTrue(launched.isDestroyed)
+                assertNull(field(fragment, "currentDemand"))
+                assertFalse(fragment.monitoring.current.value.connected)
+                assertFalse(
+                    fragment.monitoring.publishCurrent(
+                        generation,
+                        "lifecycle-test",
+                        1,
+                        token,
+                        CurrentSample(BatteryCurrentReading(-500_000, "late"), null)
+                    )
+                )
+                assertEquals(-400_000L, fragment.monitoring.current.value.sample.now?.microAmps)
+            }
+        } finally {
+            instrumentation.runOnMainSync { activity?.finish() }
+            instrumentation.waitForIdleSync()
+            assertTrue(MonitoringDesiredState.write(context, desiredBefore))
+            assertTrue(SettingsSnapshot.apply(settings, settingsBefore))
+            assertTrue(SettingsSnapshot.apply(preferences, preferencesBefore))
+        }
     }
 
     private fun field(fragment: PersistentFragment, name: String): Any? =

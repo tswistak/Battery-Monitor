@@ -151,6 +151,13 @@ export async function pushSharedFile(name: string, bytes: Buffer) {
     await browser.pushFile(`${directory}/${name}`, bytes.toString('base64'));
 }
 
+export async function stageGeneralImportFixture() {
+    const bytes = readFileSync(join(root, 'e2e/fixtures/prepared-general.zip'));
+    assert.equal(createHash('sha256').update(bytes).digest('hex'),
+        '5d887ce88c1ba5e1427ac413887bec9b16fd28cd35c42b1b3803213ac4a69d8b', 'Prepared import fixture integrity');
+    await pushSharedFile('prepared-general.zip', bytes);
+}
+
 export async function stageHistoricalFixtures() {
     const source = join(root, 'e2e/fixtures/historical-1.7.3');
     const provenance = JSON.parse(readFileSync(join(source, 'historical-1.7.3-provenance.json'), 'utf8'));

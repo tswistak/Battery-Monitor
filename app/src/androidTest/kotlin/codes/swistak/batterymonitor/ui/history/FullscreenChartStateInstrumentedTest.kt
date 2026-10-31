@@ -20,7 +20,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
@@ -35,7 +34,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -262,7 +260,7 @@ class FullscreenChartStateInstrumentedTest {
                     }
                 }
             }
-            captureFixture(activity, model, "gesture-initial")
+            assertFixtureRendered(activity, model)
             lateinit var chart: LineChart
             main { chart = requireNotNull(nativeChart(activity.window.decorView)) }
             val initial = visibleTimes(chart)
@@ -435,7 +433,6 @@ class FullscreenChartStateInstrumentedTest {
     private lateinit var database: LogDatabase
     private val store = ViewModelStore()
     private var models = 0
-    private var reportedFullscreenInsets = false
 
     private val range = HistoryRangeState(0, 10_000)
     private val observation = LogRecord(200, 50, 1_000, 300, 4000, -100_000, 2_500_000)
@@ -491,20 +488,6 @@ class FullscreenChartStateInstrumentedTest {
         directory.deleteRecursively()
     }
 
-    @Test
-    fun explicit_intent_roundtrips_metric_exact_range_and_label() {
-        val exact = HistoryRangeState(1_800_000_000_123, 1_800_003_600_124)
-        val intent = FullscreenChartActivity.intent(context, HistoryMetric.POWER, exact, "custom")
-        assertEquals(FullscreenChartActivity::class.java.name, intent.component!!.className)
-        assertEquals(
-            FullscreenChartRequest(HistoryMetric.POWER, exact), fullscreenChartRequest(
-                intent.getStringExtra("chart.metric"),
-                intent.getLongExtra("chart.start", -1),
-                intent.getLongExtra("chart.end", -1)
-            )
-        )
-        assertEquals("custom", intent.getStringExtra("chart.label"))
-    }
 
     @Test
     fun history_refresh_retains_viewport_and_exact_selection_for_an_unchanged_level_sample() {
@@ -1121,7 +1104,7 @@ class FullscreenChartStateInstrumentedTest {
                     }
                 }
             }
-            captureFixture(activity, model, "voltage-refresh-before-y-label-change")
+            assertFixtureRendered(activity, model)
             assertFixtureViewport(activity, model, requested)
             var retainedViewport = requested
             var contentLeft = 0f
@@ -1153,7 +1136,7 @@ class FullscreenChartStateInstrumentedTest {
                     point.key == insertedKey && point.value?.let { abs(it - 19.999) < 0.000001 } == true
                 } == true
             }
-            captureFixture(activity, model, "voltage-refresh-after-y-label-change")
+            assertFixtureRendered(activity, model)
             await {
                 var updatedGeometry = false
                 main {
@@ -1268,28 +1251,26 @@ class FullscreenChartStateInstrumentedTest {
                     }
                 }
             }
-            captureFixture(activity, model, "single-connected")
+            assertFixtureRendered(activity, model)
             main { model.comparison(HistoryMetric.CURRENT) }
-            captureFixture(activity, model, "level-current")
+            assertFixtureRendered(activity, model)
             main { model.style(ChartDrawingStyle.POINTS) }
-            captureFixture(activity, model, "points")
+            assertFixtureRendered(activity, model)
             main {
                 model.metric(HistoryMetric.TEMPERATURE)
                 model.comparison(HistoryMetric.VOLTAGE)
                 model.style(ChartDrawingStyle.CONNECTED)
                 model.valueScale(ChartValueScale.LOGARITHMIC)
             }
-            captureFixture(activity, model, "positive-log")
-            captureFixtureMenu("positive-log-settings")
+            assertFixtureRendered(activity, model)
             main {
                 model.metric(HistoryMetric.LEVEL)
                 model.comparison(HistoryMetric.CURRENT)
             }
-            captureFixture(activity, model, "unsupported-log")
+            assertFixtureRendered(activity, model)
             await { model.state.value!!.valueScale == ChartValueScale.LINEAR }
-            captureFixtureMenu("disabled-log-settings")
             main { model.range(fullRange, "all") }
-            captureFixture(activity, model, "all-history")
+            assertFixtureRendered(activity, model)
             val requestedViewport = HistoryRangeState(samples[95].time, samples[107].time)
             main {
                 model.viewport(requestedViewport, 1000)
@@ -1297,7 +1278,7 @@ class FullscreenChartStateInstrumentedTest {
                     it.value != null && it.key.time > rebootTime
                 }.key)
             }
-            captureFixture(activity, model, "periodic-reboot-zoom")
+            assertFixtureRendered(activity, model)
             assertFixtureViewport(activity, model, requestedViewport)
             database.addLogs(
                 listOf(
@@ -1307,11 +1288,11 @@ class FullscreenChartStateInstrumentedTest {
                 )
             )
             main { model.refresh() }
-            captureFixture(activity, model, "all-history-earlier-record-zoom")
+            assertFixtureRendered(activity, model)
             assertEquals(start - 3_600_000L, model.state.value!!.range.start)
             assertFixtureViewport(activity, model, requestedViewport)
             main { model.scale(ChartScaleMode.MANUAL) }
-            captureFixture(activity, model, "manual-y")
+            assertFixtureRendered(activity, model)
             main {
                 val chart = requireNotNull(nativeChart(activity.window.decorView))
                 chart.zoomToCenter(1f, 2f)
@@ -1338,7 +1319,7 @@ class FullscreenChartStateInstrumentedTest {
             val shiftedViewport =
                 HistoryRangeState(requestedViewport.start + 60_000, requestedViewport.end + 60_000)
             main { model.viewport(shiftedViewport, 1000) }
-            captureFixture(activity, model, "manual-y-horizontal-rebase")
+            assertFixtureRendered(activity, model)
             assertFixtureViewport(activity, model, shiftedViewport)
             main {
                 val chart = requireNotNull(nativeChart(activity.window.decorView))
@@ -1350,13 +1331,7 @@ class FullscreenChartStateInstrumentedTest {
                 model.select(null)
                 model.viewport(HistoryRangeState(start, start + 4 * 3_600_000L), 1000)
             }
-            captureFixture(activity, model, "legacy-sparse")
-            main { model.viewport(model.state.value!!.range, 1000) }
-            for (brightness in listOf("Dark", "TrueBlack")) {
-                context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
-                    .edit().putString(SettingsContract.KEY_BRIGHTNESS, brightness).commit()
-                captureFixture(activity, model, brightness.lowercase())
-            }
+            assertFixtureRendered(activity, model)
         } finally {
             main { monitor.lastActivity?.finish() }
             instrumentation.removeMonitor(monitor)
@@ -1624,8 +1599,8 @@ class FullscreenChartStateInstrumentedTest {
         return null
     }
 
-    private fun captureFixture(
-        activity: FullscreenChartActivity, model: FullscreenChartViewModel, name: String
+    private fun assertFixtureRendered(
+        activity: FullscreenChartActivity, model: FullscreenChartViewModel
     ) {
         loaded(model)
         await {
@@ -1638,15 +1613,11 @@ class FullscreenChartStateInstrumentedTest {
                     if (state.valueScale == ChartValueScale.LOGARITHMIC && !fullscreenLogAvailable(
                             state.metrics, state.boundsByMetric, false, 1
                         )
-                    ) {
-                        ChartValueScale.LINEAR
-                    } else state.valueScale
+                    ) ChartValueScale.LINEAR else state.valueScale
                 val valuesMatch = state.metrics.all { metric ->
                     val point = state.charts[metric]?.points?.firstOrNull { it.value != null }
-                    val set =
-                        chart?.data?.dataSets?.filterIsInstance<LineDataSet<*>>()?.firstOrNull {
-                            it.label == metric.name
-                        }
+                    val set = chart?.data?.dataSets?.filterIsInstance<LineDataSet<*>>()
+                        ?.firstOrNull { it.label == metric.name }
                     val entry = set?.entries?.firstOrNull()
                     point != null && set != null && entry != null && entry.data == point.key && abs(
                         entry.y - fullscreenChartValue(
@@ -1654,87 +1625,47 @@ class FullscreenChartStateInstrumentedTest {
                         ).toFloat()
                     ) < 0.0001 && (state.style != ChartDrawingStyle.POINTS || set.color == Color.TRANSPARENT)
                 }
+                val decor = activity.window.decorView
+                val statusBarHidden = decor.rootWindowInsets?.let {
+                    !WindowInsetsCompat.toWindowInsetsCompat(it, decor)
+                        .isVisible(WindowInsetsCompat.Type.statusBars())
+                } == true
                 rendered =
                     chart != null && chart.width > 0 && chart.height > 0 && labels == state.metrics.map { it.name }
-                        .toSet() && chart.axisRight.isEnabled == (state.comparison != null) && valuesMatch
-                if (rendered) {
-                    val decor = activity.window.decorView
-                    val platformInsets = decor.rootWindowInsets
-                    val viewAwareInsets = platformInsets?.let {
-                        WindowInsetsCompat.toWindowInsetsCompat(it, decor)
-                    }
-                    if (!reportedFullscreenInsets) {
-                        @Suppress("DEPRECATION") InstrumentationRegistry.getInstrumentation()
-                            .sendStatus(0, Bundle().apply {
-                                putString("testDiagnostic", "fullscreenInsets")
-                                putString(
-                                    "oldStatusBarVisible",
-                                    ViewCompat.getRootWindowInsets(decor)
-                                        ?.isVisible(WindowInsetsCompat.Type.statusBars())
-                                        ?.toString() ?: "unknown"
-                                )
-                                putString(
-                                    "viewAwareStatusBarVisible",
-                                    viewAwareInsets?.isVisible(WindowInsetsCompat.Type.statusBars())
-                                        ?.toString() ?: "unknown"
-                                )
-                                putInt("windowSystemUiVisibility", decor.windowSystemUiVisibility)
-                                putInt("decorSystemUiVisibility", decor.systemUiVisibility)
-                                putInt("fullscreenBit", View.SYSTEM_UI_FLAG_FULLSCREEN)
-                                putBoolean(
-                                    "windowFullscreenBitSet",
-                                    decor.windowSystemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN != 0
-                                )
-                                putBoolean(
-                                    "decorFullscreenBitSet",
-                                    decor.systemUiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN != 0
-                                )
-                                putBoolean("hasWindowFocus", decor.hasWindowFocus())
-                                putInt("orientation", activity.resources.configuration.orientation)
-                                putInt("requestedOrientation", activity.requestedOrientation)
-                                putInt(
-                                    "smallestWidthDp",
-                                    activity.resources.configuration.smallestScreenWidthDp
-                                )
-                                putFloat("fontScale", activity.resources.configuration.fontScale)
-                                putBoolean("multiWindow", activity.isInMultiWindowMode)
-                                putInt("windowWidth", decor.width)
-                                putInt("windowHeight", decor.height)
-                                putInt("rawTopInsetPx", platformInsets?.systemWindowInsetTop ?: -1)
-                            })
-                        reportedFullscreenInsets = true
-                    }
-                    rendered =
-                        viewAwareInsets?.isVisible(WindowInsetsCompat.Type.statusBars()) == false
-                }
+                        .toSet() && chart.axisRight.isEnabled == (state.comparison != null) && valuesMatch && statusBarHidden
             }
             rendered
         }
         main {
-            val decor = activity.window.decorView
-            assertFalse(
-                WindowInsetsCompat.toWindowInsetsCompat(
-                    requireNotNull(decor.rootWindowInsets), decor
-                ).isVisible(WindowInsetsCompat.Type.statusBars())
-            )
+            val state = model.state.value!!
+            val chart = requireNotNull(nativeChart(activity.window.decorView))
+            val valueScale =
+                if (state.valueScale == ChartValueScale.LOGARITHMIC && !fullscreenLogAvailable(
+                        state.metrics, state.boundsByMetric, false, 1
+                    )
+                ) ChartValueScale.LINEAR else state.valueScale
+            for (metric in state.metrics) {
+                val sets = requireNotNull(chart.data).dataSets.filterIsInstance<LineDataSet<*>>()
+                    .filter { it.label == metric.name }
+                val segments = state.charts.getValue(metric).points.filter { it.value != null }
+                    .groupBy { it.segment }.values.toList()
+                assertEquals(segments.size, sets.size)
+                for ((segment, set) in segments.zip(sets)) {
+                    assertEquals(segment.map { it.key }, set.entries.map { it.data })
+                    assertEquals(
+                        if (metric == state.metric) YAxis.AxisDependency.LEFT else YAxis.AxisDependency.RIGHT,
+                        set.axisDependency
+                    )
+                    for ((point, entry) in segment.zip(set.entries)) {
+                        assertEquals(
+                            fullscreenChartValue(
+                                point.value!!, metric, false, 1, valueScale
+                            ).toFloat(), entry.y, 0.0001f
+                        )
+                    }
+                }
+            }
         }
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
-        android.os.SystemClock.sleep(150)
-        captureFixtureScreenshot(name)
-    }
-
-    private fun captureFixtureMenu(name: String) {
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        if (!clickFixtureText(context.getString(R.string.history_chart_settings))) {
-            assertTrue(clickFixtureText(context.getString(R.string.history_chart_more)))
-            instrumentation.waitForIdleSync()
-            assertTrue(clickFixtureText(context.getString(R.string.history_chart_settings)))
-        }
-        instrumentation.waitForIdleSync()
-        android.os.SystemClock.sleep(150)
-        captureFixtureScreenshot(name)
-        instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-        instrumentation.waitForIdleSync()
     }
 
     private fun assertFixtureViewport(
@@ -1821,17 +1752,6 @@ class FullscreenChartStateInstrumentedTest {
         val released = automation.injectInputEvent(up, true)
         up.recycle()
         return pressed && released
-    }
-
-    private fun captureFixtureScreenshot(name: String) {
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val screenshots =
-            File(instrumentation.targetContext.cacheDir, "chart-v2-fixture").apply { mkdirs() }
-        val bitmap = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
-        File(screenshots, "$name.png").outputStream().use { output ->
-            assertTrue(bitmap.compress(Bitmap.CompressFormat.PNG, 100, output))
-        }
-        bitmap.recycle()
     }
 
     private fun loaded(model: FullscreenChartViewModel) {

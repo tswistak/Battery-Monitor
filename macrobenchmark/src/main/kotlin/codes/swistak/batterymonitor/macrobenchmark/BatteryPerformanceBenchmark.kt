@@ -364,11 +364,17 @@ class BatteryPerformanceBenchmark {
         awaitText("diag_action_refresh")
         goBack()
     }
-
+    
     @Test
     fun currentIdleUpdates() = frames {
-        // A fixed observation window includes several configured two-second acquisitions.
         SystemClock.sleep(IDLE_WINDOW_MILLIS)
+        report("current_idle_scope", Bundle().apply {
+            putString("standardBackendMetric", "FrameTimingMetric")
+            putString("visibleUpdatesObserved", "unavailable")
+            putString(
+                "scope", "Current State idle rendering; no frames is not performance evidence"
+            )
+        })
     }
 
     @Test

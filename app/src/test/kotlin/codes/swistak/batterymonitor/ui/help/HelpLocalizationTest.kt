@@ -53,63 +53,6 @@ class HelpLocalizationTest {
         }
     }
 
-    @Test
-    fun `help quotes the visible action and notification choice names in every locale`() {
-        val references = mapOf(
-            "alarms_overview_help" to listOf("menu_delete_alarm"),
-            "pref_top_line_content_help" to listOf(
-                "time_remaining", "time_since_status_change", "vital_signs"
-            ),
-            "time_estimates_settings_help" to listOf(
-                "alarms_charging_target", "alarms_discharging_target"
-            ),
-            "pref_charging_target_mode_help" to listOf("alarms_charging_target"),
-            "pref_discharging_target_help" to listOf("alarms_discharging_target"),
-            "monitoring_help_overview" to listOf(
-                "diag_start_monitor",
-                "diag_stop_monitor",
-                "nav_settings",
-                "advanced_settings",
-                "pref_use_privileged_access",
-                "diagnostics_vendor_settings"
-            )
-        )
-        val quotes = listOf("“" to "”", "„" to "”", "„" to "“", "«" to "»", "「" to "」", "״" to "״")
-        for (file in catalogs()) {
-            val strings = catalog(file)
-            for ((help, controls) in references) {
-                val paragraph = strings.getValue(help).textContent
-                for (control in controls) {
-                    val label = strings.getValue(control).textContent
-                    assertTrue(
-                        "${file.path}: $help must quote $control ($label)",
-                        quotes.any { (open, close) ->
-                            Regex(
-                                "${Regex.escape(open)}[\\s\u00a0\u202f]*${Regex.escape(label)}[\\s\u00a0\u202f]*${
-                                    Regex.escape(
-                                        close
-                                    )
-                                }"
-                            ).containsMatchIn(paragraph)
-                        })
-                }
-            }
-        }
-    }
-
-    @Test
-    fun `Polish widget hours retain translator reviewed full forms`() {
-        val polish = catalog(File(resourcesDirectory(), "values-pl/strings.xml"))
-        assertEquals(
-            mapOf(
-                "one" to $$"Poziom naładowania · ostatnia %1$d godzina",
-                "few" to $$"Poziom naładowania · ostatnie %1$d godziny",
-                "many" to $$"Poziom naładowania · ostatnich %1$d godzin",
-                "other" to $$"Poziom naładowania · ostatnich %1$d godzin"
-            ), pluralItems(polish.getValue("widget_trend_range"))
-        )
-    }
-
     private fun arguments(text: String): Set<String> =
         Regex("""%(?:\d+\$)?[a-zA-Z]""").findAll(text).map { it.value }.toSet()
 

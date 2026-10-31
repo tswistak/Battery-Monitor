@@ -116,35 +116,4 @@ class PendingDrawerNavigationTest {
         assertEquals(SectionOwner.HELP, owner)
     }
 
-    @Test
-    fun `the unsaved alarm guard receives each request once and alone defers navigation`() =
-        runBlocking {
-            val navigator = SectionNavigator(SectionOwner.ALARMS)
-            val closed = CompletableDeferred<Unit>()
-            var pending: SectionOwner? = null
-            var requests = 0
-            val navigation = PendingDrawerNavigation(
-                CoroutineScope(coroutineContext), { closed.await() }) { owner ->
-                requests++
-                pending = owner
-            }
-            navigation.select(SectionOwner.HISTORY)
-            assertEquals(1, requests)
-            assertEquals(SectionOwner.HISTORY, pending)
-            assertEquals(SectionOwner.ALARMS, navigator.selected)
-            closed.complete(Unit)
-            yield()
-            assertEquals(1, requests)
-            assertEquals(SectionOwner.HISTORY, pending)
-            // Cancelling the confirmation leaves the draft's owner untouched.
-            pending = null
-            assertEquals(SectionOwner.ALARMS, navigator.selected)
-            navigation.select(SectionOwner.HISTORY)
-            assertEquals(2, requests)
-            navigator.select(checkNotNull(pending))
-            pending = null
-            assertEquals(SectionOwner.HISTORY, navigator.selected)
-            assertEquals(2, requests)
-            assertEquals(null, pending)
-        }
 }

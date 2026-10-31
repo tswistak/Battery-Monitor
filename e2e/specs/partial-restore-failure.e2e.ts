@@ -17,19 +17,17 @@ import { expect } from '@wdio/globals';
 import {
     cleanScenario,
     readState,
-    seedBackupData,
     seedSentinelData,
     setAlarmInsertFailure,
+    stageGeneralImportFixture,
 } from '../support/device.js';
 import {
-    acknowledgeMessage,
     chooseImportFile,
     chooseReplaceHistory,
     clickText,
     confirmAllAvailableCategories,
     openBackupAndRestoreScreen,
     requireText,
-    saveBackupThroughFilePicker,
 } from '../support/ui.js';
 
 describe('Partial general backup restore failure', () => {
@@ -45,18 +43,14 @@ describe('Partial general backup restore failure', () => {
     });
 
     it('reports completed settings and failed alarms while preserving the transaction and skipping later stages', async () => {
-        await seedBackupData();
-        await openBackupAndRestoreScreen();
-        await clickText('Export general backup');
-        await saveBackupThroughFilePicker('current-general.zip');
-        await acknowledgeMessage('General backup exported successfully');
         await seedSentinelData();
+        await stageGeneralImportFixture();
         const before = await readState();
         alarmFailureInstalled = true;
         await setAlarmInsertFailure(true);
 
         await openBackupAndRestoreScreen();
-        await chooseImportFile('Import general backup', 'current-general.zip');
+        await chooseImportFile('Import general backup', 'prepared-general.zip');
         await confirmAllAvailableCategories();
         await chooseReplaceHistory();
         await requireText(

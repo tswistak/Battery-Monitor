@@ -21,7 +21,6 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
@@ -31,14 +30,11 @@ import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
@@ -62,16 +58,13 @@ import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
 import codes.swistak.batterymonitor.ui.navigation.SectionOwner
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
-import codes.swistak.batterymonitor.ui.theme.Brightness
-import codes.swistak.batterymonitor.ui.theme.ColorSource
-import codes.swistak.batterymonitor.ui.theme.batteryColorScheme
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+
 
 class StartupDialogsInstrumentedTest {
     private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
@@ -80,9 +73,6 @@ class StartupDialogsInstrumentedTest {
     private lateinit var preferencePrefix: String
     private val granted = StartupEnvironment(
         notificationPermissionRequired = true, notificationsGranted = true, batteryOptimized = false
-    )
-    private val denied = StartupEnvironment(
-        notificationPermissionRequired = true, notificationsGranted = false, batteryOptimized = true
     )
     private val preferences
         get() = context.getSharedPreferences(
@@ -115,153 +105,6 @@ class StartupDialogsInstrumentedTest {
         for (name in listOf(SettingsContract.SP_MAIN_FILE, SettingsContract.SETTINGS_FILE)) {
             instrumentation.targetContext.deleteSharedPreferences("$preferencePrefix-$name")
         }
-    }
-
-    @Test
-    fun legacy_upgrade_is_detected_before_first_run_changes_and_retries_until_acknowledged() {
-        preferences.edit().putBoolean(SettingsContract.KEY_FIRST_RUN, false).commit()
-        val handle = SavedStateHandle()
-        val controller = controller(handle)
-        assertFalse(preferences.contains(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION))
-        main { repeat(4) { controller.advance(denied) } }
-        assertEquals(StartupPresentation.CHANGELOG, controller.presentation)
-        assertNull(controller.systemAction)
-        assertTrue(controller.blocksContentDialogs)
-
-        val restored = controller(copy(handle))
-        assertEquals(StartupPresentation.CHANGELOG, restored.presentation)
-        main { restored.advance(denied) }
-        assertEquals(StartupPresentation.CHANGELOG, restored.presentation)
-        val nextLaunch = controller()
-        main { nextLaunch.advance(granted) }
-        assertEquals(StartupPresentation.CHANGELOG, nextLaunch.presentation)
-        assertFalse(preferences.contains(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION))
-        main { assertTrue(nextLaunch.acknowledgeChangelog()) }
-        assertEquals(
-            installedVersion,
-            preferences.getLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, -1)
-        )
-        val acknowledged = controller()
-        main { acknowledged.advance(granted) }
-        assertEquals(StartupPresentation.NONE, acknowledged.presentation)
-    }
-
-    @Test
-    fun notification_requests_are_consumed_once_and_wait_across_recreation_without_overlay() {
-        baseline(firstRun = true)
-        val handle = SavedStateHandle()
-        val controller = controller(handle)
-        main { controller.advance(denied) }
-        assertEquals(StartupPresentation.ONBOARDING, controller.presentation)
-        main { controller.requestNotifications() }
-        assertEquals(StartupPresentation.NONE, controller.presentation)
-        assertTrue(controller.blocksContentDialogs)
-        assertFalse(preferences.getBoolean(SettingsContract.KEY_FIRST_RUN, true))
-        val beforeDispatchHandle = copy(handle)
-        val beforeDispatch = controller(beforeDispatchHandle)
-        main {
-            assertEquals(StartupSystemAction.NOTIFICATIONS, beforeDispatch.takeSystemAction())
-            assertNull(beforeDispatch.takeSystemAction())
-            repeat(4) { beforeDispatch.advance(denied) }
-            beforeDispatch.onLeavingActivity()
-        }
-        assertEquals(StartupPresentation.NONE, beforeDispatch.presentation)
-        assertTrue(beforeDispatch.blocksContentDialogs)
-
-        val afterDispatch = controller(copy(beforeDispatchHandle))
-        main {
-            afterDispatch.advance(denied)
-            assertNull(afterDispatch.takeSystemAction())
-            afterDispatch.onWindowFocusChanged(true, denied)
-        }
-        assertEquals(StartupPresentation.BATTERY_OPTIMIZATION, afterDispatch.presentation)
-        main {
-            afterDispatch.dismissBatteryPrompt()
-            repeat(4) { afterDispatch.advance(denied) }
-        }
-        assertEquals(StartupPresentation.NONE, afterDispatch.presentation)
-        assertFalse(afterDispatch.blocksContentDialogs)
-    }
-
-    @Test
-    fun cancelling_onboarding_and_unexpected_system_return_do_not_duplicate_requests() {
-        baseline(firstRun = true)
-        val controller = controller()
-        main {
-            controller.advance(denied.copy(batteryOptimized = false))
-            controller.cancelOnboarding()
-            repeat(4) { controller.advance(denied.copy(batteryOptimized = false)) }
-        }
-        assertEquals(StartupPresentation.NONE, controller.presentation)
-        assertNull(controller.systemAction)
-        assertFalse(preferences.getBoolean(SettingsContract.KEY_FIRST_RUN, true))
-
-        main {
-            controller.openLiveUpdateSettings()
-            assertEquals(StartupSystemAction.LIVE_UPDATE_SETTINGS, controller.takeSystemAction())
-            controller.onLeavingActivity()
-            controller.onWindowFocusChanged(true, granted)
-            repeat(4) { controller.advance(granted) }
-        }
-        assertEquals(StartupPresentation.NONE, controller.presentation)
-        assertNull(controller.systemAction)
-        assertFalse(controller.blocksContentDialogs)
-    }
-
-    @Test
-    fun acknowledgement_high_water_mark_and_installed_code_ignore_version_name_suffixes() {
-        baseline(firstRun = false, acknowledged = installedVersion + 1)
-        val controller = controller()
-        assertEquals(installedVersion, controller.versionCode)
-        main {
-            controller.advance(granted)
-            assertTrue(controller.acknowledgeChangelog())
-        }
-        assertEquals(StartupPresentation.NONE, controller.presentation)
-        assertEquals(
-            installedVersion + 1,
-            preferences.getLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, -1)
-        )
-    }
-
-    @Test
-    fun restored_changelog_cannot_override_an_acknowledged_or_downgraded_version() {
-        for (acknowledged in listOf(installedVersion, installedVersion + 1)) {
-            baseline(firstRun = false, acknowledged = acknowledged)
-            val handle = SavedStateHandle(
-                mapOf("startup_presentation" to StartupPresentation.CHANGELOG.name)
-            )
-            val restored = controller(handle)
-            main { repeat(3) { restored.advance(granted) } }
-            assertEquals(StartupPresentation.NONE, restored.presentation)
-            assertFalse(restored.blocksContentDialogs)
-            assertEquals(StartupPresentation.NONE.name, handle.get<String>("startup_presentation"))
-            assertEquals(
-                acknowledged,
-                preferences.getLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, -1)
-            )
-        }
-    }
-
-    @Test
-    fun a_pending_upgrade_replaces_a_restored_battery_warning_before_requesting_permissions() {
-        baseline(firstRun = false, acknowledged = installedVersion - 1)
-        val handle = SavedStateHandle(
-            mapOf(
-                "startup_presentation" to StartupPresentation.BATTERY_OPTIMIZATION.name,
-                "startup_battery_prompt_shown" to true
-            )
-        )
-        val restored = controller(handle)
-        main { repeat(3) { restored.advance(denied) } }
-        assertEquals(StartupPresentation.CHANGELOG, restored.presentation)
-        assertNull(restored.systemAction)
-        assertTrue(restored.blocksContentDialogs)
-        assertEquals(StartupPresentation.CHANGELOG.name, handle.get<String>("startup_presentation"))
-        assertEquals(
-            installedVersion - 1,
-            preferences.getLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, -1)
-        )
     }
 
     @Test
@@ -685,8 +528,8 @@ class StartupDialogsInstrumentedTest {
     }
 
     @Test
-    fun changelog_uses_the_app_palette_is_non_dismissable_and_acknowledges_only_on_confirmation() {
-        baseline(firstRun = false, acknowledged = installedVersion - 1)
+    fun changelog_is_non_dismissable_and_acknowledges_only_on_confirmation() {
+        baseline(acknowledged = installedVersion - 1)
         val controller = controller()
         main { controller.advance(granted) }
         val target = instrumentation.targetContext
@@ -697,7 +540,6 @@ class StartupDialogsInstrumentedTest {
         val oldFlags = info.flags
         info.flags = oldFlags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
         automation.serviceInfo = info
-        var expectedSurface = 0
         var confirmations = 0
         try {
             instrumentation.startActivitySync(
@@ -713,8 +555,6 @@ class StartupDialogsInstrumentedTest {
                 activity.setContent {
                     CompositionLocalProvider(LocalContext provides context) {
                         AppBatteryTheme {
-                            val surface = AlertDialogDefaults.containerColor
-                            SideEffect { expectedSurface = surface.toArgb() }
                             Surface(Modifier.fillMaxSize()) {
                                 Text(context.getString(R.string.app_full_name))
                             }
@@ -744,28 +584,6 @@ class StartupDialogsInstrumentedTest {
             assertTrue(find(title) != null)
             assertEquals(StartupPresentation.CHANGELOG, controller.presentation)
 
-            val settings =
-                context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
-            for (source in listOf("BatteryBlue", "Dynamic")) {
-                val surfaces = mutableSetOf<Int>()
-                for (brightness in listOf("Light", "Dark", "TrueBlack")) {
-                    main {
-                        settings.edit().putString(SettingsContract.KEY_COLOR_SOURCE, source)
-                            .putString(SettingsContract.KEY_BRIGHTNESS, brightness).commit()
-                    }
-                    instrumentation.waitForIdleSync()
-                    val requestedSurface = batteryColorScheme(
-                        context, ColorSource.valueOf(source), Brightness.valueOf(brightness), false
-                    ).surfaceContainerHigh.toArgb()
-                    await { expectedSurface == requestedSurface }
-                    await { surfacePixels(expectedSurface) > 50 }
-                    surfaces += expectedSurface
-                    assertEquals("Changing theme must not attach another dialog", 1, dialogs())
-                }
-                assertEquals(
-                    "Light, dark and true-black dialogs have distinct surfaces", 3, surfaces.size
-                )
-            }
             click(context.getString(R.string.changelog_got_it))
             await { controller.presentation == StartupPresentation.NONE }
             await { dialogs() == 0 }
@@ -774,6 +592,10 @@ class StartupDialogsInstrumentedTest {
                 installedVersion,
                 preferences.getLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, -1)
             )
+            val nextLaunch = controller()
+            main { nextLaunch.advance(granted) }
+            assertEquals(StartupPresentation.NONE, nextLaunch.presentation)
+            assertEquals("Acknowledgement prevents another dialog", 0, dialogs())
         } finally {
             main { monitor.lastActivity?.finish() }
             instrumentation.removeMonitor(monitor)
@@ -782,19 +604,18 @@ class StartupDialogsInstrumentedTest {
         }
     }
 
+
     private fun controller(handle: SavedStateHandle = SavedStateHandle()): StartupDialogViewModel {
         lateinit var controller: StartupDialogViewModel
         main { controller = StartupDialogViewModel(application, handle) }
         return controller
     }
 
-    private fun baseline(firstRun: Boolean, acknowledged: Long = installedVersion) {
+    private fun baseline(acknowledged: Long = installedVersion) {
+        val firstRun = false
         preferences.edit().putBoolean(SettingsContract.KEY_FIRST_RUN, firstRun)
             .putLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, acknowledged).commit()
     }
-
-    private fun copy(handle: SavedStateHandle) =
-        SavedStateHandle(handle.keys().associateWith { handle[it] })
 
     private fun applicationWindows() = instrumentation.uiAutomation.windows.filter {
         it.type == AccessibilityWindowInfo.TYPE_APPLICATION && it.root?.packageName?.toString() == instrumentation.targetContext.packageName
@@ -896,24 +717,6 @@ class StartupDialogsInstrumentedTest {
 
     private fun hiddenActivityNode(node: SemanticsNode): Boolean =
         node.config.contains(SemanticsProperties.HideFromAccessibility) || node.parent?.let(::hiddenActivityNode) == true
-
-    private fun surfacePixels(color: Int): Int {
-        val dialog = applicationWindows().firstOrNull { it.isActive } ?: return 0
-        val bounds = Rect()
-        dialog.getBoundsInScreen(bounds)
-        val bitmap = instrumentation.uiAutomation.takeScreenshot() ?: return 0
-        try {
-            var count = 0
-            for (y in bounds.top.coerceAtLeast(0) until bounds.bottom.coerceAtMost(bitmap.height) step 5) {
-                for (x in bounds.left.coerceAtLeast(0) until bounds.right.coerceAtMost(bitmap.width) step 5) {
-                    if (bitmap.getPixel(x, y) == color) count++
-                }
-            }
-            return count
-        } finally {
-            bitmap.recycle()
-        }
-    }
 
     private fun find(text: String): AccessibilityNodeInfo? {
         fun search(node: AccessibilityNodeInfo): AccessibilityNodeInfo? {

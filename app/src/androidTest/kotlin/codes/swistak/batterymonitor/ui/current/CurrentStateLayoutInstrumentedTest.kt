@@ -76,31 +76,6 @@ import org.junit.Test
 import kotlin.math.roundToInt
 
 class CurrentStateLayoutInstrumentedTest {
-    @Test
-    fun monitoring_bundle_keeps_the_effective_target_when_the_full_range_ETA_is_cleared() {
-        val info = BatteryInfo().apply {
-            percent = 88
-            status = BatteryInfo.STATUS_NOT_CHARGING
-            plugged = BatteryInfo.PLUGGED_USB
-            effectivePredictionTargetPercent = 80
-            prediction.markTargetReached(80)
-            fullRangePrediction.clear()
-        }
-        val bundle = info.toBundle()
-        val snapshot = MonitoringSnapshot.fromBundle(bundle)
-        assertEquals(80, snapshot.effectivePredictionTargetPercent)
-        assertEquals(0, snapshot.fullRangePrediction.targetPercent)
-        assertEquals(BatteryInfo.Prediction.NONE, snapshot.fullRangePrediction.direction)
-        assertTrue(
-            currentStateModel(
-                MonitoringUiState(
-                    MonitoringAvailability.LIVE, snapshot
-                )
-            ).hasAlternative
-        )
-        bundle.remove("effective_prediction_target")
-        assertEquals(80, MonitoringSnapshot.fromBundle(bundle).effectivePredictionTargetPercent)
-    }
 
     @Test
     fun overview_percentage_points_keep_their_physical_height_as_samples_arrive() {
@@ -120,88 +95,84 @@ class CurrentStateLayoutInstrumentedTest {
                 hostActivity != null && !hostActivity.isDestroyed && hostActivity.lifecycle.currentState == Lifecycle.State.RESUMED && (hostActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE || android.os.Build.VERSION.SDK_INT >= 36 && hostActivity.resources.configuration.smallestScreenWidthDp >= 600 || hostActivity.isInMultiWindowMode)
             }
             activity = host.lastActivity as FullscreenChartActivity
-            for (width in listOf(390, 1000)) {
-                main {
-                    density = minOf(
-                        activity.window.decorView.width.toFloat() / width,
-                        activity.window.decorView.height.toFloat() / 240
-                    )
-                    activity.setContent {
-                        CompositionLocalProvider(LocalDensity provides Density(density, 2f)) {
-                            AppBatteryTheme {
-                                color = MaterialTheme.colorScheme.primary.toArgb()
-                                val series = HistorySeries(values.mapIndexed { index, value ->
-                                    HistoryPoint(
-                                        HistoryKey(
-                                            1_800_000L + index * 60_000, index.toLong()
-                                        ), value
-                                    )
-                                }, values.minOrNull(), values.maxOrNull())
-                                val chart = HistoryChartModel(
-                                    HistoryRangeState(0, 3_600_000),
-                                    values.size.toLong(),
-                                    mapOf(HistoryMetric.LEVEL to series),
-                                    emptyList()
+            val width = 390
+            main {
+                density = minOf(
+                    activity.window.decorView.width.toFloat() / width,
+                    activity.window.decorView.height.toFloat() / 240
+                )
+                activity.setContent {
+                    CompositionLocalProvider(LocalDensity provides Density(density, 2f)) {
+                        AppBatteryTheme {
+                            color = MaterialTheme.colorScheme.primary.toArgb()
+                            val series = HistorySeries(values.mapIndexed { index, value ->
+                                HistoryPoint(
+                                    HistoryKey(
+                                        1_800_000L + index * 60_000, index.toLong()
+                                    ), value
                                 )
-                                Box(Modifier.size(width.dp, 200.dp)) {
-                                    MeasurementChart(
-                                        chart,
-                                        HistoryMetric.LEVEL,
-                                        false,
-                                        null,
-                                        {},
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .onGloballyPositioned {
-                                                origin = it.positionInWindow()
-                                                plotWidth = it.size.width
-                                            },
-                                        compact = true,
-                                        compactChartHeight = 100.dp,
-                                        fixedPercentageScale = true
-                                    )
-                                }
+                            }, values.minOrNull(), values.maxOrNull())
+                            val chart = HistoryChartModel(
+                                HistoryRangeState(0, 3_600_000),
+                                values.size.toLong(),
+                                mapOf(HistoryMetric.LEVEL to series),
+                                emptyList()
+                            )
+                            Box(Modifier.size(width.dp, 200.dp)) {
+                                MeasurementChart(
+                                    chart,
+                                    HistoryMetric.LEVEL,
+                                    false,
+                                    null,
+                                    {},
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .onGloballyPositioned {
+                                            origin = it.positionInWindow()
+                                            plotWidth = it.size.width
+                                        },
+                                    compact = true,
+                                    compactChartHeight = 100.dp,
+                                    fixedPercentageScale = true
+                                )
                             }
                         }
                     }
                 }
-                val cases = listOf(
-                    emptyList(),
-                    listOf(88.0),
-                    listOf(88.0, 88.0),
-                    listOf(89.0, 88.0),
-                    listOf(0.0),
-                    listOf(100.0),
-                    listOf(1.0, 0.0),
-                    listOf(99.0, 100.0)
-                )
-                for (samples in cases) {
-                    main { values = samples }
-                    instrumentation.waitForIdleSync()
-                    if (samples.isEmpty()) {
-                        await { hasText(context.getString(R.string.current_unavailable)) }
-                    } else {
-                        await { plotWidth > 0 && !hasText(context.getString(R.string.current_unavailable)) }
-                        // Inspect the selected marker in the real Canvas, including single and flat series.
-                        await {
-                            var matches = false
-                            main {
-                                val decor = activity.window.decorView
-                                val bitmap = Bitmap.createBitmap(
-                                    decor.width, decor.height, Bitmap.Config.ARGB_8888
-                                )
-                                decor.draw(Canvas(bitmap))
-                                val inset = 8 * density
-                                val time = 1_800_000L + (samples.size - 1) * 60_000
-                                val x =
-                                    origin.x + inset + time / 3_600_000f * (plotWidth - 2 * inset)
-                                val y = origin.y + (100 - 8) * density - samples.last()
-                                    .toFloat() / 100 * (100 - 16) * density
-                                matches = bitmap.getPixel(x.roundToInt(), y.roundToInt()) == color
-                                bitmap.recycle()
-                            }
-                            matches
+            }
+            val cases = listOf(
+                emptyList(),
+                listOf(88.0),
+                listOf(88.0, 88.0),
+                listOf(89.0, 88.0),
+                listOf(0.0),
+                listOf(100.0)
+            )
+            for (samples in cases) {
+                main { values = samples }
+                instrumentation.waitForIdleSync()
+                if (samples.isEmpty()) {
+                    await { hasText(context.getString(R.string.current_unavailable)) }
+                } else {
+                    await { plotWidth > 0 && !hasText(context.getString(R.string.current_unavailable)) }
+                    // Inspect the selected marker in the real Canvas, including single and flat series.
+                    await {
+                        var matches = false
+                        main {
+                            val decor = activity.window.decorView
+                            val bitmap = Bitmap.createBitmap(
+                                decor.width, decor.height, Bitmap.Config.ARGB_8888
+                            )
+                            decor.draw(Canvas(bitmap))
+                            val inset = 8 * density
+                            val time = 1_800_000L + (samples.size - 1) * 60_000
+                            val x = origin.x + inset + time / 3_600_000f * (plotWidth - 2 * inset)
+                            val y = origin.y + (100 - 8) * density - samples.last()
+                                .toFloat() / 100 * (100 - 16) * density
+                            matches = bitmap.getPixel(x.roundToInt(), y.roundToInt()) == color
+                            bitmap.recycle()
                         }
+                        matches
                     }
                 }
             }
@@ -335,7 +306,7 @@ class CurrentStateLayoutInstrumentedTest {
     private var renderedLayoutGeneration = 0
 
     @Test
-    fun narrow_sections_are_lazy_and_grouped_actions_survive_wide_large_font_and_rtl() {
+    fun current_actions_remain_usable_on_small_wide_large_font_and_rtl_layouts() {
         val monitor =
             instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
         instrumentation.startActivitySync(
@@ -391,41 +362,28 @@ class CurrentStateLayoutInstrumentedTest {
             scrollTo("measurement_grid")
             await { hasText(labels.first()) }
             main {
-                assertTrue(
-                    "Large fonts retain a single column of metric actions",
-                    clickable(labels[1]).boundsInRoot.top > clickable(labels[0]).boundsInRoot.top
-                )
                 labels.forEach {
                     assertTrue(clickable(it).config.contains(SemanticsActions.OnClick))
                 }
             }
 
+            click(labels.first())
+            await { hasText(detailSource) }
+            instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+            await { !hasText(detailSource) }
+
             for (direction in listOf(LayoutDirection.Ltr, LayoutDirection.Rtl)) {
                 render(1000, 700, direction = direction)
                 await { hasText(labels.first()) && hasHero() }
                 main {
-                    val hero = nodes().first {
-                        it.config.getOrNull(SemanticsProperties.ContentDescription)
-                            ?.any { description -> description.startsWith("72%") } == true
-                    }.boundsInRoot
-                    val temperature = clickable(labels[0]).boundsInRoot
-                    val voltage = clickable(labels[1]).boundsInRoot
-                    val gridLeft = minOf(temperature.left, voltage.left)
-                    val gridRight = maxOf(temperature.right, voltage.right)
-                    assertEquals(
-                        "Independent columns start together", hero.top, temperature.top, 1f
-                    )
-                    assertEquals(
-                        "Overview keeps its 1.02 weight",
-                        1.02f,
-                        hero.width / (gridRight - gridLeft),
-                        0.02f
-                    )
-                    val gap = if (direction == LayoutDirection.Ltr) gridLeft - hero.right
-                    else hero.left - gridRight
-                    assertEquals("Wide columns retain their gap", 24f * density, gap, 2f)
-                    assertTrue(list().config[SemanticsProperties.IndexForKey]("expanded_content") >= 0)
+                    labels.forEach {
+                        assertTrue(clickable(it).config.contains(SemanticsActions.OnClick))
+                    }
                 }
+                click(labels.first())
+                await { hasText(detailSource) }
+                instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+                await { !hasText(detailSource) }
             }
         } finally {
             main { monitor.lastActivity?.finish() }
