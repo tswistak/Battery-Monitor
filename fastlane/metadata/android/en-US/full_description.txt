@@ -1,39 +1,50 @@
 Battery Monitor is a simple, practical Android app for keeping an eye on your device’s battery.
 
-It gives you clear battery information at a glance, shows useful notifications, supports configurable battery alarms, and lets you review battery history over time.
+See battery information at a glance, get useful alerts, and follow charging and discharging over time.
 
-<b>Main features:</b>
+<b>⭐ Main features:</b>
 
-- persistent notification with current battery level, status, and optional details
-- on Android 16 and newer, the main notification can be replaced with a Live Update showing the current battery level or temperature,
-- detailed battery information, including charge level, temperature, voltage, health, and power source
-- advanced battery information thanks to root access or Shizuku
-- configurable battery alarms: for full charge, low battery, or custom charge thresholds; temperature and battery health
-- battery event history with filtering
-- CSV history export for further analysis
-- home screen widgets
-- no personal data collection
+- current battery readings and charging/discharging time estimates
+- battery history with interactive charts
+- configurable battery level, temperature and health alerts
+- persistent notifications and Live Updates on compatible Android 16+ devices
+- configurable home screen widgets
+- CSV/JSON history export, automatic exports and backup/restore
+- optional advanced information through root or Shizuku
+- local processing of battery and device information
 
-<b>Battery status notification</b>
+<b>🔋 Current battery information</b>
 
-Battery Monitor can show a persistent notification with up-to-date battery information. You can choose what is displayed, such as battery percentage, charging status, or additional details.
+See battery level, charging status, temperature, voltage, current and other readings available on your device. Check approximate charging and discharging times, including estimates to a battery level you choose.
 
-<b>Battery alarms</b>
+<b>📲 Battery status notification</b>
 
-Set practical alerts to help you manage charging and discharging. Battery Monitor can notify you when the battery reaches a selected level, drops below a chosen threshold, or becomes fully charged.
+Keep battery information visible in a persistent notification and choose which details it shows. On compatible devices running Android 16 or newer, you can also use Live Updates.
 
-<b>History and export</b>
+<b>🔔 Battery alarms</b>
 
-The app records battery-related events so you can review how your battery status changed over time. Logs can be filtered and exported to CSV for further analysis.
+Get notified when the battery becomes fully charged, rises above or drops below a level you choose, or reaches a high or low temperature. Alerts for health problems reported by Android are also available.
 
-<b>Widgets</b>
+<b>📊 History and export</b>
 
-Home screen widgets let you keep important battery information visible without opening the app.
+Review charging and discharging over time with interactive charts and a filterable event history. Select a time range or compare two measurements on a fullscreen chart. Export history as CSV or JSON for further analysis, with automatic exports available too.
 
-<b>Privacy</b>
+<b>🧩 Widgets</b>
 
-Battery Monitor does not collect, store, or transmit personal data. It focuses only on local battery monitoring on your device.
+Keep battery status, detailed readings or a recent trend on your home screen without opening the app. Choose the widget content and appearance that suit you.
 
-<b>Project background</b>
+<b>💾 Backup and restore</b>
 
-Battery Monitor is a continued and rebranded version of Battery Indicator Pro / BatteryBot Pro. The project aims to preserve a classic, clear battery monitoring experience while keeping the app working well on modern Android versions.
+Back up your settings, alarms and battery history, and restore them when needed.
+
+<b>🎨 Appearance and compatibility</b>
+
+Choose light, dark or true-black themes, with dynamic colors on supported devices. Battery Monitor requires Android 8.0 or newer. Root or Shizuku can provide additional readings on supported devices, but neither is required for everyday monitoring.
+
+<b>🔒 Privacy</b>
+
+Battery and device information is processed locally. Battery Monitor does not send monitoring data to external servers. Files you export or share may contain device information.
+
+<b>📜 Project background</b>
+
+Battery Monitor is a continued and rebranded version of Battery Indicator Pro / BatteryBot Pro, with ongoing development for modern Android versions.

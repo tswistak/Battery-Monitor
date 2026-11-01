@@ -11,59 +11,93 @@
 
 </div>
 
-Battery Monitor is a classic, no-nonsense Android battery app focused on clarity, reliability, and control.
+Battery Monitor is a practical Android app for checking battery status, following battery history and setting battery alarms.
 
-See battery status at a glance, get meaningful notifications, and track battery behavior over time.
+See current readings and time estimates, review charging and discharging over time, and keep battery information visible in notifications and widgets.
 
 <p align="center">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Battery Monitor screenshot 1" width="24%" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="Battery Monitor screenshot 2" width="24%" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" alt="Battery Monitor screenshot 5" width="24%" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" alt="Battery Monitor screenshot 6" width="24%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Current battery readings and charging estimate" width="24%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="Battery-level history" width="24%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" alt="Configurable battery alarms" width="24%" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" alt="Status, measurement and trend widgets" width="24%" />
 </p>
 
 ## Highlights
 
-- Live battery percentage and status in notifications
-- Detailed current battery info (charge, temperature, voltage, health, plug state)
-- Access advanced battery info using root or Shizuku
-- Configurable battery alarms (for charge levels, temperature, and more)
-- Battery history/logging with CSV export
-- Home screen widgets
-- Privacy-friendly by design (no personal data collection)
+- Current battery readings and approximate charging/discharging time estimates
+- Interactive measurement history and fullscreen comparison of two metrics
+- Configurable battery alarms with multiple thresholds
+- Persistent notifications and Live Updates on supported Android 16+ systems
+- Configurable home-screen widgets
+- CSV/JSON history export and backup/restore
+- Optional advanced information through root or Shizuku
+- Local processing of monitoring data
 
 ## Features
 
-### Main Notification
-- Persistent battery status in the notification area
-- Flexible display options for percentage/time/status content
-- Designed for quick readability
+### Current State and Time Estimates
 
-### Battery Alarms
-- Alerts for full charge
-- Alerts when charge drops below or rises above selected levels
-- Optional temperature and health-related alerts
+- Battery level, charging status and power source, temperature, voltage, current and remaining charge, where available
+- Battery-side power calculated from voltage and current
+- Approximate charging/discharging estimates with configurable targets and an alternative full-range estimate where applicable
+- A recent battery-level trend
+
+Readings depend on the device and the data Android makes available. Android-reported battery health is a status, not a capacity-health percentage or a measurement of degradation.
 
 ### History and Logs
-- Built-in battery event logging
-- Filter and review battery events
-- Export logs to CSV for analysis
+
+- Battery events and periodic measurements
+- Charts for level, temperature, voltage, current, power and remaining charge
+- Time ranges, event filtering, interactive charts and a fullscreen view comparing up to two metrics
+- CSV/JSON export and import, with choices to add imported history or replace existing history
+- CSV export since the last export or appended to an existing file; automatic CSV/JSON exports to a chosen folder, as new files or appended to an existing file
+
+### Main Notification
+
+- Persistent battery information with configurable content and expanded details
+- Optional Live Updates on Android 16+ with compatible system behavior and settings
+
+Notification presentation, including status-bar indicators, depends on Android and the device.
+
+### Battery Alarms
+
+- Full-charge alerts and rising/falling battery-level thresholds
+- High/low temperature and Android-reported health alerts
+- Charging/discharging target alerts
+- Multiple thresholds for threshold-based alarm types
+
+Targets support estimates and alerts; Battery Monitor does not set a hardware charging cutoff. Alarm sounds and notification channels are configured through Android settings.
 
 ### Widgets
-- Circle and full-size widget variants
-- Keep battery info visible without opening the app
+
+- Status, Measurements and Trend widgets with per-widget appearance and content settings
+- Classic Circle and Full variants remain available
+- Add and configure widgets through your launcher's widget workflow
+
+### Backup and Restore
+
+- General backups include settings, alarms, history and predictor data
+- Save backups to user-selected files and choose which categories to restore
+- Add restored history to existing records or replace them
+
+### Appearance and Advanced Information
+
+- Light, dark and true-black appearance, with dynamic colors on supported systems
+- Optional additional readings through root or Shizuku, plus diagnostic information
+
+Requires Android 8.0/API 26 or newer. Optional readings, manufacturer-specific charging-limit detection and Live Updates depend on the device and Android version. Root and Shizuku are not required for ordinary monitoring.
 
 ## Privacy
 
-Battery Monitor processes battery and device information locally, including values exposed by the device such as a battery serial number. It does not transmit this information or collect it on external servers.
+Battery and device information is processed locally. Device-provided fields can include identifiers such as a battery serial number, where available. Battery Monitor does not send monitoring data to external servers. Files you export or share may contain device information.
 
 ## Project Background
 
 This project is a fork of [Battery Indicator Pro / BatteryBot Pro](https://github.com/darshan-/Battery-Indicator-Pro), with continued development and rebranding.
 
-The main goal of the fork is to maintain and enhance the app to ensure it works well on modern Android versions. Check [CHANGELOG](CHANGELOG.md) for details on changes and updates.
+The goal of the fork is to maintain and enhance battery monitoring for modern Android versions. Check [CHANGELOG](CHANGELOG.md) for details on changes and updates.
 
-Huge thanks to the original authors and contributors.
+Thanks to the original authors and contributors.
 
 ## Development
 

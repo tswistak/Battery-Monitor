@@ -175,6 +175,29 @@ jobs:
 
           echo "$CHANGELOG_FILE contains $CHARACTER_COUNT of 500 allowed characters"
 
+      - name: Validate F-Droid metadata character limits
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          FAILED=0
+          for METADATA_FILE in fastlane/metadata/android/*/{title,short_description,full_description}.txt; do
+            [[ -f "$METADATA_FILE" ]] || continue
+            case "${METADATA_FILE##*/}" in
+              title.txt) LIMIT=50 ;;
+              short_description.txt) LIMIT=80 ;;
+              full_description.txt) LIMIT=4000 ;;
+            esac
+
+            read -r CHARACTER_COUNT < <(LC_ALL=C.UTF-8 wc -m < "$METADATA_FILE")
+            if (( CHARACTER_COUNT > LIMIT )); then
+              echo "$METADATA_FILE contains $CHARACTER_COUNT characters; the limit is $LIMIT"
+              FAILED=1
+            else
+              echo "$METADATA_FILE contains $CHARACTER_COUNT of $LIMIT allowed characters"
+            fi
+          done
+          exit "$FAILED"
+
       - name: Set up Node
         if: ${{ !cancelled() }}
         uses: actions/setup-node@v4

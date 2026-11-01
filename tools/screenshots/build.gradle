@@ -1,0 +1,48 @@
+gradle.beforeProject { project ->
+    if (project.path != ':app') return
+    project.pluginManager.withPlugin('com.android.application') {
+        project.extensions.getByName('androidComponents').finalizeDsl { android ->
+            def root = project.rootProject
+            def output = project.layout.buildDirectory.dir('screenshot-main').get().asFile
+            project.delete(output)
+            project.copy { from project.file('src/main/kotlin'); into output }
+            project.copy { from root.file('tools/screenshots/android'); into output }
+            def replaceOnce = { String name, String before, String after ->
+                def source = new File(output, "codes/swistak/batterymonitor/monitoring/$name")
+                def text = source.getText('UTF-8')
+                if (text.count(before) != 1) throw new GradleException("Screenshot input no longer matches $name")
+                source.setText(text.replace(before, after), 'UTF-8')
+            }
+            replaceOnce('BatteryCurrent.kt',
+                    'val appContext = context.applicationContext',
+                    'ScreenshotInput.setContext(context)\n        val appContext = context.applicationContext')
+            replaceOnce('BatteryCurrent.kt',
+                    'val acquiredAt = readTime()\n        readAndroid(average)',
+                    'ScreenshotInput.current()?.let { return it }\n        val acquiredAt = readTime()\n        readAndroid(average)')
+            replaceOnce('RemainingCharge.kt',
+                    'val android = try {',
+                    'ScreenshotInput.remainingCharge()?.let { return it }\n        val android = try {')
+            replaceOnce('BatteryInfoService.kt',
+                    'val batteryIntent = intent ?: registerReceiver(null, batteryChanged)',
+                    'val batteryIntent = ScreenshotInput.batteryIntent() ?: intent ?: registerReceiver(null, batteryChanged)')
+            android.sourceSets.main.kotlin.directories.clear()
+            android.sourceSets.main.kotlin.directories.add(output.absolutePath)
+            android.sourceSets.debug.manifest.srcFile(root.file('tools/screenshots/AndroidManifest.xml'))
+            android.sourceSets.debug.res.directories.clear()
+            android.sourceSets.debug.res.directories.add(root.file('tools/screenshots/res').absolutePath)
+            android.signingConfigs.create('screenshots') {
+                storeFile root.file('captures/screenshots/local-test.keystore')
+                storePassword 'android'
+                keyAlias 'androiddebugkey'
+                keyPassword 'android'
+            }
+            android.buildTypes.debug.signingConfig = android.signingConfigs.screenshots
+        }
+    }
+}
+
+gradle.taskGraph.whenReady { graph ->
+    if (graph.allTasks.any { it.path.toLowerCase().contains('release') || it.path.toLowerCase().contains('profile') }) {
+        throw new GradleException('Screenshot overlay is restricted to disposable debug builds')
+    }
+}
