@@ -81,7 +81,7 @@ class HistoryModelTest {
                     HistoryRangeState(0, 1000), sequenceOf(HistoryRecord(1, record))
                 ).series.getValue(HistoryMetric.POWER)
                 assertEquals(
-                    if (direction > 0) "+4.80 W" else "-4.80 W", historyValue(
+                    if (direction > 0) "+4.80\u00A0W" else "-4.80\u00A0W", historyValue(
                         series.points.single().value,
                         HistoryMetric.POWER,
                         false,
@@ -118,7 +118,8 @@ class HistoryModelTest {
             chart.series.getValue(HistoryMetric.REMAINING_CHARGE).points.map { it.value })
         assertNotEquals(power.points.first().segment, power.points.last().segment)
         assertEquals(
-            "-4.00–+1.00 W", historyRangeValue(power, HistoryMetric.POWER, false, Locale.US, -1)
+            "-4.00–+1.00\u00A0W",
+            historyRangeValue(power, HistoryMetric.POWER, false, Locale.US, -1)
         )
         val scale = historyChartScale(power, HistoryMetric.POWER, false, -1)
         assertTrue(scale.minimum <= -4 && scale.maximum >= 1)
@@ -126,7 +127,7 @@ class HistoryModelTest {
         assertEquals("", LogExport.csvPowerField(records[1], -1))
         assertEquals("0.0", LogExport.csvPowerField(records[3], -1))
         assertEquals(
-            "0.00 W", historyValue(
+            "0.00\u00A0W", historyValue(
                 0.0, HistoryMetric.POWER, false, Locale.US, -1
             )
         )
@@ -150,7 +151,7 @@ class HistoryModelTest {
         assertEquals(1200.25, series.max)
         assertNotEquals(series.points.first().segment, series.points.last().segment)
         assertEquals(
-            "-240,125–1200,25 mA",
+            "-240,125–1200,25\u00A0mA",
             historyRangeValue(series, HistoryMetric.CURRENT, false, Locale.forLanguageTag("pl"))
         )
         val scale = historyChartScale(series, HistoryMetric.CURRENT, false)
@@ -158,7 +159,7 @@ class HistoryModelTest {
         assertTrue(scale.maximum >= 1200.25)
         assertTrue(scale.ticks.any { it == 0.0 })
         assertEquals(
-            "-1200,25–240,125 mA",
+            "-1200,25–240,125\u00A0mA",
             historyRangeValue(series, HistoryMetric.CURRENT, false, Locale.forLanguageTag("pl"), -1)
         )
         val calibrated = historyChartScale(series, HistoryMetric.CURRENT, false, -1000)
@@ -186,7 +187,7 @@ class HistoryModelTest {
             )
         )
         assertEquals(
-            "29,8–36,4 °C", historyRangeValue(
+            "29,8–36,4\u00A0°C", historyRangeValue(
                 HistorySeries(emptyList(), 29.8, 36.4),
                 HistoryMetric.TEMPERATURE,
                 false,
@@ -194,12 +195,12 @@ class HistoryModelTest {
             )
         )
         assertEquals(
-            "85.6–97.5 °F", historyRangeValue(
+            "85.6–97.5\u00A0°F", historyRangeValue(
                 HistorySeries(emptyList(), 29.8, 36.4), HistoryMetric.TEMPERATURE, true, Locale.US
             )
         )
         assertEquals(
-            "3.88–4.20 V", historyRangeValue(
+            "3.88–4.20\u00A0V", historyRangeValue(
                 HistorySeries(emptyList(), 3.88, 4.20), HistoryMetric.VOLTAGE, false, Locale.US
             )
         )

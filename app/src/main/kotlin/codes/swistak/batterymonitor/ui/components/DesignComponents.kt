@@ -161,8 +161,8 @@ fun BatteryCellHero(
                     )
                     Canvas(Modifier.matchParentSize()) {
                         val tickColor = colors.onPrimaryContainer.copy(alpha = 0.35f)
-                        repeat(5) { tick ->
-                            val y = size.height * (0.05f + tick * 0.225f)
+                        repeat(3) { tick ->
+                            val y = size.height * (1 - (tick + 1) / 4f)
                             drawLine(
                                 tickColor,
                                 Offset(4.dp.toPx(), y),
@@ -255,7 +255,7 @@ fun MetricGrid(
                                 )
                             }
                             Text(
-                                "${metric.value}${if (metric.unit.isEmpty()) "" else " ${metric.unit}"}",
+                                "${metric.value}${if (metric.unit.isEmpty()) "" else "\u00A0${metric.unit}"}",
                                 style = if (expanded) MaterialTheme.typography.headlineMedium else MaterialTheme.typography.titleLarge,
                                 color = MaterialTheme.colorScheme.onSurface
                             )

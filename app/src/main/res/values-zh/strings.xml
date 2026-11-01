@@ -65,13 +65,12 @@
     <string name="vital_sign_voltage" formatted="false">電池電壓</string>
     <string name="pref_cat_battery_current_main" formatted="false">電池電流</string>
     <string name="remaining_charge" formatted="false">剩餘電量</string>
-    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
     <string name="remaining_charge_unavailable">無法取得剩餘電量</string>
-    <string name="current_remaining_charge">剩餘電荷量：%1$s mAh</string>
+    <string name="current_remaining_charge">剩餘電荷量：%1$s\u00A0mAh</string>
     <string name="battery_power">電池功率</string>
     <string name="battery_power_explanation">根據電池電壓與電流計算；充電時為正，放電時為負。這是電池端的功率，而非充電器功率。</string>
     <string name="current_android_health">Android 回報的狀態</string>
-    <string name="current_status_unit">Android 狀態</string>
     <string name="current_health_explanation">此 Android 狀態不是電池健康度百分比。</string>
     <string name="health_unknown" formatted="false">未知</string>
     <string name="health_good" formatted="false">電池健康良好</string>
@@ -95,7 +94,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">乘數</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">某些裝置會回報非預期的單位或正負號。請在此處乘以回報值，以修正顯示結果。\n
     \n
-    以手機的粗略參考來說，Android 的標準符號是充電時為正、放電時為負。主動充電通常約為 +500 至 +5000 mA，一般放電通常約為 -100 至 -3000 mA。電池接近充滿或手機閒置時，接近零的數值可能是正常的。如果數值看起來約小了或大了 1000 倍，或正負號相反，請調整乘數。</string>
+    以手機的粗略參考來說，Android 的標準符號是充電時為正、放電時為負。主動充電通常約為 +500 至 +5000\u00A0mA，一般放電通常約為 -100 至 -3000\u00A0mA。電池接近充滿或手機閒置時，接近零的數值可能是正常的。如果數值看起來約小了或大了 1000 倍，或正負號相反，請調整乘數。</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">自動偵測</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">目前的電池狀態或讀數無法使用自動偵測</string>
     <string name="pref_battery_current_multiplier_detection_result">乘數已自動設為 %1$d</string>
@@ -136,7 +135,7 @@
     <string name="pref_charging_target_mode_summary_default" formatted="false">未偵測到固定的裝置上限 — 使用 100%</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    如果此數值看起來不正確，您可以協助改善裝置偵測。請開啟「設定」 → 「進階」 → 「OEM 充電上限診斷」並嚴格按照「說明」中的指示產生 OEM 充電上限報告</string>
+    如果此數值看起來不正確，您可以協助改善裝置偵測。請開啟「設定」 → 「進階」 → 「OEM 充電上限診斷」並嚴格按照「說明」中的指示產生 OEM 充電上限報告。</string>
     <string name="charging_target_mode_automatic" formatted="false">自動（建議）</string>
     <string name="charging_target_mode_custom" formatted="false">自訂</string>
     <string name="pref_custom_charging_target" formatted="false">自訂充電目標</string>
@@ -155,6 +154,7 @@
     <string name="app_notifs_disabled_summary" formatted="false">您已停用此應用程式的所有通知。  請允許他們存取這些設定</string>
     <string name="main_notifs_disabled_summary" formatted="false">您已停用此應用程式的主要通知。  請啟用它以存取這些設定</string>
     <string name="settings_notification_disabled">請啟用應用程式通知及主要通知頻道，以調整此選項</string>
+    <string name="settings_notification_disabled_help">請啟用應用程式通知及主要通知頻道，以調整此選項。</string>
     <string name="notifications_onboarding_message">Battery Monitor 需要您的权限，以在状态列显示电池电量并通知您有关警报的信息。\n
     \n
     注意：授予此权限有时可能会导致应用关闭。若发生这种情况，请重新打开应用。</string>
@@ -195,6 +195,7 @@
     <string name="status_bar_chip_settings" formatted="false">狀態列晶片</string>
     <string name="status_bar_chip_settings_help" formatted="false">在 Android 16 以上版本中，選擇即時更新晶片何時出現、輪流顯示哪些數值，以及是否顯示充電表情符號。可用性也取決於裝置與系統通知設定。</string>
     <string name="settings_live_update_summary">在 Android 設定中允許或封鎖醒目顯示的電池通知</string>
+    <string name="settings_live_update_help">在 Android 設定中允許或封鎖醒目顯示的電池通知。</string>
     <string name="live_updates_onboarding_title">狀態列電池晶片</string>
     <string name="live_updates_onboarding_message_on">您的装置支援在状态列中以芯片形式显示电池百分比。此选项默认已启用。\n
     \n
@@ -227,11 +228,11 @@
     <string name="pref_chip_switching_interval_help" formatted="false">選擇晶片切換至下一個所選值的頻率。選取多個值時可使用此設定。</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">輸入以秒為單位的間隔（1–3600）。</string>
     <string name="pref_chip_switching_interval_error" formatted="false">請輸入 1 到 3600 之間的值。</string>
-    <string name="chip_switching_interval_2_seconds" formatted="false">2 秒</string>
-    <string name="chip_switching_interval_5_seconds" formatted="false">5 秒</string>
-    <string name="chip_switching_interval_10_seconds" formatted="false">10 秒</string>
-    <string name="chip_switching_interval_15_seconds" formatted="false">15 秒</string>
-    <string name="chip_switching_interval_30_seconds" formatted="false">30 秒</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0秒</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5\u00A0秒</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0秒</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0秒</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0秒</string>
     <string name="pref_chip_indicate_charging" formatted="false">顯示充電表情符號</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">充電或充飽電時顯示閃電表情符號？</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">如果啟用，狀態列晶片將在旁邊顯示閃電表情符號 充電時或充滿電時的晶片值。</string>
@@ -295,6 +296,7 @@
     <string name="alarms_channel_help">音效與傳送方式由此 Android 通知頻道控制。</string>
     <string name="pref_dismiss_low_battery_on_recovery">電量回升後關閉低電量警報</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">電量高於臨界點時移除低電量通知。其他警報通知會保留</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">電量高於臨界點時移除低電量通知。其他警報通知會保留。</string>
     <string name="alarms_channel_unavailable">通知頻道尚未建立或無法使用</string>
     <string name="alarms_settings_unavailable">無法開啟 Android 通知設定</string>
     <string name="alarms_target_unknown">目標無法取得。請開啟估算設定。</string>
@@ -310,9 +312,9 @@
     <string name="alarms_saved_reload_failed">已儲存，但無法通知監測服務。請檢查監測狀態。</string>
 
     <string name="history_range">歷史記錄範圍</string>
-    <string name="history_last_24h">最近 24 小時</string>
-    <string name="history_last_3d">最近 3 天</string>
-    <string name="history_last_7d">最近 7 天</string>
+    <string name="history_last_24h">最近 24\u00A0小時</string>
+    <string name="history_last_3d">最近 3\u00A0天</string>
+    <string name="history_last_7d">最近 7\u00A0天</string>
     <string name="history_all_history">所有歷史紀錄</string>
     <string name="history_custom_range">自訂日期範圍</string>
     <string name="history_month">月份</string>
@@ -324,7 +326,7 @@
     <string name="history_change_range">變更</string>
     <string name="history_charts">圖表</string>
     <string name="history_level">電量</string>
-    <string name="history_level_24h">電量 · 最近 24 小時</string>
+    <string name="history_level_24h">電量 · 最近 24\u00A0小時</string>
     <string name="history_battery_level">電池電量</string>
     <string name="history_observations">這是儲存的觀測值，並非連續測量。垂直線標示電源事件與重新啟動。</string>
     <string name="history_chart_description">觀測範圍從 %1$s 至 %2$s。最小值 %3$s，最大值 %4$s。開啟「事件」並點選記錄可查看讀數詳情。</string>
@@ -369,8 +371,8 @@
     <string name="history_chart_select_point">選取測量值</string>
     <string name="history_chart_event_summary">已連接（短虛線）：%1$d · 已中斷連接（長虛線）：%2$d · 監測中斷（點線）：%3$d</string>
     <string name="history_chart_events">圖表事件</string>
-    <string name="history_chart_1h">最近 1 小時</string>
-    <string name="history_chart_6h">最近 6 小時</string>
+    <string name="history_chart_1h">最近 1\u00A0小時</string>
+    <string name="history_chart_6h">最近 6\u00A0小時</string>
     <string name="history_chart_zoom_in">放大</string>
     <string name="history_chart_zoom_out">縮小</string>
     <string name="history_chart_pan_left">較早的時段</string>
@@ -475,7 +477,7 @@
     <string name="widget_preview_note">預覽使用上次監測讀數。小工具大小由啟動器設定。</string>
     <string name="widget_read_at">讀數 %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="other">電量 · 最近 %1$d 小時</item>
+        <item quantity="other">電量 · 最近 %1$d\u00A0小時</item>
     </plurals>
     <string name="widget_observed_range">觀測 %1$s–%2$s</string>
     <string name="widget_chart_description">從 %1$s 至 %2$s 儲存的電池電量。最小值 %3$s，最大值 %4$s。</string>
@@ -489,29 +491,32 @@
     <string name="settings_search_no_results">沒有相符的設定</string>
     <string name="settings_dependency_disabled">請啟用或設定上方的相關選項，以變更此設定</string>
     <string name="other_settings" formatted="false">一般</string>
-    <string name="settings_general_summary">語言、外觀、單位與時間長度格式</string>
+    <string name="settings_general_summary">語言、外觀、溫度單位與時間長度格式</string>
     <string name="other_settings_help" formatted="false">選擇配色與亮度、應用程式語言、溫度單位、時間長度格式，以及裝置重新啟動後是否開始監測。</string>
     <string name="settings_legacy_general">其他</string>
     <string name="pref_cat_language" formatted="false">語言與格式</string>
     <string name="pref_change_app_language" formatted="false">應用程式語言</string>
     <string name="pref_change_app_language_help" formatted="false">選擇 Battery Monitor 使用的語言。系統預設值會跟隨裝置語言。</string>
     <string name="settings_app_language_unavailable">系統的應用程式語言選擇器需要 Android 13 或以上版本</string>
+    <string name="settings_app_language_unavailable_help">系統的應用程式語言選擇器需要 Android 13 或以上版本。</string>
     <string name="pref_temperature_unit" formatted="false">溫度顯示單位</string>
-    <string name="pref_temperature_unit_help" formatted="false">選擇以攝氏或華氏顯示溫度。</string>
+    <string name="pref_temperature_unit_help" formatted="false">選擇以攝氏或華氏顯示電池溫度。</string>
     <string name="celsius" formatted="false">攝氏溫度</string>
     <string name="fahrenheit" formatted="false">華氏溫度</string>
     <string name="pref_long_duration_format" formatted="false">長時間格式</string>
-    <string name="pref_long_duration_format_help" formatted="false">「天與小時」會在超過 24 小時後使用天數，例如 1d 3h。「僅小時」會以小時保留完整時間，例如 27h</string>
+    <string name="pref_long_duration_format_help" formatted="false">「天與小時」會在超過 24\u00A0小時後使用天數，例如 1d 3h。「僅小時」會以小時保留完整時間，例如 27h。</string>
     <string name="long_duration_format_days_and_hours" formatted="false">天與小時</string>
     <string name="long_duration_format_hours_only" formatted="false">僅小時</string>
     <string name="settings_appearance">外觀</string>
     <string name="settings_color_palette">配色</string>
     <string name="settings_color_palette_summary">使用系統色彩或 「Battery Blue」</string>
+    <string name="settings_color_palette_help">使用系統色彩或 「Battery Blue」。</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">系統色彩需要 Android 12 或以上版本。此裝置使用 「Battery Blue」。</string>
     <string name="settings_brightness">亮度</string>
     <string name="settings_brightness_summary">依照系統，或選擇淺色、深色或純黑</string>
+    <string name="settings_brightness_help">依照系統，或選擇淺色、深色或純黑。</string>
     <string name="settings_brightness_system">系統</string>
     <string name="settings_brightness_light">淺色</string>
     <string name="settings_brightness_dark">深色</string>
@@ -653,8 +658,10 @@
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">受限制。点按以允许可靠的后台监控</string>
     <string name="diagnostics_vendor_settings" formatted="false">制造商设置</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">打开此设备提供的其他后台活动或自动启动设置</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">打开此设备提供的其他后台活动或自动启动设置。</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">后台活动帮助</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">在 Don’t Kill My App 上打开设备专用指南</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">在 Don’t Kill My App 上打开设备专用指南。</string>
     <string name="diagnostics_root" formatted="false">Root 访问</string>
     <string name="diagnostics_root_unavailable" formatted="false">不可用。点按以请求或检查 Root 访问</string>
     <string name="diagnostics_shizuku" formatted="false">Shizuku 访问</string>
@@ -676,8 +683,8 @@
     <string name="diag_predictor_start_monitor">請在上方開始監測，以查看儲存的預測資料。</string>
     <string name="diag_predictor_active_state" formatted="false">目前電池狀態</string>
     <string name="diag_predictor_effective_rate" formatted="false">估算使用的速率</string>
-    <string name="diag_predictor_five_minute_rate" formatted="false">最近 5 分鐘</string>
-    <string name="diag_predictor_five_point_rate" formatted="false">最近 5 個百分點</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">最近 5\u00A0分鐘</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">最近 5\u00A0個百分點</string>
     <string name="diag_predictor_active_long_term_rate" formatted="false">目前長期速率</string>
     <string name="diag_predictor_observed_points" formatted="false">已完成的百分點</string>
     <string name="diag_predictor_observation_duration" formatted="false">已觀測的工作階段時間</string>
@@ -694,8 +701,10 @@
     <string name="diagnostics_device_and_logs" formatted="false">设备和诊断报告</string>
     <string name="diagnostics_debug_logs" formatted="false">收集调试日志</string>
     <string name="diagnostics_debug_logs_warning" formatted="false">调试日志可能包含个人信息。仅在调查问题时启用，请检查导出的文件，并谨慎公开分享</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">调试日志可能包含个人信息。仅在调查问题时启用，请检查导出的文件，并谨慎公开分享。</string>
     <string name="diagnostics_clear" formatted="false">删除已收集的调试日志</string>
     <string name="diagnostics_clear_summary" formatted="false">删除应用当前保存的调试日志</string>
+    <string name="diagnostics_clear_help" formatted="false">删除应用当前保存的调试日志。</string>
     <string name="diagnostics_logs_cleared" formatted="false">已删除调试日志</string>
     <string name="diagnostics_logs_clear_failed" formatted="false">无法删除调试日志</string>
     <string name="diagnostics_export" formatted="false">导出诊断报告</string>
@@ -729,16 +738,18 @@
     <string name="charging_diagnostics_need_two" formatted="false">請先擷取至少兩種不同的充電模式</string>
     <string name="charging_diagnostics_report" formatted="false">建立比較報告</string>
     <string name="charging_diagnostics_report_summary" formatted="false">請先擷取至少兩種不同的 OEM 充電模式</string>
+    <string name="charging_diagnostics_report_help" formatted="false">請先擷取至少兩種不同的 OEM 充電模式。</string>
     <string name="charging_diagnostics_copy" formatted="false">複製到剪貼簿</string>
     <string name="charging_diagnostics_save" formatted="false">儲存</string>
     <string name="charging_diagnostics_copied" formatted="false">已複製報告</string>
     <string name="charging_diagnostics_clear" formatted="false">清除充電快照</string>
     <string name="charging_diagnostics_clear_summary" formatted="false">刪除儲存在本機的 OEM 充電快照</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">刪除儲存在本機的 OEM 充電快照。</string>
     <string name="charging_diagnostics_cleared" formatted="false">已刪除充電快照</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. 中斷手機與充電器的連接，並在擷取設定快照期間保持中斷。快照之間只變更製造商的充電保護設定。\n
-    2. 關閉充電保護，等待 2–5 秒，然後擷取快照。\n
-    3. 選擇固定上限，等待 2–5 秒，然後擷取快照。若可以，請以另一個上限重複操作。\n
-    4. 啟用自動調節、智慧或排程充電，等待 2–5 秒，然後擷取快照。\n
+    2. 關閉充電保護，等待 2–5\u00A0秒，然後擷取快照。\n
+    3. 選擇固定上限，等待 2–5\u00A0秒，然後擷取快照。若可以，請以另一個上限重複操作。\n
+    4. 啟用自動調節、智慧或排程充電，等待 2–5\u00A0秒，然後擷取快照。\n
     5. 如果設定比較無法得出明確結果，可以選擇在充電時重複此程序，以擷取僅在執行時出現的狀態。\n
     6. 建立並檢查比較報告。資料會經過篩選，可能敏感的值會被隱藏，但傳送前仍請檢查完整報告。</string>
     <string name="charging_diagnostics_help_contact" formatted="false">檢視報告後，請複製或儲存，然後以電子郵件傳送至 <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>。</string>
@@ -750,30 +761,30 @@
     <string name="general_backup_help" formatted="false">一般備份會一起儲存設定、鬧鐘和裝置特定資料。還原時，你可以選擇要匯入的可用資料。</string>
     <string name="pref_export_general_backup" formatted="false">匯出一般備份</string>
     <string name="pref_export_general_backup_summary" formatted="false">將設定、鬧鐘和裝置特定資料儲存到 ZIP 檔案</string>
-    <string name="general_backup_exported" formatted="false">已成功匯出一般備份</string>
+    <string name="general_backup_exported" formatted="false">已成功匯出一般備份。</string>
     <string name="pref_import_general_backup" formatted="false">匯入一般備份</string>
     <string name="pref_import_general_backup_summary" formatted="false">從一般備份 ZIP 檔案還原所選資料</string>
     <string name="general_backup_restore_message" formatted="false">選擇您要還原的內容。</string>
-    <string name="general_backup_imported" formatted="false">已成功匯入一般備份</string>
+    <string name="general_backup_imported" formatted="false">已成功匯入一般備份。</string>
     <string name="invalid_general_backup_file" formatted="false">無效或不相容的一般備份檔案</string>
     <string name="settings_restore_partial">部分資料無法還原。已成功還原：%1$s。可能僅部分還原的資料：%2$s。請先檢查這些項目後再試一次。</string>
     <string name="settings_restore_none">無</string>
     <string name="settings_backup_help" formatted="false">設定備份會儲存應用程式偏好設定。匯入後會還原已儲存的偏好設定。</string>
     <string name="pref_export_settings" formatted="false">匯出設定</string>
     <string name="pref_export_settings_summary" formatted="false">將目前設定儲存至檔案</string>
-    <string name="settings_exported" formatted="false">設定已成功匯出</string>
+    <string name="settings_exported" formatted="false">設定已成功匯出。</string>
     <string name="pref_import_settings" formatted="false">匯入設定</string>
     <string name="pref_import_settings_summary" formatted="false">從檔案還原設定</string>
-    <string name="settings_imported" formatted="false">設定已成功匯入</string>
+    <string name="settings_imported" formatted="false">設定已成功匯入。</string>
     <string name="invalid_settings_file" formatted="false">無效的設定檔案</string>
     <string name="settings_file_version_warning" formatted="false">此檔案由較新版本的應用程式建立。匯入可能會造成未預期的行為。仍要繼續嗎？</string>
     <string name="alarms_backup_help" formatted="false">鬧鐘備份會儲存你的鬧鐘。匯入後會以備份中的鬧鐘取代所有目前的鬧鐘。</string>
     <string name="pref_export_alarms" formatted="false">匯出鬧鐘</string>
     <string name="pref_export_alarms_summary" formatted="false">將目前的鬧鐘儲存到檔案</string>
-    <string name="alarms_exported" formatted="false">已成功匯出鬧鐘</string>
+    <string name="alarms_exported" formatted="false">已成功匯出鬧鐘。</string>
     <string name="pref_import_alarms" formatted="false">匯入鬧鐘</string>
     <string name="pref_import_alarms_summary" formatted="false">以檔案中的鬧鐘取代目前的鬧鐘</string>
-    <string name="alarms_imported" formatted="false">已成功匯入鬧鐘</string>
+    <string name="alarms_imported" formatted="false">已成功匯入鬧鐘。</string>
     <string name="invalid_alarms_file" formatted="false">無效的鬧鐘檔案</string>
     <string name="pref_backup_device_data" formatted="false">備份裝置特定資料</string>
     <string name="device_specific_backup_help" formatted="false">裝置特定備份會儲存記錄和預測器資料。匯入時可以選擇其中一項或兩項。這些資料屬於來源裝置；在其他裝置上使用可能造成預測不準確或應用程式行為異常。匯入記錄時，請選擇加入現有記錄或取代現有記錄。</string>
@@ -782,10 +793,11 @@
     <string name="device_data_backup_warning" formatted="false">這些裝置特定資料屬於收集資料的裝置。將其匯入其他裝置可能會導致錯誤的預測或其他非預期的應用程式行為。</string>
     <string name="pref_export_device_data" formatted="false">匯出裝置特定資料</string>
     <string name="pref_export_device_data_summary" formatted="false">將記錄和預測資料儲存到檔案</string>
-    <string name="device_data_exported" formatted="false">已成功匯出裝置特定資料</string>
+    <string name="device_data_exported" formatted="false">已成功匯出裝置特定資料。</string>
     <string name="pref_import_device_data" formatted="false">匯入裝置特定資料</string>
     <string name="pref_import_device_data_summary" formatted="false">從檔案還原記錄和預測資料</string>
     <string name="device_data_imported" formatted="false">已成功匯入裝置特定資料</string>
+    <string name="device_data_imported_dialog" formatted="false">已成功匯入裝置特定資料。</string>
     <string name="invalid_device_data_file" formatted="false">無效的裝置特定資料檔案</string>
     <string name="device_data_file_empty" formatted="false">此檔案不包含支援的裝置特定資料</string>
     <string name="pref_import_logs_csv" formatted="false">從 CSV 匯入記錄</string>
@@ -797,13 +809,14 @@
     <string name="log_import_add" formatted="false">新增至現有記錄</string>
     <string name="log_import_replace" formatted="false">取代現有記錄</string>
     <string name="csv_logs_imported" formatted="false">已成功匯入 CSV 記錄</string>
+    <string name="csv_logs_imported_dialog" formatted="false">已成功匯入 CSV 記錄。</string>
     <string name="invalid_csv_logs_file" formatted="false">無效或不相容的 CSV 記錄檔案</string>
     <string name="settings_reset_title">還原預設設定</string>
     <string name="settings_reset_summary">保留歷史記錄、警報與已學習的估算，並重設應用程式偏好</string>
     <string name="settings_reset_help" formatted="false">「還原預設設定」會先要求確認，再重設應用程式偏好。歷史記錄、警報、已學習的估算、小工具設定及背景監測的執行狀態都會保留。系統權限與通知頻道設定不會重設。</string>
     <string name="settings_reset_question">要將所有應用程式設定還原為預設值嗎？歷史記錄、警報與已學習的估算會保留。背景監測會維持目前的執行或停止狀態。</string>
     <string name="settings_reset_confirm">還原預設值</string>
-    <string name="settings_reset_done">已還原預設設定</string>
+    <string name="settings_reset_done">已還原預設設定。</string>
     <string name="settings_reset_failed">無法完成還原預設設定。部分設定可能已變更。請檢查可用儲存空間後再試一次。</string>
 
     <string name="help_cat_version" formatted="false">版本</string>

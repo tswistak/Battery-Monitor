@@ -116,9 +116,9 @@ internal fun ThresholdDialog(
                     isError = !valid && !draft.thresholdInput.isNullOrEmpty(),
                     supportingText = {
                         Text(
-                            stringResource(
-                                if (state.collisionId != null) R.string.alarms_duplicate
-                                else if (temperature) R.string.alarms_temperature_range else R.string.alarms_numeric_range,
+                            if (state.collisionId != null) stringResource(R.string.alarms_duplicate)
+                            else stringResource(
+                                if (temperature) R.string.alarms_temperature_range else R.string.alarms_numeric_range,
                                 bounds.first,
                                 bounds.last
                             )

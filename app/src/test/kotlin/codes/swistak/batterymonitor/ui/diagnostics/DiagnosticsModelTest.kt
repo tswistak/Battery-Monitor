@@ -289,11 +289,11 @@ class DiagnosticsModelTest {
             }
             val groups = diagnosticGroups(snapshot, 1000)
             assertEquals(
-                "-900 mA",
+                "-900\u00A0mA",
                 groups[0].rows.single { it.label == R.string.diag_field_current_now }.value
             )
             assertEquals(
-                "2000 mA",
+                "2000\u00A0mA",
                 groups[2].rows.single { it.label == R.string.diag_field_max_charging_current }.value
             )
             assertEquals(
@@ -525,15 +525,19 @@ class DiagnosticsModelTest {
             val snapshot = acquiredSnapshot {
                 accessMethod = "Android"
                 currentNowUa = -900
+                energyCounterNwh = 1500000
                 fieldSources["current_now"] = "BatteryManager / BATTERY_PROPERTY_CURRENT_NOW"
                 serviceLabels.addAll(listOf("voltage", "temperature"))
                 serviceValues.addAll(listOf("5000", "250"))
             }
             val rows = diagnosticGroups(snapshot, 1000).first().rows
-            assertEquals("5.000 V", rows.single { it.rawKey == "voltage" }.value)
+            assertEquals("5.000\u00A0V", rows.single { it.rawKey == "voltage" }.value)
             assertEquals("25.0°C", rows.single { it.rawKey == "temperature" }.value)
+            val energy = rows.single { it.rawKey == "energy_counter" }
+            assertEquals("1.5\u00A0mWh", energy.value)
+            assertEquals("1500000", energy.rawValue)
             val power = rows.single { it.rawKey == "battery_power" }
-            assertEquals("-4.50 W", power.value)
+            assertEquals("-4.50\u00A0W", power.value)
             assertEquals(
                 "ACTION_BATTERY_CHANGED / voltage × BatteryManager / BATTERY_PROPERTY_CURRENT_NOW",
                 power.source
@@ -576,7 +580,7 @@ class DiagnosticsModelTest {
                 }
                 val groups = diagnosticGroups(snapshot, 1)
                 val voltage = groups.first().rows.single { it.rawKey == "voltage" }
-                assertEquals("3.900 V", voltage.value)
+                assertEquals("3.900\u00A0V", voltage.value)
                 assertEquals(raw, voltage.rawValue)
                 assertEquals(unit, voltage.unit)
                 assertEquals("/sys/class/power_supply/battery/voltage_now", voltage.source)
@@ -587,10 +591,11 @@ class DiagnosticsModelTest {
                 )
                 assertEquals("0", groups[3].rows.single { it.rawKey == "voltage" }.rawValue)
                 assertEquals(
-                    "-1.95 W", groups.first().rows.single { it.rawKey == "battery_power" }.value
+                    "-1.95\u00A0W",
+                    groups.first().rows.single { it.rawKey == "battery_power" }.value
                 )
                 assertEquals(
-                    "-1.95 W", mergedDiagnosticGroups(
+                    "-1.95\u00A0W", mergedDiagnosticGroups(
                         listOf(snapshot), 1
                     ).first().rows.single { it.rawKey == "battery_power" }.value
                 )
@@ -616,10 +621,10 @@ class DiagnosticsModelTest {
                 ).first().rows.single { it.rawKey == "voltage" }.value
             )
             val rows = mergedDiagnosticGroups(listOf(android, invalid), 1).first().rows
-            assertEquals("4.000 V", rows.single { it.rawKey == "voltage" }.value)
+            assertEquals("4.000\u00A0V", rows.single { it.rawKey == "voltage" }.value)
             assertEquals("Android", rows.single { it.rawKey == "voltage" }.accessMethod)
             assertEquals(200L, rows.single { it.rawKey == "voltage" }.observedAtMillis)
-            assertEquals("-2.00 W", rows.single { it.rawKey == "battery_power" }.value)
+            assertEquals("-2.00\u00A0W", rows.single { it.rawKey == "battery_power" }.value)
         } finally {
             Locale.setDefault(previousLocale)
         }
@@ -711,7 +716,7 @@ class DiagnosticsModelTest {
             })
             val current = charging.single { it.rawKey == "usb/current_max" }
             assertEquals(R.string.diag_field_max_charging_current, current.label)
-            assertEquals("1000 mA", current.value)
+            assertEquals("1000\u00A0mA", current.value)
             assertEquals("1000000\n", current.rawValue)
             assertEquals("Root", current.accessMethod)
             assertEquals(200L, current.observedAtMillis)
@@ -733,23 +738,23 @@ class DiagnosticsModelTest {
                 charging.single { it.rawKey == "usb/online" }.valueLabel
             )
             assertEquals(
-                "5.000 V", charging.single { it.rawKey == "usb/input_voltage_limit" }.value
+                "5.000\u00A0V", charging.single { it.rawKey == "usb/input_voltage_limit" }.value
             )
             assertEquals(
-                "1500 mA", charging.single { it.rawKey == "usb/input_current_limit" }.value
+                "1500\u00A0mA", charging.single { it.rawKey == "usb/input_current_limit" }.value
             )
             assertEquals(
                 R.string.diag_settled_input_current,
                 charging.single { it.rawKey == "battery/input_current_max" }.label
             )
             assertEquals(
-                "700 mA", charging.single { it.rawKey == "battery/input_current_max" }.value
+                "700\u00A0mA", charging.single { it.rawKey == "battery/input_current_max" }.value
             )
             assertEquals(
-                "1500 mA", charging.single { it.rawKey == "battery/input_current_limit" }.value
+                "1500\u00A0mA", charging.single { it.rawKey == "battery/input_current_limit" }.value
             )
             assertEquals(
-                "5.000 V", charging.single { it.rawKey == "battery/input_voltage_limit" }.value
+                "5.000\u00A0V", charging.single { it.rawKey == "battery/input_voltage_limit" }.value
             )
             assertTrue(charging.none { it.rawKey == "battery/health" })
             val battery = deviceDiagnosticGroups(snapshots, charging = false).flatMap { it.rows }
@@ -766,7 +771,7 @@ class DiagnosticsModelTest {
             })
             assertEquals("Li-ion", battery.single { it.rawKey == "battery/technology" }.value)
             assertEquals(
-                "4.320 V", battery.single { it.rawKey == "battery/voltage_max_design" }.value
+                "4.320\u00A0V", battery.single { it.rawKey == "battery/voltage_max_design" }.value
             )
             assertEquals(
                 R.string.health_good, battery.single { it.rawKey == "battery/health" }.valueLabel

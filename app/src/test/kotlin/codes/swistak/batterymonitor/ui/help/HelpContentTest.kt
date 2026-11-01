@@ -44,6 +44,7 @@ class HelpContentTest {
                 if (mode == SettingsContract.CHARGING_TARGET_MODE_CUSTOM) customTexts else emptySet()
             assertEquals("Charging target mode $mode", expected, paragraphs.intersect(customTexts))
             assertTrue(paragraphs.contains(R.string.pref_discharging_target))
+            assertTrue(paragraphs.contains(R.string.pref_prediction_type_help))
         }
     }
 
@@ -79,6 +80,14 @@ class HelpContentTest {
             overview,
             helpSections("unknown-topic", 37, SettingsContract.CHARGING_TARGET_MODE_AUTOMATIC)
         )
+        assertTrue(overview.none { it.titleResource == R.string.diagnostics })
+        assertTrue(overview.flatMap { it.paragraphs }.none {
+            it.textResource == R.string.diag_help_overview
+        })
+        assertTrue(
+            helpSections(
+            SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null
+        ).flatMap { it.paragraphs }.any { it.textResource == R.string.diag_help_overview })
     }
 
     @Test
@@ -132,16 +141,16 @@ class HelpContentTest {
                 SettingsContract.KEY_OTHER_SETTINGS, sdk, null
             ).flatMap { it.paragraphs }.map { it.textResource }.toSet()
             assertEquals(sdk < 31, R.string.settings_color_palette_unavailable in general)
-            assertEquals(sdk < 33, R.string.settings_app_language_unavailable in general)
+            assertEquals(sdk < 33, R.string.settings_app_language_unavailable_help in general)
             assertEquals(sdk >= 33, R.string.pref_change_app_language_help in general)
             val monitor = helpSections(MONITORING_HELP_TOPIC, sdk, null).flatMap { it.paragraphs }
                 .map { it.textResource }.toSet()
-            assertEquals(sdk >= 36, R.string.settings_live_update_summary in monitor)
+            assertEquals(sdk >= 36, R.string.settings_live_update_help in monitor)
         }
         val notification = helpSections(
             SettingsContract.KEY_NOTIFICATION_SETTINGS, 37, null
         ).flatMap { it.paragraphs }.map { it.textResource }.toSet()
-        assertTrue(R.string.settings_notification_disabled in notification)
+        assertTrue(R.string.settings_notification_disabled_help in notification)
     }
 
     @Test

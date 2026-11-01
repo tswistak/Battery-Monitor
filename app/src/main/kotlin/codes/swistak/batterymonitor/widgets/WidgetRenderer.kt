@@ -436,7 +436,7 @@ internal object WidgetRenderer {
             BatteryCurrent.formatMilliAmps(
                 BatteryCurrent.scaleMicroAmps(it, multiplier),
                 context.resources.configuration.locales[0]
-            ) + " mA"
+            ) + "\u00A0mA"
         }
 
         WidgetMetric.REMAINING_CHARGE -> snapshot?.remainingChargeMicroampHours?.let {

@@ -346,8 +346,23 @@ class CurrentStateLayoutInstrumentedTest {
                 R.string.current_detail_source, "current-layout-fixture.temperature"
             )
             await { hasText(detailSource) }
+            assertTrue(hasText(context.getString(R.string.current_detail_unit, "°C")))
             instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
             await { !hasText(detailSource) }
+
+            click(labels.last())
+            val healthExplanation = context.getString(R.string.current_health_explanation)
+            await { hasText(healthExplanation) }
+            assertTrue(hasText(context.getString(R.string.health_good)))
+            main {
+                val unitPrefix = context.getString(R.string.current_detail_unit, "")
+                assertFalse(nodes().any { node ->
+                    node.config.getOrNull(SemanticsProperties.Text)
+                        ?.any { it.text.startsWith(unitPrefix) } == true
+                })
+            }
+            instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+            await { !hasText(healthExplanation) }
 
             scrollTo("trend_history")
             await { hasText(context.getString(R.string.history_level_24h)) }

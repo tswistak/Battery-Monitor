@@ -6,11 +6,14 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "../..");
 const resDir = path.join(repoRoot, "app", "src", "main", "res");
 const topLevelIndent = "    ";
+const newlineContinuation = `\n${topLevelIndent}`;
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : String(error));
-  process.exitCode = 1;
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.message : String(error));
+    process.exitCode = 1;
+  });
+}
 
 async function main() {
   const filePaths = await findStringFiles();
@@ -51,7 +54,7 @@ async function main() {
       filePath,
       blankLineAfterLineNumbers,
     );
-    const formatted = expandEscapedNewlinesInDocument(withBlankLines, filePath);
+        const formatted = expandEscapedNewlinesInDocument(withBlankLines, filePath);
 
     if (formatted === original) {
       continue;
@@ -198,51 +201,84 @@ function expandEscapedNewlinesInDocument(content, filePath) {
     cursor = block.end;
   }
 
-  output += document.inner.slice(cursor);
-  output += document.suffix;
-  return output;
+  return output + document.inner.slice(cursor) + document.suffix;
 }
 
 function expandEscapedNewlinesInBlock(block) {
-  if (block.tagName !== "string") {
-    return block;
+  if (block.tagName !== "string") return block;
+
+  const openEnd = findTagEnd(block.raw, 0);
+  const closeStart = block.raw.lastIndexOf("</string>");
+  let output = block.raw.slice(0, openEnd);
+
+  for (let index = openEnd; index < closeStart; index += 1) {
+    const character = block.raw[index];
+    if (character === "<") {
+      const end = findTagEnd(block.raw, index);
+      output += block.raw.slice(index, end);
+      index = end - 1;
+    } else if (character === "\\" && index + 1 < closeStart) {
+      const escaped = block.raw[++index];
+      output += character + escaped;
+      if (escaped === "n") output += newlineContinuation;
+    } else {
+      output += character;
+    }
   }
 
-  return {
-    ...block,
-    raw: block.raw.replaceAll("\\n", "\\n\n    "),
-  };
+  return { ...block, raw: output + block.raw.slice(closeStart) };
 }
 
-function flattenMultilineStringValue(value) {
+export function flattenMultilineStringValue(value) {
   const normalized = normalizeNewlines(value);
   let output = "";
-  let pendingWhitespace = false;
   let lastTokenWasEscapedNewline = false;
+  let quoted = false;
 
   for (let index = 0; index < normalized.length; index += 1) {
-    if (normalized.startsWith("\\n", index)) {
-      output += "\\n";
-      pendingWhitespace = false;
-      lastTokenWasEscapedNewline = true;
-      index += 1;
-      continue;
-    }
-
     const character = normalized[index];
 
-    if (/\s/.test(character)) {
-      pendingWhitespace = true;
+    if (character === "\\" && index + 1 < normalized.length) {
+      const escaped = normalized[index + 1];
+      output += character + escaped;
+      lastTokenWasEscapedNewline = escaped === "n";
+      index += 1;
+      if (lastTokenWasEscapedNewline && normalized.startsWith(newlineContinuation, index + 1)) {
+        index += newlineContinuation.length;
+      }
       continue;
     }
 
-    if (pendingWhitespace && output.length > 0 && !lastTokenWasEscapedNewline) {
-      output += " ";
+    if (character === "<") {
+      const end = findTagEnd(normalized, index);
+      output += normalized.slice(index, end);
+      index = end - 1;
+      continue;
+    }
+
+    const quote = normalized.slice(index).match(/^(?:"|&quot;|&#0*34;|&#x0*22;)/i)?.[0];
+    if (quote) {
+      quoted = !quoted;
+      output += quote;
+      index += quote.length - 1;
+      continue;
+    }
+
+    if (character === "\n" && !quoted) {
+      output = output.replace(/[ \t]+$/, "");
+      while (index + 1 < normalized.length && /[ \t\n]/.test(normalized[index + 1])) {
+        index += 1;
+      }
+      if (output.length > 0 && index + 1 < normalized.length && !lastTokenWasEscapedNewline) {
+        output += " ";
+      }
+      continue;
     }
 
     output += character;
-    pendingWhitespace = false;
-    lastTokenWasEscapedNewline = false;
+    if (!/[ \t]/.test(character)) {
+      lastTokenWasEscapedNewline = false;
+    }
   }
 
   return output;

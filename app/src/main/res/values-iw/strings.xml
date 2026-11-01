@@ -65,13 +65,12 @@
     <string name="vital_sign_voltage" formatted="false">מתח הסוללה</string>
     <string name="pref_cat_battery_current_main" formatted="false">זרם הסוללה</string>
     <string name="remaining_charge" formatted="false">טעינה נותרת</string>
-    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
     <string name="remaining_charge_unavailable">הטעינה הנותרת אינה זמינה</string>
-    <string name="current_remaining_charge">מטען שנותר: %1$s mAh</string>
+    <string name="current_remaining_charge">מטען שנותר: %1$s\u00A0mAh</string>
     <string name="battery_power">הספק הסוללה</string>
     <string name="battery_power_explanation">מחושב ממתח הסוללה ומהזרם; חיובי בטעינה ושלילי בפריקה. זהו ההספק בצד הסוללה, ולא הספק המטען.</string>
     <string name="current_android_health">המצב לפי Android</string>
-    <string name="current_status_unit">מצב Android</string>
     <string name="current_health_explanation">מצב זה של Android אינו אחוז בריאות הסוללה.</string>
     <string name="health_unknown" formatted="false">לא-ידוע</string>
     <string name="health_good" formatted="false">בריאות טובה</string>
@@ -95,7 +94,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">מַכפִּיל</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">מכשירים מסוימים מדווחים על יחידות או סימנים בלתי צפויים. הכפל כאן את הערך המדווח כדי לתקן את התוצאה המוצגת.\n
     \n
-    כנקודת ייחוס כללית לטלפונים, הסימן התקני של Android הוא חיובי בזמן טעינה ושלילי בזמן פריקה. טעינה פעילה היא לרוב בערך +500 עד +5000 mA, ופריקה רגילה היא לרוב בערך -100 עד -3000 mA. ערכים קרובים לאפס יכולים להיות תקינים כשהסוללה כמעט מלאה או כשהטלפון אינו פעיל. אם הגודל נראה קטן או גדול בערך פי 1000, או שהסימן הפוך, יש לכוונן את המכפיל.</string>
+    כנקודת ייחוס כללית לטלפונים, הסימן התקני של Android הוא חיובי בזמן טעינה ושלילי בזמן פריקה. טעינה פעילה היא לרוב בערך +500 עד +5000\u00A0mA, ופריקה רגילה היא לרוב בערך -100 עד -3000\u00A0mA. ערכים קרובים לאפס יכולים להיות תקינים כשהסוללה כמעט מלאה או כשהטלפון אינו פעיל. אם הגודל נראה קטן או גדול בערך פי 1000, או שהסימן הפוך, יש לכוונן את המכפיל.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">זיהוי אוטומטי</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">זיהוי אוטומטי אינו זמין עבור מצב הסוללה או הקריאה הנוכחיים</string>
     <string name="pref_battery_current_multiplier_detection_result">המכפיל הוגדר אוטומטית ל־%1$d</string>
@@ -136,7 +135,7 @@
     <string name="pref_charging_target_mode_summary_default" formatted="false">לא זוהתה מגבלה קבועה — ייעשה שימוש ב־100%</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    אם הערך הזה אינו נראה נכון, תוכלו לעזור לשפר את זיהוי המכשירים. פתחו את ״הגדרות״ → ״מתקדם״ → ״אבחון מגבלת טעינה של היצרן״ והפיקו דוח מגבלת טעינה של היצרן תוך הקפדה על ההוראות ב״עזרה״</string>
+    אם הערך הזה אינו נראה נכון, תוכלו לעזור לשפר את זיהוי המכשירים. פתחו את ״הגדרות״ → ״מתקדם״ → ״אבחון מגבלת טעינה של היצרן״ והפיקו דוח מגבלת טעינה של היצרן תוך הקפדה על ההוראות ב״עזרה״.</string>
     <string name="charging_target_mode_automatic" formatted="false">אוטומטי (מומלץ)</string>
     <string name="charging_target_mode_custom" formatted="false">מותאם אישית</string>
     <string name="pref_custom_charging_target" formatted="false">יעד טעינה מותאם אישית</string>
@@ -155,6 +154,7 @@
     <string name="app_notifs_disabled_summary" formatted="false">השבתת את כל ההתראות עבור האפליקציה הזו.  אנא אפשר להם לגשת להגדרות אלה</string>
     <string name="main_notifs_disabled_summary" formatted="false">השבתת את ההתראה הראשית עבור אפליקציה זו.  אנא הפעל אותו כדי לגשת להגדרות אלה</string>
     <string name="settings_notification_disabled">יש להפעיל את התראות האפליקציה ואת ערוץ ההתראה הראשי כדי להתאים אפשרות זו</string>
+    <string name="settings_notification_disabled_help">יש להפעיל את התראות האפליקציה ואת ערוץ ההתראה הראשי כדי להתאים אפשרות זו.</string>
     <string name="notifications_onboarding_message">Battery Monitor צריך את ההרשאה שלך כדי להציג את רמת הסוללה בשורת המצב ולהתריע על אזעקות.\n
     \n
     הערה: מתן ההרשאה הזו עלול לגרום לעיתים לסגירת האפליקציה. אם זה קורה, פשוט פתח אותה מחדש.</string>
@@ -195,6 +195,7 @@
     <string name="status_bar_chip_settings" formatted="false">שבב שורת המצב</string>
     <string name="status_bar_chip_settings_help" formatted="false">ב־Android 16 ואילך, בחרו מתי שבב העדכון החי מופיע, אילו ערכים הוא מחליף והאם הוא מציג אימוג׳י טעינה. הזמינות תלויה גם במכשיר ובהגדרות התראות המערכת.</string>
     <string name="settings_live_update_summary">אפשרו או חסמו התראות סוללה מקודמות בהגדרות Android</string>
+    <string name="settings_live_update_help">אפשרו או חסמו התראות סוללה מקודמות בהגדרות Android.</string>
     <string name="live_updates_onboarding_title">שבב סוללה בשורת המצב</string>
     <string name="live_updates_onboarding_message_on">המכשיר שלך תומך בהצגת אחוז הסוללה כשבב בשורת המצב. אפשרות זו מופעלת כברירת מחדל.\n
     \n
@@ -227,11 +228,11 @@
     <string name="pref_chip_switching_interval_help" formatted="false">בחר באיזו תדירות השבב יעבור לערך הנבחר הבא. הגדרה זו זמינה כאשר נבחר יותר מערך אחד.</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">הזן מרווח בשניות (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">הזן ערך בין 1 ל־3600.</string>
-    <string name="chip_switching_interval_2_seconds" formatted="false">2 שניות</string>
-    <string name="chip_switching_interval_5_seconds" formatted="false">5 שניות</string>
-    <string name="chip_switching_interval_10_seconds" formatted="false">10 שניות</string>
-    <string name="chip_switching_interval_15_seconds" formatted="false">15 שניות</string>
-    <string name="chip_switching_interval_30_seconds" formatted="false">30 שניות</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0שניות</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5\u00A0שניות</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0שניות</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0שניות</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0שניות</string>
     <string name="pref_chip_indicate_charging" formatted="false">הצג סימון טעינה</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">להציג סימון בזמן טעינה או טעינה מלאה?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">אם מופעל, שבב שורת המצב יציג סימון ליד הערך בזמן טעינה או טעינה מלאה.</string>
@@ -297,6 +298,7 @@
     <string name="alarms_channel_help">ערוץ התראות זה של Android שולט בצליל ובאופן המסירה.</string>
     <string name="pref_dismiss_low_battery_on_recovery">סגירת התרעת סוללה חלשה לאחר התאוששות</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">הסרת התראת הסוללה החלשה כאשר המטען עולה מעל הסף שלה. התראות התרעה אחרות נשארות</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">הסרת התראת הסוללה החלשה כאשר המטען עולה מעל הסף שלה. התראות התרעה אחרות נשארות.</string>
     <string name="alarms_channel_unavailable">ערוץ ההתראות לא נוצר או אינו זמין</string>
     <string name="alarms_settings_unavailable">לא ניתן לפתוח את הגדרות ההתראות של Android</string>
     <string name="alarms_target_unknown">היעד אינו זמין. יש לפתוח את הגדרות ההערכה.</string>
@@ -312,9 +314,9 @@
     <string name="alarms_saved_reload_failed">נשמר, אך לא ניתן להודיע לרכיב הניטור. יש לבדוק את מצב הניטור.</string>
 
     <string name="history_range">טווח היסטוריה</string>
-    <string name="history_last_24h">24 השעות האחרונות</string>
-    <string name="history_last_3d">3 הימים האחרונים</string>
-    <string name="history_last_7d">7 הימים האחרונים</string>
+    <string name="history_last_24h">24\u00A0השעות האחרונות</string>
+    <string name="history_last_3d">3\u00A0הימים האחרונים</string>
+    <string name="history_last_7d">7\u00A0הימים האחרונים</string>
     <string name="history_all_history">כל ההיסטוריה</string>
     <string name="history_custom_range">טווח תאריכים מותאם</string>
     <string name="history_month">חודש</string>
@@ -326,7 +328,7 @@
     <string name="history_change_range">שינוי</string>
     <string name="history_charts">תרשימים</string>
     <string name="history_level">רמה</string>
-    <string name="history_level_24h">רמה · 24 השעות האחרונות</string>
+    <string name="history_level_24h">רמה · 24\u00A0השעות האחרונות</string>
     <string name="history_battery_level">רמת הסוללה</string>
     <string name="history_observations">תצפיות שמורות, ולא מדידה רציפה. קווים אנכיים מסמנים אירועי חשמל ואתחולים.</string>
     <string name="history_chart_description">טווח התצפיות מ־%1$s עד %2$s. מינימום %3$s, מקסימום %4$s. יש לפתוח את ה״אירועים״ ולהקיש על רשומה לפרטי הקריאה.</string>
@@ -372,7 +374,7 @@
     <string name="history_chart_event_summary">מחובר (מקפים קצרים): %1$d · מנותק (מקפים ארוכים): %2$d · הפסקות בניטור (קו מנוקד): %3$d</string>
     <string name="history_chart_events">אירועי התרשים</string>
     <string name="history_chart_1h">השעה האחרונה</string>
-    <string name="history_chart_6h">6 השעות האחרונות</string>
+    <string name="history_chart_6h">6\u00A0השעות האחרונות</string>
     <string name="history_chart_zoom_in">הגדלה</string>
     <string name="history_chart_zoom_out">הקטנה</string>
     <string name="history_chart_pan_left">טווח זמן מוקדם יותר</string>
@@ -415,12 +417,12 @@
     <string name="pref_max_log_age_summary" formatted="false">מחק יומנים ישנים יותר מ:</string>
     <string name="pref_max_log_age_help" formatted="false">כשהרישום מופעל, חיבור לחשמל מסיר יומנים ישנים ממגבלה זו. ״לעולם לא למחוק״ שומר אותם עד לניקוי ידני. אם ייצוא אוטומטי מופעל, Battery Monitor מייצא יומנים ממתינים לפני מחיקת רשומות ישנות; כישלון בייצוא מונע מחיקה זו.</string>
     <string name="age_1_day" formatted="false">יום אחד</string>
-    <string name="age_2_days" formatted="false">2 ימים</string>
-    <string name="age_4_days" formatted="false">4 ימים</string>
+    <string name="age_2_days" formatted="false">2\u00A0ימים</string>
+    <string name="age_4_days" formatted="false">4\u00A0ימים</string>
     <string name="age_1_week" formatted="false">שבוע אחד</string>
-    <string name="age_2_weeks" formatted="false">2 שבועות</string>
-    <string name="age_3_weeks" formatted="false">3 שבועות</string>
-    <string name="age_4_weeks" formatted="false">4 שבועות</string>
+    <string name="age_2_weeks" formatted="false">2\u00A0שבועות</string>
+    <string name="age_3_weeks" formatted="false">3\u00A0שבועות</string>
+    <string name="age_4_weeks" formatted="false">4\u00A0שבועות</string>
     <string name="age_never_delete" formatted="false">לעולם לא למחוק</string>
     <string name="settings_history_export">היסטוריה וייצוא</string>
     <string name="log_export_mode_title" formatted="false">ייצוא יומנים</string>
@@ -479,7 +481,7 @@
     <plurals name="widget_trend_range">
         <item quantity="one">רמה · השעה האחרונה</item>
         <item quantity="two">רמה · השעתיים האחרונות</item>
-        <item quantity="other">רמה · %1$d השעות האחרונות</item>
+        <item quantity="other">רמה · %1$d\u00A0השעות האחרונות</item>
     </plurals>
     <string name="widget_observed_range">נצפה %1$s–%2$s</string>
     <string name="widget_chart_description">רמת הסוללה השמורה מ־%1$s עד %2$s. מינימום %3$s, מקסימום %4$s.</string>
@@ -493,29 +495,32 @@
     <string name="settings_search_no_results">אין הגדרות תואמות</string>
     <string name="settings_dependency_disabled">כדי לשנות הגדרה זו יש להפעיל או להגדיר את האפשרות הקשורה למעלה</string>
     <string name="other_settings" formatted="false">כללי</string>
-    <string name="settings_general_summary">שפה, מראה, יחידות ותבנית משך זמן</string>
+    <string name="settings_general_summary">שפה, מראה, יחידת טמפרטורה ותבנית משך זמן</string>
     <string name="other_settings_help" formatted="false">בחרו את לוח הצבעים והבהירות, שפת האפליקציה, יחידת הטמפרטורה, תבנית משך הזמן והאם הניטור מופעל לאחר אתחול המכשיר.</string>
     <string name="settings_legacy_general">אחר</string>
     <string name="pref_cat_language" formatted="false">שפה ועיצוב</string>
     <string name="pref_change_app_language" formatted="false">שפת האפליקציה</string>
     <string name="pref_change_app_language_help" formatted="false">בחרו את השפה שבה Battery Monitor משתמש. ברירת המחדל של המערכת תואמת לשפת המכשיר.</string>
     <string name="settings_app_language_unavailable">בורר שפת האפליקציה במערכת דורש Android 13 ומעלה</string>
+    <string name="settings_app_language_unavailable_help">בורר שפת האפליקציה במערכת דורש Android 13 ומעלה.</string>
     <string name="pref_temperature_unit" formatted="false">יחידת טמפרטורה</string>
-    <string name="pref_temperature_unit_help" formatted="false">בחרו אם להציג טמפרטורות בצלזיוס או בפרנהייט.</string>
+    <string name="pref_temperature_unit_help" formatted="false">בחרו אם להציג את טמפרטורת הסוללה בצלזיוס או בפרנהייט.</string>
     <string name="celsius" formatted="false">צלזיוס</string>
     <string name="fahrenheit" formatted="false">פארנהייט</string>
     <string name="pref_long_duration_format" formatted="false">תבנית למשך זמן ארוך</string>
-    <string name="pref_long_duration_format_help" formatted="false">״ימים ושעות״ משתמש בימים לאחר 24 שעות, למשל 1d 3h. ״שעות בלבד״ משאיר את כל משך הזמן בשעות, למשל 27h</string>
+    <string name="pref_long_duration_format_help" formatted="false">״ימים ושעות״ משתמש בימים לאחר 24\u00A0שעות, למשל 1d 3h. ״שעות בלבד״ משאיר את כל משך הזמן בשעות, למשל 27h.</string>
     <string name="long_duration_format_days_and_hours" formatted="false">ימים ושעות</string>
     <string name="long_duration_format_hours_only" formatted="false">שעות בלבד</string>
     <string name="settings_appearance">מראה</string>
     <string name="settings_color_palette">לוח צבעים</string>
     <string name="settings_color_palette_summary">שימוש בצבעי המערכת או ב־“Battery Blue”</string>
+    <string name="settings_color_palette_help">שימוש בצבעי המערכת או ב־“Battery Blue”.</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">צבעי המערכת דורשים Android 12 ומעלה. במכשיר זה נעשה שימוש ב־“Battery Blue”.</string>
     <string name="settings_brightness">בהירות</string>
     <string name="settings_brightness_summary">לפי המערכת או בחירה בבהיר, כהה או שחור מלא</string>
+    <string name="settings_brightness_help">לפי המערכת או בחירה בבהיר, כהה או שחור מלא.</string>
     <string name="settings_brightness_system">מערכת</string>
     <string name="settings_brightness_light">בהיר</string>
     <string name="settings_brightness_dark">כהה</string>
@@ -657,8 +662,10 @@
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">מוגבל. יש להקיש כדי לאפשר ניטור אמין ברקע</string>
     <string name="diagnostics_vendor_settings" formatted="false">הגדרות היצרן</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">פתיחת הגדרות נוספות לפעילות ברקע או להפעלה אוטומטית במכשיר</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">פתיחת הגדרות נוספות לפעילות ברקע או להפעלה אוטומטית במכשיר.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">עזרה לפעילות ברקע</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">פתיחת הנחיות ייעודיות למכשיר ב-Don’t Kill My App</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">פתיחת הנחיות ייעודיות למכשיר ב-Don’t Kill My App.</string>
     <string name="diagnostics_root" formatted="false">גישת root</string>
     <string name="diagnostics_root_unavailable" formatted="false">לא זמין. יש להקיש כדי לבקש או לבדוק גישת root</string>
     <string name="diagnostics_shizuku" formatted="false">גישת Shizuku</string>
@@ -680,8 +687,8 @@
     <string name="diag_predictor_start_monitor">יש להפעיל את הניטור למעלה כדי לבדוק את נתוני החיזוי השמורים.</string>
     <string name="diag_predictor_active_state" formatted="false">מצב הסוללה הפעיל</string>
     <string name="diag_predictor_effective_rate" formatted="false">הקצב המשמש להערכה</string>
-    <string name="diag_predictor_five_minute_rate" formatted="false">5 הדקות האחרונות</string>
-    <string name="diag_predictor_five_point_rate" formatted="false">5 נקודות האחוז האחרונות</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">5\u00A0הדקות האחרונות</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">5\u00A0נקודות האחוז האחרונות</string>
     <string name="diag_predictor_active_long_term_rate" formatted="false">הקצב הפעיל לטווח ארוך</string>
     <string name="diag_predictor_observed_points" formatted="false">נקודות אחוז שהושלמו</string>
     <string name="diag_predictor_observation_duration" formatted="false">משך ההפעלה שנצפה</string>
@@ -698,8 +705,10 @@
     <string name="diagnostics_device_and_logs" formatted="false">מכשיר ודוח אבחון</string>
     <string name="diagnostics_debug_logs" formatted="false">איסוף יומני ניפוי שגיאות</string>
     <string name="diagnostics_debug_logs_warning" formatted="false">יומני ניפוי שגיאות עשויים להכיל מידע אישי. יש להפעילם רק בזמן בדיקת בעיה, לעיין בקובץ שיוצא ולהיזהר בעת שיתוף ציבורי</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">יומני ניפוי שגיאות עשויים להכיל מידע אישי. יש להפעילם רק בזמן בדיקת בעיה, לעיין בקובץ שיוצא ולהיזהר בעת שיתוף ציבורי.</string>
     <string name="diagnostics_clear" formatted="false">מחיקת יומני ניפוי השגיאות שנאספו</string>
     <string name="diagnostics_clear_summary" formatted="false">הסרת יומני ניפוי השגיאות ששמר היישום</string>
+    <string name="diagnostics_clear_help" formatted="false">הסרת יומני ניפוי השגיאות ששמר היישום.</string>
     <string name="diagnostics_logs_cleared" formatted="false">יומני ניפוי השגיאות נמחקו</string>
     <string name="diagnostics_logs_clear_failed" formatted="false">לא ניתן למחוק את יומני ניפוי השגיאות</string>
     <string name="diagnostics_export" formatted="false">ייצוא דוח אבחון</string>
@@ -735,16 +744,18 @@
     <string name="charging_diagnostics_need_two" formatted="false">תחילה צלמו לפחות שני מצבי טעינה שונים</string>
     <string name="charging_diagnostics_report" formatted="false">יצירת דוח השוואה</string>
     <string name="charging_diagnostics_report_summary" formatted="false">תחילה צלמו לפחות שני מצבי טעינה שונים של היצרן</string>
+    <string name="charging_diagnostics_report_help" formatted="false">תחילה צלמו לפחות שני מצבי טעינה שונים של היצרן.</string>
     <string name="charging_diagnostics_copy" formatted="false">העתקה ללוח</string>
     <string name="charging_diagnostics_save" formatted="false">שמירה</string>
     <string name="charging_diagnostics_copied" formatted="false">הדוח הועתק</string>
     <string name="charging_diagnostics_clear" formatted="false">ניקוי תמונות מצב של טעינה</string>
     <string name="charging_diagnostics_clear_summary" formatted="false">מחיקת תמונות מצב השמורות מקומית</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">מחיקת תמונות מצב השמורות מקומית.</string>
     <string name="charging_diagnostics_cleared" formatted="false">תמונות המצב נמחקו</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. נתקו את הטלפון והשאירו אותו מנותק בזמן צילום תמונות מצב של התצורה. בין התמונות שנו רק את הגדרת הגנת הטעינה של היצרן.\n
-    2. כבו את הגנת הטעינה, המתינו 2–5 שניות וצלמו תמונת מצב.\n
-    3. בחרו מגבלה קבועה, המתינו 2–5 שניות וצלמו. אם אפשר, חזרו עם מגבלה אחרת.\n
-    4. הפעילו טעינה מסתגלת, חכמה או מתוזמנת, המתינו 2–5 שניות וצלמו.\n
+    2. כבו את הגנת הטעינה, המתינו 2–5\u00A0שניות וצלמו תמונת מצב.\n
+    3. בחרו מגבלה קבועה, המתינו 2–5\u00A0שניות וצלמו. אם אפשר, חזרו עם מגבלה אחרת.\n
+    4. הפעילו טעינה מסתגלת, חכמה או מתוזמנת, המתינו 2–5\u00A0שניות וצלמו.\n
     5. אם השוואת התצורה אינה חד־משמעית, אפשר לחזור על הרצף בזמן טעינה כדי ללכוד מצב שמופיע רק בזמן פעולה.\n
     6. צרו ועיינו בדוח ההשוואה. הנתונים מסוננים וערכים שעלולים להיות רגישים מוסתרים, אך יש לעיין בדוח המלא לפני השיתוף.</string>
     <string name="charging_diagnostics_help_contact" formatted="false">לאחר עיון בדוח, העתיקו או שמרו אותו ושלחו אותו בדוא״ל אל <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
@@ -756,30 +767,30 @@
     <string name="general_backup_help" formatted="false">גיבוי כללי שומר יחד הגדרות, התראות ונתונים ייחודיים למכשיר. בעת השחזור ניתן לבחור אילו מהנתונים הזמינים לייבא.</string>
     <string name="pref_export_general_backup" formatted="false">ייצוא גיבוי כללי</string>
     <string name="pref_export_general_backup_summary" formatted="false">שמירת הגדרות, התראות ונתונים ייחודיים למכשיר בקובץ ZIP</string>
-    <string name="general_backup_exported" formatted="false">הגיבוי הכללי יוצא בהצלחה</string>
+    <string name="general_backup_exported" formatted="false">הגיבוי הכללי יוצא בהצלחה.</string>
     <string name="pref_import_general_backup" formatted="false">ייבוא גיבוי כללי</string>
     <string name="pref_import_general_backup_summary" formatted="false">שחזור הנתונים שנבחרו מקובץ ZIP של גיבוי כללי</string>
     <string name="general_backup_restore_message" formatted="false">יש לבחור מה לשחזר.</string>
-    <string name="general_backup_imported" formatted="false">הגיבוי הכללי יובא בהצלחה</string>
+    <string name="general_backup_imported" formatted="false">הגיבוי הכללי יובא בהצלחה.</string>
     <string name="invalid_general_backup_file" formatted="false">קובץ גיבוי כללי לא תקין או לא תואם</string>
     <string name="settings_restore_partial">לא ניתן לשחזר חלק מהנתונים. שוחזרו בהצלחה: %1$s. נתונים שייתכן ששוחזרו חלקית: %2$s. יש לבדוק את הסעיפים האלו לפני ניסיון נוסף.</string>
     <string name="settings_restore_none">ללא</string>
     <string name="settings_backup_help" formatted="false">גיבוי הגדרות שומר את העדפות האפליקציה. ייבוא שלו משחזר את ההעדפות שנשמרו.</string>
     <string name="pref_export_settings" formatted="false">ייצוא הגדרות</string>
     <string name="pref_export_settings_summary" formatted="false">שמירת ההגדרות הנוכחיות לקובץ</string>
-    <string name="settings_exported" formatted="false">ההגדרות יוצאו בהצלחה</string>
+    <string name="settings_exported" formatted="false">ההגדרות יוצאו בהצלחה.</string>
     <string name="pref_import_settings" formatted="false">ייבוא הגדרות</string>
     <string name="pref_import_settings_summary" formatted="false">שחזור הגדרות מקובץ</string>
-    <string name="settings_imported" formatted="false">ההגדרות יובאו בהצלחה</string>
+    <string name="settings_imported" formatted="false">ההגדרות יובאו בהצלחה.</string>
     <string name="invalid_settings_file" formatted="false">קובץ הגדרות לא תקין</string>
     <string name="settings_file_version_warning" formatted="false">קובץ זה נוצר בגרסה חדשה יותר של האפליקציה. ייבואו עלול לגרום להתנהגות בלתי צפויה. להמשיך בכל זאת?</string>
     <string name="alarms_backup_help" formatted="false">גיבוי התראות שומר את ההתראות שלכם. ייבוא שלו מחליף את כל ההתראות הנוכחיות באלו שבגיבוי.</string>
     <string name="pref_export_alarms" formatted="false">ייצוא התראות</string>
     <string name="pref_export_alarms_summary" formatted="false">שמירת ההתראות הנוכחיות לקובץ</string>
-    <string name="alarms_exported" formatted="false">ההתראות יוצאו בהצלחה</string>
+    <string name="alarms_exported" formatted="false">ההתראות יוצאו בהצלחה.</string>
     <string name="pref_import_alarms" formatted="false">ייבוא התראות</string>
     <string name="pref_import_alarms_summary" formatted="false">החלפת ההתראות הנוכחיות בהתראות מקובץ</string>
-    <string name="alarms_imported" formatted="false">ההתראות יובאו בהצלחה</string>
+    <string name="alarms_imported" formatted="false">ההתראות יובאו בהצלחה.</string>
     <string name="invalid_alarms_file" formatted="false">קובץ התראות לא תקין</string>
     <string name="pref_backup_device_data" formatted="false">גיבוי נתונים ייחודיים למכשיר</string>
     <string name="device_specific_backup_help" formatted="false">גיבוי ייחודי למכשיר שומר יומנים ונתוני חיזוי. ניתן לבחור אחד מהם או את שניהם במהלך הייבוא. נתונים אלה שייכים למכשיר המקור; שימוש בהם במכשיר אחר עלול לגרום לתחזיות שגויות או להתנהגות בלתי צפויה. בעת ייבוא יומנים, יש לבחור אם להוסיף אותם או להחליף את היומנים הקיימים.</string>
@@ -788,10 +799,11 @@
     <string name="device_data_backup_warning" formatted="false">הנתונים האלה ייחודיים למכשיר שבו נאספו. ייבוא שלהם למכשיר אחר עלול לגרום לתחזיות שגויות או להתנהגות בלתי צפויה אחרת של היישום.</string>
     <string name="pref_export_device_data" formatted="false">ייצוא נתונים ייחודיים למכשיר</string>
     <string name="pref_export_device_data_summary" formatted="false">שמירת יומנים ונתוני חיזוי בקובץ</string>
-    <string name="device_data_exported" formatted="false">נתונים ייחודיים למכשיר יוצאו בהצלחה</string>
+    <string name="device_data_exported" formatted="false">נתונים ייחודיים למכשיר יוצאו בהצלחה.</string>
     <string name="pref_import_device_data" formatted="false">ייבוא נתונים ייחודיים למכשיר</string>
     <string name="pref_import_device_data_summary" formatted="false">שחזור יומנים ונתוני חיזוי מקובץ</string>
     <string name="device_data_imported" formatted="false">נתונים ייחודיים למכשיר יובאו בהצלחה</string>
+    <string name="device_data_imported_dialog" formatted="false">נתונים ייחודיים למכשיר יובאו בהצלחה.</string>
     <string name="invalid_device_data_file" formatted="false">קובץ נתונים ייחודיים למכשיר לא תקין</string>
     <string name="device_data_file_empty" formatted="false">קובץ זה אינו מכיל נתונים נתמכים הייחודיים למכשיר</string>
     <string name="pref_import_logs_csv" formatted="false">ייבוא יומנים מ-CSV</string>
@@ -803,13 +815,14 @@
     <string name="log_import_add" formatted="false">הוספה ליומנים קיימים</string>
     <string name="log_import_replace" formatted="false">החלפת יומנים קיימים</string>
     <string name="csv_logs_imported" formatted="false">יומני CSV יובאו בהצלחה</string>
+    <string name="csv_logs_imported_dialog" formatted="false">יומני CSV יובאו בהצלחה.</string>
     <string name="invalid_csv_logs_file" formatted="false">קובץ יומני CSV לא תקין או לא תואם</string>
     <string name="settings_reset_title">שחזור הגדרות ברירת המחדל</string>
     <string name="settings_reset_summary">איפוס העדפות האפליקציה תוך שמירת ההיסטוריה, ההתרעות וההערכות שנלמדו</string>
     <string name="settings_reset_help" formatted="false">״שחזור הגדרות ברירת המחדל״ מבקש אישור ואז מאפס את העדפות האפליקציה. הוא שומר על ההיסטוריה, ההתרעות, ההערכות שנלמדו, הגדרות הווידג׳טים ומצב הפעלת ניטור הרקע. הרשאות המערכת והגדרות ערוצי ההתראות אינן מתאפסות.</string>
     <string name="settings_reset_question">לשחזר את כל הגדרות האפליקציה לברירות המחדל? ההיסטוריה, ההתרעות וההערכות שנלמדו יישמרו. ניטור הרקע יישאר פועל או עצור כפי שהוא כעת.</string>
     <string name="settings_reset_confirm">שחזור ברירות המחדל</string>
-    <string name="settings_reset_done">הגדרות ברירת המחדל שוחזרו</string>
+    <string name="settings_reset_done">הגדרות ברירת המחדל שוחזרו.</string>
     <string name="settings_reset_failed">לא ניתן להשלים את שחזור ברירות המחדל. ייתכן שחלק מההגדרות כבר השתנו. יש לבדוק את נפח האחסון הפנוי ולנסות שוב.</string>
 
     <string name="help_cat_version" formatted="false">גרסה</string>
@@ -847,38 +860,38 @@
     <string name="duration_for">במשך %1$s</string>
     <plurals name="for_n_hours">
         <item quantity="one">למשך שעה אחת</item>
-        <item quantity="two">למשך %d שעות</item>
-        <item quantity="other">למשך %d שעות</item>
+        <item quantity="two">למשך %d\u00A0שעות</item>
+        <item quantity="other">למשך %d\u00A0שעות</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"יום אחד, "</item>
-        <item quantity="two">"%d ימים, "</item>
-        <item quantity="other">"%d ימים, "</item>
+        <item quantity="two">"%d\u00A0ימים, "</item>
+        <item quantity="other">"%d\u00A0ימים, "</item>
     </plurals>
     <plurals name="n_hours">
         <item quantity="one">שעה אחת</item>
-        <item quantity="two">%d שעות</item>
-        <item quantity="other">%d שעות</item>
+        <item quantity="two">%d\u00A0שעות</item>
+        <item quantity="other">%d\u00A0שעות</item>
     </plurals>
     <plurals name="n_hours_long">
         <item quantity="one">"שעה אחת, "</item>
-        <item quantity="two">"%d שעות, "</item>
-        <item quantity="other">"%d שעות, "</item>
+        <item quantity="two">"%d\u00A0שעות, "</item>
+        <item quantity="other">"%d\u00A0שעות, "</item>
     </plurals>
     <plurals name="n_minutes_long">
         <item quantity="one">דקה אחת</item>
-        <item quantity="two">%d דקות</item>
-        <item quantity="other">%d דקות</item>
+        <item quantity="two">%d\u00A0דקות</item>
+        <item quantity="other">%d\u00A0דקות</item>
     </plurals>
     <plurals name="n_hours_medium">
-        <item quantity="one">"%d שע׳, "</item>
-        <item quantity="two">"%d שע׳, "</item>
-        <item quantity="other">"%d שע׳, "</item>
+        <item quantity="one">"%d\u00A0שע׳, "</item>
+        <item quantity="two">"%d\u00A0שע׳, "</item>
+        <item quantity="other">"%d\u00A0שע׳, "</item>
     </plurals>
     <plurals name="n_minutes_medium">
-        <item quantity="one">%d דק׳</item>
-        <item quantity="two">%d דק׳</item>
-        <item quantity="other">%d דק׳</item>
+        <item quantity="one">%d\u00A0דק׳</item>
+        <item quantity="two">%d\u00A0דק׳</item>
+        <item quantity="other">%d\u00A0דק׳</item>
     </plurals>
     <plurals name="n_hours_short">
         <item quantity="one">"%d שע׳ "</item>

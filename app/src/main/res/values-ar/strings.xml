@@ -65,13 +65,12 @@
     <string name="vital_sign_voltage" formatted="false">جهد البطارية</string>
     <string name="pref_cat_battery_current_main" formatted="false">تيار البطارية</string>
     <string name="remaining_charge" formatted="false">الشحنة المتبقية</string>
-    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
     <string name="remaining_charge_unavailable">الشحنة المتبقية غير متاحة</string>
-    <string name="current_remaining_charge">الشحنة المتبقية: %1$s mAh</string>
+    <string name="current_remaining_charge">الشحنة المتبقية: %1$s\u00A0mAh</string>
     <string name="battery_power">قدرة البطارية</string>
     <string name="battery_power_explanation">تُحسب من جهد البطارية وتيارها؛ موجبة أثناء الشحن وسالبة أثناء التفريغ. هذه قدرة جهة البطارية وليست قدرة الشاحن.</string>
     <string name="current_android_health">الحالة حسب Android</string>
-    <string name="current_status_unit">حالة Android</string>
     <string name="current_health_explanation">حالة Android هذه ليست نسبة صحة البطارية.</string>
     <string name="health_unknown" formatted="false">غير معروف</string>
     <string name="health_good" formatted="false">حالة جيدة</string>
@@ -95,7 +94,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">المُضاعِف</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">تبلغ بعض الأجهزة عن وحدات أو إشارات غير متوقعة. اضرب القيمة المُبلّغ عنها هنا لتصحيح النتيجة المعروضة.\n
     \n
-    كمرجع تقريبي للهواتف، تكون إشارة Android القياسية موجبة أثناء الشحن وسالبة أثناء التفريغ. يكون الشحن النشط غالبًا بين +500 و+5000 mA، بينما يكون التفريغ العادي غالبًا بين -100 و-3000 mA. قد تكون القيم القريبة من الصفر طبيعية عندما تكون البطارية شبه ممتلئة أو الهاتف في وضع الخمول. إذا بدت القيمة أصغر أو أكبر بنحو 1000 مرة، أو كانت الإشارة معكوسة، فاضبط المُضاعِف.</string>
+    كمرجع تقريبي للهواتف، تكون إشارة Android القياسية موجبة أثناء الشحن وسالبة أثناء التفريغ. يكون الشحن النشط غالبًا بين +500 و+5000\u00A0mA، بينما يكون التفريغ العادي غالبًا بين -100 و-3000\u00A0mA. قد تكون القيم القريبة من الصفر طبيعية عندما تكون البطارية شبه ممتلئة أو الهاتف في وضع الخمول. إذا بدت القيمة أصغر أو أكبر بنحو 1000 مرة، أو كانت الإشارة معكوسة، فاضبط المُضاعِف.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">اكتشاف تلقائي</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">لا يتوفر الاكتشاف التلقائي لحالة البطارية أو القراءة الحالية</string>
     <string name="pref_battery_current_multiplier_detection_result">تم ضبط المُضاعِف تلقائيًا على %1$d</string>
@@ -136,7 +135,7 @@
     <string name="pref_charging_target_mode_summary_default" formatted="false">لم يُكتشف حد ثابت للجهاز — سيتم استخدام 100%</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    إذا كانت هذه القيمة لا تبدو صحيحة، يمكنك المساعدة في تحسين اكتشاف الأجهزة. افتح «الإعدادات» → «متقدم» → «تشخيص حد الشحن من الشركة المصنّعة» وأنشئ تقريراً لحد الشحن من الشركة المصنّعة، مع اتباع تعليمات «مساعدة» بعناية</string>
+    إذا كانت هذه القيمة لا تبدو صحيحة، يمكنك المساعدة في تحسين اكتشاف الأجهزة. افتح «الإعدادات» → «متقدم» → «تشخيص حد الشحن من الشركة المصنّعة» وأنشئ تقريراً لحد الشحن من الشركة المصنّعة، مع اتباع تعليمات «مساعدة» بعناية.</string>
     <string name="charging_target_mode_automatic" formatted="false">تلقائي (موصى به)</string>
     <string name="charging_target_mode_custom" formatted="false">مخصص</string>
     <string name="pref_custom_charging_target" formatted="false">هدف شحن مخصص</string>
@@ -155,6 +154,7 @@
     <string name="app_notifs_disabled_summary" formatted="false">لقد عطلت جميع إشعارات هذا التطبيق. يرجى تمكينها للوصول إلى هذه الإعدادات</string>
     <string name="main_notifs_disabled_summary" formatted="false">لقد عطلت الإشعار الرئيسي لهذا التطبيق. يرجى تمكينه للوصول إلى هذه الإعدادات</string>
     <string name="settings_notification_disabled">فعّل إشعارات التطبيق وقناة الإشعار الرئيسي لتخصيص هذا الخيار</string>
+    <string name="settings_notification_disabled_help">فعّل إشعارات التطبيق وقناة الإشعار الرئيسي لتخصيص هذا الخيار.</string>
     <string name="notifications_onboarding_message">يحتاج Battery Monitor إلى إذنك لعرض مستوى البطارية في شريط الحالة وإشعارك بالتنبيهات.\n
     \n
     ملاحظة: قد يؤدي منح هذا الإذن أحيانًا إلى إغلاق التطبيق. إذا حدث ذلك، يرجى إعادة فتحه ببساطة.</string>
@@ -195,6 +195,7 @@
     <string name="status_bar_chip_settings" formatted="false">شريحة شريط الحالة</string>
     <string name="status_bar_chip_settings_help" formatted="false">في Android 16 أو أحدث، اختر متى تظهر شريحة Live Update والقيم التي تتناوب عليها وما إذا كانت تعرض رمز الشحن التعبيري. يعتمد توفرها أيضًا على الجهاز وإعدادات إشعارات النظام.</string>
     <string name="settings_live_update_summary">السماح بإشعارات البطارية البارزة أو حظرها في إعدادات Android</string>
+    <string name="settings_live_update_help">السماح بإشعارات البطارية البارزة أو حظرها في إعدادات Android.</string>
     <string name="live_updates_onboarding_title">شريحة بطارية شريط الحالة</string>
     <string name="live_updates_onboarding_message_on">جهازك يدعم عرض نسبة البطارية كشريحة في شريط الحالة. هذا الخيار مفعّل افتراضيًا.\n
     \n
@@ -228,10 +229,10 @@
     <string name="pref_chip_switching_interval_custom_message" formatted="false">أدخل فاصلاً بالثواني (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">أدخل قيمة من 1 إلى 3600.</string>
     <string name="chip_switching_interval_2_seconds" formatted="false">ثانيتان</string>
-    <string name="chip_switching_interval_5_seconds" formatted="false">5 ثوانٍ</string>
-    <string name="chip_switching_interval_10_seconds" formatted="false">10 ثوانٍ</string>
-    <string name="chip_switching_interval_15_seconds" formatted="false">15 ثانية</string>
-    <string name="chip_switching_interval_30_seconds" formatted="false">30 ثانية</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5\u00A0ثوانٍ</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0ثوانٍ</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0ثانية</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0ثانية</string>
     <string name="pref_chip_indicate_charging" formatted="false">إظهار رمز الشحن</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">إظهار رمز البرق أثناء الشحن أو عند الامتلاء الكامل؟</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">عند التمكين، ستعرض شريحة شريط الحالة رمز البرق بجانب القيمة أثناء الشحن أو عند اكتمال الشحن.</string>
@@ -300,6 +301,7 @@
     <string name="alarms_channel_help">تتحكم قناة إشعارات Android هذه في الصوت وطريقة التسليم.</string>
     <string name="pref_dismiss_low_battery_on_recovery">إزالة تنبيه انخفاض البطارية بعد التعافي</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">إزالة إشعار انخفاض البطارية عندما ترتفع الشحنة فوق عتبته. تبقى إشعارات التنبيهات الأخرى</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">إزالة إشعار انخفاض البطارية عندما ترتفع الشحنة فوق عتبته. تبقى إشعارات التنبيهات الأخرى.</string>
     <string name="alarms_channel_unavailable">قناة الإشعارات غير منشأة أو غير متاحة</string>
     <string name="alarms_settings_unavailable">تعذر فتح إعدادات إشعارات Android</string>
     <string name="alarms_target_unknown">الهدف غير متاح. افتح إعدادات التقدير.</string>
@@ -315,9 +317,9 @@
     <string name="alarms_saved_reload_failed">تم الحفظ، لكن تعذر إخطار المراقبة. راجع حالة المراقبة.</string>
 
     <string name="history_range">نطاق السجل</string>
-    <string name="history_last_24h">آخر 24 ساعة</string>
-    <string name="history_last_3d">آخر 3 أيام</string>
-    <string name="history_last_7d">آخر 7 أيام</string>
+    <string name="history_last_24h">آخر 24\u00A0ساعة</string>
+    <string name="history_last_3d">آخر 3\u00A0أيام</string>
+    <string name="history_last_7d">آخر 7\u00A0أيام</string>
     <string name="history_all_history">السجل بالكامل</string>
     <string name="history_custom_range">نطاق تاريخ مخصص</string>
     <string name="history_month">الشهر</string>
@@ -329,7 +331,7 @@
     <string name="history_change_range">تغيير</string>
     <string name="history_charts">المخططات</string>
     <string name="history_level">المستوى</string>
-    <string name="history_level_24h">المستوى · آخر 24 ساعة</string>
+    <string name="history_level_24h">المستوى · آخر 24\u00A0ساعة</string>
     <string name="history_battery_level">مستوى البطارية</string>
     <string name="history_observations">قراءات محفوظة وليست قياسًا مستمرًا. تشير الخطوط العمودية إلى أحداث الطاقة وإعادة التشغيل.</string>
     <string name="history_chart_description">النطاق المرصود من %1$s إلى %2$s. الحد الأدنى %3$s، والأقصى %4$s. افتح «الأحداث» واضغط على سجل لتفاصيل القراءة.</string>
@@ -375,7 +377,7 @@
     <string name="history_chart_event_summary">متصل (شرطات قصيرة): %1$d · غير متصل (شرطات طويلة): %2$d · انقطاعات المراقبة (منقّط): %3$d</string>
     <string name="history_chart_events">أحداث الرسم البياني</string>
     <string name="history_chart_1h">آخر ساعة</string>
-    <string name="history_chart_6h">آخر 6 ساعات</string>
+    <string name="history_chart_6h">آخر 6\u00A0ساعات</string>
     <string name="history_chart_zoom_in">تكبير</string>
     <string name="history_chart_zoom_out">تصغير</string>
     <string name="history_chart_pan_left">فترة زمنية أسبق</string>
@@ -480,12 +482,12 @@
     <string name="widget_preview_note">تستخدم المعاينة آخر قراءة للمراقبة. يحدد مشغل الشاشة الرئيسية حجم الأداة.</string>
     <string name="widget_read_at">القراءة %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="zero">المستوى · آخر %1$d ساعة</item>
+        <item quantity="zero">المستوى · آخر %1$d\u00A0ساعة</item>
         <item quantity="one">المستوى · آخر ساعة</item>
         <item quantity="two">المستوى · آخر ساعتين</item>
-        <item quantity="few">المستوى · آخر %1$d ساعات</item>
-        <item quantity="many">المستوى · آخر %1$d ساعة</item>
-        <item quantity="other">المستوى · آخر %1$d ساعة</item>
+        <item quantity="few">المستوى · آخر %1$d\u00A0ساعات</item>
+        <item quantity="many">المستوى · آخر %1$d\u00A0ساعة</item>
+        <item quantity="other">المستوى · آخر %1$d\u00A0ساعة</item>
     </plurals>
     <string name="widget_observed_range">الرصد %1$s–%2$s</string>
     <string name="widget_chart_description">مستوى البطارية المحفوظ من %1$s إلى %2$s. الحد الأدنى %3$s، والأقصى %4$s.</string>
@@ -499,29 +501,32 @@
     <string name="settings_search_no_results">لا توجد إعدادات مطابقة</string>
     <string name="settings_dependency_disabled">فعّل الخيار المرتبط أعلاه أو اضبطه لتغيير هذا الإعداد</string>
     <string name="other_settings" formatted="false">عام</string>
-    <string name="settings_general_summary">اللغة والمظهر والوحدات وتنسيق المدة</string>
+    <string name="settings_general_summary">اللغة والمظهر ووحدة درجة الحرارة وتنسيق المدة</string>
     <string name="other_settings_help" formatted="false">اختر لوحة الألوان والسطوع ولغة التطبيق ووحدة الحرارة وتنسيق المدة وما إذا كانت المراقبة تبدأ بعد إعادة تشغيل الجهاز.</string>
     <string name="settings_legacy_general">أخرى</string>
     <string name="pref_cat_language" formatted="false">اللغة والتنسيق</string>
     <string name="pref_change_app_language" formatted="false">لغة التطبيق</string>
     <string name="pref_change_app_language_help" formatted="false">حدد اللغة التي يستخدمها Battery Monitor. يتبع خيار النظام الافتراضي لغة جهازك.</string>
     <string name="settings_app_language_unavailable">يتطلب محدد لغة التطبيق في النظام Android 13 أو أحدث</string>
+    <string name="settings_app_language_unavailable_help">يتطلب محدد لغة التطبيق في النظام Android 13 أو أحدث.</string>
     <string name="pref_temperature_unit" formatted="false">وحدة درجة الحرارة</string>
-    <string name="pref_temperature_unit_help" formatted="false">اختر عرض درجات الحرارة بالدرجة المئوية أو الفهرنهايت.</string>
+    <string name="pref_temperature_unit_help" formatted="false">اختر عرض درجة حرارة البطارية بالدرجة المئوية أو الفهرنهايت.</string>
     <string name="celsius" formatted="false">سلسيوسي</string>
     <string name="fahrenheit" formatted="false">فهرنهايت</string>
     <string name="pref_long_duration_format" formatted="false">تنسيق المدد الطويلة</string>
-    <string name="pref_long_duration_format_help" formatted="false">يستخدم وضع «الأيام والساعات» الأيام بعد 24 ساعة، مثل 1d 3h. يحتفظ وضع ال«ساعات فقط» بالمدة الكاملة بالساعات، مثل 27h</string>
+    <string name="pref_long_duration_format_help" formatted="false">يستخدم وضع «الأيام والساعات» الأيام بعد 24\u00A0ساعة، مثل 1d 3h. يحتفظ وضع ال«ساعات فقط» بالمدة الكاملة بالساعات، مثل 27h.</string>
     <string name="long_duration_format_days_and_hours" formatted="false">الأيام والساعات</string>
     <string name="long_duration_format_hours_only" formatted="false">ساعات فقط</string>
     <string name="settings_appearance">المظهر</string>
     <string name="settings_color_palette">لوحة الألوان</string>
     <string name="settings_color_palette_summary">استخدام ألوان النظام أو «Battery Blue»</string>
+    <string name="settings_color_palette_help">استخدام ألوان النظام أو «Battery Blue».</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">تتطلب ألوان النظام Android 12 أو أحدث. يُستخدم «Battery Blue» على هذا الجهاز.</string>
     <string name="settings_brightness">السطوع</string>
     <string name="settings_brightness_summary">اتباع النظام أو اختيار فاتح أو داكن أو أسود خالص</string>
+    <string name="settings_brightness_help">اتباع النظام أو اختيار فاتح أو داكن أو أسود خالص.</string>
     <string name="settings_brightness_system">النظام</string>
     <string name="settings_brightness_light">فاتح</string>
     <string name="settings_brightness_dark">داكن</string>
@@ -663,8 +668,10 @@
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">مقيّد. اضغط للسماح بمراقبة موثوقة في الخلفية</string>
     <string name="diagnostics_vendor_settings" formatted="false">إعدادات الشركة المصنعة</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">افتح إعدادات إضافية للنشاط في الخلفية أو التشغيل التلقائي المتاحة على هذا الجهاز</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">افتح إعدادات إضافية للنشاط في الخلفية أو التشغيل التلقائي المتاحة على هذا الجهاز.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">مساعدة النشاط في الخلفية</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">افتح إرشادات خاصة بالجهاز على Don’t Kill My App</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">افتح إرشادات خاصة بالجهاز على Don’t Kill My App.</string>
     <string name="diagnostics_root" formatted="false">وصول الجذر</string>
     <string name="diagnostics_root_unavailable" formatted="false">غير متاح. اضغط لطلب وصول الجذر أو التحقق منه</string>
     <string name="diagnostics_shizuku" formatted="false">وصول Shizuku</string>
@@ -686,8 +693,8 @@
     <string name="diag_predictor_start_monitor">ابدأ المراقبة أعلاه لفحص بيانات التنبؤ المحفوظة.</string>
     <string name="diag_predictor_active_state" formatted="false">حالة البطارية النشطة</string>
     <string name="diag_predictor_effective_rate" formatted="false">المعدل المستخدم للتقدير</string>
-    <string name="diag_predictor_five_minute_rate" formatted="false">آخر 5 دقائق</string>
-    <string name="diag_predictor_five_point_rate" formatted="false">آخر 5 نقاط مئوية</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">آخر 5\u00A0دقائق</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">آخر 5\u00A0نقاط مئوية</string>
     <string name="diag_predictor_active_long_term_rate" formatted="false">المعدل طويل الأجل النشط</string>
     <string name="diag_predictor_observed_points" formatted="false">النقاط المئوية المكتملة</string>
     <string name="diag_predictor_observation_duration" formatted="false">مدة الجلسة المرصودة</string>
@@ -704,8 +711,10 @@
     <string name="diagnostics_device_and_logs" formatted="false">الجهاز وتقرير التشخيص</string>
     <string name="diagnostics_debug_logs" formatted="false">جمع سجلات تصحيح الأخطاء</string>
     <string name="diagnostics_debug_logs_warning" formatted="false">قد تحتوي سجلات تصحيح الأخطاء على معلومات شخصية. فعّلها فقط أثناء التحقيق في مشكلة، وراجع الملف المصدّر، وتوخ الحذر عند مشاركته علنًا</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">قد تحتوي سجلات تصحيح الأخطاء على معلومات شخصية. فعّلها فقط أثناء التحقيق في مشكلة، وراجع الملف المصدّر، وتوخ الحذر عند مشاركته علنًا.</string>
     <string name="diagnostics_clear" formatted="false">حذف سجلات تصحيح الأخطاء المجمعة</string>
     <string name="diagnostics_clear_summary" formatted="false">أزل سجلات تصحيح الأخطاء المخزنة بواسطة التطبيق</string>
+    <string name="diagnostics_clear_help" formatted="false">أزل سجلات تصحيح الأخطاء المخزنة بواسطة التطبيق.</string>
     <string name="diagnostics_logs_cleared" formatted="false">تم حذف سجلات تصحيح الأخطاء</string>
     <string name="diagnostics_logs_clear_failed" formatted="false">تعذر حذف سجلات تصحيح الأخطاء</string>
     <string name="diagnostics_export" formatted="false">تصدير تقرير التشخيص</string>
@@ -744,16 +753,18 @@
     <string name="charging_diagnostics_need_two" formatted="false">التقط أولاً وضعين مختلفين للشحن على الأقل</string>
     <string name="charging_diagnostics_report" formatted="false">إنشاء تقرير مقارنة</string>
     <string name="charging_diagnostics_report_summary" formatted="false">التقط أولاً وضعين مختلفين للشحن على الأقل</string>
+    <string name="charging_diagnostics_report_help" formatted="false">التقط أولاً وضعين مختلفين للشحن على الأقل.</string>
     <string name="charging_diagnostics_copy" formatted="false">نسخ إلى الحافظة</string>
     <string name="charging_diagnostics_save" formatted="false">حفظ</string>
     <string name="charging_diagnostics_copied" formatted="false">تم نسخ التقرير</string>
     <string name="charging_diagnostics_clear" formatted="false">مسح لقطات الشحن</string>
     <string name="charging_diagnostics_clear_summary" formatted="false">حذف لقطات الشحن المحفوظة محلياً</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">حذف لقطات الشحن المحفوظة محلياً.</string>
     <string name="charging_diagnostics_cleared" formatted="false">تم حذف لقطات الشحن</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. افصل الهاتف عن الشاحن واتركه غير متصل أثناء التقاط لقطات الإعداد. غيّر بين اللقطات إعداد حماية الشحن الخاص بالشركة المصنّعة فقط.\n
-    2. أوقف حماية الشحن، وانتظر 2–5 ثوانٍ، ثم التقط لقطة.\n
-    3. اختر حداً ثابتاً، وانتظر 2–5 ثوانٍ، ثم التقط لقطة. كرر بحد آخر إن أمكن.\n
-    4. فعّل الشحن التكيّفي أو الذكي أو المجدول، وانتظر 2–5 ثوانٍ، ثم التقط لقطة.\n
+    2. أوقف حماية الشحن، وانتظر 2–5\u00A0ثوانٍ، ثم التقط لقطة.\n
+    3. اختر حداً ثابتاً، وانتظر 2–5\u00A0ثوانٍ، ثم التقط لقطة. كرر بحد آخر إن أمكن.\n
+    4. فعّل الشحن التكيّفي أو الذكي أو المجدول، وانتظر 2–5\u00A0ثوانٍ، ثم التقط لقطة.\n
     5. إذا لم تكن مقارنة الإعداد حاسمة، يمكنك اختيارياً تكرار التسلسل أثناء الشحن لالتقاط الحالة التي تظهر وقت التشغيل فقط.\n
     6. أنشئ تقرير المقارنة وراجعه. تُصفّى البيانات وتُحجب القيم المحتمل أن تكون حساسة، لكن راجع التقرير كاملاً قبل مشاركته.</string>
     <string name="charging_diagnostics_help_contact" formatted="false">بعد مراجعة التقرير، انسخه أو احفظه ثم أرسله بالبريد الإلكتروني إلى <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
@@ -765,30 +776,30 @@
     <string name="general_backup_help" formatted="false">تحفظ النسخة الاحتياطية العامة الإعدادات والتنبيهات والبيانات الخاصة بالجهاز معًا. عند استعادتها، يمكنك اختيار البيانات المتاحة التي تريد استيرادها.</string>
     <string name="pref_export_general_backup" formatted="false">تصدير النسخة الاحتياطية العامة</string>
     <string name="pref_export_general_backup_summary" formatted="false">حفظ الإعدادات والتنبيهات والبيانات الخاصة بالجهاز في ملف ZIP</string>
-    <string name="general_backup_exported" formatted="false">تم تصدير النسخة الاحتياطية العامة بنجاح</string>
+    <string name="general_backup_exported" formatted="false">تم تصدير النسخة الاحتياطية العامة بنجاح.</string>
     <string name="pref_import_general_backup" formatted="false">استيراد النسخة الاحتياطية العامة</string>
     <string name="pref_import_general_backup_summary" formatted="false">استعادة البيانات المحددة من ملف ZIP لنسخة احتياطية عامة</string>
     <string name="general_backup_restore_message" formatted="false">اختر ما تريد استعادته.</string>
-    <string name="general_backup_imported" formatted="false">تم استيراد النسخة الاحتياطية العامة بنجاح</string>
+    <string name="general_backup_imported" formatted="false">تم استيراد النسخة الاحتياطية العامة بنجاح.</string>
     <string name="invalid_general_backup_file" formatted="false">ملف النسخة الاحتياطية العامة غير صالح أو غير متوافق</string>
     <string name="settings_restore_partial">تعذرت استعادة بعض البيانات. تمت استعادة: %1$s. بيانات ربما استُعيدت جزئيًا: %2$s. تحقق من هذه الأقسام قبل المحاولة مجددًا.</string>
     <string name="settings_restore_none">لا شيء</string>
     <string name="settings_backup_help" formatted="false">تحفظ نسخة الإعدادات الاحتياطية تفضيلات التطبيق. يؤدي استيرادها إلى استعادة التفضيلات المحفوظة.</string>
     <string name="pref_export_settings" formatted="false">تصدير الإعدادات</string>
     <string name="pref_export_settings_summary" formatted="false">حفظ الإعدادات الحالية في ملف</string>
-    <string name="settings_exported" formatted="false">تم تصدير الإعدادات بنجاح</string>
+    <string name="settings_exported" formatted="false">تم تصدير الإعدادات بنجاح.</string>
     <string name="pref_import_settings" formatted="false">استيراد الإعدادات</string>
     <string name="pref_import_settings_summary" formatted="false">استعادة الإعدادات من ملف</string>
-    <string name="settings_imported" formatted="false">تم استيراد الإعدادات بنجاح</string>
+    <string name="settings_imported" formatted="false">تم استيراد الإعدادات بنجاح.</string>
     <string name="invalid_settings_file" formatted="false">ملف إعدادات غير صالح</string>
     <string name="settings_file_version_warning" formatted="false">تم إنشاء هذا الملف بواسطة إصدار أحدث من التطبيق. قد يؤدي استيراده إلى سلوك غير متوقع. هل تريد المتابعة رغم ذلك؟</string>
     <string name="alarms_backup_help" formatted="false">تحفظ نسخة التنبيهات الاحتياطية تنبيهاتك. يؤدي استيرادها إلى استبدال جميع التنبيهات الحالية بالتنبيهات الموجودة في النسخة الاحتياطية.</string>
     <string name="pref_export_alarms" formatted="false">تصدير التنبيهات</string>
     <string name="pref_export_alarms_summary" formatted="false">حفظ التنبيهات الحالية في ملف</string>
-    <string name="alarms_exported" formatted="false">تم تصدير التنبيهات بنجاح</string>
+    <string name="alarms_exported" formatted="false">تم تصدير التنبيهات بنجاح.</string>
     <string name="pref_import_alarms" formatted="false">استيراد التنبيهات</string>
     <string name="pref_import_alarms_summary" formatted="false">استبدال التنبيهات الحالية بتنبيهات من ملف</string>
-    <string name="alarms_imported" formatted="false">تم استيراد التنبيهات بنجاح</string>
+    <string name="alarms_imported" formatted="false">تم استيراد التنبيهات بنجاح.</string>
     <string name="invalid_alarms_file" formatted="false">ملف تنبيهات غير صالح</string>
     <string name="pref_backup_device_data" formatted="false">نسخ البيانات الخاصة بالجهاز احتياطيًا</string>
     <string name="device_specific_backup_help" formatted="false">تحفظ النسخة الاحتياطية الخاصة بالجهاز السجلات وبيانات المتنبئ. يمكنك تحديد أحدهما أو كليهما أثناء الاستيراد. تنتمي هذه البيانات إلى الجهاز المصدر؛ وقد يؤدي استخدامها على جهاز آخر إلى تنبؤات غير صحيحة أو سلوك غير متوقع. عند استيراد السجلات، اختر إضافتها أو استبدال السجلات الحالية.</string>
@@ -797,10 +808,11 @@
     <string name="device_data_backup_warning" formatted="false">هذه بيانات خاصة بالجهاز الذي جُمعت عليه. قد يؤدي استيرادها على جهاز آخر إلى تنبؤات غير صحيحة أو سلوك آخر غير متوقع للتطبيق.</string>
     <string name="pref_export_device_data" formatted="false">تصدير البيانات الخاصة بالجهاز</string>
     <string name="pref_export_device_data_summary" formatted="false">حفظ السجلات وبيانات التنبؤ في ملف</string>
-    <string name="device_data_exported" formatted="false">تم تصدير البيانات الخاصة بالجهاز بنجاح</string>
+    <string name="device_data_exported" formatted="false">تم تصدير البيانات الخاصة بالجهاز بنجاح.</string>
     <string name="pref_import_device_data" formatted="false">استيراد البيانات الخاصة بالجهاز</string>
     <string name="pref_import_device_data_summary" formatted="false">استعادة السجلات وبيانات التنبؤ من ملف</string>
     <string name="device_data_imported" formatted="false">تم استيراد البيانات الخاصة بالجهاز بنجاح</string>
+    <string name="device_data_imported_dialog" formatted="false">تم استيراد البيانات الخاصة بالجهاز بنجاح.</string>
     <string name="invalid_device_data_file" formatted="false">ملف البيانات الخاصة بالجهاز غير صالح</string>
     <string name="device_data_file_empty" formatted="false">لا يحتوي هذا الملف على بيانات مدعومة خاصة بالجهاز</string>
     <string name="pref_import_logs_csv" formatted="false">استيراد السجلات من CSV</string>
@@ -812,13 +824,14 @@
     <string name="log_import_add" formatted="false">إضافة إلى السجلات الحالية</string>
     <string name="log_import_replace" formatted="false">استبدال السجلات الحالية</string>
     <string name="csv_logs_imported" formatted="false">تم استيراد سجلات CSV بنجاح</string>
+    <string name="csv_logs_imported_dialog" formatted="false">تم استيراد سجلات CSV بنجاح.</string>
     <string name="invalid_csv_logs_file" formatted="false">ملف سجلات CSV غير صالح أو غير متوافق</string>
     <string name="settings_reset_title">استعادة الإعدادات الافتراضية</string>
     <string name="settings_reset_summary">إعادة ضبط تفضيلات التطبيق مع الاحتفاظ بالسجل والتنبيهات والتقديرات المتعلمة</string>
     <string name="settings_reset_help" formatted="false">تطلب «استعادة الإعدادات الافتراضية» تأكيدًا، ثم تعيد ضبط تفضيلات التطبيق. تحتفظ بالسجل والتنبيهات والتقديرات المتعلمة وإعدادات الأدوات وحالة تشغيل مراقبة الخلفية. لا تُعاد ضبط أذونات النظام أو إعدادات قنوات الإشعارات.</string>
     <string name="settings_reset_question">هل تريد استعادة كل إعدادات التطبيق إلى الافتراضية؟ سيُحتفظ بالسجل والتنبيهات والتقديرات المتعلمة. ستبقى مراقبة الخلفية تعمل أو متوقفة كما هي الآن.</string>
     <string name="settings_reset_confirm">استعادة الافتراضية</string>
-    <string name="settings_reset_done">تمت استعادة الإعدادات الافتراضية</string>
+    <string name="settings_reset_done">تمت استعادة الإعدادات الافتراضية.</string>
     <string name="settings_reset_failed">تعذر إكمال استعادة الإعدادات الافتراضية. ربما تغيرت بعض الإعدادات بالفعل. تحقق من مساحة التخزين المتاحة وأعد المحاولة.</string>
 
     <string name="help_cat_version" formatted="false">الاصدار</string>
@@ -855,60 +868,60 @@
     <string name="since" formatted="false">منذ</string>
     <string name="duration_for">لمدة %1$s</string>
     <plurals name="for_n_hours">
-        <item quantity="zero">لمدة %d ساعة</item>
-        <item quantity="one">لمدة %d ساعة</item>
-        <item quantity="two">لمدة %d ساعتين</item>
-        <item quantity="few">لمدة %d ساعات</item>
-        <item quantity="many">لمدة %d ساعة</item>
-        <item quantity="other">لمدة %d ساعة</item>
+        <item quantity="zero">لمدة %d\u00A0ساعة</item>
+        <item quantity="one">لمدة %d\u00A0ساعة</item>
+        <item quantity="two">لمدة %d\u00A0ساعتين</item>
+        <item quantity="few">لمدة %d\u00A0ساعات</item>
+        <item quantity="many">لمدة %d\u00A0ساعة</item>
+        <item quantity="other">لمدة %d\u00A0ساعة</item>
     </plurals>
     <plurals name="n_days">
-        <item quantity="zero">"%d يوم, "</item>
-        <item quantity="one">"%d يوم, "</item>
-        <item quantity="two">"%d يومان, "</item>
-        <item quantity="few">"%d أيام, "</item>
-        <item quantity="many">"%d يومًا, "</item>
-        <item quantity="other">"%d يوم, "</item>
+        <item quantity="zero">"%d\u00A0يوم, "</item>
+        <item quantity="one">"%d\u00A0يوم, "</item>
+        <item quantity="two">"%d\u00A0يومان, "</item>
+        <item quantity="few">"%d\u00A0أيام, "</item>
+        <item quantity="many">"%d\u00A0يومًا, "</item>
+        <item quantity="other">"%d\u00A0يوم, "</item>
     </plurals>
     <plurals name="n_hours">
-        <item quantity="zero">%d ساعة</item>
-        <item quantity="one">%d ساعة</item>
-        <item quantity="two">%d ساعتان</item>
-        <item quantity="few">%d ساعات</item>
-        <item quantity="many">%d ساعة</item>
-        <item quantity="other">%d ساعة</item>
+        <item quantity="zero">%d\u00A0ساعة</item>
+        <item quantity="one">%d\u00A0ساعة</item>
+        <item quantity="two">%d\u00A0ساعتان</item>
+        <item quantity="few">%d\u00A0ساعات</item>
+        <item quantity="many">%d\u00A0ساعة</item>
+        <item quantity="other">%d\u00A0ساعة</item>
     </plurals>
     <plurals name="n_hours_long">
-        <item quantity="zero">%d ساعة</item>
-        <item quantity="one">%d ساعة</item>
-        <item quantity="two">%d ساعتان</item>
-        <item quantity="few">%d ساعات</item>
-        <item quantity="many">%d ساعة</item>
-        <item quantity="other">%d ساعة</item>
+        <item quantity="zero">%d\u00A0ساعة</item>
+        <item quantity="one">%d\u00A0ساعة</item>
+        <item quantity="two">%d\u00A0ساعتان</item>
+        <item quantity="few">%d\u00A0ساعات</item>
+        <item quantity="many">%d\u00A0ساعة</item>
+        <item quantity="other">%d\u00A0ساعة</item>
     </plurals>
     <plurals name="n_minutes_long">
-        <item quantity="zero">%d دقيقة</item>
-        <item quantity="one">%d دقيقة</item>
-        <item quantity="two">%d دقيقتان</item>
-        <item quantity="few">%d دقائق</item>
-        <item quantity="many">%d دقيقة</item>
-        <item quantity="other">%d دقيقة</item>
+        <item quantity="zero">%d\u00A0دقيقة</item>
+        <item quantity="one">%d\u00A0دقيقة</item>
+        <item quantity="two">%d\u00A0دقيقتان</item>
+        <item quantity="few">%d\u00A0دقائق</item>
+        <item quantity="many">%d\u00A0دقيقة</item>
+        <item quantity="other">%d\u00A0دقيقة</item>
     </plurals>
     <plurals name="n_hours_medium">
-        <item quantity="zero">"%d س, "</item>
-        <item quantity="one">"%d س, "</item>
-        <item quantity="two">"%d س, "</item>
-        <item quantity="few">"%d س, "</item>
-        <item quantity="many">"%d س, "</item>
-        <item quantity="other">"%d س, "</item>
+        <item quantity="zero">"%d\u00A0س, "</item>
+        <item quantity="one">"%d\u00A0س, "</item>
+        <item quantity="two">"%d\u00A0س, "</item>
+        <item quantity="few">"%d\u00A0س, "</item>
+        <item quantity="many">"%d\u00A0س, "</item>
+        <item quantity="other">"%d\u00A0س, "</item>
     </plurals>
     <plurals name="n_minutes_medium">
-        <item quantity="zero">%d دق.</item>
-        <item quantity="one">%d دق.</item>
-        <item quantity="two">%d دق.</item>
-        <item quantity="few">%d دق.</item>
-        <item quantity="many">%d دق.</item>
-        <item quantity="other">%d دق.</item>
+        <item quantity="zero">%d\u00A0دق.</item>
+        <item quantity="one">%d\u00A0دق.</item>
+        <item quantity="two">%d\u00A0دق.</item>
+        <item quantity="few">%d\u00A0دق.</item>
+        <item quantity="many">%d\u00A0دق.</item>
+        <item quantity="other">%d\u00A0دق.</item>
     </plurals>
     <plurals name="n_hours_short">
         <item quantity="zero">"%d س "</item>

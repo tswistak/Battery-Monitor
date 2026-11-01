@@ -67,8 +67,7 @@ class DiagnosticsProjectionCacheTest {
             assertEquals(group.rows.size, group.rows.map { it.rawKey }.distinct().size)
             assertEquals(
                 sources.asSequence().flatMap(::rawDiagnosticGroups)
-                    .filter { it.title == group.title }.flatMap { it.rows }.map { it.rawKey }
-                    .toSet(),
+                .filter { it.title == group.title }.flatMap { it.rows }.map { it.rawKey }.toSet(),
                 group.rows.map { it.rawKey }.toSet()
             )
         }
@@ -121,14 +120,14 @@ class DiagnosticsProjectionCacheTest {
         val raw = cache.groups(sources, defaults, 3)
         val initial = cache.groups(sources, defaults, 1)
         assertEquals("25.0°C", row(initial, "temperature").value)
-        assertEquals("4.125 V", row(initial, "voltage").value)
-        assertEquals("-0.9 mA", row(initial, "current_now").value)
+        assertEquals("4.125\u00A0V", row(initial, "voltage").value)
+        assertEquals("-0.9\u00A0mA", row(initial, "current_now").value)
         val changed = defaults.copy(multiplier = 1000, fahrenheit = true, locale = Locale.GERMANY)
         val reformatted = cache.groups(sources, changed, 1)
         assertNotSame(initial, reformatted)
         assertEquals("77,0°F", row(reformatted, "temperature").value)
-        assertEquals("4,125 V", row(reformatted, "voltage").value)
-        assertEquals("-900 mA", row(reformatted, "current_now").value)
+        assertEquals("4,125\u00A0V", row(reformatted, "voltage").value)
+        assertEquals("-900\u00A0mA", row(reformatted, "current_now").value)
         assertEquals("-900", row(reformatted, "current_now").rawValue)
         assertEquals(10L, row(reformatted, "current_now").observedAtMillis)
         assertSame(raw, cache.groups(sources, changed, 3))

@@ -65,13 +65,12 @@
     <string name="vital_sign_voltage" formatted="false">Pil voltajı</string>
     <string name="pref_cat_battery_current_main" formatted="false">Pil akımı</string>
     <string name="remaining_charge" formatted="false">Kalan şarj</string>
-    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
     <string name="remaining_charge_unavailable">Kalan şarj kullanılamıyor</string>
-    <string name="current_remaining_charge">Kalan şarj: %1$s mAh</string>
+    <string name="current_remaining_charge">Kalan şarj: %1$s\u00A0mAh</string>
     <string name="battery_power">Pil gücü</string>
     <string name="battery_power_explanation">Pil gerilimi ve akımından hesaplanır; şarj olurken pozitif, boşalırken negatiftir. Bu, şarj cihazının değil pil tarafının gücüdür.</string>
     <string name="current_android_health">Android tarafından bildirilen durum</string>
-    <string name="current_status_unit">Android durumu</string>
     <string name="current_health_explanation">Bu Android durumu, pil sağlığı yüzdesi değildir.</string>
     <string name="health_unknown" formatted="false">Bilinmiyor</string>
     <string name="health_good" formatted="false">Sağlıklı</string>
@@ -95,7 +94,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Çarpan</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Bazı cihazlar akımı beklenmeyen birimlerde veya işaretle bildirir. Görüntülenen sonucu düzeltmek için bildirilen değeri burada çarpın.\n
     \n
-    Telefonlar için kabaca referans olarak Android’in standart işareti şarj sırasında pozitif, deşarj sırasında negatiftir. Aktif şarj genellikle +500 ile +5000 mA, normal deşarj ise -100 ile -3000 mA civarındadır. Pil neredeyse doluyken veya telefon boştayken sıfıra yakın değerler normal olabilir. Değer yaklaşık 1000 kat küçük ya da büyük görünüyorsa veya işaret tersse çarpanı ayarlayın.</string>
+    Telefonlar için kabaca referans olarak Android’in standart işareti şarj sırasında pozitif, deşarj sırasında negatiftir. Aktif şarj genellikle +500 ile +5000\u00A0mA, normal deşarj ise -100 ile -3000\u00A0mA civarındadır. Pil neredeyse doluyken veya telefon boştayken sıfıra yakın değerler normal olabilir. Değer yaklaşık 1000 kat küçük ya da büyük görünüyorsa veya işaret tersse çarpanı ayarlayın.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Otomatik algıla</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Otomatik algılama mevcut pil durumu veya okuması için kullanılamıyor</string>
     <string name="pref_battery_current_multiplier_detection_result">Çarpan otomatik olarak %1$d değerine ayarlandı</string>
@@ -136,7 +135,7 @@
     <string name="pref_charging_target_mode_summary_default" formatted="false">Sabit cihaz sınırı algılanmadı — 100% kullanılıyor</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    Bu değer doğru görünmüyorsa cihaz algılamayı geliştirmeye yardımcı olabilirsiniz. “Ayarlar” → “Gelişmiş” → “OEM şarj sınırı tanılama” yolunu açın ve “Yardım” bölümündeki talimatları dikkatle izleyerek bir OEM şarj sınırı raporu oluşturun</string>
+    Bu değer doğru görünmüyorsa cihaz algılamayı geliştirmeye yardımcı olabilirsiniz. “Ayarlar” → “Gelişmiş” → “OEM şarj sınırı tanılama” yolunu açın ve “Yardım” bölümündeki talimatları dikkatle izleyerek bir OEM şarj sınırı raporu oluşturun.</string>
     <string name="charging_target_mode_automatic" formatted="false">Otomatik (önerilen)</string>
     <string name="charging_target_mode_custom" formatted="false">Özel</string>
     <string name="pref_custom_charging_target" formatted="false">Özel şarj hedefi</string>
@@ -155,6 +154,7 @@
     <string name="app_notifs_disabled_summary" formatted="false">Bu uygulama için tüm bildirimleri kapattınız. Bu ayarlara erişmek için etkinleştirin</string>
     <string name="main_notifs_disabled_summary" formatted="false">Bu uygulama için ana bildirimi kapattınız. Bu ayarlara erişmek için etkinleştirin</string>
     <string name="settings_notification_disabled">Bu seçeneği özelleştirmek için uygulama bildirimlerini ve ana bildirim kanalını etkinleştirin</string>
+    <string name="settings_notification_disabled_help">Bu seçeneği özelleştirmek için uygulama bildirimlerini ve ana bildirim kanalını etkinleştirin.</string>
     <string name="notifications_onboarding_message">Battery Monitor\'ün pil seviyesini durum çubuğunda gösterebilmesi ve alarmlar hakkında sizi bilgilendirebilmesi için izninize ihtiyacı vardır.\n
     \n
     Not: Bu izni vermek bazen uygulamanın kapanmasına neden olabilir. Böyle olursa uygulamayı yeniden açmanız yeterlidir.</string>
@@ -195,6 +195,7 @@
     <string name="status_bar_chip_settings" formatted="false">Durum Çubuğu Çipi</string>
     <string name="status_bar_chip_settings_help" formatted="false">Android 16 ve sonrasında Canlı Güncelleme çipinin ne zaman görüneceğini, hangi değerler arasında geçiş yapacağını ve şarj emojisi gösterip göstermeyeceğini seçin. Kullanılabilirlik, cihaza ve sistem bildirim ayarlarına da bağlıdır.</string>
     <string name="settings_live_update_summary">Android ayarlarında öne çıkarılan pil bildirimlerine izin verin veya engelleyin</string>
+    <string name="settings_live_update_help">Android ayarlarında öne çıkarılan pil bildirimlerine izin verin veya engelleyin.</string>
     <string name="live_updates_onboarding_title">Durum Çubuğu Pil Çipi</string>
     <string name="live_updates_onboarding_message_on">Cihazınız, pil yüzdesini durum çubuğunda bir çip olarak göstermeyi destekler. Bu seçenek varsayılan olarak etkindir.\n
     \n
@@ -227,11 +228,11 @@
     <string name="pref_chip_switching_interval_help" formatted="false">Çipin bir sonraki seçili değere ne sıklıkta geçeceğini seçin. Bu ayar birden fazla değer seçildiğinde kullanılabilir.</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">Saniye cinsinden bir aralık girin (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">1 ile 3600 arasında bir değer girin.</string>
-    <string name="chip_switching_interval_2_seconds" formatted="false">2 saniye</string>
-    <string name="chip_switching_interval_5_seconds" formatted="false">5 saniye</string>
-    <string name="chip_switching_interval_10_seconds" formatted="false">10 saniye</string>
-    <string name="chip_switching_interval_15_seconds" formatted="false">15 saniye</string>
-    <string name="chip_switching_interval_30_seconds" formatted="false">30 saniye</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0saniye</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5\u00A0saniye</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0saniye</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0saniye</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0saniye</string>
     <string name="pref_chip_indicate_charging" formatted="false">Şarj Emojisini Göster</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Şarj olurken/yüzde 100\'de yıldırım emojisi gösterilsin mi?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Etkinse, durum çubuğu çipi şarj olurken değerin yanında yıldırım emojisi gösterir.</string>
@@ -296,6 +297,7 @@
     <string name="alarms_channel_help">Ses ve iletim, bu Android bildirim kanalı tarafından denetlenir.</string>
     <string name="pref_dismiss_low_battery_on_recovery">Şarj yükseldiğinde düşük pil alarmını kaldır</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Şarj eşik değerinin üzerine çıktığında düşük pil bildirimini kaldırır. Diğer alarm bildirimleri kalır</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">Şarj eşik değerinin üzerine çıktığında düşük pil bildirimini kaldırır. Diğer alarm bildirimleri kalır.</string>
     <string name="alarms_channel_unavailable">Bildirim kanalı oluşturulmamış veya mevcut değil</string>
     <string name="alarms_settings_unavailable">Android bildirim ayarları açılamadı</string>
     <string name="alarms_target_unknown">Hedef mevcut değil. Tahmin ayarlarını açın.</string>
@@ -311,9 +313,9 @@
     <string name="alarms_saved_reload_failed">Kaydedildi ancak izleme hizmetine bildirilemedi. İzleme durumunu gözden geçirin.</string>
 
     <string name="history_range">Geçmiş aralığı</string>
-    <string name="history_last_24h">Son 24 saat</string>
-    <string name="history_last_3d">Son 3 gün</string>
-    <string name="history_last_7d">Son 7 gün</string>
+    <string name="history_last_24h">Son 24\u00A0saat</string>
+    <string name="history_last_3d">Son 3\u00A0gün</string>
+    <string name="history_last_7d">Son 7\u00A0gün</string>
     <string name="history_all_history">Tüm geçmiş</string>
     <string name="history_custom_range">Özel tarih aralığı</string>
     <string name="history_month">Ay</string>
@@ -325,7 +327,7 @@
     <string name="history_change_range">Değiştir</string>
     <string name="history_charts">Grafikler</string>
     <string name="history_level">Seviye</string>
-    <string name="history_level_24h">Seviye · Son 24 saat</string>
+    <string name="history_level_24h">Seviye · Son 24\u00A0saat</string>
     <string name="history_battery_level">Pil seviyesi</string>
     <string name="history_observations">Sürekli ölçüm yerine kaydedilmiş gözlemlerdir. Dikey çizgiler güç olaylarını ve yeniden başlatmaları gösterir.</string>
     <string name="history_chart_description">Gözlenen aralık: %1$s–%2$s. En düşük %3$s, en yüksek %4$s. Ölçüm ayrıntıları için “Olaylar” bölümünde bir kayda dokunun.</string>
@@ -370,8 +372,8 @@
     <string name="history_chart_select_point">Ölçümleri seç</string>
     <string name="history_chart_event_summary">Bağlandı (kısa çizgiler): %1$d · Bağlantı kesildi (uzun çizgiler): %2$d · İzleme kesintileri (noktalı): %3$d</string>
     <string name="history_chart_events">Grafik olayları</string>
-    <string name="history_chart_1h">Son 1 saat</string>
-    <string name="history_chart_6h">Son 6 saat</string>
+    <string name="history_chart_1h">Son 1\u00A0saat</string>
+    <string name="history_chart_6h">Son 6\u00A0saat</string>
     <string name="history_chart_zoom_in">Yakınlaştır</string>
     <string name="history_chart_zoom_out">Uzaklaştır</string>
     <string name="history_chart_pan_left">Daha önceki zaman aralığı</string>
@@ -413,13 +415,13 @@
     <string name="pref_max_log_age" formatted="false">Maksimum Kayıt Yaşı</string>
     <string name="pref_max_log_age_summary" formatted="false">Şundan eski kayıtları sil:</string>
     <string name="pref_max_log_age_help" formatted="false">Kayıt etkinken güç bağlantısı, bu sınırdan eski günlükleri kaldırır. “Asla silme” seçeneği, elle temizleyene kadar saklar. Otomatik dışa aktarma etkinse Battery Monitor eski girdileri silmeden önce bekleyen günlükleri dışa aktarır; dışa aktarma başarısız olursa silme yapılmaz.</string>
-    <string name="age_1_day" formatted="false">1 gün</string>
-    <string name="age_2_days" formatted="false">2 gün</string>
-    <string name="age_4_days" formatted="false">4 gün</string>
-    <string name="age_1_week" formatted="false">1 hafta</string>
-    <string name="age_2_weeks" formatted="false">2 hafta</string>
-    <string name="age_3_weeks" formatted="false">3 hafta</string>
-    <string name="age_4_weeks" formatted="false">4 hafta</string>
+    <string name="age_1_day" formatted="false">1\u00A0gün</string>
+    <string name="age_2_days" formatted="false">2\u00A0gün</string>
+    <string name="age_4_days" formatted="false">4\u00A0gün</string>
+    <string name="age_1_week" formatted="false">1\u00A0hafta</string>
+    <string name="age_2_weeks" formatted="false">2\u00A0hafta</string>
+    <string name="age_3_weeks" formatted="false">3\u00A0hafta</string>
+    <string name="age_4_weeks" formatted="false">4\u00A0hafta</string>
     <string name="age_never_delete" formatted="false">Asla silme</string>
     <string name="settings_history_export">Geçmiş ve dışa aktarma</string>
     <string name="log_export_mode_title" formatted="false">Günlükleri dışa aktar</string>
@@ -476,8 +478,8 @@
     <string name="widget_preview_note">Önizleme, son izleme ölçümünü kullanır. Widget boyutunu başlatıcınız belirler.</string>
     <string name="widget_read_at">Ölçüm %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Seviye · Son %1$d saat</item>
-        <item quantity="other">Seviye · Son %1$d saat</item>
+        <item quantity="one">Seviye · Son %1$d\u00A0saat</item>
+        <item quantity="other">Seviye · Son %1$d\u00A0saat</item>
     </plurals>
     <string name="widget_observed_range">Gözlem aralığı %1$s–%2$s</string>
     <string name="widget_chart_description">%1$s ile %2$s arasındaki kayıtlı pil seviyesi. En düşük %3$s, en yüksek %4$s.</string>
@@ -491,29 +493,32 @@
     <string name="settings_search_no_results">Eşleşen ayar yok</string>
     <string name="settings_dependency_disabled">Bu ayarı değiştirmek için yukarıdaki ilgili seçeneği etkinleştirin veya yapılandırın</string>
     <string name="other_settings" formatted="false">Genel</string>
-    <string name="settings_general_summary">Dil, görünüm, birimler ve süre biçimi</string>
+    <string name="settings_general_summary">Dil, görünüm, sıcaklık birimi ve süre biçimi</string>
     <string name="other_settings_help" formatted="false">Renk paletini ve parlaklığı, uygulama dilini, sıcaklık birimini, süre biçimini ve cihaz yeniden başlatıldıktan sonra izlemenin başlayıp başlamayacağını seçin.</string>
     <string name="settings_legacy_general">Diğer</string>
     <string name="pref_cat_language" formatted="false">Dil ve biçimlendirme</string>
     <string name="pref_change_app_language" formatted="false">Uygulama dili</string>
     <string name="pref_change_app_language_help" formatted="false">Battery Monitor’ün kullanacağı dili seçin. Sistem varsayılanı cihazınızın dilini izler.</string>
     <string name="settings_app_language_unavailable">Sistem uygulama dili seçicisi Android 13 veya üzeri gerektirir</string>
+    <string name="settings_app_language_unavailable_help">Sistem uygulama dili seçicisi Android 13 veya üzeri gerektirir.</string>
     <string name="pref_temperature_unit" formatted="false">Sıcaklık birimi</string>
-    <string name="pref_temperature_unit_help" formatted="false">Sıcaklıkların Santigrat veya Fahrenhayt olarak gösterilmesini seçin.</string>
+    <string name="pref_temperature_unit_help" formatted="false">Pil sıcaklığının Santigrat veya Fahrenhayt olarak gösterilmesini seçin.</string>
     <string name="celsius" formatted="false">Santigrad</string>
     <string name="fahrenheit" formatted="false">Fahrenhayt</string>
     <string name="pref_long_duration_format" formatted="false">Uzun süre biçimi</string>
-    <string name="pref_long_duration_format_help" formatted="false">“Günler ve saatler”, 24 saatten sonra günleri kullanır; örneğin 1d 3h. “Yalnızca saat”, tüm süreyi saat olarak tutar; örneğin 27h</string>
+    <string name="pref_long_duration_format_help" formatted="false">“Günler ve saatler”, 24\u00A0saatten sonra günleri kullanır; örneğin 1d 3h. “Yalnızca saat”, tüm süreyi saat olarak tutar; örneğin 27h.</string>
     <string name="long_duration_format_days_and_hours" formatted="false">Günler ve saatler</string>
     <string name="long_duration_format_hours_only" formatted="false">Yalnızca saat</string>
     <string name="settings_appearance">Görünüm</string>
     <string name="settings_color_palette">Renk paleti</string>
     <string name="settings_color_palette_summary">Sistem renklerini veya “Battery Blue” kullanın</string>
+    <string name="settings_color_palette_help">Sistem renklerini veya “Battery Blue” kullanın.</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">Sistem renkleri Android 12 veya üzeri gerektirir. Bu cihazda “Battery Blue” kullanılıyor.</string>
     <string name="settings_brightness">Parlaklık</string>
     <string name="settings_brightness_summary">Sistemi izleyin veya açık, koyu ya da tam siyah seçin</string>
+    <string name="settings_brightness_help">Sistemi izleyin veya açık, koyu ya da tam siyah seçin.</string>
     <string name="settings_brightness_system">Sistem</string>
     <string name="settings_brightness_light">Açık</string>
     <string name="settings_brightness_dark">Koyu</string>
@@ -655,8 +660,10 @@
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Kısıtlı. Güvenilir arka plan izlemesine izin vermek için dokunun</string>
     <string name="diagnostics_vendor_settings" formatted="false">Üretici ayarları</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Bu cihazdaki ek arka plan etkinliği veya otomatik başlatma ayarlarını açın</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Bu cihazdaki ek arka plan etkinliği veya otomatik başlatma ayarlarını açın.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Arka plan etkinliği yardımı</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Don’t Kill My App üzerinde cihaza özel kılavuzu açın</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">Don’t Kill My App üzerinde cihaza özel kılavuzu açın.</string>
     <string name="diagnostics_root" formatted="false">Root erişimi</string>
     <string name="diagnostics_root_unavailable" formatted="false">Kullanılamıyor. Root erişimi istemek veya kontrol etmek için dokunun</string>
     <string name="diagnostics_shizuku" formatted="false">Shizuku erişimi</string>
@@ -678,8 +685,8 @@
     <string name="diag_predictor_start_monitor">Kaydedilen tahmin verilerini incelemek için yukarıdan izlemeyi başlatın.</string>
     <string name="diag_predictor_active_state" formatted="false">Etkin pil durumu</string>
     <string name="diag_predictor_effective_rate" formatted="false">Tahminde kullanılan hız</string>
-    <string name="diag_predictor_five_minute_rate" formatted="false">Son 5 dakika</string>
-    <string name="diag_predictor_five_point_rate" formatted="false">Son 5 yüzde puanı</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">Son 5\u00A0dakika</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">Son 5\u00A0yüzde puanı</string>
     <string name="diag_predictor_active_long_term_rate" formatted="false">Etkin uzun vadeli hız</string>
     <string name="diag_predictor_observed_points" formatted="false">Tamamlanan yüzde puanları</string>
     <string name="diag_predictor_observation_duration" formatted="false">Gözlenen oturum süresi</string>
@@ -696,8 +703,10 @@
     <string name="diagnostics_device_and_logs" formatted="false">Cihaz ve tanılama raporu</string>
     <string name="diagnostics_debug_logs" formatted="false">Hata ayıklama günlüklerini topla</string>
     <string name="diagnostics_debug_logs_warning" formatted="false">Hata ayıklama günlükleri kişisel bilgiler içerebilir. Yalnızca sorun araştırırken etkinleştirin, dışa aktarılan dosyayı inceleyin ve herkese açık paylaşırken dikkatli olun</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">Hata ayıklama günlükleri kişisel bilgiler içerebilir. Yalnızca sorun araştırırken etkinleştirin, dışa aktarılan dosyayı inceleyin ve herkese açık paylaşırken dikkatli olun.</string>
     <string name="diagnostics_clear" formatted="false">Toplanan hata ayıklama günlüklerini sil</string>
     <string name="diagnostics_clear_summary" formatted="false">Uygulamanın sakladığı hata ayıklama günlüklerini kaldırın</string>
+    <string name="diagnostics_clear_help" formatted="false">Uygulamanın sakladığı hata ayıklama günlüklerini kaldırın.</string>
     <string name="diagnostics_logs_cleared" formatted="false">Hata ayıklama günlükleri silindi</string>
     <string name="diagnostics_logs_clear_failed" formatted="false">Hata ayıklama günlükleri silinemedi</string>
     <string name="diagnostics_export" formatted="false">Tanılama raporunu dışa aktar</string>
@@ -732,16 +741,18 @@
     <string name="charging_diagnostics_need_two" formatted="false">Önce en az iki farklı şarj modunu yakalayın</string>
     <string name="charging_diagnostics_report" formatted="false">Karşılaştırma raporu oluştur</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Önce en az iki farklı OEM şarj modunu yakalayın</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Önce en az iki farklı OEM şarj modunu yakalayın.</string>
     <string name="charging_diagnostics_copy" formatted="false">Panoya kopyala</string>
     <string name="charging_diagnostics_save" formatted="false">Kaydet</string>
     <string name="charging_diagnostics_copied" formatted="false">Rapor kopyalandı</string>
     <string name="charging_diagnostics_clear" formatted="false">Şarj görüntülerini temizle</string>
     <string name="charging_diagnostics_clear_summary" formatted="false">Yerel olarak saklanan OEM şarj görüntülerini sil</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">Yerel olarak saklanan OEM şarj görüntülerini sil.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Şarj görüntüleri silindi</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. Telefonu şarj cihazından çıkarın ve yapılandırma görüntülerini yakalarken bağlantısız tutun. Görüntüler arasında yalnızca üreticinin şarj koruması ayarını değiştirin.\n
-    2. Şarj korumasını kapatın, 2–5 saniye bekleyin ve bir görüntü yakalayın.\n
-    3. Sabit bir sınır seçin, 2–5 saniye bekleyin ve bir görüntü yakalayın. Mümkünse farklı bir sınırla tekrarlayın.\n
-    4. Uyarlanabilir, akıllı veya zamanlanmış şarjı açın, 2–5 saniye bekleyin ve bir görüntü yakalayın.\n
+    2. Şarj korumasını kapatın, 2–5\u00A0saniye bekleyin ve bir görüntü yakalayın.\n
+    3. Sabit bir sınır seçin, 2–5\u00A0saniye bekleyin ve bir görüntü yakalayın. Mümkünse farklı bir sınırla tekrarlayın.\n
+    4. Uyarlanabilir, akıllı veya zamanlanmış şarjı açın, 2–5\u00A0saniye bekleyin ve bir görüntü yakalayın.\n
     5. Yapılandırma karşılaştırması kesin değilse yalnızca çalışma sırasında görünen durumu yakalamak için diziyi isteğe bağlı olarak şarj sırasında tekrarlayabilirsiniz.\n
     6. Karşılaştırma raporunu oluşturup inceleyin. Veriler filtrelenir ve potansiyel olarak hassas değerler gizlenir; yine de göndermeden önce raporun tamamını kontrol edin.</string>
     <string name="charging_diagnostics_help_contact" formatted="false">Raporu inceledikten sonra kopyalayın veya kaydedin ve e-postayla <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> adresine gönderin.</string>
@@ -753,30 +764,30 @@
     <string name="general_backup_help" formatted="false">Genel yedekleme; ayarları, alarmları ve cihaza özgü verileri birlikte kaydeder. Geri yükleme sırasında mevcut verilerden hangilerini içe aktarmak istediğinizi seçebilirsiniz.</string>
     <string name="pref_export_general_backup" formatted="false">Genel yedeği dışa aktar</string>
     <string name="pref_export_general_backup_summary" formatted="false">Ayarları, alarmları ve cihaza özgü verileri bir ZIP dosyasına kaydet</string>
-    <string name="general_backup_exported" formatted="false">Genel yedek başarıyla dışa aktarıldı</string>
+    <string name="general_backup_exported" formatted="false">Genel yedek başarıyla dışa aktarıldı.</string>
     <string name="pref_import_general_backup" formatted="false">Genel yedeği içe aktar</string>
     <string name="pref_import_general_backup_summary" formatted="false">Seçilen verileri genel yedek ZIP dosyasından geri yükle</string>
     <string name="general_backup_restore_message" formatted="false">Geri yüklemek istediklerinizi seçin.</string>
-    <string name="general_backup_imported" formatted="false">Genel yedek başarıyla içe aktarıldı</string>
+    <string name="general_backup_imported" formatted="false">Genel yedek başarıyla içe aktarıldı.</string>
     <string name="invalid_general_backup_file" formatted="false">Geçersiz veya uyumsuz genel yedek dosyası</string>
     <string name="settings_restore_partial">Bazı veriler geri yüklenemedi. Başarıyla geri yüklenen: %1$s. Kısmen geri yüklenmiş olabilecek: %2$s. Yeniden denemeden önce bu bölümleri kontrol edin.</string>
     <string name="settings_restore_none">Yok</string>
     <string name="settings_backup_help" formatted="false">Ayarlar yedeği uygulama tercihlerinizi kaydeder. İçe aktarıldığında kayıtlı tercihler geri yüklenir.</string>
     <string name="pref_export_settings" formatted="false">Ayarları dışa aktar</string>
     <string name="pref_export_settings_summary" formatted="false">Geçerli ayarları bir dosyaya kaydet</string>
-    <string name="settings_exported" formatted="false">Ayarlar başarıyla dışa aktarıldı</string>
+    <string name="settings_exported" formatted="false">Ayarlar başarıyla dışa aktarıldı.</string>
     <string name="pref_import_settings" formatted="false">Ayarları içe aktar</string>
     <string name="pref_import_settings_summary" formatted="false">Ayarları bir dosyadan geri yükle</string>
-    <string name="settings_imported" formatted="false">Ayarlar başarıyla içe aktarıldı</string>
+    <string name="settings_imported" formatted="false">Ayarlar başarıyla içe aktarıldı.</string>
     <string name="invalid_settings_file" formatted="false">Geçersiz ayar dosyası</string>
     <string name="settings_file_version_warning" formatted="false">Bu dosya uygulamanın daha yeni bir sürümüyle oluşturuldu. İçe aktarmak beklenmedik davranışlara yol açabilir. Yine de devam edilsin mi?</string>
     <string name="alarms_backup_help" formatted="false">Alarm yedeği alarmlarınızı kaydeder. İçe aktarıldığında mevcut tüm alarmlar yedekteki alarmlarla değiştirilir.</string>
     <string name="pref_export_alarms" formatted="false">Alarmları dışa aktar</string>
     <string name="pref_export_alarms_summary" formatted="false">Geçerli alarmları bir dosyaya kaydet</string>
-    <string name="alarms_exported" formatted="false">Alarmlar başarıyla dışa aktarıldı</string>
+    <string name="alarms_exported" formatted="false">Alarmlar başarıyla dışa aktarıldı.</string>
     <string name="pref_import_alarms" formatted="false">Alarmları içe aktar</string>
     <string name="pref_import_alarms_summary" formatted="false">Geçerli alarmları dosyadaki alarmlarla değiştir</string>
-    <string name="alarms_imported" formatted="false">Alarmlar başarıyla içe aktarıldı</string>
+    <string name="alarms_imported" formatted="false">Alarmlar başarıyla içe aktarıldı.</string>
     <string name="invalid_alarms_file" formatted="false">Geçersiz alarm dosyası</string>
     <string name="pref_backup_device_data" formatted="false">Cihaza özgü verileri yedekle</string>
     <string name="device_specific_backup_help" formatted="false">Cihaza özgü yedekleme, günlükleri ve tahmin verilerini kaydeder. İçe aktarma sırasında birini veya her ikisini seçebilirsiniz. Bu veriler kaynak cihaza aittir; başka bir cihazda kullanılmaları yanlış tahminlere veya beklenmeyen davranışlara neden olabilir. Günlükleri içe aktarırken bunları eklemeyi veya mevcut günlükleri değiştirmeyi seçin.</string>
@@ -785,10 +796,11 @@
     <string name="device_data_backup_warning" formatted="false">Bu veriler toplandıkları cihaza özgüdür. Verilerin başka bir cihaza aktarılması yanlış tahminlere veya uygulamanın beklenmedik şekilde davranmasına neden olabilir.</string>
     <string name="pref_export_device_data" formatted="false">Cihaza özgü verileri dışa aktar</string>
     <string name="pref_export_device_data_summary" formatted="false">Günlükleri ve tahmin verilerini bir dosyaya kaydet</string>
-    <string name="device_data_exported" formatted="false">Cihaza özgü veriler başarıyla dışa aktarıldı</string>
+    <string name="device_data_exported" formatted="false">Cihaza özgü veriler başarıyla dışa aktarıldı.</string>
     <string name="pref_import_device_data" formatted="false">Cihaza özgü verileri içe aktar</string>
     <string name="pref_import_device_data_summary" formatted="false">Günlükleri ve tahmin verilerini bir dosyadan geri yükle</string>
     <string name="device_data_imported" formatted="false">Cihaza özgü veriler başarıyla içe aktarıldı</string>
+    <string name="device_data_imported_dialog" formatted="false">Cihaza özgü veriler başarıyla içe aktarıldı.</string>
     <string name="invalid_device_data_file" formatted="false">Geçersiz cihaza özgü veri dosyası</string>
     <string name="device_data_file_empty" formatted="false">Bu dosya desteklenen cihaza özgü veri içermiyor</string>
     <string name="pref_import_logs_csv" formatted="false">Günlükleri CSV’den içe aktar</string>
@@ -800,13 +812,14 @@
     <string name="log_import_add" formatted="false">Mevcut günlüklere ekle</string>
     <string name="log_import_replace" formatted="false">Mevcut günlükleri değiştir</string>
     <string name="csv_logs_imported" formatted="false">CSV günlükleri başarıyla içe aktarıldı</string>
+    <string name="csv_logs_imported_dialog" formatted="false">CSV günlükleri başarıyla içe aktarıldı.</string>
     <string name="invalid_csv_logs_file" formatted="false">Geçersiz veya uyumsuz CSV günlük dosyası</string>
     <string name="settings_reset_title">Varsayılan ayarları geri yükle</string>
     <string name="settings_reset_summary">Geçmişi, alarmları ve öğrenilen tahminleri koruyarak uygulama tercihlerini sıfırlayın</string>
     <string name="settings_reset_help" formatted="false">“Varsayılan ayarları geri yükle”, onay isteyip uygulama tercihlerini sıfırlar. Geçmiş, alarmlar, öğrenilen tahminler, widget yapılandırmaları ve arka planda izlemenin çalışma durumu korunur. Sistem izinleri ve bildirim kanalı ayarları sıfırlanmaz.</string>
     <string name="settings_reset_question">Tüm uygulama ayarları varsayılanlara geri yüklensin mi? Geçmiş, alarmlar ve öğrenilen tahminler korunacak. Arka planda izleme şu anki gibi çalışır veya durmuş durumda kalacak.</string>
     <string name="settings_reset_confirm">Varsayılanları geri yükle</string>
-    <string name="settings_reset_done">Varsayılan ayarlar geri yüklendi</string>
+    <string name="settings_reset_done">Varsayılan ayarlar geri yüklendi.</string>
     <string name="settings_reset_failed">Varsayılan ayarların geri yüklenmesi tamamlanamadı. Bazı ayarlar değişmiş olabilir. Kullanılabilir depolama alanını kontrol edip yeniden deneyin.</string>
 
     <string name="help_cat_version" formatted="false">Sürüm</string>
@@ -841,32 +854,32 @@
     <string name="since" formatted="false">den itibaren</string>
     <string name="duration_for">%1$s boyunca</string>
     <plurals name="for_n_hours">
-        <item quantity="one">%d Saat için</item>
-        <item quantity="other">%d Saat için</item>
+        <item quantity="one">%d\u00A0Saat için</item>
+        <item quantity="other">%d\u00A0Saat için</item>
     </plurals>
     <plurals name="n_days">
-        <item quantity="one">"%d gün, "</item>
-        <item quantity="other">"%d gün, "</item>
+        <item quantity="one">"%d\u00A0gün, "</item>
+        <item quantity="other">"%d\u00A0gün, "</item>
     </plurals>
     <plurals name="n_hours">
-        <item quantity="one">%d saat</item>
-        <item quantity="other">%d saat</item>
+        <item quantity="one">%d\u00A0saat</item>
+        <item quantity="other">%d\u00A0saat</item>
     </plurals>
     <plurals name="n_hours_long">
-        <item quantity="one">"%d saat, "</item>
-        <item quantity="other">"%d saat, "</item>
+        <item quantity="one">"%d\u00A0saat, "</item>
+        <item quantity="other">"%d\u00A0saat, "</item>
     </plurals>
     <plurals name="n_minutes_long">
-        <item quantity="one">%d dakika</item>
-        <item quantity="other">%d dakika</item>
+        <item quantity="one">%d\u00A0dakika</item>
+        <item quantity="other">%d\u00A0dakika</item>
     </plurals>
     <plurals name="n_hours_medium">
-        <item quantity="one">"%d sa., "</item>
-        <item quantity="other">"%d sa., "</item>
+        <item quantity="one">"%d\u00A0sa., "</item>
+        <item quantity="other">"%d\u00A0sa., "</item>
     </plurals>
     <plurals name="n_minutes_medium">
-        <item quantity="one">%d dk.</item>
-        <item quantity="other">%d dk.</item>
+        <item quantity="one">%d\u00A0dk.</item>
+        <item quantity="other">%d\u00A0dk.</item>
     </plurals>
     <plurals name="n_hours_short">
         <item quantity="one">"%d sa. "</item>

@@ -65,13 +65,12 @@
     <string name="vital_sign_voltage" formatted="false">Akkumulátorfeszültség</string>
     <string name="pref_cat_battery_current_main" formatted="false">Akkumulátoráram</string>
     <string name="remaining_charge" formatted="false">Hátralévő töltés</string>
-    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
     <string name="remaining_charge_unavailable">A hátralévő töltés nem érhető el</string>
-    <string name="current_remaining_charge">Hátralévő töltés: %1$s mAh</string>
+    <string name="current_remaining_charge">Hátralévő töltés: %1$s\u00A0mAh</string>
     <string name="battery_power">Akkumulátor teljesítménye</string>
     <string name="battery_power_explanation">Az akkumulátor feszültségéből és áramából számítva; töltéskor pozitív, merüléskor negatív. Ez az akkumulátoroldali teljesítmény, nem a töltőé.</string>
     <string name="current_android_health">Android szerinti állapot</string>
-    <string name="current_status_unit">Android-állapot</string>
     <string name="current_health_explanation">Ez az Android állapotjelzése, nem az akkumulátor egészségének százalékos értéke.</string>
     <string name="health_unknown" formatted="false">Ismeretlen</string>
     <string name="health_good" formatted="false">Jó állapot</string>
@@ -95,7 +94,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Szorzó</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Egyes készülékek váratlan mértékegységben vagy előjellel jelentik az áramot. A kijelzett eredmény javításához itt szorozd meg a jelentett értéket.\n
     \n
-    Telefonoknál durva támpontként az Android szabványos előjele töltéskor pozitív, merítéskor negatív. Az aktív töltés gyakran körülbelül +500 és +5000 mA, a szokásos merítés pedig -100 és -3000 mA közé esik. A nullához közeli érték normális lehet majdnem tele akkumulátornál vagy tétlen telefonnál. Ha a nagyságrend körülbelül 1000-szer túl kicsi vagy túl nagy, illetve az előjel fordított, módosítsd a szorzót.</string>
+    Telefonoknál durva támpontként az Android szabványos előjele töltéskor pozitív, merítéskor negatív. Az aktív töltés gyakran körülbelül +500 és +5000\u00A0mA, a szokásos merítés pedig -100 és -3000\u00A0mA közé esik. A nullához közeli érték normális lehet majdnem tele akkumulátornál vagy tétlen telefonnál. Ha a nagyságrend körülbelül 1000-szer túl kicsi vagy túl nagy, illetve az előjel fordított, módosítsd a szorzót.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Automatikus felismerés</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Az automatikus felismerés nem érhető el az akkumulátor jelenlegi állapotához vagy mérési értékéhez</string>
     <string name="pref_battery_current_multiplier_detection_result">A szorzó automatikusan %1$d értékre lett állítva</string>
@@ -136,7 +135,7 @@
     <string name="pref_charging_target_mode_summary_default" formatted="false">Nem észlelhető rögzített eszközkorlát — 100% lesz használva</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    Ha ez az érték nem tűnik helyesnek, segíthet javítani az eszközfelismerést. Nyissa meg a következőt: „Beállítások” → „Speciális” → „OEM töltési korlát diagnosztikája”, és készítsen OEM töltésikorlát-jelentést a „Súgó” utasításainak pontos követésével</string>
+    Ha ez az érték nem tűnik helyesnek, segíthet javítani az eszközfelismerést. Nyissa meg a következőt: „Beállítások” → „Speciális” → „OEM töltési korlát diagnosztikája”, és készítsen OEM töltésikorlát-jelentést a „Súgó” utasításainak pontos követésével.</string>
     <string name="charging_target_mode_automatic" formatted="false">Automatikus (ajánlott)</string>
     <string name="charging_target_mode_custom" formatted="false">Egyéni</string>
     <string name="pref_custom_charging_target" formatted="false">Egyéni töltési cél</string>
@@ -155,6 +154,7 @@
     <string name="app_notifs_disabled_summary" formatted="false">Letiltottad az alkalmazás összes értesítését. Ezek eléréséhez engedélyezd őket</string>
     <string name="main_notifs_disabled_summary" formatted="false">Letiltottad az alkalmazás fő értesítését. Ezek eléréséhez engedélyezd</string>
     <string name="settings_notification_disabled">Az opció testreszabásához engedélyezze az alkalmazás értesítéseit és a fő értesítési csatornát</string>
+    <string name="settings_notification_disabled_help">Az opció testreszabásához engedélyezze az alkalmazás értesítéseit és a fő értesítési csatornát.</string>
     <string name="notifications_onboarding_message">A Battery Monitornak engedélyre van szüksége ahhoz, hogy az állapotsorban megjelenítse az akkumulátor töltöttségét, és értesítse Önt a riasztásokról.\n
     \n
     Megjegyzés: Ennek az engedélynek a megadása alkalmanként az alkalmazás bezáródását okozhatja. Ha ez történik, egyszerűen nyissa meg újra.</string>
@@ -195,6 +195,7 @@
     <string name="status_bar_chip_settings" formatted="false">Állapotsor chip</string>
     <string name="status_bar_chip_settings_help" formatted="false">Android 16 vagy újabb rendszeren kiválaszthatja, mikor jelenjen meg a Live Update chip, milyen értékeket váltogasson, és mutasson-e töltési emojit. Az elérhetőség az eszköztől és a rendszer értesítési beállításaitól is függ.</string>
     <string name="settings_live_update_summary">Kiemelt akkumulátorértesítések engedélyezése vagy tiltása az Android beállításaiban</string>
+    <string name="settings_live_update_help">Kiemelt akkumulátorértesítések engedélyezése vagy tiltása az Android beállításaiban.</string>
     <string name="live_updates_onboarding_title">Állapotsor akkumulátor chip</string>
     <string name="live_updates_onboarding_message_on">A készülék támogatja az akkumulátor százalékának chipként való megjelenítését az állapotsorban. Ez alapértelmezés szerint be van kapcsolva.\n
     \n
@@ -227,11 +228,11 @@
     <string name="pref_chip_switching_interval_help" formatted="false">Válaszd ki, milyen gyakran váltson a chip a következő kijelölt értékre. Ez a beállítás akkor érhető el, ha egynél több érték van kijelölve.</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">Add meg az időközt másodpercben (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">Adj meg egy 1 és 3600 közötti értéket.</string>
-    <string name="chip_switching_interval_2_seconds" formatted="false">2 masodperc</string>
-    <string name="chip_switching_interval_5_seconds" formatted="false">5 masodperc</string>
-    <string name="chip_switching_interval_10_seconds" formatted="false">10 masodperc</string>
-    <string name="chip_switching_interval_15_seconds" formatted="false">15 masodperc</string>
-    <string name="chip_switching_interval_30_seconds" formatted="false">30 masodperc</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0masodperc</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5\u00A0masodperc</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0masodperc</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0masodperc</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0masodperc</string>
     <string name="pref_chip_indicate_charging" formatted="false">Töltés emoji megjelenítése</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Villám emoji megjelenítése töltéskor vagy teljes töltöttségnél?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Ha engedélyezve van, az állapotsor chip a töltöttségi érték mellett villám emojit jelenít meg.</string>
@@ -296,6 +297,7 @@
     <string name="alarms_channel_help">A hangot és a kézbesítést ez az Android értesítési csatorna szabályozza.</string>
     <string name="pref_dismiss_low_battery_on_recovery">Alacsony töltöttségi riasztás eltüntetése helyreállás után</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Eltávolítja az alacsony töltöttségi értesítést, ha a töltöttség a küszöb fölé emelkedik. A többi riasztási értesítés megmarad</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">Eltávolítja az alacsony töltöttségi értesítést, ha a töltöttség a küszöb fölé emelkedik. A többi riasztási értesítés megmarad.</string>
     <string name="alarms_channel_unavailable">Az értesítési csatorna nincs létrehozva vagy nem érhető el</string>
     <string name="alarms_settings_unavailable">Az Android értesítési beállításai nem nyithatók meg</string>
     <string name="alarms_target_unknown">A cél nem érhető el. Nyissa meg a becslési beállításokat.</string>
@@ -311,9 +313,9 @@
     <string name="alarms_saved_reload_failed">Mentve, de a figyelés nem értesíthető. Ellenőrizze a figyelés állapotát.</string>
 
     <string name="history_range">Előzmények időtartománya</string>
-    <string name="history_last_24h">Utolsó 24 óra</string>
-    <string name="history_last_3d">Utolsó 3 nap</string>
-    <string name="history_last_7d">Utolsó 7 nap</string>
+    <string name="history_last_24h">Utolsó 24\u00A0óra</string>
+    <string name="history_last_3d">Utolsó 3\u00A0nap</string>
+    <string name="history_last_7d">Utolsó 7\u00A0nap</string>
     <string name="history_all_history">Összes előzmény</string>
     <string name="history_custom_range">Egyéni dátumtartomány</string>
     <string name="history_month">Hónap</string>
@@ -325,7 +327,7 @@
     <string name="history_change_range">Módosítás</string>
     <string name="history_charts">Diagramok</string>
     <string name="history_level">Töltöttség</string>
-    <string name="history_level_24h">Töltöttség · Utolsó 24 óra</string>
+    <string name="history_level_24h">Töltöttség · Utolsó 24\u00A0óra</string>
     <string name="history_battery_level">Akkumulátor töltöttsége</string>
     <string name="history_observations">Tárolt megfigyelések, nem folyamatos mérés. A függőleges vonalak a tápellátási eseményeket és az újraindításokat jelölik.</string>
     <string name="history_chart_description">Megfigyelt tartomány: %1$s–%2$s. Minimum: %3$s, maximum: %4$s. A mérés részleteihez nyissa meg az „Események”et, és koppintson egy bejegyzésre.</string>
@@ -370,8 +372,8 @@
     <string name="history_chart_select_point">Mérések kiválasztása</string>
     <string name="history_chart_event_summary">Csatlakoztatások (rövid szaggatott vonalak): %1$d · Leválasztások (hosszú szaggatott vonalak): %2$d · Megfigyelési szünetek (pontozott vonalak): %3$d</string>
     <string name="history_chart_events">Grafikon eseményei</string>
-    <string name="history_chart_1h">Elmúlt 1 óra</string>
-    <string name="history_chart_6h">Elmúlt 6 óra</string>
+    <string name="history_chart_1h">Elmúlt 1\u00A0óra</string>
+    <string name="history_chart_6h">Elmúlt 6\u00A0óra</string>
     <string name="history_chart_zoom_in">Nagyítás</string>
     <string name="history_chart_zoom_out">Kicsinyítés</string>
     <string name="history_chart_pan_left">Korábbi időszak</string>
@@ -413,13 +415,13 @@
     <string name="pref_max_log_age" formatted="false">Napló időszaka</string>
     <string name="pref_max_log_age_summary" formatted="false">Törölje az ennél régebbi bejegyzéseket:</string>
     <string name="pref_max_log_age_help" formatted="false">Engedélyezett naplózásnál a tápellátás csatlakoztatása törli az ennél régebbi naplókat. A „Soha ne törölje” beállítás kézi törlésig megőrzi őket. Automatikus exportálás esetén a Battery Monitor előbb exportálja a függő naplókat; sikertelen exportáláskor nem törli a régi bejegyzéseket.</string>
-    <string name="age_1_day" formatted="false">1 nap</string>
-    <string name="age_2_days" formatted="false">2 nap</string>
-    <string name="age_4_days" formatted="false">4 nap</string>
-    <string name="age_1_week" formatted="false">1 hét</string>
-    <string name="age_2_weeks" formatted="false">2 hét</string>
-    <string name="age_3_weeks" formatted="false">3 hét</string>
-    <string name="age_4_weeks" formatted="false">4 hét</string>
+    <string name="age_1_day" formatted="false">1\u00A0nap</string>
+    <string name="age_2_days" formatted="false">2\u00A0nap</string>
+    <string name="age_4_days" formatted="false">4\u00A0nap</string>
+    <string name="age_1_week" formatted="false">1\u00A0hét</string>
+    <string name="age_2_weeks" formatted="false">2\u00A0hét</string>
+    <string name="age_3_weeks" formatted="false">3\u00A0hét</string>
+    <string name="age_4_weeks" formatted="false">4\u00A0hét</string>
     <string name="age_never_delete" formatted="false">Soha ne törölje</string>
     <string name="settings_history_export">Előzmények és exportálás</string>
     <string name="log_export_mode_title" formatted="false">Naplók exportálása</string>
@@ -476,8 +478,8 @@
     <string name="widget_preview_note">Az előnézet az utolsó figyelési mérést használja. A widget méretét a kezdőképernyő-kezelő állítja be.</string>
     <string name="widget_read_at">Mérés: %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Töltöttség · Utolsó %1$d óra</item>
-        <item quantity="other">Töltöttség · Utolsó %1$d óra</item>
+        <item quantity="one">Töltöttség · Utolsó %1$d\u00A0óra</item>
+        <item quantity="other">Töltöttség · Utolsó %1$d\u00A0óra</item>
     </plurals>
     <string name="widget_observed_range">Megfigyelve: %1$s–%2$s</string>
     <string name="widget_chart_description">Tárolt akkumulátortöltöttség: %1$s–%2$s. Minimum: %3$s, maximum: %4$s.</string>
@@ -491,29 +493,32 @@
     <string name="settings_search_no_results">Nincs megfelelő beállítás</string>
     <string name="settings_dependency_disabled">A beállítás módosításához engedélyezze vagy állítsa be a fenti kapcsolódó opciót</string>
     <string name="other_settings" formatted="false">Általános</string>
-    <string name="settings_general_summary">Nyelv, megjelenés, mértékegységek és időtartam-formátum</string>
+    <string name="settings_general_summary">Nyelv, megjelenés, hőmérsékleti mértékegység és időtartam-formátum</string>
     <string name="other_settings_help" formatted="false">Válassza ki a színpalettát és világosságot, az alkalmazás nyelvét, a hőmérséklet mértékegységét, az időtartam formátumát, és hogy induljon-e figyelés az eszköz újraindítása után.</string>
     <string name="settings_legacy_general">Egyéb</string>
     <string name="pref_cat_language" formatted="false">Nyelv és formázás</string>
     <string name="pref_change_app_language" formatted="false">Alkalmazás nyelve</string>
     <string name="pref_change_app_language_help" formatted="false">Válassza ki a Battery Monitor nyelvét. A rendszer alapértelmezése az eszköz nyelvét követi.</string>
     <string name="settings_app_language_unavailable">A rendszer alkalmazásnyelv-választójához Android 13 vagy újabb rendszer szükséges</string>
+    <string name="settings_app_language_unavailable_help">A rendszer alkalmazásnyelv-választójához Android 13 vagy újabb rendszer szükséges.</string>
     <string name="pref_temperature_unit" formatted="false">Hőmérséklet mértékegysége</string>
-    <string name="pref_temperature_unit_help" formatted="false">Válassza ki, hogy a hőmérséklet Celsius- vagy Fahrenheit-fokban jelenjen meg.</string>
+    <string name="pref_temperature_unit_help" formatted="false">Válassza ki, hogy az akkumulátor hőmérséklete Celsius- vagy Fahrenheit-fokban jelenjen meg.</string>
     <string name="celsius" formatted="false">Celsius</string>
     <string name="fahrenheit" formatted="false">Fahrenheit</string>
     <string name="pref_long_duration_format" formatted="false">Hosszú időtartam formátuma</string>
-    <string name="pref_long_duration_format_help" formatted="false">A „Napok és órák” 24 óra után napokat használ, például 1d 3h. A „Csak óra” a teljes időt órákban tartja, például 27h</string>
+    <string name="pref_long_duration_format_help" formatted="false">A „Napok és órák” 24\u00A0óra után napokat használ, például 1d 3h. A „Csak óra” a teljes időt órákban tartja, például 27h.</string>
     <string name="long_duration_format_days_and_hours" formatted="false">Napok és órák</string>
     <string name="long_duration_format_hours_only" formatted="false">Csak óra</string>
     <string name="settings_appearance">Megjelenés</string>
     <string name="settings_color_palette">Színpaletta</string>
     <string name="settings_color_palette_summary">Rendszerszínek vagy „Battery Blue” használata</string>
+    <string name="settings_color_palette_help">Rendszerszínek vagy „Battery Blue” használata.</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">A rendszerszínekhez Android 12 vagy újabb rendszer szükséges. Ezen az eszközön a „Battery Blue” használatos.</string>
     <string name="settings_brightness">Világosság</string>
     <string name="settings_brightness_summary">Rendszer követése vagy világos, sötét, illetve teljesen fekete mód választása</string>
+    <string name="settings_brightness_help">Rendszer követése vagy világos, sötét, illetve teljesen fekete mód választása.</string>
     <string name="settings_brightness_system">Rendszer</string>
     <string name="settings_brightness_light">Világos</string>
     <string name="settings_brightness_dark">Sötét</string>
@@ -655,8 +660,10 @@
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Korlátozott. Koppintson a megbízható háttérbeli megfigyelés engedélyezéséhez</string>
     <string name="diagnostics_vendor_settings" formatted="false">Gyártói beállítások</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Az eszközön elérhető további háttértevékenységi vagy automatikus indítási beállítások megnyitása</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Az eszközön elérhető további háttértevékenységi vagy automatikus indítási beállítások megnyitása.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Háttértevékenységi súgó</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Eszközspecifikus útmutató megnyitása a Don’t Kill My App oldalon</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">Eszközspecifikus útmutató megnyitása a Don’t Kill My App oldalon.</string>
     <string name="diagnostics_root" formatted="false">Root hozzáférés</string>
     <string name="diagnostics_root_unavailable" formatted="false">Nem érhető el. Koppintson a root hozzáférés kéréséhez vagy ellenőrzéséhez</string>
     <string name="diagnostics_shizuku" formatted="false">Shizuku hozzáférés</string>
@@ -678,8 +685,8 @@
     <string name="diag_predictor_start_monitor">Indítsa el fent a figyelést a mentett előrejelzési adatok megtekintéséhez.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktív akkumulátorállapot</string>
     <string name="diag_predictor_effective_rate" formatted="false">A becsléshez használt ütem</string>
-    <string name="diag_predictor_five_minute_rate" formatted="false">Utolsó 5 perc</string>
-    <string name="diag_predictor_five_point_rate" formatted="false">Utolsó 5 százalékpont</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">Utolsó 5\u00A0perc</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">Utolsó 5\u00A0százalékpont</string>
     <string name="diag_predictor_active_long_term_rate" formatted="false">Aktív hosszú távú ütem</string>
     <string name="diag_predictor_observed_points" formatted="false">Befejezett százalékpontok</string>
     <string name="diag_predictor_observation_duration" formatted="false">Megfigyelt munkamenet időtartama</string>
@@ -696,8 +703,10 @@
     <string name="diagnostics_device_and_logs" formatted="false">Eszköz és diagnosztikai jelentés</string>
     <string name="diagnostics_debug_logs" formatted="false">Hibakeresési naplók gyűjtése</string>
     <string name="diagnostics_debug_logs_warning" formatted="false">A hibakeresési naplók személyes adatokat tartalmazhatnak. Csak a probléma vizsgálata alatt engedélyezze, ellenőrizze az exportált fájlt, és óvatosan ossza meg nyilvánosan</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">A hibakeresési naplók személyes adatokat tartalmazhatnak. Csak a probléma vizsgálata alatt engedélyezze, ellenőrizze az exportált fájlt, és óvatosan ossza meg nyilvánosan.</string>
     <string name="diagnostics_clear" formatted="false">Gyűjtött hibakeresési naplók törlése</string>
     <string name="diagnostics_clear_summary" formatted="false">Az alkalmazás által tárolt hibakeresési naplók eltávolítása</string>
+    <string name="diagnostics_clear_help" formatted="false">Az alkalmazás által tárolt hibakeresési naplók eltávolítása.</string>
     <string name="diagnostics_logs_cleared" formatted="false">Hibakeresési naplók törölve</string>
     <string name="diagnostics_logs_clear_failed" formatted="false">A hibakeresési naplók nem törölhetők</string>
     <string name="diagnostics_export" formatted="false">Diagnosztikai jelentés exportálása</string>
@@ -732,16 +741,18 @@
     <string name="charging_diagnostics_need_two" formatted="false">Előbb rögzítsen legalább két különböző töltési módot</string>
     <string name="charging_diagnostics_report" formatted="false">Összehasonlító jelentés készítése</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Előbb rögzítsen legalább két különböző OEM töltési módot</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Előbb rögzítsen legalább két különböző OEM töltési módot.</string>
     <string name="charging_diagnostics_copy" formatted="false">Másolás a vágólapra</string>
     <string name="charging_diagnostics_save" formatted="false">Mentés</string>
     <string name="charging_diagnostics_copied" formatted="false">Jelentés másolva</string>
     <string name="charging_diagnostics_clear" formatted="false">Töltési pillanatképek törlése</string>
     <string name="charging_diagnostics_clear_summary" formatted="false">Helyben tárolt OEM töltési pillanatképek törlése</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">Helyben tárolt OEM töltési pillanatképek törlése.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Töltési pillanatképek törölve</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. Válassza le a telefont, és a konfigurációs pillanatképek készítése közben tartsa leválasztva. A pillanatképek között csak a gyártó töltésvédelmi beállítását módosítsa.\n
-    2. Kapcsolja ki a töltésvédelmet, várjon 2–5 másodpercet, majd rögzítsen pillanatképet.\n
-    3. Válasszon rögzített korlátot, várjon 2–5 másodpercet, majd rögzítsen. Ha lehet, ismételje meg másik korláttal.\n
-    4. Kapcsolja be az adaptív, intelligens vagy ütemezett töltést, várjon 2–5 másodpercet, majd rögzítsen.\n
+    2. Kapcsolja ki a töltésvédelmet, várjon 2–5\u00A0másodpercet, majd rögzítsen pillanatképet.\n
+    3. Válasszon rögzített korlátot, várjon 2–5\u00A0másodpercet, majd rögzítsen. Ha lehet, ismételje meg másik korláttal.\n
+    4. Kapcsolja be az adaptív, intelligens vagy ütemezett töltést, várjon 2–5\u00A0másodpercet, majd rögzítsen.\n
     5. Ha a konfiguráció összehasonlítása nem egyértelmű, a sorozatot opcionálisan töltés közben is megismételheti, hogy rögzítse a csak működés közben elérhető állapotot.\n
     6. Készítse el és tekintse át az összehasonlító jelentést. Az adatok szűrve, a potenciálisan érzékeny értékek kitakarva jelennek meg, de megosztás előtt ellenőrizze a teljes jelentést.</string>
     <string name="charging_diagnostics_help_contact" formatted="false">A jelentés áttekintése után másolja vagy mentse, majd küldje el e-mailben a <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> címre.</string>
@@ -753,30 +764,30 @@
     <string name="general_backup_help" formatted="false">Az általános biztonsági mentés együtt menti a beállításokat, a riasztásokat és az eszközspecifikus adatokat. Visszaállításkor kiválaszthatod, hogy az elérhető adatok közül melyeket szeretnéd importálni.</string>
     <string name="pref_export_general_backup" formatted="false">Általános biztonsági mentés exportálása</string>
     <string name="pref_export_general_backup_summary" formatted="false">Beállítások, riasztások és eszközspecifikus adatok mentése ZIP-fájlba</string>
-    <string name="general_backup_exported" formatted="false">Az általános biztonsági mentés exportálása sikeres</string>
+    <string name="general_backup_exported" formatted="false">Az általános biztonsági mentés exportálása sikeres.</string>
     <string name="pref_import_general_backup" formatted="false">Általános biztonsági mentés importálása</string>
     <string name="pref_import_general_backup_summary" formatted="false">Kiválasztott adatok visszaállítása egy általános biztonsági mentés ZIP-fájljából</string>
     <string name="general_backup_restore_message" formatted="false">Válassza ki, mit szeretne visszaállítani.</string>
-    <string name="general_backup_imported" formatted="false">Az általános biztonsági mentés importálása sikeres</string>
+    <string name="general_backup_imported" formatted="false">Az általános biztonsági mentés importálása sikeres.</string>
     <string name="invalid_general_backup_file" formatted="false">Érvénytelen vagy nem kompatibilis általános biztonsági mentési fájl</string>
     <string name="settings_restore_partial">Néhány adat nem állítható vissza. Sikeresen visszaállítva: %1$s. Esetleg részben visszaállítva: %2$s. Új próbálkozás előtt ellenőrizze ezeket a részeket.</string>
     <string name="settings_restore_none">Nincs</string>
     <string name="settings_backup_help" formatted="false">A beállítások biztonsági mentése elmenti az alkalmazás beállításait. Importáláskor visszaállítja a mentett beállításokat.</string>
     <string name="pref_export_settings" formatted="false">Beállítások exportálása</string>
     <string name="pref_export_settings_summary" formatted="false">Jelenlegi beállítások mentése fájlba</string>
-    <string name="settings_exported" formatted="false">A beállítások exportálása sikerült</string>
+    <string name="settings_exported" formatted="false">A beállítások exportálása sikerült.</string>
     <string name="pref_import_settings" formatted="false">Beállítások importálása</string>
     <string name="pref_import_settings_summary" formatted="false">Beállítások visszaállítása fájlból</string>
-    <string name="settings_imported" formatted="false">A beállítások importálása sikerült</string>
+    <string name="settings_imported" formatted="false">A beállítások importálása sikerült.</string>
     <string name="invalid_settings_file" formatted="false">Érvénytelen beállításfájl</string>
     <string name="settings_file_version_warning" formatted="false">Ezt a fájlt az alkalmazás egy újabb verziója hozta létre. Az importálás váratlan működést okozhat. Folytatja?</string>
     <string name="alarms_backup_help" formatted="false">A riasztások biztonsági mentése elmenti a riasztásaidat. Importáláskor minden jelenlegi riasztást a mentésben lévőkkel helyettesít.</string>
     <string name="pref_export_alarms" formatted="false">Riasztások exportálása</string>
     <string name="pref_export_alarms_summary" formatted="false">Jelenlegi riasztások mentése fájlba</string>
-    <string name="alarms_exported" formatted="false">A riasztások exportálása sikerült</string>
+    <string name="alarms_exported" formatted="false">A riasztások exportálása sikerült.</string>
     <string name="pref_import_alarms" formatted="false">Riasztások importálása</string>
     <string name="pref_import_alarms_summary" formatted="false">Jelenlegi riasztások cseréje a fájlban lévőkre</string>
-    <string name="alarms_imported" formatted="false">A riasztások importálása sikerült</string>
+    <string name="alarms_imported" formatted="false">A riasztások importálása sikerült.</string>
     <string name="invalid_alarms_file" formatted="false">Érvénytelen riasztásfájl</string>
     <string name="pref_backup_device_data" formatted="false">Eszközspecifikus adatok biztonsági mentése</string>
     <string name="device_specific_backup_help" formatted="false">Az eszközspecifikus biztonsági mentés elmenti a naplókat és az előrejelző adatait. Importáláskor az egyik vagy mindkettő kiválasztható. Ezek az adatok a forráseszközhöz tartoznak; másik eszközön használva hibás előrejelzéseket vagy váratlan működést okozhatnak. A naplók importálásakor válaszd ki, hogy hozzáadod őket, vagy lecseréled a meglévő naplókat.</string>
@@ -785,10 +796,11 @@
     <string name="device_data_backup_warning" formatted="false">Ezek az eszközspecifikus adatok ahhoz az eszközhöz tartoznak, amelyen gyűjtötték őket. Másik eszközre importálva hibás előrejelzéseket vagy az alkalmazás egyéb váratlan működését okozhatják.</string>
     <string name="pref_export_device_data" formatted="false">Eszközspecifikus adatok exportálása</string>
     <string name="pref_export_device_data_summary" formatted="false">Naplók és előrejelzési adatok mentése fájlba</string>
-    <string name="device_data_exported" formatted="false">Az eszközspecifikus adatok exportálása sikeres</string>
+    <string name="device_data_exported" formatted="false">Az eszközspecifikus adatok exportálása sikeres.</string>
     <string name="pref_import_device_data" formatted="false">Eszközspecifikus adatok importálása</string>
     <string name="pref_import_device_data_summary" formatted="false">Naplók és előrejelzési adatok visszaállítása fájlból</string>
     <string name="device_data_imported" formatted="false">Az eszközspecifikus adatok importálása sikeres</string>
+    <string name="device_data_imported_dialog" formatted="false">Az eszközspecifikus adatok importálása sikeres.</string>
     <string name="invalid_device_data_file" formatted="false">Érvénytelen eszközspecifikus adatfájl</string>
     <string name="device_data_file_empty" formatted="false">Ez a fájl nem tartalmaz támogatott eszközspecifikus adatokat</string>
     <string name="pref_import_logs_csv" formatted="false">Naplók importálása CSV-fájlból</string>
@@ -800,13 +812,14 @@
     <string name="log_import_add" formatted="false">Hozzáadás a meglévő naplókhoz</string>
     <string name="log_import_replace" formatted="false">Meglévő naplók cseréje</string>
     <string name="csv_logs_imported" formatted="false">A CSV-naplók importálása sikeres</string>
+    <string name="csv_logs_imported_dialog" formatted="false">A CSV-naplók importálása sikeres.</string>
     <string name="invalid_csv_logs_file" formatted="false">Érvénytelen vagy nem kompatibilis CSV-naplófájl</string>
     <string name="settings_reset_title">Alapbeállítások visszaállítása</string>
     <string name="settings_reset_summary">Az alkalmazás beállításainak visszaállítása az előzmények, riasztások és tanult becslések megőrzésével</string>
     <string name="settings_reset_help" formatted="false">Az „Alapbeállítások visszaállítása” megerősítést kér, majd visszaállítja az alkalmazás beállításait. Megőrzi az előzményeket, riasztásokat, tanult becsléseket, widgetbeállításokat és a háttérbeli figyelés állapotát. A rendszerengedélyek és értesítési csatornák beállításai nem változnak.</string>
     <string name="settings_reset_question">Visszaállítja az alkalmazás összes alapbeállítását? Az előzmények, riasztások és tanult becslések megmaradnak. A háttérbeli figyelés jelenlegi futó vagy leállított állapota megmarad.</string>
     <string name="settings_reset_confirm">Alapértékek visszaállítása</string>
-    <string name="settings_reset_done">Alapbeállítások visszaállítva</string>
+    <string name="settings_reset_done">Alapbeállítások visszaállítva.</string>
     <string name="settings_reset_failed">Az alapbeállítások visszaállítása nem fejeződött be. Néhány beállítás már megváltozhatott. Ellenőrizze a szabad tárhelyet, és próbálja újra.</string>
 
     <string name="help_cat_version" formatted="false">Verzió</string>
@@ -843,32 +856,32 @@
     <string name="since" formatted="false">óta</string>
     <string name="duration_for">Ennyi ideje: %1$s</string>
     <plurals name="for_n_hours">
-        <item quantity="one">%d órája</item>
-        <item quantity="other">%d órája</item>
+        <item quantity="one">%d\u00A0órája</item>
+        <item quantity="other">%d\u00A0órája</item>
     </plurals>
     <plurals name="n_days">
-        <item quantity="one">"%d nap, "</item>
-        <item quantity="other">"%d nap, "</item>
+        <item quantity="one">"%d\u00A0nap, "</item>
+        <item quantity="other">"%d\u00A0nap, "</item>
     </plurals>
     <plurals name="n_hours">
-        <item quantity="one">%d óra</item>
-        <item quantity="other">%d óra</item>
+        <item quantity="one">%d\u00A0óra</item>
+        <item quantity="other">%d\u00A0óra</item>
     </plurals>
     <plurals name="n_hours_long">
-        <item quantity="one">"%d óra, "</item>
-        <item quantity="other">"%d óra, "</item>
+        <item quantity="one">"%d\u00A0óra, "</item>
+        <item quantity="other">"%d\u00A0óra, "</item>
     </plurals>
     <plurals name="n_minutes_long">
-        <item quantity="one">%d perc</item>
-        <item quantity="other">%d perc</item>
+        <item quantity="one">%d\u00A0perc</item>
+        <item quantity="other">%d\u00A0perc</item>
     </plurals>
     <plurals name="n_hours_medium">
-        <item quantity="one">"%d ó, "</item>
-        <item quantity="other">"%d ó, "</item>
+        <item quantity="one">"%d\u00A0ó, "</item>
+        <item quantity="other">"%d\u00A0ó, "</item>
     </plurals>
     <plurals name="n_minutes_medium">
-        <item quantity="one">%d p</item>
-        <item quantity="other">%d p</item>
+        <item quantity="one">%d\u00A0p</item>
+        <item quantity="other">%d\u00A0p</item>
     </plurals>
     <plurals name="n_hours_short">
         <item quantity="one">"%d ó "</item>

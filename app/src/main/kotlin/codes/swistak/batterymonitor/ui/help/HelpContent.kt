@@ -82,13 +82,13 @@ internal fun helpSections(
             HelpSection(
                 R.string.pref_cat_channel_settings, listOf(
                     HelpParagraph(R.string.notification_channels_help),
-                    HelpParagraph(R.string.settings_notification_disabled),
+                    HelpParagraph(R.string.settings_notification_disabled_help),
                 )
             ),
             HelpSection(
                 R.string.channel_group_name_alarms, listOf(
                     HelpParagraph(R.string.pref_dismiss_low_battery_on_recovery, subheading = true),
-                    HelpParagraph(R.string.pref_dismiss_low_battery_on_recovery_summary),
+                    HelpParagraph(R.string.pref_dismiss_low_battery_on_recovery_help),
                 )
             ),
             HelpSection(
@@ -120,7 +120,7 @@ internal fun helpSections(
                 R.string.status_bar_chip_settings, listOf(
                     HelpParagraph(R.string.status_bar_chip_settings_help),
                     HelpParagraph(R.string.live_updates_notif_chan_name, subheading = true),
-                    HelpParagraph(R.string.settings_live_update_summary),
+                    HelpParagraph(R.string.settings_live_update_help),
                     HelpParagraph(R.string.pref_live_update_display, subheading = true),
                     HelpParagraph(R.string.pref_live_update_display_help),
                     HelpParagraph(
@@ -160,10 +160,10 @@ internal fun helpSections(
             HelpSection(
                 R.string.settings_appearance, listOfNotNull(
                     HelpParagraph(R.string.settings_color_palette, subheading = true),
-                    HelpParagraph(R.string.settings_color_palette_summary),
+                    HelpParagraph(R.string.settings_color_palette_help),
                     if (sdkInt < 31) HelpParagraph(R.string.settings_color_palette_unavailable) else null,
                     HelpParagraph(R.string.settings_brightness, subheading = true),
-                    HelpParagraph(R.string.settings_brightness_summary),
+                    HelpParagraph(R.string.settings_brightness_help),
                 )
             ),
             HelpSection(
@@ -171,7 +171,7 @@ internal fun helpSections(
                     HelpParagraph(R.string.pref_change_app_language, subheading = true),
                     HelpParagraph(
                         if (sdkInt >= 33) R.string.pref_change_app_language_help
-                        else R.string.settings_app_language_unavailable
+                        else R.string.settings_app_language_unavailable_help
                     ),
                     HelpParagraph(R.string.pref_temperature_unit, subheading = true),
                     HelpParagraph(R.string.pref_temperature_unit_help),
@@ -276,7 +276,7 @@ internal fun helpSections(
                     if (chipVisible) HelpParagraph(
                         R.string.live_updates_notif_chan_name, subheading = true
                     ) else null,
-                    if (chipVisible) HelpParagraph(R.string.settings_live_update_summary) else null,
+                    if (chipVisible) HelpParagraph(R.string.settings_live_update_help) else null,
                 )
             ),
             HelpSection(
@@ -287,21 +287,21 @@ internal fun helpSections(
                     HelpParagraph(R.string.diagnostics_battery_optimization, subheading = true),
                     HelpParagraph(R.string.battery_optimized_message),
                     HelpParagraph(R.string.diagnostics_vendor_settings, subheading = true),
-                    HelpParagraph(R.string.diagnostics_vendor_settings_summary),
+                    HelpParagraph(R.string.diagnostics_vendor_settings_help),
                     HelpParagraph(R.string.diagnostics_dont_kill_my_app, subheading = true),
-                    HelpParagraph(R.string.diagnostics_dont_kill_my_app_summary),
+                    HelpParagraph(R.string.diagnostics_dont_kill_my_app_help),
                 )
             ),
             HelpSection(
                 R.string.diagnostics_device_and_logs, listOf(
                     HelpParagraph(R.string.diagnostics_debug_logs, subheading = true),
-                    HelpParagraph(R.string.diagnostics_debug_logs_warning),
+                    HelpParagraph(R.string.diagnostics_debug_logs_help),
                     HelpParagraph(R.string.diagnostics_export, subheading = true),
                     HelpParagraph(R.string.diagnostics_help_report),
-                    HelpParagraph(R.string.diag_include_debug),
+                    HelpParagraph(R.string.diag_include_debug, subheading = true),
                     HelpParagraph(R.string.diag_report_privacy),
                     HelpParagraph(R.string.diagnostics_clear, subheading = true),
-                    HelpParagraph(R.string.diagnostics_clear_summary),
+                    HelpParagraph(R.string.diagnostics_clear_help),
                 )
             ),
         )
@@ -314,12 +314,12 @@ internal fun helpSections(
                     HelpParagraph(R.string.charging_diagnostics_capture, subheading = true),
                     HelpParagraph(R.string.charging_diagnostics_help_steps),
                     HelpParagraph(R.string.charging_diagnostics_report, subheading = true),
-                    HelpParagraph(R.string.charging_diagnostics_report_summary),
-                    HelpParagraph(R.string.diag_include_apps),
+                    HelpParagraph(R.string.charging_diagnostics_report_help),
+                    HelpParagraph(R.string.diag_include_apps, subheading = true),
                     HelpParagraph(R.string.diag_report_privacy),
                     HelpParagraph(R.string.charging_diagnostics_help_contact),
                     HelpParagraph(R.string.charging_diagnostics_clear, subheading = true),
-                    HelpParagraph(R.string.charging_diagnostics_clear_summary),
+                    HelpParagraph(R.string.charging_diagnostics_clear_help),
                 )
             ),
         )
@@ -367,7 +367,7 @@ internal fun helpSections(
             ),
             HelpSection(
                 R.string.diagnostics_export, listOf(
-                    HelpParagraph(R.string.diag_include_raw),
+                    HelpParagraph(R.string.diag_include_raw, subheading = true),
                     HelpParagraph(R.string.diag_report_privacy),
                 )
             ),
@@ -442,11 +442,6 @@ internal fun helpSections(
             HelpSection(
                 R.string.pref_backup_restore, listOf(
                     HelpParagraph(R.string.backup_restore_help_overview),
-                )
-            ),
-            HelpSection(
-                R.string.diagnostics, listOf(
-                    HelpParagraph(R.string.diag_help_overview),
                 )
             ),
         )

@@ -65,13 +65,12 @@
     <string name="vital_sign_voltage" formatted="false">Battery voltage</string>
     <string name="pref_cat_battery_current_main" formatted="false">Battery current</string>
     <string name="remaining_charge" formatted="false">Remaining charge</string>
-    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
     <string name="remaining_charge_unavailable">Remaining charge unavailable</string>
-    <string name="current_remaining_charge">Remaining charge: %1$s mAh</string>
+    <string name="current_remaining_charge">Remaining charge: %1$s\u00A0mAh</string>
     <string name="battery_power">Battery power</string>
     <string name="battery_power_explanation">Calculated from battery voltage and current; positive while charging, negative while discharging. This is battery-side power, not charger power.</string>
     <string name="current_android_health">Status according to Android</string>
-    <string name="current_status_unit">Android status</string>
     <string name="current_health_explanation">This Android status is not a battery health percentage.</string>
     <string name="health_unknown" formatted="false">Unknown</string>
     <string name="health_good" formatted="false">Healthy</string>
@@ -95,7 +94,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Multiplier</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Some devices report unexpected units or signs. Multiply the reported value here to correct the displayed result.\n
     \n
-    As a rough phone reference, Android’s standard sign is positive while charging and negative while discharging. Active charging is often around +500 to +5000 mA, while ordinary discharge is often around -100 to -3000 mA. Values near zero can be normal when the battery is nearly full or the phone is idle. If the magnitude looks about 1000 times too small or too large, or the sign is reversed, adjust the multiplier.</string>
+    As a rough phone reference, Android’s standard sign is positive while charging and negative while discharging. Active charging is often around +500 to +5000\u00A0mA, while ordinary discharge is often around -100 to -3000\u00A0mA. Values near zero can be normal when the battery is nearly full or the phone is idle. If the magnitude looks about 1000 times too small or too large, or the sign is reversed, adjust the multiplier.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detect automatically</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatic detection is unavailable for the current battery state or reading</string>
     <string name="pref_battery_current_multiplier_detection_result">Multiplier automatically set to %1$d</string>
@@ -136,7 +135,7 @@
     <string name="pref_charging_target_mode_summary_default" formatted="false">No fixed device charging target detected — using 100%</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    If this value does not look correct, you can help improve device detection. Open “Settings” → “Advanced” → “OEM charging-target diagnostics” and generate a report, carefully following the instructions in “Help”</string>
+    If this value does not look correct, you can help improve device detection. Open “Settings” → “Advanced” → “OEM charging-target diagnostics” and generate a report, carefully following the instructions in “Help”.</string>
     <string name="charging_target_mode_automatic" formatted="false">Automatic (recommended)</string>
     <string name="charging_target_mode_custom" formatted="false">Custom</string>
     <string name="pref_custom_charging_target" formatted="false">Custom charging target</string>
@@ -155,6 +154,7 @@
     <string name="app_notifs_disabled_summary" formatted="false">You have disabled all notifications for this app. Please enable them to access these settings</string>
     <string name="main_notifs_disabled_summary" formatted="false">You have disabled the main notification for this app. Please enable it to access these settings</string>
     <string name="settings_notification_disabled">Enable app notifications and the main notification channel to customize this option</string>
+    <string name="settings_notification_disabled_help">Enable app notifications and the main notification channel to customize this option.</string>
     <string name="notifications_onboarding_message">Battery Monitor needs your permission to show the battery level in the status bar and notify you about alarms.\n
     \n
     Note: Granting this permission may occasionally cause the app to close. If it does, please simply reopen it.</string>
@@ -195,6 +195,7 @@
     <string name="status_bar_chip_settings" formatted="false">Status Bar Chip</string>
     <string name="status_bar_chip_settings_help" formatted="false">On Android 16 or later, choose when the Live Update chip appears, which values it cycles through, and whether it shows a charging emoji. Availability also depends on the device and system notification settings.</string>
     <string name="settings_live_update_summary">Allow or block promoted battery notifications in Android settings</string>
+    <string name="settings_live_update_help">Allow or block promoted battery notifications in Android settings.</string>
     <string name="live_updates_onboarding_title">Status Bar Battery Chip</string>
     <string name="live_updates_onboarding_message_on">Your device supports showing the battery percentage as a chip in the status bar. This is enabled by default.\n
     \n
@@ -227,11 +228,11 @@
     <string name="pref_chip_switching_interval_help" formatted="false">Choose how often the chip changes to the next selected value. This setting is available when more than one value is selected.</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">Enter an interval in seconds (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">Enter a value from 1 to 3600.</string>
-    <string name="chip_switching_interval_2_seconds" formatted="false">2 seconds</string>
-    <string name="chip_switching_interval_5_seconds" formatted="false">5 seconds</string>
-    <string name="chip_switching_interval_10_seconds" formatted="false">10 seconds</string>
-    <string name="chip_switching_interval_15_seconds" formatted="false">15 seconds</string>
-    <string name="chip_switching_interval_30_seconds" formatted="false">30 seconds</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0seconds</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5\u00A0seconds</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0seconds</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0seconds</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0seconds</string>
     <string name="pref_chip_indicate_charging" formatted="false">Show Charging Emoji</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Show a lightning emoji when charging or fully charged?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">If enabled, the status bar chip will show a lightning emoji next to the chip value while charging or when fully charged.</string>
@@ -296,6 +297,7 @@
     <string name="alarms_channel_help">Sound and delivery are controlled by this Android notification channel.</string>
     <string name="pref_dismiss_low_battery_on_recovery">Dismiss low battery alarm after recovery</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Remove the low battery notification when the charge rises above its threshold. Other alarm notifications remain</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">Remove the low battery notification when the charge rises above its threshold. Other alarm notifications remain.</string>
     <string name="alarms_channel_unavailable">Notification channel not created or unavailable</string>
     <string name="alarms_settings_unavailable">Android notification settings could not be opened</string>
     <string name="alarms_target_unknown">Target unavailable. Open estimate settings.</string>
@@ -311,9 +313,9 @@
     <string name="alarms_saved_reload_failed">Saved, but the monitor could not be notified. Review monitoring status.</string>
 
     <string name="history_range">History range</string>
-    <string name="history_last_24h">Last 24 hours</string>
-    <string name="history_last_3d">Last 3 days</string>
-    <string name="history_last_7d">Last 7 days</string>
+    <string name="history_last_24h">Last 24\u00A0hours</string>
+    <string name="history_last_3d">Last 3\u00A0days</string>
+    <string name="history_last_7d">Last 7\u00A0days</string>
     <string name="history_all_history">All history</string>
     <string name="history_custom_range">Custom date range</string>
     <string name="history_month">Month</string>
@@ -325,7 +327,7 @@
     <string name="history_change_range">Change</string>
     <string name="history_charts">Charts</string>
     <string name="history_level">Level</string>
-    <string name="history_level_24h">Level · Last 24 hours</string>
+    <string name="history_level_24h">Level · Last 24\u00A0hours</string>
     <string name="history_battery_level">Battery level</string>
     <string name="history_observations">Stored observations, not a continuous measurement. Vertical lines mark power events and restarts.</string>
     <string name="history_chart_description">Observed range from %1$s to %2$s. Minimum %3$s, maximum %4$s. Open “Events” and tap a record for reading details.</string>
@@ -370,8 +372,8 @@
     <string name="history_chart_select_point">Select observations</string>
     <string name="history_chart_event_summary">Connected (short dashes): %1$d · Disconnected (long dashes): %2$d · Monitoring interruptions (dotted): %3$d</string>
     <string name="history_chart_events">Chart events</string>
-    <string name="history_chart_1h">Last 1 hour</string>
-    <string name="history_chart_6h">Last 6 hours</string>
+    <string name="history_chart_1h">Last 1\u00A0hour</string>
+    <string name="history_chart_6h">Last 6\u00A0hours</string>
     <string name="history_chart_zoom_in">Zoom in</string>
     <string name="history_chart_zoom_out">Zoom out</string>
     <string name="history_chart_pan_left">Earlier time interval</string>
@@ -413,13 +415,13 @@
     <string name="pref_max_log_age" formatted="false">Maximum Log Age</string>
     <string name="pref_max_log_age_summary" formatted="false">Delete logs older than:</string>
     <string name="pref_max_log_age_help" formatted="false">When logging is enabled, connecting to power removes logs older than this limit. “Never delete” keeps them until you clear them manually. If automatic export is enabled, Battery Monitor exports pending logs before deleting old entries; a failed export prevents that deletion.</string>
-    <string name="age_1_day" formatted="false">1 day</string>
-    <string name="age_2_days" formatted="false">2 days</string>
-    <string name="age_4_days" formatted="false">4 days</string>
-    <string name="age_1_week" formatted="false">1 week</string>
-    <string name="age_2_weeks" formatted="false">2 weeks</string>
-    <string name="age_3_weeks" formatted="false">3 weeks</string>
-    <string name="age_4_weeks" formatted="false">4 weeks</string>
+    <string name="age_1_day" formatted="false">1\u00A0day</string>
+    <string name="age_2_days" formatted="false">2\u00A0days</string>
+    <string name="age_4_days" formatted="false">4\u00A0days</string>
+    <string name="age_1_week" formatted="false">1\u00A0week</string>
+    <string name="age_2_weeks" formatted="false">2\u00A0weeks</string>
+    <string name="age_3_weeks" formatted="false">3\u00A0weeks</string>
+    <string name="age_4_weeks" formatted="false">4\u00A0weeks</string>
     <string name="age_never_delete" formatted="false">Never delete</string>
     <string name="settings_history_export">History and export</string>
     <string name="log_export_mode_title" formatted="false">Export logs</string>
@@ -476,8 +478,8 @@
     <string name="widget_preview_note">Preview uses the last monitor reading. Widget size is set by your launcher.</string>
     <string name="widget_read_at">Reading %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Level · Last %1$d hour</item>
-        <item quantity="other">Level · Last %1$d hours</item>
+        <item quantity="one">Level · Last %1$d\u00A0hour</item>
+        <item quantity="other">Level · Last %1$d\u00A0hours</item>
     </plurals>
     <string name="widget_observed_range">Observed %1$s–%2$s</string>
     <string name="widget_chart_description">Stored battery level from %1$s to %2$s. Minimum %3$s, maximum %4$s.</string>
@@ -491,29 +493,32 @@
     <string name="settings_search_no_results">No matching settings</string>
     <string name="settings_dependency_disabled">Enable or configure the related option above to change this setting</string>
     <string name="other_settings" formatted="false">General</string>
-    <string name="settings_general_summary">Language, appearance, units and duration format</string>
+    <string name="settings_general_summary">Language, appearance, temperature unit and duration format</string>
     <string name="other_settings_help" formatted="false">Choose the color palette and brightness, app language, temperature unit, duration format, and whether monitoring starts after a device restart.</string>
     <string name="settings_legacy_general">Other</string>
     <string name="pref_cat_language" formatted="false">Language &amp; formatting</string>
     <string name="pref_change_app_language" formatted="false">App language</string>
     <string name="pref_change_app_language_help" formatted="false">Select the language used by Battery Monitor. The system default follows your device language.</string>
     <string name="settings_app_language_unavailable">The system app language selector requires Android 13 or later</string>
+    <string name="settings_app_language_unavailable_help">The system app language selector requires Android 13 or later.</string>
     <string name="pref_temperature_unit" formatted="false">Temperature unit</string>
-    <string name="pref_temperature_unit_help" formatted="false">Choose whether temperatures are displayed in Celsius or Fahrenheit.</string>
+    <string name="pref_temperature_unit_help" formatted="false">Choose whether battery temperature is displayed in Celsius or Fahrenheit.</string>
     <string name="celsius" formatted="false">Celsius</string>
     <string name="fahrenheit" formatted="false">Fahrenheit</string>
     <string name="pref_long_duration_format" formatted="false">Long duration format</string>
-    <string name="pref_long_duration_format_help" formatted="false">“Days and hours” uses days after 24 hours, for example 1d 3h. “Hours only” keeps the full duration in hours, for example 27h</string>
+    <string name="pref_long_duration_format_help" formatted="false">“Days and hours” uses days after 24\u00A0hours, for example 1d 3h. “Hours only” keeps the full duration in hours, for example 27h.</string>
     <string name="long_duration_format_days_and_hours" formatted="false">Days and hours</string>
     <string name="long_duration_format_hours_only" formatted="false">Hours only</string>
     <string name="settings_appearance">Appearance</string>
     <string name="settings_color_palette">Color palette</string>
     <string name="settings_color_palette_summary">Use system colors or “Battery Blue”</string>
+    <string name="settings_color_palette_help">Use system colors or “Battery Blue”.</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">System colors require Android 12 or later. “Battery Blue” is used on this device.</string>
     <string name="settings_brightness">Brightness</string>
     <string name="settings_brightness_summary">Follow the system or choose light, dark or true black</string>
+    <string name="settings_brightness_help">Follow the system or choose light, dark or true black.</string>
     <string name="settings_brightness_system">System</string>
     <string name="settings_brightness_light">Light</string>
     <string name="settings_brightness_dark">Dark</string>
@@ -535,7 +540,7 @@
     <string name="settings_data_permissions">Data and permissions</string>
     <string name="advanced_settings" formatted="false">Advanced</string>
     <string name="advanced_settings_summary" formatted="false">Fine-tune Battery Monitor with additional controls for specialized use cases</string>
-    <string name="advanced_settings_help" formatted="false">Control privileged access, history logging, log retention, and automatic exports. “Background monitoring” opens checks and tools for permissions, monitor reliability, and debug logs. Open “OEM charging-target diagnostics” for charging-target reports.</string>
+    <string name="advanced_settings_help" formatted="false">Control privileged access, history logging, log retention, and automatic export. “Background monitoring” opens checks and tools for permissions, monitor reliability, and debug logs. Open “OEM charging-target diagnostics” for charging-target reports.</string>
     <string name="pref_cat_privileged_access" formatted="false">Privileged access</string>
     <string name="pref_use_privileged_access" formatted="false">Use privileged access</string>
     <string name="pref_use_privileged_access_summary" formatted="false">Use granted root or Shizuku access for more complete and accurate device data?</string>
@@ -655,8 +660,10 @@
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Restricted. Tap to allow reliable background monitoring</string>
     <string name="diagnostics_vendor_settings" formatted="false">Manufacturer settings</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Open additional background activity or autostart settings available on this device</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Open additional background activity or autostart settings available on this device.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Background activity help</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Open device-specific guidance on Don’t Kill My App</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">Open device-specific guidance on Don’t Kill My App.</string>
     <string name="diagnostics_root" formatted="false">Root access</string>
     <string name="diagnostics_root_unavailable" formatted="false">Not available. Tap to request or check root access</string>
     <string name="diagnostics_shizuku" formatted="false">Shizuku access</string>
@@ -678,8 +685,8 @@
     <string name="diag_predictor_start_monitor">Start monitoring above to inspect saved predictor data.</string>
     <string name="diag_predictor_active_state" formatted="false">Active battery state</string>
     <string name="diag_predictor_effective_rate" formatted="false">Rate used for the estimate</string>
-    <string name="diag_predictor_five_minute_rate" formatted="false">Last 5 minutes</string>
-    <string name="diag_predictor_five_point_rate" formatted="false">Last 5 percentage points</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">Last 5\u00A0minutes</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">Last 5\u00A0percentage points</string>
     <string name="diag_predictor_active_long_term_rate" formatted="false">Active long-term rate</string>
     <string name="diag_predictor_observed_points" formatted="false">Completed percentage points</string>
     <string name="diag_predictor_observation_duration" formatted="false">Observed session duration</string>
@@ -696,8 +703,10 @@
     <string name="diagnostics_device_and_logs" formatted="false">Device and troubleshooting report</string>
     <string name="diagnostics_debug_logs" formatted="false">Collect debug logs</string>
     <string name="diagnostics_debug_logs_warning" formatted="false">Debug logs can contain personal information. Enable only while investigating a problem, review the exported file, and be careful when sharing it publicly</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">Debug logs can contain personal information. Enable only while investigating a problem, review the exported file, and be careful when sharing it publicly.</string>
     <string name="diagnostics_clear" formatted="false">Delete collected debug logs</string>
     <string name="diagnostics_clear_summary" formatted="false">Remove debug logs currently stored by the app</string>
+    <string name="diagnostics_clear_help" formatted="false">Remove debug logs currently stored by the app.</string>
     <string name="diagnostics_logs_cleared" formatted="false">Debug logs deleted</string>
     <string name="diagnostics_logs_clear_failed" formatted="false">Could not delete debug logs</string>
     <string name="diagnostics_export" formatted="false">Export diagnostics report</string>
@@ -732,16 +741,18 @@
     <string name="charging_diagnostics_need_two" formatted="false">Capture at least two different charging modes first</string>
     <string name="charging_diagnostics_report" formatted="false">Create comparison report</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Capture at least two different OEM charging modes first</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Capture at least two different OEM charging modes first.</string>
     <string name="charging_diagnostics_copy" formatted="false">Copy to clipboard</string>
     <string name="charging_diagnostics_save" formatted="false">Save</string>
     <string name="charging_diagnostics_copied" formatted="false">Report copied</string>
     <string name="charging_diagnostics_clear" formatted="false">Clear charging snapshots</string>
     <string name="charging_diagnostics_clear_summary" formatted="false">Delete locally stored OEM charging snapshots</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">Delete locally stored OEM charging snapshots.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Charging snapshots deleted</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. Unplug the phone and keep it disconnected while capturing configuration snapshots. Change only the OEM charging protection setting between snapshots.\n
-    2. Turn charging protection off, wait 2–5 seconds, then capture a snapshot.\n
-    3. Select any fixed charging target, wait 2–5 seconds, and capture another snapshot. Repeat with at least one different fixed charging target if available.\n
-    4. Enable adaptive, smart, or scheduled charging, wait 2–5 seconds, and capture one more snapshot.\n
+    2. Turn charging protection off, wait 2–5\u00A0seconds, then capture a snapshot.\n
+    3. Select any fixed charging target, wait 2–5\u00A0seconds, and capture another snapshot. Repeat with at least one different fixed charging target if available.\n
+    4. Enable adaptive, smart, or scheduled charging, wait 2–5\u00A0seconds, and capture one more snapshot.\n
     5. If the configuration comparison is inconclusive, you may optionally repeat the sequence while charging to capture runtime-only state.\n
     6. Create and review the comparison report. Report data is filtered and potentially sensitive values are redacted, but you should still review the complete report before sharing it.</string>
     <string name="charging_diagnostics_help_contact" formatted="false">After reviewing the report, copy or save it and send it by email to <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
@@ -753,30 +764,30 @@
     <string name="general_backup_help" formatted="false">A general backup saves settings, alarms, and device-specific data together. When restoring it, you can choose which available data to import.</string>
     <string name="pref_export_general_backup" formatted="false">Export general backup</string>
     <string name="pref_export_general_backup_summary" formatted="false">Save settings, alarms, and device-specific data to a ZIP file</string>
-    <string name="general_backup_exported" formatted="false">General backup exported successfully</string>
+    <string name="general_backup_exported" formatted="false">General backup exported successfully.</string>
     <string name="pref_import_general_backup" formatted="false">Import general backup</string>
     <string name="pref_import_general_backup_summary" formatted="false">Restore selected data from a general backup ZIP file</string>
     <string name="general_backup_restore_message" formatted="false">Choose what you want to restore.</string>
-    <string name="general_backup_imported" formatted="false">General backup imported successfully</string>
+    <string name="general_backup_imported" formatted="false">General backup imported successfully.</string>
     <string name="invalid_general_backup_file" formatted="false">Invalid or incompatible general backup file</string>
     <string name="settings_restore_partial">Some data could not be restored. Successfully restored: %1$s. Data that may have been partly restored: %2$s. Please check these sections before trying again.</string>
     <string name="settings_restore_none">None</string>
     <string name="settings_backup_help" formatted="false">A settings backup saves your app preferences. Importing it restores the saved preferences.</string>
     <string name="pref_export_settings" formatted="false">Export settings</string>
     <string name="pref_export_settings_summary" formatted="false">Save current settings to a file</string>
-    <string name="settings_exported" formatted="false">Settings exported successfully</string>
+    <string name="settings_exported" formatted="false">Settings exported successfully.</string>
     <string name="pref_import_settings" formatted="false">Import settings</string>
     <string name="pref_import_settings_summary" formatted="false">Restore settings from a file</string>
-    <string name="settings_imported" formatted="false">Settings imported successfully</string>
+    <string name="settings_imported" formatted="false">Settings imported successfully.</string>
     <string name="invalid_settings_file" formatted="false">Invalid settings file</string>
     <string name="settings_file_version_warning" formatted="false">This file was created by a newer version of the app. Importing it may cause unexpected behavior. Continue anyway?</string>
     <string name="alarms_backup_help" formatted="false">An alarms backup saves your alarms. Importing it replaces all current alarms with those from the backup.</string>
     <string name="pref_export_alarms" formatted="false">Export alarms</string>
     <string name="pref_export_alarms_summary" formatted="false">Save current alarms to a file</string>
-    <string name="alarms_exported" formatted="false">Alarms exported successfully</string>
+    <string name="alarms_exported" formatted="false">Alarms exported successfully.</string>
     <string name="pref_import_alarms" formatted="false">Import alarms</string>
     <string name="pref_import_alarms_summary" formatted="false">Replace current alarms with alarms from a file</string>
-    <string name="alarms_imported" formatted="false">Alarms imported successfully</string>
+    <string name="alarms_imported" formatted="false">Alarms imported successfully.</string>
     <string name="invalid_alarms_file" formatted="false">Invalid alarms file</string>
     <string name="pref_backup_device_data" formatted="false">Backup device-specific data</string>
     <string name="device_specific_backup_help" formatted="false">A device-specific data backup saves logs and predictor data. You can select either or both during import. This data belongs to the source device; using it on another device can cause incorrect predictions or unexpected behavior. When importing logs, choose whether to add them or replace existing logs.</string>
@@ -785,10 +796,11 @@
     <string name="device_data_backup_warning" formatted="false">This device-specific data belongs to the device where it was collected. Importing it on another device can cause incorrect predictions or other unexpected app behavior.</string>
     <string name="pref_export_device_data" formatted="false">Export device-specific data</string>
     <string name="pref_export_device_data_summary" formatted="false">Save logs and predictor data to a file</string>
-    <string name="device_data_exported" formatted="false">Device-specific data exported successfully</string>
+    <string name="device_data_exported" formatted="false">Device-specific data exported successfully.</string>
     <string name="pref_import_device_data" formatted="false">Import device-specific data</string>
     <string name="pref_import_device_data_summary" formatted="false">Restore logs and predictor data from a file</string>
     <string name="device_data_imported" formatted="false">Device-specific data imported successfully</string>
+    <string name="device_data_imported_dialog" formatted="false">Device-specific data imported successfully.</string>
     <string name="invalid_device_data_file" formatted="false">Invalid device-specific data file</string>
     <string name="device_data_file_empty" formatted="false">This file contains no supported device-specific data</string>
     <string name="pref_import_logs_csv" formatted="false">Import logs from CSV</string>
@@ -800,13 +812,14 @@
     <string name="log_import_add" formatted="false">Add to existing logs</string>
     <string name="log_import_replace" formatted="false">Replace existing logs</string>
     <string name="csv_logs_imported" formatted="false">CSV logs imported successfully</string>
+    <string name="csv_logs_imported_dialog" formatted="false">CSV logs imported successfully.</string>
     <string name="invalid_csv_logs_file" formatted="false">Invalid or incompatible CSV logs file</string>
     <string name="settings_reset_title">Restore default settings</string>
     <string name="settings_reset_summary">Reset app preferences while keeping history, alarms and learned estimates</string>
     <string name="settings_reset_help" formatted="false">“Restore default settings” asks for confirmation, then resets app preferences. It keeps history, alarms, learned estimates, widget configurations, and whether background monitoring is running. System permissions and notification-channel settings are not reset.</string>
     <string name="settings_reset_question">Restore all app settings to their defaults? History, alarms and learned estimates will be kept. Background monitoring will stay running or stopped as it is now.</string>
     <string name="settings_reset_confirm">Restore defaults</string>
-    <string name="settings_reset_done">Default settings restored</string>
+    <string name="settings_reset_done">Default settings restored.</string>
     <string name="settings_reset_failed">Could not finish restoring default settings. Some settings may already have changed. Check available storage and try again.</string>
 
     <string name="help_cat_version" formatted="false">Version</string>
@@ -843,32 +856,32 @@
     <string name="since" formatted="false">Since</string>
     <string name="duration_for">for %1$s</string>
     <plurals name="for_n_hours">
-        <item quantity="one">For %d Hour</item>
-        <item quantity="other">For %d Hours</item>
+        <item quantity="one">For %d\u00A0Hour</item>
+        <item quantity="other">For %d\u00A0Hours</item>
     </plurals>
     <plurals name="n_days">
-        <item quantity="one">"%d day, "</item>
-        <item quantity="other">"%d days, "</item>
+        <item quantity="one">"%d\u00A0day, "</item>
+        <item quantity="other">"%d\u00A0days, "</item>
     </plurals>
     <plurals name="n_hours">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">%d\u00A0hour</item>
+        <item quantity="other">%d\u00A0hours</item>
     </plurals>
     <plurals name="n_hours_long">
-        <item quantity="one">"%d hour, "</item>
-        <item quantity="other">"%d hours, "</item>
+        <item quantity="one">"%d\u00A0hour, "</item>
+        <item quantity="other">"%d\u00A0hours, "</item>
     </plurals>
     <plurals name="n_minutes_long">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="one">%d\u00A0minute</item>
+        <item quantity="other">%d\u00A0minutes</item>
     </plurals>
     <plurals name="n_hours_medium">
-        <item quantity="one">"%d hr, "</item>
-        <item quantity="other">"%d hrs, "</item>
+        <item quantity="one">"%d\u00A0hr, "</item>
+        <item quantity="other">"%d\u00A0hrs, "</item>
     </plurals>
     <plurals name="n_minutes_medium">
-        <item quantity="one">%d min.</item>
-        <item quantity="other">%d mins.</item>
+        <item quantity="one">%d\u00A0min.</item>
+        <item quantity="other">%d\u00A0mins.</item>
     </plurals>
     <plurals name="n_hours_short">
         <item quantity="other">"%dh "</item>

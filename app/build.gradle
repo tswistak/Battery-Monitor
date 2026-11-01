@@ -293,3 +293,27 @@ android.sourceSets.named('main') {
 tasks.named('preBuild').configure {
     dependsOn packageLicenseAssets
 }
+
+def localizationResDirectory = objects.directoryProperty()
+localizationResDirectory.set(layout.buildDirectory.dir('generated/localizationRes'))
+def prepareLocalizationResources = tasks.register('prepareLocalizationResources', Sync) {
+    from('src/main/res') {
+        include 'values*/strings.xml'
+    }
+    into localizationResDirectory
+    doLast {
+        fileTree(localizationResDirectory.get().asFile).matching {
+            include 'values*/strings.xml'
+        }.each { resource ->
+            resource.setText(resource.getText('UTF-8').replaceAll(/\\\\|\\n\r?\n {4}/) { token ->
+                token.startsWith('\\n') ? '\\n' : token
+            }, 'UTF-8')
+        }
+    }
+}
+tasks.named('preBuild').configure {
+    dependsOn prepareLocalizationResources
+}
+androidComponents.onVariants(androidComponents.selector().all()) { variant ->
+    variant.sources.res.addGeneratedSourceDirectory(prepareLocalizationResources) { localizationResDirectory }
+}

@@ -65,13 +65,12 @@
     <string name="vital_sign_voltage" formatted="false">バッテリー電圧</string>
     <string name="pref_cat_battery_current_main" formatted="false">バッテリー電流</string>
     <string name="remaining_charge" formatted="false">残りの充電量</string>
-    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
     <string name="remaining_charge_unavailable">残りの充電量を取得できません</string>
-    <string name="current_remaining_charge">残りの充電量: %1$s mAh</string>
+    <string name="current_remaining_charge">残りの充電量: %1$s\u00A0mAh</string>
     <string name="battery_power">バッテリー電力</string>
     <string name="battery_power_explanation">バッテリーの電圧と電流から計算します。充電中は正、放電中は負になります。充電器側ではなく、バッテリー側の電力です。</string>
     <string name="current_android_health">Android による状態</string>
-    <string name="current_status_unit">Android の状態</string>
     <string name="current_health_explanation">この Android の状態は、バッテリーの健全性を示す割合ではありません。</string>
     <string name="health_unknown" formatted="false">不明</string>
     <string name="health_good" formatted="false">良好</string>
@@ -95,7 +94,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">倍率</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">一部の端末では、予期しない単位や符号で電流が報告されます。表示結果を補正するには、報告値にここで指定した倍率を掛けます。\n
     \n
-    スマートフォンのおおよその目安として、Android の標準では充電中が正、放電中が負です。充電中は +500～+5000 mA、通常の放電中は -100～-3000 mA 程度になることがよくあります。満充電に近い場合や端末がアイドル状態の場合は、ゼロに近い値でも正常です。値が約 1000 倍小さい、または大きい場合や、符号が逆の場合は倍率を調整してください。</string>
+    スマートフォンのおおよその目安として、Android の標準では充電中が正、放電中が負です。充電中は +500～+5000\u00A0mA、通常の放電中は -100～-3000\u00A0mA 程度になることがよくあります。満充電に近い場合や端末がアイドル状態の場合は、ゼロに近い値でも正常です。値が約 1000 倍小さい、または大きい場合や、符号が逆の場合は倍率を調整してください。</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">自動検出</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">現在のバッテリー状態または測定値では自動検出を利用できません</string>
     <string name="pref_battery_current_multiplier_detection_result">倍率を自動的に %1$d に設定しました</string>
@@ -136,7 +135,7 @@
     <string name="pref_charging_target_mode_summary_default" formatted="false">固定された端末上限を検出できません — 100% を使用します</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    この値が正しくないように見える場合は、端末検出の改善に協力できます。「設定」 → 「詳細設定」 → 「OEM充電上限の診断」を開き、「ヘルプ」の手順に注意深く従ってOEM充電上限レポートを作成してください</string>
+    この値が正しくないように見える場合は、端末検出の改善に協力できます。「設定」 → 「詳細設定」 → 「OEM充電上限の診断」を開き、「ヘルプ」の手順に注意深く従ってOEM充電上限レポートを作成してください。</string>
     <string name="charging_target_mode_automatic" formatted="false">自動（推奨）</string>
     <string name="charging_target_mode_custom" formatted="false">カスタム</string>
     <string name="pref_custom_charging_target" formatted="false">カスタム充電目標</string>
@@ -155,6 +154,7 @@
     <string name="app_notifs_disabled_summary" formatted="false">このアプリの通知がすべて無効になっています。これらの設定にアクセスするには有効にしてください</string>
     <string name="main_notifs_disabled_summary" formatted="false">このアプリのメイン通知が無効になっています。これらの設定にアクセスするには有効にしてください</string>
     <string name="settings_notification_disabled">この設定を変更するには、アプリの通知とメイン通知チャンネルを有効にしてください</string>
+    <string name="settings_notification_disabled_help">この設定を変更するには、アプリの通知とメイン通知チャンネルを有効にしてください。</string>
     <string name="notifications_onboarding_message">Battery Monitor がステータスバーにバッテリー残量を表示し、アラームについて通知するには、権限が必要です。\n
     \n
     注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
@@ -195,6 +195,7 @@
     <string name="status_bar_chip_settings" formatted="false">ステータスバーチップ</string>
     <string name="status_bar_chip_settings_help" formatted="false">Android 16 以降で、ライブ更新チップの表示条件、切り替える値、充電絵文字の表示を選べます。利用できるかどうかは、端末とシステムの通知設定にも依存します。</string>
     <string name="settings_live_update_summary">Android の設定で、優先表示されるバッテリー通知を許可またはブロックします</string>
+    <string name="settings_live_update_help">Android の設定で、優先表示されるバッテリー通知を許可またはブロックします。</string>
     <string name="live_updates_onboarding_title">ステータスバーのバッテリーチップ</string>
     <string name="live_updates_onboarding_message_on">お使いの端末は、ステータスバーにバッテリー残量をチップとして表示できます。このオプションはデフォルトで有効です。\n
     \n
@@ -295,6 +296,7 @@
     <string name="alarms_channel_help">音と通知方法は、この Android の通知チャンネルで設定します。</string>
     <string name="pref_dismiss_low_battery_on_recovery">残量回復時に低残量アラームを消す</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">残量がしきい値を超えたら、低残量の通知を削除します。他のアラーム通知は残ります</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">残量がしきい値を超えたら、低残量の通知を削除します。他のアラーム通知は残ります。</string>
     <string name="alarms_channel_unavailable">通知チャンネルが未作成、または利用できません</string>
     <string name="alarms_settings_unavailable">Android の通知設定を開けませんでした</string>
     <string name="alarms_target_unknown">目標を取得できません。推定の設定を開いてください。</string>
@@ -412,13 +414,13 @@
     <string name="pref_max_log_age" formatted="false">最大ログ履歴</string>
     <string name="pref_max_log_age_summary" formatted="false">次より古いログを削除します:</string>
     <string name="pref_max_log_age_help" formatted="false">記録が有効な場合、電源への接続時にこの期間より古いログを削除します。「削除しない」では、手動で消去するまで保持します。自動エクスポートが有効な場合、Battery Monitor は古い項目を削除する前に未処理のログをエクスポートします。失敗した場合は削除しません。</string>
-    <string name="age_1_day" formatted="false">1 日</string>
-    <string name="age_2_days" formatted="false">2 日</string>
-    <string name="age_4_days" formatted="false">4 日</string>
-    <string name="age_1_week" formatted="false">1 週間</string>
-    <string name="age_2_weeks" formatted="false">2 週間</string>
-    <string name="age_3_weeks" formatted="false">3 週間</string>
-    <string name="age_4_weeks" formatted="false">4 週間</string>
+    <string name="age_1_day" formatted="false">1\u00A0日</string>
+    <string name="age_2_days" formatted="false">2\u00A0日</string>
+    <string name="age_4_days" formatted="false">4\u00A0日</string>
+    <string name="age_1_week" formatted="false">1\u00A0週間</string>
+    <string name="age_2_weeks" formatted="false">2\u00A0週間</string>
+    <string name="age_3_weeks" formatted="false">3\u00A0週間</string>
+    <string name="age_4_weeks" formatted="false">4\u00A0週間</string>
     <string name="age_never_delete" formatted="false">削除しない</string>
     <string name="settings_history_export">履歴とエクスポート</string>
     <string name="log_export_mode_title" formatted="false">ログをエクスポート</string>
@@ -475,7 +477,7 @@
     <string name="widget_preview_note">プレビューは監視の前回の測定値を使います。ウィジェットのサイズはランチャーで設定します。</string>
     <string name="widget_read_at">測定 %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="other">残量 · 過去 %1$d 時間</item>
+        <item quantity="other">残量 · 過去 %1$d\u00A0時間</item>
     </plurals>
     <string name="widget_observed_range">観測 %1$s–%2$s</string>
     <string name="widget_chart_description">%1$s から %2$s までの保存済みバッテリー残量。最小 %3$s、最大 %4$s。</string>
@@ -489,29 +491,32 @@
     <string name="settings_search_no_results">一致する設定はありません</string>
     <string name="settings_dependency_disabled">この設定を変更するには、上の関連する項目を有効にするか設定してください</string>
     <string name="other_settings" formatted="false">一般</string>
-    <string name="settings_general_summary">言語、外観、単位、時間の表示形式</string>
+    <string name="settings_general_summary">言語、外観、温度単位、時間の表示形式</string>
     <string name="other_settings_help" formatted="false">カラーパレットと明るさ、アプリの言語、温度の単位、時間の表示形式、端末の再起動後に監視を開始するかを選びます。</string>
     <string name="settings_legacy_general">その他</string>
     <string name="pref_cat_language" formatted="false">言語と表示形式</string>
     <string name="pref_change_app_language" formatted="false">アプリの言語</string>
     <string name="pref_change_app_language_help" formatted="false">Battery Monitor で使用する言語を選択します。システムのデフォルトでは端末の言語が使用されます。</string>
     <string name="settings_app_language_unavailable">システムでアプリの言語を選ぶには Android 13 以降が必要です</string>
+    <string name="settings_app_language_unavailable_help">システムでアプリの言語を選ぶには Android 13 以降が必要です。</string>
     <string name="pref_temperature_unit" formatted="false">温度の単位</string>
-    <string name="pref_temperature_unit_help" formatted="false">温度を摂氏または華氏のどちらで表示するかを選択します。</string>
+    <string name="pref_temperature_unit_help" formatted="false">バッテリー温度を摂氏または華氏のどちらで表示するかを選択します。</string>
     <string name="celsius" formatted="false">セ氏</string>
     <string name="fahrenheit" formatted="false">華氏</string>
     <string name="pref_long_duration_format" formatted="false">長時間の表示形式</string>
-    <string name="pref_long_duration_format_help" formatted="false">「日と時間」では24時間を超えると日を使用します（例: 1d 3h）。「時間のみ」では全期間を時間で表示します（例: 27h）</string>
+    <string name="pref_long_duration_format_help" formatted="false">「日と時間」では24時間を超えると日を使用します（例: 1d 3h）。「時間のみ」では全期間を時間で表示します（例: 27h）。</string>
     <string name="long_duration_format_days_and_hours" formatted="false">日と時間</string>
     <string name="long_duration_format_hours_only" formatted="false">時間のみ</string>
     <string name="settings_appearance">外観</string>
     <string name="settings_color_palette">カラーパレット</string>
     <string name="settings_color_palette_summary">システムの色または 「Battery Blue」 を使用</string>
+    <string name="settings_color_palette_help">システムの色または 「Battery Blue」 を使用。</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">システムの色には Android 12 以降が必要です。この端末では 「Battery Blue」 を使用します。</string>
     <string name="settings_brightness">明るさ</string>
     <string name="settings_brightness_summary">システムに従うか、ライト、ダーク、完全な黒を選択</string>
+    <string name="settings_brightness_help">システムに従うか、ライト、ダーク、完全な黒を選択。</string>
     <string name="settings_brightness_system">システム</string>
     <string name="settings_brightness_light">ライト</string>
     <string name="settings_brightness_dark">ダーク</string>
@@ -653,8 +658,10 @@
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">制限されています。タップして信頼できるバックグラウンド監視を許可します</string>
     <string name="diagnostics_vendor_settings" formatted="false">メーカー設定</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">この端末で利用できる追加のバックグラウンド動作または自動起動設定を開きます</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">この端末で利用できる追加のバックグラウンド動作または自動起動設定を開きます。</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">バックグラウンド動作のヘルプ</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Don’t Kill My App で端末固有のガイドを開きます</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">Don’t Kill My App で端末固有のガイドを開きます。</string>
     <string name="diagnostics_root" formatted="false">root アクセス</string>
     <string name="diagnostics_root_unavailable" formatted="false">利用できません。タップして root アクセスを要求または確認します</string>
     <string name="diagnostics_shizuku" formatted="false">Shizuku アクセス</string>
@@ -694,8 +701,10 @@
     <string name="diagnostics_device_and_logs" formatted="false">端末と診断レポート</string>
     <string name="diagnostics_debug_logs" formatted="false">デバッグログを収集</string>
     <string name="diagnostics_debug_logs_warning" formatted="false">デバッグログには個人情報が含まれる場合があります。問題の調査中だけ有効にし、エクスポートしたファイルを確認して、公開共有には注意してください</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">デバッグログには個人情報が含まれる場合があります。問題の調査中だけ有効にし、エクスポートしたファイルを確認して、公開共有には注意してください。</string>
     <string name="diagnostics_clear" formatted="false">収集したデバッグログを削除</string>
     <string name="diagnostics_clear_summary" formatted="false">アプリが現在保存しているデバッグログを削除します</string>
+    <string name="diagnostics_clear_help" formatted="false">アプリが現在保存しているデバッグログを削除します。</string>
     <string name="diagnostics_logs_cleared" formatted="false">デバッグログを削除しました</string>
     <string name="diagnostics_logs_clear_failed" formatted="false">デバッグログを削除できませんでした</string>
     <string name="diagnostics_export" formatted="false">診断レポートをエクスポート</string>
@@ -729,11 +738,13 @@
     <string name="charging_diagnostics_need_two" formatted="false">最初に2種類以上の充電モードを取得してください</string>
     <string name="charging_diagnostics_report" formatted="false">比較レポートを作成</string>
     <string name="charging_diagnostics_report_summary" formatted="false">最初に2種類以上のOEM充電モードを取得してください</string>
+    <string name="charging_diagnostics_report_help" formatted="false">最初に2種類以上のOEM充電モードを取得してください。</string>
     <string name="charging_diagnostics_copy" formatted="false">クリップボードにコピー</string>
     <string name="charging_diagnostics_save" formatted="false">保存</string>
     <string name="charging_diagnostics_copied" formatted="false">レポートをコピーしました</string>
     <string name="charging_diagnostics_clear" formatted="false">充電スナップショットを消去</string>
     <string name="charging_diagnostics_clear_summary" formatted="false">端末内に保存したOEM充電スナップショットを削除します</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">端末内に保存したOEM充電スナップショットを削除します。</string>
     <string name="charging_diagnostics_cleared" formatted="false">充電スナップショットを削除しました</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. 端末を充電器から外し、設定スナップショットの取得中は接続しないでください。スナップショット間ではメーカーの充電保護設定だけを変更します。\n
     2. 充電保護をオフにし、2–5秒待ってスナップショットを取得します。\n
@@ -750,30 +761,30 @@
     <string name="general_backup_help" formatted="false">一般バックアップでは、設定、アラーム、端末固有データをまとめて保存します。復元時に、利用可能なデータからインポートする項目を選択できます。</string>
     <string name="pref_export_general_backup" formatted="false">全体バックアップをエクスポート</string>
     <string name="pref_export_general_backup_summary" formatted="false">設定、アラーム、デバイス固有データをZIPファイルに保存します</string>
-    <string name="general_backup_exported" formatted="false">全体バックアップを正常にエクスポートしました</string>
+    <string name="general_backup_exported" formatted="false">全体バックアップを正常にエクスポートしました。</string>
     <string name="pref_import_general_backup" formatted="false">全体バックアップをインポート</string>
     <string name="pref_import_general_backup_summary" formatted="false">全体バックアップのZIPファイルから選択したデータを復元します</string>
     <string name="general_backup_restore_message" formatted="false">復元する項目を選択してください。</string>
-    <string name="general_backup_imported" formatted="false">全体バックアップを正常にインポートしました</string>
+    <string name="general_backup_imported" formatted="false">全体バックアップを正常にインポートしました。</string>
     <string name="invalid_general_backup_file" formatted="false">全体バックアップファイルが無効か、互換性がありません</string>
     <string name="settings_restore_partial">一部のデータを復元できませんでした。復元済み: %1$s。一部だけ復元された可能性があるデータ: %2$s。再試行する前に、これらの項目を確認してください。</string>
     <string name="settings_restore_none">なし</string>
     <string name="settings_backup_help" formatted="false">設定バックアップではアプリの設定を保存します。インポートすると保存した設定が復元されます。</string>
     <string name="pref_export_settings" formatted="false">設定をエクスポート</string>
     <string name="pref_export_settings_summary" formatted="false">現在の設定をファイルに保存</string>
-    <string name="settings_exported" formatted="false">設定を正常にエクスポートしました</string>
+    <string name="settings_exported" formatted="false">設定を正常にエクスポートしました。</string>
     <string name="pref_import_settings" formatted="false">設定をインポート</string>
     <string name="pref_import_settings_summary" formatted="false">ファイルから設定を復元</string>
-    <string name="settings_imported" formatted="false">設定を正常にインポートしました</string>
+    <string name="settings_imported" formatted="false">設定を正常にインポートしました。</string>
     <string name="invalid_settings_file" formatted="false">無効な設定ファイル</string>
     <string name="settings_file_version_warning" formatted="false">このファイルは新しいバージョンのアプリで作成されています。インポートすると予期しない動作が発生する可能性があります。それでも続行しますか？</string>
     <string name="alarms_backup_help" formatted="false">アラームのバックアップではアラームを保存します。インポートすると、現在のすべてのアラームがバックアップ内のアラームに置き換えられます。</string>
     <string name="pref_export_alarms" formatted="false">アラームをエクスポート</string>
     <string name="pref_export_alarms_summary" formatted="false">現在のアラームをファイルに保存します</string>
-    <string name="alarms_exported" formatted="false">アラームをエクスポートしました</string>
+    <string name="alarms_exported" formatted="false">アラームをエクスポートしました。</string>
     <string name="pref_import_alarms" formatted="false">アラームをインポート</string>
     <string name="pref_import_alarms_summary" formatted="false">現在のアラームをファイル内のアラームで置き換えます</string>
-    <string name="alarms_imported" formatted="false">アラームをインポートしました</string>
+    <string name="alarms_imported" formatted="false">アラームをインポートしました。</string>
     <string name="invalid_alarms_file" formatted="false">無効なアラームファイルです</string>
     <string name="pref_backup_device_data" formatted="false">デバイス固有データをバックアップ</string>
     <string name="device_specific_backup_help" formatted="false">端末固有バックアップでは、ログと予測データを保存します。インポート時に一方または両方を選択できます。このデータは元の端末のものであるため、別の端末で使用すると予測が不正確になったり、予期しない動作が発生したりする場合があります。ログをインポートするときは、既存のログに追加するか置き換えるかを選択してください。</string>
@@ -782,10 +793,11 @@
     <string name="device_data_backup_warning" formatted="false">このデバイス固有データは収集元のデバイスに属します。別のデバイスにインポートすると、予測が不正確になったり、アプリが予期しない動作をしたりする可能性があります。</string>
     <string name="pref_export_device_data" formatted="false">デバイス固有データをエクスポート</string>
     <string name="pref_export_device_data_summary" formatted="false">ログと予測データをファイルに保存します</string>
-    <string name="device_data_exported" formatted="false">デバイス固有データを正常にエクスポートしました</string>
+    <string name="device_data_exported" formatted="false">デバイス固有データを正常にエクスポートしました。</string>
     <string name="pref_import_device_data" formatted="false">デバイス固有データをインポート</string>
     <string name="pref_import_device_data_summary" formatted="false">ファイルからログと予測データを復元します</string>
     <string name="device_data_imported" formatted="false">デバイス固有データを正常にインポートしました</string>
+    <string name="device_data_imported_dialog" formatted="false">デバイス固有データを正常にインポートしました。</string>
     <string name="invalid_device_data_file" formatted="false">デバイス固有データファイルが無効です</string>
     <string name="device_data_file_empty" formatted="false">このファイルには対応しているデバイス固有データが含まれていません</string>
     <string name="pref_import_logs_csv" formatted="false">CSVからログをインポート</string>
@@ -797,13 +809,14 @@
     <string name="log_import_add" formatted="false">既存のログに追加する</string>
     <string name="log_import_replace" formatted="false">既存のログを置き換える</string>
     <string name="csv_logs_imported" formatted="false">CSVログを正常にインポートしました</string>
+    <string name="csv_logs_imported_dialog" formatted="false">CSVログを正常にインポートしました。</string>
     <string name="invalid_csv_logs_file" formatted="false">CSVログファイルが無効か、互換性がありません</string>
     <string name="settings_reset_title">既定の設定に戻す</string>
     <string name="settings_reset_summary">履歴、アラーム、学習済みの推定を保持して、アプリの設定をリセットします</string>
     <string name="settings_reset_help" formatted="false">「既定の設定に戻す」操作では、確認後にアプリの設定をリセットします。履歴、アラーム、学習済みの推定、ウィジェット設定、バックグラウンド監視の実行状態は保持します。システムの権限と通知チャンネル設定はリセットしません。</string>
     <string name="settings_reset_question">アプリのすべての設定を既定値に戻しますか？履歴、アラーム、学習済みの推定は保持します。バックグラウンド監視は現在の実行・停止状態を維持します。</string>
     <string name="settings_reset_confirm">既定値に戻す</string>
-    <string name="settings_reset_done">既定の設定に戻しました</string>
+    <string name="settings_reset_done">既定の設定に戻しました。</string>
     <string name="settings_reset_failed">既定の設定への復元を完了できませんでした。一部の設定は変更された可能性があります。ストレージの空き容量を確認して再試行してください。</string>
 
     <string name="help_cat_version" formatted="false">バージョン</string>
@@ -840,25 +853,25 @@
     <string name="since" formatted="false">から</string>
     <string name="duration_for">%1$s の間</string>
     <plurals name="for_n_hours">
-        <item quantity="other">%d 時間</item>
+        <item quantity="other">%d\u00A0時間</item>
     </plurals>
     <plurals name="n_days">
-        <item quantity="other">"%d 日 "</item>
+        <item quantity="other">"%d\u00A0日 "</item>
     </plurals>
     <plurals name="n_hours">
-        <item quantity="other">%d 時間</item>
+        <item quantity="other">%d\u00A0時間</item>
     </plurals>
     <plurals name="n_hours_long">
-        <item quantity="other">"%d 時間 "</item>
+        <item quantity="other">"%d\u00A0時間 "</item>
     </plurals>
     <plurals name="n_minutes_long">
-        <item quantity="other">%d 分</item>
+        <item quantity="other">%d\u00A0分</item>
     </plurals>
     <plurals name="n_hours_medium">
-        <item quantity="other">"%d 時間 "</item>
+        <item quantity="other">"%d\u00A0時間 "</item>
     </plurals>
     <plurals name="n_minutes_medium">
-        <item quantity="other">%d 分</item>
+        <item quantity="other">%d\u00A0分</item>
     </plurals>
     <plurals name="n_hours_short">
         <item quantity="other">"%d時間 "</item>

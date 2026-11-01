@@ -76,12 +76,12 @@ internal fun normalizedDiagnosticGroups(
         )
     }
 
-    fun charge(raw: Long?) = raw?.let { String.format(locale, "%.1f mAh", it / 1000.0) }
+    fun charge(raw: Long?) = raw?.let { String.format(locale, "%.1f\u00A0mAh", it / 1000.0) }
 
     fun current(raw: Long?) = raw?.let {
         BatteryCurrent.formatMilliAmps(
             BatteryCurrent.scaleMicroAmps(it, multiplier), locale
-        ) + " mA"
+        ) + "\u00A0mA"
     }
 
     val health = snapshot.serviceLabels.indexOf("health").takeIf { it >= 0 }
@@ -135,7 +135,7 @@ internal fun normalizedDiagnosticGroups(
             "voltage",
             raw,
             unit,
-            String.format(locale, "%.3f V", millivolts / 1000.0),
+            String.format(locale, "%.3f\u00A0V", millivolts / 1000.0),
             source
         )
     }
@@ -189,7 +189,7 @@ internal fun normalizedDiagnosticGroups(
                     "nWh",
                     snapshot.energyCounterNwh?.let {
                         String.format(
-                            locale, "%.1f mWh", it / 1_000_000.0
+                            locale, "%.1f\u00A0mWh", it / 1_000_000.0
                         )
                     }),
                 row(R.string.diag_field_cycle_count, "cycle_count", snapshot.cycleCount),
@@ -213,7 +213,7 @@ internal fun normalizedDiagnosticGroups(
                     "battery_power",
                     power,
                     "W",
-                    power?.let { String.format(locale, "%.2f W", it) },
+                    power?.let { String.format(locale, "%.2f\u00A0W", it) },
                     "${voltage.source} × ${snapshot.fieldSources["current_now"] ?: if (android) "BatteryManager / current_now" else "dumpsys battery / current_now"}"
                 ).copy(
                     observedAtMillis = powerTime?.wallMillis ?: 0,
@@ -304,7 +304,7 @@ internal fun normalizedDiagnosticGroups(
                     snapshot.maxChargingCurrentUa?.let {
                         BatteryCurrent.formatMilliAmps(
                             BatteryCurrent.scaleMicroAmps(it, 1), locale
-                        ) + " mA"
+                        ) + "\u00A0mA"
                     }),
                 row(
                     R.string.diag_field_max_charging_voltage,
@@ -313,7 +313,7 @@ internal fun normalizedDiagnosticGroups(
                     "µV",
                     snapshot.maxChargingVoltageUv?.let {
                         String.format(
-                            locale, "%.2f V", it / 1_000_000.0
+                            locale, "%.2f\u00A0V", it / 1_000_000.0
                         )
                     }),
                 row(
@@ -338,6 +338,7 @@ internal fun normalizedDiagnosticGroups(
         )
     )
 }
+
 
 internal fun rawDiagnosticGroups(snapshot: AdvancedBatterySnapshot): List<DiagnosticGroup> {
     val access = diagnosticAccessName(snapshot)
@@ -454,7 +455,7 @@ internal fun mergedDiagnosticGroups(
                 val time =
                     oldestMeasurementTime(voltage.measurementTime(), current.measurementTime())
                 return@map row.copy(
-                    value = power?.let { String.format(locale, "%.2f W", it) },
+                    value = power?.let { String.format(locale, "%.2f\u00A0W", it) },
                     rawValue = power?.toString(),
                     source = if (power == null) "" else "${voltage.source} × ${current.source}",
                     accessMethod = listOf(voltage.accessMethod, current.accessMethod).distinct()
@@ -476,6 +477,7 @@ internal fun mergedDiagnosticGroups(
         })
     }
 }
+
 
 internal fun deviceDiagnosticGroups(
     snapshots: List<AdvancedBatterySnapshot>,
@@ -508,9 +510,9 @@ internal fun deviceDiagnosticGroups(
                     val value = text.toLongOrNull()?.takeIf { it >= 0 } ?: return null
                     return row.copy(
                         label = label, unit = unit, value = if (unit == "µV") String.format(
-                            locale, "%.3f V", value / divisor
+                            locale, "%.3f\u00A0V", value / divisor
                         )
-                        else BatteryCurrent.formatMilliAmps(value / divisor, locale) + " mA"
+                        else BatteryCurrent.formatMilliAmps(value / divisor, locale) + "\u00A0mA"
                     )
                 }
 
@@ -606,6 +608,7 @@ internal fun deviceDiagnosticGroups(
             })
     }
 }
+
 
 internal fun formattedDiagnosticValue(
     row: DiagnosticRow, label: (Int) -> String

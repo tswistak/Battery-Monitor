@@ -65,13 +65,12 @@
     <string name="vital_sign_voltage" formatted="false">बैटरी वोल्टेज</string>
     <string name="pref_cat_battery_current_main" formatted="false">बैटरी करंट</string>
     <string name="remaining_charge" formatted="false">शेष चार्ज</string>
-    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
     <string name="remaining_charge_unavailable">शेष चार्ज उपलब्ध नहीं है</string>
-    <string name="current_remaining_charge">शेष चार्ज: %1$s mAh</string>
+    <string name="current_remaining_charge">शेष चार्ज: %1$s\u00A0mAh</string>
     <string name="battery_power">बैटरी पावर</string>
     <string name="battery_power_explanation">बैटरी के वोल्टेज और करंट से गणना की जाती है; चार्जिंग में धनात्मक और डिस्चार्जिंग में ऋणात्मक। यह बैटरी की पावर है, चार्जर की नहीं।</string>
     <string name="current_android_health">Android के अनुसार स्थिति</string>
-    <string name="current_status_unit">Android की स्थिति</string>
     <string name="current_health_explanation">Android की यह स्थिति बैटरी स्वास्थ्य का प्रतिशत नहीं है।</string>
     <string name="health_unknown" formatted="false">अज्ञात</string>
     <string name="health_good" formatted="false">अच्छा स्वास्थ्य</string>
@@ -95,7 +94,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">गुणक</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">कुछ डिवाइस अनपेक्षित इकाइयों या चिह्नों में करंट की रिपोर्ट करते हैं। दिखाए गए परिणाम को सही करने के लिए रिपोर्ट किए गए मान को यहाँ गुणा करें।\n
     \n
-    फ़ोन के लिए एक मोटे संदर्भ के रूप में, Android का मानक चिह्न चार्जिंग के समय धनात्मक और डिस्चार्जिंग के समय ऋणात्मक होता है। सक्रिय चार्जिंग अक्सर लगभग +500 से +5000 mA होती है, जबकि सामान्य डिस्चार्ज लगभग -100 से -3000 mA होता है। बैटरी लगभग पूरी होने या फ़ोन के निष्क्रिय होने पर शून्य के पास के मान सामान्य हो सकते हैं। यदि परिमाण लगभग 1000 गुना छोटा या बड़ा दिखता है, या चिह्न उलटा है, तो गुणक समायोजित करें।</string>
+    फ़ोन के लिए एक मोटे संदर्भ के रूप में, Android का मानक चिह्न चार्जिंग के समय धनात्मक और डिस्चार्जिंग के समय ऋणात्मक होता है। सक्रिय चार्जिंग अक्सर लगभग +500 से +5000\u00A0mA होती है, जबकि सामान्य डिस्चार्ज लगभग -100 से -3000\u00A0mA होता है। बैटरी लगभग पूरी होने या फ़ोन के निष्क्रिय होने पर शून्य के पास के मान सामान्य हो सकते हैं। यदि परिमाण लगभग 1000 गुना छोटा या बड़ा दिखता है, या चिह्न उलटा है, तो गुणक समायोजित करें।</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">अपने आप पता लगाएँ</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">बैटरी की मौजूदा स्थिति या रीडिंग के लिए अपने आप पता लगाना उपलब्ध नहीं है</string>
     <string name="pref_battery_current_multiplier_detection_result">गुणक अपने आप %1$d पर सेट किया गया</string>
@@ -136,7 +135,7 @@
     <string name="pref_charging_target_mode_summary_default" formatted="false">कोई निश्चित डिवाइस सीमा नहीं मिली — 100% उपयोग किया जाएगा</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    अगर यह मान सही नहीं लगता, तो आप डिवाइस पहचान को बेहतर बनाने में मदद कर सकते हैं। “सेटिंग” → “उन्नत” → “OEM चार्जिंग सीमा निदान” खोलें और “मदद” में दिए निर्देशों का ध्यान से पालन करते हुए OEM चार्जिंग सीमा रिपोर्ट बनाएँ</string>
+    अगर यह मान सही नहीं लगता, तो आप डिवाइस पहचान को बेहतर बनाने में मदद कर सकते हैं। “सेटिंग” → “उन्नत” → “OEM चार्जिंग सीमा निदान” खोलें और “मदद” में दिए निर्देशों का ध्यान से पालन करते हुए OEM चार्जिंग सीमा रिपोर्ट बनाएँ।</string>
     <string name="charging_target_mode_automatic" formatted="false">स्वचालित (अनुशंसित)</string>
     <string name="charging_target_mode_custom" formatted="false">कस्टम</string>
     <string name="pref_custom_charging_target" formatted="false">कस्टम चार्जिंग लक्ष्य</string>
@@ -155,6 +154,7 @@
     <string name="app_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए सभी सूचनाएं अक्षम कर दी हैं.  कृपया उन्हें इन सेटिंग्स तक पहुंचने में सक्षम करें</string>
     <string name="main_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए मुख्य अधिसूचना अक्षम कर दी है.  कृपया इन सेटिंग्स तक पहुंचने के लिए इसे सक्षम करें</string>
     <string name="settings_notification_disabled">यह विकल्प बदलने के लिए ऐप सूचनाएँ और मुख्य सूचना चैनल सक्षम करें</string>
+    <string name="settings_notification_disabled_help">यह विकल्प बदलने के लिए ऐप सूचनाएँ और मुख्य सूचना चैनल सक्षम करें।</string>
     <string name="notifications_onboarding_message">Battery Monitor को स्टेटस बार में बैटरी स्तर दिखाने और अलार्म के बारे में सूचित करने के लिए आपकी अनुमति चाहिए।\n
     \n
     नोट: यह अनुमति देने पर कभी-कभी ऐप बंद हो सकती है। अगर ऐसा हो, तो बस ऐप को दोबारा खोलें।</string>
@@ -195,6 +195,7 @@
     <string name="status_bar_chip_settings" formatted="false">स्टेटस बार चिप</string>
     <string name="status_bar_chip_settings_help" formatted="false">Android 16 या बाद के संस्करण पर चुनें कि लाइव अपडेट चिप कब दिखे, किन मानों में बदले और चार्जिंग इमोजी दिखाए या नहीं। उपलब्धता डिवाइस और सिस्टम की सूचना सेटिंग पर भी निर्भर करती है।</string>
     <string name="settings_live_update_summary">Android सेटिंग में प्रमुख बैटरी सूचनाओं को अनुमति दें या रोकें</string>
+    <string name="settings_live_update_help">Android सेटिंग में प्रमुख बैटरी सूचनाओं को अनुमति दें या रोकें।</string>
     <string name="live_updates_onboarding_title">स्टेटस बार बैटरी चिप</string>
     <string name="live_updates_onboarding_message_on">आपका डिवाइस स्टेटस बार में बैटरी प्रतिशत को चिप के रूप में दिखाने का समर्थन करता है। यह विकल्प डिफ़ॉल्ट रूप से सक्षम है।\n
     \n
@@ -227,11 +228,11 @@
     <string name="pref_chip_switching_interval_help" formatted="false">चुनें कि चिप कितनी बार अगले चयनित मान पर बदले। यह सेटिंग एक से अधिक मान चुने जाने पर उपलब्ध होती है।</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">सेकंड में अंतराल दर्ज करें (1–3600)।</string>
     <string name="pref_chip_switching_interval_error" formatted="false">1 से 3600 तक का मान दर्ज करें।</string>
-    <string name="chip_switching_interval_2_seconds" formatted="false">2 सेकंड</string>
-    <string name="chip_switching_interval_5_seconds" formatted="false">5 सेकंड</string>
-    <string name="chip_switching_interval_10_seconds" formatted="false">10 सेकंड</string>
-    <string name="chip_switching_interval_15_seconds" formatted="false">15 सेकंड</string>
-    <string name="chip_switching_interval_30_seconds" formatted="false">30 सेकंड</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0सेकंड</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5\u00A0सेकंड</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0सेकंड</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0सेकंड</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0सेकंड</string>
     <string name="pref_chip_indicate_charging" formatted="false">चार्जिंग इमोजी दिखाएँ</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">चार्ज करते समय या पूरी तरह चार्ज होने पर बिजली का इमोजी दिखाएँ?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">यदि सक्षम किया गया है, तो स्टेटस बार चिप बगल में एक बिजली का इमोजी दिखाएगा चार्ज करते समय या पूरी तरह चार्ज होने पर चिप का मूल्य।</string>
@@ -296,6 +297,7 @@
     <string name="alarms_channel_help">ध्वनि और सूचना वितरण इस Android सूचना चैनल से नियंत्रित होते हैं।</string>
     <string name="pref_dismiss_low_battery_on_recovery">बैटरी बढ़ने पर कम बैटरी अलार्म हटाएँ</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">चार्ज अपनी सीमा से ऊपर जाने पर कम बैटरी की सूचना हटाएँ। अन्य अलार्म सूचनाएँ बनी रहेंगी</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">चार्ज अपनी सीमा से ऊपर जाने पर कम बैटरी की सूचना हटाएँ। अन्य अलार्म सूचनाएँ बनी रहेंगी।</string>
     <string name="alarms_channel_unavailable">सूचना चैनल बना नहीं है या उपलब्ध नहीं है</string>
     <string name="alarms_settings_unavailable">Android की सूचना सेटिंग नहीं खुल सकी</string>
     <string name="alarms_target_unknown">लक्ष्य उपलब्ध नहीं है। अनुमान सेटिंग खोलें।</string>
@@ -311,9 +313,9 @@
     <string name="alarms_saved_reload_failed">सहेजा गया, लेकिन निगरानी को सूचित नहीं किया जा सका। निगरानी की स्थिति जाँचें।</string>
 
     <string name="history_range">इतिहास की अवधि</string>
-    <string name="history_last_24h">पिछले 24 घंटे</string>
-    <string name="history_last_3d">पिछले 3 दिन</string>
-    <string name="history_last_7d">पिछले 7 दिन</string>
+    <string name="history_last_24h">पिछले 24\u00A0घंटे</string>
+    <string name="history_last_3d">पिछले 3\u00A0दिन</string>
+    <string name="history_last_7d">पिछले 7\u00A0दिन</string>
     <string name="history_all_history">पूरा इतिहास</string>
     <string name="history_custom_range">मनचाही तिथि सीमा</string>
     <string name="history_month">महीना</string>
@@ -325,7 +327,7 @@
     <string name="history_change_range">बदलें</string>
     <string name="history_charts">चार्ट</string>
     <string name="history_level">स्तर</string>
-    <string name="history_level_24h">स्तर · पिछले 24 घंटे</string>
+    <string name="history_level_24h">स्तर · पिछले 24\u00A0घंटे</string>
     <string name="history_battery_level">बैटरी स्तर</string>
     <string name="history_observations">ये सहेजे गए अवलोकन हैं, लगातार माप नहीं। खड़ी रेखाएँ पावर घटनाएँ और पुनरारंभ दर्शाती हैं।</string>
     <string name="history_chart_description">%1$s से %2$s तक का अवलोकन। न्यूनतम %3$s, अधिकतम %4$s। रीडिंग विवरण के लिए “घटनाएँ” खोलकर किसी रिकॉर्ड पर टैप करें।</string>
@@ -370,8 +372,8 @@
     <string name="history_chart_select_point">माप चुनें</string>
     <string name="history_chart_event_summary">कनेक्ट हुआ (छोटे डैश): %1$d · डिस्कनेक्ट हुआ (लंबे डैश): %2$d · निगरानी में रुकावटें (बिंदुदार): %3$d</string>
     <string name="history_chart_events">चार्ट की घटनाएँ</string>
-    <string name="history_chart_1h">पिछला 1 घंटा</string>
-    <string name="history_chart_6h">पिछले 6 घंटे</string>
+    <string name="history_chart_1h">पिछला 1\u00A0घंटा</string>
+    <string name="history_chart_6h">पिछले 6\u00A0घंटे</string>
     <string name="history_chart_zoom_in">ज़ूम इन करें</string>
     <string name="history_chart_zoom_out">ज़ूम आउट करें</string>
     <string name="history_chart_pan_left">पहले की समय अवधि</string>
@@ -413,13 +415,13 @@
     <string name="pref_max_log_age" formatted="false">अधिकतम लॉग आयु</string>
     <string name="pref_max_log_age_summary" formatted="false">इससे पुराने लॉग हटाएँ:</string>
     <string name="pref_max_log_age_help" formatted="false">लॉगिंग सक्षम होने पर पावर जोड़ने से इस सीमा से पुराने लॉग हटते हैं। “कभी न हटाएँ” चुनने पर लॉग हाथ से साफ़ करने तक रहते हैं। स्वचालित निर्यात सक्षम हो तो Battery Monitor पुराने रिकॉर्ड हटाने से पहले लंबित लॉग निर्यात करता है; निर्यात विफल होने पर वे नहीं हटते।</string>
-    <string name="age_1_day" formatted="false">1 दिन</string>
-    <string name="age_2_days" formatted="false">2 दिन</string>
-    <string name="age_4_days" formatted="false">4 दिन</string>
-    <string name="age_1_week" formatted="false">1 सप्ताह</string>
-    <string name="age_2_weeks" formatted="false">2 सप्ताह</string>
-    <string name="age_3_weeks" formatted="false">3 सप्ताह</string>
-    <string name="age_4_weeks" formatted="false">4 सप्ताह</string>
+    <string name="age_1_day" formatted="false">1\u00A0दिन</string>
+    <string name="age_2_days" formatted="false">2\u00A0दिन</string>
+    <string name="age_4_days" formatted="false">4\u00A0दिन</string>
+    <string name="age_1_week" formatted="false">1\u00A0सप्ताह</string>
+    <string name="age_2_weeks" formatted="false">2\u00A0सप्ताह</string>
+    <string name="age_3_weeks" formatted="false">3\u00A0सप्ताह</string>
+    <string name="age_4_weeks" formatted="false">4\u00A0सप्ताह</string>
     <string name="age_never_delete" formatted="false">कभी न हटाएँ</string>
     <string name="settings_history_export">इतिहास और निर्यात</string>
     <string name="log_export_mode_title" formatted="false">लॉग निर्यात करें</string>
@@ -476,8 +478,8 @@
     <string name="widget_preview_note">पूर्वावलोकन पिछली निगरानी रीडिंग का उपयोग करता है। विजेट का आकार आपका लॉन्चर तय करता है।</string>
     <string name="widget_read_at">रीडिंग %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">स्तर · पिछला %1$d घंटा</item>
-        <item quantity="other">स्तर · पिछले %1$d घंटे</item>
+        <item quantity="one">स्तर · पिछला %1$d\u00A0घंटा</item>
+        <item quantity="other">स्तर · पिछले %1$d\u00A0घंटे</item>
     </plurals>
     <string name="widget_observed_range">अवलोकन %1$s–%2$s</string>
     <string name="widget_chart_description">%1$s से %2$s तक सहेजा गया बैटरी स्तर। न्यूनतम %3$s, अधिकतम %4$s।</string>
@@ -491,29 +493,32 @@
     <string name="settings_search_no_results">कोई मेल खाती सेटिंग नहीं</string>
     <string name="settings_dependency_disabled">यह सेटिंग बदलने के लिए ऊपर का संबंधित विकल्प सक्षम या कॉन्फ़िगर करें</string>
     <string name="other_settings" formatted="false">सामान्य</string>
-    <string name="settings_general_summary">भाषा, रूप, इकाइयाँ और अवधि का फ़ॉर्मेट</string>
+    <string name="settings_general_summary">भाषा, रूप, तापमान इकाई और अवधि का फ़ॉर्मेट</string>
     <string name="other_settings_help" formatted="false">रंग पैलेट और चमक, ऐप की भाषा, तापमान इकाई, अवधि का फ़ॉर्मेट और डिवाइस पुनरारंभ के बाद निगरानी शुरू हो या नहीं, चुनें।</string>
     <string name="settings_legacy_general">अन्य</string>
     <string name="pref_cat_language" formatted="false">भाषा और फ़ॉर्मेटिंग</string>
     <string name="pref_change_app_language" formatted="false">ऐप की भाषा</string>
     <string name="pref_change_app_language_help" formatted="false">Battery Monitor द्वारा इस्तेमाल की जाने वाली भाषा चुनें। सिस्टम डिफ़ॉल्ट आपके डिवाइस की भाषा का अनुसरण करता है।</string>
     <string name="settings_app_language_unavailable">सिस्टम ऐप भाषा चयन के लिए Android 13 या नया संस्करण चाहिए</string>
+    <string name="settings_app_language_unavailable_help">सिस्टम ऐप भाषा चयन के लिए Android 13 या नया संस्करण चाहिए।</string>
     <string name="pref_temperature_unit" formatted="false">तापमान इकाई</string>
-    <string name="pref_temperature_unit_help" formatted="false">चुनें कि तापमान सेल्सियस या फ़ारेनहाइट में दिखाया जाए।</string>
+    <string name="pref_temperature_unit_help" formatted="false">चुनें कि बैटरी का तापमान सेल्सियस या फ़ारेनहाइट में दिखाया जाए।</string>
     <string name="celsius" formatted="false">सेल्सीयस</string>
     <string name="fahrenheit" formatted="false">फ़ारेनहाइट</string>
     <string name="pref_long_duration_format" formatted="false">लंबी अवधि का फ़ॉर्मेट</string>
-    <string name="pref_long_duration_format_help" formatted="false">“दिन और घंटे” 24 घंटे के बाद दिनों का उपयोग करता है, जैसे 1d 3h। “केवल घंटे” पूरी अवधि को घंटों में रखता है, जैसे 27h</string>
+    <string name="pref_long_duration_format_help" formatted="false">“दिन और घंटे” 24\u00A0घंटे के बाद दिनों का उपयोग करता है, जैसे 1d 3h। “केवल घंटे” पूरी अवधि को घंटों में रखता है, जैसे 27h।</string>
     <string name="long_duration_format_days_and_hours" formatted="false">दिन और घंटे</string>
     <string name="long_duration_format_hours_only" formatted="false">केवल घंटे</string>
     <string name="settings_appearance">रूप</string>
     <string name="settings_color_palette">रंग पैलेट</string>
     <string name="settings_color_palette_summary">सिस्टम रंग या “Battery Blue” उपयोग करें</string>
+    <string name="settings_color_palette_help">सिस्टम रंग या “Battery Blue” उपयोग करें।</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">सिस्टम रंगों के लिए Android 12 या नया संस्करण चाहिए। इस डिवाइस पर “Battery Blue” उपयोग होता है।</string>
     <string name="settings_brightness">चमक</string>
     <string name="settings_brightness_summary">सिस्टम के अनुसार या हल्का, गहरा या पूर्ण काला चुनें</string>
+    <string name="settings_brightness_help">सिस्टम के अनुसार या हल्का, गहरा या पूर्ण काला चुनें।</string>
     <string name="settings_brightness_system">सिस्टम</string>
     <string name="settings_brightness_light">हल्का</string>
     <string name="settings_brightness_dark">गहरा</string>
@@ -655,8 +660,10 @@
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">प्रतिबंधित। विश्वसनीय बैकग्राउंड निगरानी की अनुमति देने के लिए टैप करें</string>
     <string name="diagnostics_vendor_settings" formatted="false">निर्माता सेटिंग</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">इस डिवाइस पर उपलब्ध अतिरिक्त बैकग्राउंड गतिविधि या ऑटोस्टार्ट सेटिंग खोलें</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">इस डिवाइस पर उपलब्ध अतिरिक्त बैकग्राउंड गतिविधि या ऑटोस्टार्ट सेटिंग खोलें।</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">बैकग्राउंड गतिविधि सहायता</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Don’t Kill My App पर डिवाइस-विशिष्ट मार्गदर्शन खोलें</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">Don’t Kill My App पर डिवाइस-विशिष्ट मार्गदर्शन खोलें।</string>
     <string name="diagnostics_root" formatted="false">रूट पहुँच</string>
     <string name="diagnostics_root_unavailable" formatted="false">उपलब्ध नहीं। रूट पहुँच माँगने या जाँचने के लिए टैप करें</string>
     <string name="diagnostics_shizuku" formatted="false">Shizuku पहुँच</string>
@@ -678,8 +685,8 @@
     <string name="diag_predictor_start_monitor">सहेजा हुआ अनुमानक डेटा देखने के लिए ऊपर से निगरानी शुरू करें।</string>
     <string name="diag_predictor_active_state" formatted="false">बैटरी की सक्रिय स्थिति</string>
     <string name="diag_predictor_effective_rate" formatted="false">अनुमान में उपयोग हुई दर</string>
-    <string name="diag_predictor_five_minute_rate" formatted="false">पिछले 5 मिनट</string>
-    <string name="diag_predictor_five_point_rate" formatted="false">पिछले 5 प्रतिशत बिंदु</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">पिछले 5\u00A0मिनट</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">पिछले 5\u00A0प्रतिशत बिंदु</string>
     <string name="diag_predictor_active_long_term_rate" formatted="false">सक्रिय दीर्घकालिक दर</string>
     <string name="diag_predictor_observed_points" formatted="false">पूरे हुए प्रतिशत बिंदु</string>
     <string name="diag_predictor_observation_duration" formatted="false">देखे गए सत्र की अवधि</string>
@@ -696,8 +703,10 @@
     <string name="diagnostics_device_and_logs" formatted="false">डिवाइस और निदान रिपोर्ट</string>
     <string name="diagnostics_debug_logs" formatted="false">डीबग लॉग एकत्र करें</string>
     <string name="diagnostics_debug_logs_warning" formatted="false">डीबग लॉग में व्यक्तिगत जानकारी हो सकती है। केवल समस्या की जाँच के दौरान चालू करें, निर्यात की गई फ़ाइल देखें और सार्वजनिक रूप से साझा करते समय सावधान रहें</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">डीबग लॉग में व्यक्तिगत जानकारी हो सकती है। केवल समस्या की जाँच के दौरान चालू करें, निर्यात की गई फ़ाइल देखें और सार्वजनिक रूप से साझा करते समय सावधान रहें।</string>
     <string name="diagnostics_clear" formatted="false">एकत्रित डीबग लॉग हटाएँ</string>
     <string name="diagnostics_clear_summary" formatted="false">ऐप द्वारा संग्रहीत डीबग लॉग हटाएँ</string>
+    <string name="diagnostics_clear_help" formatted="false">ऐप द्वारा संग्रहीत डीबग लॉग हटाएँ।</string>
     <string name="diagnostics_logs_cleared" formatted="false">डीबग लॉग हटाए गए</string>
     <string name="diagnostics_logs_clear_failed" formatted="false">डीबग लॉग हटाए नहीं जा सके</string>
     <string name="diagnostics_export" formatted="false">निदान रिपोर्ट निर्यात करें</string>
@@ -732,16 +741,18 @@
     <string name="charging_diagnostics_need_two" formatted="false">पहले कम से कम दो अलग चार्जिंग मोड लें</string>
     <string name="charging_diagnostics_report" formatted="false">तुलना रिपोर्ट बनाएँ</string>
     <string name="charging_diagnostics_report_summary" formatted="false">पहले कम से कम दो अलग OEM चार्जिंग मोड के स्नैपशॉट लें</string>
+    <string name="charging_diagnostics_report_help" formatted="false">पहले कम से कम दो अलग OEM चार्जिंग मोड के स्नैपशॉट लें।</string>
     <string name="charging_diagnostics_copy" formatted="false">क्लिपबोर्ड पर कॉपी करें</string>
     <string name="charging_diagnostics_save" formatted="false">सहेजें</string>
     <string name="charging_diagnostics_copied" formatted="false">रिपोर्ट कॉपी की गई</string>
     <string name="charging_diagnostics_clear" formatted="false">चार्जिंग स्नैपशॉट मिटाएँ</string>
     <string name="charging_diagnostics_clear_summary" formatted="false">स्थानीय रूप से सहेजे OEM स्नैपशॉट हटाएँ</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">स्थानीय रूप से सहेजे OEM स्नैपशॉट हटाएँ।</string>
     <string name="charging_diagnostics_cleared" formatted="false">चार्जिंग स्नैपशॉट हटाए गए</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. फ़ोन को चार्जर से अलग करें और कॉन्फ़िगरेशन स्नैपशॉट लेते समय उसे अलग रखें। स्नैपशॉट के बीच केवल निर्माता की चार्जिंग सुरक्षा सेटिंग बदलें।\n
-    2. चार्जिंग सुरक्षा बंद करें, 2–5 सेकंड प्रतीक्षा करें और स्नैपशॉट लें।\n
-    3. एक निश्चित सीमा चुनें, 2–5 सेकंड प्रतीक्षा करें और स्नैपशॉट लें। संभव हो तो दूसरी सीमा पर दोहराएँ।\n
-    4. अनुकूलित, स्मार्ट या निर्धारित चार्जिंग चालू करें, 2–5 सेकंड प्रतीक्षा करें और स्नैपशॉट लें।\n
+    2. चार्जिंग सुरक्षा बंद करें, 2–5\u00A0सेकंड प्रतीक्षा करें और स्नैपशॉट लें।\n
+    3. एक निश्चित सीमा चुनें, 2–5\u00A0सेकंड प्रतीक्षा करें और स्नैपशॉट लें। संभव हो तो दूसरी सीमा पर दोहराएँ।\n
+    4. अनुकूलित, स्मार्ट या निर्धारित चार्जिंग चालू करें, 2–5\u00A0सेकंड प्रतीक्षा करें और स्नैपशॉट लें।\n
     5. यदि कॉन्फ़िगरेशन तुलना से स्पष्ट परिणाम न मिले, तो केवल संचालन के समय दिखने वाली स्थिति दर्ज करने के लिए चार्जिंग के दौरान क्रम को वैकल्पिक रूप से दोहराएँ।\n
     6. तुलना रिपोर्ट बनाएँ और जाँचें। डेटा फ़िल्टर होता है और संभावित संवेदनशील मान छिपाए जाते हैं, फिर भी साझा करने से पहले पूरी रिपोर्ट जाँचें।</string>
     <string name="charging_diagnostics_help_contact" formatted="false">रिपोर्ट की समीक्षा के बाद, उसे कॉपी या सहेजें और ईमेल से <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> पर भेजें।</string>
@@ -753,30 +764,30 @@
     <string name="general_backup_help" formatted="false">सामान्य बैकअप सेटिंग, अलार्म और डिवाइस-विशिष्ट डेटा को एक साथ सहेजता है। पुनर्स्थापित करते समय आप उपलब्ध डेटा में से चुन सकते हैं कि क्या आयात करना है।</string>
     <string name="pref_export_general_backup" formatted="false">सामान्य बैकअप निर्यात करें</string>
     <string name="pref_export_general_backup_summary" formatted="false">सेटिंग, अलार्म और डिवाइस-विशिष्ट डेटा को ZIP फ़ाइल में सहेजें</string>
-    <string name="general_backup_exported" formatted="false">सामान्य बैकअप सफलतापूर्वक निर्यात किया गया</string>
+    <string name="general_backup_exported" formatted="false">सामान्य बैकअप सफलतापूर्वक निर्यात किया गया।</string>
     <string name="pref_import_general_backup" formatted="false">सामान्य बैकअप आयात करें</string>
     <string name="pref_import_general_backup_summary" formatted="false">सामान्य बैकअप ZIP फ़ाइल से चयनित डेटा पुनर्स्थापित करें</string>
     <string name="general_backup_restore_message" formatted="false">चुनें कि आप क्या पुनर्स्थापित करना चाहते हैं।</string>
-    <string name="general_backup_imported" formatted="false">सामान्य बैकअप सफलतापूर्वक आयात किया गया</string>
+    <string name="general_backup_imported" formatted="false">सामान्य बैकअप सफलतापूर्वक आयात किया गया।</string>
     <string name="invalid_general_backup_file" formatted="false">अमान्य या असंगत सामान्य बैकअप फ़ाइल</string>
     <string name="settings_restore_partial">कुछ डेटा बहाल नहीं हो सका। सफलतापूर्वक बहाल: %1$s। संभवतः आंशिक रूप से बहाल डेटा: %2$s। फिर कोशिश करने से पहले इन अनुभागों की जाँच करें।</string>
     <string name="settings_restore_none">कोई नहीं</string>
     <string name="settings_backup_help" formatted="false">सेटिंग बैकअप आपकी ऐप प्राथमिकताएँ सहेजता है। इसे आयात करने पर सहेजी गई प्राथमिकताएँ पुनर्स्थापित होती हैं।</string>
     <string name="pref_export_settings" formatted="false">सेटिंग निर्यात करें</string>
     <string name="pref_export_settings_summary" formatted="false">वर्तमान सेटिंग को फ़ाइल में सहेजें</string>
-    <string name="settings_exported" formatted="false">सेटिंग सफलतापूर्वक निर्यात की गईं</string>
+    <string name="settings_exported" formatted="false">सेटिंग सफलतापूर्वक निर्यात की गईं।</string>
     <string name="pref_import_settings" formatted="false">सेटिंग आयात करें</string>
     <string name="pref_import_settings_summary" formatted="false">फ़ाइल से सेटिंग पुनर्स्थापित करें</string>
-    <string name="settings_imported" formatted="false">सेटिंग सफलतापूर्वक आयात की गईं</string>
+    <string name="settings_imported" formatted="false">सेटिंग सफलतापूर्वक आयात की गईं।</string>
     <string name="invalid_settings_file" formatted="false">अमान्य सेटिंग फ़ाइल</string>
     <string name="settings_file_version_warning" formatted="false">यह फ़ाइल ऐप के नए संस्करण से बनाई गई है। इसे आयात करने से अनपेक्षित व्यवहार हो सकता है। फिर भी जारी रखें?</string>
     <string name="alarms_backup_help" formatted="false">अलार्म बैकअप आपके अलार्म सहेजता है। इसे आयात करने पर सभी मौजूदा अलार्म बैकअप के अलार्म से बदल जाते हैं।</string>
     <string name="pref_export_alarms" formatted="false">अलार्म निर्यात करें</string>
     <string name="pref_export_alarms_summary" formatted="false">वर्तमान अलार्म को फ़ाइल में सहेजें</string>
-    <string name="alarms_exported" formatted="false">अलार्म सफलतापूर्वक निर्यात किए गए</string>
+    <string name="alarms_exported" formatted="false">अलार्म सफलतापूर्वक निर्यात किए गए।</string>
     <string name="pref_import_alarms" formatted="false">अलार्म आयात करें</string>
     <string name="pref_import_alarms_summary" formatted="false">वर्तमान अलार्म को फ़ाइल के अलार्म से बदलें</string>
-    <string name="alarms_imported" formatted="false">अलार्म सफलतापूर्वक आयात किए गए</string>
+    <string name="alarms_imported" formatted="false">अलार्म सफलतापूर्वक आयात किए गए।</string>
     <string name="invalid_alarms_file" formatted="false">अमान्य अलार्म फ़ाइल</string>
     <string name="pref_backup_device_data" formatted="false">डिवाइस-विशिष्ट डेटा का बैकअप लें</string>
     <string name="device_specific_backup_help" formatted="false">डिवाइस-विशिष्ट बैकअप लॉग और पूर्वानुमान डेटा सहेजता है। आयात के दौरान आप एक या दोनों चुन सकते हैं। यह डेटा स्रोत डिवाइस का होता है; दूसरे डिवाइस पर इसका उपयोग गलत पूर्वानुमान या अनपेक्षित व्यवहार का कारण बन सकता है। लॉग आयात करते समय चुनें कि उन्हें जोड़ना है या मौजूदा लॉग को बदलना है।</string>
@@ -785,10 +796,11 @@
     <string name="device_data_backup_warning" formatted="false">यह डिवाइस-विशिष्ट डेटा उस डिवाइस का है जिस पर इसे एकत्र किया गया था। इसे किसी दूसरे डिवाइस पर आयात करने से गलत पूर्वानुमान या ऐप का अन्य अनपेक्षित व्यवहार हो सकता है।</string>
     <string name="pref_export_device_data" formatted="false">डिवाइस-विशिष्ट डेटा निर्यात करें</string>
     <string name="pref_export_device_data_summary" formatted="false">लॉग और पूर्वानुमान डेटा को फ़ाइल में सहेजें</string>
-    <string name="device_data_exported" formatted="false">डिवाइस-विशिष्ट डेटा सफलतापूर्वक निर्यात किया गया</string>
+    <string name="device_data_exported" formatted="false">डिवाइस-विशिष्ट डेटा सफलतापूर्वक निर्यात किया गया।</string>
     <string name="pref_import_device_data" formatted="false">डिवाइस-विशिष्ट डेटा आयात करें</string>
     <string name="pref_import_device_data_summary" formatted="false">फ़ाइल से लॉग और पूर्वानुमान डेटा पुनर्स्थापित करें</string>
     <string name="device_data_imported" formatted="false">डिवाइस-विशिष्ट डेटा सफलतापूर्वक आयात किया गया</string>
+    <string name="device_data_imported_dialog" formatted="false">डिवाइस-विशिष्ट डेटा सफलतापूर्वक आयात किया गया।</string>
     <string name="invalid_device_data_file" formatted="false">अमान्य डिवाइस-विशिष्ट डेटा फ़ाइल</string>
     <string name="device_data_file_empty" formatted="false">इस फ़ाइल में कोई समर्थित डिवाइस-विशिष्ट डेटा नहीं है</string>
     <string name="pref_import_logs_csv" formatted="false">CSV से लॉग आयात करें</string>
@@ -800,13 +812,14 @@
     <string name="log_import_add" formatted="false">मौजूदा लॉग में जोड़ें</string>
     <string name="log_import_replace" formatted="false">मौजूदा लॉग बदलें</string>
     <string name="csv_logs_imported" formatted="false">CSV लॉग सफलतापूर्वक आयात किए गए</string>
+    <string name="csv_logs_imported_dialog" formatted="false">CSV लॉग सफलतापूर्वक आयात किए गए।</string>
     <string name="invalid_csv_logs_file" formatted="false">अमान्य या असंगत CSV लॉग फ़ाइल</string>
     <string name="settings_reset_title">डिफ़ॉल्ट सेटिंग बहाल करें</string>
     <string name="settings_reset_summary">इतिहास, अलार्म और सीखे गए अनुमान रखते हुए ऐप प्राथमिकताएँ रीसेट करें</string>
     <string name="settings_reset_help" formatted="false">“डिफ़ॉल्ट सेटिंग बहाल करें” पर पुष्टि माँगी जाती है, फिर ऐप प्राथमिकताएँ रीसेट होती हैं। इतिहास, अलार्म, सीखे गए अनुमान, विजेट कॉन्फ़िगरेशन और बैकग्राउंड निगरानी चालू या बंद होने की स्थिति बनी रहती है। सिस्टम अनुमतियाँ और सूचना चैनल सेटिंग रीसेट नहीं होतीं।</string>
     <string name="settings_reset_question">ऐप की सभी सेटिंग डिफ़ॉल्ट पर बहाल करें? इतिहास, अलार्म और सीखे गए अनुमान बने रहेंगे। बैकग्राउंड निगरानी अभी की तरह चालू या बंद रहेगी।</string>
     <string name="settings_reset_confirm">डिफ़ॉल्ट बहाल करें</string>
-    <string name="settings_reset_done">डिफ़ॉल्ट सेटिंग बहाल हुई</string>
+    <string name="settings_reset_done">डिफ़ॉल्ट सेटिंग बहाल हुई।</string>
     <string name="settings_reset_failed">डिफ़ॉल्ट सेटिंग पूरी तरह बहाल नहीं हो सकी। कुछ सेटिंग बदल चुकी हो सकती हैं। उपलब्ध स्टोरेज जाँचें और फिर कोशिश करें।</string>
 
     <string name="help_cat_version" formatted="false">संस्करण</string>
@@ -843,32 +856,32 @@
     <string name="since" formatted="false">तब से</string>
     <string name="duration_for">%1$s से</string>
     <plurals name="for_n_hours">
-        <item quantity="one">%d घंटे के लिए</item>
-        <item quantity="other">%d घंटे के लिए</item>
+        <item quantity="one">%d\u00A0घंटे के लिए</item>
+        <item quantity="other">%d\u00A0घंटे के लिए</item>
     </plurals>
     <plurals name="n_days">
-        <item quantity="one">"%d दिन, "</item>
-        <item quantity="other">"%d दिन, "</item>
+        <item quantity="one">"%d\u00A0दिन, "</item>
+        <item quantity="other">"%d\u00A0दिन, "</item>
     </plurals>
     <plurals name="n_hours">
-        <item quantity="one">%d घंटा</item>
-        <item quantity="other">%d घंटे</item>
+        <item quantity="one">%d\u00A0घंटा</item>
+        <item quantity="other">%d\u00A0घंटे</item>
     </plurals>
     <plurals name="n_hours_long">
-        <item quantity="one">"%d घंटा, "</item>
-        <item quantity="other">"%d घंटे, "</item>
+        <item quantity="one">"%d\u00A0घंटा, "</item>
+        <item quantity="other">"%d\u00A0घंटे, "</item>
     </plurals>
     <plurals name="n_minutes_long">
-        <item quantity="one">%d मिनट</item>
-        <item quantity="other">%d मिनट</item>
+        <item quantity="one">%d\u00A0मिनट</item>
+        <item quantity="other">%d\u00A0मिनट</item>
     </plurals>
     <plurals name="n_hours_medium">
-        <item quantity="one">"%d घं., "</item>
-        <item quantity="other">"%d घं., "</item>
+        <item quantity="one">"%d\u00A0घं., "</item>
+        <item quantity="other">"%d\u00A0घं., "</item>
     </plurals>
     <plurals name="n_minutes_medium">
-        <item quantity="one">%d मि.</item>
-        <item quantity="other">%d मि.</item>
+        <item quantity="one">%d\u00A0मि.</item>
+        <item quantity="other">%d\u00A0मि.</item>
     </plurals>
     <plurals name="n_hours_short">
         <item quantity="one">"%d घं. "</item>

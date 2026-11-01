@@ -9,10 +9,12 @@ package codes.swistak.batterymonitor.settings
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
+import android.view.inspector.WindowInspector
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -51,15 +53,143 @@ import codes.swistak.batterymonitor.ui.help.helpSections
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.settings.SettingsScreen
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
+import codes.swistak.batterymonitor.ui.theme.Brightness
+import codes.swistak.batterymonitor.ui.theme.ColorSource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Assume.assumeTrue
 import org.junit.Test
+import java.util.Locale
+
 
 class SettingsNavigationInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val context = instrumentation.targetContext
     private lateinit var activity: FullscreenChartActivity
+
+    @Test
+    fun appearance_summaries_keep_one_localized_prefix_when_choices_change() {
+        assumeTrue(Build.VERSION.SDK_INT >= 29)
+        for (language in listOf("en", "pl")) withHost {
+            val configuration = Configuration(activity.resources.configuration).apply {
+                setLocale(Locale.forLanguageTag(language))
+            }
+            val localized = activity.createConfigurationContext(configuration)
+            val settings = context.getSharedPreferences(
+                SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+            )
+            val keys = listOf(SettingsContract.KEY_COLOR_SOURCE, SettingsContract.KEY_BRIGHTNESS)
+            val before = keys.associateWith { settings.getString(it, null) }
+            var version by mutableStateOf(0)
+            val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> version++ }
+            val prefix = localized.getString(R.string.currently_set_to)
+
+            fun hasText(text: String) = nodes(includeDialogs = true).any {
+                it.config.getOrNull(SemanticsProperties.Text)
+                    ?.any { value -> value.text == text } == true
+            }
+
+            fun select(label: Int) {
+                main {
+                    val text = localized.getString(label)
+                    val node = nodes(includeDialogs = true).first {
+                        it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(
+                            SemanticsProperties.Text
+                        )?.any { value -> value.text == text } == true
+                    }
+                    assertTrue(node.config[SemanticsActions.OnClick].action?.invoke() == true)
+                }
+            }
+
+            try {
+                settings.edit().putString(keys[0], ColorSource.Dynamic.name)
+                    .putString(keys[1], Brightness.System.name).commit()
+                settings.registerOnSharedPreferenceChangeListener(listener)
+                main {
+                    val screen = PreferenceManager(activity).createPreferenceScreen(activity)
+                    activity.setContent {
+                        CompositionLocalProvider(
+                            LocalContext provides localized,
+                            LocalResources provides localized.resources,
+                            LocalConfiguration provides configuration
+                        ) {
+                            AppBatteryTheme {
+                                SettingsScreen(
+                                    screen,
+                                    version,
+                                    "general",
+                                    null,
+                                    {},
+                                    { _, _ -> },
+                                    { _, _ -> })
+                            }
+                        }
+                    }
+                }
+                await {
+                    hasText(prefix + localized.getString(R.string.settings_color_palette_material_you)) && hasText(
+                        prefix + localized.getString(R.string.settings_brightness_system)
+                    )
+                }
+                for ((title, choice, keyAndValue) in listOf(
+                    Triple(
+                        R.string.settings_color_palette,
+                        R.string.settings_color_palette_battery_blue,
+                        keys[0] to ColorSource.BatteryBlue.name
+                    ), Triple(
+                        R.string.settings_brightness,
+                        R.string.settings_brightness_dark,
+                        keys[1] to Brightness.Dark.name
+                    )
+                )) {
+                    await { hasText(localized.getString(title)) }
+                    select(title)
+                    await { hasText(localized.getString(choice)) }
+                    select(choice)
+                    await { hasText(prefix + localized.getString(choice)) }
+                    assertEquals(keyAndValue.second, settings.getString(keyAndValue.first, null))
+                }
+            } finally {
+                settings.unregisterOnSharedPreferenceChangeListener(listener)
+                settings.edit().apply {
+                    for ((key, value) in before) if (value == null) remove(key) else putString(
+                        key, value
+                    )
+                }.commit()
+            }
+        }
+    }
+
+    @Test
+    fun time_estimates_does_not_repeat_estimator_help_below_the_selector() = withHost {
+        main {
+            val screen = PreferenceManager(activity).createPreferenceScreen(activity)
+            screen.addPreference(Preference(activity).apply {
+                key = SettingsContract.KEY_PREDICTION_TYPE
+                title = context.getString(R.string.pref_prediction_type)
+            })
+            activity.setContent {
+                AppBatteryTheme {
+                    SettingsScreen(
+                        preferences = screen,
+                        version = 0,
+                        initialCategory = "time",
+                        highlightKey = null,
+                        onActivate = {},
+                        onNavigateCategory = { _, _ -> },
+                        onDiagnostics = { _, _ -> })
+                }
+            }
+        }
+        await { button(R.string.pref_prediction_type) != null }
+        main {
+            val displayedText = nodes().flatMap {
+                it.config.getOrNull(SemanticsProperties.Text).orEmpty()
+            }.map { it.text }
+            assertFalse(context.getString(R.string.pref_prediction_type_help) in displayedText)
+        }
+    }
 
     @Test
     fun advanced_opens_existing_OEM_tools_and_background_monitoring_without_changing_settings() =
@@ -243,8 +373,7 @@ class SettingsNavigationInstrumentedTest {
         main {
             assertTrue(
                 nodes().first { it.config.contains(SemanticsActions.ScrollBy) }.config[SemanticsActions.ScrollBy].action?.invoke(
-                    0f,
-                    100_000f
+                    0f, 100_000f
                 ) == true
             )
         }
@@ -304,7 +433,7 @@ class SettingsNavigationInstrumentedTest {
             ?.any { text -> text.text == context.getString(label) } == true
     }
 
-    private fun nodes(): List<SemanticsNode> {
+    private fun nodes(includeDialogs: Boolean = false): List<SemanticsNode> {
         fun descendants(node: SemanticsNode): List<SemanticsNode> =
             listOf(node) + node.children.flatMap(::descendants)
 
@@ -316,7 +445,11 @@ class SettingsNavigationInstrumentedTest {
                 owners(view.getChildAt(it))
             } else emptyList()
         }
-        return owners(activity.window.decorView).flatMap { descendants(it.rootSemanticsNode) }
+
+        val roots = if (includeDialogs && Build.VERSION.SDK_INT >= 29) {
+            WindowInspector.getGlobalWindowViews().filter { it.isShown }
+        } else listOf(activity.window.decorView)
+        return roots.flatMap(::owners).flatMap { descendants(it.rootSemanticsNode) }
     }
 
     private fun main(action: () -> Unit) = instrumentation.runOnMainSync(action)

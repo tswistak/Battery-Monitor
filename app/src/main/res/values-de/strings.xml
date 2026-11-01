@@ -65,13 +65,12 @@
     <string name="vital_sign_voltage" formatted="false">Akkuspannung</string>
     <string name="pref_cat_battery_current_main" formatted="false">Batteriestrom</string>
     <string name="remaining_charge" formatted="false">Verbleibende Ladung</string>
-    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
     <string name="remaining_charge_unavailable">Verbleibende Ladung nicht verfügbar</string>
-    <string name="current_remaining_charge">Verbleibende Ladung: %1$s mAh</string>
+    <string name="current_remaining_charge">Verbleibende Ladung: %1$s\u00A0mAh</string>
     <string name="battery_power">Akkuleistung</string>
     <string name="battery_power_explanation">Aus Akkuspannung und Strom berechnet; positiv beim Laden, negativ beim Entladen. Dies ist die akkuseitige Leistung, nicht die Leistung des Ladegeräts.</string>
     <string name="current_android_health">Status laut Android</string>
-    <string name="current_status_unit">Android-Status</string>
     <string name="current_health_explanation">Dieser Android-Status ist kein Prozentwert für den Akkuzustand.</string>
     <string name="health_unknown" formatted="false">Unbekannt</string>
     <string name="health_good" formatted="false">Guter Zustand</string>
@@ -95,7 +94,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Multiplikator</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Einige Geräte melden unerwartete Einheiten oder Vorzeichen. Multipliziere den gemeldeten Wert hier, um die Anzeige zu korrigieren.\n
     \n
-    Als grober Richtwert für Smartphones gilt nach Android-Konvention: positiv beim Laden und negativ beim Entladen. Aktives Laden liegt oft bei etwa +500 bis +5000 mA, normales Entladen bei etwa -100 bis -3000 mA. Werte nahe null können bei fast vollem Akku oder im Leerlauf normal sein. Ist der Betrag ungefähr 1000-mal zu klein oder zu groß oder ist das Vorzeichen vertauscht, passe den Multiplikator an.</string>
+    Als grober Richtwert für Smartphones gilt nach Android-Konvention: positiv beim Laden und negativ beim Entladen. Aktives Laden liegt oft bei etwa +500 bis +5000\u00A0mA, normales Entladen bei etwa -100 bis -3000\u00A0mA. Werte nahe null können bei fast vollem Akku oder im Leerlauf normal sein. Ist der Betrag ungefähr 1000-mal zu klein oder zu groß oder ist das Vorzeichen vertauscht, passe den Multiplikator an.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Automatisch erkennen</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Die automatische Erkennung ist für den aktuellen Akkustatus oder Messwert nicht verfügbar</string>
     <string name="pref_battery_current_multiplier_detection_result">Der Multiplikator wurde automatisch auf %1$d gesetzt</string>
@@ -136,7 +135,7 @@
     <string name="pref_charging_target_mode_summary_default" formatted="false">Kein festes Gerätelimit erkannt — 100% werden verwendet</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    Wenn dieser Wert nicht richtig aussieht, können Sie helfen, die Geräteerkennung zu verbessern. Öffnen Sie „Einstellungen“ → „Erweitert“ → „OEM-Ladelimit-Diagnose“ und erstellen Sie einen OEM-Ladelimit-Bericht. Befolgen Sie dabei sorgfältig die Anleitung in der „Hilfe“</string>
+    Wenn dieser Wert nicht richtig aussieht, können Sie helfen, die Geräteerkennung zu verbessern. Öffnen Sie „Einstellungen“ → „Erweitert“ → „OEM-Ladelimit-Diagnose“ und erstellen Sie einen OEM-Ladelimit-Bericht. Befolgen Sie dabei sorgfältig die Anleitung in der „Hilfe“.</string>
     <string name="charging_target_mode_automatic" formatted="false">Automatisch (empfohlen)</string>
     <string name="charging_target_mode_custom" formatted="false">Benutzerdefiniert</string>
     <string name="pref_custom_charging_target" formatted="false">Benutzerdefiniertes Ladeziel</string>
@@ -155,6 +154,7 @@
     <string name="app_notifs_disabled_summary" formatted="false">Sie haben alle Benachrichtigungen für diese App deaktiviert. Bitte aktivieren Sie sie, um auf diese Einstellungen zuzugreifen</string>
     <string name="main_notifs_disabled_summary" formatted="false">Sie haben die Hauptbenachrichtigung für diese App deaktiviert. Bitte aktivieren Sie sie, um auf diese Einstellungen zuzugreifen</string>
     <string name="settings_notification_disabled">Aktivieren Sie App-Benachrichtigungen und den Hauptbenachrichtigungskanal, um diese Option anzupassen</string>
+    <string name="settings_notification_disabled_help">Aktivieren Sie App-Benachrichtigungen und den Hauptbenachrichtigungskanal, um diese Option anzupassen.</string>
     <string name="notifications_onboarding_message">Battery Monitor benötigt Ihre Berechtigung, um den Batteriestand in der Statusleiste anzuzeigen und Sie über Alarme zu benachrichtigen.\n
     \n
     Hinweis: Das Erteilen dieser Berechtigung kann gelegentlich dazu führen, dass sich die App schließt. Falls das passiert, öffnen Sie sie einfach erneut.</string>
@@ -195,6 +195,7 @@
     <string name="status_bar_chip_settings" formatted="false">Statusleisten-Chip</string>
     <string name="status_bar_chip_settings_help" formatted="false">Ab Android 16 wählen Sie, wann der Live-Update-Chip erscheint, welche Werte er abwechselnd zeigt und ob ein Lade-Emoji angezeigt wird. Die Verfügbarkeit hängt auch vom Gerät und den System-Benachrichtigungseinstellungen ab.</string>
     <string name="settings_live_update_summary">Hervorgehobene Akkubenachrichtigungen in den Android-Einstellungen zulassen oder blockieren</string>
+    <string name="settings_live_update_help">Hervorgehobene Akkubenachrichtigungen in den Android-Einstellungen zulassen oder blockieren.</string>
     <string name="live_updates_onboarding_title">Akku-Chip in der Statusleiste</string>
     <string name="live_updates_onboarding_message_on">Ihr Gerät unterstützt die Anzeige des Batteriestands als Chip in der Statusleiste. Diese Option ist standardmäßig aktiviert.\n
     \n
@@ -227,11 +228,11 @@
     <string name="pref_chip_switching_interval_help" formatted="false">Legen Sie fest, wie oft der Chip zum nächsten ausgewählten Wert wechselt. Diese Einstellung ist verfügbar, wenn mehr als ein Wert ausgewählt ist.</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">Geben Sie ein Intervall in Sekunden ein (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">Geben Sie einen Wert zwischen 1 und 3600 ein.</string>
-    <string name="chip_switching_interval_2_seconds" formatted="false">2 Sekunden</string>
-    <string name="chip_switching_interval_5_seconds" formatted="false">5 Sekunden</string>
-    <string name="chip_switching_interval_10_seconds" formatted="false">10 Sekunden</string>
-    <string name="chip_switching_interval_15_seconds" formatted="false">15 Sekunden</string>
-    <string name="chip_switching_interval_30_seconds" formatted="false">30 Sekunden</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0Sekunden</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5\u00A0Sekunden</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0Sekunden</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0Sekunden</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0Sekunden</string>
     <string name="pref_chip_indicate_charging" formatted="false">Lade-Emoji anzeigen</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Blitz-Emoji beim Laden oder bei vollem Akku anzeigen?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Wenn aktiviert, zeigt der Statusleisten-Chip beim Laden oder vollem Akku ein Blitz-Emoji neben dem Wert.</string>
@@ -296,6 +297,7 @@
     <string name="alarms_channel_help">Ton und Zustellung werden durch diesen Android-Benachrichtigungskanal gesteuert.</string>
     <string name="pref_dismiss_low_battery_on_recovery">Alarm bei niedrigem Akkustand nach Erholung schließen</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Die Benachrichtigung bei niedrigem Akkustand entfernen, wenn die Ladung über ihren Schwellenwert steigt. Andere Alarmbenachrichtigungen bleiben erhalten</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">Die Benachrichtigung bei niedrigem Akkustand entfernen, wenn die Ladung über ihren Schwellenwert steigt. Andere Alarmbenachrichtigungen bleiben erhalten.</string>
     <string name="alarms_channel_unavailable">Benachrichtigungskanal nicht erstellt oder nicht verfügbar</string>
     <string name="alarms_settings_unavailable">Android-Benachrichtigungseinstellungen konnten nicht geöffnet werden</string>
     <string name="alarms_target_unknown">Ziel nicht verfügbar. Öffnen Sie die Schätzungseinstellungen.</string>
@@ -311,9 +313,9 @@
     <string name="alarms_saved_reload_failed">Gespeichert, aber die Überwachung konnte nicht benachrichtigt werden. Prüfen Sie den Überwachungsstatus.</string>
 
     <string name="history_range">Verlaufszeitraum</string>
-    <string name="history_last_24h">Letzte 24 Stunden</string>
-    <string name="history_last_3d">Letzte 3 Tage</string>
-    <string name="history_last_7d">Letzte 7 Tage</string>
+    <string name="history_last_24h">Letzte 24\u00A0Stunden</string>
+    <string name="history_last_3d">Letzte 3\u00A0Tage</string>
+    <string name="history_last_7d">Letzte 7\u00A0Tage</string>
     <string name="history_all_history">Gesamter Verlauf</string>
     <string name="history_custom_range">Benutzerdefinierter Datumsbereich</string>
     <string name="history_month">Monat</string>
@@ -325,7 +327,7 @@
     <string name="history_change_range">Ändern</string>
     <string name="history_charts">Diagramme</string>
     <string name="history_level">Ladestand</string>
-    <string name="history_level_24h">Ladestand · Letzte 24 Stunden</string>
+    <string name="history_level_24h">Ladestand · Letzte 24\u00A0Stunden</string>
     <string name="history_battery_level">Akkustand</string>
     <string name="history_observations">Gespeicherte Beobachtungen, keine kontinuierliche Messung. Vertikale Linien markieren Stromversorgungsereignisse und Neustarts.</string>
     <string name="history_chart_description">Beobachteter Bereich von %1$s bis %2$s. Minimum %3$s, Maximum %4$s. Öffnen Sie „Ereignisse“ und tippen Sie auf einen Eintrag für Messwertdetails.</string>
@@ -371,7 +373,7 @@
     <string name="history_chart_event_summary">Verbunden (kurze Striche): %1$d · Getrennt (lange Striche): %2$d · Unterbrechungen der Überwachung (gepunktet): %3$d</string>
     <string name="history_chart_events">Diagrammereignisse</string>
     <string name="history_chart_1h">Letzte Stunde</string>
-    <string name="history_chart_6h">Letzte 6 Stunden</string>
+    <string name="history_chart_6h">Letzte 6\u00A0Stunden</string>
     <string name="history_chart_zoom_in">Vergrößern</string>
     <string name="history_chart_zoom_out">Verkleinern</string>
     <string name="history_chart_pan_left">Früherer Zeitraum</string>
@@ -413,13 +415,13 @@
     <string name="pref_max_log_age" formatted="false">Maximales Protokollalter</string>
     <string name="pref_max_log_age_summary" formatted="false">Löschen von Protokollen älter als:</string>
     <string name="pref_max_log_age_help" formatted="false">Bei aktivierter Protokollierung entfernt das Anschließen an eine Stromquelle Protokolle, die älter als diese Grenze sind. „Nie löschen“ behält sie bis zum manuellen Löschen. Bei aktiviertem automatischem Export exportiert Battery Monitor ausstehende Protokolle vor dem Löschen alter Einträge; ein fehlgeschlagener Export verhindert dieses Löschen.</string>
-    <string name="age_1_day" formatted="false">1 Tag</string>
-    <string name="age_2_days" formatted="false">2 Tage</string>
-    <string name="age_4_days" formatted="false">4 Tage</string>
-    <string name="age_1_week" formatted="false">1 Woche</string>
-    <string name="age_2_weeks" formatted="false">2 Wochen</string>
-    <string name="age_3_weeks" formatted="false">3 Wochen</string>
-    <string name="age_4_weeks" formatted="false">4 Wochen</string>
+    <string name="age_1_day" formatted="false">1\u00A0Tag</string>
+    <string name="age_2_days" formatted="false">2\u00A0Tage</string>
+    <string name="age_4_days" formatted="false">4\u00A0Tage</string>
+    <string name="age_1_week" formatted="false">1\u00A0Woche</string>
+    <string name="age_2_weeks" formatted="false">2\u00A0Wochen</string>
+    <string name="age_3_weeks" formatted="false">3\u00A0Wochen</string>
+    <string name="age_4_weeks" formatted="false">4\u00A0Wochen</string>
     <string name="age_never_delete" formatted="false">Nie löschen</string>
     <string name="settings_history_export">Verlauf und Export</string>
     <string name="log_export_mode_title" formatted="false">Protokolle exportieren</string>
@@ -476,8 +478,8 @@
     <string name="widget_preview_note">Die Vorschau verwendet den letzten Überwachungsmesswert. Die Widget-Größe wird durch Ihren Launcher festgelegt.</string>
     <string name="widget_read_at">Messwert %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Ladestand · Letzte %1$d Stunde</item>
-        <item quantity="other">Ladestand · Letzte %1$d Stunden</item>
+        <item quantity="one">Ladestand · Letzte %1$d\u00A0Stunde</item>
+        <item quantity="other">Ladestand · Letzte %1$d\u00A0Stunden</item>
     </plurals>
     <string name="widget_observed_range">Beobachtet %1$s–%2$s</string>
     <string name="widget_chart_description">Gespeicherter Akkustand von %1$s bis %2$s. Minimum %3$s, Maximum %4$s.</string>
@@ -491,29 +493,32 @@
     <string name="settings_search_no_results">Keine passenden Einstellungen</string>
     <string name="settings_dependency_disabled">Aktivieren oder konfigurieren Sie die zugehörige Option oben, um diese Einstellung zu ändern</string>
     <string name="other_settings" formatted="false">Allgemein</string>
-    <string name="settings_general_summary">Sprache, Darstellung, Einheiten und Zeitdauerformat</string>
+    <string name="settings_general_summary">Sprache, Darstellung, Temperatureinheit und Zeitdauerformat</string>
     <string name="other_settings_help" formatted="false">Wählen Sie Farbpalette und Helligkeit, App-Sprache, Temperatureinheit, Zeitdauerformat und ob die Überwachung nach einem Geräteneustart beginnt.</string>
     <string name="settings_legacy_general">Sonstiges</string>
     <string name="pref_cat_language" formatted="false">Sprache und Formatierung</string>
     <string name="pref_change_app_language" formatted="false">App-Sprache</string>
     <string name="pref_change_app_language_help" formatted="false">Wählen Sie die von Battery Monitor verwendete Sprache. Die Systemvorgabe folgt der Gerätesprache.</string>
     <string name="settings_app_language_unavailable">Die systemeigene App-Sprachauswahl erfordert Android 13 oder neuer</string>
+    <string name="settings_app_language_unavailable_help">Die systemeigene App-Sprachauswahl erfordert Android 13 oder neuer.</string>
     <string name="pref_temperature_unit" formatted="false">Temperatureinheit</string>
-    <string name="pref_temperature_unit_help" formatted="false">Wählen Sie, ob Temperaturen in Celsius oder Fahrenheit angezeigt werden.</string>
+    <string name="pref_temperature_unit_help" formatted="false">Wählen Sie, ob die Batterietemperatur in Celsius oder Fahrenheit angezeigt wird.</string>
     <string name="celsius" formatted="false">Celsius</string>
     <string name="fahrenheit" formatted="false">Fahrenheit</string>
     <string name="pref_long_duration_format" formatted="false">Format langer Zeiträume</string>
-    <string name="pref_long_duration_format_help" formatted="false">„Tage und Stunden“ verwendet ab 24 Stunden Tage, zum Beispiel 1d 3h. „Nur Stunden“ behält die gesamte Dauer in Stunden bei, zum Beispiel 27h</string>
+    <string name="pref_long_duration_format_help" formatted="false">„Tage und Stunden“ verwendet ab 24\u00A0Stunden Tage, zum Beispiel 1d 3h. „Nur Stunden“ behält die gesamte Dauer in Stunden bei, zum Beispiel 27h.</string>
     <string name="long_duration_format_days_and_hours" formatted="false">Tage und Stunden</string>
     <string name="long_duration_format_hours_only" formatted="false">Nur Stunden</string>
     <string name="settings_appearance">Darstellung</string>
     <string name="settings_color_palette">Farbpalette</string>
     <string name="settings_color_palette_summary">Systemfarben oder „Battery Blue“ verwenden</string>
+    <string name="settings_color_palette_help">Systemfarben oder „Battery Blue“ verwenden.</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">Systemfarben erfordern Android 12 oder neuer. Auf diesem Gerät wird „Battery Blue“ verwendet.</string>
     <string name="settings_brightness">Helligkeit</string>
     <string name="settings_brightness_summary">System folgen oder hell, dunkel oder echtes Schwarz wählen</string>
+    <string name="settings_brightness_help">System folgen oder hell, dunkel oder echtes Schwarz wählen.</string>
     <string name="settings_brightness_system">System</string>
     <string name="settings_brightness_light">Hell</string>
     <string name="settings_brightness_dark">Dunkel</string>
@@ -655,8 +660,10 @@
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Eingeschränkt. Tippen, um zuverlässige Hintergrundüberwachung zu erlauben</string>
     <string name="diagnostics_vendor_settings" formatted="false">Herstellereinstellungen</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Zusätzliche Einstellungen für Hintergrundaktivität oder Autostart auf diesem Gerät öffnen</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Zusätzliche Einstellungen für Hintergrundaktivität oder Autostart auf diesem Gerät öffnen.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Hilfe zur Hintergrundaktivität</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Gerätespezifische Hinweise bei Don’t Kill My App öffnen</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">Gerätespezifische Hinweise bei Don’t Kill My App öffnen.</string>
     <string name="diagnostics_root" formatted="false">Root-Zugriff</string>
     <string name="diagnostics_root_unavailable" formatted="false">Nicht verfügbar. Tippen, um Root-Zugriff anzufordern oder zu prüfen</string>
     <string name="diagnostics_shizuku" formatted="false">Shizuku-Zugriff</string>
@@ -678,8 +685,8 @@
     <string name="diag_predictor_start_monitor">Starten Sie oben die Überwachung, um gespeicherte Vorhersagedaten zu prüfen.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktiver Akkustatus</string>
     <string name="diag_predictor_effective_rate" formatted="false">Für die Schätzung verwendete Rate</string>
-    <string name="diag_predictor_five_minute_rate" formatted="false">Letzte 5 Minuten</string>
-    <string name="diag_predictor_five_point_rate" formatted="false">Letzte 5 Prozentpunkte</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">Letzte 5\u00A0Minuten</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">Letzte 5\u00A0Prozentpunkte</string>
     <string name="diag_predictor_active_long_term_rate" formatted="false">Aktive Langzeitrate</string>
     <string name="diag_predictor_observed_points" formatted="false">Abgeschlossene Prozentpunkte</string>
     <string name="diag_predictor_observation_duration" formatted="false">Beobachtete Sitzungsdauer</string>
@@ -696,8 +703,10 @@
     <string name="diagnostics_device_and_logs" formatted="false">Gerät und Diagnosebericht</string>
     <string name="diagnostics_debug_logs" formatted="false">Debug-Protokolle sammeln</string>
     <string name="diagnostics_debug_logs_warning" formatted="false">Debug-Protokolle können persönliche Informationen enthalten. Nur während der Fehlersuche aktivieren, die exportierte Datei prüfen und beim öffentlichen Teilen vorsichtig sein</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">Debug-Protokolle können persönliche Informationen enthalten. Nur während der Fehlersuche aktivieren, die exportierte Datei prüfen und beim öffentlichen Teilen vorsichtig sein.</string>
     <string name="diagnostics_clear" formatted="false">Gesammelte Debug-Protokolle löschen</string>
     <string name="diagnostics_clear_summary" formatted="false">Derzeit von der App gespeicherte Debug-Protokolle entfernen</string>
+    <string name="diagnostics_clear_help" formatted="false">Derzeit von der App gespeicherte Debug-Protokolle entfernen.</string>
     <string name="diagnostics_logs_cleared" formatted="false">Debug-Protokolle gelöscht</string>
     <string name="diagnostics_logs_clear_failed" formatted="false">Debug-Protokolle konnten nicht gelöscht werden</string>
     <string name="diagnostics_export" formatted="false">Diagnosebericht exportieren</string>
@@ -732,16 +741,18 @@
     <string name="charging_diagnostics_need_two" formatted="false">Erfassen Sie zuerst mindestens zwei verschiedene Lademodi</string>
     <string name="charging_diagnostics_report" formatted="false">Vergleichsbericht erstellen</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Erfassen Sie zuerst mindestens zwei verschiedene OEM-Lademodi</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Erfassen Sie zuerst mindestens zwei verschiedene OEM-Lademodi.</string>
     <string name="charging_diagnostics_copy" formatted="false">In Zwischenablage kopieren</string>
     <string name="charging_diagnostics_save" formatted="false">Speichern</string>
     <string name="charging_diagnostics_copied" formatted="false">Bericht kopiert</string>
     <string name="charging_diagnostics_clear" formatted="false">Lade-Momentaufnahmen löschen</string>
     <string name="charging_diagnostics_clear_summary" formatted="false">Lokal gespeicherte OEM-Lade-Momentaufnahmen löschen</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">Lokal gespeicherte OEM-Lade-Momentaufnahmen löschen.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Lade-Momentaufnahmen gelöscht</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. Trennen Sie das Telefon vom Ladegerät und lassen Sie es während der Konfigurationsaufnahmen getrennt. Ändern Sie zwischen den Aufnahmen nur die Ladeschutzeinstellung des Herstellers.\n
-    2. Schalten Sie den Ladeschutz aus, warten Sie 2–5 Sekunden und erfassen Sie eine Momentaufnahme.\n
-    3. Wählen Sie ein festes Limit, warten Sie 2–5 Sekunden und erfassen Sie eine Aufnahme. Wiederholen Sie dies wenn möglich mit einem anderen Limit.\n
-    4. Aktivieren Sie adaptives, intelligentes oder zeitgesteuertes Laden, warten Sie 2–5 Sekunden und erfassen Sie eine Aufnahme.\n
+    2. Schalten Sie den Ladeschutz aus, warten Sie 2–5\u00A0Sekunden und erfassen Sie eine Momentaufnahme.\n
+    3. Wählen Sie ein festes Limit, warten Sie 2–5\u00A0Sekunden und erfassen Sie eine Aufnahme. Wiederholen Sie dies wenn möglich mit einem anderen Limit.\n
+    4. Aktivieren Sie adaptives, intelligentes oder zeitgesteuertes Laden, warten Sie 2–5\u00A0Sekunden und erfassen Sie eine Aufnahme.\n
     5. Falls der Konfigurationsvergleich kein eindeutiges Ergebnis liefert, können Sie die Abfolge optional während des Ladens wiederholen, um den nur zur Laufzeit vorhandenen Zustand zu erfassen.\n
     6. Erstellen und prüfen Sie den Vergleichsbericht. Die Daten werden gefiltert und potenziell sensible Werte unkenntlich gemacht; prüfen Sie dennoch den vollständigen Bericht vor dem Teilen.</string>
     <string name="charging_diagnostics_help_contact" formatted="false">Kopieren oder speichern Sie den Bericht nach der Prüfung und senden Sie ihn per E-Mail an <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
@@ -753,30 +764,30 @@
     <string name="general_backup_help" formatted="false">Eine allgemeine Sicherung speichert Einstellungen, Alarme und gerätespezifische Daten gemeinsam. Bei der Wiederherstellung kannst du auswählen, welche verfügbaren Daten importiert werden sollen.</string>
     <string name="pref_export_general_backup" formatted="false">Allgemeine Sicherung exportieren</string>
     <string name="pref_export_general_backup_summary" formatted="false">Einstellungen, Alarme und gerätespezifische Daten in einer ZIP-Datei speichern</string>
-    <string name="general_backup_exported" formatted="false">Allgemeine Sicherung erfolgreich exportiert</string>
+    <string name="general_backup_exported" formatted="false">Allgemeine Sicherung erfolgreich exportiert.</string>
     <string name="pref_import_general_backup" formatted="false">Allgemeine Sicherung importieren</string>
     <string name="pref_import_general_backup_summary" formatted="false">Ausgewählte Daten aus einer ZIP-Datei mit allgemeiner Sicherung wiederherstellen</string>
     <string name="general_backup_restore_message" formatted="false">Wählen Sie aus, was wiederhergestellt werden soll.</string>
-    <string name="general_backup_imported" formatted="false">Allgemeine Sicherung erfolgreich importiert</string>
+    <string name="general_backup_imported" formatted="false">Allgemeine Sicherung erfolgreich importiert.</string>
     <string name="invalid_general_backup_file" formatted="false">Ungültige oder inkompatible allgemeine Sicherungsdatei</string>
     <string name="settings_restore_partial">Einige Daten konnten nicht wiederhergestellt werden. Erfolgreich wiederhergestellt: %1$s. Möglicherweise teilweise wiederhergestellte Daten: %2$s. Prüfen Sie diese Bereiche, bevor Sie es erneut versuchen.</string>
     <string name="settings_restore_none">Keine</string>
     <string name="settings_backup_help" formatted="false">Eine Einstellungssicherung speichert deine App-Einstellungen. Beim Import werden die gespeicherten Einstellungen wiederhergestellt.</string>
     <string name="pref_export_settings" formatted="false">Einstellungen exportieren</string>
     <string name="pref_export_settings_summary" formatted="false">Aktuelle Einstellungen in einer Datei speichern</string>
-    <string name="settings_exported" formatted="false">Einstellungen wurden erfolgreich exportiert</string>
+    <string name="settings_exported" formatted="false">Einstellungen wurden erfolgreich exportiert.</string>
     <string name="pref_import_settings" formatted="false">Einstellungen importieren</string>
     <string name="pref_import_settings_summary" formatted="false">Einstellungen aus einer Datei wiederherstellen</string>
-    <string name="settings_imported" formatted="false">Einstellungen wurden erfolgreich importiert</string>
+    <string name="settings_imported" formatted="false">Einstellungen wurden erfolgreich importiert.</string>
     <string name="invalid_settings_file" formatted="false">Ungültige Einstellungsdatei</string>
     <string name="settings_file_version_warning" formatted="false">Diese Datei wurde mit einer neueren Version der App erstellt. Das Importieren kann zu unerwartetem Verhalten führen. Trotzdem fortfahren?</string>
     <string name="alarms_backup_help" formatted="false">Eine Alarmsicherung speichert deine Alarme. Beim Import werden alle aktuellen Alarme durch die Alarme aus der Sicherung ersetzt.</string>
     <string name="pref_export_alarms" formatted="false">Alarme exportieren</string>
     <string name="pref_export_alarms_summary" formatted="false">Aktuelle Alarme in einer Datei speichern</string>
-    <string name="alarms_exported" formatted="false">Alarme wurden erfolgreich exportiert</string>
+    <string name="alarms_exported" formatted="false">Alarme wurden erfolgreich exportiert.</string>
     <string name="pref_import_alarms" formatted="false">Alarme importieren</string>
     <string name="pref_import_alarms_summary" formatted="false">Aktuelle Alarme durch Alarme aus einer Datei ersetzen</string>
-    <string name="alarms_imported" formatted="false">Alarme wurden erfolgreich importiert</string>
+    <string name="alarms_imported" formatted="false">Alarme wurden erfolgreich importiert.</string>
     <string name="invalid_alarms_file" formatted="false">Ungültige Alarmdatei</string>
     <string name="pref_backup_device_data" formatted="false">Gerätespezifische Daten sichern</string>
     <string name="device_specific_backup_help" formatted="false">Eine gerätespezifische Sicherung speichert Protokolle und Prognosedaten. Beim Import kannst du eines oder beides auswählen. Diese Daten gehören zum Quellgerät; ihre Verwendung auf einem anderen Gerät kann zu falschen Prognosen oder unerwartetem Verhalten führen. Beim Import von Protokollen kannst du wählen, ob sie hinzugefügt oder vorhandene Protokolle ersetzt werden sollen.</string>
@@ -785,10 +796,11 @@
     <string name="device_data_backup_warning" formatted="false">Diese gerätespezifischen Daten gehören zu dem Gerät, auf dem sie erfasst wurden. Der Import auf ein anderes Gerät kann zu falschen Vorhersagen oder anderem unerwartetem App-Verhalten führen.</string>
     <string name="pref_export_device_data" formatted="false">Gerätespezifische Daten exportieren</string>
     <string name="pref_export_device_data_summary" formatted="false">Protokolle und Vorhersagedaten in einer Datei speichern</string>
-    <string name="device_data_exported" formatted="false">Gerätespezifische Daten erfolgreich exportiert</string>
+    <string name="device_data_exported" formatted="false">Gerätespezifische Daten erfolgreich exportiert.</string>
     <string name="pref_import_device_data" formatted="false">Gerätespezifische Daten importieren</string>
     <string name="pref_import_device_data_summary" formatted="false">Protokolle und Vorhersagedaten aus einer Datei wiederherstellen</string>
     <string name="device_data_imported" formatted="false">Gerätespezifische Daten erfolgreich importiert</string>
+    <string name="device_data_imported_dialog" formatted="false">Gerätespezifische Daten erfolgreich importiert.</string>
     <string name="invalid_device_data_file" formatted="false">Ungültige Datei mit gerätespezifischen Daten</string>
     <string name="device_data_file_empty" formatted="false">Diese Datei enthält keine unterstützten gerätespezifischen Daten</string>
     <string name="pref_import_logs_csv" formatted="false">Protokolle aus CSV importieren</string>
@@ -800,13 +812,14 @@
     <string name="log_import_add" formatted="false">Zu vorhandenen Protokollen hinzufügen</string>
     <string name="log_import_replace" formatted="false">Vorhandene Protokolle ersetzen</string>
     <string name="csv_logs_imported" formatted="false">CSV-Protokolle erfolgreich importiert</string>
+    <string name="csv_logs_imported_dialog" formatted="false">CSV-Protokolle erfolgreich importiert.</string>
     <string name="invalid_csv_logs_file" formatted="false">Ungültige oder inkompatible CSV-Protokolldatei</string>
     <string name="settings_reset_title">Standardeinstellungen wiederherstellen</string>
     <string name="settings_reset_summary">App-Einstellungen zurücksetzen und Verlauf, Alarme sowie erlernte Schätzungen behalten</string>
     <string name="settings_reset_help" formatted="false">„Standardeinstellungen wiederherstellen“ fragt nach einer Bestätigung und setzt dann die App-Einstellungen zurück. Verlauf, Alarme, erlernte Schätzungen, Widget-Konfigurationen und der Betriebszustand der Hintergrundüberwachung bleiben erhalten. Systemberechtigungen und Einstellungen der Benachrichtigungskanäle werden nicht zurückgesetzt.</string>
     <string name="settings_reset_question">Alle App-Einstellungen auf die Standardwerte zurücksetzen? Verlauf, Alarme und erlernte Schätzungen bleiben erhalten. Die Hintergrundüberwachung bleibt wie bisher gestartet oder gestoppt.</string>
     <string name="settings_reset_confirm">Standardwerte wiederherstellen</string>
-    <string name="settings_reset_done">Standardeinstellungen wiederhergestellt</string>
+    <string name="settings_reset_done">Standardeinstellungen wiederhergestellt.</string>
     <string name="settings_reset_failed">Die Standardeinstellungen konnten nicht vollständig wiederhergestellt werden. Einige Einstellungen wurden möglicherweise bereits geändert. Prüfen Sie den verfügbaren Speicher und versuchen Sie es erneut.</string>
 
     <string name="help_cat_version" formatted="false">Version</string>
@@ -843,32 +856,32 @@
     <string name="since" formatted="false">Seit</string>
     <string name="duration_for">Seit %1$s</string>
     <plurals name="for_n_hours">
-        <item quantity="one">Seit %d Stunde</item>
-        <item quantity="other">Seit %d Stunden</item>
+        <item quantity="one">Seit %d\u00A0Stunde</item>
+        <item quantity="other">Seit %d\u00A0Stunden</item>
     </plurals>
     <plurals name="n_days">
-        <item quantity="one">"%d Tag, "</item>
-        <item quantity="other">"%d Tage, "</item>
+        <item quantity="one">"%d\u00A0Tag, "</item>
+        <item quantity="other">"%d\u00A0Tage, "</item>
     </plurals>
     <plurals name="n_hours">
-        <item quantity="one">%d Stunde</item>
-        <item quantity="other">%d Stunden</item>
+        <item quantity="one">%d\u00A0Stunde</item>
+        <item quantity="other">%d\u00A0Stunden</item>
     </plurals>
     <plurals name="n_hours_long">
-        <item quantity="one">"%d Stunde, "</item>
-        <item quantity="other">"%d Stunden, "</item>
+        <item quantity="one">"%d\u00A0Stunde, "</item>
+        <item quantity="other">"%d\u00A0Stunden, "</item>
     </plurals>
     <plurals name="n_minutes_long">
-        <item quantity="one">%d Minute</item>
-        <item quantity="other">%d Minuten</item>
+        <item quantity="one">%d\u00A0Minute</item>
+        <item quantity="other">%d\u00A0Minuten</item>
     </plurals>
     <plurals name="n_hours_medium">
-        <item quantity="one">"%d Std., "</item>
-        <item quantity="other">"%d Std., "</item>
+        <item quantity="one">"%d\u00A0Std., "</item>
+        <item quantity="other">"%d\u00A0Std., "</item>
     </plurals>
     <plurals name="n_minutes_medium">
-        <item quantity="one">%d Min.</item>
-        <item quantity="other">%d Min.</item>
+        <item quantity="one">%d\u00A0Min.</item>
+        <item quantity="other">%d\u00A0Min.</item>
     </plurals>
     <plurals name="n_hours_short">
         <item quantity="one">"%d Std. "</item>

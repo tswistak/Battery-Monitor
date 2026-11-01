@@ -78,23 +78,23 @@ internal fun historyValue(
         HistoryMetric.LEVEL -> String.format(locale, "%.0f%%", value)
         HistoryMetric.TEMPERATURE -> String.format(
             locale,
-            "%.1f %s",
+            "%.1f\u00A0%s",
             if (fahrenheit) value * 1.8 + 32 else value,
             if (fahrenheit) "°F" else "°C"
         )
 
-        HistoryMetric.VOLTAGE -> String.format(locale, "%.2f V", value)
+        HistoryMetric.VOLTAGE -> String.format(locale, "%.2f\u00A0V", value)
         HistoryMetric.CURRENT -> BatteryCurrent.formatMilliAmps(
             value * currentMultiplier, locale
-        ) + " mA"
+        ) + "\u00A0mA"
 
         HistoryMetric.POWER -> (if (value * currentMultiplier > 0) "+" else "") + String.format(
-            locale, "%.2f W", if (value == 0.0) 0.0 else value * currentMultiplier
+            locale, "%.2f\u00A0W", if (value == 0.0) 0.0 else value * currentMultiplier
         )
 
         HistoryMetric.REMAINING_CHARGE -> NumberFormat.getNumberInstance(locale).apply {
             maximumFractionDigits = 3
-        }.format(value) + " mAh"
+        }.format(value) + "\u00A0mAh"
     }
 }
 

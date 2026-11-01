@@ -223,8 +223,7 @@ class FullscreenChartStateTest {
             valueScale = ChartValueScale.LOGARITHMIC
         )
         val states = listOf(
-            initial.withMetric(HistoryMetric.CURRENT),
-            initial.withComparison(null)
+            initial.withMetric(HistoryMetric.CURRENT), initial.withComparison(null)
         )
         for ((range1, rangeLabel, _, _, viewport, scaleMode, selectedKey, charts, boundsByMetric) in states) {
             assertEquals(initial.range, range1)
@@ -264,11 +263,21 @@ class FullscreenChartStateTest {
                 historyValue(values[index], metric, true, polish, -1).replace('\u00a0', ' ')
                     .replace('\u202f', ' ')
             assertEquals(expected[index], formatted)
+            if (metric != HistoryMetric.LEVEL) {
+                assertTrue(
+                    historyValue(
+                        values[index], metric, true, polish, -1
+                    ).endsWith("\u00A0${expected[index].substringAfterLast(' ')}")
+                )
+            }
             assertEquals("—", historyValue(null, metric, false, Locale.US))
         }
-        assertEquals("34.2 °C", historyValue(34.2, HistoryMetric.TEMPERATURE, false, Locale.US))
-        assertEquals("-12.5 mA", historyValue(-12.5, HistoryMetric.CURRENT, false, Locale.US))
+        assertEquals(
+            "34.2\u00A0°C", historyValue(34.2, HistoryMetric.TEMPERATURE, false, Locale.US)
+        )
+        assertEquals("-12.5\u00A0mA", historyValue(-12.5, HistoryMetric.CURRENT, false, Locale.US))
     }
+
 
     @Test
     fun `both axes scale independently in actual units`() {

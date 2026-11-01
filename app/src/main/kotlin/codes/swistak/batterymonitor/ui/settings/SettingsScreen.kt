@@ -228,7 +228,7 @@ fun SettingsScreen(
                     itemsIndexed(rows, key = { _, item -> item.key }) { index, descriptor ->
                         val first = index == 0 || rows[index - 1].group != descriptor.group
                         val last =
-                            index == rows.lastIndex || rows[index + 1].group != descriptor.group || descriptor.key == SettingsContract.KEY_PREDICTION_TYPE
+                            index == rows.lastIndex || rows[index + 1].group != descriptor.group
                         if (first && descriptor.group.isNotBlank()) Text(
                             descriptor.group,
                             Modifier
@@ -246,12 +246,6 @@ fun SettingsScreen(
                             unavailable,
                             version + localVersion
                         ) { activate(descriptor) }
-                        if (descriptor.key == SettingsContract.KEY_PREDICTION_TYPE) Text(
-                            stringResource(R.string.pref_prediction_type_help),
-                            Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
                     }
                     if (category == SettingsCategory.Advanced) item {
                         val background = descriptors.first { it.key == "background_monitoring" }
@@ -419,7 +413,7 @@ private fun SettingItem(
     val summary = when {
         unavailable != null -> unavailable
         preference is SeekBarPreference -> descriptor.summary.ifBlank { "${preference.value}%" }
-        descriptor.key == KEY_COLOR_SOURCE -> stringResource(
+        descriptor.key == KEY_COLOR_SOURCE -> stringResource(R.string.currently_set_to) + stringResource(
             if (colorSource(
                     settings.getString(
                         KEY_COLOR_SOURCE, null
@@ -428,7 +422,7 @@ private fun SettingItem(
             ) R.string.settings_color_palette_material_you else R.string.settings_color_palette_battery_blue
         )
 
-        descriptor.key == KEY_BRIGHTNESS -> stringResource(
+        descriptor.key == KEY_BRIGHTNESS -> stringResource(R.string.currently_set_to) + stringResource(
             when (brightness(settings.getString(KEY_BRIGHTNESS, null))) {
                 Brightness.System -> R.string.settings_brightness_system
                 Brightness.Light -> R.string.settings_brightness_light

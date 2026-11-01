@@ -1534,8 +1534,8 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                             SettingsOperationAction.ExportAlarms -> R.string.alarms_exported
                             SettingsOperationAction.ImportAlarms -> R.string.alarms_imported
                             SettingsOperationAction.ExportDeviceData -> R.string.device_data_exported
-                            SettingsOperationAction.ImportDeviceData -> R.string.device_data_imported
-                            SettingsOperationAction.ImportCsvLogs -> R.string.csv_logs_imported
+                            SettingsOperationAction.ImportDeviceData -> R.string.device_data_imported_dialog
+                            SettingsOperationAction.ImportCsvLogs -> R.string.csv_logs_imported_dialog
                             SettingsOperationAction.ExportGeneralBackup -> R.string.general_backup_exported
                             else -> R.string.general_backup_imported
                         }
@@ -2229,7 +2229,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
 
         if (category == null || pref == null) return
         pref.setSummary(
-            res.getString(R.string.currently_set_to) + " " + Locale.getDefault().displayLanguage
+            res.getString(R.string.currently_set_to) + Locale.getDefault().displayLanguage
         )
         category.isVisible = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

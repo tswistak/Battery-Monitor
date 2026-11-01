@@ -65,13 +65,12 @@
     <string name="vital_sign_voltage" formatted="false">Tensione della batteria</string>
     <string name="pref_cat_battery_current_main" formatted="false">Corrente della batteria</string>
     <string name="remaining_charge" formatted="false">Carica residua</string>
-    <string name="remaining_charge_value" formatted="true">%1$s mAh</string>
+    <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
     <string name="remaining_charge_unavailable">Carica residua non disponibile</string>
-    <string name="current_remaining_charge">Carica residua: %1$s mAh</string>
+    <string name="current_remaining_charge">Carica residua: %1$s\u00A0mAh</string>
     <string name="battery_power">Potenza della batteria</string>
     <string name="battery_power_explanation">Calcolata dalla tensione e dalla corrente della batteria; positiva durante la carica, negativa durante la scarica. È la potenza lato batteria, non quella del caricatore.</string>
     <string name="current_android_health">Stato secondo Android</string>
-    <string name="current_status_unit">Stato Android</string>
     <string name="current_health_explanation">Questo stato di Android non indica la salute della batteria in percentuale.</string>
     <string name="health_unknown" formatted="false">Sconosciuto</string>
     <string name="health_good" formatted="false">Buono stato</string>
@@ -95,7 +94,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Moltiplicatore</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Alcuni dispositivi riportano unità o segni imprevisti. Moltiplica qui il valore riportato per correggere il risultato visualizzato.\n
     \n
-    Come riferimento approssimativo per uno smartphone, la convenzione Android usa valori positivi durante la carica e negativi durante la scarica. La carica attiva è spesso compresa tra +500 e +5000 mA, mentre una scarica normale è spesso tra -100 e -3000 mA. Valori vicini a zero possono essere normali quando la batteria è quasi piena o il telefono è inattivo. Se il valore sembra circa 1000 volte troppo piccolo o troppo grande, oppure il segno è invertito, regola il moltiplicatore.</string>
+    Come riferimento approssimativo per uno smartphone, la convenzione Android usa valori positivi durante la carica e negativi durante la scarica. La carica attiva è spesso compresa tra +500 e +5000\u00A0mA, mentre una scarica normale è spesso tra -100 e -3000\u00A0mA. Valori vicini a zero possono essere normali quando la batteria è quasi piena o il telefono è inattivo. Se il valore sembra circa 1000 volte troppo piccolo o troppo grande, oppure il segno è invertito, regola il moltiplicatore.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Rileva automaticamente</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Il rilevamento automatico non è disponibile per lo stato o la lettura attuale della batteria</string>
     <string name="pref_battery_current_multiplier_detection_result">Il moltiplicatore è stato impostato automaticamente su %1$d</string>
@@ -136,7 +135,7 @@
     <string name="pref_charging_target_mode_summary_default" formatted="false">Nessun limite fisso rilevato — verrà usato il 100%</string>
     <string name="pref_charging_target_mode_summary_automatic_help" formatted="true">%1$s\n
     \n
-    Se questo valore non sembra corretto, puoi contribuire a migliorare il rilevamento dei dispositivi. Apri «Impostazioni» → «Avanzate» → «Diagnostica del limite di carica OEM» e genera un rapporto sul limite di ricarica OEM seguendo attentamente le istruzioni di «Aiuto»</string>
+    Se questo valore non sembra corretto, puoi contribuire a migliorare il rilevamento dei dispositivi. Apri «Impostazioni» → «Avanzate» → «Diagnostica del limite di carica OEM» e genera un rapporto sul limite di ricarica OEM seguendo attentamente le istruzioni di «Aiuto».</string>
     <string name="charging_target_mode_automatic" formatted="false">Automatico (consigliato)</string>
     <string name="charging_target_mode_custom" formatted="false">Personalizzato</string>
     <string name="pref_custom_charging_target" formatted="false">Obiettivo di carica personalizzato</string>
@@ -155,6 +154,7 @@
     <string name="app_notifs_disabled_summary" formatted="false">Hai disabilitato tutte le notifiche per questa app. Abilita le notifiche per accedere a queste impostazioni</string>
     <string name="main_notifs_disabled_summary" formatted="false">Hai disabilitato la notifica principale per questa app. Abilitala per accedere a queste impostazioni</string>
     <string name="settings_notification_disabled">Abilita le notifiche dell’app e il canale di notifica principale per personalizzare questa opzione</string>
+    <string name="settings_notification_disabled_help">Abilita le notifiche dell’app e il canale di notifica principale per personalizzare questa opzione.</string>
     <string name="notifications_onboarding_message">Battery Monitor ha bisogno della tua autorizzazione per mostrare il livello della batteria nella barra di stato e avvisarti sugli allarmi.\n
     \n
     Nota: la concessione di questa autorizzazione può occasionalmente causare la chiusura dell\'app. Se succede, riaprila semplicemente.</string>
@@ -195,6 +195,7 @@
     <string name="status_bar_chip_settings" formatted="false">Chip barra di stato</string>
     <string name="status_bar_chip_settings_help" formatted="false">Su Android 16 o versioni successive, scegli quando appare il chip Live Update, quali valori mostra a rotazione e se visualizza un’emoji di ricarica. La disponibilità dipende anche dal dispositivo e dalle impostazioni delle notifiche di sistema.</string>
     <string name="settings_live_update_summary">Consenti o blocca le notifiche della batteria in evidenza nelle impostazioni di Android</string>
+    <string name="settings_live_update_help">Consenti o blocca le notifiche della batteria in evidenza nelle impostazioni di Android.</string>
     <string name="live_updates_onboarding_title">Chip batteria barra di stato</string>
     <string name="live_updates_onboarding_message_on">Il tuo dispositivo supporta la visualizzazione della percentuale della batteria come chip nella barra di stato. Questa opzione è abilitata per impostazione predefinita.\n
     \n
@@ -227,11 +228,11 @@
     <string name="pref_chip_switching_interval_help" formatted="false">Scegli con quale frequenza il chip passa al valore selezionato successivo. Questa impostazione è disponibile quando è selezionato più di un valore.</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">Inserisci un intervallo in secondi (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">Inserisci un valore compreso tra 1 e 3600.</string>
-    <string name="chip_switching_interval_2_seconds" formatted="false">2 secondi</string>
-    <string name="chip_switching_interval_5_seconds" formatted="false">5 secondi</string>
-    <string name="chip_switching_interval_10_seconds" formatted="false">10 secondi</string>
-    <string name="chip_switching_interval_15_seconds" formatted="false">15 secondi</string>
-    <string name="chip_switching_interval_30_seconds" formatted="false">30 secondi</string>
+    <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0secondi</string>
+    <string name="chip_switching_interval_5_seconds" formatted="false">5\u00A0secondi</string>
+    <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0secondi</string>
+    <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0secondi</string>
+    <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0secondi</string>
     <string name="pref_chip_indicate_charging" formatted="false">Mostra emoji ricarica</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Mostrare un\'emoji fulmine durante la ricarica o a carica completa?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Se abilitato, il chip nella barra di stato mostrerà un\'emoji fulmine accanto al valore durante la ricarica o a carica completa.</string>
@@ -297,6 +298,7 @@
     <string name="alarms_channel_help">Suono e consegna sono controllati da questo canale di notifica di Android.</string>
     <string name="pref_dismiss_low_battery_on_recovery">Rimuovi allarme batteria scarica dopo il recupero</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Rimuovi la notifica di batteria scarica quando la carica risale sopra la soglia. Le altre notifiche di allarme rimangono</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">Rimuovi la notifica di batteria scarica quando la carica risale sopra la soglia. Le altre notifiche di allarme rimangono.</string>
     <string name="alarms_channel_unavailable">Canale di notifica non creato o non disponibile</string>
     <string name="alarms_settings_unavailable">Impossibile aprire le impostazioni delle notifiche di Android</string>
     <string name="alarms_target_unknown">Obiettivo non disponibile. Apri le impostazioni delle stime.</string>
@@ -312,9 +314,9 @@
     <string name="alarms_saved_reload_failed">Salvato, ma non è stato possibile avvisare il monitoraggio. Controllane lo stato.</string>
 
     <string name="history_range">Intervallo della cronologia</string>
-    <string name="history_last_24h">Ultime 24 ore</string>
-    <string name="history_last_3d">Ultimi 3 giorni</string>
-    <string name="history_last_7d">Ultimi 7 giorni</string>
+    <string name="history_last_24h">Ultime 24\u00A0ore</string>
+    <string name="history_last_3d">Ultimi 3\u00A0giorni</string>
+    <string name="history_last_7d">Ultimi 7\u00A0giorni</string>
     <string name="history_all_history">Tutta la cronologia</string>
     <string name="history_custom_range">Intervallo di date personalizzato</string>
     <string name="history_month">Mese</string>
@@ -326,7 +328,7 @@
     <string name="history_change_range">Modifica</string>
     <string name="history_charts">Grafici</string>
     <string name="history_level">Livello</string>
-    <string name="history_level_24h">Livello · Ultime 24 ore</string>
+    <string name="history_level_24h">Livello · Ultime 24\u00A0ore</string>
     <string name="history_battery_level">Livello della batteria</string>
     <string name="history_observations">Osservazioni salvate, non una misurazione continua. Le linee verticali indicano gli eventi di alimentazione e i riavvii.</string>
     <string name="history_chart_description">Intervallo osservato dal %1$s al %2$s. Minimo %3$s, massimo %4$s. Apri «Eventi» e tocca una voce per i dettagli delle letture.</string>
@@ -372,7 +374,7 @@
     <string name="history_chart_event_summary">Collegato (trattini corti): %1$d · Scollegato (trattini lunghi): %2$d · Interruzioni del monitoraggio (puntini): %3$d</string>
     <string name="history_chart_events">Eventi del grafico</string>
     <string name="history_chart_1h">Ultima ora</string>
-    <string name="history_chart_6h">Ultime 6 ore</string>
+    <string name="history_chart_6h">Ultime 6\u00A0ore</string>
     <string name="history_chart_zoom_in">Ingrandisci</string>
     <string name="history_chart_zoom_out">Riduci</string>
     <string name="history_chart_pan_left">Intervallo precedente</string>
@@ -414,13 +416,13 @@
     <string name="pref_max_log_age" formatted="false">Periodo massimo registro</string>
     <string name="pref_max_log_age_summary" formatted="false">Cancella registri più vecchi di:</string>
     <string name="pref_max_log_age_help" formatted="false">Quando la registrazione è abilitata, collegare l’alimentazione rimuove i registri più vecchi di questo limite. «Non eliminare mai» li mantiene finché non li cancelli manualmente. Se l’esportazione automatica è abilitata, Battery Monitor esporta i registri in attesa prima di eliminare le vecchie voci; un’esportazione non riuscita impedisce tale eliminazione.</string>
-    <string name="age_1_day" formatted="false">1 giorno</string>
-    <string name="age_2_days" formatted="false">2 giorni</string>
-    <string name="age_4_days" formatted="false">4 giorni</string>
-    <string name="age_1_week" formatted="false">1 settimana</string>
-    <string name="age_2_weeks" formatted="false">2 settimane</string>
-    <string name="age_3_weeks" formatted="false">3 settimane</string>
-    <string name="age_4_weeks" formatted="false">4 settimane</string>
+    <string name="age_1_day" formatted="false">1\u00A0giorno</string>
+    <string name="age_2_days" formatted="false">2\u00A0giorni</string>
+    <string name="age_4_days" formatted="false">4\u00A0giorni</string>
+    <string name="age_1_week" formatted="false">1\u00A0settimana</string>
+    <string name="age_2_weeks" formatted="false">2\u00A0settimane</string>
+    <string name="age_3_weeks" formatted="false">3\u00A0settimane</string>
+    <string name="age_4_weeks" formatted="false">4\u00A0settimane</string>
     <string name="age_never_delete" formatted="false">Non eliminare mai</string>
     <string name="settings_history_export">Cronologia ed esportazione</string>
     <string name="log_export_mode_title" formatted="false">Esporta registri</string>
@@ -477,9 +479,9 @@
     <string name="widget_preview_note">L’anteprima usa l’ultima lettura del monitoraggio. La dimensione del widget è definita dal launcher.</string>
     <string name="widget_read_at">Lettura %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Livello · Ultima %1$d ora</item>
-        <item quantity="many">Livello · Ultime %1$d ore</item>
-        <item quantity="other">Livello · Ultime %1$d ore</item>
+        <item quantity="one">Livello · Ultima %1$d\u00A0ora</item>
+        <item quantity="many">Livello · Ultime %1$d\u00A0ore</item>
+        <item quantity="other">Livello · Ultime %1$d\u00A0ore</item>
     </plurals>
     <string name="widget_observed_range">Osservato %1$s–%2$s</string>
     <string name="widget_chart_description">Livello della batteria salvato dal %1$s al %2$s. Minimo %3$s, massimo %4$s.</string>
@@ -493,29 +495,32 @@
     <string name="settings_search_no_results">Nessuna impostazione corrispondente</string>
     <string name="settings_dependency_disabled">Abilita o configura l’opzione correlata qui sopra per modificare questa impostazione</string>
     <string name="other_settings" formatted="false">Generali</string>
-    <string name="settings_general_summary">Lingua, aspetto, unità e formato della durata</string>
+    <string name="settings_general_summary">Lingua, aspetto, unità di temperatura e formato della durata</string>
     <string name="other_settings_help" formatted="false">Scegli tavolozza dei colori e luminosità, lingua dell’app, unità di temperatura, formato della durata e se avviare il monitoraggio dopo un riavvio del dispositivo.</string>
     <string name="settings_legacy_general">Altro</string>
     <string name="pref_cat_language" formatted="false">Lingua e formattazione</string>
     <string name="pref_change_app_language" formatted="false">Lingua dell\'app</string>
     <string name="pref_change_app_language_help" formatted="false">Seleziona la lingua usata da Battery Monitor. L’impostazione predefinita di sistema segue la lingua del dispositivo.</string>
     <string name="settings_app_language_unavailable">Il selettore di sistema per la lingua delle app richiede Android 13 o versioni successive</string>
+    <string name="settings_app_language_unavailable_help">Il selettore di sistema per la lingua delle app richiede Android 13 o versioni successive.</string>
     <string name="pref_temperature_unit" formatted="false">Unità temperatura</string>
-    <string name="pref_temperature_unit_help" formatted="false">Scegli se mostrare le temperature in Celsius o Fahrenheit.</string>
+    <string name="pref_temperature_unit_help" formatted="false">Scegli se mostrare la temperatura della batteria in Celsius o Fahrenheit.</string>
     <string name="celsius" formatted="false">Centigrado</string>
     <string name="fahrenheit" formatted="false">Fahrenheit</string>
     <string name="pref_long_duration_format" formatted="false">Formato delle durate lunghe</string>
-    <string name="pref_long_duration_format_help" formatted="false">«Giorni e ore» usa i giorni oltre le 24 ore, ad esempio 1d 3h. «Solo ore» mantiene l’intera durata in ore, ad esempio 27h</string>
+    <string name="pref_long_duration_format_help" formatted="false">«Giorni e ore» usa i giorni oltre le 24\u00A0ore, ad esempio 1d 3h. «Solo ore» mantiene l’intera durata in ore, ad esempio 27h.</string>
     <string name="long_duration_format_days_and_hours" formatted="false">Giorni e ore</string>
     <string name="long_duration_format_hours_only" formatted="false">Solo ore</string>
     <string name="settings_appearance">Aspetto</string>
     <string name="settings_color_palette">Tavolozza dei colori</string>
     <string name="settings_color_palette_summary">Usa i colori di sistema o “Blu batteria”</string>
+    <string name="settings_color_palette_help">Usa i colori di sistema o “Blu batteria”.</string>
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Blu batteria</string>
     <string name="settings_color_palette_unavailable">I colori di sistema richiedono Android 12 o versioni successive. Su questo dispositivo viene usato “Blu batteria”.</string>
     <string name="settings_brightness">Luminosità</string>
     <string name="settings_brightness_summary">Segui il sistema o scegli chiaro, scuro o nero assoluto</string>
+    <string name="settings_brightness_help">Segui il sistema o scegli chiaro, scuro o nero assoluto.</string>
     <string name="settings_brightness_system">Sistema</string>
     <string name="settings_brightness_light">Chiaro</string>
     <string name="settings_brightness_dark">Scuro</string>
@@ -657,8 +662,10 @@
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Limitato. Tocca per consentire un monitoraggio affidabile in background</string>
     <string name="diagnostics_vendor_settings" formatted="false">Impostazioni del produttore</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Apri impostazioni aggiuntive per attività in background o avvio automatico disponibili sul dispositivo</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Apri impostazioni aggiuntive per attività in background o avvio automatico disponibili sul dispositivo.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Guida per le attività in background</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Apri la guida specifica del dispositivo su Don’t Kill My App</string>
+    <string name="diagnostics_dont_kill_my_app_help" formatted="false">Apri la guida specifica del dispositivo su Don’t Kill My App.</string>
     <string name="diagnostics_root" formatted="false">Accesso root</string>
     <string name="diagnostics_root_unavailable" formatted="false">Non disponibile. Tocca per richiedere o controllare l’accesso root</string>
     <string name="diagnostics_shizuku" formatted="false">Accesso Shizuku</string>
@@ -680,8 +687,8 @@
     <string name="diag_predictor_start_monitor">Avvia il monitoraggio qui sopra per esaminare i dati di previsione salvati.</string>
     <string name="diag_predictor_active_state" formatted="false">Stato attivo della batteria</string>
     <string name="diag_predictor_effective_rate" formatted="false">Tasso usato per la stima</string>
-    <string name="diag_predictor_five_minute_rate" formatted="false">Ultimi 5 minuti</string>
-    <string name="diag_predictor_five_point_rate" formatted="false">Ultimi 5 punti percentuali</string>
+    <string name="diag_predictor_five_minute_rate" formatted="false">Ultimi 5\u00A0minuti</string>
+    <string name="diag_predictor_five_point_rate" formatted="false">Ultimi 5\u00A0punti percentuali</string>
     <string name="diag_predictor_active_long_term_rate" formatted="false">Tasso a lungo termine attivo</string>
     <string name="diag_predictor_observed_points" formatted="false">Punti percentuali completati</string>
     <string name="diag_predictor_observation_duration" formatted="false">Durata della sessione osservata</string>
@@ -698,8 +705,10 @@
     <string name="diagnostics_device_and_logs" formatted="false">Dispositivo e rapporto diagnostico</string>
     <string name="diagnostics_debug_logs" formatted="false">Raccogli registri di debug</string>
     <string name="diagnostics_debug_logs_warning" formatted="false">I registri di debug possono contenere informazioni personali. Attivali solo durante l’analisi di un problema, controlla il file esportato e condividilo pubblicamente con cautela</string>
+    <string name="diagnostics_debug_logs_help" formatted="false">I registri di debug possono contenere informazioni personali. Attivali solo durante l’analisi di un problema, controlla il file esportato e condividilo pubblicamente con cautela.</string>
     <string name="diagnostics_clear" formatted="false">Elimina i registri di debug raccolti</string>
     <string name="diagnostics_clear_summary" formatted="false">Rimuovi i registri di debug attualmente salvati dall’app</string>
+    <string name="diagnostics_clear_help" formatted="false">Rimuovi i registri di debug attualmente salvati dall’app.</string>
     <string name="diagnostics_logs_cleared" formatted="false">Registri di debug eliminati</string>
     <string name="diagnostics_logs_clear_failed" formatted="false">Impossibile eliminare i registri di debug</string>
     <string name="diagnostics_export" formatted="false">Esporta rapporto diagnostico</string>
@@ -735,16 +744,18 @@
     <string name="charging_diagnostics_need_two" formatted="false">Acquisisci prima almeno due diverse modalità di ricarica</string>
     <string name="charging_diagnostics_report" formatted="false">Crea rapporto di confronto</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Acquisisci prima almeno due diverse modalità di ricarica OEM</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Acquisisci prima almeno due diverse modalità di ricarica OEM.</string>
     <string name="charging_diagnostics_copy" formatted="false">Copia negli appunti</string>
     <string name="charging_diagnostics_save" formatted="false">Salva</string>
     <string name="charging_diagnostics_copied" formatted="false">Rapporto copiato</string>
     <string name="charging_diagnostics_clear" formatted="false">Cancella istantanee di ricarica</string>
     <string name="charging_diagnostics_clear_summary" formatted="false">Elimina le istantanee OEM salvate localmente</string>
+    <string name="charging_diagnostics_clear_help" formatted="false">Elimina le istantanee OEM salvate localmente.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Istantanee di ricarica eliminate</string>
     <string name="charging_diagnostics_help_steps" formatted="false">1. Scollega il telefono e lascialo scollegato durante le istantanee della configurazione. Tra un’istantanea e l’altra modifica solo l’impostazione di protezione della ricarica del produttore.\n
-    2. Disattiva la protezione della ricarica, attendi 2–5 secondi e acquisisci un’istantanea.\n
-    3. Seleziona un limite fisso, attendi 2–5 secondi e acquisisci. Se possibile, ripeti con un limite diverso.\n
-    4. Attiva la ricarica adattiva, intelligente o programmata, attendi 2–5 secondi e acquisisci un’istantanea.\n
+    2. Disattiva la protezione della ricarica, attendi 2–5\u00A0secondi e acquisisci un’istantanea.\n
+    3. Seleziona un limite fisso, attendi 2–5\u00A0secondi e acquisisci. Se possibile, ripeti con un limite diverso.\n
+    4. Attiva la ricarica adattiva, intelligente o programmata, attendi 2–5\u00A0secondi e acquisisci un’istantanea.\n
     5. Se il confronto della configurazione non è conclusivo, puoi ripetere facoltativamente la sequenza durante la ricarica per acquisire gli stati presenti solo durante il funzionamento.\n
     6. Crea e controlla il rapporto di confronto. I dati sono filtrati e i valori potenzialmente sensibili vengono oscurati, ma controlla l’intero rapporto prima di condividerlo.</string>
     <string name="charging_diagnostics_help_contact" formatted="false">Dopo aver esaminato il rapporto, copialo o salvalo e invialo tramite e-mail a <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
@@ -756,30 +767,30 @@
     <string name="general_backup_help" formatted="false">Un backup generale salva insieme impostazioni, allarmi e dati specifici del dispositivo. Durante il ripristino puoi scegliere quali dati disponibili importare.</string>
     <string name="pref_export_general_backup" formatted="false">Esporta backup generale</string>
     <string name="pref_export_general_backup_summary" formatted="false">Salva impostazioni, allarmi e dati specifici del dispositivo in un file ZIP</string>
-    <string name="general_backup_exported" formatted="false">Backup generale esportato correttamente</string>
+    <string name="general_backup_exported" formatted="false">Backup generale esportato correttamente.</string>
     <string name="pref_import_general_backup" formatted="false">Importa backup generale</string>
     <string name="pref_import_general_backup_summary" formatted="false">Ripristina i dati selezionati da un file ZIP di backup generale</string>
     <string name="general_backup_restore_message" formatted="false">Scegli cosa vuoi ripristinare.</string>
-    <string name="general_backup_imported" formatted="false">Backup generale importato correttamente</string>
+    <string name="general_backup_imported" formatted="false">Backup generale importato correttamente.</string>
     <string name="invalid_general_backup_file" formatted="false">File di backup generale non valido o incompatibile</string>
     <string name="settings_restore_partial">Non è stato possibile ripristinare alcuni dati. Ripristinati correttamente: %1$s. Dati che potrebbero essere stati ripristinati in parte: %2$s. Controlla queste sezioni prima di riprovare.</string>
     <string name="settings_restore_none">Nessuno</string>
     <string name="settings_backup_help" formatted="false">Un backup delle impostazioni salva le preferenze dell’app. Importandolo vengono ripristinate le preferenze salvate.</string>
     <string name="pref_export_settings" formatted="false">Esporta impostazioni</string>
     <string name="pref_export_settings_summary" formatted="false">Salva le impostazioni correnti in un file</string>
-    <string name="settings_exported" formatted="false">Impostazioni esportate correttamente</string>
+    <string name="settings_exported" formatted="false">Impostazioni esportate correttamente.</string>
     <string name="pref_import_settings" formatted="false">Importa impostazioni</string>
     <string name="pref_import_settings_summary" formatted="false">Ripristina le impostazioni da un file</string>
-    <string name="settings_imported" formatted="false">Impostazioni importate correttamente</string>
+    <string name="settings_imported" formatted="false">Impostazioni importate correttamente.</string>
     <string name="invalid_settings_file" formatted="false">File delle impostazioni non valido</string>
     <string name="settings_file_version_warning" formatted="false">Questo file è stato creato da una versione più recente dell’app. L’importazione potrebbe causare un comportamento imprevisto. Continuare comunque?</string>
     <string name="alarms_backup_help" formatted="false">Un backup degli allarmi salva i tuoi allarmi. Importandolo, tutti gli allarmi attuali vengono sostituiti da quelli del backup.</string>
     <string name="pref_export_alarms" formatted="false">Esporta allarmi</string>
     <string name="pref_export_alarms_summary" formatted="false">Salva gli allarmi attuali in un file</string>
-    <string name="alarms_exported" formatted="false">Allarmi esportati correttamente</string>
+    <string name="alarms_exported" formatted="false">Allarmi esportati correttamente.</string>
     <string name="pref_import_alarms" formatted="false">Importa allarmi</string>
     <string name="pref_import_alarms_summary" formatted="false">Sostituisci gli allarmi attuali con quelli di un file</string>
-    <string name="alarms_imported" formatted="false">Allarmi importati correttamente</string>
+    <string name="alarms_imported" formatted="false">Allarmi importati correttamente.</string>
     <string name="invalid_alarms_file" formatted="false">File degli allarmi non valido</string>
     <string name="pref_backup_device_data" formatted="false">Backup dei dati specifici del dispositivo</string>
     <string name="device_specific_backup_help" formatted="false">Un backup specifico del dispositivo salva i registri e i dati del predittore. Durante l’importazione puoi selezionarne uno o entrambi. Questi dati appartengono al dispositivo di origine; usarli su un altro dispositivo può causare previsioni errate o comportamenti imprevisti. Durante l’importazione dei registri, scegli se aggiungerli o sostituire quelli esistenti.</string>
@@ -788,10 +799,11 @@
     <string name="device_data_backup_warning" formatted="false">Questi dati sono specifici del dispositivo su cui sono stati raccolti. Importarli su un altro dispositivo può causare previsioni errate o altri comportamenti imprevisti dell’app.</string>
     <string name="pref_export_device_data" formatted="false">Esporta dati specifici del dispositivo</string>
     <string name="pref_export_device_data_summary" formatted="false">Salva registri e dati di previsione in un file</string>
-    <string name="device_data_exported" formatted="false">Dati specifici del dispositivo esportati correttamente</string>
+    <string name="device_data_exported" formatted="false">Dati specifici del dispositivo esportati correttamente.</string>
     <string name="pref_import_device_data" formatted="false">Importa dati specifici del dispositivo</string>
     <string name="pref_import_device_data_summary" formatted="false">Ripristina registri e dati di previsione da un file</string>
     <string name="device_data_imported" formatted="false">Dati specifici del dispositivo importati correttamente</string>
+    <string name="device_data_imported_dialog" formatted="false">Dati specifici del dispositivo importati correttamente.</string>
     <string name="invalid_device_data_file" formatted="false">File dei dati specifici del dispositivo non valido</string>
     <string name="device_data_file_empty" formatted="false">Questo file non contiene dati specifici del dispositivo supportati</string>
     <string name="pref_import_logs_csv" formatted="false">Importa registri da CSV</string>
@@ -803,13 +815,14 @@
     <string name="log_import_add" formatted="false">Aggiungi ai registri esistenti</string>
     <string name="log_import_replace" formatted="false">Sostituisci registri esistenti</string>
     <string name="csv_logs_imported" formatted="false">Registri CSV importati correttamente</string>
+    <string name="csv_logs_imported_dialog" formatted="false">Registri CSV importati correttamente.</string>
     <string name="invalid_csv_logs_file" formatted="false">File di registri CSV non valido o incompatibile</string>
     <string name="settings_reset_title">Ripristina impostazioni predefinite</string>
     <string name="settings_reset_summary">Reimposta le preferenze dell’app mantenendo cronologia, allarmi e stime apprese</string>
     <string name="settings_reset_help" formatted="false">«Ripristina impostazioni predefinite» chiede conferma, poi reimposta le preferenze dell’app. Mantiene cronologia, allarmi, stime apprese, configurazioni dei widget e lo stato del monitoraggio in background. Le autorizzazioni di sistema e le impostazioni dei canali di notifica non vengono reimpostate.</string>
     <string name="settings_reset_question">Ripristinare tutte le impostazioni predefinite dell’app? Cronologia, allarmi e stime apprese saranno mantenuti. Il monitoraggio in background resterà attivo o fermo come adesso.</string>
     <string name="settings_reset_confirm">Ripristina valori predefiniti</string>
-    <string name="settings_reset_done">Impostazioni predefinite ripristinate</string>
+    <string name="settings_reset_done">Impostazioni predefinite ripristinate.</string>
     <string name="settings_reset_failed">Impossibile completare il ripristino delle impostazioni predefinite. Alcune impostazioni potrebbero essere già cambiate. Controlla lo spazio disponibile e riprova.</string>
 
     <string name="help_cat_version" formatted="false">Versione</string>
@@ -846,39 +859,39 @@
     <string name="since" formatted="false">Dalle</string>
     <string name="duration_for">Da %1$s</string>
     <plurals name="for_n_hours">
-        <item quantity="one">Per %d ora</item>
-        <item quantity="many">Per %d ore</item>
-        <item quantity="other">Per %d ore</item>
+        <item quantity="one">Per %d\u00A0ora</item>
+        <item quantity="many">Per %d\u00A0ore</item>
+        <item quantity="other">Per %d\u00A0ore</item>
     </plurals>
     <plurals name="n_days">
-        <item quantity="one">"%d giorno, "</item>
-        <item quantity="many">"%d giorni, "</item>
-        <item quantity="other">"%d giorni, "</item>
+        <item quantity="one">"%d\u00A0giorno, "</item>
+        <item quantity="many">"%d\u00A0giorni, "</item>
+        <item quantity="other">"%d\u00A0giorni, "</item>
     </plurals>
     <plurals name="n_hours">
-        <item quantity="one">%d ora</item>
-        <item quantity="many">%d ore</item>
-        <item quantity="other">%d ore</item>
+        <item quantity="one">%d\u00A0ora</item>
+        <item quantity="many">%d\u00A0ore</item>
+        <item quantity="other">%d\u00A0ore</item>
     </plurals>
     <plurals name="n_hours_long">
-        <item quantity="one">"%d ora, "</item>
-        <item quantity="many">"%d ore, "</item>
-        <item quantity="other">"%d ore, "</item>
+        <item quantity="one">"%d\u00A0ora, "</item>
+        <item quantity="many">"%d\u00A0ore, "</item>
+        <item quantity="other">"%d\u00A0ore, "</item>
     </plurals>
     <plurals name="n_minutes_long">
-        <item quantity="one">%d minuto</item>
-        <item quantity="many">%d minuti</item>
-        <item quantity="other">%d minuti</item>
+        <item quantity="one">%d\u00A0minuto</item>
+        <item quantity="many">%d\u00A0minuti</item>
+        <item quantity="other">%d\u00A0minuti</item>
     </plurals>
     <plurals name="n_hours_medium">
-        <item quantity="one">"%d h, "</item>
-        <item quantity="many">"%d h, "</item>
-        <item quantity="other">"%d h, "</item>
+        <item quantity="one">"%d\u00A0h, "</item>
+        <item quantity="many">"%d\u00A0h, "</item>
+        <item quantity="other">"%d\u00A0h, "</item>
     </plurals>
     <plurals name="n_minutes_medium">
-        <item quantity="one">%d min</item>
-        <item quantity="many">%d min</item>
-        <item quantity="other">%d min</item>
+        <item quantity="one">%d\u00A0min</item>
+        <item quantity="many">%d\u00A0min</item>
+        <item quantity="other">%d\u00A0min</item>
     </plurals>
     <plurals name="n_hours_short">
         <item quantity="one">"%d h "</item>
