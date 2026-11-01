@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Уведомления Battery Monitor отключены. Проверьте настройки уведомлений, чтобы восстановить предупреждения.</string>
     <string name="current_power_optimized">Фоновая активность может быть ограничена</string>
     <string name="current_power_optimized_body">Оптимизация батареи Android может задерживать обновления мониторинга. Если обновления прекратятся, проверьте настройки батареи для приложения.</string>
-    <string name="current_paused">Подключено · не заряжается</string>
+    <string name="current_paused">Подключено · Не заряжается</string>
     <string name="current_target_reached">Цель %1$d%% достигнута</string>
     <string name="current_below_target">Ниже цели %1$d%%</string>
     <string name="current_low">Очень низкий заряд</string>
@@ -327,7 +327,7 @@
     <string name="history_change_range">Изменить</string>
     <string name="history_charts">Графики</string>
     <string name="history_level">Уровень</string>
-    <string name="history_level_24h">Уровень · последние 24 часа</string>
+    <string name="history_level_24h">Уровень · Последние 24 часа</string>
     <string name="history_battery_level">Уровень заряда</string>
     <string name="history_observations">Сохранённые наблюдения, а не непрерывное измерение. Вертикальные линии отмечают события питания и перезапуски.</string>
     <string name="history_chart_description">Диапазон наблюдений с %1$s по %2$s. Минимум %3$s, максимум %4$s. Откройте «События» и нажмите запись для подробностей.</string>
@@ -351,6 +351,9 @@
     <string name="history_system_event">Системное событие</string>
     <string name="history_disconnected">Питание отключено</string>
     <string name="history_charge_started">Зарядка начата</string>
+    <string name="history_status_plugged_in" formatted="false">Подключен к сети</string>
+    <string name="history_status_not_charging" formatted="false">Не заряжается</string>
+    <string name="history_status_fully_charged" formatted="false">Полностью заряжен</string>
     <string name="history_periodic_measurement">Измерение батареи</string>
     <string name="history_raw_observations">Сохранённые наблюдения. В подробностях показаны доступные измерения и их время.</string>
     <string name="history_export_selected">Экспорт выбранного диапазона</string>
@@ -388,8 +391,8 @@
     <string name="history_chart_logarithmic">Логарифмическая</string>
     <string name="history_chart_log_unavailable">Для логарифмической шкалы нужны положительные измерения обоих выбранных показателей.</string>
     <string name="history_chart_scale">Масштаб оси Y</string>
-    <string name="history_chart_scale_auto">Автоматический · видимые измерения</string>
-    <string name="history_chart_scale_fixed">Фиксированный · весь выбранный диапазон</string>
+    <string name="history_chart_scale_auto">Автоматический · Видимые измерения</string>
+    <string name="history_chart_scale_fixed">Фиксированный · Весь выбранный диапазон</string>
     <string name="history_chart_scale_manual">Ручное масштабирование по вертикали</string>
     <string name="history_chart_y_auto">Y: Авто</string>
     <string name="history_chart_y_fixed">Y: Фиксированный</string>
@@ -475,10 +478,10 @@
     <string name="widget_preview_note">Предпросмотр использует последнее измерение мониторинга. Размер виджета задаётся программой запуска.</string>
     <string name="widget_read_at">Измерение %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Уровень · последний %1$d ч</item>
-        <item quantity="few">Уровень · последние %1$d ч</item>
-        <item quantity="many">Уровень · последних %1$d ч</item>
-        <item quantity="other">Уровень · последние %1$d ч</item>
+        <item quantity="one">Уровень · Последний %1$d ч</item>
+        <item quantity="few">Уровень · Последние %1$d ч</item>
+        <item quantity="many">Уровень · Последних %1$d ч</item>
+        <item quantity="other">Уровень · Последние %1$d ч</item>
     </plurals>
     <string name="widget_observed_range">Наблюдения %1$s–%2$s</string>
     <string name="widget_chart_description">Сохранённый уровень батареи с %1$s по %2$s. Минимум %3$s, максимум %4$s.</string>

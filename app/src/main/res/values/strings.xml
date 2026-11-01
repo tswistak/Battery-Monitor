@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Battery Monitor notifications are disabled. Review notification settings to restore alerts.</string>
     <string name="current_power_optimized">Background activity may be restricted</string>
     <string name="current_power_optimized_body">Android battery optimization can delay monitor updates. Review this app’s battery setting if updates stop.</string>
-    <string name="current_paused">Plugged in · not charging</string>
+    <string name="current_paused">Plugged in · Not charging</string>
     <string name="current_target_reached">Target %1$d%% reached</string>
     <string name="current_below_target">Below target %1$d%%</string>
     <string name="current_low">Battery is very low</string>
@@ -325,7 +325,7 @@
     <string name="history_change_range">Change</string>
     <string name="history_charts">Charts</string>
     <string name="history_level">Level</string>
-    <string name="history_level_24h">Level · last 24 hours</string>
+    <string name="history_level_24h">Level · Last 24 hours</string>
     <string name="history_battery_level">Battery level</string>
     <string name="history_observations">Stored observations, not a continuous measurement. Vertical lines mark power events and restarts.</string>
     <string name="history_chart_description">Observed range from %1$s to %2$s. Minimum %3$s, maximum %4$s. Open “Events” and tap a record for reading details.</string>
@@ -349,6 +349,9 @@
     <string name="history_system_event">System event</string>
     <string name="history_disconnected">Disconnected from power</string>
     <string name="history_charge_started">Charging started</string>
+    <string name="history_status_plugged_in" formatted="false">Plugged in</string>
+    <string name="history_status_not_charging" formatted="false">Not charging</string>
+    <string name="history_status_fully_charged" formatted="false">Fully charged</string>
     <string name="history_periodic_measurement">Battery measurement</string>
     <string name="history_raw_observations">Stored observations. Details show the available readings and their time.</string>
     <string name="history_export_selected">Export selected range</string>
@@ -386,8 +389,8 @@
     <string name="history_chart_logarithmic">Logarithmic</string>
     <string name="history_chart_log_unavailable">Logarithmic scale requires positive observations for both selected metrics.</string>
     <string name="history_chart_scale">Y-axis scale</string>
-    <string name="history_chart_scale_auto">Automatic · visible observations</string>
-    <string name="history_chart_scale_fixed">Fixed · full selected range</string>
+    <string name="history_chart_scale_auto">Automatic · Visible observations</string>
+    <string name="history_chart_scale_fixed">Fixed · Full selected range</string>
     <string name="history_chart_scale_manual">Manual vertical zoom</string>
     <string name="history_chart_y_auto">Y: Auto</string>
     <string name="history_chart_y_fixed">Y: Fixed</string>
@@ -473,8 +476,8 @@
     <string name="widget_preview_note">Preview uses the last monitor reading. Widget size is set by your launcher.</string>
     <string name="widget_read_at">Reading %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Level · last %1$d hour</item>
-        <item quantity="other">Level · last %1$d hours</item>
+        <item quantity="one">Level · Last %1$d hour</item>
+        <item quantity="other">Level · Last %1$d hours</item>
     </plurals>
     <string name="widget_observed_range">Observed %1$s–%2$s</string>
     <string name="widget_chart_description">Stored battery level from %1$s to %2$s. Minimum %3$s, maximum %4$s.</string>

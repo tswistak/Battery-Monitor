@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Les notifications de Battery Monitor sont désactivées. Vérifiez les paramètres de notification pour rétablir les alertes.</string>
     <string name="current_power_optimized">L’activité en arrière-plan peut être restreinte</string>
     <string name="current_power_optimized_body">L’optimisation de la batterie Android peut retarder les mises à jour de surveillance. Vérifiez le réglage de batterie de cette application si les mises à jour s’arrêtent.</string>
-    <string name="current_paused">Branché · pas de charge</string>
+    <string name="current_paused">Branché · Pas de charge</string>
     <string name="current_target_reached">Objectif de %1$d%% atteint</string>
     <string name="current_below_target">Sous l’objectif de %1$d%%</string>
     <string name="current_low">Batterie très faible</string>
@@ -326,7 +326,7 @@
     <string name="history_change_range">Modifier</string>
     <string name="history_charts">Graphiques</string>
     <string name="history_level">Niveau</string>
-    <string name="history_level_24h">Niveau · dernières 24 heures</string>
+    <string name="history_level_24h">Niveau · Dernières 24 heures</string>
     <string name="history_battery_level">Niveau de batterie</string>
     <string name="history_observations">Observations enregistrées, pas une mesure continue. Les lignes verticales indiquent les événements d’alimentation et les redémarrages.</string>
     <string name="history_chart_description">Période observée du %1$s au %2$s. Minimum %3$s, maximum %4$s. Ouvrez « Événements » et touchez une entrée pour voir ses mesures.</string>
@@ -350,6 +350,9 @@
     <string name="history_system_event">Événement système</string>
     <string name="history_disconnected">Débranché de l’alimentation</string>
     <string name="history_charge_started">Charge commencée</string>
+    <string name="history_status_plugged_in" formatted="false">Branché</string>
+    <string name="history_status_not_charging" formatted="false">Pas de charge</string>
+    <string name="history_status_fully_charged" formatted="false">Complètement chargée</string>
     <string name="history_periodic_measurement">Mesure de la batterie</string>
     <string name="history_raw_observations">Observations enregistrées. Les détails présentent les mesures disponibles et leur heure.</string>
     <string name="history_export_selected">Exporter la période sélectionnée</string>
@@ -387,8 +390,8 @@
     <string name="history_chart_logarithmic">Logarithmique</string>
     <string name="history_chart_log_unavailable">L’échelle logarithmique nécessite des mesures positives pour les deux grandeurs sélectionnées.</string>
     <string name="history_chart_scale">Échelle de l’axe Y</string>
-    <string name="history_chart_scale_auto">Automatique · mesures visibles</string>
-    <string name="history_chart_scale_fixed">Fixe · toute la période sélectionnée</string>
+    <string name="history_chart_scale_auto">Automatique · Mesures visibles</string>
+    <string name="history_chart_scale_fixed">Fixe · Toute la période sélectionnée</string>
     <string name="history_chart_scale_manual">Zoom vertical manuel</string>
     <string name="history_chart_y_auto">Y : Auto</string>
     <string name="history_chart_y_fixed">Y : Fixe</string>

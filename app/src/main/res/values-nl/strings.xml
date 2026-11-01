@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Meldingen van Battery Monitor zijn uitgeschakeld. Controleer de meldingsinstellingen om weer waarschuwingen te ontvangen.</string>
     <string name="current_power_optimized">Achtergrondactiviteit is mogelijk beperkt</string>
     <string name="current_power_optimized_body">Batterijoptimalisatie van Android kan bewakingsupdates vertragen. Controleer de batterijinstelling van deze app als updates uitblijven.</string>
-    <string name="current_paused">Aangesloten · laadt niet op</string>
+    <string name="current_paused">Aangesloten · Laadt niet op</string>
     <string name="current_target_reached">Doel van %1$d%% bereikt</string>
     <string name="current_below_target">Onder het doel van %1$d%%</string>
     <string name="current_low">Batterij is bijna leeg</string>
@@ -325,7 +325,7 @@
     <string name="history_change_range">Wijzigen</string>
     <string name="history_charts">Grafieken</string>
     <string name="history_level">Niveau</string>
-    <string name="history_level_24h">Niveau · laatste 24 uur</string>
+    <string name="history_level_24h">Niveau · Laatste 24 uur</string>
     <string name="history_battery_level">Batterijniveau</string>
     <string name="history_observations">Opgeslagen waarnemingen, geen doorlopende meting. Verticale lijnen markeren stroomgebeurtenissen en herstarts.</string>
     <string name="history_chart_description">Waargenomen bereik van %1$s tot %2$s. Minimum %3$s, maximum %4$s. Open “Gebeurtenissen” en tik op een vermelding voor meetdetails.</string>
@@ -349,6 +349,9 @@
     <string name="history_system_event">Systeemgebeurtenis</string>
     <string name="history_disconnected">Losgekoppeld van stroom</string>
     <string name="history_charge_started">Opladen gestart</string>
+    <string name="history_status_plugged_in" formatted="false">Aangesloten</string>
+    <string name="history_status_not_charging" formatted="false">Niet opladen</string>
+    <string name="history_status_fully_charged" formatted="false">Volledig opgeladen</string>
     <string name="history_periodic_measurement">Batterijmeting</string>
     <string name="history_raw_observations">Opgeslagen waarnemingen. Details tonen de beschikbare metingen en hun tijdstip.</string>
     <string name="history_export_selected">Geselecteerde periode exporteren</string>
@@ -386,8 +389,8 @@
     <string name="history_chart_logarithmic">Logaritmisch</string>
     <string name="history_chart_log_unavailable">De logaritmische schaal vereist positieve metingen voor beide geselecteerde meetwaarden.</string>
     <string name="history_chart_scale">Schaal van de Y-as</string>
-    <string name="history_chart_scale_auto">Automatisch · zichtbare metingen</string>
-    <string name="history_chart_scale_fixed">Vast · volledige geselecteerde periode</string>
+    <string name="history_chart_scale_auto">Automatisch · Zichtbare metingen</string>
+    <string name="history_chart_scale_fixed">Vast · Volledige geselecteerde periode</string>
     <string name="history_chart_scale_manual">Handmatig verticaal zoomen</string>
     <string name="history_chart_y_auto">Y: Auto</string>
     <string name="history_chart_y_fixed">Y: Vast</string>
@@ -473,8 +476,8 @@
     <string name="widget_preview_note">Het voorbeeld gebruikt de laatste bewakingsmeting. Je launcher bepaalt de widgetgrootte.</string>
     <string name="widget_read_at">Meting %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Niveau · laatste %1$d uur</item>
-        <item quantity="other">Niveau · laatste %1$d uur</item>
+        <item quantity="one">Niveau · Laatste %1$d uur</item>
+        <item quantity="other">Niveau · Laatste %1$d uur</item>
     </plurals>
     <string name="widget_observed_range">Waargenomen %1$s–%2$s</string>
     <string name="widget_chart_description">Opgeslagen batterijniveau van %1$s tot %2$s. Minimum %3$s, maximum %4$s.</string>

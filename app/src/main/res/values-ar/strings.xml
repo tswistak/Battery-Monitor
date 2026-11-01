@@ -353,6 +353,9 @@
     <string name="history_system_event">حدث النظام</string>
     <string name="history_disconnected">مفصول عن الطاقة</string>
     <string name="history_charge_started">بدأ الشحن</string>
+    <string name="history_status_plugged_in" formatted="false">موصل</string>
+    <string name="history_status_not_charging" formatted="false">لا يشحن</string>
+    <string name="history_status_fully_charged" formatted="false">تم الشحن بالكامل</string>
     <string name="history_periodic_measurement">قياس البطارية</string>
     <string name="history_raw_observations">قراءات محفوظة. تعرض التفاصيل القياسات المتاحة ووقتها.</string>
     <string name="history_export_selected">تصدير النطاق المحدد</string>

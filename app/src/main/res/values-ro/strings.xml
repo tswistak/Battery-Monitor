@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Notificările Battery Monitor sunt dezactivate. Verifică setările notificărilor pentru a restabili alertele.</string>
     <string name="current_power_optimized">Activitatea în fundal poate fi restricționată</string>
     <string name="current_power_optimized_body">Optimizarea bateriei din Android poate întârzia actualizările monitorului. Verifică setarea bateriei pentru această aplicație dacă actualizările se opresc.</string>
-    <string name="current_paused">Conectat · nu se încarcă</string>
+    <string name="current_paused">Conectat · Nu se încarcă</string>
     <string name="current_target_reached">Ținta de %1$d%% a fost atinsă</string>
     <string name="current_below_target">Sub ținta de %1$d%%</string>
     <string name="current_low">Bateria este aproape descărcată</string>
@@ -326,7 +326,7 @@
     <string name="history_change_range">Schimbă</string>
     <string name="history_charts">Grafice</string>
     <string name="history_level">Nivel</string>
-    <string name="history_level_24h">Nivel · ultimele 24 de ore</string>
+    <string name="history_level_24h">Nivel · Ultimele 24 de ore</string>
     <string name="history_battery_level">Nivelul bateriei</string>
     <string name="history_observations">Observații salvate, nu o măsurătoare continuă. Liniile verticale marchează evenimentele de alimentare și repornirile.</string>
     <string name="history_chart_description">Interval observat de la %1$s la %2$s. Minim %3$s, maxim %4$s. Deschide „Evenimente” și atinge o înregistrare pentru detaliile citirii.</string>
@@ -350,6 +350,9 @@
     <string name="history_system_event">Eveniment de sistem</string>
     <string name="history_disconnected">Deconectat de la alimentare</string>
     <string name="history_charge_started">Încărcare pornită</string>
+    <string name="history_status_plugged_in" formatted="false">Conectat</string>
+    <string name="history_status_not_charging" formatted="false">Nu se incarca</string>
+    <string name="history_status_fully_charged" formatted="false">Incarcat complet</string>
     <string name="history_periodic_measurement">Măsurătoare a bateriei</string>
     <string name="history_raw_observations">Observații salvate. Detaliile arată citirile disponibile și ora lor.</string>
     <string name="history_export_selected">Exportă intervalul selectat</string>
@@ -387,8 +390,8 @@
     <string name="history_chart_logarithmic">Logaritmică</string>
     <string name="history_chart_log_unavailable">Scara logaritmică necesită măsurători pozitive pentru ambii parametri selectați.</string>
     <string name="history_chart_scale">Scara axei Y</string>
-    <string name="history_chart_scale_auto">Automată · măsurători vizibile</string>
-    <string name="history_chart_scale_fixed">Fixă · întregul interval selectat</string>
+    <string name="history_chart_scale_auto">Automată · Măsurători vizibile</string>
+    <string name="history_chart_scale_fixed">Fixă · Întregul interval selectat</string>
     <string name="history_chart_scale_manual">Zoom vertical manual</string>
     <string name="history_chart_y_auto">Y: Automată</string>
     <string name="history_chart_y_fixed">Y: Fixă</string>
@@ -474,9 +477,9 @@
     <string name="widget_preview_note">Previzualizarea folosește ultima citire a monitorului. Dimensiunea widgetului este stabilită de lansator.</string>
     <string name="widget_read_at">Citire %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Nivel · ultima %1$d oră</item>
-        <item quantity="few">Nivel · ultimele %1$d ore</item>
-        <item quantity="other">Nivel · ultimele %1$d de ore</item>
+        <item quantity="one">Nivel · Ultima %1$d oră</item>
+        <item quantity="few">Nivel · Ultimele %1$d ore</item>
+        <item quantity="other">Nivel · Ultimele %1$d de ore</item>
     </plurals>
     <string name="widget_observed_range">Observat %1$s–%2$s</string>
     <string name="widget_chart_description">Nivelul bateriei salvat de la %1$s la %2$s. Minim %3$s, maxim %4$s.</string>

@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">A Battery Monitor értesítései le vannak tiltva. A riasztások visszaállításához ellenőrizze az értesítési beállításokat.</string>
     <string name="current_power_optimized">A háttérbeli működés korlátozott lehet</string>
     <string name="current_power_optimized_body">Az Android akkumulátoroptimalizálása késleltetheti a figyelés frissítéseit. Ha a frissítések leállnak, ellenőrizze az alkalmazás akkumulátorbeállítását.</string>
-    <string name="current_paused">Csatlakoztatva · nem töltődik</string>
+    <string name="current_paused">Csatlakoztatva · Nem töltődik</string>
     <string name="current_target_reached">A(z) %1$d%%-os cél elérve</string>
     <string name="current_below_target">A(z) %1$d%%-os cél alatt</string>
     <string name="current_low">Nagyon alacsony töltöttség</string>
@@ -325,7 +325,7 @@
     <string name="history_change_range">Módosítás</string>
     <string name="history_charts">Diagramok</string>
     <string name="history_level">Töltöttség</string>
-    <string name="history_level_24h">Töltöttség · utolsó 24 óra</string>
+    <string name="history_level_24h">Töltöttség · Utolsó 24 óra</string>
     <string name="history_battery_level">Akkumulátor töltöttsége</string>
     <string name="history_observations">Tárolt megfigyelések, nem folyamatos mérés. A függőleges vonalak a tápellátási eseményeket és az újraindításokat jelölik.</string>
     <string name="history_chart_description">Megfigyelt tartomány: %1$s–%2$s. Minimum: %3$s, maximum: %4$s. A mérés részleteihez nyissa meg az „Események”et, és koppintson egy bejegyzésre.</string>
@@ -349,6 +349,9 @@
     <string name="history_system_event">Rendszeresemény</string>
     <string name="history_disconnected">Tápellátás leválasztva</string>
     <string name="history_charge_started">Töltés megkezdődött</string>
+    <string name="history_status_plugged_in" formatted="false">Csatlakoztatva</string>
+    <string name="history_status_not_charging" formatted="false">Nincs töltés</string>
+    <string name="history_status_fully_charged" formatted="false">Teljesen feltöltve</string>
     <string name="history_periodic_measurement">Akkumulátormérés</string>
     <string name="history_raw_observations">Tárolt megfigyelések. A részletekben az elérhető mérések és időpontjuk látható.</string>
     <string name="history_export_selected">Kiválasztott tartomány exportálása</string>
@@ -386,8 +389,8 @@
     <string name="history_chart_logarithmic">Logaritmikus</string>
     <string name="history_chart_log_unavailable">A logaritmikus skálához mindkét kiválasztott mérőszám minden mérésének pozitívnak kell lennie.</string>
     <string name="history_chart_scale">Y tengely skálája</string>
-    <string name="history_chart_scale_auto">Automatikus · látható mérések</string>
-    <string name="history_chart_scale_fixed">Rögzített · teljes kijelölt tartomány</string>
+    <string name="history_chart_scale_auto">Automatikus · Látható mérések</string>
+    <string name="history_chart_scale_fixed">Rögzített · Teljes kijelölt tartomány</string>
     <string name="history_chart_scale_manual">Kézi függőleges nagyítás</string>
     <string name="history_chart_y_auto">Y: Automatikus</string>
     <string name="history_chart_y_fixed">Y: Rögzített</string>
@@ -473,8 +476,8 @@
     <string name="widget_preview_note">Az előnézet az utolsó figyelési mérést használja. A widget méretét a kezdőképernyő-kezelő állítja be.</string>
     <string name="widget_read_at">Mérés: %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Töltöttség · utolsó %1$d óra</item>
-        <item quantity="other">Töltöttség · utolsó %1$d óra</item>
+        <item quantity="one">Töltöttség · Utolsó %1$d óra</item>
+        <item quantity="other">Töltöttség · Utolsó %1$d óra</item>
     </plurals>
     <string name="widget_observed_range">Megfigyelve: %1$s–%2$s</string>
     <string name="widget_chart_description">Tárolt akkumulátortöltöttség: %1$s–%2$s. Minimum: %3$s, maximum: %4$s.</string>

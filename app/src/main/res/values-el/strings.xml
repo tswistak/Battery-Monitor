@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Οι ειδοποιήσεις του Battery Monitor είναι απενεργοποιημένες. Ελέγξτε τις ρυθμίσεις ειδοποιήσεων για να επαναφέρετε τις προειδοποιήσεις.</string>
     <string name="current_power_optimized">Η δραστηριότητα παρασκηνίου ενδέχεται να περιορίζεται</string>
     <string name="current_power_optimized_body">Η βελτιστοποίηση μπαταρίας του Android μπορεί να καθυστερεί τις ενημερώσεις παρακολούθησης. Ελέγξτε τη ρύθμιση μπαταρίας της εφαρμογής αν σταματήσουν οι ενημερώσεις.</string>
-    <string name="current_paused">Συνδεδεμένο · δεν φορτίζει</string>
+    <string name="current_paused">Συνδεδεμένο · Δεν φορτίζει</string>
     <string name="current_target_reached">Επιτεύχθηκε ο στόχος %1$d%%</string>
     <string name="current_below_target">Κάτω από τον στόχο %1$d%%</string>
     <string name="current_low">Η στάθμη της μπαταρίας είναι πολύ χαμηλή</string>
@@ -325,7 +325,7 @@
     <string name="history_change_range">Αλλαγή</string>
     <string name="history_charts">Γραφήματα</string>
     <string name="history_level">Στάθμη</string>
-    <string name="history_level_24h">Στάθμη · τελευταίες 24 ώρες</string>
+    <string name="history_level_24h">Στάθμη · Τελευταίες 24 ώρες</string>
     <string name="history_battery_level">Στάθμη μπαταρίας</string>
     <string name="history_observations">Αποθηκευμένες παρατηρήσεις, όχι συνεχής μέτρηση. Οι κάθετες γραμμές δείχνουν συμβάντα τροφοδοσίας και επανεκκινήσεις.</string>
     <string name="history_chart_description">Εύρος παρατηρήσεων από %1$s έως %2$s. Ελάχιστο %3$s, μέγιστο %4$s. Ανοίξτε τα «Συμβάντα» και πατήστε μια εγγραφή για λεπτομέρειες μέτρησης.</string>
@@ -349,6 +349,9 @@
     <string name="history_system_event">Συμβάν συστήματος</string>
     <string name="history_disconnected">Αποσύνδεση από την τροφοδοσία</string>
     <string name="history_charge_started">Η φόρτιση ξεκίνησε</string>
+    <string name="history_status_plugged_in" formatted="false">Συνδεδεμένο</string>
+    <string name="history_status_not_charging" formatted="false">Δε φορτίζει</string>
+    <string name="history_status_fully_charged" formatted="false">Πλήρως φορτισμένη</string>
     <string name="history_periodic_measurement">Μέτρηση μπαταρίας</string>
     <string name="history_raw_observations">Αποθηκευμένες παρατηρήσεις. Οι λεπτομέρειες δείχνουν τις διαθέσιμες μετρήσεις και την ώρα τους.</string>
     <string name="history_export_selected">Εξαγωγή επιλεγμένου εύρους</string>
@@ -386,8 +389,8 @@
     <string name="history_chart_logarithmic">Λογαριθμική</string>
     <string name="history_chart_log_unavailable">Η λογαριθμική κλίμακα απαιτεί θετικές μετρήσεις και για τα δύο επιλεγμένα μεγέθη.</string>
     <string name="history_chart_scale">Κλίμακα άξονα Y</string>
-    <string name="history_chart_scale_auto">Αυτόματη · ορατές μετρήσεις</string>
-    <string name="history_chart_scale_fixed">Σταθερή · όλο το επιλεγμένο διάστημα</string>
+    <string name="history_chart_scale_auto">Αυτόματη · Ορατές μετρήσεις</string>
+    <string name="history_chart_scale_fixed">Σταθερή · Όλο το επιλεγμένο διάστημα</string>
     <string name="history_chart_scale_manual">Χειροκίνητο κατακόρυφο ζουμ</string>
     <string name="history_chart_y_auto">Y: Αυτόματη</string>
     <string name="history_chart_y_fixed">Y: Σταθερή</string>
@@ -473,8 +476,8 @@
     <string name="widget_preview_note">Η προεπισκόπηση χρησιμοποιεί την τελευταία μέτρηση παρακολούθησης. Το μέγεθος του γραφικού στοιχείου ορίζεται από την εφαρμογή αρχικής οθόνης.</string>
     <string name="widget_read_at">Μέτρηση %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Στάθμη · τελευταία %1$d ώρα</item>
-        <item quantity="other">Στάθμη · τελευταίες %1$d ώρες</item>
+        <item quantity="one">Στάθμη · Τελευταία %1$d ώρα</item>
+        <item quantity="other">Στάθμη · Τελευταίες %1$d ώρες</item>
     </plurals>
     <string name="widget_observed_range">Παρατηρήσεις %1$s–%2$s</string>
     <string name="widget_chart_description">Αποθηκευμένη στάθμη μπαταρίας από %1$s έως %2$s. Ελάχιστο %3$s, μέγιστο %4$s.</string>

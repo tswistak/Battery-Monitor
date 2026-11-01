@@ -350,6 +350,9 @@
     <string name="history_system_event">אירוע מערכת</string>
     <string name="history_disconnected">נותק מהחשמל</string>
     <string name="history_charge_started">הטעינה התחילה</string>
+    <string name="history_status_plugged_in" formatted="false">מחובר</string>
+    <string name="history_status_not_charging" formatted="false">לא בטעינה</string>
+    <string name="history_status_fully_charged" formatted="false">טעינה מלאה</string>
     <string name="history_periodic_measurement">מדידת סוללה</string>
     <string name="history_raw_observations">תצפיות שמורות. הפרטים מציגים את הקריאות הזמינות ואת זמנן.</string>
     <string name="history_export_selected">ייצוא הטווח הנבחר</string>

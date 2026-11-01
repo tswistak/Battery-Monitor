@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Las notificaciones de Battery Monitor están desactivadas. Revisa los ajustes de notificaciones para restablecer las alertas.</string>
     <string name="current_power_optimized">La actividad en segundo plano puede estar restringida</string>
     <string name="current_power_optimized_body">La optimización de batería de Android puede retrasar las actualizaciones del monitor. Revisa el ajuste de batería de esta aplicación si las actualizaciones se detienen.</string>
-    <string name="current_paused">Conectado · sin cargar</string>
+    <string name="current_paused">Conectado · Sin cargar</string>
     <string name="current_target_reached">Objetivo del %1$d%% alcanzado</string>
     <string name="current_below_target">Por debajo del objetivo del %1$d%%</string>
     <string name="current_low">La batería está muy baja</string>
@@ -326,7 +326,7 @@
     <string name="history_change_range">Cambiar</string>
     <string name="history_charts">Gráficos</string>
     <string name="history_level">Nivel</string>
-    <string name="history_level_24h">Nivel · últimas 24 horas</string>
+    <string name="history_level_24h">Nivel · Últimas 24 horas</string>
     <string name="history_battery_level">Nivel de batería</string>
     <string name="history_observations">Observaciones guardadas, no una medición continua. Las líneas verticales marcan eventos de alimentación y reinicios.</string>
     <string name="history_chart_description">Intervalo observado de %1$s a %2$s. Mínimo %3$s, máximo %4$s. Abre «Eventos» y toca un registro para ver los detalles de la lectura.</string>
@@ -350,6 +350,9 @@
     <string name="history_system_event">Evento del sistema</string>
     <string name="history_disconnected">Desconectado de la alimentación</string>
     <string name="history_charge_started">Carga iniciada</string>
+    <string name="history_status_plugged_in" formatted="false">Enchufado</string>
+    <string name="history_status_not_charging" formatted="false">No está cargando</string>
+    <string name="history_status_fully_charged" formatted="false">Cargado</string>
     <string name="history_periodic_measurement">Medición de batería</string>
     <string name="history_raw_observations">Observaciones guardadas. Los detalles muestran las lecturas disponibles y su hora.</string>
     <string name="history_export_selected">Exportar intervalo seleccionado</string>
@@ -387,8 +390,8 @@
     <string name="history_chart_logarithmic">Logarítmica</string>
     <string name="history_chart_log_unavailable">La escala logarítmica requiere mediciones positivas para ambas métricas seleccionadas.</string>
     <string name="history_chart_scale">Escala del eje Y</string>
-    <string name="history_chart_scale_auto">Automática · mediciones visibles</string>
-    <string name="history_chart_scale_fixed">Fija · todo el intervalo seleccionado</string>
+    <string name="history_chart_scale_auto">Automática · Mediciones visibles</string>
+    <string name="history_chart_scale_fixed">Fija · Todo el intervalo seleccionado</string>
     <string name="history_chart_scale_manual">Zoom vertical manual</string>
     <string name="history_chart_y_auto">Y: Auto</string>
     <string name="history_chart_y_fixed">Y: Fija</string>
@@ -474,9 +477,9 @@
     <string name="widget_preview_note">La vista previa usa la última lectura del monitor. El lanzador determina el tamaño del widget.</string>
     <string name="widget_read_at">Lectura %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Nivel · última %1$d hora</item>
-        <item quantity="many">Nivel · últimas %1$d horas</item>
-        <item quantity="other">Nivel · últimas %1$d horas</item>
+        <item quantity="one">Nivel · Última %1$d hora</item>
+        <item quantity="many">Nivel · Últimas %1$d horas</item>
+        <item quantity="other">Nivel · Últimas %1$d horas</item>
     </plurals>
     <string name="widget_observed_range">Observado %1$s–%2$s</string>
     <string name="widget_chart_description">Nivel de batería guardado de %1$s a %2$s. Mínimo %3$s, máximo %4$s.</string>

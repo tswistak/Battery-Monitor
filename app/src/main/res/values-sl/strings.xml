@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Obvestila aplikacije Battery Monitor so izklopljena. Preverite nastavitve obvestil, da obnovite opozorila.</string>
     <string name="current_power_optimized">Dejavnost v ozadju je lahko omejena</string>
     <string name="current_power_optimized_body">Optimizacija baterije v Androidu lahko zakasni posodobitve spremljanja. Če se ustavijo, preverite nastavitev baterije za to aplikacijo.</string>
-    <string name="current_paused">Priključeno · se ne polni</string>
+    <string name="current_paused">Priključeno · Se ne polni</string>
     <string name="current_target_reached">Cilj %1$d%% je dosežen</string>
     <string name="current_below_target">Pod ciljem %1$d%%</string>
     <string name="current_low">Baterija je skoraj prazna</string>
@@ -327,7 +327,7 @@
     <string name="history_change_range">Spremeni</string>
     <string name="history_charts">Grafi</string>
     <string name="history_level">Raven</string>
-    <string name="history_level_24h">Raven · zadnjih 24 ur</string>
+    <string name="history_level_24h">Raven · Zadnjih 24 ur</string>
     <string name="history_battery_level">Raven baterije</string>
     <string name="history_observations">Shranjena opažanja, ne neprekinjena meritev. Navpične črte označujejo dogodke napajanja in ponovne zagone.</string>
     <string name="history_chart_description">Opazovani obseg od %1$s do %2$s. Najmanj %3$s, največ %4$s. Odprite „Dogodki“ in tapnite zapis za podrobnosti meritve.</string>
@@ -351,6 +351,9 @@
     <string name="history_system_event">Sistemski dogodek</string>
     <string name="history_disconnected">Odklopljeno z napajanja</string>
     <string name="history_charge_started">Polnjenje se je začelo</string>
+    <string name="history_status_plugged_in" formatted="false">Priklopljeno</string>
+    <string name="history_status_not_charging" formatted="false">Se ne polni</string>
+    <string name="history_status_fully_charged" formatted="false">Napolnjeno</string>
     <string name="history_periodic_measurement">Meritev baterije</string>
     <string name="history_raw_observations">Shranjena opažanja. Podrobnosti prikazujejo razpoložljive meritve in njihov čas.</string>
     <string name="history_export_selected">Izvozi izbrani obseg</string>
@@ -388,8 +391,8 @@
     <string name="history_chart_logarithmic">Logaritemska</string>
     <string name="history_chart_log_unavailable">Logaritemska lestvica zahteva pozitivne meritve obeh izbranih veličin.</string>
     <string name="history_chart_scale">Merilo osi Y</string>
-    <string name="history_chart_scale_auto">Samodejno · vidne meritve</string>
-    <string name="history_chart_scale_fixed">Fiksno · celoten izbrani razpon</string>
+    <string name="history_chart_scale_auto">Samodejno · Vidne meritve</string>
+    <string name="history_chart_scale_fixed">Fiksno · Celoten izbrani razpon</string>
     <string name="history_chart_scale_manual">Ročna navpična povečava</string>
     <string name="history_chart_y_auto">Y: Samodejno</string>
     <string name="history_chart_y_fixed">Y: Fiksno</string>
@@ -475,10 +478,10 @@
     <string name="widget_preview_note">Predogled uporablja zadnjo meritev spremljanja. Velikost gradnika določa zaganjalnik.</string>
     <string name="widget_read_at">Meritev %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Raven · zadnja %1$d ura</item>
-        <item quantity="two">Raven · zadnji %1$d uri</item>
-        <item quantity="few">Raven · zadnje %1$d ure</item>
-        <item quantity="other">Raven · zadnjih %1$d ur</item>
+        <item quantity="one">Raven · Zadnja %1$d ura</item>
+        <item quantity="two">Raven · Zadnji %1$d uri</item>
+        <item quantity="few">Raven · Zadnje %1$d ure</item>
+        <item quantity="other">Raven · Zadnjih %1$d ur</item>
     </plurals>
     <string name="widget_observed_range">Opazovano %1$s–%2$s</string>
     <string name="widget_chart_description">Shranjena raven baterije od %1$s do %2$s. Najmanj %3$s, največ %4$s.</string>

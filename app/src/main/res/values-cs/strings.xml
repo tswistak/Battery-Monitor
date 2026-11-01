@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Oznámení aplikace Battery Monitor jsou vypnutá. Obnovte upozornění v nastavení oznámení.</string>
     <string name="current_power_optimized">Aktivita na pozadí může být omezená</string>
     <string name="current_power_optimized_body">Optimalizace baterie v Androidu může zpozdit aktualizace sledování. Pokud se zastaví, zkontrolujte nastavení baterie této aplikace.</string>
-    <string name="current_paused">Připojeno · nenabíjí se</string>
+    <string name="current_paused">Připojeno · Nenabíjí se</string>
     <string name="current_target_reached">Dosažen cíl %1$d%%</string>
     <string name="current_below_target">Pod cílem %1$d%%</string>
     <string name="current_low">Baterie je téměř vybitá</string>
@@ -328,7 +328,7 @@
     <string name="history_change_range">Změnit</string>
     <string name="history_charts">Grafy</string>
     <string name="history_level">Úroveň</string>
-    <string name="history_level_24h">Úroveň · posledních 24 hodin</string>
+    <string name="history_level_24h">Úroveň · Posledních 24 hodin</string>
     <string name="history_battery_level">Úroveň baterie</string>
     <string name="history_observations">Uložená pozorování, nikoli souvislé měření. Svislé čáry označují události napájení a restarty.</string>
     <string name="history_chart_description">Pozorovaný rozsah od %1$s do %2$s. Minimum %3$s, maximum %4$s. Otevřete „Události“ a klepněte na záznam pro podrobnosti měření.</string>
@@ -352,6 +352,9 @@
     <string name="history_system_event">Systémová událost</string>
     <string name="history_disconnected">Odpojeno od napájení</string>
     <string name="history_charge_started">Nabíjení zahájeno</string>
+    <string name="history_status_plugged_in" formatted="false">Připojeno</string>
+    <string name="history_status_not_charging" formatted="false">Nenabíjí</string>
+    <string name="history_status_fully_charged" formatted="false">Plně nabito</string>
     <string name="history_periodic_measurement">Měření baterie</string>
     <string name="history_raw_observations">Uložená pozorování. Podrobnosti ukazují dostupná měření a jejich čas.</string>
     <string name="history_export_selected">Exportovat vybraný rozsah</string>
@@ -389,8 +392,8 @@
     <string name="history_chart_logarithmic">Logaritmické</string>
     <string name="history_chart_log_unavailable">Logaritmické měřítko vyžaduje kladná měření u obou vybraných veličin.</string>
     <string name="history_chart_scale">Měřítko osy Y</string>
-    <string name="history_chart_scale_auto">Automatické · viditelná měření</string>
-    <string name="history_chart_scale_fixed">Pevné · celý vybraný rozsah</string>
+    <string name="history_chart_scale_auto">Automatické · Viditelná měření</string>
+    <string name="history_chart_scale_fixed">Pevné · Celý vybraný rozsah</string>
     <string name="history_chart_scale_manual">Ruční svislé přiblížení</string>
     <string name="history_chart_y_auto">Y: Auto</string>
     <string name="history_chart_y_fixed">Y: Pevné</string>
@@ -476,10 +479,10 @@
     <string name="widget_preview_note">Náhled používá poslední měření. Velikost widgetu nastavuje spouštěč.</string>
     <string name="widget_read_at">Měření %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Úroveň · poslední %1$d hodina</item>
-        <item quantity="few">Úroveň · poslední %1$d hodiny</item>
-        <item quantity="many">Úroveň · posledních %1$d hodin</item>
-        <item quantity="other">Úroveň · posledních %1$d hodin</item>
+        <item quantity="one">Úroveň · Poslední %1$d hodina</item>
+        <item quantity="few">Úroveň · Poslední %1$d hodiny</item>
+        <item quantity="many">Úroveň · Posledních %1$d hodin</item>
+        <item quantity="other">Úroveň · Posledních %1$d hodin</item>
     </plurals>
     <string name="widget_observed_range">Pozorováno %1$s–%2$s</string>
     <string name="widget_chart_description">Uložená úroveň baterie od %1$s do %2$s. Minimum %3$s, maximum %4$s.</string>

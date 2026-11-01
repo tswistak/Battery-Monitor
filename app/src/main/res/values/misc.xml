@@ -101,6 +101,22 @@
         <item>@string/status_not_charging</item>
         <item>@string/status_fully_charged</item>
     </string-array>
+    <string-array name="history_statuses">
+        <item>@string/status_unplugged</item>
+        <item>@string/status_unknown</item>
+        <item>@string/history_status_plugged_in</item>
+        <item>@string/status_discharging</item>
+        <item>@string/history_status_not_charging</item>
+        <item>@string/history_status_fully_charged</item>
+    </string-array>
+    <string-array name="history_statuses_old">
+        <item>@string/status_discharging</item>
+        <item>@string/status_unknown</item>
+        <item>@string/status_charging</item>
+        <item>@string/status_discharging</item>
+        <item>@string/history_status_not_charging</item>
+        <item>@string/history_status_fully_charged</item>
+    </string-array>
     <string-array name="log_filters">
         <item>@string/status_plugged_in</item>
         <item>@string/status_unplugged</item>

@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Battery Monitor bildirimleri devre dışı. Uyarıları yeniden almak için bildirim ayarlarını gözden geçirin.</string>
     <string name="current_power_optimized">Arka plan etkinliği kısıtlanmış olabilir</string>
     <string name="current_power_optimized_body">Android pil optimizasyonu izleme güncellemelerini geciktirebilir. Güncellemeler durursa uygulamanın pil ayarını gözden geçirin.</string>
-    <string name="current_paused">Bağlı · şarj olmuyor</string>
+    <string name="current_paused">Bağlı · Şarj olmuyor</string>
     <string name="current_target_reached">%1$d%% hedefine ulaşıldı</string>
     <string name="current_below_target">%1$d%% hedefinin altında</string>
     <string name="current_low">Pil çok düşük</string>
@@ -325,7 +325,7 @@
     <string name="history_change_range">Değiştir</string>
     <string name="history_charts">Grafikler</string>
     <string name="history_level">Seviye</string>
-    <string name="history_level_24h">Seviye · son 24 saat</string>
+    <string name="history_level_24h">Seviye · Son 24 saat</string>
     <string name="history_battery_level">Pil seviyesi</string>
     <string name="history_observations">Sürekli ölçüm yerine kaydedilmiş gözlemlerdir. Dikey çizgiler güç olaylarını ve yeniden başlatmaları gösterir.</string>
     <string name="history_chart_description">Gözlenen aralık: %1$s–%2$s. En düşük %3$s, en yüksek %4$s. Ölçüm ayrıntıları için “Olaylar” bölümünde bir kayda dokunun.</string>
@@ -349,6 +349,9 @@
     <string name="history_system_event">Sistem olayı</string>
     <string name="history_disconnected">Güç bağlantısı kesildi</string>
     <string name="history_charge_started">Şarj başladı</string>
+    <string name="history_status_plugged_in" formatted="false">Takıldı</string>
+    <string name="history_status_not_charging" formatted="false">Şarj olmuyor</string>
+    <string name="history_status_fully_charged" formatted="false">Tamamen doldu</string>
     <string name="history_periodic_measurement">Pil ölçümü</string>
     <string name="history_raw_observations">Kaydedilmiş gözlemler. Ayrıntılar, mevcut ölçümleri ve zamanlarını gösterir.</string>
     <string name="history_export_selected">Seçili aralığı dışa aktar</string>
@@ -386,8 +389,8 @@
     <string name="history_chart_logarithmic">Logaritmik</string>
     <string name="history_chart_log_unavailable">Logaritmik ölçek, seçilen her iki ölçüt için de pozitif ölçümler gerektirir.</string>
     <string name="history_chart_scale">Y ekseni ölçeği</string>
-    <string name="history_chart_scale_auto">Otomatik · görünür ölçümler</string>
-    <string name="history_chart_scale_fixed">Sabit · seçilen aralığın tamamı</string>
+    <string name="history_chart_scale_auto">Otomatik · Görünür ölçümler</string>
+    <string name="history_chart_scale_fixed">Sabit · Seçilen aralığın tamamı</string>
     <string name="history_chart_scale_manual">Manuel dikey yakınlaştırma</string>
     <string name="history_chart_y_auto">Y: Otomatik</string>
     <string name="history_chart_y_fixed">Y: Sabit</string>
@@ -473,8 +476,8 @@
     <string name="widget_preview_note">Önizleme, son izleme ölçümünü kullanır. Widget boyutunu başlatıcınız belirler.</string>
     <string name="widget_read_at">Ölçüm %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Seviye · son %1$d saat</item>
-        <item quantity="other">Seviye · son %1$d saat</item>
+        <item quantity="one">Seviye · Son %1$d saat</item>
+        <item quantity="other">Seviye · Son %1$d saat</item>
     </plurals>
     <string name="widget_observed_range">Gözlem aralığı %1$s–%2$s</string>
     <string name="widget_chart_description">%1$s ile %2$s arasındaki kayıtlı pil seviyesi. En düşük %3$s, en yüksek %4$s.</string>

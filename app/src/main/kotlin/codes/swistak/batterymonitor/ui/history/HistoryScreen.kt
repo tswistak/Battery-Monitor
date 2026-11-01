@@ -265,8 +265,8 @@ internal fun HistoryRoute(
     var detailsId by rememberSaveable { mutableStateOf<Long?>(null) }
     var detailsTime by rememberSaveable { mutableStateOf<Long?>(null) }
     var importingJson by rememberSaveable { mutableStateOf(false) }
-    val statuses = stringArrayResource(R.array.log_statuses)
-    val oldStatuses = stringArrayResource(R.array.log_statuses_old)
+    val statuses = stringArrayResource(R.array.history_statuses)
+    val oldStatuses = stringArrayResource(R.array.history_statuses_old)
     val plugged = stringArrayResource(R.array.pluggeds)
     val boot = stringResource(R.string.status_boot_completed)
     val unknown = stringResource(R.string.status_unknown)

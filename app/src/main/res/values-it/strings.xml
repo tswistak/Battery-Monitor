@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Le notifiche di Battery Monitor sono disattivate. Controlla le impostazioni delle notifiche per ripristinare gli avvisi.</string>
     <string name="current_power_optimized">L’attività in background potrebbe essere limitata</string>
     <string name="current_power_optimized_body">L’ottimizzazione della batteria di Android può ritardare gli aggiornamenti del monitoraggio. Se si interrompono, controlla l’impostazione della batteria di questa app.</string>
-    <string name="current_paused">Collegato · non in carica</string>
+    <string name="current_paused">Collegato · Non in carica</string>
     <string name="current_target_reached">Obiettivo del %1$d%% raggiunto</string>
     <string name="current_below_target">Sotto l’obiettivo del %1$d%%</string>
     <string name="current_low">Batteria molto scarica</string>
@@ -326,7 +326,7 @@
     <string name="history_change_range">Modifica</string>
     <string name="history_charts">Grafici</string>
     <string name="history_level">Livello</string>
-    <string name="history_level_24h">Livello · ultime 24 ore</string>
+    <string name="history_level_24h">Livello · Ultime 24 ore</string>
     <string name="history_battery_level">Livello della batteria</string>
     <string name="history_observations">Osservazioni salvate, non una misurazione continua. Le linee verticali indicano gli eventi di alimentazione e i riavvii.</string>
     <string name="history_chart_description">Intervallo osservato dal %1$s al %2$s. Minimo %3$s, massimo %4$s. Apri «Eventi» e tocca una voce per i dettagli delle letture.</string>
@@ -350,6 +350,9 @@
     <string name="history_system_event">Evento di sistema</string>
     <string name="history_disconnected">Scollegato dall’alimentazione</string>
     <string name="history_charge_started">Ricarica iniziata</string>
+    <string name="history_status_plugged_in" formatted="false">Collegato</string>
+    <string name="history_status_not_charging" formatted="false">Non in carica</string>
+    <string name="history_status_fully_charged" formatted="false">Completamente carico</string>
     <string name="history_periodic_measurement">Misurazione della batteria</string>
     <string name="history_raw_observations">Osservazioni salvate. I dettagli mostrano le letture disponibili e il loro orario.</string>
     <string name="history_export_selected">Esporta intervallo selezionato</string>
@@ -387,8 +390,8 @@
     <string name="history_chart_logarithmic">Logaritmica</string>
     <string name="history_chart_log_unavailable">La scala logaritmica richiede misurazioni positive per entrambe le grandezze selezionate.</string>
     <string name="history_chart_scale">Scala dell’asse Y</string>
-    <string name="history_chart_scale_auto">Automatica · misurazioni visibili</string>
-    <string name="history_chart_scale_fixed">Fissa · intero intervallo selezionato</string>
+    <string name="history_chart_scale_auto">Automatica · Misurazioni visibili</string>
+    <string name="history_chart_scale_fixed">Fissa · Intero intervallo selezionato</string>
     <string name="history_chart_scale_manual">Zoom verticale manuale</string>
     <string name="history_chart_y_auto">Y: Auto</string>
     <string name="history_chart_y_fixed">Y: Fissa</string>
@@ -474,9 +477,9 @@
     <string name="widget_preview_note">L’anteprima usa l’ultima lettura del monitoraggio. La dimensione del widget è definita dal launcher.</string>
     <string name="widget_read_at">Lettura %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Livello · ultima %1$d ora</item>
-        <item quantity="many">Livello · ultime %1$d ore</item>
-        <item quantity="other">Livello · ultime %1$d ore</item>
+        <item quantity="one">Livello · Ultima %1$d ora</item>
+        <item quantity="many">Livello · Ultime %1$d ore</item>
+        <item quantity="other">Livello · Ultime %1$d ore</item>
     </plurals>
     <string name="widget_observed_range">Osservato %1$s–%2$s</string>
     <string name="widget_chart_description">Livello della batteria salvato dal %1$s al %2$s. Minimo %3$s, massimo %4$s.</string>

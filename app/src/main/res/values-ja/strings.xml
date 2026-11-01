@@ -348,6 +348,9 @@
     <string name="history_system_event">システムイベント</string>
     <string name="history_disconnected">電源から切断</string>
     <string name="history_charge_started">充電を開始</string>
+    <string name="history_status_plugged_in" formatted="false">接続済</string>
+    <string name="history_status_not_charging" formatted="false">非充電中</string>
+    <string name="history_status_fully_charged" formatted="false">フル充電</string>
     <string name="history_periodic_measurement">バッテリーの測定</string>
     <string name="history_raw_observations">保存済みの観測値です。詳細には、取得できた測定値とその時刻が表示されます。</string>
     <string name="history_export_selected">選択した期間をエクスポート</string>

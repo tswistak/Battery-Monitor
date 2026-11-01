@@ -349,6 +349,9 @@
     <string name="history_system_event">رویداد سیستم</string>
     <string name="history_disconnected">از برق جدا شد</string>
     <string name="history_charge_started">شارژ آغاز شد</string>
+    <string name="history_status_plugged_in" formatted="false">متصل به برق</string>
+    <string name="history_status_not_charging" formatted="false">شارژ نشدن</string>
+    <string name="history_status_fully_charged" formatted="false">کاملا شارژ شده</string>
     <string name="history_periodic_measurement">اندازه‌گیری باتری</string>
     <string name="history_raw_observations">مشاهدات ذخیره‌شده. جزئیات، خوانش‌های موجود و زمان آن‌ها را نشان می‌دهند.</string>
     <string name="history_export_selected">برون‌ریزی بازه انتخاب‌شده</string>

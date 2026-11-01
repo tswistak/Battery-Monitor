@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Benachrichtigungen von Battery Monitor sind deaktiviert. Prüfen Sie die Benachrichtigungseinstellungen, um Alarme wieder zu erhalten.</string>
     <string name="current_power_optimized">Hintergrundaktivität ist möglicherweise eingeschränkt</string>
     <string name="current_power_optimized_body">Die Akkuoptimierung von Android kann Überwachungsaktualisierungen verzögern. Prüfen Sie die Akkueinstellung dieser App, wenn Aktualisierungen ausbleiben.</string>
-    <string name="current_paused">Angeschlossen · lädt nicht</string>
+    <string name="current_paused">Angeschlossen · Lädt nicht</string>
     <string name="current_target_reached">Ziel von %1$d%% erreicht</string>
     <string name="current_below_target">Unter dem Ziel von %1$d%%</string>
     <string name="current_low">Akku ist fast leer</string>
@@ -325,7 +325,7 @@
     <string name="history_change_range">Ändern</string>
     <string name="history_charts">Diagramme</string>
     <string name="history_level">Ladestand</string>
-    <string name="history_level_24h">Ladestand · letzte 24 Stunden</string>
+    <string name="history_level_24h">Ladestand · Letzte 24 Stunden</string>
     <string name="history_battery_level">Akkustand</string>
     <string name="history_observations">Gespeicherte Beobachtungen, keine kontinuierliche Messung. Vertikale Linien markieren Stromversorgungsereignisse und Neustarts.</string>
     <string name="history_chart_description">Beobachteter Bereich von %1$s bis %2$s. Minimum %3$s, Maximum %4$s. Öffnen Sie „Ereignisse“ und tippen Sie auf einen Eintrag für Messwertdetails.</string>
@@ -349,6 +349,9 @@
     <string name="history_system_event">Systemereignis</string>
     <string name="history_disconnected">Von der Stromversorgung getrennt</string>
     <string name="history_charge_started">Ladevorgang gestartet</string>
+    <string name="history_status_plugged_in" formatted="false">Eingesteckt</string>
+    <string name="history_status_not_charging" formatted="false">Nicht ladend</string>
+    <string name="history_status_fully_charged" formatted="false">Voll geladen</string>
     <string name="history_periodic_measurement">Akkumessung</string>
     <string name="history_raw_observations">Gespeicherte Beobachtungen. Die Details zeigen verfügbare Messwerte und ihren Zeitpunkt.</string>
     <string name="history_export_selected">Ausgewählten Zeitraum exportieren</string>
@@ -386,8 +389,8 @@
     <string name="history_chart_logarithmic">Logarithmisch</string>
     <string name="history_chart_log_unavailable">Die logarithmische Skala erfordert positive Messwerte für beide ausgewählten Messgrößen.</string>
     <string name="history_chart_scale">Skalierung der Y-Achse</string>
-    <string name="history_chart_scale_auto">Automatisch · sichtbare Messwerte</string>
-    <string name="history_chart_scale_fixed">Fest · gesamter ausgewählter Zeitraum</string>
+    <string name="history_chart_scale_auto">Automatisch · Sichtbare Messwerte</string>
+    <string name="history_chart_scale_fixed">Fest · Gesamter ausgewählter Zeitraum</string>
     <string name="history_chart_scale_manual">Manueller vertikaler Zoom</string>
     <string name="history_chart_y_auto">Y: Auto</string>
     <string name="history_chart_y_fixed">Y: Fest</string>
@@ -473,8 +476,8 @@
     <string name="widget_preview_note">Die Vorschau verwendet den letzten Überwachungsmesswert. Die Widget-Größe wird durch Ihren Launcher festgelegt.</string>
     <string name="widget_read_at">Messwert %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Ladestand · letzte %1$d Stunde</item>
-        <item quantity="other">Ladestand · letzte %1$d Stunden</item>
+        <item quantity="one">Ladestand · Letzte %1$d Stunde</item>
+        <item quantity="other">Ladestand · Letzte %1$d Stunden</item>
     </plurals>
     <string name="widget_observed_range">Beobachtet %1$s–%2$s</string>
     <string name="widget_chart_description">Gespeicherter Akkustand von %1$s bis %2$s. Minimum %3$s, Maximum %4$s.</string>

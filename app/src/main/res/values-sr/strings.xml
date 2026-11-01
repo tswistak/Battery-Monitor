@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Obaveštenja aplikacije Battery Monitor su isključena. Proverite podešavanja obaveštenja da biste vratili upozorenja.</string>
     <string name="current_power_optimized">Aktivnost u pozadini može biti ograničena</string>
     <string name="current_power_optimized_body">Android optimizacija baterije može odložiti ažuriranja praćenja. Ako prestanu, proverite podešavanje baterije za ovu aplikaciju.</string>
-    <string name="current_paused">Priključeno · ne puni se</string>
+    <string name="current_paused">Priključeno · Ne puni se</string>
     <string name="current_target_reached">Dostignut cilj %1$d%%</string>
     <string name="current_below_target">Ispod cilja %1$d%%</string>
     <string name="current_low">Baterija je skoro prazna</string>
@@ -326,7 +326,7 @@
     <string name="history_change_range">Promeni</string>
     <string name="history_charts">Grafikoni</string>
     <string name="history_level">Nivo</string>
-    <string name="history_level_24h">Nivo · poslednja 24 sata</string>
+    <string name="history_level_24h">Nivo · Poslednja 24 sata</string>
     <string name="history_battery_level">Nivo baterije</string>
     <string name="history_observations">Sačuvana zapažanja, a ne neprekidno merenje. Uspravne linije označavaju događaje napajanja i ponovna pokretanja.</string>
     <string name="history_chart_description">Posmatrani opseg od %1$s do %2$s. Minimum %3$s, maksimum %4$s. Otvorite „Događaji“ i dodirnite zapis za detalje očitavanja.</string>
@@ -350,6 +350,9 @@
     <string name="history_system_event">Sistemski događaj</string>
     <string name="history_disconnected">Isključeno sa napajanja</string>
     <string name="history_charge_started">Punjenje je započelo</string>
+    <string name="history_status_plugged_in" formatted="false">Stavljen na punjenje</string>
+    <string name="history_status_not_charging" formatted="false">Ne puni se</string>
+    <string name="history_status_fully_charged" formatted="false">100% puno</string>
     <string name="history_periodic_measurement">Merenje baterije</string>
     <string name="history_raw_observations">Sačuvana zapažanja. Detalji prikazuju dostupna očitavanja i njihovo vreme.</string>
     <string name="history_export_selected">Izvezi izabrani opseg</string>
@@ -387,8 +390,8 @@
     <string name="history_chart_logarithmic">Логаритамска</string>
     <string name="history_chart_log_unavailable">Логаритамска скала захтева позитивна мерења за оба изабрана показатеља.</string>
     <string name="history_chart_scale">Размера Y осе</string>
-    <string name="history_chart_scale_auto">Аутоматска · видљива мерења</string>
-    <string name="history_chart_scale_fixed">Фиксна · цео изабрани опсег</string>
+    <string name="history_chart_scale_auto">Аутоматска · Видљива мерења</string>
+    <string name="history_chart_scale_fixed">Фиксна · Цео изабрани опсег</string>
     <string name="history_chart_scale_manual">Ручно вертикално зумирање</string>
     <string name="history_chart_y_auto">Y: Аутоматска</string>
     <string name="history_chart_y_fixed">Y: Фиксна</string>
@@ -474,9 +477,9 @@
     <string name="widget_preview_note">Prikaz koristi poslednje očitavanje praćenja. Veličinu vidžeta određuje pokretač.</string>
     <string name="widget_read_at">Očitavanje %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Nivo · poslednji %1$d sat</item>
-        <item quantity="few">Nivo · poslednja %1$d sata</item>
-        <item quantity="other">Nivo · poslednjih %1$d sati</item>
+        <item quantity="one">Nivo · Poslednji %1$d sat</item>
+        <item quantity="few">Nivo · Poslednja %1$d sata</item>
+        <item quantity="other">Nivo · Poslednjih %1$d sati</item>
     </plurals>
     <string name="widget_observed_range">Posmatrano %1$s–%2$s</string>
     <string name="widget_chart_description">Sačuvani nivo baterije od %1$s do %2$s. Minimum %3$s, maksimum %4$s.</string>

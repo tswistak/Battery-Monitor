@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Battery Monitor pranešimai išjungti. Patikrinkite pranešimų nustatymus, kad vėl gautumėte įspėjimus.</string>
     <string name="current_power_optimized">Veikla fone gali būti ribojama</string>
     <string name="current_power_optimized_body">„Android“ akumuliatoriaus optimizavimas gali uždelsti stebėjimo atnaujinimus. Jei jie sustoja, patikrinkite šios programos akumuliatoriaus nustatymą.</string>
-    <string name="current_paused">Prijungtas · neįkraunamas</string>
+    <string name="current_paused">Prijungtas · Neįkraunamas</string>
     <string name="current_target_reached">Pasiektas %1$d%% tikslas</string>
     <string name="current_below_target">Žemiau %1$d%% tikslo</string>
     <string name="current_low">Akumuliatorius beveik išsikrovęs</string>
@@ -327,7 +327,7 @@
     <string name="history_change_range">Keisti</string>
     <string name="history_charts">Diagramos</string>
     <string name="history_level">Lygis</string>
-    <string name="history_level_24h">Lygis · paskutinės 24 valandos</string>
+    <string name="history_level_24h">Lygis · Paskutinės 24 valandos</string>
     <string name="history_battery_level">Akumuliatoriaus lygis</string>
     <string name="history_observations">Išsaugoti stebėjimai, o ne nuolatinis matavimas. Vertikalios linijos žymi maitinimo įvykius ir paleidimus iš naujo.</string>
     <string name="history_chart_description">Stebėtas intervalas nuo %1$s iki %2$s. Mažiausia vertė %3$s, didžiausia %4$s. Atverkite „Įvykiai“ ir palieskite įrašą rodmens informacijai.</string>
@@ -351,6 +351,9 @@
     <string name="history_system_event">Sistemos įvykis</string>
     <string name="history_disconnected">Atjungtas nuo maitinimo</string>
     <string name="history_charge_started">Įkrovimas pradėtas</string>
+    <string name="history_status_plugged_in" formatted="false">Prijungta</string>
+    <string name="history_status_not_charging" formatted="false">Ne kraunama</string>
+    <string name="history_status_fully_charged" formatted="false">Pilnai įkrauta</string>
     <string name="history_periodic_measurement">Akumuliatoriaus matavimas</string>
     <string name="history_raw_observations">Išsaugoti stebėjimai. Informacijoje pateikiami pasiekiami rodmenys ir jų laikas.</string>
     <string name="history_export_selected">Eksportuoti pasirinktą intervalą</string>
@@ -388,8 +391,8 @@
     <string name="history_chart_logarithmic">Logaritminė</string>
     <string name="history_chart_log_unavailable">Logaritminei skalei reikia teigiamų abiejų pasirinktų rodiklių matavimų.</string>
     <string name="history_chart_scale">Y ašies mastelis</string>
-    <string name="history_chart_scale_auto">Automatinis · matomi matavimai</string>
-    <string name="history_chart_scale_fixed">Fiksuotas · visas pasirinktas intervalas</string>
+    <string name="history_chart_scale_auto">Automatinis · Matomi matavimai</string>
+    <string name="history_chart_scale_fixed">Fiksuotas · Visas pasirinktas intervalas</string>
     <string name="history_chart_scale_manual">Rankinis vertikalus mastelio keitimas</string>
     <string name="history_chart_y_auto">Y: Automatinis</string>
     <string name="history_chart_y_fixed">Y: Fiksuotas</string>
@@ -475,10 +478,10 @@
     <string name="widget_preview_note">Peržiūra naudoja paskutinį stebėjimo rodmenį. Valdiklio dydį nustato paleidimo priemonė.</string>
     <string name="widget_read_at">Rodmuo %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Lygis · paskutinė %1$d val.</item>
-        <item quantity="few">Lygis · paskutinės %1$d val.</item>
-        <item quantity="many">Lygis · paskutinių %1$d val.</item>
-        <item quantity="other">Lygis · paskutinių %1$d val.</item>
+        <item quantity="one">Lygis · Paskutinė %1$d val.</item>
+        <item quantity="few">Lygis · Paskutinės %1$d val.</item>
+        <item quantity="many">Lygis · Paskutinių %1$d val.</item>
+        <item quantity="other">Lygis · Paskutinių %1$d val.</item>
     </plurals>
     <string name="widget_observed_range">Stebėta %1$s–%2$s</string>
     <string name="widget_chart_description">Išsaugotas akumuliatoriaus lygis nuo %1$s iki %2$s. Mažiausia vertė %3$s, didžiausia %4$s.</string>

@@ -349,6 +349,9 @@
     <string name="history_system_event">सिस्टम घटना</string>
     <string name="history_disconnected">पावर से हटाया गया</string>
     <string name="history_charge_started">चार्जिंग शुरू हुई</string>
+    <string name="history_status_plugged_in" formatted="false">लगाया</string>
+    <string name="history_status_not_charging" formatted="false">चार्ज नही हो रहा हैं</string>
+    <string name="history_status_fully_charged" formatted="false">पूर्णतःउर्जित</string>
     <string name="history_periodic_measurement">बैटरी माप</string>
     <string name="history_raw_observations">सहेजे गए अवलोकन। विवरण में उपलब्ध रीडिंग और उनका समय दिखता है।</string>
     <string name="history_export_selected">चुनी हुई अवधि निर्यात करें</string>

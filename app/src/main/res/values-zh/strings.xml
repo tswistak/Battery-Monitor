@@ -348,6 +348,9 @@
     <string name="history_system_event">系統事件</string>
     <string name="history_disconnected">已拔除電源</string>
     <string name="history_charge_started">已開始充電</string>
+    <string name="history_status_plugged_in" formatted="false">插入電源</string>
+    <string name="history_status_not_charging" formatted="false">未充電</string>
+    <string name="history_status_fully_charged" formatted="false">電池充滿</string>
     <string name="history_periodic_measurement">電池測量</string>
     <string name="history_raw_observations">儲存的觀測值。詳情顯示可用讀數及其時間。</string>
     <string name="history_export_selected">匯出所選範圍</string>

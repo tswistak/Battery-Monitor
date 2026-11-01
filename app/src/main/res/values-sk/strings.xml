@@ -41,7 +41,7 @@
     <string name="current_notifications_off_body">Oznámenia aplikácie Battery Monitor sú vypnuté. Obnovte upozornenia v nastaveniach oznámení.</string>
     <string name="current_power_optimized">Aktivita na pozadí môže byť obmedzená</string>
     <string name="current_power_optimized_body">Optimalizácia batérie v Androide môže oneskoriť aktualizácie monitorovania. Ak sa zastavia, skontrolujte nastavenie batérie tejto aplikácie.</string>
-    <string name="current_paused">Pripojené · nenabíja sa</string>
+    <string name="current_paused">Pripojené · Nenabíja sa</string>
     <string name="current_target_reached">Dosiahnutý cieľ %1$d%%</string>
     <string name="current_below_target">Pod cieľom %1$d%%</string>
     <string name="current_low">Batéria je takmer vybitá</string>
@@ -327,7 +327,7 @@
     <string name="history_change_range">Zmeniť</string>
     <string name="history_charts">Grafy</string>
     <string name="history_level">Úroveň</string>
-    <string name="history_level_24h">Úroveň · posledných 24 hodín</string>
+    <string name="history_level_24h">Úroveň · Posledných 24 hodín</string>
     <string name="history_battery_level">Úroveň batérie</string>
     <string name="history_observations">Uložené pozorovania, nie súvislé meranie. Zvislé čiary označujú udalosti napájania a reštarty.</string>
     <string name="history_chart_description">Pozorovaný rozsah od %1$s do %2$s. Minimum %3$s, maximum %4$s. Otvorte „Udalosti“ a klepnite na záznam pre podrobnosti merania.</string>
@@ -351,6 +351,9 @@
     <string name="history_system_event">Systémová udalosť</string>
     <string name="history_disconnected">Odpojené od napájania</string>
     <string name="history_charge_started">Nabíjanie sa začalo</string>
+    <string name="history_status_plugged_in" formatted="false">Pripojený</string>
+    <string name="history_status_not_charging" formatted="false">Nenabíja</string>
+    <string name="history_status_fully_charged" formatted="false">Plne nabitá</string>
     <string name="history_periodic_measurement">Meranie batérie</string>
     <string name="history_raw_observations">Uložené pozorovania. Podrobnosti ukazujú dostupné merania a ich čas.</string>
     <string name="history_export_selected">Exportovať vybraný rozsah</string>
@@ -388,8 +391,8 @@
     <string name="history_chart_logarithmic">Logaritmická</string>
     <string name="history_chart_log_unavailable">Logaritmická stupnica vyžaduje kladné merania oboch vybraných veličín.</string>
     <string name="history_chart_scale">Mierka osi Y</string>
-    <string name="history_chart_scale_auto">Automatická · viditeľné merania</string>
-    <string name="history_chart_scale_fixed">Pevná · celý vybraný rozsah</string>
+    <string name="history_chart_scale_auto">Automatická · Viditeľné merania</string>
+    <string name="history_chart_scale_fixed">Pevná · Celý vybraný rozsah</string>
     <string name="history_chart_scale_manual">Ručné zvislé priblíženie</string>
     <string name="history_chart_y_auto">Y: Automatická</string>
     <string name="history_chart_y_fixed">Y: Pevná</string>
@@ -475,10 +478,10 @@
     <string name="widget_preview_note">Náhľad používa posledné meranie. Veľkosť miniaplikácie nastavuje spúšťač.</string>
     <string name="widget_read_at">Meranie %1$s</string>
     <plurals name="widget_trend_range">
-        <item quantity="one">Úroveň · posledná %1$d hodina</item>
-        <item quantity="few">Úroveň · posledné %1$d hodiny</item>
-        <item quantity="many">Úroveň · posledných %1$d hodín</item>
-        <item quantity="other">Úroveň · posledných %1$d hodín</item>
+        <item quantity="one">Úroveň · Posledná %1$d hodina</item>
+        <item quantity="few">Úroveň · Posledné %1$d hodiny</item>
+        <item quantity="many">Úroveň · Posledných %1$d hodín</item>
+        <item quantity="other">Úroveň · Posledných %1$d hodín</item>
     </plurals>
     <string name="widget_observed_range">Pozorované %1$s–%2$s</string>
     <string name="widget_chart_description">Uložená úroveň batérie od %1$s do %2$s. Minimum %3$s, maximum %4$s.</string>
