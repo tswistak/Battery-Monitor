@@ -1,15 +1,15 @@
 Battery Monitor is a simple, practical Android app for keeping an eye on your device’s battery.
 
-See battery information at a glance, get useful alerts, and follow charging and discharging over time.
+See battery information at a glance, get useful alarms, and follow charging and discharging over time.
 
 <b>⭐ Main features:</b>
 
 - current battery readings and charging/discharging time estimates
 - battery history with interactive charts
-- configurable battery level, temperature and health alerts
-- persistent notifications and Live Updates on compatible Android 16+ devices
+- configurable battery level, temperature and health alarms
+- persistent notification and Live Updates on compatible Android 16+ devices
 - configurable home screen widgets
-- CSV/JSON history export, automatic exports and backup/restore
+- manual or automatic history export to CSV/JSON, and settings backup/restore
 - optional advanced information through root or Shizuku
 - local processing of battery and device information
 
@@ -23,7 +23,7 @@ Keep battery information visible in a persistent notification and choose which d
 
 <b>🔔 Battery alarms</b>
 
-Get notified when the battery becomes fully charged, rises above or drops below a level you choose, or reaches a high or low temperature. Alerts for health problems reported by Android are also available.
+Get notified when the battery becomes fully charged, rises above or drops below a level you choose, or reaches a high or low temperature. Alarms for health problems reported by Android are also available.
 
 <b>📊 History and export</b>
 
