@@ -27,8 +27,8 @@ See current readings and time estimates, review charging and discharging over ti
 - Current battery readings and approximate charging/discharging time estimates
 - Interactive measurement history and fullscreen comparison of two metrics
 - Configurable battery alarms with multiple thresholds
-- Persistent notifications and Live Updates on supported Android 16+ systems
-- Configurable home-screen widgets
+- Persistent notification and Live Updates on supported Android 16+ devices
+- Configurable home screen widgets
 - CSV/JSON history export and backup/restore
 - Optional advanced information through root or Shizuku
 - Local processing of monitoring data
@@ -57,16 +57,16 @@ Readings depend on the device and the data Android makes available. Android-repo
 - Persistent battery information with configurable content and expanded details
 - Optional Live Updates on Android 16+ with compatible system behavior and settings
 
-Notification presentation, including status-bar indicators, depends on Android and the device.
+Notification presentation, including status bar indicators, depends on Android and the device.
 
 ### Battery Alarms
 
-- Full-charge alerts and rising/falling battery-level thresholds
-- High/low temperature and Android-reported health alerts
-- Charging/discharging target alerts
+- Full-charge alarms and rising/falling battery-level thresholds
+- High/low temperature and Android-reported health alarms
+- Charging/discharging target alarms
 - Multiple thresholds for threshold-based alarm types
 
-Targets support estimates and alerts; Battery Monitor does not set a hardware charging cutoff. Alarm sounds and notification channels are configured through Android settings.
+Targets support estimates and alarms; Battery Monitor does not set a hardware charging cutoff. Alarm sounds and notification channels are configured through Android settings.
 
 ### Widgets
 
@@ -82,7 +82,7 @@ Targets support estimates and alerts; Battery Monitor does not set a hardware ch
 
 ### Appearance and Advanced Information
 
-- Light, dark and true-black appearance, with dynamic colors on supported systems
+- Light, dark and true-black appearance, with dynamic colors on supported devices
 - Optional additional readings through root or Shizuku, plus diagnostic information
 
 Requires Android 8.0/API 26 or newer. Optional readings, manufacturer-specific charging-limit detection and Live Updates depend on the device and Android version. Root and Shizuku are not required for ordinary monitoring.
