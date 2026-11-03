@@ -36,21 +36,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -84,7 +78,6 @@ import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.liveRegion
-import androidx.compose.ui.semantics.paneTitle
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -104,6 +97,7 @@ import codes.swistak.batterymonitor.logs.historyObservationValue
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.HistoryChartScale
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.historyAxisFormatter
 import codes.swistak.batterymonitor.ui.components.historyUnit
 import codes.swistak.batterymonitor.ui.components.historyValue
@@ -1221,25 +1215,16 @@ internal fun fullscreenLineData(
     return LineData(*sets.toTypedArray())
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ChartIcon(drawable: Int, label: Int, enabled: Boolean, onClick: () -> Unit) {
     val text = stringResource(label)
-    TooltipBox(
-        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(androidx.compose.material3.TooltipAnchorPosition.Below),
-        tooltip = {
-            PlainTooltip(Modifier.semantics {
-                liveRegion = LiveRegionMode.Assertive
-                paneTitle = text
-            }) { Text(text) }
-        },
-        state = rememberTooltipState()
+    TooltipIconButton(
+        label = text,
+        onClick = onClick,
+        enabled = enabled,
+        modifier = Modifier.size(BatterySpacing.touch)
     ) {
-        IconButton(
-            onClick = onClick, enabled = enabled, modifier = Modifier.size(BatterySpacing.touch)
-        ) {
-            Icon(painterResource(drawable), text, Modifier.size(24.dp))
-        }
+        Icon(painterResource(drawable), text, Modifier.size(24.dp))
     }
 }
 

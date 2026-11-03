@@ -173,7 +173,7 @@ export async function acknowledgeMessage(message: string) {
 }
 
 export async function confirmAllAvailableCategories() {
-    await browser.$(textStartsWithSelector('Predictor data')).waitForDisplayed({ timeout });
+    await requireText('Predictor data');
     await clickText('Okay');
 }
 

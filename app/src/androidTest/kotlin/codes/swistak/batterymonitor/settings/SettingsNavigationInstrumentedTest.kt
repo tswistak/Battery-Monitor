@@ -225,7 +225,7 @@ class SettingsNavigationInstrumentedTest {
             click(R.string.advanced_settings)
             await { button(R.string.charging_diagnostics_title) != null }
             click(R.string.charging_diagnostics_title)
-            click(R.string.diagnostics_monitoring)
+            click(R.string.diag_monitor_operation)
             assertEquals(listOf("charging-tools" to null, "monitor" to null), destinations)
             assertEquals(before, preferences.all)
         }
@@ -299,7 +299,7 @@ class SettingsNavigationInstrumentedTest {
             }
         }
         for ((label, destination) in listOf(
-            R.string.diagnostics_monitoring to ("monitor" to null),
+            R.string.diag_monitor_operation to ("monitor" to null),
             R.string.charging_diagnostics_capture to ("charging-tools" to "charging_diagnostics_capture")
         )) {
             await { nodes().any { it.config.contains(SemanticsActions.SetText) } }

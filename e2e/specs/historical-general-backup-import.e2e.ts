@@ -33,7 +33,7 @@ describe('Historical general backup import', () => {
         await chooseImportFile('Import general backup', 'historical-1.7.3-general.zip');
         await confirmAllAvailableCategories();
         await chooseReplaceHistory();
-        await acknowledgeMessage('General backup imported successfully');
+        await acknowledgeMessage('General backup imported successfully.');
         await stopMonitoring();
 
         const state = await readState();

@@ -7,8 +7,10 @@
 */
 package codes.swistak.batterymonitor.diagnostics
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Build
 import android.os.PowerManager
 import android.os.SystemClock
@@ -55,6 +57,9 @@ internal object DiagnosticsReport {
         val now = SystemClock.elapsedRealtime()
         val heartbeat = healthState.serviceHeartbeatElapsedTime
         val databaseHeartbeat = healthState.databaseHeartbeatElapsedTime
+        @SuppressLint("AppBundleLocaleChanges") val reportContext =
+            context.createConfigurationContext(
+                Configuration(context.resources.configuration).apply { setLocale(Locale.ENGLISH) })
 
         fun booleanStatus(value: Boolean): String = if (value) "Yes" else "No"
         fun line(label: String, value: CharSequence): String = "$label: $value"
@@ -95,6 +100,7 @@ internal object DiagnosticsReport {
             appendLine(
                 line(
                     "Monitoring service", monitoringStatus(
+                        reportContext,
                         BackgroundServiceWatchdog.isServiceDesired(context),
                         now,
                         heartbeat,
@@ -105,6 +111,7 @@ internal object DiagnosticsReport {
             appendLine(
                 line(
                     "Logging database", monitoringStatus(
+                        reportContext,
                         settings.getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true),
                         now,
                         databaseHeartbeat,
@@ -122,12 +129,13 @@ internal object DiagnosticsReport {
     }
 
     private fun monitoringStatus(
-        enabled: Boolean, now: Long, timestamp: Long, unavailableText: String
+        context: Context, enabled: Boolean, now: Long, timestamp: Long, unavailableText: String
     ): String {
         if (!enabled) return "Disabled"
         if (timestamp !in 1..now) return unavailableText
         if (now - timestamp >= 300_000) return "Stale - no recent response"
-        val age = DiagnosticsDurationFormatter.format(Locale.ENGLISH, now - timestamp)
+
+        val age = DiagnosticsDurationFormatter.format(context, now - timestamp)
         return "Working - last response $age ago"
     }
 }

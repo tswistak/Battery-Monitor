@@ -59,8 +59,12 @@ class HelpNavigationInstrumentedTest {
                     .commit()
             )
             for ((section, detail, expectedHelp) in listOf(
-                Triple("diagnostics", "monitor", R.string.monitoring_help_overview), Triple(
-                    "diagnostics", "monitor:diagnostics_export", R.string.monitoring_help_overview
+                Triple("diagnostics", "monitor", R.string.diagnostics_root_help), Triple(
+                    "diagnostics", "monitor:diagnostics_export", R.string.diagnostics_root_help
+                ), Triple(
+                    "diagnostics", "monitor:diagnostics_root", R.string.diagnostics_root_help
+                ), Triple(
+                    "diagnostics", "monitor:diagnostics_shizuku", R.string.diagnostics_shizuku_help
                 ), Triple(
                     "diagnostics", "charging-tools", R.string.charging_diagnostics_help_overview
                 ), Triple(
@@ -71,8 +75,7 @@ class HelpNavigationInstrumentedTest {
             )) {
                 instrumentation.startActivitySync(
                     Intent(
-                        context,
-                        BatteryInfoActivity::class.java
+                        context, BatteryInfoActivity::class.java
                     ).putExtra(BatteryInfoActivity.EXTRA_SECTION, section)
                         .putExtra(BatteryInfoActivity.EXTRA_DETAIL, detail)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

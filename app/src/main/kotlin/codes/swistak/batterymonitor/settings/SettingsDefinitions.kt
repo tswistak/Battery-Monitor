@@ -206,6 +206,7 @@ internal object SettingsDefinitions {
                 title = R.string.pref_cat_channel_settings, preferences = listOf(
                     SettingsPreferenceDefinition(
                         key = SettingsContract.KEY_ENABLE_NOTIFS_B,
+                        summary = R.string.pref_manage_main_channel_summary,
                         selectable = false,
                     ),
                 )
@@ -283,6 +284,7 @@ internal object SettingsDefinitions {
                     SettingsPreferenceDefinition(
                         key = SettingsContract.KEY_SHOW_ICON_UNIT,
                         title = R.string.pref_show_icon_unit,
+                        summary = R.string.pref_show_icon_unit_summary,
                         singleLineTitle = false,
                         control = SettingsControl.Toggle(true),
                     ),
@@ -385,7 +387,7 @@ internal object SettingsDefinitions {
                             entries = R.array.max_log_age_entries,
                             entryValues = R.array.max_log_age_values,
                             defaultValue = SettingsTextDefault.Resource(R.string.default_max_log_age),
-                            dialogTitle = R.string.pref_max_log_age_summary,
+                            dialogTitle = R.string.pref_max_log_age,
                         ),
                     ),
                 )
@@ -458,8 +460,8 @@ internal object SettingsDefinitions {
                     ),
                     SettingsPreferenceDefinition(
                         key = SettingsContract.KEY_AUTO_LOG_EXPORT,
-                        title = R.string.pref_set_auto_log_export,
-                        summary = R.string.pref_auto_log_export_not_set_summary,
+                        title = R.string.pref_auto_log_export_title,
+                        summary = R.string.pref_auto_log_export_setup_summary,
                     ),
                 )
             ),

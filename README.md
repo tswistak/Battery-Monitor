@@ -50,7 +50,7 @@ Readings depend on the device and the data Android makes available. Android-repo
 - Charts for level, temperature, voltage, current, power and remaining charge
 - Time ranges, event filtering, interactive charts and a fullscreen view comparing up to two metrics
 - CSV/JSON export and import, with choices to add imported history or replace existing history
-- CSV export since the last export or appended to an existing file; automatic CSV/JSON exports to a chosen folder, as new files or appended to an existing file
+- CSV/JSON export for a selected range, everything, or logs since the last manual export, including append to a compatible existing file; automatic CSV/JSON exports to a chosen folder, as new files or appended to an existing file
 
 ### Main Notification
 

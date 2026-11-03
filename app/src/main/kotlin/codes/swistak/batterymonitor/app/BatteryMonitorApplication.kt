@@ -24,6 +24,8 @@ import codes.swistak.batterymonitor.logs.AutoLogExportScheduler
 import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.migration.SettingsMigrationManager
+import codes.swistak.batterymonitor.widgets.WidgetUpdateDispatcher
+
 
 class BatteryMonitorApplication : Application() {
     private var notificationChannelLocales = LocaleList.getEmptyLocaleList()
@@ -48,6 +50,7 @@ class BatteryMonitorApplication : Application() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+        WidgetUpdateDispatcher.refresh(this)
         val locales = resources.configuration.locales
         if (locales != notificationChannelLocales) {
             NotificationChannels.refreshExistingChannelNames(this)

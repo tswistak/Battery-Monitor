@@ -54,6 +54,7 @@ import codes.swistak.batterymonitor.alarms.AlarmRule
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.common.DurationFormatter
+import codes.swistak.batterymonitor.logs.AutoLogExportProvider.Companion.applyMonitoringSnapshot
 import codes.swistak.batterymonitor.logs.AutoLogExporter
 import codes.swistak.batterymonitor.logs.BatteryHistorySampler
 import codes.swistak.batterymonitor.logs.HISTORY_MAINTENANCE_INTERVAL_MS
@@ -846,7 +847,10 @@ class BatteryInfoService : Service() {
 
     private fun applySettingsSnapshot(snapshot: Bundle) {
         forceWidgetUpdate = true
-        if (!SettingsSnapshot.apply(settings, snapshot)) {
+        if (!applyMonitoringSnapshot(
+                this, settings, snapshot
+            )
+        ) {
             Log.e(LOG_TAG, "Failed to apply cross-process settings snapshot")
         }
     }
@@ -1419,7 +1423,8 @@ class BatteryInfoService : Service() {
             }
 
             SettingsContract.CHIP_CONTENT_VOLTAGE -> {
-                info!!.voltage?.let { DisplayStrings.formatVoltage(it) } ?: "—"
+                info!!.voltage?.let { DisplayStrings.formatVoltage(it) }
+                    ?: "—"
             }
 
             SettingsContract.CHIP_CONTENT_CURRENT -> {
@@ -1541,10 +1546,10 @@ class BatteryInfoService : Service() {
                 }
             } else line = DisplayStrings.nMinutesLong(predicted.minutes)
 
-            line += if (info!!.prediction.whatHappened == BatteryInfo.Prediction.UNTIL_CHARGED) res.getString(
-                R.string.notification_until_charged
+            line = res.getString(
+                if (info!!.prediction.whatHappened == BatteryInfo.Prediction.UNTIL_CHARGED) R.string.notification_until_charged else R.string.notification_until_drained,
+                line
             )
-            else res.getString(R.string.notification_until_drained)
         }
 
         return line
@@ -1586,7 +1591,7 @@ class BatteryInfoService : Service() {
                         it
                     )
                 }?.let {
-                    BatteryCurrent.formatMilliAmps(it, res.configuration.locales[0]) + "mA"
+                    BatteryCurrent.formatMilliAmps(it, res.configuration.locales[0]) + "\u00A0mA"
                 }
 
                 SettingsContract.VITAL_SIGN_CHARGE -> {

@@ -43,7 +43,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -93,11 +92,14 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.ActionLabel
 import codes.swistak.batterymonitor.ui.components.SettingRow
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
+import codes.swistak.batterymonitor.ui.settings.settingIcon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.text.DateFormat
 import java.util.Date
 
@@ -149,12 +151,12 @@ internal fun DiagnosticsRoute(
     DisposableEffect(viewModel) { onDispose { viewModel.setActive(false) } }
     DiagnosticsScreen(
         state, viewModel::refreshStats, onMonitor, onChargingTools, {
-        viewModel.setPrivilegedEnabled(it)
-        onPrivilegedChanged()
-    }, { selected ->
-        viewModel.setTab(selected)
-        tab = selected
-    }, monitor.snapshot, monitorActions, monitor.availability, tab
+            viewModel.setPrivilegedEnabled(it)
+            onPrivilegedChanged()
+        }, { selected ->
+            viewModel.setTab(selected)
+            tab = selected
+        }, monitor.snapshot, monitorActions, monitor.availability, tab
     )
 }
 
@@ -220,7 +222,7 @@ internal fun DiagnosticsScreen(
     ) {
         if (needsPredictor) value = withContext(Dispatchers.Default) {
             preparePredictorDiagnostics(
-                storedPredictor, recentPredictorState, predictorTime, locale
+                storedPredictor, recentPredictorState, predictorTime, locale, resources::getString
             )
         }
     }
@@ -286,12 +288,12 @@ internal fun DiagnosticsScreen(
                 (if (tab == 0) listOfNotNull(state.basic) else snapshots).filter { it.hasStats() }
             Text(
                 stringResource(
-                R.string.current_detail_source, diagnosticSourceName(
-                    sources.joinToString(
-                        " · ", transform = ::diagnosticAccessName
-                    )
-                ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
-                ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
+                    R.string.current_detail_source, diagnosticSourceName(
+                        sources.joinToString(
+                            " · ", transform = ::diagnosticAccessName
+                        )
+                    ).ifEmpty { "Android" }) + " · " + (sources.maxOfOrNull { it.capturedAtMillis }
+                    ?.let { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(it)) } ?: "—"),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
@@ -341,18 +343,26 @@ internal fun DiagnosticsScreen(
                 label = { Text(stringResource(R.string.diag_search_key)) },
                 leadingIcon = { Icon(painterResource(R.drawable.ui_search), null) },
                 trailingIcon = {
-                    if (query.isNotEmpty()) IconButton(onClick = {
-                        query = ""
-                    }) {
+                    if (query.isNotEmpty()) TooltipIconButton(
+                        label = stringResource(
+                            R.string.search_clear
+                        ), onClick = {
+                            query = ""
+                        }) {
                         Icon(
-                            painterResource(R.drawable.ui_close), stringResource(R.string.cancel)
+                            painterResource(R.drawable.ui_close),
+                            stringResource(R.string.search_clear)
                         )
                     }
                 },
                 singleLine = true,
                 modifier = Modifier.weight(1f)
             )
-            IconButton(onClick = onRefresh, enabled = !state.loading && !state.rawLoading) {
+            TooltipIconButton(
+                label = stringResource(R.string.diag_action_refresh),
+                onClick = onRefresh,
+                enabled = !state.loading && !state.rawLoading
+            ) {
                 Icon(
                     painterResource(R.drawable.ui_refresh),
                     stringResource(R.string.diag_action_refresh)
@@ -555,7 +565,8 @@ internal fun DiagnosticsScreen(
                 }
                 OutlinedButton(onClick = onChargingTools, modifier = Modifier.fillMaxWidth()) {
                     ActionLabel(
-                        stringResource(R.string.charging_diagnostics_title), R.drawable.ui_bolt
+                        stringResource(R.string.charging_diagnostics_title),
+                        settingIcon("charging_diagnostics_capture")
                     )
                 }
             }
@@ -572,13 +583,13 @@ internal fun DiagnosticsScreen(
                     DiagnosticsLink(
                         stringResource(R.string.pref_cat_privileged_access),
                         stringResource(state.privilegedAccessStatus),
-                        R.drawable.ui_storage
+                        settingIcon(SettingsContract.KEY_USE_PRIVILEGED_ACCESS)
                     ) { dialog = "access" }
                     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                     DiagnosticsLink(
-                        stringResource(R.string.diagnostics_monitoring),
-                        stringResource(R.string.diagnostics_vendor_settings_summary),
-                        R.drawable.ui_battery,
+                        stringResource(R.string.diag_monitor_operation),
+                        stringResource(R.string.diagnostics_summary),
+                        settingIcon("background_monitoring"),
                         onMonitor
                     )
                 }
@@ -595,7 +606,10 @@ internal fun DiagnosticsScreen(
                     )
                 }
                 TextButton(onClick = { dialog = "report" }, modifier = Modifier.fillMaxWidth()) {
-                    ActionLabel(stringResource(R.string.diagnostics_export), R.drawable.ui_share)
+                    ActionLabel(
+                        stringResource(R.string.diagnostics_export),
+                        settingIcon("diagnostics_export")
+                    )
                 }
                 Text(
                     stringResource(R.string.diag_source_help),
@@ -683,7 +697,7 @@ internal fun DiagnosticsScreen(
     if (dialogsAllowed && dialog == "report") DiagnosticReportDialog({ includeRaw ->
         // The dialog invokes this callback on IO, only when a report is requested.
         val reportPredictor = preparePredictorDiagnostics(
-            storedPredictor, recentPredictorState, predictorTime, locale
+            storedPredictor, recentPredictorState, predictorTime, locale, resources::getString
         )
         val normalized =
             mergedDiagnosticGroups(snapshots, display.multiplier, display.fahrenheit, locale)
@@ -902,13 +916,20 @@ internal fun DiagnosticReportDialog(
     val context = LocalContext.current
     val resources = LocalResources.current
     var include by rememberSaveable { mutableStateOf(false) }
-    var reportFailed by remember { mutableStateOf(false) }
     val currentCreate by rememberUpdatedState(create)
-    val report by produceState<String?>(null, include) {
-        value = null
-        reportFailed = false
-        value = withContext(Dispatchers.IO) { runCatching { currentCreate(include) }.getOrNull() }
-        reportFailed = value == null
+    val requestedInclude = include
+    val previewState = remember(requestedInclude) { mutableStateOf<Result<String>?>(null) }
+    val currentPreviewState by rememberUpdatedState(previewState)
+    LaunchedEffect(previewState) {
+        previewState.value = withContext(Dispatchers.IO) {
+            runCatching { currentCreate(requestedInclude) }
+        }
+    }
+    val report = previewState.value?.getOrNull()
+    val reportFailed = previewState.value?.isFailure == true
+    fun readyReport(): String? {
+        if (include != requestedInclude || currentPreviewState !== previewState) return null
+        return previewState.value?.getOrNull()
     }
     // Keep large report text out of the Activity saved-state Bundle.
     val pendingFile = context.cacheDir.resolve("diagnostics-report-pending.txt")
@@ -932,59 +953,83 @@ internal fun DiagnosticReportDialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
         title = { Text(stringResource(titleResource)) },
         text = {
-            Column(
-                Modifier.verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                SettingRow(
-                    stringResource(optionLabel),
-                    stringResource(R.string.diag_report_privacy),
-                    { include = !include },
-                    checked = include
-                )
-                OutlinedCard(
-                    Modifier
-                        .fillMaxWidth()
-                        .heightIn(max = 300.dp),
-                    shape = MaterialTheme.shapes.medium,
-                    colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+            BoxWithConstraints(Modifier.fillMaxWidth()) {
+                val minimumPreviewHeight = 32.dp + with(LocalDensity.current) {
+                    MaterialTheme.typography.bodySmall.lineHeight.toDp() * 2
+                }
+                val previewHeight =
+                    (maxHeight * 0.6f).coerceAtLeast(minimumPreviewHeight).coerceAtMost(300.dp)
+                Column(
+                    Modifier.verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    SelectionContainer(Modifier.padding(16.dp)) {
-                        Text(
-                            report
-                                ?: stringResource(if (reportFailed) R.string.diagnostics_export_failed else R.string.diagnostics_checking),
+                    SettingRow(
+                        stringResource(optionLabel),
+                        stringResource(R.string.diag_report_privacy),
+                        { include = !include },
+                        checked = include
+                    )
+                    OutlinedCard(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(previewHeight),
+                        shape = MaterialTheme.shapes.medium,
+                        colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        SelectionContainer(
                             Modifier
-                                .fillMaxWidth()
-                                .verticalScroll(rememberScrollState()),
-                            fontFamily = FontFamily.Monospace,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
+                                .fillMaxSize()
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                report
+                                    ?: stringResource(if (reportFailed) R.string.diagnostics_export_failed else R.string.diagnostics_checking),
+                                Modifier
+                                    .fillMaxSize()
+                                    .verticalScroll(rememberScrollState()),
+                                fontFamily = FontFamily.Monospace,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                        }
                     }
                 }
             }
         },
         confirmButton = {
-            TextButton(enabled = report != null, onClick = {
-                val preview = report.orEmpty()
-                scope.launch {
-                    val success =
-                        withContext(Dispatchers.IO) { runCatching { pendingFile.writeText(preview) }.isSuccess }
-                    if (success) save.launch("battery_monitor_diagnostics_${System.currentTimeMillis()}.txt")
-                    else context.showToast(R.string.diagnostics_export_failed)
-                }
-            }) { Text(stringResource(R.string.charging_diagnostics_save)) }
-        },
-        dismissButton = {
-            FlowRow(horizontalArrangement = Arrangement.End) {
+            FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 TextButton(
                     enabled = report != null, onClick = {
+                        val preview = readyReport() ?: return@TextButton
                         copyDiagnostic(
-                            context, resources.getString(R.string.nav_diagnostics), report.orEmpty()
+                            context, resources.getString(R.string.nav_diagnostics), preview
                         )
                     }) { Text(stringResource(R.string.charging_diagnostics_copy)) }
                 TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+                TextButton(enabled = report != null, onClick = {
+                    val preview = readyReport() ?: return@TextButton
+                    scope.launch {
+                        var stagedFile: File? = null
+                        try {
+                            val success = withContext(Dispatchers.IO) {
+                                runCatching {
+                                    val file = File.createTempFile(
+                                        "diagnostics-report-", ".txt", context.cacheDir
+                                    )
+                                    stagedFile = file
+                                    file.writeText(preview)
+                                }.isSuccess
+                            }
+                            if (readyReport() == null) return@launch
+                            if (success && stagedFile?.renameTo(pendingFile) == true) {
+                                save.launch("battery_monitor_diagnostics_${System.currentTimeMillis()}.txt")
+                            } else context.showToast(R.string.diagnostics_export_failed)
+                        } finally {
+                            stagedFile?.delete()
+                        }
+                    }
+                }) { Text(stringResource(R.string.charging_diagnostics_save)) }
             }
         })
 }

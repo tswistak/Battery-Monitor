@@ -40,7 +40,7 @@ internal enum class SettingsCategory(
     ),
     Notification(
         "notification",
-        R.string.settings_notification,
+        R.string.notification_settings,
         R.string.notification_settings_summary,
         R.drawable.ui_bell,
         R.string.notification_settings
@@ -108,7 +108,7 @@ internal object SettingCatalog {
 
     private val diagnosticEntries = listOf(
         DiagnosticEntry(
-            "background_monitoring", R.string.diagnostics_monitoring, R.string.diagnostics_summary
+            "background_monitoring", R.string.diag_monitor_operation, R.string.diagnostics_summary
         ),
         DiagnosticEntry(
             SettingsContract.KEY_DEBUG_LOGGING,
@@ -179,7 +179,6 @@ internal object SettingCatalog {
             SettingsContract.KEY_DISCHARGING_TARGET
         ), SettingsCategory.Notification to listOf(
             SettingsContract.KEY_ENABLE_NOTIFS_B,
-            SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY,
             SettingsContract.KEY_TOP_LINE,
             SettingsContract.KEY_BOTTOM_LINE,
             SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
@@ -275,12 +274,12 @@ internal object SettingCatalog {
                                 SettingsContract.KEY_MAX_LOG_AGE,
                                 SettingsContract.KEY_AUTO_LOG_EXPORT
                             )
-                        ) text(R.string.settings_history_export) else heading, listOf(
+                        ) text(R.string.pref_cat_logging) else heading, listOf(
                             text(category.title), text(category.legacyTitle)
                         ) + (when (category) {
                             SettingsCategory.General -> listOf(text(R.string.settings_legacy_general))
                             SettingsCategory.Advanced -> listOf(
-                                text(R.string.settings_history_export),
+                                text(R.string.pref_cat_logging),
                                 text(R.string.settings_data_permissions)
                             )
 
@@ -303,7 +302,7 @@ internal object SettingCatalog {
                 SettingsCategory.Advanced,
                 text(it.title),
                 it.summary?.let(text).orEmpty(),
-                text(if (route == "charging-tools") R.string.charging_diagnostics_title else R.string.diagnostics_monitoring),
+                text(if (route == "charging-tools") R.string.charging_diagnostics_title else R.string.diag_monitor_operation),
                 listOf(
                     text(R.string.diagnostics),
                     text(R.string.advanced_settings),

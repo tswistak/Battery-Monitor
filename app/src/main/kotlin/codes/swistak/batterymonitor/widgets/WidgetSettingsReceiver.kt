@@ -11,6 +11,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import codes.swistak.batterymonitor.logs.AutoLogExportProvider.Companion.applyMonitoringSnapshot
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsSnapshot
@@ -18,7 +19,8 @@ import codes.swistak.batterymonitor.settings.SettingsSnapshot
 class WidgetSettingsReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val snapshot = intent.getBundleExtra(EXTRA_SETTINGS)
-        if (snapshot != null && !SettingsSnapshot.apply(
+        if (snapshot != null && !applyMonitoringSnapshot(
+                context,
                 context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE),
                 snapshot
             )

@@ -25,8 +25,9 @@ class SettingCatalogTest {
     fun `every existing settings control and appearance control has a searchable destination`() {
         val keys = preferenceKeys()
         assertEquals(
-            keys + setOf(KEY_COLOR_SOURCE, KEY_BRIGHTNESS) + SettingCatalog.diagnosticRoutes.keys,
-            SettingCatalog.routes.keys
+            (keys - "dismiss_low_battery_on_recovery") + setOf(
+                KEY_COLOR_SOURCE, KEY_BRIGHTNESS
+            ) + SettingCatalog.diagnosticRoutes.keys, SettingCatalog.routes.keys
         )
         assertEquals(SettingsCategory.entries.toSet(), SettingCatalog.routes.values.toSet())
         assertEquals(6, SettingsCategory.entries.map { it.route }.distinct().size)

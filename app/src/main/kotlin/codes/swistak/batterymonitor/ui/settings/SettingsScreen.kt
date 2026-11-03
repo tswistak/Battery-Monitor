@@ -35,7 +35,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -79,6 +78,7 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_BRIGHTNESS
 import codes.swistak.batterymonitor.settings.SettingsContract.KEY_COLOR_SOURCE
 import codes.swistak.batterymonitor.ui.components.NumericValueDialog
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
 import codes.swistak.batterymonitor.ui.theme.Brightness
@@ -154,10 +154,12 @@ fun SettingsScreen(
                     leadingIcon = { Icon(painterResource(R.drawable.ui_search), null) },
                     trailingIcon = if (query.isNotEmpty()) {
                         {
-                            IconButton(onClick = { query = "" }) {
+                            TooltipIconButton(
+                                label = stringResource(R.string.search_clear),
+                                onClick = { query = "" }) {
                                 Icon(
                                     painterResource(R.drawable.ui_close),
-                                    stringResource(R.string.cancel)
+                                    stringResource(R.string.search_clear)
                                 )
                             }
                         }
@@ -252,7 +254,11 @@ fun SettingsScreen(
                         TextButton(
                             onClick = { activate(background) }, Modifier.padding(top = 12.dp)
                         ) {
-                            Icon(painterResource(R.drawable.ui_current), null, Modifier.size(20.dp))
+                            Icon(
+                                painterResource(settingIcon(background.key)),
+                                null,
+                                Modifier.size(20.dp)
+                            )
                             Spacer(Modifier.width(8.dp))
                             Text(background.title)
                         }
@@ -262,7 +268,11 @@ fun SettingsScreen(
                             onClick = {
                                 onDiagnostics(requireNotNull(charging.diagnosticDetail), null)
                             }) {
-                            Icon(painterResource(R.drawable.ui_bolt), null, Modifier.size(20.dp))
+                            Icon(
+                                painterResource(settingIcon(charging.key)),
+                                null,
+                                Modifier.size(20.dp)
+                            )
                             Spacer(Modifier.width(8.dp))
                             Text(stringResource(R.string.charging_diagnostics_title))
                         }
@@ -482,9 +492,7 @@ private fun unavailableReason(
         R.string.settings_app_language_unavailable
     )
     if (descriptor.category == SettingsCategory.Notification && descriptor.key !in setOf(
-            SettingsContract.KEY_ENABLE_NOTIFS_B,
-            SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS,
-            SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY
+            SettingsContract.KEY_ENABLE_NOTIFS_B, SettingsContract.KEY_LIVE_UPDATE_SYSTEM_SETTINGS
         )
     ) {
         val manager = NotificationManagerCompat.from(context)

@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.ui.alarms
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.NotificationManager
 import android.os.Build
@@ -272,6 +273,27 @@ internal class AlarmsViewModel(
     fun clearNotice() = mutableState.update { it.copy(notice = null) }
     fun reportSettingsFailure() =
         mutableState.update { it.copy(notice = text(R.string.alarms_settings_unavailable)) }
+
+    fun setDismissLowBatteryOnRecovery(enabled: Boolean, onChanged: () -> Unit) {
+        if (state.value.busy) return
+        mutableState.update { it.copy(busy = true) }
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                runCatching {
+                    check(
+                        // Keep commit's Boolean result so failed resets are reported to the user.
+                        @SuppressLint("UseKtx") settings.edit().putBoolean(
+                            SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY, enabled
+                        ).commit()
+                    )
+                }
+            }
+            mutableState.update { it.copy(busy = false) }
+            result.onSuccess {
+                runCatching(onChanged).onFailure { reportSettingsFailure() }
+            }.onFailure { reportSettingsFailure() }
+        }
+    }
 
     private fun mutate(onSuccess: () -> Unit, operation: (AlarmDatabase) -> Unit) {
         if (!state.value.canMutate) return

@@ -29,7 +29,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -75,6 +74,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import kotlinx.coroutines.launch
 
@@ -245,13 +245,14 @@ internal fun SideNavigationShell(
                                 true
                             } else false
                         }) {
-                    Row(Modifier
-                        .fillMaxSize()
-                        .focusProperties {
-                            onEnter = { if (modalOpen) cancelFocusChange() }
-                        }
-                        .focusGroup()
-                        .semantics { if (modalOpen) hideFromAccessibility() }) {
+                    Row(
+                        Modifier
+                            .fillMaxSize()
+                            .focusProperties {
+                                onEnter = { if (modalOpen) cancelFocusChange() }
+                            }
+                            .focusGroup()
+                            .semantics { if (modalOpen) hideFromAccessibility() }) {
                         if (persistent) PermanentDrawerSheet(
                             modifier = Modifier
                                 .width(280.dp)
@@ -303,16 +304,17 @@ internal fun SideNavigationShell(
                                     )
                                 },
                                 navigationIcon = {
-                                    IconButton(onClick = {
-                                        if (detailTitle != null) onUp()
-                                        else if (persistent) {
-                                            if (keyboardNavigation) panelFocus.requestFocus()
-                                        } else scope.launch { drawerState.open() }
-                                    }, modifier = Modifier
-                                        .focusRequester(menuFocus)
-                                        .semantics {
-                                            contentDescription = navigationLabel
-                                        }) {
+                                    TooltipIconButton(
+                                        label = navigationLabel, onClick = {
+                                            if (detailTitle != null) onUp()
+                                            else if (persistent) {
+                                                if (keyboardNavigation) panelFocus.requestFocus()
+                                            } else scope.launch { drawerState.open() }
+                                        }, modifier = Modifier
+                                            .focusRequester(menuFocus)
+                                            .semantics {
+                                                contentDescription = navigationLabel
+                                            }) {
                                         Icon(
                                             painterResource(if (detailTitle == null) R.drawable.ui_menu else R.drawable.ui_back),
                                             contentDescription = null,
@@ -321,7 +323,10 @@ internal fun SideNavigationShell(
                                     }
                                 },
                                 actions = {
-                                    if (onSettings != null) IconButton(onClick = onSettings) {
+                                    if (onSettings != null) TooltipIconButton(
+                                        label = settingsLabel,
+                                        onClick = onSettings
+                                    ) {
                                         Icon(
                                             painterResource(R.drawable.ui_settings),
                                             contentDescription = settingsLabel,

@@ -287,16 +287,13 @@ internal fun normalizedDiagnosticGroups(
                         4 -> R.string.diag_wireless_supply
                         else -> 0
                     }
-                ),
-                fastCharging ?: row(R.string.diag_fast_charging, "fast_charging", null),
-                row(
+                ), fastCharging ?: row(R.string.diag_fast_charging, "fast_charging", null), row(
                     R.string.diag_field_charge_time_remaining,
                     "charge_time_remaining",
                     snapshot.chargeTimeRemainingMs,
                     "ms",
-                    snapshot.chargeTimeRemainingMs?.takeIf { it >= 0 }
-                        ?.let { DiagnosticsDurationFormatter.format(locale, it) }),
-                row(
+                    snapshot.chargeTimeRemainingMs?.takeIf { it >= 0 }?.toString()
+                ), row(
                     R.string.diag_field_max_charging_current,
                     "max_charging_current",
                     snapshot.maxChargingCurrentUa,
@@ -305,8 +302,7 @@ internal fun normalizedDiagnosticGroups(
                         BatteryCurrent.formatMilliAmps(
                             BatteryCurrent.scaleMicroAmps(it, 1), locale
                         ) + "\u00A0mA"
-                    }),
-                row(
+                    }), row(
                     R.string.diag_field_max_charging_voltage,
                     "max_charging_voltage",
                     snapshot.maxChargingVoltageUv,
@@ -315,20 +311,17 @@ internal fun normalizedDiagnosticGroups(
                         String.format(
                             locale, "%.2f\u00A0V", it / 1_000_000.0
                         )
-                    }),
-                row(
+                    }), row(
                     R.string.diag_field_charging_policy,
                     "charging_policy",
                     snapshot.chargingPolicy,
                     value = null
-                ).copy(valueLabel = chargingPolicyLabel(snapshot)),
-                row(
+                ).copy(valueLabel = chargingPolicyLabel(snapshot)), row(
                     R.string.diag_field_charging_state,
                     "charging_state",
                     snapshot.chargingState,
                     value = null
-                ).copy(valueLabel = chargingStateLabel(snapshot)),
-                row(
+                ).copy(valueLabel = chargingStateLabel(snapshot)), row(
                     R.string.diag_field_capacity_level,
                     "capacity_level",
                     snapshot.capacityLevel,
@@ -620,8 +613,7 @@ internal fun formattedDiagnosticValue(
     if (row.valueLabel != 0) return label(row.valueLabel)
     if (row.label == R.string.diag_field_charge_time_remaining) {
         val milliseconds = row.rawValue?.toLongOrNull()?.takeIf { it >= 0 } ?: return null
-        row.value?.takeIf { it != row.rawValue }?.let { return it }
-        return DiagnosticsDurationFormatter.format(locale, milliseconds)
+        return DiagnosticsDurationFormatter.format(locale, milliseconds, label)
     }
     return row.value
 }

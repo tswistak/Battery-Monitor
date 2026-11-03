@@ -38,7 +38,7 @@
     <string name="current_monitor_action">Preverite spremljanje v razdelku „Diagnostika“.</string>
     <string name="current_monitor_attention">Spremljanje zahteva pozornost</string>
     <string name="current_notifications_off">Obvestila so izklopljena</string>
-    <string name="current_notifications_off_body">Obvestila aplikacije Battery Monitor so izklopljena. Preverite nastavitve obvestil, da obnovite opozorila.</string>
+    <string name="current_notifications_off_body">Obvestila aplikacije Battery Monitor so izklopljena. Preverite nastavitve obvestil, da obnovite alarme.</string>
     <string name="current_power_optimized">Dejavnost v ozadju je lahko omejena</string>
     <string name="current_power_optimized_body">Optimizacija baterije v Androidu lahko zakasni posodobitve spremljanja. Če se ustavijo, preverite nastavitev baterije za to aplikacijo.</string>
     <string name="current_paused">Priključeno · Se ne polni</string>
@@ -63,6 +63,7 @@
     <string name="current_temperature">Temperatura</string>
     <string name="current_voltage">Napetost</string>
     <string name="vital_sign_voltage" formatted="false">Napetost baterije</string>
+    <string name="vital_sign_current_label" formatted="false">Tok</string>
     <string name="pref_cat_battery_current_main" formatted="false">Tok baterije</string>
     <string name="remaining_charge" formatted="false">Preostali naboj</string>
     <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
@@ -91,11 +92,13 @@
     <string name="current_state_settings_help" formatted="false">Izberite, ali se prikaže preostali naboj in ali „Trenutno stanje“ daje prednost povprečnemu toku baterije. Tok se meri vedno, ko je na voljo. Množilnik popravlja tok in izračunano moč po vsej aplikaciji; dnevniki ohranijo izvirni trenutni tok, da lahko množilnik pozneje spremenite.</string>
     <string name="pref_show_remaining_charge" formatted="false">Prikaži preostali naboj</string>
     <string name="pref_show_remaining_charge_summary" formatted="false">Prikažem preostali naboj baterije, ki ga sporoča naprava, v mAh?</string>
+    <string name="pref_show_remaining_charge_help" formatted="false">Prikažite preostali naboj baterije, ki ga sporoča naprava, v mAh.</string>
     <string name="pref_battery_current_multiplier" formatted="false">Množitelj</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Nekatere naprave poročajo v nepričakovanih enotah ali z nepričakovanim predznakom. Tukaj pomnožite sporočeno vrednost, da popravite prikazani rezultat.\n
     \n
     Kot groba referenca za telefone je standardni predznak Androida med polnjenjem pozitiven, med praznjenjem pa negativen. Aktivno polnjenje je pogosto približno od +500 do +5000\u00A0mA, običajno praznjenje pa od -100 do -3000\u00A0mA. Vrednosti blizu nič so lahko običajne, ko je baterija skoraj polna ali telefon miruje. Če je vrednost približno 1000-krat premajhna ali prevelika oziroma je predznak obrnjen, prilagodite množitelj.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Zaznaj samodejno</string>
+    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Poskusite določiti množitelj toka iz odčitka baterije. Če zaznavanje ni na voljo, trenutna vrednost ostane nespremenjena, zaznavanje pa lahko poskusi znova, ko je na voljo primeren odčitek. Izbira ročne vrednosti prekliče čakajoče zaznavanje.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Samodejno zaznavanje ni na voljo za trenutno stanje baterije ali odčitek</string>
     <string name="pref_battery_current_multiplier_detection_result">Množitelj je bil samodejno nastavljen na %1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Prednost povprečnemu toku</string>
@@ -147,8 +150,7 @@
     <string name="main_notif_chan_name" formatted="false">Glavno obvestilo</string>
     <string name="live_updates_notif_chan_name" formatted="false">Posodobitve v živo</string>
     <string name="notification_settings" formatted="false">Glavno obvestilo</string>
-    <string name="settings_notification">Obvestilo</string>
-    <string name="notification_settings_summary" formatted="false">Konfigurirajte vsebino obvestila, ikono vrstice stanja in čip posodobitev v živo</string>
+    <string name="notification_settings_summary" formatted="false">Konfigurirajte vsebino obvestila, ikono vrstice stanja in čip Posodobitev v živo</string>
     <string name="notification_settings_help" formatted="false">Konfigurirate lahko, katero vsebino želite prikazati v spustnem obvestilu.</string>
     <string name="notification_channels_help" formatted="false">Odprite nastavitve obvestil Androida, da dovolite ali blokirate obvestila ter nastavite zvok, vibriranje in dostavo glavnega obvestila in posameznih vrst alarmov. Omogočitev pravila alarma ne preglasi blokiranega kanala obvestil.</string>
     <string name="app_notifs_disabled_summary" formatted="false">Onemogočili ste vsa obvestila za to aplikacijo.  Omogočite jim dostop do teh nastavitev</string>
@@ -160,6 +162,7 @@
     Opomba: dodelitev tega dovoljenja lahko občasno povzroči zaprtje aplikacije. Če se to zgodi, jo preprosto znova odprite.</string>
     <string name="pref_cat_channel_settings" formatted="false">Nastavitve kanala za obvestila</string>
     <string name="pref_manage_main_channel" formatted="false">Upravljanje glavnega kanala</string>
+    <string name="pref_manage_main_channel_summary" formatted="false">Odpri nastavitve Androida za glavni kanal obvestil</string>
     <string name="pref_cat_notification_content" formatted="false">Vsebina</string>
     <string name="pref_top_line_content" formatted="false">Vsebina vrhnje vrstice</string>
     <string name="pref_top_line_content_help" formatted="false">Izberite, ali zgornja vrstica obvestila prikazuje oceno „Preostali čas“, „Čas od spremembe stanja“ ali izbrane „Vitalni znaki“.</string>
@@ -168,8 +171,8 @@
     <string name="time_remaining" formatted="false">Preostali čas</string>
     <string name="time_since_status_change" formatted="false">Čas od spremembe stanja</string>
     <string name="vital_signs" formatted="false">Vitalni znaki</string>
-    <string name="notification_until_charged" formatted="false">"do polnjenja"</string>
-    <string name="notification_until_drained" formatted="false">"levo"</string>
+    <string name="notification_until_charged" formatted="true">%1$s do napolnitve</string>
+    <string name="notification_until_drained" formatted="true">Preostalo %1$s</string>
     <string name="pref_time_remaining_verbosity" formatted="false">Preostali čas Dobesednost</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">Naprave so v vseh oblikah in velikostih, zato večina prevodov potrebuje uporabite okrajšave, da zagotovite, da ocena preostalega časa ustreza udobno v območju za obvestila. Če še vedno ne ustreza, lahko se odločite za obliko „Zgoščeno“. Če imate dovolj prostora, morda vam bo ljubša nastavitev „Dobesedno“.</string>
     <string name="condensed" formatted="false">Zgoščeno</string>
@@ -177,23 +180,27 @@
     <string name="verbose" formatted="false">Dobesedno</string>
     <string name="pref_vital_signs_content" formatted="false">Vsebina ključnih podatkov</string>
     <string name="pref_vital_signs_content_summary" formatted="false">Katere vrednosti vključiti v „Vitalni znaki“ in v kakšnem vrstnem redu?</string>
+    <string name="pref_vital_signs_content_help" formatted="false">Izberite vrednosti in z gumbi za premikanje določite njihov vrstni red. Izbor vseh vrednosti lahko prekličete.</string>
     <string name="pref_expanded_notification" formatted="false">Razširi podrobnosti obvestila</string>
     <string name="pref_expanded_notification_summary" formatted="false">Prikaži podrobnosti z oznakami, ko je obvestilo razširjeno?</string>
     <string name="pref_expanded_notification_help" formatted="false">Če je ta možnost omogočena, razširjeno glavno obvestilo prikazuje „Preostali čas“, „Čas od spremembe stanja“ in vsako vrednost iz skupine „Vitalni znaki“ v ločeni vrstici z oznako namesto povzetka v eni vrstici.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">Ikona vrstice stanja</string>
     <string name="status_bar_icon_settings_help" formatted="false">Izberite, ali ikona obvestila prikazuje odstotek baterije ali temperaturo, ali naj bo v ikoni prikazan simbol enote in ali naj ima polnjenje posebno ikono. Od Androida 16 ikona vrstice stanja morda ne bo delovala v vseh različicah operacijskega sistema.</string>
+    <string name="status_bar_icon_availability_help" formatted="false">Od Androida 16 ikona vrstice stanja morda ne bo delovala v vseh različicah operacijskega sistema.</string>
     <string name="pref_icon_content" formatted="false">Vsebina ikone</string>
     <string name="pref_icon_content_help" formatted="false">Izberite, ali ikona vrstice stanja prikazuje odstotek baterije ali temperatura baterije. Temperatura sledi vaši izbrani enoti.</string>
     <string name="pref_content_percent" formatted="false">Odstotek baterije</string>
     <string name="pref_content_temperature" formatted="false">Temperatura baterije</string>
     <string name="pref_show_icon_unit" formatted="false">Prikaži simbol enote</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Pokaži simbol enote ob vrednosti v ikoni vrstice stanja</string>
     <string name="pref_show_icon_unit_help" formatted="false">Če je omogočeno, ikona prikazuje znak za odstotek pri odstotku baterije in simbol stopinje pri temperaturi baterije. Izklopite to možnost, če želite prikazati samo številko.</string>
     <string name="pref_indicate_charging" formatted="false">Označite Polnjenje</string>
     <string name="pref_indicate_charging_summary" formatted="false">Ali želite spremeniti ikono za prikaz med polnjenjem?</string>
     <string name="pref_indicate_charging_help" formatted="false">Ikona polnjenja lahko pod številko prikaže strelo. Izklopite to nastavitev, če želite isto ikono med polnjenjem in praznjenjem.</string>
     <string name="status_bar_chip_settings" formatted="false">Čip vrstice stanja</string>
     <string name="status_bar_chip_settings_help" formatted="false">V Androidu 16 ali novejšem izberite, kdaj se pojavi oznaka Live Update, katere vrednosti izmenjuje in ali prikazuje emoji polnjenja. Razpoložljivost je odvisna tudi od naprave in sistemskih nastavitev obvestil.</string>
+    <string name="status_bar_chip_availability_help" formatted="false">Razpoložljivost je odvisna tudi od naprave in sistemskih nastavitev obvestil.</string>
     <string name="settings_live_update_summary">V nastavitvah Androida dovoli ali blokiraj poudarjena obvestila baterije</string>
     <string name="settings_live_update_help">V nastavitvah Androida dovoli ali blokiraj poudarjena obvestila baterije.</string>
     <string name="live_updates_onboarding_title">Vrstica stanja Baterijski čip</string>
@@ -210,22 +217,22 @@
     <string name="live_updates_onboarding_positive_on">Razumem</string>
     <string name="live_updates_onboarding_positive_off">Pojdite v Nastavitve</string>
     <string name="live_updates_onboarding_negative_off">Odpusti</string>
-    <string name="pref_live_update_display" formatted="false">Prikazi sprotno posodobitev</string>
+    <string name="pref_live_update_display" formatted="false">Prikazi Sprotno posodobitev</string>
     <string name="pref_live_update_display_summary" formatted="false">Prikazi v vrstici stanja:</string>
-    <string name="pref_live_update_display_help" formatted="false">Izberite, kdaj naj se v vrstici stanja prikaze cip sprotne posodobitve Android 16+.</string>
+    <string name="pref_live_update_display_help" formatted="false">Izberite, kdaj naj se v vrstici stanja prikaze cip Sprotne posodobitve Android 16+.</string>
     <string name="pref_live_update_display_charging" formatted="false">Samo med polnjenjem</string>
-    <string name="pref_live_update_keep_main_notification" formatted="false">Obdrzi glavno obvestilo s sprotno posodobitvijo</string>
-    <string name="pref_live_update_keep_main_notification_summary" formatted="false">Ali naj se prikaze celotno glavno obvestilo, ko je sprotna posodobitev aktivna?</string>
+    <string name="pref_live_update_keep_main_notification" formatted="false">Obdrzi glavno obvestilo s Sprotno posodobitvijo</string>
+    <string name="pref_live_update_keep_main_notification_summary" formatted="false">Ali naj se prikaze celotno glavno obvestilo, ko je Sprotna posodobitev aktivna?</string>
     <string name="pref_live_update_keep_main_notification_help" formatted="false">Ce je vklopljeno, navadno glavno obvestilo ostane vidno poleg cipa v vrstici stanja.</string>
-    <string name="pref_expanded_live_update" formatted="false">Razširi podrobnosti sprotne posodobitve</string>
-    <string name="pref_expanded_live_update_summary" formatted="false">Prikaži podrobnosti z oznakami v obvestilu sprotne posodobitve?</string>
-    <string name="pref_expanded_live_update_help" formatted="false">Obvestila sprotnih posodobitev so vedno prikazana razširjena. Če je ta možnost omogočena, sprotna posodobitev prikazuje „Preostali čas“, „Čas od spremembe stanja“ in vsako vrednost iz skupine „Vitalni znaki“ v ločeni vrstici z oznako.</string>
+    <string name="pref_expanded_live_update" formatted="false">Razširi podrobnosti Sprotne posodobitve</string>
+    <string name="pref_expanded_live_update_summary" formatted="false">Prikaži podrobnosti z oznakami v obvestilu Sprotne posodobitve?</string>
+    <string name="pref_expanded_live_update_help" formatted="false">Obvestila Sprotnih posodobitev so vedno prikazana razširjena. Če je ta možnost omogočena, Sprotna posodobitev prikazuje „Preostali čas“, „Čas od spremembe stanja“ in vsako vrednost iz skupine „Vitalni znaki“ v ločeni vrstici z oznako.</string>
     <string name="pref_chip_content" formatted="false">Vsebina čipa</string>
     <string name="pref_chip_content_summary" formatted="false">Katere vrednosti naj bodo prikazane v čipu in v kakšnem vrstnem redu?</string>
-    <string name="pref_chip_content_help" formatted="false">Izberite vrednosti, med katerimi bo preklapljal čip v vrstici stanja, in določite njihov vrstni red.</string>
+    <string name="pref_chip_content_help" formatted="false">Izberite vrednosti, med katerimi bo preklapljal čip v vrstici stanja, in določite njihov vrstni red. Izbrana mora ostati vsaj ena vrednost.</string>
     <string name="pref_chip_switching_interval" formatted="false">Preklopni interval</string>
     <string name="pref_chip_switching_interval_summary" formatted="false">Izberite, kako pogosto čip preklopi na naslednjo izbrano vrednost</string>
-    <string name="pref_chip_switching_interval_help" formatted="false">Izberite, kako pogosto čip preklopi na naslednjo izbrano vrednost. Ta nastavitev je na voljo, ko je izbrana več kot ena vrednost.</string>
+    <string name="pref_chip_switching_interval_help" formatted="false">Izberite, kako pogosto čip preklopi na naslednjo izbrano vrednost. Ta nastavitev je na voljo, ko je izbrana več kot ena vrednost in „Prikazi Sprotno posodobitev“ ni nastavljeno na „Nikoli“.</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">Vnesite interval v sekundah (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">Vnesite vrednost od 1 do 3600.</string>
     <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0sekundi</string>
@@ -277,6 +284,7 @@
     <string name="alarms_add_threshold">Dodaj prag</string>
     <string name="alarms_edit_threshold">Uredi prag</string>
     <string name="alarms_edit_existing">Uredi obstoječi prag</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Če prag že obstaja, ga odprite z možnostjo „Uredi obstoječi prag“. Če se shranjeni alarmi med urejanjem spremenijo, uporabite „Osveži“ in prag znova odprite, preden ga spremenite.</string>
     <string name="alarms_new_enabled">Alarm bo omogočen po dodajanju.</string>
     <string name="alarms_edit_keeps_enabled">Urejanje ohrani trenutno stanje vklopa/izklopa.</string>
     <string name="alarms_enabled">Omogočeno</string>
@@ -297,6 +305,7 @@
     <string name="alarms_delivery_vibration">Vibriranje in obvestilo</string>
     <string name="alarms_delivery_notification">Samo obvestilo</string>
     <string name="alarms_channel_help">Zvok in dostavo upravlja ta kanal obvestil Androida.</string>
+    <string name="alarms_options_title" formatted="false">Možnosti alarmov</string>
     <string name="pref_dismiss_low_battery_on_recovery">Odstrani alarm za prazno baterijo po obnovitvi</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Odstrani obvestilo o prazni bateriji, ko napolnjenost preseže njegov prag. Druga obvestila alarmov ostanejo</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Odstrani obvestilo o prazni bateriji, ko napolnjenost preseže njegov prag. Druga obvestila alarmov ostanejo.</string>
@@ -310,6 +319,7 @@
     <string name="alarms_conflict">Shranjeni alarmi so se spremenili. Pred spremembami osvežite in znova odprite prag.</string>
     <string name="alarms_missing_rule">Ta alarm manjka ali je neveljaven. Preglejte katalog alarmov.</string>
     <string name="alarms_invalid_records">Nekateri shranjeni alarmi so neveljavni. Preglejte te zapise; niso bili odstranjeni.</string>
+    <string name="alarms_invalid_records_help" formatted="false">Ko so navedeni neveljavni shranjeni alarmi, lahko omogočeni vnos onemogočite, ne da bi ga izbrisali, ali ga trajno izbrišete. Obe dejanji zahtevata potrditev.</string>
     <string name="alarms_database_error">Do zbirke alarmov ni bilo mogoče dostopati. Poskusite znova.</string>
     <string name="alarms_saved">Nastavitve alarmov shranjene</string>
     <string name="alarms_saved_reload_failed">Shranjeno, vendar spremljanja ni bilo mogoče obvestiti. Preverite stanje spremljanja.</string>
@@ -359,8 +369,6 @@
     <string name="history_periodic_measurement">Meritev baterije</string>
     <string name="history_raw_observations">Shranjena opažanja. Podrobnosti prikazujejo razpoložljive meritve in njihov čas.</string>
     <string name="history_export_selected">Izvozi izbrani obseg</string>
-    <string name="history_export_csv">Izbrani obseg · CSV</string>
-    <string name="history_export_json">Izbrani obseg · JSON</string>
     <string name="history_import_json">Uvozi dnevnike iz varnostne kopije JSON</string>
     <string name="history_delete_selected">Počisti izbrani obseg</string>
     <string name="history_delete_selected_confirm">Res želite počistiti dnevnike v izbranem obsegu?</string>
@@ -416,7 +424,7 @@
     <string name="pref_enable_logging_help" formatted="false">Shranjujte opažanja baterije in spremembe stanja za razdelek „Zgodovina“. Razpoložljive meritve vključujejo raven, temperaturo, napetost, izvirni trenutni tok in preostali naboj. Moč se izračuna iz napetosti in toka ob prikazu ali izvozu; ne shranjuje se ločeno. Izklop beleženja ne izbriše obstoječe zgodovine ali ustavi ocen časa.</string>
     <string name="pref_max_log_age" formatted="false">Največja starost poročila</string>
     <string name="pref_max_log_age_summary" formatted="false">Izbriši poročila starejša od:</string>
-    <string name="pref_max_log_age_help" formatted="false">Ko je beleženje omogočeno, priklop na napajanje odstrani dnevnike, starejše od te omejitve. „Nikoli ne izbriši“ jih ohrani do ročnega brisanja. Če je omogočen samodejni izvoz, Battery Monitor pred brisanjem starih vnosov izvozi čakajoče dnevnike; neuspešen izvoz prepreči brisanje.</string>
+    <string name="pref_max_log_age_help" formatted="false">Ko je beleženje omogočeno, priklop na napajanje odstrani dnevnike, starejše od te omejitve. „Brez omejitve“ jih ohrani do ročnega brisanja. Če je omogočen samodejni izvoz, Battery Monitor pred brisanjem starih vnosov izvozi čakajoče dnevnike; neuspešen izvoz prepreči brisanje.</string>
     <string name="age_1_day" formatted="false">1\u00A0dan</string>
     <string name="age_2_days" formatted="false">2\u00A0dnei</string>
     <string name="age_4_days" formatted="false">4\u00A0dni</string>
@@ -424,24 +432,26 @@
     <string name="age_2_weeks" formatted="false">2\u00A0tedna</string>
     <string name="age_3_weeks" formatted="false">3\u00A0tedne</string>
     <string name="age_4_weeks" formatted="false">4\u00A0tedne</string>
-    <string name="age_never_delete" formatted="false">Nikoli ne izbriši</string>
-    <string name="settings_history_export">Zgodovina in izvoz</string>
+    <string name="age_no_limit" formatted="false">Brez omejitve</string>
     <string name="log_export_mode_title" formatted="false">Izvozi dnevnike</string>
     <string name="log_export_append" formatted="false">Dodaj obstoječi datoteki</string>
+    <string name="log_export_append_help" formatted="false">Datoteke CSV in JSON lahko dopolnjujete. Izberite obstoječo datoteko v izbrani obliki; dodajo se samo dnevniki od zadnjega ročnega izvoza.</string>
+    <string name="log_json_append_invalid" formatted="false">Izberite berljivo datoteko zgodovine JSON aplikacije Battery Monitor v podprti različici, veliko največ 16 MB.</string>
+    <string name="log_export_recovery_required" formatted="true">Znova povežite shrambo in poskusite znova izvoziti v to datoteko, da jo obnovite. Izvirna datoteka ostane v shrambi aplikacije (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">Vse</string>
     <string name="log_export_from_last" formatted="false">Od zadnjega izvoza</string>
-    <string name="pref_auto_log_export" formatted="false">Samodejni izvoz dnevnikov</string>
-    <string name="pref_auto_log_export_not_set_summary" formatted="false">Občasno shrani nove dnevnike v mapo</string>
+    <string name="pref_auto_log_export_title" formatted="false">Občasno shrani nove dnevnike v mapo</string>
     <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
     %4$s</string>
-    <string name="pref_set_auto_log_export" formatted="false">Nastavi samodejni izvoz dnevnikov</string>
-    <string name="pref_edit_auto_log_export" formatted="false">Uredi samodejni izvoz dnevnikov</string>
+    <string name="pref_auto_log_export_setup_summary" formatted="false">Nastavi samodejni izvoz dnevnikov</string>
     <string name="pref_disable_auto_log_export" formatted="false">Onemogoči samodejni izvoz</string>
     <string name="pref_auto_log_export_frequency" formatted="false">Pogostost izvoza</string>
     <string name="pref_auto_log_export_mode" formatted="false">Upravljanje datotek</string>
     <string name="pref_auto_log_export_format" formatted="false">Oblika izvoza</string>
     <string name="pref_auto_log_export_directory" formatted="false">Spremeni mapo</string>
-    <string name="auto_log_export_help" formatted="false">Samodejni izvoz nastavite v „Napredno“. Izberite mapo, pogostost, obliko in ali naj se ustvarijo ločene datoteke ali dodaja v eno datoteko. Izvozi običajno shranijo dnevnike od prejšnjega samodejnega izvoza; nova trajna datoteka vključuje vse razpoložljive dnevnike. Android lahko med mirovanjem izvoze odloži. Beleženje mora ostati omogočeno.</string>
+    <string name="pref_auto_log_export_path" formatted="true">Pot: %1$s</string>
+    <string name="auto_log_export_help" formatted="false">Izberite mapo, pogostost, obliko in ali naj se ustvarijo ločene datoteke ali dodaja v eno datoteko. Izvozi običajno shranijo dnevnike od prejšnjega samodejnega izvoza; nova trajna datoteka vključuje vse razpoložljive dnevnike. Android lahko med mirovanjem izvoze odloži. Beleženje mora ostati omogočeno.</string>
+    <string name="auto_log_export_options_help" formatted="false">Interval izvoza ne sme presegati obdobja hrambe dnevnikov. Sprememba mape zahteva, da aplikaciji v Androidu dovolite dostop do te mape. Če samodejni izvoz onemogočite, shranjeni dnevniki in obstoječe datoteke ostanejo nespremenjeni.</string>
     <string name="auto_log_export_format_help" formatted="false">CSV je uporaben v preglednici ali urejevalniku besedila. Vsebuje izvirni tok, preostali naboj in moč, izračunano z množilnikom, izbranim ob izvozu. JSON ohrani strukturirane dnevnike za varnostne kopije. Celice z nedostopnim tokom, preostalim nabojem in močjo ostanejo prazne.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Ustvari novo datoteko</string>
     <string name="auto_log_export_mode_append" formatted="false">Dodaj nove dnevnike obstoječi datoteki</string>
@@ -492,8 +502,9 @@
 
     <string name="settings_activity_subtitle" formatted="false">Nastavitve</string>
     <string name="settings_overview" formatted="false">Povzetek</string>
-    <string name="settings_overview_help" formatted="false">Nastavitve so razdeljene na „Splošno“, „Aktualne informacije“, „Ocene časa“, „Obvestilo“, „Napredno“ ter „Varnostno kopiranje in obnovitev“. Možnost poiščite z iskanjem. Vsaka stran ima pomoč za svoje nastavitve. „Diagnostika“ je na voljo ločeno v stranskem meniju.</string>
+    <string name="settings_overview_help" formatted="false">Nastavitve so razdeljene na „Splošno“, „Aktualne informacije“, „Ocene časa“, „Glavno obvestilo“, „Napredno“ ter „Varnostno kopiranje in obnovitev“. Možnost poiščite z iskanjem. Vsaka stran ima pomoč za svoje nastavitve. „Diagnostika“ je na voljo ločeno v stranskem meniju.</string>
     <string name="settings_search_hint">Išči nastavitve</string>
+    <string name="search_clear">Počisti iskanje</string>
     <string name="settings_search_no_results">Ni ustreznih nastavitev</string>
     <string name="settings_dependency_disabled">Za spremembo te nastavitve zgoraj omogočite ali nastavite povezano možnost</string>
     <string name="other_settings" formatted="false">Splošno</string>
@@ -531,7 +542,7 @@
     <string name="background_service_starting" formatted="false">Nadzornik baterije se zaganja…</string>
     <string name="monitoring_state_save_failed">Stanja spremljanja ni bilo mogoče shraniti. Preverite prostor za shranjevanje in poskusite znova.</string>
     <string name="battery_optimized" formatted="false">Spremljanje v ozadju</string>
-    <string name="battery_optimized_message" formatted="false">Neomejeno izvajanje v ozadju lahko izboljša zanesljivost spremljanja. Optimizacija baterije v Androidu lahko zakasni posodobitve in opozorila.\n
+    <string name="battery_optimized_message" formatted="false">Neomejeno izvajanje v ozadju lahko izboljša zanesljivost spremljanja. Optimizacija baterije v Androidu lahko zakasni posodobitve in alarme.\n
     \n
     Neomejeno izvajanje lahko poveča porabo baterije v ozadju. To lahko pozneje spremenite v „Nastavitve“ Androida → „Aplikacije“ → „Battery Monitor“ → „Baterija“. Imena menijev se razlikujejo glede na napravo.</string>
     <string name="pref_cat_autostart" formatted="false">Samodejni zagon</string>
@@ -544,7 +555,7 @@
     <string name="settings_data_permissions">Podatki in dovoljenja</string>
     <string name="advanced_settings" formatted="false">Napredno</string>
     <string name="advanced_settings_summary" formatted="false">Natančneje prilagodite Battery Monitor z dodatnimi možnostmi za specializirano uporabo</string>
-    <string name="advanced_settings_help" formatted="false">Upravljajte privilegiran dostop, beleženje zgodovine, hrambo dnevnikov in samodejne izvoze. „Spremljanje v ozadju“ odpre preverjanja in orodja za dovoljenja, zanesljivost spremljanja in dnevnike razhroščevanja. Za poročila o omejitvah polnjenja odprite „Diagnostika omejitve polnjenja OEM“.</string>
+    <string name="advanced_settings_help" formatted="false">Upravljajte privilegiran dostop, beleženje zgodovine, hrambo dnevnikov in samodejne izvoze. „Delovanje spremljanja“ odpre preverjanja in orodja za dovoljenja, zanesljivost spremljanja in dnevnike razhroščevanja. Za poročila o omejitvah polnjenja odprite „Diagnostika omejitve polnjenja OEM“.</string>
     <string name="pref_cat_privileged_access" formatted="false">Privilegiran dostop</string>
     <string name="pref_use_privileged_access" formatted="false">Uporabi privilegiran dostop</string>
     <string name="pref_use_privileged_access_summary" formatted="false">Uporabim odobren dostop root ali Shizuku za popolnejše in natančnejše podatke naprave?</string>
@@ -637,20 +648,24 @@
     <string name="diagnostics_summary" formatted="false">Preverite dovoljenja in zanesljivost spremljanja ter ustvarite poročilo za odpravljanje težav</string>
     <string name="diag_overview">Delovanje aplikacije</string>
     <string name="diagnostics_help_title" formatted="false">Kako pomaga diagnostika</string>
-    <string name="diagnostics_help_overview" formatted="false">„Spremljanje v ozadju“ preverja dovoljenja in zanesljivost spremljanja. S kontrolniki zaženite ali ustavite spremljanje, spremenite beleženje razhroščevanja, odprite nastavitve optimizacije baterije in obvestil ali ustvarite poročilo za odpravljanje težav. Vsaka nedostopna meritev ne pomeni težave z dovoljenjem; nekatere naprave je ne zagotavljajo.</string>
-    <string name="monitoring_help_overview" formatted="false">Preverite dovoljenje za obvestila, dostop root ali Shizuku, storitev spremljanja in podatkovno zbirko zgodovine. Tapnite preverjanje, da zahtevate dostop ali ga izvedete. „Zaženi spremljanje“ je na voljo, ko je spremljanje ustavljeno; „Ustavi spremljanje“, ko je zagnano. Razpoložljive meritve so odvisne od podpore naprave in odobrenega dostopa. Preverjanje storitve zahteva zagnano spremljanje; preverjanje podatkovne zbirke zahteva beleženje zgodovine („Nastavitve“ → „Napredno“). Za uporabo dodatnih meritev omogočite „Uporabi privilegiran dostop“ v „Nastavitve“ → „Napredno“. „Nastavitve proizvajalca“ so na voljo samo na podprtih napravah.</string>
+    <string name="diagnostics_help_overview" formatted="false">„Delovanje spremljanja“ preverja dovoljenja in zanesljivost spremljanja. S kontrolniki zaženite ali ustavite spremljanje, spremenite beleženje razhroščevanja, odprite nastavitve optimizacije baterije in obvestil ali ustvarite poročilo za odpravljanje težav. Vsaka nedostopna meritev ne pomeni težave z dovoljenjem; nekatere naprave je ne zagotavljajo.</string>
     <string name="diagnostics_monitoring" formatted="false">Spremljanje v ozadju</string>
     <string name="diag_monitor_operation">Delovanje spremljanja</string>
     <string name="diag_heartbeat">Zadnji signal aktivnosti</string>
+    <string name="diagnostics_heartbeat_help" formatted="false">Čas zadnjega odziva storitve spremljanja. Star ali nerazpoložljiv odziv lahko pomeni, da je spremljanje ustavljeno ali se ne odziva.</string>
     <string name="diag_start_monitor">Zaženi spremljanje</string>
+    <string name="diagnostics_start_help" formatted="false">Zaženite spremljanje baterije in samodejno obnovitev v ozadju. Na voljo, ko je spremljanje ustavljeno; shranjeni alarmi in nastavitve zgodovine se ohranijo.</string>
     <string name="diag_stop_monitor">Ustavi spremljanje</string>
+    <string name="diag_stop_monitor_summary" formatted="false">Ustavi spremljanje baterije, beleženje zgodovine in samodejno obnovitev v ozadju</string>
     <string name="diag_stop_monitor_body">Spremljanje baterije, beleženje zgodovine in samodejna obnovitev v ozadju se ustavijo. Tukaj lahko spremljanje znova zaženete.</string>
     <string name="diagnostics_not_running_tap_to_start" formatted="false">Ni nedavnega odziva. Tapnite za zahtevo ponovnega zagona</string>
     <string name="diagnostics_service" formatted="false">Storitev spremljanja</string>
+    <string name="diagnostics_service_help" formatted="false">Pokaže, ali se je spremljanje nedavno odzvalo. Tapnite za zahtevo po odzivu; če ga ni, Battery Monitor poskusi en ponovni zagon. Na voljo samo pri omogočenem spremljanju.</string>
     <string name="diagnostics_service_responded" formatted="false">Storitev spremljanja se je odzvala</string>
     <string name="diagnostics_service_restarting" formatted="false">Storitev se ni odzvala. Poteka ponovni zagon…</string>
     <string name="diagnostics_service_restart_failed" formatted="false">Storitev spremljanja se po ponovnem zagonu ni odzvala. Poskusite znova zagnati aplikacijo.</string>
     <string name="diagnostics_database" formatted="false">Podatkovna zbirka dnevnika</string>
+    <string name="diagnostics_database_help" formatted="false">Pokaže, ali se je podatkovna zbirka zgodovine nedavno odzvala. Tapnite za preizkus branja in pisanja brez spreminjanja shranjene zgodovine. Na voljo samo pri omogočenem beleženju zgodovine.</string>
     <string name="diagnostics_no_recent_database_access" formatted="false">Ni nedavnega uspešnega dostopa do podatkovne zbirke</string>
     <string name="diagnostics_working_last_seen" formatted="true">Deluje · Zadnji odziv pred %1$s</string>
     <string name="diagnostics_database_check_succeeded" formatted="false">Preverjanje branja in pisanja podatkovne zbirke je uspelo</string>
@@ -660,17 +675,22 @@
     <string name="diagnostics_notifications" formatted="false">Obvestila</string>
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Dovoljenje manjka. Tapnite za odpiranje nastavitev</string>
     <string name="diagnostics_battery_optimization" formatted="false">Optimizacija baterije</string>
+    <string name="diagnostics_battery_optimization_help" formatted="false">Odprite nastavitve optimizacije baterije v Androidu, ko je delovanje omejeno. Če omejitev že ni, tap potrdi to stanje.</string>
     <string name="diagnostics_unrestricted" formatted="false">Brez omejitev</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Omejeno. Tapnite za zanesljivo spremljanje v ozadju</string>
     <string name="diagnostics_vendor_settings" formatted="false">Nastavitve proizvajalca</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Odprite dodatne nastavitve dejavnosti v ozadju ali samodejnega zagona v tej napravi</string>
     <string name="diagnostics_vendor_settings_help" formatted="false">Odprite dodatne nastavitve dejavnosti v ozadju ali samodejnega zagona v tej napravi.</string>
+    <string name="diagnostics_vendor_availability_help" formatted="false">„Nastavitve proizvajalca“ so na voljo samo na podprtih napravah.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Pomoč za dejavnost v ozadju</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Odprite navodila za napravo na Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">Odprite navodila za napravo na Don’t Kill My App.</string>
     <string name="diagnostics_root" formatted="false">Korenski dostop</string>
-    <string name="diagnostics_root_unavailable" formatted="false">Ni na voljo. Tapnite za zahtevo ali preverjanje korenskega dostopa</string>
+    <string name="diagnostics_root_help" formatted="false">Tapnite, da preverite, ali lahko Battery Monitor pridobi korenski dostop. Nastavljeni upravljalnik korenskega dostopa lahko zahteva odobritev. Neuspeh lahko pomeni zavrnjen dostop, manjkajoča orodja ali drugo napako; ne dokazuje, da naprava nima korenskega dostopa. To preverjanje ne izvede rootanja naprave in ne spremeni nastavitve „Uporabi privilegiran dostop“.</string>
+    <string name="diagnostics_root_unavailable" formatted="false">Ni na voljo. Tapnite za ponovno preverjanje</string>
     <string name="diagnostics_shizuku" formatted="false">Dostop Shizuku</string>
+    <string name="diagnostics_shizuku_help" formatted="false">Če Shizuku ne deluje, tap odpre njegov upravljalnik ali navodila za nastavitev, če ni nameščen. Ko deluje brez dovoljenja, tap zahteva dostop ali po predhodni zavrnitvi odpre upravljalnik. Če je dostop že odobren, tap ne naredi ničesar. To dejanje ne spremeni nastavitve „Uporabi privilegiran dostop“.</string>
+    <string name="monitoring_privileged_access_help" formatted="false">Razpoložljive meritve so odvisne od podpore naprave in odobrenega dostopa. Za uporabo dodatnih meritev omogočite „Uporabi privilegiran dostop“ v „Nastavitve“ → „Napredno“.</string>
     <string name="diagnostics_shizuku_permission_missing" formatted="false">Dovoljenje manjka. Tapnite, da ga zahtevate od Shizuku</string>
     <string name="diagnostics_checking" formatted="false">Preverjanje…</string>
     <string name="diagnostics_tap_to_check" formatted="false">Ni preverjeno. Tapnite za zahtevo ali preverjanje dostopa</string>
@@ -730,6 +750,7 @@
     <string name="charging_diagnostics_capture" formatted="false">Zajemi posnetek</string>
     <string name="charging_diagnostics_capture_summary" formatted="false">V nastavitvah naprave izberite način polnjenja in nato zajemite njegove signale</string>
     <string name="charging_diagnostics_choose_state" formatted="false">Katera nastavitev naprave je aktivna?</string>
+    <string name="charging_diagnostics_condition_help" formatted="false">Izberite proizvajalčev način polnjenja, ki je že nastavljen v napravi. Za fiksni cilj vnesite njegov odstotek. Ta izbira označi posnetek; ne spremeni zaščite polnjenja naprave.</string>
     <string name="charging_diagnostics_condition_off" formatted="false">Zaščita izklopljena / brez omejitve</string>
     <string name="charging_diagnostics_condition_fixed" formatted="false">Fiksna omejitev…</string>
     <string name="charging_diagnostics_condition_adaptive" formatted="false">Prilagodljivo / pametno polnjenje</string>
@@ -767,43 +788,49 @@
     <string name="backup_restore_settings_summary" formatted="false">Varnostno kopirajte, obnovite in prenesite nastavitve aplikacije in podatke o bateriji</string>
     <string name="backup_restore_help_overview" formatted="false">Shranite in obnovite nastavitve, alarme, dnevnike in naučene podatke napovedovanja. „Obnovi privzete nastavitve“ po potrditvi ponastavi nastavitve aplikacije ter ohrani zgodovino, alarme, naučene ocene in stanje spremljanja.</string>
     <string name="pref_general_backup" formatted="false">Splošna varnostna kopija aplikacije</string>
-    <string name="general_backup_help" formatted="false">Splošna varnostna kopija skupaj shrani nastavitve, alarme in podatke, značilne za napravo. Pri obnovitvi lahko izberete, katere razpoložljive podatke želite uvoziti.</string>
+    <string name="general_backup_restore_effects_help" formatted="false">Izbrane kategorije se obnovijo; neizbrane se ohranijo. Obnovitev alarmov nadomesti trenutne alarme. Za dnevnike izberite, ali jih želite dodati ali nadomestiti trenutno zgodovino.</string>
     <string name="pref_export_general_backup" formatted="false">Izvozi splošno varnostno kopijo</string>
+    <string name="pref_export_general_backup_help" formatted="false">Skupaj shranite nastavitve, alarme in podatke, značilne za napravo, v splošno varnostno kopijo ZIP na izbrano mesto.</string>
     <string name="pref_export_general_backup_summary" formatted="false">Shrani nastavitve, alarme in podatke, značilne za napravo, v datoteko ZIP</string>
     <string name="general_backup_exported" formatted="false">Splošna varnostna kopija je bila uspešno izvožena.</string>
     <string name="pref_import_general_backup" formatted="false">Uvozi splošno varnostno kopijo</string>
+    <string name="pref_import_general_backup_help" formatted="false">Izberite obstoječo splošno varnostno kopijo ZIP in razpoložljive kategorije, ki jih želite obnoviti. Varnostne kopije iz novejših različic aplikacije so lahko nezdružljive, obnovitev dnevnikov ali podatkov napovedovalnika iz druge naprave pa lahko povzroči napačne napovedi. Če je obnovitev le delno dokončana, pred ponovnim poskusom preverite navedene kategorije.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Obnovi izbrane podatke iz datoteke ZIP splošne varnostne kopije</string>
     <string name="general_backup_restore_message" formatted="false">Izberite, kaj želite obnoviti.</string>
+    <string name="general_backup_device_data_warning_scope" formatted="false">Dnevniki in podatki napovedovanja</string>
     <string name="general_backup_imported" formatted="false">Splošna varnostna kopija je bila uspešno uvožena.</string>
     <string name="invalid_general_backup_file" formatted="false">Neveljavna ali nezdružljiva datoteka splošne varnostne kopije</string>
     <string name="settings_restore_partial">Nekaterih podatkov ni bilo mogoče obnoviti. Uspešno obnovljeno: %1$s. Podatki, ki so morda delno obnovljeni: %2$s. Pred novim poskusom preverite te razdelke.</string>
     <string name="settings_restore_none">Nič</string>
-    <string name="settings_backup_help" formatted="false">Varnostna kopija nastavitev shrani nastavitve aplikacije. Z uvozom obnovite shranjene nastavitve.</string>
     <string name="pref_export_settings" formatted="false">Izvozi nastavitve</string>
+    <string name="pref_export_settings_help" formatted="false">„Izvozi nastavitve“ shrani nastavitve aplikacije. Rezultat je datoteka varnostne kopije nastavitev v obliki JSON.</string>
     <string name="pref_export_settings_summary" formatted="false">Shrani trenutne nastavitve v datoteko</string>
     <string name="settings_exported" formatted="false">Nastavitve so bile uspešno izvožene.</string>
     <string name="pref_import_settings" formatted="false">Uvozi nastavitve</string>
+    <string name="pref_import_settings_help" formatted="false">Z „Uvozi nastavitve“ obnovite shranjene nastavitve. To dejanje ne obnovi zgodovine ali zapisov alarmov.</string>
     <string name="pref_import_settings_summary" formatted="false">Obnovi nastavitve iz datoteke</string>
     <string name="settings_imported" formatted="false">Nastavitve so bile uspešno uvožene.</string>
     <string name="invalid_settings_file" formatted="false">Neveljavna datoteka nastavitev</string>
     <string name="settings_file_version_warning" formatted="false">Ta datoteka je bila ustvarjena z novejšo različico aplikacije. Uvoz lahko povzroči nepričakovano delovanje. Vseeno nadaljujem?</string>
-    <string name="alarms_backup_help" formatted="false">Varnostna kopija alarmov shrani vaše alarme. Z uvozom zamenjate vse trenutne alarme z alarmi iz varnostne kopije.</string>
     <string name="pref_export_alarms" formatted="false">Izvozi alarme</string>
+    <string name="pref_export_alarms_help" formatted="false">„Izvozi alarme“ shrani vaše alarme. Datoteka JSON vsebuje pravila alarmov, ne pa nastavitev kanalov obvestil ali zvokov, ki jih upravlja Android.</string>
     <string name="pref_export_alarms_summary" formatted="false">Shrani trenutne alarme v datoteko</string>
     <string name="alarms_exported" formatted="false">Alarmi so bili uspešno izvoženi.</string>
     <string name="pref_import_alarms" formatted="false">Uvozi alarme</string>
+    <string name="pref_import_alarms_help" formatted="false">Z „Uvozi alarme“ zamenjate vse trenutne alarme z alarmi iz varnostne kopije. Izberite datoteko varnostne kopije alarmov v obliki JSON.</string>
     <string name="pref_import_alarms_summary" formatted="false">Zamenjaj trenutne alarme z alarmi iz datoteke</string>
     <string name="alarms_imported" formatted="false">Alarmi so bili uspešno uvoženi.</string>
     <string name="invalid_alarms_file" formatted="false">Neveljavna datoteka alarmov</string>
     <string name="pref_backup_device_data" formatted="false">Varnostno kopiranje podatkov, značilnih za napravo</string>
-    <string name="device_specific_backup_help" formatted="false">Varnostna kopija, značilna za napravo, shrani dnevnike in podatke napovedovalnika. Pri uvozu lahko izberete eno ali obe vrsti podatkov. Ti podatki pripadajo izvorni napravi; uporaba v drugi napravi lahko povzroči napačne napovedi ali nepričakovano delovanje. Pri uvozu dnevnikov izberite, ali jih želite dodati ali zamenjati obstoječe dnevnike.</string>
     <string name="device_data_logs" formatted="false">Dnevniki</string>
     <string name="device_data_predictor" formatted="false">Podatki napovedovanja</string>
     <string name="device_data_backup_warning" formatted="false">Ti podatki so značilni za napravo, v kateri so bili zbrani. Uvoz v drugo napravo lahko povzroči napačne napovedi ali drugo nepričakovano delovanje aplikacije.</string>
     <string name="pref_export_device_data" formatted="false">Izvozi podatke, značilne za napravo</string>
+    <string name="pref_export_device_data_help" formatted="false">Izberite dnevnike, podatke napovedovalnika ali oboje in jih shranite v varnostno kopijo JSON, značilno za napravo. Podatki pripadajo izvorni napravi.</string>
     <string name="pref_export_device_data_summary" formatted="false">Shrani dnevnike in podatke napovedovanja v datoteko</string>
     <string name="device_data_exported" formatted="false">Podatki, značilni za napravo, so bili uspešno izvoženi.</string>
     <string name="pref_import_device_data" formatted="false">Uvozi podatke, značilne za napravo</string>
+    <string name="pref_import_device_data_help" formatted="false">Izberite razpoložljive dnevnike in/ali podatke napovedovalnika za obnovitev iz varnostne kopije JSON, značilne za napravo; neizbrane kategorije ostanejo nespremenjene. Pri uvozu dnevnikov izberite, ali jih želite dodati ali zamenjati obstoječe dnevnike. Obnovitev dnevnikov ali podatkov napovedovalnika iz druge naprave lahko povzroči napačne napovedi.</string>
     <string name="pref_import_device_data_summary" formatted="false">Obnovi dnevnike in podatke napovedovanja iz datoteke</string>
     <string name="device_data_imported" formatted="false">Podatki, značilni za napravo, so bili uspešno uvoženi</string>
     <string name="device_data_imported_dialog" formatted="false">Podatki, značilni za napravo, so bili uspešno uvoženi.</string>
@@ -860,12 +887,12 @@
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
     <string name="since" formatted="false">od</string>
-    <string name="duration_for">Trajanje: %1$s</string>
+    <string name="duration_for">trajanje: %1$s</string>
     <plurals name="for_n_hours">
-        <item quantity="one">Za %d\u00A0uro</item>
-        <item quantity="two">Za %d\u00A0uri</item>
-        <item quantity="few">Za %d\u00A0ure</item>
-        <item quantity="other">Za %d\u00A0ur</item>
+        <item quantity="one">za %d\u00A0uro</item>
+        <item quantity="two">za %d\u00A0uri</item>
+        <item quantity="few">za %d\u00A0ure</item>
+        <item quantity="other">za %d\u00A0ur</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"%d\u00A0dan, "</item>
@@ -918,4 +945,5 @@
     <string name="unit_days">%dd</string>
     <string name="unit_hours">%dh</string>
     <string name="unit_minutes">%dmin</string>
+    <string name="unit_seconds" formatted="true">%ds</string>
 </resources>

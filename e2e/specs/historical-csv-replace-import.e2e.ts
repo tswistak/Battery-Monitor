@@ -31,7 +31,7 @@ describe('Historical CSV replace import', () => {
 
         await chooseImportFile('Import logs from CSV', 'historical-1.7.3-history.csv');
         await chooseReplaceHistory();
-        await acknowledgeMessage('CSV logs imported successfully');
+        await acknowledgeMessage('CSV logs imported successfully.');
 
         const state = await readState();
         // Historical CSV's Discharging label imports as an unplugged observation (100).

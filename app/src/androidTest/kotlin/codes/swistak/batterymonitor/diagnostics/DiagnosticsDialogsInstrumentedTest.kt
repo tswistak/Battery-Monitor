@@ -12,6 +12,8 @@
 */
 package codes.swistak.batterymonitor.diagnostics
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -39,6 +41,7 @@ import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingDiagnosticStore
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticReportDialog
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import codes.swistak.batterymonitor.ui.theme.Brightness
@@ -49,6 +52,11 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.TimeUnit
 
 class DiagnosticsDialogsInstrumentedTest {
     private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
@@ -56,6 +64,112 @@ class DiagnosticsDialogsInstrumentedTest {
     private lateinit var activity: FullscreenChartActivity
     private lateinit var fragment: DiagnosticsFragment
     private lateinit var state: DiagnosticsDialogState
+
+    // This SDK exposes primaryClip as read-only to the Kotlin compiler.
+    @Suppress("UsePropertyAccessSyntax")
+    @Test
+    fun report_option_changes_hide_private_content_and_only_the_latest_result_can_be_copied() {
+        class Request(val include: Boolean) {
+            val result = CompletableFuture<String>()
+            val finished = CountDownLatch(1)
+        }
+
+        val requests = LinkedBlockingQueue<Request>()
+        val pending = CopyOnWriteArrayList<Request>()
+        fun nextRequest(include: Boolean): Request =
+            requireNotNull(requests.poll(10, TimeUnit.SECONDS)).also {
+                assertEquals(include, it.include)
+            }
+
+        fun shown(text: String): Boolean {
+            var present = false
+            main { present = hasText(text) }
+            return present
+        }
+        withHost(actionsOnly = true) {
+            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            var previousClip: ClipData? = null
+            val clipboardMarker = "Unchanged clipboard"
+            main {
+                previousClip = clipboard.primaryClip
+                clipboard.setPrimaryClip(ClipData.newPlainText("test", clipboardMarker))
+                activity.setContent {
+                    AppBatteryTheme {
+                        DiagnosticReportDialog(create = { include ->
+                            val request = Request(include)
+                            pending.add(request)
+                            requests.add(request)
+                            try {
+                                request.result.get(10, TimeUnit.SECONDS)
+                            } finally {
+                                request.finished.countDown()
+                            }
+                        }, onDismiss = {})
+                    }
+                }
+            }
+            try {
+                nextRequest(false).result.complete("Public report")
+                await { buttonDisabled(R.string.charging_diagnostics_copy) == false }
+                click(R.string.diag_include_raw)
+                nextRequest(true).result.complete("Private device and package details")
+                await { shown("Private device and package details") }
+
+                main {
+                    val oldCopy =
+                        button(R.string.charging_diagnostics_copy).config[SemanticsActions.OnClick].action
+                    assertTrue(
+                        button(R.string.diag_include_raw).config[SemanticsActions.OnClick].action?.invoke() == true
+                    )
+                    // A queued click must not copy the old private preview before recomposition.
+                    requireNotNull(oldCopy).invoke()
+                    assertEquals(
+                        clipboardMarker, clipboard.primaryClip?.getItemAt(0)?.text?.toString()
+                    )
+                }
+                val obsolete = nextRequest(false)
+                main {
+                    assertFalse(hasText("Private device and package details"))
+                    assertTrue(buttonDisabled(R.string.charging_diagnostics_copy) == true)
+                    assertTrue(buttonDisabled(R.string.charging_diagnostics_save) == true)
+                }
+                click(R.string.diag_include_raw)
+                val latest = nextRequest(true)
+                latest.result.complete("Latest requested private report")
+                await { shown("Latest requested private report") }
+                obsolete.result.complete("Obsolete public report")
+                assertTrue(obsolete.finished.await(5, TimeUnit.SECONDS))
+                instrumentation.waitForIdleSync()
+                main {
+                    assertTrue(hasText("Latest requested private report"))
+                    assertFalse(hasText("Obsolete public report"))
+                }
+                click(R.string.charging_diagnostics_copy)
+                main {
+                    assertEquals(
+                        "Latest requested private report",
+                        clipboard.primaryClip?.getItemAt(0)?.text?.toString()
+                    )
+                }
+
+                click(R.string.diag_include_raw)
+                nextRequest(false).result.completeExceptionally(IllegalStateException("Report unavailable"))
+                await { shown(context.getString(R.string.diagnostics_export_failed)) }
+                main {
+                    assertFalse(hasText("Latest requested private report"))
+                    assertTrue(buttonDisabled(R.string.charging_diagnostics_copy) == true)
+                    assertTrue(buttonDisabled(R.string.charging_diagnostics_save) == true)
+                }
+            } finally {
+                pending.forEach {
+                    it.result.completeExceptionally(IllegalStateException("Report fixture closed"))
+                }
+                main {
+                    previousClip?.let(clipboard::setPrimaryClip) ?: clipboard.clearPrimaryClip()
+                }
+            }
+        }
+    }
 
     @Test
     fun report_title_distinguishes_monitoring_and_oem_comparison() {

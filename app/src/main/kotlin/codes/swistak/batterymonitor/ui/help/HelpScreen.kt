@@ -15,6 +15,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.URLSpan
 import android.text.util.Linkify
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -54,7 +55,6 @@ import androidx.compose.ui.unit.dp
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.ui.components.SettingRow
-import codes.swistak.batterymonitor.ui.settings.SettingsCategory
 import codes.swistak.batterymonitor.ui.settings.helpHeadingIcon
 
 @Composable
@@ -80,7 +80,6 @@ fun HelpScreen(topic: String? = null, onOpenLicenses: () -> Unit = {}) {
     val sections = remember(topic, chargingTargetMode) {
         helpSections(topic, Build.VERSION.SDK_INT, chargingTargetMode)
     }
-    val categoryHelp = SettingsCategory.fromLegacy(topic) != null
     val version = remember(context) {
         runCatching {
             context.packageManager.getPackageInfo(context.packageName, 0).versionName
@@ -102,16 +101,20 @@ fun HelpScreen(topic: String? = null, onOpenLicenses: () -> Unit = {}) {
                     Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     section.titleResource?.let { title ->
-                        HelpHeading(resources.getText(title), title, showIcon = !categoryHelp)
+                        HelpHeading(
+                            resources.getText(title),
+                            section.controlKey,
+                            iconResource = section.iconResource
+                        )
                     }
                     SelectionContainer {
                         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                            for ((textResource, subheading) in section.paragraphs) {
+                            for ((textResource, subheading, controlKey) in section.paragraphs) {
                                 val text = if (textResource == R.string.nav_help_version) {
                                     versionText
                                 } else resources.getText(textResource)
                                 if (subheading) {
-                                    HelpHeading(text, textResource, small = true)
+                                    HelpHeading(text, controlKey, small = true)
                                 } else Text(
                                     helpText(text),
                                     style = MaterialTheme.typography.bodyMedium,
@@ -135,19 +138,24 @@ fun HelpScreen(topic: String? = null, onOpenLicenses: () -> Unit = {}) {
 
 @Composable
 internal fun HelpHeading(
-    text: CharSequence, textResource: Int, small: Boolean = false, showIcon: Boolean = true
+    text: CharSequence,
+    controlKey: String? = null,
+    small: Boolean = false,
+    @DrawableRes iconResource: Int? = null
 ) {
     Row(
         Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (showIcon) Icon(
-            painterResource(helpHeadingIcon(textResource) ?: R.drawable.ui_info),
-            contentDescription = null,
-            Modifier.size(if (small) 20.dp else 23.dp),
-            tint = MaterialTheme.colorScheme.primary
-        )
+        (iconResource ?: helpHeadingIcon(controlKey))?.let { icon ->
+            Icon(
+                painterResource(icon),
+                contentDescription = null,
+                Modifier.size(if (small) 20.dp else 23.dp),
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
         Text(
             helpText(text),
             Modifier
@@ -158,6 +166,7 @@ internal fun HelpHeading(
         )
     }
 }
+
 
 @Composable
 internal fun helpText(text: CharSequence): AnnotatedString {

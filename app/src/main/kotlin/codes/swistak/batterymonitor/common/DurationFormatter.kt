@@ -15,8 +15,31 @@ package codes.swistak.batterymonitor.common
 import android.content.res.Resources
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.LongDurationFormat
+import java.util.Locale
 
 internal object DurationFormatter {
+    fun formatCompact(
+        locale: Locale, elapsedMilliseconds: Long, unitPattern: (Int) -> String
+    ): String {
+        val totalSeconds = (elapsedMilliseconds / 1000L).coerceAtLeast(0L)
+        val hours = totalSeconds / 3600L
+        val minutes = totalSeconds % 3600L / 60L
+        val seconds = totalSeconds % 60L
+        return buildList {
+            if (hours > 0L) add(String.format(locale, unitPattern(R.string.unit_hours), hours))
+            if (minutes > 0L) add(
+                String.format(
+                    locale,
+                    unitPattern(R.string.unit_minutes),
+                    minutes
+                )
+            )
+            if (seconds > 0L || isEmpty()) {
+                add(String.format(locale, unitPattern(R.string.unit_seconds), seconds))
+            }
+        }.joinToString(" ")
+    }
+
     internal fun roundedDaysAndHours(
         days: Int, hours: Int, minutes: Int
     ): Pair<Int, Int> {

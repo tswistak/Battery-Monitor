@@ -78,7 +78,7 @@ internal fun LicenseScreen(componentId: String? = null, onOpenComponent: (String
                             "artwork" -> R.string.help_licenses_artwork
                             else -> R.string.help_licenses_libraries
                         }
-                    ), R.string.help_cat_open_source
+                    )
                 )
             }
             items(entries, key = { it.id }) { component ->
@@ -145,7 +145,7 @@ private fun LicenseDetail(component: LicenseComponent?) {
                 LicenseCard { LicenseBody(stringResource(R.string.help_licenses_unavailable)) }
             } else {
                 LicenseCard {
-                    HelpHeading(component.name, R.string.help_cat_open_source)
+                    HelpHeading(component.name)
                     LicenseBody(
                         listOf(
                             component.version, component.license

@@ -51,7 +51,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -86,6 +85,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.ui.components.NumericInputResult
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.parseLocalizedInt
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
@@ -237,7 +237,9 @@ private fun WidgetConfigurationScreen(
         TopAppBar(
             title = { Text(stringResource(R.string.widget_configure_title)) },
             navigationIcon = {
-                IconButton(onClick = onCancel, enabled = !saving) {
+                TooltipIconButton(
+                    label = stringResource(R.string.cancel), onClick = onCancel, enabled = !saving
+                ) {
                     Icon(
                         painterResource(R.drawable.ui_close),
                         contentDescription = stringResource(R.string.cancel)
@@ -489,21 +491,25 @@ private fun MetricSelection(selected: List<WidgetMetric>, onChange: (List<Widget
                     )
                     Text(label)
                 }
-                IconButton(onClick = {
-                    onChange(
-                        selected.toMutableList()
-                            .apply { java.util.Collections.swap(this, index, index - 1) })
-                }, enabled = index > 0) {
+                TooltipIconButton(
+                    label = stringResource(R.string.settings_move_item_up, label), onClick = {
+                        onChange(
+                            selected.toMutableList()
+                                .apply { java.util.Collections.swap(this, index, index - 1) })
+                    }, enabled = index > 0
+                ) {
                     Icon(
                         painterResource(R.drawable.ui_up),
                         stringResource(R.string.settings_move_item_up, label)
                     )
                 }
-                IconButton(onClick = {
-                    onChange(
-                        selected.toMutableList()
-                            .apply { java.util.Collections.swap(this, index, index + 1) })
-                }, enabled = index >= 0 && index < selected.lastIndex) {
+                TooltipIconButton(
+                    label = stringResource(R.string.settings_move_item_down, label), onClick = {
+                        onChange(
+                            selected.toMutableList()
+                                .apply { java.util.Collections.swap(this, index, index + 1) })
+                    }, enabled = index >= 0 && index < selected.lastIndex
+                ) {
                     Icon(
                         painterResource(R.drawable.ui_down),
                         stringResource(R.string.settings_move_item_down, label)
@@ -551,7 +557,6 @@ private fun WidgetPreview(
                 object : AppWidgetHostView(viewContext) {
                     override fun onInterceptTouchEvent(event: MotionEvent): Boolean = true
 
-                    // This read-only preview has no click action; its Compose parent supplies the description.
                     @SuppressLint("ClickableViewAccessibility")
                     override fun onTouchEvent(event: MotionEvent): Boolean = true
                 }.apply {

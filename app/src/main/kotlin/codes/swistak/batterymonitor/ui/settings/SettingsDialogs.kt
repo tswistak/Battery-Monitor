@@ -33,7 +33,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
@@ -57,6 +56,7 @@ import androidx.compose.ui.window.DialogProperties
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.ui.components.NumericValueDialog
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.theme.BatterySpacing
 import java.io.Serializable
@@ -73,6 +73,7 @@ internal sealed interface SettingsDialog {
         val selected: Set<Int>,
         val multiple: Boolean = true,
         val allowEmpty: Boolean = false,
+        val supportingText: String? = null,
         val onConfirm: (Set<Int>) -> Unit
     ) : SettingsDialog
 
@@ -237,6 +238,9 @@ private fun ChoicesDialog(dialog: SettingsDialog.Choices, onDismiss: () -> Unit)
                 }
             }
         }
+        dialog.supportingText?.let {
+            Text(it, style = MaterialTheme.typography.bodySmall)
+        }
     }
 }
 
@@ -288,19 +292,27 @@ private fun OrderedDialog(dialog: SettingsDialog.Ordered, onDismiss: () -> Unit)
                         Checkbox(item.selected, onCheckedChange = null)
                         Text(item.label)
                     }
-                    IconButton(onClick = {
-                        items =
-                            items.toMutableList().apply { Collections.swap(this, index, index - 1) }
-                    }, enabled = index > 0) {
+                    TooltipIconButton(
+                        label = stringResource(R.string.settings_move_item_up, item.label),
+                        onClick = {
+                            items = items.toMutableList()
+                                .apply { Collections.swap(this, index, index - 1) }
+                        },
+                        enabled = index > 0
+                    ) {
                         Icon(
                             painterResource(R.drawable.ui_up),
                             stringResource(R.string.settings_move_item_up, item.label)
                         )
                     }
-                    IconButton(onClick = {
-                        items =
-                            items.toMutableList().apply { Collections.swap(this, index, index + 1) }
-                    }, enabled = index < items.lastIndex) {
+                    TooltipIconButton(
+                        label = stringResource(R.string.settings_move_item_down, item.label),
+                        onClick = {
+                            items = items.toMutableList()
+                                .apply { Collections.swap(this, index, index + 1) }
+                        },
+                        enabled = index < items.lastIndex
+                    ) {
                         Icon(
                             painterResource(R.drawable.ui_down),
                             stringResource(R.string.settings_move_item_down, item.label)
@@ -325,7 +337,6 @@ private fun AutoExportDialog(dialog: SettingsDialog.AutoExport, onDismiss: () ->
             frequency
         ) == true && mode in dialog.modeLabels.indices && format in dialog.formatLabels.indices
     ) {
-        Text(dialog.directoryLabel, style = MaterialTheme.typography.bodySmall)
         SettingsDropdown(
             SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY,
             stringResource(R.string.pref_auto_log_export_frequency),
@@ -346,6 +357,11 @@ private fun AutoExportDialog(dialog: SettingsDialog.AutoExport, onDismiss: () ->
             dialog.formatLabels,
             format,
             { format = it })
+        Text(
+            stringResource(R.string.pref_auto_log_export_path, dialog.directoryLabel),
+            modifier = Modifier.fillMaxWidth(),
+            style = MaterialTheme.typography.bodySmall
+        )
         TextButton(onClick = {
             onDismiss()
             dialog.onChooseDirectory()

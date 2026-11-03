@@ -52,7 +52,6 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -116,6 +115,7 @@ import codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.MeasurementChart
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
 import codes.swistak.batterymonitor.ui.components.historyRangeValue
@@ -167,7 +167,9 @@ internal fun HistoryActionsMenu(enabled: Boolean, onAction: (String) -> Unit) {
         SettingsContract.SP_MAIN_FILE, Context.MODE_PRIVATE
     )
     Box {
-        IconButton(onClick = { expanded = true }, enabled = enabled, modifier = Modifier.semantics {
+        TooltipIconButton(label = label, onClick = {
+            expanded = true
+        }, enabled = enabled, modifier = Modifier.semantics {
             contentDescription = label
         }) { Icon(painterResource(R.drawable.ui_more), null) }
         DropdownMenu(expanded, onDismissRequest = { expanded = false }) {
@@ -265,6 +267,8 @@ internal fun HistoryRoute(
     var detailsId by rememberSaveable { mutableStateOf<Long?>(null) }
     var detailsTime by rememberSaveable { mutableStateOf<Long?>(null) }
     var importingJson by rememberSaveable { mutableStateOf(false) }
+    var exportFormat by rememberSaveable { mutableStateOf(LogExportFormat.CSV) }
+    var exportError by rememberSaveable { mutableStateOf<String?>(null) }
     val statuses = stringArrayResource(R.array.history_statuses)
     val oldStatuses = stringArrayResource(R.array.history_statuses_old)
     val plugged = stringArrayResource(R.array.pluggeds)
@@ -295,8 +299,7 @@ internal fun HistoryRoute(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val uri = it.data?.data
             if (it.resultCode == Activity.RESULT_OK && uri != null) viewModel.export(uri) { success, formatError ->
-                if (formatError != null) Toast.makeText(appContext, formatError, Toast.LENGTH_LONG)
-                    .show()
+                if (formatError != null) exportError = formatError
                 else result(success, R.string.file_written)
             }
             else viewModel.pendingExport = null
@@ -419,7 +422,8 @@ internal fun HistoryRoute(
                                 style = MaterialTheme.typography.titleMedium,
                                 modifier = Modifier.weight(1f)
                             )
-                            IconButton(
+                            TooltipIconButton(
+                                label = stringResource(R.string.history_open_fullscreen),
                                 onClick = {
                                     onOpenFullscreen(
                                         state.metric, state.range, state.rangeLabel
@@ -500,7 +504,7 @@ internal fun HistoryRoute(
                                 ) {
                                     Text(
                                         chart.events.filter { it.code == HistoryEvent.CONNECTED }
-                                            .sumOf { it.count }.toString(),
+                                        .sumOf { it.count }.toString(),
                                         style = MaterialTheme.typography.titleLarge
                                     )
                                     Text(
@@ -634,14 +638,14 @@ internal fun HistoryRoute(
                             if (record.status == -1) stringResource(R.string.history_system_event)
                             else listOfNotNull(
                                 HistoryMetric.CURRENT.value(record)?.let {
-                                    historyValue(
-                                        it,
-                                        HistoryMetric.CURRENT,
-                                        fahrenheit,
-                                        locale,
-                                        currentMultiplier
-                                    )
-                                },
+                                historyValue(
+                                    it,
+                                    HistoryMetric.CURRENT,
+                                    fahrenheit,
+                                    locale,
+                                    currentMultiplier
+                                )
+                            },
                                 HistoryMetric.POWER.value(record)?.let {
                                     historyValue(
                                         it,
@@ -663,30 +667,29 @@ internal fun HistoryRoute(
                                     )
                                 }).joinToString(" · ")
                                 .ifEmpty { stringResource(R.string.current_unavailable) }
-                        Row(
-                            Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    detailsId = entry.id
-                                    detailsTime = entry.record.time
+                        Row(Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                detailsId = entry.id
+                                detailsTime = entry.record.time
+                            }
+                            .then(if (twoPane) Modifier.semantics {
+                                selected = emphasized
+                            } else Modifier)
+                            .drawBehind {
+                                if (emphasized) {
+                                    val width = 3.dp.toPx()
+                                    val x =
+                                        if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
+                                    drawRect(
+                                        selectionColor,
+                                        topLeft = Offset(x, 0f),
+                                        size = Size(width, size.height)
+                                    )
                                 }
-                                .then(if (twoPane) Modifier.semantics {
-                                    selected = emphasized
-                                } else Modifier)
-                                .drawBehind {
-                                    if (emphasized) {
-                                        val width = 3.dp.toPx()
-                                        val x =
-                                            if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
-                                        drawRect(
-                                            selectionColor,
-                                            topLeft = Offset(x, 0f),
-                                            size = Size(width, size.height)
-                                        )
-                                    }
-                                }
-                                .heightIn(min = 67.dp)
-                                .padding(horizontal = 13.dp, vertical = 12.dp),
+                            }
+                            .heightIn(min = 67.dp)
+                            .padding(horizontal = 13.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(11.dp)) {
                             Surface(
@@ -927,6 +930,13 @@ internal fun HistoryRoute(
     }
 
     val dialogsAllowed = applicationDialogsAllowed()
+    if (dialogsAllowed && exportError != null) AlertDialog(onDismissRequest = {
+        exportError = null
+    }, title = { Text(stringResource(R.string.history_operation_failed)) }, text = {
+        Text(exportError.orEmpty(), Modifier.verticalScroll(rememberScrollState()))
+    }, confirmButton = {
+        TextButton(onClick = { exportError = null }) { Text(stringResource(R.string.okay)) }
+    })
     val filterLabels = stringArrayResource(R.array.log_filters).toList() + measurement
     if (dialogsAllowed && dialog == "filters") AlertDialog(
         onDismissRequest = { dialog = null },
@@ -960,12 +970,25 @@ internal fun HistoryRoute(
         R.string.log_export_mode_title,
         { dialog = null },
         listOf(
-            R.string.history_export_csv to { export(LogExportFormat.CSV, "selected") },
-            R.string.history_export_json to { export(LogExportFormat.JSON, "selected") },
-            R.string.log_export_from_last to { export(LogExportFormat.CSV, "since") },
-            R.string.log_export_append to { export(LogExportFormat.CSV, "append") },
-            R.string.log_export_all_logs to { export(LogExportFormat.CSV, "all") })
-    )
+            R.string.history_export_selected to { export(exportFormat, "selected") },
+            R.string.log_export_all_logs to { export(exportFormat, "all") },
+            R.string.log_export_from_last to { export(exportFormat, "since") },
+            R.string.log_export_append to { export(exportFormat, "append") }),
+        header = {
+            Text(stringResource(R.string.pref_auto_log_export_format))
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                LogExportFormat.entries.forEach { format ->
+                    FilterChip(
+                        selected = exportFormat == format,
+                        onClick = { exportFormat = format },
+                        label = { Text(format.name) })
+                }
+            }
+            Text(
+                stringResource(R.string.log_export_append_help),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        })
     if (dialog == "import") ChoiceDialog(
         R.string.log_import_mode_title,
         { dialog = null },
@@ -1010,9 +1033,9 @@ internal fun HistoryRoute(
     })
     if (dialogsAllowed && dialog == "replace") AlertDialog(
         onDismissRequest = {
-            dialog = null
-            viewModel.pendingImportUri = null
-        },
+        dialog = null
+        viewModel.pendingImportUri = null
+    },
         title = { Text(stringResource(R.string.log_import_replace)) },
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
@@ -1144,7 +1167,12 @@ internal fun metricLabel(metric: HistoryMetric): String = stringResource(
 )
 
 @Composable
-private fun ChoiceDialog(title: Int, onDismiss: () -> Unit, choices: List<Pair<Int, () -> Unit>>) {
+private fun ChoiceDialog(
+    title: Int,
+    onDismiss: () -> Unit,
+    choices: List<Pair<Int, () -> Unit>>,
+    header: @Composable () -> Unit = {}
+) {
     if (applicationDialogsAllowed()) AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(title)) },
@@ -1153,6 +1181,7 @@ private fun ChoiceDialog(title: Int, onDismiss: () -> Unit, choices: List<Pair<I
                 Modifier.verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+                header()
                 choices.forEach { (label, action) ->
                     OutlinedButton(
                         onClick = action, modifier = Modifier.fillMaxWidth()

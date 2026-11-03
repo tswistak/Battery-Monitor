@@ -95,10 +95,17 @@ class WidgetRendererTest {
     }
 
     @Test
-    fun `Y axis preserves the plotted midpoint and shows only it for compact widgets`() {
+    fun `Y axis retains scale endpoints when crowded and only the midpoint for compact widgets`() {
         assertEquals(listOf(45.0, 37.5, 30.0), WidgetRenderer.chartAxisValues(30.0, 45.0, false))
         assertEquals(listOf(37.5), WidgetRenderer.chartAxisValues(30.0, 45.0, true))
         assertEquals(listOf(100.0, 70.0, 40.0), WidgetRenderer.chartAxisValues(40.0, 100.0, false))
+        assertEquals(
+            listOf(100.0, 40.0),
+            WidgetRenderer.chartAxisValues(40.0, 100.0, false, includeMiddle = false)
+        )
+        assertEquals(
+            listOf(70.0), WidgetRenderer.chartAxisValues(40.0, 100.0, true, includeMiddle = false)
+        )
     }
 
     @Test

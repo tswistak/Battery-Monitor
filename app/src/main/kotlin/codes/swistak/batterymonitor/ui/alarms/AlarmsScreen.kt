@@ -26,13 +26,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
@@ -73,6 +73,7 @@ import codes.swistak.batterymonitor.alarms.AlarmRule
 import codes.swistak.batterymonitor.alarms.AlarmTypeDefinition
 import codes.swistak.batterymonitor.alarms.LogicalAlarm
 import codes.swistak.batterymonitor.ui.components.ActionLabel
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
 
@@ -94,6 +95,8 @@ internal fun AlarmsScreen(
     chargingTarget: Int?,
     dischargingTarget: Int,
     monitoringAvailable: Boolean,
+    dismissLowBatteryOnRecovery: Boolean,
+    onDismissLowBatteryOnRecovery: (Boolean) -> Unit,
     onEdit: (Int) -> Unit,
     onAdd: (String) -> Unit,
     onEnabled: (String, LogicalAlarm?, Boolean) -> Unit,
@@ -291,6 +294,42 @@ internal fun AlarmsScreen(
                     }
                 }
             }
+            item(key = "alarm_options") {
+                Text(
+                    stringResource(R.string.alarms_options_title),
+                    modifier = Modifier
+                        .padding(start = 4.dp, top = 24.dp, bottom = 10.dp)
+                        .semantics { heading() },
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                AlarmSurface(first = true, last = true) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .toggleable(
+                                value = dismissLowBatteryOnRecovery,
+                                enabled = !state.busy,
+                                role = Role.Switch,
+                                onValueChange = onDismissLowBatteryOnRecovery
+                            )
+                            .heightIn(min = 64.dp)
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(Modifier.weight(1f)) {
+                            Text(stringResource(R.string.pref_dismiss_low_battery_on_recovery))
+                            Text(
+                                stringResource(R.string.pref_dismiss_low_battery_on_recovery_summary),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Switch(dismissLowBatteryOnRecovery, null, enabled = !state.busy)
+                    }
+                }
+            }
             if (state.projection.invalid.isNotEmpty()) {
                 item(key = "recovery") {
                     Text(
@@ -421,7 +460,9 @@ private fun AlarmTypeHeader(
                 )
             }
             Box {
-                IconButton(onClick = { options = true }) {
+                TooltipIconButton(
+                    label = stringResource(R.string.alarms_options, label),
+                    onClick = { options = true }) {
                     Icon(
                         painterResource(R.drawable.ui_more),
                         stringResource(R.string.alarms_options, label)

@@ -33,7 +33,7 @@ describe('Historical device data import', () => {
         await chooseImportFile('Import device-specific data', 'historical-1.7.3-device.json');
         await confirmAllAvailableCategories();
         await chooseReplaceHistory();
-        await acknowledgeMessage('Device-specific data imported successfully');
+        await acknowledgeMessage('Device-specific data imported successfully.');
 
         const state = await readState();
         expect(state.logs).toEqual([

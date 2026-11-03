@@ -29,7 +29,7 @@ describe('Historical settings import', () => {
         await openBackupAndRestoreScreen();
 
         await chooseImportFile('Import settings', 'historical-1.7.3-settings.json');
-        await acknowledgeMessage('Settings imported successfully');
+        await acknowledgeMessage('Settings imported successfully.');
         await stopMonitoring();
 
         const state = await readState();

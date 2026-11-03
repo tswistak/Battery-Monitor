@@ -15,7 +15,7 @@
     <string name="nav_battery_group">Μπαταρία</string>
     <string name="nav_current">Τρέχουσα κατάσταση</string>
     <string name="nav_history">Ιστορικό</string>
-    <string name="nav_alarms">Προειδοποιήσεις</string>
+    <string name="nav_alarms">Συναγερμοί</string>
     <string name="nav_tools_group">Εργαλεία και εφαρμογή</string>
     <string name="nav_diagnostics">Διαγνωστικά</string>
     <string name="nav_settings">Ρυθμίσεις</string>
@@ -38,14 +38,14 @@
     <string name="current_monitor_action">Ελέγξτε την παρακολούθηση στα «Διαγνωστικά».</string>
     <string name="current_monitor_attention">Η παρακολούθηση χρειάζεται προσοχή</string>
     <string name="current_notifications_off">Οι ειδοποιήσεις είναι ανενεργές</string>
-    <string name="current_notifications_off_body">Οι ειδοποιήσεις του Battery Monitor είναι απενεργοποιημένες. Ελέγξτε τις ρυθμίσεις ειδοποιήσεων για να επαναφέρετε τις προειδοποιήσεις.</string>
+    <string name="current_notifications_off_body">Οι ειδοποιήσεις του Battery Monitor είναι απενεργοποιημένες. Ελέγξτε τις ρυθμίσεις ειδοποιήσεων για να επαναφέρετε τους συναγερμούς.</string>
     <string name="current_power_optimized">Η δραστηριότητα παρασκηνίου ενδέχεται να περιορίζεται</string>
     <string name="current_power_optimized_body">Η βελτιστοποίηση μπαταρίας του Android μπορεί να καθυστερεί τις ενημερώσεις παρακολούθησης. Ελέγξτε τη ρύθμιση μπαταρίας της εφαρμογής αν σταματήσουν οι ενημερώσεις.</string>
     <string name="current_paused">Συνδεδεμένο · Δεν φορτίζει</string>
     <string name="current_target_reached">Επιτεύχθηκε ο στόχος %1$d%%</string>
     <string name="current_below_target">Κάτω από τον στόχο %1$d%%</string>
     <string name="current_low">Η στάθμη της μπαταρίας είναι πολύ χαμηλή</string>
-    <string name="current_low_body">Ελέγξτε τις ενεργές προειδοποιήσεις και συνδέστε στην τροφοδοσία όταν χρειάζεται.</string>
+    <string name="current_low_body">Ελέγξτε τους ενεργούς συναγερμούς και συνδέστε στην τροφοδοσία όταν χρειάζεται.</string>
     <string name="status_unknown" formatted="false">Άγνωστο</string>
     <string name="status_unplugged" formatted="false">Αποσυνδεδεμένο</string>
     <string name="status_plugged_in" formatted="false">Συνδεδεμένο</string>
@@ -63,6 +63,7 @@
     <string name="current_temperature">Θερμοκρασία</string>
     <string name="current_voltage">Τάση</string>
     <string name="vital_sign_voltage" formatted="false">Τάση μπαταρίας</string>
+    <string name="vital_sign_current_label" formatted="false">Ρεύμα</string>
     <string name="pref_cat_battery_current_main" formatted="false">Ρεύμα μπαταρίας</string>
     <string name="remaining_charge" formatted="false">Υπολειπόμενο φορτίο</string>
     <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
@@ -91,11 +92,13 @@
     <string name="current_state_settings_help" formatted="false">Επιλέξτε αν θα εμφανίζεται το υπολειπόμενο φορτίο και αν η «Τρέχουσα κατάσταση» θα προτιμά το μέσο ρεύμα μπαταρίας. Το ρεύμα μετριέται πάντα όταν είναι διαθέσιμο. Ο πολλαπλασιαστής διορθώνει το ρεύμα και την υπολογισμένη ισχύ σε όλη την εφαρμογή· οι καταγραφές διατηρούν το αρχικό στιγμιαίο ρεύμα ώστε ο πολλαπλασιαστής να μπορεί να αλλάξει αργότερα.</string>
     <string name="pref_show_remaining_charge" formatted="false">Εμφάνιση υπολειπόμενου φορτίου</string>
     <string name="pref_show_remaining_charge_summary" formatted="false">Εμφάνιση του υπολειπόμενου φορτίου μπαταρίας που αναφέρει η συσκευή σε mAh;</string>
+    <string name="pref_show_remaining_charge_help" formatted="false">Εμφανίστε το υπολειπόμενο φορτίο μπαταρίας που αναφέρει η συσκευή, σε mAh.</string>
     <string name="pref_battery_current_multiplier" formatted="false">Πολλαπλασιαστής</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Ορισμένες συσκευές αναφέρουν μη αναμενόμενες μονάδες ή πρόσημα. Πολλαπλασιάστε εδώ την αναφερόμενη τιμή για να διορθώσετε το εμφανιζόμενο αποτέλεσμα.\n
     \n
     Ως ενδεικτική αναφορά για τηλέφωνα, το Android χρησιμοποιεί θετικό πρόσημο κατά τη φόρτιση και αρνητικό κατά την εκφόρτιση. Η ενεργή φόρτιση είναι συχνά περίπου +500 έως +5000\u00A0mA, ενώ η συνηθισμένη εκφόρτιση περίπου -100 έως -3000\u00A0mA. Τιμές κοντά στο μηδέν μπορεί να είναι φυσιολογικές όταν η μπαταρία είναι σχεδόν γεμάτη ή το τηλέφωνο αδρανές. Αν το μέγεθος φαίνεται περίπου 1000 φορές μικρότερο ή μεγαλύτερο, ή το πρόσημο είναι αντίστροφο, προσαρμόστε τον πολλαπλασιαστή.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Αυτόματος εντοπισμός</string>
+    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Προσπαθήστε να προσδιορίσετε τον πολλαπλασιαστή ρεύματος από μια μέτρηση μπαταρίας. Αν η ανίχνευση δεν είναι διαθέσιμη, η τρέχουσα τιμή παραμένει αμετάβλητη και η ανίχνευση μπορεί να επαναληφθεί όταν γίνει διαθέσιμη μια κατάλληλη μέτρηση. Η επιλογή χειροκίνητης τιμής ακυρώνει την εκκρεμή ανίχνευση.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Ο αυτόματος εντοπισμός δεν είναι διαθέσιμος για την τρέχουσα κατάσταση ή ένδειξη της μπαταρίας</string>
     <string name="pref_battery_current_multiplier_detection_result">Ο πολλαπλασιαστής ορίστηκε αυτόματα σε %1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Προτίμηση μέσου ρεύματος</string>
@@ -118,7 +121,7 @@
     <string name="current_prediction_explanation">Αυτή η εκτίμηση χρησιμοποιεί τη ρυθμισμένη μέθοδο πρόβλεψης του Battery Monitor. Ο στόχος της δεν ελέγχει τη φόρτιση ή τον τερματισμό λειτουργίας.</string>
     <string name="time_estimates_settings" formatted="false">Εκτιμήσεις χρόνου</string>
     <string name="time_estimates_settings_summary" formatted="false">Επιλέξτε τον υπολογισμό του χρόνου που απομένει και τα επίπεδα-στόχους της μπαταρίας</string>
-    <string name="time_estimates_settings_help" formatted="false">Επιλέξτε πώς το Battery Monitor εκτιμά τον υπολειπόμενο χρόνο και τις στάθμες-στόχους μπαταρίας. Οι στόχοι ισχύουν και για τις προειδοποιήσεις «Επιτεύχθηκε ο στόχος φόρτισης» και «Επιτεύχθηκε ο στόχος εκφόρτισης». Το Battery Monitor δεν ξεκινά ούτε σταματά τη φόρτιση.</string>
+    <string name="time_estimates_settings_help" formatted="false">Επιλέξτε πώς το Battery Monitor εκτιμά τον υπολειπόμενο χρόνο και τις στάθμες-στόχους μπαταρίας. Οι στόχοι ισχύουν και για τους συναγερμούς «Επιτεύχθηκε ο στόχος φόρτισης» και «Επιτεύχθηκε ο στόχος εκφόρτισης». Το Battery Monitor δεν ξεκινά ούτε σταματά τη φόρτιση.</string>
     <string name="pref_cat_predictor" formatted="false">Εκτιμήσεις υπολειπόμενου χρόνου</string>
     <string name="pref_prediction_type" formatted="false">Τύπος εκτίμησης</string>
     <string name="pref_prediction_type_help" formatted="false">Ο «Ευαίσθητος» χρησιμοποιεί τον ρυθμό των τελευταίων πέντε λεπτών. Ο «Συντηρητικός», η προεπιλογή, συνδυάζει πρόσφατους ρυθμούς με τον μαθημένο μακροπρόθεσμο μέσο όρο για μείωση απότομων αλλαγών. Το «Από την Αλλαγή Κατάστασης» χρησιμοποιεί την τρέχουσα συνεδρία φόρτισης ή εκφόρτισης. Ο «Μακροπρόθεσμος Μέσος όρος» χρησιμοποιεί τον μαθημένο ρυθμό εκφόρτισης ή της ενεργής πηγής φόρτισης. Μέχρι να υπάρχουν αρκετές παρατηρήσεις, οι εκτιμήσεις χρησιμοποιούν τον αποθηκευμένο μέσο όρο ή μια αρχική προεπιλογή.</string>
@@ -128,7 +131,7 @@
     <string name="predictor_long_term_ave" formatted="false">Μακροπρόθεσμος Μέσος όρος</string>
     <string name="pref_cat_target_levels" formatted="false">Επίπεδα-στόχοι</string>
     <string name="pref_charging_target_mode" formatted="false">Στόχος φόρτισης</string>
-    <string name="pref_charging_target_mode_help" formatted="false">Η «Αυτόματα (συνιστάται)» χρησιμοποιεί σταθερό όριο φόρτισης της συσκευής όταν το Battery Monitor μπορεί να το διαβάσει, διαφορετικά 100%. Η προσαρμοστική φόρτιση εξακολουθεί να στοχεύει το 100%. Η «Προσαρμοσμένο» χρησιμοποιεί την επιλεγμένη στάθμη για εκτιμήσεις φόρτισης και προειδοποιήσεις «Επιτεύχθηκε ο στόχος φόρτισης».</string>
+    <string name="pref_charging_target_mode_help" formatted="false">Η «Αυτόματα (συνιστάται)» χρησιμοποιεί σταθερό όριο φόρτισης της συσκευής όταν το Battery Monitor μπορεί να το διαβάσει, διαφορετικά 100%. Η προσαρμοστική φόρτιση εξακολουθεί να στοχεύει το 100%. Η «Προσαρμοσμένο» χρησιμοποιεί την επιλεγμένη στάθμη για εκτιμήσεις φόρτισης και συναγερμούς «Επιτεύχθηκε ο στόχος φόρτισης».</string>
     <string name="pref_charging_target_mode_support_help" formatted="false">Η αυτόματη ανίχνευση μπορεί να λειτουργήσει σε συσκευές Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme και Sony Xperia, καθώς και σε συσκευές με GrapheneOS ή LineageOS, ιδιαίτερα όταν υπάρχει πρόσβαση root ή Shizuku. Βασίζεται σε σήματα λογισμικού, επομένως η διαθεσιμότητα και η ακρίβεια δεν είναι εγγυημένες ούτε για τους κατασκευαστές που αναφέρονται. Μπορεί επίσης να λειτουργήσει σε μη δοκιμασμένα μοντέλα ή εκδόσεις λειτουργικού αυτών των οικογενειών, αλλά συσκευές άλλων κατασκευαστών δεν ανιχνεύονται αυτόματα προς το παρόν.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Όριο φόρτισης συσκευής: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Προσαρμοσμένος στόχος</string>
@@ -141,16 +144,15 @@
     <string name="pref_custom_charging_target" formatted="false">Προσαρμοσμένος στόχος φόρτισης</string>
     <string name="pref_custom_charging_target_help" formatted="false">Ορίστε το τελικό επίπεδο των εκτιμήσεων φόρτισης όταν ο «Στόχος φόρτισης» είναι «Προσαρμοσμένο».</string>
     <string name="pref_discharging_target" formatted="false">Στόχος αποφόρτισης</string>
-    <string name="pref_discharging_target_help" formatted="false">Ορίστε το τελικό σημείο των εκτιμήσεων εκφόρτισης και των προειδοποιήσεων «Επιτεύχθηκε ο στόχος εκφόρτισης». Κάτω από αυτή τη στάθμη, οι εκτιμήσεις χρόνου συνεχίζουν προς το 0%. Οι προειδοποιήσεις χαμηλής μπαταρίας με δικό τους όριο παραμένουν ανεξάρτητες.</string>
+    <string name="pref_discharging_target_help" formatted="false">Ορίστε το τελικό σημείο των εκτιμήσεων εκφόρτισης και των συναγερμών «Επιτεύχθηκε ο στόχος εκφόρτισης». Κάτω από αυτή τη στάθμη, οι εκτιμήσεις χρόνου συνεχίζουν προς το 0%. Οι συναγερμοί χαμηλής μπαταρίας με δικό τους όριο παραμένουν ανεξάρτητοι.</string>
     <string name="pref_target_level_summary" formatted="true">Εκτίμηση έως %1$d%%</string>
 
     <string name="main_notif_chan_name" formatted="false">Κύρια ειδοποίηση</string>
     <string name="live_updates_notif_chan_name" formatted="false">Ζωντανές ενημερώσεις</string>
     <string name="notification_settings" formatted="false">Κύρια ειδοποίηση</string>
-    <string name="settings_notification">Ειδοποίηση</string>
     <string name="notification_settings_summary" formatted="false">Διαμορφώστε το περιεχόμενο ειδοποιήσεων, το εικονίδιο της γραμμής κατάστασης και το τσιπ Ζωντανών ενημερώσεων</string>
     <string name="notification_settings_help" formatted="false">Μπορείτε να διαμορφώσετε ποιο περιεχόμενο θα εμφανίζεται στην αναπτυσσόμενη ειδοποίηση.</string>
-    <string name="notification_channels_help" formatted="false">Ανοίξτε τις ρυθμίσεις ειδοποιήσεων Android για να επιτρέψετε ή να αποκλείσετε ειδοποιήσεις και να ρυθμίσετε ήχο, δόνηση και παράδοση για την κύρια ειδοποίηση και κάθε τύπο προειδοποίησης. Η ενεργοποίηση κανόνα προειδοποίησης δεν παρακάμπτει ένα αποκλεισμένο κανάλι ειδοποιήσεων.</string>
+    <string name="notification_channels_help" formatted="false">Ανοίξτε τις ρυθμίσεις ειδοποιήσεων Android για να επιτρέψετε ή να αποκλείσετε ειδοποιήσεις και να ρυθμίσετε ήχο, δόνηση και παράδοση για την κύρια ειδοποίηση και κάθε τύπο συναγερμού. Η ενεργοποίηση κανόνα συναγερμού δεν παρακάμπτει ένα αποκλεισμένο κανάλι ειδοποιήσεων.</string>
     <string name="app_notifs_disabled_summary" formatted="false">Έχετε απενεργοποιήσει όλες τις ειδοποιήσεις για αυτήν την εφαρμογή.  Ενεργοποιήστε τους να έχουν πρόσβαση σε αυτές τις ρυθμίσεις</string>
     <string name="main_notifs_disabled_summary" formatted="false">Έχετε απενεργοποιήσει την κύρια ειδοποίηση για αυτήν την εφαρμογή.  Ενεργοποιήστε το για πρόσβαση σε αυτές τις ρυθμίσεις</string>
     <string name="settings_notification_disabled">Ενεργοποιήστε τις ειδοποιήσεις εφαρμογής και το κύριο κανάλι ειδοποιήσεων για να προσαρμόσετε αυτή την επιλογή</string>
@@ -160,6 +162,7 @@
     Σημείωση: Η παραχώρηση αυτής της άδειας μπορεί περιστασιακά να προκαλέσει το κλείσιμο της εφαρμογής. Αν συμβεί, απλώς ανοίξτε την ξανά.</string>
     <string name="pref_cat_channel_settings" formatted="false">Ρυθμίσεις καναλιού ειδοποιήσεων</string>
     <string name="pref_manage_main_channel" formatted="false">Διαχείριση Κύριου Καναλιού</string>
+    <string name="pref_manage_main_channel_summary" formatted="false">Ανοίξτε τις ρυθμίσεις Android για το κύριο κανάλι ειδοποιήσεων</string>
     <string name="pref_cat_notification_content" formatted="false">Περιεχόμενο</string>
     <string name="pref_top_line_content" formatted="false">Περιεχόμενο κορυφαίας γραμμής</string>
     <string name="pref_top_line_content_help" formatted="false">Επιλέξτε αν η επάνω γραμμή ειδοποίησης εμφανίζει την επιλογή «Χρόνος που απομένει» ως εκτίμηση, «Χρόνος από την αλλαγή κατάστασης» ή τα επιλεγμένα «Ζωτικά Σημεία».</string>
@@ -168,8 +171,8 @@
     <string name="time_remaining" formatted="false">Χρόνος που απομένει</string>
     <string name="time_since_status_change" formatted="false">Χρόνος από την αλλαγή κατάστασης</string>
     <string name="vital_signs" formatted="false">Ζωτικά Σημεία</string>
-    <string name="notification_until_charged" formatted="false">"μέχρι να χρεωθεί"</string>
-    <string name="notification_until_drained" formatted="false">"αριστερά"</string>
+    <string name="notification_until_charged" formatted="true">%1$s μέχρι την πλήρη φόρτιση</string>
+    <string name="notification_until_drained" formatted="true">Απομένουν %1$s</string>
     <string name="pref_time_remaining_verbosity" formatted="false">Χρόνος που απομένει</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">Οι συσκευές διατίθενται σε όλα τα σχήματα και μεγέθη, επομένως οι περισσότερες μεταφράσεις χρειάζονται χρησιμοποιήστε συντομογραφίες για να βεβαιωθείτε ότι ταιριάζει η εκτίμηση του υπολειπόμενου χρόνου άνετα στην περιοχή ειδοποιήσεων. Αν πάλι δεν ταιριάζει, μπορείτε να επιλέξετε τη μορφή «Συμπυκνωμένο». Αν έχεις άφθονο χώρο, μπορεί να προτιμήσετε τη ρύθμιση «Πολύλογος».</string>
     <string name="condensed" formatted="false">Συμπυκνωμένο</string>
@@ -177,23 +180,27 @@
     <string name="verbose" formatted="false">Πολύλογος</string>
     <string name="pref_vital_signs_content" formatted="false">Περιεχόμενο ζωτικών στοιχείων</string>
     <string name="pref_vital_signs_content_summary" formatted="false">Ποιες τιμές να περιλαμβάνονται στα «Ζωτικά Σημεία» και με ποια σειρά;</string>
+    <string name="pref_vital_signs_content_help" formatted="false">Επιλέξτε τιμές και χρησιμοποιήστε τα κουμπιά μετακίνησης για να ορίσετε τη σειρά τους. Μπορείτε να αποεπιλέξετε όλες τις τιμές.</string>
     <string name="pref_expanded_notification" formatted="false">Ανάπτυξη λεπτομερειών ειδοποίησης</string>
     <string name="pref_expanded_notification_summary" formatted="false">Να εμφανίζονται λεπτομέρειες με ετικέτες όταν η ειδοποίηση αναπτύσσεται;</string>
     <string name="pref_expanded_notification_help" formatted="false">Αν ενεργοποιηθεί, η ανάπτυξη της κύριας ειδοποίησης εμφανίζει τον «Χρόνος που απομένει», τον «Χρόνος από την αλλαγή κατάστασης» και κάθε τιμή των «Ζωτικά Σημεία» σε ξεχωριστή γραμμή με ετικέτα, αντί για τη σύνοψη μίας γραμμής.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">Εικονίδιο γραμμής κατάστασης</string>
     <string name="status_bar_icon_settings_help" formatted="false">Επιλέξτε αν το εικονίδιο ειδοποίησης εμφανίζει ποσοστό μπαταρίας ή θερμοκρασία, αν εμφανίζεται το σύμβολο της μονάδας μέσα στο εικονίδιο και αν η φόρτιση θα έχει ξεχωριστό εικονίδιο. Από το Android 16 και μετά, το εικονίδιο της γραμμής κατάστασης ενδέχεται να μη λειτουργεί σε κάθε παραλλαγή του λειτουργικού συστήματος.</string>
+    <string name="status_bar_icon_availability_help" formatted="false">Από το Android 16 και μετά, το εικονίδιο της γραμμής κατάστασης ενδέχεται να μη λειτουργεί σε κάθε παραλλαγή του λειτουργικού συστήματος.</string>
     <string name="pref_icon_content" formatted="false">Περιεχόμενο εικονιδίου</string>
     <string name="pref_icon_content_help" formatted="false">Επιλέξτε εάν το εικονίδιο της γραμμής κατάστασης εμφανίζει ποσοστό μπαταρίας ή θερμοκρασία μπαταρίας. Η θερμοκρασία ακολουθεί τη μονάδα που έχετε επιλέξει.</string>
     <string name="pref_content_percent" formatted="false">Ποσοστό μπαταρίας</string>
     <string name="pref_content_temperature" formatted="false">Θερμοκρασία μπαταρίας</string>
     <string name="pref_show_icon_unit" formatted="false">Εμφάνιση συμβόλου μονάδας</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Εμφάνιση του συμβόλου μονάδας δίπλα στην τιμή στο εικονίδιο της γραμμής κατάστασης</string>
     <string name="pref_show_icon_unit_help" formatted="false">Αν είναι ενεργό, το εικονίδιο εμφανίζει σύμβολο ποσοστού για το ποσοστό μπαταρίας και σύμβολο βαθμών για τη θερμοκρασία της μπαταρίας. Απενεργοποιήστε το για να εμφανίζεται μόνο ο αριθμός.</string>
     <string name="pref_indicate_charging" formatted="false">Υποδεικνύεται Φόρτιση</string>
     <string name="pref_indicate_charging_summary" formatted="false">Αλλαγή εικονιδίου για ένδειξη κατά τη φόρτιση;</string>
     <string name="pref_indicate_charging_help" formatted="false">Το εικονίδιο φόρτισης μπορεί να εμφανίζει έναν κεραυνό κάτω από τον αριθμό. Απενεργοποιήστε αυτή τη ρύθμιση αν προτιμάτε το ίδιο εικονίδιο κατά τη φόρτιση και την αποφόρτιση.</string>
     <string name="status_bar_chip_settings" formatted="false">Τσιπ γραμμής κατάστασης</string>
     <string name="status_bar_chip_settings_help" formatted="false">Σε Android 16 ή νεότερο, επιλέξτε πότε εμφανίζεται το τσιπ Ζωντανών ενημερώσεων, ποιες τιμές εναλλάσσει και αν εμφανίζει emoji φόρτισης. Η διαθεσιμότητα εξαρτάται επίσης από τη συσκευή και τις ρυθμίσεις ειδοποιήσεων συστήματος.</string>
+    <string name="status_bar_chip_availability_help" formatted="false">Η διαθεσιμότητα εξαρτάται επίσης από τη συσκευή και τις ρυθμίσεις ειδοποιήσεων συστήματος.</string>
     <string name="settings_live_update_summary">Επιτρέψτε ή αποκλείστε τις προωθημένες ειδοποιήσεις μπαταρίας στις ρυθμίσεις Android</string>
     <string name="settings_live_update_help">Επιτρέψτε ή αποκλείστε τις προωθημένες ειδοποιήσεις μπαταρίας στις ρυθμίσεις Android.</string>
     <string name="live_updates_onboarding_title">Τσιπ μπαταρίας γραμμής κατάστασης</string>
@@ -222,10 +229,10 @@
     <string name="pref_expanded_live_update_help" formatted="false">Οι ειδοποιήσεις Live Update εμφανίζονται πάντα αναπτυγμένες. Αν ενεργοποιηθεί, το Live Update εμφανίζει τον «Χρόνος που απομένει», τον «Χρόνος από την αλλαγή κατάστασης» και κάθε τιμή των «Ζωτικά Σημεία» σε ξεχωριστή γραμμή με ετικέτα.</string>
     <string name="pref_chip_content" formatted="false">Περιεχόμενο Chip</string>
     <string name="pref_chip_content_summary" formatted="false">Ποιες τιμές θα εμφανίζονται στο chip και με ποια σειρά;</string>
-    <string name="pref_chip_content_help" formatted="false">Επιλέξτε τις τιμές μεταξύ των οποίων θα εναλλάσσεται το chip της γραμμής κατάστασης και ορίστε τη σειρά τους.</string>
+    <string name="pref_chip_content_help" formatted="false">Επιλέξτε τις τιμές μεταξύ των οποίων θα εναλλάσσεται το chip της γραμμής κατάστασης και ορίστε τη σειρά τους. Πρέπει να παραμένει επιλεγμένη τουλάχιστον μία τιμή.</string>
     <string name="pref_chip_switching_interval" formatted="false">Μεσοδιάστημα εναλλαγής</string>
     <string name="pref_chip_switching_interval_summary" formatted="false">Επιλέξτε πόσο συχνά το chip θα αλλάζει στην επόμενη επιλεγμένη τιμή</string>
-    <string name="pref_chip_switching_interval_help" formatted="false">Επιλέξτε πόσο συχνά το chip θα αλλάζει στην επόμενη επιλεγμένη τιμή. Αυτή η ρύθμιση είναι διαθέσιμη όταν έχουν επιλεγεί περισσότερες από μία τιμές.</string>
+    <string name="pref_chip_switching_interval_help" formatted="false">Επιλέξτε πόσο συχνά το chip θα αλλάζει στην επόμενη επιλεγμένη τιμή. Αυτή η ρύθμιση είναι διαθέσιμη όταν έχουν επιλεγεί περισσότερες από μία τιμές και η επιλογή «Εμφάνιση Live Update» δεν έχει οριστεί σε «Ποτέ».</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">Εισαγάγετε ένα διάστημα σε δευτερόλεπτα (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">Εισαγάγετε μια τιμή από 1 έως 3600.</string>
     <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0δευτερόλεπτα</string>
@@ -237,16 +244,16 @@
     <string name="pref_chip_indicate_charging_summary" formatted="false">Εμφάνιση ενός emoji αστραπής κατά τη φόρτιση ή την πλήρη φόρτιση;</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Εάν είναι ενεργοποιημένο, το τσιπ της γραμμής κατάστασης θα εμφανίσει ένα emoji αστραπή δίπλα την τιμή του τσιπ κατά τη φόρτιση ή όταν είναι πλήρως φορτισμένο.</string>
 
-    <string name="alarm_settings_subtitle" formatted="false">Ρυθμίσεις Ειδοποιήσεων</string>
-    <string name="alarm_settings" formatted="false">Ειδοποιήσεις</string>
+    <string name="alarm_settings_subtitle" formatted="false">Ρυθμίσεις συναγερμών</string>
+    <string name="alarm_settings" formatted="false">Συναγερμοί</string>
     <string name="alarm_settings_help" formatted="false">Μπορείτε να ρυθμίσετε τον Battery Monitor να σας ενημερώνει όταν το επίπεδο της μπαταρίας φτάνει σε ένα συγκεκριμένο επίπεδο (π.χ, όταν η μπαταρία φορτίζεται πλήρως ή όταν το επίπεδο της μπαταρίας πέφτει κάτω από 20%)</string>
-    <string name="alarms_overview" formatted="false">Επισκόπηση Ειδιποιήσεων</string>
-    <string name="alarms_overview_help">Και οι οκτώ τύποι προειδοποιήσεων είναι πάντα διαθέσιμοι. Ενεργοποιήστε συμβάντα απευθείας ή χρησιμοποιήστε την «Προσθήκη ορίου» κάτω από τύπο φορτίου ή θερμοκρασίας. Τα νέα όρια ενεργοποιούνται μετά την αποθήκευση. Πατήστε μια τιμή για επεξεργασία· η επεξεργασία διατηρεί την κατάσταση ενεργοποίησής της. Οι ανενεργές τιμές παραμένουν στη λίστα. Η «Διαγραφή Ειδοποίησης» ζητά επιβεβαίωση. Ο ήχος και η δόνηση είναι κοινά ανά τύπο στις ρυθμίσεις ειδοποιήσεων Android. Οι υπάρχουσες διπλότυπες εγγραφές εμφανίζονται ως μία λογική προειδοποίηση· η αλλαγή κατάστασης ή η διαγραφή επηρεάζει όλα τα αντίγραφα. Οι προειδοποιήσεις φόρτισης και εκφόρτισης ακολουθούν τους στόχους εκτίμησης και δεν ελέγχουν τη φόρτιση. Ένα αποκλεισμένο κανάλι ή η σταματημένη παρακολούθηση δεν αλλάζουν τους αποθηκευμένους διακόπτες.</string>
+    <string name="alarms_overview" formatted="false">Επισκόπηση συναγερμών</string>
+    <string name="alarms_overview_help">Και οι οκτώ τύποι συναγερμών είναι πάντα διαθέσιμοι. Ενεργοποιήστε συμβάντα απευθείας ή χρησιμοποιήστε την «Προσθήκη ορίου» κάτω από τύπο φορτίου ή θερμοκρασίας. Τα νέα όρια ενεργοποιούνται μετά την αποθήκευση. Πατήστε μια τιμή για επεξεργασία· η επεξεργασία διατηρεί την κατάσταση ενεργοποίησής της. Οι ανενεργές τιμές παραμένουν στη λίστα. Η «Διαγραφή συναγερμού» ζητά επιβεβαίωση. Ο ήχος και η δόνηση είναι κοινά ανά τύπο στις ρυθμίσεις ειδοποιήσεων Android. Οι υπάρχουσες διπλότυπες εγγραφές εμφανίζονται ως ένας λογικός συναγερμός· η αλλαγή κατάστασης ή η διαγραφή επηρεάζει όλα τα αντίγραφα. Οι συναγερμοί φόρτισης και εκφόρτισης ακολουθούν τους στόχους εκτίμησης και δεν ελέγχουν τη φόρτιση. Ένα αποκλεισμένο κανάλι ή η σταματημένη παρακολούθηση δεν αλλάζουν τους αποθηκευμένους διακόπτες.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d ενεργή προειδοποίηση</item>
         <item quantity="other">%1$d ενεργές προειδοποιήσεις</item>
     </plurals>
-    <string name="channel_group_name_alarms" formatted="false">Συναγερμός</string>
+    <string name="channel_group_name_alarms" formatted="false">Συναγερμοί</string>
     <string name="alarm_type_fully_charged" formatted="false">Πλήρως Φορτισμένη</string>
     <string name="alarm_fully_charged" formatted="false">Η μπαταρία είναι φορτισμένη πλήρως</string>
     <string name="alarms_targets_group">Στόχοι φόρτισης και εκφόρτισης</string>
@@ -268,14 +275,15 @@
     <string name="alarms_android_problem_summary">Πρόβλημα μπαταρίας που αναφέρει το σύστημα, όχι ποσοστό υγείας χωρητικότητας</string>
     <string name="alarm_type_health_failure" formatted="false">Καλή υγεία απέτυχε</string>
     <string name="alarm_health_failure" formatted="false">"Η υγεία της μπαταρίας είναι: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Συνθήκες Ειδοποίησης</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Εδώ ελέγχετε τις συνθήκες που ενεργοποιούν μια ειδοποίηση.</string>
+    <string name="pref_cat_alarm_conditions" formatted="false">Συνθήκες συναγερμού</string>
+    <string name="pref_cat_alarm_conditions_help" formatted="false">Εδώ ελέγχετε τις συνθήκες που ενεργοποιούν έναν συναγερμό.</string>
     <string name="pref_alarm_threshold" formatted="false">Όριο</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Για προειδοποιήσεις φορτίου και θερμοκρασίας, ορίστε το όριο και αποθηκεύστε τον κανόνα. Η προειδοποίηση ενεργοποιείται όταν μια μέτρηση φτάσει ή περάσει το όριο προς την επιλεγμένη κατεύθυνση. Οι επαναλαμβανόμενες μετρήσεις στο όριο δεν επαναλαμβάνουν την προειδοποίηση. Η έναρξη παρακολούθησης, η εισαγωγή κανόνα ή η ενεργοποίησή του πέρα από το όριο δεν την ενεργοποιούν αμέσως· απαιτείται μεταγενέστερη διέλευση.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Για συναγερμούς φορτίου και θερμοκρασίας, ορίστε το όριο και αποθηκεύστε τον κανόνα. Ο συναγερμός ενεργοποιείται όταν μια μέτρηση φτάσει ή περάσει το όριο προς την επιλεγμένη κατεύθυνση. Οι επαναλαμβανόμενες μετρήσεις στο όριο δεν επαναλαμβάνουν τον συναγερμό. Η έναρξη παρακολούθησης, η εισαγωγή κανόνα ή η ενεργοποίησή του πέρα από το όριο δεν τον ενεργοποιούν αμέσως· απαιτείται μεταγενέστερη διέλευση.</string>
     <string name="alarms_add_threshold">Προσθήκη ορίου</string>
     <string name="alarms_edit_threshold">Επεξεργασία ορίου</string>
     <string name="alarms_edit_existing">Επεξεργασία υπάρχοντος ορίου</string>
-    <string name="alarms_new_enabled">Η προειδοποίηση θα ενεργοποιηθεί όταν προστεθεί.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Αν υπάρχει ήδη ένα όριο, ανοίξτε το με την επιλογή «Επεξεργασία υπάρχοντος ορίου». Αν οι αποθηκευμένοι συναγερμοί αλλάξουν κατά την επεξεργασία, χρησιμοποιήστε την επιλογή «Ανανέωση» και ανοίξτε ξανά το όριο πριν το αλλάξετε.</string>
+    <string name="alarms_new_enabled">Ο συναγερμός θα ενεργοποιηθεί όταν προστεθεί.</string>
     <string name="alarms_edit_keeps_enabled">Η επεξεργασία διατηρεί την τρέχουσα ρύθμιση ενεργοποίησης/απενεργοποίησης.</string>
     <string name="alarms_enabled">Ενεργό</string>
     <string name="alarms_disable">Απενεργοποίηση</string>
@@ -283,9 +291,9 @@
     <string name="alarms_numeric_range">Εισαγάγετε ακέραιο αριθμό από %1$d έως %2$d.</string>
     <string name="alarms_temperature_range">Εισαγάγετε αριθμό από %1$d έως %2$d, με έως ένα δεκαδικό ψηφίο.</string>
     <string name="alarms_duplicate">Αυτό το όριο υπάρχει ήδη για αυτόν τον τύπο.</string>
-    <string name="alarms_discard_confirmation">Να απορριφθούν οι αλλαγές σας σε αυτή την προειδοποίηση;</string>
+    <string name="alarms_discard_confirmation">Να απορριφθούν οι αλλαγές σας σε αυτόν τον συναγερμό;</string>
     <string name="alarms_discard">Απόρριψη</string>
-    <string name="menu_delete_alarm" formatted="false">Διαγραφή Ειδοποίησης</string>
+    <string name="menu_delete_alarm" formatted="false">Διαγραφή συναγερμού</string>
     <string name="alarms_delete_threshold_confirmation">Να διαγραφεί το %1$s — %2$s; Όλα τα αντίγραφα αυτού του ορίου θα αφαιρεθούν.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Έχετε απενεργοποιήσει την ομάδα ειδοποιήσεων συναγερμού για αυτήν την εφαρμογή.  Ενεργοποιήστε το για πρόσβαση στους συναγερμούς σας</string>
     <string name="alarm_chan_disabled" formatted="false">Έχετε απενεργοποιήσει τις ειδοποιήσεις για αυτόν τον τύπο συναγερμού.  Επιτρέψτε τους να χρησιμοποιούν αυτόν τον τύπο συναγερμού.</string>
@@ -295,21 +303,23 @@
     <string name="alarms_delivery_vibration">Δόνηση και ειδοποίηση</string>
     <string name="alarms_delivery_notification">Μόνο ειδοποίηση</string>
     <string name="alarms_channel_help">Ο ήχος και η παράδοση ελέγχονται από αυτό το κανάλι ειδοποιήσεων Android.</string>
-    <string name="pref_dismiss_low_battery_on_recovery">Απόρριψη προειδοποίησης χαμηλής μπαταρίας μετά την ανάκαμψη</string>
-    <string name="pref_dismiss_low_battery_on_recovery_summary">Αφαίρεση της ειδοποίησης χαμηλής μπαταρίας όταν το φορτίο ανέβει πάνω από το όριό της. Οι άλλες ειδοποιήσεις προειδοποιήσεων παραμένουν</string>
-    <string name="pref_dismiss_low_battery_on_recovery_help">Αφαίρεση της ειδοποίησης χαμηλής μπαταρίας όταν το φορτίο ανέβει πάνω από το όριό της. Οι άλλες ειδοποιήσεις προειδοποιήσεων παραμένουν.</string>
+    <string name="alarms_options_title" formatted="false">Επιλογές συναγερμών</string>
+    <string name="pref_dismiss_low_battery_on_recovery">Απόρριψη συναγερμού χαμηλής μπαταρίας μετά την ανάκαμψη</string>
+    <string name="pref_dismiss_low_battery_on_recovery_summary">Αφαίρεση της ειδοποίησης χαμηλής μπαταρίας όταν το φορτίο ανέβει πάνω από το όριό της. Οι άλλες ειδοποιήσεις συναγερμών παραμένουν</string>
+    <string name="pref_dismiss_low_battery_on_recovery_help">Αφαίρεση της ειδοποίησης χαμηλής μπαταρίας όταν το φορτίο ανέβει πάνω από το όριό της. Οι άλλες ειδοποιήσεις συναγερμών παραμένουν.</string>
     <string name="alarms_channel_unavailable">Το κανάλι ειδοποιήσεων δεν έχει δημιουργηθεί ή δεν είναι διαθέσιμο</string>
     <string name="alarms_settings_unavailable">Δεν ήταν δυνατό το άνοιγμα των ρυθμίσεων ειδοποιήσεων Android</string>
     <string name="alarms_target_unknown">Ο στόχος δεν είναι διαθέσιμος. Ανοίξτε τις ρυθμίσεις εκτίμησης.</string>
-    <string name="alarms_monitor_stopped">Η παρακολούθηση έχει σταματήσει. Οι αποθηκευμένες προειδοποιήσεις δεν αξιολογούνται.</string>
-    <string name="alarms_monitor_unconfirmed">Δεν υπάρχει τρέχουσα σύνδεση παρακολούθησης. Η αξιολόγηση προειδοποιήσεων δεν έχει επιβεβαιωθεί.</string>
-    <string name="alarms_state_unknown">Οι ρυθμίσεις προειδοποιήσεων δεν είναι διαθέσιμες</string>
+    <string name="alarms_monitor_stopped">Η παρακολούθηση έχει σταματήσει. Οι αποθηκευμένοι συναγερμοί δεν αξιολογούνται.</string>
+    <string name="alarms_monitor_unconfirmed">Δεν υπάρχει τρέχουσα σύνδεση παρακολούθησης. Η αξιολόγηση συναγερμών δεν έχει επιβεβαιωθεί.</string>
+    <string name="alarms_state_unknown">Οι ρυθμίσεις συναγερμών δεν είναι διαθέσιμες</string>
     <string name="alarms_stale">Εμφανίζονται οι προηγούμενες ρυθμίσεις. Ανανεώστε πριν κάνετε αλλαγές.</string>
-    <string name="alarms_conflict">Οι αποθηκευμένες προειδοποιήσεις άλλαξαν. Ανανεώστε και ανοίξτε ξανά το όριο πριν κάνετε αλλαγές.</string>
-    <string name="alarms_missing_rule">Αυτή η προειδοποίηση λείπει ή δεν είναι έγκυρη. Ελέγξτε τον κατάλογο προειδοποιήσεων.</string>
-    <string name="alarms_invalid_records">Ορισμένες αποθηκευμένες προειδοποιήσεις δεν είναι έγκυρες. Ελέγξτε αυτές τις εγγραφές· δεν έχουν αφαιρεθεί.</string>
-    <string name="alarms_database_error">Δεν ήταν δυνατή η πρόσβαση στη βάση δεδομένων προειδοποιήσεων. Δοκιμάστε ξανά.</string>
-    <string name="alarms_saved">Οι ρυθμίσεις προειδοποιήσεων αποθηκεύτηκαν</string>
+    <string name="alarms_conflict">Οι αποθηκευμένοι συναγερμοί άλλαξαν. Ανανεώστε και ανοίξτε ξανά το όριο πριν κάνετε αλλαγές.</string>
+    <string name="alarms_missing_rule">Αυτός ο συναγερμός λείπει ή δεν είναι έγκυρος. Ελέγξτε τον κατάλογο συναγερμών.</string>
+    <string name="alarms_invalid_records">Ορισμένοι αποθηκευμένοι συναγερμοί δεν είναι έγκυροι. Ελέγξτε αυτές τις εγγραφές· δεν έχουν αφαιρεθεί.</string>
+    <string name="alarms_invalid_records_help" formatted="false">Όταν εμφανίζονται μη έγκυροι αποθηκευμένοι συναγερμοί, μπορείτε να απενεργοποιήσετε μια ενεργή εγγραφή χωρίς να τη διαγράψετε ή να τη διαγράψετε οριστικά. Και οι δύο ενέργειες ζητούν επιβεβαίωση.</string>
+    <string name="alarms_database_error">Δεν ήταν δυνατή η πρόσβαση στη βάση δεδομένων συναγερμών. Δοκιμάστε ξανά.</string>
+    <string name="alarms_saved">Οι ρυθμίσεις συναγερμών αποθηκεύτηκαν</string>
     <string name="alarms_saved_reload_failed">Αποθηκεύτηκε, αλλά δεν ήταν δυνατή η ενημέρωση της παρακολούθησης. Ελέγξτε την κατάσταση παρακολούθησης.</string>
 
     <string name="history_range">Εύρος ιστορικού</string>
@@ -357,8 +367,6 @@
     <string name="history_periodic_measurement">Μέτρηση μπαταρίας</string>
     <string name="history_raw_observations">Αποθηκευμένες παρατηρήσεις. Οι λεπτομέρειες δείχνουν τις διαθέσιμες μετρήσεις και την ώρα τους.</string>
     <string name="history_export_selected">Εξαγωγή επιλεγμένου εύρους</string>
-    <string name="history_export_csv">Επιλεγμένο εύρος · CSV</string>
-    <string name="history_export_json">Επιλεγμένο εύρος · JSON</string>
     <string name="history_import_json">Εισαγωγή καταγραφών από αντίγραφο JSON</string>
     <string name="history_delete_selected">Εκκαθάριση επιλεγμένου εύρους</string>
     <string name="history_delete_selected_confirm">Να διαγραφούν οι καταγραφές στο επιλεγμένο εύρος;</string>
@@ -414,7 +422,7 @@
     <string name="pref_enable_logging_help" formatted="false">Αποθηκεύστε παρατηρήσεις μπαταρίας και αλλαγές κατάστασης για το «Ιστορικό». Οι διαθέσιμες μετρήσεις περιλαμβάνουν στάθμη, θερμοκρασία, τάση, αρχικό στιγμιαίο ρεύμα και υπολειπόμενο φορτίο. Η ισχύς υπολογίζεται από την τάση και το ρεύμα κατά την εμφάνιση ή εξαγωγή· δεν αποθηκεύεται ξεχωριστά. Η απενεργοποίηση καταγραφής δεν διαγράφει το υπάρχον ιστορικό και δεν σταματά τις εκτιμήσεις χρόνου.</string>
     <string name="pref_max_log_age" formatted="false">Μέγιστη Περίοδος Καταγραφής</string>
     <string name="pref_max_log_age_summary" formatted="false">Διαγραφή λίστας δεδομένων παλαιότερης από:</string>
-    <string name="pref_max_log_age_help" formatted="false">Όταν η καταγραφή είναι ενεργή, η σύνδεση στην τροφοδοσία αφαιρεί καταγραφές παλαιότερες από αυτό το όριο. Η επιλογή «Να μη διαγράφονται ποτέ» τις διατηρεί μέχρι να τις διαγράψετε χειροκίνητα. Αν είναι ενεργή η αυτόματη εξαγωγή, το Battery Monitor εξάγει εκκρεμείς καταγραφές πριν διαγράψει παλιές εγγραφές· η αποτυχία εξαγωγής εμποδίζει αυτή τη διαγραφή.</string>
+    <string name="pref_max_log_age_help" formatted="false">Όταν η καταγραφή είναι ενεργή, η σύνδεση στην τροφοδοσία αφαιρεί καταγραφές παλαιότερες από αυτό το όριο. Η επιλογή «Χωρίς όριο» τις διατηρεί μέχρι να τις διαγράψετε χειροκίνητα. Αν είναι ενεργή η αυτόματη εξαγωγή, το Battery Monitor εξάγει εκκρεμείς καταγραφές πριν διαγράψει παλιές εγγραφές· η αποτυχία εξαγωγής εμποδίζει αυτή τη διαγραφή.</string>
     <string name="age_1_day" formatted="false">1\u00A0μέρα</string>
     <string name="age_2_days" formatted="false">2\u00A0μέρες</string>
     <string name="age_4_days" formatted="false">4\u00A0μέρες</string>
@@ -422,24 +430,26 @@
     <string name="age_2_weeks" formatted="false">2\u00A0εβδομάδες</string>
     <string name="age_3_weeks" formatted="false">3\u00A0εβδομάδες</string>
     <string name="age_4_weeks" formatted="false">4\u00A0εβδομάδες</string>
-    <string name="age_never_delete" formatted="false">Να μη διαγράφονται ποτέ</string>
-    <string name="settings_history_export">Ιστορικό και εξαγωγή</string>
+    <string name="age_no_limit" formatted="false">Χωρίς όριο</string>
     <string name="log_export_mode_title" formatted="false">Εξαγωγή αρχείων καταγραφής</string>
     <string name="log_export_append" formatted="false">Προσθήκη σε υπάρχον αρχείο</string>
+    <string name="log_export_append_help" formatted="false">Μπορούν να επεκταθούν αρχεία CSV και JSON. Επιλέξτε υπάρχον αρχείο στην επιλεγμένη μορφή· προστίθενται μόνο καταγραφές από την τελευταία μη αυτόματη εξαγωγή.</string>
+    <string name="log_json_append_invalid" formatted="false">Επιλέξτε ένα αναγνώσιμο αρχείο ιστορικού JSON του Battery Monitor σε υποστηριζόμενη έκδοση, έως 16 MB.</string>
+    <string name="log_export_recovery_required" formatted="true">Συνδέστε ξανά τον αποθηκευτικό χώρο και δοκιμάστε ξανά εξαγωγή σε αυτό το αρχείο για να αποκατασταθεί. Το αρχικό αρχείο διατηρείται στον χώρο αποθήκευσης της εφαρμογής (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">Όλα</string>
     <string name="log_export_from_last" formatted="false">Από την τελευταία εξαγωγή</string>
-    <string name="pref_auto_log_export" formatted="false">Αυτόματη εξαγωγή αρχείων καταγραφής</string>
-    <string name="pref_auto_log_export_not_set_summary" formatted="false">Περιοδική αποθήκευση νέων καταγραφών σε φάκελο</string>
+    <string name="pref_auto_log_export_title" formatted="false">Περιοδική αποθήκευση νέων καταγραφών σε φάκελο</string>
     <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
     %4$s</string>
-    <string name="pref_set_auto_log_export" formatted="false">Ρύθμιση αυτόματων εξαγωγών</string>
-    <string name="pref_edit_auto_log_export" formatted="false">Επεξεργασία αυτόματων εξαγωγών</string>
+    <string name="pref_auto_log_export_setup_summary" formatted="false">Ρύθμιση αυτόματων εξαγωγών</string>
     <string name="pref_disable_auto_log_export" formatted="false">Απενεργοποίηση αυτόματης εξαγωγής</string>
     <string name="pref_auto_log_export_frequency" formatted="false">Συχνότητα εξαγωγής</string>
     <string name="pref_auto_log_export_mode" formatted="false">Διαχείριση αρχείων</string>
     <string name="pref_auto_log_export_format" formatted="false">Μορφή εξαγωγής</string>
     <string name="pref_auto_log_export_directory" formatted="false">Αλλαγή φακέλου</string>
-    <string name="auto_log_export_help" formatted="false">Ρυθμίστε την αυτόματη εξαγωγή στην ενότητα «Ρυθμίσεις» → «Για προχωρημένους». Επιλέξτε φάκελο, συχνότητα, μορφή και αν θα δημιουργούνται ξεχωριστά αρχεία ή θα γίνεται προσθήκη σε ένα αρχείο. Οι εξαγωγές συνήθως αποθηκεύουν καταγραφές από την προηγούμενη αυτόματη εξαγωγή· ένα νέο συνεχές αρχείο περιλαμβάνει όλες τις διαθέσιμες καταγραφές. Το Android μπορεί να καθυστερεί εξαγωγές σε αδράνεια. Η καταγραφή πρέπει να παραμένει ενεργή.</string>
+    <string name="pref_auto_log_export_path" formatted="true">Διαδρομή: %1$s</string>
+    <string name="auto_log_export_help" formatted="false">Επιλέξτε φάκελο, συχνότητα, μορφή και αν θα δημιουργούνται ξεχωριστά αρχεία ή θα γίνεται προσθήκη σε ένα αρχείο. Οι εξαγωγές συνήθως αποθηκεύουν καταγραφές από την προηγούμενη αυτόματη εξαγωγή· ένα νέο συνεχές αρχείο περιλαμβάνει όλες τις διαθέσιμες καταγραφές. Το Android μπορεί να καθυστερεί εξαγωγές σε αδράνεια. Η καταγραφή πρέπει να παραμένει ενεργή.</string>
+    <string name="auto_log_export_options_help" formatted="false">Το διάστημα εξαγωγής δεν μπορεί να υπερβαίνει την περίοδο διατήρησης αρχείων καταγραφής. Η αλλαγή φακέλου απαιτεί να παραχωρήσετε στην εφαρμογή πρόσβαση σε αυτόν τον φάκελο στο Android. Η απενεργοποίηση της αυτόματης εξαγωγής αφήνει αμετάβλητα τα αποθηκευμένα αρχεία καταγραφής και τα υπάρχοντα αρχεία.</string>
     <string name="auto_log_export_format_help" formatted="false">Το CSV είναι χρήσιμο σε υπολογιστικό φύλλο ή πρόγραμμα επεξεργασίας κειμένου. Περιλαμβάνει το αρχικό ρεύμα, το υπολειπόμενο φορτίο και την ισχύ που υπολογίζεται με τον πολλαπλασιαστή της στιγμής εξαγωγής. Το JSON διατηρεί δομημένα δεδομένα καταγραφής για αντίγραφα ασφαλείας. Τα κελιά μη διαθέσιμου ρεύματος, υπολειπόμενου φορτίου και ισχύος παραμένουν κενά.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Δημιουργία νέου αρχείου</string>
     <string name="auto_log_export_mode_append" formatted="false">Προσθήκη νέων καταγραφών στο υπάρχον αρχείο</string>
@@ -488,8 +498,9 @@
 
     <string name="settings_activity_subtitle" formatted="false">Ρυθμίσεις</string>
     <string name="settings_overview" formatted="false">Επισκόπηση</string>
-    <string name="settings_overview_help" formatted="false">Οι ρυθμίσεις ομαδοποιούνται σε «Γενικά», «Τρέχουσες πληροφορίες», «Εκτιμήσεις χρόνου», «Ειδοποίηση», «Για προχωρημένους» και «Δημιουργία και επαναφορά αντιγράφων ασφαλείας». Χρησιμοποιήστε την αναζήτηση για να βρείτε μια επιλογή. Κάθε σελίδα έχει βοήθεια για τις ρυθμίσεις της. Τα «Διαγνωστικά» είναι διαθέσιμα ξεχωριστά στην πλαϊνή γραμμή.</string>
+    <string name="settings_overview_help" formatted="false">Οι ρυθμίσεις ομαδοποιούνται σε «Γενικά», «Τρέχουσες πληροφορίες», «Εκτιμήσεις χρόνου», «Κύρια ειδοποίηση», «Για προχωρημένους» και «Δημιουργία και επαναφορά αντιγράφων ασφαλείας». Χρησιμοποιήστε την αναζήτηση για να βρείτε μια επιλογή. Κάθε σελίδα έχει βοήθεια για τις ρυθμίσεις της. Τα «Διαγνωστικά» είναι διαθέσιμα ξεχωριστά στην πλαϊνή γραμμή.</string>
     <string name="settings_search_hint">Αναζήτηση ρυθμίσεων</string>
+    <string name="search_clear">Εκκαθάριση αναζήτησης</string>
     <string name="settings_search_no_results">Δεν βρέθηκαν αντίστοιχες ρυθμίσεις</string>
     <string name="settings_dependency_disabled">Ενεργοποιήστε ή ρυθμίστε τη σχετική επιλογή παραπάνω για να αλλάξετε αυτή τη ρύθμιση</string>
     <string name="other_settings" formatted="false">Γενικά</string>
@@ -527,7 +538,7 @@
     <string name="background_service_starting" formatted="false">Το Battery Monitor ξεκινά…</string>
     <string name="monitoring_state_save_failed">Δεν ήταν δυνατή η αποθήκευση της κατάστασης παρακολούθησης. Ελέγξτε τον διαθέσιμο χώρο και δοκιμάστε ξανά.</string>
     <string name="battery_optimized" formatted="false">Παρακολούθηση στο παρασκήνιο</string>
-    <string name="battery_optimized_message" formatted="false">Η απεριόριστη εκτέλεση στο παρασκήνιο μπορεί να βελτιώσει την αξιοπιστία της παρακολούθησης. Η βελτιστοποίηση μπαταρίας του Android μπορεί να καθυστερεί ενημερώσεις και ειδοποιήσεις.\n
+    <string name="battery_optimized_message" formatted="false">Η απεριόριστη εκτέλεση στο παρασκήνιο μπορεί να βελτιώσει την αξιοπιστία της παρακολούθησης. Η βελτιστοποίηση μπαταρίας του Android μπορεί να καθυστερεί ενημερώσεις και συναγερμούς.\n
     \n
     Η απεριόριστη εκτέλεση μπορεί να αυξήσει την κατανάλωση μπαταρίας στο παρασκήνιο. Μπορείτε να το αλλάξετε αργότερα στις «Ρυθμίσεις» Android → «Εφαρμογές» → «Battery Monitor» → «Μπαταρία». Τα ονόματα των μενού διαφέρουν ανάλογα με τη συσκευή.</string>
     <string name="pref_cat_autostart" formatted="false">Αυτόματη Ενεργοποίηση</string>
@@ -540,7 +551,7 @@
     <string name="settings_data_permissions">Δεδομένα και άδειες</string>
     <string name="advanced_settings" formatted="false">Για προχωρημένους</string>
     <string name="advanced_settings_summary" formatted="false">Προσαρμόστε με ακρίβεια το Battery Monitor με πρόσθετα στοιχεία ελέγχου για εξειδικευμένες χρήσεις</string>
-    <string name="advanced_settings_help" formatted="false">Ελέγξτε την προνομιακή πρόσβαση, την καταγραφή ιστορικού, τη διατήρηση καταγραφών και τις αυτόματες εξαγωγές. Η «Παρακολούθηση στο παρασκήνιο» ανοίγει ελέγχους και εργαλεία για άδειες, αξιοπιστία παρακολούθησης και καταγραφές αποσφαλμάτωσης. Για αναφορές ορίου φόρτισης ανοίξτε «Διαγνωστικά ορίου φόρτισης OEM».</string>
+    <string name="advanced_settings_help" formatted="false">Ελέγξτε την προνομιακή πρόσβαση, την καταγραφή ιστορικού, τη διατήρηση καταγραφών και τις αυτόματες εξαγωγές. Η «Λειτουργία παρακολούθησης» ανοίγει ελέγχους και εργαλεία για άδειες, αξιοπιστία παρακολούθησης και καταγραφές αποσφαλμάτωσης. Για αναφορές ορίου φόρτισης ανοίξτε «Διαγνωστικά ορίου φόρτισης OEM».</string>
     <string name="pref_cat_privileged_access" formatted="false">Προνομιακή πρόσβαση</string>
     <string name="pref_use_privileged_access" formatted="false">Χρήση προνομιακής πρόσβασης</string>
     <string name="pref_use_privileged_access_summary" formatted="false">Χρήση της παραχωρημένης πρόσβασης root ή Shizuku για πληρέστερα και ακριβέστερα δεδομένα συσκευής;</string>
@@ -633,20 +644,24 @@
     <string name="diagnostics_summary" formatted="false">Έλεγχος αδειών και αξιοπιστίας παρακολούθησης και δημιουργία αναφοράς αντιμετώπισης προβλημάτων</string>
     <string name="diag_overview">Λειτουργία εφαρμογής</string>
     <string name="diagnostics_help_title" formatted="false">Πώς βοηθούν τα διαγνωστικά</string>
-    <string name="diagnostics_help_overview" formatted="false">Η «Παρακολούθηση στο παρασκήνιο» ελέγχει άδειες και αξιοπιστία παρακολούθησης. Χρησιμοποιήστε τα χειριστήρια για έναρξη ή διακοπή παρακολούθησης, αλλαγή καταγραφής αποσφαλμάτωσης, άνοιγμα ρυθμίσεων βελτιστοποίησης μπαταρίας και ειδοποιήσεων ή δημιουργία αναφοράς αντιμετώπισης προβλημάτων. Δεν υποδεικνύει κάθε μη διαθέσιμη μέτρηση πρόβλημα άδειας· ορισμένες συσκευές δεν την παρέχουν.</string>
-    <string name="monitoring_help_overview" formatted="false">Ελέγξτε την άδεια ειδοποιήσεων, την πρόσβαση root ή Shizuku, την υπηρεσία παρακολούθησης και τη βάση δεδομένων ιστορικού. Πατήστε έναν έλεγχο για να ζητήσετε πρόσβαση ή να τον εκτελέσετε. Η επιλογή «Έναρξη παρακολούθησης» είναι διαθέσιμη όταν η παρακολούθηση έχει σταματήσει, ενώ η επιλογή «Διακοπή παρακολούθησης» όταν εκτελείται. Οι διαθέσιμες μετρήσεις εξαρτώνται από την υποστήριξη της συσκευής και την πρόσβαση που έχει παραχωρηθεί. Ο έλεγχος υπηρεσίας απαιτεί ενεργή παρακολούθηση· ο έλεγχος βάσης δεδομένων απαιτεί καταγραφή ιστορικού («Ρυθμίσεις» → «Για προχωρημένους»). Για να χρησιμοποιήσετε πρόσθετες μετρήσεις, ενεργοποιήστε την επιλογή «Χρήση προνομιακής πρόσβασης» στις «Ρυθμίσεις» → «Για προχωρημένους». Η επιλογή «Ρυθμίσεις κατασκευαστή» είναι διαθέσιμη μόνο σε υποστηριζόμενες συσκευές.</string>
+    <string name="diagnostics_help_overview" formatted="false">Η «Λειτουργία παρακολούθησης» ελέγχει άδειες και αξιοπιστία παρακολούθησης. Χρησιμοποιήστε τα χειριστήρια για έναρξη ή διακοπή παρακολούθησης, αλλαγή καταγραφής αποσφαλμάτωσης, άνοιγμα ρυθμίσεων βελτιστοποίησης μπαταρίας και ειδοποιήσεων ή δημιουργία αναφοράς αντιμετώπισης προβλημάτων. Δεν υποδεικνύει κάθε μη διαθέσιμη μέτρηση πρόβλημα άδειας· ορισμένες συσκευές δεν την παρέχουν.</string>
     <string name="diagnostics_monitoring" formatted="false">Παρακολούθηση στο παρασκήνιο</string>
     <string name="diag_monitor_operation">Λειτουργία παρακολούθησης</string>
     <string name="diag_heartbeat">Τελευταίο σήμα λειτουργίας</string>
+    <string name="diagnostics_heartbeat_help" formatted="false">Χρόνος της τελευταίας απόκρισης της υπηρεσίας παρακολούθησης. Μια παλιά ή μη διαθέσιμη απόκριση μπορεί να σημαίνει ότι η παρακολούθηση έχει σταματήσει ή δεν αποκρίνεται.</string>
     <string name="diag_start_monitor">Έναρξη παρακολούθησης</string>
+    <string name="diagnostics_start_help" formatted="false">Ξεκινήστε την παρακολούθηση της μπαταρίας και την αυτόματη ανάκτηση στο παρασκήνιο. Διαθέσιμο όταν η παρακολούθηση έχει σταματήσει· οι αποθηκευμένοι συναγερμοί και οι ρυθμίσεις ιστορικού διατηρούνται.</string>
     <string name="diag_stop_monitor">Διακοπή παρακολούθησης</string>
+    <string name="diag_stop_monitor_summary" formatted="false">Διακοπή παρακολούθησης μπαταρίας, καταγραφής ιστορικού και αυτόματης ανάκτησης στο παρασκήνιο</string>
     <string name="diag_stop_monitor_body">Η παρακολούθηση μπαταρίας, η καταγραφή ιστορικού και η αυτόματη ανάκτηση στο παρασκήνιο θα σταματήσουν. Μπορείτε να ξεκινήσετε ξανά την παρακολούθηση εδώ.</string>
     <string name="diagnostics_not_running_tap_to_start" formatted="false">Καμία πρόσφατη απόκριση. Πατήστε για αίτημα επανεκκίνησης</string>
     <string name="diagnostics_service" formatted="false">Υπηρεσία παρακολούθησης</string>
+    <string name="diagnostics_service_help" formatted="false">Δείχνει αν η παρακολούθηση αποκρίθηκε πρόσφατα. Πατήστε για να ζητήσετε απόκριση· αν δεν φτάσει, το Battery Monitor επιχειρεί μία επανεκκίνηση. Διαθέσιμο μόνο όταν η παρακολούθηση είναι ενεργοποιημένη.</string>
     <string name="diagnostics_service_responded" formatted="false">Η υπηρεσία παρακολούθησης αποκρίθηκε</string>
     <string name="diagnostics_service_restarting" formatted="false">Η υπηρεσία δεν αποκρίθηκε. Γίνεται επανεκκίνησή της…</string>
     <string name="diagnostics_service_restart_failed" formatted="false">Η υπηρεσία παρακολούθησης δεν αποκρίθηκε μετά την επανεκκίνηση. Δοκιμάστε να επανεκκινήσετε την εφαρμογή.</string>
     <string name="diagnostics_database" formatted="false">Βάση δεδομένων καταγραφής</string>
+    <string name="diagnostics_database_help" formatted="false">Δείχνει αν η βάση δεδομένων ιστορικού αποκρίθηκε πρόσφατα. Πατήστε για να ελέγξετε την ανάγνωση και την εγγραφή χωρίς να αλλάξετε το αποθηκευμένο ιστορικό. Διαθέσιμο μόνο όταν είναι ενεργοποιημένη η καταγραφή ιστορικού.</string>
     <string name="diagnostics_no_recent_database_access" formatted="false">Καμία πρόσφατη επιτυχής πρόσβαση στη βάση δεδομένων</string>
     <string name="diagnostics_working_last_seen" formatted="true">Λειτουργεί · Τελευταία απόκριση πριν από %1$s</string>
     <string name="diagnostics_database_check_succeeded" formatted="false">Ο έλεγχος ανάγνωσης και εγγραφής της βάσης δεδομένων ολοκληρώθηκε με επιτυχία</string>
@@ -656,17 +671,22 @@
     <string name="diagnostics_notifications" formatted="false">Ειδοποιήσεις</string>
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Λείπει άδεια. Πατήστε για άνοιγμα ρυθμίσεων</string>
     <string name="diagnostics_battery_optimization" formatted="false">Βελτιστοποίηση μπαταρίας</string>
+    <string name="diagnostics_battery_optimization_help" formatted="false">Ανοίξτε τις ρυθμίσεις βελτιστοποίησης μπαταρίας του Android όταν υπάρχει περιορισμός. Αν δεν υπάρχει ήδη περιορισμός, το πάτημα επιβεβαιώνει αυτήν την κατάσταση.</string>
     <string name="diagnostics_unrestricted" formatted="false">Χωρίς περιορισμούς</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Περιορισμένο. Πατήστε για αξιόπιστη παρακολούθηση στο παρασκήνιο</string>
     <string name="diagnostics_vendor_settings" formatted="false">Ρυθμίσεις κατασκευαστή</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Ανοίξτε πρόσθετες ρυθμίσεις δραστηριότητας παρασκηνίου ή αυτόματης εκκίνησης στη συσκευή</string>
     <string name="diagnostics_vendor_settings_help" formatted="false">Ανοίξτε πρόσθετες ρυθμίσεις δραστηριότητας παρασκηνίου ή αυτόματης εκκίνησης στη συσκευή.</string>
+    <string name="diagnostics_vendor_availability_help" formatted="false">Η επιλογή «Ρυθμίσεις κατασκευαστή» είναι διαθέσιμη μόνο σε υποστηριζόμενες συσκευές.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Βοήθεια δραστηριότητας παρασκηνίου</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Ανοίξτε οδηγίες για τη συσκευή στο Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">Ανοίξτε οδηγίες για τη συσκευή στο Don’t Kill My App.</string>
     <string name="diagnostics_root" formatted="false">Πρόσβαση root</string>
-    <string name="diagnostics_root_unavailable" formatted="false">Μη διαθέσιμο. Πατήστε για αίτημα ή έλεγχο πρόσβασης root</string>
+    <string name="diagnostics_root_help" formatted="false">Πατήστε για να ελέγξετε αν το Battery Monitor μπορεί να αποκτήσει πρόσβαση root. Ένας ρυθμισμένος διαχειριστής root μπορεί να ζητήσει εξουσιοδότηση. Η αποτυχία μπορεί να σημαίνει άρνηση πρόσβασης, έλλειψη εργαλείων ή άλλο σφάλμα· δεν αποδεικνύει ότι η συσκευή δεν έχει root. Αυτός ο έλεγχος δεν κάνει root τη συσκευή ούτε αλλάζει τη ρύθμιση «Χρήση προνομιακής πρόσβασης».</string>
+    <string name="diagnostics_root_unavailable" formatted="false">Μη διαθέσιμο. Πατήστε για νέο έλεγχο</string>
     <string name="diagnostics_shizuku" formatted="false">Πρόσβαση Shizuku</string>
+    <string name="diagnostics_shizuku_help" formatted="false">Αν το Shizuku δεν εκτελείται, το πάτημα ανοίγει τον διαχειριστή του ή τις οδηγίες εγκατάστασης αν δεν είναι εγκατεστημένο. Όταν εκτελείται χωρίς άδεια, το πάτημα ζητά πρόσβαση ή ανοίγει τον διαχειριστή μετά από προηγούμενη άρνηση. Αν η πρόσβαση έχει ήδη παραχωρηθεί, το πάτημα δεν κάνει τίποτα. Αυτή η ενέργεια δεν αλλάζει τη ρύθμιση «Χρήση προνομιακής πρόσβασης».</string>
+    <string name="monitoring_privileged_access_help" formatted="false">Οι διαθέσιμες μετρήσεις εξαρτώνται από την υποστήριξη της συσκευής και την πρόσβαση που έχει παραχωρηθεί. Για να χρησιμοποιήσετε πρόσθετες μετρήσεις, ενεργοποιήστε την επιλογή «Χρήση προνομιακής πρόσβασης» στις «Ρυθμίσεις» → «Για προχωρημένους».</string>
     <string name="diagnostics_shizuku_permission_missing" formatted="false">Λείπει άδεια. Πατήστε για να τη ζητήσετε από το Shizuku</string>
     <string name="diagnostics_checking" formatted="false">Έλεγχος…</string>
     <string name="diagnostics_tap_to_check" formatted="false">Δεν ελέγχθηκε. Πατήστε για αίτημα ή έλεγχο πρόσβασης</string>
@@ -726,6 +746,7 @@
     <string name="charging_diagnostics_capture" formatted="false">Λήψη στιγμιότυπου</string>
     <string name="charging_diagnostics_capture_summary" formatted="false">Ορίστε μια λειτουργία φόρτισης στις ρυθμίσεις της συσκευής και καταγράψτε τα σήματά της</string>
     <string name="charging_diagnostics_choose_state" formatted="false">Ποια ρύθμιση συσκευής είναι ενεργή;</string>
+    <string name="charging_diagnostics_condition_help" formatted="false">Επιλέξτε τη λειτουργία φόρτισης του κατασκευαστή που έχει ήδη οριστεί στη συσκευή. Για σταθερό όριο, εισαγάγετε το ποσοστό του. Αυτή η επιλογή επισημαίνει το στιγμιότυπο· δεν αλλάζει την προστασία φόρτισης της συσκευής.</string>
     <string name="charging_diagnostics_condition_off" formatted="false">Προστασία ανενεργή / χωρίς όριο</string>
     <string name="charging_diagnostics_condition_fixed" formatted="false">Σταθερό όριο…</string>
     <string name="charging_diagnostics_condition_adaptive" formatted="false">Προσαρμοζόμενη / έξυπνη φόρτιση</string>
@@ -759,45 +780,51 @@
 
     <string name="pref_backup_restore" formatted="false">Δημιουργία και επαναφορά αντιγράφων ασφαλείας</string>
     <string name="backup_restore_settings_summary" formatted="false">Δημιουργήστε αντίγραφα ασφαλείας, επαναφέρετε και μεταφέρετε τις ρυθμίσεις της εφαρμογής και τα δεδομένα μπαταρίας</string>
-    <string name="backup_restore_help_overview" formatted="false">Αποθηκεύστε και επαναφέρετε ρυθμίσεις, προειδοποιήσεις, καταγραφές και μαθημένα δεδομένα πρόβλεψης. Η «Επαναφορά προεπιλεγμένων ρυθμίσεων» επαναφέρει τις προτιμήσεις εφαρμογής μετά από επιβεβαίωση, διατηρώντας το ιστορικό, τις προειδοποιήσεις, τις μαθημένες εκτιμήσεις και την κατάσταση λειτουργίας της παρακολούθησης.</string>
+    <string name="backup_restore_help_overview" formatted="false">Αποθηκεύστε και επαναφέρετε ρυθμίσεις, συναγερμούς, καταγραφές και μαθημένα δεδομένα πρόβλεψης. Η «Επαναφορά προεπιλεγμένων ρυθμίσεων» επαναφέρει τις προτιμήσεις εφαρμογής μετά από επιβεβαίωση, διατηρώντας το ιστορικό, τους συναγερμούς, τις μαθημένες εκτιμήσεις και την κατάσταση λειτουργίας της παρακολούθησης.</string>
     <string name="pref_general_backup" formatted="false">Γενικό αντίγραφο ασφαλείας εφαρμογής</string>
-    <string name="general_backup_help" formatted="false">Ένα γενικό αντίγραφο ασφαλείας αποθηκεύει μαζί ρυθμίσεις, ειδοποιήσεις και δεδομένα ειδικά για τη συσκευή. Κατά την επαναφορά, μπορείτε να επιλέξετε ποια διαθέσιμα δεδομένα θα εισαχθούν.</string>
+    <string name="general_backup_restore_effects_help" formatted="false">Οι επιλεγμένες κατηγορίες επαναφέρονται· οι μη επιλεγμένες διατηρούνται. Η επαναφορά συναγερμών αντικαθιστά τους τρέχοντες συναγερμούς. Για τα αρχεία καταγραφής, επιλέξτε αν θα τα προσθέσετε ή θα αντικαταστήσετε το τρέχον ιστορικό.</string>
     <string name="pref_export_general_backup" formatted="false">Εξαγωγή γενικού αντιγράφου ασφαλείας</string>
-    <string name="pref_export_general_backup_summary" formatted="false">Αποθήκευση ρυθμίσεων, ειδοποιήσεων και δεδομένων ειδικών για τη συσκευή σε αρχείο ZIP</string>
+    <string name="pref_export_general_backup_help" formatted="false">Αποθηκεύστε μαζί ρυθμίσεις, συναγερμούς και δεδομένα ειδικά για τη συσκευή σε ένα γενικό αντίγραφο ασφαλείας ZIP, σε τοποθεσία που επιλέγετε.</string>
+    <string name="pref_export_general_backup_summary" formatted="false">Αποθήκευση ρυθμίσεων, συναγερμών και δεδομένων ειδικών για τη συσκευή σε αρχείο ZIP</string>
     <string name="general_backup_exported" formatted="false">Το γενικό αντίγραφο ασφαλείας εξήχθη με επιτυχία.</string>
     <string name="pref_import_general_backup" formatted="false">Εισαγωγή γενικού αντιγράφου ασφαλείας</string>
+    <string name="pref_import_general_backup_help" formatted="false">Επιλέξτε ένα υπάρχον ZIP γενικού αντιγράφου ασφαλείας και ποιες διαθέσιμες κατηγορίες θα επαναφέρετε. Τα αντίγραφα ασφαλείας από νεότερες εκδόσεις της εφαρμογής ενδέχεται να μην είναι συμβατά και η επαναφορά καταγραφών ή δεδομένων πρόβλεψης από άλλη συσκευή μπορεί να δώσει λανθασμένες εκτιμήσεις. Αν η επαναφορά ολοκληρωθεί μόνο εν μέρει, ελέγξτε τις αναφερόμενες κατηγορίες πριν προσπαθήσετε ξανά.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Επαναφορά επιλεγμένων δεδομένων από αρχείο ZIP γενικού αντιγράφου ασφαλείας</string>
     <string name="general_backup_restore_message" formatted="false">Επιλέξτε τι θέλετε να επαναφέρετε.</string>
+    <string name="general_backup_device_data_warning_scope" formatted="false">Αρχεία καταγραφής και δεδομένα πρόβλεψης</string>
     <string name="general_backup_imported" formatted="false">Το γενικό αντίγραφο ασφαλείας εισήχθη με επιτυχία.</string>
     <string name="invalid_general_backup_file" formatted="false">Μη έγκυρο ή μη συμβατό αρχείο γενικού αντιγράφου ασφαλείας</string>
     <string name="settings_restore_partial">Δεν ήταν δυνατή η επαναφορά ορισμένων δεδομένων. Επαναφέρθηκαν επιτυχώς: %1$s. Δεδομένα που ίσως επαναφέρθηκαν μερικώς: %2$s. Ελέγξτε αυτές τις ενότητες πριν δοκιμάσετε ξανά.</string>
     <string name="settings_restore_none">Κανένα</string>
-    <string name="settings_backup_help" formatted="false">Ένα αντίγραφο ασφαλείας ρυθμίσεων αποθηκεύει τις προτιμήσεις της εφαρμογής. Η εισαγωγή του επαναφέρει τις αποθηκευμένες προτιμήσεις.</string>
     <string name="pref_export_settings" formatted="false">Εξαγωγή ρυθμίσεων</string>
+    <string name="pref_export_settings_help" formatted="false">Η «Εξαγωγή ρυθμίσεων» αποθηκεύει τις προτιμήσεις της εφαρμογής. Το αποτέλεσμα είναι ένα αρχείο JSON αντιγράφου ασφαλείας ρυθμίσεων.</string>
     <string name="pref_export_settings_summary" formatted="false">Αποθήκευση των τρεχουσών ρυθμίσεων σε αρχείο</string>
     <string name="settings_exported" formatted="false">Οι ρυθμίσεις εξήχθησαν με επιτυχία.</string>
     <string name="pref_import_settings" formatted="false">Εισαγωγή ρυθμίσεων</string>
+    <string name="pref_import_settings_help" formatted="false">Η «Εισαγωγή ρυθμίσεων» επαναφέρει τις αποθηκευμένες προτιμήσεις. Αυτή η ενέργεια δεν επαναφέρει ιστορικό ή εγγραφές συναγερμών.</string>
     <string name="pref_import_settings_summary" formatted="false">Επαναφορά ρυθμίσεων από αρχείο</string>
     <string name="settings_imported" formatted="false">Οι ρυθμίσεις εισήχθησαν με επιτυχία.</string>
     <string name="invalid_settings_file" formatted="false">Μη έγκυρο αρχείο ρυθμίσεων</string>
     <string name="settings_file_version_warning" formatted="false">Αυτό το αρχείο δημιουργήθηκε από νεότερη έκδοση της εφαρμογής. Η εισαγωγή του μπορεί να προκαλέσει απρόσμενη συμπεριφορά. Συνέχεια ούτως ή άλλως;</string>
-    <string name="alarms_backup_help" formatted="false">Ένα αντίγραφο ασφαλείας ειδοποιήσεων αποθηκεύει τις ειδοποιήσεις σας. Η εισαγωγή του αντικαθιστά όλες τις τρέχουσες ειδοποιήσεις με αυτές του αντιγράφου ασφαλείας.</string>
-    <string name="pref_export_alarms" formatted="false">Εξαγωγή ειδοποιήσεων</string>
-    <string name="pref_export_alarms_summary" formatted="false">Αποθήκευση των τρεχουσών ειδοποιήσεων σε αρχείο</string>
-    <string name="alarms_exported" formatted="false">Οι ειδοποιήσεις εξήχθησαν με επιτυχία.</string>
-    <string name="pref_import_alarms" formatted="false">Εισαγωγή ειδοποιήσεων</string>
-    <string name="pref_import_alarms_summary" formatted="false">Αντικατάσταση των τρεχουσών ειδοποιήσεων με ειδοποιήσεις από αρχείο</string>
-    <string name="alarms_imported" formatted="false">Οι ειδοποιήσεις εισήχθησαν με επιτυχία.</string>
-    <string name="invalid_alarms_file" formatted="false">Μη έγκυρο αρχείο ειδοποιήσεων</string>
+    <string name="pref_export_alarms" formatted="false">Εξαγωγή συναγερμών</string>
+    <string name="pref_export_alarms_help" formatted="false">Η «Εξαγωγή συναγερμών» αποθηκεύει τους συναγερμούς σας. Το αρχείο JSON περιέχει κανόνες συναγερμών, όχι ρυθμίσεις καναλιών ειδοποιήσεων ή ήχων που διαχειρίζεται το Android.</string>
+    <string name="pref_export_alarms_summary" formatted="false">Αποθήκευση των τρεχόντων συναγερμών σε αρχείο</string>
+    <string name="alarms_exported" formatted="false">Οι συναγερμοί εξήχθησαν με επιτυχία.</string>
+    <string name="pref_import_alarms" formatted="false">Εισαγωγή συναγερμών</string>
+    <string name="pref_import_alarms_help" formatted="false">Η «Εισαγωγή συναγερμών» αντικαθιστά όλους τους τρέχοντες συναγερμούς με αυτές του αντιγράφου ασφαλείας. Επιλέξτε ένα αρχείο JSON αντιγράφου ασφαλείας συναγερμών.</string>
+    <string name="pref_import_alarms_summary" formatted="false">Αντικατάσταση των τρεχόντων συναγερμών με συναγερμούς από αρχείο</string>
+    <string name="alarms_imported" formatted="false">Οι συναγερμοί εισήχθησαν με επιτυχία.</string>
+    <string name="invalid_alarms_file" formatted="false">Μη έγκυρο αρχείο συναγερμών</string>
     <string name="pref_backup_device_data" formatted="false">Αντίγραφο ασφαλείας δεδομένων ειδικών για τη συσκευή</string>
-    <string name="device_specific_backup_help" formatted="false">Ένα αντίγραφο ασφαλείας ειδικά για τη συσκευή αποθηκεύει αρχεία καταγραφής και δεδομένα πρόβλεψης. Μπορείτε να επιλέξετε ένα ή και τα δύο κατά την εισαγωγή. Αυτά τα δεδομένα ανήκουν στη συσκευή προέλευσης· η χρήση τους σε άλλη συσκευή μπορεί να προκαλέσει λανθασμένες προβλέψεις ή απρόσμενη συμπεριφορά. Κατά την εισαγωγή αρχείων καταγραφής, επιλέξτε αν θα προστεθούν ή θα αντικαταστήσουν τα υπάρχοντα.</string>
     <string name="device_data_logs" formatted="false">Αρχεία καταγραφής</string>
     <string name="device_data_predictor" formatted="false">Δεδομένα πρόβλεψης</string>
     <string name="device_data_backup_warning" formatted="false">Αυτά τα δεδομένα είναι ειδικά για τη συσκευή στην οποία συλλέχθηκαν. Η εισαγωγή τους σε άλλη συσκευή μπορεί να προκαλέσει λανθασμένες προβλέψεις ή άλλη μη αναμενόμενη συμπεριφορά της εφαρμογής.</string>
     <string name="pref_export_device_data" formatted="false">Εξαγωγή δεδομένων ειδικών για τη συσκευή</string>
+    <string name="pref_export_device_data_help" formatted="false">Επιλέξτε καταγραφές, δεδομένα πρόβλεψης ή και τα δύο και αποθηκεύστε τα σε αντίγραφο ασφαλείας JSON ειδικό για τη συσκευή. Τα δεδομένα ανήκουν στη συσκευή προέλευσης.</string>
     <string name="pref_export_device_data_summary" formatted="false">Αποθήκευση αρχείων καταγραφής και δεδομένων πρόβλεψης σε αρχείο</string>
     <string name="device_data_exported" formatted="false">Τα δεδομένα ειδικά για τη συσκευή εξήχθησαν με επιτυχία.</string>
     <string name="pref_import_device_data" formatted="false">Εισαγωγή δεδομένων ειδικών για τη συσκευή</string>
+    <string name="pref_import_device_data_help" formatted="false">Επιλέξτε τις διαθέσιμες καταγραφές και/ή δεδομένα πρόβλεψης για επαναφορά από αντίγραφο ασφαλείας JSON ειδικό για τη συσκευή· οι μη επιλεγμένες κατηγορίες παραμένουν αμετάβλητες. Κατά την εισαγωγή καταγραφών, επιλέξτε προσθήκη ή αντικατάσταση υπαρχουσών καταγραφών. Η επαναφορά καταγραφών ή δεδομένων πρόβλεψης από άλλη συσκευή μπορεί να δώσει λανθασμένες εκτιμήσεις.</string>
     <string name="pref_import_device_data_summary" formatted="false">Επαναφορά αρχείων καταγραφής και δεδομένων πρόβλεψης από αρχείο</string>
     <string name="device_data_imported" formatted="false">Τα δεδομένα ειδικά για τη συσκευή εισήχθησαν με επιτυχία</string>
     <string name="device_data_imported_dialog" formatted="false">Τα δεδομένα ειδικά για τη συσκευή εισήχθησαν με επιτυχία.</string>
@@ -815,9 +842,9 @@
     <string name="csv_logs_imported_dialog" formatted="false">Τα αρχεία καταγραφής CSV εισήχθησαν με επιτυχία.</string>
     <string name="invalid_csv_logs_file" formatted="false">Μη έγκυρο ή μη συμβατό αρχείο καταγραφής CSV</string>
     <string name="settings_reset_title">Επαναφορά προεπιλεγμένων ρυθμίσεων</string>
-    <string name="settings_reset_summary">Επαναφορά προτιμήσεων εφαρμογής με διατήρηση ιστορικού, προειδοποιήσεων και μαθημένων εκτιμήσεων</string>
-    <string name="settings_reset_help" formatted="false">Η «Επαναφορά προεπιλεγμένων ρυθμίσεων» ζητά επιβεβαίωση και έπειτα επαναφέρει τις προτιμήσεις εφαρμογής. Διατηρεί το ιστορικό, τις προειδοποιήσεις, τις μαθημένες εκτιμήσεις, τις ρυθμίσεις γραφικών στοιχείων και την κατάσταση λειτουργίας της παρακολούθησης παρασκηνίου. Οι άδειες συστήματος και οι ρυθμίσεις καναλιών ειδοποιήσεων δεν επαναφέρονται.</string>
-    <string name="settings_reset_question">Να επανέλθουν όλες οι ρυθμίσεις της εφαρμογής στις προεπιλογές; Το ιστορικό, οι προειδοποιήσεις και οι μαθημένες εκτιμήσεις θα διατηρηθούν. Η παρακολούθηση παρασκηνίου θα παραμείνει ενεργή ή ανενεργή όπως είναι τώρα.</string>
+    <string name="settings_reset_summary">Επαναφορά προτιμήσεων εφαρμογής με διατήρηση ιστορικού, συναγερμών και μαθημένων εκτιμήσεων</string>
+    <string name="settings_reset_help" formatted="false">Η «Επαναφορά προεπιλεγμένων ρυθμίσεων» ζητά επιβεβαίωση και έπειτα επαναφέρει τις προτιμήσεις εφαρμογής. Διατηρεί το ιστορικό, τους συναγερμούς, τις μαθημένες εκτιμήσεις, τις ρυθμίσεις γραφικών στοιχείων και την κατάσταση λειτουργίας της παρακολούθησης παρασκηνίου. Οι άδειες συστήματος και οι ρυθμίσεις καναλιών ειδοποιήσεων δεν επαναφέρονται.</string>
+    <string name="settings_reset_question">Να επανέλθουν όλες οι ρυθμίσεις της εφαρμογής στις προεπιλογές; Το ιστορικό, οι συναγερμοί και οι μαθημένες εκτιμήσεις θα διατηρηθούν. Η παρακολούθηση παρασκηνίου θα παραμείνει ενεργή ή ανενεργή όπως είναι τώρα.</string>
     <string name="settings_reset_confirm">Επαναφορά προεπιλογών</string>
     <string name="settings_reset_done">Έγινε επαναφορά των προεπιλεγμένων ρυθμίσεων.</string>
     <string name="settings_reset_failed">Δεν ήταν δυνατή η ολοκλήρωση επαναφοράς προεπιλεγμένων ρυθμίσεων. Ορισμένες ρυθμίσεις ίσως έχουν ήδη αλλάξει. Ελέγξτε τον διαθέσιμο χώρο και δοκιμάστε ξανά.</string>
@@ -853,11 +880,11 @@
     <string name="celsius_symbol" formatted="false">C</string>
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
-    <string name="since" formatted="false">Από</string>
-    <string name="duration_for">Για %1$s</string>
+    <string name="since" formatted="false">από</string>
+    <string name="duration_for">για %1$s</string>
     <plurals name="for_n_hours">
-        <item quantity="one">Για %d\u00A0ώρα</item>
-        <item quantity="other">Για %d\u00A0ώρες</item>
+        <item quantity="one">για %d\u00A0ώρα</item>
+        <item quantity="other">για %d\u00A0ώρες</item>
     </plurals>
     <plurals name="n_days">
         <item quantity="one">"%d\u00A0ημέρα, "</item>
@@ -894,4 +921,5 @@
     <string name="unit_days">%dη</string>
     <string name="unit_hours">%dω</string>
     <string name="unit_minutes">%dλ</string>
+    <string name="unit_seconds" formatted="true">%dδ</string>
 </resources>

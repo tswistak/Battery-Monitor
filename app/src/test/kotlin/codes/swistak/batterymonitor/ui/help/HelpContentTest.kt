@@ -86,8 +86,8 @@ class HelpContentTest {
         })
         assertTrue(
             helpSections(
-            SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null
-        ).flatMap { it.paragraphs }.any { it.textResource == R.string.diag_help_overview })
+                SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null
+            ).flatMap { it.paragraphs }.any { it.textResource == R.string.diag_help_overview })
     }
 
     @Test
@@ -126,8 +126,9 @@ class HelpContentTest {
             .map { it.textResource }.toSet()
         val charging = helpSections(CHARGING_TOOLS_HELP_TOPIC, 37, null).flatMap { it.paragraphs }
             .map { it.textResource }.toSet()
-        assertTrue(R.string.monitoring_help_overview in monitoring)
-        assertTrue(R.string.monitoring_help_overview !in charging)
+        assertTrue(R.string.diagnostics_root_help in monitoring)
+        assertTrue(R.string.diagnostics_root_help !in charging)
+        assertTrue(R.string.monitoring_privileged_access_help in monitoring)
         assertTrue(R.string.charging_diagnostics_help_steps in charging)
         assertTrue(R.string.charging_diagnostics_help_steps !in monitoring)
         assertTrue(R.string.diag_report_privacy in monitoring)

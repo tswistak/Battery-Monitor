@@ -726,7 +726,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             setSummary(
                 if (!appNotifsEnabled) R.string.app_notifs_disabled_summary
                 else if (!mainNotifsEnabled) R.string.main_notifs_disabled_summary
-                else R.string.pref_manage_main_channel
+                else R.string.pref_manage_main_channel_summary
             )
             isSelectable = true
         }
@@ -895,7 +895,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         SettingsContract.KEY_VITAL_SIGNS_ORDER,
         SettingsContract.DEFAULT_VITAL_SIGNS_CONTENT,
         R.array.vital_signs_content_values,
-        R.array.vital_signs_content_entries,
+        R.array.vital_signs_content_chooser_entries,
         VitalSignsOrder.parse(
             mSharedPreferences.getString(
                 SettingsContract.KEY_VITAL_SIGNS_ORDER, null
@@ -1561,10 +1561,10 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         if (failure !is GeneralBackupRestoreException) return getString(error)
         setPreferences(reinflate = true)
         val completed = failure.completedData.joinToString(", ") {
-            generalBackupItemLabel(it).substringBefore('\n')
+            generalBackupItemLabel(it)
         }
         val failed = failure.failedData.joinToString(", ") {
-            generalBackupItemLabel(it).substringBefore('\n')
+            generalBackupItemLabel(it)
         }
         return getString(
             R.string.settings_restore_partial,
@@ -1658,9 +1658,9 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         )
         preference.isEnabled = loggingEnabled
         if (!isAutoLogExportConfigured()) {
-            preference.setTitle(R.string.pref_set_auto_log_export)
+            preference.setTitle(R.string.pref_auto_log_export_title)
             preference.setSummary(
-                if (loggingEnabled) R.string.pref_auto_log_export_not_set_summary
+                if (loggingEnabled) R.string.pref_auto_log_export_setup_summary
                 else R.string.currently_disabled
             )
             return
@@ -1670,7 +1670,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         val frequencyValues = frequencyOptions.map { it.preferenceValue }.toTypedArray()
         val modeValues = resources.getStringArray(R.array.auto_log_export_mode_values)
         val formatValues = resources.getStringArray(R.array.auto_log_export_format_values)
-        preference.setTitle(R.string.pref_edit_auto_log_export)
+        preference.setTitle(R.string.pref_auto_log_export_title)
         if (!loggingEnabled) {
             preference.setSummary(R.string.currently_disabled)
             return
@@ -1688,7 +1688,9 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 formatValues,
                 resources.getStringArray(R.array.auto_log_export_format_entries),
                 mSharedPreferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT, null)
-            ), directoryLabel(currentAutoLogExportDirectory())
+            ), getString(
+                R.string.pref_auto_log_export_path, directoryLabel(currentAutoLogExportDirectory())
+            )
         )
     }
 
@@ -1727,7 +1729,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             AutoLogExportFrequency.enabledForRetention(maxLogAgeHours()).map { it.preferenceValue }
                 .toSet()
         dialog = SettingsDialog.AutoExport(
-            title = getString(if (wasConfigured) R.string.pref_edit_auto_log_export else R.string.pref_set_auto_log_export),
+            title = getString(R.string.pref_auto_log_export_title),
             directoryLabel = directoryLabel(directory),
             frequencyLabels = frequencies.map { it.label },
             frequencyEnabled = frequencies.map { it.preferenceValue in enabled },
@@ -1951,6 +1953,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 message = warning,
                 options = types.map(::generalBackupItemLabel),
                 selected = types.indices.toSet(),
+                supportingText = if (types.any {
+                        it == GeneralBackupDataType.LOGS || it == GeneralBackupDataType.PREDICTOR_DATA
+                    }) getString(R.string.general_backup_device_data_warning_scope) + "\n" + getString(
+                    R.string.device_data_backup_warning
+                ) else null,
                 onConfirm = { selected ->
                     val selectedData = selected.mapTo(linkedSetOf()) { types[it] }
                     if (GeneralBackupDataType.LOGS in selectedData) {
@@ -1976,11 +1983,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 GeneralBackupDataType.PREDICTOR_DATA -> R.string.device_data_predictor
             }
         )
-        return if (type == GeneralBackupDataType.LOGS || type == GeneralBackupDataType.PREDICTOR_DATA) {
-            label + "\n" + getString(R.string.device_data_backup_warning)
-        } else {
-            label
-        }
+        return label
     }
 
     private fun doGeneralBackupImport(

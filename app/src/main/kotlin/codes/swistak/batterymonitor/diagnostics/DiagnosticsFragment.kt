@@ -217,7 +217,9 @@ class DiagnosticsFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
                 R.string.charging_diagnostics_clear,
                 getString(R.string.charging_diagnostics_clear_summary)
             ),
-            "monitor_stop" to MonitorAction(R.string.diag_stop_monitor),
+            "monitor_stop" to MonitorAction(
+                R.string.diag_stop_monitor, getString(R.string.diag_stop_monitor_summary)
+            ),
             "monitor_start" to MonitorAction(R.string.diag_start_monitor),
         )
         bindActions()

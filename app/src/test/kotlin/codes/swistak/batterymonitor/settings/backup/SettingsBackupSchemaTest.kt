@@ -53,7 +53,7 @@ class SettingsBackupSchemaTest {
         )
         assertEquals(
             "Classify each new user setting as portable or intentionally device-specific",
-            SettingCatalog.routes.keys - SettingCatalog.diagnosticRoutes.keys,
+            (SettingCatalog.routes.keys - SettingCatalog.diagnosticRoutes.keys) + SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY,
             scalarSettings.map { it.key }.toSet() + appearanceSettings + encodedSettings + actions
         )
         for ((key, _, _, _, _, control) in scalarSettings) {

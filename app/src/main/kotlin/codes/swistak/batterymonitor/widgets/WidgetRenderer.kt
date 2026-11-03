@@ -266,11 +266,6 @@ internal object WidgetRenderer {
                             metricValue(context, metric, reading, fahrenheit, multiplier)
                                 ?: unavailable
                         )
-                        item.setTextViewTextSize(
-                            R.id.widget_metric_value,
-                            TypedValue.COMPLEX_UNIT_SP,
-                            if (shortMeasurements) 16f else if ((widthDp - if (compact) 20 else 32) / columns < 100) 18f else 21f
-                        )
                         if (rows.size > 1 && heightDp < 190) item.setInt(
                             R.id.widget_metric_label, "setMaxLines", 1
                         )
@@ -314,7 +309,14 @@ internal object WidgetRenderer {
                     val scale = historyChartScale(
                         HistorySeries(emptyList(), trend.min, trend.max), HistoryMetric.LEVEL, false
                     )
-                    val axisValues = chartAxisValues(scale.minimum, scale.maximum, compact)
+                    val fontScale = context.resources.configuration.fontScale
+                    val axisValues = chartAxisValues(
+                        scale.minimum, scale.maximum, compact, includeMiddle = !usesCompactLayout(
+                            config.variant,
+                            (heightDp / fontScale).roundToInt(),
+                            (widthDp / fontScale).roundToInt()
+                        )
+                    )
                     val numberFormat = NumberFormat.getNumberInstance(
                         context.resources.configuration.locales[0]
                     ).apply { maximumFractionDigits = 1 }
@@ -514,9 +516,13 @@ internal object WidgetRenderer {
         return bitmap
     }
 
-    internal fun chartAxisValues(minimum: Double, maximum: Double, compact: Boolean): List<Double> =
-        if (compact) listOf((minimum + maximum) / 2)
-        else listOf(maximum, (minimum + maximum) / 2, minimum)
+    internal fun chartAxisValues(
+        minimum: Double, maximum: Double, compact: Boolean, includeMiddle: Boolean = true
+    ): List<Double> = when {
+        compact -> listOf((minimum + maximum) / 2)
+        includeMiddle -> listOf(maximum, (minimum + maximum) / 2, minimum)
+        else -> listOf(maximum, minimum)
+    }
 
     internal fun chartRuns(
         points: List<WidgetTrendPoint>, start: Long, end: Long

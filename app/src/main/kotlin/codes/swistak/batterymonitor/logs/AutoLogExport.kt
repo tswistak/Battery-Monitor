@@ -12,14 +12,18 @@
 */
 package codes.swistak.batterymonitor.logs
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.DocumentsContract
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.edit
 import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.settings.SettingsContract
@@ -81,7 +85,12 @@ internal fun shouldRunAutoLogExport(
 internal object AutoLogExportScheduler {
     private const val REQUEST_CODE = 3084
 
-    fun ensureScheduled(context: Context) {
+    fun ensureScheduled(context: Context) = AutoLogExportProvider.schedule(context, "ensure")
+    fun reschedule(context: Context) = AutoLogExportProvider.schedule(context, "reschedule")
+    fun scheduleAfterRun(context: Context) = AutoLogExportProvider.schedule(context, "after")
+    fun cancel(context: Context) = AutoLogExportProvider.schedule(context, "cancel")
+
+    internal fun ensureScheduledInMainProcess(context: Context) {
         val preferences = preferences(context)
         val frequency = AutoLogExportFrequency.fromPreference(
             preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, null)
@@ -92,7 +101,7 @@ internal object AutoLogExportScheduler {
                 preferences.contains(SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY)
             )
         ) {
-            cancel(context)
+            cancelInMainProcess(context)
             return
         }
 
@@ -103,9 +112,9 @@ internal object AutoLogExportScheduler {
         scheduleAlarm(context, next)
     }
 
-    fun reschedule(context: Context) {
+    internal fun rescheduleInMainProcess(context: Context) {
         preferences(context).edit { remove(SettingsContract.KEY_NEXT_AUTO_LOG_EXPORT_TIME) }
-        ensureScheduled(context)
+        ensureScheduledInMainProcess(context)
     }
 
     fun startInitialExport(context: Context) {
@@ -117,7 +126,7 @@ internal object AutoLogExportScheduler {
         )
     }
 
-    fun scheduleAfterRun(context: Context) {
+    internal fun scheduleAfterRunInMainProcess(context: Context) {
         val preferences = preferences(context)
         val frequency = AutoLogExportFrequency.fromPreference(
             preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, null)
@@ -128,7 +137,7 @@ internal object AutoLogExportScheduler {
                 preferences.contains(SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY)
             )
         ) {
-            cancel(context)
+            cancelInMainProcess(context)
             return
         }
         val next = nextOccurrence(System.currentTimeMillis(), frequency)
@@ -136,7 +145,7 @@ internal object AutoLogExportScheduler {
         scheduleAlarm(context, next)
     }
 
-    fun cancel(context: Context) {
+    internal fun cancelInMainProcess(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         alarmManager?.cancel(pendingIntent(context))
         preferences(context).edit { remove(SettingsContract.KEY_NEXT_AUTO_LOG_EXPORT_TIME) }
@@ -183,6 +192,7 @@ internal class AutoLogExportReceiver : BroadcastReceiver() {
                 AutoLogExporter.export(context.applicationContext, createFileWhenEmpty)
             } catch (exception: Exception) {
                 Log.e("AutoLogExport", "Automatic log export failed", exception)
+                AutoLogExporter.showRecoveryFailure(context, exception)
             } finally {
                 AutoLogExportScheduler.scheduleAfterRun(context.applicationContext)
                 result.finish()
@@ -216,102 +226,129 @@ internal object AutoLogExporter {
     private fun exportBeforeLogDeletion(
         context: Context, rescheduleAfterExport: Boolean
     ): Boolean {
-        return !isEnabled(context) || try {
+        return try {
             export(context)
             if (rescheduleAfterExport) AutoLogExportScheduler.reschedule(context)
             true
         } catch (exception: Exception) {
             Log.e(LOG_TAG, "Skipping log deletion because automatic export failed", exception)
+            showRecoveryFailure(context, exception)
             false
         }
     }
 
-    @Synchronized
-    fun export(context: Context, createFileWhenEmpty: Boolean = false) {
-        if (!isEnabled(context)) return
-        val preferences = context.getSharedPreferences(
-            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
-        )
-        val treeUri = preferences.getString(
-            SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY, null
-        )?.let(Uri::parse) ?: return
-        val format = LogExportFormat.fromPreference(
-            preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT, null)
-        )
-        val mode = AutoLogExportMode.fromPreference(
-            preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_MODE, null)
-        )
-        val exportThrough = System.currentTimeMillis()
-        val lastAutomaticExport = preferences.takeIf {
-            it.contains(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME)
-        }?.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, 0L)
-
-        when (mode) {
-            AutoLogExportMode.NEW_FILE -> {
-                val records = LogExport.loadRecords(
-                    context, afterExclusive = lastAutomaticExport, throughInclusive = exportThrough
-                )
-                if (shouldCreateNewAutoLogExportFile(records.isNotEmpty(), createFileWhenEmpty)) {
-                    val uri = createDocument(
-                        context,
-                        treeUri,
-                        mimeType(format),
-                        LogExport.fileName(format, exportThrough)
-                    )
-                    writeNewFile(context, uri, format, records)
-                }
-            }
-
-            AutoLogExportMode.APPEND -> {
-                val fileName = LogExport.appendFileName(format)
-                val existingUri = findDocument(context, treeUri, fileName)
-                val records = LogExport.loadRecords(
-                    context,
-                    afterExclusive = lastAutomaticExport.takeIf { existingUri != null },
-                    throughInclusive = exportThrough
-                )
-                if (records.isNotEmpty() || existingUri == null) {
-                    val uri = existingUri ?: createDocument(
-                        context, treeUri, mimeType(format), fileName
-                    )
-                    appendToFile(context, uri, format, records, existingUri != null)
-                }
-            }
-        }
-        preferences.edit {
-            putLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, exportThrough)
+    internal fun showRecoveryFailure(context: Context, exception: Exception) {
+        if (exception is LogExportRecoveryException) Handler(Looper.getMainLooper()).post {
+            Toast.makeText(context.applicationContext, exception.message, Toast.LENGTH_LONG).show()
         }
     }
+
+    fun export(context: Context, createFileWhenEmpty: Boolean = false) =
+        AutoLogExportProvider.export(context, createFileWhenEmpty)
+
+    @SuppressLint("UseKtx")
+    internal fun exportInMainProcess(context: Context, createFileWhenEmpty: Boolean = false) =
+        LogExport.withDocumentLock(context) {
+            if (!isEnabled(context)) return@withDocumentLock
+            val preferences = context.getSharedPreferences(
+                SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
+            )
+            val treeUri = preferences.getString(
+                SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY, null
+            )?.let(Uri::parse) ?: return@withDocumentLock
+            val format = LogExportFormat.fromPreference(
+                preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT, null)
+            )
+            val mode = AutoLogExportMode.fromPreference(
+                preferences.getString(SettingsContract.KEY_AUTO_LOG_EXPORT_MODE, null)
+            )
+            val exportThrough = System.currentTimeMillis()
+            val lastAutomaticExport = preferences.takeIf {
+                it.contains(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME)
+            }?.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, 0L)
+
+            when (mode) {
+                AutoLogExportMode.NEW_FILE -> {
+                    val records = LogExport.loadRecords(
+                        context,
+                        afterExclusive = lastAutomaticExport,
+                        throughInclusive = exportThrough
+                    )
+                    if (shouldCreateNewAutoLogExportFile(
+                            records.isNotEmpty(), createFileWhenEmpty
+                        )
+                    ) {
+                        val uri = createDocument(
+                            context,
+                            treeUri,
+                            mimeType(format),
+                            LogExport.fileName(format, exportThrough)
+                        )
+                        writeNewFile(context, uri, format, records)
+                    }
+                }
+
+                AutoLogExportMode.APPEND -> {
+                    val fileName = LogExport.appendFileName(format)
+                    val existingUri = findDocument(context, treeUri, fileName)
+                    val after = lastAutomaticExport.takeIf { existingUri != null }
+                    if (format == LogExportFormat.JSON) {
+                        val uri = existingUri ?: createDocument(
+                            context, treeUri, mimeType(format), fileName
+                        )
+                        val database = LogDatabase(context.applicationContext)
+                        try {
+                            if (after == null || after < exportThrough) {
+                                val start = (after ?: -1L) + 1
+                                database.readHistory(
+                                    historyQuery(
+                                        HistoryRangeState(
+                                            start.coerceAtLeast(0), exportThrough + 1
+                                        )
+                                    )
+                                ) { rows ->
+                                    LogExport.appendJson(
+                                        context, uri, rows.map { it.record })
+                                }
+                            } else LogExport.appendJson(context, uri, emptySequence())
+                        } finally {
+                            database.close()
+                        }
+                    } else {
+                        val records = LogExport.loadRecords(
+                            context, afterExclusive = after, throughInclusive = exportThrough
+                        )
+                        if (records.isNotEmpty() || existingUri == null) {
+                            val uri = existingUri ?: createDocument(
+                                context, treeUri, mimeType(format), fileName
+                            )
+                            appendToFile(context, uri, format, records)
+                        }
+                    }
+                }
+            }
+            LogExport.withWatermarkLock(context) {
+                check(preferences.edit().apply {
+                    putLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, exportThrough)
+                }.commit()) { "Could not save automatic export watermark" }
+            }
+        }
 
     private fun writeNewFile(
         context: Context, uri: Uri, format: LogExportFormat, records: List<LogRecord>
     ) {
-        context.contentResolver.openOutputStream(uri, "w")?.use { output ->
+        context.contentResolver.openOutputStream(uri, "wt")?.use { output ->
             write(context, output, format, records)
         } ?: error("Could not open automatic export file")
     }
 
     private fun appendToFile(
-        context: Context,
-        uri: Uri,
-        format: LogExportFormat,
-        records: List<LogRecord>,
-        existed: Boolean
+        context: Context, uri: Uri, format: LogExportFormat, records: List<LogRecord>
     ) {
-        if (format == LogExportFormat.CSV) {
-            LogExport.appendCsv(context, uri, records.asSequence())
-            return
+        when (format) {
+            LogExportFormat.CSV -> LogExport.appendCsv(context, uri, records.asSequence())
+            LogExportFormat.JSON -> LogExport.appendJson(context, uri, records.asSequence())
         }
-
-        val existingRecords = if (existed) {
-            context.contentResolver.openInputStream(uri)?.bufferedReader(StandardCharsets.UTF_8)
-                ?.use { DeviceDataBackup.readLogsFromJson(it.readText()) }.orEmpty()
-        } else {
-            emptyList()
-        }
-        context.contentResolver.openOutputStream(uri, "w")?.use { output ->
-            write(context, output, format, existingRecords + records)
-        } ?: error("Could not open automatic export file")
     }
 
     private fun write(

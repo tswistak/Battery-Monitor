@@ -48,6 +48,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.ui.components.SettingRow
+import codes.swistak.batterymonitor.ui.settings.settingIcon
 
 internal class MonitorAction(val title: Int, summary: String = "", enabled: Boolean = true) {
     var summary by mutableStateOf(summary)
@@ -139,7 +140,7 @@ internal fun MonitorOperationScreen(
                                 horizontalArrangement = Arrangement.spacedBy(12.dp)
                             ) {
                                 Icon(
-                                    painterResource(actionIcon(action.title)),
+                                    painterResource(settingIcon(key)),
                                     null,
                                     Modifier.size(22.dp),
                                     tint = MaterialTheme.colorScheme.primary
@@ -173,16 +174,4 @@ internal fun MonitorOperationScreen(
             }
         }
     }
-}
-
-private fun actionIcon(title: Int) = when (title) {
-    R.string.diagnostics_notifications, R.string.live_updates_notif_chan_name -> R.drawable.ui_bell
-    R.string.diagnostics_service, R.string.diag_start_monitor -> R.drawable.ui_refresh
-    R.string.diagnostics_database, R.string.diagnostics_debug_logs -> R.drawable.ui_history
-    R.string.diagnostics_export, R.string.charging_diagnostics_report -> R.drawable.ui_share
-    R.string.diagnostics_battery_optimization, R.string.diag_stop_monitor -> R.drawable.ui_battery
-    R.string.diagnostics_vendor_settings -> R.drawable.ui_settings
-    R.string.diagnostics_dont_kill_my_app, R.string.charging_diagnostics_instructions_hint -> R.drawable.ui_help
-    R.string.charging_diagnostics_capture -> R.drawable.ui_bolt
-    else -> R.drawable.ui_info
 }

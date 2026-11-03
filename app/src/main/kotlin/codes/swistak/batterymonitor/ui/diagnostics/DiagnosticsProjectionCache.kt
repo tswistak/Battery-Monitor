@@ -79,9 +79,13 @@ internal fun preparePredictorDiagnostics(
     stored: PredictorStoredState?,
     recent: PredictorRecentState?,
     observedAtMillis: Long,
-    locale: Locale
+    locale: Locale,
+    unitPattern: (Int) -> String
 ): PredictorDiagnosticsProjection {
-    val duration: (Long) -> String = { DiagnosticsDurationFormatter.format(locale, it) }
+
+    val duration: (Long) -> String = {
+        DiagnosticsDurationFormatter.format(locale, it, unitPattern)
+    }
     val saved = stored?.let { predictorDiagnosticGroup(it, observedAtMillis, locale, duration) }
     val latest =
         recent?.let { recentPredictorDiagnosticGroup(it, observedAtMillis, locale, duration) }

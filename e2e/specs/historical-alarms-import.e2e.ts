@@ -29,7 +29,7 @@ describe('Historical alarms import', () => {
         await openBackupAndRestoreScreen();
 
         await chooseImportFile('Import alarms', 'historical-1.7.3-alarms.json');
-        await acknowledgeMessage('Alarms imported successfully');
+        await acknowledgeMessage('Alarms imported successfully.');
 
         const state = await readState();
         expect(state.alarms).toEqual([

@@ -16,6 +16,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.JsonReader
+import android.util.JsonToken
 import codes.swistak.batterymonitor.logs.LogDatabase
 import codes.swistak.batterymonitor.logs.LogRecord
 import codes.swistak.batterymonitor.monitoring.Predictor
@@ -25,11 +27,14 @@ import codes.swistak.batterymonitor.settings.SettingsSnapshot
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import org.json.JSONTokener
 import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
+import java.io.StringReader
+import java.math.BigDecimal
 import java.nio.charset.StandardCharsets
 
 internal enum class DeviceDataType {
@@ -232,6 +237,92 @@ internal object DeviceDataBackup {
 
     fun readLogsFromJson(jsonString: String): List<LogRecord> =
         parseLogs(parseRoot(jsonString).getJSONArray(KEY_LOGS))
+
+    internal fun prepareLogsAppend(
+        jsonString: String, records: Sequence<LogRecord>, maxBytes: Int
+    ): String? {
+        val empty = jsonString.isEmpty()
+        if (!empty) JsonReader(StringReader(jsonString)).use { reader ->
+            require(reader.peek() == JsonToken.BEGIN_OBJECT) { "Expected a JSON history document" }
+            validateAppendJsonValue(reader, 0)
+            require(reader.peek() == JsonToken.END_DOCUMENT) { "Unexpected content after JSON history" }
+        }
+        val root = if (empty) JSONObject().put(KEY_VERSION, SCHEMA_VERSION)
+            .put(KEY_LOGS, JSONArray()) else JSONObject(jsonString)
+        val version = root.get(KEY_VERSION)
+        require(version is Int && version in Version1DeviceDataImporter.VERSION..SCHEMA_VERSION) {
+            "Unsupported JSON history version"
+        }
+        val logs = root.getJSONArray(KEY_LOGS)
+        parseLogs(logs)
+        if (root.has(Version1DeviceDataImporter.KEY_LAST_LOG_EXPORT_TIME)) {
+            parseLastLogExportTime(root)
+        }
+        if (root.has(KEY_PREDICTOR) && !root.isNull(KEY_PREDICTOR)) root.getJSONObject(KEY_PREDICTOR)
+
+        var changed = false
+        var size = jsonString.toByteArray(StandardCharsets.UTF_8).size.toLong()
+        for (record in records) {
+            val log = logsToJson(listOf(record)).getJSONObject(0)
+            size += log.toString().toByteArray(StandardCharsets.UTF_8).size + 1
+            require(size <= maxBytes) { "JSON history is too large to append safely" }
+            logs.put(log)
+            changed = true
+        }
+        if (!changed && !empty) return null
+        if (version < SCHEMA_VERSION && root.has(KEY_PREDICTOR) && !root.isNull(KEY_PREDICTOR)) {
+            // Version 1 implicitly used predictor state 1; keep that interpretation after upgrading.
+            val predictor = root.getJSONObject(KEY_PREDICTOR)
+            if (!predictor.has(Version2DeviceDataImporter.KEY_PREDICTOR_STATE_VERSION)) {
+                predictor.put(Version2DeviceDataImporter.KEY_PREDICTOR_STATE_VERSION, 1)
+            }
+        }
+        root.put(KEY_VERSION, SCHEMA_VERSION)
+        val prepared = root.toString()
+        val bytes = prepared.toByteArray(StandardCharsets.UTF_8)
+        require(String(bytes, StandardCharsets.UTF_8) == prepared) {
+            "JSON history contains text that cannot be preserved"
+        }
+        require(bytes.size <= maxBytes) {
+            "JSON history is too large to append safely"
+        }
+        validateJson(prepared, setOf(DeviceDataType.LOGS))
+        return prepared
+    }
+
+    private fun validateAppendJsonValue(reader: JsonReader, depth: Int) {
+        require(depth <= 64) { "JSON history is nested too deeply" }
+        when (reader.peek()) {
+            JsonToken.BEGIN_OBJECT -> {
+                reader.beginObject()
+                val keys = mutableSetOf<String>()
+                while (reader.hasNext()) {
+                    require(keys.add(reader.nextName())) { "Duplicate JSON history field" }
+                    validateAppendJsonValue(reader, depth + 1)
+                }
+                reader.endObject()
+            }
+
+            JsonToken.BEGIN_ARRAY -> {
+                reader.beginArray()
+                while (reader.hasNext()) validateAppendJsonValue(reader, depth + 1)
+                reader.endArray()
+            }
+
+            JsonToken.NUMBER -> {
+                val literal = reader.nextString()
+                val number = JSONTokener(literal).nextValue()
+                require(number is Number && BigDecimal(literal).compareTo(BigDecimal(number.toString())) == 0) {
+                    "JSON history contains a number that cannot be preserved"
+                }
+            }
+
+            JsonToken.STRING -> reader.nextString()
+            JsonToken.BOOLEAN -> reader.nextBoolean()
+            JsonToken.NULL -> reader.nextNull()
+            else -> error("Invalid JSON history value")
+        }
+    }
 
     private fun addLastLogExportTime(context: Context, root: JSONObject) {
         val preferences = context.getSharedPreferences(

@@ -71,6 +71,7 @@ import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.alarms.AlarmsScreen
 import codes.swistak.batterymonitor.ui.alarms.AlarmsViewModel
 import codes.swistak.batterymonitor.ui.alarms.ThresholdDialog
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.current.CurrentMeasurement
 import codes.swistak.batterymonitor.ui.current.CurrentStateRoute
 import codes.swistak.batterymonitor.ui.current.CurrentStateViewModel
@@ -278,8 +279,8 @@ class BatteryInfoActivity : AppCompatActivity() {
                         if (selected in setOf(
                                 SectionOwner.DIAGNOSTICS, SectionOwner.ALARMS, SectionOwner.SETTINGS
                             )
-                        ) androidx.compose.material3.IconButton(
-                            onClick = {
+                        ) TooltipIconButton(
+                            label = getString(R.string.menu_help), onClick = {
                                 val topic = when (selected) {
                                     SectionOwner.ALARMS -> if (detail == null) SettingsContract.KEY_ALARMS_SETTINGS else SettingsContract.KEY_ALARM_EDIT_SETTINGS
                                     SectionOwner.DIAGNOSTICS -> diagnosticDetailHelpTopic(detail)
@@ -389,6 +390,14 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     chargingTarget = chargingTarget,
                                     dischargingTarget = dischargingTarget,
                                     monitoringAvailable = monitoringState.availability == MonitoringAvailability.LIVE,
+                                    dismissLowBatteryOnRecovery = currentSettings.getBoolean(
+                                        SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY, false
+                                    ),
+                                    onDismissLowBatteryOnRecovery = {
+                                        alarms.setDismissLowBatteryOnRecovery(
+                                            it, persistent::reloadSettings
+                                        )
+                                    },
                                     onEdit = {
                                         alarms.beginDraft(
                                             it, temperatureUnit.convertToFahrenheit, alarmLocale
@@ -616,6 +625,10 @@ class BatteryInfoActivity : AppCompatActivity() {
     }
 
     fun openSettingsCategory(category: String?, highlight: String? = null) {
+        if (highlight == SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY) {
+            performSelectSection(SectionOwner.ALARMS)
+            return
+        }
         if (category == null) {
             performSelectSection(SectionOwner.SETTINGS)
             return

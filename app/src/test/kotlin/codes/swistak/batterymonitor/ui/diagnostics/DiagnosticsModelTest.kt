@@ -23,6 +23,28 @@ import org.junit.Test
 import java.util.Locale
 
 class DiagnosticsModelTest {
+
+    @Test
+    fun `charge-time display and report share compact units while retaining raw milliseconds`() {
+        val snapshot = AdvancedBatterySnapshot().apply { chargeTimeRemainingMs = 3_723_999L }
+        val groups = normalizedDiagnosticGroups(snapshot, 1, locale = Locale.ENGLISH)
+        val row = groups.flatMap { it.rows }.single { it.rawKey == "charge_time_remaining" }
+        val units: (Int) -> String = {
+            when (it) {
+                R.string.unit_hours -> "%dh"
+                R.string.unit_minutes -> "%dm"
+                R.string.unit_seconds -> "%ds"
+                else -> it.toString()
+            }
+        }
+        assertEquals("3723999", row.rawValue)
+        assertEquals("ms", row.unit)
+        assertEquals("1h 2m 3s", formattedDiagnosticValue(row, units, Locale.ENGLISH))
+        val report = diagnosticReport(groups, units, includeRaw = false, locale = Locale.ENGLISH)
+        assertTrue(report.contains("charge_time_remaining: 1h 2m 3s\n"))
+        assertTrue(report.contains("raw=3723999; unit=ms"))
+    }
+
     @Test
     fun `charging source is available from the Android broadcast without privileged access`() {
         for ((plugged, label) in listOf(

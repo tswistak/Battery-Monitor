@@ -202,7 +202,7 @@ class LicenseScreenInstrumentedTest {
     @Test
     fun compose_contextual_help_returns_to_the_actual_settings_category_without_help_fragments() {
         withActivity(section = "settings", detail = "settings:notification") { activity ->
-            await { visibleText(context.getString(R.string.settings_notification)) }
+            await { visibleText(context.getString(R.string.notification_settings)) }
             assertNavigation(activity, SectionOwner.SETTINGS, "settings:notification")
             repeat(2) { index ->
                 main { activity.openHelp(SettingsContract.KEY_NOTIFICATION_SETTINGS) }
@@ -215,7 +215,7 @@ class LicenseScreenInstrumentedTest {
                 assertNoHelpFragments(activity)
                 if (index == 0) instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
                 else assertTrue(tapText(context.getString(R.string.nav_up)))
-                await { visibleText(context.getString(R.string.settings_notification)) }
+                await { visibleText(context.getString(R.string.notification_settings)) }
                 assertNavigation(activity, SectionOwner.SETTINGS, "settings:notification")
             }
             main { activity.selectSection(SectionOwner.HELP) }

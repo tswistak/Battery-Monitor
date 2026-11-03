@@ -133,7 +133,7 @@ internal object DisplayStrings {
     }
 
     internal fun formatVoltage(voltage: Int, locale: Locale): String {
-        return formatDecimal(voltage / 1000.0, 1, 3, locale) + voltSymbol
+        return formatDecimal(voltage / 1000.0, 1, 3, locale) + "\u00A0" + voltSymbol
     }
 
     internal fun formatChargeDetailed(microAmpHours: Long, locale: Locale): String {

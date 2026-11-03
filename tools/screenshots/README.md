@@ -81,7 +81,11 @@ Every seed checks timestamp ordering/range, observation gaps, gradual temperatur
 
 Use English (United States), Celsius, default font scale, ordinary phone density and consistent timezone. Match SystemUI's simulated battery level/status to the selected scene; the helper does not change SystemUI. Launch normally, complete permission/background setup, and verify the actual Current State, latest history, notification and widgets before capturing. Use the actual launcher widget workflow and normal application settings to change themes or notification content.
 
-For the phone widget image, a blank launcher page with a normal 5 × 5 grid fits Status at 2 × 2 in the upper left, Trend at 3 × 3 in the upper right, and Measurements at 5 × 2 below. Add and resize the functioning widgets through the launcher's normal controls. Keep the default font scale and density; verify all four Measurements values fit without ellipses before capture.
+Set the disposable emulator's actual display with `adb -s "$SERIAL" shell wm size 1080x2400` for images 1–3, 5, 7 and 8. Use `1080x1920` for image 4, and rotate the actual `1080x2400` display for landscape image 6. Keep density 420 and font scale 1.0. Restore display overrides with `adb -s "$SERIAL" shell wm size reset` during cleanup.
+
+For the phone widget image, use a full AOSP (`default`) emulator image, a 1080 × 1920 display at density 420, and font scale 1.0. Select **Wallpaper & style → App grid → 4 × 4** through the launcher's normal controls. Put Trend and Status at 2 × 2 each above Measurements at 4 × 2 on a blank launcher page. Remove unrelated dock shortcuts and keep the first page's search widget out of the capture. Verify all four Measurements values fit without ellipses before capture. Resize the actual widgets through the launcher; do not resize the PNG to imitate a shorter chart.
+
+If SystemUI demo mode is used to hide unrelated notification icons, set its clock from this emulator's actual time immediately before each capture and keep its battery level/status equal to the real battery overrides. Reseed before final captures if lengthy launcher preparation has aged the fixture; this uses the same production import/predictor checks and does not alter widget configuration.
 
 ```sh
 adb -s "$SERIAL" exec-out screencap -p > "$OUTPUT"
@@ -100,20 +104,19 @@ adb -s "$SERIAL" emu kill
 
 Keep final images and this guide. APKs, emulator disks, disposable keys and device dumps belong in ignored build/capture output, outside tracked metadata. A later ordinary build without `-I tools/screenshots/build.gradle` compiles the unmodified production inputs and includes no screenshot receiver.
 
-## Captured assets
+## Asset inventory
 
-The seven phone images were captured from the real application and SystemUI and visually checked on an Android 16/API 36 Google Play ARM64 phone emulator. They use native 1080 × 2400 resolution, density 420, font scale 1.0, English (United States), Europe/Warsaw time and Celsius. The app uses BatteryBlue/light except for the dark fullscreen comparison; the notification image uses ordinary SystemUI presentation. Image 6 is a real landscape capture at 2400 × 1080.
+Use English (United States), Europe/Warsaw time, Celsius, density 420 and font scale 1.0 for the phone images. Select the Battery Blue palette and the appearance listed below through the app's real settings. For image 5, expand the ordinary persistent notification with Live Update set to “Never”; an API 36 emulator provides the required SystemUI layout. Capture native PNGs at the listed display sizes.
 
-| File | Subject |
-| --- | --- |
-| [1.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | Current battery readings and charging estimate to the manual 80% target. |
-| [2.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | Battery-level history over 24 hours. |
-| [3.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | Grouped battery alarms with enabled and disabled thresholds. |
-| [4.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | Functioning Status 2 × 2, Trend 3 × 3 and Measurements 5 × 2 launcher widgets. |
-| [5.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) | The expanded ordinary persistent battery notification. |
-| [6.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/6.png) | Dark landscape fullscreen comparison of battery level and temperature. |
-| [7.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/7.png) | History Events with Plugged in, Unplugged and Measurements selected: 3 of 9 event types. |
+| File | Subject | Size | Appearance |
+| --- | --- | --- | --- |
+| [1.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | Current battery readings and charging estimate to the manual 80% target | 1080 × 2400 | Light |
+| [2.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | Battery-level history over 24 hours | 1080 × 2400 | Light |
+| [3.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | Grouped battery alarms with enabled and disabled thresholds | 1080 × 2400 | Light |
+| [4.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) | Trend 2 × 2, Status 2 × 2 and Measurements 4 × 2 launcher widgets | 1080 × 1920 | Light |
+| [5.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) | Expanded ordinary persistent battery notification | 1080 × 2400 | SystemUI |
+| [6.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/6.png) | Landscape fullscreen comparison of battery level and temperature | 2400 × 1080 | Dark |
+| [7.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/7.png) | History Events with Plugged in, Unplugged and Measurements selected: 3 of 9 event types | 1080 × 2400 | Light |
+| [8.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/8.png) | Current battery readings and manually configured 80% charging target | 1080 × 2400 | Dark |
 
-The optional [tablet History image](../../fastlane/metadata/android/en-US/images/tenInchScreenshots/1.png) was captured and visually checked on a Samsung SM-X200 running Android 14/API 34, at 1920 × 1200 in landscape. The app is English, SystemUI is Polish, and the appearance is light with dynamic colors.
-
-This image uses real seven-day history retained through the normal full-backup/restore workflow, rather than the phone demonstration fixture. Fresh history observations were verified after restoration, and the visible app and system battery levels matched. The original installation was preserved.
+Keep the optional [tablet History image](../../fastlane/metadata/android/en-US/images/tenInchScreenshots/1.png) unchanged: 1920 × 1200 in landscape, light appearance with dynamic colors, English application text and Polish SystemUI. Do not seed, wipe or modify the owner's Samsung tablet to prepare phone screenshots.

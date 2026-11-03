@@ -79,7 +79,7 @@ describe('Complete general backup round trip', () => {
 
         await clickText('Export general backup');
         await saveBackupThroughFilePicker('current-general.zip');
-        await acknowledgeMessage('General backup exported successfully');
+        await acknowledgeMessage('General backup exported successfully.');
 
         const bytes = await pullSharedFile('current-general.zip');
         await expect(bytes.length).toBeGreaterThan(0);
@@ -125,7 +125,7 @@ describe('Complete general backup round trip', () => {
         await chooseImportFile('Import general backup', 'current-general.zip');
         await confirmAllAvailableCategories();
         await chooseReplaceHistory();
-        await acknowledgeMessage('General backup imported successfully');
+        await acknowledgeMessage('General backup imported successfully.');
 
         const restored = await readState();
         await expect(restored.settings).toMatchObject(expectedSettings);

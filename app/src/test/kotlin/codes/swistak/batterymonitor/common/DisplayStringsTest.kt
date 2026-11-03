@@ -59,10 +59,18 @@ class DisplayStringsTest {
     }
 
     @Test
-    fun `voltage uses locale decimal separator and preserves millivolt precision`() {
-        assertEquals("4.217V", DisplayStrings.formatVoltage(4217, Locale.US))
-        assertEquals("4,217V", DisplayStrings.formatVoltage(4217, Locale.forLanguageTag("pl")))
-        assertEquals("4,0V", DisplayStrings.formatVoltage(4000, Locale.forLanguageTag("pl")))
+    fun `voltage keeps its unit with the value and preserves locale and millivolt precision`() {
+        assertEquals("4.217\u00A0V", DisplayStrings.formatVoltage(4217, Locale.US))
+        assertEquals(
+            "4,217\u00A0V", DisplayStrings.formatVoltage(4217, Locale.forLanguageTag("pl"))
+        )
+        assertEquals("4,0\u00A0V", DisplayStrings.formatVoltage(4000, Locale.forLanguageTag("pl")))
+        try {
+            DisplayStrings.voltSymbol = "ف"
+            assertEquals("4.0\u00A0ف", DisplayStrings.formatVoltage(4000, Locale.US))
+        } finally {
+            DisplayStrings.voltSymbol = "V"
+        }
     }
 
     @Test

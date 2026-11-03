@@ -63,6 +63,7 @@
     <string name="current_temperature">טמפרטורה</string>
     <string name="current_voltage">מתח</string>
     <string name="vital_sign_voltage" formatted="false">מתח הסוללה</string>
+    <string name="vital_sign_current_label" formatted="false">זרם</string>
     <string name="pref_cat_battery_current_main" formatted="false">זרם הסוללה</string>
     <string name="remaining_charge" formatted="false">טעינה נותרת</string>
     <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
@@ -91,11 +92,13 @@
     <string name="current_state_settings_help" formatted="false">בחרו אם להציג מטען שנותר ואם ״מצב נוכחי״ מעדיף זרם סוללה ממוצע. הזרם נמדד תמיד כשהוא זמין. המכפיל מתקן את הזרם ואת ההספק המחושב בכל האפליקציה; היומנים שומרים את הזרם הרגעי המקורי כדי לאפשר שינוי של המכפיל בהמשך.</string>
     <string name="pref_show_remaining_charge" formatted="false">הצגת הטעינה הנותרת</string>
     <string name="pref_show_remaining_charge_summary" formatted="false">להציג את טעינת הסוללה הנותרת שהמכשיר מדווח עליה ב־mAh?</string>
+    <string name="pref_show_remaining_charge_help" formatted="false">הציגו את טעינת הסוללה הנותרת שהמכשיר מדווח עליה, ב־mAh.</string>
     <string name="pref_battery_current_multiplier" formatted="false">מַכפִּיל</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">מכשירים מסוימים מדווחים על יחידות או סימנים בלתי צפויים. הכפל כאן את הערך המדווח כדי לתקן את התוצאה המוצגת.\n
     \n
     כנקודת ייחוס כללית לטלפונים, הסימן התקני של Android הוא חיובי בזמן טעינה ושלילי בזמן פריקה. טעינה פעילה היא לרוב בערך +500 עד +5000\u00A0mA, ופריקה רגילה היא לרוב בערך -100 עד -3000\u00A0mA. ערכים קרובים לאפס יכולים להיות תקינים כשהסוללה כמעט מלאה או כשהטלפון אינו פעיל. אם הגודל נראה קטן או גדול בערך פי 1000, או שהסימן הפוך, יש לכוונן את המכפיל.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">זיהוי אוטומטי</string>
+    <string name="pref_battery_current_multiplier_auto_help" formatted="false">נסו להסיק את מכפיל הזרם מקריאת סוללה. אם הזיהוי אינו זמין, הערך הנוכחי נשאר ללא שינוי והזיהוי עשוי להתבצע שוב כשתהיה קריאה מתאימה. בחירת ערך ידני מבטלת זיהוי ממתין.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">זיהוי אוטומטי אינו זמין עבור מצב הסוללה או הקריאה הנוכחיים</string>
     <string name="pref_battery_current_multiplier_detection_result">המכפיל הוגדר אוטומטית ל־%1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">העדפת זרם ממוצע</string>
@@ -147,7 +150,6 @@
     <string name="main_notif_chan_name" formatted="false">הודעה ראשית</string>
     <string name="live_updates_notif_chan_name" formatted="false">עדכונים חיים</string>
     <string name="notification_settings" formatted="false">הודעה ראשית</string>
-    <string name="settings_notification">התראה</string>
     <string name="notification_settings_summary" formatted="false">הגדר את תוכן ההתראה, את סמל שורת המצב ואת שבב העדכון החי</string>
     <string name="notification_settings_help" formatted="false">אתה יכול להגדיר איזה תוכן יוצג בהודעה הנפתחת.</string>
     <string name="notification_channels_help" formatted="false">יש לפתוח את הגדרות ההתראות של Android כדי לאפשר או לחסום התראות ולהגדיר צליל, רטט ואופן מסירה להתראה הראשית ולכל סוג התרעה. הפעלת כלל התרעה אינה עוקפת ערוץ התראות חסום.</string>
@@ -160,6 +162,7 @@
     הערה: מתן ההרשאה הזו עלול לגרום לעיתים לסגירת האפליקציה. אם זה קורה, פשוט פתח אותה מחדש.</string>
     <string name="pref_cat_channel_settings" formatted="false">הגדרות ערוץ הודעות</string>
     <string name="pref_manage_main_channel" formatted="false">ניהול הערוץ הראשי</string>
+    <string name="pref_manage_main_channel_summary" formatted="false">פתיחת הגדרות Android לערוץ ההתראה הראשי</string>
     <string name="pref_cat_notification_content" formatted="false">תוכן</string>
     <string name="pref_top_line_content" formatted="false">תוכן השורה העליונה</string>
     <string name="pref_top_line_content_help" formatted="false">בחר אם בשורה העליונה של ההתראה יוצגו ״משך הזמן שנותר״ המשוער, ״זמן מאז שינוי המצב״ או ״סימנים חיוניים״ שנבחרו.</string>
@@ -168,8 +171,8 @@
     <string name="time_remaining" formatted="false">משך הזמן שנותר</string>
     <string name="time_since_status_change" formatted="false">זמן מאז שינוי המצב</string>
     <string name="vital_signs" formatted="false">סימנים חיוניים</string>
-    <string name="notification_until_charged" formatted="false">" עד לסיום הטעינה"</string>
-    <string name="notification_until_drained" formatted="false">" נותרו"</string>
+    <string name="notification_until_charged" formatted="true">%1$s עד לסיום הטעינה</string>
+    <string name="notification_until_drained" formatted="true">נותרו %1$s</string>
     <string name="pref_time_remaining_verbosity" formatted="false">זמן שנותר מילוליות</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">מכשירים מגיעים בכל הצורות והגדלים, כך שרוב התרגומים צריכים לעשות זאת השתמש בקיצורים כדי להבטיח שהאומדן שנותר הזמן מתאים בנוחות באזור ההודעות. אם זה עדיין לא מתאים, אתה יכול לבחור בפורמט “דחוס”. אם יש לך הרבה מקום, ייתכן שתעדיף את ההגדרה “מילולי”.</string>
     <string name="condensed" formatted="false">דחוס</string>
@@ -177,23 +180,27 @@
     <string name="verbose" formatted="false">מילולי</string>
     <string name="pref_vital_signs_content" formatted="false">תוכן הנתונים החיוניים</string>
     <string name="pref_vital_signs_content_summary" formatted="false">אילו ערכים לכלול ב״סימנים חיוניים״ ובאיזה סדר?</string>
+    <string name="pref_vital_signs_content_help" formatted="false">בחרו ערכים והשתמשו בכפתורי ההזזה כדי לקבוע את סדרם. אפשר לבטל את הבחירה של כל הערכים.</string>
     <string name="pref_expanded_notification" formatted="false">הרחבת פרטי ההתראה</string>
     <string name="pref_expanded_notification_summary" formatted="false">להציג פרטים עם תוויות כשההתראה מורחבת?</string>
     <string name="pref_expanded_notification_help" formatted="false">כשהאפשרות מופעלת, הרחבת ההתראה הראשית מציגה את ״משך הזמן שנותר״, את ״זמן מאז שינוי המצב״ ואת כל אחד מ״סימנים חיוניים״ בשורה נפרדת עם תווית, במקום סיכום בשורה אחת.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">סמל שורת המצב</string>
     <string name="status_bar_icon_settings_help" formatted="false">בחר אם סמל ההתראה יציג את אחוז הסוללה או את הטמפרטורה, אם סמל היחידה יוצג בתוך הסמל, ואם לטעינה יהיה סמל ייעודי. החל מ-Android 16, ייתכן שסמל שורת המצב לא יפעל בכל גרסאות מערכת ההפעלה.</string>
+    <string name="status_bar_icon_availability_help" formatted="false">החל מ-Android 16, ייתכן שסמל שורת המצב לא יפעל בכל גרסאות מערכת ההפעלה.</string>
     <string name="pref_icon_content" formatted="false">תוכן סמל</string>
     <string name="pref_icon_content_help" formatted="false">בחר אם סמל שורת המצב יציג את אחוז הסוללה או טמפרטורת הסוללה. הטמפרטורה עוקבת אחר היחידה שבחרת.</string>
     <string name="pref_content_percent" formatted="false">אחוז סוללה</string>
     <string name="pref_content_temperature" formatted="false">טמפרטורת הסוללה</string>
     <string name="pref_show_icon_unit" formatted="false">הצג סמל יחידה</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">הצגת סמל היחידה לצד הערך בסמל בשורת המצב</string>
     <string name="pref_show_icon_unit_help" formatted="false">כאשר האפשרות מופעלת, הסמל מציג סימן אחוז עבור אחוז הסוללה וסימן מעלה עבור טמפרטורת הסוללה. השבת אפשרות זו כדי להציג רק את המספר.</string>
     <string name="pref_indicate_charging" formatted="false">ציין טעינה</string>
     <string name="pref_indicate_charging_summary" formatted="false">לשנות את הסמל לציון בעת ​​טעינה?</string>
     <string name="pref_indicate_charging_help" formatted="false">סמל הטעינה יכול להציג ברק מתחת למספר. השבת הגדרה זו אם אתה מעדיף את אותו סמל בזמן טעינה ופריקה.</string>
     <string name="status_bar_chip_settings" formatted="false">שבב שורת המצב</string>
     <string name="status_bar_chip_settings_help" formatted="false">ב־Android 16 ואילך, בחרו מתי שבב העדכון החי מופיע, אילו ערכים הוא מחליף והאם הוא מציג אימוג׳י טעינה. הזמינות תלויה גם במכשיר ובהגדרות התראות המערכת.</string>
+    <string name="status_bar_chip_availability_help" formatted="false">הזמינות תלויה גם במכשיר ובהגדרות התראות המערכת.</string>
     <string name="settings_live_update_summary">אפשרו או חסמו התראות סוללה מקודמות בהגדרות Android</string>
     <string name="settings_live_update_help">אפשרו או חסמו התראות סוללה מקודמות בהגדרות Android.</string>
     <string name="live_updates_onboarding_title">שבב סוללה בשורת המצב</string>
@@ -222,10 +229,10 @@
     <string name="pref_expanded_live_update_help" formatted="false">התראות העדכון החי מוצגות תמיד במצב מורחב. כשהאפשרות מופעלת, העדכון החי מציג את ״משך הזמן שנותר״, את ״זמן מאז שינוי המצב״ ואת כל אחד מ״סימנים חיוניים״ בשורה נפרדת עם תווית.</string>
     <string name="pref_chip_content" formatted="false">תוכן שבב</string>
     <string name="pref_chip_content_summary" formatted="false">אילו ערכים יוצגו בשבב ובאיזה סדר?</string>
-    <string name="pref_chip_content_help" formatted="false">בחר את הערכים ששבב שורת המצב יתחלף ביניהם וסדר אותם.</string>
+    <string name="pref_chip_content_help" formatted="false">בחר את הערכים ששבב שורת המצב יתחלף ביניהם וסדר אותם. לפחות ערך אחד חייב להישאר מסומן.</string>
     <string name="pref_chip_switching_interval" formatted="false">מרווח החלפה</string>
     <string name="pref_chip_switching_interval_summary" formatted="false">בחר באיזו תדירות השבב יעבור לערך הנבחר הבא</string>
-    <string name="pref_chip_switching_interval_help" formatted="false">בחר באיזו תדירות השבב יעבור לערך הנבחר הבא. הגדרה זו זמינה כאשר נבחר יותר מערך אחד.</string>
+    <string name="pref_chip_switching_interval_help" formatted="false">בחר באיזו תדירות השבב יעבור לערך הנבחר הבא. הגדרה זו זמינה כאשר נבחר יותר מערך אחד והאפשרות ״הצג עדכון חי״ אינה מוגדרת ל־״לְעוֹלָם לֹא״.</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">הזן מרווח בשניות (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">הזן ערך בין 1 ל־3600.</string>
     <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0שניות</string>
@@ -237,17 +244,17 @@
     <string name="pref_chip_indicate_charging_summary" formatted="false">להציג סימון בזמן טעינה או טעינה מלאה?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">אם מופעל, שבב שורת המצב יציג סימון ליד הערך בזמן טעינה או טעינה מלאה.</string>
 
-    <string name="alarm_settings_subtitle" formatted="false">הגדרות התראה</string>
-    <string name="alarm_settings" formatted="false">התראות</string>
+    <string name="alarm_settings_subtitle" formatted="false">הגדרות התרעה</string>
+    <string name="alarm_settings" formatted="false">התרעות</string>
     <string name="alarm_settings_help" formatted="false">אתה יכול לגרום ל-Battery Monitor להודיע לך מתי רמת הסוללה שלך מגיע למצב מסוים (למשל, הסוללה נטועה במלואה, רמת הסוללה יורדת מתחת ל-20%, ועוד רבים אחרים).</string>
-    <string name="alarms_overview" formatted="false">סקירה כללית של אזעקות</string>
+    <string name="alarms_overview" formatted="false">סקירה כללית של התרעות</string>
     <string name="alarms_overview_help">כל שמונת סוגי ההתרעות זמינים תמיד. הפעילו אירועים ישירות, או השתמשו ב״הוספת סף״ תחת סוג מטען או טמפרטורה. ספים חדשים מופעלים לאחר שמירה. הקישו על ערך לעריכתו; העריכה שומרת על מצב ההפעלה שלו. ערכים מושבתים נשארים ברשימה. ״מחיקת התרעה״ מבקשת אישור. הצליל והרטט משותפים לפי סוג בהגדרות התראות Android. רשומות כפולות קיימות מופיעות כהתרעה לוגית אחת; שינוי מצב או מחיקה משפיעים על כל העותקים. התרעות טעינה ופריקה עוקבות אחר יעדי ההערכה ואינן שולטות בטעינה. ערוץ חסום או ניטור עצור אינם משנים את המתגים השמורים.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d התרעה מופעלת</item>
         <item quantity="two">%1$d התרעות מופעלות</item>
         <item quantity="other">%1$d התרעות מופעלות</item>
     </plurals>
-    <string name="channel_group_name_alarms" formatted="false">אַזעָקָה</string>
+    <string name="channel_group_name_alarms" formatted="false">התרעות</string>
     <string name="alarm_type_fully_charged" formatted="false">טעונה במלואה</string>
     <string name="alarm_fully_charged" formatted="false">הסוללה טעונה כעת במלואה</string>
     <string name="alarms_targets_group">יעדי טעינה ופריקה</string>
@@ -276,6 +283,7 @@
     <string name="alarms_add_threshold">הוספת סף</string>
     <string name="alarms_edit_threshold">עריכת סף</string>
     <string name="alarms_edit_existing">עריכת סף קיים</string>
+    <string name="alarms_threshold_edit_help" formatted="false">אם הסף כבר קיים, פתחו אותו באמצעות ״עריכת סף קיים״. אם ההתרעות השמורות משתנות בזמן העריכה, השתמשו ב״רענון״ ופתחו שוב את הסף לפני שתשנו אותו.</string>
     <string name="alarms_new_enabled">ההתרעה תופעל בעת הוספתה.</string>
     <string name="alarms_edit_keeps_enabled">עריכה שומרת על מצב ההפעלה או הכיבוי הנוכחי.</string>
     <string name="alarms_enabled">מופעל</string>
@@ -296,6 +304,7 @@
     <string name="alarms_delivery_vibration">רטט והתראה</string>
     <string name="alarms_delivery_notification">התראה בלבד</string>
     <string name="alarms_channel_help">ערוץ התראות זה של Android שולט בצליל ובאופן המסירה.</string>
+    <string name="alarms_options_title" formatted="false">אפשרויות התרעה</string>
     <string name="pref_dismiss_low_battery_on_recovery">סגירת התרעת סוללה חלשה לאחר התאוששות</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">הסרת התראת הסוללה החלשה כאשר המטען עולה מעל הסף שלה. התראות התרעה אחרות נשארות</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">הסרת התראת הסוללה החלשה כאשר המטען עולה מעל הסף שלה. התראות התרעה אחרות נשארות.</string>
@@ -309,6 +318,7 @@
     <string name="alarms_conflict">ההתרעות השמורות השתנו. יש לרענן ולפתוח שוב את הסף לפני ביצוע שינויים.</string>
     <string name="alarms_missing_rule">התרעה זו חסרה או אינה תקינה. יש לבדוק את קטלוג ההתרעות.</string>
     <string name="alarms_invalid_records">חלק מההתרעות השמורות אינן תקינות. יש לבדוק את הרשומות האלו; הן לא הוסרו.</string>
+    <string name="alarms_invalid_records_help" formatted="false">כשמוצגות התרעות שמורות לא תקינות, אפשר להשבית רשומה פעילה בלי למחוק אותה, או למחוק אותה לצמיתות. שתי הפעולות מבקשות אישור.</string>
     <string name="alarms_database_error">לא ניתן לגשת למסד נתוני ההתרעות. יש לנסות שוב.</string>
     <string name="alarms_saved">הגדרות ההתרעות נשמרו</string>
     <string name="alarms_saved_reload_failed">נשמר, אך לא ניתן להודיע לרכיב הניטור. יש לבדוק את מצב הניטור.</string>
@@ -358,8 +368,6 @@
     <string name="history_periodic_measurement">מדידת סוללה</string>
     <string name="history_raw_observations">תצפיות שמורות. הפרטים מציגים את הקריאות הזמינות ואת זמנן.</string>
     <string name="history_export_selected">ייצוא הטווח הנבחר</string>
-    <string name="history_export_csv">הטווח הנבחר · CSV</string>
-    <string name="history_export_json">הטווח הנבחר · JSON</string>
     <string name="history_import_json">ייבוא יומנים מגיבוי JSON</string>
     <string name="history_delete_selected">ניקוי הטווח הנבחר</string>
     <string name="history_delete_selected_confirm">לנקות את היומנים בטווח הנבחר?</string>
@@ -415,7 +423,7 @@
     <string name="pref_enable_logging_help" formatted="false">שמירת תצפיות סוללה ושינויי מצב עבור ״היסטוריה״. המדידות הזמינות כוללות רמה, טמפרטורה, מתח, זרם רגעי מקורי ומטען שנותר. ההספק מחושב מהמתח ומהזרם בעת הצגה או ייצוא; הוא אינו נשמר בנפרד. כיבוי הרישום אינו מוחק היסטוריה קיימת ואינו עוצר הערכות זמן.</string>
     <string name="pref_max_log_age" formatted="false">גיל יומן מקסימלי</string>
     <string name="pref_max_log_age_summary" formatted="false">מחק יומנים ישנים יותר מ:</string>
-    <string name="pref_max_log_age_help" formatted="false">כשהרישום מופעל, חיבור לחשמל מסיר יומנים ישנים ממגבלה זו. ״לעולם לא למחוק״ שומר אותם עד לניקוי ידני. אם ייצוא אוטומטי מופעל, Battery Monitor מייצא יומנים ממתינים לפני מחיקת רשומות ישנות; כישלון בייצוא מונע מחיקה זו.</string>
+    <string name="pref_max_log_age_help" formatted="false">כשהרישום מופעל, חיבור לחשמל מסיר יומנים ישנים ממגבלה זו. ״ללא הגבלה״ שומר אותם עד לניקוי ידני. אם ייצוא אוטומטי מופעל, Battery Monitor מייצא יומנים ממתינים לפני מחיקת רשומות ישנות; כישלון בייצוא מונע מחיקה זו.</string>
     <string name="age_1_day" formatted="false">יום אחד</string>
     <string name="age_2_days" formatted="false">2\u00A0ימים</string>
     <string name="age_4_days" formatted="false">4\u00A0ימים</string>
@@ -423,24 +431,26 @@
     <string name="age_2_weeks" formatted="false">2\u00A0שבועות</string>
     <string name="age_3_weeks" formatted="false">3\u00A0שבועות</string>
     <string name="age_4_weeks" formatted="false">4\u00A0שבועות</string>
-    <string name="age_never_delete" formatted="false">לעולם לא למחוק</string>
-    <string name="settings_history_export">היסטוריה וייצוא</string>
+    <string name="age_no_limit" formatted="false">ללא הגבלה</string>
     <string name="log_export_mode_title" formatted="false">ייצוא יומנים</string>
     <string name="log_export_append" formatted="false">הוספה לקובץ קיים</string>
+    <string name="log_export_append_help" formatted="false">אפשר להוסיף לקובצי CSV ו־JSON. בחרו קובץ קיים בפורמט שנבחר; יתווספו רק יומנים מאז הייצוא הידני האחרון.</string>
+    <string name="log_json_append_invalid" formatted="false">בחרו קובץ היסטוריה JSON קריא של Battery Monitor בגרסה נתמכת, בגודל של עד 16 MB.</string>
+    <string name="log_export_recovery_required" formatted="true">חברו מחדש את האחסון ונסו שוב לייצא לקובץ הזה כדי לשחזר אותו. הקובץ המקורי נשמר באחסון האפליקציה (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">הכול</string>
     <string name="log_export_from_last" formatted="false">מאז הייצוא האחרון</string>
-    <string name="pref_auto_log_export" formatted="false">ייצוא יומנים אוטומטי</string>
-    <string name="pref_auto_log_export_not_set_summary" formatted="false">שמירת יומנים חדשים בתיקייה באופן תקופתי</string>
+    <string name="pref_auto_log_export_title" formatted="false">שמירת יומנים חדשים בתיקייה באופן תקופתי</string>
     <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
     %4$s</string>
-    <string name="pref_set_auto_log_export" formatted="false">הגדרת ייצוא יומנים אוטומטי</string>
-    <string name="pref_edit_auto_log_export" formatted="false">עריכת ייצוא יומנים אוטומטי</string>
+    <string name="pref_auto_log_export_setup_summary" formatted="false">הגדרת ייצוא יומנים אוטומטי</string>
     <string name="pref_disable_auto_log_export" formatted="false">השבתת ייצוא אוטומטי</string>
     <string name="pref_auto_log_export_frequency" formatted="false">תדירות הייצוא</string>
     <string name="pref_auto_log_export_mode" formatted="false">טיפול בקבצים</string>
     <string name="pref_auto_log_export_format" formatted="false">תבנית הייצוא</string>
     <string name="pref_auto_log_export_directory" formatted="false">שינוי תיקייה</string>
-    <string name="auto_log_export_help" formatted="false">הגדירו ייצוא אוטומטי ב״הגדרות״ → ״מתקדם״. בחרו תיקייה, תדירות, תבנית ואם ליצור קבצים נפרדים או להוסיף לקובץ אחד. ייצוא שומר בדרך כלל יומנים מאז הייצוא האוטומטי הקודם; קובץ מתמשך חדש כולל את כל היומנים הזמינים. Android עשוי לעכב ייצוא במצב סרק. הרישום חייב להישאר מופעל.</string>
+    <string name="pref_auto_log_export_path" formatted="true">נתיב: %1$s</string>
+    <string name="auto_log_export_help" formatted="false">בחרו תיקייה, תדירות, תבנית ואם ליצור קבצים נפרדים או להוסיף לקובץ אחד. ייצוא שומר בדרך כלל יומנים מאז הייצוא האוטומטי הקודם; קובץ מתמשך חדש כולל את כל היומנים הזמינים. Android עשוי לעכב ייצוא במצב סרק. הרישום חייב להישאר מופעל.</string>
+    <string name="auto_log_export_options_help" formatted="false">מרווח הייצוא לא יכול לחרוג מתקופת שמירת היומנים. שינוי התיקייה מחייב מתן גישה לאפליקציה לתיקייה זו ב־Android. השבתת הייצוא האוטומטי משאירה את היומנים השמורים ואת הקבצים הקיימים ללא שינוי.</string>
     <string name="auto_log_export_format_help" formatted="false">CSV שימושי בגיליון אלקטרוני או בעורך טקסט. הוא כולל את הזרם המקורי, המטען שנותר וההספק שמחושב עם המכפיל שנבחר בעת הייצוא. JSON שומר נתוני יומן מובנים לגיבוי. תאים של זרם, מטען שנותר והספק שאינם זמינים נשארים ריקים.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">יצירת קובץ חדש</string>
     <string name="auto_log_export_mode_append" formatted="false">הוספת היומנים החדשים לקובץ הקיים</string>
@@ -490,8 +500,9 @@
 
     <string name="settings_activity_subtitle" formatted="false">הגדרות</string>
     <string name="settings_overview" formatted="false">סקירה כללית</string>
-    <string name="settings_overview_help" formatted="false">ההגדרות מקובצות ל״כללי״, ״המידע הנוכחי״, ״הערכות זמן״, ״התראה״, ״מתקדם״ ו״גיבוי ושחזור״. השתמשו בחיפוש למציאת אפשרות. לכל דף יש עזרה להגדרות שלו. ה“אבחון” זמין בנפרד בסרגל הצד.</string>
+    <string name="settings_overview_help" formatted="false">ההגדרות מקובצות ל״כללי״, ״המידע הנוכחי״, ״הערכות זמן״, ״הודעה ראשית״, ״מתקדם״ ו״גיבוי ושחזור״. השתמשו בחיפוש למציאת אפשרות. לכל דף יש עזרה להגדרות שלו. ה“אבחון” זמין בנפרד בסרגל הצד.</string>
     <string name="settings_search_hint">חיפוש הגדרות</string>
+    <string name="search_clear">ניקוי החיפוש</string>
     <string name="settings_search_no_results">אין הגדרות תואמות</string>
     <string name="settings_dependency_disabled">כדי לשנות הגדרה זו יש להפעיל או להגדיר את האפשרות הקשורה למעלה</string>
     <string name="other_settings" formatted="false">כללי</string>
@@ -542,7 +553,7 @@
     <string name="settings_data_permissions">נתונים והרשאות</string>
     <string name="advanced_settings" formatted="false">מתקדם</string>
     <string name="advanced_settings_summary" formatted="false">כוונו את Battery Monitor בעזרת פקדים נוספים לשימושים מיוחדים</string>
-    <string name="advanced_settings_help" formatted="false">שליטה בגישה מיוחסת, רישום היסטוריה, שמירת יומנים וייצוא אוטומטי. ״ניטור ברקע״ פותח בדיקות וכלים להרשאות, אמינות הניטור ויומני ניפוי. לדוחות מגבלת טעינה פתחו את ״אבחון מגבלת טעינה של היצרן״.</string>
+    <string name="advanced_settings_help" formatted="false">שליטה בגישה מיוחסת, רישום היסטוריה, שמירת יומנים וייצוא אוטומטי. ״פעולת הניטור״ פותחת בדיקות וכלים להרשאות, אמינות הניטור ויומני ניפוי. לדוחות מגבלת טעינה פתחו את ״אבחון מגבלת טעינה של היצרן״.</string>
     <string name="pref_cat_privileged_access" formatted="false">גישה מיוחסת</string>
     <string name="pref_use_privileged_access" formatted="false">שימוש בגישה מיוחסת</string>
     <string name="pref_use_privileged_access_summary" formatted="false">להשתמש בגישת root או Shizuku שהוענקה לקבלת נתוני מכשיר מלאים ומדויקים יותר?</string>
@@ -635,20 +646,24 @@
     <string name="diagnostics_summary" formatted="false">בדיקת הרשאות ואמינות הניטור ויצירת דוח לפתרון בעיות</string>
     <string name="diag_overview">פעולת האפליקציה</string>
     <string name="diagnostics_help_title" formatted="false">כיצד האבחון עוזר</string>
-    <string name="diagnostics_help_overview" formatted="false">״ניטור ברקע״ בודק הרשאות ואמינות ניטור. השתמשו בפקדים להפעלת או עצירת הניטור, לשינוי רישום ניפוי, לפתיחת הגדרות מיטוב סוללה והתראות או ליצירת דוח פתרון בעיות. לא כל קריאה שאינה זמינה מעידה על בעיית הרשאות; מכשירים מסוימים אינם מספקים אותה.</string>
-    <string name="monitoring_help_overview" formatted="false">בדקו את הרשאת ההתראות, את הגישה דרך root או Shizuku, את שירות הניטור ואת מסד הנתונים של ההיסטוריה. הקישו על בדיקה כדי לבקש גישה או להפעיל אותה. ״הפעלת הניטור״ זמינה כשהניטור מופסק; ״עצירת הניטור״ זמינה כשהוא פועל. הקריאות הזמינות תלויות בתמיכת המכשיר ובגישה שניתנה. בדיקת השירות דורשת ניטור פעיל; בדיקת מסד הנתונים דורשת רישום היסטוריה (״הגדרות״ ← ״מתקדם״). כדי להשתמש בקריאות נוספות, הפעילו את ״שימוש בגישה מיוחסת״ ב״הגדרות״ ← ״מתקדם״. האפשרות ״הגדרות היצרן״ זמינה רק במכשירים נתמכים.</string>
+    <string name="diagnostics_help_overview" formatted="false">״פעולת הניטור״ בודקת הרשאות ואמינות ניטור. השתמשו בפקדים להפעלת או עצירת הניטור, לשינוי רישום ניפוי, לפתיחת הגדרות מיטוב סוללה והתראות או ליצירת דוח פתרון בעיות. לא כל קריאה שאינה זמינה מעידה על בעיית הרשאות; מכשירים מסוימים אינם מספקים אותה.</string>
     <string name="diagnostics_monitoring" formatted="false">ניטור ברקע</string>
     <string name="diag_monitor_operation">פעולת הניטור</string>
     <string name="diag_heartbeat">פעימת פעילות אחרונה</string>
+    <string name="diagnostics_heartbeat_help" formatted="false">מועד התגובה האחרונה של שירות הניטור. תגובה ישנה או לא זמינה עשויה להעיד שהניטור מופסק או אינו מגיב.</string>
     <string name="diag_start_monitor">הפעלת הניטור</string>
+    <string name="diagnostics_start_help" formatted="false">הפעילו ניטור סוללה ושחזור אוטומטי ברקע. זמין כשהניטור מופסק; ההתרעות השמורות והגדרות ההיסטוריה נשמרות.</string>
     <string name="diag_stop_monitor">עצירת הניטור</string>
+    <string name="diag_stop_monitor_summary" formatted="false">עצירת ניטור הסוללה, רישום ההיסטוריה והשחזור האוטומטי ברקע</string>
     <string name="diag_stop_monitor_body">ניטור הסוללה, רישום ההיסטוריה והשחזור האוטומטי ברקע ייעצרו. ניתן להפעיל את הניטור שוב כאן.</string>
     <string name="diagnostics_not_running_tap_to_start" formatted="false">אין תגובה אחרונה. יש להקיש כדי לבקש הפעלה מחדש</string>
     <string name="diagnostics_service" formatted="false">שירות הניטור</string>
+    <string name="diagnostics_service_help" formatted="false">מציג אם הניטור הגיב לאחרונה. הקישו כדי לבקש תגובה; אם לא מתקבלת תגובה, Battery Monitor מנסה להפעיל מחדש פעם אחת. זמין רק כשהניטור מופעל.</string>
     <string name="diagnostics_service_responded" formatted="false">שירות הניטור הגיב</string>
     <string name="diagnostics_service_restarting" formatted="false">השירות לא הגיב. מתבצעת הפעלה מחדש…</string>
     <string name="diagnostics_service_restart_failed" formatted="false">שירות הניטור לא הגיב לאחר ההפעלה מחדש. נסו להפעיל מחדש את היישום.</string>
     <string name="diagnostics_database" formatted="false">מסד נתוני היומן</string>
+    <string name="diagnostics_database_help" formatted="false">מציג אם מסד הנתונים של ההיסטוריה הגיב לאחרונה. הקישו כדי לבדוק קריאה וכתיבה בלי לשנות את ההיסטוריה השמורה. זמין רק כשרישום ההיסטוריה מופעל.</string>
     <string name="diagnostics_no_recent_database_access" formatted="false">אין גישה מוצלחת אחרונה למסד הנתונים</string>
     <string name="diagnostics_working_last_seen" formatted="true">פועל · תגובה אחרונה לפני %1$s</string>
     <string name="diagnostics_database_check_succeeded" formatted="false">בדיקת הקריאה והכתיבה במסד הנתונים הצליחה</string>
@@ -658,17 +673,22 @@
     <string name="diagnostics_notifications" formatted="false">התראות</string>
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">הרשאה חסרה. יש להקיש לפתיחת ההגדרות</string>
     <string name="diagnostics_battery_optimization" formatted="false">מיטוב סוללה</string>
+    <string name="diagnostics_battery_optimization_help" formatted="false">פתחו את הגדרות מיטוב הסוללה של Android כשהפעילות מוגבלת. אם היא כבר אינה מוגבלת, הקשה מאשרת את המצב הזה.</string>
     <string name="diagnostics_unrestricted" formatted="false">ללא הגבלה</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">מוגבל. יש להקיש כדי לאפשר ניטור אמין ברקע</string>
     <string name="diagnostics_vendor_settings" formatted="false">הגדרות היצרן</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">פתיחת הגדרות נוספות לפעילות ברקע או להפעלה אוטומטית במכשיר</string>
     <string name="diagnostics_vendor_settings_help" formatted="false">פתיחת הגדרות נוספות לפעילות ברקע או להפעלה אוטומטית במכשיר.</string>
+    <string name="diagnostics_vendor_availability_help" formatted="false">האפשרות ״הגדרות היצרן״ זמינה רק במכשירים נתמכים.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">עזרה לפעילות ברקע</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">פתיחת הנחיות ייעודיות למכשיר ב-Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">פתיחת הנחיות ייעודיות למכשיר ב-Don’t Kill My App.</string>
     <string name="diagnostics_root" formatted="false">גישת root</string>
-    <string name="diagnostics_root_unavailable" formatted="false">לא זמין. יש להקיש כדי לבקש או לבדוק גישת root</string>
+    <string name="diagnostics_root_help" formatted="false">הקישו כדי לבדוק אם Battery Monitor יכול לקבל גישת root. מנהל root שהוגדר עשוי לבקש אישור. כישלון יכול להעיד על סירוב גישה, כלים חסרים או שגיאה אחרת; הוא אינו מוכיח שהמכשיר אינו מושרש. בדיקה זו אינה מבצעת root למכשיר ואינה משנה את ההגדרה ״שימוש בגישה מיוחסת״.</string>
+    <string name="diagnostics_root_unavailable" formatted="false">לא זמין. יש להקיש כדי לבדוק שוב</string>
     <string name="diagnostics_shizuku" formatted="false">גישת Shizuku</string>
+    <string name="diagnostics_shizuku_help" formatted="false">אם Shizuku אינו פועל, הקשה פותחת את המנהל שלו, או הוראות הגדרה אם הוא אינו מותקן. כשהוא פועל ללא הרשאה, הקשה מבקשת גישה או פותחת את המנהל לאחר סירוב קודם. אם הגישה כבר ניתנה, הקשה אינה עושה דבר. פעולה זו אינה משנה את ההגדרה ״שימוש בגישה מיוחסת״.</string>
+    <string name="monitoring_privileged_access_help" formatted="false">הקריאות הזמינות תלויות בתמיכת המכשיר ובגישה שניתנה. כדי להשתמש בקריאות נוספות, הפעילו את ״שימוש בגישה מיוחסת״ ב״הגדרות״ ← ״מתקדם״.</string>
     <string name="diagnostics_shizuku_permission_missing" formatted="false">הרשאה חסרה. יש להקיש כדי לבקש אותה מ-Shizuku</string>
     <string name="diagnostics_checking" formatted="false">מתבצעת בדיקה…</string>
     <string name="diagnostics_tap_to_check" formatted="false">לא נבדק. יש להקיש כדי לבקש או לבדוק גישה</string>
@@ -728,6 +748,7 @@
     <string name="charging_diagnostics_capture" formatted="false">צילום תמונת מצב</string>
     <string name="charging_diagnostics_capture_summary" formatted="false">בחרו מצב טעינה בהגדרות המכשיר ואז צלמו את האותות שלו</string>
     <string name="charging_diagnostics_choose_state" formatted="false">איזו הגדרת מכשיר פעילה?</string>
+    <string name="charging_diagnostics_condition_help" formatted="false">בחרו במצב הטעינה של היצרן שכבר הוגדר במכשיר. למגבלה קבועה, הזינו את האחוז שלה. בחירה זו מתייגת את תמונת המצב; היא אינה משנה את הגנת הטעינה של המכשיר.</string>
     <string name="charging_diagnostics_condition_off" formatted="false">הגנה כבויה / ללא הגבלה</string>
     <string name="charging_diagnostics_condition_fixed" formatted="false">מגבלה קבועה…</string>
     <string name="charging_diagnostics_condition_adaptive" formatted="false">טעינה מסתגלת / חכמה</string>
@@ -764,43 +785,49 @@
     <string name="backup_restore_settings_summary" formatted="false">גבה, שחזר והעבר את הגדרות היישום ונתוני הסוללה</string>
     <string name="backup_restore_help_overview" formatted="false">שמירה ושחזור של הגדרות, התרעות, יומנים ונתוני חיזוי שנלמדו. ״שחזור הגדרות ברירת המחדל״ מאפס את העדפות האפליקציה לאחר אישור תוך שמירת ההיסטוריה, ההתרעות, ההערכות שנלמדו ומצב הפעלת הניטור.</string>
     <string name="pref_general_backup" formatted="false">גיבוי כללי של היישום</string>
-    <string name="general_backup_help" formatted="false">גיבוי כללי שומר יחד הגדרות, התראות ונתונים ייחודיים למכשיר. בעת השחזור ניתן לבחור אילו מהנתונים הזמינים לייבא.</string>
+    <string name="general_backup_restore_effects_help" formatted="false">הקטגוריות שנבחרו משוחזרות; קטגוריות שלא נבחרו נשמרות. שחזור התרעות מחליף את ההתרעות הנוכחיות. עבור היומנים, בחרו אם להוסיף אותם או להחליף את ההיסטוריה הנוכחית.</string>
     <string name="pref_export_general_backup" formatted="false">ייצוא גיבוי כללי</string>
+    <string name="pref_export_general_backup_help" formatted="false">שמרו יחד הגדרות, התראות ונתונים ייחודיים למכשיר בגיבוי כללי בקובץ ZIP במיקום שתבחרו.</string>
     <string name="pref_export_general_backup_summary" formatted="false">שמירת הגדרות, התראות ונתונים ייחודיים למכשיר בקובץ ZIP</string>
     <string name="general_backup_exported" formatted="false">הגיבוי הכללי יוצא בהצלחה.</string>
     <string name="pref_import_general_backup" formatted="false">ייבוא גיבוי כללי</string>
+    <string name="pref_import_general_backup_help" formatted="false">בחרו קובץ ZIP קיים של גיבוי כללי ואת קטגוריות הנתונים הזמינות לשחזור. ייתכן שגיבויים מגרסאות חדשות יותר של היישום לא יהיו תואמים, ושחזור יומנים או נתוני חיזוי ממכשיר אחר עלול לגרום להערכות שגויות. אם השחזור הושלם באופן חלקי בלבד, בדקו את הקטגוריות שדווחו לפני ניסיון חוזר.</string>
     <string name="pref_import_general_backup_summary" formatted="false">שחזור הנתונים שנבחרו מקובץ ZIP של גיבוי כללי</string>
     <string name="general_backup_restore_message" formatted="false">יש לבחור מה לשחזר.</string>
+    <string name="general_backup_device_data_warning_scope" formatted="false">יומנים ונתוני חיזוי</string>
     <string name="general_backup_imported" formatted="false">הגיבוי הכללי יובא בהצלחה.</string>
     <string name="invalid_general_backup_file" formatted="false">קובץ גיבוי כללי לא תקין או לא תואם</string>
     <string name="settings_restore_partial">לא ניתן לשחזר חלק מהנתונים. שוחזרו בהצלחה: %1$s. נתונים שייתכן ששוחזרו חלקית: %2$s. יש לבדוק את הסעיפים האלו לפני ניסיון נוסף.</string>
     <string name="settings_restore_none">ללא</string>
-    <string name="settings_backup_help" formatted="false">גיבוי הגדרות שומר את העדפות האפליקציה. ייבוא שלו משחזר את ההעדפות שנשמרו.</string>
     <string name="pref_export_settings" formatted="false">ייצוא הגדרות</string>
+    <string name="pref_export_settings_help" formatted="false">״ייצוא הגדרות״ שומר את העדפות האפליקציה. התוצאה היא קובץ JSON של גיבוי הגדרות.</string>
     <string name="pref_export_settings_summary" formatted="false">שמירת ההגדרות הנוכחיות לקובץ</string>
     <string name="settings_exported" formatted="false">ההגדרות יוצאו בהצלחה.</string>
     <string name="pref_import_settings" formatted="false">ייבוא הגדרות</string>
+    <string name="pref_import_settings_help" formatted="false">״ייבוא הגדרות״ משחזר את ההעדפות שנשמרו. פעולה זו אינה משחזרת היסטוריה או רשומות התראות.</string>
     <string name="pref_import_settings_summary" formatted="false">שחזור הגדרות מקובץ</string>
     <string name="settings_imported" formatted="false">ההגדרות יובאו בהצלחה.</string>
     <string name="invalid_settings_file" formatted="false">קובץ הגדרות לא תקין</string>
     <string name="settings_file_version_warning" formatted="false">קובץ זה נוצר בגרסה חדשה יותר של האפליקציה. ייבואו עלול לגרום להתנהגות בלתי צפויה. להמשיך בכל זאת?</string>
-    <string name="alarms_backup_help" formatted="false">גיבוי התראות שומר את ההתראות שלכם. ייבוא שלו מחליף את כל ההתראות הנוכחיות באלו שבגיבוי.</string>
     <string name="pref_export_alarms" formatted="false">ייצוא התראות</string>
+    <string name="pref_export_alarms_help" formatted="false">״ייצוא התראות״ שומר את ההתראות שלכם. קובץ ה־JSON מכיל כללי התראות, ולא הגדרות של ערוצי התראות או צלילים המנוהלות בידי Android.</string>
     <string name="pref_export_alarms_summary" formatted="false">שמירת ההתראות הנוכחיות לקובץ</string>
     <string name="alarms_exported" formatted="false">ההתראות יוצאו בהצלחה.</string>
     <string name="pref_import_alarms" formatted="false">ייבוא התראות</string>
+    <string name="pref_import_alarms_help" formatted="false">״ייבוא התראות״ מחליף את כל ההתראות הנוכחיות באלו שבגיבוי. בחרו קובץ JSON של גיבוי התראות.</string>
     <string name="pref_import_alarms_summary" formatted="false">החלפת ההתראות הנוכחיות בהתראות מקובץ</string>
     <string name="alarms_imported" formatted="false">ההתראות יובאו בהצלחה.</string>
     <string name="invalid_alarms_file" formatted="false">קובץ התראות לא תקין</string>
     <string name="pref_backup_device_data" formatted="false">גיבוי נתונים ייחודיים למכשיר</string>
-    <string name="device_specific_backup_help" formatted="false">גיבוי ייחודי למכשיר שומר יומנים ונתוני חיזוי. ניתן לבחור אחד מהם או את שניהם במהלך הייבוא. נתונים אלה שייכים למכשיר המקור; שימוש בהם במכשיר אחר עלול לגרום לתחזיות שגויות או להתנהגות בלתי צפויה. בעת ייבוא יומנים, יש לבחור אם להוסיף אותם או להחליף את היומנים הקיימים.</string>
     <string name="device_data_logs" formatted="false">יומנים</string>
     <string name="device_data_predictor" formatted="false">נתוני חיזוי</string>
     <string name="device_data_backup_warning" formatted="false">הנתונים האלה ייחודיים למכשיר שבו נאספו. ייבוא שלהם למכשיר אחר עלול לגרום לתחזיות שגויות או להתנהגות בלתי צפויה אחרת של היישום.</string>
     <string name="pref_export_device_data" formatted="false">ייצוא נתונים ייחודיים למכשיר</string>
+    <string name="pref_export_device_data_help" formatted="false">בחרו יומנים, נתוני חיזוי או את שניהם ושמרו אותם בגיבוי JSON ייחודי למכשיר. הנתונים שייכים למכשיר המקור.</string>
     <string name="pref_export_device_data_summary" formatted="false">שמירת יומנים ונתוני חיזוי בקובץ</string>
     <string name="device_data_exported" formatted="false">נתונים ייחודיים למכשיר יוצאו בהצלחה.</string>
     <string name="pref_import_device_data" formatted="false">ייבוא נתונים ייחודיים למכשיר</string>
+    <string name="pref_import_device_data_help" formatted="false">בחרו את היומנים ו/או נתוני החיזוי הזמינים לשחזור מגיבוי JSON ייחודי למכשיר; קטגוריות שלא נבחרו יישארו ללא שינוי. בעת ייבוא יומנים, בחרו אם להוסיף אותם או להחליף יומנים קיימים. שחזור יומנים או נתוני חיזוי ממכשיר אחר עלול לגרום להערכות שגויות.</string>
     <string name="pref_import_device_data_summary" formatted="false">שחזור יומנים ונתוני חיזוי מקובץ</string>
     <string name="device_data_imported" formatted="false">נתונים ייחודיים למכשיר יובאו בהצלחה</string>
     <string name="device_data_imported_dialog" formatted="false">נתונים ייחודיים למכשיר יובאו בהצלחה.</string>
@@ -906,4 +933,5 @@
     <string name="unit_days">%dי</string>
     <string name="unit_hours">%dש</string>
     <string name="unit_minutes">%dד</string>
+    <string name="unit_seconds" formatted="true">%dשנ׳</string>
 </resources>

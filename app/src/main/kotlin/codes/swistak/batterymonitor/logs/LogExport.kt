@@ -28,12 +28,15 @@ import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 import java.io.OutputStreamWriter
+import java.io.RandomAccessFile
 import java.io.Reader
 import java.io.Writer
 import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 import kotlin.math.roundToInt
 
 internal enum class LogExportFormat(val preferenceValue: String, val extension: String) {
@@ -46,6 +49,27 @@ internal enum class LogExportFormat(val preferenceValue: String, val extension: 
 }
 
 internal object LogExport {
+    private val exportLock = ReentrantLock()
+    private val watermarkLock = ReentrantLock()
+
+    internal fun <T> withDocumentLock(context: Context, operation: () -> T): T =
+        withFileLock(context, "log-export.lock", exportLock, operation)
+
+    internal fun <T> withWatermarkLock(context: Context, operation: () -> T): T =
+        withFileLock(context, "log-export-watermarks.lock", watermarkLock, operation)
+
+    private fun <T> withFileLock(
+        context: Context, name: String, lock: ReentrantLock, operation: () -> T
+    ): T = lock.withLock {
+        if (lock.holdCount > 1) return@withLock operation()
+        RandomAccessFile(File(context.filesDir, name), "rw").use { file ->
+            file.channel.use { channel -> channel.lock().use { operation() } }
+        }
+    }
+
+    fun appendJson(context: Context, uri: Uri, records: Sequence<LogRecord>) =
+        withDocumentLock(context) { JsonLogAppend.append(context, uri, records) }
+
     internal fun hasRawCurrentCsvHeader(columns: List<String>): Boolean =
         columns.size == 8 && columns.last().contains("µA")
 
@@ -109,20 +133,21 @@ internal object LogExport {
         return last != -1 && last != '\r'.code && last != '\n'.code
     }
 
-    fun appendCsv(context: Context, uri: Uri, records: Sequence<LogRecord>) {
-        val resolver = context.contentResolver
-        val header =
-            (resolver.openInputStream(uri) ?: error("Could not read append target")).bufferedReader(
+    fun appendCsv(context: Context, uri: Uri, records: Sequence<LogRecord>) =
+        withDocumentLock(context) {
+            val resolver = context.contentResolver
+            val header = (resolver.openInputStream(uri)
+                ?: error("Could not read append target")).bufferedReader(
                 StandardCharsets.UTF_8
             ).use { CsvLogImporter.readCsvRows(it).firstOrNull().orEmpty() }
-        if (header.isNotEmpty() && !hasMeasurementCsvHeader(header)) migrateCsv(context, uri)
-        val needsSeparator = header.isNotEmpty() && (resolver.openInputStream(uri)
-            ?: error("Could not read append target")).use(::needsCsvSeparator)
-        resolver.openOutputStream(uri, if (header.isEmpty()) "wt" else "wa")?.use { output ->
-            if (needsSeparator) output.write("\r\n".toByteArray(StandardCharsets.UTF_8))
-            writeCsv(context, output, records, includeHeader = header.isEmpty())
-        } ?: error("Could not open append target")
-    }
+            if (header.isNotEmpty() && !hasMeasurementCsvHeader(header)) migrateCsv(context, uri)
+            val needsSeparator = header.isNotEmpty() && (resolver.openInputStream(uri)
+                ?: error("Could not read append target")).use(::needsCsvSeparator)
+            resolver.openOutputStream(uri, if (header.isEmpty()) "wt" else "wa")?.use { output ->
+                if (needsSeparator) output.write("\r\n".toByteArray(StandardCharsets.UTF_8))
+                writeCsv(context, output, records, includeHeader = header.isEmpty())
+            } ?: error("Could not open append target")
+        }
 
     private fun migrateCsv(context: Context, uri: Uri) {
         val resolver = context.contentResolver

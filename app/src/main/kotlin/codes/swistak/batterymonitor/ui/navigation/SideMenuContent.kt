@@ -25,7 +25,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 
 data class MenuSection(val id: String, val label: String)
 
@@ -95,9 +95,10 @@ fun SideMenuContent(
                 overflow = TextOverflow.Ellipsis
             )
             if (showCloseButton) {
-                IconButton(onClick = onClose, modifier = Modifier.semantics {
-                    contentDescription = closeLabel
-                }) {
+                TooltipIconButton(
+                    label = closeLabel, onClick = onClose, modifier = Modifier.semantics {
+                        contentDescription = closeLabel
+                    }) {
                     Icon(
                         painterResource(R.drawable.ui_close),
                         contentDescription = null,

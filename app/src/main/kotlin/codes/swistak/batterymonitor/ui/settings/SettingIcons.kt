@@ -73,7 +73,7 @@ private val settingIcons = listOf(
         R.drawable.ui_target
     ),
     SettingIcon(
-        SettingsContract.KEY_ENABLE_NOTIFS_B, R.string.pref_cat_channel_settings, R.drawable.ui_bell
+        SettingsContract.KEY_ENABLE_NOTIFS_B, R.string.pref_manage_main_channel, R.drawable.ui_bell
     ),
     SettingIcon(
         SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY,
@@ -129,7 +129,7 @@ private val settingIcons = listOf(
         R.drawable.ui_text
     ),
     SettingIcon(
-        SettingsContract.KEY_CHIP_CONTENT, R.string.pref_chip_content, R.drawable.ui_battery
+        SettingsContract.KEY_CHIP_CONTENT, R.string.pref_chip_content, R.drawable.ui_heart
     ),
     SettingIcon(
         SettingsContract.KEY_CHIP_SWITCHING_INTERVAL,
@@ -154,7 +154,7 @@ private val settingIcons = listOf(
     ),
     SettingIcon(
         SettingsContract.KEY_AUTO_LOG_EXPORT,
-        R.string.pref_set_auto_log_export,
+        R.string.pref_auto_log_export_title,
         R.drawable.ui_export
     ),
     SettingIcon(
@@ -217,7 +217,7 @@ private val settingIcons = listOf(
         R.string.settings_reset_title,
         R.drawable.ui_refresh
     ),
-    SettingIcon("background_monitoring", R.string.diagnostics_monitoring, R.drawable.ui_current),
+    SettingIcon("background_monitoring", R.string.diag_monitor_operation, R.drawable.ui_current),
     SettingIcon(
         SettingsContract.KEY_DEBUG_LOGGING, R.string.diagnostics_debug_logs, R.drawable.ui_code
     ),
@@ -238,6 +238,11 @@ private val settingIcons = listOf(
         "diagnostics_notifications", R.string.diagnostics_notifications, R.drawable.ui_bell
     ),
     SettingIcon("diagnostics_service", R.string.diagnostics_service, R.drawable.ui_current),
+    SettingIcon("diagnostics_heartbeat", R.string.diag_heartbeat, R.drawable.ui_clock),
+    SettingIcon(
+        "diagnostics_live_updates", R.string.live_updates_notif_chan_name, R.drawable.ui_bell
+    ),
+    SettingIcon("hint", R.string.charging_diagnostics_instructions_hint, R.drawable.ui_help),
     SettingIcon("diagnostics_database", R.string.diagnostics_database, R.drawable.ui_storage),
     SettingIcon("diagnostics_root", R.string.diagnostics_root, R.drawable.ui_shield),
     SettingIcon("diagnostics_shizuku", R.string.diagnostics_shizuku, R.drawable.ui_shield),
@@ -257,64 +262,11 @@ private val settingIcons = listOf(
 )
 
 private val iconsByKey = settingIcons.associate { it.key to it.drawable }
-private val iconsByTitle = settingIcons.associate { it.title to it.drawable } + mapOf(
-    R.string.settings_appearance to R.drawable.ui_palette,
-    R.string.pref_cat_language to R.drawable.ui_language,
-    R.string.pref_cat_autostart to R.drawable.ui_refresh,
-    R.string.pref_cat_battery_current_main to R.drawable.ui_current,
-    R.string.remaining_charge to R.drawable.ui_battery,
-    R.string.pref_cat_predictor to R.drawable.ui_history,
-    R.string.pref_cat_target_levels to R.drawable.ui_target,
-    R.string.pref_cat_notification_content to R.drawable.ui_bell,
-    R.string.status_bar_icon_settings to R.drawable.ui_battery,
-    R.string.status_bar_chip_settings to R.drawable.ui_battery,
-    R.string.pref_cat_privileged_access to R.drawable.ui_shield,
-    R.string.pref_cat_logging to R.drawable.ui_storage,
-    R.string.pref_general_backup to R.drawable.ui_storage,
-    R.string.settings_activity_subtitle to R.drawable.ui_settings,
-    R.string.pref_backup_device_data to R.drawable.ui_storage,
-    R.string.pref_auto_log_export to R.drawable.ui_export,
-    R.string.pref_disable_auto_log_export to R.drawable.ui_stop,
-    R.string.alarm_settings to R.drawable.ui_bell,
-    R.string.alarms_overview to R.drawable.ui_bell,
-    R.string.channel_group_name_alarms to R.drawable.ui_bell,
-    R.string.pref_cat_alarm_conditions to R.drawable.ui_target,
-    R.string.pref_alarm_threshold to R.drawable.ui_target,
-    R.string.settings_overview to R.drawable.ui_settings,
-    R.string.other_settings to R.drawable.ui_settings,
-    R.string.time_estimates_settings to R.drawable.ui_clock,
-    R.string.tab_current_info to R.drawable.ui_battery,
-    R.string.notification_settings to R.drawable.ui_bell,
-    R.string.advanced_settings to R.drawable.ui_shield,
-    R.string.pref_backup_restore to R.drawable.ui_storage,
-    R.string.diagnostics to R.drawable.ui_current,
-    R.string.nav_diagnostics to R.drawable.ui_current,
-    R.string.diagnostics_help_title to R.drawable.ui_current,
-    R.string.charging_diagnostics_title to R.drawable.ui_plug,
-    R.string.diagnostics_permissions to R.drawable.ui_shield,
-    R.string.diagnostics_device_and_logs to R.drawable.ui_code,
-    R.string.diag_overview to R.drawable.ui_current,
-    R.string.nav_battery_group to R.drawable.ui_battery,
-    R.string.diag_raw to R.drawable.ui_code,
-    R.string.diag_section_counters to R.drawable.ui_current,
-    R.string.diag_section_capacity to R.drawable.ui_battery,
-    R.string.diag_section_charging to R.drawable.ui_plug,
-    R.string.diag_section_service to R.drawable.ui_battery,
-    R.string.diag_section_sysfs to R.drawable.ui_code,
-    R.string.diag_section_metadata to R.drawable.ui_info,
-    R.string.device_data_predictor to R.drawable.ui_history,
-    R.string.diag_help_troubleshooting_title to R.drawable.ui_warning,
-    R.string.help_cat_version to R.drawable.ui_info,
-    R.string.help_cat_open_source to R.drawable.ui_code,
-    R.string.help_cat_acknowledgments to R.drawable.ui_people,
-    R.string.help_cat_frequently_asked_questions to R.drawable.ui_help,
-    R.string.help_cat_contact to R.drawable.ui_contact,
-    R.string.help_cat_privacy to R.drawable.ui_shield,
-    R.string.help_cat_no_warranty to R.drawable.ui_warning
-)
 
 @DrawableRes
 internal fun settingIcon(key: String): Int = iconsByKey[key] ?: R.drawable.ui_settings
 
 @DrawableRes
-internal fun helpHeadingIcon(@StringRes title: Int): Int? = iconsByTitle[title]
+internal fun helpHeadingIcon(controlKey: String?): Int? = controlKey?.let {
+    iconsByKey[it] ?: SettingsCategory.fromLegacy(it)?.icon
+}

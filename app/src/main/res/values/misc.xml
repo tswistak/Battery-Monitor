@@ -160,7 +160,7 @@
         <item>@string/age_2_weeks</item>
         <item>@string/age_3_weeks</item>
         <item>@string/age_4_weeks</item>
-        <item>@string/age_never_delete</item>
+        <item>@string/age_no_limit</item>
     </string-array>
 
     <string-array name="icon_content_entries">
@@ -221,6 +221,15 @@
         <item>@string/pref_content_temperature</item>
         <item>@string/vital_sign_voltage</item>
         <item>@string/pref_cat_battery_current_main</item>
+        <item>@string/remaining_charge</item>
+        <item>@string/time_since_status_change</item>
+    </string-array>
+
+    <string-array name="vital_signs_content_chooser_entries">
+        <item>@string/diag_field_state_of_health</item>
+        <item>@string/current_temperature</item>
+        <item>@string/current_voltage</item>
+        <item>@string/vital_sign_current_label</item>
         <item>@string/remaining_charge</item>
         <item>@string/time_since_status_change</item>
     </string-array>

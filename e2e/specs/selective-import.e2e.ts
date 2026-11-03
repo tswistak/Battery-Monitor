@@ -19,7 +19,6 @@ import {
     acknowledgeMessage,
     chooseImportFile,
     clickText,
-    clickTextStartingWith,
     openBackupAndRestoreScreen,
     requireText,
 } from '../support/ui.js';
@@ -38,10 +37,10 @@ describe('Selective general backup import', () => {
         await chooseImportFile('Import general backup', 'prepared-general.zip');
         await requireText('Choose what you want to restore.');
         await clickText('Alarms');
-        await clickTextStartingWith('Logs');
-        await clickTextStartingWith('Predictor data');
+        await clickText('Logs');
+        await clickText('Predictor data');
         await clickText('Okay');
-        await acknowledgeMessage('General backup imported successfully');
+        await acknowledgeMessage('General backup imported successfully.');
 
         const after = await readState();
         await expect(after.settings.temperature_unit).toBe('fahrenheit');

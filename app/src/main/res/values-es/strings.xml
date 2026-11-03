@@ -38,7 +38,7 @@
     <string name="current_monitor_action">Comprueba el monitor en «Diagnóstico».</string>
     <string name="current_monitor_attention">El monitor requiere atención</string>
     <string name="current_notifications_off">Las notificaciones están desactivadas</string>
-    <string name="current_notifications_off_body">Las notificaciones de Battery Monitor están desactivadas. Revisa los ajustes de notificaciones para restablecer las alertas.</string>
+    <string name="current_notifications_off_body">Las notificaciones de Battery Monitor están desactivadas. Revisa los ajustes de notificaciones para restablecer las alarmas.</string>
     <string name="current_power_optimized">La actividad en segundo plano puede estar restringida</string>
     <string name="current_power_optimized_body">La optimización de batería de Android puede retrasar las actualizaciones del monitor. Revisa el ajuste de batería de esta aplicación si las actualizaciones se detienen.</string>
     <string name="current_paused">Conectado · Sin cargar</string>
@@ -63,6 +63,7 @@
     <string name="current_temperature">Temperatura</string>
     <string name="current_voltage">Voltaje</string>
     <string name="vital_sign_voltage" formatted="false">Voltaje de la batería</string>
+    <string name="vital_sign_current_label" formatted="false">Corriente</string>
     <string name="pref_cat_battery_current_main" formatted="false">Corriente de la batería</string>
     <string name="remaining_charge" formatted="false">Carga restante</string>
     <string name="remaining_charge_value" formatted="true">%1$s\u00A0mAh</string>
@@ -91,11 +92,13 @@
     <string name="current_state_settings_help" formatted="false">Elige si mostrar la carga restante y si «Estado actual» prefiere la corriente media de la batería. La corriente se mide siempre que está disponible. El multiplicador corrige la corriente y la potencia calculada en toda la aplicación; los registros conservan la corriente instantánea original para poder cambiar el multiplicador más adelante.</string>
     <string name="pref_show_remaining_charge" formatted="false">Mostrar carga restante</string>
     <string name="pref_show_remaining_charge_summary" formatted="false">¿Mostrar la carga restante de la batería indicada por el dispositivo en mAh?</string>
+    <string name="pref_show_remaining_charge_help" formatted="false">Muestra la carga restante de la batería indicada por el dispositivo en mAh.</string>
     <string name="pref_battery_current_multiplier" formatted="false">Multiplicador</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Algunos dispositivos informan unidades o signos inesperados. Multiplica aquí el valor informado para corregir el resultado mostrado.\n
     \n
     Como referencia aproximada para teléfonos, el signo estándar de Android es positivo durante la carga y negativo durante la descarga. La carga activa suele estar entre +500 y +5000\u00A0mA, mientras que la descarga normal suele estar entre -100 y -3000\u00A0mA. Los valores cercanos a cero pueden ser normales cuando la batería está casi llena o el teléfono está inactivo. Si la magnitud parece unas 1000 veces menor o mayor, o el signo está invertido, ajusta el multiplicador.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detectar automáticamente</string>
+    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Intenta deducir el multiplicador de corriente a partir de una lectura de la batería. Si la detección no está disponible, el valor actual no cambia y la detección puede volver a intentarse cuando haya una lectura adecuada. Elegir un valor manual cancela la detección pendiente.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">La detección automática no está disponible para el estado o la lectura actual de la batería</string>
     <string name="pref_battery_current_multiplier_detection_result">El multiplicador se estableció automáticamente en %1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Preferir corriente media</string>
@@ -146,8 +149,7 @@
 
     <string name="main_notif_chan_name" formatted="false">Notificación principal</string>
     <string name="live_updates_notif_chan_name" formatted="false">Actualizaciones en vivo</string>
-    <string name="notification_settings" formatted="false">Notificaciones</string>
-    <string name="settings_notification">Notificación</string>
+    <string name="notification_settings" formatted="false">Notificación principal</string>
     <string name="notification_settings_summary" formatted="false">Configura el contenido de la notificación, el icono de la barra de estado y el chip de Live Update</string>
     <string name="notification_settings_help" formatted="false">Puede configurar qué contenido mostrar en la notificación desplegable.</string>
     <string name="notification_channels_help" formatted="false">Abre los ajustes de notificaciones de Android para permitir o bloquear notificaciones y configurar el sonido, la vibración y la entrega de la notificación principal y cada tipo de alarma. Activar una regla de alarma no anula el bloqueo de un canal de notificación.</string>
@@ -160,6 +162,7 @@
     Nota: Conceder este permiso puede hacer que la aplicación se cierre ocasionalmente. Si sucede, simplemente vuelve a abrirla.</string>
     <string name="pref_cat_channel_settings" formatted="false">Configuración del canal de notificación</string>
     <string name="pref_manage_main_channel" formatted="false">Administrar canal principal</string>
+    <string name="pref_manage_main_channel_summary" formatted="false">Abrir los ajustes de Android para el canal de notificación principal</string>
     <string name="pref_cat_notification_content" formatted="false">Contenido</string>
     <string name="pref_top_line_content" formatted="false">Contenido de primera línea</string>
     <string name="pref_top_line_content_help" formatted="false">Elige si la línea superior de la notificación muestra el «Tiempo restante» estimado, «Tiempo desde el cambio de estado» o los «Signos Vitales» configurados.</string>
@@ -168,8 +171,8 @@
     <string name="time_remaining" formatted="false">Tiempo restante</string>
     <string name="time_since_status_change" formatted="false">Tiempo desde el cambio de estado</string>
     <string name="vital_signs" formatted="false">Signos Vitales</string>
-    <string name="notification_until_charged" formatted="false">" hasta carga completa"</string>
-    <string name="notification_until_drained" formatted="false">" restantes"</string>
+    <string name="notification_until_charged" formatted="true">%1$s hasta carga completa</string>
+    <string name="notification_until_drained" formatted="true">%1$s restantes</string>
     <string name="pref_time_remaining_verbosity" formatted="false">Tiempo restante Verbosidad</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">Los dispositivos vienen en todas las formas y tamaños, por lo que la mayoría de las traducciones deben realizarse utilizar abreviaturas para garantizar que la estimación del tiempo restante se ajuste cómodamente en el área de notificación. Si todavía no encaja, puedes optar por el formato «Condensado». Si tienes mucho espacio, es posible que prefiera la configuración «Verboso».</string>
     <string name="condensed" formatted="false">Condensado</string>
@@ -177,23 +180,27 @@
     <string name="verbose" formatted="false">Verboso</string>
     <string name="pref_vital_signs_content" formatted="false">Contenido de estadísticas vitales</string>
     <string name="pref_vital_signs_content_summary" formatted="false">¿Qué valores se deben incluir en las «Signos Vitales» y en qué orden?</string>
+    <string name="pref_vital_signs_content_help" formatted="false">Selecciona valores y usa los botones de movimiento para establecer su orden. Se pueden deseleccionar todos los valores.</string>
     <string name="pref_expanded_notification" formatted="false">Expandir detalles de la notificación</string>
     <string name="pref_expanded_notification_summary" formatted="false">¿Mostrar detalles con etiquetas al expandir la notificación?</string>
     <string name="pref_expanded_notification_help" formatted="false">Si se activa, al expandir la notificación principal se muestran el «Tiempo restante», el «Tiempo desde el cambio de estado» y cada valor de las «Signos Vitales» en una línea independiente con su etiqueta, en lugar del resumen de una sola línea.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">Icono de la barra de estado</string>
     <string name="status_bar_icon_settings_help" formatted="false">Elige si el icono de la notificación muestra el porcentaje de batería o la temperatura, si el símbolo de la unidad aparece en el icono y si la carga usa un icono específico. A partir de Android 16, es posible que el icono de la barra de estado no funcione en todas las variantes del sistema operativo.</string>
+    <string name="status_bar_icon_availability_help" formatted="false">A partir de Android 16, es posible que el icono de la barra de estado no funcione en todas las variantes del sistema operativo.</string>
     <string name="pref_icon_content" formatted="false">Contenido del icono</string>
     <string name="pref_icon_content_help" formatted="false">Elija si el icono de la barra de estado muestra el porcentaje de batería o temperatura de la batería. La temperatura sigue la unidad seleccionada.</string>
     <string name="pref_content_percent" formatted="false">Porcentaje de batería</string>
     <string name="pref_content_temperature" formatted="false">Temperatura de la batería</string>
     <string name="pref_show_icon_unit" formatted="false">Mostrar símbolo de unidad</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Mostrar el símbolo de unidad junto al valor en el icono de la barra de estado</string>
     <string name="pref_show_icon_unit_help" formatted="false">Si está activado, el icono muestra un signo de porcentaje para el nivel de batería y un símbolo de grado para la temperatura de la batería. Desactívalo para mostrar solo el número.</string>
     <string name="pref_indicate_charging" formatted="false">Indicar cargando</string>
     <string name="pref_indicate_charging_summary" formatted="false">¿Modificar el icono para indicar cuándo se está cargando?</string>
     <string name="pref_indicate_charging_help" formatted="false">El icono de carga puede mostrar un rayo debajo del número. Desactiva este ajuste si prefieres el mismo icono al cargar y descargar.</string>
     <string name="status_bar_chip_settings" formatted="false">Chip de barra de estado</string>
     <string name="status_bar_chip_settings_help" formatted="false">En Android 16 o posterior, elige cuándo aparece el chip de Live Update, qué valores alterna y si muestra un emoji de carga. La disponibilidad también depende del dispositivo y de los ajustes de notificaciones del sistema.</string>
+    <string name="status_bar_chip_availability_help" formatted="false">La disponibilidad también depende del dispositivo y de los ajustes de notificaciones del sistema.</string>
     <string name="settings_live_update_summary">Permite o bloquea las notificaciones de batería destacadas en los ajustes de Android</string>
     <string name="settings_live_update_help">Permite o bloquea las notificaciones de batería destacadas en los ajustes de Android.</string>
     <string name="live_updates_onboarding_title">Chip de batería de barra de estado</string>
@@ -210,22 +217,22 @@
     <string name="live_updates_onboarding_positive_on">Entiendo</string>
     <string name="live_updates_onboarding_positive_off">Ir a configuración</string>
     <string name="live_updates_onboarding_negative_off">Despedir</string>
-    <string name="pref_live_update_display" formatted="false">Mostrar actualización en vivo</string>
+    <string name="pref_live_update_display" formatted="false">Mostrar Actualización en vivo</string>
     <string name="pref_live_update_display_summary" formatted="false">Mostrar en la barra de estado:</string>
-    <string name="pref_live_update_display_help" formatted="false">Elige cuándo debe mostrarse en la barra de estado el chip de actualización en vivo de Android 16+.</string>
+    <string name="pref_live_update_display_help" formatted="false">Elige cuándo debe mostrarse en la barra de estado el chip de Actualización en vivo de Android 16+.</string>
     <string name="pref_live_update_display_charging" formatted="false">Solo durante la carga</string>
-    <string name="pref_live_update_keep_main_notification" formatted="false">Mantener notificación principal con la actualización en vivo</string>
-    <string name="pref_live_update_keep_main_notification_summary" formatted="false">¿Mostrar la notificación principal completa mientras la actualización en vivo está activa?</string>
+    <string name="pref_live_update_keep_main_notification" formatted="false">Mantener notificación principal con la Actualización en vivo</string>
+    <string name="pref_live_update_keep_main_notification_summary" formatted="false">¿Mostrar la notificación principal completa mientras la Actualización en vivo está activa?</string>
     <string name="pref_live_update_keep_main_notification_help" formatted="false">Si está activado, la notificación principal normal seguirá visible además del chip de la barra de estado.</string>
-    <string name="pref_expanded_live_update" formatted="false">Expandir detalles de la actualización en vivo</string>
-    <string name="pref_expanded_live_update_summary" formatted="false">¿Mostrar detalles con etiquetas en la notificación de actualización en vivo?</string>
-    <string name="pref_expanded_live_update_help" formatted="false">Las notificaciones de actualización en vivo siempre se muestran expandidas. Si se activa, la actualización en vivo muestra el «Tiempo restante», el «Tiempo desde el cambio de estado» y cada valor de las «Signos Vitales» en una línea independiente con su etiqueta.</string>
+    <string name="pref_expanded_live_update" formatted="false">Expandir detalles de la Actualización en vivo</string>
+    <string name="pref_expanded_live_update_summary" formatted="false">¿Mostrar detalles con etiquetas en la notificación de Actualización en vivo?</string>
+    <string name="pref_expanded_live_update_help" formatted="false">Las notificaciones de Actualización en vivo siempre se muestran expandidas. Si se activa, la Actualización en vivo muestra el «Tiempo restante», el «Tiempo desde el cambio de estado» y cada valor de las «Signos Vitales» en una línea independiente con su etiqueta.</string>
     <string name="pref_chip_content" formatted="false">Contenido del chip</string>
     <string name="pref_chip_content_summary" formatted="false">¿Qué valores deben mostrarse en el chip y en qué orden?</string>
-    <string name="pref_chip_content_help" formatted="false">Elige los valores entre los que alternará el chip de la barra de estado y organiza su orden.</string>
+    <string name="pref_chip_content_help" formatted="false">Elige los valores entre los que alternará el chip de la barra de estado y organiza su orden. Debe permanecer seleccionado al menos un valor.</string>
     <string name="pref_chip_switching_interval" formatted="false">Intervalo de conmutación</string>
     <string name="pref_chip_switching_interval_summary" formatted="false">Elige con qué frecuencia el chip cambia al siguiente valor seleccionado</string>
-    <string name="pref_chip_switching_interval_help" formatted="false">Elige con qué frecuencia el chip cambia al siguiente valor seleccionado. Esta opción está disponible cuando se selecciona más de un valor.</string>
+    <string name="pref_chip_switching_interval_help" formatted="false">Elige con qué frecuencia el chip cambia al siguiente valor seleccionado. Esta opción está disponible cuando se selecciona más de un valor y «Mostrar Actualización en vivo» no está configurado como «Nunca».</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">Introduce un intervalo en segundos (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">Introduce un valor entre 1 y 3600.</string>
     <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0segundos</string>
@@ -276,6 +283,7 @@
     <string name="alarms_add_threshold">Añadir umbral</string>
     <string name="alarms_edit_threshold">Editar umbral</string>
     <string name="alarms_edit_existing">Editar umbral existente</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Si ya existe un umbral, ábrelo con «Editar umbral existente». Si las alarmas guardadas cambian durante la edición, usa «Actualizar» y vuelve a abrir el umbral antes de modificarlo.</string>
     <string name="alarms_new_enabled">La alarma se activará al añadirla.</string>
     <string name="alarms_edit_keeps_enabled">La edición mantiene el estado activado o desactivado actual.</string>
     <string name="alarms_enabled">Activada</string>
@@ -296,6 +304,7 @@
     <string name="alarms_delivery_vibration">Vibración y notificación</string>
     <string name="alarms_delivery_notification">Solo notificación</string>
     <string name="alarms_channel_help">Este canal de notificación de Android controla el sonido y la entrega.</string>
+    <string name="alarms_options_title" formatted="false">Opciones de alarmas</string>
     <string name="pref_dismiss_low_battery_on_recovery">Descartar alarma de batería baja al recuperarse</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Elimina la notificación de batería baja cuando la carga supera su umbral. Las demás notificaciones de alarma permanecen</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Elimina la notificación de batería baja cuando la carga supera su umbral. Las demás notificaciones de alarma permanecen.</string>
@@ -309,6 +318,7 @@
     <string name="alarms_conflict">Las alarmas guardadas han cambiado. Actualiza y vuelve a abrir el umbral antes de hacer cambios.</string>
     <string name="alarms_missing_rule">Esta alarma falta o no es válida. Revisa el catálogo de alarmas.</string>
     <string name="alarms_invalid_records">Algunas alarmas guardadas no son válidas. Revisa estos registros; no se han eliminado.</string>
+    <string name="alarms_invalid_records_help" formatted="false">Cuando se muestran alarmas guardadas no válidas, puedes desactivar un registro activado sin eliminarlo, o eliminarlo permanentemente. Ambas acciones requieren confirmación.</string>
     <string name="alarms_database_error">No se ha podido acceder a la base de datos de alarmas. Inténtalo de nuevo.</string>
     <string name="alarms_saved">Ajustes de alarma guardados</string>
     <string name="alarms_saved_reload_failed">Guardado, pero no se ha podido avisar al monitor. Revisa el estado de monitorización.</string>
@@ -358,8 +368,6 @@
     <string name="history_periodic_measurement">Medición de batería</string>
     <string name="history_raw_observations">Observaciones guardadas. Los detalles muestran las lecturas disponibles y su hora.</string>
     <string name="history_export_selected">Exportar intervalo seleccionado</string>
-    <string name="history_export_csv">Intervalo seleccionado · CSV</string>
-    <string name="history_export_json">Intervalo seleccionado · JSON</string>
     <string name="history_import_json">Importar registros de una copia de seguridad JSON</string>
     <string name="history_delete_selected">Borrar intervalo seleccionado</string>
     <string name="history_delete_selected_confirm">¿Quieres borrar los registros del intervalo seleccionado?</string>
@@ -415,7 +423,7 @@
     <string name="pref_enable_logging_help" formatted="false">Guarda observaciones y cambios de estado de la batería para el «Historial». Las mediciones disponibles incluyen nivel, temperatura, voltaje, corriente instantánea original y carga restante. La potencia se calcula a partir del voltaje y la corriente al mostrarla o exportarla; no se guarda por separado. Desactivar el registro no borra el historial existente ni detiene las estimaciones de tiempo.</string>
     <string name="pref_max_log_age" formatted="false">Antigüedad máxima</string>
     <string name="pref_max_log_age_summary" formatted="false">Borrar logs anteriores a:</string>
-    <string name="pref_max_log_age_help" formatted="false">Cuando el registro está activado, conectar la alimentación elimina los registros anteriores a este límite. «No eliminar nunca» los conserva hasta que los borres manualmente. Si la exportación automática está activada, Battery Monitor exporta los registros pendientes antes de eliminar los antiguos; si la exportación falla, no se eliminan.</string>
+    <string name="pref_max_log_age_help" formatted="false">Cuando el registro está activado, conectar la alimentación elimina los registros anteriores a este límite. «Sin límite» los conserva hasta que los borres manualmente. Si la exportación automática está activada, Battery Monitor exporta los registros pendientes antes de eliminar los antiguos; si la exportación falla, no se eliminan.</string>
     <string name="age_1_day" formatted="false">1\u00A0día</string>
     <string name="age_2_days" formatted="false">2\u00A0días</string>
     <string name="age_4_days" formatted="false">4\u00A0días</string>
@@ -423,24 +431,26 @@
     <string name="age_2_weeks" formatted="false">2\u00A0semanas</string>
     <string name="age_3_weeks" formatted="false">3\u00A0semanas</string>
     <string name="age_4_weeks" formatted="false">4\u00A0semanas</string>
-    <string name="age_never_delete" formatted="false">No eliminar nunca</string>
-    <string name="settings_history_export">Historial y exportación</string>
+    <string name="age_no_limit" formatted="false">Sin límite</string>
     <string name="log_export_mode_title" formatted="false">Exportar registros</string>
     <string name="log_export_append" formatted="false">Añadir a un archivo existente</string>
+    <string name="log_export_append_help" formatted="false">Se pueden ampliar los archivos CSV y JSON. Elige un archivo existente en el formato seleccionado; solo se añaden los registros desde la última exportación manual.</string>
+    <string name="log_json_append_invalid" formatted="false">Elige un archivo de historial JSON legible de Battery Monitor, de una versión compatible y de hasta 16 MB.</string>
+    <string name="log_export_recovery_required" formatted="true">Vuelve a conectar el almacenamiento e intenta exportar a este archivo otra vez para restaurarlo. El archivo original se conserva en el almacenamiento de la aplicación (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">Todo</string>
     <string name="log_export_from_last" formatted="false">Desde la última exportación</string>
-    <string name="pref_auto_log_export" formatted="false">Exportación automática de registros</string>
-    <string name="pref_auto_log_export_not_set_summary" formatted="false">Guardar periódicamente los registros nuevos en una carpeta</string>
+    <string name="pref_auto_log_export_title" formatted="false">Guardar periódicamente los registros nuevos en una carpeta</string>
     <string name="pref_auto_log_export_set_summary" formatted="true">%1$s · %2$s · %3$s\n
     %4$s</string>
-    <string name="pref_set_auto_log_export" formatted="false">Configurar exportaciones automáticas</string>
-    <string name="pref_edit_auto_log_export" formatted="false">Editar exportaciones automáticas</string>
+    <string name="pref_auto_log_export_setup_summary" formatted="false">Configurar exportaciones automáticas</string>
     <string name="pref_disable_auto_log_export" formatted="false">Desactivar la exportación automática</string>
     <string name="pref_auto_log_export_frequency" formatted="false">Frecuencia de exportación</string>
     <string name="pref_auto_log_export_mode" formatted="false">Gestión de archivos</string>
     <string name="pref_auto_log_export_format" formatted="false">Formato de exportación</string>
     <string name="pref_auto_log_export_directory" formatted="false">Cambiar carpeta</string>
-    <string name="auto_log_export_help" formatted="false">Configura la exportación automática en «Ajustes» → «Avanzado». Elige una carpeta, la frecuencia, el formato y si crear archivos separados o añadir a un único archivo. Normalmente se guardan los registros desde la exportación automática anterior; un nuevo archivo continuo incluye todos los registros disponibles. Android puede retrasar las exportaciones durante la inactividad. El registro debe seguir activado.</string>
+    <string name="pref_auto_log_export_path" formatted="true">Ruta: %1$s</string>
+    <string name="auto_log_export_help" formatted="false">Elige una carpeta, la frecuencia, el formato y si crear archivos separados o añadir a un único archivo. Normalmente se guardan los registros desde la exportación automática anterior; un nuevo archivo continuo incluye todos los registros disponibles. Android puede retrasar las exportaciones durante la inactividad. El registro debe seguir activado.</string>
+    <string name="auto_log_export_options_help" formatted="false">El intervalo de exportación no puede superar el tiempo de conservación de los registros. Cambiar la carpeta requiere conceder a la aplicación acceso a esa carpeta en Android. Desactivar la exportación automática no modifica los registros guardados ni los archivos existentes.</string>
     <string name="auto_log_export_format_help" formatted="false">CSV es útil en una hoja de cálculo o un editor de texto. Incluye la corriente original, la carga restante y la potencia calculada con el multiplicador seleccionado al exportar. JSON conserva los datos estructurados de los registros para las copias de seguridad. Las celdas de corriente, carga restante y potencia no disponibles quedan vacías.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Crear un archivo nuevo</string>
     <string name="auto_log_export_mode_append" formatted="false">Añadir los registros nuevos al archivo existente</string>
@@ -490,8 +500,9 @@
 
     <string name="settings_activity_subtitle" formatted="false">Ajustes</string>
     <string name="settings_overview" formatted="false">Visión general</string>
-    <string name="settings_overview_help" formatted="false">Los ajustes se agrupan en «General», «Informacion actual», «Estimaciones de tiempo», «Notificación», «Avanzado» y «Copia de seguridad y restauración». Usa la búsqueda para encontrar una opción. Cada página tiene ayuda sobre sus ajustes. «Diagnóstico» está disponible por separado en la barra lateral.</string>
+    <string name="settings_overview_help" formatted="false">Los ajustes se agrupan en «General», «Informacion actual», «Estimaciones de tiempo», «Notificación principal», «Avanzado» y «Copia de seguridad y restauración». Usa la búsqueda para encontrar una opción. Cada página tiene ayuda sobre sus ajustes. «Diagnóstico» está disponible por separado en la barra lateral.</string>
     <string name="settings_search_hint">Buscar ajustes</string>
+    <string name="search_clear">Borrar búsqueda</string>
     <string name="settings_search_no_results">No hay ajustes coincidentes</string>
     <string name="settings_dependency_disabled">Activa o configura la opción relacionada de arriba para cambiar este ajuste</string>
     <string name="other_settings" formatted="false">General</string>
@@ -529,7 +540,7 @@
     <string name="background_service_starting" formatted="false">Battery Monitor se está iniciando…</string>
     <string name="monitoring_state_save_failed">No se ha podido guardar el estado de monitorización. Comprueba el almacenamiento disponible e inténtalo de nuevo.</string>
     <string name="battery_optimized" formatted="false">Monitorización en segundo plano</string>
-    <string name="battery_optimized_message" formatted="false">La ejecución sin restricciones en segundo plano puede mejorar la fiabilidad de la monitorización. La optimización de batería de Android puede retrasar las actualizaciones y las alertas.\n
+    <string name="battery_optimized_message" formatted="false">La ejecución sin restricciones en segundo plano puede mejorar la fiabilidad de la monitorización. La optimización de batería de Android puede retrasar las actualizaciones y las alarmas.\n
     \n
     La ejecución sin restricciones puede aumentar el consumo de batería en segundo plano. Puedes cambiarlo más adelante en «Ajustes» de Android → «Aplicaciones» → «Battery Monitor» → «Batería». Los nombres de los menús varían según el dispositivo.</string>
     <string name="pref_cat_autostart" formatted="false">Autoarranque</string>
@@ -542,7 +553,7 @@
     <string name="settings_data_permissions">Datos y permisos</string>
     <string name="advanced_settings" formatted="false">Avanzado</string>
     <string name="advanced_settings_summary" formatted="false">Ajusta Battery Monitor con controles adicionales para usos especializados</string>
-    <string name="advanced_settings_help" formatted="false">Controla el acceso privilegiado, el registro del historial, la conservación de registros y las exportaciones automáticas. «Supervisión en segundo plano» abre comprobaciones y herramientas para permisos, fiabilidad del monitor y registros de depuración. Abre «Diagnóstico del límite de carga OEM» para crear informes del límite de carga.</string>
+    <string name="advanced_settings_help" formatted="false">Controla el acceso privilegiado, el registro del historial, la conservación de registros y las exportaciones automáticas. «Funcionamiento del monitor» abre comprobaciones y herramientas para permisos, fiabilidad del monitor y registros de depuración. Abre «Diagnóstico del límite de carga OEM» para crear informes del límite de carga.</string>
     <string name="pref_cat_privileged_access" formatted="false">Acceso privilegiado</string>
     <string name="pref_use_privileged_access" formatted="false">Usar acceso privilegiado</string>
     <string name="pref_use_privileged_access_summary" formatted="false">¿Usar el acceso root o Shizuku concedido para obtener datos más completos y precisos del dispositivo?</string>
@@ -635,20 +646,24 @@
     <string name="diagnostics_summary" formatted="false">Comprueba permisos y fiabilidad de la supervisión y crea un informe para resolver problemas</string>
     <string name="diag_overview">Funcionamiento de la aplicación</string>
     <string name="diagnostics_help_title" formatted="false">Cómo ayuda el diagnóstico</string>
-    <string name="diagnostics_help_overview" formatted="false">«Supervisión en segundo plano» comprueba los permisos y la fiabilidad del monitor. Usa sus controles para iniciar o detener la monitorización, cambiar el registro de depuración, abrir los ajustes de optimización de batería y notificaciones o crear un informe de diagnóstico. No todas las lecturas no disponibles indican un problema de permisos; algunos dispositivos no las proporcionan.</string>
-    <string name="monitoring_help_overview" formatted="false">Comprueba el permiso de notificaciones, el acceso root o Shizuku, el servicio de monitorización y la base de datos del historial. Toca una comprobación para solicitar acceso o ejecutarla. «Iniciar monitorización» está disponible cuando la monitorización está detenida; «Detener monitorización», cuando está activa. Las lecturas disponibles dependen de la compatibilidad del dispositivo y del acceso concedido. La comprobación del servicio requiere que la monitorización esté activa; la comprobación de la base de datos requiere el registro del historial («Ajustes» → «Avanzado»). Para usar lecturas adicionales, activa «Usar acceso privilegiado» en «Ajustes» → «Avanzado». La opción «Ajustes del fabricante» solo está disponible en dispositivos compatibles.</string>
+    <string name="diagnostics_help_overview" formatted="false">«Funcionamiento del monitor» comprueba los permisos y la fiabilidad del monitor. Usa sus controles para iniciar o detener la monitorización, cambiar el registro de depuración, abrir los ajustes de optimización de batería y notificaciones o crear un informe de diagnóstico. No todas las lecturas no disponibles indican un problema de permisos; algunos dispositivos no las proporcionan.</string>
     <string name="diagnostics_monitoring" formatted="false">Supervisión en segundo plano</string>
     <string name="diag_monitor_operation">Funcionamiento del monitor</string>
     <string name="diag_heartbeat">Última señal de actividad</string>
+    <string name="diagnostics_heartbeat_help" formatted="false">Hora de la última respuesta del servicio de monitorización. Una respuesta antigua o no disponible puede indicar que la monitorización está detenida o no responde.</string>
     <string name="diag_start_monitor">Iniciar monitorización</string>
+    <string name="diagnostics_start_help" formatted="false">Inicia la monitorización de la batería y la recuperación automática en segundo plano. Disponible mientras la monitorización está detenida; se conservan las alarmas guardadas y los ajustes del historial.</string>
     <string name="diag_stop_monitor">Detener monitorización</string>
+    <string name="diag_stop_monitor_summary" formatted="false">Detener la monitorización de batería, el registro del historial y la recuperación automática en segundo plano</string>
     <string name="diag_stop_monitor_body">Se detendrán la monitorización de batería, el registro del historial y la recuperación automática en segundo plano. Puedes volver a iniciar la monitorización aquí.</string>
     <string name="diagnostics_not_running_tap_to_start" formatted="false">No hay respuesta reciente. Toca para solicitar un reinicio</string>
     <string name="diagnostics_service" formatted="false">Servicio de supervisión</string>
+    <string name="diagnostics_service_help" formatted="false">Muestra si la monitorización respondió recientemente. Toca para solicitar una respuesta; si no llega, Battery Monitor intenta un único reinicio. Solo está disponible mientras la monitorización está activada.</string>
     <string name="diagnostics_service_responded" formatted="false">El servicio de supervisión respondió</string>
     <string name="diagnostics_service_restarting" formatted="false">El servicio no respondió. Reiniciándolo…</string>
     <string name="diagnostics_service_restart_failed" formatted="false">El servicio de supervisión no respondió después de reiniciarse. Prueba a reiniciar la aplicación.</string>
     <string name="diagnostics_database" formatted="false">Base de datos de registros</string>
+    <string name="diagnostics_database_help" formatted="false">Muestra si la base de datos del historial respondió recientemente. Toca para probar la lectura y escritura sin modificar el historial guardado. Solo está disponible mientras el registro del historial está activado.</string>
     <string name="diagnostics_no_recent_database_access" formatted="false">No hay acceso correcto reciente a la base de datos</string>
     <string name="diagnostics_working_last_seen" formatted="true">Funcionando · Última respuesta hace %1$s</string>
     <string name="diagnostics_database_check_succeeded" formatted="false">La comprobación de lectura y escritura de la base de datos se completó correctamente</string>
@@ -658,17 +673,22 @@
     <string name="diagnostics_notifications" formatted="false">Notificaciones</string>
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Falta el permiso. Toca para abrir los ajustes</string>
     <string name="diagnostics_battery_optimization" formatted="false">Optimización de batería</string>
+    <string name="diagnostics_battery_optimization_help" formatted="false">Abre los ajustes de optimización de batería de Android cuando haya restricciones. Si ya no hay restricciones, al tocar se confirma ese estado.</string>
     <string name="diagnostics_unrestricted" formatted="false">Sin restricciones</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Restringido. Toca para permitir una supervisión fiable en segundo plano</string>
     <string name="diagnostics_vendor_settings" formatted="false">Ajustes del fabricante</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Abre ajustes adicionales de actividad en segundo plano o inicio automático disponibles en este dispositivo</string>
     <string name="diagnostics_vendor_settings_help" formatted="false">Abre ajustes adicionales de actividad en segundo plano o inicio automático disponibles en este dispositivo.</string>
+    <string name="diagnostics_vendor_availability_help" formatted="false">La opción «Ajustes del fabricante» solo está disponible en dispositivos compatibles.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Ayuda para actividad en segundo plano</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Abre indicaciones específicas del dispositivo en Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">Abre indicaciones específicas del dispositivo en Don’t Kill My App.</string>
     <string name="diagnostics_root" formatted="false">Acceso root</string>
-    <string name="diagnostics_root_unavailable" formatted="false">No disponible. Toca para solicitar o comprobar el acceso root</string>
+    <string name="diagnostics_root_help" formatted="false">Toca para comprobar si Battery Monitor puede obtener acceso root. Un gestor root configurado puede solicitar autorización. Un fallo puede indicar acceso denegado, herramientas ausentes u otro error; no demuestra que el dispositivo no tenga root. Esta comprobación no rootea el dispositivo ni cambia el ajuste «Usar acceso privilegiado».</string>
+    <string name="diagnostics_root_unavailable" formatted="false">No disponible. Toca para comprobar de nuevo</string>
     <string name="diagnostics_shizuku" formatted="false">Acceso a Shizuku</string>
+    <string name="diagnostics_shizuku_help" formatted="false">Si Shizuku no está en ejecución, al tocar se abre su gestor, o las instrucciones de configuración si no está instalado. Si está en ejecución sin permiso, al tocar se solicita acceso o se abre el gestor tras una denegación anterior. Si el acceso ya está concedido, tocar no hace nada. Esta acción no cambia el ajuste «Usar acceso privilegiado».</string>
+    <string name="monitoring_privileged_access_help" formatted="false">Las lecturas disponibles dependen de la compatibilidad del dispositivo y del acceso concedido. Para usar lecturas adicionales, activa «Usar acceso privilegiado» en «Ajustes» → «Avanzado».</string>
     <string name="diagnostics_shizuku_permission_missing" formatted="false">Falta el permiso. Toca para solicitarlo a Shizuku</string>
     <string name="diagnostics_checking" formatted="false">Comprobando…</string>
     <string name="diagnostics_tap_to_check" formatted="false">Sin comprobar. Toca para solicitar o comprobar el acceso</string>
@@ -728,6 +748,7 @@
     <string name="charging_diagnostics_capture" formatted="false">Capturar instantánea</string>
     <string name="charging_diagnostics_capture_summary" formatted="false">Configura un modo de carga en los ajustes del dispositivo y captura sus señales</string>
     <string name="charging_diagnostics_choose_state" formatted="false">¿Qué ajuste del dispositivo está activo?</string>
+    <string name="charging_diagnostics_condition_help" formatted="false">Selecciona el modo de carga del fabricante que ya está configurado en el dispositivo. Para un objetivo fijo, introduce su porcentaje. Esta elección etiqueta la instantánea; no cambia la protección de carga del dispositivo.</string>
     <string name="charging_diagnostics_condition_off" formatted="false">Protección desactivada / sin límite</string>
     <string name="charging_diagnostics_condition_fixed" formatted="false">Límite fijo…</string>
     <string name="charging_diagnostics_condition_adaptive" formatted="false">Carga adaptativa / inteligente</string>
@@ -764,43 +785,49 @@
     <string name="backup_restore_settings_summary" formatted="false">Haz copias de seguridad, restaura y transfiere los ajustes de la aplicación y los datos de la batería</string>
     <string name="backup_restore_help_overview" formatted="false">Guarda y restaura ajustes, alarmas, registros y datos aprendidos de predicción. «Restaurar ajustes predeterminados» restablece las preferencias de la aplicación tras una confirmación y conserva el historial, las alarmas, las estimaciones aprendidas y si la monitorización está en ejecución.</string>
     <string name="pref_general_backup" formatted="false">Copia de seguridad general de la aplicación</string>
-    <string name="general_backup_help" formatted="false">Una copia de seguridad general guarda juntos los ajustes, las alarmas y los datos específicos del dispositivo. Al restaurarla, puedes elegir qué datos disponibles quieres importar.</string>
+    <string name="general_backup_restore_effects_help" formatted="false">Se restauran las categorías seleccionadas; las no seleccionadas se conservan. Restaurar las alarmas sustituye las alarmas actuales. Para los registros, elige si añadirlos o sustituir el historial actual.</string>
     <string name="pref_export_general_backup" formatted="false">Exportar copia de seguridad general</string>
+    <string name="pref_export_general_backup_help" formatted="false">Guarda juntos los ajustes, las alarmas y los datos específicos del dispositivo en una copia de seguridad general ZIP en la ubicación que elijas.</string>
     <string name="pref_export_general_backup_summary" formatted="false">Guardar ajustes, alarmas y datos específicos del dispositivo en un archivo ZIP</string>
     <string name="general_backup_exported" formatted="false">Copia de seguridad general exportada correctamente.</string>
     <string name="pref_import_general_backup" formatted="false">Importar copia de seguridad general</string>
+    <string name="pref_import_general_backup_help" formatted="false">Selecciona una copia de seguridad general ZIP existente y elige qué categorías disponibles restaurar. Las copias de seguridad creadas con versiones más recientes de la aplicación pueden ser incompatibles, y restaurar registros o datos del predictor de otro dispositivo puede causar estimaciones incorrectas. Si la restauración solo se completa parcialmente, revisa las categorías indicadas antes de volver a intentarlo.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Restaurar los datos seleccionados desde un archivo ZIP de copia de seguridad general</string>
     <string name="general_backup_restore_message" formatted="false">Elige lo que quieres restaurar.</string>
+    <string name="general_backup_device_data_warning_scope" formatted="false">Registros y datos de predicción</string>
     <string name="general_backup_imported" formatted="false">Copia de seguridad general importada correctamente.</string>
     <string name="invalid_general_backup_file" formatted="false">Archivo de copia de seguridad general no válido o incompatible</string>
     <string name="settings_restore_partial">No se han podido restaurar algunos datos. Restaurados correctamente: %1$s. Datos que podrían haberse restaurado parcialmente: %2$s. Comprueba estas secciones antes de volver a intentarlo.</string>
     <string name="settings_restore_none">Ninguno</string>
-    <string name="settings_backup_help" formatted="false">Una copia de seguridad de los ajustes guarda las preferencias de la aplicación. Al importarla se restauran las preferencias guardadas.</string>
     <string name="pref_export_settings" formatted="false">Exportar ajustes</string>
+    <string name="pref_export_settings_help" formatted="false">«Exportar ajustes» guarda las preferencias de la aplicación. El resultado es un archivo JSON de copia de seguridad de ajustes.</string>
     <string name="pref_export_settings_summary" formatted="false">Guardar los ajustes actuales en un archivo</string>
     <string name="settings_exported" formatted="false">Los ajustes se exportaron correctamente.</string>
     <string name="pref_import_settings" formatted="false">Importar ajustes</string>
+    <string name="pref_import_settings_help" formatted="false">Con «Importar ajustes» se restauran las preferencias guardadas. Esta acción no restaura el historial ni los registros de alarmas.</string>
     <string name="pref_import_settings_summary" formatted="false">Restaurar ajustes desde un archivo</string>
     <string name="settings_imported" formatted="false">Los ajustes se importaron correctamente.</string>
     <string name="invalid_settings_file" formatted="false">Archivo de ajustes no válido</string>
     <string name="settings_file_version_warning" formatted="false">Este archivo fue creado por una versión más reciente de la aplicación. Importarlo puede provocar un comportamiento inesperado. ¿Continuar de todos modos?</string>
-    <string name="alarms_backup_help" formatted="false">Una copia de seguridad de alarmas guarda tus alarmas. Al importarla se sustituyen todas las alarmas actuales por las de la copia.</string>
     <string name="pref_export_alarms" formatted="false">Exportar alarmas</string>
+    <string name="pref_export_alarms_help" formatted="false">«Exportar alarmas» guarda tus alarmas. El archivo JSON contiene las reglas de alarma, pero no los ajustes de canales de notificación o sonidos gestionados por Android.</string>
     <string name="pref_export_alarms_summary" formatted="false">Guardar las alarmas actuales en un archivo</string>
     <string name="alarms_exported" formatted="false">Las alarmas se exportaron correctamente.</string>
     <string name="pref_import_alarms" formatted="false">Importar alarmas</string>
+    <string name="pref_import_alarms_help" formatted="false">Con «Importar alarmas» se sustituyen todas las alarmas actuales por las de la copia. Selecciona un archivo JSON de copia de seguridad de alarmas.</string>
     <string name="pref_import_alarms_summary" formatted="false">Reemplazar las alarmas actuales por las de un archivo</string>
     <string name="alarms_imported" formatted="false">Las alarmas se importaron correctamente.</string>
     <string name="invalid_alarms_file" formatted="false">Archivo de alarmas no válido</string>
     <string name="pref_backup_device_data" formatted="false">Copia de seguridad de datos específicos del dispositivo</string>
-    <string name="device_specific_backup_help" formatted="false">Una copia de seguridad específica del dispositivo guarda los registros y los datos del predictor. Puedes seleccionar uno o ambos durante la importación. Estos datos pertenecen al dispositivo de origen; usarlos en otro dispositivo puede producir predicciones incorrectas o un comportamiento inesperado. Al importar registros, elige si quieres añadirlos o sustituir los existentes.</string>
     <string name="device_data_logs" formatted="false">Registros</string>
     <string name="device_data_predictor" formatted="false">Datos de predicción</string>
     <string name="device_data_backup_warning" formatted="false">Estos datos son específicos del dispositivo en el que se recopilaron. Importarlos en otro dispositivo puede provocar predicciones incorrectas u otro comportamiento inesperado de la aplicación.</string>
     <string name="pref_export_device_data" formatted="false">Exportar datos específicos del dispositivo</string>
+    <string name="pref_export_device_data_help" formatted="false">Selecciona registros, datos del predictor o ambos y guárdalos en una copia de seguridad JSON específica del dispositivo. Los datos pertenecen al dispositivo de origen.</string>
     <string name="pref_export_device_data_summary" formatted="false">Guardar registros y datos de predicción en un archivo</string>
     <string name="device_data_exported" formatted="false">Datos específicos del dispositivo exportados correctamente.</string>
     <string name="pref_import_device_data" formatted="false">Importar datos específicos del dispositivo</string>
+    <string name="pref_import_device_data_help" formatted="false">Selecciona los registros y/o datos del predictor disponibles que quieras restaurar desde una copia de seguridad JSON específica del dispositivo; las categorías no seleccionadas permanecen sin cambios. Al importar registros, elige si quieres añadirlos o sustituir los existentes. Restaurar registros o datos del predictor de otro dispositivo puede causar estimaciones incorrectas.</string>
     <string name="pref_import_device_data_summary" formatted="false">Restaurar registros y datos de predicción desde un archivo</string>
     <string name="device_data_imported" formatted="false">Datos específicos del dispositivo importados correctamente</string>
     <string name="device_data_imported_dialog" formatted="false">Datos específicos del dispositivo importados correctamente.</string>
@@ -857,7 +884,7 @@
     <string name="fahrenheit_symbol" formatted="false">F</string>
     <string name="volt_symbol" formatted="false">V</string>
     <string name="since" formatted="false">desde</string>
-    <string name="duration_for">Durante %1$s</string>
+    <string name="duration_for">durante %1$s</string>
     <plurals name="for_n_hours">
         <item quantity="one">hace %d\u00A0hora</item>
         <item quantity="many">hace %d\u00A0horas</item>
@@ -906,4 +933,5 @@
     <string name="unit_days">%dd</string>
     <string name="unit_hours">%dh</string>
     <string name="unit_minutes">%dm</string>
+    <string name="unit_seconds" formatted="true">%ds</string>
 </resources>
