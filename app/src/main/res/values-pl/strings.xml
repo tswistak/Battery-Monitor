@@ -98,7 +98,7 @@
     \n
     Orientacyjnie dla telefonu standardowy znak Androida jest dodatni podczas ładowania i ujemny podczas rozładowywania. Aktywne ładowanie często jest w przybliżeniu między +500 a +5000\u00A0mA, podczas gdy zwykłe rozładowywanie zwykle między -100 a -3000\u00A0mA. Wartości bliskie zeru mogą być normalne, gdy bateria jest prawie pełna lub telefon jest bezczynny. Jeśli rząd wielkości wygląda na około 1000 razy za mały lub za duży albo znak jest odwrócony, dostosuj mnożnik.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Wykryj automatycznie</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Spróbuj ustalić mnożnik prądu na podstawie odczytu baterii. Jeśli wykrywanie jest niedostępne, bieżąca wartość nie zmienia się, a wykrywanie może zostać ponowione, gdy będzie dostępny odpowiedni odczyt. Wybranie wartości ręcznej anuluje oczekujące wykrywanie.</string>
+    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Spróbuj wywnioskować mnożnik prądu z odczytu baterii. Jeśli wykrywanie jest niedostępne, wartość prądu pozostaje niezmiemiona, a wykrywanie można ponowić, gdy właściwy odczyt stanie się dostępny. Ręczne wybranie wartości anuluje oczekujące wykrywanie.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatyczne wykrywanie jest niedostępne dla aktualnego stanu baterii lub odczytu</string>
     <string name="pref_battery_current_multiplier_detection_result">Mnożnik automatycznie ustawiony na %1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Preferuj średni prąd</string>
@@ -180,7 +180,7 @@
     <string name="verbose" formatted="false">Rozwlekły</string>
     <string name="pref_vital_signs_content" formatted="false">Zawartość parametrów</string>
     <string name="pref_vital_signs_content_summary" formatted="false">Które wartości mają być uwzglęniane w parametrach i w której kolejności?</string>
-    <string name="pref_vital_signs_content_help" formatted="false">Wybierz wartości i użyj przycisków przesuwania, aby ustawić ich kolejność. Możesz odznaczyć wszystkie wartości.</string>
+    <string name="pref_vital_signs_content_help" formatted="false">Wybierz wartości i użyj przycisków przesuwania, aby ustawić ich kolejność. Każdą z nich można odznaczyć.</string>
     <string name="pref_expanded_notification" formatted="false">Rozwijaj szczegóły powiadomienia</string>
     <string name="pref_expanded_notification_summary" formatted="false">Czy wyświetlać szczegóły, gdy powiadomienie zostanie rozwinięte?</string>
     <string name="pref_expanded_notification_help" formatted="false">Jeśli włączone, rozwinięcie głównego powiadomienia wyświetla „Pozostały czas”, „Czas od zmiany stanu” i wartość każdego z parametrów w oddzielnym wierszu zamiast jednowierszowego podsumowania.</string>
@@ -193,7 +193,7 @@
     <string name="pref_content_percent" formatted="false">Procent baterii</string>
     <string name="pref_content_temperature" formatted="false">Temperatura baterii</string>
     <string name="pref_show_icon_unit" formatted="false">Pokazuj symbol jednostki</string>
-    <string name="pref_show_icon_unit_summary" formatted="false">Pokazuj symbol jednostki obok wartości na ikonie paska stanu</string>
+    <string name="pref_show_icon_unit_summary" formatted="false">Pokazuj symbol jednostki obok wartości na ikonie na pasku stanu</string>
     <string name="pref_show_icon_unit_help" formatted="false">Jeśli włączone, ikona pokazuje znak procenta dla poziomu naładowania baterii i symbol stopnia dla temperatury baterii. Wyłącz to ustawienie, aby pokazywać tylko liczbę.</string>
     <string name="pref_indicate_charging" formatted="false">Wskazuj ładowanie</string>
     <string name="pref_indicate_charging_summary" formatted="false">Czy zmieniać ikonę, aby wskazywać ładowanie?</string>
@@ -232,7 +232,7 @@
     <string name="pref_chip_content_help" formatted="false">Wybierz wartości, między którymi ma przełączać się kapsułka na pasku stanu, i ustaw ich kolejność. Co najmniej jedna wartość musi pozostać wybrana.</string>
     <string name="pref_chip_switching_interval" formatted="false">Interwał przełączania</string>
     <string name="pref_chip_switching_interval_summary" formatted="false">Wybierz, jak często kapsułka ma przełączać się na następną wybraną wartość</string>
-    <string name="pref_chip_switching_interval_help" formatted="false">Wybierz, jak często kapsułka ma przełączać się na następną wybraną wartość. Ustawienie to jest dostępne, gdy została wybrana więcej niż jedna wartość i opcja „Wyświetlaj Aktualizację na żywo” nie jest ustawiona na „Nigdy”.</string>
+    <string name="pref_chip_switching_interval_help" formatted="false">Wybierz, jak często kapsułka ma przełączać się na następną wybraną wartość. Ustawienie to jest dostępne, gdy została wybrana więcej niż jedna wartość i „Wyświetlaj Aktualizację na żywo” nie jest ustawione na „Nigdy”.</string>
     <string name="pref_chip_switching_interval_custom_message" formatted="false">Wprowadź interwał w sekundach (1–3600).</string>
     <string name="pref_chip_switching_interval_error" formatted="false">Wprowadź wartość od 1 do 3600</string>
     <string name="chip_switching_interval_2_seconds" formatted="false">2\u00A0sekundy</string>
@@ -284,7 +284,7 @@
     <string name="alarms_add_threshold">Dodaj próg</string>
     <string name="alarms_edit_threshold">Edytuj próg</string>
     <string name="alarms_edit_existing">Edytuj istniejący próg</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Jeśli próg już istnieje, otwórz go przez „Edytuj istniejący próg”. Jeśli zapisane alarmy zmienią się podczas edycji, użyj „Odśwież” i ponownie otwórz próg przed jego zmianą.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Jeśli próg już istnieje, otwórz go przez „Edytuj istniejący próg”. Jeśli zapisane alarmy zmieniają się podczas edycji, użyj „Odśwież” i ponownie otwórz próg przed jego zmianą.</string>
     <string name="alarms_new_enabled">Alarm zostanie włączony po dodaniu.</string>
     <string name="alarms_edit_keeps_enabled">Edycja zachowuje bieżące ustawienie włączenia/wyłączenia.</string>
     <string name="alarms_enabled">Włączony</string>
@@ -319,7 +319,7 @@
     <string name="alarms_conflict">Zmieniono zapisane alarmy. Odśwież i ponownie otwórz próg przed wprowadzeniem zmian.</string>
     <string name="alarms_missing_rule">Tego alarmu brakuje lub jest nieprawidłowy. Przejrzyj katalog alarmów.</string>
     <string name="alarms_invalid_records">Niektóre zapisane alarmy są nieprawidłowe. Przejrzyj te wpisy; nie zostały usunięte.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Gdy są wyświetlane nieprawidłowe zapisane alarmy, możesz wyłączyć włączony wpis bez jego usuwania lub trwale go usunąć. Obie czynności wymagają potwierdzenia.</string>
+    <string name="alarms_invalid_records_help" formatted="false">Gdy wypisane są nieprawidłowo zapisane alarmy, możesz wyłączyć włączony wpis bez jego usuwania albo usunąć go trwale. Obie czynności pytają o potwierdzenie.</string>
     <string name="alarms_database_error">Nie udało się uzyskać dostępu do bazy danych alarmów. Spróbuj ponownie.</string>
     <string name="alarms_saved">Zapisano ustawienia alarmów</string>
     <string name="alarms_saved_reload_failed">Zapisano, ale nie udało się powiadomić monitora. Przejrzyj stan monitorowania.</string>
@@ -369,7 +369,7 @@
     <string name="history_periodic_measurement">Pomiar baterii</string>
     <string name="history_raw_observations">Przechowywane obserwacje. Szczegóły pokazują dostępne odczyty i ich czas.</string>
     <string name="history_export_selected">Eksportuj wybrany zakres</string>
-    <string name="history_import_json">Importuj zdarzenia z kopii zapasowej w pliku JSON</string>
+    <string name="history_import_json">Importuj logi z kopii zapasowej JSON</string>
     <string name="history_delete_selected">Wyczyść wybrany zakres</string>
     <string name="history_delete_selected_confirm">Czy na pewno wyczyścić logi z wybranego zakresu?</string>
     <string name="history_delete_all">Wyczyść wszystkie logi</string>
@@ -424,7 +424,7 @@
     <string name="pref_enable_logging_help" formatted="false">Zapisuj obserwacje baterii i zmiany stanu w „Historia”. Dostępne pomiary uwzględniają poziom naładowania baterii, temperaturę, napięcie, oryginalny prąd chwilowy i pozostały ładunek. Moc jest obliczana z napięcia i prądu podczas wyświetlania lub eksportu; nie jest przechowywana osobno. Wyłączenie logowania nie usuwa istniejącej historii ani nie zatrzymuje szacowania czasu.</string>
     <string name="pref_max_log_age" formatted="false">Maksymalny czas przechowywania logów</string>
     <string name="pref_max_log_age_summary" formatted="false">Usuwaj logi starsze niż:</string>
-    <string name="pref_max_log_age_help" formatted="false">Gdy logowanie jest włączone, podłączenie do zasilania usuwa logi starsze niż ten limit. „Bez ograniczeń” przechowuje je, dopóki nie wyczyścisz ich ręcznie. Jeśli automatyczny eksport jest włączony, Monitor baterii eksportuje oczekujące logi przed usunięciem starych wpisów; nieudany eksport uniemożliwia to usunięcie.</string>
+    <string name="pref_max_log_age_help" formatted="false">Gdy logowanie jest włączone, podłączenie do zasilania usuwa logi starsze niż ten limit. „Bez limitu” przechowuje je, dopóki nie wyczyścisz ich ręcznie. Jeśli automatyczny eksport jest włączony, Monitor baterii eksportuje oczekujące logi przed usunięciem starych wpisów; nieudany eksport uniemożliwia to usunięcie.</string>
     <string name="age_1_day" formatted="false">1\u00A0dzień</string>
     <string name="age_2_days" formatted="false">2\u00A0dni</string>
     <string name="age_4_days" formatted="false">4\u00A0dni</string>
@@ -432,12 +432,12 @@
     <string name="age_2_weeks" formatted="false">2\u00A0tygodnie</string>
     <string name="age_3_weeks" formatted="false">3\u00A0tygodnie</string>
     <string name="age_4_weeks" formatted="false">4\u00A0tygodnie</string>
-    <string name="age_no_limit" formatted="false">Bez ograniczeń</string>
+    <string name="age_no_limit" formatted="false">Bez limitu</string>
     <string name="log_export_mode_title" formatted="false">Eksportuj logi</string>
     <string name="log_export_append" formatted="false">Dodaj do istniejącego pliku</string>
     <string name="log_export_append_help" formatted="false">Pliki CSV i JSON można rozszerzać. Wybierz istniejący plik w wybranym formacie; dodawane są tylko logi od ostatniego ręcznego eksportu.</string>
-    <string name="log_json_append_invalid" formatted="false">Wybierz możliwy do odczytania plik historii JSON aplikacji Battery Monitor w obsługiwanej wersji, o rozmiarze do 16 MB.</string>
-    <string name="log_export_recovery_required" formatted="true">Podłącz ponownie pamięć i spróbuj ponownie wyeksportować dane do tego pliku, aby go przywrócić. Oryginalny plik zachowano w pamięci aplikacji (%1$s).</string>
+    <string name="log_json_append_invalid" formatted="false">Wybierz możliwy do odczytania plik JSON historii Monitora baterii w obsługiwanej wersji, o rozmiarze do 16 MB.</string>
+    <string name="log_export_recovery_required" formatted="true">Podłącz ponownie pamięć i ponownie wyeksportuj do tego samego pliku, aby go przywrócić. Oryginalny plik jest przechowywany w pamięci aplikacji (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">Wszystkie</string>
     <string name="log_export_from_last" formatted="false">Od ostatniego eksportu</string>
     <string name="pref_auto_log_export_title" formatted="false">Okresowo zapisuj nowe logi w folderze</string>
@@ -451,7 +451,7 @@
     <string name="pref_auto_log_export_directory" formatted="false">Zmień folder</string>
     <string name="pref_auto_log_export_path" formatted="true">Ścieżka: %1$s</string>
     <string name="auto_log_export_help" formatted="false">Wybierz folder, częstotliwość, format oraz tworzenie osobnych plików lub dopisywanie do jednego pliku. Eksport zwykle zapisuje logi od poprzedniego automatycznego eksportu; nowy plik do dopisywania obejmuje wszystkie dostępne logi. Android może opóźniać eksport podczas bezczynności. Logowanie musi pozostać włączone.</string>
-    <string name="auto_log_export_options_help" formatted="false">Odstęp między eksportami nie może być dłuższy niż okres przechowywania logów. Zmiana folderu wymaga przyznania aplikacji dostępu do tego folderu w Androidzie. Wyłączenie automatycznego eksportu pozostawia zapisane logi i istniejące pliki bez zmian.</string>
+    <string name="auto_log_export_options_help" formatted="false">Interwał eksportu nie może przekroczyć czasu przechowywania logów. Zmiana folderu wymaga przyznania aplikacji dostępu do tego folderu w Androidzie. Wyłączenie automatycznego eksportu pozostawia zapisane logi i istniejące pliki niezmienione.</string>
     <string name="auto_log_export_format_help" formatted="false">CSV ułatwia analizę w arkuszu kalkulacyjnym lub edytorze tekstu. Zawiera oryginalny prąd, pozostały ładunek oraz moc obliczoną z mnożnikiem wybranym podczas eksportu. JSON zachowuje strukturę danych logów do kopii zapasowych. Komórki z niedostępnym prądem, pozostałym ładunkiem i mocą pozostają puste.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Twórz nowy plik</string>
     <string name="auto_log_export_mode_append" formatted="false">Dodawaj nowe logi do istniejącego pliku</string>
@@ -652,20 +652,20 @@
     <string name="diagnostics_monitoring" formatted="false">Monitorowanie w tle</string>
     <string name="diag_monitor_operation">Działanie monitora</string>
     <string name="diag_heartbeat">Ostatni sygnał</string>
-    <string name="diagnostics_heartbeat_help" formatted="false">Czas ostatniej odpowiedzi usługi monitorowania. Stara lub niedostępna odpowiedź może oznaczać, że monitorowanie jest zatrzymane lub nie odpowiada.</string>
+    <string name="diagnostics_heartbeat_help" formatted="false">Czas ostatniej odpowiedzi usługi monitorowania. Stara lub niedostępna odpowiedź może oznaczać, że monitorowanie zostało zatrzymane lub nie odpowiada.</string>
     <string name="diag_start_monitor">Uruchom monitorowanie</string>
-    <string name="diagnostics_start_help" formatted="false">Uruchom monitorowanie baterii i automatyczne odzyskiwanie w tle. Dostępne przy zatrzymanym monitorowaniu; zapisane alarmy i ustawienia historii zostają zachowane.</string>
+    <string name="diagnostics_start_help" formatted="false">Uruchom monitorowanie baterii i automatyczne odzyskiwanie w tle. Dostępne przy zatrzymanym monitorowaniu; zapisane alarmy i ustawienia historii pozostają zachowane.</string>
     <string name="diag_stop_monitor">Zatrzymaj monitorowanie</string>
     <string name="diag_stop_monitor_summary" formatted="false">Zatrzymaj monitorowanie baterii, zapisywanie historii i automatyczne odzyskiwanie w tle</string>
     <string name="diag_stop_monitor_body">Monitorowanie baterii, zapisywanie historii i automatyczne odzyskiwanie w tle zostaną zatrzymane. Tutaj możesz ponownie uruchomić monitorowanie.</string>
     <string name="diagnostics_not_running_tap_to_start" formatted="false">Brak ostatniej odpowiedzi. Naciśnij, aby poprosić o ponowne uruchomienie</string>
     <string name="diagnostics_service" formatted="false">Usługa monitorowania</string>
-    <string name="diagnostics_service_help" formatted="false">Pokazuje, czy monitorowanie ostatnio odpowiedziało. Naciśnij, aby zażądać odpowiedzi; jeśli nie nadejdzie, Battery Monitor podejmie jedną próbę ponownego uruchomienia. Dostępne tylko przy włączonym monitorowaniu.</string>
+    <string name="diagnostics_service_help" formatted="false">Pokazuje, czy monitorowanie ostatnio odpowiedziało. Naciśnij, aby poprosić o odpowiedź; jeśli żadna nie nadejdzie, Monitor baterii spróbuje ponownie się uruchomieć. Dostępne tylko wtedy, gdy monitorowanie jest włączone.</string>
     <string name="diagnostics_service_responded" formatted="false">Usługa monitorowania odpowiedziała</string>
     <string name="diagnostics_service_restarting" formatted="false">Usługa nie odpowiedziała. Ponowne jej uruchamianie…</string>
     <string name="diagnostics_service_restart_failed" formatted="false">Usługa monitorowania nie odpowiedziała po ponownym uruchomieniu. Spróbuj ponownie uruchomić aplikację.</string>
     <string name="diagnostics_database" formatted="false">Baza danych logowania</string>
-    <string name="diagnostics_database_help" formatted="false">Pokazuje, czy baza historii ostatnio odpowiedziała. Naciśnij, aby sprawdzić odczyt i zapis bez zmiany zapisanej historii. Dostępne tylko przy włączonym zapisywaniu historii.</string>
+    <string name="diagnostics_database_help" formatted="false">Pokazuje, czy baza danych historii ostatnio odpowiedziała. Naciśnij, aby przetestować odczyt i zapis bez zmiany zapisanej historii. Dostępne tylko wtedy, gdy zapisywanie historii jest włączone.</string>
     <string name="diagnostics_no_recent_database_access" formatted="false">Brak ostatniego udanego dostępu do bazy danych</string>
     <string name="diagnostics_working_last_seen" formatted="true">Działa · Ostatnia odpowiedź %1$s temu</string>
     <string name="diagnostics_database_check_succeeded" formatted="false">Sprawdzenie odczytu i zapisu bazy danych powiodło się</string>
@@ -675,7 +675,7 @@
     <string name="diagnostics_notifications" formatted="false">Powiadomienia</string>
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Brak uprawnienia. Naciśnij, aby otworzyć ustawienia</string>
     <string name="diagnostics_battery_optimization" formatted="false">Optymalizacja baterii</string>
-    <string name="diagnostics_battery_optimization_help" formatted="false">Otwórz ustawienia optymalizacji baterii Androida, gdy działanie jest ograniczone. Jeśli ograniczenia są już wyłączone, naciśnięcie potwierdza ten stan.</string>
+    <string name="diagnostics_battery_optimization_help" formatted="false">Otwórz ustawienia optymalizacji baterii Androida, gdy monitorowanie jest ograniczone. Jeśli jest już nieograniczone, naciśnięcie potwierdza ten stan.</string>
     <string name="diagnostics_unrestricted" formatted="false">Bez ograniczeń</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Z ograniczeniami. Naciśnij, aby zezwolić na niezawodne monitorowanie w tle</string>
     <string name="diagnostics_vendor_settings" formatted="false">Ustawienia producenta</string>
@@ -686,10 +686,10 @@
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Otwórz wskazówki dla tego urządzenia w Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">Otwórz wskazówki dla tego urządzenia w Don’t Kill My App.</string>
     <string name="diagnostics_root" formatted="false">Dostęp do roota</string>
-    <string name="diagnostics_root_help" formatted="false">Naciśnij, aby sprawdzić, czy Battery Monitor może uzyskać dostęp do roota. Skonfigurowany menedżer roota może poprosić o autoryzację. Niepowodzenie może oznaczać odmowę dostępu, brak narzędzi lub inny błąd; nie dowodzi, że urządzenie nie jest zrootowane. To sprawdzenie nie rootuje urządzenia ani nie zmienia ustawienia „Używaj dostępu uprzywilejowanego”.</string>
+    <string name="diagnostics_root_help" formatted="false">Naciśnij, aby sprawdzić, czy Monitor baterii może uzyskać dostęp do roota. Skonfigurowany menedżer roota może poprosić o autoryzację. Niepowodzenie może oznaczać odmowę dostępu, brak narzędzi lub inny błąd; nie dowodzi, że urządzenie jest niezrootowane. Sprawdzenie to nie rootuje urządzenia ani nie zmienia ustawienia „Używaj dostępu uprzywilejowanego”.</string>
     <string name="diagnostics_root_unavailable" formatted="false">Niedostępny. Naciśnij, aby sprawdzić ponownie</string>
     <string name="diagnostics_shizuku" formatted="false">Dostęp przez Shizuku</string>
-    <string name="diagnostics_shizuku_help" formatted="false">Jeśli Shizuku nie działa, naciśnięcie otwiera jego menedżer lub instrukcję konfiguracji, jeśli nie jest zainstalowany. Gdy działa bez uprawnienia, naciśnięcie prosi o dostęp lub otwiera menedżer po wcześniejszej odmowie. Jeśli dostęp jest już przyznany, naciśnięcie nic nie robi. Ta czynność nie zmienia ustawienia „Używaj dostępu uprzywilejowanego”.</string>
+    <string name="diagnostics_shizuku_help" formatted="false">Jeśli Shizuku nie jest uruchomione, naciśnięcie otwiera jego menedżera albo wskazówki dotyczące konfiguracji, jeśli nie jest zainstalowany. Gdy zostało uruchomione bez uprawnienia, naciśnięcie prosi o dostęp albo otwiera menedżera po wcześniejszej odmowie. Jeśli dostęp jest już przyznany, naciśnięcie nic nie robi. Czynność ta nie zmienia ustawienia „Używaj dostępu uprzywilejowanego”.</string>
     <string name="monitoring_privileged_access_help" formatted="false">Możliwości urządzenia i przyznany dostęp określają, które odczyty są dostępne. Aby używać dodatkowych odczytów, włącz „Używaj dostępu uprzywilejowanego” w „Ustawienia” → „Zaawansowane”.</string>
     <string name="diagnostics_shizuku_permission_missing" formatted="false">Brak uprawnienia. Naciśnij, aby poprosić o nie w Shizuku</string>
     <string name="diagnostics_checking" formatted="false">Sprawdzanie…</string>
@@ -750,7 +750,7 @@
     <string name="charging_diagnostics_capture" formatted="false">Wykonaj snapshot</string>
     <string name="charging_diagnostics_capture_summary" formatted="false">Ustaw tryb ładowania w ustawieniach urządzenia, a następnie przechwyć jego sygnały</string>
     <string name="charging_diagnostics_choose_state" formatted="false">Które ustawienie urządzenia jest aktywne?</string>
-    <string name="charging_diagnostics_condition_help" formatted="false">Wybierz tryb ładowania producenta już ustawiony na urządzeniu. Dla stałego limitu wpisz jego wartość procentową. Ten wybór opisuje migawkę; nie zmienia ochrony ładowania urządzenia.</string>
+    <string name="charging_diagnostics_condition_help" formatted="false">Wybierz tryb ładowania OEM już ustawiony na urządzeniu. Dla stałego celu wprowadź jego procent. Wybór ten podpisuje snapshot; nie zmienia ochrony ładowania urządzenia.</string>
     <string name="charging_diagnostics_condition_off" formatted="false">Ochrona wyłączona/bez ograniczeń</string>
     <string name="charging_diagnostics_condition_fixed" formatted="false">Stały cel…</string>
     <string name="charging_diagnostics_condition_adaptive" formatted="false">Ładowanie adaptacyjne/inteligentne</string>
@@ -788,13 +788,13 @@
     <string name="backup_restore_settings_summary" formatted="false">Twórz kopie zapasowe swoich ustawień aplikacji i danych baterii, przywracaj je i przenoś</string>
     <string name="backup_restore_help_overview" formatted="false">Zapisuj i przywracaj ustawienia, alarmy, logi i wyuczone dane przewidywania. „Przywróć ustawienia domyślne” resetuje preferencje aplikacji po potwierdzeniu, jednocześnie zachowując historię, alarmy, wyuczone szacunki i czy monitorowanie jest uruchomione.</string>
     <string name="pref_general_backup" formatted="false">Ogólna kopia zapasowa aplikacji</string>
-    <string name="general_backup_restore_effects_help" formatted="false">Wybrane kategorie są przywracane; niewybrane pozostają bez zmian. Przywrócenie alarmów zastępuje bieżące alarmy. Dla logów wybierz, czy je dodać, czy zastąpić bieżącą historię.</string>
+    <string name="general_backup_restore_effects_help" formatted="false">Wybrane kategorie zostają przywrócone; niewybrane kategorie pozostają niezmienione. Przywrócenie alarmów zastępuje bieżące alarmy. Dla logów wybierz, czy je dodać, czy zastąpić bieżącą historię.</string>
     <string name="pref_export_general_backup" formatted="false">Eksportuj ogólną kopię zapasową</string>
-    <string name="pref_export_general_backup_help" formatted="false">Zapisz razem ustawienia, alarmy i dane specyficzne dla urządzenia w pliku ZIP z ogólną kopią zapasową w wybranej lokalizacji.</string>
+    <string name="pref_export_general_backup_help" formatted="false">Zapisz razem ustawienia, alarmy i dane specyficzne dla urządzenia do pliku ZIP ogólnej kopii zapasowej w wybranej przez siebie lokalizacji.</string>
     <string name="pref_export_general_backup_summary" formatted="false">Zapisz ustawienia, alarmy i dane specyficzne dla urządzenia do pliku ZIP</string>
     <string name="general_backup_exported" formatted="false">Ogólna kopia zapasowa została wyeksportowana.</string>
     <string name="pref_import_general_backup" formatted="false">Importuj ogólną kopię zapasową</string>
-    <string name="pref_import_general_backup_help" formatted="false">Wybierz istniejący plik ZIP z ogólną kopią zapasową i wybierz, które dostępne dane przywrócić. Kopie zapasowe z nowszych wersji aplikacji mogą być niekompatybilne, a przywrócenie logów lub danych predykcyjnych z innego urządzenia może spowodować błędne przewidywania. Jeśli przywracanie zostanie ukończone tylko częściowo, sprawdź wskazane kategorie przed ponowną próbą.</string>
+    <string name="pref_import_general_backup_help" formatted="false">Wybierz istniejący plik ZIP ogólnej kopii zapasowej i które dostępne kategorie przywrócić. Kopie zapasowe z nowszych wersji aplikacji mogą być niekompatybilne, a przywrócenie logów lub danych predykcyjnych z innego urządzenia może powodować nieprawidłowe szacunki. Jeśli przywrócenie zostało ukończone tylko częściowo, przejrzyj zgłoszone kategorie, zanim spróbujesz ponownie.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Przywróć wybrane dane z pliku ZIP ogólnej kopii zapasowej</string>
     <string name="general_backup_restore_message" formatted="false">Wybierz, co chcesz przywrócić.</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">Logi i dane predykcyjne</string>
@@ -803,21 +803,21 @@
     <string name="settings_restore_partial">Niektórych danych nie udało się przywrócić. Pomyślnie przywrócono: %1$s. Dane, które mogły zostać przywrócone częściowo: %2$s. Sprawdź te sekcje przed ponowną próbą.</string>
     <string name="settings_restore_none">Brak</string>
     <string name="pref_export_settings" formatted="false">Eksportuj ustawienia</string>
-    <string name="pref_export_settings_help" formatted="false">„Eksportuj ustawienia” zapisuje Twoje preferencje aplikacji. Wynikiem jest plik JSON z kopią zapasową ustawień.</string>
+    <string name="pref_export_settings_help" formatted="false">„Eksportuj ustawienia” zapisuje Twoje preferencje aplikacji. Wynikiem jest plik JSON kopii zapasowej ustawień.</string>
     <string name="pref_export_settings_summary" formatted="false">Zapisz bieżące ustawienia do pliku</string>
     <string name="settings_exported" formatted="false">Ustawienia zostały wyeksportowane.</string>
     <string name="pref_import_settings" formatted="false">Importuj ustawienia</string>
-    <string name="pref_import_settings_help" formatted="false">„Importuj ustawienia” przywraca zapisane preferencje. Ta czynność nie przywraca historii ani zapisanych alarmów.</string>
+    <string name="pref_import_settings_help" formatted="false">„Importuj ustawienia” przywraca zapisane preferencje. Czynność ta nie przywraca historii ani wpisów alarmów.</string>
     <string name="pref_import_settings_summary" formatted="false">Przywróć ustawienia z pliku</string>
     <string name="settings_imported" formatted="false">Ustawienia zostały zaimportowane.</string>
     <string name="invalid_settings_file" formatted="false">Nieprawidłowy plik ustawień</string>
     <string name="settings_file_version_warning" formatted="false">Ten plik został utworzony przez nowszą wersję aplikacji. Zaimportowanie go może spowodować nieoczekiwane zachowanie. Czy kontynuować mimo to?</string>
     <string name="pref_export_alarms" formatted="false">Eksportuj alarmy</string>
-    <string name="pref_export_alarms_help" formatted="false">„Eksportuj alarmy” zapisuje Twoje alarmy. Plik JSON zawiera reguły alarmów, bez zarządzanych przez Androida ustawień kanałów powiadomień i dźwięków.</string>
+    <string name="pref_export_alarms_help" formatted="false">„Eksportuj alarmy” zapisuje Twoje alarmy. Plik JSON zawiera reguły alarmów, a nie zarządzane przez Androida ustawienia kanałów powiadomień lub dźwięków.</string>
     <string name="pref_export_alarms_summary" formatted="false">Zapisz bieżące alarmy do pliku</string>
     <string name="alarms_exported" formatted="false">Alarmy zostały wyeksportowane.</string>
     <string name="pref_import_alarms" formatted="false">Importuj alarmy</string>
-    <string name="pref_import_alarms_help" formatted="false">„Importuj alarmy” zastępuje wszystkie bieżące alarmy alarmami z kopii zapasowej. Wybierz plik JSON z kopią zapasową alarmów.</string>
+    <string name="pref_import_alarms_help" formatted="false">„Importuj alarmy” zastępuje wszystkie bieżące alarmy alarmami z kopii zapasowej. Wybierz plik JSON kopii zapasowej alarmów.</string>
     <string name="pref_import_alarms_summary" formatted="false">Zastąp bieżące alarmy alarmami z pliku</string>
     <string name="alarms_imported" formatted="false">Alarmy zostały zaimportowane.</string>
     <string name="invalid_alarms_file" formatted="false">Nieprawidłowy plik alarmów</string>
@@ -826,11 +826,11 @@
     <string name="device_data_predictor" formatted="false">Dane predykcyjne</string>
     <string name="device_data_backup_warning" formatted="false">Te dane specyficzne dla urządzenia należą do urządzenia, na którym zostały zebrane. Zaimportowanie ich na innym urządzeniu może spowodować błędne przewidywania lub inne nieoczekiwane zachowanie aplikacji.</string>
     <string name="pref_export_device_data" formatted="false">Eksportuj dane specyficzne dla urządzenia</string>
-    <string name="pref_export_device_data_help" formatted="false">Wybierz logi, dane predykcyjne lub oba i zapisz je w kopii zapasowej JSON specyficznej dla urządzenia. Dane należą do urządzenia źródłowego.</string>
+    <string name="pref_export_device_data_help" formatted="false">Wybierz logi, dane predykcyjne albo oba i zapisz je do kopii zapasowej JSON specyficznej dla urządzenia. Dane należą do urządzenia źródłowego.</string>
     <string name="pref_export_device_data_summary" formatted="false">Zapisz logi i dane predykcyjne do pliku</string>
     <string name="device_data_exported" formatted="false">Dane specyficzne dla urządzenia zostały wyeksportowane.</string>
     <string name="pref_import_device_data" formatted="false">Importuj dane specyficzne dla urządzenia</string>
-    <string name="pref_import_device_data_help" formatted="false">Wybierz dostępne logi i/lub dane predykcyjne do przywrócenia z kopii zapasowej JSON specyficznej dla urządzenia; niewybrane kategorie pozostają bez zmian. Podczas importowania logów wybierz, czy je dodać, czy zastąpić istniejące logi. Przywrócenie logów lub danych predykcyjnych z innego urządzenia może spowodować błędne przewidywania.</string>
+    <string name="pref_import_device_data_help" formatted="false">Wybierz dostępne logi i/lub dane predykcyjne do przywrócenia z kopii zapasowej JSON specyficznej dla urządzenia; niewybrane kategorie pozostają niezmienione. Podczas importowania logów wybierz, czy je dodać, czy zastąpić istniejące logi. Przywrócenie logów lub danych predykcyjnych z innego urządzenia może powodować nieprawidłowe szacunki.</string>
     <string name="pref_import_device_data_summary" formatted="false">Przywróć logi i dane predykcyjne z pliku</string>
     <string name="device_data_imported" formatted="false">Dane specyficzne dla urządzenia zostały zaimportowane</string>
     <string name="device_data_imported_dialog" formatted="false">Dane specyficzne dla urządzenia zostały zaimportowane.</string>
@@ -846,7 +846,7 @@
     <string name="log_import_replace" formatted="false">Zastąp istniejące logi</string>
     <string name="csv_logs_imported" formatted="false">Logi CSV zostały zaimportowane</string>
     <string name="csv_logs_imported_dialog" formatted="false">Logi CSV zostały zaimportowane.</string>
-    <string name="invalid_csv_logs_file" formatted="false">Nieprawidłowy lub niekompatybilny plik logów CSV</string>
+    <string name="invalid_csv_logs_file" formatted="false">Nieprawidłowy lub niekompatybilny plik CSV logów</string>
     <string name="settings_reset_title">Przywróć ustawienia domyślne</string>
     <string name="settings_reset_summary">Zresetuj preferencje aplikacji, zachowując historię, alarmy i wyuczone szacunki</string>
     <string name="settings_reset_help" formatted="false">„Przywróć ustawienia domyślne” pyta o potwierdzenie, a następnie resetuje preferencje aplikacji. Zachowuje historię, alarmy, wyuczone szacunki, konfiguracje widżetów i czy monitorowanie w tle jest uruchomione. Uprawnienia systemowe i ustawienia kanałów powiadomień nie są resetowane.</string>
