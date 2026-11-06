@@ -94,15 +94,14 @@
     <string name="pref_show_remaining_charge_summary" formatted="false">Vom Gerät gemeldete verbleibende Akkuladung in mAh anzeigen?</string>
     <string name="pref_show_remaining_charge_help" formatted="false">Zeige die vom Gerät gemeldete verbleibende Akkuladung in mAh an.</string>
     <string name="pref_battery_current_multiplier" formatted="false">Multiplikator</string>
-    <string name="pref_battery_current_multiplier_help" formatted="false">Einige Geräte melden unerwartete Einheiten oder Vorzeichen. Multipliziere den gemeldeten Wert hier, um die Anzeige zu korrigieren.\n
+    <string name="pref_battery_current_multiplier_help" formatted="false">Einige Geräte melden unerwartete Einheiten oder Vorzeichen. Multipliziere den gemeldeten Wert hier, um die Anzeige zu korrigieren. Mit „Automatisch erkennen“ kannst du versuchen, den Strommultiplikator aus einem Akkumesswert abzuleiten.\n
     \n
     Als grober Richtwert für Smartphones gilt nach Android-Konvention: positiv beim Laden und negativ beim Entladen. Aktives Laden liegt oft bei etwa +500 bis +5000\u00A0mA, normales Entladen bei etwa -100 bis -3000\u00A0mA. Werte nahe null können bei fast vollem Akku oder im Leerlauf normal sein. Ist der Betrag ungefähr 1000-mal zu klein oder zu groß oder ist das Vorzeichen vertauscht, passe den Multiplikator an.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Automatisch erkennen</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Versuchen Sie, den Strommultiplikator aus einem Akkumesswert abzuleiten. Wenn die Erkennung nicht verfügbar ist, bleibt der aktuelle Wert unverändert und die Erkennung kann es erneut versuchen, sobald ein geeigneter Messwert verfügbar ist. Die Auswahl eines manuellen Werts bricht die ausstehende Erkennung ab.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Die automatische Erkennung ist für den aktuellen Akkustatus oder Messwert nicht verfügbar</string>
     <string name="pref_battery_current_multiplier_detection_result">Der Multiplikator wurde automatisch auf %1$d gesetzt</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Durchschnittsstrom bevorzugen</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">Den aktuellen Durchschnitt unter „Aktueller Zustand“ verwenden, wenn verfügbar?</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">Den aktuellen Durchschnitt verwenden, wenn verfügbar?</string>
     <string name="pref_prefer_current_avg_help" formatted="false">Einige Geräte liefern neben dem Momentanstrom einen aktuellen Durchschnitt. Der Mittelungszeitraum ist geräteabhängig. „Aktueller Zustand“ verwendet den Momentanstrom, wenn der Durchschnitt nicht verfügbar ist. Diese Option gilt nur für „Aktueller Zustand“; Protokolle speichern immer den ursprünglichen Momentanwert.</string>
 
     <string name="activity_until_charged" formatted="false">bis vollständig aufgeladen</string>
@@ -131,8 +130,8 @@
     <string name="predictor_long_term_ave" formatted="false">Langzeitdurchschnitt</string>
     <string name="pref_cat_target_levels" formatted="false">Zielstände</string>
     <string name="pref_charging_target_mode" formatted="false">Ladeziel</string>
-    <string name="pref_charging_target_mode_help" formatted="false">„Automatisch (empfohlen)“ nutzt eine feste Ladegrenze des Geräts, wenn Battery Monitor sie lesen kann, andernfalls 100%. Adaptives Laden zielt weiterhin auf 100%. „Benutzerdefiniert“ verwendet den gewählten Ladestand für Ladeschätzungen und Alarme „Ladeziel erreicht“.</string>
-    <string name="pref_charging_target_mode_support_help" formatted="false">Die automatische Erkennung kann auf Geräten von Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme und Sony Xperia sowie auf Geräten mit GrapheneOS oder LineageOS funktionieren – besonders, wenn Root- oder Shizuku-Zugriff verfügbar ist. Sie stützt sich auf Softwaresignale; Verfügbarkeit und Genauigkeit sind daher selbst bei den genannten Herstellern nicht garantiert. Auch ungetestete Modelle oder Betriebssystemversionen dieser Familien können funktionieren. Geräte anderer Hersteller werden derzeit nicht automatisch erkannt.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">„Automatisch (empfohlen)“ nutzt eine feste Ladegrenze des Geräts, wenn Battery Monitor sie lesen kann, andernfalls 100%. Adaptives Laden zielt weiterhin auf 100%. „Benutzerdefiniert“ verwendet den gewählten Ladestand für Ladeschätzungen und Alarme „Ladeziel erreicht“.\n
+    Die automatische Erkennung kann auf Geräten von Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme und Sony Xperia sowie auf Geräten mit GrapheneOS oder LineageOS funktionieren – besonders, wenn Root- oder Shizuku-Zugriff verfügbar ist. Sie stützt sich auf Softwaresignale; Verfügbarkeit und Genauigkeit sind daher selbst bei den genannten Herstellern nicht garantiert. Auch ungetestete Modelle oder Betriebssystemversionen dieser Familien können funktionieren. Geräte anderer Hersteller werden derzeit nicht automatisch erkannt.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Ladelimit des Geräts: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Eigenes Ziel</string>
     <string name="pref_charging_target_mode_summary_default" formatted="false">Kein festes Gerätelimit erkannt — 100% werden verwendet</string>
@@ -156,7 +155,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">Sie haben alle Benachrichtigungen für diese App deaktiviert. Bitte aktivieren Sie sie, um auf diese Einstellungen zuzugreifen</string>
     <string name="main_notifs_disabled_summary" formatted="false">Sie haben die Hauptbenachrichtigung für diese App deaktiviert. Bitte aktivieren Sie sie, um auf diese Einstellungen zuzugreifen</string>
     <string name="settings_notification_disabled">Aktivieren Sie App-Benachrichtigungen und den Hauptbenachrichtigungskanal, um diese Option anzupassen</string>
-    <string name="settings_notification_disabled_help">Aktivieren Sie App-Benachrichtigungen und den Hauptbenachrichtigungskanal, um diese Option anzupassen.</string>
     <string name="notifications_onboarding_message">Battery Monitor benötigt Ihre Berechtigung, um den Batteriestand in der Statusleiste anzuzeigen und Sie über Alarme zu benachrichtigen.\n
     \n
     Hinweis: Das Erteilen dieser Berechtigung kann gelegentlich dazu führen, dass sich die App schließt. Falls das passiert, öffnen Sie sie einfach erneut.</string>
@@ -172,7 +170,20 @@
     <string name="time_since_status_change" formatted="false">Vergangene Zeit seit Statusänderung</string>
     <string name="vital_signs" formatted="false">Vitalzeichen</string>
     <string name="notification_until_charged" formatted="true">%1$s bis vollständig aufgeladen</string>
-    <string name="notification_until_drained" formatted="true">%1$s verbleibend</string>
+    <string name="notification_until_drained_mixed" formatted="true">%1$s verbleibend</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s verbleibend</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="one">%1$s verbleibend</item>
+        <item quantity="other">%1$s verbleibend</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="one">%1$s verbleibend</item>
+        <item quantity="other">%1$s verbleibend</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="one">%1$s verbleibend</item>
+        <item quantity="other">%1$s verbleibend</item>
+    </plurals>
     <string name="pref_time_remaining_verbosity" formatted="false">Ausführlichkeit Restzeit</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">Je nach Gerätegröße sind teils Abkürzungen nötig, damit die Restzeitschätzung gut in den Benachrichtigungsbereich passt.</string>
     <string name="condensed" formatted="false">Kompakt</string>
@@ -302,7 +313,6 @@
     <string name="alarms_delivery_sound">Ton und Benachrichtigung</string>
     <string name="alarms_delivery_vibration">Vibration und Benachrichtigung</string>
     <string name="alarms_delivery_notification">Nur Benachrichtigung</string>
-    <string name="alarms_channel_help">Ton und Zustellung werden durch diesen Android-Benachrichtigungskanal gesteuert.</string>
     <string name="alarms_options_title" formatted="false">Alarmoptionen</string>
     <string name="pref_dismiss_low_battery_on_recovery">Alarm bei niedrigem Akkustand nach Erholung schließen</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Die Benachrichtigung bei niedrigem Akkustand entfernen, wenn die Ladung über ihren Schwellenwert steigt. Andere Alarmbenachrichtigungen bleiben erhalten</string>
@@ -374,7 +384,6 @@
     <string name="history_deleted">Protokolle gelöscht</string>
     <string name="history_load_failed">Verlauf konnte nicht gelesen werden</string>
     <string name="history_operation_failed">Vorgang fehlgeschlagen. Prüfen Sie den Dateizugriff und versuchen Sie es erneut.</string>
-    <string name="history_settings">Verlaufs- und Sicherungseinstellungen</string>
     <string name="history_open_fullscreen">Diagramm im Vollbild öffnen</string>
     <string name="history_chart_description_fullscreen">%1$s. Messwerte von %2$s bis %3$s.</string>
     <string name="history_chart_select_point">Messwerte auswählen</string>
@@ -421,7 +430,6 @@
     <string name="pref_enable_logging_summary" formatted="false">Batteriestatusänderungen protokollieren?</string>
     <string name="pref_enable_logging_help" formatted="false">Speichern Sie Akkubeobachtungen und Statusänderungen für den „Verlauf“. Verfügbare Messwerte umfassen Ladestand, Temperatur, Spannung, ursprünglichen Momentanstrom und verbleibende Ladung. Leistung wird beim Anzeigen oder Exportieren aus Spannung und Strom berechnet und nicht separat gespeichert. Das Ausschalten der Protokollierung löscht weder den bestehenden Verlauf noch stoppt es Zeitschätzungen.</string>
     <string name="pref_max_log_age" formatted="false">Maximales Protokollalter</string>
-    <string name="pref_max_log_age_summary" formatted="false">Löschen von Protokollen älter als:</string>
     <string name="pref_max_log_age_help" formatted="false">Bei aktivierter Protokollierung entfernt das Anschließen an eine Stromquelle Protokolle, die älter als diese Grenze sind. „Unbegrenzt“ behält sie bis zum manuellen Löschen. Bei aktiviertem automatischem Export exportiert Battery Monitor ausstehende Protokolle vor dem Löschen alter Einträge; ein fehlgeschlagener Export verhindert dieses Löschen.</string>
     <string name="age_1_day" formatted="false">1\u00A0Tag</string>
     <string name="age_2_days" formatted="false">2\u00A0Tage</string>
@@ -433,7 +441,7 @@
     <string name="age_no_limit" formatted="false">Unbegrenzt</string>
     <string name="log_export_mode_title" formatted="false">Protokolle exportieren</string>
     <string name="log_export_append" formatted="false">An vorhandene Datei anhängen</string>
-    <string name="log_export_append_help" formatted="false">CSV und JSON können erweitert werden. Wählen Sie eine vorhandene Datei im gewählten Format; nur Protokolle seit dem letzten manuellen Export werden hinzugefügt.</string>
+    <string name="log_export_append_description" formatted="false">CSV und JSON können erweitert werden. Wählen Sie eine vorhandene Datei im gewählten Format; nur Protokolle seit dem letzten manuellen Export werden hinzugefügt.</string>
     <string name="log_json_append_invalid" formatted="false">Wählen Sie eine lesbare JSON-Verlaufsdatei von Battery Monitor in einer unterstützten Version mit höchstens 16 MB.</string>
     <string name="log_export_recovery_required" formatted="true">Verbinden Sie den Speicher erneut und versuchen Sie erneut, in diese Datei zu exportieren, um sie wiederherzustellen. Die Originaldatei bleibt im App-Speicher (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">Alles</string>
@@ -565,7 +573,7 @@
     <string name="diag_status_waiting_permission" formatted="false">Warte auf Shizuku-Berechtigung…</string>
     <string name="diag_status_no_stats" formatted="false">Auf diesem Gerät sind derzeit keine erweiterten Akkustatistiken verfügbar.</string>
     <string name="diag_value_not_available" formatted="false">Nicht verfügbar</string>
-    <string name="diag_help_overview" formatted="false">Die „Diagnose“ vereint die Zuverlässigkeit der Überwachung, gespeicherte Vorhersagedaten und Akkudaten in den Reitern „App-Betrieb“, „Akku“, „Laden“ und „Rohdaten“. Android-Daten sind ohne Root verfügbar. Zusätzliche Gerätedaten hängen vom Gerät und den für Battery Monitor verfügbaren Berechtigungen ab.</string>
+    <string name="diag_help_overview" formatted="false">Vereint die Zuverlässigkeit der Überwachung, gespeicherte Vorhersagedaten und Akkudaten in den Reitern „App-Betrieb“, „Akku“, „Laden“ und „Rohdaten“. Android-Daten sind ohne Root verfügbar. Zusätzliche Gerätedaten hängen vom Gerät und den für Battery Monitor verfügbaren Berechtigungen ab.</string>
     <string name="diag_section_counters" formatted="false">Zähler</string>
     <string name="diag_help_counters" formatted="false">Akkumesswerte werden als verbleibende Ladung in mAh, Strom in mA, Energie in mWh, Spannung in V, Temperatur in Ihrer gewählten Einheit und Leistung in W beschriftet und formatiert. Der Strommultiplikator gilt auch für die berechnete Leistung. Durchschnittsstrom und Zyklusanzahl hängen von der Geräteunterstützung ab.</string>
     <string name="diag_field_charge_counter" formatted="false">Geschätzte Restladung</string>
@@ -573,7 +581,7 @@
     <string name="diag_field_current_average" formatted="false">Durchschnittsstrom</string>
     <string name="diag_field_energy_counter" formatted="false">Energiezähler</string>
     <string name="diag_section_capacity" formatted="false">Kapazität</string>
-    <string name="diag_help_capacity" formatted="false">„Kapazität“ zeigt Vollladekapazität, Designkapazität und den geschätzten Zustand. Der geschätzte Zustand wird als Vollladekapazität geteilt durch Designkapazität berechnet und ist daher nur so genau wie die vom Gerät gemeldeten Werte.</string>
+    <string name="diag_help_capacity" formatted="false">Zeigt Vollladekapazität, Designkapazität und den geschätzten Zustand. Der geschätzte Zustand wird als Vollladekapazität geteilt durch Designkapazität berechnet und ist daher nur so genau wie die vom Gerät gemeldeten Werte.</string>
     <string name="diag_field_cycle_count" formatted="false">Zyklusanzahl</string>
     <string name="diag_field_reported_capacity" formatted="false">Gemeldete Kapazität</string>
     <string name="diag_field_state_of_health" formatted="false">Gesundheitszustand</string>
@@ -586,7 +594,7 @@
     <string name="diag_capacity_low">Niedrig</string>
     <string name="diag_capacity_high">Hoch</string>
     <string name="diag_section_charging" formatted="false">Laden</string>
-    <string name="diag_help_charging" formatted="false">„Laden“ zeigt Werte zum aktiven Ladepfad wie maximalen Ladestrom oder maximale Ladespannung, Laderichtlinie, Ladezustand und Kapazitätsstufe. Diese Felder können sich je nach Ladegerät und Lademodus ändern.</string>
+    <string name="diag_help_charging" formatted="false">Zeigt Werte zum aktiven Ladepfad wie maximalen Ladestrom oder maximale Ladespannung, Laderichtlinie, Ladezustand und Kapazitätsstufe. Diese Felder können sich je nach Ladegerät und Lademodus ändern.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Verbleibende Ladezeit</string>
     <string name="diag_field_max_charging_current" formatted="false">Maximaler Ladestrom</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Maximale Ladespannung</string>
@@ -643,8 +651,7 @@
     <string name="diagnostics" formatted="false">Diagnose</string>
     <string name="diagnostics_summary" formatted="false">Berechtigungen und Zuverlässigkeit prüfen und einen Bericht zur Fehlerbehebung erstellen</string>
     <string name="diag_overview">App-Betrieb</string>
-    <string name="diagnostics_help_title" formatted="false">So hilft die Diagnose</string>
-    <string name="diagnostics_help_overview" formatted="false">„Überwachungsbetrieb“ prüft Berechtigungen und die Zuverlässigkeit der Überwachung. Mit den Steuerelementen können Sie die Überwachung starten oder stoppen, Debug-Protokollierung ändern, Einstellungen für Akkuoptimierung und Benachrichtigungen öffnen oder einen Bericht zur Fehlerbehebung erstellen. Nicht jeder fehlende Messwert weist auf ein Berechtigungsproblem hin; manche Geräte liefern ihn nicht.</string>
+    <string name="diagnostics_help_overview" formatted="false">Prüft Berechtigungen und die Zuverlässigkeit der Überwachung. Mit den Steuerelementen können Sie die Überwachung starten oder stoppen, Debug-Protokollierung ändern, Einstellungen für Akkuoptimierung und Benachrichtigungen öffnen oder einen Bericht zur Fehlerbehebung erstellen. Nicht jeder fehlende Messwert weist auf ein Berechtigungsproblem hin; manche Geräte liefern ihn nicht.</string>
     <string name="diagnostics_monitoring" formatted="false">Hintergrundüberwachung</string>
     <string name="diag_monitor_operation">Überwachungsbetrieb</string>
     <string name="diag_heartbeat">Letztes Lebenszeichen</string>
@@ -782,13 +789,12 @@
     <string name="backup_restore_settings_summary" formatted="false">Sichern, wiederherstellen und übertragen Sie Ihre App-Einstellungen und Akkudaten</string>
     <string name="backup_restore_help_overview" formatted="false">Speichern Sie Einstellungen, Alarme, Protokolle und erlernte Vorhersagedaten und stellen Sie diese wieder her. „Standardeinstellungen wiederherstellen“ setzt nach einer Bestätigung App-Einstellungen zurück und behält Verlauf, Alarme, erlernte Schätzungen und den Betriebszustand der Überwachung bei.</string>
     <string name="pref_general_backup" formatted="false">Allgemeine App-Sicherung</string>
-    <string name="general_backup_restore_effects_help" formatted="false">Ausgewählte Kategorien werden wiederhergestellt; nicht ausgewählte Kategorien bleiben erhalten. Das Wiederherstellen von Alarmen ersetzt die aktuellen Alarme. Wählen Sie bei Protokollen, ob diese hinzugefügt werden oder den aktuellen Verlauf ersetzen sollen.</string>
     <string name="pref_export_general_backup" formatted="false">Allgemeine Sicherung exportieren</string>
     <string name="pref_export_general_backup_help" formatted="false">Speichere Einstellungen, Alarme und gerätespezifische Daten gemeinsam in einer allgemeinen App-Sicherung im ZIP-Format an einem Ort deiner Wahl.</string>
     <string name="pref_export_general_backup_summary" formatted="false">Einstellungen, Alarme und gerätespezifische Daten in einer ZIP-Datei speichern</string>
     <string name="general_backup_exported" formatted="false">Allgemeine Sicherung erfolgreich exportiert.</string>
     <string name="pref_import_general_backup" formatted="false">Allgemeine Sicherung importieren</string>
-    <string name="pref_import_general_backup_help" formatted="false">Wähle eine vorhandene allgemeine App-Sicherung im ZIP-Format und die verfügbaren Kategorien, die wiederhergestellt werden sollen. Sicherungen aus neueren App-Versionen können inkompatibel sein, und die Wiederherstellung von Protokollen oder Prognosedaten eines anderen Geräts kann zu falschen Schätzungen führen. Prüfe bei einer nur teilweise abgeschlossenen Wiederherstellung die gemeldeten Kategorien, bevor du es erneut versuchst.</string>
+    <string name="pref_import_general_backup_help" formatted="false">Wähle eine vorhandene allgemeine App-Sicherung im ZIP-Format und die verfügbaren Kategorien, die wiederhergestellt werden sollen. Sicherungen aus neueren App-Versionen können inkompatibel sein, und die Wiederherstellung von Protokollen oder Prognosedaten eines anderen Geräts kann zu falschen Schätzungen führen. Prüfe bei einer nur teilweise abgeschlossenen Wiederherstellung die gemeldeten Kategorien, bevor du es erneut versuchst. Ausgewählte Kategorien werden wiederhergestellt; nicht ausgewählte Kategorien bleiben erhalten. Das Wiederherstellen von Alarmen ersetzt die aktuellen Alarme. Wählen Sie bei Protokollen, ob diese hinzugefügt werden oder den aktuellen Verlauf ersetzen sollen.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Ausgewählte Daten aus einer ZIP-Datei mit allgemeiner Sicherung wiederherstellen</string>
     <string name="general_backup_restore_message" formatted="false">Wählen Sie aus, was wiederhergestellt werden soll.</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">Protokolle und Vorhersagedaten</string>
@@ -797,21 +803,21 @@
     <string name="settings_restore_partial">Einige Daten konnten nicht wiederhergestellt werden. Erfolgreich wiederhergestellt: %1$s. Möglicherweise teilweise wiederhergestellte Daten: %2$s. Prüfen Sie diese Bereiche, bevor Sie es erneut versuchen.</string>
     <string name="settings_restore_none">Keine</string>
     <string name="pref_export_settings" formatted="false">Einstellungen exportieren</string>
-    <string name="pref_export_settings_help" formatted="false">„Einstellungen exportieren“ speichert deine App-Einstellungen. Das Ergebnis ist eine JSON-Datei zur Einstellungssicherung.</string>
+    <string name="pref_export_settings_help" formatted="false">Speichere deine App-Einstellungen. Das Ergebnis ist eine JSON-Datei zur Einstellungssicherung.</string>
     <string name="pref_export_settings_summary" formatted="false">Aktuelle Einstellungen in einer Datei speichern</string>
     <string name="settings_exported" formatted="false">Einstellungen wurden erfolgreich exportiert.</string>
     <string name="pref_import_settings" formatted="false">Einstellungen importieren</string>
-    <string name="pref_import_settings_help" formatted="false">Bei „Einstellungen importieren“ werden die gespeicherten Einstellungen wiederhergestellt. Diese Aktion stellt weder Verlauf noch Alarmdatensätze wieder her.</string>
+    <string name="pref_import_settings_help" formatted="false">Stelle die gespeicherten Einstellungen wieder her. Diese Aktion stellt weder Verlauf noch Alarmdatensätze wieder her.</string>
     <string name="pref_import_settings_summary" formatted="false">Einstellungen aus einer Datei wiederherstellen</string>
     <string name="settings_imported" formatted="false">Einstellungen wurden erfolgreich importiert.</string>
     <string name="invalid_settings_file" formatted="false">Ungültige Einstellungsdatei</string>
     <string name="settings_file_version_warning" formatted="false">Diese Datei wurde mit einer neueren Version der App erstellt. Das Importieren kann zu unerwartetem Verhalten führen. Trotzdem fortfahren?</string>
     <string name="pref_export_alarms" formatted="false">Alarme exportieren</string>
-    <string name="pref_export_alarms_help" formatted="false">„Alarme exportieren“ speichert deine Alarme. Die JSON-Datei enthält Alarmregeln, aber keine von Android verwalteten Einstellungen für Benachrichtigungskanäle oder Töne.</string>
+    <string name="pref_export_alarms_help" formatted="false">Speichere deine Alarme. Die JSON-Datei enthält Alarmregeln, aber keine von Android verwalteten Einstellungen für Benachrichtigungskanäle oder Töne.</string>
     <string name="pref_export_alarms_summary" formatted="false">Aktuelle Alarme in einer Datei speichern</string>
     <string name="alarms_exported" formatted="false">Alarme wurden erfolgreich exportiert.</string>
     <string name="pref_import_alarms" formatted="false">Alarme importieren</string>
-    <string name="pref_import_alarms_help" formatted="false">Bei „Alarme importieren“ werden alle aktuellen Alarme durch die Alarme aus der Sicherung ersetzt. Wähle eine JSON-Datei mit einer Alarmsicherung.</string>
+    <string name="pref_import_alarms_help" formatted="false">Ersetze alle aktuellen Alarme durch die Alarme aus der Sicherung. Wähle eine JSON-Datei mit einer Alarmsicherung.</string>
     <string name="pref_import_alarms_summary" formatted="false">Aktuelle Alarme durch Alarme aus einer Datei ersetzen</string>
     <string name="alarms_imported" formatted="false">Alarme wurden erfolgreich importiert.</string>
     <string name="invalid_alarms_file" formatted="false">Ungültige Alarmdatei</string>
@@ -843,7 +849,7 @@
     <string name="invalid_csv_logs_file" formatted="false">Ungültige oder inkompatible CSV-Protokolldatei</string>
     <string name="settings_reset_title">Standardeinstellungen wiederherstellen</string>
     <string name="settings_reset_summary">App-Einstellungen zurücksetzen und Verlauf, Alarme sowie erlernte Schätzungen behalten</string>
-    <string name="settings_reset_help" formatted="false">„Standardeinstellungen wiederherstellen“ fragt nach einer Bestätigung und setzt dann die App-Einstellungen zurück. Verlauf, Alarme, erlernte Schätzungen, Widget-Konfigurationen und der Betriebszustand der Hintergrundüberwachung bleiben erhalten. Systemberechtigungen und Einstellungen der Benachrichtigungskanäle werden nicht zurückgesetzt.</string>
+    <string name="settings_reset_help" formatted="false">Setze die App-Einstellungen nach Bestätigung zurück. Verlauf, Alarme, erlernte Schätzungen, Widget-Konfigurationen und der Betriebszustand der Hintergrundüberwachung bleiben erhalten. Systemberechtigungen und Einstellungen der Benachrichtigungskanäle werden nicht zurückgesetzt.</string>
     <string name="settings_reset_question">Alle App-Einstellungen auf die Standardwerte zurücksetzen? Verlauf, Alarme und erlernte Schätzungen bleiben erhalten. Die Hintergrundüberwachung bleibt wie bisher gestartet oder gestoppt.</string>
     <string name="settings_reset_confirm">Standardwerte wiederherstellen</string>
     <string name="settings_reset_done">Standardeinstellungen wiederhergestellt.</string>

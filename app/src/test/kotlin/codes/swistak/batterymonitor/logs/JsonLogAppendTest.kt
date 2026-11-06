@@ -379,6 +379,28 @@ class JsonLogAppendTest {
             preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, 0)
         )
         assertEquals(successful, file.readText())
+        provider.unreadable = false
+        val database = LogDatabase(context)
+        try {
+            assertEquals(listOf(observation), database.getAllLogRecords())
+            assertTrue(database.hasLogsOlderThan(672))
+            maintainHistory(
+                672,
+                database::hasLogsOlderThan,
+                { AutoLogExporter.exportBeforeAutomaticLogPruning(context) },
+                database::prune
+            )
+            assertTrue(database.getAllLogRecords().isEmpty())
+            assertEquals(successful, file.readText())
+            assertEquals(200L, preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 0))
+            assertTrue(
+                preferences.getLong(
+                    SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, 0
+                ) >= repeatedWatermark
+            )
+        } finally {
+            database.close()
+        }
     }
 
     private class ExportProvider(private val target: File) : ContentProvider() {

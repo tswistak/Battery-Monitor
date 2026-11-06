@@ -94,15 +94,14 @@
     <string name="pref_show_remaining_charge_summary" formatted="false">Czy wyświetlać odnotowany przez urządzenie pozostały poziom naładowania baterii w mAh?</string>
     <string name="pref_show_remaining_charge_help" formatted="false">Wyświetlaj pozostały poziom naładowania baterii zgłaszany przez urządzenie w mAh.</string>
     <string name="pref_battery_current_multiplier" formatted="false">Mnożnik</string>
-    <string name="pref_battery_current_multiplier_help" formatted="false">Niektóre urządzenia zgłaszają nieoczekiwane jednostki lub znaki. Pomnóż tutaj zgłoszoną wartość, aby poprawić wyświetlany wynik.\n
+    <string name="pref_battery_current_multiplier_help" formatted="false">Niektóre urządzenia zgłaszają nieoczekiwane jednostki lub znaki. Pomnóż tutaj zgłoszoną wartość, aby poprawić wyświetlany wynik. Użyj „Wykryj automatycznie”, aby spróbować wywnioskować mnożnik prądu z odczytu baterii.\n
     \n
     Orientacyjnie dla telefonu standardowy znak Androida jest dodatni podczas ładowania i ujemny podczas rozładowywania. Aktywne ładowanie często jest w przybliżeniu między +500 a +5000\u00A0mA, podczas gdy zwykłe rozładowywanie zwykle między -100 a -3000\u00A0mA. Wartości bliskie zeru mogą być normalne, gdy bateria jest prawie pełna lub telefon jest bezczynny. Jeśli rząd wielkości wygląda na około 1000 razy za mały lub za duży albo znak jest odwrócony, dostosuj mnożnik.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Wykryj automatycznie</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Spróbuj wywnioskować mnożnik prądu z odczytu baterii. Jeśli wykrywanie jest niedostępne, wartość prądu pozostaje niezmiemiona, a wykrywanie można ponowić, gdy właściwy odczyt stanie się dostępny. Ręczne wybranie wartości anuluje oczekujące wykrywanie.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatyczne wykrywanie jest niedostępne dla aktualnego stanu baterii lub odczytu</string>
     <string name="pref_battery_current_multiplier_detection_result">Mnożnik automatycznie ustawiony na %1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Preferuj średni prąd</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">Czy używać ostatniej średniej w „Aktualny stan”, gdy jest dostępna?</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">Czy używać ostatniej średniej, gdy jest dostępna?</string>
     <string name="pref_prefer_current_avg_help" formatted="false">Niektóre urządzenia udostępniają ostatnią średnią oprócz prądu chwilowego. Okres uśredniania zależy od urządzenia. „Aktualny stan” używa prądu chwilowego, gdy średnia jest niedostępna. Ta opcja dotyczy tylko „Aktualny stan”; logi zawsze przechowują oryginalny chwilowy odczyt.</string>
 
     <string name="activity_until_charged" formatted="false">do naładowania</string>
@@ -131,8 +130,8 @@
     <string name="predictor_long_term_ave" formatted="false">Średnie długoterminowe</string>
     <string name="pref_cat_target_levels" formatted="false">Docelowe poziomy</string>
     <string name="pref_charging_target_mode" formatted="false">Cel ładowania</string>
-    <string name="pref_charging_target_mode_help" formatted="false">„Automatyczny” używa stałego celu ładowania urządzenia, gdy Monitor baterii potrafi go odczytać, a w przeciwnym razie używa 100%. Ładowanie adaptacyjne nadal ma cel 100%. „Własny” używa wybranego przez Ciebie poziomu do szacunków ładowania i alarmów „Osiągnięto cel ładowania”.</string>
-    <string name="pref_charging_target_mode_support_help" formatted="false">Automatyczne wykrywanie może działać na urządzeniach Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme i Sony Xperia, a także na urządzeniach z GrapheneOS lub LineageOS — szczególnie gdy możliwy jest dostęp do roota albo Shizuku. Opiera się na sygnałach programowych, dlatego dostępność i dokładność nie są gwarantowane nawet u wymienionych producentów. Nieprzetestowane modele lub wersje systemów z tych rodzin mogą również działać, ale urządzenia innych producentów nie są obecnie wykrywane automatycznie.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">„Automatyczny” używa stałego celu ładowania urządzenia, gdy Monitor baterii potrafi go odczytać, a w przeciwnym razie używa 100%. Ładowanie adaptacyjne nadal ma cel 100%. „Własny” używa wybranego przez Ciebie poziomu do szacunków ładowania i alarmów „Osiągnięto cel ładowania”.\n
+    Automatyczne wykrywanie może działać na urządzeniach Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme i Sony Xperia, a także na urządzeniach z GrapheneOS lub LineageOS — szczególnie gdy możliwy jest dostęp do roota albo Shizuku. Opiera się na sygnałach programowych, dlatego dostępność i dokładność nie są gwarantowane nawet u wymienionych producentów. Nieprzetestowane modele lub wersje systemów z tych rodzin mogą również działać, ale urządzenia innych producentów nie są obecnie wykrywane automatycznie.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Cel ładowania urządzenia: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Własny cel</string>
     <string name="pref_charging_target_mode_summary_default" formatted="false">Nie wykryto stałego celu w urządzeniu — używane 100%</string>
@@ -156,7 +155,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) wszystkie powiadomienia dla tej aplikacji. Włącz je, aby uzyskać dostęp do tych ustawień</string>
     <string name="main_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) główne powiadomienie dla tej aplikacji. Włącz je, aby uzyskać dostęp do tych ustawień</string>
     <string name="settings_notification_disabled">Włącz powiadomienia aplikacji i główny kanał powiadomień, aby dostosować tę opcję</string>
-    <string name="settings_notification_disabled_help">Włącz powiadomienia aplikacji i główny kanał powiadomień, aby dostosować tę opcję.</string>
     <string name="notifications_onboarding_message">Monitor baterii potrzebuje Twojego uprawnienia, aby wyświetlać poziom naładowania baterii na pasku stanu i powiadamiać Cię o alarmach.\n
     \n
     Uwaga: Przyznanie tego uprawnienia może czasami powodować zamknięcie aplikacji. W takim przypadku wystarczy ją ponownie otworzyć.</string>
@@ -172,7 +170,26 @@
     <string name="time_since_status_change" formatted="false">Czas od zmiany stanu</string>
     <string name="vital_signs" formatted="false">Parametry</string>
     <string name="notification_until_charged" formatted="true">%1$s do naładowania</string>
-    <string name="notification_until_drained" formatted="true">Pozostało %1$s</string>
+    <string name="notification_until_drained_mixed" formatted="true">Pozostały czas: %1$s</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="one">Pozostał %1$s</item>
+        <item quantity="few">Pozostały %1$s</item>
+        <item quantity="many">Pozostało %1$s</item>
+        <item quantity="other">Pozostało %1$s</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="one">Pozostała %1$s</item>
+        <item quantity="few">Pozostały %1$s</item>
+        <item quantity="many">Pozostało %1$s</item>
+        <item quantity="other">Pozostało %1$s</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="one">Pozostała %1$s</item>
+        <item quantity="few">Pozostały %1$s</item>
+        <item quantity="many">Pozostało %1$s</item>
+        <item quantity="other">Pozostało %1$s</item>
+    </plurals>
     <string name="pref_time_remaining_verbosity" formatted="false">Rozwlekłość pozostałego czasu</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">Urządzenia są dostępne w różnych kształtach i rozmiarach, dlatego większość tłumaczeń wymaga używania skrótów, aby zapewnić, że szacowany pozostały czas mieści się w obszarze powiadomień. Jeśli nadal się nie mieści, możesz wybrać format „Zagęszczony”. Jeśli masz dużo miejsca, możesz preferować ustawienie „Rozwlekły”.</string>
     <string name="condensed" formatted="false">Zagęszczony</string>
@@ -304,7 +321,6 @@
     <string name="alarms_delivery_sound">Dźwięk i powiadomienie</string>
     <string name="alarms_delivery_vibration">Wibracje i powiadomienie</string>
     <string name="alarms_delivery_notification">Tylko powiadomienie</string>
-    <string name="alarms_channel_help">Dźwięk i dostarczenie powiadomienia są kontrolowane przez ten kianał powiadomień Androida.</string>
     <string name="alarms_options_title" formatted="false">Opcje alarmów</string>
     <string name="pref_dismiss_low_battery_on_recovery">Odrzucaj alarm niskiego poziomu naładowania baterii po doładowaniu</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Usuwaj powiadomienie o niskim poziomie naładowania, gdy poziom naładowania wzrośnie powyżej jego progu. Inne powiadomienia alarmów pozostają</string>
@@ -333,7 +349,7 @@
     <string name="history_month">Miesiąc</string>
     <string name="history_year">Rok</string>
     <string name="history_from">Od: %1$s</string>
-    <string name="history_through">Przez: %1$s</string>
+    <string name="history_through">Do: %1$s</string>
     <string name="history_calendar_days">Uwzględnia obie wybrane daty w lokalnej strefie czasowej.</string>
     <string name="history_invalid_range">Wprowadź prawidłowy zakres dat.</string>
     <string name="history_change_range">Zmień</string>
@@ -376,7 +392,6 @@
     <string name="history_deleted">Usunięto logi</string>
     <string name="history_load_failed">Nie udało się odczytać historii</string>
     <string name="history_operation_failed">Operacja nieudana. Sprawdź dostęp do pliku i spróbuj ponownie.</string>
-    <string name="history_settings">Ustawienia historii i kopii zapasowych</string>
     <string name="history_open_fullscreen">Otwórz wykres na pełnym ekranie</string>
     <string name="history_chart_description_fullscreen">%1$s. Obserwacje od %2$s do %3$s.</string>
     <string name="history_chart_select_point">Wybierz obserwacje</string>
@@ -423,7 +438,6 @@
     <string name="pref_enable_logging_summary" formatted="false">Czy logować zmiany stanu baterii?</string>
     <string name="pref_enable_logging_help" formatted="false">Zapisuj obserwacje baterii i zmiany stanu w „Historia”. Dostępne pomiary uwzględniają poziom naładowania baterii, temperaturę, napięcie, oryginalny prąd chwilowy i pozostały ładunek. Moc jest obliczana z napięcia i prądu podczas wyświetlania lub eksportu; nie jest przechowywana osobno. Wyłączenie logowania nie usuwa istniejącej historii ani nie zatrzymuje szacowania czasu.</string>
     <string name="pref_max_log_age" formatted="false">Maksymalny czas przechowywania logów</string>
-    <string name="pref_max_log_age_summary" formatted="false">Usuwaj logi starsze niż:</string>
     <string name="pref_max_log_age_help" formatted="false">Gdy logowanie jest włączone, podłączenie do zasilania usuwa logi starsze niż ten limit. „Bez limitu” przechowuje je, dopóki nie wyczyścisz ich ręcznie. Jeśli automatyczny eksport jest włączony, Monitor baterii eksportuje oczekujące logi przed usunięciem starych wpisów; nieudany eksport uniemożliwia to usunięcie.</string>
     <string name="age_1_day" formatted="false">1\u00A0dzień</string>
     <string name="age_2_days" formatted="false">2\u00A0dni</string>
@@ -435,7 +449,7 @@
     <string name="age_no_limit" formatted="false">Bez limitu</string>
     <string name="log_export_mode_title" formatted="false">Eksportuj logi</string>
     <string name="log_export_append" formatted="false">Dodaj do istniejącego pliku</string>
-    <string name="log_export_append_help" formatted="false">Pliki CSV i JSON można rozszerzać. Wybierz istniejący plik w wybranym formacie; dodawane są tylko logi od ostatniego ręcznego eksportu.</string>
+    <string name="log_export_append_description" formatted="false">Pliki CSV i JSON można rozszerzać. Wybierz istniejący plik w wybranym formacie; dodawane są tylko logi od ostatniego ręcznego eksportu.</string>
     <string name="log_json_append_invalid" formatted="false">Wybierz możliwy do odczytania plik JSON historii Monitora baterii w obsługiwanej wersji, o rozmiarze do 16 MB.</string>
     <string name="log_export_recovery_required" formatted="true">Podłącz ponownie pamięć i ponownie wyeksportuj do tego samego pliku, aby go przywrócić. Oryginalny plik jest przechowywany w pamięci aplikacji (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">Wszystkie</string>
@@ -569,7 +583,7 @@
     <string name="diag_status_waiting_permission" formatted="false">Oczekiwanie na uprawnienie do Shizuku…</string>
     <string name="diag_status_no_stats" formatted="false">W tej chwili nie są dostępne żadne zaawansowane statystyki baterii.</string>
     <string name="diag_value_not_available" formatted="false">Niedostępne</string>
-    <string name="diag_help_overview" formatted="false">„Diagnostyka” łączy niezawodność monitora, zapisane dane przewidywania i dane baterii w kartach „Działanie aplikacji”, „Bateria”, „Ładowanie” i „Surowe”. Dane Androida są dostępne bez roota. Dodatkowe dane urządzenia zależą od urządzenia i uprawnień dostępnych dla Monitora baterii.</string>
+    <string name="diag_help_overview" formatted="false">Łączy niezawodność monitora, zapisane dane przewidywania i dane baterii w kartach „Działanie aplikacji”, „Bateria”, „Ładowanie” i „Surowe”. Dane Androida są dostępne bez roota. Dodatkowe dane urządzenia zależą od urządzenia i uprawnień dostępnych dla Monitora baterii.</string>
     <string name="diag_section_counters" formatted="false">Liczniki</string>
     <string name="diag_help_counters" formatted="false">Odczyty baterii są podpisane i sformatowane jako pozostały ładunek w mAh, prąd w mA, energia w mWh, napięcie w V, temperatura w wybranej przez Ciebie jednostce i moc w W. Mnożnik prądu stosuje się także do obliczanej mocy. Średni prąd i licznik cykli zależą od możliwości urządzenia.</string>
     <string name="diag_field_charge_counter" formatted="false">Szacunkowy pozostały poziom naładowania</string>
@@ -577,7 +591,7 @@
     <string name="diag_field_current_average" formatted="false">Średni prąd</string>
     <string name="diag_field_energy_counter" formatted="false">Licznik energii</string>
     <string name="diag_section_capacity" formatted="false">Pojemność</string>
-    <string name="diag_help_capacity" formatted="false">„Pojemność” pokazuje pojemność pełnego naładowania, pojemność projektową i szacowane zdrowie. Szacowane zdrowie jest obliczane jako pojemność pełnego naładowania podzielona przez pojemność projektową, więc jego dokładność zależy od wartości odnotowanych przez urządzenie.</string>
+    <string name="diag_help_capacity" formatted="false">Pokazuje pojemność pełnego naładowania, pojemność projektową i szacowane zdrowie. Szacowane zdrowie jest obliczane jako pojemność pełnego naładowania podzielona przez pojemność projektową, więc jego dokładność zależy od wartości odnotowanych przez urządzenie.</string>
     <string name="diag_field_cycle_count" formatted="false">Liczba cykli</string>
     <string name="diag_field_reported_capacity" formatted="false">Zgłoszona pojemność</string>
     <string name="diag_field_state_of_health" formatted="false">Stan zdrowia</string>
@@ -590,7 +604,7 @@
     <string name="diag_capacity_low">Niski</string>
     <string name="diag_capacity_high">Wysoki</string>
     <string name="diag_section_charging" formatted="false">Ładowanie</string>
-    <string name="diag_help_charging" formatted="false">„Ładowanie” pokazuje wartości związane z aktywną ścieżką ładowania, takie jak maksymalny prąd lub napięcie ładowania, strategia ładowania, stan ładowania i poziom pojemności. Pola te mogą się zmieniać w zależności od ładowarki i trybu ładowania.</string>
+    <string name="diag_help_charging" formatted="false">Pokazuje wartości związane z aktywną ścieżką ładowania, takie jak maksymalny prąd lub napięcie ładowania, strategia ładowania, stan ładowania i poziom pojemności. Pola te mogą się zmieniać w zależności od ładowarki i trybu ładowania.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Pozostały czas ładowania</string>
     <string name="diag_field_max_charging_current" formatted="false">Maksymalny prąd ładowania</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Maksymalne napięcie ładowania</string>
@@ -647,8 +661,7 @@
     <string name="diagnostics" formatted="false">Diagnostyka</string>
     <string name="diagnostics_summary" formatted="false">Sprawdź uprawnienia, niezawodność monitorowania i utwórz raport do rozwiązywania problemów</string>
     <string name="diag_overview">Działanie aplikacji</string>
-    <string name="diagnostics_help_title" formatted="false">Jak pomaga diagnostyka</string>
-    <string name="diagnostics_help_overview" formatted="false">„Działanie monitora” sprawdza uprawnienia i niezawodność monitora. Używaj jego elementów sterujących, aby uruchamiać lub zatrzymywać monitorowanie, zmieniać logowanie debugowania, otwierać ustawienia optymalizacji baterii i powiadomień lub tworzyć raport do rozwiązywania problemów. Nie każdy niedostępny odczyt oznacza problem z uprawnieniami; niektóre urządzenia tego nie udostępniają.</string>
+    <string name="diagnostics_help_overview" formatted="false">Sprawdza uprawnienia i niezawodność monitora. Używaj jego elementów sterujących, aby uruchamiać lub zatrzymywać monitorowanie, zmieniać logowanie debugowania, otwierać ustawienia optymalizacji baterii i powiadomień lub tworzyć raport do rozwiązywania problemów. Nie każdy niedostępny odczyt oznacza problem z uprawnieniami; niektóre urządzenia tego nie udostępniają.</string>
     <string name="diagnostics_monitoring" formatted="false">Monitorowanie w tle</string>
     <string name="diag_monitor_operation">Działanie monitora</string>
     <string name="diag_heartbeat">Ostatni sygnał</string>
@@ -788,13 +801,12 @@
     <string name="backup_restore_settings_summary" formatted="false">Twórz kopie zapasowe swoich ustawień aplikacji i danych baterii, przywracaj je i przenoś</string>
     <string name="backup_restore_help_overview" formatted="false">Zapisuj i przywracaj ustawienia, alarmy, logi i wyuczone dane przewidywania. „Przywróć ustawienia domyślne” resetuje preferencje aplikacji po potwierdzeniu, jednocześnie zachowując historię, alarmy, wyuczone szacunki i czy monitorowanie jest uruchomione.</string>
     <string name="pref_general_backup" formatted="false">Ogólna kopia zapasowa aplikacji</string>
-    <string name="general_backup_restore_effects_help" formatted="false">Wybrane kategorie zostają przywrócone; niewybrane kategorie pozostają niezmienione. Przywrócenie alarmów zastępuje bieżące alarmy. Dla logów wybierz, czy je dodać, czy zastąpić bieżącą historię.</string>
     <string name="pref_export_general_backup" formatted="false">Eksportuj ogólną kopię zapasową</string>
     <string name="pref_export_general_backup_help" formatted="false">Zapisz razem ustawienia, alarmy i dane specyficzne dla urządzenia do pliku ZIP ogólnej kopii zapasowej w wybranej przez siebie lokalizacji.</string>
     <string name="pref_export_general_backup_summary" formatted="false">Zapisz ustawienia, alarmy i dane specyficzne dla urządzenia do pliku ZIP</string>
     <string name="general_backup_exported" formatted="false">Ogólna kopia zapasowa została wyeksportowana.</string>
     <string name="pref_import_general_backup" formatted="false">Importuj ogólną kopię zapasową</string>
-    <string name="pref_import_general_backup_help" formatted="false">Wybierz istniejący plik ZIP ogólnej kopii zapasowej i które dostępne kategorie przywrócić. Kopie zapasowe z nowszych wersji aplikacji mogą być niekompatybilne, a przywrócenie logów lub danych predykcyjnych z innego urządzenia może powodować nieprawidłowe szacunki. Jeśli przywrócenie zostało ukończone tylko częściowo, przejrzyj zgłoszone kategorie, zanim spróbujesz ponownie.</string>
+    <string name="pref_import_general_backup_help" formatted="false">Wybierz istniejący plik ZIP ogólnej kopii zapasowej i które dostępne kategorie przywrócić. Kopie zapasowe z nowszych wersji aplikacji mogą być niekompatybilne, a przywrócenie logów lub danych predykcyjnych z innego urządzenia może powodować nieprawidłowe szacunki. Jeśli przywrócenie zostało ukończone tylko częściowo, przejrzyj zgłoszone kategorie, zanim spróbujesz ponownie. Wybrane kategorie zostają przywrócone; niewybrane kategorie pozostają niezmienione. Przywrócenie alarmów zastępuje bieżące alarmy. Dla logów wybierz, czy je dodać, czy zastąpić bieżącą historię.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Przywróć wybrane dane z pliku ZIP ogólnej kopii zapasowej</string>
     <string name="general_backup_restore_message" formatted="false">Wybierz, co chcesz przywrócić.</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">Logi i dane predykcyjne</string>
@@ -803,21 +815,21 @@
     <string name="settings_restore_partial">Niektórych danych nie udało się przywrócić. Pomyślnie przywrócono: %1$s. Dane, które mogły zostać przywrócone częściowo: %2$s. Sprawdź te sekcje przed ponowną próbą.</string>
     <string name="settings_restore_none">Brak</string>
     <string name="pref_export_settings" formatted="false">Eksportuj ustawienia</string>
-    <string name="pref_export_settings_help" formatted="false">„Eksportuj ustawienia” zapisuje Twoje preferencje aplikacji. Wynikiem jest plik JSON kopii zapasowej ustawień.</string>
+    <string name="pref_export_settings_help" formatted="false">Zapisz swoje preferencje aplikacji. Wynikiem jest plik JSON kopii zapasowej ustawień.</string>
     <string name="pref_export_settings_summary" formatted="false">Zapisz bieżące ustawienia do pliku</string>
     <string name="settings_exported" formatted="false">Ustawienia zostały wyeksportowane.</string>
     <string name="pref_import_settings" formatted="false">Importuj ustawienia</string>
-    <string name="pref_import_settings_help" formatted="false">„Importuj ustawienia” przywraca zapisane preferencje. Czynność ta nie przywraca historii ani wpisów alarmów.</string>
+    <string name="pref_import_settings_help" formatted="false">Przywróć zapisane preferencje. Czynność ta nie przywraca historii ani wpisów alarmów.</string>
     <string name="pref_import_settings_summary" formatted="false">Przywróć ustawienia z pliku</string>
     <string name="settings_imported" formatted="false">Ustawienia zostały zaimportowane.</string>
     <string name="invalid_settings_file" formatted="false">Nieprawidłowy plik ustawień</string>
     <string name="settings_file_version_warning" formatted="false">Ten plik został utworzony przez nowszą wersję aplikacji. Zaimportowanie go może spowodować nieoczekiwane zachowanie. Czy kontynuować mimo to?</string>
     <string name="pref_export_alarms" formatted="false">Eksportuj alarmy</string>
-    <string name="pref_export_alarms_help" formatted="false">„Eksportuj alarmy” zapisuje Twoje alarmy. Plik JSON zawiera reguły alarmów, a nie zarządzane przez Androida ustawienia kanałów powiadomień lub dźwięków.</string>
+    <string name="pref_export_alarms_help" formatted="false">Zapisz swoje alarmy. Plik JSON zawiera reguły alarmów, a nie zarządzane przez Androida ustawienia kanałów powiadomień lub dźwięków.</string>
     <string name="pref_export_alarms_summary" formatted="false">Zapisz bieżące alarmy do pliku</string>
     <string name="alarms_exported" formatted="false">Alarmy zostały wyeksportowane.</string>
     <string name="pref_import_alarms" formatted="false">Importuj alarmy</string>
-    <string name="pref_import_alarms_help" formatted="false">„Importuj alarmy” zastępuje wszystkie bieżące alarmy alarmami z kopii zapasowej. Wybierz plik JSON kopii zapasowej alarmów.</string>
+    <string name="pref_import_alarms_help" formatted="false">Zastąp wszystkie bieżące alarmy alarmami z kopii zapasowej. Wybierz plik JSON kopii zapasowej alarmów.</string>
     <string name="pref_import_alarms_summary" formatted="false">Zastąp bieżące alarmy alarmami z pliku</string>
     <string name="alarms_imported" formatted="false">Alarmy zostały zaimportowane.</string>
     <string name="invalid_alarms_file" formatted="false">Nieprawidłowy plik alarmów</string>
@@ -849,7 +861,7 @@
     <string name="invalid_csv_logs_file" formatted="false">Nieprawidłowy lub niekompatybilny plik CSV logów</string>
     <string name="settings_reset_title">Przywróć ustawienia domyślne</string>
     <string name="settings_reset_summary">Zresetuj preferencje aplikacji, zachowując historię, alarmy i wyuczone szacunki</string>
-    <string name="settings_reset_help" formatted="false">„Przywróć ustawienia domyślne” pyta o potwierdzenie, a następnie resetuje preferencje aplikacji. Zachowuje historię, alarmy, wyuczone szacunki, konfiguracje widżetów i czy monitorowanie w tle jest uruchomione. Uprawnienia systemowe i ustawienia kanałów powiadomień nie są resetowane.</string>
+    <string name="settings_reset_help" formatted="false">Zresetuj preferencje aplikacji po potwierdzeniu. Zachowuje historię, alarmy, wyuczone szacunki, konfiguracje widżetów i czy monitorowanie w tle jest uruchomione. Uprawnienia systemowe i ustawienia kanałów powiadomień nie są resetowane.</string>
     <string name="settings_reset_question">Czy przywrócić wszystkie ustawienia aplikacji do ich wartości domyślnych? Historia, alarmy i wyuczone szacunki zostaną zachowane. Monitorowanie w tle pozostanie uruchomione lub zatrzymane, tak jak jest teraz.</string>
     <string name="settings_reset_confirm">Przywróć domyślne</string>
     <string name="settings_reset_done">Przywrócono ustawienia domyślne.</string>

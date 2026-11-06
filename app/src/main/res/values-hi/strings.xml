@@ -94,15 +94,14 @@
     <string name="pref_show_remaining_charge_summary" formatted="false">डिवाइस द्वारा रिपोर्ट किया गया शेष बैटरी चार्ज mAh में दिखाएँ?</string>
     <string name="pref_show_remaining_charge_help" formatted="false">डिवाइस द्वारा रिपोर्ट किया गया शेष बैटरी चार्ज mAh में दिखाएँ।</string>
     <string name="pref_battery_current_multiplier" formatted="false">गुणक</string>
-    <string name="pref_battery_current_multiplier_help" formatted="false">कुछ डिवाइस अनपेक्षित इकाइयों या चिह्नों में करंट की रिपोर्ट करते हैं। दिखाए गए परिणाम को सही करने के लिए रिपोर्ट किए गए मान को यहाँ गुणा करें।\n
+    <string name="pref_battery_current_multiplier_help" formatted="false">कुछ डिवाइस अनपेक्षित इकाइयों या चिह्नों में करंट की रिपोर्ट करते हैं। दिखाए गए परिणाम को सही करने के लिए रिपोर्ट किए गए मान को यहाँ गुणा करें। बैटरी की रीडिंग से करंट गुणक का अनुमान लगाने के लिए “अपने आप पता लगाएँ” का उपयोग करें।\n
     \n
     फ़ोन के लिए एक मोटे संदर्भ के रूप में, Android का मानक चिह्न चार्जिंग के समय धनात्मक और डिस्चार्जिंग के समय ऋणात्मक होता है। सक्रिय चार्जिंग अक्सर लगभग +500 से +5000\u00A0mA होती है, जबकि सामान्य डिस्चार्ज लगभग -100 से -3000\u00A0mA होता है। बैटरी लगभग पूरी होने या फ़ोन के निष्क्रिय होने पर शून्य के पास के मान सामान्य हो सकते हैं। यदि परिमाण लगभग 1000 गुना छोटा या बड़ा दिखता है, या चिह्न उलटा है, तो गुणक समायोजित करें।</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">अपने आप पता लगाएँ</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">बैटरी की रीडिंग से करंट का गुणक पता करने की कोशिश करें। पहचान उपलब्ध न होने पर मौजूदा मान नहीं बदलता और उपयुक्त रीडिंग मिलने पर पहचान फिर से की जा सकती है। मैन्युअल मान चुनने से लंबित पहचान रद्द हो जाती है।</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">बैटरी की मौजूदा स्थिति या रीडिंग के लिए अपने आप पता लगाना उपलब्ध नहीं है</string>
     <string name="pref_battery_current_multiplier_detection_result">गुणक अपने आप %1$d पर सेट किया गया</string>
     <string name="pref_prefer_average_battery_current" formatted="false">औसत करंट को प्राथमिकता दें</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">उपलब्ध होने पर “वर्तमान स्थिति” में हाल का औसत उपयोग करें?</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">उपलब्ध होने पर हाल का औसत उपयोग करें?</string>
     <string name="pref_prefer_current_avg_help" formatted="false">कुछ डिवाइस तात्कालिक करंट के साथ हाल का औसत भी देते हैं। औसत की अवधि डिवाइस के अनुसार बदलती है। औसत न मिलने पर “वर्तमान स्थिति” तात्कालिक करंट उपयोग करती है। यह विकल्प केवल “वर्तमान स्थिति” पर लागू है; लॉग हमेशा मूल तात्कालिक रीडिंग रखते हैं।</string>
 
     <string name="activity_until_charged" formatted="false">चार्ज होने तक</string>
@@ -131,8 +130,8 @@
     <string name="predictor_long_term_ave" formatted="false">दीर्घकालिक औसत</string>
     <string name="pref_cat_target_levels" formatted="false">लक्ष्य स्तर</string>
     <string name="pref_charging_target_mode" formatted="false">चार्जिंग लक्ष्य</string>
-    <string name="pref_charging_target_mode_help" formatted="false">“स्वचालित (अनुशंसित)” मोड Battery Monitor के पढ़ पाने पर डिवाइस की निश्चित चार्जिंग सीमा उपयोग करता है, अन्यथा 100%। अनुकूली चार्जिंग का लक्ष्य फिर भी 100% है। “कस्टम” मोड चार्जिंग अनुमान और “चार्जिंग लक्ष्य पूरा हुआ” अलार्म के लिए आपका चुना स्तर उपयोग करता है।</string>
-    <string name="pref_charging_target_mode_support_help" formatted="false">स्वचालित पहचान Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme और Sony Xperia डिवाइसों तथा GrapheneOS या LineageOS चलाने वाले डिवाइसों पर काम कर सकती है—खासकर जब root या Shizuku पहुँच उपलब्ध हो। यह सॉफ़्टवेयर संकेतों पर निर्भर है, इसलिए सूचीबद्ध निर्माताओं के डिवाइसों पर भी उपलब्धता या सटीकता की गारंटी नहीं है। इन परिवारों के बिना जाँचे मॉडल या OS संस्करण भी काम कर सकते हैं, लेकिन अन्य निर्माताओं के डिवाइस अभी स्वचालित रूप से पहचाने नहीं जाते।</string>
+    <string name="pref_charging_target_mode_help" formatted="false">“स्वचालित (अनुशंसित)” मोड Battery Monitor के पढ़ पाने पर डिवाइस की निश्चित चार्जिंग सीमा उपयोग करता है, अन्यथा 100%। अनुकूली चार्जिंग का लक्ष्य फिर भी 100% है। “कस्टम” मोड चार्जिंग अनुमान और “चार्जिंग लक्ष्य पूरा हुआ” अलार्म के लिए आपका चुना स्तर उपयोग करता है।\n
+    स्वचालित पहचान Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme और Sony Xperia डिवाइसों तथा GrapheneOS या LineageOS चलाने वाले डिवाइसों पर काम कर सकती है—खासकर जब root या Shizuku पहुँच उपलब्ध हो। यह सॉफ़्टवेयर संकेतों पर निर्भर है, इसलिए सूचीबद्ध निर्माताओं के डिवाइसों पर भी उपलब्धता या सटीकता की गारंटी नहीं है। इन परिवारों के बिना जाँचे मॉडल या OS संस्करण भी काम कर सकते हैं, लेकिन अन्य निर्माताओं के डिवाइस अभी स्वचालित रूप से पहचाने नहीं जाते।</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">डिवाइस चार्जिंग सीमा: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">कस्टम लक्ष्य</string>
     <string name="pref_charging_target_mode_summary_default" formatted="false">कोई निश्चित डिवाइस सीमा नहीं मिली — 100% उपयोग किया जाएगा</string>
@@ -156,7 +155,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए सभी सूचनाएं अक्षम कर दी हैं.  कृपया उन्हें इन सेटिंग्स तक पहुंचने में सक्षम करें</string>
     <string name="main_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए मुख्य अधिसूचना अक्षम कर दी है.  कृपया इन सेटिंग्स तक पहुंचने के लिए इसे सक्षम करें</string>
     <string name="settings_notification_disabled">यह विकल्प बदलने के लिए ऐप सूचनाएँ और मुख्य सूचना चैनल सक्षम करें</string>
-    <string name="settings_notification_disabled_help">यह विकल्प बदलने के लिए ऐप सूचनाएँ और मुख्य सूचना चैनल सक्षम करें।</string>
     <string name="notifications_onboarding_message">Battery Monitor को स्टेटस बार में बैटरी स्तर दिखाने और अलार्म के बारे में सूचित करने के लिए आपकी अनुमति चाहिए।\n
     \n
     नोट: यह अनुमति देने पर कभी-कभी ऐप बंद हो सकती है। अगर ऐसा हो, तो बस ऐप को दोबारा खोलें।</string>
@@ -172,7 +170,20 @@
     <string name="time_since_status_change" formatted="false">स्थिति परिवर्तन के बाद से समय</string>
     <string name="vital_signs" formatted="false">जीवन के संकेत</string>
     <string name="notification_until_charged" formatted="true">चार्ज होने में %1$s</string>
-    <string name="notification_until_drained" formatted="true">%1$s शेष</string>
+    <string name="notification_until_drained_mixed" formatted="true">%1$s शेष</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s शेष</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="one">%1$s शेष</item>
+        <item quantity="other">%1$s शेष</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="one">%1$s शेष</item>
+        <item quantity="other">%1$s शेष</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="one">%1$s शेष</item>
+        <item quantity="other">%1$s शेष</item>
+    </plurals>
     <string name="pref_time_remaining_verbosity" formatted="false">समय शेष वाचालता</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">उपकरण सभी आकृति और आकार में आते हैं, तो सबसे अनुवाद समय शेष अनुमान सूचना क्षेत्र में आराम से फिट बैठता है कि यह सुनिश्चित करने के लिए लघु रूपों का उपयोग करने की आवश्यकता है। यह अभी भी फिट नहीं है, तो आप “संघनित” प्रारूप के लिए विकल्प चुन सकते हैं। आप कमरे के पास बहुत है, तो आप “वाचाल” सेटिंग पसंद हो सकता है।</string>
     <string name="condensed" formatted="false">संघनित</string>
@@ -302,7 +313,6 @@
     <string name="alarms_delivery_sound">ध्वनि और सूचना</string>
     <string name="alarms_delivery_vibration">कंपन और सूचना</string>
     <string name="alarms_delivery_notification">केवल सूचना</string>
-    <string name="alarms_channel_help">ध्वनि और सूचना वितरण इस Android सूचना चैनल से नियंत्रित होते हैं।</string>
     <string name="alarms_options_title" formatted="false">अलार्म विकल्प</string>
     <string name="pref_dismiss_low_battery_on_recovery">बैटरी बढ़ने पर कम बैटरी अलार्म हटाएँ</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">चार्ज अपनी सीमा से ऊपर जाने पर कम बैटरी की सूचना हटाएँ। अन्य अलार्म सूचनाएँ बनी रहेंगी</string>
@@ -374,7 +384,6 @@
     <string name="history_deleted">लॉग साफ़ किए गए</string>
     <string name="history_load_failed">इतिहास नहीं पढ़ा जा सका</string>
     <string name="history_operation_failed">कार्रवाई विफल हुई। फ़ाइल तक पहुँच जाँचें और फिर कोशिश करें।</string>
-    <string name="history_settings">इतिहास और बैकअप सेटिंग</string>
     <string name="history_open_fullscreen">चार्ट को फ़ुल स्क्रीन में खोलें</string>
     <string name="history_chart_description_fullscreen">%1$s. %2$s से %3$s तक के माप।</string>
     <string name="history_chart_select_point">माप चुनें</string>
@@ -421,7 +430,6 @@
     <string name="pref_enable_logging_summary" formatted="false">लॉग बैटरी स्थिति में परिवर्तन?</string>
     <string name="pref_enable_logging_help" formatted="false">“इतिहास” के लिए बैटरी अवलोकन और स्थिति बदलाव सहेजें। उपलब्ध मापों में स्तर, तापमान, वोल्टेज, मूल तात्कालिक करंट और शेष चार्ज शामिल हैं। पावर दिखाते या निर्यात करते समय वोल्टेज व करंट से निकाली जाती है; यह अलग से सहेजी नहीं जाती। लॉगिंग बंद करने से मौजूदा इतिहास नहीं मिटता और समय अनुमान नहीं रुकते।</string>
     <string name="pref_max_log_age" formatted="false">अधिकतम लॉग आयु</string>
-    <string name="pref_max_log_age_summary" formatted="false">इससे पुराने लॉग हटाएँ:</string>
     <string name="pref_max_log_age_help" formatted="false">लॉगिंग सक्षम होने पर पावर जोड़ने से इस सीमा से पुराने लॉग हटते हैं। “कोई सीमा नहीं” चुनने पर लॉग हाथ से साफ़ करने तक रहते हैं। स्वचालित निर्यात सक्षम हो तो Battery Monitor पुराने रिकॉर्ड हटाने से पहले लंबित लॉग निर्यात करता है; निर्यात विफल होने पर वे नहीं हटते।</string>
     <string name="age_1_day" formatted="false">1\u00A0दिन</string>
     <string name="age_2_days" formatted="false">2\u00A0दिन</string>
@@ -433,7 +441,7 @@
     <string name="age_no_limit" formatted="false">कोई सीमा नहीं</string>
     <string name="log_export_mode_title" formatted="false">लॉग निर्यात करें</string>
     <string name="log_export_append" formatted="false">मौजूदा फ़ाइल में जोड़ें</string>
-    <string name="log_export_append_help" formatted="false">CSV और JSON में जोड़ा जा सकता है। चुने हुए फ़ॉर्मेट की मौजूदा फ़ाइल चुनें; केवल पिछले मैन्युअल निर्यात के बाद के लॉग जोड़े जाते हैं।</string>
+    <string name="log_export_append_description" formatted="false">CSV और JSON में जोड़ा जा सकता है। चुने हुए फ़ॉर्मेट की मौजूदा फ़ाइल चुनें; केवल पिछले मैन्युअल निर्यात के बाद के लॉग जोड़े जाते हैं।</string>
     <string name="log_json_append_invalid" formatted="false">Battery Monitor की पढ़ने योग्य JSON इतिहास फ़ाइल चुनें, जिसका संस्करण समर्थित हो और आकार 16 MB तक हो।</string>
     <string name="log_export_recovery_required" formatted="true">संग्रहण फिर से जोड़ें और उसे पुनर्स्थापित करने के लिए इसी फ़ाइल में दोबारा निर्यात करने का प्रयास करें। मूल फ़ाइल ऐप के संग्रहण में रखी गई है (%1$s)।</string>
     <string name="log_export_all_logs" formatted="false">सब कुछ</string>
@@ -565,7 +573,7 @@
     <string name="diag_status_waiting_permission" formatted="false">Shizuku अनुमति की प्रतीक्षा हो रही है…</string>
     <string name="diag_status_no_stats" formatted="false">इस डिवाइस पर अभी कोई उन्नत बैटरी आँकड़े उपलब्ध नहीं हैं।</string>
     <string name="diag_value_not_available" formatted="false">उपलब्ध नहीं</string>
-    <string name="diag_help_overview" formatted="false">“निदान” में “ऐप संचालन”, “बैटरी”, “चार्जिंग” और “मूल डेटा” टैब पर निगरानी की विश्वसनीयता, सहेजा हुआ अनुमानक डेटा और बैटरी डेटा मिलता है। Android डेटा root के बिना उपलब्ध है। अतिरिक्त डिवाइस डेटा, डिवाइस और Battery Monitor को उपलब्ध अनुमतियों पर निर्भर है।</string>
+    <string name="diag_help_overview" formatted="false">“ऐप संचालन”, “बैटरी”, “चार्जिंग” और “मूल डेटा” टैब पर निगरानी की विश्वसनीयता, सहेजा हुआ अनुमानक डेटा और बैटरी डेटा मिलता है। Android डेटा root के बिना उपलब्ध है। अतिरिक्त डिवाइस डेटा, डिवाइस और Battery Monitor को उपलब्ध अनुमतियों पर निर्भर है।</string>
     <string name="diag_section_counters" formatted="false">काउंटर</string>
     <string name="diag_help_counters" formatted="false">बैटरी रीडिंग लेबल और फ़ॉर्मेट के साथ दिखाई जाती हैं: शेष चार्ज mAh में, करंट mA में, ऊर्जा mWh में, वोल्टेज V में, तापमान चुनी हुई इकाई में और पावर W में। करंट गुणक गणना की गई पावर पर भी लागू होता है। औसत करंट और साइकिल गिनती डिवाइस समर्थन पर निर्भर हैं।</string>
     <string name="diag_field_charge_counter" formatted="false">अनुमानित शेष चार्ज</string>
@@ -573,7 +581,7 @@
     <string name="diag_field_current_average" formatted="false">औसत धारा</string>
     <string name="diag_field_energy_counter" formatted="false">ऊर्जा काउंटर</string>
     <string name="diag_section_capacity" formatted="false">क्षमता</string>
-    <string name="diag_help_capacity" formatted="false">“क्षमता” अनुभाग पूर्ण चार्ज क्षमता, डिज़ाइन क्षमता और अनुमानित स्वास्थ्य दिखाता है। अनुमानित स्वास्थ्य पूर्ण चार्ज क्षमता को डिज़ाइन क्षमता से विभाजित करके निकाला जाता है, इसलिए इसकी सटीकता डिवाइस द्वारा रिपोर्ट किए गए मानों पर निर्भर करती है।</string>
+    <string name="diag_help_capacity" formatted="false">पूर्ण चार्ज क्षमता, डिज़ाइन क्षमता और अनुमानित स्वास्थ्य दिखाता है। अनुमानित स्वास्थ्य पूर्ण चार्ज क्षमता को डिज़ाइन क्षमता से विभाजित करके निकाला जाता है, इसलिए इसकी सटीकता डिवाइस द्वारा रिपोर्ट किए गए मानों पर निर्भर करती है।</string>
     <string name="diag_field_cycle_count" formatted="false">सायकल गणना</string>
     <string name="diag_field_reported_capacity" formatted="false">रिपोर्ट की गई क्षमता</string>
     <string name="diag_field_state_of_health" formatted="false">स्वास्थ्य स्थिति</string>
@@ -586,7 +594,7 @@
     <string name="diag_capacity_low">कम</string>
     <string name="diag_capacity_high">अधिक</string>
     <string name="diag_section_charging" formatted="false">चार्जिंग</string>
-    <string name="diag_help_charging" formatted="false">“चार्जिंग” अनुभाग सक्रिय चार्जिंग पथ से जुड़े मान दिखाता है, जैसे अधिकतम चार्जिंग करंट या वोल्टेज, चार्जिंग नीति, चार्जिंग स्थिति और क्षमता स्तर। ये फ़ील्ड चार्जर और चार्जिंग मोड के अनुसार बदल सकते हैं।</string>
+    <string name="diag_help_charging" formatted="false">सक्रिय चार्जिंग पथ से जुड़े मान दिखाता है, जैसे अधिकतम चार्जिंग करंट या वोल्टेज, चार्जिंग नीति, चार्जिंग स्थिति और क्षमता स्तर। ये फ़ील्ड चार्जर और चार्जिंग मोड के अनुसार बदल सकते हैं।</string>
     <string name="diag_field_charge_time_remaining" formatted="false">बचा हुआ चार्ज समय</string>
     <string name="diag_field_max_charging_current" formatted="false">अधिकतम चार्जिंग धारा</string>
     <string name="diag_field_max_charging_voltage" formatted="false">अधिकतम चार्जिंग वोल्टेज</string>
@@ -643,8 +651,7 @@
     <string name="diagnostics" formatted="false">निदान</string>
     <string name="diagnostics_summary" formatted="false">अनुमतियाँ और निगरानी की विश्वसनीयता जाँचें और समस्या निवारण रिपोर्ट बनाएँ</string>
     <string name="diag_overview">ऐप संचालन</string>
-    <string name="diagnostics_help_title" formatted="false">निदान कैसे मदद करता है</string>
-    <string name="diagnostics_help_overview" formatted="false">“निगरानी संचालन” अनुमतियाँ और निगरानी की विश्वसनीयता जाँचता है। इसके नियंत्रण से निगरानी शुरू या बंद करें, डीबग लॉगिंग बदलें, बैटरी ऑप्टिमाइज़ेशन व सूचना सेटिंग खोलें या समस्या निवारण रिपोर्ट बनाएँ। हर अनुपलब्ध रीडिंग अनुमति की समस्या नहीं होती; कुछ डिवाइस वह देते ही नहीं हैं।</string>
+    <string name="diagnostics_help_overview" formatted="false">अनुमतियाँ और निगरानी की विश्वसनीयता जाँचता है। इसके नियंत्रण से निगरानी शुरू या बंद करें, डीबग लॉगिंग बदलें, बैटरी ऑप्टिमाइज़ेशन व सूचना सेटिंग खोलें या समस्या निवारण रिपोर्ट बनाएँ। हर अनुपलब्ध रीडिंग अनुमति की समस्या नहीं होती; कुछ डिवाइस वह देते ही नहीं हैं।</string>
     <string name="diagnostics_monitoring" formatted="false">बैकग्राउंड निगरानी</string>
     <string name="diag_monitor_operation">निगरानी संचालन</string>
     <string name="diag_heartbeat">पिछला हार्टबीट</string>
@@ -782,13 +789,12 @@
     <string name="backup_restore_settings_summary" formatted="false">अपनी ऐप सेटिंग्स और बैटरी डेटा का बैकअप लें, उन्हें पुनर्स्थापित करें और स्थानांतरित करें</string>
     <string name="backup_restore_help_overview" formatted="false">सेटिंग, अलार्म, लॉग और सीखा हुआ अनुमान डेटा सहेजें और बहाल करें। “डिफ़ॉल्ट सेटिंग बहाल करें” पर पुष्टि के बाद ऐप प्राथमिकताएँ रीसेट होती हैं, लेकिन इतिहास, अलार्म, सीखे गए अनुमान और निगरानी चालू या बंद होने की स्थिति बनी रहती है।</string>
     <string name="pref_general_backup" formatted="false">सामान्य ऐप बैकअप</string>
-    <string name="general_backup_restore_effects_help" formatted="false">चुनी गई श्रेणियाँ बहाल की जाती हैं; नहीं चुनी गई श्रेणियाँ बनी रहती हैं। अलार्म बहाल करने से मौजूदा अलार्म बदल जाते हैं। लॉग के लिए चुनें कि उन्हें जोड़ना है या मौजूदा इतिहास बदलना है।</string>
     <string name="pref_export_general_backup" formatted="false">सामान्य बैकअप निर्यात करें</string>
     <string name="pref_export_general_backup_help" formatted="false">सेटिंग, अलार्म और डिवाइस-विशिष्ट डेटा को एक सामान्य बैकअप ZIP में अपनी चुनी हुई जगह पर एक साथ सहेजें।</string>
     <string name="pref_export_general_backup_summary" formatted="false">सेटिंग, अलार्म और डिवाइस-विशिष्ट डेटा को ZIP फ़ाइल में सहेजें</string>
     <string name="general_backup_exported" formatted="false">सामान्य बैकअप सफलतापूर्वक निर्यात किया गया।</string>
     <string name="pref_import_general_backup" formatted="false">सामान्य बैकअप आयात करें</string>
-    <string name="pref_import_general_backup_help" formatted="false">मौजूदा सामान्य बैकअप ZIP चुनें और तय करें कि उपलब्ध श्रेणियों में से किन्हें पुनर्स्थापित करना है। ऐप के नए संस्करणों से बने बैकअप असंगत हो सकते हैं, और किसी दूसरे डिवाइस से लॉग या पूर्वानुमान डेटा पुनर्स्थापित करने से गलत अनुमान मिल सकते हैं। यदि पुनर्स्थापन केवल आंशिक रूप से पूरा हो, तो दोबारा कोशिश करने से पहले बताई गई श्रेणियाँ जाँचें।</string>
+    <string name="pref_import_general_backup_help" formatted="false">मौजूदा सामान्य बैकअप ZIP चुनें और तय करें कि उपलब्ध श्रेणियों में से किन्हें पुनर्स्थापित करना है। ऐप के नए संस्करणों से बने बैकअप असंगत हो सकते हैं, और किसी दूसरे डिवाइस से लॉग या पूर्वानुमान डेटा पुनर्स्थापित करने से गलत अनुमान मिल सकते हैं। यदि पुनर्स्थापन केवल आंशिक रूप से पूरा हो, तो दोबारा कोशिश करने से पहले बताई गई श्रेणियाँ जाँचें। चुनी गई श्रेणियाँ बहाल की जाती हैं; नहीं चुनी गई श्रेणियाँ बनी रहती हैं। अलार्म बहाल करने से मौजूदा अलार्म बदल जाते हैं। लॉग के लिए चुनें कि उन्हें जोड़ना है या मौजूदा इतिहास बदलना है।</string>
     <string name="pref_import_general_backup_summary" formatted="false">सामान्य बैकअप ZIP फ़ाइल से चयनित डेटा पुनर्स्थापित करें</string>
     <string name="general_backup_restore_message" formatted="false">चुनें कि आप क्या पुनर्स्थापित करना चाहते हैं।</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">लॉग और पूर्वानुमान डेटा</string>
@@ -797,21 +803,21 @@
     <string name="settings_restore_partial">कुछ डेटा बहाल नहीं हो सका। सफलतापूर्वक बहाल: %1$s। संभवतः आंशिक रूप से बहाल डेटा: %2$s। फिर कोशिश करने से पहले इन अनुभागों की जाँच करें।</string>
     <string name="settings_restore_none">कोई नहीं</string>
     <string name="pref_export_settings" formatted="false">सेटिंग निर्यात करें</string>
-    <string name="pref_export_settings_help" formatted="false">“सेटिंग निर्यात करें” आपकी ऐप प्राथमिकताएँ सहेजता है। इससे सेटिंग-बैकअप JSON फ़ाइल बनती है।</string>
+    <string name="pref_export_settings_help" formatted="false">आपकी ऐप प्राथमिकताएँ सहेजें। इससे सेटिंग-बैकअप JSON फ़ाइल बनती है।</string>
     <string name="pref_export_settings_summary" formatted="false">वर्तमान सेटिंग को फ़ाइल में सहेजें</string>
     <string name="settings_exported" formatted="false">सेटिंग सफलतापूर्वक निर्यात की गईं।</string>
     <string name="pref_import_settings" formatted="false">सेटिंग आयात करें</string>
-    <string name="pref_import_settings_help" formatted="false">“सेटिंग आयात करें” से सहेजी गई प्राथमिकताएँ पुनर्स्थापित होती हैं। यह क्रिया इतिहास या अलार्म रिकॉर्ड पुनर्स्थापित नहीं करती है।</string>
+    <string name="pref_import_settings_help" formatted="false">सहेजी गई प्राथमिकताएँ पुनर्स्थापित करें। यह क्रिया इतिहास या अलार्म रिकॉर्ड पुनर्स्थापित नहीं करती है।</string>
     <string name="pref_import_settings_summary" formatted="false">फ़ाइल से सेटिंग पुनर्स्थापित करें</string>
     <string name="settings_imported" formatted="false">सेटिंग सफलतापूर्वक आयात की गईं।</string>
     <string name="invalid_settings_file" formatted="false">अमान्य सेटिंग फ़ाइल</string>
     <string name="settings_file_version_warning" formatted="false">यह फ़ाइल ऐप के नए संस्करण से बनाई गई है। इसे आयात करने से अनपेक्षित व्यवहार हो सकता है। फिर भी जारी रखें?</string>
     <string name="pref_export_alarms" formatted="false">अलार्म निर्यात करें</string>
-    <string name="pref_export_alarms_help" formatted="false">“अलार्म निर्यात करें” आपके अलार्म सहेजता है। JSON फ़ाइल में अलार्म नियम होते हैं, Android द्वारा प्रबंधित सूचना चैनल या ध्वनि सेटिंग नहीं।</string>
+    <string name="pref_export_alarms_help" formatted="false">आपके अलार्म सहेजें। JSON फ़ाइल में अलार्म नियम होते हैं, Android द्वारा प्रबंधित सूचना चैनल या ध्वनि सेटिंग नहीं।</string>
     <string name="pref_export_alarms_summary" formatted="false">वर्तमान अलार्म को फ़ाइल में सहेजें</string>
     <string name="alarms_exported" formatted="false">अलार्म सफलतापूर्वक निर्यात किए गए।</string>
     <string name="pref_import_alarms" formatted="false">अलार्म आयात करें</string>
-    <string name="pref_import_alarms_help" formatted="false">“अलार्म आयात करें” से सभी मौजूदा अलार्म बैकअप के अलार्म से बदल जाते हैं। अलार्म-बैकअप JSON फ़ाइल चुनें।</string>
+    <string name="pref_import_alarms_help" formatted="false">सभी मौजूदा अलार्म बैकअप के अलार्म से बदलें। अलार्म-बैकअप JSON फ़ाइल चुनें।</string>
     <string name="pref_import_alarms_summary" formatted="false">वर्तमान अलार्म को फ़ाइल के अलार्म से बदलें</string>
     <string name="alarms_imported" formatted="false">अलार्म सफलतापूर्वक आयात किए गए।</string>
     <string name="invalid_alarms_file" formatted="false">अमान्य अलार्म फ़ाइल</string>
@@ -843,7 +849,7 @@
     <string name="invalid_csv_logs_file" formatted="false">अमान्य या असंगत CSV लॉग फ़ाइल</string>
     <string name="settings_reset_title">डिफ़ॉल्ट सेटिंग बहाल करें</string>
     <string name="settings_reset_summary">इतिहास, अलार्म और सीखे गए अनुमान रखते हुए ऐप प्राथमिकताएँ रीसेट करें</string>
-    <string name="settings_reset_help" formatted="false">“डिफ़ॉल्ट सेटिंग बहाल करें” पर पुष्टि माँगी जाती है, फिर ऐप प्राथमिकताएँ रीसेट होती हैं। इतिहास, अलार्म, सीखे गए अनुमान, विजेट कॉन्फ़िगरेशन और बैकग्राउंड निगरानी चालू या बंद होने की स्थिति बनी रहती है। सिस्टम अनुमतियाँ और सूचना चैनल सेटिंग रीसेट नहीं होतीं।</string>
+    <string name="settings_reset_help" formatted="false">पुष्टि के बाद ऐप प्राथमिकताएँ रीसेट करें। इतिहास, अलार्म, सीखे गए अनुमान, विजेट कॉन्फ़िगरेशन और बैकग्राउंड निगरानी चालू या बंद होने की स्थिति बनी रहती है। सिस्टम अनुमतियाँ और सूचना चैनल सेटिंग रीसेट नहीं होतीं।</string>
     <string name="settings_reset_question">ऐप की सभी सेटिंग डिफ़ॉल्ट पर बहाल करें? इतिहास, अलार्म और सीखे गए अनुमान बने रहेंगे। बैकग्राउंड निगरानी अभी की तरह चालू या बंद रहेगी।</string>
     <string name="settings_reset_confirm">डिफ़ॉल्ट बहाल करें</string>
     <string name="settings_reset_done">डिफ़ॉल्ट सेटिंग बहाल हुई।</string>

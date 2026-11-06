@@ -94,15 +94,14 @@
     <string name="pref_show_remaining_charge_summary" formatted="false">Mostrar a carga restante da bateria informada pelo dispositivo em mAh?</string>
     <string name="pref_show_remaining_charge_help" formatted="false">Mostre a carga restante da bateria informada pelo dispositivo em mAh.</string>
     <string name="pref_battery_current_multiplier" formatted="false">Multiplicador</string>
-    <string name="pref_battery_current_multiplier_help" formatted="false">Alguns dispositivos informam unidades ou sinais inesperados. Multiplique aqui o valor informado para corrigir o resultado exibido.\n
+    <string name="pref_battery_current_multiplier_help" formatted="false">Alguns dispositivos informam unidades ou sinais inesperados. Multiplique aqui o valor informado para corrigir o resultado exibido. Use “Detectar automaticamente” para tentar deduzir o multiplicador de corrente a partir de uma leitura da bateria.\n
     \n
     Como referência aproximada para celulares, o sinal padrão do Android é positivo durante o carregamento e negativo durante a descarga. O carregamento ativo costuma ficar entre +500 e +5000\u00A0mA, enquanto a descarga normal costuma ficar entre -100 e -3000\u00A0mA. Valores próximos de zero podem ser normais quando a bateria está quase cheia ou o celular está ocioso. Se a magnitude parecer cerca de 1000 vezes menor ou maior, ou se o sinal estiver invertido, ajuste o multiplicador.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detectar automaticamente</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Tente deduzir o multiplicador de corrente a partir de uma leitura da bateria. Se a detecção não estiver disponível, o valor atual permanece inalterado e a detecção pode tentar novamente quando uma leitura adequada estiver disponível. Escolher um valor manual cancela a detecção pendente.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">A detecção automática não está disponível para o estado ou a leitura atual da bateria</string>
     <string name="pref_battery_current_multiplier_detection_result">O multiplicador foi definido automaticamente como %1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Preferir corrente média</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">Usar a média recente em “Estado atual” quando estiver disponível?</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">Usar a média recente quando estiver disponível?</string>
     <string name="pref_prefer_current_avg_help" formatted="false">Alguns dispositivos fornecem uma média recente além da corrente instantânea. O período da média varia conforme o dispositivo. “Estado atual” usa a corrente instantânea quando a média está indisponível. Esta opção aplica-se apenas a “Estado atual”; os registros salvam sempre a leitura instantânea original.</string>
 
     <string name="activity_until_charged" formatted="false">até ser carregado</string>
@@ -131,8 +130,8 @@
     <string name="predictor_long_term_ave" formatted="false">Média de longo prazo</string>
     <string name="pref_cat_target_levels" formatted="false">Níveis desejados</string>
     <string name="pref_charging_target_mode" formatted="false">Meta de carregamento</string>
-    <string name="pref_charging_target_mode_help" formatted="false">“Automático (recomendado)” usa um limite fixo de carregamento do dispositivo quando o Battery Monitor o consegue ler; caso contrário, usa 100%. O carregamento adaptativo continua a visar 100%. “Personalizado” usa o nível escolhido para as estimativas de carregamento e os alarmes “Objetivo de carregamento atingido”.</string>
-    <string name="pref_charging_target_mode_support_help" formatted="false">A detecção automática pode funcionar em aparelhos Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme e Sony Xperia, além de aparelhos com GrapheneOS ou LineageOS, especialmente quando há acesso root ou Shizuku. Ela se baseia em sinais de software, portanto a disponibilidade e a precisão não são garantidas nem mesmo para os fabricantes citados. Modelos ou versões do sistema não testados dessas famílias também podem funcionar, mas aparelhos de outros fabricantes não são detectados automaticamente no momento.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">“Automático (recomendado)” usa um limite fixo de carregamento do dispositivo quando o Battery Monitor o consegue ler; caso contrário, usa 100%. O carregamento adaptativo continua a visar 100%. “Personalizado” usa o nível escolhido para as estimativas de carregamento e os alarmes “Objetivo de carregamento atingido”.\n
+    A detecção automática pode funcionar em aparelhos Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme e Sony Xperia, além de aparelhos com GrapheneOS ou LineageOS, especialmente quando há acesso root ou Shizuku. Ela se baseia em sinais de software, portanto a disponibilidade e a precisão não são garantidas nem mesmo para os fabricantes citados. Modelos ou versões do sistema não testados dessas famílias também podem funcionar, mas aparelhos de outros fabricantes não são detectados automaticamente no momento.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Limite de carregamento do dispositivo: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Meta personalizada</string>
     <string name="pref_charging_target_mode_summary_default" formatted="false">Nenhum limite fixo detectado — usando 100%</string>
@@ -156,7 +155,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">Você desativou todas as notificações deste aplicativo.  Por favor, permita que eles acessem essas configurações</string>
     <string name="main_notifs_disabled_summary" formatted="false">Você desativou a notificação principal deste aplicativo.  Ative-o para acessar essas configurações</string>
     <string name="settings_notification_disabled">Ative as notificações do aplicativo e o canal principal de notificações para personalizar esta opção</string>
-    <string name="settings_notification_disabled_help">Ative as notificações do aplicativo e o canal principal de notificações para personalizar esta opção.</string>
     <string name="notifications_onboarding_message">O Battery Monitor precisa da sua permissão para mostrar o nível da bateria na barra de status e avisar sobre alarmes.\n
     \n
     Observação: conceder essa permissão pode ocasionalmente fazer o app fechar. Se isso acontecer, basta abri-lo novamente.</string>
@@ -172,7 +170,23 @@
     <string name="time_since_status_change" formatted="false">Tempo desde a mudança de status</string>
     <string name="vital_signs" formatted="false">Sinais Vitais</string>
     <string name="notification_until_charged" formatted="true">%1$s até carregar</string>
-    <string name="notification_until_drained" formatted="true">Restam %1$s</string>
+    <string name="notification_until_drained_mixed" formatted="true">%1$s até descarregar</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s até descarregar</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="one">%1$s até descarregar</item>
+        <item quantity="many">%1$s até descarregar</item>
+        <item quantity="other">%1$s até descarregar</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="one">%1$s até descarregar</item>
+        <item quantity="many">%1$s até descarregar</item>
+        <item quantity="other">%1$s até descarregar</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="one">%1$s até descarregar</item>
+        <item quantity="many">%1$s até descarregar</item>
+        <item quantity="other">%1$s até descarregar</item>
+    </plurals>
     <string name="pref_time_remaining_verbosity" formatted="false">Verbosidade do tempo restante</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">Os dispositivos vêm em todos os formatos e tamanhos, por isso a maioria das traduções precisa use abreviações para garantir que a estimativa do tempo restante se ajuste confortavelmente na área de notificação. Se ainda não couber, você pode optar pelo formato “Condensado”. Se você tiver bastante espaço, você pode preferir a configuração “Verboso”.</string>
     <string name="condensed" formatted="false">Condensado</string>
@@ -303,7 +317,6 @@
     <string name="alarms_delivery_sound">Som e notificação</string>
     <string name="alarms_delivery_vibration">Vibração e notificação</string>
     <string name="alarms_delivery_notification">Apenas notificação</string>
-    <string name="alarms_channel_help">O som e a entrega são controlados por este canal de notificações do Android.</string>
     <string name="alarms_options_title" formatted="false">Opções dos alarmes</string>
     <string name="pref_dismiss_low_battery_on_recovery">Dispensar alarme de bateria fraca após recuperação</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Remova a notificação de bateria fraca quando a carga ultrapassa o respectivo limiar. As outras notificações de alarme permanecem</string>
@@ -375,7 +388,6 @@
     <string name="history_deleted">Registros limpos</string>
     <string name="history_load_failed">Não foi possível ler o histórico</string>
     <string name="history_operation_failed">A operação falhou. Verifique o acesso ao arquivo e tente novamente.</string>
-    <string name="history_settings">Configurações do histórico e cópias de segurança</string>
     <string name="history_open_fullscreen">Abrir gráfico em tela cheia</string>
     <string name="history_chart_description_fullscreen">%1$s. Medições de %2$s a %3$s.</string>
     <string name="history_chart_select_point">Selecionar medições</string>
@@ -422,7 +434,6 @@
     <string name="pref_enable_logging_summary" formatted="false">Registrar mudanças no estado da bateria?</string>
     <string name="pref_enable_logging_help" formatted="false">Salve observações e mudanças de estado da bateria para o “Histórico”. As medições disponíveis incluem nível, temperatura, tensão, corrente instantânea original e carga restante. A potência é calculada a partir da tensão e corrente ao ser apresentada ou exportada; não é salva separadamente. Desativar o registro não apaga o histórico existente nem interrompe as estimativas de tempo.</string>
     <string name="pref_max_log_age" formatted="false">Idade Máxima dos Relatórios</string>
-    <string name="pref_max_log_age_summary" formatted="false">Apagar relatórios mais velhos que:</string>
     <string name="pref_max_log_age_help" formatted="false">Quando o registro está ativado, conectar à energia remove os registros anteriores a este limite. “Sem limite” mantém-nos até que os apague manualmente. Se a exportação automática estiver ativada, o Battery Monitor exporta os registros pendentes antes de eliminar os antigos; uma falha na exportação impede essa eliminação.</string>
     <string name="age_1_day" formatted="false">1\u00A0dia</string>
     <string name="age_2_days" formatted="false">2\u00A0dias</string>
@@ -434,7 +445,7 @@
     <string name="age_no_limit" formatted="false">Sem limite</string>
     <string name="log_export_mode_title" formatted="false">Exportar registros</string>
     <string name="log_export_append" formatted="false">Adicionar a um arquivo existente</string>
-    <string name="log_export_append_help" formatted="false">Os arquivos CSV e JSON podem ser ampliados. Escolha um arquivo existente no formato selecionado; são adicionados apenas os registros desde a última exportação manual.</string>
+    <string name="log_export_append_description" formatted="false">Os arquivos CSV e JSON podem ser ampliados. Escolha um arquivo existente no formato selecionado; são adicionados apenas os registros desde a última exportação manual.</string>
     <string name="log_json_append_invalid" formatted="false">Escolha um arquivo JSON de histórico do Battery Monitor legível, de uma versão compatível, com até 16 MB.</string>
     <string name="log_export_recovery_required" formatted="true">Reconecte o armazenamento e tente exportar novamente para esse arquivo para restaurá-lo. O arquivo original é mantido no armazenamento do aplicativo (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">Tudo</string>
@@ -567,7 +578,7 @@
     <string name="diag_status_waiting_permission" formatted="false">Aguardando permissão do Shizuku…</string>
     <string name="diag_status_no_stats" formatted="false">Nenhuma estatística avançada da bateria está disponível neste dispositivo agora.</string>
     <string name="diag_value_not_available" formatted="false">Não disponível</string>
-    <string name="diag_help_overview" formatted="false">“Diagnóstico” combina a confiabilidade do monitor, os dados salvos do previsor e os dados da bateria nos abas “Funcionamento do aplicativo”, “Bateria”, “Carregamento” e “Dados brutos”. Os dados Android estão disponíveis sem root. Os dados adicionais dependem do dispositivo e das permissões disponíveis para o Battery Monitor.</string>
+    <string name="diag_help_overview" formatted="false">Combina a confiabilidade do monitor, os dados salvos do previsor e os dados da bateria nos abas “Funcionamento do aplicativo”, “Bateria”, “Carregamento” e “Dados brutos”. Os dados Android estão disponíveis sem root. Os dados adicionais dependem do dispositivo e das permissões disponíveis para o Battery Monitor.</string>
     <string name="diag_section_counters" formatted="false">Contadores</string>
     <string name="diag_help_counters" formatted="false">As leituras da bateria têm etiquetas e são formatadas como carga restante em mAh, corrente em mA, energia em mWh, tensão em V, temperatura na unidade selecionada e potência em W. O multiplicador de corrente também se aplica à potência calculada. A corrente média e o número de ciclos dependem do suporte do dispositivo.</string>
     <string name="diag_field_charge_counter" formatted="false">Estimativa de carga restante</string>
@@ -575,7 +586,7 @@
     <string name="diag_field_current_average" formatted="false">Corrente média</string>
     <string name="diag_field_energy_counter" formatted="false">Contador de energia</string>
     <string name="diag_section_capacity" formatted="false">Capacidade</string>
-    <string name="diag_help_capacity" formatted="false">“Capacidade” mostra a capacidade de carga completa, a capacidade de projeto e a saúde estimada. A saúde estimada é calculada como capacidade de carga completa dividida pela capacidade de projeto, portanto sua precisão depende dos valores informados pelo dispositivo.</string>
+    <string name="diag_help_capacity" formatted="false">Mostra a capacidade de carga completa, a capacidade de projeto e a saúde estimada. A saúde estimada é calculada como capacidade de carga completa dividida pela capacidade de projeto, portanto sua precisão depende dos valores informados pelo dispositivo.</string>
     <string name="diag_field_cycle_count" formatted="false">Contagem de ciclos</string>
     <string name="diag_field_reported_capacity" formatted="false">Capacidade reportada</string>
     <string name="diag_field_state_of_health" formatted="false">Estado de saúde</string>
@@ -588,7 +599,7 @@
     <string name="diag_capacity_low">Baixa</string>
     <string name="diag_capacity_high">Alta</string>
     <string name="diag_section_charging" formatted="false">Carregamento</string>
-    <string name="diag_help_charging" formatted="false">“Carregamento” mostra valores relacionados ao caminho de carregamento ativo, como corrente ou tensão máximas de carregamento, política de carregamento, estado de carregamento e nível de capacidade. Esses campos podem mudar entre carregadores e modos de carregamento.</string>
+    <string name="diag_help_charging" formatted="false">Mostra valores relacionados ao caminho de carregamento ativo, como corrente ou tensão máximas de carregamento, política de carregamento, estado de carregamento e nível de capacidade. Esses campos podem mudar entre carregadores e modos de carregamento.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Tempo restante de carregamento</string>
     <string name="diag_field_max_charging_current" formatted="false">Corrente máxima de carregamento</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Tensão máxima de carregamento</string>
@@ -645,8 +656,7 @@
     <string name="diagnostics" formatted="false">Diagnóstico</string>
     <string name="diagnostics_summary" formatted="false">Verifique permissões e confiabilidade do monitoramento e crie um relatório para solucionar problemas</string>
     <string name="diag_overview">Funcionamento do aplicativo</string>
-    <string name="diagnostics_help_title" formatted="false">Como o diagnóstico ajuda</string>
-    <string name="diagnostics_help_overview" formatted="false">“Funcionamento do monitor” verifica as permissões e a confiabilidade do monitor. Use os controles para iniciar ou parar o monitoramento, alterar o registro de depuração, abrir as configurações de otimização da bateria e de notificações ou criar um relatório de resolução de problemas. Nem toda a leitura indisponível indica um problema de permissões; alguns dispositivos não a fornecem.</string>
+    <string name="diagnostics_help_overview" formatted="false">Verifica as permissões e a confiabilidade do monitor. Use os controles para iniciar ou parar o monitoramento, alterar o registro de depuração, abrir as configurações de otimização da bateria e de notificações ou criar um relatório de resolução de problemas. Nem toda a leitura indisponível indica um problema de permissões; alguns dispositivos não a fornecem.</string>
     <string name="diagnostics_monitoring" formatted="false">Monitoramento em segundo plano</string>
     <string name="diag_monitor_operation">Funcionamento do monitor</string>
     <string name="diag_heartbeat">Último sinal de atividade</string>
@@ -785,13 +795,12 @@
     <string name="backup_restore_settings_summary" formatted="false">Faça backup, restaure e transfira as configurações do aplicativo e os dados da bateria</string>
     <string name="backup_restore_help_overview" formatted="false">Salve e restaure configurações, alarmes, registros e dados de previsão aprendidos. “Restaurar configurações padrão” restaura as preferências do aplicativo após confirmação, mantendo o histórico, os alarmes, as estimativas aprendidas e se o monitoramento está funcionando.</string>
     <string name="pref_general_backup" formatted="false">Backup geral do aplicativo</string>
-    <string name="general_backup_restore_effects_help" formatted="false">As categorias selecionadas são restauradas; as não selecionadas são mantidas. Restaurar os alarmes substitui os alarmes atuais. Para os registros, escolha se deseja adicioná-los ou substituir o histórico atual.</string>
     <string name="pref_export_general_backup" formatted="false">Exportar backup geral</string>
     <string name="pref_export_general_backup_help" formatted="false">Salve configurações, alarmes e dados específicos do dispositivo juntos em um backup geral ZIP em um local de sua escolha.</string>
     <string name="pref_export_general_backup_summary" formatted="false">Salvar configurações, alarmes e dados específicos do dispositivo em um arquivo ZIP</string>
     <string name="general_backup_exported" formatted="false">Backup geral exportado com sucesso.</string>
     <string name="pref_import_general_backup" formatted="false">Importar backup geral</string>
-    <string name="pref_import_general_backup_help" formatted="false">Selecione um backup geral ZIP existente e escolha quais categorias disponíveis restaurar. Backups criados com versões mais recentes do aplicativo podem ser incompatíveis, e restaurar registros ou dados do preditor de outro dispositivo pode causar previsões incorretas. Se a restauração for concluída apenas parcialmente, verifique as categorias informadas antes de tentar novamente.</string>
+    <string name="pref_import_general_backup_help" formatted="false">Selecione um backup geral ZIP existente e escolha quais categorias disponíveis restaurar. Backups criados com versões mais recentes do aplicativo podem ser incompatíveis, e restaurar registros ou dados do preditor de outro dispositivo pode causar previsões incorretas. Se a restauração for concluída apenas parcialmente, verifique as categorias informadas antes de tentar novamente. As categorias selecionadas são restauradas; as não selecionadas são mantidas. Restaurar os alarmes substitui os alarmes atuais. Para os registros, escolha se deseja adicioná-los ou substituir o histórico atual.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Restaurar os dados selecionados de um arquivo ZIP de backup geral</string>
     <string name="general_backup_restore_message" formatted="false">Escolha o que deseja restaurar.</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">Registros e dados de previsão</string>
@@ -800,21 +809,21 @@
     <string name="settings_restore_partial">Não foi possível restaurar alguns dados. Restaurados com sucesso: %1$s. Dados que podem ter sido parcialmente restaurados: %2$s. Verifique estas seções antes de tentar novamente.</string>
     <string name="settings_restore_none">Nenhum</string>
     <string name="pref_export_settings" formatted="false">Exportar configurações</string>
-    <string name="pref_export_settings_help" formatted="false">“Exportar configurações” salva as preferências do aplicativo. O resultado é um arquivo JSON de backup das configurações.</string>
+    <string name="pref_export_settings_help" formatted="false">Salva as preferências do aplicativo. O resultado é um arquivo JSON de backup das configurações.</string>
     <string name="pref_export_settings_summary" formatted="false">Salvar as configurações atuais em um arquivo</string>
     <string name="settings_exported" formatted="false">Configurações exportadas com sucesso.</string>
     <string name="pref_import_settings" formatted="false">Importar configurações</string>
-    <string name="pref_import_settings_help" formatted="false">Com “Importar configurações”, as preferências salvas são restauradas. Esta ação não restaura o histórico nem os registros de alarmes.</string>
+    <string name="pref_import_settings_help" formatted="false">Restaure as preferências salvas. Esta ação não restaura o histórico nem os registros de alarmes.</string>
     <string name="pref_import_settings_summary" formatted="false">Restaurar configurações de um arquivo</string>
     <string name="settings_imported" formatted="false">Configurações importadas com sucesso.</string>
     <string name="invalid_settings_file" formatted="false">Arquivo de configurações inválido</string>
     <string name="settings_file_version_warning" formatted="false">Este arquivo foi criado por uma versão mais recente do app. Importá-lo pode causar comportamento inesperado. Continuar mesmo assim?</string>
     <string name="pref_export_alarms" formatted="false">Exportar alarmes</string>
-    <string name="pref_export_alarms_help" formatted="false">“Exportar alarmes” salva seus alarmes. O arquivo JSON contém regras de alarme, mas não as configurações de canais de notificação ou sons gerenciadas pelo Android.</string>
+    <string name="pref_export_alarms_help" formatted="false">Salva seus alarmes. O arquivo JSON contém regras de alarme, mas não as configurações de canais de notificação ou sons gerenciadas pelo Android.</string>
     <string name="pref_export_alarms_summary" formatted="false">Salvar os alarmes atuais em um arquivo</string>
     <string name="alarms_exported" formatted="false">Alarmes exportados com sucesso.</string>
     <string name="pref_import_alarms" formatted="false">Importar alarmes</string>
-    <string name="pref_import_alarms_help" formatted="false">Com “Importar alarmes”, todos os alarmes atuais são substituídos pelos alarmes do backup. Escolha um arquivo JSON de backup dos alarmes.</string>
+    <string name="pref_import_alarms_help" formatted="false">Substitua todos os alarmes atuais pelos alarmes do backup. Escolha um arquivo JSON de backup dos alarmes.</string>
     <string name="pref_import_alarms_summary" formatted="false">Substituir os alarmes atuais pelos alarmes de um arquivo</string>
     <string name="alarms_imported" formatted="false">Alarmes importados com sucesso.</string>
     <string name="invalid_alarms_file" formatted="false">Arquivo de alarmes inválido</string>
@@ -846,7 +855,7 @@
     <string name="invalid_csv_logs_file" formatted="false">Arquivo de registros CSV inválido ou incompatível</string>
     <string name="settings_reset_title">Restaurar configurações padrão</string>
     <string name="settings_reset_summary">Redefina as preferências do aplicativo mantendo o histórico, os alarmes e as estimativas aprendidas</string>
-    <string name="settings_reset_help" formatted="false">“Restaurar configurações padrão” pede confirmação e depois restaura as preferências do aplicativo. Mantém o histórico, os alarmes, as estimativas aprendidas, as configurações dos widgets e se o monitoramento em segundo plano está funcionando. Não restaura as permissões do sistema nem as configurações dos canais de notificações.</string>
+    <string name="settings_reset_help" formatted="false">Restaure as preferências do aplicativo após a confirmação. Mantém o histórico, os alarmes, as estimativas aprendidas, as configurações dos widgets e se o monitoramento em segundo plano está funcionando. Não restaura as permissões do sistema nem as configurações dos canais de notificações.</string>
     <string name="settings_reset_question">Restaurar todas as configurações do aplicativo para os valores padrão? O histórico, os alarmes e as estimativas aprendidas serão mantidos. O monitoramento em segundo plano continuará funcionando ou parado, tal como está agora.</string>
     <string name="settings_reset_confirm">Restaurar configurações padrão</string>
     <string name="settings_reset_done">Configurações padrão restauradas.</string>

@@ -94,15 +94,14 @@
     <string name="pref_show_remaining_charge_summary" formatted="false">عرض شحنة البطارية المتبقية التي يبلغ عنها الجهاز بوحدة mAh؟</string>
     <string name="pref_show_remaining_charge_help" formatted="false">اعرض شحنة البطارية المتبقية التي يبلغ عنها الجهاز بوحدة mAh.</string>
     <string name="pref_battery_current_multiplier" formatted="false">المُضاعِف</string>
-    <string name="pref_battery_current_multiplier_help" formatted="false">تبلغ بعض الأجهزة عن وحدات أو إشارات غير متوقعة. اضرب القيمة المُبلّغ عنها هنا لتصحيح النتيجة المعروضة.\n
+    <string name="pref_battery_current_multiplier_help" formatted="false">تبلغ بعض الأجهزة عن وحدات أو إشارات غير متوقعة. اضرب القيمة المُبلّغ عنها هنا لتصحيح النتيجة المعروضة. استخدم «اكتشاف تلقائي» لمحاولة استنتاج مُضاعِف التيار من قراءة البطارية.\n
     \n
     كمرجع تقريبي للهواتف، تكون إشارة Android القياسية موجبة أثناء الشحن وسالبة أثناء التفريغ. يكون الشحن النشط غالبًا بين +500 و+5000\u00A0mA، بينما يكون التفريغ العادي غالبًا بين -100 و-3000\u00A0mA. قد تكون القيم القريبة من الصفر طبيعية عندما تكون البطارية شبه ممتلئة أو الهاتف في وضع الخمول. إذا بدت القيمة أصغر أو أكبر بنحو 1000 مرة، أو كانت الإشارة معكوسة، فاضبط المُضاعِف.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">اكتشاف تلقائي</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">حاول استنتاج مضاعف التيار من قراءة البطارية. إذا تعذّر الاكتشاف، تبقى القيمة الحالية دون تغيير ويمكن إعادة محاولة الاكتشاف عند توفر قراءة مناسبة. اختيار قيمة يدوية يلغي الاكتشاف المعلّق.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">لا يتوفر الاكتشاف التلقائي لحالة البطارية أو القراءة الحالية</string>
     <string name="pref_battery_current_multiplier_detection_result">تم ضبط المُضاعِف تلقائيًا على %1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">تفضيل متوسط التيار</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">استخدام المتوسط الحديث في «الحالة الحالية» عند توفره؟</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">استخدام المتوسط الحديث عند توفره؟</string>
     <string name="pref_prefer_current_avg_help" formatted="false">توفر بعض الأجهزة متوسطًا حديثًا إلى جانب التيار اللحظي. تختلف فترة المتوسط حسب الجهاز. تستخدم «الحالة الحالية» التيار اللحظي عندما لا يتوفر المتوسط. ينطبق هذا الخيار على «الحالة الحالية» فقط؛ تحفظ السجلات القراءة اللحظية الأصلية دائمًا.</string>
 
     <string name="activity_until_charged" formatted="false">حتى الشحن</string>
@@ -131,8 +130,8 @@
     <string name="predictor_long_term_ave" formatted="false">طويل الاجل</string>
     <string name="pref_cat_target_levels" formatted="false">المستويات المستهدفة</string>
     <string name="pref_charging_target_mode" formatted="false">هدف الشحن</string>
-    <string name="pref_charging_target_mode_help" formatted="false">يستخدم «تلقائي (موصى به)» حد شحن الجهاز الثابت عندما يستطيع Battery Monitor قراءته، وإلا يستخدم 100%. يظل هدف الشحن التكيفي 100%. يستخدم «مخصص» المستوى الذي اخترته لتقديرات الشحن ومنبهات «تم بلوغ هدف الشحن».</string>
-    <string name="pref_charging_target_mode_support_help" formatted="false">قد يعمل الاكتشاف التلقائي على أجهزة Google Pixel وSamsung Galaxy وXiaomi/Redmi/POCO وOnePlus/Oppo/Realme وSony Xperia، وعلى الأجهزة التي تعمل بنظام GrapheneOS أو LineageOS، خصوصًا عند توفر صلاحية root أو Shizuku. يعتمد الاكتشاف على إشارات برمجية، لذلك لا نضمن توفره أو دقته حتى مع الشركات المذكورة. قد تعمل أيضًا طُرز أو إصدارات نظام غير مختبرة ضمن هذه العائلات، لكن أجهزة الشركات الأخرى لا تُكتشف تلقائيًا حاليًا.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">يستخدم «تلقائي (موصى به)» حد شحن الجهاز الثابت عندما يستطيع Battery Monitor قراءته، وإلا يستخدم 100%. يظل هدف الشحن التكيفي 100%. يستخدم «مخصص» المستوى الذي اخترته لتقديرات الشحن ومنبهات «تم بلوغ هدف الشحن».\n
+    قد يعمل الاكتشاف التلقائي على أجهزة Google Pixel وSamsung Galaxy وXiaomi/Redmi/POCO وOnePlus/Oppo/Realme وSony Xperia، وعلى الأجهزة التي تعمل بنظام GrapheneOS أو LineageOS، خصوصًا عند توفر صلاحية root أو Shizuku. يعتمد الاكتشاف على إشارات برمجية، لذلك لا نضمن توفره أو دقته حتى مع الشركات المذكورة. قد تعمل أيضًا طُرز أو إصدارات نظام غير مختبرة ضمن هذه العائلات، لكن أجهزة الشركات الأخرى لا تُكتشف تلقائيًا حاليًا.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">حد شحن الجهاز: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">هدف مخصص</string>
     <string name="pref_charging_target_mode_summary_default" formatted="false">لم يُكتشف حد ثابت للجهاز — سيتم استخدام 100%</string>
@@ -156,7 +155,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">لقد عطلت جميع إشعارات هذا التطبيق. يرجى تمكينها للوصول إلى هذه الإعدادات</string>
     <string name="main_notifs_disabled_summary" formatted="false">لقد عطلت الإشعار الرئيسي لهذا التطبيق. يرجى تمكينه للوصول إلى هذه الإعدادات</string>
     <string name="settings_notification_disabled">فعّل إشعارات التطبيق وقناة الإشعار الرئيسي لتخصيص هذا الخيار</string>
-    <string name="settings_notification_disabled_help">فعّل إشعارات التطبيق وقناة الإشعار الرئيسي لتخصيص هذا الخيار.</string>
     <string name="notifications_onboarding_message">يحتاج Battery Monitor إلى إذنك لعرض مستوى البطارية في شريط الحالة وإشعارك بالمنبهات.\n
     \n
     ملاحظة: قد يؤدي منح هذا الإذن أحيانًا إلى إغلاق التطبيق. إذا حدث ذلك، يرجى إعادة فتحه ببساطة.</string>
@@ -172,7 +170,32 @@
     <string name="time_since_status_change" formatted="false">منذ وقت تغيير الحالة</string>
     <string name="vital_signs" formatted="false">علامات حيوية</string>
     <string name="notification_until_charged" formatted="true">%1$s حتى اكتمال الشحن</string>
-    <string name="notification_until_drained" formatted="true">متبقٍ %1$s</string>
+    <string name="notification_until_drained_mixed" formatted="true">%1$s حتى نفاد البطارية</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s حتى نفاد البطارية</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="zero">%1$s حتى نفاد البطارية</item>
+        <item quantity="one">%1$s حتى نفاد البطارية</item>
+        <item quantity="two">%1$s حتى نفاد البطارية</item>
+        <item quantity="few">%1$s حتى نفاد البطارية</item>
+        <item quantity="many">%1$s حتى نفاد البطارية</item>
+        <item quantity="other">%1$s حتى نفاد البطارية</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="zero">%1$s حتى نفاد البطارية</item>
+        <item quantity="one">%1$s حتى نفاد البطارية</item>
+        <item quantity="two">%1$s حتى نفاد البطارية</item>
+        <item quantity="few">%1$s حتى نفاد البطارية</item>
+        <item quantity="many">%1$s حتى نفاد البطارية</item>
+        <item quantity="other">%1$s حتى نفاد البطارية</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="zero">%1$s حتى نفاد البطارية</item>
+        <item quantity="one">%1$s حتى نفاد البطارية</item>
+        <item quantity="two">%1$s حتى نفاد البطارية</item>
+        <item quantity="few">%1$s حتى نفاد البطارية</item>
+        <item quantity="many">%1$s حتى نفاد البطارية</item>
+        <item quantity="other">%1$s حتى نفاد البطارية</item>
+    </plurals>
     <string name="pref_time_remaining_verbosity" formatted="false">الوقت المتبقي الاسهاب</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">الأجهزة تأتي في جميع الأشكال والأحجام، لذلك تحتاج معظم الترجمات لاستخدام الاختصارات لضمان أن تقدير الوقت المتبقي يلائم بشكل مريح في منطقة الاشعارات. إذا كان لا يزال لا يصلح، يمكنك اختيار شكل «موجز». إذا كان لديك الكثير من الغرف، قد تفضل إعداد «مسهب».</string>
     <string name="condensed" formatted="false">موجز</string>
@@ -306,7 +329,6 @@
     <string name="alarms_delivery_sound">صوت وإشعار</string>
     <string name="alarms_delivery_vibration">اهتزاز وإشعار</string>
     <string name="alarms_delivery_notification">إشعار فقط</string>
-    <string name="alarms_channel_help">تتحكم قناة إشعارات Android هذه في الصوت وطريقة التسليم.</string>
     <string name="alarms_options_title" formatted="false">خيارات المنبهات</string>
     <string name="pref_dismiss_low_battery_on_recovery">إزالة منبه انخفاض البطارية بعد التعافي</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">إزالة إشعار انخفاض البطارية عندما ترتفع الشحنة فوق عتبته. تبقى إشعارات المنبهات الأخرى</string>
@@ -378,7 +400,6 @@
     <string name="history_deleted">تم مسح السجلات</string>
     <string name="history_load_failed">تعذرت قراءة السجل</string>
     <string name="history_operation_failed">فشلت العملية. تحقق من الوصول إلى الملف وأعد المحاولة.</string>
-    <string name="history_settings">إعدادات السجل والنسخ الاحتياطي</string>
     <string name="history_open_fullscreen">فتح الرسم البياني بملء الشاشة</string>
     <string name="history_chart_description_fullscreen">%1$s. القراءات من %2$s إلى %3$s.</string>
     <string name="history_chart_select_point">تحديد القراءات</string>
@@ -425,7 +446,6 @@
     <string name="pref_enable_logging_summary" formatted="false">تسجيل حالة تغيير البطارية ؟</string>
     <string name="pref_enable_logging_help" formatted="false">احفظ قراءات البطارية وتغييرات الحالة لـ «السجل». تشمل القياسات المتاحة المستوى والحرارة والجهد والتيار اللحظي الأصلي والشحنة المتبقية. تُحسب القدرة من الجهد والتيار عند العرض أو التصدير؛ ولا تُحفظ منفصلة. إيقاف التسجيل لا يمسح السجل الموجود ولا يوقف تقديرات الوقت.</string>
     <string name="pref_max_log_age" formatted="false">الاحد الاقصى للسجلات</string>
-    <string name="pref_max_log_age_summary" formatted="false">حذف السجلات القديمة بعد:</string>
     <string name="pref_max_log_age_help" formatted="false">عند تفعيل التسجيل، يؤدي توصيل الطاقة إلى إزالة السجلات الأقدم من هذا الحد. يبقي خيار «بلا حد» السجلات حتى تمسحها يدويًا. إذا فُعّل التصدير التلقائي، يصدّر Battery Monitor السجلات المعلقة قبل حذف الإدخالات القديمة؛ وفشل التصدير يمنع هذا الحذف.</string>
     <string name="age_1_day" formatted="false">يوم واحد</string>
     <string name="age_2_days" formatted="false">يومان</string>
@@ -437,7 +457,7 @@
     <string name="age_no_limit" formatted="false">بلا حد</string>
     <string name="log_export_mode_title" formatted="false">تصدير السجلات</string>
     <string name="log_export_append" formatted="false">إلحاق بملف موجود</string>
-    <string name="log_export_append_help" formatted="false">يمكن الإضافة إلى ملفات CSV وJSON. اختر ملفًا موجودًا بالتنسيق المحدد؛ ستُضاف فقط السجلات منذ آخر تصدير يدوي.</string>
+    <string name="log_export_append_description" formatted="false">يمكن الإضافة إلى ملفات CSV وJSON. اختر ملفًا موجودًا بالتنسيق المحدد؛ ستُضاف فقط السجلات منذ آخر تصدير يدوي.</string>
     <string name="log_json_append_invalid" formatted="false">اختر ملف سجل JSON قابلًا للقراءة من Battery Monitor بإصدار مدعوم وحجم لا يتجاوز 16 ميغابايت.</string>
     <string name="log_export_recovery_required" formatted="true">أعد توصيل وحدة التخزين وحاول التصدير إلى هذا الملف مجددًا لاستعادته. يُحتفظ بالملف الأصلي في مساحة تخزين التطبيق (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">كل شيء</string>
@@ -573,7 +593,7 @@
     <string name="diag_status_waiting_permission" formatted="false">بانتظار إذن Shizuku…</string>
     <string name="diag_status_no_stats" formatted="false">لا تتوفر أي إحصاءات بطارية متقدمة على هذا الجهاز حاليًا.</string>
     <string name="diag_value_not_available" formatted="false">غير متاح</string>
-    <string name="diag_help_overview" formatted="false">يجمع «التشخيص» موثوقية المراقبة وبيانات التنبؤ المحفوظة وبيانات البطارية في علامات «تشغيل التطبيق» و«البطارية» و«الشحن» و«البيانات الخام». تتوفر بيانات Android دون root. تعتمد بيانات الجهاز الإضافية على الجهاز والأذونات المتاحة لـ Battery Monitor.</string>
+    <string name="diag_help_overview" formatted="false">يجمع موثوقية المراقبة وبيانات التنبؤ المحفوظة وبيانات البطارية في علامات «تشغيل التطبيق» و«البطارية» و«الشحن» و«البيانات الخام». تتوفر بيانات Android دون root. تعتمد بيانات الجهاز الإضافية على الجهاز والأذونات المتاحة لـ Battery Monitor.</string>
     <string name="diag_section_counters" formatted="false">العدادات</string>
     <string name="diag_help_counters" formatted="false">تُسمى قراءات البطارية وتُنسق كشحنة متبقية بوحدة mAh وتيار بوحدة mA وطاقة بوحدة mWh وجهد بوحدة V وحرارة بالوحدة المختارة وقدرة بوحدة W. ينطبق مضاعف التيار أيضًا على القدرة المحسوبة. يعتمد متوسط التيار وعدد الدورات على دعم الجهاز.</string>
     <string name="diag_field_charge_counter" formatted="false">تقدير الشحنة المتبقية</string>
@@ -581,7 +601,7 @@
     <string name="diag_field_current_average" formatted="false">متوسط التيار</string>
     <string name="diag_field_energy_counter" formatted="false">عداد الطاقة</string>
     <string name="diag_section_capacity" formatted="false">السعة</string>
-    <string name="diag_help_capacity" formatted="false">تعرض «السعة» سعة الشحن الكامل والسعة التصميمية والحالة التقديرية. يتم حساب الحالة التقديرية بقسمة سعة الشحن الكامل على السعة التصميمية ولذلك تعتمد دقتها على ما يبلغه الجهاز.</string>
+    <string name="diag_help_capacity" formatted="false">تعرض سعة الشحن الكامل والسعة التصميمية والحالة التقديرية. يتم حساب الحالة التقديرية بقسمة سعة الشحن الكامل على السعة التصميمية ولذلك تعتمد دقتها على ما يبلغه الجهاز.</string>
     <string name="diag_field_cycle_count" formatted="false">عدد الدورات</string>
     <string name="diag_field_reported_capacity" formatted="false">السعة المبلغ عنها</string>
     <string name="diag_field_state_of_health" formatted="false">حالة الصحة</string>
@@ -594,7 +614,7 @@
     <string name="diag_capacity_low">منخفض</string>
     <string name="diag_capacity_high">مرتفع</string>
     <string name="diag_section_charging" formatted="false">الشحن</string>
-    <string name="diag_help_charging" formatted="false">يعرض قسم «الشحن» قيما مرتبطة بمسار الشحن النشط مثل أقصى تيار أو جهد شحن وسياسة الشحن وحالة الشحن ومستوى السعة. قد تتغير هذه الحقول بين الشواحن وأوضاع الشحن المختلفة.</string>
+    <string name="diag_help_charging" formatted="false">يعرض قيما مرتبطة بمسار الشحن النشط مثل أقصى تيار أو جهد شحن وسياسة الشحن وحالة الشحن ومستوى السعة. قد تتغير هذه الحقول بين الشواحن وأوضاع الشحن المختلفة.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">الوقت المتبقي للشحن</string>
     <string name="diag_field_max_charging_current" formatted="false">أقصى تيار شحن</string>
     <string name="diag_field_max_charging_voltage" formatted="false">أقصى جهد شحن</string>
@@ -651,8 +671,7 @@
     <string name="diagnostics" formatted="false">التشخيص</string>
     <string name="diagnostics_summary" formatted="false">تحقق من الأذونات وموثوقية المراقبة وأنشئ تقريرًا لاستكشاف الأخطاء</string>
     <string name="diag_overview">تشغيل التطبيق</string>
-    <string name="diagnostics_help_title" formatted="false">كيف يساعد التشخيص</string>
-    <string name="diagnostics_help_overview" formatted="false">يتحقق «تشغيل المراقبة» من الأذونات وموثوقية المراقبة. استخدم عناصره لبدء المراقبة أو إيقافها وتغيير تسجيل التصحيح وفتح إعدادات تحسين البطارية والإشعارات أو إنشاء تقرير لاستكشاف الأخطاء. ليست كل قراءة غير متاحة دليلًا على مشكلة أذونات؛ بعض الأجهزة لا توفرها.</string>
+    <string name="diagnostics_help_overview" formatted="false">يتحقق من الأذونات وموثوقية المراقبة. استخدم عناصره لبدء المراقبة أو إيقافها وتغيير تسجيل التصحيح وفتح إعدادات تحسين البطارية والإشعارات أو إنشاء تقرير لاستكشاف الأخطاء. ليست كل قراءة غير متاحة دليلًا على مشكلة أذونات؛ بعض الأجهزة لا توفرها.</string>
     <string name="diagnostics_monitoring" formatted="false">المراقبة في الخلفية</string>
     <string name="diag_monitor_operation">تشغيل المراقبة</string>
     <string name="diag_heartbeat">آخر إشارة نشاط</string>
@@ -794,13 +813,12 @@
     <string name="backup_restore_settings_summary" formatted="false">أنشئ نسخة احتياطية من إعدادات تطبيقك وبيانات البطارية واستعدها وانقلها</string>
     <string name="backup_restore_help_overview" formatted="false">احفظ واستعد الإعدادات والمنبهات والسجلات وبيانات التنبؤ المتعلمة. تعيد «استعادة الإعدادات الافتراضية» ضبط تفضيلات التطبيق بعد التأكيد مع الاحتفاظ بالسجل والمنبهات والتقديرات المتعلمة وحالة تشغيل المراقبة.</string>
     <string name="pref_general_backup" formatted="false">نسخة احتياطية عامة للتطبيق</string>
-    <string name="general_backup_restore_effects_help" formatted="false">تُستعاد الفئات المحددة؛ وتبقى الفئات غير المحددة كما هي. تؤدي استعادة المنبّهات إلى استبدال المنبّهات الحالية. بالنسبة للسجلات، اختر إضافتها أو استبدال السجل الحالي.</string>
     <string name="pref_export_general_backup" formatted="false">تصدير النسخة الاحتياطية العامة</string>
     <string name="pref_export_general_backup_help" formatted="false">احفظ الإعدادات والمنبهات والبيانات الخاصة بالجهاز معًا في نسخة احتياطية عامة بصيغة ZIP في موقع تختاره.</string>
     <string name="pref_export_general_backup_summary" formatted="false">حفظ الإعدادات والمنبهات والبيانات الخاصة بالجهاز في ملف ZIP</string>
     <string name="general_backup_exported" formatted="false">تم تصدير النسخة الاحتياطية العامة بنجاح.</string>
     <string name="pref_import_general_backup" formatted="false">استيراد النسخة الاحتياطية العامة</string>
-    <string name="pref_import_general_backup_help" formatted="false">اختر ملف ZIP موجودًا لنسخة احتياطية عامة، ثم اختر فئات البيانات المتاحة التي تريد استعادتها. قد لا تتوافق النسخ الاحتياطية المنشأة بإصدارات أحدث من التطبيق، وقد تؤدي استعادة السجلات أو بيانات التنبؤ من جهاز آخر إلى تقديرات غير صحيحة. إذا اكتملت الاستعادة جزئيًا فقط، فراجع الفئات المعروضة قبل المحاولة مرة أخرى.</string>
+    <string name="pref_import_general_backup_help" formatted="false">اختر ملف ZIP موجودًا لنسخة احتياطية عامة، ثم اختر فئات البيانات المتاحة التي تريد استعادتها. قد لا تتوافق النسخ الاحتياطية المنشأة بإصدارات أحدث من التطبيق، وقد تؤدي استعادة السجلات أو بيانات التنبؤ من جهاز آخر إلى تقديرات غير صحيحة. إذا اكتملت الاستعادة جزئيًا فقط، فراجع الفئات المعروضة قبل المحاولة مرة أخرى. تُستعاد الفئات المحددة؛ وتبقى الفئات غير المحددة كما هي. تؤدي استعادة المنبّهات إلى استبدال المنبّهات الحالية. بالنسبة للسجلات، اختر إضافتها أو استبدال السجل الحالي.</string>
     <string name="pref_import_general_backup_summary" formatted="false">استعادة البيانات المحددة من ملف ZIP لنسخة احتياطية عامة</string>
     <string name="general_backup_restore_message" formatted="false">اختر ما تريد استعادته.</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">السجلات وبيانات التنبؤ</string>
@@ -809,21 +827,21 @@
     <string name="settings_restore_partial">تعذرت استعادة بعض البيانات. تمت استعادة: %1$s. بيانات ربما استُعيدت جزئيًا: %2$s. تحقق من هذه الأقسام قبل المحاولة مجددًا.</string>
     <string name="settings_restore_none">لا شيء</string>
     <string name="pref_export_settings" formatted="false">تصدير الإعدادات</string>
-    <string name="pref_export_settings_help" formatted="false">يحفظ «تصدير الإعدادات» تفضيلات التطبيق. الناتج ملف JSON لنسخة احتياطية من الإعدادات.</string>
+    <string name="pref_export_settings_help" formatted="false">احفظ تفضيلات التطبيق. الناتج ملف JSON لنسخة احتياطية من الإعدادات.</string>
     <string name="pref_export_settings_summary" formatted="false">حفظ الإعدادات الحالية في ملف</string>
     <string name="settings_exported" formatted="false">تم تصدير الإعدادات بنجاح.</string>
     <string name="pref_import_settings" formatted="false">استيراد الإعدادات</string>
-    <string name="pref_import_settings_help" formatted="false">يؤدي «استيراد الإعدادات» إلى استعادة التفضيلات المحفوظة. لا يستعيد هذا الإجراء السجل أو سجلات المنبهات.</string>
+    <string name="pref_import_settings_help" formatted="false">استعد التفضيلات المحفوظة. لا يستعيد هذا الإجراء السجل أو سجلات المنبهات.</string>
     <string name="pref_import_settings_summary" formatted="false">استعادة الإعدادات من ملف</string>
     <string name="settings_imported" formatted="false">تم استيراد الإعدادات بنجاح.</string>
     <string name="invalid_settings_file" formatted="false">ملف إعدادات غير صالح</string>
     <string name="settings_file_version_warning" formatted="false">تم إنشاء هذا الملف بواسطة إصدار أحدث من التطبيق. قد يؤدي استيراده إلى سلوك غير متوقع. هل تريد المتابعة رغم ذلك؟</string>
     <string name="pref_export_alarms" formatted="false">تصدير المنبهات</string>
-    <string name="pref_export_alarms_help" formatted="false">يحفظ «تصدير المنبهات» منبهاتك. يحتوي ملف JSON على قواعد المنبهات، ولا يتضمن إعدادات قنوات الإشعارات أو الأصوات التي يديرها Android.</string>
+    <string name="pref_export_alarms_help" formatted="false">احفظ منبهاتك. يحتوي ملف JSON على قواعد المنبهات، ولا يتضمن إعدادات قنوات الإشعارات أو الأصوات التي يديرها Android.</string>
     <string name="pref_export_alarms_summary" formatted="false">حفظ المنبهات الحالية في ملف</string>
     <string name="alarms_exported" formatted="false">تم تصدير المنبهات بنجاح.</string>
     <string name="pref_import_alarms" formatted="false">استيراد المنبهات</string>
-    <string name="pref_import_alarms_help" formatted="false">يؤدي «استيراد المنبهات» إلى استبدال جميع المنبهات الحالية بالمنبهات الموجودة في النسخة الاحتياطية. اختر ملف JSON لنسخة احتياطية من المنبهات.</string>
+    <string name="pref_import_alarms_help" formatted="false">استبدل جميع المنبهات الحالية بالمنبهات الموجودة في النسخة الاحتياطية. اختر ملف JSON لنسخة احتياطية من المنبهات.</string>
     <string name="pref_import_alarms_summary" formatted="false">استبدال المنبهات الحالية بمنبهات من ملف</string>
     <string name="alarms_imported" formatted="false">تم استيراد المنبهات بنجاح.</string>
     <string name="invalid_alarms_file" formatted="false">ملف منبهات غير صالح</string>
@@ -855,7 +873,7 @@
     <string name="invalid_csv_logs_file" formatted="false">ملف سجلات CSV غير صالح أو غير متوافق</string>
     <string name="settings_reset_title">استعادة الإعدادات الافتراضية</string>
     <string name="settings_reset_summary">إعادة ضبط تفضيلات التطبيق مع الاحتفاظ بالسجل والمنبهات والتقديرات المتعلمة</string>
-    <string name="settings_reset_help" formatted="false">تطلب «استعادة الإعدادات الافتراضية» تأكيدًا، ثم تعيد ضبط تفضيلات التطبيق. تحتفظ بالسجل والمنبهات والتقديرات المتعلمة وإعدادات الأدوات وحالة تشغيل مراقبة الخلفية. لا تُعاد ضبط أذونات النظام أو إعدادات قنوات الإشعارات.</string>
+    <string name="settings_reset_help" formatted="false">أعد ضبط تفضيلات التطبيق بعد التأكيد. تحتفظ بالسجل والمنبهات والتقديرات المتعلمة وإعدادات الأدوات وحالة تشغيل مراقبة الخلفية. لا تُعاد ضبط أذونات النظام أو إعدادات قنوات الإشعارات.</string>
     <string name="settings_reset_question">هل تريد استعادة كل إعدادات التطبيق إلى الافتراضية؟ سيُحتفظ بالسجل والمنبهات والتقديرات المتعلمة. ستبقى مراقبة الخلفية تعمل أو متوقفة كما هي الآن.</string>
     <string name="settings_reset_confirm">استعادة الافتراضية</string>
     <string name="settings_reset_done">تمت استعادة الإعدادات الافتراضية.</string>

@@ -148,10 +148,6 @@ class HelpContentTest {
                 .map { it.textResource }.toSet()
             assertEquals(sdk >= 36, R.string.settings_live_update_help in monitor)
         }
-        val notification = helpSections(
-            SettingsContract.KEY_NOTIFICATION_SETTINGS, 37, null
-        ).flatMap { it.paragraphs }.map { it.textResource }.toSet()
-        assertTrue(R.string.settings_notification_disabled_help in notification)
     }
 
     @Test

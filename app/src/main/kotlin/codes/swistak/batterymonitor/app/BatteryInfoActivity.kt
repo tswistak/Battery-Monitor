@@ -306,8 +306,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                             )
                         }
                         if (selected == SectionOwner.HISTORY) HistoryActionsMenu(!historyState.busy) {
-                            if (it == "settings") selectSection(SectionOwner.SETTINGS)
-                            else historyAction = it
+                            historyAction = it
                         }
                     }) { modifier ->
                     Box(modifier) {

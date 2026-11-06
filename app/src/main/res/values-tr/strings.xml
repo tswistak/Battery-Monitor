@@ -94,15 +94,14 @@
     <string name="pref_show_remaining_charge_summary" formatted="false">Cihazın bildirdiği kalan pil şarjı mAh olarak gösterilsin mi?</string>
     <string name="pref_show_remaining_charge_help" formatted="false">Cihazın bildirdiği kalan pil şarjını mAh olarak gösterin.</string>
     <string name="pref_battery_current_multiplier" formatted="false">Çarpan</string>
-    <string name="pref_battery_current_multiplier_help" formatted="false">Bazı cihazlar akımı beklenmeyen birimlerde veya işaretle bildirir. Görüntülenen sonucu düzeltmek için bildirilen değeri burada çarpın.\n
+    <string name="pref_battery_current_multiplier_help" formatted="false">Bazı cihazlar akımı beklenmeyen birimlerde veya işaretle bildirir. Görüntülenen sonucu düzeltmek için bildirilen değeri burada çarpın. Bir pil ölçümünden akım çarpanını çıkarmayı denemek için “Otomatik algıla” seçeneğini kullanın.\n
     \n
     Telefonlar için kabaca referans olarak Android’in standart işareti şarj sırasında pozitif, deşarj sırasında negatiftir. Aktif şarj genellikle +500 ile +5000\u00A0mA, normal deşarj ise -100 ile -3000\u00A0mA civarındadır. Pil neredeyse doluyken veya telefon boştayken sıfıra yakın değerler normal olabilir. Değer yaklaşık 1000 kat küçük ya da büyük görünüyorsa veya işaret tersse çarpanı ayarlayın.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Otomatik algıla</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Bir pil ölçümünden akım çarpanını çıkarmayı deneyin. Algılama kullanılamıyorsa mevcut değer değişmeden kalır ve uygun bir ölçüm kullanılabilir olduğunda algılama yeniden deneyebilir. Elle bir değer seçmek, bekleyen algılamayı iptal eder.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Otomatik algılama mevcut pil durumu veya okuması için kullanılamıyor</string>
     <string name="pref_battery_current_multiplier_detection_result">Çarpan otomatik olarak %1$d değerine ayarlandı</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Ortalama akımı tercih et</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">Kullanılabiliyorsa “Geçerli durum”da son ortalamayı kullan?</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">Kullanılabiliyorsa son ortalamayı kullan?</string>
     <string name="pref_prefer_current_avg_help" formatted="false">Bazı cihazlar anlık akıma ek olarak son ortalamayı sağlar. Ortalama alma süresi cihaza göre değişir. Ortalama yoksa “Geçerli durum” anlık akımı kullanır. Bu seçenek yalnızca “Geçerli durum”a uygulanır; günlükler her zaman özgün anlık ölçümü saklar.</string>
 
     <string name="activity_until_charged" formatted="false">şarj olana kadar</string>
@@ -131,8 +130,8 @@
     <string name="predictor_long_term_ave" formatted="false">Uzun dönem ortalama</string>
     <string name="pref_cat_target_levels" formatted="false">Hedef seviyeler</string>
     <string name="pref_charging_target_mode" formatted="false">Şarj hedefi</string>
-    <string name="pref_charging_target_mode_help" formatted="false">“Otomatik (önerilen)”, Battery Monitor okuyabiliyorsa sabit cihaz şarj sınırını, aksi halde 100% kullanır. Uyarlanabilir şarj yine 100% hedefler. “Özel”, şarj tahminleri ve “Şarj hedefine ulaşıldı” alarmları için seçtiğiniz seviyeyi kullanır.</string>
-    <string name="pref_charging_target_mode_support_help" formatted="false">Otomatik algılama Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme ve Sony Xperia cihazlarda ve GrapheneOS veya LineageOS çalıştıran cihazlarda, özellikle root ya da Shizuku erişimi varsa çalışabilir. Yazılım sinyallerine dayandığından, listelenen üreticilerde bile kullanılabilirlik ve doğruluk garanti edilmez. Bu ailelerdeki denenmemiş modeller veya işletim sistemi sürümleri de çalışabilir, ancak diğer üreticilerin cihazları şu anda otomatik olarak algılanmaz.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">“Otomatik (önerilen)”, Battery Monitor okuyabiliyorsa sabit cihaz şarj sınırını, aksi halde 100% kullanır. Uyarlanabilir şarj yine 100% hedefler. “Özel”, şarj tahminleri ve “Şarj hedefine ulaşıldı” alarmları için seçtiğiniz seviyeyi kullanır.\n
+    Otomatik algılama Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme ve Sony Xperia cihazlarda ve GrapheneOS veya LineageOS çalıştıran cihazlarda, özellikle root ya da Shizuku erişimi varsa çalışabilir. Yazılım sinyallerine dayandığından, listelenen üreticilerde bile kullanılabilirlik ve doğruluk garanti edilmez. Bu ailelerdeki denenmemiş modeller veya işletim sistemi sürümleri de çalışabilir, ancak diğer üreticilerin cihazları şu anda otomatik olarak algılanmaz.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Cihaz şarj sınırı: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Özel hedef</string>
     <string name="pref_charging_target_mode_summary_default" formatted="false">Sabit cihaz sınırı algılanmadı — 100% kullanılıyor</string>
@@ -156,7 +155,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">Bu uygulama için tüm bildirimleri kapattınız. Bu ayarlara erişmek için etkinleştirin</string>
     <string name="main_notifs_disabled_summary" formatted="false">Bu uygulama için ana bildirimi kapattınız. Bu ayarlara erişmek için etkinleştirin</string>
     <string name="settings_notification_disabled">Bu seçeneği özelleştirmek için uygulama bildirimlerini ve ana bildirim kanalını etkinleştirin</string>
-    <string name="settings_notification_disabled_help">Bu seçeneği özelleştirmek için uygulama bildirimlerini ve ana bildirim kanalını etkinleştirin.</string>
     <string name="notifications_onboarding_message">Battery Monitor\'ün pil seviyesini durum çubuğunda gösterebilmesi ve alarmlar hakkında sizi bilgilendirebilmesi için izninize ihtiyacı vardır.\n
     \n
     Not: Bu izni vermek bazen uygulamanın kapanmasına neden olabilir. Böyle olursa uygulamayı yeniden açmanız yeterlidir.</string>
@@ -172,7 +170,20 @@
     <string name="time_since_status_change" formatted="false">Durum değişiminden beri geçen süre</string>
     <string name="vital_signs" formatted="false">Hayati göstergeler</string>
     <string name="notification_until_charged" formatted="true">%1$s şarj olana kadar</string>
-    <string name="notification_until_drained" formatted="true">%1$s kaldı</string>
+    <string name="notification_until_drained_mixed" formatted="true">%1$s kaldı</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s kaldı</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="one">%1$s kaldı</item>
+        <item quantity="other">%1$s kaldı</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="one">%1$s kaldı</item>
+        <item quantity="other">%1$s kaldı</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="one">%1$s kaldı</item>
+        <item quantity="other">%1$s kaldı</item>
+    </plurals>
     <string name="pref_time_remaining_verbosity" formatted="false">Kalan Süre Ayrıntı Düzeyi</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">Cihaz boyutlarına göre kalan süre tahmini için kısaltmalar gerekebilir.</string>
     <string name="condensed" formatted="false">Kısa</string>
@@ -302,7 +313,6 @@
     <string name="alarms_delivery_sound">Ses ve bildirim</string>
     <string name="alarms_delivery_vibration">Titreşim ve bildirim</string>
     <string name="alarms_delivery_notification">Yalnızca bildirim</string>
-    <string name="alarms_channel_help">Ses ve iletim, bu Android bildirim kanalı tarafından denetlenir.</string>
     <string name="alarms_options_title" formatted="false">Alarm seçenekleri</string>
     <string name="pref_dismiss_low_battery_on_recovery">Şarj yükseldiğinde düşük pil alarmını kaldır</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Şarj eşik değerinin üzerine çıktığında düşük pil bildirimini kaldırır. Diğer alarm bildirimleri kalır</string>
@@ -374,7 +384,6 @@
     <string name="history_deleted">Günlükler temizlendi</string>
     <string name="history_load_failed">Geçmiş okunamadı</string>
     <string name="history_operation_failed">İşlem başarısız. Dosya erişimini kontrol edip yeniden deneyin.</string>
-    <string name="history_settings">Geçmiş ve yedekleme ayarları</string>
     <string name="history_open_fullscreen">Tam ekran grafiği aç</string>
     <string name="history_chart_description_fullscreen">%1$s. %2$s ile %3$s arasındaki ölçümler.</string>
     <string name="history_chart_select_point">Ölçümleri seç</string>
@@ -421,7 +430,6 @@
     <string name="pref_enable_logging_summary" formatted="false">Pil durum değişiklikleri kaydedilsin mi?</string>
     <string name="pref_enable_logging_help" formatted="false">“Geçmiş” için pil gözlemlerini ve durum değişikliklerini kaydedin. Mevcut ölçümler; seviye, sıcaklık, gerilim, özgün anlık akım ve kalan şarjı içerir. Güç, gösterilirken veya dışa aktarılırken gerilim ve akımdan hesaplanır; ayrı saklanmaz. Kaydı kapatmak mevcut geçmişi silmez veya süre tahminlerini durdurmaz.</string>
     <string name="pref_max_log_age" formatted="false">Maksimum Kayıt Yaşı</string>
-    <string name="pref_max_log_age_summary" formatted="false">Şundan eski kayıtları sil:</string>
     <string name="pref_max_log_age_help" formatted="false">Kayıt etkinken güç bağlantısı, bu sınırdan eski günlükleri kaldırır. “Sınır yok” seçeneği, elle temizleyene kadar saklar. Otomatik dışa aktarma etkinse Battery Monitor eski girdileri silmeden önce bekleyen günlükleri dışa aktarır; dışa aktarma başarısız olursa silme yapılmaz.</string>
     <string name="age_1_day" formatted="false">1\u00A0gün</string>
     <string name="age_2_days" formatted="false">2\u00A0gün</string>
@@ -433,7 +441,7 @@
     <string name="age_no_limit" formatted="false">Sınır yok</string>
     <string name="log_export_mode_title" formatted="false">Günlükleri dışa aktar</string>
     <string name="log_export_append" formatted="false">Mevcut dosyaya ekle</string>
-    <string name="log_export_append_help" formatted="false">CSV ve JSON dosyalarına ekleme yapılabilir. Seçilen biçimde mevcut bir dosya seçin; yalnızca son elle dışa aktarımdan sonraki günlükler eklenir.</string>
+    <string name="log_export_append_description" formatted="false">CSV ve JSON dosyalarına ekleme yapılabilir. Seçilen biçimde mevcut bir dosya seçin; yalnızca son elle dışa aktarımdan sonraki günlükler eklenir.</string>
     <string name="log_json_append_invalid" formatted="false">Desteklenen bir sürümde, en fazla 16 MB boyutunda okunabilir bir Battery Monitor JSON geçmiş dosyası seçin.</string>
     <string name="log_export_recovery_required" formatted="true">Depolamayı yeniden bağlayın ve dosyayı geri yüklemek için bu dosyaya tekrar dışa aktarmayı deneyin. Özgün dosya uygulama depolamasında saklanır (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">Her şey</string>
@@ -565,7 +573,7 @@
     <string name="diag_status_waiting_permission" formatted="false">Shizuku izni bekleniyor…</string>
     <string name="diag_status_no_stats" formatted="false">Bu cihazda şu anda gelişmiş pil istatistiği mevcut değil.</string>
     <string name="diag_value_not_available" formatted="false">Kullanılamıyor</string>
-    <string name="diag_help_overview" formatted="false">“Tanılama”; izleme güvenilirliğini, kayıtlı tahmin verilerini ve pil verilerini “Uygulamanın çalışması”, “Pil”, “Şarj” ve “Ham veriler” sekmelerinde birleştirir. Android verileri root olmadan kullanılabilir. Ek veriler, cihaza ve Battery Monitor izinlerine bağlıdır.</string>
+    <string name="diag_help_overview" formatted="false">İzleme güvenilirliğini, kayıtlı tahmin verilerini ve pil verilerini “Uygulamanın çalışması”, “Pil”, “Şarj” ve “Ham veriler” sekmelerinde birleştirir. Android verileri root olmadan kullanılabilir. Ek veriler, cihaza ve Battery Monitor izinlerine bağlıdır.</string>
     <string name="diag_section_counters" formatted="false">Sayaçlar</string>
     <string name="diag_help_counters" formatted="false">Pil ölçümleri etiketlenir ve kalan şarj mAh, akım mA, enerji mWh, gerilim V, sıcaklık seçtiğiniz birim ve güç W olarak biçimlendirilir. Akım çarpanı hesaplanan güce de uygulanır. Ortalama akım ve döngü sayısı cihaz desteğine bağlıdır.</string>
     <string name="diag_field_charge_counter" formatted="false">Tahmini kalan şarj</string>
@@ -573,7 +581,7 @@
     <string name="diag_field_current_average" formatted="false">Ortalama akım</string>
     <string name="diag_field_energy_counter" formatted="false">Enerji sayacı</string>
     <string name="diag_section_capacity" formatted="false">Kapasite</string>
-    <string name="diag_help_capacity" formatted="false">“Kapasite”, tam şarj kapasitesini, tasarım kapasitesini ve tahmini sağlığı gösterir. Tahmini sağlık, tam şarj kapasitesinin tasarım kapasitesine bölünmesiyle hesaplanır; bu nedenle doğruluğu cihazın bildirdiği değerlere bağlıdır.</string>
+    <string name="diag_help_capacity" formatted="false">Tam şarj kapasitesini, tasarım kapasitesini ve tahmini sağlığı gösterir. Tahmini sağlık, tam şarj kapasitesinin tasarım kapasitesine bölünmesiyle hesaplanır; bu nedenle doğruluğu cihazın bildirdiği değerlere bağlıdır.</string>
     <string name="diag_field_cycle_count" formatted="false">Döngü sayısı</string>
     <string name="diag_field_reported_capacity" formatted="false">Bildirilen kapasite</string>
     <string name="diag_field_state_of_health" formatted="false">Sağlık durumu</string>
@@ -586,7 +594,7 @@
     <string name="diag_capacity_low">Düşük</string>
     <string name="diag_capacity_high">Yüksek</string>
     <string name="diag_section_charging" formatted="false">Şarj</string>
-    <string name="diag_help_charging" formatted="false">“Şarj” bölümü, etkin şarj yolu ile ilgili değerleri gösterir; örneğin maksimum şarj akımı veya gerilimi, şarj politikası, şarj durumu ve kapasite düzeyi. Bu alanlar şarj cihazına ve şarj moduna göre değişebilir.</string>
+    <string name="diag_help_charging" formatted="false">Etkin şarj yolu ile ilgili değerleri gösterir; örneğin maksimum şarj akımı veya gerilimi, şarj politikası, şarj durumu ve kapasite düzeyi. Bu alanlar şarj cihazına ve şarj moduna göre değişebilir.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Kalan şarj süresi</string>
     <string name="diag_field_max_charging_current" formatted="false">Maksimum şarj akımı</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Maksimum şarj voltajı</string>
@@ -643,8 +651,7 @@
     <string name="diagnostics" formatted="false">Tanılama</string>
     <string name="diagnostics_summary" formatted="false">İzinleri ve izleme güvenilirliğini kontrol edin, sorun giderme raporu oluşturun</string>
     <string name="diag_overview">Uygulamanın çalışması</string>
-    <string name="diagnostics_help_title" formatted="false">Tanılama nasıl yardımcı olur</string>
-    <string name="diagnostics_help_overview" formatted="false">“İzlemenin çalışması”, izinleri ve izleme güvenilirliğini kontrol eder. Denetimleriyle izlemeyi başlatıp durdurabilir, hata ayıklama kaydını değiştirebilir, pil optimizasyonu ve bildirim ayarlarını açabilir veya sorun giderme raporu oluşturabilirsiniz. Her eksik ölçüm izin sorunu anlamına gelmez; bazı cihazlar bu veriyi sağlamaz.</string>
+    <string name="diagnostics_help_overview" formatted="false">İzinleri ve izleme güvenilirliğini kontrol eder. Denetimleriyle izlemeyi başlatıp durdurabilir, hata ayıklama kaydını değiştirebilir, pil optimizasyonu ve bildirim ayarlarını açabilir veya sorun giderme raporu oluşturabilirsiniz. Her eksik ölçüm izin sorunu anlamına gelmez; bazı cihazlar bu veriyi sağlamaz.</string>
     <string name="diagnostics_monitoring" formatted="false">Arka planda izleme</string>
     <string name="diag_monitor_operation">İzlemenin çalışması</string>
     <string name="diag_heartbeat">Son canlılık sinyali</string>
@@ -782,13 +789,12 @@
     <string name="backup_restore_settings_summary" formatted="false">Uygulama ayarlarınızı ve pil verilerinizi yedekleyin, geri yükleyin ve aktarın</string>
     <string name="backup_restore_help_overview" formatted="false">Ayarları, alarmları, günlükleri ve öğrenilen tahmin verilerini kaydedip geri yükleyin. “Varsayılan ayarları geri yükle”, onaydan sonra uygulama tercihlerini sıfırlar; geçmişi, alarmları, öğrenilen tahminleri ve izlemenin çalışma durumunu korur.</string>
     <string name="pref_general_backup" formatted="false">Genel uygulama yedeği</string>
-    <string name="general_backup_restore_effects_help" formatted="false">Seçilen kategoriler geri yüklenir; seçilmeyen kategoriler korunur. Alarmları geri yüklemek mevcut alarmları değiştirir. Günlükler için bunları eklemeyi veya mevcut geçmişi değiştirmeyi seçin.</string>
     <string name="pref_export_general_backup" formatted="false">Genel yedeği dışa aktar</string>
     <string name="pref_export_general_backup_help" formatted="false">Ayarları, alarmları ve cihaza özgü verileri seçtiğiniz konumda genel bir ZIP yedeğine birlikte kaydedin.</string>
     <string name="pref_export_general_backup_summary" formatted="false">Ayarları, alarmları ve cihaza özgü verileri bir ZIP dosyasına kaydet</string>
     <string name="general_backup_exported" formatted="false">Genel yedek başarıyla dışa aktarıldı.</string>
     <string name="pref_import_general_backup" formatted="false">Genel yedeği içe aktar</string>
-    <string name="pref_import_general_backup_help" formatted="false">Mevcut bir genel ZIP yedeğini seçin ve kullanılabilir kategorilerden hangilerini geri yüklemek istediğinizi belirleyin. Uygulamanın daha yeni sürümlerinden alınan yedekler uyumsuz olabilir ve başka bir cihazdan günlüklerin veya tahmin verilerinin geri yüklenmesi yanlış tahminlere neden olabilir. Geri yükleme yalnızca kısmen tamamlanırsa yeniden denemeden önce bildirilen kategorileri kontrol edin.</string>
+    <string name="pref_import_general_backup_help" formatted="false">Mevcut bir genel ZIP yedeğini seçin ve kullanılabilir kategorilerden hangilerini geri yüklemek istediğinizi belirleyin. Uygulamanın daha yeni sürümlerinden alınan yedekler uyumsuz olabilir ve başka bir cihazdan günlüklerin veya tahmin verilerinin geri yüklenmesi yanlış tahminlere neden olabilir. Geri yükleme yalnızca kısmen tamamlanırsa yeniden denemeden önce bildirilen kategorileri kontrol edin. Seçilen kategoriler geri yüklenir; seçilmeyen kategoriler korunur. Alarmları geri yüklemek mevcut alarmları değiştirir. Günlükler için bunları eklemeyi veya mevcut geçmişi değiştirmeyi seçin.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Seçilen verileri genel yedek ZIP dosyasından geri yükle</string>
     <string name="general_backup_restore_message" formatted="false">Geri yüklemek istediklerinizi seçin.</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">Günlükler ve tahmin verileri</string>
@@ -797,21 +803,21 @@
     <string name="settings_restore_partial">Bazı veriler geri yüklenemedi. Başarıyla geri yüklenen: %1$s. Kısmen geri yüklenmiş olabilecek: %2$s. Yeniden denemeden önce bu bölümleri kontrol edin.</string>
     <string name="settings_restore_none">Yok</string>
     <string name="pref_export_settings" formatted="false">Ayarları dışa aktar</string>
-    <string name="pref_export_settings_help" formatted="false">“Ayarları dışa aktar” uygulama tercihlerinizi kaydeder. Sonuç, JSON biçiminde bir ayar yedeği dosyasıdır.</string>
+    <string name="pref_export_settings_help" formatted="false">Uygulama tercihlerinizi kaydedin. Sonuç, JSON biçiminde bir ayar yedeği dosyasıdır.</string>
     <string name="pref_export_settings_summary" formatted="false">Geçerli ayarları bir dosyaya kaydet</string>
     <string name="settings_exported" formatted="false">Ayarlar başarıyla dışa aktarıldı.</string>
     <string name="pref_import_settings" formatted="false">Ayarları içe aktar</string>
-    <string name="pref_import_settings_help" formatted="false">“Ayarları içe aktar” ile kayıtlı tercihler geri yüklenir. Bu işlem geçmişi veya alarm kayıtlarını geri yüklemez.</string>
+    <string name="pref_import_settings_help" formatted="false">Kayıtlı tercihleri geri yükleyin. Bu işlem geçmişi veya alarm kayıtlarını geri yüklemez.</string>
     <string name="pref_import_settings_summary" formatted="false">Ayarları bir dosyadan geri yükle</string>
     <string name="settings_imported" formatted="false">Ayarlar başarıyla içe aktarıldı.</string>
     <string name="invalid_settings_file" formatted="false">Geçersiz ayar dosyası</string>
     <string name="settings_file_version_warning" formatted="false">Bu dosya uygulamanın daha yeni bir sürümüyle oluşturuldu. İçe aktarmak beklenmedik davranışlara yol açabilir. Yine de devam edilsin mi?</string>
     <string name="pref_export_alarms" formatted="false">Alarmları dışa aktar</string>
-    <string name="pref_export_alarms_help" formatted="false">“Alarmları dışa aktar” alarmlarınızı kaydeder. JSON dosyası alarm kurallarını içerir; Android tarafından yönetilen bildirim kanalı veya ses ayarlarını içermez.</string>
+    <string name="pref_export_alarms_help" formatted="false">Alarmlarınızı kaydedin. JSON dosyası alarm kurallarını içerir; Android tarafından yönetilen bildirim kanalı veya ses ayarlarını içermez.</string>
     <string name="pref_export_alarms_summary" formatted="false">Geçerli alarmları bir dosyaya kaydet</string>
     <string name="alarms_exported" formatted="false">Alarmlar başarıyla dışa aktarıldı.</string>
     <string name="pref_import_alarms" formatted="false">Alarmları içe aktar</string>
-    <string name="pref_import_alarms_help" formatted="false">“Alarmları içe aktar” ile mevcut tüm alarmlar yedekteki alarmlarla değiştirilir. JSON biçiminde bir alarm yedeği dosyası seçin.</string>
+    <string name="pref_import_alarms_help" formatted="false">Mevcut tüm alarmları yedekteki alarmlarla değiştirin. JSON biçiminde bir alarm yedeği dosyası seçin.</string>
     <string name="pref_import_alarms_summary" formatted="false">Geçerli alarmları dosyadaki alarmlarla değiştir</string>
     <string name="alarms_imported" formatted="false">Alarmlar başarıyla içe aktarıldı.</string>
     <string name="invalid_alarms_file" formatted="false">Geçersiz alarm dosyası</string>
@@ -843,7 +849,7 @@
     <string name="invalid_csv_logs_file" formatted="false">Geçersiz veya uyumsuz CSV günlük dosyası</string>
     <string name="settings_reset_title">Varsayılan ayarları geri yükle</string>
     <string name="settings_reset_summary">Geçmişi, alarmları ve öğrenilen tahminleri koruyarak uygulama tercihlerini sıfırlayın</string>
-    <string name="settings_reset_help" formatted="false">“Varsayılan ayarları geri yükle”, onay isteyip uygulama tercihlerini sıfırlar. Geçmiş, alarmlar, öğrenilen tahminler, widget yapılandırmaları ve arka planda izlemenin çalışma durumu korunur. Sistem izinleri ve bildirim kanalı ayarları sıfırlanmaz.</string>
+    <string name="settings_reset_help" formatted="false">Onaydan sonra uygulama tercihlerini sıfırlayın. Geçmiş, alarmlar, öğrenilen tahminler, widget yapılandırmaları ve arka planda izlemenin çalışma durumu korunur. Sistem izinleri ve bildirim kanalı ayarları sıfırlanmaz.</string>
     <string name="settings_reset_question">Tüm uygulama ayarları varsayılanlara geri yüklensin mi? Geçmiş, alarmlar ve öğrenilen tahminler korunacak. Arka planda izleme şu anki gibi çalışır veya durmuş durumda kalacak.</string>
     <string name="settings_reset_confirm">Varsayılanları geri yükle</string>
     <string name="settings_reset_done">Varsayılan ayarlar geri yüklendi.</string>

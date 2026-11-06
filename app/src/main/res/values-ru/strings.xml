@@ -94,15 +94,14 @@
     <string name="pref_show_remaining_charge_summary" formatted="false">Показывать сообщаемый устройством оставшийся заряд аккумулятора в мА·ч?</string>
     <string name="pref_show_remaining_charge_help" formatted="false">Показывайте сообщаемый устройством оставшийся заряд аккумулятора в мА·ч.</string>
     <string name="pref_battery_current_multiplier" formatted="false">Множитель</string>
-    <string name="pref_battery_current_multiplier_help" formatted="false">Некоторые устройства сообщают ток в неожиданных единицах или с обратным знаком. Умножьте сообщаемое значение здесь, чтобы скорректировать отображаемый результат.\n
+    <string name="pref_battery_current_multiplier_help" formatted="false">Некоторые устройства сообщают ток в неожиданных единицах или с обратным знаком. Умножьте сообщаемое значение здесь, чтобы скорректировать отображаемый результат. Используйте «Определить автоматически», чтобы попытаться определить множитель тока по показанию батареи.\n
     \n
     Для приблизительной оценки на телефоне стандарт Android использует положительное значение при зарядке и отрицательное при разрядке. Активная зарядка часто составляет примерно от +500 до +5000\u00A0mA, а обычная разрядка — от -100 до -3000\u00A0mA. Значения около нуля могут быть нормальными, когда батарея почти заряжена или телефон бездействует. Если значение выглядит примерно в 1000 раз меньше или больше либо знак обратный, настройте множитель.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Определить автоматически</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Попробуйте определить множитель тока по показанию батареи. Если определение недоступно, текущее значение не меняется, а попытка может повториться при получении подходящего показания. Выбор значения вручную отменяет ожидающее определение.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Автоматическое определение недоступно для текущего состояния батареи или показания</string>
     <string name="pref_battery_current_multiplier_detection_result">Множитель автоматически установлен на %1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Предпочитать средний ток</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">Использовать последнее среднее на экране «Текущее состояние», когда доступно?</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">Использовать последнее среднее, когда доступно?</string>
     <string name="pref_prefer_current_avg_help" formatted="false">Некоторые устройства предоставляют последнее среднее помимо мгновенного тока. Период усреднения зависит от устройства. «Текущее состояние» использует мгновенный ток, если средний недоступен. Эта опция относится только к экрану «Текущее состояние»; журналы всегда хранят исходное мгновенное измерение.</string>
 
     <string name="activity_until_charged" formatted="false">до полного заряда</string>
@@ -131,8 +130,8 @@
     <string name="predictor_long_term_ave" formatted="false">Среднее за большой период</string>
     <string name="pref_cat_target_levels" formatted="false">Целевые уровни</string>
     <string name="pref_charging_target_mode" formatted="false">Цель зарядки</string>
-    <string name="pref_charging_target_mode_help" formatted="false">Режим «Автоматически (рекомендуется)» использует фиксированный предел зарядки устройства, если Battery Monitor может его прочитать, иначе 100%. Адаптивная зарядка по-прежнему нацелена на 100%. «Пользовательский» режим использует выбранный уровень для оценок зарядки и сигналов «Цель зарядки достигнута».</string>
-    <string name="pref_charging_target_mode_support_help" formatted="false">Автоматическое определение может работать на устройствах Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme и Sony Xperia, а также на устройствах с GrapheneOS или LineageOS, особенно при наличии доступа root или Shizuku. Оно основано на программных сигналах, поэтому доступность и точность не гарантируются даже для перечисленных производителей. Непроверенные модели или версии ОС из этих семейств также могут работать, но устройства других производителей сейчас автоматически не определяются.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">Режим «Автоматически (рекомендуется)» использует фиксированный предел зарядки устройства, если Battery Monitor может его прочитать, иначе 100%. Адаптивная зарядка по-прежнему нацелена на 100%. «Пользовательский» режим использует выбранный уровень для оценок зарядки и сигналов «Цель зарядки достигнута».\n
+    Автоматическое определение может работать на устройствах Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme и Sony Xperia, а также на устройствах с GrapheneOS или LineageOS, особенно при наличии доступа root или Shizuku. Оно основано на программных сигналах, поэтому доступность и точность не гарантируются даже для перечисленных производителей. Непроверенные модели или версии ОС из этих семейств также могут работать, но устройства других производителей сейчас автоматически не определяются.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Лимит зарядки устройства: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Пользовательская цель</string>
     <string name="pref_charging_target_mode_summary_default" formatted="false">Фиксированный лимит устройства не обнаружен — используется 100 %</string>
@@ -156,7 +155,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">Вы отключили все уведомления этого приложения. Включите их, чтобы открыть эти настройки</string>
     <string name="main_notifs_disabled_summary" formatted="false">Вы отключили основное уведомление этого приложения. Включите его, чтобы открыть эти настройки</string>
     <string name="settings_notification_disabled">Включите уведомления приложения и основной канал уведомлений, чтобы настроить эту опцию</string>
-    <string name="settings_notification_disabled_help">Включите уведомления приложения и основной канал уведомлений, чтобы настроить эту опцию.</string>
     <string name="notifications_onboarding_message">Battery Monitor требуется ваше разрешение, чтобы показывать уровень батареи в строке состояния и уведомлять вас о сигналах тревоги.\n
     \n
     Примечание: предоставление этого разрешения может иногда приводить к закрытию приложения. Если это произойдет, просто откройте его снова.</string>
@@ -172,7 +170,26 @@
     <string name="time_since_status_change" formatted="false">Время, прошедшее с момента изменения состояния</string>
     <string name="vital_signs" formatted="false">Критически важные параметры</string>
     <string name="notification_until_charged" formatted="true">%1$s до полного заряда</string>
-    <string name="notification_until_drained" formatted="true">Осталось %1$s</string>
+    <string name="notification_until_drained_mixed" formatted="true">Оставшееся время: %1$s</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="one">Остался %1$s</item>
+        <item quantity="few">Осталось %1$s</item>
+        <item quantity="many">Осталось %1$s</item>
+        <item quantity="other">Осталось %1$s</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="one">Остался %1$s</item>
+        <item quantity="few">Осталось %1$s</item>
+        <item quantity="many">Осталось %1$s</item>
+        <item quantity="other">Осталось %1$s</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="one">Осталась %1$s</item>
+        <item quantity="few">Осталось %1$s</item>
+        <item quantity="many">Осталось %1$s</item>
+        <item quantity="other">Осталось %1$s</item>
+    </plurals>
     <string name="pref_time_remaining_verbosity" formatted="false">Детальность указания оставшегося времени</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">Устройства бывают самых разных форм и размеров, поэтому в большинстве языков приходится использовать сокращения для того, чтобы оценка оставшегося времени помещалась в области уведомления. Если она по-прежнему не помещается, вы можете использовать формат «Сжатый». Если места на экране вашего устройства достаточно, вы можете использовать формат «Детальный».</string>
     <string name="condensed" formatted="false">Сжатый</string>
@@ -304,7 +321,6 @@
     <string name="alarms_delivery_sound">Звук и уведомление</string>
     <string name="alarms_delivery_vibration">Вибрация и уведомление</string>
     <string name="alarms_delivery_notification">Только уведомление</string>
-    <string name="alarms_channel_help">Звук и доставка задаются этим каналом уведомлений Android.</string>
     <string name="alarms_options_title" formatted="false">Параметры сигналов</string>
     <string name="pref_dismiss_low_battery_on_recovery">Убирать сигнал о низком заряде после восстановления</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Убирать уведомление о низком заряде, когда заряд превышает порог. Другие уведомления сигналов остаются</string>
@@ -376,7 +392,6 @@
     <string name="history_deleted">Журналы очищены</string>
     <string name="history_load_failed">Не удалось прочитать историю</string>
     <string name="history_operation_failed">Операция не выполнена. Проверьте доступ к файлу и повторите.</string>
-    <string name="history_settings">Настройки истории и резервного копирования</string>
     <string name="history_open_fullscreen">Открыть полноэкранный график</string>
     <string name="history_chart_description_fullscreen">%1$s. Измерения с %2$s по %3$s.</string>
     <string name="history_chart_select_point">Выбрать измерения</string>
@@ -423,7 +438,6 @@
     <string name="pref_enable_logging_summary" formatted="false">Вести журнал изменений состояния аккумулятора?</string>
     <string name="pref_enable_logging_help" formatted="false">Сохраняйте наблюдения и изменения состояния батареи для раздела «История». Доступные измерения: уровень, температура, напряжение, исходный мгновенный ток и оставшийся заряд. Мощность рассчитывается из напряжения и тока при показе или экспорте; отдельно она не хранится. Выключение записи не удаляет историю и не останавливает оценки времени.</string>
     <string name="pref_max_log_age" formatted="false">Максимальный возраст журнала</string>
-    <string name="pref_max_log_age_summary" formatted="false">Удалить журналы старше:</string>
     <string name="pref_max_log_age_help" formatted="false">При включённой записи подключение питания удаляет журналы старше этого срока. «Без ограничений» сохраняет их до ручной очистки. Если включён автоматический экспорт, Battery Monitor экспортирует ожидающие записи до удаления старых; ошибка экспорта предотвращает удаление.</string>
     <string name="age_1_day" formatted="false">1\u00A0день</string>
     <string name="age_2_days" formatted="false">2\u00A0дня</string>
@@ -435,7 +449,7 @@
     <string name="age_no_limit" formatted="false">Без ограничений</string>
     <string name="log_export_mode_title" formatted="false">Экспорт журналов</string>
     <string name="log_export_append" formatted="false">Добавить в существующий файл</string>
-    <string name="log_export_append_help" formatted="false">Файлы CSV и JSON можно дополнять. Выберите существующий файл выбранного формата; добавляются только журналы с момента последнего ручного экспорта.</string>
+    <string name="log_export_append_description" formatted="false">Файлы CSV и JSON можно дополнять. Выберите существующий файл выбранного формата; добавляются только журналы с момента последнего ручного экспорта.</string>
     <string name="log_json_append_invalid" formatted="false">Выберите доступный для чтения JSON-файл истории Battery Monitor поддерживаемой версии размером до 16 МБ.</string>
     <string name="log_export_recovery_required" formatted="true">Подключите хранилище снова и повторите экспорт в этот файл, чтобы восстановить его. Исходный файл сохранён в хранилище приложения (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">Всё</string>
@@ -569,7 +583,7 @@
     <string name="diag_status_waiting_permission" formatted="false">Ожидание разрешения Shizuku…</string>
     <string name="diag_status_no_stats" formatted="false">На этом устройстве сейчас нет доступной расширенной статистики батареи.</string>
     <string name="diag_value_not_available" formatted="false">Недоступно</string>
-    <string name="diag_help_overview" formatted="false">«Диагностика» объединяет надёжность мониторинга, сохранённые данные прогнозирования и данные батареи во вкладках «Работа приложения», «Аккумулятор», «Зарядка» и «Исходные данные». Данные Android доступны без root. Дополнительные данные устройства зависят от устройства и разрешений Battery Monitor.</string>
+    <string name="diag_help_overview" formatted="false">Объединяет надёжность мониторинга, сохранённые данные прогнозирования и данные батареи во вкладках «Работа приложения», «Аккумулятор», «Зарядка» и «Исходные данные». Данные Android доступны без root. Дополнительные данные устройства зависят от устройства и разрешений Battery Monitor.</string>
     <string name="diag_section_counters" formatted="false">Счетчики</string>
     <string name="diag_help_counters" formatted="false">Измерения батареи подписаны и отформатированы: оставшийся заряд в mAh, ток в mA, энергия в mWh, напряжение в V, температура в выбранной единице и мощность в W. Множитель тока также применяется к расчётной мощности. Средний ток и число циклов зависят от поддержки устройства.</string>
     <string name="diag_field_charge_counter" formatted="false">Оценка оставшегося заряда</string>
@@ -577,7 +591,7 @@
     <string name="diag_field_current_average" formatted="false">Средний ток</string>
     <string name="diag_field_energy_counter" formatted="false">Счетчик энергии</string>
     <string name="diag_section_capacity" formatted="false">Емкость</string>
-    <string name="diag_help_capacity" formatted="false">Раздел «Емкость» показывает емкость полного заряда, проектную емкость и расчетное состояние. Расчетное состояние вычисляется как емкость полного заряда, деленная на проектную емкость, поэтому точность зависит от значений, сообщаемых устройством.</string>
+    <string name="diag_help_capacity" formatted="false">Показывает емкость полного заряда, проектную емкость и расчетное состояние. Расчетное состояние вычисляется как емкость полного заряда, деленная на проектную емкость, поэтому точность зависит от значений, сообщаемых устройством.</string>
     <string name="diag_field_cycle_count" formatted="false">Количество циклов</string>
     <string name="diag_field_reported_capacity" formatted="false">Заявленная емкость</string>
     <string name="diag_field_state_of_health" formatted="false">Состояние здоровья</string>
@@ -590,7 +604,7 @@
     <string name="diag_capacity_low">Низкий</string>
     <string name="diag_capacity_high">Высокий</string>
     <string name="diag_section_charging" formatted="false">Зарядка</string>
-    <string name="diag_help_charging" formatted="false">Раздел «Зарядка» показывает значения, связанные с активным путем зарядки, например максимальный ток или напряжение зарядки, политику зарядки, состояние зарядки и уровень емкости. Эти поля могут меняться в зависимости от зарядного устройства и режима зарядки.</string>
+    <string name="diag_help_charging" formatted="false">Показывает значения, связанные с активным путем зарядки, например максимальный ток или напряжение зарядки, политику зарядки, состояние зарядки и уровень емкости. Эти поля могут меняться в зависимости от зарядного устройства и режима зарядки.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Оставшееся время зарядки</string>
     <string name="diag_field_max_charging_current" formatted="false">Максимальный ток зарядки</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Максимальное напряжение зарядки</string>
@@ -647,8 +661,7 @@
     <string name="diagnostics" formatted="false">Диагностика</string>
     <string name="diagnostics_summary" formatted="false">Проверка разрешений и надёжности мониторинга, создание отчёта для устранения неполадок</string>
     <string name="diag_overview">Работа приложения</string>
-    <string name="diagnostics_help_title" formatted="false">Как помогает диагностика</string>
-    <string name="diagnostics_help_overview" formatted="false">«Работа мониторинга» проверяет разрешения и надёжность мониторинга. Его элементы управления позволяют включить или остановить мониторинг, изменить отладочную запись, открыть настройки оптимизации батареи и уведомлений или создать отчёт для устранения неполадок. Не каждое недоступное измерение означает проблему разрешений; некоторые устройства его не предоставляют.</string>
+    <string name="diagnostics_help_overview" formatted="false">Проверяет разрешения и надёжность мониторинга. Его элементы управления позволяют включить или остановить мониторинг, изменить отладочную запись, открыть настройки оптимизации батареи и уведомлений или создать отчёт для устранения неполадок. Не каждое недоступное измерение означает проблему разрешений; некоторые устройства его не предоставляют.</string>
     <string name="diagnostics_monitoring" formatted="false">Фоновый мониторинг</string>
     <string name="diag_monitor_operation">Работа мониторинга</string>
     <string name="diag_heartbeat">Последний сигнал активности</string>
@@ -788,13 +801,12 @@
     <string name="backup_restore_settings_summary" formatted="false">Создавайте резервные копии, восстанавливайте и переносите настройки приложения и данные аккумулятора</string>
     <string name="backup_restore_help_overview" formatted="false">Сохраняйте и восстанавливайте настройки, сигналы, журналы и накопленные данные прогнозирования. «Восстановить настройки по умолчанию» сбрасывает настройки приложения после подтверждения, сохраняя историю, сигналы, накопленные оценки и состояние мониторинга.</string>
     <string name="pref_general_backup" formatted="false">Общая резервная копия приложения</string>
-    <string name="general_backup_restore_effects_help" formatted="false">Выбранные категории восстанавливаются; невыбранные сохраняются. Восстановление сигналов заменяет текущие сигналы. Для журналов выберите добавление или замену текущей истории.</string>
     <string name="pref_export_general_backup" formatted="false">Экспорт общей резервной копии</string>
     <string name="pref_export_general_backup_help" formatted="false">Сохраните настройки, сигналы и данные конкретного устройства вместе в ZIP-файле общей резервной копии в выбранном месте.</string>
     <string name="pref_export_general_backup_summary" formatted="false">Сохранить настройки, сигналы и данные конкретного устройства в ZIP-файл</string>
     <string name="general_backup_exported" formatted="false">Общая резервная копия успешно экспортирована.</string>
     <string name="pref_import_general_backup" formatted="false">Импорт общей резервной копии</string>
-    <string name="pref_import_general_backup_help" formatted="false">Выберите существующий ZIP-файл общей резервной копии и доступные категории для восстановления. Резервные копии из более новых версий приложения могут быть несовместимы, а восстановление журналов или данных прогнозирования с другого устройства может привести к неверным прогнозам. Если восстановление завершено лишь частично, проверьте указанные в сообщении категории перед повторной попыткой.</string>
+    <string name="pref_import_general_backup_help" formatted="false">Выберите существующий ZIP-файл общей резервной копии и доступные категории для восстановления. Резервные копии из более новых версий приложения могут быть несовместимы, а восстановление журналов или данных прогнозирования с другого устройства может привести к неверным прогнозам. Если восстановление завершено лишь частично, проверьте указанные в сообщении категории перед повторной попыткой. Выбранные категории восстанавливаются; невыбранные сохраняются. Восстановление сигналов заменяет текущие сигналы. Для журналов выберите добавление или замену текущей истории.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Восстановить выбранные данные из ZIP-файла общей резервной копии</string>
     <string name="general_backup_restore_message" formatted="false">Выберите, что нужно восстановить.</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">Журналы и данные прогнозирования</string>
@@ -803,21 +815,21 @@
     <string name="settings_restore_partial">Часть данных не удалось восстановить. Восстановлено: %1$s. Возможно, частично восстановлено: %2$s. Проверьте эти разделы перед повторной попыткой.</string>
     <string name="settings_restore_none">Нет</string>
     <string name="pref_export_settings" formatted="false">Экспортировать настройки</string>
-    <string name="pref_export_settings_help" formatted="false">«Экспортировать настройки» сохраняет параметры приложения. Результат сохраняется в JSON-файле резервной копии настроек.</string>
+    <string name="pref_export_settings_help" formatted="false">Сохраните параметры приложения. Результат сохраняется в JSON-файле резервной копии настроек.</string>
     <string name="pref_export_settings_summary" formatted="false">Сохранить текущие настройки в файл</string>
     <string name="settings_exported" formatted="false">Настройки успешно экспортированы.</string>
     <string name="pref_import_settings" formatted="false">Импортировать настройки</string>
-    <string name="pref_import_settings_help" formatted="false">При «Импортировать настройки» сохранённые параметры восстанавливаются. Это действие не восстанавливает историю или записи сигналов.</string>
+    <string name="pref_import_settings_help" formatted="false">Восстановите сохранённые параметры. Это действие не восстанавливает историю или записи сигналов.</string>
     <string name="pref_import_settings_summary" formatted="false">Восстановить настройки из файла</string>
     <string name="settings_imported" formatted="false">Настройки успешно импортированы.</string>
     <string name="invalid_settings_file" formatted="false">Недопустимый файл настроек</string>
     <string name="settings_file_version_warning" formatted="false">Этот файл был создан более новой версией приложения. Его импорт может привести к непредвиденному поведению. Всё равно продолжить?</string>
     <string name="pref_export_alarms" formatted="false">Экспорт сигналов</string>
-    <string name="pref_export_alarms_help" formatted="false">«Экспорт сигналов» сохраняет ваши сигналы. JSON-файл содержит правила сигналов, а не настройки каналов уведомлений или звука, которыми управляет Android.</string>
+    <string name="pref_export_alarms_help" formatted="false">Сохраните ваши сигналы. JSON-файл содержит правила сигналов, а не настройки каналов уведомлений или звука, которыми управляет Android.</string>
     <string name="pref_export_alarms_summary" formatted="false">Сохранить текущие сигналы в файл</string>
     <string name="alarms_exported" formatted="false">Сигналы успешно экспортированы.</string>
     <string name="pref_import_alarms" formatted="false">Импорт сигналов</string>
-    <string name="pref_import_alarms_help" formatted="false">При «Импорт сигналов» все текущие сигналы заменяются сигналами из копии. Выберите JSON-файл резервной копии сигналов.</string>
+    <string name="pref_import_alarms_help" formatted="false">Замените все текущие сигналы сигналами из копии. Выберите JSON-файл резервной копии сигналов.</string>
     <string name="pref_import_alarms_summary" formatted="false">Заменить текущие сигналы сигналами из файла</string>
     <string name="alarms_imported" formatted="false">Сигналы успешно импортированы.</string>
     <string name="invalid_alarms_file" formatted="false">Недопустимый файл сигналов</string>
@@ -849,7 +861,7 @@
     <string name="invalid_csv_logs_file" formatted="false">Недопустимый или несовместимый файл журналов CSV</string>
     <string name="settings_reset_title">Восстановить настройки по умолчанию</string>
     <string name="settings_reset_summary">Сбросить настройки приложения, сохранив историю, сигналы и накопленные оценки</string>
-    <string name="settings_reset_help" formatted="false">«Восстановить настройки по умолчанию» запрашивает подтверждение, затем сбрасывает настройки приложения. История, сигналы, накопленные оценки, настройки виджетов и состояние фонового мониторинга сохраняются. Системные разрешения и настройки каналов уведомлений не сбрасываются.</string>
+    <string name="settings_reset_help" formatted="false">Сбросьте настройки приложения после подтверждения. История, сигналы, накопленные оценки, настройки виджетов и состояние фонового мониторинга сохраняются. Системные разрешения и настройки каналов уведомлений не сбрасываются.</string>
     <string name="settings_reset_question">Восстановить все настройки приложения по умолчанию? История, сигналы и накопленные оценки будут сохранены. Фоновый мониторинг останется включённым или выключенным, как сейчас.</string>
     <string name="settings_reset_confirm">Восстановить по умолчанию</string>
     <string name="settings_reset_done">Настройки по умолчанию восстановлены.</string>

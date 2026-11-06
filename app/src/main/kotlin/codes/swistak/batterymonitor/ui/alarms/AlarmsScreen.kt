@@ -76,6 +76,7 @@ import codes.swistak.batterymonitor.ui.components.ActionLabel
 import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
+import codes.swistak.batterymonitor.ui.settings.settingIcon
 
 internal fun alarmTypeLabel(type: String): Int = when (type) {
     "fully_charged" -> R.string.alarm_type_fully_charged
@@ -286,7 +287,7 @@ internal fun AlarmsScreen(
                                 ) {
                                     ActionLabel(
                                         stringResource(R.string.alarms_add_threshold),
-                                        R.drawable.ui_plus
+                                        settingIcon("alarms_add_threshold")
                                     )
                                 }
                             }
@@ -572,7 +573,7 @@ private fun ThresholdRow(
                     color = if (alarm.enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Icon(
-                    painterResource(R.drawable.ui_edit),
+                    painterResource(settingIcon("alarms_edit_threshold")),
                     null,
                     Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant

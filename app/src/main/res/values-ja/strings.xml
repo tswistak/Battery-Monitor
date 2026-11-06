@@ -94,15 +94,14 @@
     <string name="pref_show_remaining_charge_summary" formatted="false">端末が報告するバッテリーの残りの充電量を mAh で表示しますか？</string>
     <string name="pref_show_remaining_charge_help" formatted="false">端末が報告するバッテリーの残りの充電量を mAh で表示します。</string>
     <string name="pref_battery_current_multiplier" formatted="false">倍率</string>
-    <string name="pref_battery_current_multiplier_help" formatted="false">一部の端末では、予期しない単位や符号で電流が報告されます。表示結果を補正するには、報告値にここで指定した倍率を掛けます。\n
+    <string name="pref_battery_current_multiplier_help" formatted="false">一部の端末では、予期しない単位や符号で電流が報告されます。表示結果を補正するには、報告値にここで指定した倍率を掛けます。 「自動検出」を選ぶと、バッテリーの測定値から電流の倍率の推定を試みます。\n
     \n
     スマートフォンのおおよその目安として、Android の標準では充電中が正、放電中が負です。充電中は +500～+5000\u00A0mA、通常の放電中は -100～-3000\u00A0mA 程度になることがよくあります。満充電に近い場合や端末がアイドル状態の場合は、ゼロに近い値でも正常です。値が約 1000 倍小さい、または大きい場合や、符号が逆の場合は倍率を調整してください。</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">自動検出</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">バッテリーの読み取り値から電流の倍率の推定を試みます。検出できない場合、現在の値は変更されず、適切な読み取り値が得られたときに検出を再試行できます。手動で値を選択すると、保留中の検出は取り消されます。</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">現在のバッテリー状態または測定値では自動検出を利用できません</string>
     <string name="pref_battery_current_multiplier_detection_result">倍率を自動的に %1$d に設定しました</string>
     <string name="pref_prefer_average_battery_current" formatted="false">平均電流を優先</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">利用できる場合、「現在の状態」で直近の平均値を使用しますか？</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">利用できる場合、直近の平均値を使用しますか？</string>
     <string name="pref_prefer_current_avg_help" formatted="false">一部の端末は瞬間電流に加えて直近の平均値も提供します。平均期間は端末によって異なります。「現在の状態」は平均値がなければ瞬間電流を使います。この設定は「現在の状態」のみに適用され、ログは常に元の瞬間電流を保存します。</string>
 
     <string name="activity_until_charged" formatted="false">充電まで</string>
@@ -131,8 +130,8 @@
     <string name="predictor_long_term_ave" formatted="false">長期平均</string>
     <string name="pref_cat_target_levels" formatted="false">目標残量</string>
     <string name="pref_charging_target_mode" formatted="false">充電目標</string>
-    <string name="pref_charging_target_mode_help" formatted="false">「自動（推奨）」は、Battery Monitor が読み取れる場合は端末の固定充電上限を、それ以外は 100% を使います。アダプティブ充電でも目標は 100% です。「カスタム」は、充電の推定と「充電目標に到達」のアラームに、選択した残量を使います。</string>
-    <string name="pref_charging_target_mode_support_help" formatted="false">自動検出は、Google Pixel、Samsung Galaxy、Xiaomi/Redmi/POCO、OnePlus/Oppo/Realme、Sony Xperia、およびGrapheneOSまたはLineageOSを搭載した端末で動作する場合があります。rootまたはShizukuアクセスが利用できる場合は特に有効です。ソフトウェア信号に依存するため、記載したメーカーの端末でも利用可否や精度は保証されません。これらの系統の未検証モデルやOSバージョンでも動作する可能性がありますが、他メーカーの端末は現在自動検出されません。</string>
+    <string name="pref_charging_target_mode_help" formatted="false">「自動（推奨）」は、Battery Monitor が読み取れる場合は端末の固定充電上限を、それ以外は 100% を使います。アダプティブ充電でも目標は 100% です。「カスタム」は、充電の推定と「充電目標に到達」のアラームに、選択した残量を使います。\n
+    自動検出は、Google Pixel、Samsung Galaxy、Xiaomi/Redmi/POCO、OnePlus/Oppo/Realme、Sony Xperia、およびGrapheneOSまたはLineageOSを搭載した端末で動作する場合があります。rootまたはShizukuアクセスが利用できる場合は特に有効です。ソフトウェア信号に依存するため、記載したメーカーの端末でも利用可否や精度は保証されません。これらの系統の未検証モデルやOSバージョンでも動作する可能性がありますが、他メーカーの端末は現在自動検出されません。</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">端末の充電上限：%1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">カスタム目標</string>
     <string name="pref_charging_target_mode_summary_default" formatted="false">固定された端末上限を検出できません — 100% を使用します</string>
@@ -156,7 +155,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">このアプリの通知がすべて無効になっています。これらの設定にアクセスするには有効にしてください</string>
     <string name="main_notifs_disabled_summary" formatted="false">このアプリのメイン通知が無効になっています。これらの設定にアクセスするには有効にしてください</string>
     <string name="settings_notification_disabled">この設定を変更するには、アプリの通知とメイン通知チャンネルを有効にしてください</string>
-    <string name="settings_notification_disabled_help">この設定を変更するには、アプリの通知とメイン通知チャンネルを有効にしてください。</string>
     <string name="notifications_onboarding_message">Battery Monitor がステータスバーにバッテリー残量を表示し、アラームについて通知するには、権限が必要です。\n
     \n
     注: この権限を付与すると、まれにアプリが終了することがあります。その場合は、アプリをもう一度開いてください。</string>
@@ -172,7 +170,17 @@
     <string name="time_since_status_change" formatted="false">ステータス変更からの時間</string>
     <string name="vital_signs" formatted="false">バイタルサイン</string>
     <string name="notification_until_charged" formatted="true">充電完了まで %1$s</string>
-    <string name="notification_until_drained" formatted="true">残り %1$s</string>
+    <string name="notification_until_drained_mixed" formatted="true">残り %1$s</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">残り %1$s</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="other">残り %1$s</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="other">残り %1$s</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="other">残り %1$s</item>
+    </plurals>
     <string name="pref_time_remaining_verbosity" formatted="false">残時間の詳細</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">デバイスにはすべての形やサイズ入っているので、見積残り時間が 通知エリアにフィットするように適切に略語を使用して調整するだけです。 それでもフィットしない場合は、「圧縮」の形式を選ぶことができます。 たくさんのスペースがある場合は、「詳細」の設定を行うことができます。</string>
     <string name="condensed" formatted="false">圧縮</string>
@@ -301,7 +309,6 @@
     <string name="alarms_delivery_sound">音と通知</string>
     <string name="alarms_delivery_vibration">振動と通知</string>
     <string name="alarms_delivery_notification">通知のみ</string>
-    <string name="alarms_channel_help">音と通知方法は、この Android の通知チャンネルで設定します。</string>
     <string name="alarms_options_title" formatted="false">アラームの設定</string>
     <string name="pref_dismiss_low_battery_on_recovery">残量回復時に低残量アラームを消す</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">残量がしきい値を超えたら、低残量の通知を削除します。他のアラーム通知は残ります</string>
@@ -373,7 +380,6 @@
     <string name="history_deleted">ログを消去しました</string>
     <string name="history_load_failed">履歴を読み込めませんでした</string>
     <string name="history_operation_failed">操作に失敗しました。ファイルへのアクセスを確認して再試行してください。</string>
-    <string name="history_settings">履歴とバックアップの設定</string>
     <string name="history_open_fullscreen">全画面のグラフを開く</string>
     <string name="history_chart_description_fullscreen">%1$s。%2$sから%3$sまでの測定値。</string>
     <string name="history_chart_select_point">測定値を選択</string>
@@ -420,7 +426,6 @@
     <string name="pref_enable_logging_summary" formatted="false">バッテリーステータスの変更ログを取得しますか?</string>
     <string name="pref_enable_logging_help" formatted="false">「履歴」用にバッテリーの観測値と状態変化を保存します。取得できる測定値には、残量、温度、電圧、元の瞬間電流、残りの充電量があります。電力は表示時やエクスポート時に電圧と電流から計算し、個別には保存しません。記録をオフにしても、既存の履歴は消えず、時間の推定も続きます。</string>
     <string name="pref_max_log_age" formatted="false">最大ログ履歴</string>
-    <string name="pref_max_log_age_summary" formatted="false">次より古いログを削除します:</string>
     <string name="pref_max_log_age_help" formatted="false">記録が有効な場合、電源への接続時にこの期間より古いログを削除します。「制限なし」では、手動で消去するまで保持します。自動エクスポートが有効な場合、Battery Monitor は古い項目を削除する前に未処理のログをエクスポートします。失敗した場合は削除しません。</string>
     <string name="age_1_day" formatted="false">1\u00A0日</string>
     <string name="age_2_days" formatted="false">2\u00A0日</string>
@@ -432,7 +437,7 @@
     <string name="age_no_limit" formatted="false">制限なし</string>
     <string name="log_export_mode_title" formatted="false">ログをエクスポート</string>
     <string name="log_export_append" formatted="false">既存のファイルに追加</string>
-    <string name="log_export_append_help" formatted="false">CSV と JSON の両方に追記できます。選択した形式の既存ファイルを選んでください。前回の手動エクスポート以降のログのみが追加されます。</string>
+    <string name="log_export_append_description" formatted="false">CSV と JSON の両方に追記できます。選択した形式の既存ファイルを選んでください。前回の手動エクスポート以降のログのみが追加されます。</string>
     <string name="log_json_append_invalid" formatted="false">サポートされているバージョンで、16 MB 以下の読み取り可能な Battery Monitor の JSON 履歴ファイルを選択してください。</string>
     <string name="log_export_recovery_required" formatted="true">ストレージを再接続し、復元するために同じファイルへのエクスポートを再試行してください。元のファイルはアプリのストレージ（%1$s）に保存されています。</string>
     <string name="log_export_all_logs" formatted="false">すべて</string>
@@ -563,7 +568,7 @@
     <string name="diag_status_waiting_permission" formatted="false">Shizuku の権限を待機中…</string>
     <string name="diag_status_no_stats" formatted="false">この端末では現在利用できる高度なバッテリー統計がありません。</string>
     <string name="diag_value_not_available" formatted="false">利用不可</string>
-    <string name="diag_help_overview" formatted="false">「診断」は「アプリの動作」、「バッテリー」、「充電」、「生データ」の各タブに、監視の信頼性、保存済みの予測データ、バッテリーデータをまとめています。Android のデータは root なしで取得できます。追加の端末データは、端末と Battery Monitor に与えた権限によって異なります。</string>
+    <string name="diag_help_overview" formatted="false">「アプリの動作」、「バッテリー」、「充電」、「生データ」の各タブに、監視の信頼性、保存済みの予測データ、バッテリーデータをまとめています。Android のデータは root なしで取得できます。追加の端末データは、端末と Battery Monitor に与えた権限によって異なります。</string>
     <string name="diag_section_counters" formatted="false">カウンター</string>
     <string name="diag_help_counters" formatted="false">バッテリーの測定値は、残りの充電量を mAh、電流を mA、エネルギーを mWh、電圧を V、温度を選択した単位、電力を W としてラベル付きで表示します。電流の倍率は計算した電力にも適用します。平均電流と充電サイクル数は端末の対応状況に依存します。</string>
     <string name="diag_field_charge_counter" formatted="false">推定残量</string>
@@ -571,7 +576,7 @@
     <string name="diag_field_current_average" formatted="false">平均電流</string>
     <string name="diag_field_energy_counter" formatted="false">エネルギーカウンター</string>
     <string name="diag_section_capacity" formatted="false">容量</string>
-    <string name="diag_help_capacity" formatted="false">「容量」には、満充電容量、設計容量、推定状態が表示されます。推定状態は満充電容量を設計容量で割って計算されるため、精度は端末が報告する値に依存します。</string>
+    <string name="diag_help_capacity" formatted="false">満充電容量、設計容量、推定状態が表示されます。推定状態は満充電容量を設計容量で割って計算されるため、精度は端末が報告する値に依存します。</string>
     <string name="diag_field_cycle_count" formatted="false">サイクル回数</string>
     <string name="diag_field_reported_capacity" formatted="false">報告容量</string>
     <string name="diag_field_state_of_health" formatted="false">健全性</string>
@@ -584,7 +589,7 @@
     <string name="diag_capacity_low">低い</string>
     <string name="diag_capacity_high">高い</string>
     <string name="diag_section_charging" formatted="false">充電</string>
-    <string name="diag_help_charging" formatted="false">「充電」には、最大充電電流や最大充電電圧、充電ポリシー、充電状態、容量レベルなど、現在の充電経路に関連する値が表示されます。これらの項目は充電器や充電モードによって変わる場合があります。</string>
+    <string name="diag_help_charging" formatted="false">最大充電電流や最大充電電圧、充電ポリシー、充電状態、容量レベルなど、現在の充電経路に関連する値が表示されます。これらの項目は充電器や充電モードによって変わる場合があります。</string>
     <string name="diag_field_charge_time_remaining" formatted="false">充電残り時間</string>
     <string name="diag_field_max_charging_current" formatted="false">最大充電電流</string>
     <string name="diag_field_max_charging_voltage" formatted="false">最大充電電圧</string>
@@ -641,8 +646,7 @@
     <string name="diagnostics" formatted="false">診断</string>
     <string name="diagnostics_summary" formatted="false">権限と監視の信頼性を確認し、トラブルシューティング用レポートを作成します</string>
     <string name="diag_overview">アプリの動作</string>
-    <string name="diagnostics_help_title" formatted="false">診断の役割</string>
-    <string name="diagnostics_help_overview" formatted="false">「監視の動作」は権限と監視の信頼性を確認します。監視の開始・停止、デバッグログの変更、バッテリー最適化と通知設定の表示、問題調査レポートの作成ができます。取得できない値がすべて権限の問題とは限りません。端末が提供しない値もあります。</string>
+    <string name="diagnostics_help_overview" formatted="false">権限と監視の信頼性を確認します。監視の開始・停止、デバッグログの変更、バッテリー最適化と通知設定の表示、問題調査レポートの作成ができます。取得できない値がすべて権限の問題とは限りません。端末が提供しない値もあります。</string>
     <string name="diagnostics_monitoring" formatted="false">バックグラウンド監視</string>
     <string name="diag_monitor_operation">監視の動作</string>
     <string name="diag_heartbeat">最終ハートビート</string>
@@ -779,13 +783,12 @@
     <string name="backup_restore_settings_summary" formatted="false">アプリの設定とバッテリーデータをバックアップ、復元、転送します</string>
     <string name="backup_restore_help_overview" formatted="false">設定、アラーム、ログ、学習済みの予測データを保存・復元します。「既定の設定に戻す」操作は、確認後にアプリの設定をリセットしますが、履歴、アラーム、学習済みの推定、監視の実行状態は保持します。</string>
     <string name="pref_general_backup" formatted="false">アプリ全体のバックアップ</string>
-    <string name="general_backup_restore_effects_help" formatted="false">選択したカテゴリは復元され、選択していないカテゴリは保持されます。アラームを復元すると、現在のアラームは置き換えられます。ログは追加するか、現在の履歴を置き換えるかを選択します。</string>
     <string name="pref_export_general_backup" formatted="false">全体バックアップをエクスポート</string>
     <string name="pref_export_general_backup_help" formatted="false">設定、アラーム、端末固有データをまとめて、選択した場所に全体バックアップの ZIP ファイルとして保存します。</string>
     <string name="pref_export_general_backup_summary" formatted="false">設定、アラーム、デバイス固有データをZIPファイルに保存します</string>
     <string name="general_backup_exported" formatted="false">全体バックアップを正常にエクスポートしました。</string>
     <string name="pref_import_general_backup" formatted="false">全体バックアップをインポート</string>
-    <string name="pref_import_general_backup_help" formatted="false">既存の全体バックアップ ZIP を選択し、利用可能な項目から復元するものを選びます。新しいバージョンのアプリで作成したバックアップは互換性がない場合があり、別の端末のログや予測データを復元すると、推定値が不正確になる可能性があります。一部だけ復元された場合は、再試行する前に報告された項目を確認してください。</string>
+    <string name="pref_import_general_backup_help" formatted="false">既存の全体バックアップ ZIP を選択し、利用可能な項目から復元するものを選びます。新しいバージョンのアプリで作成したバックアップは互換性がない場合があり、別の端末のログや予測データを復元すると、推定値が不正確になる可能性があります。一部だけ復元された場合は、再試行する前に報告された項目を確認してください。 選択したカテゴリは復元され、選択していないカテゴリは保持されます。アラームを復元すると、現在のアラームは置き換えられます。ログは追加するか、現在の履歴を置き換えるかを選択します。</string>
     <string name="pref_import_general_backup_summary" formatted="false">全体バックアップのZIPファイルから選択したデータを復元します</string>
     <string name="general_backup_restore_message" formatted="false">復元する項目を選択してください。</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">ログと予測データ</string>
@@ -794,21 +797,21 @@
     <string name="settings_restore_partial">一部のデータを復元できませんでした。復元済み: %1$s。一部だけ復元された可能性があるデータ: %2$s。再試行する前に、これらの項目を確認してください。</string>
     <string name="settings_restore_none">なし</string>
     <string name="pref_export_settings" formatted="false">設定をエクスポート</string>
-    <string name="pref_export_settings_help" formatted="false">「設定をエクスポート」ではアプリの設定を保存します。設定のバックアップ用 JSON ファイルを作成します。</string>
+    <string name="pref_export_settings_help" formatted="false">アプリの設定を保存してください。設定のバックアップ用 JSON ファイルを作成します。</string>
     <string name="pref_export_settings_summary" formatted="false">現在の設定をファイルに保存</string>
     <string name="settings_exported" formatted="false">設定を正常にエクスポートしました。</string>
     <string name="pref_import_settings" formatted="false">設定をインポート</string>
-    <string name="pref_import_settings_help" formatted="false">「設定をインポート」で保存した設定が復元されます。この操作では履歴やアラームの記録は復元されません。</string>
+    <string name="pref_import_settings_help" formatted="false">保存した設定を復元してください。この操作では履歴やアラームの記録は復元されません。</string>
     <string name="pref_import_settings_summary" formatted="false">ファイルから設定を復元</string>
     <string name="settings_imported" formatted="false">設定を正常にインポートしました。</string>
     <string name="invalid_settings_file" formatted="false">無効な設定ファイル</string>
     <string name="settings_file_version_warning" formatted="false">このファイルは新しいバージョンのアプリで作成されています。インポートすると予期しない動作が発生する可能性があります。それでも続行しますか？</string>
     <string name="pref_export_alarms" formatted="false">アラームをエクスポート</string>
-    <string name="pref_export_alarms_help" formatted="false">「アラームをエクスポート」ではアラームを保存します。JSON ファイルにはアラームのルールが含まれますが、Android が管理する通知チャンネルやサウンドの設定は含まれません。</string>
+    <string name="pref_export_alarms_help" formatted="false">アラームを保存してください。JSON ファイルにはアラームのルールが含まれますが、Android が管理する通知チャンネルやサウンドの設定は含まれません。</string>
     <string name="pref_export_alarms_summary" formatted="false">現在のアラームをファイルに保存します</string>
     <string name="alarms_exported" formatted="false">アラームをエクスポートしました。</string>
     <string name="pref_import_alarms" formatted="false">アラームをインポート</string>
-    <string name="pref_import_alarms_help" formatted="false">「アラームをインポート」で、現在のすべてのアラームがバックアップ内のアラームに置き換えられます。アラームのバックアップ用 JSON ファイルを選択してください。</string>
+    <string name="pref_import_alarms_help" formatted="false">現在のすべてのアラームをバックアップ内のアラームに置き換えてください。アラームのバックアップ用 JSON ファイルを選択してください。</string>
     <string name="pref_import_alarms_summary" formatted="false">現在のアラームをファイル内のアラームで置き換えます</string>
     <string name="alarms_imported" formatted="false">アラームをインポートしました。</string>
     <string name="invalid_alarms_file" formatted="false">無効なアラームファイルです</string>
@@ -840,7 +843,7 @@
     <string name="invalid_csv_logs_file" formatted="false">CSVログファイルが無効か、互換性がありません</string>
     <string name="settings_reset_title">既定の設定に戻す</string>
     <string name="settings_reset_summary">履歴、アラーム、学習済みの推定を保持して、アプリの設定をリセットします</string>
-    <string name="settings_reset_help" formatted="false">「既定の設定に戻す」操作では、確認後にアプリの設定をリセットします。履歴、アラーム、学習済みの推定、ウィジェット設定、バックグラウンド監視の実行状態は保持します。システムの権限と通知チャンネル設定はリセットしません。</string>
+    <string name="settings_reset_help" formatted="false">確認後にアプリの設定をリセットしてください。履歴、アラーム、学習済みの推定、ウィジェット設定、バックグラウンド監視の実行状態は保持します。システムの権限と通知チャンネル設定はリセットしません。</string>
     <string name="settings_reset_question">アプリのすべての設定を既定値に戻しますか？履歴、アラーム、学習済みの推定は保持します。バックグラウンド監視は現在の実行・停止状態を維持します。</string>
     <string name="settings_reset_confirm">既定値に戻す</string>
     <string name="settings_reset_done">既定の設定に戻しました。</string>

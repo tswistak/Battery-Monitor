@@ -293,8 +293,10 @@ class FullscreenChartStateInstrumentedTest {
                                     model::select,
                                     model::refresh,
                                     activity::finish,
-                                    onViewportObserved = { viewport, width ->
-                                        observeFixtureViewport(activity, model, viewport, width)
+                                    onViewportObserved = { viewport, width, command ->
+                                        observeFixtureViewport(
+                                            activity, model, viewport, width, command
+                                        )
                                     })
                             }
                         }
@@ -399,9 +401,15 @@ class FullscreenChartStateInstrumentedTest {
                 assertDuration(chart, duration)
             }
             loaded(model)
-            main { model.viewport(HistoryRangeState(0, duration), 1000) }
-            loaded(model)
-            await { visibleTimes(chart).start <= 5 }
+            val earlyViewport = HistoryRangeState(0, duration)
+            main { model.viewport(earlyViewport, 1000) }
+            val earlyDiagnostic = {
+                "Early explicit viewport did not settle; requested=$earlyViewport; " + fixtureChartDiagnostic(
+                    activity, model
+                )
+            }
+            loaded(model, earlyDiagnostic)
+            await(earlyDiagnostic) { visibleTimes(chart).start <= 5 }
             down = android.os.SystemClock.uptimeMillis()
             touch(chart, down, MotionEvent.ACTION_DOWN, 0.2f)
             touch(chart, down, MotionEvent.ACTION_MOVE, 0.3f)
@@ -409,9 +417,15 @@ class FullscreenChartStateInstrumentedTest {
             touch(chart, down, MotionEvent.ACTION_UP, 0.8f)
             assertDuration(chart, duration)
             assertTrue(visibleTimes(chart).start >= 0)
-            main { model.viewport(HistoryRangeState(late, late + duration), 1000) }
-            loaded(model)
-            await { abs(visibleTimes(chart).start - late) <= 5 }
+            val lateViewport = HistoryRangeState(late, late + duration)
+            main { model.viewport(lateViewport, 1000) }
+            val lateDiagnostic = {
+                "Late explicit viewport did not settle; requested=$lateViewport; " + fixtureChartDiagnostic(
+                    activity, model
+                )
+            }
+            loaded(model, lateDiagnostic)
+            await(lateDiagnostic) { abs(visibleTimes(chart).start - late) <= 5 }
             down = android.os.SystemClock.uptimeMillis()
             touch(chart, down, MotionEvent.ACTION_DOWN, 0.8f)
             for (x in listOf(0.77f, 0.5f, 0.2f)) {
@@ -731,6 +745,52 @@ class FullscreenChartStateInstrumentedTest {
         assertEquals(4.1, bounds.min!!, 0.0)
         assertEquals(4.4, bounds.max!!, 0.0)
         assertEquals(HistoryKey(21_500, 4), state.selectedKey)
+    }
+
+    @Test
+    fun observation_from_previous_command_cannot_replace_pending_explicit_viewport() {
+        val hour = 3_600_000L
+        val late = 1_800_000_000_000L
+        val retained = HistoryRangeState(0, late + 2 * hour)
+        val initial = HistoryRangeState(0, hour)
+        val requested = HistoryRangeState(late, late + hour)
+        database.addLogs(
+            listOf(
+                observation.copy(time = 0),
+                observation.copy(time = late),
+                observation.copy(time = late + hour / 2)
+            )
+        )
+        val model = model(HistoryMetric.LEVEL, retained, "custom")
+        main { model.viewport(initial, 1000) }
+        loaded(model)
+        main {
+            val observedCommand = model.state.value!!.viewportCommand
+            model.viewport(requested, 640)
+            val pending = model.state.value!!
+            assertTrue("The explicit command must still be pending", pending.loading)
+            model.observeViewport(initial, 1878, observedCommand)
+            val after = model.state.value!!
+            assertEquals(
+                "Observation from command $observedCommand must not replace pending command " + "${pending.viewportCommand}; requested=$requested; actual=${after.viewport}",
+                requested,
+                after.viewport
+            )
+            assertSame(
+                "A stale observation must not mutate or restart the pending request", pending, after
+            )
+        }
+        loaded(model)
+        assertEquals(requested, model.state.value!!.chart!!.viewport)
+        val dragged = HistoryRangeState(late + hour / 4, late + hour + hour / 4)
+        main { model.observeViewport(dragged, 640, model.state.value!!.viewportCommand) }
+        loaded(model)
+        assertEquals(
+            "A current-command gesture must still update the viewport",
+            dragged,
+            model.state.value!!.viewport
+        )
+        assertEquals(dragged, model.state.value!!.chart!!.viewport)
     }
 
     @Test
@@ -1151,8 +1211,10 @@ class FullscreenChartStateInstrumentedTest {
                                     model::select,
                                     model::refresh,
                                     activity::finish,
-                                    onViewportObserved = { viewport, width ->
-                                        observeFixtureViewport(activity, model, viewport, width)
+                                    onViewportObserved = { viewport, width, command ->
+                                        observeFixtureViewport(
+                                            activity, model, viewport, width, command
+                                        )
                                     })
                             }
                         }
@@ -1731,25 +1793,21 @@ class FullscreenChartStateInstrumentedTest {
                 if (activity.isDestroyed || activity.isFinishing) {
                     throw AssertionError(
                         "$phase: Chart Activity is finishing or destroyed; requested=$requested; " + fixtureChartDiagnostic(
-                            state,
-                            chart
+                            state, chart
                         )
                     )
                 }
                 if (state?.error == true) {
                     throw AssertionError(
                         "$phase: Chart model failed; requested=$requested; " + fixtureChartDiagnostic(
-                            state,
-                            chart
+                            state, chart
                         )
                     )
                 }
                 val failure = fixtureRenderedMismatch(activity, state, chart)
                 val viewportMatches =
                     state != null && chart != null && requested != null && fixtureViewportMatches(
-                        state,
-                        chart,
-                        requested
+                        state, chart, requested
                     )
                 if (failure == null && viewportMatches) {
                     val geometry = listOf(
@@ -1946,19 +2004,20 @@ class FullscreenChartStateInstrumentedTest {
         activity: FullscreenChartActivity,
         model: FullscreenChartViewModel,
         observed: HistoryRangeState,
-        width: Int
+        width: Int,
+        observedCommand: Long
     ) {
         val before = model.state.value
         val chart = nativeChart(activity.window.decorView)
         val observation =
-            "observed=$observed width=$width; " + "nativeX=${chart?.lowestVisibleX}..${chart?.highestVisibleX}; " + "nativeDataId=${
+            "atUptimeMillis=${android.os.SystemClock.uptimeMillis()} observed=$observed width=$width observedCommand=$observedCommand; " + "nativeX=${chart?.lowestVisibleX}..${chart?.highestVisibleX}; " + "nativeDataId=${
                 System.identityHashCode(chart?.data)
             }; " + fixtureChartDiagnostic(before, chart, includeCallbacks = false)
-        model.observeViewport(observed, width)
+        model.observeViewport(observed, width, observedCommand)
         val after = model.state.value
         if (fixtureViewportCallbacks.size == 16) fixtureViewportCallbacks.removeFirst()
         fixtureViewportCallbacks.addLast(
-            "$observation; afterModelViewport=${after?.viewport}; afterLoading=${after?.loading}"
+            "$observation; afterModelViewport=${after?.viewport}; afterCommand=${after?.viewportCommand}; afterLoading=${after?.loading}"
         )
     }
 
@@ -1993,7 +2052,11 @@ class FullscreenChartStateInstrumentedTest {
                         (entry.data as HistoryKey).time - (entry.x.toDouble() * 1000).toLong()
                     "${origin + (chart.lowestVisibleX.toDouble() * 1000).toLong()}.." + "${origin + (chart.highestVisibleX.toDouble() * 1000).toLong()}"
                 } ?: "unavailable"
-        return "mode=${state?.scaleMode}, loading=${state?.loading}, error=${state?.error}, " + "modelViewport=${state?.viewport}, nativeViewport=$nativeViewport, " + "scaleYEnabled=${chart?.isScaleYEnabled}, dragYEnabled=${chart?.isDragYEnabled}, " + "scaleY=${chart?.viewPortHandler?.scaleY}, maxScaleY=${chart?.viewPortHandler?.maxScaleY}, " + "leftY=${chart?.axisLeft?.axisMinimum}..${chart?.axisLeft?.axisMaximum}, " + "rightY=${chart?.axisRight?.axisMinimum}..${chart?.axisRight?.axisMaximum}, " + "topY=${
+        return "mode=${state?.scaleMode}, loading=${state?.loading}, error=${state?.error}, " + "modelViewport=${state?.viewport}, command=${state?.viewportCommand}, " + "chartViewports=${state?.charts?.mapValues { it.value.viewport }}, nativeViewport=$nativeViewport, " + "nativeX=${chart?.lowestVisibleX}..${chart?.highestVisibleX}, nativeDataId=${
+            System.identityHashCode(
+                chart?.data
+            )
+        }, " + "scaleYEnabled=${chart?.isScaleYEnabled}, dragYEnabled=${chart?.isDragYEnabled}, " + "scaleY=${chart?.viewPortHandler?.scaleY}, maxScaleY=${chart?.viewPortHandler?.maxScaleY}, " + "leftY=${chart?.axisLeft?.axisMinimum}..${chart?.axisLeft?.axisMaximum}, " + "rightY=${chart?.axisRight?.axisMinimum}..${chart?.axisRight?.axisMaximum}, " + "topY=${
             chart?.let(
                 ::fullscreenChartTopY
             )
@@ -2028,8 +2091,7 @@ class FullscreenChartStateInstrumentedTest {
             lookup =
                 "root=${root != null}, visibleNode=${node != null}, bounds=$candidate, window=$windowBounds"
             val available = node != null && !candidate.isEmpty && windowBounds.contains(
-                candidate.centerX(),
-                candidate.centerY()
+                candidate.centerX(), candidate.centerY()
             )
             if (available) bounds.set(candidate)
             available
@@ -2061,9 +2123,14 @@ class FullscreenChartStateInstrumentedTest {
         return pressed && released
     }
 
-    private fun loaded(model: FullscreenChartViewModel) {
-        await { model.state.value?.loading == false }
-        assertFalse(model.state.value!!.error)
+    private fun loaded(
+        model: FullscreenChartViewModel, diagnostic: () -> String = {
+            "History loading did not finish; " + fixtureChartDiagnostic(model.state.value, null)
+        }
+    ) {
+        await(diagnostic) { model.state.value?.loading == false }
+        val error = model.state.value!!.error
+        assertFalse(if (error) diagnostic() else "History load failed", error)
     }
 
     private fun await(

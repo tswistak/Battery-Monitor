@@ -43,6 +43,7 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -180,18 +181,16 @@ internal fun HistoryActionsMenu(enabled: Boolean, onAction: (String) -> Unit) {
                 (if (preferences.getBoolean(
                         "show_seconds", false
                     )
-                ) R.string.menu_hide_seconds else R.string.menu_show_seconds) to "seconds",
-                R.string.history_settings to "settings"
+                ) R.string.menu_hide_seconds else R.string.menu_show_seconds) to "seconds"
             ).forEach { (label, action) ->
                 DropdownMenuItem(text = { Text(stringResource(label)) }, leadingIcon = {
                     Icon(
                         painterResource(
                             when (action) {
-                                "export" -> R.drawable.ui_share
+                                "export" -> R.drawable.ui_export
                                 "import" -> R.drawable.ui_down
                                 "delete" -> R.drawable.ui_minus
-                                "seconds" -> R.drawable.ui_clock
-                                else -> R.drawable.ui_settings
+                                else -> R.drawable.ui_clock
                             }
                         ), null
                     )
@@ -504,7 +503,7 @@ internal fun HistoryRoute(
                                 ) {
                                     Text(
                                         chart.events.filter { it.code == HistoryEvent.CONNECTED }
-                                        .sumOf { it.count }.toString(),
+                                            .sumOf { it.count }.toString(),
                                         style = MaterialTheme.typography.titleLarge
                                     )
                                     Text(
@@ -638,14 +637,14 @@ internal fun HistoryRoute(
                             if (record.status == -1) stringResource(R.string.history_system_event)
                             else listOfNotNull(
                                 HistoryMetric.CURRENT.value(record)?.let {
-                                historyValue(
-                                    it,
-                                    HistoryMetric.CURRENT,
-                                    fahrenheit,
-                                    locale,
-                                    currentMultiplier
-                                )
-                            },
+                                    historyValue(
+                                        it,
+                                        HistoryMetric.CURRENT,
+                                        fahrenheit,
+                                        locale,
+                                        currentMultiplier
+                                    )
+                                },
                                 HistoryMetric.POWER.value(record)?.let {
                                     historyValue(
                                         it,
@@ -667,29 +666,30 @@ internal fun HistoryRoute(
                                     )
                                 }).joinToString(" · ")
                                 .ifEmpty { stringResource(R.string.current_unavailable) }
-                        Row(Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                detailsId = entry.id
-                                detailsTime = entry.record.time
-                            }
-                            .then(if (twoPane) Modifier.semantics {
-                                selected = emphasized
-                            } else Modifier)
-                            .drawBehind {
-                                if (emphasized) {
-                                    val width = 3.dp.toPx()
-                                    val x =
-                                        if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
-                                    drawRect(
-                                        selectionColor,
-                                        topLeft = Offset(x, 0f),
-                                        size = Size(width, size.height)
-                                    )
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    detailsId = entry.id
+                                    detailsTime = entry.record.time
                                 }
-                            }
-                            .heightIn(min = 67.dp)
-                            .padding(horizontal = 13.dp, vertical = 12.dp),
+                                .then(if (twoPane) Modifier.semantics {
+                                    selected = emphasized
+                                } else Modifier)
+                                .drawBehind {
+                                    if (emphasized) {
+                                        val width = 3.dp.toPx()
+                                        val x =
+                                            if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
+                                        drawRect(
+                                            selectionColor,
+                                            topLeft = Offset(x, 0f),
+                                            size = Size(width, size.height)
+                                        )
+                                    }
+                                }
+                                .heightIn(min = 67.dp)
+                                .padding(horizontal = 13.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(11.dp)) {
                             Surface(
@@ -791,7 +791,7 @@ internal fun HistoryRoute(
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                 contentPadding = PaddingValues(12.dp)
             ) {
-                Icon(painterResource(R.drawable.ui_share), null, Modifier.size(19.dp))
+                Icon(painterResource(R.drawable.ui_export), null, Modifier.size(19.dp))
                 Spacer(Modifier.width(8.dp))
                 Text(stringResource(R.string.history_export_selected))
             }
@@ -967,14 +967,16 @@ internal fun HistoryRoute(
             }) { Text(stringResource(R.string.okay)) }
         })
     if (dialog == "export") ChoiceDialog(
-        R.string.log_export_mode_title,
-        { dialog = null },
-        listOf(
-            R.string.history_export_selected to { export(exportFormat, "selected") },
-            R.string.log_export_all_logs to { export(exportFormat, "all") },
-            R.string.log_export_from_last to { export(exportFormat, "since") },
-            R.string.log_export_append to { export(exportFormat, "append") }),
-        header = {
+        R.string.log_export_mode_title, { dialog = null }, listOf(
+            DialogChoice(R.string.history_export_selected, { export(exportFormat, "selected") }),
+            DialogChoice(R.string.log_export_all_logs, { export(exportFormat, "all") }),
+            DialogChoice(R.string.log_export_from_last, { export(exportFormat, "since") }),
+            DialogChoice(
+                R.string.log_export_append,
+                { export(exportFormat, "append") },
+                R.string.log_export_append_description
+            )
+        ), header = {
             Text(stringResource(R.string.pref_auto_log_export_format))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 LogExportFormat.entries.forEach { format ->
@@ -984,23 +986,19 @@ internal fun HistoryRoute(
                         label = { Text(format.name) })
                 }
             }
-            Text(
-                stringResource(R.string.log_export_append_help),
-                style = MaterialTheme.typography.bodyMedium
-            )
         })
     if (dialog == "import") ChoiceDialog(
         R.string.log_import_mode_title,
         { dialog = null },
-        listOf(R.string.pref_import_logs_csv to {
+        listOf(DialogChoice(R.string.pref_import_logs_csv, {
             importingJson = false
             importer.launch(arrayOf("*/*"))
             dialog = null
-        }, R.string.history_import_json to {
+        }), DialogChoice(R.string.history_import_json, {
             importingJson = true
             importer.launch(arrayOf("*/*"))
             dialog = null
-        })
+        }))
     )
     if (dialogsAllowed && dialog == "importMode") AlertDialog(onDismissRequest = {
         dialog = null
@@ -1033,9 +1031,9 @@ internal fun HistoryRoute(
     })
     if (dialogsAllowed && dialog == "replace") AlertDialog(
         onDismissRequest = {
-        dialog = null
-        viewModel.pendingImportUri = null
-    },
+            dialog = null
+            viewModel.pendingImportUri = null
+        },
         title = { Text(stringResource(R.string.log_import_replace)) },
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
@@ -1056,11 +1054,10 @@ internal fun HistoryRoute(
             }) { Text(stringResource(R.string.cancel)) }
         })
     if (dialog == "delete") ChoiceDialog(
-        R.string.menu_clear,
-        { dialog = null },
-        listOf(
-            R.string.history_delete_selected to { dialog = "deleteSelected" },
-            R.string.history_delete_all to { dialog = "deleteAll" })
+        R.string.menu_clear, { dialog = null }, listOf(
+            DialogChoice(R.string.history_delete_selected, { dialog = "deleteSelected" }),
+            DialogChoice(R.string.history_delete_all, { dialog = "deleteAll" })
+        )
     )
     if (dialogsAllowed && (dialog == "deleteSelected" || dialog == "deleteAll")) AlertDialog(
         onDismissRequest = {
@@ -1166,11 +1163,15 @@ internal fun metricLabel(metric: HistoryMetric): String = stringResource(
     }
 )
 
+private data class DialogChoice(
+    val label: Int, val action: () -> Unit, val description: Int? = null
+)
+
 @Composable
 private fun ChoiceDialog(
     title: Int,
     onDismiss: () -> Unit,
-    choices: List<Pair<Int, () -> Unit>>,
+    choices: List<DialogChoice>,
     header: @Composable () -> Unit = {}
 ) {
     if (applicationDialogsAllowed()) AlertDialog(
@@ -1182,10 +1183,24 @@ private fun ChoiceDialog(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 header()
-                choices.forEach { (label, action) ->
+                choices.forEach { (label, action, description) ->
                     OutlinedButton(
-                        onClick = action, modifier = Modifier.fillMaxWidth()
-                    ) { Text(stringResource(label), Modifier.fillMaxWidth()) }
+                        onClick = action,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = if (description == null) ButtonDefaults.outlinedShape else MaterialTheme.shapes.medium
+                    ) {
+                        Column(
+                            Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Text(stringResource(label), Modifier.fillMaxWidth())
+                            if (description != null) Text(
+                                stringResource(description),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
             }
         },

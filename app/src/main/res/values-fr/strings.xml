@@ -94,15 +94,14 @@
     <string name="pref_show_remaining_charge_summary" formatted="false">Afficher la charge restante de la batterie signalée par l’appareil en mAh\u00A0?</string>
     <string name="pref_show_remaining_charge_help" formatted="false">Affichez la charge restante de la batterie signalée par l’appareil en mAh.</string>
     <string name="pref_battery_current_multiplier" formatted="false">Multiplicateur</string>
-    <string name="pref_battery_current_multiplier_help" formatted="false">Certains appareils signalent des unités ou des signes inattendus. Multipliez ici la valeur signalée pour corriger le résultat affiché.\n
+    <string name="pref_battery_current_multiplier_help" formatted="false">Certains appareils signalent des unités ou des signes inattendus. Multipliez ici la valeur signalée pour corriger le résultat affiché. Utilisez «\u00A0Détecter automatiquement\u00A0» pour tenter de déduire le multiplicateur de courant à partir d’une mesure de la batterie.\n
     \n
     À titre indicatif pour un téléphone, la convention Android utilise un signe positif pendant la charge et négatif pendant la décharge. Une charge active se situe souvent entre +500 et +5000\u00A0mA, et une décharge ordinaire entre -100 et -3000\u00A0mA. Des valeurs proches de zéro peuvent être normales lorsque la batterie est presque pleine ou que le téléphone est inactif. Si la valeur semble environ 1000 fois trop petite ou trop grande, ou si le signe est inversé, ajustez le multiplicateur.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Détecter automatiquement</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">Essayez de déduire le multiplicateur de courant à partir d’une mesure de la batterie. Si la détection est indisponible, la valeur actuelle reste inchangée et la détection peut réessayer lorsqu’une mesure appropriée devient disponible. Choisir une valeur manuelle annule la détection en attente.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">La détection automatique n’est pas disponible pour l’état ou la mesure actuelle de la batterie</string>
     <string name="pref_battery_current_multiplier_detection_result">Le multiplicateur a été automatiquement défini sur %1$d</string>
     <string name="pref_prefer_average_battery_current" formatted="false">Préférer le courant moyen</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">Utiliser la moyenne récente dans «\u00A0Infos actuelles\u00A0» lorsqu’elle est disponible ?</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">Utiliser la moyenne récente lorsqu’elle est disponible ?</string>
     <string name="pref_prefer_current_avg_help" formatted="false">Certains appareils fournissent une moyenne récente en plus du courant instantané. La période de calcul varie selon l’appareil. «\u00A0Infos actuelles\u00A0» utilise le courant instantané si la moyenne n’est pas disponible. Cette option s’applique uniquement à «\u00A0Infos actuelles\u00A0» ; les journaux conservent toujours la mesure instantanée d’origine.</string>
 
     <string name="activity_until_charged" formatted="false">jusqu’à charge</string>
@@ -131,8 +130,8 @@
     <string name="predictor_long_term_ave" formatted="false">Moyenne long terme</string>
     <string name="pref_cat_target_levels" formatted="false">Niveaux cibles</string>
     <string name="pref_charging_target_mode" formatted="false">Objectif de charge</string>
-    <string name="pref_charging_target_mode_help" formatted="false">«\u00A0Automatique (recommandé)\u00A0» utilise une limite de charge fixe de l’appareil si Battery Monitor peut la lire, sinon 100 %. La charge adaptative vise toujours 100 %. «\u00A0Personnalisé\u00A0» utilise le niveau choisi pour les estimations de charge et les alarmes «\u00A0Objectif de charge atteint\u00A0».</string>
-    <string name="pref_charging_target_mode_support_help" formatted="false">La détection automatique peut fonctionner sur les appareils Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme et Sony Xperia, ainsi que sur les appareils sous GrapheneOS ou LineageOS, notamment lorsqu’un accès root ou Shizuku est disponible. Elle repose sur des signaux logiciels\u00A0: sa disponibilité et sa précision ne sont donc pas garanties, même pour les fabricants indiqués. Des modèles ou versions de système non testés de ces familles peuvent aussi fonctionner, mais les appareils d’autres fabricants ne sont actuellement pas détectés automatiquement.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">«\u00A0Automatique (recommandé)\u00A0» utilise une limite de charge fixe de l’appareil si Battery Monitor peut la lire, sinon 100 %. La charge adaptative vise toujours 100 %. «\u00A0Personnalisé\u00A0» utilise le niveau choisi pour les estimations de charge et les alarmes «\u00A0Objectif de charge atteint\u00A0».\n
+    La détection automatique peut fonctionner sur les appareils Google Pixel, Samsung Galaxy, Xiaomi/Redmi/POCO, OnePlus/Oppo/Realme et Sony Xperia, ainsi que sur les appareils sous GrapheneOS ou LineageOS, notamment lorsqu’un accès root ou Shizuku est disponible. Elle repose sur des signaux logiciels\u00A0: sa disponibilité et sa précision ne sont donc pas garanties, même pour les fabricants indiqués. Des modèles ou versions de système non testés de ces familles peuvent aussi fonctionner, mais les appareils d’autres fabricants ne sont actuellement pas détectés automatiquement.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">Limite de charge de l’appareil : %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">Objectif personnalisé</string>
     <string name="pref_charging_target_mode_summary_default" formatted="false">Aucune limite fixe détectée — utilisation de 100 %</string>
@@ -156,7 +155,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">Toutes les notifications de cette appli sont désactivées. Activez-les pour accéder à ces réglages</string>
     <string name="main_notifs_disabled_summary" formatted="false">La notification principale de cette appli est désactivée. Activez-la pour accéder à ces réglages</string>
     <string name="settings_notification_disabled">Activez les notifications de l’application et le canal de notification principal pour personnaliser cette option</string>
-    <string name="settings_notification_disabled_help">Activez les notifications de l’application et le canal de notification principal pour personnaliser cette option.</string>
     <string name="notifications_onboarding_message">Battery Monitor a besoin de votre autorisation pour afficher le niveau de batterie dans la barre d\'état et vous avertir des alarmes.\n
     \n
     Remarque : l\'attribution de cette autorisation peut occasionnellement entraîner la fermeture de l\'application. Si cela arrive, rouvrez-la simplement.</string>
@@ -172,7 +170,23 @@
     <string name="time_since_status_change" formatted="false">Temps depuis changement d’état</string>
     <string name="vital_signs" formatted="false">Signes vitaux</string>
     <string name="notification_until_charged" formatted="true">%1$s jusqu’à charge complète</string>
-    <string name="notification_until_drained" formatted="true">%1$s restants</string>
+    <string name="notification_until_drained_mixed" formatted="true">Temps restant : %1$s</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="one">%1$s restant</item>
+        <item quantity="many">%1$s restants</item>
+        <item quantity="other">%1$s restants</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="one">%1$s restante</item>
+        <item quantity="many">%1$s restantes</item>
+        <item quantity="other">%1$s restantes</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="one">%1$s restante</item>
+        <item quantity="many">%1$s restantes</item>
+        <item quantity="other">%1$s restantes</item>
+    </plurals>
     <string name="pref_time_remaining_verbosity" formatted="false">Niveau de détail du temps restant</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">Selon les appareils, des abréviations peuvent être nécessaires pour que l’estimation tienne dans la zone de notification.</string>
     <string name="condensed" formatted="false">Condensé</string>
@@ -303,7 +317,6 @@
     <string name="alarms_delivery_sound">Son et notification</string>
     <string name="alarms_delivery_vibration">Vibrations et notification</string>
     <string name="alarms_delivery_notification">Notification uniquement</string>
-    <string name="alarms_channel_help">Le son et la diffusion sont contrôlés par ce canal de notification Android.</string>
     <string name="alarms_options_title" formatted="false">Options des alarmes</string>
     <string name="pref_dismiss_low_battery_on_recovery">Retirer l’alarme de batterie faible après remontée du niveau</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Retirer la notification de batterie faible lorsque la charge repasse au-dessus de son seuil. Les autres notifications d’alarme restent affichées</string>
@@ -375,7 +388,6 @@
     <string name="history_deleted">Journaux effacés</string>
     <string name="history_load_failed">Impossible de lire l’historique</string>
     <string name="history_operation_failed">Échec de l’opération. Vérifiez l’accès aux fichiers et réessayez.</string>
-    <string name="history_settings">Paramètres d’historique et de sauvegarde</string>
     <string name="history_open_fullscreen">Ouvrir le graphique en plein écran</string>
     <string name="history_chart_description_fullscreen">%1$s. Mesures de %2$s à %3$s.</string>
     <string name="history_chart_select_point">Sélectionner des mesures</string>
@@ -422,7 +434,6 @@
     <string name="pref_enable_logging_summary" formatted="false">Enregistrer les états de la batterie ?</string>
     <string name="pref_enable_logging_help" formatted="false">Enregistrez les observations de batterie et les changements d’état pour «\u00A0Historique\u00A0». Les mesures disponibles comprennent le niveau, la température, la tension, le courant instantané d’origine et la charge restante. La puissance est calculée à partir de la tension et du courant à l’affichage ou à l’export ; elle n’est pas stockée séparément. Désactiver l’enregistrement n’efface pas l’historique existant et n’arrête pas les estimations du temps.</string>
     <string name="pref_max_log_age" formatted="false">Âge maximal du journal</string>
-    <string name="pref_max_log_age_summary" formatted="false">Supprimer les journaux plus ancients que :</string>
     <string name="pref_max_log_age_help" formatted="false">Lorsque l’enregistrement est activé, le branchement à l’alimentation supprime les journaux plus anciens que cette limite. «\u00A0Sans limite\u00A0» les conserve jusqu’à leur effacement manuel. Si l’export automatique est activé, Battery Monitor exporte les journaux en attente avant de supprimer les anciennes entrées ; un échec d’export empêche cette suppression.</string>
     <string name="age_1_day" formatted="false">1\u00A0jour</string>
     <string name="age_2_days" formatted="false">2\u00A0jours</string>
@@ -434,7 +445,7 @@
     <string name="age_no_limit" formatted="false">Sans limite</string>
     <string name="log_export_mode_title" formatted="false">Exporter les journaux</string>
     <string name="log_export_append" formatted="false">Ajouter à un fichier existant</string>
-    <string name="log_export_append_help" formatted="false">Les fichiers CSV et JSON peuvent être complétés. Choisissez un fichier existant au format sélectionné ; seuls les journaux depuis le dernier export manuel sont ajoutés.</string>
+    <string name="log_export_append_description" formatted="false">Les fichiers CSV et JSON peuvent être complétés. Choisissez un fichier existant au format sélectionné ; seuls les journaux depuis le dernier export manuel sont ajoutés.</string>
     <string name="log_json_append_invalid" formatted="false">Choisissez un fichier JSON d’historique Battery Monitor lisible, d’une version prise en charge, de 16 Mo maximum.</string>
     <string name="log_export_recovery_required" formatted="true">Reconnectez le stockage et réessayez d’exporter vers ce fichier pour le restaurer. Le fichier original est conservé dans le stockage de l’application (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">Tout</string>
@@ -567,7 +578,7 @@
     <string name="diag_status_waiting_permission" formatted="false">En attente de l\'autorisation Shizuku…</string>
     <string name="diag_status_no_stats" formatted="false">Aucune statistique avancée de batterie n\'est disponible sur cet appareil pour le moment.</string>
     <string name="diag_value_not_available" formatted="false">Non disponible</string>
-    <string name="diag_help_overview" formatted="false">«\u00A0Diagnostics\u00A0» regroupe la fiabilité de la surveillance, les données de prévision enregistrées et les données de batterie dans les onglets «\u00A0Fonctionnement de l’application\u00A0», «\u00A0Batterie\u00A0», «\u00A0Charge\u00A0» et «\u00A0Données brutes\u00A0». Les données Android sont disponibles sans root. Les données supplémentaires dépendent de l’appareil et des autorisations accordées à Battery Monitor.</string>
+    <string name="diag_help_overview" formatted="false">Regroupe la fiabilité de la surveillance, les données de prévision enregistrées et les données de batterie dans les onglets «\u00A0Fonctionnement de l’application\u00A0», «\u00A0Batterie\u00A0», «\u00A0Charge\u00A0» et «\u00A0Données brutes\u00A0». Les données Android sont disponibles sans root. Les données supplémentaires dépendent de l’appareil et des autorisations accordées à Battery Monitor.</string>
     <string name="diag_section_counters" formatted="false">Compteurs</string>
     <string name="diag_help_counters" formatted="false">Les mesures de batterie sont nommées et formatées : charge restante en mAh, courant en mA, énergie en mWh, tension en V, température dans l’unité choisie et puissance en W. Le multiplicateur de courant s’applique aussi à la puissance calculée. Le courant moyen et le nombre de cycles dépendent de la prise en charge par l’appareil.</string>
     <string name="diag_field_charge_counter" formatted="false">Charge restante estimée</string>
@@ -575,7 +586,7 @@
     <string name="diag_field_current_average" formatted="false">Courant moyen</string>
     <string name="diag_field_energy_counter" formatted="false">Compteur d\'énergie</string>
     <string name="diag_section_capacity" formatted="false">Capacité</string>
-    <string name="diag_help_capacity" formatted="false">La «\u00A0Capacité\u00A0» affiche la capacité à pleine charge, la capacité nominale et l état estimé. L état estimé est calculé comme la capacité à pleine charge divisée par la capacité nominale, donc sa précision dépend des valeurs rapportées par l appareil.</string>
+    <string name="diag_help_capacity" formatted="false">Affiche la capacité à pleine charge, la capacité nominale et l état estimé. L état estimé est calculé comme la capacité à pleine charge divisée par la capacité nominale, donc sa précision dépend des valeurs rapportées par l appareil.</string>
     <string name="diag_field_cycle_count" formatted="false">Nombre de cycles</string>
     <string name="diag_field_reported_capacity" formatted="false">Capacité rapportée</string>
     <string name="diag_field_state_of_health" formatted="false">État de santé</string>
@@ -588,7 +599,7 @@
     <string name="diag_capacity_low">Faible</string>
     <string name="diag_capacity_high">Élevée</string>
     <string name="diag_section_charging" formatted="false">Charge</string>
-    <string name="diag_help_charging" formatted="false">La «\u00A0Charge\u00A0» affiche des valeurs liées au chemin de charge actif, comme le courant ou la tension maximale de charge, la politique de charge, l état de charge et le niveau de capacité. Ces champs peuvent changer selon le chargeur et le mode de charge.</string>
+    <string name="diag_help_charging" formatted="false">Affiche des valeurs liées au chemin de charge actif, comme le courant ou la tension maximale de charge, la politique de charge, l état de charge et le niveau de capacité. Ces champs peuvent changer selon le chargeur et le mode de charge.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Temps de charge restant</string>
     <string name="diag_field_max_charging_current" formatted="false">Courant de charge maximal</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Tension de charge maximale</string>
@@ -645,8 +656,7 @@
     <string name="diagnostics" formatted="false">Diagnostic</string>
     <string name="diagnostics_summary" formatted="false">Vérifier les autorisations et la fiabilité du suivi, et créer un rapport de dépannage</string>
     <string name="diag_overview">Fonctionnement de l’application</string>
-    <string name="diagnostics_help_title" formatted="false">Utilité du diagnostic</string>
-    <string name="diagnostics_help_overview" formatted="false">«\u00A0Fonctionnement de la surveillance\u00A0» vérifie les autorisations et la fiabilité de la surveillance. Ses commandes permettent de démarrer ou d’arrêter la surveillance, de modifier l’enregistrement de débogage, d’ouvrir les paramètres d’optimisation de batterie et de notification ou de créer un rapport de dépannage. Une mesure indisponible n’indique pas toujours un problème d’autorisation ; certains appareils ne la fournissent pas.</string>
+    <string name="diagnostics_help_overview" formatted="false">Vérifie les autorisations et la fiabilité de la surveillance. Ses commandes permettent de démarrer ou d’arrêter la surveillance, de modifier l’enregistrement de débogage, d’ouvrir les paramètres d’optimisation de batterie et de notification ou de créer un rapport de dépannage. Une mesure indisponible n’indique pas toujours un problème d’autorisation ; certains appareils ne la fournissent pas.</string>
     <string name="diagnostics_monitoring" formatted="false">Suivi en arrière-plan</string>
     <string name="diag_monitor_operation">Fonctionnement de la surveillance</string>
     <string name="diag_heartbeat">Dernier signe d’activité</string>
@@ -785,13 +795,12 @@
     <string name="backup_restore_settings_summary" formatted="false">Sauvegardez, restaurez et transférez les paramètres de l’application et les données de la batterie</string>
     <string name="backup_restore_help_overview" formatted="false">Enregistrez et restaurez les paramètres, les alarmes, les journaux et les données de prévision apprises. «\u00A0Rétablir les paramètres par défaut\u00A0» réinitialise les préférences après confirmation, tout en conservant l’historique, les alarmes, les estimations apprises et l’état de la surveillance.</string>
     <string name="pref_general_backup" formatted="false">Sauvegarde générale de l’application</string>
-    <string name="general_backup_restore_effects_help" formatted="false">Les catégories sélectionnées sont restaurées ; les catégories non sélectionnées sont conservées. La restauration des alarmes remplace les alarmes actuelles. Pour les journaux, choisissez de les ajouter ou de remplacer l’historique actuel.</string>
     <string name="pref_export_general_backup" formatted="false">Exporter la sauvegarde générale</string>
     <string name="pref_export_general_backup_help" formatted="false">Enregistrez ensemble les paramètres, les alarmes et les données propres à l’appareil dans une sauvegarde générale ZIP à l’emplacement de votre choix.</string>
     <string name="pref_export_general_backup_summary" formatted="false">Enregistrer les paramètres, les alarmes et les données propres à l’appareil dans un fichier ZIP</string>
     <string name="general_backup_exported" formatted="false">Sauvegarde générale exportée avec succès.</string>
     <string name="pref_import_general_backup" formatted="false">Importer la sauvegarde générale</string>
-    <string name="pref_import_general_backup_help" formatted="false">Sélectionnez une sauvegarde générale ZIP existante et choisissez les catégories disponibles à restaurer. Les sauvegardes créées avec des versions plus récentes de l’application peuvent être incompatibles, et la restauration de journaux ou de données de prédiction provenant d’un autre appareil peut produire des estimations incorrectes. Si la restauration ne se termine que partiellement, vérifiez les catégories signalées avant de réessayer.</string>
+    <string name="pref_import_general_backup_help" formatted="false">Sélectionnez une sauvegarde générale ZIP existante et choisissez les catégories disponibles à restaurer. Les sauvegardes créées avec des versions plus récentes de l’application peuvent être incompatibles, et la restauration de journaux ou de données de prédiction provenant d’un autre appareil peut produire des estimations incorrectes. Si la restauration ne se termine que partiellement, vérifiez les catégories signalées avant de réessayer. Les catégories sélectionnées sont restaurées ; les catégories non sélectionnées sont conservées. La restauration des alarmes remplace les alarmes actuelles. Pour les journaux, choisissez de les ajouter ou de remplacer l’historique actuel.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Restaurer les données sélectionnées depuis un fichier ZIP de sauvegarde générale</string>
     <string name="general_backup_restore_message" formatted="false">Choisissez ce que vous souhaitez restaurer.</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">Journaux et données de prédiction</string>
@@ -800,21 +809,21 @@
     <string name="settings_restore_partial">Certaines données n’ont pas pu être restaurées. Restauration réussie : %1$s. Données peut-être partiellement restaurées : %2$s. Vérifiez ces sections avant de réessayer.</string>
     <string name="settings_restore_none">Aucune</string>
     <string name="pref_export_settings" formatted="false">Exporter les paramètres</string>
-    <string name="pref_export_settings_help" formatted="false">«\u00A0Exporter les paramètres\u00A0» enregistre les préférences de l’application. Le résultat est un fichier JSON de sauvegarde des paramètres.</string>
+    <string name="pref_export_settings_help" formatted="false">Enregistre les préférences de l’application. Le résultat est un fichier JSON de sauvegarde des paramètres.</string>
     <string name="pref_export_settings_summary" formatted="false">Enregistrer les paramètres actuels dans un fichier</string>
     <string name="settings_exported" formatted="false">Les paramètres ont été exportés avec succès.</string>
     <string name="pref_import_settings" formatted="false">Importer les paramètres</string>
-    <string name="pref_import_settings_help" formatted="false">«\u00A0Importer les paramètres\u00A0» restaure les préférences sauvegardées. Cette action ne restaure ni l’historique ni les enregistrements d’alarmes.</string>
+    <string name="pref_import_settings_help" formatted="false">Restaure les préférences sauvegardées. Cette action ne restaure ni l’historique ni les enregistrements d’alarmes.</string>
     <string name="pref_import_settings_summary" formatted="false">Restaurer les paramètres depuis un fichier</string>
     <string name="settings_imported" formatted="false">Les paramètres ont été importés avec succès.</string>
     <string name="invalid_settings_file" formatted="false">Fichier de paramètres non valide</string>
     <string name="settings_file_version_warning" formatted="false">Ce fichier a été créé par une version plus récente de l’application. Son importation peut provoquer un comportement inattendu. Continuer quand même\u00A0?</string>
     <string name="pref_export_alarms" formatted="false">Exporter les alarmes</string>
-    <string name="pref_export_alarms_help" formatted="false">«\u00A0Exporter les alarmes\u00A0» enregistre vos alarmes. Le fichier JSON contient les règles d’alarme, mais pas les paramètres des canaux de notification ou des sons gérés par Android.</string>
+    <string name="pref_export_alarms_help" formatted="false">Enregistre vos alarmes. Le fichier JSON contient les règles d’alarme, mais pas les paramètres des canaux de notification ou des sons gérés par Android.</string>
     <string name="pref_export_alarms_summary" formatted="false">Enregistrer les alarmes actuelles dans un fichier</string>
     <string name="alarms_exported" formatted="false">Les alarmes ont été exportées avec succès.</string>
     <string name="pref_import_alarms" formatted="false">Importer les alarmes</string>
-    <string name="pref_import_alarms_help" formatted="false">«\u00A0Importer les alarmes\u00A0» remplace toutes les alarmes actuelles par celles de la sauvegarde. Choisissez un fichier JSON de sauvegarde des alarmes.</string>
+    <string name="pref_import_alarms_help" formatted="false">Remplace toutes les alarmes actuelles par celles de la sauvegarde. Choisissez un fichier JSON de sauvegarde des alarmes.</string>
     <string name="pref_import_alarms_summary" formatted="false">Remplacer les alarmes actuelles par celles d’un fichier</string>
     <string name="alarms_imported" formatted="false">Les alarmes ont été importées avec succès.</string>
     <string name="invalid_alarms_file" formatted="false">Fichier d’alarmes non valide</string>
@@ -846,7 +855,7 @@
     <string name="invalid_csv_logs_file" formatted="false">Fichier de journaux CSV non valide ou incompatible</string>
     <string name="settings_reset_title">Rétablir les paramètres par défaut</string>
     <string name="settings_reset_summary">Réinitialiser les préférences en conservant l’historique, les alarmes et les estimations apprises</string>
-    <string name="settings_reset_help" formatted="false">«\u00A0Rétablir les paramètres par défaut\u00A0» demande une confirmation, puis réinitialise les préférences de l’application. L’historique, les alarmes, les estimations apprises, la configuration des widgets et l’état de la surveillance en arrière-plan sont conservés. Les autorisations système et les paramètres des canaux de notification ne sont pas réinitialisés.</string>
+    <string name="settings_reset_help" formatted="false">Réinitialise les préférences de l’application après confirmation. L’historique, les alarmes, les estimations apprises, la configuration des widgets et l’état de la surveillance en arrière-plan sont conservés. Les autorisations système et les paramètres des canaux de notification ne sont pas réinitialisés.</string>
     <string name="settings_reset_question">Rétablir tous les paramètres par défaut ? L’historique, les alarmes et les estimations apprises seront conservés. La surveillance en arrière-plan restera dans son état actuel, active ou arrêtée.</string>
     <string name="settings_reset_confirm">Rétablir les valeurs par défaut</string>
     <string name="settings_reset_done">Paramètres par défaut rétablis.</string>

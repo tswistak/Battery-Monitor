@@ -75,6 +75,7 @@ import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannel
 import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_A_TRISE
 import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_LIVE_UPDATE
 import codes.swistak.batterymonitor.monitoring.notifications.NotificationChannels.CHAN_ID_MAIN
+import codes.swistak.batterymonitor.monitoring.notifications.RemainingTimeMessage
 import codes.swistak.batterymonitor.monitoring.presentation.CurrentDemand
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringConnection
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
@@ -1423,8 +1424,7 @@ class BatteryInfoService : Service() {
             }
 
             SettingsContract.CHIP_CONTENT_VOLTAGE -> {
-                info!!.voltage?.let { DisplayStrings.formatVoltage(it) }
-                    ?: "—"
+                info!!.voltage?.let { DisplayStrings.formatVoltage(it) } ?: "—"
             }
 
             SettingsContract.CHIP_CONTENT_CURRENT -> {
@@ -1513,46 +1513,25 @@ class BatteryInfoService : Service() {
         }
     }
 
-    private fun predictionLine(): String {
-        var line: String?
+    private fun predictionLine(expanded: Boolean = false): String {
         val predicted = info!!.prediction.lastRTime
 
         if (info!!.prediction.whatHappened == BatteryInfo.Prediction.NONE) {
-            line = DisplayStrings.statuses[info!!.status]
-        } else {
-            val longDurationFormat = longDurationFormat()
-            val displayHours = predicted.days * 24 + predicted.hours
-            if (predicted.days > 0 && longDurationFormat == LongDurationFormat.DAYS_AND_HOURS) line =
-                DurationFormatter.formatRoundedDaysAndHours(
-                    res, predicted.days, predicted.hours, predicted.minutes
-                )
-            else if (displayHours > 0) {
-                val verbosity: String = settings.getString(
-                    SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
-                    res.getString(R.string.default_time_remaining_verbosity)
-                )!!
-                line = when (verbosity) {
-                    "condensed" -> DisplayStrings.nHoursMMinutesMedium(
-                        displayHours, predicted.minutes
-                    )
-
-                    "verbose" -> DisplayStrings.nHoursMMinutesLong(
-                        displayHours, predicted.minutes
-                    )
-
-                    else -> DisplayStrings.nHoursLongMMinutesMedium(
-                        displayHours, predicted.minutes
-                    )
-                }
-            } else line = DisplayStrings.nMinutesLong(predicted.minutes)
-
-            line = res.getString(
-                if (info!!.prediction.whatHappened == BatteryInfo.Prediction.UNTIL_CHARGED) R.string.notification_until_charged else R.string.notification_until_drained,
-                line
-            )
+            return DisplayStrings.statuses[info!!.status]
         }
-
-        return line
+        return RemainingTimeMessage.format(
+            res,
+            predicted.days,
+            predicted.hours,
+            predicted.minutes,
+            info!!.prediction.whatHappened == BatteryInfo.Prediction.UNTIL_CHARGED,
+            longDurationFormat(),
+            settings.getString(
+                SettingsContract.KEY_TIME_REMAINING_VERBOSITY,
+                res.getString(R.string.default_time_remaining_verbosity)
+            )!!,
+            expanded
+        )
     }
 
     private fun isExpandedNotificationDetailsEnabled(): Boolean {
@@ -1626,7 +1605,7 @@ class BatteryInfoService : Service() {
 
     private fun expandedDetailEntries(): List<Pair<String, String>> {
         val entries = mutableListOf<Pair<String, String>>()
-        entries += getString(R.string.time_remaining) to predictionLine()
+        entries += getString(R.string.time_remaining) to predictionLine(expanded = true)
         entries += getString(R.string.time_since_status_change) to statusDurationLine()
         for ((label, value) in vitalStatEntries()) {
             if (entries.any { it.first == label }) continue

@@ -175,7 +175,8 @@ internal class FullscreenChartViewModel(application: Application) : AndroidViewM
         updateViewport(viewport, width, command = true)
     }
 
-    fun observeViewport(viewport: HistoryRangeState, width: Int) {
+    fun observeViewport(viewport: HistoryRangeState, width: Int, observedCommand: Long) {
+        if (mutable.value?.viewportCommand != observedCommand) return
         updateViewport(viewport, width, command = false)
     }
 

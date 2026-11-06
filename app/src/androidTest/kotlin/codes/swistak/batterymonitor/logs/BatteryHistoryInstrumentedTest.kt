@@ -24,6 +24,7 @@ import codes.swistak.batterymonitor.devicebackup.DeviceDataBackup
 import codes.swistak.batterymonitor.devicebackup.DeviceDataType
 import codes.swistak.batterymonitor.devicebackup.LogImportMode
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.settings.SettingsSnapshot
 import codes.swistak.batterymonitor.ui.current.CurrentStateViewModel
 import codes.swistak.batterymonitor.ui.history.HistoryViewModel
 import kotlinx.coroutines.CoroutineStart
@@ -343,30 +344,62 @@ class BatteryHistoryInstrumentedTest {
     fun required_export_failure_retains_expired_samples_and_watermarks() {
         val record = observation.copy(status = 200)
         database.addLogs(listOf(record))
-        val preferences =
-            context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
-        preferences.edit().putBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)
-            .putString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, "24").putString(
-                SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY, "content://missing/tree/test"
-            ).putLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, 0).commit()
-        maintainHistory(
-            672,
-            database::hasLogsOlderThan,
-            { AutoLogExporter.exportBeforeAutomaticLogPruning(context) },
-            database::prune
+        val providerContext = InstrumentationRegistry.getInstrumentation().targetContext
+        // The registered provider owns the real preferences; only the history under deletion is isolated.
+        val preferences = providerContext.getSharedPreferences(
+            SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE
         )
-        assertEquals(listOf(record), database.getAllLogRecords())
-        assertEquals(0L, preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, -1))
-        assertThrows(Exception::class.java) { runBlocking { LogsRepository(context).delete(null) } }
-        assertEquals(listOf(record), database.getAllLogRecords())
-        preferences.edit().putString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, "off").commit()
-        maintainHistory(
-            672,
-            database::hasLogsOlderThan,
-            { AutoLogExporter.exportBeforeAutomaticLogPruning(context) },
-            database::prune
-        )
-        assertTrue(rows().isEmpty())
+        val before = SettingsSnapshot.capture(preferences)
+        try {
+            assertTrue(
+                preferences.edit().putBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)
+                    .putString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, "24").putString(
+                        SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY,
+                        "content://missing/tree/test"
+                    )
+                    // Append attempts storage access even when the provider's own database is empty.
+                    .putString(SettingsContract.KEY_AUTO_LOG_EXPORT_MODE, "append")
+                    .putString(SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT, "json")
+                    .putLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, 1234)
+                    .putLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, 0).commit()
+            )
+            assertTrue(database.hasLogsOlderThan(672))
+            maintainHistory(
+                672,
+                database::hasLogsOlderThan,
+                { AutoLogExporter.exportBeforeAutomaticLogPruning(context) },
+                database::prune
+            )
+            assertEquals(listOf(record), database.getAllLogRecords())
+            assertEquals(
+                0L, preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, -1)
+            )
+            assertEquals(1234L, preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, -1))
+            assertThrows(Exception::class.java) { runBlocking { LogsRepository(context).delete(null) } }
+            assertEquals(listOf(record), database.getAllLogRecords())
+            assertEquals(
+                0L, preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, -1)
+            )
+            assertEquals(1234L, preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, -1))
+            assertTrue(
+                preferences.edit().putString(SettingsContract.KEY_AUTO_LOG_EXPORT_FREQUENCY, "off")
+                    .commit()
+            )
+            maintainHistory(
+                672,
+                database::hasLogsOlderThan,
+                { AutoLogExporter.exportBeforeAutomaticLogPruning(context) },
+                database::prune
+            )
+            assertTrue(rows().isEmpty())
+            assertEquals(
+                0L, preferences.getLong(SettingsContract.KEY_LAST_AUTO_LOG_EXPORT_TIME, -1)
+            )
+            assertEquals(1234L, preferences.getLong(SettingsContract.KEY_LAST_LOG_EXPORT_TIME, -1))
+        } finally {
+            assertTrue(SettingsSnapshot.apply(preferences, before))
+            AutoLogExportScheduler.ensureScheduled(providerContext)
+        }
     }
 
     @Test

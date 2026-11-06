@@ -94,15 +94,14 @@
     <string name="pref_show_remaining_charge_summary" formatted="false">شارژ باقی‌مانده باتری که دستگاه گزارش می‌کند بر حسب mAh نمایش داده شود؟</string>
     <string name="pref_show_remaining_charge_help" formatted="false">شارژ باقی‌مانده باتری که دستگاه گزارش می‌کند را بر حسب mAh نمایش دهید.</string>
     <string name="pref_battery_current_multiplier" formatted="false">ضرب کننده</string>
-    <string name="pref_battery_current_multiplier_help" formatted="false">برخی دستگاه‌ها واحدها یا علامت‌های غیرمنتظره گزارش می‌کنند. برای اصلاح نتیجه نمایش‌داده‌شده، مقدار گزارش‌شده را در اینجا ضرب کنید.\n
+    <string name="pref_battery_current_multiplier_help" formatted="false">برخی دستگاه‌ها واحدها یا علامت‌های غیرمنتظره گزارش می‌کنند. برای اصلاح نتیجه نمایش‌داده‌شده، مقدار گزارش‌شده را در اینجا ضرب کنید. برای تلاش جهت استنتاج ضریب جریان از خوانش باتری، از «تشخیص خودکار» استفاده کنید.\n
     \n
     به‌عنوان یک مرجع تقریبی برای تلفن‌ها، علامت استاندارد Android هنگام شارژ مثبت و هنگام تخلیه منفی است. شارژ فعال معمولاً حدود +500 تا +5000\u00A0mA و تخلیه عادی حدود -100 تا -3000\u00A0mA است. وقتی باتری تقریباً پر است یا تلفن بیکار است، مقادیر نزدیک صفر می‌توانند طبیعی باشند. اگر اندازه مقدار حدود 1000 برابر کوچک‌تر یا بزرگ‌تر به نظر می‌رسد، یا علامت برعکس است، ضریب را تنظیم کنید.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">تشخیص خودکار</string>
-    <string name="pref_battery_current_multiplier_auto_help" formatted="false">تلاش کنید ضریب جریان را از یک خوانش باتری به دست آورید. اگر تشخیص در دسترس نباشد، مقدار فعلی بدون تغییر می‌ماند و پس از دریافت خوانش مناسب، امکان تکرار تشخیص وجود دارد. انتخاب مقدار دستی، تشخیص در انتظار را لغو می‌کند.</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">تشخیص خودکار برای وضعیت یا خوانش فعلی باتری در دسترس نیست</string>
     <string name="pref_battery_current_multiplier_detection_result">ضریب به‌طور خودکار روی %1$d تنظیم شد</string>
     <string name="pref_prefer_average_battery_current" formatted="false">ترجیح جریان میانگین</string>
-    <string name="pref_prefer_average_battery_current_summary" formatted="false">در «وضعیت فعلی»، در صورت وجود از میانگین اخیر استفاده شود؟</string>
+    <string name="pref_prefer_average_battery_current_summary" formatted="false">در صورت وجود از میانگین اخیر استفاده شود؟</string>
     <string name="pref_prefer_current_avg_help" formatted="false">برخی دستگاه‌ها علاوه بر جریان لحظه‌ای، میانگین اخیر را ارائه می‌کنند. دوره میانگین‌گیری در دستگاه‌ها متفاوت است. «وضعیت فعلی» وقتی میانگین موجود نیست از جریان لحظه‌ای استفاده می‌کند. این گزینه فقط برای «وضعیت فعلی» است؛ گزارش‌ها همیشه خوانش لحظه‌ای اصلی را ذخیره می‌کنند.</string>
 
     <string name="activity_until_charged" formatted="false">تا زمانی که شارژ شود</string>
@@ -131,8 +130,8 @@
     <string name="predictor_long_term_ave" formatted="false">میانگین بلند مدت</string>
     <string name="pref_cat_target_levels" formatted="false">سطح‌های هدف</string>
     <string name="pref_charging_target_mode" formatted="false">هدف شارژ</string>
-    <string name="pref_charging_target_mode_help" formatted="false">«خودکار (پیشنهادی)» از حد ثابت شارژ دستگاه، اگر Battery Monitor بتواند آن را بخواند، و در غیر این صورت از 100% استفاده می‌کند. شارژ تطبیقی همچنان 100% را هدف می‌گیرد. «سفارشی» از سطح انتخابی شما برای تخمین شارژ و آلارمهای «هدف شارژ محقق شد» استفاده می‌کند.</string>
-    <string name="pref_charging_target_mode_support_help" formatted="false">تشخیص خودکار ممکن است روی دستگاه‌های Google Pixel، Samsung Galaxy، Xiaomi/Redmi/POCO، OnePlus/Oppo/Realme و Sony Xperia و نیز دستگاه‌های دارای GrapheneOS یا LineageOS، به‌ویژه با دسترسی root یا Shizuku، کار کند. این قابلیت به سیگنال‌های نرم‌افزاری متکی است؛ بنابراین حتی برای سازندگان نام‌برده نیز دسترس‌پذیری و دقت تضمین نمی‌شود. مدل‌ها یا نسخه‌های آزمایش‌نشده در این خانواده‌ها نیز ممکن است کار کنند، اما دستگاه‌های سازندگان دیگر در حال حاضر خودکار شناسایی نمی‌شوند.</string>
+    <string name="pref_charging_target_mode_help" formatted="false">«خودکار (پیشنهادی)» از حد ثابت شارژ دستگاه، اگر Battery Monitor بتواند آن را بخواند، و در غیر این صورت از 100% استفاده می‌کند. شارژ تطبیقی همچنان 100% را هدف می‌گیرد. «سفارشی» از سطح انتخابی شما برای تخمین شارژ و آلارمهای «هدف شارژ محقق شد» استفاده می‌کند.\n
+    تشخیص خودکار ممکن است روی دستگاه‌های Google Pixel، Samsung Galaxy، Xiaomi/Redmi/POCO، OnePlus/Oppo/Realme و Sony Xperia و نیز دستگاه‌های دارای GrapheneOS یا LineageOS، به‌ویژه با دسترسی root یا Shizuku، کار کند. این قابلیت به سیگنال‌های نرم‌افزاری متکی است؛ بنابراین حتی برای سازندگان نام‌برده نیز دسترس‌پذیری و دقت تضمین نمی‌شود. مدل‌ها یا نسخه‌های آزمایش‌نشده در این خانواده‌ها نیز ممکن است کار کنند، اما دستگاه‌های سازندگان دیگر در حال حاضر خودکار شناسایی نمی‌شوند.</string>
     <string name="pref_charging_target_mode_summary_device" formatted="true">محدودیت شارژ دستگاه: %1$d%%</string>
     <string name="pref_charging_target_mode_summary_custom" formatted="false">هدف سفارشی</string>
     <string name="pref_charging_target_mode_summary_default" formatted="false">محدودیت ثابت دستگاه شناسایی نشد — 100% استفاده می‌شود</string>
@@ -156,7 +155,6 @@
     <string name="app_notifs_disabled_summary" formatted="false">شما همه اعلان‌ها را برای این برنامه غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا به این تنظیمات دسترسی داشته باشند</string>
     <string name="main_notifs_disabled_summary" formatted="false">شما اعلان اصلی این برنامه را غیرفعال کرده اید.  لطفاً برای دسترسی به این تنظیمات آن را فعال کنید</string>
     <string name="settings_notification_disabled">برای سفارشی کردن این گزینه، اعلان‌های برنامه و کانال اعلان اصلی را فعال کنید</string>
-    <string name="settings_notification_disabled_help">برای سفارشی کردن این گزینه، اعلان‌های برنامه و کانال اعلان اصلی را فعال کنید.</string>
     <string name="notifications_onboarding_message">Battery Monitor برای نمایش سطح باتری در نوار وضعیت و اطلاع‌رسانی درباره آلارمها به اجازه شما نیاز دارد.\n
     \n
     نکته: دادن این مجوز ممکن است گاهی باعث بسته شدن برنامه شود. اگر این اتفاق افتاد، کافی است برنامه را دوباره باز کنید.</string>
@@ -172,7 +170,20 @@
     <string name="time_since_status_change" formatted="false">زمان از تغییر وضعیت</string>
     <string name="vital_signs" formatted="false">علائم حیاتی</string>
     <string name="notification_until_charged" formatted="true">%1$s تا شارژ کامل</string>
-    <string name="notification_until_drained" formatted="true">%1$s باقی‌مانده</string>
+    <string name="notification_until_drained_mixed" formatted="true">%1$s باقی‌مانده</string>
+    <string name="notification_until_drained_mixed_expanded" formatted="true">%1$s باقی‌مانده</string>
+    <plurals name="notification_until_drained_days">
+        <item quantity="one">%1$s باقی‌مانده</item>
+        <item quantity="other">%1$s باقی‌مانده</item>
+    </plurals>
+    <plurals name="notification_until_drained_hours">
+        <item quantity="one">%1$s باقی‌مانده</item>
+        <item quantity="other">%1$s باقی‌مانده</item>
+    </plurals>
+    <plurals name="notification_until_drained_minutes">
+        <item quantity="one">%1$s باقی‌مانده</item>
+        <item quantity="other">%1$s باقی‌مانده</item>
+    </plurals>
     <string name="pref_time_remaining_verbosity" formatted="false">زمان باقی مانده پرحرفی</string>
     <string name="pref_time_remaining_verbosity_help" formatted="false">دستگاه‌ها در اشکال و اندازه‌های مختلف وجود دارند، بنابراین اکثر ترجمه‌ها به این نیاز دارند از اختصارات استفاده کنید تا اطمینان حاصل کنید که برآورد زمان باقیمانده مطابقت دارد به راحتی در منطقه اطلاع رسانی. اگر هنوز جا نیفتاد، می توانید فرمت «متراکم شده» را انتخاب کنید. اگر فضای زیادی دارید، ممکن است تنظیمات «پرمخاطب» را ترجیح دهید.</string>
     <string name="condensed" formatted="false">متراکم شده</string>
@@ -302,7 +313,6 @@
     <string name="alarms_delivery_sound">صدا و اعلان</string>
     <string name="alarms_delivery_vibration">لرزش و اعلان</string>
     <string name="alarms_delivery_notification">فقط اعلان</string>
-    <string name="alarms_channel_help">صدا و نحوه ارائه را این کانال اعلان Android کنترل می‌کند.</string>
     <string name="alarms_options_title" formatted="false">گزینه‌های آلارم</string>
     <string name="pref_dismiss_low_battery_on_recovery">بستن آلارم باتری کم پس از افزایش شارژ</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">وقتی شارژ از آستانه بالاتر رفت، اعلان باتری کم حذف شود. سایر اعلان‌های آلارم باقی می‌مانند</string>
@@ -374,7 +384,6 @@
     <string name="history_deleted">گزارش‌ها پاک شدند</string>
     <string name="history_load_failed">خواندن تاریخچه ممکن نشد</string>
     <string name="history_operation_failed">عملیات ناموفق بود. دسترسی به پرونده را بررسی کنید و دوباره تلاش کنید.</string>
-    <string name="history_settings">تنظیمات تاریخچه و پشتیبان‌گیری</string>
     <string name="history_open_fullscreen">باز کردن نمودار تمام‌صفحه</string>
     <string name="history_chart_description_fullscreen">%1$s. داده‌ها از %2$s تا %3$s.</string>
     <string name="history_chart_select_point">انتخاب داده‌ها</string>
@@ -421,7 +430,6 @@
     <string name="pref_enable_logging_summary" formatted="false">گزارش وضعیت باتری تغییر می کند؟</string>
     <string name="pref_enable_logging_help" formatted="false">مشاهدات باتری و تغییرات وضعیت را برای «تاریخچه» ذخیره کنید. اندازه‌گیری‌های موجود شامل سطح، دما، ولتاژ، جریان لحظه‌ای اصلی و شارژ باقی‌مانده هستند. توان هنگام نمایش یا برون‌ریزی از ولتاژ و جریان محاسبه می‌شود؛ جداگانه ذخیره نمی‌شود. خاموش کردن ثبت گزارش، تاریخچه موجود را پاک نمی‌کند و تخمین زمان را متوقف نمی‌کند.</string>
     <string name="pref_max_log_age" formatted="false">حداکثر سن ورود</string>
-    <string name="pref_max_log_age_summary" formatted="false">حذف گزارش های قدیمی تر از:</string>
     <string name="pref_max_log_age_help" formatted="false">وقتی ثبت گزارش فعال باشد، اتصال به برق گزارش‌های قدیمی‌تر از این حد را حذف می‌کند. گزینه «بدون محدودیت» آن‌ها را تا پاک کردن دستی نگه می‌دارد. اگر برون‌ریزی خودکار فعال باشد، Battery Monitor گزارش‌های در انتظار را پیش از حذف ورودی‌های قدیمی برون‌ریزی می‌کند؛ ناموفق بودن برون‌ریزی مانع این حذف می‌شود.</string>
     <string name="age_1_day" formatted="false">1\u00A0روز</string>
     <string name="age_2_days" formatted="false">2\u00A0روز</string>
@@ -433,7 +441,7 @@
     <string name="age_no_limit" formatted="false">بدون محدودیت</string>
     <string name="log_export_mode_title" formatted="false">برون‌بری گزارش‌ها</string>
     <string name="log_export_append" formatted="false">افزودن به پروندهٔ موجود</string>
-    <string name="log_export_append_help" formatted="false">می‌توان به پرونده‌های CSV و JSON افزود. پرونده‌ای موجود با قالب انتخاب‌شده را برگزینید؛ فقط گزارش‌های پس از آخرین برون‌بری دستی افزوده می‌شوند.</string>
+    <string name="log_export_append_description" formatted="false">می‌توان به پرونده‌های CSV و JSON افزود. پرونده‌ای موجود با قالب انتخاب‌شده را برگزینید؛ فقط گزارش‌های پس از آخرین برون‌بری دستی افزوده می‌شوند.</string>
     <string name="log_json_append_invalid" formatted="false">یک پروندهٔ تاریخچهٔ JSON خواندنی از Battery Monitor با نسخهٔ پشتیبانی‌شده و حداکثر اندازهٔ ۱۶ مگابایت انتخاب کنید.</string>
     <string name="log_export_recovery_required" formatted="true">فضای ذخیره‌سازی را دوباره متصل کنید و برای بازیابی، دوباره برون‌بری به همین پرونده را امتحان کنید. پروندهٔ اصلی در فضای ذخیره‌سازی برنامه نگه داشته می‌شود (%1$s).</string>
     <string name="log_export_all_logs" formatted="false">همه‌چیز</string>
@@ -565,7 +573,7 @@
     <string name="diag_status_waiting_permission" formatted="false">در انتظار مجوز Shizuku…</string>
     <string name="diag_status_no_stats" formatted="false">در حال حاضر هیچ آمار پیشرفته‌ای از باتری روی این دستگاه در دسترس نیست.</string>
     <string name="diag_value_not_available" formatted="false">در دسترس نیست</string>
-    <string name="diag_help_overview" formatted="false">«عیب‌یابی» قابلیت اطمینان پایشگر، داده‌های پیش‌بینی ذخیره‌شده و داده‌های باتری را در زبانه‌های «عملکرد برنامه»، «باتری»، «شارژ» و «خام» ترکیب می‌کند. داده‌های Android بدون root موجودند. داده‌های اضافی دستگاه به دستگاه و مجوزهای در دسترس Battery Monitor بستگی دارند.</string>
+    <string name="diag_help_overview" formatted="false">قابلیت اطمینان پایشگر، داده‌های پیش‌بینی ذخیره‌شده و داده‌های باتری را در زبانه‌های «عملکرد برنامه»، «باتری»، «شارژ» و «خام» ترکیب می‌کند. داده‌های Android بدون root موجودند. داده‌های اضافی دستگاه به دستگاه و مجوزهای در دسترس Battery Monitor بستگی دارند.</string>
     <string name="diag_section_counters" formatted="false">شمارنده‌ها</string>
     <string name="diag_help_counters" formatted="false">خوانش‌های باتری با برچسب و قالب مناسب به صورت شارژ باقی‌مانده با mAh، جریان با mA، انرژی با mWh، ولتاژ با V، دما با واحد انتخابی و توان با W نمایش داده می‌شوند. ضریب جریان بر توان محاسبه‌شده نیز اعمال می‌شود. جریان میانگین و تعداد چرخه‌ها به پشتیبانی دستگاه بستگی دارند.</string>
     <string name="diag_field_charge_counter" formatted="false">برآورد شارژ باقی‌مانده</string>
@@ -573,7 +581,7 @@
     <string name="diag_field_current_average" formatted="false">میانگین جریان</string>
     <string name="diag_field_energy_counter" formatted="false">شمارنده انرژی</string>
     <string name="diag_section_capacity" formatted="false">ظرفیت</string>
-    <string name="diag_help_capacity" formatted="false">«ظرفیت»، ظرفیت شارژ کامل، ظرفیت طراحی و سلامت تخمینی را نشان می دهد. سلامت تخمینی از تقسیم ظرفیت شارژ کامل بر ظرفیت طراحی به دست می آید، بنابراین دقت آن به داده های گزارش شده توسط دستگاه بستگی دارد.</string>
+    <string name="diag_help_capacity" formatted="false">ظرفیت شارژ کامل، ظرفیت طراحی و سلامت تخمینی را نشان می دهد. سلامت تخمینی از تقسیم ظرفیت شارژ کامل بر ظرفیت طراحی به دست می آید، بنابراین دقت آن به داده های گزارش شده توسط دستگاه بستگی دارد.</string>
     <string name="diag_field_cycle_count" formatted="false">تعداد چرخه</string>
     <string name="diag_field_reported_capacity" formatted="false">ظرفیت گزارش شده</string>
     <string name="diag_field_state_of_health" formatted="false">وضعیت سلامت</string>
@@ -586,7 +594,7 @@
     <string name="diag_capacity_low">کم</string>
     <string name="diag_capacity_high">زیاد</string>
     <string name="diag_section_charging" formatted="false">شارژ</string>
-    <string name="diag_help_charging" formatted="false">بخش «شارژ» مقادیر مربوط به مسیر فعال شارژ را نشان می دهد، مانند بیشینه جریان یا ولتاژ شارژ، سیاست شارژ، وضعیت شارژ و سطح ظرفیت. این فیلدها ممکن است بین شارژرها و حالت های شارژ تغییر کنند.</string>
+    <string name="diag_help_charging" formatted="false">مقادیر مربوط به مسیر فعال شارژ را نشان می دهد، مانند بیشینه جریان یا ولتاژ شارژ، سیاست شارژ، وضعیت شارژ و سطح ظرفیت. این فیلدها ممکن است بین شارژرها و حالت های شارژ تغییر کنند.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">زمان باقی مانده تا تکمیل شارژ</string>
     <string name="diag_field_max_charging_current" formatted="false">حداکثر جریان شارژ</string>
     <string name="diag_field_max_charging_voltage" formatted="false">حداکثر ولتاژ شارژ</string>
@@ -643,8 +651,7 @@
     <string name="diagnostics" formatted="false">عیب‌یابی</string>
     <string name="diagnostics_summary" formatted="false">مجوزها و پایداری پایش را بررسی کنید و گزارشی برای رفع مشکل بسازید</string>
     <string name="diag_overview">عملکرد برنامه</string>
-    <string name="diagnostics_help_title" formatted="false">عیب‌یابی چگونه کمک می‌کند</string>
-    <string name="diagnostics_help_overview" formatted="false">«عملکرد پایشگر» مجوزها و قابلیت اطمینان پایشگر را بررسی می‌کند. از کنترل‌های آن برای شروع یا توقف پایش، تغییر ثبت اشکال‌زدایی، باز کردن تنظیمات بهینه‌سازی باتری و اعلان یا ساخت گزارش عیب‌یابی استفاده کنید. هر خوانش ناموجود نشانه مشکل مجوز نیست؛ برخی دستگاه‌ها آن را ارائه نمی‌کنند.</string>
+    <string name="diagnostics_help_overview" formatted="false">مجوزها و قابلیت اطمینان پایشگر را بررسی می‌کند. از کنترل‌های آن برای شروع یا توقف پایش، تغییر ثبت اشکال‌زدایی، باز کردن تنظیمات بهینه‌سازی باتری و اعلان یا ساخت گزارش عیب‌یابی استفاده کنید. هر خوانش ناموجود نشانه مشکل مجوز نیست؛ برخی دستگاه‌ها آن را ارائه نمی‌کنند.</string>
     <string name="diagnostics_monitoring" formatted="false">پایش پس‌زمینه</string>
     <string name="diag_monitor_operation">عملکرد پایشگر</string>
     <string name="diag_heartbeat">آخرین ضربان</string>
@@ -782,13 +789,12 @@
     <string name="backup_restore_settings_summary" formatted="false">از تنظیمات برنامه و داده‌های باتری نسخهٔ پشتیبان تهیه کنید، آن‌ها را بازیابی و منتقل کنید</string>
     <string name="backup_restore_help_overview" formatted="false">تنظیمات، آلارمها، گزارش‌ها و داده‌های پیش‌بینی آموخته‌شده را ذخیره و بازیابی کنید. «بازیابی تنظیمات پیش‌فرض» پس از تأیید، ترجیحات برنامه را بازنشانی می‌کند و تاریخچه، آلارمها، تخمین‌های آموخته‌شده و وضعیت اجرای پایش را حفظ می‌کند.</string>
     <string name="pref_general_backup" formatted="false">پشتیبان‌گیری عمومی برنامه</string>
-    <string name="general_backup_restore_effects_help" formatted="false">دسته‌های انتخاب‌شده بازیابی می‌شوند؛ دسته‌های انتخاب‌نشده حفظ می‌شوند. بازیابی آلارم‌ها، آلارم‌های فعلی را جایگزین می‌کند. برای گزارش‌ها، انتخاب کنید آن‌ها اضافه شوند یا جایگزین تاریخچه فعلی شوند.</string>
     <string name="pref_export_general_backup" formatted="false">صادر کردن پشتیبان عمومی</string>
     <string name="pref_export_general_backup_help" formatted="false">تنظیمات، آلارمها و داده‌های مختص دستگاه را با هم در یک پشتیبان عمومی ZIP در مکان دلخواه ذخیره کنید.</string>
     <string name="pref_export_general_backup_summary" formatted="false">ذخیره تنظیمات، آلارمها و داده‌های ویژه دستگاه در یک فایل ZIP</string>
     <string name="general_backup_exported" formatted="false">پشتیبان عمومی با موفقیت صادر شد.</string>
     <string name="pref_import_general_backup" formatted="false">وارد کردن پشتیبان عمومی</string>
-    <string name="pref_import_general_backup_help" formatted="false">یک فایل ZIP پشتیبان عمومی موجود را انتخاب کنید و تعیین کنید کدام دسته‌های موجود بازیابی شوند. پشتیبان‌های تهیه‌شده با نسخه‌های جدیدتر برنامه ممکن است سازگار نباشند و بازیابی گزارش‌ها یا داده‌های پیش‌بینی از دستگاهی دیگر ممکن است برآوردهای نادرست ایجاد کند. اگر بازیابی فقط تا حدی انجام شد، پیش از تلاش دوباره دسته‌های گزارش‌شده را بررسی کنید.</string>
+    <string name="pref_import_general_backup_help" formatted="false">یک فایل ZIP پشتیبان عمومی موجود را انتخاب کنید و تعیین کنید کدام دسته‌های موجود بازیابی شوند. پشتیبان‌های تهیه‌شده با نسخه‌های جدیدتر برنامه ممکن است سازگار نباشند و بازیابی گزارش‌ها یا داده‌های پیش‌بینی از دستگاهی دیگر ممکن است برآوردهای نادرست ایجاد کند. اگر بازیابی فقط تا حدی انجام شد، پیش از تلاش دوباره دسته‌های گزارش‌شده را بررسی کنید. دسته‌های انتخاب‌شده بازیابی می‌شوند؛ دسته‌های انتخاب‌نشده حفظ می‌شوند. بازیابی آلارم‌ها، آلارم‌های فعلی را جایگزین می‌کند. برای گزارش‌ها، انتخاب کنید آن‌ها اضافه شوند یا جایگزین تاریخچه فعلی شوند.</string>
     <string name="pref_import_general_backup_summary" formatted="false">بازیابی داده‌های انتخاب‌شده از فایل ZIP پشتیبان عمومی</string>
     <string name="general_backup_restore_message" formatted="false">مواردی را که می‌خواهید بازیابی شوند انتخاب کنید.</string>
     <string name="general_backup_device_data_warning_scope" formatted="false">گزارش‌ها و داده‌های پیش‌بینی</string>
@@ -797,21 +803,21 @@
     <string name="settings_restore_partial">بازیابی برخی داده‌ها ممکن نشد. با موفقیت بازیابی شد: %1$s. داده‌هایی که شاید بخشی از آن‌ها بازیابی شده باشد: %2$s. پیش از تلاش دوباره این بخش‌ها را بررسی کنید.</string>
     <string name="settings_restore_none">هیچ‌کدام</string>
     <string name="pref_export_settings" formatted="false">صادر کردن تنظیمات</string>
-    <string name="pref_export_settings_help" formatted="false">«صادر کردن تنظیمات» ترجیحات برنامه را ذخیره می‌کند. نتیجه یک فایل JSON پشتیبان تنظیمات است.</string>
+    <string name="pref_export_settings_help" formatted="false">ترجیحات برنامه را ذخیره کنید. نتیجه یک فایل JSON پشتیبان تنظیمات است.</string>
     <string name="pref_export_settings_summary" formatted="false">ذخیره تنظیمات فعلی در یک فایل</string>
     <string name="settings_exported" formatted="false">تنظیمات با موفقیت صادر شد.</string>
     <string name="pref_import_settings" formatted="false">وارد کردن تنظیمات</string>
-    <string name="pref_import_settings_help" formatted="false">«وارد کردن تنظیمات» ترجیحات ذخیره‌شده را بازیابی می‌کند. این عمل تاریخچه یا رکوردهای آلارم را بازیابی نمی‌کند.</string>
+    <string name="pref_import_settings_help" formatted="false">ترجیحات ذخیره‌شده را بازیابی کنید. این عمل تاریخچه یا رکوردهای آلارم را بازیابی نمی‌کند.</string>
     <string name="pref_import_settings_summary" formatted="false">بازیابی تنظیمات از یک فایل</string>
     <string name="settings_imported" formatted="false">تنظیمات با موفقیت وارد شد.</string>
     <string name="invalid_settings_file" formatted="false">فایل تنظیمات نامعتبر است</string>
     <string name="settings_file_version_warning" formatted="false">این فایل با نسخه جدیدتری از برنامه ایجاد شده است. وارد کردن آن ممکن است باعث رفتار غیرمنتظره شود. با این حال ادامه می‌دهید؟</string>
     <string name="pref_export_alarms" formatted="false">صادر کردن آلارمها</string>
-    <string name="pref_export_alarms_help" formatted="false">«صادر کردن آلارمها» آلارمهای شما را ذخیره می‌کند. فایل JSON شامل قواعد آلارم است، نه تنظیمات کانال اعلان یا صدا که Android مدیریت می‌کند.</string>
+    <string name="pref_export_alarms_help" formatted="false">آلارمهای شما را ذخیره کنید. فایل JSON شامل قواعد آلارم است، نه تنظیمات کانال اعلان یا صدا که Android مدیریت می‌کند.</string>
     <string name="pref_export_alarms_summary" formatted="false">ذخیره آلارمهای فعلی در یک فایل</string>
     <string name="alarms_exported" formatted="false">آلارمها با موفقیت صادر شدند.</string>
     <string name="pref_import_alarms" formatted="false">وارد کردن آلارمها</string>
-    <string name="pref_import_alarms_help" formatted="false">«وارد کردن آلارمها» همهٔ آلارمهای فعلی را با آلارمهای نسخهٔ پشتیبان جایگزین می‌کند. یک فایل JSON پشتیبان آلارم را انتخاب کنید.</string>
+    <string name="pref_import_alarms_help" formatted="false">همهٔ آلارمهای فعلی را با آلارمهای نسخهٔ پشتیبان جایگزین کنید. یک فایل JSON پشتیبان آلارم را انتخاب کنید.</string>
     <string name="pref_import_alarms_summary" formatted="false">جایگزینی آلارمهای فعلی با آلارمهای یک فایل</string>
     <string name="alarms_imported" formatted="false">آلارمها با موفقیت وارد شدند.</string>
     <string name="invalid_alarms_file" formatted="false">فایل آلارم نامعتبر است</string>
@@ -843,7 +849,7 @@
     <string name="invalid_csv_logs_file" formatted="false">فایل گزارش‌های CSV نامعتبر یا ناسازگار است</string>
     <string name="settings_reset_title">بازیابی تنظیمات پیش‌فرض</string>
     <string name="settings_reset_summary">بازنشانی ترجیحات برنامه با حفظ تاریخچه، آلارمها و تخمین‌های آموخته‌شده</string>
-    <string name="settings_reset_help" formatted="false">«بازیابی تنظیمات پیش‌فرض» پس از تأیید، ترجیحات برنامه را بازنشانی می‌کند. تاریخچه، آلارمها، تخمین‌های آموخته‌شده، پیکربندی ابزارک‌ها و وضعیت اجرای پایش پس‌زمینه حفظ می‌شوند. مجوزهای سیستم و تنظیمات کانال اعلان بازنشانی نمی‌شوند.</string>
+    <string name="settings_reset_help" formatted="false">پس از تأیید، ترجیحات برنامه را بازنشانی کنید. تاریخچه، آلارمها، تخمین‌های آموخته‌شده، پیکربندی ابزارک‌ها و وضعیت اجرای پایش پس‌زمینه حفظ می‌شوند. مجوزهای سیستم و تنظیمات کانال اعلان بازنشانی نمی‌شوند.</string>
     <string name="settings_reset_question">همه تنظیمات برنامه به پیش‌فرض بازگردند؟ تاریخچه، آلارمها و تخمین‌های آموخته‌شده حفظ می‌شوند. پایش پس‌زمینه مانند اکنون روشن یا متوقف می‌ماند.</string>
     <string name="settings_reset_confirm">بازیابی پیش‌فرض‌ها</string>
     <string name="settings_reset_done">تنظیمات پیش‌فرض بازیابی شدند.</string>

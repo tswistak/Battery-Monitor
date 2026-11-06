@@ -87,14 +87,12 @@ internal fun helpSections(
         SettingsContract.KEY_NOTIFICATION_SETTINGS -> listOfNotNull(
             HelpSection(
                 R.string.pref_cat_channel_settings, listOf(
-                    HelpParagraph(R.string.notification_channels_help),
                     HelpParagraph(
                         R.string.pref_manage_main_channel,
                         subheading = true,
                         controlKey = SettingsContract.KEY_ENABLE_NOTIFS_B
                     ),
-                    HelpParagraph(R.string.pref_manage_main_channel_summary),
-                    HelpParagraph(R.string.settings_notification_disabled_help),
+                    HelpParagraph(R.string.notification_channels_help),
                 )
             ),
             HelpSection(
@@ -223,11 +221,6 @@ internal fun helpSections(
                     ),
                     HelpParagraph(R.string.pref_battery_current_multiplier_help),
                     HelpParagraph(
-                        R.string.pref_battery_current_multiplier_detect_automatically,
-                        subheading = true
-                    ),
-                    HelpParagraph(R.string.pref_battery_current_multiplier_auto_help),
-                    HelpParagraph(
                         R.string.pref_prefer_average_battery_current,
                         subheading = true,
                         controlKey = SettingsContract.KEY_PREFER_AVERAGE_BATTERY_CURRENT
@@ -311,7 +304,6 @@ internal fun helpSections(
                         controlKey = SettingsContract.KEY_CHARGING_TARGET_MODE
                     ),
                     HelpParagraph(R.string.pref_charging_target_mode_help),
-                    HelpParagraph(R.string.pref_charging_target_mode_support_help),
                     if (customTargetVisible) HelpParagraph(
                         R.string.pref_custom_charging_target,
                         subheading = true,
@@ -390,7 +382,6 @@ internal fun helpSections(
                         controlKey = SettingsContract.KEY_IMPORT_GENERAL_BACKUP
                     ),
                     HelpParagraph(R.string.pref_import_general_backup_help),
-                    HelpParagraph(R.string.general_backup_restore_effects_help),
                 )
             ),
             HelpSection(
@@ -683,8 +674,17 @@ internal fun helpSections(
                     HelpParagraph(R.string.alarms_overview, subheading = true),
                     HelpParagraph(R.string.alarms_overview_help),
                     HelpParagraph(R.string.notification_channels_help),
-                    HelpParagraph(R.string.pref_alarm_threshold, subheading = true),
+                    HelpParagraph(
+                        R.string.alarms_add_threshold,
+                        subheading = true,
+                        controlKey = "alarms_add_threshold"
+                    ),
                     HelpParagraph(R.string.pref_alarm_threshold_help),
+                    HelpParagraph(
+                        R.string.alarms_edit_threshold,
+                        subheading = true,
+                        controlKey = "alarms_edit_threshold"
+                    ),
                     HelpParagraph(R.string.alarms_threshold_edit_help),
                 )
             ),
@@ -710,8 +710,17 @@ internal fun helpSections(
             HelpSection(
                 R.string.pref_cat_alarm_conditions, listOf(
                     HelpParagraph(R.string.pref_cat_alarm_conditions_help),
-                    HelpParagraph(R.string.pref_alarm_threshold, subheading = true),
+                    HelpParagraph(
+                        R.string.alarms_add_threshold,
+                        subheading = true,
+                        controlKey = "alarms_add_threshold"
+                    ),
                     HelpParagraph(R.string.pref_alarm_threshold_help),
+                    HelpParagraph(
+                        R.string.alarms_edit_threshold,
+                        subheading = true,
+                        controlKey = "alarms_edit_threshold"
+                    ),
                     HelpParagraph(R.string.alarms_threshold_edit_help),
                     HelpParagraph(R.string.notification_channels_help),
                 )

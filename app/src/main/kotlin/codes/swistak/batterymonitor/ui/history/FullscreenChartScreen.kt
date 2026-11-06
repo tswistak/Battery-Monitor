@@ -141,7 +141,7 @@ internal fun FullscreenChartScreen(
     onSelect: (HistoryKey?) -> Unit,
     onRetry: () -> Unit,
     onBack: () -> Unit,
-    onViewportObserved: (HistoryRangeState, Int) -> Unit
+    onViewportObserved: (HistoryRangeState, Int, Long) -> Unit
 ) {
     val context = LocalContext.current
     val locale = LocalConfiguration.current.locales[0]
@@ -420,29 +420,45 @@ internal fun FullscreenChartScreen(
         }
     }
 
-    LaunchedEffect(chartWidth) {
-        if (chartWidth > 1) reportViewport(currentViewport, chartWidth)
+    fun currentNativeViewport(): HistoryRangeState? {
+        if (!viewportReady || currentCommand != appliedCommand || viewportRevision != appliedRevision) return null
+        val chart = chartView ?: return null
+        val coordinates = appliedCoordinates ?: return null
+        val first = chart.lowestVisibleX
+        val last = chart.highestVisibleX
+        if (!first.isFinite() || !last.isFinite() || last <= first) return null
+        return fullscreenVisibleViewport(chart, coordinates, currentRange)
     }
-    LaunchedEffect(chartState, timeAxis, chartWidth) {
+
+    LaunchedEffect(chartWidth, state.viewportCommand) {
+        if (chartWidth > 1) {
+            reportViewport(currentNativeViewport() ?: currentViewport, chartWidth, currentCommand)
+        }
+    }
+    LaunchedEffect(chartState, chartView, chartWidth) {
         snapshotFlow {
-            if (viewportReady && currentCommand == appliedCommand && viewportRevision == appliedRevision) chartState.lowestVisibleX to chartState.highestVisibleX else null
-        }.filterNotNull().distinctUntilChanged().collect { (first, last) ->
-            if (last > first && first.isFinite() && last.isFinite()) {
-                val start = timeAxis.time(first).coerceIn(currentRange.start, currentRange.end - 1)
-                val end = timeAxis.time(last).coerceIn(
-                    start + 1, currentRange.end
+            if (viewportReady && currentCommand == appliedCommand && viewportRevision == appliedRevision) {
+                Triple(
+                    chartState.lowestVisibleX to chartState.highestVisibleX,
+                    appliedCoordinates,
+                    appliedCommand to appliedRevision
                 )
-                val precision = maxOf(
-                    Math.ulp(timeAxis.x(currentViewport.start)),
-                    Math.ulp(timeAxis.x(currentViewport.end))
-                ).toDouble()
-                val tolerance = maxOf(2L, (precision * 2000).toLong())
-                if (kotlin.math.abs(start - currentViewport.start) > tolerance || kotlin.math.abs(
-                        end - currentViewport.end
-                    ) > tolerance
-                ) {
-                    reportViewport(HistoryRangeState(start, end), chartWidth)
-                }
+            } else null
+        }.distinctUntilChanged().filterNotNull().collect {
+            val observed = currentNativeViewport() ?: return@collect
+            val coordinates = appliedCoordinates ?: return@collect
+            val observedCommand = appliedCommand
+            val appliedAxis = DetailedHistoryTimeAxis(coordinates)
+            val precision = maxOf(
+                Math.ulp(appliedAxis.x(currentViewport.start)),
+                Math.ulp(appliedAxis.x(currentViewport.end))
+            ).toDouble()
+            val tolerance = maxOf(2L, (precision * 2000).toLong())
+            if (kotlin.math.abs(observed.start - currentViewport.start) > tolerance || kotlin.math.abs(
+                    observed.end - currentViewport.end
+                ) > tolerance
+            ) {
+                reportViewport(observed, chartWidth, observedCommand)
             }
         }
     }
