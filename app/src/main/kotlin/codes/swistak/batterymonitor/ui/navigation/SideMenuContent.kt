@@ -82,7 +82,7 @@ fun SideMenuContent(
                         setImageDrawable(context.applicationInfo.loadIcon(context.packageManager))
                         importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
                     }
-                }, modifier = Modifier.size(30.dp)
+                }, modifier = Modifier.size(32.dp)
             )
             Text(
                 appName,

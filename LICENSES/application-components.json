@@ -12,7 +12,9 @@
       "https://www.gnu.org/licenses/gpl-3.0.txt"
     ],
     "artifacts": [],
-    "files": ["GPL-3.0.txt"]
+    "files": [
+      "GPL-3.0.txt"
+    ]
   },
   {
     "id": "battery-indicator-pro-artwork",
@@ -26,7 +28,10 @@
       "https://creativecommons.org/licenses/by-sa/3.0/legalcode.txt"
     ],
     "artifacts": [],
-    "files": ["CC-BY-SA-3.0.txt", "Artwork-Notices.txt"]
+    "files": [
+      "CC-BY-SA-3.0.txt",
+      "Artwork-Notices.txt"
+    ]
   },
   {
     "id": "google-material-icons",
@@ -34,13 +39,16 @@
     "version": "",
     "group": "artwork",
     "license": "Apache-2.0",
-    "attribution": "Original icon design: Google LLC. The battery_full symbol is adapted in the launcher icon through changed coordinates, scale, colors and shadow. The fullscreen glyph is converted to an Android vector drawable.",
+    "attribution": "Original icon design: Google LLC. The fullscreen glyph in ui_fullscreen.xml is converted to an Android vector drawable without changing its geometry.",
     "sources": [
       "https://github.com/google/material-design-icons",
       "https://github.com/google/material-design-icons/blob/master/LICENSE"
     ],
     "artifacts": [],
-    "files": ["Apache-2.0.txt", "Google-Material-Icons-Notices.txt"]
+    "files": [
+      "Apache-2.0.txt",
+      "Google-Material-Icons-Notices.txt"
+    ]
   },
   {
     "id": "battery-monitor-artwork",
@@ -48,9 +56,14 @@
     "version": "",
     "group": "artwork",
     "license": "GPL-3.0-or-later",
-    "attribution": "Copyright © 2026 Tomasz Świstak. Applies to new original widget presentation, backgrounds and artwork to the extent of the project's rights, including UI line icons generated for Battery Monitor using Codex. Third-party material and inherited derivatives retain their own licenses.",
-    "sources": ["https://github.com/tswistak/Battery-Monitor"],
+    "attribution": "Copyright © 2026 Tomasz Świstak. Applies to new original widget presentation, backgrounds and artwork to the extent of the project's rights, including the Battery Monitor logo and its native launcher, themed, notification, documentation and F-Droid variants, and UI line icons generated for Battery Monitor using Codex. Third-party material and inherited derivatives retain their own licenses.",
+    "sources": [
+      "https://github.com/tswistak/Battery-Monitor"
+    ],
     "artifacts": [],
-    "files": ["GPL-3.0.txt", "Artwork-Provenance.txt"]
+    "files": [
+      "GPL-3.0.txt",
+      "Artwork-Provenance.txt"
+    ]
   }
 ]

@@ -1162,7 +1162,8 @@ class BatteryInfoService : Service() {
 
     private fun startForegroundImmediately(): Boolean {
         val notification: Notification =
-            NotificationCompat.Builder(this, CHAN_ID_MAIN).setSmallIcon(R.mipmap.ic_launcher)
+            NotificationCompat.Builder(this, CHAN_ID_MAIN)
+                .setSmallIcon(R.drawable.ic_notification_brand)
                 .setContentTitle(getString(R.string.background_service_starting)).setOngoing(true)
                 .setShowWhen(false).build()
 
@@ -1643,7 +1644,7 @@ class BatteryInfoService : Service() {
 
     private fun iconFor(): Int {
         if (shouldRequestLiveUpdateChip()) {
-            return R.mipmap.ic_launcher_round
+            return R.drawable.ic_notification_brand
         }
 
         return iconForLegacyMainNotification()

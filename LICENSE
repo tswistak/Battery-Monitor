@@ -33,7 +33,7 @@ See [`LICENSES/CC-BY-SA-3.0.txt`](LICENSES/CC-BY-SA-3.0.txt) and [`LICENSES/Artw
 
 ### Google Material Icons
 
-The battery symbol in the Battery Monitor application icon and the fullscreen UI icon (`app/src/main/res/drawable/ui_fullscreen.xml`) are adapted from **Google Material Icons**, licensed under the **Apache License, Version 2.0**.
+The fullscreen UI icon (`app/src/main/res/drawable/ui_fullscreen.xml`) is adapted from **Google Material Icons**, licensed under the **Apache License, Version 2.0**.
 
 - Original design: Google LLC.
 - Source: https://github.com/google/material-design-icons

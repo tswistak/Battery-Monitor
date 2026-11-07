@@ -1,11 +1,21 @@
-Battery Monitor UI line-vector provenance
+Battery Monitor logo and UI line-vector provenance
 
-The 46 ui_*.xml line-vector resources other than ui_fullscreen.xml were
+The Battery Monitor application logo is original artwork generated using
+Codex. Its rounded battery shell, transparent opening and fixed partial
+fill are used by the Android launcher, themed and notification icons.
+The contained version in docs/assets/app-icon.svg is the source for
+its documentation PNG and F-Droid metadata icon.
+
+The logo is included with Battery Monitor's original artwork, copyright
+2026 Tomasz Świstak, under the project's GPL-3.0-or-later terms, to the
+extent of the project's rights.
+
+The 45 ui_*.xml line-vector resources other than ui_fullscreen.xml were
 generated for Battery Monitor using Codex.
 
 These icons are included with Battery Monitor's original artwork under
 the project's GPL-3.0-or-later terms, to the extent of the project's rights.
 The complete GPLv3 text is packaged as GPL-3.0.txt.
 
-The Material fullscreen glyph and Material launcher battery are covered
-separately by Google-Material-Icons-Notices.txt and Apache-2.0.txt.
+The Material fullscreen glyph is covered separately by
+Google-Material-Icons-Notices.txt and Apache-2.0.txt.

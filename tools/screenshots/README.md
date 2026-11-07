@@ -119,4 +119,4 @@ Use English (United States), Europe/Warsaw time, Celsius, density 420 and font s
 | [7.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/7.png) | History Events with Plugged in, Unplugged and Measurements selected: 3 of 9 event types | 1080 × 2400 | Light |
 | [8.png](../../fastlane/metadata/android/en-US/images/phoneScreenshots/8.png) | Current battery readings and manually configured 80% charging target | 1080 × 2400 | Dark |
 
-Keep the optional [tablet History image](../../fastlane/metadata/android/en-US/images/tenInchScreenshots/1.png) unchanged: 1920 × 1200 in landscape, light appearance with dynamic colors, English application text and Polish SystemUI. Do not seed, wipe or modify the owner's Samsung tablet to prepare phone screenshots.
+The [tablet History image](../../fastlane/metadata/android/en-US/images/tenInchScreenshots/1.png) shows the last 24 hours at 1920 × 1200 in landscape, with light appearance, dynamic colors, English application text and Polish SystemUI. Do not seed, wipe or modify the owner's tablet to prepare screenshots.
