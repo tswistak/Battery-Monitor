@@ -96,7 +96,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Násobitel</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Některá zařízení hlásí neočekávané jednotky nebo znaménko. Zde můžete hlášenou hodnotu vynásobit a opravit tak zobrazený výsledek. Pomocí „Zjistit automaticky“ se můžete pokusit určit násobitel proudu z odečtu baterie.\n
     \n
-    Pro hrubou orientaci u telefonů používá Android kladné znaménko při nabíjení a záporné při vybíjení. Aktivní nabíjení bývá přibližně +500 až +5000\u00A0mA, běžné vybíjení přibližně -100 až -3000\u00A0mA. Hodnoty blízko nule mohou být normální, když je baterie téměř plná nebo telefon nečinný. Pokud je hodnota asi 1000krát příliš malá či velká nebo má opačné znaménko, upravte násobitel.</string>
+    Pro hrubou orientaci u zařízení používá Android kladné znaménko při nabíjení a záporné při vybíjení. Aktivní nabíjení bývá přibližně +500 až +5000\u00A0mA, běžné vybíjení přibližně -100 až -3000\u00A0mA. Hodnoty blízko nule mohou být normální, když je baterie téměř plná nebo zařízení nečinné. Pokud je hodnota asi 1000krát příliš malá či velká nebo má opačné znaménko, upravte násobitel.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Zjistit automaticky</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatické zjištění není pro aktuální stav baterie nebo naměřenou hodnotu k dispozici</string>
     <string name="pref_battery_current_multiplier_detection_result">Násobitel byl automaticky nastaven na %1$d</string>
@@ -151,7 +151,9 @@
     <string name="live_updates_notif_chan_name" formatted="false">Živé aktualizace</string>
     <string name="notification_settings" formatted="false">Hlavní oznámení</string>
     <string name="notification_settings_summary" formatted="false">Nastavte obsah oznámení, ikonu stavového řádku a čip Živých aktualizací</string>
-    <string name="notification_settings_help" formatted="false">Můžete nakonfigurovat, který obsah se zobrazí v rozevíracím oznámení.</string>
+    <string name="notification_settings_help" formatted="false">Můžete nakonfigurovat, který obsah se zobrazí v rozevíracím oznámení.\n
+    Zvolte, zda ikona v oznámení zobrazuje procento baterie nebo teplotu, zda se v ikoně zobrazuje symbol jednotky a zda má mít nabíjení vlastní ikonu. Od Androidu 16 nemusí ikona stavového řádku fungovat ve všech variantách operačního systému.\n
+    V Androidu 16 a novějším zvolte, kdy se zobrazí štítek Live Update, které hodnoty střídá a zda ukazuje emoji nabíjení. Dostupnost závisí také na zařízení a systémovém nastavení oznámení.</string>
     <string name="notification_channels_help" formatted="false">Otevřete nastavení oznámení Androidu pro povolení či blokování oznámení a nastavení zvuku, vibrací a doručování hlavního oznámení a jednotlivých typů alarmů. Povolení pravidla alarmu nepřebije blokovaný kanál oznámení.</string>
     <string name="app_notifs_disabled_summary" formatted="false">Zakázali jste všechna oznámení pro tuto aplikaci.  Povolte jim přístup k těmto nastavením</string>
     <string name="main_notifs_disabled_summary" formatted="false">Vypnuli jste hlavní upozornění pro tuto aplikaci.  Pro přístup k těmto nastavením jej povolte</string>
@@ -204,7 +206,6 @@
     <string name="pref_expanded_notification_help" formatted="false">Pokud je tato možnost zapnutá, rozbalené hlavní oznámení zobrazuje „Zbývající čas“, „Čas od změny stavu“ a každou hodnotu „Vitální známky“ na samostatném řádku s popiskem místo jednořádkového souhrnu.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">Ikona stavového řádku</string>
-    <string name="status_bar_icon_settings_help" formatted="false">Zvolte, zda ikona v oznámení zobrazuje procento baterie nebo teplotu, zda se v ikoně zobrazuje symbol jednotky a zda má mít nabíjení vlastní ikonu. Od Androidu 16 nemusí ikona stavového řádku fungovat ve všech variantách operačního systému.</string>
     <string name="status_bar_icon_availability_help" formatted="false">Od Androidu 16 nemusí ikona stavového řádku fungovat ve všech variantách operačního systému.</string>
     <string name="pref_icon_content" formatted="false">Obsah ikony</string>
     <string name="pref_icon_content_help" formatted="false">Zvolte, zda ikona stavového řádku zobrazuje procento baterie nebo teplota baterie. Teplota odpovídá vámi zvolené jednotce.</string>
@@ -217,7 +218,6 @@
     <string name="pref_indicate_charging_summary" formatted="false">Změnit ikonu pro indikaci při nabíjení?</string>
     <string name="pref_indicate_charging_help" formatted="false">Ikona nabíjení může pod číslem zobrazovat blesk. Tuto volbu vypněte, pokud chcete při nabíjení i vybíjení stejnou ikonu.</string>
     <string name="status_bar_chip_settings" formatted="false">Čip stavového řádku</string>
-    <string name="status_bar_chip_settings_help" formatted="false">V Androidu 16 a novějším zvolte, kdy se zobrazí štítek Live Update, které hodnoty střídá a zda ukazuje emoji nabíjení. Dostupnost závisí také na zařízení a systémovém nastavení oznámení.</string>
     <string name="status_bar_chip_availability_help" formatted="false">Dostupnost závisí také na zařízení a systémovém nastavení oznámení.</string>
     <string name="settings_live_update_summary">Povolit nebo blokovat zvýrazněná oznámení baterie v nastavení Androidu</string>
     <string name="settings_live_update_help">Povolit nebo blokovat zvýrazněná oznámení baterie v nastavení Androidu.</string>
@@ -267,6 +267,8 @@
     <string name="alarm_settings_help" formatted="false">Můžete nastavit upozornění aplikace Battery Monitor jakmile stav baterie dosáhne určité hodnoty(např., Baterie je plně nabitá, Stav baterie klesl 20% atd.).</string>
     <string name="alarms_overview" formatted="false">Přehled alarmů</string>
     <string name="alarms_overview_help">Všech osm typů alarmů je vždy dostupných. Události zapněte přímo nebo použijte „Přidat práh“ u typu nabití či teploty. Nové prahy se po uložení zapnou. Klepnutím na hodnotu ji upravíte; úprava zachová stav zapnuto/vypnuto. Vypnuté hodnoty zůstávají v seznamu. „Smazat alarm“ vyžádá potvrzení. Zvuk a vibrace se sdílejí podle typu v nastavení oznámení Androidu. Existující duplicitní záznamy se zobrazují jako jeden logický alarm; přepnutí či smazání ovlivní všechny kopie. Alarmy nabíjení a vybíjení se řídí cíli odhadů a neřídí nabíjení. Blokovaný kanál či zastavené sledování nemění uložené přepínače.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Všech osm typů alarmů je vždy dostupných. Události zapněte přímo nebo použijte „Přidat práh“ u typu nabití či teploty. Nové prahy se po uložení zapnou. Klepnutím na hodnotu ji upravíte; úprava zachová stav zapnuto/vypnuto. Vypnuté hodnoty zůstávají v seznamu. „Smazat alarm“ vyžádá potvrzení. Zvuk a vibrace se sdílejí podle typu v nastavení oznámení Androidu. Existující duplicitní záznamy se zobrazují jako jeden logický alarm; přepnutí či smazání ovlivní všechny kopie. Alarmy nabíjení a vybíjení se řídí cíli odhadů a neřídí nabíjení. Blokovaný kanál či zastavené sledování nemění uložené přepínače.\n
+    Otevřete nastavení oznámení Androidu pro povolení či blokování oznámení a nastavení zvuku, vibrací a doručování hlavního oznámení a jednotlivých typů alarmů. Povolení pravidla alarmu nepřebije blokovaný kanál oznámení.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm zapnut</item>
         <item quantity="few">%1$d alarmy zapnuty</item>
@@ -303,6 +305,8 @@
     <string name="alarms_edit_threshold">Upravit práh</string>
     <string name="alarms_edit_existing">Upravit existující práh</string>
     <string name="alarms_threshold_edit_help" formatted="false">Pokud práh již existuje, otevřete jej pomocí „Upravit existující práh“. Pokud se uložené alarmy během úprav změní, použijte „Obnovit“ a před změnou práh znovu otevřete.</string>
+    <string name="alarms_threshold_edit_channels_help" formatted="false">Pokud práh již existuje, otevřete jej pomocí „Upravit existující práh“. Pokud se uložené alarmy během úprav změní, použijte „Obnovit“ a před změnou práh znovu otevřete.\n
+    Otevřete nastavení oznámení Androidu pro povolení či blokování oznámení a nastavení zvuku, vibrací a doručování hlavního oznámení a jednotlivých typů alarmů. Povolení pravidla alarmu nepřebije blokovaný kanál oznámení.</string>
     <string name="alarms_new_enabled">Alarm se po přidání zapne.</string>
     <string name="alarms_edit_keeps_enabled">Úprava zachová aktuální stav zapnuto/vypnuto.</string>
     <string name="alarms_enabled">Zapnuto</string>
@@ -424,7 +428,7 @@
     <string name="history_chart_y_fixed">Y: Pevné</string>
     <string name="history_chart_y_manual">Y: Ruční</string>
 
-    <string name="logs_empty" formatted="false">Záznamy jsou prázdné</string>
+    <string name="logs_empty" formatted="false">Záznamy jsou prázdné.</string>
     <string name="configure_log_filter" formatted="false">Zobrazit, které položky protokolu?</string>
     <string name="menu_show_seconds" formatted="false">Zobrazit sekundy</string>
     <string name="menu_hide_seconds" formatted="false">Skrýt sekundy</string>
@@ -439,7 +443,7 @@
     <string name="pref_enable_logging_summary" formatted="false">Záznamy změnu stavu baterie ?</string>
     <string name="pref_enable_logging_help" formatted="false">Ukládejte pozorování baterie a změny stavu do „Historie“. Dostupná měření zahrnují úroveň, teplotu, napětí, původní okamžitý proud a zbývající náboj. Výkon se při zobrazení nebo exportu vypočítá z napětí a proudu; neukládá se samostatně. Vypnutí záznamu nevymaže existující historii ani nezastaví odhady času.</string>
     <string name="pref_max_log_age" formatted="false">Maximální stáří záznamů</string>
-    <string name="pref_max_log_age_help" formatted="false">Pokud je záznam zapnutý, připojení k napájení odstraní záznamy starší než tento limit. „Bez omezení“ je uchová, dokud je nevymažete ručně. Pokud je zapnutý automatický export, Battery Monitor před smazáním starých položek exportuje čekající záznamy; neúspěšný export smazání zabrání.</string>
+    <string name="pref_max_log_age_help" formatted="false">Pokud je záznam zapnutý, záznamy starší než tento limit se automaticky odstraňují při údržbě historie. „Bez omezení“ je uchová, dokud je nevymažete ručně. Pokud je zapnutý automatický export, Battery Monitor před smazáním starých položek exportuje čekající záznamy; neúspěšný export smazání zabrání.</string>
     <string name="age_1_day" formatted="false">1\u00A0den</string>
     <string name="age_2_days" formatted="false">2\u00A0dny</string>
     <string name="age_4_days" formatted="false">4\u00A0dny</string>
@@ -465,9 +469,9 @@
     <string name="pref_auto_log_export_format" formatted="false">Formát exportu</string>
     <string name="pref_auto_log_export_directory" formatted="false">Změnit složku</string>
     <string name="pref_auto_log_export_path" formatted="true">Cesta: %1$s</string>
-    <string name="auto_log_export_help" formatted="false">Zvolte složku, četnost, formát a zda vytvářet samostatné soubory nebo připojovat do jednoho. Exporty obvykle ukládají záznamy od předchozího automatického exportu; nový průběžný soubor zahrnuje všechny dostupné záznamy. Android může exporty při nečinnosti odložit. Záznam musí zůstat zapnutý.</string>
-    <string name="auto_log_export_options_help" formatted="false">Interval exportu nesmí překročit dobu uchovávání protokolů. Změna složky vyžaduje udělení přístupu aplikace k této složce v Androidu. Vypnutí automatického exportu ponechá uložené protokoly a existující soubory beze změny.</string>
-    <string name="auto_log_export_format_help" formatted="false">CSV se hodí pro tabulkový nebo textový editor. Obsahuje původní proud, zbývající náboj a výkon vypočtený s násobitelem zvoleným při exportu. JSON uchovává strukturované záznamy pro zálohy. Buňky s nedostupným proudem, zbývajícím nábojem a výkonem zůstávají prázdné.</string>
+    <string name="auto_log_export_help" formatted="false">Zvolte složku, četnost, formát a zda vytvářet samostatné soubory nebo připojovat do jednoho. Exporty obvykle ukládají záznamy od předchozího automatického exportu; nový průběžný soubor zahrnuje všechny dostupné záznamy. Android může exporty při nečinnosti odložit. Záznam musí zůstat zapnutý.\n
+    CSV se hodí pro tabulkový nebo textový editor. Obsahuje původní proud, zbývající náboj a výkon vypočtený s násobitelem zvoleným při exportu. JSON uchovává strukturované záznamy pro zálohy. Buňky s nedostupným proudem, zbývajícím nábojem a výkonem zůstávají prázdné.\n
+    Interval exportu nesmí překročit dobu uchovávání protokolů. Změna složky vyžaduje udělení přístupu aplikace k této složce v Androidu. Vypnutí automatického exportu ponechá uložené protokoly a existující soubory beze změny.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Vytvořit nový soubor</string>
     <string name="auto_log_export_mode_append" formatted="false">Připojit nové záznamy k existujícímu souboru</string>
     <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
@@ -546,6 +550,8 @@
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">Systémové barvy vyžadují Android 12 nebo novější. Na tomto zařízení se používá „Battery Blue“.</string>
+    <string name="settings_color_palette_unsupported_help" formatted="false">Použít systémové barvy nebo „Battery Blue“.\n
+    Systémové barvy vyžadují Android 12 nebo novější. Na tomto zařízení se používá „Battery Blue“.</string>
     <string name="settings_brightness">Jas</string>
     <string name="settings_brightness_summary">Podle systému nebo světlý, tmavý či zcela černý režim</string>
     <string name="settings_brightness_help">Podle systému nebo světlý, tmavý či zcela černý režim.</string>
@@ -561,8 +567,8 @@
     \n
     Neomezený běh může zvýšit spotřebu baterie na pozadí. Nastavení můžete později změnit v „Nastavení“ Androidu → „Aplikace“ → „Battery Monitor“ → „Baterie“. Názvy nabídek se liší podle zařízení.</string>
     <string name="pref_cat_autostart" formatted="false">Automatické spuštění</string>
-    <string name="pref_autostart_at_boot" formatted="false">Automatické spuštění při startu telefonu</string>
-    <string name="pref_autostart_at_boot_summary" formatted="false">Spustit Battery Monitor jakmile je zařízení spuštěno:</string>
+    <string name="pref_autostart_at_boot" formatted="false">Automatické spuštění při startu zařízení</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">Spustit Battery Monitor jakmile je zařízení spuštěno</string>
     <string name="pref_autostart_at_boot_help" formatted="false">„Vždy“ spustí sledování na pozadí po restartu zařízení. „Nikdy“ přeskočí automatické spuštění při startu. „Pokud běželo při vypnutí“ se řídí tím, zda jste naposledy sledování v Battery Monitor spustili nebo zastavili. Zavření aplikace ani ukončení jejího procesu se nepočítá jako zastavení sledování. Widgety tuto volbu nepřebíjejí.</string>
     <string name="boot_pref_always" formatted="false">Vždy</string>
     <string name="boot_pref_never" formatted="false">Nikdy</string>
@@ -584,7 +590,8 @@
     <string name="diag_status_waiting_permission" formatted="false">Čekání na oprávnění Shizuku…</string>
     <string name="diag_status_no_stats" formatted="false">Na tomto zařízení nyní nejsou k dispozici žádné pokročilé statistiky baterie.</string>
     <string name="diag_value_not_available" formatted="false">Není k dispozici</string>
-    <string name="diag_help_overview" formatted="false">Spojuje spolehlivost sledování, uložené údaje předpovědi a údaje baterie v kartách „Provoz aplikace“, „Baterie“, „Nabíjení“ a „Nezpracované údaje“. Údaje Androidu jsou dostupné bez rootu. Další údaje závisí na zařízení a oprávněních aplikace Battery Monitor.</string>
+    <string name="diag_help_overview" formatted="false">Spojuje spolehlivost sledování, uložené údaje předpovědi a údaje baterie v kartách „Provoz aplikace“, „Baterie“, „Nabíjení“ a „Nezpracované údaje“. Údaje Androidu jsou dostupné bez rootu. Další údaje závisí na zařízení a oprávněních aplikace Battery Monitor.\n
+    Dostupná měření Androidu se shromažďují automaticky, když je otevřená „Diagnostika“. Klepnutím na hodnotu zobrazíte a zkopírujete měření, zdroj a čas. Původní klíče a hodnoty zařízení jsou v „Nezpracované údaje“. Pro použití rootu nebo Shizuku povolte privilegovaný přístup.</string>
     <string name="diag_section_counters" formatted="false">Počítadla</string>
     <string name="diag_help_counters" formatted="false">Měření baterie jsou označena a formátována jako zbývající náboj v mAh, proud v mA, energie v mWh, napětí ve V, teplota ve zvolené jednotce a výkon ve W. Násobitel proudu platí i pro vypočtený výkon. Průměrný proud a počet cyklů závisí na podpoře zařízení.</string>
     <string name="diag_field_charge_counter" formatted="false">Odhad zbývajícího náboje</string>
@@ -605,7 +612,8 @@
     <string name="diag_capacity_low">Nízká</string>
     <string name="diag_capacity_high">Vysoká</string>
     <string name="diag_section_charging" formatted="false">Nabíjení</string>
-    <string name="diag_help_charging" formatted="false">Zobrazuje hodnoty související s aktivní nabíjecí cestou, například maximální nabíjecí proud nebo napětí, politiku nabíjení, stav nabíjení a úroveň kapacity. Tato pole se mohou měnit mezi nabíječkami a režimy nabíjení.</string>
+    <string name="diag_help_charging" formatted="false">Zobrazuje hodnoty související s aktivní nabíjecí cestou, například maximální nabíjecí proud nebo napětí, politiku nabíjení, stav nabíjení a úroveň kapacity. Tato pole se mohou měnit mezi nabíječkami a režimy nabíjení.\n
+    Tento odhad používá nastavenou metodu předpovědi aplikace Battery Monitor. Její cíl neřídí nabíjení ani vypnutí.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Zbývající čas nabíjení</string>
     <string name="diag_field_max_charging_current" formatted="false">Maximální nabíjecí proud</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Maximální nabíjecí napětí</string>
@@ -662,7 +670,7 @@
     <string name="diagnostics" formatted="false">Diagnostika</string>
     <string name="diagnostics_summary" formatted="false">Zkontrolujte oprávnění a spolehlivost sledování a vytvořte zprávu pro řešení problémů</string>
     <string name="diag_overview">Provoz aplikace</string>
-    <string name="diagnostics_help_overview" formatted="false">Kontroluje oprávnění a spolehlivost sledování. Jeho ovládací prvky umožňují spustit nebo zastavit sledování, změnit ladicí záznam, otevřít nastavení optimalizace baterie a oznámení nebo vytvořit hlášení pro řešení problémů. Ne každé nedostupné měření znamená problém s oprávněním; některá zařízení jej neposkytují.</string>
+    <string name="diagnostics_help_overview" formatted="false">Zkontrolujte oprávnění a spolehlivost sledování. Jeho ovládací prvky umožňují spustit nebo zastavit sledování, změnit ladicí záznam, otevřít nastavení optimalizace baterie a oznámení nebo vytvořit hlášení pro řešení problémů. Ne každé nedostupné měření znamená problém s oprávněním; některá zařízení jej neposkytují.</string>
     <string name="diagnostics_monitoring" formatted="false">Sledování na pozadí</string>
     <string name="diag_monitor_operation">Provoz sledování</string>
     <string name="diag_heartbeat">Poslední signál aktivity</string>
@@ -690,12 +698,15 @@
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Oprávnění chybí. Klepnutím otevřete nastavení</string>
     <string name="diagnostics_battery_optimization" formatted="false">Optimalizace baterie</string>
     <string name="diagnostics_battery_optimization_help" formatted="false">Otevřete nastavení optimalizace baterie Androidu, pokud je činnost omezená. Pokud již není omezována, klepnutí tento stav potvrdí.</string>
+    <string name="monitoring_battery_optimization_help" formatted="false">Otevřete nastavení optimalizace baterie Androidu, pokud je činnost omezená. Pokud již není omezována, klepnutí tento stav potvrdí.\n
+    Neomezený běh na pozadí může zlepšit spolehlivost sledování. Optimalizace baterie v Androidu může zpozdit aktualizace a alarmy.\n
+    \n
+    Neomezený běh může zvýšit spotřebu baterie na pozadí. Nastavení můžete později změnit v „Nastavení“ Androidu → „Aplikace“ → „Battery Monitor“ → „Baterie“. Názvy nabídek se liší podle zařízení.</string>
     <string name="diagnostics_unrestricted" formatted="false">Bez omezení</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Omezeno. Klepnutím povolíte spolehlivé sledování na pozadí</string>
     <string name="diagnostics_vendor_settings" formatted="false">Nastavení výrobce</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Otevřít další nastavení aktivity na pozadí nebo automatického spuštění dostupná v tomto zařízení</string>
-    <string name="diagnostics_vendor_settings_help" formatted="false">Otevřít další nastavení aktivity na pozadí nebo automatického spuštění dostupná v tomto zařízení.</string>
-    <string name="diagnostics_vendor_availability_help" formatted="false">„Nastavení výrobce“ je dostupné pouze na podporovaných zařízeních.</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Otevřete další nastavení aktivity na pozadí nebo automatického spuštění. Dostupné pouze na podporovaných zařízeních.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Nápověda k aktivitě na pozadí</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Otevřít pokyny pro toto zařízení na Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">Otevřít pokyny pro toto zařízení na Don’t Kill My App.</string>
@@ -759,6 +770,8 @@
 
     <string name="charging_diagnostics_title" formatted="false">Diagnostika limitu nabíjení OEM</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Otevřete nástroje pro snímky a porovnání a zjistěte, jak Battery Monitor rozpoznává limit nabíjení zařízení. Pokyny k přípravě najdete v nápovědě samotné diagnostické obrazovky OEM.</string>
+    <string name="charging_tools_help_overview" formatted="false">Otevřete nástroje pro snímky a porovnání a zjistěte, jak Battery Monitor rozpoznává limit nabíjení zařízení. Pokyny k přípravě najdete v nápovědě samotné diagnostické obrazovky OEM.\n
+    S privilegovaným přístupem mohou být dostupné další diagnostické informace. Udělte přístup přes Shizuku nebo root a zapněte privilegovaný přístup v „Nastavení“ → „Pokročilé“ → „Použít privilegovaný přístup“, aby byl přehled limitu nabíjení OEM užitečnější.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Aby byla zpráva užitečná, otevřete „Nápověda“ a před pořízením snímků postupujte podle kroků přípravy.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">S privilegovaným přístupem mohou být dostupné další diagnostické informace. Udělte přístup přes Shizuku nebo root a zapněte privilegovaný přístup v „Nastavení“ → „Pokročilé“ → „Použít privilegovaný přístup“, aby byl přehled limitu nabíjení OEM užitečnější.</string>
     <string name="charging_diagnostics_capture" formatted="false">Pořídit snímek</string>
@@ -790,13 +803,14 @@
     <string name="charging_diagnostics_clear_summary" formatted="false">Odstranit místně uložené snímky nabíjení OEM</string>
     <string name="charging_diagnostics_clear_help" formatted="false">Odstranit místně uložené snímky nabíjení OEM.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Snímky nabíjení odstraněny</string>
-    <string name="charging_diagnostics_help_steps" formatted="false">1. Odpojte telefon a během pořizování snímků konfigurace jej nechte odpojený. Mezi snímky měňte pouze nastavení ochrany nabíjení od výrobce.\n
+    <string name="charging_diagnostics_help_steps" formatted="false">1. Odpojte zařízení a během pořizování snímků konfigurace je nechte odpojené. Mezi snímky měňte pouze nastavení ochrany nabíjení od výrobce.\n
     2. Vypněte ochranu nabíjení, počkejte 2–5\u00A0sekund a pořiďte snímek.\n
     3. Vyberte pevný limit, počkejte 2–5\u00A0sekund a pořiďte snímek. Pokud lze, zopakujte s jiným limitem.\n
     4. Zapněte adaptivní, chytré nebo plánované nabíjení, počkejte 2–5\u00A0sekund a pořiďte snímek.\n
     5. Pokud porovnání konfigurace není průkazné, můžete sekvenci volitelně zopakovat během nabíjení a zachytit stav dostupný pouze za provozu.\n
     6. Vytvořte a zkontrolujte porovnávací zprávu. Data jsou filtrována a potenciálně citlivé hodnoty skryty, přesto před sdílením zkontrolujte celou zprávu.</string>
-    <string name="charging_diagnostics_help_contact" formatted="false">Po kontrole zprávu zkopírujte nebo uložte a odešlete ji e-mailem na adresu <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
+    <string name="charging_report_privacy_help" formatted="false">Ve výchozím stavu nezahrnuto. Tyto údaje mohou obsahovat osobní informace. Před kopírováním nebo uložením zkontrolujte náhled.\n
+    Po kontrole zprávu zkopírujte nebo uložte a odešlete ji e-mailem na adresu <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Záloha a obnovení</string>
     <string name="backup_restore_settings_summary" formatted="false">Zálohujte, obnovujte a přenášejte nastavení aplikace a data baterie</string>
@@ -810,9 +824,9 @@
     <string name="pref_import_general_backup_help" formatted="false">Vyberte existující obecnou zálohu ZIP a zvolte, které dostupné kategorie obnovit. Zálohy vytvořené novějšími verzemi aplikace nemusí být kompatibilní a obnova protokolů nebo dat prediktoru z jiného zařízení může způsobit nesprávné odhady. Pokud se obnova dokončí jen částečně, před dalším pokusem zkontrolujte uvedené kategorie. Vybrané kategorie se obnoví; nevybrané zůstanou zachovány. Obnovení alarmů nahradí aktuální alarmy. U protokolů zvolte, zda je přidat, nebo nahradit aktuální historii.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Obnovit vybraná data ze souboru ZIP obecné zálohy</string>
     <string name="general_backup_restore_message" formatted="false">Vyberte, co chcete obnovit.</string>
-    <string name="general_backup_device_data_warning_scope" formatted="false">Protokoly a data predikce</string>
+    <string name="general_backup_device_data_warning">Protokoly a data predikce jsou specifické pro zařízení, na kterém byly shromážděny. Import do jiného zařízení může způsobit nesprávné predikce nebo jiné neočekávané chování aplikace.</string>
     <string name="general_backup_imported" formatted="false">Obecná záloha byla úspěšně importována.</string>
-    <string name="invalid_general_backup_file" formatted="false">Neplatný nebo nekompatibilní soubor obecné zálohy</string>
+    <string name="invalid_general_backup_file" formatted="false">Neplatný nebo nekompatibilní soubor obecné zálohy.</string>
     <string name="settings_restore_partial">Některé údaje se nepodařilo obnovit. Úspěšně obnoveno: %1$s. Částečně obnovené údaje: %2$s. Před dalším pokusem tyto části zkontrolujte.</string>
     <string name="settings_restore_none">Žádné</string>
     <string name="pref_export_settings" formatted="false">Exportovat nastavení</string>
@@ -823,7 +837,7 @@
     <string name="pref_import_settings_help" formatted="false">Obnovte uložené předvolby. Tato akce neobnovuje historii ani záznamy alarmů.</string>
     <string name="pref_import_settings_summary" formatted="false">Obnovit nastavení ze souboru</string>
     <string name="settings_imported" formatted="false">Nastavení bylo úspěšně importováno.</string>
-    <string name="invalid_settings_file" formatted="false">Neplatný soubor nastavení</string>
+    <string name="invalid_settings_file" formatted="false">Neplatný soubor nastavení.</string>
     <string name="settings_file_version_warning" formatted="false">Tento soubor byl vytvořen novější verzí aplikace. Jeho import může způsobit neočekávané chování. Přesto pokračovat?</string>
     <string name="pref_export_alarms" formatted="false">Exportovat alarmy</string>
     <string name="pref_export_alarms_help" formatted="false">Uložte vaše alarmy. Soubor JSON obsahuje pravidla alarmů, nikoli nastavení kanálů oznámení nebo zvuků spravovaná Androidem.</string>
@@ -833,7 +847,7 @@
     <string name="pref_import_alarms_help" formatted="false">Nahraďte všechny aktuální alarmy alarmy ze zálohy. Vyberte soubor zálohy alarmů ve formátu JSON.</string>
     <string name="pref_import_alarms_summary" formatted="false">Nahradit aktuální alarmy alarmy ze souboru</string>
     <string name="alarms_imported" formatted="false">Alarmy byly úspěšně importovány.</string>
-    <string name="invalid_alarms_file" formatted="false">Neplatný soubor alarmů</string>
+    <string name="invalid_alarms_file" formatted="false">Neplatný soubor alarmů.</string>
     <string name="pref_backup_device_data" formatted="false">Záloha dat specifických pro zařízení</string>
     <string name="device_data_logs" formatted="false">Protokoly</string>
     <string name="device_data_predictor" formatted="false">Data predikce</string>
@@ -847,8 +861,8 @@
     <string name="pref_import_device_data_summary" formatted="false">Obnovit protokoly a data predikce ze souboru</string>
     <string name="device_data_imported" formatted="false">Data specifická pro zařízení byla úspěšně importována</string>
     <string name="device_data_imported_dialog" formatted="false">Data specifická pro zařízení byla úspěšně importována.</string>
-    <string name="invalid_device_data_file" formatted="false">Neplatný soubor dat specifických pro zařízení</string>
-    <string name="device_data_file_empty" formatted="false">Tento soubor neobsahuje žádná podporovaná data specifická pro zařízení</string>
+    <string name="invalid_device_data_file" formatted="false">Neplatný soubor dat specifických pro zařízení.</string>
+    <string name="device_data_file_empty" formatted="false">Tento soubor neobsahuje žádná podporovaná data specifická pro zařízení.</string>
     <string name="pref_import_logs_csv" formatted="false">Importovat protokoly z CSV</string>
     <string name="pref_import_logs_csv_summary" formatted="false">Importovat protokoly z exportovaného souboru CSV</string>
     <string name="csv_logs_import_help" formatted="false">Importujte záznamy z CSV exportovaného aplikací Battery Monitor a zvolte přidání nebo nahrazení stávajících záznamů. Starší exporty nemusí obsahovat proud či zbývající náboj; tato měření u starších položek zůstanou prázdná. Zálohy JSON zachovávají strukturované údaje a jsou vhodnější pro obnovení.</string>
@@ -859,7 +873,7 @@
     <string name="log_import_replace" formatted="false">Nahradit stávající protokoly</string>
     <string name="csv_logs_imported" formatted="false">Protokoly CSV byly úspěšně importovány</string>
     <string name="csv_logs_imported_dialog" formatted="false">Protokoly CSV byly úspěšně importovány.</string>
-    <string name="invalid_csv_logs_file" formatted="false">Neplatný nebo nekompatibilní soubor protokolů CSV</string>
+    <string name="invalid_csv_logs_file" formatted="false">Neplatný nebo nekompatibilní soubor protokolů CSV.</string>
     <string name="settings_reset_title">Obnovit výchozí nastavení</string>
     <string name="settings_reset_summary">Obnovit předvolby aplikace a zachovat historii, alarmy a naučené odhady</string>
     <string name="settings_reset_help" formatted="false">Obnovte předvolby aplikace po potvrzení. Zachová historii, alarmy, naučené odhady, nastavení widgetů a stav sledování na pozadí. Systémová oprávnění a nastavení kanálů oznámení se neobnovují.</string>

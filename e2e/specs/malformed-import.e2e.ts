@@ -18,6 +18,7 @@ import { cleanScenario, pushSharedFile, readState, seedSentinelData } from '../s
 import {
     acknowledgeMessage,
     chooseImportFile,
+    chooseReplaceHistory,
     openBackupAndRestoreScreen,
 } from '../support/ui.js';
 
@@ -34,7 +35,7 @@ describe('Malformed general backup import', () => {
         await openBackupAndRestoreScreen();
 
         await chooseImportFile('Import general backup', 'invalid-general.zip');
-        await acknowledgeMessage('Invalid or incompatible general backup file');
+        await acknowledgeMessage('Invalid or incompatible general backup file.');
 
         const after = await readState();
         await expect(after.settings).toEqual(before.settings);
@@ -50,4 +51,45 @@ describe('Malformed general backup import', () => {
             },
         ]);
     });
+
+    for (const { action, filename, body, message } of [
+        {
+            action: 'Import settings', filename: 'invalid-settings.json', body: '{',
+            message: 'Invalid settings file.',
+        },
+        {
+            action: 'Import alarms', filename: 'invalid-alarms.json', body: '{',
+            message: 'Invalid alarms file.',
+        },
+        {
+            action: 'Import device-specific data', filename: 'invalid-device.json', body: '{',
+            message: 'Invalid device-specific data file.',
+        },
+        {
+            action: 'Import device-specific data', filename: 'empty-device.json', body: '{"version":2}',
+            message: 'This file contains no supported device-specific data.',
+        },
+        {
+            action: 'Import logs from CSV', filename: 'invalid-logs.csv', body: 'not,a,history,header',
+            message: 'Invalid or incompatible CSV logs file.',
+        },
+    ]) {
+        it(`acknowledges ${filename} in a dialog and preserves existing data`, async () => {
+            await seedSentinelData();
+            await pushSharedFile(filename, Buffer.from(body));
+            await openBackupAndRestoreScreen();
+            const before = await readState();
+            await openBackupAndRestoreScreen();
+
+            await chooseImportFile(action, filename);
+            if (action === 'Import logs from CSV') await chooseReplaceHistory();
+            await acknowledgeMessage(message);
+
+            const after = await readState();
+            await expect(after.settings).toEqual(before.settings);
+            await expect(after.alarms).toEqual(before.alarms);
+            await expect(after.logs).toEqual(before.logs);
+            await expect(after.predictor).toEqual(before.predictor);
+        });
+    }
 });

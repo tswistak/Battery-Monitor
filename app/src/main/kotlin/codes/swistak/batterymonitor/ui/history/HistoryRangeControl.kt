@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -27,6 +29,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -43,6 +46,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -100,6 +104,7 @@ internal fun HistoryRangeControl(
     val dateFormat = remember(locale) {
         DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
     }
+    var selection by rememberSaveable { mutableStateOf(state.rangeLabel) }
     var mode by rememberSaveable { mutableStateOf<String?>(null) }
     var first by rememberSaveable {
         mutableStateOf(
@@ -123,7 +128,15 @@ internal fun HistoryRangeControl(
         else -> stringResource(R.string.history_range)
     }
     Surface(
-        onClick = { mode = "choose" },
+        onClick = {
+            selection = state.rangeLabel
+            val start = Instant.ofEpochMilli(state.range.start).atZone(zone).toLocalDate()
+            first = start.toString()
+            last = Instant.ofEpochMilli(state.range.end - 1).atZone(zone).toLocalDate().toString()
+            month = start.monthValue.toString()
+            year = start.year.toString()
+            mode = "choose"
+        },
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(18.dp),
         color = MaterialTheme.colorScheme.surfaceVariant
@@ -175,58 +188,82 @@ internal fun HistoryRangeControl(
             )
         }
     }
-    if (mode == "choose" && dialogsAllowed) AlertDialog(
-        onDismissRequest = { mode = null },
-        title = { Text(stringResource(R.string.history_range)) },
-        text = {
-            Column(Modifier.verticalScroll(rememberScrollState())) {
-                if (compact) {
-                    TextButton(onClick = {
-                        onRange(HistoryRangeState.lastHours(1), "1h")
-                        mode = null
-                    }) { Text(stringResource(R.string.history_chart_1h)) }
-                    TextButton(onClick = {
-                        onRange(HistoryRangeState.lastHours(6), "6h")
-                        mode = null
-                    }) { Text(stringResource(R.string.history_chart_6h)) }
-                }
-                TextButton(onClick = {
-                    onRange(HistoryRangeState.lastHours(24), "24h")
-                    mode = null
-                }) { Text(stringResource(R.string.history_last_24h)) }
-                TextButton(onClick = {
-                    onRange(HistoryRangeState.lastHours(168), "7d")
-                    mode = null
-                }) { Text(stringResource(R.string.history_last_7d)) }
-                TextButton(onClick = {
-                    onRange(state.range, "all")
-                    mode = null
-                }) { Text(stringResource(R.string.history_all_history)) }
-                TextButton(onClick = {
-                    first = Instant.ofEpochMilli(state.range.start).atZone(zone).toLocalDate()
-                        .toString()
-                    last = Instant.ofEpochMilli(state.range.end - 1).atZone(zone).toLocalDate()
-                        .toString()
-                    mode = "custom"
-                }) { Text(stringResource(R.string.history_custom_range)) }
-                TextButton(onClick = {
-                    mode = "month"
-                }) { Text(stringResource(R.string.history_month)) }
-                TextButton(onClick = {
-                    mode = "year"
-                }) { Text(stringResource(R.string.history_year)) }
-            }
-        },
-        confirmButton = {},
-        dismissButton = {
-            TextButton(onClick = {
+    if (mode == "choose" && dialogsAllowed) {
+        var handled by remember { mutableStateOf(false) }
+        AlertDialog(onDismissRequest = {
+            if (!handled && mode == "choose") {
+                handled = true
                 mode = null
+            }
+        }, title = { Text(stringResource(R.string.history_range)) }, text = {
+            Column(
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .selectableGroup()
+            ) {
+                val options = buildList {
+                    if (compact) {
+                        add("1h" to R.string.history_chart_1h)
+                        add("6h" to R.string.history_chart_6h)
+                    }
+                    add("24h" to R.string.history_last_24h)
+                    add("7d" to R.string.history_last_7d)
+                    add("all" to R.string.history_all_history)
+                    add("custom" to R.string.history_custom_range)
+                    add("month" to R.string.history_month)
+                    add("year" to R.string.history_year)
+                }
+                options.forEach { (value, label) ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp)
+                            .selectable(selection == value, role = Role.RadioButton) {
+                                selection = value
+                            }
+                            .padding(horizontal = 8.dp, vertical = 12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(selection == value, onClick = null)
+                        Text(stringResource(label), Modifier.weight(1f))
+                    }
+                }
+            }
+        }, confirmButton = {
+            TextButton(onClick = {
+                if (!handled && mode == "choose") {
+                    handled = true
+                    when (selection) {
+                        "custom", "month", "year" -> mode = selection
+                        else -> {
+                            val range = when (selection) {
+                                "1h" -> HistoryRangeState.lastHours(1)
+                                "6h" -> HistoryRangeState.lastHours(6)
+                                "24h" -> HistoryRangeState.lastHours(24)
+                                "7d" -> HistoryRangeState.lastHours(168)
+                                else -> state.range
+                            }
+                            mode = null
+                            onRange(range, selection)
+                        }
+                    }
+                }
+            }) { Text(stringResource(R.string.okay)) }
+        }, dismissButton = {
+            TextButton(onClick = {
+                if (!handled && mode == "choose") {
+                    handled = true
+                    mode = null
+                }
             }) { Text(stringResource(R.string.cancel)) }
         })
+    }
     if (mode == "startDate" || mode == "endDate") {
+        val pickerMode = mode
+        var handled by remember(pickerMode) { mutableStateOf(false) }
         val pickerState = rememberDatePickerState(
             initialSelectedDateMillis = historyDatePickerMillis(
-                LocalDate.parse(if (mode == "startDate") first else last).coerceIn(
+                LocalDate.parse(if (pickerMode == "startDate") first else last).coerceIn(
                     LocalDate.of(1900, 1, 1), LocalDate.of(9999, 12, 31)
                 )
             ), yearRange = 1900..9999, initialDisplayMode = if (windowHeight < 480.dp) {
@@ -235,32 +272,46 @@ internal fun HistoryRangeControl(
                 DisplayMode.Picker
             }
         )
-        if (dialogsAllowed) DatePickerDialog(
-            onDismissRequest = { mode = "custom" },
-            modifier = Modifier.imePadding(),
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        pickerState.selectedDateMillis?.let {
-                            val selected = historyDatePickerDate(it).toString()
-                            if (mode == "startDate") first = selected else last = selected
-                            mode = "custom"
-                        }
-                    }, enabled = pickerState.selectedDateMillis != null
-                ) { Text(stringResource(R.string.okay)) }
-            },
-            dismissButton = {
-                TextButton(onClick = { mode = "custom" }) {
-                    Text(stringResource(R.string.cancel))
+        if (dialogsAllowed) DatePickerDialog(onDismissRequest = {
+            if (!handled && mode == pickerMode) {
+                handled = true
+                mode = "custom"
+            }
+        }, modifier = Modifier.imePadding(), confirmButton = {
+            TextButton(
+                onClick = {
+                    if (!handled && mode == pickerMode) pickerState.selectedDateMillis?.let {
+                        handled = true
+                        val selected = historyDatePickerDate(it).toString()
+                        if (pickerMode == "startDate") first = selected else last = selected
+                        mode = "custom"
+                    }
+                }, enabled = pickerState.selectedDateMillis != null
+            ) { Text(stringResource(R.string.okay)) }
+        }, dismissButton = {
+            TextButton(onClick = {
+                if (!handled && mode == pickerMode) {
+                    handled = true
+                    mode = "custom"
                 }
             }) {
+                Text(stringResource(R.string.cancel))
+            }
+        }) {
             DatePicker(pickerState, modifier = Modifier.verticalScroll(rememberScrollState()))
         }
     }
     if (mode in setOf("custom", "month", "year")) {
-        val range = historyDraftRange(mode!!, first, last, month, year, zone)
+        val editorMode = mode!!
+        var handled by remember(editorMode) { mutableStateOf(false) }
+        val range = historyDraftRange(editorMode, first, last, month, year, zone)
         if (dialogsAllowed) AlertDialog(
-            onDismissRequest = { mode = null },
+            onDismissRequest = {
+                if (!handled && mode == editorMode) {
+                    handled = true
+                    mode = null
+                }
+            },
             modifier = Modifier.imePadding(),
             title = { Text(stringResource(R.string.history_range)) },
             text = {
@@ -268,15 +319,25 @@ internal fun HistoryRangeControl(
                     Modifier.verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    if (mode == "custom") {
-                        OutlinedButton(onClick = { mode = "startDate" }) {
+                    if (editorMode == "custom") {
+                        OutlinedButton(onClick = {
+                            if (!handled && mode == editorMode) {
+                                handled = true
+                                mode = "startDate"
+                            }
+                        }) {
                             Text(
                                 stringResource(
                                     R.string.history_from, dateFormat.format(LocalDate.parse(first))
                                 )
                             )
                         }
-                        OutlinedButton(onClick = { mode = "endDate" }) {
+                        OutlinedButton(onClick = {
+                            if (!handled && mode == editorMode) {
+                                handled = true
+                                mode = "endDate"
+                            }
+                        }) {
                             Text(
                                 stringResource(
                                     R.string.history_through,
@@ -296,7 +357,7 @@ internal fun HistoryRangeControl(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             singleLine = true
                         )
-                        if (mode == "month") OutlinedTextField(
+                        if (editorMode == "month") OutlinedTextField(
                             month,
                             { month = it },
                             label = { Text(stringResource(R.string.history_month)) },
@@ -312,15 +373,19 @@ internal fun HistoryRangeControl(
             },
             confirmButton = {
                 TextButton(onClick = {
-                    range?.let {
-                        onRange(it, mode!!)
+                    if (!handled && mode == editorMode && range != null) {
+                        handled = true
                         mode = null
+                        onRange(range, editorMode)
                     }
                 }, enabled = range != null) { Text(stringResource(R.string.okay)) }
             },
             dismissButton = {
                 TextButton(onClick = {
-                    mode = null
+                    if (!handled && mode == editorMode) {
+                        handled = true
+                        mode = null
+                    }
                 }) { Text(stringResource(R.string.cancel)) }
             })
     }

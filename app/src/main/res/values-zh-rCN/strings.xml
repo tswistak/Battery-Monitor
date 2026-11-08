@@ -96,7 +96,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">乘数</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">某些设备会报告意外的单位或符号。请在此处乘以报告值以修正显示结果。 可使用“自动检测”尝试根据电池读数推算电流乘数。\n
     \n
-    作为手机的粗略参考，Android 的标准符号是充电时为正、放电时为负。主动充电通常约为 +500 至 +5000\u00A0mA，普通放电通常约为 -100 至 -3000\u00A0mA。电池接近充满或手机空闲时，接近零的值可能是正常的。如果数值看起来约小了或大了 1000 倍，或者符号相反，请调整乘数。</string>
+    作为设备的粗略参考，Android 的标准符号是充电时为正、放电时为负。主动充电通常约为 +500 至 +5000\u00A0mA，普通放电通常约为 -100 至 -3000\u00A0mA。电池接近充满或设备空闲时，接近零的值可能是正常的。如果数值看起来约小了或大了 1000 倍，或者符号相反，请调整乘数。</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">自动检测</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">当前电池状态或读数无法使用自动检测</string>
     <string name="pref_battery_current_multiplier_detection_result">乘数已自动设置为 %1$d</string>
@@ -150,7 +150,9 @@
     <string name="live_updates_notif_chan_name" formatted="false">实时更新</string>
     <string name="notification_settings" formatted="false">主要通知</string>
     <string name="notification_settings_summary" formatted="false">配置通知内容、状态栏图标和实时更新芯片</string>
-    <string name="notification_settings_help" formatted="false">您可以配置在下拉通知中显示哪些内容。</string>
+    <string name="notification_settings_help" formatted="false">您可以配置在下拉通知中显示哪些内容。\n
+    选择通知图标显示电池百分比还是温度、是否在图标中显示单位符号，以及充电时是否使用专用图标。从 Android 16 开始，状态栏图标可能无法在所有操作系统变体上正常工作。\n
+    在 Android 16 以上版本中，选择实时更新芯片何时出现、轮流显示哪些数值，以及是否显示充电表情符号。可用性也取决于设备与系统通知设置。</string>
     <string name="notification_channels_help" formatted="false">打开 Android 通知设置以允许或屏蔽通知，并设置主要通知及各警报类型的声音、振动与送达方式。启用警报规则不会解除通知渠道的屏蔽。</string>
     <string name="app_notifs_disabled_summary" formatted="false">您已禁用此应用程序的所有通知。  请允许他们访问这些设置</string>
     <string name="main_notifs_disabled_summary" formatted="false">您已禁用此应用程序的主要通知。  请启用它以访问这些设置</string>
@@ -194,7 +196,6 @@
     <string name="pref_expanded_notification_help" formatted="false">启用后，展开主通知会将“剩余时间”、“自状态更改以来的时间”及每项“生命体征”的数值，分别显示在带标签的独立行中，取代单行摘要。</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s：%2$s</string>
     <string name="status_bar_icon_settings" formatted="false">状态栏图标</string>
-    <string name="status_bar_icon_settings_help" formatted="false">选择通知图标显示电池百分比还是温度、是否在图标中显示单位符号，以及充电时是否使用专用图标。从 Android 16 开始，状态栏图标可能无法在所有操作系统变体上正常工作。</string>
     <string name="status_bar_icon_availability_help" formatted="false">从 Android 16 开始，状态栏图标可能无法在所有操作系统变体上正常工作。</string>
     <string name="pref_icon_content" formatted="false">图标内容</string>
     <string name="pref_icon_content_help" formatted="false">选择状态栏图标是否显示电池百分比或 电池温度。温度遵循您选择的单位。</string>
@@ -207,7 +208,6 @@
     <string name="pref_indicate_charging_summary" formatted="false">更改图标以指示充电时？</string>
     <string name="pref_indicate_charging_help" formatted="false">充电图标可以在数字下方显示闪电。如果你希望充电和放电时使用相同图标，请关闭此设置。</string>
     <string name="status_bar_chip_settings" formatted="false">状态栏芯片</string>
-    <string name="status_bar_chip_settings_help" formatted="false">在 Android 16 以上版本中，选择实时更新芯片何时出现、轮流显示哪些数值，以及是否显示充电表情符号。可用性也取决于设备与系统通知设置。</string>
     <string name="status_bar_chip_availability_help" formatted="false">可用性也取决于设备与系统通知设置。</string>
     <string name="settings_live_update_summary">在 Android 设置中允许或屏蔽醒目显示的电池通知</string>
     <string name="settings_live_update_help">在 Android 设置中允许或屏蔽醒目显示的电池通知。</string>
@@ -257,6 +257,8 @@
     <string name="alarm_settings_help" formatted="false">您可以让 Battery Monitor 在电池达到某个条件时提醒您，例如充满电、电量低于 20% 等。</string>
     <string name="alarms_overview" formatted="false">警报概览</string>
     <string name="alarms_overview_help">八种警报类型始终可用。直接启用事件，或在电量与温度类型下使用“添加临界值”。新临界值保存后会启用。点击数值可编辑；编辑会保留开关状态。禁用的数值仍列在列表中。“删除警报”会要求确认。声音与振动依类型共用 Android 通知设置。现有重复记录会显示为单一警报；切换或删除会影响所有副本。充放电警报依照估算目标，不会控制充电。屏蔽渠道或停止监测不会改变已保存的开关。</string>
+    <string name="alarms_overview_channels_help" formatted="false">八种警报类型始终可用。直接启用事件，或在电量与温度类型下使用“添加临界值”。新临界值保存后会启用。点击数值可编辑；编辑会保留开关状态。禁用的数值仍列在列表中。“删除警报”会要求确认。声音与振动依类型共用 Android 通知设置。现有重复记录会显示为单一警报；切换或删除会影响所有副本。充放电警报依照估算目标，不会控制充电。屏蔽渠道或停止监测不会改变已保存的开关。\n
+    打开 Android 通知设置以允许或屏蔽通知，并设置主要通知及各警报类型的声音、振动与送达方式。启用警报规则不会解除通知渠道的屏蔽。</string>
     <plurals name="alarms_active_count">
         <item quantity="other">已启用 %1$d 个警报</item>
     </plurals>
@@ -290,6 +292,8 @@
     <string name="alarms_edit_threshold">编辑临界值</string>
     <string name="alarms_edit_existing">编辑现有临界值</string>
     <string name="alarms_threshold_edit_help" formatted="false">如果临界值已存在，请通过“编辑现有临界值”打开。如果编辑期间已保存的警报发生变化，请使用“刷新”，并重新打开临界值后再更改。</string>
+    <string name="alarms_threshold_edit_channels_help" formatted="false">如果临界值已存在，请通过“编辑现有临界值”打开。如果编辑期间已保存的警报发生变化，请使用“刷新”，并重新打开临界值后再更改。\n
+    打开 Android 通知设置以允许或屏蔽通知，并设置主要通知及各警报类型的声音、振动与送达方式。启用警报规则不会解除通知渠道的屏蔽。</string>
     <string name="alarms_new_enabled">添加后会启用此警报。</string>
     <string name="alarms_edit_keeps_enabled">编辑会保留当前的开关状态。</string>
     <string name="alarms_enabled">已启用</string>
@@ -411,7 +415,7 @@
     <string name="history_chart_y_fixed">Y: 固定</string>
     <string name="history_chart_y_manual">Y: 手动</string>
 
-    <string name="logs_empty" formatted="false">日志记录为空</string>
+    <string name="logs_empty" formatted="false">日志记录为空。</string>
     <string name="configure_log_filter" formatted="false">显示哪些日志项？</string>
     <string name="menu_show_seconds" formatted="false">显示秒数</string>
     <string name="menu_hide_seconds" formatted="false">隐藏秒数</string>
@@ -426,7 +430,7 @@
     <string name="pref_enable_logging_summary" formatted="false">记录电池状态变化？</string>
     <string name="pref_enable_logging_help" formatted="false">保存电池观测值与状态变更以供“历史记录”使用。可用测量值包括电量、温度、电压、原始瞬时电流与剩余电荷量。功率在显示或导出时由电压与电流计算，不会另外保存。关闭记录不会清除现有历史记录或停止时间估算。</string>
     <string name="pref_max_log_age" formatted="false">历史记录保留时间</string>
-    <string name="pref_max_log_age_help" formatted="false">启用记录时，接上电源会移除超过此期限的记录。选择“无限制”会保留记录，直到手动清除。启用自动导出时，Battery Monitor 会先导出待处理记录，再删除旧项目；导出失败时不会删除。</string>
+    <string name="pref_max_log_age_help" formatted="false">启用记录时，超过此期限的记录会在历史维护期间自动移除。选择“无限制”会保留记录，直到手动清除。启用自动导出时，Battery Monitor 会先导出待处理记录，再删除旧项目；导出失败时不会删除。</string>
     <string name="age_1_day" formatted="false">一天</string>
     <string name="age_2_days" formatted="false">两天</string>
     <string name="age_4_days" formatted="false">四天</string>
@@ -452,9 +456,9 @@
     <string name="pref_auto_log_export_format" formatted="false">导出格式</string>
     <string name="pref_auto_log_export_directory" formatted="false">更改文件夹</string>
     <string name="pref_auto_log_export_path" formatted="true">路径：%1$s</string>
-    <string name="auto_log_export_help" formatted="false">选择文件夹、频率、格式，以及建立独立档案或附加至同一档案。通常会保存上次自动导出之后的记录；新的持续使用档案则包含所有可用记录。Android 可能在闲置时延迟导出。记录功能必须维持启用。</string>
-    <string name="auto_log_export_options_help" formatted="false">导出间隔不能超过历史记录保留时间。更改文件夹需要在 Android 中授予应用访问该文件夹的权限。停用自动导出不会更改已保存的日志和现有文件。</string>
-    <string name="auto_log_export_format_help" formatted="false">CSV 适合在试算表或文字编辑器中使用。内容包括原始电流、剩余电荷量，以及使用导出时所选倍率计算的功率。JSON 保留结构化记录数据以供备份。无法取得的电流、剩余电荷量与功率单元格会留白。</string>
+    <string name="auto_log_export_help" formatted="false">选择文件夹、频率、格式，以及建立独立档案或附加至同一档案。通常会保存上次自动导出之后的记录；新的持续使用档案则包含所有可用记录。Android 可能在闲置时延迟导出。记录功能必须维持启用。\n
+    CSV 适合在试算表或文字编辑器中使用。内容包括原始电流、剩余电荷量，以及使用导出时所选倍率计算的功率。JSON 保留结构化记录数据以供备份。无法取得的电流、剩余电荷量与功率单元格会留白。\n
+    导出间隔不能超过历史记录保留时间。更改文件夹需要在 Android 中授予应用访问该文件夹的权限。停用自动导出不会更改已保存的日志和现有文件。</string>
     <string name="auto_log_export_mode_new_file" formatted="false">创建新文件</string>
     <string name="auto_log_export_mode_append" formatted="false">将新日志追加到现有文件</string>
     <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
@@ -530,6 +534,8 @@
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">系统色彩需要 Android 12 或更新版本。此设备使用 “Battery Blue”。</string>
+    <string name="settings_color_palette_unsupported_help" formatted="false">使用系统色彩或 “Battery Blue”。\n
+    系统色彩需要 Android 12 或更新版本。此设备使用 “Battery Blue”。</string>
     <string name="settings_brightness">亮度</string>
     <string name="settings_brightness_summary">依照系统，或选择浅色、深色或纯黑</string>
     <string name="settings_brightness_help">依照系统，或选择浅色、深色或纯黑。</string>
@@ -546,7 +552,7 @@
     不受限制地运行可能会增加后台耗电量。您可以稍后在 Android “设置” → “应用” → “Battery Monitor” → “电池”中更改此设置。菜单名称因设备而异。</string>
     <string name="pref_cat_autostart" formatted="false">自启动</string>
     <string name="pref_autostart_at_boot" formatted="false">开机自启动</string>
-    <string name="pref_autostart_at_boot_summary" formatted="false">设备启动时启动 Battery Monitor：</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">设备启动时启动 Battery Monitor</string>
     <string name="pref_autostart_at_boot_help" formatted="false">“始终”会在设备重启后开始后台监测。“从不”会略过开机自动启动。“关机时运行”依照您上次在 Battery Monitor 中开始或停止监测的状态。关闭应用或结束其程序不算停止监测。小组件不会覆盖此选择。</string>
     <string name="boot_pref_always" formatted="false">始终</string>
     <string name="boot_pref_never" formatted="false">从不</string>
@@ -568,7 +574,8 @@
     <string name="diag_status_waiting_permission" formatted="false">正在等待 Shizuku 权限…</string>
     <string name="diag_status_no_stats" formatted="false">此设备当前没有可用的高级电池统计。</string>
     <string name="diag_value_not_available" formatted="false">不可用</string>
-    <string name="diag_help_overview" formatted="false">在“应用运行”、“电池”、“充电”与“原始数据”分页中整合监测可靠性、保存的预测数据与电池数据。Android 数据无需 root 即可取得。额外设备数据取决于设备与 Battery Monitor 可用的权限。</string>
+    <string name="diag_help_overview" formatted="false">在“应用运行”、“电池”、“充电”与“原始数据”分页中整合监测可靠性、保存的预测数据与电池数据。Android 数据无需 root 即可取得。额外设备数据取决于设备与 Battery Monitor 可用的权限。\n
+    打开“诊断”时会自动收集可用的 Android 读数。点击数值可检查并复制其读数、来源与时间。设备原始键与数值可在“原始数据”中查看。启用特殊权限访问，还可使用 Root 或 Shizuku。</string>
     <string name="diag_section_counters" formatted="false">计数器</string>
     <string name="diag_help_counters" formatted="false">电池读数会以标签与格式显示：剩余电荷量为 mAh、电流为 mA、能量为 mWh、电压为 V、温度为所菜单位，功率为 W。电流倍率也适用于计算功率。平均电流与循环次数取决于设备支援。</string>
     <string name="diag_field_charge_counter" formatted="false">剩余电量估算</string>
@@ -589,7 +596,8 @@
     <string name="diag_capacity_low">低</string>
     <string name="diag_capacity_high">高</string>
     <string name="diag_section_charging" formatted="false">充电</string>
-    <string name="diag_help_charging" formatted="false">会显示与当前充电路径相关的数值，例如最大充电电流或电压、充电策略、充电状态和容量级别。这些字段可能会随着充电器和充电模式变化。</string>
+    <string name="diag_help_charging" formatted="false">会显示与当前充电路径相关的数值，例如最大充电电流或电压、充电策略、充电状态和容量级别。这些字段可能会随着充电器和充电模式变化。\n
+    此估算使用 Battery Monitor 设置的预测方法。其目标不会控制充电或关机。</string>
     <string name="diag_field_charge_time_remaining" formatted="false">剩余充电时间</string>
     <string name="diag_field_max_charging_current" formatted="false">最大充电电流</string>
     <string name="diag_field_max_charging_voltage" formatted="false">最大充电电压</string>
@@ -674,12 +682,15 @@
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">缺少权限。点按以打开设置</string>
     <string name="diagnostics_battery_optimization" formatted="false">电池优化</string>
     <string name="diagnostics_battery_optimization_help" formatted="false">受到限制时打开 Android 电池优化设置。如果已不受限制，点按会确认此状态。</string>
+    <string name="monitoring_battery_optimization_help" formatted="false">受到限制时打开 Android 电池优化设置。如果已不受限制，点按会确认此状态。\n
+    允许在后台不受限制地运行，可提高监测的可靠性。Android 电池优化可能会延迟更新和警报。\n
+    \n
+    不受限制地运行可能会增加后台耗电量。您可以稍后在 Android “设置” → “应用” → “Battery Monitor” → “电池”中更改此设置。菜单名称因设备而异。</string>
     <string name="diagnostics_unrestricted" formatted="false">不受限制</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">受限制。点按以允许可靠的后台监控</string>
     <string name="diagnostics_vendor_settings" formatted="false">制造商设置</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">打开此设备提供的其他后台活动或自动启动设置</string>
-    <string name="diagnostics_vendor_settings_help" formatted="false">打开此设备提供的其他后台活动或自动启动设置。</string>
-    <string name="diagnostics_vendor_availability_help" formatted="false">“制造商设置”仅在支持的设备上可用。</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">打开其他后台活动或自动启动设置。仅在支持的设备上可用。</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">后台活动帮助</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">在 Don’t Kill My App 上打开设备专用指南</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">在 Don’t Kill My App 上打开设备专用指南。</string>
@@ -743,6 +754,8 @@
 
     <string name="charging_diagnostics_title" formatted="false">OEM 充电上限诊断</string>
     <string name="charging_diagnostics_help_overview" formatted="false">打开快照和比较工具，调查 Battery Monitor 如何检测设备的充电上限。准备说明可在 OEM 诊断屏幕本身的帮助中找到。</string>
+    <string name="charging_tools_help_overview" formatted="false">打开快照和比较工具，调查 Battery Monitor 如何检测设备的充电上限。准备说明可在 OEM 诊断屏幕本身的帮助中找到。\n
+    使用特权访问可能会获得更多诊断信息。请授予 Shizuku 或 root 访问权限，并在“设置” → “高级” → “使用特权访问”中启用特权访问，以生成更有用的 OEM 充电上限报告。</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">为了生成有用的报告，请先打开“帮助”并按照准备步骤操作，再捕获快照。</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">使用特权访问可能会获得更多诊断信息。请授予 Shizuku 或 root 访问权限，并在“设置” → “高级” → “使用特权访问”中启用特权访问，以生成更有用的 OEM 充电上限报告。</string>
     <string name="charging_diagnostics_capture" formatted="false">捕获快照</string>
@@ -771,13 +784,14 @@
     <string name="charging_diagnostics_clear_summary" formatted="false">删除本地保存的 OEM 充电快照</string>
     <string name="charging_diagnostics_clear_help" formatted="false">删除本地保存的 OEM 充电快照。</string>
     <string name="charging_diagnostics_cleared" formatted="false">已删除充电快照</string>
-    <string name="charging_diagnostics_help_steps" formatted="false">1. 断开手机与充电器的连接，并在捕获配置快照期间保持断开。快照之间只更改制造商的充电保护设置。\n
+    <string name="charging_diagnostics_help_steps" formatted="false">1. 断开设备与充电器的连接，并在捕获配置快照期间保持断开。快照之间只更改制造商的充电保护设置。\n
     2. 关闭充电保护，等待 2–5\u00A0秒，然后捕获快照。\n
     3. 选择固定上限，等待 2–5\u00A0秒，然后捕获快照。如果可以，请使用另一个上限重复操作。\n
     4. 启用自适应、智能或定时充电，等待 2–5\u00A0秒，然后捕获快照。\n
     5. 如果配置比较无法得出明确结果，可以选择在充电时重复此过程，以捕获仅在运行时出现的状态。\n
     6. 创建并检查比较报告。数据会经过筛选，可能敏感的值会被隐藏，但发送前仍请检查完整报告。</string>
-    <string name="charging_diagnostics_help_contact" formatted="false">查看报告后，请复制或保存，然后通过电子邮件发送至 <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>。</string>
+    <string name="charging_report_privacy_help" formatted="false">默认不包含。这些数据可能含有个人信息。复制或保存前请检查预览。\n
+    查看报告后，请复制或保存，然后通过电子邮件发送至 <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>。</string>
 
     <string name="pref_backup_restore" formatted="false">备份与恢复</string>
     <string name="backup_restore_settings_summary" formatted="false">备份、恢复和传输应用设置及电池数据</string>
@@ -791,9 +805,9 @@
     <string name="pref_import_general_backup_help" formatted="false">选择现有的常规备份 ZIP，以及要恢复的可用数据类别。较新版本应用创建的备份可能不兼容，而恢复其他设备的记录或预测数据可能导致估计不准确。如果只完成部分恢复，请先检查报告的类别，再重试。 会还原所选类别，未选中的类别则会保留。还原警报会替换当前警报。对于日志，请选择添加日志或替换当前历史记录。</string>
     <string name="pref_import_general_backup_summary" formatted="false">从常规备份 ZIP 文件恢复所选数据</string>
     <string name="general_backup_restore_message" formatted="false">选择要恢复的内容。</string>
-    <string name="general_backup_device_data_warning_scope" formatted="false">日志和预测数据</string>
+    <string name="general_backup_device_data_warning">日志和预测数据属于收集数据的设备。将其导入其他设备可能会导致错误的预测或应用出现其他意外行为。</string>
     <string name="general_backup_imported" formatted="false">常规备份已成功导入。</string>
-    <string name="invalid_general_backup_file" formatted="false">无效或不兼容的常规备份文件</string>
+    <string name="invalid_general_backup_file" formatted="false">无效或不兼容的常规备份文件。</string>
     <string name="settings_restore_partial">部分数据无法恢复。已成功恢复：%1$s。可能仅部分恢复的数据：%2$s。请先检查这些项目后再试一次。</string>
     <string name="settings_restore_none">无</string>
     <string name="pref_export_settings" formatted="false">导出设置</string>
@@ -804,7 +818,7 @@
     <string name="pref_import_settings_help" formatted="false">恢复已保存的偏好设置。此操作不会恢复历史记录或警报记录。</string>
     <string name="pref_import_settings_summary" formatted="false">从文件恢复设置</string>
     <string name="settings_imported" formatted="false">设置已成功导入。</string>
-    <string name="invalid_settings_file" formatted="false">无效的设置文件</string>
+    <string name="invalid_settings_file" formatted="false">无效的设置文件。</string>
     <string name="settings_file_version_warning" formatted="false">此文件由较新版本的应用创建。导入可能会导致意外行为。仍要继续吗？</string>
     <string name="pref_export_alarms" formatted="false">导出警报</string>
     <string name="pref_export_alarms_help" formatted="false">保存你的警报。JSON 文件包含警报规则，不包含由 Android 管理的通知渠道或声音设置。</string>
@@ -814,7 +828,7 @@
     <string name="pref_import_alarms_help" formatted="false">使用备份中的警报替换所有当前警报。选择警报备份 JSON 文件。</string>
     <string name="pref_import_alarms_summary" formatted="false">用文件中的警报替换当前警报</string>
     <string name="alarms_imported" formatted="false">警报已成功导入。</string>
-    <string name="invalid_alarms_file" formatted="false">无效的警报文件</string>
+    <string name="invalid_alarms_file" formatted="false">无效的警报文件。</string>
     <string name="pref_backup_device_data" formatted="false">备份设备特定数据</string>
     <string name="device_data_logs" formatted="false">日志</string>
     <string name="device_data_predictor" formatted="false">预测数据</string>
@@ -828,8 +842,8 @@
     <string name="pref_import_device_data_summary" formatted="false">从文件恢复日志和预测数据</string>
     <string name="device_data_imported" formatted="false">设备特定数据已成功导入</string>
     <string name="device_data_imported_dialog" formatted="false">设备特定数据已成功导入。</string>
-    <string name="invalid_device_data_file" formatted="false">无效的设备特定数据文件</string>
-    <string name="device_data_file_empty" formatted="false">此文件不包含支持的设备特定数据</string>
+    <string name="invalid_device_data_file" formatted="false">无效的设备特定数据文件。</string>
+    <string name="device_data_file_empty" formatted="false">此文件不包含支持的设备特定数据。</string>
     <string name="pref_import_logs_csv" formatted="false">从 CSV 导入日志</string>
     <string name="pref_import_logs_csv_summary" formatted="false">从导出的 CSV 文件导入日志</string>
     <string name="csv_logs_import_help" formatted="false">从 Battery Monitor 导出的 CSV 导入记录，并选择加入或替换现有记录。较旧的导出可能没有电流或剩余电荷量；旧项目的这些测量值会留白。JSON 备份可保留结构化数据，更适合用于恢复。</string>
@@ -840,7 +854,7 @@
     <string name="log_import_replace" formatted="false">替换现有日志</string>
     <string name="csv_logs_imported" formatted="false">CSV 日志已成功导入</string>
     <string name="csv_logs_imported_dialog" formatted="false">CSV 日志已成功导入。</string>
-    <string name="invalid_csv_logs_file" formatted="false">无效或不兼容的 CSV 日志文件</string>
+    <string name="invalid_csv_logs_file" formatted="false">无效或不兼容的 CSV 日志文件。</string>
     <string name="settings_reset_title">恢复默认设置</string>
     <string name="settings_reset_summary">保留历史记录、警报与已学习的估算，并重置应用偏好</string>
     <string name="settings_reset_help" formatted="false">确认后重置应用偏好。历史记录、警报、已学习的估算、小组件设置及后台监测的执行状态都会保留。系统权限与通知渠道设置不会重置。</string>

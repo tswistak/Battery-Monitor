@@ -96,7 +96,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Vermenigvuldiger</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Sommige apparaten rapporteren onverwachte eenheden of tekens. Vermenigvuldig de gerapporteerde waarde hier om het weergegeven resultaat te corrigeren. Gebruik “Automatisch detecteren” om te proberen de stroomvermenigvuldiger af te leiden uit een batterijmeting.\n
     \n
-    Als globale richtlijn voor een telefoon gebruikt Android een positieve waarde tijdens opladen en een negatieve waarde tijdens ontladen. Actief opladen ligt vaak rond +500 tot +5000\u00A0mA, terwijl normaal ontladen vaak rond -100 tot -3000\u00A0mA ligt. Waarden rond nul kunnen normaal zijn wanneer de batterij bijna vol is of de telefoon niet actief is. Als de grootte ongeveer 1000 keer te klein of te groot lijkt, of het teken is omgekeerd, pas dan de vermenigvuldiger aan.</string>
+    Als globale richtlijn voor een apparaat gebruikt Android een positieve waarde tijdens opladen en een negatieve waarde tijdens ontladen. Actief opladen ligt vaak rond +500 tot +5000\u00A0mA, terwijl normaal ontladen vaak rond -100 tot -3000\u00A0mA ligt. Waarden rond nul kunnen normaal zijn wanneer de batterij bijna vol is of het apparaat niet actief is. Als de grootte ongeveer 1000 keer te klein of te groot lijkt, of het teken is omgekeerd, pas dan de vermenigvuldiger aan.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Automatisch detecteren</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatische detectie is niet beschikbaar voor de huidige batterijstatus of meting</string>
     <string name="pref_battery_current_multiplier_detection_result">De vermenigvuldiger is automatisch ingesteld op %1$d</string>
@@ -150,7 +150,9 @@
     <string name="live_updates_notif_chan_name" formatted="false">Live-updates</string>
     <string name="notification_settings" formatted="false">Hoofdmelding</string>
     <string name="notification_settings_summary" formatted="false">Configureer meldingsinhoud, statusbalkpictogram en Live Update-chip</string>
-    <string name="notification_settings_help" formatted="false">Je kunt de inhoud en het uiterlijk van de melding aanpassen.</string>
+    <string name="notification_settings_help" formatted="false">Je kunt de inhoud en het uiterlijk van de melding aanpassen.\n
+    Kies of het meldingsicoon het batterijpercentage of de temperatuur toont, of het eenheidssymbool in het icoon wordt weergegeven en of laden een apart icoon gebruikt. Vanaf Android 16 werkt het statusbalkpictogram mogelijk niet op elke variant van het besturingssysteem.\n
+    Vanaf Android 16 kun je kiezen wanneer de Live Update-chip verschijnt, welke waarden deze afwisselend toont en of een laad-emoji wordt weergegeven. De beschikbaarheid hangt ook af van het apparaat en de systeemmeldingsinstellingen.</string>
     <string name="notification_channels_help" formatted="false">Open de Android-meldingsinstellingen om meldingen toe te staan of te blokkeren en geluid, trillen en bezorging in te stellen voor de hoofdmelding en elk alarmtype. Een alarmregel inschakelen heft een geblokkeerd meldingskanaal niet op.</string>
     <string name="app_notifs_disabled_summary" formatted="false">Je hebt alle meldingen voor deze app uitgeschakeld. Schakel ze in om toegang te krijgen tot deze instellingen</string>
     <string name="main_notifs_disabled_summary" formatted="false">Je hebt de hoofdmelding voor deze app uitgeschakeld. Schakel die in om toegang te krijgen tot deze instellingen</string>
@@ -197,7 +199,6 @@
     <string name="pref_expanded_notification_help" formatted="false">Als dit is ingeschakeld, toont de uitgevouwen hoofdmelding “Tijd resterend”, “Tijd sinds wijziging in status” en elke waarde van “Gezondheid” op een eigen regel met een label, in plaats van de samenvatting op één regel.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">Statusicoon</string>
-    <string name="status_bar_icon_settings_help" formatted="false">Kies of het meldingsicoon het batterijpercentage of de temperatuur toont, of het eenheidssymbool in het icoon wordt weergegeven en of laden een apart icoon gebruikt. Vanaf Android 16 werkt het statusbalkpictogram mogelijk niet op elke variant van het besturingssysteem.</string>
     <string name="status_bar_icon_availability_help" formatted="false">Vanaf Android 16 werkt het statusbalkpictogram mogelijk niet op elke variant van het besturingssysteem.</string>
     <string name="pref_icon_content" formatted="false">Icooninhoud</string>
     <string name="pref_icon_content_help" formatted="false">Kies of het statusbalkicoon batterijpercentage of batterijtemperatuur toont. Temperatuur volgt je gekozen eenheid.</string>
@@ -210,7 +211,6 @@
     <string name="pref_indicate_charging_summary" formatted="false">Icoon veranderen tijdens opladen</string>
     <string name="pref_indicate_charging_help" formatted="false">Het laadicoon kan een bliksemschicht onder het getal tonen. Schakel dit uit als je tijdens laden en ontladen hetzelfde icoon wilt.</string>
     <string name="status_bar_chip_settings" formatted="false">Statusbalkchip</string>
-    <string name="status_bar_chip_settings_help" formatted="false">Vanaf Android 16 kun je kiezen wanneer de Live Update-chip verschijnt, welke waarden deze afwisselend toont en of een laad-emoji wordt weergegeven. De beschikbaarheid hangt ook af van het apparaat en de systeemmeldingsinstellingen.</string>
     <string name="status_bar_chip_availability_help" formatted="false">De beschikbaarheid hangt ook af van het apparaat en de systeemmeldingsinstellingen.</string>
     <string name="settings_live_update_summary">Prominente batterijmeldingen toestaan of blokkeren in de Android-instellingen</string>
     <string name="settings_live_update_help">Prominente batterijmeldingen toestaan of blokkeren in de Android-instellingen.</string>
@@ -260,6 +260,8 @@
     <string name="alarm_settings_help" formatted="false">Je kunt een melding ontvangen als je batterijniveau onder een bepaald punt komt.</string>
     <string name="alarms_overview" formatted="false">Overzicht van alarmen</string>
     <string name="alarms_overview_help">Alle acht alarmtypen zijn altijd beschikbaar. Schakel gebeurtenissen direct in of gebruik “Drempel toevoegen” onder een laad- of temperatuurtype. Nieuwe drempels worden na opslaan ingeschakeld. Tik op een waarde om deze te bewerken; bewerken behoudt de aan-uitstatus. Uitgeschakelde waarden blijven in de lijst staan. “Alarm verwijderen” vraagt om bevestiging. Geluid en trillen worden per type gedeeld in de Android-meldingsinstellingen. Bestaande dubbele vermeldingen verschijnen als één logisch alarm; schakelen of verwijderen beïnvloedt alle kopieën. Laad- en ontlaadalarmen volgen schattingsdoelen en regelen het opladen niet. Een geblokkeerd kanaal of gestopte bewaking verandert opgeslagen schakelaars niet.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Alle acht alarmtypen zijn altijd beschikbaar. Schakel gebeurtenissen direct in of gebruik “Drempel toevoegen” onder een laad- of temperatuurtype. Nieuwe drempels worden na opslaan ingeschakeld. Tik op een waarde om deze te bewerken; bewerken behoudt de aan-uitstatus. Uitgeschakelde waarden blijven in de lijst staan. “Alarm verwijderen” vraagt om bevestiging. Geluid en trillen worden per type gedeeld in de Android-meldingsinstellingen. Bestaande dubbele vermeldingen verschijnen als één logisch alarm; schakelen of verwijderen beïnvloedt alle kopieën. Laad- en ontlaadalarmen volgen schattingsdoelen en regelen het opladen niet. Een geblokkeerd kanaal of gestopte bewaking verandert opgeslagen schakelaars niet.\n
+    Open de Android-meldingsinstellingen om meldingen toe te staan of te blokkeren en geluid, trillen en bezorging in te stellen voor de hoofdmelding en elk alarmtype. Een alarmregel inschakelen heft een geblokkeerd meldingskanaal niet op.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm ingeschakeld</item>
         <item quantity="other">%1$d alarmen ingeschakeld</item>
@@ -294,6 +296,8 @@
     <string name="alarms_edit_threshold">Drempel bewerken</string>
     <string name="alarms_edit_existing">Bestaande drempel bewerken</string>
     <string name="alarms_threshold_edit_help" formatted="false">Als een drempel al bestaat, open je deze met “Bestaande drempel bewerken”. Als opgeslagen alarmen tijdens het bewerken veranderen, gebruik je “Vernieuwen” en open je de drempel opnieuw voordat je deze wijzigt.</string>
+    <string name="alarms_threshold_edit_channels_help" formatted="false">Als een drempel al bestaat, open je deze met “Bestaande drempel bewerken”. Als opgeslagen alarmen tijdens het bewerken veranderen, gebruik je “Vernieuwen” en open je de drempel opnieuw voordat je deze wijzigt.\n
+    Open de Android-meldingsinstellingen om meldingen toe te staan of te blokkeren en geluid, trillen en bezorging in te stellen voor de hoofdmelding en elk alarmtype. Een alarmregel inschakelen heft een geblokkeerd meldingskanaal niet op.</string>
     <string name="alarms_new_enabled">Het alarm wordt ingeschakeld wanneer het wordt toegevoegd.</string>
     <string name="alarms_edit_keeps_enabled">Bewerken behoudt de huidige aan-uitinstelling.</string>
     <string name="alarms_enabled">Ingeschakeld</string>
@@ -415,7 +419,7 @@
     <string name="history_chart_y_fixed">Y: Vast</string>
     <string name="history_chart_y_manual">Y: Handmatig</string>
 
-    <string name="logs_empty" formatted="false">Logboeken zijn leeg</string>
+    <string name="logs_empty" formatted="false">Logboeken zijn leeg.</string>
     <string name="configure_log_filter" formatted="false">Welke logitems laten zien?</string>
     <string name="menu_show_seconds" formatted="false">Seconden tonen</string>
     <string name="menu_hide_seconds" formatted="false">Seconden verbergen</string>
@@ -430,7 +434,7 @@
     <string name="pref_enable_logging_summary" formatted="false">Veranderingen in batterijstatus opnemen in logboek</string>
     <string name="pref_enable_logging_help" formatted="false">Sla batterijwaarnemingen en statuswijzigingen op voor “Geschiedenis”. Beschikbare metingen omvatten niveau, temperatuur, spanning, oorspronkelijke momentane stroom en resterende lading. Vermogen wordt bij weergave of export berekend uit spanning en stroom; het wordt niet apart opgeslagen. Registratie uitschakelen wist bestaande geschiedenis niet en stopt tijdsschattingen niet.</string>
     <string name="pref_max_log_age" formatted="false">Maximale logboek leeftijd</string>
-    <string name="pref_max_log_age_help" formatted="false">Als registratie is ingeschakeld, verwijdert aansluiten op stroom logboeken die ouder zijn dan deze limiet. “Geen limiet” bewaart ze totdat je ze handmatig wist. Als automatische export is ingeschakeld, exporteert Battery Monitor nog niet geëxporteerde logboeken voordat oude vermeldingen worden verwijderd; een mislukte export voorkomt die verwijdering.</string>
+    <string name="pref_max_log_age_help" formatted="false">Als registratie is ingeschakeld, worden logboeken die ouder zijn dan deze limiet automatisch verwijderd tijdens het onderhoud van de geschiedenis. “Geen limiet” bewaart ze totdat je ze handmatig wist. Als automatische export is ingeschakeld, exporteert Battery Monitor nog niet geëxporteerde logboeken voordat oude vermeldingen worden verwijderd; een mislukte export voorkomt die verwijdering.</string>
     <string name="age_1_day" formatted="false">1\u00A0dag</string>
     <string name="age_2_days" formatted="false">2\u00A0dagen</string>
     <string name="age_4_days" formatted="false">4\u00A0dagen</string>
@@ -456,9 +460,9 @@
     <string name="pref_auto_log_export_format" formatted="false">Exportindeling</string>
     <string name="pref_auto_log_export_directory" formatted="false">Map wijzigen</string>
     <string name="pref_auto_log_export_path" formatted="true">Pad: %1$s</string>
-    <string name="auto_log_export_help" formatted="false">Kies een map, frequentie, formaat en of je aparte bestanden wilt maken of aan één bestand wilt toevoegen. Exports slaan normaal logboeken sinds de vorige automatische export op; een nieuw doorlopend bestand bevat alle beschikbare logboeken. Android kan exports bij inactiviteit uitstellen. Registratie moet ingeschakeld blijven.</string>
-    <string name="auto_log_export_options_help" formatted="false">Het exportinterval mag de bewaartermijn van logboeken niet overschrijden. Als je de map wijzigt, moet je de app in Android toegang tot die map geven. Automatische export uitschakelen laat opgeslagen logboeken en bestaande bestanden ongewijzigd.</string>
-    <string name="auto_log_export_format_help" formatted="false">CSV is handig in een spreadsheet of teksteditor. Het bevat de oorspronkelijke stroom, resterende lading en vermogen berekend met de factor die bij export is gekozen. JSON bewaart gestructureerde logboekgegevens voor back-ups. Cellen voor niet-beschikbare stroom, resterende lading en vermogen blijven leeg.</string>
+    <string name="auto_log_export_help" formatted="false">Kies een map, frequentie, formaat en of je aparte bestanden wilt maken of aan één bestand wilt toevoegen. Exports slaan normaal logboeken sinds de vorige automatische export op; een nieuw doorlopend bestand bevat alle beschikbare logboeken. Android kan exports bij inactiviteit uitstellen. Registratie moet ingeschakeld blijven.\n
+    CSV is handig in een spreadsheet of teksteditor. Het bevat de oorspronkelijke stroom, resterende lading en vermogen berekend met de factor die bij export is gekozen. JSON bewaart gestructureerde logboekgegevens voor back-ups. Cellen voor niet-beschikbare stroom, resterende lading en vermogen blijven leeg.\n
+    Het exportinterval mag de bewaartermijn van logboeken niet overschrijden. Als je de map wijzigt, moet je de app in Android toegang tot die map geven. Automatische export uitschakelen laat opgeslagen logboeken en bestaande bestanden ongewijzigd.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Nieuw bestand maken</string>
     <string name="auto_log_export_mode_append" formatted="false">Nieuwe logboeken aan bestaand bestand toevoegen</string>
     <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
@@ -535,6 +539,8 @@
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">Systeemkleuren vereisen Android 12 of nieuwer. Op dit apparaat wordt “Battery Blue” gebruikt.</string>
+    <string name="settings_color_palette_unsupported_help" formatted="false">Systeemkleuren of “Battery Blue” gebruiken.\n
+    Systeemkleuren vereisen Android 12 of nieuwer. Op dit apparaat wordt “Battery Blue” gebruikt.</string>
     <string name="settings_brightness">Helderheid</string>
     <string name="settings_brightness_summary">Systeem volgen of licht, donker of echt zwart kiezen</string>
     <string name="settings_brightness_help">Systeem volgen of licht, donker of echt zwart kiezen.</string>
@@ -551,7 +557,7 @@
     Onbeperkte uitvoering kan het batterijverbruik op de achtergrond verhogen. Je kunt dit later wijzigen via Android-“instellingen” → “Apps” → “Battery Monitor” → “Batterij”. Menunamen verschillen per apparaat.</string>
     <string name="pref_cat_autostart" formatted="false">Automatisch starten</string>
     <string name="pref_autostart_at_boot" formatted="false">Automatisch starten bij inschakelen</string>
-    <string name="pref_autostart_at_boot_summary" formatted="false">Starten als het apparaat wordt ingeschakeld:</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">Starten als het apparaat wordt ingeschakeld</string>
     <string name="pref_autostart_at_boot_help" formatted="false">“Altijd” start achtergrondbewaking na een herstart van het apparaat. “Nooit” slaat automatisch starten bij opstarten over. “Wanneer ingeschakeld bij afsluiten” volgt of je de bewaking voor het laatst in Battery Monitor hebt gestart of gestopt. De app sluiten of het proces beëindigen telt niet als de bewaking stoppen. Widgets veranderen deze keuze niet.</string>
     <string name="boot_pref_always" formatted="false">Altijd</string>
     <string name="boot_pref_never" formatted="false">Nooit</string>
@@ -573,7 +579,8 @@
     <string name="diag_status_waiting_permission" formatted="false">Wachten op Shizuku-toestemming…</string>
     <string name="diag_status_no_stats" formatted="false">Er zijn momenteel geen geavanceerde batterijstatistieken beschikbaar op dit apparaat.</string>
     <string name="diag_value_not_available" formatted="false">Niet beschikbaar</string>
-    <string name="diag_help_overview" formatted="false">Combineert betrouwbaarheid van de bewaking, opgeslagen voorspellingsgegevens en batterijgegevens in de tabbladen “Appwerking”, “Batterij”, “Laden” en “Ruwe gegevens”. Android-gegevens zijn zonder root beschikbaar. Extra apparaatgegevens hangen af van het apparaat en de rechten die Battery Monitor heeft.</string>
+    <string name="diag_help_overview" formatted="false">Combineert betrouwbaarheid van de bewaking, opgeslagen voorspellingsgegevens en batterijgegevens in de tabbladen “Appwerking”, “Batterij”, “Laden” en “Ruwe gegevens”. Android-gegevens zijn zonder root beschikbaar. Extra apparaatgegevens hangen af van het apparaat en de rechten die Battery Monitor heeft.\n
+    Beschikbare Android-metingen worden automatisch verzameld zolang “Diagnostiek” open is. Tik op een waarde om de meting, bron en tijd te bekijken en te kopiëren. Oorspronkelijke apparaatsleutels en -waarden staan onder “Ruwe gegevens”. Schakel toegang met extra rechten in om ook root of Shizuku te gebruiken.</string>
     <string name="diag_section_counters" formatted="false">Tellers</string>
     <string name="diag_help_counters" formatted="false">Batterijmetingen worden gelabeld en opgemaakt als resterende lading in mAh, stroom in mA, energie in mWh, spanning in V, temperatuur in de gekozen eenheid en vermogen in W. De stroomfactor geldt ook voor berekend vermogen. Gemiddelde stroom en aantal cycli hangen af van apparaatondersteuning.</string>
     <string name="diag_field_charge_counter" formatted="false">Geschatte resterende lading</string>
@@ -594,7 +601,8 @@
     <string name="diag_capacity_low">Laag</string>
     <string name="diag_capacity_high">Hoog</string>
     <string name="diag_section_charging" formatted="false">Laden</string>
-    <string name="diag_help_charging" formatted="false">Toont waarden die horen bij het actieve laadpad, zoals maximale laadstroom of laadspanning, laadbeleid, laadstatus en capaciteitsniveau. Deze velden kunnen verschillen per lader en laadmodus.</string>
+    <string name="diag_help_charging" formatted="false">Toont waarden die horen bij het actieve laadpad, zoals maximale laadstroom of laadspanning, laadbeleid, laadstatus en capaciteitsniveau. Deze velden kunnen verschillen per lader en laadmodus.\n
+    Deze schatting gebruikt de ingestelde voorspellingsmethode van Battery Monitor. Het doel ervan regelt het opladen of afsluiten niet.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Resterende laadtijd</string>
     <string name="diag_field_max_charging_current" formatted="false">Maximale laadstroom</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Maximale laadspanning</string>
@@ -651,7 +659,7 @@
     <string name="diagnostics" formatted="false">Diagnostiek</string>
     <string name="diagnostics_summary" formatted="false">Controleer machtigingen en betrouwbaarheid van bewaking en maak een rapport voor probleemoplossing</string>
     <string name="diag_overview">Appwerking</string>
-    <string name="diagnostics_help_overview" formatted="false">Controleert rechten en betrouwbaarheid van de bewaking. Gebruik de bediening om bewaking te starten of stoppen, debugregistratie te wijzigen, instellingen voor batterijoptimalisatie en meldingen te openen of een probleemrapport te maken. Niet elke ontbrekende meting wijst op een rechtenprobleem; sommige apparaten leveren deze niet.</string>
+    <string name="diagnostics_help_overview" formatted="false">Controleer rechten en betrouwbaarheid van de bewaking. Gebruik de bediening om bewaking te starten of stoppen, debugregistratie te wijzigen, instellingen voor batterijoptimalisatie en meldingen te openen of een probleemrapport te maken. Niet elke ontbrekende meting wijst op een rechtenprobleem; sommige apparaten leveren deze niet.</string>
     <string name="diagnostics_monitoring" formatted="false">Achtergrondbewaking</string>
     <string name="diag_monitor_operation">Werking van de bewaking</string>
     <string name="diag_heartbeat">Laatste activiteitssignaal</string>
@@ -679,12 +687,15 @@
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Machtiging ontbreekt. Tik om instellingen te openen</string>
     <string name="diagnostics_battery_optimization" formatted="false">Batterijoptimalisatie</string>
     <string name="diagnostics_battery_optimization_help" formatted="false">Open de Android-instellingen voor batterijoptimalisatie wanneer er beperkingen zijn. Als er al geen beperkingen zijn, bevestigt tikken die status.</string>
+    <string name="monitoring_battery_optimization_help" formatted="false">Open de Android-instellingen voor batterijoptimalisatie wanneer er beperkingen zijn. Als er al geen beperkingen zijn, bevestigt tikken die status.\n
+    Onbeperkte uitvoering op de achtergrond kan de betrouwbaarheid van de bewaking verbeteren. Batterijoptimalisatie van Android kan updates en alarmen vertragen.\n
+    \n
+    Onbeperkte uitvoering kan het batterijverbruik op de achtergrond verhogen. Je kunt dit later wijzigen via Android-“instellingen” → “Apps” → “Battery Monitor” → “Batterij”. Menunamen verschillen per apparaat.</string>
     <string name="diagnostics_unrestricted" formatted="false">Onbeperkt</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Beperkt. Tik om betrouwbare achtergrondbewaking toe te staan</string>
     <string name="diagnostics_vendor_settings" formatted="false">Fabrikantinstellingen</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Open extra instellingen voor achtergrondactiviteit of automatisch starten op dit apparaat</string>
-    <string name="diagnostics_vendor_settings_help" formatted="false">Open extra instellingen voor achtergrondactiviteit of automatisch starten op dit apparaat.</string>
-    <string name="diagnostics_vendor_availability_help" formatted="false">“Fabrikantinstellingen” zijn alleen beschikbaar op ondersteunde apparaten.</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Open extra instellingen voor achtergrondactiviteit of automatisch starten. Alleen beschikbaar op ondersteunde apparaten.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Hulp bij achtergrondactiviteit</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Open apparaatspecifieke uitleg op Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">Open apparaatspecifieke uitleg op Don’t Kill My App.</string>
@@ -748,6 +759,8 @@
 
     <string name="charging_diagnostics_title" formatted="false">Diagnose van OEM-laadlimiet</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Open de opname- en vergelijkingshulpmiddelen om te onderzoeken hoe Battery Monitor de laadlimiet van het apparaat herkent. De voorbereidingsinstructies staan in de eigen hulp van het OEM-diagnosescherm.</string>
+    <string name="charging_tools_help_overview" formatted="false">Open de opname- en vergelijkingshulpmiddelen om te onderzoeken hoe Battery Monitor de laadlimiet van het apparaat herkent. De voorbereidingsinstructies staan in de eigen hulp van het OEM-diagnosescherm.\n
+    Met bevoorrechte toegang is mogelijk meer diagnostische informatie beschikbaar. Verleen toegang via Shizuku of root en schakel bevoorrechte toegang in via “Instellingen” → “Geavanceerd” → “Toegang met extra rechten gebruiken” voor een bruikbaarder rapport over OEM-laadlimieten.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Open voor een bruikbaar rapport “Hulp” en volg de voorbereidingsstappen voordat u momentopnamen maakt.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Met bevoorrechte toegang is mogelijk meer diagnostische informatie beschikbaar. Verleen toegang via Shizuku of root en schakel bevoorrechte toegang in via “Instellingen” → “Geavanceerd” → “Toegang met extra rechten gebruiken” voor een bruikbaarder rapport over OEM-laadlimieten.</string>
     <string name="charging_diagnostics_capture" formatted="false">Momentopname maken</string>
@@ -777,13 +790,14 @@
     <string name="charging_diagnostics_clear_summary" formatted="false">Lokaal opgeslagen OEM-laadmomentopnamen verwijderen</string>
     <string name="charging_diagnostics_clear_help" formatted="false">Lokaal opgeslagen OEM-laadmomentopnamen verwijderen.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Laadmomentopnamen verwijderd</string>
-    <string name="charging_diagnostics_help_steps" formatted="false">1. Koppel de telefoon los en houd deze losgekoppeld tijdens de configuratieopnamen. Wijzig tussen de opnamen alleen de laadbeschermingsinstelling van de fabrikant.\n
+    <string name="charging_diagnostics_help_steps" formatted="false">1. Koppel het apparaat los en houd dit losgekoppeld tijdens de configuratieopnamen. Wijzig tussen de opnamen alleen de laadbeschermingsinstelling van de fabrikant.\n
     2. Schakel laadbescherming uit, wacht 2–5\u00A0seconden en maak een momentopname.\n
     3. Kies een vaste limiet, wacht 2–5\u00A0seconden en maak een opname. Herhaal indien mogelijk met een andere limiet.\n
     4. Schakel adaptief, slim of gepland laden in, wacht 2–5\u00A0seconden en maak een opname.\n
     5. Als de configuratievergelijking geen duidelijk resultaat oplevert, kunt u de reeks desgewenst tijdens het opladen herhalen om toestanden vast te leggen die alleen tijdens gebruik zichtbaar zijn.\n
     6. Maak en controleer het vergelijkingsrapport. Gegevens worden gefilterd en mogelijk gevoelige waarden worden afgeschermd, maar controleer het volledige rapport voordat u het deelt.</string>
-    <string name="charging_diagnostics_help_contact" formatted="false">Kopieer of bewaar het rapport nadat u het hebt bekeken en verstuur het per e-mail naar <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
+    <string name="charging_report_privacy_help" formatted="false">Standaard uitgesloten. Deze gegevens kunnen persoonlijke informatie bevatten. Controleer het voorbeeld voordat je kopieert of opslaat.\n
+    Kopieer of bewaar het rapport nadat u het hebt bekeken en verstuur het per e-mail naar <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Back-up en herstel</string>
     <string name="backup_restore_settings_summary" formatted="false">Maak back-ups van je app-instellingen en batterijgegevens, herstel ze en draag ze over</string>
@@ -797,9 +811,9 @@
     <string name="pref_import_general_backup_help" formatted="false">Selecteer een bestaande algemene ZIP-back-up en kies welke beschikbare categorieën je wilt herstellen. Back-ups die met nieuwere appversies zijn gemaakt, kunnen incompatibel zijn, en het herstellen van logboeken of voorspellingsgegevens van een ander apparaat kan tot onjuiste schattingen leiden. Controleer bij een slechts gedeeltelijk voltooide herstelactie de gemelde categorieën voordat je het opnieuw probeert. Geselecteerde categorieën worden hersteld; niet-geselecteerde categorieën blijven behouden. Het herstellen van alarmen vervangt de huidige alarmen. Kies bij logboeken of je ze wilt toevoegen of de huidige geschiedenis wilt vervangen.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Geselecteerde gegevens herstellen uit een ZIP-bestand met een algemene back-up</string>
     <string name="general_backup_restore_message" formatted="false">Kies wat u wilt herstellen.</string>
-    <string name="general_backup_device_data_warning_scope" formatted="false">Logboeken en voorspellingsgegevens</string>
+    <string name="general_backup_device_data_warning">Logboeken en voorspellingsgegevens horen bij het apparaat waarop ze zijn verzameld. Importeren op een ander apparaat kan leiden tot onjuiste voorspellingen of ander onverwacht gedrag van de app.</string>
     <string name="general_backup_imported" formatted="false">Algemene back-up is geïmporteerd.</string>
-    <string name="invalid_general_backup_file" formatted="false">Ongeldig of incompatibel algemeen back-upbestand</string>
+    <string name="invalid_general_backup_file" formatted="false">Ongeldig of incompatibel algemeen back-upbestand.</string>
     <string name="settings_restore_partial">Sommige gegevens konden niet worden hersteld. Hersteld: %1$s. Gegevens die mogelijk gedeeltelijk zijn hersteld: %2$s. Controleer deze onderdelen voordat je het opnieuw probeert.</string>
     <string name="settings_restore_none">Geen</string>
     <string name="pref_export_settings" formatted="false">Instellingen exporteren</string>
@@ -810,7 +824,7 @@
     <string name="pref_import_settings_help" formatted="false">Herstel de opgeslagen voorkeuren. Deze actie herstelt geen geschiedenis of alarmgegevens.</string>
     <string name="pref_import_settings_summary" formatted="false">Instellingen herstellen vanuit een bestand</string>
     <string name="settings_imported" formatted="false">Instellingen zijn succesvol geïmporteerd.</string>
-    <string name="invalid_settings_file" formatted="false">Ongeldig instellingenbestand</string>
+    <string name="invalid_settings_file" formatted="false">Ongeldig instellingenbestand.</string>
     <string name="settings_file_version_warning" formatted="false">Dit bestand is gemaakt met een nieuwere versie van de app. Importeren kan onverwacht gedrag veroorzaken. Toch doorgaan?</string>
     <string name="pref_export_alarms" formatted="false">Alarmen exporteren</string>
     <string name="pref_export_alarms_help" formatted="false">Sla je alarmen op. Het JSON-bestand bevat alarmregels, maar geen door Android beheerde instellingen voor meldingskanalen of geluiden.</string>
@@ -820,7 +834,7 @@
     <string name="pref_import_alarms_help" formatted="false">Vervang alle huidige alarmen door de alarmen uit de back-up. Kies een JSON-bestand met een alarmback-up.</string>
     <string name="pref_import_alarms_summary" formatted="false">Huidige alarmen vervangen door alarmen uit een bestand</string>
     <string name="alarms_imported" formatted="false">Alarmen zijn succesvol geïmporteerd.</string>
-    <string name="invalid_alarms_file" formatted="false">Ongeldig alarmbestand</string>
+    <string name="invalid_alarms_file" formatted="false">Ongeldig alarmbestand.</string>
     <string name="pref_backup_device_data" formatted="false">Back-up van apparaatspecifieke gegevens</string>
     <string name="device_data_logs" formatted="false">Logboeken</string>
     <string name="device_data_predictor" formatted="false">Voorspellingsgegevens</string>
@@ -834,8 +848,8 @@
     <string name="pref_import_device_data_summary" formatted="false">Logboeken en voorspellingsgegevens herstellen vanuit een bestand</string>
     <string name="device_data_imported" formatted="false">Apparaatspecifieke gegevens zijn geïmporteerd</string>
     <string name="device_data_imported_dialog" formatted="false">Apparaatspecifieke gegevens zijn geïmporteerd.</string>
-    <string name="invalid_device_data_file" formatted="false">Ongeldig bestand met apparaatspecifieke gegevens</string>
-    <string name="device_data_file_empty" formatted="false">Dit bestand bevat geen ondersteunde apparaatspecifieke gegevens</string>
+    <string name="invalid_device_data_file" formatted="false">Ongeldig bestand met apparaatspecifieke gegevens.</string>
+    <string name="device_data_file_empty" formatted="false">Dit bestand bevat geen ondersteunde apparaatspecifieke gegevens.</string>
     <string name="pref_import_logs_csv" formatted="false">Logboeken importeren uit CSV</string>
     <string name="pref_import_logs_csv_summary" formatted="false">Logboeken importeren uit een geëxporteerd CSV-bestand</string>
     <string name="csv_logs_import_help" formatted="false">Importeer logboeken uit een door Battery Monitor geëxporteerde CSV en kies of je ze wilt toevoegen of bestaande logboeken wilt vervangen. Oudere exports bevatten mogelijk geen stroom of resterende lading; die metingen blijven voor oudere vermeldingen leeg. JSON-back-ups bewaren de gestructureerde gegevens en hebben de voorkeur bij herstel.</string>
@@ -846,7 +860,7 @@
     <string name="log_import_replace" formatted="false">Bestaande logboeken vervangen</string>
     <string name="csv_logs_imported" formatted="false">CSV-logboeken zijn geïmporteerd</string>
     <string name="csv_logs_imported_dialog" formatted="false">CSV-logboeken zijn geïmporteerd.</string>
-    <string name="invalid_csv_logs_file" formatted="false">Ongeldig of incompatibel CSV-logboekbestand</string>
+    <string name="invalid_csv_logs_file" formatted="false">Ongeldig of incompatibel CSV-logboekbestand.</string>
     <string name="settings_reset_title">Standaardinstellingen herstellen</string>
     <string name="settings_reset_summary">Appvoorkeuren resetten met behoud van geschiedenis, alarmen en aangeleerde schattingen</string>
     <string name="settings_reset_help" formatted="false">Reset de appvoorkeuren na bevestiging. Geschiedenis, alarmen, aangeleerde schattingen, widgetconfiguraties en de actieve of gestopte toestand van achtergrondbewaking blijven behouden. Systeemrechten en instellingen van meldingskanalen worden niet gereset.</string>

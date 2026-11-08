@@ -315,7 +315,9 @@ fun SettingsScreen(
             Brightness.Dark.name to R.string.settings_brightness_dark,
             Brightness.TrueBlack.name to R.string.settings_brightness_true_black
         )
-        val value = settings.getString(key, choices.first().first)
+        var draft by rememberSaveable(key) {
+            mutableStateOf(settings.getString(key, choices.first().first))
+        }
         if (applicationDialogsAllowed()) AlertDialog(
             onDismissRequest = { appearance = null },
             title = { Text(stringResource(if (key == KEY_COLOR_SOURCE) R.string.settings_color_palette else R.string.settings_brightness)) },
@@ -327,12 +329,11 @@ fun SettingsScreen(
                                 .fillMaxWidth()
                                 .heightIn(min = 48.dp)
                                 .selectable(
-                                    selected = value == name, role = Role.RadioButton, onClick = {
-                                        settings.edit { putString(key, name) }
-                                        appearance = null
+                                    selected = draft == name, role = Role.RadioButton, onClick = {
+                                        draft = name
                                     }), verticalAlignment = Alignment.CenterVertically
                         ) {
-                            RadioButton(value == name, null)
+                            RadioButton(draft == name, null)
                             Text(stringResource(label), Modifier.padding(start = 12.dp))
                         }
                     }
@@ -342,7 +343,14 @@ fun SettingsScreen(
                     )
                 }
             },
-            confirmButton = {},
+            confirmButton = {
+                TextButton(enabled = choices.any { it.first == draft }, onClick = {
+                    if (appearance == key && choices.any { it.first == draft }) {
+                        appearance = null
+                        settings.edit { putString(key, draft) }
+                    }
+                }) { Text(stringResource(R.string.okay)) }
+            },
             dismissButton = {
                 TextButton(onClick = {
                     appearance = null

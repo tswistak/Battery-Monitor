@@ -30,6 +30,7 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,7 +55,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.settings.SettingsContract
-import codes.swistak.batterymonitor.ui.components.SettingRow
 import codes.swistak.batterymonitor.ui.settings.helpHeadingIcon
 
 @Composable
@@ -124,11 +124,27 @@ fun HelpScreen(topic: String? = null, onOpenLicenses: () -> Unit = {}) {
                         }
                     }
                     if (section.titleResource == R.string.help_cat_open_source) {
-                        SettingRow(
-                            title = stringResource(R.string.help_licenses_title),
-                            summary = stringResource(R.string.help_licenses_summary),
-                            onClick = onOpenLicenses
-                        )
+                        OutlinedButton(
+                            onClick = onOpenLicenses,
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = MaterialTheme.shapes.large,
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)
+                        ) {
+                            Column(
+                                Modifier.fillMaxWidth(),
+                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(
+                                    stringResource(R.string.help_licenses_title),
+                                    style = MaterialTheme.typography.titleSmall
+                                )
+                                Text(
+                                    stringResource(R.string.help_licenses_summary),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
                     }
                 }
             }

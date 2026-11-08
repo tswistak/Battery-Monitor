@@ -99,8 +99,8 @@ internal fun ThresholdDialog(
                     modifier = Modifier.semantics { heading() },
                     style = MaterialTheme.typography.headlineSmall
                 )
-                Text(
-                    stringResource(if (draft.id == null) R.string.alarms_add_threshold else R.string.alarms_edit_threshold),
+                if (draft.id != null) Text(
+                    stringResource(R.string.alarms_edit_threshold),
                     style = MaterialTheme.typography.titleSmall
                 )
                 OutlinedTextField(

@@ -360,7 +360,10 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             if (requestCode != SHIZUKU_PERMISSION_REQUEST_CODE || !privilegedAccessRequestInProgress) return@OnRequestPermissionResultListener
 
             if (grantResult == PackageManager.PERMISSION_GRANTED) {
-                mainHandler.post(::completePrivilegedAccessEnable)
+                val generation = privilegedAccessRequestGeneration
+                mainHandler.post {
+                    if (generation == privilegedAccessRequestGeneration) completePrivilegedAccessEnable()
+                }
             } else {
                 privilegedAccessRequestInProgress = false
             }
@@ -427,7 +430,10 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             }?.toSet().orEmpty()
         setPreferences()
         pendingBackupDialog = savedInstanceState?.getBundle("settings_backup_dialog")
-        savedInstanceState?.getBundle("settings_dialog")?.let(::restoreDialog)
+        savedInstanceState?.getBundle("settings_dialog")?.let { request ->
+            if (pendingDocumentRequest == AUTO_LOG_EXPORT_DIRECTORY_REQUEST && request.getString("action") == "auto_export") dialogRequest =
+                request else restoreDialog(request)
+        }
         if (dialog == null && !busy && operationModel.outcome == null) {
             pendingBackupDialog?.let(::readBackupImport)
         }
@@ -540,7 +546,9 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             "auto_export" -> showAutoLogExportDialog(
                 request.getString("directory")?.let(Uri::parse),
                 request.getInt("permission_flags")
-                    .takeIf { request.containsKey("permission_flags") })
+                    .takeIf { request.containsKey("permission_flags") },
+                request
+            )
 
             "message" -> request.getString("message")?.let { dialog = SettingsDialog.Message(it) }
             "backup_import" -> readBackupImport(request)
@@ -684,6 +692,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     override fun onPause() {
         super.onPause()
 
+        if (pendingPrivilegedShizukuBinderListener != null) cancelPrivilegedAccessRequest()
         mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         timeEstimateJob?.cancel()
         timeEstimateJob = null
@@ -694,13 +703,23 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         }
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (hidden) cancelPrivilegedAccessRequest()
+    }
+
     override fun onDestroy() {
-        pendingPrivilegedShizukuBinderListener?.let(Shizuku::removeBinderReceivedListener)
-        pendingPrivilegedShizukuBinderListener = null
-        privilegedAccessRequestInProgress = false
+        cancelPrivilegedAccessRequest()
         Shizuku.removeRequestPermissionResultListener(privilegedShizukuPermissionListener)
         PrivilegedAccess.setReadyListener(null)
         super.onDestroy()
+    }
+
+    private fun cancelPrivilegedAccessRequest() {
+        privilegedAccessRequestInProgress = false
+        privilegedAccessRequestGeneration++
+        pendingPrivilegedShizukuBinderListener?.let(Shizuku::removeBinderReceivedListener)
+        pendingPrivilegedShizukuBinderListener = null
     }
 
     private fun resetService(cancelFirst: Boolean = false) {
@@ -965,7 +984,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
-        if (key == null) return
+        if (key == null || !isAdded) return
         mSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         syncPreferenceValues(requireNotNull(mPreferenceScreen))
 
@@ -1056,11 +1075,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         preference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, value ->
             val enable = value as? Boolean ?: return@OnPreferenceChangeListener false
             if (!enable) {
-                privilegedAccessRequestInProgress = false
-                pendingPrivilegedShizukuBinderListener?.let(
-                    Shizuku::removeBinderReceivedListener
-                )
-                pendingPrivilegedShizukuBinderListener = null
+                cancelPrivilegedAccessRequest()
                 return@OnPreferenceChangeListener true
             }
 
@@ -1070,7 +1085,16 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun requestPrivilegedAccessEnable() {
-        if (privilegedAccessRequestInProgress) return
+        if (privilegedAccessRequestInProgress) {
+            if (pendingPrivilegedShizukuBinderListener != null && !runCatching(Shizuku::pingBinder).getOrDefault(
+                    false
+                )
+            ) {
+                Toast.makeText(requireContext(), R.string.shizuku_not_running, Toast.LENGTH_LONG)
+                    .show()
+            }
+            return
+        }
         privilegedAccessRequestInProgress = true
         val generation = ++privilegedAccessRequestGeneration
         val allowed = {
@@ -1108,10 +1132,9 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             val listener = object : OnBinderReceivedListener {
                 override fun onBinderReceived() {
                     mainHandler.post {
+                        if (pendingPrivilegedShizukuBinderListener !== this) return@post
                         Shizuku.removeBinderReceivedListener(this)
-                        if (pendingPrivilegedShizukuBinderListener === this) {
-                            pendingPrivilegedShizukuBinderListener = null
-                        }
+                        pendingPrivilegedShizukuBinderListener = null
                         if (privilegedAccessRequestInProgress) {
                             requestPrivilegedShizukuPermission()
                         }
@@ -1544,6 +1567,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 }
             }, onFailure = { failure ->
                 clearBackupDialog()
+                if (failure is kotlinx.coroutines.CancellationException) return@fold
                 if (outcome.action == SettingsOperationAction.ResetSettings) setPreferences(
                     reinflate = true
                 )
@@ -1558,7 +1582,11 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun backupFailureMessage(error: Int, failure: Throwable): String {
-        if (failure !is GeneralBackupRestoreException) return getString(error)
+        if (failure !is GeneralBackupRestoreException) {
+            val storageFailure =
+                error != R.string.settings_reset_failed && (failure is SecurityException || failure is android.database.sqlite.SQLiteException || failure is IOException && failure !is java.util.zip.ZipException)
+            return getString(if (storageFailure) R.string.history_operation_failed else error)
+        }
         setPreferences(reinflate = true)
         val completed = failure.completedData.joinToString(", ") {
             generalBackupItemLabel(it)
@@ -1702,9 +1730,17 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
     }
 
     private fun handleAutoLogExportDirectoryResult(resultCode: Int, data: Intent?) {
+        val draft = dialogRequest?.takeIf { it.getString("action") == "auto_export" }
         val uri = data?.data
         if (resultCode != Activity.RESULT_OK || uri == null) {
-            if (isAutoLogExportConfigured()) {
+            if (draft != null) {
+                showAutoLogExportDialog(
+                    draft.getString("directory")?.let(Uri::parse),
+                    draft.getInt("permission_flags")
+                        .takeIf { draft.containsKey("permission_flags") },
+                    draft
+                )
+            } else if (isAutoLogExportConfigured()) {
                 showAutoLogExportDialog(currentAutoLogExportDirectory())
             }
             return
@@ -1712,10 +1748,12 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
 
         val flags =
             data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-        showAutoLogExportDialog(uri, flags)
+        showAutoLogExportDialog(uri, flags, draft)
     }
 
-    private fun showAutoLogExportDialog(directory: Uri?, permissionFlags: Int? = null) {
+    private fun showAutoLogExportDialog(
+        directory: Uri?, permissionFlags: Int? = null, draft: Bundle? = null
+    ) {
         if (directory == null) {
             openAutoLogExportDirectoryPicker()
             return
@@ -1733,13 +1771,14 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             directoryLabel = directoryLabel(directory),
             frequencyLabels = frequencies.map { it.label },
             frequencyEnabled = frequencies.map { it.preferenceValue in enabled },
-            frequencyIndex = valueIndex(
-                frequencyValues, AutoLogExportFrequency.cappedForRetention(
-                    currentAutoLogExportFrequency(), maxLogAgeHours()
-                ).preferenceValue
-            ),
+            frequencyIndex = draft?.getInt("frequency")?.takeIf { draft.containsKey("frequency") }
+                ?: valueIndex(
+                    frequencyValues, AutoLogExportFrequency.cappedForRetention(
+                        currentAutoLogExportFrequency(), maxLogAgeHours()
+                    ).preferenceValue
+                ),
             modeLabels = resources.getStringArray(R.array.auto_log_export_mode_entries).toList(),
-            modeIndex = valueIndex(
+            modeIndex = draft?.getInt("mode")?.takeIf { draft.containsKey("mode") } ?: valueIndex(
                 modes, mSharedPreferences.getString(
                     SettingsContract.KEY_AUTO_LOG_EXPORT_MODE,
                     AutoLogExportMode.NEW_FILE.preferenceValue
@@ -1747,11 +1786,13 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             ),
             formatLabels = resources.getStringArray(R.array.auto_log_export_format_entries)
                 .toList(),
-            formatIndex = valueIndex(
-                formats, mSharedPreferences.getString(
-                    SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT, LogExportFormat.CSV.preferenceValue
-                )
-            ),
+            formatIndex = draft?.getInt("format")?.takeIf { draft.containsKey("format") }
+                ?: valueIndex(
+                    formats, mSharedPreferences.getString(
+                        SettingsContract.KEY_AUTO_LOG_EXPORT_FORMAT,
+                        LogExportFormat.CSV.preferenceValue
+                    )
+                ),
             configured = wasConfigured,
             onConfirm = { frequency, mode, format ->
                 runCatching {
@@ -1790,13 +1831,25 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                     dialog = SettingsDialog.Message(getString(R.string.diag_value_not_available))
                 }
             },
-            onChooseDirectory = ::openAutoLogExportDirectoryPicker,
+            onChooseDirectory = { frequency, mode, format ->
+                dialogRequest = Bundle(dialogRequest ?: Bundle()).apply {
+                    putInt("frequency", frequency)
+                    putInt("mode", mode)
+                    putInt("format", format)
+                }
+                openAutoLogExportDirectoryPicker()
+            },
             onDisable = ::disableAutoLogExport
         )
         dialogRequest = Bundle().apply {
             putString("action", "auto_export")
             putString("directory", directory.toString())
             permissionFlags?.let { putInt("permission_flags", it) }
+            draft?.let {
+                for (key in listOf("frequency", "mode", "format")) {
+                    if (it.containsKey(key)) putInt(key, it.getInt(key))
+                }
+            }
         }
     }
 
@@ -1955,9 +2008,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 selected = types.indices.toSet(),
                 supportingText = if (types.any {
                         it == GeneralBackupDataType.LOGS || it == GeneralBackupDataType.PREDICTOR_DATA
-                    }) getString(R.string.general_backup_device_data_warning_scope) + "\n" + getString(
-                    R.string.device_data_backup_warning
-                ) else null,
+                    }) getString(R.string.general_backup_device_data_warning) else null,
                 onConfirm = { selected ->
                     val selectedData = selected.mapTo(linkedSetOf()) { types[it] }
                     if (GeneralBackupDataType.LOGS in selectedData) {
@@ -2028,7 +2079,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             }
             if (availableData.isEmpty()) {
                 clearBackupDialog()
-                Toast.makeText(activity, R.string.device_data_file_empty, Toast.LENGTH_SHORT).show()
+                dialog = SettingsDialog.Message(getString(R.string.device_data_file_empty))
                 return
             }
             val dataTypes = DeviceDataType.entries.filter { it in availableData }.toTypedArray()
@@ -2052,7 +2103,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             rememberBackupDialog(request)
         } catch (_: Exception) {
             clearBackupDialog()
-            Toast.makeText(activity, R.string.invalid_device_data_file, Toast.LENGTH_SHORT).show()
+            dialog = SettingsDialog.Message(getString(R.string.invalid_device_data_file))
         }
     }
 
@@ -2196,7 +2247,7 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
             // Keep commit's Boolean result so failed imports are reported to the user.
             @SuppressLint("UseKtx") val editor = settings.edit()
             SettingsBackup.importFromJson(editor, json)
-            check(editor.commit()) { "Could not save imported settings" }
+            if (!editor.commit()) throw IOException("Could not save imported settings")
             reloadService(context, settings, messenger)
         }
     }

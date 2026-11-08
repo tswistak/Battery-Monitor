@@ -96,7 +96,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">المُضاعِف</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">تبلغ بعض الأجهزة عن وحدات أو إشارات غير متوقعة. اضرب القيمة المُبلّغ عنها هنا لتصحيح النتيجة المعروضة. استخدم «اكتشاف تلقائي» لمحاولة استنتاج مُضاعِف التيار من قراءة البطارية.\n
     \n
-    كمرجع تقريبي للهواتف، تكون إشارة Android القياسية موجبة أثناء الشحن وسالبة أثناء التفريغ. يكون الشحن النشط غالبًا بين +500 و+5000\u00A0mA، بينما يكون التفريغ العادي غالبًا بين -100 و-3000\u00A0mA. قد تكون القيم القريبة من الصفر طبيعية عندما تكون البطارية شبه ممتلئة أو الهاتف في وضع الخمول. إذا بدت القيمة أصغر أو أكبر بنحو 1000 مرة، أو كانت الإشارة معكوسة، فاضبط المُضاعِف.</string>
+    كمرجع تقريبي للأجهزة، تكون إشارة Android القياسية موجبة أثناء الشحن وسالبة أثناء التفريغ. يكون الشحن النشط غالبًا بين +500 و+5000\u00A0mA، بينما يكون التفريغ العادي غالبًا بين -100 و-3000\u00A0mA. قد تكون القيم القريبة من الصفر طبيعية عندما تكون البطارية شبه ممتلئة أو الجهاز في وضع الخمول. إذا بدت القيمة أصغر أو أكبر بنحو 1000 مرة، أو كانت الإشارة معكوسة، فاضبط المُضاعِف.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">اكتشاف تلقائي</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">لا يتوفر الاكتشاف التلقائي لحالة البطارية أو القراءة الحالية</string>
     <string name="pref_battery_current_multiplier_detection_result">تم ضبط المُضاعِف تلقائيًا على %1$d</string>
@@ -150,7 +150,9 @@
     <string name="live_updates_notif_chan_name" formatted="false">التحديثات المباشرة</string>
     <string name="notification_settings" formatted="false">الإشعار الرئيسي</string>
     <string name="notification_settings_summary" formatted="false">هيّئ محتوى الإشعار وأيقونة شريط الحالة وشريحة التحديث المباشر</string>
-    <string name="notification_settings_help" formatted="false">يمكنك تكوين المحتوى الذي تود رؤيته في قائمة الاشعارات والسيطرة على مظهره</string>
+    <string name="notification_settings_help" formatted="false">يمكنك تكوين المحتوى الذي تود رؤيته في قائمة الاشعارات والسيطرة على مظهره\n
+    اختر ما إذا كانت أيقونة الإشعار تعرض نسبة البطارية أو درجة الحرارة، وما إذا كان رمز الوحدة يظهر داخل الأيقونة، وما إذا كان الشحن يستخدم أيقونة مخصصة. ابتداءً من Android 16، قد لا تعمل أيقونة شريط الحالة على جميع إصدارات نظام التشغيل.\n
+    في Android 16 أو أحدث، اختر متى تظهر شريحة Live Update والقيم التي تتناوب عليها وما إذا كانت تعرض رمز الشحن التعبيري. يعتمد توفرها أيضًا على الجهاز وإعدادات إشعارات النظام.</string>
     <string name="notification_channels_help" formatted="false">افتح إعدادات إشعارات Android للسماح بالإشعارات أو حظرها وضبط الصوت والاهتزاز وطريقة التسليم للإشعار الرئيسي وكل نوع منبه. تفعيل قاعدة منبه لا يتجاوز حظر قناة الإشعارات.</string>
     <string name="app_notifs_disabled_summary" formatted="false">لقد عطلت جميع إشعارات هذا التطبيق. يرجى تمكينها للوصول إلى هذه الإعدادات</string>
     <string name="main_notifs_disabled_summary" formatted="false">لقد عطلت الإشعار الرئيسي لهذا التطبيق. يرجى تمكينه للوصول إلى هذه الإعدادات</string>
@@ -209,7 +211,6 @@
     <string name="pref_expanded_notification_help" formatted="false">عند تفعيل هذا الخيار، يعرض توسيع الإشعار الرئيسي «الوقت المتبقي» و«منذ وقت تغيير الحالة» وكل قيمة من «علامات حيوية» في سطر منفصل مع تسمية، بدلًا من الملخص ذي السطر الواحد.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">ايقونة شريط الحالة</string>
-    <string name="status_bar_icon_settings_help" formatted="false">اختر ما إذا كانت أيقونة الإشعار تعرض نسبة البطارية أو درجة الحرارة، وما إذا كان رمز الوحدة يظهر داخل الأيقونة، وما إذا كان الشحن يستخدم أيقونة مخصصة. ابتداءً من Android 16، قد لا تعمل أيقونة شريط الحالة على جميع إصدارات نظام التشغيل.</string>
     <string name="status_bar_icon_availability_help" formatted="false">ابتداءً من Android 16، قد لا تعمل أيقونة شريط الحالة على جميع إصدارات نظام التشغيل.</string>
     <string name="pref_icon_content" formatted="false">محتوى الأيقونة</string>
     <string name="pref_icon_content_help" formatted="false">اختر ما إذا كانت أيقونة شريط الحالة تعرض نسبة البطارية أو درجة حرارتها. ستتبع الحرارة الوحدة التي اخترتها.</string>
@@ -222,7 +223,6 @@
     <string name="pref_indicate_charging_summary" formatted="false">تغيير لايقونة للتنبيه عند الشحن؟</string>
     <string name="pref_indicate_charging_help" formatted="false">يمكن لأيقونة الشحن إظهار رمز برق أسفل الرقم. عطّل هذا الإعداد إذا كنت تفضّل نفس الأيقونة أثناء الشحن والتفريغ.</string>
     <string name="status_bar_chip_settings" formatted="false">شريحة شريط الحالة</string>
-    <string name="status_bar_chip_settings_help" formatted="false">في Android 16 أو أحدث، اختر متى تظهر شريحة Live Update والقيم التي تتناوب عليها وما إذا كانت تعرض رمز الشحن التعبيري. يعتمد توفرها أيضًا على الجهاز وإعدادات إشعارات النظام.</string>
     <string name="status_bar_chip_availability_help" formatted="false">يعتمد توفرها أيضًا على الجهاز وإعدادات إشعارات النظام.</string>
     <string name="settings_live_update_summary">السماح بإشعارات البطارية البارزة أو حظرها في إعدادات Android</string>
     <string name="settings_live_update_help">السماح بإشعارات البطارية البارزة أو حظرها في إعدادات Android.</string>
@@ -272,6 +272,8 @@
     <string name="alarm_settings_help" formatted="false">يمكن للمؤشر بإعلامك عند مستوى البطارية تصل إلى نقطة معينة (على سبيل المثال، يصبح البطارية مشحونة بالكامل، وانخفاض مستوى البطارية أقل من 20٪)</string>
     <string name="alarms_overview" formatted="false">النظرة العامة على المنبهات</string>
     <string name="alarms_overview_help">تتوفر أنواع المنبه الثمانية دائمًا. فعّل الأحداث مباشرةً، أو استخدم «إضافة عتبة» ضمن نوع شحنة أو حرارة. تُفعّل العتبات الجديدة بعد الحفظ. اضغط على قيمة لتعديلها؛ يحتفظ التعديل بحالة التشغيل أو الإيقاف. تبقى القيم المعطلة في القائمة. يتطلب «حذف المنبه» تأكيدًا. يُشترك في الصوت والاهتزاز حسب النوع في إعدادات إشعارات Android. تظهر السجلات المكررة الموجودة كمنبه منطقي واحد؛ ويؤثر التبديل أو الحذف على كل النسخ. تتبع منبهات الشحن والتفريغ أهداف التقدير ولا تتحكم في الشحن. حظر قناة أو إيقاف المراقبة لا يغير المفاتيح المحفوظة.</string>
+    <string name="alarms_overview_channels_help" formatted="false">تتوفر أنواع المنبه الثمانية دائمًا. فعّل الأحداث مباشرةً، أو استخدم «إضافة عتبة» ضمن نوع شحنة أو حرارة. تُفعّل العتبات الجديدة بعد الحفظ. اضغط على قيمة لتعديلها؛ يحتفظ التعديل بحالة التشغيل أو الإيقاف. تبقى القيم المعطلة في القائمة. يتطلب «حذف المنبه» تأكيدًا. يُشترك في الصوت والاهتزاز حسب النوع في إعدادات إشعارات Android. تظهر السجلات المكررة الموجودة كمنبه منطقي واحد؛ ويؤثر التبديل أو الحذف على كل النسخ. تتبع منبهات الشحن والتفريغ أهداف التقدير ولا تتحكم في الشحن. حظر قناة أو إيقاف المراقبة لا يغير المفاتيح المحفوظة.\n
+    افتح إعدادات إشعارات Android للسماح بالإشعارات أو حظرها وضبط الصوت والاهتزاز وطريقة التسليم للإشعار الرئيسي وكل نوع منبه. تفعيل قاعدة منبه لا يتجاوز حظر قناة الإشعارات.</string>
     <plurals name="alarms_active_count">
         <item quantity="zero">المنبهات المفعّلة: %1$d</item>
         <item quantity="one">%1$d منبه مفعّل</item>
@@ -310,6 +312,8 @@
     <string name="alarms_edit_threshold">تعديل العتبة</string>
     <string name="alarms_edit_existing">تعديل العتبة الموجودة</string>
     <string name="alarms_threshold_edit_help" formatted="false">إذا كانت العتبة موجودة بالفعل، فافتحها باستخدام «تعديل العتبة الموجودة». إذا تغيّرت المنبّهات المحفوظة أثناء التعديل، فاستخدم «تحديث» وأعد فتح العتبة قبل تغييرها.</string>
+    <string name="alarms_threshold_edit_channels_help" formatted="false">إذا كانت العتبة موجودة بالفعل، فافتحها باستخدام «تعديل العتبة الموجودة». إذا تغيّرت المنبّهات المحفوظة أثناء التعديل، فاستخدم «تحديث» وأعد فتح العتبة قبل تغييرها.\n
+    افتح إعدادات إشعارات Android للسماح بالإشعارات أو حظرها وضبط الصوت والاهتزاز وطريقة التسليم للإشعار الرئيسي وكل نوع منبه. تفعيل قاعدة منبه لا يتجاوز حظر قناة الإشعارات.</string>
     <string name="alarms_new_enabled">سيُفعّل المنبه عند إضافته.</string>
     <string name="alarms_edit_keeps_enabled">يحافظ التعديل على حالة التشغيل أو الإيقاف الحالية.</string>
     <string name="alarms_enabled">مفعل</string>
@@ -431,7 +435,7 @@
     <string name="history_chart_y_fixed">Y: ثابت</string>
     <string name="history_chart_y_manual">Y: يدوي</string>
 
-    <string name="logs_empty" formatted="false">السجلات فارغة</string>
+    <string name="logs_empty" formatted="false">السجلات فارغة.</string>
     <string name="configure_log_filter" formatted="false">رؤية عناصر السجلات؟</string>
     <string name="menu_show_seconds" formatted="false">إظهار الثواني</string>
     <string name="menu_hide_seconds" formatted="false">إخفاء الثواني</string>
@@ -446,7 +450,7 @@
     <string name="pref_enable_logging_summary" formatted="false">تسجيل حالة تغيير البطارية ؟</string>
     <string name="pref_enable_logging_help" formatted="false">احفظ قراءات البطارية وتغييرات الحالة لـ «السجل». تشمل القياسات المتاحة المستوى والحرارة والجهد والتيار اللحظي الأصلي والشحنة المتبقية. تُحسب القدرة من الجهد والتيار عند العرض أو التصدير؛ ولا تُحفظ منفصلة. إيقاف التسجيل لا يمسح السجل الموجود ولا يوقف تقديرات الوقت.</string>
     <string name="pref_max_log_age" formatted="false">الاحد الاقصى للسجلات</string>
-    <string name="pref_max_log_age_help" formatted="false">عند تفعيل التسجيل، يؤدي توصيل الطاقة إلى إزالة السجلات الأقدم من هذا الحد. يبقي خيار «بلا حد» السجلات حتى تمسحها يدويًا. إذا فُعّل التصدير التلقائي، يصدّر Battery Monitor السجلات المعلقة قبل حذف الإدخالات القديمة؛ وفشل التصدير يمنع هذا الحذف.</string>
+    <string name="pref_max_log_age_help" formatted="false">عند تفعيل التسجيل، تُزال السجلات الأقدم من هذا الحد تلقائيًا أثناء صيانة السجل. يبقي خيار «بلا حد» السجلات حتى تمسحها يدويًا. إذا فُعّل التصدير التلقائي، يصدّر Battery Monitor السجلات المعلقة قبل حذف الإدخالات القديمة؛ وفشل التصدير يمنع هذا الحذف.</string>
     <string name="age_1_day" formatted="false">يوم واحد</string>
     <string name="age_2_days" formatted="false">يومان</string>
     <string name="age_4_days" formatted="false">اربعة ايام</string>
@@ -472,9 +476,9 @@
     <string name="pref_auto_log_export_format" formatted="false">تنسيق التصدير</string>
     <string name="pref_auto_log_export_directory" formatted="false">تغيير المجلد</string>
     <string name="pref_auto_log_export_path" formatted="true">المسار: %1$s</string>
-    <string name="auto_log_export_help" formatted="false">اختر مجلدًا وتكرارًا وتنسيقًا وما إذا كنت تريد ملفات منفصلة أو الإلحاق بملف واحد. يحفظ التصدير عادةً السجلات منذ آخر تصدير تلقائي؛ ويشمل الملف المستمر الجديد كل السجلات المتاحة. قد يؤخر Android التصدير في الخمول. يجب إبقاء التسجيل مفعّلًا.</string>
-    <string name="auto_log_export_options_help" formatted="false">لا يمكن أن يتجاوز الفاصل بين عمليات التصدير مدة الاحتفاظ بالسجلات. يتطلب تغيير المجلد منح التطبيق حق الوصول إلى ذلك المجلد في Android. يؤدي تعطيل التصدير التلقائي إلى ترك السجلات المحفوظة والملفات الموجودة دون تغيير.</string>
-    <string name="auto_log_export_format_help" formatted="false">يفيد CSV في جداول البيانات أو محررات النصوص. يتضمن التيار الأصلي والشحنة المتبقية والقدرة المحسوبة باستخدام المضاعف المحدد وقت التصدير. يحفظ JSON بيانات السجل المنظمة للنسخ الاحتياطية. تبقى خلايا التيار والشحنة المتبقية والقدرة غير المتاحة فارغة.</string>
+    <string name="auto_log_export_help" formatted="false">اختر مجلدًا وتكرارًا وتنسيقًا وما إذا كنت تريد ملفات منفصلة أو الإلحاق بملف واحد. يحفظ التصدير عادةً السجلات منذ آخر تصدير تلقائي؛ ويشمل الملف المستمر الجديد كل السجلات المتاحة. قد يؤخر Android التصدير في الخمول. يجب إبقاء التسجيل مفعّلًا.\n
+    يفيد CSV في جداول البيانات أو محررات النصوص. يتضمن التيار الأصلي والشحنة المتبقية والقدرة المحسوبة باستخدام المضاعف المحدد وقت التصدير. يحفظ JSON بيانات السجل المنظمة للنسخ الاحتياطية. تبقى خلايا التيار والشحنة المتبقية والقدرة غير المتاحة فارغة.\n
+    لا يمكن أن يتجاوز الفاصل بين عمليات التصدير مدة الاحتفاظ بالسجلات. يتطلب تغيير المجلد منح التطبيق حق الوصول إلى ذلك المجلد في Android. يؤدي تعطيل التصدير التلقائي إلى ترك السجلات المحفوظة والملفات الموجودة دون تغيير.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">إنشاء ملف جديد</string>
     <string name="auto_log_export_mode_append" formatted="false">إلحاق السجلات الجديدة بالملف الموجود</string>
     <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
@@ -555,6 +559,8 @@
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">تتطلب ألوان النظام Android 12 أو أحدث. يُستخدم «Battery Blue» على هذا الجهاز.</string>
+    <string name="settings_color_palette_unsupported_help" formatted="false">استخدام ألوان النظام أو «Battery Blue».\n
+    تتطلب ألوان النظام Android 12 أو أحدث. يُستخدم «Battery Blue» على هذا الجهاز.</string>
     <string name="settings_brightness">السطوع</string>
     <string name="settings_brightness_summary">اتباع النظام أو اختيار فاتح أو داكن أو أسود خالص</string>
     <string name="settings_brightness_help">اتباع النظام أو اختيار فاتح أو داكن أو أسود خالص.</string>
@@ -570,8 +576,8 @@
     \n
     قد يزيد التشغيل غير المقيّد من استهلاك البطارية في الخلفية. يمكنك تغيير هذا لاحقًا من «إعدادات» Android → «التطبيقات» → «Battery Monitor» → «البطارية». تختلف أسماء القوائم حسب الجهاز.</string>
     <string name="pref_cat_autostart" formatted="false">تشغيل تلقائي</string>
-    <string name="pref_autostart_at_boot" formatted="false">تشغيل تلقائي عند بدء الهاتف</string>
-    <string name="pref_autostart_at_boot_summary" formatted="false">تشغيل التطبيق عند اقلاع الهاتف</string>
+    <string name="pref_autostart_at_boot" formatted="false">تشغيل تلقائي عند بدء الجهاز</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">تشغيل التطبيق عند اقلاع الجهاز</string>
     <string name="pref_autostart_at_boot_help" formatted="false">يبدأ خيار «دائما» المراقبة في الخلفية بعد إعادة تشغيل الجهاز. يتجاوز خيار «ابدا» البدء التلقائي عند الإقلاع. يتبع خيار «إذا كان يعمل عند الإيقاف» آخر بدء أو إيقاف للمراقبة في Battery Monitor. إغلاق التطبيق أو إنهاء عمليته لا يُعد إيقافًا للمراقبة. الأدوات لا تتجاوز هذا الخيار.</string>
     <string name="boot_pref_always" formatted="false">دائما</string>
     <string name="boot_pref_never" formatted="false">ابدا</string>
@@ -593,7 +599,8 @@
     <string name="diag_status_waiting_permission" formatted="false">بانتظار إذن Shizuku…</string>
     <string name="diag_status_no_stats" formatted="false">لا تتوفر أي إحصاءات بطارية متقدمة على هذا الجهاز حاليًا.</string>
     <string name="diag_value_not_available" formatted="false">غير متاح</string>
-    <string name="diag_help_overview" formatted="false">يجمع موثوقية المراقبة وبيانات التنبؤ المحفوظة وبيانات البطارية في علامات «تشغيل التطبيق» و«البطارية» و«الشحن» و«البيانات الخام». تتوفر بيانات Android دون root. تعتمد بيانات الجهاز الإضافية على الجهاز والأذونات المتاحة لـ Battery Monitor.</string>
+    <string name="diag_help_overview" formatted="false">يجمع موثوقية المراقبة وبيانات التنبؤ المحفوظة وبيانات البطارية في علامات «تشغيل التطبيق» و«البطارية» و«الشحن» و«البيانات الخام». تتوفر بيانات Android دون root. تعتمد بيانات الجهاز الإضافية على الجهاز والأذونات المتاحة لـ Battery Monitor.\n
+    تُجمع قراءات Android المتاحة تلقائيًا ما دام «التشخيص» مفتوحًا. اضغط على قيمة لفحص ونسخ قراءتها ومصدرها ووقتها. تتوفر مفاتيح الجهاز وقيمه الأصلية في «البيانات الخام». فعّل الوصول المميز لاستخدام Root أو Shizuku أيضًا.</string>
     <string name="diag_section_counters" formatted="false">العدادات</string>
     <string name="diag_help_counters" formatted="false">تُسمى قراءات البطارية وتُنسق كشحنة متبقية بوحدة mAh وتيار بوحدة mA وطاقة بوحدة mWh وجهد بوحدة V وحرارة بالوحدة المختارة وقدرة بوحدة W. ينطبق مضاعف التيار أيضًا على القدرة المحسوبة. يعتمد متوسط التيار وعدد الدورات على دعم الجهاز.</string>
     <string name="diag_field_charge_counter" formatted="false">تقدير الشحنة المتبقية</string>
@@ -614,7 +621,8 @@
     <string name="diag_capacity_low">منخفض</string>
     <string name="diag_capacity_high">مرتفع</string>
     <string name="diag_section_charging" formatted="false">الشحن</string>
-    <string name="diag_help_charging" formatted="false">يعرض قيما مرتبطة بمسار الشحن النشط مثل أقصى تيار أو جهد شحن وسياسة الشحن وحالة الشحن ومستوى السعة. قد تتغير هذه الحقول بين الشواحن وأوضاع الشحن المختلفة.</string>
+    <string name="diag_help_charging" formatted="false">يعرض قيما مرتبطة بمسار الشحن النشط مثل أقصى تيار أو جهد شحن وسياسة الشحن وحالة الشحن ومستوى السعة. قد تتغير هذه الحقول بين الشواحن وأوضاع الشحن المختلفة.\n
+    يستخدم هذا التقدير خوارزمية التنبؤ المضبوطة في Battery Monitor. لا يتحكم هدفه في الشحن أو إيقاف التشغيل.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">الوقت المتبقي للشحن</string>
     <string name="diag_field_max_charging_current" formatted="false">أقصى تيار شحن</string>
     <string name="diag_field_max_charging_voltage" formatted="false">أقصى جهد شحن</string>
@@ -671,7 +679,7 @@
     <string name="diagnostics" formatted="false">التشخيص</string>
     <string name="diagnostics_summary" formatted="false">تحقق من الأذونات وموثوقية المراقبة وأنشئ تقريرًا لاستكشاف الأخطاء</string>
     <string name="diag_overview">تشغيل التطبيق</string>
-    <string name="diagnostics_help_overview" formatted="false">يتحقق من الأذونات وموثوقية المراقبة. استخدم عناصره لبدء المراقبة أو إيقافها وتغيير تسجيل التصحيح وفتح إعدادات تحسين البطارية والإشعارات أو إنشاء تقرير لاستكشاف الأخطاء. ليست كل قراءة غير متاحة دليلًا على مشكلة أذونات؛ بعض الأجهزة لا توفرها.</string>
+    <string name="diagnostics_help_overview" formatted="false">تحقّق من الأذونات وموثوقية المراقبة. استخدم عناصره لبدء المراقبة أو إيقافها وتغيير تسجيل التصحيح وفتح إعدادات تحسين البطارية والإشعارات أو إنشاء تقرير لاستكشاف الأخطاء. ليست كل قراءة غير متاحة دليلًا على مشكلة أذونات؛ بعض الأجهزة لا توفرها.</string>
     <string name="diagnostics_monitoring" formatted="false">المراقبة في الخلفية</string>
     <string name="diag_monitor_operation">تشغيل المراقبة</string>
     <string name="diag_heartbeat">آخر إشارة نشاط</string>
@@ -699,12 +707,15 @@
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">الإذن مفقود. اضغط لفتح الإعدادات</string>
     <string name="diagnostics_battery_optimization" formatted="false">تحسين البطارية</string>
     <string name="diagnostics_battery_optimization_help" formatted="false">افتح إعدادات تحسين البطارية في Android عند وجود قيود. إذا كان التشغيل غير مقيّد بالفعل، فإن الضغط يؤكد هذه الحالة.</string>
+    <string name="monitoring_battery_optimization_help" formatted="false">افتح إعدادات تحسين البطارية في Android عند وجود قيود. إذا كان التشغيل غير مقيّد بالفعل، فإن الضغط يؤكد هذه الحالة.\n
+    يمكن أن يؤدي السماح بالتشغيل غير المقيّد في الخلفية إلى تحسين موثوقية المراقبة. قد يؤخر تحسين البطارية في Android التحديثات والمنبهات.\n
+    \n
+    قد يزيد التشغيل غير المقيّد من استهلاك البطارية في الخلفية. يمكنك تغيير هذا لاحقًا من «إعدادات» Android → «التطبيقات» → «Battery Monitor» → «البطارية». تختلف أسماء القوائم حسب الجهاز.</string>
     <string name="diagnostics_unrestricted" formatted="false">غير مقيّد</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">مقيّد. اضغط للسماح بمراقبة موثوقة في الخلفية</string>
     <string name="diagnostics_vendor_settings" formatted="false">إعدادات الشركة المصنعة</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">افتح إعدادات إضافية للنشاط في الخلفية أو التشغيل التلقائي المتاحة على هذا الجهاز</string>
-    <string name="diagnostics_vendor_settings_help" formatted="false">افتح إعدادات إضافية للنشاط في الخلفية أو التشغيل التلقائي المتاحة على هذا الجهاز.</string>
-    <string name="diagnostics_vendor_availability_help" formatted="false">خيار «إعدادات الشركة المصنعة» متاح على الأجهزة المدعومة فقط.</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">افتح إعدادات إضافية للنشاط في الخلفية أو التشغيل التلقائي. متاحة على الأجهزة المدعومة فقط.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">مساعدة النشاط في الخلفية</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">افتح إرشادات خاصة بالجهاز على Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">افتح إرشادات خاصة بالجهاز على Don’t Kill My App.</string>
@@ -768,6 +779,8 @@
 
     <string name="charging_diagnostics_title" formatted="false">تشخيص حد الشحن من الشركة المصنّعة</string>
     <string name="charging_diagnostics_help_overview" formatted="false">افتح أدوات اللقطات والمقارنة للتحقق من كيفية اكتشاف Battery Monitor لحد الشحن في الجهاز. تتوفر تعليمات التحضير في المساعدة الخاصة بشاشة تشخيص الشركة المصنّعة.</string>
+    <string name="charging_tools_help_overview" formatted="false">افتح أدوات اللقطات والمقارنة للتحقق من كيفية اكتشاف Battery Monitor لحد الشحن في الجهاز. تتوفر تعليمات التحضير في المساعدة الخاصة بشاشة تشخيص الشركة المصنّعة.\n
+    قد تتوفر معلومات تشخيصية إضافية باستخدام الوصول المميز. امنح الوصول عبر Shizuku أو root وفعّل الوصول المميز في «الإعدادات» → «متقدم» → «استخدام الوصول المميّز» للحصول على تقرير أكثر فائدة حول حد الشحن الخاص بالشركة المصنّعة.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">للحصول على تقرير مفيد، افتح «مساعدة» واتبع خطوات التحضير قبل التقاط اللقطات.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">قد تتوفر معلومات تشخيصية إضافية باستخدام الوصول المميز. امنح الوصول عبر Shizuku أو root وفعّل الوصول المميز في «الإعدادات» → «متقدم» → «استخدام الوصول المميّز» للحصول على تقرير أكثر فائدة حول حد الشحن الخاص بالشركة المصنّعة.</string>
     <string name="charging_diagnostics_capture" formatted="false">التقاط لقطة</string>
@@ -801,13 +814,14 @@
     <string name="charging_diagnostics_clear_summary" formatted="false">حذف لقطات الشحن المحفوظة محلياً</string>
     <string name="charging_diagnostics_clear_help" formatted="false">حذف لقطات الشحن المحفوظة محلياً.</string>
     <string name="charging_diagnostics_cleared" formatted="false">تم حذف لقطات الشحن</string>
-    <string name="charging_diagnostics_help_steps" formatted="false">1. افصل الهاتف عن الشاحن واتركه غير متصل أثناء التقاط لقطات الإعداد. غيّر بين اللقطات إعداد حماية الشحن الخاص بالشركة المصنّعة فقط.\n
+    <string name="charging_diagnostics_help_steps" formatted="false">1. افصل الجهاز عن الشاحن واتركه غير متصل أثناء التقاط لقطات الإعداد. غيّر بين اللقطات إعداد حماية الشحن الخاص بالشركة المصنّعة فقط.\n
     2. أوقف حماية الشحن، وانتظر 2–5\u00A0ثوانٍ، ثم التقط لقطة.\n
     3. اختر حداً ثابتاً، وانتظر 2–5\u00A0ثوانٍ، ثم التقط لقطة. كرر بحد آخر إن أمكن.\n
     4. فعّل الشحن التكيّفي أو الذكي أو المجدول، وانتظر 2–5\u00A0ثوانٍ، ثم التقط لقطة.\n
     5. إذا لم تكن مقارنة الإعداد حاسمة، يمكنك اختيارياً تكرار التسلسل أثناء الشحن لالتقاط الحالة التي تظهر وقت التشغيل فقط.\n
     6. أنشئ تقرير المقارنة وراجعه. تُصفّى البيانات وتُحجب القيم المحتمل أن تكون حساسة، لكن راجع التقرير كاملاً قبل مشاركته.</string>
-    <string name="charging_diagnostics_help_contact" formatted="false">بعد مراجعة التقرير، انسخه أو احفظه ثم أرسله بالبريد الإلكتروني إلى <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
+    <string name="charging_report_privacy_help" formatted="false">مستبعدة افتراضيًا. قد تحتوي هذه البيانات على معلومات شخصية. راجع المعاينة قبل النسخ أو الحفظ.\n
+    بعد مراجعة التقرير، انسخه أو احفظه ثم أرسله بالبريد الإلكتروني إلى <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">النسخ الاحتياطي والاستعادة</string>
     <string name="backup_restore_settings_summary" formatted="false">أنشئ نسخة احتياطية من إعدادات تطبيقك وبيانات البطارية واستعدها وانقلها</string>
@@ -821,9 +835,9 @@
     <string name="pref_import_general_backup_help" formatted="false">اختر ملف ZIP موجودًا لنسخة احتياطية عامة، ثم اختر فئات البيانات المتاحة التي تريد استعادتها. قد لا تتوافق النسخ الاحتياطية المنشأة بإصدارات أحدث من التطبيق، وقد تؤدي استعادة السجلات أو بيانات التنبؤ من جهاز آخر إلى تقديرات غير صحيحة. إذا اكتملت الاستعادة جزئيًا فقط، فراجع الفئات المعروضة قبل المحاولة مرة أخرى. تُستعاد الفئات المحددة؛ وتبقى الفئات غير المحددة كما هي. تؤدي استعادة المنبّهات إلى استبدال المنبّهات الحالية. بالنسبة للسجلات، اختر إضافتها أو استبدال السجل الحالي.</string>
     <string name="pref_import_general_backup_summary" formatted="false">استعادة البيانات المحددة من ملف ZIP لنسخة احتياطية عامة</string>
     <string name="general_backup_restore_message" formatted="false">اختر ما تريد استعادته.</string>
-    <string name="general_backup_device_data_warning_scope" formatted="false">السجلات وبيانات التنبؤ</string>
+    <string name="general_backup_device_data_warning">السجلات وبيانات التنبؤ خاصة بالجهاز الذي جُمعت عليه. قد يؤدي استيرادها على جهاز آخر إلى تنبؤات غير صحيحة أو سلوك آخر غير متوقع للتطبيق.</string>
     <string name="general_backup_imported" formatted="false">تم استيراد النسخة الاحتياطية العامة بنجاح.</string>
-    <string name="invalid_general_backup_file" formatted="false">ملف النسخة الاحتياطية العامة غير صالح أو غير متوافق</string>
+    <string name="invalid_general_backup_file" formatted="false">ملف النسخة الاحتياطية العامة غير صالح أو غير متوافق.</string>
     <string name="settings_restore_partial">تعذرت استعادة بعض البيانات. تمت استعادة: %1$s. بيانات ربما استُعيدت جزئيًا: %2$s. تحقق من هذه الأقسام قبل المحاولة مجددًا.</string>
     <string name="settings_restore_none">لا شيء</string>
     <string name="pref_export_settings" formatted="false">تصدير الإعدادات</string>
@@ -834,7 +848,7 @@
     <string name="pref_import_settings_help" formatted="false">استعد التفضيلات المحفوظة. لا يستعيد هذا الإجراء السجل أو سجلات المنبهات.</string>
     <string name="pref_import_settings_summary" formatted="false">استعادة الإعدادات من ملف</string>
     <string name="settings_imported" formatted="false">تم استيراد الإعدادات بنجاح.</string>
-    <string name="invalid_settings_file" formatted="false">ملف إعدادات غير صالح</string>
+    <string name="invalid_settings_file" formatted="false">ملف إعدادات غير صالح.</string>
     <string name="settings_file_version_warning" formatted="false">تم إنشاء هذا الملف بواسطة إصدار أحدث من التطبيق. قد يؤدي استيراده إلى سلوك غير متوقع. هل تريد المتابعة رغم ذلك؟</string>
     <string name="pref_export_alarms" formatted="false">تصدير المنبهات</string>
     <string name="pref_export_alarms_help" formatted="false">احفظ منبهاتك. يحتوي ملف JSON على قواعد المنبهات، ولا يتضمن إعدادات قنوات الإشعارات أو الأصوات التي يديرها Android.</string>
@@ -844,7 +858,7 @@
     <string name="pref_import_alarms_help" formatted="false">استبدل جميع المنبهات الحالية بالمنبهات الموجودة في النسخة الاحتياطية. اختر ملف JSON لنسخة احتياطية من المنبهات.</string>
     <string name="pref_import_alarms_summary" formatted="false">استبدال المنبهات الحالية بمنبهات من ملف</string>
     <string name="alarms_imported" formatted="false">تم استيراد المنبهات بنجاح.</string>
-    <string name="invalid_alarms_file" formatted="false">ملف منبهات غير صالح</string>
+    <string name="invalid_alarms_file" formatted="false">ملف منبهات غير صالح.</string>
     <string name="pref_backup_device_data" formatted="false">نسخ البيانات الخاصة بالجهاز احتياطيًا</string>
     <string name="device_data_logs" formatted="false">السجلات</string>
     <string name="device_data_predictor" formatted="false">بيانات التنبؤ</string>
@@ -858,8 +872,8 @@
     <string name="pref_import_device_data_summary" formatted="false">استعادة السجلات وبيانات التنبؤ من ملف</string>
     <string name="device_data_imported" formatted="false">تم استيراد البيانات الخاصة بالجهاز بنجاح</string>
     <string name="device_data_imported_dialog" formatted="false">تم استيراد البيانات الخاصة بالجهاز بنجاح.</string>
-    <string name="invalid_device_data_file" formatted="false">ملف البيانات الخاصة بالجهاز غير صالح</string>
-    <string name="device_data_file_empty" formatted="false">لا يحتوي هذا الملف على بيانات مدعومة خاصة بالجهاز</string>
+    <string name="invalid_device_data_file" formatted="false">ملف البيانات الخاصة بالجهاز غير صالح.</string>
+    <string name="device_data_file_empty" formatted="false">لا يحتوي هذا الملف على بيانات مدعومة خاصة بالجهاز.</string>
     <string name="pref_import_logs_csv" formatted="false">استيراد السجلات من CSV</string>
     <string name="pref_import_logs_csv_summary" formatted="false">استيراد السجلات من ملف CSV مُصدَّر</string>
     <string name="csv_logs_import_help" formatted="false">استورد سجلات من ملف CSV صدّره Battery Monitor واختر إضافتها أو استبدال السجلات الحالية. قد لا تتضمن الصادرات القديمة التيار أو الشحنة المتبقية؛ وتبقى هذه القياسات فارغة للإدخالات القديمة. تحفظ نسخ JSON الاحتياطية البيانات المنظمة وهي أفضل لاستعادتها.</string>
@@ -870,7 +884,7 @@
     <string name="log_import_replace" formatted="false">استبدال السجلات الحالية</string>
     <string name="csv_logs_imported" formatted="false">تم استيراد سجلات CSV بنجاح</string>
     <string name="csv_logs_imported_dialog" formatted="false">تم استيراد سجلات CSV بنجاح.</string>
-    <string name="invalid_csv_logs_file" formatted="false">ملف سجلات CSV غير صالح أو غير متوافق</string>
+    <string name="invalid_csv_logs_file" formatted="false">ملف سجلات CSV غير صالح أو غير متوافق.</string>
     <string name="settings_reset_title">استعادة الإعدادات الافتراضية</string>
     <string name="settings_reset_summary">إعادة ضبط تفضيلات التطبيق مع الاحتفاظ بالسجل والمنبهات والتقديرات المتعلمة</string>
     <string name="settings_reset_help" formatted="false">أعد ضبط تفضيلات التطبيق بعد التأكيد. تحتفظ بالسجل والمنبهات والتقديرات المتعلمة وإعدادات الأدوات وحالة تشغيل مراقبة الخلفية. لا تُعاد ضبط أذونات النظام أو إعدادات قنوات الإشعارات.</string>

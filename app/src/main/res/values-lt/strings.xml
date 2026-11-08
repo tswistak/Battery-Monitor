@@ -96,7 +96,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Daugiklis</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Kai kurie įrenginiai srovę pateikia netikėtais vienetais arba su netikėtu ženklu. Čia padauginkite pateiktą reikšmę, kad pataisytumėte rodomą rezultatą. Pasirinkę „Aptikti automatiškai“ galite pabandyti nustatyti srovės daugiklį pagal akumuliatoriaus rodmenį.\n
     \n
-    Apytiksliai vertinant telefoną, pagal Android standartą kraunant ženklas yra teigiamas, o iškraunant – neigiamas. Aktyvus įkrovimas dažnai būna apie +500–+5000\u00A0mA, o įprastas iškrovimas – apie -100–-3000\u00A0mA. Reikšmės arti nulio gali būti normalios, kai baterija beveik pilna arba telefonas nenaudojamas. Jei reikšmė atrodo maždaug 1000 kartų per maža ar per didelė arba ženklas apverstas, pakoreguokite daugiklį.</string>
+    Apytiksliai vertinant įrenginį, pagal Android standartą kraunant ženklas yra teigiamas, o iškraunant – neigiamas. Aktyvus įkrovimas dažnai būna apie +500–+5000\u00A0mA, o įprastas iškrovimas – apie -100–-3000\u00A0mA. Reikšmės arti nulio gali būti normalios, kai baterija beveik pilna arba įrenginys nenaudojamas. Jei reikšmė atrodo maždaug 1000 kartų per maža ar per didelė arba ženklas apverstas, pakoreguokite daugiklį.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Aptikti automatiškai</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatinis aptikimas negalimas esant dabartinei akumuliatoriaus būsenai arba rodmeniui</string>
     <string name="pref_battery_current_multiplier_detection_result">Daugiklis automatiškai nustatytas į %1$d</string>
@@ -150,7 +150,9 @@
     <string name="live_updates_notif_chan_name" formatted="false">Tiesioginiai naujiniai</string>
     <string name="notification_settings" formatted="false">Pagrindinis pranešimas</string>
     <string name="notification_settings_summary" formatted="false">Konfigūruokite pranešimo turinį, būsenos juostos piktogramą ir Tiesioginio naujinimo lustą</string>
-    <string name="notification_settings_help" formatted="false">Galite konfigūruoti, kurį turinį rodyti išskleidžiamajame pranešime.</string>
+    <string name="notification_settings_help" formatted="false">Galite konfigūruoti, kurį turinį rodyti išskleidžiamajame pranešime.\n
+    Pasirinkite, ar pranešimo piktograma rodo akumuliatoriaus procentą ar temperatūrą, ar piktogramoje rodomas vieneto simbolis ir ar įkrovimui turi būti naudojama atskira piktograma. Nuo „Android 16“ būsenos juostos piktograma gali veikti ne visuose operacinės sistemos variantuose.\n
+    „Android 16“ ar naujesnėje versijoje pasirinkite, kada rodomas Tiesioginio naujinimo lustas, kokias vertes jis keičia ir ar rodo įkrovimo jaustuką. Prieinamumas taip pat priklauso nuo įrenginio ir sistemos pranešimų nustatymų.</string>
     <string name="notification_channels_help" formatted="false">Atverkite „Android“ pranešimų nustatymus, kad leistumėte ar blokuotumėte pranešimus ir nustatytumėte pagrindinio pranešimo bei kiekvieno aliarmo tipo garsą, vibraciją ir pateikimą. Įjungta aliarmo taisyklė nepanaikina pranešimų kanalo blokavimo.</string>
     <string name="app_notifs_disabled_summary" formatted="false">Išjungėte visus šios programos pranešimus.  Leiskite jiems pasiekti šiuos nustatymus</string>
     <string name="main_notifs_disabled_summary" formatted="false">Išjungėte pagrindinį šios programos pranešimą.  Įgalinkite jį, kad galėtumėte pasiekti šiuos nustatymus</string>
@@ -203,7 +205,6 @@
     <string name="pref_expanded_notification_help" formatted="false">Įjungus šią parinktį, išskleistame pagrindiniame pranešime vietoje vienos eilutės santraukos rodomas „Likęs laikas“, „Laikas nuo būsenos pasikeitimo“ ir kiekviena „Gyvybiniai požymiai“ reikšmė atskiroje eilutėje su žyma.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">Būsenos juostos piktograma</string>
-    <string name="status_bar_icon_settings_help" formatted="false">Pasirinkite, ar pranešimo piktograma rodo akumuliatoriaus procentą ar temperatūrą, ar piktogramoje rodomas vieneto simbolis ir ar įkrovimui turi būti naudojama atskira piktograma. Nuo „Android 16“ būsenos juostos piktograma gali veikti ne visuose operacinės sistemos variantuose.</string>
     <string name="status_bar_icon_availability_help" formatted="false">Nuo „Android 16“ būsenos juostos piktograma gali veikti ne visuose operacinės sistemos variantuose.</string>
     <string name="pref_icon_content" formatted="false">Piktogramos turinys</string>
     <string name="pref_icon_content_help" formatted="false">Pasirinkite, ar būsenos juostos piktograma rodo akumuliatoriaus procentą arba akumuliatoriaus temperatūra. Temperatūra atitinka jūsų pasirinktą vienetą.</string>
@@ -216,7 +217,6 @@
     <string name="pref_indicate_charging_summary" formatted="false">Keisti piktogramą, kad būtų rodomas įkrovimas?</string>
     <string name="pref_indicate_charging_help" formatted="false">Įkrovimo piktograma gali rodyti žaibą po skaičiumi. Išjunkite šį nustatymą, jei norite tos pačios piktogramos kraunant ir išsikraunant.</string>
     <string name="status_bar_chip_settings" formatted="false">Būsenos juostos lustas</string>
-    <string name="status_bar_chip_settings_help" formatted="false">„Android 16“ ar naujesnėje versijoje pasirinkite, kada rodomas Tiesioginio naujinimo lustas, kokias vertes jis keičia ir ar rodo įkrovimo jaustuką. Prieinamumas taip pat priklauso nuo įrenginio ir sistemos pranešimų nustatymų.</string>
     <string name="status_bar_chip_availability_help" formatted="false">Prieinamumas taip pat priklauso nuo įrenginio ir sistemos pranešimų nustatymų.</string>
     <string name="settings_live_update_summary">Leisti arba blokuoti iškeltus akumuliatoriaus pranešimus „Android“ nustatymuose</string>
     <string name="settings_live_update_help">Leisti arba blokuoti iškeltus akumuliatoriaus pranešimus „Android“ nustatymuose.</string>
@@ -266,6 +266,8 @@
     <string name="alarm_settings_help" formatted="false">Jūs galite nusistatyti Baterijos Indikatoriaus perspėjimą, kai baterijos lygis pasiekia tam tikrą tašką (pvz.: baterija pilnai įkraunama, baterijos lygtis nukrenta žemiau 20% ir pan.).</string>
     <string name="alarms_overview" formatted="false">Aliarmų Peržiūra</string>
     <string name="alarms_overview_help">Visi aštuoni aliarmų tipai visada pasiekiami. Įvykius įjunkite tiesiogiai arba prie įkrovos ar temperatūros tipo naudokite „Pridėti ribą“. Naujos ribos įjungiamos išsaugojus. Palieskite vertę, kad ją keistumėte; įjungimo ar išjungimo būsena išlieka. Išjungtos vertės lieka sąraše. „Ištrinti Aliarmą“ prašo patvirtinimo. Garsas ir vibracija bendri tipui „Android“ pranešimų nustatymuose. Esami įrašų dublikatai rodomi kaip vienas aliarmas; perjungimas ar trynimas veikia visas kopijas. Įkrovimo ir iškrovimo aliarmai naudoja įverčių tikslus ir nevaldo įkrovimo. Užblokuotas kanalas ar sustabdytas stebėjimas nekeičia išsaugotų jungiklių.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Visi aštuoni aliarmų tipai visada pasiekiami. Įvykius įjunkite tiesiogiai arba prie įkrovos ar temperatūros tipo naudokite „Pridėti ribą“. Naujos ribos įjungiamos išsaugojus. Palieskite vertę, kad ją keistumėte; įjungimo ar išjungimo būsena išlieka. Išjungtos vertės lieka sąraše. „Ištrinti Aliarmą“ prašo patvirtinimo. Garsas ir vibracija bendri tipui „Android“ pranešimų nustatymuose. Esami įrašų dublikatai rodomi kaip vienas aliarmas; perjungimas ar trynimas veikia visas kopijas. Įkrovimo ir iškrovimo aliarmai naudoja įverčių tikslus ir nevaldo įkrovimo. Užblokuotas kanalas ar sustabdytas stebėjimas nekeičia išsaugotų jungiklių.\n
+    Atverkite „Android“ pranešimų nustatymus, kad leistumėte ar blokuotumėte pranešimus ir nustatytumėte pagrindinio pranešimo bei kiekvieno aliarmo tipo garsą, vibraciją ir pateikimą. Įjungta aliarmo taisyklė nepanaikina pranešimų kanalo blokavimo.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">Įjungtas %1$d aliarmas</item>
         <item quantity="few">Įjungti %1$d aliarmai</item>
@@ -302,6 +304,8 @@
     <string name="alarms_edit_threshold">Keisti ribą</string>
     <string name="alarms_edit_existing">Keisti esamą ribą</string>
     <string name="alarms_threshold_edit_help" formatted="false">Jei riba jau yra, atverkite ją naudodami „Keisti esamą ribą“. Jei išsaugoti įspėjimai pasikeičia redaguojant, naudokite „Atnaujinti“ ir prieš keisdami ribą atverkite ją iš naujo.</string>
+    <string name="alarms_threshold_edit_channels_help" formatted="false">Jei riba jau yra, atverkite ją naudodami „Keisti esamą ribą“. Jei išsaugoti įspėjimai pasikeičia redaguojant, naudokite „Atnaujinti“ ir prieš keisdami ribą atverkite ją iš naujo.\n
+    Atverkite „Android“ pranešimų nustatymus, kad leistumėte ar blokuotumėte pranešimus ir nustatytumėte pagrindinio pranešimo bei kiekvieno aliarmo tipo garsą, vibraciją ir pateikimą. Įjungta aliarmo taisyklė nepanaikina pranešimų kanalo blokavimo.</string>
     <string name="alarms_new_enabled">Aliarmas bus įjungtas jį pridėjus.</string>
     <string name="alarms_edit_keeps_enabled">Keičiant išlaikoma dabartinė įjungimo ar išjungimo būsena.</string>
     <string name="alarms_enabled">Įjungta</string>
@@ -423,7 +427,7 @@
     <string name="history_chart_y_fixed">Y: Fiksuotas</string>
     <string name="history_chart_y_manual">Y: Rankinis</string>
 
-    <string name="logs_empty" formatted="false">Įrašai tušti</string>
+    <string name="logs_empty" formatted="false">Įrašai tušti.</string>
     <string name="configure_log_filter" formatted="false">Rodyti kuriuos žurnalo elementus?</string>
     <string name="menu_show_seconds" formatted="false">Rodyti sekundes</string>
     <string name="menu_hide_seconds" formatted="false">Slėpti sekundes</string>
@@ -438,7 +442,7 @@
     <string name="pref_enable_logging_summary" formatted="false">Įrašinėti baterijos būsenos pakitimus?</string>
     <string name="pref_enable_logging_help" formatted="false">Išsaugokite akumuliatoriaus stebėjimus ir būsenos pokyčius skiltyje „Istorija“. Galimi matavimai: lygis, temperatūra, įtampa, pradinė momentinė srovė ir likęs krūvis. Galia apskaičiuojama iš įtampos ir srovės rodant arba eksportuojant; atskirai ji nesaugoma. Išjungus registravimą esama istorija neištrinama ir laiko įverčiai nesustabdomi.</string>
     <string name="pref_max_log_age" formatted="false">Ilgiausias įrašo gyvavimas</string>
-    <string name="pref_max_log_age_help" formatted="false">Kai registravimas įjungtas, prijungus maitinimą pašalinami už šią ribą senesni žurnalai. „Be apribojimų“ juos saugo iki rankinio išvalymo. Jei įjungtas automatinis eksportas, Battery Monitor prieš trindamas senus įrašus eksportuoja laukiančius žurnalus; nepavykęs eksportas neleidžia trinti.</string>
+    <string name="pref_max_log_age_help" formatted="false">Kai registravimas įjungtas, už šią ribą senesni žurnalai automatiškai pašalinami tvarkant istoriją. „Be apribojimų“ juos saugo iki rankinio išvalymo. Jei įjungtas automatinis eksportas, Battery Monitor prieš trindamas senus įrašus eksportuoja laukiančius žurnalus; nepavykęs eksportas neleidžia trinti.</string>
     <string name="age_1_day" formatted="false">1\u00A0diena</string>
     <string name="age_2_days" formatted="false">2\u00A0dienos</string>
     <string name="age_4_days" formatted="false">4\u00A0dienos</string>
@@ -464,9 +468,9 @@
     <string name="pref_auto_log_export_format" formatted="false">Eksporto formatas</string>
     <string name="pref_auto_log_export_directory" formatted="false">Keisti aplanką</string>
     <string name="pref_auto_log_export_path" formatted="true">Kelias: %1$s</string>
-    <string name="auto_log_export_help" formatted="false">Pasirinkite aplanką, dažnį, formatą ir ar kurti atskirus failus, ar pridėti prie vieno failo. Paprastai eksportuojami žurnalai nuo ankstesnio automatinio eksporto; naujame tęstiniame faile yra visi pasiekiami žurnalai. „Android“ gali atidėti eksportą, kai įrenginys nenaudojamas. Registravimas turi likti įjungtas.</string>
-    <string name="auto_log_export_options_help" formatted="false">Eksportavimo intervalas negali viršyti žurnalų saugojimo laikotarpio. Keičiant aplanką reikia Android sistemoje suteikti programai prieigą prie to aplanko. Išjungus automatinį eksportavimą, išsaugoti žurnalai ir esami failai nekeičiami.</string>
-    <string name="auto_log_export_format_help" formatted="false">CSV patogu naudoti skaičiuoklėje ar teksto rengyklėje. Jame yra pradinė srovė, likęs krūvis ir galia, apskaičiuota naudojant eksportuojant pasirinktą daugiklį. JSON išsaugo struktūrinius žurnalų duomenis atsarginėms kopijoms. Nepasiekiamos srovės, likusio krūvio ir galios langeliai lieka tušti.</string>
+    <string name="auto_log_export_help" formatted="false">Pasirinkite aplanką, dažnį, formatą ir ar kurti atskirus failus, ar pridėti prie vieno failo. Paprastai eksportuojami žurnalai nuo ankstesnio automatinio eksporto; naujame tęstiniame faile yra visi pasiekiami žurnalai. „Android“ gali atidėti eksportą, kai įrenginys nenaudojamas. Registravimas turi likti įjungtas.\n
+    CSV patogu naudoti skaičiuoklėje ar teksto rengyklėje. Jame yra pradinė srovė, likęs krūvis ir galia, apskaičiuota naudojant eksportuojant pasirinktą daugiklį. JSON išsaugo struktūrinius žurnalų duomenis atsarginėms kopijoms. Nepasiekiamos srovės, likusio krūvio ir galios langeliai lieka tušti.\n
+    Eksportavimo intervalas negali viršyti žurnalų saugojimo laikotarpio. Keičiant aplanką reikia Android sistemoje suteikti programai prieigą prie to aplanko. Išjungus automatinį eksportavimą, išsaugoti žurnalai ir esami failai nekeičiami.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Sukurti naują failą</string>
     <string name="auto_log_export_mode_append" formatted="false">Pridėti naujus žurnalus prie esamo failo</string>
     <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
@@ -545,6 +549,8 @@
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">Sistemos spalvoms reikia „Android 12“ arba naujesnės versijos. Šiame įrenginyje naudojama „Battery Blue“.</string>
+    <string name="settings_color_palette_unsupported_help" formatted="false">Naudoti sistemos spalvas arba „Battery Blue“.\n
+    Sistemos spalvoms reikia „Android 12“ arba naujesnės versijos. Šiame įrenginyje naudojama „Battery Blue“.</string>
     <string name="settings_brightness">Šviesumas</string>
     <string name="settings_brightness_summary">Naudoti sistemos nustatymą arba rinktis šviesią, tamsią ar visiškai juodą temą</string>
     <string name="settings_brightness_help">Naudoti sistemos nustatymą arba rinktis šviesią, tamsią ar visiškai juodą temą.</string>
@@ -560,8 +566,8 @@
     \n
     Neribotas veikimas gali padidinti akumuliatoriaus sąnaudas fone. Tai galėsite pakeisti vėliau: Android „nustatymai“ → „Programos“ → „Battery Monitor“ → „Akumuliatorius“. Meniu pavadinimai skiriasi priklausomai nuo įrenginio.</string>
     <string name="pref_cat_autostart" formatted="false">Auto-Paleidimas</string>
-    <string name="pref_autostart_at_boot" formatted="false">Auto-Paleidimas įjungus telefoną</string>
-    <string name="pref_autostart_at_boot_summary" formatted="false">Paleisti Programą kai prietaisas įjungia:</string>
+    <string name="pref_autostart_at_boot" formatted="false">Auto-Paleidimas įjungus įrenginį</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">Paleisti Programą kai prietaisas įjungia</string>
     <string name="pref_autostart_at_boot_help" formatted="false">„Visada“ pradeda stebėjimą fone iš naujo paleidus įrenginį. „Niekada“ praleidžia automatinį paleidimą. „Jei veikia išjungiant“ atsižvelgia į tai, ar paskutinį kartą pradėjote, ar sustabdėte stebėjimą Battery Monitor. Programos užvėrimas ar jos proceso nutraukimas nelaikomas stebėjimo sustabdymu. Valdikliai šio pasirinkimo nepakeičia.</string>
     <string name="boot_pref_always" formatted="false">Visada</string>
     <string name="boot_pref_never" formatted="false">Niekada</string>
@@ -583,7 +589,8 @@
     <string name="diag_status_waiting_permission" formatted="false">Laukiama Shizuku leidimo…</string>
     <string name="diag_status_no_stats" formatted="false">Šiuo metu šiame įrenginyje nėra jokios išplėstinės baterijos statistikos.</string>
     <string name="diag_value_not_available" formatted="false">Nėra</string>
-    <string name="diag_help_overview" formatted="false">Sujungia stebėjimo patikimumą, išsaugotus prognozavimo duomenis ir akumuliatoriaus duomenis kortelėse „Programos veikimas“, „Akumuliatorius“, „Įkrovimas“ ir „Neapdoroti duomenys“. „Android“ duomenys pasiekiami be root. Papildomi duomenys priklauso nuo įrenginio ir Battery Monitor leidimų.</string>
+    <string name="diag_help_overview" formatted="false">Sujungia stebėjimo patikimumą, išsaugotus prognozavimo duomenis ir akumuliatoriaus duomenis kortelėse „Programos veikimas“, „Akumuliatorius“, „Įkrovimas“ ir „Neapdoroti duomenys“. „Android“ duomenys pasiekiami be root. Papildomi duomenys priklauso nuo įrenginio ir Battery Monitor leidimų.\n
+    Pasiekiami „Android“ rodmenys renkami automatiškai, kol atverta „Diagnostika“. Palieskite vertę, kad peržiūrėtumėte ir nukopijuotumėte rodmenį, šaltinį ir laiką. Pradiniai įrenginio raktai ir vertės pateikiami skiltyje „Neapdoroti duomenys“. Įjunkite privilegijuotą prieigą, kad būtų naudojamas ir Root arba Shizuku.</string>
     <string name="diag_section_counters" formatted="false">Skaitikliai</string>
     <string name="diag_help_counters" formatted="false">Akumuliatoriaus rodmenys pažymėti ir formatuojami kaip likęs krūvis mAh, srovė mA, energija mWh, įtampa V, temperatūra pasirinktais vienetais ir galia W. Srovės daugiklis taikomas ir apskaičiuotai galiai. Vidutinė srovė ir ciklų skaičius priklauso nuo įrenginio palaikymo.</string>
     <string name="diag_field_charge_counter" formatted="false">Numatomas likęs įkrovimas</string>
@@ -604,7 +611,8 @@
     <string name="diag_capacity_low">Žemas</string>
     <string name="diag_capacity_high">Aukštas</string>
     <string name="diag_section_charging" formatted="false">Įkrovimas</string>
-    <string name="diag_help_charging" formatted="false">Rodo reikšmes, susijusias su aktyviu įkrovimo keliu, tokias kaip didžiausia įkrovimo srovė ar įtampa, įkrovimo politika, įkrovimo būsena ir talpos lygis. Šie laukai gali keistis priklausomai nuo įkroviklio ir įkrovimo režimo.</string>
+    <string name="diag_help_charging" formatted="false">Rodo reikšmes, susijusias su aktyviu įkrovimo keliu, tokias kaip didžiausia įkrovimo srovė ar įtampa, įkrovimo politika, įkrovimo būsena ir talpos lygis. Šie laukai gali keistis priklausomai nuo įkroviklio ir įkrovimo režimo.\n
+    Šis įvertis naudoja pasirinktą Battery Monitor prognozavimo metodą. Jo tikslas nevaldo įkrovimo ar išjungimo.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Likęs įkrovimo laikas</string>
     <string name="diag_field_max_charging_current" formatted="false">Didžiausia įkrovimo srovė</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Didžiausia įkrovimo įtampa</string>
@@ -661,7 +669,7 @@
     <string name="diagnostics" formatted="false">Diagnostika</string>
     <string name="diagnostics_summary" formatted="false">Patikrinkite leidimus ir stebėjimo patikimumą bei sukurkite trikčių šalinimo ataskaitą</string>
     <string name="diag_overview">Programos veikimas</string>
-    <string name="diagnostics_help_overview" formatted="false">Tikrina leidimus ir stebėjimo patikimumą. Jo valdikliais galite pradėti ar sustabdyti stebėjimą, keisti derinimo registravimą, atverti akumuliatoriaus optimizavimo ir pranešimų nustatymus arba kurti trikčių šalinimo ataskaitą. Ne kiekvienas nepasiekiamas rodmuo reiškia leidimų problemą; kai kurie įrenginiai jo nepateikia.</string>
+    <string name="diagnostics_help_overview" formatted="false">Tikrinkite leidimus ir stebėjimo patikimumą. Jo valdikliais galite pradėti ar sustabdyti stebėjimą, keisti derinimo registravimą, atverti akumuliatoriaus optimizavimo ir pranešimų nustatymus arba kurti trikčių šalinimo ataskaitą. Ne kiekvienas nepasiekiamas rodmuo reiškia leidimų problemą; kai kurie įrenginiai jo nepateikia.</string>
     <string name="diagnostics_monitoring" formatted="false">Stebėjimas fone</string>
     <string name="diag_monitor_operation">Stebėjimo veikimas</string>
     <string name="diag_heartbeat">Paskutinis veikimo signalas</string>
@@ -689,12 +697,15 @@
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Trūksta leidimo. Palieskite atverti nustatymus</string>
     <string name="diagnostics_battery_optimization" formatted="false">Akumuliatoriaus optimizavimas</string>
     <string name="diagnostics_battery_optimization_help" formatted="false">Jei veikla ribojama, atverkite Android akumuliatoriaus optimizavimo nustatymus. Jei ribojimų jau nėra, bakstelėjimas patvirtina šią būseną.</string>
+    <string name="monitoring_battery_optimization_help" formatted="false">Jei veikla ribojama, atverkite Android akumuliatoriaus optimizavimo nustatymus. Jei ribojimų jau nėra, bakstelėjimas patvirtina šią būseną.\n
+    Neribotas veikimas fone gali pagerinti stebėjimo patikimumą. „Android“ akumuliatoriaus optimizavimas gali uždelsti atnaujinimus ir aliarmus.\n
+    \n
+    Neribotas veikimas gali padidinti akumuliatoriaus sąnaudas fone. Tai galėsite pakeisti vėliau: Android „nustatymai“ → „Programos“ → „Battery Monitor“ → „Akumuliatorius“. Meniu pavadinimai skiriasi priklausomai nuo įrenginio.</string>
     <string name="diagnostics_unrestricted" formatted="false">Neribojama</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Ribojama. Palieskite leisti patikimą stebėjimą fone</string>
     <string name="diagnostics_vendor_settings" formatted="false">Gamintojo nustatymai</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Atverkite papildomus foninės veiklos ar automatinio paleidimo nustatymus šiame įrenginyje</string>
-    <string name="diagnostics_vendor_settings_help" formatted="false">Atverkite papildomus foninės veiklos ar automatinio paleidimo nustatymus šiame įrenginyje.</string>
-    <string name="diagnostics_vendor_availability_help" formatted="false">Parinktis „Gamintojo nustatymai“ pasiekiama tik palaikomuose įrenginiuose.</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Atverkite papildomus foninės veiklos ar automatinio paleidimo nustatymus. Pasiekiami tik palaikomuose įrenginiuose.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Foninės veiklos pagalba</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Atverkite įrenginio vadovą svetainėje Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">Atverkite įrenginio vadovą svetainėje Don’t Kill My App.</string>
@@ -758,6 +769,8 @@
 
     <string name="charging_diagnostics_title" formatted="false">OEM įkrovimo ribos diagnostika</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Atverkite momentinių kopijų ir palyginimo įrankius, kad ištirtumėte, kaip Battery Monitor aptinka įrenginio įkrovimo ribą. Pasiruošimo instrukcijos pateiktos paties OEM diagnostikos ekrano žinyne.</string>
+    <string name="charging_tools_help_overview" formatted="false">Atverkite momentinių kopijų ir palyginimo įrankius, kad ištirtumėte, kaip Battery Monitor aptinka įrenginio įkrovimo ribą. Pasiruošimo instrukcijos pateiktos paties OEM diagnostikos ekrano žinyne.\n
+    Suteikus privilegijuotą prieigą gali būti pasiekiama daugiau diagnostikos informacijos. Suteikite prieigą per „Shizuku“ arba „root“ ir skiltyje „Nustatymai“ → „Išplėstiniai“ → „Naudoti privilegijuotą prieigą“ įjunkite privilegijuotą prieigą, kad OEM įkrovimo ribos ataskaita būtų naudingesnė.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Kad ataskaita būtų naudinga, prieš fiksuodami kopijas atverkite skiltį „Pagalba“ ir atlikite paruošimo veiksmus.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Suteikus privilegijuotą prieigą gali būti pasiekiama daugiau diagnostikos informacijos. Suteikite prieigą per „Shizuku“ arba „root“ ir skiltyje „Nustatymai“ → „Išplėstiniai“ → „Naudoti privilegijuotą prieigą“ įjunkite privilegijuotą prieigą, kad OEM įkrovimo ribos ataskaita būtų naudingesnė.</string>
     <string name="charging_diagnostics_capture" formatted="false">Užfiksuoti momentinę kopiją</string>
@@ -789,13 +802,14 @@
     <string name="charging_diagnostics_clear_summary" formatted="false">Ištrinti vietoje saugomas OEM įkrovimo kopijas</string>
     <string name="charging_diagnostics_clear_help" formatted="false">Ištrinti vietoje saugomas OEM įkrovimo kopijas.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Įkrovimo kopijos ištrintos</string>
-    <string name="charging_diagnostics_help_steps" formatted="false">1. Atjunkite telefoną ir palikite jį atjungtą, kol fiksuojamos konfigūracijos kopijos. Tarp kopijų keiskite tik gamintojo įkrovimo apsaugos nustatymą.\n
+    <string name="charging_diagnostics_help_steps" formatted="false">1. Atjunkite įrenginį ir palikite jį atjungtą, kol fiksuojamos konfigūracijos kopijos. Tarp kopijų keiskite tik gamintojo įkrovimo apsaugos nustatymą.\n
     2. Išjunkite įkrovimo apsaugą, palaukite 2–5\u00A0sekundes ir užfiksuokite kopiją.\n
     3. Pasirinkite fiksuotą ribą, palaukite 2–5\u00A0sekundes ir užfiksuokite. Jei galima, pakartokite su kita riba.\n
     4. Įjunkite prisitaikantį, išmanų ar suplanuotą įkrovimą, palaukite 2–5\u00A0sekundes ir užfiksuokite.\n
     5. Jei konfigūracijos palyginimas neaiškus, pasirinktinai pakartokite seką įkrovimo metu, kad užfiksuotumėte tik veikimo metu matomą būseną.\n
     6. Sukurkite ir peržiūrėkite palyginimo ataskaitą. Duomenys filtruojami, o galimai jautrios reikšmės paslepiamos, tačiau prieš dalydamiesi peržiūrėkite visą ataskaitą.</string>
-    <string name="charging_diagnostics_help_contact" formatted="false">Peržiūrėję ataskaitą nukopijuokite arba išsaugokite ir išsiųskite el. paštu adresu <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
+    <string name="charging_report_privacy_help" formatted="false">Pagal numatytuosius nustatymus neįtraukiama. Šiuose duomenyse gali būti asmeninės informacijos. Prieš kopijuodami ar išsaugodami peržiūrėkite.\n
+    Peržiūrėję ataskaitą nukopijuokite arba išsaugokite ir išsiųskite el. paštu adresu <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Atsarginė kopija ir atkūrimas</string>
     <string name="backup_restore_settings_summary" formatted="false">Kurkite programėlės nustatymų ir akumuliatoriaus duomenų atsargines kopijas, juos atkurkite ir perkelkite</string>
@@ -809,9 +823,9 @@
     <string name="pref_import_general_backup_help" formatted="false">Pasirinkite esamą bendrąją ZIP atsarginę kopiją ir prieinamas kategorijas, kurias norite atkurti. Naujesnėmis programos versijomis sukurtos atsarginės kopijos gali būti nesuderinamos, o atkūrus žurnalus ar prognozuoklio duomenis iš kito įrenginio gali būti pateikti neteisingi įverčiai. Jei atkuriama tik dalis duomenų, prieš bandydami dar kartą patikrinkite nurodytas kategorijas. Pasirinktos kategorijos atkuriamos; nepasirinktos išsaugomos. Atkuriant įspėjimus pakeičiami dabartiniai įspėjimai. Žurnalams pasirinkite, ar juos pridėti, ar pakeisti dabartinę istoriją.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Atkurti pasirinktus duomenis iš bendrosios atsarginės kopijos ZIP failo</string>
     <string name="general_backup_restore_message" formatted="false">Pasirinkite, ką norite atkurti.</string>
-    <string name="general_backup_device_data_warning_scope" formatted="false">Žurnalai ir prognozavimo duomenys</string>
+    <string name="general_backup_device_data_warning">Žurnalai ir prognozavimo duomenys priklauso įrenginiui, kuriame jie buvo surinkti. Importavus juos į kitą įrenginį gali būti pateiktos neteisingos prognozės arba programa gali veikti kitaip nei tikėtasi.</string>
     <string name="general_backup_imported" formatted="false">Bendroji atsarginė kopija sėkmingai importuota.</string>
-    <string name="invalid_general_backup_file" formatted="false">Netinkamas arba nesuderinamas bendrosios atsarginės kopijos failas</string>
+    <string name="invalid_general_backup_file" formatted="false">Netinkamas arba nesuderinamas bendrosios atsarginės kopijos failas.</string>
     <string name="settings_restore_partial">Dalies duomenų nepavyko atkurti. Atkurta: %1$s. Galbūt iš dalies atkurta: %2$s. Prieš bandydami dar kartą patikrinkite šias skiltis.</string>
     <string name="settings_restore_none">Nėra</string>
     <string name="pref_export_settings" formatted="false">Eksportuoti nustatymus</string>
@@ -822,7 +836,7 @@
     <string name="pref_import_settings_help" formatted="false">Atkurkite išsaugotas nuostatas. Šis veiksmas neatkuria istorijos ar aliarmų įrašų.</string>
     <string name="pref_import_settings_summary" formatted="false">Atkurti nustatymus iš failo</string>
     <string name="settings_imported" formatted="false">Nustatymai sėkmingai importuoti.</string>
-    <string name="invalid_settings_file" formatted="false">Netinkamas nustatymų failas</string>
+    <string name="invalid_settings_file" formatted="false">Netinkamas nustatymų failas.</string>
     <string name="settings_file_version_warning" formatted="false">Šis failas buvo sukurtas naujesne programos versija. Jį importavus gali atsirasti nenumatytas veikimas. Vis tiek tęsti?</string>
     <string name="pref_export_alarms" formatted="false">Eksportuoti aliarmus</string>
     <string name="pref_export_alarms_help" formatted="false">Išsaugokite jūsų aliarmus. JSON faile yra aliarmų taisyklės, o ne Android valdomi pranešimų kanalų ar garso nustatymai.</string>
@@ -832,7 +846,7 @@
     <string name="pref_import_alarms_help" formatted="false">Visus dabartinius aliarmus pakeiskite esančiais atsarginėje kopijoje. Pasirinkite aliarmų atsarginės kopijos JSON failą.</string>
     <string name="pref_import_alarms_summary" formatted="false">Pakeisti dabartinius aliarmus aliarmais iš failo</string>
     <string name="alarms_imported" formatted="false">Aliarmai sėkmingai importuoti.</string>
-    <string name="invalid_alarms_file" formatted="false">Netinkamas aliarmų failas</string>
+    <string name="invalid_alarms_file" formatted="false">Netinkamas aliarmų failas.</string>
     <string name="pref_backup_device_data" formatted="false">Kurti konkrečiam įrenginiui skirtų duomenų atsarginę kopiją</string>
     <string name="device_data_logs" formatted="false">Žurnalai</string>
     <string name="device_data_predictor" formatted="false">Prognozavimo duomenys</string>
@@ -846,8 +860,8 @@
     <string name="pref_import_device_data_summary" formatted="false">Atkurti žurnalus ir prognozavimo duomenis iš failo</string>
     <string name="device_data_imported" formatted="false">Konkrečiam įrenginiui skirti duomenys sėkmingai importuoti</string>
     <string name="device_data_imported_dialog" formatted="false">Konkrečiam įrenginiui skirti duomenys sėkmingai importuoti.</string>
-    <string name="invalid_device_data_file" formatted="false">Netinkamas konkrečiam įrenginiui skirtų duomenų failas</string>
-    <string name="device_data_file_empty" formatted="false">Šiame faile nėra palaikomų konkrečiam įrenginiui skirtų duomenų</string>
+    <string name="invalid_device_data_file" formatted="false">Netinkamas konkrečiam įrenginiui skirtų duomenų failas.</string>
+    <string name="device_data_file_empty" formatted="false">Šiame faile nėra palaikomų konkrečiam įrenginiui skirtų duomenų.</string>
     <string name="pref_import_logs_csv" formatted="false">Importuoti žurnalus iš CSV</string>
     <string name="pref_import_logs_csv_summary" formatted="false">Importuoti žurnalus iš eksportuoto CSV failo</string>
     <string name="csv_logs_import_help" formatted="false">Importuokite žurnalus iš Battery Monitor eksportuoto CSV ir pasirinkite, ar juos pridėti, ar pakeisti esamus. Senesniuose eksportuose gali nebūti srovės ar likusio krūvio; šie matavimai senesniems įrašams lieka tušti. JSON atsarginės kopijos išsaugo struktūrinius duomenis ir geriau tinka jiems atkurti.</string>
@@ -858,7 +872,7 @@
     <string name="log_import_replace" formatted="false">Pakeisti esamus žurnalus</string>
     <string name="csv_logs_imported" formatted="false">CSV žurnalai sėkmingai importuoti</string>
     <string name="csv_logs_imported_dialog" formatted="false">CSV žurnalai sėkmingai importuoti.</string>
-    <string name="invalid_csv_logs_file" formatted="false">Netinkamas arba nesuderinamas CSV žurnalų failas</string>
+    <string name="invalid_csv_logs_file" formatted="false">Netinkamas arba nesuderinamas CSV žurnalų failas.</string>
     <string name="settings_reset_title">Atkurti numatytuosius nustatymus</string>
     <string name="settings_reset_summary">Atkurti programos nuostatas išsaugant istoriją, aliarmus ir išmoktus įverčius</string>
     <string name="settings_reset_help" formatted="false">Po patvirtinimo atkurkite programos nuostatas. Išsaugoma istorija, aliarmai, išmokti įverčiai, valdiklių konfigūracijos ir stebėjimo fone būsena. Sistemos leidimai ir pranešimų kanalų nustatymai neatkuriami.</string>

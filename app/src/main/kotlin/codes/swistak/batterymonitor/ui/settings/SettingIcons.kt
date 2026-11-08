@@ -97,13 +97,13 @@ private val settingIcons = listOf(
     SettingIcon(
         SettingsContract.KEY_EXPANDED_NOTIFICATION_DETAILS,
         R.string.pref_expanded_notification,
-        R.drawable.ui_text
+        R.drawable.ui_fullscreen
     ),
     SettingIcon(
         SettingsContract.KEY_ICON_CONTENT, R.string.pref_icon_content, R.drawable.ui_battery
     ),
     SettingIcon(
-        SettingsContract.KEY_SHOW_ICON_UNIT, R.string.pref_show_icon_unit, R.drawable.ui_text
+        SettingsContract.KEY_SHOW_ICON_UNIT, R.string.pref_show_icon_unit, R.drawable.ui_unit
     ),
     SettingIcon(
         SettingsContract.KEY_INDICATE_CHARGING, R.string.pref_indicate_charging, R.drawable.ui_bolt
@@ -116,17 +116,17 @@ private val settingIcons = listOf(
     SettingIcon(
         SettingsContract.KEY_LIVE_UPDATE_DISPLAY,
         R.string.pref_live_update_display,
-        R.drawable.ui_bell
+        R.drawable.ui_visibility
     ),
     SettingIcon(
         SettingsContract.KEY_LIVE_UPDATE_KEEP_MAIN_NOTIFICATION,
         R.string.pref_live_update_keep_main_notification,
-        R.drawable.ui_bell
+        R.drawable.ui_layers
     ),
     SettingIcon(
         SettingsContract.KEY_EXPANDED_LIVE_UPDATE_DETAILS,
         R.string.pref_expanded_live_update,
-        R.drawable.ui_text
+        R.drawable.ui_fullscreen
     ),
     SettingIcon(
         SettingsContract.KEY_CHIP_CONTENT, R.string.pref_chip_content, R.drawable.ui_heart

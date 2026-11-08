@@ -51,6 +51,7 @@ internal data class HistoryUiState(
     val loading: Boolean = false,
     val busy: Boolean = false,
     val error: Boolean = false,
+    val importError: String? = null,
     val hasNext: Boolean = false,
     val hasPrevious: Boolean = false,
     val anchor: HistoryKey? = null,
@@ -189,6 +190,7 @@ internal class HistoryViewModel(
             selectedPointId = if (bundle.containsKey("point") && bundle.containsKey("pointTime")) {
                 bundle.getLong("point")
             } else null,
+            importError = bundle.getString("importError"),
             includeAnchor = bundle.getBoolean("includeAnchor")
         )
         retainedSelection =
@@ -233,6 +235,7 @@ internal class HistoryViewModel(
             putBoolean("exportAppend", it.append)
             putBoolean("exportWatermark", it.advanceWatermark)
         }
+        putString("importError", value.importError)
         putString("importUri", pendingImportUri)
         putBoolean("importJson", pendingImportJson)
     }
@@ -465,40 +468,61 @@ internal class HistoryViewModel(
         operation(onDone) { repository.delete(if (all) null else range) }
     }
 
-    fun import(mode: LogImportMode, onDone: (Boolean, String?) -> Unit) {
+    fun acknowledgeImportError() {
+        mutable.value = mutable.value.copy(importError = null)
+    }
+
+    fun import(mode: LogImportMode, onSuccess: () -> Unit) {
         val uri = pendingImportUri?.let(Uri::parse) ?: return
         val json = pendingImportJson
         pendingImportUri = null
         var restoreError: String? = null
+        var partialRestore = false
         operation({ success ->
-            onDone(success, restoreError)
-            if (restoreError != null) {
+            if (success) onSuccess()
+            else mutable.value = mutable.value.copy(
+                importError = restoreError ?: getApplication<Application>().getString(
+                    R.string.history_operation_failed
+                )
+            )
+            if (partialRestore) {
                 mutable.value = mutable.value.copy(selectedPointId = null, eventToReveal = null)
                 scroll(0, 0)
                 refresh(null, false, includeAnchor = false)
             }
         }) {
-            try {
-                withContext(Dispatchers.IO) {
-                    val context = getApplication<Application>()
+            withContext(Dispatchers.IO) {
+                val context = getApplication<Application>()
+                // Reading stays outside format validation: denied access is not a malformed file.
+                val text = if (json) DeviceDataBackup.readFromUri(context, uri)
+                else CsvLogImporter.readFromUri(context, uri)
+                try {
                     if (json) {
-                        val text = DeviceDataBackup.readFromUri(context, uri)
+                        if (DeviceDataBackup.getAvailableData(text).isEmpty()) {
+                            restoreError = context.getString(R.string.device_data_file_empty)
+                            throw IllegalArgumentException("No supported device data")
+                        }
                         DeviceDataBackup.importFromJson(
                             context, text, setOf(DeviceDataType.LOGS), mode
                         )
-                    } else {
-                        val text = CsvLogImporter.readFromUri(context, uri)
-                        CsvLogImporter.importFromCsv(context, text, mode)
-                    }
+                    } else CsvLogImporter.importFromCsv(context, text, mode)
+                } catch (failure: GeneralBackupRestoreException) {
+                    partialRestore = true
+                    restoreError = context.getString(
+                        R.string.settings_restore_partial,
+                        context.getString(R.string.settings_restore_none),
+                        context.getString(R.string.device_data_logs)
+                    )
+                    throw failure
+                } catch (failure: org.json.JSONException) {
+                    restoreError = context.getString(R.string.invalid_device_data_file)
+                    throw failure
+                } catch (failure: IllegalArgumentException) {
+                    if (restoreError == null) restoreError = context.getString(
+                        if (json) R.string.invalid_device_data_file else R.string.invalid_csv_logs_file
+                    )
+                    throw failure
                 }
-            } catch (failure: GeneralBackupRestoreException) {
-                val context = getApplication<Application>()
-                restoreError = context.getString(
-                    R.string.settings_restore_partial,
-                    context.getString(R.string.settings_restore_none),
-                    context.getString(R.string.device_data_logs)
-                )
-                throw failure
             }
         }
     }

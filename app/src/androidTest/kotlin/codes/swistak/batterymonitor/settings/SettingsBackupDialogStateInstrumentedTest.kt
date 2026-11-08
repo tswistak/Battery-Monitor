@@ -17,6 +17,7 @@ import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -31,6 +32,7 @@ import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.devicebackup.GeneralBackup
 import codes.swistak.batterymonitor.settings.backup.SettingsBackup
 import codes.swistak.batterymonitor.ui.settings.SettingsDialog
+import kotlinx.coroutines.CancellationException
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -42,6 +44,7 @@ import org.junit.Test
 import java.io.File
 import java.io.RandomAccessFile
 import java.util.UUID
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -246,6 +249,104 @@ class SettingsBackupDialogStateInstrumentedTest {
         cancel(restored)
     }
 
+    @Test
+    fun malformed_and_unreadable_import_errors_survive_recreation_until_acknowledged() {
+        val malformed = File(directory, "malformed-device.json").apply { writeText("invalid JSON") }
+        val unreadable = File(directory, "missing-device.json")
+        for ((source, expected) in listOf(
+            malformed to R.string.invalid_device_data_file,
+            unreadable to R.string.history_operation_failed
+        )) {
+            val original = fragment()
+            read(original, request(6), Uri.fromFile(source))
+            complete(original)
+            assertEquals(
+                context.getString(expected), (dialog(original) as SettingsDialog.Message).message
+            )
+            assertNull(models.getValue(original).outcome)
+            assertNull(save(original).getBundle("settings_backup_dialog"))
+
+            val restored = restore(save(original))
+            assertEquals(
+                context.getString(expected), (dialog(restored) as SettingsDialog.Message).message
+            )
+            cancel(restored)
+            assertNull(save(restored).getBundle("settings_dialog"))
+            val acknowledged = restore(save(restored))
+            assertNull(dialog(acknowledged))
+            assertNull(models.getValue(acknowledged).outcome)
+        }
+    }
+
+    @Test
+    fun an_empty_device_archive_uses_a_message_and_cancelled_work_has_no_error() {
+        val source = File(directory, "empty-device.json").apply { writeText("""{"version":2}""") }
+        val empty = fragment()
+        read(empty, request(6), Uri.fromFile(source))
+        complete(empty)
+        assertEquals(
+            context.getString(R.string.device_data_file_empty),
+            (dialog(empty) as SettingsDialog.Message).message
+        )
+        assertNull(save(empty).getBundle("settings_backup_dialog"))
+
+        val cancelled = fragment()
+        main {
+            models.getValue(cancelled).start(
+                SettingsOperationAction.ReadDeviceData, R.string.invalid_device_data_file
+            ) { throw CancellationException("Test cancellation") }
+        }
+        complete(cancelled)
+        assertNull(dialog(cancelled))
+        assertNull(models.getValue(cancelled).outcome)
+        assertNull(save(cancelled).getBundle("settings_dialog"))
+    }
+
+    @Test
+    fun queued_preference_callback_does_not_touch_detached_settings() {
+        val fragment = fragment()
+        val name = "detached-settings-callback-${UUID.randomUUID()}"
+        val preferences = context.getSharedPreferences(name, Context.MODE_PRIVATE)
+        val deliveries = AtomicInteger()
+        val observer = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == SettingsContract.KEY_ENABLE_LOGGING) deliveries.incrementAndGet()
+        }
+        val added = Fragment::class.java.getDeclaredField("mAdded").apply { isAccessible = true }
+        val host = Fragment::class.java.getDeclaredField("mHost").apply { isAccessible = true }
+        try {
+            main {
+                SettingsFragment::class.java.getDeclaredField("mSharedPreferences")
+                    .apply { isAccessible = true }.set(fragment, preferences)
+                added.setBoolean(fragment, true)
+                preferences.registerOnSharedPreferenceChangeListener(fragment)
+                preferences.registerOnSharedPreferenceChangeListener(observer)
+                var committed = false
+                val writer = Thread {
+                    committed =
+                        preferences.edit().putBoolean(SettingsContract.KEY_ENABLE_LOGGING, true)
+                            .commit()
+                }
+                writer.start()
+                writer.join()
+                assertTrue(committed)
+                // SharedPreferences already queued the original listener snapshot on this main thread.
+                preferences.unregisterOnSharedPreferenceChangeListener(fragment)
+                preferences.unregisterOnSharedPreferenceChangeListener(observer)
+                added.setBoolean(fragment, false)
+                host.set(fragment, null)
+            }
+            instrumentation.waitForIdleSync()
+            assertEquals(1, deliveries.get())
+            assertNull(dialog(fragment))
+            assertFalse(models.getValue(fragment).busy)
+            assertNull(models.getValue(fragment).outcome)
+        } finally {
+            preferences.unregisterOnSharedPreferenceChangeListener(fragment)
+            preferences.unregisterOnSharedPreferenceChangeListener(observer)
+            context.deleteSharedPreferences(name)
+        }
+    }
+
     private fun fragment(): SettingsFragment {
         lateinit var result: SettingsFragment
         main {
@@ -300,8 +401,10 @@ class SettingsBackupDialogStateInstrumentedTest {
 
     private fun restore(saved: Bundle) = fragment().also { fragment ->
         main {
-            SettingsFragment::class.java.getDeclaredMethod("restoreDialog", Bundle::class.java)
-                .apply { isAccessible = true }.invoke(fragment, saved.getBundle("settings_dialog"))
+            saved.getBundle("settings_dialog")?.let { request ->
+                SettingsFragment::class.java.getDeclaredMethod("restoreDialog", Bundle::class.java)
+                    .apply { isAccessible = true }.invoke(fragment, request)
+            }
         }
     }
 

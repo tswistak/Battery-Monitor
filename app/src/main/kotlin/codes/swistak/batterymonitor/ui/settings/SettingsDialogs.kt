@@ -107,7 +107,7 @@ internal sealed interface SettingsDialog {
         val formatIndex: Int,
         val configured: Boolean,
         val onConfirm: (Int, Int, Int) -> Unit,
-        val onChooseDirectory: () -> Unit,
+        val onChooseDirectory: (Int, Int, Int) -> Unit,
         val onDisable: () -> Unit
     ) : SettingsDialog
 
@@ -143,7 +143,7 @@ internal fun SettingsDialogs(dialog: SettingsDialog?, busy: Boolean, onDismiss: 
         is SettingsDialog.Choices -> listOf(dialog.title, dialog.options, dialog.selected)
         is SettingsDialog.Number -> listOf(dialog.title, dialog.initial, dialog.min, dialog.max)
         is SettingsDialog.Ordered -> listOf(dialog.title, dialog.items)
-        is SettingsDialog.AutoExport -> listOf(dialog.title, dialog.directoryLabel)
+        is SettingsDialog.AutoExport -> listOf(dialog.title)
         is SettingsDialog.Confirm -> listOf(dialog.title, dialog.message)
         is SettingsDialog.Message -> listOf(dialog.message)
     }
@@ -177,10 +177,17 @@ private fun SettingsAlert(
     cancellable: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    var handled by remember { mutableStateOf(false) }
+    fun dismiss() {
+        if (!handled) {
+            handled = true
+            onDismiss()
+        }
+    }
     if (applicationDialogsAllowed()) AlertDialog(
         modifier = Modifier.imePadding(),
         properties = DialogProperties(decorFitsSystemWindows = false),
-        onDismissRequest = onDismiss,
+        onDismissRequest = ::dismiss,
         title = title?.let { { Text(it) } },
         text = {
             Column(
@@ -192,12 +199,15 @@ private fun SettingsAlert(
         },
         confirmButton = {
             TextButton(onClick = {
-                onDismiss()
-                onConfirm()
+                if (!handled && enabled) {
+                    handled = true
+                    onDismiss()
+                    onConfirm()
+                }
             }, enabled = enabled) { Text(stringResource(confirmLabel)) }
         },
         dismissButton = if (cancellable) {
-            { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } }
+            { TextButton(onClick = ::dismiss) { Text(stringResource(R.string.cancel)) } }
         } else null)
 }
 
@@ -363,8 +373,7 @@ private fun AutoExportDialog(dialog: SettingsDialog.AutoExport, onDismiss: () ->
             style = MaterialTheme.typography.bodySmall
         )
         TextButton(onClick = {
-            onDismiss()
-            dialog.onChooseDirectory()
+            dialog.onChooseDirectory(frequency, mode, format)
         }) {
             Icon(
                 painterResource(settingIcon(SettingsContract.KEY_AUTO_LOG_EXPORT_DIRECTORY)),

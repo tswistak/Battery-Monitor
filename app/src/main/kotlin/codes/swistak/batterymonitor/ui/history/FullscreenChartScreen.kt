@@ -34,6 +34,9 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -55,6 +58,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.withFrameNanos
@@ -98,6 +102,7 @@ import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.HistoryChartScale
 import codes.swistak.batterymonitor.ui.components.TooltipIconButton
+import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.historyAxisFormatter
 import codes.swistak.batterymonitor.ui.components.historyUnit
 import codes.swistak.batterymonitor.ui.components.historyValue
@@ -202,10 +207,22 @@ internal fun FullscreenChartScreen(
     var appliedYBounds by remember { mutableStateOf<Map<HistoryMetric, HistoryChartScale>?>(null) }
     var pendingTopY by remember { mutableStateOf<Float?>(null) }
     var chartWidth by remember { mutableIntStateOf(1) }
-    var metricMenu by remember { mutableStateOf(false) }
-    var comparisonMenu by remember { mutableStateOf(false) }
-    var scaleMenu by remember { mutableStateOf(false) }
-    var settingsMenu by remember { mutableStateOf(false) }
+    var editor by rememberSaveable { mutableStateOf<String?>(null) }
+    var draftMetric by rememberSaveable { mutableStateOf(state.metric) }
+    var draftComparison by rememberSaveable { mutableStateOf(state.comparison) }
+    var draftScale by rememberSaveable { mutableStateOf(state.scaleMode) }
+    var draftStyle by rememberSaveable { mutableStateOf(state.style) }
+    var draftValueScale by rememberSaveable { mutableStateOf(state.valueScale) }
+
+    fun editChart(selection: String) {
+        draftMetric = state.metric
+        draftComparison = state.comparison
+        draftScale = state.scaleMode
+        draftStyle = state.style
+        draftValueScale = state.valueScale
+        editor = selection
+    }
+
     var overflowMenu by remember { mutableStateOf(false) }
     var eventsMenu by remember { mutableStateOf(false) }
     val currentViewport by rememberUpdatedState(state.viewport)
@@ -463,6 +480,95 @@ internal fun FullscreenChartScreen(
         }
     }
 
+    if (editor != null && applicationDialogsAllowed()) AlertDialog(onDismissRequest = {
+        editor = null
+    }, title = {
+        Text(
+            stringResource(
+                when (editor) {
+                    "metric" -> R.string.history_charts
+                    "comparison" -> R.string.history_chart_compare
+                    "scale" -> R.string.history_chart_scale
+                    else -> R.string.history_chart_settings
+                }
+            )
+        )
+    }, text = {
+        Column(Modifier.verticalScroll(rememberScrollState())) {
+            when (editor) {
+                "metric" -> HistoryMetric.entries.forEach { metric ->
+                    ChartRadioItem(metricLabel(metric), draftMetric == metric) {
+                        draftMetric = metric
+                    }
+                }
+
+                "comparison" -> {
+                    ChartRadioItem(
+                        stringResource(R.string.history_chart_remove_comparison),
+                        draftComparison == null
+                    ) { draftComparison = null }
+                    HistoryMetric.entries.filter { it != state.metric }.forEach { metric ->
+                        ChartRadioItem(metricLabel(metric), draftComparison == metric) {
+                            draftComparison = metric
+                        }
+                    }
+                }
+
+                "scale" -> ChartScaleMode.entries.forEach { mode ->
+                    ChartRadioItem(scaleLabel(mode), draftScale == mode) { draftScale = mode }
+                }
+
+                else -> {
+                    Text(
+                        stringResource(R.string.history_chart_display_style),
+                        style = typography.labelMedium
+                    )
+                    ChartDrawingStyle.entries.forEach { style ->
+                        ChartRadioItem(
+                            stringResource(if (style == ChartDrawingStyle.CONNECTED) R.string.history_chart_connected else R.string.history_chart_points),
+                            draftStyle == style
+                        ) { draftStyle = style }
+                    }
+                    HorizontalDivider()
+                    Text(
+                        stringResource(R.string.history_chart_value_scale),
+                        style = typography.labelMedium
+                    )
+                    ChartValueScale.entries.forEach { scale ->
+                        ChartRadioItem(
+                            stringResource(if (scale == ChartValueScale.LINEAR) R.string.history_chart_linear else R.string.history_chart_logarithmic),
+                            draftValueScale == scale,
+                            enabled = scale == ChartValueScale.LINEAR || logAvailable
+                        ) { draftValueScale = scale }
+                    }
+                    if (!logAvailable) Text(
+                        stringResource(R.string.history_chart_log_unavailable),
+                        style = typography.bodySmall,
+                        color = colors.onSurfaceVariant
+                    )
+                }
+            }
+        }
+    }, confirmButton = {
+        TextButton(
+            enabled = editor != "settings" || draftValueScale == ChartValueScale.LINEAR || logAvailable,
+            onClick = {
+                val confirmedEditor = editor
+                editor = null
+                when (confirmedEditor) {
+                    "metric" -> onMetric(draftMetric)
+                    "comparison" -> onComparison(draftComparison)
+                    "scale" -> onScale(draftScale)
+                    "settings" -> {
+                        if (draftStyle != state.style) onStyle(draftStyle)
+                        if (draftValueScale != state.valueScale) onValueScale(draftValueScale)
+                    }
+                }
+            }) { Text(stringResource(R.string.okay)) }
+    }, dismissButton = {
+        TextButton(onClick = { editor = null }) { Text(stringResource(R.string.cancel)) }
+    })
+
     Scaffold(
         containerColor = colors.background, topBar = {
             BoxWithConstraints(
@@ -483,52 +589,16 @@ internal fun FullscreenChartScreen(
                 ) {
                     ChartIcon(R.drawable.ui_back, R.string.nav_up, true, onBack)
                     Box(Modifier.weight(1f)) {
-                        ChartSelector(title, metricMenu, { metricMenu = true })
-                        DropdownMenu(metricMenu, onDismissRequest = { metricMenu = false }) {
-                            HistoryMetric.entries.forEach { metric ->
-                                DropdownMenuItem(
-                                    text = { Text(metricLabel(metric)) },
-                                    modifier = Modifier.semantics {
-                                        this.selected = metric == state.metric
-                                    },
-                                    onClick = {
-                                        metricMenu = false
-                                        onMetric(metric)
-                                    })
-                            }
-                        }
+                        ChartSelector(title, editor == "metric", { editChart("metric") })
                     }
                     Box(Modifier.weight(1f)) {
                         ChartSelector(
                             state.comparison?.let { metricLabel(it) }
                                 ?: stringResource(R.string.history_chart_compare),
-                            comparisonMenu,
-                            { comparisonMenu = true },
+                            editor == "comparison",
+                            { editChart("comparison") },
                             leadingPlus = state.comparison == null
                         )
-                        DropdownMenu(
-                            comparisonMenu, onDismissRequest = { comparisonMenu = false }) {
-                            if (state.comparison != null) {
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(R.string.history_chart_remove_comparison)) },
-                                    onClick = {
-                                        comparisonMenu = false
-                                        onComparison(null)
-                                    })
-                                HorizontalDivider()
-                            }
-                            HistoryMetric.entries.filter { it != state.metric }.forEach { metric ->
-                                DropdownMenuItem(
-                                    text = { Text(metricLabel(metric)) },
-                                    modifier = Modifier.semantics {
-                                        this.selected = metric == state.comparison
-                                    },
-                                    onClick = {
-                                        comparisonMenu = false
-                                        onComparison(metric)
-                                    })
-                            }
-                        }
                     }
                     Box(Modifier.weight(1.2f)) {
                         HistoryRangeControl(
@@ -565,70 +635,15 @@ internal fun FullscreenChartScreen(
                     if (showScale) Box(Modifier.width(104.dp)) {
                         ChartSelector(
                             compactScaleLabel,
-                            scaleMenu,
-                            { scaleMenu = true },
+                            editor == "scale",
+                            { editChart("scale") },
                             description = currentScaleLabel
                         )
-                        DropdownMenu(scaleMenu, onDismissRequest = { scaleMenu = false }) {
-                            ChartScaleMode.entries.forEach { mode ->
-                                ChartRadioItem(scaleLabel(mode), state.scaleMode == mode) {
-                                    scaleMenu = false
-                                    onScale(mode)
-                                }
-                            }
-                        }
                     }
                     Box {
                         if (showScale) ChartIcon(
                             R.drawable.ui_settings, R.string.history_chart_settings, true
-                        ) { settingsMenu = true }
-                        DropdownMenu(settingsMenu, onDismissRequest = { settingsMenu = false }) {
-                            Text(
-                                stringResource(R.string.history_chart_display_style),
-                                Modifier.padding(
-                                    horizontal = BatterySpacing.normal, vertical = BatterySpacing.sm
-                                ),
-                                style = typography.labelMedium
-                            )
-                            ChartDrawingStyle.entries.forEach { style ->
-                                ChartRadioItem(
-                                    stringResource(if (style == ChartDrawingStyle.CONNECTED) R.string.history_chart_connected else R.string.history_chart_points),
-                                    state.style == style
-                                ) {
-                                    settingsMenu = false
-                                    onStyle(style)
-                                }
-                            }
-                            HorizontalDivider()
-                            Text(
-                                stringResource(R.string.history_chart_value_scale),
-                                Modifier.padding(
-                                    horizontal = BatterySpacing.normal, vertical = BatterySpacing.sm
-                                ),
-                                style = typography.labelMedium
-                            )
-                            ChartValueScale.entries.forEach { scale ->
-                                ChartRadioItem(
-                                    stringResource(if (scale == ChartValueScale.LINEAR) R.string.history_chart_linear else R.string.history_chart_logarithmic),
-                                    valueScale == scale,
-                                    enabled = scale == ChartValueScale.LINEAR || logAvailable
-                                ) {
-                                    settingsMenu = false
-                                    onValueScale(scale)
-                                }
-                            }
-                            if (!logAvailable) Text(
-                                stringResource(R.string.history_chart_log_unavailable),
-                                Modifier
-                                    .width(280.dp)
-                                    .padding(
-                                        horizontal = BatterySpacing.normal,
-                                        vertical = BatterySpacing.sm
-                                    ),
-                                style = typography.bodySmall,
-                                color = colors.onSurfaceVariant
-                            )
-                        }
+                        ) { editChart("settings") }
                     }
                     if (!showZoom) Box {
                         ChartIcon(
@@ -640,7 +655,7 @@ internal fun FullscreenChartScreen(
                                 text = { Text(stringResource(R.string.history_chart_settings)) },
                                 onClick = {
                                     overflowMenu = false
-                                    settingsMenu = true
+                                    editChart("settings")
                                 })
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.history_chart_zoom_in)) },
@@ -665,18 +680,12 @@ internal fun FullscreenChartScreen(
                                 })
                             if (!showScale) {
                                 HorizontalDivider()
-                                Text(
-                                    stringResource(R.string.history_chart_scale), Modifier.padding(
-                                        horizontal = BatterySpacing.normal,
-                                        vertical = BatterySpacing.sm
-                                    ), style = typography.labelMedium
-                                )
-                                ChartScaleMode.entries.forEach { mode ->
-                                    ChartRadioItem(scaleLabel(mode), state.scaleMode == mode) {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.history_chart_scale)) },
+                                    onClick = {
                                         overflowMenu = false
-                                        onScale(mode)
-                                    }
-                                }
+                                        editChart("scale")
+                                    })
                             }
                         }
                     }

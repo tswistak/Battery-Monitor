@@ -121,18 +121,40 @@ class HelpContentTest {
     }
 
     @Test
-    fun `monitoring and charging topics resolve their own guidance and report privacy help`() {
+    fun `monitoring and charging topics retain their own report guidance without a duplicate debug option`() {
         val monitoring = helpSections(MONITORING_HELP_TOPIC, 37, null).flatMap { it.paragraphs }
             .map { it.textResource }.toSet()
         val charging = helpSections(CHARGING_TOOLS_HELP_TOPIC, 37, null).flatMap { it.paragraphs }
             .map { it.textResource }.toSet()
         assertTrue(R.string.diagnostics_root_help in monitoring)
         assertTrue(R.string.diagnostics_root_help !in charging)
-        assertTrue(R.string.monitoring_privileged_access_help in monitoring)
+        assertTrue(R.string.diagnostics_shizuku_help in monitoring)
+        val access = helpSections(MONITORING_HELP_TOPIC, 37, null)
+            .first { it.titleResource == R.string.diagnostics_permissions }.paragraphs
+        assertEquals(
+            listOf(
+                HelpParagraph(
+                    R.string.diagnostics_shizuku,
+                    subheading = true,
+                    controlKey = "diagnostics_shizuku"
+                ),
+                HelpParagraph(R.string.diagnostics_shizuku_help),
+                HelpParagraph(R.string.monitoring_privileged_access_help)
+            ),
+            access.takeLast(3)
+        )
+        assertEquals(
+            1,
+            access.count { it.textResource == R.string.monitoring_privileged_access_help })
         assertTrue(R.string.charging_diagnostics_help_steps in charging)
         assertTrue(R.string.charging_diagnostics_help_steps !in monitoring)
-        assertTrue(R.string.diag_report_privacy in monitoring)
-        assertTrue(R.string.diag_report_privacy in charging)
+        assertTrue(R.string.diagnostics_help_report in monitoring)
+        assertTrue(R.string.diag_include_debug !in monitoring)
+        assertTrue(R.string.charging_report_privacy_help in charging)
+        assertTrue(
+            helpSections(
+                SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null
+            ).flatMap { it.paragraphs }.any { it.textResource == R.string.diag_report_privacy })
     }
 
     @Test
@@ -141,7 +163,8 @@ class HelpContentTest {
             val general = helpSections(
                 SettingsContract.KEY_OTHER_SETTINGS, sdk, null
             ).flatMap { it.paragraphs }.map { it.textResource }.toSet()
-            assertEquals(sdk < 31, R.string.settings_color_palette_unavailable in general)
+            assertEquals(sdk < 31, R.string.settings_color_palette_unsupported_help in general)
+            assertEquals(sdk >= 31, R.string.settings_color_palette_help in general)
             assertEquals(sdk < 33, R.string.settings_app_language_unavailable_help in general)
             assertEquals(sdk >= 33, R.string.pref_change_app_language_help in general)
             val monitor = helpSections(MONITORING_HELP_TOPIC, sdk, null).flatMap { it.paragraphs }
@@ -154,7 +177,7 @@ class HelpContentTest {
     fun `diagnostics explains reading sources and both alarm destinations explain thresholds`() {
         val diagnostics = helpSections(SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null)
         assertTrue(diagnostics.flatMap { it.paragraphs }
-            .any { it.textResource == R.string.diag_source_help })
+            .any { it.textResource == R.string.diag_help_overview })
         for (topic in listOf(
             SettingsContract.KEY_ALARMS_SETTINGS, SettingsContract.KEY_ALARM_EDIT_SETTINGS
         )) {

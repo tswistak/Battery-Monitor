@@ -12,6 +12,7 @@
 */
 package codes.swistak.batterymonitor.ui.history
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.ComponentCallbacks
 import android.content.Context
@@ -37,6 +38,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsNode
+import androidx.compose.ui.semantics.SemanticsOwner
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -45,6 +51,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.platform.view.inspector.WindowInspectorCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.DetailedHistoryChartModel
 import codes.swistak.batterymonitor.logs.DetailedHistoryTimeAxis
@@ -77,6 +84,132 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.abs
 
 class FullscreenChartStateInstrumentedTest {
+    @SuppressLint("RestrictedApi")
+    @Test
+    fun chart_editors_discard_cancel_and_back_and_retain_uncommitted_drafts_on_recreation() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val target = instrumentation.targetContext
+        val host = instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        instrumentation.startActivitySync(
+            FullscreenChartActivity.intent(target, HistoryMetric.LEVEL, range, "custom")
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        fun nodes(): List<SemanticsNode> {
+            fun descendants(node: SemanticsNode): List<SemanticsNode> =
+                listOf(node) + node.children.flatMap(::descendants)
+
+            fun owners(view: View): List<SemanticsOwner> {
+                val owner = view.javaClass.methods.firstOrNull { it.name == "getSemanticsOwner" }
+                    ?.invoke(view) as? SemanticsOwner
+                if (owner != null) return listOf(owner)
+                return if (view is ViewGroup) (0 until view.childCount).flatMap {
+                    owners(view.getChildAt(it))
+                } else emptyList()
+            }
+            return WindowInspectorCompat.getGlobalWindowViews().filter { it.hasWindowFocus() }
+                .flatMap(::owners).flatMap { descendants(it.rootSemanticsNode) }
+        }
+
+        fun labelNode(label: Int): SemanticsNode? {
+            val text = target.getString(label)
+            return nodes().firstOrNull { node ->
+                node.config.getOrNull(SemanticsProperties.Text)
+                    ?.any { it.text == text } == true || node.config.getOrNull(SemanticsProperties.ContentDescription)
+                    ?.contains(text) == true
+            }
+        }
+
+        fun visible(label: Int): Boolean {
+            var found = false
+            main { found = labelNode(label) != null }
+            return found
+        }
+
+        fun control(label: Int): SemanticsNode? {
+            var node = labelNode(label)
+            while (node != null && !node.config.contains(SemanticsActions.OnClick)) node =
+                node.parent
+            return node
+        }
+
+        fun tap(label: Int) {
+            await({ "Chart editor did not expose a clickable '${target.getString(label)}'" }) {
+                var ready = false
+                main {
+                    ready = control(label) != null
+                    if (!ready) nodes().firstOrNull { it.config.contains(SemanticsActions.ScrollBy) }?.config?.get(
+                        SemanticsActions.ScrollBy
+                    )?.action?.invoke(0f, 200f)
+                }
+                ready
+            }
+            main {
+                assertTrue(requireNotNull(control(label)).config[SemanticsActions.OnClick].action?.invoke() == true)
+            }
+            instrumentation.waitForIdleSync()
+        }
+
+        fun settings() {
+            await { !visible(R.string.cancel) }
+            await { visible(R.string.history_chart_settings) || visible(R.string.history_chart_more) }
+            if (!visible(R.string.history_chart_settings)) tap(R.string.history_chart_more)
+            tap(R.string.history_chart_settings)
+            await { visible(R.string.history_chart_display_style) && visible(R.string.cancel) }
+        }
+        try {
+            await {
+                val activity = host.lastActivity as? FullscreenChartActivity
+                activity != null && !activity.isDestroyed && activity.hasWindowFocus() && activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            }
+            lateinit var viewer: FullscreenChartViewModel
+            main {
+                viewer =
+                    ViewModelProvider(host.lastActivity as FullscreenChartActivity)[FullscreenChartViewModel::class.java]
+            }
+            await { viewer.state.value != null }
+            assertEquals(ChartDrawingStyle.CONNECTED, viewer.state.value!!.style)
+
+            settings()
+            tap(R.string.history_chart_points)
+            assertEquals(ChartDrawingStyle.CONNECTED, viewer.state.value!!.style)
+            tap(R.string.cancel)
+            assertEquals(ChartDrawingStyle.CONNECTED, viewer.state.value!!.style)
+
+            settings()
+            tap(R.string.history_chart_points)
+            instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+            instrumentation.waitForIdleSync()
+            assertEquals(ChartDrawingStyle.CONNECTED, viewer.state.value!!.style)
+
+            settings()
+            tap(R.string.history_chart_points)
+            val previous = host.lastActivity
+            main { previous.recreate() }
+            await { host.lastActivity !== previous && !host.lastActivity.isDestroyed && visible(R.string.okay) }
+            assertEquals(ChartDrawingStyle.CONNECTED, viewer.state.value!!.style)
+            tap(R.string.okay)
+            await { viewer.state.value!!.style == ChartDrawingStyle.POINTS }
+            settings()
+            tap(R.string.history_chart_connected)
+            tap(R.string.cancel)
+            assertEquals(ChartDrawingStyle.POINTS, viewer.state.value!!.style)
+
+            tap(R.string.history_chart_compare)
+            tap(R.string.current_temperature)
+            assertNull(viewer.state.value!!.comparison)
+            tap(R.string.cancel)
+            assertNull(viewer.state.value!!.comparison)
+            tap(R.string.history_chart_compare)
+            tap(R.string.current_voltage)
+            assertNull(viewer.state.value!!.comparison)
+            tap(R.string.okay)
+            await { viewer.state.value!!.comparison == HistoryMetric.VOLTAGE }
+        } finally {
+            main { host.lastActivity?.finish() }
+            instrumentation.removeMonitor(host)
+        }
+    }
+
     @Test
     fun close_and_back_return_to_the_previous_orientation_and_system_bars() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()

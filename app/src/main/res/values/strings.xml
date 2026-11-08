@@ -96,7 +96,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Multiplier</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Some devices report unexpected units or signs. Multiply the reported value here to correct the displayed result. Use “Detect automatically” to try to infer the multiplier from a battery reading.\n
     \n
-    As a rough phone reference, Android’s standard sign is positive while charging and negative while discharging. Active charging is often around +500 to +5000\u00A0mA, while ordinary discharge is often around -100 to -3000\u00A0mA. Values near zero can be normal when the battery is nearly full or the phone is idle. If the magnitude looks about 1000 times too small or too large, or the sign is reversed, adjust the multiplier.</string>
+    As a rough device reference, Android’s standard sign is positive while charging and negative while discharging. Active charging is often around +500 to +5000\u00A0mA, while ordinary discharge is often around -100 to -3000\u00A0mA. Values near zero can be normal when the battery is nearly full or the device is idle. If the magnitude looks about 1000 times too small or too large, or the sign is reversed, adjust the multiplier.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detect automatically</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatic detection is unavailable for the current battery state or reading</string>
     <string name="pref_battery_current_multiplier_detection_result">Multiplier automatically set to %1$d</string>
@@ -150,7 +150,9 @@
     <string name="live_updates_notif_chan_name" formatted="false">Live Updates</string>
     <string name="notification_settings" formatted="false">Main notification</string>
     <string name="notification_settings_summary" formatted="false">Configure notification content and status bar appearance</string>
-    <string name="notification_settings_help" formatted="false">You can configure which content to show in the pull-down notification.</string>
+    <string name="notification_settings_help" formatted="false">You can configure which content to show in the pull-down notification.\n
+    Choose whether the notification icon shows battery percentage or temperature. Also choose whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon. Starting with Android 16, the status bar icon may not work on every OS variant.\n
+    On Android 16 or later, choose when the Live Update chip appears, which values it cycles through, and whether it shows a charging emoji. Availability also depends on the device and system notification settings.</string>
     <string name="notification_channels_help" formatted="false">Open Android notification settings to allow or block notifications and configure sound, vibration, and delivery for the main notification and each alarm type. Enabling an alarm rule does not override a blocked notification channel.</string>
     <string name="app_notifs_disabled_summary" formatted="false">You have disabled all notifications for this app. Please enable them to access these settings</string>
     <string name="main_notifs_disabled_summary" formatted="false">You have disabled the main notification for this app. Please enable it to access these settings</string>
@@ -197,7 +199,6 @@
     <string name="pref_expanded_notification_help" formatted="false">If enabled, expanding the main notification shows “Time Remaining”, “Time Since Status Change”, and each “Vital Signs” value on its own labeled line instead of the single-line summary.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">Status Bar Icon</string>
-    <string name="status_bar_icon_settings_help" formatted="false">Choose whether the notification icon shows battery percentage or temperature. Also choose whether the unit symbol is shown in the icon, and whether charging gets a dedicated icon. Starting with Android 16, the status bar icon may not work on every OS variant.</string>
     <string name="status_bar_icon_availability_help" formatted="false">Starting with Android 16, the status bar icon may not work on every OS variant.</string>
     <string name="pref_icon_content" formatted="false">Icon Content</string>
     <string name="pref_icon_content_help" formatted="false">Choose whether the status bar icon shows battery percentage or battery temperature. Temperature follows your selected unit.</string>
@@ -210,7 +211,6 @@
     <string name="pref_indicate_charging_summary" formatted="false">Alter icon to indicate when charging?</string>
     <string name="pref_indicate_charging_help" formatted="false">Icon can show a lightning bolt below the number during charging. Disable this setting if you would prefer the same icon all the time.</string>
     <string name="status_bar_chip_settings" formatted="false">Status Bar Chip</string>
-    <string name="status_bar_chip_settings_help" formatted="false">On Android 16 or later, choose when the Live Update chip appears, which values it cycles through, and whether it shows a charging emoji. Availability also depends on the device and system notification settings.</string>
     <string name="status_bar_chip_availability_help" formatted="false">Availability also depends on the device and system notification settings.</string>
     <string name="settings_live_update_summary">Allow or block promoted battery notifications in Android settings</string>
     <string name="settings_live_update_help">Allow or block promoted battery notifications in Android settings.</string>
@@ -260,6 +260,8 @@
     <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
     <string name="alarms_overview" formatted="false">Alarms Overview</string>
     <string name="alarms_overview_help">All eight alarm types are always available. Switch events on directly, or use “Add threshold” under a charge or temperature type. New thresholds are enabled after saving. Tap a value to edit it; editing keeps its on/off state. Disabled values remain listed. “Delete alarm” asks for confirmation. Sound and vibration are shared by type in Android notification settings. Existing duplicate records appear as one logical alarm; switching or deleting affects all copies. Charging and discharging alarms follow estimate targets and do not control charging. A blocked channel or stopped monitor does not change saved switches.</string>
+    <string name="alarms_overview_channels_help" formatted="false">All eight alarm types are always available. Switch events on directly, or use “Add threshold” under a charge or temperature type. New thresholds are enabled after saving. Tap a value to edit it; editing keeps its on/off state. Disabled values remain listed. “Delete alarm” asks for confirmation. Sound and vibration are shared by type in Android notification settings. Existing duplicate records appear as one logical alarm; switching or deleting affects all copies. Charging and discharging alarms follow estimate targets and do not control charging. A blocked channel or stopped monitor does not change saved switches.\n
+    Open Android notification settings to allow or block notifications and configure sound, vibration, and delivery for the main notification and each alarm type. Enabling an alarm rule does not override a blocked notification channel.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm enabled</item>
         <item quantity="other">%1$d alarms enabled</item>
@@ -294,6 +296,8 @@
     <string name="alarms_edit_threshold">Edit threshold</string>
     <string name="alarms_edit_existing">Edit existing threshold</string>
     <string name="alarms_threshold_edit_help" formatted="false">If a threshold already exists, open it with “Edit existing threshold”. If saved alarms change while editing, use “Refresh” and reopen the threshold before changing it.</string>
+    <string name="alarms_threshold_edit_channels_help" formatted="false">If a threshold already exists, open it with “Edit existing threshold”. If saved alarms change while editing, use “Refresh” and reopen the threshold before changing it.\n
+    Open Android notification settings to allow or block notifications and configure sound, vibration, and delivery for the main notification and each alarm type. Enabling an alarm rule does not override a blocked notification channel.</string>
     <string name="alarms_new_enabled">The alarm will be enabled when added.</string>
     <string name="alarms_edit_keeps_enabled">Editing keeps the current on/off setting.</string>
     <string name="alarms_enabled">Enabled</string>
@@ -415,7 +419,7 @@
     <string name="history_chart_y_fixed">Y: Fixed</string>
     <string name="history_chart_y_manual">Y: Manual</string>
 
-    <string name="logs_empty" formatted="false">Logs Are Empty</string>
+    <string name="logs_empty" formatted="false">Logs Are Empty.</string>
     <string name="configure_log_filter" formatted="false">Show which log items?</string>
     <string name="menu_show_seconds" formatted="false">Show Seconds</string>
     <string name="menu_hide_seconds" formatted="false">Hide Seconds</string>
@@ -430,7 +434,7 @@
     <string name="pref_enable_logging_summary" formatted="false">Log battery state changes?</string>
     <string name="pref_enable_logging_help" formatted="false">Save battery observations and status changes for “History”. Available measurements include level, temperature, voltage, original instantaneous current, and remaining charge. Power is calculated from voltage and current when displayed or exported; it is not stored separately. Turning logging off does not erase existing history or stop time estimates.</string>
     <string name="pref_max_log_age" formatted="false">Maximum Log Age</string>
-    <string name="pref_max_log_age_help" formatted="false">When logging is enabled, connecting to power removes logs older than this limit. “No limit” keeps them until you clear them manually. If automatic export is enabled, Battery Monitor exports pending logs before deleting old entries; a failed export prevents that deletion.</string>
+    <string name="pref_max_log_age_help" formatted="false">When logging is enabled, logs older than the selected age are automatically removed during history maintenance. “No limit” keeps them until you clear them manually. If automatic export is enabled, Battery Monitor exports pending logs before deleting old entries; a failed export prevents that deletion.</string>
     <string name="age_1_day" formatted="false">1\u00A0day</string>
     <string name="age_2_days" formatted="false">2\u00A0days</string>
     <string name="age_4_days" formatted="false">4\u00A0days</string>
@@ -456,9 +460,9 @@
     <string name="pref_auto_log_export_format" formatted="false">Export format</string>
     <string name="pref_auto_log_export_directory" formatted="false">Change folder</string>
     <string name="pref_auto_log_export_path" formatted="true">Path: %1$s</string>
-    <string name="auto_log_export_help" formatted="false">Choose a folder, frequency, format, and whether to create separate files or append to one file. Exports normally save logs since the previous automatic export; a new ongoing file includes all available logs. Android may delay exports while idle. Logging must remain enabled.</string>
-    <string name="auto_log_export_options_help" formatted="false">The export interval cannot exceed log retention. Changing the folder requires granting the app access to that folder in Android. Disabling automatic export leaves saved logs and existing files unchanged.</string>
-    <string name="auto_log_export_format_help" formatted="false">CSV is useful in a spreadsheet or text editor. It includes the original current, remaining charge, and power calculated using the multiplier selected at export time. JSON preserves structured log data for backups. Unavailable current, remaining charge, and power cells remain empty.</string>
+    <string name="auto_log_export_help" formatted="false">Choose a folder, frequency, format, and whether to create separate files or append to one file. Exports normally save logs since the previous automatic export; a new ongoing file includes all available logs. Android may delay exports while idle. Logging must remain enabled.\n
+    CSV is useful in a spreadsheet or text editor. It includes the original current, remaining charge, and power calculated using the multiplier selected at export time. JSON preserves structured log data for backups. Unavailable current, remaining charge, and power cells remain empty.\n
+    The export interval cannot exceed log retention. Changing the folder requires granting the app access to that folder in Android. Disabling automatic export leaves saved logs and existing files unchanged.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Create a new file</string>
     <string name="auto_log_export_mode_append" formatted="false">Append new logs to the existing file</string>
     <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
@@ -535,6 +539,8 @@
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">System colors require Android 12 or later. “Battery Blue” is used on this device.</string>
+    <string name="settings_color_palette_unsupported_help" formatted="false">Use system colors or “Battery Blue”.\n
+    System colors require Android 12 or later. “Battery Blue” is used on this device.</string>
     <string name="settings_brightness">Brightness</string>
     <string name="settings_brightness_summary">Follow the system or choose light, dark or true black</string>
     <string name="settings_brightness_help">Follow the system or choose light, dark or true black.</string>
@@ -551,7 +557,7 @@
     Allowing unrestricted background execution may increase background battery use. You can change this later in Android “Settings” → “Apps” → “Battery Monitor” → “Battery”. Menu names vary by device.</string>
     <string name="pref_cat_autostart" formatted="false">Autostart</string>
     <string name="pref_autostart_at_boot" formatted="false">Autostart at Boot</string>
-    <string name="pref_autostart_at_boot_summary" formatted="false">Start Battery Monitor when device boots:</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">Start Battery Monitor when device boots</string>
     <string name="pref_autostart_at_boot_help" formatted="false">“Always” starts background monitoring after a device restart. “Never” skips the automatic start at boot. “If running on shutdown” follows whether you last started or stopped monitoring in Battery Monitor. Closing the app or ending its process does not count as stopping monitoring. Widgets do not override this choice.</string>
     <string name="boot_pref_always" formatted="false">Always</string>
     <string name="boot_pref_never" formatted="false">Never</string>
@@ -573,7 +579,8 @@
     <string name="diag_status_waiting_permission" formatted="false">Waiting for Shizuku permission…</string>
     <string name="diag_status_no_stats" formatted="false">No advanced battery stats are available on this device right now.</string>
     <string name="diag_value_not_available" formatted="false">Not available</string>
-    <string name="diag_help_overview" formatted="false">Combines monitor reliability, saved predictor data and battery data in “App operation”, “Battery”, “Charging” and “Raw” tabs. Android data is available without root. Extra device data depends on the device and permissions available to Battery Monitor.</string>
+    <string name="diag_help_overview" formatted="false">Combines monitor reliability, saved predictor data and battery data in “App operation”, “Battery”, “Charging” and “Raw” tabs. Android data is available without root. Extra device data depends on the device and permissions available to Battery Monitor.\n
+    Available Android readings are collected automatically while “Diagnostics” is open. Tap a value to inspect and copy its reading, source and time. Original device keys and values are available in “Raw”. Enable privileged access to also use Root or Shizuku.</string>
     <string name="diag_section_counters" formatted="false">Counters</string>
     <string name="diag_help_counters" formatted="false">Battery readings are labeled and formatted as remaining charge in mAh, current in mA, energy in mWh, voltage in V, temperature in your selected unit, and power in W. The current multiplier also applies to calculated power. Average current and cycle count depend on device support.</string>
     <string name="diag_field_charge_counter" formatted="false">Remaining charge estimate</string>
@@ -594,7 +601,8 @@
     <string name="diag_capacity_low">Low</string>
     <string name="diag_capacity_high">High</string>
     <string name="diag_section_charging" formatted="false">Charging</string>
-    <string name="diag_help_charging" formatted="false">Shows values related to the active charging path, such as maximum charging current or voltage, charging policy, charging state, and capacity level. These fields may change between chargers and charging modes.</string>
+    <string name="diag_help_charging" formatted="false">Shows values related to the active charging path, such as maximum charging current or voltage, charging policy, charging state, and capacity level. These fields may change between chargers and charging modes.\n
+    This estimate uses the configured Battery Monitor predictor. Its target does not control charging or shutdown.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Charge time remaining</string>
     <string name="diag_field_max_charging_current" formatted="false">Max charging current</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Max charging voltage</string>
@@ -651,7 +659,7 @@
     <string name="diagnostics" formatted="false">Diagnostics</string>
     <string name="diagnostics_summary" formatted="false">Check permissions, monitoring reliability, and create a report for troubleshooting</string>
     <string name="diag_overview">App operation</string>
-    <string name="diagnostics_help_overview" formatted="false">Checks permissions and monitor reliability. Use its controls to start or stop monitoring, change debug logging, open battery optimization and notification settings, or create a troubleshooting report. Not every unavailable reading indicates a permission problem; some devices do not provide it.</string>
+    <string name="diagnostics_help_overview" formatted="false">Check permissions and monitor reliability. Use its controls to start or stop monitoring, change debug logging, open battery optimization and notification settings, or create a troubleshooting report. Not every unavailable reading indicates a permission problem; some devices do not provide it.</string>
     <string name="diagnostics_monitoring" formatted="false">Background monitoring</string>
     <string name="diag_monitor_operation">Monitor operation</string>
     <string name="diag_heartbeat">Last heartbeat</string>
@@ -679,12 +687,15 @@
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Permission missing. Tap to open settings</string>
     <string name="diagnostics_battery_optimization" formatted="false">Battery optimization</string>
     <string name="diagnostics_battery_optimization_help" formatted="false">Open Android battery-optimization settings when restricted. If already unrestricted, tapping confirms that status.</string>
+    <string name="monitoring_battery_optimization_help" formatted="false">Open Android battery-optimization settings when restricted. If already unrestricted, tapping confirms that status.\n
+    Unrestricted background execution can improve monitoring reliability. Android battery optimization may delay updates and alarms.\n
+    \n
+    Allowing unrestricted background execution may increase background battery use. You can change this later in Android “Settings” → “Apps” → “Battery Monitor” → “Battery”. Menu names vary by device.</string>
     <string name="diagnostics_unrestricted" formatted="false">Unrestricted</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Restricted. Tap to allow reliable background monitoring</string>
     <string name="diagnostics_vendor_settings" formatted="false">Manufacturer settings</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Open additional background activity or autostart settings available on this device</string>
-    <string name="diagnostics_vendor_settings_help" formatted="false">Open additional background activity or autostart settings available on this device.</string>
-    <string name="diagnostics_vendor_availability_help" formatted="false">“Manufacturer settings” is available only on supported devices.</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Open additional background activity or autostart settings. Available only on supported devices.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Background activity help</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Open device-specific guidance on Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">Open device-specific guidance on Don’t Kill My App.</string>
@@ -748,6 +759,8 @@
 
     <string name="charging_diagnostics_title" formatted="false">OEM charging-target diagnostics</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Open snapshot and comparison tools to investigate how Battery Monitor detects the device’s charging target. Preparation instructions are available in the OEM diagnostic screen’s own help.</string>
+    <string name="charging_tools_help_overview" formatted="false">Open snapshot and comparison tools to investigate how Battery Monitor detects the device’s charging target. Preparation instructions are available in the OEM diagnostic screen’s own help.\n
+    More diagnostic information may be available with privileged access. Grant Shizuku or root access and enable privileged access in “Settings” → “Advanced” → “Use privileged access” for a more useful OEM charging-target report.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">For a useful report, open “Help” and follow the preparation steps before capturing snapshots.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">More diagnostic information may be available with privileged access. Grant Shizuku or root access and enable privileged access in “Settings” → “Advanced” → “Use privileged access” for a more useful OEM charging-target report.</string>
     <string name="charging_diagnostics_capture" formatted="false">Capture snapshot</string>
@@ -777,13 +790,14 @@
     <string name="charging_diagnostics_clear_summary" formatted="false">Delete locally stored OEM charging snapshots</string>
     <string name="charging_diagnostics_clear_help" formatted="false">Delete locally stored OEM charging snapshots.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Charging snapshots deleted</string>
-    <string name="charging_diagnostics_help_steps" formatted="false">1. Unplug the phone and keep it disconnected while capturing configuration snapshots. Change only the OEM charging protection setting between snapshots.\n
+    <string name="charging_diagnostics_help_steps" formatted="false">1. Unplug the device and keep it disconnected while capturing configuration snapshots. Change only the OEM charging protection setting between snapshots.\n
     2. Turn charging protection off, wait 2–5\u00A0seconds, then capture a snapshot.\n
     3. Select any fixed charging target, wait 2–5\u00A0seconds, and capture another snapshot. Repeat with at least one different fixed charging target if available.\n
     4. Enable adaptive, smart, or scheduled charging, wait 2–5\u00A0seconds, and capture one more snapshot.\n
     5. If the configuration comparison is inconclusive, you may optionally repeat the sequence while charging to capture runtime-only state.\n
     6. Create and review the comparison report. Report data is filtered and potentially sensitive values are redacted, but you should still review the complete report before sharing it.</string>
-    <string name="charging_diagnostics_help_contact" formatted="false">After reviewing the report, copy or save it and send it by email to <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
+    <string name="charging_report_privacy_help" formatted="false">Excluded by default. These data may contain personal information. Review the preview before copying or saving.\n
+    After reviewing the report, copy or save it and send it by email to <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Backup and restore</string>
     <string name="backup_restore_settings_summary" formatted="false">Back up, restore, and transfer your app settings and battery data</string>
@@ -797,9 +811,9 @@
     <string name="pref_import_general_backup_help" formatted="false">Select an existing general-backup ZIP and choose which available categories to restore. Backups from newer app versions may be incompatible, and restoring logs or predictor data from another device can cause incorrect estimates. If a restore is only partly completed, review the reported categories before trying again. Selected categories are restored; unselected categories are kept. Restoring alarms replaces the current alarms. For logs, choose whether to add them or replace current history.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Restore selected data from a general backup ZIP file</string>
     <string name="general_backup_restore_message" formatted="false">Choose what you want to restore.</string>
-    <string name="general_backup_device_data_warning_scope" formatted="false">Logs and Predictor data</string>
+    <string name="general_backup_device_data_warning">Logs and predictor data belong to the device where they were collected. Importing them on another device can cause incorrect predictions or other unexpected app behavior.</string>
     <string name="general_backup_imported" formatted="false">General backup imported successfully.</string>
-    <string name="invalid_general_backup_file" formatted="false">Invalid or incompatible general backup file</string>
+    <string name="invalid_general_backup_file" formatted="false">Invalid or incompatible general backup file.</string>
     <string name="settings_restore_partial">Some data could not be restored. Successfully restored: %1$s. Data that may have been partly restored: %2$s. Please check these sections before trying again.</string>
     <string name="settings_restore_none">None</string>
     <string name="pref_export_settings" formatted="false">Export settings</string>
@@ -810,7 +824,7 @@
     <string name="pref_import_settings_help" formatted="false">Restore the saved preferences. This action does not restore history or alarm records.</string>
     <string name="pref_import_settings_summary" formatted="false">Restore settings from a file</string>
     <string name="settings_imported" formatted="false">Settings imported successfully.</string>
-    <string name="invalid_settings_file" formatted="false">Invalid settings file</string>
+    <string name="invalid_settings_file" formatted="false">Invalid settings file.</string>
     <string name="settings_file_version_warning" formatted="false">This file was created by a newer version of the app. Importing it may cause unexpected behavior. Continue anyway?</string>
     <string name="pref_export_alarms" formatted="false">Export alarms</string>
     <string name="pref_export_alarms_help" formatted="false">Save your alarms. The JSON file contains alarm rules, not Android-managed notification-channel or sound settings.</string>
@@ -820,7 +834,7 @@
     <string name="pref_import_alarms_help" formatted="false">Replace all current alarms with those from the backup. Choose an alarm-backup JSON file.</string>
     <string name="pref_import_alarms_summary" formatted="false">Replace current alarms with alarms from a file</string>
     <string name="alarms_imported" formatted="false">Alarms imported successfully.</string>
-    <string name="invalid_alarms_file" formatted="false">Invalid alarms file</string>
+    <string name="invalid_alarms_file" formatted="false">Invalid alarms file.</string>
     <string name="pref_backup_device_data" formatted="false">Backup device-specific data</string>
     <string name="device_data_logs" formatted="false">Logs</string>
     <string name="device_data_predictor" formatted="false">Predictor data</string>
@@ -834,8 +848,8 @@
     <string name="pref_import_device_data_summary" formatted="false">Restore logs and predictor data from a file</string>
     <string name="device_data_imported" formatted="false">Device-specific data imported successfully</string>
     <string name="device_data_imported_dialog" formatted="false">Device-specific data imported successfully.</string>
-    <string name="invalid_device_data_file" formatted="false">Invalid device-specific data file</string>
-    <string name="device_data_file_empty" formatted="false">This file contains no supported device-specific data</string>
+    <string name="invalid_device_data_file" formatted="false">Invalid device-specific data file.</string>
+    <string name="device_data_file_empty" formatted="false">This file contains no supported device-specific data.</string>
     <string name="pref_import_logs_csv" formatted="false">Import logs from CSV</string>
     <string name="pref_import_logs_csv_summary" formatted="false">Import logs from an exported CSV file</string>
     <string name="csv_logs_import_help" formatted="false">Import logs from a CSV exported by Battery Monitor and choose whether to add them or replace existing logs. Older exports may not contain current or remaining charge; those measurements stay empty for older entries. JSON backups preserve the structured data and are preferable for restoring it.</string>
@@ -846,7 +860,7 @@
     <string name="log_import_replace" formatted="false">Replace existing logs</string>
     <string name="csv_logs_imported" formatted="false">CSV logs imported successfully</string>
     <string name="csv_logs_imported_dialog" formatted="false">CSV logs imported successfully.</string>
-    <string name="invalid_csv_logs_file" formatted="false">Invalid or incompatible CSV logs file</string>
+    <string name="invalid_csv_logs_file" formatted="false">Invalid or incompatible CSV logs file.</string>
     <string name="settings_reset_title">Restore default settings</string>
     <string name="settings_reset_summary">Reset app preferences while keeping history, alarms and learned estimates</string>
     <string name="settings_reset_help" formatted="false">Reset app preferences after confirmation. It keeps history, alarms, learned estimates, widget configurations, and whether background monitoring is running. System permissions and notification-channel settings are not reset.</string>

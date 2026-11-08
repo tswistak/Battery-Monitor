@@ -96,7 +96,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Množilac</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Neki uređaji prijavljuju neočekivane jedinice ili predznake. Ovde pomnožite prijavljenu vrednost da biste ispravili prikazani rezultat. Izaberite „Otkrij automatski“ da pokušate da odredite množilac struje iz očitavanja baterije.\n
     \n
-    Kao okvirna referenca za telefone, standardni Android predznak je pozitivan tokom punjenja i negativan tokom pražnjenja. Aktivno punjenje je često oko +500 do +5000\u00A0mA, dok je uobičajeno pražnjenje oko -100 do -3000\u00A0mA. Vrednosti blizu nule mogu biti normalne kada je baterija skoro puna ili telefon miruje. Ako vrednost izgleda oko 1000 puta premala ili prevelika, ili je predznak obrnut, podesite množilac.</string>
+    Kao okvirna referenca za uređaje, standardni Android predznak je pozitivan tokom punjenja i negativan tokom pražnjenja. Aktivno punjenje je često oko +500 do +5000\u00A0mA, dok je uobičajeno pražnjenje oko -100 do -3000\u00A0mA. Vrednosti blizu nule mogu biti normalne kada je baterija skoro puna ili uređaj miruje. Ako vrednost izgleda oko 1000 puta premala ili prevelika, ili je predznak obrnut, podesite množilac.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Otkrij automatski</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Automatsko otkrivanje nije dostupno za trenutno stanje baterije ili očitavanje</string>
     <string name="pref_battery_current_multiplier_detection_result">Množilac je automatski podešen na %1$d</string>
@@ -150,7 +150,9 @@
     <string name="live_updates_notif_chan_name" formatted="false">Ažuriranja uživo</string>
     <string name="notification_settings" formatted="false">Glavno obaveštenje</string>
     <string name="notification_settings_summary" formatted="false">Podesite sadržaj obaveštenja, ikonicu statusne trake i čip Ažuriranja uživo</string>
-    <string name="notification_settings_help" formatted="false">Možete da podesite koji sadržaj želite da bude prikazan u delu za notifikacije i da menjate njegog izgled.</string>
+    <string name="notification_settings_help" formatted="false">Možete da podesite koji sadržaj želite da bude prikazan u delu za notifikacije i da menjate njegog izgled.\n
+    Izaberite da li ikonica obaveštenja prikazuje procenat baterije ili temperaturu, da li se u ikonici prikazuje simbol jedinice i da li punjenje koristi posebnu ikonicu. Od Androida 16 ikonica statusne trake možda neće raditi u svim varijantama operativnog sistema.\n
+    Na Androidu 16 ili novijem izaberite kada se pojavljuje čip Live Update, koje vrednosti smenjuje i da li prikazuje emodži punjenja. Dostupnost zavisi i od uređaja i sistemskih podešavanja obaveštenja.</string>
     <string name="notification_channels_help" formatted="false">Otvorite Android podešavanja obaveštenja da dozvolite ili blokirate obaveštenja i podesite zvuk, vibraciju i isporuku za glavno obaveštenje i svaki tip alarma. Omogućavanje pravila alarma ne zaobilazi blokirani kanal obaveštenja.</string>
     <string name="app_notifs_disabled_summary" formatted="false">Isključili ste sva obaveštenja za ovu aplikaciju. Omogućite ih da biste pristupili ovim podešavanjima</string>
     <string name="main_notifs_disabled_summary" formatted="false">Isključili ste glavno obaveštenje za ovu aplikaciju. Omogućite ga da biste pristupili ovim podešavanjima</string>
@@ -200,7 +202,6 @@
     <string name="pref_expanded_notification_help" formatted="false">Ako je ova opcija uključena, prošireno glavno obaveštenje prikazuje „Preostalo vreme“, „Vreme od promene statusa“ i svaku vrednost iz grupe „Vitalni znaci“ u zasebnom redu sa oznakom umesto sažetka u jednom redu.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">Ikonica statusne trake</string>
-    <string name="status_bar_icon_settings_help" formatted="false">Izaberite da li ikonica obaveštenja prikazuje procenat baterije ili temperaturu, da li se u ikonici prikazuje simbol jedinice i da li punjenje koristi posebnu ikonicu. Od Androida 16 ikonica statusne trake možda neće raditi u svim varijantama operativnog sistema.</string>
     <string name="status_bar_icon_availability_help" formatted="false">Od Androida 16 ikonica statusne trake možda neće raditi u svim varijantama operativnog sistema.</string>
     <string name="pref_icon_content" formatted="false">Sadržaj ikonice</string>
     <string name="pref_icon_content_help" formatted="false">Izaberite da li ikonica statusne trake prikazuje procenat baterije ili temperaturu baterije. Temperatura prati izabranu jedinicu.</string>
@@ -213,7 +214,6 @@
     <string name="pref_indicate_charging_summary" formatted="false">Izmeni ikonicu da označi kada je na punjenju?</string>
     <string name="pref_indicate_charging_help" formatted="false">Ikonica punjenja može prikazivati munju ispod broja. Isključite ovu opciju ako želite istu ikonicu tokom punjenja i pražnjenja.</string>
     <string name="status_bar_chip_settings" formatted="false">Čip statusne trake</string>
-    <string name="status_bar_chip_settings_help" formatted="false">Na Androidu 16 ili novijem izaberite kada se pojavljuje čip Live Update, koje vrednosti smenjuje i da li prikazuje emodži punjenja. Dostupnost zavisi i od uređaja i sistemskih podešavanja obaveštenja.</string>
     <string name="status_bar_chip_availability_help" formatted="false">Dostupnost zavisi i od uređaja i sistemskih podešavanja obaveštenja.</string>
     <string name="settings_live_update_summary">Dozvoli ili blokiraj istaknuta obaveštenja o bateriji u Android podešavanjima</string>
     <string name="settings_live_update_help">Dozvoli ili blokiraj istaknuta obaveštenja o bateriji u Android podešavanjima.</string>
@@ -263,6 +263,8 @@
     <string name="alarm_settings_help" formatted="false">Možete da podesite da vas Battery Monitor obavesti kada procenat baterije dosegne određeni nivo (npr. baterija je u potpunosti napunjena, procenat baterije padne ispod 20%).</string>
     <string name="alarms_overview" formatted="false">Pregled alarma</string>
     <string name="alarms_overview_help">Svih osam tipova alarma je uvek dostupno. Uključite događaje direktno ili koristite „Dodaj prag“ kod tipa napunjenosti ili temperature. Novi pragovi su omogućeni posle čuvanja. Dodirnite vrednost za izmenu; izmena zadržava uključeno/isključeno stanje. Isključene vrednosti ostaju na listi. „Izbriši alarm“ traži potvrdu. Zvuk i vibracija se dele po tipu u Android podešavanjima obaveštenja. Postojeći duplikati zapisa prikazuju se kao jedan logički alarm; prebacivanje ili brisanje utiče na sve kopije. Alarmi punjenja i pražnjenja prate ciljeve procene i ne upravljaju punjenjem. Blokirani kanal ili zaustavljeno praćenje ne menja sačuvane prekidače.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Svih osam tipova alarma je uvek dostupno. Uključite događaje direktno ili koristite „Dodaj prag“ kod tipa napunjenosti ili temperature. Novi pragovi su omogućeni posle čuvanja. Dodirnite vrednost za izmenu; izmena zadržava uključeno/isključeno stanje. Isključene vrednosti ostaju na listi. „Izbriši alarm“ traži potvrdu. Zvuk i vibracija se dele po tipu u Android podešavanjima obaveštenja. Postojeći duplikati zapisa prikazuju se kao jedan logički alarm; prebacivanje ili brisanje utiče na sve kopije. Alarmi punjenja i pražnjenja prate ciljeve procene i ne upravljaju punjenjem. Blokirani kanal ili zaustavljeno praćenje ne menja sačuvane prekidače.\n
+    Otvorite Android podešavanja obaveštenja da dozvolite ili blokirate obaveštenja i podesite zvuk, vibraciju i isporuku za glavno obaveštenje i svaki tip alarma. Omogućavanje pravila alarma ne zaobilazi blokirani kanal obaveštenja.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm uključen</item>
         <item quantity="few">%1$d alarma uključena</item>
@@ -298,6 +300,8 @@
     <string name="alarms_edit_threshold">Izmeni prag</string>
     <string name="alarms_edit_existing">Izmeni postojeći prag</string>
     <string name="alarms_threshold_edit_help" formatted="false">Ako prag već postoji, otvorite ga preko „Izmeni postojeći prag“. Ako se sačuvani alarmi promene tokom izmene, koristite „Osveži“ i ponovo otvorite prag pre nego što ga promenite.</string>
+    <string name="alarms_threshold_edit_channels_help" formatted="false">Ako prag već postoji, otvorite ga preko „Izmeni postojeći prag“. Ako se sačuvani alarmi promene tokom izmene, koristite „Osveži“ i ponovo otvorite prag pre nego što ga promenite.\n
+    Otvorite Android podešavanja obaveštenja da dozvolite ili blokirate obaveštenja i podesite zvuk, vibraciju i isporuku za glavno obaveštenje i svaki tip alarma. Omogućavanje pravila alarma ne zaobilazi blokirani kanal obaveštenja.</string>
     <string name="alarms_new_enabled">Alarm će biti uključen kada se doda.</string>
     <string name="alarms_edit_keeps_enabled">Izmena zadržava trenutno uključeno/isključeno stanje.</string>
     <string name="alarms_enabled">Uključeno</string>
@@ -419,7 +423,7 @@
     <string name="history_chart_y_fixed">Y: Фиксна</string>
     <string name="history_chart_y_manual">Y: Ручна</string>
 
-    <string name="logs_empty" formatted="false">Evidencija je prazna</string>
+    <string name="logs_empty" formatted="false">Evidencija je prazna.</string>
     <string name="configure_log_filter" formatted="false">Odaberite unose u evidenciju koje želite da budu prikazani?</string>
     <string name="menu_show_seconds" formatted="false">Prikaži sekunde</string>
     <string name="menu_hide_seconds" formatted="false">Sakrij sekunde</string>
@@ -434,7 +438,7 @@
     <string name="pref_enable_logging_summary" formatted="false">Evidentiraj promene u stanju baterije?</string>
     <string name="pref_enable_logging_help" formatted="false">Sačuvajte zapažanja baterije i promene stanja za odeljak „Istorija“. Dostupna merenja obuhvataju nivo, temperaturu, napon, izvornu trenutnu struju i preostali naboj. Snaga se računa iz napona i struje pri prikazu ili izvozu; ne čuva se zasebno. Isključivanje beleženja ne briše postojeću istoriju niti zaustavlja procene vremena.</string>
     <string name="pref_max_log_age" formatted="false">Maksimalno vreme evidentiranja unosa</string>
-    <string name="pref_max_log_age_help" formatted="false">Kada je beleženje omogućeno, priključivanje na napajanje uklanja evidencije starije od ove granice. „Без ограничења“ ih zadržava dok ih ručno ne obrišete. Ako je automatski izvoz omogućen, Battery Monitor izvozi evidencije na čekanju pre brisanja starih unosa; neuspešan izvoz sprečava to brisanje.</string>
+    <string name="pref_max_log_age_help" formatted="false">Kada je beleženje omogućeno, evidencije starije od ove granice automatski se uklanjaju tokom održavanja istorije. „Без ограничења“ ih zadržava dok ih ručno ne obrišete. Ako je automatski izvoz omogućen, Battery Monitor izvozi evidencije na čekanju pre brisanja starih unosa; neuspešan izvoz sprečava to brisanje.</string>
     <string name="age_1_day" formatted="false">1\u00A0dan</string>
     <string name="age_2_days" formatted="false">2\u00A0dana</string>
     <string name="age_4_days" formatted="false">4\u00A0dana</string>
@@ -460,9 +464,9 @@
     <string name="pref_auto_log_export_format" formatted="false">Формат извоза</string>
     <string name="pref_auto_log_export_directory" formatted="false">Промени фасциклу</string>
     <string name="pref_auto_log_export_path" formatted="true">Путања: %1$s</string>
-    <string name="auto_log_export_help" formatted="false">Izaberite fasciklu, učestalost, format i da li da se prave zasebne datoteke ili dodaje u jednu. Izvozi obično čuvaju evidencije od prethodnog automatskog izvoza; nova trajna datoteka uključuje sve dostupne evidencije. Android može odložiti izvoz tokom mirovanja. Beleženje mora ostati omogućeno.</string>
-    <string name="auto_log_export_options_help" formatted="false">Интервал извоза не може да премаши период чувања дневника. Промена фасцикле захтева да апликацији одобрите приступ тој фасцикли у Android-у. Искључивање аутоматског извоза оставља сачуване дневнике и постојеће датотеке непромењеним.</string>
-    <string name="auto_log_export_format_help" formatted="false">CSV je koristan u tabeli ili uređivaču teksta. Sadrži izvornu struju, preostali naboj i snagu izračunatu pomoću množioca izabranog pri izvozu. JSON zadržava strukturirane evidencije za rezervne kopije. Polja za nedostupnu struju, preostali naboj i snagu ostaju prazna.</string>
+    <string name="auto_log_export_help" formatted="false">Izaberite fasciklu, učestalost, format i da li da se prave zasebne datoteke ili dodaje u jednu. Izvozi obično čuvaju evidencije od prethodnog automatskog izvoza; nova trajna datoteka uključuje sve dostupne evidencije. Android može odložiti izvoz tokom mirovanja. Beleženje mora ostati omogućeno.\n
+    CSV je koristan u tabeli ili uređivaču teksta. Sadrži izvornu struju, preostali naboj i snagu izračunatu pomoću množioca izabranog pri izvozu. JSON zadržava strukturirane evidencije za rezervne kopije. Polja za nedostupnu struju, preostali naboj i snagu ostaju prazna.\n
+    Интервал извоза не може да премаши период чувања дневника. Промена фасцикле захтева да апликацији одобрите приступ тој фасцикли у Android-у. Искључивање аутоматског извоза оставља сачуване дневнике и постојеће датотеке непромењеним.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Направи нову датотеку</string>
     <string name="auto_log_export_mode_append" formatted="false">Додај нове евиденције у постојећу датотеку</string>
     <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
@@ -540,6 +544,8 @@
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">Sistemske boje zahtevaju Android 12 ili noviji. Na ovom uređaju se koristi „Battery Blue”.</string>
+    <string name="settings_color_palette_unsupported_help" formatted="false">Koristi sistemske boje ili „Battery Blue”.\n
+    Sistemske boje zahtevaju Android 12 ili noviji. Na ovom uređaju se koristi „Battery Blue”.</string>
     <string name="settings_brightness">Osvetljenost</string>
     <string name="settings_brightness_summary">Prati sistem ili izaberi svetli, tamni ili potpuno crni režim</string>
     <string name="settings_brightness_help">Prati sistem ili izaberi svetli, tamni ili potpuno crni režim.</string>
@@ -556,7 +562,7 @@
     Neograničen rad može povećati potrošnju baterije u pozadini. To možete kasnije promeniti u Android „podešavanjima“ → „Aplikacije“ → „Battery Monitor“ → „Baterija“. Nazivi menija se razlikuju u zavisnosti od uređaja.</string>
     <string name="pref_cat_autostart" formatted="false">Pokreni automatski</string>
     <string name="pref_autostart_at_boot" formatted="false">Pokreni automatski pri paljenju</string>
-    <string name="pref_autostart_at_boot_summary" formatted="false">Pokreni Battery Monitor kada se uređaj upali:</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">Pokreni Battery Monitor kada se uređaj upali</string>
     <string name="pref_autostart_at_boot_help" formatted="false">„Uvek” pokreće praćenje u pozadini posle ponovnog pokretanja uređaja. „Nikad” preskače automatsko pokretanje pri podizanju sistema. „Ukoliko radi u trenutku gašenja” prati da li ste poslednji put pokrenuli ili zaustavili praćenje u Battery Monitor. Zatvaranje aplikacije ili prekid njenog procesa ne računa se kao zaustavljanje praćenja. Vidžeti ne zaobilaze ovaj izbor.</string>
     <string name="boot_pref_always" formatted="false">Uvek</string>
     <string name="boot_pref_never" formatted="false">Nikad</string>
@@ -578,7 +584,8 @@
     <string name="diag_status_waiting_permission" formatted="false">Čeka se dozvola za Shizuku…</string>
     <string name="diag_status_no_stats" formatted="false">Na ovom uređaju trenutno nema dostupne napredne statistike baterije.</string>
     <string name="diag_value_not_available" formatted="false">Nije dostupno</string>
-    <string name="diag_help_overview" formatted="false">Objedinjuje pouzdanost praćenja, sačuvane podatke predviđanja i podatke baterije u karticama „Rad aplikacije“, „Baterija“, „Punjenje“ i „Sirovi podaci“. Android podaci su dostupni bez root pristupa. Dodatni podaci zavise od uređaja i dozvola aplikacije Battery Monitor.</string>
+    <string name="diag_help_overview" formatted="false">Objedinjuje pouzdanost praćenja, sačuvane podatke predviđanja i podatke baterije u karticama „Rad aplikacije“, „Baterija“, „Punjenje“ i „Sirovi podaci“. Android podaci su dostupni bez root pristupa. Dodatni podaci zavise od uređaja i dozvola aplikacije Battery Monitor.\n
+    Dostupna Android očitavanja prikupljaju se automatski dok je „Dijagnostika“ otvorena. Dodirnite vrednost da pregledate i kopirate očitavanje, izvor i vreme. Izvorni ključevi i vrednosti uređaja dostupni su u odeljku „Sirovi podaci“. Omogućite privilegovani pristup da koristite i root ili Shizuku.</string>
     <string name="diag_section_counters" formatted="false">Brojači</string>
     <string name="diag_help_counters" formatted="false">Očitavanja baterije su označena i oblikovana kao preostali naboj u mAh, struja u mA, energija u mWh, napon u V, temperatura u izabranoj jedinici i snaga u W. Množilac struje važi i za izračunatu snagu. Prosečna struja i broj ciklusa zavise od podrške uređaja.</string>
     <string name="diag_field_charge_counter" formatted="false">Procena preostalog naboja</string>
@@ -599,7 +606,8 @@
     <string name="diag_capacity_low">Niska</string>
     <string name="diag_capacity_high">Visoka</string>
     <string name="diag_section_charging" formatted="false">Punjenje</string>
-    <string name="diag_help_charging" formatted="false">Prikazuje vrednosti povezane sa aktivnom putanjom punjenja, kao što su maksimalna struja ili napon punjenja, politika punjenja, stanje punjenja i nivo kapaciteta. Ova polja mogu da se menjaju između punjača i režima punjenja.</string>
+    <string name="diag_help_charging" formatted="false">Prikazuje vrednosti povezane sa aktivnom putanjom punjenja, kao što su maksimalna struja ili napon punjenja, politika punjenja, stanje punjenja i nivo kapaciteta. Ova polja mogu da se menjaju između punjača i režima punjenja.\n
+    Ova procena koristi podešeni metod predviđanja aplikacije Battery Monitor. Njegov cilj ne upravlja punjenjem ni isključivanjem.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Preostalo vreme punjenja</string>
     <string name="diag_field_max_charging_current" formatted="false">Maksimalna struja punjenja</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Maksimalni napon punjenja</string>
@@ -656,7 +664,7 @@
     <string name="diagnostics" formatted="false">Дијагностика</string>
     <string name="diagnostics_summary" formatted="false">Проверите дозволе и поузданост надгледања и направите извештај за решавање проблема</string>
     <string name="diag_overview">Rad aplikacije</string>
-    <string name="diagnostics_help_overview" formatted="false">Proverava dozvole i pouzdanost praćenja. Kontrolama pokrenite ili zaustavite praćenje, promenite beleženje otklanjanja grešaka, otvorite podešavanja optimizacije baterije i obaveštenja ili napravite izveštaj za rešavanje problema. Nije svako nedostupno očitavanje problem sa dozvolama; neki uređaji ga ne daju.</string>
+    <string name="diagnostics_help_overview" formatted="false">Proverite dozvole i pouzdanost praćenja. Kontrolama pokrenite ili zaustavite praćenje, promenite beleženje otklanjanja grešaka, otvorite podešavanja optimizacije baterije i obaveštenja ili napravite izveštaj za rešavanje problema. Nije svako nedostupno očitavanje problem sa dozvolama; neki uređaji ga ne daju.</string>
     <string name="diagnostics_monitoring" formatted="false">Надгледање у позадини</string>
     <string name="diag_monitor_operation">Rad praćenja</string>
     <string name="diag_heartbeat">Poslednji signal aktivnosti</string>
@@ -684,12 +692,15 @@
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Дозвола недостаје. Додирните да отворите подешавања</string>
     <string name="diagnostics_battery_optimization" formatted="false">Оптимизација батерије</string>
     <string name="diagnostics_battery_optimization_help" formatted="false">Отворите Android подешавања оптимизације батерије када постоје ограничења. Ако ограничења већ нема, додир потврђује тај статус.</string>
+    <string name="monitoring_battery_optimization_help" formatted="false">Отворите Android подешавања оптимизације батерије када постоје ограничења. Ако ограничења већ нема, додир потврђује тај статус.\n
+    Neograničen rad u pozadini može poboljšati pouzdanost praćenja. Android optimizacija baterije može odložiti ažuriranja i alarme.\n
+    \n
+    Neograničen rad može povećati potrošnju baterije u pozadini. To možete kasnije promeniti u Android „podešavanjima“ → „Aplikacije“ → „Battery Monitor“ → „Baterija“. Nazivi menija se razlikuju u zavisnosti od uređaja.</string>
     <string name="diagnostics_unrestricted" formatted="false">Без ограничења</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Ограничено. Додирните да дозволите поуздано надгледање у позадини</string>
     <string name="diagnostics_vendor_settings" formatted="false">Подешавања произвођача</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Отворите додатна подешавања рада у позадини или аутоматског покретања на овом уређају</string>
-    <string name="diagnostics_vendor_settings_help" formatted="false">Отворите додатна подешавања рада у позадини или аутоматског покретања на овом уређају.</string>
-    <string name="diagnostics_vendor_availability_help" formatted="false">„Подешавања произвођача“ su dostupna samo na podržanim uređajima.</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Отворите додатна подешавања рада у позадини или аутоматског покретања. Dostupna samo na podržanim uređajima.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Помоћ за рад у позадини</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Отворите упутства за уређај на Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">Отворите упутства за уређај на Don’t Kill My App.</string>
@@ -753,6 +764,8 @@
 
     <string name="charging_diagnostics_title" formatted="false">Дијагностика OEM ограничења пуњења</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Otvorite alate za snimke i poređenje da biste istražili kako Battery Monitor otkriva ograničenje punjenja uređaja. Uputstva za pripremu dostupna su u pomoći samog OEM dijagnostičkog ekrana.</string>
+    <string name="charging_tools_help_overview" formatted="false">Otvorite alate za snimke i poređenje da biste istražili kako Battery Monitor otkriva ograničenje punjenja uređaja. Uputstva za pripremu dostupna su u pomoći samog OEM dijagnostičkog ekrana.\n
+    Уз привилеговани приступ може бити доступно више дијагностичких података. Одобрите приступ преко Shizuku-а или root-а и укључите привилеговани приступ у „Podešavanja” → „Napredno” → „Koristi privilegovani pristup” за кориснији извештај о OEM ограничењу пуњења.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Да би извештај био користан, отворите „Pomoć“ и пратите кораке за припрему пре снимања стања.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Уз привилеговани приступ може бити доступно више дијагностичких података. Одобрите приступ преко Shizuku-а или root-а и укључите привилеговани приступ у „Podešavanja” → „Napredno” → „Koristi privilegovani pristup” за кориснији извештај о OEM ограничењу пуњења.</string>
     <string name="charging_diagnostics_capture" formatted="false">Сними стање</string>
@@ -783,13 +796,14 @@
     <string name="charging_diagnostics_clear_summary" formatted="false">Обриши локално сачуване OEM снимке пуњења</string>
     <string name="charging_diagnostics_clear_help" formatted="false">Обриши локално сачуване OEM снимке пуњења.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Снимци пуњења су обрисани</string>
-    <string name="charging_diagnostics_help_steps" formatted="false">1. Искључите телефон са пуњача и оставите га искљученог током снимања конфигурације. Између снимака мењајте само подешавање заштите пуњења произвођача.\n
+    <string name="charging_diagnostics_help_steps" formatted="false">1. Искључите уређај са пуњача и оставите га искљученог током снимања конфигурације. Између снимака мењајте само подешавање заштите пуњења произвођача.\n
     2. Искључите заштиту пуњења, сачекајте 2–5\u00A0секунди и снимите стање.\n
     3. Изаберите фиксно ограничење, сачекајте 2–5\u00A0секунди и снимите стање. Ако је могуће, поновите са другим ограничењем.\n
     4. Укључите прилагодљиво, паметно или планирано пуњење, сачекајте 2–5\u00A0секунди и снимите стање.\n
     5. Ако поређење конфигурације није јасно, можете по жељи поновити поступак током пуњења да бисте снимили стање доступно само током рада.\n
     6. Направите и прегледајте упоредни извештај. Подаци се филтрирају, а потенцијално осетљиве вредности скривају, али пре слања прегледајте цео извештај.</string>
-    <string name="charging_diagnostics_help_contact" formatted="false">Након прегледа извештаја, копирајте га или сачувајте и пошаљите е-поштом на <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
+    <string name="charging_report_privacy_help" formatted="false">Podrazumevano isključeno. Ovi podaci mogu sadržati lične informacije. Pregledajte prikaz pre kopiranja ili čuvanja.\n
+    Након прегледа извештаја, копирајте га или сачувајте и пошаљите е-поштом на <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Резервна копија и враћање</string>
     <string name="backup_restore_settings_summary" formatted="false">Napravite rezervnu kopiju, vratite i prenesite podešavanja aplikacije i podatke o bateriji</string>
@@ -803,9 +817,9 @@
     <string name="pref_import_general_backup_help" formatted="false">Изаберите постојећу ZIP датотеку опште резервне копије и доступне категорије које желите да вратите. Резервне копије из новијих верзија апликације могу бити некомпатибилне, а враћање евиденција или података предвиђања са другог уређаја може довести до погрешних предвиђања. Ако је враћање само делимично завршено, проверите пријављене категорије пре поновног покушаја. Izabrane kategorije se vraćaju; neizabrane ostaju sačuvane. Vraćanje alarma zamenjuje trenutne alarme. Za dnevnike izaberite da li ćete ih dodati ili zameniti trenutnu istoriju.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Врати изабране податке из ZIP датотеке опште резервне копије</string>
     <string name="general_backup_restore_message" formatted="false">Изаберите шта желите да вратите.</string>
-    <string name="general_backup_device_data_warning_scope" formatted="false">Евиденције и подаци предвиђања</string>
+    <string name="general_backup_device_data_warning">Евиденције и подаци предвиђања су специфични за уређај на којем су прикупљени. Увоз на други уређај може довести до погрешних предвиђања или другог неочекиваног понашања апликације.</string>
     <string name="general_backup_imported" formatted="false">Општа резервна копија је успешно увезена.</string>
-    <string name="invalid_general_backup_file" formatted="false">Неважећа или некомпатибилна датотека опште резервне копије</string>
+    <string name="invalid_general_backup_file" formatted="false">Неважећа или некомпатибилна датотека опште резервне копије.</string>
     <string name="settings_restore_partial">Neke podatke nije moguće vratiti. Uspešno vraćeno: %1$s. Podaci koji su možda delimično vraćeni: %2$s. Proverite ove odeljke pre novog pokušaja.</string>
     <string name="settings_restore_none">Ništa</string>
     <string name="pref_export_settings" formatted="false">Izvezi podešavanja</string>
@@ -816,7 +830,7 @@
     <string name="pref_import_settings_help" formatted="false">Вратите сачувана подешавања. Ова радња не враћа историју или записе аларма.</string>
     <string name="pref_import_settings_summary" formatted="false">Vrati podešavanja iz datoteke</string>
     <string name="settings_imported" formatted="false">Podešavanja su uspešno uvezena.</string>
-    <string name="invalid_settings_file" formatted="false">Neispravna datoteka podešavanja</string>
+    <string name="invalid_settings_file" formatted="false">Neispravna datoteka podešavanja.</string>
     <string name="settings_file_version_warning" formatted="false">Ova datoteka je napravljena novijom verzijom aplikacije. Uvoz može izazvati neočekivano ponašanje. Nastaviti ipak?</string>
     <string name="pref_export_alarms" formatted="false">Извези аларме</string>
     <string name="pref_export_alarms_help" formatted="false">Сачувајте ваше аларме. JSON датотека садржи правила аларма, а не подешавања канала обавештења или звукова којима управља Android.</string>
@@ -826,7 +840,7 @@
     <string name="pref_import_alarms_help" formatted="false">Замените све тренутне аларме алармима из копије. Изаберите JSON датотеку резервне копије аларма.</string>
     <string name="pref_import_alarms_summary" formatted="false">Замени тренутне аларме алармима из датотеке</string>
     <string name="alarms_imported" formatted="false">Аларми су успешно увезени.</string>
-    <string name="invalid_alarms_file" formatted="false">Неважећа датотека аларма</string>
+    <string name="invalid_alarms_file" formatted="false">Неважећа датотека аларма.</string>
     <string name="pref_backup_device_data" formatted="false">Резервна копија података специфичних за уређај</string>
     <string name="device_data_logs" formatted="false">Евиденције</string>
     <string name="device_data_predictor" formatted="false">Подаци предвиђања</string>
@@ -840,8 +854,8 @@
     <string name="pref_import_device_data_summary" formatted="false">Врати евиденције и податке предвиђања из датотеке</string>
     <string name="device_data_imported" formatted="false">Подаци специфични за уређај су успешно увезени</string>
     <string name="device_data_imported_dialog" formatted="false">Подаци специфични за уређај су успешно увезени.</string>
-    <string name="invalid_device_data_file" formatted="false">Неважећа датотека података специфичних за уређај</string>
-    <string name="device_data_file_empty" formatted="false">Ова датотека не садржи подржане податке специфичне за уређај</string>
+    <string name="invalid_device_data_file" formatted="false">Неважећа датотека података специфичних за уређај.</string>
+    <string name="device_data_file_empty" formatted="false">Ова датотека не садржи подржане податке специфичне за уређај.</string>
     <string name="pref_import_logs_csv" formatted="false">Увези евиденције из CSV-а</string>
     <string name="pref_import_logs_csv_summary" formatted="false">Увези евиденције из извезене CSV датотеке</string>
     <string name="csv_logs_import_help" formatted="false">Uvezite evidencije iz CSV datoteke izvezene pomoću Battery Monitor i izaberite dodavanje ili zamenu postojećih evidencija. Stariji izvozi možda ne sadrže struju ili preostali naboj; ta merenja ostaju prazna za starije unose. JSON rezervne kopije zadržavaju strukturirane podatke i bolje su za njihovo vraćanje.</string>
@@ -852,7 +866,7 @@
     <string name="log_import_replace" formatted="false">Замени постојеће евиденције</string>
     <string name="csv_logs_imported" formatted="false">CSV евиденције су успешно увезене</string>
     <string name="csv_logs_imported_dialog" formatted="false">CSV евиденције су успешно увезене.</string>
-    <string name="invalid_csv_logs_file" formatted="false">Неважећа или некомпатибилна CSV датотека евиденција</string>
+    <string name="invalid_csv_logs_file" formatted="false">Неважећа или некомпатибилна CSV датотека евиденција.</string>
     <string name="settings_reset_title">Vrati podrazumevana podešavanja</string>
     <string name="settings_reset_summary">Vrati postavke aplikacije uz zadržavanje istorije, alarma i naučenih procena</string>
     <string name="settings_reset_help" formatted="false">Vratite postavke aplikacije nakon potvrde. Zadržava istoriju, alarme, naučene procene, podešavanja vidžeta i stanje praćenja u pozadini. Sistemske dozvole i podešavanja kanala obaveštenja se ne vraćaju.</string>

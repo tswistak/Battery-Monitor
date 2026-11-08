@@ -98,6 +98,141 @@ class BatteryHistoryInstrumentedTest {
     ).use { it.execSQL(statement) }
 
     @Test
+    fun history_import_failures_remain_pending_until_acknowledged_and_keep_read_errors_distinct() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val app = object : Application() { init {
+            attachBaseContext(context)
+        }
+        }
+        val models = ViewModelStore()
+        var index = 0
+        fun main(action: () -> Unit) = instrumentation.runOnMainSync(action)
+        fun model(): HistoryViewModel {
+            lateinit var result: HistoryViewModel
+            main {
+                result = HistoryViewModel(app)
+                models.put("import-${index++}", result)
+            }
+            return result
+        }
+
+        fun await(model: HistoryViewModel) {
+            val until = android.os.SystemClock.uptimeMillis() + 10_000
+            while (model.state.value.busy && android.os.SystemClock.uptimeMillis() < until) {
+                Thread.sleep(20)
+            }
+            assertFalse("Import must finish", model.state.value.busy)
+            instrumentation.waitForIdleSync()
+        }
+        try {
+            database.addLogs(listOf(observation))
+            val initial = rows()
+
+            data class InvalidSource(
+                val name: String,
+                val body: String?,
+                val json: Boolean,
+                val error: Int
+            )
+            for ((name, body, json, expected) in listOf(
+                InvalidSource(
+                    "broken.csv",
+                    "invalid",
+                    false,
+                    codes.swistak.batterymonitor.R.string.invalid_csv_logs_file
+                ),
+                InvalidSource(
+                    "broken.json",
+                    "invalid",
+                    true,
+                    codes.swistak.batterymonitor.R.string.invalid_device_data_file
+                ),
+                InvalidSource(
+                    "empty.json",
+                    """{"version":2}""",
+                    true,
+                    codes.swistak.batterymonitor.R.string.device_data_file_empty
+                ),
+                InvalidSource(
+                    "missing.json",
+                    null,
+                    true,
+                    codes.swistak.batterymonitor.R.string.history_operation_failed
+                )
+            )) {
+                val source = File(directory, name)
+                if (body != null) source.writeText(body)
+                val original = model()
+                var successCallbacks = 0
+                main {
+                    original.pendingImportUri = android.net.Uri.fromFile(source).toString()
+                    original.pendingImportJson = json
+                    original.import(LogImportMode.REPLACE) { successCallbacks++ }
+                }
+                await(original)
+                assertEquals(0, successCallbacks)
+                val explanation = context.getString(expected)
+                assertEquals(explanation, original.state.value.importError)
+                lateinit var saved: android.os.Bundle
+                main { saved = original.save() }
+                val restored = model()
+                main { restored.restore(saved) }
+                assertEquals(explanation, restored.state.value.importError)
+                main { restored.acknowledgeImportError() }
+                assertNull(restored.state.value.importError)
+                main { saved = restored.save() }
+                val acknowledged = model()
+                main { acknowledged.restore(saved) }
+                assertNull(acknowledged.state.value.importError)
+                assertEquals(initial, rows())
+            }
+            val valid = File(directory, "valid.json").apply {
+                writeText(
+                    DeviceDataBackup.exportToJson(context, setOf(DeviceDataType.LOGS)).toString()
+                )
+            }
+            sql("CREATE TRIGGER fail_history_import BEFORE INSERT ON logs BEGIN SELECT RAISE(ABORT, 'synthetic restore failure'); END")
+            val partial = model()
+            var successful = 0
+            main {
+                partial.pendingImportUri = android.net.Uri.fromFile(valid).toString()
+                partial.pendingImportJson = true
+                partial.import(LogImportMode.REPLACE) { successful++ }
+            }
+            await(partial)
+            assertEquals(
+                context.getString(
+                    codes.swistak.batterymonitor.R.string.settings_restore_partial,
+                    context.getString(codes.swistak.batterymonitor.R.string.settings_restore_none),
+                    context.getString(codes.swistak.batterymonitor.R.string.device_data_logs)
+                ), partial.state.value.importError
+            )
+            assertEquals(0, successful)
+            assertEquals(initial, rows())
+            sql("DROP TRIGGER fail_history_import")
+            val successfulImport = model()
+            main {
+                successfulImport.pendingImportUri = android.net.Uri.fromFile(valid).toString()
+                successfulImport.pendingImportJson = true
+                successfulImport.import(LogImportMode.REPLACE) { successful++ }
+            }
+            await(successfulImport)
+            assertEquals(1, successful)
+            assertNull(successfulImport.state.value.importError)
+            assertEquals(initial.map { it.record }, rows().map { it.record })
+            val cancelled = model()
+            var successCallbacks = 0
+            main { cancelled.import(LogImportMode.REPLACE) { successCallbacks++ } }
+            assertFalse(cancelled.state.value.busy)
+            assertNull(cancelled.state.value.importError)
+            assertEquals(0, successCallbacks)
+            assertEquals(initial.map { it.record }, rows().map { it.record })
+        } finally {
+            main { models.clear() }
+        }
+    }
+    
+    @Test
     fun database_records_real_transitions_and_samples_but_not_fluctuations_or_disabled_logging() {
         val sampler = BatteryHistorySampler()
         assertEquals(LogResult.Inserted, log(observation, 0, sampler))

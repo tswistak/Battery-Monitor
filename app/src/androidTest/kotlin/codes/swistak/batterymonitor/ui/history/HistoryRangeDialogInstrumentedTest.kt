@@ -20,10 +20,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityWindowInfo
-import android.view.inputmethod.InputMethodManager
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.test.platform.app.InstrumentationRegistry
@@ -31,6 +34,7 @@ import androidx.test.platform.view.inspector.WindowInspectorCompat
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
+import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -41,6 +45,221 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 class HistoryRangeDialogInstrumentedTest {
+    @Test
+    fun filters_cancel_and_back_leave_preferences_unchanged_and_ok_applies_once() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val target = instrumentation.targetContext
+        val directory =
+            java.io.File(target.cacheDir, "filter-draft-${System.nanoTime()}").apply { mkdirs() }
+        val isolated = object : android.content.ContextWrapper(target) {
+            override fun getApplicationContext(): android.content.Context = this
+            override fun getSharedPreferences(name: String, mode: Int) =
+                target.getSharedPreferences("${directory.name}-$name", mode)
+
+            override fun getDatabasePath(name: String) = java.io.File(directory, name)
+            override fun openOrCreateDatabase(
+                name: String,
+                mode: Int,
+                factory: android.database.sqlite.SQLiteDatabase.CursorFactory?
+            ) = android.database.sqlite.SQLiteDatabase.openOrCreateDatabase(
+                getDatabasePath(name), factory
+            )
+
+            override fun openOrCreateDatabase(
+                name: String,
+                mode: Int,
+                factory: android.database.sqlite.SQLiteDatabase.CursorFactory?,
+                errorHandler: android.database.DatabaseErrorHandler?
+            ) = android.database.sqlite.SQLiteDatabase.openOrCreateDatabase(
+                getDatabasePath(name).path, factory, errorHandler
+            )
+        }
+        val app = object : android.app.Application() { init {
+            attachBaseContext(isolated)
+        }
+        }
+        val store = androidx.lifecycle.ViewModelStore()
+        lateinit var model: HistoryViewModel
+        main {
+            model = HistoryViewModel(app)
+            store.put("filters", model)
+            model.tab("logs")
+        }
+        val committed = model.state.value.filters
+        val key = codes.swistak.batterymonitor.logs.historyFilterKeys.first()
+        val label = target.resources.getStringArray(R.array.log_filters).first()
+        val preferences = isolated.getSharedPreferences(
+            codes.swistak.batterymonitor.settings.SettingsContract.SP_MAIN_FILE,
+            android.content.Context.MODE_PRIVATE
+        )
+        val changes = java.util.concurrent.atomic.AtomicInteger()
+        val listener =
+            android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, changed ->
+                if (changed == key) changes.incrementAndGet()
+            }
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+        val monitor =
+            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        instrumentation.startActivitySync(
+            FullscreenChartActivity.intent(
+                target, HistoryMetric.LEVEL, HistoryRangeState.lastHours(24), "24h"
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        try {
+            await {
+                monitor.lastActivity != null && !monitor.lastActivity.isDestroyed && monitor.lastActivity.hasWindowFocus() && monitor.lastActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            }
+            main {
+                (monitor.lastActivity as FullscreenChartActivity).setContent {
+                    androidx.compose.runtime.CompositionLocalProvider(
+                        androidx.compose.ui.platform.LocalContext provides isolated,
+                        androidx.activity.compose.LocalActivityResultRegistryOwner provides (monitor.lastActivity as FullscreenChartActivity)
+                    ) {
+                        AppBatteryTheme {
+                            HistoryRoute(
+                                model,
+                                kotlinx.coroutines.flow.MutableStateFlow(codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState()),
+                                null,
+                                {},
+                                { _, _, _ -> })
+                        }
+                    }
+                }
+            }
+            val all = target.getString(R.string.history_all_types)
+            fun toggleFirstFilter() {
+                await("The filter dialog must open before editing its draft") {
+                    textVisible(target.getString(R.string.configure_log_filter))
+                }
+                click(label)
+            }
+            click(all)
+            toggleFirstFilter()
+            assertEquals(committed, model.state.value.filters)
+            click(target.getString(R.string.cancel))
+            assertEquals(committed, model.state.value.filters)
+            assertEquals(0, changes.get())
+            click(all)
+            toggleFirstFilter()
+            instrumentation.sendKeyDownUpSync(android.view.KeyEvent.KEYCODE_BACK)
+            await { dialogs() == 0 }
+            assertEquals(committed, model.state.value.filters)
+            assertEquals(0, changes.get())
+            click(all)
+            toggleFirstFilter()
+            assertEquals(committed, model.state.value.filters)
+            val filterConfirm = confirmAction()
+            main { filterConfirm(); filterConfirm() }
+            await { model.state.value.filters == committed - key }
+            await { changes.get() == 1 }
+            assertFalse(preferences.getBoolean(key, true))
+            click(
+                target.getString(
+                    R.string.history_filtered_types, committed.size - 1, committed.size
+                )
+            )
+            toggleFirstFilter()
+            click(target.getString(R.string.cancel))
+            assertEquals(committed - key, model.state.value.filters)
+            assertEquals(1, changes.get())
+        } finally {
+            main {
+                monitor.lastActivity?.finish()
+                store.clear()
+            }
+            instrumentation.removeMonitor(monitor)
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
+            for (name in listOf(
+                codes.swistak.batterymonitor.settings.SettingsContract.SETTINGS_FILE,
+                codes.swistak.batterymonitor.settings.SettingsContract.SP_MAIN_FILE
+            )) target.deleteSharedPreferences("${directory.name}-$name")
+            directory.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun preset_selection_changes_only_the_draft_until_ok_and_reopening_discards_cancelled_choices() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val context = instrumentation.targetContext
+        val range = HistoryRangeState.lastHours(24)
+        val state = mutableStateOf(HistoryUiState(range = range))
+        var commits = 0
+        val monitor =
+            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        instrumentation.startActivitySync(
+            FullscreenChartActivity.intent(context, HistoryMetric.LEVEL, range, "24h")
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        try {
+            await {
+                monitor.lastActivity != null && !monitor.lastActivity.isDestroyed && monitor.lastActivity.hasWindowFocus() && monitor.lastActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            }
+            main {
+                (monitor.lastActivity as FullscreenChartActivity).setContent {
+                    AppBatteryTheme {
+                        HistoryRangeControl(state.value, { next, label ->
+                            commits++
+                            state.value = state.value.copy(range = next, rangeLabel = label)
+                        }, ZoneId.systemDefault())
+                    }
+                }
+            }
+            fun awaitClosedDialog() {
+                await("Range dialog must detach and return focus to its live host before reopening") {
+                    val host = monitor.lastActivity
+                    dialogs() == 0 && host != null && !host.isFinishing && !host.isDestroyed && host.hasWindowFocus()
+                }
+            }
+
+            val original = context.getString(R.string.history_last_24h)
+            val week = context.getString(R.string.history_last_7d)
+            click(original)
+            click(week)
+            assertEquals(0, commits)
+            click(context.getString(R.string.cancel))
+            awaitClosedDialog()
+            assertEquals(0, commits)
+            assertEquals("24h", state.value.rangeLabel)
+            click(original)
+            click(week)
+            instrumentation.sendKeyDownUpSync(android.view.KeyEvent.KEYCODE_BACK)
+            awaitClosedDialog()
+            assertEquals(0, commits)
+            click(original)
+            click(week)
+            assertEquals(0, commits)
+            click(context.getString(R.string.okay))
+            await { commits == 1 }
+            awaitClosedDialog()
+            assertEquals("7d", state.value.rangeLabel)
+            click(week)
+            click(original)
+            click(context.getString(R.string.cancel))
+            awaitClosedDialog()
+            assertEquals(1, commits)
+            assertEquals("7d", state.value.rangeLabel)
+            click(week)
+            click(context.getString(R.string.history_custom_range))
+            click(context.getString(R.string.okay))
+            await { textVisible(context.getString(R.string.history_calendar_days)) }
+            click(context.getString(R.string.cancel))
+            awaitClosedDialog()
+            assertEquals(1, commits)
+            click(week)
+            click(context.getString(R.string.history_custom_range))
+            click(context.getString(R.string.okay))
+            await { textVisible(context.getString(R.string.history_calendar_days)) }
+            assertEquals(1, commits)
+            val finalConfirm = confirmAction()
+            main { finalConfirm(); finalConfirm() }
+            await { commits == 2 }
+            assertEquals("custom", state.value.rangeLabel)
+        } finally {
+            main { monitor.lastActivity?.finish() }
+            instrumentation.removeMonitor(monitor)
+        }
+    }
+
     @Test
     fun date_picker_replaces_parent_and_recreation_and_cancellation_preserve_custom_draft() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -68,6 +287,7 @@ class HistoryRangeDialogInstrumentedTest {
             }
             click(context.getString(R.string.history_range))
             click(context.getString(R.string.history_custom_range))
+            click(context.getString(R.string.okay))
             val locale = monitor.lastActivity.resources.configuration.locales[0]
             val format = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
             val from = context.getString(R.string.history_from, format.format(first))
@@ -101,6 +321,7 @@ class HistoryRangeDialogInstrumentedTest {
 
             click(context.getString(R.string.history_range))
             click(context.getString(R.string.history_custom_range))
+            click(context.getString(R.string.okay))
             await { textVisible(from) && textVisible(through) }
             assertOneDialog()
         } finally {
@@ -117,7 +338,7 @@ class HistoryRangeDialogInstrumentedTest {
     }
 
     @SuppressLint("RestrictedApi")
-    private fun dialogs(): Int {
+    private fun windowSemanticsNodes(focusedOnly: Boolean = false): List<SemanticsNode> {
         fun descendants(node: SemanticsNode): List<SemanticsNode> =
             listOf(node) + node.children.flatMap(::descendants)
 
@@ -128,14 +349,32 @@ class HistoryRangeDialogInstrumentedTest {
             if (view !is ViewGroup) return emptyList()
             return (0 until view.childCount).flatMap { owners(view.getChildAt(it)) }
         }
+        return WindowInspectorCompat.getGlobalWindowViews()
+            .filter { !focusedOnly || it.hasWindowFocus() }.flatMap(::owners)
+            .flatMap { descendants(it.rootSemanticsNode) }
+    }
 
+    private fun dialogs(): Int {
         var count = 0
         main {
-            count = WindowInspectorCompat.getGlobalWindowViews().flatMap(::owners)
-                .flatMap { descendants(it.rootSemanticsNode) }
-                .count { it.config.contains(SemanticsProperties.IsDialog) }
+            count =
+                windowSemanticsNodes().count { it.config.contains(SemanticsProperties.IsDialog) }
         }
         return count
+    }
+
+    private fun confirmAction(): () -> Boolean {
+        var action: (() -> Boolean)? = null
+        main {
+            val label =
+                InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.okay)
+            action = windowSemanticsNodes(focusedOnly = true).first {
+                it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(
+                    SemanticsProperties.Text
+                )?.any { text -> text.text == label } == true
+            }.config[SemanticsActions.OnClick].action
+        }
+        return requireNotNull(action)
     }
 
     private fun textVisible(text: String): Boolean = find(text) != null
@@ -162,32 +401,29 @@ class HistoryRangeDialogInstrumentedTest {
     }
 
     private fun click(text: String) {
-        await("The visible dialog must expose the button: $text") {
-            if (!textVisible(text)) {
-                hideKeyboard()
-                findNode { it.isScrollable }?.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)
-            }
-            textVisible(text)
-        }
-        val node = requireNotNull(find(text))
-        var clickable: AccessibilityNodeInfo? = node
-        while (clickable != null && !clickable.isClickable) clickable = clickable.parent
-        assertTrue(
-            "No clickable control for $text",
-            clickable?.performAction(AccessibilityNodeInfo.ACTION_CLICK) == true
-        )
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
-    }
-
-    @SuppressLint("RestrictedApi")
-    private fun hideKeyboard() {
-        main {
-            WindowInspectorCompat.getGlobalWindowViews().filter { it.hasWindowFocus() }
-                .forEach { view ->
-                    view.context.getSystemService(InputMethodManager::class.java)
-                        ?.hideSoftInputFromWindow(view.windowToken, 0)
+        var action: (() -> Boolean)? = null
+        await("The active dialog must expose the exact control: $text") {
+            main {
+                val nodes = windowSemanticsNodes(focusedOnly = true)
+                var node = nodes.firstOrNull {
+                    it.config.getOrNull(SemanticsProperties.Text)
+                        ?.any { value -> value.text == text } == true
                 }
+                while (node != null && !node.config.contains(SemanticsActions.OnClick)) node =
+                    node.parent
+                action = node?.config?.getOrNull(SemanticsActions.OnClick)?.action
+                if (action == null) nodes.firstOrNull { it.config.contains(SemanticsActions.ScrollBy) }?.config?.getOrNull(
+                    SemanticsActions.ScrollBy
+                )?.action?.invoke(0f, 200f)
+            }
+            action != null
         }
+        main {
+            assertTrue(
+                "Could not invoke the exact control: $text", requireNotNull(action).invoke()
+            )
+        }
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
     }
 
     @SuppressLint("RestrictedApi")

@@ -96,7 +96,7 @@
     <string name="pref_battery_current_multiplier" formatted="false">Multiplicator</string>
     <string name="pref_battery_current_multiplier_help" formatted="false">Unele dispozitive raportează unități sau semne neașteptate. Înmulțește aici valoarea raportată pentru a corecta rezultatul afișat. Folosește „Detectează automat” pentru a încerca să deduci multiplicatorul curentului dintr-o citire a bateriei.\n
     \n
-    Ca reper aproximativ pentru telefoane, semnul standard Android este pozitiv în timpul încărcării și negativ în timpul descărcării. Încărcarea activă este adesea între +500 și +5000\u00A0mA, iar descărcarea obișnuită între -100 și -3000\u00A0mA. Valorile apropiate de zero pot fi normale când bateria este aproape plină sau telefonul este inactiv. Dacă valoarea pare de aproximativ 1000 de ori prea mică ori prea mare sau semnul este inversat, ajustează multiplicatorul.</string>
+    Ca reper aproximativ pentru dispozitive, semnul standard Android este pozitiv în timpul încărcării și negativ în timpul descărcării. Încărcarea activă este adesea între +500 și +5000\u00A0mA, iar descărcarea obișnuită între -100 și -3000\u00A0mA. Valorile apropiate de zero pot fi normale când bateria este aproape plină sau dispozitivul este inactiv. Dacă valoarea pare de aproximativ 1000 de ori prea mică ori prea mare sau semnul este inversat, ajustează multiplicatorul.</string>
     <string name="pref_battery_current_multiplier_detect_automatically" formatted="false">Detectează automat</string>
     <string name="pref_battery_current_multiplier_detection_unavailable" formatted="false">Detectarea automată nu este disponibilă pentru starea sau citirea curentă a bateriei</string>
     <string name="pref_battery_current_multiplier_detection_result">Multiplicatorul a fost setat automat la %1$d</string>
@@ -150,7 +150,9 @@
     <string name="live_updates_notif_chan_name" formatted="false">Actualizări live</string>
     <string name="notification_settings" formatted="false">Notificare principală</string>
     <string name="notification_settings_summary" formatted="false">Configurați conținutul notificării, pictograma barei de stare și cipul de Actualizare live</string>
-    <string name="notification_settings_help" formatted="false">Puteți configura ce conținut să se afișeze în notificarea derulantă.</string>
+    <string name="notification_settings_help" formatted="false">Puteți configura ce conținut să se afișeze în notificarea derulantă.\n
+    Alege dacă pictograma notificării afișează procentul bateriei sau temperatura, dacă simbolul unității este afișat în pictogramă și dacă încărcarea folosește o pictogramă dedicată. Începând cu Android 16, este posibil ca pictograma barei de stare să nu funcționeze pe toate variantele sistemului de operare.\n
+    Pe Android 16 sau ulterior, alege când apare cipul de Actualizare live, ce valori afișează pe rând și dacă arată un emoji de încărcare. Disponibilitatea depinde și de dispozitiv și de setările notificărilor din sistem.</string>
     <string name="notification_channels_help" formatted="false">Deschide setările notificărilor Android pentru a permite sau bloca notificările și a configura sunetul, vibrațiile și livrarea pentru notificarea principală și fiecare tip de alarmă. Activarea unei reguli de alarmă nu anulează blocarea unui canal de notificări.</string>
     <string name="app_notifs_disabled_summary" formatted="false">Ați dezactivat toate notificările pentru această aplicație.  Vă rugăm să le permiteți să acceseze aceste setări</string>
     <string name="main_notifs_disabled_summary" formatted="false">Ați dezactivat notificarea principală pentru această aplicație.  Activați-l pentru a accesa aceste setări</string>
@@ -200,7 +202,6 @@
     <string name="pref_expanded_notification_help" formatted="false">Dacă această opțiune este activată, extinderea notificării principale afișează „Timpul rămas”, „Timp de la schimbarea stării” și fiecare valoare din „Semne Vitale” pe câte un rând separat cu etichetă, în locul rezumatului pe un singur rând.</string>
     <string name="pref_expanded_notification_format" formatted="true">%1$s: %2$s</string>
     <string name="status_bar_icon_settings" formatted="false">Pictograma barei de stare</string>
-    <string name="status_bar_icon_settings_help" formatted="false">Alege dacă pictograma notificării afișează procentul bateriei sau temperatura, dacă simbolul unității este afișat în pictogramă și dacă încărcarea folosește o pictogramă dedicată. Începând cu Android 16, este posibil ca pictograma barei de stare să nu funcționeze pe toate variantele sistemului de operare.</string>
     <string name="status_bar_icon_availability_help" formatted="false">Începând cu Android 16, este posibil ca pictograma barei de stare să nu funcționeze pe toate variantele sistemului de operare.</string>
     <string name="pref_icon_content" formatted="false">Conținutul pictogramei</string>
     <string name="pref_icon_content_help" formatted="false">Alegeți dacă pictograma barei de stare arată procentul bateriei sau temperatura bateriei. Temperatura urmează unitatea selectată.</string>
@@ -213,7 +214,6 @@
     <string name="pref_indicate_charging_summary" formatted="false">Modificați pictograma pentru a indica când se încarcă?</string>
     <string name="pref_indicate_charging_help" formatted="false">Pictograma de încărcare poate afișa un fulger sub număr. Dezactivează această opțiune dacă preferi aceeași pictogramă la încărcare și descărcare.</string>
     <string name="status_bar_chip_settings" formatted="false">Cip bară de stare</string>
-    <string name="status_bar_chip_settings_help" formatted="false">Pe Android 16 sau ulterior, alege când apare cipul de Actualizare live, ce valori afișează pe rând și dacă arată un emoji de încărcare. Disponibilitatea depinde și de dispozitiv și de setările notificărilor din sistem.</string>
     <string name="status_bar_chip_availability_help" formatted="false">Disponibilitatea depinde și de dispozitiv și de setările notificărilor din sistem.</string>
     <string name="settings_live_update_summary">Permite sau blochează notificările de baterie promovate în setările Android</string>
     <string name="settings_live_update_help">Permite sau blochează notificările de baterie promovate în setările Android.</string>
@@ -263,6 +263,8 @@
     <string name="alarm_settings_help" formatted="false">Puteți solicita Battery Monitor să vă anunțe când nivelul bateriei este atinge o anumită condiție (de exemplu, bateria se încarcă complet, nivelul bateriei scade sub 20% și multe altele).</string>
     <string name="alarms_overview" formatted="false">Prezentare generală a alarmelor</string>
     <string name="alarms_overview_help">Toate cele opt tipuri de alarmă sunt mereu disponibile. Activează evenimentele direct sau folosește „Adaugă prag” la un tip de alarmă pentru nivelul bateriei sau temperatură. Pragurile noi sunt activate după salvare. Atinge o valoare pentru a o edita; editarea păstrează starea activată sau dezactivată. Valorile dezactivate rămân în listă. „Sterge Alarma” cere confirmare. Sunetul și vibrațiile sunt comune fiecărui tip în setările notificărilor Android. Înregistrările duplicate existente apar ca o singură alarmă logică; activarea, dezactivarea sau ștergerea afectează toate copiile. Alarmele de încărcare și descărcare urmează țintele estimărilor și nu controlează încărcarea. Un canal blocat sau un monitor oprit nu schimbă comutatoarele salvate.</string>
+    <string name="alarms_overview_channels_help" formatted="false">Toate cele opt tipuri de alarmă sunt mereu disponibile. Activează evenimentele direct sau folosește „Adaugă prag” la un tip de alarmă pentru nivelul bateriei sau temperatură. Pragurile noi sunt activate după salvare. Atinge o valoare pentru a o edita; editarea păstrează starea activată sau dezactivată. Valorile dezactivate rămân în listă. „Sterge Alarma” cere confirmare. Sunetul și vibrațiile sunt comune fiecărui tip în setările notificărilor Android. Înregistrările duplicate existente apar ca o singură alarmă logică; activarea, dezactivarea sau ștergerea afectează toate copiile. Alarmele de încărcare și descărcare urmează țintele estimărilor și nu controlează încărcarea. Un canal blocat sau un monitor oprit nu schimbă comutatoarele salvate.\n
+    Deschide setările notificărilor Android pentru a permite sau bloca notificările și a configura sunetul, vibrațiile și livrarea pentru notificarea principală și fiecare tip de alarmă. Activarea unei reguli de alarmă nu anulează blocarea unui canal de notificări.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarmă activată</item>
         <item quantity="few">%1$d alarme activate</item>
@@ -298,6 +300,8 @@
     <string name="alarms_edit_threshold">Editează pragul</string>
     <string name="alarms_edit_existing">Editează pragul existent</string>
     <string name="alarms_threshold_edit_help" formatted="false">Dacă un prag există deja, deschide-l cu „Editează pragul existent”. Dacă alarmele salvate se schimbă în timpul editării, folosește „Reîmprospătează” și redeschide pragul înainte de a-l modifica.</string>
+    <string name="alarms_threshold_edit_channels_help" formatted="false">Dacă un prag există deja, deschide-l cu „Editează pragul existent”. Dacă alarmele salvate se schimbă în timpul editării, folosește „Reîmprospătează” și redeschide pragul înainte de a-l modifica.\n
+    Deschide setările notificărilor Android pentru a permite sau bloca notificările și a configura sunetul, vibrațiile și livrarea pentru notificarea principală și fiecare tip de alarmă. Activarea unei reguli de alarmă nu anulează blocarea unui canal de notificări.</string>
     <string name="alarms_new_enabled">Alarma va fi activată când este adăugată.</string>
     <string name="alarms_edit_keeps_enabled">Editarea păstrează starea actuală, activată sau dezactivată.</string>
     <string name="alarms_enabled">Activată</string>
@@ -419,7 +423,7 @@
     <string name="history_chart_y_fixed">Y: Fixă</string>
     <string name="history_chart_y_manual">Y: Manuală</string>
 
-    <string name="logs_empty" formatted="false">Nu sunt loguri/loguri goale</string>
+    <string name="logs_empty" formatted="false">Nu sunt loguri/loguri goale.</string>
     <string name="configure_log_filter" formatted="false">Afișați ce elemente de jurnal?</string>
     <string name="menu_show_seconds" formatted="false">Afișează secunde</string>
     <string name="menu_hide_seconds" formatted="false">Ascunde secunde</string>
@@ -434,7 +438,7 @@
     <string name="pref_enable_logging_summary" formatted="false">Înregistrați modificările stării bateriei?</string>
     <string name="pref_enable_logging_help" formatted="false">Salvează observațiile și schimbările de stare ale bateriei pentru „Istoric”. Măsurătorile disponibile includ nivelul, temperatura, tensiunea, curentul instantaneu original și încărcarea rămasă. Puterea se calculează din tensiune și curent la afișare sau export; nu este stocată separat. Dezactivarea înregistrării nu șterge istoricul existent și nu oprește estimările de timp.</string>
     <string name="pref_max_log_age" formatted="false">Vârsta maximă a jurnalului</string>
-    <string name="pref_max_log_age_help" formatted="false">Când înregistrarea este activată, conectarea la alimentare elimină jurnalele mai vechi decât această limită. „Fără limită” le păstrează până când le ștergi manual. Dacă exportul automat este activat, Battery Monitor exportă jurnalele în așteptare înainte de a șterge intrările vechi; un export eșuat împiedică ștergerea.</string>
+    <string name="pref_max_log_age_help" formatted="false">Când înregistrarea este activată, jurnalele mai vechi decât această limită sunt eliminate automat în timpul întreținerii istoricului. „Fără limită” le păstrează până când le ștergi manual. Dacă exportul automat este activat, Battery Monitor exportă jurnalele în așteptare înainte de a șterge intrările vechi; un export eșuat împiedică ștergerea.</string>
     <string name="age_1_day" formatted="false">1\u00A0zi</string>
     <string name="age_2_days" formatted="false">2\u00A0zile</string>
     <string name="age_4_days" formatted="false">4\u00A0zile</string>
@@ -460,9 +464,9 @@
     <string name="pref_auto_log_export_format" formatted="false">Formatul exportului</string>
     <string name="pref_auto_log_export_directory" formatted="false">Schimbă dosarul</string>
     <string name="pref_auto_log_export_path" formatted="true">Cale: %1$s</string>
-    <string name="auto_log_export_help" formatted="false">Alege un dosar, frecvența, formatul și dacă se creează fișiere separate sau se adaugă într-un singur fișier. Exporturile salvează de obicei jurnalele de la exportul automat anterior; un nou fișier continuu include toate jurnalele disponibile. Android poate întârzia exporturile în repaus. Înregistrarea trebuie să rămână activată.</string>
-    <string name="auto_log_export_options_help" formatted="false">Intervalul de export nu poate depăși perioada de păstrare a jurnalelor. Schimbarea dosarului necesită acordarea accesului aplicației la acel dosar în Android. Dezactivarea exportului automat lasă jurnalele salvate și fișierele existente neschimbate.</string>
-    <string name="auto_log_export_format_help" formatted="false">CSV este util într-o foaie de calcul sau într-un editor de text. Include curentul original, încărcarea rămasă și puterea calculată cu multiplicatorul selectat la export. JSON păstrează datele structurate ale jurnalelor pentru copii de rezervă. Celulele pentru curent, încărcare rămasă și putere indisponibile rămân goale.</string>
+    <string name="auto_log_export_help" formatted="false">Alege un dosar, frecvența, formatul și dacă se creează fișiere separate sau se adaugă într-un singur fișier. Exporturile salvează de obicei jurnalele de la exportul automat anterior; un nou fișier continuu include toate jurnalele disponibile. Android poate întârzia exporturile în repaus. Înregistrarea trebuie să rămână activată.\n
+    CSV este util într-o foaie de calcul sau într-un editor de text. Include curentul original, încărcarea rămasă și puterea calculată cu multiplicatorul selectat la export. JSON păstrează datele structurate ale jurnalelor pentru copii de rezervă. Celulele pentru curent, încărcare rămasă și putere indisponibile rămân goale.\n
+    Intervalul de export nu poate depăși perioada de păstrare a jurnalelor. Schimbarea dosarului necesită acordarea accesului aplicației la acel dosar în Android. Dezactivarea exportului automat lasă jurnalele salvate și fișierele existente neschimbate.</string>
     <string name="auto_log_export_mode_new_file" formatted="false">Creează un fișier nou</string>
     <string name="auto_log_export_mode_append" formatted="false">Adaugă jurnalele noi la fișierul existent</string>
     <string name="log_csv_column_with_unit">%1$s (%2$s)</string>
@@ -540,6 +544,8 @@
     <string name="settings_color_palette_material_you">Material You</string>
     <string name="settings_color_palette_battery_blue">Battery Blue</string>
     <string name="settings_color_palette_unavailable">Culorile sistemului necesită Android 12 sau o versiune ulterioară. Pe acest dispozitiv se folosește „Battery Blue”.</string>
+    <string name="settings_color_palette_unsupported_help" formatted="false">Folosește culorile sistemului sau „Battery Blue”.\n
+    Culorile sistemului necesită Android 12 sau o versiune ulterioară. Pe acest dispozitiv se folosește „Battery Blue”.</string>
     <string name="settings_brightness">Luminozitate</string>
     <string name="settings_brightness_summary">Urmează sistemul sau alege luminos, întunecat ori negru pur</string>
     <string name="settings_brightness_help">Urmează sistemul sau alege luminos, întunecat ori negru pur.</string>
@@ -556,7 +562,7 @@
     Rularea fără restricții poate crește consumul bateriei în fundal. Puteți schimba ulterior această opțiune în „Setări” Android → „Aplicații” → „Battery Monitor” → „Baterie”. Numele meniurilor diferă în funcție de dispozitiv.</string>
     <string name="pref_cat_autostart" formatted="false">Pornire automată</string>
     <string name="pref_autostart_at_boot" formatted="false">Pornire automată la pornire</string>
-    <string name="pref_autostart_at_boot_summary" formatted="false">Porniți monitorizarea bateriei când dispozitivul pornește:</string>
+    <string name="pref_autostart_at_boot_summary" formatted="false">Porniți monitorizarea bateriei când dispozitivul pornește</string>
     <string name="pref_autostart_at_boot_help" formatted="false">„Întotdeauna” pornește monitorizarea în fundal după repornirea dispozitivului. „Nu” omite pornirea automată la inițializare. „Dacă rulează la oprire” urmează ultima pornire sau oprire a monitorizării în Battery Monitor. Închiderea aplicației sau terminarea procesului ei nu înseamnă oprirea monitorizării. Widgeturile nu anulează această alegere.</string>
     <string name="boot_pref_always" formatted="false">Întotdeauna</string>
     <string name="boot_pref_never" formatted="false">Nu</string>
@@ -578,7 +584,8 @@
     <string name="diag_status_waiting_permission" formatted="false">Se așteaptă permisiunea Shizuku…</string>
     <string name="diag_status_no_stats" formatted="false">În acest moment nu sunt disponibile statistici avansate ale bateriei pe acest dispozitiv.</string>
     <string name="diag_value_not_available" formatted="false">Indisponibil</string>
-    <string name="diag_help_overview" formatted="false">Combină fiabilitatea monitorului, datele de predicție salvate și datele bateriei în filele „Funcționarea aplicației”, „Baterie”, „Încărcare” și „Date brute”. Datele Android sunt disponibile fără root. Datele suplimentare depind de dispozitiv și de permisiunile disponibile pentru Battery Monitor.</string>
+    <string name="diag_help_overview" formatted="false">Combină fiabilitatea monitorului, datele de predicție salvate și datele bateriei în filele „Funcționarea aplicației”, „Baterie”, „Încărcare” și „Date brute”. Datele Android sunt disponibile fără root. Datele suplimentare depind de dispozitiv și de permisiunile disponibile pentru Battery Monitor.\n
+    Citirile Android disponibile sunt colectate automat cât timp „Diagnosticare” este deschisă. Atinge o valoare pentru a examina și copia citirea, sursa și ora. Cheile și valorile originale ale dispozitivului sunt disponibile în „Date brute”. Activează accesul privilegiat pentru a folosi și Root sau Shizuku.</string>
     <string name="diag_section_counters" formatted="false">Contoare</string>
     <string name="diag_help_counters" formatted="false">Citirile bateriei sunt etichetate și formatate ca încărcare rămasă în mAh, curent în mA, energie în mWh, tensiune în V, temperatură în unitatea selectată și putere în W. Multiplicatorul de curent se aplică și puterii calculate. Curentul mediu și numărul de cicluri depind de suportul dispozitivului.</string>
     <string name="diag_field_charge_counter" formatted="false">Estimarea încărcării rămase</string>
@@ -599,7 +606,8 @@
     <string name="diag_capacity_low">Scăzută</string>
     <string name="diag_capacity_high">Ridicată</string>
     <string name="diag_section_charging" formatted="false">Încărcare</string>
-    <string name="diag_help_charging" formatted="false">Afișează valori legate de calea activă de încărcare, precum curentul sau tensiunea maximă de încărcare, politica de încărcare, starea de încărcare și nivelul de capacitate. Aceste câmpuri se pot schimba între încărcătoare și moduri de încărcare.</string>
+    <string name="diag_help_charging" formatted="false">Afișează valori legate de calea activă de încărcare, precum curentul sau tensiunea maximă de încărcare, politica de încărcare, starea de încărcare și nivelul de capacitate. Aceste câmpuri se pot schimba între încărcătoare și moduri de încărcare.\n
+    Această estimare folosește metoda de predicție configurată în Battery Monitor. Ținta ei nu controlează încărcarea sau oprirea.</string>
     <string name="diag_field_charge_time_remaining" formatted="false">Timp de încărcare rămas</string>
     <string name="diag_field_max_charging_current" formatted="false">Curent maxim de încărcare</string>
     <string name="diag_field_max_charging_voltage" formatted="false">Tensiune maximă de încărcare</string>
@@ -684,12 +692,15 @@
     <string name="diagnostics_permission_missing_tap_to_fix" formatted="false">Permisiune lipsă. Atingeți pentru a deschide setările</string>
     <string name="diagnostics_battery_optimization" formatted="false">Optimizarea bateriei</string>
     <string name="diagnostics_battery_optimization_help" formatted="false">Deschide setările Android de optimizare a bateriei când există restricții. Dacă nu mai există restricții, atingerea confirmă această stare.</string>
+    <string name="monitoring_battery_optimization_help" formatted="false">Deschide setările Android de optimizare a bateriei când există restricții. Dacă nu mai există restricții, atingerea confirmă această stare.\n
+    Rularea fără restricții în fundal poate îmbunătăți fiabilitatea monitorizării. Optimizarea bateriei din Android poate întârzia actualizările și alarmele.\n
+    \n
+    Rularea fără restricții poate crește consumul bateriei în fundal. Puteți schimba ulterior această opțiune în „Setări” Android → „Aplicații” → „Battery Monitor” → „Baterie”. Numele meniurilor diferă în funcție de dispozitiv.</string>
     <string name="diagnostics_unrestricted" formatted="false">Fără restricții</string>
     <string name="diagnostics_restricted_tap_to_fix" formatted="false">Restricționat. Atingeți pentru a permite monitorizarea fiabilă în fundal</string>
     <string name="diagnostics_vendor_settings" formatted="false">Setările producătorului</string>
     <string name="diagnostics_vendor_settings_summary" formatted="false">Deschideți setări suplimentare pentru activitatea în fundal sau pornirea automată disponibile pe dispozitiv</string>
-    <string name="diagnostics_vendor_settings_help" formatted="false">Deschideți setări suplimentare pentru activitatea în fundal sau pornirea automată disponibile pe dispozitiv.</string>
-    <string name="diagnostics_vendor_availability_help" formatted="false">Opțiunea „Setările producătorului” este disponibilă numai pe dispozitivele compatibile.</string>
+    <string name="diagnostics_vendor_settings_help" formatted="false">Deschideți setări suplimentare pentru activitatea în fundal sau pornirea automată. Disponibile numai pe dispozitivele compatibile.</string>
     <string name="diagnostics_dont_kill_my_app" formatted="false">Ajutor pentru activitatea în fundal</string>
     <string name="diagnostics_dont_kill_my_app_summary" formatted="false">Deschideți ghidul specific dispozitivului pe Don’t Kill My App</string>
     <string name="diagnostics_dont_kill_my_app_help" formatted="false">Deschideți ghidul specific dispozitivului pe Don’t Kill My App.</string>
@@ -753,6 +764,8 @@
 
     <string name="charging_diagnostics_title" formatted="false">Diagnosticarea limitei de încărcare OEM</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Deschide instrumentele pentru instantanee și comparație pentru a investiga cum detectează Battery Monitor limita de încărcare a dispozitivului. Instrucțiunile de pregătire se găsesc în ajutorul propriu al ecranului de diagnosticare OEM.</string>
+    <string name="charging_tools_help_overview" formatted="false">Deschide instrumentele pentru instantanee și comparație pentru a investiga cum detectează Battery Monitor limita de încărcare a dispozitivului. Instrucțiunile de pregătire se găsesc în ajutorul propriu al ecranului de diagnosticare OEM.\n
+    Cu acces privilegiat pot fi disponibile mai multe informații de diagnosticare. Acordă acces prin Shizuku sau root și activează accesul privilegiat în „Setări” → „Avansat” → „Folosește acces privilegiat” pentru un raport mai util despre limita de încărcare OEM.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Pentru un raport util, deschide „Ajutor” și urmează pașii de pregătire înainte de a captura instantaneele.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Cu acces privilegiat pot fi disponibile mai multe informații de diagnosticare. Acordă acces prin Shizuku sau root și activează accesul privilegiat în „Setări” → „Avansat” → „Folosește acces privilegiat” pentru un raport mai util despre limita de încărcare OEM.</string>
     <string name="charging_diagnostics_capture" formatted="false">Capturează instantaneu</string>
@@ -783,13 +796,14 @@
     <string name="charging_diagnostics_clear_summary" formatted="false">Șterge instantaneele OEM salvate local</string>
     <string name="charging_diagnostics_clear_help" formatted="false">Șterge instantaneele OEM salvate local.</string>
     <string name="charging_diagnostics_cleared" formatted="false">Instantaneele de încărcare au fost șterse</string>
-    <string name="charging_diagnostics_help_steps" formatted="false">1. Deconectează telefonul și menține-l deconectat în timpul instantaneelor de configurare. Între instantanee, modifică doar setarea producătorului pentru protecția la încărcare.\n
+    <string name="charging_diagnostics_help_steps" formatted="false">1. Deconectează dispozitivul și menține-l deconectat în timpul instantaneelor de configurare. Între instantanee, modifică doar setarea producătorului pentru protecția la încărcare.\n
     2. Oprește protecția la încărcare, așteaptă 2–5\u00A0secunde și capturează un instantaneu.\n
     3. Selectează o limită fixă, așteaptă 2–5\u00A0secunde și capturează. Dacă se poate, repetă cu altă limită.\n
     4. Activează încărcarea adaptivă, inteligentă sau programată, așteaptă 2–5\u00A0secunde și capturează.\n
     5. Dacă rezultatul comparației configurației nu este concludent, poți repeta opțional secvența în timpul încărcării pentru a captura stări prezente doar în timpul funcționării.\n
     6. Creează și verifică raportul comparativ. Datele sunt filtrate, iar valorile potențial sensibile sunt ascunse, dar verifică raportul complet înainte de a-l distribui.</string>
-    <string name="charging_diagnostics_help_contact" formatted="false">După ce verifici raportul, copiază-l sau salvează-l și trimite-l prin e-mail la <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
+    <string name="charging_report_privacy_help" formatted="false">Excluse implicit. Aceste date pot conține informații personale. Verifică previzualizarea înainte de a copia sau salva.\n
+    După ce verifici raportul, copiază-l sau salvează-l și trimite-l prin e-mail la <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Copiere de rezervă și restaurare</string>
     <string name="backup_restore_settings_summary" formatted="false">Faceți copii de rezervă, restaurați și transferați setările aplicației și datele bateriei</string>
@@ -803,9 +817,9 @@
     <string name="pref_import_general_backup_help" formatted="false">Selectează o copie de rezervă generală ZIP existentă și alege ce categorii disponibile dorești să restaurezi. Copiile de rezervă create cu versiuni mai noi ale aplicației pot fi incompatibile, iar restaurarea jurnalelor sau a datelor predictorului de pe alt dispozitiv poate duce la predicții incorecte. Dacă restaurarea este doar parțială, verifică categoriile raportate înainte de a încerca din nou. Categoriile selectate sunt restaurate; cele neselectate sunt păstrate. Restaurarea alarmelor înlocuiește alarmele actuale. Pentru jurnale, alege dacă să le adaugi sau să înlocuiești istoricul actual.</string>
     <string name="pref_import_general_backup_summary" formatted="false">Restaurați datele selectate dintr-un fișier ZIP de copiere de rezervă generală</string>
     <string name="general_backup_restore_message" formatted="false">Alegeți ce doriți să restaurați.</string>
-    <string name="general_backup_device_data_warning_scope" formatted="false">Jurnale și date de predicție</string>
+    <string name="general_backup_device_data_warning">Jurnalele și datele de predicție sunt specifice dispozitivului pe care au fost colectate. Importarea lor pe alt dispozitiv poate duce la predicții incorecte sau la un alt comportament neașteptat al aplicației.</string>
     <string name="general_backup_imported" formatted="false">Copia de rezervă generală a fost importată cu succes.</string>
-    <string name="invalid_general_backup_file" formatted="false">Fișier de copiere de rezervă generală nevalid sau incompatibil</string>
+    <string name="invalid_general_backup_file" formatted="false">Fișier de copiere de rezervă generală nevalid sau incompatibil.</string>
     <string name="settings_restore_partial">Unele date nu au putut fi restaurate. Restaurate cu succes: %1$s. Date posibil restaurate parțial: %2$s. Verifică aceste secțiuni înainte de a încerca din nou.</string>
     <string name="settings_restore_none">Niciunul</string>
     <string name="pref_export_settings" formatted="false">Exportă setările</string>
@@ -816,7 +830,7 @@
     <string name="pref_import_settings_help" formatted="false">Restaurează preferințele salvate. Această acțiune nu restaurează istoricul sau înregistrările alarmelor.</string>
     <string name="pref_import_settings_summary" formatted="false">Restabilește setările dintr-un fișier</string>
     <string name="settings_imported" formatted="false">Setările au fost importate cu succes.</string>
-    <string name="invalid_settings_file" formatted="false">Fișier de setări nevalid</string>
+    <string name="invalid_settings_file" formatted="false">Fișier de setări nevalid.</string>
     <string name="settings_file_version_warning" formatted="false">Acest fișier a fost creat de o versiune mai nouă a aplicației. Importarea lui poate cauza un comportament neașteptat. Continui oricum?</string>
     <string name="pref_export_alarms" formatted="false">Exportați alarmele</string>
     <string name="pref_export_alarms_help" formatted="false">Salvează alarmele tale. Fișierul JSON conține regulile alarmelor, nu setările canalelor de notificare sau ale sunetelor gestionate de Android.</string>
@@ -826,7 +840,7 @@
     <string name="pref_import_alarms_help" formatted="false">Înlocuiește toate alarmele curente cu cele din copie. Alege un fișier JSON de rezervă al alarmelor.</string>
     <string name="pref_import_alarms_summary" formatted="false">Înlocuiți alarmele curente cu cele dintr-un fișier</string>
     <string name="alarms_imported" formatted="false">Alarmele au fost importate cu succes.</string>
-    <string name="invalid_alarms_file" formatted="false">Fișier de alarme nevalid</string>
+    <string name="invalid_alarms_file" formatted="false">Fișier de alarme nevalid.</string>
     <string name="pref_backup_device_data" formatted="false">Copiere de rezervă a datelor specifice dispozitivului</string>
     <string name="device_data_logs" formatted="false">Jurnale</string>
     <string name="device_data_predictor" formatted="false">Date de predicție</string>
@@ -840,8 +854,8 @@
     <string name="pref_import_device_data_summary" formatted="false">Restaurați jurnalele și datele de predicție dintr-un fișier</string>
     <string name="device_data_imported" formatted="false">Datele specifice dispozitivului au fost importate cu succes</string>
     <string name="device_data_imported_dialog" formatted="false">Datele specifice dispozitivului au fost importate cu succes.</string>
-    <string name="invalid_device_data_file" formatted="false">Fișier de date specifice dispozitivului nevalid</string>
-    <string name="device_data_file_empty" formatted="false">Acest fișier nu conține date specifice dispozitivului acceptate</string>
+    <string name="invalid_device_data_file" formatted="false">Fișier de date specifice dispozitivului nevalid.</string>
+    <string name="device_data_file_empty" formatted="false">Acest fișier nu conține date specifice dispozitivului acceptate.</string>
     <string name="pref_import_logs_csv" formatted="false">Importați jurnale din CSV</string>
     <string name="pref_import_logs_csv_summary" formatted="false">Importați jurnale dintr-un fișier CSV exportat</string>
     <string name="csv_logs_import_help" formatted="false">Importă jurnale dintr-un CSV exportat de Battery Monitor și alege dacă le adaugi sau înlocuiești jurnalele existente. Exporturile mai vechi pot să nu conțină curentul sau încărcarea rămasă; aceste măsurători rămân goale pentru intrările vechi. Copiile de rezervă JSON păstrează datele structurate și sunt preferabile pentru restaurarea lor.</string>
@@ -852,7 +866,7 @@
     <string name="log_import_replace" formatted="false">Înlocuiți jurnalele existente</string>
     <string name="csv_logs_imported" formatted="false">Jurnalele CSV au fost importate cu succes</string>
     <string name="csv_logs_imported_dialog" formatted="false">Jurnalele CSV au fost importate cu succes.</string>
-    <string name="invalid_csv_logs_file" formatted="false">Fișier de jurnale CSV nevalid sau incompatibil</string>
+    <string name="invalid_csv_logs_file" formatted="false">Fișier de jurnale CSV nevalid sau incompatibil.</string>
     <string name="settings_reset_title">Restabilește setările implicite</string>
     <string name="settings_reset_summary">Resetează preferințele aplicației, păstrând istoricul, alarmele și estimările învățate</string>
     <string name="settings_reset_help" formatted="false">Resetează preferințele aplicației după confirmare. Păstrează istoricul, alarmele, estimările învățate, configurațiile widgeturilor și starea pornită sau oprită a monitorizării în fundal. Permisiunile sistemului și setările canalelor de notificări nu sunt resetate.</string>

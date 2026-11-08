@@ -12,9 +12,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inspector.WindowInspector
+import android.widget.FrameLayout
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +25,8 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.LocalSaveableStateRegistry
+import androidx.compose.runtime.saveable.SaveableStateRegistry
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
@@ -48,9 +52,13 @@ import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
+import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsScreen
+import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsState
 import codes.swistak.batterymonitor.ui.help.HelpScreen
 import codes.swistak.batterymonitor.ui.help.helpSections
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
+import codes.swistak.batterymonitor.ui.settings.SettingsDialog
+import codes.swistak.batterymonitor.ui.settings.SettingsDialogs
 import codes.swistak.batterymonitor.ui.settings.SettingsScreen
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import codes.swistak.batterymonitor.ui.theme.Brightness
@@ -84,6 +92,30 @@ class SettingsNavigationInstrumentedTest {
             var version by mutableStateOf(0)
             val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ -> version++ }
             val prefix = localized.getString(R.string.currently_set_to)
+            var registry = SaveableStateRegistry(null) { true }
+
+            fun content() {
+                val screen = PreferenceManager(activity).createPreferenceScreen(activity)
+                activity.setContent {
+                    CompositionLocalProvider(
+                        LocalContext provides localized,
+                        LocalResources provides localized.resources,
+                        LocalConfiguration provides configuration,
+                        LocalSaveableStateRegistry provides registry
+                    ) {
+                        AppBatteryTheme {
+                            SettingsScreen(
+                                screen,
+                                version,
+                                "general",
+                                null,
+                                {},
+                                { _, _ -> },
+                                { _, _ -> })
+                        }
+                    }
+                }
+            }
 
             fun hasText(text: String) = nodes(includeDialogs = true).any {
                 it.config.getOrNull(SemanticsProperties.Text)
@@ -106,27 +138,7 @@ class SettingsNavigationInstrumentedTest {
                 settings.edit().putString(keys[0], ColorSource.Dynamic.name)
                     .putString(keys[1], Brightness.System.name).commit()
                 settings.registerOnSharedPreferenceChangeListener(listener)
-                main {
-                    val screen = PreferenceManager(activity).createPreferenceScreen(activity)
-                    activity.setContent {
-                        CompositionLocalProvider(
-                            LocalContext provides localized,
-                            LocalResources provides localized.resources,
-                            LocalConfiguration provides configuration
-                        ) {
-                            AppBatteryTheme {
-                                SettingsScreen(
-                                    screen,
-                                    version,
-                                    "general",
-                                    null,
-                                    {},
-                                    { _, _ -> },
-                                    { _, _ -> })
-                            }
-                        }
-                    }
-                }
+                main { content() }
                 await {
                     hasText(prefix + localized.getString(R.string.settings_color_palette_material_you)) && hasText(
                         prefix + localized.getString(R.string.settings_brightness_system)
@@ -143,10 +155,48 @@ class SettingsNavigationInstrumentedTest {
                         keys[1] to Brightness.Dark.name
                     )
                 )) {
+                    val committed = settings.getString(keyAndValue.first, null)
+                    select(title)
+                    await { hasText(localized.getString(choice)) }
+                    select(choice)
+                    assertEquals(committed, settings.getString(keyAndValue.first, null))
+                    select(R.string.cancel)
+                    assertEquals(committed, settings.getString(keyAndValue.first, null))
+                    select(title)
+                    await { hasText(localized.getString(choice)) }
+                    main {
+                        assertFalse(nodes(includeDialogs = true).any {
+                            it.config.getOrNull(SemanticsProperties.Selected) == true && it.config.getOrNull(
+                                SemanticsProperties.Text
+                            )?.any { value -> value.text == localized.getString(choice) } == true
+                        })
+                    }
+                    select(choice)
+                    instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+                    instrumentation.waitForIdleSync()
+                    assertEquals(committed, settings.getString(keyAndValue.first, null))
                     await { hasText(localized.getString(title)) }
                     select(title)
                     await { hasText(localized.getString(choice)) }
                     select(choice)
+                    main {
+                        val saved = registry.performSave()
+                        activity.setContentView(FrameLayout(activity))
+                        registry = SaveableStateRegistry(saved) { true }
+                        content()
+                    }
+                    await { hasText(localized.getString(R.string.okay)) }
+                    assertEquals(committed, settings.getString(keyAndValue.first, null))
+                    main {
+                        val confirm = nodes(includeDialogs = true).first {
+                            it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(
+                                SemanticsProperties.Text
+                            )
+                                ?.any { value -> value.text == localized.getString(R.string.okay) } == true
+                        }.config[SemanticsActions.OnClick].action!!
+                        confirm()
+                        confirm()
+                    }
                     await { hasText(prefix + localized.getString(choice)) }
                     assertEquals(keyAndValue.second, settings.getString(keyAndValue.first, null))
                 }
@@ -160,6 +210,179 @@ class SettingsNavigationInstrumentedTest {
             }
         }
     }
+
+    @Test
+    fun diagnostics_access_discards_cancelled_drafts_and_confirms_once() = withHost {
+        assumeTrue(Build.VERSION.SDK_INT >= 29)
+        var state by mutableStateOf(DiagnosticsState())
+        val committed = mutableListOf<Boolean>()
+        main {
+            activity.setContent {
+                AppBatteryTheme {
+                    DiagnosticsScreen(
+                        state, {}, {}, {}, { enabled ->
+                            committed += enabled
+                            state = state.copy(privilegedEnabled = enabled)
+                        }, tab = 3
+                    )
+                }
+            }
+        }
+
+        fun action(label: Int) = nodes(includeDialogs = true).firstOrNull {
+            it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(SemanticsProperties.Text)
+                ?.any { value -> value.text == context.getString(label) } == true
+        }
+
+        fun select(label: Int) {
+            await { action(label) != null }
+            main { assertTrue(action(label)!!.config[SemanticsActions.OnClick].action?.invoke() == true) }
+            instrumentation.waitForIdleSync()
+        }
+
+        await { nodes().any { it.config.contains(SemanticsActions.ScrollBy) } }
+        main {
+            nodes().first { it.config.contains(SemanticsActions.ScrollBy) }.config[SemanticsActions.ScrollBy].action?.invoke(
+                0f, 100_000f
+            )
+        }
+        for (cancelWithBack in listOf(false, true)) {
+            select(R.string.pref_cat_privileged_access)
+            select(R.string.pref_use_privileged_access)
+            assertTrue(committed.isEmpty())
+            if (cancelWithBack) {
+                instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+                instrumentation.waitForIdleSync()
+            } else select(R.string.cancel)
+            assertTrue(committed.isEmpty())
+        }
+        select(R.string.pref_cat_privileged_access)
+        await { action(R.string.pref_use_privileged_access) != null }
+        main {
+            assertEquals(
+                androidx.compose.ui.state.ToggleableState.Off,
+                action(R.string.pref_use_privileged_access)!!.config[SemanticsProperties.ToggleableState]
+            )
+        }
+        select(R.string.pref_use_privileged_access)
+        main {
+            val confirm = action(R.string.okay)!!.config[SemanticsActions.OnClick].action!!
+            confirm()
+            confirm()
+        }
+        await { committed == listOf(true) }
+        select(R.string.pref_cat_privileged_access)
+        await { action(R.string.pref_use_privileged_access) != null }
+        main {
+            assertEquals(
+                androidx.compose.ui.state.ToggleableState.On,
+                action(R.string.pref_use_privileged_access)!!.config[SemanticsProperties.ToggleableState]
+            )
+        }
+        select(R.string.cancel)
+        assertEquals(listOf(true), committed)
+    }
+
+    @Test
+    fun automatic_export_preserves_folder_step_drafts_and_only_confirms_the_current_session_once() =
+        withHost {
+            assumeTrue(Build.VERSION.SDK_INT >= 29)
+            var dialog by mutableStateOf<SettingsDialog?>(null)
+            var registry = SaveableStateRegistry(null) { true }
+            val folderRequests = mutableListOf<Triple<Int, Int, Int>>()
+            val confirmations = mutableListOf<Pair<String, Triple<Int, Int, Int>>>()
+
+            fun configuration(directory: String): SettingsDialog.AutoExport =
+                SettingsDialog.AutoExport(
+                    title = "Synthetic automatic export",
+                    directoryLabel = directory,
+                    frequencyLabels = listOf("Original frequency", "Draft frequency"),
+                    frequencyEnabled = listOf(true, true),
+                    frequencyIndex = 0,
+                    modeLabels = listOf("Original mode", "Draft mode"),
+                    modeIndex = 0,
+                    formatLabels = listOf("Original format", "Draft format"),
+                    formatIndex = 0,
+                    configured = true,
+                    onConfirm = { frequency, mode, format ->
+                        confirmations += directory to Triple(frequency, mode, format)
+                    },
+                    onChooseDirectory = { frequency, mode, format ->
+                        folderRequests += Triple(frequency, mode, format)
+                        dialog = configuration("Chosen folder")
+                    },
+                    onDisable = { error("Disable is an explicit operation outside this editing check") })
+
+            fun content() {
+                activity.setContent {
+                    CompositionLocalProvider(LocalSaveableStateRegistry provides registry) {
+                        AppBatteryTheme { SettingsDialogs(dialog, false) { dialog = null } }
+                    }
+                }
+            }
+
+            fun action(text: String) = nodes(includeDialogs = true).firstOrNull {
+                it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(
+                    SemanticsProperties.Text
+                )?.any { value -> value.text == text } == true
+            }
+
+            fun select(text: String) {
+                await { action(text) != null }
+                main { assertTrue(action(text)!!.config[SemanticsActions.OnClick].action?.invoke() == true) }
+                instrumentation.waitForIdleSync()
+            }
+
+            fun draft() {
+                for ((initial, edited) in listOf(
+                    "Original frequency" to "Draft frequency",
+                    "Original mode" to "Draft mode",
+                    "Original format" to "Draft format"
+                )) {
+                    select(initial)
+                    select(edited)
+                }
+            }
+
+            main { dialog = configuration("Original folder"); content() }
+            draft()
+            select(context.getString(R.string.pref_auto_log_export_directory))
+            assertEquals(listOf(Triple(1, 1, 1)), folderRequests)
+            assertTrue(confirmations.isEmpty())
+            await { action("Draft frequency") != null && action("Draft mode") != null && action("Draft format") != null }
+            select(context.getString(R.string.cancel))
+            await {
+                dialog == null && nodes(includeDialogs = true).none {
+                    it.config.contains(SemanticsProperties.IsDialog)
+                }
+            }
+            assertTrue(confirmations.isEmpty())
+
+            main { dialog = configuration("Original folder") }
+            await {
+                action("Original frequency") != null && action("Original mode") != null && action(
+                    "Original format"
+                ) != null
+            }
+            draft()
+            select(context.getString(R.string.pref_auto_log_export_directory))
+            main {
+                val saved = registry.performSave()
+                activity.setContentView(FrameLayout(activity))
+                registry = SaveableStateRegistry(saved) { true }
+                content()
+            }
+            await { action("Draft frequency") != null && action("Draft mode") != null && action("Draft format") != null }
+            assertTrue(confirmations.isEmpty())
+            main {
+                val confirm =
+                    action(context.getString(R.string.okay))!!.config[SemanticsActions.OnClick].action!!
+                confirm()
+                confirm()
+            }
+            assertEquals(listOf("Chosen folder" to Triple(1, 1, 1)), confirmations)
+            assertEquals(listOf(Triple(1, 1, 1), Triple(1, 1, 1)), folderRequests)
+        }
 
     @Test
     fun time_estimates_does_not_repeat_estimator_help_below_the_selector() = withHost {

@@ -253,6 +253,7 @@ internal fun HistoryRoute(
         settings.getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")?.toIntOrNull() ?: 1
     }
     val seconds = remember(settingsVersion) { mainPreferences.getBoolean("show_seconds", false) }
+    var draftFilters by rememberSaveable { mutableStateOf<List<String>>(ArrayList(state.filters)) }
     var dialog by rememberSaveable { mutableStateOf(if (viewModel.pendingImportUri != null) "importMode" else null) }
     LaunchedEffect(requestedAction) {
         if (requestedAction != null) {
@@ -450,7 +451,17 @@ internal fun HistoryRoute(
                                 zone = zone
                             )
                         } else if (state.loading) Spacer(Modifier.height(280.dp))
-                        else Text(stringResource(R.string.logs_empty))
+                        else Box(
+                            Modifier
+                                .fillMaxWidth()
+                                .height(280.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            if (!state.error) Text(
+                                stringResource(R.string.logs_empty),
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                            )
+                        }
                     }
                 }
             }
@@ -537,7 +548,10 @@ internal fun HistoryRoute(
                 ) {
                     FilterChip(
                         selected = state.filters.size == historyFilterKeys.size,
-                        onClick = { dialog = "filters" },
+                        onClick = {
+                            draftFilters = ArrayList(state.filters)
+                            dialog = "filters"
+                        },
                         shape = RoundedCornerShape(11.dp),
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -571,7 +585,7 @@ internal fun HistoryRoute(
                         )
                     }
                 }
-                if (!state.loading && state.page.isEmpty()) Text(stringResource(R.string.logs_empty))
+                if (!state.loading && !state.error && state.page.isEmpty()) Text(stringResource(R.string.logs_empty))
             }
             logDays.forEach { (date, entries) ->
                 item(key = "day:$date", contentType = "day") {
@@ -937,11 +951,28 @@ internal fun HistoryRoute(
     }, confirmButton = {
         TextButton(onClick = { exportError = null }) { Text(stringResource(R.string.okay)) }
     })
-    val filterLabels = stringArrayResource(R.array.log_filters).toList() + measurement
-    if (dialogsAllowed && dialog == "filters") AlertDialog(
-        onDismissRequest = { dialog = null },
-        title = { Text(stringResource(R.string.configure_log_filter)) },
+    if (dialogsAllowed && state.importError != null) AlertDialog(
+        onDismissRequest = viewModel::acknowledgeImportError,
+        title = { Text(stringResource(R.string.log_import_mode_title)) },
         text = {
+            Text(
+                state.importError.orEmpty(), Modifier.verticalScroll(rememberScrollState())
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = viewModel::acknowledgeImportError) {
+                Text(stringResource(R.string.okay))
+            }
+        })
+    val filterLabels = stringArrayResource(R.array.log_filters).toList() + measurement
+    if (dialogsAllowed && dialog == "filters") {
+        var handled by remember { mutableStateOf(false) }
+        AlertDialog(onDismissRequest = {
+            if (!handled && dialog == "filters") {
+                handled = true
+                dialog = null
+            }
+        }, title = { Text(stringResource(R.string.configure_log_filter)) }, text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 historyFilterKeys.forEachIndexed { index, key ->
                     Row(
@@ -949,23 +980,38 @@ internal fun HistoryRoute(
                             .fillMaxWidth()
                             .heightIn(min = 48.dp)
                             .toggleable(
-                                key in state.filters,
+                                key in draftFilters,
                                 role = Role.Checkbox,
-                                onValueChange = { checked -> viewModel.filters(if (checked) state.filters + key else state.filters - key) }),
+                                onValueChange = { checked ->
+                                    draftFilters = ArrayList(
+                                        if (checked) draftFilters + key else draftFilters - key
+                                    )
+                                }),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Checkbox(key in state.filters, null)
+                        Checkbox(key in draftFilters, null)
                         Text(filterLabels[index], Modifier.padding(vertical = 12.dp))
                     }
                 }
             }
-        },
-        confirmButton = {
+        }, confirmButton = {
             TextButton(onClick = {
-                dialog = null
+                if (!handled && dialog == "filters") {
+                    handled = true
+                    dialog = null
+                    viewModel.filters(draftFilters.toSet())
+                }
             }) { Text(stringResource(R.string.okay)) }
+        }, dismissButton = {
+            TextButton(onClick = {
+                if (!handled && dialog == "filters") {
+                    handled = true
+                    dialog = null
+                }
+            }) { Text(stringResource(R.string.cancel)) }
         })
+    }
     if (dialog == "export") ChoiceDialog(
         R.string.log_export_mode_title, { dialog = null }, listOf(
             DialogChoice(R.string.history_export_selected, { export(exportFormat, "selected") }),
@@ -1011,12 +1057,7 @@ internal fun HistoryRoute(
     }, confirmButton = {
         Column {
             TextButton(onClick = {
-                viewModel.import(LogImportMode.ADD) { success, restoreError ->
-                    if (restoreError != null) Toast.makeText(
-                        appContext, restoreError, Toast.LENGTH_LONG
-                    ).show()
-                    else result(success, R.string.csv_logs_imported)
-                }
+                viewModel.import(LogImportMode.ADD) { result(true, R.string.csv_logs_imported) }
                 dialog = null
             }) { Text(stringResource(R.string.log_import_add)) }
             TextButton(onClick = {
@@ -1038,11 +1079,10 @@ internal fun HistoryRoute(
         text = { Text(stringResource(R.string.confirm_clear_logs)) },
         confirmButton = {
             TextButton(onClick = {
-                viewModel.import(LogImportMode.REPLACE) { success, restoreError ->
-                    if (restoreError != null) Toast.makeText(
-                        appContext, restoreError, Toast.LENGTH_LONG
-                    ).show()
-                    else result(success, R.string.device_data_imported)
+                viewModel.import(LogImportMode.REPLACE) {
+                    result(
+                        true, R.string.device_data_imported
+                    )
                 }
                 dialog = null
             }) { Text(stringResource(R.string.yes)) }

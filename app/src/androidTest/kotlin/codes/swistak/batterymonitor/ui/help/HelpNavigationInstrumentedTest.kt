@@ -66,11 +66,11 @@ class HelpNavigationInstrumentedTest {
                 ), Triple(
                     "diagnostics", "monitor:diagnostics_shizuku", R.string.diagnostics_shizuku_help
                 ), Triple(
-                    "diagnostics", "charging-tools", R.string.charging_diagnostics_help_overview
+                    "diagnostics", "charging-tools", R.string.charging_tools_help_overview
                 ), Triple(
                     "diagnostics",
                     "charging-tools:charging_diagnostics_capture",
-                    R.string.charging_diagnostics_help_overview
+                    R.string.charging_tools_help_overview
                 ), Triple("settings", "settings:advanced", R.string.pref_use_privileged_access_help)
             )) {
                 instrumentation.startActivitySync(

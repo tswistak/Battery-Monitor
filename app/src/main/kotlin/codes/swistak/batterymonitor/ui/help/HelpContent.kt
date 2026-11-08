@@ -238,8 +238,10 @@ internal fun helpSections(
                         subheading = true,
                         controlKey = SettingsContract.KEY_COLOR_SOURCE
                     ),
-                    HelpParagraph(R.string.settings_color_palette_help),
-                    if (sdkInt < 31) HelpParagraph(R.string.settings_color_palette_unavailable) else null,
+                    HelpParagraph(
+                        if (sdkInt < 31) R.string.settings_color_palette_unsupported_help
+                        else R.string.settings_color_palette_help
+                    ),
                     HelpParagraph(
                         R.string.settings_brightness,
                         subheading = true,
@@ -351,8 +353,6 @@ internal fun helpSections(
                         controlKey = SettingsContract.KEY_AUTO_LOG_EXPORT
                     ),
                     HelpParagraph(R.string.auto_log_export_help),
-                    HelpParagraph(R.string.auto_log_export_format_help),
-                    HelpParagraph(R.string.auto_log_export_options_help),
                 )
             ),
             HelpSection(
@@ -495,15 +495,13 @@ internal fun helpSections(
                         subheading = true,
                         controlKey = "diagnostics_battery_optimization"
                     ),
-                    HelpParagraph(R.string.diagnostics_battery_optimization_help),
-                    HelpParagraph(R.string.battery_optimized_message),
+                    HelpParagraph(R.string.monitoring_battery_optimization_help),
                     HelpParagraph(
                         R.string.diagnostics_vendor_settings,
                         subheading = true,
                         controlKey = "diagnostics_vendor_settings"
                     ),
                     HelpParagraph(R.string.diagnostics_vendor_settings_help),
-                    HelpParagraph(R.string.diagnostics_vendor_availability_help),
                     HelpParagraph(
                         R.string.diagnostics_dont_kill_my_app,
                         subheading = true,
@@ -535,8 +533,6 @@ internal fun helpSections(
                         controlKey = "diagnostics_export"
                     ),
                     HelpParagraph(R.string.diagnostics_help_report),
-                    HelpParagraph(R.string.diag_include_debug, subheading = true),
-                    HelpParagraph(R.string.diag_report_privacy),
                     HelpParagraph(
                         R.string.diagnostics_clear,
                         subheading = true,
@@ -550,8 +546,7 @@ internal fun helpSections(
         CHARGING_TOOLS_HELP_TOPIC -> listOf(
             HelpSection(
                 R.string.charging_diagnostics_title, listOf(
-                    HelpParagraph(R.string.charging_diagnostics_help_overview),
-                    HelpParagraph(R.string.charging_diagnostics_privileged_hint),
+                    HelpParagraph(R.string.charging_tools_help_overview),
                     HelpParagraph(
                         R.string.charging_diagnostics_capture,
                         subheading = true,
@@ -569,8 +564,7 @@ internal fun helpSections(
                     ),
                     HelpParagraph(R.string.charging_diagnostics_report_help),
                     HelpParagraph(R.string.diag_include_apps, subheading = true),
-                    HelpParagraph(R.string.diag_report_privacy),
-                    HelpParagraph(R.string.charging_diagnostics_help_contact),
+                    HelpParagraph(R.string.charging_report_privacy_help),
                     HelpParagraph(
                         R.string.charging_diagnostics_clear,
                         subheading = true,
@@ -585,7 +579,6 @@ internal fun helpSections(
             HelpSection(
                 R.string.nav_diagnostics, listOf(
                     HelpParagraph(R.string.diag_help_overview),
-                    HelpParagraph(R.string.diag_source_help),
                 )
             ),
             HelpSection(
@@ -619,7 +612,6 @@ internal fun helpSections(
             HelpSection(
                 R.string.diag_section_charging, listOf(
                     HelpParagraph(R.string.diag_help_charging),
-                    HelpParagraph(R.string.current_prediction_explanation),
                     HelpParagraph(
                         R.string.charging_diagnostics_title,
                         subheading = true,
@@ -672,8 +664,7 @@ internal fun helpSections(
                 R.string.alarm_settings, listOf(
                     HelpParagraph(R.string.alarm_settings_help),
                     HelpParagraph(R.string.alarms_overview, subheading = true),
-                    HelpParagraph(R.string.alarms_overview_help),
-                    HelpParagraph(R.string.notification_channels_help),
+                    HelpParagraph(R.string.alarms_overview_channels_help),
                     HelpParagraph(
                         R.string.alarms_add_threshold,
                         subheading = true,
@@ -721,8 +712,7 @@ internal fun helpSections(
                         subheading = true,
                         controlKey = "alarms_edit_threshold"
                     ),
-                    HelpParagraph(R.string.alarms_threshold_edit_help),
-                    HelpParagraph(R.string.notification_channels_help),
+                    HelpParagraph(R.string.alarms_threshold_edit_channels_help),
                 )
             ),
         )
@@ -751,8 +741,6 @@ internal fun helpSections(
             HelpSection(
                 R.string.notification_settings, listOf(
                     HelpParagraph(R.string.notification_settings_help),
-                    HelpParagraph(R.string.status_bar_icon_settings_help),
-                    HelpParagraph(R.string.status_bar_chip_settings_help),
                 ), controlKey = SettingsContract.KEY_NOTIFICATION_SETTINGS
             ),
             HelpSection(

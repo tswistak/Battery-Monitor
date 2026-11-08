@@ -669,31 +669,37 @@ internal fun DiagnosticsScreen(
             }) { Text(stringResource(R.string.cancel)) }
         })
     }
-    if (dialogsAllowed && dialog == "access") AlertDialog(
-        onDismissRequest = { dialog = null },
-        title = { Text(stringResource(R.string.pref_cat_privileged_access)) },
-        text = {
-            Column(Modifier.verticalScroll(rememberScrollState())) {
-                SettingRow(
-                    stringResource(R.string.pref_use_privileged_access),
-                    stringResource(R.string.pref_use_privileged_access_summary),
-                    {
-                        pendingPrivilegedChange = !state.privilegedEnabled
+    if (dialog == "access") {
+        var draft by rememberSaveable { mutableStateOf(state.privilegedEnabled) }
+        if (dialogsAllowed) AlertDialog(
+            onDismissRequest = { dialog = null },
+            title = { Text(stringResource(R.string.pref_cat_privileged_access)) },
+            text = {
+                Column(Modifier.verticalScroll(rememberScrollState())) {
+                    SettingRow(
+                        stringResource(R.string.pref_use_privileged_access),
+                        stringResource(R.string.pref_use_privileged_access_summary),
+                        { draft = !draft },
+                        checked = draft
+                    )
+                    Text(
+                        stringResource(R.string.diag_status_no_access),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    if (dialog == "access") {
                         dialog = null
-                    },
-                    checked = state.privilegedEnabled
-                )
-                Text(
-                    stringResource(R.string.diag_status_no_access),
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = {
-                dialog = null
-            }) { Text(stringResource(android.R.string.ok)) }
-        })
+                        if (draft != state.privilegedEnabled) pendingPrivilegedChange = draft
+                    }
+                }) { Text(stringResource(R.string.okay)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { dialog = null }) { Text(stringResource(R.string.cancel)) }
+            })
+    }
     if (dialogsAllowed && dialog == "report") DiagnosticReportDialog({ includeRaw ->
         // The dialog invokes this callback on IO, only when a report is requested.
         val reportPredictor = preparePredictorDiagnostics(
