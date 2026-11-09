@@ -1,0 +1,212 @@
+---
+import { content, appImage, appVideo } from '../data/content';
+import AppScreen from './AppScreen.astro';
+import AppClip from './AppClip.astro';
+import { featureCopy as copy } from '../content/en/pages';
+import { ui } from '../content/en/ui';
+const caps = content.capabilities;
+const features = [
+  {
+    id: 'notifications',
+    title: caps.liveUpdates ? copy.notifications.title : copy.notifications.legacyTitle,
+    copy: caps.liveUpdates ? copy.notifications.description : copy.notifications.legacyDescription,
+    media: 'notification',
+  },
+  ...(caps.widgets
+    ? [
+        {
+          id: 'widgets',
+          title: copy.widgets.title,
+          copy: caps.modernWidgets ? copy.widgets.description : copy.widgets.legacyDescription,
+          media: 'widgets',
+        },
+      ]
+    : []),
+  ...(caps.backups
+    ? [
+        {
+          id: 'backups',
+          title: copy.backups.title,
+          copy: caps.historyCharts ? copy.backups.description : copy.backups.legacyDescription,
+          media: null,
+        },
+      ]
+    : []),
+  ...(caps.privileged
+    ? [
+        {
+          id: 'advanced',
+          title: copy.advanced.title,
+          copy: copy.advanced.description,
+          media: null,
+        },
+      ]
+    : []),
+];
+---
+
+<section
+  class="more-features content-section"
+  id="feature-story"
+  aria-labelledby="more-features-title"
+>
+  <div class="story-pin">
+    <h2 id="more-features-title">{copy.title}</h2>
+    <div class="feature-story">
+      <div class="feature-list story-copy">
+        {features.map((feature, index) => (
+          <article data-story-step={index} id={'story-' + feature.id}>
+            <h3>
+              <a class="story-link" data-story-link href={'#story-media-' + feature.id}>
+                {feature.title}
+              </a>
+            </h3>
+            <p>{feature.copy}</p>
+          </article>
+        ))}
+      </div>
+      <div class="story-visual" role="group" aria-label={copy.mediaLabel}>
+        {features.map((feature, index) => (
+          <div
+            class="story-panel"
+            role="group"
+            id={'story-media-' + feature.id}
+            tabindex="-1"
+            data-story-media={index}
+            aria-labelledby={'story-' + feature.id}
+          >
+            {feature.media === 'notification' && appImage('notification') ? (
+              <>
+                <div class="notification-crop">
+                  {appVideo('notification') ? (
+                    <AppClip
+                      name="notification"
+                      label={copy.notifications.videoLabel}
+                      transcript={copy.notifications.transcript}
+                    />
+                  ) : (
+                    <AppScreen name="notification" alt={copy.notifications.imageAlt} />
+                  )}
+                </div>
+                <p class="story-caption">{copy.notifications.caption}</p>
+              </>
+            ) : feature.media === 'widgets' && appImage('widgets') ? (
+              <>
+                <div
+                  class:list={[
+                    'feature-crop',
+                    appVideo('widgets')
+                      ? 'widgets-video'
+                      : caps.modernWidgets
+                        ? 'widgets-crop'
+                        : 'legacy-widgets-crop',
+                  ]}
+                >
+                  {appVideo('widgets') ? (
+                    <AppClip
+                      name="widgets"
+                      label={copy.widgets.videoLabel}
+                      transcript={copy.widgets.transcript}
+                    />
+                  ) : (
+                    <AppScreen name="widgets" alt={copy.widgets.imageAlt} />
+                  )}
+                </div>
+                <p class="story-caption">{copy.widgets.caption}</p>
+              </>
+            ) : feature.id === 'backups' && appImage('backups') ? (
+              <>
+                <div class="feature-crop backup-crop">
+                  {appVideo('backups') ? (
+                    <AppClip
+                      name="backups"
+                      label={copy.backups.videoLabel}
+                      transcript={copy.backups.transcript}
+                    />
+                  ) : (
+                    <AppScreen name="backups" alt={copy.backups.imageAlt} />
+                  )}
+                </div>
+                <p class="story-caption">{copy.backups.caption}</p>
+              </>
+            ) : feature.id === 'advanced' && appImage('advanced') ? (
+              <>
+                <div class="comparison-labels">
+                  <span>
+                    {copy.advanced.withoutRoot}
+                    <br />
+                    <small>{copy.advanced.standardCount}</small>
+                  </span>
+                  <span>
+                    {copy.advanced.withRoot}
+                    <br />
+                    <small>{copy.advanced.rootCount}</small>
+                  </span>
+                </div>
+                <div class="feature-crop advanced-crop">
+                  {appVideo('advanced') ? (
+                    <AppClip
+                      name="advanced"
+                      label={copy.advanced.videoLabel}
+                      transcript={copy.advanced.transcript}
+                    />
+                  ) : (
+                    <AppScreen name="advanced" alt={copy.advanced.imageAlt} />
+                  )}
+                </div>
+                <p class="story-caption">
+                  {copy.advanced.caption}
+                  {appVideo('advanced') && (
+                    <a class="comparison-open" href={appVideo('advanced')}>
+                      {copy.advanced.viewLarger}
+                    </a>
+                  )}
+                </p>
+              </>
+            ) : feature.id === 'backups' ? (
+              <>
+                <div class="data-evidence">
+                  <strong>
+                    {caps.historyCharts ? copy.backups.exportFormats : copy.backups.legacyExports}
+                  </strong>
+                  <p>{copy.backups.history}</p>
+                  <div class="backup-rule"></div>
+                  <strong>{copy.backups.settings}</strong>
+                  <p>{copy.backups.settingsDescription}</p>
+                </div>
+                <p class="story-caption">{copy.backups.fallbackCaption}</p>
+              </>
+            ) : feature.id === 'advanced' ? (
+              <>
+                <div class="access-evidence">
+                  <span>{ui.name}</span>
+                  <div class="access-connector" aria-hidden="true"></div>
+                  <div class="access-options">
+                    <strong>{copy.advanced.root}</strong>
+                    <span>{copy.advanced.alternative}</span>
+                    <strong>{copy.advanced.shizuku}</strong>
+                  </div>
+                  <div class="access-connector" aria-hidden="true"></div>
+                  <span>{copy.advanced.readings}</span>
+                  <p>{copy.advanced.accessDescription}</p>
+                </div>
+                <p class="story-caption">{copy.advanced.fallbackCaption}</p>
+              </>
+            ) : (
+              <>
+                <div class="data-evidence">
+                  <strong>{feature.title}</strong>
+                  <p>{feature.copy}</p>
+                </div>
+                <p class="story-caption">{copy.fallbackCaption}</p>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  import '../scripts/feature-story.mjs';
+</script>

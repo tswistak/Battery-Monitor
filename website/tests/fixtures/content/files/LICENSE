@@ -1,0 +1,37 @@
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+The file 'res/drawable[mh]dpi/battery.png' is based on an icon from
+the Oxygen icon theme at [ http://www.oxygen-icons.org ].  You may
+copy it under the Creative Commons Attribution-ShareAlike 3.0 License
+[ http://creativecommons.org/licenses/by-sa/3.0/ ].
+
+Several icons were downloaded from icons8.com, which advertises the icons
+as "Free for open source."  Some other icons are from, or based upon, the
+Material design icons from Google, available under Apache license version
+2.0.
+
+The other icons/artwork are copyright © 2009-2020 Darshan Computing, LLC and
+also released under the Creative Commons Attribution-ShareAlike 3.0
+License [ http://creativecommons.org/licenses/by-sa/3.0/ ].  If you
+use the icons, please attribute them as coming from: "The Android
+application Battery Indicator Pro by Darshan Computing, LLC".  Of
+course you must include the copyright and license information as well.
+
+The source code is copyright © 2009-2020 Darshan Computing, LLC and released as follows:
+
+Modifications for this fork are copyright © 2026 Tomasz Świstak and are
+also released under the GNU General Public License, version 3 or later.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  See the COPYING file in this repository for the full GPLv3 text,
+  or [ http://www.gnu.org/licenses/gpl-3.0.txt ].
+
+If you have any questions about the licensing terms or would like
+permission to use code or artwork under some other license, please
+contact me at tomasz@swistak.codes.

@@ -1,0 +1,61 @@
+{
+  "name": "battery-monitor-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.19.0 <25",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "content:local": "node scripts/content/import.mjs --mode local",
+    "dev": "npm run content:local && astro dev --host 0.0.0.0",
+    "build": "npm run content:local && astro build && node scripts/check-links.mjs",
+    "build:production": "node scripts/content/import.mjs --mode production && astro build && node scripts/check-links.mjs",
+    "build:fixture": "node scripts/content/import.mjs --mode fixture --fixture tests/fixtures/content && astro build && node scripts/check-links.mjs",
+    "preview": "astro preview --host 127.0.0.1",
+    "check": "npm run content:local && astro check",
+    "typecheck": "npm run check",
+    "test": "node --test tests/content.test.mjs tests/deploy.test.mjs",
+    "test:browser": "npm run build && playwright test",
+    "audit:mobile": "node scripts/audit-mobile.mjs",
+    "validate:publish": "node scripts/validate-config.mjs --publish",
+    "deploy:plan": "node scripts/deploy/manifest.mjs && node scripts/deploy/publish.mjs --dry-run",
+    "deploy:manifest": "node scripts/deploy/manifest.mjs",
+    "deploy:publish": "node scripts/deploy/publish.mjs --publish",
+    "deploy:smoke": "node scripts/deploy/smoke.mjs",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "@fontsource-variable/roboto": "5.3.0",
+    "astro": "7.4.7",
+    "fast-xml-parser": "5.12.0",
+    "marked": "18.1.3",
+    "sanitize-html": "2.18.1",
+    "sharp": "0.35.5",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "@axe-core/playwright": "4.14.0",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.65.0",
+    "@types/node": "26.6.6",
+    "@types/sanitize-html": "2.16.2",
+    "eslint": "10.14.0",
+    "eslint-plugin-astro": "3.2.1",
+    "globals": "17.14.0",
+    "lighthouse": "13.6.0",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.2",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1"
+  },
+  "overrides": {
+    "minimatch@10.2.6": "11.0.1"
+  }
+}

@@ -1,0 +1,42 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { getSiteConfig } from '../lib/site-config';
+import { getPrivacySections } from '../content/en/privacy';
+import { pageMeta } from '../content/en/ui';
+const config = getSiteConfig();
+const sections = getPrivacySections(config);
+---
+
+<SiteLayout {...pageMeta.privacy} pageId="privacy">
+  <div class="document-page">
+    <h1>Privacy Policy</h1>
+    <p class="page-lead">
+      The Android app and this website have different data flows. This policy explains both and the
+      choices available to you.
+    </p>
+    <nav class="page-links" aria-label="Policy contents">
+      {sections.map((section) => (
+        <a href={'#' + section.id}>{section.title}</a>
+      ))}
+    </nav>
+    {sections.map((section) => (
+      <section id={section.id}>
+        <h2>{section.title}</h2>
+        <div class="prose" set:html={section.html} />
+        {section.id === 'preferences' && (
+          <>
+            <button class="text-button" type="button" data-privacy-settings hidden>
+              Change analytics preferences
+            </button>
+            <noscript>
+              <p>
+                JavaScript is disabled, so this website cannot load its optional browser analytics.
+                Enable JavaScript only if you want to change its stored preference.
+              </p>
+            </noscript>
+          </>
+        )}
+      </section>
+    ))}
+  </div>
+</SiteLayout>

@@ -1,0 +1,40 @@
+---
+import { content } from '../data/content';
+import { ui } from '../content/en/ui';
+const { placement = 'hero' } = Astro.props;
+---
+
+<div class="stores store-badges" role="group" aria-label="Get Battery Monitor">
+  <div class="store-choice">
+    <button
+      class="store-official store-play"
+      type="button"
+      disabled
+      aria-describedby="play-coming-soon"
+    >
+      <img src="/badges/google-play.png" width="646" height="250" alt="Get it on Google Play" />
+    </button>
+    <span id="play-coming-soon" class="store-status">
+      {ui.comingSoon}
+    </span>
+  </div>
+  <a
+    class="store-official"
+    href="https://f-droid.org/packages/codes.swistak.batterymonitor/"
+    aria-label="Get Battery Monitor on F-Droid"
+    data-analytics-event="fdroid"
+    data-analytics-placement={placement}
+    data-analytics-channel="fdroid"
+  >
+    <img src="/badges/fdroid.svg" width="646" height="250" alt="Get it on F-Droid" />
+  </a>
+  <a
+    class="store-official"
+    href={content.release.url}
+    data-analytics-event="release"
+    data-analytics-placement={placement}
+    data-analytics-channel="github"
+  >
+    <img src="/badges/github.png" width="646" height="250" alt="Get it on GitHub" />
+  </a>
+</div>

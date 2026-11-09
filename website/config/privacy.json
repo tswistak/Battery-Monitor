@@ -1,0 +1,57 @@
+{
+  "policyVersion": "2026-11-09-v1",
+  "effectiveDate": null,
+  "controller": {
+    "name": "Tomasz Świstak",
+    "email": "tomasz@swistak.codes"
+  },
+  "hosting": {
+    "provider": "BunnyWay d.o.o. (bunny.net)",
+    "processingLocations": null,
+    "processorAgreement": null,
+    "subprocessorInformation": null,
+    "transferSafeguards": null,
+    "deliveryLegalBasis": null,
+    "deliveryInterests": null,
+    "accessLogData": null,
+    "accessLogRetentionDays": null,
+    "accessLogAccessControls": null,
+    "backupRetentionDays": null
+  },
+  "contact": {
+    "providerInformation": null,
+    "legalBasis": null,
+    "retentionCriteria": null,
+    "transferSafeguards": null
+  },
+  "analytics": {
+    "hostingProvider": null,
+    "processingLocations": null,
+    "processorAgreement": null,
+    "subprocessorInformation": null,
+    "transferSafeguards": null,
+    "matomoVersion": null,
+    "ipMaskingBytes": null,
+    "maskedIpGeolocation": null,
+    "rawRetentionDays": null,
+    "aggregatedRetentionDays": null,
+    "proxyLogData": null,
+    "proxyLogRetentionDays": null,
+    "backupRetentionDays": null,
+    "accessControls": null,
+    "dedicatedSiteIdConfirmed": false,
+    "intrusiveFeaturesDisabled": false,
+    "visitorCookieSeconds": null,
+    "sessionCookieSeconds": null,
+    "serverSettingsEvidence": null,
+    "trackerResponseCookiePolicy": null,
+    "retentionEvidence": null,
+    "consentEvidenceProcedure": null
+  },
+  "review": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "policyVersion": null,
+    "assessmentRecord": null
+  }
+}

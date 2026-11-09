@@ -1,0 +1,117 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import StoreButtons from '../components/StoreButtons.astro';
+import Sponsorship from '../components/Sponsorship.astro';
+import FeatureStory from '../components/FeatureStory.astro';
+import AppScreen from '../components/AppScreen.astro';
+import { content } from '../data/content';
+import { getFaq } from '../content/en/faq';
+import { pageMeta } from '../content/en/ui';
+import { homeCopy as copy } from '../content/en/pages';
+const { capabilities: caps } = content;
+const faq = getFaq(caps, 'home');
+---
+
+<SiteLayout {...pageMeta.home} pageId="home">
+  <section class="intro" aria-labelledby="headline">
+    <div class="hero-title">
+      <h1 id="headline">
+        {copy.title[0]}
+        <br />
+        {copy.title[1]}
+      </h1>
+      <p class="product-line">{copy.productLine}</p>
+    </div>
+    <div class="summary">
+      <p>{copy.introduction}</p>
+      <StoreButtons />
+    </div>
+  </section>
+  <section class="evidence" aria-label={copy.appPreviewLabel}>
+    <article class="current" id="feature-current">
+      <AppScreen name="current" alt={copy.current.imageAlt} class="screen readings-screen" eager />
+      <div class="readings-copy feature-copy" id="readings">
+        <h2>
+          {copy.current.title[0]}
+          <br /> {copy.current.title[1]}
+        </h2>
+        <p>{copy.current.description}</p>
+      </div>
+    </article>
+    <article class="history" id="history">
+      <div class="feature-copy">
+        <h2>
+          {copy.history.title[0]}
+          <br />
+          {copy.history.title[1]}
+        </h2>
+        <p>{caps.historyCharts ? copy.history.description : copy.history.legacyDescription}</p>
+      </div>
+      <AppScreen
+        name="history"
+        alt={caps.historyCharts ? copy.history.imageAlt : copy.history.legacyImageAlt}
+        class="screen"
+        eager
+      />
+    </article>
+    <article class="alarms" id="feature-alarms">
+      <div class="alarms-copy feature-copy">
+        <h2>
+          {copy.alarms.title[0]}
+          <br />
+          {copy.alarms.title[1]}
+        </h2>
+        <p>{copy.alarms.description}</p>
+      </div>
+      <div class="alarms-screen">
+        <AppScreen name="alarms" alt={copy.alarms.imageAlt} class="screen" eager />
+      </div>
+    </article>
+  </section>
+  <FeatureStory />
+  <section class="privacy-overview" aria-labelledby="local-data-title">
+    <div>
+      <h2 id="local-data-title">
+        {copy.privacy.title[0]}
+        <br />
+        {copy.privacy.title[1]}
+      </h2>
+      <p class="requirements">
+        {copy.privacy.android} {content.requirements.androidMin}
+        {copy.privacy.minimumVersionSuffix}
+        <br />
+        {copy.privacy.deviceReadings}
+      </p>
+    </div>
+    <div class="privacy-copy">
+      <p>{copy.privacy.description}</p>
+      <div class="text-links">
+        <a
+          href={content.app.sourceUrl}
+          data-analytics-event="source"
+          data-analytics-placement="hero"
+          data-analytics-channel="github"
+        >
+          {copy.privacy.sourceLink}
+        </a>
+        <a href="/about/#licenses">{copy.privacy.licenseLink}</a>
+        <a href="/privacy/">{copy.privacy.privacyLink}</a>
+      </div>
+    </div>
+  </section>
+  <section class="home-faq content-section" aria-labelledby="home-faq-title">
+    <div class="section-heading">
+      <h2 id="home-faq-title">{copy.faqTitle}</h2>
+      <a href="/help/#faq">{copy.moreQuestions}</a>
+    </div>
+    <div class="faq-list">
+      {faq.map((item) => (
+        <details id={item.id}>
+          <summary>{item.question}</summary>
+          <div class="faq-answer" set:html={item.html} />
+        </details>
+      ))}
+    </div>
+  </section>
+  <Sponsorship />
+</SiteLayout>

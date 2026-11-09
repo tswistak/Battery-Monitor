@@ -1,0 +1,112 @@
+{
+  "retrieved": "2026-11-09",
+  "assets": [
+    {
+      "file": "src/assets/brand/symbol-light.svg",
+      "source": "captures/docs/logo-design/symbol-light.svg",
+      "license": "GPL-3.0-or-later",
+      "note": "Approved original Battery Monitor light symbol; copied unchanged.",
+      "sha256": "83ad0d0200f7a9bd46d92a34a86fdb8b8a56d6b598534aa4d40c9dfa71f1fe4f",
+      "bytes": 565
+    },
+    {
+      "file": "src/assets/brand/icon-brand.svg",
+      "source": "captures/docs/logo-design/icon-brand.svg",
+      "license": "GPL-3.0-or-later",
+      "note": "Approved contained brand icon; copied unchanged.",
+      "sha256": "d45446732cadb1de5ac29d9042a6735a9bb0c87dffb724af10be0bcabe590ea4",
+      "bytes": 913
+    },
+    {
+      "file": "src/assets/brand/logo-master.svg",
+      "source": "captures/docs/logo-design/logo-master.svg",
+      "license": "GPL-3.0-or-later",
+      "note": "Authoritative geometry master; copied unchanged.",
+      "sha256": "873b9fc3da0fecb40175f30af376a71d19fde35b5a74a84713fcc4be79a4e16c",
+      "bytes": 567
+    },
+    {
+      "file": "public/favicon.svg",
+      "source": "captures/docs/logo-design/icon-brand.svg",
+      "license": "GPL-3.0-or-later",
+      "note": "Approved brand icon used as favicon without geometry changes.",
+      "sha256": "d45446732cadb1de5ac29d9042a6735a9bb0c87dffb724af10be0bcabe590ea4",
+      "bytes": 913
+    },
+    {
+      "file": "public/badges/google-play.png",
+      "source": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png",
+      "license": "Google Play brand terms",
+      "note": "Official badge asset, unmodified. Keep Coming soon outside it; do not invent a listing or preregistration destination.",
+      "sha256": "f72611e2df8e88204009fd896d05d5e8e83c77009c63943bbffa169559934849",
+      "bytes": 4904
+    },
+    {
+      "file": "public/badges/fdroid.svg",
+      "source": "https://f-droid.org/badge/get-it-on.svg",
+      "license": "CC-BY-SA-3.0",
+      "note": "Official English F-Droid badge; link only to the actual main-repository app listing.",
+      "sha256": "6cc2f4259302860af29a771a01515b29033415c9a3508e1dac5377e8e0c2131c",
+      "bytes": 23239
+    },
+    {
+      "file": "public/badges/github.png",
+      "source": "docs/assets/badge_github.png",
+      "license": "Existing repository artwork; GitHub brand terms",
+      "note": "Same unmodified GitHub download badge used in README.md.",
+      "sha256": "5ef0f3805935b7b83cf247c97b143c6be8fe044d21bc8547ee4bcfc5d77d0a90",
+      "bytes": 15613
+    },
+    {
+      "file": "public/badges/sponsorship/github-heart.svg",
+      "source": "https://raw.githubusercontent.com/primer/octicons/main/icons/heart-16.svg",
+      "license": "MIT",
+      "note": "Official Octicons heart; native Sponsor control.",
+      "sha256": "903fe8a9c58d5789ccfa4b46274e5ed172261b2a88c5df109784e125449220a2",
+      "bytes": 694
+    },
+    {
+      "file": "public/badges/sponsorship/liberapay.svg",
+      "source": "https://liberapay.com/assets/widgets/donate.svg",
+      "license": "CC0-1.0",
+      "note": "Official Donate widget. Liberapay trademark identifies its service.",
+      "sha256": "18774e39f98524d7925e37e39c0fbdf17b48b847ef13a70d2631e01ce86376fd",
+      "bytes": 1457
+    },
+    {
+      "file": "public/badges/sponsorship/suppi.svg",
+      "source": "https://suppi.pl/api/widget/button.svg?fill=6457FD&textColor=ffffff",
+      "license": "Official provider-widget terms; no separate permissive artwork license found",
+      "note": "Official violet/white support widget; preserve geometry and colors.",
+      "sha256": "ed83cd0c96e4e2c8c2e1f77e440b46e7ad141fa124c6e15f4a252d62217348e7",
+      "bytes": 10339
+    },
+    {
+      "file": "public/notices/Roboto-OFL.txt",
+      "source": "https://registry.npmjs.org/@fontsource-variable/roboto/-/roboto-5.3.0.tgz",
+      "package": "@fontsource-variable/roboto@5.3.0",
+      "license": "OFL-1.1",
+      "sha256": "84044c09058803d87a241bd28abb4ce30a433d7db9c27a04da3efad6a0ca539c",
+      "bytes": 4512,
+      "note": "Unchanged upstream notice."
+    },
+    {
+      "file": "node_modules/@fontsource-variable/roboto/files/roboto-latin-wght-normal.woff2",
+      "source": "https://registry.npmjs.org/@fontsource-variable/roboto/-/roboto-5.3.0.tgz",
+      "package": "@fontsource-variable/roboto@5.3.0",
+      "license": "OFL-1.1",
+      "sha256": "1404ca348bd75ef836f4dd8b6f2cc719458642d1237c368296b2fc652dca47dc",
+      "bytes": 43136,
+      "note": "Selected local variable-weight font source; Astro emits the final hashed URL."
+    },
+    {
+      "file": "node_modules/@fontsource-variable/roboto/files/roboto-latin-ext-wght-normal.woff2",
+      "source": "https://registry.npmjs.org/@fontsource-variable/roboto/-/roboto-5.3.0.tgz",
+      "package": "@fontsource-variable/roboto@5.3.0",
+      "license": "OFL-1.1",
+      "sha256": "cedb374b05a35034cf96db185db4eeb8f8ce49e1a56197673702ff11b5533d6e",
+      "bytes": 29392,
+      "note": "Selected local variable-weight font source; Astro emits the final hashed URL."
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+apply plugin: 'com.android.application'
+
+def secureProperties = new Properties()
+def securePropertiesFile = project.file("../secure.properties")
+if (securePropertiesFile.exists()) {
+    securePropertiesFile.withInputStream { secureProperties.load(it) }
+}
+
+def fdroidVersionProperties = new Properties()
+def fdroidVersionPropertiesFile = rootProject.file("fdroid-version.properties")
+if (fdroidVersionPropertiesFile.exists()) {
+    fdroidVersionPropertiesFile.withInputStream { fdroidVersionProperties.load(it) }
+}
+
+def defaultVersionName = (fdroidVersionProperties['versionName'] ?: "1.0.0").toString()
+def defaultVersionCode = (fdroidVersionProperties['versionCode'] ?: "1000000").toString().toInteger()
+
+def ciVersionName = (project.findProperty("ciVersionName") ?: System.getenv("CI_VERSION_NAME"))?.toString()
+def baseVersionName = ciVersionName ?: defaultVersionName
+
+def computedVersionCode = defaultVersionCode
+if (ciVersionName) {
+    def matcher = (ciVersionName =~ /^(\d+)\.(\d+)\.(\d+)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/)
+    if (!matcher.matches()) {
+        throw new GradleException(
+                "ciVersionName must match SemVer (example: 1.0.0, 1.0.0-prerelease, 1.0.0+build.1)"
+        )
+    }
+
+    int major = matcher.group(1).toInteger()
+    int minor = matcher.group(2).toInteger()
+    int patch = matcher.group(3).toInteger()
+    if (minor > 999 || patch > 999) {
+        throw new GradleException("Minor and patch must be <= 999 for versionCode packing")
+    }
+    computedVersionCode = major * 1000000 + minor * 1000 + patch
+}
+
+def releaseStoreFileProp = project.findProperty("releaseStoreFile") ?: System.getenv("RELEASE_STORE_FILE")
+def releaseStorePasswordProp = project.findProperty("releaseStorePassword") ?: System.getenv("RELEASE_STORE_PASSWORD") ?: secureProperties['key.store.password']
+def releaseKeyAliasProp = project.findProperty("releaseKeyAlias") ?: System.getenv("RELEASE_KEY_ALIAS") ?: "alias_name"
+def releaseKeyPasswordProp = project.findProperty("releaseKeyPassword") ?: System.getenv("RELEASE_KEY_PASSWORD") ?: secureProperties['key.alias.password']
+
+def hasReleaseSigning =
+        releaseStoreFileProp &&
+        releaseStorePasswordProp &&
+        releaseKeyAliasProp &&
+        releaseKeyPasswordProp
+
+android {
+    namespace = "codes.swistak.batterymonitor"
+
+    compileSdk 37
+
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
+    defaultConfig {
+        minSdk 26
+        targetSdk 37
+        versionName baseVersionName
+        versionCode computedVersionCode
+
+        vectorDrawables.useSupportLibrary = false
+        resourceConfigurations += ['ar', 'cs', 'de', 'el', 'en', 'en-rUS', 'es', 'es-rUS', 'fa', 'fr', 'hi', 'hu', 'it', 'iw', 'ja', 'lt', 'nl', 'pl', 'pt', 'pt-rBR', 'ro', 'ru', 'sk', 'sl', 'sr', 'tr', 'zh', 'zh-rCN']
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        disable 'MissingTranslation'
+    }
+
+    signingConfigs {
+        release {
+            if (hasReleaseSigning) {
+                storeFile file(releaseStoreFileProp)
+                storePassword releaseStorePasswordProp
+                keyAlias releaseKeyAliasProp
+                keyPassword releaseKeyPasswordProp
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+
+        release {
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
+
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), rootProject.file('proguard-no-obfuscation')
+        }
+    }
+}
+
+android.sourceSets.named("main") {
+    kotlin.directories.add("src/main/java")
+}
+
+dependencies {
+    testImplementation "junit:junit:4.13.2"
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "androidx.core:core:1.19.0"
+    implementation "androidx.fragment:fragment:1.8.9"
+    implementation "androidx.viewpager:viewpager:1.1.0"
+
+    implementation "androidx.appcompat:appcompat:1.7.1"
+    implementation "androidx.appcompat:appcompat-resources:1.7.1"
+
+    implementation "androidx.preference:preference:1.2.1"
+    implementation "dev.rikka.shizuku:api:13.1.5"
+    implementation "dev.rikka.shizuku:provider:13.1.5"
+}

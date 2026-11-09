@@ -1,0 +1,12 @@
+node_modules/
+.astro/
+.generated/
+.cache/
+.artifacts/
+dist/
+.env
+.env.*
+!.env.example
+test-results/
+playwright-report/
+lighthouse-results/
