@@ -1,0 +1,158 @@
+---
+import type { AnalyticsPayload } from '../scripts/analytics';
+import { consentCopyEn as copy } from '../lib/consent';
+type Props = AnalyticsPayload;
+const payload = Astro.props;
+const json = JSON.stringify(payload).replace(/</g, '\\u003c');
+---
+
+<script id="analytics-config" type="application/json" set:html={json} />
+<section class="privacy-banner" data-privacy-banner aria-labelledby="privacy-banner-title" hidden>
+  <h2 id="privacy-banner-title">{copy.bannerTitle}</h2>
+  <p>
+    With your permission, Matomo records website visits and link clicks using first-party cookies.
+    It does not collect battery data from the app.{' '}
+    <a href="/privacy/#analytics">Read about analytics</a>.
+  </p>
+  <p data-privacy-feedback role="status" hidden></p>
+  <div class="privacy-actions">
+    <button type="button" data-privacy-accept>
+      {copy.accept}
+    </button>
+    <button type="button" data-privacy-reject>
+      {copy.reject}
+    </button>
+  </div>
+</section>
+<dialog
+  class="privacy-dialog"
+  data-privacy-dialog
+  aria-labelledby="privacy-settings-title"
+  aria-describedby="privacy-settings-description"
+>
+  <h2 id="privacy-settings-title">{copy.settingsTitle}</h2>
+  <p id="privacy-settings-description">
+    Website analytics is optional. Accepting helps us understand which pages and downloads are
+    useful. Refusing leaves every feature and download available.
+  </p>
+  <p data-privacy-status role="status">
+    {copy.undecided}
+  </p>
+  <p>
+    Your choice is remembered for {payload.config.consentDays} days. Withdrawing stops future
+    tracking and removes this website’s analytics cookies; it does not delete records already stored
+    on the analytics server. <a href="/privacy/#preferences">Privacy policy and requests</a>.
+  </p>
+  <div class="privacy-actions">
+    <button type="button" data-privacy-accept>
+      {copy.accept}
+    </button>
+    <button type="button" data-privacy-reject>
+      {copy.reject}
+    </button>
+    <button type="button" data-privacy-withdraw hidden>
+      {copy.withdraw}
+    </button>
+  </div>
+  <button class="privacy-close" type="button" data-privacy-close>
+    {copy.close}
+  </button>
+</dialog>
+<script>
+  import '../scripts/analytics';
+</script>
+<style>
+  .privacy-banner,
+  .privacy-dialog {
+    background: var(--canvas, #f6f9fc);
+    color: var(--ink, #17232d);
+    border: 1px solid #8ba8bb;
+    border-radius: 12px;
+    padding: 24px;
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 560px;
+  }
+  .privacy-banner {
+    position: fixed;
+    inset: auto 24px 24px auto;
+    z-index: 10;
+    width: calc(100% - 48px);
+  }
+  .privacy-banner[hidden] {
+    display: none;
+  }
+  .privacy-banner h2,
+  .privacy-dialog h2 {
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin: 0 0 14px;
+  }
+  .privacy-banner p,
+  .privacy-dialog p {
+    margin: 0 0 18px;
+    max-width: 65ch;
+  }
+  .privacy-banner a,
+  .privacy-dialog a {
+    color: var(--action, #006493);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .privacy-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .privacy-actions button,
+  .privacy-close {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--action, #006493);
+    background: transparent;
+    border: 1px solid #8ba8bb;
+    border-radius: 6px;
+    min-height: 44px;
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+  .privacy-actions button:hover,
+  .privacy-close:hover {
+    background: var(--blue, #ddeffd);
+  }
+  .privacy-actions button:disabled {
+    cursor: default;
+    color: #3d5869;
+    background: #e4ebf0;
+  }
+  .privacy-actions button:focus-visible,
+  .privacy-close:focus-visible {
+    outline: 3px solid var(--action, #006493);
+    outline-offset: 4px;
+  }
+  .privacy-dialog {
+    width: calc(100% - 48px);
+    max-height: calc(100svh - 48px);
+    overflow: auto;
+  }
+  .privacy-dialog::backdrop {
+    background: #17232d66;
+  }
+  .privacy-close {
+    margin-top: 20px;
+  }
+  @media (max-width: 600px) {
+    .privacy-banner {
+      inset: auto 16px 16px;
+      width: calc(100% - 32px);
+      padding: 20px;
+    }
+    .privacy-dialog {
+      width: calc(100% - 32px);
+      padding: 20px;
+    }
+  }
+</style>

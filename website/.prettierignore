@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.generated/
+.cache/
+.artifacts/
+test-results/
+playwright-report/
+lighthouse-results/
+public/
+src/assets/
+tests/fixtures/content/
+tests/fixtures/matomo/
+package-lock.json

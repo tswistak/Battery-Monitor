@@ -1,0 +1,33 @@
+---
+import logo from '../assets/brand/symbol-light.svg';
+import { ui } from '../content/en/ui';
+const { pageId } = Astro.props;
+const links = [
+  ['download', '/download/', ui.getApp],
+  ['help', '/help/', ui.help],
+  ['changelog', '/changelog/', ui.changelog],
+];
+---
+
+<header>
+  <a class="brand" href="/">
+    <img src={logo.src} width="37" height="37" alt="" />
+    {ui.name}
+  </a>
+  <nav aria-label={ui.mainNavigation}>
+    {links.map(([id, href, label]) => (
+      <a href={href} aria-current={pageId === id ? 'page' : undefined}>
+        {label}
+      </a>
+    ))}
+    <a
+      href="https://github.com/tswistak/Battery-Monitor"
+      data-analytics-event="source"
+      data-analytics-placement="header"
+      data-analytics-channel="github"
+    >
+      {ui.source}
+    </a>
+    <a href="/#support">{ui.support}</a>
+  </nav>
+</header>

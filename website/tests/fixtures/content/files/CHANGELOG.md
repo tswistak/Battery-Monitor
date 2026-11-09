@@ -1,0 +1,234 @@
+# CHANGELOG
+
+## 1.7.3
+
+### Improved
+
+- Main notification is now expandable with vital signs details (#129, thanks @LiberiFatali).
+
+## 1.7.2
+
+### Improved
+
+- More reliable voltage reading (#142).
+
+### Fixed
+
+- Notifications opening Alarms instead of Current State (#139, thanks @matiamb).
+
+## 1.7.1
+
+1.7.0 was the last feature-oriented release before version 2.0 (October/November). The next releases will be less frequent and will consist only of bug fixes and small improvements.
+
+### Fixed
+
+- Fixed battery time estimates becoming incorrect after charging or discharging with custom prediction targets enabled.
+- Reset potentially corrupted cached long-term discharge estimates after updating.
+
+## 1.7.0
+
+This is the last feature-oriented release before version 2.0 (October/November). The next releases will be less frequent and will consist only of bug fixes and small improvements.  
+
+### New
+
+- Possibility to set charging and discharging targets for time estimations (#72).
+- Automated detection of charging limits on supported devices.
+- Alarms for charging and discharging limits (#144).
+
+### Improved
+
+- Reorganized settings.
+- Show day count for time higher than 24 hours (#71).
+
+### Development
+
+- Release PGP signing.
+
+## 1.6.0
+
+### New
+
+- App backup and restore.
+- Alarms backup (#69).
+- Existing logs import (#80).
+- Scheduled automatic logs export (#34).
+- App diagnostics screen (#128).
+
+### Improved
+
+- Ability to append new logs to the existing ones (#83).
+- Possibility to only export logs that haven't been exported yet (#79).
+- Better handling of DB errors and service restart (#117).
+
+## 1.5.0
+
+### New
+
+- Battery remaining charge display in the main screen, notification and chip (#87).
+- Notification's "Vital Signs" content customization.
+- Status bar chip content customization with new options (#104).
+- Added a FAQ section to the help.
+
+### Improved
+
+- Shizuku permission handling (#105).
+- Removed hiding status bar icon settings on modern Androids (#89).
+
+## 1.4.0
+
+### New
+
+- Modernized and simplified battery current measurement (#52).
+- Battery current multiplier auto detector.
+
+### Improved
+
+- Reorganized settings.
+
+### Fixed
+
+- Use localized decimal separator in notifications.
+- Wrong time formatting on Samsung phones (#95).
+
+### Development
+
+- Refactored project structure.
+
+## 1.3.2
+
+### Development
+
+- Refactored the whole app from Java to Kotlin (#7).
+- Refactored unit tests to JUnit and moved them to Gradle.
+
+## 1.3.1
+
+### Improved
+
+- Added timestamp to settings backup export file name.
+- More reliable way for running background service to better prevent aggressive optimization (#59).
+- Added manufacturer and model to log file name (#81).
+
+### Fixed
+
+- "1 min until drained" prediction while the plugged device stopped charging (#58).
+- Low-severity security issues.
+- Clearing "Advanced" tab contents on refresh (#57).
+
+### Development
+
+- Updated Gradle and dependencies to the latest versions.
+- Replaced deprecated APIs with current ones.
+- Refactored live updates to rely only on NotificationCompat.
+
+## 1.3.0
+
+### New
+
+- Added system (Android 13+) language chooser in settings (#56, thanks @Aga-C).
+- Added importing and exporting app settings (#51, thanks @Hirdaya-Shrestha).
+
+### Fixed
+
+- Using localized unit strings instead of hardcoded English ones (#63, thanks @Hirdaya-Shrestha).
+- Rewritten live updates to use NotificationCompat, to ensure it works well with API 36.
+- Turned off force refresh of battery data in OS in the Advanced tab, which could cause issues with some battery drivers.
+
+## 1.2.0
+
+### New
+
+- Added the "Advanced" tab showing battery data accessible by root/Shizuku (#27).
+
+### Improved
+
+- Changed font in icons to narrower, so digits are bigger now (#18).
+
+### Fixed
+
+- The default file name for export now contains the current app name (thanks @Aga-C).
+- Long names in setting are now wrapped to the new line (#40, thanks @Aga-C).
+
+### Development
+
+- Removed unused black icon variant.
+
+## 1.1.0
+
+### New
+
+- Added an option to keep logs until they are manually removed (#25, thanks @lrcstars).
+- Notification bar icons redesign with new settings (#18).
+
+### Improved
+
+- Chinese translations (thanks @lrcstars).
+- Dutch translations (thanks @ltguillaume).
+- CSV now exports time with seconds (#19, thanks @lrcstars).
+
+### Fixed
+
+- Fixed the untranslated app name on the launcher (#31, thanks @Aga-C).
+
+### Development
+
+- Rebuilt an icon generation script for new icon types.
+- Removed legacy image assets.
+- Reordered all localized strings to match order in English (#23).
+
+## 1.0.4
+
+### Improved
+
+- Changed "Good Health" to "Healthy" in notification (#11, thanks @ltguillaume)
+
+### Fixed
+
+- Separated live updates channel from the main notification channel (#10)
+
+## 1.0.3
+
+### Fixed
+
+- Disabled Android dependency metadata in release.
+
+## 1.0.2
+
+### Fixed
+
+- Added missing metadata required for F-Droid release.
+
+## 1.0.1
+
+### Fixed
+
+- Replaced old icon in live updates with the current one.
+
+## 1.0.0
+
+### New
+
+- Added live updates (Android 16+) with a dedicated settings screen.
+- Added showing temperature on a notification icon.
+- Added support for Android's per-app language chooser.
+
+### Improved
+
+- Rebranded the app from BatteryBot Pro to Battery Monitor.
+- Added automated translations for missing strings.
+- Human-made Polish translations (thanks @Aga-C).
+- Possibility to set custom values for battery alarms (charge levels, temperature).
+- Removed unnecessary text from notifications.
+
+### Fixed
+
+- Fixed Android 16 compatibility issues (UI, crash during DND).
+- Fixed notification reliability on older Android versions.
+- Fixed random timeout crashes.
+- Fixed hardcoded strings to use string resources for better localization.
+
+### Development
+
+- Updated target SDK to 37 and upgraded SDK/Gradle toolchain.
+- Added release GitHub Action.
+- Cleaned up unused resources.

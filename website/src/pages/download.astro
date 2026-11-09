@@ -1,0 +1,72 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import StoreButtons from '../components/StoreButtons.astro';
+import { content, dateLabel } from '../data/content';
+import { pageMeta } from '../content/en/ui';
+import { downloadCopy as copy } from '../content/en/pages';
+const { release } = content;
+---
+
+<SiteLayout {...pageMeta.download} pageId="download">
+  <div class="document-page">
+    <h1>{pageMeta.download.title}</h1>
+    <p class="page-lead">
+      {copy.introduction} {content.requirements.androidMin}
+      {copy.minimumVersionSuffix}
+    </p>
+    <section aria-labelledby="release-title">
+      <h2 id="release-title">
+        {copy.currentVersion}: {release.version}
+      </h2>
+      {release.publishedAt && (
+        <p>
+          {copy.published}{' '}
+          <time datetime={release.publishedAt}>{dateLabel(release.publishedAt)}</time>.
+        </p>
+      )}
+      {release.apkUrl && (
+        <div class="release-actions">
+          <a
+            class="primary-action"
+            href={release.apkUrl}
+            data-analytics-event="apk"
+            data-analytics-placement="download"
+            data-analytics-channel="github"
+          >
+            {copy.apkLink} <span aria-hidden="true">↗</span>
+          </a>
+          {release.signatureUrl && <a href={release.signatureUrl}>{copy.signatureLink}</a>}
+        </div>
+      )}
+      <div class="text-links">
+        <a
+          href={release.url}
+          data-analytics-event="release"
+          data-analytics-placement="download"
+          data-analytics-channel="github"
+        >
+          {copy.releaseLink}
+        </a>
+      </div>
+      {release.apkSha256 && (
+        <details class="checksum">
+          <summary>{copy.checksum}</summary>
+          <code>{release.apkSha256}</code>
+        </details>
+      )}
+    </section>
+    <section>
+      <h2>{copy.channelsTitle}</h2>
+      <StoreButtons placement="download" />
+      <p>{copy.channels}</p>
+    </section>
+    <section>
+      <h2>{copy.setupTitle}</h2>
+      <p>{copy.updates}</p>
+      <p>{copy.firstRun}</p>
+      <p>
+        {copy.monitoring} <a href="/help/">{copy.helpLink}</a> {copy.helpContext}
+      </p>
+    </section>
+  </div>
+</SiteLayout>

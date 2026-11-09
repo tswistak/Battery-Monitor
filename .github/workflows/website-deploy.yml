@@ -1,0 +1,123 @@
+name: Website deployment
+
+on:
+  push:
+    branches: ['**']
+  workflow_run:
+    workflows: [Build APK Release]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  website:
+    if: >-
+      github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref ==
+      format('refs/heads/{0}', vars.WEBSITE_PRODUCTION_BRANCH ||
+      github.event.repository.default_branch)) || (github.event_name == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_repository.full_name == github.repository)
+    name: Build and publish authorized website
+    concurrency:
+      group: website-production
+      queue: max
+      cancel-in-progress: false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: website
+    env:
+      WEBSITE_PRODUCTION_BRANCH:
+        ${{ vars.WEBSITE_PRODUCTION_BRANCH || github.event.repository.default_branch }}
+      WEBSITE_DEPLOY_ENABLED: ${{ vars.WEBSITE_DEPLOY_ENABLED || 'false' }}
+      WEBSITE_URL: ${{ vars.WEBSITE_URL || 'https://batterymonitor.swistak.codes/' }}
+      MATOMO_ENABLED: ${{ vars.MATOMO_ENABLED || 'false' }}
+      MATOMO_URL: ${{ vars.MATOMO_URL || 'https://radioactive-toy.swistak.codes/' }}
+      MATOMO_SITE_ID: ${{ vars.MATOMO_SITE_ID }}
+    steps:
+      - name: Reject manual dispatch from an arbitrary branch
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          REQUESTED_REF: ${{ github.ref }}
+        working-directory: .
+        run: |
+          if [ "$REQUESTED_REF" != "refs/heads/$WEBSITE_PRODUCTION_BRANCH" ]; then
+            echo '::error::Manual website deployment must use the production branch.'
+            exit 1
+          fi
+      - name: Checkout current authorized production implementation
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ vars.WEBSITE_PRODUCTION_BRANCH || github.event.repository.default_branch }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - name: Verify trigger and current production revision
+        id: context
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node ../.github/scripts/website-deploy-context.mjs
+      - name: Install website tooling
+        if: steps.context.outputs.deploy == 'true'
+        run: npm ci
+      - name: Lint website code
+        if: steps.context.outputs.deploy == 'true'
+        run: npm run lint
+      - name: Check website formatting
+        if: steps.context.outputs.deploy == 'true'
+        run: npm run format:check
+      - name: Check website implementation
+        if: steps.context.outputs.deploy == 'true'
+        run: npm run check
+      - name: Test content import and deployment
+        if: steps.context.outputs.deploy == 'true'
+        run: npm test
+      - name: Build against current published stable application
+        if: steps.context.outputs.deploy == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run build:production
+      - name: Validate public policy and deployment prerequisites
+        if: steps.context.outputs.deploy == 'true' && env.WEBSITE_DEPLOY_ENABLED == 'true'
+        run: npm run validate:publish
+      - name: Package generated site and deployment manifest
+        if: steps.context.outputs.deploy == 'true'
+        id: package
+        run: node scripts/deploy/manifest.mjs
+      - name: Publishing is disabled until owner setup is complete
+        if: steps.context.outputs.deploy == 'true' && env.WEBSITE_DEPLOY_ENABLED != 'true'
+        run:
+          echo 'Website built and retained. Publishing skipped because WEBSITE_DEPLOY_ENABLED is not
+          true.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish website-owned files and invalidate CDN cache
+        if: steps.context.outputs.deploy == 'true' && env.WEBSITE_DEPLOY_ENABLED == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          BUNNY_STORAGE_ENDPOINT: ${{ vars.BUNNY_STORAGE_ENDPOINT }}
+          BUNNY_STORAGE_ZONE: ${{ vars.BUNNY_STORAGE_ZONE }}
+          BUNNY_STORAGE_PREFIX: ${{ vars.BUNNY_STORAGE_PREFIX }}
+          BUNNY_PULL_ZONE_ID: ${{ vars.BUNNY_PULL_ZONE_ID }}
+          BUNNY_STORAGE_ACCESS_KEY: ${{ secrets.BUNNY_STORAGE_ACCESS_KEY }}
+          BUNNY_API_KEY: ${{ secrets.BUNNY_API_KEY }}
+        run: node scripts/deploy/publish.mjs --publish
+      - name: Verify published routes, assets and real 404 behavior
+        if: steps.context.outputs.deploy == 'true' && env.WEBSITE_DEPLOY_ENABLED == 'true'
+        run: node scripts/deploy/smoke.mjs
+      - name: Retain site and final deployment manifest
+        if: always() && steps.package.outcome == 'success'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: website-production-${{ github.run_id }}-${{ github.run_attempt }}
+          path: website/.artifacts/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import { appImage } from '../data/content';
+import type { SiteContent } from '../data/model';
+interface Props {
+  name: keyof SiteContent['media'];
+  alt: string;
+  class?: string;
+  eager?: boolean;
+}
+const { name, alt, class: className = '', eager = false } = Astro.props;
+const image = appImage(name);
+---
+
+{image && (
+  <Image
+    src={image}
+    alt={alt}
+    class={className}
+    widths={[280, 560, 840, 1080, 1440].filter((width) => width <= image.width)}
+    sizes={
+      name === 'current'
+        ? '(max-width:600px) 170px, 280px'
+        : '(max-width:759px) 280px, (max-width:1199px) 380px, 700px'
+    }
+    format="webp"
+    quality={85}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+  />
+)}

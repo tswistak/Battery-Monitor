@@ -1,0 +1,18 @@
+{
+  "version": "5.7.1",
+  "usage": "Representative real Matomo tracker for intercepted local tests only; not a production bundle.",
+  "files": [
+    {
+      "file": "matomo.js",
+      "source": "https://raw.githubusercontent.com/matomo-org/matomo/5.7.1/matomo.js",
+      "sha256": "1762dd6a64fcd59421610b68625258f9224a1f278159c4d99282adb631470465",
+      "bytes": 67972
+    },
+    {
+      "file": "LICENSE.txt",
+      "source": "https://raw.githubusercontent.com/matomo-org/matomo/5.7.1/js/LICENSE.txt",
+      "sha256": "a791a617108931367ab2cdb9e549fb92820b5c314faa39b38e0ff1c3b0b85c04",
+      "bytes": 1528
+    }
+  ]
+}

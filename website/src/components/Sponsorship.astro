@@ -1,0 +1,74 @@
+---
+import { content } from '../data/content';
+import { supportCopy as copy } from '../content/en/pages';
+const { github, liberapay, suppi } = content.funding;
+---
+
+<section class="support" id="support" aria-labelledby="support-title">
+  <div>
+    <h2 id="support-title">{copy.title}</h2>
+    <p>{copy.description}</p>
+    <p class="thanks">{copy.thanks}</p>
+  </div>
+  <div class="support-links">
+    <div class="support-platforms">
+      {github && (
+        <a
+          class="sponsor-github"
+          href={github}
+          data-analytics-event="support"
+          data-analytics-placement="support"
+          data-analytics-channel="github-sponsors"
+        >
+          <img
+            class="sponsor-heart"
+            src="/badges/sponsorship/github-heart.svg"
+            width="16"
+            height="16"
+            alt=""
+          />
+          {copy.githubLink}
+        </a>
+      )}
+      {liberapay ? (
+        <a
+          class="provider-badge liberapay"
+          href={liberapay}
+          data-analytics-event="support"
+          data-analytics-placement="support"
+          data-analytics-channel="liberapay"
+        >
+          <img
+            src="/badges/sponsorship/liberapay.svg"
+            width="83"
+            height="30"
+            alt={copy.liberapayAlt}
+          />
+        </a>
+      ) : (
+        <button class="provider-badge liberapay" type="button" disabled>
+          <img
+            src="/badges/sponsorship/liberapay.svg"
+            width="83"
+            height="30"
+            alt={copy.liberapayAlt}
+          />
+        </button>
+      )}
+      {suppi && (
+        <a
+          class="provider-badge suppi"
+          href={suppi}
+          data-analytics-event="support"
+          data-analytics-placement="support"
+          data-analytics-channel="suppi"
+        >
+          <img src="/badges/sponsorship/suppi.svg" width="158" height="39" alt={copy.suppiAlt} />
+          <span class="provider-caption">
+            <span aria-hidden="true">🇵🇱</span> {copy.suppiAvailability}
+          </span>
+        </a>
+      )}
+    </div>
+  </div>
+</section>

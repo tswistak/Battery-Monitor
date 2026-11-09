@@ -1,0 +1,150 @@
+---
+import '../styles/site.css';
+import '../styles/fonts.css';
+import robotoLatin from '@fontsource-variable/roboto/files/roboto-latin-wght-normal.woff2?url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PrivacyControls from '../components/PrivacyControls.astro';
+import { getSiteConfig } from '../lib/site-config';
+import { content } from '../data/content';
+import { pageMeta, ui } from '../content/en/ui';
+import { getFaq } from '../content/en/faq';
+interface Props {
+  title: string;
+  description: string;
+  pageId: string;
+  path?: string;
+  noindex?: boolean;
+}
+const { title, description, pageId, path = Astro.url.pathname, noindex = false } = Astro.props;
+const config = getSiteConfig();
+const canonical = new URL(path, config.siteUrl).href;
+const preview = content.provenance.mode !== 'production';
+const pageTitle = title.includes(ui.name) ? title : `${title} — ${ui.name}`;
+const image = new URL('/app-icon.png', config.siteUrl).href;
+const websiteId = new URL('/#website', config.siteUrl).href;
+const applicationId = new URL('/#app', config.siteUrl).href;
+const breadcrumbs = [
+  { name: ui.name, item: config.siteUrl },
+  ...(path.startsWith('/help/') && path !== '/help/'
+    ? [{ name: pageMeta.help.title, item: new URL('/help/', config.siteUrl).href }]
+    : []),
+  { name: title, item: canonical },
+];
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'WebSite',
+    '@id': websiteId,
+    name: ui.name,
+    url: config.siteUrl,
+    inLanguage: 'en',
+  },
+  {
+    '@type': pageId === 'help' ? 'FAQPage' : pageId === 'about' ? 'AboutPage' : 'WebPage',
+    '@id': `${canonical}#webpage`,
+    name: pageTitle,
+    description,
+    url: canonical,
+    image,
+    inLanguage: 'en',
+    isPartOf: { '@id': websiteId },
+    ...(pageId !== 'home' ? { breadcrumb: { '@id': `${canonical}#breadcrumbs` } } : {}),
+    ...(pageId === 'home' || pageId === 'download' ? { mainEntity: { '@id': applicationId } } : {}),
+    ...(pageId === 'help'
+      ? {
+          mainEntity: getFaq(content.capabilities).map((item) => ({
+            '@type': 'Question',
+            '@id': `${canonical}#${item.id}`,
+            name: item.question,
+            acceptedAnswer: { '@type': 'Answer', text: item.html },
+          })),
+        }
+      : {}),
+  },
+];
+if (pageId !== 'home') {
+  graph.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${canonical}#breadcrumbs`,
+    itemListElement: breadcrumbs.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      ...item,
+    })),
+  });
+}
+if (pageId === 'home' || pageId === 'download') {
+  graph.push({
+    '@type': 'MobileApplication',
+    '@id': applicationId,
+    name: ui.name,
+    description: pageMeta.home.description,
+    url: config.siteUrl,
+    image,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: `Android ${content.requirements.androidMin}.0 or later`,
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: 0 },
+    license: content.app.licenseUrl,
+    ...(!preview
+      ? {
+          softwareVersion: content.release.version,
+          ...(content.release.apkUrl ? { downloadUrl: content.release.apkUrl } : {}),
+        }
+      : {}),
+  });
+}
+const structuredData = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': graph,
+}).replaceAll('<', '\\u003c');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="preload" href={robotoLatin} as="font" type="font/woff2" crossorigin />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="describedby" href="/llms.txt" type="text/plain" />
+    {(noindex || preview) && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#f6f9fc" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Battery Monitor" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="Battery Monitor app icon" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image:alt" content="Battery Monitor app icon" />
+    {!noindex && <script type="application/ld+json" set:html={structuredData} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">
+      {ui.skip}
+    </a>
+    <Header pageId={pageId} />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <PrivacyControls
+      config={config.analytics}
+      page={{ id: pageId }}
+      appVersion={content.release.version}
+    />
+  </body>
+</html>

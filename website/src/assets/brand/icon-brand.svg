@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+    <title id="title">Battery Monitor icon brand</title>
+    <circle cx="128" cy="128" r="128" fill="#03A9F4" />
+    <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title" viewBox="0 0 256 256"
+        x="25.6" y="28.16" width="204.8" height="204.8" preserveAspectRatio="xMidYMid meet">
+        <title id="icon-brand-title">Battery Monitor — Hero Cell concept</title>
+        <path fill="#FFFFFF" fill-rule="evenodd"
+            d="M112 24H144Q152 24 152 32V48H156A36 36 0 0 1 192 84V188A36 36 0 0 1 156 224H100A36 36 0 0 1 64 188V84A36 36 0 0 1 100 48H104V32Q104 24 112 24ZM100 64H156A20 20 0 0 1 176 84V188A20 20 0 0 1 156 208H100A20 20 0 0 1 80 188V84A20 20 0 0 1 100 64Z" />
+        <path fill="#FFFFFF" d="M96 128H160V180A12 12 0 0 1 148 192H108A12 12 0 0 1 96 180Z" />
+    </svg>
+
+</svg>

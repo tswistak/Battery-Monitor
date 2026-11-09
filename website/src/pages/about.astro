@@ -1,0 +1,41 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { content } from '../data/content';
+import { pageMeta } from '../content/en/ui';
+import { aboutCopy as copy } from '../content/en/pages';
+---
+
+<SiteLayout {...pageMeta.about} pageId="about">
+  <div class="document-page">
+    <h1>{pageMeta.about.title}</h1>
+    <p class="page-lead">{copy.introduction}</p>
+    <section>
+      <h2>{copy.historyTitle}</h2>
+      <p>{copy.history}</p>
+      <div class="prose" set:html={content.app.attributionHtml} />
+      <p>
+        {copy.contribution}{' '}
+        <a href="https://github.com/tswistak/Battery-Monitor/blob/master/CONTRIBUTING.MD">
+          {copy.contributionLink}
+        </a>{' '}
+        {copy.contributionAlternative} <a href="/#support">{copy.supportLink}</a>.
+      </p>
+    </section>
+    <section id="licenses">
+      <h2>{copy.licensesTitle}</h2>
+      <p>{copy.licenses}</p>
+      <div class="text-links">
+        <a href="/notices/source-code.txt">{copy.sourceLink}</a>
+        <a href="/notices/GPL-3.0.txt">{copy.gplLink}</a>
+        <a href={content.app.licenseUrl}>{copy.applicationLicenseLink}</a>
+        <a href="/notices/third-party-assets.txt">{copy.assetNoticesLink}</a>
+        <a href="/notices/Roboto-OFL.txt">{copy.fontLicenseLink}</a>
+        <a href="/notices/CC-BY-SA-3.0.txt">{copy.artworkLicenseLink}</a>
+      </div>
+      <p>
+        {copy.artwork} <a href="/notices/Android-artwork-notices.txt">{copy.artworkNoticesLink}</a>.
+      </p>
+      <p>{copy.providerNotices}</p>
+    </section>
+  </div>
+</SiteLayout>

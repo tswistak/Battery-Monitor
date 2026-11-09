@@ -1,0 +1,35 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { content } from '../../data/content';
+import { guideIntro } from '../../content/en/guides';
+import type { SiteContent } from '../../data/model';
+export function getStaticPaths() {
+  return content.articles.map((article) => ({ params: { topic: article.id }, props: { article } }));
+}
+interface Props {
+  article: SiteContent['articles'][number];
+}
+const { article } = Astro.props;
+---
+
+<SiteLayout title={article.title} description={guideIntro[article.id]} pageId={article.id}>
+  <article class="document-page help-article">
+    <a class="back-link" href="/help/#guides">
+      All help guides
+    </a>
+    <h1>{article.title}</h1>
+    <p class="page-lead">{guideIntro[article.id]}</p>
+    <p>Screen names and controls in these guides refer to the Android app.</p>
+    <div class="prose imported-help" set:html={article.html} />
+    <aside class="source-note">
+      <p>
+        Application content: {content.release.version}.{' '}
+        <a href={content.app.sourceUrl}>View the corresponding application source</a>.
+      </p>
+    </aside>
+    <div class="page-links">
+      <a href="/help/#contact">Still need help?</a>
+      <a href="/download/">Get the app</a>
+    </div>
+  </article>
+</SiteLayout>

@@ -1,0 +1,18 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [
+    ".astro/types.d.ts",
+    "src/**/*",
+    "scripts/**/*.mjs",
+    "tests/**/*.ts",
+    "tests/**/*.mjs",
+    "*.ts",
+    "*.mjs"
+  ],
+  "exclude": ["dist", "node_modules", ".cache", ".artifacts", "tests/fixtures/matomo"],
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "types": ["node"]
+  }
+}

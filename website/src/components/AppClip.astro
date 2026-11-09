@@ -1,0 +1,52 @@
+---
+import { getImage } from 'astro:assets';
+import { appImage, appVideo } from '../data/content';
+import type { SiteContent } from '../data/model';
+import { ui } from '../content/en/ui';
+
+interface Props {
+  name: keyof SiteContent['videos'];
+  label: string;
+  transcript: string;
+}
+const { name, label, transcript } = Astro.props;
+const image = appImage(name);
+const poster = image
+  ? await getImage({ src: image, width: Math.min(1600, image.width), format: 'webp', quality: 85 })
+  : undefined;
+---
+
+<div class="clip-frame">
+  <video
+    data-feature-video={name}
+    controls
+    muted
+    playsinline
+    loop
+    preload="none"
+    poster={poster?.src}
+    width={image?.width}
+    height={image?.height}
+    aria-label={label}
+    aria-describedby={'clip-transcript-' + name}
+  >
+    <source src={appVideo(name)} type="video/mp4" />
+    <p id={'clip-transcript-' + name}>{transcript}</p>
+    <a href={appVideo(name)}>{ui.watchRecording}</a>
+  </video>
+  <button
+    class="clip-toggle"
+    type="button"
+    data-clip-toggle
+    data-play-label={ui.playRecording}
+    data-pause-label={ui.pauseRecording}
+    aria-label={ui.playRecording}
+    aria-describedby={'clip-transcript-' + name}
+    hidden
+  >
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path class="clip-play" d="m8 5 11 7-11 7z" />
+      <path class="clip-pause" d="M6 5h4v14H6zm8 0h4v14h-4z" />
+    </svg>
+  </button>
+</div>

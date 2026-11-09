@@ -1,0 +1,27 @@
+---
+import { ui } from '../content/en/ui';
+---
+
+<footer class="site-footer">
+  <a class="footer-name" href="/">
+    Battery Monitor
+  </a>
+  <nav class="footer-links" aria-label="Footer">
+    <a href="/about/">{ui.about}</a>
+    <a href="/privacy/">{ui.privacy}</a>
+    <a href="/about/#licenses">{ui.license}</a>
+    <a href="/help/#contact">{ui.contact}</a>
+    <a
+      href="https://github.com/tswistak/Battery-Monitor"
+      data-analytics-event="source"
+      data-analytics-placement="footer"
+      data-analytics-channel="github"
+    >
+      {ui.github}
+    </a>
+    <a href="/privacy/#preferences" data-privacy-settings>
+      {ui.preferences}
+    </a>
+  </nav>
+  <p class="footer-note">Open-source Android battery monitoring · GPL-3.0-or-later</p>
+</footer>

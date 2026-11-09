@@ -1,0 +1,77 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { content } from '../../data/content';
+import { getFaq } from '../../content/en/faq';
+import { guideIntro } from '../../content/en/guides';
+import { pageMeta } from '../../content/en/ui';
+const faq = getFaq(content.capabilities);
+---
+
+<SiteLayout {...pageMeta.help} pageId="help">
+  <div class="document-page">
+    <h1>Help &amp; FAQ</h1>
+    <p class="page-lead">
+      Understand your readings, configure the app and find help when something behaves differently
+      on your device.
+    </p>
+    <nav class="page-links" aria-label="Help contents">
+      <a href="#faq">Frequently asked questions</a>
+      <a href="#guides">Guides</a>
+      <a href="#contact">Contact &amp; reporting</a>
+    </nav>
+    <section id="faq">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-list">
+        {faq.map((item) => (
+          <details id={item.id}>
+            <summary>{item.question}</summary>
+            <div class="faq-answer" set:html={item.html} />
+          </details>
+        ))}
+      </div>
+    </section>
+    <section id="guides">
+      <h2>Guides</h2>
+      <div class="guide-index">
+        {content.articles.map((article) => (
+          <article>
+            <h3>
+              <a href={'/help/' + article.id + '/'}>{article.title}</a>
+            </h3>
+            <p>{guideIntro[article.id]}</p>
+            <span>
+              Read the guide <span aria-hidden="true">→</span>
+            </span>
+          </article>
+        ))}
+      </div>
+    </section>
+    <section class="contact-section" id="contact">
+      <h2>Contact &amp; reporting</h2>
+      <p>
+        For questions, use{' '}
+        <a href="https://github.com/tswistak/Battery-Monitor/discussions">GitHub Discussions</a> or
+        email <a href={'mailto:' + content.app.contactEmail}>{content.app.contactEmail}</a>. For a
+        reproducible problem, open a{' '}
+        <a
+          href="https://github.com/tswistak/Battery-Monitor/issues"
+          data-analytics-event="report-issue"
+          data-analytics-placement="help"
+          data-analytics-channel="github"
+        >
+          GitHub issue
+        </a>
+        .
+      </p>
+      <p>
+        Include the app version and distribution channel, Android version, device model, what you
+        expected, what happened and the steps to reproduce it. For delayed readings or alarms,
+        include the relevant timing and background/notification settings.
+      </p>
+      <p>
+        Review reports and exported files before sharing. They may include device information and
+        identifiers. Avoid posting private data in a public issue.
+      </p>
+    </section>
+  </div>
+</SiteLayout>
