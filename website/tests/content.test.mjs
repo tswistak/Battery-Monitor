@@ -6,6 +6,8 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { loadSiteConfig, validatePublication } from '../scripts/config.mjs';
 import { getPrivacySections } from '../src/content/en/privacy.ts';
+import { makeReceipt, readReceipt, DAY_MS } from '../src/lib/consent.ts';
+import { parse as parseYaml } from 'yaml';
 import {
   listReleases,
   selectStableRelease,
@@ -680,4 +682,90 @@ test('validated privacy facts reach the policy in both modes and optional notice
       /MATOMO_CONSENT_DIMENSION_ID/,
     );
   }
+});
+
+test('workflow consent variables configure the site consistently and reject incompatible lifetimes', async () => {
+  const privacy = JSON.parse(await readFile('tests/fixtures/privacy.json', 'utf8'));
+  const variables = {
+    ANALYTICS_CONSENT_VERSION: 'analytics-fixture-short-v2',
+    CONSENT_VALIDITY_DAYS: '30',
+    MATOMO_VISITOR_COOKIE_SECONDS: '1209600',
+    MATOMO_SESSION_COOKIE_SECONDS: '900',
+  };
+  const workflow = parseYaml(await readFile('../.github/workflows/website-deploy.yml', 'utf8'));
+  for (const key of Object.keys(variables))
+    assert.equal(workflow.jobs.website.env[key], '${{ vars.' + key + ' }}');
+
+  privacy.analytics.visitorCookieSeconds = 1209600;
+  privacy.analytics.sessionCookieSeconds = 900;
+  const env = {
+    ...variables,
+    MATOMO_ENABLED: 'true',
+    MATOMO_SITE_ID: '7',
+    MATOMO_URL: 'https://analytics.invalid/',
+  };
+  const config = validatePublication(loadSiteConfig({ env, privacy }));
+  assert.deepEqual(config.analytics, {
+    enabled: true,
+    matomoUrl: 'https://analytics.invalid/',
+    siteId: '7',
+    consentDimensionId: null,
+    consentVersion: 'analytics-fixture-short-v2',
+    consentDays: 30,
+    cookieVisitorSeconds: 1209600,
+    cookieSessionSeconds: 900,
+  });
+  const storage = getPrivacySections(config).find((section) => section.id === 'storage').html;
+  for (const value of ['30 days of decision validity', 'Up to 14 days', 'Up to 15 minutes'])
+    assert(storage.includes(value));
+
+  const defaults = loadSiteConfig({ env: {}, privacy }).analytics;
+  assert.equal(defaults.enabled, false);
+  assert.equal(defaults.consentVersion, 'analytics-2026-11-09-v1');
+  assert.equal(defaults.consentDays, 180);
+  assert.equal(defaults.cookieVisitorSeconds, 15552000);
+  assert.equal(defaults.cookieSessionSeconds, 1800);
+  assert.deepEqual(
+    loadSiteConfig({
+      env: Object.fromEntries(Object.keys(variables).map((key) => [key, ''])),
+      privacy,
+    }).analytics,
+    defaults,
+  );
+  assert.equal(
+    loadSiteConfig({ env: { ...env, MATOMO_ENABLED: 'false' }, privacy }).analytics.enabled,
+    false,
+  );
+
+  const now = Date.parse('2026-11-10T12:00:00Z');
+  const previous = makeReceipt('accept', defaults.consentVersion, 30, now);
+  assert.equal(
+    readReceipt(JSON.stringify(previous), config.analytics.consentVersion, 30, now),
+    null,
+  );
+  const current = makeReceipt('accept', config.analytics.consentVersion, 30, now);
+  assert.equal(current.expiresAt - current.decidedAt, 30 * DAY_MS);
+  assert.deepEqual(
+    readReceipt(JSON.stringify(current), config.analytics.consentVersion, 30, now),
+    current,
+  );
+
+  for (const [key, value] of [
+    ['ANALYTICS_CONSENT_VERSION', 'invalid notice version'],
+    ['CONSENT_VALIDITY_DAYS', '0'],
+    ['CONSENT_VALIDITY_DAYS', '366'],
+    ['CONSENT_VALIDITY_DAYS', '1.5'],
+    ['MATOMO_VISITOR_COOKIE_SECONDS', '0'],
+    ['MATOMO_VISITOR_COOKIE_SECONDS', '2592001'],
+    ['MATOMO_SESSION_COOKIE_SECONDS', '0'],
+    ['MATOMO_SESSION_COOKIE_SECONDS', '86401'],
+  ])
+    assert.throws(
+      () => loadSiteConfig({ env: { ...env, [key]: value }, privacy }),
+      new RegExp(key),
+    );
+  assert.throws(
+    () => loadSiteConfig({ env: { CONSENT_VALIDITY_DAYS: '30' }, privacy }),
+    /MATOMO_VISITOR_COOKIE_SECONDS cannot outlive the consent validity period/,
+  );
 });

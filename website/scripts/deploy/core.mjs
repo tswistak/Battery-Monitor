@@ -1,4 +1,12 @@
-import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
+import {
+  createCipheriv,
+  createDecipheriv,
+  createHash,
+  createHmac,
+  hkdfSync,
+  randomBytes,
+  timingSafeEqual,
+} from 'node:crypto';
 import { lstat, readdir, readFile, realpath } from 'node:fs/promises';
 import { extname, relative, resolve, sep } from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
@@ -211,7 +219,7 @@ export async function scanDist(dist, secrets = []) {
 
 export function validateManifest(manifest, { successful = false } = {}) {
   if (
-    manifest?.schemaVersion !== 1 ||
+    ![1, 2].includes(manifest?.schemaVersion) ||
     manifest.owner !== OWNER ||
     !HASH.test(manifest.buildId || '') ||
     !Number.isFinite(Date.parse(manifest.generatedAt))
@@ -256,10 +264,21 @@ export function validateManifest(manifest, { successful = false } = {}) {
       ownedPaths.has(entry.path) ||
       !MIME[extname(entry.path).toLowerCase()] ||
       !HASH.test(entry.sha256 || '') ||
-      !Number.isFinite(Date.parse(entry.lastReferencedAt))
+      (manifest.schemaVersion === 1
+        ? !Number.isFinite(Date.parse(entry.lastReferencedAt))
+        : entry.obsoleteSince !== null &&
+          (typeof entry.obsoleteSince !== 'string' ||
+            !Number.isFinite(Date.parse(entry.obsoleteSince))))
     )
       throw new Error('Invalid owned-file retention record');
     ownedPaths.add(entry.path);
+  }
+  if (manifest.schemaVersion === 2) {
+    for (const file of manifest.files) {
+      const owned = manifest.owned.find((entry) => entry.path === file.path);
+      if (!owned || owned.sha256 !== file.sha256 || owned.obsoleteSince !== null)
+        throw new Error('Active files cannot be obsolete or lack verified ownership');
+    }
   }
   for (const build of manifest.recentBuilds) {
     if (!HASH.test(build.buildId || '') || !Array.isArray(build.paths))
@@ -279,16 +298,26 @@ export async function createManifest(
   if (previous) validateManifest(previous, { successful: true });
   const files = await scanDist(dist, secrets);
   const buildId = sha256(JSON.stringify({ provenance, files }));
-  const owned = new Map((previous?.owned || []).map((entry) => [entry.path, { ...entry }]));
+  const owned = new Map(
+    (previous?.owned || []).map((entry) => [
+      entry.path,
+      {
+        path: entry.path,
+        sha256: entry.sha256,
+        // Legacy publication dates cannot establish when a file stopped being active.
+        obsoleteSince: previous.schemaVersion === 2 ? entry.obsoleteSince : null,
+      },
+    ]),
+  );
   files.forEach((file) =>
-    owned.set(file.path, { path: file.path, sha256: file.sha256, lastReferencedAt: now }),
+    owned.set(file.path, { path: file.path, sha256: file.sha256, obsoleteSince: null }),
   );
   const recentBuilds = [
     { buildId, paths: files.map((file) => file.path) },
     ...(previous?.recentBuilds || []).filter((build) => build.buildId !== buildId),
   ].slice(0, 2);
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     owner: OWNER,
     buildId,
     generatedAt: now,
@@ -312,7 +341,9 @@ export function planDeployment(manifest, { previous = null, now = Date.now() } =
           return (
             prior &&
             !protectedPaths.has(entry.path) &&
-            now - Date.parse(prior.lastReferencedAt) >= RETAIN_MS
+            previous.schemaVersion === 2 &&
+            prior.obsoleteSince !== null &&
+            now - Date.parse(prior.obsoleteSince) >= RETAIN_MS
           );
         })
         .map((entry) => entry.path)
@@ -322,6 +353,17 @@ export function planDeployment(manifest, { previous = null, now = Date.now() } =
     uploads: [...manifest.files].sort((a, b) => a.phase - b.phase || a.path.localeCompare(b.path)),
     cleanup,
   };
+}
+
+export function publishedOwnership(manifest, publishedAt, deleted = new Set()) {
+  const activePaths = new Set(manifest.files.map((file) => file.path));
+  return manifest.owned
+    .filter((entry) => !deleted.has(entry.path))
+    .map((entry) => ({
+      path: entry.path,
+      sha256: entry.sha256,
+      obsoleteSince: activePaths.has(entry.path) ? null : (entry.obsoleteSince ?? publishedAt),
+    }));
 }
 
 export function storageUrl(config, path) {
@@ -417,27 +459,49 @@ export function destination(config) {
   };
 }
 
-export function stateUrl(config) {
-  const name = sha256(JSON.stringify(destination(config))) + '.json';
+export function stateUrl(config, { pending = false } = {}) {
+  const name = sha256(JSON.stringify(destination(config))) + (pending ? '.pending.json' : '.json');
   return storageUrl({ ...config, prefix: STATE_DIRECTORY }, name);
 }
 
-export function encodeState(manifest, config) {
-  validateManifest(manifest, { successful: true });
-  if (!isDeepStrictEqual(manifest.destination, destination(config)))
-    throw new Error('Prior manifest belongs to a different deployment destination');
-  const payload = JSON.stringify(manifest);
+function stateEncryptionKey(config) {
+  return hkdfSync(
+    'sha256',
+    Buffer.from(config.stateKey, 'hex'),
+    '',
+    `${OWNER}:state-encryption`,
+    32,
+  );
+}
+
+function encodeRecord(kind, value, config) {
+  const payload = JSON.stringify(value);
   if (
     [config.storageKey, config.apiKey, config.githubToken, config.stateKey]
       .filter(Boolean)
       .some((secret) => payload.includes(secret))
   )
     throw new Error('A deployment credential occurs in the deployment manifest');
-  const signature = createHmac('sha256', config.stateKey).update(payload).digest('hex');
-  return Buffer.from(JSON.stringify({ schemaVersion: 1, owner: OWNER, manifest, signature }));
+  const signature = createHmac('sha256', config.stateKey)
+    .update(`${kind}:${payload}`)
+    .digest('hex');
+  const signed = JSON.stringify({ schemaVersion: 2, owner: OWNER, kind, value, signature });
+  const iv = randomBytes(12);
+  const cipher = createCipheriv('aes-256-gcm', stateEncryptionKey(config), iv);
+  cipher.setAAD(Buffer.from(OWNER));
+  const encrypted = Buffer.concat([cipher.update(signed, 'utf8'), cipher.final()]);
+  return Buffer.from(
+    JSON.stringify({
+      schemaVersion: 2,
+      owner: OWNER,
+      iv: iv.toString('hex'),
+      tag: cipher.getAuthTag().toString('hex'),
+      ciphertext: encrypted.toString('hex'),
+    }),
+  );
 }
 
-export function decodeState(bytes, config) {
+function decodeRecord(bytes, kind, config) {
   let state;
   try {
     state = JSON.parse(bytes.toString('utf8'));
@@ -446,44 +510,229 @@ export function decodeState(bytes, config) {
       'Deployment state is corrupt; restore the last trusted state before publishing',
     );
   }
+  if (state?.schemaVersion === 2) {
+    if (
+      state.owner !== OWNER ||
+      !/^[a-f0-9]{24}$/.test(state.iv || '') ||
+      !/^[a-f0-9]{32}$/.test(state.tag || '') ||
+      typeof state.ciphertext !== 'string' ||
+      !/^(?:[a-f0-9]{2})+$/.test(state.ciphertext)
+    )
+      throw new Error('Invalid encrypted deployment state');
+    try {
+      const decipher = createDecipheriv(
+        'aes-256-gcm',
+        stateEncryptionKey(config),
+        Buffer.from(state.iv, 'hex'),
+        { authTagLength: 16 },
+      );
+      decipher.setAAD(Buffer.from(OWNER));
+      decipher.setAuthTag(Buffer.from(state.tag, 'hex'));
+      state = JSON.parse(
+        Buffer.concat([
+          decipher.update(Buffer.from(state.ciphertext, 'hex')),
+          decipher.final(),
+        ]).toString('utf8'),
+      );
+    } catch {
+      throw new Error('Deployment state integrity check failed');
+    }
+  }
+  const legacy = state?.schemaVersion === 1 && kind === 'manifest';
+  const value = legacy ? state.manifest : state?.value;
   if (
-    state?.schemaVersion !== 1 ||
+    (!legacy && (state?.schemaVersion !== 2 || state.kind !== kind)) ||
     state.owner !== OWNER ||
-    !state.manifest ||
-    typeof state.manifest !== 'object' ||
-    Array.isArray(state.manifest) ||
+    !value ||
+    typeof value !== 'object' ||
+    Array.isArray(value) ||
     !HASH.test(state.signature || '')
   )
     throw new Error('Invalid signed deployment state');
   const expected = createHmac('sha256', config.stateKey)
-    .update(JSON.stringify(state.manifest))
+    .update(legacy ? JSON.stringify(value) : `${kind}:${JSON.stringify(value)}`)
     .digest();
   if (!timingSafeEqual(Buffer.from(state.signature, 'hex'), expected))
     throw new Error('Deployment state integrity check failed');
-  validateManifest(state.manifest, { successful: true });
-  if (!isDeepStrictEqual(state.manifest.destination, destination(config)))
-    throw new Error('Prior manifest belongs to a different deployment destination');
-  return state.manifest;
+  return value;
 }
 
-async function readState(config, http) {
+export function encodeState(manifest, config) {
+  validateManifest(manifest, { successful: true });
+  if (!isDeepStrictEqual(manifest.destination, destination(config)))
+    throw new Error('Prior manifest belongs to a different deployment destination');
+  return encodeRecord('manifest', manifest, config);
+}
+
+export function decodeState(bytes, config) {
+  const manifest = decodeRecord(bytes, 'manifest', config);
+  validateManifest(manifest, { successful: true });
+  if (!isDeepStrictEqual(manifest.destination, destination(config)))
+    throw new Error('Prior manifest belongs to a different deployment destination');
+  return manifest;
+}
+
+function validatePending(pending, config) {
+  if (pending?.schemaVersion !== 1 || !isDeepStrictEqual(pending.destination, destination(config)))
+    throw new Error('Pending deployment belongs to a different deployment destination');
+  validateManifest(pending.manifest);
+  validateProvenance(pending.manifest.provenance, true);
+  if (
+    pending.manifest.publishedAt !== null ||
+    !Array.isArray(pending.expected) ||
+    !pending.expected.length
+  )
+    throw new Error('Invalid pending deployment record');
+  const identities = new Set();
+  for (const file of pending.expected) {
+    safePath(file.path);
+    const identity = `${file.path}:${file.sha256}`;
+    if (
+      !MIME[extname(file.path).toLowerCase()] ||
+      !HASH.test(file.sha256 || '') ||
+      !Number.isSafeInteger(file.size) ||
+      file.size < 0 ||
+      identities.has(identity)
+    )
+      throw new Error('Invalid pending deployment file');
+    identities.add(identity);
+  }
+  for (const file of pending.manifest.files)
+    if (
+      !pending.expected.some(
+        (expected) =>
+          expected.path === file.path &&
+          expected.sha256 === file.sha256 &&
+          expected.size === file.size,
+      )
+    )
+      throw new Error('Pending deployment does not authorize its build files');
+  return pending;
+}
+
+export function encodePending(pending, config) {
+  validatePending(pending, config);
+  return encodeRecord('pending', pending, config);
+}
+
+export function decodePending(bytes, config) {
+  return validatePending(decodeRecord(bytes, 'pending', config), config);
+}
+
+async function readState(config, http, { pending = false } = {}) {
   const response = await request(
-    stateUrl(config),
+    stateUrl(config, { pending }),
     { headers: { AccessKey: config.storageKey } },
     http,
   );
   if (response.status === 404) return null;
   if (!response.ok) throw new Error(`Cannot read deployment state (${response.status})`);
   const bytes = Buffer.from(await response.arrayBuffer());
-  return { bytes, manifest: decodeState(bytes, config) };
+  return { bytes, manifest: pending ? decodePending(bytes, config) : decodeState(bytes, config) };
 }
 
-async function assertUnchangedState(config, state, http) {
-  const latest = await readState(config, http);
+async function assertUnchangedState(config, state, http, options = {}) {
+  const latest = await readState(config, http, options);
   if ((latest && sha256(latest.bytes)) !== (state && sha256(state.bytes)))
     throw new Error(
       'Deployment state changed during publication; refusing stale cleanup or state update',
     );
+}
+
+async function assertPrivateState(config, http, options = {}) {
+  const remote = new URL(stateUrl(config, options));
+  const path = `/${STATE_DIRECTORY}/${remote.pathname.split('/').at(-1)}`;
+  const url = new URL(path, config.websiteUrl);
+  url.searchParams.set('state-check', randomBytes(12).toString('hex'));
+  const response = await request(
+    url.href,
+    { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } },
+    http,
+  );
+  await response.body?.cancel();
+  if (![403, 404].includes(response.status))
+    throw new Error(
+      'Deployment state is publicly accessible; restrict the CDN origin to the website prefix or block the website-deploy-state path',
+    );
+}
+
+async function storeState(config, bytes, http, options = {}) {
+  const stored = await request(
+    stateUrl(config, options),
+    {
+      method: 'PUT',
+      headers: {
+        AccessKey: config.storageKey,
+        'Content-Type': 'application/json',
+        Checksum: sha256(bytes).toUpperCase(),
+      },
+      body: bytes,
+    },
+    http,
+  );
+  if (stored.status !== 201)
+    throw new Error(`Deployment state could not be persisted (${stored.status})`);
+  const verified = await readState(config, http, options);
+  if (!verified || sha256(verified.bytes) !== sha256(bytes))
+    throw new Error('Persisted deployment state could not be verified');
+  return verified;
+}
+
+async function verifyInitialFiles(config, pending, http) {
+  const verified = [];
+  async function visit(directory = '') {
+    const url = storageUrl(config, `${directory}index.html`).replace(/index\.html$/, '');
+    const listing = await request(url, { headers: { AccessKey: config.storageKey } }, http);
+    if (listing.status === 404) return;
+    if (!listing.ok)
+      throw new Error(`Cannot inspect initial deployment destination (${listing.status})`);
+    const entries = await listing.json();
+    if (!Array.isArray(entries)) throw new Error('Invalid Storage directory listing');
+    const names = new Set();
+    for (const entry of entries) {
+      if (
+        !entry ||
+        typeof entry.ObjectName !== 'string' ||
+        entry.ObjectName.includes('/') ||
+        typeof entry.IsDirectory !== 'boolean' ||
+        !Number.isSafeInteger(entry.Length) ||
+        entry.Length < 0 ||
+        names.has(entry.ObjectName)
+      )
+        throw new Error('Invalid Storage directory entry');
+      const path = safePath(directory + entry.ObjectName);
+      names.add(entry.ObjectName);
+      const expected =
+        pending?.expected.filter((file) =>
+          entry.IsDirectory ? file.path.startsWith(path + '/') : file.path === path,
+        ) || [];
+      if (!expected.length)
+        throw new Error(
+          'Initial deployment requires an empty website destination or authenticated pending ownership; unrelated files were preserved',
+        );
+      if (entry.IsDirectory) {
+        await visit(path + '/');
+        continue;
+      }
+      const existing = await request(
+        storageUrl(config, path),
+        { headers: { AccessKey: config.storageKey } },
+        http,
+      );
+      if (!existing.ok) throw new Error(`Pending deployment file could not be verified: ${path}`);
+      const bytes = Buffer.from(await existing.arrayBuffer());
+      const file = expected.find(
+        (file) => file.size === bytes.length && file.sha256 === sha256(bytes),
+      );
+      if (!file)
+        throw new Error(
+          `Pending deployment ownership could not be verified for ${path}; it was preserved`,
+        );
+      verified.push(file);
+    }
+  }
+  await visit();
+  return verified;
 }
 
 async function purgeSite(config, http) {
@@ -518,40 +767,79 @@ export async function publishSite({ dist, manifest, config, http = {}, validateP
     throw new Error('dist no longer matches its deployment manifest');
   const state = await readState(config, http);
   const previous = state?.manifest || null;
+  let pending = null;
+  let recovered = [];
   if (!previous) {
     if (!config.bootstrap)
       throw new Error(
-        'Deployment state is missing; use WEBSITE_DEPLOY_BOOTSTRAP=true only for an empty initial website destination, or restore trusted state',
+        'Deployment state is missing; use WEBSITE_DEPLOY_BOOTSTRAP=true only for an empty initial website destination or authenticated pending recovery',
       );
-    const listing = await request(
-      storageUrl(config, 'index.html').replace(/index\.html$/, ''),
-      { headers: { AccessKey: config.storageKey } },
-      http,
-    );
-    if (listing.status !== 404) {
-      const entries = listing.ok ? await listing.json() : null;
-      if (!Array.isArray(entries) || entries.length)
-        throw new Error(
-          'Initial deployment requires an empty website destination; existing files and history were preserved',
-        );
-    }
-  }
+    pending = await readState(config, http, { pending: true });
+    recovered = await verifyInitialFiles(config, pending?.manifest, http);
+  } else await assertPrivateState(config, http);
   // Regenerate at the real publish entry point: local artifacts cannot authorize remote deletion.
   manifest = await createManifest(dist, manifest.provenance, {
     previous,
     secrets,
   });
+  for (const file of recovered)
+    if (!manifest.owned.some((entry) => entry.path === file.path))
+      manifest.owned.push({ path: file.path, sha256: file.sha256, obsoleteSince: null });
+  manifest.owned.sort((a, b) => a.path.localeCompare(b.path));
   const plan = planDeployment(manifest, { previous });
   await assertCurrent(manifest.provenance, config, http);
+  if (!previous) {
+    const expected = new Map(
+      [...recovered, ...manifest.files].map((file) => [
+        `${file.path}:${file.sha256}`,
+        { path: file.path, size: file.size, sha256: file.sha256 },
+      ]),
+    );
+    const record = {
+      schemaVersion: 1,
+      destination: destination(config),
+      manifest,
+      expected: [...expected.values()],
+    };
+    await assertUnchangedState(config, state, http);
+    await assertUnchangedState(config, pending, http, { pending: true });
+    pending = await storeState(config, encodePending(record, config), http, { pending: true });
+    await assertPrivateState(config, http, { pending: true });
+  }
   let phase = 0;
   for (const file of plan.uploads) {
     if (file.phase > phase) {
       await assertCurrent(manifest.provenance, config, http);
-      if (file.phase === 2) await assertUnchangedState(config, state, http);
+      if (file.phase === 2) {
+        await assertUnchangedState(config, state, http);
+        if (pending) await assertUnchangedState(config, pending, http, { pending: true });
+      }
       phase = file.phase;
     }
     const bytes = await readFile(resolve(dist, file.path));
     if (sha256(bytes) !== file.sha256) throw new Error('A build file changed during publication');
+    if (pending) {
+      const existing = await request(
+        storageUrl(config, file.path),
+        { headers: { AccessKey: config.storageKey } },
+        http,
+      );
+      if (existing.status !== 404) {
+        if (!existing.ok) throw new Error(`Cannot verify pending deployment target: ${file.path}`);
+        const actual = Buffer.from(await existing.arrayBuffer());
+        if (
+          !pending.manifest.expected.some(
+            (expected) =>
+              expected.path === file.path &&
+              expected.size === actual.length &&
+              expected.sha256 === sha256(actual),
+          )
+        )
+          throw new Error(
+            `Pending deployment ownership could not be verified for ${file.path}; it was preserved`,
+          );
+      }
+    }
     const headers = {
       AccessKey: config.storageKey,
       'Content-Type': file.mime,
@@ -577,6 +865,10 @@ export async function publishSite({ dist, manifest, config, http = {}, validateP
   await smokeSite({ url: config.websiteUrl, manifest, http });
   await assertCurrent(manifest.provenance, config, http);
   await assertUnchangedState(config, state, http);
+  if (pending) {
+    await assertUnchangedState(config, pending, http, { pending: true });
+    await verifyInitialFiles(config, pending.manifest, http);
+  }
   for (const path of plan.cleanup) {
     const owned = previous.owned.find((entry) => entry.path === path);
     const existing = await request(
@@ -601,40 +893,17 @@ export async function publishSite({ dist, manifest, config, http = {}, validateP
   }
   if (plan.cleanup.length) await purgeSite(config, http);
   const deleted = new Set(plan.cleanup);
-  const currentPaths = new Set(manifest.files.map((file) => file.path));
   const publishedAt = new Date().toISOString();
   const successful = {
     ...manifest,
     publishedAt,
     destination: destination(config),
-    owned: manifest.owned
-      .filter((entry) => !deleted.has(entry.path))
-      .map((entry) =>
-        currentPaths.has(entry.path) ? { ...entry, lastReferencedAt: publishedAt } : entry,
-      ),
+    owned: publishedOwnership(manifest, publishedAt, deleted),
   };
   const bytes = encodeState(successful, config);
   await assertUnchangedState(config, state, http);
-  const stored = await request(
-    stateUrl(config),
-    {
-      method: 'PUT',
-      headers: {
-        AccessKey: config.storageKey,
-        'Content-Type': 'application/json',
-        Checksum: sha256(bytes).toUpperCase(),
-      },
-      body: bytes,
-    },
-    http,
-  );
-  if (stored.status !== 201)
-    throw new Error(
-      `Site verified, but successful deployment state could not be persisted (${stored.status})`,
-    );
-  const verified = await readState(config, http);
-  if (!verified || sha256(verified.bytes) !== sha256(bytes))
-    throw new Error('Site verified, but persisted deployment state could not be verified');
+  await storeState(config, bytes, http);
+  // A verified successful state retires bootstrap authority; a leftover pending record is ignored.
   return {
     status: 'published',
     uploads: plan.uploads.length,

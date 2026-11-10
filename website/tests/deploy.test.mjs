@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHmac } from 'node:crypto';
 import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -9,8 +10,11 @@ import {
   createManifest,
   destination,
   decodeState,
+  decodePending,
   encodeState,
+  encodePending,
   planDeployment,
+  publishedOwnership,
   publishSite,
   request,
   safePath,
@@ -88,17 +92,20 @@ async function fixture(t, asset = 'app.first123.js') {
 }
 
 function mockNetwork({
-  head = () => WEBSITE,
-  releaseId = 42,
+  currentProvenance = provenance,
+  head = () => currentProvenance.websiteCommit,
+  releaseId = currentProvenance.releaseId,
   failPut = false,
   badChecksum = false,
-  assetId = 3,
-  assetUpdatedAt = provenance.releaseAssets.apk.updatedAt,
+  assetId = currentProvenance.releaseAssets.apk.id,
+  assetUpdatedAt = currentProvenance.releaseAssets.apk.updatedAt,
   assetDigest = null,
   initialStorage = new Map(),
   smokeFailure = false,
   purgeFailure = false,
   stateFailure = false,
+  pendingFailure = false,
+  publicState = false,
 } = {}) {
   const calls = [];
   const storage = new Map(initialStorage);
@@ -131,26 +138,25 @@ function mockNetwork({
             id: releaseId,
             draft: false,
             prerelease: false,
-            tag_name: 'v2.0.0',
-            published_at: provenance.publishedAt,
-            html_url: 'https://github.com/tswistak/Battery-Monitor/releases/tag/v2.0.0',
+            tag_name: currentProvenance.tag,
+            published_at: currentProvenance.publishedAt,
+            html_url: `https://github.com/tswistak/Battery-Monitor/releases/tag/${currentProvenance.tag}`,
           },
         ]);
       if (url.pathname.includes('/git/ref/tags/'))
         return json({ object: { type: 'tag', sha: TAG } });
       if (url.pathname.includes('/git/tags/'))
-        return json({ object: { type: 'commit', sha: APP } });
+        return json({ object: { type: 'commit', sha: currentProvenance.appCommit } });
       if (url.pathname.endsWith('/assets'))
         return json([
           {
             id: typeof assetId === 'function' ? assetId(++assetReads) : assetId,
-            name: 'battery-monitor-2.0.0.apk',
+            name: currentProvenance.releaseAssets.apk.name,
             state: 'uploaded',
-            size: 500,
+            size: currentProvenance.releaseAssets.apk.size,
             updated_at: assetUpdatedAt,
             digest: assetDigest,
-            browser_download_url:
-              'https://github.com/tswistak/Battery-Monitor/releases/download/v2.0.0/battery-monitor-2.0.0.apk',
+            browser_download_url: currentProvenance.releaseAssets.apk.url,
           },
         ]);
       throw new Error('Unexpected GitHub request');
@@ -158,6 +164,13 @@ function mockNetwork({
     if (url.hostname === 'api.bunny.net')
       return new Response(null, { status: purgeFailure ? 400 : 204 });
     if (url.origin === new URL(env.WEBSITE_URL).origin) {
+      if (url.pathname.startsWith('/website-deploy-state/')) {
+        assert.equal(options.headers?.AccessKey, undefined);
+        const bytes = storage.get('/website-zone' + url.pathname);
+        return new Response(publicState && bytes ? bytes : null, {
+          status: publicState && bytes ? 200 : 404,
+        });
+      }
       if (smokeFailure || url.pathname.includes('__battery-monitor-smoke'))
         return new Response('missing', { status: 404 });
       const path =
@@ -178,7 +191,13 @@ function mockNetwork({
     }
     if (url.hostname.endsWith('storage.bunnycdn.com')) {
       if (method === 'PUT') {
-        if (failPut || (stateFailure && url.pathname.includes('/website-deploy-state/')))
+        if (
+          (typeof failPut === 'function' ? failPut(url) : failPut) ||
+          (stateFailure &&
+            url.pathname.includes('/website-deploy-state/') &&
+            !url.pathname.endsWith('.pending.json')) ||
+          (pendingFailure && url.pathname.endsWith('.pending.json'))
+        )
           return new Response(null, { status: 400 });
         assert.ok(Buffer.isBuffer(options.body));
         assert.equal(options.headers.Checksum, sha256(options.body).toUpperCase());
@@ -190,8 +209,23 @@ function mockNetwork({
         storage.delete(url.pathname);
         return new Response(null, { status: 200 });
       }
-      if (url.pathname.endsWith('/'))
-        return json([...storage.keys()].filter((path) => path.startsWith(url.pathname)));
+      if (url.pathname.endsWith('/')) {
+        const entries = new Map();
+        for (const [path, bytes] of storage) {
+          if (!path.startsWith(url.pathname)) continue;
+          const relative = path.slice(url.pathname.length);
+          const name = relative.split('/')[0];
+          const directory = relative.includes('/');
+          entries.set(name, {
+            ObjectName: name,
+            IsDirectory: directory,
+            Length: directory ? 0 : bytes.length,
+            Path: url.pathname,
+            StorageZoneName: env.BUNNY_STORAGE_ZONE,
+          });
+        }
+        return json([...entries.values()]);
+      }
       if (!storage.has(url.pathname)) return new Response(null, { status: 404 });
       return new Response(badChecksum ? Buffer.from('wrong content') : storage.get(url.pathname), {
         status: 200,
@@ -205,11 +239,21 @@ function mockNetwork({
 async function history(t) {
   const f = await fixture(t, 'app.old123.js');
   let previous = await createManifest(f.dist, provenance, { now: '2026-01-01T00:00:00Z' });
-  previous = { ...previous, publishedAt: '2026-01-01T00:00:01Z', destination: destination(config) };
+  previous = {
+    ...previous,
+    publishedAt: '2026-01-01T00:00:01Z',
+    destination: destination(config),
+    owned: publishedOwnership(previous, '2026-01-01T00:00:01Z'),
+  };
   await rm(join(f.dist, '_astro/app.old123.js'));
   await writeFile(join(f.dist, '_astro/app.previous456.js'), 'previous');
   let second = await createManifest(f.dist, provenance, { previous, now: '2026-01-09T00:00:00Z' });
-  second = { ...second, publishedAt: '2026-01-09T00:00:01Z', destination: destination(config) };
+  second = {
+    ...second,
+    publishedAt: '2026-01-09T00:00:01Z',
+    destination: destination(config),
+    owned: publishedOwnership(second, '2026-01-09T00:00:01Z'),
+  };
   await rm(join(f.dist, '_astro/app.previous456.js'));
   await writeFile(join(f.dist, '_astro/app.current789.js'), 'current');
   const current = await createManifest(f.dist, provenance, {
@@ -316,6 +360,10 @@ test('manifest planning orders assets before entry points and protects two build
     () => planDeployment(current, { previous: { ...previous, publishedAt: null } }),
     /successful/,
   );
+  const obsoleteActive = structuredClone(current);
+  obsoleteActive.owned.find((entry) => entry.path === 'index.html').obsoleteSince =
+    '2026-01-01T00:00:00Z';
+  assert.throws(() => validateManifest(obsoleteActive), /Active files cannot be obsolete/);
 });
 
 test('HTTP retries are bounded, honor Retry-After, and never follow redirects', async () => {
@@ -575,7 +623,7 @@ test('cleanup only deletes checksum-verified old owned files and rejects another
   );
 });
 
-test('real publisher entry point persists independent deployments and ages removed routes and hashed assets safely', async (t) => {
+test('real publisher retains long-lived active assets for seven days after successful removal', async (t) => {
   const f = await fixture(t, 'app.old123.js');
   await mkdir(join(f.dist, 'retired'));
   await writeFile(join(f.dist, 'retired/index.html'), '<h1>Old route</h1>');
@@ -603,25 +651,38 @@ test('real publisher entry point persists independent deployments and ages remov
   }
   const first = await deploy();
   assert.equal(first.result.deleted, 0);
+  assert.ok(first.result.manifest.owned.every((file) => file.obsoleteSince === null));
+  t.mock.timers.setTime(Date.parse('2026-01-31T12:00:00Z'));
+  assert.deepEqual(
+    planDeployment(first.result.manifest, { previous: first.result.manifest }).cleanup,
+    [],
+  );
   await rm(join(f.dist, 'retired'), { recursive: true });
   await rm(join(f.dist, '_astro/app.old123.js'));
   await writeFile(join(f.dist, '_astro/app.second456.js'), 'second');
-  t.mock.timers.setTime(Date.parse('2026-01-02T00:00:00Z'));
   const second = await deploy();
   assert.equal(second.result.manifest.recentBuilds[1].buildId, first.result.manifest.buildId);
   assert.ok(second.result.manifest.owned.some((file) => file.path === 'retired/index.html'));
   assert.ok(storage.has('/website-zone/battery/retired/index.html'));
   assert.ok(storage.has('/website-zone/battery/_astro/app.old123.js'));
+  assert.equal(
+    second.result.manifest.owned.find((file) => file.path === '_astro/app.old123.js').obsoleteSince,
+    '2026-01-31T12:00:00.000Z',
+  );
   await rm(join(f.dist, '_astro/app.second456.js'));
   await writeFile(join(f.dist, '_astro/app.third789.js'), 'third');
-  t.mock.timers.setTime(Date.parse('2026-01-03T00:00:00Z'));
+  t.mock.timers.setTime(Date.parse('2026-01-31T12:05:00Z'));
   const third = await deploy();
   assert.equal(third.result.deleted, 0);
   assert.ok(storage.has('/website-zone/battery/retired/index.html'));
   assert.ok(storage.has('/website-zone/battery/_astro/app.old123.js'));
+  assert.equal(
+    third.result.manifest.owned.find((file) => file.path === '_astro/app.old123.js').obsoleteSince,
+    second.result.manifest.owned.find((file) => file.path === '_astro/app.old123.js').obsoleteSince,
+  );
   await rm(join(f.dist, '_astro/app.third789.js'));
   await writeFile(join(f.dist, '_astro/app.fourth012.js'), 'fourth');
-  t.mock.timers.setTime(Date.parse('2026-01-10T00:00:00Z'));
+  t.mock.timers.setTime(Date.parse('2026-02-08T12:00:00Z'));
   const fourth = await deploy();
   assert.equal(fourth.result.deleted, 3);
   assert.ok(!storage.has('/website-zone/battery/retired/index.html'));
@@ -636,6 +697,140 @@ test('real publisher entry point persists independent deployments and ages remov
   assert.equal(fourth.network.calls.filter((call) => call.method === 'POST').length, 2);
 });
 
+test('successful reintroduction clears obsolescence and a failed removal cannot start its next window', async (t) => {
+  const f = await fixture(t, 'app.old123.js');
+  await mkdir(join(f.root, '.artifacts'));
+  let storage = new Map();
+  const statePath = new URL(stateUrl(config)).pathname;
+  const oldPath = '/website-zone/battery/_astro/app.old123.js';
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-01-01T00:00:00Z') });
+  async function deploy(options = {}) {
+    const manifest = await createManifest(f.dist, provenance);
+    await writeFile(join(f.root, '.artifacts/deployment-manifest.json'), JSON.stringify(manifest));
+    const network = mockNetwork({ initialStorage: storage, ...options });
+    try {
+      return await runPublish({
+        root: f.root,
+        args: ['--publish'],
+        env,
+        http: network,
+        validatePolicy: async () => {},
+      });
+    } finally {
+      storage = new Map(network.storage);
+    }
+  }
+  await deploy();
+  await rm(join(f.dist, '_astro/app.old123.js'));
+  await writeFile(join(f.dist, '_astro/app.second456.js'), 'second');
+  t.mock.timers.setTime(Date.parse('2026-01-31T12:00:00Z'));
+  let result = await deploy();
+  assert.equal(
+    result.manifest.owned.find((file) => file.path === '_astro/app.old123.js').obsoleteSince,
+    '2026-01-31T12:00:00.000Z',
+  );
+  await rm(join(f.dist, '_astro/app.second456.js'));
+  await writeFile(join(f.dist, '_astro/app.old123.js'), 'export const ready = true;');
+  t.mock.timers.setTime(Date.parse('2026-02-01T12:00:00Z'));
+  result = await deploy();
+  assert.equal(
+    result.manifest.owned.find((file) => file.path === '_astro/app.old123.js').obsoleteSince,
+    null,
+  );
+  const activeState = storage.get(statePath);
+  await rm(join(f.dist, '_astro/app.old123.js'));
+  await writeFile(join(f.dist, '_astro/app.third789.js'), 'third');
+  t.mock.timers.setTime(Date.parse('2026-02-02T12:00:00Z'));
+  await assert.rejects(deploy({ smokeFailure: true }));
+  assert.deepEqual(storage.get(statePath), activeState);
+  assert.equal(
+    decodeState(activeState, config).owned.find((file) => file.path === '_astro/app.old123.js')
+      .obsoleteSince,
+    null,
+  );
+  t.mock.timers.setTime(Date.parse('2026-02-03T12:00:00Z'));
+  result = await deploy();
+  assert.equal(
+    result.manifest.owned.find((file) => file.path === '_astro/app.old123.js').obsoleteSince,
+    '2026-02-03T12:00:00.000Z',
+  );
+  await writeFile(join(f.dist, 'index.html'), '<h1>Website after another update</h1>');
+  t.mock.timers.setTime(Date.parse('2026-02-09T12:00:00Z'));
+  result = await deploy();
+  assert.ok(storage.has(oldPath));
+  assert.equal(
+    result.manifest.owned.find((file) => file.path === '_astro/app.old123.js').obsoleteSince,
+    '2026-02-03T12:00:00.000Z',
+  );
+  await writeFile(join(f.dist, 'index.html'), '<h1>Website after retention expiry</h1>');
+  t.mock.timers.setTime(Date.parse('2026-02-10T12:00:01Z'));
+  result = await deploy();
+  assert.ok(!storage.has(oldPath));
+  assert.ok(result.manifest.owned.every((file) => file.path !== '_astro/app.old123.js'));
+});
+
+test('legacy successful manifests migrate conservatively at the next successful publication', async (t) => {
+  const f = await fixture(t, 'app.old123.js');
+  await mkdir(join(f.root, '.artifacts'));
+  const initial = await createManifest(f.dist, provenance, { now: '2026-01-01T00:00:00Z' });
+  const orphan = { path: '_astro/legacy.orphan123.js', sha256: sha256('legacy orphan') };
+  const legacy = {
+    ...initial,
+    schemaVersion: 1,
+    publishedAt: '2026-01-01T00:00:00Z',
+    destination: destination(config),
+    owned: [...initial.owned, orphan].map(({ path, sha256 }) => ({
+      path,
+      sha256,
+      lastReferencedAt: '2000-01-01T00:00:00Z',
+    })),
+  };
+  const statePath = new URL(stateUrl(config)).pathname;
+  const orphanPath = '/website-zone/battery/' + orphan.path;
+  const oldPath = '/website-zone/battery/_astro/app.old123.js';
+  let storage = new Map([
+    [statePath, encodeState(legacy, config)],
+    [orphanPath, Buffer.from('legacy orphan')],
+    [oldPath, Buffer.from('export const ready = true;')],
+  ]);
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-01-31T12:00:00Z') });
+  async function deploy() {
+    const manifest = await createManifest(f.dist, provenance);
+    await writeFile(join(f.root, '.artifacts/deployment-manifest.json'), JSON.stringify(manifest));
+    const network = mockNetwork({ initialStorage: storage });
+    const result = await runPublish({
+      root: f.root,
+      args: ['--publish'],
+      env,
+      http: network,
+      validatePolicy: async () => {},
+    });
+    storage = new Map(network.storage);
+    return result;
+  }
+  await rm(join(f.dist, '_astro/app.old123.js'));
+  await writeFile(join(f.dist, '_astro/app.second456.js'), 'second');
+  let result = await deploy();
+  assert.equal(result.manifest.schemaVersion, 2);
+  assert.equal(result.deleted, 0);
+  assert.equal(
+    result.manifest.owned.find((file) => file.path === orphan.path).obsoleteSince,
+    '2026-01-31T12:00:00.000Z',
+  );
+  assert.ok(storage.has(orphanPath));
+  await writeFile(join(f.dist, 'index.html'), '<h1>Rapid update after migration</h1>');
+  t.mock.timers.setTime(Date.parse('2026-01-31T12:05:00Z'));
+  result = await deploy();
+  assert.equal(result.deleted, 0);
+  assert.ok(storage.has(orphanPath));
+  assert.ok(storage.has(oldPath));
+  await writeFile(join(f.dist, 'index.html'), '<h1>After conservative retention expiry</h1>');
+  t.mock.timers.setTime(Date.parse('2026-02-08T12:00:00Z'));
+  await deploy();
+  assert.ok(!storage.has(orphanPath));
+  assert.ok(!storage.has(oldPath));
+});
+
 test('missing, tampered or mismatched durable state cannot reset history or authorize cleanup', async (t) => {
   const f = await fixture(t);
   const manifest = await createManifest(f.dist, provenance);
@@ -647,11 +842,8 @@ test('missing, tampered or mismatched durable state cannot reset history or auth
   const statePath = new URL(stateUrl(config)).pathname;
   const signed = encodeState(prior, config);
   const altered = JSON.parse(signed);
-  altered.manifest.owned.push({
-    path: 'unrelated.txt',
-    sha256: 'f'.repeat(64),
-    lastReferencedAt: '2000-01-01',
-  });
+  altered.ciphertext =
+    (altered.ciphertext.startsWith('00') ? '01' : '00') + altered.ciphertext.slice(2);
   const otherConfig = { ...config, prefix: 'other-site' };
   const cases = [
     { storage: new Map(), config: { ...config, bootstrap: false }, error: /state is missing/ },
@@ -784,6 +976,348 @@ test('fresh guard resolves an annotated stable tag despite newer prereleases', a
     releaseId: 42,
   });
   assert.ok(network.calls.some((call) => call.url.includes('/git/tags/')));
+});
+
+test('initial publication resumes authenticated pending files after ordinary failures', async (t) => {
+  for (const stage of [
+    'pending-only',
+    'partial asset',
+    'partial HTML',
+    'checksum',
+    'purge',
+    'smoke',
+    'successful state write',
+  ]) {
+    await t.test(stage, async (t) => {
+      const f = await fixture(t);
+      await mkdir(join(f.root, '.artifacts'));
+      const manifest = await createManifest(f.dist, provenance);
+      await writeFile(
+        join(f.root, '.artifacts/deployment-manifest.json'),
+        JSON.stringify(manifest),
+      );
+      let sitePuts = 0;
+      const failed = mockNetwork({
+        failPut: (url) => {
+          if (!url.pathname.startsWith('/website-zone/battery/')) return false;
+          sitePuts++;
+          return (
+            (stage === 'pending-only' && sitePuts === 1) ||
+            (stage === 'partial asset' && sitePuts === 2) ||
+            (stage === 'partial HTML' && url.pathname.endsWith('/download/index.html'))
+          );
+        },
+        purgeFailure: stage === 'purge',
+        smokeFailure: stage === 'smoke',
+        stateFailure: stage === 'successful state write',
+      });
+      let checksumFailed = false;
+      const fetchFn = async (input, options = {}) => {
+        const response = await failed.fetchFn(input, options);
+        if (
+          stage === 'checksum' &&
+          !checksumFailed &&
+          (options.method || 'GET') === 'GET' &&
+          String(input).endsWith('/_astro/app.first123.js') &&
+          response.ok
+        ) {
+          checksumFailed = true;
+          return new Response('bad verification response');
+        }
+        return response;
+      };
+      await assert.rejects(
+        runPublish({
+          root: f.root,
+          args: ['--publish'],
+          env,
+          http: { ...failed, fetchFn },
+          validatePolicy: async () => {},
+        }),
+      );
+      const statePath = new URL(stateUrl(config)).pathname;
+      const pendingPath = new URL(stateUrl(config, { pending: true })).pathname;
+      assert.equal(failed.storage.has(statePath), false);
+      const pending = decodePending(failed.storage.get(pendingPath), config);
+      assert.equal(pending.manifest.publishedAt, null);
+      assert.equal(pending.manifest.buildId, manifest.buildId);
+      const uploaded = [...failed.storage.keys()].filter((path) =>
+        path.startsWith('/website-zone/battery/'),
+      );
+      if (stage === 'pending-only') assert.equal(uploaded.length, 0);
+      else assert.ok(uploaded.length > 0);
+      if (['purge', 'smoke', 'successful state write'].includes(stage))
+        assert.equal(uploaded.length, manifest.files.length);
+      const resumed = mockNetwork({ initialStorage: failed.storage });
+      const result = await runPublish({
+        root: f.root,
+        args: ['--publish'],
+        env,
+        http: resumed,
+        validatePolicy: async () => {},
+      });
+      assert.equal(result.status, 'published');
+      assert.equal(result.deleted, 0);
+      assert.equal(decodeState(resumed.storage.get(statePath), config).buildId, manifest.buildId);
+      assert.equal(resumed.calls.filter((call) => call.method === 'DELETE').length, 0);
+      const pendingPut = resumed.calls.findIndex(
+        (call) => call.method === 'PUT' && call.url === stateUrl(config, { pending: true }),
+      );
+      const filePut = resumed.calls.findIndex(
+        (call) =>
+          call.method === 'PUT' && new URL(call.url).pathname.startsWith('/website-zone/battery/'),
+      );
+      assert.ok(pendingPut >= 0 && pendingPut < filePut);
+    });
+  }
+});
+
+test('initial recovery accepts a fresh website or release only after verifying all earlier objects', async (t) => {
+  for (const change of ['website', 'release']) {
+    await t.test(change, async (t) => {
+      const f = await fixture(t, 'app.old123.js');
+      await mkdir(join(f.root, '.artifacts'));
+      const artifact = join(f.root, '.artifacts/deployment-manifest.json');
+      const firstManifest = await createManifest(f.dist, provenance);
+      await writeFile(artifact, JSON.stringify(firstManifest));
+      let puts = 0;
+      const first = mockNetwork({
+        failPut: (url) => url.pathname.startsWith('/website-zone/battery/') && ++puts === 3,
+      });
+      await assert.rejects(
+        runPublish({
+          root: f.root,
+          args: ['--publish'],
+          env,
+          http: first,
+          validatePolicy: async () => {},
+        }),
+      );
+      const next = structuredClone(provenance);
+      if (change === 'website') next.websiteCommit = 'd'.repeat(40);
+      else {
+        next.appCommit = 'e'.repeat(40);
+        next.releaseId = 43;
+        next.tag = 'v2.1.0';
+        next.version = '2.1.0';
+        next.publishedAt = '2026-02-01T00:00:00Z';
+        next.releaseAssets.apk = {
+          ...next.releaseAssets.apk,
+          id: 4,
+          name: 'battery-monitor-2.1.0.apk',
+          url: 'https://github.com/tswistak/Battery-Monitor/releases/download/v2.1.0/battery-monitor-2.1.0.apk',
+        };
+        await writeFile(join(f.dist, 'download/index.html'), '<h1>Get Battery Monitor 2.1.0</h1>');
+      }
+      await rm(join(f.dist, '_astro/app.old123.js'));
+      await writeFile(join(f.dist, '_astro/app.new456.js'), 'new asset');
+      await writeFile(join(f.dist, 'index.html'), '<h1>Updated Battery Monitor</h1>');
+      const manifest = await createManifest(f.dist, next);
+      await writeFile(artifact, JSON.stringify(manifest));
+      const resumed = mockNetwork({ initialStorage: first.storage, currentProvenance: next });
+      const result = await runPublish({
+        root: f.root,
+        args: ['--publish'],
+        env,
+        http: resumed,
+        validatePolicy: async () => {},
+      });
+      assert.deepEqual(result.manifest.provenance, next);
+      const old = result.manifest.owned.find((file) => file.path === '_astro/app.old123.js');
+      assert.equal(old.obsoleteSince, result.manifest.publishedAt);
+      assert.ok(resumed.storage.has('/website-zone/battery/_astro/app.old123.js'));
+      assert.equal(result.manifest.recentBuilds.length, 1);
+      assert.equal(result.deleted, 0);
+    });
+  }
+});
+
+test('pending recovery rejects unknown objects, conflicting bytes and untrusted state before mutation', async (t) => {
+  const f = await fixture(t);
+  await mkdir(join(f.root, '.artifacts'));
+  const manifest = await createManifest(f.dist, provenance);
+  await writeFile(join(f.root, '.artifacts/deployment-manifest.json'), JSON.stringify(manifest));
+  let puts = 0;
+  const first = mockNetwork({
+    failPut: (url) => url.pathname.startsWith('/website-zone/battery/') && ++puts === 2,
+  });
+  await assert.rejects(
+    runPublish({
+      root: f.root,
+      args: ['--publish'],
+      env,
+      http: first,
+      validatePolicy: async () => {},
+    }),
+  );
+  const pendingPath = new URL(stateUrl(config, { pending: true })).pathname;
+  const valid = decodePending(first.storage.get(pendingPath), config);
+  const otherConfig = { ...config, prefix: 'another-site' };
+  const tampered = JSON.parse(first.storage.get(pendingPath));
+  tampered.tag = '0'.repeat(32);
+  const cases = [
+    new Map([...first.storage, ['/website-zone/battery/unrelated.txt', Buffer.from('unrelated')]]),
+    new Map([
+      ...first.storage,
+      ['/website-zone/battery/_astro/app.first123.js', Buffer.from('conflicting bytes')],
+    ]),
+    new Map([...first.storage, [pendingPath, Buffer.from(JSON.stringify(tampered))]]),
+    new Map([
+      ...first.storage,
+      [
+        pendingPath,
+        encodePending({ ...valid, destination: destination(otherConfig) }, otherConfig),
+      ],
+    ]),
+  ];
+  for (const storage of cases) {
+    const failed = mockNetwork({ initialStorage: storage });
+    await assert.rejects(
+      runPublish({
+        root: f.root,
+        args: ['--publish'],
+        env,
+        http: failed,
+        validatePolicy: async () => {},
+      }),
+    );
+    assert.equal(failed.calls.filter((call) => ['PUT', 'DELETE'].includes(call.method)).length, 0);
+    assert.deepEqual(failed.storage, storage);
+  }
+  const emptyDirectory = mockNetwork();
+  const fetchFn = (input, options) =>
+    String(input).endsWith('/website-zone/battery/')
+      ? json([{ ObjectName: 'unknown-directory', IsDirectory: true, Length: 0 }])
+      : emptyDirectory.fetchFn(input, options);
+  await assert.rejects(
+    runPublish({
+      root: f.root,
+      args: ['--publish'],
+      env,
+      http: { ...emptyDirectory, fetchFn },
+      validatePolicy: async () => {},
+    }),
+    /empty website destination/,
+  );
+  assert.equal(emptyDirectory.calls.filter((call) => call.method === 'PUT').length, 0);
+});
+
+test('new state is encrypted and typed, legacy signed state migrates, and successful state retires pending authority', async (t) => {
+  const f = await fixture(t);
+  await mkdir(join(f.root, '.artifacts'));
+  const manifest = await createManifest(f.dist, provenance);
+  await writeFile(join(f.root, '.artifacts/deployment-manifest.json'), JSON.stringify(manifest));
+  const first = mockNetwork();
+  const result = await runPublish({
+    root: f.root,
+    args: ['--publish'],
+    env,
+    http: first,
+    validatePolicy: async () => {},
+  });
+  const statePath = new URL(stateUrl(config)).pathname;
+  const encrypted = first.storage.get(statePath);
+  const text = encrypted.toString('utf8');
+  for (const value of [
+    'manifest',
+    config.zone,
+    config.websiteUrl,
+    provenance.websiteCommit,
+    ...result.manifest.files.map((file) => file.path),
+  ])
+    assert.equal(text.includes(value), false);
+  assert.throws(() => decodePending(encrypted, config), /Invalid signed/);
+  assert.throws(
+    () =>
+      decodeState(first.storage.get(new URL(stateUrl(config, { pending: true })).pathname), config),
+    /Invalid signed/,
+  );
+  const legacyManifest = {
+    ...result.manifest,
+    schemaVersion: 1,
+    owned: result.manifest.owned.map((entry) => ({
+      path: entry.path,
+      sha256: entry.sha256,
+      lastReferencedAt: result.manifest.publishedAt,
+    })),
+  };
+  const legacy = Buffer.from(
+    JSON.stringify({
+      schemaVersion: 1,
+      owner: legacyManifest.owner,
+      manifest: legacyManifest,
+      signature: createHmac('sha256', config.stateKey)
+        .update(JSON.stringify(legacyManifest))
+        .digest('hex'),
+    }),
+  );
+  assert.deepEqual(decodeState(legacy, config), legacyManifest);
+  first.storage.set(statePath, legacy);
+  first.storage.set(
+    new URL(stateUrl(config, { pending: true })).pathname,
+    Buffer.from('retired corrupt pending data'),
+  );
+  const migrated = mockNetwork({ initialStorage: first.storage });
+  const completed = await runPublish({
+    root: f.root,
+    args: ['--publish'],
+    env: { ...env, WEBSITE_DEPLOY_BOOTSTRAP: 'false' },
+    http: migrated,
+    validatePolicy: async () => {},
+  });
+  assert.equal(completed.manifest.schemaVersion, 2);
+  assert.equal(JSON.parse(migrated.storage.get(statePath)).schemaVersion, 2);
+  assert.equal(
+    migrated.calls.some((call) => call.url === stateUrl(config, { pending: true })),
+    false,
+  );
+  const publicDestination = mockNetwork({ publicState: true });
+  await assert.rejects(
+    runPublish({
+      root: f.root,
+      args: ['--publish'],
+      env,
+      http: publicDestination,
+      validatePolicy: async () => {},
+    }),
+    /publicly accessible/,
+  );
+  assert.equal(
+    [...publicDestination.storage.keys()].some((path) => path.startsWith('/website-zone/battery/')),
+    false,
+  );
+  const collisionEnv = { ...env, BUNNY_STORAGE_ZONE: 'website-deploy-state' };
+  const collisionConfig = configFromEnv(collisionEnv, { publishing: true });
+  const collision = mockNetwork();
+  let probes = 0;
+  const fetchFn = (input, options = {}) => {
+    const url = new URL(input);
+    if (url.origin === new URL(env.WEBSITE_URL).origin) {
+      probes++;
+      assert.equal(
+        url.pathname,
+        `/website-deploy-state/${sha256(JSON.stringify(destination(collisionConfig)))}.pending.json`,
+      );
+      assert.equal(options.headers?.AccessKey, undefined);
+      return new Response(null, { status: 200 });
+    }
+    return collision.fetchFn(input, options);
+  };
+  await assert.rejects(
+    runPublish({
+      root: f.root,
+      args: ['--publish'],
+      env: collisionEnv,
+      http: { ...collision, fetchFn },
+      validatePolicy: async () => {},
+    }),
+    /publicly accessible/,
+  );
+  assert.equal(probes, 1);
+  assert.equal(
+    [...collision.storage.keys()].some((path) => path.startsWith('/website-deploy-state/battery/')),
+    false,
+  );
 });
 
 test('smoke checks enforce stable version, required assets, headers and actual 404', async (t) => {
