@@ -127,7 +127,9 @@ internal fun MonitorOperationScreen(
                                     .semantics { selected = highlighted }
                                     .then(
                                         if (checked == null) Modifier.clickable(
-                                            enabled = enabled, onClick = action.onClick
+                                            enabled = enabled,
+                                            role = Role.Button,
+                                            onClick = action.onClick
                                         )
                                         else Modifier.toggleable(
                                             checked,

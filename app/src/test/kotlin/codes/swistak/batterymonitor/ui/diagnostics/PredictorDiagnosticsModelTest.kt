@@ -189,7 +189,7 @@ class PredictorDiagnosticsModelTest {
             ), group.rows.take(4).map { it.label })
         assertEquals(values.map(Float::toString), group.rows.take(4).map { it.rawValue })
         assertTrue(group.rows.take(4).all { it.unit == "ms per percentage point" })
-        assertTrue(group.rows.all { it.observedAtMillis == 42L })
+        assertTrue(group.rows.all { it.observedAtMillis == 0L && it.checkedAtMillis == 42L })
         assertEquals("2", group.rows.last().rawValue)
     }
 

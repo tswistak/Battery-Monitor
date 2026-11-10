@@ -179,6 +179,16 @@ internal class PrivilegedBatteryReader(
 
     fun read(): PrivilegedBatteryReading? = readInternal(null)
 
+    fun cached(): PrivilegedBatteryReading? {
+        val capturedRevision = accessRevision()
+        val reading = synchronized(lock) {
+            cache.takeIf {
+                enabled() && revision == capturedRevision && clock() - cachedAtMillis in 0..CACHE_TTL_MS
+            }
+        }
+        return reading?.takeIf { enabled() && capturedRevision == accessRevision() }
+    }
+
     fun readWhenReady(allowCached: Boolean = true, onResult: (PrivilegedBatteryReading?) -> Unit) {
         readInternal(onResult, allowCached)
     }

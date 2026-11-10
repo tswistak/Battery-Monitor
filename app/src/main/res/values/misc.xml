@@ -6,7 +6,7 @@
         <item>@string/chip_switching_interval_10_seconds</item>
         <item>@string/chip_switching_interval_15_seconds</item>
         <item>@string/chip_switching_interval_30_seconds</item>
-        <item>@string/custom</item>
+        <item>@string/chip_switching_interval_custom</item>
     </string-array>
 
     <string-array name="chip_switching_interval_values" translatable="false">

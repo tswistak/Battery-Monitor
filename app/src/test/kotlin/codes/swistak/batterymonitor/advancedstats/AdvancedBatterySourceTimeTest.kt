@@ -171,5 +171,39 @@ class AdvancedBatterySourceTimeTest {
         assertNull(snapshot.currentAverageUa)
         assertNull(snapshot.sourceReadTimes["BatteryManager / BATTERY_PROPERTY_CAPACITY"])
         assertNull(snapshot.sourceReadTimes["BatteryManager / computeChargeTimeRemaining"])
+        assertEquals(
+            starts[BatteryManager.BATTERY_PROPERTY_CURRENT_AVERAGE],
+            snapshot.checks["current_average"]?.time
+        )
+        assertEquals(false, snapshot.checks["current_average"]?.failed)
+        assertEquals(
+            starts[BatteryManager.BATTERY_PROPERTY_CAPACITY], snapshot.checks["capacity"]?.time
+        )
+        assertEquals(true, snapshot.checks["capacity"]?.failed)
+        assertNull(snapshot.checks["charging_policy"])
+    }
+
+    @Test
+    fun `unavailable APIs and cancelled acquisition do not acquire attempt times`() {
+        val snapshot = AdvancedBatterySnapshot()
+        AdvancedBatteryStatsCollector.collectBatteryManagerReadings(
+            snapshot,
+            { Int.MIN_VALUE },
+            { Long.MIN_VALUE },
+            getChargeTimeRemaining = { error("Unavailable API must not be invoked") },
+            chargeTimeAvailable = false,
+            now = { BatteryMeasurementTime(100, 10) })
+        assertNull(snapshot.checks["charge_time_remaining"])
+        assertNull(snapshot.checks["BatteryManager / computeChargeTimeRemaining"])
+        try {
+            Thread.currentThread().interrupt()
+            snapshot.recordCheck(
+                "cancelled", listOf("current_now"), BatteryMeasurementTime(200, 20), true
+            )
+            assertNull(snapshot.checks["cancelled"])
+            assertEquals(100L, snapshot.checks["current_now"]?.time?.wallMillis)
+        } finally {
+            Thread.interrupted()
+        }
     }
 }

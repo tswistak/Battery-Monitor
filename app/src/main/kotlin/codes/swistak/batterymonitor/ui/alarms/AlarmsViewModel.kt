@@ -63,7 +63,7 @@ internal data class AlarmsState(
     val busy: Boolean = false,
     val readError: String? = null,
     val error: String? = null,
-    val notice: String? = null,
+    val notice: Int? = null,
     val draft: AlarmDraft? = null,
     val draftConflict: Boolean = false,
     val collisionId: Int? = null,
@@ -152,7 +152,7 @@ internal class AlarmsViewModel(
         }
         val rule = state.value.rules.find { it.id == id }
         if (rule == null || !validStoredAlarm(rule)) {
-            mutableState.update { it.copy(notice = text(R.string.alarms_missing_rule)) }
+            mutableState.update { it.copy(notice = R.string.alarms_missing_rule) }
             return
         }
         mutableState.update { it.copy(revealType = rule.type, revealId = id) }
@@ -218,6 +218,7 @@ internal class AlarmsViewModel(
     }
 
     fun discardDraft() {
+        if (state.value.busy) return
         savedState.remove<Bundle>("alarm_draft")
         savedState.remove<Bundle>("alarm_original")
         originalDraft = null
@@ -272,7 +273,7 @@ internal class AlarmsViewModel(
     fun clearReveal() = mutableState.update { it.copy(revealType = null, revealId = null) }
     fun clearNotice() = mutableState.update { it.copy(notice = null) }
     fun reportSettingsFailure() =
-        mutableState.update { it.copy(notice = text(R.string.alarms_settings_unavailable)) }
+        mutableState.update { it.copy(notice = R.string.alarms_settings_unavailable) }
 
     fun setDismissLowBatteryOnRecovery(enabled: Boolean, onChanged: () -> Unit) {
         if (state.value.busy) return
@@ -302,10 +303,11 @@ internal class AlarmsViewModel(
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) { runCatching { withDatabase(operation) } }
             result.fold(onSuccess = {
-                mutableState.update { it.copy(busy = false, notice = text(R.string.alarms_saved)) }
-                runCatching(onSuccess).onFailure {
-                    mutableState.update { it.copy(notice = text(R.string.alarms_saved_reload_failed)) }
-                }
+                mutableState.update { it.copy(busy = false) }
+                val notice = runCatching(onSuccess).fold(
+                    onSuccess = { R.string.alarms_saved },
+                    onFailure = { R.string.alarms_saved_reload_failed })
+                mutableState.update { it.copy(notice = notice) }
                 refresh()
             }, onFailure = { failure ->
                 mutableState.update { old ->

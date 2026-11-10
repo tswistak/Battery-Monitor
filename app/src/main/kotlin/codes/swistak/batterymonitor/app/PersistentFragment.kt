@@ -13,14 +13,11 @@
 */
 package codes.swistak.batterymonitor.app
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -28,7 +25,6 @@ import android.os.Message
 import android.os.Messenger
 import android.os.RemoteException
 import android.util.Log
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import codes.swistak.batterymonitor.R
@@ -208,16 +204,10 @@ class PersistentFragment : Fragment() {
 
     private fun startServiceIfNeeded() {
         if (!BackgroundServiceWatchdog.isServiceDesired(requireContext())) return
-        if (Build.VERSION.SDK_INT < 33 || ContextCompat.checkSelfPermission(
-                requireActivity(), Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            val selfHealRequested = BackgroundServiceWatchdog.selfHealIfNeeded(requireContext())
-            if ((!serviceConnected || serviceConnection?.serviceMessenger == null) && !selfHealRequested) {
-                BatteryInfoService.startForegroundServiceSafely(requireContext())
-            }
+        val selfHealRequested = BackgroundServiceWatchdog.selfHealIfNeeded(requireContext())
+        if ((!serviceConnected || serviceConnection?.serviceMessenger == null) && !selfHealRequested) {
+            BatteryInfoService.startForegroundServiceSafely(requireContext())
         }
-        // A notification denial must not disconnect the UI from an existing monitor.
         bindService()
     }
 

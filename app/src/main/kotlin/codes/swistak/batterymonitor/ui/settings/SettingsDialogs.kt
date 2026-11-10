@@ -259,7 +259,7 @@ private fun NumberDialog(dialog: SettingsDialog.Number, onDismiss: () -> Unit) {
     NumericValueDialog(
         label = dialog.title,
         fieldLabel = stringResource(R.string.settings_numeric_value),
-        message = dialog.message,
+        supportingText = dialog.message,
         unit = "",
         initialValue = dialog.initial,
         min = dialog.min,

@@ -18,7 +18,6 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
-import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
@@ -222,7 +221,8 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
                     val timedOut = android.os.SystemClock.elapsedRealtime() > deadline
                     publish {
                         copy(
-                            appRaw = if (timedOut) appRaw else raw ?: appRaw,
+                            appRaw = if (timedOut) appRaw else raw?.retainFailedReadingsFrom(appRaw)
+                                ?: appRaw,
                             rawLoading = false,
                             rawStatus = if (timedOut) R.string.diag_timeout else if (raw == null) R.string.diag_status_no_stats else 0
                         )
@@ -233,20 +233,6 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
             name = "diagnostics-app-raw"
             start()
         }
-    }
-
-    fun setPrivilegedEnabled(enabled: Boolean) {
-        preferences.edit { putBoolean(SettingsContract.KEY_USE_PRIVILEGED_ACCESS, enabled) }
-        PrivilegedAccess.setEnabled(enabled)
-        publish { copy(privilegedEnabled = enabled, advanced = null, status = 0, stale = false) }
-        resetAndRefresh()
-    }
-
-    private fun resetAndRefresh() {
-        loadGeneration++
-        cancelActiveConnection()
-        loadState = LoadState.IDLE
-        refreshStats()
     }
 
     fun refreshStats() {
@@ -268,7 +254,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
                 runCatching { AdvancedBatteryStatsCollector.collectBasic(getApplication()) }.getOrNull()
             mainHandler.post {
                 if (generation != loadGeneration || !active) return@post
-                publish { copy(basic = basic ?: this.basic) }
+                publish { copy(basic = basic?.retainFailedReadingsFrom(this.basic) ?: this.basic) }
                 if (canLoadPrivileged(generation)) loadPrivileged(generation)
                 else {
                     loadState = LoadState.IDLE
@@ -403,7 +389,7 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
             if (!snapshot.hasStats()) {
                 publish {
                     copy(
-                        advanced = advanced ?: snapshot,
+                        advanced = advanced?.retainingWithChecksFrom(snapshot) ?: snapshot,
                         status = R.string.diag_status_no_stats,
                         stale = advanced != null,
                         loading = false
@@ -412,7 +398,14 @@ internal class DiagnosticsViewModel(application: Application) : AndroidViewModel
                 return@post
             }
 
-            publish { copy(advanced = snapshot, status = 0, stale = false, loading = false) }
+            publish {
+                copy(
+                    advanced = snapshot.retainFailedReadingsFrom(advanced),
+                    status = 0,
+                    stale = false,
+                    loading = false
+                )
+            }
         }
     }
 

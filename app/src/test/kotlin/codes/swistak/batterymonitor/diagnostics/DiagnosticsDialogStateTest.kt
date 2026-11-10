@@ -90,37 +90,37 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun `capture cannot start twice and limited discovery shows one hint`() {
+    fun `each capture finishes without opening a dialog`() {
         val state = DiagnosticsDialogState()
-        assertTrue(state.beginCapture())
-        assertFalse(state.beginCapture())
-        state.finishCapture(true)
-        assertFalse(state.capturing)
-        assertEquals(DiagnosticsDialog.PRIVILEGED_HINT, state.dialog)
-        state.offerPrivilegedHint()
-        state.dismiss()
-        assertNull(state.dialog)
+        repeat(2) {
+            assertTrue(state.beginCapture())
+            assertFalse(state.beginCapture())
+            state.finishCapture()
+            assertFalse(state.capturing)
+            assertNull(state.dialog)
+        }
     }
 
     @Test
-    fun `asynchronous hint waits for existing dialog instead of overlapping it`() {
+    fun `capture completion preserves an existing dialog without deferring another`() {
         val state = DiagnosticsDialogState()
         state.open(DiagnosticsDialog.MONITOR_REPORT)
-        state.finishCapture(true)
+        state.beginCapture()
+        state.finishCapture()
         assertEquals(DiagnosticsDialog.MONITOR_REPORT, state.dialog)
         state.dismiss()
-        assertEquals(DiagnosticsDialog.PRIVILEGED_HINT, state.dialog)
-        state.dismiss()
         assertNull(state.dialog)
+        assertFalse(state.capturing)
     }
 
     @Test
-    fun `successful unrestricted capture does not show a privileged hint`() {
+    fun `obsolete restored privileged hint is ignored`() {
         val state = DiagnosticsDialogState()
-        state.beginCapture()
-        state.finishCapture(false)
+        state.restore("PRIVILEGED_HINT", null)
         assertNull(state.dialog)
         assertFalse(state.capturing)
+        state.open(DiagnosticsDialog.CHARGING_CONDITION)
+        assertEquals(DiagnosticsDialog.CHARGING_CONDITION, state.dialog)
     }
 
     @Test
@@ -133,10 +133,8 @@ class DiagnosticsDialogStateTest {
         assertEquals(DiagnosticsDialog.CHARGING_CONDITION, restored.dialog)
         assertEquals(3, restored.selectedCondition)
         assertFalse(restored.capturing)
-        restored.offerPrivilegedHint()
-        assertEquals(DiagnosticsDialog.CHARGING_CONDITION, restored.dialog)
         restored.dismiss()
-        assertEquals(DiagnosticsDialog.PRIVILEGED_HINT, restored.dialog)
+        assertNull(restored.dialog)
     }
 
     @Test
@@ -147,17 +145,4 @@ class DiagnosticsDialogStateTest {
         assertNull(state.selectedCondition)
     }
 
-    @Test
-    fun `hint acknowledged on another diagnostics screen is not shown again`() {
-        val state = DiagnosticsDialogState()
-        state.offerPrivilegedHint()
-        state.clearPrivilegedHint()
-        assertNull(state.dialog)
-        state.open(DiagnosticsDialog.MONITOR_REPORT)
-        state.offerPrivilegedHint()
-        state.clearPrivilegedHint()
-        assertEquals(DiagnosticsDialog.MONITOR_REPORT, state.dialog)
-        state.dismiss()
-        assertNull(state.dialog)
-    }
 }

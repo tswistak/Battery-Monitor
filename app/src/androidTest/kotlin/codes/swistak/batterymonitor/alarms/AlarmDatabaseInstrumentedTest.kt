@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.platform.app.InstrumentationRegistry
+import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.backup.AlarmBackup
 import codes.swistak.batterymonitor.alarms.backup.Version2AlarmImporter
 import codes.swistak.batterymonitor.ui.alarms.AlarmDraft
@@ -408,6 +409,9 @@ class AlarmDatabaseInstrumentedTest {
         }
         idle(model)
         assertEquals(1, reloads.get())
+        assertEquals(R.string.alarms_saved, model.state.value.notice)
+        main { model.clearNotice() }
+        assertNull(model.state.value.notice)
         assertTrue(rows().single().enabled)
         val group = group("charge_drops")
         main { model.setEnabled(group.type, group, false) { reloads.incrementAndGet() } }
@@ -421,12 +425,65 @@ class AlarmDatabaseInstrumentedTest {
         }
         idle(model)
         assertEquals(3, reloads.get())
+        assertEquals(R.string.alarms_saved, model.state.value.notice)
         assertFalse(rows().single().enabled)
         assertEquals(group.id, rows().single().id)
         assertEquals("19", rows().single().threshold)
         main { model.refresh() }
         idle(model)
         assertEquals(3, reloads.get())
+    }
+
+    @Test
+    fun successful_commit_with_failed_reload_emits_only_the_truthful_warning() {
+        val model = model()
+        main { model.refresh() }
+        idle(model)
+        main {
+            model.beginThreshold("charge_drops", false, Locale.US)
+            model.changeDraftInput("17")
+            model.saveDraft { error("Injected reload failure") }
+        }
+        idle(model)
+        assertEquals("17", rows().single().threshold)
+        assertEquals(R.string.alarms_saved_reload_failed, model.state.value.notice)
+        assertNull(model.state.value.draft)
+        main {
+            model.clearNotice()
+            model.reportSettingsFailure()
+        }
+        assertEquals(R.string.alarms_settings_unavailable, model.state.value.notice)
+    }
+
+    @Test
+    fun discarding_add_edit_and_invalid_drafts_clears_restoration_without_mutating_alarms() {
+        database.saveThreshold("charge_drops", "17", emptyList())
+        val saved = group("charge_drops")
+        database.setLogicalEnabled(saved.type, saved.members, false)
+        val original = rows()
+        val handle = SavedStateHandle()
+        val model = model(handle)
+        main { model.refresh() }
+        idle(model)
+        for ((edit, input) in listOf(false to "19", true to "20", false to "", true to "")) {
+            main {
+                if (edit) model.beginDraft(saved.id, false, Locale.US)
+                else model.beginThreshold("charge_drops", false, Locale.US)
+                model.changeDraftInput(input)
+                model.discardDraft()
+            }
+            assertEquals(original, rows())
+            assertNull(model.state.value.draft)
+            assertNull(model.state.value.notice)
+            assertNull(model.state.value.error)
+            assertNull(model.state.value.collisionId)
+            assertFalse(model.state.value.draftConflict)
+            assertFalse(model.hasUnsavedChanges)
+            assertNull(model(handle).state.value.draft)
+        }
+        main { model.beginDraft(saved.id, false, Locale.US) }
+        assertEquals("17", model.state.value.draft!!.thresholdInput)
+        assertFalse(model.state.value.draft!!.enabled)
     }
 
     @Test

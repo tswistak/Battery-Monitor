@@ -92,6 +92,51 @@ class DialogEditingInstrumentedTest {
     }
 
     @Test
+    fun persistent_numeric_guidance_keeps_error_semantics_and_blocks_invalid_keyboard_commits() =
+        withHost {
+            val visible = mutableStateOf(true)
+            val saved = mutableListOf<Int>()
+            val guidance = "Synthetic interval guidance: 1–3600."
+            show {
+                if (visible.value) NumericValueDialog(
+                    label = "Interval fixture",
+                    fieldLabel = "Value",
+                    unit = "",
+                    initialValue = 7,
+                    min = 1,
+                    max = 3600,
+                    step = 1,
+                    saveLabel = "Save",
+                    cancelLabel = "Cancel",
+                    errorMessage = { "Synthetic error" },
+                    supportingText = guidance,
+                    onSave = {
+                        saved += it
+                        visible.value = false
+                    },
+                    onCancel = { visible.value = false })
+            }
+
+            assertGuidanceAndValidation(guidance, invalid = false)
+            for (invalid in listOf("", "abc", "0", "3601")) {
+                input(invalid)
+                await { saveDisabled() }
+                assertGuidanceAndValidation(guidance, invalid = true)
+                main { field().config[SemanticsActions.OnImeAction].action?.invoke() }
+                assertTrue(saved.isEmpty())
+            }
+            restoreComposition()
+            main { assertEquals("3601", field().config[SemanticsProperties.EditableText].text) }
+            assertGuidanceAndValidation(guidance, invalid = true)
+            input("3600")
+            await { !saveDisabled() }
+            assertGuidanceAndValidation(guidance, invalid = false)
+            main { assertTrue(field().config[SemanticsActions.OnImeAction].action?.invoke() == true) }
+            await { dialogs() == 0 }
+            assertEquals(listOf(3600), saved)
+        }
+
+    @Test
     fun numeric_draft_restores_and_cancel_or_back_never_commits() = withHost {
         val visible = mutableStateOf(true)
         var saved: Int? = null
@@ -136,7 +181,7 @@ class DialogEditingInstrumentedTest {
             }, onSave = {}, onDelete = {
                 deleted++
                 state.value = state.value.copy(draft = null)
-            }, onDismiss = {}, onEditExisting = {}, onRetry = {})
+            }, onDismiss = {}, onCancel = {}, onEditExisting = {}, onRetry = {})
         }
         input("91")
         click(target.getString(R.string.menu_delete_alarm))
@@ -157,6 +202,56 @@ class DialogEditingInstrumentedTest {
         await { dialogs() == 0 }
         assertEquals(1, deleted)
     }
+
+    @Test
+    fun explicit_alarm_cancel_discards_add_edit_and_invalid_drafts_without_guarded_dismissal() =
+        withHost {
+            val state = mutableStateOf(AlarmsState(hasSnapshot = true, loading = false))
+            var guardedDismissals = 0
+            var cancellations = 0
+            fixture = {
+                ThresholdDialog(
+                    state = state.value,
+                    onInput = { input ->
+                        state.value = state.value.copy(
+                            draft = editThresholdInput(requireNotNull(state.value.draft), input)
+                        )
+                    },
+                    onSave = { error("Cancel must not save") },
+                    onDelete = { error("Cancel must not delete") },
+                    onDismiss = { guardedDismissals++ },
+                    onCancel = {
+                        cancellations++
+                        state.value = state.value.copy(
+                            draft = null, collisionId = null, draftConflict = false
+                        )
+                    },
+                    onEditExisting = {},
+                    onRetry = {})
+            }
+            for ((id, typedInput) in listOf(null to "91", 7 to "92", null to "", 7 to "")) {
+                main {
+                    state.value = state.value.copy(
+                        draft = AlarmDraft(
+                            id = id,
+                            type = "charge_rises",
+                            threshold = "80",
+                            thresholdInput = "80",
+                            initialInput = "80",
+                            inputLocale = "en-US"
+                        )
+                    )
+                }
+                render()
+                await { dialogs() == 1 }
+                input(typedInput)
+                click(target.getString(R.string.cancel))
+                await { dialogs() == 0 }
+                assertNull(state.value.draft)
+            }
+            assertEquals(4, cancellations)
+            assertEquals(0, guardedDismissals)
+        }
 
     @Composable
     private fun Numeric(onSave: (Int) -> Unit, onCancel: () -> Unit) {
@@ -261,6 +356,19 @@ class DialogEditingInstrumentedTest {
         var disabled = false
         main { disabled = button("Save").config.contains(SemanticsProperties.Disabled) }
         return disabled
+    }
+
+    @Suppress("SameParameterValue")
+    private fun assertGuidanceAndValidation(guidance: String, invalid: Boolean) {
+        main {
+            assertTrue(nodes().any {
+                it.config.getOrNull(SemanticsProperties.Text)?.any { text ->
+                    text.text == guidance
+                } == true
+            })
+            assertEquals(invalid, field().config.contains(SemanticsProperties.Error))
+            assertEquals(invalid, button("Save").config.contains(SemanticsProperties.Disabled))
+        }
     }
 
     private fun click(text: String) {

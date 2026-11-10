@@ -20,6 +20,9 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
+import java.util.concurrent.atomic.AtomicInteger
+import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
@@ -198,26 +201,89 @@ class DiagnosticsDialogsInstrumentedTest {
     }
 
     @Test
-    fun stop_cancellation_and_queued_privileged_hint_use_one_dialog_in_both_hosts() {
+    fun old_pending_hint_and_capture_completion_do_not_open_or_replace_dialogs() {
         for (actionsOnly in listOf(false, true)) withHost(actionsOnly) {
             val monitoring = BackgroundServiceWatchdog.isServiceDesired(context)
             val snapshots = ChargingDiagnosticStore.read(context).size
-            main { fragment.monitorActions.getValue("monitor_stop").onClick() }
-            await { dialogs() == 1 }
-            main { assertTrue(hasText(context.getString(R.string.diag_stop_monitor_body))) }
-
             preferences().edit().putBoolean(PENDING_HINT, true).commit()
-            main { state.finishCapture(true) }
+            main {
+                state.restore("PRIVILEGED_HINT", null)
+                activity.supportFragmentManager.beginTransaction()
+                    .setMaxLifecycle(fragment, Lifecycle.State.STARTED).commitNow()
+                activity.supportFragmentManager.beginTransaction()
+                    .setMaxLifecycle(fragment, Lifecycle.State.RESUMED).commitNow()
+                repeat(2) {
+                    assertTrue(state.beginCapture())
+                    state.finishCapture()
+                    assertNull(state.dialog)
+                }
+            }
+            await { dialogs() == 0 }
+            main {
+                fragment.monitorActions.getValue("monitor_stop").onClick()
+                state.finishCapture()
+            }
+            await { dialogs() == 1 }
             assertEquals(DiagnosticsDialog.STOP_MONITORING, state.dialog)
             click(R.string.cancel)
-            await { state.dialog == DiagnosticsDialog.PRIVILEGED_HINT && dialogs() == 1 }
-            main { assertTrue(hasText(context.getString(R.string.charging_diagnostics_privileged_hint))) }
-            click(R.string.okay)
             await { dialogs() == 0 }
             assertNull(state.dialog)
-            assertFalse(preferences().getBoolean(PENDING_HINT, false))
+            assertTrue(preferences().getBoolean(PENDING_HINT, false))
             assertEquals(monitoring, BackgroundServiceWatchdog.isServiceDesired(context))
             assertEquals(snapshots, ChargingDiagnosticStore.read(context).size)
+        }
+    }
+
+    @Test
+    fun app_operation_refresh_checks_database_once_and_ignores_results_after_pause() {
+        val monitoring = BackgroundServiceWatchdog.isServiceDesired(context)
+        try {
+            assertTrue(MonitoringDesiredState.write(context, false))
+            withHost(actionsOnly = true) {
+                preferences().edit().putBoolean(SettingsContract.KEY_ENABLE_LOGGING, false).commit()
+                val skipped = AtomicInteger()
+                main { fragment.refreshAppOperation { skipped.incrementAndGet() } }
+                assertEquals(1, skipped.get())
+                assertFalse(fragment.appOperationRefreshing)
+                assertFalse(BackgroundServiceWatchdog.isServiceDesired(context))
+                assertFalse(preferences().getBoolean(SettingsContract.KEY_ENABLE_LOGGING, true))
+
+                preferences().edit().putBoolean(SettingsContract.KEY_ENABLE_LOGGING, true).commit()
+                val overlapping = AtomicInteger()
+                main {
+                    fragment.monitorActions.getValue("diagnostics_database").onClick()
+                    assertTrue(fragment.appOperationRefreshing)
+                    fragment.refreshAppOperation { overlapping.incrementAndGet() }
+                }
+                await { !fragment.appOperationRefreshing }
+                assertEquals(0, overlapping.get())
+                val completed = AtomicInteger()
+                val started = SystemClock.elapsedRealtime()
+                main {
+                    fragment.refreshAppOperation { completed.incrementAndGet() }
+                    assertTrue(fragment.appOperationRefreshing)
+                    fragment.refreshAppOperation { completed.incrementAndGet() }
+                }
+                await { completed.get() == 1 && !fragment.appOperationRefreshing }
+                assertTrue(fragment.latestDatabaseResponseElapsedTime >= started)
+                assertFalse(BackgroundServiceWatchdog.isServiceDesired(context))
+
+                val obsolete = AtomicInteger()
+                val latest = AtomicInteger()
+                main {
+                    fragment.refreshAppOperation { obsolete.incrementAndGet() }
+                    activity.supportFragmentManager.beginTransaction()
+                        .setMaxLifecycle(fragment, Lifecycle.State.STARTED).commitNow()
+                    activity.supportFragmentManager.beginTransaction()
+                        .setMaxLifecycle(fragment, Lifecycle.State.RESUMED).commitNow()
+                    fragment.refreshAppOperation { latest.incrementAndGet() }
+                }
+                await { latest.get() == 1 && !fragment.appOperationRefreshing }
+                assertEquals(0, obsolete.get())
+                assertFalse(BackgroundServiceWatchdog.isServiceDesired(context))
+            }
+        } finally {
+            assertTrue(MonitoringDesiredState.write(context, monitoring))
         }
     }
 
@@ -277,7 +343,12 @@ class DiagnosticsDialogsInstrumentedTest {
         assumeTrue("Dialog window inspection requires Android 10", Build.VERSION.SDK_INT >= 29)
         val preferences = preferences()
         val keys =
-            listOf(SettingsContract.KEY_COLOR_SOURCE, SettingsContract.KEY_BRIGHTNESS, PENDING_HINT)
+            listOf(
+                SettingsContract.KEY_COLOR_SOURCE,
+                SettingsContract.KEY_BRIGHTNESS,
+                SettingsContract.KEY_ENABLE_LOGGING,
+                PENDING_HINT
+            )
         val previous = keys.associateWith { preferences.all[it] }
         preferences.edit()
             .putString(SettingsContract.KEY_COLOR_SOURCE, ColorSource.BatteryBlue.name)

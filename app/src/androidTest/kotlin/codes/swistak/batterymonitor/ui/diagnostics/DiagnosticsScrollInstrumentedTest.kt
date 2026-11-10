@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.SemanticsActions
@@ -45,6 +46,7 @@ import codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -62,6 +64,9 @@ class DiagnosticsScrollInstrumentedTest {
             ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
         var tab by mutableIntStateOf(0)
+        var visible by mutableStateOf(true)
+        var stopped by mutableStateOf(false)
+        var savedPredictor by mutableStateOf(SavedPredictorDiagnostics())
         var state by mutableStateOf(DiagnosticsState(rawLoading = true))
         val monitor = MonitoringSnapshot.fromBundle(BatteryInfo().toBundle()).copy(
             predictorData = PredictorStoredState(mapOf(Predictor.KEY_AVERAGE[0] to 864000f), 2)
@@ -75,22 +80,27 @@ class DiagnosticsScrollInstrumentedTest {
             main {
                 activity.setContent {
                     AppBatteryTheme {
-                        // Keep the other tab scrollable even in a tall tablet window.
-                        Box(
-                            Modifier
-                                .fillMaxWidth()
-                                .height(400.dp)
-                        ) {
-                            DiagnosticsScreen(
-                                state,
-                                {},
-                                {},
-                                {},
-                                {},
-                                { tab = it },
-                                monitor = monitor,
-                                tab = tab
-                            )
+                        val savedScreens = rememberSaveableStateHolder()
+                        if (visible) savedScreens.SaveableStateProvider("diagnostics") {
+                            // Keep the other tab scrollable even in a tall tablet window.
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(400.dp)
+                            ) {
+                                DiagnosticsScreen(
+                                    state,
+                                    {},
+                                    {},
+                                    {},
+                                    {},
+                                    { tab = it },
+                                    monitor = monitor,
+                                    tab = tab,
+                                    savedPredictor = savedPredictor,
+                                    monitoringStopped = stopped
+                                )
+                            }
                         }
                     }
                 }
@@ -126,6 +136,45 @@ class DiagnosticsScrollInstrumentedTest {
             instrumentation.waitForIdleSync()
             await { texts().any { it.contains("updated") } }
             assertEquals(before, scroll(), 0.01f)
+            main { visible = false }
+            await { !hasList() }
+            main { visible = true }
+            await { indexOf("raw:${R.string.diag_section_service}:basic_0") >= 0 }
+            assertEquals(before, scroll(), 0.01f)
+            await { indexOf("raw:${R.string.device_data_predictor}:header") >= 0 }
+            main {
+                assertTrue(list().config[SemanticsActions.ScrollBy].action!!.invoke(0f, 100_000f))
+            }
+            await { atBottom() && scroll() > before }
+            val bottomBefore = scroll()
+            assertTrue(bottomBefore > before)
+            main { visible = false }
+            await { !hasList() }
+            main { visible = true }
+            await { indexOf("raw:${R.string.device_data_predictor}:header") >= 0 }
+            assertEquals(bottomBefore, scroll(), 0.01f)
+            main {
+                visible = false
+                stopped = true
+                savedPredictor = SavedPredictorDiagnostics(loading = true)
+            }
+            await { !hasList() }
+            main { visible = true }
+            await { texts().contains(context.getString(R.string.diag_raw)) }
+            main {
+                assertFalse(nodes().any { it.config.contains(SemanticsActions.ScrollToIndex) })
+            }
+            main {
+                savedPredictor = SavedPredictorDiagnostics(
+                    data = monitor.predictorData, checkedAtMillis = 2_000
+                )
+            }
+            await { indexOf("raw:${R.string.device_data_predictor}:header") >= 0 }
+            assertEquals(bottomBefore, scroll(), 0.01f)
+            main { savedPredictor = savedPredictor.copy(loading = true) }
+            instrumentation.waitForIdleSync()
+            assertEquals(bottomBefore, scroll(), 0.01f)
+            main { savedPredictor = savedPredictor.copy(loading = false) }
             main { tab = 1 }
             await { indexOf("1:0:${R.string.diag_section_counters}") >= 0 }
             main { list().config[SemanticsActions.ScrollToIndex].action!!.invoke(2) }
@@ -184,6 +233,21 @@ class DiagnosticsScrollInstrumentedTest {
                 )?.value?.invoke() ?: -1f
         }
         return value
+    }
+
+    private fun hasList(): Boolean {
+        var present = false
+        main { present = nodes().any { it.config.contains(SemanticsActions.ScrollToIndex) } }
+        return present
+    }
+
+    private fun atBottom(): Boolean {
+        var bottom = false
+        main {
+            val range = list().config[SemanticsProperties.VerticalScrollAxisRange]
+            bottom = range.value() >= range.maxValue()
+        }
+        return bottom
     }
 
     private fun texts(): List<String> {

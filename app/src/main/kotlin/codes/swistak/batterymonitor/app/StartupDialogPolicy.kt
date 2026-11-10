@@ -45,10 +45,7 @@ internal fun nextStartupPresentation(
     progress: StartupProgress, environment: StartupEnvironment
 ): StartupPresentation = when {
     progress.changelogPending -> StartupPresentation.CHANGELOG
-    environment.notificationPermissionRequired && !environment.notificationsGranted && !progress.notificationAttempted -> {
-        if (progress.firstRun) StartupPresentation.ONBOARDING
-        else StartupPresentation.REQUEST_NOTIFICATIONS
-    }
+    progress.firstRun && environment.notificationPermissionRequired && !environment.notificationsGranted && !progress.notificationAttempted -> StartupPresentation.ONBOARDING
 
     environment.batteryOptimized && !progress.batteryPromptShown -> StartupPresentation.BATTERY_OPTIMIZATION
 

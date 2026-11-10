@@ -158,9 +158,9 @@ class StartupDialogPolicyTest {
     }
 
     @Test
-    fun `existing users request missing permission after acknowledging the changelog`() {
+    fun `returning users keep notification denial after acknowledging the changelog`() {
         assertEquals(
-            StartupPresentation.REQUEST_NOTIFICATIONS, nextStartupPresentation(
+            StartupPresentation.BATTERY_OPTIMIZATION, nextStartupPresentation(
                 StartupProgress(firstRun = false, changelogPending = false),
                 environment(notificationsGranted = false)
             )

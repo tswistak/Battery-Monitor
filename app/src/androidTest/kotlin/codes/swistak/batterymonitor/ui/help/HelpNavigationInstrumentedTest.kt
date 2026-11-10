@@ -12,6 +12,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.semantics.SemanticsActions
@@ -22,11 +23,15 @@ import androidx.compose.ui.semantics.getOrNull
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.app.BatteryInfoActivity
 import codes.swistak.batterymonitor.app.StartupDialogViewModel
 import codes.swistak.batterymonitor.settings.SettingsContract
+import codes.swistak.batterymonitor.ui.navigation.SectionNavigator
+import codes.swistak.batterymonitor.ui.navigation.SectionOwner
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
@@ -51,54 +56,56 @@ class HelpNavigationInstrumentedTest {
                 context.packageName, 0
             )
         )
-        val monitor = instrumentation.addMonitor(BatteryInfoActivity::class.java.name, null, false)
         try {
             assertTrue(
                 preferences.edit().putBoolean(SettingsContract.KEY_FIRST_RUN, false)
                     .putLong(StartupDialogViewModel.KEY_ACKNOWLEDGED_VERSION, installedVersion)
                     .commit()
             )
-            for ((section, detail, expectedHelp) in listOf(
-                Triple("diagnostics", "monitor", R.string.diagnostics_root_help), Triple(
-                    "diagnostics", "monitor:diagnostics_export", R.string.diagnostics_root_help
-                ), Triple(
-                    "diagnostics", "monitor:diagnostics_root", R.string.diagnostics_root_help
-                ), Triple(
-                    "diagnostics", "monitor:diagnostics_shizuku", R.string.diagnostics_shizuku_help
-                ), Triple(
-                    "diagnostics", "charging-tools", R.string.charging_tools_help_overview
-                ), Triple(
-                    "diagnostics",
+            for ((section, detail, expectedTopic) in listOf(
+                Triple(SectionOwner.DIAGNOSTICS, "monitor", MONITORING_HELP_TOPIC),
+                Triple(
+                    SectionOwner.DIAGNOSTICS, "monitor:diagnostics_export", MONITORING_HELP_TOPIC
+                ),
+                Triple(SectionOwner.DIAGNOSTICS, "monitor:diagnostics_root", MONITORING_HELP_TOPIC),
+                Triple(
+                    SectionOwner.DIAGNOSTICS, "monitor:diagnostics_shizuku", MONITORING_HELP_TOPIC
+                ),
+                Triple(SectionOwner.DIAGNOSTICS, "charging-tools", CHARGING_TOOLS_HELP_TOPIC),
+                Triple(
+                    SectionOwner.DIAGNOSTICS,
                     "charging-tools:charging_diagnostics_capture",
-                    R.string.charging_tools_help_overview
-                ), Triple("settings", "settings:advanced", R.string.pref_use_privileged_access_help)
+                    CHARGING_TOOLS_HELP_TOPIC
+                ),
+                Triple(
+                    SectionOwner.SETTINGS,
+                    "settings:advanced",
+                    SettingsContract.KEY_ADVANCED_SETTINGS
+                )
             )) {
-                instrumentation.startActivitySync(
+                ActivityScenario.launch<BatteryInfoActivity>(
                     Intent(
                         context, BatteryInfoActivity::class.java
-                    ).putExtra(BatteryInfoActivity.EXTRA_SECTION, section)
+                    ).putExtra(BatteryInfoActivity.EXTRA_SECTION, section.route)
                         .putExtra(BatteryInfoActivity.EXTRA_DETAIL, detail)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
-                await {
-                    (monitor.lastActivity as? BatteryInfoActivity)?.let {
-                        !it.isDestroyed && it.lifecycle.currentState == Lifecycle.State.RESUMED
-                    } == true
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                ).use { scenario ->
+                    scenario.onActivity { launched ->
+                        activity = launched
+                        ViewModelProvider(activity)[StartupDialogViewModel::class.java].dismissBatteryPrompt()
+                    }
+                    await { helpButton() != null }
+                    main {
+                        assertTrue(
+                            requireNotNull(helpButton()).config[SemanticsActions.OnClick].action?.invoke() == true
+                        )
+                    }
+                    assertSavedNavigation(scenario, SectionOwner.HELP, "help:$expectedTopic")
+                    main { activity.onBackPressedDispatcher.onBackPressed() }
+                    assertSavedNavigation(scenario, section, detail)
                 }
-                activity = monitor.lastActivity as BatteryInfoActivity
-                main { ViewModelProvider(activity)[StartupDialogViewModel::class.java].dismissBatteryPrompt() }
-                await { helpButton() != null }
-                main { assertTrue(requireNotNull(helpButton()).config[SemanticsActions.OnClick].action?.invoke() == true) }
-                await { hasText(expectedHelp) }
-                main { activity.onBackPressedDispatcher.onBackPressed() }
-                await { helpButton() != null && !hasText(expectedHelp) }
-                main { activity.finish() }
-                instrumentation.waitForIdleSync()
             }
         } finally {
-            main { monitor.lastActivity?.finish() }
-            instrumentation.waitForIdleSync()
-            instrumentation.removeMonitor(monitor)
             val restore = preferences.edit()
             if (firstRun is Boolean) restore.putBoolean(SettingsContract.KEY_FIRST_RUN, firstRun)
             else restore.remove(SettingsContract.KEY_FIRST_RUN)
@@ -116,9 +123,17 @@ class HelpNavigationInstrumentedTest {
         )?.contains(activity.getString(R.string.menu_help)) == true
     }
 
-    private fun hasText(resource: Int): Boolean = nodes().any {
-        !hidden(it) && it.config.getOrNull(SemanticsProperties.Text)
-            ?.any { text -> text.text == activity.getString(resource) } == true
+    private fun assertSavedNavigation(
+        scenario: ActivityScenario<BatteryInfoActivity>, owner: SectionOwner, detail: String
+    ) {
+        val saved = Bundle()
+        scenario.moveToState(Lifecycle.State.CREATED)
+        scenario.onActivity { instrumentation.callActivityOnSaveInstanceState(it, saved) }
+        scenario.moveToState(Lifecycle.State.RESUMED)
+        scenario.onActivity { activity = it }
+        val navigation = SectionNavigator.restore(saved)
+        assertEquals(owner, navigation.selected)
+        assertEquals(detail, navigation.detail)
     }
 
     private fun hidden(node: SemanticsNode): Boolean =

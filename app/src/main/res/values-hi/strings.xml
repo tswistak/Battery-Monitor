@@ -251,6 +251,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0सेकंड</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0सेकंड</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0सेकंड</string>
+    <string name="chip_switching_interval_custom">कस्टम</string>
     <string name="pref_chip_indicate_charging" formatted="false">चार्जिंग इमोजी दिखाएँ</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">चार्ज करते समय या पूरी तरह चार्ज होने पर बिजली का इमोजी दिखाएँ?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">यदि सक्षम किया गया है, तो स्टेटस बार चिप बगल में एक बिजली का इमोजी दिखाएगा चार्ज करते समय या पूरी तरह चार्ज होने पर चिप का मूल्य।</string>
@@ -614,9 +615,9 @@
     <string name="diag_charging_too_cold">चार्जिंग के लिए बहुत ठंडा</string>
     <string name="diag_charging_too_hot">चार्जिंग के लिए बहुत गर्म</string>
     <string name="diag_section_service" formatted="false">Android बैटरी सेवा</string>
-    <string name="diag_help_service" formatted="false">“मूल डेटा” में Android बैटरी ब्रॉडकास्ट और उपलब्ध होने पर dumpsys battery के मूल नाम व मान होते हैं। इनमें चार्जिंग स्रोत, बैटरी स्थिति, तापमान, वोल्टेज और बैटरी सेवा की अन्य स्थितियाँ हो सकती हैं।</string>
+    <string name="diag_help_service" formatted="false">Android बैटरी ब्रॉडकास्ट और उपलब्ध होने पर dumpsys battery के मूल नाम व मान होते हैं। इनमें चार्जिंग स्रोत, बैटरी स्थिति, तापमान, वोल्टेज और बैटरी सेवा की अन्य स्थितियाँ हो सकती हैं।</string>
     <string name="diag_section_sysfs" formatted="false">कर्नेल power_supply फ़ाइलें</string>
-    <string name="diag_help_sysfs" formatted="false">“मूल डेटा” में /sys/class/power_supply से पढ़े गए मूल नाम व मान दिखते हैं, जिनमें कई पंक्तियों के मान भी हैं। कुंजी से खोजें और पूरा मान देखने व कॉपी करने के लिए पंक्ति पर टैप करें। नई रीडिंग के लिए “रीफ़्रेश” करें। Battery Monitor root या Shizuku के बिना अपनी सामान्य Android अनुमतियों से भी पढ़ने की कोशिश करता है।</string>
+    <string name="diag_help_sysfs" formatted="false">/sys/class/power_supply से पढ़े गए मूल नाम व मान दिखते हैं, जिनमें कई पंक्तियों के मान भी हैं।</string>
     <string name="diag_fuel_gauge">बैटरी चार्ज मापक</string>
     <string name="diag_mains_supply">AC पावर स्रोत</string>
     <string name="diag_charging_source">चार्जिंग स्रोत</string>
@@ -646,15 +647,18 @@
     <string name="diag_input_voltage">इनपुट वोल्टेज</string>
     <string name="diag_input_voltage_limit">इनपुट वोल्टेज सीमा</string>
     <string name="diag_section_metadata" formatted="false">मेटाडेटा</string>
-    <string name="diag_help_metadata" formatted="false">“मूल डेटा” में BatteryManager के मूल गुण नाम व मान भी शामिल हैं, जिनमें उपलब्ध काउंटर और करंट रीडिंग हैं। निर्माण विवरण या बदलने की स्थिति जैसे अतिरिक्त गुण Android संस्करण, डिवाइस समर्थन और अनुमतियों पर निर्भर हैं।</string>
+    <string name="diag_help_metadata" formatted="false">BatteryManager के मूल गुण नाम व मान भी शामिल हैं, जिनमें उपलब्ध काउंटर और करंट रीडिंग हैं। निर्माण विवरण या बदलने की स्थिति जैसे अतिरिक्त गुण Android संस्करण, डिवाइस समर्थन और अनुमतियों पर निर्भर हैं।</string>
     <string name="diag_raw">मूल डेटा</string>
     <string name="diag_search_key">कुंजियाँ खोजें</string>
     <string name="diag_no_keys">उपलब्ध डेटा में कोई मेल खाती कुंजी नहीं है</string>
     <string name="diag_raw_values">मूल मान</string>
     <string name="diag_last_checked">पिछली जाँच: %1$s</string>
     <string name="diag_privileged_stale">पिछली विशेषाधिकार प्राप्त रीडिंग दिखाई जा रही हैं। फिर कोशिश करने के लिए रीफ़्रेश करें।</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">समस्या निवारण</string>
-    <string name="diag_help_troubleshooting" formatted="false">“निदान” में Android डेटा अपने आप एकत्र होता है। अतिरिक्त root या Shizuku डेटा के लिए “अतिरिक्त स्रोत” में विशेषाधिकार प्राप्त पहुँच सक्षम करें। Battery Monitor पहले root, फिर Shizuku की कोशिश करता है। Shizuku चालू होना और अनुमति मिलना ज़रूरी है। गायब फ़ील्ड अनुपलब्ध रहते हैं; रीफ़्रेश विफल होने पर पिछला स्नैपशॉट बना रहता है और पुराना चिह्नित होता है।</string>
+    <string name="diag_help_troubleshooting" formatted="false">“निदान” में Android डेटा अपने आप एकत्र होता है। अतिरिक्त root या Shizuku डेटा के लिए “सेटिंग” → “उन्नत” में “विशेषाधिकार प्राप्त पहुँच का उपयोग करें” चालू करें। Battery Monitor पहले root, फिर Shizuku की कोशिश करता है। Shizuku चालू होना और अनुमति मिलना ज़रूरी है। गायब फ़ील्ड अनुपलब्ध रहते हैं; रीफ़्रेश विफल होने पर पिछला स्नैपशॉट बना रहता है और पुराना चिह्नित होता है।</string>
+    <string name="diag_help_raw_general" formatted="false">उपलब्ध स्रोतों की मूल कुंजियाँ और मान। कुंजी से खोजें और पूरा मान देखने व कॉपी करने के लिए पंक्ति पर टैप करें। नई रीडिंग के लिए “रीफ़्रेश” करें। Battery Monitor root या Shizuku के बिना अपनी सामान्य Android अनुमतियों से भी पढ़ने की कोशिश करता है। उपलब्धता इस बात पर निर्भर करती है कि किन स्रोतों को पढ़ा जा सकता है।</string>
+    <string name="diag_help_raw_predictor" formatted="false">उपलब्ध होने पर सहेजे गए पूर्वानुमान डेटा की मूल कुंजियाँ और मान।</string>
+    <string name="diag_export_report_help" formatted="false">उपलब्ध निदान रीडिंग और पूर्वानुमान डेटा की रिपोर्ट बनाएँ। पूर्वावलोकन जाँचें, फिर रिपोर्ट को क्लिपबोर्ड पर कॉपी करें या टेक्स्ट फ़ाइल के रूप में सहेजें। साझा करने से पहले रिपोर्ट को ध्यान से जाँचें, खासकर यदि उसमें मूल मान और पहचानकर्ता शामिल हों।</string>
+    <string name="diag_charging_source_disconnected">अनप्लग</string>
 
     <string name="diagnostics" formatted="false">निदान</string>
     <string name="diagnostics_summary" formatted="false">अनुमतियाँ और निगरानी की विश्वसनीयता जाँचें और समस्या निवारण रिपोर्ट बनाएँ</string>
@@ -716,11 +720,15 @@
     <string name="diag_missing_average">औसत करंट, तात्कालिक करंट से अलग डिवाइस रीडिंग है। डिवाइस औसत न दे तो Battery Monitor अपना औसत नहीं निकालता।</string>
     <string name="diag_missing_estimated_health">इस अनुमान के लिए उसी बैटरी की धनात्मक पूर्ण-चार्ज और डिज़ाइन क्षमताएँ चाहिए। पूर्ण-चार्ज क्षमता डिज़ाइन क्षमता से अधिक नहीं होनी चाहिए।</string>
     <string name="diag_missing_charge_time">यह डिवाइस द्वारा बताया गया चार्जिंग अनुमान है। “वर्तमान स्थिति”, Battery Monitor का चुना हुआ अनुमान तरीका उपयोग करती है और डिवाइस का अनुमान न होने पर भी अनुमान दिखा सकती है।</string>
-    <string name="diag_predictor_description">दरें एक प्रतिशत बिंदु का समय दिखाती हैं। हाल की गणनाएँ मेमोरी में रहती हैं; सहेजे गए औसत पुनरारंभ के बाद भी रहते हैं। अधूरी अवधि में दीर्घकालिक दर और न सहेजे गए औसत के लिए डिफ़ॉल्ट उपयोग होते हैं।</string>
-    <string name="diagnostics_predictor_help" formatted="false">“ऐप संचालन” में सहेजे गए दीर्घकालिक औसत और अनुमानक के हाल के इनपुट दिखते हैं। हाल की दरें बैटरी प्रतिशत में बदलाव से बनती हैं और एक प्रतिशत बिंदु का समय, चुना हुआ तरीका, सक्रिय चार्जिंग स्रोत, देखे गए बिंदु व अवधियाँ और अधूरी अवधि शामिल है या नहीं, दिखाती हैं। पाँच मिनट और पाँच बिंदु की अवधि के अनदेखे हिस्सों में सक्रिय दीर्घकालिक दर उपयोग होती है; छूटे स्तरों का प्रक्षेपण किया जाता है। हाल की स्थिति मेमोरी में रहती है और निगरानी फिर शुरू होने, चार्जिंग व डिस्चार्जिंग के बीच बदलने या चार्जिंग स्रोत बदलने पर रीसेट होती है। सहेजे गए सीखे हुए औसत पुनरारंभ के बाद भी रहते हैं। यह डेटा इतिहास लॉग से स्वतंत्र है; लॉग साफ़ करने से अनुमान रीसेट नहीं होते।</string>
+    <string name="diagnostics_predictor_help" formatted="false">सहेजे गए दीर्घकालिक औसत और अनुमानक के हाल के इनपुट की समीक्षा करें। हाल की दरें बैटरी प्रतिशत में बदलाव से बनती हैं और एक प्रतिशत बिंदु का समय, चुना हुआ तरीका, सक्रिय चार्जिंग स्रोत, देखे गए बिंदु व अवधियाँ और अधूरी अवधि शामिल है या नहीं, दिखाती हैं। पाँच मिनट और पाँच बिंदु की अवधि के अनदेखे हिस्सों में सक्रिय दीर्घकालिक दर उपयोग होती है; छूटे स्तरों का प्रक्षेपण किया जाता है। हाल की स्थिति मेमोरी में रहती है और निगरानी फिर शुरू होने, चार्जिंग व डिस्चार्जिंग के बीच बदलने या चार्जिंग स्रोत बदलने पर रीसेट होती है। सहेजे गए सीखे हुए औसत पुनरारंभ के बाद भी रहते हैं। यह डेटा इतिहास लॉग से स्वतंत्र है; लॉग साफ़ करने से अनुमान रीसेट नहीं होते।</string>
+    <string name="diag_check_failed" formatted="false">रीडिंग लेने का पिछला प्रयास विफल रहा।</string>
+    <string name="diag_reading_retained" formatted="false">पिछली रीडिंग दिखाई जा रही है।</string>
+    <string name="diag_value_copied" formatted="false">मान कॉपी किया गया</string>
+    <string name="diag_predictor_read_failed" formatted="false">सहेजा गया पूर्वानुमान डेटा पढ़ा नहीं जा सका।</string>
+    <string name="diag_predictor_recent_title" formatted="false">पूर्वानुमान डेटा — हाल की गणनाएँ</string>
+    <string name="diag_predictor_stored_title" formatted="false">पूर्वानुमान डेटा — सहेजे गए दीर्घकालिक औसत</string>
     <string name="diag_predictor_recent" formatted="false">हाल की गणनाएँ</string>
     <string name="diag_predictor_no_recent" formatted="false">कोई सक्रिय अनुमान नहीं है। चार्जिंग या डिस्चार्जिंग में निगरानी रीडिंग मिलने के बाद हाल का डेटा उपलब्ध होता है।</string>
-    <string name="diag_predictor_start_monitor">सहेजा हुआ अनुमानक डेटा देखने के लिए ऊपर से निगरानी शुरू करें।</string>
     <string name="diag_predictor_active_state" formatted="false">बैटरी की सक्रिय स्थिति</string>
     <string name="diag_predictor_effective_rate" formatted="false">अनुमान में उपयोग हुई दर</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">पिछले 5\u00A0मिनट</string>
@@ -730,7 +738,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">देखे गए सत्र की अवधि</string>
     <string name="diag_predictor_current_level_duration" formatted="false">वर्तमान स्तर पर समय</string>
     <string name="diag_predictor_uses_partial" formatted="false">अधूरी अवधि शामिल है</string>
-    <string name="diag_predictor_saved_averages" formatted="false">सहेजे गए दीर्घकालिक औसत</string>
     <string name="diag_predictor_ac">चार्जिंग (AC)</string>
     <string name="diag_predictor_wireless">चार्जिंग (वायरलेस)</string>
     <string name="diag_predictor_usb">चार्जिंग (USB)</string>
@@ -759,8 +766,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">OEM चार्जिंग सीमा निदान</string>
     <string name="charging_diagnostics_help_overview" formatted="false">स्नैपशॉट और तुलना टूल खोलकर जाँचें कि Battery Monitor डिवाइस की चार्जिंग सीमा कैसे पहचानता है। तैयारी के निर्देश OEM निदान स्क्रीन की अपनी सहायता में उपलब्ध हैं।</string>
-    <string name="charging_tools_help_overview" formatted="false">स्नैपशॉट और तुलना टूल खोलकर जाँचें कि Battery Monitor डिवाइस की चार्जिंग सीमा कैसे पहचानता है। तैयारी के निर्देश OEM निदान स्क्रीन की अपनी सहायता में उपलब्ध हैं।\n
-    विशेषाधिकार प्राप्त पहुँच से अधिक निदान जानकारी उपलब्ध हो सकती है। अधिक उपयोगी OEM चार्जिंग सीमा रिपोर्ट के लिए Shizuku या root पहुँच दें और “सेटिंग” → “उन्नत” → “विशेषाधिकार प्राप्त पहुँच का उपयोग करें” में विशेषाधिकार प्राप्त पहुँच चालू करें।</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">उपयोगी रिपोर्ट के लिए, “मदद” खोलें और स्नैपशॉट लेने से पहले तैयारी के चरणों का पालन करें।</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">विशेषाधिकार प्राप्त पहुँच से अधिक निदान जानकारी उपलब्ध हो सकती है। अधिक उपयोगी OEM चार्जिंग सीमा रिपोर्ट के लिए Shizuku या root पहुँच दें और “सेटिंग” → “उन्नत” → “विशेषाधिकार प्राप्त पहुँच का उपयोग करें” में विशेषाधिकार प्राप्त पहुँच चालू करें।</string>
     <string name="charging_diagnostics_capture" formatted="false">स्नैपशॉट लें</string>
@@ -782,7 +787,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">पहले कम से कम दो अलग चार्जिंग मोड लें</string>
     <string name="charging_diagnostics_report" formatted="false">तुलना रिपोर्ट बनाएँ</string>
     <string name="charging_diagnostics_report_summary" formatted="false">पहले कम से कम दो अलग OEM चार्जिंग मोड के स्नैपशॉट लें</string>
-    <string name="charging_diagnostics_report_help" formatted="false">पहले कम से कम दो अलग OEM चार्जिंग मोड के स्नैपशॉट लें।</string>
+    <string name="charging_diagnostics_report_help" formatted="false">पहले कम से कम दो अलग OEM चार्जिंग मोड के स्नैपशॉट लें। रिपोर्ट की समीक्षा के बाद, उसे कॉपी या सहेजें और ईमेल से <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> पर भेजें।</string>
     <string name="charging_diagnostics_copy" formatted="false">क्लिपबोर्ड पर कॉपी करें</string>
     <string name="charging_diagnostics_save" formatted="false">सहेजें</string>
     <string name="charging_diagnostics_copied" formatted="false">रिपोर्ट कॉपी की गई</string>
@@ -796,8 +801,6 @@
     4. अनुकूलित, स्मार्ट या निर्धारित चार्जिंग चालू करें, 2–5\u00A0सेकंड प्रतीक्षा करें और स्नैपशॉट लें।\n
     5. यदि कॉन्फ़िगरेशन तुलना से स्पष्ट परिणाम न मिले, तो केवल संचालन के समय दिखने वाली स्थिति दर्ज करने के लिए चार्जिंग के दौरान क्रम को वैकल्पिक रूप से दोहराएँ।\n
     6. तुलना रिपोर्ट बनाएँ और जाँचें। डेटा फ़िल्टर होता है और संभावित संवेदनशील मान छिपाए जाते हैं, फिर भी साझा करने से पहले पूरी रिपोर्ट जाँचें।</string>
-    <string name="charging_report_privacy_help" formatted="false">डिफ़ॉल्ट रूप से शामिल नहीं हैं। इस डेटा में निजी जानकारी हो सकती है। कॉपी या सहेजने से पहले पूर्वावलोकन जाँचें।\n
-    रिपोर्ट की समीक्षा के बाद, उसे कॉपी या सहेजें और ईमेल से <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> पर भेजें।</string>
 
     <string name="pref_backup_restore" formatted="false">बैकअप और पुनर्स्थापना</string>
     <string name="backup_restore_settings_summary" formatted="false">अपनी ऐप सेटिंग्स और बैटरी डेटा का बैकअप लें, उन्हें पुनर्स्थापित करें और स्थानांतरित करें</string>

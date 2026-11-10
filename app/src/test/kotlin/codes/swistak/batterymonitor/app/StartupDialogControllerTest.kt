@@ -211,6 +211,21 @@ class StartupDialogControllerTest {
         )
     }
 
+    @Test
+    fun returning_with_notifications_denied_does_not_request_permission_on_each_launch() {
+        baseline(firstRun = false)
+        repeat(2) {
+            val returning = controller()
+            returning.advance(denied.copy(batteryOptimized = false))
+            assertNull(returning.systemAction)
+            assertEquals(StartupPresentation.NONE, returning.presentation)
+            assertFalse(returning.blocksContentDialogs)
+        }
+        val explicit = controller()
+        explicit.requestNotifications()
+        assertEquals(StartupSystemAction.NOTIFICATIONS, explicit.takeSystemAction())
+    }
+
     private fun controller(handle: SavedStateHandle = SavedStateHandle()) =
         StartupDialogViewModel(application, handle)
 

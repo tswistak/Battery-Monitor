@@ -16,7 +16,7 @@ import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingDiagnosticC
 internal const val DEFAULT_FIXED_CHARGING_LIMIT_PERCENT = 80
 
 internal enum class DiagnosticsDialog {
-    STOP_MONITORING, CHARGING_CONDITION, FIXED_CHARGING_LIMIT, PRIVILEGED_HINT, MONITOR_REPORT, CHARGING_REPORT
+    STOP_MONITORING, CHARGING_CONDITION, FIXED_CHARGING_LIMIT, MONITOR_REPORT, CHARGING_REPORT
 }
 
 internal class DiagnosticsDialogState {
@@ -24,7 +24,6 @@ internal class DiagnosticsDialogState {
     var selectedCondition by mutableStateOf<Int?>(null)
     var capturing by mutableStateOf(false)
         private set
-    private var pendingPrivilegedHint = false
 
     fun restore(dialogName: String?, selection: Int?) {
         dialog = DiagnosticsDialog.entries.firstOrNull { it.name == dialogName }
@@ -38,8 +37,7 @@ internal class DiagnosticsDialogState {
     }
 
     fun dismiss() {
-        dialog = if (pendingPrivilegedHint) DiagnosticsDialog.PRIVILEGED_HINT else null
-        pendingPrivilegedHint = false
+        dialog = null
     }
 
     fun confirmCondition(): ChargingDiagnosticCondition? {
@@ -66,20 +64,8 @@ internal class DiagnosticsDialogState {
         return true
     }
 
-    fun finishCapture(showPrivilegedHint: Boolean) {
+    fun finishCapture() {
         capturing = false
-        if (showPrivilegedHint) offerPrivilegedHint()
-    }
-
-    fun offerPrivilegedHint() {
-        if (dialog == DiagnosticsDialog.PRIVILEGED_HINT) return
-        if (dialog == null) dialog = DiagnosticsDialog.PRIVILEGED_HINT
-        else pendingPrivilegedHint = true
-    }
-
-    fun clearPrivilegedHint() {
-        pendingPrivilegedHint = false
-        if (dialog == DiagnosticsDialog.PRIVILEGED_HINT) dialog = null
     }
 }
 

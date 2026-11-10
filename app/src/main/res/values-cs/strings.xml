@@ -258,6 +258,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0sekund</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0sekund</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0sekund</string>
+    <string name="chip_switching_interval_custom">Vlastní</string>
     <string name="pref_chip_indicate_charging" formatted="false">Zobrazit Emoji nabíjení</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Zobrazit emotikony blesku při nabíjení nebo plném nabití?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Pokud je povoleno, na čipu stavového řádku se vedle zobrazí emotikony blesku hodnotu čipu při nabíjení nebo při plném nabití.</string>
@@ -625,9 +626,9 @@
     <string name="diag_charging_too_cold">Příliš chladno pro nabíjení</string>
     <string name="diag_charging_too_hot">Příliš horko pro nabíjení</string>
     <string name="diag_section_service" formatted="false">Služba baterie Androidu</string>
-    <string name="diag_help_service" formatted="false">„Nezpracované údaje“ obsahují původní názvy a hodnoty z hlášení baterie Androidu a, je-li dostupný, příkazu dumpsys battery. Mohou zahrnovat zdroj nabíjení, stav baterie, teplotu, napětí a další stav služby baterie.</string>
+    <string name="diag_help_service" formatted="false">Původní názvy a hodnoty z hlášení baterie Androidu a, je-li dostupný, příkazu dumpsys battery. Mohou zahrnovat zdroj nabíjení, stav baterie, teplotu, napětí a další stav služby baterie.</string>
     <string name="diag_section_sysfs" formatted="false">Soubory power_supply v jádře</string>
-    <string name="diag_help_sysfs" formatted="false">„Nezpracované údaje“ zobrazují původní názvy a hodnoty z /sys/class/power_supply včetně víceřádkových hodnot. Hledejte podle klíče a klepněte na řádek pro zobrazení a kopírování celé hodnoty. Pomocí „Obnovit“ načtěte nová měření. Battery Monitor zkouší čtení i s běžnými oprávněními Androidu, bez rootu či Shizuku.</string>
+    <string name="diag_help_sysfs" formatted="false">Původní názvy a hodnoty z /sys/class/power_supply včetně víceřádkových hodnot.</string>
     <string name="diag_fuel_gauge">Měřič stavu baterie</string>
     <string name="diag_mains_supply">Síťové napájení AC</string>
     <string name="diag_charging_source">Zdroj nabíjení</string>
@@ -657,15 +658,18 @@
     <string name="diag_input_voltage">Vstupní napětí</string>
     <string name="diag_input_voltage_limit">Limit vstupního napětí</string>
     <string name="diag_section_metadata" formatted="false">Metadata</string>
-    <string name="diag_help_metadata" formatted="false">„Nezpracované údaje“ obsahují také původní názvy a hodnoty vlastností BatteryManager včetně dostupných čítačů a měření proudu. Další vlastnosti, jako údaje o výrobě či výměně, závisí na verzi Androidu, podpoře zařízení a oprávněních.</string>
+    <string name="diag_help_metadata" formatted="false">Původní názvy a hodnoty vlastností BatteryManager včetně dostupných čítačů a měření proudu. Další vlastnosti, jako údaje o výrobě či výměně, závisí na verzi Androidu, podpoře zařízení a oprávněních.</string>
     <string name="diag_raw">Nezpracované údaje</string>
     <string name="diag_search_key">Hledat klíče</string>
     <string name="diag_no_keys">V dostupných údajích nejsou odpovídající klíče</string>
     <string name="diag_raw_values">Nezpracované hodnoty</string>
     <string name="diag_last_checked">Poslední kontrola: %1$s</string>
     <string name="diag_privileged_stale">Jsou zobrazena předchozí privilegovaná měření. Obnovte pro další pokus.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">Řešení problémů</string>
-    <string name="diag_help_troubleshooting" formatted="false">Údaje Androidu se v „Diagnostika“ shromažďují automaticky. Pro další údaje rootu nebo Shizuku povolte privilegovaný přístup v části „Další zdroje“. Battery Monitor nejprve zkusí root, poté Shizuku. Shizuku musí běžet a mít udělené oprávnění. Chybějící pole zůstanou nedostupná; neúspěšné obnovení zachová předchozí snímek a označí jej jako zastaralý.</string>
+    <string name="diag_help_troubleshooting" formatted="false">Údaje Androidu se v „Diagnostika“ shromažďují automaticky. Pro další údaje rootu nebo Shizuku zapněte „Použít privilegovaný přístup“ v „Nastavení“ → „Pokročilé“. Battery Monitor nejprve zkusí root, poté Shizuku. Shizuku musí běžet a mít udělené oprávnění. Chybějící pole zůstanou nedostupná; neúspěšné obnovení zachová předchozí snímek a označí jej jako zastaralý.</string>
+    <string name="diag_help_raw_general" formatted="false">Původní klíče a hodnoty z dostupných zdrojů. Hledejte podle klíče a klepněte na řádek pro zobrazení a kopírování celé hodnoty. Pomocí „Obnovit“ načtěte nová měření. Battery Monitor zkouší čtení i s běžnými oprávněními Androidu, bez rootu či Shizuku. Dostupnost závisí na tom, které zdroje lze číst.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Původní klíče a hodnoty uložených dat prediktoru, jsou-li dostupné.</string>
+    <string name="diag_export_report_help" formatted="false">Vytvořte zprávu z dostupných diagnostických měření a dat prediktoru. Prohlédněte si náhled a poté zprávu zkopírujte do schránky nebo uložte jako textový soubor. Před sdílením zprávu pečlivě zkontrolujte, zejména pokud obsahuje nezpracované hodnoty a identifikátory.</string>
+    <string name="diag_charging_source_disconnected">Odpojeno</string>
 
     <string name="diagnostics" formatted="false">Diagnostika</string>
     <string name="diagnostics_summary" formatted="false">Zkontrolujte oprávnění a spolehlivost sledování a vytvořte zprávu pro řešení problémů</string>
@@ -727,11 +731,15 @@
     <string name="diag_missing_average">Průměrný proud je samostatné měření zařízení, odlišné od okamžitého proudu. Battery Monitor nepočítá vlastní průměr, pokud jej zařízení neposkytuje.</string>
     <string name="diag_missing_estimated_health">Tento odhad vyžaduje kladnou kapacitu při plném nabití a konstrukční kapacitu téže baterie. Kapacita při plném nabití nesmí překročit konstrukční kapacitu.</string>
     <string name="diag_missing_charge_time">Toto je odhad nabíjení hlášený zařízením. „Aktuální stav“ používá nastavenou metodu předpovědi aplikace Battery Monitor a může zobrazit odhad i bez odhadu zařízení.</string>
-    <string name="diag_predictor_description">Rychlosti udávají čas na jeden procentní bod. Nedávné výpočty jsou v paměti; uložené průměry přetrvají restart. Neúplná okna používají dlouhodobou rychlost a neuložené průměry výchozí hodnoty.</string>
-    <string name="diagnostics_predictor_help" formatted="false">„Provoz aplikace“ zobrazuje uložené dlouhodobé průměry a nedávné vstupy předpovědi. Nedávné rychlosti vycházejí ze změn procenta baterie a zobrazují čas na jeden procentní bod, vybranou metodu, aktivní zdroj nabíjení, pozorované body a doby trvání a zahrnutí nedokončeného intervalu. Pětiminutová a pětibodová okna používají pro nepozorované části aktivní dlouhodobou rychlost; přeskočené úrovně se interpolují. Nedávný stav je v paměti a obnoví se při restartu sledování, přechodu mezi nabíjením a vybíjením nebo změně zdroje nabíjení. Uložené naučené průměry přetrvají restart. Tyto údaje jsou nezávislé na historii; vymazání záznamů odhady neobnoví.</string>
+    <string name="diagnostics_predictor_help" formatted="false">Prohlédněte si uložené dlouhodobé průměry a nedávné vstupy předpovědi. Nedávné rychlosti vycházejí ze změn procenta baterie a zobrazují čas na jeden procentní bod, vybranou metodu, aktivní zdroj nabíjení, pozorované body a doby trvání a zahrnutí nedokončeného intervalu. Pětiminutová a pětibodová okna používají pro nepozorované části aktivní dlouhodobou rychlost; přeskočené úrovně se interpolují. Nedávný stav je v paměti a obnoví se při restartu sledování, přechodu mezi nabíjením a vybíjením nebo změně zdroje nabíjení. Uložené naučené průměry přetrvají restart. Tyto údaje jsou nezávislé na historii; vymazání záznamů odhady neobnoví.</string>
+    <string name="diag_check_failed" formatted="false">Poslední pokus o čtení selhal.</string>
+    <string name="diag_reading_retained" formatted="false">Zobrazuje se předchozí měření.</string>
+    <string name="diag_value_copied" formatted="false">Hodnota byla zkopírována</string>
+    <string name="diag_predictor_read_failed" formatted="false">Nepodařilo se přečíst uložená data predikce.</string>
+    <string name="diag_predictor_recent_title" formatted="false">Data predikce — Nedávné výpočty</string>
+    <string name="diag_predictor_stored_title" formatted="false">Data predikce — Uložené dlouhodobé průměry</string>
     <string name="diag_predictor_recent" formatted="false">Nedávné výpočty</string>
     <string name="diag_predictor_no_recent" formatted="false">Žádný aktivní odhad. Nedávné údaje jsou dostupné po měření při nabíjení nebo vybíjení.</string>
-    <string name="diag_predictor_start_monitor">Pro kontrolu uložených údajů předpovědi zapněte sledování výše.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktivní stav baterie</string>
     <string name="diag_predictor_effective_rate" formatted="false">Rychlost použitá pro odhad</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">Posledních 5\u00A0minut</string>
@@ -741,7 +749,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">Pozorovaná délka relace</string>
     <string name="diag_predictor_current_level_duration" formatted="false">Čas na aktuální úrovni</string>
     <string name="diag_predictor_uses_partial" formatted="false">Zahrnut nedokončený interval</string>
-    <string name="diag_predictor_saved_averages" formatted="false">Uložené dlouhodobé průměry</string>
     <string name="diag_predictor_ac">Nabíjení (AC)</string>
     <string name="diag_predictor_wireless">Nabíjení (bezdrátové)</string>
     <string name="diag_predictor_usb">Nabíjení (USB)</string>
@@ -770,8 +777,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">Diagnostika limitu nabíjení OEM</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Otevřete nástroje pro snímky a porovnání a zjistěte, jak Battery Monitor rozpoznává limit nabíjení zařízení. Pokyny k přípravě najdete v nápovědě samotné diagnostické obrazovky OEM.</string>
-    <string name="charging_tools_help_overview" formatted="false">Otevřete nástroje pro snímky a porovnání a zjistěte, jak Battery Monitor rozpoznává limit nabíjení zařízení. Pokyny k přípravě najdete v nápovědě samotné diagnostické obrazovky OEM.\n
-    S privilegovaným přístupem mohou být dostupné další diagnostické informace. Udělte přístup přes Shizuku nebo root a zapněte privilegovaný přístup v „Nastavení“ → „Pokročilé“ → „Použít privilegovaný přístup“, aby byl přehled limitu nabíjení OEM užitečnější.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Aby byla zpráva užitečná, otevřete „Nápověda“ a před pořízením snímků postupujte podle kroků přípravy.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">S privilegovaným přístupem mohou být dostupné další diagnostické informace. Udělte přístup přes Shizuku nebo root a zapněte privilegovaný přístup v „Nastavení“ → „Pokročilé“ → „Použít privilegovaný přístup“, aby byl přehled limitu nabíjení OEM užitečnější.</string>
     <string name="charging_diagnostics_capture" formatted="false">Pořídit snímek</string>
@@ -795,7 +800,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">Nejprve pořiďte alespoň dva různé režimy nabíjení</string>
     <string name="charging_diagnostics_report" formatted="false">Vytvořit porovnávací zprávu</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Nejprve pořiďte alespoň dva různé režimy nabíjení OEM</string>
-    <string name="charging_diagnostics_report_help" formatted="false">Nejprve pořiďte alespoň dva různé režimy nabíjení OEM.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Nejprve pořiďte alespoň dva různé režimy nabíjení OEM. Po kontrole zprávu zkopírujte nebo uložte a odešlete ji e-mailem na adresu <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
     <string name="charging_diagnostics_copy" formatted="false">Kopírovat do schránky</string>
     <string name="charging_diagnostics_save" formatted="false">Uložit</string>
     <string name="charging_diagnostics_copied" formatted="false">Zpráva byla zkopírována</string>
@@ -809,8 +814,6 @@
     4. Zapněte adaptivní, chytré nebo plánované nabíjení, počkejte 2–5\u00A0sekund a pořiďte snímek.\n
     5. Pokud porovnání konfigurace není průkazné, můžete sekvenci volitelně zopakovat během nabíjení a zachytit stav dostupný pouze za provozu.\n
     6. Vytvořte a zkontrolujte porovnávací zprávu. Data jsou filtrována a potenciálně citlivé hodnoty skryty, přesto před sdílením zkontrolujte celou zprávu.</string>
-    <string name="charging_report_privacy_help" formatted="false">Ve výchozím stavu nezahrnuto. Tyto údaje mohou obsahovat osobní informace. Před kopírováním nebo uložením zkontrolujte náhled.\n
-    Po kontrole zprávu zkopírujte nebo uložte a odešlete ji e-mailem na adresu <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Záloha a obnovení</string>
     <string name="backup_restore_settings_summary" formatted="false">Zálohujte, obnovujte a přenášejte nastavení aplikace a data baterie</string>

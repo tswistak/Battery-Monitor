@@ -86,8 +86,8 @@ class HelpContentTest {
         })
         assertTrue(
             helpSections(
-                SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null
-            ).flatMap { it.paragraphs }.any { it.textResource == R.string.diag_help_overview })
+            SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null
+        ).flatMap { it.paragraphs }.any { it.textResource == R.string.diag_help_overview })
     }
 
     @Test
@@ -129,8 +129,9 @@ class HelpContentTest {
         assertTrue(R.string.diagnostics_root_help in monitoring)
         assertTrue(R.string.diagnostics_root_help !in charging)
         assertTrue(R.string.diagnostics_shizuku_help in monitoring)
-        val access = helpSections(MONITORING_HELP_TOPIC, 37, null)
-            .first { it.titleResource == R.string.diagnostics_permissions }.paragraphs
+        val access = helpSections(
+            MONITORING_HELP_TOPIC, 37, null
+        ).first { it.titleResource == R.string.diagnostics_permissions }.paragraphs
         assertEquals(
             listOf(
                 HelpParagraph(
@@ -140,21 +141,18 @@ class HelpContentTest {
                 ),
                 HelpParagraph(R.string.diagnostics_shizuku_help),
                 HelpParagraph(R.string.monitoring_privileged_access_help)
-            ),
-            access.takeLast(3)
+            ), access.takeLast(3)
         )
         assertEquals(
-            1,
-            access.count { it.textResource == R.string.monitoring_privileged_access_help })
+            1, access.count { it.textResource == R.string.monitoring_privileged_access_help })
         assertTrue(R.string.charging_diagnostics_help_steps in charging)
         assertTrue(R.string.charging_diagnostics_help_steps !in monitoring)
         assertTrue(R.string.diagnostics_help_report in monitoring)
         assertTrue(R.string.diag_include_debug !in monitoring)
-        assertTrue(R.string.charging_report_privacy_help in charging)
         assertTrue(
             helpSections(
-                SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null
-            ).flatMap { it.paragraphs }.any { it.textResource == R.string.diag_report_privacy })
+            SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null
+        ).flatMap { it.paragraphs }.any { it.textResource == R.string.diag_export_report_help })
     }
 
     @Test

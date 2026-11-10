@@ -254,6 +254,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0segundos</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0segundos</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0segundos</string>
+    <string name="chip_switching_interval_custom">Personalizado</string>
     <string name="pref_chip_indicate_charging" formatted="false">Mostrar emoji de carga</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">¿Mostrar un emoji de relámpago cuando se carga o cuando está completamente cargado?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Si está habilitado, el chip de la barra de estado mostrará un emoji de relámpago al lado el valor del chip mientras se carga o cuando está completamente cargado.</string>
@@ -619,9 +620,9 @@
     <string name="diag_charging_too_cold">Demasiado fría para cargar</string>
     <string name="diag_charging_too_hot">Demasiado caliente para cargar</string>
     <string name="diag_section_service" formatted="false">Servicio de batería de Android</string>
-    <string name="diag_help_service" formatted="false">«Sin procesar» incluye los nombres y valores originales de las difusiones de batería de Android y, cuando es accesible, de dumpsys battery. Pueden incluir la fuente de carga, el estado de la batería, la temperatura, el voltaje y otros datos del servicio de batería.</string>
+    <string name="diag_help_service" formatted="false">Los nombres y valores originales de las difusiones de batería de Android y, cuando es accesible, de dumpsys battery. Pueden incluir la fuente de carga, el estado de la batería, la temperatura, el voltaje y otros datos del servicio de batería.</string>
     <string name="diag_section_sysfs" formatted="false">Archivos power_supply del kernel</string>
-    <string name="diag_help_sysfs" formatted="false">«Sin procesar» muestra los nombres y valores originales leídos de /sys/class/power_supply, incluidos los valores de varias líneas. Busca por clave y toca una fila para ver y copiar el valor completo. Usa «Actualizar» para obtener nuevas lecturas. Battery Monitor también intenta leer con sus permisos normales de Android, sin root ni Shizuku.</string>
+    <string name="diag_help_sysfs" formatted="false">Los nombres y valores originales leídos de /sys/class/power_supply, incluidos los valores de varias líneas.</string>
     <string name="diag_fuel_gauge">Medidor de carga de batería</string>
     <string name="diag_mains_supply">Alimentación de CA</string>
     <string name="diag_charging_source">Fuente de carga</string>
@@ -651,15 +652,18 @@
     <string name="diag_input_voltage">Voltaje de entrada</string>
     <string name="diag_input_voltage_limit">Límite de voltaje de entrada</string>
     <string name="diag_section_metadata" formatted="false">Metadatos</string>
-    <string name="diag_help_metadata" formatted="false">«Sin procesar» también incluye los nombres y valores originales de las propiedades de BatteryManager, incluidos los contadores y las lecturas de corriente disponibles. Las propiedades adicionales, como los detalles de fabricación o el estado de sustitución, dependen de la versión de Android, de la compatibilidad del dispositivo y de los permisos.</string>
+    <string name="diag_help_metadata" formatted="false">Los nombres y valores originales de las propiedades de BatteryManager, incluidos los contadores y las lecturas de corriente disponibles. Las propiedades adicionales, como los detalles de fabricación o el estado de sustitución, dependen de la versión de Android, de la compatibilidad del dispositivo y de los permisos.</string>
     <string name="diag_raw">Sin procesar</string>
     <string name="diag_search_key">Buscar claves</string>
     <string name="diag_no_keys">No hay claves coincidentes en los datos disponibles</string>
     <string name="diag_raw_values">Valores sin procesar</string>
     <string name="diag_last_checked">Última comprobación: %1$s</string>
     <string name="diag_privileged_stale">Se muestran las lecturas privilegiadas anteriores. Actualiza para volver a intentarlo.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">Solución de problemas</string>
-    <string name="diag_help_troubleshooting" formatted="false">Los datos de Android se recopilan automáticamente en «Diagnóstico». Para obtener datos adicionales mediante root o Shizuku, activa el acceso privilegiado en «Fuentes adicionales». Battery Monitor intenta usar root primero y luego Shizuku. Shizuku debe estar en ejecución y tener el permiso concedido. Los campos que faltan siguen sin estar disponibles; las actualizaciones fallidas conservan la instantánea anterior y la marcan como desactualizada.</string>
+    <string name="diag_help_troubleshooting" formatted="false">Los datos de Android se recopilan automáticamente en «Diagnóstico». Para obtener datos adicionales mediante root o Shizuku, activa «Usar acceso privilegiado» en «Ajustes» → «Avanzado». Battery Monitor intenta usar root primero y luego Shizuku. Shizuku debe estar en ejecución y tener el permiso concedido. Los campos que faltan siguen sin estar disponibles; las actualizaciones fallidas conservan la instantánea anterior y la marcan como desactualizada.</string>
+    <string name="diag_help_raw_general" formatted="false">Claves y valores originales de las fuentes disponibles. Busca por clave y toca una fila para ver y copiar el valor completo. Usa «Actualizar» para obtener nuevas lecturas. Battery Monitor también intenta leer con sus permisos normales de Android, sin root ni Shizuku. La disponibilidad depende de las fuentes que se puedan leer.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Claves y valores originales de los datos guardados del predictor, cuando estén disponibles.</string>
+    <string name="diag_export_report_help" formatted="false">Crea un informe con las lecturas de diagnóstico y los datos del predictor disponibles. Revisa la vista previa y después copia el informe al portapapeles o guárdalo como archivo de texto. Antes de compartirlo, revisa el informe con atención, sobre todo si incluye valores sin procesar e identificadores.</string>
+    <string name="diag_charging_source_disconnected">Desenchufada</string>
 
     <string name="diagnostics" formatted="false">Diagnóstico</string>
     <string name="diagnostics_summary" formatted="false">Comprueba permisos y fiabilidad de la supervisión y crea un informe para resolver problemas</string>
@@ -721,11 +725,15 @@
     <string name="diag_missing_average">La corriente media es una lectura del dispositivo distinta de la corriente instantánea. Battery Monitor no calcula su propia media si el dispositivo no la proporciona.</string>
     <string name="diag_missing_estimated_health">Esta estimación requiere capacidades positivas de carga completa y de diseño de la misma batería. La capacidad de carga completa no debe superar la capacidad de diseño.</string>
     <string name="diag_missing_charge_time">Esta es la estimación de carga proporcionada por el dispositivo. «Estado actual» usa el método de predicción configurado en Battery Monitor y puede mostrar una estimación aunque el dispositivo no proporcione ninguna.</string>
-    <string name="diag_predictor_description">Las tasas muestran el tiempo por punto porcentual. Los cálculos recientes se conservan en memoria; las medias guardadas sobreviven a los reinicios. Las ventanas incompletas usan la tasa a largo plazo y las medias no guardadas usan valores predeterminados.</string>
-    <string name="diagnostics_predictor_help" formatted="false">«Funcionamiento de la aplicación» muestra las medias guardadas a largo plazo y los datos recientes del predictor. Las tasas recientes usan los cambios en el porcentaje de batería y muestran el tiempo por punto porcentual, el método seleccionado, la fuente de carga activa, los puntos y duraciones observados y si se incluye el intervalo incompleto. Las ventanas de cinco minutos y cinco puntos usan la tasa activa a largo plazo para los tramos no observados; los niveles omitidos se interpolan. El estado reciente se conserva en memoria y se restablece al reiniciar la monitorización, al pasar de carga a descarga o al cambiar la fuente de carga. Las medias aprendidas guardadas sobreviven a los reinicios. Estos datos son independientes del historial; borrar los registros no restablece las estimaciones.</string>
+    <string name="diagnostics_predictor_help" formatted="false">Revisa las medias guardadas a largo plazo y los datos recientes del predictor. Las tasas recientes usan los cambios en el porcentaje de batería y muestran el tiempo por punto porcentual, el método seleccionado, la fuente de carga activa, los puntos y duraciones observados y si se incluye el intervalo incompleto. Las ventanas de cinco minutos y cinco puntos usan la tasa activa a largo plazo para los tramos no observados; los niveles omitidos se interpolan. El estado reciente se conserva en memoria y se restablece al reiniciar la monitorización, al pasar de carga a descarga o al cambiar la fuente de carga. Las medias aprendidas guardadas sobreviven a los reinicios. Estos datos son independientes del historial; borrar los registros no restablece las estimaciones.</string>
+    <string name="diag_check_failed" formatted="false">El último intento de lectura falló.</string>
+    <string name="diag_reading_retained" formatted="false">Se muestra la lectura anterior.</string>
+    <string name="diag_value_copied" formatted="false">Valor copiado</string>
+    <string name="diag_predictor_read_failed" formatted="false">No se pudieron leer los datos de predicción guardados.</string>
+    <string name="diag_predictor_recent_title" formatted="false">Datos de predicción — Cálculos recientes</string>
+    <string name="diag_predictor_stored_title" formatted="false">Datos de predicción — Medias guardadas a largo plazo</string>
     <string name="diag_predictor_recent" formatted="false">Cálculos recientes</string>
     <string name="diag_predictor_no_recent" formatted="false">No hay ninguna estimación activa. Los datos recientes estarán disponibles tras una lectura del monitor durante la carga o descarga.</string>
-    <string name="diag_predictor_start_monitor">Inicia la monitorización arriba para consultar los datos guardados del predictor.</string>
     <string name="diag_predictor_active_state" formatted="false">Estado activo de la batería</string>
     <string name="diag_predictor_effective_rate" formatted="false">Tasa usada para la estimación</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">Últimos 5\u00A0minutos</string>
@@ -735,7 +743,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">Duración de la sesión observada</string>
     <string name="diag_predictor_current_level_duration" formatted="false">Tiempo en el nivel actual</string>
     <string name="diag_predictor_uses_partial" formatted="false">Intervalo incompleto incluido</string>
-    <string name="diag_predictor_saved_averages" formatted="false">Medias guardadas a largo plazo</string>
     <string name="diag_predictor_ac">Cargando (CA)</string>
     <string name="diag_predictor_wireless">Cargando (inalámbrica)</string>
     <string name="diag_predictor_usb">Cargando (USB)</string>
@@ -764,8 +771,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">Diagnóstico del límite de carga OEM</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Abre las herramientas de instantáneas y comparación para investigar cómo detecta Battery Monitor el límite de carga del dispositivo. Las instrucciones de preparación están en la ayuda de la propia pantalla de diagnóstico OEM.</string>
-    <string name="charging_tools_help_overview" formatted="false">Abre las herramientas de instantáneas y comparación para investigar cómo detecta Battery Monitor el límite de carga del dispositivo. Las instrucciones de preparación están en la ayuda de la propia pantalla de diagnóstico OEM.\n
-    Puede haber más información de diagnóstico disponible con acceso privilegiado. Concede acceso mediante Shizuku o root y activa el acceso privilegiado en «Ajustes» → «Avanzado» → «Usar acceso privilegiado» para obtener un informe de límites de carga OEM más útil.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Para obtener un informe útil, abre la «Ayuda» y sigue los pasos de preparación antes de capturar las instantáneas.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Puede haber más información de diagnóstico disponible con acceso privilegiado. Concede acceso mediante Shizuku o root y activa el acceso privilegiado en «Ajustes» → «Avanzado» → «Usar acceso privilegiado» para obtener un informe de límites de carga OEM más útil.</string>
     <string name="charging_diagnostics_capture" formatted="false">Capturar instantánea</string>
@@ -788,7 +793,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">Captura primero al menos dos modos de carga diferentes</string>
     <string name="charging_diagnostics_report" formatted="false">Crear informe comparativo</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Captura primero al menos dos modos de carga OEM diferentes</string>
-    <string name="charging_diagnostics_report_help" formatted="false">Captura primero al menos dos modos de carga OEM diferentes.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Captura primero al menos dos modos de carga OEM diferentes. Después de revisar el informe, cópialo o guárdalo y envíalo por correo electrónico a <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
     <string name="charging_diagnostics_copy" formatted="false">Copiar al portapapeles</string>
     <string name="charging_diagnostics_save" formatted="false">Guardar</string>
     <string name="charging_diagnostics_copied" formatted="false">Informe copiado</string>
@@ -802,8 +807,6 @@
     4. Activa la carga adaptativa, inteligente o programada, espera entre 2\u00A0y 5\u00A0segundos y captura otra instantánea.\n
     5. Si la comparación de configuración no es concluyente, puedes repetir opcionalmente la secuencia durante la carga para capturar estados que solo aparecen en tiempo de ejecución.\n
     6. Crea y revisa el informe comparativo. Los datos se filtran y los valores potencialmente sensibles se ocultan, pero revisa el informe completo antes de compartirlo.</string>
-    <string name="charging_report_privacy_help" formatted="false">Excluidos por defecto. Estos datos pueden contener información personal. Revisa la vista previa antes de copiar o guardar.\n
-    Después de revisar el informe, cópialo o guárdalo y envíalo por correo electrónico a <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Copia de seguridad y restauración</string>
     <string name="backup_restore_settings_summary" formatted="false">Haz copias de seguridad, restaura y transfiere los ajustes de la aplicación y los datos de la batería</string>

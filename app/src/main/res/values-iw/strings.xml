@@ -254,6 +254,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0שניות</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0שניות</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0שניות</string>
+    <string name="chip_switching_interval_custom">מותאם אישית</string>
     <string name="pref_chip_indicate_charging" formatted="false">הצג סימון טעינה</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">להציג סימון בזמן טעינה או טעינה מלאה?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">אם מופעל, שבב שורת המצב יציג סימון ליד הערך בזמן טעינה או טעינה מלאה.</string>
@@ -619,9 +620,9 @@
     <string name="diag_charging_too_cold">קרה מדי לטעינה</string>
     <string name="diag_charging_too_hot">חמה מדי לטעינה</string>
     <string name="diag_section_service" formatted="false">שירות הסוללה של Android</string>
-    <string name="diag_help_service" formatted="false">״נתונים גולמיים״ כוללים שמות וערכים מקוריים משידורי הסוללה של Android, וכשהגישה אפשרית, מ־dumpsys battery. הם עשויים לכלול מקור טעינה, מצב סוללה, טמפרטורה, מתח ומצבים אחרים של שירות הסוללה.</string>
+    <string name="diag_help_service" formatted="false">שמות וערכים מקוריים משידורי הסוללה של Android, וכשהגישה אפשרית, מ־dumpsys battery. הם עשויים לכלול מקור טעינה, מצב סוללה, טמפרטורה, מתח ומצבים אחרים של שירות הסוללה.</string>
     <string name="diag_section_sysfs" formatted="false">קובצי power_supply של הליבה</string>
-    <string name="diag_help_sysfs" formatted="false">״נתונים גולמיים״ מציגים את השמות והערכים המקוריים שנקראו מ־/sys/class/power_supply, כולל ערכים מרובי שורות. חפשו לפי מפתח והקישו על שורה כדי להציג ולהעתיק את הערך המלא. השתמשו ב״רענון״ לאיסוף קריאות חדשות. Battery Monitor מנסה לקרוא גם עם הרשאות Android הרגילות, ללא root או Shizuku.</string>
+    <string name="diag_help_sysfs" formatted="false">השמות והערכים המקוריים שנקראו מ־/sys/class/power_supply, כולל ערכים מרובי שורות.</string>
     <string name="diag_fuel_gauge">מד מטען הסוללה</string>
     <string name="diag_mains_supply">אספקת חשמל AC</string>
     <string name="diag_charging_source">מקור טעינה</string>
@@ -651,15 +652,18 @@
     <string name="diag_input_voltage">מתח כניסה</string>
     <string name="diag_input_voltage_limit">מגבלת מתח כניסה</string>
     <string name="diag_section_metadata" formatted="false">מטא נתונים</string>
-    <string name="diag_help_metadata" formatted="false">״נתונים גולמיים״ כוללים גם שמות וערכים מקוריים של מאפייני BatteryManager, כולל מונים וקריאות זרם זמינים. מאפיינים נוספים כמו פרטי ייצור או מצב החלפה תלויים בגרסת Android, בתמיכת המכשיר ובהרשאות.</string>
+    <string name="diag_help_metadata" formatted="false">שמות וערכים מקוריים של מאפייני BatteryManager, כולל מונים וקריאות זרם זמינים. מאפיינים נוספים כמו פרטי ייצור או מצב החלפה תלויים בגרסת Android, בתמיכת המכשיר ובהרשאות.</string>
     <string name="diag_raw">נתונים גולמיים</string>
     <string name="diag_search_key">חיפוש מפתחות</string>
     <string name="diag_no_keys">אין מפתחות תואמים בנתונים הזמינים</string>
     <string name="diag_raw_values">ערכים גולמיים</string>
     <string name="diag_last_checked">בדיקה אחרונה: %1$s</string>
     <string name="diag_privileged_stale">מוצגות הקריאות הקודמות מגישה מיוחסת. יש לרענן כדי לנסות שוב.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">פתרון בעיות</string>
-    <string name="diag_help_troubleshooting" formatted="false">נתוני Android נאספים אוטומטית ב״אבחון״. לנתוני root או Shizuku נוספים, הפעילו גישה מיוחסת תחת ״מקורות נוספים״. Battery Monitor מנסה תחילה root ואז Shizuku. Shizuku צריך לפעול ויש להעניק הרשאה. שדות חסרים נשארים לא זמינים; רענון שנכשל שומר את תמונת המצב הקודמת ומסמן אותה כלא עדכנית.</string>
+    <string name="diag_help_troubleshooting" formatted="false">נתוני Android נאספים אוטומטית ב״אבחון״. לנתוני root או Shizuku נוספים, הפעילו את ״שימוש בגישה מיוחסת״ ב״הגדרות״ ← ״מתקדם״. Battery Monitor מנסה תחילה root ואז Shizuku. Shizuku צריך לפעול ויש להעניק הרשאה. שדות חסרים נשארים לא זמינים; רענון שנכשל שומר את תמונת המצב הקודמת ומסמן אותה כלא עדכנית.</string>
+    <string name="diag_help_raw_general" formatted="false">מפתחות וערכים מקוריים ממקורות זמינים. חפשו לפי מפתח והקישו על שורה כדי להציג ולהעתיק את הערך המלא. השתמשו ב״רענון״ לאיסוף קריאות חדשות. Battery Monitor מנסה לקרוא גם עם הרשאות Android הרגילות, ללא root או Shizuku. הזמינות תלויה במקורות שניתן לקרוא.</string>
+    <string name="diag_help_raw_predictor" formatted="false">מפתחות וערכים מקוריים של נתוני חיזוי שמורים, כאשר הם זמינים.</string>
+    <string name="diag_export_report_help" formatted="false">צרו דוח של קריאות האבחון ונתוני החיזוי הזמינים. עיינו בתצוגה המקדימה, ואז העתיקו את הדוח ללוח או שמרו אותו כקובץ טקסט. לפני השיתוף, בדקו את הדוח בקפידה, במיוחד אם הוא כולל ערכים גולמיים ומזהים.</string>
+    <string name="diag_charging_source_disconnected">לא-מחובר</string>
 
     <string name="diagnostics" formatted="false">אבחון</string>
     <string name="diagnostics_summary" formatted="false">בדיקת הרשאות ואמינות הניטור ויצירת דוח לפתרון בעיות</string>
@@ -721,11 +725,15 @@
     <string name="diag_missing_average">זרם ממוצע הוא קריאה נפרדת של המכשיר מהזרם הרגעי. Battery Monitor אינו מחשב ממוצע משלו כשהמכשיר אינו מספק אותו.</string>
     <string name="diag_missing_estimated_health">הערכה זו דורשת קיבולת טעינה מלאה וקיבולת תכנון חיוביות מאותה סוללה. קיבולת הטעינה המלאה אינה יכולה לעלות על קיבולת התכנון.</string>
     <string name="diag_missing_charge_time">זו הערכת הטעינה שמדווחת על ידי המכשיר. ״מצב נוכחי״ משתמש בשיטת החיזוי שהוגדרה ב־Battery Monitor ויכול להציג הערכה גם ללא הערכה מהמכשיר.</string>
-    <string name="diag_predictor_description">הקצבים מציגים את הזמן לנקודת אחוז אחת. החישובים האחרונים נשמרים בזיכרון; ממוצעים שמורים נשארים לאחר אתחול. חלונות לא שלמים משתמשים בקצב ארוך הטווח, וממוצעים שלא נשמרו משתמשים בברירות המחדל.</string>
-    <string name="diagnostics_predictor_help" formatted="false">״פעולת האפליקציה״ מציגה ממוצעים שמורים לטווח ארוך ואת הקלטים האחרונים לחיזוי. הקצבים האחרונים משתמשים בשינויים באחוז הסוללה ומציגים את הזמן לנקודת אחוז אחת, השיטה שנבחרה, מקור הטעינה הפעיל, הנקודות והמשכים שנצפו והאם המרווח שטרם הושלם נכלל. חלונות חמש הדקות וחמש נקודות האחוז משתמשים בקצב הפעיל לטווח ארוך עבור חלקים שלא נצפו; רמות שדולגו מחושבות באמצעות אינטרפולציה. המצב האחרון נשמר בזיכרון ומתאפס כשהניטור מופעל מחדש, במעבר בין טעינה לפריקה או בשינוי מקור הטעינה. ממוצעים שמורים שנלמדו נשארים לאחר אתחול. נתונים אלו עצמאיים מיומני ההיסטוריה; ניקוי היומנים אינו מאפס את ההערכות.</string>
+    <string name="diagnostics_predictor_help" formatted="false">עיינו בממוצעים השמורים לטווח ארוך ובקלטים האחרונים לחיזוי. הקצבים האחרונים משתמשים בשינויים באחוז הסוללה ומציגים את הזמן לנקודת אחוז אחת, השיטה שנבחרה, מקור הטעינה הפעיל, הנקודות והמשכים שנצפו והאם המרווח שטרם הושלם נכלל. חלונות חמש הדקות וחמש נקודות האחוז משתמשים בקצב הפעיל לטווח ארוך עבור חלקים שלא נצפו; רמות שדולגו מחושבות באמצעות אינטרפולציה. המצב האחרון נשמר בזיכרון ומתאפס כשהניטור מופעל מחדש, במעבר בין טעינה לפריקה או בשינוי מקור הטעינה. ממוצעים שמורים שנלמדו נשארים לאחר אתחול. נתונים אלו עצמאיים מיומני ההיסטוריה; ניקוי היומנים אינו מאפס את ההערכות.</string>
+    <string name="diag_check_failed" formatted="false">ניסיון הקריאה האחרון נכשל.</string>
+    <string name="diag_reading_retained" formatted="false">מוצגת הקריאה הקודמת.</string>
+    <string name="diag_value_copied" formatted="false">הערך הועתק</string>
+    <string name="diag_predictor_read_failed" formatted="false">לא ניתן לקרוא את נתוני החיזוי השמורים.</string>
+    <string name="diag_predictor_recent_title" formatted="false">נתוני חיזוי — חישובים אחרונים</string>
+    <string name="diag_predictor_stored_title" formatted="false">נתוני חיזוי — ממוצעים שמורים לטווח ארוך</string>
     <string name="diag_predictor_recent" formatted="false">חישובים אחרונים</string>
     <string name="diag_predictor_no_recent" formatted="false">אין הערכה פעילה. נתונים אחרונים זמינים לאחר קריאת ניטור בזמן טעינה או פריקה.</string>
-    <string name="diag_predictor_start_monitor">יש להפעיל את הניטור למעלה כדי לבדוק את נתוני החיזוי השמורים.</string>
     <string name="diag_predictor_active_state" formatted="false">מצב הסוללה הפעיל</string>
     <string name="diag_predictor_effective_rate" formatted="false">הקצב המשמש להערכה</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">5\u00A0הדקות האחרונות</string>
@@ -735,7 +743,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">משך ההפעלה שנצפה</string>
     <string name="diag_predictor_current_level_duration" formatted="false">זמן ברמה הנוכחית</string>
     <string name="diag_predictor_uses_partial" formatted="false">המרווח שטרם הושלם נכלל</string>
-    <string name="diag_predictor_saved_averages" formatted="false">ממוצעים שמורים לטווח ארוך</string>
     <string name="diag_predictor_ac">טעינה (AC)</string>
     <string name="diag_predictor_wireless">טעינה (אלחוטית)</string>
     <string name="diag_predictor_usb">טעינה (USB)</string>
@@ -764,8 +771,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">אבחון מגבלת טעינה של היצרן</string>
     <string name="charging_diagnostics_help_overview" formatted="false">פתחו את כלי תמונות המצב וההשוואה כדי לבדוק כיצד Battery Monitor מזהה את מגבלת הטעינה של המכשיר. הוראות ההכנה זמינות בעזרה של מסך אבחון היצרן עצמו.</string>
-    <string name="charging_tools_help_overview" formatted="false">פתחו את כלי תמונות המצב וההשוואה כדי לבדוק כיצד Battery Monitor מזהה את מגבלת הטעינה של המכשיר. הוראות ההכנה זמינות בעזרה של מסך אבחון היצרן עצמו.\n
-    ייתכן שמידע אבחון נוסף יהיה זמין עם גישה מורשית. העניקו גישה דרך Shizuku או root והפעילו גישה מורשית בנתיב ״הגדרות״ → ״מתקדם״ → ״שימוש בגישה מיוחסת״ כדי לקבל דוח שימושי יותר על מגבלת הטעינה של היצרן.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">כדי ליצור דוח שימושי, פתחו את ״עזרה״ ובצעו את שלבי ההכנה לפני צילום תמונות המצב.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">ייתכן שמידע אבחון נוסף יהיה זמין עם גישה מורשית. העניקו גישה דרך Shizuku או root והפעילו גישה מורשית בנתיב ״הגדרות״ → ״מתקדם״ → ״שימוש בגישה מיוחסת״ כדי לקבל דוח שימושי יותר על מגבלת הטעינה של היצרן.</string>
     <string name="charging_diagnostics_capture" formatted="false">צילום תמונת מצב</string>
@@ -788,7 +793,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">תחילה צלמו לפחות שני מצבי טעינה שונים</string>
     <string name="charging_diagnostics_report" formatted="false">יצירת דוח השוואה</string>
     <string name="charging_diagnostics_report_summary" formatted="false">תחילה צלמו לפחות שני מצבי טעינה שונים של היצרן</string>
-    <string name="charging_diagnostics_report_help" formatted="false">תחילה צלמו לפחות שני מצבי טעינה שונים של היצרן.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">תחילה צלמו לפחות שני מצבי טעינה שונים של היצרן. לאחר עיון בדוח, העתיקו או שמרו אותו ושלחו אותו בדוא״ל אל <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
     <string name="charging_diagnostics_copy" formatted="false">העתקה ללוח</string>
     <string name="charging_diagnostics_save" formatted="false">שמירה</string>
     <string name="charging_diagnostics_copied" formatted="false">הדוח הועתק</string>
@@ -802,8 +807,6 @@
     4. הפעילו טעינה מסתגלת, חכמה או מתוזמנת, המתינו 2–5\u00A0שניות וצלמו.\n
     5. אם השוואת התצורה אינה חד־משמעית, אפשר לחזור על הרצף בזמן טעינה כדי ללכוד מצב שמופיע רק בזמן פעולה.\n
     6. צרו ועיינו בדוח ההשוואה. הנתונים מסוננים וערכים שעלולים להיות רגישים מוסתרים, אך יש לעיין בדוח המלא לפני השיתוף.</string>
-    <string name="charging_report_privacy_help" formatted="false">לא נכללים כברירת מחדל. נתונים אלו עשויים להכיל מידע אישי. יש לבדוק את התצוגה המקדימה לפני העתקה או שמירה.\n
-    לאחר עיון בדוח, העתיקו או שמרו אותו ושלחו אותו בדוא״ל אל <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">גיבוי ושחזור</string>
     <string name="backup_restore_settings_summary" formatted="false">גבה, שחזר והעבר את הגדרות היישום ונתוני הסוללה</string>

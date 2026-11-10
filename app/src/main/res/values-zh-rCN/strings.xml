@@ -248,6 +248,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0秒</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0秒</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0秒</string>
+    <string name="chip_switching_interval_custom">自定义</string>
     <string name="pref_chip_indicate_charging" formatted="false">显示充电表情符号</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">充电或充满电时显示闪电表情符号？</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">如果启用，状态栏芯片将在旁边显示闪电表情符号 充电时或充满电时的芯片值。</string>
@@ -609,9 +610,9 @@
     <string name="diag_charging_too_cold">温度过低，无法充电</string>
     <string name="diag_charging_too_hot">温度过高，无法充电</string>
     <string name="diag_section_service" formatted="false">Android 电池服务</string>
-    <string name="diag_help_service" formatted="false">“原始数据”包含 Android 电池广播与可访问时的 dumpsys battery 原始名称及数值。内容可能包含充电来源、电池状态、温度、电压与其他电池服务状态。</string>
+    <string name="diag_help_service" formatted="false">Android 电池广播与可访问时的 dumpsys battery 原始名称及数值。内容可能包含充电来源、电池状态、温度、电压与其他电池服务状态。</string>
     <string name="diag_section_sysfs" formatted="false">内核 power_supply 文件</string>
-    <string name="diag_help_sysfs" formatted="false">“原始数据”显示从 /sys/class/power_supply 读取的原始名称与数值，包含多行数值。依键搜寻，点击行可查看并复制完整数值。使用“刷新”收集新读数。Battery Monitor 也会尝试以常规 Android 权限读取，无需 root 或 Shizuku。</string>
+    <string name="diag_help_sysfs" formatted="false">从 /sys/class/power_supply 读取的原始名称与数值，包含多行数值。</string>
     <string name="diag_fuel_gauge">电池电量计</string>
     <string name="diag_mains_supply">AC 电源</string>
     <string name="diag_charging_source">充电来源</string>
@@ -641,15 +642,18 @@
     <string name="diag_input_voltage">输入电压</string>
     <string name="diag_input_voltage_limit">输入电压上限</string>
     <string name="diag_section_metadata" formatted="false">元数据</string>
-    <string name="diag_help_metadata" formatted="false">“原始数据”也包含 BatteryManager 的原始属性名称与数值，包括可用计数器与电流读数。制造详情或更换状态等额外属性取决于 Android 版本、设备支援与权限。</string>
+    <string name="diag_help_metadata" formatted="false">BatteryManager 的原始属性名称与数值，包括可用计数器与电流读数。制造详情或更换状态等额外属性取决于 Android 版本、设备支援与权限。</string>
     <string name="diag_raw">原始数据</string>
     <string name="diag_search_key">搜寻键</string>
     <string name="diag_no_keys">可用数据中没有相符的键</string>
     <string name="diag_raw_values">原始数值</string>
     <string name="diag_last_checked">上次检查：%1$s</string>
     <string name="diag_privileged_stale">当前显示先前通过特殊权限取得的读数。请刷新以再试一次。</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">故障排查</string>
-    <string name="diag_help_troubleshooting" formatted="false">“诊断”会自动收集 Android 数据。如需额外 root 或 Shizuku 数据，请在“其他来源”启用特殊权限访问。Battery Monitor 会先尝试 root，再尝试 Shizuku。Shizuku 必须正在执行且已授予权限。缺少的字段仍会显示为无法取得；刷新失败时会保留先前快照并标记为过期。</string>
+    <string name="diag_help_troubleshooting" formatted="false">“诊断”会自动收集 Android 数据。如需额外 root 或 Shizuku 数据，请在“设置”→“高级”启用“使用特权访问”。Battery Monitor 会先尝试 root，再尝试 Shizuku。Shizuku 必须正在执行且已授予权限。缺少的字段仍会显示为无法取得；刷新失败时会保留先前快照并标记为过期。</string>
+    <string name="diag_help_raw_general" formatted="false">可用来源的原始键与数值。依键搜寻，点击行可查看并复制完整数值。使用“刷新”收集新读数。Battery Monitor 也会尝试以常规 Android 权限读取，无需 root 或 Shizuku。数据是否可用取决于哪些来源可读取。</string>
+    <string name="diag_help_raw_predictor" formatted="false">可用预测数据的原始键与数值。</string>
+    <string name="diag_export_report_help" formatted="false">创建包含可用诊断读数与预测数据的报告。检查预览，然后将报告复制到剪贴板或保存为文本文件。分享前请仔细检查报告，尤其是包含原始数值与标识信息时。</string>
+    <string name="diag_charging_source_disconnected">未接电源</string>
 
     <string name="diagnostics" formatted="false">诊断</string>
     <string name="diagnostics_summary" formatted="false">检查权限和监控可靠性，并创建故障排查报告</string>
@@ -711,11 +715,15 @@
     <string name="diag_missing_average">平均电流是与瞬时电流不同的设备读数。设备未提供平均值时，Battery Monitor 不会自行计算。</string>
     <string name="diag_missing_estimated_health">此估算需要同一电池的正值满充容量与设计容量。满充容量不得超过设计容量。</string>
     <string name="diag_missing_charge_time">这是设备报告的充电估算。“当前状态”使用 Battery Monitor 设置的预测方法，即使没有设备估算，也可能显示估算。</string>
-    <string name="diag_predictor_description">速率显示每一个百分点所需的时间。近期计算保留在内存中；保存的平均值在重启后仍会保留。不完整的区间使用长期速率，未保存的平均值则使用默认值。</string>
-    <string name="diagnostics_predictor_help" formatted="false">“应用运行”显示保存的长期平均值与近期预测输入。近期速率根据电池百分比变化，显示每一个百分点所需时间、所选方法、当前充电来源、已观测点数与时间，以及是否包含未完成区间。五分钟与五个百分点的区间会以当前长期速率补足未观测部分，并对跳过的电量进行插值。近期状态保留在内存中，在监测重启、充放电切换或充电来源变更时重置。保存的已学习平均值在重启后仍会保留。此数据独立于历史记录；清除记录不会重置估算。</string>
+    <string name="diagnostics_predictor_help" formatted="false">请查看保存的长期平均值与近期预测输入。近期速率根据电池百分比变化，显示每一个百分点所需时间、所选方法、当前充电来源、已观测点数与时间，以及是否包含未完成区间。五分钟与五个百分点的区间会以当前长期速率补足未观测部分，并对跳过的电量进行插值。近期状态保留在内存中，在监测重启、充放电切换或充电来源变更时重置。保存的已学习平均值在重启后仍会保留。此数据独立于历史记录；清除记录不会重置估算。</string>
+    <string name="diag_check_failed" formatted="false">最近一次读取失败。</string>
+    <string name="diag_reading_retained" formatted="false">当前显示上一次的读数。</string>
+    <string name="diag_value_copied" formatted="false">已复制数值</string>
+    <string name="diag_predictor_read_failed" formatted="false">无法读取保存的预测数据。</string>
+    <string name="diag_predictor_recent_title" formatted="false">预测数据：近期计算</string>
+    <string name="diag_predictor_stored_title" formatted="false">预测数据：保存的长期平均值</string>
     <string name="diag_predictor_recent" formatted="false">近期计算</string>
     <string name="diag_predictor_no_recent" formatted="false">没有进行中的估算。充电或放电时取得监测读数后，才会有近期数据。</string>
-    <string name="diag_predictor_start_monitor">请在上方开始监测，以查看保存的预测数据。</string>
     <string name="diag_predictor_active_state" formatted="false">当前电池状态</string>
     <string name="diag_predictor_effective_rate" formatted="false">估算使用的速率</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">最近 5\u00A0分钟</string>
@@ -725,7 +733,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">已观测的会话时间</string>
     <string name="diag_predictor_current_level_duration" formatted="false">当前电量的持续时间</string>
     <string name="diag_predictor_uses_partial" formatted="false">包含未完成区间</string>
-    <string name="diag_predictor_saved_averages" formatted="false">保存的长期平均值</string>
     <string name="diag_predictor_ac">充电（AC）</string>
     <string name="diag_predictor_wireless">充电（无线）</string>
     <string name="diag_predictor_usb">充电（USB）</string>
@@ -754,8 +761,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">OEM 充电上限诊断</string>
     <string name="charging_diagnostics_help_overview" formatted="false">打开快照和比较工具，调查 Battery Monitor 如何检测设备的充电上限。准备说明可在 OEM 诊断屏幕本身的帮助中找到。</string>
-    <string name="charging_tools_help_overview" formatted="false">打开快照和比较工具，调查 Battery Monitor 如何检测设备的充电上限。准备说明可在 OEM 诊断屏幕本身的帮助中找到。\n
-    使用特权访问可能会获得更多诊断信息。请授予 Shizuku 或 root 访问权限，并在“设置” → “高级” → “使用特权访问”中启用特权访问，以生成更有用的 OEM 充电上限报告。</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">为了生成有用的报告，请先打开“帮助”并按照准备步骤操作，再捕获快照。</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">使用特权访问可能会获得更多诊断信息。请授予 Shizuku 或 root 访问权限，并在“设置” → “高级” → “使用特权访问”中启用特权访问，以生成更有用的 OEM 充电上限报告。</string>
     <string name="charging_diagnostics_capture" formatted="false">捕获快照</string>
@@ -776,7 +781,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">请先捕获至少两种不同的充电模式</string>
     <string name="charging_diagnostics_report" formatted="false">创建比较报告</string>
     <string name="charging_diagnostics_report_summary" formatted="false">请先捕获至少两种不同的 OEM 充电模式</string>
-    <string name="charging_diagnostics_report_help" formatted="false">请先捕获至少两种不同的 OEM 充电模式。</string>
+    <string name="charging_diagnostics_report_help" formatted="false">请先捕获至少两种不同的 OEM 充电模式。 查看报告后，请复制或保存，然后通过电子邮件发送至 <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>。</string>
     <string name="charging_diagnostics_copy" formatted="false">复制到剪贴板</string>
     <string name="charging_diagnostics_save" formatted="false">保存</string>
     <string name="charging_diagnostics_copied" formatted="false">已复制报告</string>
@@ -790,8 +795,6 @@
     4. 启用自适应、智能或定时充电，等待 2–5\u00A0秒，然后捕获快照。\n
     5. 如果配置比较无法得出明确结果，可以选择在充电时重复此过程，以捕获仅在运行时出现的状态。\n
     6. 创建并检查比较报告。数据会经过筛选，可能敏感的值会被隐藏，但发送前仍请检查完整报告。</string>
-    <string name="charging_report_privacy_help" formatted="false">默认不包含。这些数据可能含有个人信息。复制或保存前请检查预览。\n
-    查看报告后，请复制或保存，然后通过电子邮件发送至 <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>。</string>
 
     <string name="pref_backup_restore" formatted="false">备份与恢复</string>
     <string name="backup_restore_settings_summary" formatted="false">备份、恢复和传输应用设置及电池数据</string>

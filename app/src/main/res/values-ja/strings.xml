@@ -248,6 +248,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10秒</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15秒</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30秒</string>
+    <string name="chip_switching_interval_custom">カスタム</string>
     <string name="pref_chip_indicate_charging" formatted="false">充電絵文字を表示</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">充電中または満充電時に稲妻絵文字を表示しますか？</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">有効にすると、充電中または満充電時に、ステータスバーチップの値の横に稲妻絵文字が表示されます。</string>
@@ -609,9 +610,9 @@
     <string name="diag_charging_too_cold">低温のため充電できません</string>
     <string name="diag_charging_too_hot">高温のため充電できません</string>
     <string name="diag_section_service" formatted="false">Android バッテリーサービス</string>
-    <string name="diag_help_service" formatted="false">「生データ」には Android のバッテリーブロードキャストと、アクセスできる場合は dumpsys battery の元の名前と値が含まれます。充電元、バッテリー状態、温度、電圧、その他のバッテリーサービスの状態が含まれる場合があります。</string>
+    <string name="diag_help_service" formatted="false">Android のバッテリーブロードキャストと、アクセスできる場合は dumpsys battery の元の名前と値が含まれます。充電元、バッテリー状態、温度、電圧、その他のバッテリーサービスの状態が含まれる場合があります。</string>
     <string name="diag_section_sysfs" formatted="false">カーネル power_supply ファイル</string>
-    <string name="diag_help_sysfs" formatted="false">「生データ」は /sys/class/power_supply から読み取った元の名前と値を、複数行の値も含めて表示します。キーで検索し、行をタップすると値全体を確認してコピーできます。「更新」で新しい測定値を取得します。Battery Monitor は root や Shizuku を使わず、通常の Android 権限での読み取りも試みます。</string>
+    <string name="diag_help_sysfs" formatted="false">/sys/class/power_supply から読み取った元の名前と値を、複数行の値も含めて表示します。</string>
     <string name="diag_fuel_gauge">バッテリー残量計</string>
     <string name="diag_mains_supply">AC 電源</string>
     <string name="diag_charging_source">充電元</string>
@@ -641,15 +642,18 @@
     <string name="diag_input_voltage">入力電圧</string>
     <string name="diag_input_voltage_limit">入力電圧の上限</string>
     <string name="diag_section_metadata" formatted="false">メタデータ</string>
-    <string name="diag_help_metadata" formatted="false">「生データ」には、取得できるカウンターや電流の測定値など、BatteryManager の元のプロパティ名と値も含まれます。製造情報や交換状態などの追加プロパティは、Android のバージョン、端末の対応状況、権限に依存します。</string>
+    <string name="diag_help_metadata" formatted="false">取得できるカウンターや電流の測定値など、BatteryManager の元のプロパティ名と値も含まれます。製造情報や交換状態などの追加プロパティは、Android のバージョン、端末の対応状況、権限に依存します。</string>
     <string name="diag_raw">生データ</string>
     <string name="diag_search_key">キーを検索</string>
     <string name="diag_no_keys">取得したデータに一致するキーはありません</string>
     <string name="diag_raw_values">生の値</string>
     <string name="diag_last_checked">最終確認: %1$s</string>
     <string name="diag_privileged_stale">以前取得した特権アクセスの測定値を表示しています。更新して再試行してください。</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">トラブルシューティング</string>
-    <string name="diag_help_troubleshooting" formatted="false">Android のデータは「診断」で自動収集します。追加の root または Shizuku のデータには、「追加の取得元」で特権アクセスを有効にしてください。Battery Monitor は root、次に Shizuku を試します。Shizuku の起動と権限の許可が必要です。ない項目は取得できないままです。更新に失敗すると、前回のスナップショットを保持し、古いものとして表示します。</string>
+    <string name="diag_help_troubleshooting" formatted="false">Android のデータは「診断」で自動収集します。追加の root または Shizuku のデータには、「設定」→「詳細設定」で「特権アクセスを使用」を有効にしてください。Battery Monitor は root、次に Shizuku を試します。Shizuku の起動と権限の許可が必要です。ない項目は取得できないままです。更新に失敗すると、前回のスナップショットを保持し、古いものとして表示します。</string>
+    <string name="diag_help_raw_general" formatted="false">利用できる取得元の元のキーと値を表示します。キーで検索し、行をタップすると値全体を確認してコピーできます。「更新」で新しい測定値を取得します。Battery Monitor は root や Shizuku を使わず、通常の Android 権限での読み取りも試みます。利用できるデータは、読み取れる取得元によって異なります。</string>
+    <string name="diag_help_raw_predictor" formatted="false">保存済みの予測データの元のキーと値を、利用できる場合に表示します。</string>
+    <string name="diag_export_report_help" formatted="false">利用できる診断の測定値と予測データのレポートを作成します。プレビューを確認してから、レポートをクリップボードにコピーするか、テキストファイルとして保存します。共有する前に、特に生の値や識別子が含まれる場合は、レポートを注意深く確認してください。</string>
+    <string name="diag_charging_source_disconnected">未接続</string>
 
     <string name="diagnostics" formatted="false">診断</string>
     <string name="diagnostics_summary" formatted="false">権限と監視の信頼性を確認し、トラブルシューティング用レポートを作成します</string>
@@ -711,11 +715,15 @@
     <string name="diag_missing_average">平均電流は、瞬間電流とは別の端末の測定値です。端末が平均値を提供しない場合、Battery Monitor は独自の平均値を計算しません。</string>
     <string name="diag_missing_estimated_health">この推定には、同じバッテリーの正の満充電容量と設計容量が必要です。満充電容量が設計容量を超えてはいけません。</string>
     <string name="diag_missing_charge_time">これは端末が報告した充電時間の推定です。「現在の状態」は Battery Monitor で設定した予測方式を使うため、端末の推定値がなくても推定を表示できる場合があります。</string>
-    <string name="diag_predictor_description">変化率は1パーセントポイントにかかる時間を示します。最近の計算はメモリ内に保持され、保存済みの平均値は再起動後も残ります。不完全な期間には長期の変化率を、未保存の平均値には既定値を使います。</string>
-    <string name="diagnostics_predictor_help" formatted="false">「アプリの動作」には、保存済みの長期平均と最近の予測入力が表示されます。最近の変化率はバッテリー残量の変化を使い、1パーセントポイントの時間、選択した方式、有効な充電元、観測したポイントと期間、未完了の区間を含むかを示します。5分間と5ポイントの計算では、未観測部分に有効な長期変化率を使い、飛ばされた残量を補間します。最近の状態はメモリ内にあり、監視の再開、充放電の切り替え、充電元の変更でリセットされます。学習して保存した平均値は再起動後も残ります。履歴ログとは独立しており、ログを消去しても推定はリセットされません。</string>
+    <string name="diagnostics_predictor_help" formatted="false">保存済みの長期平均と最近の予測入力を確認してください。最近の変化率はバッテリー残量の変化を使い、1パーセントポイントの時間、選択した方式、有効な充電元、観測したポイントと期間、未完了の区間を含むかを示します。5分間と5ポイントの計算では、未観測部分に有効な長期変化率を使い、飛ばされた残量を補間します。最近の状態はメモリ内にあり、監視の再開、充放電の切り替え、充電元の変更でリセットされます。学習して保存した平均値は再起動後も残ります。履歴ログとは独立しており、ログを消去しても推定はリセットされません。</string>
+    <string name="diag_check_failed" formatted="false">最新の読み取りに失敗しました。</string>
+    <string name="diag_reading_retained" formatted="false">前回の測定値を表示しています。</string>
+    <string name="diag_value_copied" formatted="false">値をコピーしました</string>
+    <string name="diag_predictor_read_failed" formatted="false">保存済みの予測データを読み取れませんでした。</string>
+    <string name="diag_predictor_recent_title" formatted="false">予測データ：最近の計算</string>
+    <string name="diag_predictor_stored_title" formatted="false">予測データ：保存済みの長期平均</string>
     <string name="diag_predictor_recent" formatted="false">最近の計算</string>
     <string name="diag_predictor_no_recent" formatted="false">有効な推定はありません。充電中または放電中に監視の測定値を取得すると、最近のデータを表示できます。</string>
-    <string name="diag_predictor_start_monitor">保存済みの予測データを確認するには、上で監視を開始してください。</string>
     <string name="diag_predictor_active_state" formatted="false">現在のバッテリー状態</string>
     <string name="diag_predictor_effective_rate" formatted="false">推定に使った変化率</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">直近5分間</string>
@@ -725,7 +733,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">観測したセッションの時間</string>
     <string name="diag_predictor_current_level_duration" formatted="false">現在の残量での経過時間</string>
     <string name="diag_predictor_uses_partial" formatted="false">未完了の区間を含む</string>
-    <string name="diag_predictor_saved_averages" formatted="false">保存済みの長期平均</string>
     <string name="diag_predictor_ac">充電（AC）</string>
     <string name="diag_predictor_wireless">充電（ワイヤレス）</string>
     <string name="diag_predictor_usb">充電（USB）</string>
@@ -754,8 +761,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">OEM充電上限の診断</string>
     <string name="charging_diagnostics_help_overview" formatted="false">スナップショットと比較のツールを開き、Battery Monitor が端末の充電上限をどのように検出するかを調べます。準備の手順は、OEM 診断画面のヘルプにあります。</string>
-    <string name="charging_tools_help_overview" formatted="false">スナップショットと比較のツールを開き、Battery Monitor が端末の充電上限をどのように検出するかを調べます。準備の手順は、OEM 診断画面のヘルプにあります。\n
-    特権アクセスを使用すると、より多くの診断情報を取得できる場合があります。より有用なOEM充電上限レポートを作成するには、Shizukuまたはrootアクセスを許可し、「設定」 → 「詳細設定」 → 「特権アクセスを使用」で特権アクセスを有効にしてください。</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">有用なレポートを作成するには、スナップショットを取得する前に「ヘルプ」を開き、準備手順に従ってください。</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">特権アクセスを使用すると、より多くの診断情報を取得できる場合があります。より有用なOEM充電上限レポートを作成するには、Shizukuまたはrootアクセスを許可し、「設定」 → 「詳細設定」 → 「特権アクセスを使用」で特権アクセスを有効にしてください。</string>
     <string name="charging_diagnostics_capture" formatted="false">スナップショットを取得</string>
@@ -776,7 +781,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">最初に2種類以上の充電モードを取得してください</string>
     <string name="charging_diagnostics_report" formatted="false">比較レポートを作成</string>
     <string name="charging_diagnostics_report_summary" formatted="false">最初に2種類以上のOEM充電モードを取得してください</string>
-    <string name="charging_diagnostics_report_help" formatted="false">最初に2種類以上のOEM充電モードを取得してください。</string>
+    <string name="charging_diagnostics_report_help" formatted="false">最初に2種類以上のOEM充電モードを取得してください。 レポートを確認後、コピーまたは保存し、メールで <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> へ送信してください。</string>
     <string name="charging_diagnostics_copy" formatted="false">クリップボードにコピー</string>
     <string name="charging_diagnostics_save" formatted="false">保存</string>
     <string name="charging_diagnostics_copied" formatted="false">レポートをコピーしました</string>
@@ -790,8 +795,6 @@
     4. アダプティブ、スマート、またはスケジュール充電を有効にし、2–5秒待って取得します。\n
     5. 設定の比較で明確な結果が得られない場合は、充電中に同じ手順を任意で繰り返し、動作中だけ現れる状態を取得できます。\n
     6. 比較レポートを作成して確認します。データはフィルターされ、潜在的に機密な値は隠されますが、共有前にレポート全体を確認してください。</string>
-    <string name="charging_report_privacy_help" formatted="false">既定では含めません。個人情報が含まれる場合があります。コピーや保存の前にプレビューを確認してください。\n
-    レポートを確認後、コピーまたは保存し、メールで <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> へ送信してください。</string>
 
     <string name="pref_backup_restore" formatted="false">バックアップと復元</string>
     <string name="backup_restore_settings_summary" formatted="false">アプリの設定とバッテリーデータをバックアップ、復元、転送します</string>

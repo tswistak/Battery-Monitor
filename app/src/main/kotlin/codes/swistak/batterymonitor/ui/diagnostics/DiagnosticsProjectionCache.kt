@@ -15,6 +15,7 @@
 */
 package codes.swistak.batterymonitor.ui.diagnostics
 
+import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
 import codes.swistak.batterymonitor.diagnostics.DiagnosticsDurationFormatter
 import codes.swistak.batterymonitor.monitoring.PredictorRecentState
@@ -24,6 +25,9 @@ import java.util.Locale
 internal data class DiagnosticsFormat(
     val multiplier: Int, val fahrenheit: Boolean, val locale: Locale
 )
+
+internal fun rawDiagnosticGroupTitle(group: DiagnosticGroup): Int =
+    if (group.title == R.string.diag_section_service) R.string.diag_raw_values else group.title
 
 internal class DiagnosticsProjectionCache {
     private var snapshots: List<AdvancedBatterySnapshot>? = null
@@ -80,13 +84,15 @@ internal fun preparePredictorDiagnostics(
     recent: PredictorRecentState?,
     observedAtMillis: Long,
     locale: Locale,
-    unitPattern: (Int) -> String
+    unitPattern: (Int) -> String,
+    storedCheckedAtMillis: Long = observedAtMillis
 ): PredictorDiagnosticsProjection {
 
     val duration: (Long) -> String = {
         DiagnosticsDurationFormatter.format(locale, it, unitPattern)
     }
-    val saved = stored?.let { predictorDiagnosticGroup(it, observedAtMillis, locale, duration) }
+    val saved =
+        stored?.let { predictorDiagnosticGroup(it, storedCheckedAtMillis, locale, duration) }
     val latest =
         recent?.let { recentPredictorDiagnosticGroup(it, observedAtMillis, locale, duration) }
     val combined = combinedPredictorDiagnosticGroup(saved, latest)

@@ -60,6 +60,7 @@ internal fun ThresholdDialog(
     onSave: () -> Unit,
     onDelete: () -> Unit,
     onDismiss: () -> Unit,
+    onCancel: () -> Unit,
     onEditExisting: () -> Unit,
     onRetry: () -> Unit
 ) {
@@ -98,10 +99,6 @@ internal fun ThresholdDialog(
                     stringResource(alarmTypeLabel(draft.type)),
                     modifier = Modifier.semantics { heading() },
                     style = MaterialTheme.typography.headlineSmall
-                )
-                if (draft.id != null) Text(
-                    stringResource(R.string.alarms_edit_threshold),
-                    style = MaterialTheme.typography.titleSmall
                 )
                 OutlinedTextField(
                     value = draft.thresholdInput.orEmpty(),
@@ -168,7 +165,7 @@ internal fun ThresholdDialog(
                 }
                 FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     TextButton(
-                        onClick = onDismiss, enabled = !state.busy
+                        onClick = onCancel, enabled = !state.busy
                     ) { Text(stringResource(R.string.cancel)) }
                     TextButton(onClick = onSave, enabled = canSave) {
                         Text(stringResource(if (draft.id == null) R.string.alarms_add_threshold else R.string.charging_diagnostics_save))

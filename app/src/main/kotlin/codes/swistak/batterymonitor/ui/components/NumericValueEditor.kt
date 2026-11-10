@@ -89,7 +89,8 @@ fun NumericValueDialog(
     onCancel: () -> Unit,
     modifier: Modifier = Modifier,
     message: String? = null,
-    fieldLabel: String = label
+    fieldLabel: String = label,
+    supportingText: String? = null
 ) {
     val locale = LocalConfiguration.current.locales[0]
     val formatter = NumberFormat.getIntegerInstance(locale).apply { isGroupingUsed = false }
@@ -120,7 +121,8 @@ fun NumericValueDialog(
                         { Text(unit) }
                     } else null,
                     supportingText = {
-                        if (result is NumericInputResult.Error) Text(errorMessage(result.reason))
+                        if (supportingText != null) Text(supportingText)
+                        else if (result is NumericInputResult.Error) Text(errorMessage(result.reason))
                     },
                     isError = result is NumericInputResult.Error,
                     singleLine = true,

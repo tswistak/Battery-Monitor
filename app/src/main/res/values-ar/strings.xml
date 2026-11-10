@@ -263,6 +263,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0ثوانٍ</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0ثانية</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0ثانية</string>
+    <string name="chip_switching_interval_custom">مخصص</string>
     <string name="pref_chip_indicate_charging" formatted="false">إظهار رمز الشحن</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">إظهار رمز البرق أثناء الشحن أو عند الامتلاء الكامل؟</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">عند التمكين، ستعرض شريحة شريط الحالة رمز البرق بجانب القيمة أثناء الشحن أو عند اكتمال الشحن.</string>
@@ -634,9 +635,9 @@
     <string name="diag_charging_too_cold">باردة جدًا للشحن</string>
     <string name="diag_charging_too_hot">ساخنة جدًا للشحن</string>
     <string name="diag_section_service" formatted="false">خدمة بطارية Android</string>
-    <string name="diag_help_service" formatted="false">تتضمن «البيانات الخام» الأسماء والقيم الأصلية من بثوث بطارية Android، ومن dumpsys battery عند إتاحته. قد تشمل مصدر الشحن وحالة البطارية والحرارة والجهد وحالات أخرى لخدمة البطارية.</string>
+    <string name="diag_help_service" formatted="false">الأسماء والقيم الأصلية من بثوث بطارية Android، ومن dumpsys battery عند إتاحته. قد تشمل مصدر الشحن وحالة البطارية والحرارة والجهد وحالات أخرى لخدمة البطارية.</string>
     <string name="diag_section_sysfs" formatted="false">ملفات power_supply في النواة</string>
-    <string name="diag_help_sysfs" formatted="false">تعرض «البيانات الخام» الأسماء والقيم الأصلية المقروءة من /sys/class/power_supply، بما فيها القيم متعددة الأسطر. ابحث بالمفتاح واضغط على صف لعرض قيمته كاملة ونسخها. استخدم «تحديث» لجمع قراءات جديدة. يحاول Battery Monitor أيضًا القراءة بأذونات Android العادية، دون root أو Shizuku.</string>
+    <string name="diag_help_sysfs" formatted="false">الأسماء والقيم الأصلية المقروءة من /sys/class/power_supply، بما فيها القيم متعددة الأسطر.</string>
     <string name="diag_fuel_gauge">مقياس شحنة البطارية</string>
     <string name="diag_mains_supply">مصدر طاقة AC</string>
     <string name="diag_charging_source">مصدر الشحن</string>
@@ -666,15 +667,18 @@
     <string name="diag_input_voltage">جهد الإدخال</string>
     <string name="diag_input_voltage_limit">حد جهد الإدخال</string>
     <string name="diag_section_metadata" formatted="false">البيانات الوصفية</string>
-    <string name="diag_help_metadata" formatted="false">تتضمن «البيانات الخام» أيضًا أسماء خصائص BatteryManager وقيمها الأصلية، بما فيها العدادات وقراءات التيار المتاحة. تعتمد خصائص إضافية مثل تفاصيل التصنيع أو حالة الاستبدال على إصدار Android ودعم الجهاز والأذونات.</string>
+    <string name="diag_help_metadata" formatted="false">أسماء خصائص BatteryManager وقيمها الأصلية، بما فيها العدادات وقراءات التيار المتاحة. تعتمد خصائص إضافية مثل تفاصيل التصنيع أو حالة الاستبدال على إصدار Android ودعم الجهاز والأذونات.</string>
     <string name="diag_raw">البيانات الخام</string>
     <string name="diag_search_key">البحث في المفاتيح</string>
     <string name="diag_no_keys">لا توجد مفاتيح مطابقة في البيانات المتاحة</string>
     <string name="diag_raw_values">القيم الخام</string>
     <string name="diag_last_checked">آخر تحقق: %1$s</string>
     <string name="diag_privileged_stale">تُعرض القراءات المميزة السابقة. حدّث للمحاولة مجددًا.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">استكشاف الأخطاء وإصلاحها</string>
-    <string name="diag_help_troubleshooting" formatted="false">تُجمع بيانات Android تلقائيًا في «التشخيص». للحصول على بيانات root أو Shizuku إضافية، فعّل الوصول المميز ضمن «مصادر إضافية». يحاول Battery Monitor استخدام root أولًا ثم Shizuku. يجب أن يكون Shizuku قيد التشغيل وأن يُمنح الإذن. تبقى الحقول المفقودة غير متاحة؛ ويحافظ فشل التحديث على اللقطة السابقة ويضع علامة بأنها قديمة.</string>
+    <string name="diag_help_troubleshooting" formatted="false">تُجمع بيانات Android تلقائيًا في «التشخيص». للحصول على بيانات root أو Shizuku إضافية، فعّل «استخدام الوصول المميّز» في «الإعدادات» ← «متقدم». يحاول Battery Monitor استخدام root أولًا ثم Shizuku. يجب أن يكون Shizuku قيد التشغيل وأن يُمنح الإذن. تبقى الحقول المفقودة غير متاحة؛ ويحافظ فشل التحديث على اللقطة السابقة ويضع علامة بأنها قديمة.</string>
+    <string name="diag_help_raw_general" formatted="false">المفاتيح والقيم الأصلية من المصادر المتاحة. ابحث بالمفتاح واضغط على صف لعرض قيمته كاملة ونسخها. استخدم «تحديث» لجمع قراءات جديدة. يحاول Battery Monitor أيضًا القراءة بأذونات Android العادية، دون root أو Shizuku. يعتمد التوفر على المصادر التي يمكن قراءتها.</string>
+    <string name="diag_help_raw_predictor" formatted="false">المفاتيح والقيم الأصلية لبيانات التنبؤ المحفوظة، عند توفرها.</string>
+    <string name="diag_export_report_help" formatted="false">أنشئ تقريرًا بالقراءات التشخيصية وبيانات التنبؤ المتاحة. راجع المعاينة، ثم انسخ التقرير إلى الحافظة أو احفظه كملف نصي. قبل المشاركة، تحقق من التقرير بعناية، خاصة إذا كان يتضمن قيمًا خامًا ومعرّفات.</string>
+    <string name="diag_charging_source_disconnected">غير موصل</string>
 
     <string name="diagnostics" formatted="false">التشخيص</string>
     <string name="diagnostics_summary" formatted="false">تحقق من الأذونات وموثوقية المراقبة وأنشئ تقريرًا لاستكشاف الأخطاء</string>
@@ -736,11 +740,15 @@
     <string name="diag_missing_average">متوسط التيار قراءة يوفرها الجهاز منفصلة عن التيار اللحظي. لا يحسب Battery Monitor متوسطًا خاصًا به عندما لا يوفره الجهاز.</string>
     <string name="diag_missing_estimated_health">يتطلب هذا التقدير سعة شحن كامل وسعة تصميم موجبتين من البطارية نفسها. يجب ألا تتجاوز سعة الشحن الكامل سعة التصميم.</string>
     <string name="diag_missing_charge_time">هذا تقدير الشحن الذي يبلغ عنه الجهاز. تستخدم «الحالة الحالية» طريقة التنبؤ المضبوطة في Battery Monitor ويمكنها عرض تقدير حتى دون توفر تقدير من الجهاز.</string>
-    <string name="diag_predictor_description">تعرض المعدلات الزمن اللازم لنقطة مئوية واحدة. تُحفظ الحسابات الحديثة في الذاكرة؛ وتبقى المتوسطات المحفوظة بعد إعادة التشغيل. تستخدم الفترات غير المكتملة المعدل طويل الأجل، وتستخدم المتوسطات غير المحفوظة القيم الافتراضية.</string>
-    <string name="diagnostics_predictor_help" formatted="false">يعرض «تشغيل التطبيق» المتوسطات طويلة الأجل المحفوظة ومدخلات التنبؤ الحديثة. تستخدم المعدلات الحديثة تغيّر نسبة البطارية وتعرض زمن النقطة المئوية الواحدة والطريقة المختارة ومصدر الشحن النشط والنقاط والمدد المرصودة وما إذا كانت الفترة غير المكتملة مشمولة. تستخدم نافذتا الخمس دقائق والخمس نقاط المعدل طويل الأجل النشط للأجزاء غير المرصودة؛ وتُستوفى المستويات المتجاوزة. تُحفظ الحالة الحديثة في الذاكرة وتُعاد ضبطها عند إعادة تشغيل المراقبة أو التبديل بين الشحن والتفريغ أو تغيّر مصدر الشحن. تبقى المتوسطات المتعلمة المحفوظة بعد إعادة التشغيل. هذه البيانات مستقلة عن سجلات التاريخ؛ مسح السجلات لا يعيد ضبط التقديرات.</string>
+    <string name="diagnostics_predictor_help" formatted="false">راجع المتوسطات طويلة الأجل المحفوظة ومدخلات التنبؤ الحديثة. تستخدم المعدلات الحديثة تغيّر نسبة البطارية وتعرض زمن النقطة المئوية الواحدة والطريقة المختارة ومصدر الشحن النشط والنقاط والمدد المرصودة وما إذا كانت الفترة غير المكتملة مشمولة. تستخدم نافذتا الخمس دقائق والخمس نقاط المعدل طويل الأجل النشط للأجزاء غير المرصودة؛ وتُستوفى المستويات المتجاوزة. تُحفظ الحالة الحديثة في الذاكرة وتُعاد ضبطها عند إعادة تشغيل المراقبة أو التبديل بين الشحن والتفريغ أو تغيّر مصدر الشحن. تبقى المتوسطات المتعلمة المحفوظة بعد إعادة التشغيل. هذه البيانات مستقلة عن سجلات التاريخ؛ مسح السجلات لا يعيد ضبط التقديرات.</string>
+    <string name="diag_check_failed" formatted="false">فشلت أحدث محاولة قراءة.</string>
+    <string name="diag_reading_retained" formatted="false">تُعرض القراءة السابقة.</string>
+    <string name="diag_value_copied" formatted="false">تم نسخ القيمة</string>
+    <string name="diag_predictor_read_failed" formatted="false">تعذّرت قراءة بيانات التنبؤ المحفوظة.</string>
+    <string name="diag_predictor_recent_title" formatted="false">بيانات التنبؤ — الحسابات الحديثة</string>
+    <string name="diag_predictor_stored_title" formatted="false">بيانات التنبؤ — المتوسطات طويلة الأجل المحفوظة</string>
     <string name="diag_predictor_recent" formatted="false">الحسابات الحديثة</string>
     <string name="diag_predictor_no_recent" formatted="false">لا يوجد تقدير نشط. تتوفر البيانات الحديثة بعد قراءة المراقبة أثناء الشحن أو التفريغ.</string>
-    <string name="diag_predictor_start_monitor">ابدأ المراقبة أعلاه لفحص بيانات التنبؤ المحفوظة.</string>
     <string name="diag_predictor_active_state" formatted="false">حالة البطارية النشطة</string>
     <string name="diag_predictor_effective_rate" formatted="false">المعدل المستخدم للتقدير</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">آخر 5\u00A0دقائق</string>
@@ -750,7 +758,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">مدة الجلسة المرصودة</string>
     <string name="diag_predictor_current_level_duration" formatted="false">الوقت عند المستوى الحالي</string>
     <string name="diag_predictor_uses_partial" formatted="false">الفترة غير المكتملة مشمولة</string>
-    <string name="diag_predictor_saved_averages" formatted="false">المتوسطات طويلة الأجل المحفوظة</string>
     <string name="diag_predictor_ac">الشحن (AC)</string>
     <string name="diag_predictor_wireless">الشحن (لاسلكي)</string>
     <string name="diag_predictor_usb">الشحن (USB)</string>
@@ -779,8 +786,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">تشخيص حد الشحن من الشركة المصنّعة</string>
     <string name="charging_diagnostics_help_overview" formatted="false">افتح أدوات اللقطات والمقارنة للتحقق من كيفية اكتشاف Battery Monitor لحد الشحن في الجهاز. تتوفر تعليمات التحضير في المساعدة الخاصة بشاشة تشخيص الشركة المصنّعة.</string>
-    <string name="charging_tools_help_overview" formatted="false">افتح أدوات اللقطات والمقارنة للتحقق من كيفية اكتشاف Battery Monitor لحد الشحن في الجهاز. تتوفر تعليمات التحضير في المساعدة الخاصة بشاشة تشخيص الشركة المصنّعة.\n
-    قد تتوفر معلومات تشخيصية إضافية باستخدام الوصول المميز. امنح الوصول عبر Shizuku أو root وفعّل الوصول المميز في «الإعدادات» → «متقدم» → «استخدام الوصول المميّز» للحصول على تقرير أكثر فائدة حول حد الشحن الخاص بالشركة المصنّعة.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">للحصول على تقرير مفيد، افتح «مساعدة» واتبع خطوات التحضير قبل التقاط اللقطات.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">قد تتوفر معلومات تشخيصية إضافية باستخدام الوصول المميز. امنح الوصول عبر Shizuku أو root وفعّل الوصول المميز في «الإعدادات» → «متقدم» → «استخدام الوصول المميّز» للحصول على تقرير أكثر فائدة حول حد الشحن الخاص بالشركة المصنّعة.</string>
     <string name="charging_diagnostics_capture" formatted="false">التقاط لقطة</string>
@@ -806,7 +811,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">التقط أولاً وضعين مختلفين للشحن على الأقل</string>
     <string name="charging_diagnostics_report" formatted="false">إنشاء تقرير مقارنة</string>
     <string name="charging_diagnostics_report_summary" formatted="false">التقط أولاً وضعين مختلفين للشحن على الأقل</string>
-    <string name="charging_diagnostics_report_help" formatted="false">التقط أولاً وضعين مختلفين للشحن على الأقل.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">التقط أولاً وضعين مختلفين للشحن على الأقل. بعد مراجعة التقرير، انسخه أو احفظه ثم أرسله بالبريد الإلكتروني إلى <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
     <string name="charging_diagnostics_copy" formatted="false">نسخ إلى الحافظة</string>
     <string name="charging_diagnostics_save" formatted="false">حفظ</string>
     <string name="charging_diagnostics_copied" formatted="false">تم نسخ التقرير</string>
@@ -820,8 +825,6 @@
     4. فعّل الشحن التكيّفي أو الذكي أو المجدول، وانتظر 2–5\u00A0ثوانٍ، ثم التقط لقطة.\n
     5. إذا لم تكن مقارنة الإعداد حاسمة، يمكنك اختيارياً تكرار التسلسل أثناء الشحن لالتقاط الحالة التي تظهر وقت التشغيل فقط.\n
     6. أنشئ تقرير المقارنة وراجعه. تُصفّى البيانات وتُحجب القيم المحتمل أن تكون حساسة، لكن راجع التقرير كاملاً قبل مشاركته.</string>
-    <string name="charging_report_privacy_help" formatted="false">مستبعدة افتراضيًا. قد تحتوي هذه البيانات على معلومات شخصية. راجع المعاينة قبل النسخ أو الحفظ.\n
-    بعد مراجعة التقرير، انسخه أو احفظه ثم أرسله بالبريد الإلكتروني إلى <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">النسخ الاحتياطي والاستعادة</string>
     <string name="backup_restore_settings_summary" formatted="false">أنشئ نسخة احتياطية من إعدادات تطبيقك وبيانات البطارية واستعدها وانقلها</string>

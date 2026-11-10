@@ -77,6 +77,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -87,6 +89,8 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.showToast
+import codes.swistak.batterymonitor.devicebackup.PredictorBackupReader
+import codes.swistak.batterymonitor.monitoring.PredictorStoredState
 import codes.swistak.batterymonitor.monitoring.presentation.MonitoringAvailability
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
@@ -113,6 +117,11 @@ internal val DiagnosticRowSaver = Saver<DiagnosticRow?, Bundle>(save = { row ->
             putString("unit", it.unit)
             putString("source", it.source)
             putLong("observedAtMillis", it.observedAtMillis)
+            it.observedElapsedMillis?.let { elapsed -> putLong("observedElapsedMillis", elapsed) }
+            putLong("checkedAtMillis", it.checkedAtMillis)
+            it.checkedElapsedMillis?.let { elapsed -> putLong("checkedElapsedMillis", elapsed) }
+            putBoolean("checkFailed", it.checkFailed)
+            putBoolean("retained", it.retained)
             putString("accessMethod", it.accessMethod)
             putInt("valueLabel", it.valueLabel)
         }
@@ -127,9 +136,23 @@ internal val DiagnosticRowSaver = Saver<DiagnosticRow?, Bundle>(save = { row ->
         source = saved.getString("source").orEmpty(),
         observedAtMillis = saved.getLong("observedAtMillis"),
         accessMethod = saved.getString("accessMethod").orEmpty(),
-        valueLabel = saved.getInt("valueLabel")
+        valueLabel = saved.getInt("valueLabel"),
+        observedElapsedMillis = saved.getLong("observedElapsedMillis")
+            .takeIf { saved.containsKey("observedElapsedMillis") },
+        checkedAtMillis = saved.getLong("checkedAtMillis"),
+        checkedElapsedMillis = saved.getLong("checkedElapsedMillis")
+            .takeIf { saved.containsKey("checkedElapsedMillis") },
+        checkFailed = saved.getBoolean("checkFailed"),
+        retained = saved.getBoolean("retained")
     )
 })
+
+internal data class SavedPredictorDiagnostics(
+    val data: PredictorStoredState? = null,
+    val checkedAtMillis: Long = 0,
+    val loading: Boolean = false,
+    val failed: Boolean = false
+)
 
 @Composable
 internal fun DiagnosticsRoute(
@@ -138,25 +161,72 @@ internal fun DiagnosticsRoute(
     onChargingTools: () -> Unit,
     monitoring: kotlinx.coroutines.flow.StateFlow<codes.swistak.batterymonitor.monitoring.presentation.MonitoringUiState>,
     monitorActions: Map<String, MonitorAction>,
-    onPrivilegedChanged: () -> Unit
+    onPrivilegedAccessSettings: () -> Unit,
+    onRefreshAppOperation: (() -> Unit) -> Unit,
+    appOperationRefreshing: Boolean,
+    monitoringStopped: Boolean
 ) {
+    val context = LocalContext.current
     var tab by rememberSaveable { mutableIntStateOf(0) }
+    var resumed by remember { mutableStateOf(false) }
+    var predictorRevision by remember { mutableIntStateOf(0) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val monitor by monitoring.collectAsStateWithLifecycle()
+    val livePredictor = monitor.availability == MonitoringAvailability.LIVE && !monitoringStopped
+    val needsPredictor = tab == 0 || tab == 3
+    val savedPredictor by produceState(
+        SavedPredictorDiagnostics(loading = needsPredictor && !livePredictor),
+        resumed,
+        livePredictor,
+        needsPredictor,
+        predictorRevision
+    ) {
+        if (resumed && needsPredictor && !livePredictor) {
+            value = value.copy(loading = true, failed = false)
+            val (result, checkedAt) = withContext(Dispatchers.IO) {
+                val read =
+                    runCatching { PredictorBackupReader.read(File(context.applicationInfo.dataDir)) }
+                read to System.currentTimeMillis()
+            }
+            value = result.fold(
+                { SavedPredictorDiagnostics(it, checkedAt) },
+                { value.copy(checkedAtMillis = checkedAt, loading = false, failed = true) })
+        } else if (!needsPredictor || livePredictor) value = value.copy(loading = false)
+    }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        resumed = true
+        predictorRevision++
         viewModel.setTab(tab)
         viewModel.setActive(true)
     }
-    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) { viewModel.setActive(false) }
+    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
+        resumed = false
+        viewModel.setActive(false)
+    }
     DisposableEffect(viewModel) { onDispose { viewModel.setActive(false) } }
     DiagnosticsScreen(
-        state, viewModel::refreshStats, onMonitor, onChargingTools, {
-            viewModel.setPrivilegedEnabled(it)
-            onPrivilegedChanged()
-        }, { selected ->
+        state,
+        {
+            if (tab == 0) onRefreshAppOperation { predictorRevision++ }
+            else {
+                viewModel.refreshStats()
+                if (tab == 3) predictorRevision++
+            }
+        },
+        onMonitor,
+        onChargingTools,
+        onPrivilegedAccessSettings,
+        { selected ->
             viewModel.setTab(selected)
             tab = selected
-        }, monitor.snapshot, monitorActions, monitor.availability, tab
+        },
+        monitor.snapshot,
+        monitorActions,
+        monitor.availability,
+        tab,
+        savedPredictor,
+        appOperationRefreshing,
+        monitoringStopped
     )
 }
 
@@ -166,12 +236,15 @@ internal fun DiagnosticsScreen(
     onRefresh: () -> Unit,
     onMonitor: () -> Unit,
     onChargingTools: () -> Unit,
-    onPrivileged: (Boolean) -> Unit,
+    onPrivilegedAccessSettings: () -> Unit,
     onTab: (Int) -> Unit = {},
     monitor: codes.swistak.batterymonitor.monitoring.presentation.MonitoringSnapshot? = null,
     monitorActions: Map<String, MonitorAction> = emptyMap(),
     monitorAvailability: MonitoringAvailability = if (monitor == null) MonitoringAvailability.WAITING else MonitoringAvailability.LIVE,
-    tab: Int = 0
+    tab: Int = 0,
+    savedPredictor: SavedPredictorDiagnostics = SavedPredictorDiagnostics(),
+    appOperationRefreshing: Boolean = false,
+    monitoringStopped: Boolean = monitorActions["monitor_start"]?.isVisible == true
 ) {
     val context = LocalContext.current
     val resources = LocalResources.current
@@ -200,7 +273,7 @@ internal fun DiagnosticsScreen(
     val snapshots = remember(state.basic, state.appRaw, state.advanced) {
         listOfNotNull(state.basic, state.appRaw, state.advanced)
     }
-    val projections = remember { List(4) { mutableStateOf<List<DiagnosticGroup>>(emptyList()) } }
+    val projections = remember { List(4) { mutableStateOf<List<DiagnosticGroup>?>(null) } }
     val projectionCache = remember { DiagnosticsProjectionCache() }
     LaunchedEffect(snapshots, display, tab) {
         if (tab != 0) {
@@ -209,42 +282,49 @@ internal fun DiagnosticsScreen(
         }
     }
     val needsPredictor = tab == 0 || tab == 3
-    val storedPredictor = monitor?.predictorData
-    val recentPredictorState = monitor?.recentPredictorData
+    val livePredictor = monitorAvailability == MonitoringAvailability.LIVE && !monitoringStopped
+    val storedPredictor = if (livePredictor) monitor?.predictorData else savedPredictor.data
+    val recentPredictorState = if (monitoringStopped) null else monitor?.recentPredictorData
     val predictorTime = monitor?.observedAtMillis ?: 0
-    val predictorProjection by produceState(
-        PredictorDiagnosticsProjection(),
+    val storedPredictorTime = if (livePredictor) predictorTime else savedPredictor.checkedAtMillis
+    var predictorReady by remember { mutableStateOf(false) }
+    val predictorProjection by produceState<PredictorDiagnosticsProjection?>(
+        null,
         needsPredictor,
         storedPredictor,
         recentPredictorState,
         predictorTime,
-        locale
+        storedPredictorTime,
+        locale,
+        savedPredictor.loading
     ) {
-        if (needsPredictor) value = withContext(Dispatchers.Default) {
-            preparePredictorDiagnostics(
-                storedPredictor, recentPredictorState, predictorTime, locale, resources::getString
-            )
+        if (needsPredictor) {
+            value = withContext(Dispatchers.Default) {
+                preparePredictorDiagnostics(
+                    storedPredictor,
+                    recentPredictorState,
+                    predictorTime,
+                    locale,
+                    resources::getString,
+                    storedPredictorTime
+                )
+            }
+            if (!savedPredictor.loading) predictorReady = true
         }
     }
-    val predictor = predictorProjection.stored
-    val recentPredictor = predictorProjection.recent
-    val raw = remember(tab == 3, projections[3].value, predictorProjection.raw) {
-        if (tab == 3) projections[3].value + listOfNotNull(predictorProjection.raw) else emptyList()
+    val predictor = predictorProjection?.stored
+    val recentPredictor = predictorProjection?.recent
+    val raw = remember(tab == 3, projections[3].value, predictorProjection?.raw) {
+        if (tab == 3) projections[3].value.orEmpty() + listOfNotNull(predictorProjection?.raw) else emptyList()
     }
     var query by rememberSaveable { mutableStateOf("") }
     val dialogsAllowed = applicationDialogsAllowed()
     var dialog by rememberSaveable { mutableStateOf<String?>(null) }
-    var pendingPrivilegedChange by rememberSaveable { mutableStateOf<Boolean?>(null) }
     var selectedRow by rememberSaveable(stateSaver = DiagnosticRowSaver) {
         mutableStateOf(null)
     }
-    LaunchedEffect(dialogsAllowed, dialog, pendingPrivilegedChange) {
-        if (dialogsAllowed && dialog == null) {
-            pendingPrivilegedChange?.let { enabled ->
-                pendingPrivilegedChange = null
-                onPrivileged(enabled)
-            }
-        }
+    LaunchedEffect(dialog) {
+        if (dialog != null && dialog != "reading" && dialog != "report") dialog = null
     }
     fun selectRow(row: DiagnosticRow) {
         selectedRow = row
@@ -263,12 +343,14 @@ internal fun DiagnosticsScreen(
         R.string.diag_raw
     )
     val scrollStates = labels.map { rememberLazyListState() }
+    var previousTab by rememberSaveable { mutableIntStateOf(tab) }
     LaunchedEffect(tab) {
-        if (tab == 3) scrollStates[3].requestScrollToItem(0)
+        if (tab == 3 && previousTab != tab) scrollStates[3].requestScrollToItem(0)
+        previousTab = tab
     }
     val filteredRaw = remember(raw, query) { filterRawGroups(raw, query) }
     val groups = when (tab) {
-        1, 2 -> projections[tab].value
+        1, 2 -> projections[tab].value.orEmpty()
         3 -> filteredRaw
         else -> emptyList()
     }
@@ -361,7 +443,7 @@ internal fun DiagnosticsScreen(
             TooltipIconButton(
                 label = stringResource(R.string.diag_action_refresh),
                 onClick = onRefresh,
-                enabled = !state.loading && !state.rawLoading
+                enabled = !state.loading && !state.rawLoading && !appOperationRefreshing && !savedPredictor.loading
             ) {
                 Icon(
                     painterResource(R.drawable.ui_refresh),
@@ -369,8 +451,11 @@ internal fun DiagnosticsScreen(
                 )
             }
         }
-        if (state.loading || state.rawLoading) LinearProgressIndicator(Modifier.fillMaxWidth())
-        LazyColumn(
+        if (state.loading || state.rawLoading || appOperationRefreshing || savedPredictor.loading) LinearProgressIndicator(
+            Modifier.fillMaxWidth()
+        )
+        // Wait for real rows so a restored scroll position is not clamped to an empty projection.
+        if (tab == 0 || projections[tab].value != null && (tab != 3 || predictorReady)) LazyColumn(
             Modifier.weight(1f),
             state = scrollStates[tab],
             contentPadding = PaddingValues(20.dp),
@@ -380,20 +465,36 @@ internal fun DiagnosticsScreen(
                 Spacer(Modifier.height(1.dp))
             }
             if (tab == 0) {
-                item {
+                item(key = "operation") {
                     DiagnosticCard(stringResource(R.string.diag_monitor_operation)) {
                         MonitorOperationValues(monitorActions)
                     }
                 }
-                item {
+                item(key = "predictor:recent") {
                     PredictorDiagnosticCard(
-                        predictor,
+                        R.string.diag_predictor_recent_title,
                         recentPredictor,
-                        if (monitorActions["monitor_start"]?.isVisible == true) R.string.diag_predictor_start_monitor else R.string.current_waiting,
-                        if (monitor == null) R.string.current_waiting else R.string.diag_predictor_no_recent,
-                        monitor?.observedAtMillis ?: 0,
+                        when {
+                            monitoringStopped -> R.string.current_monitor_disabled
+                            monitor == null -> R.string.current_waiting
+                            else -> R.string.diag_predictor_no_recent
+                        },
+                        if (monitoringStopped) 0 else predictorTime,
                         monitorAvailability != MonitoringAvailability.LIVE,
-                        onSelect = ::selectRow
+                        onSelect = ::selectRow,
+                        loading = appOperationRefreshing && !monitoringStopped
+                    )
+                }
+                item(key = "predictor:stored") {
+                    PredictorDiagnosticCard(
+                        R.string.diag_predictor_stored_title,
+                        predictor,
+                        if (savedPredictor.failed) R.string.diag_predictor_read_failed else R.string.diag_value_not_available,
+                        storedPredictorTime,
+                        !livePredictor && savedPredictor.failed,
+                        onSelect = ::selectRow,
+                        loading = !livePredictor && savedPredictor.loading,
+                        error = if (!livePredictor && savedPredictor.failed) R.string.diag_predictor_read_failed else 0
                     )
                 }
             }
@@ -452,9 +553,10 @@ internal fun DiagnosticsScreen(
                                 .padding(16.dp)
                         ) {
                             Text(
-                                stringResource(if (index == 0) R.string.diag_raw_values else group.title),
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.SemiBold
+                                stringResource(rawDiagnosticGroupTitle(group)),
+                                modifier = Modifier.semantics { heading() },
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold
                             )
                             Text(
                                 diagnosticGroupSources(group),
@@ -520,23 +622,23 @@ internal fun DiagnosticsScreen(
                         val readings = group.rows.filter { it.value != null || it.valueLabel != 0 }
                         val sources =
                             diagnosticSourceName(readings.joinToString(" · ") { it.accessMethod })
-                        if (readings.isNotEmpty()) Text(
-                            stringResource(
-                                R.string.current_detail_source, sources
-                            ),
-                            Modifier.padding(horizontal = 16.dp),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        if (readings.isNotEmpty()) Text(
-                            stringResource(
-                                R.string.current_detail_time,
-                                diagnosticTime(checkNotNull(latestDiagnosticReading(readings)).observedAtMillis)
-                            ),
-                            Modifier.padding(16.dp),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        if (readings.isNotEmpty()) Column(
+                            Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                        ) {
+                            Text(
+                                stringResource(R.string.current_detail_source, sources),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Text(
+                                stringResource(
+                                    R.string.current_detail_time,
+                                    diagnosticTime(checkNotNull(latestDiagnosticReading(readings)).observedAtMillis)
+                                ),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
             }
@@ -583,8 +685,9 @@ internal fun DiagnosticsScreen(
                     DiagnosticsLink(
                         stringResource(R.string.pref_cat_privileged_access),
                         stringResource(state.privilegedAccessStatus),
-                        settingIcon(SettingsContract.KEY_USE_PRIVILEGED_ACCESS)
-                    ) { dialog = "access" }
+                        settingIcon(SettingsContract.KEY_USE_PRIVILEGED_ACCESS),
+                        onPrivilegedAccessSettings
+                    )
                     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                     DiagnosticsLink(
                         stringResource(R.string.diag_monitor_operation),
@@ -598,7 +701,7 @@ internal fun DiagnosticsScreen(
                 if (tab == 3) Spacer(Modifier.height(16.dp))
                 if (tab != 3) OutlinedButton(
                     onClick = onRefresh,
-                    enabled = !state.loading && !state.rawLoading,
+                    enabled = !state.loading && !state.rawLoading && !appOperationRefreshing && !savedPredictor.loading,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     ActionLabel(
@@ -645,10 +748,16 @@ internal fun DiagnosticsScreen(
                             R.string.current_detail_source, source
                         )
                     )
+                    if (row.retained && !missing) Text(stringResource(R.string.diag_reading_retained))
+                    if (row.checkFailed) Text(stringResource(R.string.diag_check_failed))
+                    if (!missing) Text(
+                        stringResource(
+                            R.string.current_detail_time, diagnosticTime(row.observedAtMillis)
+                        )
+                    )
                     Text(
                         stringResource(
-                            if (missing) R.string.diag_last_checked else R.string.current_detail_time,
-                            diagnosticTime(row.observedAtMillis)
+                            R.string.diag_last_checked, diagnosticTime(row.checkedAtMillis)
                         )
                     )
                 }
@@ -656,7 +765,10 @@ internal fun DiagnosticsScreen(
         }, confirmButton = {
             TextButton(onClick = {
                 copyDiagnostic(
-                    context, title, if (isRaw) "${row.rawKey}=$value" else "$title: $value"
+                    context,
+                    title,
+                    if (isRaw) "${row.rawKey}=$value" else "$title: $value",
+                    R.string.diag_value_copied
                 )
             }) {
                 Text(
@@ -669,41 +781,15 @@ internal fun DiagnosticsScreen(
             }) { Text(stringResource(R.string.cancel)) }
         })
     }
-    if (dialog == "access") {
-        var draft by rememberSaveable { mutableStateOf(state.privilegedEnabled) }
-        if (dialogsAllowed) AlertDialog(
-            onDismissRequest = { dialog = null },
-            title = { Text(stringResource(R.string.pref_cat_privileged_access)) },
-            text = {
-                Column(Modifier.verticalScroll(rememberScrollState())) {
-                    SettingRow(
-                        stringResource(R.string.pref_use_privileged_access),
-                        stringResource(R.string.pref_use_privileged_access_summary),
-                        { draft = !draft },
-                        checked = draft
-                    )
-                    Text(
-                        stringResource(R.string.diag_status_no_access),
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    if (dialog == "access") {
-                        dialog = null
-                        if (draft != state.privilegedEnabled) pendingPrivilegedChange = draft
-                    }
-                }) { Text(stringResource(R.string.okay)) }
-            },
-            dismissButton = {
-                TextButton(onClick = { dialog = null }) { Text(stringResource(R.string.cancel)) }
-            })
-    }
     if (dialogsAllowed && dialog == "report") DiagnosticReportDialog({ includeRaw ->
         // The dialog invokes this callback on IO, only when a report is requested.
         val reportPredictor = preparePredictorDiagnostics(
-            storedPredictor, recentPredictorState, predictorTime, locale, resources::getString
+            storedPredictor,
+            recentPredictorState,
+            predictorTime,
+            locale,
+            resources::getString,
+            storedPredictorTime
         )
         val normalized =
             mergedDiagnosticGroups(snapshots, display.multiplier, display.fahrenheit, locale)
@@ -729,55 +815,44 @@ internal fun DiagnosticsScreen(
     }, onDismiss = { dialog = null })
 }
 
+
 @Composable
 private fun PredictorDiagnosticCard(
-    stored: DiagnosticGroup?,
-    recent: DiagnosticGroup?,
-    storedEmptyLabel: Int,
-    recentEmptyLabel: Int,
-    observedAtMillis: Long,
+    @StringRes title: Int,
+    group: DiagnosticGroup?,
+    @StringRes emptyLabel: Int,
+    checkedAtMillis: Long,
     stale: Boolean,
-    onSelect: (DiagnosticRow) -> Unit
+    onSelect: (DiagnosticRow) -> Unit,
+    loading: Boolean = false,
+    @StringRes error: Int = 0
 ) {
     val resources = LocalResources.current
-    DiagnosticCard(stringResource(R.string.device_data_predictor)) {
-        Text(
-            stringResource(R.string.diag_predictor_description),
-            Modifier.padding(16.dp),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+    DiagnosticCard(stringResource(title)) {
+        if (loading) LinearProgressIndicator(Modifier.fillMaxWidth())
+        if (error != 0 && group != null) Text(
+            stringResource(error), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.error
         )
-        if (stale && (stored != null || recent != null)) Text(
+        if (stale && group != null) Text(
             stringResource(R.string.current_stale),
-            Modifier.padding(horizontal = 16.dp),
+            Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        listOf(
-            Triple(R.string.diag_predictor_recent, recent, recentEmptyLabel),
-            Triple(R.string.diag_predictor_saved_averages, stored, storedEmptyLabel)
-        ).forEach { (title, group, emptyLabel) ->
-            Text(
-                stringResource(title),
-                Modifier.padding(16.dp),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+        if (group == null) Text(
+            stringResource(if (loading) R.string.diagnostics_checking else emptyLabel),
+            Modifier.padding(16.dp),
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        ) else group.rows.forEachIndexed { index, row ->
+            DiagnosticValue(
+                stringResource(row.label),
+                formattedDiagnosticValue(row, resources::getString).orEmpty(),
+                onClick = { onSelect(row) })
+            if (index < group.rows.lastIndex) HorizontalDivider(
+                color = MaterialTheme.colorScheme.outlineVariant
             )
-            if (group == null) Text(
-                stringResource(emptyLabel),
-                Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            ) else group.rows.forEachIndexed { index, row ->
-                DiagnosticValue(
-                    stringResource(row.label),
-                    formattedDiagnosticValue(row, resources::getString).orEmpty(),
-                    onClick = { onSelect(row) })
-                if (index < group.rows.lastIndex) HorizontalDivider(
-                    color = MaterialTheme.colorScheme.outlineVariant
-                )
-            }
         }
-        if (stored != null || recent != null) Text(
-            stringResource(R.string.diag_last_checked, diagnosticTime(observedAtMillis)),
+        if (checkedAtMillis > 0) Text(
+            stringResource(R.string.diag_last_checked, diagnosticTime(checkedAtMillis)),
             Modifier.padding(16.dp),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -795,9 +870,11 @@ internal fun DiagnosticCard(title: String? = null, content: @Composable ColumnSc
     ) {
         if (title != null) Text(
             title,
-            Modifier.padding(16.dp),
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.SemiBold
+            Modifier
+                .padding(16.dp)
+                .semantics { heading() },
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
         )
         content()
     }
@@ -905,11 +982,13 @@ internal fun diagnosticTime(time: Long): String =
 
 // This SDK exposes primaryClip as read-only to the Kotlin compiler.
 @Suppress("UsePropertyAccessSyntax")
-internal fun copyDiagnostic(context: Context, title: String, text: String) {
+internal fun copyDiagnostic(
+    context: Context, title: String, text: String, @StringRes successMessage: Int
+) {
     (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(
         ClipData.newPlainText(title, text)
     )
-    context.showToast(R.string.charging_diagnostics_copied)
+    context.showToast(successMessage)
 }
 
 @Composable
@@ -1009,7 +1088,10 @@ internal fun DiagnosticReportDialog(
                     enabled = report != null, onClick = {
                         val preview = readyReport() ?: return@TextButton
                         copyDiagnostic(
-                            context, resources.getString(R.string.nav_diagnostics), preview
+                            context,
+                            resources.getString(R.string.nav_diagnostics),
+                            preview,
+                            R.string.charging_diagnostics_copied
                         )
                     }) { Text(stringResource(R.string.charging_diagnostics_copy)) }
                 TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }

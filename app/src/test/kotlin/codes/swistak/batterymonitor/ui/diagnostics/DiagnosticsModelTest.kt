@@ -25,6 +25,105 @@ import java.util.Locale
 class DiagnosticsModelTest {
 
     @Test
+    fun `Android technology is projected without privileged data and preserves its raw provenance`() {
+        for (chemistry in listOf("Li-ion", "Li-polymer", "LiFePO4", "123")) {
+            val raw = "  $chemistry\n"
+            val snapshot = acquiredSnapshot {
+                accessMethod = "Android"
+                capturedAtMillis = 100
+                serviceLabels.add("technology")
+                serviceValues.add(raw)
+            }
+            val groups = DiagnosticsProjectionCache().groups(
+                listOf(snapshot), DiagnosticsFormat(1, false, Locale.US), tab = 1
+            )
+            val row =
+                groups.flatMap { it.rows }.single { it.label == R.string.diag_battery_technology }
+            assertEquals(chemistry, row.value)
+            assertEquals(raw, row.rawValue)
+            assertEquals("", row.unit)
+            assertEquals("Android", row.accessMethod)
+            assertEquals("ACTION_BATTERY_CHANGED / technology", row.source)
+            assertEquals(100L, row.observedAtMillis)
+            assertEquals(100L, row.observedElapsedMillis)
+            assertEquals(raw, rawDiagnosticGroups(snapshot).first().rows.single().rawValue)
+            assertFalse(diagnosticReport(groups, { it.toString() }, false).contains("technology:"))
+            assertTrue(
+                diagnosticReport(
+                    groups, { it.toString() }, true
+                ).contains("technology: $chemistry")
+            )
+        }
+    }
+
+    @Test
+    fun `technology selects the latest identified battery source and ignores blank and charger values`() {
+        val broadcast = acquiredSnapshot {
+            accessMethod = "Android"
+            capturedAtMillis = 100
+            serviceLabels.add("technology")
+            serviceValues.add("Li-ion")
+        }
+        val privileged = acquiredSnapshot {
+            accessMethod = AdvancedBatterySnapshot.ACCESS_SHIZUKU
+            capturedAtMillis = 200
+            serviceLabels.add("technology")
+            serviceValues.add("  ")
+            sysfsLabels.addAll(listOf("cell/type", "cell/technology", "usb/type", "usb/technology"))
+            sysfsValues.addAll(listOf("Battery", " Li-polymer\n", "USB", "charger-only"))
+        }
+
+        fun technology() = DiagnosticsProjectionCache().groups(
+            listOf(broadcast, privileged), DiagnosticsFormat(1, false, Locale.US), tab = 1
+        ).flatMap { it.rows }.single { it.label == R.string.diag_battery_technology }
+
+        val sysfs = technology()
+        assertEquals("Li-polymer", sysfs.value)
+        assertEquals("/sys/class/power_supply / cell/technology", sysfs.source)
+        assertEquals("Shizuku", sysfs.accessMethod)
+        assertEquals(200L, sysfs.observedAtMillis)
+        assertEquals(200L, sysfs.checkedAtMillis)
+        val raw = mergedRawDiagnosticGroups(listOf(broadcast, privileged)).flatMap { it.rows }
+        assertEquals(" Li-polymer\n", raw.single { it.rawKey == "cell/technology" }.rawValue)
+        assertEquals("charger-only", raw.single { it.rawKey == "usb/technology" }.rawValue)
+
+        privileged.sysfsValues[1] = "\n"
+        assertEquals("Li-ion", technology().value)
+        assertEquals("Android", technology().accessMethod)
+        privileged.serviceValues[0] = "NiMH"
+        assertEquals("NiMH", technology().value)
+        assertEquals("dumpsys battery / technology", technology().source)
+        broadcast.serviceValues[0] = ""
+        privileged.serviceValues[0] = ""
+        assertNull(technology().value)
+        assertEquals("", technology().source)
+    }
+
+    @Test
+    fun `retained technology keeps acquisition time and records the failed refresh separately`() {
+        val previous = acquiredSnapshot {
+            accessMethod = "Android"
+            capturedAtMillis = 100
+            serviceLabels.add("technology")
+            serviceValues.add("Li-polymer")
+        }
+        val failed = AdvancedBatterySnapshot().apply {
+            accessMethod = "Android"
+            capturedAtMillis = 300
+            recordCheck(
+                "ACTION_BATTERY_CHANGED", emptyList(), BatteryMeasurementTime(200, 200), true
+            )
+        }.retainFailedReadingsFrom(previous)
+        val row = normalizedDiagnosticGroups(failed, 1).flatMap { it.rows }
+            .single { it.rawKey == "technology" }
+        assertEquals("Li-polymer", row.value)
+        assertEquals(100L, row.observedAtMillis)
+        assertEquals(200L, row.checkedAtMillis)
+        assertTrue(row.checkFailed)
+        assertTrue(row.retained)
+    }
+
+    @Test
     fun `charge-time display and report share compact units while retaining raw milliseconds`() {
         val snapshot = AdvancedBatterySnapshot().apply { chargeTimeRemainingMs = 3_723_999L }
         val groups = normalizedDiagnosticGroups(snapshot, 1, locale = Locale.ENGLISH)
@@ -48,7 +147,7 @@ class DiagnosticsModelTest {
     @Test
     fun `charging source is available from the Android broadcast without privileged access`() {
         for ((plugged, label) in listOf(
-            "0" to R.string.plugged_unplugged,
+            "0" to R.string.diag_charging_source_disconnected,
             "1" to R.string.diag_mains_supply,
             "2" to R.string.diag_usb_supply,
             "4" to R.string.diag_wireless_supply
@@ -115,7 +214,7 @@ class DiagnosticsModelTest {
             assertEquals("", missing.source)
             val merged = mergedDiagnosticGroups(listOf(charging, unplugged, unknown), 1)
             val latest = merged[2].rows.single { it.rawKey == "plugged" }
-            assertEquals(R.string.plugged_unplugged, latest.valueLabel)
+            assertEquals(R.string.diag_charging_source_disconnected, latest.valueLabel)
             assertEquals(200L, latest.observedAtMillis)
         }
     }
@@ -791,7 +890,12 @@ class DiagnosticsModelTest {
                     "usb/health"
                 )
             })
-            assertEquals("Li-ion", battery.single { it.rawKey == "battery/technology" }.value)
+            assertTrue(battery.none { it.label == R.string.diag_battery_technology })
+            assertEquals(
+                "Li-ion",
+                mergedDiagnosticGroups(snapshots, 1).flatMap { it.rows }
+                    .single { it.rawKey == "technology" }.value
+            )
             assertEquals(
                 "4.320\u00A0V", battery.single { it.rawKey == "battery/voltage_max_design" }.value
             )
@@ -1047,6 +1151,132 @@ class DiagnosticsModelTest {
         assertEquals("/sys/class/power_supply / battery/current_now", raw.source)
         assertEquals(50L, raw.observedAtMillis)
         assertEquals(5L, raw.observedElapsedMillis)
+    }
+
+    @Test
+    fun `missing reading keeps completed attempt time without inventing a measurement or source`() {
+        val snapshot = AdvancedBatterySnapshot().apply {
+            recordCheck(
+                "BatteryManager / BATTERY_PROPERTY_CURRENT_AVERAGE",
+                listOf("current_average"),
+                BatteryMeasurementTime(500, 10),
+                failed = false
+            )
+        }
+        val cache = DiagnosticsProjectionCache()
+        val row = cache.groups(listOf(snapshot), DiagnosticsFormat(1, false, Locale.US), 1)
+            .flatMap { it.rows }.single { it.rawKey == "current_average" }
+        assertNull(row.rawValue)
+        assertEquals("", row.source)
+        assertEquals(0L, row.observedAtMillis)
+        assertEquals(500L, row.checkedAtMillis)
+        assertEquals(10L, row.checkedElapsedMillis)
+        assertFalse(row.checkFailed)
+        val untouched = normalizedDiagnosticGroups(AdvancedBatterySnapshot(), 1).flatMap { it.rows }
+            .single { it.rawKey == "current_average" }
+        assertEquals(0L, untouched.checkedAtMillis)
+    }
+
+    @Test
+    fun `failed newer attempts preserve older successful measurement time through retention and merging`() {
+        val previous = AdvancedBatterySnapshot().apply {
+            accessMethod = "Android"
+            currentAverageUa = -300000
+            fieldSources["current_average"] = "BatteryManager / BATTERY_PROPERTY_CURRENT_AVERAGE"
+            sourceReadTimes[fieldSources.getValue("current_average")] =
+                BatteryMeasurementTime(500, 10)
+            recordCheck(
+                fieldSources.getValue("current_average"),
+                listOf("current_average"),
+                BatteryMeasurementTime(500, 10),
+                false
+            )
+        }
+        val failed = AdvancedBatterySnapshot().apply {
+            accessMethod = "Android"
+            recordCheck(
+                "BatteryManager / BATTERY_PROPERTY_CURRENT_AVERAGE",
+                listOf("current_average"),
+                BatteryMeasurementTime(100, 20),
+                true
+            )
+        }
+        val merged = mergedDiagnosticGroups(listOf(previous, failed), 1).flatMap { it.rows }
+            .single { it.rawKey == "current_average" }
+        assertEquals("-300000", merged.rawValue)
+        assertEquals(500L, merged.observedAtMillis)
+        assertEquals(10L, merged.observedElapsedMillis)
+        assertEquals(100L, merged.checkedAtMillis)
+        assertEquals(20L, merged.checkedElapsedMillis)
+        assertTrue(merged.checkFailed)
+        assertTrue(merged.retained)
+        val retained = failed.retainFailedReadingsFrom(previous)
+        val projected = normalizedDiagnosticGroups(retained, 1).flatMap { it.rows }
+            .single { it.rawKey == "current_average" }
+        assertEquals(merged, projected)
+        val unsupported = AdvancedBatterySnapshot().apply {
+            recordCheck(
+                "BatteryManager / BATTERY_PROPERTY_CURRENT_AVERAGE",
+                listOf("current_average"),
+                BatteryMeasurementTime(600, 30),
+                false
+            )
+        }.retainFailedReadingsFrom(previous)
+        assertNull(unsupported.currentAverageUa)
+    }
+
+    @Test
+    fun `derived values retain coherent measurements while reporting a later failed input check`() {
+        val success = AdvancedBatterySnapshot().apply {
+            accessMethod = "Android"
+            currentNowUa = -500000
+            fullChargeUah = 3000000
+            designChargeUah = 4000000
+            serviceLabels.add("voltage")
+            serviceValues.add("4000")
+            fieldSources["current_now"] = "BatteryManager / BATTERY_PROPERTY_CURRENT_NOW"
+            fieldSources["charge_full"] = "/sys/class/power_supply/battery/charge_full"
+            fieldSources["charge_full_design"] =
+                "/sys/class/power_supply/battery/charge_full_design"
+            fieldSources.forEach { (field, source) ->
+                sourceReadTimes[source] = BatteryMeasurementTime(100, 10)
+                recordCheck(source, listOf(field), BatteryMeasurementTime(100, 10), false)
+            }
+            sourceReadTimes["ACTION_BATTERY_CHANGED / voltage"] = BatteryMeasurementTime(90, 9)
+            recordCheck(
+                "ACTION_BATTERY_CHANGED / voltage",
+                listOf("voltage"),
+                BatteryMeasurementTime(90, 9),
+                false
+            )
+        }
+        val failed = AdvancedBatterySnapshot().apply {
+            listOf("current_now", "charge_full").forEach { field ->
+                recordCheck(
+                    success.fieldSources.getValue(field),
+                    listOf(field),
+                    BatteryMeasurementTime(200, 20),
+                    true
+                )
+            }
+        }
+        val initial = normalizedDiagnosticGroups(success, 1).flatMap { it.rows }
+        assertEquals(100L, initial.single { it.rawKey == "battery_power" }.checkedAtMillis)
+        assertEquals(100L, initial.single { it.rawKey == "estimated_health" }.checkedAtMillis)
+        val rows = mergedDiagnosticGroups(listOf(success, failed), 1).flatMap { it.rows }
+        val power = rows.single { it.rawKey == "battery_power" }
+        assertEquals("-2.0", power.rawValue)
+        assertEquals(90L, power.observedAtMillis)
+        val health = rows.single { it.rawKey == "estimated_health" }
+        assertEquals("75.0", health.rawValue)
+        assertEquals(100L, health.observedAtMillis)
+        for ((_, _, _, _, _, _, _, _, _, _, checkedAtMillis, _, checkFailed, retained) in listOf(
+            power, health
+        )) {
+            assertEquals(200L, checkedAtMillis)
+            assertTrue(checkFailed)
+            assertTrue(retained)
+        }
     }
 
     private fun fieldSource(snapshot: AdvancedBatterySnapshot) =

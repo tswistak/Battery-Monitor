@@ -257,6 +257,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0секунд</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0секунд</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0секунд</string>
+    <string name="chip_switching_interval_custom">Настраиваемый</string>
     <string name="pref_chip_indicate_charging" formatted="false">Показывать эмодзи зарядки</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Показывать эмодзи молнии во время зарядки или при полном заряде?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Если включено, чип в строке состояния будет показывать эмодзи молнии рядом со значением во время зарядки или при полном заряде.</string>
@@ -624,9 +625,9 @@
     <string name="diag_charging_too_cold">Слишком холодно для зарядки</string>
     <string name="diag_charging_too_hot">Слишком жарко для зарядки</string>
     <string name="diag_section_service" formatted="false">Служба батареи Android</string>
-    <string name="diag_help_service" formatted="false">«Исходные данные» содержат оригинальные имена и значения из сообщений Android о батарее и, если доступно, dumpsys battery. Они могут включать источник зарядки, состояние батареи, температуру, напряжение и другие данные службы батареи.</string>
+    <string name="diag_help_service" formatted="false">Оригинальные имена и значения из сообщений Android о батарее и, если доступно, dumpsys battery. Они могут включать источник зарядки, состояние батареи, температуру, напряжение и другие данные службы батареи.</string>
     <string name="diag_section_sysfs" formatted="false">Файлы power_supply ядра</string>
-    <string name="diag_help_sysfs" formatted="false">«Исходные данные» показывают оригинальные имена и значения из /sys/class/power_supply, включая многострочные. Ищите по ключу и нажмите строку, чтобы просмотреть и скопировать полное значение. Используйте «Обновить» для новых измерений. Battery Monitor также пробует читать данные с обычными разрешениями Android, без root или Shizuku.</string>
+    <string name="diag_help_sysfs" formatted="false">Оригинальные имена и значения из /sys/class/power_supply, включая многострочные.</string>
     <string name="diag_fuel_gauge">Датчик заряда батареи</string>
     <string name="diag_mains_supply">Сетевое питание</string>
     <string name="diag_charging_source">Источник зарядки</string>
@@ -656,15 +657,18 @@
     <string name="diag_input_voltage">Входное напряжение</string>
     <string name="diag_input_voltage_limit">Предел входного напряжения</string>
     <string name="diag_section_metadata" formatted="false">Метаданные</string>
-    <string name="diag_help_metadata" formatted="false">«Исходные данные» также включают оригинальные имена и значения свойств BatteryManager, включая доступные счётчики и измерения тока. Дополнительные свойства, например сведения о производстве или замене, зависят от версии Android, поддержки устройства и разрешений.</string>
+    <string name="diag_help_metadata" formatted="false">Оригинальные имена и значения свойств BatteryManager, включая доступные счётчики и измерения тока. Дополнительные свойства, например сведения о производстве или замене, зависят от версии Android, поддержки устройства и разрешений.</string>
     <string name="diag_raw">Исходные данные</string>
     <string name="diag_search_key">Поиск ключей</string>
     <string name="diag_no_keys">Нет подходящих ключей в доступных данных</string>
     <string name="diag_raw_values">Исходные значения</string>
     <string name="diag_last_checked">Последняя проверка: %1$s</string>
     <string name="diag_privileged_stale">Показаны предыдущие привилегированные данные. Обновите, чтобы повторить попытку.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">Устранение неполадок</string>
-    <string name="diag_help_troubleshooting" formatted="false">Данные Android собираются в разделе «Диагностика» автоматически. Для дополнительных данных root или Shizuku включите привилегированный доступ в разделе «Дополнительные источники». Battery Monitor сначала пробует root, затем Shizuku. Shizuku должен быть запущен, а разрешение предоставлено. Отсутствующие поля остаются недоступными; при неудачном обновлении сохраняется предыдущий снимок и помечается устаревшим.</string>
+    <string name="diag_help_troubleshooting" formatted="false">Данные Android собираются в разделе «Диагностика» автоматически. Для дополнительных данных root или Shizuku включите «Использовать привилегированный доступ» в «Настройки» → «Расширенные». Battery Monitor сначала пробует root, затем Shizuku. Shizuku должен быть запущен, а разрешение предоставлено. Отсутствующие поля остаются недоступными; при неудачном обновлении сохраняется предыдущий снимок и помечается устаревшим.</string>
+    <string name="diag_help_raw_general" formatted="false">Исходные ключи и значения из доступных источников. Ищите по ключу и нажмите строку, чтобы просмотреть и скопировать полное значение. Используйте «Обновить» для новых измерений. Battery Monitor также пробует читать данные с обычными разрешениями Android, без root или Shizuku. Доступность зависит от того, какие источники можно прочитать.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Исходные ключи и значения доступных данных прогнозирования.</string>
+    <string name="diag_export_report_help" formatted="false">Создайте отчёт о доступных диагностических показаниях и данных прогнозирования. Просмотрите отчёт в окне предварительного просмотра, затем скопируйте отчёт в буфер обмена или сохраните его как текстовый файл. Перед отправкой внимательно проверьте отчёт, особенно если он содержит исходные значения и идентификаторы.</string>
+    <string name="diag_charging_source_disconnected">Отключен от сети</string>
 
     <string name="diagnostics" formatted="false">Диагностика</string>
     <string name="diagnostics_summary" formatted="false">Проверка разрешений и надёжности мониторинга, создание отчёта для устранения неполадок</string>
@@ -726,11 +730,15 @@
     <string name="diag_missing_average">Средний ток — отдельное измерение устройства, отличное от мгновенного тока. Battery Monitor не рассчитывает своё среднее, если устройство его не предоставляет.</string>
     <string name="diag_missing_estimated_health">Для оценки нужны положительные значения ёмкости при полном заряде и проектной ёмкости одной батареи. Ёмкость при полном заряде не должна превышать проектную.</string>
     <string name="diag_missing_charge_time">Это оценка зарядки от устройства. «Текущее состояние» использует настроенный метод Battery Monitor и может показывать оценку даже без оценки устройства.</string>
-    <string name="diag_predictor_description">Скорости показывают время на один процентный пункт. Последние расчёты хранятся в памяти; сохранённые средние сохраняются после перезапуска. Неполные интервалы используют долгосрочную скорость, а несохранённые средние — значения по умолчанию.</string>
-    <string name="diagnostics_predictor_help" formatted="false">«Работа приложения» показывает сохранённые долгосрочные средние и последние входные данные прогнозирования. Последние скорости используют изменения процента заряда и показывают время на один процентный пункт, выбранный метод, активный источник зарядки, наблюдаемые пункты и длительности, а также учёт незавершённого интервала. В окнах за пять минут и пять пунктов ненаблюдаемые участки используют активную долгосрочную скорость; пропущенные уровни интерполируются. Последние данные хранятся в памяти и сбрасываются при перезапуске мониторинга, переходе между зарядкой и разрядкой или смене источника зарядки. Сохранённые накопленные средние переживают перезапуск. Эти данные не зависят от журналов истории; очистка журналов не сбрасывает оценки.</string>
+    <string name="diagnostics_predictor_help" formatted="false">Просмотрите сохранённые долгосрочные средние и последние входные данные прогнозирования. Последние скорости используют изменения процента заряда и показывают время на один процентный пункт, выбранный метод, активный источник зарядки, наблюдаемые пункты и длительности, а также учёт незавершённого интервала. В окнах за пять минут и пять пунктов ненаблюдаемые участки используют активную долгосрочную скорость; пропущенные уровни интерполируются. Последние данные хранятся в памяти и сбрасываются при перезапуске мониторинга, переходе между зарядкой и разрядкой или смене источника зарядки. Сохранённые накопленные средние переживают перезапуск. Эти данные не зависят от журналов истории; очистка журналов не сбрасывает оценки.</string>
+    <string name="diag_check_failed" formatted="false">Последняя попытка чтения не удалась.</string>
+    <string name="diag_reading_retained" formatted="false">Показано предыдущее измерение.</string>
+    <string name="diag_value_copied" formatted="false">Значение скопировано</string>
+    <string name="diag_predictor_read_failed" formatted="false">Не удалось прочитать сохранённые данные прогнозирования.</string>
+    <string name="diag_predictor_recent_title" formatted="false">Данные прогнозирования — Последние расчёты</string>
+    <string name="diag_predictor_stored_title" formatted="false">Данные прогнозирования — Сохранённые долгосрочные средние</string>
     <string name="diag_predictor_recent" formatted="false">Последние расчёты</string>
     <string name="diag_predictor_no_recent" formatted="false">Нет активной оценки. Последние данные доступны после измерения при зарядке или разрядке.</string>
-    <string name="diag_predictor_start_monitor">Включите мониторинг выше, чтобы просмотреть сохранённые данные прогнозирования.</string>
     <string name="diag_predictor_active_state" formatted="false">Активное состояние батареи</string>
     <string name="diag_predictor_effective_rate" formatted="false">Скорость для оценки</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">Последние 5\u00A0минут</string>
@@ -740,7 +748,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">Длительность наблюдаемого сеанса</string>
     <string name="diag_predictor_current_level_duration" formatted="false">Время на текущем уровне</string>
     <string name="diag_predictor_uses_partial" formatted="false">Незавершённый интервал учтён</string>
-    <string name="diag_predictor_saved_averages" formatted="false">Сохранённые долгосрочные средние</string>
     <string name="diag_predictor_ac">Зарядка (сеть)</string>
     <string name="diag_predictor_wireless">Зарядка (беспроводная)</string>
     <string name="diag_predictor_usb">Зарядка (USB)</string>
@@ -769,8 +776,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">Диагностика ограничения зарядки OEM</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Откройте инструменты снимков и сравнения, чтобы выяснить, как Battery Monitor определяет ограничение зарядки устройства. Инструкции по подготовке доступны в справке самого экрана диагностики OEM.</string>
-    <string name="charging_tools_help_overview" formatted="false">Откройте инструменты снимков и сравнения, чтобы выяснить, как Battery Monitor определяет ограничение зарядки устройства. Инструкции по подготовке доступны в справке самого экрана диагностики OEM.\n
-    При привилегированном доступе может быть доступно больше диагностических данных. Предоставьте доступ через Shizuku или root и включите привилегированный доступ в разделе «Настройки» → «Расширенные» → «Использовать привилегированный доступ», чтобы получить более полезный отчёт об OEM-ограничении зарядки.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Чтобы отчёт был полезным, откройте «Помощь» и выполните шаги подготовки перед созданием снимков.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">При привилегированном доступе может быть доступно больше диагностических данных. Предоставьте доступ через Shizuku или root и включите привилегированный доступ в разделе «Настройки» → «Расширенные» → «Использовать привилегированный доступ», чтобы получить более полезный отчёт об OEM-ограничении зарядки.</string>
     <string name="charging_diagnostics_capture" formatted="false">Сделать снимок</string>
@@ -794,7 +799,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">Сначала сохраните как минимум два разных режима зарядки</string>
     <string name="charging_diagnostics_report" formatted="false">Создать сравнительный отчёт</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Сначала сделайте снимки как минимум двух разных режимов зарядки OEM</string>
-    <string name="charging_diagnostics_report_help" formatted="false">Сначала сделайте снимки как минимум двух разных режимов зарядки OEM.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Сначала сделайте снимки как минимум двух разных режимов зарядки OEM. После проверки отчёта скопируйте или сохраните его и отправьте по электронной почте на адрес <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
     <string name="charging_diagnostics_copy" formatted="false">Копировать в буфер обмена</string>
     <string name="charging_diagnostics_save" formatted="false">Сохранить</string>
     <string name="charging_diagnostics_copied" formatted="false">Отчёт скопирован</string>
@@ -808,8 +813,6 @@
     4. Включите адаптивную, умную или запланированную зарядку, подождите 2–5\u00A0секунд и сделайте снимок.\n
     5. Если сравнение конфигурации не дало однозначного результата, при желании повторите последовательность во время зарядки, чтобы зафиксировать состояние, доступное только в процессе работы.\n
     6. Создайте и проверьте сравнительный отчёт. Данные фильтруются, а потенциально конфиденциальные значения скрываются, но перед отправкой проверьте весь отчёт.</string>
-    <string name="charging_report_privacy_help" formatted="false">По умолчанию не включены. Эти данные могут содержать личную информацию. Проверьте предпросмотр перед копированием или сохранением.\n
-    После проверки отчёта скопируйте или сохраните его и отправьте по электронной почте на адрес <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Резервное копирование и восстановление</string>
     <string name="backup_restore_settings_summary" formatted="false">Создавайте резервные копии, восстанавливайте и переносите настройки приложения и данные аккумулятора</string>

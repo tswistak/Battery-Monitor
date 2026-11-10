@@ -251,6 +251,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0Sekunden</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0Sekunden</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0Sekunden</string>
+    <string name="chip_switching_interval_custom">Benutzerdefiniert</string>
     <string name="pref_chip_indicate_charging" formatted="false">Lade-Emoji anzeigen</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Blitz-Emoji beim Laden oder bei vollem Akku anzeigen?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Wenn aktiviert, zeigt der Statusleisten-Chip beim Laden oder vollem Akku ein Blitz-Emoji neben dem Wert.</string>
@@ -614,9 +615,9 @@
     <string name="diag_charging_too_cold">Zu kalt zum Laden</string>
     <string name="diag_charging_too_hot">Zu heiß zum Laden</string>
     <string name="diag_section_service" formatted="false">Android-Akkudienst</string>
-    <string name="diag_help_service" formatted="false">„Rohdaten“ enthält ursprüngliche Namen und Werte aus Android-Akkumeldungen und, wenn zugänglich, aus dumpsys battery. Dazu können Ladequelle, Akkustatus, Temperatur, Spannung und weitere Zustände des Akkudienstes gehören.</string>
+    <string name="diag_help_service" formatted="false">Ursprüngliche Namen und Werte aus Android-Akkumeldungen und, wenn zugänglich, aus dumpsys battery. Dazu können Ladequelle, Akkustatus, Temperatur, Spannung und weitere Zustände des Akkudienstes gehören.</string>
     <string name="diag_section_sysfs" formatted="false">Kernel-Dateien von power_supply</string>
-    <string name="diag_help_sysfs" formatted="false">„Rohdaten“ zeigt die ursprünglichen Namen und Werte aus /sys/class/power_supply, einschließlich mehrzeiliger Werte. Suchen Sie nach Schlüsseln und tippen Sie auf eine Zeile, um ihren vollständigen Wert anzusehen und zu kopieren. Mit „Aktualisieren“ erfassen Sie neue Messwerte. Battery Monitor versucht auch, mit normalen Android-Berechtigungen zu lesen, ohne Root oder Shizuku.</string>
+    <string name="diag_help_sysfs" formatted="false">Die ursprünglichen Namen und Werte aus /sys/class/power_supply, einschließlich mehrzeiliger Werte.</string>
     <string name="diag_fuel_gauge">Akku-Ladungsmesser</string>
     <string name="diag_mains_supply">Netzstromversorgung</string>
     <string name="diag_charging_source">Ladequelle</string>
@@ -646,15 +647,18 @@
     <string name="diag_input_voltage">Eingangsspannung</string>
     <string name="diag_input_voltage_limit">Eingangsspannungsgrenze</string>
     <string name="diag_section_metadata" formatted="false">Metadaten</string>
-    <string name="diag_help_metadata" formatted="false">„Rohdaten“ enthält auch ursprüngliche BatteryManager-Eigenschaftsnamen und -werte, einschließlich verfügbarer Zähler und Strommesswerte. Zusätzliche Eigenschaften wie Fertigungsdetails oder Austauschstatus hängen von Android-Version, Geräteunterstützung und Berechtigungen ab.</string>
+    <string name="diag_help_metadata" formatted="false">Ursprüngliche BatteryManager-Eigenschaftsnamen und -werte, einschließlich verfügbarer Zähler und Strommesswerte. Zusätzliche Eigenschaften wie Fertigungsdetails oder Austauschstatus hängen von Android-Version, Geräteunterstützung und Berechtigungen ab.</string>
     <string name="diag_raw">Rohdaten</string>
     <string name="diag_search_key">Schlüssel suchen</string>
     <string name="diag_no_keys">Keine passenden Schlüssel in den verfügbaren Daten</string>
     <string name="diag_raw_values">Rohwerte</string>
     <string name="diag_last_checked">Zuletzt geprüft: %1$s</string>
     <string name="diag_privileged_stale">Die vorherigen privilegierten Messwerte werden angezeigt. Aktualisieren Sie, um es erneut zu versuchen.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">Fehlersuche</string>
-    <string name="diag_help_troubleshooting" formatted="false">Android-Daten werden in der „Diagnose“ automatisch erfasst. Für zusätzliche Root- oder Shizuku-Daten aktivieren Sie privilegierten Zugriff unter „Zusätzliche Quellen“. Battery Monitor versucht zuerst Root, dann Shizuku. Shizuku muss laufen und die Berechtigung muss erteilt sein. Fehlende Felder bleiben nicht verfügbar; fehlgeschlagene Aktualisierungen behalten die vorherige Momentaufnahme und markieren sie als veraltet.</string>
+    <string name="diag_help_troubleshooting" formatted="false">Android-Daten werden in der „Diagnose“ automatisch erfasst. Für zusätzliche Root- oder Shizuku-Daten aktivieren Sie „Privilegierten Zugriff verwenden“ unter „Einstellungen“ → „Erweitert“. Battery Monitor versucht zuerst Root, dann Shizuku. Shizuku muss laufen und die Berechtigung muss erteilt sein. Fehlende Felder bleiben nicht verfügbar; fehlgeschlagene Aktualisierungen behalten die vorherige Momentaufnahme und markieren sie als veraltet.</string>
+    <string name="diag_help_raw_general" formatted="false">Ursprüngliche Schlüssel und Werte aus verfügbaren Quellen. Suchen Sie nach Schlüsseln und tippen Sie auf eine Zeile, um ihren vollständigen Wert anzusehen und zu kopieren. Mit „Aktualisieren“ erfassen Sie neue Messwerte. Battery Monitor versucht auch, mit normalen Android-Berechtigungen zu lesen, ohne Root oder Shizuku. Die Verfügbarkeit hängt davon ab, welche Quellen gelesen werden können.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Ursprüngliche Schlüssel und Werte gespeicherter Vorhersagedaten, sofern verfügbar.</string>
+    <string name="diag_export_report_help" formatted="false">Erstellen Sie einen Bericht mit den verfügbaren Diagnosemesswerten und Vorhersagedaten. Prüfen Sie die Vorschau und kopieren Sie den Bericht dann in die Zwischenablage oder speichern Sie ihn als Textdatei. Prüfen Sie den Bericht vor dem Teilen sorgfältig, besonders wenn er Rohwerte und Kennungen enthält.</string>
+    <string name="diag_charging_source_disconnected">Nicht angeschlossen</string>
 
     <string name="diagnostics" formatted="false">Diagnose</string>
     <string name="diagnostics_summary" formatted="false">Berechtigungen und Zuverlässigkeit prüfen und einen Bericht zur Fehlerbehebung erstellen</string>
@@ -716,11 +720,15 @@
     <string name="diag_missing_average">Der Durchschnittsstrom ist ein separater Gerätemesswert neben dem Momentanstrom. Battery Monitor berechnet keinen eigenen Durchschnitt, wenn das Gerät keinen liefert.</string>
     <string name="diag_missing_estimated_health">Diese Schätzung benötigt positive Werte für die Vollladekapazität und die Nennkapazität desselben Akkus. Die Vollladekapazität darf die Nennkapazität nicht überschreiten.</string>
     <string name="diag_missing_charge_time">Dies ist die vom Gerät gemeldete Ladeschätzung. „Aktueller Zustand“ verwendet die eingestellte Vorhersagemethode von Battery Monitor und kann auch ohne Geräteschätzung eine Schätzung anzeigen.</string>
-    <string name="diag_predictor_description">Raten zeigen die Zeit für einen Prozentpunkt. Aktuelle Berechnungen bleiben im Arbeitsspeicher; gespeicherte Durchschnittswerte überstehen einen Neustart. Unvollständige Zeitfenster verwenden die Langzeitrate, nicht gespeicherte Durchschnittswerte verwenden Standardwerte.</string>
-    <string name="diagnostics_predictor_help" formatted="false">„App-Betrieb“ zeigt gespeicherte Langzeitdurchschnittswerte und die aktuellen Eingabewerte der Vorhersage. Aktuelle Raten nutzen Änderungen des Akkuprozentsatzes und zeigen die Zeit für einen Prozentpunkt, die gewählte Methode, die aktive Ladequelle, beobachtete Punkte und Zeitdauern sowie die Einbeziehung des unvollständigen Intervalls. Die Fünf-Minuten- und Fünf-Prozentpunkte-Fenster nutzen für unbeobachtete Abschnitte die aktive Langzeitrate; übersprungene Ladestände werden interpoliert. Der aktuelle Zustand bleibt im Arbeitsspeicher und wird zurückgesetzt, wenn die Überwachung neu startet, zwischen Laden und Entladen wechselt oder sich die Ladequelle ändert. Gespeicherte erlernte Durchschnittswerte überstehen einen Neustart. Diese Daten sind von den Verlaufsprotokollen unabhängig; das Löschen von Protokollen setzt Schätzungen nicht zurück.</string>
+    <string name="diagnostics_predictor_help" formatted="false">Prüfen Sie gespeicherte Langzeitdurchschnittswerte und die aktuellen Eingabewerte der Vorhersage. Aktuelle Raten nutzen Änderungen des Akkuprozentsatzes und zeigen die Zeit für einen Prozentpunkt, die gewählte Methode, die aktive Ladequelle, beobachtete Punkte und Zeitdauern sowie die Einbeziehung des unvollständigen Intervalls. Die Fünf-Minuten- und Fünf-Prozentpunkte-Fenster nutzen für unbeobachtete Abschnitte die aktive Langzeitrate; übersprungene Ladestände werden interpoliert. Der aktuelle Zustand bleibt im Arbeitsspeicher und wird zurückgesetzt, wenn die Überwachung neu startet, zwischen Laden und Entladen wechselt oder sich die Ladequelle ändert. Gespeicherte erlernte Durchschnittswerte überstehen einen Neustart. Diese Daten sind von den Verlaufsprotokollen unabhängig; das Löschen von Protokollen setzt Schätzungen nicht zurück.</string>
+    <string name="diag_check_failed" formatted="false">Der letzte Leseversuch ist fehlgeschlagen.</string>
+    <string name="diag_reading_retained" formatted="false">Der vorherige Messwert wird angezeigt.</string>
+    <string name="diag_value_copied" formatted="false">Wert kopiert</string>
+    <string name="diag_predictor_read_failed" formatted="false">Gespeicherte Vorhersagedaten konnten nicht gelesen werden.</string>
+    <string name="diag_predictor_recent_title" formatted="false">Vorhersagedaten — Aktuelle Berechnungen</string>
+    <string name="diag_predictor_stored_title" formatted="false">Vorhersagedaten — Gespeicherte Langzeitdurchschnittswerte</string>
     <string name="diag_predictor_recent" formatted="false">Aktuelle Berechnungen</string>
     <string name="diag_predictor_no_recent" formatted="false">Keine aktive Schätzung. Aktuelle Daten sind nach einer Überwachungsmessung beim Laden oder Entladen verfügbar.</string>
-    <string name="diag_predictor_start_monitor">Starten Sie oben die Überwachung, um gespeicherte Vorhersagedaten zu prüfen.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktiver Akkustatus</string>
     <string name="diag_predictor_effective_rate" formatted="false">Für die Schätzung verwendete Rate</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">Letzte 5\u00A0Minuten</string>
@@ -730,7 +738,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">Beobachtete Sitzungsdauer</string>
     <string name="diag_predictor_current_level_duration" formatted="false">Zeit auf dem aktuellen Ladestand</string>
     <string name="diag_predictor_uses_partial" formatted="false">Unvollständiges Intervall einbezogen</string>
-    <string name="diag_predictor_saved_averages" formatted="false">Gespeicherte Langzeitdurchschnittswerte</string>
     <string name="diag_predictor_ac">Laden (Netzstrom)</string>
     <string name="diag_predictor_wireless">Laden (kabellos)</string>
     <string name="diag_predictor_usb">Laden (USB)</string>
@@ -759,8 +766,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">OEM-Ladelimit-Diagnose</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Öffnen Sie die Werkzeuge für Momentaufnahmen und Vergleiche, um zu untersuchen, wie Battery Monitor das Ladelimit des Geräts erkennt. Anweisungen zur Vorbereitung finden Sie in der eigenen Hilfe des OEM-Diagnosebildschirms.</string>
-    <string name="charging_tools_help_overview" formatted="false">Öffnen Sie die Werkzeuge für Momentaufnahmen und Vergleiche, um zu untersuchen, wie Battery Monitor das Ladelimit des Geräts erkennt. Anweisungen zur Vorbereitung finden Sie in der eigenen Hilfe des OEM-Diagnosebildschirms.\n
-    Mit privilegiertem Zugriff sind möglicherweise weitere Diagnosedaten verfügbar. Gewähren Sie Shizuku- oder Root-Zugriff und aktivieren Sie den privilegierten Zugriff unter „Einstellungen“ → „Erweitert“ → „Privilegierten Zugriff verwenden“, um einen aussagekräftigeren Bericht zum OEM-Ladelimit zu erhalten.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Damit der Bericht aussagekräftig ist, öffnen Sie die „Hilfe“ und folgen Sie vor dem Erfassen den Vorbereitungsschritten.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Mit privilegiertem Zugriff sind möglicherweise weitere Diagnosedaten verfügbar. Gewähren Sie Shizuku- oder Root-Zugriff und aktivieren Sie den privilegierten Zugriff unter „Einstellungen“ → „Erweitert“ → „Privilegierten Zugriff verwenden“, um einen aussagekräftigeren Bericht zum OEM-Ladelimit zu erhalten.</string>
     <string name="charging_diagnostics_capture" formatted="false">Momentaufnahme erfassen</string>
@@ -782,7 +787,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">Erfassen Sie zuerst mindestens zwei verschiedene Lademodi</string>
     <string name="charging_diagnostics_report" formatted="false">Vergleichsbericht erstellen</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Erfassen Sie zuerst mindestens zwei verschiedene OEM-Lademodi</string>
-    <string name="charging_diagnostics_report_help" formatted="false">Erfassen Sie zuerst mindestens zwei verschiedene OEM-Lademodi.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Erfassen Sie zuerst mindestens zwei verschiedene OEM-Lademodi. Kopieren oder speichern Sie den Bericht nach der Prüfung und senden Sie ihn per E-Mail an <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
     <string name="charging_diagnostics_copy" formatted="false">In Zwischenablage kopieren</string>
     <string name="charging_diagnostics_save" formatted="false">Speichern</string>
     <string name="charging_diagnostics_copied" formatted="false">Bericht kopiert</string>
@@ -796,8 +801,6 @@
     4. Aktivieren Sie adaptives, intelligentes oder zeitgesteuertes Laden, warten Sie 2–5\u00A0Sekunden und erfassen Sie eine Aufnahme.\n
     5. Falls der Konfigurationsvergleich kein eindeutiges Ergebnis liefert, können Sie die Abfolge optional während des Ladens wiederholen, um den nur zur Laufzeit vorhandenen Zustand zu erfassen.\n
     6. Erstellen und prüfen Sie den Vergleichsbericht. Die Daten werden gefiltert und potenziell sensible Werte unkenntlich gemacht; prüfen Sie dennoch den vollständigen Bericht vor dem Teilen.</string>
-    <string name="charging_report_privacy_help" formatted="false">Standardmäßig ausgeschlossen. Diese Daten können persönliche Informationen enthalten. Prüfen Sie die Vorschau vor dem Kopieren oder Speichern.\n
-    Kopieren oder speichern Sie den Bericht nach der Prüfung und senden Sie ihn per E-Mail an <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Sichern und Wiederherstellen</string>
     <string name="backup_restore_settings_summary" formatted="false">Sichern, wiederherstellen und übertragen Sie Ihre App-Einstellungen und Akkudaten</string>

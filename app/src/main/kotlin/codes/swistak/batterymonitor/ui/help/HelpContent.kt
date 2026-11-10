@@ -546,25 +546,19 @@ internal fun helpSections(
         CHARGING_TOOLS_HELP_TOPIC -> listOf(
             HelpSection(
                 R.string.charging_diagnostics_title, listOf(
-                    HelpParagraph(R.string.charging_tools_help_overview),
                     HelpParagraph(
                         R.string.charging_diagnostics_capture,
                         subheading = true,
                         controlKey = "charging_diagnostics_capture"
                     ),
                     HelpParagraph(R.string.charging_diagnostics_help_steps),
-                    HelpParagraph(
-                        R.string.charging_diagnostics_choose_state, subheading = true
-                    ),
-                    HelpParagraph(R.string.charging_diagnostics_condition_help),
+                    HelpParagraph(R.string.charging_diagnostics_privileged_hint),
                     HelpParagraph(
                         R.string.charging_diagnostics_report,
                         subheading = true,
                         controlKey = "charging_diagnostics_report"
                     ),
                     HelpParagraph(R.string.charging_diagnostics_report_help),
-                    HelpParagraph(R.string.diag_include_apps, subheading = true),
-                    HelpParagraph(R.string.charging_report_privacy_help),
                     HelpParagraph(
                         R.string.charging_diagnostics_clear,
                         subheading = true,
@@ -577,7 +571,7 @@ internal fun helpSections(
 
         SettingsContract.KEY_ADVANCED_INFO_HELP -> listOf(
             HelpSection(
-                R.string.nav_diagnostics, listOf(
+                R.string.settings_overview, listOf(
                     HelpParagraph(R.string.diag_help_overview),
                 )
             ),
@@ -622,16 +616,20 @@ internal fun helpSections(
             ),
             HelpSection(
                 R.string.diag_raw, listOf(
-                    HelpParagraph(R.string.diag_section_service, subheading = true),
+                    HelpParagraph(R.string.diag_help_raw_general),
+                    HelpParagraph(R.string.diag_raw_values, subheading = true),
                     HelpParagraph(R.string.diag_help_service),
                     HelpParagraph(R.string.diag_section_sysfs, subheading = true),
                     HelpParagraph(R.string.diag_help_sysfs),
                     HelpParagraph(R.string.diag_section_metadata, subheading = true),
                     HelpParagraph(R.string.diag_help_metadata),
+                    HelpParagraph(R.string.device_data_predictor, subheading = true),
+                    HelpParagraph(R.string.diag_help_raw_predictor),
                 )
             ),
             HelpSection(
                 R.string.diag_additional_sources, listOf(
+                    HelpParagraph(R.string.diag_help_troubleshooting),
                     HelpParagraph(
                         R.string.pref_cat_privileged_access,
                         subheading = true,
@@ -647,14 +645,8 @@ internal fun helpSections(
                 )
             ),
             HelpSection(
-                R.string.diag_help_troubleshooting_title, listOf(
-                    HelpParagraph(R.string.diag_help_troubleshooting),
-                )
-            ),
-            HelpSection(
                 R.string.diagnostics_export, listOf(
-                    HelpParagraph(R.string.diag_include_raw, subheading = true),
-                    HelpParagraph(R.string.diag_report_privacy),
+                    HelpParagraph(R.string.diag_export_report_help),
                 ), controlKey = "diagnostics_export"
             ),
         )

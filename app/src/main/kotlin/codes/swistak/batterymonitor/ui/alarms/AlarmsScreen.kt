@@ -7,6 +7,7 @@
 */
 package codes.swistak.batterymonitor.ui.alarms
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -53,6 +54,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -72,6 +75,7 @@ import codes.swistak.batterymonitor.alarms.AlarmGroup
 import codes.swistak.batterymonitor.alarms.AlarmRule
 import codes.swistak.batterymonitor.alarms.AlarmTypeDefinition
 import codes.swistak.batterymonitor.alarms.LogicalAlarm
+import codes.swistak.batterymonitor.common.showToast
 import codes.swistak.batterymonitor.ui.components.ActionLabel
 import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
@@ -115,6 +119,8 @@ internal fun AlarmsScreen(
     // Keep the restored position unmeasured until saved threshold rows have loaded.
     val loadingListState = remember { LazyListState() }
     val snackbar = remember { SnackbarHostState() }
+    val context = LocalContext.current
+    val resources = LocalResources.current
     var recoveryAction by remember { mutableStateOf<Pair<AlarmRule, Boolean>?>(null) }
     val keys = remember(state.projection) {
         buildList {
@@ -144,9 +150,14 @@ internal fun AlarmsScreen(
         }
     }
     LaunchedEffect(state.notice) {
-        state.notice?.let {
-            snackbar.showSnackbar(it)
-            onNoticeHandled()
+        state.notice?.let { notice ->
+            if (notice == R.string.alarms_saved) {
+                onNoticeHandled()
+                context.showToast(notice, Toast.LENGTH_SHORT)
+            } else {
+                snackbar.showSnackbar(resources.getString(notice))
+                onNoticeHandled()
+            }
         }
     }
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -556,16 +567,16 @@ private fun ThresholdRow(
                 verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     buildAnnotatedString {
-                        append(value)
-                        withStyle(
-                            SpanStyle(
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                                fontWeight = FontWeight.Medium
-                            )
-                        ) {
-                            append(" $unit")
-                        }
-                    },
+                    append(value)
+                    withStyle(
+                        SpanStyle(
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            fontWeight = FontWeight.Medium
+                        )
+                    ) {
+                        append(" $unit")
+                    }
+                },
                     Modifier
                         .weight(1f, fill = false)
                         .clearAndSetSemantics {},

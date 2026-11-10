@@ -24,6 +24,43 @@ import java.util.concurrent.RejectedExecutionException
 
 class PrivilegedBatteryReaderTest {
     @Test
+    fun `cache-only diagnostic reads never collect and preserve acquisition time until expiry or revocation`() {
+        val harness = Harness()
+        val acquiredAt = BatteryMeasurementTime(5_000, 100)
+        harness.nextSnapshot = snapshot().apply {
+            currentNowUa = -200_000
+            fieldSources["current_now"] = "cmd battery get current_now"
+            sourceReadTimes["cmd battery get current_now"] = acquiredAt
+        }
+        assertNull(harness.reader.cached())
+        assertTrue(harness.executor.tasks.isEmpty())
+
+        harness.reader.readWhenReady { }
+        harness.executor.runNext()
+        harness.now = 5_000
+        assertEquals(acquiredAt, harness.reader.cached()?.fieldMeasurementTimes?.get("current_now"))
+        assertEquals(1, harness.collections)
+        assertTrue(harness.executor.tasks.isEmpty())
+
+        harness.now = 10_001
+        assertNull(harness.reader.cached())
+        assertTrue(harness.executor.tasks.isEmpty())
+        harness.reader.readWhenReady { }
+        harness.executor.runNext()
+        assertTrue(harness.reader.cached() != null)
+        harness.revision++
+        assertNull(harness.reader.cached())
+        assertTrue(harness.executor.tasks.isEmpty())
+        harness.reader.readWhenReady { }
+        harness.executor.runNext()
+        assertTrue(harness.reader.cached() != null)
+        harness.accessEnabled = false
+        assertNull(harness.reader.cached())
+        assertTrue(harness.executor.tasks.isEmpty())
+        assertEquals(3, harness.collections)
+    }
+
+    @Test
     fun `projection keeps acquisition metadata paired with each selected exact source`() {
         val serviceTime = BatteryMeasurementTime(1_000, 100)
         val nowTime = BatteryMeasurementTime(1_100, 200)

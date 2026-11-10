@@ -251,6 +251,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0δευτερόλεπτα</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0δευτερόλεπτα</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0δευτερόλεπτα</string>
+    <string name="chip_switching_interval_custom">Προσαρμοσμένο</string>
     <string name="pref_chip_indicate_charging" formatted="false">Εμφάνιση Emoji φόρτισης</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Εμφάνιση ενός emoji αστραπής κατά τη φόρτιση ή την πλήρη φόρτιση;</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Εάν είναι ενεργοποιημένο, το τσιπ της γραμμής κατάστασης θα εμφανίσει ένα emoji αστραπή δίπλα την τιμή του τσιπ κατά τη φόρτιση ή όταν είναι πλήρως φορτισμένο.</string>
@@ -614,9 +615,9 @@
     <string name="diag_charging_too_cold">Πολύ κρύα για φόρτιση</string>
     <string name="diag_charging_too_hot">Πολύ ζεστή για φόρτιση</string>
     <string name="diag_section_service" formatted="false">Υπηρεσία μπαταρίας Android</string>
-    <string name="diag_help_service" formatted="false">Τα «Ακατέργαστα» περιλαμβάνουν τα αρχικά ονόματα και τις τιμές από τις εκπομπές μπαταρίας Android και, όταν είναι προσβάσιμο, το dumpsys battery. Μπορούν να περιλαμβάνουν πηγή φόρτισης, κατάσταση μπαταρίας, θερμοκρασία, τάση και άλλες καταστάσεις της υπηρεσίας μπαταρίας.</string>
+    <string name="diag_help_service" formatted="false">Τα αρχικά ονόματα και τις τιμές από τις εκπομπές μπαταρίας Android και, όταν είναι προσβάσιμο, το dumpsys battery. Μπορούν να περιλαμβάνουν πηγή φόρτισης, κατάσταση μπαταρίας, θερμοκρασία, τάση και άλλες καταστάσεις της υπηρεσίας μπαταρίας.</string>
     <string name="diag_section_sysfs" formatted="false">Αρχεία power_supply του πυρήνα</string>
-    <string name="diag_help_sysfs" formatted="false">Τα «Ακατέργαστα» δείχνουν τα αρχικά ονόματα και τις τιμές από το /sys/class/power_supply, συμπεριλαμβανομένων πολυγραμμικών τιμών. Αναζητήστε με κλειδί και πατήστε μια γραμμή για προβολή και αντιγραφή ολόκληρης της τιμής. Χρησιμοποιήστε την «Ανανέωση» για νέες μετρήσεις. Το Battery Monitor δοκιμάζει ανάγνωση και με τις κανονικές άδειες Android, χωρίς root ή Shizuku.</string>
+    <string name="diag_help_sysfs" formatted="false">Τα αρχικά ονόματα και τις τιμές από το /sys/class/power_supply, συμπεριλαμβανομένων πολυγραμμικών τιμών.</string>
     <string name="diag_fuel_gauge">Μετρητής φορτίου μπαταρίας</string>
     <string name="diag_mains_supply">Τροφοδοσία AC</string>
     <string name="diag_charging_source">Πηγή φόρτισης</string>
@@ -646,15 +647,18 @@
     <string name="diag_input_voltage">Τάση εισόδου</string>
     <string name="diag_input_voltage_limit">Όριο τάσης εισόδου</string>
     <string name="diag_section_metadata" formatted="false">Μεταδεδομένα</string>
-    <string name="diag_help_metadata" formatted="false">Τα «Ακατέργαστα» περιλαμβάνουν επίσης τα αρχικά ονόματα και τις τιμές ιδιοτήτων BatteryManager, μαζί με διαθέσιμους μετρητές και μετρήσεις ρεύματος. Πρόσθετες ιδιότητες, όπως στοιχεία κατασκευής ή κατάσταση αντικατάστασης, εξαρτώνται από την έκδοση Android, την υποστήριξη της συσκευής και τις άδειες.</string>
+    <string name="diag_help_metadata" formatted="false">Τα αρχικά ονόματα και τις τιμές ιδιοτήτων BatteryManager, μαζί με διαθέσιμους μετρητές και μετρήσεις ρεύματος. Πρόσθετες ιδιότητες, όπως στοιχεία κατασκευής ή κατάσταση αντικατάστασης, εξαρτώνται από την έκδοση Android, την υποστήριξη της συσκευής και τις άδειες.</string>
     <string name="diag_raw">Ακατέργαστα</string>
     <string name="diag_search_key">Αναζήτηση κλειδιών</string>
     <string name="diag_no_keys">Δεν υπάρχουν κλειδιά που ταιριάζουν στα διαθέσιμα δεδομένα</string>
     <string name="diag_raw_values">Ακατέργαστες τιμές</string>
     <string name="diag_last_checked">Τελευταίος έλεγχος: %1$s</string>
     <string name="diag_privileged_stale">Εμφανίζονται οι προηγούμενες προνομιακές μετρήσεις. Ανανεώστε για νέα προσπάθεια.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">Αντιμετώπιση προβλημάτων</string>
-    <string name="diag_help_troubleshooting" formatted="false">Τα δεδομένα Android συλλέγονται αυτόματα στα «Διαγνωστικά». Για πρόσθετα δεδομένα root ή Shizuku, ενεργοποιήστε την προνομιακή πρόσβαση στις «Πρόσθετες πηγές». Το Battery Monitor δοκιμάζει πρώτα root και μετά Shizuku. Το Shizuku πρέπει να εκτελείται και να έχει δοθεί άδεια. Τα πεδία που λείπουν παραμένουν μη διαθέσιμα· οι αποτυχημένες ανανεώσεις διατηρούν το προηγούμενο στιγμιότυπο και το επισημαίνουν ως μη ενημερωμένο.</string>
+    <string name="diag_help_troubleshooting" formatted="false">Τα δεδομένα Android συλλέγονται αυτόματα στα «Διαγνωστικά». Για πρόσθετα δεδομένα root ή Shizuku, ενεργοποιήστε την επιλογή «Χρήση προνομιακής πρόσβασης» στις «Ρυθμίσεις» → «Για προχωρημένους». Το Battery Monitor δοκιμάζει πρώτα root και μετά Shizuku. Το Shizuku πρέπει να εκτελείται και να έχει δοθεί άδεια. Τα πεδία που λείπουν παραμένουν μη διαθέσιμα· οι αποτυχημένες ανανεώσεις διατηρούν το προηγούμενο στιγμιότυπο και το επισημαίνουν ως μη ενημερωμένο.</string>
+    <string name="diag_help_raw_general" formatted="false">Αρχικά κλειδιά και τιμές από τις διαθέσιμες πηγές. Αναζητήστε με κλειδί και πατήστε μια γραμμή για προβολή και αντιγραφή ολόκληρης της τιμής. Χρησιμοποιήστε την «Ανανέωση» για νέες μετρήσεις. Το Battery Monitor δοκιμάζει ανάγνωση και με τις κανονικές άδειες Android, χωρίς root ή Shizuku. Η διαθεσιμότητα εξαρτάται από το ποιες πηγές μπορούν να διαβαστούν.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Αρχικά κλειδιά και τιμές αποθηκευμένων δεδομένων πρόβλεψης, όταν είναι διαθέσιμα.</string>
+    <string name="diag_export_report_help" formatted="false">Δημιουργήστε μια αναφορά με τις διαθέσιμες διαγνωστικές μετρήσεις και τα δεδομένα πρόβλεψης. Ελέγξτε την προεπισκόπηση και έπειτα αντιγράψτε την αναφορά στο πρόχειρο ή αποθηκεύστε την ως αρχείο κειμένου. Πριν την κοινοποιήσετε, ελέγξτε την προσεκτικά, ειδικά αν περιέχει ακατέργαστες τιμές και αναγνωριστικά.</string>
+    <string name="diag_charging_source_disconnected">Αποσυνδεδεμένη</string>
 
     <string name="diagnostics" formatted="false">Διαγνωστικά</string>
     <string name="diagnostics_summary" formatted="false">Έλεγχος αδειών και αξιοπιστίας παρακολούθησης και δημιουργία αναφοράς αντιμετώπισης προβλημάτων</string>
@@ -716,11 +720,15 @@
     <string name="diag_missing_average">Το μέσο ρεύμα είναι ξεχωριστή μέτρηση της συσκευής από το στιγμιαίο ρεύμα. Το Battery Monitor δεν υπολογίζει δικό του μέσο όρο όταν η συσκευή δεν παρέχει κανέναν.</string>
     <string name="diag_missing_estimated_health">Αυτή η εκτίμηση απαιτεί θετική χωρητικότητα πλήρους φόρτισης και σχεδιασμού από την ίδια μπαταρία. Η χωρητικότητα πλήρους φόρτισης δεν πρέπει να υπερβαίνει τη χωρητικότητα σχεδιασμού.</string>
     <string name="diag_missing_charge_time">Αυτή είναι η εκτίμηση φόρτισης που αναφέρει η συσκευή. Η «Τρέχουσα κατάσταση» χρησιμοποιεί τη ρυθμισμένη μέθοδο πρόβλεψης του Battery Monitor και μπορεί να δείχνει εκτίμηση ακόμη και χωρίς εκτίμηση της συσκευής.</string>
-    <string name="diag_predictor_description">Οι ρυθμοί δείχνουν τον χρόνο για μία ποσοστιαία μονάδα. Οι πρόσφατοι υπολογισμοί διατηρούνται στη μνήμη· οι αποθηκευμένοι μέσοι όροι παραμένουν μετά την επανεκκίνηση. Τα ελλιπή παράθυρα χρησιμοποιούν τον μακροπρόθεσμο ρυθμό και οι μη αποθηκευμένοι μέσοι όροι τις προεπιλογές.</string>
-    <string name="diagnostics_predictor_help" formatted="false">Η «Λειτουργία εφαρμογής» δείχνει τους αποθηκευμένους μακροπρόθεσμους μέσους όρους και τα πρόσφατα δεδομένα εισόδου της πρόβλεψης. Οι πρόσφατοι ρυθμοί χρησιμοποιούν τις μεταβολές ποσοστού μπαταρίας και δείχνουν τον χρόνο ανά ποσοστιαία μονάδα, την επιλεγμένη μέθοδο, την ενεργή πηγή φόρτισης, τα παρατηρημένα σημεία και τις διάρκειες και αν περιλαμβάνεται το ημιτελές διάστημα. Τα παράθυρα πέντε λεπτών και πέντε μονάδων χρησιμοποιούν τον ενεργό μακροπρόθεσμο ρυθμό για τα μη παρατηρημένα τμήματα· οι στάθμες που παραλείφθηκαν υπολογίζονται με παρεμβολή. Η πρόσφατη κατάσταση διατηρείται στη μνήμη και επαναφέρεται όταν επανεκκινεί η παρακολούθηση, αλλάζει μεταξύ φόρτισης και εκφόρτισης ή αλλάζει η πηγή φόρτισης. Οι αποθηκευμένοι μαθημένοι μέσοι όροι παραμένουν μετά την επανεκκίνηση. Αυτά τα δεδομένα είναι ανεξάρτητα από τις καταγραφές ιστορικού· η εκκαθάριση καταγραφών δεν επαναφέρει τις εκτιμήσεις.</string>
+    <string name="diagnostics_predictor_help" formatted="false">Ελέγξτε τους αποθηκευμένους μακροπρόθεσμους μέσους όρους και τα πρόσφατα δεδομένα εισόδου της πρόβλεψης. Οι πρόσφατοι ρυθμοί χρησιμοποιούν τις μεταβολές ποσοστού μπαταρίας και δείχνουν τον χρόνο ανά ποσοστιαία μονάδα, την επιλεγμένη μέθοδο, την ενεργή πηγή φόρτισης, τα παρατηρημένα σημεία και τις διάρκειες και αν περιλαμβάνεται το ημιτελές διάστημα. Τα παράθυρα πέντε λεπτών και πέντε μονάδων χρησιμοποιούν τον ενεργό μακροπρόθεσμο ρυθμό για τα μη παρατηρημένα τμήματα· οι στάθμες που παραλείφθηκαν υπολογίζονται με παρεμβολή. Η πρόσφατη κατάσταση διατηρείται στη μνήμη και επαναφέρεται όταν επανεκκινεί η παρακολούθηση, αλλάζει μεταξύ φόρτισης και εκφόρτισης ή αλλάζει η πηγή φόρτισης. Οι αποθηκευμένοι μαθημένοι μέσοι όροι παραμένουν μετά την επανεκκίνηση. Αυτά τα δεδομένα είναι ανεξάρτητα από τις καταγραφές ιστορικού· η εκκαθάριση καταγραφών δεν επαναφέρει τις εκτιμήσεις.</string>
+    <string name="diag_check_failed" formatted="false">Η τελευταία προσπάθεια ανάγνωσης απέτυχε.</string>
+    <string name="diag_reading_retained" formatted="false">Εμφανίζεται η προηγούμενη μέτρηση.</string>
+    <string name="diag_value_copied" formatted="false">Η τιμή αντιγράφηκε</string>
+    <string name="diag_predictor_read_failed" formatted="false">Δεν ήταν δυνατή η ανάγνωση των αποθηκευμένων δεδομένων πρόβλεψης.</string>
+    <string name="diag_predictor_recent_title" formatted="false">Δεδομένα πρόβλεψης — Πρόσφατοι υπολογισμοί</string>
+    <string name="diag_predictor_stored_title" formatted="false">Δεδομένα πρόβλεψης — Αποθηκευμένοι μακροπρόθεσμοι μέσοι όροι</string>
     <string name="diag_predictor_recent" formatted="false">Πρόσφατοι υπολογισμοί</string>
     <string name="diag_predictor_no_recent" formatted="false">Δεν υπάρχει ενεργή εκτίμηση. Πρόσφατα δεδομένα γίνονται διαθέσιμα μετά από μέτρηση παρακολούθησης κατά τη φόρτιση ή την εκφόρτιση.</string>
-    <string name="diag_predictor_start_monitor">Ξεκινήστε την παρακολούθηση παραπάνω για να εξετάσετε τα αποθηκευμένα δεδομένα πρόβλεψης.</string>
     <string name="diag_predictor_active_state" formatted="false">Ενεργή κατάσταση μπαταρίας</string>
     <string name="diag_predictor_effective_rate" formatted="false">Ρυθμός που χρησιμοποιείται για την εκτίμηση</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">Τελευταία 5\u00A0λεπτά</string>
@@ -730,7 +738,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">Παρατηρημένη διάρκεια συνεδρίας</string>
     <string name="diag_predictor_current_level_duration" formatted="false">Χρόνος στην τρέχουσα στάθμη</string>
     <string name="diag_predictor_uses_partial" formatted="false">Περιλαμβάνεται το ημιτελές διάστημα</string>
-    <string name="diag_predictor_saved_averages" formatted="false">Αποθηκευμένοι μακροπρόθεσμοι μέσοι όροι</string>
     <string name="diag_predictor_ac">Φόρτιση (AC)</string>
     <string name="diag_predictor_wireless">Φόρτιση (ασύρματη)</string>
     <string name="diag_predictor_usb">Φόρτιση (USB)</string>
@@ -759,8 +766,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">Διαγνωστικά ορίου φόρτισης OEM</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Ανοίξτε τα εργαλεία στιγμιοτύπων και σύγκρισης για να διερευνήσετε πώς το Battery Monitor εντοπίζει το όριο φόρτισης της συσκευής. Οδηγίες προετοιμασίας υπάρχουν στη βοήθεια της ίδιας της οθόνης διαγνωστικών OEM.</string>
-    <string name="charging_tools_help_overview" formatted="false">Ανοίξτε τα εργαλεία στιγμιοτύπων και σύγκρισης για να διερευνήσετε πώς το Battery Monitor εντοπίζει το όριο φόρτισης της συσκευής. Οδηγίες προετοιμασίας υπάρχουν στη βοήθεια της ίδιας της οθόνης διαγνωστικών OEM.\n
-    Με προνομιακή πρόσβαση ενδέχεται να είναι διαθέσιμες περισσότερες διαγνωστικές πληροφορίες. Παραχωρήστε πρόσβαση μέσω Shizuku ή root και ενεργοποιήστε την προνομιακή πρόσβαση στο «Ρυθμίσεις» → «Για προχωρημένους» → «Χρήση προνομιακής πρόσβασης» για μια πιο χρήσιμη αναφορά ορίου φόρτισης OEM.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Για μια χρήσιμη αναφορά, ανοίξτε τη «Βοήθεια» και ακολουθήστε τα βήματα προετοιμασίας πριν από τη λήψη στιγμιότυπων.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Με προνομιακή πρόσβαση ενδέχεται να είναι διαθέσιμες περισσότερες διαγνωστικές πληροφορίες. Παραχωρήστε πρόσβαση μέσω Shizuku ή root και ενεργοποιήστε την προνομιακή πρόσβαση στο «Ρυθμίσεις» → «Για προχωρημένους» → «Χρήση προνομιακής πρόσβασης» για μια πιο χρήσιμη αναφορά ορίου φόρτισης OEM.</string>
     <string name="charging_diagnostics_capture" formatted="false">Λήψη στιγμιότυπου</string>
@@ -782,7 +787,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">Καταγράψτε πρώτα τουλάχιστον δύο διαφορετικές λειτουργίες</string>
     <string name="charging_diagnostics_report" formatted="false">Δημιουργία αναφοράς σύγκρισης</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Καταγράψτε πρώτα τουλάχιστον δύο διαφορετικές λειτουργίες φόρτισης OEM</string>
-    <string name="charging_diagnostics_report_help" formatted="false">Καταγράψτε πρώτα τουλάχιστον δύο διαφορετικές λειτουργίες φόρτισης OEM.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Καταγράψτε πρώτα τουλάχιστον δύο διαφορετικές λειτουργίες φόρτισης OEM. Αφού ελέγξετε την αναφορά, αντιγράψτε ή αποθηκεύστε την και στείλτε τη με email στη διεύθυνση <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
     <string name="charging_diagnostics_copy" formatted="false">Αντιγραφή στο πρόχειρο</string>
     <string name="charging_diagnostics_save" formatted="false">Αποθήκευση</string>
     <string name="charging_diagnostics_copied" formatted="false">Η αναφορά αντιγράφηκε</string>
@@ -796,8 +801,6 @@
     4. Ενεργοποιήστε προσαρμοζόμενη, έξυπνη ή προγραμματισμένη φόρτιση, περιμένετε 2–5\u00A0δευτερόλεπτα και καταγράψτε.\n
     5. Αν η σύγκριση διαμόρφωσης δεν είναι σαφής, μπορείτε προαιρετικά να επαναλάβετε τη διαδικασία κατά τη φόρτιση για να καταγράψετε καταστάσεις που εμφανίζονται μόνο κατά τη λειτουργία.\n
     6. Δημιουργήστε και ελέγξτε την αναφορά. Τα δεδομένα φιλτράρονται και οι δυνητικά ευαίσθητες τιμές αποκρύπτονται, αλλά ελέγξτε όλη την αναφορά πριν τη μοιραστείτε.</string>
-    <string name="charging_report_privacy_help" formatted="false">Εξαιρούνται από προεπιλογή. Αυτά τα δεδομένα ενδέχεται να περιέχουν προσωπικές πληροφορίες. Ελέγξτε την προεπισκόπηση πριν από την αντιγραφή ή αποθήκευση.\n
-    Αφού ελέγξετε την αναφορά, αντιγράψτε ή αποθηκεύστε την και στείλτε τη με email στη διεύθυνση <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Δημιουργία και επαναφορά αντιγράφων ασφαλείας</string>
     <string name="backup_restore_settings_summary" formatted="false">Δημιουργήστε αντίγραφα ασφαλείας, επαναφέρετε και μεταφέρετε τις ρυθμίσεις της εφαρμογής και τα δεδομένα μπαταρίας</string>

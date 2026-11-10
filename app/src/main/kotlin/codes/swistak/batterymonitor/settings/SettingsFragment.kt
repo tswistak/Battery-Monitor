@@ -477,7 +477,14 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
                 title = (preference.dialogTitle ?: preference.title).toString(),
                 message = preference.dialogMessage?.toString(),
                 options = preference.entries.map(CharSequence::toString),
-                selected = setOf(preference.findIndexOfValue(preference.value)),
+                selected = setOf(
+                    if (preference.key == SettingsContract.KEY_CHIP_SWITCHING_INTERVAL) {
+                        chipSwitchingIntervalChoiceIndex(
+                            mSharedPreferences.getString(preference.key, "5"),
+                            preference.entryValues.map(CharSequence::toString)
+                        )
+                    } else preference.findIndexOfValue(preference.value)
+                ),
                 multiple = false,
                 onConfirm = { selected ->
                     val value = preference.entryValues[selected.single()].toString()
@@ -2319,4 +2326,12 @@ class SettingsFragment : Fragment(), OnSharedPreferenceChangeListener,
         mainChan = mNotificationManager!!.getNotificationChannel(NotificationChannels.CHAN_ID_MAIN)
         return mainChan != null && mainChan!!.importance > 0
     }
+}
+
+internal fun chipSwitchingIntervalChoiceIndex(
+    storedSeconds: String?, entryValues: List<String>
+): Int {
+    val seconds = storedSeconds?.toIntOrNull()?.coerceIn(1, 3600) ?: 5
+    return entryValues.indexOf(seconds.toString()).takeIf { it >= 0 }
+        ?: entryValues.indexOf("custom")
 }

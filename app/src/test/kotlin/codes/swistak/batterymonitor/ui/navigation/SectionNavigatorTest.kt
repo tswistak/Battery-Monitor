@@ -128,4 +128,18 @@ class SectionNavigatorTest {
         assertEquals(SectionOwner.CURRENT, navigator.selected)
         assertFalse(navigator.back())
     }
+
+    @Test
+    fun `a highlighted Settings destination returns directly to its diagnostic origin`() {
+        val navigator = SectionNavigator(SectionOwner.DIAGNOSTICS)
+        val origin = SectionState(selectedTab = "raw", scrollIndex = 17, scrollOffset = 24)
+        navigator.update(SectionOwner.DIAGNOSTICS, origin)
+        navigator.openDetail(SectionOwner.SETTINGS, "settings:advanced:use_privileged_access")
+
+        assertTrue(navigator.back())
+        assertEquals(SectionOwner.DIAGNOSTICS, navigator.selected)
+        assertEquals(null, navigator.detail)
+        assertEquals(origin, navigator.state(SectionOwner.DIAGNOSTICS))
+    }
+
 }

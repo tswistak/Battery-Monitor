@@ -329,7 +329,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 if (topic == "licenses" || topic?.startsWith("licenses:") == true) {
                                     LicenseScreen(
                                         componentId = topic.substringAfter(':', "")
-                                            .ifEmpty { null },
+                                        .ifEmpty { null },
                                         onOpenComponent = { openHelp("licenses:$it") })
                                 } else {
                                     HelpScreen(topic, onOpenLicenses = { openHelp("licenses") })
@@ -360,7 +360,19 @@ class BatteryInfoActivity : AppCompatActivity() {
                                     { openDiagnosticDetail("charging-tools") },
                                     persistent.monitoring.state,
                                     monitorActions,
-                                    persistent::reloadSettings
+                                    onPrivilegedAccessSettings = {
+                                        openSettingsCategory(
+                                            SettingsCategory.Advanced.route,
+                                            SettingsContract.KEY_USE_PRIVILEGED_ACCESS
+                                        )
+                                    },
+                                    onRefreshAppOperation = { complete ->
+                                        activeDiagnosticsFragment?.refreshAppOperation(complete)
+                                    },
+                                    appOperationRefreshing = activeDiagnosticsFragment?.appOperationRefreshing == true,
+                                    monitoringStopped = activeDiagnosticsFragment?.monitorActions?.get(
+                                        "monitor_start"
+                                    )?.isVisible == true
                                 )
                             }
                         }
@@ -453,6 +465,12 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 onDelete = { alarms.deleteDraft(persistent::reloadSettings) },
                                 onDismiss = {
                                     leaveAlarmEditor(AlarmEditorNavigation(AlarmEditorDestination.DISMISS))
+                                },
+                                onCancel = {
+                                    if (!alarms.state.value.busy) {
+                                        pendingAlarmNavigation = null
+                                        alarms.discardDraft()
+                                    }
                                 },
                                 onEditExisting = alarms::editExistingThreshold,
                                 onRetry = alarms::refresh

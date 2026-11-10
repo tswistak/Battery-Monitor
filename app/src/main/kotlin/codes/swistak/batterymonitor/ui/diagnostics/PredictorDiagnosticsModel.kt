@@ -48,7 +48,8 @@ internal fun predictorDiagnosticGroup(
             rawValue = raw?.toString(),
             unit = "ms per percentage point",
             source = Predictor.STORE_NAME,
-            observedAtMillis = observedAtMillis,
+            observedAtMillis = 0,
+            checkedAtMillis = observedAtMillis,
             accessMethod = "Battery Monitor",
             valueLabel = valueLabel
         )
@@ -60,7 +61,8 @@ internal fun predictorDiagnosticGroup(
         rawValue = data.version?.toString(),
         unit = "",
         source = Predictor.STORE_NAME,
-        observedAtMillis = observedAtMillis,
+        observedAtMillis = 0,
+        checkedAtMillis = observedAtMillis,
         accessMethod = "Battery Monitor",
         valueLabel = if (data.version == null) R.string.diag_predictor_not_saved else 0
     )
@@ -93,6 +95,7 @@ internal fun recentPredictorDiagnosticGroup(
         unit = unit,
         source = "PredictorCore",
         observedAtMillis = observedAtMillis,
+        checkedAtMillis = observedAtMillis,
         accessMethod = "Battery Monitor",
         valueLabel = valueLabel
     )

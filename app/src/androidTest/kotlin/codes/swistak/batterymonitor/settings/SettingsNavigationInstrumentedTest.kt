@@ -7,10 +7,12 @@
 */
 package codes.swistak.batterymonitor.settings
 
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.os.Build
 import android.view.KeyEvent
 import android.view.View
@@ -50,10 +52,15 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
+import codes.swistak.batterymonitor.monitoring.BatteryMeasurementTime
+import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsFormat
+import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsProjectionCache
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsScreen
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticsState
+import codes.swistak.batterymonitor.ui.diagnostics.diagnosticTime
 import codes.swistak.batterymonitor.ui.help.HelpScreen
 import codes.swistak.batterymonitor.ui.help.helpSections
 import codes.swistak.batterymonitor.ui.history.FullscreenChartActivity
@@ -68,8 +75,8 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
+import java.io.File
 import java.util.Locale
-
 
 class SettingsNavigationInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -212,75 +219,247 @@ class SettingsNavigationInstrumentedTest {
     }
 
     @Test
-    fun diagnostics_access_discards_cancelled_drafts_and_confirms_once() = withHost {
+    fun diagnostics_access_requests_settings_without_changing_the_saved_preference() = withHost {
         assumeTrue(Build.VERSION.SDK_INT >= 29)
-        var state by mutableStateOf(DiagnosticsState())
-        val committed = mutableListOf<Boolean>()
+        val settings =
+            context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+        val before = settings.all[SettingsContract.KEY_USE_PRIVILEGED_ACCESS]
+        var navigationRequests = 0
         main {
             activity.setContent {
                 AppBatteryTheme {
                     DiagnosticsScreen(
-                        state, {}, {}, {}, { enabled ->
-                            committed += enabled
-                            state = state.copy(privilegedEnabled = enabled)
-                        }, tab = 3
+                        DiagnosticsState(),
+                        {},
+                        {},
+                        {},
+                        { navigationRequests++ },
+                        tab = 3
                     )
                 }
             }
         }
-
-        fun action(label: Int) = nodes(includeDialogs = true).firstOrNull {
-            it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(SemanticsProperties.Text)
-                ?.any { value -> value.text == context.getString(label) } == true
-        }
-
-        fun select(label: Int) {
-            await { action(label) != null }
-            main { assertTrue(action(label)!!.config[SemanticsActions.OnClick].action?.invoke() == true) }
-            instrumentation.waitForIdleSync()
-        }
-
         await { nodes().any { it.config.contains(SemanticsActions.ScrollBy) } }
         main {
             nodes().first { it.config.contains(SemanticsActions.ScrollBy) }.config[SemanticsActions.ScrollBy].action?.invoke(
                 0f, 100_000f
             )
         }
-        for (cancelWithBack in listOf(false, true)) {
-            select(R.string.pref_cat_privileged_access)
-            select(R.string.pref_use_privileged_access)
-            assertTrue(committed.isEmpty())
-            if (cancelWithBack) {
-                instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
+        fun accessRow() = nodes().firstOrNull {
+            it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(SemanticsProperties.Text)
+                ?.any { value -> value.text == context.getString(R.string.pref_cat_privileged_access) } == true
+        }
+        await { accessRow() != null }
+        main { assertTrue(accessRow()!!.config[SemanticsActions.OnClick].action?.invoke() == true) }
+        instrumentation.waitForIdleSync()
+        assertEquals(1, navigationRequests)
+        assertEquals(before, settings.all[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
+        assertFalse(nodes(includeDialogs = true).any {
+            it.config.contains(SemanticsProperties.IsDialog)
+        })
+    }
+
+    @Suppress("UsePropertyAccessSyntax")
+    @Test
+    fun technology_details_and_copy_preserve_android_and_battery_sysfs_readings() {
+        assumeTrue(Build.VERSION.SDK_INT >= 29)
+        for (language in listOf("en", "pl")) for (sysfs in listOf(false, true)) withHost {
+            val configuration = Configuration(activity.resources.configuration).apply {
+                setLocale(Locale.forLanguageTag(language))
+            }
+            val localized = activity.createConfigurationContext(configuration)
+            val chemistry = if (sysfs) "Li-polymer" else "Li-ion"
+            val raw = "  $chemistry\n"
+            val key = if (sysfs) "battery/technology" else "technology"
+            val source = if (sysfs) "/sys/class/power_supply/battery/technology"
+            else "ACTION_BATTERY_CHANGED / technology"
+            val acquired = 1_794_225_600_000L
+            val snapshot = AdvancedBatterySnapshot().apply {
+                accessMethod = if (sysfs) AdvancedBatterySnapshot.ACCESS_ROOT else "Android"
+                capturedAtMillis = acquired + 60_000
+                sourceReadTimes[source] = BatteryMeasurementTime(acquired, 100)
+                if (sysfs) {
+                    sysfsLabels.addAll(listOf("battery/type", key))
+                    sysfsValues.addAll(listOf("Battery", raw))
+                } else {
+                    serviceLabels.add(key)
+                    serviceValues.add(raw)
+                }
+            }
+            val state = if (sysfs) DiagnosticsState(advanced = snapshot, privilegedEnabled = true)
+            else DiagnosticsState(basic = snapshot, privilegedEnabled = false)
+            assertEquals(
+                chemistry, DiagnosticsProjectionCache().groups(
+                listOfNotNull(state.basic, state.appRaw, state.advanced),
+                DiagnosticsFormat(1, false, Locale.forLanguageTag(language)),
+                tab = 1
+            ).flatMap { it.rows }.single { it.label == R.string.diag_battery_technology }.value
+            )
+            val settings =
+                context.getSharedPreferences(SettingsContract.SETTINGS_FILE, Context.MODE_PRIVATE)
+            val before = settings.all[SettingsContract.KEY_USE_PRIVILEGED_ACCESS]
+            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val previousClip = clipboard.primaryClip
+            var tab by mutableStateOf(1)
+
+            fun texts(node: SemanticsNode) =
+                node.config.getOrNull(SemanticsProperties.Text).orEmpty()
+
+            fun hasText(value: String) = nodes(includeDialogs = true).any { node ->
+                texts(node).any { it.text == value }
+            }
+
+            fun action(value: String) = nodes(includeDialogs = true).firstOrNull { node ->
+                node.config.contains(SemanticsActions.OnClick) && texts(node).any { it.text == value }
+            }
+
+            fun select(value: String) {
+                await { action(value) != null }
+                main { assertTrue(action(value)!!.config[SemanticsActions.OnClick].action?.invoke() == true) }
                 instrumentation.waitForIdleSync()
-            } else select(R.string.cancel)
-            assertTrue(committed.isEmpty())
+            }
+
+            fun dialogText(): List<String> {
+                fun descendants(node: SemanticsNode): List<SemanticsNode> =
+                    listOf(node) + node.children.flatMap(::descendants)
+
+                val dialog = nodes(includeDialogs = true).first {
+                    it.config.contains(SemanticsProperties.IsDialog)
+                }
+                return descendants(dialog).flatMap { texts(it) }.map { it.text }
+            }
+
+            fun capture(name: String) {
+                instrumentation.waitForIdleSync()
+                // Let dialog animations settle before recording visual evidence.
+                Thread.sleep(350)
+                val bitmap = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
+                val directory = requireNotNull(context.getExternalFilesDir("diagnostics-fourteen"))
+                directory.mkdirs()
+                File(
+                    directory, "$language-${if (sysfs) "sysfs" else "android"}-$name.png"
+                ).outputStream()
+                    .use { assertTrue(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)) }
+                bitmap.recycle()
+            }
+
+            try {
+                main {
+                    activity.setContent {
+                        CompositionLocalProvider(
+                            LocalContext provides localized,
+                            LocalResources provides localized.resources,
+                            LocalConfiguration provides configuration
+                        ) {
+                            AppBatteryTheme {
+                                DiagnosticsScreen(
+                                    state,
+                                    {},
+                                    {},
+                                    {},
+                                    {},
+                                    onTab = { tab = it },
+                                    tab = tab
+                                )
+                            }
+                        }
+                    }
+                }
+                capture("before-scroll")
+                await {
+                    nodes().any { it.config.contains(SemanticsActions.ScrollToIndex) } && nodes().any { node ->
+                        texts(
+                            node
+                        ).any { it.text.contains(if (sysfs) "Root" else "Android") }
+                    }
+                }
+                main {
+                    val capacityIndex =
+                        nodes().first { it.config.contains(SemanticsProperties.IndexForKey) }.config[SemanticsProperties.IndexForKey](
+                            "1:1:${R.string.diag_section_capacity}"
+                        )
+                    assertTrue(capacityIndex >= 0)
+                    assertTrue(
+                        nodes().first { it.config.contains(SemanticsActions.ScrollToIndex) }.config[SemanticsActions.ScrollToIndex].action?.invoke(
+                            capacityIndex
+                        ) == true
+                    )
+                }
+                try {
+                    await { action(chemistry) != null }
+                } catch (failure: AssertionError) {
+                    capture("battery-failure")
+                    var visible = ""
+                    main { visible = nodes().flatMap { texts(it) }.joinToString("\n") { it.text } }
+                    File(
+                        context.getExternalFilesDir("diagnostics-fourteen"),
+                        "$language-${if (sysfs) "sysfs" else "android"}-battery-failure.txt"
+                    ).writeText(visible)
+                    throw failure
+                }
+                main {
+                    assertEquals(
+                        1, nodes().count { texts(it).any { value -> value.text == chemistry } })
+                }
+                capture("battery")
+                select(chemistry)
+                await { nodes(includeDialogs = true).any { it.config.contains(SemanticsProperties.IsDialog) } }
+                main {
+                    val text = dialogText()
+                    assertTrue(chemistry in text)
+                    assertTrue(text.any { it.contains(if (sysfs) "Root" else "Android") })
+                    assertTrue(text.any { it.contains(diagnosticTime(acquired)) })
+                    assertFalse(text.any { it.contains(diagnosticTime(snapshot.capturedAtMillis)) })
+                }
+                capture("detail")
+                select(localized.getString(R.string.charging_diagnostics_copy))
+                main {
+                    assertEquals(
+                        chemistry,
+                        clipboard.primaryClip!!.getItemAt(0).text.toString().substringAfter(": ")
+                    )
+                }
+                select(localized.getString(R.string.cancel))
+                select(localized.getString(R.string.diag_raw))
+                await { nodes().any { it.config.contains(SemanticsActions.SetText) } }
+                main {
+                    assertTrue(
+                        nodes().first { it.config.contains(SemanticsActions.SetText) }.config[SemanticsActions.SetText].action?.invoke(
+                            AnnotatedString("technology")
+                        ) == true
+                    )
+                }
+                await { action(key) != null }
+                select(key)
+                await {
+                    hasText(raw) && nodes(includeDialogs = true).any {
+                        it.config.contains(
+                            SemanticsProperties.IsDialog
+                        )
+                    }
+                }
+                main {
+                    val text = dialogText()
+                    assertTrue(raw in text)
+                    assertTrue(text.any { it.contains(if (sysfs) "/sys/class/power_supply / $key (Root)" else "$source (Android)") })
+                    assertTrue(text.any { it.contains(diagnosticTime(acquired)) })
+                }
+                capture("raw-detail")
+                select(localized.getString(R.string.charging_diagnostics_copy))
+                main {
+                    assertEquals(
+                        "$key=$raw", clipboard.primaryClip!!.getItemAt(0).text.toString()
+                    )
+                }
+                assertEquals(before, settings.all[SettingsContract.KEY_USE_PRIVILEGED_ACCESS])
+            } finally {
+                main {
+                    if (previousClip == null) clipboard.clearPrimaryClip() else clipboard.setPrimaryClip(
+                        previousClip
+                    )
+                }
+            }
         }
-        select(R.string.pref_cat_privileged_access)
-        await { action(R.string.pref_use_privileged_access) != null }
-        main {
-            assertEquals(
-                androidx.compose.ui.state.ToggleableState.Off,
-                action(R.string.pref_use_privileged_access)!!.config[SemanticsProperties.ToggleableState]
-            )
-        }
-        select(R.string.pref_use_privileged_access)
-        main {
-            val confirm = action(R.string.okay)!!.config[SemanticsActions.OnClick].action!!
-            confirm()
-            confirm()
-        }
-        await { committed == listOf(true) }
-        select(R.string.pref_cat_privileged_access)
-        await { action(R.string.pref_use_privileged_access) != null }
-        main {
-            assertEquals(
-                androidx.compose.ui.state.ToggleableState.On,
-                action(R.string.pref_use_privileged_access)!!.config[SemanticsProperties.ToggleableState]
-            )
-        }
-        select(R.string.cancel)
-        assertEquals(listOf(true), committed)
     }
 
     @Test

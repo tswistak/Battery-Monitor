@@ -257,6 +257,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0sekundžių</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0sekundžių</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0sekundžių</string>
+    <string name="chip_switching_interval_custom">Pasirinktinis</string>
     <string name="pref_chip_indicate_charging" formatted="false">Rodyti įkrovimo jaustukus</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Rodyti žaibišką jaustuką įkraunant ar visiškai įkraunant?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Jei įjungta, būsenos juostos lustas šalia parodys žaibišką jaustuką lusto vertė kraunant arba visiškai įkrautą.</string>
@@ -624,9 +625,9 @@
     <string name="diag_charging_too_cold">Per šalta įkrauti</string>
     <string name="diag_charging_too_hot">Per karšta įkrauti</string>
     <string name="diag_section_service" formatted="false">Android baterijos paslauga</string>
-    <string name="diag_help_service" formatted="false">„Neapdoroti duomenys“ apima pradinius pavadinimus ir vertes iš „Android“ akumuliatoriaus pranešimų bei, kai pasiekiama, dumpsys battery. Tai gali būti įkrovimo šaltinis, akumuliatoriaus būsena, temperatūra, įtampa ir kita akumuliatoriaus tarnybos būsena.</string>
+    <string name="diag_help_service" formatted="false">Pradiniai pavadinimai ir vertės iš „Android“ akumuliatoriaus pranešimų bei, kai pasiekiama, dumpsys battery. Tai gali būti įkrovimo šaltinis, akumuliatoriaus būsena, temperatūra, įtampa ir kita akumuliatoriaus tarnybos būsena.</string>
     <string name="diag_section_sysfs" formatted="false">Branduolio power_supply failai</string>
-    <string name="diag_help_sysfs" formatted="false">„Neapdoroti duomenys“ rodo pradinius pavadinimus ir vertes iš /sys/class/power_supply, įskaitant kelių eilučių vertes. Ieškokite pagal raktą ir palieskite eilutę visai vertei peržiūrėti bei kopijuoti. Naujiems rodmenims rinkitės „Atnaujinti“. Battery Monitor taip pat bando skaityti su įprastais „Android“ leidimais, be root ar Shizuku.</string>
+    <string name="diag_help_sysfs" formatted="false">Pradiniai pavadinimai ir vertės iš /sys/class/power_supply, įskaitant kelių eilučių vertes.</string>
     <string name="diag_fuel_gauge">Akumuliatoriaus įkrovos matuoklis</string>
     <string name="diag_mains_supply">Kintamosios srovės maitinimas</string>
     <string name="diag_charging_source">Įkrovimo šaltinis</string>
@@ -656,15 +657,18 @@
     <string name="diag_input_voltage">Įvesties įtampa</string>
     <string name="diag_input_voltage_limit">Įvesties įtampos riba</string>
     <string name="diag_section_metadata" formatted="false">Metaduomenys</string>
-    <string name="diag_help_metadata" formatted="false">„Neapdoroti duomenys“ taip pat apima pradinius BatteryManager savybių pavadinimus ir vertes, įskaitant pasiekiamus skaitiklius ir srovės rodmenis. Papildomos savybės, pavyzdžiui, gamybos duomenys ar pakeitimo būsena, priklauso nuo „Android“ versijos, įrenginio palaikymo ir leidimų.</string>
+    <string name="diag_help_metadata" formatted="false">Pradiniai BatteryManager savybių pavadinimai ir vertės, įskaitant pasiekiamus skaitiklius ir srovės rodmenis. Papildomos savybės, pavyzdžiui, gamybos duomenys ar pakeitimo būsena, priklauso nuo „Android“ versijos, įrenginio palaikymo ir leidimų.</string>
     <string name="diag_raw">Neapdoroti duomenys</string>
     <string name="diag_search_key">Ieškoti raktų</string>
     <string name="diag_no_keys">Pasiekiamuose duomenyse nėra atitinkančių raktų</string>
     <string name="diag_raw_values">Neapdorotos vertės</string>
     <string name="diag_last_checked">Paskutinį kartą tikrinta: %1$s</string>
     <string name="diag_privileged_stale">Rodomi ankstesni privilegijuoti rodmenys. Atnaujinkite, kad bandytumėte dar kartą.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">Trikčių šalinimas</string>
-    <string name="diag_help_troubleshooting" formatted="false">„Android“ duomenys skiltyje „Diagnostika“ renkami automatiškai. Papildomiems root ar Shizuku duomenims įjunkite privilegijuotą prieigą skiltyje „Papildomi šaltiniai“. Battery Monitor pirmiausia bando root, tada Shizuku. Shizuku turi veikti ir turėti suteiktą leidimą. Trūkstami laukai lieka nepasiekiami; nepavykus atnaujinti išsaugoma ankstesnė momentinė kopija ir pažymima pasenusia.</string>
+    <string name="diag_help_troubleshooting" formatted="false">„Android“ duomenys skiltyje „Diagnostika“ renkami automatiškai. Papildomiems root ar Shizuku duomenims įjunkite „Naudoti privilegijuotą prieigą“ skiltyje „Nustatymai“ → „Išplėstiniai“. Battery Monitor pirmiausia bando root, tada Shizuku. Shizuku turi veikti ir turėti suteiktą leidimą. Trūkstami laukai lieka nepasiekiami; nepavykus atnaujinti išsaugoma ankstesnė momentinė kopija ir pažymima pasenusia.</string>
+    <string name="diag_help_raw_general" formatted="false">Pradiniai raktai ir vertės iš pasiekiamų šaltinių. Ieškokite pagal raktą ir palieskite eilutę visai vertei peržiūrėti bei kopijuoti. Naujiems rodmenims rinkitės „Atnaujinti“. Battery Monitor taip pat bando skaityti su įprastais „Android“ leidimais, be root ar Shizuku. Pasiekiamumas priklauso nuo to, kuriuos šaltinius galima nuskaityti.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Pradiniai išsaugotų prognozavimo duomenų raktai ir vertės, kai jie pasiekiami.</string>
+    <string name="diag_export_report_help" formatted="false">Sukurkite ataskaitą iš pasiekiamų diagnostikos rodmenų ir prognozavimo duomenų. Patikrinkite peržiūrą, tada nukopijuokite ataskaitą į iškarpinę arba išsaugokite kaip tekstinį failą. Prieš bendrindami atidžiai patikrinkite ataskaitą, ypač jei joje yra neapdorotų verčių ir identifikatorių.</string>
+    <string name="diag_charging_source_disconnected">Atjungtas</string>
 
     <string name="diagnostics" formatted="false">Diagnostika</string>
     <string name="diagnostics_summary" formatted="false">Patikrinkite leidimus ir stebėjimo patikimumą bei sukurkite trikčių šalinimo ataskaitą</string>
@@ -726,11 +730,15 @@
     <string name="diag_missing_average">Vidutinė srovė yra atskiras įrenginio rodmuo, ne momentinė srovė. Battery Monitor neskaičiuoja savo vidurkio, jei įrenginys jo nepateikia.</string>
     <string name="diag_missing_estimated_health">Šiam įverčiui reikia teigiamų to paties akumuliatoriaus pilnos įkrovos ir projektinės talpos verčių. Pilnos įkrovos talpa negali viršyti projektinės.</string>
     <string name="diag_missing_charge_time">Tai įrenginio pateiktas įkrovimo įvertis. „Dabartinė būsena“ naudoja pasirinktą Battery Monitor prognozavimo metodą ir gali rodyti įvertį net jei įrenginys jo nepateikia.</string>
-    <string name="diag_predictor_description">Greičiai rodo vieno procentinio punkto trukmę. Naujausi skaičiavimai laikomi atmintyje; išsaugoti vidurkiai išlieka paleidus iš naujo. Neužbaigti intervalai naudoja ilgalaikį greitį, o neišsaugoti vidurkiai – numatytąsias vertes.</string>
-    <string name="diagnostics_predictor_help" formatted="false">„Programos veikimas“ rodo išsaugotus ilgalaikius vidurkius ir naujausius prognozavimo duomenis. Naujausi greičiai naudoja akumuliatoriaus procentų pokyčius ir rodo vieno procentinio punkto trukmę, pasirinktą metodą, aktyvų įkrovimo šaltinį, stebėtus punktus ir trukmes bei ar įtrauktas neužbaigtas intervalas. Penkių minučių ir penkių punktų langai nestebėtoms dalims naudoja aktyvų ilgalaikį greitį; praleisti lygiai interpoliuojami. Naujausia būsena laikoma atmintyje ir atkuriama iš naujo paleidus stebėjimą, perėjus iš įkrovimo į iškrovimą ar atvirkščiai arba pasikeitus įkrovimo šaltiniui. Išsaugoti išmokti vidurkiai išlieka paleidus iš naujo. Šie duomenys nepriklauso nuo istorijos žurnalų; jų išvalymas neatkuria įverčių.</string>
+    <string name="diagnostics_predictor_help" formatted="false">Peržiūrėkite išsaugotus ilgalaikius vidurkius ir naujausius prognozavimo duomenis. Naujausi greičiai naudoja akumuliatoriaus procentų pokyčius ir rodo vieno procentinio punkto trukmę, pasirinktą metodą, aktyvų įkrovimo šaltinį, stebėtus punktus ir trukmes bei ar įtrauktas neužbaigtas intervalas. Penkių minučių ir penkių punktų langai nestebėtoms dalims naudoja aktyvų ilgalaikį greitį; praleisti lygiai interpoliuojami. Naujausia būsena laikoma atmintyje ir atkuriama iš naujo paleidus stebėjimą, perėjus iš įkrovimo į iškrovimą ar atvirkščiai arba pasikeitus įkrovimo šaltiniui. Išsaugoti išmokti vidurkiai išlieka paleidus iš naujo. Šie duomenys nepriklauso nuo istorijos žurnalų; jų išvalymas neatkuria įverčių.</string>
+    <string name="diag_check_failed" formatted="false">Paskutinis bandymas nuskaityti nepavyko.</string>
+    <string name="diag_reading_retained" formatted="false">Rodomas ankstesnis rodmuo.</string>
+    <string name="diag_value_copied" formatted="false">Reikšmė nukopijuota</string>
+    <string name="diag_predictor_read_failed" formatted="false">Nepavyko perskaityti išsaugotų prognozavimo duomenų.</string>
+    <string name="diag_predictor_recent_title" formatted="false">Prognozavimo duomenys — Naujausi skaičiavimai</string>
+    <string name="diag_predictor_stored_title" formatted="false">Prognozavimo duomenys — Išsaugoti ilgalaikiai vidurkiai</string>
     <string name="diag_predictor_recent" formatted="false">Naujausi skaičiavimai</string>
     <string name="diag_predictor_no_recent" formatted="false">Nėra aktyvaus įverčio. Naujausi duomenys pasiekiami po stebėjimo rodmens įkraunant arba iškraunant.</string>
-    <string name="diag_predictor_start_monitor">Įjunkite stebėjimą aukščiau, kad peržiūrėtumėte išsaugotus prognozavimo duomenis.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktyvi akumuliatoriaus būsena</string>
     <string name="diag_predictor_effective_rate" formatted="false">Įverčiui naudojamas greitis</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">Paskutinės 5\u00A0minutės</string>
@@ -740,7 +748,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">Stebėto seanso trukmė</string>
     <string name="diag_predictor_current_level_duration" formatted="false">Laikas dabartiniame lygyje</string>
     <string name="diag_predictor_uses_partial" formatted="false">Įtrauktas neužbaigtas intervalas</string>
-    <string name="diag_predictor_saved_averages" formatted="false">Išsaugoti ilgalaikiai vidurkiai</string>
     <string name="diag_predictor_ac">Įkrovimas (AC)</string>
     <string name="diag_predictor_wireless">Įkrovimas (belaidis)</string>
     <string name="diag_predictor_usb">Įkrovimas (USB)</string>
@@ -769,8 +776,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">OEM įkrovimo ribos diagnostika</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Atverkite momentinių kopijų ir palyginimo įrankius, kad ištirtumėte, kaip Battery Monitor aptinka įrenginio įkrovimo ribą. Pasiruošimo instrukcijos pateiktos paties OEM diagnostikos ekrano žinyne.</string>
-    <string name="charging_tools_help_overview" formatted="false">Atverkite momentinių kopijų ir palyginimo įrankius, kad ištirtumėte, kaip Battery Monitor aptinka įrenginio įkrovimo ribą. Pasiruošimo instrukcijos pateiktos paties OEM diagnostikos ekrano žinyne.\n
-    Suteikus privilegijuotą prieigą gali būti pasiekiama daugiau diagnostikos informacijos. Suteikite prieigą per „Shizuku“ arba „root“ ir skiltyje „Nustatymai“ → „Išplėstiniai“ → „Naudoti privilegijuotą prieigą“ įjunkite privilegijuotą prieigą, kad OEM įkrovimo ribos ataskaita būtų naudingesnė.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Kad ataskaita būtų naudinga, prieš fiksuodami kopijas atverkite skiltį „Pagalba“ ir atlikite paruošimo veiksmus.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Suteikus privilegijuotą prieigą gali būti pasiekiama daugiau diagnostikos informacijos. Suteikite prieigą per „Shizuku“ arba „root“ ir skiltyje „Nustatymai“ → „Išplėstiniai“ → „Naudoti privilegijuotą prieigą“ įjunkite privilegijuotą prieigą, kad OEM įkrovimo ribos ataskaita būtų naudingesnė.</string>
     <string name="charging_diagnostics_capture" formatted="false">Užfiksuoti momentinę kopiją</string>
@@ -794,7 +799,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">Pirmiausia užfiksuokite bent du skirtingus režimus</string>
     <string name="charging_diagnostics_report" formatted="false">Sukurti palyginimo ataskaitą</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Pirmiausia užfiksuokite bent du skirtingus OEM įkrovimo režimus</string>
-    <string name="charging_diagnostics_report_help" formatted="false">Pirmiausia užfiksuokite bent du skirtingus OEM įkrovimo režimus.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Pirmiausia užfiksuokite bent du skirtingus OEM įkrovimo režimus. Peržiūrėję ataskaitą nukopijuokite arba išsaugokite ir išsiųskite el. paštu adresu <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
     <string name="charging_diagnostics_copy" formatted="false">Kopijuoti į iškarpinę</string>
     <string name="charging_diagnostics_save" formatted="false">Išsaugoti</string>
     <string name="charging_diagnostics_copied" formatted="false">Ataskaita nukopijuota</string>
@@ -808,8 +813,6 @@
     4. Įjunkite prisitaikantį, išmanų ar suplanuotą įkrovimą, palaukite 2–5\u00A0sekundes ir užfiksuokite.\n
     5. Jei konfigūracijos palyginimas neaiškus, pasirinktinai pakartokite seką įkrovimo metu, kad užfiksuotumėte tik veikimo metu matomą būseną.\n
     6. Sukurkite ir peržiūrėkite palyginimo ataskaitą. Duomenys filtruojami, o galimai jautrios reikšmės paslepiamos, tačiau prieš dalydamiesi peržiūrėkite visą ataskaitą.</string>
-    <string name="charging_report_privacy_help" formatted="false">Pagal numatytuosius nustatymus neįtraukiama. Šiuose duomenyse gali būti asmeninės informacijos. Prieš kopijuodami ar išsaugodami peržiūrėkite.\n
-    Peržiūrėję ataskaitą nukopijuokite arba išsaugokite ir išsiųskite el. paštu adresu <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Atsarginė kopija ir atkūrimas</string>
     <string name="backup_restore_settings_summary" formatted="false">Kurkite programėlės nustatymų ir akumuliatoriaus duomenų atsargines kopijas, juos atkurkite ir perkelkite</string>

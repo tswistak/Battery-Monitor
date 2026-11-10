@@ -257,6 +257,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0sekund</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0sekund</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0sekund</string>
+    <string name="chip_switching_interval_custom">Niestandardowy</string>
     <string name="pref_chip_indicate_charging" formatted="false">Pokazuj emoji ładowania</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Czy pokazywać emoji błyskawicy podczas ładowania lub po pełnym naładowaniu?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Jeśli włączone, kapsułka na pasku stanu pokazuje emoji błyskawicy obok wartości kapsułki podczas ładowania lub po pełnym naładowaniu.</string>
@@ -592,7 +593,7 @@
     <string name="diag_help_overview" formatted="false">Łączy niezawodność monitora, zapisane dane predykcyjne i dane baterii w kartach „Działanie aplikacji”, „Bateria”, „Ładowanie” i „Surowe”. Dane Androida są dostępne bez roota. Dodatkowe dane urządzenia zależą od urządzenia i uprawnień dostępnych dla Monitora baterii.\n
     Dostępne odczyty Androida są zbierane automatycznie, gdy „Diagnostyka” jest otwarta. Naciśnij wartość, aby zbadać i skopiować jej odczyt, źródło i czas. Oryginalne klucze i wartości urządzenia są dostępne w „Surowe”. Włącz dostęp uprzywilejowany, aby używać również roota albo Shizuku.</string>
     <string name="diag_section_counters" formatted="false">Liczniki</string>
-    <string name="diag_help_counters" formatted="false">Odczyty baterii są podpisane i sformatowane jako pozostały ładunek w mAh, prąd w mA, energia w mWh, napięcie w V, temperatura w wybranej przez Ciebie jednostce i moc w W. Mnożnik prądu stosuje się także do obliczanej mocy. Średni prąd i licznik cykli zależą od możliwości urządzenia.</string>
+    <string name="diag_help_counters" formatted="false">Odczyty baterii są podpisane i sformatowane jako pozostały ładunek w mAh, prąd w mA, energia w mWh, napięcie w V, temperatura w wybranej przez Ciebie jednostce i moc w W. Mnożnik prądu stosuje się także do obliczanej mocy. Średni prąd i liczba cykli zależą od możliwości urządzenia.</string>
     <string name="diag_field_charge_counter" formatted="false">Szacunkowy pozostały poziom naładowania</string>
     <string name="diag_field_current_now" formatted="false">Bieżący prąd</string>
     <string name="diag_field_current_average" formatted="false">Średni prąd</string>
@@ -624,9 +625,9 @@
     <string name="diag_charging_too_cold">Za zimno, aby ładować</string>
     <string name="diag_charging_too_hot">Za ciepło, aby ładować</string>
     <string name="diag_section_service" formatted="false">Usługa baterii Androida</string>
-    <string name="diag_help_service" formatted="false">„Surowe” uwzględnia oryginalne nazwy i wartości z komunikatów baterii Androida oraz, gdy dostępne, z polecenia „dumpsys battery”. Mogą one uwzględniać źródło ładowania, stan baterii, temperaturę, napięcie i inny stan usługi baterii.</string>
+    <string name="diag_help_service" formatted="false">Oryginalne nazwy i wartości z komunikatów baterii Androida oraz, gdy dostępne, z polecenia „dumpsys battery”. Mogą one uwzględniać źródło ładowania, stan baterii, temperaturę, napięcie i inny stan usługi baterii.</string>
     <string name="diag_section_sysfs" formatted="false">Pliki power_supply jądra</string>
-    <string name="diag_help_sysfs" formatted="false">„Surowe” pokazuje oryginalne nazwy i wartości odczytane z /sys/class/power_supply, w tym wartości wielowierszowe. Wyszukaj według klucza i naciśnij wiersz, aby wyświetlić i skopiować jego pełną wartość. Użyj „Odśwież”, aby zebrać nowe odczyty. Monitor baterii próbuje również odczytów z jego zwykłymi uprawnieniami Androida, bez roota lub Shizuku.</string>
+    <string name="diag_help_sysfs" formatted="false">Oryginalne nazwy i wartości odczytane z /sys/class/power_supply, w tym wartości wielowierszowe.</string>
     <string name="diag_fuel_gauge">Wskaźnik poziomu naładowania baterii</string>
     <string name="diag_mains_supply">Zasilanie sieciowe</string>
     <string name="diag_charging_source">Źródło ładowania</string>
@@ -656,15 +657,18 @@
     <string name="diag_input_voltage">Napięcie wejściowe</string>
     <string name="diag_input_voltage_limit">Limit napięcia wejściowego</string>
     <string name="diag_section_metadata" formatted="false">Metadane</string>
-    <string name="diag_help_metadata" formatted="false">„Surowe” również uwzględnia oryginalne nazwy i wartości właściwości „BatteryManager”, w tym dostępne liczniki i odczyty prądu. Dodatkowe właściwości, takie jak szczegóły produkcyjne lub stan wymiany baterii, zależą od wersji Androida, możliwości urządzenia i uprawnień.</string>
+    <string name="diag_help_metadata" formatted="false">Oryginalne nazwy i wartości właściwości „BatteryManager”, w tym dostępne liczniki i odczyty prądu. Dodatkowe właściwości, takie jak szczegóły produkcyjne lub stan wymiany baterii, zależą od wersji Androida, możliwości urządzenia i uprawnień.</string>
     <string name="diag_raw">Surowe</string>
     <string name="diag_search_key">Szukaj kluczy</string>
     <string name="diag_no_keys">Brak pasujących kluczy w dostępnych danych</string>
     <string name="diag_raw_values">Surowe wartości</string>
     <string name="diag_last_checked">Ostatnie sprawdzenie: %1$s</string>
     <string name="diag_privileged_stale">Wyświetlane są poprzednie odczyty uprzywilejowane. Odśwież, aby spróbować ponownie.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">Rozwiązywanie problemów</string>
-    <string name="diag_help_troubleshooting" formatted="false">Dane Androida są zbierane automatycznie w „Diagnostyka”. W celu uzyskania dodatkowych danych z roota albo Shizuku włącz dostęp uprzywilejowany w „Dodatkowe źródła”. Monitor baterii najpierw próbuje uzyskać je z roota, potem z Shizuku. Shizuku musi być uruchomione i mieć przyznane uprawnienie. Brakujące pola pozostają niedostępne; nieudane odświeżenia zachowują poprzedni snapshot i oznaczają go jako nieaktualny.</string>
+    <string name="diag_help_troubleshooting" formatted="false">Dane Androida są zbierane automatycznie w „Diagnostyka”. W celu uzyskania dodatkowych danych z roota albo Shizuku włącz dostęp uprzywilejowany w „Ustawienia” → „Zaawansowane” → „Używaj dostępu uprzywilejowanego”. Monitor baterii najpierw próbuje uzyskać je z roota, potem z Shizuku. Shizuku musi być uruchomione i mieć przyznane uprawnienie. Brakujące pola pozostają niedostępne; nieudane odświeżenia zachowują poprzedni snapshot i oznaczają go jako nieaktualny.</string>
+    <string name="diag_help_raw_general" formatted="false">Oryginalne klucze i wartości z dostępnych źródeł. Wyszukaj według klucza i naciśnij wiersz, aby wyświetlić i skopiować jego pełną wartość. Użyj „Odśwież”, aby zebrać nowe odczyty. Monitor baterii próbuje również odczytów z jego zwykłymi uprawnieniami Androida, bez roota lub Shizuku. Dostępność zależy od tego, które źródła można odczytać.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Oryginalne klucze i wartości danych predykcyjnych, gdy są dostępne.</string>
+    <string name="diag_export_report_help" formatted="false">Utwórz raport z dostępnych odczytów diagnostycznych i danych predykcyjnych. Przejrzyj podgląd, a następnie skopiuj raport do schowka albo zapisz go w pliku tekstowym. Przed udostępnieniem dokładnie sprawdź raport, zwłaszcza jeśli zawiera surowe wartości i identyfikatory.</string>
+    <string name="diag_charging_source_disconnected">Odłączone</string>
 
     <string name="diagnostics" formatted="false">Diagnostyka</string>
     <string name="diagnostics_summary" formatted="false">Sprawdź uprawnienia, niezawodność monitorowania i utwórz raport do rozwiązywania problemów</string>
@@ -723,14 +727,18 @@
     <string name="diag_additional_sources">Dodatkowe źródła</string>
     <string name="diag_source_help">Dostępne odczyty Androida są zbierane automatycznie, gdy „Diagnostyka” jest otwarta. Naciśnij wartość, aby zbadać i skopiować jej odczyt, źródło i czas. Oryginalne klucze i wartości urządzenia są dostępne w „Surowe”. Włącz dostęp uprzywilejowany, aby używać również roota albo Shizuku.</string>
     <string name="diag_missing_reading">Włączone źródła nie zwróciły użytecznego odczytu.</string>
-    <string name="diag_missing_average">Średni prąd to odczyt urządzenia oddzielny od prądu chwilowego. Monitor baterii nie oblicza własnej średniej, gdy urządzenie jej nie dostarcza.</string>
+    <string name="diag_missing_average">Średni prąd to odczyt urządzenia różny od prądu chwilowego. Monitor baterii nie oblicza własnej średniej, gdy urządzenie jej nie dostarcza.</string>
     <string name="diag_missing_estimated_health">To szacowanie wymaga dodatnich wartości pojemności przy pełnym naładowaniu i pojemności projektowej tej samej baterii. Pojemność przy pełnym naładowaniu nie może przekraczać pojemności projektowej.</string>
     <string name="diag_missing_charge_time">Jest to szacunek ładowania zgłoszony przez urządzenie. „Aktualny stan” używa skonfigurowanej metody predykcyjnej Monitora baterii i może pokazywać szacunek nawet wtedy, gdy nie jest dostępny szacunek urządzenia.</string>
-    <string name="diag_predictor_description">Tempa zmian pokazują czas dla jednego punktu procentowego. Ostatnie obliczenia są trzymane w pamięci; zapisane średnie przetrwają ponowne uruchomienie. Niekompletne okna czasowe używają tempa zmian długoterminowych, a niezapisane średnie domyślnego.</string>
-    <string name="diagnostics_predictor_help" formatted="false">„Działanie aplikacji” pokazuje zapisane średnie długoterminowe i ostatnie predykcyjne dane wejściowe. Ostatnie tempa zmian używają zmian w procentowym poziomie naładowania baterii i pokazują czas dla jednego punktu procentowego, wybraną metodę, aktywne źródło ładowania, zaobserwowane punkty i czas trwania oraz czy niedokończony interwał został uwzględniony. Pięciominutowe i pięciopuntkowe okna czasowe używają aktywnego tempa zmian długoterminowych dla niezaobserwowanych części; pominięte poziomy zostały zinterpolowane. Ostatni stan jest przechowywany w pamięci i resetowany po ponownym uruchomieniu monitorowania, przełączeniu między ładowaniem i rozładowywaniem lub zmianie źródła ładowania. Zapisane wyuczone średnie przetrwają po ponownym uruchomieniu. Dane te są niezależne od logów historii; czyszczenie logów nie resetuje szacunków.</string>
+    <string name="diagnostics_predictor_help" formatted="false">Przejrzyj zapisane średnie długoterminowe i ostatnie predykcyjne dane wejściowe. Ostatnie tempa zmian używają zmian w procentowym poziomie naładowania baterii i pokazują czas dla jednego punktu procentowego, wybraną metodę, aktywne źródło ładowania, zaobserwowane punkty i czas trwania oraz czy niedokończony interwał został uwzględniony. Pięciominutowe i pięciopuntkowe okna czasowe używają aktywnego tempa zmian długoterminowych dla niezaobserwowanych części; pominięte poziomy zostały zinterpolowane. Ostatni stan jest przechowywany w pamięci i resetowany po ponownym uruchomieniu monitorowania, przełączeniu między ładowaniem i rozładowywaniem lub zmianie źródła ładowania. Zapisane wyuczone średnie przetrwają po ponownym uruchomieniu. Dane te są niezależne od logów historii; czyszczenie logów nie resetuje szacunków.</string>
+    <string name="diag_check_failed" formatted="false">Ostatnia próba odczytu nie powiodła się.</string>
+    <string name="diag_reading_retained" formatted="false">Wyświetlany jest poprzedni odczyt.</string>
+    <string name="diag_value_copied" formatted="false">Skopiowano wartość</string>
+    <string name="diag_predictor_read_failed" formatted="false">Nie udało się odczytać zapisanych danych predykcyjnych.</string>
+    <string name="diag_predictor_recent_title" formatted="false">Dane predykcyjne — Ostatnie obliczenia</string>
+    <string name="diag_predictor_stored_title" formatted="false">Dane predykcyjne — Zapisane średnie długoterminowe</string>
     <string name="diag_predictor_recent" formatted="false">Ostatnie obliczenia</string>
     <string name="diag_predictor_no_recent" formatted="false">Brak aktywnego oszacowania. Ostatnie dane są dostępne po odczycie monitora podczas ładowania lub rozładowywania.</string>
-    <string name="diag_predictor_start_monitor">Uruchom monitorowanie powyżej, aby zbadać zapisane dane predykcyjne.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktywny stan baterii</string>
     <string name="diag_predictor_effective_rate" formatted="false">Tempo zmian używane do szacowania</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">Ostatnie 5\u00A0minut</string>
@@ -740,7 +748,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">Zaobserwowany czas trwania sesji</string>
     <string name="diag_predictor_current_level_duration" formatted="false">Czas na obecnym poziomie</string>
     <string name="diag_predictor_uses_partial" formatted="false">Uwzględniony niedokończony interwał</string>
-    <string name="diag_predictor_saved_averages" formatted="false">Zapisane średnie długoterminowe</string>
     <string name="diag_predictor_ac">Ładowanie (AC)</string>
     <string name="diag_predictor_wireless">Ładowanie (bezprzewodowe)</string>
     <string name="diag_predictor_usb">Ładowanie (USB)</string>
@@ -769,10 +776,8 @@
 
     <string name="charging_diagnostics_title" formatted="false">Diagnostyka celu ładowania OEM</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Otwórz narzędzia do snapshotów i porównań, aby zbadać, jak Monitor baterii wykrywa cel ładowania urządzenia. Instrukcje dotyczące przygotowania są dostępne w pomocy samego ekranu diagnostyki OEM.</string>
-    <string name="charging_tools_help_overview" formatted="false">Otwórz narzędzia do snapshotów i porównań, aby zbadać, jak Monitor baterii wykrywa cel ładowania urządzenia. Instrukcje dotyczące przygotowania są dostępne w pomocy samego ekranu diagnostyki OEM.\n
-    Więcej informacji diagnostycznych może być dostępnych z dostępem uprzywilejowanym. Przyznaj dostęp do roota albo Shizuku i włącz dostęp uprzywilejowany w „Ustawienia” → „Zaawansowane” → „Używaj dostępu uprzywilejowanego” dla bardziej przydatnego raportu celu ładowania OEM</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Aby uzyskać przydatny raport, otwórz „Pomoc” i podążaj za przygotowanymi tam krokami przed wykonaniem snapshotów</string>
-    <string name="charging_diagnostics_privileged_hint" formatted="false">Więcej informacji diagnostycznych może być dostępnych z dostępem uprzywilejowanym. Przyznaj dostęp do roota albo Shizuku i włącz dostęp uprzywilejowany w „Ustawienia” → „Zaawansowane” → „Używaj dostępu uprzywilejowanego” dla bardziej przydatnego raportu celu ładowania OEM</string>
+    <string name="charging_diagnostics_privileged_hint" formatted="false">Więcej informacji diagnostycznych może być dostępnych z dostępem uprzywilejowanym. Przyznaj dostęp do roota albo Shizuku i włącz dostęp uprzywilejowany w „Ustawienia” → „Zaawansowane” → „Używaj dostępu uprzywilejowanego” dla bardziej przydatnego raportu celu ładowania OEM.</string>
     <string name="charging_diagnostics_capture" formatted="false">Wykonaj snapshot</string>
     <string name="charging_diagnostics_capture_summary" formatted="false">Ustaw tryb ładowania w ustawieniach urządzenia, a następnie przechwyć jego sygnały</string>
     <string name="charging_diagnostics_choose_state" formatted="false">Które ustawienie urządzenia jest aktywne?</string>
@@ -794,7 +799,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania</string>
     <string name="charging_diagnostics_report" formatted="false">Utwórz raport porównawczy</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania OEM</string>
-    <string name="charging_diagnostics_report_help" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania OEM.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Najpierw wykonaj snapshoty co najmniej dwóch różnych trybów ładowania OEM. Po przejrzeniu raportu skopiuj go albo zapisz i wyślij e-mailem na <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
     <string name="charging_diagnostics_copy" formatted="false">Kopiuj do schowka</string>
     <string name="charging_diagnostics_save" formatted="false">Zapisz</string>
     <string name="charging_diagnostics_copied" formatted="false">Skopiowano raport</string>
@@ -808,8 +813,6 @@
     4. Włącz ładowanie adaptacyjne, inteligentne lub zaplanowane, odczekaj 2-5\u00A0sekund i wykonaj jeszcze jeden snapshot.\n
     5. Jeśli porównanie konfiguracji jest niejednoznaczne, możesz opcjonalnie powtórzyć tę sekwencję podczas ładowania, aby uchwycić stan w trakcie działania.\n
     6. Utwórz i przejrzyj raport porównawczy. Dane w raporcie są przefiltrowane, a potencjalnie wrażliwe wartości ukrywane, ale nadal powinieneś/powinnaś przejrzeć kompletny raport przed jego udostępnieniem.</string>
-    <string name="charging_report_privacy_help" formatted="false">Wykluczone domyślnie. Dane te mogą zawierać dane osobowe. Przejrzyj podgląd przed kopiowaniem lub zapisywaniem.\n
-    Po przejrzeniu raportu skopiuj go albo zapisz i wyślij e-mailem na <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a>.</string>
 
     <string name="pref_backup_restore" formatted="false">Kopia zapasowa i przywracanie</string>
     <string name="backup_restore_settings_summary" formatted="false">Twórz kopie zapasowe swoich ustawień aplikacji i danych baterii, przywracaj je i przenoś</string>

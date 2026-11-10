@@ -29,6 +29,24 @@ class DiagnosticsProjectionCacheTest {
     private val defaults = DiagnosticsFormat(1, false, Locale.US)
 
     @Test
+    fun `filtering raw data preserves the matching source group identity`() {
+        val source = snapshot(-900, 10).apply {
+            metadataLabels.add("BATTERY_PROPERTY_CURRENT_NOW")
+            metadataValues.add("-900")
+        }
+        val raw = DiagnosticsProjectionCache().groups(listOf(source), defaults, 3)
+        val service = filterRawGroups(raw, "temperature").single()
+        val sysfs = filterRawGroups(raw, "battery/current_now").single()
+        val metadata = filterRawGroups(raw, "BATTERY_PROPERTY").single()
+        assertEquals(R.string.diag_section_service, service.title)
+        assertEquals(R.string.diag_raw_values, rawDiagnosticGroupTitle(service))
+        assertEquals(R.string.diag_section_sysfs, rawDiagnosticGroupTitle(sysfs))
+        assertEquals(R.string.diag_section_metadata, rawDiagnosticGroupTitle(metadata))
+        assertEquals("-900", sysfs.rows.single().rawValue)
+        assertEquals("-900", metadata.rows.single().rawValue)
+    }
+
+    @Test
     fun `raw sections merge all collector fields once using each fields latest acquisition`() {
         val basic = snapshot(-900, 10).apply {
             metadataLabels.addAll(
@@ -142,6 +160,21 @@ class DiagnosticsProjectionCacheTest {
         assertEquals("-1200", row(replaced, "current_now").rawValue)
         assertEquals(20L, row(replaced, "current_now").observedAtMillis)
         assertEquals(20L, row(replaced, "current_now").observedElapsedMillis)
+    }
+
+    @Test
+    fun `reading stored averages does not invent their learning time or recent calculations`() {
+        val projection = preparePredictorDiagnostics(
+            codes.swistak.batterymonitor.monitoring.PredictorStoredState(emptyMap(), null),
+            null,
+            900,
+            Locale.US,
+            { "unit" },
+            storedCheckedAtMillis = 1200
+        )
+        assertEquals(null, projection.recent)
+        val rows = requireNotNull(projection.stored).rows
+        assertTrue(rows.all { it.observedAtMillis == 0L && it.checkedAtMillis == 1200L })
     }
 
     private fun row(groups: List<DiagnosticGroup>, key: String) =

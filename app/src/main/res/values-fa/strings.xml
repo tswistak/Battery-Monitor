@@ -251,6 +251,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0ثانیه</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0ثانیه</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0ثانیه</string>
+    <string name="chip_switching_interval_custom">سفارشی</string>
     <string name="pref_chip_indicate_charging" formatted="false">نمایش شکلک شارژ</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">یک شکلک رعد و برق هنگام شارژ یا شارژ کامل نشان داده شود؟</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">اگر فعال باشد، تراشه نوار وضعیت یک شکلک رعد و برق را در کنار آن نشان می دهد مقدار تراشه در هنگام شارژ یا در هنگام شارژ کامل.</string>
@@ -614,9 +615,9 @@
     <string name="diag_charging_too_cold">برای شارژ بیش از حد سرد است</string>
     <string name="diag_charging_too_hot">برای شارژ بیش از حد گرم است</string>
     <string name="diag_section_service" formatted="false">سرویس باتری Android</string>
-    <string name="diag_help_service" formatted="false">بخش «خام» نام‌ها و مقادیر اصلی پخش‌های باتری Android و، در صورت دسترسی، dumpsys battery را شامل می‌شود. این داده‌ها می‌توانند منبع شارژ، وضعیت باتری، دما، ولتاژ و سایر وضعیت‌های سرویس باتری باشند.</string>
+    <string name="diag_help_service" formatted="false">نام‌ها و مقادیر اصلی پخش‌های باتری Android و، در صورت دسترسی، dumpsys battery. این داده‌ها می‌توانند منبع شارژ، وضعیت باتری، دما، ولتاژ و سایر وضعیت‌های سرویس باتری باشند.</string>
     <string name="diag_section_sysfs" formatted="false">فایل های power_supply هسته</string>
-    <string name="diag_help_sysfs" formatted="false">بخش «خام» نام‌ها و مقادیر اصلی خوانده‌شده از /sys/class/power_supply، از جمله مقادیر چندخطی را نشان می‌دهد. با کلید جستجو کنید و برای دیدن و کپی مقدار کامل روی ردیف بزنید. برای جمع‌آوری خوانش‌های جدید از «نوسازی» استفاده کنید. Battery Monitor با مجوزهای عادی Android، بدون root یا Shizuku نیز خواندن را امتحان می‌کند.</string>
+    <string name="diag_help_sysfs" formatted="false">نام‌ها و مقادیر اصلی خوانده‌شده از /sys/class/power_supply، از جمله مقادیر چندخطی.</string>
     <string name="diag_fuel_gauge">سنجشگر شارژ باتری</string>
     <string name="diag_mains_supply">منبع تغذیه AC</string>
     <string name="diag_charging_source">منبع شارژ</string>
@@ -646,15 +647,18 @@
     <string name="diag_input_voltage">ولتاژ ورودی</string>
     <string name="diag_input_voltage_limit">حد ولتاژ ورودی</string>
     <string name="diag_section_metadata" formatted="false">فراداده</string>
-    <string name="diag_help_metadata" formatted="false">بخش «خام» نام‌ها و مقادیر اصلی ویژگی‌های BatteryManager، از جمله شمارنده‌ها و خوانش‌های جریان موجود را نیز شامل می‌شود. ویژگی‌های اضافی مانند جزئیات ساخت یا وضعیت تعویض به نسخه Android، پشتیبانی دستگاه و مجوزها بستگی دارند.</string>
+    <string name="diag_help_metadata" formatted="false">نام‌ها و مقادیر اصلی ویژگی‌های BatteryManager، از جمله شمارنده‌ها و خوانش‌های جریان موجود. ویژگی‌های اضافی مانند جزئیات ساخت یا وضعیت تعویض به نسخه Android، پشتیبانی دستگاه و مجوزها بستگی دارند.</string>
     <string name="diag_raw">خام</string>
     <string name="diag_search_key">جستجوی کلیدها</string>
     <string name="diag_no_keys">کلید منطبقی در داده‌های موجود نیست</string>
     <string name="diag_raw_values">مقادیر خام</string>
     <string name="diag_last_checked">آخرین بررسی: %1$s</string>
     <string name="diag_privileged_stale">خوانش‌های قبلی با دسترسی ویژه نمایش داده می‌شوند. برای تلاش دوباره تازه‌سازی کنید.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">عیب یابی</string>
-    <string name="diag_help_troubleshooting" formatted="false">داده‌های Android در «عیب‌یابی» خودکار جمع‌آوری می‌شوند. برای داده‌های اضافی root یا Shizuku، دسترسی ویژه را در «منابع اضافی» فعال کنید. Battery Monitor ابتدا root و سپس Shizuku را امتحان می‌کند. Shizuku باید در حال اجرا باشد و مجوز داده شده باشد. فیلدهای ناموجود در دسترس نمی‌شوند؛ تازه‌سازی ناموفق تصویر وضعیت قبلی را حفظ و قدیمی علامت‌گذاری می‌کند.</string>
+    <string name="diag_help_troubleshooting" formatted="false">داده‌های Android در «عیب‌یابی» خودکار جمع‌آوری می‌شوند. برای داده‌های اضافی root یا Shizuku، «استفاده از دسترسی ویژه» را در «تنظیمات» ← «پیشرفته» فعال کنید. Battery Monitor ابتدا root و سپس Shizuku را امتحان می‌کند. Shizuku باید در حال اجرا باشد و مجوز داده شده باشد. فیلدهای ناموجود در دسترس نمی‌شوند؛ تازه‌سازی ناموفق تصویر وضعیت قبلی را حفظ و قدیمی علامت‌گذاری می‌کند.</string>
+    <string name="diag_help_raw_general" formatted="false">کلیدها و مقادیر اصلی از منابع موجود. با کلید جستجو کنید و برای دیدن و کپی مقدار کامل روی ردیف بزنید. برای جمع‌آوری خوانش‌های جدید از «نوسازی» استفاده کنید. Battery Monitor با مجوزهای عادی Android، بدون root یا Shizuku نیز خواندن را امتحان می‌کند. در دسترس بودن به منابع قابل خواندن بستگی دارد.</string>
+    <string name="diag_help_raw_predictor" formatted="false">کلیدها و مقادیر اصلی داده‌های پیش‌بینی ذخیره‌شده، در صورت وجود.</string>
+    <string name="diag_export_report_help" formatted="false">گزارشی از خوانش‌های عیب‌یابی و داده‌های پیش‌بینی موجود ایجاد کنید. پیش‌نمایش را بررسی کنید، سپس گزارش را در کلیپ‌بورد کپی یا به‌صورت فایل متنی ذخیره کنید. پیش از اشتراک‌گذاری، گزارش را با دقت بررسی کنید، به‌ویژه اگر شامل مقادیر خام و شناسه‌ها باشد.</string>
+    <string name="diag_charging_source_disconnected">قطع شده</string>
 
     <string name="diagnostics" formatted="false">عیب‌یابی</string>
     <string name="diagnostics_summary" formatted="false">مجوزها و پایداری پایش را بررسی کنید و گزارشی برای رفع مشکل بسازید</string>
@@ -716,11 +720,15 @@
     <string name="diag_missing_average">جریان میانگین خوانشی جدا از جریان لحظه‌ای است که دستگاه ارائه می‌دهد. اگر دستگاه آن را ارائه نکند، Battery Monitor میانگین خودش را محاسبه نمی‌کند.</string>
     <string name="diag_missing_estimated_health">این تخمین به ظرفیت شارژ کامل و ظرفیت طراحی مثبت از همان باتری نیاز دارد. ظرفیت شارژ کامل نباید از ظرفیت طراحی بیشتر باشد.</string>
     <string name="diag_missing_charge_time">این تخمین شارژ گزارش‌شده توسط دستگاه است. «وضعیت فعلی» از روش پیش‌بینی تنظیم‌شده Battery Monitor استفاده می‌کند و حتی بدون تخمین دستگاه می‌تواند تخمین نشان دهد.</string>
-    <string name="diag_predictor_description">نرخ‌ها زمان لازم برای یک واحد درصد را نشان می‌دهند. محاسبات اخیر در حافظه نگه داشته می‌شوند؛ میانگین‌های ذخیره‌شده پس از راه‌اندازی مجدد باقی می‌مانند. بازه‌های ناقص از نرخ بلندمدت و میانگین‌های ذخیره‌نشده از پیش‌فرض‌ها استفاده می‌کنند.</string>
-    <string name="diagnostics_predictor_help" formatted="false">«عملکرد برنامه» میانگین‌های بلندمدت ذخیره‌شده و ورودی‌های اخیر پیش‌بینی را نشان می‌دهد. نرخ‌های اخیر از تغییر درصد باتری استفاده می‌کنند و زمان یک واحد درصد، روش انتخاب‌شده، منبع شارژ فعال، نقاط و مدت‌های مشاهده‌شده و لحاظ شدن بازه ناتمام را نشان می‌دهند. پنجره‌های پنج‌دقیقه‌ای و پنج‌واحددرصدی برای بخش‌های مشاهده‌نشده از نرخ بلندمدت فعال استفاده می‌کنند؛ سطح‌های ردشده درون‌یابی می‌شوند. وضعیت اخیر در حافظه نگه داشته می‌شود و با شروع دوباره پایش، تغییر بین شارژ و تخلیه یا تغییر منبع شارژ بازنشانی می‌شود. میانگین‌های آموخته‌شده ذخیره‌شده پس از راه‌اندازی مجدد باقی می‌مانند. این داده‌ها مستقل از گزارش‌های تاریخچه‌اند؛ پاک کردن گزارش‌ها تخمین‌ها را بازنشانی نمی‌کند.</string>
+    <string name="diagnostics_predictor_help" formatted="false">میانگین‌های بلندمدت ذخیره‌شده و ورودی‌های اخیر پیش‌بینی را مرور کنید. نرخ‌های اخیر از تغییر درصد باتری استفاده می‌کنند و زمان یک واحد درصد، روش انتخاب‌شده، منبع شارژ فعال، نقاط و مدت‌های مشاهده‌شده و لحاظ شدن بازه ناتمام را نشان می‌دهند. پنجره‌های پنج‌دقیقه‌ای و پنج‌واحددرصدی برای بخش‌های مشاهده‌نشده از نرخ بلندمدت فعال استفاده می‌کنند؛ سطح‌های ردشده درون‌یابی می‌شوند. وضعیت اخیر در حافظه نگه داشته می‌شود و با شروع دوباره پایش، تغییر بین شارژ و تخلیه یا تغییر منبع شارژ بازنشانی می‌شود. میانگین‌های آموخته‌شده ذخیره‌شده پس از راه‌اندازی مجدد باقی می‌مانند. این داده‌ها مستقل از گزارش‌های تاریخچه‌اند؛ پاک کردن گزارش‌ها تخمین‌ها را بازنشانی نمی‌کند.</string>
+    <string name="diag_check_failed" formatted="false">آخرین تلاش برای خواندن ناموفق بود.</string>
+    <string name="diag_reading_retained" formatted="false">خوانش قبلی نمایش داده می‌شود.</string>
+    <string name="diag_value_copied" formatted="false">مقدار کپی شد</string>
+    <string name="diag_predictor_read_failed" formatted="false">خواندن داده‌های پیش‌بینی ذخیره‌شده ممکن نبود.</string>
+    <string name="diag_predictor_recent_title" formatted="false">داده‌های پیش‌بینی — محاسبات اخیر</string>
+    <string name="diag_predictor_stored_title" formatted="false">داده‌های پیش‌بینی — میانگین‌های بلندمدت ذخیره‌شده</string>
     <string name="diag_predictor_recent" formatted="false">محاسبات اخیر</string>
     <string name="diag_predictor_no_recent" formatted="false">تخمین فعالی وجود ندارد. داده‌های اخیر پس از خوانش پایشگر هنگام شارژ یا تخلیه در دسترس قرار می‌گیرند.</string>
-    <string name="diag_predictor_start_monitor">برای بررسی داده‌های پیش‌بینی ذخیره‌شده، پایش را از بالا شروع کنید.</string>
     <string name="diag_predictor_active_state" formatted="false">وضعیت فعال باتری</string>
     <string name="diag_predictor_effective_rate" formatted="false">نرخ استفاده‌شده برای تخمین</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">۵\u00A0دقیقه گذشته</string>
@@ -730,7 +738,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">مدت نشست مشاهده‌شده</string>
     <string name="diag_predictor_current_level_duration" formatted="false">زمان در سطح فعلی</string>
     <string name="diag_predictor_uses_partial" formatted="false">بازه ناتمام لحاظ شده است</string>
-    <string name="diag_predictor_saved_averages" formatted="false">میانگین‌های بلندمدت ذخیره‌شده</string>
     <string name="diag_predictor_ac">شارژ (AC)</string>
     <string name="diag_predictor_wireless">شارژ (بی‌سیم)</string>
     <string name="diag_predictor_usb">شارژ (USB)</string>
@@ -759,8 +766,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">عیب‌یابی محدودیت شارژ سازنده</string>
     <string name="charging_diagnostics_help_overview" formatted="false">ابزارهای ثبت تصویر و مقایسه را باز کنید تا نحوه تشخیص محدودیت شارژ دستگاه توسط Battery Monitor را بررسی کنید. دستورالعمل‌های آماده‌سازی در راهنمای خود صفحه عیب‌یابی سازنده موجود است.</string>
-    <string name="charging_tools_help_overview" formatted="false">ابزارهای ثبت تصویر و مقایسه را باز کنید تا نحوه تشخیص محدودیت شارژ دستگاه توسط Battery Monitor را بررسی کنید. دستورالعمل‌های آماده‌سازی در راهنمای خود صفحه عیب‌یابی سازنده موجود است.\n
-    با دسترسی ویژه ممکن است اطلاعات تشخیصی بیشتری در دسترس باشد. برای گزارش مفیدتر از محدودیت شارژ سازنده، دسترسی Shizuku یا root را بدهید و دسترسی ویژه را در «تنظیمات» → «پیشرفته» → «استفاده از دسترسی ویژه» فعال کنید.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">برای تهیه گزارشی مفید، پیش از ثبت تصاویر «کمک کنید» را باز کنید و مراحل آماده‌سازی را انجام دهید.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">با دسترسی ویژه ممکن است اطلاعات تشخیصی بیشتری در دسترس باشد. برای گزارش مفیدتر از محدودیت شارژ سازنده، دسترسی Shizuku یا root را بدهید و دسترسی ویژه را در «تنظیمات» → «پیشرفته» → «استفاده از دسترسی ویژه» فعال کنید.</string>
     <string name="charging_diagnostics_capture" formatted="false">گرفتن تصویر لحظه‌ای</string>
@@ -782,7 +787,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ را ثبت کنید</string>
     <string name="charging_diagnostics_report" formatted="false">ایجاد گزارش مقایسه</string>
     <string name="charging_diagnostics_report_summary" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ سازنده را ثبت کنید</string>
-    <string name="charging_diagnostics_report_help" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ سازنده را ثبت کنید.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">ابتدا دست‌کم دو حالت متفاوت شارژ سازنده را ثبت کنید. پس از بررسی گزارش، آن را کپی یا ذخیره کنید و با ایمیل به <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> بفرستید.</string>
     <string name="charging_diagnostics_copy" formatted="false">کپی در کلیپ‌بورد</string>
     <string name="charging_diagnostics_save" formatted="false">ذخیره</string>
     <string name="charging_diagnostics_copied" formatted="false">گزارش کپی شد</string>
@@ -796,8 +801,6 @@
     4. شارژ تطبیقی، هوشمند یا زمان‌بندی‌شده را فعال کنید، 2–5\u00A0ثانیه صبر و تصویری ثبت کنید.\n
     5. اگر مقایسه پیکربندی نتیجه روشنی نداشت، می‌توانید برای ثبت وضعیت‌هایی که فقط هنگام کار دیده می‌شوند، این مراحل را هنگام شارژ نیز تکرار کنید.\n
     6. گزارش مقایسه را بسازید و بررسی کنید. داده‌ها فیلتر و مقادیر احتمالاً حساس پنهان می‌شوند، اما پیش از اشتراک‌گذاری کل گزارش را بررسی کنید.</string>
-    <string name="charging_report_privacy_help" formatted="false">به‌طور پیش‌فرض کنار گذاشته می‌شوند. این داده‌ها ممکن است اطلاعات شخصی داشته باشند. پیش از کپی یا ذخیره، پیش‌نمایش را بررسی کنید.\n
-    پس از بررسی گزارش، آن را کپی یا ذخیره کنید و با ایمیل به <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> بفرستید.</string>
 
     <string name="pref_backup_restore" formatted="false">پشتیبان‌گیری و بازیابی</string>
     <string name="backup_restore_settings_summary" formatted="false">از تنظیمات برنامه و داده‌های باتری نسخهٔ پشتیبان تهیه کنید، آن‌ها را بازیابی و منتقل کنید</string>

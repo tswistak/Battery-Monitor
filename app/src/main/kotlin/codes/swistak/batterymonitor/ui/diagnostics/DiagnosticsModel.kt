@@ -28,7 +28,11 @@ internal data class DiagnosticRow(
     val observedAtMillis: Long,
     val accessMethod: String,
     val valueLabel: Int = 0,
-    val observedElapsedMillis: Long? = null
+    val observedElapsedMillis: Long? = null,
+    val checkedAtMillis: Long = 0,
+    val checkedElapsedMillis: Long? = null,
+    val checkFailed: Boolean = false,
+    val retained: Boolean = false
 )
 
 internal data class DiagnosticGroup(val title: Int, val rows: List<DiagnosticRow>)
@@ -63,6 +67,8 @@ internal fun normalizedDiagnosticGroups(
         ?: if (android) "BatteryManager / $key" else "dumpsys battery / $key"
         val time =
             snapshot.sourceReadTimes[selectedSource]?.takeIf { raw != null && it.wallMillis > 0 }
+        val check = snapshot.checks[key]?.takeIf { it.retained } ?: snapshot.checks[selectedSource]
+        ?: snapshot.checks[key]
         return DiagnosticRow(
             label,
             key,
@@ -72,7 +78,11 @@ internal fun normalizedDiagnosticGroups(
             selectedSource,
             time?.wallMillis ?: 0,
             access,
-            observedElapsedMillis = time?.elapsedMillis
+            observedElapsedMillis = time?.elapsedMillis,
+            checkedAtMillis = check?.time?.wallMillis ?: time?.wallMillis ?: 0,
+            checkedElapsedMillis = check?.time?.elapsedMillis ?: time?.elapsedMillis,
+            checkFailed = check?.failed == true,
+            retained = raw != null && (check?.failed == true || check?.retained == true)
         )
     }
 
@@ -97,10 +107,11 @@ internal fun normalizedDiagnosticGroups(
         4 -> "Wireless powered"
         else -> "AC powered"
     }
+    val serviceRows = rawRows(
+        snapshot.serviceLabels, snapshot.serviceValues, serviceSource, snapshot, access
+    )
     val fastCharging = latestDiagnosticReading(
-        rawRows(
-            snapshot.serviceLabels, snapshot.serviceValues, serviceSource, snapshot, access
-        ).mapNotNull { reading ->
+        serviceRows.mapNotNull { reading ->
             val samsungHighVoltage = reading.rawKey == "hv_charger"
             if (reading.rawKey != "ChargeFastCharger" && !samsungHighVoltage) return@mapNotNull null
             val enabled = when (reading.rawValue?.trim()?.lowercase(Locale.ROOT)) {
@@ -141,6 +152,18 @@ internal fun normalizedDiagnosticGroups(
     }
 
     val sysfs = snapshot.sysfsLabels.zip(snapshot.sysfsValues).toMap()
+    val technologyKeys =
+        AdvancedBatteryStatsCollector.batterySupplyNames(sysfs).map { "$it/technology" }.toSet()
+    val technology =
+        latestDiagnosticReading((serviceRows.filter { it.rawKey == "technology" } + rawRows(
+            snapshot.sysfsLabels, snapshot.sysfsValues, "/sys/class/power_supply", snapshot, access
+        ).filter { it.rawKey in technologyKeys }).mapNotNull { reading ->
+            reading.rawValue?.trim()?.takeIf { it.isNotEmpty() }?.let {
+                reading.copy(
+                    label = R.string.diag_battery_technology, rawKey = "technology", value = it
+                )
+            }
+        }) ?: row(R.string.diag_battery_technology, "technology", null)
     val voltage = voltageReading(service["voltage"], "$serviceSource / voltage")
         ?: AdvancedBatteryStatsCollector.batterySupplyNames(sysfs).firstNotNullOfOrNull { supply ->
             voltageReading(
@@ -164,7 +187,7 @@ internal fun normalizedDiagnosticGroups(
         snapshot.fieldSources["charge_full"]?.let(snapshot.sourceReadTimes::get),
         snapshot.fieldSources["charge_full_design"]?.let(snapshot.sourceReadTimes::get)
     )
-    return listOf(
+    val groups = listOf(
         DiagnosticGroup(
             R.string.diag_section_counters, listOf(
                 row(
@@ -222,7 +245,7 @@ internal fun normalizedDiagnosticGroups(
             )
         ), DiagnosticGroup(
             R.string.diag_section_capacity, listOf(
-                row(
+                technology, row(
                     R.string.current_android_health,
                     "health",
                     health,
@@ -281,7 +304,7 @@ internal fun normalizedDiagnosticGroups(
                     source = "$serviceSource / $pluggedField"
                 ).copy(
                     valueLabel = when (plugged) {
-                        0 -> R.string.plugged_unplugged
+                        0 -> R.string.diag_charging_source_disconnected
                         1 -> R.string.diag_mains_supply
                         2 -> R.string.diag_usb_supply
                         4 -> R.string.diag_wireless_supply
@@ -330,6 +353,16 @@ internal fun normalizedDiagnosticGroups(
             )
         )
     )
+    return groups.map { group ->
+        group.copy(rows = group.rows.map { reading ->
+            val inputs = when (reading.rawKey) {
+                "battery_power" -> setOf("voltage", "current_now")
+                "estimated_health" -> setOf("charge_full", "charge_full_design")
+                else -> return@map reading
+            }
+            reading.withLatestCheck(group.rows.filter { it.rawKey in inputs })
+        })
+    }
 }
 
 
@@ -397,9 +430,28 @@ private fun DiagnosticRow.measurementTime(): BatteryMeasurementTime? =
 internal fun latestDiagnosticReading(rows: List<DiagnosticRow>): DiagnosticRow? {
     val monotonic =
         rows.filter { it.observedAtMillis > 0 && it.observedElapsedMillis?.let { elapsed -> elapsed >= 0 } == true }
-    return if (monotonic.isNotEmpty()) monotonic.maxByOrNull { it.observedElapsedMillis!! }
+    val reading = if (monotonic.isNotEmpty()) monotonic.maxByOrNull { it.observedElapsedMillis!! }
     else rows.maxByOrNull { it.observedAtMillis }
+    return reading?.withLatestCheck(rows)
 }
+
+private fun DiagnosticRow.withLatestCheck(rows: List<DiagnosticRow>): DiagnosticRow {
+    val attempted = rows.filter { it.checkedAtMillis > 0 }
+    val monotonic = attempted.filter { it.checkedElapsedMillis?.let { time -> time >= 0 } == true }
+    val checked = if (monotonic.isNotEmpty()) monotonic.maxByOrNull { it.checkedElapsedMillis!! }
+    else attempted.maxByOrNull { it.checkedAtMillis }
+    if (checked == null) return this
+    return copy(
+        checkedAtMillis = checked.checkedAtMillis,
+        checkedElapsedMillis = checked.checkedElapsedMillis,
+        checkFailed = checked.checkFailed,
+        retained = retained || (value != null || valueLabel != 0) && (checked.checkFailed || checked.rawValue == null && checked.valueLabel == 0)
+    )
+}
+
+private fun DiagnosticRow.withoutCheck(): DiagnosticRow = copy(
+    checkedAtMillis = 0, checkedElapsedMillis = null, checkFailed = false, retained = false
+)
 
 internal fun mergedDiagnosticGroups(
     snapshots: List<AdvancedBatterySnapshot>,
@@ -427,13 +479,13 @@ internal fun mergedDiagnosticGroups(
         group.copy(rows = group.rows.map { row ->
             val readings =
                 groups.mapNotNull { it[index].rows.firstOrNull { candidate -> candidate.rawKey == row.rawKey } }
-            latestDiagnosticReading(readings.filter {
+            (latestDiagnosticReading(readings.filter {
                 (it.value != null || it.valueLabel != 0) && !unavailableChargeDefault(
                     it
                 )
             }) ?: if (unavailableChargeDefault(row)) row.copy(
                 value = null, rawValue = null, source = ""
-            ) else row
+            ) else row).withLatestCheck(readings)
         })
     }.orEmpty()
     return merged.mapIndexed { index, group ->
@@ -455,16 +507,18 @@ internal fun mergedDiagnosticGroups(
                         .joinToString(" · "),
                     observedAtMillis = time?.wallMillis ?: 0,
                     observedElapsedMillis = time?.elapsedMillis
-                )
+                ).withLatestCheck(listOf(voltage, current))
             }
             if (row.rawKey != "estimated_health") return@map row
             val inputs = listOf("charge_full", "charge_full_design")
             // A derived reading must describe the measurements actually displayed together.
             groups.map { it[index] }.firstOrNull { candidate ->
                 inputs.all { key ->
-                    candidate.rows.first { it.rawKey == key } == group.rows.first { it.rawKey == key }
+                    candidate.rows.first { it.rawKey == key }
+                        .withoutCheck() == group.rows.first { it.rawKey == key }.withoutCheck()
                 }
-            }?.rows?.first { it.rawKey == row.rawKey } ?: row.copy(
+            }?.rows?.first { it.rawKey == row.rawKey }?.withLatestCheck(
+                group.rows.filter { it.rawKey in inputs }) ?: row.copy(
                 value = null, rawValue = null, source = ""
             )
         })
@@ -517,11 +571,6 @@ internal fun deviceDiagnosticGroups(
                 // Keep fields with unverified semantics and units in Raw.
                 if (!charging) when (key) {
                     "health" -> enumeration(R.string.diag_supply_health, supplyHealthLabel(text))
-                    "technology" -> text.takeIf {
-                        it in setOf(
-                            "NiMH", "Li-ion", "Li-poly", "LiFe", "NiCd", "LiMn"
-                        )
-                    }?.let { row.copy(label = R.string.diag_battery_technology, value = it) }
 
                     "voltage_ocv" -> number(R.string.diag_open_circuit_voltage, "µV", 1_000_000.0)
                     "voltage_min_design" -> number(
@@ -760,6 +809,7 @@ private fun rawRows(
         else -> "$source / $key"
     }
     val time = snapshot.sourceReadTimes[canonicalSource]?.takeIf { it.wallMillis > 0 }
+    val check = snapshot.checks[canonicalSource]
     DiagnosticRow(
         0,
         key,
@@ -769,7 +819,11 @@ private fun rawRows(
         if (key.startsWith("cmd battery ")) key else "$source / $key",
         time?.wallMillis ?: 0,
         access,
-        observedElapsedMillis = time?.elapsedMillis
+        observedElapsedMillis = time?.elapsedMillis,
+        checkedAtMillis = check?.time?.wallMillis ?: time?.wallMillis ?: 0,
+        checkedElapsedMillis = check?.time?.elapsedMillis ?: time?.elapsedMillis,
+        checkFailed = check?.failed == true,
+        retained = check?.failed == true || check?.retained == true
     )
 }
 
@@ -785,7 +839,7 @@ internal fun diagnosticReport(
         group.rows.forEach { row ->
             val predictor = row.label != 0 && group.title == R.string.device_data_predictor
             val knownFastCharging = row.rawKey == "fast_charging" && row.valueLabel != 0
-            if (includeRaw || predictor || (index < 3 && row.label != 0 && (row.rawValue?.toDoubleOrNull() != null || knownFastCharging))) {
+            if (includeRaw || predictor || (index < 3 && row.label != 0 && (row.rawValue?.toDoubleOrNull() != null && row.label != R.string.diag_battery_technology || knownFastCharging))) {
                 appendLine(
                     "${row.rawKey}: ${
                         formattedDiagnosticValue(

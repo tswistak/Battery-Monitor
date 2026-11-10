@@ -147,6 +147,7 @@ class BatteryInfoService : Service() {
             "codes.swistak.batterymonitor.action.DIAGNOSTICS_CHECK"
         private const val EXTRA_DIAGNOSTICS_RECEIVER =
             "codes.swistak.batterymonitor.EXTRA_DIAGNOSTICS_RECEIVER"
+        const val DIAGNOSTICS_RESULT_FAILED = 0
         const val DIAGNOSTICS_RESULT_OK = 1
         const val DIAGNOSTICS_RESULT_TIMESTAMP = "diagnostics_result_timestamp"
 
@@ -205,11 +206,14 @@ class BatteryInfoService : Service() {
 
         fun requestDiagnosticsCheck(
             context: Context, receiver: ResultReceiver
-        ): ServiceStartResult = startServiceSafely(
-            context,
-            Intent(context, BatteryInfoService::class.java).setAction(ACTION_DIAGNOSTICS_CHECK)
-                .putExtra(EXTRA_DIAGNOSTICS_RECEIVER, receiver)
-        )
+        ): ServiceStartResult {
+            if (!BackgroundServiceWatchdog.isServiceDesired(context)) return ServiceStartResult.NOT_ALLOWED
+            return startServiceSafely(
+                context,
+                Intent(context, BatteryInfoService::class.java).setAction(ACTION_DIAGNOSTICS_CHECK)
+                    .putExtra(EXTRA_DIAGNOSTICS_RECEIVER, receiver)
+            )
+        }
 
         private fun startServiceSafely(
             context: Context, serviceIntent: Intent
@@ -343,7 +347,9 @@ class BatteryInfoService : Service() {
     private lateinit var remainingChargeReader: RemainingChargeReader
 
     private data class PendingBatteryUpdate(
-        val intent: Intent, val acquiredAt: BatteryMeasurementTime
+        val intent: Intent,
+        val acquiredAt: BatteryMeasurementTime,
+        val diagnosticsReceiver: ResultReceiver? = null
     )
 
     private val pendingBatteryUpdates = java.util.ArrayDeque<PendingBatteryUpdate>()
@@ -534,9 +540,24 @@ class BatteryInfoService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val diagnosticsReceiver = intent?.takeIf { it.action == ACTION_DIAGNOSTICS_CHECK }?.let {
+            IntentCompat.getParcelableExtra(
+                it, EXTRA_DIAGNOSTICS_RECEIVER, ResultReceiver::class.java
+            )
+        }
         if (!mainNotificationForegroundStarted) {
+            diagnosticsReceiver?.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
             stopSelf(startId)
             return START_NOT_STICKY
+        }
+        if (diagnosticsReceiver != null && !BackgroundServiceWatchdog.isServiceDesired(this)) {
+            diagnosticsReceiver.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
+            stopSelf(startId)
+            return START_NOT_STICKY
+        }
+        if (diagnosticsReceiver != null) {
+            update(null, diagnosticsReceiver)
+            return START_STICKY
         }
         intent?.getBundleExtra(EXTRA_SETTINGS_SNAPSHOT)?.let { snapshot ->
             thresholdAlarmEvaluator.reset()
@@ -547,17 +568,6 @@ class BatteryInfoService : Service() {
         configureChipContent()
         update(null)
         restartChipSwitcher()
-
-        if (intent?.action == ACTION_DIAGNOSTICS_CHECK) {
-            val receiver = IntentCompat.getParcelableExtra(
-                intent, EXTRA_DIAGNOSTICS_RECEIVER, ResultReceiver::class.java
-            )
-            receiver?.send(
-                DIAGNOSTICS_RESULT_OK, Bundle().apply {
-                    putLong(DIAGNOSTICS_RESULT_TIMESTAMP, SystemClock.elapsedRealtime())
-                })
-        }
-
         return START_STICKY
     }
 
@@ -976,12 +986,25 @@ class BatteryInfoService : Service() {
     }
 
 
-    private fun update(intent: Intent?) {
+    private fun update(intent: Intent?, diagnosticsReceiver: ResultReceiver? = null) {
         val acquiredAt = BatteryMeasurementTime.now()
-        val batteryIntent = intent ?: registerReceiver(null, batteryChanged)
+        val batteryIntent = try {
+            intent ?: registerReceiver(null, batteryChanged)
+        } catch (error: RuntimeException) {
+            if (diagnosticsReceiver == null) throw error
+            Log.e(LOG_TAG, "Diagnostic battery acquisition failed", error)
+            diagnosticsReceiver.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
+            return
+        }
+        if (diagnosticsReceiver != null && batteryIntent == null) {
+            diagnosticsReceiver.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
+            return
+        }
         pendingBatteryUpdates.addLast(
             PendingBatteryUpdate(
-                batteryIntent?.let(::Intent) ?: Intent(Intent.ACTION_BATTERY_CHANGED), acquiredAt
+                batteryIntent?.let(::Intent) ?: Intent(Intent.ACTION_BATTERY_CHANGED),
+                acquiredAt,
+                diagnosticsReceiver
             )
         )
         processNextBatteryUpdate()
@@ -999,7 +1022,10 @@ class BatteryInfoService : Service() {
         val times =
             fieldTimes + if (remainingCharge != null) mapOf("charge_counter" to remainingChargeTime) else emptyMap()
         currentAcquisition.read(wantsAverageCurrent()) { direct ->
-            if (destroyed) return@read
+            if (destroyed) {
+                pending.diagnosticsReceiver?.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
+                return@read
+            }
             val requestId = recordDirectCurrent(direct)
             if (direct.now != null || direct.average != null) {
                 publishCurrent(direct)
@@ -1010,7 +1036,13 @@ class BatteryInfoService : Service() {
             val revision = PrivilegedAccess.accessRevision
             val complete: (PrivilegedBatteryReading?) -> Unit = { reading ->
                 mHandler.post {
-                    if (!destroyed) {
+                    try {
+                        if (destroyed) {
+                            pending.diagnosticsReceiver?.send(
+                                DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY
+                            )
+                            return@post
+                        }
                         val allowed =
                             PrivilegedAccess.isEnabled() && revision == PrivilegedAccess.accessRevision
                         val fallback = reading.takeIf { allowed }
@@ -1029,12 +1061,26 @@ class BatteryInfoService : Service() {
                             voltageSource,
                             times
                         )
+                        pending.diagnosticsReceiver?.send(
+                            DIAGNOSTICS_RESULT_OK, Bundle().apply {
+                                putLong(DIAGNOSTICS_RESULT_TIMESTAMP, SystemClock.elapsedRealtime())
+                                putString(
+                                    MonitoringConnection.FIELD_PROCESS_ID, monitoringProcessId
+                                )
+                                putLong(MonitoringConnection.FIELD_SEQUENCE, monitoringSequence)
+                            })
+                    } catch (error: Exception) {
+                        Log.e(LOG_TAG, "Battery monitoring update failed", error)
+                        pending.diagnosticsReceiver?.send(DIAGNOSTICS_RESULT_FAILED, Bundle.EMPTY)
+                    } finally {
+                        resolvingBatteryUpdate = false
+                        processNextBatteryUpdate()
                     }
-                    resolvingBatteryUpdate = false
-                    processNextBatteryUpdate()
                 }
             }
-            if (needsFallback && PrivilegedAccess.isEnabled()) {
+            if (pending.diagnosticsReceiver != null) {
+                complete(PrivilegedBatteryReader.shared.cached())
+            } else if (needsFallback && PrivilegedAccess.isEnabled()) {
                 PrivilegedBatteryReader.shared.readWhenReady(
                     allowCached = false, onResult = complete
                 )
@@ -1161,11 +1207,10 @@ class BatteryInfoService : Service() {
     }
 
     private fun startForegroundImmediately(): Boolean {
-        val notification: Notification =
-            NotificationCompat.Builder(this, CHAN_ID_MAIN)
-                .setSmallIcon(R.drawable.ic_notification_brand)
-                .setContentTitle(getString(R.string.background_service_starting)).setOngoing(true)
-                .setShowWhen(false).build()
+        val notification: Notification = NotificationCompat.Builder(this, CHAN_ID_MAIN)
+            .setSmallIcon(R.drawable.ic_notification_brand)
+            .setContentTitle(getString(R.string.background_service_starting)).setOngoing(true)
+            .setShowWhen(false).build()
 
         try {
             startForegroundWithNotification(notification)

@@ -251,6 +251,7 @@
     <string name="chip_switching_interval_10_seconds" formatted="false">10\u00A0masodperc</string>
     <string name="chip_switching_interval_15_seconds" formatted="false">15\u00A0masodperc</string>
     <string name="chip_switching_interval_30_seconds" formatted="false">30\u00A0masodperc</string>
+    <string name="chip_switching_interval_custom">Egyéni</string>
     <string name="pref_chip_indicate_charging" formatted="false">Töltés emoji megjelenítése</string>
     <string name="pref_chip_indicate_charging_summary" formatted="false">Villám emoji megjelenítése töltéskor vagy teljes töltöttségnél?</string>
     <string name="pref_chip_indicate_charging_help" formatted="false">Ha engedélyezve van, az állapotsor chip a töltöttségi érték mellett villám emojit jelenít meg.</string>
@@ -614,9 +615,9 @@
     <string name="diag_charging_too_cold">Túl hideg a töltéshez</string>
     <string name="diag_charging_too_hot">Túl meleg a töltéshez</string>
     <string name="diag_section_service" formatted="false">Android akkumulátorszolgáltatás</string>
-    <string name="diag_help_service" formatted="false">A „Nyers adatok” az Android akkumulátorüzeneteinek eredeti neveit és értékeit, valamint elérhetőség esetén a dumpsys battery adatait tartalmazza. Ezek között lehet a töltési forrás, akkumulátorállapot, hőmérséklet, feszültség és az akkumulátorszolgáltatás egyéb állapotadatai.</string>
+    <string name="diag_help_service" formatted="false">Az Android akkumulátorüzeneteinek eredeti nevei és értékei, valamint elérhetőség esetén a dumpsys battery adatai. Ezek között lehet a töltési forrás, akkumulátorállapot, hőmérséklet, feszültség és az akkumulátorszolgáltatás egyéb állapotadatai.</string>
     <string name="diag_section_sysfs" formatted="false">Kernel power_supply fájlok</string>
-    <string name="diag_help_sysfs" formatted="false">A „Nyers adatok” a /sys/class/power_supply eredeti neveit és értékeit mutatja, a többsorosakat is. Keressen kulcs szerint, és koppintson egy sorra a teljes érték megtekintéséhez és másolásához. A „Frissítés” új méréseket gyűjt. A Battery Monitor normál Android-engedélyekkel, root és Shizuku nélkül is megpróbálja az olvasást.</string>
+    <string name="diag_help_sysfs" formatted="false">A /sys/class/power_supply eredeti nevei és értékei, a többsorosak is.</string>
     <string name="diag_fuel_gauge">Akkumulátor töltésmérője</string>
     <string name="diag_mains_supply">Hálózati tápellátás</string>
     <string name="diag_charging_source">Töltési forrás</string>
@@ -646,15 +647,18 @@
     <string name="diag_input_voltage">Bemeneti feszültség</string>
     <string name="diag_input_voltage_limit">Bemeneti feszültségkorlát</string>
     <string name="diag_section_metadata" formatted="false">Metaadatok</string>
-    <string name="diag_help_metadata" formatted="false">A „Nyers adatok” az eredeti BatteryManager-tulajdonságneveket és értékeket is tartalmazza, köztük az elérhető számlálókat és áramméréseket. A további tulajdonságok, például gyártási adatok vagy csereállapot, az Android-verziótól, az eszköztámogatástól és az engedélyektől függnek.</string>
+    <string name="diag_help_metadata" formatted="false">Az eredeti BatteryManager-tulajdonságnevek és értékek, köztük az elérhető számlálók és árammérések. A további tulajdonságok, például gyártási adatok vagy csereállapot, az Android-verziótól, az eszköztámogatástól és az engedélyektől függnek.</string>
     <string name="diag_raw">Nyers adatok</string>
     <string name="diag_search_key">Kulcsok keresése</string>
     <string name="diag_no_keys">Nincs megfelelő kulcs az elérhető adatokban</string>
     <string name="diag_raw_values">Nyers értékek</string>
     <string name="diag_last_checked">Utolsó ellenőrzés: %1$s</string>
     <string name="diag_privileged_stale">A korábbi privilegizált hozzáférésű mérések láthatók. Új próbához frissítsen.</string>
-    <string name="diag_help_troubleshooting_title" formatted="false">Hibaelhárítás</string>
-    <string name="diag_help_troubleshooting" formatted="false">Az Android-adatok automatikusan gyűlnek a „Diagnosztika”. További root- vagy Shizuku-adatokhoz engedélyezze a privilegizált hozzáférést a „További források” alatt. A Battery Monitor először a rootot, majd a Shizukut próbálja. A Shizukunak futnia kell, megadott engedéllyel. A hiányzó mezők nem érhetők el; sikertelen frissítésnél az előző pillanatkép megmarad, és elavult jelzést kap.</string>
+    <string name="diag_help_troubleshooting" formatted="false">Az Android-adatok automatikusan gyűlnek a „Diagnosztika”. További root- vagy Shizuku-adatokhoz kapcsolja be a „Privilegizált hozzáférés használata” beállítást itt: „Beállítások” → „Speciális”. A Battery Monitor először a rootot, majd a Shizukut próbálja. A Shizukunak futnia kell, megadott engedéllyel. A hiányzó mezők nem érhetők el; sikertelen frissítésnél az előző pillanatkép megmarad, és elavult jelzést kap.</string>
+    <string name="diag_help_raw_general" formatted="false">Eredeti kulcsok és értékek az elérhető forrásokból. Keressen kulcs szerint, és koppintson egy sorra a teljes érték megtekintéséhez és másolásához. A „Frissítés” új méréseket gyűjt. A Battery Monitor normál Android-engedélyekkel, root és Shizuku nélkül is megpróbálja az olvasást. Az elérhetőség attól függ, hogy mely források olvashatók.</string>
+    <string name="diag_help_raw_predictor" formatted="false">A mentett előrejelzési adatok eredeti kulcsai és értékei, ha elérhetők.</string>
+    <string name="diag_export_report_help" formatted="false">Készítsen jelentést az elérhető diagnosztikai mérésekből és előrejelzési adatokból. Nézze át az előnézetet, majd másolja a jelentést a vágólapra vagy mentse szövegfájlként. Megosztás előtt gondosan ellenőrizze a jelentést, különösen, ha nyers értékeket és azonosítókat tartalmaz.</string>
+    <string name="diag_charging_source_disconnected">Szétkapcsolva</string>
 
     <string name="diagnostics" formatted="false">Diagnosztika</string>
     <string name="diagnostics_summary" formatted="false">Engedélyek és a megfigyelés megbízhatóságának ellenőrzése, hibakeresési jelentés készítése</string>
@@ -716,11 +720,15 @@
     <string name="diag_missing_average">Az átlagos áram a pillanatnyi áramtól különálló eszközmérés. A Battery Monitor nem számít saját átlagot, ha az eszköz nem ad meg ilyet.</string>
     <string name="diag_missing_estimated_health">A becsléshez ugyanazon akkumulátor pozitív teljes töltési és tervezett kapacitása szükséges. A teljes töltési kapacitás nem haladhatja meg a tervezettet.</string>
     <string name="diag_missing_charge_time">Ez az eszköz által jelentett töltési becslés. A „Jelenlegi állapot” a Battery Monitor beállított módszerét használja, és az eszköz becslése nélkül is mutathat becslést.</string>
-    <string name="diag_predictor_description">Az ütemek egy százalékpont idejét mutatják. A közelmúlt számításai memóriában maradnak; a mentett átlagok újraindítás után is megmaradnak. A hiányos időablakok a hosszú távú ütemet, a nem mentett átlagok az alapértékeket használják.</string>
-    <string name="diagnostics_predictor_help" formatted="false">Az „Alkalmazás működése” a mentett hosszú távú átlagokat és a legutóbbi előrejelzési bemeneteket mutatja. A közelmúlt ütemei a töltöttségi százalék változásából számolnak, és egy százalékpont idejét, a kiválasztott módszert, az aktív töltési forrást, a megfigyelt pontokat és időtartamokat, valamint a befejezetlen időszak beszámítását mutatják. Az ötperces és ötpontos ablakok a meg nem figyelt részekhez az aktív hosszú távú ütemet használják; a kihagyott szinteket interpolálják. A közelmúlt állapota memóriában marad, és a figyelés újraindításakor, töltés és merülés közötti váltáskor vagy a töltési forrás változásakor alaphelyzetbe áll. A mentett tanult átlagok megmaradnak. Ezek az adatok függetlenek az előzménynaplóktól; a naplók törlése nem állítja alaphelyzetbe a becsléseket.</string>
+    <string name="diagnostics_predictor_help" formatted="false">Tekintse át a mentett hosszú távú átlagokat és a legutóbbi előrejelzési bemeneteket. A közelmúlt ütemei a töltöttségi százalék változásából számolnak, és egy százalékpont idejét, a kiválasztott módszert, az aktív töltési forrást, a megfigyelt pontokat és időtartamokat, valamint a befejezetlen időszak beszámítását mutatják. Az ötperces és ötpontos ablakok a meg nem figyelt részekhez az aktív hosszú távú ütemet használják; a kihagyott szinteket interpolálják. A közelmúlt állapota memóriában marad, és a figyelés újraindításakor, töltés és merülés közötti váltáskor vagy a töltési forrás változásakor alaphelyzetbe áll. A mentett tanult átlagok megmaradnak. Ezek az adatok függetlenek az előzménynaplóktól; a naplók törlése nem állítja alaphelyzetbe a becsléseket.</string>
+    <string name="diag_check_failed" formatted="false">A legutóbbi olvasási kísérlet sikertelen volt.</string>
+    <string name="diag_reading_retained" formatted="false">Az előző mérés látható.</string>
+    <string name="diag_value_copied" formatted="false">Érték másolva</string>
+    <string name="diag_predictor_read_failed" formatted="false">Nem sikerült beolvasni a mentett előrejelzési adatokat.</string>
+    <string name="diag_predictor_recent_title" formatted="false">Előrejelzési adatok — Legutóbbi számítások</string>
+    <string name="diag_predictor_stored_title" formatted="false">Előrejelzési adatok — Mentett hosszú távú átlagok</string>
     <string name="diag_predictor_recent" formatted="false">Legutóbbi számítások</string>
     <string name="diag_predictor_no_recent" formatted="false">Nincs aktív becslés. A közelmúlt adatai töltés vagy merülés közbeni mérés után érhetők el.</string>
-    <string name="diag_predictor_start_monitor">Indítsa el fent a figyelést a mentett előrejelzési adatok megtekintéséhez.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktív akkumulátorállapot</string>
     <string name="diag_predictor_effective_rate" formatted="false">A becsléshez használt ütem</string>
     <string name="diag_predictor_five_minute_rate" formatted="false">Utolsó 5\u00A0perc</string>
@@ -730,7 +738,6 @@
     <string name="diag_predictor_observation_duration" formatted="false">Megfigyelt munkamenet időtartama</string>
     <string name="diag_predictor_current_level_duration" formatted="false">Jelenlegi töltöttségen eltöltött idő</string>
     <string name="diag_predictor_uses_partial" formatted="false">Befejezetlen időszak beleszámítva</string>
-    <string name="diag_predictor_saved_averages" formatted="false">Mentett hosszú távú átlagok</string>
     <string name="diag_predictor_ac">Töltés (hálózat)</string>
     <string name="diag_predictor_wireless">Töltés (vezeték nélküli)</string>
     <string name="diag_predictor_usb">Töltés (USB)</string>
@@ -759,8 +766,6 @@
 
     <string name="charging_diagnostics_title" formatted="false">OEM töltési korlát diagnosztikája</string>
     <string name="charging_diagnostics_help_overview" formatted="false">Nyissa meg a pillanatkép- és összehasonlító eszközöket annak vizsgálatához, hogyan észleli a Battery Monitor az eszköz töltési korlátját. Az előkészítési útmutató az OEM diagnosztikai képernyő saját súgójában található.</string>
-    <string name="charging_tools_help_overview" formatted="false">Nyissa meg a pillanatkép- és összehasonlító eszközöket annak vizsgálatához, hogyan észleli a Battery Monitor az eszköz töltési korlátját. Az előkészítési útmutató az OEM diagnosztikai képernyő saját súgójában található.\n
-    Kiemelt hozzáféréssel további diagnosztikai adatok válhatnak elérhetővé. Engedélyezze a Shizuku- vagy root-hozzáférést, majd kapcsolja be a kiemelt hozzáférést itt: „Beállítások” → „Speciális” → „Privilegizált hozzáférés használata” a hasznosabb OEM töltéskorlát-jelentéshez.</string>
     <string name="charging_diagnostics_instructions_hint" formatted="false">Hasznos jelentéshez nyissa meg a „Súgó”, és a pillanatképek rögzítése előtt kövesse az előkészítési lépéseket.</string>
     <string name="charging_diagnostics_privileged_hint" formatted="false">Kiemelt hozzáféréssel további diagnosztikai adatok válhatnak elérhetővé. Engedélyezze a Shizuku- vagy root-hozzáférést, majd kapcsolja be a kiemelt hozzáférést itt: „Beállítások” → „Speciális” → „Privilegizált hozzáférés használata” a hasznosabb OEM töltéskorlát-jelentéshez.</string>
     <string name="charging_diagnostics_capture" formatted="false">Pillanatkép rögzítése</string>
@@ -782,7 +787,7 @@
     <string name="charging_diagnostics_need_two" formatted="false">Előbb rögzítsen legalább két különböző töltési módot</string>
     <string name="charging_diagnostics_report" formatted="false">Összehasonlító jelentés készítése</string>
     <string name="charging_diagnostics_report_summary" formatted="false">Előbb rögzítsen legalább két különböző OEM töltési módot</string>
-    <string name="charging_diagnostics_report_help" formatted="false">Előbb rögzítsen legalább két különböző OEM töltési módot.</string>
+    <string name="charging_diagnostics_report_help" formatted="false">Előbb rögzítsen legalább két különböző OEM töltési módot. A jelentés áttekintése után másolja vagy mentse, majd küldje el e-mailben a <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> címre.</string>
     <string name="charging_diagnostics_copy" formatted="false">Másolás a vágólapra</string>
     <string name="charging_diagnostics_save" formatted="false">Mentés</string>
     <string name="charging_diagnostics_copied" formatted="false">Jelentés másolva</string>
@@ -796,8 +801,6 @@
     4. Kapcsolja be az adaptív, intelligens vagy ütemezett töltést, várjon 2–5\u00A0másodpercet, majd rögzítsen.\n
     5. Ha a konfiguráció összehasonlítása nem egyértelmű, a sorozatot opcionálisan töltés közben is megismételheti, hogy rögzítse a csak működés közben elérhető állapotot.\n
     6. Készítse el és tekintse át az összehasonlító jelentést. Az adatok szűrve, a potenciálisan érzékeny értékek kitakarva jelennek meg, de megosztás előtt ellenőrizze a teljes jelentést.</string>
-    <string name="charging_report_privacy_help" formatted="false">Alapértelmezés szerint kimaradnak. Ezek az adatok személyes információkat tartalmazhatnak. Másolás vagy mentés előtt ellenőrizze az előnézetet.\n
-    A jelentés áttekintése után másolja vagy mentse, majd küldje el e-mailben a <a href="mailto:tomasz@swistak.codes">tomasz@swistak.codes</a> címre.</string>
 
     <string name="pref_backup_restore" formatted="false">Biztonsági mentés és visszaállítás</string>
     <string name="backup_restore_settings_summary" formatted="false">Készítsen biztonsági másolatot az alkalmazás beállításairól és az akkumulátoradatokról, majd állítsa vissza vagy vigye át őket</string>
