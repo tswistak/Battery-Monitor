@@ -625,9 +625,9 @@
     <string name="diag_charging_too_cold">Слишком холодно для зарядки</string>
     <string name="diag_charging_too_hot">Слишком жарко для зарядки</string>
     <string name="diag_section_service" formatted="false">Служба батареи Android</string>
-    <string name="diag_help_service" formatted="false">Оригинальные имена и значения из сообщений Android о батарее и, если доступно, dumpsys battery. Они могут включать источник зарядки, состояние батареи, температуру, напряжение и другие данные службы батареи.</string>
+    <string name="diag_help_service" formatted="false">Показывает оригинальные имена и значения из сообщений Android о батарее и, если доступно, dumpsys battery. Они могут включать источник зарядки, состояние батареи, температуру, напряжение и другие данные службы батареи.</string>
     <string name="diag_section_sysfs" formatted="false">Файлы power_supply ядра</string>
-    <string name="diag_help_sysfs" formatted="false">Оригинальные имена и значения из /sys/class/power_supply, включая многострочные.</string>
+    <string name="diag_help_sysfs" formatted="false">Показывает оригинальные имена и значения из /sys/class/power_supply, включая многострочные.</string>
     <string name="diag_fuel_gauge">Датчик заряда батареи</string>
     <string name="diag_mains_supply">Сетевое питание</string>
     <string name="diag_charging_source">Источник зарядки</string>
@@ -657,7 +657,7 @@
     <string name="diag_input_voltage">Входное напряжение</string>
     <string name="diag_input_voltage_limit">Предел входного напряжения</string>
     <string name="diag_section_metadata" formatted="false">Метаданные</string>
-    <string name="diag_help_metadata" formatted="false">Оригинальные имена и значения свойств BatteryManager, включая доступные счётчики и измерения тока. Дополнительные свойства, например сведения о производстве или замене, зависят от версии Android, поддержки устройства и разрешений.</string>
+    <string name="diag_help_metadata" formatted="false">Показывает оригинальные имена и значения свойств BatteryManager, включая доступные счётчики и измерения тока. Дополнительные свойства, например сведения о производстве или замене, зависят от версии Android, поддержки устройства и разрешений.</string>
     <string name="diag_raw">Исходные данные</string>
     <string name="diag_search_key">Поиск ключей</string>
     <string name="diag_no_keys">Нет подходящих ключей в доступных данных</string>
@@ -665,8 +665,8 @@
     <string name="diag_last_checked">Последняя проверка: %1$s</string>
     <string name="diag_privileged_stale">Показаны предыдущие привилегированные данные. Обновите, чтобы повторить попытку.</string>
     <string name="diag_help_troubleshooting" formatted="false">Данные Android собираются в разделе «Диагностика» автоматически. Для дополнительных данных root или Shizuku включите «Использовать привилегированный доступ» в «Настройки» → «Расширенные». Battery Monitor сначала пробует root, затем Shizuku. Shizuku должен быть запущен, а разрешение предоставлено. Отсутствующие поля остаются недоступными; при неудачном обновлении сохраняется предыдущий снимок и помечается устаревшим.</string>
-    <string name="diag_help_raw_general" formatted="false">Исходные ключи и значения из доступных источников. Ищите по ключу и нажмите строку, чтобы просмотреть и скопировать полное значение. Используйте «Обновить» для новых измерений. Battery Monitor также пробует читать данные с обычными разрешениями Android, без root или Shizuku. Доступность зависит от того, какие источники можно прочитать.</string>
-    <string name="diag_help_raw_predictor" formatted="false">Исходные ключи и значения доступных данных прогнозирования.</string>
+    <string name="diag_help_raw_general" formatted="false">Показывает исходные ключи и значения из доступных источников. Ищите по ключу и нажмите строку, чтобы просмотреть и скопировать полное значение. Используйте «Обновить» для новых измерений. Battery Monitor также пробует читать данные с обычными разрешениями Android, без root или Shizuku. Доступность зависит от того, какие источники можно прочитать.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Показывает исходные ключи и значения доступных данных прогнозирования.</string>
     <string name="diag_export_report_help" formatted="false">Создайте отчёт о доступных диагностических показаниях и данных прогнозирования. Просмотрите отчёт в окне предварительного просмотра, затем скопируйте отчёт в буфер обмена или сохраните его как текстовый файл. Перед отправкой внимательно проверьте отчёт, особенно если он содержит исходные значения и идентификаторы.</string>
     <string name="diag_charging_source_disconnected">Отключен от сети</string>
 
@@ -725,7 +725,6 @@
     <string name="diag_timeout">Время ожидания измерения истекло. Предыдущий снимок данных сохранён. Повторите обновление.</string>
     <string name="diag_no">Нет</string>
     <string name="diag_additional_sources">Дополнительные источники</string>
-    <string name="diag_source_help">Доступные данные Android собираются автоматически, пока открыта «Диагностика». Нажмите значение, чтобы просмотреть и скопировать измерение, источник и время. Исходные ключи и значения устройства доступны в разделе «Исходные данные». Включите привилегированный доступ, чтобы также использовать Root или Shizuku.</string>
     <string name="diag_missing_reading">Включённые источники не вернули пригодных данных.</string>
     <string name="diag_missing_average">Средний ток — отдельное измерение устройства, отличное от мгновенного тока. Battery Monitor не рассчитывает своё среднее, если устройство его не предоставляет.</string>
     <string name="diag_missing_estimated_health">Для оценки нужны положительные значения ёмкости при полном заряде и проектной ёмкости одной батареи. Ёмкость при полном заряде не должна превышать проектную.</string>
@@ -735,8 +734,8 @@
     <string name="diag_reading_retained" formatted="false">Показано предыдущее измерение.</string>
     <string name="diag_value_copied" formatted="false">Значение скопировано</string>
     <string name="diag_predictor_read_failed" formatted="false">Не удалось прочитать сохранённые данные прогнозирования.</string>
-    <string name="diag_predictor_recent_title" formatted="false">Данные прогнозирования — Последние расчёты</string>
-    <string name="diag_predictor_stored_title" formatted="false">Данные прогнозирования — Сохранённые долгосрочные средние</string>
+    <string name="diag_predictor_recent_title" formatted="false">Данные прогнозирования — последние расчёты</string>
+    <string name="diag_predictor_stored_title" formatted="false">Данные прогнозирования — сохранённые долгосрочные средние</string>
     <string name="diag_predictor_recent" formatted="false">Последние расчёты</string>
     <string name="diag_predictor_no_recent" formatted="false">Нет активной оценки. Последние данные доступны после измерения при зарядке или разрядке.</string>
     <string name="diag_predictor_active_state" formatted="false">Активное состояние батареи</string>

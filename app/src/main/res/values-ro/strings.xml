@@ -620,9 +620,9 @@
     <string name="diag_charging_too_cold">Prea rece pentru încărcare</string>
     <string name="diag_charging_too_hot">Prea fierbinte pentru încărcare</string>
     <string name="diag_section_service" formatted="false">Serviciul de baterie Android</string>
-    <string name="diag_help_service" formatted="false">Numele și valorile originale din mesajele de difuzare privind bateria Android și, când este accesibil, din dumpsys battery. Acestea pot include sursa de încărcare, starea bateriei, temperatura, tensiunea și alte stări ale serviciului de baterie.</string>
+    <string name="diag_help_service" formatted="false">Afișează numele și valorile originale din mesajele de difuzare privind bateria Android și, când este accesibil, din dumpsys battery. Acestea pot include sursa de încărcare, starea bateriei, temperatura, tensiunea și alte stări ale serviciului de baterie.</string>
     <string name="diag_section_sysfs" formatted="false">Fișierele power_supply ale nucleului</string>
-    <string name="diag_help_sysfs" formatted="false">Numele și valorile originale citite din /sys/class/power_supply, inclusiv valorile pe mai multe linii.</string>
+    <string name="diag_help_sysfs" formatted="false">Afișează numele și valorile originale citite din /sys/class/power_supply, inclusiv valorile pe mai multe linii.</string>
     <string name="diag_fuel_gauge">Indicator de încărcare a bateriei</string>
     <string name="diag_mains_supply">Alimentare CA</string>
     <string name="diag_charging_source">Sursa de încărcare</string>
@@ -652,7 +652,7 @@
     <string name="diag_input_voltage">Tensiune de intrare</string>
     <string name="diag_input_voltage_limit">Limită a tensiunii de intrare</string>
     <string name="diag_section_metadata" formatted="false">Metadate</string>
-    <string name="diag_help_metadata" formatted="false">Numele și valorile originale ale proprietăților BatteryManager, inclusiv contoarele și citirile de curent disponibile. Proprietăți suplimentare, precum detaliile de fabricație sau starea înlocuirii, depind de versiunea Android, de suportul dispozitivului și de permisiuni.</string>
+    <string name="diag_help_metadata" formatted="false">Afișează numele și valorile originale ale proprietăților BatteryManager, inclusiv contoarele și citirile de curent disponibile. Proprietăți suplimentare, precum detaliile de fabricație sau starea înlocuirii, depind de versiunea Android, de suportul dispozitivului și de permisiuni.</string>
     <string name="diag_raw">Date brute</string>
     <string name="diag_search_key">Caută chei</string>
     <string name="diag_no_keys">Nicio cheie potrivită în datele disponibile</string>
@@ -660,8 +660,8 @@
     <string name="diag_last_checked">Ultima verificare: %1$s</string>
     <string name="diag_privileged_stale">Sunt afișate citirile privilegiate anterioare. Reîmprospătează pentru a încerca din nou.</string>
     <string name="diag_help_troubleshooting" formatted="false">Datele Android sunt colectate automat în „Diagnosticare”. Pentru date suplimentare prin root sau Shizuku, activează „Folosește acces privilegiat” în „Setări” → „Avansat”. Battery Monitor încearcă mai întâi root, apoi Shizuku. Shizuku trebuie să ruleze, iar permisiunea să fie acordată. Câmpurile lipsă rămân indisponibile; reîmprospătările eșuate păstrează instantaneul anterior și îl marchează ca învechit.</string>
-    <string name="diag_help_raw_general" formatted="false">Chei și valori originale din sursele disponibile. Caută după cheie și atinge un rând pentru a vedea și copia valoarea completă. Folosește „Reîmprospătează” pentru a colecta citiri noi. Battery Monitor încearcă și citiri cu permisiunile Android obișnuite, fără root sau Shizuku. Disponibilitatea depinde de sursele care pot fi citite.</string>
-    <string name="diag_help_raw_predictor" formatted="false">Cheile și valorile originale ale datelor de predicție disponibile.</string>
+    <string name="diag_help_raw_general" formatted="false">Afișează chei și valori originale din sursele disponibile. Caută după cheie și atinge un rând pentru a vedea și copia valoarea completă. Folosește „Reîmprospătează” pentru a colecta citiri noi. Battery Monitor încearcă și citiri cu permisiunile Android obișnuite, fără root sau Shizuku. Disponibilitatea depinde de sursele care pot fi citite.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Afișează cheile și valorile originale ale datelor de predicție disponibile.</string>
     <string name="diag_export_report_help" formatted="false">Creează un raport cu citirile de diagnosticare și datele de predicție disponibile. Examinează previzualizarea, apoi copiază raportul în clipboard sau salvează-l ca fișier text. Înainte de a-l distribui, verifică atent raportul, mai ales dacă include valori brute și identificatori.</string>
     <string name="diag_charging_source_disconnected">Deconectată</string>
 
@@ -720,7 +720,6 @@
     <string name="diag_timeout">Citirea a expirat. Instantaneul anterior este păstrat. Încearcă să reîmprospătezi din nou.</string>
     <string name="diag_no">Nu</string>
     <string name="diag_additional_sources">Surse suplimentare</string>
-    <string name="diag_source_help">Citirile Android disponibile sunt colectate automat cât timp „Diagnosticare” este deschisă. Atinge o valoare pentru a examina și copia citirea, sursa și ora. Cheile și valorile originale ale dispozitivului sunt disponibile în „Date brute”. Activează accesul privilegiat pentru a folosi și Root sau Shizuku.</string>
     <string name="diag_missing_reading">Sursele activate nu au returnat o citire utilizabilă.</string>
     <string name="diag_missing_average">Curentul mediu este o citire a dispozitivului separată de curentul instantaneu. Battery Monitor nu calculează o medie proprie când dispozitivul nu o furnizează.</string>
     <string name="diag_missing_estimated_health">Această estimare necesită capacități pozitive la încărcare completă și de proiectare pentru aceeași baterie. Capacitatea la încărcare completă nu trebuie să o depășească pe cea de proiectare.</string>
@@ -730,8 +729,8 @@
     <string name="diag_reading_retained" formatted="false">Este afișată citirea anterioară.</string>
     <string name="diag_value_copied" formatted="false">Valoare copiată</string>
     <string name="diag_predictor_read_failed" formatted="false">Nu s-au putut citi datele de predicție salvate.</string>
-    <string name="diag_predictor_recent_title" formatted="false">Date de predicție — Calcule recente</string>
-    <string name="diag_predictor_stored_title" formatted="false">Date de predicție — Medii pe termen lung salvate</string>
+    <string name="diag_predictor_recent_title" formatted="false">Date de predicție — calcule recente</string>
+    <string name="diag_predictor_stored_title" formatted="false">Date de predicție — medii pe termen lung salvate</string>
     <string name="diag_predictor_recent" formatted="false">Calcule recente</string>
     <string name="diag_predictor_no_recent" formatted="false">Nicio estimare activă. Datele recente sunt disponibile după o citire a monitorului în timpul încărcării sau descărcării.</string>
     <string name="diag_predictor_active_state" formatted="false">Starea activă a bateriei</string>

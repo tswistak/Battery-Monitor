@@ -615,9 +615,9 @@
     <string name="diag_charging_too_cold">Şarj için çok soğuk</string>
     <string name="diag_charging_too_hot">Şarj için çok sıcak</string>
     <string name="diag_section_service" formatted="false">Android pil hizmeti</string>
-    <string name="diag_help_service" formatted="false">Android pil yayınlarından ve erişilebildiğinde dumpsys battery üzerinden alınan özgün adlar ve değerler. Bunlar şarj kaynağı, pil durumu, sıcaklık, gerilim ve diğer pil hizmeti durumlarını içerebilir.</string>
+    <string name="diag_help_service" formatted="false">Android pil yayınlarından ve erişilebildiğinde dumpsys battery üzerinden alınan özgün adları ve değerleri gösterir. Bunlar şarj kaynağı, pil durumu, sıcaklık, gerilim ve diğer pil hizmeti durumlarını içerebilir.</string>
     <string name="diag_section_sysfs" formatted="false">Çekirdek power_supply dosyaları</string>
-    <string name="diag_help_sysfs" formatted="false">/sys/class/power_supply üzerinden okunan özgün adlar ve çok satırlı olanlar dahil değerler.</string>
+    <string name="diag_help_sysfs" formatted="false">/sys/class/power_supply üzerinden okunan özgün adları ve çok satırlı olanlar dahil değerleri gösterir.</string>
     <string name="diag_fuel_gauge">Pil şarj ölçeri</string>
     <string name="diag_mains_supply">AC güç kaynağı</string>
     <string name="diag_charging_source">Şarj kaynağı</string>
@@ -647,7 +647,7 @@
     <string name="diag_input_voltage">Giriş gerilimi</string>
     <string name="diag_input_voltage_limit">Giriş gerilimi sınırı</string>
     <string name="diag_section_metadata" formatted="false">Meta veriler</string>
-    <string name="diag_help_metadata" formatted="false">Mevcut sayaçlar ve akım ölçümleri dahil özgün BatteryManager özellik adları ve değerleri. Üretim ayrıntıları veya değişim durumu gibi ek özellikler Android sürümüne, cihaz desteğine ve izinlere bağlıdır.</string>
+    <string name="diag_help_metadata" formatted="false">Mevcut sayaçlar ve akım ölçümleri dahil özgün BatteryManager özellik adlarını ve değerlerini gösterir. Üretim ayrıntıları veya değişim durumu gibi ek özellikler Android sürümüne, cihaz desteğine ve izinlere bağlıdır.</string>
     <string name="diag_raw">Ham veriler</string>
     <string name="diag_search_key">Anahtar ara</string>
     <string name="diag_no_keys">Mevcut verilerde eşleşen anahtar yok</string>
@@ -655,8 +655,8 @@
     <string name="diag_last_checked">Son kontrol: %1$s</string>
     <string name="diag_privileged_stale">Önceki ayrıcalıklı ölçümler gösteriliyor. Yeniden denemek için yenileyin.</string>
     <string name="diag_help_troubleshooting" formatted="false">Android verileri “Tanılama” içinde otomatik toplanır. Ek root veya Shizuku verileri için “Ayarlar” → “Gelişmiş” bölümünde “Ayrıcalıklı erişimi kullan” seçeneğini etkinleştirin. Battery Monitor önce root, ardından Shizuku dener. Shizuku çalışıyor ve izin verilmiş olmalıdır. Eksik alanlar mevcut değil olarak kalır; başarısız yenilemeler önceki anlık görüntüyü korur ve güncel değil olarak işaretler.</string>
-    <string name="diag_help_raw_general" formatted="false">Kullanılabilir kaynakların özgün anahtarları ve değerleri. Anahtara göre arayın ve tam değeri görüntüleyip kopyalamak için bir satıra dokunun. Yeni ölçümler için “Yenile” kullanın. Battery Monitor normal Android izinleriyle, root veya Shizuku olmadan da okumayı dener. Kullanılabilirlik, hangi kaynakların okunabildiğine bağlıdır.</string>
-    <string name="diag_help_raw_predictor" formatted="false">Kullanılabilir tahmin verilerinin özgün anahtarları ve değerleri.</string>
+    <string name="diag_help_raw_general" formatted="false">Kullanılabilir kaynakların özgün anahtarlarını ve değerlerini gösterir. Anahtara göre arayın ve tam değeri görüntüleyip kopyalamak için bir satıra dokunun. Yeni ölçümler için “Yenile” kullanın. Battery Monitor normal Android izinleriyle, root veya Shizuku olmadan da okumayı dener. Kullanılabilirlik, hangi kaynakların okunabildiğine bağlıdır.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Kullanılabilir tahmin verilerinin özgün anahtarlarını ve değerlerini gösterir.</string>
     <string name="diag_export_report_help" formatted="false">Kullanılabilir tanılama ölçümleri ve tahmin verilerinden bir rapor oluşturun. Önizlemeyi inceleyin, ardından raporu panoya kopyalayın veya metin dosyası olarak kaydedin. Paylaşmadan önce raporu, özellikle ham değerler ve tanımlayıcılar içeriyorsa, dikkatle kontrol edin.</string>
     <string name="diag_charging_source_disconnected">Bağlı değil</string>
 
@@ -715,7 +715,6 @@
     <string name="diag_timeout">Ölçüm zaman aşımına uğradı. Önceki anlık görüntü korunuyor. Yeniden yenilemeyi deneyin.</string>
     <string name="diag_no">Hayır</string>
     <string name="diag_additional_sources">Ek kaynaklar</string>
-    <string name="diag_source_help">“Tanılama” açıkken mevcut Android ölçümleri otomatik toplanır. Ölçümü, kaynağını ve zamanını inceleyip kopyalamak için bir değere dokunun. Cihazın özgün anahtarları ve değerleri “Ham veriler” bölümündedir. Root veya Shizuku da kullanmak için ayrıcalıklı erişimi etkinleştirin.</string>
     <string name="diag_missing_reading">Etkin kaynaklar kullanılabilir bir ölçüm döndürmedi.</string>
     <string name="diag_missing_average">Ortalama akım, anlık akımdan ayrı bir cihaz ölçümüdür. Cihaz ortalama sağlamıyorsa Battery Monitor kendi ortalamasını hesaplamaz.</string>
     <string name="diag_missing_estimated_health">Bu tahmin için aynı pilin pozitif tam şarj ve tasarım kapasiteleri gerekir. Tam şarj kapasitesi tasarım kapasitesini aşmamalıdır.</string>
@@ -725,8 +724,8 @@
     <string name="diag_reading_retained" formatted="false">Önceki ölçüm gösteriliyor.</string>
     <string name="diag_value_copied" formatted="false">Değer kopyalandı</string>
     <string name="diag_predictor_read_failed" formatted="false">Kaydedilen tahmin verileri okunamadı.</string>
-    <string name="diag_predictor_recent_title" formatted="false">Tahmin verileri — Son hesaplamalar</string>
-    <string name="diag_predictor_stored_title" formatted="false">Tahmin verileri — Kaydedilen uzun vadeli ortalamalar</string>
+    <string name="diag_predictor_recent_title" formatted="false">Tahmin verileri — son hesaplamalar</string>
+    <string name="diag_predictor_stored_title" formatted="false">Tahmin verileri — kaydedilen uzun vadeli ortalamalar</string>
     <string name="diag_predictor_recent" formatted="false">Son hesaplamalar</string>
     <string name="diag_predictor_no_recent" formatted="false">Etkin tahmin yok. Son veriler, şarj veya boşalma sırasında izleme ölçümünden sonra kullanılabilir.</string>
     <string name="diag_predictor_active_state" formatted="false">Etkin pil durumu</string>

@@ -615,9 +615,9 @@
     <string name="diag_charging_too_cold">برای شارژ بیش از حد سرد است</string>
     <string name="diag_charging_too_hot">برای شارژ بیش از حد گرم است</string>
     <string name="diag_section_service" formatted="false">سرویس باتری Android</string>
-    <string name="diag_help_service" formatted="false">نام‌ها و مقادیر اصلی پخش‌های باتری Android و، در صورت دسترسی، dumpsys battery. این داده‌ها می‌توانند منبع شارژ، وضعیت باتری، دما، ولتاژ و سایر وضعیت‌های سرویس باتری باشند.</string>
+    <string name="diag_help_service" formatted="false">نام‌ها و مقادیر اصلی پخش‌های باتری Android و، در صورت دسترسی، dumpsys battery را نشان می‌دهد. این داده‌ها می‌توانند منبع شارژ، وضعیت باتری، دما، ولتاژ و سایر وضعیت‌های سرویس باتری باشند.</string>
     <string name="diag_section_sysfs" formatted="false">فایل های power_supply هسته</string>
-    <string name="diag_help_sysfs" formatted="false">نام‌ها و مقادیر اصلی خوانده‌شده از /sys/class/power_supply، از جمله مقادیر چندخطی.</string>
+    <string name="diag_help_sysfs" formatted="false">نام‌ها و مقادیر اصلی خوانده‌شده از /sys/class/power_supply، از جمله مقادیر چندخطی را نشان می‌دهد.</string>
     <string name="diag_fuel_gauge">سنجشگر شارژ باتری</string>
     <string name="diag_mains_supply">منبع تغذیه AC</string>
     <string name="diag_charging_source">منبع شارژ</string>
@@ -647,7 +647,7 @@
     <string name="diag_input_voltage">ولتاژ ورودی</string>
     <string name="diag_input_voltage_limit">حد ولتاژ ورودی</string>
     <string name="diag_section_metadata" formatted="false">فراداده</string>
-    <string name="diag_help_metadata" formatted="false">نام‌ها و مقادیر اصلی ویژگی‌های BatteryManager، از جمله شمارنده‌ها و خوانش‌های جریان موجود. ویژگی‌های اضافی مانند جزئیات ساخت یا وضعیت تعویض به نسخه Android، پشتیبانی دستگاه و مجوزها بستگی دارند.</string>
+    <string name="diag_help_metadata" formatted="false">نام‌ها و مقادیر اصلی ویژگی‌های BatteryManager، از جمله شمارنده‌ها و خوانش‌های جریان موجود را نشان می‌دهد. ویژگی‌های اضافی مانند جزئیات ساخت یا وضعیت تعویض به نسخه Android، پشتیبانی دستگاه و مجوزها بستگی دارند.</string>
     <string name="diag_raw">خام</string>
     <string name="diag_search_key">جستجوی کلیدها</string>
     <string name="diag_no_keys">کلید منطبقی در داده‌های موجود نیست</string>
@@ -655,8 +655,8 @@
     <string name="diag_last_checked">آخرین بررسی: %1$s</string>
     <string name="diag_privileged_stale">خوانش‌های قبلی با دسترسی ویژه نمایش داده می‌شوند. برای تلاش دوباره تازه‌سازی کنید.</string>
     <string name="diag_help_troubleshooting" formatted="false">داده‌های Android در «عیب‌یابی» خودکار جمع‌آوری می‌شوند. برای داده‌های اضافی root یا Shizuku، «استفاده از دسترسی ویژه» را در «تنظیمات» ← «پیشرفته» فعال کنید. Battery Monitor ابتدا root و سپس Shizuku را امتحان می‌کند. Shizuku باید در حال اجرا باشد و مجوز داده شده باشد. فیلدهای ناموجود در دسترس نمی‌شوند؛ تازه‌سازی ناموفق تصویر وضعیت قبلی را حفظ و قدیمی علامت‌گذاری می‌کند.</string>
-    <string name="diag_help_raw_general" formatted="false">کلیدها و مقادیر اصلی از منابع موجود. با کلید جستجو کنید و برای دیدن و کپی مقدار کامل روی ردیف بزنید. برای جمع‌آوری خوانش‌های جدید از «نوسازی» استفاده کنید. Battery Monitor با مجوزهای عادی Android، بدون root یا Shizuku نیز خواندن را امتحان می‌کند. در دسترس بودن به منابع قابل خواندن بستگی دارد.</string>
-    <string name="diag_help_raw_predictor" formatted="false">کلیدها و مقادیر اصلی داده‌های پیش‌بینی ذخیره‌شده، در صورت وجود.</string>
+    <string name="diag_help_raw_general" formatted="false">کلیدها و مقادیر اصلی از منابع موجود را نشان می‌دهد. با کلید جستجو کنید و برای دیدن و کپی مقدار کامل روی ردیف بزنید. برای جمع‌آوری خوانش‌های جدید از «نوسازی» استفاده کنید. Battery Monitor با مجوزهای عادی Android، بدون root یا Shizuku نیز خواندن را امتحان می‌کند. در دسترس بودن به منابع قابل خواندن بستگی دارد.</string>
+    <string name="diag_help_raw_predictor" formatted="false">کلیدها و مقادیر اصلی داده‌های پیش‌بینی ذخیره‌شده، در صورت وجود را نشان می‌دهد.</string>
     <string name="diag_export_report_help" formatted="false">گزارشی از خوانش‌های عیب‌یابی و داده‌های پیش‌بینی موجود ایجاد کنید. پیش‌نمایش را بررسی کنید، سپس گزارش را در کلیپ‌بورد کپی یا به‌صورت فایل متنی ذخیره کنید. پیش از اشتراک‌گذاری، گزارش را با دقت بررسی کنید، به‌ویژه اگر شامل مقادیر خام و شناسه‌ها باشد.</string>
     <string name="diag_charging_source_disconnected">قطع شده</string>
 
@@ -715,7 +715,6 @@
     <string name="diag_timeout">زمان خوانش تمام شد. تصویر وضعیت قبلی حفظ می‌شود. دوباره تازه‌سازی کنید.</string>
     <string name="diag_no">خیر</string>
     <string name="diag_additional_sources">منابع اضافی</string>
-    <string name="diag_source_help">خوانش‌های موجود Android هنگام باز بودن «عیب‌یابی» خودکار جمع‌آوری می‌شوند. برای بررسی و کپی خوانش، منبع و زمان آن، روی یک مقدار بزنید. کلیدها و مقادیر اصلی دستگاه در بخش «خام» موجودند. برای استفاده از Root یا Shizuku نیز دسترسی ویژه را فعال کنید.</string>
     <string name="diag_missing_reading">منابع فعال خوانش قابل استفاده‌ای برنگرداندند.</string>
     <string name="diag_missing_average">جریان میانگین خوانشی جدا از جریان لحظه‌ای است که دستگاه ارائه می‌دهد. اگر دستگاه آن را ارائه نکند، Battery Monitor میانگین خودش را محاسبه نمی‌کند.</string>
     <string name="diag_missing_estimated_health">این تخمین به ظرفیت شارژ کامل و ظرفیت طراحی مثبت از همان باتری نیاز دارد. ظرفیت شارژ کامل نباید از ظرفیت طراحی بیشتر باشد.</string>

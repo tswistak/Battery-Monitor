@@ -635,9 +635,9 @@
     <string name="diag_charging_too_cold">باردة جدًا للشحن</string>
     <string name="diag_charging_too_hot">ساخنة جدًا للشحن</string>
     <string name="diag_section_service" formatted="false">خدمة بطارية Android</string>
-    <string name="diag_help_service" formatted="false">الأسماء والقيم الأصلية من بثوث بطارية Android، ومن dumpsys battery عند إتاحته. قد تشمل مصدر الشحن وحالة البطارية والحرارة والجهد وحالات أخرى لخدمة البطارية.</string>
+    <string name="diag_help_service" formatted="false">يعرض الأسماء والقيم الأصلية من بثوث بطارية Android، ومن dumpsys battery عند إتاحته. قد تشمل مصدر الشحن وحالة البطارية والحرارة والجهد وحالات أخرى لخدمة البطارية.</string>
     <string name="diag_section_sysfs" formatted="false">ملفات power_supply في النواة</string>
-    <string name="diag_help_sysfs" formatted="false">الأسماء والقيم الأصلية المقروءة من /sys/class/power_supply، بما فيها القيم متعددة الأسطر.</string>
+    <string name="diag_help_sysfs" formatted="false">يعرض الأسماء والقيم الأصلية المقروءة من /sys/class/power_supply، بما فيها القيم متعددة الأسطر.</string>
     <string name="diag_fuel_gauge">مقياس شحنة البطارية</string>
     <string name="diag_mains_supply">مصدر طاقة AC</string>
     <string name="diag_charging_source">مصدر الشحن</string>
@@ -667,7 +667,7 @@
     <string name="diag_input_voltage">جهد الإدخال</string>
     <string name="diag_input_voltage_limit">حد جهد الإدخال</string>
     <string name="diag_section_metadata" formatted="false">البيانات الوصفية</string>
-    <string name="diag_help_metadata" formatted="false">أسماء خصائص BatteryManager وقيمها الأصلية، بما فيها العدادات وقراءات التيار المتاحة. تعتمد خصائص إضافية مثل تفاصيل التصنيع أو حالة الاستبدال على إصدار Android ودعم الجهاز والأذونات.</string>
+    <string name="diag_help_metadata" formatted="false">يعرض أسماء خصائص BatteryManager وقيمها الأصلية، بما فيها العدادات وقراءات التيار المتاحة. تعتمد خصائص إضافية مثل تفاصيل التصنيع أو حالة الاستبدال على إصدار Android ودعم الجهاز والأذونات.</string>
     <string name="diag_raw">البيانات الخام</string>
     <string name="diag_search_key">البحث في المفاتيح</string>
     <string name="diag_no_keys">لا توجد مفاتيح مطابقة في البيانات المتاحة</string>
@@ -675,8 +675,8 @@
     <string name="diag_last_checked">آخر تحقق: %1$s</string>
     <string name="diag_privileged_stale">تُعرض القراءات المميزة السابقة. حدّث للمحاولة مجددًا.</string>
     <string name="diag_help_troubleshooting" formatted="false">تُجمع بيانات Android تلقائيًا في «التشخيص». للحصول على بيانات root أو Shizuku إضافية، فعّل «استخدام الوصول المميّز» في «الإعدادات» ← «متقدم». يحاول Battery Monitor استخدام root أولًا ثم Shizuku. يجب أن يكون Shizuku قيد التشغيل وأن يُمنح الإذن. تبقى الحقول المفقودة غير متاحة؛ ويحافظ فشل التحديث على اللقطة السابقة ويضع علامة بأنها قديمة.</string>
-    <string name="diag_help_raw_general" formatted="false">المفاتيح والقيم الأصلية من المصادر المتاحة. ابحث بالمفتاح واضغط على صف لعرض قيمته كاملة ونسخها. استخدم «تحديث» لجمع قراءات جديدة. يحاول Battery Monitor أيضًا القراءة بأذونات Android العادية، دون root أو Shizuku. يعتمد التوفر على المصادر التي يمكن قراءتها.</string>
-    <string name="diag_help_raw_predictor" formatted="false">المفاتيح والقيم الأصلية لبيانات التنبؤ المحفوظة، عند توفرها.</string>
+    <string name="diag_help_raw_general" formatted="false">يعرض المفاتيح والقيم الأصلية من المصادر المتاحة. ابحث بالمفتاح واضغط على صف لعرض قيمته كاملة ونسخها. استخدم «تحديث» لجمع قراءات جديدة. يحاول Battery Monitor أيضًا القراءة بأذونات Android العادية، دون root أو Shizuku. يعتمد التوفر على المصادر التي يمكن قراءتها.</string>
+    <string name="diag_help_raw_predictor" formatted="false">يعرض المفاتيح والقيم الأصلية لبيانات التنبؤ المحفوظة، عند توفرها.</string>
     <string name="diag_export_report_help" formatted="false">أنشئ تقريرًا بالقراءات التشخيصية وبيانات التنبؤ المتاحة. راجع المعاينة، ثم انسخ التقرير إلى الحافظة أو احفظه كملف نصي. قبل المشاركة، تحقق من التقرير بعناية، خاصة إذا كان يتضمن قيمًا خامًا ومعرّفات.</string>
     <string name="diag_charging_source_disconnected">غير موصل</string>
 
@@ -735,7 +735,6 @@
     <string name="diag_timeout">انتهت مهلة القراءة. تم الاحتفاظ باللقطة السابقة. حاول التحديث مجددًا.</string>
     <string name="diag_no">لا</string>
     <string name="diag_additional_sources">مصادر إضافية</string>
-    <string name="diag_source_help">تُجمع قراءات Android المتاحة تلقائيًا ما دام «التشخيص» مفتوحًا. اضغط على قيمة لفحص ونسخ قراءتها ومصدرها ووقتها. تتوفر مفاتيح الجهاز وقيمه الأصلية في «البيانات الخام». فعّل الوصول المميز لاستخدام Root أو Shizuku أيضًا.</string>
     <string name="diag_missing_reading">لم تُرجع المصادر المفعلة قراءة قابلة للاستخدام.</string>
     <string name="diag_missing_average">متوسط التيار قراءة يوفرها الجهاز منفصلة عن التيار اللحظي. لا يحسب Battery Monitor متوسطًا خاصًا به عندما لا يوفره الجهاز.</string>
     <string name="diag_missing_estimated_health">يتطلب هذا التقدير سعة شحن كامل وسعة تصميم موجبتين من البطارية نفسها. يجب ألا تتجاوز سعة الشحن الكامل سعة التصميم.</string>

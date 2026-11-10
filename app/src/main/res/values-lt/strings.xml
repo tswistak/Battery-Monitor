@@ -625,9 +625,9 @@
     <string name="diag_charging_too_cold">Per šalta įkrauti</string>
     <string name="diag_charging_too_hot">Per karšta įkrauti</string>
     <string name="diag_section_service" formatted="false">Android baterijos paslauga</string>
-    <string name="diag_help_service" formatted="false">Pradiniai pavadinimai ir vertės iš „Android“ akumuliatoriaus pranešimų bei, kai pasiekiama, dumpsys battery. Tai gali būti įkrovimo šaltinis, akumuliatoriaus būsena, temperatūra, įtampa ir kita akumuliatoriaus tarnybos būsena.</string>
+    <string name="diag_help_service" formatted="false">Rodo pradinius pavadinimus ir vertes iš „Android“ akumuliatoriaus pranešimų bei, kai pasiekiama, dumpsys battery. Tai gali būti įkrovimo šaltinis, akumuliatoriaus būsena, temperatūra, įtampa ir kita akumuliatoriaus tarnybos būsena.</string>
     <string name="diag_section_sysfs" formatted="false">Branduolio power_supply failai</string>
-    <string name="diag_help_sysfs" formatted="false">Pradiniai pavadinimai ir vertės iš /sys/class/power_supply, įskaitant kelių eilučių vertes.</string>
+    <string name="diag_help_sysfs" formatted="false">Rodo pradinius pavadinimus ir vertes iš /sys/class/power_supply, įskaitant kelių eilučių vertes.</string>
     <string name="diag_fuel_gauge">Akumuliatoriaus įkrovos matuoklis</string>
     <string name="diag_mains_supply">Kintamosios srovės maitinimas</string>
     <string name="diag_charging_source">Įkrovimo šaltinis</string>
@@ -657,7 +657,7 @@
     <string name="diag_input_voltage">Įvesties įtampa</string>
     <string name="diag_input_voltage_limit">Įvesties įtampos riba</string>
     <string name="diag_section_metadata" formatted="false">Metaduomenys</string>
-    <string name="diag_help_metadata" formatted="false">Pradiniai BatteryManager savybių pavadinimai ir vertės, įskaitant pasiekiamus skaitiklius ir srovės rodmenis. Papildomos savybės, pavyzdžiui, gamybos duomenys ar pakeitimo būsena, priklauso nuo „Android“ versijos, įrenginio palaikymo ir leidimų.</string>
+    <string name="diag_help_metadata" formatted="false">Rodo pradinius BatteryManager savybių pavadinimus ir vertes, įskaitant pasiekiamus skaitiklius ir srovės rodmenis. Papildomos savybės, pavyzdžiui, gamybos duomenys ar pakeitimo būsena, priklauso nuo „Android“ versijos, įrenginio palaikymo ir leidimų.</string>
     <string name="diag_raw">Neapdoroti duomenys</string>
     <string name="diag_search_key">Ieškoti raktų</string>
     <string name="diag_no_keys">Pasiekiamuose duomenyse nėra atitinkančių raktų</string>
@@ -665,8 +665,8 @@
     <string name="diag_last_checked">Paskutinį kartą tikrinta: %1$s</string>
     <string name="diag_privileged_stale">Rodomi ankstesni privilegijuoti rodmenys. Atnaujinkite, kad bandytumėte dar kartą.</string>
     <string name="diag_help_troubleshooting" formatted="false">„Android“ duomenys skiltyje „Diagnostika“ renkami automatiškai. Papildomiems root ar Shizuku duomenims įjunkite „Naudoti privilegijuotą prieigą“ skiltyje „Nustatymai“ → „Išplėstiniai“. Battery Monitor pirmiausia bando root, tada Shizuku. Shizuku turi veikti ir turėti suteiktą leidimą. Trūkstami laukai lieka nepasiekiami; nepavykus atnaujinti išsaugoma ankstesnė momentinė kopija ir pažymima pasenusia.</string>
-    <string name="diag_help_raw_general" formatted="false">Pradiniai raktai ir vertės iš pasiekiamų šaltinių. Ieškokite pagal raktą ir palieskite eilutę visai vertei peržiūrėti bei kopijuoti. Naujiems rodmenims rinkitės „Atnaujinti“. Battery Monitor taip pat bando skaityti su įprastais „Android“ leidimais, be root ar Shizuku. Pasiekiamumas priklauso nuo to, kuriuos šaltinius galima nuskaityti.</string>
-    <string name="diag_help_raw_predictor" formatted="false">Pradiniai išsaugotų prognozavimo duomenų raktai ir vertės, kai jie pasiekiami.</string>
+    <string name="diag_help_raw_general" formatted="false">Rodo pradinius raktus ir vertes iš pasiekiamų šaltinių. Ieškokite pagal raktą ir palieskite eilutę visai vertei peržiūrėti bei kopijuoti. Naujiems rodmenims rinkitės „Atnaujinti“. Battery Monitor taip pat bando skaityti su įprastais „Android“ leidimais, be root ar Shizuku. Pasiekiamumas priklauso nuo to, kuriuos šaltinius galima nuskaityti.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Rodo pradinius išsaugotų prognozavimo duomenų raktus ir vertes, kai jie pasiekiami.</string>
     <string name="diag_export_report_help" formatted="false">Sukurkite ataskaitą iš pasiekiamų diagnostikos rodmenų ir prognozavimo duomenų. Patikrinkite peržiūrą, tada nukopijuokite ataskaitą į iškarpinę arba išsaugokite kaip tekstinį failą. Prieš bendrindami atidžiai patikrinkite ataskaitą, ypač jei joje yra neapdorotų verčių ir identifikatorių.</string>
     <string name="diag_charging_source_disconnected">Atjungtas</string>
 
@@ -725,7 +725,6 @@
     <string name="diag_timeout">Baigėsi rodmens laukimo laikas. Ankstesnė momentinė kopija išsaugota. Pabandykite atnaujinti dar kartą.</string>
     <string name="diag_no">Ne</string>
     <string name="diag_additional_sources">Papildomi šaltiniai</string>
-    <string name="diag_source_help">Pasiekiami „Android“ rodmenys renkami automatiškai, kol atverta „Diagnostika“. Palieskite vertę, kad peržiūrėtumėte ir nukopijuotumėte rodmenį, šaltinį ir laiką. Pradiniai įrenginio raktai ir vertės pateikiami skiltyje „Neapdoroti duomenys“. Įjunkite privilegijuotą prieigą, kad būtų naudojamas ir Root arba Shizuku.</string>
     <string name="diag_missing_reading">Įjungti šaltiniai nepateikė tinkamo rodmens.</string>
     <string name="diag_missing_average">Vidutinė srovė yra atskiras įrenginio rodmuo, ne momentinė srovė. Battery Monitor neskaičiuoja savo vidurkio, jei įrenginys jo nepateikia.</string>
     <string name="diag_missing_estimated_health">Šiam įverčiui reikia teigiamų to paties akumuliatoriaus pilnos įkrovos ir projektinės talpos verčių. Pilnos įkrovos talpa negali viršyti projektinės.</string>
@@ -735,8 +734,8 @@
     <string name="diag_reading_retained" formatted="false">Rodomas ankstesnis rodmuo.</string>
     <string name="diag_value_copied" formatted="false">Reikšmė nukopijuota</string>
     <string name="diag_predictor_read_failed" formatted="false">Nepavyko perskaityti išsaugotų prognozavimo duomenų.</string>
-    <string name="diag_predictor_recent_title" formatted="false">Prognozavimo duomenys — Naujausi skaičiavimai</string>
-    <string name="diag_predictor_stored_title" formatted="false">Prognozavimo duomenys — Išsaugoti ilgalaikiai vidurkiai</string>
+    <string name="diag_predictor_recent_title" formatted="false">Prognozavimo duomenys — naujausi skaičiavimai</string>
+    <string name="diag_predictor_stored_title" formatted="false">Prognozavimo duomenys — išsaugoti ilgalaikiai vidurkiai</string>
     <string name="diag_predictor_recent" formatted="false">Naujausi skaičiavimai</string>
     <string name="diag_predictor_no_recent" formatted="false">Nėra aktyvaus įverčio. Naujausi duomenys pasiekiami po stebėjimo rodmens įkraunant arba iškraunant.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktyvi akumuliatoriaus būsena</string>

@@ -610,9 +610,9 @@
     <string name="diag_charging_too_cold">溫度過低，無法充電</string>
     <string name="diag_charging_too_hot">溫度過高，無法充電</string>
     <string name="diag_section_service" formatted="false">Android 電池服務</string>
-    <string name="diag_help_service" formatted="false">Android 電池廣播與可存取時的 dumpsys battery 原始名稱及數值。內容可能包含充電來源、電池狀態、溫度、電壓與其他電池服務狀態。</string>
+    <string name="diag_help_service" formatted="false">顯示 Android 電池廣播與可存取時的 dumpsys battery 原始名稱及數值。內容可能包含充電來源、電池狀態、溫度、電壓與其他電池服務狀態。</string>
     <string name="diag_section_sysfs" formatted="false">核心 power_supply 檔案</string>
-    <string name="diag_help_sysfs" formatted="false">從 /sys/class/power_supply 讀取的原始名稱與數值，包含多行數值。</string>
+    <string name="diag_help_sysfs" formatted="false">顯示從 /sys/class/power_supply 讀取的原始名稱與數值，包含多行數值。</string>
     <string name="diag_fuel_gauge">電池電量計</string>
     <string name="diag_mains_supply">AC 電源</string>
     <string name="diag_charging_source">充電來源</string>
@@ -642,7 +642,7 @@
     <string name="diag_input_voltage">輸入電壓</string>
     <string name="diag_input_voltage_limit">輸入電壓上限</string>
     <string name="diag_section_metadata" formatted="false">元数据</string>
-    <string name="diag_help_metadata" formatted="false">BatteryManager 的原始屬性名稱與數值，包括可用計數器與電流讀數。製造詳情或更換狀態等額外屬性取決於 Android 版本、裝置支援與權限。</string>
+    <string name="diag_help_metadata" formatted="false">顯示 BatteryManager 的原始屬性名稱與數值，包括可用計數器與電流讀數。製造詳情或更換狀態等額外屬性取決於 Android 版本、裝置支援與權限。</string>
     <string name="diag_raw">原始資料</string>
     <string name="diag_search_key">搜尋索引鍵</string>
     <string name="diag_no_keys">可用資料中沒有相符的索引鍵</string>
@@ -650,8 +650,8 @@
     <string name="diag_last_checked">上次檢查：%1$s</string>
     <string name="diag_privileged_stale">目前顯示先前透過特殊權限取得的讀數。請重新整理以再試一次。</string>
     <string name="diag_help_troubleshooting" formatted="false">「診斷」會自動收集 Android 資料。如需額外 root 或 Shizuku 資料，請在「設定」→「進階」啟用「使用特殊權限存取」。Battery Monitor 會先嘗試 root，再嘗試 Shizuku。Shizuku 必須正在執行且已授予權限。缺少的欄位仍會顯示為無法取得；重新整理失敗時會保留先前快照並標示為過期。</string>
-    <string name="diag_help_raw_general" formatted="false">可用來源的原始索引鍵與數值。依索引鍵搜尋，點選資料列可查看並複製完整數值。使用「重新整理」收集新讀數。Battery Monitor 也會嘗試以一般 Android 權限讀取，無需 root 或 Shizuku。資料是否可用取決於哪些來源可讀取。</string>
-    <string name="diag_help_raw_predictor" formatted="false">可用預測資料的原始索引鍵與數值。</string>
+    <string name="diag_help_raw_general" formatted="false">顯示可用來源的原始索引鍵與數值。依索引鍵搜尋，點選資料列可查看並複製完整數值。使用「重新整理」收集新讀數。Battery Monitor 也會嘗試以一般 Android 權限讀取，無需 root 或 Shizuku。資料是否可用取決於哪些來源可讀取。</string>
+    <string name="diag_help_raw_predictor" formatted="false">顯示可用預測資料的原始索引鍵與數值。</string>
     <string name="diag_export_report_help" formatted="false">建立包含可用診斷讀數與預測資料的報告。檢查預覽，然後將報告複製到剪貼簿或儲存為文字檔。分享前請仔細檢查報告，尤其是包含原始數值與識別資訊時。</string>
     <string name="diag_charging_source_disconnected">電源中斷</string>
 
@@ -710,7 +710,6 @@
     <string name="diag_timeout">讀取逾時。已保留先前的快照。請再次重新整理。</string>
     <string name="diag_no">否</string>
     <string name="diag_additional_sources">其他來源</string>
-    <string name="diag_source_help">開啟「診斷」時會自動收集可用的 Android 讀數。點選數值可檢查並複製其讀數、來源與時間。裝置原始索引鍵與數值可在「原始資料」中查看。啟用特殊權限存取，還可使用 Root 或 Shizuku。</string>
     <string name="diag_missing_reading">已啟用的來源未傳回可用讀數。</string>
     <string name="diag_missing_average">平均電流是與瞬時電流不同的裝置讀數。裝置未提供平均值時，Battery Monitor 不會自行計算。</string>
     <string name="diag_missing_estimated_health">此估算需要同一電池的正值滿充容量與設計容量。滿充容量不得超過設計容量。</string>

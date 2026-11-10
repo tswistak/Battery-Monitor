@@ -615,9 +615,9 @@
     <string name="diag_charging_too_cold">Too cold to charge</string>
     <string name="diag_charging_too_hot">Too hot to charge</string>
     <string name="diag_section_service" formatted="false">Android battery service</string>
-    <string name="diag_help_service" formatted="false">Original names and values from Android battery broadcasts and, when accessible, dumpsys battery. These can include charging source, battery status, temperature, voltage, and other battery-service state.</string>
+    <string name="diag_help_service" formatted="false">Shows original names and values from Android battery broadcasts and, when accessible, dumpsys battery. These can include charging source, battery status, temperature, voltage, and other battery-service state.</string>
     <string name="diag_section_sysfs" formatted="false">Kernel power-supply files</string>
-    <string name="diag_help_sysfs" formatted="false">Original names and values read from /sys/class/power_supply, including multiline values.</string>
+    <string name="diag_help_sysfs" formatted="false">Shows original names and values read from /sys/class/power_supply, including multiline values.</string>
     <string name="diag_fuel_gauge">Battery fuel gauge</string>
     <string name="diag_mains_supply">AC power supply</string>
     <string name="diag_charging_source">Charging source</string>
@@ -647,7 +647,7 @@
     <string name="diag_input_voltage">Input voltage</string>
     <string name="diag_input_voltage_limit">Input voltage limit</string>
     <string name="diag_section_metadata" formatted="false">Metadata</string>
-    <string name="diag_help_metadata" formatted="false">Original BatteryManager property names and values, including available counters and current readings. Additional properties such as manufacturing details or replacement status depend on Android version, device support, and permissions.</string>
+    <string name="diag_help_metadata" formatted="false">Shows original BatteryManager property names and values, including available counters and current readings. Additional properties such as manufacturing details or replacement status depend on Android version, device support, and permissions.</string>
     <string name="diag_raw">Raw</string>
     <string name="diag_search_key">Search keys</string>
     <string name="diag_no_keys">No matching keys in the available data</string>
@@ -655,8 +655,8 @@
     <string name="diag_last_checked">Last checked: %1$s</string>
     <string name="diag_privileged_stale">The previous privileged readings are shown. Refresh to try again.</string>
     <string name="diag_help_troubleshooting" formatted="false">Android data is collected automatically in “Diagnostics”. For additional root or Shizuku data, enable privileged access under “Settings” → “Advanced” → “Use privileged access”. Battery Monitor tries root first, then Shizuku. Shizuku must be running and permission granted. Missing fields remain unavailable; failed refreshes retain the previous snapshot and mark it stale.</string>
-    <string name="diag_help_raw_general" formatted="false">Original keys and values from available sources. Search by key and tap a row to view and copy its complete value. Use “Refresh” to collect new readings. Battery Monitor also tries reads with its normal Android permissions, without root or Shizuku. Availability depends on which sources can be read.</string>
-    <string name="diag_help_raw_predictor" formatted="false">Original keys and values from predictor data, when available.</string>
+    <string name="diag_help_raw_general" formatted="false">Shows original keys and values from available sources. Search by key and tap a row to view and copy its complete value. Use “Refresh” to collect new readings. Battery Monitor also tries reads with its normal Android permissions, without root or Shizuku. Availability depends on which sources can be read.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Shows original keys and values from predictor data, when available.</string>
     <string name="diag_export_report_help" formatted="false">Create a report of the available diagnostic readings and predictor data. Review the preview, then copy the report to the clipboard or save it as a text file. Before sharing, check the report carefully, especially if it includes raw values and identifiers.</string>
     <string name="diag_charging_source_disconnected">Unplugged</string>
 
@@ -715,7 +715,6 @@
     <string name="diag_timeout">Reading timed out. The previous snapshot is kept. Try refreshing again.</string>
     <string name="diag_no">No</string>
     <string name="diag_additional_sources">Additional sources</string>
-    <string name="diag_source_help">Available Android readings are collected automatically while “Diagnostics” is open. Tap a value to inspect and copy its reading, source and time. Original device keys and values are available in “Raw”. Enable privileged access to also use Root or Shizuku.</string>
     <string name="diag_missing_reading">The enabled sources did not return a usable reading.</string>
     <string name="diag_missing_average">Average current is a separate device reading from instantaneous current. Battery Monitor does not calculate its own average when the device provides none.</string>
     <string name="diag_missing_estimated_health">This estimate needs positive full-charge and design capacities from the same battery. Full-charge capacity must not exceed design capacity.</string>
@@ -725,8 +724,8 @@
     <string name="diag_reading_retained" formatted="false">The previous reading is shown.</string>
     <string name="diag_value_copied" formatted="false">Value copied</string>
     <string name="diag_predictor_read_failed" formatted="false">Could not read saved predictor data.</string>
-    <string name="diag_predictor_recent_title" formatted="false">Predictor data — Recent calculations</string>
-    <string name="diag_predictor_stored_title" formatted="false">Predictor data — Saved long-term averages</string>
+    <string name="diag_predictor_recent_title" formatted="false">Predictor data — recent calculations</string>
+    <string name="diag_predictor_stored_title" formatted="false">Predictor data — saved long-term averages</string>
     <string name="diag_predictor_recent" formatted="false">Recent calculations</string>
     <string name="diag_predictor_no_recent" formatted="false">No active estimate. Recent data is available after a monitor reading while charging or discharging.</string>
     <string name="diag_predictor_active_state" formatted="false">Active battery state</string>

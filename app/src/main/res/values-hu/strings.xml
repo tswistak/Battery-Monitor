@@ -615,9 +615,9 @@
     <string name="diag_charging_too_cold">Túl hideg a töltéshez</string>
     <string name="diag_charging_too_hot">Túl meleg a töltéshez</string>
     <string name="diag_section_service" formatted="false">Android akkumulátorszolgáltatás</string>
-    <string name="diag_help_service" formatted="false">Az Android akkumulátorüzeneteinek eredeti nevei és értékei, valamint elérhetőség esetén a dumpsys battery adatai. Ezek között lehet a töltési forrás, akkumulátorállapot, hőmérséklet, feszültség és az akkumulátorszolgáltatás egyéb állapotadatai.</string>
+    <string name="diag_help_service" formatted="false">Megjeleníti az Android akkumulátorüzeneteinek eredeti neveit és értékeit, valamint elérhetőség esetén a dumpsys battery adatait. Ezek között lehet a töltési forrás, akkumulátorállapot, hőmérséklet, feszültség és az akkumulátorszolgáltatás egyéb állapotadatai.</string>
     <string name="diag_section_sysfs" formatted="false">Kernel power_supply fájlok</string>
-    <string name="diag_help_sysfs" formatted="false">A /sys/class/power_supply eredeti nevei és értékei, a többsorosak is.</string>
+    <string name="diag_help_sysfs" formatted="false">Megjeleníti a /sys/class/power_supply eredeti neveit és értékeit, a többsorosakat is.</string>
     <string name="diag_fuel_gauge">Akkumulátor töltésmérője</string>
     <string name="diag_mains_supply">Hálózati tápellátás</string>
     <string name="diag_charging_source">Töltési forrás</string>
@@ -647,7 +647,7 @@
     <string name="diag_input_voltage">Bemeneti feszültség</string>
     <string name="diag_input_voltage_limit">Bemeneti feszültségkorlát</string>
     <string name="diag_section_metadata" formatted="false">Metaadatok</string>
-    <string name="diag_help_metadata" formatted="false">Az eredeti BatteryManager-tulajdonságnevek és értékek, köztük az elérhető számlálók és árammérések. A további tulajdonságok, például gyártási adatok vagy csereállapot, az Android-verziótól, az eszköztámogatástól és az engedélyektől függnek.</string>
+    <string name="diag_help_metadata" formatted="false">Megjeleníti az eredeti BatteryManager-tulajdonságneveket és értékeket, köztük az elérhető számlálókat és áramméréseket. A további tulajdonságok, például gyártási adatok vagy csereállapot, az Android-verziótól, az eszköztámogatástól és az engedélyektől függnek.</string>
     <string name="diag_raw">Nyers adatok</string>
     <string name="diag_search_key">Kulcsok keresése</string>
     <string name="diag_no_keys">Nincs megfelelő kulcs az elérhető adatokban</string>
@@ -655,8 +655,8 @@
     <string name="diag_last_checked">Utolsó ellenőrzés: %1$s</string>
     <string name="diag_privileged_stale">A korábbi privilegizált hozzáférésű mérések láthatók. Új próbához frissítsen.</string>
     <string name="diag_help_troubleshooting" formatted="false">Az Android-adatok automatikusan gyűlnek a „Diagnosztika”. További root- vagy Shizuku-adatokhoz kapcsolja be a „Privilegizált hozzáférés használata” beállítást itt: „Beállítások” → „Speciális”. A Battery Monitor először a rootot, majd a Shizukut próbálja. A Shizukunak futnia kell, megadott engedéllyel. A hiányzó mezők nem érhetők el; sikertelen frissítésnél az előző pillanatkép megmarad, és elavult jelzést kap.</string>
-    <string name="diag_help_raw_general" formatted="false">Eredeti kulcsok és értékek az elérhető forrásokból. Keressen kulcs szerint, és koppintson egy sorra a teljes érték megtekintéséhez és másolásához. A „Frissítés” új méréseket gyűjt. A Battery Monitor normál Android-engedélyekkel, root és Shizuku nélkül is megpróbálja az olvasást. Az elérhetőség attól függ, hogy mely források olvashatók.</string>
-    <string name="diag_help_raw_predictor" formatted="false">A mentett előrejelzési adatok eredeti kulcsai és értékei, ha elérhetők.</string>
+    <string name="diag_help_raw_general" formatted="false">Megjelenít eredeti kulcsokat és értékeket az elérhető forrásokból. Keressen kulcs szerint, és koppintson egy sorra a teljes érték megtekintéséhez és másolásához. A „Frissítés” új méréseket gyűjt. A Battery Monitor normál Android-engedélyekkel, root és Shizuku nélkül is megpróbálja az olvasást. Az elérhetőség attól függ, hogy mely források olvashatók.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Megjeleníti a mentett előrejelzési adatok eredeti kulcsait és értékeit, ha elérhetők.</string>
     <string name="diag_export_report_help" formatted="false">Készítsen jelentést az elérhető diagnosztikai mérésekből és előrejelzési adatokból. Nézze át az előnézetet, majd másolja a jelentést a vágólapra vagy mentse szövegfájlként. Megosztás előtt gondosan ellenőrizze a jelentést, különösen, ha nyers értékeket és azonosítókat tartalmaz.</string>
     <string name="diag_charging_source_disconnected">Szétkapcsolva</string>
 
@@ -715,7 +715,6 @@
     <string name="diag_timeout">A mérés időtúllépés miatt leállt. Az előző pillanatkép megmaradt. Próbálja újra a frissítést.</string>
     <string name="diag_no">Nem</string>
     <string name="diag_additional_sources">További források</string>
-    <string name="diag_source_help">Az elérhető Android-mérések automatikusan gyűlnek, amíg a „Diagnosztika” nyitva van. Koppintson egy értékre a mérés, a forrás és az idő megtekintéséhez és másolásához. Az eredeti eszközkulcsok és értékek a „Nyers adatok” részben érhetők el. A Root vagy Shizuku használatához engedélyezze a privilegizált hozzáférést.</string>
     <string name="diag_missing_reading">Az engedélyezett források nem adtak használható mérést.</string>
     <string name="diag_missing_average">Az átlagos áram a pillanatnyi áramtól különálló eszközmérés. A Battery Monitor nem számít saját átlagot, ha az eszköz nem ad meg ilyet.</string>
     <string name="diag_missing_estimated_health">A becsléshez ugyanazon akkumulátor pozitív teljes töltési és tervezett kapacitása szükséges. A teljes töltési kapacitás nem haladhatja meg a tervezettet.</string>
@@ -725,8 +724,8 @@
     <string name="diag_reading_retained" formatted="false">Az előző mérés látható.</string>
     <string name="diag_value_copied" formatted="false">Érték másolva</string>
     <string name="diag_predictor_read_failed" formatted="false">Nem sikerült beolvasni a mentett előrejelzési adatokat.</string>
-    <string name="diag_predictor_recent_title" formatted="false">Előrejelzési adatok — Legutóbbi számítások</string>
-    <string name="diag_predictor_stored_title" formatted="false">Előrejelzési adatok — Mentett hosszú távú átlagok</string>
+    <string name="diag_predictor_recent_title" formatted="false">Előrejelzési adatok — legutóbbi számítások</string>
+    <string name="diag_predictor_stored_title" formatted="false">Előrejelzési adatok — mentett hosszú távú átlagok</string>
     <string name="diag_predictor_recent" formatted="false">Legutóbbi számítások</string>
     <string name="diag_predictor_no_recent" formatted="false">Nincs aktív becslés. A közelmúlt adatai töltés vagy merülés közbeni mérés után érhetők el.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktív akkumulátorállapot</string>

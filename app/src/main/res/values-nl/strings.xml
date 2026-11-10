@@ -615,9 +615,9 @@
     <string name="diag_charging_too_cold">Te koud om op te laden</string>
     <string name="diag_charging_too_hot">Te heet om op te laden</string>
     <string name="diag_section_service" formatted="false">Android-batterijservice</string>
-    <string name="diag_help_service" formatted="false">Oorspronkelijke namen en waarden uit Android-batterijuitzendingen en, indien toegankelijk, dumpsys battery. Dit kan de laadbron, batterijstatus, temperatuur, spanning en andere batterijservicestatus omvatten.</string>
+    <string name="diag_help_service" formatted="false">Toont oorspronkelijke namen en waarden uit Android-batterijuitzendingen en, indien toegankelijk, dumpsys battery. Dit kan de laadbron, batterijstatus, temperatuur, spanning en andere batterijservicestatus omvatten.</string>
     <string name="diag_section_sysfs" formatted="false">Kernel power_supply-bestanden</string>
-    <string name="diag_help_sysfs" formatted="false">Oorspronkelijke namen en waarden uit /sys/class/power_supply, inclusief meerregelige waarden.</string>
+    <string name="diag_help_sysfs" formatted="false">Toont oorspronkelijke namen en waarden uit /sys/class/power_supply, inclusief meerregelige waarden.</string>
     <string name="diag_fuel_gauge">Batterijladingmeter</string>
     <string name="diag_mains_supply">Netstroomvoorziening</string>
     <string name="diag_charging_source">Oplaadbron</string>
@@ -647,7 +647,7 @@
     <string name="diag_input_voltage">Ingangsspanning</string>
     <string name="diag_input_voltage_limit">Ingangsspanningslimiet</string>
     <string name="diag_section_metadata" formatted="false">Metadata</string>
-    <string name="diag_help_metadata" formatted="false">Oorspronkelijke BatteryManager-eigenschapsnamen en -waarden, inclusief beschikbare tellers en stroommetingen. Aanvullende eigenschappen zoals productiegegevens of vervangingsstatus hangen af van de Android-versie, apparaatondersteuning en rechten.</string>
+    <string name="diag_help_metadata" formatted="false">Toont oorspronkelijke BatteryManager-eigenschapsnamen en -waarden, inclusief beschikbare tellers en stroommetingen. Aanvullende eigenschappen zoals productiegegevens of vervangingsstatus hangen af van de Android-versie, apparaatondersteuning en rechten.</string>
     <string name="diag_raw">Ruwe gegevens</string>
     <string name="diag_search_key">Sleutels zoeken</string>
     <string name="diag_no_keys">Geen overeenkomende sleutels in de beschikbare gegevens</string>
@@ -655,8 +655,8 @@
     <string name="diag_last_checked">Laatst gecontroleerd: %1$s</string>
     <string name="diag_privileged_stale">De vorige metingen met extra rechten worden getoond. Vernieuw om het opnieuw te proberen.</string>
     <string name="diag_help_troubleshooting" formatted="false">Android-gegevens worden automatisch verzameld in “Diagnostiek”. Schakel voor extra root- of Shizuku-gegevens “Toegang met extra rechten gebruiken” in onder “Instellingen” → “Geavanceerd”. Battery Monitor probeert eerst root, daarna Shizuku. Shizuku moet actief zijn en toestemming moet zijn verleend. Ontbrekende velden blijven niet beschikbaar; mislukte vernieuwingen behouden de vorige momentopname en markeren deze als verouderd.</string>
-    <string name="diag_help_raw_general" formatted="false">Oorspronkelijke sleutels en waarden uit beschikbare bronnen. Zoek op sleutel en tik op een rij om de volledige waarde te bekijken en te kopiëren. Gebruik “Vernieuwen” om nieuwe metingen te verzamelen. Battery Monitor probeert ook te lezen met normale Android-rechten, zonder root of Shizuku. De beschikbaarheid hangt af van welke bronnen kunnen worden gelezen.</string>
-    <string name="diag_help_raw_predictor" formatted="false">Oorspronkelijke sleutels en waarden van beschikbare voorspellingsgegevens.</string>
+    <string name="diag_help_raw_general" formatted="false">Toont oorspronkelijke sleutels en waarden uit beschikbare bronnen. Zoek op sleutel en tik op een rij om de volledige waarde te bekijken en te kopiëren. Gebruik “Vernieuwen” om nieuwe metingen te verzamelen. Battery Monitor probeert ook te lezen met normale Android-rechten, zonder root of Shizuku. De beschikbaarheid hangt af van welke bronnen kunnen worden gelezen.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Toont oorspronkelijke sleutels en waarden van beschikbare voorspellingsgegevens.</string>
     <string name="diag_export_report_help" formatted="false">Maak een rapport van de beschikbare diagnostische metingen en voorspellingsgegevens. Bekijk het voorbeeld en kopieer het rapport vervolgens naar het klembord of sla het op als tekstbestand. Controleer het rapport zorgvuldig voordat je het deelt, vooral als het ruwe waarden en identificatiegegevens bevat.</string>
     <string name="diag_charging_source_disconnected">Losgekoppeld</string>
 
@@ -715,7 +715,6 @@
     <string name="diag_timeout">Time-out bij het uitlezen. De vorige momentopname blijft behouden. Probeer opnieuw te vernieuwen.</string>
     <string name="diag_no">Nee</string>
     <string name="diag_additional_sources">Aanvullende bronnen</string>
-    <string name="diag_source_help">Beschikbare Android-metingen worden automatisch verzameld zolang “Diagnostiek” open is. Tik op een waarde om de meting, bron en tijd te bekijken en te kopiëren. Oorspronkelijke apparaatsleutels en -waarden staan onder “Ruwe gegevens”. Schakel toegang met extra rechten in om ook root of Shizuku te gebruiken.</string>
     <string name="diag_missing_reading">De ingeschakelde bronnen hebben geen bruikbare meting geleverd.</string>
     <string name="diag_missing_average">Gemiddelde stroom is een afzonderlijke apparaatmeting naast de momentane stroom. Battery Monitor berekent geen eigen gemiddelde als het apparaat er geen levert.</string>
     <string name="diag_missing_estimated_health">Deze schatting vereist positieve waarden voor de capaciteit bij volledige lading en de ontwerpcapaciteit van dezelfde batterij. De capaciteit bij volledige lading mag niet hoger zijn dan de ontwerpcapaciteit.</string>
@@ -725,8 +724,8 @@
     <string name="diag_reading_retained" formatted="false">De vorige meting wordt getoond.</string>
     <string name="diag_value_copied" formatted="false">Waarde gekopieerd</string>
     <string name="diag_predictor_read_failed" formatted="false">Opgeslagen voorspellingsgegevens konden niet worden gelezen.</string>
-    <string name="diag_predictor_recent_title" formatted="false">Voorspellingsgegevens — Recente berekeningen</string>
-    <string name="diag_predictor_stored_title" formatted="false">Voorspellingsgegevens — Opgeslagen langetermijngemiddelden</string>
+    <string name="diag_predictor_recent_title" formatted="false">Voorspellingsgegevens — recente berekeningen</string>
+    <string name="diag_predictor_stored_title" formatted="false">Voorspellingsgegevens — opgeslagen langetermijngemiddelden</string>
     <string name="diag_predictor_recent" formatted="false">Recente berekeningen</string>
     <string name="diag_predictor_no_recent" formatted="false">Geen actieve schatting. Recente gegevens zijn beschikbaar na een bewakingsmeting tijdens opladen of ontladen.</string>
     <string name="diag_predictor_active_state" formatted="false">Actieve batterijstatus</string>

@@ -625,9 +625,9 @@
     <string name="diag_charging_too_cold">Príliš chladno na nabíjanie</string>
     <string name="diag_charging_too_hot">Príliš horúco na nabíjanie</string>
     <string name="diag_section_service" formatted="false">Služba batérie Androidu</string>
-    <string name="diag_help_service" formatted="false">Pôvodné názvy a hodnoty z hlásení batérie Androidu a, ak je dostupný, príkazu dumpsys battery. Môžu zahŕňať zdroj nabíjania, stav batérie, teplotu, napätie a ďalší stav služby batérie.</string>
+    <string name="diag_help_service" formatted="false">Zobrazuje pôvodné názvy a hodnoty z hlásení batérie Androidu a, ak je dostupný, príkazu dumpsys battery. Môžu zahŕňať zdroj nabíjania, stav batérie, teplotu, napätie a ďalší stav služby batérie.</string>
     <string name="diag_section_sysfs" formatted="false">Súbory power_supply jadra</string>
-    <string name="diag_help_sysfs" formatted="false">Pôvodné názvy a hodnoty z /sys/class/power_supply vrátane viacriadkových hodnôt.</string>
+    <string name="diag_help_sysfs" formatted="false">Zobrazuje pôvodné názvy a hodnoty z /sys/class/power_supply vrátane viacriadkových hodnôt.</string>
     <string name="diag_fuel_gauge">Merač stavu batérie</string>
     <string name="diag_mains_supply">Sieťové napájanie AC</string>
     <string name="diag_charging_source">Zdroj nabíjania</string>
@@ -657,7 +657,7 @@
     <string name="diag_input_voltage">Vstupné napätie</string>
     <string name="diag_input_voltage_limit">Limit vstupného napätia</string>
     <string name="diag_section_metadata" formatted="false">Metadáta</string>
-    <string name="diag_help_metadata" formatted="false">Pôvodné názvy a hodnoty vlastností BatteryManager vrátane dostupných počítadiel a meraní prúdu. Ďalšie vlastnosti, ako údaje o výrobe či výmene, závisia od verzie Androidu, podpory zariadenia a povolení.</string>
+    <string name="diag_help_metadata" formatted="false">Zobrazuje pôvodné názvy a hodnoty vlastností BatteryManager vrátane dostupných počítadiel a meraní prúdu. Ďalšie vlastnosti, ako údaje o výrobe či výmene, závisia od verzie Androidu, podpory zariadenia a povolení.</string>
     <string name="diag_raw">Nespracované údaje</string>
     <string name="diag_search_key">Hľadať kľúče</string>
     <string name="diag_no_keys">V dostupných údajoch nie sú zodpovedajúce kľúče</string>
@@ -665,8 +665,8 @@
     <string name="diag_last_checked">Posledná kontrola: %1$s</string>
     <string name="diag_privileged_stale">Sú zobrazené predchádzajúce privilegované merania. Obnovte pre ďalší pokus.</string>
     <string name="diag_help_troubleshooting" formatted="false">Údaje Androidu sa v časti „Diagnostika“ zhromažďujú automaticky. Pre ďalšie údaje rootu alebo Shizuku zapnite „Použiť privilegovaný prístup“ v „Nastavenia“ → „Rozšírené“. Battery Monitor najprv skúsi root, potom Shizuku. Shizuku musí bežať a mať udelené povolenie. Chýbajúce polia zostanú nedostupné; neúspešné obnovenie zachová predchádzajúcu snímku a označí ju ako zastaranú.</string>
-    <string name="diag_help_raw_general" formatted="false">Pôvodné kľúče a hodnoty z dostupných zdrojov. Hľadajte podľa kľúča a klepnite na riadok na zobrazenie a kopírovanie celej hodnoty. Pomocou „Obnoviť“ načítajte nové merania. Battery Monitor skúša čítanie aj s bežnými povoleniami Androidu, bez rootu či Shizuku. Dostupnosť závisí od toho, ktoré zdroje sa dajú čítať.</string>
-    <string name="diag_help_raw_predictor" formatted="false">Pôvodné kľúče a hodnoty dostupných údajov predikcie.</string>
+    <string name="diag_help_raw_general" formatted="false">Zobrazuje pôvodné kľúče a hodnoty z dostupných zdrojov. Hľadajte podľa kľúča a klepnite na riadok na zobrazenie a kopírovanie celej hodnoty. Pomocou „Obnoviť“ načítajte nové merania. Battery Monitor skúša čítanie aj s bežnými povoleniami Androidu, bez rootu či Shizuku. Dostupnosť závisí od toho, ktoré zdroje sa dajú čítať.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Zobrazuje pôvodné kľúče a hodnoty dostupných údajov predikcie.</string>
     <string name="diag_export_report_help" formatted="false">Vytvorte správu z dostupných diagnostických meraní a údajov predikcie. Prezrite si náhľad a potom správu skopírujte do schránky alebo uložte ako textový súbor. Pred zdieľaním správu dôkladne skontrolujte, najmä ak obsahuje nespracované hodnoty a identifikátory.</string>
     <string name="diag_charging_source_disconnected">Odpojený</string>
 
@@ -725,7 +725,6 @@
     <string name="diag_timeout">Časový limit merania vypršal. Predchádzajúca snímka je zachovaná. Skúste obnoviť znova.</string>
     <string name="diag_no">Nie</string>
     <string name="diag_additional_sources">Ďalšie zdroje</string>
-    <string name="diag_source_help">Dostupné merania Androidu sa zhromažďujú automaticky, keď je otvorená „Diagnostika“. Klepnutím na hodnotu zobrazíte a skopírujete meranie, zdroj a čas. Pôvodné kľúče a hodnoty zariadenia sú v časti „Nespracované údaje“. Na použitie rootu alebo Shizuku povoľte privilegovaný prístup.</string>
     <string name="diag_missing_reading">Povolené zdroje neposkytli použiteľné meranie.</string>
     <string name="diag_missing_average">Priemerný prúd je samostatné meranie zariadenia, odlišné od okamžitého prúdu. Battery Monitor nepočíta vlastný priemer, ak ho zariadenie neposkytuje.</string>
     <string name="diag_missing_estimated_health">Tento odhad vyžaduje kladnú kapacitu pri plnom nabití a konštrukčnú kapacitu tej istej batérie. Kapacita pri plnom nabití nesmie prekročiť konštrukčnú kapacitu.</string>
@@ -735,8 +734,8 @@
     <string name="diag_reading_retained" formatted="false">Zobrazuje sa predchádzajúce meranie.</string>
     <string name="diag_value_copied" formatted="false">Hodnota bola skopírovaná</string>
     <string name="diag_predictor_read_failed" formatted="false">Nepodarilo sa prečítať uložené údaje predikcie.</string>
-    <string name="diag_predictor_recent_title" formatted="false">Údaje predikcie — Nedávne výpočty</string>
-    <string name="diag_predictor_stored_title" formatted="false">Údaje predikcie — Uložené dlhodobé priemery</string>
+    <string name="diag_predictor_recent_title" formatted="false">Údaje predikcie — nedávne výpočty</string>
+    <string name="diag_predictor_stored_title" formatted="false">Údaje predikcie — uložené dlhodobé priemery</string>
     <string name="diag_predictor_recent" formatted="false">Nedávne výpočty</string>
     <string name="diag_predictor_no_recent" formatted="false">Žiadny aktívny odhad. Nedávne údaje sú dostupné po meraní pri nabíjaní alebo vybíjaní.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktívny stav batérie</string>

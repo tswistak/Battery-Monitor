@@ -710,7 +710,6 @@
     <string name="diag_timeout">測定がタイムアウトしました。前回のスナップショットを保持しています。再度更新してください。</string>
     <string name="diag_no">いいえ</string>
     <string name="diag_additional_sources">追加の取得元</string>
-    <string name="diag_source_help">「診断」を開いている間、取得できる Android の測定値を自動収集します。値をタップすると、測定値、取得元、時刻を確認してコピーできます。端末の元のキーと値は「生データ」にあります。Root または Shizuku も使うには、特権アクセスを有効にしてください。</string>
     <string name="diag_missing_reading">有効な取得元から、利用できる測定値が返されませんでした。</string>
     <string name="diag_missing_average">平均電流は、瞬間電流とは別の端末の測定値です。端末が平均値を提供しない場合、Battery Monitor は独自の平均値を計算しません。</string>
     <string name="diag_missing_estimated_health">この推定には、同じバッテリーの正の満充電容量と設計容量が必要です。満充電容量が設計容量を超えてはいけません。</string>

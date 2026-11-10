@@ -714,11 +714,6 @@ internal fun DiagnosticsScreen(
                         settingIcon("diagnostics_export")
                     )
                 }
-                Text(
-                    stringResource(R.string.diag_source_help),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
             }
         }
     }

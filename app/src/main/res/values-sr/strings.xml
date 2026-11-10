@@ -620,9 +620,9 @@
     <string name="diag_charging_too_cold">Previše hladno za punjenje</string>
     <string name="diag_charging_too_hot">Previše toplo za punjenje</string>
     <string name="diag_section_service" formatted="false">Android servis baterije</string>
-    <string name="diag_help_service" formatted="false">Izvorni nazivi i vrednosti iz Android obaveštenja o bateriji i, kada je dostupan, dumpsys battery. Mogu uključivati izvor punjenja, stanje baterije, temperaturu, napon i drugo stanje servisa baterije.</string>
+    <string name="diag_help_service" formatted="false">Prikazuje izvorne nazive i vrednosti iz Android obaveštenja o bateriji i, kada je dostupan, dumpsys battery. Mogu uključivati izvor punjenja, stanje baterije, temperaturu, napon i drugo stanje servisa baterije.</string>
     <string name="diag_section_sysfs" formatted="false">Kernel power_supply fajlovi</string>
-    <string name="diag_help_sysfs" formatted="false">Izvorni nazivi i vrednosti pročitani iz /sys/class/power_supply, uključujući višeredne vrednosti.</string>
+    <string name="diag_help_sysfs" formatted="false">Prikazuje izvorne nazive i vrednosti pročitane iz /sys/class/power_supply, uključujući višeredne vrednosti.</string>
     <string name="diag_fuel_gauge">Merač napunjenosti baterije</string>
     <string name="diag_mains_supply">Mrežno napajanje AC</string>
     <string name="diag_charging_source">Izvor punjenja</string>
@@ -652,7 +652,7 @@
     <string name="diag_input_voltage">Ulazni napon</string>
     <string name="diag_input_voltage_limit">Ograničenje ulaznog napona</string>
     <string name="diag_section_metadata" formatted="false">Metapodaci</string>
-    <string name="diag_help_metadata" formatted="false">Izvorni nazivi i vrednosti BatteryManager svojstava, uključujući dostupne brojače i očitavanja struje. Dodatna svojstva poput podataka o proizvodnji ili zameni zavise od verzije Androida, podrške uređaja i dozvola.</string>
+    <string name="diag_help_metadata" formatted="false">Prikazuje izvorne nazive i vrednosti BatteryManager svojstava, uključujući dostupne brojače i očitavanja struje. Dodatna svojstva poput podataka o proizvodnji ili zameni zavise od verzije Androida, podrške uređaja i dozvola.</string>
     <string name="diag_raw">Sirovi podaci</string>
     <string name="diag_search_key">Pretraži ključeve</string>
     <string name="diag_no_keys">Nema odgovarajućih ključeva u dostupnim podacima</string>
@@ -660,8 +660,8 @@
     <string name="diag_last_checked">Poslednja provera: %1$s</string>
     <string name="diag_privileged_stale">Prikazana su prethodna privilegovana očitavanja. Osvežite da pokušate ponovo.</string>
     <string name="diag_help_troubleshooting" formatted="false">Android podaci se u odeljku „Dijagnostika“ prikupljaju automatski. Za dodatne root ili Shizuku podatke omogućite „Koristi privilegovani pristup“ u „Podešavanja“ → „Napredno“. Battery Monitor prvo pokušava root, zatim Shizuku. Shizuku mora biti pokrenut uz dodeljenu dozvolu. Nedostajuća polja ostaju nedostupna; neuspešna osvežavanja čuvaju prethodni snimak i označavaju ga zastarelim.</string>
-    <string name="diag_help_raw_general" formatted="false">Izvorni ključevi i vrednosti iz dostupnih izvora. Pretražite po ključu i dodirnite red da pregledate i kopirate celu vrednost. Koristite „Osveži“ za nova očitavanja. Battery Monitor pokušava čitanje i sa običnim Android dozvolama, bez root ili Shizuku pristupa. Dostupnost zavisi od toga koji izvori mogu da se čitaju.</string>
-    <string name="diag_help_raw_predictor" formatted="false">Izvorni ključevi i vrednosti dostupnih podataka predviđanja.</string>
+    <string name="diag_help_raw_general" formatted="false">Prikazuje izvorne ključeve i vrednosti iz dostupnih izvora. Pretražite po ključu i dodirnite red da pregledate i kopirate celu vrednost. Koristite „Osveži“ za nova očitavanja. Battery Monitor pokušava čitanje i sa običnim Android dozvolama, bez root ili Shizuku pristupa. Dostupnost zavisi od toga koji izvori mogu da se čitaju.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Prikazuje izvorne ključeve i vrednosti dostupnih podataka predviđanja.</string>
     <string name="diag_export_report_help" formatted="false">Napravite izveštaj o dostupnim dijagnostičkim očitavanjima i podacima predviđanja. Proverite pregled izveštaja, a zatim kopirajte izveštaj u ostavu ili ga sačuvajte kao tekstualni fajl. Pre deljenja pažljivo proverite izveštaj, naročito ako sadrži sirove vrednosti i identifikatore.</string>
     <string name="diag_charging_source_disconnected">Isključen</string>
 
@@ -720,7 +720,6 @@
     <string name="diag_timeout">Isteklo je vreme za očitavanje. Prethodni snimak je sačuvan. Pokušajte ponovo da osvežite.</string>
     <string name="diag_no">Ne</string>
     <string name="diag_additional_sources">Dodatni izvori</string>
-    <string name="diag_source_help">Dostupna Android očitavanja prikupljaju se automatski dok je „Dijagnostika“ otvorena. Dodirnite vrednost da pregledate i kopirate očitavanje, izvor i vreme. Izvorni ključevi i vrednosti uređaja dostupni su u odeljku „Sirovi podaci“. Omogućite privilegovani pristup da koristite i root ili Shizuku.</string>
     <string name="diag_missing_reading">Omogućeni izvori nisu vratili upotrebljivo očitavanje.</string>
     <string name="diag_missing_average">Prosečna struja je posebno očitavanje uređaja, različito od trenutne struje. Battery Monitor ne računa sopstveni prosek ako ga uređaj ne daje.</string>
     <string name="diag_missing_estimated_health">Ova procena zahteva pozitivan kapacitet pri punom punjenju i pozitivan projektovani kapacitet iste baterije. Kapacitet pri punom punjenju ne sme premašiti projektovani.</string>
@@ -730,8 +729,8 @@
     <string name="diag_reading_retained" formatted="false">Prikazano je prethodno očitavanje.</string>
     <string name="diag_value_copied" formatted="false">Вредност је копирана</string>
     <string name="diag_predictor_read_failed" formatted="false">Није могуће прочитати сачуване податке предвиђања.</string>
-    <string name="diag_predictor_recent_title" formatted="false">Подаци предвиђања — Недавни прорачуни</string>
-    <string name="diag_predictor_stored_title" formatted="false">Подаци предвиђања — Сачувани дугорочни просеци</string>
+    <string name="diag_predictor_recent_title" formatted="false">Подаци предвиђања — недавни прорачуни</string>
+    <string name="diag_predictor_stored_title" formatted="false">Подаци предвиђања — сачувани дугорочни просеци</string>
     <string name="diag_predictor_recent" formatted="false">Nedavni proračuni</string>
     <string name="diag_predictor_no_recent" formatted="false">Nema aktivne procene. Nedavni podaci dostupni su posle očitavanja tokom punjenja ili pražnjenja.</string>
     <string name="diag_predictor_active_state" formatted="false">Aktivno stanje baterije</string>

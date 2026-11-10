@@ -620,9 +620,9 @@
     <string name="diag_charging_too_cold">קרה מדי לטעינה</string>
     <string name="diag_charging_too_hot">חמה מדי לטעינה</string>
     <string name="diag_section_service" formatted="false">שירות הסוללה של Android</string>
-    <string name="diag_help_service" formatted="false">שמות וערכים מקוריים משידורי הסוללה של Android, וכשהגישה אפשרית, מ־dumpsys battery. הם עשויים לכלול מקור טעינה, מצב סוללה, טמפרטורה, מתח ומצבים אחרים של שירות הסוללה.</string>
+    <string name="diag_help_service" formatted="false">מציג שמות וערכים מקוריים משידורי הסוללה של Android, וכשהגישה אפשרית, מ־dumpsys battery. הם עשויים לכלול מקור טעינה, מצב סוללה, טמפרטורה, מתח ומצבים אחרים של שירות הסוללה.</string>
     <string name="diag_section_sysfs" formatted="false">קובצי power_supply של הליבה</string>
-    <string name="diag_help_sysfs" formatted="false">השמות והערכים המקוריים שנקראו מ־/sys/class/power_supply, כולל ערכים מרובי שורות.</string>
+    <string name="diag_help_sysfs" formatted="false">מציג את השמות והערכים המקוריים שנקראו מ־/sys/class/power_supply, כולל ערכים מרובי שורות.</string>
     <string name="diag_fuel_gauge">מד מטען הסוללה</string>
     <string name="diag_mains_supply">אספקת חשמל AC</string>
     <string name="diag_charging_source">מקור טעינה</string>
@@ -652,7 +652,7 @@
     <string name="diag_input_voltage">מתח כניסה</string>
     <string name="diag_input_voltage_limit">מגבלת מתח כניסה</string>
     <string name="diag_section_metadata" formatted="false">מטא נתונים</string>
-    <string name="diag_help_metadata" formatted="false">שמות וערכים מקוריים של מאפייני BatteryManager, כולל מונים וקריאות זרם זמינים. מאפיינים נוספים כמו פרטי ייצור או מצב החלפה תלויים בגרסת Android, בתמיכת המכשיר ובהרשאות.</string>
+    <string name="diag_help_metadata" formatted="false">מציג שמות וערכים מקוריים של מאפייני BatteryManager, כולל מונים וקריאות זרם זמינים. מאפיינים נוספים כמו פרטי ייצור או מצב החלפה תלויים בגרסת Android, בתמיכת המכשיר ובהרשאות.</string>
     <string name="diag_raw">נתונים גולמיים</string>
     <string name="diag_search_key">חיפוש מפתחות</string>
     <string name="diag_no_keys">אין מפתחות תואמים בנתונים הזמינים</string>
@@ -660,8 +660,8 @@
     <string name="diag_last_checked">בדיקה אחרונה: %1$s</string>
     <string name="diag_privileged_stale">מוצגות הקריאות הקודמות מגישה מיוחסת. יש לרענן כדי לנסות שוב.</string>
     <string name="diag_help_troubleshooting" formatted="false">נתוני Android נאספים אוטומטית ב״אבחון״. לנתוני root או Shizuku נוספים, הפעילו את ״שימוש בגישה מיוחסת״ ב״הגדרות״ ← ״מתקדם״. Battery Monitor מנסה תחילה root ואז Shizuku. Shizuku צריך לפעול ויש להעניק הרשאה. שדות חסרים נשארים לא זמינים; רענון שנכשל שומר את תמונת המצב הקודמת ומסמן אותה כלא עדכנית.</string>
-    <string name="diag_help_raw_general" formatted="false">מפתחות וערכים מקוריים ממקורות זמינים. חפשו לפי מפתח והקישו על שורה כדי להציג ולהעתיק את הערך המלא. השתמשו ב״רענון״ לאיסוף קריאות חדשות. Battery Monitor מנסה לקרוא גם עם הרשאות Android הרגילות, ללא root או Shizuku. הזמינות תלויה במקורות שניתן לקרוא.</string>
-    <string name="diag_help_raw_predictor" formatted="false">מפתחות וערכים מקוריים של נתוני חיזוי שמורים, כאשר הם זמינים.</string>
+    <string name="diag_help_raw_general" formatted="false">מציג מפתחות וערכים מקוריים ממקורות זמינים. חפשו לפי מפתח והקישו על שורה כדי להציג ולהעתיק את הערך המלא. השתמשו ב״רענון״ לאיסוף קריאות חדשות. Battery Monitor מנסה לקרוא גם עם הרשאות Android הרגילות, ללא root או Shizuku. הזמינות תלויה במקורות שניתן לקרוא.</string>
+    <string name="diag_help_raw_predictor" formatted="false">מציג מפתחות וערכים מקוריים של נתוני חיזוי שמורים, כאשר הם זמינים.</string>
     <string name="diag_export_report_help" formatted="false">צרו דוח של קריאות האבחון ונתוני החיזוי הזמינים. עיינו בתצוגה המקדימה, ואז העתיקו את הדוח ללוח או שמרו אותו כקובץ טקסט. לפני השיתוף, בדקו את הדוח בקפידה, במיוחד אם הוא כולל ערכים גולמיים ומזהים.</string>
     <string name="diag_charging_source_disconnected">לא-מחובר</string>
 
@@ -720,7 +720,6 @@
     <string name="diag_timeout">תם הזמן המוקצב לקריאה. תמונת המצב הקודמת נשמרת. יש לנסות לרענן שוב.</string>
     <string name="diag_no">לא</string>
     <string name="diag_additional_sources">מקורות נוספים</string>
-    <string name="diag_source_help">קריאות Android הזמינות נאספות אוטומטית כשה״אבחון״ פתוח. יש להקיש על ערך כדי לבדוק ולהעתיק את הקריאה, המקור והזמן. המפתחות והערכים המקוריים של המכשיר זמינים ב״נתונים גולמיים״. יש להפעיל גישה מיוחסת כדי להשתמש גם ב־Root או ב־Shizuku.</string>
     <string name="diag_missing_reading">המקורות המופעלים לא החזירו קריאה שימושית.</string>
     <string name="diag_missing_average">זרם ממוצע הוא קריאה נפרדת של המכשיר מהזרם הרגעי. Battery Monitor אינו מחשב ממוצע משלו כשהמכשיר אינו מספק אותו.</string>
     <string name="diag_missing_estimated_health">הערכה זו דורשת קיבולת טעינה מלאה וקיבולת תכנון חיוביות מאותה סוללה. קיבולת הטעינה המלאה אינה יכולה לעלות על קיבולת התכנון.</string>

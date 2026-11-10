@@ -620,9 +620,9 @@
     <string name="diag_charging_too_cold">Trop froid pour charger</string>
     <string name="diag_charging_too_hot">Trop chaud pour charger</string>
     <string name="diag_section_service" formatted="false">Service de batterie Android</string>
-    <string name="diag_help_service" formatted="false">Les noms et valeurs d’origine des messages de batterie Android et, si accessible, de dumpsys battery. Ils peuvent comprendre la source de charge, l’état de la batterie, la température, la tension et d’autres états du service de batterie.</string>
+    <string name="diag_help_service" formatted="false">Affiche les noms et valeurs d’origine des messages de batterie Android et, si accessible, de dumpsys battery. Ils peuvent comprendre la source de charge, l’état de la batterie, la température, la tension et d’autres états du service de batterie.</string>
     <string name="diag_section_sysfs" formatted="false">Fichiers power_supply du noyau</string>
-    <string name="diag_help_sysfs" formatted="false">Les noms et valeurs d’origine lus dans /sys/class/power_supply, y compris les valeurs sur plusieurs lignes.</string>
+    <string name="diag_help_sysfs" formatted="false">Affiche les noms et valeurs d’origine lus dans /sys/class/power_supply, y compris les valeurs sur plusieurs lignes.</string>
     <string name="diag_fuel_gauge">Jauge de batterie</string>
     <string name="diag_mains_supply">Alimentation secteur</string>
     <string name="diag_charging_source">Source de charge</string>
@@ -652,7 +652,7 @@
     <string name="diag_input_voltage">Tension d’entrée</string>
     <string name="diag_input_voltage_limit">Limite de tension d’entrée</string>
     <string name="diag_section_metadata" formatted="false">Métadonnées</string>
-    <string name="diag_help_metadata" formatted="false">Les noms et valeurs d’origine des propriétés BatteryManager, dont les compteurs et mesures de courant disponibles. Les propriétés supplémentaires, comme les détails de fabrication ou l’état de remplacement, dépendent de la version Android, de la prise en charge par l’appareil et des autorisations.</string>
+    <string name="diag_help_metadata" formatted="false">Affiche les noms et valeurs d’origine des propriétés BatteryManager, dont les compteurs et mesures de courant disponibles. Les propriétés supplémentaires, comme les détails de fabrication ou l’état de remplacement, dépendent de la version Android, de la prise en charge par l’appareil et des autorisations.</string>
     <string name="diag_raw">Données brutes</string>
     <string name="diag_search_key">Rechercher des clés</string>
     <string name="diag_no_keys">Aucune clé correspondante dans les données disponibles</string>
@@ -660,8 +660,8 @@
     <string name="diag_last_checked">Dernière vérification : %1$s</string>
     <string name="diag_privileged_stale">Les mesures privilégiées précédentes sont affichées. Actualisez pour réessayer.</string>
     <string name="diag_help_troubleshooting" formatted="false">Les données Android sont collectées automatiquement dans «\u00A0Diagnostics\u00A0». Pour obtenir des données root ou Shizuku supplémentaires, activez «\u00A0Utiliser l’accès privilégié\u00A0» dans «\u00A0Paramètres\u00A0» → «\u00A0Avancé\u00A0». Battery Monitor essaie root, puis Shizuku. Shizuku doit être en cours d’exécution et l’autorisation accordée. Les champs manquants restent indisponibles ; les actualisations échouées conservent l’instantané précédent et le marquent comme périmé.</string>
-    <string name="diag_help_raw_general" formatted="false">Clés et valeurs d’origine des sources disponibles. Recherchez une clé et touchez une ligne pour voir et copier sa valeur complète. Utilisez «\u00A0Actualiser\u00A0» pour collecter de nouvelles mesures. Battery Monitor tente aussi de lire avec ses autorisations Android normales, sans root ni Shizuku. La disponibilité dépend des sources qui peuvent être lues.</string>
-    <string name="diag_help_raw_predictor" formatted="false">Clés et valeurs d’origine des données de prédiction enregistrées, lorsqu’elles sont disponibles.</string>
+    <string name="diag_help_raw_general" formatted="false">Affiche les clés et valeurs d’origine des sources disponibles. Recherchez une clé et touchez une ligne pour voir et copier sa valeur complète. Utilisez «\u00A0Actualiser\u00A0» pour collecter de nouvelles mesures. Battery Monitor tente aussi de lire avec ses autorisations Android normales, sans root ni Shizuku. La disponibilité dépend des sources qui peuvent être lues.</string>
+    <string name="diag_help_raw_predictor" formatted="false">Affiche les clés et valeurs d’origine des données de prédiction enregistrées, lorsqu’elles sont disponibles.</string>
     <string name="diag_export_report_help" formatted="false">Créez un rapport des mesures de diagnostic et des données de prédiction disponibles. Vérifiez l’aperçu, puis copiez le rapport dans le presse-papiers ou enregistrez-le dans un fichier texte. Avant de le partager, examinez-le attentivement, surtout s’il contient des valeurs brutes et des identifiants.</string>
     <string name="diag_charging_source_disconnected">Débranchée</string>
 
@@ -720,7 +720,6 @@
     <string name="diag_timeout">Délai de lecture dépassé. L’instantané précédent est conservé. Réessayez d’actualiser.</string>
     <string name="diag_no">Non</string>
     <string name="diag_additional_sources">Sources supplémentaires</string>
-    <string name="diag_source_help">Les mesures Android disponibles sont collectées automatiquement lorsque «\u00A0Diagnostics\u00A0» est ouvert. Touchez une valeur pour examiner et copier sa mesure, sa source et son heure. Les clés et valeurs d’origine de l’appareil sont disponibles dans «\u00A0Données brutes\u00A0». Activez l’accès privilégié pour utiliser aussi root ou Shizuku.</string>
     <string name="diag_missing_reading">Les sources activées n’ont fourni aucune mesure exploitable.</string>
     <string name="diag_missing_average">Le courant moyen et le courant instantané sont deux mesures distinctes fournies par l’appareil. Battery Monitor ne calcule pas sa propre moyenne si l’appareil n’en fournit pas.</string>
     <string name="diag_missing_estimated_health">Cette estimation nécessite des capacités à pleine charge et nominale positives provenant de la même batterie. La capacité à pleine charge ne doit pas dépasser la capacité nominale.</string>
@@ -730,8 +729,8 @@
     <string name="diag_reading_retained" formatted="false">La mesure précédente est affichée.</string>
     <string name="diag_value_copied" formatted="false">Valeur copiée</string>
     <string name="diag_predictor_read_failed" formatted="false">Impossible de lire les données de prédiction enregistrées.</string>
-    <string name="diag_predictor_recent_title" formatted="false">Données de prédiction — Calculs récents</string>
-    <string name="diag_predictor_stored_title" formatted="false">Données de prédiction — Moyennes à long terme enregistrées</string>
+    <string name="diag_predictor_recent_title" formatted="false">Données de prédiction — calculs récents</string>
+    <string name="diag_predictor_stored_title" formatted="false">Données de prédiction — moyennes à long terme enregistrées</string>
     <string name="diag_predictor_recent" formatted="false">Calculs récents</string>
     <string name="diag_predictor_no_recent" formatted="false">Aucune estimation active. Les données récentes sont disponibles après une mesure de surveillance en charge ou en décharge.</string>
     <string name="diag_predictor_active_state" formatted="false">État actif de la batterie</string>
