@@ -175,7 +175,7 @@ export function markdownSection(markdown, heading) {
 }
 
 const legacyKeys = {
-  notification_settings_help: ['status_bar_icon_settings_help'],
+  status_bar_icon_availability_help: ['status_bar_icon_settings_help'],
   status_bar_chip_availability_help: ['status_bar_chip_settings_help'],
   diag_help_capacity: ['advanced_help_capacity'],
   diag_help_counters: ['advanced_help_counters'],
@@ -188,6 +188,14 @@ const legacyKeys = {
 
 export function buildArticles({ strings, readme, capabilities, commit, omitted }) {
   const context = { commit, sourcePath: 'app/src/main/res/values/strings.xml' };
+  const label = (key) =>
+    strings.has(key)
+      ? sanitizeHtml(normalizeAndroid(strings.get(key)), { allowedTags: [], allowedAttributes: {} })
+      : null;
+  const location = (keys) => {
+    const names = keys?.map(label);
+    return names?.length && names.every(Boolean) ? `<p>In the app: ${names.join(' → ')}.</p>` : '';
+  };
   return ARTICLE_MAPPINGS.map((mapping) => {
     const sources = [];
     const sections = [];
@@ -197,13 +205,27 @@ export function buildArticles({ strings, readme, capabilities, commit, omitted }
         continue;
       }
       const fragments = [];
-      for (const key of section.keys) {
+      for (const entry of section.keys) {
+        const { helpKey: key, ...details } = typeof entry === 'string' ? { helpKey: entry } : entry;
         const actual = [key, ...(legacyKeys[key] ?? [])].find((candidate) =>
           strings.has(candidate),
         );
         if (!actual || sources.includes(actual)) continue;
         try {
-          fragments.push(paragraphs(strings.get(actual), context));
+          const titleKeys =
+            details.titleKeys ??
+            [details.titleKey ?? (key.endsWith('_help') ? key.slice(0, -5) : null)].filter(Boolean);
+          const title =
+            actual !== key && details.legacyTitle
+              ? escapeText(details.legacyTitle)
+              : details.title
+                ? escapeText(details.title)
+                : titleKeys.map(label).find(Boolean);
+          const heading =
+            title && title.toLowerCase() !== section.title.toLowerCase() ? `<h3>${title}</h3>` : '';
+          fragments.push(
+            `${heading}${location(details.navigation)}${paragraphs(strings.get(actual), context)}`,
+          );
           sources.push(actual);
         } catch {
           omitted.push(
@@ -218,9 +240,11 @@ export function buildArticles({ strings, readme, capabilities, commit, omitted }
           sources.push(`README.md#${section.readmeHeading}`);
         }
       }
-      if (fragments.length)
-        sections.push(`<h2>${escapeText(section.title)}</h2>${fragments.join('')}`);
-      else
+      if (fragments.length) {
+        sections.push(
+          `<h2>${escapeText(section.title)}</h2>${location(section.navigation)}${fragments.join('')}`,
+        );
+      } else
         omitted.push(
           `${mapping.id}/${section.title}: source section not available in this application revision`,
         );

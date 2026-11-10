@@ -5,6 +5,7 @@ export interface AnalyticsConfig {
   matomoUrl: string;
   siteId: string | null;
   consentVersion: string;
+  consentDimensionId: number | null;
   consentDays: number;
   cookieVisitorSeconds: number;
   cookieSessionSeconds: number;

@@ -19,6 +19,7 @@ const manifest = await createManifest(resolve(root, 'dist'), provenance, {
     process.env.BUNNY_STORAGE_ACCESS_KEY,
     process.env.BUNNY_API_KEY,
     process.env.GITHUB_TOKEN,
+    process.env.WEBSITE_DEPLOY_STATE_KEY,
   ],
 });
 const artifacts = resolve(root, '.artifacts');

@@ -39,6 +39,7 @@ jobs:
       MATOMO_ENABLED: ${{ vars.MATOMO_ENABLED || 'false' }}
       MATOMO_URL: ${{ vars.MATOMO_URL || 'https://radioactive-toy.swistak.codes/' }}
       MATOMO_SITE_ID: ${{ vars.MATOMO_SITE_ID }}
+      MATOMO_CONSENT_DIMENSION_ID: ${{ vars.MATOMO_CONSENT_DIMENSION_ID }}
     steps:
       - name: Reject manual dispatch from an arbitrary branch
         if: github.event_name == 'workflow_dispatch'
@@ -98,7 +99,7 @@ jobs:
         run:
           echo 'Website built and retained. Publishing skipped because WEBSITE_DEPLOY_ENABLED is not
           true.' >> "$GITHUB_STEP_SUMMARY"
-      - name: Publish website-owned files and invalidate CDN cache
+      - name: Publish, verify and clean up using durable successful deployment state
         if: steps.context.outputs.deploy == 'true' && env.WEBSITE_DEPLOY_ENABLED == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -108,10 +109,9 @@ jobs:
           BUNNY_PULL_ZONE_ID: ${{ vars.BUNNY_PULL_ZONE_ID }}
           BUNNY_STORAGE_ACCESS_KEY: ${{ secrets.BUNNY_STORAGE_ACCESS_KEY }}
           BUNNY_API_KEY: ${{ secrets.BUNNY_API_KEY }}
+          WEBSITE_DEPLOY_STATE_KEY: ${{ secrets.WEBSITE_DEPLOY_STATE_KEY }}
+          WEBSITE_DEPLOY_BOOTSTRAP: ${{ vars.WEBSITE_DEPLOY_BOOTSTRAP || 'false' }}
         run: node scripts/deploy/publish.mjs --publish
-      - name: Verify published routes, assets and real 404 behavior
-        if: steps.context.outputs.deploy == 'true' && env.WEBSITE_DEPLOY_ENABLED == 'true'
-        run: node scripts/deploy/smoke.mjs
       - name: Retain site and final deployment manifest
         if: always() && steps.package.outcome == 'success'
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6

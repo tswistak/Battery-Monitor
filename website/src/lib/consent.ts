@@ -182,13 +182,21 @@ export function cleanTrackingRequest(
   title: string,
   referrer: string,
   campaign?: string,
+  consentDimension?: { id: number; version: string },
 ): string {
   const output = new URLSearchParams();
   const source = new URLSearchParams(request);
   for (const [key, value] of source) if (requestKeys.has(key)) output.set(key, value);
-  output.set('url', canonicalUrl);
+  const trackingUrl = new URL(canonicalUrl);
+  trackingUrl.search = '';
+  trackingUrl.hash = '';
+  if (campaign && campaigns.has(campaign)) trackingUrl.searchParams.set('mtm_campaign', campaign);
+  output.set('url', trackingUrl.href);
   output.set('action_name', title);
   if (referrer) output.set('urlref', referrerOrigin(referrer));
-  if (campaign && campaigns.has(campaign)) output.set('_rcn', campaign);
+  if (consentDimension && !source.has('e_c')) {
+    const key = `dimension${consentDimension.id}`;
+    if (source.get(key) === consentDimension.version) output.set(key, consentDimension.version);
+  }
   return output.toString();
 }

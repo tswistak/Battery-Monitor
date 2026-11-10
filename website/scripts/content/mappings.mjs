@@ -19,7 +19,13 @@ export const ARTICLE_MAPPINGS = [
       },
       {
         title: 'Sound, vibration and delivery',
-        keys: ['notification_channels_help', 'monitoring_battery_optimization_help'],
+        keys: [
+          { helpKey: 'notification_channels_help', title: 'Android notification channels' },
+          {
+            helpKey: 'monitoring_battery_optimization_help',
+            titleKey: 'diagnostics_battery_optimization',
+          },
+        ],
         capability: 'alarms',
       },
     ],
@@ -32,6 +38,7 @@ export const ARTICLE_MAPPINGS = [
     sections: [
       {
         title: 'Main notification',
+        navigation: ['settings_activity_subtitle', 'notification_settings'],
         keys: [
           'notification_settings_help',
           'pref_top_line_content_help',
@@ -42,7 +49,7 @@ export const ARTICLE_MAPPINGS = [
       {
         title: 'Status-bar appearance',
         keys: [
-          'status_bar_icon_availability_help',
+          { helpKey: 'status_bar_icon_availability_help', titleKey: 'status_bar_icon_settings' },
           'pref_icon_content_help',
           'pref_show_icon_unit_help',
         ],
@@ -50,14 +57,17 @@ export const ARTICLE_MAPPINGS = [
       {
         title: 'Live Updates',
         keys: [
-          'status_bar_chip_availability_help',
-          'settings_live_update_help',
+          { helpKey: 'status_bar_chip_availability_help', titleKey: 'status_bar_chip_settings' },
+          { helpKey: 'settings_live_update_help', title: 'Android Live Update permission' },
           'pref_live_update_display_help',
           'pref_expanded_live_update_help',
         ],
         capability: 'liveUpdates',
       },
-      { title: 'Permissions and notification channels', keys: ['notification_channels_help'] },
+      {
+        title: 'Permissions and notification channels',
+        keys: [{ helpKey: 'notification_channels_help', title: 'Android notification channels' }],
+      },
     ],
   },
   {
@@ -69,8 +79,8 @@ export const ARTICLE_MAPPINGS = [
       {
         title: 'Monitor status',
         keys: [
-          'diagnostics_help_overview',
-          'diagnostics_heartbeat_help',
+          { helpKey: 'diagnostics_help_overview', titleKey: 'diagnostics' },
+          { helpKey: 'diagnostics_heartbeat_help', title: 'Latest monitoring response' },
           'diagnostics_service_help',
           'pref_autostart_at_boot_help',
         ],
@@ -78,14 +88,20 @@ export const ARTICLE_MAPPINGS = [
       {
         title: 'Background restrictions',
         keys: [
-          'monitoring_battery_optimization_help',
+          {
+            helpKey: 'monitoring_battery_optimization_help',
+            titleKey: 'diagnostics_battery_optimization',
+          },
           'diagnostics_vendor_settings_help',
           'diagnostics_dont_kill_my_app_help',
         ],
       },
       {
         title: 'Preparing a report',
-        keys: ['diagnostics_help_report', 'diagnostics_debug_logs_help'],
+        keys: [
+          { helpKey: 'diagnostics_help_report', titleKey: 'diagnostics_export' },
+          'diagnostics_debug_logs_help',
+        ],
       },
     ],
   },
@@ -98,26 +114,50 @@ export const ARTICLE_MAPPINGS = [
       {
         title: 'Current measurements',
         keys: [
-          'current_state_settings_help',
+          {
+            helpKey: 'current_state_settings_help',
+            titleKey: 'tab_current_info',
+            navigation: ['settings_activity_subtitle', 'tab_current_info'],
+          },
           'pref_show_remaining_charge_help',
-          'battery_power_explanation',
+          { helpKey: 'battery_power_explanation', titleKey: 'battery_power' },
         ],
         readmeHeading: 'Current State and Time Estimates',
       },
       {
         title: 'Current units and averaging',
-        keys: ['pref_battery_current_multiplier_help', 'pref_prefer_current_avg_help'],
+        keys: [
+          'pref_battery_current_multiplier_help',
+          {
+            helpKey: 'pref_prefer_current_avg_help',
+            titleKey: 'pref_prefer_average_battery_current',
+          },
+        ],
       },
       {
         title: 'Health status and capacity estimates',
-        keys: ['current_health_explanation', 'diag_help_capacity', 'diag_help_counters'],
+        keys: [
+          { helpKey: 'current_health_explanation', title: 'Android battery health status' },
+          {
+            helpKey: 'diag_help_capacity',
+            titleKeys: ['diag_section_capacity', 'advanced_section_capacity'],
+          },
+          {
+            helpKey: 'diag_help_counters',
+            titleKeys: ['diag_section_counters', 'advanced_section_counters'],
+          },
+        ],
       },
       {
         title: 'Optional device readings',
         keys: [
+          { helpKey: 'advanced_help_overview', titleKey: 'tab_advanced' },
           'pref_use_privileged_access_help',
-          'monitoring_privileged_access_help',
-          'diag_help_troubleshooting',
+          { helpKey: 'monitoring_privileged_access_help', title: 'Available additional readings' },
+          {
+            helpKey: 'diag_help_troubleshooting',
+            titleKeys: ['diag_help_troubleshooting_title', 'advanced_help_troubleshooting_title'],
+          },
         ],
         readmeHeading: 'Appearance and Advanced Information',
         capability: 'privileged',
@@ -132,7 +172,11 @@ export const ARTICLE_MAPPINGS = [
     sections: [
       {
         title: 'What a target means',
-        keys: ['time_estimates_settings_help', 'current_prediction_explanation'],
+        navigation: ['settings_activity_subtitle', 'time_estimates_settings'],
+        keys: [
+          'time_estimates_settings_help',
+          { helpKey: 'current_prediction_explanation', title: 'Remaining-time estimate' },
+        ],
       },
       {
         title: 'Automatic and custom targets',
@@ -143,7 +187,10 @@ export const ARTICLE_MAPPINGS = [
         ],
       },
       { title: 'Prediction methods', keys: ['pref_prediction_type_help'] },
-      { title: 'Learning and history', keys: ['diagnostics_predictor_help'] },
+      {
+        title: 'Learning and history',
+        keys: [{ helpKey: 'diagnostics_predictor_help', title: 'Saved averages and recent rates' }],
+      },
     ],
   },
   {
@@ -160,13 +207,18 @@ export const ARTICLE_MAPPINGS = [
       },
       {
         title: 'History export and import',
-        keys: ['auto_log_export_help', 'csv_logs_import_help', 'csv_logs_import_warning'],
+        keys: [
+          { helpKey: 'auto_log_export_help', title: 'Automatic log exports' },
+          { helpKey: 'csv_logs_import_help', titleKey: 'pref_import_logs_csv' },
+          { helpKey: 'csv_logs_import_warning', title: 'CSV compatibility' },
+        ],
         capability: 'history',
       },
       {
         title: 'General backup and restore',
+        navigation: ['settings_activity_subtitle', 'pref_backup_restore'],
         keys: [
-          'backup_restore_help_overview',
+          { helpKey: 'backup_restore_help_overview', titleKey: 'pref_backup_restore' },
           'pref_export_general_backup_help',
           'pref_import_general_backup_help',
         ],
@@ -176,9 +228,9 @@ export const ARTICLE_MAPPINGS = [
       {
         title: 'Separate settings and alarm backups',
         keys: [
-          'pref_export_settings_help',
+          { helpKey: 'pref_export_settings_help', legacyTitle: 'Settings backup' },
           'pref_import_settings_help',
-          'pref_export_alarms_help',
+          { helpKey: 'pref_export_alarms_help', legacyTitle: 'Alarms backup' },
           'pref_import_alarms_help',
         ],
         capability: 'backups',
@@ -186,9 +238,9 @@ export const ARTICLE_MAPPINGS = [
       {
         title: 'Device-specific data',
         keys: [
-          'pref_export_device_data_help',
+          { helpKey: 'pref_export_device_data_help', legacyTitle: 'Device-specific backup' },
           'pref_import_device_data_help',
-          'general_backup_device_data_warning',
+          { helpKey: 'general_backup_device_data_warning', title: 'Restoring on another device' },
         ],
         capability: 'backups',
       },

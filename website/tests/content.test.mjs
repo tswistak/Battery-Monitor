@@ -4,6 +4,8 @@ import { mkdtemp, mkdir, readFile, writeFile, rm, symlink } from 'node:fs/promis
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { loadSiteConfig, validatePublication } from '../scripts/config.mjs';
+import { getPrivacySections } from '../src/content/en/privacy.ts';
 import {
   listReleases,
   selectStableRelease,
@@ -18,6 +20,7 @@ import {
   markdownHtml,
   buildContent,
   buildArticles,
+  capabilitiesFrom,
   changelogFrom,
 } from '../scripts/content/extract.mjs';
 import {
@@ -268,6 +271,95 @@ test('unsupported optional features cannot inject their available source explana
   assert(omitted.some((reason) => reason.includes('unsupported feature')));
 });
 
+test('shared help keeps settings labeled across current and legacy resource structures', async () => {
+  const older = await fixtureSnapshot('tests/fixtures/content');
+  const currentStrings = await readFile(
+    new URL('../../app/src/main/res/values/strings.xml', import.meta.url),
+    'utf8',
+  );
+  const currentReadme = await readFile(new URL('../../README.md', import.meta.url), 'utf8');
+  for (const [xml, readme, legacy] of [
+    [
+      older.files.get('app/src/main/res/values/strings.xml').toString(),
+      older.files.get('README.md').toString(),
+      true,
+    ],
+    [currentStrings, currentReadme, false],
+  ]) {
+    const strings = parseAndroidStrings(xml, context);
+    const articles = buildArticles({
+      strings,
+      readme,
+      capabilities: capabilitiesFrom(strings, readme),
+      commit,
+      omitted: [],
+    });
+    const article = (id) => articles.find((value) => value.id === id);
+    const headingBefore = (id, key) => {
+      const html = article(id).html;
+      const firstParagraph = normalizeAndroid(strings.get(key))
+        .split(/\n\s*\n/)[0]
+        .replace(/\s+/g, ' ')
+        .trim();
+      const start = html.lastIndexOf(firstParagraph);
+      assert(start >= 0, `${key} must remain imported`);
+      return [...html.slice(0, start).matchAll(/<h[23]>(.*?)<\/h[23]>/g)].at(-1)?.[1];
+    };
+    for (const [id, helpKey, titleKey] of [
+      ['notifications', 'pref_expanded_notification_help', 'pref_expanded_notification'],
+      ['notifications', 'pref_show_icon_unit_help', 'pref_show_icon_unit'],
+      ['battery-readings', 'pref_prefer_current_avg_help', 'pref_prefer_average_battery_current'],
+      ['history-and-backups', 'pref_enable_logging_help', 'pref_enable_logging'],
+    ]) {
+      assert.equal(headingBefore(id, helpKey), normalizeAndroid(strings.get(titleKey)));
+    }
+    const iconHelp = legacy ? 'status_bar_icon_settings_help' : 'status_bar_icon_availability_help';
+    assert.equal(
+      headingBefore('notifications', iconHelp),
+      normalizeAndroid(strings.get('status_bar_icon_settings')),
+    );
+    const capacityHelp = legacy ? 'advanced_help_capacity' : 'diag_help_capacity';
+    const capacityTitle = legacy ? 'advanced_section_capacity' : 'diag_section_capacity';
+    assert.equal(
+      headingBefore('battery-readings', capacityHelp),
+      normalizeAndroid(strings.get(capacityTitle)),
+    );
+    const backups = article('history-and-backups');
+    if (legacy) {
+      assert(backups.sources.includes('settings_backup_help'));
+      assert(!backups.sources.includes('pref_import_settings_help'));
+      assert(article('battery-readings').sources.includes('advanced_help_overview'));
+      assert.equal(
+        backups.html.split(normalizeAndroid(strings.get('settings_backup_help'))).length - 1,
+        1,
+      );
+    } else {
+      assert(backups.sources.includes('pref_export_settings_help'));
+      assert(backups.sources.includes('pref_import_settings_help'));
+      assert(!article('battery-readings').sources.includes('advanced_help_overview'));
+    }
+    assert(
+      article('charging-targets').html.includes(
+        [strings.get('settings_activity_subtitle'), strings.get('time_estimates_settings')]
+          .map(normalizeAndroid)
+          .join(' → '),
+      ),
+    );
+    strings.delete('time_estimates_settings');
+    assert(
+      !buildArticles({
+        strings,
+        readme,
+        capabilities: capabilitiesFrom(strings, readme),
+        commit,
+        omitted: [],
+      })
+        .find((value) => value.id === 'charging-targets')
+        .html.includes('In the app:'),
+    );
+  }
+});
+
 test('pinned fixture checksum mismatches fail before extraction', async () => {
   const root = await mkdtemp(path.join(tmpdir(), 'battery-fixture-'));
   try {
@@ -514,5 +606,78 @@ test('snapshot reading rejects traversal and symlink escapes', async () => {
     assert.equal((await safeRead(root, 'safe.txt')).toString(), 'safe');
   } finally {
     await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('publication requires operational disclosures even when local policy omits unresolved facts', async () => {
+  const fixture = JSON.parse(await readFile('tests/fixtures/privacy.json', 'utf8'));
+  const env = { MATOMO_ENABLED: 'true', MATOMO_SITE_ID: '7' };
+  assert.equal(
+    validatePublication(loadSiteConfig({ env, privacy: fixture })).publicationReady,
+    true,
+  );
+  for (const [group, key] of [
+    ['hosting', 'processingLocations'],
+    ['hosting', 'transferSafeguards'],
+    ['hosting', 'accessLogRetentionDays'],
+    ['contact', 'providerInformation'],
+    ['contact', 'transferSafeguards'],
+    ['analytics', 'processingLocations'],
+    ['analytics', 'transferSafeguards'],
+    ['analytics', 'proxyLogData'],
+    ['analytics', 'rawRetentionDays'],
+    ['analytics', 'trackerResponseCookiePolicy'],
+    ['analytics', 'consentEvidenceProcedure'],
+    ['review', 'assessmentRecord'],
+  ]) {
+    const privacy = structuredClone(fixture);
+    privacy[group][key] = null;
+    assert.throws(
+      () => loadSiteConfig({ env, privacy }),
+      new RegExp(`privacy\\.${group}\\.${key}`),
+    );
+    if (group !== 'analytics') {
+      const local = loadSiteConfig({ env: {}, privacy });
+      assert.equal(local.analytics.enabled, false);
+      assert.throws(() => validatePublication(local), /Publication blocked/);
+    }
+  }
+});
+
+test('validated privacy facts reach the policy in both modes and optional notice dimensions are bounded', async () => {
+  const privacy = JSON.parse(await readFile('tests/fixtures/privacy.json', 'utf8'));
+  privacy.hosting.provider = 'Synthetic host <unsafe> & partners';
+  for (const enabled of ['false', 'true']) {
+    const config = loadSiteConfig({
+      env: { MATOMO_ENABLED: enabled, MATOMO_SITE_ID: '7', MATOMO_CONSENT_DIMENSION_ID: '3' },
+      privacy,
+    });
+    const sections = getPrivacySections(config);
+    const delivery = sections.find((section) => section.id === 'website-delivery').html;
+    assert(delivery.includes('<dl class="privacy-facts">'));
+    assert(delivery.includes('Synthetic host &lt;unsafe&gt; &amp; partners'));
+    for (const section of [
+      privacy.hosting,
+      privacy.contact,
+      ...(enabled === 'true' ? [privacy.analytics] : []),
+    ]) {
+      const html = sections.map((section) => section.html).join('');
+      for (const key of [
+        'processingLocations',
+        'processorAgreement',
+        'subprocessorInformation',
+        'transferSafeguards',
+      ]) {
+        if (typeof section[key] === 'string') assert(html.includes(section[key]));
+      }
+    }
+    assert.equal(config.analytics.consentDimensionId, 3);
+  }
+  assert.equal(loadSiteConfig({ env: {}, privacy }).analytics.consentDimensionId, null);
+  for (const value of ['0', '1000', '-1', '1.5', 'arbitrary']) {
+    assert.throws(
+      () => loadSiteConfig({ env: { MATOMO_CONSENT_DIMENSION_ID: value }, privacy }),
+      /MATOMO_CONSENT_DIMENSION_ID/,
+    );
   }
 });
