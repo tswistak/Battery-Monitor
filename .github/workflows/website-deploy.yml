@@ -40,6 +40,10 @@ jobs:
       MATOMO_URL: ${{ vars.MATOMO_URL || 'https://radioactive-toy.swistak.codes/' }}
       MATOMO_SITE_ID: ${{ vars.MATOMO_SITE_ID }}
       MATOMO_CONSENT_DIMENSION_ID: ${{ vars.MATOMO_CONSENT_DIMENSION_ID }}
+      ANALYTICS_CONSENT_VERSION: ${{ vars.ANALYTICS_CONSENT_VERSION }}
+      CONSENT_VALIDITY_DAYS: ${{ vars.CONSENT_VALIDITY_DAYS }}
+      MATOMO_VISITOR_COOKIE_SECONDS: ${{ vars.MATOMO_VISITOR_COOKIE_SECONDS }}
+      MATOMO_SESSION_COOKIE_SECONDS: ${{ vars.MATOMO_SESSION_COOKIE_SECONDS }}
     steps:
       - name: Reject manual dispatch from an arbitrary branch
         if: github.event_name == 'workflow_dispatch'
