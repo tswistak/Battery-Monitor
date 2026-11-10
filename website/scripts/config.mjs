@@ -260,6 +260,12 @@ export function loadSiteConfig({
     enabled,
     matomoUrl: httpsUrl(env.MATOMO_URL || 'https://radioactive-toy.swistak.codes/', 'MATOMO_URL'),
     siteId,
+    consentDimensionId: integer(
+      env.MATOMO_CONSENT_DIMENSION_ID,
+      null,
+      'MATOMO_CONSENT_DIMENSION_ID',
+      999,
+    ),
     consentVersion,
     consentDays,
     cookieVisitorSeconds: integer(

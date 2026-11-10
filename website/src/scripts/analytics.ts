@@ -41,7 +41,7 @@ interface Tracker {
   setReferrerUrl(url: string): void;
   setDocumentTitle(title: string): void;
   setCustomRequestProcessing(process: (request: string) => string): void;
-  trackPageView(): void;
+  trackPageView(title?: string, customData?: Record<string, string>): void;
   trackEvent(category: string, action: string, name: string): void;
 }
 
@@ -59,6 +59,10 @@ function validConfig(value: AnalyticsConfig): boolean {
     typeof value.enabled !== 'boolean' ||
     typeof value.consentVersion !== 'string' ||
     !/^[a-zA-Z0-9._-]{1,64}$/.test(value.consentVersion) ||
+    (value.consentDimensionId !== null &&
+      (!Number.isInteger(value.consentDimensionId) ||
+        value.consentDimensionId < 1 ||
+        value.consentDimensionId > 999)) ||
     !Number.isInteger(value.consentDays) ||
     value.consentDays < 1 ||
     value.consentDays > 365 ||
@@ -109,7 +113,7 @@ export function initAnalytics(payload: AnalyticsPayload): void {
   let loading: Promise<void> | undefined;
   let granted = false;
   let viewed = false;
-  let grantEvidencePending = false;
+  let noticePending = false;
   let listening = false;
   let generation = 0;
   let expiryTimer: ReturnType<typeof setTimeout> | undefined;
@@ -153,7 +157,7 @@ export function initAnalytics(payload: AnalyticsPayload): void {
   function revoke(): void {
     generation++;
     granted = false;
-    grantEvidencePending = false;
+    noticePending = false;
     document.removeEventListener('click', trackAction);
     listening = false;
     for (const request of pendingRequests) request.abort();
@@ -255,19 +259,28 @@ export function initAnalytics(payload: AnalyticsPayload): void {
       tracker.setCustomRequestProcessing((request) => {
         if (trackerGeneration !== generation || !allowed() || !granted) return '';
         const params = new URLSearchParams(
-          cleanTrackingRequest(request, canonical, page.title, referrer, campaign),
+          cleanTrackingRequest(
+            request,
+            canonical,
+            page.title,
+            referrer,
+            campaign,
+            config.consentDimensionId === null
+              ? undefined
+              : { id: config.consentDimensionId, version: config.consentVersion },
+          ),
         );
         params.set('consent', '1');
         const controller = new AbortController();
         pendingRequests.add(controller);
-        // Matomo can delay its transport after this hook; own abortable dispatch prevents sends after withdrawal.
+        // Keep navigation requests alive while retaining abort/credential control unavailable with sendBeacon.
         void fetch(`${endpoint}?${params}`, {
           method: 'GET',
           mode: 'no-cors',
           credentials: 'omit',
           referrerPolicy: 'no-referrer',
           cache: 'no-store',
-          keepalive: false,
+          keepalive: true,
           signal: controller.signal,
         })
           .catch(() => {})
@@ -287,12 +300,14 @@ export function initAnalytics(payload: AnalyticsPayload): void {
     }
     if (!viewed) {
       viewed = true;
-      tracker.trackPageView();
+      tracker.trackPageView(
+        undefined,
+        noticePending && config.consentDimensionId !== null
+          ? { [`dimension${config.consentDimensionId}`]: config.consentVersion }
+          : undefined,
+      );
     }
-    if (grantEvidencePending) {
-      grantEvidencePending = false;
-      tracker.trackEvent('Privacy', 'consent-granted', `${config.consentVersion}|${page.id}`);
-    }
+    noticePending = false;
   }
 
   function start(): void {
@@ -350,7 +365,7 @@ export function initAnalytics(payload: AnalyticsPayload): void {
         /* Storage can forbid removal too; this document still keeps analytics off. */
       }
     }
-    if (choice === 'accept' && !storageFailed) grantEvidencePending = true;
+    if (choice === 'accept' && !storageFailed) noticePending = true;
     reconcile();
     if (dialog?.open) dialog.close();
   }

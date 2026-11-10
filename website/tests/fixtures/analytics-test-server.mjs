@@ -1,4 +1,6 @@
 import { createServer } from 'node:http';
+import { createServer as createHttpsServer } from 'node:https';
+import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -28,6 +30,7 @@ export async function startAnalyticsHarness() {
         matomoUrl: 'https://analytics.invalid/',
         siteId: '7',
         consentVersion: 'analytics-v1',
+        consentDimensionId: url.pathname === '/no-dimension/' ? null : 4,
         consentDays: 180,
         cookieVisitorSeconds: 15_552_000,
         cookieSessionSeconds: 1800,
@@ -41,6 +44,7 @@ export async function startAnalyticsHarness() {
       <main><h1>Local analytics test</h1>
         <a data-analytics-event="apk" data-analytics-placement="download" data-analytics-channel="github" href="#download-target">Direct APK</a>
         <a data-analytics-event="fdroid" data-analytics-placement="hero" data-analytics-channel="fdroid" href="#download-target">F-Droid</a>
+        <a data-analytics-event="release" data-analytics-placement="download" data-analytics-channel="github" href="https://downloads.invalid/">GitHub release</a>
         <span id="download-target">Download target</span>
         <a data-privacy-settings href="/privacy/#preferences">Privacy settings</a>
       </main>
@@ -73,6 +77,54 @@ export async function startAnalyticsHarness() {
         await new Promise((resolve, reject) =>
           server.close((error) => (error ? reject(error) : resolve())),
         );
+    },
+  };
+}
+
+export async function startAnalyticsReceiver() {
+  const received = [];
+  const completed = [];
+  const timers = new Set();
+  const server = createHttpsServer(
+    {
+      // Self-signed localhost-only test credentials, never used by the website or deployment.
+      key: await readFile(new URL('./localhost-key.pem', import.meta.url)),
+      cert: await readFile(new URL('./localhost-cert.pem', import.meta.url)),
+    },
+    (request, response) => {
+      const url = new URL(request.url, 'http://127.0.0.1');
+      if (url.pathname === '/matomo.php') {
+        const params = new URLSearchParams(url.search);
+        received.push(params);
+        response.once('finish', () => completed.push(params));
+        const timer = setTimeout(() => {
+          timers.delete(timer);
+          response.writeHead(204);
+          response.end();
+        }, 750);
+        timers.add(timer);
+        return;
+      }
+      response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      response.end(
+        '<!doctype html><html lang="en"><title>Release destination</title><h1>Release destination</h1></html>',
+      );
+    },
+  );
+  await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', resolve);
+  });
+  return {
+    url: `https://127.0.0.1:${server.address().port}`,
+    received,
+    completed,
+    close: async () => {
+      for (const timer of timers) clearTimeout(timer);
+      server.closeAllConnections();
+      await new Promise((resolve, reject) =>
+        server.close((error) => (error ? reject(error) : resolve())),
+      );
     },
   };
 }

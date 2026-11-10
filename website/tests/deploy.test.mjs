@@ -8,6 +8,8 @@ import {
   configFromEnv,
   createManifest,
   destination,
+  decodeState,
+  encodeState,
   planDeployment,
   publishSite,
   request,
@@ -15,9 +17,11 @@ import {
   scanDist,
   sha256,
   storageUrl,
+  stateUrl,
   validateManifest,
 } from '../scripts/deploy/core.mjs';
 import { smokeSite } from '../scripts/deploy/smoke.mjs';
+import { runPublish } from '../scripts/deploy/publish.mjs';
 
 const WEBSITE = 'a'.repeat(40);
 const APP = 'b'.repeat(40);
@@ -52,6 +56,8 @@ const env = {
   BUNNY_STORAGE_ACCESS_KEY: 'test-storage-password',
   BUNNY_API_KEY: 'test-cdn-api-key',
   GITHUB_TOKEN: 'test-github-read-token',
+  WEBSITE_DEPLOY_STATE_KEY: '9'.repeat(64),
+  WEBSITE_DEPLOY_BOOTSTRAP: 'true',
 };
 const config = configFromEnv(env, { publishing: true });
 const json = (value) =>
@@ -90,6 +96,9 @@ function mockNetwork({
   assetUpdatedAt = provenance.releaseAssets.apk.updatedAt,
   assetDigest = null,
   initialStorage = new Map(),
+  smokeFailure = false,
+  purgeFailure = false,
+  stateFailure = false,
 } = {}) {
   const calls = [];
   const storage = new Map(initialStorage);
@@ -146,10 +155,31 @@ function mockNetwork({
         ]);
       throw new Error('Unexpected GitHub request');
     }
-    if (url.hostname === 'api.bunny.net') return new Response(null, { status: 204 });
+    if (url.hostname === 'api.bunny.net')
+      return new Response(null, { status: purgeFailure ? 400 : 204 });
+    if (url.origin === new URL(env.WEBSITE_URL).origin) {
+      if (smokeFailure || url.pathname.includes('__battery-monitor-smoke'))
+        return new Response('missing', { status: 404 });
+      const path =
+        '/website-zone/battery' +
+        (url.pathname.endsWith('/') ? url.pathname + 'index.html' : url.pathname);
+      const bytes = storage.get(path) || Buffer.from('<h1>Battery Monitor 2.0.0</h1>');
+      return new Response(bytes, {
+        headers: {
+          'content-type': url.pathname.endsWith('/') ? 'text/html' : 'application/octet-stream',
+          'referrer-policy': 'no-referrer',
+          'x-content-type-options': 'nosniff',
+          'content-security-policy': "default-src 'self'; object-src 'none'; base-uri 'self'",
+          'cache-control': url.pathname.startsWith('/_astro/')
+            ? 'public,max-age=31536000,immutable'
+            : 'public,max-age=300',
+        },
+      });
+    }
     if (url.hostname.endsWith('storage.bunnycdn.com')) {
       if (method === 'PUT') {
-        if (failPut) return new Response(null, { status: 400 });
+        if (failPut || (stateFailure && url.pathname.includes('/website-deploy-state/')))
+          return new Response(null, { status: 400 });
         assert.ok(Buffer.isBuffer(options.body));
         assert.equal(options.headers.Checksum, sha256(options.body).toUpperCase());
         assert.equal(options.headers.AccessKey, env.BUNNY_STORAGE_ACCESS_KEY);
@@ -160,6 +190,8 @@ function mockNetwork({
         storage.delete(url.pathname);
         return new Response(null, { status: 200 });
       }
+      if (url.pathname.endsWith('/'))
+        return json([...storage.keys()].filter((path) => path.startsWith(url.pathname)));
       if (!storage.has(url.pathname)) return new Response(null, { status: 404 });
       return new Response(badChecksum ? Buffer.from('wrong content') : storage.get(url.pathname), {
         status: 200,
@@ -230,6 +262,23 @@ test('configuration is disabled by default and rejects unsafe destinations or am
       { publishing: true },
     ),
     { enabled: false },
+  );
+});
+
+test('publication requires separate state signing, a bounded website prefix and explicit initial bootstrap', () => {
+  for (const changes of [
+    { WEBSITE_DEPLOY_STATE_KEY: '' },
+    { WEBSITE_DEPLOY_STATE_KEY: 'weak' },
+    { WEBSITE_DEPLOY_STATE_KEY: env.BUNNY_STORAGE_ACCESS_KEY },
+    { BUNNY_STORAGE_ACCESS_KEY: env.WEBSITE_DEPLOY_STATE_KEY },
+    { BUNNY_STORAGE_PREFIX: '' },
+    { BUNNY_STORAGE_PREFIX: 'website-deploy-state' },
+    { WEBSITE_DEPLOY_BOOTSTRAP: 'yes' },
+  ])
+    assert.throws(() => configFromEnv({ ...env, ...changes }, { publishing: true }));
+  assert.equal(
+    configFromEnv({ ...env, WEBSITE_DEPLOY_BOOTSTRAP: undefined }, { publishing: true }).bootstrap,
+    false,
   );
 });
 
@@ -339,7 +388,9 @@ test('publication verifies checksums, asset ordering, separate credentials and f
   });
   assert.equal(policies, 1);
   assert.equal(result.status, 'published');
-  const puts = network.calls.filter((call) => call.method === 'PUT');
+  const puts = network.calls.filter(
+    (call) => call.method === 'PUT' && !call.url.includes('/website-deploy-state/'),
+  );
   assert.ok(puts[0].url.includes('/_astro/'));
   assert.ok(puts.at(-1).url.endsWith('.html'));
   assert.ok(network.calls.filter((call) => call.url.endsWith('/git/ref/heads/main')).length >= 2);
@@ -469,12 +520,12 @@ test('cleanup only deletes checksum-verified old owned files and rejects another
     initialStorage: new Map([
       [oldPath, Buffer.from('export const ready = true;')],
       [unrelated, Buffer.from('unrelated owner data')],
+      [new URL(stateUrl(config)).pathname, encodeState(previous, config)],
     ]),
   });
   const result = await publishSite({
     dist,
     manifest: current,
-    previous,
     config,
     http: network,
     validatePolicy: async () => {},
@@ -488,13 +539,15 @@ test('cleanup only deletes checksum-verified old owned files and rejects another
     [oldPath],
   );
   const modified = mockNetwork({
-    initialStorage: new Map([[oldPath, Buffer.from('manually replaced content')]]),
+    initialStorage: new Map([
+      [oldPath, Buffer.from('manually replaced content')],
+      [new URL(stateUrl(config)).pathname, encodeState(previous, config)],
+    ]),
   });
   await assert.rejects(
     publishSite({
       dist,
       manifest: current,
-      previous,
       config,
       http: modified,
       validatePolicy: async () => {},
@@ -507,13 +560,221 @@ test('cleanup only deletes checksum-verified old owned files and rejects another
     publishSite({
       dist,
       manifest: current,
-      previous: other,
       config,
-      http: mockNetwork(),
+      http: mockNetwork({
+        initialStorage: new Map([
+          [
+            new URL(stateUrl(config)).pathname,
+            encodeState(other, { ...config, prefix: 'another-site' }),
+          ],
+        ]),
+      }),
       validatePolicy: async () => {},
     }),
     /different deployment destination/,
   );
+});
+
+test('real publisher entry point persists independent deployments and ages removed routes and hashed assets safely', async (t) => {
+  const f = await fixture(t, 'app.old123.js');
+  await mkdir(join(f.dist, 'retired'));
+  await writeFile(join(f.dist, 'retired/index.html'), '<h1>Old route</h1>');
+  await mkdir(join(f.root, '.artifacts'));
+  const unrelated = '/website-zone/unrelated.txt';
+  let storage = new Map([[unrelated, Buffer.from('not owned by the website')]]);
+  t.mock.timers.enable({ apis: ['Date'], now: Date.parse('2026-01-01T00:00:00Z') });
+  async function deploy() {
+    // Each workflow starts with a fresh local manifest and gets history only from Bunny Storage.
+    const manifest = await createManifest(f.dist, provenance);
+    await writeFile(join(f.root, '.artifacts/deployment-manifest.json'), JSON.stringify(manifest));
+    const network = mockNetwork({ initialStorage: storage });
+    const result = await runPublish({
+      root: f.root,
+      args: ['--publish'],
+      env,
+      http: network,
+      validatePolicy: async () => {},
+    });
+    storage = new Map(network.storage);
+    const persisted = decodeState(storage.get(new URL(stateUrl(config)).pathname), config);
+    assert.deepEqual(persisted, result.manifest);
+    assert.equal(network.calls.at(-1).url, stateUrl(config));
+    return { result, network };
+  }
+  const first = await deploy();
+  assert.equal(first.result.deleted, 0);
+  await rm(join(f.dist, 'retired'), { recursive: true });
+  await rm(join(f.dist, '_astro/app.old123.js'));
+  await writeFile(join(f.dist, '_astro/app.second456.js'), 'second');
+  t.mock.timers.setTime(Date.parse('2026-01-02T00:00:00Z'));
+  const second = await deploy();
+  assert.equal(second.result.manifest.recentBuilds[1].buildId, first.result.manifest.buildId);
+  assert.ok(second.result.manifest.owned.some((file) => file.path === 'retired/index.html'));
+  assert.ok(storage.has('/website-zone/battery/retired/index.html'));
+  assert.ok(storage.has('/website-zone/battery/_astro/app.old123.js'));
+  await rm(join(f.dist, '_astro/app.second456.js'));
+  await writeFile(join(f.dist, '_astro/app.third789.js'), 'third');
+  t.mock.timers.setTime(Date.parse('2026-01-03T00:00:00Z'));
+  const third = await deploy();
+  assert.equal(third.result.deleted, 0);
+  assert.ok(storage.has('/website-zone/battery/retired/index.html'));
+  assert.ok(storage.has('/website-zone/battery/_astro/app.old123.js'));
+  await rm(join(f.dist, '_astro/app.third789.js'));
+  await writeFile(join(f.dist, '_astro/app.fourth012.js'), 'fourth');
+  t.mock.timers.setTime(Date.parse('2026-01-10T00:00:00Z'));
+  const fourth = await deploy();
+  assert.equal(fourth.result.deleted, 3);
+  assert.ok(!storage.has('/website-zone/battery/retired/index.html'));
+  assert.ok(!storage.has('/website-zone/battery/_astro/app.old123.js'));
+  assert.ok(storage.has('/website-zone/battery/_astro/app.third789.js'));
+  assert.ok(storage.has(unrelated));
+  assert.ok(
+    fourth.network.calls
+      .filter((call) => call.method === 'DELETE')
+      .every((call) => new URL(call.url).pathname.startsWith('/website-zone/battery/')),
+  );
+  assert.equal(fourth.network.calls.filter((call) => call.method === 'POST').length, 2);
+});
+
+test('missing, tampered or mismatched durable state cannot reset history or authorize cleanup', async (t) => {
+  const f = await fixture(t);
+  const manifest = await createManifest(f.dist, provenance);
+  const prior = {
+    ...manifest,
+    publishedAt: new Date().toISOString(),
+    destination: destination(config),
+  };
+  const statePath = new URL(stateUrl(config)).pathname;
+  const signed = encodeState(prior, config);
+  const altered = JSON.parse(signed);
+  altered.manifest.owned.push({
+    path: 'unrelated.txt',
+    sha256: 'f'.repeat(64),
+    lastReferencedAt: '2000-01-01',
+  });
+  const otherConfig = { ...config, prefix: 'other-site' };
+  const cases = [
+    { storage: new Map(), config: { ...config, bootstrap: false }, error: /state is missing/ },
+    {
+      storage: new Map([['/website-zone/battery/unrelated.txt', Buffer.from('existing')]]),
+      config,
+      error: /empty website destination/,
+    },
+    { storage: new Map([[statePath, Buffer.from('{')]]), config, error: /corrupt/ },
+    {
+      storage: new Map([[statePath, Buffer.from(JSON.stringify(altered))]]),
+      config,
+      error: /integrity/,
+    },
+    {
+      storage: new Map([
+        [statePath, encodeState({ ...prior, destination: destination(otherConfig) }, otherConfig)],
+      ]),
+      config,
+      error: /different deployment destination/,
+    },
+  ];
+  for (const entry of cases) {
+    const network = mockNetwork({ initialStorage: entry.storage });
+    await assert.rejects(
+      publishSite({
+        dist: f.dist,
+        manifest,
+        config: entry.config,
+        http: network,
+        validatePolicy: async () => {},
+      }),
+      entry.error,
+    );
+    assert.equal(network.calls.filter((call) => ['PUT', 'DELETE'].includes(call.method)).length, 0);
+    assert.deepEqual(network.storage, entry.storage);
+  }
+  assert.throws(() => encodeState({ ...prior, secret: config.stateKey }, config), /credential/);
+  assert.throws(() => safePath('website-deploy-state/forged.json'), /forbidden/);
+});
+
+test('failed publication checks and state writes preserve the last successful manifest', async (t) => {
+  const f = await fixture(t);
+  const firstManifest = await createManifest(f.dist, provenance);
+  const baseline = mockNetwork();
+  await publishSite({
+    dist: f.dist,
+    manifest: firstManifest,
+    config,
+    http: baseline,
+    validatePolicy: async () => {},
+  });
+  const statePath = new URL(stateUrl(config)).pathname;
+  const lastSuccessful = baseline.storage.get(statePath);
+  await writeFile(join(f.dist, 'index.html'), '<h1>Changed website</h1>');
+  const nextManifest = await createManifest(f.dist, provenance);
+  for (const failure of [
+    { failPut: true },
+    { smokeFailure: true },
+    { purgeFailure: true },
+    { stateFailure: true },
+  ]) {
+    const network = mockNetwork({ ...failure, initialStorage: baseline.storage });
+    await assert.rejects(
+      publishSite({
+        dist: f.dist,
+        manifest: nextManifest,
+        config: { ...config, bootstrap: false },
+        http: network,
+        validatePolicy: async () => {},
+      }),
+    );
+    assert.deepEqual(network.storage.get(statePath), lastSuccessful);
+    assert.equal(network.calls.filter((call) => call.method === 'DELETE').length, 0);
+  }
+  await assert.rejects(
+    runPublish({ root: f.root, args: ['--publish', '--previous-manifest=untrusted.json'], env }),
+    /dry-run planning/,
+  );
+});
+
+test('state changes during publication stop a stale deployment before HTML or cleanup', async (t) => {
+  const f = await fixture(t);
+  const manifest = await createManifest(f.dist, provenance);
+  const first = mockNetwork();
+  const prior = await publishSite({
+    dist: f.dist,
+    manifest,
+    config,
+    http: first,
+    validatePolicy: async () => {},
+  });
+  const statePath = new URL(stateUrl(config)).pathname;
+  const network = mockNetwork({ initialStorage: first.storage });
+  const concurrent = encodeState(
+    { ...prior.manifest, publishedAt: new Date(Date.now() + 1).toISOString() },
+    config,
+  );
+  let stateReads = 0;
+  const fetchFn = async (input, options) => {
+    if (String(input) === stateUrl(config) && ++stateReads === 2)
+      network.storage.set(statePath, concurrent);
+    return network.fetchFn(input, options);
+  };
+  await assert.rejects(
+    publishSite({
+      dist: f.dist,
+      manifest,
+      config,
+      http: { ...network, fetchFn },
+      validatePolicy: async () => {},
+    }),
+    /state changed/,
+  );
+  assert.equal(
+    network.calls.filter(
+      (call) =>
+        call.method === 'DELETE' ||
+        (call.method === 'PUT' && (call.url.endsWith('.html') || call.url === stateUrl(config))),
+    ).length,
+    0,
+  );
+  assert.deepEqual(network.storage.get(statePath), concurrent);
 });
 
 test('fresh guard resolves an annotated stable tag despite newer prereleases', async () => {

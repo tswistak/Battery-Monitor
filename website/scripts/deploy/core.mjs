@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import { lstat, readdir, readFile, realpath } from 'node:fs/promises';
 import { extname, relative, resolve, sep } from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
@@ -13,6 +13,7 @@ import {
 
 export const OWNER = 'battery-monitor-website';
 export const RETAIN_MS = 7 * 24 * 60 * 60 * 1000;
+const STATE_DIRECTORY = 'website-deploy-state';
 const REGIONS = new Set([
   'storage.bunnycdn.com',
   ...['uk', 'ny', 'la', 'sg', 'se', 'br', 'jh', 'syd'].map(
@@ -42,7 +43,7 @@ const MIME = {
   '.webmanifest': 'application/manifest+json',
 };
 const FORBIDDEN =
-  /^(?:node_modules|src|scripts|tests|captures|\.git|\.github|\.generated|\.artifacts|\.env(?:\..*)?|package(?:-lock)?\.json|tsconfig(?:\..*)?\.json|astro\.config\..*)$/i;
+  /^(?:node_modules|src|scripts|tests|captures|\.git|\.github|\.generated|\.artifacts|\.env(?:\..*)?|package(?:-lock)?\.json|tsconfig(?:\..*)?\.json|astro\.config\..*|website-deploy-state)$/i;
 const HASH = /^[a-f0-9]{64}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
 export const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -93,6 +94,8 @@ export function configFromEnv(env = process.env, { publishing = false } = {}) {
     pullZoneId: env.BUNNY_PULL_ZONE_ID || null,
     storageKey: env.BUNNY_STORAGE_ACCESS_KEY || null,
     apiKey: env.BUNNY_API_KEY || null,
+    stateKey: env.WEBSITE_DEPLOY_STATE_KEY || null,
+    bootstrap: env.WEBSITE_DEPLOY_BOOTSTRAP === 'true',
     githubToken: env.GITHUB_TOKEN || null,
   };
   if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(config.repository))
@@ -118,6 +121,8 @@ export function configFromEnv(env = process.env, { publishing = false } = {}) {
     throw new Error('Invalid BUNNY_STORAGE_ZONE');
   if (config.pullZoneId && !/^[1-9][0-9]*$/.test(config.pullZoneId))
     throw new Error('BUNNY_PULL_ZONE_ID must be a positive integer');
+  if (env.WEBSITE_DEPLOY_BOOTSTRAP && !['true', 'false'].includes(env.WEBSITE_DEPLOY_BOOTSTRAP))
+    throw new Error('WEBSITE_DEPLOY_BOOTSTRAP must be true or false');
   if (publishing && config.enabled) {
     for (const [key, value] of [
       ['BUNNY_STORAGE_ENDPOINT', config.endpoint],
@@ -125,8 +130,17 @@ export function configFromEnv(env = process.env, { publishing = false } = {}) {
       ['BUNNY_PULL_ZONE_ID', config.pullZoneId],
       ['BUNNY_STORAGE_ACCESS_KEY', config.storageKey],
       ['BUNNY_API_KEY', config.apiKey],
+      ['WEBSITE_DEPLOY_STATE_KEY', config.stateKey],
     ])
       if (!value?.trim()) throw new Error(`Missing ${key}`);
+    if (!config.prefix || config.prefix.split('/')[0] === STATE_DIRECTORY)
+      throw new Error(
+        'Publication requires a nonempty BUNNY_STORAGE_PREFIX outside deployment state',
+      );
+    if (!/^[a-f0-9]{64}$/.test(config.stateKey))
+      throw new Error('WEBSITE_DEPLOY_STATE_KEY must be a separate random 64-character hex secret');
+    if ([config.storageKey, config.apiKey, config.githubToken].includes(config.stateKey))
+      throw new Error('Deployment state signing and service credentials must be distinct');
     if (config.storageKey === config.apiKey)
       throw new Error('Storage and CDN API credentials must be distinct');
   }
@@ -399,24 +413,102 @@ export function destination(config) {
     endpoint: config.endpoint,
     zone: config.zone,
     prefix: config.prefix,
+    pullZoneId: config.pullZoneId,
   };
 }
 
-export async function publishSite({
-  dist,
-  manifest,
-  previous = null,
-  config,
-  http = {},
-  validatePolicy,
-}) {
+export function stateUrl(config) {
+  const name = sha256(JSON.stringify(destination(config))) + '.json';
+  return storageUrl({ ...config, prefix: STATE_DIRECTORY }, name);
+}
+
+export function encodeState(manifest, config) {
+  validateManifest(manifest, { successful: true });
+  if (!isDeepStrictEqual(manifest.destination, destination(config)))
+    throw new Error('Prior manifest belongs to a different deployment destination');
+  const payload = JSON.stringify(manifest);
+  if (
+    [config.storageKey, config.apiKey, config.githubToken, config.stateKey]
+      .filter(Boolean)
+      .some((secret) => payload.includes(secret))
+  )
+    throw new Error('A deployment credential occurs in the deployment manifest');
+  const signature = createHmac('sha256', config.stateKey).update(payload).digest('hex');
+  return Buffer.from(JSON.stringify({ schemaVersion: 1, owner: OWNER, manifest, signature }));
+}
+
+export function decodeState(bytes, config) {
+  let state;
+  try {
+    state = JSON.parse(bytes.toString('utf8'));
+  } catch {
+    throw new Error(
+      'Deployment state is corrupt; restore the last trusted state before publishing',
+    );
+  }
+  if (
+    state?.schemaVersion !== 1 ||
+    state.owner !== OWNER ||
+    !state.manifest ||
+    typeof state.manifest !== 'object' ||
+    Array.isArray(state.manifest) ||
+    !HASH.test(state.signature || '')
+  )
+    throw new Error('Invalid signed deployment state');
+  const expected = createHmac('sha256', config.stateKey)
+    .update(JSON.stringify(state.manifest))
+    .digest();
+  if (!timingSafeEqual(Buffer.from(state.signature, 'hex'), expected))
+    throw new Error('Deployment state integrity check failed');
+  validateManifest(state.manifest, { successful: true });
+  if (!isDeepStrictEqual(state.manifest.destination, destination(config)))
+    throw new Error('Prior manifest belongs to a different deployment destination');
+  return state.manifest;
+}
+
+async function readState(config, http) {
+  const response = await request(
+    stateUrl(config),
+    { headers: { AccessKey: config.storageKey } },
+    http,
+  );
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error(`Cannot read deployment state (${response.status})`);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  return { bytes, manifest: decodeState(bytes, config) };
+}
+
+async function assertUnchangedState(config, state, http) {
+  const latest = await readState(config, http);
+  if ((latest && sha256(latest.bytes)) !== (state && sha256(state.bytes)))
+    throw new Error(
+      'Deployment state changed during publication; refusing stale cleanup or state update',
+    );
+}
+
+async function purgeSite(config, http) {
+  const response = await request(
+    `https://api.bunny.net/pullzone/${config.pullZoneId}/purgeCache`,
+    {
+      method: 'POST',
+      headers: { AccessKey: config.apiKey, 'Content-Type': 'application/json' },
+      body: '{}',
+    },
+    http,
+  );
+  if (response.status !== 204)
+    throw new Error(`Site files uploaded, but CDN invalidation failed (${response.status})`);
+}
+
+export async function publishSite({ dist, manifest, config, http = {}, validatePolicy }) {
   if (!config.enabled) return { status: 'disabled', uploads: 0, deleted: 0 };
   validateManifest(manifest);
   validateProvenance(manifest.provenance, true);
   if (typeof validatePolicy !== 'function')
     throw new Error('A production privacy/configuration validator is required');
   await validatePolicy();
-  const actual = await scanDist(dist, [config.storageKey, config.apiKey, config.githubToken]);
+  const secrets = [config.storageKey, config.apiKey, config.githubToken, config.stateKey];
+  const actual = await scanDist(dist, secrets);
   if (
     JSON.stringify(actual) !==
     JSON.stringify(
@@ -424,14 +516,38 @@ export async function publishSite({
     )
   )
     throw new Error('dist no longer matches its deployment manifest');
-  if (previous && JSON.stringify(previous.destination) !== JSON.stringify(destination(config)))
-    throw new Error('Prior manifest belongs to a different deployment destination');
+  const state = await readState(config, http);
+  const previous = state?.manifest || null;
+  if (!previous) {
+    if (!config.bootstrap)
+      throw new Error(
+        'Deployment state is missing; use WEBSITE_DEPLOY_BOOTSTRAP=true only for an empty initial website destination, or restore trusted state',
+      );
+    const listing = await request(
+      storageUrl(config, 'index.html').replace(/index\.html$/, ''),
+      { headers: { AccessKey: config.storageKey } },
+      http,
+    );
+    if (listing.status !== 404) {
+      const entries = listing.ok ? await listing.json() : null;
+      if (!Array.isArray(entries) || entries.length)
+        throw new Error(
+          'Initial deployment requires an empty website destination; existing files and history were preserved',
+        );
+    }
+  }
+  // Regenerate at the real publish entry point: local artifacts cannot authorize remote deletion.
+  manifest = await createManifest(dist, manifest.provenance, {
+    previous,
+    secrets,
+  });
   const plan = planDeployment(manifest, { previous });
   await assertCurrent(manifest.provenance, config, http);
   let phase = 0;
   for (const file of plan.uploads) {
     if (file.phase > phase) {
       await assertCurrent(manifest.provenance, config, http);
+      if (file.phase === 2) await assertUnchangedState(config, state, http);
       phase = file.phase;
     }
     const bytes = await readFile(resolve(dist, file.path));
@@ -456,17 +572,11 @@ export async function publishSite({
     if (!verification.ok || sha256(Buffer.from(await verification.arrayBuffer())) !== file.sha256)
       throw new Error(`Storage checksum verification failed for ${file.path}`);
   }
-  const purged = await request(
-    `https://api.bunny.net/pullzone/${config.pullZoneId}/purgeCache`,
-    {
-      method: 'POST',
-      headers: { AccessKey: config.apiKey, 'Content-Type': 'application/json' },
-      body: '{}',
-    },
-    http,
-  );
-  if (purged.status !== 204)
-    throw new Error(`Site files uploaded, but CDN invalidation failed (${purged.status})`);
+  await purgeSite(config, http);
+  const { smokeSite } = await import('./smoke.mjs');
+  await smokeSite({ url: config.websiteUrl, manifest, http });
+  await assertCurrent(manifest.provenance, config, http);
+  await assertUnchangedState(config, state, http);
   for (const path of plan.cleanup) {
     const owned = previous.owned.find((entry) => entry.path === path);
     const existing = await request(
@@ -489,16 +599,46 @@ export async function publishSite({
         `Site published, but controlled cleanup failed (${deleted.status}) for ${path}`,
       );
   }
+  if (plan.cleanup.length) await purgeSite(config, http);
   const deleted = new Set(plan.cleanup);
+  const currentPaths = new Set(manifest.files.map((file) => file.path));
+  const publishedAt = new Date().toISOString();
+  const successful = {
+    ...manifest,
+    publishedAt,
+    destination: destination(config),
+    owned: manifest.owned
+      .filter((entry) => !deleted.has(entry.path))
+      .map((entry) =>
+        currentPaths.has(entry.path) ? { ...entry, lastReferencedAt: publishedAt } : entry,
+      ),
+  };
+  const bytes = encodeState(successful, config);
+  await assertUnchangedState(config, state, http);
+  const stored = await request(
+    stateUrl(config),
+    {
+      method: 'PUT',
+      headers: {
+        AccessKey: config.storageKey,
+        'Content-Type': 'application/json',
+        Checksum: sha256(bytes).toUpperCase(),
+      },
+      body: bytes,
+    },
+    http,
+  );
+  if (stored.status !== 201)
+    throw new Error(
+      `Site verified, but successful deployment state could not be persisted (${stored.status})`,
+    );
+  const verified = await readState(config, http);
+  if (!verified || sha256(verified.bytes) !== sha256(bytes))
+    throw new Error('Site verified, but persisted deployment state could not be verified');
   return {
     status: 'published',
     uploads: plan.uploads.length,
     deleted: deleted.size,
-    manifest: {
-      ...manifest,
-      publishedAt: new Date().toISOString(),
-      destination: destination(config),
-      owned: manifest.owned.filter((entry) => !deleted.has(entry.path)),
-    },
+    manifest: successful,
   };
 }

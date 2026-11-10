@@ -40,3 +40,18 @@ const sections = getPrivacySections(config);
     ))}
   </div>
 </SiteLayout>
+
+<style>
+  .document-page :global(.privacy-facts) {
+    margin-block: 1.25rem;
+  }
+  .document-page :global(.privacy-facts div + div) {
+    margin-block-start: 0.75rem;
+  }
+  .document-page :global(.privacy-facts dt) {
+    font-weight: 700;
+  }
+  .document-page :global(.privacy-facts dd) {
+    margin-inline-start: 0;
+  }
+</style>
