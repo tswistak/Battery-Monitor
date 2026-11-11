@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">כן</string>
     <string name="okay" formatted="false">אישור</string>
     <string name="cancel" formatted="false">ביטול</string>
-    <string name="custom" formatted="false">מותאם אישית…</string>
     <string name="currently_set_to" formatted="false">"כעת מכוון ל: "</string>
     <string name="currently_disabled" formatted="false">אינו מאופשר כעת</string>
     <string name="settings_numeric_value">ערך</string>
@@ -262,9 +261,7 @@
     <string name="alarm_settings_subtitle" formatted="false">הגדרות התרעה</string>
     <string name="alarm_settings" formatted="false">התרעות</string>
     <string name="alarm_settings_help" formatted="false">אתה יכול לגרום ל-Battery Monitor להודיע לך מתי רמת הסוללה שלך מגיע למצב מסוים (למשל, הסוללה נטועה במלואה, רמת הסוללה יורדת מתחת ל-20%, ועוד רבים אחרים).</string>
-    <string name="alarms_overview" formatted="false">סקירה כללית של התרעות</string>
-    <string name="alarms_overview_help">כל שמונת סוגי ההתרעות זמינים תמיד. הפעילו אירועים ישירות, או השתמשו ב״הוספת סף״ תחת סוג מטען או טמפרטורה. ספים חדשים מופעלים לאחר שמירה. הקישו על ערך לעריכתו; העריכה שומרת על מצב ההפעלה שלו. ערכים מושבתים נשארים ברשימה. ״מחיקת התרעה״ מבקשת אישור. הצליל והרטט משותפים לפי סוג בהגדרות התראות Android. רשומות כפולות קיימות מופיעות כהתרעה לוגית אחת; שינוי מצב או מחיקה משפיעים על כל העותקים. התרעות טעינה ופריקה עוקבות אחר יעדי ההערכה ואינן שולטות בטעינה. ערוץ חסום או ניטור עצור אינם משנים את המתגים השמורים.</string>
-    <string name="alarms_overview_channels_help" formatted="false">כל שמונת סוגי ההתרעות זמינים תמיד. הפעילו אירועים ישירות, או השתמשו ב״הוספת סף״ תחת סוג מטען או טמפרטורה. ספים חדשים מופעלים לאחר שמירה. הקישו על ערך לעריכתו; העריכה שומרת על מצב ההפעלה שלו. ערכים מושבתים נשארים ברשימה. ״מחיקת התרעה״ מבקשת אישור. הצליל והרטט משותפים לפי סוג בהגדרות התראות Android. רשומות כפולות קיימות מופיעות כהתרעה לוגית אחת; שינוי מצב או מחיקה משפיעים על כל העותקים. התרעות טעינה ופריקה עוקבות אחר יעדי ההערכה ואינן שולטות בטעינה. ערוץ חסום או ניטור עצור אינם משנים את המתגים השמורים.\n
+    <string name="alarms_overview_channels_help" formatted="false">כל שמונת סוגי ההתרעות זמינים תמיד. הפעילו אירועים ישירות, או השתמשו ב״הוספת סף״ תחת סוג מטען או טמפרטורה. ערכים מושבתים נשארים ברשימה. הצליל והרטט משותפים לפי סוג בהגדרות התראות Android. רשומות כפולות קיימות מופיעות כהתרעה לוגית אחת; שינוי מצב משפיע על כל העותקים. התרעות טעינה ופריקה עוקבות אחר יעדי ההערכה ואינן שולטות בטעינה. ערוץ חסום או ניטור עצור אינם משנים את המתגים השמורים.\n
     יש לפתוח את הגדרות ההתראות של Android כדי לאפשר או לחסום התראות ולהגדיר צליל, רטט ואופן מסירה להתראה הראשית ולכל סוג התרעה. הפעלת כלל התרעה אינה עוקפת ערוץ התראות חסום.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d התרעה מופעלת</item>
@@ -293,21 +290,18 @@
     <string name="alarms_android_problem_summary">בעיה בסוללה שמדווחת על ידי המערכת, ולא אחוז בריאות הקיבולת</string>
     <string name="alarm_type_health_failure" formatted="false">כשל בריאותי</string>
     <string name="alarm_health_failure" formatted="false">"בריאות הסוללה היא:"</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">תנאי אזעקה</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">זה המקום שבו אתה יכול לשלוט באילו תנאים מפעילים את האזעקה.</string>
     <string name="pref_alarm_threshold" formatted="false">סַף</string>
-    <string name="pref_alarm_threshold_help" formatted="false">להתרעות מטען וטמפרטורה, הגדירו את הסף ושמרו את הכלל. ההתרעה מופעלת כשקריאה מגיעה לסף או עוברת אותו בכיוון שנבחר. קריאות חוזרות בסף אינן חוזרות על ההתרעה. הפעלת הניטור, ייבוא כלל או הפעלתו מעבר לסף אינם מפעילים אותו מיד; נדרשת חצייה מאוחרת יותר.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">להתרעות מטען וטמפרטורה, הגדירו את הסף ושמרו את הכלל. ספים חדשים מופעלים לאחר שמירה. ההתרעה מופעלת כשקריאה מגיעה לסף או עוברת אותו בכיוון שנבחר. קריאות חוזרות בסף אינן חוזרות על ההתרעה. הפעלת הניטור, ייבוא כלל או הפעלתו מעבר לסף אינם מפעילים אותו מיד; נדרשת חצייה מאוחרת יותר.</string>
     <string name="alarms_add_threshold">הוספת סף</string>
     <string name="alarms_edit_threshold">עריכת סף</string>
     <string name="alarms_edit_existing">עריכת סף קיים</string>
-    <string name="alarms_threshold_edit_help" formatted="false">אם הסף כבר קיים, פתחו אותו באמצעות ״עריכת סף קיים״. אם ההתרעות השמורות משתנות בזמן העריכה, השתמשו ב״רענון״ ופתחו שוב את הסף לפני שתשנו אותו.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">אם הסף כבר קיים, פתחו אותו באמצעות ״עריכת סף קיים״. אם ההתרעות השמורות משתנות בזמן העריכה, השתמשו ב״רענון״ ופתחו שוב את הסף לפני שתשנו אותו.\n
-    יש לפתוח את הגדרות ההתראות של Android כדי לאפשר או לחסום התראות ולהגדיר צליל, רטט ואופן מסירה להתראה הראשית ולכל סוג התרעה. הפעלת כלל התרעה אינה עוקפת ערוץ התראות חסום.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">הקישו על סמל העיפרון ליד ערך הסף כדי לערוך אותו. העריכה שומרת על מצב ההפעלה שלו. כדי למחוק התרעה, פתחו אותה לעריכה, בחרו ב״מחיקת התרעה״ ואשרו את המחיקה. כל העותקים של סף זה יוסרו. אם ההתרעות השמורות משתנות בזמן העריכה, השתמשו ב״רענון״ ופתחו שוב את הסף לפני שתשנו אותו.</string>
     <string name="alarms_new_enabled">ההתרעה תופעל בעת הוספתה.</string>
     <string name="alarms_edit_keeps_enabled">עריכה שומרת על מצב ההפעלה או הכיבוי הנוכחי.</string>
     <string name="alarms_enabled">מופעל</string>
     <string name="alarms_disable">השבתה</string>
     <string name="alarms_options">אפשרויות: %1$s</string>
+    <string name="alarms_options_tooltip">אפשרויות</string>
     <string name="alarms_numeric_range">יש להזין מספר שלם מ־%1$d עד %2$d.</string>
     <string name="alarms_temperature_range">יש להזין מספר מ־%1$d עד %2$d, עם ספרה אחת לכל היותר אחרי הנקודה.</string>
     <string name="alarms_duplicate">סף זה כבר קיים עבור סוג זה.</string>
@@ -315,18 +309,15 @@
     <string name="alarms_discard">ביטול השינויים</string>
     <string name="menu_delete_alarm" formatted="false">מחיקת התרעה</string>
     <string name="alarms_delete_threshold_confirmation">למחוק את %1$s — %2$s? כל העותקים של סף זה יוסרו.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">השבתת את קבוצת התראות האזעקה עבור אפליקציה זו.  אנא הפעל אותו כדי לגשת להתראות שלך</string>
+    <string name="alarms_notifications_disabled">ההתראות מושבתות. יש להפעיל אותן בהגדרות Android כדי לקבל התראות על אזעקות.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">השבתת את קבוצת התראות האזעקה עבור אפליקציה זו.  יש להפעיל אותה בהגדרות Android כדי לקבל התראות על אזעקות.</string>
+    <string name="alarms_open_notification_settings">פתיחת הגדרות ההתראות של Android</string>
     <string name="alarm_chan_disabled" formatted="false">השבתת התראות עבור סוג התראה זה.  אנא אפשר להם להשתמש בסוג זה של אזעקה.</string>
     <string name="alarm_chan_settings_b" formatted="false">נהל את סוג האזעקה הזה</string>
-    <string name="alarms_delivery_sound_vibration">צליל, רטט והתראה</string>
-    <string name="alarms_delivery_sound">צליל והתראה</string>
-    <string name="alarms_delivery_vibration">רטט והתראה</string>
-    <string name="alarms_delivery_notification">התראה בלבד</string>
     <string name="alarms_options_title" formatted="false">אפשרויות התרעה</string>
     <string name="pref_dismiss_low_battery_on_recovery">סגירת התרעת סוללה חלשה לאחר התאוששות</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">הסרת התראת הסוללה החלשה כאשר המטען עולה מעל הסף שלה. התראות התרעה אחרות נשארות</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">הסרת התראת הסוללה החלשה כאשר המטען עולה מעל הסף שלה. התראות התרעה אחרות נשארות.</string>
-    <string name="alarms_channel_unavailable">ערוץ ההתראות לא נוצר או אינו זמין</string>
     <string name="alarms_settings_unavailable">לא ניתן לפתוח את הגדרות ההתראות של Android</string>
     <string name="alarms_target_unknown">היעד אינו זמין. יש לפתוח את הגדרות ההערכה.</string>
     <string name="alarms_monitor_stopped">הניטור עצור. ההתרעות השמורות אינן נבדקות.</string>
@@ -336,7 +327,6 @@
     <string name="alarms_conflict">ההתרעות השמורות השתנו. יש לרענן ולפתוח שוב את הסף לפני ביצוע שינויים.</string>
     <string name="alarms_missing_rule">התרעה זו חסרה או אינה תקינה. יש לבדוק את קטלוג ההתרעות.</string>
     <string name="alarms_invalid_records">חלק מההתרעות השמורות אינן תקינות. יש לבדוק את הרשומות האלו; הן לא הוסרו.</string>
-    <string name="alarms_invalid_records_help" formatted="false">כשמוצגות התרעות שמורות לא תקינות, אפשר להשבית רשומה פעילה בלי למחוק אותה, או למחוק אותה לצמיתות. שתי הפעולות מבקשות אישור.</string>
     <string name="alarms_database_error">לא ניתן לגשת למסד נתוני ההתרעות. יש לנסות שוב.</string>
     <string name="alarms_saved">הגדרות ההתרעות נשמרו</string>
     <string name="alarms_saved_reload_failed">נשמר, אך לא ניתן להודיע לרכיב הניטור. יש לבדוק את מצב הניטור.</string>
@@ -353,6 +343,9 @@
     <string name="history_through">עד: %1$s</string>
     <string name="history_calendar_days">כולל את שני התאריכים שנבחרו, באזור הזמן המקומי.</string>
     <string name="history_invalid_range">יש להזין טווח תאריכים תקין.</string>
+    <string name="history_invalid_month">יש להזין חודש תקין (1–12).</string>
+    <string name="history_invalid_year">יש להזין שנה תקינה (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">תקופה זו מתחילה לפני התאריך המוקדם ביותר שנתמך בהיסטוריה.</string>
     <string name="history_change_range">שינוי</string>
     <string name="history_charts">תרשימים</string>
     <string name="history_level">רמה</string>
@@ -396,7 +389,6 @@
     <string name="history_open_fullscreen">פתיחת התרשים במסך מלא</string>
     <string name="history_chart_description_fullscreen">%1$s. מדידות מ־%2$s עד %3$s.</string>
     <string name="history_chart_select_point">בחירת מדידות</string>
-    <string name="history_chart_event_summary">מחובר (מקפים קצרים): %1$d · מנותק (מקפים ארוכים): %2$d · הפסקות בניטור (קו מנוקד): %3$d</string>
     <string name="history_chart_events">אירועי התרשים</string>
     <string name="history_chart_1h">השעה האחרונה</string>
     <string name="history_chart_6h">6\u00A0השעות האחרונות</string>
@@ -406,7 +398,7 @@
     <string name="history_chart_pan_right">טווח זמן מאוחר יותר</string>
     <string name="history_chart_reset">התאמה לטווח שנבחר</string>
     <string name="history_chart_compare">השוואה</string>
-    <string name="history_chart_remove_comparison">הסרת ההשוואה</string>
+    <string name="history_chart_no_comparison">ללא</string>
     <string name="history_chart_more">פעולות נוספות בתרשים</string>
     <string name="history_chart_settings">הגדרות תצוגת התרשים</string>
     <string name="history_chart_display_style">סגנון תצוגה</string>

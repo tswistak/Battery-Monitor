@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Evet</string>
     <string name="okay" formatted="false">Tamam</string>
     <string name="cancel" formatted="false">İptal</string>
-    <string name="custom" formatted="false">Özel…</string>
     <string name="currently_set_to" formatted="false">"Şu an buna ayarlı: "</string>
     <string name="currently_disabled" formatted="false">Şu An Etkin Değil</string>
     <string name="settings_numeric_value">Değer</string>
@@ -259,9 +258,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Alarm Ayarları</string>
     <string name="alarm_settings" formatted="false">Alarmlar</string>
     <string name="alarm_settings_help" formatted="false">Pil seviyesi belirli bir duruma geldiğinde Battery Monitor sizi bilgilendirebilir.</string>
-    <string name="alarms_overview" formatted="false">Alarmlara Genel Bakış</string>
-    <string name="alarms_overview_help">Sekiz alarm türünün tümü her zaman kullanılabilir. Olayları doğrudan açın veya şarj ya da sıcaklık türü altında “Eşik ekle” kullanın. Yeni eşikler kaydedildikten sonra etkinleşir. Düzenlemek için bir değere dokunun; düzenleme açık/kapalı durumunu korur. Devre dışı değerler listede kalır. “Alarm Sil” onay ister. Ses ve titreşim, Android bildirim ayarlarında tür bazında ortaktır. Mevcut yinelenen kayıtlar tek bir mantıksal alarm olarak görünür; açma/kapatma veya silme tüm kopyaları etkiler. Şarj ve boşalma alarmları tahmin hedeflerini izler ve şarjı denetlemez. Engellenen kanal veya durdurulan izleme, kaydedilen anahtarları değiştirmez.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Sekiz alarm türünün tümü her zaman kullanılabilir. Olayları doğrudan açın veya şarj ya da sıcaklık türü altında “Eşik ekle” kullanın. Yeni eşikler kaydedildikten sonra etkinleşir. Düzenlemek için bir değere dokunun; düzenleme açık/kapalı durumunu korur. Devre dışı değerler listede kalır. “Alarm Sil” onay ister. Ses ve titreşim, Android bildirim ayarlarında tür bazında ortaktır. Mevcut yinelenen kayıtlar tek bir mantıksal alarm olarak görünür; açma/kapatma veya silme tüm kopyaları etkiler. Şarj ve boşalma alarmları tahmin hedeflerini izler ve şarjı denetlemez. Engellenen kanal veya durdurulan izleme, kaydedilen anahtarları değiştirmez.\n
+    <string name="alarms_overview_channels_help" formatted="false">Sekiz alarm türünün tümü her zaman kullanılabilir. Olayları doğrudan açın veya şarj ya da sıcaklık türü altında “Eşik ekle” kullanın. Devre dışı değerler listede kalır. Ses ve titreşim, Android bildirim ayarlarında tür bazında ortaktır. Mevcut yinelenen kayıtlar tek bir mantıksal alarm olarak görünür; açma/kapatma tüm kopyaları etkiler. Şarj ve boşalma alarmları tahmin hedeflerini izler ve şarjı denetlemez. Engellenen kanal veya durdurulan izleme, kaydedilen anahtarları değiştirmez.\n
     Bildirimlere izin vermek veya engellemek, ana bildirim ve her alarm türü için ses, titreşim ve iletim ayarlarını yapmak üzere Android bildirim ayarlarını açın. Bir alarm kuralını etkinleştirmek, engellenmiş bildirim kanalını geçersiz kılmaz.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm etkin</item>
@@ -289,21 +286,18 @@
     <string name="alarms_android_problem_summary">Kapasite sağlığı yüzdesi değil, sistemin bildirdiği pil sorunudur</string>
     <string name="alarm_type_health_failure" formatted="false">Sağlık yetersiz</string>
     <string name="alarm_health_failure" formatted="false">"Pil sağlığı: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Alarm Koşulları</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Burada hangi koşulların alarm tetikleyeceğini kontrol edebilirsiniz.</string>
     <string name="pref_alarm_threshold" formatted="false">Eşik</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Şarj ve sıcaklık alarmları için eşiği ayarlayıp kuralı kaydedin. Ölçüm, seçilen yönde eşiğe ulaştığında veya eşiği geçtiğinde alarm tetiklenir. Eşikte tekrarlanan ölçümler alarmı yinelemez. İzlemeyi başlatmak, kural içe aktarmak veya eşik aşılmışken etkinleştirmek hemen tetiklemez; daha sonra bir eşik geçişi gerekir.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Şarj ve sıcaklık alarmları için eşiği ayarlayıp kuralı kaydedin. Yeni eşikler kaydedildikten sonra etkinleşir. Ölçüm, seçilen yönde eşiğe ulaştığında veya eşiği geçtiğinde alarm tetiklenir. Eşikte tekrarlanan ölçümler alarmı yinelemez. İzlemeyi başlatmak, kural içe aktarmak veya eşik aşılmışken etkinleştirmek hemen tetiklemez; daha sonra bir eşik geçişi gerekir.</string>
     <string name="alarms_add_threshold">Eşik ekle</string>
     <string name="alarms_edit_threshold">Eşiği düzenle</string>
     <string name="alarms_edit_existing">Mevcut eşiği düzenle</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Bir eşik zaten varsa “Mevcut eşiği düzenle” ile açın. Kayıtlı alarmlar düzenleme sırasında değişirse “Yenile” seçeneğini kullanın ve değiştirmeden önce eşiği yeniden açın.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Bir eşik zaten varsa “Mevcut eşiği düzenle” ile açın. Kayıtlı alarmlar düzenleme sırasında değişirse “Yenile” seçeneğini kullanın ve değiştirmeden önce eşiği yeniden açın.\n
-    Bildirimlere izin vermek veya engellemek, ana bildirim ve her alarm türü için ses, titreşim ve iletim ayarlarını yapmak üzere Android bildirim ayarlarını açın. Bir alarm kuralını etkinleştirmek, engellenmiş bildirim kanalını geçersiz kılmaz.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Düzenlemek için eşik değerinin yanındaki kalem simgesine dokunun. Düzenleme açık/kapalı durumunu korur. Bir alarmı silmek için düzenleyicisini açın, “Alarm Sil” seçeneğini seçin ve silmeyi onaylayın. Bu eşiğin tüm kopyaları kaldırılacak. Kayıtlı alarmlar düzenleme sırasında değişirse “Yenile” seçeneğini kullanın ve değiştirmeden önce eşiği yeniden açın.</string>
     <string name="alarms_new_enabled">Alarm eklendiğinde etkinleştirilecek.</string>
     <string name="alarms_edit_keeps_enabled">Düzenleme, geçerli açık/kapalı ayarını korur.</string>
     <string name="alarms_enabled">Etkin</string>
     <string name="alarms_disable">Devre dışı bırak</string>
     <string name="alarms_options">Seçenekler: %1$s</string>
+    <string name="alarms_options_tooltip">Seçenekler</string>
     <string name="alarms_numeric_range">%1$d ile %2$d arasında bir tam sayı girin.</string>
     <string name="alarms_temperature_range">%1$d ile %2$d arasında, en fazla bir ondalık basamaklı bir sayı girin.</string>
     <string name="alarms_duplicate">Bu tür için eşik zaten mevcut.</string>
@@ -311,18 +305,15 @@
     <string name="alarms_discard">Vazgeç</string>
     <string name="menu_delete_alarm" formatted="false">Alarm Sil</string>
     <string name="alarms_delete_threshold_confirmation">%1$s — %2$s silinsin mi? Bu eşiğin tüm kopyaları kaldırılacak.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Bu uygulama için alarm bildirim grubunu kapattınız. Alarmlara erişmek için etkinleştirin</string>
+    <string name="alarms_notifications_disabled">Bildirimler kapalı. Alarm bildirimlerini almak için Android ayarlarından bildirimleri açın.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Bu uygulama için alarm bildirim grubunu kapattınız. Alarm bildirimlerini almak için bu grubu Android ayarlarından açın.</string>
+    <string name="alarms_open_notification_settings">Android bildirim ayarlarını aç</string>
     <string name="alarm_chan_disabled" formatted="false">Bu alarm türü için bildirimleri kapattınız. Bu alarm türünü kullanmak için etkinleştirin.</string>
     <string name="alarm_chan_settings_b" formatted="false">Bu Alarm Türünü Yönet</string>
-    <string name="alarms_delivery_sound_vibration">Ses, titreşim ve bildirim</string>
-    <string name="alarms_delivery_sound">Ses ve bildirim</string>
-    <string name="alarms_delivery_vibration">Titreşim ve bildirim</string>
-    <string name="alarms_delivery_notification">Yalnızca bildirim</string>
     <string name="alarms_options_title" formatted="false">Alarm seçenekleri</string>
     <string name="pref_dismiss_low_battery_on_recovery">Şarj yükseldiğinde düşük pil alarmını kaldır</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Şarj eşik değerinin üzerine çıktığında düşük pil bildirimini kaldırır. Diğer alarm bildirimleri kalır</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Şarj eşik değerinin üzerine çıktığında düşük pil bildirimini kaldırır. Diğer alarm bildirimleri kalır.</string>
-    <string name="alarms_channel_unavailable">Bildirim kanalı oluşturulmamış veya mevcut değil</string>
     <string name="alarms_settings_unavailable">Android bildirim ayarları açılamadı</string>
     <string name="alarms_target_unknown">Hedef mevcut değil. Tahmin ayarlarını açın.</string>
     <string name="alarms_monitor_stopped">İzleme durduruldu. Kaydedilen alarmlar değerlendirilmiyor.</string>
@@ -332,7 +323,6 @@
     <string name="alarms_conflict">Kaydedilen alarmlar değişti. Değişiklik yapmadan önce yenileyip eşiği yeniden açın.</string>
     <string name="alarms_missing_rule">Bu alarm eksik veya geçersiz. Alarm kataloğunu gözden geçirin.</string>
     <string name="alarms_invalid_records">Kaydedilen bazı alarmlar geçersiz. Bu kayıtları gözden geçirin; kaldırılmadılar.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Geçersiz kayıtlı alarmlar listelendiğinde, etkin bir kaydı silmeden devre dışı bırakabilir veya kalıcı olarak silebilirsiniz. Her iki işlem de onay ister.</string>
     <string name="alarms_database_error">Alarm veritabanına erişilemedi. Yeniden deneyin.</string>
     <string name="alarms_saved">Alarm ayarları kaydedildi</string>
     <string name="alarms_saved_reload_failed">Kaydedildi ancak izleme hizmetine bildirilemedi. İzleme durumunu gözden geçirin.</string>
@@ -349,6 +339,9 @@
     <string name="history_through">Bitiş: %1$s</string>
     <string name="history_calendar_days">Yerel saat diliminde seçilen iki tarih de dahildir.</string>
     <string name="history_invalid_range">Geçerli bir tarih aralığı girin.</string>
+    <string name="history_invalid_month">Geçerli bir ay girin (1–12).</string>
+    <string name="history_invalid_year">Geçerli bir yıl girin (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Bu takvim dönemi, geçmişte desteklenen en eski tarihten önce başlıyor.</string>
     <string name="history_change_range">Değiştir</string>
     <string name="history_charts">Grafikler</string>
     <string name="history_level">Seviye</string>
@@ -392,7 +385,6 @@
     <string name="history_open_fullscreen">Tam ekran grafiği aç</string>
     <string name="history_chart_description_fullscreen">%1$s. %2$s ile %3$s arasındaki ölçümler.</string>
     <string name="history_chart_select_point">Ölçümleri seç</string>
-    <string name="history_chart_event_summary">Bağlandı (kısa çizgiler): %1$d · Bağlantı kesildi (uzun çizgiler): %2$d · İzleme kesintileri (noktalı): %3$d</string>
     <string name="history_chart_events">Grafik olayları</string>
     <string name="history_chart_1h">Son 1\u00A0saat</string>
     <string name="history_chart_6h">Son 6\u00A0saat</string>
@@ -402,7 +394,7 @@
     <string name="history_chart_pan_right">Daha sonraki zaman aralığı</string>
     <string name="history_chart_reset">Seçilen aralığı sığdır</string>
     <string name="history_chart_compare">Karşılaştır</string>
-    <string name="history_chart_remove_comparison">Karşılaştırmayı kaldır</string>
+    <string name="history_chart_no_comparison">Yok</string>
     <string name="history_chart_more">Diğer grafik işlemleri</string>
     <string name="history_chart_settings">Grafik görüntüleme ayarları</string>
     <string name="history_chart_display_style">Görüntüleme biçimi</string>

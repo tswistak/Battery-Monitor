@@ -74,15 +74,6 @@ internal data class AlarmsState(
     val enabledCount: Int? get() = if (hasSnapshot) projection.enabledCount else null
 }
 
-internal fun alarmDeliveryLabel(channel: AlarmChannelInfo?): Int = when {
-    channel == null || !channel.available -> R.string.alarms_channel_unavailable
-    channel.blocked -> R.string.alarm_chan_disabled
-    channel.sound && channel.vibration -> R.string.alarms_delivery_sound_vibration
-    channel.sound -> R.string.alarms_delivery_sound
-    channel.vibration -> R.string.alarms_delivery_vibration
-    else -> R.string.alarms_delivery_notification
-}
-
 internal class AlarmsViewModel(
     application: Application, private val savedState: SavedStateHandle
 ) : AndroidViewModel(application) {

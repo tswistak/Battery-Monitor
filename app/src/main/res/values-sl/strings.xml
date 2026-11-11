@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Da</string>
     <string name="okay" formatted="false">Vredu</string>
     <string name="cancel" formatted="false">Prekliči</string>
-    <string name="custom" formatted="false">Po meri…</string>
     <string name="currently_set_to" formatted="false">"Trenutno nastavljeno na: "</string>
     <string name="currently_disabled" formatted="false">Trenutno onemogočeno</string>
     <string name="settings_numeric_value">Vrednost</string>
@@ -265,9 +264,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Nastavitve alarma</string>
     <string name="alarm_settings" formatted="false">Alarmi</string>
     <string name="alarm_settings_help" formatted="false">Battery Monitor lahko nastavite tako, da vas obvesti ko baterija doseže določeno točko (npr., baterija se popolnoma napolni, baterija pade pod 20%).</string>
-    <string name="alarms_overview" formatted="false">Pregled alarmov</string>
-    <string name="alarms_overview_help">Vseh osem vrst alarmov je vedno na voljo. Dogodke vklopite neposredno ali uporabite „Dodaj prag“ pri vrsti napolnjenosti ali temperature. Novi pragi se omogočijo po shranjevanju. Tapnite vrednost za urejanje; urejanje ohrani stanje vklopa/izklopa. Onemogočene vrednosti ostanejo na seznamu. „Zbriši alarm“ zahteva potrditev. Zvok in vibriranje se delita po vrsti v nastavitvah obvestil Androida. Obstoječi podvojeni zapisi se prikažejo kot en logični alarm; preklop ali brisanje vpliva na vse kopije. Alarmi polnjenja in praznjenja sledijo ciljem ocen in ne upravljajo polnjenja. Blokiran kanal ali ustavljeno spremljanje ne spremeni shranjenih stikal.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Vseh osem vrst alarmov je vedno na voljo. Dogodke vklopite neposredno ali uporabite „Dodaj prag“ pri vrsti napolnjenosti ali temperature. Novi pragi se omogočijo po shranjevanju. Tapnite vrednost za urejanje; urejanje ohrani stanje vklopa/izklopa. Onemogočene vrednosti ostanejo na seznamu. „Zbriši alarm“ zahteva potrditev. Zvok in vibriranje se delita po vrsti v nastavitvah obvestil Androida. Obstoječi podvojeni zapisi se prikažejo kot en logični alarm; preklop ali brisanje vpliva na vse kopije. Alarmi polnjenja in praznjenja sledijo ciljem ocen in ne upravljajo polnjenja. Blokiran kanal ali ustavljeno spremljanje ne spremeni shranjenih stikal.\n
+    <string name="alarms_overview_channels_help" formatted="false">Vseh osem vrst alarmov je vedno na voljo. Dogodke vklopite neposredno ali uporabite „Dodaj prag“ pri vrsti napolnjenosti ali temperature. Onemogočene vrednosti ostanejo na seznamu. Zvok in vibriranje se delita po vrsti v nastavitvah obvestil Androida. Obstoječi podvojeni zapisi se prikažejo kot en logični alarm; preklop vpliva na vse kopije. Alarmi polnjenja in praznjenja sledijo ciljem ocen in ne upravljajo polnjenja. Blokiran kanal ali ustavljeno spremljanje ne spremeni shranjenih stikal.\n
     Odprite nastavitve obvestil Androida, da dovolite ali blokirate obvestila ter nastavite zvok, vibriranje in dostavo glavnega obvestila in posameznih vrst alarmov. Omogočitev pravila alarma ne preglasi blokiranega kanala obvestil.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm omogočen</item>
@@ -297,21 +294,18 @@
     <string name="alarms_android_problem_summary">Težava baterije, ki jo poroča sistem, ne odstotek zdravja kapacitete</string>
     <string name="alarm_type_health_failure" formatted="false">Zdravstveni neuspeh</string>
     <string name="alarm_health_failure" formatted="false">"Zdravje baterije je: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Stanje alarmov</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Tukaj lahko nadzirajte, kateri pogoji sprožijo alarm.</string>
     <string name="pref_alarm_threshold" formatted="false">Meja</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Za alarme napolnjenosti in temperature nastavite prag in shranite pravilo. Alarm se sproži, ko meritev doseže ali preseže prag v izbrani smeri. Ponovljene meritve na pragu ne ponovijo alarma. Zagon spremljanja, uvoz pravila ali omogočitev za pragom ga ne sproži takoj; potreben je poznejši prehod.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Za alarme napolnjenosti in temperature nastavite prag in shranite pravilo. Novi pragi se omogočijo po shranjevanju. Alarm se sproži, ko meritev doseže ali preseže prag v izbrani smeri. Ponovljene meritve na pragu ne ponovijo alarma. Zagon spremljanja, uvoz pravila ali omogočitev za pragom ga ne sproži takoj; potreben je poznejši prehod.</string>
     <string name="alarms_add_threshold">Dodaj prag</string>
     <string name="alarms_edit_threshold">Uredi prag</string>
     <string name="alarms_edit_existing">Uredi obstoječi prag</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Če prag že obstaja, ga odprite z možnostjo „Uredi obstoječi prag“. Če se shranjeni alarmi med urejanjem spremenijo, uporabite „Osveži“ in prag znova odprite, preden ga spremenite.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Če prag že obstaja, ga odprite z možnostjo „Uredi obstoječi prag“. Če se shranjeni alarmi med urejanjem spremenijo, uporabite „Osveži“ in prag znova odprite, preden ga spremenite.\n
-    Odprite nastavitve obvestil Androida, da dovolite ali blokirate obvestila ter nastavite zvok, vibriranje in dostavo glavnega obvestila in posameznih vrst alarmov. Omogočitev pravila alarma ne preglasi blokiranega kanala obvestil.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Tapnite ikono svinčnika ob vrednosti praga, da jo uredite. Urejanje ohrani stanje vklopa/izklopa. Če želite izbrisati alarm, odprite urejevalnik alarma, izberite „Zbriši alarm“ in potrdite brisanje. Vse kopije tega praga bodo odstranjene. Če se shranjeni alarmi med urejanjem spremenijo, uporabite „Osveži“ in prag znova odprite, preden ga spremenite.</string>
     <string name="alarms_new_enabled">Alarm bo omogočen po dodajanju.</string>
     <string name="alarms_edit_keeps_enabled">Urejanje ohrani trenutno stanje vklopa/izklopa.</string>
     <string name="alarms_enabled">Omogočeno</string>
     <string name="alarms_disable">Onemogoči</string>
     <string name="alarms_options">Možnosti: %1$s</string>
+    <string name="alarms_options_tooltip">Možnosti</string>
     <string name="alarms_numeric_range">Vnesite celo število od %1$d do %2$d.</string>
     <string name="alarms_temperature_range">Vnesite število od %1$d do %2$d z največ eno decimalko.</string>
     <string name="alarms_duplicate">Ta prag za to vrsto že obstaja.</string>
@@ -319,18 +313,15 @@
     <string name="alarms_discard">Zavrzi</string>
     <string name="menu_delete_alarm" formatted="false">Zbriši alarm</string>
     <string name="alarms_delete_threshold_confirmation">Izbrišem %1$s — %2$s? Vse kopije tega praga bodo odstranjene.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Za to aplikacijo ste onemogočili skupino obvestil o alarmih.  Omogočite ga za dostop do svojih alarmov</string>
+    <string name="alarms_notifications_disabled">Obvestila so izklopljena. Omogočite jih v nastavitvah sistema Android, da boste prejemali obvestila o alarmih.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Za to aplikacijo ste onemogočili skupino obvestil o alarmih.  Omogočite jo v nastavitvah sistema Android, da boste prejemali obvestila o alarmih.</string>
+    <string name="alarms_open_notification_settings">Odpri nastavitve obvestil sistema Android</string>
     <string name="alarm_chan_disabled" formatted="false">Za to vrsto alarma ste onemogočili obvestila.  Omogočite jim uporabo te vrste alarma.</string>
     <string name="alarm_chan_settings_b" formatted="false">Upravljanje te vrste alarma</string>
-    <string name="alarms_delivery_sound_vibration">Zvok, vibriranje in obvestilo</string>
-    <string name="alarms_delivery_sound">Zvok in obvestilo</string>
-    <string name="alarms_delivery_vibration">Vibriranje in obvestilo</string>
-    <string name="alarms_delivery_notification">Samo obvestilo</string>
     <string name="alarms_options_title" formatted="false">Možnosti alarmov</string>
     <string name="pref_dismiss_low_battery_on_recovery">Odstrani alarm za prazno baterijo po obnovitvi</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Odstrani obvestilo o prazni bateriji, ko napolnjenost preseže njegov prag. Druga obvestila alarmov ostanejo</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Odstrani obvestilo o prazni bateriji, ko napolnjenost preseže njegov prag. Druga obvestila alarmov ostanejo.</string>
-    <string name="alarms_channel_unavailable">Kanal obvestil ni ustvarjen ali ni na voljo</string>
     <string name="alarms_settings_unavailable">Nastavitev obvestil Androida ni bilo mogoče odpreti</string>
     <string name="alarms_target_unknown">Cilj ni na voljo. Odprite nastavitve ocen.</string>
     <string name="alarms_monitor_stopped">Spremljanje je ustavljeno. Shranjeni alarmi se ne preverjajo.</string>
@@ -340,7 +331,6 @@
     <string name="alarms_conflict">Shranjeni alarmi so se spremenili. Pred spremembami osvežite in znova odprite prag.</string>
     <string name="alarms_missing_rule">Ta alarm manjka ali je neveljaven. Preglejte katalog alarmov.</string>
     <string name="alarms_invalid_records">Nekateri shranjeni alarmi so neveljavni. Preglejte te zapise; niso bili odstranjeni.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Ko so navedeni neveljavni shranjeni alarmi, lahko omogočeni vnos onemogočite, ne da bi ga izbrisali, ali ga trajno izbrišete. Obe dejanji zahtevata potrditev.</string>
     <string name="alarms_database_error">Do zbirke alarmov ni bilo mogoče dostopati. Poskusite znova.</string>
     <string name="alarms_saved">Nastavitve alarmov shranjene</string>
     <string name="alarms_saved_reload_failed">Shranjeno, vendar spremljanja ni bilo mogoče obvestiti. Preverite stanje spremljanja.</string>
@@ -357,6 +347,9 @@
     <string name="history_through">Do: %1$s</string>
     <string name="history_calendar_days">Vključuje oba izbrana datuma v lokalnem časovnem pasu.</string>
     <string name="history_invalid_range">Vnesite veljaven datumski obseg.</string>
+    <string name="history_invalid_month">Vnesite veljaven mesec (1–12).</string>
+    <string name="history_invalid_year">Vnesite veljavno leto (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">To koledarsko obdobje se začne pred najzgodnejšim datumom, ki ga podpira zgodovina.</string>
     <string name="history_change_range">Spremeni</string>
     <string name="history_charts">Grafi</string>
     <string name="history_level">Raven</string>
@@ -400,7 +393,6 @@
     <string name="history_open_fullscreen">Odpri celozaslonski graf</string>
     <string name="history_chart_description_fullscreen">%1$s. Meritve od %2$s do %3$s.</string>
     <string name="history_chart_select_point">Izberi meritve</string>
-    <string name="history_chart_event_summary">Priklopi (kratke črtice): %1$d · Odklopi (dolge črtice): %2$d · Prekinitve spremljanja (pike): %3$d</string>
     <string name="history_chart_events">Dogodki v grafu</string>
     <string name="history_chart_1h">Zadnja ura</string>
     <string name="history_chart_6h">Zadnjih 6\u00A0ur</string>
@@ -410,7 +402,7 @@
     <string name="history_chart_pan_right">Poznejši časovni interval</string>
     <string name="history_chart_reset">Prikaži celoten izbrani razpon</string>
     <string name="history_chart_compare">Primerjaj</string>
-    <string name="history_chart_remove_comparison">Odstrani primerjavo</string>
+    <string name="history_chart_no_comparison">Nič</string>
     <string name="history_chart_more">Več dejanj grafa</string>
     <string name="history_chart_settings">Nastavitve prikaza grafa</string>
     <string name="history_chart_display_style">Slog prikaza</string>

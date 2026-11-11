@@ -7,6 +7,7 @@
 */
 package codes.swistak.batterymonitor.ui.history
 
+import android.text.format.DateFormat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
@@ -47,6 +49,9 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.error
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -59,7 +64,9 @@ import java.time.YearMonth
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.format.DecimalStyle
 import java.time.format.FormatStyle
+import java.util.Locale
 
 internal fun historyDatePickerMillis(date: LocalDate): Long =
     date.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
@@ -67,26 +74,43 @@ internal fun historyDatePickerMillis(date: LocalDate): Long =
 internal fun historyDatePickerDate(millis: Long): LocalDate =
     Instant.ofEpochMilli(millis).atZone(ZoneOffset.UTC).toLocalDate()
 
+internal data class HistoryRangeDraft(
+    val range: HistoryRangeState?,
+    val invalidMonth: Boolean = false,
+    val invalidYear: Boolean = false
+)
+
 internal fun historyDraftRange(
     mode: String, first: String, last: String, month: String, year: String, zone: ZoneId
-): HistoryRangeState? = runCatching {
-    when (mode) {
-        "month" -> {
-            val selected =
-                YearMonth.of(year.toInt().also { require(it in 1970..9999) }, month.toInt())
-            HistoryRangeState.days(selected.atDay(1), selected.atEndOfMonth(), zone)
-        }
+): HistoryRangeDraft {
+    if (mode != "month" && mode != "year") return HistoryRangeDraft(
+        range = runCatching {
+            HistoryRangeState.days(LocalDate.parse(first), LocalDate.parse(last), zone)
+        }.getOrNull()
+    )
 
-        "year" -> {
-            val selected = year.toInt().also { require(it in 1970..9999) }
-            HistoryRangeState.days(
-                LocalDate.of(selected, 1, 1), LocalDate.of(selected, 12, 31), zone
-            )
-        }
+    val selectedMonth = if (mode == "month") month.toIntOrNull()?.takeIf { it in 1..12 } else 1
+    val selectedYear = year.toIntOrNull()?.takeIf { it in 1970..9999 }
+    if (selectedMonth == null || selectedYear == null) return HistoryRangeDraft(
+        range = null, invalidMonth = selectedMonth == null, invalidYear = selectedYear == null
+    )
+    return HistoryRangeDraft(
+        range = runCatching {
+            val firstMonth = YearMonth.of(selectedYear, selectedMonth)
+            val lastMonth = if (mode == "month") firstMonth else YearMonth.of(selectedYear, 12)
+            HistoryRangeState.days(firstMonth.atDay(1), lastMonth.atEndOfMonth(), zone)
+        }.getOrNull()
+    )
+}
 
-        else -> HistoryRangeState.days(LocalDate.parse(first), LocalDate.parse(last), zone)
-    }
-}.getOrNull()
+internal fun historyCalendarRangeTitle(
+    range: HistoryRangeState, label: String, locale: Locale, zone: ZoneId
+): String {
+    val pattern = if (label == "month") DateFormat.getBestDateTimePattern(locale, "MMy") else "uuuu"
+    val start = Instant.ofEpochMilli(range.start).atZone(zone).toLocalDate()
+    return DateTimeFormatter.ofPattern(pattern, locale).withDecimalStyle(DecimalStyle.of(locale))
+        .format(start)
+}
 
 @Composable
 internal fun HistoryRangeControl(
@@ -125,6 +149,11 @@ internal fun HistoryRangeControl(
         "72h" -> stringResource(R.string.history_last_3d)
         "7d" -> stringResource(R.string.history_last_7d)
         "all" -> stringResource(R.string.history_all_history)
+        "custom" -> stringResource(R.string.history_custom_range)
+        "month", "year" -> remember(state.range, state.rangeLabel, locale, zone) {
+            historyCalendarRangeTitle(state.range, state.rangeLabel, locale, zone)
+        }
+
         else -> stringResource(R.string.history_range)
     }
     Surface(
@@ -162,7 +191,11 @@ internal fun HistoryRangeControl(
                     title,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
-                    maxLines = if (compact) 1 else Int.MAX_VALUE,
+                    maxLines = when {
+                        !compact -> Int.MAX_VALUE
+                        state.rangeLabel == "custom" -> 2
+                        else -> 1
+                    },
                     overflow = TextOverflow.Ellipsis
                 )
                 if (!compact && state.rangeLabel !in setOf("24h", "72h", "7d")) Text(
@@ -208,10 +241,10 @@ internal fun HistoryRangeControl(
                     }
                     add("24h" to R.string.history_last_24h)
                     add("7d" to R.string.history_last_7d)
-                    add("all" to R.string.history_all_history)
-                    add("custom" to R.string.history_custom_range)
                     add("month" to R.string.history_month)
                     add("year" to R.string.history_year)
+                    add("all" to R.string.history_all_history)
+                    add("custom" to R.string.history_custom_range)
                 }
                 options.forEach { (value, label) ->
                     Row(
@@ -304,7 +337,17 @@ internal fun HistoryRangeControl(
     if (mode in setOf("custom", "month", "year")) {
         val editorMode = mode!!
         var handled by remember(editorMode) { mutableStateOf(false) }
-        val range = historyDraftRange(editorMode, first, last, month, year, zone)
+        val draft = historyDraftRange(editorMode, first, last, month, year, zone)
+        val range = draft.range
+        val confirm: () -> Unit = {
+            if (!handled && mode == editorMode) {
+                historyDraftRange(editorMode, first, last, month, year, zone).range?.let { valid ->
+                    handled = true
+                    mode = null
+                    onRange(valid, editorMode)
+                }
+            }
+        }
         if (dialogsAllowed) AlertDialog(
             onDismissRequest = {
                 if (!handled && mode == editorMode) {
@@ -349,36 +392,43 @@ internal fun HistoryRangeControl(
                             stringResource(R.string.history_calendar_days),
                             style = MaterialTheme.typography.bodySmall
                         )
-                    } else {
-                        OutlinedTextField(
-                            year,
-                            { year = it },
-                            label = { Text(stringResource(R.string.history_year)) },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            singleLine = true
+                        if (range == null) Text(
+                            stringResource(R.string.history_invalid_range),
+                            color = MaterialTheme.colorScheme.error
                         )
-                        if (editorMode == "month") OutlinedTextField(
-                            month,
-                            { month = it },
-                            label = { Text(stringResource(R.string.history_month)) },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            singleLine = true
+                    } else {
+                        val monthEditor = editorMode == "month"
+                        CalendarNumberField(
+                            value = year,
+                            onValueChange = { year = it },
+                            label = stringResource(R.string.history_year),
+                            errorText = if (draft.invalidYear) {
+                                stringResource(R.string.history_invalid_year)
+                            } else null,
+                            imeAction = if (monthEditor) ImeAction.Next else ImeAction.Done,
+                            onDone = confirm
+                        )
+                        if (monthEditor) CalendarNumberField(
+                            value = month,
+                            onValueChange = { month = it },
+                            label = stringResource(R.string.history_month),
+                            errorText = if (draft.invalidMonth) {
+                                stringResource(R.string.history_invalid_month)
+                            } else null,
+                            imeAction = ImeAction.Done,
+                            onDone = confirm
+                        )
+                        if (range == null && !draft.invalidYear && !draft.invalidMonth) Text(
+                            stringResource(R.string.history_calendar_period_unavailable),
+                            color = MaterialTheme.colorScheme.error
                         )
                     }
-                    if (range == null) Text(
-                        stringResource(R.string.history_invalid_range),
-                        color = MaterialTheme.colorScheme.error
-                    )
                 }
             },
             confirmButton = {
-                TextButton(onClick = {
-                    if (!handled && mode == editorMode && range != null) {
-                        handled = true
-                        mode = null
-                        onRange(range, editorMode)
-                    }
-                }, enabled = range != null) { Text(stringResource(R.string.okay)) }
+                TextButton(onClick = confirm, enabled = range != null) {
+                    Text(stringResource(R.string.okay))
+                }
             },
             dismissButton = {
                 TextButton(onClick = {
@@ -389,4 +439,28 @@ internal fun HistoryRangeControl(
                 }) { Text(stringResource(R.string.cancel)) }
             })
     }
+}
+
+@Composable
+private fun CalendarNumberField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    errorText: String?,
+    imeAction: ImeAction,
+    onDone: () -> Unit
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = if (errorText != null) Modifier.semantics { error(errorText) } else Modifier,
+        label = { Text(label) },
+        supportingText = if (errorText != null) ({ Text(errorText) }) else null,
+        isError = errorText != null,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number, imeAction = imeAction
+        ),
+        keyboardActions = KeyboardActions(onDone = { onDone() }),
+        singleLine = true
+    )
 }

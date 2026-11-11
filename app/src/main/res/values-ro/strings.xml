@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Da</string>
     <string name="okay" formatted="false">Bine</string>
     <string name="cancel" formatted="false">Anuleaza</string>
-    <string name="custom" formatted="false">Personalizat…</string>
     <string name="currently_set_to" formatted="false">"Acum setat la: "</string>
     <string name="currently_disabled" formatted="false">Dezactivat Acum</string>
     <string name="settings_numeric_value">Valoare</string>
@@ -262,9 +261,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Setări de alarmă</string>
     <string name="alarm_settings" formatted="false">Alarme</string>
     <string name="alarm_settings_help" formatted="false">Puteți solicita Battery Monitor să vă anunțe când nivelul bateriei este atinge o anumită condiție (de exemplu, bateria se încarcă complet, nivelul bateriei scade sub 20% și multe altele).</string>
-    <string name="alarms_overview" formatted="false">Prezentare generală a alarmelor</string>
-    <string name="alarms_overview_help">Toate cele opt tipuri de alarmă sunt mereu disponibile. Activează evenimentele direct sau folosește „Adaugă prag” la un tip de alarmă pentru nivelul bateriei sau temperatură. Pragurile noi sunt activate după salvare. Atinge o valoare pentru a o edita; editarea păstrează starea activată sau dezactivată. Valorile dezactivate rămân în listă. „Sterge Alarma” cere confirmare. Sunetul și vibrațiile sunt comune fiecărui tip în setările notificărilor Android. Înregistrările duplicate existente apar ca o singură alarmă logică; activarea, dezactivarea sau ștergerea afectează toate copiile. Alarmele de încărcare și descărcare urmează țintele estimărilor și nu controlează încărcarea. Un canal blocat sau un monitor oprit nu schimbă comutatoarele salvate.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Toate cele opt tipuri de alarmă sunt mereu disponibile. Activează evenimentele direct sau folosește „Adaugă prag” la un tip de alarmă pentru nivelul bateriei sau temperatură. Pragurile noi sunt activate după salvare. Atinge o valoare pentru a o edita; editarea păstrează starea activată sau dezactivată. Valorile dezactivate rămân în listă. „Sterge Alarma” cere confirmare. Sunetul și vibrațiile sunt comune fiecărui tip în setările notificărilor Android. Înregistrările duplicate existente apar ca o singură alarmă logică; activarea, dezactivarea sau ștergerea afectează toate copiile. Alarmele de încărcare și descărcare urmează țintele estimărilor și nu controlează încărcarea. Un canal blocat sau un monitor oprit nu schimbă comutatoarele salvate.\n
+    <string name="alarms_overview_channels_help" formatted="false">Toate cele opt tipuri de alarmă sunt mereu disponibile. Activează evenimentele direct sau folosește „Adaugă prag” la un tip de alarmă pentru nivelul bateriei sau temperatură. Valorile dezactivate rămân în listă. Sunetul și vibrațiile sunt comune fiecărui tip în setările notificărilor Android. Înregistrările duplicate existente apar ca o singură alarmă logică; activarea sau dezactivarea afectează toate copiile. Alarmele de încărcare și descărcare urmează țintele estimărilor și nu controlează încărcarea. Un canal blocat sau un monitor oprit nu schimbă comutatoarele salvate.\n
     Deschide setările notificărilor Android pentru a permite sau bloca notificările și a configura sunetul, vibrațiile și livrarea pentru notificarea principală și fiecare tip de alarmă. Activarea unei reguli de alarmă nu anulează blocarea unui canal de notificări.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarmă activată</item>
@@ -293,21 +290,18 @@
     <string name="alarms_android_problem_summary">O problemă a bateriei raportată de sistem, nu un procent al sănătății capacității</string>
     <string name="alarm_type_health_failure" formatted="false">Eșecul de sănătate</string>
     <string name="alarm_health_failure" formatted="false">Calitatea Bateriei este:</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Condiții de alarmă</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Aici poți controlați ce condiții declanșează alarma.</string>
     <string name="pref_alarm_threshold" formatted="false">Prag</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Pentru alarmele de nivel al bateriei și temperatură, setează pragul și salvează regula. Alarma se declanșează când o citire atinge sau trece pragul în direcția aleasă. Citirile repetate la prag nu repetă alarma. Pornirea monitorului, importarea unei reguli sau activarea ei dincolo de prag nu o declanșează imediat; este necesară o trecere ulterioară.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Pentru alarmele de nivel al bateriei și temperatură, setează pragul și salvează regula. Pragurile noi sunt activate după salvare. Alarma se declanșează când o citire atinge sau trece pragul în direcția aleasă. Citirile repetate la prag nu repetă alarma. Pornirea monitorului, importarea unei reguli sau activarea ei dincolo de prag nu o declanșează imediat; este necesară o trecere ulterioară.</string>
     <string name="alarms_add_threshold">Adaugă prag</string>
     <string name="alarms_edit_threshold">Editează pragul</string>
     <string name="alarms_edit_existing">Editează pragul existent</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Dacă un prag există deja, deschide-l cu „Editează pragul existent”. Dacă alarmele salvate se schimbă în timpul editării, folosește „Reîmprospătează” și redeschide pragul înainte de a-l modifica.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Dacă un prag există deja, deschide-l cu „Editează pragul existent”. Dacă alarmele salvate se schimbă în timpul editării, folosește „Reîmprospătează” și redeschide pragul înainte de a-l modifica.\n
-    Deschide setările notificărilor Android pentru a permite sau bloca notificările și a configura sunetul, vibrațiile și livrarea pentru notificarea principală și fiecare tip de alarmă. Activarea unei reguli de alarmă nu anulează blocarea unui canal de notificări.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Atinge pictograma creionului de lângă valoarea pragului pentru a o edita. Editarea păstrează starea activată sau dezactivată. Pentru a șterge o alarmă, deschide editorul alarmei, alege „Sterge Alarma” și confirmă ștergerea. Toate copiile acestui prag vor fi eliminate. Dacă alarmele salvate se schimbă în timpul editării, folosește „Reîmprospătează” și redeschide pragul înainte de a-l modifica.</string>
     <string name="alarms_new_enabled">Alarma va fi activată când este adăugată.</string>
     <string name="alarms_edit_keeps_enabled">Editarea păstrează starea actuală, activată sau dezactivată.</string>
     <string name="alarms_enabled">Activată</string>
     <string name="alarms_disable">Dezactivează</string>
     <string name="alarms_options">Opțiuni: %1$s</string>
+    <string name="alarms_options_tooltip">Opțiuni</string>
     <string name="alarms_numeric_range">Introdu un număr întreg de la %1$d la %2$d.</string>
     <string name="alarms_temperature_range">Introdu un număr de la %1$d la %2$d, cu cel mult o zecimală.</string>
     <string name="alarms_duplicate">Acest prag există deja pentru acest tip.</string>
@@ -315,18 +309,15 @@
     <string name="alarms_discard">Renunță</string>
     <string name="menu_delete_alarm" formatted="false">Sterge Alarma</string>
     <string name="alarms_delete_threshold_confirmation">Ștergi %1$s — %2$s? Toate copiile acestui prag vor fi eliminate.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Ați dezactivat grupul de notificări de alarmă pentru această aplicație.  Activați-l pentru a vă accesa alarmele</string>
+    <string name="alarms_notifications_disabled">Notificările sunt dezactivate. Activați-le în setările Android pentru a primi notificări de alarmă.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Ați dezactivat grupul de notificări de alarmă pentru această aplicație.  Activați-l în setările Android pentru a primi notificări de alarmă.</string>
+    <string name="alarms_open_notification_settings">Deschideți setările de notificare Android</string>
     <string name="alarm_chan_disabled" formatted="false">Ați dezactivat notificările pentru acest tip de alarmă.  Vă rugăm să le permiteți să utilizeze acest tip de alarmă.</string>
     <string name="alarm_chan_settings_b" formatted="false">Gestionați acest tip de alarmă</string>
-    <string name="alarms_delivery_sound_vibration">Sunet, vibrație și notificare</string>
-    <string name="alarms_delivery_sound">Sunet și notificare</string>
-    <string name="alarms_delivery_vibration">Vibrație și notificare</string>
-    <string name="alarms_delivery_notification">Doar notificare</string>
     <string name="alarms_options_title" formatted="false">Opțiuni pentru alarme</string>
     <string name="pref_dismiss_low_battery_on_recovery">Închide alarma de baterie descărcată după revenire</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Elimină notificarea de baterie descărcată când nivelul depășește pragul ei. Celelalte notificări de alarmă rămân</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Elimină notificarea de baterie descărcată când nivelul depășește pragul ei. Celelalte notificări de alarmă rămân.</string>
-    <string name="alarms_channel_unavailable">Canal de notificări necreat sau indisponibil</string>
     <string name="alarms_settings_unavailable">Setările notificărilor Android nu au putut fi deschise</string>
     <string name="alarms_target_unknown">Țintă indisponibilă. Deschide setările estimărilor.</string>
     <string name="alarms_monitor_stopped">Monitorizarea este oprită. Alarmele salvate nu sunt evaluate.</string>
@@ -336,7 +327,6 @@
     <string name="alarms_conflict">Alarmele salvate s-au schimbat. Reîmprospătează și redeschide pragul înainte de a face modificări.</string>
     <string name="alarms_missing_rule">Această alarmă lipsește sau este nevalidă. Verifică lista alarmelor.</string>
     <string name="alarms_invalid_records">Unele alarme salvate sunt nevalide. Verifică aceste înregistrări; nu au fost eliminate.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Când sunt afișate alarme salvate nevalide, poți dezactiva o înregistrare activată fără a o șterge sau o poți șterge definitiv. Ambele acțiuni cer confirmare.</string>
     <string name="alarms_database_error">Baza de date a alarmelor nu a putut fi accesată. Încearcă din nou.</string>
     <string name="alarms_saved">Setările alarmei au fost salvate</string>
     <string name="alarms_saved_reload_failed">Salvat, dar monitorul nu a putut fi notificat. Verifică starea monitorizării.</string>
@@ -353,6 +343,9 @@
     <string name="history_through">Până la: %1$s</string>
     <string name="history_calendar_days">Include ambele date selectate, în fusul orar local.</string>
     <string name="history_invalid_range">Introdu un interval de date valid.</string>
+    <string name="history_invalid_month">Introdu o lună validă (1–12).</string>
+    <string name="history_invalid_year">Introdu un an valid (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Această perioadă calendaristică începe înainte de prima dată acceptată în istoric.</string>
     <string name="history_change_range">Schimbă</string>
     <string name="history_charts">Grafice</string>
     <string name="history_level">Nivel</string>
@@ -396,7 +389,6 @@
     <string name="history_open_fullscreen">Deschide graficul pe tot ecranul</string>
     <string name="history_chart_description_fullscreen">%1$s. Măsurători de la %2$s la %3$s.</string>
     <string name="history_chart_select_point">Selectează măsurători</string>
-    <string name="history_chart_event_summary">Conectări (liniuțe scurte): %1$d · Deconectări (liniuțe lungi): %2$d · Întreruperi ale monitorizării (puncte): %3$d</string>
     <string name="history_chart_events">Evenimente în grafic</string>
     <string name="history_chart_1h">Ultima oră</string>
     <string name="history_chart_6h">Ultimele 6\u00A0ore</string>
@@ -406,7 +398,7 @@
     <string name="history_chart_pan_right">Interval de timp ulterior</string>
     <string name="history_chart_reset">Afișează întregul interval selectat</string>
     <string name="history_chart_compare">Compară</string>
-    <string name="history_chart_remove_comparison">Elimină comparația</string>
+    <string name="history_chart_no_comparison">Niciuna</string>
     <string name="history_chart_more">Mai multe acțiuni pentru grafic</string>
     <string name="history_chart_settings">Setări de afișare a graficului</string>
     <string name="history_chart_display_style">Stil de afișare</string>

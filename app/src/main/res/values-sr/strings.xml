@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Da</string>
     <string name="okay" formatted="false">U redu</string>
     <string name="cancel" formatted="false">Otkaži</string>
-    <string name="custom" formatted="false">Прилагођено…</string>
     <string name="currently_set_to" formatted="false">"Trenutno podešeno na : "</string>
     <string name="currently_disabled" formatted="false">Trenutno deaktivirano</string>
     <string name="settings_numeric_value">Vrednost</string>
@@ -262,9 +261,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Podešavanja alarma</string>
     <string name="alarm_settings" formatted="false">Alarmi</string>
     <string name="alarm_settings_help" formatted="false">Možete da podesite da vas Battery Monitor obavesti kada procenat baterije dosegne određeni nivo (npr. baterija je u potpunosti napunjena, procenat baterije padne ispod 20%).</string>
-    <string name="alarms_overview" formatted="false">Pregled alarma</string>
-    <string name="alarms_overview_help">Svih osam tipova alarma je uvek dostupno. Uključite događaje direktno ili koristite „Dodaj prag“ kod tipa napunjenosti ili temperature. Novi pragovi su omogućeni posle čuvanja. Dodirnite vrednost za izmenu; izmena zadržava uključeno/isključeno stanje. Isključene vrednosti ostaju na listi. „Izbriši alarm“ traži potvrdu. Zvuk i vibracija se dele po tipu u Android podešavanjima obaveštenja. Postojeći duplikati zapisa prikazuju se kao jedan logički alarm; prebacivanje ili brisanje utiče na sve kopije. Alarmi punjenja i pražnjenja prate ciljeve procene i ne upravljaju punjenjem. Blokirani kanal ili zaustavljeno praćenje ne menja sačuvane prekidače.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Svih osam tipova alarma je uvek dostupno. Uključite događaje direktno ili koristite „Dodaj prag“ kod tipa napunjenosti ili temperature. Novi pragovi su omogućeni posle čuvanja. Dodirnite vrednost za izmenu; izmena zadržava uključeno/isključeno stanje. Isključene vrednosti ostaju na listi. „Izbriši alarm“ traži potvrdu. Zvuk i vibracija se dele po tipu u Android podešavanjima obaveštenja. Postojeći duplikati zapisa prikazuju se kao jedan logički alarm; prebacivanje ili brisanje utiče na sve kopije. Alarmi punjenja i pražnjenja prate ciljeve procene i ne upravljaju punjenjem. Blokirani kanal ili zaustavljeno praćenje ne menja sačuvane prekidače.\n
+    <string name="alarms_overview_channels_help" formatted="false">Svih osam tipova alarma je uvek dostupno. Uključite događaje direktno ili koristite „Dodaj prag“ kod tipa napunjenosti ili temperature. Isključene vrednosti ostaju na listi. Zvuk i vibracija se dele po tipu u Android podešavanjima obaveštenja. Postojeći duplikati zapisa prikazuju se kao jedan logički alarm; uključivanje ili isključivanje utiče na sve kopije. Alarmi punjenja i pražnjenja prate ciljeve procene i ne upravljaju punjenjem. Blokirani kanal ili zaustavljeno praćenje ne menja sačuvane prekidače.\n
     Otvorite Android podešavanja obaveštenja da dozvolite ili blokirate obaveštenja i podesite zvuk, vibraciju i isporuku za glavno obaveštenje i svaki tip alarma. Omogućavanje pravila alarma ne zaobilazi blokirani kanal obaveštenja.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm uključen</item>
@@ -293,21 +290,18 @@
     <string name="alarms_android_problem_summary">Problem baterije koji prijavljuje sistem, a ne procenat zdravlja kapaciteta</string>
     <string name="alarm_type_health_failure" formatted="false">Stanje baterije narušeno</string>
     <string name="alarm_health_failure" formatted="false">"Stanje baterije : "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Uslovi za aktivaciju alarma</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Ovde možete da kontrolišete koji uslovi će aktivirati alarm.</string>
     <string name="pref_alarm_threshold" formatted="false">Granica</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Za alarme napunjenosti i temperature podesite prag i sačuvajte pravilo. Alarm se aktivira kada očitavanje dostigne ili pređe prag u izabranom smeru. Ponovljena očitavanja na pragu ne ponavljaju alarm. Pokretanje praćenja, uvoz pravila ili njegovo uključivanje preko praga ne aktivira ga odmah; potrebno je kasnije prelaženje.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Za alarme napunjenosti i temperature podesite prag i sačuvajte pravilo. Novi pragovi su omogućeni posle čuvanja. Alarm se aktivira kada očitavanje dostigne ili pređe prag u izabranom smeru. Ponovljena očitavanja na pragu ne ponavljaju alarm. Pokretanje praćenja, uvoz pravila ili njegovo uključivanje preko praga ne aktivira ga odmah; potrebno je kasnije prelaženje.</string>
     <string name="alarms_add_threshold">Dodaj prag</string>
     <string name="alarms_edit_threshold">Izmeni prag</string>
     <string name="alarms_edit_existing">Izmeni postojeći prag</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Ako prag već postoji, otvorite ga preko „Izmeni postojeći prag“. Ako se sačuvani alarmi promene tokom izmene, koristite „Osveži“ i ponovo otvorite prag pre nego što ga promenite.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Ako prag već postoji, otvorite ga preko „Izmeni postojeći prag“. Ako se sačuvani alarmi promene tokom izmene, koristite „Osveži“ i ponovo otvorite prag pre nego što ga promenite.\n
-    Otvorite Android podešavanja obaveštenja da dozvolite ili blokirate obaveštenja i podesite zvuk, vibraciju i isporuku za glavno obaveštenje i svaki tip alarma. Omogućavanje pravila alarma ne zaobilazi blokirani kanal obaveštenja.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Dodirnite ikonu olovke pored vrednosti praga da biste je izmenili. Izmena zadržava uključeno/isključeno stanje. Da biste izbrisali alarm, otvorite ga za izmenu, izaberite „Izbriši alarm“ i potvrdite brisanje. Sve kopije ovog praga će biti uklonjene. Ako se sačuvani alarmi promene tokom izmene, koristite „Osveži“ i ponovo otvorite prag pre nego što ga promenite.</string>
     <string name="alarms_new_enabled">Alarm će biti uključen kada se doda.</string>
     <string name="alarms_edit_keeps_enabled">Izmena zadržava trenutno uključeno/isključeno stanje.</string>
     <string name="alarms_enabled">Uključeno</string>
     <string name="alarms_disable">Isključi</string>
     <string name="alarms_options">Opcije: %1$s</string>
+    <string name="alarms_options_tooltip">Opcije</string>
     <string name="alarms_numeric_range">Unesite ceo broj od %1$d do %2$d.</string>
     <string name="alarms_temperature_range">Unesite broj od %1$d do %2$d sa najviše jednim decimalnim mestom.</string>
     <string name="alarms_duplicate">Ovaj prag već postoji za ovaj tip.</string>
@@ -315,18 +309,15 @@
     <string name="alarms_discard">Odbaci</string>
     <string name="menu_delete_alarm" formatted="false">Izbriši alarm</string>
     <string name="alarms_delete_threshold_confirmation">Obrisati %1$s — %2$s? Sve kopije ovog praga će biti uklonjene.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Isključili ste grupu obaveštenja za alarme ove aplikacije. Omogućite je da biste pristupili alarmima</string>
+    <string name="alarms_notifications_disabled">Obaveštenja su isključena. Uključite ih u podešavanjima Androida da biste primali obaveštenja o alarmima.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Isključili ste grupu obaveštenja za alarme ove aplikacije. Uključite je u podešavanjima Androida da biste primali obaveštenja o alarmima.</string>
+    <string name="alarms_open_notification_settings">Otvori podešavanja obaveštenja za Android</string>
     <string name="alarm_chan_disabled" formatted="false">Isključili ste obaveštenja za ovaj tip alarma. Omogućite ih da biste koristili ovaj tip alarma.</string>
     <string name="alarm_chan_settings_b" formatted="false">Upravljaj ovim tipom alarma</string>
-    <string name="alarms_delivery_sound_vibration">Zvuk, vibracija i obaveštenje</string>
-    <string name="alarms_delivery_sound">Zvuk i obaveštenje</string>
-    <string name="alarms_delivery_vibration">Vibracija i obaveštenje</string>
-    <string name="alarms_delivery_notification">Samo obaveštenje</string>
     <string name="alarms_options_title" formatted="false">Опције аларма</string>
     <string name="pref_dismiss_low_battery_on_recovery">Ukloni alarm za nizak nivo baterije posle oporavka</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Ukloni obaveštenje o niskom nivou baterije kada napunjenost pređe njegov prag. Ostala obaveštenja alarma ostaju</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Ukloni obaveštenje o niskom nivou baterije kada napunjenost pređe njegov prag. Ostala obaveštenja alarma ostaju.</string>
-    <string name="alarms_channel_unavailable">Kanal obaveštenja nije napravljen ili nije dostupan</string>
     <string name="alarms_settings_unavailable">Android podešavanja obaveštenja nije moguće otvoriti</string>
     <string name="alarms_target_unknown">Cilj nije dostupan. Otvorite podešavanja procena.</string>
     <string name="alarms_monitor_stopped">Praćenje je zaustavljeno. Sačuvani alarmi se ne procenjuju.</string>
@@ -336,7 +327,6 @@
     <string name="alarms_conflict">Sačuvani alarmi su promenjeni. Osvežite i ponovo otvorite prag pre promena.</string>
     <string name="alarms_missing_rule">Ovaj alarm nedostaje ili nije važeći. Pregledajte katalog alarma.</string>
     <string name="alarms_invalid_records">Neki sačuvani alarmi nisu važeći. Pregledajte ove zapise; nisu uklonjeni.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Kada su navedeni nevažeći sačuvani alarmi, možete da onemogućite omogućen zapis bez brisanja ili da ga trajno izbrišete. Obe radnje traže potvrdu.</string>
     <string name="alarms_database_error">Pristup bazi alarma nije moguć. Pokušajte ponovo.</string>
     <string name="alarms_saved">Podešavanja alarma sačuvana</string>
     <string name="alarms_saved_reload_failed">Sačuvano, ali praćenje nije moglo biti obavešteno. Proverite stanje praćenja.</string>
@@ -353,6 +343,9 @@
     <string name="history_through">Do: %1$s</string>
     <string name="history_calendar_days">Obuhvata oba izabrana datuma u lokalnoj vremenskoj zoni.</string>
     <string name="history_invalid_range">Unesite važeći opseg datuma.</string>
+    <string name="history_invalid_month">Unesite važeći mesec (1–12).</string>
+    <string name="history_invalid_year">Unesite važeću godinu (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Ovaj kalendarski period počinje pre najranijeg datuma koji istorija podržava.</string>
     <string name="history_change_range">Promeni</string>
     <string name="history_charts">Grafikoni</string>
     <string name="history_level">Nivo</string>
@@ -396,7 +389,6 @@
     <string name="history_open_fullscreen">Отвори графикон преко целог екрана</string>
     <string name="history_chart_description_fullscreen">%1$s. Мерења од %2$s до %3$s.</string>
     <string name="history_chart_select_point">Изабери мерења</string>
-    <string name="history_chart_event_summary">Повезивања (кратке цртице): %1$d · Прекиди везе (дуге цртице): %2$d · Прекиди праћења (тачке): %3$d</string>
     <string name="history_chart_events">Догађаји на графикону</string>
     <string name="history_chart_1h">Последњи сат</string>
     <string name="history_chart_6h">Последњих 6\u00A0сати</string>
@@ -406,7 +398,7 @@
     <string name="history_chart_pan_right">Каснији временски интервал</string>
     <string name="history_chart_reset">Прикажи цео изабрани опсег</string>
     <string name="history_chart_compare">Упореди</string>
-    <string name="history_chart_remove_comparison">Уклони поређење</string>
+    <string name="history_chart_no_comparison">Ništa</string>
     <string name="history_chart_more">Још радњи графикона</string>
     <string name="history_chart_settings">Подешавања приказа графикона</string>
     <string name="history_chart_display_style">Стил приказа</string>

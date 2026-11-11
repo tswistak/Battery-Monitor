@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Да</string>
     <string name="okay" formatted="false">Да</string>
     <string name="cancel" formatted="false">Отмена</string>
-    <string name="custom" formatted="false">Настраиваемый…</string>
     <string name="currently_set_to" formatted="false">"Текущая настройка: "</string>
     <string name="currently_disabled" formatted="false">Сейчас отключен</string>
     <string name="settings_numeric_value">Значение</string>
@@ -265,9 +264,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Настройки сигналов</string>
     <string name="alarm_settings" formatted="false">Сигналы</string>
     <string name="alarm_settings_help" formatted="false">Вы можете настроить Battery Monitor так, чтобы получать уведомление о том, что заряд аккумулятора достигает определенного уровня (например, аккумулятор становится полностью заряженным, заряд опустился ниже 20%).</string>
-    <string name="alarms_overview" formatted="false">Обзор сигналов</string>
-    <string name="alarms_overview_help">Все восемь типов сигналов доступны всегда. Включайте события напрямую или используйте «Добавить порог» у типа заряда или температуры. Новые пороги включаются после сохранения. Нажмите значение для изменения; его состояние вкл./выкл. сохраняется. Отключённые значения остаются в списке. «Удалить сигнал» требует подтверждения. Звук и вибрация общие для типа в настройках уведомлений Android. Существующие дубликаты показаны как одно сигнал; переключение или удаление затрагивает все копии. Сигналы о зарядке и разрядке следуют целям оценки и не управляют зарядкой. Заблокированный канал или остановленный мониторинг не меняют сохранённые переключатели.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Все восемь типов сигналов доступны всегда. Включайте события напрямую или используйте «Добавить порог» у типа заряда или температуры. Новые пороги включаются после сохранения. Нажмите значение для изменения; его состояние вкл./выкл. сохраняется. Отключённые значения остаются в списке. «Удалить сигнал» требует подтверждения. Звук и вибрация общие для типа в настройках уведомлений Android. Существующие дубликаты показаны как одно сигнал; переключение или удаление затрагивает все копии. Сигналы о зарядке и разрядке следуют целям оценки и не управляют зарядкой. Заблокированный канал или остановленный мониторинг не меняют сохранённые переключатели.\n
+    <string name="alarms_overview_channels_help" formatted="false">Все восемь типов сигналов доступны всегда. Включайте события напрямую или используйте «Добавить порог» у типа заряда или температуры. Отключённые значения остаются в списке. Звук и вибрация общие для типа в настройках уведомлений Android. Существующие дубликаты показаны как один сигнал; переключение затрагивает все копии. Сигналы о зарядке и разрядке следуют целям оценки и не управляют зарядкой. Заблокированный канал или остановленный мониторинг не меняют сохранённые переключатели.\n
     Откройте настройки уведомлений Android, чтобы разрешить или заблокировать уведомления, настроить звук, вибрацию и доставку для основного уведомления и каждого типа сигналы. Включение правила сигналы не отменяет блокировку канала уведомлений.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d сигнал включено</item>
@@ -297,21 +294,18 @@
     <string name="alarms_android_problem_summary">Проблема батареи, сообщённая системой, а не процент здоровья по ёмкости</string>
     <string name="alarm_type_health_failure" formatted="false">Неисправность</string>
     <string name="alarm_health_failure" formatted="false">"Состояние аккумулятора: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Условия выдачи сигналы</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Здесь настраиваются события, приводящие к появлению сигналы.</string>
     <string name="pref_alarm_threshold" formatted="false">Порог</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Для сигналов о заряде и температуре задайте порог и сохраните правило. Сигнал срабатывает, когда измерение достигает порога или пересекает его в выбранном направлении. Повторные измерения на пороге не повторяют сигнал. Запуск мониторинга, импорт правила или его включение за порогом не вызывают немедленного срабатывания; требуется последующее пересечение.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Для сигналов о заряде и температуре задайте порог и сохраните правило. Новые пороги включаются после сохранения. Сигнал срабатывает, когда измерение достигает порога или пересекает его в выбранном направлении. Повторные измерения на пороге не повторяют сигнал. Запуск мониторинга, импорт правила или его включение за порогом не вызывают немедленного срабатывания; требуется последующее пересечение.</string>
     <string name="alarms_add_threshold">Добавить порог</string>
     <string name="alarms_edit_threshold">Изменить порог</string>
     <string name="alarms_edit_existing">Изменить существующий порог</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Если порог уже существует, откройте его через «Изменить существующий порог». Если сохранённые сигналы изменятся во время редактирования, используйте «Обновить» и снова откройте порог, прежде чем изменять его.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Если порог уже существует, откройте его через «Изменить существующий порог». Если сохранённые сигналы изменятся во время редактирования, используйте «Обновить» и снова откройте порог, прежде чем изменять его.\n
-    Откройте настройки уведомлений Android, чтобы разрешить или заблокировать уведомления, настроить звук, вибрацию и доставку для основного уведомления и каждого типа сигналы. Включение правила сигналы не отменяет блокировку канала уведомлений.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Нажмите значок карандаша рядом со значением порога, чтобы изменить его. Его состояние вкл./выкл. сохраняется. Чтобы удалить сигнал, откройте его для редактирования, выберите «Удалить сигнал» и подтвердите удаление. Все копии этого порога будут удалены. Если сохранённые сигналы изменятся во время редактирования, используйте «Обновить» и снова откройте порог, прежде чем изменять его.</string>
     <string name="alarms_new_enabled">Сигнал будет включён при добавлении.</string>
     <string name="alarms_edit_keeps_enabled">При изменении сохраняется текущее состояние вкл./выкл.</string>
     <string name="alarms_enabled">Включено</string>
     <string name="alarms_disable">Отключить</string>
     <string name="alarms_options">Параметры: %1$s</string>
+    <string name="alarms_options_tooltip">Параметры</string>
     <string name="alarms_numeric_range">Введите целое число от %1$d до %2$d.</string>
     <string name="alarms_temperature_range">Введите число от %1$d до %2$d, не более одного знака после запятой.</string>
     <string name="alarms_duplicate">Такой порог уже существует для этого типа.</string>
@@ -319,18 +313,15 @@
     <string name="alarms_discard">Отменить изменения</string>
     <string name="menu_delete_alarm" formatted="false">Удалить сигнал</string>
     <string name="alarms_delete_threshold_confirmation">Удалить %1$s — %2$s? Все копии этого порога будут удалены.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Вы отключили группу уведомлений сигналов для этого приложения. Включите ее, чтобы получить доступ к сигналам</string>
+    <string name="alarms_notifications_disabled">Уведомления отключены. Включите их в настройках Android, чтобы получать уведомления о сигналах.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Вы отключили группу уведомлений сигналов для этого приложения. Включите её в настройках Android, чтобы получать уведомления о сигналах.</string>
+    <string name="alarms_open_notification_settings">Открыть настройки уведомлений Android</string>
     <string name="alarm_chan_disabled" formatted="false">Вы отключили уведомления для этого типа сигналов. Включите их, чтобы использовать этот тип сигналы.</string>
     <string name="alarm_chan_settings_b" formatted="false">Настроить этот тип сигналы</string>
-    <string name="alarms_delivery_sound_vibration">Звук, вибрация и уведомление</string>
-    <string name="alarms_delivery_sound">Звук и уведомление</string>
-    <string name="alarms_delivery_vibration">Вибрация и уведомление</string>
-    <string name="alarms_delivery_notification">Только уведомление</string>
     <string name="alarms_options_title" formatted="false">Параметры сигналов</string>
     <string name="pref_dismiss_low_battery_on_recovery">Убирать сигнал о низком заряде после восстановления</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Убирать уведомление о низком заряде, когда заряд превышает порог. Другие уведомления сигналов остаются</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Убирать уведомление о низком заряде, когда заряд превышает порог. Другие уведомления сигналов остаются.</string>
-    <string name="alarms_channel_unavailable">Канал уведомлений не создан или недоступен</string>
     <string name="alarms_settings_unavailable">Не удалось открыть настройки уведомлений Android</string>
     <string name="alarms_target_unknown">Цель недоступна. Откройте настройки оценок.</string>
     <string name="alarms_monitor_stopped">Мониторинг остановлен. Сохранённые сигналы не проверяются.</string>
@@ -340,7 +331,6 @@
     <string name="alarms_conflict">Сохранённые сигналы изменились. Обновите и снова откройте порог перед изменением.</string>
     <string name="alarms_missing_rule">Этот сигнал отсутствует или недопустим. Проверьте каталог сигналов.</string>
     <string name="alarms_invalid_records">Некоторые сохранённые сигналы недопустимы. Проверьте эти записи; они не были удалены.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Когда показан список некорректных сохранённых сигналов, можно отключить включённую запись, не удаляя её, или удалить её навсегда. Оба действия требуют подтверждения.</string>
     <string name="alarms_database_error">Не удалось открыть базу сигналов. Повторите попытку.</string>
     <string name="alarms_saved">Настройки сигналов сохранены</string>
     <string name="alarms_saved_reload_failed">Сохранено, но не удалось уведомить мониторинг. Проверьте состояние мониторинга.</string>
@@ -357,6 +347,9 @@
     <string name="history_through">По: %1$s</string>
     <string name="history_calendar_days">Включает обе выбранные даты в местном часовом поясе.</string>
     <string name="history_invalid_range">Введите допустимый диапазон дат.</string>
+    <string name="history_invalid_month">Введите допустимый месяц (1–12).</string>
+    <string name="history_invalid_year">Введите допустимый год (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Этот календарный период начинается раньше самой ранней даты, поддерживаемой в истории.</string>
     <string name="history_change_range">Изменить</string>
     <string name="history_charts">Графики</string>
     <string name="history_level">Уровень</string>
@@ -400,7 +393,6 @@
     <string name="history_open_fullscreen">Открыть полноэкранный график</string>
     <string name="history_chart_description_fullscreen">%1$s. Измерения с %2$s по %3$s.</string>
     <string name="history_chart_select_point">Выбрать измерения</string>
-    <string name="history_chart_event_summary">Подключения (короткие штрихи): %1$d · Отключения (длинные штрихи): %2$d · Перерывы мониторинга (точки): %3$d</string>
     <string name="history_chart_events">События на графике</string>
     <string name="history_chart_1h">Последний час</string>
     <string name="history_chart_6h">Последние 6\u00A0часов</string>
@@ -410,7 +402,7 @@
     <string name="history_chart_pan_right">Более поздний интервал</string>
     <string name="history_chart_reset">Показать весь выбранный диапазон</string>
     <string name="history_chart_compare">Сравнить</string>
-    <string name="history_chart_remove_comparison">Убрать сравнение</string>
+    <string name="history_chart_no_comparison">Нет</string>
     <string name="history_chart_more">Другие действия с графиком</string>
     <string name="history_chart_settings">Настройки отображения графика</string>
     <string name="history_chart_display_style">Стиль отображения</string>

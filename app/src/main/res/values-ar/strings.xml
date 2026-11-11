@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">نعم</string>
     <string name="okay" formatted="false">موافق</string>
     <string name="cancel" formatted="false">لا</string>
-    <string name="custom" formatted="false">مخصص…</string>
     <string name="currently_set_to" formatted="false">"حاليا ضبط الى: "</string>
     <string name="currently_disabled" formatted="false">معطل حاليا</string>
     <string name="settings_numeric_value">القيمة</string>
@@ -271,9 +270,7 @@
     <string name="alarm_settings_subtitle" formatted="false">اعدادات المنبه</string>
     <string name="alarm_settings" formatted="false">المنبهات</string>
     <string name="alarm_settings_help" formatted="false">يمكن للمؤشر بإعلامك عند مستوى البطارية تصل إلى نقطة معينة (على سبيل المثال، يصبح البطارية مشحونة بالكامل، وانخفاض مستوى البطارية أقل من 20٪)</string>
-    <string name="alarms_overview" formatted="false">النظرة العامة على المنبهات</string>
-    <string name="alarms_overview_help">تتوفر أنواع المنبه الثمانية دائمًا. فعّل الأحداث مباشرةً، أو استخدم «إضافة عتبة» ضمن نوع شحنة أو حرارة. تُفعّل العتبات الجديدة بعد الحفظ. اضغط على قيمة لتعديلها؛ يحتفظ التعديل بحالة التشغيل أو الإيقاف. تبقى القيم المعطلة في القائمة. يتطلب «حذف المنبه» تأكيدًا. يُشترك في الصوت والاهتزاز حسب النوع في إعدادات إشعارات Android. تظهر السجلات المكررة الموجودة كمنبه منطقي واحد؛ ويؤثر التبديل أو الحذف على كل النسخ. تتبع منبهات الشحن والتفريغ أهداف التقدير ولا تتحكم في الشحن. حظر قناة أو إيقاف المراقبة لا يغير المفاتيح المحفوظة.</string>
-    <string name="alarms_overview_channels_help" formatted="false">تتوفر أنواع المنبه الثمانية دائمًا. فعّل الأحداث مباشرةً، أو استخدم «إضافة عتبة» ضمن نوع شحنة أو حرارة. تُفعّل العتبات الجديدة بعد الحفظ. اضغط على قيمة لتعديلها؛ يحتفظ التعديل بحالة التشغيل أو الإيقاف. تبقى القيم المعطلة في القائمة. يتطلب «حذف المنبه» تأكيدًا. يُشترك في الصوت والاهتزاز حسب النوع في إعدادات إشعارات Android. تظهر السجلات المكررة الموجودة كمنبه منطقي واحد؛ ويؤثر التبديل أو الحذف على كل النسخ. تتبع منبهات الشحن والتفريغ أهداف التقدير ولا تتحكم في الشحن. حظر قناة أو إيقاف المراقبة لا يغير المفاتيح المحفوظة.\n
+    <string name="alarms_overview_channels_help" formatted="false">تتوفر أنواع المنبه الثمانية دائمًا. فعّل الأحداث مباشرةً، أو استخدم «إضافة عتبة» ضمن نوع شحنة أو حرارة. تبقى القيم المعطلة في القائمة. يُشترك في الصوت والاهتزاز حسب النوع في إعدادات إشعارات Android. تظهر السجلات المكررة الموجودة كمنبه منطقي واحد؛ ويؤثر التبديل على كل النسخ. تتبع منبهات الشحن والتفريغ أهداف التقدير ولا تتحكم في الشحن. حظر قناة أو إيقاف المراقبة لا يغير المفاتيح المحفوظة.\n
     افتح إعدادات إشعارات Android للسماح بالإشعارات أو حظرها وضبط الصوت والاهتزاز وطريقة التسليم للإشعار الرئيسي وكل نوع منبه. تفعيل قاعدة منبه لا يتجاوز حظر قناة الإشعارات.</string>
     <plurals name="alarms_active_count">
         <item quantity="zero">المنبهات المفعّلة: %1$d</item>
@@ -305,21 +302,18 @@
     <string name="alarms_android_problem_summary">مشكلة بطارية يبلغ عنها النظام، وليست نسبة صحة السعة</string>
     <string name="alarm_type_health_failure" formatted="false">حالة سيئة للغاية</string>
     <string name="alarm_health_failure" formatted="false">"حالة البطارية "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">ظروف المنبه</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">هذا هو المكان الذي يمكنك التحكم في أي ظروف تؤدي إلى المنبه</string>
     <string name="pref_alarm_threshold" formatted="false">نسبة</string>
-    <string name="pref_alarm_threshold_help" formatted="false">لمنبهات الشحنة والحرارة، اضبط العتبة واحفظ القاعدة. يعمل المنبه عندما تبلغ القراءة العتبة أو تتجاوزها في الاتجاه المختار. لا تكرر القراءات المتتالية عند العتبة المنبه. بدء المراقبة أو استيراد قاعدة أو تفعيلها بعد تجاوز العتبة لا يطلق المنبه فورًا؛ يلزم عبور لاحق.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">لمنبهات الشحنة والحرارة، اضبط العتبة واحفظ القاعدة. تُفعّل العتبات الجديدة بعد الحفظ. يعمل المنبه عندما تبلغ القراءة العتبة أو تتجاوزها في الاتجاه المختار. لا تكرر القراءات المتتالية عند العتبة المنبه. بدء المراقبة أو استيراد قاعدة أو تفعيلها بعد تجاوز العتبة لا يطلق المنبه فورًا؛ يلزم عبور لاحق.</string>
     <string name="alarms_add_threshold">إضافة عتبة</string>
     <string name="alarms_edit_threshold">تعديل العتبة</string>
     <string name="alarms_edit_existing">تعديل العتبة الموجودة</string>
-    <string name="alarms_threshold_edit_help" formatted="false">إذا كانت العتبة موجودة بالفعل، فافتحها باستخدام «تعديل العتبة الموجودة». إذا تغيّرت المنبّهات المحفوظة أثناء التعديل، فاستخدم «تحديث» وأعد فتح العتبة قبل تغييرها.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">إذا كانت العتبة موجودة بالفعل، فافتحها باستخدام «تعديل العتبة الموجودة». إذا تغيّرت المنبّهات المحفوظة أثناء التعديل، فاستخدم «تحديث» وأعد فتح العتبة قبل تغييرها.\n
-    افتح إعدادات إشعارات Android للسماح بالإشعارات أو حظرها وضبط الصوت والاهتزاز وطريقة التسليم للإشعار الرئيسي وكل نوع منبه. تفعيل قاعدة منبه لا يتجاوز حظر قناة الإشعارات.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">اضغط على أيقونة القلم بجوار قيمة العتبة لتعديلها. يحتفظ التعديل بحالة التشغيل أو الإيقاف. لحذف منبه، افتح محرره واختر «حذف المنبه» ثم أكّد الحذف. ستُزال كل نسخ هذه العتبة. إذا تغيّرت المنبّهات المحفوظة أثناء التعديل، فاستخدم «تحديث» وأعد فتح العتبة قبل تغييرها.</string>
     <string name="alarms_new_enabled">سيُفعّل المنبه عند إضافته.</string>
     <string name="alarms_edit_keeps_enabled">يحافظ التعديل على حالة التشغيل أو الإيقاف الحالية.</string>
     <string name="alarms_enabled">مفعل</string>
     <string name="alarms_disable">تعطيل</string>
     <string name="alarms_options">الخيارات: %1$s</string>
+    <string name="alarms_options_tooltip">الخيارات</string>
     <string name="alarms_numeric_range">أدخل عددًا صحيحًا من %1$d إلى %2$d.</string>
     <string name="alarms_temperature_range">أدخل عددًا من %1$d إلى %2$d، بمنزلة عشرية واحدة كحد أقصى.</string>
     <string name="alarms_duplicate">هذه العتبة موجودة بالفعل لهذا النوع.</string>
@@ -327,18 +321,15 @@
     <string name="alarms_discard">تجاهل</string>
     <string name="menu_delete_alarm" formatted="false">حذف المنبه</string>
     <string name="alarms_delete_threshold_confirmation">هل تريد حذف %1$s — %2$s؟ ستُزال كل نسخ هذه العتبة.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">لقد عطلت مجموعة إشعارات المنبهات لهذا التطبيق. يرجى تمكينها للوصول إلى منبهاتك</string>
+    <string name="alarms_notifications_disabled">الإشعارات معطّلة. فعّلها في إعدادات Android لتلقي إشعارات المنبهات.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">لقد عطلت مجموعة إشعارات المنبهات لهذا التطبيق. فعّلها في إعدادات Android لتلقي إشعارات المنبهات.</string>
+    <string name="alarms_open_notification_settings">فتح إعدادات إشعارات Android</string>
     <string name="alarm_chan_disabled" formatted="false">لقد عطلت إشعارات هذا النوع من المنبهات. يرجى تمكينها لاستخدام هذا النوع.</string>
     <string name="alarm_chan_settings_b" formatted="false">إدارة هذا النوع من المنبهات</string>
-    <string name="alarms_delivery_sound_vibration">صوت واهتزاز وإشعار</string>
-    <string name="alarms_delivery_sound">صوت وإشعار</string>
-    <string name="alarms_delivery_vibration">اهتزاز وإشعار</string>
-    <string name="alarms_delivery_notification">إشعار فقط</string>
     <string name="alarms_options_title" formatted="false">خيارات المنبهات</string>
     <string name="pref_dismiss_low_battery_on_recovery">إزالة منبه انخفاض البطارية بعد التعافي</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">إزالة إشعار انخفاض البطارية عندما ترتفع الشحنة فوق عتبته. تبقى إشعارات المنبهات الأخرى</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">إزالة إشعار انخفاض البطارية عندما ترتفع الشحنة فوق عتبته. تبقى إشعارات المنبهات الأخرى.</string>
-    <string name="alarms_channel_unavailable">قناة الإشعارات غير منشأة أو غير متاحة</string>
     <string name="alarms_settings_unavailable">تعذر فتح إعدادات إشعارات Android</string>
     <string name="alarms_target_unknown">الهدف غير متاح. افتح إعدادات التقدير.</string>
     <string name="alarms_monitor_stopped">المراقبة متوقفة. لا يجري تقييم المنبهات المحفوظة.</string>
@@ -348,7 +339,6 @@
     <string name="alarms_conflict">تغيرت المنبهات المحفوظة. حدّث وأعد فتح العتبة قبل إجراء تغييرات.</string>
     <string name="alarms_missing_rule">هذا المنبه مفقود أو غير صالح. راجع قائمة المنبهات.</string>
     <string name="alarms_invalid_records">بعض المنبهات المحفوظة غير صالحة. راجع هذه السجلات؛ لم تتم إزالتها.</string>
-    <string name="alarms_invalid_records_help" formatted="false">عند عرض منبّهات محفوظة غير صالحة، يمكنك تعطيل سجل مفعّل دون حذفه، أو حذفه نهائيًا. يطلب كلا الإجراءين التأكيد.</string>
     <string name="alarms_database_error">تعذر الوصول إلى قاعدة بيانات المنبهات. أعد المحاولة.</string>
     <string name="alarms_saved">تم حفظ إعدادات المنبهات</string>
     <string name="alarms_saved_reload_failed">تم الحفظ، لكن تعذر إخطار المراقبة. راجع حالة المراقبة.</string>
@@ -365,6 +355,9 @@
     <string name="history_through">حتى: %1$s</string>
     <string name="history_calendar_days">يشمل التاريخين المحددين، حسب المنطقة الزمنية المحلية.</string>
     <string name="history_invalid_range">أدخل نطاق تاريخ صالحًا.</string>
+    <string name="history_invalid_month">أدخل شهرًا صالحًا (1–12).</string>
+    <string name="history_invalid_year">أدخل سنة صالحة (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">تبدأ هذه الفترة التقويمية قبل بداية السجل المدعوم.</string>
     <string name="history_change_range">تغيير</string>
     <string name="history_charts">المخططات</string>
     <string name="history_level">المستوى</string>
@@ -408,7 +401,6 @@
     <string name="history_open_fullscreen">فتح الرسم البياني بملء الشاشة</string>
     <string name="history_chart_description_fullscreen">%1$s. القراءات من %2$s إلى %3$s.</string>
     <string name="history_chart_select_point">تحديد القراءات</string>
-    <string name="history_chart_event_summary">متصل (شرطات قصيرة): %1$d · غير متصل (شرطات طويلة): %2$d · انقطاعات المراقبة (منقّط): %3$d</string>
     <string name="history_chart_events">أحداث الرسم البياني</string>
     <string name="history_chart_1h">آخر ساعة</string>
     <string name="history_chart_6h">آخر 6\u00A0ساعات</string>
@@ -418,7 +410,7 @@
     <string name="history_chart_pan_right">فترة زمنية لاحقة</string>
     <string name="history_chart_reset">ملاءمة النطاق المحدد</string>
     <string name="history_chart_compare">مقارنة</string>
-    <string name="history_chart_remove_comparison">إزالة المقارنة</string>
+    <string name="history_chart_no_comparison">لا شيء</string>
     <string name="history_chart_more">المزيد من إجراءات الرسم البياني</string>
     <string name="history_chart_settings">إعدادات عرض الرسم البياني</string>
     <string name="history_chart_display_style">نمط العرض</string>

@@ -12,7 +12,6 @@
 */
 package codes.swistak.batterymonitor.ui.alarms
 
-import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.alarms.AlarmConflictException
 import codes.swistak.batterymonitor.alarms.AlarmDatabase
 import codes.swistak.batterymonitor.alarms.AlarmGroup
@@ -158,11 +157,16 @@ class AlarmGroupingTest {
     }
 
     @Test
-    fun `delivery availability permission group and monitor are independent of enabled configuration`() {
+    fun `blocked delivery and stopped monitoring do not change saved enabled configuration`() {
         val enabled = AlarmRule(1, true, "fully_charged", "")
         val state = AlarmsState(
             rules = listOf(enabled),
             projection = projectAlarms(listOf(enabled)),
+            channels = mapOf(
+                enabled.type to AlarmChannelInfo(
+                    available = true, blocked = true, sound = false, vibration = false
+                )
+            ),
             hasSnapshot = true,
             loading = false,
             notificationsBlocked = true,
@@ -170,27 +174,7 @@ class AlarmGroupingTest {
             monitoringDesired = false
         )
         assertEquals(1, state.enabledCount)
-        assertEquals(
-            R.string.alarms_channel_unavailable, alarmDeliveryLabel(
-                AlarmChannelInfo(
-                    available = false, blocked = false, sound = false, vibration = false
-                )
-            )
-        )
-        assertEquals(
-            R.string.alarm_chan_disabled, alarmDeliveryLabel(
-                AlarmChannelInfo(
-                    available = true, blocked = true, sound = false, vibration = false
-                )
-            )
-        )
-        assertEquals(
-            R.string.alarms_delivery_notification, alarmDeliveryLabel(
-                AlarmChannelInfo(
-                    available = true, blocked = false, sound = false, vibration = false
-                )
-            )
-        )
+        assertTrue(state.canMutate)
     }
 
     @Test

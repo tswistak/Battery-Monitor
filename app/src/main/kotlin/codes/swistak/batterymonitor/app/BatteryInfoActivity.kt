@@ -282,7 +282,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                         ) TooltipIconButton(
                             label = getString(R.string.menu_help), onClick = {
                                 val topic = when (selected) {
-                                    SectionOwner.ALARMS -> if (detail == null) SettingsContract.KEY_ALARMS_SETTINGS else SettingsContract.KEY_ALARM_EDIT_SETTINGS
+                                    SectionOwner.ALARMS -> SettingsContract.KEY_ALARMS_SETTINGS
                                     SectionOwner.DIAGNOSTICS -> diagnosticDetailHelpTopic(detail)
                                     else -> when (SettingsCategory.fromRoute(
                                         detail?.substringAfter(
@@ -329,7 +329,7 @@ class BatteryInfoActivity : AppCompatActivity() {
                                 if (topic == "licenses" || topic?.startsWith("licenses:") == true) {
                                     LicenseScreen(
                                         componentId = topic.substringAfter(':', "")
-                                        .ifEmpty { null },
+                                            .ifEmpty { null },
                                         onOpenComponent = { openHelp("licenses:$it") })
                                 } else {
                                     HelpScreen(topic, onOpenLicenses = { openHelp("licenses") })

@@ -114,10 +114,6 @@ class HelpContentTest {
                 key, diagnosticDetailHelpTopic(route), diagnosticDetailHelpTopic("$route:$key")
             )
         }
-        assertEquals(
-            helpSections(MONITORING_HELP_TOPIC, 37, null),
-            helpSections(SettingsContract.KEY_DIAGNOSTICS_SETTINGS, 37, null)
-        )
     }
 
     @Test
@@ -170,21 +166,5 @@ class HelpContentTest {
             assertEquals(sdk >= 36, R.string.settings_live_update_help in monitor)
         }
     }
-
-    @Test
-    fun `diagnostics explains reading sources and both alarm destinations explain thresholds`() {
-        val diagnostics = helpSections(SettingsContract.KEY_ADVANCED_INFO_HELP, 37, null)
-        assertTrue(diagnostics.flatMap { it.paragraphs }
-            .any { it.textResource == R.string.diag_help_overview })
-        for (topic in listOf(
-            SettingsContract.KEY_ALARMS_SETTINGS, SettingsContract.KEY_ALARM_EDIT_SETTINGS
-        )) {
-            assertTrue(
-                topic,
-                helpSections(topic, 37, null).flatMap { it.paragraphs }
-                    .any { it.textResource == R.string.pref_alarm_threshold_help })
-        }
-    }
-
 
 }

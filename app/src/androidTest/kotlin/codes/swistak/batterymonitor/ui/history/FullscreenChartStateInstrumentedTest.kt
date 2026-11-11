@@ -204,6 +204,15 @@ class FullscreenChartStateInstrumentedTest {
             assertNull(viewer.state.value!!.comparison)
             tap(R.string.okay)
             await { viewer.state.value!!.comparison == HistoryMetric.VOLTAGE }
+            tap(R.string.current_voltage)
+            tap(R.string.history_chart_no_comparison)
+            assertEquals(HistoryMetric.VOLTAGE, viewer.state.value!!.comparison)
+            tap(R.string.cancel)
+            assertEquals(HistoryMetric.VOLTAGE, viewer.state.value!!.comparison)
+            tap(R.string.current_voltage)
+            tap(R.string.history_chart_no_comparison)
+            tap(R.string.okay)
+            await { viewer.state.value!!.comparison == null }
         } finally {
             main { host.lastActivity?.finish() }
             instrumentation.removeMonitor(host)

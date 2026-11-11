@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
@@ -264,6 +265,15 @@ internal fun MeasurementChart(
     val line = MaterialTheme.colorScheme.primary
     val outline = MaterialTheme.colorScheme.outlineVariant
     val eventColor = MaterialTheme.colorScheme.onSurfaceVariant
+    val eventTimes = remember(model.events, compact) {
+        if (compact) emptyMap() else model.events.groupBy { it.code }.mapValues { (_, events) ->
+            events.flatMap { event ->
+                if (event.first == event.last) listOf(event.first) else listOf(
+                    event.first, event.last
+                )
+            }.sorted()
+        }
+    }
     Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         if (!compact) {
             val formatted =
@@ -369,33 +379,38 @@ internal fun MeasurementChart(
                             pathEffect = dashed
                         )
                     }
-                    if (!compact) model.events.forEach { event ->
-                        listOf(event.first, event.last).distinct().forEach { time ->
-                            drawLine(
-                                eventColor,
-                                Offset(x(time), inset),
-                                Offset(x(time), size.height - inset),
-                                1.dp.toPx(),
-                                pathEffect = when (event.code) {
-                                    HistoryEvent.CONNECTED -> PathEffect.dashPathEffect(
-                                        floatArrayOf(
-                                            3.dp.toPx(), 4.dp.toPx()
+                    if (eventTimes.isNotEmpty() && size.width > 2 * inset) {
+                        val right = size.width - inset
+                        val bottom = size.height - inset
+                        val dotRadius = RebootMarkerRadius.toPx()
+                        val dotSpacing = RebootMarkerSpacing.toPx()
+                        val strokeWidth = 1.dp.toPx()
+                        val shortDashes =
+                            PathEffect.dashPathEffect(floatArrayOf(3.dp.toPx(), 4.dp.toPx()))
+                        val longDashes =
+                            PathEffect.dashPathEffect(floatArrayOf(7.dp.toPx(), 4.dp.toPx()))
+                        clipRect(inset, inset, right, bottom) {
+                            forEachHistoryEventMarker(
+                                eventTimes, inset, right, dotRadius, strokeWidth, ::x
+                            ) { code, markerX ->
+                                when (code) {
+                                    HistoryEvent.REBOOT -> forEachRebootDot(
+                                        inset, bottom, dotRadius, dotSpacing
+                                    ) { dotY ->
+                                        drawCircle(
+                                            eventColor, dotRadius, Offset(markerX, dotY)
                                         )
-                                    )
+                                    }
 
-                                    HistoryEvent.DISCONNECTED -> PathEffect.dashPathEffect(
-                                        floatArrayOf(
-                                            7.dp.toPx(), 4.dp.toPx()
-                                        )
-                                    )
-
-                                    else -> PathEffect.dashPathEffect(
-                                        floatArrayOf(
-                                            1.dp.toPx(), 4.dp.toPx()
-                                        )
+                                    HistoryEvent.CONNECTED, HistoryEvent.DISCONNECTED -> drawLine(
+                                        eventColor,
+                                        Offset(markerX, inset),
+                                        Offset(markerX, bottom),
+                                        strokeWidth,
+                                        pathEffect = if (code == HistoryEvent.CONNECTED) shortDashes else longDashes
                                     )
                                 }
-                            )
+                            }
                         }
                     }
                     points.zipWithNext().forEach { (first, last) ->

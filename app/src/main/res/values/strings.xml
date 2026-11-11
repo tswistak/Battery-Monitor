@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Yes</string>
     <string name="okay" formatted="false">Okay</string>
     <string name="cancel" formatted="false">Cancel</string>
-    <string name="custom" formatted="false">Custom…</string>
     <string name="currently_set_to" formatted="false">"Currently set to: "</string>
     <string name="currently_disabled" formatted="false">Currently Disabled</string>
     <string name="settings_numeric_value">Value</string>
@@ -259,9 +258,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Alarm Settings</string>
     <string name="alarm_settings" formatted="false">Alarms</string>
     <string name="alarm_settings_help" formatted="false">You can have Battery Monitor notify you when your battery level reaches a certain condition (e.g., the battery becomes fully charged, the battery level drops below 20%, and many others).</string>
-    <string name="alarms_overview" formatted="false">Alarms Overview</string>
-    <string name="alarms_overview_help">All eight alarm types are always available. Switch events on directly, or use “Add threshold” under a charge or temperature type. New thresholds are enabled after saving. Tap a value to edit it; editing keeps its on/off state. Disabled values remain listed. “Delete alarm” asks for confirmation. Sound and vibration are shared by type in Android notification settings. Existing duplicate records appear as one logical alarm; switching or deleting affects all copies. Charging and discharging alarms follow estimate targets and do not control charging. A blocked channel or stopped monitor does not change saved switches.</string>
-    <string name="alarms_overview_channels_help" formatted="false">All eight alarm types are always available. Switch events on directly, or use “Add threshold” under a charge or temperature type. New thresholds are enabled after saving. Tap a value to edit it; editing keeps its on/off state. Disabled values remain listed. “Delete alarm” asks for confirmation. Sound and vibration are shared by type in Android notification settings. Existing duplicate records appear as one logical alarm; switching or deleting affects all copies. Charging and discharging alarms follow estimate targets and do not control charging. A blocked channel or stopped monitor does not change saved switches.\n
+    <string name="alarms_overview_channels_help" formatted="false">All eight alarm types are always available. Switch events on directly, or use “Add threshold” under a charge or temperature type. Disabled values remain listed. Sound and vibration are shared by type in Android notification settings. Existing duplicate records appear as one logical alarm; switching affects all copies. Charging and discharging alarms follow estimate targets and do not control charging. A blocked channel or stopped monitor does not change saved switches.\n
     Open Android notification settings to allow or block notifications and configure sound, vibration, and delivery for the main notification and each alarm type. Enabling an alarm rule does not override a blocked notification channel.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm enabled</item>
@@ -289,21 +286,18 @@
     <string name="alarms_android_problem_summary">A system-reported battery problem, not a capacity-health percentage</string>
     <string name="alarm_type_health_failure" formatted="false">Health failure</string>
     <string name="alarm_health_failure" formatted="false">"Battery health is: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Alarm Conditions</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">This is where you can control what conditions trigger the alarm.</string>
     <string name="pref_alarm_threshold" formatted="false">Threshold</string>
-    <string name="pref_alarm_threshold_help" formatted="false">For charge and temperature alarms, set the threshold and save the rule. The alarm fires when a reading reaches or passes the threshold in the chosen direction. Repeated readings at the threshold do not repeat the alarm. Starting the monitor, importing a rule or enabling it beyond the threshold does not fire it immediately; a later crossing is required.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">For charge and temperature alarms, set the threshold and save the rule. New thresholds are enabled after saving. The alarm fires when a reading reaches or passes the threshold in the chosen direction. Repeated readings at the threshold do not repeat the alarm. Starting the monitor, importing a rule or enabling it beyond the threshold does not fire it immediately; a later crossing is required.</string>
     <string name="alarms_add_threshold">Add threshold</string>
     <string name="alarms_edit_threshold">Edit threshold</string>
     <string name="alarms_edit_existing">Edit existing threshold</string>
-    <string name="alarms_threshold_edit_help" formatted="false">If a threshold already exists, open it with “Edit existing threshold”. If saved alarms change while editing, use “Refresh” and reopen the threshold before changing it.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">If a threshold already exists, open it with “Edit existing threshold”. If saved alarms change while editing, use “Refresh” and reopen the threshold before changing it.\n
-    Open Android notification settings to allow or block notifications and configure sound, vibration, and delivery for the main notification and each alarm type. Enabling an alarm rule does not override a blocked notification channel.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Tap the pencil icon next to a threshold value to edit it. Editing keeps its on/off state. To delete an alarm, open its editor, choose “Delete alarm”, and confirm the deletion. All copies of this threshold will be removed. If saved alarms change while editing, use “Refresh” and reopen the threshold before changing it.</string>
     <string name="alarms_new_enabled">The alarm will be enabled when added.</string>
     <string name="alarms_edit_keeps_enabled">Editing keeps the current on/off setting.</string>
     <string name="alarms_enabled">Enabled</string>
     <string name="alarms_disable">Disable</string>
     <string name="alarms_options">Options: %1$s</string>
+    <string name="alarms_options_tooltip">Options</string>
     <string name="alarms_numeric_range">Enter a whole number from %1$d to %2$d.</string>
     <string name="alarms_temperature_range">Enter a number from %1$d to %2$d, with up to one decimal place.</string>
     <string name="alarms_duplicate">This threshold already exists for this type.</string>
@@ -311,18 +305,15 @@
     <string name="alarms_discard">Discard</string>
     <string name="menu_delete_alarm" formatted="false">Delete alarm</string>
     <string name="alarms_delete_threshold_confirmation">Delete %1$s — %2$s? All copies of this threshold will be removed.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">You have disabled the alarm notification group for this app. Please enable it to access your alarms</string>
+    <string name="alarms_notifications_disabled">Notifications are disabled. Enable them in Android settings to receive alarm notifications.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">You have disabled the alarm notification group for this app. Enable it in Android settings to receive alarm notifications.</string>
+    <string name="alarms_open_notification_settings">Open Android notification settings</string>
     <string name="alarm_chan_disabled" formatted="false">You have disabled notifications for this alarm type.  Please enable them to use this type of alarm.</string>
     <string name="alarm_chan_settings_b" formatted="false">Manage This Alarm Type</string>
-    <string name="alarms_delivery_sound_vibration">Sound, vibration and notification</string>
-    <string name="alarms_delivery_sound">Sound and notification</string>
-    <string name="alarms_delivery_vibration">Vibration and notification</string>
-    <string name="alarms_delivery_notification">Notification only</string>
     <string name="alarms_options_title" formatted="false">Alarm options</string>
     <string name="pref_dismiss_low_battery_on_recovery">Dismiss low battery alarm after recovery</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Remove the low battery notification when the charge rises above its threshold. Other alarm notifications remain</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Remove the low battery notification when the charge rises above its threshold. Other alarm notifications remain.</string>
-    <string name="alarms_channel_unavailable">Notification channel not created or unavailable</string>
     <string name="alarms_settings_unavailable">Android notification settings could not be opened</string>
     <string name="alarms_target_unknown">Target unavailable. Open estimate settings.</string>
     <string name="alarms_monitor_stopped">Monitoring is stopped. Saved alarms are not being evaluated.</string>
@@ -332,7 +323,6 @@
     <string name="alarms_conflict">Saved alarms changed. Refresh and reopen the threshold before making changes.</string>
     <string name="alarms_missing_rule">This alarm is missing or invalid. Review the alarm catalog.</string>
     <string name="alarms_invalid_records">Some saved alarms are invalid. Review these records; they have not been removed.</string>
-    <string name="alarms_invalid_records_help" formatted="false">When invalid saved alarms are listed, you can disable an enabled record without deleting it, or delete it permanently. Both actions ask for confirmation.</string>
     <string name="alarms_database_error">Could not access the alarm database. Try again.</string>
     <string name="alarms_saved">Alarm settings saved</string>
     <string name="alarms_saved_reload_failed">Saved, but the monitor could not be notified. Review monitoring status.</string>
@@ -349,6 +339,9 @@
     <string name="history_through">Through: %1$s</string>
     <string name="history_calendar_days">Includes both selected dates, in the local time zone.</string>
     <string name="history_invalid_range">Enter a valid date range.</string>
+    <string name="history_invalid_month">Enter a valid month (1–12).</string>
+    <string name="history_invalid_year">Enter a valid year (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">This calendar period starts before supported history.</string>
     <string name="history_change_range">Change</string>
     <string name="history_charts">Charts</string>
     <string name="history_level">Level</string>
@@ -392,7 +385,6 @@
     <string name="history_open_fullscreen">Open full-screen chart</string>
     <string name="history_chart_description_fullscreen">%1$s. Observations from %2$s to %3$s.</string>
     <string name="history_chart_select_point">Select observations</string>
-    <string name="history_chart_event_summary">Connected (short dashes): %1$d · Disconnected (long dashes): %2$d · Monitoring interruptions (dotted): %3$d</string>
     <string name="history_chart_events">Chart events</string>
     <string name="history_chart_1h">Last 1\u00A0hour</string>
     <string name="history_chart_6h">Last 6\u00A0hours</string>
@@ -402,7 +394,7 @@
     <string name="history_chart_pan_right">Later time interval</string>
     <string name="history_chart_reset">Fit selected range</string>
     <string name="history_chart_compare">Compare</string>
-    <string name="history_chart_remove_comparison">Remove comparison</string>
+    <string name="history_chart_no_comparison">None</string>
     <string name="history_chart_more">More chart actions</string>
     <string name="history_chart_settings">Chart display settings</string>
     <string name="history_chart_display_style">Display style</string>

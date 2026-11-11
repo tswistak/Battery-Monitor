@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Sí</string>
     <string name="okay" formatted="false">Ok</string>
     <string name="cancel" formatted="false">Cancelar</string>
-    <string name="custom" formatted="false">Personalizado…</string>
     <string name="currently_set_to" formatted="false">"Seleccionado:"</string>
     <string name="currently_disabled" formatted="false">Desactivado</string>
     <string name="settings_numeric_value">Valor</string>
@@ -262,9 +261,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Ajustes de alarma</string>
     <string name="alarm_settings" formatted="false">Alarmas</string>
     <string name="alarm_settings_help" formatted="false">Puede hacer que Battery Monitor le notifique cuando su nivel de batería alcanza una determinada condición (por ejemplo, la batería se carga completamente, el nivel de la batería cae por debajo del 20%, y muchos otros).</string>
-    <string name="alarms_overview" formatted="false">Descripción general de alarmas</string>
-    <string name="alarms_overview_help">Los ocho tipos de alarma están siempre disponibles. Activa los eventos directamente o usa «Añadir umbral» bajo un tipo de carga o temperatura. Los nuevos umbrales se activan al guardar. Toca un valor para editarlo; la edición conserva su estado activado o desactivado. Los valores desactivados siguen en la lista. «Borrar alarma» pide confirmación. El sonido y la vibración se comparten por tipo en los ajustes de notificaciones de Android. Los registros duplicados existentes aparecen como una sola alarma lógica; activarla, desactivarla o eliminarla afecta a todas las copias. Las alarmas de carga y descarga siguen los objetivos de estimación y no controlan la carga. Un canal bloqueado o un monitor detenido no cambia los interruptores guardados.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Los ocho tipos de alarma están siempre disponibles. Activa los eventos directamente o usa «Añadir umbral» bajo un tipo de carga o temperatura. Los nuevos umbrales se activan al guardar. Toca un valor para editarlo; la edición conserva su estado activado o desactivado. Los valores desactivados siguen en la lista. «Borrar alarma» pide confirmación. El sonido y la vibración se comparten por tipo en los ajustes de notificaciones de Android. Los registros duplicados existentes aparecen como una sola alarma lógica; activarla, desactivarla o eliminarla afecta a todas las copias. Las alarmas de carga y descarga siguen los objetivos de estimación y no controlan la carga. Un canal bloqueado o un monitor detenido no cambia los interruptores guardados.\n
+    <string name="alarms_overview_channels_help" formatted="false">Los ocho tipos de alarma están siempre disponibles. Activa los eventos directamente o usa «Añadir umbral» bajo un tipo de carga o temperatura. Los valores desactivados siguen en la lista. El sonido y la vibración se comparten por tipo en los ajustes de notificaciones de Android. Los registros duplicados existentes aparecen como una sola alarma lógica; activarla o desactivarla afecta a todas las copias. Las alarmas de carga y descarga siguen los objetivos de estimación y no controlan la carga. Un canal bloqueado o un monitor detenido no cambia los interruptores guardados.\n
     Abre los ajustes de notificaciones de Android para permitir o bloquear notificaciones y configurar el sonido, la vibración y la entrega de la notificación principal y cada tipo de alarma. Activar una regla de alarma no anula el bloqueo de un canal de notificación.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarma activada</item>
@@ -293,21 +290,18 @@
     <string name="alarms_android_problem_summary">Un problema de batería indicado por el sistema, no un porcentaje de salud de la capacidad</string>
     <string name="alarm_type_health_failure" formatted="false">Fallo de salud</string>
     <string name="alarm_health_failure" formatted="false">"El estado de la batería es: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Condiciones de alarma</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Aquí es donde puedes controlar qué condiciones activan la alarma.</string>
     <string name="pref_alarm_threshold" formatted="false">Límite</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Para las alarmas de carga y temperatura, define el umbral y guarda la regla. La alarma se activa cuando una lectura alcanza o cruza el umbral en la dirección elegida. Las lecturas repetidas en el umbral no repiten la alarma. Iniciar el monitor, importar una regla o activarla más allá del umbral no la dispara inmediatamente; se necesita un cruce posterior.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Para las alarmas de carga y temperatura, define el umbral y guarda la regla. Los nuevos umbrales se activan al guardar. La alarma se activa cuando una lectura alcanza o cruza el umbral en la dirección elegida. Las lecturas repetidas en el umbral no repiten la alarma. Iniciar el monitor, importar una regla o activarla más allá del umbral no la dispara inmediatamente; se necesita un cruce posterior.</string>
     <string name="alarms_add_threshold">Añadir umbral</string>
     <string name="alarms_edit_threshold">Editar umbral</string>
     <string name="alarms_edit_existing">Editar umbral existente</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Si ya existe un umbral, ábrelo con «Editar umbral existente». Si las alarmas guardadas cambian durante la edición, usa «Actualizar» y vuelve a abrir el umbral antes de modificarlo.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Si ya existe un umbral, ábrelo con «Editar umbral existente». Si las alarmas guardadas cambian durante la edición, usa «Actualizar» y vuelve a abrir el umbral antes de modificarlo.\n
-    Abre los ajustes de notificaciones de Android para permitir o bloquear notificaciones y configurar el sonido, la vibración y la entrega de la notificación principal y cada tipo de alarma. Activar una regla de alarma no anula el bloqueo de un canal de notificación.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Toca el icono del lápiz junto al valor de un umbral para editarlo. La edición conserva su estado activado o desactivado. Para borrar una alarma, abre su editor, selecciona «Borrar alarma» y confirma el borrado. Se eliminarán todas las copias de este umbral. Si las alarmas guardadas cambian durante la edición, usa «Actualizar» y vuelve a abrir el umbral antes de modificarlo.</string>
     <string name="alarms_new_enabled">La alarma se activará al añadirla.</string>
     <string name="alarms_edit_keeps_enabled">La edición mantiene el estado activado o desactivado actual.</string>
     <string name="alarms_enabled">Activada</string>
     <string name="alarms_disable">Desactivar</string>
     <string name="alarms_options">Opciones: %1$s</string>
+    <string name="alarms_options_tooltip">Opciones</string>
     <string name="alarms_numeric_range">Introduce un número entero entre %1$d y %2$d.</string>
     <string name="alarms_temperature_range">Introduce un número entre %1$d y %2$d, con un máximo de un decimal.</string>
     <string name="alarms_duplicate">Este umbral ya existe para este tipo.</string>
@@ -315,18 +309,15 @@
     <string name="alarms_discard">Descartar</string>
     <string name="menu_delete_alarm" formatted="false">Borrar alarma</string>
     <string name="alarms_delete_threshold_confirmation">¿Eliminar %1$s — %2$s? Se eliminarán todas las copias de este umbral.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Ha desactivado el grupo de notificación de alarma para esta aplicación.  Habilítelo para acceder a sus alarmas</string>
+    <string name="alarms_notifications_disabled">Las notificaciones están desactivadas. Actívelas en los ajustes de Android para recibir notificaciones de alarmas.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Ha desactivado el grupo de notificación de alarma para esta aplicación.  Actívelo en los ajustes de Android para recibir notificaciones de alarmas.</string>
+    <string name="alarms_open_notification_settings">Abrir los ajustes de notificaciones de Android</string>
     <string name="alarm_chan_disabled" formatted="false">Ha desactivado las notificaciones para este tipo de alarma.  Por favor, permítales utilizar este tipo de alarma.</string>
     <string name="alarm_chan_settings_b" formatted="false">Administrar este tipo de alarma</string>
-    <string name="alarms_delivery_sound_vibration">Sonido, vibración y notificación</string>
-    <string name="alarms_delivery_sound">Sonido y notificación</string>
-    <string name="alarms_delivery_vibration">Vibración y notificación</string>
-    <string name="alarms_delivery_notification">Solo notificación</string>
     <string name="alarms_options_title" formatted="false">Opciones de alarmas</string>
     <string name="pref_dismiss_low_battery_on_recovery">Descartar alarma de batería baja al recuperarse</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Elimina la notificación de batería baja cuando la carga supera su umbral. Las demás notificaciones de alarma permanecen</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Elimina la notificación de batería baja cuando la carga supera su umbral. Las demás notificaciones de alarma permanecen.</string>
-    <string name="alarms_channel_unavailable">Canal de notificación no creado o no disponible</string>
     <string name="alarms_settings_unavailable">No se han podido abrir los ajustes de notificaciones de Android</string>
     <string name="alarms_target_unknown">Objetivo no disponible. Abre los ajustes de estimación.</string>
     <string name="alarms_monitor_stopped">La monitorización está detenida. No se están evaluando las alarmas guardadas.</string>
@@ -336,7 +327,6 @@
     <string name="alarms_conflict">Las alarmas guardadas han cambiado. Actualiza y vuelve a abrir el umbral antes de hacer cambios.</string>
     <string name="alarms_missing_rule">Esta alarma falta o no es válida. Revisa el catálogo de alarmas.</string>
     <string name="alarms_invalid_records">Algunas alarmas guardadas no son válidas. Revisa estos registros; no se han eliminado.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Cuando se muestran alarmas guardadas no válidas, puedes desactivar un registro activado sin eliminarlo, o eliminarlo permanentemente. Ambas acciones requieren confirmación.</string>
     <string name="alarms_database_error">No se ha podido acceder a la base de datos de alarmas. Inténtalo de nuevo.</string>
     <string name="alarms_saved">Ajustes de alarma guardados</string>
     <string name="alarms_saved_reload_failed">Guardado, pero no se ha podido avisar al monitor. Revisa el estado de monitorización.</string>
@@ -353,6 +343,9 @@
     <string name="history_through">Hasta: %1$s</string>
     <string name="history_calendar_days">Incluye ambas fechas seleccionadas, en la zona horaria local.</string>
     <string name="history_invalid_range">Introduce un intervalo de fechas válido.</string>
+    <string name="history_invalid_month">Introduce un mes válido (1–12).</string>
+    <string name="history_invalid_year">Introduce un año válido (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Este periodo del calendario comienza antes de la fecha más antigua admitida en el historial.</string>
     <string name="history_change_range">Cambiar</string>
     <string name="history_charts">Gráficos</string>
     <string name="history_level">Nivel</string>
@@ -396,7 +389,6 @@
     <string name="history_open_fullscreen">Abrir gráfico a pantalla completa</string>
     <string name="history_chart_description_fullscreen">%1$s. Mediciones de %2$s a %3$s.</string>
     <string name="history_chart_select_point">Seleccionar mediciones</string>
-    <string name="history_chart_event_summary">Conectado (guiones cortos): %1$d · Desconectado (guiones largos): %2$d · Interrupciones del monitoreo (puntos): %3$d</string>
     <string name="history_chart_events">Eventos del gráfico</string>
     <string name="history_chart_1h">Última hora</string>
     <string name="history_chart_6h">Últimas 6\u00A0horas</string>
@@ -406,7 +398,7 @@
     <string name="history_chart_pan_right">Intervalo siguiente</string>
     <string name="history_chart_reset">Ajustar al intervalo seleccionado</string>
     <string name="history_chart_compare">Comparar</string>
-    <string name="history_chart_remove_comparison">Quitar comparación</string>
+    <string name="history_chart_no_comparison">Ninguna</string>
     <string name="history_chart_more">Más acciones del gráfico</string>
     <string name="history_chart_settings">Ajustes de visualización del gráfico</string>
     <string name="history_chart_display_style">Estilo de visualización</string>

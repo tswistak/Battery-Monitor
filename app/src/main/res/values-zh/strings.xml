@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">確認</string>
     <string name="okay" formatted="false">完成</string>
     <string name="cancel" formatted="false">取消</string>
-    <string name="custom" formatted="false">自訂…</string>
     <string name="currently_set_to" formatted="false">"目前設定為"</string>
     <string name="currently_disabled" formatted="false">目前不可使用</string>
     <string name="settings_numeric_value">數值</string>
@@ -256,9 +255,7 @@
     <string name="alarm_settings_subtitle" formatted="false">警報設定</string>
     <string name="alarm_settings" formatted="false">警報</string>
     <string name="alarm_settings_help" formatted="false">您可以讓Battery Monitor在電池電量不足時通知您 達到一定條件（例如，電池充滿電， 電池電量低於 20% 等等）。</string>
-    <string name="alarms_overview" formatted="false">警報概述</string>
-    <string name="alarms_overview_help">八種警報類型始終可用。直接啟用事件，或在電量與溫度類型下使用「新增臨界點」。新臨界點儲存後會啟用。點選數值可編輯；編輯會保留開關狀態。停用的數值仍列在清單中。「刪除警報」會要求確認。音效與震動依類型共用 Android 通知設定。現有重複記錄會顯示為單一警報；切換或刪除會影響所有副本。充放電警報依照估算目標，不會控制充電。封鎖頻道或停止監測不會改變已儲存的開關。</string>
-    <string name="alarms_overview_channels_help" formatted="false">八種警報類型始終可用。直接啟用事件，或在電量與溫度類型下使用「新增臨界點」。新臨界點儲存後會啟用。點選數值可編輯；編輯會保留開關狀態。停用的數值仍列在清單中。「刪除警報」會要求確認。音效與震動依類型共用 Android 通知設定。現有重複記錄會顯示為單一警報；切換或刪除會影響所有副本。充放電警報依照估算目標，不會控制充電。封鎖頻道或停止監測不會改變已儲存的開關。\n
+    <string name="alarms_overview_channels_help" formatted="false">八種警報類型始終可用。直接啟用事件，或在電量與溫度類型下使用「新增臨界點」。停用的數值仍列在清單中。音效與震動依類型共用 Android 通知設定。現有重複記錄會顯示為單一警報；切換開關會影響所有副本。充放電警報依照估算目標，不會控制充電。封鎖頻道或停止監測不會改變已儲存的開關。\n
     開啟 Android 通知設定以允許或封鎖通知，並設定主要通知及各警報類型的音效、震動與傳送方式。啟用警報規則不會解除通知頻道的封鎖。</string>
     <plurals name="alarms_active_count">
         <item quantity="other">已啟用 %1$d 個警報</item>
@@ -285,21 +282,18 @@
     <string name="alarms_android_problem_summary">這是系統回報的電池問題，不是容量健康度百分比</string>
     <string name="alarm_type_health_failure" formatted="false">健康失敗</string>
     <string name="alarm_health_failure" formatted="false">“電池健康狀況是：”</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">警報條件</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">這是你可以的地方 控制觸發警報的條件。</string>
     <string name="pref_alarm_threshold" formatted="false">臨界點</string>
-    <string name="pref_alarm_threshold_help" formatted="false">電量與溫度警報需設定臨界點並儲存規則。讀數沿所選方向達到或越過臨界點時會觸發警報。重複讀到臨界點不會重複觸發。開始監測、匯入規則，或在已超過臨界點時啟用規則，都不會立即觸發；之後必須再跨越臨界點。</string>
+    <string name="pref_alarm_threshold_help" formatted="false">電量與溫度警報需設定臨界點並儲存規則。新臨界點儲存後會啟用。讀數沿所選方向達到或越過臨界點時會觸發警報。重複讀到臨界點不會重複觸發。開始監測、匯入規則，或在已超過臨界點時啟用規則，都不會立即觸發；之後必須再跨越臨界點。</string>
     <string name="alarms_add_threshold">新增臨界點</string>
     <string name="alarms_edit_threshold">編輯臨界點</string>
     <string name="alarms_edit_existing">編輯現有臨界點</string>
-    <string name="alarms_threshold_edit_help" formatted="false">若臨界點已存在，請透過「編輯現有臨界點」開啟。若編輯期間已儲存的警報發生變更，請使用「重新整理」，並重新開啟臨界點後再變更。</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">若臨界點已存在，請透過「編輯現有臨界點」開啟。若編輯期間已儲存的警報發生變更，請使用「重新整理」，並重新開啟臨界點後再變更。\n
-    開啟 Android 通知設定以允許或封鎖通知，並設定主要通知及各警報類型的音效、震動與傳送方式。啟用警報規則不會解除通知頻道的封鎖。</string>
+    <string name="alarms_threshold_edit_help" formatted="false">點選臨界點數值旁的鉛筆圖示即可編輯。編輯會保留開關狀態。若要刪除警報，請開啟其編輯畫面，選擇「刪除警報」並確認刪除。此臨界點的所有副本都會移除。若編輯期間已儲存的警報發生變更，請使用「重新整理」，並重新開啟臨界點後再變更。</string>
     <string name="alarms_new_enabled">新增後會啟用此警報。</string>
     <string name="alarms_edit_keeps_enabled">編輯會保留目前的開關狀態。</string>
     <string name="alarms_enabled">已啟用</string>
     <string name="alarms_disable">停用</string>
     <string name="alarms_options">選項：%1$s</string>
+    <string name="alarms_options_tooltip">選項</string>
     <string name="alarms_numeric_range">請輸入 %1$d 至 %2$d 的整數。</string>
     <string name="alarms_temperature_range">請輸入 %1$d 至 %2$d 的數值，最多一位小數。</string>
     <string name="alarms_duplicate">此類型已存在相同臨界點。</string>
@@ -307,18 +301,15 @@
     <string name="alarms_discard">捨棄</string>
     <string name="menu_delete_alarm" formatted="false">刪除警報</string>
     <string name="alarms_delete_threshold_confirmation">要刪除 %1$s — %2$s 嗎？此臨界點的所有副本都會移除。</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">您已停用此應用的警報通知群組。請啟用它以存取您的警報</string>
+    <string name="alarms_notifications_disabled">通知已停用。請在 Android 設定中啟用通知，以接收警報通知。</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">您已停用此應用的警報通知群組。請在 Android 設定中啟用此群組，以接收警報通知。</string>
+    <string name="alarms_open_notification_settings">開啟 Android 通知設定</string>
     <string name="alarm_chan_disabled" formatted="false">您已停用此警報類型的通知。  請允許他們使用此類警報。</string>
     <string name="alarm_chan_settings_b" formatted="false">管理此警報類型</string>
-    <string name="alarms_delivery_sound_vibration">音效、震動與通知</string>
-    <string name="alarms_delivery_sound">音效與通知</string>
-    <string name="alarms_delivery_vibration">震動與通知</string>
-    <string name="alarms_delivery_notification">僅通知</string>
     <string name="alarms_options_title" formatted="false">警報選項</string>
     <string name="pref_dismiss_low_battery_on_recovery">電量回升後關閉低電量警報</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">電量高於臨界點時移除低電量通知。其他警報通知會保留</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">電量高於臨界點時移除低電量通知。其他警報通知會保留。</string>
-    <string name="alarms_channel_unavailable">通知頻道尚未建立或無法使用</string>
     <string name="alarms_settings_unavailable">無法開啟 Android 通知設定</string>
     <string name="alarms_target_unknown">目標無法取得。請開啟估算設定。</string>
     <string name="alarms_monitor_stopped">監測已停止。儲存的警報未在評估中。</string>
@@ -328,7 +319,6 @@
     <string name="alarms_conflict">儲存的警報已變更。請重新整理並重新開啟臨界點後再變更。</string>
     <string name="alarms_missing_rule">此警報遺失或無效。請檢查警報清單。</string>
     <string name="alarms_invalid_records">部分儲存的警報無效。請檢查這些記錄；它們尚未被移除。</string>
-    <string name="alarms_invalid_records_help" formatted="false">列出無效的已儲存警報時，可以停用已啟用的記錄而不將其刪除，也可以永久刪除。這兩種操作都會要求確認。</string>
     <string name="alarms_database_error">無法存取警報資料庫。請再試一次。</string>
     <string name="alarms_saved">警報設定已儲存</string>
     <string name="alarms_saved_reload_failed">已儲存，但無法通知監測服務。請檢查監測狀態。</string>
@@ -345,6 +335,9 @@
     <string name="history_through">至：%1$s</string>
     <string name="history_calendar_days">依當地時區計算，包含所選的起訖日期。</string>
     <string name="history_invalid_range">請輸入有效的日期範圍。</string>
+    <string name="history_invalid_month">請輸入有效的月份（1–12）。</string>
+    <string name="history_invalid_year">請輸入有效的年份（1970–9999）。</string>
+    <string name="history_calendar_period_unavailable">這個日曆期間的開始日期早於歷史記錄支援的最早日期。</string>
     <string name="history_change_range">變更</string>
     <string name="history_charts">圖表</string>
     <string name="history_level">電量</string>
@@ -388,7 +381,6 @@
     <string name="history_open_fullscreen">開啟全螢幕圖表</string>
     <string name="history_chart_description_fullscreen">%1$s。從 %2$s 到 %3$s 的測量值。</string>
     <string name="history_chart_select_point">選取測量值</string>
-    <string name="history_chart_event_summary">已連接（短虛線）：%1$d · 已中斷連接（長虛線）：%2$d · 監測中斷（點線）：%3$d</string>
     <string name="history_chart_events">圖表事件</string>
     <string name="history_chart_1h">最近 1\u00A0小時</string>
     <string name="history_chart_6h">最近 6\u00A0小時</string>
@@ -398,7 +390,7 @@
     <string name="history_chart_pan_right">較晚的時段</string>
     <string name="history_chart_reset">顯示完整的所選範圍</string>
     <string name="history_chart_compare">比較</string>
-    <string name="history_chart_remove_comparison">移除比較</string>
+    <string name="history_chart_no_comparison">無</string>
     <string name="history_chart_more">更多圖表操作</string>
     <string name="history_chart_settings">圖表顯示設定</string>
     <string name="history_chart_display_style">顯示樣式</string>

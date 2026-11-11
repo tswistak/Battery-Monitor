@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Ja</string>
     <string name="okay" formatted="false">OK</string>
     <string name="cancel" formatted="false">Annuleren</string>
-    <string name="custom" formatted="false">Aangepast…</string>
     <string name="currently_set_to" formatted="false">"Ingesteld op: "</string>
     <string name="currently_disabled" formatted="false">Momenteel uitgeschakeld</string>
     <string name="settings_numeric_value">Waarde</string>
@@ -259,9 +258,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Alarminstellingen</string>
     <string name="alarm_settings" formatted="false">Alarmen</string>
     <string name="alarm_settings_help" formatted="false">Je kunt een melding ontvangen als je batterijniveau onder een bepaald punt komt.</string>
-    <string name="alarms_overview" formatted="false">Overzicht van alarmen</string>
-    <string name="alarms_overview_help">Alle acht alarmtypen zijn altijd beschikbaar. Schakel gebeurtenissen direct in of gebruik “Drempel toevoegen” onder een laad- of temperatuurtype. Nieuwe drempels worden na opslaan ingeschakeld. Tik op een waarde om deze te bewerken; bewerken behoudt de aan-uitstatus. Uitgeschakelde waarden blijven in de lijst staan. “Alarm verwijderen” vraagt om bevestiging. Geluid en trillen worden per type gedeeld in de Android-meldingsinstellingen. Bestaande dubbele vermeldingen verschijnen als één logisch alarm; schakelen of verwijderen beïnvloedt alle kopieën. Laad- en ontlaadalarmen volgen schattingsdoelen en regelen het opladen niet. Een geblokkeerd kanaal of gestopte bewaking verandert opgeslagen schakelaars niet.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Alle acht alarmtypen zijn altijd beschikbaar. Schakel gebeurtenissen direct in of gebruik “Drempel toevoegen” onder een laad- of temperatuurtype. Nieuwe drempels worden na opslaan ingeschakeld. Tik op een waarde om deze te bewerken; bewerken behoudt de aan-uitstatus. Uitgeschakelde waarden blijven in de lijst staan. “Alarm verwijderen” vraagt om bevestiging. Geluid en trillen worden per type gedeeld in de Android-meldingsinstellingen. Bestaande dubbele vermeldingen verschijnen als één logisch alarm; schakelen of verwijderen beïnvloedt alle kopieën. Laad- en ontlaadalarmen volgen schattingsdoelen en regelen het opladen niet. Een geblokkeerd kanaal of gestopte bewaking verandert opgeslagen schakelaars niet.\n
+    <string name="alarms_overview_channels_help" formatted="false">Alle acht alarmtypen zijn altijd beschikbaar. Schakel gebeurtenissen direct in of gebruik “Drempel toevoegen” onder een laad- of temperatuurtype. Uitgeschakelde waarden blijven in de lijst staan. Geluid en trillen worden per type gedeeld in de Android-meldingsinstellingen. Bestaande dubbele vermeldingen verschijnen als één logisch alarm; schakelen beïnvloedt alle kopieën. Laad- en ontlaadalarmen volgen schattingsdoelen en regelen het opladen niet. Een geblokkeerd kanaal of gestopte bewaking verandert opgeslagen schakelaars niet.\n
     Open de Android-meldingsinstellingen om meldingen toe te staan of te blokkeren en geluid, trillen en bezorging in te stellen voor de hoofdmelding en elk alarmtype. Een alarmregel inschakelen heft een geblokkeerd meldingskanaal niet op.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm ingeschakeld</item>
@@ -289,21 +286,18 @@
     <string name="alarms_android_problem_summary">Een door het systeem gemeld batterijprobleem, geen percentage voor de capaciteitstoestand</string>
     <string name="alarm_type_health_failure" formatted="false">Probleem met batterij</string>
     <string name="alarm_health_failure" formatted="false">"Batterijstatus: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Voorwaarden voor alarm</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Hier kun je de voorwaarden instellen voor het alarm</string>
     <string name="pref_alarm_threshold" formatted="false">Voorwaarde</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Stel voor laad- en temperatuuralarmen de drempel in en sla de regel op. Het alarm gaat af wanneer een meting de drempel in de gekozen richting bereikt of passeert. Herhaalde metingen op de drempel herhalen het alarm niet. De bewaking starten, een regel importeren of deze voorbij de drempel inschakelen laat het alarm niet direct afgaan; een latere drempeloverschrijding is nodig.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Stel voor laad- en temperatuuralarmen de drempel in en sla de regel op. Nieuwe drempels worden na opslaan ingeschakeld. Het alarm gaat af wanneer een meting de drempel in de gekozen richting bereikt of passeert. Herhaalde metingen op de drempel herhalen het alarm niet. De bewaking starten, een regel importeren of deze voorbij de drempel inschakelen laat het alarm niet direct afgaan; een latere drempeloverschrijding is nodig.</string>
     <string name="alarms_add_threshold">Drempel toevoegen</string>
     <string name="alarms_edit_threshold">Drempel bewerken</string>
     <string name="alarms_edit_existing">Bestaande drempel bewerken</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Als een drempel al bestaat, open je deze met “Bestaande drempel bewerken”. Als opgeslagen alarmen tijdens het bewerken veranderen, gebruik je “Vernieuwen” en open je de drempel opnieuw voordat je deze wijzigt.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Als een drempel al bestaat, open je deze met “Bestaande drempel bewerken”. Als opgeslagen alarmen tijdens het bewerken veranderen, gebruik je “Vernieuwen” en open je de drempel opnieuw voordat je deze wijzigt.\n
-    Open de Android-meldingsinstellingen om meldingen toe te staan of te blokkeren en geluid, trillen en bezorging in te stellen voor de hoofdmelding en elk alarmtype. Een alarmregel inschakelen heft een geblokkeerd meldingskanaal niet op.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Tik op het potloodpictogram naast de drempelwaarde om deze te bewerken. Bewerken behoudt de aan-uitstatus. Open de editor van het alarm, kies “Alarm verwijderen” en bevestig de verwijdering. Alle kopieën van deze drempel worden verwijderd. Als opgeslagen alarmen tijdens het bewerken veranderen, gebruik je “Vernieuwen” en open je de drempel opnieuw voordat je deze wijzigt.</string>
     <string name="alarms_new_enabled">Het alarm wordt ingeschakeld wanneer het wordt toegevoegd.</string>
     <string name="alarms_edit_keeps_enabled">Bewerken behoudt de huidige aan-uitinstelling.</string>
     <string name="alarms_enabled">Ingeschakeld</string>
     <string name="alarms_disable">Uitschakelen</string>
     <string name="alarms_options">Opties: %1$s</string>
+    <string name="alarms_options_tooltip">Opties</string>
     <string name="alarms_numeric_range">Voer een geheel getal van %1$d tot %2$d in.</string>
     <string name="alarms_temperature_range">Voer een getal van %1$d tot %2$d in, met maximaal één decimaal.</string>
     <string name="alarms_duplicate">Deze drempel bestaat al voor dit type.</string>
@@ -311,18 +305,15 @@
     <string name="alarms_discard">Verwerpen</string>
     <string name="menu_delete_alarm" formatted="false">Alarm verwijderen</string>
     <string name="alarms_delete_threshold_confirmation">%1$s — %2$s verwijderen? Alle kopieën van deze drempel worden verwijderd.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Je hebt de meldingsgroep voor alarmen van deze app uitgeschakeld. Schakel die in om toegang te krijgen tot je alarmen</string>
+    <string name="alarms_notifications_disabled">Meldingen zijn uitgeschakeld. Schakel ze in bij de Android-instellingen om alarmmeldingen te ontvangen.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Je hebt de meldingsgroep voor alarmen van deze app uitgeschakeld. Schakel die in bij de Android-instellingen om alarmmeldingen te ontvangen.</string>
+    <string name="alarms_open_notification_settings">Android-meldingsinstellingen openen</string>
     <string name="alarm_chan_disabled" formatted="false">Je hebt meldingen voor dit alarmtype uitgeschakeld. Schakel ze in om dit type alarm te gebruiken.</string>
     <string name="alarm_chan_settings_b" formatted="false">Dit alarmtype beheren</string>
-    <string name="alarms_delivery_sound_vibration">Geluid, trillen en melding</string>
-    <string name="alarms_delivery_sound">Geluid en melding</string>
-    <string name="alarms_delivery_vibration">Trillen en melding</string>
-    <string name="alarms_delivery_notification">Alleen melding</string>
     <string name="alarms_options_title" formatted="false">Alarmopties</string>
     <string name="pref_dismiss_low_battery_on_recovery">Alarm voor bijna lege batterij sluiten na herstel</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Verwijder de melding voor een bijna lege batterij wanneer de lading boven de drempel stijgt. Andere alarmmeldingen blijven staan</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Verwijder de melding voor een bijna lege batterij wanneer de lading boven de drempel stijgt. Andere alarmmeldingen blijven staan.</string>
-    <string name="alarms_channel_unavailable">Meldingskanaal niet aangemaakt of niet beschikbaar</string>
     <string name="alarms_settings_unavailable">De Android-meldingsinstellingen konden niet worden geopend</string>
     <string name="alarms_target_unknown">Doel niet beschikbaar. Open de schattingsinstellingen.</string>
     <string name="alarms_monitor_stopped">De bewaking is gestopt. Opgeslagen alarmen worden niet beoordeeld.</string>
@@ -332,7 +323,6 @@
     <string name="alarms_conflict">Opgeslagen alarmen zijn gewijzigd. Vernieuw en open de drempel opnieuw voordat je wijzigingen aanbrengt.</string>
     <string name="alarms_missing_rule">Dit alarm ontbreekt of is ongeldig. Controleer het alarmoverzicht.</string>
     <string name="alarms_invalid_records">Sommige opgeslagen alarmen zijn ongeldig. Controleer deze vermeldingen; ze zijn niet verwijderd.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Wanneer ongeldige opgeslagen alarmen worden vermeld, kun je een ingeschakeld item uitschakelen zonder het te verwijderen, of het permanent verwijderen. Voor beide acties wordt om bevestiging gevraagd.</string>
     <string name="alarms_database_error">De alarmdatabase kon niet worden geopend. Probeer het opnieuw.</string>
     <string name="alarms_saved">Alarminstellingen opgeslagen</string>
     <string name="alarms_saved_reload_failed">Opgeslagen, maar de bewaking kon niet worden geïnformeerd. Controleer de bewakingsstatus.</string>
@@ -349,6 +339,9 @@
     <string name="history_through">Tot en met: %1$s</string>
     <string name="history_calendar_days">Bevat beide geselecteerde datums, in de lokale tijdzone.</string>
     <string name="history_invalid_range">Voer een geldige datumperiode in.</string>
+    <string name="history_invalid_month">Voer een geldige maand in (1–12).</string>
+    <string name="history_invalid_year">Voer een geldig jaar in (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Deze kalenderperiode begint vóór de vroegste ondersteunde datum in de geschiedenis.</string>
     <string name="history_change_range">Wijzigen</string>
     <string name="history_charts">Grafieken</string>
     <string name="history_level">Niveau</string>
@@ -392,7 +385,6 @@
     <string name="history_open_fullscreen">Grafiek op volledig scherm openen</string>
     <string name="history_chart_description_fullscreen">%1$s. Metingen van %2$s tot %3$s.</string>
     <string name="history_chart_select_point">Metingen selecteren</string>
-    <string name="history_chart_event_summary">Aangesloten (korte streepjes): %1$d · Losgekoppeld (lange streepjes): %2$d · Onderbrekingen van de bewaking (stippellijn): %3$d</string>
     <string name="history_chart_events">Grafiekgebeurtenissen</string>
     <string name="history_chart_1h">Afgelopen uur</string>
     <string name="history_chart_6h">Afgelopen 6\u00A0uur</string>
@@ -402,7 +394,7 @@
     <string name="history_chart_pan_right">Later tijdsinterval</string>
     <string name="history_chart_reset">Geselecteerde periode passend maken</string>
     <string name="history_chart_compare">Vergelijken</string>
-    <string name="history_chart_remove_comparison">Vergelijking verwijderen</string>
+    <string name="history_chart_no_comparison">Geen</string>
     <string name="history_chart_more">Meer grafiekacties</string>
     <string name="history_chart_settings">Weergave-instellingen van de grafiek</string>
     <string name="history_chart_display_style">Weergavestijl</string>

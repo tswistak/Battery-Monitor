@@ -10,13 +10,16 @@ package codes.swistak.batterymonitor.ui.help
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.alarms.AlarmGroup
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.ui.settings.SettingCatalog
+import codes.swistak.batterymonitor.ui.settings.alarmGroupIcon
 
 internal data class HelpParagraph(
     @param:StringRes val textResource: Int,
     val subheading: Boolean = false,
-    val controlKey: String? = null
+    val controlKey: String? = null,
+    val iconResources: List<Int> = emptyList()
 )
 
 internal data class HelpSection(
@@ -446,7 +449,7 @@ internal fun helpSections(
             ),
         )
 
-        SettingsContract.KEY_DIAGNOSTICS_SETTINGS, MONITORING_HELP_TOPIC -> listOf(
+        MONITORING_HELP_TOPIC -> listOf(
             HelpSection(
                 R.string.diagnostics_permissions, listOfNotNull(
                     HelpParagraph(
@@ -653,9 +656,13 @@ internal fun helpSections(
 
         SettingsContract.KEY_ALARMS_SETTINGS -> listOf(
             HelpSection(
-                R.string.alarm_settings, listOf(
+                R.string.settings_overview, listOf(
                     HelpParagraph(R.string.alarm_settings_help),
-                    HelpParagraph(R.string.alarms_overview, subheading = true),
+                    HelpParagraph(
+                        R.string.alarm_settings,
+                        subheading = true,
+                        iconResources = AlarmGroup.entries.map(::alarmGroupIcon)
+                    ),
                     HelpParagraph(R.string.alarms_overview_channels_help),
                     HelpParagraph(
                         R.string.alarms_add_threshold,
@@ -675,36 +682,6 @@ internal fun helpSections(
                 R.string.alarms_options_title, listOf(
                     HelpParagraph(R.string.pref_dismiss_low_battery_on_recovery, subheading = true),
                     HelpParagraph(R.string.pref_dismiss_low_battery_on_recovery_help),
-                )
-            ),
-            HelpSection(
-                null, listOf(
-                    HelpParagraph(R.string.alarms_invalid_records_help),
-                )
-            ),
-        )
-
-        SettingsContract.KEY_ALARM_EDIT_SETTINGS -> listOf(
-            HelpSection(
-                R.string.alarms_overview, listOf(
-                    HelpParagraph(R.string.alarms_overview_help),
-                )
-            ),
-            HelpSection(
-                R.string.pref_cat_alarm_conditions, listOf(
-                    HelpParagraph(R.string.pref_cat_alarm_conditions_help),
-                    HelpParagraph(
-                        R.string.alarms_add_threshold,
-                        subheading = true,
-                        controlKey = "alarms_add_threshold"
-                    ),
-                    HelpParagraph(R.string.pref_alarm_threshold_help),
-                    HelpParagraph(
-                        R.string.alarms_edit_threshold,
-                        subheading = true,
-                        controlKey = "alarms_edit_threshold"
-                    ),
-                    HelpParagraph(R.string.alarms_threshold_edit_channels_help),
                 )
             ),
         )

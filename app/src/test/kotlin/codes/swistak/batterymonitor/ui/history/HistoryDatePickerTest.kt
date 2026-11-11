@@ -66,8 +66,9 @@ class HistoryDatePickerTest {
             val zone = ZoneId.of(zoneName)
             for ((text, hours) in listOf(spring to 23, autumn to 25)) {
                 val date = historyDatePickerDate(historyDatePickerMillis(LocalDate.parse(text)))
-                val range =
-                    historyDraftRange("custom", date.toString(), date.toString(), "", "", zone)!!
+                val range = historyDraftRange(
+                    "custom", date.toString(), date.toString(), "", "", zone
+                ).range!!
                 val start = date.atStartOfDay(zone).toInstant().toEpochMilli()
                 val nextDay = date.plusDays(1).atStartOfDay(zone).toInstant().toEpochMilli()
                 assertEquals(start, range.start)
@@ -85,25 +86,50 @@ class HistoryDatePickerTest {
         val zone = ZoneId.of("Europe/Warsaw")
         assertEquals(
             HistoryRangeState.days(LocalDate.of(2028, 2, 1), LocalDate.of(2028, 2, 29), zone),
-            historyDraftRange("month", "", "", "2", "2028", zone)
+            historyDraftRange("month", "", "", "2", "2028", zone).range
         )
         assertEquals(
             HistoryRangeState.days(LocalDate.of(2028, 1, 1), LocalDate.of(2028, 12, 31), zone),
-            historyDraftRange("year", "", "", "", "2028", zone)
+            historyDraftRange("year", "", "", "", "2028", zone).range
         )
     }
 
     @Test
-    fun `invalid drafts do not produce ranges`() {
+    fun `invalid custom dates do not produce ranges or calendar field errors`() {
         val zone = ZoneOffset.UTC
-        assertNull(historyDraftRange("custom", "2026-04-02", "2026-04-01", "", "", zone))
-        assertNull(historyDraftRange("custom", "invalid", "2026-04-01", "", "", zone))
-        assertNull(historyDraftRange("month", "", "", "13", "2026", zone))
-        assertNull(historyDraftRange("month", "", "", "0", "2026", zone))
-        for (year in listOf("", "bad", "1969", "10000")) {
-            assertNull(historyDraftRange("year", "", "", "", year, zone))
-            assertNull(historyDraftRange("month", "", "", "1", year, zone))
+        assertEquals(
+            HistoryRangeDraft(null),
+            historyDraftRange("custom", "2026-04-02", "2026-04-01", "", "", zone)
+        )
+        assertEquals(
+            HistoryRangeDraft(null),
+            historyDraftRange("custom", "invalid", "2026-04-01", "", "", zone)
+        )
+    }
+
+    @Test
+    fun `month and year validation reports each invalid field independently`() {
+        val zone = ZoneOffset.UTC
+        for (month in listOf("", "1.5", "13", "0", "2147483648")) {
+            assertEquals(
+                HistoryRangeDraft(null, invalidMonth = true),
+                historyDraftRange("month", "", "", month, "2026", zone)
+            )
         }
+        for (year in listOf("", "2026.5", "bad", "1969", "10000", "2147483648")) {
+            assertEquals(
+                HistoryRangeDraft(null, invalidYear = true),
+                historyDraftRange("year", "", "", "", year, zone)
+            )
+            assertEquals(
+                HistoryRangeDraft(null, invalidYear = true),
+                historyDraftRange("month", "", "", "1", year, zone)
+            )
+        }
+        assertEquals(
+            HistoryRangeDraft(null, invalidMonth = true, invalidYear = true),
+            historyDraftRange("month", "", "", "0", "", zone)
+        )
     }
 
     @Test
@@ -113,7 +139,12 @@ class HistoryDatePickerTest {
             LocalDate.of(1969, 12, 31),
             historyDatePickerDate(historyDatePickerMillis(Instant.EPOCH.atZone(west).toLocalDate()))
         )
-        assertNull(historyDraftRange("custom", "1969-12-31", "1970-01-01", "", "", west))
-        assertNotNull(historyDraftRange("custom", "1970-01-01", "1970-01-01", "", "", west))
+        assertNull(historyDraftRange("custom", "1969-12-31", "1970-01-01", "", "", west).range)
+        assertNotNull(historyDraftRange("custom", "1970-01-01", "1970-01-01", "", "", west).range)
+        val east = ZoneId.of("Europe/Warsaw")
+        assertEquals(HistoryRangeDraft(null), historyDraftRange("month", "", "", "1", "1970", east))
+        assertEquals(HistoryRangeDraft(null), historyDraftRange("year", "", "", "", "1970", east))
+        assertNotNull(historyDraftRange("month", "", "", "2", "1970", east).range)
+        assertNotNull(historyDraftRange("year", "", "", "", "9999", east).range)
     }
 }

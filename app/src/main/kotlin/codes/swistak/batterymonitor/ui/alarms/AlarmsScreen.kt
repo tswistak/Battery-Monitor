@@ -36,6 +36,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
@@ -80,6 +81,7 @@ import codes.swistak.batterymonitor.ui.components.ActionLabel
 import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
 import codes.swistak.batterymonitor.ui.components.groupedCardBorder
+import codes.swistak.batterymonitor.ui.settings.alarmGroupIcon
 import codes.swistak.batterymonitor.ui.settings.settingIcon
 
 internal fun alarmTypeLabel(type: String): Int = when (type) {
@@ -214,8 +216,16 @@ internal fun AlarmsScreen(
                         style = MaterialTheme.typography.bodySmall
                     )
                     if (state.notificationsBlocked || state.groupBlocked) {
-                        Text(stringResource(if (state.notificationsBlocked) R.string.current_notifications_off else R.string.alarm_notifs_disabled_summary))
-                        TextButton(onClick = onNotificationSettings) { Text(stringResource(R.string.alarm_chan_settings_b)) }
+                        val warning = if (state.notificationsBlocked) {
+                            R.string.alarms_notifications_disabled
+                        } else R.string.alarm_notifs_disabled_summary
+                        Text(stringResource(warning))
+                        OutlinedButton(onClick = onNotificationSettings) {
+                            ActionLabel(
+                                stringResource(R.string.alarms_open_notification_settings),
+                                R.drawable.ui_external
+                            )
+                        }
                     }
                 }
             }
@@ -227,14 +237,7 @@ internal fun AlarmsScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            painterResource(
-                                when (group) {
-                                    AlarmGroup.LEVEL -> R.drawable.ui_battery
-                                    AlarmGroup.TARGETS -> R.drawable.ui_target
-                                    AlarmGroup.TEMPERATURE -> R.drawable.ui_temp
-                                    AlarmGroup.STATUS -> R.drawable.ui_heart
-                                }
-                            ),
+                            painterResource(alarmGroupIcon(group)),
                             null,
                             Modifier.size(18.dp),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -473,7 +476,7 @@ private fun AlarmTypeHeader(
             }
             Box {
                 TooltipIconButton(
-                    label = stringResource(R.string.alarms_options, label),
+                    label = stringResource(R.string.alarms_options_tooltip),
                     onClick = { options = true }) {
                     Icon(
                         painterResource(R.drawable.ui_more),
@@ -481,11 +484,6 @@ private fun AlarmTypeHeader(
                     )
                 }
                 DropdownMenu(expanded = options, onDismissRequest = { options = false }) {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(alarmDeliveryLabel(channel))) },
-                        onClick = {},
-                        enabled = false
-                    )
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.alarm_chan_settings_b)) },
                         onClick = {
@@ -567,16 +565,16 @@ private fun ThresholdRow(
                 verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     buildAnnotatedString {
-                    append(value)
-                    withStyle(
-                        SpanStyle(
-                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                            fontWeight = FontWeight.Medium
-                        )
-                    ) {
-                        append(" $unit")
-                    }
-                },
+                        append(value)
+                        withStyle(
+                            SpanStyle(
+                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                fontWeight = FontWeight.Medium
+                            )
+                        ) {
+                            append(" $unit")
+                        }
+                    },
                     Modifier
                         .weight(1f, fill = false)
                         .clearAndSetSemantics {},

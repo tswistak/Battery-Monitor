@@ -109,12 +109,17 @@ fun HelpScreen(topic: String? = null, onOpenLicenses: () -> Unit = {}) {
                     }
                     SelectionContainer {
                         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                            for ((textResource, subheading, controlKey) in section.paragraphs) {
+                            for ((textResource, subheading, controlKey, iconResources) in section.paragraphs) {
                                 val text = if (textResource == R.string.nav_help_version) {
                                     versionText
                                 } else resources.getText(textResource)
                                 if (subheading) {
-                                    HelpHeading(text, controlKey, small = true)
+                                    HelpHeading(
+                                        text,
+                                        controlKey,
+                                        small = true,
+                                        iconResources = iconResources
+                                    )
                                 } else Text(
                                     helpText(text),
                                     style = MaterialTheme.typography.bodyMedium,
@@ -157,20 +162,30 @@ internal fun HelpHeading(
     text: CharSequence,
     controlKey: String? = null,
     small: Boolean = false,
-    @DrawableRes iconResource: Int? = null
+    @DrawableRes iconResource: Int? = null,
+    iconResources: List<Int> = emptyList()
 ) {
     Row(
         Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        (iconResource ?: helpHeadingIcon(controlKey))?.let { icon ->
-            Icon(
-                painterResource(icon),
-                contentDescription = null,
-                Modifier.size(if (small) 20.dp else 23.dp),
-                tint = MaterialTheme.colorScheme.primary
-            )
+        val icons =
+            iconResources.ifEmpty { listOfNotNull(iconResource ?: helpHeadingIcon(controlKey)) }
+        if (icons.isNotEmpty()) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                for (icon in icons) {
+                    Icon(
+                        painterResource(icon),
+                        contentDescription = null,
+                        Modifier.size(if (small) 20.dp else 23.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
         }
         Text(
             helpText(text),

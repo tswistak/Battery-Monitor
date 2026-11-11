@@ -10,6 +10,7 @@ package codes.swistak.batterymonitor.ui.settings
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import codes.swistak.batterymonitor.R
+import codes.swistak.batterymonitor.alarms.AlarmGroup
 import codes.swistak.batterymonitor.settings.SettingsContract
 
 private data class SettingIcon(
@@ -271,4 +272,12 @@ internal fun settingIcon(key: String): Int = iconsByKey[key] ?: R.drawable.ui_se
 @DrawableRes
 internal fun helpHeadingIcon(controlKey: String?): Int? = controlKey?.let {
     iconsByKey[it] ?: SettingsCategory.fromLegacy(it)?.icon
+}
+
+@DrawableRes
+internal fun alarmGroupIcon(group: AlarmGroup): Int = when (group) {
+    AlarmGroup.LEVEL -> R.drawable.ui_battery
+    AlarmGroup.TARGETS -> R.drawable.ui_target
+    AlarmGroup.TEMPERATURE -> R.drawable.ui_temp
+    AlarmGroup.STATUS -> R.drawable.ui_heart
 }

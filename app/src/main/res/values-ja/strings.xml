@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">はい</string>
     <string name="okay" formatted="false">OK</string>
     <string name="cancel" formatted="false">キャンセル</string>
-    <string name="custom" formatted="false">カスタム…</string>
     <string name="currently_set_to" formatted="false">"現在の設定: "</string>
     <string name="currently_disabled" formatted="false">現在無効</string>
     <string name="settings_numeric_value">値</string>
@@ -256,9 +255,7 @@
     <string name="alarm_settings_subtitle" formatted="false">アラーム設定</string>
     <string name="alarm_settings" formatted="false">アラーム</string>
     <string name="alarm_settings_help" formatted="false">お使いのバッテリー残量が一定のレベルに達したときに、 Battery Monitor があなたに通知することができます (例、バッテリーがフル充電された、 バッテリー残量が 20% を下回った)。</string>
-    <string name="alarms_overview" formatted="false">アラームの概要</string>
-    <string name="alarms_overview_help">8種類すべてのアラームを常に利用できます。イベントを直接オンにするか、残量・温度の種別で「しきい値を追加」を使います。新しいしきい値は保存後に有効になります。値をタップして編集しても、オン・オフ状態は維持します。無効な値も一覧に残ります。「アラームを削除」では確認します。音と振動は、Android の通知設定で種別ごとに共有します。既存の重複記録は1つのアラームとして表示し、切り替えや削除はすべてのコピーに適用します。充放電アラームは推定の目標に従い、充電を制御しません。チャンネルのブロックや監視の停止は、保存済みスイッチを変更しません。</string>
-    <string name="alarms_overview_channels_help" formatted="false">8種類すべてのアラームを常に利用できます。イベントを直接オンにするか、残量・温度の種別で「しきい値を追加」を使います。新しいしきい値は保存後に有効になります。値をタップして編集しても、オン・オフ状態は維持します。無効な値も一覧に残ります。「アラームを削除」では確認します。音と振動は、Android の通知設定で種別ごとに共有します。既存の重複記録は1つのアラームとして表示し、切り替えや削除はすべてのコピーに適用します。充放電アラームは推定の目標に従い、充電を制御しません。チャンネルのブロックや監視の停止は、保存済みスイッチを変更しません。\n
+    <string name="alarms_overview_channels_help" formatted="false">8種類すべてのアラームを常に利用できます。イベントを直接オンにするか、残量・温度の種別で「しきい値を追加」を使います。無効な値も一覧に残ります。音と振動は、Android の通知設定で種別ごとに共有します。既存の重複記録は1つのアラームとして表示し、オン・オフの切り替えはすべてのコピーに適用します。充放電アラームは推定の目標に従い、充電を制御しません。チャンネルのブロックや監視の停止は、保存済みスイッチを変更しません。\n
     Android の通知設定で通知を許可またはブロックし、メイン通知と各アラーム種別の音、振動、通知方法を設定できます。アラームのルールを有効にしても、ブロックされた通知チャンネルは有効になりません。</string>
     <plurals name="alarms_active_count">
         <item quantity="other">%1$d 件のアラームが有効</item>
@@ -285,21 +282,18 @@
     <string name="alarms_android_problem_summary">システムが報告したバッテリーの問題です。容量の健全性を示す割合ではありません</string>
     <string name="alarm_type_health_failure" formatted="false">ステータス障害</string>
     <string name="alarm_health_failure" formatted="false">"バッテリーのステータス: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">アラームの条件</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">ここでアラームの発生する条件を指定します。</string>
     <string name="pref_alarm_threshold" formatted="false">しきい値</string>
-    <string name="pref_alarm_threshold_help" formatted="false">残量・温度アラームは、しきい値を設定してルールを保存します。指定した方向で測定値がしきい値に達するか超えると発動します。しきい値で同じ測定が続いても再発動しません。監視の開始、ルールのインポート、しきい値を超えた状態での有効化ではすぐに発動せず、その後にしきい値を越える必要があります。</string>
+    <string name="pref_alarm_threshold_help" formatted="false">残量・温度アラームは、しきい値を設定してルールを保存します。新しいしきい値は保存後に有効になります。指定した方向で測定値がしきい値に達するか超えると発動します。しきい値で同じ測定が続いても再発動しません。監視の開始、ルールのインポート、しきい値を超えた状態での有効化ではすぐに発動せず、その後にしきい値を越える必要があります。</string>
     <string name="alarms_add_threshold">しきい値を追加</string>
     <string name="alarms_edit_threshold">しきい値を編集</string>
     <string name="alarms_edit_existing">既存のしきい値を編集</string>
-    <string name="alarms_threshold_edit_help" formatted="false">しきい値がすでに存在する場合は、「既存のしきい値を編集」で開きます。編集中に保存済みのアラームが変更された場合は、「更新」を使用し、しきい値を再度開いてから変更してください。</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">しきい値がすでに存在する場合は、「既存のしきい値を編集」で開きます。編集中に保存済みのアラームが変更された場合は、「更新」を使用し、しきい値を再度開いてから変更してください。\n
-    Android の通知設定で通知を許可またはブロックし、メイン通知と各アラーム種別の音、振動、通知方法を設定できます。アラームのルールを有効にしても、ブロックされた通知チャンネルは有効になりません。</string>
+    <string name="alarms_threshold_edit_help" formatted="false">しきい値を編集するには、値の横にある鉛筆アイコンをタップします。編集しても、オン・オフ状態は維持します。アラームを削除するには、編集画面を開いて「アラームを削除」を選び、削除を確定します。このしきい値のすべてのコピーが削除されます。編集中に保存済みのアラームが変更された場合は、「更新」を使用し、しきい値を再度開いてから変更してください。</string>
     <string name="alarms_new_enabled">追加するとアラームが有効になります。</string>
     <string name="alarms_edit_keeps_enabled">編集しても、現在のオン・オフ状態は維持されます。</string>
     <string name="alarms_enabled">有効</string>
     <string name="alarms_disable">無効にする</string>
     <string name="alarms_options">オプション: %1$s</string>
+    <string name="alarms_options_tooltip">オプション</string>
     <string name="alarms_numeric_range">%1$d から %2$d までの整数を入力してください。</string>
     <string name="alarms_temperature_range">%1$d から %2$d までの数値を、小数第1位までで入力してください。</string>
     <string name="alarms_duplicate">この種別には、同じしきい値が既にあります。</string>
@@ -307,18 +301,15 @@
     <string name="alarms_discard">破棄</string>
     <string name="menu_delete_alarm" formatted="false">アラームを削除</string>
     <string name="alarms_delete_threshold_confirmation">%1$s — %2$s を削除しますか？このしきい値のすべてのコピーが削除されます。</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">このアプリのアラーム通知グループが無効になっています。アラームにアクセスするには有効にしてください</string>
+    <string name="alarms_notifications_disabled">通知が無効になっています。アラーム通知を受け取るには、Android の設定で通知を有効にしてください。</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">このアプリのアラーム通知グループが無効になっています。アラーム通知を受け取るには、Android の設定でこのグループを有効にしてください。</string>
+    <string name="alarms_open_notification_settings">Android の通知設定を開く</string>
     <string name="alarm_chan_disabled" formatted="false">この種類のアラーム通知が無効です。このアラーム種類を使用するには有効にしてください。</string>
     <string name="alarm_chan_settings_b" formatted="false">このアラーム種類を管理</string>
-    <string name="alarms_delivery_sound_vibration">音、振動、通知</string>
-    <string name="alarms_delivery_sound">音と通知</string>
-    <string name="alarms_delivery_vibration">振動と通知</string>
-    <string name="alarms_delivery_notification">通知のみ</string>
     <string name="alarms_options_title" formatted="false">アラームの設定</string>
     <string name="pref_dismiss_low_battery_on_recovery">残量回復時に低残量アラームを消す</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">残量がしきい値を超えたら、低残量の通知を削除します。他のアラーム通知は残ります</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">残量がしきい値を超えたら、低残量の通知を削除します。他のアラーム通知は残ります。</string>
-    <string name="alarms_channel_unavailable">通知チャンネルが未作成、または利用できません</string>
     <string name="alarms_settings_unavailable">Android の通知設定を開けませんでした</string>
     <string name="alarms_target_unknown">目標を取得できません。推定の設定を開いてください。</string>
     <string name="alarms_monitor_stopped">監視が停止しています。保存済みアラームは判定されていません。</string>
@@ -328,7 +319,6 @@
     <string name="alarms_conflict">保存済みアラームが変更されました。更新してしきい値を開き直してから変更してください。</string>
     <string name="alarms_missing_rule">このアラームは存在しないか無効です。アラーム一覧を確認してください。</string>
     <string name="alarms_invalid_records">一部の保存済みアラームが無効です。記録を確認してください。削除はされていません。</string>
-    <string name="alarms_invalid_records_help" formatted="false">無効な保存済みアラームが一覧表示されている場合、有効な項目を削除せずに無効にするか、完全に削除できます。どちらの操作でも確認を求めます。</string>
     <string name="alarms_database_error">アラームのデータベースにアクセスできませんでした。再試行してください。</string>
     <string name="alarms_saved">アラーム設定を保存しました</string>
     <string name="alarms_saved_reload_failed">保存しましたが、監視サービスに通知できませんでした。監視の状態を確認してください。</string>
@@ -345,6 +335,9 @@
     <string name="history_through">終了: %1$s</string>
     <string name="history_calendar_days">現地のタイムゾーンで、選択した両方の日付を含みます。</string>
     <string name="history_invalid_range">有効な日付範囲を入力してください。</string>
+    <string name="history_invalid_month">有効な月（1～12）を入力してください。</string>
+    <string name="history_invalid_year">有効な年（1970～9999）を入力してください。</string>
+    <string name="history_calendar_period_unavailable">この期間は、履歴でサポートされる最も古い日付より前から始まっています。</string>
     <string name="history_change_range">変更</string>
     <string name="history_charts">グラフ</string>
     <string name="history_level">残量</string>
@@ -388,7 +381,6 @@
     <string name="history_open_fullscreen">全画面のグラフを開く</string>
     <string name="history_chart_description_fullscreen">%1$s。%2$sから%3$sまでの測定値。</string>
     <string name="history_chart_select_point">測定値を選択</string>
-    <string name="history_chart_event_summary">接続（短い破線）：%1$d · 切断（長い破線）：%2$d · 監視の中断（点線）：%3$d</string>
     <string name="history_chart_events">グラフのイベント</string>
     <string name="history_chart_1h">直近1時間</string>
     <string name="history_chart_6h">直近6時間</string>
@@ -398,7 +390,7 @@
     <string name="history_chart_pan_right">次の時間帯</string>
     <string name="history_chart_reset">選択した期間全体を表示</string>
     <string name="history_chart_compare">比較</string>
-    <string name="history_chart_remove_comparison">比較を解除</string>
+    <string name="history_chart_no_comparison">なし</string>
     <string name="history_chart_more">その他のグラフ操作</string>
     <string name="history_chart_settings">グラフの表示設定</string>
     <string name="history_chart_display_style">表示スタイル</string>

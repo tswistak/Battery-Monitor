@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Ano</string>
     <string name="okay" formatted="false">O.K.</string>
     <string name="cancel" formatted="false">Zrušit</string>
-    <string name="custom" formatted="false">Vlastní…</string>
     <string name="currently_set_to" formatted="false">"Aktuálně nastaveno: "</string>
     <string name="currently_disabled" formatted="false">Aktuálně zakázáno</string>
     <string name="settings_numeric_value">Hodnota</string>
@@ -266,9 +265,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Nastavení alarmů</string>
     <string name="alarm_settings" formatted="false">Alarmy</string>
     <string name="alarm_settings_help" formatted="false">Můžete nastavit upozornění aplikace Battery Monitor jakmile stav baterie dosáhne určité hodnoty(např., Baterie je plně nabitá, Stav baterie klesl 20% atd.).</string>
-    <string name="alarms_overview" formatted="false">Přehled alarmů</string>
-    <string name="alarms_overview_help">Všech osm typů alarmů je vždy dostupných. Události zapněte přímo nebo použijte „Přidat práh“ u typu nabití či teploty. Nové prahy se po uložení zapnou. Klepnutím na hodnotu ji upravíte; úprava zachová stav zapnuto/vypnuto. Vypnuté hodnoty zůstávají v seznamu. „Smazat alarm“ vyžádá potvrzení. Zvuk a vibrace se sdílejí podle typu v nastavení oznámení Androidu. Existující duplicitní záznamy se zobrazují jako jeden logický alarm; přepnutí či smazání ovlivní všechny kopie. Alarmy nabíjení a vybíjení se řídí cíli odhadů a neřídí nabíjení. Blokovaný kanál či zastavené sledování nemění uložené přepínače.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Všech osm typů alarmů je vždy dostupných. Události zapněte přímo nebo použijte „Přidat práh“ u typu nabití či teploty. Nové prahy se po uložení zapnou. Klepnutím na hodnotu ji upravíte; úprava zachová stav zapnuto/vypnuto. Vypnuté hodnoty zůstávají v seznamu. „Smazat alarm“ vyžádá potvrzení. Zvuk a vibrace se sdílejí podle typu v nastavení oznámení Androidu. Existující duplicitní záznamy se zobrazují jako jeden logický alarm; přepnutí či smazání ovlivní všechny kopie. Alarmy nabíjení a vybíjení se řídí cíli odhadů a neřídí nabíjení. Blokovaný kanál či zastavené sledování nemění uložené přepínače.\n
+    <string name="alarms_overview_channels_help" formatted="false">Všech osm typů alarmů je vždy dostupných. Události zapněte přímo nebo použijte „Přidat práh“ u typu nabití či teploty. Vypnuté hodnoty zůstávají v seznamu. Zvuk a vibrace se sdílejí podle typu v nastavení oznámení Androidu. Existující duplicitní záznamy se zobrazují jako jeden logický alarm; přepnutí ovlivní všechny kopie. Alarmy nabíjení a vybíjení se řídí cíli odhadů a neřídí nabíjení. Blokovaný kanál či zastavené sledování nemění uložené přepínače.\n
     Otevřete nastavení oznámení Androidu pro povolení či blokování oznámení a nastavení zvuku, vibrací a doručování hlavního oznámení a jednotlivých typů alarmů. Povolení pravidla alarmu nepřebije blokovaný kanál oznámení.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarm zapnut</item>
@@ -298,21 +295,18 @@
     <string name="alarms_android_problem_summary">Problém baterie hlášený systémem, nikoli procento zdraví kapacity</string>
     <string name="alarm_type_health_failure" formatted="false">Selhání</string>
     <string name="alarm_health_failure" formatted="false">"Kondice baterie: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Podmínky alarmu</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Zde můžeze měnit nastavení podmínek pro spuštění alarmu.</string>
     <string name="pref_alarm_threshold" formatted="false">Práh</string>
-    <string name="pref_alarm_threshold_help" formatted="false">U alarmů nabití a teploty nastavte práh a uložte pravidlo. Alarm se spustí, když měření dosáhne prahu nebo jej překročí ve zvoleném směru. Opakovaná měření na prahu alarm neopakují. Spuštění sledování, import pravidla nebo jeho zapnutí za prahem jej nespustí okamžitě; je nutné pozdější překročení.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">U alarmů nabití a teploty nastavte práh a uložte pravidlo. Nové prahy se po uložení zapnou. Alarm se spustí, když měření dosáhne prahu nebo jej překročí ve zvoleném směru. Opakovaná měření na prahu alarm neopakují. Spuštění sledování, import pravidla nebo jeho zapnutí za prahem jej nespustí okamžitě; je nutné pozdější překročení.</string>
     <string name="alarms_add_threshold">Přidat práh</string>
     <string name="alarms_edit_threshold">Upravit práh</string>
     <string name="alarms_edit_existing">Upravit existující práh</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Pokud práh již existuje, otevřete jej pomocí „Upravit existující práh“. Pokud se uložené alarmy během úprav změní, použijte „Obnovit“ a před změnou práh znovu otevřete.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Pokud práh již existuje, otevřete jej pomocí „Upravit existující práh“. Pokud se uložené alarmy během úprav změní, použijte „Obnovit“ a před změnou práh znovu otevřete.\n
-    Otevřete nastavení oznámení Androidu pro povolení či blokování oznámení a nastavení zvuku, vibrací a doručování hlavního oznámení a jednotlivých typů alarmů. Povolení pravidla alarmu nepřebije blokovaný kanál oznámení.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Klepnutím na ikonu tužky vedle hodnoty prahu ji upravíte. Úprava zachová stav zapnuto/vypnuto. Chcete-li alarm odstranit, otevřete jeho editor, zvolte „Smazat alarm“ a smazání potvrďte. Budou odstraněny všechny kopie tohoto prahu. Pokud se uložené alarmy během úprav změní, použijte „Obnovit“ a před změnou práh znovu otevřete.</string>
     <string name="alarms_new_enabled">Alarm se po přidání zapne.</string>
     <string name="alarms_edit_keeps_enabled">Úprava zachová aktuální stav zapnuto/vypnuto.</string>
     <string name="alarms_enabled">Zapnuto</string>
     <string name="alarms_disable">Vypnout</string>
     <string name="alarms_options">Možnosti: %1$s</string>
+    <string name="alarms_options_tooltip">Možnosti</string>
     <string name="alarms_numeric_range">Zadejte celé číslo od %1$d do %2$d.</string>
     <string name="alarms_temperature_range">Zadejte číslo od %1$d do %2$d s nejvýše jedním desetinným místem.</string>
     <string name="alarms_duplicate">Tento práh již pro tento typ existuje.</string>
@@ -320,18 +314,15 @@
     <string name="alarms_discard">Zahodit</string>
     <string name="menu_delete_alarm" formatted="false">Smazat alarm</string>
     <string name="alarms_delete_threshold_confirmation">Smazat %1$s — %2$s? Budou odstraněny všechny kopie tohoto prahu.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Pro tuto aplikaci jste zakázali skupinu upozornění na alarm.  Povolte jej pro přístup ke svým alarmům</string>
+    <string name="alarms_notifications_disabled">Oznámení jsou vypnutá. Chcete-li dostávat oznámení o alarmech, povolte je v nastavení Androidu.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Pro tuto aplikaci jste zakázali skupinu upozornění na alarm.  Povolte ji v nastavení Androidu, abyste dostávali oznámení o alarmech.</string>
+    <string name="alarms_open_notification_settings">Otevřít nastavení oznámení Androidu</string>
     <string name="alarm_chan_disabled" formatted="false">Pro tento typ alarmu jste zakázali upozornění.  Umožněte jim používat tento typ alarmu.</string>
     <string name="alarm_chan_settings_b" formatted="false">Spravovat tento typ alarmu</string>
-    <string name="alarms_delivery_sound_vibration">Zvuk, vibrace a oznámení</string>
-    <string name="alarms_delivery_sound">Zvuk a oznámení</string>
-    <string name="alarms_delivery_vibration">Vibrace a oznámení</string>
-    <string name="alarms_delivery_notification">Pouze oznámení</string>
     <string name="alarms_options_title" formatted="false">Možnosti alarmů</string>
     <string name="pref_dismiss_low_battery_on_recovery">Zrušit alarm nízké baterie po zotavení</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Odstranit oznámení nízké baterie, když nabití překročí jeho práh. Ostatní oznámení alarmů zůstanou</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Odstranit oznámení nízké baterie, když nabití překročí jeho práh. Ostatní oznámení alarmů zůstanou.</string>
-    <string name="alarms_channel_unavailable">Kanál oznámení není vytvořen nebo dostupný</string>
     <string name="alarms_settings_unavailable">Nastavení oznámení Androidu se nepodařilo otevřít</string>
     <string name="alarms_target_unknown">Cíl není dostupný. Otevřete nastavení odhadů.</string>
     <string name="alarms_monitor_stopped">Sledování je zastavené. Uložené alarmy se nevyhodnocují.</string>
@@ -341,7 +332,6 @@
     <string name="alarms_conflict">Uložené alarmy se změnily. Před úpravami obnovte a znovu otevřete práh.</string>
     <string name="alarms_missing_rule">Tento alarm chybí nebo je neplatný. Zkontrolujte katalog alarmů.</string>
     <string name="alarms_invalid_records">Některé uložené alarmy jsou neplatné. Zkontrolujte tyto záznamy; nebyly odstraněny.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Pokud jsou uvedeny neplatné uložené alarmy, můžete zapnutý záznam vypnout bez jeho odstranění nebo jej trvale odstranit. Obě akce vyžadují potvrzení.</string>
     <string name="alarms_database_error">Nelze přistoupit k databázi alarmů. Zkuste to znovu.</string>
     <string name="alarms_saved">Nastavení alarmů uloženo</string>
     <string name="alarms_saved_reload_failed">Uloženo, ale sledování se nepodařilo upozornit. Zkontrolujte stav sledování.</string>
@@ -358,6 +348,9 @@
     <string name="history_through">Do: %1$s</string>
     <string name="history_calendar_days">Zahrnuje obě vybraná data v místním časovém pásmu.</string>
     <string name="history_invalid_range">Zadejte platný rozsah dat.</string>
+    <string name="history_invalid_month">Zadejte platný měsíc (1–12).</string>
+    <string name="history_invalid_year">Zadejte platný rok (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Toto kalendářní období začíná před začátkem podporované historie.</string>
     <string name="history_change_range">Změnit</string>
     <string name="history_charts">Grafy</string>
     <string name="history_level">Úroveň</string>
@@ -401,7 +394,6 @@
     <string name="history_open_fullscreen">Otevřít graf na celou obrazovku</string>
     <string name="history_chart_description_fullscreen">%1$s. Měření od %2$s do %3$s.</string>
     <string name="history_chart_select_point">Vybrat měření</string>
-    <string name="history_chart_event_summary">Připojení (krátké čárky): %1$d · Odpojení (dlouhé čárky): %2$d · Přerušení sledování (tečky): %3$d</string>
     <string name="history_chart_events">Události grafu</string>
     <string name="history_chart_1h">Poslední hodina</string>
     <string name="history_chart_6h">Posledních 6\u00A0hodin</string>
@@ -411,7 +403,7 @@
     <string name="history_chart_pan_right">Pozdější časový úsek</string>
     <string name="history_chart_reset">Zobrazit celý vybraný rozsah</string>
     <string name="history_chart_compare">Porovnat</string>
-    <string name="history_chart_remove_comparison">Odebrat porovnání</string>
+    <string name="history_chart_no_comparison">Žádné</string>
     <string name="history_chart_more">Další akce grafu</string>
     <string name="history_chart_settings">Nastavení zobrazení grafu</string>
     <string name="history_chart_display_style">Styl zobrazení</string>

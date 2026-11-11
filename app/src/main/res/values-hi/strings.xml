@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">हां</string>
     <string name="okay" formatted="false">ठीक है</string>
     <string name="cancel" formatted="false">निष्क्रिय</string>
-    <string name="custom" formatted="false">कस्टम…</string>
     <string name="currently_set_to" formatted="false">"वर्तमान में इस पर सेट है:"</string>
     <string name="currently_disabled" formatted="false">वर्तमान में अक्षम</string>
     <string name="settings_numeric_value">मान</string>
@@ -259,9 +258,7 @@
     <string name="alarm_settings_subtitle" formatted="false">अलार्म सेटिंग्स</string>
     <string name="alarm_settings" formatted="false">एलार्म</string>
     <string name="alarm_settings_help" formatted="false">आपकी बैटरी का स्तर होने पर आप बैटरी मॉनिटर आपको सूचित कर सकते हैं एक निश्चित स्थिति तक पहुँच जाता है (उदाहरण के लिए, बैटरी पूरी तरह चार्ज हो जाती है, बैटरी का स्तर 20% से नीचे चला जाता है, और कई अन्य)।</string>
-    <string name="alarms_overview" formatted="false">अलार्म अवलोकन</string>
-    <string name="alarms_overview_help">अलार्म के सभी आठ प्रकार हमेशा उपलब्ध हैं। घटनाएँ सीधे चालू करें या चार्ज व तापमान के प्रकार में “सीमा जोड़ें” चुनें। नई सीमाएँ सहेजने के बाद सक्षम होती हैं। बदलने के लिए किसी मान पर टैप करें; बदलने पर चालू/बंद स्थिति बनी रहती है। अक्षम मान सूची में रहते हैं। “अलार्म हटाएँ” पर पुष्टि माँगी जाती है। Android सूचना सेटिंग में ध्वनि व कंपन हर प्रकार के लिए साझा हैं। मौजूदा डुप्लिकेट रिकॉर्ड एक अलार्म की तरह दिखते हैं; स्विच बदलने या हटाने से सभी प्रतियाँ प्रभावित होती हैं। चार्जिंग व डिस्चार्जिंग अलार्म अनुमान के लक्ष्य मानते हैं, चार्जिंग नियंत्रित नहीं करते। बंद चैनल या रुकी निगरानी सहेजे स्विच नहीं बदलते।</string>
-    <string name="alarms_overview_channels_help" formatted="false">अलार्म के सभी आठ प्रकार हमेशा उपलब्ध हैं। घटनाएँ सीधे चालू करें या चार्ज व तापमान के प्रकार में “सीमा जोड़ें” चुनें। नई सीमाएँ सहेजने के बाद सक्षम होती हैं। बदलने के लिए किसी मान पर टैप करें; बदलने पर चालू/बंद स्थिति बनी रहती है। अक्षम मान सूची में रहते हैं। “अलार्म हटाएँ” पर पुष्टि माँगी जाती है। Android सूचना सेटिंग में ध्वनि व कंपन हर प्रकार के लिए साझा हैं। मौजूदा डुप्लिकेट रिकॉर्ड एक अलार्म की तरह दिखते हैं; स्विच बदलने या हटाने से सभी प्रतियाँ प्रभावित होती हैं। चार्जिंग व डिस्चार्जिंग अलार्म अनुमान के लक्ष्य मानते हैं, चार्जिंग नियंत्रित नहीं करते। बंद चैनल या रुकी निगरानी सहेजे स्विच नहीं बदलते।\n
+    <string name="alarms_overview_channels_help" formatted="false">अलार्म के सभी आठ प्रकार हमेशा उपलब्ध हैं। घटनाएँ सीधे चालू करें या चार्ज व तापमान के प्रकार में “सीमा जोड़ें” चुनें। अक्षम मान सूची में रहते हैं। Android सूचना सेटिंग में ध्वनि व कंपन हर प्रकार के लिए साझा हैं। मौजूदा डुप्लिकेट रिकॉर्ड एक अलार्म की तरह दिखते हैं; स्विच बदलने से सभी प्रतियाँ प्रभावित होती हैं। चार्जिंग व डिस्चार्जिंग अलार्म अनुमान के लक्ष्य मानते हैं, चार्जिंग नियंत्रित नहीं करते। बंद चैनल या रुकी निगरानी सहेजे स्विच नहीं बदलते।\n
     सूचनाएँ अनुमति देने या रोकने और मुख्य सूचना व हर अलार्म प्रकार के लिए ध्वनि, कंपन तथा सूचना वितरण सेट करने हेतु Android की सूचना सेटिंग खोलें। अलार्म नियम सक्षम करने से बंद सूचना चैनल चालू नहीं होता।</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d अलार्म सक्षम</item>
@@ -289,21 +286,18 @@
     <string name="alarms_android_problem_summary">सिस्टम द्वारा बताई गई बैटरी समस्या, क्षमता के स्वास्थ्य का प्रतिशत नहीं</string>
     <string name="alarm_type_health_failure" formatted="false">स्वास्थ्य विफलता</string>
     <string name="alarm_health_failure" formatted="false">"बैटरी स्वास्थ्य है:"</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">अलार्म की स्थिति</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">यहीं आप कर सकते हैं नियंत्रित करें कि कौन सी स्थितियाँ अलार्म को ट्रिगर करती हैं।</string>
     <string name="pref_alarm_threshold" formatted="false">सीमा</string>
-    <string name="pref_alarm_threshold_help" formatted="false">चार्ज और तापमान अलार्म के लिए सीमा सेट करके नियम सहेजें। रीडिंग चुनी दिशा में सीमा तक पहुँचने या पार करने पर अलार्म बजता है। सीमा पर बार-बार रीडिंग मिलने से अलार्म नहीं दोहरता। निगरानी शुरू करने, नियम आयात करने या सीमा के पार होने पर सक्षम करने से तुरंत अलार्म नहीं बजता; बाद में सीमा पार करना ज़रूरी है।</string>
+    <string name="pref_alarm_threshold_help" formatted="false">चार्ज और तापमान अलार्म के लिए सीमा सेट करके नियम सहेजें। नई सीमाएँ सहेजने के बाद सक्षम होती हैं। रीडिंग चुनी दिशा में सीमा तक पहुँचने या पार करने पर अलार्म बजता है। सीमा पर बार-बार रीडिंग मिलने से अलार्म नहीं दोहरता। निगरानी शुरू करने, नियम आयात करने या सीमा के पार होने पर सक्षम करने से तुरंत अलार्म नहीं बजता; बाद में सीमा पार करना ज़रूरी है।</string>
     <string name="alarms_add_threshold">सीमा जोड़ें</string>
     <string name="alarms_edit_threshold">सीमा बदलें</string>
     <string name="alarms_edit_existing">मौजूदा सीमा बदलें</string>
-    <string name="alarms_threshold_edit_help" formatted="false">अगर सीमा पहले से मौजूद है, तो उसे “मौजूदा सीमा बदलें” से खोलें। अगर बदलाव करते समय सहेजे गए अलार्म बदल जाएँ, तो “रीफ़्रेश” इस्तेमाल करें और सीमा बदलने से पहले उसे फिर से खोलें।</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">अगर सीमा पहले से मौजूद है, तो उसे “मौजूदा सीमा बदलें” से खोलें। अगर बदलाव करते समय सहेजे गए अलार्म बदल जाएँ, तो “रीफ़्रेश” इस्तेमाल करें और सीमा बदलने से पहले उसे फिर से खोलें।\n
-    सूचनाएँ अनुमति देने या रोकने और मुख्य सूचना व हर अलार्म प्रकार के लिए ध्वनि, कंपन तथा सूचना वितरण सेट करने हेतु Android की सूचना सेटिंग खोलें। अलार्म नियम सक्षम करने से बंद सूचना चैनल चालू नहीं होता।</string>
+    <string name="alarms_threshold_edit_help" formatted="false">सीमा का मान बदलने के लिए उसके बगल में पेंसिल के आइकन पर टैप करें। बदलने पर चालू/बंद स्थिति बनी रहती है। अलार्म हटाने के लिए उसका एडिटर खोलें, “अलार्म हटाएँ” चुनें और हटाने की पुष्टि करें। इस सीमा की सभी प्रतियाँ हट जाएँगी। अगर बदलाव करते समय सहेजे गए अलार्म बदल जाएँ, तो “रीफ़्रेश” इस्तेमाल करें और सीमा बदलने से पहले उसे फिर से खोलें।</string>
     <string name="alarms_new_enabled">जोड़ते ही अलार्म सक्षम हो जाएगा।</string>
     <string name="alarms_edit_keeps_enabled">बदलने पर चालू/बंद की वर्तमान स्थिति बनी रहती है।</string>
     <string name="alarms_enabled">सक्षम</string>
     <string name="alarms_disable">अक्षम करें</string>
     <string name="alarms_options">विकल्प: %1$s</string>
+    <string name="alarms_options_tooltip">विकल्प</string>
     <string name="alarms_numeric_range">%1$d से %2$d के बीच पूर्णांक दर्ज करें।</string>
     <string name="alarms_temperature_range">%1$d से %2$d के बीच संख्या दर्ज करें, अधिकतम एक दशमलव स्थान के साथ।</string>
     <string name="alarms_duplicate">इस प्रकार के लिए यह सीमा पहले से मौजूद है।</string>
@@ -311,18 +305,15 @@
     <string name="alarms_discard">छोड़ दें</string>
     <string name="menu_delete_alarm" formatted="false">अलार्म हटाएँ</string>
     <string name="alarms_delete_threshold_confirmation">%1$s — %2$s हटाएँ? इस सीमा की सभी प्रतियाँ हट जाएँगी।</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए अलार्म अधिसूचना समूह को अक्षम कर दिया है।  कृपया इसे अपने अलार्म तक पहुंचने के लिए सक्षम करें</string>
+    <string name="alarms_notifications_disabled">सूचनाएँ बंद हैं। अलार्म की सूचनाएँ पाने के लिए उन्हें Android की सेटिंग में चालू करें।</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">आपने इस ऐप के लिए अलार्म अधिसूचना समूह को अक्षम कर दिया है।  अलार्म की सूचनाएँ पाने के लिए इसे Android की सेटिंग में चालू करें।</string>
+    <string name="alarms_open_notification_settings">Android की सूचना सेटिंग खोलें</string>
     <string name="alarm_chan_disabled" formatted="false">आपने इस अलार्म प्रकार के लिए सूचनाएं अक्षम कर दी हैं।  कृपया उन्हें इस प्रकार के अलार्म का उपयोग करने में सक्षम करें।</string>
     <string name="alarm_chan_settings_b" formatted="false">इस अलार्म प्रकार को प्रबंधित करें</string>
-    <string name="alarms_delivery_sound_vibration">ध्वनि, कंपन और सूचना</string>
-    <string name="alarms_delivery_sound">ध्वनि और सूचना</string>
-    <string name="alarms_delivery_vibration">कंपन और सूचना</string>
-    <string name="alarms_delivery_notification">केवल सूचना</string>
     <string name="alarms_options_title" formatted="false">अलार्म विकल्प</string>
     <string name="pref_dismiss_low_battery_on_recovery">बैटरी बढ़ने पर कम बैटरी अलार्म हटाएँ</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">चार्ज अपनी सीमा से ऊपर जाने पर कम बैटरी की सूचना हटाएँ। अन्य अलार्म सूचनाएँ बनी रहेंगी</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">चार्ज अपनी सीमा से ऊपर जाने पर कम बैटरी की सूचना हटाएँ। अन्य अलार्म सूचनाएँ बनी रहेंगी।</string>
-    <string name="alarms_channel_unavailable">सूचना चैनल बना नहीं है या उपलब्ध नहीं है</string>
     <string name="alarms_settings_unavailable">Android की सूचना सेटिंग नहीं खुल सकी</string>
     <string name="alarms_target_unknown">लक्ष्य उपलब्ध नहीं है। अनुमान सेटिंग खोलें।</string>
     <string name="alarms_monitor_stopped">निगरानी बंद है। सहेजे गए अलार्म की जाँच नहीं हो रही है।</string>
@@ -332,7 +323,6 @@
     <string name="alarms_conflict">सहेजे गए अलार्म बदल गए हैं। बदलाव करने से पहले रीफ़्रेश करके सीमा फिर खोलें।</string>
     <string name="alarms_missing_rule">यह अलार्म गायब या अमान्य है। अलार्म सूची जाँचें।</string>
     <string name="alarms_invalid_records">कुछ सहेजे गए अलार्म अमान्य हैं। इन रिकॉर्ड की जाँच करें; इन्हें हटाया नहीं गया है।</string>
-    <string name="alarms_invalid_records_help" formatted="false">जब अमान्य सहेजे गए अलार्म सूची में दिखाए जाते हैं, तो आप चालू रिकॉर्ड को बिना हटाए बंद कर सकते हैं या उसे स्थायी रूप से हटा सकते हैं। दोनों कार्रवाइयाँ पुष्टि माँगती हैं।</string>
     <string name="alarms_database_error">अलार्म डेटाबेस तक पहुँच नहीं मिली। फिर कोशिश करें।</string>
     <string name="alarms_saved">अलार्म सेटिंग सहेजी गई</string>
     <string name="alarms_saved_reload_failed">सहेजा गया, लेकिन निगरानी को सूचित नहीं किया जा सका। निगरानी की स्थिति जाँचें।</string>
@@ -349,6 +339,9 @@
     <string name="history_through">तक: %1$s</string>
     <string name="history_calendar_days">स्थानीय समय क्षेत्र में दोनों चुनी हुई तिथियाँ शामिल हैं।</string>
     <string name="history_invalid_range">मान्य तिथि सीमा दर्ज करें।</string>
+    <string name="history_invalid_month">मान्य महीना दर्ज करें (1–12)।</string>
+    <string name="history_invalid_year">मान्य वर्ष दर्ज करें (1970–9999)।</string>
+    <string name="history_calendar_period_unavailable">यह कैलेंडर अवधि इतिहास के लिए समर्थित सबसे पुरानी तारीख से पहले शुरू होती है।</string>
     <string name="history_change_range">बदलें</string>
     <string name="history_charts">चार्ट</string>
     <string name="history_level">स्तर</string>
@@ -392,7 +385,6 @@
     <string name="history_open_fullscreen">चार्ट को फ़ुल स्क्रीन में खोलें</string>
     <string name="history_chart_description_fullscreen">%1$s. %2$s से %3$s तक के माप।</string>
     <string name="history_chart_select_point">माप चुनें</string>
-    <string name="history_chart_event_summary">कनेक्ट हुआ (छोटे डैश): %1$d · डिस्कनेक्ट हुआ (लंबे डैश): %2$d · निगरानी में रुकावटें (बिंदुदार): %3$d</string>
     <string name="history_chart_events">चार्ट की घटनाएँ</string>
     <string name="history_chart_1h">पिछला 1\u00A0घंटा</string>
     <string name="history_chart_6h">पिछले 6\u00A0घंटे</string>
@@ -402,7 +394,7 @@
     <string name="history_chart_pan_right">बाद की समय अवधि</string>
     <string name="history_chart_reset">पूरी चुनी हुई अवधि दिखाएँ</string>
     <string name="history_chart_compare">तुलना</string>
-    <string name="history_chart_remove_comparison">तुलना हटाएँ</string>
+    <string name="history_chart_no_comparison">कोई नहीं</string>
     <string name="history_chart_more">चार्ट की और कार्रवाइयाँ</string>
     <string name="history_chart_settings">चार्ट प्रदर्शन सेटिंग</string>
     <string name="history_chart_display_style">प्रदर्शन शैली</string>

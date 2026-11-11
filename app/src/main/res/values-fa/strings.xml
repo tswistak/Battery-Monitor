@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">آری</string>
     <string name="okay" formatted="false">باشه</string>
     <string name="cancel" formatted="false">لغو</string>
-    <string name="custom" formatted="false">سفارشی…</string>
     <string name="currently_set_to" formatted="false">"در حال حاضر روی:"</string>
     <string name="currently_disabled" formatted="false">در حال حاضر غیر فعال است</string>
     <string name="settings_numeric_value">مقدار</string>
@@ -259,9 +258,7 @@
     <string name="alarm_settings_subtitle" formatted="false">تنظیمات آلارم</string>
     <string name="alarm_settings" formatted="false">آلارم‌ها</string>
     <string name="alarm_settings_help" formatted="false">می‌توانید از مانیتور باتری به شما اطلاع دهید که وقتی باتری شما تمام می‌شود به شرایط خاصی می رسد (به عنوان مثال، باتری کاملاً شارژ می شود، سطح باتری به زیر 20٪ می رسد و بسیاری دیگر).</string>
-    <string name="alarms_overview" formatted="false">بررسی اجمالی آلارمها</string>
-    <string name="alarms_overview_help">هر هشت نوع آلارم همیشه در دسترس‌اند. رویدادها را مستقیم روشن کنید یا زیر نوع شارژ یا دما از «افزودن آستانه» استفاده کنید. آستانه‌های جدید پس از ذخیره فعال می‌شوند. برای ویرایش روی مقدار بزنید؛ ویرایش وضعیت روشن یا خاموش آن را حفظ می‌کند. مقادیر غیرفعال در فهرست می‌مانند. «حذف آلارم» نیاز به تأیید دارد. صدا و لرزش در تنظیمات اعلان Android برای هر نوع مشترک‌اند. رکوردهای تکراری موجود به صورت یک آلارم منطقی ظاهر می‌شوند؛ تغییر وضعیت یا حذف بر همه نسخه‌ها اثر دارد. آلارمهای شارژ و تخلیه از هدف‌های تخمین پیروی می‌کنند و شارژ را کنترل نمی‌کنند. کانال مسدود یا پایشگر متوقف، کلیدهای ذخیره‌شده را تغییر نمی‌دهد.</string>
-    <string name="alarms_overview_channels_help" formatted="false">هر هشت نوع آلارم همیشه در دسترس‌اند. رویدادها را مستقیم روشن کنید یا زیر نوع شارژ یا دما از «افزودن آستانه» استفاده کنید. آستانه‌های جدید پس از ذخیره فعال می‌شوند. برای ویرایش روی مقدار بزنید؛ ویرایش وضعیت روشن یا خاموش آن را حفظ می‌کند. مقادیر غیرفعال در فهرست می‌مانند. «حذف آلارم» نیاز به تأیید دارد. صدا و لرزش در تنظیمات اعلان Android برای هر نوع مشترک‌اند. رکوردهای تکراری موجود به صورت یک آلارم منطقی ظاهر می‌شوند؛ تغییر وضعیت یا حذف بر همه نسخه‌ها اثر دارد. آلارمهای شارژ و تخلیه از هدف‌های تخمین پیروی می‌کنند و شارژ را کنترل نمی‌کنند. کانال مسدود یا پایشگر متوقف، کلیدهای ذخیره‌شده را تغییر نمی‌دهد.\n
+    <string name="alarms_overview_channels_help" formatted="false">هر هشت نوع آلارم همیشه در دسترس‌اند. رویدادها را مستقیم روشن کنید یا زیر نوع شارژ یا دما از «افزودن آستانه» استفاده کنید. مقادیر غیرفعال در فهرست می‌مانند. صدا و لرزش در تنظیمات اعلان Android برای هر نوع مشترک‌اند. رکوردهای تکراری موجود به صورت یک آلارم منطقی ظاهر می‌شوند؛ تغییر وضعیت بر همه نسخه‌ها اثر دارد. آلارمهای شارژ و تخلیه از هدف‌های تخمین پیروی می‌کنند و شارژ را کنترل نمی‌کنند. کانال مسدود یا پایشگر متوقف، کلیدهای ذخیره‌شده را تغییر نمی‌دهد.\n
     تنظیمات اعلان Android را باز کنید تا اعلان‌ها را مجاز یا مسدود کنید و صدا، لرزش و نحوه ارائه اعلان اصلی و هر نوع آلارم را تنظیم کنید. فعال کردن قانون آلارم، کانال اعلان مسدودشده را دور نمی‌زند.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d آلارم فعال است</item>
@@ -289,21 +286,18 @@
     <string name="alarms_android_problem_summary">مشکل باتری گزارش‌شده توسط سیستم است، نه درصد سلامت ظرفیت</string>
     <string name="alarm_type_health_failure" formatted="false">شکست سلامتی</string>
     <string name="alarm_health_failure" formatted="false">"سلامت باتری این است:"</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">شرایط آلارم</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">اینجا جایی است که می توانید کنترل کنید که چه شرایطی باعث ایجاد زنگ آلارم می شود.</string>
     <string name="pref_alarm_threshold" formatted="false">آستانه</string>
-    <string name="pref_alarm_threshold_help" formatted="false">برای آلارمهای شارژ و دما، آستانه را تنظیم و قانون را ذخیره کنید. آلارم وقتی فعال می‌شود که خوانش در جهت انتخاب‌شده به آستانه برسد یا از آن عبور کند. خوانش‌های تکراری در آستانه، آلارم را تکرار نمی‌کنند. شروع پایش، درون‌ریزی قانون یا فعال کردن آن پس از آستانه، آلارم را فوراً فعال نمی‌کند؛ عبور بعدی لازم است.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">برای آلارمهای شارژ و دما، آستانه را تنظیم و قانون را ذخیره کنید. آستانه‌های جدید پس از ذخیره فعال می‌شوند. آلارم وقتی فعال می‌شود که خوانش در جهت انتخاب‌شده به آستانه برسد یا از آن عبور کند. خوانش‌های تکراری در آستانه، آلارم را تکرار نمی‌کنند. شروع پایش، درون‌ریزی قانون یا فعال کردن آن پس از آستانه، آلارم را فوراً فعال نمی‌کند؛ عبور بعدی لازم است.</string>
     <string name="alarms_add_threshold">افزودن آستانه</string>
     <string name="alarms_edit_threshold">ویرایش آستانه</string>
     <string name="alarms_edit_existing">ویرایش آستانه موجود</string>
-    <string name="alarms_threshold_edit_help" formatted="false">اگر آستانه از قبل وجود دارد، آن را با «ویرایش آستانه موجود» باز کنید. اگر آلارم‌های ذخیره‌شده هنگام ویرایش تغییر کردند، از «نوسازی» استفاده کنید و پیش از تغییر آستانه، آن را دوباره باز کنید.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">اگر آستانه از قبل وجود دارد، آن را با «ویرایش آستانه موجود» باز کنید. اگر آلارم‌های ذخیره‌شده هنگام ویرایش تغییر کردند، از «نوسازی» استفاده کنید و پیش از تغییر آستانه، آن را دوباره باز کنید.\n
-    تنظیمات اعلان Android را باز کنید تا اعلان‌ها را مجاز یا مسدود کنید و صدا، لرزش و نحوه ارائه اعلان اصلی و هر نوع آلارم را تنظیم کنید. فعال کردن قانون آلارم، کانال اعلان مسدودشده را دور نمی‌زند.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">برای ویرایش آستانه، روی نماد مداد کنار مقدار آن بزنید. ویرایش وضعیت روشن یا خاموش آن را حفظ می‌کند. برای حذف آلارم، ویرایشگر آن را باز کنید، «حذف آلارم» را انتخاب کنید و حذف را تأیید کنید. همه نسخه‌های این آستانه حذف می‌شوند. اگر آلارم‌های ذخیره‌شده هنگام ویرایش تغییر کردند، از «نوسازی» استفاده کنید و پیش از تغییر آستانه، آن را دوباره باز کنید.</string>
     <string name="alarms_new_enabled">آلارم هنگام افزودن فعال می‌شود.</string>
     <string name="alarms_edit_keeps_enabled">ویرایش، وضعیت روشن یا خاموش فعلی را حفظ می‌کند.</string>
     <string name="alarms_enabled">فعال</string>
     <string name="alarms_disable">غیرفعال کردن</string>
     <string name="alarms_options">گزینه‌ها: %1$s</string>
+    <string name="alarms_options_tooltip">گزینه‌ها</string>
     <string name="alarms_numeric_range">یک عدد صحیح از %1$d تا %2$d وارد کنید.</string>
     <string name="alarms_temperature_range">عددی از %1$d تا %2$d با حداکثر یک رقم اعشار وارد کنید.</string>
     <string name="alarms_duplicate">این آستانه از قبل برای این نوع وجود دارد.</string>
@@ -311,18 +305,15 @@
     <string name="alarms_discard">کنار گذاشتن</string>
     <string name="menu_delete_alarm" formatted="false">حذف آلارم</string>
     <string name="alarms_delete_threshold_confirmation">%1$s — %2$s حذف شود؟ همه نسخه‌های این آستانه حذف می‌شوند.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">شما گروه اعلان آلارم را برای این برنامه غیرفعال کرده اید.  لطفاً آن را برای دسترسی به آلارم های خود فعال کنید</string>
+    <string name="alarms_notifications_disabled">اعلان‌ها غیرفعال هستند. برای دریافت اعلان‌های آلارم، آن‌ها را در تنظیمات اندروید فعال کنید.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">شما گروه اعلان آلارم را برای این برنامه غیرفعال کرده اید.  برای دریافت اعلان‌های آلارم، آن را در تنظیمات اندروید فعال کنید.</string>
+    <string name="alarms_open_notification_settings">باز کردن تنظیمات اعلان‌های اندروید</string>
     <string name="alarm_chan_disabled" formatted="false">شما اعلان‌ها را برای این نوع زنگ آلارم غیرفعال کرده‌اید.  لطفاً آنها را فعال کنید تا از این نوع زنگ آلارم استفاده کنند.</string>
     <string name="alarm_chan_settings_b" formatted="false">این نوع زنگ آلارم را مدیریت کنید</string>
-    <string name="alarms_delivery_sound_vibration">صدا، لرزش و اعلان</string>
-    <string name="alarms_delivery_sound">صدا و اعلان</string>
-    <string name="alarms_delivery_vibration">لرزش و اعلان</string>
-    <string name="alarms_delivery_notification">فقط اعلان</string>
     <string name="alarms_options_title" formatted="false">گزینه‌های آلارم</string>
     <string name="pref_dismiss_low_battery_on_recovery">بستن آلارم باتری کم پس از افزایش شارژ</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">وقتی شارژ از آستانه بالاتر رفت، اعلان باتری کم حذف شود. سایر اعلان‌های آلارم باقی می‌مانند</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">وقتی شارژ از آستانه بالاتر رفت، اعلان باتری کم حذف شود. سایر اعلان‌های آلارم باقی می‌مانند.</string>
-    <string name="alarms_channel_unavailable">کانال اعلان ساخته نشده یا در دسترس نیست</string>
     <string name="alarms_settings_unavailable">باز کردن تنظیمات اعلان Android ممکن نشد</string>
     <string name="alarms_target_unknown">هدف در دسترس نیست. تنظیمات تخمین را باز کنید.</string>
     <string name="alarms_monitor_stopped">پایش متوقف است. آلارمهای ذخیره‌شده ارزیابی نمی‌شوند.</string>
@@ -332,7 +323,6 @@
     <string name="alarms_conflict">آلارمهای ذخیره‌شده تغییر کردند. پیش از تغییر، تازه‌سازی کنید و آستانه را دوباره باز کنید.</string>
     <string name="alarms_missing_rule">این آلارم موجود نیست یا نامعتبر است. فهرست آلارمها را بررسی کنید.</string>
     <string name="alarms_invalid_records">برخی آلارمهای ذخیره‌شده نامعتبرند. این رکوردها را بررسی کنید؛ حذف نشده‌اند.</string>
-    <string name="alarms_invalid_records_help" formatted="false">وقتی آلارم‌های ذخیره‌شده نامعتبر فهرست می‌شوند، می‌توانید یک رکورد فعال را بدون حذف آن غیرفعال کنید یا آن را برای همیشه حذف کنید. هر دو اقدام تأیید می‌خواهند.</string>
     <string name="alarms_database_error">دسترسی به پایگاه داده آلارمها ممکن نشد. دوباره تلاش کنید.</string>
     <string name="alarms_saved">تنظیمات آلارم ذخیره شدند</string>
     <string name="alarms_saved_reload_failed">ذخیره شد، اما آگاه کردن پایشگر ممکن نشد. وضعیت پایش را بررسی کنید.</string>
@@ -349,6 +339,9 @@
     <string name="history_through">تا: %1$s</string>
     <string name="history_calendar_days">هر دو تاریخ انتخاب‌شده را در منطقه زمانی محلی شامل می‌شود.</string>
     <string name="history_invalid_range">بازه تاریخ معتبری وارد کنید.</string>
+    <string name="history_invalid_month">ماه معتبری وارد کنید (۱–۱۲).</string>
+    <string name="history_invalid_year">سال معتبری وارد کنید (۱۹۷۰–۹۹۹۹).</string>
+    <string name="history_calendar_period_unavailable">این دورهٔ تقویمی پیش از آغاز محدودهٔ پشتیبانی‌شدهٔ تاریخچه شروع می‌شود.</string>
     <string name="history_change_range">تغییر</string>
     <string name="history_charts">نمودارها</string>
     <string name="history_level">سطح</string>
@@ -392,7 +385,6 @@
     <string name="history_open_fullscreen">باز کردن نمودار تمام‌صفحه</string>
     <string name="history_chart_description_fullscreen">%1$s. داده‌ها از %2$s تا %3$s.</string>
     <string name="history_chart_select_point">انتخاب داده‌ها</string>
-    <string name="history_chart_event_summary">متصل (خط‌چین کوتاه): %1$d · قطع اتصال (خط‌چین بلند): %2$d · وقفه‌های پایش (نقطه‌چین): %3$d</string>
     <string name="history_chart_events">رویدادهای نمودار</string>
     <string name="history_chart_1h">۱\u00A0ساعت گذشته</string>
     <string name="history_chart_6h">۶\u00A0ساعت گذشته</string>
@@ -402,7 +394,7 @@
     <string name="history_chart_pan_right">بازهٔ زمانی بعدی</string>
     <string name="history_chart_reset">نمایش کامل بازهٔ انتخاب‌شده</string>
     <string name="history_chart_compare">مقایسه</string>
-    <string name="history_chart_remove_comparison">حذف مقایسه</string>
+    <string name="history_chart_no_comparison">هیچ‌کدام</string>
     <string name="history_chart_more">اقدامات بیشتر نمودار</string>
     <string name="history_chart_settings">تنظیمات نمایش نمودار</string>
     <string name="history_chart_display_style">سبک نمایش</string>

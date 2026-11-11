@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Ναι</string>
     <string name="okay" formatted="false">Εντάξει</string>
     <string name="cancel" formatted="false">Ακύρωση</string>
-    <string name="custom" formatted="false">Προσαρμοσμένο…</string>
     <string name="currently_set_to" formatted="false">"Τώρα έχει ρυθμιστεί σε: "</string>
     <string name="currently_disabled" formatted="false">Απενεργοποιημένο Τώρα</string>
     <string name="settings_numeric_value">Τιμή</string>
@@ -259,9 +258,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Ρυθμίσεις συναγερμών</string>
     <string name="alarm_settings" formatted="false">Συναγερμοί</string>
     <string name="alarm_settings_help" formatted="false">Μπορείτε να ρυθμίσετε τον Battery Monitor να σας ενημερώνει όταν το επίπεδο της μπαταρίας φτάνει σε ένα συγκεκριμένο επίπεδο (π.χ, όταν η μπαταρία φορτίζεται πλήρως ή όταν το επίπεδο της μπαταρίας πέφτει κάτω από 20%)</string>
-    <string name="alarms_overview" formatted="false">Επισκόπηση συναγερμών</string>
-    <string name="alarms_overview_help">Και οι οκτώ τύποι συναγερμών είναι πάντα διαθέσιμοι. Ενεργοποιήστε συμβάντα απευθείας ή χρησιμοποιήστε την «Προσθήκη ορίου» κάτω από τύπο φορτίου ή θερμοκρασίας. Τα νέα όρια ενεργοποιούνται μετά την αποθήκευση. Πατήστε μια τιμή για επεξεργασία· η επεξεργασία διατηρεί την κατάσταση ενεργοποίησής της. Οι ανενεργές τιμές παραμένουν στη λίστα. Η «Διαγραφή συναγερμού» ζητά επιβεβαίωση. Ο ήχος και η δόνηση είναι κοινά ανά τύπο στις ρυθμίσεις ειδοποιήσεων Android. Οι υπάρχουσες διπλότυπες εγγραφές εμφανίζονται ως ένας λογικός συναγερμός· η αλλαγή κατάστασης ή η διαγραφή επηρεάζει όλα τα αντίγραφα. Οι συναγερμοί φόρτισης και εκφόρτισης ακολουθούν τους στόχους εκτίμησης και δεν ελέγχουν τη φόρτιση. Ένα αποκλεισμένο κανάλι ή η σταματημένη παρακολούθηση δεν αλλάζουν τους αποθηκευμένους διακόπτες.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Και οι οκτώ τύποι συναγερμών είναι πάντα διαθέσιμοι. Ενεργοποιήστε συμβάντα απευθείας ή χρησιμοποιήστε την «Προσθήκη ορίου» κάτω από τύπο φορτίου ή θερμοκρασίας. Τα νέα όρια ενεργοποιούνται μετά την αποθήκευση. Πατήστε μια τιμή για επεξεργασία· η επεξεργασία διατηρεί την κατάσταση ενεργοποίησής της. Οι ανενεργές τιμές παραμένουν στη λίστα. Η «Διαγραφή συναγερμού» ζητά επιβεβαίωση. Ο ήχος και η δόνηση είναι κοινά ανά τύπο στις ρυθμίσεις ειδοποιήσεων Android. Οι υπάρχουσες διπλότυπες εγγραφές εμφανίζονται ως ένας λογικός συναγερμός· η αλλαγή κατάστασης ή η διαγραφή επηρεάζει όλα τα αντίγραφα. Οι συναγερμοί φόρτισης και εκφόρτισης ακολουθούν τους στόχους εκτίμησης και δεν ελέγχουν τη φόρτιση. Ένα αποκλεισμένο κανάλι ή η σταματημένη παρακολούθηση δεν αλλάζουν τους αποθηκευμένους διακόπτες.\n
+    <string name="alarms_overview_channels_help" formatted="false">Και οι οκτώ τύποι συναγερμών είναι πάντα διαθέσιμοι. Ενεργοποιήστε συμβάντα απευθείας ή χρησιμοποιήστε την «Προσθήκη ορίου» κάτω από τύπο φορτίου ή θερμοκρασίας. Οι ανενεργές τιμές παραμένουν στη λίστα. Ο ήχος και η δόνηση είναι κοινά ανά τύπο στις ρυθμίσεις ειδοποιήσεων Android. Οι υπάρχουσες διπλότυπες εγγραφές εμφανίζονται ως ένας λογικός συναγερμός· η αλλαγή κατάστασης επηρεάζει όλα τα αντίγραφα. Οι συναγερμοί φόρτισης και εκφόρτισης ακολουθούν τους στόχους εκτίμησης και δεν ελέγχουν τη φόρτιση. Ένα αποκλεισμένο κανάλι ή η σταματημένη παρακολούθηση δεν αλλάζουν τους αποθηκευμένους διακόπτες.\n
     Ανοίξτε τις ρυθμίσεις ειδοποιήσεων Android για να επιτρέψετε ή να αποκλείσετε ειδοποιήσεις και να ρυθμίσετε ήχο, δόνηση και παράδοση για την κύρια ειδοποίηση και κάθε τύπο συναγερμού. Η ενεργοποίηση κανόνα συναγερμού δεν παρακάμπτει ένα αποκλεισμένο κανάλι ειδοποιήσεων.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d ενεργή προειδοποίηση</item>
@@ -289,21 +286,18 @@
     <string name="alarms_android_problem_summary">Πρόβλημα μπαταρίας που αναφέρει το σύστημα, όχι ποσοστό υγείας χωρητικότητας</string>
     <string name="alarm_type_health_failure" formatted="false">Καλή υγεία απέτυχε</string>
     <string name="alarm_health_failure" formatted="false">"Η υγεία της μπαταρίας είναι: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Συνθήκες συναγερμού</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Εδώ ελέγχετε τις συνθήκες που ενεργοποιούν έναν συναγερμό.</string>
     <string name="pref_alarm_threshold" formatted="false">Όριο</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Για συναγερμούς φορτίου και θερμοκρασίας, ορίστε το όριο και αποθηκεύστε τον κανόνα. Ο συναγερμός ενεργοποιείται όταν μια μέτρηση φτάσει ή περάσει το όριο προς την επιλεγμένη κατεύθυνση. Οι επαναλαμβανόμενες μετρήσεις στο όριο δεν επαναλαμβάνουν τον συναγερμό. Η έναρξη παρακολούθησης, η εισαγωγή κανόνα ή η ενεργοποίησή του πέρα από το όριο δεν τον ενεργοποιούν αμέσως· απαιτείται μεταγενέστερη διέλευση.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Για συναγερμούς φορτίου και θερμοκρασίας, ορίστε το όριο και αποθηκεύστε τον κανόνα. Τα νέα όρια ενεργοποιούνται μετά την αποθήκευση. Ο συναγερμός ενεργοποιείται όταν μια μέτρηση φτάσει ή περάσει το όριο προς την επιλεγμένη κατεύθυνση. Οι επαναλαμβανόμενες μετρήσεις στο όριο δεν επαναλαμβάνουν τον συναγερμό. Η έναρξη παρακολούθησης, η εισαγωγή κανόνα ή η ενεργοποίησή του πέρα από το όριο δεν τον ενεργοποιούν αμέσως· απαιτείται μεταγενέστερη διέλευση.</string>
     <string name="alarms_add_threshold">Προσθήκη ορίου</string>
     <string name="alarms_edit_threshold">Επεξεργασία ορίου</string>
     <string name="alarms_edit_existing">Επεξεργασία υπάρχοντος ορίου</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Αν υπάρχει ήδη ένα όριο, ανοίξτε το με την επιλογή «Επεξεργασία υπάρχοντος ορίου». Αν οι αποθηκευμένοι συναγερμοί αλλάξουν κατά την επεξεργασία, χρησιμοποιήστε την επιλογή «Ανανέωση» και ανοίξτε ξανά το όριο πριν το αλλάξετε.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Αν υπάρχει ήδη ένα όριο, ανοίξτε το με την επιλογή «Επεξεργασία υπάρχοντος ορίου». Αν οι αποθηκευμένοι συναγερμοί αλλάξουν κατά την επεξεργασία, χρησιμοποιήστε την επιλογή «Ανανέωση» και ανοίξτε ξανά το όριο πριν το αλλάξετε.\n
-    Ανοίξτε τις ρυθμίσεις ειδοποιήσεων Android για να επιτρέψετε ή να αποκλείσετε ειδοποιήσεις και να ρυθμίσετε ήχο, δόνηση και παράδοση για την κύρια ειδοποίηση και κάθε τύπο συναγερμού. Η ενεργοποίηση κανόνα συναγερμού δεν παρακάμπτει ένα αποκλεισμένο κανάλι ειδοποιήσεων.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Πατήστε το εικονίδιο μολυβιού δίπλα στην τιμή του ορίου για να την επεξεργαστείτε. Η επεξεργασία διατηρεί την κατάσταση ενεργοποίησής της. Για να διαγράψετε έναν συναγερμό, ανοίξτε τον για επεξεργασία, επιλέξτε «Διαγραφή συναγερμού» και επιβεβαιώστε τη διαγραφή. Όλα τα αντίγραφα αυτού του ορίου θα αφαιρεθούν. Αν οι αποθηκευμένοι συναγερμοί αλλάξουν κατά την επεξεργασία, χρησιμοποιήστε την επιλογή «Ανανέωση» και ανοίξτε ξανά το όριο πριν το αλλάξετε.</string>
     <string name="alarms_new_enabled">Ο συναγερμός θα ενεργοποιηθεί όταν προστεθεί.</string>
     <string name="alarms_edit_keeps_enabled">Η επεξεργασία διατηρεί την τρέχουσα ρύθμιση ενεργοποίησης/απενεργοποίησης.</string>
     <string name="alarms_enabled">Ενεργό</string>
     <string name="alarms_disable">Απενεργοποίηση</string>
     <string name="alarms_options">Επιλογές: %1$s</string>
+    <string name="alarms_options_tooltip">Επιλογές</string>
     <string name="alarms_numeric_range">Εισαγάγετε ακέραιο αριθμό από %1$d έως %2$d.</string>
     <string name="alarms_temperature_range">Εισαγάγετε αριθμό από %1$d έως %2$d, με έως ένα δεκαδικό ψηφίο.</string>
     <string name="alarms_duplicate">Αυτό το όριο υπάρχει ήδη για αυτόν τον τύπο.</string>
@@ -311,18 +305,15 @@
     <string name="alarms_discard">Απόρριψη</string>
     <string name="menu_delete_alarm" formatted="false">Διαγραφή συναγερμού</string>
     <string name="alarms_delete_threshold_confirmation">Να διαγραφεί το %1$s — %2$s; Όλα τα αντίγραφα αυτού του ορίου θα αφαιρεθούν.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Έχετε απενεργοποιήσει την ομάδα ειδοποιήσεων συναγερμού για αυτήν την εφαρμογή.  Ενεργοποιήστε το για πρόσβαση στους συναγερμούς σας</string>
+    <string name="alarms_notifications_disabled">Οι ειδοποιήσεις είναι απενεργοποιημένες. Ενεργοποιήστε τις στις ρυθμίσεις του Android για να λαμβάνετε ειδοποιήσεις συναγερμών.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Έχετε απενεργοποιήσει την ομάδα ειδοποιήσεων συναγερμού για αυτήν την εφαρμογή.  Ενεργοποιήστε την στις ρυθμίσεις του Android για να λαμβάνετε ειδοποιήσεις συναγερμών.</string>
+    <string name="alarms_open_notification_settings">Άνοιγμα ρυθμίσεων ειδοποιήσεων Android</string>
     <string name="alarm_chan_disabled" formatted="false">Έχετε απενεργοποιήσει τις ειδοποιήσεις για αυτόν τον τύπο συναγερμού.  Επιτρέψτε τους να χρησιμοποιούν αυτόν τον τύπο συναγερμού.</string>
     <string name="alarm_chan_settings_b" formatted="false">Διαχείριση αυτού του τύπου συναγερμού</string>
-    <string name="alarms_delivery_sound_vibration">Ήχος, δόνηση και ειδοποίηση</string>
-    <string name="alarms_delivery_sound">Ήχος και ειδοποίηση</string>
-    <string name="alarms_delivery_vibration">Δόνηση και ειδοποίηση</string>
-    <string name="alarms_delivery_notification">Μόνο ειδοποίηση</string>
     <string name="alarms_options_title" formatted="false">Επιλογές συναγερμών</string>
     <string name="pref_dismiss_low_battery_on_recovery">Απόρριψη συναγερμού χαμηλής μπαταρίας μετά την ανάκαμψη</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Αφαίρεση της ειδοποίησης χαμηλής μπαταρίας όταν το φορτίο ανέβει πάνω από το όριό της. Οι άλλες ειδοποιήσεις συναγερμών παραμένουν</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Αφαίρεση της ειδοποίησης χαμηλής μπαταρίας όταν το φορτίο ανέβει πάνω από το όριό της. Οι άλλες ειδοποιήσεις συναγερμών παραμένουν.</string>
-    <string name="alarms_channel_unavailable">Το κανάλι ειδοποιήσεων δεν έχει δημιουργηθεί ή δεν είναι διαθέσιμο</string>
     <string name="alarms_settings_unavailable">Δεν ήταν δυνατό το άνοιγμα των ρυθμίσεων ειδοποιήσεων Android</string>
     <string name="alarms_target_unknown">Ο στόχος δεν είναι διαθέσιμος. Ανοίξτε τις ρυθμίσεις εκτίμησης.</string>
     <string name="alarms_monitor_stopped">Η παρακολούθηση έχει σταματήσει. Οι αποθηκευμένοι συναγερμοί δεν αξιολογούνται.</string>
@@ -332,7 +323,6 @@
     <string name="alarms_conflict">Οι αποθηκευμένοι συναγερμοί άλλαξαν. Ανανεώστε και ανοίξτε ξανά το όριο πριν κάνετε αλλαγές.</string>
     <string name="alarms_missing_rule">Αυτός ο συναγερμός λείπει ή δεν είναι έγκυρος. Ελέγξτε τον κατάλογο συναγερμών.</string>
     <string name="alarms_invalid_records">Ορισμένοι αποθηκευμένοι συναγερμοί δεν είναι έγκυροι. Ελέγξτε αυτές τις εγγραφές· δεν έχουν αφαιρεθεί.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Όταν εμφανίζονται μη έγκυροι αποθηκευμένοι συναγερμοί, μπορείτε να απενεργοποιήσετε μια ενεργή εγγραφή χωρίς να τη διαγράψετε ή να τη διαγράψετε οριστικά. Και οι δύο ενέργειες ζητούν επιβεβαίωση.</string>
     <string name="alarms_database_error">Δεν ήταν δυνατή η πρόσβαση στη βάση δεδομένων συναγερμών. Δοκιμάστε ξανά.</string>
     <string name="alarms_saved">Οι ρυθμίσεις συναγερμών αποθηκεύτηκαν</string>
     <string name="alarms_saved_reload_failed">Αποθηκεύτηκε, αλλά δεν ήταν δυνατή η ενημέρωση της παρακολούθησης. Ελέγξτε την κατάσταση παρακολούθησης.</string>
@@ -349,6 +339,9 @@
     <string name="history_through">Έως: %1$s</string>
     <string name="history_calendar_days">Περιλαμβάνει και τις δύο επιλεγμένες ημερομηνίες, στην τοπική ζώνη ώρας.</string>
     <string name="history_invalid_range">Εισαγάγετε έγκυρο εύρος ημερομηνιών.</string>
+    <string name="history_invalid_month">Εισαγάγετε έναν έγκυρο μήνα (1–12).</string>
+    <string name="history_invalid_year">Εισαγάγετε ένα έγκυρο έτος (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Αυτή η ημερολογιακή περίοδος αρχίζει πριν από την αρχή του υποστηριζόμενου ιστορικού.</string>
     <string name="history_change_range">Αλλαγή</string>
     <string name="history_charts">Γραφήματα</string>
     <string name="history_level">Στάθμη</string>
@@ -392,7 +385,6 @@
     <string name="history_open_fullscreen">Άνοιγμα γραφήματος σε πλήρη οθόνη</string>
     <string name="history_chart_description_fullscreen">%1$s. Μετρήσεις από %2$s έως %3$s.</string>
     <string name="history_chart_select_point">Επιλογή μετρήσεων</string>
-    <string name="history_chart_event_summary">Συνδέσεις (μικρές παύλες): %1$d · Αποσυνδέσεις (μεγάλες παύλες): %2$d · Διακοπές παρακολούθησης (τελείες): %3$d</string>
     <string name="history_chart_events">Συμβάντα γραφήματος</string>
     <string name="history_chart_1h">Τελευταία ώρα</string>
     <string name="history_chart_6h">Τελευταίες 6\u00A0ώρες</string>
@@ -402,7 +394,7 @@
     <string name="history_chart_pan_right">Επόμενο χρονικό διάστημα</string>
     <string name="history_chart_reset">Εμφάνιση όλου του επιλεγμένου διαστήματος</string>
     <string name="history_chart_compare">Σύγκριση</string>
-    <string name="history_chart_remove_comparison">Κατάργηση σύγκρισης</string>
+    <string name="history_chart_no_comparison">Καμία</string>
     <string name="history_chart_more">Περισσότερες ενέργειες γραφήματος</string>
     <string name="history_chart_settings">Ρυθμίσεις εμφάνισης γραφήματος</string>
     <string name="history_chart_display_style">Στυλ εμφάνισης</string>

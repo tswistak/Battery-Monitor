@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Ja</string>
     <string name="okay" formatted="false">Okay</string>
     <string name="cancel" formatted="false">Abbrechen</string>
-    <string name="custom" formatted="false">Benutzerdefiniert…</string>
     <string name="currently_set_to" formatted="false">"Im Moment gesetzt auf: "</string>
     <string name="currently_disabled" formatted="false">Im Moment ausgeschaltet</string>
     <string name="settings_numeric_value">Wert</string>
@@ -259,9 +258,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Alarm Einstellungen</string>
     <string name="alarm_settings" formatted="false">Alarme</string>
     <string name="alarm_settings_help" formatted="false">Battery Monitor kann Sie benachrichtigen, wenn ein bestimmter Akkuzustand erreicht wird (z. B. vollständig geladen, unter 20% usw.).</string>
-    <string name="alarms_overview" formatted="false">Übersicht Alarme</string>
-    <string name="alarms_overview_help">Alle acht Alarmtypen sind immer verfügbar. Schalten Sie Ereignisse direkt ein oder nutzen Sie „Schwellenwert hinzufügen“ unter einem Lade- oder Temperaturtyp. Neue Schwellenwerte sind nach dem Speichern aktiviert. Tippen Sie zum Bearbeiten auf einen Wert; sein Ein-/Aus-Zustand bleibt erhalten. Deaktivierte Werte bleiben aufgeführt. „Alarm löschen“ erfordert eine Bestätigung. Ton und Vibration werden pro Typ in den Android-Benachrichtigungseinstellungen gemeinsam festgelegt. Vorhandene doppelte Einträge erscheinen als ein logischer Alarm; Umschalten oder Löschen betrifft alle Kopien. Lade- und Entladealarme folgen den Schätzungszielen und steuern nicht das Laden. Ein blockierter Kanal oder eine gestoppte Überwachung ändert keine gespeicherten Schalter.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Alle acht Alarmtypen sind immer verfügbar. Schalten Sie Ereignisse direkt ein oder nutzen Sie „Schwellenwert hinzufügen“ unter einem Lade- oder Temperaturtyp. Neue Schwellenwerte sind nach dem Speichern aktiviert. Tippen Sie zum Bearbeiten auf einen Wert; sein Ein-/Aus-Zustand bleibt erhalten. Deaktivierte Werte bleiben aufgeführt. „Alarm löschen“ erfordert eine Bestätigung. Ton und Vibration werden pro Typ in den Android-Benachrichtigungseinstellungen gemeinsam festgelegt. Vorhandene doppelte Einträge erscheinen als ein logischer Alarm; Umschalten oder Löschen betrifft alle Kopien. Lade- und Entladealarme folgen den Schätzungszielen und steuern nicht das Laden. Ein blockierter Kanal oder eine gestoppte Überwachung ändert keine gespeicherten Schalter.\n
+    <string name="alarms_overview_channels_help" formatted="false">Alle acht Alarmtypen sind immer verfügbar. Schalten Sie Ereignisse direkt ein oder nutzen Sie „Schwellenwert hinzufügen“ unter einem Lade- oder Temperaturtyp. Deaktivierte Werte bleiben aufgeführt. Ton und Vibration werden pro Typ in den Android-Benachrichtigungseinstellungen gemeinsam festgelegt. Vorhandene doppelte Einträge erscheinen als ein logischer Alarm; Umschalten betrifft alle Kopien. Lade- und Entladealarme folgen den Schätzungszielen und steuern nicht das Laden. Ein blockierter Kanal oder eine gestoppte Überwachung ändert keine gespeicherten Schalter.\n
     Öffnen Sie die Android-Benachrichtigungseinstellungen, um Benachrichtigungen zuzulassen oder zu blockieren und Ton, Vibration und Zustellung für die Hauptbenachrichtigung und jeden Alarmtyp festzulegen. Das Aktivieren einer Alarmregel hebt einen blockierten Benachrichtigungskanal nicht auf.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d Alarm aktiviert</item>
@@ -289,21 +286,18 @@
     <string name="alarms_android_problem_summary">Ein vom System gemeldetes Akkuproblem, kein Prozentwert für die Kapazitätsgesundheit</string>
     <string name="alarm_type_health_failure" formatted="false">Zustand Störung</string>
     <string name="alarm_health_failure" formatted="false">"Batteriezustand ist: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Alarm-Bedingungen</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Hier legen Sie fest, welche Bedingungen den Alarm auslösen.</string>
     <string name="pref_alarm_threshold" formatted="false">Grenzwert</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Legen Sie für Lade- und Temperaturalarme den Schwellenwert fest und speichern Sie die Regel. Der Alarm wird ausgelöst, wenn ein Messwert den Schwellenwert in der gewählten Richtung erreicht oder überschreitet. Wiederholte Messwerte am Schwellenwert lösen den Alarm nicht erneut aus. Das Starten der Überwachung, Importieren einer Regel oder Aktivieren jenseits des Schwellenwerts löst ihn nicht sofort aus; ein späteres Überschreiten ist nötig.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Legen Sie für Lade- und Temperaturalarme den Schwellenwert fest und speichern Sie die Regel. Neue Schwellenwerte sind nach dem Speichern aktiviert. Der Alarm wird ausgelöst, wenn ein Messwert den Schwellenwert in der gewählten Richtung erreicht oder überschreitet. Wiederholte Messwerte am Schwellenwert lösen den Alarm nicht erneut aus. Das Starten der Überwachung, Importieren einer Regel oder Aktivieren jenseits des Schwellenwerts löst ihn nicht sofort aus; ein späteres Überschreiten ist nötig.</string>
     <string name="alarms_add_threshold">Schwellenwert hinzufügen</string>
     <string name="alarms_edit_threshold">Schwellenwert bearbeiten</string>
     <string name="alarms_edit_existing">Vorhandenen Schwellenwert bearbeiten</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Wenn ein Schwellenwert bereits vorhanden ist, öffnen Sie ihn über „Vorhandenen Schwellenwert bearbeiten“. Wenn sich gespeicherte Alarme während der Bearbeitung ändern, verwenden Sie „Aktualisieren“ und öffnen Sie den Schwellenwert vor Änderungen erneut.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Wenn ein Schwellenwert bereits vorhanden ist, öffnen Sie ihn über „Vorhandenen Schwellenwert bearbeiten“. Wenn sich gespeicherte Alarme während der Bearbeitung ändern, verwenden Sie „Aktualisieren“ und öffnen Sie den Schwellenwert vor Änderungen erneut.\n
-    Öffnen Sie die Android-Benachrichtigungseinstellungen, um Benachrichtigungen zuzulassen oder zu blockieren und Ton, Vibration und Zustellung für die Hauptbenachrichtigung und jeden Alarmtyp festzulegen. Das Aktivieren einer Alarmregel hebt einen blockierten Benachrichtigungskanal nicht auf.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Tippen Sie auf das Stiftsymbol neben einem Schwellenwert, um ihn zu bearbeiten. Sein Ein-/Aus-Zustand bleibt erhalten. Öffnen Sie zum Löschen eines Alarms den Editor, wählen Sie „Alarm löschen“ und bestätigen Sie das Löschen. Alle Kopien dieses Schwellenwerts werden entfernt. Wenn sich gespeicherte Alarme während der Bearbeitung ändern, verwenden Sie „Aktualisieren“ und öffnen Sie den Schwellenwert vor Änderungen erneut.</string>
     <string name="alarms_new_enabled">Der Alarm wird beim Hinzufügen aktiviert.</string>
     <string name="alarms_edit_keeps_enabled">Beim Bearbeiten bleibt die aktuelle Ein-/Aus-Einstellung erhalten.</string>
     <string name="alarms_enabled">Aktiviert</string>
     <string name="alarms_disable">Deaktivieren</string>
     <string name="alarms_options">Optionen: %1$s</string>
+    <string name="alarms_options_tooltip">Optionen</string>
     <string name="alarms_numeric_range">Geben Sie eine ganze Zahl von %1$d bis %2$d ein.</string>
     <string name="alarms_temperature_range">Geben Sie eine Zahl von %1$d bis %2$d mit höchstens einer Nachkommastelle ein.</string>
     <string name="alarms_duplicate">Dieser Schwellenwert existiert bereits für diesen Typ.</string>
@@ -311,18 +305,15 @@
     <string name="alarms_discard">Verwerfen</string>
     <string name="menu_delete_alarm" formatted="false">Alarm löschen</string>
     <string name="alarms_delete_threshold_confirmation">%1$s — %2$s löschen? Alle Kopien dieses Schwellenwerts werden entfernt.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Sie haben die Alarm-Benachrichtigungsgruppe für diese App deaktiviert. Bitte aktivieren Sie sie, um auf Ihre Alarme zuzugreifen</string>
+    <string name="alarms_notifications_disabled">Benachrichtigungen sind deaktiviert. Aktivieren Sie sie in den Android-Einstellungen, um Alarmbenachrichtigungen zu erhalten.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Sie haben die Alarm-Benachrichtigungsgruppe für diese App deaktiviert. Aktivieren Sie sie in den Android-Einstellungen, um Alarmbenachrichtigungen zu erhalten.</string>
+    <string name="alarms_open_notification_settings">Android-Benachrichtigungseinstellungen öffnen</string>
     <string name="alarm_chan_disabled" formatted="false">Sie haben Benachrichtigungen für diesen Alarmtyp deaktiviert. Bitte aktivieren Sie sie, um diesen Alarmtyp zu verwenden.</string>
     <string name="alarm_chan_settings_b" formatted="false">Diesen Alarmtyp verwalten</string>
-    <string name="alarms_delivery_sound_vibration">Ton, Vibration und Benachrichtigung</string>
-    <string name="alarms_delivery_sound">Ton und Benachrichtigung</string>
-    <string name="alarms_delivery_vibration">Vibration und Benachrichtigung</string>
-    <string name="alarms_delivery_notification">Nur Benachrichtigung</string>
     <string name="alarms_options_title" formatted="false">Alarmoptionen</string>
     <string name="pref_dismiss_low_battery_on_recovery">Alarm bei niedrigem Akkustand nach Erholung schließen</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Die Benachrichtigung bei niedrigem Akkustand entfernen, wenn die Ladung über ihren Schwellenwert steigt. Andere Alarmbenachrichtigungen bleiben erhalten</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Die Benachrichtigung bei niedrigem Akkustand entfernen, wenn die Ladung über ihren Schwellenwert steigt. Andere Alarmbenachrichtigungen bleiben erhalten.</string>
-    <string name="alarms_channel_unavailable">Benachrichtigungskanal nicht erstellt oder nicht verfügbar</string>
     <string name="alarms_settings_unavailable">Android-Benachrichtigungseinstellungen konnten nicht geöffnet werden</string>
     <string name="alarms_target_unknown">Ziel nicht verfügbar. Öffnen Sie die Schätzungseinstellungen.</string>
     <string name="alarms_monitor_stopped">Überwachung ist gestoppt. Gespeicherte Alarme werden nicht ausgewertet.</string>
@@ -332,7 +323,6 @@
     <string name="alarms_conflict">Gespeicherte Alarme wurden geändert. Aktualisieren Sie und öffnen Sie den Schwellenwert erneut, bevor Sie Änderungen vornehmen.</string>
     <string name="alarms_missing_rule">Dieser Alarm fehlt oder ist ungültig. Prüfen Sie den Alarmkatalog.</string>
     <string name="alarms_invalid_records">Einige gespeicherte Alarme sind ungültig. Prüfen Sie diese Einträge; sie wurden nicht entfernt.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Wenn ungültige gespeicherte Alarme aufgelistet werden, können Sie einen aktivierten Eintrag deaktivieren, ohne ihn zu löschen, oder ihn dauerhaft löschen. Beide Aktionen erfordern eine Bestätigung.</string>
     <string name="alarms_database_error">Zugriff auf die Alarmdatenbank fehlgeschlagen. Versuchen Sie es erneut.</string>
     <string name="alarms_saved">Alarmeinstellungen gespeichert</string>
     <string name="alarms_saved_reload_failed">Gespeichert, aber die Überwachung konnte nicht benachrichtigt werden. Prüfen Sie den Überwachungsstatus.</string>
@@ -349,6 +339,9 @@
     <string name="history_through">Bis einschließlich: %1$s</string>
     <string name="history_calendar_days">Beide gewählten Daten sind enthalten, in der lokalen Zeitzone.</string>
     <string name="history_invalid_range">Geben Sie einen gültigen Datumsbereich ein.</string>
+    <string name="history_invalid_month">Geben Sie einen gültigen Monat ein (1–12).</string>
+    <string name="history_invalid_year">Geben Sie ein gültiges Jahr ein (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Dieser Kalenderzeitraum beginnt vor dem frühesten unterstützten Verlaufsdatum.</string>
     <string name="history_change_range">Ändern</string>
     <string name="history_charts">Diagramme</string>
     <string name="history_level">Ladestand</string>
@@ -392,7 +385,6 @@
     <string name="history_open_fullscreen">Diagramm im Vollbild öffnen</string>
     <string name="history_chart_description_fullscreen">%1$s. Messwerte von %2$s bis %3$s.</string>
     <string name="history_chart_select_point">Messwerte auswählen</string>
-    <string name="history_chart_event_summary">Verbunden (kurze Striche): %1$d · Getrennt (lange Striche): %2$d · Unterbrechungen der Überwachung (gepunktet): %3$d</string>
     <string name="history_chart_events">Diagrammereignisse</string>
     <string name="history_chart_1h">Letzte Stunde</string>
     <string name="history_chart_6h">Letzte 6\u00A0Stunden</string>
@@ -402,7 +394,7 @@
     <string name="history_chart_pan_right">Späterer Zeitraum</string>
     <string name="history_chart_reset">Ausgewählten Zeitraum einpassen</string>
     <string name="history_chart_compare">Vergleichen</string>
-    <string name="history_chart_remove_comparison">Vergleich entfernen</string>
+    <string name="history_chart_no_comparison">Ohne</string>
     <string name="history_chart_more">Weitere Diagrammaktionen</string>
     <string name="history_chart_settings">Diagrammdarstellung</string>
     <string name="history_chart_display_style">Darstellungsart</string>

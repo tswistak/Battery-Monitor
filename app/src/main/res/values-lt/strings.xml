@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Taip</string>
     <string name="okay" formatted="false">Gerai</string>
     <string name="cancel" formatted="false">Nutraukti</string>
-    <string name="custom" formatted="false">Pasirinktinis…</string>
     <string name="currently_set_to" formatted="false">"Dabar nustatyta: "</string>
     <string name="currently_disabled" formatted="false">Dabar išjungta</string>
     <string name="settings_numeric_value">Vertė</string>
@@ -265,9 +264,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Aliarmo Nustatymai</string>
     <string name="alarm_settings" formatted="false">Aliarmai</string>
     <string name="alarm_settings_help" formatted="false">Jūs galite nusistatyti Baterijos Indikatoriaus perspėjimą, kai baterijos lygis pasiekia tam tikrą tašką (pvz.: baterija pilnai įkraunama, baterijos lygtis nukrenta žemiau 20% ir pan.).</string>
-    <string name="alarms_overview" formatted="false">Aliarmų Peržiūra</string>
-    <string name="alarms_overview_help">Visi aštuoni aliarmų tipai visada pasiekiami. Įvykius įjunkite tiesiogiai arba prie įkrovos ar temperatūros tipo naudokite „Pridėti ribą“. Naujos ribos įjungiamos išsaugojus. Palieskite vertę, kad ją keistumėte; įjungimo ar išjungimo būsena išlieka. Išjungtos vertės lieka sąraše. „Ištrinti Aliarmą“ prašo patvirtinimo. Garsas ir vibracija bendri tipui „Android“ pranešimų nustatymuose. Esami įrašų dublikatai rodomi kaip vienas aliarmas; perjungimas ar trynimas veikia visas kopijas. Įkrovimo ir iškrovimo aliarmai naudoja įverčių tikslus ir nevaldo įkrovimo. Užblokuotas kanalas ar sustabdytas stebėjimas nekeičia išsaugotų jungiklių.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Visi aštuoni aliarmų tipai visada pasiekiami. Įvykius įjunkite tiesiogiai arba prie įkrovos ar temperatūros tipo naudokite „Pridėti ribą“. Naujos ribos įjungiamos išsaugojus. Palieskite vertę, kad ją keistumėte; įjungimo ar išjungimo būsena išlieka. Išjungtos vertės lieka sąraše. „Ištrinti Aliarmą“ prašo patvirtinimo. Garsas ir vibracija bendri tipui „Android“ pranešimų nustatymuose. Esami įrašų dublikatai rodomi kaip vienas aliarmas; perjungimas ar trynimas veikia visas kopijas. Įkrovimo ir iškrovimo aliarmai naudoja įverčių tikslus ir nevaldo įkrovimo. Užblokuotas kanalas ar sustabdytas stebėjimas nekeičia išsaugotų jungiklių.\n
+    <string name="alarms_overview_channels_help" formatted="false">Visi aštuoni aliarmų tipai visada pasiekiami. Įvykius įjunkite tiesiogiai arba prie įkrovos ar temperatūros tipo naudokite „Pridėti ribą“. Išjungtos vertės lieka sąraše. Garsas ir vibracija bendri tipui „Android“ pranešimų nustatymuose. Esami įrašų dublikatai rodomi kaip vienas aliarmas; perjungimas veikia visas kopijas. Įkrovimo ir iškrovimo aliarmai naudoja įverčių tikslus ir nevaldo įkrovimo. Užblokuotas kanalas ar sustabdytas stebėjimas nekeičia išsaugotų jungiklių.\n
     Atverkite „Android“ pranešimų nustatymus, kad leistumėte ar blokuotumėte pranešimus ir nustatytumėte pagrindinio pranešimo bei kiekvieno aliarmo tipo garsą, vibraciją ir pateikimą. Įjungta aliarmo taisyklė nepanaikina pranešimų kanalo blokavimo.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">Įjungtas %1$d aliarmas</item>
@@ -297,21 +294,18 @@
     <string name="alarms_android_problem_summary">Sistemos pranešta akumuliatoriaus problema, o ne būklės procentas pagal talpą</string>
     <string name="alarm_type_health_failure" formatted="false">Būklės klaida</string>
     <string name="alarm_health_failure" formatted="false">"Baterijos būklė yra: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Aliarmo Sąlygos</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Čia galite valdyti tai, kas iškviečia aliarmą.</string>
     <string name="pref_alarm_threshold" formatted="false">Riba</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Įkrovos ir temperatūros aliarmams nustatykite ribą ir išsaugokite taisyklę. Aliarmas suveikia, kai rodmuo pasiekia ar peržengia ribą pasirinkta kryptimi. Pakartotiniai rodmenys ties riba nekartoja aliarmo. Pradėjus stebėjimą, importavus taisyklę ar įjungus ją jau už ribos, ji nesuveikia iš karto; reikia vėlesnio ribos peržengimo.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Įkrovos ir temperatūros aliarmams nustatykite ribą ir išsaugokite taisyklę. Naujos ribos įjungiamos išsaugojus. Aliarmas suveikia, kai rodmuo pasiekia ar peržengia ribą pasirinkta kryptimi. Pakartotiniai rodmenys ties riba nekartoja aliarmo. Pradėjus stebėjimą, importavus taisyklę ar įjungus ją jau už ribos, ji nesuveikia iš karto; reikia vėlesnio ribos peržengimo.</string>
     <string name="alarms_add_threshold">Pridėti ribą</string>
     <string name="alarms_edit_threshold">Keisti ribą</string>
     <string name="alarms_edit_existing">Keisti esamą ribą</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Jei riba jau yra, atverkite ją naudodami „Keisti esamą ribą“. Jei išsaugoti įspėjimai pasikeičia redaguojant, naudokite „Atnaujinti“ ir prieš keisdami ribą atverkite ją iš naujo.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Jei riba jau yra, atverkite ją naudodami „Keisti esamą ribą“. Jei išsaugoti įspėjimai pasikeičia redaguojant, naudokite „Atnaujinti“ ir prieš keisdami ribą atverkite ją iš naujo.\n
-    Atverkite „Android“ pranešimų nustatymus, kad leistumėte ar blokuotumėte pranešimus ir nustatytumėte pagrindinio pranešimo bei kiekvieno aliarmo tipo garsą, vibraciją ir pateikimą. Įjungta aliarmo taisyklė nepanaikina pranešimų kanalo blokavimo.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Norėdami keisti ribą, palieskite pieštuko piktogramą šalia jos vertės. Įjungimo ar išjungimo būsena išlieka. Norėdami ištrinti aliarmą, atverkite jo redagavimo langą, pasirinkite „Ištrinti Aliarmą“ ir patvirtinkite ištrynimą. Visos šios ribos kopijos bus pašalintos. Jei išsaugoti įspėjimai pasikeičia redaguojant, naudokite „Atnaujinti“ ir prieš keisdami ribą atverkite ją iš naujo.</string>
     <string name="alarms_new_enabled">Aliarmas bus įjungtas jį pridėjus.</string>
     <string name="alarms_edit_keeps_enabled">Keičiant išlaikoma dabartinė įjungimo ar išjungimo būsena.</string>
     <string name="alarms_enabled">Įjungta</string>
     <string name="alarms_disable">Išjungti</string>
     <string name="alarms_options">Parinktys: %1$s</string>
+    <string name="alarms_options_tooltip">Parinktys</string>
     <string name="alarms_numeric_range">Įveskite sveikąjį skaičių nuo %1$d iki %2$d.</string>
     <string name="alarms_temperature_range">Įveskite skaičių nuo %1$d iki %2$d, ne daugiau kaip su vienu skaitmeniu po kablelio.</string>
     <string name="alarms_duplicate">Šio tipo riba jau yra.</string>
@@ -319,18 +313,15 @@
     <string name="alarms_discard">Atmesti</string>
     <string name="menu_delete_alarm" formatted="false">Ištrinti Aliarmą</string>
     <string name="alarms_delete_threshold_confirmation">Ištrinti %1$s — %2$s? Visos šios ribos kopijos bus pašalintos.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Išjungėte šios programos aliarmo pranešimų grupę.  Įgalinkite jį, kad galėtumėte pasiekti aliarmus</string>
+    <string name="alarms_notifications_disabled">Pranešimai išjungti. Įjunkite juos „Android“ nustatymuose, kad gautumėte aliarmo pranešimus.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Išjungėte šios programos aliarmo pranešimų grupę.  Įjunkite ją „Android“ nustatymuose, kad gautumėte aliarmo pranešimus.</string>
+    <string name="alarms_open_notification_settings">Atidaryti „Android“ pranešimų nustatymus</string>
     <string name="alarm_chan_disabled" formatted="false">Išjungėte šio tipo aliarmus.  Leiskite jiems naudoti šio tipo aliarmizaciją.</string>
     <string name="alarm_chan_settings_b" formatted="false">Tvarkyti šį aliarmo tipą</string>
-    <string name="alarms_delivery_sound_vibration">Garsas, vibracija ir pranešimas</string>
-    <string name="alarms_delivery_sound">Garsas ir pranešimas</string>
-    <string name="alarms_delivery_vibration">Vibracija ir pranešimas</string>
-    <string name="alarms_delivery_notification">Tik pranešimas</string>
     <string name="alarms_options_title" formatted="false">Aliarmų parinktys</string>
     <string name="pref_dismiss_low_battery_on_recovery">Pašalinti mažos įkrovos aliarmą jai atsistačius</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Pašalinti mažos įkrovos pranešimą, kai įkrova pakyla virš ribos. Kiti aliarmų pranešimai lieka</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Pašalinti mažos įkrovos pranešimą, kai įkrova pakyla virš ribos. Kiti aliarmų pranešimai lieka.</string>
-    <string name="alarms_channel_unavailable">Pranešimų kanalas nesukurtas arba nepasiekiamas</string>
     <string name="alarms_settings_unavailable">Nepavyko atverti „Android“ pranešimų nustatymų</string>
     <string name="alarms_target_unknown">Tikslas nepasiekiamas. Atverkite įverčių nustatymus.</string>
     <string name="alarms_monitor_stopped">Stebėjimas sustabdytas. Išsaugoti aliarmai netikrinami.</string>
@@ -340,7 +331,6 @@
     <string name="alarms_conflict">Išsaugoti aliarmai pasikeitė. Prieš keisdami atnaujinkite ir vėl atverkite ribą.</string>
     <string name="alarms_missing_rule">Šio aliarmo nėra arba jis netinkamas. Peržiūrėkite aliarmų katalogą.</string>
     <string name="alarms_invalid_records">Kai kurie išsaugoti aliarmai netinkami. Peržiūrėkite šiuos įrašus; jie nebuvo pašalinti.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Kai pateikiami netinkami išsaugoti įspėjimai, galite išjungti įjungtą įrašą jo neištrindami arba ištrinti jį visam laikui. Abu veiksmai prašo patvirtinimo.</string>
     <string name="alarms_database_error">Nepavyko pasiekti aliarmų duomenų bazės. Bandykite dar kartą.</string>
     <string name="alarms_saved">Aliarmų nustatymai išsaugoti</string>
     <string name="alarms_saved_reload_failed">Išsaugota, bet nepavyko pranešti stebėjimo tarnybai. Patikrinkite stebėjimo būseną.</string>
@@ -357,6 +347,9 @@
     <string name="history_through">Iki: %1$s</string>
     <string name="history_calendar_days">Apima abi pasirinktas datas vietine laiko juosta.</string>
     <string name="history_invalid_range">Įveskite tinkamą datų intervalą.</string>
+    <string name="history_invalid_month">Įveskite tinkamą mėnesį (1–12).</string>
+    <string name="history_invalid_year">Įveskite tinkamus metus (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Šis kalendorinis laikotarpis prasideda anksčiau už seniausią palaikomą istorijos datą.</string>
     <string name="history_change_range">Keisti</string>
     <string name="history_charts">Diagramos</string>
     <string name="history_level">Lygis</string>
@@ -400,7 +393,6 @@
     <string name="history_open_fullscreen">Atverti grafiką visame ekrane</string>
     <string name="history_chart_description_fullscreen">%1$s. Matavimai nuo %2$s iki %3$s.</string>
     <string name="history_chart_select_point">Pasirinkti matavimus</string>
-    <string name="history_chart_event_summary">Prijungimai (trumpi brūkšniai): %1$d · Atjungimai (ilgi brūkšniai): %2$d · Stebėjimo pertrūkiai (taškai): %3$d</string>
     <string name="history_chart_events">Grafiko įvykiai</string>
     <string name="history_chart_1h">Paskutinė valanda</string>
     <string name="history_chart_6h">Paskutinės 6\u00A0valandos</string>
@@ -410,7 +402,7 @@
     <string name="history_chart_pan_right">Vėlesnis laiko intervalas</string>
     <string name="history_chart_reset">Rodyti visą pasirinktą intervalą</string>
     <string name="history_chart_compare">Palyginti</string>
-    <string name="history_chart_remove_comparison">Pašalinti palyginimą</string>
+    <string name="history_chart_no_comparison">Nėra</string>
     <string name="history_chart_more">Daugiau grafiko veiksmų</string>
     <string name="history_chart_settings">Grafiko rodymo nuostatos</string>
     <string name="history_chart_display_style">Rodymo stilius</string>

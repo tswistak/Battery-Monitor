@@ -27,6 +27,7 @@ import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
+import androidx.compose.ui.text.AnnotatedString
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.test.platform.app.InstrumentationRegistry
@@ -37,12 +38,15 @@ import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.ui.theme.AppBatteryTheme
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.util.Locale
 
 class HistoryRangeDialogInstrumentedTest {
     @Test
@@ -261,6 +265,136 @@ class HistoryRangeDialogInstrumentedTest {
     }
 
     @Test
+    fun invalid_calendar_fields_block_confirmation_until_corrected() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val context = instrumentation.targetContext
+        val zone = ZoneId.of("Europe/Warsaw")
+        val range =
+            HistoryRangeState.days(LocalDate.of(2026, 12, 1), LocalDate.of(2026, 12, 31), zone)
+        val state = mutableStateOf(HistoryUiState(range = range))
+        var commits = 0
+        val monitor =
+            instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
+        instrumentation.startActivitySync(
+            FullscreenChartActivity.intent(context, HistoryMetric.LEVEL, range, "24h")
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        try {
+            await { monitor.lastActivity?.hasWindowFocus() == true }
+            main {
+                (monitor.lastActivity as FullscreenChartActivity).setContent {
+                    AppBatteryTheme {
+                        HistoryRangeControl(state.value, { next, label ->
+                            commits++
+                            state.value = state.value.copy(range = next, rangeLabel = label)
+                        }, zone, compact = true)
+                    }
+                }
+            }
+            val okay = context.getString(R.string.okay)
+            fun fields() = windowSemanticsNodes(focusedOnly = true).filter {
+                it.config.contains(SemanticsActions.SetText)
+            }
+
+            fun awaitEditor(message: String, ready: () -> Boolean) {
+                await(message) {
+                    var visible = false
+                    main { visible = ready() }
+                    visible
+                }
+            }
+
+            fun setField(index: Int, value: String) {
+                main {
+                    val setText = fields()[index].config[SemanticsActions.SetText].action
+                    assertTrue(requireNotNull(setText).invoke(AnnotatedString(value)))
+                }
+                awaitEditor("The calendar field must reflect the edited value") {
+                    fields().getOrNull(index)?.config?.getOrNull(SemanticsProperties.EditableText)?.text == value
+                }
+            }
+
+            fun checkErrors(yearInvalid: Boolean, monthInvalid: Boolean) {
+                main {
+                    val nodes = windowSemanticsNodes(focusedOnly = true)
+                    assertEquals(
+                        listOf(yearInvalid, monthInvalid),
+                        fields().map { it.config.contains(SemanticsProperties.Error) })
+                    val button = nodes.first {
+                        it.config.contains(SemanticsActions.OnClick) && it.config.getOrNull(
+                            SemanticsProperties.Text
+                        )?.any { text -> text.text == okay } == true
+                    }
+                    assertEquals(
+                        yearInvalid || monthInvalid,
+                        button.config.contains(SemanticsProperties.Disabled)
+                    )
+                }
+                assertEquals(0, commits)
+            }
+            click(context.getString(R.string.history_last_24h))
+            val month = context.getString(R.string.history_month)
+            click(month)
+            awaitEditor("Month must be the selected draft before opening its editor") {
+                windowSemanticsNodes(focusedOnly = true).any { node ->
+                    node.config.getOrNull(SemanticsProperties.Selected) == true && node.config.getOrNull(
+                        SemanticsProperties.Text
+                    )?.any { it.text == month } == true
+                }
+            }
+            click(okay)
+            awaitEditor("The month editor must have focus and expose both editable fields") {
+                fields().size == 2
+            }
+
+            setField(1, "13")
+            checkErrors(yearInvalid = false, monthInvalid = true)
+            setField(0, "")
+            checkErrors(yearInvalid = true, monthInvalid = true)
+            main {
+                val done = fields()[1].config[SemanticsActions.OnImeAction].action
+                assertTrue(requireNotNull(done).invoke())
+            }
+            checkErrors(yearInvalid = true, monthInvalid = true)
+            setField(1, "11")
+            checkErrors(yearInvalid = true, monthInvalid = false)
+            setField(0, "2026")
+            checkErrors(yearInvalid = false, monthInvalid = false)
+            click(okay)
+            await { commits == 1 }
+            assertEquals("month", state.value.rangeLabel)
+            assertEquals(
+                HistoryRangeState.days(LocalDate.of(2026, 11, 1), LocalDate.of(2026, 11, 30), zone),
+                state.value.range
+            )
+        } finally {
+            main { monitor.lastActivity?.finish() }
+            instrumentation.removeMonitor(monitor)
+        }
+    }
+
+    @Test
+    fun calendar_titles_use_committed_period_in_supplied_zone_and_active_locale() {
+        val zone = ZoneId.of("Pacific/Kiritimati")
+        val utc = ZoneOffset.UTC
+        val first = LocalDate.of(2026, 1, 1)
+        val last = LocalDate.of(2026, 1, 31)
+        val localRange = HistoryRangeState.days(first, last, zone)
+        val utcRange = HistoryRangeState.days(first, last, utc)
+        for (period in listOf("month", "year")) {
+            val localTitle = historyCalendarRangeTitle(localRange, period, Locale.US, zone)
+            assertEquals(historyCalendarRangeTitle(utcRange, period, Locale.US, utc), localTitle)
+            assertNotEquals(
+                historyCalendarRangeTitle(localRange, period, Locale.US, utc), localTitle
+            )
+        }
+        assertNotEquals(
+            historyCalendarRangeTitle(localRange, "month", Locale.US, zone),
+            historyCalendarRangeTitle(localRange, "month", Locale.forLanguageTag("pl-PL"), zone)
+        )
+    }
+
+    @Test
     fun date_picker_replaces_parent_and_recreation_and_cancellation_preserve_custom_draft() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val context = instrumentation.targetContext
@@ -280,13 +414,14 @@ class HistoryRangeDialogInstrumentedTest {
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
         try {
+            val custom = context.getString(R.string.history_custom_range)
             await {
                 monitor.lastActivity != null && !monitor.lastActivity.isDestroyed && monitor.lastActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && textVisible(
-                    context.getString(R.string.history_range)
+                    custom
                 )
             }
-            click(context.getString(R.string.history_range))
-            click(context.getString(R.string.history_custom_range))
+            click(custom)
+            click(custom)
             click(context.getString(R.string.okay))
             val locale = monitor.lastActivity.resources.configuration.locales[0]
             val format = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
@@ -319,8 +454,8 @@ class HistoryRangeDialogInstrumentedTest {
             await { dialogs() == 0 }
             assertEquals(0, dialogs())
 
-            click(context.getString(R.string.history_range))
-            click(context.getString(R.string.history_custom_range))
+            click(custom)
+            click(custom)
             click(context.getString(R.string.okay))
             await { textVisible(from) && textVisible(through) }
             assertOneDialog()

@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Oui</string>
     <string name="okay" formatted="false">Ok</string>
     <string name="cancel" formatted="false">Annuler</string>
-    <string name="custom" formatted="false">Personnalisé…</string>
     <string name="currently_set_to" formatted="false">"Valeur actuelle :"</string>
     <string name="currently_disabled" formatted="false">Actuellement désactivé</string>
     <string name="settings_numeric_value">Valeur</string>
@@ -262,9 +261,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Paramètres des alarmes</string>
     <string name="alarm_settings" formatted="false">Alarmes</string>
     <string name="alarm_settings_help" formatted="false">Vous pouvez configurer Battery Monitor pour qu\'il vous informe dès que la batterie a atteint un certain point (exemple : La batterie est complètement chargée, le niveau de charge a atteint 20%, etc…).</string>
-    <string name="alarms_overview" formatted="false">Aperçu des alarmes</string>
-    <string name="alarms_overview_help">Les huit types d’alarme sont toujours disponibles. Activez directement les événements ou utilisez «\u00A0Ajouter un seuil\u00A0» sous un type de charge ou de température. Les nouveaux seuils sont activés après l’enregistrement. Touchez une valeur pour la modifier ; la modification conserve son état activé ou désactivé. Les valeurs désactivées restent affichées. «\u00A0Supprimer l\'alarme\u00A0» demande confirmation. Le son et les vibrations sont communs à chaque type dans les paramètres de notification Android. Les enregistrements existants en double apparaissent comme une seule alarme logique ; l’activation, la désactivation ou la suppression touche toutes les copies. Les alarmes de charge et de décharge suivent les objectifs d’estimation et ne contrôlent pas la charge. Un canal bloqué ou une surveillance arrêtée ne modifie pas les commutateurs enregistrés.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Les huit types d’alarme sont toujours disponibles. Activez directement les événements ou utilisez «\u00A0Ajouter un seuil\u00A0» sous un type de charge ou de température. Les nouveaux seuils sont activés après l’enregistrement. Touchez une valeur pour la modifier ; la modification conserve son état activé ou désactivé. Les valeurs désactivées restent affichées. «\u00A0Supprimer l\'alarme\u00A0» demande confirmation. Le son et les vibrations sont communs à chaque type dans les paramètres de notification Android. Les enregistrements existants en double apparaissent comme une seule alarme logique ; l’activation, la désactivation ou la suppression touche toutes les copies. Les alarmes de charge et de décharge suivent les objectifs d’estimation et ne contrôlent pas la charge. Un canal bloqué ou une surveillance arrêtée ne modifie pas les commutateurs enregistrés.\n
+    <string name="alarms_overview_channels_help" formatted="false">Les huit types d’alarme sont toujours disponibles. Activez directement les événements ou utilisez «\u00A0Ajouter un seuil\u00A0» sous un type de charge ou de température. Les valeurs désactivées restent affichées. Le son et les vibrations sont communs à chaque type dans les paramètres de notification Android. Les enregistrements existants en double apparaissent comme une seule alarme logique ; l’activation ou la désactivation touche toutes les copies. Les alarmes de charge et de décharge suivent les objectifs d’estimation et ne contrôlent pas la charge. Un canal bloqué ou une surveillance arrêtée ne modifie pas les commutateurs enregistrés.\n
     Ouvrez les paramètres de notification Android pour autoriser ou bloquer les notifications et configurer le son, les vibrations et la diffusion pour la notification principale et chaque type d’alarme. Activer une règle d’alarme ne contourne pas un canal de notification bloqué.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d alarme activée</item>
@@ -293,21 +290,18 @@
     <string name="alarms_android_problem_summary">Un problème de batterie signalé par le système, pas un indicateur en pourcentage de l’état de santé de la batterie</string>
     <string name="alarm_type_health_failure" formatted="false">Santé critique</string>
     <string name="alarm_health_failure" formatted="false">"Santé de la batterie : "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Conditions de l\'alarme</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">C\'est ici que vous pouvez contrôler les conditions de déclenchement de l\'alarme.</string>
     <string name="pref_alarm_threshold" formatted="false">Seuil</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Pour les alarmes de charge et de température, définissez le seuil et enregistrez la règle. L’alarme se déclenche lorsqu’une mesure atteint ou dépasse le seuil dans le sens choisi. Des mesures répétées au seuil ne répètent pas l’alarme. Démarrer la surveillance, importer une règle ou l’activer alors que le seuil est déjà dépassé ne déclenche pas immédiatement l’alarme ; un franchissement ultérieur est nécessaire.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Pour les alarmes de charge et de température, définissez le seuil et enregistrez la règle. Les nouveaux seuils sont activés après l’enregistrement. L’alarme se déclenche lorsqu’une mesure atteint ou dépasse le seuil dans le sens choisi. Des mesures répétées au seuil ne répètent pas l’alarme. Démarrer la surveillance, importer une règle ou l’activer alors que le seuil est déjà dépassé ne déclenche pas immédiatement l’alarme ; un franchissement ultérieur est nécessaire.</string>
     <string name="alarms_add_threshold">Ajouter un seuil</string>
     <string name="alarms_edit_threshold">Modifier le seuil</string>
     <string name="alarms_edit_existing">Modifier le seuil existant</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Si un seuil existe déjà, ouvrez-le avec « Modifier le seuil existant ». Si les alarmes enregistrées changent pendant la modification, utilisez « Actualiser » et rouvrez le seuil avant de le modifier.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Si un seuil existe déjà, ouvrez-le avec « Modifier le seuil existant ». Si les alarmes enregistrées changent pendant la modification, utilisez « Actualiser » et rouvrez le seuil avant de le modifier.\n
-    Ouvrez les paramètres de notification Android pour autoriser ou bloquer les notifications et configurer le son, les vibrations et la diffusion pour la notification principale et chaque type d’alarme. Activer une règle d’alarme ne contourne pas un canal de notification bloqué.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Touchez l’icône en forme de crayon à côté de la valeur d’un seuil pour la modifier. La modification conserve son état activé ou désactivé. Pour supprimer une alarme, ouvrez-la en mode édition, choisissez «\u00A0Supprimer l\'alarme\u00A0» et confirmez la suppression. Toutes les copies de ce seuil seront supprimées. Si les alarmes enregistrées changent pendant la modification, utilisez « Actualiser » et rouvrez le seuil avant de le modifier.</string>
     <string name="alarms_new_enabled">L’alarme sera activée lors de l’ajout.</string>
     <string name="alarms_edit_keeps_enabled">La modification conserve l’état activé ou désactivé actuel.</string>
     <string name="alarms_enabled">Activée</string>
     <string name="alarms_disable">Désactiver</string>
     <string name="alarms_options">Options : %1$s</string>
+    <string name="alarms_options_tooltip">Options</string>
     <string name="alarms_numeric_range">Saisissez un nombre entier de %1$d à %2$d.</string>
     <string name="alarms_temperature_range">Saisissez un nombre de %1$d à %2$d, avec au plus une décimale.</string>
     <string name="alarms_duplicate">Ce seuil existe déjà pour ce type.</string>
@@ -315,18 +309,15 @@
     <string name="alarms_discard">Abandonner</string>
     <string name="menu_delete_alarm" formatted="false">Supprimer l\'alarme</string>
     <string name="alarms_delete_threshold_confirmation">Supprimer %1$s — %2$s ? Toutes les copies de ce seuil seront supprimées.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Le groupe de notifications des alarmes est désactivé. Activez-le pour accéder à vos alarmes</string>
+    <string name="alarms_notifications_disabled">Les notifications sont désactivées. Activez-les dans les paramètres Android pour recevoir les notifications d’alarme.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Le groupe de notifications des alarmes est désactivé. Activez-le dans les paramètres Android pour recevoir les notifications d’alarme.</string>
+    <string name="alarms_open_notification_settings">Ouvrir les paramètres de notification Android</string>
     <string name="alarm_chan_disabled" formatted="false">Les notifications de ce type d’alarme sont désactivées. Activez-les pour utiliser ce type d’alarme.</string>
     <string name="alarm_chan_settings_b" formatted="false">Gérer ce type d’alarme</string>
-    <string name="alarms_delivery_sound_vibration">Son, vibrations et notification</string>
-    <string name="alarms_delivery_sound">Son et notification</string>
-    <string name="alarms_delivery_vibration">Vibrations et notification</string>
-    <string name="alarms_delivery_notification">Notification uniquement</string>
     <string name="alarms_options_title" formatted="false">Options des alarmes</string>
     <string name="pref_dismiss_low_battery_on_recovery">Retirer l’alarme de batterie faible après remontée du niveau</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Retirer la notification de batterie faible lorsque la charge repasse au-dessus de son seuil. Les autres notifications d’alarme restent affichées</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Retirer la notification de batterie faible lorsque la charge repasse au-dessus de son seuil. Les autres notifications d’alarme restent affichées.</string>
-    <string name="alarms_channel_unavailable">Canal de notification non créé ou indisponible</string>
     <string name="alarms_settings_unavailable">Impossible d’ouvrir les paramètres de notification Android</string>
     <string name="alarms_target_unknown">Objectif indisponible. Ouvrez les paramètres d’estimation.</string>
     <string name="alarms_monitor_stopped">La surveillance est arrêtée. Les alarmes enregistrées ne sont pas évaluées.</string>
@@ -336,7 +327,6 @@
     <string name="alarms_conflict">Les alarmes enregistrées ont changé. Actualisez et rouvrez le seuil avant de le modifier.</string>
     <string name="alarms_missing_rule">Cette alarme est absente ou non valide. Vérifiez le catalogue d’alarmes.</string>
     <string name="alarms_invalid_records">Certaines alarmes enregistrées ne sont pas valides. Vérifiez ces entrées ; elles n’ont pas été supprimées.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Lorsque des alarmes enregistrées invalides sont répertoriées, vous pouvez désactiver une entrée activée sans la supprimer, ou la supprimer définitivement. Les deux actions demandent une confirmation.</string>
     <string name="alarms_database_error">Impossible d’accéder à la base de données des alarmes. Réessayez.</string>
     <string name="alarms_saved">Paramètres d’alarme enregistrés</string>
     <string name="alarms_saved_reload_failed">Enregistré, mais impossible d’en informer la surveillance. Vérifiez son état.</string>
@@ -353,6 +343,9 @@
     <string name="history_through">Au : %1$s</string>
     <string name="history_calendar_days">Les deux dates sélectionnées sont incluses, dans le fuseau horaire local.</string>
     <string name="history_invalid_range">Saisissez une période valide.</string>
+    <string name="history_invalid_month">Saisissez un mois valide (1–12).</string>
+    <string name="history_invalid_year">Saisissez une année valide (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Cette période commence avant la première date prise en charge par l’historique.</string>
     <string name="history_change_range">Modifier</string>
     <string name="history_charts">Graphiques</string>
     <string name="history_level">Niveau</string>
@@ -396,7 +389,6 @@
     <string name="history_open_fullscreen">Ouvrir le graphique en plein écran</string>
     <string name="history_chart_description_fullscreen">%1$s. Mesures de %2$s à %3$s.</string>
     <string name="history_chart_select_point">Sélectionner des mesures</string>
-    <string name="history_chart_event_summary">Branché (tirets courts) : %1$d · Débranché (tirets longs) : %2$d · Interruptions de la surveillance (pointillés) : %3$d</string>
     <string name="history_chart_events">Événements du graphique</string>
     <string name="history_chart_1h">Dernière heure</string>
     <string name="history_chart_6h">6\u00A0dernières heures</string>
@@ -406,7 +398,7 @@
     <string name="history_chart_pan_right">Intervalle suivant</string>
     <string name="history_chart_reset">Afficher toute la période sélectionnée</string>
     <string name="history_chart_compare">Comparer</string>
-    <string name="history_chart_remove_comparison">Supprimer la comparaison</string>
+    <string name="history_chart_no_comparison">Aucune</string>
     <string name="history_chart_more">Autres actions du graphique</string>
     <string name="history_chart_settings">Paramètres d’affichage du graphique</string>
     <string name="history_chart_display_style">Style d’affichage</string>

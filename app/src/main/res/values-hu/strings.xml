@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Igen</string>
     <string name="okay" formatted="false">Rendben</string>
     <string name="cancel" formatted="false">Mégsem</string>
-    <string name="custom" formatted="false">Egyéni…</string>
     <string name="currently_set_to" formatted="false">"Jelenlegi beállítás:"</string>
     <string name="currently_disabled" formatted="false">Jelenleg Letiltva</string>
     <string name="settings_numeric_value">Érték</string>
@@ -259,9 +258,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Riasztás beállítások</string>
     <string name="alarm_settings" formatted="false">Riasztások</string>
     <string name="alarm_settings_help" formatted="false">Beállíthatja, hogy a Battery Monitor értesítse, amikor az akku töltése elér egy bizonyos szintet (pl. ha teljesen feltöltődik, vagy mondjuk 20% alá csökken.)</string>
-    <string name="alarms_overview" formatted="false">Riasztások áttekintése</string>
-    <string name="alarms_overview_help">Mind a nyolc riasztástípus mindig elérhető. Az eseményeket közvetlenül kapcsolhatja be, vagy töltöttségi és hőmérsékleti típusnál használja a „Küszöb hozzáadása” műveletet. Az új küszöbök mentés után engedélyezettek. Koppintson egy értékre a szerkesztéshez; a be- vagy kikapcsolt állapota megmarad. A letiltott értékek a listában maradnak. A „Risztás törlése” megerősítést kér. A hang és rezgés típusonként közös az Android értesítési beállításaiban. A meglévő ismétlődő bejegyzések egy logikai riasztásként jelennek meg; a kapcsolás és törlés minden példányra hat. A töltési és merülési riasztások a becslési célokat követik, és nem vezérlik a töltést. A letiltott csatorna vagy leállított figyelés nem módosítja a mentett kapcsolókat.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Mind a nyolc riasztástípus mindig elérhető. Az eseményeket közvetlenül kapcsolhatja be, vagy töltöttségi és hőmérsékleti típusnál használja a „Küszöb hozzáadása” műveletet. Az új küszöbök mentés után engedélyezettek. Koppintson egy értékre a szerkesztéshez; a be- vagy kikapcsolt állapota megmarad. A letiltott értékek a listában maradnak. A „Risztás törlése” megerősítést kér. A hang és rezgés típusonként közös az Android értesítési beállításaiban. A meglévő ismétlődő bejegyzések egy logikai riasztásként jelennek meg; a kapcsolás és törlés minden példányra hat. A töltési és merülési riasztások a becslési célokat követik, és nem vezérlik a töltést. A letiltott csatorna vagy leállított figyelés nem módosítja a mentett kapcsolókat.\n
+    <string name="alarms_overview_channels_help" formatted="false">Mind a nyolc riasztástípus mindig elérhető. Az eseményeket közvetlenül kapcsolhatja be, vagy töltöttségi és hőmérsékleti típusnál használja a „Küszöb hozzáadása” műveletet. A letiltott értékek a listában maradnak. A hang és rezgés típusonként közös az Android értesítési beállításaiban. A meglévő ismétlődő bejegyzések egy logikai riasztásként jelennek meg; a kapcsolás minden példányra hat. A töltési és merülési riasztások a becslési célokat követik, és nem vezérlik a töltést. A letiltott csatorna vagy leállított figyelés nem módosítja a mentett kapcsolókat.\n
     Az Android értesítési beállításaiban engedélyezheti vagy tilthatja az értesítéseket, és beállíthatja a fő értesítés, valamint az egyes riasztástípusok hangját, rezgését és kézbesítését. Egy riasztási szabály engedélyezése nem írja felül a letiltott értesítési csatornát.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d riasztás engedélyezve</item>
@@ -289,21 +286,18 @@
     <string name="alarms_android_problem_summary">A rendszer által jelzett akkumulátorprobléma, nem a kapacitás szerinti egészségi százalék</string>
     <string name="alarm_type_health_failure" formatted="false">Állapot probléma</string>
     <string name="alarm_health_failure" formatted="false">"Akku állapota: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Riasztási feltételek</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">Itt határozhatja meg, hogy milyen események váltsanak ki riasztást.</string>
     <string name="pref_alarm_threshold" formatted="false">Küszöb</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Töltöttségi és hőmérsékleti riasztásoknál állítsa be a küszöböt, és mentse a szabályt. A riasztás akkor szólal meg, amikor egy mérés eléri vagy átlépi a küszöböt a választott irányban. A küszöbön ismétlődő mérések nem ismétlik a riasztást. A figyelés indítása, szabály importálása vagy a küszöbön túl történő engedélyezése nem riaszt azonnal; későbbi átlépés szükséges.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Töltöttségi és hőmérsékleti riasztásoknál állítsa be a küszöböt, és mentse a szabályt. Az új küszöbök mentés után engedélyezettek. A riasztás akkor szólal meg, amikor egy mérés eléri vagy átlépi a küszöböt a választott irányban. A küszöbön ismétlődő mérések nem ismétlik a riasztást. A figyelés indítása, szabály importálása vagy a küszöbön túl történő engedélyezése nem riaszt azonnal; későbbi átlépés szükséges.</string>
     <string name="alarms_add_threshold">Küszöb hozzáadása</string>
     <string name="alarms_edit_threshold">Küszöb szerkesztése</string>
     <string name="alarms_edit_existing">Meglévő küszöb szerkesztése</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Ha egy küszöb már létezik, nyissa meg a „Meglévő küszöb szerkesztése” lehetőséggel. Ha a mentett riasztások szerkesztés közben megváltoznak, használja a „Frissítés” lehetőséget, és a módosítás előtt nyissa meg újra a küszöböt.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Ha egy küszöb már létezik, nyissa meg a „Meglévő küszöb szerkesztése” lehetőséggel. Ha a mentett riasztások szerkesztés közben megváltoznak, használja a „Frissítés” lehetőséget, és a módosítás előtt nyissa meg újra a küszöböt.\n
-    Az Android értesítési beállításaiban engedélyezheti vagy tilthatja az értesítéseket, és beállíthatja a fő értesítés, valamint az egyes riasztástípusok hangját, rezgését és kézbesítését. Egy riasztási szabály engedélyezése nem írja felül a letiltott értesítési csatornát.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">A szerkesztéshez koppintson a küszöbérték melletti ceruzaikonra. A be- vagy kikapcsolt állapota megmarad. A riasztás törléséhez nyissa meg a szerkesztőjét, válassza a „Risztás törlése” lehetőséget, majd erősítse meg a törlést. A küszöb összes példánya törlődik. Ha a mentett riasztások szerkesztés közben megváltoznak, használja a „Frissítés” lehetőséget, és a módosítás előtt nyissa meg újra a küszöböt.</string>
     <string name="alarms_new_enabled">A riasztás hozzáadáskor engedélyezve lesz.</string>
     <string name="alarms_edit_keeps_enabled">A szerkesztés megőrzi a jelenlegi be- vagy kikapcsolt állapotot.</string>
     <string name="alarms_enabled">Engedélyezve</string>
     <string name="alarms_disable">Letiltás</string>
     <string name="alarms_options">Opciók: %1$s</string>
+    <string name="alarms_options_tooltip">Opciók</string>
     <string name="alarms_numeric_range">Adjon meg egy egész számot %1$d és %2$d között.</string>
     <string name="alarms_temperature_range">Adjon meg egy számot %1$d és %2$d között, legfeljebb egy tizedesjeggyel.</string>
     <string name="alarms_duplicate">Ez a küszöb már létezik ehhez a típushoz.</string>
@@ -311,18 +305,15 @@
     <string name="alarms_discard">Elvetés</string>
     <string name="menu_delete_alarm" formatted="false">Risztás törlése</string>
     <string name="alarms_delete_threshold_confirmation">Törli ezt: %1$s — %2$s? A küszöb összes példánya törlődik.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Letiltottad az alkalmazás riasztási értesítési csoportját. A riasztások eléréséhez engedélyezd</string>
+    <string name="alarms_notifications_disabled">Az értesítések ki vannak kapcsolva. Engedélyezd őket az Android beállításaiban, hogy megkapd a riasztási értesítéseket.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Letiltottad az alkalmazás riasztási értesítési csoportját. Engedélyezd az Android beállításaiban, hogy megkapd a riasztási értesítéseket.</string>
+    <string name="alarms_open_notification_settings">Az Android értesítési beállításainak megnyitása</string>
     <string name="alarm_chan_disabled" formatted="false">Letiltottad az értesítéseket ehhez a riasztástípushoz. Engedélyezd a használatához.</string>
     <string name="alarm_chan_settings_b" formatted="false">Riasztástípus kezelése</string>
-    <string name="alarms_delivery_sound_vibration">Hang, rezgés és értesítés</string>
-    <string name="alarms_delivery_sound">Hang és értesítés</string>
-    <string name="alarms_delivery_vibration">Rezgés és értesítés</string>
-    <string name="alarms_delivery_notification">Csak értesítés</string>
     <string name="alarms_options_title" formatted="false">Riasztási beállítások</string>
     <string name="pref_dismiss_low_battery_on_recovery">Alacsony töltöttségi riasztás eltüntetése helyreállás után</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Eltávolítja az alacsony töltöttségi értesítést, ha a töltöttség a küszöb fölé emelkedik. A többi riasztási értesítés megmarad</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Eltávolítja az alacsony töltöttségi értesítést, ha a töltöttség a küszöb fölé emelkedik. A többi riasztási értesítés megmarad.</string>
-    <string name="alarms_channel_unavailable">Az értesítési csatorna nincs létrehozva vagy nem érhető el</string>
     <string name="alarms_settings_unavailable">Az Android értesítési beállításai nem nyithatók meg</string>
     <string name="alarms_target_unknown">A cél nem érhető el. Nyissa meg a becslési beállításokat.</string>
     <string name="alarms_monitor_stopped">A figyelés leállt. A mentett riasztások nincsenek kiértékelve.</string>
@@ -332,7 +323,6 @@
     <string name="alarms_conflict">A mentett riasztások megváltoztak. Módosítás előtt frissítsen, és nyissa meg újra a küszöböt.</string>
     <string name="alarms_missing_rule">Ez a riasztás hiányzik vagy érvénytelen. Ellenőrizze a riasztáskatalógust.</string>
     <string name="alarms_invalid_records">Néhány mentett riasztás érvénytelen. Ellenőrizze ezeket a bejegyzéseket; nem lettek eltávolítva.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Ha érvénytelen mentett riasztások jelennek meg, egy bekapcsolt bejegyzést törlés nélkül kikapcsolhat, vagy véglegesen törölheti. Mindkét művelet megerősítést kér.</string>
     <string name="alarms_database_error">A riasztási adatbázis nem érhető el. Próbálja újra.</string>
     <string name="alarms_saved">Riasztási beállítások mentve</string>
     <string name="alarms_saved_reload_failed">Mentve, de a figyelés nem értesíthető. Ellenőrizze a figyelés állapotát.</string>
@@ -349,6 +339,9 @@
     <string name="history_through">Eddig: %1$s</string>
     <string name="history_calendar_days">Mindkét kiválasztott dátumot tartalmazza, a helyi időzónában.</string>
     <string name="history_invalid_range">Adjon meg érvényes dátumtartományt.</string>
+    <string name="history_invalid_month">Adjon meg egy érvényes hónapot (1–12).</string>
+    <string name="history_invalid_year">Adjon meg egy érvényes évet (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Ez a naptári időszak az előzmények legkorábbi támogatott dátuma előtt kezdődik.</string>
     <string name="history_change_range">Módosítás</string>
     <string name="history_charts">Diagramok</string>
     <string name="history_level">Töltöttség</string>
@@ -392,7 +385,6 @@
     <string name="history_open_fullscreen">Teljes képernyős grafikon megnyitása</string>
     <string name="history_chart_description_fullscreen">%1$s. Mérések %2$s és %3$s között.</string>
     <string name="history_chart_select_point">Mérések kiválasztása</string>
-    <string name="history_chart_event_summary">Csatlakoztatások (rövid szaggatott vonalak): %1$d · Leválasztások (hosszú szaggatott vonalak): %2$d · Megfigyelési szünetek (pontozott vonalak): %3$d</string>
     <string name="history_chart_events">Grafikon eseményei</string>
     <string name="history_chart_1h">Elmúlt 1\u00A0óra</string>
     <string name="history_chart_6h">Elmúlt 6\u00A0óra</string>
@@ -402,7 +394,7 @@
     <string name="history_chart_pan_right">Későbbi időszak</string>
     <string name="history_chart_reset">Teljes kijelölt tartomány megjelenítése</string>
     <string name="history_chart_compare">Összehasonlítás</string>
-    <string name="history_chart_remove_comparison">Összehasonlítás eltávolítása</string>
+    <string name="history_chart_no_comparison">Nincs</string>
     <string name="history_chart_more">További grafikonműveletek</string>
     <string name="history_chart_settings">Grafikon megjelenítési beállításai</string>
     <string name="history_chart_display_style">Megjelenítési mód</string>

@@ -4,7 +4,6 @@
     <string name="yes" formatted="false">Sì</string>
     <string name="okay" formatted="false">Ok</string>
     <string name="cancel" formatted="false">Annulla</string>
-    <string name="custom" formatted="false">Personalizzato…</string>
     <string name="currently_set_to" formatted="false">"Attualmente impostato su: "</string>
     <string name="currently_disabled" formatted="false">Attualmente disattivato</string>
     <string name="settings_numeric_value">Valore</string>
@@ -262,9 +261,7 @@
     <string name="alarm_settings_subtitle" formatted="false">Impostazioni allarme</string>
     <string name="alarm_settings" formatted="false">Allarmi</string>
     <string name="alarm_settings_help" formatted="false">Puoi ottenere una notifica da Battery Monitor quando il livello della batteria raggiunge un certo punto (es., la batteria diventa completamente carica, la batteria scende sotto il 20%).</string>
-    <string name="alarms_overview" formatted="false">Panoramica allarmi</string>
-    <string name="alarms_overview_help">Tutti gli otto tipi di allarme sono sempre disponibili. Attiva direttamente gli eventi oppure usa «Aggiungi soglia» sotto un tipo di carica o temperatura. Le nuove soglie vengono abilitate dopo il salvataggio. Tocca un valore per modificarlo; la modifica ne mantiene lo stato di attivazione. I valori disabilitati restano elencati. «Elimina allarme» chiede conferma. Suono e vibrazione sono condivisi per tipo nelle impostazioni delle notifiche di Android. I record duplicati esistenti appaiono come un unico allarme logico; attivazione, disattivazione o eliminazione influiscono su tutte le copie. Gli allarmi di carica e scarica seguono gli obiettivi delle stime e non controllano la ricarica. Un canale bloccato o il monitoraggio fermo non modifica gli interruttori salvati.</string>
-    <string name="alarms_overview_channels_help" formatted="false">Tutti gli otto tipi di allarme sono sempre disponibili. Attiva direttamente gli eventi oppure usa «Aggiungi soglia» sotto un tipo di carica o temperatura. Le nuove soglie vengono abilitate dopo il salvataggio. Tocca un valore per modificarlo; la modifica ne mantiene lo stato di attivazione. I valori disabilitati restano elencati. «Elimina allarme» chiede conferma. Suono e vibrazione sono condivisi per tipo nelle impostazioni delle notifiche di Android. I record duplicati esistenti appaiono come un unico allarme logico; attivazione, disattivazione o eliminazione influiscono su tutte le copie. Gli allarmi di carica e scarica seguono gli obiettivi delle stime e non controllano la ricarica. Un canale bloccato o il monitoraggio fermo non modifica gli interruttori salvati.\n
+    <string name="alarms_overview_channels_help" formatted="false">Tutti gli otto tipi di allarme sono sempre disponibili. Attiva direttamente gli eventi oppure usa «Aggiungi soglia» sotto un tipo di carica o temperatura. I valori disabilitati restano elencati. Suono e vibrazione sono condivisi per tipo nelle impostazioni delle notifiche di Android. I record duplicati esistenti appaiono come un unico allarme logico; l’attivazione o la disattivazione influisce su tutte le copie. Gli allarmi di carica e scarica seguono gli obiettivi delle stime e non controllano la ricarica. Un canale bloccato o il monitoraggio fermo non modifica gli interruttori salvati.\n
     Apri le impostazioni delle notifiche di Android per consentire o bloccare le notifiche e configurare suono, vibrazione e consegna per la notifica principale e ogni tipo di allarme. Abilitare una regola di allarme non aggira un canale di notifica bloccato.</string>
     <plurals name="alarms_active_count">
         <item quantity="one">%1$d allarme abilitato</item>
@@ -293,21 +290,18 @@
     <string name="alarms_android_problem_summary">Un problema della batteria segnalato dal sistema, non la salute della batteria espressa in percentuale</string>
     <string name="alarm_type_health_failure" formatted="false">Recupero stato non riuscito</string>
     <string name="alarm_health_failure" formatted="false">"La salute della batteria è: "</string>
-    <string name="pref_cat_alarm_conditions" formatted="false">Condizioni Allarme</string>
-    <string name="pref_cat_alarm_conditions_help" formatted="false">E\' possibile controllare in quali condizioni innescare l\' allarme.</string>
     <string name="pref_alarm_threshold" formatted="false">Soglia</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Per gli allarmi di carica e temperatura, imposta la soglia e salva la regola. L’allarme scatta quando una lettura raggiunge o supera la soglia nella direzione scelta. Letture ripetute sulla soglia non ripetono l’allarme. Avviare il monitoraggio, importare una regola o abilitarla oltre la soglia non la fa scattare subito; è necessario un successivo attraversamento.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Per gli allarmi di carica e temperatura, imposta la soglia e salva la regola. Le nuove soglie vengono abilitate dopo il salvataggio. L’allarme scatta quando una lettura raggiunge o supera la soglia nella direzione scelta. Letture ripetute sulla soglia non ripetono l’allarme. Avviare il monitoraggio, importare una regola o abilitarla oltre la soglia non la fa scattare subito; è necessario un successivo attraversamento.</string>
     <string name="alarms_add_threshold">Aggiungi soglia</string>
     <string name="alarms_edit_threshold">Modifica soglia</string>
     <string name="alarms_edit_existing">Modifica soglia esistente</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Se una soglia esiste già, aprila con «Modifica soglia esistente». Se gli allarmi salvati cambiano durante la modifica, usa «Aggiorna» e riapri la soglia prima di modificarla.</string>
-    <string name="alarms_threshold_edit_channels_help" formatted="false">Se una soglia esiste già, aprila con «Modifica soglia esistente». Se gli allarmi salvati cambiano durante la modifica, usa «Aggiorna» e riapri la soglia prima di modificarla.\n
-    Apri le impostazioni delle notifiche di Android per consentire o bloccare le notifiche e configurare suono, vibrazione e consegna per la notifica principale e ogni tipo di allarme. Abilitare una regola di allarme non aggira un canale di notifica bloccato.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Tocca l’icona della matita accanto al valore della soglia per modificarlo. La modifica ne mantiene lo stato di attivazione. Per eliminare un allarme, apri il relativo editor, scegli «Elimina allarme» e conferma l’eliminazione. Saranno rimosse tutte le copie di questa soglia. Se gli allarmi salvati cambiano durante la modifica, usa «Aggiorna» e riapri la soglia prima di modificarla.</string>
     <string name="alarms_new_enabled">L’allarme sarà abilitato quando viene aggiunto.</string>
     <string name="alarms_edit_keeps_enabled">La modifica mantiene l’attuale stato di attivazione.</string>
     <string name="alarms_enabled">Abilitato</string>
     <string name="alarms_disable">Disabilita</string>
     <string name="alarms_options">Opzioni: %1$s</string>
+    <string name="alarms_options_tooltip">Opzioni</string>
     <string name="alarms_numeric_range">Inserisci un numero intero da %1$d a %2$d.</string>
     <string name="alarms_temperature_range">Inserisci un numero da %1$d a %2$d, con al massimo una cifra decimale.</string>
     <string name="alarms_duplicate">Questa soglia esiste già per questo tipo.</string>
@@ -315,18 +309,15 @@
     <string name="alarms_discard">Scarta</string>
     <string name="menu_delete_alarm" formatted="false">Elimina allarme</string>
     <string name="alarms_delete_threshold_confirmation">Eliminare %1$s — %2$s? Saranno rimosse tutte le copie di questa soglia.</string>
-    <string name="alarm_notifs_disabled_summary" formatted="false">Hai disabilitato il gruppo notifiche degli allarmi per questa app. Abilitalo per accedere ai tuoi allarmi</string>
+    <string name="alarms_notifications_disabled">Le notifiche sono disattivate. Attivale nelle impostazioni di Android per ricevere le notifiche degli allarmi.</string>
+    <string name="alarm_notifs_disabled_summary" formatted="false">Hai disabilitato il gruppo notifiche degli allarmi per questa app. Attivalo nelle impostazioni di Android per ricevere le notifiche degli allarmi.</string>
+    <string name="alarms_open_notification_settings">Apri le impostazioni delle notifiche di Android</string>
     <string name="alarm_chan_disabled" formatted="false">Hai disabilitato le notifiche per questo tipo di allarme. Abilitale per usare questo tipo di allarme.</string>
     <string name="alarm_chan_settings_b" formatted="false">Gestisci questo tipo di allarme</string>
-    <string name="alarms_delivery_sound_vibration">Suono, vibrazione e notifica</string>
-    <string name="alarms_delivery_sound">Suono e notifica</string>
-    <string name="alarms_delivery_vibration">Vibrazione e notifica</string>
-    <string name="alarms_delivery_notification">Solo notifica</string>
     <string name="alarms_options_title" formatted="false">Opzioni degli allarmi</string>
     <string name="pref_dismiss_low_battery_on_recovery">Rimuovi allarme batteria scarica dopo il recupero</string>
     <string name="pref_dismiss_low_battery_on_recovery_summary">Rimuovi la notifica di batteria scarica quando la carica risale sopra la soglia. Le altre notifiche di allarme rimangono</string>
     <string name="pref_dismiss_low_battery_on_recovery_help">Rimuovi la notifica di batteria scarica quando la carica risale sopra la soglia. Le altre notifiche di allarme rimangono.</string>
-    <string name="alarms_channel_unavailable">Canale di notifica non creato o non disponibile</string>
     <string name="alarms_settings_unavailable">Impossibile aprire le impostazioni delle notifiche di Android</string>
     <string name="alarms_target_unknown">Obiettivo non disponibile. Apri le impostazioni delle stime.</string>
     <string name="alarms_monitor_stopped">Il monitoraggio è fermo. Gli allarmi salvati non vengono valutati.</string>
@@ -336,7 +327,6 @@
     <string name="alarms_conflict">Gli allarmi salvati sono cambiati. Aggiorna e riapri la soglia prima di modificarla.</string>
     <string name="alarms_missing_rule">Questo allarme è mancante o non valido. Controlla il catalogo degli allarmi.</string>
     <string name="alarms_invalid_records">Alcuni allarmi salvati non sono validi. Controlla queste voci; non sono state rimosse.</string>
-    <string name="alarms_invalid_records_help" formatted="false">Quando vengono elencati allarmi salvati non validi, puoi disattivare una voce attiva senza eliminarla, oppure eliminarla definitivamente. Entrambe le azioni richiedono conferma.</string>
     <string name="alarms_database_error">Impossibile accedere al database degli allarmi. Riprova.</string>
     <string name="alarms_saved">Impostazioni allarmi salvate</string>
     <string name="alarms_saved_reload_failed">Salvato, ma non è stato possibile avvisare il monitoraggio. Controllane lo stato.</string>
@@ -353,6 +343,9 @@
     <string name="history_through">Al: %1$s</string>
     <string name="history_calendar_days">Include entrambe le date selezionate, nel fuso orario locale.</string>
     <string name="history_invalid_range">Inserisci un intervallo di date valido.</string>
+    <string name="history_invalid_month">Inserisci un mese valido (1–12).</string>
+    <string name="history_invalid_year">Inserisci un anno valido (1970–9999).</string>
+    <string name="history_calendar_period_unavailable">Questo periodo di calendario inizia prima della prima data supportata dalla cronologia.</string>
     <string name="history_change_range">Modifica</string>
     <string name="history_charts">Grafici</string>
     <string name="history_level">Livello</string>
@@ -396,7 +389,6 @@
     <string name="history_open_fullscreen">Apri il grafico a schermo intero</string>
     <string name="history_chart_description_fullscreen">%1$s. Misurazioni da %2$s a %3$s.</string>
     <string name="history_chart_select_point">Seleziona misurazioni</string>
-    <string name="history_chart_event_summary">Collegato (trattini corti): %1$d · Scollegato (trattini lunghi): %2$d · Interruzioni del monitoraggio (puntini): %3$d</string>
     <string name="history_chart_events">Eventi del grafico</string>
     <string name="history_chart_1h">Ultima ora</string>
     <string name="history_chart_6h">Ultime 6\u00A0ore</string>
@@ -406,7 +398,7 @@
     <string name="history_chart_pan_right">Intervallo successivo</string>
     <string name="history_chart_reset">Adatta all’intervallo selezionato</string>
     <string name="history_chart_compare">Confronta</string>
-    <string name="history_chart_remove_comparison">Rimuovi confronto</string>
+    <string name="history_chart_no_comparison">Nessuno</string>
     <string name="history_chart_more">Altre azioni del grafico</string>
     <string name="history_chart_settings">Impostazioni di visualizzazione del grafico</string>
     <string name="history_chart_display_style">Stile di visualizzazione</string>

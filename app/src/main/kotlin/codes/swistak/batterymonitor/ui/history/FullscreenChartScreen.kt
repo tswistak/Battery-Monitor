@@ -14,6 +14,7 @@ package codes.swistak.batterymonitor.ui.history
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Paint
 import android.view.MotionEvent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.focusable
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -64,6 +66,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.toArgb
@@ -89,6 +92,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.withClip
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.DetailedHistoryChartModel
 import codes.swistak.batterymonitor.logs.DetailedHistoryTimeAxis
@@ -101,8 +105,12 @@ import codes.swistak.batterymonitor.logs.historyObservationValue
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.settings.temperatureUnit
 import codes.swistak.batterymonitor.ui.components.HistoryChartScale
+import codes.swistak.batterymonitor.ui.components.RebootMarkerRadius
+import codes.swistak.batterymonitor.ui.components.RebootMarkerSpacing
 import codes.swistak.batterymonitor.ui.components.TooltipIconButton
 import codes.swistak.batterymonitor.ui.components.applicationDialogsAllowed
+import codes.swistak.batterymonitor.ui.components.forEachHistoryEventMarker
+import codes.swistak.batterymonitor.ui.components.forEachRebootDot
 import codes.swistak.batterymonitor.ui.components.historyAxisFormatter
 import codes.swistak.batterymonitor.ui.components.historyUnit
 import codes.swistak.batterymonitor.ui.components.historyValue
@@ -123,6 +131,7 @@ import com.github.mikephil.charting.listener.BarLineChartTouchListener
 import com.github.mikephil.charting.listener.ChartTouchListener
 import com.github.mikephil.charting.listener.OnChartGestureListener
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.github.mikephil.charting.renderer.XAxisRenderer
 import com.github.mikephil.charting.utils.MPPointD
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -131,6 +140,7 @@ import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import android.graphics.Canvas as NativeCanvas
 import com.github.mikephil.charting.charts.LineChart as LineChartView
 
 @Composable
@@ -253,12 +263,10 @@ internal fun FullscreenChartScreen(
             ChartScaleMode.MANUAL -> R.string.history_chart_y_manual
         }
     )
-    val title = if (state.metric == HistoryMetric.LEVEL) {
-        stringResource(R.string.history_battery_level)
-    } else metricLabel(state.metric)
+    val title = metricLabel(state.metric)
+    val descriptiveTitle = primaryMetricLabel(state.metric)
     val colors = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
-    val shapes = MaterialTheme.shapes
     val typeface = rememberTypeface(
         typography.labelSmall.fontFamily ?: FontFamily.Default,
         typography.labelSmall.fontWeight ?: FontWeight.Normal
@@ -348,6 +356,10 @@ internal fun FullscreenChartScreen(
         }
     }
     val lineData = displayed?.data
+    val displayedEvents = displayed?.models?.get(state.metric)?.events.orEmpty()
+    val eventTimes = remember(displayedEvents) {
+        displayedEvents.groupBy({ it.code }, { it.key.time })
+    }
     LaunchedEffect(chartView, motion.active) {
         val chart = chartView ?: return@LaunchedEffect
         if (!motion.active) return@LaunchedEffect
@@ -376,7 +388,7 @@ internal fun FullscreenChartScreen(
 
     val chartDescription = stringResource(
         R.string.history_chart_description_fullscreen,
-        title,
+        descriptiveTitle,
         formatter.format(Instant.ofEpochMilli(state.viewport.start)),
         formatter.format(Instant.ofEpochMilli(state.viewport.end - 1))
     )
@@ -497,14 +509,14 @@ internal fun FullscreenChartScreen(
         Column(Modifier.verticalScroll(rememberScrollState())) {
             when (editor) {
                 "metric" -> HistoryMetric.entries.forEach { metric ->
-                    ChartRadioItem(metricLabel(metric), draftMetric == metric) {
+                    ChartRadioItem(primaryMetricLabel(metric), draftMetric == metric) {
                         draftMetric = metric
                     }
                 }
 
                 "comparison" -> {
                     ChartRadioItem(
-                        stringResource(R.string.history_chart_remove_comparison),
+                        stringResource(R.string.history_chart_no_comparison),
                         draftComparison == null
                     ) { draftComparison = null }
                     HistoryMetric.entries.filter { it != state.metric }.forEach { metric ->
@@ -529,7 +541,6 @@ internal fun FullscreenChartScreen(
                             draftStyle == style
                         ) { draftStyle = style }
                     }
-                    HorizontalDivider()
                     Text(
                         stringResource(R.string.history_chart_value_scale),
                         style = typography.labelMedium
@@ -589,7 +600,12 @@ internal fun FullscreenChartScreen(
                 ) {
                     ChartIcon(R.drawable.ui_back, R.string.nav_up, true, onBack)
                     Box(Modifier.weight(1f)) {
-                        ChartSelector(title, editor == "metric", { editChart("metric") })
+                        ChartSelector(
+                            title,
+                            editor == "metric",
+                            { editChart("metric") },
+                            description = descriptiveTitle
+                        )
                     }
                     Box(Modifier.weight(1f)) {
                         ChartSelector(
@@ -697,16 +713,16 @@ internal fun FullscreenChartScreen(
                 .fillMaxSize()
                 .padding(insets)
         ) {
-            if (state.comparison != null) Row(
+            if (state.comparison != null) FlowRow(
                 Modifier
                     .fillMaxWidth()
                     .padding(horizontal = BatterySpacing.normal),
-                horizontalArrangement = Arrangement.spacedBy(BatterySpacing.normal)
+                horizontalArrangement = Arrangement.spacedBy(BatterySpacing.normal),
+                verticalArrangement = Arrangement.spacedBy(BatterySpacing.xs)
             ) {
                 metrics.forEach { metric ->
                     val color = if (metric == state.metric) colors.primary else colors.tertiary
                     Row(
-                        Modifier.weight(1f),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(BatterySpacing.xs)
                     ) {
@@ -731,9 +747,7 @@ internal fun FullscreenChartScreen(
                         Text(
                             "${metricLabel(metric)} (${historyUnit(metric, fahrenheit)})",
                             style = typography.labelSmall,
-                            color = color,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            color = color
                         )
                     }
                 }
@@ -749,6 +763,7 @@ internal fun FullscreenChartScreen(
                 Modifier
                     .weight(1f)
                     .fillMaxWidth()
+                    .clipToBounds()
                     .padding(horizontal = BatterySpacing.sm, vertical = BatterySpacing.sm)
             ) {
                 if (lineData != null || chartView != null) LineChart(
@@ -775,51 +790,10 @@ internal fun FullscreenChartScreen(
                             }
                         }
                         .focusable(),
-                    marker = { entry, _ ->
-                        val key = state.selectedKey ?: entry.data as? HistoryKey
-                        if (key != null) {
-                            MaterialTheme(
-                                colorScheme = colors, shapes = shapes, typography = typography
-                            ) {
-                                Surface(
-                                    color = colors.surfaceContainerHigh,
-                                    contentColor = colors.onSurface,
-                                    shape = shapes.small
-                                ) {
-                                    Column(
-                                        Modifier.padding(
-                                            horizontal = BatterySpacing.md,
-                                            vertical = BatterySpacing.sm
-                                        )
-                                    ) {
-                                        metrics.forEach { metric ->
-                                            Text(
-                                                "${metricLabel(metric)}: ${
-                                                    historyValue(
-                                                        reading(
-                                                            metric, key
-                                                        ),
-                                                        metric,
-                                                        fahrenheit,
-                                                        locale,
-                                                        currentMultiplier
-                                                    )
-                                                }",
-                                                style = typography.labelLarge,
-                                                color = if (metric == state.metric) colors.primary else colors.tertiary
-                                            )
-                                            Text(
-                                                formatter.format(Instant.ofEpochMilli(key.time)),
-                                                style = typography.labelSmall
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
+                    marker = null,
                     setup = {
                         chartView = this
+                        rendererXAxis = FullscreenEventRenderer(this)
                         onChartGestureListener = motion
                         noDataText = ""
                         isNoDataIconEnabled = false
@@ -925,23 +899,12 @@ internal fun FullscreenChartScreen(
                                 highlightColor = seriesColor
                             }
                         }
-                        xAxis.removeAllLimitLines()
-                        val eventColumns = mutableSetOf<Pair<Int, Int>>()
-                        model?.events?.forEach { event ->
-                            val column =
-                                ((event.key.time - state.viewport.start).toDouble() / (state.viewport.end - state.viewport.start) * chartWidth / 6).toInt()
-                            if (eventColumns.add(column to event.code)) {
-                                xAxis.addLimitLine(LimitLine(timeAxis.x(event.key.time)).apply {
-                                    lineColor = colors.outline.toArgb()
-                                    lineWidth = 0.7f
-                                    when (event.code) {
-                                        HistoryEvent.CONNECTED -> enableDashedLine(4f, 5f, 0f)
-                                        HistoryEvent.DISCONNECTED -> enableDashedLine(10f, 7f, 0f)
-                                        else -> enableDashedLine(2f, 5f, 0f)
-                                    }
-                                })
-                            }
-                        }
+                        (rendererXAxis as FullscreenEventRenderer).updateEvents(
+                            eventTimes,
+                            timeAxis,
+                            colors.outline.toArgb(),
+                            colors.onSurfaceVariant.toArgb()
+                        )
                         notifyDataSetChanged()
                         setVisibleXRangeMinimum(minOf(1f, xAxis.axisMaximum))
                         setVisibleXRangeMaximum(xAxis.axisMaximum)
@@ -1081,7 +1044,7 @@ internal fun FullscreenChartScreen(
                     DropdownMenu(eventsMenu, onDismissRequest = { eventsMenu = false }) {
                         Text(
                             stringResource(
-                                R.string.history_chart_event_summary,
+                                R.string.history_event_counts,
                                 events.filter { it.code == HistoryEvent.CONNECTED }
                                     .sumOf { it.count },
                                 events.filter { it.code == HistoryEvent.DISCONNECTED }
@@ -1146,6 +1109,77 @@ private class FullscreenChartMotion : OnChartGestureListener {
     override fun onChartLongPressed(me: MotionEvent) = Unit
     override fun onChartDoubleTapped(me: MotionEvent) = Unit
     override fun onChartSingleTapped(me: MotionEvent) = Unit
+}
+
+private class FullscreenEventRenderer(private val chart: LineChartView) : XAxisRenderer(
+    chart.viewPortHandler, chart.xAxis, chart.getTransformer(YAxis.AxisDependency.LEFT)
+) {
+    private val position = FloatArray(2)
+    private val dotPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val connectedLine = powerLine(4f, 5f)
+    private val disconnectedLine = powerLine(10f, 7f)
+    private var times: Map<Int, List<Long>> = emptyMap()
+    private var timeAxis: DetailedHistoryTimeAxis? = null
+
+    private fun powerLine(dash: Float, gap: Float) = LimitLine(0f).apply {
+        lineWidth = 0.7f
+        enableDashedLine(dash, gap, 0f)
+    }
+
+    fun updateEvents(
+        times: Map<Int, List<Long>>,
+        timeAxis: DetailedHistoryTimeAxis,
+        powerColor: Int,
+        rebootColor: Int
+    ) {
+        this.times = times
+        this.timeAxis = timeAxis
+        connectedLine.lineColor = powerColor
+        disconnectedLine.lineColor = powerColor
+        dotPaint.color = rebootColor
+    }
+
+    override fun renderLimitLines(c: NativeCanvas) {
+        super.renderLimitLines(c)
+        if (times.isEmpty()) return
+        val axis = timeAxis ?: return
+        val transform = transformer ?: return
+        val plot = chart.viewPortHandler.contentRect
+        if (plot.isEmpty) return
+        val density = chart.resources.displayMetrics.density
+        val dotRadius = RebootMarkerRadius.value * density
+        val dotSpacing = RebootMarkerSpacing.value * density
+        c.withClip(plot) {
+            // Read the native transform every frame, including while the viewport is in motion.
+            forEachHistoryEventMarker(
+                times,
+                plot.left,
+                plot.right,
+                dotRadius,
+                connectedLine.lineWidth * density,
+                screenX = { time ->
+                    position[0] = axis.x(time)
+                    position[1] = 0f
+                    transform.pointValuesToPixel(position)
+                    position[0]
+                }) { code, x ->
+                when (code) {
+                    HistoryEvent.REBOOT -> forEachRebootDot(
+                        plot.top, plot.bottom, dotRadius, dotSpacing
+                    ) { y ->
+                        c.drawCircle(x, y, dotRadius, dotPaint)
+                    }
+
+                    HistoryEvent.CONNECTED, HistoryEvent.DISCONNECTED -> {
+                        position[0] = x
+                        val line =
+                            if (code == HistoryEvent.CONNECTED) connectedLine else disconnectedLine
+                        renderLimitLineLine(c, line, position)
+                    }
+                }
+            }
+        }
+    }
 }
 
 internal fun fullscreenCoordinatesNeedRebase(
@@ -1303,6 +1337,11 @@ private fun ChartRadioItem(
         onClick = onClick
     )
 }
+
+@Composable
+private fun primaryMetricLabel(metric: HistoryMetric): String =
+    if (metric == HistoryMetric.LEVEL) stringResource(R.string.history_battery_level)
+    else metricLabel(metric)
 
 @Composable
 private fun scaleLabel(mode: ChartScaleMode): String = stringResource(
