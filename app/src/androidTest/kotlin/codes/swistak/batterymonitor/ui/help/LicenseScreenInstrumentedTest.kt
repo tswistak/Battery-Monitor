@@ -8,8 +8,6 @@
 package codes.swistak.batterymonitor.ui.help
 
 import android.Manifest
-import android.app.Activity
-import android.app.Application
 import android.app.Instrumentation
 import android.content.Context
 import android.content.Intent
@@ -25,8 +23,6 @@ import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commitNow
 import androidx.lifecycle.ViewModelProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import codes.swistak.batterymonitor.R
@@ -40,7 +36,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
-import org.junit.Assume.assumeTrue
 import org.junit.Test
 
 class LicenseScreenInstrumentedTest {
@@ -222,91 +217,6 @@ class LicenseScreenInstrumentedTest {
             await { visibleText(context.getString(R.string.help_cat_version)) }
             assertNavigation(activity, SectionOwner.HELP, null)
             assertNoHelpFragments(activity)
-        }
-    }
-
-    @Test
-    fun removed_help_fragment_saved_class_restores_through_the_factory_and_is_cleaned() {
-        assumeTrue(
-            "The serialized migration fixture needs post-save callbacks",
-            Build.VERSION.SDK_INT >= 29
-        )
-        withActivity { activity ->
-            await { visibleText(context.getString(R.string.help_cat_version)) }
-            val legacyClass = "codes.swistak.batterymonitor.ui.help.LegacyHelpFragment"
-            val legacyTag = "section:help:help:licenses"
-            main {
-                val manager = activity.supportFragmentManager
-                val placeholder = manager.fragmentFactory.instantiate(
-                    context.classLoader, legacyClass
-                )
-                assertEquals(Fragment::class.java, placeholder.javaClass)
-                manager.commitNow { add(placeholder, legacyTag) }
-            }
-
-            // shortcut: this fixture uses Fragment 1.9.1 state fields; update it when Fragment changes.
-            fun restoreLegacyClass(bundle: Bundle): Int {
-                var patched = 0
-                for (key in bundle.keySet()) {
-                    // The saved-state fixture must inspect values whose types are not known in advance.
-                    @Suppress("DEPRECATION") val value = bundle.get(key)
-                    if (value is Bundle) patched += restoreLegacyClass(value)
-                    else if (value?.javaClass?.name == "androidx.fragment.app.FragmentState") {
-                        val tag = value.javaClass.getDeclaredField("mTag")
-                        tag.isAccessible = true
-                        if (tag.get(value) == legacyTag) {
-                            val className = value.javaClass.getDeclaredField("mClassName")
-                            className.isAccessible = true
-                            className.set(value, legacyClass)
-                            patched++
-                        }
-                    }
-                }
-                return patched
-            }
-
-            var patched = 0
-            val callbacks = object : Application.ActivityLifecycleCallbacks {
-                override fun onActivityPostSaveInstanceState(
-                    savedActivity: Activity, outState: Bundle
-                ) {
-                    if (savedActivity === activity) patched += restoreLegacyClass(outState)
-                }
-
-                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) =
-                    Unit
-
-                override fun onActivityStarted(activity: Activity) = Unit
-                override fun onActivityResumed(activity: Activity) = Unit
-                override fun onActivityPaused(activity: Activity) = Unit
-                override fun onActivityStopped(activity: Activity) = Unit
-                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) =
-                    Unit
-
-                override fun onActivityDestroyed(activity: Activity) = Unit
-            }
-            main {
-                activity.application.registerActivityLifecycleCallbacks(
-                    callbacks
-                )
-            }
-            try {
-                val restored = recreate(activity)
-                main {
-                    assertEquals(
-                        "Rewrote the serialized legacy class", 1, patched
-                    )
-                }
-                await { visibleText(context.getString(R.string.help_cat_version)) }
-                assertNavigation(restored, SectionOwner.HELP, null)
-                assertNoHelpFragments(restored)
-            } finally {
-                main {
-                    activity.application.unregisterActivityLifecycleCallbacks(
-                        callbacks
-                    )
-                }
-            }
         }
     }
 

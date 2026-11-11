@@ -15,7 +15,6 @@
 */
 package codes.swistak.batterymonitor.e2ehelper;
 
-import android.appwidget.AppWidgetManager;
 import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.content.ComponentName;
@@ -47,7 +46,6 @@ public final class StorageProbe extends Probe {
     private static final String APP = "codes.swistak.batterymonitor";
     private static final String SETTINGS = APP + "_preferences";
     private static final String PREFIX = "historical-1.7.3-";
-    private static final String[] NEW_CONFIGS = {"1|Dark|BatteryBlue|fahrenheit|70|TEMPERATURE,VOLTAGE|TEMPERATURE|COMPACT|HISTORY|VOLTAGE|72", "1|Light|Dynamic|celsius|100|CURRENT,REMAINING_CHARGE|NONE|ADAPTIVE|CURRENT_STATE|CURRENT|168"};
 
     @Override
     protected void execute(String phase) throws Exception {
@@ -71,12 +69,6 @@ public final class StorageProbe extends Probe {
                 break;
             case "verifyStopped":
                 verify(context, false);
-                break;
-            case "seedNewUi":
-                seedNewUi(context);
-                break;
-            case "verifyNewUi":
-                verifyNewUi(context);
                 break;
             case "seedBackupData":
                 seedBackupData(context);
@@ -249,40 +241,6 @@ public final class StorageProbe extends Probe {
         require(predictor.getFloat("key_ave_recharge_ac", -1) == 123456f && predictor.getFloat("key_ave_recharge_wl", -1) == 234567f && predictor.getFloat("key_ave_recharge_usb", -1) == 345678f, "Historical charging predictor values changed: " + predictor.getAll());
         require(context.getSharedPreferences("sp_store_main", 0).getBoolean("serviceDesired", !running) == running, "Explicit monitoring choice changed across upgrade");
         report(snapshot(context).toString());
-    }
-
-    private void seedNewUi(Context context) throws Exception {
-        int[] ids = newWidgetIds(context);
-        SharedPreferences.Editor editor = context.getSharedPreferences("widget_configuration", 0).edit();
-        for (int index = 0; index < ids.length; index++)
-            editor.putString("widget_config_v1_" + ids[index], NEW_CONFIGS[index]);
-        require(editor.commit(), "Per-widget configuration seed failed");
-        require(context.getSharedPreferences(SETTINGS, 0).edit().putString("ui_brightness", "Dark").putInt("custom_charging_target", 87).putInt("discharging_target", 13).commit(), "New UI settings seed failed");
-        report("newUiWidgetIds=" + Arrays.toString(ids));
-    }
-
-    private void verifyNewUi(Context context) throws Exception {
-        int[] ids = newWidgetIds(context);
-        SharedPreferences store = context.getSharedPreferences("widget_configuration", 0);
-        Object configurationStore = construct(context, "widgets.WidgetConfigurationStore");
-        Class<?> familyType = type(context, "widgets.WidgetFamily");
-        Object statusFamily = familyType.getField("STATUS").get(null);
-        for (int index = 0; index < ids.length; index++) {
-            String actual = store.getString("widget_config_v1_" + ids[index], null);
-            // Schema 2 appends Y-axis visibility while preserving every schema 1 field.
-            require(NEW_CONFIGS[index].equals(actual) || (NEW_CONFIGS[index].replaceFirst("^1\\|", "2|") + "|true").equals(actual), "Widget " + ids[index] + " configuration changed or swapped: " + actual);
-            Object effective = invoke(configurationStore, "load", new Class<?>[]{int.class, familyType}, ids[index], statusFamily);
-            require((index == 0 ? "Dark" : "Light").equals(String.valueOf(invoke(effective, "getBrightness"))) && (index == 0 ? "fahrenheit" : "celsius").equals(invoke(effective, "getTemperatureUnit")) && Integer.valueOf(index == 0 ? 70 : 100).equals(invoke(effective, "getBackgroundOpacityPercent")), "Widget " + ids[index] + " effective configuration fell back or was mixed: " + effective);
-        }
-        SharedPreferences preferences = context.getSharedPreferences(SETTINGS, 0);
-        require("Dark".equals(preferences.getString("ui_brightness", null)) && preferences.getInt("custom_charging_target", -1) == 87 && preferences.getInt("discharging_target", -1) == 13, "New UI preferences were reset");
-    }
-
-    private int[] newWidgetIds(Context context) {
-        int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(APP, APP + ".widgets.StatusWidgetProvider"));
-        Arrays.sort(ids);
-        require(ids.length == 2, "Expected exactly two Status widgets; actual=" + Arrays.toString(ids));
-        return ids;
     }
 
     private void seedBackupData(Context context) throws Exception {

@@ -24,27 +24,6 @@ class SectionNavigatorTest {
     }
 
     @Test
-    fun `reselecting a section and visiting another keeps its tab range filters and scroll`() {
-        val navigator = SectionNavigator()
-        val history = SectionState(
-            selectedTab = "logs",
-            rangeStartMillis = 100,
-            rangeEndMillis = 200,
-            filters = setOf("charging"),
-            scrollIndex = 12,
-            scrollOffset = 8
-        )
-        navigator.update(SectionOwner.HISTORY, history)
-        navigator.select(SectionOwner.HISTORY)
-        navigator.select(SectionOwner.ALARMS)
-        navigator.select(SectionOwner.HISTORY)
-        navigator.select(SectionOwner.HISTORY)
-
-        assertEquals(history, navigator.state(SectionOwner.HISTORY))
-        assertEquals(SectionOwner.HISTORY, navigator.selected)
-    }
-
-    @Test
     fun `back from a menu section returns to current without accumulating a history stack`() {
         val navigator = SectionNavigator()
         navigator.select(SectionOwner.HISTORY)
@@ -58,7 +37,7 @@ class SectionNavigatorTest {
     fun `back from a contextual detail restores its origin section`() {
         val navigator = SectionNavigator()
         navigator.select(SectionOwner.HISTORY)
-        navigator.openDetail(SectionOwner.DIAGNOSTICS, "measurement", SectionOwner.HISTORY)
+        navigator.openDetail(SectionOwner.DIAGNOSTICS, "monitor")
         assertTrue(navigator.back())
         assertEquals(SectionOwner.HISTORY, navigator.selected)
         assertEquals(null, navigator.detail)
@@ -68,12 +47,12 @@ class SectionNavigatorTest {
     fun `back from settings help preserves the category before returning to the settings root`() {
         val navigator = SectionNavigator()
         navigator.select(SectionOwner.SETTINGS)
-        navigator.openDetail(SectionOwner.SETTINGS, "history")
-        navigator.openDetail(SectionOwner.HELP, "history")
+        navigator.openDetail(SectionOwner.SETTINGS, "settings:advanced")
+        navigator.openDetail(SectionOwner.HELP, "help:advanced_settings")
 
         assertTrue(navigator.back())
         assertEquals(SectionOwner.SETTINGS, navigator.selected)
-        assertEquals("history", navigator.detail)
+        assertEquals("settings:advanced", navigator.detail)
         assertTrue(navigator.back())
         assertEquals(SectionOwner.SETTINGS, navigator.selected)
         assertEquals(null, navigator.detail)
@@ -86,8 +65,8 @@ class SectionNavigatorTest {
     fun `leaving contextual help through the menu clears its nested return path`() {
         val navigator = SectionNavigator()
         navigator.select(SectionOwner.SETTINGS)
-        navigator.openDetail(SectionOwner.SETTINGS, "notification")
-        navigator.openDetail(SectionOwner.HELP, "notification")
+        navigator.openDetail(SectionOwner.SETTINGS, "settings:notification")
+        navigator.openDetail(SectionOwner.HELP, "help:notification_settings")
         navigator.select(SectionOwner.HISTORY)
 
         assertTrue(navigator.back())
@@ -100,13 +79,13 @@ class SectionNavigatorTest {
     fun `a diagnostics search destination returns to the originating settings category`() {
         val navigator = SectionNavigator()
         navigator.select(SectionOwner.SETTINGS)
-        navigator.openDetail(SectionOwner.SETTINGS, "settings:data")
+        navigator.openDetail(SectionOwner.SETTINGS, "settings:advanced")
         navigator.openDetail(SectionOwner.DIAGNOSTICS, "monitor:debug_logging")
 
         assertEquals("monitor:debug_logging", navigator.detail)
         assertTrue(navigator.back())
         assertEquals(SectionOwner.SETTINGS, navigator.selected)
-        assertEquals("settings:data", navigator.detail)
+        assertEquals("settings:advanced", navigator.detail)
         assertTrue(navigator.back())
         assertEquals(SectionOwner.SETTINGS, navigator.selected)
         assertEquals(null, navigator.detail)
@@ -132,14 +111,11 @@ class SectionNavigatorTest {
     @Test
     fun `a highlighted Settings destination returns directly to its diagnostic origin`() {
         val navigator = SectionNavigator(SectionOwner.DIAGNOSTICS)
-        val origin = SectionState(selectedTab = "raw", scrollIndex = 17, scrollOffset = 24)
-        navigator.update(SectionOwner.DIAGNOSTICS, origin)
         navigator.openDetail(SectionOwner.SETTINGS, "settings:advanced:use_privileged_access")
 
         assertTrue(navigator.back())
         assertEquals(SectionOwner.DIAGNOSTICS, navigator.selected)
         assertEquals(null, navigator.detail)
-        assertEquals(origin, navigator.state(SectionOwner.DIAGNOSTICS))
     }
 
 }

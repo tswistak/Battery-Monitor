@@ -129,10 +129,7 @@ class BatteryHistoryInstrumentedTest {
             val initial = rows()
 
             data class InvalidSource(
-                val name: String,
-                val body: String?,
-                val json: Boolean,
-                val error: Int
+                val name: String, val body: String?, val json: Boolean, val error: Int
             )
             for ((name, body, json, expected) in listOf(
                 InvalidSource(
@@ -140,20 +137,17 @@ class BatteryHistoryInstrumentedTest {
                     "invalid",
                     false,
                     codes.swistak.batterymonitor.R.string.invalid_csv_logs_file
-                ),
-                InvalidSource(
+                ), InvalidSource(
                     "broken.json",
                     "invalid",
                     true,
                     codes.swistak.batterymonitor.R.string.invalid_device_data_file
-                ),
-                InvalidSource(
+                ), InvalidSource(
                     "empty.json",
                     """{"version":2}""",
                     true,
                     codes.swistak.batterymonitor.R.string.device_data_file_empty
-                ),
-                InvalidSource(
+                ), InvalidSource(
                     "missing.json",
                     null,
                     true,
@@ -231,7 +225,7 @@ class BatteryHistoryInstrumentedTest {
             main { models.clear() }
         }
     }
-    
+
     @Test
     fun database_records_real_transitions_and_samples_but_not_fluctuations_or_disabled_logging() {
         val sampler = BatteryHistorySampler()
@@ -539,22 +533,36 @@ class BatteryHistoryInstrumentedTest {
 
     @Test
     fun older_schema_upgrades_without_losing_rows_and_new_observation_fields_stay_nullable() {
-        database.close()
-        context.getDatabasePath("logs.db").delete()
-        SQLiteDatabase.openOrCreateDatabase(context.getDatabasePath("logs.db"), null).use {
-            it.execSQL("CREATE TABLE logs (_id INTEGER PRIMARY KEY,status INTEGER,charge INTEGER,time INTEGER,temperature INTEGER,voltage INTEGER,\"current\" INTEGER)")
-            it.execSQL("INSERT INTO logs VALUES (42,100,50,1000,NULL,4000,NULL)")
-            it.version = 5
+        val file = context.getDatabasePath("logs.db")
+        for (version in 4..6) {
+            database.close()
+            SQLiteDatabase.deleteDatabase(file)
+            val columns =
+                listOf("\"current\" INTEGER", "remaining_charge_uah INTEGER").take(version - 4)
+            val measurements = listOf(-100_000L, 2_500_000L).take(version - 4)
+            val extraColumns = columns.joinToString(separator = "") { ",$it" }
+            val extraValues = measurements.joinToString(separator = "") { ",$it" }
+            SQLiteDatabase.openOrCreateDatabase(file, null).use {
+                it.execSQL("CREATE TABLE logs (_id INTEGER PRIMARY KEY,status INTEGER,charge INTEGER,time INTEGER,temperature INTEGER,voltage INTEGER$extraColumns)")
+                it.execSQL("INSERT INTO logs VALUES (42,100,50,1000,NULL,4000$extraValues)")
+                it.version = version
+            }
+            database = LogDatabase(context)
+            val old = rows().single()
+            assertEquals("History ID from schema $version", 42L, old.id)
+            assertEquals(
+                "History record from schema $version", LogRecord(
+                    100, 50, 1000, null, 4000, measurements.getOrNull(0), measurements.getOrNull(1)
+                ), old.record
+            )
+            val next = old.record.copy(time = 121_000)
+            assertEquals(
+                "History write after upgrading schema $version",
+                LogResult.Inserted,
+                log(next, 120_000, BatteryHistorySampler(0))
+            )
+            assertEquals(listOf(old.record, next.copy(status = 200)), rows().map { it.record })
         }
-        database = LogDatabase(context)
-        val old = rows().single()
-        assertEquals(42L, old.id)
-        assertEquals(LogRecord(100, 50, 1000, null, 4000), old.record)
-        assertEquals(
-            LogResult.Inserted,
-            log(old.record.copy(time = 121_000), 120_000, BatteryHistorySampler(0))
-        )
-        assertEquals(200, rows().last().record.status)
     }
 
     @Test
@@ -627,7 +635,7 @@ class BatteryHistoryInstrumentedTest {
 
     @Test
     fun csv_appends_preserve_existing_rows_headers_and_sample_semantics_for_every_supported_format() {
-        for (columns in listOf(7, 8, 10)) {
+        for (columns in listOf(7, 10)) {
             val header = listOf(
                 "Date",
                 "Time",

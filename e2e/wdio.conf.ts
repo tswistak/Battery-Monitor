@@ -15,7 +15,7 @@
  */
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
-import {appendFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
+import {existsSync, mkdirSync, readFileSync, rmSync} from 'node:fs';
 import {join} from 'node:path';
 import mergeResults from '@wdio/json-reporter/mergeResults';
 import {prepareApks} from './prepare.js';
@@ -24,7 +24,6 @@ import {collectDiagnostics, reports, root} from './support/device.js';
 export const config: WebdriverIO.Config = {
     runner: 'local',
     specs: ['./specs/*.e2e.ts'],
-    exclude: process.env.NEW_UI_BASELINE_APK ? [] : ['./specs/new-ui-widget-upgrade.e2e.ts'],
     maxInstances: 1,
     hostname: '127.0.0.1',
     port: 4723,
@@ -81,14 +80,8 @@ export const config: WebdriverIO.Config = {
         assert.match(property('persist.sys.locale') || property('ro.product.locale'), /^en(?:-US)?$/i, 'Use an en-US emulator for system UI selectors.');
         rmSync(reports, {recursive: true, force: true});
         mkdirSync(join(reports, 'json'), {recursive: true});
-        const prepared = await prepareApks();
-        if (prepared.newUiBaselineUnavailableReason) {
-            writeFileSync(join(reports, 'new-ui-baseline-unavailable.txt'), `${prepared.newUiBaselineUnavailableReason}\n`);
-            if (process.env.GITHUB_STEP_SUMMARY) {
-                appendFileSync(process.env.GITHUB_STEP_SUMMARY, `\n${prepared.newUiBaselineUnavailableReason}\n`);
-            }
-        }
-    },
+            await prepareApks();
+        },
     beforeSession(_config, capabilities) {
         Object.assign(capabilities, {'appium:udid': process.env.ANDROID_SERIAL});
     },

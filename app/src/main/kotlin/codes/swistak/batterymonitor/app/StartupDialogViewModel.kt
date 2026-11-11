@@ -115,7 +115,6 @@ internal class StartupDialogViewModel(
                     notificationAttempted = notificationAttempted,
                     batteryPromptShown = batteryPromptShown), environment)
         when (next) {
-            StartupPresentation.REQUEST_NOTIFICATIONS -> requestNotifications()
             StartupPresentation.BATTERY_OPTIMIZATION -> {
                 batteryPromptShown = true
                 show(next)

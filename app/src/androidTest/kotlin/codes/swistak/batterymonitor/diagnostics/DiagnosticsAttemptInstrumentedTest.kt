@@ -1,6 +1,5 @@
 package codes.swistak.batterymonitor.diagnostics
 
-import android.os.Bundle
 import android.os.Parcel
 import androidx.compose.runtime.saveable.SaverScope
 import codes.swistak.batterymonitor.advancedstats.AdvancedBatterySnapshot
@@ -48,12 +47,5 @@ class DiagnosticsAttemptInstrumentedTest {
         val scope = SaverScope { true }
         val saved = with(DiagnosticRowSaver) { requireNotNull(scope.save(row)) }
         assertEquals(row, DiagnosticRowSaver.restore(saved))
-        val legacy = Bundle(saved).apply {
-            remove("checkedAtMillis")
-            remove("checkedElapsedMillis")
-            remove("checkFailed")
-            remove("retained")
-        }
-        assertEquals(0L, requireNotNull(DiagnosticRowSaver.restore(legacy)).checkedAtMillis)
     }
 }

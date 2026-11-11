@@ -80,7 +80,8 @@ class SettingsBackupDialogStateInstrumentedTest {
 
     @Test
     fun preview_reparses_cached_data_after_restoration_without_large_bundle_payloads() {
-        val original = """{"version":2,"logs":[],"predictor":{}}""" + " ".repeat(200_000)
+        val original =
+            """{"version":2,"logs":[],"predictor":{"stateVersion":2}}""" + " ".repeat(200_000)
         val source = File(directory, "source.json").apply { writeText(original) }
         val first = fragment()
         read(first, request(6), Uri.fromFile(source))
@@ -121,7 +122,7 @@ class SettingsBackupDialogStateInstrumentedTest {
     @Test
     fun device_log_mode_restores_selected_data_and_cancellation_performs_no_import() {
         val source = File(directory, "source.json").apply {
-            writeText("""{"version":2,"logs":[],"predictor":{}}""")
+            writeText("""{"version":2,"logs":[],"predictor":{"stateVersion":2}}""")
         }
         val first = fragment()
         read(first, request(6), Uri.fromFile(source))
@@ -154,7 +155,7 @@ class SettingsBackupDialogStateInstrumentedTest {
         ZipOutputStream(source.outputStream()).use { output ->
             for ((name, body) in mapOf(
                 "metadata.json" to """{"version":1,"files":["device-specific.json"]}""",
-                "device-specific.json" to """{"version":2,"logs":[],"predictor":{}}"""
+                "device-specific.json" to """{"version":2,"logs":[],"predictor":{"stateVersion":2}}"""
             )) {
                 output.putNextEntry(ZipEntry(name))
                 output.write(body.toByteArray(Charsets.UTF_8))

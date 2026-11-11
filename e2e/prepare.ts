@@ -44,8 +44,6 @@ export interface PreparedApks {
     historical: ApkMetadata;
     current: ApkMetadata;
     helper: ApkMetadata;
-    newUiBaseline: ApkMetadata | null;
-    newUiBaselineUnavailableReason: string | null;
 }
 
 function command(root: string, program: string, args: string[], timeout = 120_000): Buffer {
@@ -171,8 +169,6 @@ export async function prepareApks(root = projectRoot): Promise<PreparedApks> {
     mkdirSync(build, {recursive: true});
     // A failed preparation must never leave apparently current metadata from an earlier run.
     rmSync(join(build, 'apks.json'), {force: true});
-    assert(process.env.E2E_REQUIRE_NEW_UI_BASELINE !== 'true' || process.env.NEW_UI_BASELINE_APK,
-        'E2E_REQUIRE_NEW_UI_BASELINE=true requires a genuine NEW_UI_BASELINE_APK and NEW_UI_BASELINE_SHA256.');
     sdkTool(root, 'apksigner');
     sdkTool(root, 'aapt2');
     const fixture = JSON.parse(readFileSync(join(root, 'e2e/fixtures.json'), 'utf8')).historicalApk as {
@@ -211,29 +207,10 @@ export async function prepareApks(root = projectRoot): Promise<PreparedApks> {
     assert.equal(helper.applicationId, `${fixture.applicationId}.e2ehelper`, 'Unexpected helper APK package.');
     assert.equal(helper.signerSha256, current.signerSha256, 'Helper signing identity differs.');
 
-    let newUiBaseline: ApkMetadata | null = null;
-    let newUiBaselineUnavailableReason: string | null =
-        'The released 1.7.3 APK and freshly built/signed current APK are prepared for the released-upgrade tests. ' +
-        'Only the additional older-new-UI → current-new-UI widget upgrade is NOT EXECUTED: ' +
-        '1.7.3 predates the redesigned widgets, so this separate test needs an earlier APK that already contains them. ' +
-        'Supply NEW_UI_BASELINE_APK and NEW_UI_BASELINE_SHA256 for that additional scenario.';
-    if (process.env.NEW_UI_BASELINE_APK) {
-        const source = resolve(process.env.NEW_UI_BASELINE_APK);
-        assert.match(process.env.NEW_UI_BASELINE_SHA256 ?? '', /^[a-f\d]{64}$/i, 'Supply pinned NEW_UI_BASELINE_SHA256.');
-        verifyPinnedFile(source, {sha256: process.env.NEW_UI_BASELINE_SHA256!});
-        const signed = join(build, 'new-ui-baseline.apk');
-        resign(root, source, signed);
-        newUiBaseline = {...readApk(root, signed), originalPath: source};
-        validateUpgrade(newUiBaseline, current, fixture.applicationId);
-        assert.notEqual(apkPayload(root, signed).sha256, apkPayload(root, current.path).sha256,
-            'Two identical APK payloads are not cross-version coverage.');
-        newUiBaselineUnavailableReason = null;
-    }
     const prepared: PreparedApks = {applicationId: fixture.applicationId, preparedAt: new Date().toISOString(),
-        historical, current, helper, newUiBaseline, newUiBaselineUnavailableReason};
+        historical, current, helper};
     writeFileSync(join(build, 'apks.json'), `${JSON.stringify(prepared, null, 2)}\n`);
     console.log(`Prepared E2E APK metadata: ${join(build, 'apks.json')}`);
-    if (newUiBaselineUnavailableReason) console.log(newUiBaselineUnavailableReason);
     return prepared;
 }
 

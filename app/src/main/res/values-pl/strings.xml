@@ -295,11 +295,11 @@
     <string name="alarm_type_health_failure" formatted="false">Problemy z kondycją</string>
     <string name="alarm_health_failure" formatted="false">"Kondycja baterii to: "</string>
     <string name="pref_alarm_threshold" formatted="false">Próg</string>
-    <string name="pref_alarm_threshold_help" formatted="false">Dla alarmów poziomu baterii i temperatury ustaw próg i zapisz regułę. Nowe progi zostają włączone po zapisie. Alarm uruchomi się, gdy odczyt osiągnie lub przekroczy próg w wybranym kierunku. Kolejne odczyty równe progowi nie powtarzają alarmu. Uruchomienie monitora, import reguły lub włączenie jej po przekroczeniu progu nie uruchamia alarmu od razu; potrzebne jest kolejne przekroczenie.</string>
+    <string name="pref_alarm_threshold_help" formatted="false">Dla alarmów poziomu naładowania baterii i temperatury ustaw próg i zapisz regułę. Nowe progi zostają włączone po zapisaniu. Alarm uruchomi się, gdy odczyt osiągnie lub przekroczy próg w wybranym kierunku. Kolejne odczyty równe progowi nie powtarzają alarmu. Uruchomienie monitora, import reguły lub włączenie jej po przekroczeniu progu nie uruchamia alarmu od razu; potrzebne jest kolejne przekroczenie.</string>
     <string name="alarms_add_threshold">Dodaj próg</string>
     <string name="alarms_edit_threshold">Edytuj próg</string>
     <string name="alarms_edit_existing">Edytuj istniejący próg</string>
-    <string name="alarms_threshold_edit_help" formatted="false">Naciśnij ikonę ołówka obok wartości progu, aby ją zedytować. Edycja zachowuje stan włączenia. Aby usunąć alarm, otwórz jego edytor, wybierz „Usuń alarm” i potwierdź usunięcie. Usunięte zostaną wszystkie kopie tego progu. Jeśli zapisane alarmy zmieniają się podczas edycji, użyj „Odśwież” i ponownie otwórz próg przed jego zmianą.</string>
+    <string name="alarms_threshold_edit_help" formatted="false">Naciśnij ikonę ołówka obok wartości progu, aby ją zedytować. Edycja zachowuje swój stan włączenia. Aby usunąć alarm, otwórz jego edytor, wybierz „Usuń alarm” i potwierdź usunięcie. Usunięte zostaną wszystkie kopie tego progu. Jeśli zapisane alarmy zmieniają się podczas edycji, użyj „Odśwież” i ponownie otwórz próg przed jego zmianą.</string>
     <string name="alarms_new_enabled">Alarm zostanie włączony po dodaniu.</string>
     <string name="alarms_edit_keeps_enabled">Edycja zachowuje bieżące ustawienie włączenia/wyłączenia.</string>
     <string name="alarms_enabled">Włączony</string>
@@ -312,7 +312,7 @@
     <string name="alarms_discard_confirmation">Czy odrzucić zmiany w tym alarmie?</string>
     <string name="alarms_discard">Odrzuć</string>
     <string name="menu_delete_alarm" formatted="false">Usuń alarm</string>
-    <string name="alarms_delete_threshold_confirmation">Czy usunąć %1$s — %2$s? Usunięte zostaną wszystkie kopie tego progu.</string>
+    <string name="alarms_delete_threshold_confirmation">Czy usunąć %1$s — %2$s? Wszystkie kopie tego progu zostaną usunięte.</string>
     <string name="alarms_notifications_disabled">Powiadomienia są wyłączone. Włącz je w ustawieniach Androida, aby otrzymywać powiadomienia o alarmach.</string>
     <string name="alarm_notifs_disabled_summary" formatted="false">Wyłączyłeś(-aś) grupę powiadomień alarmów dla tej aplikacji. Włącz ją w ustawieniach Androida, aby otrzymywać powiadomienia o alarmach.</string>
     <string name="alarms_open_notification_settings">Otwórz ustawienia powiadomień Androida</string>

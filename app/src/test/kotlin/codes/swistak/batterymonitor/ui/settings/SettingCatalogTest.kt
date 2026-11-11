@@ -83,9 +83,6 @@ class SettingCatalogTest {
         assertNull(SettingsCategory.fromLegacy("plugin_settings"))
         assertNull(SettingsCategory.fromRoute("unknown"))
         assertNull(SettingsCategory.fromRoute(null))
-        assertEquals(SettingsCategory.General, SettingsCategory.fromRoute("appearance"))
-        assertEquals(SettingsCategory.Advanced, SettingsCategory.fromRoute("history"))
-        assertEquals(SettingsCategory.Advanced, SettingsCategory.fromRoute("data"))
     }
 
     @Test

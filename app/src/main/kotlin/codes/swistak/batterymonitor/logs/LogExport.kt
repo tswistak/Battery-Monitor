@@ -20,7 +20,6 @@ import androidx.core.text.BidiFormatter
 import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.common.DisplayStrings
 import codes.swistak.batterymonitor.devicebackup.CsvLogImporter
-import codes.swistak.batterymonitor.monitoring.BatteryCurrent
 import codes.swistak.batterymonitor.monitoring.batteryvoltage.BatteryVoltageValidator
 import codes.swistak.batterymonitor.settings.SettingsContract
 import java.io.BufferedWriter
@@ -70,9 +69,6 @@ internal object LogExport {
     fun appendJson(context: Context, uri: Uri, records: Sequence<LogRecord>) =
         withDocumentLock(context) { JsonLogAppend.append(context, uri, records) }
 
-    internal fun hasRawCurrentCsvHeader(columns: List<String>): Boolean =
-        columns.size == 8 && columns.last().contains("µA")
-
     internal fun hasMeasurementCsvHeader(columns: List<String>): Boolean =
         columns.size == 10 && columns[7].contains("µA") && columns[8].contains("µAh") && columns[9].contains(
             "W"
@@ -95,29 +91,21 @@ internal object LogExport {
             .getString(SettingsContract.KEY_BATTERY_CURRENT_MULTIPLIER, "1")?.toIntOrNull() ?: 1
 
     internal fun upgradeLegacyCsv(
-        reader: Reader, writer: Writer, measurementColumns: List<String>, currentMultiplier: Int
+        reader: Reader, writer: Writer, measurementColumns: List<String>
     ) {
         val rows = CsvLogImporter.readCsvRows(reader).iterator()
         require(rows.hasNext()) { "Missing CSV header" }
         val header = rows.next()
-        require(header.size == 7 || hasRawCurrentCsvHeader(header)) { "Unsupported CSV columns" }
+        require(header.size == 7) { "Unsupported CSV columns" }
         require(measurementColumns.size == 3)
         fun write(row: List<String>) {
             writer.write(row.joinToString(",", transform = ::csvField))
             writer.write("\r\n")
         }
-        write(header + measurementColumns.drop(header.size - 7))
+        write(header + measurementColumns)
         for (row in rows) {
             require(row.size >= header.size) { "Incomplete CSV row" }
-            val withCurrent = if (header.size == 7) row + "" else row
-            val rawCurrent = withCurrent.last().trim().takeIf(String::isNotEmpty)?.let {
-                it.toLongOrNull() ?: throw IllegalArgumentException("Invalid CSV current")
-            }
-            val voltage = withCurrent[withCurrent.lastIndex - 1].trim().toDoubleOrNull()
-                ?.takeIf { it.isFinite() && it in 0.5..20.0 }?.let { (it * 1000).roundToInt() }
-            val power = BatteryCurrent.powerWatts(
-                voltage, rawCurrent?.let { it.toDouble() * currentMultiplier / 1000.0 })
-            write(withCurrent + listOf("", power?.toString() ?: ""))
+            write(row + listOf("", "", ""))
         }
         writer.flush()
     }
@@ -161,9 +149,7 @@ internal object LogExport {
             upgraded.outputStream().use { output ->
                 original.bufferedReader(StandardCharsets.UTF_8).use { input ->
                     val writer = OutputStreamWriter(output, StandardCharsets.UTF_8).buffered()
-                    upgradeLegacyCsv(
-                        input, writer, measurementColumns(context), currentMultiplier(context)
-                    )
+                    upgradeLegacyCsv(input, writer, measurementColumns(context))
                 }
             }
             try {

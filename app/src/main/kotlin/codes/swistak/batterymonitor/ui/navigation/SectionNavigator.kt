@@ -16,14 +16,6 @@ internal class SectionNavigator(initial: SectionOwner = SectionOwner.CURRENT) {
         private set
     private val detailOrigins = mutableListOf<Pair<SectionOwner, String?>>()
 
-    private val sectionStates = mutableMapOf<SectionOwner, SectionState>()
-
-    fun state(owner: SectionOwner): SectionState = sectionStates[owner] ?: SectionState()
-
-    fun update(owner: SectionOwner, state: SectionState) {
-        sectionStates[owner] = state
-    }
-
     fun select(owner: SectionOwner) {
         if (owner == selected && detail == null) return
         selected = owner
@@ -31,8 +23,8 @@ internal class SectionNavigator(initial: SectionOwner = SectionOwner.CURRENT) {
         detailOrigins.clear()
     }
 
-    fun openDetail(owner: SectionOwner, route: String, origin: SectionOwner = selected) {
-        detailOrigins.add(origin to if (origin == selected) detail else null)
+    fun openDetail(owner: SectionOwner, route: String) {
+        detailOrigins.add(selected to detail)
         selected = owner
         detail = route
     }
@@ -56,17 +48,6 @@ internal class SectionNavigator(initial: SectionOwner = SectionOwner.CURRENT) {
         out.putStringArrayList(
             "nav_detail_routes", ArrayList(detailOrigins.map { it.second ?: "" })
         )
-        for ((owner, state) in sectionStates) {
-            val key = "nav_${owner.route}_"
-            out.putBoolean("${key}saved", true)
-            out.putString("${key}tab", state.selectedTab)
-            state.rangeStartMillis?.let { out.putLong("${key}start", it) }
-            state.rangeEndMillis?.let { out.putLong("${key}end", it) }
-            out.putStringArrayList("${key}filters", ArrayList(state.filters))
-            out.putString("${key}item", state.selectedItemId)
-            out.putInt("${key}scroll_index", state.scrollIndex)
-            out.putInt("${key}scroll_offset", state.scrollOffset)
-        }
     }
 
     companion object {
@@ -81,23 +62,6 @@ internal class SectionNavigator(initial: SectionOwner = SectionOwner.CURRENT) {
                 owners.zip(details).forEach { (owner, route) ->
                     navigator.detailOrigins.add(SectionRegistry.owner(owner) to route.ifEmpty { null })
                 }
-            } else if (navigator.detail != null) {
-                navigator.detailOrigins.add(SectionRegistry.owner(saved.getString("nav_return_to")) to null)
-            }
-            for (owner in SectionOwner.entries) {
-                val key = "nav_${owner.route}_"
-                if (!saved.getBoolean("${key}saved")) continue
-                navigator.update(
-                    owner, SectionState(
-                        selectedTab = saved.getString("${key}tab"),
-                    rangeStartMillis = saved.takeIf { it.containsKey("${key}start") }
-                        ?.getLong("${key}start"),
-                    rangeEndMillis = saved.takeIf { it.containsKey("${key}end") }
-                        ?.getLong("${key}end"),
-                    filters = saved.getStringArrayList("${key}filters")?.toSet() ?: emptySet(),
-                    selectedItemId = saved.getString("${key}item"),
-                    scrollIndex = saved.getInt("${key}scroll_index"),
-                    scrollOffset = saved.getInt("${key}scroll_offset")))
             }
             return navigator
         }

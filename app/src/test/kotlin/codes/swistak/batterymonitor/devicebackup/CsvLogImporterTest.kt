@@ -23,29 +23,34 @@ import org.junit.Test
 
 class CsvLogImporterTest {
     @Test
-    fun `raw current headers support translated order and bidi controls`() {
+    fun `measurement headers support translated order and bidi controls`() {
         val prefix = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,"
+        val suffix = ",Charge (µAh),Power (W)"
         for (header in listOf(
             "Battery current (µA)",
             "µA (تيار البطارية)",
             "تيار البطارية (\u200f\u202aµA\u202c\u200f)"
         )) {
             assertTrue(
-                LogExport.hasRawCurrentCsvHeader(
-                    CsvLogImporter.parseCsv(prefix + header).single()
+                LogExport.hasMeasurementCsvHeader(
+                    CsvLogImporter.parseCsv(prefix + header + suffix).single()
                 )
             )
         }
         assertFalse(
-            LogExport.hasRawCurrentCsvHeader(
-                CsvLogImporter.parseCsv(prefix + "Current (mA)").single()
+            LogExport.hasMeasurementCsvHeader(
+                CsvLogImporter.parseCsv(prefix + "Current (mA)" + suffix).single()
             )
         )
         assertFalse(
-            LogExport.hasRawCurrentCsvHeader(
-                CsvLogImporter.parseCsv(prefix.dropLast(1)).single()
+            LogExport.hasMeasurementCsvHeader(
+                CsvLogImporter.parseCsv(prefix + "Current (µA)").single()
             )
         )
+    }
+
+    @Test
+    fun `CSV append needs a separator only when existing content has no line ending`() {
         for ((text, expected) in listOf(
             "" to false, "a,b\r\n" to false, "a,b\n" to false, "a,b" to true
         )) {
@@ -59,7 +64,7 @@ class CsvLogImporterTest {
             "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\r\n" + "date,time,\"Charging,\r\nUSB \"\"slow\"\"\",50,30,86,4.0\r\n" + "date,time,Charging, AC,75,31.5,88.7,4.125"
         val writer = java.io.StringWriter()
         val columns = listOf("µA (تيار البطارية)", "Charge (µAh)", "Power (W)")
-        LogExport.upgradeLegacyCsv(csv.reader().buffered(), writer, columns, 1)
+        LogExport.upgradeLegacyCsv(csv.reader().buffered(), writer, columns)
         val original = CsvLogImporter.parseCsv(csv)
         val upgraded = CsvLogImporter.parseCsv(writer.toString())
         assertEquals(original.first() + columns, upgraded.first())
@@ -69,28 +74,17 @@ class CsvLogImporterTest {
             CsvLogImporter.parseRecords(writer.toString(), { 122 }, { _, _ -> 1L })
         )
         for (invalid in listOf(
-            "a,b,c,d,e,f\n1,2,3,4,5,6", "a,b,c,d,e,f,g\n1,2,3", "a,b,c,d,e,f,g\n\"unterminated"
+            "a,b,c,d,e,f\n1,2,3,4,5,6",
+            "a,b,c,d,e,f,g,Current (µA)\n1,2,3,4,5,6,7,8",
+            "a,b,c,d,e,f,g\n1,2,3",
+            "a,b,c,d,e,f,g\n\"unterminated"
         )) {
             assertThrows(IllegalArgumentException::class.java) {
                 LogExport.upgradeLegacyCsv(
-                    invalid.reader().buffered(), java.io.StringWriter(), columns, 1
+                    invalid.reader().buffered(), java.io.StringWriter(), columns
                 )
             }
         }
-    }
-
-    @Test
-    fun `eight column CSV migration derives calibrated power and leaves old remaining charge empty`() {
-        val csv =
-            "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA)\n" + "date,time,Discharging,50,30,86,4.0,250000\n" + "date,time,Charging,50,30,86,,\n"
-        val columns = listOf("Current (µA)", "Remaining charge (µAh)", "Battery power (W)")
-        val writer = java.io.StringWriter()
-        LogExport.upgradeLegacyCsv(csv.reader(), writer, columns, -1)
-        val rows = CsvLogImporter.parseCsv(writer.toString())
-        assertTrue(LogExport.hasMeasurementCsvHeader(rows.first()))
-        assertEquals(listOf("250000", "", "-1.0"), rows[1].takeLast(3))
-        assertEquals(listOf("", "", ""), rows[2].takeLast(3))
-        assertFalse(LogExport.hasMeasurementCsvHeader(rows.first().dropLast(1)))
     }
 
     @Test
@@ -123,9 +117,16 @@ class CsvLogImporterTest {
     }
 
     @Test
-    fun `old and new CSV rows preserve missing signed fractional and zero current`() {
+    fun `measurement CSV rows preserve missing signed and zero current`() {
         val csv =
-            "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA)\n" + "date,time,Discharging,50,30,86,4.0\n" + "date,time,Discharging,50,30,86,4.0,-240125\n" + "date,time,Charging,50,30,86,4.0,1200250\n" + "date,time,Charging,50,30,86,4.0,0\n" + "date,time,Charging,50,30,86,4.0,\n" + "date,time,Boot Completed,0,0,32,0,\n"
+            """Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA),Remaining charge (µAh),Power (W)
+            |date,time,Discharging,50,30,86,4.0,,,
+            |date,time,Discharging,50,30,86,4.0,-240125,,
+            |date,time,Charging,50,30,86,4.0,1200250,,
+            |date,time,Charging,50,30,86,4.0,0,,
+            |date,time,Charging,50,30,86,4.0,,,
+            |date,time,Boot Completed,0,0,32,0,,,
+        """.trimMargin()
         val records = CsvLogImporter.parseRecords(csv, {
             when (it) {
                 "Discharging" -> 100
@@ -200,6 +201,12 @@ class CsvLogImporterTest {
         assertThrows(IllegalArgumentException::class.java) {
             CsvLogImporter.parseRecords(
                 csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage\n" + "8/10/26,1:00:00 PM,Charging,not-a-number,20.0,68.0,4.0\n",
+                statusCodeFor = { 2 },
+                timestampFor = { _, _ -> 1L })
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            CsvLogImporter.parseRecords(
+                csv = "Date,Time,Status,Charge,Temperature,Temperature F,Voltage,Current (µA)\n" + "8/10/26,1:00:00 PM,Charging,50,20.0,68.0,4.0,1200000\n",
                 statusCodeFor = { 2 },
                 timestampFor = { _, _ -> 1L })
         }

@@ -114,16 +114,6 @@ class DiagnosticsDialogStateTest {
     }
 
     @Test
-    fun `obsolete restored privileged hint is ignored`() {
-        val state = DiagnosticsDialogState()
-        state.restore("PRIVILEGED_HINT", null)
-        assertNull(state.dialog)
-        assertFalse(state.capturing)
-        state.open(DiagnosticsDialog.CHARGING_CONDITION)
-        assertEquals(DiagnosticsDialog.CHARGING_CONDITION, state.dialog)
-    }
-
-    @Test
     fun `process restoration retains dialog and selection without running actions`() {
         val previous = DiagnosticsDialogState()
         previous.open(DiagnosticsDialog.CHARGING_CONDITION)

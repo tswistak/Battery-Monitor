@@ -141,17 +141,10 @@ class BatteryInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.bi_compose_theme)
-        // FragmentManager restores old class names inside super.onCreate, before cleanup can run.
+        // FragmentManager restores the released onboarding class before cleanup can run.
         supportFragmentManager.fragmentFactory = object : FragmentFactory() {
             override fun instantiate(classLoader: ClassLoader, className: String): Fragment =
-                if (className in setOf(
-                        "codes.swistak.batterymonitor.ui.help.LegacyHelpFragment",
-                        $$"codes.swistak.batterymonitor.app.PersistentFragment$OnboardingDialogFragment",
-                        $$"codes.swistak.batterymonitor.app.PersistentFragment$BatteryOptimizationDialogFragment",
-                        "codes.swistak.batterymonitor.app.OnboardingDialogFragment",
-                        "codes.swistak.batterymonitor.app.BatteryOptimizationDialogFragment"
-                    )
-                ) {
+                if (className == $$"codes.swistak.batterymonitor.app.PersistentFragment$OnboardingDialogFragment") {
                     Fragment()
                 } else super.instantiate(classLoader, className)
         }
@@ -172,32 +165,13 @@ class BatteryInfoActivity : AppCompatActivity() {
         history.restore(savedInstanceState?.getBundle("history_state"))
         currentMeasurement =
             CurrentMeasurement.fromRoute(savedInstanceState?.getString("current_measurement"))
-        for (tag in listOf(
-            "section:current",
-            "section:history",
-            "section:diagnostics",
-            "section:alarms",
-            "onboarding",
-            "battery_optimization"
-        )) {
-            supportFragmentManager.findFragmentByTag(tag)?.let { legacy ->
-                supportFragmentManager.commitNow { remove(legacy) }
-            }
+        supportFragmentManager.findFragmentByTag("onboarding")?.let { fragment ->
+            supportFragmentManager.commitNow { remove(fragment) }
         }
-        supportFragmentManager.fragments.filter {
-            it.tag?.startsWith("section:help:") == true
-        }.forEach { obsolete ->
-            supportFragmentManager.commitNow { remove(obsolete) }
-        }
-
 
         navigator = SectionNavigator.restore(savedInstanceState)
         selected = navigator.selected
         detail = navigator.detail
-        if (selected == SectionOwner.ALARMS && detail == "alarm-edit") {
-            navigator.select(SectionOwner.ALARMS)
-            detail = null
-        }
         if (savedInstanceState == null && (intent.hasExtra(EXTRA_SECTION) || intent.hasExtra(
                 BatteryInfoService.EXTRA_CURRENT_INFO
             ) || intent.hasExtra(BatteryInfoService.EXTRA_EDIT_ALARMS))
@@ -642,10 +616,6 @@ class BatteryInfoActivity : AppCompatActivity() {
     }
 
     fun openSettingsCategory(category: String?, highlight: String? = null) {
-        if (highlight == SettingsContract.KEY_DISMISS_LOW_BATTERY_ON_RECOVERY) {
-            performSelectSection(SectionOwner.ALARMS)
-            return
-        }
         if (category == null) {
             performSelectSection(SectionOwner.SETTINGS)
             return

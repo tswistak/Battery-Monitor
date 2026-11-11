@@ -33,7 +33,8 @@ import kotlin.math.roundToInt
 import android.text.format.DateFormat as AndroidDateFormat
 
 internal object CsvLogImporter {
-    private const val COLUMN_COUNT = 7
+    private const val LEGACY_COLUMN_COUNT = 7
+    private const val COLUMN_COUNT = 10
 
     private val supportedLocaleTags = listOf(
         "en",
@@ -100,20 +101,18 @@ internal object CsvLogImporter {
         val rows = parseCsv(csv).filterNot { row -> row.all(String::isBlank) }
         require(rows.size > 1) { "The CSV file contains no log entries" }
 
-        fun codeFor(label: String): Int? = sampleStatusCode(label) ?: statusCodeFor(label)
+        val columnCount = rows.first().size
+        require(columnCount == LEGACY_COLUMN_COUNT || columnCount == COLUMN_COUNT) {
+            "Unsupported CSV columns"
+        }
+        val hasMeasurements = columnCount == COLUMN_COUNT
+        val trailingColumnCount = columnCount - 3
         return rows.drop(1).mapIndexed { index, row ->
-            require(row.size >= COLUMN_COUNT) { "Invalid CSV row ${index + 2}" }
-            val trailingColumnStart = (if (rows.first().size == 10) listOf(row.size - 7)
-            else listOf(row.size - 5, row.size - 4)).firstOrNull { start ->
-                if (start < 3) false else {
-                    val code = codeFor(row.subList(2, start).joinToString(","))
-                    code != null && (code == LogDatabase.STATUS_BOOT_COMPLETED || row[start].isBlank() || row[start].trim()
-                        .toIntOrNull() != null)
-                }
-            } ?: throw IllegalArgumentException("Invalid status or charge in CSV row ${index + 2}")
+            require(row.size >= columnCount) { "Invalid CSV row ${index + 2}" }
+            val trailingColumnStart = row.size - trailingColumnCount
             val statusLabel = row.subList(2, trailingColumnStart).joinToString(",")
-            val statusCode = codeFor(statusLabel)
-                ?: throw IllegalArgumentException("Unknown status in CSV row ${index + 2}")
+            val statusCode = sampleStatusCode(statusLabel) ?: statusCodeFor(statusLabel)
+            ?: throw IllegalArgumentException("Unknown status in CSV row ${index + 2}")
             val timestamp = timestampFor(row[0].trim(), row[1].trim())
                 ?: throw IllegalArgumentException("Invalid timestamp in CSV row ${index + 2}")
             val isBoot = statusCode == LogDatabase.STATUS_BOOT_COMPLETED
@@ -130,9 +129,9 @@ internal object CsvLogImporter {
                 voltage = if (isBoot) null else parseScaledDecimal(
                     row[trailingColumnStart + 3], 1000.0, "voltage", index + 2
                 ),
-                currentMicroAmps = if (isBoot || row.size - trailingColumnStart == 4) null
+                currentMicroAmps = if (isBoot || !hasMeasurements) null
                 else parseOptionalLong(row[trailingColumnStart + 4], "current", index + 2),
-                remainingChargeMicroampHours = if (isBoot || rows.first().size != 10) null
+                remainingChargeMicroampHours = if (isBoot || !hasMeasurements) null
                 else parseOptionalLong(
                     row[trailingColumnStart + 5], "remaining charge", index + 2
                 )?.also { require(it >= 0) { "Invalid remaining charge in CSV row ${index + 2}" } })

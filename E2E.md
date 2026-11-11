@@ -53,8 +53,6 @@ Its SHA-256 and size must match `e2e/fixtures.json`. Use `npm run prepare:apks -
 
 The five immutable backup fixtures under `e2e/fixtures/historical-1.7.3/` were captured from the actual 1.7.3 exporters. Their provenance manifest pins the source APK and each file's SHA-256. Changed or missing bytes fail the normal suite. Never regenerate historical fixtures with the current exporter.
 
-Set `NEW_UI_BASELINE_APK` and `NEW_UI_BASELINE_SHA256` to supply a genuine earlier new-UI APK with the production package ID and a lower version code. Preparation re-signs a separate copy with the test key. If this optional input is omitted, its test is reported as **NOT EXECUTED**; set `E2E_REQUIRE_NEW_UI_BASELINE=true` to require it. Two builds of the same source revision are not valid cross-version inputs. Keep APK inputs outside source control.
-
 ## Reports and troubleshooting
 
 Reports are collected under `e2e/build/reports/`: WebdriverIO JUnit XML in `junit/`, JSON reports in `json/`, Appium server logs in `appium/`, and failure screenshots, UI XML, logcat and package information in `diagnostics/`. Inspect the failing assertion and its accompanying diagnostics. APK preparation records metadata in `e2e/build/apks.json`, build output in `e2e/build/reports/preparation-build.txt` and build duration in the console output. CI uploads the metadata with the reports.

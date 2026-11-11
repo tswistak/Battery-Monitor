@@ -13,7 +13,7 @@
 package codes.swistak.batterymonitor.app
 
 internal enum class StartupPresentation {
-    ONBOARDING, CHANGELOG, BATTERY_OPTIMIZATION, REQUEST_NOTIFICATIONS, NONE
+    ONBOARDING, CHANGELOG, BATTERY_OPTIMIZATION, NONE
 }
 
 internal enum class NotificationOnboarding {

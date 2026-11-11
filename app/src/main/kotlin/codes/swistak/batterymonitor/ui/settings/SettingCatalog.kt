@@ -61,11 +61,7 @@ internal enum class SettingsCategory(
     );
 
     companion object {
-        fun fromRoute(route: String?) = when (route) {
-            "appearance" -> General
-            "history", "data" -> Advanced
-            else -> entries.firstOrNull { it.route == route }
-        }
+        fun fromRoute(route: String?) = entries.firstOrNull { it.route == route }
 
         fun fromLegacy(key: String?) = when (key) {
             SettingsContract.KEY_OTHER_SETTINGS -> General

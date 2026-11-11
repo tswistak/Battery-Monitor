@@ -42,27 +42,26 @@ import java.util.concurrent.TimeUnit;
 public final class WidgetProbe extends Probe {
     private static final String APP = "codes.swistak.batterymonitor";
     private static final String[] LEGACY_PROVIDERS = {APP + ".widgets.BatteryInfoAppWidgetProvider", APP + ".widgets.FullAppWidgetProvider"};
-    private static final String[] NEW_PROVIDERS = {APP + ".widgets.StatusWidgetProvider", APP + ".widgets.StatusWidgetProvider"};
 
     @Override
     protected void execute(String phase) throws Exception {
-        boolean bind = "bind".equals(phase) || "bindNew".equals(phase);
-        boolean newUi = "bindNew".equals(phase) || "verifyNew".equals(phase);
+        boolean bind = "bind".equals(phase);
         boolean stopped = "verifyStopped".equals(phase);
-        require(bind || "verify".equals(phase) || "verifyUpdated".equals(phase) || "verifyNew".equals(phase) || stopped, "Unknown widget phase: " + phase);
+        require(bind || "verify".equals(phase) || "verifyUpdated".equals(phase) || stopped, "Unknown widget phase: " + phase);
         WidgetHostActivity activity = (WidgetHostActivity) startActivitySync(new Intent(getTargetContext(), WidgetHostActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        if (bind) bind(activity, newUi ? NEW_PROVIDERS : LEGACY_PROVIDERS);
+        if (bind) bind(activity);
         // Verification never rebinds or requests a provider update: stale or broken upgrades must fail.
-        verify(activity, newUi, stopped);
+        verify(activity, stopped);
         screenshot(activity, phase);
         runOnMainSync(activity::finish);
     }
 
-    private void bind(WidgetHostActivity activity, String[] providers) throws Exception {
+    private void bind(WidgetHostActivity activity) throws Exception {
         AppWidgetManager manager = AppWidgetManager.getInstance(activity);
         runOnMainSync(() -> activity.host.deleteHost());
         SharedPreferences.Editor state = activity.getSharedPreferences(WidgetHostActivity.STORE, 0).edit().clear();
-        for (int slot = 0; slot < providers.length; slot++) {
+        for (int slot = 0; slot < LEGACY_PROVIDERS.length; slot++) {
+            String provider = LEGACY_PROVIDERS[slot];
             int id = activity.host.allocateAppWidgetId();
             Bundle options = new Bundle();
             options.putInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 320);
@@ -70,8 +69,8 @@ public final class WidgetProbe extends Probe {
             options.putInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 160);
             options.putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, 160);
             options.putInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, AppWidgetProviderInfo.WIDGET_CATEGORY_HOME_SCREEN);
-            require(manager.bindAppWidgetIdIfAllowed(id, new ComponentName(APP, providers[slot]), options), "Cannot bind widget " + providers[slot] + "; grant the helper appwidget bind permission on a dedicated emulator");
-            state.putInt("id_" + slot, id).putString("provider_" + slot, providers[slot]);
+            require(manager.bindAppWidgetIdIfAllowed(id, new ComponentName(APP, provider), options), "Cannot bind widget " + provider + "; grant the helper appwidget bind permission on a dedicated emulator");
+            state.putInt("id_" + slot, id).putString("provider_" + slot, provider);
         }
         require(state.commit(), "Cannot persist original widget IDs and provider components");
         runOnMainSync(() -> {
@@ -82,9 +81,9 @@ public final class WidgetProbe extends Probe {
 
     // Probe released and current APK resources by name without linking either app's generated IDs.
     @SuppressLint("DiscouragedApi")
-    private void verify(WidgetHostActivity activity, boolean newUi, boolean stopped) throws Exception {
+    private void verify(WidgetHostActivity activity, boolean stopped) throws Exception {
         Context appContext = activity.createPackageContext(APP, 0);
-        int levelId = appContext.getResources().getIdentifier(newUi ? "widget_level" : "level", "id", APP);
+        int levelId = appContext.getResources().getIdentifier("level", "id", APP);
         require(levelId != 0, "Missing battery level view in the actual widget layout");
         Intent battery = activity.registerReceiver(null, new android.content.IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         require(battery != null, "No emulator battery broadcast");

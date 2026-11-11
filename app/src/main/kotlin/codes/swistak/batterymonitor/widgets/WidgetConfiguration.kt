@@ -75,8 +75,7 @@ internal data class WidgetConfiguration(
 
         internal fun decode(value: String): WidgetConfiguration? = runCatching {
             val parts = value.split('|')
-            val version = parts[0].toInt()
-            require((version == 1 && parts.size == 11) || (version == SCHEMA_VERSION && parts.size == 12))
+            require(parts.size == 12 && parts[0].toInt() == SCHEMA_VERSION)
             WidgetConfiguration(
                 brightness = parts[1].takeIf(String::isNotEmpty)?.let(Brightness::valueOf),
                 colorSource = parts[2].takeIf(String::isNotEmpty)?.let(ColorSource::valueOf),
@@ -88,7 +87,7 @@ internal data class WidgetConfiguration(
                 tapAction = WidgetTapAction.valueOf(parts[8]),
                 tapMetric = WidgetMetric.valueOf(parts[9]),
                 trendHours = parts[10].toInt(),
-                showYAxisLabels = version == 1 || parts[11].toBooleanStrict()
+                showYAxisLabels = parts[11].toBooleanStrict()
             ).takeIf(WidgetConfiguration::isValid)
         }.getOrNull()
     }

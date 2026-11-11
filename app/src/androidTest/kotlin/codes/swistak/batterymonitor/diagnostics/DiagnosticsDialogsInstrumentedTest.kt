@@ -21,8 +21,6 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
-import java.util.concurrent.atomic.AtomicInteger
-import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +40,7 @@ import codes.swistak.batterymonitor.R
 import codes.swistak.batterymonitor.logs.HistoryMetric
 import codes.swistak.batterymonitor.logs.HistoryRangeState
 import codes.swistak.batterymonitor.monitoring.BackgroundServiceWatchdog
+import codes.swistak.batterymonitor.monitoring.MonitoringDesiredState
 import codes.swistak.batterymonitor.monitoring.charginglimit.ChargingDiagnosticStore
 import codes.swistak.batterymonitor.settings.SettingsContract
 import codes.swistak.batterymonitor.ui.diagnostics.DiagnosticReportDialog
@@ -60,6 +59,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 
 class DiagnosticsDialogsInstrumentedTest {
     private val instrumentation get() = InstrumentationRegistry.getInstrumentation()
@@ -201,13 +201,11 @@ class DiagnosticsDialogsInstrumentedTest {
     }
 
     @Test
-    fun old_pending_hint_and_capture_completion_do_not_open_or_replace_dialogs() {
+    fun capture_completion_does_not_open_or_replace_dialogs() {
         for (actionsOnly in listOf(false, true)) withHost(actionsOnly) {
             val monitoring = BackgroundServiceWatchdog.isServiceDesired(context)
             val snapshots = ChargingDiagnosticStore.read(context).size
-            preferences().edit().putBoolean(PENDING_HINT, true).commit()
             main {
-                state.restore("PRIVILEGED_HINT", null)
                 activity.supportFragmentManager.beginTransaction()
                     .setMaxLifecycle(fragment, Lifecycle.State.STARTED).commitNow()
                 activity.supportFragmentManager.beginTransaction()
@@ -228,7 +226,6 @@ class DiagnosticsDialogsInstrumentedTest {
             click(R.string.cancel)
             await { dialogs() == 0 }
             assertNull(state.dialog)
-            assertTrue(preferences().getBoolean(PENDING_HINT, false))
             assertEquals(monitoring, BackgroundServiceWatchdog.isServiceDesired(context))
             assertEquals(snapshots, ChargingDiagnosticStore.read(context).size)
         }
@@ -342,18 +339,15 @@ class DiagnosticsDialogsInstrumentedTest {
     ) {
         assumeTrue("Dialog window inspection requires Android 10", Build.VERSION.SDK_INT >= 29)
         val preferences = preferences()
-        val keys =
-            listOf(
-                SettingsContract.KEY_COLOR_SOURCE,
-                SettingsContract.KEY_BRIGHTNESS,
-                SettingsContract.KEY_ENABLE_LOGGING,
-                PENDING_HINT
-            )
+        val keys = listOf(
+            SettingsContract.KEY_COLOR_SOURCE,
+            SettingsContract.KEY_BRIGHTNESS,
+            SettingsContract.KEY_ENABLE_LOGGING
+        )
         val previous = keys.associateWith { preferences.all[it] }
         preferences.edit()
             .putString(SettingsContract.KEY_COLOR_SOURCE, ColorSource.BatteryBlue.name)
-            .putString(SettingsContract.KEY_BRIGHTNESS, Brightness.Light.name).remove(PENDING_HINT)
-            .commit()
+            .putString(SettingsContract.KEY_BRIGHTNESS, Brightness.Light.name).commit()
         val monitor =
             instrumentation.addMonitor(FullscreenChartActivity::class.java.name, null, false)
         instrumentation.startActivitySync(
@@ -507,7 +501,4 @@ class DiagnosticsDialogsInstrumentedTest {
         assertTrue(message, ready())
     }
 
-    private companion object {
-        const val PENDING_HINT = "charging_diagnostics_privileged_hint_pending"
-    }
 }
